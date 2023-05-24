@@ -10,7 +10,7 @@ import {
 
 import { type Config } from '../config.js'
 import { type Unit } from '../types/unit.js'
-import { type PartialBy, type Prettify } from '../types/utils.js'
+import { type PartialBy, type Pretty } from '../types/utils.js'
 import { getUnit } from '../utils/getUnit.js'
 import type {
   GetBlockNumberError,
@@ -20,7 +20,7 @@ import type {
 ///////////////////////////////////////////////////////////////////////////
 // Getter
 
-export type GetBalanceParameters = Prettify<
+export type GetBalanceParameters = Pretty<
   GetBalanceParameters_ & {
     /** Chain ID to fetch balance from. */
     chainId?: number | undefined
@@ -71,7 +71,7 @@ export async function getBalance(
 ///////////////////////////////////////////////////////////////////////////
 // Watcher
 
-export type WatchBalanceParameters = Prettify<
+export type WatchBalanceParameters = Pretty<
   Omit<GetBalanceParameters, 'blockNumber' | 'blockTag'> & {
     onBalance: (parameters: GetBalanceReturnType) => void
     onError?: (error: GetBalanceError | GetBlockNumberError) => void

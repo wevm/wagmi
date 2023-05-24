@@ -6,7 +6,7 @@ export {
   type Mutable,
   type OneOf,
   type PartialBy,
-  type Prettify,
+  type Pretty,
 } from './types/utils.js'
 
 ////////////////////////////////////////////////////////////////////////////////

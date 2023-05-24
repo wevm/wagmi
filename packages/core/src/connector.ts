@@ -7,7 +7,7 @@ import {
 import type { Chain } from './chain.js'
 import { Emitter } from './emitter.js'
 import { type Storage } from './storage.js'
-import { type Prettify } from './types/utils.js'
+import { type Pretty } from './types/utils.js'
 
 export type ConnectorEventMap = {
   change: { accounts?: readonly Address[]; chainId?: number }
@@ -25,7 +25,7 @@ export type CreateConnectorFn<
   chains: readonly [Chain, ...Chain[]]
   emitter: Emitter<ConnectorEventMap>
   storage?: Storage<TStorageItem> | null
-}) => Prettify<
+}) => Pretty<
   {
     readonly id: string
     readonly name: string

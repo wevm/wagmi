@@ -8,7 +8,7 @@ import {
 import { type Config, type Connector } from '../config.js'
 import { type CreateConnectorFn } from '../connector.js'
 import { ConnectorAlreadyConnectedError } from '../errors/config.js'
-import type { Prettify } from '../internal.js'
+import type { Pretty } from '../internal.js'
 
 export type ConnectParameters = {
   /** Chain ID to connect to */
@@ -97,14 +97,14 @@ export async function connect(
 ///////////////////////////////////////////////////////////////////////////
 // Mutation
 
-export type ConnectMutationData = Prettify<ConnectReturnType>
-export type ConnectMutationVariables = Prettify<{
+export type ConnectMutationData = Pretty<ConnectReturnType>
+export type ConnectMutationVariables = Pretty<{
   /** Chain ID to connect to */
   chainId?: number | undefined
   /** Connector to connect with */
   connector?: CreateConnectorFn | Connector | undefined
 }>
-export type ConnectMutationParameters = Prettify<ConnectMutationVariables>
+export type ConnectMutationParameters = Pretty<ConnectMutationVariables>
 
 export const connectMutationOptions = (
   config: Config,

@@ -31,7 +31,7 @@ export type OneOf<
   Union extends object,
   AllKeys extends KeyofUnion<Union> = KeyofUnion<Union>,
 > = Union extends infer Item
-  ? Prettify<Item & { [K in Exclude<AllKeys, keyof Item>]?: never }>
+  ? Pretty<Item & { [K in Exclude<AllKeys, keyof Item>]?: never }>
   : never
 type KeyofUnion<T> = T extends T ? keyof T : never
 
@@ -49,9 +49,9 @@ export type PartialBy<TType, TKeys extends keyof TType> = ExactPartial<
  *
  * @link https://twitter.com/mattpocockuk/status/1622730173446557697?s=20&t=NdpAcmEFXY01xkqU3KO0Mg
  * @example
- * type Result = Prettify<{ a: string } | { b: string } | { c: number, d: bigint }>
+ * type Result = Pretty<{ a: string } | { b: string } | { c: number, d: bigint }>
  * //   ^? type Result = { a: string; b: string; c: number; d: bigint }
  */
-export type Prettify<T> = {
+export type Pretty<T> = {
   [K in keyof T]: T[K]
 } & {}

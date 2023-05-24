@@ -18,12 +18,12 @@ import { type ConnectorEventMap, type CreateConnectorFn } from './connector.js'
 import { Emitter, type EventData, createEmitter } from './emitter.js'
 import { ChainNotConfiguredError } from './errors/config.js'
 import { type Storage, createStorage, noopStorage } from './storage.js'
-import type { OneOf, Prettify } from './types/utils.js'
+import type { OneOf, Pretty } from './types/utils.js'
 import { uid } from './utils/uid.js'
 
 export type CreateConfigParameters<
   TChain extends readonly [Chain, ...Chain[]],
-> = Prettify<
+> = Pretty<
   {
     connectors?: CreateConnectorFn[]
     persister?: Persister | null
@@ -93,7 +93,7 @@ export type State = {
   current: string | undefined
   status: 'connected' | 'connecting' | 'disconnected' | 'reconnecting'
 }
-export type PartializedState = Prettify<
+export type PartializedState = Pretty<
   Partial<Pick<State, 'chainId' | 'connections' | 'current' | 'status'>>
 >
 export type Connection = {

@@ -12,12 +12,12 @@ import {
   type SwitchAccountMutationVariables,
   switchAccountMutationOptions,
 } from '@wagmi/core'
-import type { Prettify } from '@wagmi/core/internal'
+import type { Pretty } from '@wagmi/core/internal'
 
 import type { OmittedUseMutationResult } from '../types/query.js'
 import { useConfig } from './useConfig.js'
 
-export type UseSwitchAccountParameters = Prettify<
+export type UseSwitchAccountParameters = Pretty<
   SwitchAccountMutationParameters & {
     mutation?: Omit<Options, OmittedMutationOptions>
   }
@@ -28,7 +28,7 @@ type Options = UseMutationOptions<
   SwitchAccountMutationVariables
 >
 
-export type UseSwitchAccountReturnType = Prettify<
+export type UseSwitchAccountReturnType = Pretty<
   Omit<Result, OmittedUseMutationResult> & {
     connectors: readonly Connector[]
     switchAccount: Result['mutate']

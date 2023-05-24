@@ -7,7 +7,7 @@ import {
   getBalanceQueryOptions,
   watchBlockNumber,
 } from '@wagmi/core'
-import type { Prettify } from '@wagmi/core/internal'
+import type { Pretty } from '@wagmi/core/internal'
 import { useEffect } from 'react'
 
 import type { OmittedUseQueryOptions } from '../types/query.js'
@@ -19,14 +19,13 @@ import {
   useQuery,
 } from './useQuery.js'
 
-export type UseBalanceParameters<TSelectData = GetBalanceQueryFnData> =
-  Prettify<
-    GetBalanceQueryParameters & {
-      enabled?: boolean
-      query?: QueryOptions<TSelectData>
-      watch?: boolean | undefined
-    }
-  >
+export type UseBalanceParameters<TSelectData = GetBalanceQueryFnData> = Pretty<
+  GetBalanceQueryParameters & {
+    enabled?: boolean
+    query?: QueryOptions<TSelectData>
+    watch?: boolean | undefined
+  }
+>
 type QueryOptions<TSelectData = GetBalanceQueryFnData> = Omit<
   UseQueryParameters<
     GetBalanceQueryFnData,

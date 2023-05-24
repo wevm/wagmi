@@ -7,7 +7,7 @@ import {
   getBlockNumberQueryOptions,
   watchBlockNumber,
 } from '@wagmi/core'
-import type { Prettify } from '@wagmi/core/internal'
+import type { Pretty } from '@wagmi/core/internal'
 import * as React from 'react'
 
 import type { OmittedUseQueryOptions } from '../types/query.js'
@@ -20,7 +20,7 @@ import {
 } from './useQuery.js'
 
 export type UseBlockNumberParameters<TSelectData = GetBlockNumberQueryFnData> =
-  Prettify<
+  Pretty<
     GetBlockNumberQueryParameters & {
       enabled?: boolean
       query?: QueryOptions<TSelectData>

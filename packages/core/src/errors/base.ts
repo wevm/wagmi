@@ -1,7 +1,7 @@
-import type { OneOf, Prettify } from '../types/utils.js'
+import type { OneOf, Pretty } from '../types/utils.js'
 import { getVersion } from '../utils/getVersion.js'
 
-type BaseErrorParameters = Prettify<
+type BaseErrorParameters = Pretty<
   {
     docsPath?: string
     docsSlug?: string
