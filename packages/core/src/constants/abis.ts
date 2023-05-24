@@ -79,12 +79,7 @@ export const erc20ABI = [
         type: 'uint256',
       },
     ],
-    outputs: [
-      {
-        name: '',
-        type: 'bool',
-      },
-    ],
+    outputs: [],
   },
   {
     type: 'function',
