@@ -219,6 +219,18 @@ If you find wagmi useful, please consider supporting development. Thank you 🙏
     <img alt="rollup.id logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/rollup.id-light.svg" width="auto" height="50">
   </picture>
 </a>
+<a href="https://pancakeswap.finance/">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/pancake-dark.svg">
+    <img alt="pancake logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/pancake-light.svg" width="auto" height="50">
+  </picture>
+</a>
+<a href="https://celo.org/">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/celo-dark.svg">
+    <img alt="celo logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/celo-light.svg" width="auto" height="50">
+  </picture>
+</a>
 
 ## Contributing
 

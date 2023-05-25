@@ -121,6 +121,26 @@ const sponsors = [
         'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/rollup.id-light.svg',
     },
   },
+  {
+    id: 'pancake',
+    name: 'PancakeSwap',
+    href: 'https://pancakeswap.finance',
+    logo: {
+      dark: 'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/pancake-dark.svg',
+      light:
+        'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/pancake-light.svg',
+    },
+  },
+  {
+    id: 'celo',
+    name: 'Celo',
+    href: 'https://celo.org',
+    logo: {
+      dark: 'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/celo-dark.svg',
+      light:
+        'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/celo-light.svg',
+    },
+  },
 ] as const
 
 export function Sponsors() {
