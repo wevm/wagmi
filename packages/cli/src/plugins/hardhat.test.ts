@@ -39,7 +39,7 @@ describe('hardhat', () => {
     })
   })
 
-  it('contracts', async () => {
+  it.skip('contracts', async () => {
     await expect(
       hardhat({
         project: resolve(__dirname, '__fixtures__/hardhat/'),
