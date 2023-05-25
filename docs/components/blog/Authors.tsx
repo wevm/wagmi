@@ -5,7 +5,7 @@ type AuthorsProps = {
 
 export function Authors({ date, children }: AuthorsProps) {
   return (
-    <div className="mt-4 mb-8 text-gray-400 text-sm">
+    <div className='mt-4 mb-8 text-gray-400 text-sm'>
       {date} by{children}
     </div>
   )
@@ -19,8 +19,9 @@ export function Author({ name, link }: AuthorProps) {
       <a
         key={name}
         href={link}
-        target="_blank"
-        className="mx-1 text-gray-800 dark:text-gray-100"
+        target='_blank'
+        className='mx-1 text-gray-800 dark:text-gray-100'
+        rel='noreferrer'
       >
         {name}
       </a>

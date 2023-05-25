@@ -1,5 +1,5 @@
-import nextra from 'nextra'
 import withPreconstruct from '@preconstruct/next'
+import nextra from 'nextra'
 
 const withNextra = nextra({
   defaultShowCopyCode: true,
@@ -14,7 +14,7 @@ const withNextra = nextra({
 /** @type {import('next').NextConfig} */
 const config = {
   i18n: {
-    locales: ['en-US','zh-CN'],
+    locales: ['en-US', 'zh-CN'],
     defaultLocale: 'en-US',
   },
   reactStrictMode: true,

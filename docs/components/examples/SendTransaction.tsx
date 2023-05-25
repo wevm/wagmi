@@ -53,7 +53,7 @@ export function SendTransaction() {
     return (
       <PreviewWrapper>
         <Box
-          as="form"
+          as='form'
           onSubmit={(e) => {
             e.preventDefault()
             if (isLoading || isConfirming) return
@@ -64,21 +64,21 @@ export function SendTransaction() {
             <Account />
             <Input
               onChange={(e) => setTo(e.target.value)}
-              label="Recipient"
-              placeholder="0xA0Cf…251e"
+              label='Recipient'
+              placeholder='0xA0Cf…251e'
               value={to}
             />
             <Input
               onChange={(e) => setValue(e.target.value)}
-              label="Amount (ether)"
-              placeholder="0.05"
-              type="number"
+              label='Amount (ether)'
+              placeholder='0.05'
+              type='number'
               value={value}
             />
             <Button
               disabled={!sendTransaction || !to || !value}
               loading={isPreparing || isLoading || isConfirming}
-              width="full"
+              width='full'
             >
               {isLoading
                 ? 'Check wallet...'
@@ -93,9 +93,9 @@ export function SendTransaction() {
               </Text>
             )}
             {isPrepareError && (
-              <Text color="red">Error: {prepareError?.message}</Text>
+              <Text color='red'>Error: {prepareError?.message}</Text>
             )}
-            {isError && <Text color="red">Error: {error?.message}</Text>}
+            {isError && <Text color='red'>Error: {error?.message}</Text>}
           </Stack>
         </Box>
       </PreviewWrapper>

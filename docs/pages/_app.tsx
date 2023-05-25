@@ -4,14 +4,13 @@ import NextScript from 'next/script'
 import * as React from 'react'
 
 import 'nextra-theme-docs/style.css'
+
 import '../style.css'
 
-// https://github.com/import-js/eslint-plugin-import/issues/1868
-// eslint-disable-next-line import/no-unresolved
-import 'degen/styles'
 import { Providers } from '../components/core'
 import { useFathom } from '../hooks'
 import { encodeBase64 } from '../lib/encode'
+import 'degen/styles'
 
 const themeKey = 'theme'
 
@@ -43,9 +42,9 @@ function App({ Component, pageProps }: AppProps) {
     <>
       {/* Set theme directly or load from cookie to prevent flash */}
       <NextScript
-        id="theme-script"
+        id='theme-script'
         src={encodedScript}
-        strategy="beforeInteractive"
+        strategy='beforeInteractive'
       />
 
       <Providers>

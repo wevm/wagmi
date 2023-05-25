@@ -36,8 +36,8 @@ export const SignMessage = () => {
           signMessage({ message })
         }}
       >
-        <input name="message" type="text" required />
-        <button disabled={isLoading}>
+        <input name='message' type='text' required />
+        <button type='button' disabled={isLoading}>
           {isLoading ? 'Check Wallet' : 'Sign Message'}
         </button>
       </form>

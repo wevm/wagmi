@@ -14,6 +14,7 @@ export const Connect = () => {
         {connectors.map((x) => (
           <button
             disabled={!x.ready || isReconnecting || connector?.id === x.id}
+            type='button'
             key={x.name}
             onClick={() => connect({ connector: x })}
           >
@@ -24,7 +25,7 @@ export const Connect = () => {
         ))}
       </div>
 
-      <div>{error && error.message}</div>
+      <div>{error?.message}</div>
     </div>
   )
 }

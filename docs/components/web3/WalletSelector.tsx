@@ -9,13 +9,13 @@ export function WalletSelector() {
     useConnect()
 
   return (
-    <Stack space="4">
+    <Stack space='4'>
       {connectors
         .filter((x) => isMounted && x.ready)
         .map((x) => (
           <Button
-            width="full"
-            variant="tertiary"
+            width='full'
+            variant='tertiary'
             center
             loading={isLoading && x.id === pendingConnector?.id}
             disabled={isMounted ? !x.ready : false}
@@ -26,7 +26,7 @@ export function WalletSelector() {
           </Button>
         ))}
 
-      {error && <Text color="red">{error.message}</Text>}
+      {error && <Text color='red'>{error.message}</Text>}
     </Stack>
   )
 }

@@ -19,11 +19,12 @@ export const WriteContract = () => {
       <div>
         <input
           onChange={(e) => setTokenId(e.target.value)}
-          placeholder="token id"
+          placeholder='token id'
           value={tokenId}
         />
         <button
           disabled={isLoading}
+          type='button'
           onClick={() => write({ args: [BigInt(tokenId)] })}
         >
           Mint

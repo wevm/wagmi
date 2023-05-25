@@ -12,7 +12,11 @@ export const SendTransaction = () => {
 
   if (isIdle)
     return (
-      <button disabled={isLoading} onClick={() => sendTransaction()}>
+      <button
+        type='button'
+        disabled={isLoading}
+        onClick={() => sendTransaction()}
+      >
         Send Transaction
       </button>
     )

@@ -14,9 +14,9 @@ export function SwitchNetwork() {
           ? switchNetwork?.(goerli.id)
           : switchNetwork?.(mainnet.id)
       }
-      variant="transparent"
-      size="small"
-      width="full"
+      variant='transparent'
+      size='small'
+      width='full'
       center
       disabled={isLoading}
       loading={isLoading}
