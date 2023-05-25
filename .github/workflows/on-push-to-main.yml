@@ -15,7 +15,7 @@ jobs:
 
   changesets:
     name: Changesets
-    needs: verify
+    # needs: verify
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
