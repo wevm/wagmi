@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 1.0.2
+
+### Patch Changes
+
+- [#2430](https://github.com/wagmi-dev/wagmi/pull/2430) [`71d92029`](https://github.com/wagmi-dev/wagmi/commit/71d92029ee4344842cd41698858a330fee95b6e0) Thanks [@tmm](https://github.com/tmm)! - Added message when command is not found.
+
 ## 1.0.1
 
 ### Patch Changes
