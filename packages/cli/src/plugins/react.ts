@@ -102,27 +102,24 @@ export function react(config: ReactConfig = {}): ReactResult {
           if (typeof contract.address === 'object') {
             typeParams = `& { chainId?: keyof typeof ${contract.meta.addressName}  }`
             if (Object.keys(contract.address).length > 1) {
-              innerHookParams[
-                'address'
-              ] = `${contract.meta.addressName}[chainId as keyof typeof ${contract.meta.addressName}]`
+              innerHookParams.address = `${contract.meta.addressName}[chainId as keyof typeof ${contract.meta.addressName}]`
               imports.add('useNetwork')
               innerContent = dedent`
                 const { chain } = useNetwork()
                 const chainId = config.chainId ?? chain?.id
               `
             } else
-              innerHookParams['address'] = `${contract.meta.addressName}[${
+              innerHookParams.address = `${contract.meta.addressName}[${
                 Object.keys(contract.address!)[0]
               }]`
           } else if (contract.address)
-            innerHookParams['address'] = contract.meta.addressName
+            innerHookParams.address = contract.meta.addressName
         }
 
-        const innerHookConfig =
-          Object.entries(innerHookParams).reduce(
-            (prev, curr) => `${prev}${curr[0]}: ${curr[1]},`,
-            '{',
-          ) + '...config}'
+        const innerHookConfig = `${Object.entries(innerHookParams).reduce(
+          (prev, curr) => `${prev}${curr[0]}: ${curr[1]},`,
+          '{',
+        )}...config}`
 
         type Item = { name: string; value: string }
         const genDocString = (hookName: string, item?: Item) => {
@@ -147,9 +144,9 @@ export function react(config: ReactConfig = {}): ReactResult {
           `
         }
 
-        let hasReadFunction,
-          hasWriteFunction,
-          hasEvent = false
+        let hasReadFunction = false
+        let hasWriteFunction = false
+        let hasEvent = false
         for (const component of contract.abi) {
           if (component.type === 'function')
             if (
@@ -216,14 +213,13 @@ export function react(config: ReactConfig = {}): ReactResult {
                   throw getHookNameError(name, contract.name)
                 hookNames.add(name)
 
-                const config =
-                  Object.entries({
-                    ...innerHookParams,
-                    functionName: `'${item.name}'`,
-                  }).reduce(
-                    (prev, curr) => `${prev}${curr[0]}: ${curr[1]},`,
-                    '{',
-                  ) + '...config}'
+                const config = `${Object.entries({
+                  ...innerHookParams,
+                  functionName: `'${item.name}'`,
+                }).reduce(
+                  (prev, curr) => `${prev}${curr[0]}: ${curr[1]},`,
+                  '{',
+                )}...config}`
                 imports.add('useContractRead')
                 const docString = genDocString('useContractRead', {
                   name: 'functionName',
@@ -300,14 +296,20 @@ export function react(config: ReactConfig = {}): ReactResult {
                       PrepareWriteContractResult<typeof ${contract.meta.abiName}, string>['request']['abi'],
                       TFunctionName,
                       TMode
-                    >${TChainId ? ` & { address?: Address; chainId?: TChainId; }` : ''}
+                    >${
+                      TChainId
+                        ? ' & { address?: Address; chainId?: TChainId; }'
+                        : ''
+                    }
                   : UseContractWriteConfig<typeof ${contract.meta.abiName}, TFunctionName, TMode> & {
                       abi?: never
                       ${typeParams_}
                     } = {} as any,
               ) {
                 ${innerContent}
-                return useContractWrite<typeof ${contract.meta.abiName}, TFunctionName, TMode>(${innerHookConfig} as any)
+                return useContractWrite<typeof ${
+                  contract.meta.abiName
+                }, TFunctionName, TMode>(${innerHookConfig} as any)
               }
               `
             } else
@@ -338,14 +340,13 @@ export function react(config: ReactConfig = {}): ReactResult {
                   throw getHookNameError(name, contract.name)
                 hookNames.add(name)
 
-                const config =
-                  Object.entries({
-                    ...innerHookParams,
-                    functionName: `'${item.name}'`,
-                  }).reduce(
-                    (prev, curr) => `${prev}${curr[0]}: ${curr[1]},`,
-                    '{',
-                  ) + '...config}'
+                const config = `${Object.entries({
+                  ...innerHookParams,
+                  functionName: `'${item.name}'`,
+                }).reduce(
+                  (prev, curr) => `${prev}${curr[0]}: ${curr[1]},`,
+                  '{',
+                )}...config}`
                 imports.add('useContractWrite')
                 const docString = genDocString('useContractWrite', {
                   name: 'functionName',
@@ -459,14 +460,13 @@ export function react(config: ReactConfig = {}): ReactResult {
                   throw getHookNameError(name, contract.name)
                 hookNames.add(name)
 
-                const config =
-                  Object.entries({
-                    ...innerHookParams,
-                    functionName: `'${item.name}'`,
-                  }).reduce(
-                    (prev, curr) => `${prev}${curr[0]}: ${curr[1]},`,
-                    '{',
-                  ) + '...config}'
+                const config = `${Object.entries({
+                  ...innerHookParams,
+                  functionName: `'${item.name}'`,
+                }).reduce(
+                  (prev, curr) => `${prev}${curr[0]}: ${curr[1]},`,
+                  '{',
+                )}...config}`
                 imports.add('usePrepareContractWrite')
                 const docString = genDocString('usePrepareContractWrite', {
                   name: 'functionName',
@@ -550,14 +550,13 @@ export function react(config: ReactConfig = {}): ReactResult {
                   throw getHookNameError(name, contract.name)
                 hookNames.add(name)
 
-                const config =
-                  Object.entries({
-                    ...innerHookParams,
-                    eventName: `'${item.name}'`,
-                  }).reduce(
-                    (prev, curr) => `${prev}${curr[0]}: ${curr[1]},`,
-                    '{',
-                  ) + '...config}'
+                const config = `${Object.entries({
+                  ...innerHookParams,
+                  eventName: `'${item.name}'`,
+                }).reduce(
+                  (prev, curr) => `${prev}${curr[0]}: ${curr[1]},`,
+                  '{',
+                )}...config}`
                 imports.add('useContractEvent')
                 const docString = genDocString('useContractEvent', {
                   name: 'eventName',

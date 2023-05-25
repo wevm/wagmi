@@ -14,19 +14,19 @@ function useForceUpdateWithCounter() {
 describe('useForceUpdate', () => {
   it('mounts', () => {
     const { result } = renderHook(() => useForceUpdate())
-    expect(result.current).toMatchInlineSnapshot(`[Function]`)
+    expect(result.current).toMatchInlineSnapshot('[Function]')
   })
 
   describe('behavior', () => {
     it('forces update', () => {
       const { result } = renderHook(() => useForceUpdateWithCounter())
-      expect(result.current.counter).toMatchInlineSnapshot(`1`)
+      expect(result.current.counter).toMatchInlineSnapshot('1')
 
       act(() => {
         result.current.forceUpdate()
       })
 
-      expect(result.current.counter).toMatchInlineSnapshot(`2`)
+      expect(result.current.counter).toMatchInlineSnapshot('2')
     })
   })
 })

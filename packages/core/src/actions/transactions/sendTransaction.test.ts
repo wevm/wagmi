@@ -89,8 +89,9 @@ describe('sendTransaction', () => {
         value: parseEther('100000'),
       })
 
-      await expect(() => sendTransaction(request)).rejects
-        .toThrowErrorMatchingInlineSnapshot(`
+      await expect(() =>
+        sendTransaction(request),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(`
         "The total cost (gas * gas fee + value) of executing this transaction exceeds the balance of the account.
 
         This error could arise when the account does not have enough funds to:

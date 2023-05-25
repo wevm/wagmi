@@ -11,6 +11,7 @@ export function deepEqual(a: any, b: any) {
 
     if (Array.isArray(a) && Array.isArray(b)) {
       length = a.length
+      // rome-ignore lint/suspicious/noDoubleEquals: <explanation>
       if (length != b.length) return false
       for (i = length; i-- !== 0; ) if (!deepEqual(a[i], b[i])) return false
       return true
@@ -38,5 +39,6 @@ export function deepEqual(a: any, b: any) {
   }
 
   // true if both NaN, false otherwise
+  // rome-ignore lint/suspicious/noSelfCompare: <explanation>
   return a !== a && b !== b
 }

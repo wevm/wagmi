@@ -63,7 +63,9 @@ describe('createConfig', () => {
           const storage = createStorage({
             storage: {
               getItem: (key) => localStorage[key],
-              setItem: (key, value) => (localStorage[key] = value),
+              setItem: (key, value) => {
+                localStorage[key] = value
+              },
               removeItem: (key) => delete localStorage[key],
             },
           })

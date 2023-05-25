@@ -125,8 +125,9 @@ describe('configureChains', () => {
       )
 
       it('populate chains with Alchemy RPC URLs if all chains support Alchemy', async () => {
-        expect(chains.map((chain) => chain.rpcUrls.default.http[0]))
-          .toMatchInlineSnapshot(`
+        expect(
+          chains.map((chain) => chain.rpcUrls.default.http[0]),
+        ).toMatchInlineSnapshot(`
             [
               "https://eth-mainnet.g.alchemy.com/v2/apiKey-alchemy",
               "https://polygon-mainnet.g.alchemy.com/v2/apiKey-alchemy",
@@ -176,8 +177,9 @@ describe('configureChains', () => {
       )
 
       it('configures with Infura RPC URL if all chains support Infura', async () => {
-        expect(chains.map((chain) => chain.rpcUrls.default.http[0]))
-          .toMatchInlineSnapshot(`
+        expect(
+          chains.map((chain) => chain.rpcUrls.default.http[0]),
+        ).toMatchInlineSnapshot(`
             [
               "https://mainnet.infura.io/v3/apiKey-infura",
               "https://polygon-mainnet.infura.io/v3/apiKey-infura",
@@ -225,8 +227,9 @@ describe('configureChains', () => {
       )
 
       it('configures chains with default RPC URL', async () => {
-        expect(chains.map((chain) => chain.rpcUrls.default.http[0]))
-          .toMatchInlineSnapshot(`
+        expect(
+          chains.map((chain) => chain.rpcUrls.default.http[0]),
+        ).toMatchInlineSnapshot(`
             [
               "https://cloudflare-eth.com",
               "https://polygon-rpc.com",
@@ -286,8 +289,9 @@ describe('configureChains', () => {
       )
 
       it('configure chains with provided RPC URLs for JSON RPC provider', async () => {
-        expect(chains.map((chain) => chain.rpcUrls.default.http[0]))
-          .toMatchInlineSnapshot(`
+        expect(
+          chains.map((chain) => chain.rpcUrls.default.http[0]),
+        ).toMatchInlineSnapshot(`
             [
               "https://homestead.example.com",
               "https://matic.example.com",
@@ -378,8 +382,9 @@ describe('configureChains', () => {
     )
 
     it('configures chains with correct fallbacks', async () => {
-      expect(chains.map((chain) => chain.rpcUrls.default.http[0]))
-        .toMatchInlineSnapshot(`
+      expect(
+        chains.map((chain) => chain.rpcUrls.default.http[0]),
+      ).toMatchInlineSnapshot(`
           [
             "https://eth-mainnet.g.alchemy.com/v2/apiKey-alchemy",
             "https://polygon-mainnet.infura.io/v3/apiKey-infura",

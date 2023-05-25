@@ -82,22 +82,19 @@ export function actions(config: ActionsConfig = {}): ActionsResult {
           if (typeof contract.address === 'object') {
             typeParams = `& { chainId?: keyof typeof ${contract.meta.addressName} }`
             if (Object.keys(contract.address).length > 1) {
-              innerActionParams[
-                'address'
-              ] = `${contract.meta.addressName}[config.chainId as keyof typeof ${contract.meta.addressName}]`
+              innerActionParams.address = `${contract.meta.addressName}[config.chainId as keyof typeof ${contract.meta.addressName}]`
             } else
-              innerActionParams['address'] = `${contract.meta.addressName}[${
+              innerActionParams.address = `${contract.meta.addressName}[${
                 Object.keys(contract.address!)[0]
               }]`
           } else if (contract.address)
-            innerActionParams['address'] = contract.meta.addressName
+            innerActionParams.address = contract.meta.addressName
         }
 
-        const innerActionConfig =
-          Object.entries(innerActionParams).reduce(
-            (prev, curr) => `${prev}${curr[0]}: ${curr[1]},`,
-            '{',
-          ) + '...config}'
+        const innerActionConfig = `${Object.entries(innerActionParams).reduce(
+          (prev, curr) => `${prev}${curr[0]}: ${curr[1]},`,
+          '{',
+        )}...config}`
 
         type Item = { name: string; value: string }
         const genDocString = (actionName: string, item?: Item) => {
@@ -153,9 +150,9 @@ export function actions(config: ActionsConfig = {}): ActionsResult {
           content.push(code)
         }
 
-        let hasReadFunction,
-          hasWriteFunction,
-          hasEvent = false
+        let hasReadFunction = false
+        let hasWriteFunction = false
+        let hasEvent = false
         for (const component of contract.abi) {
           if (component.type === 'function')
             if (

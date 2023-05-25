@@ -15,7 +15,7 @@ describe('fetchEnsName', () => {
           await fetchEnsName({
             address: '0x5FE6C3F8d12D5Ad1480F6DC01D8c7864Aa58C523',
           }),
-        ).toMatchInlineSnapshot(`null`)
+        ).toMatchInlineSnapshot('null')
       })
 
       it('has name', async () => {

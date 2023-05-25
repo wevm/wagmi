@@ -13,8 +13,7 @@ describe('useBalance', () => {
       timeout: 5_000,
     })
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { internal, ...res } = result.current
+    const { internal: _, ...res } = result.current
     expect(res).toMatchInlineSnapshot(`
       {
         "data": {
@@ -49,8 +48,7 @@ describe('useBalance', () => {
 
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result.current
+      const { internal: _, ...res } = result.current
       expect(res).toMatchInlineSnapshot(`
         {
           "data": {
@@ -112,8 +110,7 @@ describe('useBalance', () => {
 
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result.current
+      const { internal: _, ...res } = result.current
       expect(res).toMatchInlineSnapshot(`
         {
           "data": {
@@ -148,8 +145,7 @@ describe('useBalance', () => {
 
       await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result.current
+      const { internal: _, ...res } = result.current
       expect(res).toMatchInlineSnapshot(`
         {
           "data": undefined,
@@ -179,8 +175,7 @@ describe('useBalance', () => {
 
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result.current
+      const { internal: _, ...res } = result.current
       expect(res).toMatchInlineSnapshot(`
         {
           "data": {
@@ -216,8 +211,7 @@ describe('useBalance', () => {
 
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result.current
+      const { internal: _, ...res } = result.current
       expect(res).toMatchInlineSnapshot(`
         {
           "data": {
@@ -272,8 +266,7 @@ describe('useBalance', () => {
 
       await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result.current
+      const { internal: _, ...res } = result.current
       expect(res).toMatchInlineSnapshot(`
         {
           "data": undefined,
@@ -303,8 +296,7 @@ describe('useBalance', () => {
 
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result.current
+      const { internal: _, ...res } = result.current
       expect(res).toMatchInlineSnapshot(`
         {
           "data": {

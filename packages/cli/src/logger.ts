@@ -10,23 +10,23 @@ function format(args: any[]) {
     .join('\n')
 }
 
-export function success(...args: Array<any>) {
+export function success(...args: any[]) {
   console.log(pc.green(format(args)))
 }
 
-export function info(...args: Array<any>) {
+export function info(...args: any[]) {
   console.info(pc.blue(format(args)))
 }
 
-export function log(...args: Array<any>) {
+export function log(...args: any[]) {
   console.log(pc.white(format(args)))
 }
 
-export function warn(...args: Array<any>) {
+export function warn(...args: any[]) {
   console.warn(pc.yellow(format(args)))
 }
 
-export function error(...args: Array<any>) {
+export function error(...args: any[]) {
   console.error(pc.red(format(args)))
 }
 

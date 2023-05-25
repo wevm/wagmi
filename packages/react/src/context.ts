@@ -32,6 +32,7 @@ export function WagmiConfig<
   // Bailing out of using JSX
   // https://github.com/egoist/tsup/issues/390#issuecomment-933488738
   return React.createElement(Context.Provider, {
+    // rome-ignore lint/correctness/noChildrenProp: <explanation>
     children: React.createElement(QueryClientProvider, {
       children,
       client: config.queryClient,

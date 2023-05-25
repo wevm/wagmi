@@ -16,7 +16,7 @@ describe('fetchEnsAvatar', () => {
           await fetchEnsAvatar({
             name: 'awkweb.eth',
           }),
-        ).toMatchInlineSnapshot(`null`)
+        ).toMatchInlineSnapshot('null')
       })
 
       it('has avatar', async () => {

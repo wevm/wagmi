@@ -13,8 +13,7 @@ describe('useEnsName', () => {
       timeout: 5_000,
     })
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { internal, ...res } = result.current
+    const { internal: _, ...res } = result.current
     expect(res).toMatchInlineSnapshot(`
       {
         "data": "johnpalmer.eth",
@@ -43,8 +42,7 @@ describe('useEnsName', () => {
 
         await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { internal, ...res } = result.current
+        const { internal: _, ...res } = result.current
         expect(res).toMatchInlineSnapshot(`
           {
             "data": "awkweb.eth",
@@ -71,8 +69,7 @@ describe('useEnsName', () => {
 
         await waitFor(() => expect(result.current.isError).toBeTruthy())
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { internal, ...res } = result.current
+        const { internal: _, ...res } = result.current
         expect(res).toMatchInlineSnapshot(`
           {
             "data": undefined,
@@ -100,9 +97,8 @@ describe('useEnsName', () => {
 
         await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { internal, ...res } = result.current
-        expect(res.data).toMatchInlineSnapshot(`null`)
+        const { internal: _, ...res } = result.current
+        expect(res.data).toMatchInlineSnapshot('null')
       })
     })
 
@@ -143,8 +139,7 @@ describe('useEnsName', () => {
 
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result.current
+      const { internal: _, ...res } = result.current
       expect(res).toMatchInlineSnapshot(`
         {
           "data": "awkweb.eth",
@@ -174,8 +169,7 @@ describe('useEnsName', () => {
 
       await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result.current
+      const { internal: _, ...res } = result.current
       expect(res).toMatchInlineSnapshot(`
         {
           "data": undefined,
@@ -218,8 +212,7 @@ describe('useEnsName', () => {
 
       await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result.current
+      const { internal: _, ...res } = result.current
       expect(res).toMatchInlineSnapshot(`
         {
           "data": undefined,

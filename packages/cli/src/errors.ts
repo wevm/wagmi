@@ -1,12 +1,12 @@
 import type { z } from 'zod'
 
 class ValidationError extends Error {
-  details: Array<Zod.ZodIssue>
+  details: Zod.ZodIssue[]
 
   constructor(
     message: string,
     options: {
-      details: Array<Zod.ZodIssue>
+      details: Zod.ZodIssue[]
     },
   ) {
     super(message)
@@ -31,7 +31,7 @@ export function fromZodError(
 ): ValidationError {
   function joinPath(arr: Array<string | number>): string {
     return arr.reduce<string>((acc, value) => {
-      if (typeof value === 'number') return acc + '[' + value + ']'
+      if (typeof value === 'number') return `${acc}[${value}]`
       const separator = acc === '' ? '' : '.'
       return acc + separator + value
     }, '')

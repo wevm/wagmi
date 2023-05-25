@@ -29,8 +29,7 @@ describe('useContractInfiniteReads', () => {
       timeout: 15_000,
     })
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { internal, ...res } = result.current
+    const { internal: _, ...res } = result.current
     assertType<
       | InfiniteData<
           [
@@ -105,8 +104,7 @@ describe('useContractInfiniteReads', () => {
         timeout: 15_000,
       })
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result.current
+      const { internal: _, ...res } = result.current
       assertType<InfiniteData<[string, string, string]> | undefined>(res.data)
       expect(res.data).toMatchInlineSnapshot(`
         {
@@ -159,8 +157,7 @@ describe('useContractInfiniteReads', () => {
         timeout: 15_000,
       })
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result.current
+      const { internal: _, ...res } = result.current
       assertType<
         | InfiniteData<
             [
@@ -232,8 +229,7 @@ describe('useContractInfiniteReads', () => {
 
       await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result.current
+      const { internal: _, ...res } = result.current
       assertType<
         | InfiniteData<
             [

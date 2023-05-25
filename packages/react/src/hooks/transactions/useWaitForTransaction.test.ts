@@ -24,8 +24,7 @@ function useWaitForTransactionWithSendTransactionAndConnect(
 describe('useWaitForTransaction', () => {
   it('mounts', () => {
     const { result } = renderHook(() => useWaitForTransaction())
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { internal, ...res } = result.current
+    const { internal: _, ...res } = result.current
     expect(res).toMatchInlineSnapshot(`
       {
         "data": undefined,
@@ -105,8 +104,7 @@ describe('useWaitForTransaction', () => {
         expect(result.current.waitForTransaction.isSuccess).toBeTruthy(),
       )
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { data, internal, ...res } = result.current.waitForTransaction
+      const { data, internal: _, ...res } = result.current.waitForTransaction
       expect(data).toBeDefined()
       expect(data?.transactionHash).toEqual(hash)
       expect(res).toMatchInlineSnapshot(`
@@ -152,8 +150,7 @@ describe('useWaitForTransaction', () => {
         expect(result.current.waitForTransaction.isSuccess).toBeTruthy(),
       )
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { data, internal, ...res } = result.current.waitForTransaction
+      const { data, internal: _, ...res } = result.current.waitForTransaction
       expect(data).toBeDefined()
       expect(data?.transactionHash).toEqual(hash)
       expect(res).toMatchInlineSnapshot(`
@@ -188,8 +185,7 @@ describe('useWaitForTransaction', () => {
         timeout: 10_000,
       })
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result.current
+      const { internal: _, ...res } = result.current
       expect(res).toMatchInlineSnapshot(`
         {
           "data": undefined,

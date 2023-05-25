@@ -24,12 +24,12 @@ describe('disconnect', () => {
       )
 
       await disconnect()
-      expect(config.data?.account).toMatchInlineSnapshot(`undefined`)
+      expect(config.data?.account).toMatchInlineSnapshot('undefined')
     })
 
     it('not connected', async () => {
       await disconnect()
-      expect(config.data?.account).toMatchInlineSnapshot(`undefined`)
+      expect(config.data?.account).toMatchInlineSnapshot('undefined')
     })
   })
 })
