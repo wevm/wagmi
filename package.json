@@ -34,7 +34,7 @@
     "@types/prettier": "^2.7.2",
     "@vitest/coverage-c8": "^0.25.8",
     "@vitest/ui": "^0.25.8",
-    "abitype": "0.8.1",
+    "abitype": "^0.8.1",
     "dedent": "^0.7.0",
     "esbuild": "0.15.13",
     "esbuild-register": "^3.4.2",
@@ -58,6 +58,7 @@
   "packageManager": "pnpm@8.3.1",
   "pnpm": {
     "overrides": {
+      "abitype": "0.8.1",
       "esbuild": "0.15.13"
     }
   }
