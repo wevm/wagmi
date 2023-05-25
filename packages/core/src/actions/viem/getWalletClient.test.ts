@@ -16,7 +16,7 @@ describe('getWalletClient', () => {
 
   describe('behavior', () => {
     it('not connected', async () => {
-      expect(await getWalletClient()).toMatchInlineSnapshot(`null`)
+      expect(await getWalletClient()).toMatchInlineSnapshot('null')
     })
 
     it('connected', async () => {

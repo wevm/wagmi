@@ -63,8 +63,9 @@ describe('multicall', () => {
 
   describe('args', () => {
     it('chainId', async () => {
-      await expect(multicall({ chainId: 1, contracts })).resolves
-        .toMatchInlineSnapshot(`
+      await expect(
+        multicall({ chainId: 1, contracts }),
+      ).resolves.toMatchInlineSnapshot(`
         [
           {
             "result": 2n,
@@ -87,8 +88,9 @@ describe('multicall', () => {
     })
 
     it('blockTag', async () => {
-      await expect(multicall({ contracts, blockTag: 'latest' })).resolves
-        .toMatchInlineSnapshot(`
+      await expect(
+        multicall({ contracts, blockTag: 'latest' }),
+      ).resolves.toMatchInlineSnapshot(`
         [
           {
             "result": 2n,

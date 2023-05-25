@@ -11,8 +11,7 @@ describe('useEnsResolver', () => {
 
     await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { internal, ...res } = result.current
+    const { internal: _, ...res } = result.current
     expect(res).toMatchInlineSnapshot(`
       {
         "data": "0x4976fb03C32e5B8cfe2b6cCB31c09Ba78EBaBa41",
@@ -71,8 +70,7 @@ describe('useEnsResolver', () => {
 
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result.current
+      const { internal: _, ...res } = result.current
       expect(res).toMatchInlineSnapshot(`
         {
           "data": "0x4976fb03C32e5B8cfe2b6cCB31c09Ba78EBaBa41",
@@ -102,8 +100,7 @@ describe('useEnsResolver', () => {
 
       await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result.current
+      const { internal: _, ...res } = result.current
       expect(res).toMatchInlineSnapshot(`
         {
           "data": undefined,
@@ -131,8 +128,7 @@ describe('useEnsResolver', () => {
 
         await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { internal, ...res } = result.current
+        const { internal: _, ...res } = result.current
         expect(res).toMatchInlineSnapshot(`
           {
             "data": "0x4976fb03C32e5B8cfe2b6cCB31c09Ba78EBaBa41",
@@ -159,8 +155,7 @@ describe('useEnsResolver', () => {
 
         await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { internal, ...res } = result.current
+        const { internal: _, ...res } = result.current
         expect(res).toMatchInlineSnapshot(`
           {
             "data": "0x30200E0cb040F38E474E53EF437c95A1bE723b2B",
@@ -203,8 +198,7 @@ describe('useEnsResolver', () => {
 
       await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result.current
+      const { internal: _, ...res } = result.current
       expect(res).toMatchInlineSnapshot(`
         {
           "data": undefined,

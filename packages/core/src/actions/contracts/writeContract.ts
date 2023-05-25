@@ -76,7 +76,7 @@ export async function writeContract<
   if (config.mode === 'prepared') {
     request = config
   } else {
-    const { chainId, mode, ...args } = config
+    const { chainId: _, mode: __, ...args } = config
     const res = await prepareWriteContract(args as PrepareWriteContractConfig)
     request = res.request as unknown as WriteContractParameters<
       TAbi,

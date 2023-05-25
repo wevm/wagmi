@@ -198,7 +198,7 @@ export function foundry<TProject extends string>({
       if (clean || build || rebuild)
         try {
           await execa(forgeExecutable, ['--version'])
-        } catch (error) {
+        } catch (_error) {
           throw new Error(dedent`
             forge must be installed to use Foundry plugin.
             To install, follow the instructions at https://book.getfoundry.sh/getting-started/installation

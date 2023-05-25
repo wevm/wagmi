@@ -53,14 +53,14 @@ export function ContractWrite() {
             loading={isPreparing || isWriteLoading || isConfirming}
             onClick={() => write?.()}
             center
-            width="full"
+            width='full'
           >
             {isConfirming ? 'Minting...' : 'Mint'}
           </Button>
           {isPrepareError && (
-            <Text color="red">Error: {prepareError?.message}</Text>
+            <Text color='red'>Error: {prepareError?.message}</Text>
           )}
-          {isWriteError && <Text color="red">Error: {error?.message}</Text>}
+          {isWriteError && <Text color='red'>Error: {error?.message}</Text>}
           {isSuccess && (
             <Text>
               Success!{' '}

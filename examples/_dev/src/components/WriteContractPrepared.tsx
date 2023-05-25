@@ -13,7 +13,11 @@ export const WriteContractPrepared = () => {
   return (
     <div>
       <div>Mint a wagmi:</div>
-      <button disabled={isLoading || !write} onClick={() => write?.()}>
+      <button
+        type='button'
+        disabled={isLoading || !write}
+        onClick={() => write?.()}
+      >
         Mint
       </button>
       {isError && <div>{error?.message}</div>}

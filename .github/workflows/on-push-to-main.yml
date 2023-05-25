@@ -1,0 +1,46 @@
+name: Main
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Verify
+    uses: ./.github/workflows/verify.yml
+    secrets: inherit
+
+  changesets:
+    name: Changesets
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
+          fetch-depth: 0
+          submodules: true
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
+
+      - name: Create version pull request or publish to npm
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          title: "chore: version packages"
+          commit: "chore: version packages"
+          publish: pnpm changeset:release
+          version: pnpm changeset:version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish CJS bundle to npm
+        if: steps.changesets.outputs.published == 'true'
+        run: pnpm cjs:release '${{ steps.changesets.outputs.publishedPackages }}'

@@ -39,8 +39,7 @@ describe('useWalletClient', () => {
 
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, data, ...res } = result.current
+      const { internal: _, data, ...res } = result.current
       const { uid, ...walletClient } = data || {}
       expect(uid).toBeDefined()
       expect(res).toMatchInlineSnapshot(`
@@ -152,8 +151,7 @@ describe('useWalletClient', () => {
 
       await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result.current
+      const { internal: _, ...res } = result.current
       expect(res).toMatchInlineSnapshot(`
         {
           "data": undefined,
@@ -185,9 +183,8 @@ describe('useWalletClient', () => {
         expect(result.current.walletClient.isSuccess).toBeTruthy(),
       )
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, data, ...res } = result.current.walletClient
-      const { uid, ...rest } = data || {}
+      const { internal: __, data, ...res } = result.current.walletClient
+      const { uid: ___, ...rest } = data || {}
       expect(res).toMatchInlineSnapshot(`
         {
           "error": null,
@@ -328,9 +325,8 @@ describe('useWalletClient', () => {
         expect(result.current.walletClient.isSuccess).toBeTruthy(),
       )
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, data, ...res } = result.current.walletClient
-      const { uid, ...rest } = data || {}
+      const { internal: __, data, ...res } = result.current.walletClient
+      const { uid: ___, ...rest } = data || {}
       expect(res).toMatchInlineSnapshot(`
         {
           "error": null,
@@ -445,9 +441,8 @@ describe('useWalletClient', () => {
         ).toBeTruthy(),
       )
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal: _, data: data2, ...res2 } = result.current.walletClient
-      const { uid: uid2, ...rest2 } = data2 || {}
+      const { uid: ____, ...rest2 } = data2 || {}
       expect(res2).toMatchInlineSnapshot(`
         {
           "error": null,
@@ -563,8 +558,8 @@ describe('useWalletClient', () => {
       )
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, data, ...res } = result.current.walletClient
-      const { uid, ...rest } = data || {}
+      const { internal: __, data, ...res } = result.current.walletClient
+      const { uid: ___, ...rest } = data || {}
       expect(res).toMatchInlineSnapshot(`
         {
           "error": null,
@@ -676,7 +671,7 @@ describe('useWalletClient', () => {
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal: _, data: data2, ...res2 } = result.current.walletClient
-      const { uid: uid2, ...rest2 } = data2 || {}
+      const { uid: ____, ...rest2 } = data2 || {}
       expect(res2).toMatchInlineSnapshot(`
         {
           "error": null,

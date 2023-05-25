@@ -28,11 +28,11 @@ export function SignInWithEthereum() {
   }, [])
 
   const signedInContent = address ? (
-    <Stack direction="horizontal" align="center" justify="center">
-      <Box fontSize="large">Signed in as {formatAddress(address)}</Box>
+    <Stack direction='horizontal' align='center' justify='center'>
+      <Box fontSize='large'>Signed in as {formatAddress(address)}</Box>
       <Button
-        size="small"
-        variant="tertiary"
+        size='small'
+        variant='tertiary'
         onClick={async () => {
           await fetch('/api/logout')
           setAddress(undefined)
@@ -46,13 +46,13 @@ export function SignInWithEthereum() {
   if (accountData.isConnected)
     return (
       <PreviewWrapper>
-        <Stack space="6">
+        <Stack space='6'>
           <Account />
 
           {address ? (
             signedInContent
           ) : (
-            <Skeleton width="full" radius="2xLarge">
+            <Skeleton width='full' radius='2xLarge'>
               <SiweButton
                 address={accountData.address as string}
                 chainId={activeChain?.id ?? mainnet.id}
@@ -66,7 +66,7 @@ export function SignInWithEthereum() {
 
   return (
     <PreviewWrapper>
-      <Stack space="6">
+      <Stack space='6'>
         <WalletSelector />
         {signedInContent}
       </Stack>

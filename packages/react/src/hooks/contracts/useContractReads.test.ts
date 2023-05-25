@@ -36,9 +36,7 @@ describe('useContractRead', () => {
     )
 
     await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { internal, ...res } = result.current
+    const { internal: _, ...res } = result.current
     assertType<
       | [
           MulticallResult<ResolvedConfig['BigIntType']>,
@@ -92,8 +90,7 @@ describe('useContractRead', () => {
 
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result.current
+      const { internal: _, ...res } = result.current
       assertType<
         | [
             ResolvedConfig['BigIntType'],
@@ -153,8 +150,7 @@ describe('useContractRead', () => {
 
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result.current
+      const { internal: _, ...res } = result.current
       expect(res).toMatchInlineSnapshot(`
         {
           "data": [
@@ -198,8 +194,7 @@ describe('useContractRead', () => {
 
       await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result.current
+      const { internal: _, ...res } = result.current
       assertType<
         | [
             MulticallResult<ResolvedConfig['BigIntType']>,

@@ -36,11 +36,11 @@ export function SignMessage() {
       <PreviewWrapper>
         <Account />
         <Box
-          as="form"
-          display="flex"
-          flexDirection="column"
-          gap="4"
-          marginTop="8"
+          as='form'
+          display='flex'
+          flexDirection='column'
+          gap='4'
+          marginTop='8'
           onSubmit={(event) => {
             event.preventDefault()
             const formData = new FormData(event.target as HTMLFormElement)
@@ -49,18 +49,18 @@ export function SignMessage() {
           }}
         >
           <Textarea
-            name="message"
-            label="Enter a message to sign"
-            placeholder="The quick brown fox…"
+            name='message'
+            label='Enter a message to sign'
+            placeholder='The quick brown fox…'
             required
           />
 
-          <Button width="full" center disabled={isLoading} loading={isLoading}>
+          <Button width='full' center disabled={isLoading} loading={isLoading}>
             {isLoading ? 'Check Wallet' : 'Sign Message'}
           </Button>
 
           {signMessageData && (
-            <Box color="textSecondary">
+            <Box color='textSecondary'>
               <Box>Recovered Address: {recoveredAddress}</Box>
               <Box style={{ wordBreak: 'break-all' }}>
                 Signature: {signMessageData}
@@ -68,7 +68,7 @@ export function SignMessage() {
             </Box>
           )}
 
-          {error && <Text color="red">{error.message}</Text>}
+          {error && <Text color='red'>{error.message}</Text>}
         </Box>
       </PreviewWrapper>
     )

@@ -512,7 +512,7 @@ describe('useContractWrite', () => {
         const tokenId = getRandomTokenId()
         let args: any[] | any = [tokenId]
         let functionName: ExtractAbiFunctionNames<
-          (typeof wagmiContractConfig)['abi'],
+          typeof wagmiContractConfig['abi'],
           'nonpayable' | 'payable'
         > = 'mint'
         const utils = renderHook(() =>

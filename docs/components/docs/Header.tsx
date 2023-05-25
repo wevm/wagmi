@@ -12,9 +12,9 @@ export function Header() {
   const title = TITLE_WITH_TRANSLATIONS[resolvedLocale]
 
   return (
-    <header className="mb-10 flex flex-col items-center">
-      <div className="mt-8 w-auto h-12 md:h-14">
-        <h1 className="sr-only">wagmi</h1>
+    <header className='mb-10 flex flex-col items-center'>
+      <div className='mt-8 w-auto h-12 md:h-14'>
+        <h1 className='sr-only'>wagmi</h1>
         <span>
           <LogoType />
           <style jsx>{`
@@ -37,74 +37,74 @@ export function Header() {
         </span>
       </div>
 
-      <p className="text-center text-lg mb-6 mt-3 text-gray-500 md:!text-xl">
+      <p className='text-center text-lg mb-6 mt-3 text-gray-500 md:!text-xl'>
         {title}
       </p>
 
-      <div className="flex flex-wrap gap-2 justify-center max-w-[28rem] min-h-[3rem]">
+      <div className='flex flex-wrap gap-2 justify-center max-w-[28rem] min-h-[3rem]'>
         <a
-          aria-label="Version"
-          href="https://www.npmjs.com/package/wagmi"
-          className="h-5"
+          aria-label='Version'
+          href='https://www.npmjs.com/package/wagmi'
+          className='h-5'
         >
           <img
-            alt="wagmi-version"
-            src="https://img.shields.io/npm/v/wagmi?colorA=2B323B&colorB=1e2329&style=flat&label=Version"
+            alt='wagmi-version'
+            src='https://img.shields.io/npm/v/wagmi?colorA=2B323B&colorB=1e2329&style=flat&label=Version'
           />
         </a>
 
         <a
-          aria-label="License"
-          href="https://www.npmjs.com/package/wagmi"
-          className="h-5"
+          aria-label='License'
+          href='https://www.npmjs.com/package/wagmi'
+          className='h-5'
         >
           <img
-            alt="wagmi-license"
-            src="https://img.shields.io/github/license/wagmi-dev/wagmi?colorA=2B323B&colorB=1e2329&style=flat&label=License"
+            alt='wagmi-license'
+            src='https://img.shields.io/github/license/wagmi-dev/wagmi?colorA=2B323B&colorB=1e2329&style=flat&label=License'
           />
         </a>
 
         <a
-          aria-label="Downloads"
-          href="https://www.npmjs.com/package/wagmi"
-          className="h-5"
+          aria-label='Downloads'
+          href='https://www.npmjs.com/package/wagmi'
+          className='h-5'
         >
           <img
-            alt="wagmi-downloads"
-            src="https://img.shields.io/npm/dm/wagmi?colorA=2B323B&colorB=1e2329&style=flat&label=Downloads"
+            alt='wagmi-downloads'
+            src='https://img.shields.io/npm/dm/wagmi?colorA=2B323B&colorB=1e2329&style=flat&label=Downloads'
           />
         </a>
 
         <a
-          aria-label="Stars"
-          href="https://github.com/wagmi-dev/wagmi"
-          className="h-5"
+          aria-label='Stars'
+          href='https://github.com/wagmi-dev/wagmi'
+          className='h-5'
         >
           <img
-            alt="wagmi-stars"
-            src="https://img.shields.io/github/stars/wagmi-dev/wagmi?colorA=2B323B&colorB=1e2329&style=flat&label=Stars"
+            alt='wagmi-stars'
+            src='https://img.shields.io/github/stars/wagmi-dev/wagmi?colorA=2B323B&colorB=1e2329&style=flat&label=Stars'
           />
         </a>
 
         <a
-          aria-label="Best of JS"
-          href="https://bestofjs.org/projects/wagmi"
-          className="h-5"
+          aria-label='Best of JS'
+          href='https://bestofjs.org/projects/wagmi'
+          className='h-5'
         >
           <img
-            alt="wagmi-best-of-js"
-            src="https://img.shields.io/endpoint?colorA=2B323B&colorB=1e2329&style=flat&url=https://bestofjs-serverless.now.sh/api/project-badge?fullName=wagmi-dev%2Fwagmi%26since=daily"
+            alt='wagmi-best-of-js'
+            src='https://img.shields.io/endpoint?colorA=2B323B&colorB=1e2329&style=flat&url=https://bestofjs-serverless.now.sh/api/project-badge?fullName=wagmi-dev%2Fwagmi%26since=daily'
           />
         </a>
 
         <a
-          aria-label="Sponsors"
-          href="https://github.com/sponsors/wagmi-dev?metadata_campaign=docs_header"
-          className="h-5"
+          aria-label='Sponsors'
+          href='https://github.com/sponsors/wagmi-dev?metadata_campaign=docs_header'
+          className='h-5'
         >
           <img
-            alt="wagmi-sponsors"
-            src="https://img.shields.io/github/sponsors/wagmi-dev?colorA=2B323B&colorB=1e2329&style=flat&label=Sponsors"
+            alt='wagmi-sponsors'
+            src='https://img.shields.io/github/sponsors/wagmi-dev?colorA=2B323B&colorB=1e2329&style=flat&label=Sponsors'
           />
         </a>
       </div>

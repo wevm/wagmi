@@ -25,7 +25,9 @@ const AccountBalance = () => {
   return (
     <div>
       {data?.formatted}
-      <button onClick={() => refetch()}>fetch</button>
+      <button type='button' onClick={() => refetch()}>
+        fetch
+      </button>
     </div>
   )
 }
@@ -43,10 +45,11 @@ const FindBalance = () => {
       Find balance:{' '}
       <input
         onChange={(e) => setValue(e.target.value)}
-        placeholder="wallet address"
+        placeholder='wallet address'
         value={value}
       />
       <button
+        type='button'
         onClick={() => (value === address ? refetch() : setAddress(value))}
       >
         {isLoading ? 'fetching...' : 'fetch'}

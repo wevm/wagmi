@@ -72,8 +72,9 @@ describe('actions', () => {
         isTypeScript: false,
         outputs: [],
       })
-      await expect(format(`${imports}\n\n${content}`)).resolves
-        .toMatchInlineSnapshot(`
+      await expect(
+        format(`${imports}\n\n${content}`),
+      ).resolves.toMatchInlineSnapshot(`
         "import { getContract } from '@wagmi/core'
 
         /**

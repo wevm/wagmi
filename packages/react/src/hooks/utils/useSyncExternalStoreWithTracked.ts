@@ -24,8 +24,8 @@ export function useSyncExternalStoreWithTracked<
       if (isPlainObject(a) && isPlainObject(b) && trackedKeys.current.length) {
         for (const key of trackedKeys.current) {
           const equal = isEqual(
-            (a as { [key: string]: any })[key],
-            (b as { [key: string]: any })[key],
+            (a as { [k: string]: any })[key],
+            (b as { [k: string]: any })[key],
           )
           if (!equal) return false
         }

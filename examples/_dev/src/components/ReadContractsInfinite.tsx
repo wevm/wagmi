@@ -38,7 +38,9 @@ export function ReadContractsInfinite() {
           {data?.pages.map((data) => (
             <div key={stringify(data)}>{stringify(data)}</div>
           ))}
-          <button onClick={() => fetchNextPage()}>Fetch more</button>
+          <button type='button' onClick={() => fetchNextPage()}>
+            Fetch more
+          </button>
         </>
       )}
     </div>

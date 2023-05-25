@@ -198,8 +198,7 @@ export function paginatedIndexesConfig<
           : start - index - page * perPage
       })
       .filter((index) => index >= 0)
-      .map(fn)
-      .flat()) as unknown as typeof fn
+      .flatMap(fn)) as unknown as typeof fn
 
   return {
     contracts,

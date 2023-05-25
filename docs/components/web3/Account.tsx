@@ -23,28 +23,28 @@ export function Account() {
 
   return (
     <Stack
-      align="center"
+      align='center'
       direction={{ xs: 'vertical', sm: 'horizontal' }}
-      justify="space-between"
+      justify='space-between'
     >
-      <Stack align="center" direction={{ xs: 'vertical', sm: 'horizontal' }}>
+      <Stack align='center' direction={{ xs: 'vertical', sm: 'horizontal' }}>
         <Avatar
           src={ensAvatarData as any}
-          label="ENS Avatar"
+          label='ENS Avatar'
           placeholder={!ensAvatarData}
         />
-        <Stack space="0">
-          <Box fontSize="large" textAlign={{ xs: 'center', sm: 'left' }}>
+        <Stack space='0'>
+          <Box fontSize='large' textAlign={{ xs: 'center', sm: 'left' }}>
             {ensNameData
               ? `${ensNameData} (${formattedAddress})`
               : formattedAddress}
           </Box>
           <Box
-            fontSize="small"
-            color="textSecondary"
+            fontSize='small'
+            color='textSecondary'
             textAlign={{ xs: 'center', sm: 'left' }}
-            display="flex"
-            gap="1"
+            display='flex'
+            gap='1'
           >
             Connected to{' '}
             <Skeleton loading={!(isMounted && connector)}>
@@ -54,7 +54,7 @@ export function Account() {
         </Stack>
       </Stack>
 
-      <Button variant="secondary" onClick={() => disconnect()} type="button">
+      <Button variant='secondary' onClick={() => disconnect()} type='button'>
         Disconnect
       </Button>
     </Stack>

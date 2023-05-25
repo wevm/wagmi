@@ -64,7 +64,7 @@ describe('useNetwork', () => {
       await actConnect({ utils })
       expect(result.current.network?.chain?.id).toBe(1)
       await actDisconnect({ utils })
-      expect(result.current.network?.chain).toMatchInlineSnapshot(`undefined`)
+      expect(result.current.network?.chain).toMatchInlineSnapshot('undefined')
     })
 
     it('updates on switch network (supported chain)', async () => {

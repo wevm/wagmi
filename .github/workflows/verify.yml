@@ -1,0 +1,92 @@
+name: Verify
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
+
+      - name: Lint code
+        run: pnpm format && pnpm lint:fix
+      
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          commit_message: 'chore: format'
+          commit_user_name: 'github-actions[bot]'
+          commit_user_email: 'github-actions[bot]@users.noreply.github.com'
+
+  build:
+    name: Build
+    needs: lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
+
+      - name: Build
+        run: pnpm build
+
+  types:
+    name: Types
+    needs: lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
+
+      - name: Check types
+        run: pnpm typecheck
+
+      - name: Test types
+        run: pnpm test:typecheck
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    env:
+      ANVIL_BLOCK_NUMBER: 16773780
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
+
+      - name: Launch Anvil
+        run: anvil --fork-url $ANVIL_FORK_URL --fork-block-number $ANVIL_BLOCK_NUMBER &
+        env:
+          ANVIL_FORK_URL: ${{ secrets.ANVIL_FORK_URL }}
+
+      - name: Test `@wagmi/cli`, `@wagmi/core`, and `wagmi`
+        run: pnpm test:coverage
+
+      # Need to shutdown Anvil so cache gets created
+      - name: Shutdown Anvil
+        run: pkill -2 anvil

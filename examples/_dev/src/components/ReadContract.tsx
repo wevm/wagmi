@@ -32,6 +32,7 @@ const GetAlive = () => {
         disabled={isRefetching}
         onClick={() => refetch()}
         style={{ marginLeft: 4 }}
+        type='button'
       >
         {isRefetching ? 'loading...' : 'refetch'}
       </button>
@@ -57,11 +58,11 @@ const Love = () => {
       Get wagmigotchi love:
       <input
         onChange={(e) => setValue(e.target.value)}
-        placeholder="wallet address"
+        placeholder='wallet address'
         style={{ marginLeft: 4 }}
         value={value}
       />
-      <button onClick={() => setAddress(value as Address)}>
+      <button onClick={() => setAddress(value as Address)} type='button'>
         {isFetching
           ? isRefetching
             ? 'refetching...'

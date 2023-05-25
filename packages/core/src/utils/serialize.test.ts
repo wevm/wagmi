@@ -152,7 +152,7 @@ describe('stringify', () => {
 
             return (_key, value) => {
               if (value && typeof value === 'object' && ~cache.indexOf(value)) {
-                return `[ref=.]`
+                return '[ref=.]'
               }
 
               cache.push(value)

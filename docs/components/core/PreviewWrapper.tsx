@@ -18,14 +18,14 @@ export function PreviewWrapper({ children }: Props) {
 
   return (
     <Box
-      borderColor="foregroundSecondary"
-      borderRadius="2xLarge"
-      borderWidth="0.5"
-      marginY="8"
-      overflow="hidden"
-      padding="6"
-      width="full"
-      minHeight="24"
+      borderColor='foregroundSecondary'
+      borderRadius='2xLarge'
+      borderWidth='0.5'
+      marginY='8'
+      overflow='hidden'
+      padding='6'
+      width='full'
+      minHeight='24'
     >
       {children}
     </Box>
