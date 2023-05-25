@@ -59,10 +59,6 @@ jobs:
       - name: Install dependencies
         uses: ./.github/actions/install-dependencies
 
-      - name: Build contracts
-        shell: bash
-        run: pnpm contracts:build
-
       - name: Check types
         run: pnpm typecheck
 
