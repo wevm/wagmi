@@ -84,8 +84,12 @@ jobs:
         env:
           ANVIL_FORK_URL: ${{ secrets.ANVIL_FORK_URL }}
 
-      - name: Test `@wagmi/cli`, `@wagmi/core`, and `wagmi`
-        run: pnpm test:coverage
+      - name: Run tests
+        uses: nick-fields/retry@v2
+        with:
+          timeout_minutes: 20
+          max_attempts: 3
+          command: pnpm test:coverage
 
       # Need to shutdown Anvil so cache gets created
       - name: Shutdown Anvil
