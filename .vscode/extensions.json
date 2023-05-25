@@ -1,3 +1,3 @@
 {
-  "recommendations": ["dbaeumer.vscode-eslint", "orta.vscode-twoslash-queries"]
+  "recommendations": ["orta.vscode-twoslash-queries", "rome.rome"]
 }

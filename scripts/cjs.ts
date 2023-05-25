@@ -103,11 +103,12 @@ function version({
   for (const { dir, packageJson } of changedPackages) {
     const newPackageJson = { ...packageJson }
 
-    newPackageJson.version = packageJson.version + '-cjs'
+    newPackageJson.version = `${packageJson.version}-cjs`
     for (const { packageJson } of referencesPackages) {
       if (newPackageJson.dependencies?.[packageJson.name]) {
-        newPackageJson.dependencies[packageJson.name] =
-          packageJson.version + '-cjs'
+        newPackageJson.dependencies[
+          packageJson.name
+        ] = `${packageJson.version}-cjs`
       }
     }
 

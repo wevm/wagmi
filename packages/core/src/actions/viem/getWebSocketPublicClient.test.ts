@@ -29,6 +29,7 @@ describe('getWebSocketPublicClient', () => {
     it('referentially equal', async () => {
       setupConfig()
       expect(
+        // rome-ignore lint/suspicious/noSelfCompare: <explanation>
         getWebSocketPublicClient({ chainId: 1 }) ===
           getWebSocketPublicClient({ chainId: 1 }),
       ).toBeTruthy()

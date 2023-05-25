@@ -95,8 +95,9 @@ describe('switchNetwork', () => {
           },
         }),
       })
-      await expect(switchNetwork({ chainId: 69 })).rejects
-        .toThrowErrorMatchingInlineSnapshot(`
+      await expect(
+        switchNetwork({ chainId: 69 }),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(`
         "User rejected the request.
 
         Details: Failed to switch chain.

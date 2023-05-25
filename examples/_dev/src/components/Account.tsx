@@ -39,11 +39,19 @@ export const Account = () => {
         {ensName ? ` (${account?.address})` : null}
       </div>
 
-      {ensAvatar && <img src={ensAvatar} style={{ height: 40, width: 40 }} />}
+      {ensAvatar && (
+        <img
+          alt='ENS avatar'
+          src={ensAvatar}
+          style={{ height: 40, width: 40 }}
+        />
+      )}
 
       <div>
         {account?.address && (
-          <button onClick={() => disconnect.disconnect()}>Disconnect</button>
+          <button type='button' onClick={() => disconnect.disconnect()}>
+            Disconnect
+          </button>
         )}
         {isMounted && account?.connector?.name && (
           <span>Connected to {account.connector.name}</span>

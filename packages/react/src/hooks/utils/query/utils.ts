@@ -9,7 +9,6 @@ function isQueryKey(value: unknown): value is QueryKey {
   return Array.isArray(value)
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
 function isPlainObject(o: any): o is Object {
   if (!hasObjectPrototype(o)) {
     return false
@@ -28,7 +27,7 @@ function isPlainObject(o: any): o is Object {
   }
 
   // If constructor does not have an Object-specific method
-  // eslint-disable-next-line no-prototype-builtins
+  // rome-ignore lint/suspicious/noPrototypeBuiltins: <explanation>
   if (!prot.hasOwnProperty('isPrototypeOf')) {
     return false
   }

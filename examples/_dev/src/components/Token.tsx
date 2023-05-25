@@ -16,10 +16,12 @@ export const Token = () => {
       <div>
         <input
           onChange={(e) => setAddress(e.target.value as Address)}
-          placeholder="token address"
+          placeholder='token address'
           value={address}
         />
-        <button onClick={() => refetch()}>fetch</button>
+        <button type='button' onClick={() => refetch()}>
+          fetch
+        </button>
       </div>
     </div>
   )

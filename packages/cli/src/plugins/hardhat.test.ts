@@ -14,8 +14,9 @@ describe('hardhat', () => {
   describe('validate', async () => {
     it('validate', async () => {
       const temp = f.temp()
-      await expect(hardhat({ project: temp }).validate()).rejects
-        .toThrowErrorMatchingInlineSnapshot(`
+      await expect(
+        hardhat({ project: temp }).validate(),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(`
         "hardhat must be installed to use Hardhat plugin.
         To install, run: pnpm add hardhat"
       `)

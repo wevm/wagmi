@@ -64,19 +64,19 @@ export function SiweButton({ address, chainId, onSuccess }: Props) {
   }, [address, chainId, state.nonce, signMessageAsync, onSuccess])
 
   return (
-    <Stack space="4">
+    <Stack space='4'>
       <Button
         center
         disabled={!state.nonce || state.loading}
         loading={!state.nonce || state.loading}
         prefix={!state.loading && <IconEth />}
-        width="full"
+        width='full'
         onClick={handleSignIn}
       >
         {state.loading ? 'Check Wallet' : 'Sign-In with Ethereum'}
       </Button>
 
-      {state.error && <Text color="red">{state.error.message}</Text>}
+      {state.error && <Text color='red'>{state.error.message}</Text>}
     </Stack>
   )
 }

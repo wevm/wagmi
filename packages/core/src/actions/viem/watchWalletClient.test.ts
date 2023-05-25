@@ -16,7 +16,7 @@ describe('watchWalletClient', () => {
     let counter = 0
     const unsubscribe = watchWalletClient({}, (data) => {
       if (counter === 0) expect(data).toBeDefined()
-      else if (counter === 1) expect(data).toMatchInlineSnapshot(`null`)
+      else if (counter === 1) expect(data).toMatchInlineSnapshot('null')
       counter += 1
     })
 

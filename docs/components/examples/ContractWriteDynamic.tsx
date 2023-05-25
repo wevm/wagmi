@@ -63,23 +63,23 @@ export function ContractWriteDynamic() {
           <Stack>
             <Account />
             <Input
-              label="Token ID"
+              label='Token ID'
               onChange={(e) => setTokenId(e.target.value)}
-              placeholder="69"
+              placeholder='69'
               value={tokenId}
             />
             <Button
               disabled={isPreparing || isWriteLoading || isConfirming}
               loading={isPreparing || isWriteLoading || isConfirming}
-              width="full"
-              type="submit"
+              width='full'
+              type='submit'
             >
               {isConfirming ? 'Minting...' : 'Mint'}
             </Button>
             {isPrepareError && (
-              <Text color="red">Error: {prepareError?.message}</Text>
+              <Text color='red'>Error: {prepareError?.message}</Text>
             )}
-            {isWriteError && <Text color="red">Error: {error?.message}</Text>}
+            {isWriteError && <Text color='red'>Error: {error?.message}</Text>}
             {isSuccess && (
               <Text>
                 Success!{' '}

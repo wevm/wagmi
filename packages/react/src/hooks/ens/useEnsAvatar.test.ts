@@ -51,8 +51,7 @@ describe('useEnsAvatar', () => {
       timeout,
     })
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { internal, ...res } = result.current
+    const { internal: _, ...res } = result.current
     expect(res).toMatchInlineSnapshot(`
       {
         "data": "https://c8.alamy.com/comp/EWE8F9/rowan-atkinson-mr-bean-EWE8F9.jpg",
@@ -85,8 +84,7 @@ describe('useEnsAvatar', () => {
           timeout,
         })
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { internal, ...res } = result.current
+        const { internal: _, ...res } = result.current
         expect(res).toMatchInlineSnapshot(`
           {
             "data": "https://c8.alamy.com/comp/EWE8F9/rowan-atkinson-mr-bean-EWE8F9.jpg",
@@ -115,8 +113,7 @@ describe('useEnsAvatar', () => {
 
         await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { internal, ...res } = result.current
+        const { internal: _, ...res } = result.current
         expect(res).toMatchInlineSnapshot(`
           {
             "data": null,
@@ -176,8 +173,7 @@ describe('useEnsAvatar', () => {
 
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result.current
+      const { internal: _, ...res } = result.current
       expect(res).toMatchInlineSnapshot(`
         {
           "data": "https://c8.alamy.com/comp/EWE8F9/rowan-atkinson-mr-bean-EWE8F9.jpg",
@@ -207,8 +203,7 @@ describe('useEnsAvatar', () => {
 
       await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result.current
+      const { internal: _, ...res } = result.current
       expect(res).toMatchInlineSnapshot(`
         {
           "data": undefined,
@@ -259,8 +254,7 @@ describe('useEnsAvatar', () => {
 
         await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { internal, ...res } = result.current
+        const { internal: _, ...res } = result.current
         expect(res).toMatchInlineSnapshot(`
         {
           "data": undefined,

@@ -20,8 +20,9 @@ describe.skip('resolveConfig', () => {
     const configPath = await findConfig({
       config: paths['wagmi.config.ts'],
     })
-    await expect(resolveConfig({ configPath: configPath! })).resolves
-      .toMatchInlineSnapshot(`
+    await expect(
+      resolveConfig({ configPath: configPath! }),
+    ).resolves.toMatchInlineSnapshot(`
       {
         "contracts": [],
         "out": "src/generated.ts",
@@ -44,8 +45,9 @@ describe.skip('resolveConfig', () => {
     const configPath = await findConfig({
       config: paths['wagmi.config.ts'],
     })
-    await expect(resolveConfig({ configPath: configPath! })).resolves
-      .toMatchInlineSnapshot(`
+    await expect(
+      resolveConfig({ configPath: configPath! }),
+    ).resolves.toMatchInlineSnapshot(`
       {
         "contracts": [],
         "out": "src/generated.ts",
@@ -68,8 +70,9 @@ describe.skip('resolveConfig', () => {
     const configPath = await findConfig({
       config: paths['wagmi.config.ts'],
     })
-    await expect(resolveConfig({ configPath: configPath! })).resolves
-      .toMatchInlineSnapshot(`
+    await expect(
+      resolveConfig({ configPath: configPath! }),
+    ).resolves.toMatchInlineSnapshot(`
       [
         {
           "contracts": [],

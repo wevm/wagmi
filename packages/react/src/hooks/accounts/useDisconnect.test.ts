@@ -67,7 +67,7 @@ describe('useDisconnect', () => {
       )
 
       expect(result.current.account.connector).toMatchInlineSnapshot(
-        `undefined`,
+        'undefined',
       )
       expect(result.current.disconnect).toMatchInlineSnapshot(`
         {
@@ -99,7 +99,7 @@ describe('useDisconnect', () => {
       )
 
       expect(result.current.account.connector).toMatchInlineSnapshot(
-        `undefined`,
+        'undefined',
       )
       expect(result.current.disconnect).toMatchInlineSnapshot(`
         {
@@ -137,9 +137,9 @@ describe('useDisconnect', () => {
         expect(result.current.disconnect.isSuccess).toBeTruthy(),
       )
       rerender()
-      expect(result.current.account.address).toMatchInlineSnapshot(`undefined`)
+      expect(result.current.account.address).toMatchInlineSnapshot('undefined')
       expect(result.current.account.connector).toMatchInlineSnapshot(
-        `undefined`,
+        'undefined',
       )
     })
   })

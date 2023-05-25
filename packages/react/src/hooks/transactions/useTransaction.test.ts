@@ -13,8 +13,7 @@ describe('useTransaction', () => {
 
     await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { data, internal, ...res } = result.current
+    const { data, internal: _, ...res } = result.current
     expect(data?.hash).toMatchInlineSnapshot(
       '"0x5a44238ce14eced257ca19146505cce273f8bb552d35fd1a68737e2f0f95ab4b"',
     )
@@ -78,8 +77,7 @@ describe('useTransaction', () => {
 
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { data, internal, ...res } = result.current
+      const { data, internal: _, ...res } = result.current
       expect(data?.hash).toMatchInlineSnapshot(
         '"0x5a44238ce14eced257ca19146505cce273f8bb552d35fd1a68737e2f0f95ab4b"',
       )
@@ -111,8 +109,7 @@ describe('useTransaction', () => {
 
       await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result.current
+      const { internal: _, ...res } = result.current
       expect(res).toMatchInlineSnapshot(`
         {
           "data": undefined,

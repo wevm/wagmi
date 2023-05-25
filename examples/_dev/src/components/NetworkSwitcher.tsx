@@ -13,6 +13,7 @@ export const NetworkSwitcher = () => {
         <button
           disabled={!switchNetwork || x.id === chain?.id}
           key={x.id}
+          type='button'
           onClick={() => switchNetwork?.(x.id)}
         >
           Switch to {x.name}

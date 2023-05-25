@@ -32,8 +32,9 @@ describe('init', () => {
       export default { out: 'src/generated.js', contracts: [], plugins: [] }
       "
     `)
-    expect(console.formatted.replaceAll(dir, 'path/to/project'))
-      .toMatchInlineSnapshot(`
+    expect(
+      console.formatted.replaceAll(dir, 'path/to/project'),
+    ).toMatchInlineSnapshot(`
         "- Creating config
         ✔ Creating config
         Config created at wagmi.config.js"
@@ -58,8 +59,9 @@ describe('init', () => {
         export default { out: 'src/generated.js', contracts: [], plugins: [] }
         "
       `)
-      expect(console.formatted.replaceAll(dir, 'path/to/project'))
-        .toMatchInlineSnapshot(`
+      expect(
+        console.formatted.replaceAll(dir, 'path/to/project'),
+      ).toMatchInlineSnapshot(`
           "- Creating config
           ✔ Creating config
           Config created at foo.config.ts"
@@ -93,8 +95,9 @@ describe('init', () => {
       })
       "
     `)
-      expect(console.formatted.replaceAll(dir, 'path/to/project'))
-        .toMatchInlineSnapshot(`
+      expect(
+        console.formatted.replaceAll(dir, 'path/to/project'),
+      ).toMatchInlineSnapshot(`
           "- Creating config
           ✔ Creating config
           Config created at wagmi.config.ts"
@@ -119,8 +122,9 @@ describe('init', () => {
         export default { out: 'src/generated.js', contracts: [], plugins: [] }
         "
       `)
-      expect(console.formatted.replaceAll(dir, 'path/to/project'))
-        .toMatchInlineSnapshot(`
+      expect(
+        console.formatted.replaceAll(dir, 'path/to/project'),
+      ).toMatchInlineSnapshot(`
           "- Creating config
           ✔ Creating config
           Config created at foo/wagmi.config.js"
@@ -151,8 +155,9 @@ describe('init', () => {
       })
       "
     `)
-      expect(console.formatted.replaceAll(dir, 'path/to/project'))
-        .toMatchInlineSnapshot(`
+      expect(
+        console.formatted.replaceAll(dir, 'path/to/project'),
+      ).toMatchInlineSnapshot(`
           "- Creating config
           ✔ Creating config
           Config created at wagmi.config.ts"

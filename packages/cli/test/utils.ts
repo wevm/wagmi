@@ -32,8 +32,9 @@ export async function createFixture<
   const paths: { [_ in keyof TFiles]: string } = {} as any
   await Promise.all(
     (Object.keys(config.files ?? {}) as (keyof TFiles)[]).map(
-      async (filename) => {
+      async (filename_) => {
         let file: Json | true | undefined
+        let filename = filename_
         if (filename === 'tsconfig') {
           filename = 'tsconfig.json'
           file = getTsConfig(dir)

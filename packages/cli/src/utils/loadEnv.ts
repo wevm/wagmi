@@ -14,14 +14,13 @@ export function loadEnv(
   const mode = config.mode
   if (mode === 'local') {
     throw new Error(
-      `"local" cannot be used as a mode name because it conflicts with ` +
-        `the .local postfix for .env files.`,
+      `"local" cannot be used as a mode name because it conflicts with the .local postfix for .env files.`,
     )
   }
 
   const envFiles = [
-    /** default file */ `.env`,
-    /** local file */ `.env.local`,
+    /** default file */ '.env',
+    /** local file */ '.env.local',
     ...(mode
       ? [
           /** mode file */ `.env.${mode}`,

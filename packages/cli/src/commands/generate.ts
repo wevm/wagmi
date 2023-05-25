@@ -1,10 +1,11 @@
+// rome-ignore lint/correctness/noUnusedVariables: <explanation>
 import type { Abi, Address } from 'abitype'
 import { Abi as AbiSchema } from 'abitype/zod'
 import { camelCase } from 'change-case'
 import type { FSWatcher, WatchOptions } from 'chokidar'
 import { watch } from 'chokidar'
 import { default as dedent } from 'dedent'
-import { ensureDir, default as fse } from 'fs-extra'
+import { default as fse, ensureDir } from 'fs-extra'
 import { basename, dirname, resolve } from 'pathe'
 import pc from 'picocolors'
 import { getAddress } from 'viem'
@@ -22,6 +23,7 @@ import {
   resolveConfig,
 } from '../utils'
 
+// rome-ignore lint/correctness/noUnusedVariables: <explanation>
 const Generate = z.object({
   /** Path to config file */
   config: z.string().optional(),

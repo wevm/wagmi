@@ -67,7 +67,7 @@ describe('useSwitchNetwork', () => {
       await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
       const { chains, ...res } = result.current
-      expect(chains.length).toMatchInlineSnapshot(`0`)
+      expect(chains.length).toMatchInlineSnapshot('0')
       expect(res).toMatchInlineSnapshot(`
         {
           "data": undefined,
@@ -96,7 +96,7 @@ describe('useSwitchNetwork', () => {
       await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
       const { chains, ...res } = result.current
-      expect(chains.length).toMatchInlineSnapshot(`0`)
+      expect(chains.length).toMatchInlineSnapshot('0')
       expect(res).toMatchInlineSnapshot(`
         {
           "data": undefined,
@@ -164,7 +164,7 @@ describe('useSwitchNetwork', () => {
         )
 
         const { chains, data, ...res } = result.current.network
-        expect(data?.id).toMatchInlineSnapshot(`4`)
+        expect(data?.id).toMatchInlineSnapshot('4')
         expect(chains.length).toMatchInlineSnapshot('2')
         expect(res).toMatchInlineSnapshot(`
           {
@@ -198,7 +198,7 @@ describe('useSwitchNetwork', () => {
         )
 
         const { chains, data, ...res } = result.current.network
-        expect(data?.id).toMatchInlineSnapshot(`4`)
+        expect(data?.id).toMatchInlineSnapshot('4')
         expect(chains.length).toMatchInlineSnapshot('2')
         expect(res).toMatchInlineSnapshot(`
           {
@@ -279,7 +279,7 @@ describe('useSwitchNetwork', () => {
         )
 
         const { chains, data, ...res } = result.current.network
-        expect(data?.id).toMatchInlineSnapshot(`69`)
+        expect(data?.id).toMatchInlineSnapshot('69')
         expect(chains.length).toMatchInlineSnapshot('2')
         expect(res).toMatchInlineSnapshot(`
           {
@@ -443,7 +443,7 @@ describe('useSwitchNetwork', () => {
           result.current.network.switchNetwork?.(4)
         } catch (error) {
           expect(error).toMatchInlineSnapshot(
-            `[TypeError: result.current.network.switchNetwork is not a function]`,
+            '[TypeError: result.current.network.switchNetwork is not a function]',
           )
         }
       })

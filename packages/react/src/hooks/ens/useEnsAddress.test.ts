@@ -11,8 +11,7 @@ describe('useEnsAddress', () => {
 
     await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { internal, ...res } = result.current
+    const { internal: _, ...res } = result.current
     expect(res).toMatchInlineSnapshot(`
       {
         "data": "0xE5501BC2B0Df6D0D7daAFC18D2ef127D9e612963",
@@ -69,8 +68,7 @@ describe('useEnsAddress', () => {
 
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result.current
+      const { internal: _, ...res } = result.current
       expect(res).toMatchInlineSnapshot(`
         {
           "data": "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e",
@@ -100,8 +98,7 @@ describe('useEnsAddress', () => {
 
       await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result.current
+      const { internal: _, ...res } = result.current
       expect(res).toMatchInlineSnapshot(`
         {
           "data": undefined,
@@ -129,8 +126,7 @@ describe('useEnsAddress', () => {
 
         await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { internal, ...res } = result.current
+        const { internal: _, ...res } = result.current
         expect(res).toMatchInlineSnapshot(`
           {
             "data": "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e",
@@ -157,8 +153,7 @@ describe('useEnsAddress', () => {
 
         await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { internal, ...res } = result.current
+        const { internal: _, ...res } = result.current
         expect(res).toMatchInlineSnapshot(`
           {
             "data": null,
@@ -201,8 +196,7 @@ describe('useEnsAddress', () => {
 
       await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result.current
+      const { internal: _, ...res } = result.current
       expect(res).toMatchInlineSnapshot(`
         {
           "data": undefined,

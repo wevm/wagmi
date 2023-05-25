@@ -24,6 +24,7 @@ describe('getPublicClient', () => {
     it('referentially equal', async () => {
       setupConfig()
       expect(
+        // rome-ignore lint/suspicious/noSelfCompare: <explanation>
         getPublicClient({ chainId: 1 }) === getPublicClient({ chainId: 1 }),
       ).toBeTruthy()
     })

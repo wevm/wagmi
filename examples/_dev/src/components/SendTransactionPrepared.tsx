@@ -15,6 +15,7 @@ export const SendTransactionPrepared = () => {
     return (
       <button
         disabled={isLoading || !sendTransaction}
+        type='button'
         onClick={() => sendTransaction?.()}
       >
         Send Transaction

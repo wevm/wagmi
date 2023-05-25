@@ -9,8 +9,7 @@ describe('useBlockNumber', () => {
 
     await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { data, internal, ...res } = result.current
+    const { data, internal: _, ...res } = result.current
     expect(typeof data === 'bigint').toBeTruthy()
     expect(res).toMatchInlineSnapshot(`
       {
@@ -65,8 +64,7 @@ describe('useBlockNumber', () => {
 
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { data, internal, ...res } = result.current
+      const { data, internal: _, ...res } = result.current
       expect(typeof data === 'bigint').toBeTruthy()
       expect(res).toMatchInlineSnapshot(`
         {
@@ -93,8 +91,7 @@ describe('useBlockNumber', () => {
 
       await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result.current
+      const { internal: _, ...res } = result.current
       expect(res).toMatchInlineSnapshot(`
         {
           "data": undefined,
