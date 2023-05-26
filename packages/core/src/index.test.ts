@@ -26,6 +26,7 @@ test('exports', () => {
       "getBlockNumber": [Function],
       "getBlockNumberQueryOptions": [Function],
       "getChainId": [Function],
+      "getConnections": [Function],
       "noopStorage": {
         "getItem": [Function],
         "removeItem": [Function],
@@ -39,6 +40,7 @@ test('exports', () => {
       "watchBalance": [Function],
       "watchBlockNumber": [Function],
       "watchChainId": [Function],
+      "watchConnections": [Function],
     }
   `)
 })

@@ -16,6 +16,7 @@ import type { Pretty } from '@wagmi/core/internal'
 
 import type { OmittedUseMutationResult } from '../types/query.js'
 import { useConfig } from './useConfig.js'
+import { useConnections } from './useConnections.js'
 
 export type UseDisconnectParameters = Pretty<
   DisconnectMutationParameters & {
@@ -49,12 +50,13 @@ export function useDisconnect({
   const { mutate, mutateAsync, ...mutationOptions } = useMutation(
     disconnectMutationOptions(config, { connector }),
   )
+  const connections = useConnections()
+  const connectors = connections.map((connection) => connection.connector)
+
   return {
     ...mutationOptions,
     ...mutation,
-    connectors: config.connectors.filter((x) =>
-      config.state.connections.has(x.uid),
-    ),
+    connectors,
     disconnect: mutate,
     disconnectAsync: mutateAsync,
   }

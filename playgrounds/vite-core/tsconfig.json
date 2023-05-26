@@ -20,8 +20,8 @@
     "noFallthroughCasesInSwitch": true,
 
     "paths": {
-      "@wagmi/chains": ["../../references/packages/chains/src"],
-      "@wagmi/connectors": ["../../references/packages/connectors/src"],
+      "@wagmi/chains": ["../../packages/chains/src"],
+      "@wagmi/connectors": ["../../packages/connectors/src"],
       "@wagmi/core": ["../../packages/core/src"],
     }
   },

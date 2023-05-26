@@ -369,7 +369,6 @@ export function createConfig<
           : connectors
 
       // Iterate through each connector and try to connect
-      const connections = new Map()
       let connected = false
       for (const connector of sorted) {
         const isAuthorized = await connector.isAuthorized()
@@ -380,19 +379,22 @@ export function createConfig<
         connector.emitter.on('change', change)
         connector.emitter.on('disconnect', disconnect)
 
-        store.setState((x) => ({
-          ...x,
-          current: connected ? x.current : connector.uid,
-          connections: new Map(connected ? x.connections : connections).set(
-            connector.uid,
-            {
-              accounts: data.accounts,
-              chainId: data.chainId,
-              connector,
-            },
-          ),
-          status: 'connected',
-        }))
+        store.setState((x) => {
+          const connections = new Map(
+            connected ? x.connections : new Map(),
+          ).set(connector.uid, {
+            accounts: data.accounts,
+            chainId: data.chainId,
+            connector,
+          })
+          return {
+            ...x,
+            current: connected ? x.current : connector.uid,
+            connections,
+            status: 'connected',
+          }
+        })
+
         connected = true
       }
 

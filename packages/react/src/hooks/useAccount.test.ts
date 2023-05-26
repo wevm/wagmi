@@ -1,9 +1,9 @@
+import { connect } from '@wagmi/core'
 import { config } from '@wagmi/test'
 import { expect, test } from 'vitest'
 
 import { renderHook } from '../../test-utils.js'
 import { useAccount } from './useAccount.js'
-import { connect } from '@wagmi/core'
 
 test('default', async () => {
   const { result, rerender } = renderHook(() => useAccount())

@@ -79,6 +79,16 @@ export {
 } from './actions/getChainId.js'
 
 export {
+  // Getter
+  type GetConnectionsReturnType,
+  getConnections,
+  // Watcher
+  type WatchConnectionsParameters,
+  type WatchConnectionsReturnType,
+  watchConnections,
+} from './actions/getConnections.js'
+
+export {
   type SwitchAccountParameters,
   type SwitchAccountError,
   switchAccount,

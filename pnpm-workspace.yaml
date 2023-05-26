@@ -1,5 +1,4 @@
 packages:
   - 'packages/*'
   - 'playgrounds/*'
-  - 'references/packages/*'
   - 'site'

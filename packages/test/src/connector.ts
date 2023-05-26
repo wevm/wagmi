@@ -81,9 +81,8 @@ export function testConnector(parameters: TestConnectorParameters) {
       })
       const requests: Requests = {
         async request({ method, params }) {
-          if (method === 'wallet_switchEthereumChain') {
-            return
-          }
+          if (method === 'eth_requestAccounts') return parameters.accounts
+          if (method === 'wallet_switchEthereumChain') return
 
           const { result } = await rpc.http(url, { body: { method, params } })
           return result
