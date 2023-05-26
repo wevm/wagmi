@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 1.0.3
+
+### Patch Changes
+
+- [#2441](https://github.com/wagmi-dev/wagmi/pull/2441) [`326edee4`](https://github.com/wagmi-dev/wagmi/commit/326edee4bc85db84a7a4e3768e33785849ab8d8e) Thanks [@tmm](https://github.com/tmm)! - Fixed internal type issue
+
 ## 1.0.2
 
 ### Patch Changes
