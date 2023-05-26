@@ -28,7 +28,7 @@ export type WriteContractUnpreparedArgs<
   TFunctionName extends string,
 > = Omit<
   WriteContractParameters<TAbi, TFunctionName, Chain, Account>,
-  'account' | 'chain'
+  'chain'
 > & {
   mode?: never
   /** Chain id. */

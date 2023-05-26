@@ -5,6 +5,7 @@ import {
   act,
   actConnect,
   getCrowdfundArgs,
+  getPublicClient,
   getRandomTokenId,
   getWalletClients,
   mirrorCrowdfundContractConfig,
@@ -102,6 +103,39 @@ describe('useContractWrite', () => {
   })
 
   describe('configuration', () => {
+    it('account', async () => {
+      const account = '0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc'
+      const tokenId = getRandomTokenId()
+      const utils = renderHook(() =>
+        useContractWriteWithConnect({
+          ...wagmiContractConfig,
+          functionName: 'mint',
+          args: [tokenId],
+          account,
+        }),
+      )
+
+      const { result, waitFor } = utils
+      await actConnect({ utils })
+
+      await waitFor(() =>
+        expect(result.current.contractWrite.write).toBeDefined(),
+      )
+
+      await act(async () => {
+        result.current.contractWrite.write()
+      })
+
+      await waitFor(() =>
+        expect(result.current.contractWrite.isSuccess).toBeTruthy(),
+      )
+
+      const { from } = await getPublicClient().getTransaction({
+        hash: result.current.contractWrite.data!.hash,
+      })
+      expect(from).toEqual(account)
+    })
+
     describe('chainId', () => {
       it('unprepared - unable to switch', async () => {
         const tokenId = getRandomTokenId()

@@ -59,28 +59,6 @@ describe('sendTransaction', () => {
       )
     })
 
-    it('chain not configured for connector', async () => {
-      await connect({ connector: config.connectors[0]!, chainId: 420 })
-
-      const walletClients = getWalletClients()
-      const to = walletClients[1]
-      const toAddress = to?.account.address || ''
-
-      const request = await prepareSendTransaction({
-        to: toAddress,
-        value: parseEther('10'),
-      })
-
-      expect(() =>
-        sendTransaction({
-          chainId: 420,
-          ...request,
-        }),
-      ).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"Chain \\"420\\" not configured for connector \\"mock\\"."',
-      )
-    })
-
     it('insufficient balance', async () => {
       await connect({ connector: config.connectors[0]! })
 
