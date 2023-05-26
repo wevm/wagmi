@@ -37,6 +37,7 @@ type QueryKeyConfig = Pick<UsePrepareContractWriteConfig, 'scopeKey'> & {
 
 function queryKey({
   accessList,
+  account,
   activeChainId,
   args,
   address,
@@ -57,6 +58,7 @@ function queryKey({
     {
       entity: 'prepareContractTransaction',
       accessList,
+      account,
       activeChainId,
       address,
       args,
@@ -87,6 +89,7 @@ function queryFn({
     queryKey: [
       {
         accessList,
+        account,
         args,
         address,
         blockNumber,
@@ -109,6 +112,7 @@ function queryFn({
       // TODO: Remove cast and still support `Narrow<TAbi>`
       abi: abi as Abi,
       accessList,
+      account,
       args,
       address,
       blockNumber,
@@ -169,6 +173,7 @@ export function usePrepareContractWrite<
 
   const {
     accessList,
+    account,
     blockNumber,
     blockTag,
     gas,
@@ -182,6 +187,7 @@ export function usePrepareContractWrite<
   const prepareContractWriteQuery = useQuery(
     queryKey({
       accessList,
+      account,
       activeChainId: activeChain?.id,
       address,
       args: args as readonly unknown[],

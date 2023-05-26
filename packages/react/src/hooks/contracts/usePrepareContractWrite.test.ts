@@ -122,6 +122,31 @@ describe('usePrepareContractWrite', () => {
     `)
   })
 
+  describe('configuration', () => {
+    it('account', async () => {
+      const account = '0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc'
+      const tokenId = getRandomTokenId()
+      const utils = renderHook(() =>
+        usePrepareContractWriteWithConnect({
+          ...wagmiContractConfig,
+          functionName: 'mint',
+          args: [tokenId],
+          account,
+        }),
+      )
+      const { result, waitFor } = utils
+
+      await actConnect({ utils })
+
+      await waitFor(() =>
+        expect(result.current.prepareContractWrite.isSuccess).toBeTruthy(),
+      )
+
+      const { config } = result.current.prepareContractWrite
+      expect(config.request.account).toEqual(account)
+    })
+  })
+
   describe('errors', () => {
     it('should throw an error on the wrong chain', async () => {
       const tokenId = getRandomTokenId()

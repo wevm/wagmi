@@ -21,6 +21,7 @@ type UseContractWritePreparedArgs<
 > & {
   abi?: never
   accessList?: never
+  account?: never
   address?: never
   args?: never
   chainId?: never
@@ -72,6 +73,7 @@ function mutationKey({
   const {
     args,
     accessList,
+    account,
     gas,
     gasPrice,
     maxFeePerGas,
@@ -87,6 +89,7 @@ function mutationKey({
       args,
       abi,
       accessList,
+      account,
       functionName,
       gas,
       gasPrice,
@@ -121,6 +124,7 @@ function mutationFn(
     abi: config.abi as Abi, // TODO: Remove cast and still support `Narrow<TAbi>`
     functionName: config.functionName,
     accessList: config.accessList,
+    account: config.account,
     gas: config.gas,
     gasPrice: config.gasPrice,
     maxFeePerGas: config.maxFeePerGas,
@@ -155,6 +159,7 @@ export function useContractWrite<
   const { address, abi, args, chainId, functionName, mode, request } = config
   const {
     accessList,
+    account,
     gas,
     gasPrice,
     maxFeePerGas,
@@ -184,6 +189,7 @@ export function useContractWrite<
       mode,
       args,
       accessList,
+      account,
       gas,
       gasPrice,
       maxFeePerGas,
@@ -220,6 +226,7 @@ export function useContractWrite<
         functionName,
         chainId,
         accessList,
+        account,
         gas,
         gasPrice,
         maxFeePerGas,
@@ -230,6 +237,7 @@ export function useContractWrite<
       } as UseContractWriteArgs)
   }, [
     accessList,
+    account,
     abi,
     address,
     args,
@@ -266,6 +274,7 @@ export function useContractWrite<
         chainId,
         functionName,
         accessList,
+        account,
         gas,
         gasPrice,
         maxFeePerGas,
@@ -276,6 +285,7 @@ export function useContractWrite<
       } as UseContractWriteArgs)
   }, [
     accessList,
+    account,
     abi,
     address,
     args,

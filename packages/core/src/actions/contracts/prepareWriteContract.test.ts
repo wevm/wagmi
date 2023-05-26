@@ -60,6 +60,42 @@ describe('prepareWriteContract', () => {
   })
 
   describe('args', () => {
+    it('account', async () => {
+      await connect({ connector })
+      const { request, ...rest } = await prepareWriteContract({
+        ...wagmiContractConfig,
+        functionName: 'mint',
+        args: [getRandomTokenId()],
+        account: '0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc',
+      })
+      const { abi, args, ...request_ } = request || {}
+      expect(abi).toBeDefined()
+      expect(args.length).toBe(1)
+      expect(request_).toMatchInlineSnapshot(`
+        {
+          "accessList": undefined,
+          "account": "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc",
+          "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
+          "blockNumber": undefined,
+          "blockTag": undefined,
+          "chainId": undefined,
+          "functionName": "mint",
+          "gas": undefined,
+          "gasPrice": undefined,
+          "maxFeePerGas": undefined,
+          "maxPriorityFeePerGas": undefined,
+          "nonce": undefined,
+          "value": undefined,
+        }
+      `)
+      expect(rest).toMatchInlineSnapshot(`
+        {
+          "mode": "prepared",
+          "result": undefined,
+        }
+      `)
+    })
+
     it('chainId', async () => {
       await connect({ connector })
       const { request, ...rest } = await prepareWriteContract({
