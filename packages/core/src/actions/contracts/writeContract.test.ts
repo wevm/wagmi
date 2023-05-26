@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import {
+  getPublicClient,
   getRandomTokenId,
   getWalletClients,
   setupConfig,
@@ -45,6 +46,36 @@ describe('writeContract', () => {
   })
 
   describe('args', () => {
+    describe('account', async () => {
+      const account = '0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc'
+
+      it('prepared', async () => {
+        await connect({ connector })
+        const { request } = await prepareWriteContract({
+          ...wagmiContractConfig,
+          functionName: 'mint',
+          args: [getRandomTokenId()],
+          account,
+        })
+        const { hash } = await writeContract(request)
+        const { from } = await getPublicClient().getTransaction({ hash })
+        expect(from).toEqual(account)
+      })
+
+      it('unprepared', async () => {
+        await connect({ connector })
+        const { hash } = await writeContract({
+          ...wagmiContractConfig,
+          functionName: 'mint',
+          args: [getRandomTokenId()],
+          account,
+        })
+
+        const { from } = await getPublicClient().getTransaction({ hash })
+        expect(from).toEqual(account)
+      })
+    })
+
     describe('chainId', async () => {
       it('prepared', async () => {
         await connect({ connector })

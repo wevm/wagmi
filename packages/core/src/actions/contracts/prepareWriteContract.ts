@@ -14,10 +14,7 @@ export type PrepareWriteContractConfig<
   TFunctionName extends string = string,
   TChainId extends number = number,
   TWalletClient extends WalletClient = WalletClient,
-> = Omit<
-  SimulateContractParameters<TAbi, TFunctionName>,
-  'account' | 'chain'
-> & {
+> = Omit<SimulateContractParameters<TAbi, TFunctionName>, 'chain'> & {
   /** Chain id to use for Public Client. */
   chainId?: TChainId | number
   /** Custom Wallet Client. */
@@ -75,6 +72,7 @@ export async function prepareWriteContract<
   if (chainId) assertActiveChain({ chainId })
 
   const {
+    account,
     accessList,
     blockNumber,
     blockTag,
@@ -91,7 +89,7 @@ export async function prepareWriteContract<
     address,
     functionName,
     args,
-    account: walletClient.account,
+    account: account || walletClient.account,
     accessList,
     blockNumber,
     blockTag,
