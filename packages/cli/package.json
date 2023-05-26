@@ -52,7 +52,7 @@
   ],
   "peerDependencies": {
     "@wagmi/core": ">=1.0.0",
-    "typescript": ">=4.9.4",
+    "typescript": "^5.0.4",
     "wagmi": ">=1.0.0"
   },
   "peerDependenciesMeta": {
@@ -68,7 +68,7 @@
   },
   "dependencies": {
     "@wagmi/chains": "workspace:*",
-    "abitype": "0.8.1",
+    "abitype": "0.8.2",
     "abort-controller": "^3.0.0",
     "bundle-require": "^3.1.2",
     "cac": "^6.7.12",
