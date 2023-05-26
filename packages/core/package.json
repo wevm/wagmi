@@ -112,7 +112,7 @@
   ],
   "peerDependencies": {
     "viem": "~0.3.35",
-    "typescript": ">=4.9.4"
+    "typescript": "^5.0.4"
   },
   "peerDependenciesMeta": {
     "typescript": {
@@ -122,7 +122,7 @@
   "dependencies": {
     "@wagmi/chains": "workspace:*",
     "@wagmi/connectors": "workspace:*",
-    "abitype": "0.8.1",
+    "abitype": "0.8.2",
     "eventemitter3": "^4.0.7",
     "zustand": "^4.3.1"
   },
