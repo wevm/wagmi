@@ -50,7 +50,7 @@
     "typescript": "^4.9.4",
     "viem": "~0.3.35",
     "vite": "^4.0.4",
-    "vitest": "^0.25.8"
+    "vitest": "^0.31.1"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm format && pnpm lint:fix"
