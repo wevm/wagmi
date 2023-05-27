@@ -1,6 +1,6 @@
+import { config } from '@wagmi/test'
 import { expect, test } from 'vitest'
 
-import { config } from '../test/index.js'
 import { type WalletId, injected } from './injected.js'
 
 test('setup', () => {

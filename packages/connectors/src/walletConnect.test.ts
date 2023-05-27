@@ -1,8 +1,8 @@
+import { config, walletConnectProjectId } from '@wagmi/test'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import { afterAll, afterEach, beforeAll, expect, test, vi } from 'vitest'
 
-import { config, projectId } from '../test/index.js'
 import { walletConnect } from './walletConnect.js'
 
 const handlers = [
@@ -46,7 +46,7 @@ afterEach(() => server.resetHandlers())
 afterAll(() => server.close())
 
 test('setup', () => {
-  const connectorFn = walletConnect({ projectId })
+  const connectorFn = walletConnect({ projectId: walletConnectProjectId })
   const connector = config._internal.setup(connectorFn)
   expect(connector.name).toEqual('WalletConnect')
 })

@@ -32,6 +32,7 @@
     "@vitest/ui": "^0.31.0",
     "@wagmi/chains": "workspace:*",
     "@wagmi/connectors": "workspace:*",
+    "@wagmi/core": "workspace:*",
     "@wagmi/test": "workspace:*",
     "bun": "^0.5.9",
     "execa": "^7.1.1",
@@ -53,6 +54,9 @@
   "packageManager": "pnpm@8.3.1",
   "pnpm": {
     "overrides": {
+      "@wagmi/chains": "workspace:*",
+      "@wagmi/connectors": "workspace:*",
+      "@wagmi/core": "workspace:*",
       "viem": "0.3.37"
     },
     "patchedDependencies": {
@@ -63,7 +67,12 @@
       "vitepress@1.0.0-alpha.75": "patches/vitepress@1.0.0-alpha.75.patch"
     },
     "peerDependencyRules": {
-      "ignoreMissing": ["@algolia/client-search"]
+      "ignoreMissing": [
+        "@algolia/client-search",
+        "@tanstack/react-query",
+        "esbuild",
+        "react"
+      ]
     }
   }
 }

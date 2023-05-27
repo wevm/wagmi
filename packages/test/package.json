@@ -46,9 +46,6 @@
       "optional": true
     }
   },
-  "devDependencies": {
-    "@wagmi/core": "workspace:*"
-  },
   "contributors": ["jxom.eth <j@wagmi.sh>", "awkweb.eth <t@wagmi.sh>"],
   "funding": [
     {
