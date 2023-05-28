@@ -17,7 +17,8 @@ export function useInvalidateOnBlock({
     chainId,
     enabled,
     onBlock: enabled
-      ? () => queryClient.invalidateQueries(queryKey)
+      ? () =>
+          queryClient.invalidateQueries({ queryKey }, { cancelRefetch: false })
       : undefined,
     scopeKey: enabled ? undefined : 'idle',
   })
