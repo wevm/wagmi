@@ -5,10 +5,10 @@ import {
   waitFor as waitFor_,
   type waitForOptions,
 } from '@testing-library/react'
-import { config } from '@wagmi/test'
 import * as React from 'react'
+import { WagmiConfig } from 'wagmi'
 
-import { WagmiConfig } from '../src/index.js'
+import { config } from './config.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // react

@@ -1,8 +1,8 @@
 import { accounts, testChains, testClient, wait } from '@wagmi/test'
+import { renderHook, waitFor } from '@wagmi/test/react'
 import { type Address, parseEther } from 'viem'
 import { beforeEach, expect, test } from 'vitest'
 
-import { renderHook, waitFor } from '../../test/utils.js'
 import { useBalance } from './useBalance.js'
 
 const address = accounts[0]
@@ -160,9 +160,9 @@ test('parameters: watch', async () => {
   expect(result.current.data).toMatchInlineSnapshot(`
     {
       "decimals": 18,
-      "formatted": "10000",
+      "formatted": "69",
       "symbol": "ETH",
-      "value": 10000000000000000000000n,
+      "value": 69000000000000000000n,
     }
   `)
 
@@ -173,9 +173,9 @@ test('parameters: watch', async () => {
   expect(result.current.data).toMatchInlineSnapshot(`
     {
       "decimals": 18,
-      "formatted": "69",
+      "formatted": "420",
       "symbol": "ETH",
-      "value": 69000000000000000000n,
+      "value": 420000000000000000000n,
     }
   `)
 })
@@ -233,11 +233,11 @@ test('behavior: address: undefined -> defined', async () => {
       "errorUpdatedAt": 0,
       "failureCount": 0,
       "failureReason": null,
-      "fetchStatus": "fetching",
+      "fetchStatus": "idle",
       "isError": false,
       "isFetched": true,
-      "isFetchedAfterMount": false,
-      "isFetching": true,
+      "isFetchedAfterMount": true,
+      "isFetching": false,
       "isInitialLoading": false,
       "isLoading": false,
       "isLoadingError": false,
@@ -245,7 +245,7 @@ test('behavior: address: undefined -> defined', async () => {
       "isPending": false,
       "isPlaceholderData": false,
       "isRefetchError": false,
-      "isRefetching": true,
+      "isRefetching": false,
       "isStale": true,
       "isSuccess": true,
       "refetch": [Function],

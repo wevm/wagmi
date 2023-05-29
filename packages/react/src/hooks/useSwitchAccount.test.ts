@@ -1,8 +1,8 @@
 import { connect, disconnect } from '@wagmi/core'
 import { config } from '@wagmi/test'
+import { renderHook, waitFor } from '@wagmi/test/react'
 import { expect, test } from 'vitest'
 
-import { renderHook, waitFor } from '../../test/utils.js'
 import { useAccount } from './useAccount.js'
 import { useSwitchAccount } from './useSwitchAccount.js'
 

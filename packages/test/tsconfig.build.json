@@ -3,6 +3,11 @@
   "include": ["src/**/*.ts"],
   "exclude": ["src/**/*.test.ts", "src/**/*.test-d.ts"],
   "compilerOptions": {
-    "sourceMap": true
+    "baseUrl": ".",
+    "sourceMap": true,
+    "paths": {
+      // TODO: Needed for `src/connector.ts` to build
+      "abitype": ["node_modules/abitype/dist/types"]
+    }
   }
 }

@@ -34,26 +34,53 @@
       "import": "./dist/esm/index.js",
       "default": "./dist/cjs/index.js"
     },
+    "./react": {
+      "types": "./dist/types/react.d.ts",
+      "import": "./dist/esm/react.js",
+      "default": "./dist/cjs/react.js"
+    },
     "./package.json": "./package.json"
   },
+  "typesVersions": {
+    "*": {
+      "react": ["./dist/types/react.d.ts"]
+    }
+  },
   "peerDependencies": {
-    "@wagmi/core": "workspace:*",
-    "@wagmi/chains": "workspace:*",
+    "react": ">=18",
+    "react-dom": ">=18",
     "typescript": ">=5",
-    "viem": "~0.3"
+    "viem": "~0.3",
+    "wagmi": "workspace:*"
   },
   "dependencies": {
-    "@viem/anvil": "0.0.5"
+    "@testing-library/react": "^14.0.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.0.11",
+    "@viem/anvil": "0.0.5",
+    "@wagmi/core": "workspace:*",
+    "@wagmi/chains": "workspace:*",
+    "abitype": "*"
   },
   "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    },
     "typescript": {
+      "optional": true
+    },
+    "wagmi": {
       "optional": true
     }
   },
   "devDependencies": {
-    "@wagmi/core": "workspace:*",
-    "@wagmi/chains": "workspace:*",
-    "viem": "~0.3"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "viem": "~0.3",
+    "wagmi": "workspace:*"
   },
   "contributors": ["jxom.eth <j@wagmi.sh>", "awkweb.eth <t@wagmi.sh>"],
   "funding": [

@@ -8,7 +8,6 @@ import {
   type Requests,
   SwitchChainError,
   UserRejectedRequestError,
-  type WalletClient,
   createWalletClient,
   custom,
   fromHex,
@@ -30,7 +29,8 @@ export type TestConnectorParameters = {
 export function testConnector(parameters: TestConnectorParameters) {
   const features = parameters.features ?? {}
 
-  type Provider = WalletClient
+  // TODO: Only builds with `"abitype"` set in `tsconfig.json#compilerOptions#paths`
+  type Provider = ReturnType<typeof createWalletClient>
 
   let connected = false
 

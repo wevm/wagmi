@@ -1,8 +1,7 @@
-import { act, cleanup } from '@testing-library/react'
+import { act, cleanup, renderHook } from '@wagmi/test/react'
 import * as ReactDOM from 'react-dom'
 import { afterEach, describe, expect, it } from 'vitest'
 
-import { renderHook } from '../../test/utils.js'
 import { useSyncExternalStoreWithTracked } from './useSyncExternalStoreWithTracked.js'
 
 function createExternalStore<State>(initialState: State) {

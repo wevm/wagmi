@@ -1,8 +1,8 @@
 import { connect } from '@wagmi/core'
 import { config } from '@wagmi/test'
+import { renderHook } from '@wagmi/test/react'
 import { expect, test } from 'vitest'
 
-import { renderHook } from '../../test/utils.js'
 import { useConnections } from './useConnections.js'
 
 test('default', async () => {
