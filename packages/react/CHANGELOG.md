@@ -1,5 +1,11 @@
 # wagmi
 
+## 1.0.9
+
+### Patch Changes
+
+- [#2446](https://github.com/wagmi-dev/wagmi/pull/2446) [`899d8c06`](https://github.com/wagmi-dev/wagmi/commit/899d8c0698e6cc958ca8ad9ec586883edf20516e) Thanks [@iuriiiurevich](https://github.com/iuriiiurevich)! - Added `cancelRefetch: false` to `useInvalidateOnBlock`.
+
 ## 1.0.8
 
 ### Patch Changes
