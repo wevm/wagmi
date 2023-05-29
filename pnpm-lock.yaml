@@ -92,6 +92,9 @@ importers:
       '@wagmi/core':
         specifier: workspace:*
         version: link:../packages/core
+      '@wagmi/test':
+        specifier: workspace:*
+        version: link:../packages/test
       viem:
         specifier: 0.3.37
         version: 0.3.37(typescript@5.0.4)

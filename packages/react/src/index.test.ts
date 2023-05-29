@@ -46,8 +46,10 @@ test('exports', () => {
       "useAccount": [Function],
       "useBalance": [Function],
       "useBlockNumber": [Function],
+      "useChainId": [Function],
       "useConfig": [Function],
       "useConnect": [Function],
+      "useConnections": [Function],
       "useDisconnect": [Function],
       "useSwitchAccount": [Function],
     }

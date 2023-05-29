@@ -3,6 +3,7 @@ import {
   useBalance,
   useBlockNumber,
   useConnect,
+  useConnections,
   useDisconnect,
   useSwitchAccount,
 } from 'wagmi'
@@ -14,6 +15,7 @@ function App() {
       <Account />
       <Connect />
       <SwitchAccount />
+      <Connections />
       <Balance />
       <BlockNumber />
     </>
@@ -73,7 +75,7 @@ function SwitchAccount() {
 
   return (
     <div>
-      <h2>SwitchAccount</h2>
+      <h2>Switch Account</h2>
 
       {connectors.map((connector) => (
         <button
@@ -85,6 +87,24 @@ function SwitchAccount() {
         >
           {connector.name}
         </button>
+      ))}
+    </div>
+  )
+}
+
+function Connections() {
+  const connections = useConnections()
+
+  return (
+    <div>
+      <h2>Connections</h2>
+
+      {connections.map((connection) => (
+        <div id={connection.connector.uid} key={connection.connector.uid}>
+          <div>connector {connection.connector.name}</div>
+          <div>accounts: {JSON.stringify(connection.accounts)}</div>
+          <div>chainId: {connection.chainId}</div>
+        </div>
       ))}
     </div>
   )

@@ -12,6 +12,7 @@ export default defineProject({
   },
   test: {
     name: '@wagmi/core',
+    environment: 'jsdom',
     testTimeout: 10_000,
   },
 })

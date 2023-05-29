@@ -31,13 +31,20 @@ export {
   useBlockNumber,
 } from './hooks/useBlockNumber.js'
 
-export { useConfig } from './hooks/useConfig.js'
+export { type UseChainIdReturnType, useChainId } from './hooks/useChainId.js'
+
+export { type UseConfigReturnType, useConfig } from './hooks/useConfig.js'
 
 export {
   type UseConnectParameters,
   type UseConnectReturnType,
   useConnect,
 } from './hooks/useConnect.js'
+
+export {
+  type UseConnectionsReturnType,
+  useConnections,
+} from './hooks/useConnections.js'
 
 export {
   type UseDisconnectParameters,
