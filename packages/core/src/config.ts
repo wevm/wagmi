@@ -17,6 +17,7 @@ import type { Chain } from './chain.js'
 import { type ConnectorEventMap, type CreateConnectorFn } from './connector.js'
 import { Emitter, type EventData, createEmitter } from './emitter.js'
 import { ChainNotConfiguredError } from './errors/config.js'
+import { createQueryClient } from './query.js'
 import { type Storage, createStorage, noopStorage } from './storage.js'
 import type { OneOf, Pretty } from './types/utils.js'
 import { uid } from './utils/uid.js'
@@ -109,17 +110,7 @@ export type Connector = ReturnType<CreateConnectorFn> & {
 export function createConfig<
   const TChain extends readonly [Chain, ...Chain[]],
 >({
-  queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        gcTime: 1_000 * 60 * 60 * 24, // 24 hours
-        networkMode: 'offlineFirst',
-        refetchOnWindowFocus: false,
-        retry: 0,
-      },
-      mutations: { networkMode: 'offlineFirst' },
-    },
-  }),
+  queryClient = createQueryClient(),
   reconnectOnMount = true,
   storage = createStorage({
     storage:

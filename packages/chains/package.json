@@ -13,7 +13,6 @@
     "build": "pnpm run clean && pnpm run build:cjs && pnpm run build:esm+types",
     "build:cjs": "tsc --project tsconfig.build.json --module commonjs --verbatimModuleSyntax false --outDir ./dist/cjs && echo > ./dist/cjs/package.json '{\"type\":\"commonjs\"}'",
     "build:esm+types": "tsc --project tsconfig.build.json --module es2020 --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types && echo > ./dist/esm/package.json '{\"type\":\"module\"}'",
-    "link": "pnpm link ../../../packages/core",
     "typecheck": "tsc --noEmit"
   },
   "files": [
@@ -44,6 +43,10 @@
     "typescript": {
       "optional": true
     }
+  },
+  "devDependencies": {
+    "@wagmi/core": "workspace:*",
+    "viem": "~0.3"
   },
   "contributors": ["jxom.eth <j@wagmi.sh>", "awkweb.eth <t@wagmi.sh>"],
   "funding": [

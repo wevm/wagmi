@@ -1,5 +1,6 @@
 {
   "name": "@wagmi/test",
+  "description": "Test utils for wagmi",
   "version": "2.0.0",
   "license": "MIT",
   "repository": {
@@ -41,10 +42,18 @@
     "typescript": ">=5",
     "viem": "~0.3"
   },
+  "dependencies": {
+    "@viem/anvil": "0.0.5"
+  },
   "peerDependenciesMeta": {
     "typescript": {
       "optional": true
     }
+  },
+  "devDependencies": {
+    "@wagmi/core": "workspace:*",
+    "@wagmi/chains": "workspace:*",
+    "viem": "~0.3"
   },
   "contributors": ["jxom.eth <j@wagmi.sh>", "awkweb.eth <t@wagmi.sh>"],
   "funding": [

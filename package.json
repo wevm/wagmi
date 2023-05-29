@@ -1,10 +1,11 @@
 {
   "private": true,
   "scripts": {
-    "build": "pnpm run --r --filter wagmi... build",
+    "build": "pnpm run --r --filter \"./packages/**\" build",
     "clean": "pnpm run --r --parallel clean",
     "dev": "pnpm --filter vite-react dev",
     "dev:core": "pnpm --filter vite-core dev",
+    "docs:dev": "pnpm --filter docs dev",
     "format": "rome format . --write",
     "lint": "rome check .",
     "lint:fix": "pnpm lint --apply",
@@ -12,7 +13,6 @@
     "preconstruct": "bun scripts/preconstruct.ts",
     "preinstall": "npx only-allow pnpm",
     "prepare": "npx simple-git-hooks",
-    "site": "pnpm --filter site dev",
     "test": "vitest",
     "test:cov": "vitest --coverage",
     "test:typecheck": "vitest typecheck",
@@ -27,12 +27,8 @@
     "@changesets/cli": "^2.26.0",
     "@types/fs-extra": "^11.0.1",
     "@types/node": "^18.16.9",
-    "@viem/anvil": "0.0.5",
     "@vitest/coverage-c8": "^0.31.0",
     "@vitest/ui": "^0.31.0",
-    "@wagmi/chains": "workspace:*",
-    "@wagmi/connectors": "workspace:*",
-    "@wagmi/core": "workspace:*",
     "@wagmi/test": "workspace:*",
     "bun": "^0.5.9",
     "execa": "^7.1.1",
@@ -44,8 +40,6 @@
     "rome": "^12.1.0",
     "simple-git-hooks": "^2.8.1",
     "typescript": "^5.0.4",
-    "viem": "0.3.37",
-    "vite": "^4.3.2",
     "vitest": "^0.31.0"
   },
   "simple-git-hooks": {
@@ -57,14 +51,15 @@
       "@wagmi/chains": "workspace:*",
       "@wagmi/connectors": "workspace:*",
       "@wagmi/core": "workspace:*",
+      "remark-shiki-twoslash>shiki": "^0.14.1",
+      "shiki-twoslash>shiki": "^0.14.1",
       "viem": "0.3.37"
     },
     "patchedDependencies": {
       "@coinbase/wallet-sdk@3.6.6": "patches/@coinbase__wallet-sdk@3.6.6.patch",
       "@tanstack/query-core@5.0.0-alpha.26": "patches/@tanstack__query-core@5.0.0-alpha.26.patch",
       "@walletconnect/ethereum-provider@2.7.2": "patches/@walletconnect__ethereum-provider@2.7.2.patch",
-      "@web3modal/standalone@2.4.1": "patches/@web3modal__standalone@2.4.1.patch",
-      "vitepress@1.0.0-alpha.75": "patches/vitepress@1.0.0-alpha.75.patch"
+      "@web3modal/standalone@2.4.1": "patches/@web3modal__standalone@2.4.1.patch"
     },
     "peerDependencyRules": {
       "ignoreMissing": [

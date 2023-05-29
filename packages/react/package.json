@@ -82,7 +82,8 @@
     "@types/react-dom": "^18.0.11",
     "@types/use-sync-external-store": "^0.0.3",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "viem": "~0.3"
   },
   "contributors": ["jxom.eth <j@wagmi.sh>", "awkweb.eth <t@wagmi.sh>"],
   "funding": [

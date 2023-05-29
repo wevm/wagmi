@@ -2,7 +2,7 @@ import { accounts, testChains, testClient, wait } from '@wagmi/test'
 import { type Address, parseEther } from 'viem'
 import { beforeEach, expect, test } from 'vitest'
 
-import { renderHook, waitFor } from '../../test-utils.js'
+import { renderHook, waitFor } from '../../test/utils.js'
 import { useBalance } from './useBalance.js'
 
 const address = accounts[0]

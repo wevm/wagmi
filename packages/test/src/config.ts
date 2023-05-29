@@ -1,4 +1,4 @@
-import { createConfig } from '@wagmi/core'
+import { createConfig, createQueryClient } from '@wagmi/core'
 import { createTestClient, http } from 'viem'
 
 import { testChains } from './chains.js'
@@ -29,6 +29,7 @@ export const config = createConfig({
     }),
   ],
   pollingInterval: 100,
+  queryClient: createQueryClient(),
   reconnectOnMount: false,
   storage: null,
   transports: {

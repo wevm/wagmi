@@ -1,0 +1,19 @@
+{
+  "name": "docs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
+  },
+  "devDependencies": {
+    "@wagmi/chains": "workspace:*",
+    "@wagmi/connectors": "workspace:*",
+    "@wagmi/core": "workspace:*",
+    "viem": "~0.3",
+    "vitepress": "1.0.0-beta.1",
+    "vitepress-plugin-shiki-twoslash": "^0.0.6",
+    "wagmi": "workspace:*"
+  }
+}

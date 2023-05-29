@@ -1,7 +1,7 @@
 import { config } from '@wagmi/test'
 import { expect, test } from 'vitest'
 
-import { renderHook } from '../../test-utils.js'
+import { renderHook } from '../../test/utils.js'
 import { useChainId } from './useChainId.js'
 
 test('default', async () => {

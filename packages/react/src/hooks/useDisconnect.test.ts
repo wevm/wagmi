@@ -2,7 +2,7 @@ import { connect } from '@wagmi/core'
 import { config } from '@wagmi/test'
 import { beforeEach, expect, test } from 'vitest'
 
-import { renderHook, waitFor } from '../../test-utils.js'
+import { renderHook, waitFor } from '../../test/utils.js'
 import { useAccount } from './useAccount.js'
 import { useDisconnect } from './useDisconnect.js'
 

@@ -150,6 +150,15 @@ export {
 // Storage
 
 export {
+  type QueryClientParameters,
+  type QueryClient,
+  createQueryClient,
+} from './query.js'
+
+////////////////////////////////////////////////////////////////////////////////
+// Storage
+
+export {
   type Storage,
   createStorage,
   noopStorage,

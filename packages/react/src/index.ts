@@ -75,6 +75,10 @@ export {
   ChainNotConfiguredError,
   ProviderNotFoundError,
   ConnectorAlreadyConnectedError,
+  // Query
+  type QueryClientParameters,
+  type QueryClient,
+  createQueryClient,
   // Storage
   type Storage,
   createStorage,

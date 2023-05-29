@@ -1,3 +1,0 @@
-# Why wagmi
-
-why not?

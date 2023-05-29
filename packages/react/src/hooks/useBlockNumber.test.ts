@@ -1,7 +1,7 @@
 import { testClient } from '@wagmi/test'
 import { expect, test } from 'vitest'
 
-import { renderHook, waitFor } from '../../test-utils.js'
+import { renderHook, waitFor } from '../../test/utils.js'
 import { useBlockNumber } from './useBlockNumber.js'
 
 test('mounts', async () => {

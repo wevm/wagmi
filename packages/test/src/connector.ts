@@ -1,23 +1,18 @@
 import {
-  type Chain,
   ChainNotConfiguredError,
   createConnector,
   normalizeChainId,
 } from '@wagmi/core'
 import {
-  type Account,
   type Address,
-  type CustomTransport,
   type Requests,
   SwitchChainError,
   UserRejectedRequestError,
   type WalletClient,
-  createPublicClient,
   createWalletClient,
   custom,
   fromHex,
   getAddress,
-  http,
   numberToHex,
 } from 'viem'
 import { rpc } from 'viem/utils'
@@ -35,7 +30,7 @@ export type TestConnectorParameters = {
 export function testConnector(parameters: TestConnectorParameters) {
   const features = parameters.features ?? {}
 
-  type Provider = WalletClient<CustomTransport, Chain, Account<Address>>
+  type Provider = WalletClient
 
   let connected = false
 
@@ -74,11 +69,6 @@ export function testConnector(parameters: TestConnectorParameters) {
       const chain =
         config.chains.find((x) => x.id === chainId) ?? config.chains[0]
       const url = chain.rpcUrls.default.http[0]!
-      const publicClient = createPublicClient({
-        chain,
-        transport: http(url),
-        pollingInterval: 1_000,
-      })
       const requests: Requests = {
         async request({ method, params }) {
           if (method === 'eth_requestAccounts') return parameters.accounts
@@ -90,11 +80,8 @@ export function testConnector(parameters: TestConnectorParameters) {
       }
       const walletClient = createWalletClient({
         account: parameters.accounts[0]!,
-        chain: publicClient.chain,
-        transport: custom({
-          ...publicClient,
-          ...requests,
-        }),
+        chain,
+        transport: custom({ ...requests }),
       })
       return walletClient
     },

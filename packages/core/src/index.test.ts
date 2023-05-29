@@ -16,6 +16,7 @@ test('exports', () => {
       "createConfig": [Function],
       "createConnector": [Function],
       "createEmitter": [Function],
+      "createQueryClient": [Function],
       "createStorage": [Function],
       "deserialize": [Function],
       "disconnect": [Function],
