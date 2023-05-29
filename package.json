@@ -58,7 +58,6 @@
     },
     "patchedDependencies": {
       "@coinbase/wallet-sdk@3.6.6": "patches/@coinbase__wallet-sdk@3.6.6.patch",
-      "@tanstack/query-core@5.0.0-alpha.26": "patches/@tanstack__query-core@5.0.0-alpha.26.patch",
       "@walletconnect/ethereum-provider@2.7.2": "patches/@walletconnect__ethereum-provider@2.7.2.patch",
       "@web3modal/standalone@2.4.1": "patches/@web3modal__standalone@2.4.1.patch"
     },

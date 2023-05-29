@@ -12,9 +12,6 @@ patchedDependencies:
   '@coinbase/wallet-sdk@3.6.6':
     hash: vdyr3fuw3nqhkn7fysjwpibeh4
     path: patches/@coinbase__wallet-sdk@3.6.6.patch
-  '@tanstack/query-core@5.0.0-alpha.26':
-    hash: eeh6ipltmljhxdmr2zvloj7oli
-    path: patches/@tanstack__query-core@5.0.0-alpha.26.patch
   '@walletconnect/ethereum-provider@2.7.2':
     hash: d2e6fs45gcpivejxywrl54asvy
     path: patches/@walletconnect__ethereum-provider@2.7.2.patch
@@ -143,7 +140,7 @@ importers:
     dependencies:
       '@tanstack/query-core':
         specifier: 5.0.0-alpha.26
-        version: 5.0.0-alpha.26(patch_hash=eeh6ipltmljhxdmr2zvloj7oli)
+        version: 5.0.0-alpha.26
       '@tanstack/query-persist-client-core':
         specifier: 5.0.0-alpha.26
         version: 5.0.0-alpha.26
@@ -1661,15 +1658,14 @@ packages:
       remove-accents: 0.4.2
     dev: true
 
-  /@tanstack/query-core@5.0.0-alpha.26(patch_hash=eeh6ipltmljhxdmr2zvloj7oli):
+  /@tanstack/query-core@5.0.0-alpha.26:
     resolution: {integrity: sha512-vppYnb31rY8e6fBUuZ/VjuIpiaS3mkjFoD1u8gvdynmG0eHZOysJ1IbcKNEAT5QC9eJRsTHVqfitO9pKkZch4w==}
     dev: false
-    patched: true
 
   /@tanstack/query-persist-client-core@5.0.0-alpha.26:
     resolution: {integrity: sha512-gYXdphx/9Y10szA52cihv6rDyedFGddp93FaAOPVvQf8sZ6euTSRMOTlPSvZFrTtA2r8Bj+64o6Vn+Y3qzaVhw==}
     dependencies:
-      '@tanstack/query-core': 5.0.0-alpha.26(patch_hash=eeh6ipltmljhxdmr2zvloj7oli)
+      '@tanstack/query-core': 5.0.0-alpha.26
     dev: false
 
   /@tanstack/query-sync-storage-persister@5.0.0-alpha.26:
@@ -1722,7 +1718,7 @@ packages:
       react-native:
         optional: true
     dependencies:
-      '@tanstack/query-core': 5.0.0-alpha.26(patch_hash=eeh6ipltmljhxdmr2zvloj7oli)
+      '@tanstack/query-core': 5.0.0-alpha.26
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
