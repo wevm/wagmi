@@ -252,6 +252,12 @@ export function createConfig<
     )
 
   /////////////////////////////////////////////////////////////////////////////////////////////////
+  // Global values
+  /////////////////////////////////////////////////////////////////////////////////////////////////
+
+  let reconnecting = false
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////
   // Emitter listeners
   /////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -269,6 +275,9 @@ export function createConfig<
     })
   }
   function connect(data: EventData<ConnectorEventMap, 'connect'>) {
+    // Disable handling if reconnecting
+    if (reconnecting) return
+
     store.setState((x) => {
       const connector = connectors.find((x) => x.uid === data.uid)
       if (!connector) return x
@@ -313,12 +322,6 @@ export function createConfig<
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////////////
-  // Global values
-  /////////////////////////////////////////////////////////////////////////////////////////////////
-
-  let reconnecting = false
-
-  /////////////////////////////////////////////////////////////////////////////////////////////////
   // Return
   /////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -347,16 +350,16 @@ export function createConfig<
 
       // Try recently-used connectors first
       const recentConnectorId = storage?.getItem('recentConnectorId')
-      const scores: Record<string, number> = {
-        ...(recentConnectorId ? { [recentConnectorId]: 1 } : {}),
-      }
+      const scores: Record<string, number> = {}
       for (const [, connection] of store.getState().connections) {
-        scores[connection.connector.id] = 2
+        scores[connection.connector.id] = 1
       }
-      // TODO: Might want to filter `sorted` to only include `scores`
+      if (recentConnectorId) scores[recentConnectorId] = 0
       const sorted =
         Object.keys(scores).length > 0
-          ? [...connectors].sort((x) => scores[x.id] ?? -1)
+          ? [...connectors].sort(
+              (a, b) => (scores[a.id] ?? 10) - (scores[b.id] ?? 10),
+            )
           : connectors
 
       // Iterate through each connector and try to connect
@@ -385,7 +388,6 @@ export function createConfig<
             status: 'connected',
           }
         })
-
         connected = true
       }
 
