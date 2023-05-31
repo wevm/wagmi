@@ -43,6 +43,21 @@ This directly affects:
 - `fetchSigner` (now `getWalletClient`)
 - `getWebSocketProvider` (now `getWebSocketPublicClient`)
 
+**`WagmiConfig`**
+
+The `WagmiConfig` changed the `client` property name to `config`.
+
+```diff
+import { WagmiConfig } from 'wagmi'
+
+(
+  + <WagmiConfig config={config}>
+  + <WagmiConfig client={client}>
+    /* Your App */
+  </WagmiConfig />
+)
+```
+
 **`createClient`**
 
 ```diff
