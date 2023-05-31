@@ -1,5 +1,6 @@
 import Theme from 'vitepress/theme'
 
+import VercelBadge from './VercelBadge.vue'
 import './style.css'
 import 'vitepress-plugin-shiki-twoslash/styles.css'
 
@@ -11,9 +12,7 @@ export default {
   Layout: () => {
     return h(Theme.Layout, null, {
       // https://vitepress.dev/guide/extending-default-theme#layout-slots
+      'layout-bottom': () => h(VercelBadge),
     })
   },
-  // enhanceApp({ app, router, siteData }) {
-  //   // ...
-  // },
 }

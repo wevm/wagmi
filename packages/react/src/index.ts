@@ -8,7 +8,7 @@ export {
 } from './context.js'
 
 ////////////////////////////////////////////////////////////////////////////////
-// Hooks
+// Errors
 
 export { BaseError } from './errors/base.js'
 
@@ -74,10 +74,6 @@ export {
   type ConnectorEventMap,
   type CreateConnectorFn,
   createConnector,
-  // Emitter
-  type EventData,
-  Emitter,
-  createEmitter,
   // Errors
   ChainNotConfiguredError,
   ProviderNotFoundError,

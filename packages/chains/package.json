@@ -1,7 +1,7 @@
 {
   "name": "@wagmi/chains",
   "description": "A collection of chains for wagmi",
-  "version": "0.2.23",
+  "version": "2.0.0",
   "license": "MIT",
   "repository": {
     "type": "git",

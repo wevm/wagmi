@@ -1,0 +1,10 @@
+- `foundry`
+- `goerli`
+- `hardhat`
+- `localhost`
+- `mainnet`
+- `optimism`
+- `optimismGoerli`
+- `polygon`
+- `polygonMumbai`
+- `sepolia`

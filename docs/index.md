@@ -1,4 +1,7 @@
 ---
+title: 'wagmi: React Hooks for Ethereum'
+titleTemplate: false
+
 # https://vitepress.dev/reference/default-theme-home-page
 layout: home
 
