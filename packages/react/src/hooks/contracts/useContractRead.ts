@@ -27,6 +27,8 @@ export type UseContractReadConfig<
   > & {
     /** If set to `true`, the cache will depend on the block number */
     cacheOnBlock?: boolean
+    /** Set this to `true` to keep the previous data when fetching based on a new query key. Defaults to `false`. */
+    keepPreviousData?: boolean
   } & (
     | {
         /** Block number to read against. */
@@ -121,6 +123,7 @@ export function useContractRead<
     enabled: enabled_ = true,
     functionName,
     isDataEqual,
+    keepPreviousData,
     onError,
     onSettled,
     onSuccess,
@@ -192,6 +195,7 @@ export function useContractRead<
       cacheTime,
       enabled,
       isDataEqual,
+      keepPreviousData,
       select,
       staleTime,
       structuralSharing,
