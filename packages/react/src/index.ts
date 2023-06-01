@@ -53,6 +53,12 @@ export {
 } from './hooks/useDisconnect.js'
 
 export {
+  type UseReconnectParameters,
+  type UseReconnectReturnType,
+  useReconnect,
+} from './hooks/useReconnect.js'
+
+export {
   type UseSwitchAccountParameters,
   type UseSwitchAccountReturnType,
   useSwitchAccount,

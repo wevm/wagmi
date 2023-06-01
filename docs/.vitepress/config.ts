@@ -125,6 +125,15 @@ function getSidebar() {
       { text: 'Comparisons', link: '/react/comparison' },
       { text: 'Migration Guide', link: '/react/migration-guide' },
       {
+        text: 'Guides',
+        items: [
+          {
+            text: 'Connect Wallet',
+            link: '/react/connect-wallet',
+          },
+        ],
+      },
+      {
         text: 'API',
         items: [
           { text: 'createConfig', link: '/react/createConfig' },
@@ -164,6 +173,7 @@ function getSidebar() {
                 link: '/react/hooks/useConnections',
               },
               { text: 'useDisconnect', link: '/react/hooks/useDisconnect' },
+              { text: 'useReconnect', link: '/react/hooks/useReconnect' },
               {
                 text: 'useSwitchAccount',
                 link: '/react/hooks/useSwitchAccount',
@@ -180,7 +190,7 @@ function getSidebar() {
       { text: 'TypeScript Support', link: '/core/typescript' },
       { text: 'Migration Guide', link: '/core/migration-guide' },
       {
-        text: 'Guide',
+        text: 'Guides',
         items: [
           {
             text: 'Framework Adapters',
@@ -212,6 +222,7 @@ function getSidebar() {
                 text: 'getConnections',
                 link: '/core/actions/getConnections',
               },
+              { text: 'reconnect', link: '/react/hooks/reconnect' },
               {
                 text: 'switchAccount',
                 link: '/core/actions/switchAccount',

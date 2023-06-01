@@ -59,8 +59,7 @@
     "@types/react-dom": "^18.0.11",
     "@viem/anvil": "0.0.5",
     "@wagmi/core": "workspace:*",
-    "@wagmi/chains": "workspace:*",
-    "abitype": "*"
+    "@wagmi/chains": "workspace:*"
   },
   "peerDependenciesMeta": {
     "react": {

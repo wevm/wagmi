@@ -29,7 +29,6 @@ export type TestConnectorParameters = {
 export function testConnector(parameters: TestConnectorParameters) {
   const features = parameters.features ?? {}
 
-  // TODO: Only builds with `"abitype"` set in `tsconfig.json#compilerOptions#paths`
   type Provider = ReturnType<typeof createWalletClient>
 
   let connected = false

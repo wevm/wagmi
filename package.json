@@ -54,7 +54,7 @@
       "@wagmi/core": "workspace:*",
       "remark-shiki-twoslash>shiki": "^0.14.1",
       "shiki-twoslash>shiki": "^0.14.1",
-      "viem": "0.3.37"
+      "viem": "0.3.43"
     },
     "patchedDependencies": {
       "@coinbase/wallet-sdk@3.6.6": "patches/@coinbase__wallet-sdk@3.6.6.patch",

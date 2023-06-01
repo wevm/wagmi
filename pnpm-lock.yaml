@@ -6,7 +6,7 @@ overrides:
   '@wagmi/core': workspace:*
   remark-shiki-twoslash>shiki: ^0.14.1
   shiki-twoslash>shiki: ^0.14.1
-  viem: 0.3.37
+  viem: 0.3.43
 
 patchedDependencies:
   '@coinbase/wallet-sdk@3.6.6':
@@ -96,8 +96,8 @@ importers:
         specifier: workspace:*
         version: link:../packages/test
       viem:
-        specifier: 0.3.37
-        version: 0.3.37(typescript@5.0.4)
+        specifier: 0.3.43
+        version: 0.3.43(typescript@5.0.4)
       vitepress:
         specifier: 1.0.0-beta.1
         version: 1.0.0-beta.1(@types/node@18.16.9)
@@ -114,8 +114,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       viem:
-        specifier: 0.3.37
-        version: 0.3.37(typescript@5.0.4)
+        specifier: 0.3.43
+        version: 0.3.43(typescript@5.0.4)
 
   packages/connectors:
     dependencies:
@@ -136,8 +136,8 @@ importers:
         specifier: ^1.5.12
         version: 1.5.12
       viem:
-        specifier: 0.3.37
-        version: 0.3.37(typescript@5.0.4)
+        specifier: 0.3.43
+        version: 0.3.43(typescript@5.0.4)
 
   packages/core:
     dependencies:
@@ -158,8 +158,8 @@ importers:
         version: 4.3.8
     devDependencies:
       viem:
-        specifier: 0.3.37
-        version: 0.3.37(typescript@5.0.4)
+        specifier: 0.3.43
+        version: 0.3.43(typescript@5.0.4)
 
   packages/react:
     dependencies:
@@ -198,8 +198,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       viem:
-        specifier: 0.3.37
-        version: 0.3.37(typescript@5.0.4)
+        specifier: 0.3.43
+        version: 0.3.43(typescript@5.0.4)
 
   packages/test:
     dependencies:
@@ -221,9 +221,6 @@ importers:
       '@wagmi/core':
         specifier: workspace:*
         version: link:../core
-      abitype:
-        specifier: '*'
-        version: 0.8.2(typescript@5.0.4)
     devDependencies:
       react:
         specifier: ^18.2.0
@@ -232,8 +229,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       viem:
-        specifier: 0.3.37
-        version: 0.3.37(typescript@5.0.4)
+        specifier: 0.3.43
+        version: 0.3.43(typescript@5.0.4)
       wagmi:
         specifier: workspace:*
         version: link:../react
@@ -256,8 +253,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       viem:
-        specifier: 0.3.37
-        version: 0.3.37(typescript@5.0.4)
+        specifier: 0.3.43
+        version: 0.3.43(typescript@5.0.4)
     devDependencies:
       '@esbuild-plugins/node-globals-polyfill':
         specifier: ^0.2.3
@@ -284,8 +281,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       viem:
-        specifier: 0.3.37
-        version: 0.3.37(typescript@5.0.4)
+        specifier: 0.3.43
+        version: 0.3.43(typescript@5.0.4)
       wagmi:
         specifier: workspace:*
         version: link:../../packages/react
@@ -6213,8 +6210,8 @@ packages:
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
 
-  /viem@0.3.37(typescript@5.0.4):
-    resolution: {integrity: sha512-17jycP/1Hy9DsDpHlaaI7bbAHBDYGfVYHN6j0ltE7A/S30RXhPVFe4LAPRfmG+xR2QBq8xSUpjO78cRgDLBjZQ==}
+  /viem@0.3.43(typescript@5.0.4):
+    resolution: {integrity: sha512-hzzBn553/+y5jH8V1OzMShAJmPtRm/+lC7DLrjXKZSW+yoyL09OGBd0FggXLzB8deFf7JGgs4tz4rHnn0YYrdA==}
     dependencies:
       '@adraffy/ens-normalize': 1.9.0
       '@noble/curves': 1.0.0

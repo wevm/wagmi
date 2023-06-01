@@ -10,6 +10,7 @@ let previousConnections: Connection[] = []
 
 export function getConnections(config: Config): GetConnectionsReturnType {
   const connections = [...config.state.connections.values()]
+  if (config.state.status === 'reconnecting') return previousConnections
   if (deepEqual(previousConnections, connections)) return previousConnections
   previousConnections = connections
   return connections

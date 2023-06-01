@@ -5,6 +5,7 @@ import {
   disconnect,
   getAccount,
   getBlockNumber,
+  reconnect,
   switchAccount,
   watchAccount,
   watchBalance,
@@ -17,7 +18,7 @@ import { config } from './wagmi'
 function App() {
   React.useEffect(() => {
     if (typeof window !== 'undefined' && config._internal.reconnectOnMount)
-      config.reconnect()
+      reconnect(config)
   }, [])
 
   return (

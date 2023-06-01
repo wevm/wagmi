@@ -8,7 +8,7 @@ import {
 import { type Config, type Connector } from '../config.js'
 import { type CreateConnectorFn } from '../connector.js'
 import { ConnectorAlreadyConnectedError } from '../errors/config.js'
-import type { Pretty } from '../internal.js'
+import type { Pretty } from '../types/utils.js'
 
 export type ConnectParameters = {
   /** Chain ID to connect to */

@@ -61,7 +61,6 @@ export type Config<
   readonly storage: Storage | null
 
   getPublicClient(parameters?: { chainId?: number | undefined }): PublicClient
-  reconnect(): Promise<void>
   setState(value: State | ((state: State) => State)): void
   subscribe: {
     (
@@ -252,12 +251,6 @@ export function createConfig<
     )
 
   /////////////////////////////////////////////////////////////////////////////////////////////////
-  // Global values
-  /////////////////////////////////////////////////////////////////////////////////////////////////
-
-  let reconnecting = false
-
-  /////////////////////////////////////////////////////////////////////////////////////////////////
   // Emitter listeners
   /////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -276,7 +269,7 @@ export function createConfig<
   }
   function connect(data: EventData<ConnectorEventMap, 'connect'>) {
     // Disable handling if reconnecting
-    if (reconnecting) return
+    if (store.getState().status === 'reconnecting') return
 
     store.setState((x) => {
       const connector = connectors.find((x) => x.uid === data.uid)
@@ -336,72 +329,6 @@ export function createConfig<
     storage,
 
     getPublicClient,
-    async reconnect() {
-      if (store.getState().status === 'disconnected') return
-
-      // Guard against running `reconnect` multiple times.
-      if (reconnecting) return
-      reconnecting = true
-
-      store.setState((x) => ({
-        ...x,
-        status: x.current ? 'reconnecting' : 'connecting',
-      }))
-
-      // Try recently-used connectors first
-      const recentConnectorId = storage?.getItem('recentConnectorId')
-      const scores: Record<string, number> = {}
-      for (const [, connection] of store.getState().connections) {
-        scores[connection.connector.id] = 1
-      }
-      if (recentConnectorId) scores[recentConnectorId] = 0
-      const sorted =
-        Object.keys(scores).length > 0
-          ? [...connectors].sort(
-              (a, b) => (scores[a.id] ?? 10) - (scores[b.id] ?? 10),
-            )
-          : connectors
-
-      // Iterate through each connector and try to connect
-      let connected = false
-      for (const connector of sorted) {
-        const isAuthorized = await connector.isAuthorized()
-        if (!isAuthorized) continue
-
-        const data = await connector.connect()
-        connector.emitter.off('connect', connect)
-        connector.emitter.on('change', change)
-        connector.emitter.on('disconnect', disconnect)
-
-        store.setState((x) => {
-          const connections = new Map(
-            connected ? x.connections : new Map(),
-          ).set(connector.uid, {
-            accounts: data.accounts,
-            chainId: data.chainId,
-            connector,
-          })
-          return {
-            ...x,
-            current: connected ? x.current : connector.uid,
-            connections,
-            status: 'connected',
-          }
-        })
-        connected = true
-      }
-
-      // If connecting didn't succeed, set to disconnected
-      if (!connected)
-        store.setState((x) => ({
-          ...x,
-          connections: new Map(),
-          current: undefined,
-          status: 'disconnected',
-        }))
-
-      reconnecting = false
-    },
     setState(value: State | ((state: State) => State)) {
       const newState =
         typeof value === 'function' ? value(store.getState()) : value

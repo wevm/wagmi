@@ -89,6 +89,18 @@ export {
 } from './actions/getConnections.js'
 
 export {
+  type ReconnectParameters,
+  type ReconnectReturnType,
+  type ReconnectError,
+  reconnect,
+  // Mutation
+  type ReconnectMutationData,
+  type ReconnectMutationVariables,
+  type ReconnectMutationParameters,
+  reconnectMutationOptions,
+} from './actions/reconnect.js'
+
+export {
   type SwitchAccountParameters,
   type SwitchAccountError,
   switchAccount,

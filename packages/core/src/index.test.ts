@@ -32,6 +32,8 @@ test('exports', () => {
         "setItem": [Function],
       },
       "normalizeChainId": [Function],
+      "reconnect": [Function],
+      "reconnectMutationOptions": [Function],
       "serialize": [Function],
       "switchAccount": [Function],
       "switchAccountMutationOptions": [Function],

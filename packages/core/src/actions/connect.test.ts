@@ -59,7 +59,7 @@ describe('connect', () => {
       [UserRejectedRequestError: User rejected the request.
 
       Details: Failed to connect.
-      Version: viem@0.3.37]
+      Version: viem@0.3.43]
     `)
   })
 
