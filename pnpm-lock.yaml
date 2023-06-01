@@ -269,7 +269,7 @@ importers:
         specifier: ^2.8.1
         version: 2.8.7
       typescript:
-        specifier: ^5.0.4
+        specifier: '>=5.0.4'
         version: 5.0.4
       viem:
         specifier: ~0.3.35
@@ -312,7 +312,7 @@ importers:
         specifier: ^4.0.7
         version: 4.0.7
       typescript:
-        specifier: ^5.0.4
+        specifier: '>=5.0.4'
         version: 5.0.4
       zustand:
         specifier: ^4.3.1
@@ -340,7 +340,7 @@ importers:
         specifier: 0.8.2
         version: 0.8.2(typescript@5.0.4)(zod@3.21.4)
       typescript:
-        specifier: ^5.0.4
+        specifier: '>=5.0.4'
         version: 5.0.4
       use-sync-external-store:
         specifier: ^1.2.0
@@ -374,7 +374,7 @@ importers:
   references/packages/chains:
     dependencies:
       typescript:
-        specifier: ^5.0.4
+        specifier: '>=5.0.4'
         version: 5.0.4
 
   references/packages/connectors:
@@ -407,7 +407,7 @@ importers:
         specifier: ^4.0.7
         version: 4.0.7
       typescript:
-        specifier: ^5.0.4
+        specifier: '>=5.0.4'
         version: 5.0.4
     devDependencies:
       '@wagmi/chains':
