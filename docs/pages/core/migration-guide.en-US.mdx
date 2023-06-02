@@ -139,6 +139,27 @@ The `createClient` function has been renamed to `createConfig`.
 })
 ```
 
+#### `WagmiClient`
+
+The `WagmiConfig` Context now takes the `config` prop instead of `client`.
+
+```diff
+import { createConfig, WagmiConfig } from 'wagmi'
+
+const config = createConfig({
+  ...
+})
+
+function App() {
+  return (
+-   <WagmiConfig client={client}>
++   <WagmiConfig config={config}>
+      /** your app */
+    </WagmiConfig>
+  )
+}
+```
+
 #### `getClient` → `getConfig`
 
 If you are using `getClient`, that has been renamed to `getConfig`:
