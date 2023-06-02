@@ -111,7 +111,15 @@ describe('createConfig', () => {
       })
 
       it('autoConnect', async () => {
-        const config = setupConfig({ chains: [mainnet, goerli] })
+        const config = setupConfig({ chains: [mainnet, goerli], connectors: [
+            new MockConnector({
+              options: {
+                flags: { isAuthorized: true },
+                walletClient: getWalletClients()[0]!,
+              },
+            }),
+          ]
+        })
         expect(config.chains).toBeUndefined()
         await config.autoConnect()
         expect(config.chains?.length).toEqual(2)
