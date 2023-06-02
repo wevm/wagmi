@@ -25,6 +25,8 @@ it('should expose correct exports', () => {
       "crossbell",
       "dfk",
       "dogechain",
+      "edgeware",
+      "edgewareTestnet",
       "evmos",
       "evmosTestnet",
       "fantom",
@@ -96,6 +98,7 @@ it('should expose correct exports', () => {
       "zhejiang",
       "zkSync",
       "zkSyncTestnet",
+      "zoraTestnet",
     ]
   `)
 })
