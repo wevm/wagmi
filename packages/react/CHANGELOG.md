@@ -1,5 +1,24 @@
 # wagmi
 
+## 1.1.0
+
+### Minor Changes
+
+- [#2482](https://github.com/wagmi-dev/wagmi/pull/2482) [`8764b54a`](https://github.com/wagmi-dev/wagmi/commit/8764b54aab68020063946112e8fe52aff650c99c) Thanks [@tmm](https://github.com/tmm)! - Bumped minimum TypeScript version to v5.0.4.
+
+### Patch Changes
+
+- [#2471](https://github.com/wagmi-dev/wagmi/pull/2471) [`74099cef`](https://github.com/wagmi-dev/wagmi/commit/74099cefd922317641529f7881a4c8a740d62cbe) Thanks [@iuriiiurevich](https://github.com/iuriiiurevich)! - Added `keepPreviousData` prop to `useContractRead`.
+
+- [#2484](https://github.com/wagmi-dev/wagmi/pull/2484) [`3adf1f4f`](https://github.com/wagmi-dev/wagmi/commit/3adf1f4feab863cb7b5d52c81ad46f7e4eb56f09) Thanks [@jxom](https://github.com/jxom)! - Updated `abitype` to 0.8.7
+
+- [#2484](https://github.com/wagmi-dev/wagmi/pull/2484) [`3adf1f4f`](https://github.com/wagmi-dev/wagmi/commit/3adf1f4feab863cb7b5d52c81ad46f7e4eb56f09) Thanks [@jxom](https://github.com/jxom)! - Updated references.
+
+- [`01d4a6ed`](https://github.com/wagmi-dev/wagmi/commit/01d4a6ed53110712692599095d94f04dfb5b6e38) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where `useInvalidateOnBlock`'s `onBlock` was being called on every render.
+
+- Updated dependencies [[`8764b54a`](https://github.com/wagmi-dev/wagmi/commit/8764b54aab68020063946112e8fe52aff650c99c), [`3adf1f4f`](https://github.com/wagmi-dev/wagmi/commit/3adf1f4feab863cb7b5d52c81ad46f7e4eb56f09), [`3adf1f4f`](https://github.com/wagmi-dev/wagmi/commit/3adf1f4feab863cb7b5d52c81ad46f7e4eb56f09)]:
+  - @wagmi/core@1.1.0
+
 ## 1.0.9
 
 ### Patch Changes
