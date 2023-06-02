@@ -1,5 +1,17 @@
 # @wagmi/core
 
+## 1.1.0
+
+### Minor Changes
+
+- [#2482](https://github.com/wagmi-dev/wagmi/pull/2482) [`8764b54a`](https://github.com/wagmi-dev/wagmi/commit/8764b54aab68020063946112e8fe52aff650c99c) Thanks [@tmm](https://github.com/tmm)! - Bumped minimum TypeScript version to v5.0.4.
+
+### Patch Changes
+
+- [#2484](https://github.com/wagmi-dev/wagmi/pull/2484) [`3adf1f4f`](https://github.com/wagmi-dev/wagmi/commit/3adf1f4feab863cb7b5d52c81ad46f7e4eb56f09) Thanks [@jxom](https://github.com/jxom)! - Updated `abitype` to 0.8.7
+
+- [#2484](https://github.com/wagmi-dev/wagmi/pull/2484) [`3adf1f4f`](https://github.com/wagmi-dev/wagmi/commit/3adf1f4feab863cb7b5d52c81ad46f7e4eb56f09) Thanks [@jxom](https://github.com/jxom)! - Updated references.
+
 ## 1.0.8
 
 ### Patch Changes
