@@ -19,6 +19,8 @@ export {
   crossbell,
   dfk,
   dogechain,
+  edgeware,
+  edgewareTestnet,
   evmos,
   evmosTestnet,
   fantom,
@@ -90,6 +92,7 @@ export {
   zhejiang,
   zkSync,
   zkSyncTestnet,
+  zoraTestnet,
 } from '@wagmi/chains'
 
 export type { Chain } from '@wagmi/chains'
