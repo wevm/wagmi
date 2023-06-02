@@ -43,21 +43,6 @@ This directly affects:
 - `fetchSigner` (now `getWalletClient`)
 - `getWebSocketProvider` (now `getWebSocketPublicClient`)
 
-**`WagmiConfig`**
-
-The `WagmiConfig` changed the `client` property name to `config`.
-
-```diff
-import { WagmiConfig } from 'wagmi'
-
-(
-  + <WagmiConfig config={config}>
-  - <WagmiConfig client={client}>
-    /* Your App */
-  </WagmiConfig />
-)
-```
-
 **`createClient`**
 
 ```diff
@@ -152,6 +137,27 @@ The `createClient` function has been renamed to `createConfig`.
 + const config = createConfig({
   ...
 })
+```
+
+#### `WagmiClient`
+
+The `WagmiConfig` Context now takes the `config` prop instead of `client`.
+
+```diff
+import { createConfig, WagmiConfig } from 'wagmi'
+
+const config = createConfig({
+  ...
+})
+
+function App() {
+  return (
+-   <WagmiConfig client={client}>
++   <WagmiConfig config={config}>
+      /** your app */
+    </WagmiConfig>
+  )
+}
 ```
 
 #### `getClient` → `getConfig`
