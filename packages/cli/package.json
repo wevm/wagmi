@@ -52,7 +52,7 @@
   ],
   "peerDependencies": {
     "@wagmi/core": ">=1.0.0",
-    "typescript": "^5.0.4",
+    "typescript": ">=5.0.4",
     "wagmi": ">=1.0.0"
   },
   "peerDependenciesMeta": {
