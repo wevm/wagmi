@@ -101,6 +101,11 @@ export default withTwoslash(
       ],
     },
     title: 'wagmi',
+    twoslash: {
+      defaultCompilerOptions: {
+        target: 99,
+      },
+    },
     vue: {
       template: {
         compilerOptions: {
@@ -233,6 +238,7 @@ function getSidebar() {
           {
             text: 'Connectors',
             collapsed: true,
+            link: '/core/connectors',
             items: [
               {
                 text: 'coinbaseWallet',

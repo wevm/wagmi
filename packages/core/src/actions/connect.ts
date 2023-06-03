@@ -11,9 +11,13 @@ import { ConnectorAlreadyConnectedError } from '../errors/config.js'
 import type { Pretty } from '../types/utils.js'
 
 export type ConnectParameters = {
-  /** Chain ID to connect to */
+  /**
+   * Chain ID to connect to.
+   *
+   * Not all connectors support connecting directly to a chainId (e.g. they don't support programmatic chain switching). In those cases, the connector will connect to whatever chain the connector's provider is connected to.
+   */
   chainId?: number | undefined
-  /** Connector to connect with */
+  /** Connector to connect with. */
   connector: CreateConnectorFn | Connector
 }
 
@@ -34,9 +38,9 @@ export type ConnectError =
   | Error
 
 /**
- * Connects to `connector`.
+ * Connects to connector.
  *
- * - Docs: https://wagmi.sh
+ * - Docs: https://wagmi.sh/core/actions/connect
  *
  * @param config {@link Config}
  * @param parameters {@link ConnectParameters}

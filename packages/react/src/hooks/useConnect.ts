@@ -41,6 +41,11 @@ type Result = UseMutationResult<
   ConnectMutationVariables
 >
 
+/**
+ * Connects to connector.
+ *
+ * - Docs: https://wagmi.sh/react/hooks/useConnect
+ */
 export function useConnect({
   chainId,
   connector,
