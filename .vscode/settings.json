@@ -21,5 +21,8 @@
   },
   "[typescriptreact]": {
     "editor.defaultFormatter": "rome.rome"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "Vue.volar"
   }
 }

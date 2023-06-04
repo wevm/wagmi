@@ -1,6 +1,13 @@
+<script setup>
+const mutate = 'connect'
+const TData = '{ accounts: readonly Address[]; chainId: number; }'
+const TError = 'ConnectError'
+const TVariables = '{ chainId?: number | undefined; connector?: CreateConnectorFn | Connector | undefined; }'
+</script>
+
 # useConnect
 
-Hook for connecting accounts with [connectors](/core/connectors) using the [`connect`](/core/actions/connect) action.
+Hook for connecting accounts with [connectors](/core/connectors) using the [connect](/core/actions/connect) action.
 
 ## Import
 
@@ -93,10 +100,40 @@ function App() {
   )
 }
 ```
-<<< snippets/core/config.ts[config.ts]
+<<< snippets/react/config.ts[config.ts]
 :::
 
 ### mutation
+
+Options passed to underlying [`useMutation`](https://tanstack.com/query/v5/docs/react/reference/useMutation) hook.
+
+::: code-group
+```tsx [index.tsx]
+import { useConnect } from 'wagmi'
+import { mainnet } from 'wagmi/chains'
+import { injected } from 'wagmi/connectors'
+import { config } from './config'
+
+function App() {
+  const { connect } = useConnect({
+    connector: injected(),
+    mutation: { // [!code focus:4]
+      gcTime: 0,
+      retry: 2,
+    },
+  })
+
+  return (
+    <button onClick={() => connect()}>
+      Connect
+    </button>
+  )
+}
+```
+<<< snippets/react/config.ts[config.ts]
+:::
+
+<!--@include: @shared/mutation-options.md-->
 
 ## Return Type
 
@@ -104,41 +141,10 @@ function App() {
 import { type UseConnectReturnType } from 'wagmi'
 ```
 
-### connect
-### connectAsync
 ### connectors
 
 `readonly Connector[]`
 
-[Connectors](/core/connectors) configured by the [config](/TODO).
+Globally configured connectors. Useful for rendering a list of available connectors.
 
-::: code-group
-```tsx [index.tsx]
-import { useConnect } from 'wagmi'
-import { mainnet } from 'wagmi/chains'
-import { config } from './config'
-
-function App() {
-  const { connect, connectors } = useConnect()
-
-  return (
-    <button onClick={() => connect({ connector: connectors[0] })}>
-      Connect
-    </button>
-  )
-}
-```
-<<< snippets/core/config.ts[config.ts]
-:::
-
-### data
-### error
-### isError
-### isIdle
-### isLoading
-### isPaused
-### isSuccess
-### failureCount
-### failureReason
-### reset
-### status
+<!--@include: @shared/mutation-result.md-->

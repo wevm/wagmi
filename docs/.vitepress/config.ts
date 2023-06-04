@@ -93,6 +93,7 @@ export default withTwoslash(
           ],
         },
       ],
+      outline: [2, 3],
       sidebar: getSidebar(),
       siteTitle: false,
       socialLinks: [
