@@ -126,19 +126,19 @@ function mapSponsors(sponsors: {
     {
       size: 'big',
       items: mapImgPath(sponsors.platinum),
-      tier: 'Collaborator',
+      tier: 'Collaborators',
       type: 'platinum',
     },
     {
       size: 'medium',
       items: mapImgPath(sponsors.gold),
-      tier: 'Large Enterprise',
+      tier: 'Large Enterprises',
       type: 'gold',
     },
     {
       size: 'small',
       items: mapImgPath(sponsors.silver),
-      tier: 'Small Enterprise',
+      tier: 'Small Enterprises',
       type: 'silver',
     },
   ] satisfies Data

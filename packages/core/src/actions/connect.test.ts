@@ -1,7 +1,7 @@
 import { accounts, config, testChains, testConnector } from '@wagmi/test'
 import { beforeEach, describe, expect, test } from 'vitest'
 
-import { connect } from './connect.js'
+import { connect, connectMutationOptions } from './connect.js'
 import { disconnect } from './disconnect.js'
 
 const connector = config._internal.setup(testConnector({ accounts }))
@@ -70,5 +70,40 @@ describe('connect', () => {
 
       Version: @wagmi/core@1.0.2]
     `)
+  })
+})
+
+describe('connectMutationOptions', () => {
+  test('default', () => {
+    expect(connectMutationOptions(config, { connector })).toMatchObject(
+      expect.objectContaining({
+        mutationFn: expect.any(Function),
+        mutationKey: [
+          'connect',
+          expect.objectContaining({
+            connector: expect.any(Object),
+          }),
+        ],
+      }),
+    )
+  })
+
+  test('parameters: chainId', () => {
+    expect(
+      connectMutationOptions(config, {
+        connector,
+        chainId: testChains.anvil.id,
+      }),
+    ).toMatchObject(
+      expect.objectContaining({
+        mutationFn: expect.any(Function),
+        mutationKey: [
+          'connect',
+          expect.objectContaining({
+            connector: expect.any(Object),
+          }),
+        ],
+      }),
+    )
   })
 })

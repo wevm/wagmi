@@ -293,13 +293,4 @@ describe('getBalanceQueryOptions', () => {
       }
     `)
   })
-
-  test('queryFn', async () => {
-    expect(
-      getBalanceQueryOptions(config, {
-        address,
-        chainId: testChains.anvil.id,
-      })?.queryFn(),
-    ).toBeDefined()
-  })
 })

@@ -13,11 +13,8 @@ import * as React from 'react'
 import type { OmittedUseQueryOptions } from '../types/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
-import {
-  type UseQueryParameters,
-  type UseQueryReturnType,
-  useQuery,
-} from './useQuery.js'
+import { type UseQueryParameters, useQuery } from './useQuery.js'
+import type { UseQueryResult } from '@tanstack/react-query'
 
 export type UseBalanceParameters<TSelectData = GetBalanceQueryFnData> = Pretty<
   GetBalanceQueryParameters & {
@@ -37,7 +34,7 @@ type QueryOptions<TSelectData = GetBalanceQueryFnData> = Omit<
 >
 
 export type UseBalanceReturnType<TSelectData = GetBalanceQueryFnData> =
-  UseQueryReturnType<TSelectData, GetBalanceError>
+  UseQueryResult<TSelectData, GetBalanceError>
 
 /** https://wagmi.sh/react/hooks/useBalance */
 export function useBalance<TSelectData = GetBalanceQueryFnData>({

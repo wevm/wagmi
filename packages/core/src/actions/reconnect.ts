@@ -20,8 +20,8 @@ export async function reconnect(
   config: Config,
   { connectors: connectors_ }: ReconnectParameters = {},
 ): Promise<ReconnectReturnType> {
+  // If already reconnecting, do nothing
   if (config.state.status === 'reconnecting') return []
-  if (config.state.status === 'disconnected') return []
 
   config.setState((x) => ({
     ...x,
@@ -107,17 +107,17 @@ export type ReconnectMutationVariables = Pretty<{
   connectors?:
     | [CreateConnectorFn | Connector, ...(CreateConnectorFn | Connector)[]]
     | undefined
-}>
+}> | void
 export type ReconnectMutationParameters = Pretty<ReconnectMutationVariables>
 
 /** https://wagmi.sh/core/actions/reconnect#tanstack-query */
 export const reconnectMutationOptions = (
   config: Config,
-  { connectors }: ReconnectMutationParameters,
+  { connectors }: ReconnectMutationParameters = {},
 ) =>
   ({
     mutationFn(variables) {
-      const connectors_ = variables.connectors ?? connectors
+      const connectors_ = variables?.connectors ?? connectors
       return reconnect(config, { connectors: connectors_ })
     },
     mutationKey: ['reconnect', { connectors }],

@@ -62,14 +62,13 @@ export type DisconnectMutationParameters = { connector?: Connector | undefined }
 /** https://wagmi.sh/core/actions/disconnect#tanstack-query */
 export const disconnectMutationOptions = (
   config: Config,
-  options: DisconnectMutationParameters,
+  options: DisconnectMutationParameters = {},
 ) => {
   const connector = 'connector' in options ? options.connector : undefined
   return {
     ...options,
     mutationFn(variables) {
-      const connector_ =
-        (variables as DisconnectParameters | undefined)?.connector ?? connector
+      const connector_ = variables?.connector ?? connector
       return disconnect(config, { connector: connector_ })
     },
     mutationKey: ['disconnect', { connector }],

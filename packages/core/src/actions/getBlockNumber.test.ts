@@ -50,7 +50,9 @@ describe('getBlockNumberQueryOptions', () => {
         ],
       }
     `)
+  })
 
+  test('parameters: chainId', () => {
     expect(
       getBlockNumberQueryOptions(config, { chainId: testChains.anvil.id }),
     ).toMatchInlineSnapshot(`
@@ -65,13 +67,5 @@ describe('getBlockNumberQueryOptions', () => {
         ],
       }
     `)
-  })
-
-  test('queryFn', async () => {
-    expect(
-      getBlockNumberQueryOptions(config, {
-        chainId: testChains.anvil.id,
-      }).queryFn(),
-    ).toBeDefined()
   })
 })

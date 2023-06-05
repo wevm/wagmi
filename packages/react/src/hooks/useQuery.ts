@@ -4,7 +4,6 @@
 import {
   type DefaultError,
   type QueryKey,
-  type QueryOptions,
   type UseQueryOptions,
   type UseQueryResult,
   useQuery as useQuery_,
@@ -19,18 +18,13 @@ export type UseQueryParameters<
   UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
   'initialData'
 > & {
-  initialData?: QueryOptions<
+  initialData?: UseQueryOptions<
     TQueryFnData,
     TError,
     TData,
     TQueryKey
   >['initialData']
 }
-
-export type UseQueryReturnType<
-  TData = unknown,
-  TError = unknown,
-> = UseQueryResult<TData, TError>
 
 export function useQuery<
   TQueryFnData,
@@ -39,6 +33,6 @@ export function useQuery<
   TQueryKey extends QueryKey,
 >(
   args: UseQueryParameters<TQueryFnData, TError, TData, TQueryKey>,
-): UseQueryReturnType<TData, TError> {
+): UseQueryResult<TData, TError> {
   return useQuery_(args as any)
 }
