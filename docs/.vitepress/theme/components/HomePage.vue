@@ -75,6 +75,11 @@ const teamMembers = [
   max-width: 1152px;
 }
 
+h3.vp-sponsor-tier {
+  margin: 0;
+  margin-bottom: 4px;
+}
+
 .VercelBadge {
   align-items: center;
   color: var(--vp-c-text-2) !important;

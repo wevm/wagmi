@@ -7,24 +7,26 @@ type Sponsor = {
 }
 
 type Data = {
-  size: 'big' | 'medium'
+  size: 'big' | 'medium' | 'small'
   items: Sponsor[]
+  tier: string
   type: 'platinum' | 'gold' | 'silver'
 }[]
 
 // shared data across instances so we load only once.
 const data = ref<Data>()
 
-const dataHost = 'https://sponsors.vuejs.org'
-const dataUrl = `${dataHost}/vite.json`
+// TODO: Data powered
+// const dataHost = 'https://sponsors.vuejs.org'
+// const dataUrl = `${dataHost}/vite.json`
 
 export function useSponsors() {
   onMounted(async () => {
     if (data.value) return
 
-    const result = await fetch(dataUrl)
-    const json = await result.json()
-    console.log(json)
+    // const result = await fetch(dataUrl)
+    // const json = await result.json()
+    // console.log(json)
     const sponsors = {
       platinum: [
         {
@@ -124,16 +126,19 @@ function mapSponsors(sponsors: {
     {
       size: 'big',
       items: mapImgPath(sponsors.platinum),
+      tier: 'Collaborators',
       type: 'platinum',
     },
     {
-      size: 'big',
+      size: 'medium',
       items: mapImgPath(sponsors.gold),
+      tier: 'Large Enterprise',
       type: 'gold',
     },
     {
-      size: 'medium',
+      size: 'small',
       items: mapImgPath(sponsors.silver),
+      tier: 'Small Enterprise',
       type: 'silver',
     },
   ] satisfies Data
