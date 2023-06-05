@@ -1,10 +1,8 @@
 import type { Config } from '../config.js'
 
-///////////////////////////////////////////////////////////////////////////
-// Getter
-
 export type GetChainIdReturnType = number
 
+/** https://wagmi.sh/core/actions/getChainId */
 export function getChainId(config: Config): GetChainIdReturnType {
   return config.state.chainId
 }
@@ -18,6 +16,7 @@ export type WatchChainIdParameters = {
 
 export type WatchChainIdReturnType = () => void
 
+/** https://wagmi.sh/core/actions/getChainId#watcher */
 export function watchChainId(
   config: Config,
   { onChange }: WatchChainIdParameters,

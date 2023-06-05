@@ -42,6 +42,7 @@ type Result = UseMutationResult<
   SwitchAccountMutationVariables
 >
 
+/** https://wagmi.sh/react/hooks/useSwitchAccount */
 export function useSwitchAccount({
   connector,
   mutation,

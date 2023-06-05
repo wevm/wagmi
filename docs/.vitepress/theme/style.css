@@ -89,3 +89,24 @@
   --docsearch-primary-color: var(--vp-c-brand) !important;
 }
 
+/**
+ * VitePress TwoSlash
+ * -------------------------------------------------------------------------- */
+
+ /*
+ * Hide block based on theme
+ * `[class*='-dark']` matches `'vitesse-dark'`
+ * `[class*='-light']` matches `'vitesse-light'`
+ */
+ html:not(.dark) pre.shiki[class*='-dark'] {
+  display: none;
+}
+html:not(.dark) pre.shiki[class*='-light'] {
+  display: block;
+}
+html.dark pre.shiki[class*='-dark'] {
+  display: block;
+}
+html.dark pre.shiki[class*='-light'] {
+  display: none;
+}

@@ -8,6 +8,7 @@ export type GetConnectionsReturnType = Pretty<Connection>[]
 
 let previousConnections: Connection[] = []
 
+/** https://wagmi.sh/core/actions/getConnections */
 export function getConnections(config: Config): GetConnectionsReturnType {
   const connections = [...config.state.connections.values()]
   if (config.state.status === 'reconnecting') return previousConnections
@@ -25,6 +26,7 @@ export type WatchConnectionsParameters = {
 
 export type WatchConnectionsReturnType = () => void
 
+/** https://wagmi.sh/core/actions/getConnections#watcher */
 export function watchConnections(
   config: Config,
   { onChange }: WatchConnectionsParameters,

@@ -7,7 +7,7 @@ const TVariables = '{ chainId?: number | undefined; connector?: CreateConnectorF
 
 # useConnect
 
-Hook for connecting accounts with [connectors](/core/connectors) using the [connect](/core/actions/connect) action.
+Hook for connecting accounts with [connectors](/react/connectors).
 
 ## Import
 
@@ -19,9 +19,8 @@ import { useConnect } from 'wagmi'
 
 ::: code-group
 ```tsx [index.tsx]
-import { useConnect } from 'wagmi/core'
+import { useConnect } from 'wagmi'
 import { injected } from 'wagmi/connectors'
-import { config } from './config'
 
 function App() {
   const { connect } = useConnect({
@@ -35,7 +34,6 @@ function App() {
   )
 }
 ```
-<<< snippets/react/config.ts[config.ts]
 :::
 
 ## Parameters
@@ -54,10 +52,9 @@ Not all connectors support connecting directly to a `chainId` (e.g. they don't s
 
 ::: code-group
 ```tsx [index.tsx]
+import { mainnet } from 'viem/chains'
 import { useConnect } from 'wagmi'
-import { mainnet } from 'wagmi/chains'
 import { injected } from 'wagmi/connectors'
-import { config } from './config'
 
 function App() {
   const { connect } = useConnect({
@@ -72,7 +69,6 @@ function App() {
   )
 }
 ```
-<<< snippets/react/config.ts[config.ts]
 :::
 
 ### connector
@@ -83,10 +79,9 @@ function App() {
 
 ::: code-group
 ```tsx [index.tsx]
+import { mainnet } from 'viem/chains'
 import { useConnect } from 'wagmi'
-import { mainnet } from 'wagmi/chains'
 import { injected } from 'wagmi/connectors'
-import { config } from './config'
 
 function App() {
   const { connect } = useConnect({
@@ -100,7 +95,6 @@ function App() {
   )
 }
 ```
-<<< snippets/react/config.ts[config.ts]
 :::
 
 ### mutation
@@ -109,10 +103,9 @@ Options passed to underlying [`useMutation`](https://tanstack.com/query/v5/docs/
 
 ::: code-group
 ```tsx [index.tsx]
+import { mainnet } from 'viem/chains'
 import { useConnect } from 'wagmi'
-import { mainnet } from 'wagmi/chains'
 import { injected } from 'wagmi/connectors'
-import { config } from './config'
 
 function App() {
   const { connect } = useConnect({
@@ -130,7 +123,6 @@ function App() {
   )
 }
 ```
-<<< snippets/react/config.ts[config.ts]
 :::
 
 <!--@include: @shared/mutation-options.md-->

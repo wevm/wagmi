@@ -126,7 +126,7 @@ function mapSponsors(sponsors: {
     {
       size: 'big',
       items: mapImgPath(sponsors.platinum),
-      tier: 'Collaborators',
+      tier: 'Collaborator',
       type: 'platinum',
     },
     {

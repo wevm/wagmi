@@ -148,16 +148,16 @@ function toPatchVersionRange(version: string) {
 function getSidebar() {
   return {
     '/react': [
-      { text: 'Why Wagmi', link: '/react/why-wagmi' },
-      { text: 'Getting Started', link: '/react/getting-started' },
-      { text: 'TypeScript Support', link: '/react/typescript' },
-      { text: 'Comparisons', link: '/react/comparison' },
-      { text: 'Migration Guide', link: '/react/migration-guide' },
+      { text: 'Why Wagmi 🚧', link: '/react/why-wagmi' },
+      { text: 'Getting Started 🚧', link: '/react/getting-started' },
+      { text: 'TypeScript Support 🚧', link: '/react/typescript' },
+      { text: 'Comparisons 🚧', link: '/react/comparison' },
+      { text: 'Migration Guide 🚧', link: '/react/migration-guide' },
       {
         text: 'Guides',
         items: [
           {
-            text: 'Connect Wallet',
+            text: 'Connect Wallet 🚧',
             link: '/react/connect-wallet',
           },
         ],
@@ -165,21 +165,20 @@ function getSidebar() {
       {
         text: 'API',
         items: [
-          { text: 'createConfig', link: '/react/createConfig' },
-          { text: 'WagmiConfig', link: '/react/WagmiConfig' },
-          { text: 'Actions', link: '/react/actions' },
-          { text: 'Chains', link: '/react/chains' },
+          { text: 'createConfig 🚧', link: '/react/createConfig' },
+          { text: 'WagmiConfig 🚧', link: '/react/WagmiConfig' },
+          { text: 'Actions 🚧', link: '/react/actions' },
           {
-            text: 'Connectors',
+            text: 'Connectors 🚧',
             collapsed: true,
             items: [
               {
-                text: 'coinbaseWallet',
+                text: 'coinbaseWallet 🚧',
                 link: '/react/connectors/coinbaseWallet',
               },
-              { text: 'injected', link: '/react/connectors/injected' },
+              { text: 'injected 🚧', link: '/react/connectors/injected' },
               {
-                text: 'walletConnect',
+                text: 'walletConnect 🚧',
                 link: '/react/connectors/walletConnect',
               },
             ],
@@ -189,40 +188,40 @@ function getSidebar() {
             collapsed: true,
             items: [
               { text: 'useAccount', link: '/react/hooks/useAccount' },
-              { text: 'useBalance', link: '/react/hooks/useBalance' },
+              { text: 'useBalance 🚧', link: '/react/hooks/useBalance' },
               {
-                text: 'useBlockNumber',
+                text: 'useBlockNumber 🚧',
                 link: '/react/hooks/useBlockNumber',
               },
-              { text: 'useChainId', link: '/react/hooks/useChainId' },
-              { text: 'useConfig', link: '/react/hooks/useConfig' },
+              { text: 'useChainId 🚧', link: '/react/hooks/useChainId' },
+              { text: 'useConfig 🚧', link: '/react/hooks/useConfig' },
               { text: 'useConnect', link: '/react/hooks/useConnect' },
               {
-                text: 'useConnections',
+                text: 'useConnections 🚧',
                 link: '/react/hooks/useConnections',
               },
               { text: 'useDisconnect', link: '/react/hooks/useDisconnect' },
-              { text: 'useReconnect', link: '/react/hooks/useReconnect' },
+              { text: 'useReconnect 🚧', link: '/react/hooks/useReconnect' },
               {
-                text: 'useSwitchAccount',
+                text: 'useSwitchAccount 🚧',
                 link: '/react/hooks/useSwitchAccount',
               },
             ],
           },
-          { text: 'Errors', link: '/react/errors' },
+          { text: 'Errors 🚧', link: '/react/errors' },
         ],
       },
     ],
     '/core': [
-      { text: 'Why Wagmi', link: '/core/why-wagmi' },
-      { text: 'Getting Started', link: '/core/getting-started' },
-      { text: 'TypeScript Support', link: '/core/typescript' },
-      { text: 'Migration Guide', link: '/core/migration-guide' },
+      { text: 'Why Wagmi 🚧', link: '/core/why-wagmi' },
+      { text: 'Getting Started 🚧', link: '/core/getting-started' },
+      { text: 'TypeScript Support 🚧', link: '/core/typescript' },
+      { text: 'Migration Guide 🚧', link: '/core/migration-guide' },
       {
         text: 'Guides',
         items: [
           {
-            text: 'Framework Adapters',
+            text: 'Framework Adapters 🚧',
             link: '/core/framework-adapter',
           },
         ],
@@ -230,10 +229,10 @@ function getSidebar() {
       {
         text: 'API',
         items: [
-          { text: 'createConfig', link: '/core/createConfig' },
-          { text: 'createConnector', link: '/core/createConnector' },
-          { text: 'createQueryClient', link: '/core/createQueryClient' },
-          { text: 'createStorage', link: '/core/createStorage' },
+          { text: 'createConfig 🚧', link: '/core/createConfig' },
+          { text: 'createConnector 🚧', link: '/core/createConnector' },
+          { text: 'createQueryClient 🚧', link: '/core/createQueryClient' },
+          { text: 'createStorage 🚧', link: '/core/createStorage' },
           {
             text: 'Actions',
             collapsed: true,
@@ -241,9 +240,9 @@ function getSidebar() {
               { text: 'connect', link: '/core/actions/connect' },
               { text: 'disconnect', link: '/core/actions/disconnect' },
               { text: 'getAccount', link: '/core/actions/getAccount' },
-              { text: 'getBalance', link: '/core/actions/getBalance' },
+              { text: 'getBalance 🚧', link: '/core/actions/getBalance' },
               {
-                text: 'getBlockNumber',
+                text: 'getBlockNumber 🚧',
                 link: '/core/actions/getBlockNumber',
               },
               { text: 'getChainId', link: '/core/actions/getChainId' },
@@ -251,38 +250,37 @@ function getSidebar() {
                 text: 'getConnections',
                 link: '/core/actions/getConnections',
               },
-              { text: 'reconnect', link: '/react/hooks/reconnect' },
+              { text: 'reconnect', link: '/core/actions/reconnect' },
               {
                 text: 'switchAccount',
                 link: '/core/actions/switchAccount',
               },
             ],
           },
-          { text: 'Chains', link: '/core/chains' },
           {
-            text: 'Connectors',
+            text: 'Connectors 🚧',
             collapsed: true,
             link: '/core/connectors',
             items: [
               {
-                text: 'coinbaseWallet',
+                text: 'coinbaseWallet 🚧',
                 link: '/core/connectors/coinbaseWallet',
               },
-              { text: 'injected', link: '/core/connectors/injected' },
+              { text: 'injected 🚧', link: '/core/connectors/injected' },
               {
-                text: 'walletConnect',
+                text: 'walletConnect 🚧',
                 link: '/core/connectors/walletConnect',
               },
             ],
           },
-          { text: 'Errors', link: '/core/errors' },
+          { text: 'Errors 🚧', link: '/core/errors' },
           {
-            text: 'Utilities',
+            text: 'Utilities 🚧',
             collapsed: true,
             items: [
-              { text: 'deserialize', link: '/core/deserialize' },
-              { text: 'normalizeChainId', link: '/core/normalizeChainId' },
-              { text: 'serialize', link: '/core/serialize' },
+              { text: 'deserialize 🚧', link: '/core/deserialize' },
+              { text: 'normalizeChainId 🚧', link: '/core/normalizeChainId' },
+              { text: 'serialize 🚧', link: '/core/serialize' },
             ],
           },
         ],

@@ -41,6 +41,7 @@ type Result = UseMutationResult<
   ReconnectMutationVariables
 >
 
+/** https://wagmi.sh/react/hooks/useReconnect */
 export function useReconnect({
   connectors,
   mutation,

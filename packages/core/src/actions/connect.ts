@@ -37,15 +37,7 @@ export type ConnectError =
   // base
   | Error
 
-/**
- * Connects to connector.
- *
- * - Docs: https://wagmi.sh/core/actions/connect
- *
- * @param config {@link Config}
- * @param parameters {@link ConnectParameters}
- * @returns Connected account info. {@link ConnectReturnType}
- */
+/** https://wagmi.sh/core/actions/connect */
 export async function connect(
   config: Config,
   { chainId, connector: connector_ }: ConnectParameters,
@@ -99,7 +91,7 @@ export async function connect(
 }
 
 ///////////////////////////////////////////////////////////////////////////
-// Mutation
+// TanStack Query
 
 export type ConnectMutationData = Pretty<ConnectReturnType>
 export type ConnectMutationVariables = Pretty<{
@@ -110,6 +102,7 @@ export type ConnectMutationVariables = Pretty<{
 }>
 export type ConnectMutationParameters = Pretty<ConnectMutationVariables>
 
+/** https://wagmi.sh/core/actions/connect#tanstack-query */
 export const connectMutationOptions = (
   config: Config,
   { chainId, connector }: ConnectMutationParameters,

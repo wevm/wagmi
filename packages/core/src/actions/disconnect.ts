@@ -10,6 +10,7 @@ export type DisconnectParameters = {
 
 export type DisconnectError = ConnectorNotFoundError | BaseError | Error
 
+/** https://wagmi.sh/core/actions/disconnect */
 export async function disconnect(
   config: Config,
   { connector: connector_ }: DisconnectParameters = {},
@@ -52,12 +53,13 @@ export async function disconnect(
 }
 
 ///////////////////////////////////////////////////////////////////////////
-// Mutation
+// TanStack Query
 
 export type DisconnectMutationData = void
 export type DisconnectMutationVariables = { connector?: Connector } | void
 export type DisconnectMutationParameters = { connector?: Connector | undefined }
 
+/** https://wagmi.sh/core/actions/disconnect#tanstack-query */
 export const disconnectMutationOptions = (
   config: Config,
   options: DisconnectMutationParameters,

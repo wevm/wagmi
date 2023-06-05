@@ -5,7 +5,7 @@
     "clean": "pnpm run --r --parallel clean",
     "dev": "pnpm --filter vite-react dev",
     "dev:core": "pnpm --filter vite-core dev",
-    "docs:dev": "pnpm --filter docs dev --open",
+    "docs:dev": "pnpm --filter docs dev",
     "format": "rome format . --write",
     "lint": "rome check .",
     "lint:fix": "pnpm lint --apply",

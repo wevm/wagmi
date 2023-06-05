@@ -40,7 +40,7 @@ Not all connectors support connecting directly to a `chainId` (e.g. they don't s
 
 ::: code-group
 ```ts [index.ts]
-import { mainnet } from '@wagmi/chains'
+import { mainnet } from 'viem/chains'
 import { connect } from '@wagmi/core'
 import { injected } from '@wagmi/connectors'
 import { config } from './config'
@@ -94,7 +94,7 @@ Connected accounts from connector.
 
 `number`
 
-Connected chain ID from connector
+Connected chain ID from connector.
 
 ## Error
 
@@ -102,7 +102,7 @@ Connected chain ID from connector
 import { type ConnectError } from '@wagmi/core'
 ```
 
-## Query
+## TanStack Query
 
 ```ts
 import {

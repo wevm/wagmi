@@ -7,7 +7,7 @@ const TVariables = '{ connector?: Connector | undefined; }'
 
 # useDisconnect
 
-Hook for disconnecting connections using the [disconnect](/core/actions/disconnect) action.
+Hook for disconnecting connections.
 
 ## Import
 
@@ -19,7 +19,7 @@ import { useDisconnect } from 'wagmi'
 
 ::: code-group
 ```tsx [index.tsx]
-import { useDisconnect } from 'wagmi/core'
+import { useDisconnect } from 'wagmi'
 import { config } from './config'
 
 function App() {
@@ -49,8 +49,8 @@ import { type UseDisconnectParameters } from 'wagmi'
 
 ::: code-group
 ```tsx [index.tsx]
+import { mainnet } from 'viem/chains'
 import { useAccount, useDisconnect } from 'wagmi'
-import { mainnet } from 'wagmi/chains'
 import { config } from './config'
 
 function App() {
@@ -75,10 +75,9 @@ Options passed to underlying [`useMutation`](https://tanstack.com/query/v5/docs/
 
 ::: code-group
 ```tsx [index.tsx]
+import { mainnet } from 'viem/chains'
 import { useDisconnect } from 'wagmi'
-import { mainnet } from 'wagmi/chains'
 import { injected } from 'wagmi/connectors'
-import { config } from './config'
 
 function App() {
   const { disconnect } = useDisconnect({
@@ -96,7 +95,6 @@ function App() {
   )
 }
 ```
-<<< snippets/react/config.ts[config.ts]
 :::
 
 <!--@include: @shared/mutation-options.md-->

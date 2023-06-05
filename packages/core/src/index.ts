@@ -6,7 +6,7 @@ export {
   type ConnectReturnType,
   type ConnectError,
   connect,
-  // Mutation
+  // TanStack Query
   type ConnectMutationData,
   type ConnectMutationVariables,
   type ConnectMutationParameters,
@@ -17,7 +17,7 @@ export {
   type DisconnectParameters,
   type DisconnectError,
   disconnect,
-  // Mutation
+  // TanStack Query
   type DisconnectMutationData,
   type DisconnectMutationVariables,
   type DisconnectMutationParameters,
@@ -44,7 +44,7 @@ export {
   type WatchBalanceParameters,
   type WatchBalanceReturnType,
   watchBalance,
-  // Query
+  // TanStack Query
   type GetBalanceQueryFnData,
   type GetBalanceQueryKey,
   type GetBalanceQueryParameters,
@@ -61,7 +61,7 @@ export {
   type WatchBlockNumberParameters,
   type WatchBlockNumberReturnType,
   watchBlockNumber,
-  // Query
+  // TanStack Query
   type GetBlockNumberQueryFnData,
   type GetBlockNumberQueryKey,
   type GetBlockNumberQueryParameters,
@@ -93,7 +93,7 @@ export {
   type ReconnectReturnType,
   type ReconnectError,
   reconnect,
-  // Mutation
+  // TanStack Query
   type ReconnectMutationData,
   type ReconnectMutationVariables,
   type ReconnectMutationParameters,
@@ -104,7 +104,7 @@ export {
   type SwitchAccountParameters,
   type SwitchAccountError,
   switchAccount,
-  // Mutation
+  // TanStack Query
   type SwitchAccountMutationData,
   type SwitchAccountMutationVariables,
   type SwitchAccountMutationParameters,

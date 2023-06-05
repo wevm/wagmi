@@ -3,9 +3,6 @@ import { shallow } from 'zustand/shallow'
 
 import { type Config, type Connector } from '../config.js'
 
-///////////////////////////////////////////////////////////////////////////
-// Getter
-
 export type GetAccountReturnType =
   | {
       address: Address
@@ -52,6 +49,7 @@ export type GetAccountReturnType =
       status: 'disconnected'
     }
 
+/** https://wagmi.sh/core/actions/getAccount */
 export function getAccount(config: Config): GetAccountReturnType {
   const uid = config.state.current!
   const connection = config.state.connections.get(uid)
@@ -120,6 +118,7 @@ export type WatchAccountParameters = {
 
 export type WatchAccountReturnType = () => void
 
+/** https://wagmi.sh/core/actions/getAccount#watcher */
 export function watchAccount(
   config: Config,
   { onChange }: WatchAccountParameters,

@@ -9,6 +9,7 @@ import { useConfig } from './useConfig.js'
 
 export type UseChainIdReturnType = GetChainIdReturnType
 
+/** https://wagmi.sh/react/hooks/useChainId */
 export function useChainId(): UseChainIdReturnType {
   const config = useConfig()
   return React.useSyncExternalStore(

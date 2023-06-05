@@ -42,6 +42,7 @@ type Result = UseMutationResult<
   DisconnectMutationVariables
 >
 
+/** https://wagmi.sh/react/hooks/useDisconnect */
 export function useDisconnect({
   connector,
   mutation,

@@ -40,6 +40,7 @@ type QueryOptions<TSelectData = GetBlockNumberQueryFnData> = Omit<
 export type UseBlockNumberReturnType<TSelectData = GetBlockNumberQueryFnData> =
   UseQueryReturnType<TSelectData, GetBlockNumberError>
 
+/** https://wagmi.sh/react/hooks/useBlockNumber */
 export function useBlockNumber<TSelectData = GetBlockNumberQueryFnData>({
   chainId: chainId_,
   enabled = true,

@@ -7,9 +7,6 @@ import {
 
 import { type Config } from '../config.js'
 
-///////////////////////////////////////////////////////////////////////////
-// Getter
-
 export type GetBlockNumberParameters = {
   chainId?: number | undefined
 }
@@ -21,6 +18,7 @@ export type GetBlockNumberError =
   // base
   | Error
 
+/** https://wagmi.sh/core/actions/getBlockNumber */
 export function getBlockNumber(
   config: Config,
   { chainId }: GetBlockNumberParameters = {},
@@ -42,6 +40,7 @@ export type WatchBlockNumberParameters = {
 export type WatchBlockNumberReturnType = () => void
 
 // TODO: wrap in viem's `observe` to avoid duplicate invocations.
+/** https://wagmi.sh/core/actions/getBlockNumber#watcher */
 export function watchBlockNumber(
   config: Config,
   {
@@ -93,7 +92,7 @@ export function watchBlockNumber(
 }
 
 ///////////////////////////////////////////////////////////////////////////
-// Query
+// TanStack Query
 
 export type GetBlockNumberQueryParameters = GetBlockNumberParameters
 export type GetBlockNumberQueryKey = readonly [
@@ -103,6 +102,7 @@ export type GetBlockNumberQueryKey = readonly [
 export type GetBlockNumberQueryFnData =
   NonNullable<GetBlockNumberReturnType> | null
 
+/** https://wagmi.sh/core/actions/getBlockNumber#tanstack-query */
 export const getBlockNumberQueryOptions = (
   config: Config,
   { chainId }: GetBlockNumberQueryParameters = {},

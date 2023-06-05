@@ -10,6 +10,7 @@ export type SwitchAccountParameters = {
 
 export type SwitchAccountError = ConnectorNotFoundError | BaseError | Error
 
+/** https://wagmi.sh/core/actions/switchAccount */
 export async function switchAccount(
   config: Config,
   { connector }: SwitchAccountParameters,
@@ -25,7 +26,7 @@ export async function switchAccount(
 }
 
 ///////////////////////////////////////////////////////////////////////////
-// Mutation
+// TanStack Query
 
 export type SwitchAccountMutationData = void
 export type SwitchAccountMutationVariables = { connector?: Connector }
@@ -33,6 +34,7 @@ export type SwitchAccountMutationParameters = {
   connector?: Connector | undefined
 }
 
+/** https://wagmi.sh/core/actions/switchAccount#tanstack-query */
 export const switchAccountMutationOptions = (
   config: Config,
   { connector }: SwitchAccountMutationParameters,

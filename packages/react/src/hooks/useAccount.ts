@@ -9,6 +9,7 @@ import { useConfig } from './useConfig.js'
 
 export type UseAccountReturnType = GetAccountReturnType
 
+/** https://wagmi.sh/react/hooks/useAccount */
 export function useAccount(): UseAccountReturnType {
   const config = useConfig()
   return useSyncExternalStoreWithTracked(

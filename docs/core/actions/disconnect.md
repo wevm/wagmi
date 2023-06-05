@@ -15,7 +15,7 @@ import { disconnect } from '@wagmi/core'
 import { disconnect } from '@wagmi/core'
 import { config } from './config'
 
-const result = await disconnect(config)
+await disconnect(config)
 ```
 <<< snippets/core/config.ts[config.ts]
 :::
@@ -48,17 +48,13 @@ const result = await disconnect(
 <<< snippets/core/config.ts[config.ts]
 :::
 
-## Return Type
-
-`void`
-
 ## Error
 
 ```ts
 import { type DisconnectError } from '@wagmi/core'
 ```
 
-## Query
+## TanStack Query
 
 ```ts
 import {

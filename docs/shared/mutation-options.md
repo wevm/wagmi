@@ -1,3 +1,12 @@
+<!--
+<script setup>
+const mutate = 'mutationFn'
+const TData = 'TData'
+const TError = 'TError'
+const TVariables = 'TVariables'
+</script>
+-->
+
 #### gcTime
 
 `number | Infinity`
@@ -44,7 +53,7 @@ This function will fire when the mutation is successful and will be passed the m
 
 This function will fire when the mutation is either successfully fetched or encounters an error and be passed either the data or error
 
-#### queryClient
+#### TanStack QueryClient
 
 `QueryClient`
 

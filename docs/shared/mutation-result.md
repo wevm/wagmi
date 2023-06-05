@@ -1,3 +1,12 @@
+<!--
+<script setup>
+const mutate = 'mutationFn'
+const TData = 'TData'
+const TError = 'TError'
+const TVariables = 'TVariables'
+</script>
+-->
+
 ### {{mutate}}
 
 `(variables: {{TVariables}}, { onSuccess, onSettled, onError }) => void`

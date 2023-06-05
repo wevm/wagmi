@@ -8,7 +8,7 @@ import {
   watchBlockNumber,
 } from '@wagmi/core'
 import type { Pretty } from '@wagmi/core/internal'
-import { useEffect } from 'react'
+import * as React from 'react'
 
 import type { OmittedUseQueryOptions } from '../types/query.js'
 import { useChainId } from './useChainId.js'
@@ -39,6 +39,7 @@ type QueryOptions<TSelectData = GetBalanceQueryFnData> = Omit<
 export type UseBalanceReturnType<TSelectData = GetBalanceQueryFnData> =
   UseQueryReturnType<TSelectData, GetBalanceError>
 
+/** https://wagmi.sh/react/hooks/useBalance */
 export function useBalance<TSelectData = GetBalanceQueryFnData>({
   address,
   chainId: chainId_,
@@ -58,7 +59,7 @@ export function useBalance<TSelectData = GetBalanceQueryFnData>({
     unit,
   })
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!enabled) return
     if (!address) return
     if (!watch) return

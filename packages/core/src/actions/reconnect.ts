@@ -1,7 +1,6 @@
 import { type MutationOptions } from '@tanstack/query-core'
-import type { Address } from 'viem'
 
-import type { Config, Connector } from '../config.js'
+import type { Config, Connection, Connector } from '../config.js'
 import { type CreateConnectorFn } from '../connector.js'
 import type { Pretty } from '../types/utils.js'
 
@@ -12,15 +11,11 @@ export type ReconnectParameters = {
     | undefined
 }
 
-export type ReconnectReturnType = {
-  /** Connected accounts from connector */
-  accounts: readonly Address[]
-  /** Connected chain ID from connector */
-  chainId: number
-}[]
+export type ReconnectReturnType = Pretty<Connection>[]
 
 export type ReconnectError = Error
 
+/** https://wagmi.sh/core/actions/reconnect */
 export async function reconnect(
   config: Config,
   { connectors: connectors_ }: ReconnectParameters = {},
@@ -82,7 +77,11 @@ export async function reconnect(
         connections,
       }
     })
-    connections.push({ accounts: data.accounts, chainId: data.chainId })
+    connections.push({
+      accounts: data.accounts,
+      chainId: data.chainId,
+      connector,
+    })
     connected = true
   }
 
@@ -100,7 +99,7 @@ export async function reconnect(
 }
 
 ///////////////////////////////////////////////////////////////////////////
-// Mutation
+// TanStack Query
 
 export type ReconnectMutationData = Pretty<ReconnectReturnType>
 export type ReconnectMutationVariables = Pretty<{
@@ -111,6 +110,7 @@ export type ReconnectMutationVariables = Pretty<{
 }>
 export type ReconnectMutationParameters = Pretty<ReconnectMutationVariables>
 
+/** https://wagmi.sh/core/actions/reconnect#tanstack-query */
 export const reconnectMutationOptions = (
   config: Config,
   { connectors }: ReconnectMutationParameters,

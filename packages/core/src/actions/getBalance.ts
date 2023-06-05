@@ -17,9 +17,6 @@ import type {
   WatchBlockNumberReturnType,
 } from './getBlockNumber.js'
 
-///////////////////////////////////////////////////////////////////////////
-// Getter
-
 export type GetBalanceParameters = Pretty<
   GetBalanceParameters_ & {
     /** Chain ID to fetch balance from. */
@@ -44,6 +41,7 @@ export type GetBalanceError =
   // base
   | Error
 
+/** https://wagmi.sh/core/actions/getBalance */
 export async function getBalance(
   config: Config,
   { address, chainId, token, unit = 'ether', ...rest }: GetBalanceParameters,
@@ -82,6 +80,7 @@ export type WatchBalanceParameters = Pretty<
 export type WatchBalanceReturnType = () => void
 
 // TODO: wrap in viem's `observe` to avoid duplicate invocations.
+/** https://wagmi.sh/core/actions/getBalance#watcher */
 export function watchBalance(
   config: Config,
   {
@@ -152,7 +151,7 @@ export function watchBalance(
 }
 
 ///////////////////////////////////////////////////////////////////////////
-// Query
+// TanStack Query
 
 export type GetBalanceQueryParameters = PartialBy<
   GetBalanceParameters,
@@ -161,6 +160,7 @@ export type GetBalanceQueryParameters = PartialBy<
 export type GetBalanceQueryKey = readonly ['balance', GetBalanceQueryParameters]
 export type GetBalanceQueryFnData = NonNullable<GetBalanceReturnType> | null
 
+/** https://wagmi.sh/core/actions/getBalance#tanstack-query */
 export const getBalanceQueryOptions = (
   config: Config,
   {

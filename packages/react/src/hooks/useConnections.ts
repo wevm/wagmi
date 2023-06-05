@@ -9,6 +9,7 @@ import { useConfig } from './useConfig.js'
 
 export type UseConnectionsReturnType = GetConnectionsReturnType
 
+/** https://wagmi.sh/react/hooks/useConnections */
 export function useConnections(): UseConnectionsReturnType {
   const config = useConfig()
   return React.useSyncExternalStore(
