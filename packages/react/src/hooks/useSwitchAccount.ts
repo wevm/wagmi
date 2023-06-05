@@ -18,39 +18,44 @@ import type { OmittedUseMutationResult } from '../types/query.js'
 import { useConfig } from './useConfig.js'
 import { useConnections } from './useConnections.js'
 
-export type UseSwitchAccountParameters = Pretty<
+export type UseSwitchAccountParameters<TContext = unknown> = Pretty<
   SwitchAccountMutationParameters & {
-    mutation?: Omit<Options, OmittedMutationOptions>
+    mutation?: Omit<Options<TContext>, OmittedMutationOptions>
   }
 >
-type Options = UseMutationOptions<
+type Options<TContext = unknown> = UseMutationOptions<
   SwitchAccountMutationData,
   SwitchAccountError,
-  SwitchAccountMutationVariables
+  SwitchAccountMutationVariables,
+  TContext
 >
 
-export type UseSwitchAccountReturnType = Pretty<
-  Omit<Result, OmittedUseMutationResult> & {
+export type UseSwitchAccountReturnType<TContext = unknown> = Pretty<
+  Omit<Result<TContext>, OmittedUseMutationResult> & {
     connectors: readonly Connector[]
-    switchAccount: Result['mutate']
-    switchAccountAsync: Result['mutateAsync']
+    switchAccount: Result<TContext>['mutate']
+    switchAccountAsync: Result<TContext>['mutateAsync']
   }
 >
-type Result = UseMutationResult<
+type Result<TContext = unknown> = UseMutationResult<
   SwitchAccountMutationData,
   SwitchAccountError,
-  SwitchAccountMutationVariables
+  SwitchAccountMutationVariables,
+  TContext
 >
 
 /** https://wagmi.sh/react/hooks/useSwitchAccount */
-export function useSwitchAccount({
+export function useSwitchAccount<TContext = unknown>({
   connector,
   mutation,
-}: UseSwitchAccountParameters = {}): UseSwitchAccountReturnType {
+}: UseSwitchAccountParameters<TContext> = {}): UseSwitchAccountReturnType<TContext> {
   const config = useConfig()
-  const { mutate, mutateAsync, ...mutationOptions } = useMutation(
-    switchAccountMutationOptions(config, { connector }),
-  )
+  const { mutate, mutateAsync, ...mutationOptions } = useMutation<
+    SwitchAccountMutationData,
+    SwitchAccountError,
+    SwitchAccountMutationVariables,
+    TContext
+  >(switchAccountMutationOptions(config, { connector }))
   const connections = useConnections()
   const connectors = connections.map((connection) => connection.connector)
 

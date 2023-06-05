@@ -17,39 +17,44 @@ import type { Pretty } from '@wagmi/core/internal'
 import type { OmittedUseMutationResult } from '../types/query.js'
 import { useConfig } from './useConfig.js'
 
-export type UseReconnectParameters = Pretty<
+export type UseReconnectParameters<TContext = unknown> = Pretty<
   ReconnectMutationParameters & {
-    mutation?: Omit<MutationOptions, OmittedMutationOptions>
+    mutation?: Omit<MutationOptions<TContext>, OmittedMutationOptions>
   }
 >
-type MutationOptions = UseMutationOptions<
+type MutationOptions<TContext = unknown> = UseMutationOptions<
   ReconnectMutationData,
   ReconnectError,
-  ReconnectMutationVariables
+  ReconnectMutationVariables,
+  TContext
 >
 
-export type UseReconnectReturnType = Pretty<
-  Omit<Result, OmittedUseMutationResult> & {
-    reconnect: Result['mutate']
-    reconnectAsync: Result['mutateAsync']
+export type UseReconnectReturnType<TContext = unknown> = Pretty<
+  Omit<Result<TContext>, OmittedUseMutationResult> & {
+    reconnect: Result<TContext>['mutate']
+    reconnectAsync: Result<TContext>['mutateAsync']
     connectors: readonly Connector[]
   }
 >
-type Result = UseMutationResult<
+type Result<TContext = unknown> = UseMutationResult<
   ReconnectMutationData,
   ReconnectError,
-  ReconnectMutationVariables
+  ReconnectMutationVariables,
+  TContext
 >
 
 /** https://wagmi.sh/react/hooks/useReconnect */
-export function useReconnect({
+export function useReconnect<TContext = unknown>({
   connectors,
   mutation,
 }: UseReconnectParameters = {}): UseReconnectReturnType {
   const config = useConfig()
-  const { mutate, mutateAsync, ...mutationOptions } = useMutation(
-    reconnectMutationOptions(config, { connectors }),
-  )
+  const { mutate, mutateAsync, ...mutationOptions } = useMutation<
+    ReconnectMutationData,
+    ReconnectError,
+    ReconnectMutationVariables,
+    TContext
+  >(reconnectMutationOptions(config, { connectors }))
   return {
     ...mutationOptions,
     ...mutation,

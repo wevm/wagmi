@@ -68,16 +68,15 @@ export type DisconnectMutationParameters = Pretty<
 export const disconnectMutationOptions = (
   config: Config,
   { connector }: DisconnectMutationParameters = {},
-) => {
-  return {
+) =>
+  ({
     mutationFn(variables) {
       const connector_ = variables?.connector ?? connector
       return disconnect(config, { connector: connector_ })
     },
     mutationKey: ['disconnect', { connector }],
-  } as const satisfies MutationOptions<
+  }) as const satisfies MutationOptions<
     DisconnectMutationData,
     DisconnectError,
     DisconnectMutationVariables
   >
-}
