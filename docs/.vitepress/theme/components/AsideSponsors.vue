@@ -1,18 +1,22 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { VPDocAsideSponsors } from 'vitepress/theme'
-import { useSponsor } from '../composables/useSponsor'
+import { useSponsors } from '../composables/useSponsors'
 
-const { data } = useSponsor()
+const { data } = useSponsors()
 
 const sponsors = computed(() => {
   return (
-    data?.value.map((sponsor) => {
-      return {
-        size: sponsor.size === 'big' ? 'mini' : 'xmini',
-        items: sponsor.items,
-      }
-    }) ?? []
+    data?.value
+      ?.filter(
+        (sponsor) => sponsor.type === 'platinum' || sponsor.type === 'gold',
+      )
+      .map((sponsor) => {
+        return {
+          size: sponsor.type === 'platinum' ? 'mini' : 'xmini',
+          items: sponsor.items,
+        }
+      }) ?? []
   )
 })
 </script>

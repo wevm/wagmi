@@ -102,7 +102,7 @@ Connected chain ID from connector
 import { type ConnectError } from '@wagmi/core'
 ```
 
-## Mutation
+## Query
 
 ```ts
 import {

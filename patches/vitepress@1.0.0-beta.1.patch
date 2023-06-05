@@ -1,0 +1,36 @@
+diff --git a/dist/client/theme-default/without-fonts.js b/dist/client/theme-default/without-fonts.js
+index 92e11165e7de09ffe1ad7332709f051271963843..6e2f989490aba5bad7abfa6da060d68e95c240ab 100644
+--- a/dist/client/theme-default/without-fonts.js
++++ b/dist/client/theme-default/without-fonts.js
+@@ -11,10 +11,13 @@ import Layout from './Layout.vue';
+ // Note: if we add more optional components here, i.e. components that are not
+ // used in the theme by default unless the user imports them, make sure to update
+ // the `lazyDefaultThemeComponentsRE` regex in src/node/build/bundle.ts.
++export { default as VPButton } from './components/VPButton.vue';
+ export { default as VPHomeHero } from './components/VPHomeHero.vue';
+ export { default as VPHomeFeatures } from './components/VPHomeFeatures.vue';
+ export { default as VPHomeSponsors } from './components/VPHomeSponsors.vue';
++export { default as VPIconHeart } from './components/icons/VPIconHeart.vue';
+ export { default as VPDocAsideSponsors } from './components/VPDocAsideSponsors.vue';
++export { default as VPSponsors } from './components/VPSponsors.vue';
+ export { default as VPTeamPage } from './components/VPTeamPage.vue';
+ export { default as VPTeamPageTitle } from './components/VPTeamPageTitle.vue';
+ export { default as VPTeamPageSection } from './components/VPTeamPageSection.vue';
+diff --git a/theme.d.ts b/theme.d.ts
+index 1848e45bcc5035562d59467c6f798b0312c11202..6195f7c2a7ce12008b29c343c43798e637e21b9e 100644
+--- a/theme.d.ts
++++ b/theme.d.ts
+@@ -3,10 +3,13 @@ import type { DefineComponent } from 'vue'
+ import { EnhanceAppContext } from './dist/client/index.js'
+ 
+ // TODO: add props for these
++export const VPButton: DefineComponent
+ export const VPHomeHero: DefineComponent
+ export const VPHomeFeatures: DefineComponent
+ export const VPHomeSponsors: DefineComponent
++export const VPIconHeart: DefineComponent
+ export const VPDocAsideSponsors: DefineComponent
++export const VPSponsors: DefineComponent
+ export const VPTeamPage: DefineComponent
+ export const VPTeamPageTitle: DefineComponent
+ export const VPTeamPageSection: DefineComponent

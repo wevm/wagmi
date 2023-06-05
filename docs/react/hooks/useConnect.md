@@ -77,9 +77,9 @@ function App() {
 
 ### connector
 
-`CreateConnectorFn | Connector`
+`CreateConnectorFn | Connector | undefined`
 
-[Connector](/core/connectors) to connect with.
+[Connector](/react/connectors) to connect with.
 
 ::: code-group
 ```tsx [index.tsx]

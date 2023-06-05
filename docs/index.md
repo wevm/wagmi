@@ -6,23 +6,28 @@ titleTemplate: false
 layout: home
 
 hero:
-  name: "wagmi"
-  text: "React Hooks for Ethereum"
-  tagline: My great project tagline
+  name: wagmi
+  text: React Hooks for Ethereum
+  tagline: Everything you need to work with Ethereum.
   actions:
     - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
+      text: Get Started
+      link: /react/getting-started
     - theme: alt
-      text: API Examples
-      link: /api-examples
+      text: Why Wagmi?
+      link: /react/why-wagmi
 
 features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+  - icon: 🚀
+    title: 20+ React Hooks
+    details: React Hooks for working with wallets, ENS, contracts, transactions, signing, and more.
+  - icon: 🦄
+    title: Incredible DX
+    details: TypeScript ready. Infer types automatically from ABIs and EIP-712 Typed Data.
+  - icon: 💼
+    title: Official Wallet Connectors
+    details: Official wallet connectors for MetaMask, WalletConnect, Coinbase Wallet, and more.
+  - icon: 👟
+    title: Caching, Multicall & Batching
+    details: Built-in caching, deduplication, multicall, batching, persistence using Tanstack Query.
 ---
-

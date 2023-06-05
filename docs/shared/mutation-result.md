@@ -4,30 +4,30 @@
 
 The mutation function you can call with variables to trigger the mutation and optionally hooks on additional callback options.
 
-#### variables
+- #### variables
 
-`{{TVariables}}`
+  `{{TVariables}}`
 
-The variables object to pass to the <a :href="`/core/actions/${mutate}`">`{{mutate}}`</a> action.
+  The variables object to pass to the <a :href="`/core/actions/${mutate}`">`{{mutate}}`</a> action.
 
-#### onSuccess
+- #### onSuccess
 
-`(data: {{TData}}, variables: {{TVariables}}, context: TContext) => void`
+  `(data: {{TData}}, variables: {{TVariables}}, context: TContext) => void`
 
-This function will fire when the mutation is successful and will be passed the mutation's result.
+  This function will fire when the mutation is successful and will be passed the mutation's result.
 
-#### onError
+- #### onError
 
-`(error: {{TError}}, variables: {{TVariables}}, context: TContext | undefined) => void`
+  `(error: {{TError}}, variables: {{TVariables}}, context: TContext | undefined) => void`
 
-This function will fire if the mutation encounters an error and will be passed the error.
+  This function will fire if the mutation encounters an error and will be passed the error.
 
-#### onSettled
+- #### onSettled
 
-`(data: {{TData}} | undefined, error: {{TError}} | null, variables: {{TVariables}}, context: TContext | undefined) => void`
+  `(data: {{TData}} | undefined, error: {{TError}} | null, variables: {{TVariables}}, context: TContext | undefined) => void`
 
-- This function will fire when the mutation is either successfully fetched or encounters an error and be passed either the data or error
-- If you make multiple requests, `onSuccess` will fire only after the latest call you've made.
+  - This function will fire when the mutation is either successfully fetched or encounters an error and be passed either the data or error
+  - If you make multiple requests, `onSuccess` will fire only after the latest call you've made.
 
 ### {{mutate}}Async
 
@@ -40,13 +40,13 @@ Similar to [`{{mutate}}`](#mutate) but returns a promise which can be awaited.
 `{{TData}} | undefined`
 
 - Defaults to `undefined`
-- The last successfully resolved data for the query.
+- The last successfully resolved data for the mutation.
 
 ### error
 
 `{{TError}} | null`
 
-The error object for the query, if an error was encountered.
+The error object for the mutation, if an error was encountered.
 
 ### failureCount
 
@@ -63,17 +63,11 @@ The error object for the query, if an error was encountered.
 - The failure reason for the mutation retry.
 - Reset to `null` when the mutation succeeds.
 
-### isError
+### isError / isIdle / isPending / isSuccess
 
 `boolean`
 
-Boolean variable derived from [`status`](#status).
-
-### isIdle
-
-`boolean`
-
-Boolean variable derived from [`status`](#status).
+Boolean variables derived from [`status`](#status).
 
 ### isPaused
 
@@ -81,18 +75,6 @@ Boolean variable derived from [`status`](#status).
 
 - will be `true` if the mutation has been `paused`.
 - see [Network Mode](https://tanstack.com/query/v5/docs/react/guides/network-mode) for more information.
-
-### isPending
-
-`boolean`
-
-Boolean variable derived from [`status`](#status).
-
-### isSuccess
-
-`boolean`
-
-Boolean variable derived from [`status`](#status).
 
 ### reset
 

@@ -18,5 +18,10 @@
     "target": "esnext",
     "types": ["vite/client", "vitepress"]
   },
+  "include": [
+    "./*.ts",
+    "./.vitepress/**/*.ts",
+    "./.vitepress/**/*.vue"
+  ],
   "exclude": ["dist", "node_modules"]
 }

@@ -59,7 +59,8 @@
     "patchedDependencies": {
       "@coinbase/wallet-sdk@3.6.6": "patches/@coinbase__wallet-sdk@3.6.6.patch",
       "@walletconnect/ethereum-provider@2.7.2": "patches/@walletconnect__ethereum-provider@2.7.2.patch",
-      "@web3modal/standalone@2.4.1": "patches/@web3modal__standalone@2.4.1.patch"
+      "@web3modal/standalone@2.4.1": "patches/@web3modal__standalone@2.4.1.patch",
+      "vitepress@1.0.0-beta.1": "patches/vitepress@1.0.0-beta.1.patch"
     },
     "peerDependencyRules": {
       "ignoreMissing": [

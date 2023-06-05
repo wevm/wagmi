@@ -8,10 +8,12 @@
     "preview": "vitepress preview"
   },
   "devDependencies": {
+    "@unocss/reset": "^0.53.0",
     "@wagmi/chains": "workspace:*",
     "@wagmi/connectors": "workspace:*",
     "@wagmi/core": "workspace:*",
     "@wagmi/test": "workspace:*",
+    "unocss": "^0.53.0",
     "viem": "~0.3",
     "vitepress": "1.0.0-beta.1",
     "vitepress-plugin-shiki-twoslash": "^0.0.6",
