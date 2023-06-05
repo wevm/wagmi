@@ -1,6 +1,12 @@
 import { assertType, expectTypeOf, test } from 'vitest'
 
-import type { ExactPartial, Mutable, OneOf, PartialBy } from './utils.js'
+import {
+  type ExactPartial,
+  type Mutable,
+  type NonVoid,
+  type OneOf,
+  type PartialBy,
+} from './utils.js'
 
 test('ExactPartial', () => {
   expectTypeOf<ExactPartial<{ foo: boolean; bar: boolean }>>().toEqualTypeOf<{
@@ -13,6 +19,10 @@ test('Mutable', () => {
   expectTypeOf<
     Mutable<{ foo: boolean; readonly bar: boolean }>
   >().toEqualTypeOf<{ foo: boolean; bar: boolean }>()
+})
+
+test('OneOf', () => {
+  expectTypeOf<NonVoid<string | void>>().toEqualTypeOf<string>()
 })
 
 test('OneOf', () => {

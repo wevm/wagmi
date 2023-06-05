@@ -58,8 +58,7 @@
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.0.11",
     "@viem/anvil": "0.0.5",
-    "@wagmi/core": "workspace:*",
-    "@wagmi/chains": "workspace:*"
+    "@wagmi/core": "workspace:*"
   },
   "peerDependenciesMeta": {
     "react": {

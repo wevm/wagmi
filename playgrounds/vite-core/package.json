@@ -8,7 +8,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@wagmi/chains": "workspace:*",
     "@wagmi/connectors": "workspace:*",
     "@wagmi/core": "workspace:*",
     "react": "^18.2.0",

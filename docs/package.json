@@ -9,7 +9,6 @@
   },
   "devDependencies": {
     "@unocss/reset": "^0.53.0",
-    "@wagmi/chains": "workspace:*",
     "@wagmi/connectors": "workspace:*",
     "@wagmi/core": "workspace:*",
     "@wagmi/test": "workspace:*",

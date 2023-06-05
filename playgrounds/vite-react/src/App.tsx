@@ -1,3 +1,4 @@
+import { optimism } from 'viem/chains'
 import {
   useAccount,
   useBalance,
@@ -7,7 +8,6 @@ import {
   useDisconnect,
   useSwitchAccount,
 } from 'wagmi'
-import { optimism } from 'wagmi/chains'
 
 function App() {
   return (

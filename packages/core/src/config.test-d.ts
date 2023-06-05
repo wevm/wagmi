@@ -1,6 +1,6 @@
-import { mainnet, sepolia } from '@wagmi/chains'
 import { injected } from '@wagmi/connectors'
 import { createPublicClient, http } from 'viem'
+import { mainnet, sepolia } from 'viem/chains'
 import { test } from 'vitest'
 
 import { createConfig } from './config.js'

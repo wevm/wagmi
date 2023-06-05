@@ -13,11 +13,8 @@ import * as React from 'react'
 import type { OmittedUseQueryOptions } from '../types/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
-import {
-  type UseQueryParameters,
-  type UseQueryReturnType,
-  useQuery,
-} from './useQuery.js'
+import { type UseQueryParameters, useQuery } from './useQuery.js'
+import type { UseQueryResult } from '@tanstack/react-query'
 
 export type UseBlockNumberParameters<TSelectData = GetBlockNumberQueryFnData> =
   Pretty<
@@ -38,7 +35,7 @@ type QueryOptions<TSelectData = GetBlockNumberQueryFnData> = Omit<
 >
 
 export type UseBlockNumberReturnType<TSelectData = GetBlockNumberQueryFnData> =
-  UseQueryReturnType<TSelectData, GetBlockNumberError>
+  UseQueryResult<TSelectData, GetBlockNumberError>
 
 /** https://wagmi.sh/react/hooks/useBlockNumber */
 export function useBlockNumber<TSelectData = GetBlockNumberQueryFnData>({

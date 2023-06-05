@@ -22,7 +22,6 @@
     "paths": {
       "wagmi": ["../../packages/react/src"],
       "wagmi/actions": ["../../packages/react/src/actions.ts"],
-      "wagmi/chains": ["../../packages/react/src/chains.ts"],
       "wagmi/connectors": ["../../packages/react/src/connectors.ts"]
     }
   },

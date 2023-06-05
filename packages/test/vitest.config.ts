@@ -5,7 +5,6 @@ import { defineProject } from 'vitest/config'
 export default defineProject({
   resolve: {
     alias: {
-      '@wagmi/chains': path.resolve(__dirname, '../chains/src'),
       '@wagmi/core': path.resolve(__dirname, '../core/src'),
     },
   },
