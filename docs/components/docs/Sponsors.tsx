@@ -4,7 +4,7 @@ const sponsors = [
   {
     id: 'rainbow',
     name: 'Rainbow',
-    href: 'https://twitter.com/rainbowdotme',
+    href: 'https://rainbow.me/',
     logo: {
       dark: 'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/rainbow-dark.svg',
       light:
