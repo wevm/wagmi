@@ -3,7 +3,6 @@
   "include": ["src/**/*.ts"],
   "exclude": ["src/**/*.test.ts", "src/**/*.test-d.ts"],
   "compilerOptions": {
-    "noImplicitReturns": false, // React.useEffect doesn't play well with this
     "sourceMap": true
   }
 }

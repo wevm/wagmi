@@ -61,7 +61,9 @@ export function useBlockNumber<TSelectData = GetBlockNumberQueryFnData>({
         },
       })
       return unwatch
-    } catch {}
+    } catch {
+      return
+    }
   }, [chainId, watch])
 
   return useQuery({
