@@ -1,5 +1,13 @@
 # @wagmi/core
 
+## 1.1.1
+
+### Patch Changes
+
+- [`02b98a9f`](https://github.com/wagmi-dev/wagmi/commit/02b98a9f9b2c503a47af4a8967e0202b5db21787) Thanks [@jxom](https://github.com/jxom)! - Updated `viem` peer dependency.
+
+- [`02b98a9f`](https://github.com/wagmi-dev/wagmi/commit/02b98a9f9b2c503a47af4a8967e0202b5db21787) Thanks [@jxom](https://github.com/jxom)! - Updated references.
+
 ## 1.1.0
 
 ### Minor Changes
