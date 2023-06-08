@@ -19,11 +19,8 @@ import type {
 
 export type GetBalanceParameters = Pretty<
   GetBalanceParameters_ & {
-    /** Chain ID to fetch balance from. */
     chainId?: number | undefined
-    /** ERC-20 address */
     token?: Address | undefined
-    /** Unit for formatting output */
     unit?: Unit | undefined
   }
 >

@@ -17,7 +17,9 @@ describe('watchBlockNumber', () => {
   test('default', async () => {
     const blockNumbers: bigint[] = []
     const unwatch = watchBlockNumber(config, {
-      onBlockNumber: (blockNumber) => blockNumbers.push(blockNumber),
+      onBlockNumber(blockNumber) {
+        blockNumbers.push(blockNumber)
+      },
     })
 
     await testClient.anvil.mine({ blocks: 1 })

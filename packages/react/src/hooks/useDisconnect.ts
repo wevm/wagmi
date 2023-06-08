@@ -18,43 +18,43 @@ import type { OmittedUseMutationResult } from '../types/query.js'
 import { useConfig } from './useConfig.js'
 import { useConnections } from './useConnections.js'
 
-export type UseDisconnectParameters<TContext = unknown> = Pretty<
+export type UseDisconnectParameters<context = unknown> = Pretty<
   DisconnectMutationParameters & {
-    mutation?: Omit<Options<TContext>, OmittedMutationOptions>
+    mutation?: Omit<Options<context>, OmittedMutationOptions>
   }
 >
-type Options<TContext = unknown> = UseMutationOptions<
+type Options<context = unknown> = UseMutationOptions<
   DisconnectMutationData,
   DisconnectError,
   DisconnectMutationVariables,
-  TContext
+  context
 >
 
-export type UseDisconnectReturnType<TContext = unknown> = Pretty<
-  Omit<Result<TContext>, OmittedUseMutationResult> & {
+export type UseDisconnectReturnType<context = unknown> = Pretty<
+  Omit<Result<context>, OmittedUseMutationResult> & {
     connectors: readonly Connector[]
-    disconnect: Result<TContext>['mutate']
-    disconnectAsync: Result<TContext>['mutateAsync']
+    disconnect: Result<context>['mutate']
+    disconnectAsync: Result<context>['mutateAsync']
   }
 >
-type Result<TContext = unknown> = UseMutationResult<
+type Result<context = unknown> = UseMutationResult<
   DisconnectMutationData,
   DisconnectError,
   DisconnectMutationVariables,
-  TContext
+  context
 >
 
 /** https://wagmi.sh/react/hooks/useDisconnect */
-export function useDisconnect<TContext = unknown>({
+export function useDisconnect<context = unknown>({
   connector,
   mutation,
-}: UseDisconnectParameters<TContext> = {}): UseDisconnectReturnType<TContext> {
+}: UseDisconnectParameters<context> = {}): UseDisconnectReturnType<context> {
   const config = useConfig()
   const { mutate, mutateAsync, ...mutationOptions } = useMutation<
     DisconnectMutationData,
     DisconnectError,
     DisconnectMutationVariables,
-    TContext
+    context
   >(disconnectMutationOptions(config, { connector }))
   const connections = useConnections()
   const connectors = connections.map((connection) => connection.connector)

@@ -10,9 +10,6 @@ import { WagmiConfig } from 'wagmi'
 
 import { config } from './config.js'
 
-////////////////////////////////////////////////////////////////////////////////
-// react
-
 export function createWrapper<TComponent extends React.FunctionComponent<any>>(
   Wrapper: TComponent,
   props: Parameters<TComponent>[0],

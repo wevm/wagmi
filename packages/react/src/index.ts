@@ -68,8 +68,6 @@ export {
 // @wagmi/core
 
 export {
-  // Chain
-  type Chain,
   // Config
   type Connection,
   type Connector,

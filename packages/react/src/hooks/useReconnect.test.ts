@@ -17,7 +17,7 @@ afterEach(async () => {
 })
 
 test('default', async () => {
-  const { result } = renderHook(useReconnect)
+  const { result } = renderHook(() => useReconnect())
 
   expect(result.current.connectors).toBeDefined()
 

@@ -1,61 +1,68 @@
 import { EventEmitter } from 'eventemitter3'
 
 type EventMap = Record<string, object | never>
-type EventKey<T extends EventMap> = string & keyof T
-type EventFn<T extends unknown[] = any[]> = (...parameters: T) => void
-export type EventData<T extends EventMap, K extends keyof T> = (T[K] extends [
-  never,
-]
-  ? unknown
-  : T[K]) & {
+type EventKey<eventMap extends EventMap> = string & keyof eventMap
+type EventFn<parameters extends unknown[] = any[]> = (
+  ...parameters: parameters
+) => void
+export type EventData<
+  eventMap extends EventMap,
+  eventName extends keyof eventMap,
+> = (eventMap[eventName] extends [never] ? unknown : eventMap[eventName]) & {
   uid: string
 }
 
-export class Emitter<T extends EventMap> {
+export class Emitter<eventMap extends EventMap> {
   #emitter = new EventEmitter()
 
   constructor(public uid: string) {}
 
-  on<K extends EventKey<T>>(
-    eventName: K,
+  on<key extends EventKey<eventMap>>(
+    eventName: key,
     fn: EventFn<
-      T[K] extends [never] ? [{ uid: string }] : [data: T[K] & { uid: string }]
+      eventMap[key] extends [never]
+        ? [{ uid: string }]
+        : [data: eventMap[key] & { uid: string }]
     >,
   ) {
     this.#emitter.on(eventName, fn as EventFn)
   }
 
-  once<K extends EventKey<T>>(
-    eventName: K,
+  once<key extends EventKey<eventMap>>(
+    eventName: key,
     fn: EventFn<
-      T[K] extends [never] ? [{ uid: string }] : [data: T[K] & { uid: string }]
+      eventMap[key] extends [never]
+        ? [{ uid: string }]
+        : [data: eventMap[key] & { uid: string }]
     >,
   ) {
     this.#emitter.once(eventName, fn as EventFn)
   }
 
-  off<K extends EventKey<T>>(
-    eventName: K,
+  off<key extends EventKey<eventMap>>(
+    eventName: key,
     fn: EventFn<
-      T[K] extends [never] ? [{ uid: string }] : [data: T[K] & { uid: string }]
+      eventMap[key] extends [never]
+        ? [{ uid: string }]
+        : [data: eventMap[key] & { uid: string }]
     >,
   ) {
     this.#emitter.off(eventName, fn as EventFn)
   }
 
-  emit<K extends EventKey<T>>(
-    eventName: K,
-    ...params: T[K] extends [never] ? [] : [data: T[K]]
+  emit<key extends EventKey<eventMap>>(
+    eventName: key,
+    ...params: eventMap[key] extends [never] ? [] : [data: eventMap[key]]
   ) {
     const data = params[0]
     this.#emitter.emit(eventName, { uid: this.uid, ...data })
   }
 
-  listenerCount<K extends EventKey<T>>(eventName: K) {
+  listenerCount<key extends EventKey<eventMap>>(eventName: key) {
     return this.#emitter.listenerCount(eventName)
   }
 }
 
-export function createEmitter<T extends EventMap>(uid: string) {
-  return new Emitter<T>(uid)
+export function createEmitter<eventMap extends EventMap>(uid: string) {
+  return new Emitter<eventMap>(uid)
 }

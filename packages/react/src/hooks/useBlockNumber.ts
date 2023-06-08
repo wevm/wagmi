@@ -56,8 +56,9 @@ export function useBlockNumber<TSelectData = GetBlockNumberQueryFnData>({
     try {
       const unwatch = watchBlockNumber(config, {
         chainId,
-        onBlockNumber: (blockNumber) =>
-          config.queryClient.setQueryData(queryOptions.queryKey, blockNumber),
+        onBlockNumber(blockNumber) {
+          config.queryClient.setQueryData(queryOptions.queryKey, blockNumber)
+        },
       })
       return unwatch
     } catch {}

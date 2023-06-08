@@ -9,6 +9,7 @@ import {
   type ConnectMutationParameters,
   type ConnectMutationVariables,
   type Connector,
+  type CreateConnectorFn,
   type OmittedMutationOptions,
   connectMutationOptions,
 } from '@wagmi/core'
@@ -17,45 +18,68 @@ import type { Pretty } from '@wagmi/core/internal'
 import type { OmittedUseMutationResult } from '../types/query.js'
 import { useConfig } from './useConfig.js'
 
-export type UseConnectParameters<TContext = unknown> = Pretty<
-  ConnectMutationParameters & {
-    mutation?: Omit<MutationOptions<TContext>, OmittedMutationOptions>
+export type UseConnectParameters<
+  connector extends CreateConnectorFn | Connector | undefined,
+  context = unknown,
+> = Pretty<
+  ConnectMutationParameters<connector> & {
+    mutation?: Omit<MutationOptions<connector, context>, OmittedMutationOptions>
   }
 >
-type MutationOptions<TContext = unknown> = UseMutationOptions<
+type MutationOptions<
+  connector extends CreateConnectorFn | Connector | undefined,
+  context = unknown,
+> = UseMutationOptions<
   ConnectMutationData,
   ConnectError,
-  ConnectMutationVariables,
-  TContext
+  ConnectMutationVariables<connector>,
+  context
 >
 
-export type UseConnectReturnType<TContext = unknown> = Pretty<
-  Omit<Result<TContext>, OmittedUseMutationResult> & {
-    connect: Result<TContext>['mutate']
-    connectAsync: Result<TContext>['mutateAsync']
+export type UseConnectReturnType<
+  connector extends CreateConnectorFn | Connector | undefined,
+  context = unknown,
+> = Pretty<
+  Omit<Result<connector, context>, OmittedUseMutationResult> & {
+    connect: Result<connector, context>['mutate']
+    connectAsync: Result<connector, context>['mutateAsync']
     connectors: readonly Connector[]
   }
 >
-type Result<TContext = unknown> = UseMutationResult<
+type Result<
+  connector extends CreateConnectorFn | Connector | undefined,
+  context = unknown,
+> = UseMutationResult<
   ConnectMutationData,
   ConnectError,
-  ConnectMutationVariables,
-  TContext
+  ConnectMutationVariables<connector>,
+  context
 >
 
 /** https://wagmi.sh/react/hooks/useConnect */
-export function useConnect<TContext = unknown>({
+export function useConnect<
+  connector extends CreateConnectorFn | Connector | undefined = undefined,
+  context = unknown,
+>({
   chainId,
   connector,
   mutation,
-}: UseConnectParameters<TContext> = {}): UseConnectReturnType<TContext> {
+}: UseConnectParameters<connector, context> = {}): UseConnectReturnType<
+  connector,
+  context
+> {
   const config = useConfig()
   const { mutate, mutateAsync, ...mutationOptions } = useMutation<
     ConnectMutationData,
     ConnectError,
-    ConnectMutationVariables,
-    TContext
-  >(connectMutationOptions(config, { chainId, connector }))
+    ConnectMutationVariables<connector>,
+    context
+  >(
+    connectMutationOptions(config, {
+      chainId,
+      connector: connector as Connector,
+    }),
+  )
   return {
     ...mutationOptions,
     ...mutation,

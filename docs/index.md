@@ -14,7 +14,7 @@ hero:
       text: Get Started
       link: /react/getting-started
     - theme: alt
-      text: Why Wagmi?
+      text: Why Wagmi
       link: /react/why-wagmi
 
 features:

@@ -6,13 +6,13 @@ const isPlainObject = (obj: unknown) =>
   typeof obj === 'object' && !Array.isArray(obj)
 
 export function useSyncExternalStoreWithTracked<
-  Snapshot extends Selection,
-  Selection = Snapshot,
+  snapshot extends selection,
+  selection = snapshot,
 >(
   subscribe: (onStoreChange: () => void) => () => void,
-  getSnapshot: () => Snapshot,
-  getServerSnapshot: undefined | null | (() => Snapshot) = getSnapshot,
-  isEqual: (a: Selection, b: Selection) => boolean = deepEqual,
+  getSnapshot: () => snapshot,
+  getServerSnapshot: undefined | null | (() => snapshot) = getSnapshot,
+  isEqual: (a: selection, b: selection) => boolean = deepEqual,
 ) {
   const trackedKeys = React.useRef<string[]>([])
   const result = useSyncExternalStoreWithSelector(

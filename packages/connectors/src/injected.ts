@@ -10,7 +10,6 @@ import {
   type EIP1193Provider,
   type ProviderConnectInfo,
   ProviderRpcError,
-  ResourceNotFoundRpcError,
   ResourceUnavailableRpcError,
   RpcError,
   SwitchChainError,
@@ -175,7 +174,7 @@ export function injected(parameters: InjectedParameters = {}) {
               // Or wallet is already open
               if (
                 (error as RpcError).code ===
-                new ResourceNotFoundRpcError(error as Error).code
+                new ResourceUnavailableRpcError(error as Error).code
               )
                 throw error
             }

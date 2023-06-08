@@ -10,29 +10,21 @@ import {
 } from '@tanstack/react-query'
 
 export type UseQueryParameters<
-  TQueryFnData = unknown,
-  TError = DefaultError,
-  TData = TQueryFnData,
-  TQueryKey extends QueryKey = QueryKey,
-> = Omit<
-  UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
-  'initialData'
-> & {
+  queryFnData = unknown,
+  error = DefaultError,
+  data = queryFnData,
+  queryKey extends QueryKey = QueryKey,
+> = Omit<UseQueryOptions<queryFnData, error, data, queryKey>, 'initialData'> & {
   initialData?: UseQueryOptions<
-    TQueryFnData,
-    TError,
-    TData,
-    TQueryKey
+    queryFnData,
+    error,
+    data,
+    queryKey
   >['initialData']
 }
 
-export function useQuery<
-  TQueryFnData,
-  TError,
-  TData,
-  TQueryKey extends QueryKey,
->(
-  args: UseQueryParameters<TQueryFnData, TError, TData, TQueryKey>,
-): UseQueryResult<TData, TError> {
+export function useQuery<queryFnData, error, data, queryKey extends QueryKey>(
+  args: UseQueryParameters<queryFnData, error, data, queryKey>,
+): UseQueryResult<data, error> {
   return useQuery_(args as any)
 }

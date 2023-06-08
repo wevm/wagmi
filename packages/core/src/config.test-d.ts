@@ -1,4 +1,4 @@
-import { injected } from '@wagmi/connectors'
+import { accounts, testConnector } from '@wagmi/test'
 import { createPublicClient, http } from 'viem'
 import { mainnet, sepolia } from 'viem/chains'
 import { test } from 'vitest'
@@ -9,7 +9,7 @@ test('high-level config', () => {
   // Create config without needing to import viem modules.
   createConfig({
     chains: [mainnet, sepolia],
-    connectors: [injected()],
+    connectors: [testConnector({ accounts })],
     transports: {
       [mainnet.id]: http(),
       [sepolia.id]: http(),
@@ -21,7 +21,7 @@ test('low-level config', () => {
   // Create a "multi chain" config using viem modules.
   createConfig({
     chains: [mainnet, sepolia],
-    connectors: [injected()],
+    connectors: [testConnector({ accounts })],
     publicClient: ({ chain }) =>
       createPublicClient({
         chain,
@@ -32,7 +32,7 @@ test('low-level config', () => {
   // Create a simple "single chain" config using viem modules.
   // Note that we do not accept `chains` here, it is inferred from Client.
   createConfig({
-    connectors: [injected()],
+    connectors: [testConnector({ accounts })],
     publicClient: createPublicClient({
       chain: mainnet,
       transport: http(),
@@ -44,7 +44,7 @@ test('`chains` must have at least one chain`', () => {
   createConfig({
     // @ts-expect-error
     chains: [],
-    connectors: [injected()],
+    connectors: [testConnector({ accounts })],
     transports: {
       [mainnet.id]: http(),
     },
@@ -52,7 +52,7 @@ test('`chains` must have at least one chain`', () => {
   createConfig({
     // @ts-expect-error
     chains: [],
-    connectors: [injected()],
+    connectors: [testConnector({ accounts })],
     publicClient: ({ chain }) =>
       createPublicClient({
         chain,

@@ -1,11 +1,11 @@
 import {
   type Address,
+  type Chain,
   type ProviderConnectInfo,
   type ProviderMessage,
   type WalletClient,
 } from 'viem'
 
-import type { Chain } from './chain.js'
 import { Emitter } from './emitter.js'
 import { type Storage } from './storage.js'
 import { type Pretty } from './types/utils.js'
@@ -19,13 +19,13 @@ export type ConnectorEventMap = {
 }
 
 export type CreateConnectorFn<
-  TProvider = unknown,
-  TProperties extends Record<string, unknown> = {},
-  TStorageItem extends Record<string, unknown> = {},
+  provider = unknown,
+  properties extends Record<string, unknown> = {},
+  storageItem extends Record<string, unknown> = {},
 > = (config: {
   chains: readonly [Chain, ...Chain[]]
   emitter: Emitter<ConnectorEventMap>
-  storage?: Storage<TStorageItem> | null
+  storage?: Storage<storageItem> | null
 }) => Pretty<
   {
     readonly id: string
@@ -41,7 +41,7 @@ export type CreateConnectorFn<
     getChainId(): Promise<number>
     getProvider(parameters?: {
       chainId?: number | undefined
-    }): Promise<TProvider>
+    }): Promise<provider>
     getWalletClient(parameters?: {
       chainId?: number | undefined
     }): Promise<WalletClient>
@@ -53,13 +53,13 @@ export type CreateConnectorFn<
     onConnect?(connectInfo: ProviderConnectInfo): void
     onDisconnect(error?: Error): void
     onMessage?(message: ProviderMessage): void
-  } & TProperties
+  } & properties
 >
 
 export function createConnector<
-  TProvider,
-  TProperties extends Record<string, unknown> = {},
-  TStorageItem extends Record<string, unknown> = {},
->(fn: CreateConnectorFn<TProvider, TProperties, TStorageItem>) {
+  provider,
+  properties extends Record<string, unknown> = {},
+  storageItem extends Record<string, unknown> = {},
+>(fn: CreateConnectorFn<provider, properties, storageItem>) {
   return fn
 }

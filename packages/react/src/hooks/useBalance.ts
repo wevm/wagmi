@@ -63,10 +63,11 @@ export function useBalance<TSelectData = GetBalanceQueryFnData>({
 
     return watchBlockNumber(config, {
       chainId,
-      onBlockNumber: () =>
+      onBlockNumber() {
         config.queryClient.invalidateQueries({
           queryKey: queryOptions.queryKey,
-        }),
+        })
+      },
       syncConnectedChain: false,
     })
   }, [address, chainId, config, queryOptions, enabled, watch])

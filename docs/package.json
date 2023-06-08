@@ -13,7 +13,7 @@
     "@wagmi/core": "workspace:*",
     "@wagmi/test": "workspace:*",
     "unocss": "^0.53.0",
-    "viem": "~0.3",
+    "viem": "1.0.1",
     "vitepress": "1.0.0-beta.1",
     "vitepress-plugin-shiki-twoslash": "^0.0.6",
     "vue": "^3.3.4",

@@ -8,23 +8,15 @@ import {
 import { type Config, type Connector } from '../config.js'
 import { type CreateConnectorFn } from '../connector.js'
 import { ConnectorAlreadyConnectedError } from '../errors/config.js'
-import type { Pretty } from '../types/utils.js'
+import type { IsUndefined, Pretty } from '../types/utils.js'
 
 export type ConnectParameters = {
-  /**
-   * Chain ID to connect to.
-   *
-   * Not all connectors support connecting directly to a chainId (e.g. they don't support programmatic chain switching). In those cases, the connector will connect to whatever chain the connector's provider is connected to.
-   */
   chainId?: number | undefined
-  /** Connector to connect with. */
   connector: CreateConnectorFn | Connector
 }
 
 export type ConnectReturnType = {
-  /** Connected accounts from connector */
   accounts: readonly Address[]
-  /** Connected chain ID from connector */
   chainId: number
 }
 
@@ -94,31 +86,39 @@ export async function connect(
 // TanStack Query
 
 export type ConnectMutationData = Pretty<ConnectReturnType>
-export type ConnectMutationVariables = Pretty<{
-  /** Chain ID to connect to */
-  chainId?: number | undefined
-  /** Connector to connect with */
-  connector?: CreateConnectorFn | Connector | undefined
+export type ConnectMutationVariables<
+  connector extends ConnectParameters['connector'] | undefined,
+> = Pretty<
+  {
+    chainId?: number | undefined
+  } & (IsUndefined<connector> extends false
+    ? { connector?: ConnectParameters['connector'] | undefined }
+    : { connector: ConnectParameters['connector'] | undefined })
+>
+export type ConnectMutationParameters<
+  connector extends ConnectParameters['connector'] | undefined,
+> = Pretty<{
+  chainId?: ConnectParameters['chainId'] | undefined
+  connector?: connector | ConnectParameters['connector'] | undefined
 }>
-export type ConnectMutationParameters = Pretty<ConnectMutationVariables>
 
 /** https://wagmi.sh/core/actions/connect#tanstack-query */
-export const connectMutationOptions = (
+export const connectMutationOptions = <
+  connector extends ConnectParameters['connector'] | undefined,
+>(
   config: Config,
-  { chainId, connector }: ConnectMutationParameters,
+  { chainId, connector }: ConnectMutationParameters<connector>,
 ) =>
   ({
     mutationFn(variables) {
-      const connector_ = variables.connector ?? connector
-      if (!connector_) throw new Error('"connector" is required')
       return connect(config, {
         chainId: variables.chainId ?? chainId,
-        connector: connector_,
+        connector: (variables.connector ?? connector)!,
       })
     },
     mutationKey: ['connect', { connector, chainId }],
   }) as const satisfies MutationOptions<
     ConnectMutationData,
     ConnectError,
-    ConnectMutationVariables
+    ConnectMutationVariables<connector>
   >

@@ -15,7 +15,13 @@ beforeEach(async () => {
 test('default', async () => {
   const { result } = renderHook(() => ({
     useAccount: useAccount(),
-    useDisconnect: useDisconnect(),
+    useDisconnect: useDisconnect({
+      mutation: {
+        onMutate() {
+          return { foo: 'bar' }
+        },
+      },
+    }),
   }))
 
   expect(result.current.useAccount.address).toBeDefined()

@@ -3,57 +3,69 @@
  *
  * Compatible with [`exactOptionalPropertyTypes`](https://www.typescriptlang.org/tsconfig#exactOptionalPropertyTypes).
  *
- * @param T - Object to make optional.
+ * @param type - Object to make optional.
  */
-export type ExactPartial<T> = {
-  [K in keyof T]?: T[K] | undefined
+export type ExactPartial<type> = {
+  [key in keyof type]?: type[key] | undefined
 }
+
+/**
+ * Checks if {@link type} is `undefined`
+ *
+ * @param type - Type to check
+ *
+ * @example
+ * type Result = IsUndefined<undefined>
+ * //   ^? type Result = true
+ */
+export type IsUndefined<type> = [undefined] extends [type] ? true : false
 
 /**
  * Removes `readonly` from all properties of an object.
  *
- * @param T - Object to remove `readonly` properties from.
+ * @param type - Object to remove `readonly` properties from.
  */
-export type Mutable<T extends object> = {
-  -readonly [key in keyof T]: T[key]
+export type Mutable<type extends object> = {
+  -readonly [key in keyof type]: type[key]
 }
 
 /**
  * Removes `void` from type.
  *
- * @param T - Type to remove `void` from.
+ * @param type - Type to remove `void` from.
  *
  * @example
  * type Result = NonVoid<string | void>
  * //   ^? type Result = string
  */
-export type NonVoid<T> = T extends void ? never : T
+export type NonVoid<type> = type extends void ? never : type
 
 /**
  * Makes objects destructurable.
  *
- * @param Union - Union to distribute.
+ * @param union - Union to distribute.
  *
  * @example
  * type Result = OneOf<{ foo: boolean } | { bar: boolean }>
  * //   ^? type Result = { foo: boolean; bar?: undefined; } | { bar: boolean; foo?: undefined; }
  */
 export type OneOf<
-  Union extends object,
-  AllKeys extends KeyofUnion<Union> = KeyofUnion<Union>,
-> = Union extends infer Item
-  ? Pretty<Item & { [K in Exclude<AllKeys, keyof Item>]?: never }>
+  union extends object,
+  ///
+  keys extends KeyofUnion<union> = KeyofUnion<union>,
+> = union extends infer Item
+  ? Pretty<Item & { [K in Exclude<keys, keyof Item>]?: never }>
   : never
-type KeyofUnion<T> = T extends T ? keyof T : never
+type KeyofUnion<type> = type extends type ? keyof type : never
 
 /**
- * Makes {@link TKeys} optional in {@link TType} while preserving type inference.
+ * Makes {@link key} optional in {@link type} while preserving type inference.
  */
 // s/o trpc (https://github.com/trpc/trpc/blob/main/packages/server/src/types.ts#L6)
-export type PartialBy<TType, TKeys extends keyof TType> = ExactPartial<
-  Pick<TType, TKeys>
+export type PartialBy<type, key extends keyof type> = ExactPartial<
+  Pick<type, key>
 > &
-  Omit<TType, TKeys>
+  Omit<type, key>
 
 /**
  * Combines members of an intersection into a readable type.
@@ -63,6 +75,4 @@ export type PartialBy<TType, TKeys extends keyof TType> = ExactPartial<
  * type Result = Pretty<{ a: string } | { b: string } | { c: number, d: bigint }>
  * //   ^? type Result = { a: string; b: string; c: number; d: bigint }
  */
-export type Pretty<T> = {
-  [K in keyof T]: T[K]
-} & {}
+export type Pretty<type> = { [key in keyof type]: type[key] } & unknown

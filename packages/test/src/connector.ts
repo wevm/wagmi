@@ -5,7 +5,7 @@ import {
 } from '@wagmi/core'
 import {
   type Address,
-  type Requests,
+  type EIP1193RequestFn,
   SwitchChainError,
   UserRejectedRequestError,
   createWalletClient,
@@ -68,19 +68,17 @@ export function testConnector(parameters: TestConnectorParameters) {
       const chain =
         config.chains.find((x) => x.id === chainId) ?? config.chains[0]
       const url = chain.rpcUrls.default.http[0]!
-      const requests: Requests = {
-        async request({ method, params }) {
-          if (method === 'eth_requestAccounts') return parameters.accounts
-          if (method === 'wallet_switchEthereumChain') return
+      const request: EIP1193RequestFn = async ({ method, params }) => {
+        if (method === 'eth_requestAccounts') return parameters.accounts
+        if (method === 'wallet_switchEthereumChain') return
 
-          const { result } = await rpc.http(url, { body: { method, params } })
-          return result
-        },
+        const { result } = await rpc.http(url, { body: { method, params } })
+        return result
       }
       const walletClient = createWalletClient({
         account: parameters.accounts[0]!,
         chain,
-        transport: custom({ ...requests }),
+        transport: custom({ request }),
       })
       return walletClient
     },

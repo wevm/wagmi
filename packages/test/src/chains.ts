@@ -1,6 +1,5 @@
-import { type Chain } from '@wagmi/core'
 import type { PartialBy } from '@wagmi/core/internal'
-import { mainnet } from 'viem/chains'
+import { type Chain, mainnet } from 'viem/chains'
 
 import { pool } from './constants.js'
 

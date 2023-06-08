@@ -2,6 +2,7 @@ import { assertType, expectTypeOf, test } from 'vitest'
 
 import {
   type ExactPartial,
+  type IsUndefined,
   type Mutable,
   type NonVoid,
   type OneOf,
@@ -13,6 +14,19 @@ test('ExactPartial', () => {
     foo?: boolean | undefined
     bar?: boolean | undefined
   }>()
+})
+
+test('IsUndefined', () => {
+  expectTypeOf<IsUndefined<undefined>>().toEqualTypeOf<true>()
+
+  expectTypeOf<IsUndefined<never>>().toEqualTypeOf<false>()
+  expectTypeOf<IsUndefined<'never'>>().toEqualTypeOf<false>()
+  expectTypeOf<IsUndefined<null>>().toEqualTypeOf<false>()
+  expectTypeOf<IsUndefined<0>>().toEqualTypeOf<false>()
+  expectTypeOf<IsUndefined<false>>().toEqualTypeOf<false>()
+  expectTypeOf<IsUndefined<[]>>().toEqualTypeOf<false>()
+  expectTypeOf<IsUndefined<{}>>().toEqualTypeOf<false>()
+  expectTypeOf<IsUndefined<undefined[]>>().toEqualTypeOf<false>()
 })
 
 test('Mutable', () => {

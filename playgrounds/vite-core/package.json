@@ -12,7 +12,7 @@
     "@wagmi/core": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "viem": "~0.3"
+    "viem": "1.0.1"
   },
   "devDependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",

@@ -6,6 +6,7 @@ export default defineProject({
   resolve: {
     alias: {
       '@wagmi/core': path.resolve(__dirname, '../core/src'),
+      wagmi: path.resolve(__dirname, '../react/src'),
     },
   },
 })

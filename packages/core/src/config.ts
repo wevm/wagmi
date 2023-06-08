@@ -6,6 +6,7 @@ import {
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
 import {
   type Address,
+  type Chain,
   type PublicClient,
   type Transport,
   createPublicClient,
@@ -13,7 +14,6 @@ import {
 import { persist, subscribeWithSelector } from 'zustand/middleware'
 import { createStore } from 'zustand/vanilla'
 
-import type { Chain } from './chain.js'
 import { type ConnectorEventMap, type CreateConnectorFn } from './connector.js'
 import { Emitter, type EventData, createEmitter } from './emitter.js'
 import { ChainNotConfiguredError } from './errors/config.js'
@@ -23,7 +23,7 @@ import type { OneOf, Pretty } from './types/utils.js'
 import { uid } from './utils/uid.js'
 
 export type CreateConfigParameters<
-  TChain extends readonly [Chain, ...Chain[]],
+  chains extends readonly [Chain, ...Chain[]],
 > = Pretty<
   {
     connectors?: CreateConnectorFn[]
@@ -34,26 +34,26 @@ export type CreateConfigParameters<
     syncConnectedChain?: boolean
   } & OneOf<
     | {
-        chains: TChain
+        chains: chains
         pollingInterval?: number
-        transports: Record<TChain[number]['id'], Transport>
+        transports: Record<chains[number]['id'], Transport>
       }
     | {
         publicClient: PublicClient
       }
     | {
-        chains: TChain
+        chains: chains
         publicClient: (parameters: {
-          chain: TChain[number]
+          chain: chains[number]
         }) => PublicClient<Transport>
       }
   >
 >
 
 export type Config<
-  TChain extends readonly [Chain, ...Chain[]] = readonly [Chain, ...Chain[]],
+  chains extends readonly [Chain, ...Chain[]] = readonly [Chain, ...Chain[]],
 > = {
-  readonly chains: TChain
+  readonly chains: chains
   readonly connectors: readonly Connector[]
   readonly persister: Persister | null
   readonly queryClient: QueryClient

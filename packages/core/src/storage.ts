@@ -12,22 +12,22 @@ export type StorageItemMap = {
 }
 
 export type Storage<
-  TItem extends Record<string, unknown> = {},
-  Item extends StorageItemMap = StorageItemMap & TItem,
+  itemMap extends Record<string, unknown> = {},
+  storageItemMap extends StorageItemMap = StorageItemMap & itemMap,
 > = {
   getItem<
-    TKey extends keyof Item,
-    TValue extends Item[TKey],
-    TDefaultValue extends TValue | null,
+    key extends keyof storageItemMap,
+    value extends storageItemMap[key],
+    defaultValue extends value | null,
   >(
-    key: TKey,
-    defaultValue?: TDefaultValue,
-  ): TDefaultValue extends null ? TValue | null : TValue
-  setItem<TKey extends keyof Item, TValue extends Item[TKey] | null>(
-    key: TKey,
-    value: TValue,
-  ): void
-  removeItem(key: keyof Item): void
+    key: key,
+    defaultValue?: defaultValue,
+  ): defaultValue extends null ? value | null : value
+  setItem<
+    key extends keyof storageItemMap,
+    value extends storageItemMap[key] | null,
+  >(key: key, value: value): void
+  removeItem(key: keyof storageItemMap): void
 }
 
 type BaseStorage = {
@@ -37,8 +37,8 @@ type BaseStorage = {
 }
 
 export function createStorage<
-  TItem extends Record<string, unknown> = {},
-  Item extends StorageItemMap = StorageItemMap & TItem,
+  itemMap extends Record<string, unknown> = {},
+  storageItemMap extends StorageItemMap = StorageItemMap & itemMap,
 >({
   deserialize = deserialize_,
   key: prefix = 'wagmi',
@@ -49,7 +49,7 @@ export function createStorage<
   key?: string
   serialize?: <T>(value: T) => string
   storage: BaseStorage
-}): Storage<Item> {
+}): Storage<storageItemMap> {
   return {
     ...storage,
     getItem(key, defaultValue) {
