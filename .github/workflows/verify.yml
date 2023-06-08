@@ -69,7 +69,7 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     env:
-      ANVIL_BLOCK_NUMBER: 16773780
+      ANVIL_BLOCK_NUMBER: 16966590
 
     steps:
       - uses: actions/checkout@v3
