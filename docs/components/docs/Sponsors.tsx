@@ -2,16 +2,6 @@ import { useTheme } from 'next-themes'
 
 const sponsors = [
   {
-    id: 'rainbow',
-    name: 'Rainbow',
-    href: 'https://rainbow.me/',
-    logo: {
-      dark: 'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/rainbow-dark.svg',
-      light:
-        'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/rainbow-light.svg',
-    },
-  },
-  {
     id: 'family',
     name: 'Family',
     href: 'https://twitter.com/family',
@@ -149,6 +139,16 @@ const sponsors = [
       dark: 'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/celo-dark.svg',
       light:
         'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/celo-light.svg',
+    },
+  },
+  {
+    id: 'rainbow',
+    name: 'Rainbow',
+    href: 'https://rainbow.me/',
+    logo: {
+      dark: 'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/rainbow-dark.svg',
+      light:
+        'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/rainbow-light.svg',
     },
   },
 ] as const

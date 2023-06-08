@@ -147,12 +147,6 @@ If you find wagmi useful, please consider supporting development. Thank you 🙏
 
 <br>
 
-<a href="https://rainbow.me/">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/rainbow-dark.svg">
-    <img alt="rainbow logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/rainbow-light.svg" width="auto" height="50">
-  </picture>
-</a>
 <a href="https://twitter.com/family">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/family-dark.svg">
@@ -235,6 +229,12 @@ If you find wagmi useful, please consider supporting development. Thank you 🙏
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/celo-dark.svg">
     <img alt="celo logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/celo-light.svg" width="auto" height="50">
+  </picture>
+</a>
+<a href="https://rainbow.me/">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/rainbow-dark.svg">
+    <img alt="rainbow logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/rainbow-light.svg" width="auto" height="50">
   </picture>
 </a>
 
