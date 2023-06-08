@@ -141,6 +141,16 @@ const sponsors = [
         'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/celo-light.svg',
     },
   },
+  {
+    id: 'rainbow',
+    name: 'Rainbow',
+    href: 'https://rainbow.me/',
+    logo: {
+      dark: 'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/rainbow-dark.svg',
+      light:
+        'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/rainbow-light.svg',
+    },
+  },
 ] as const
 
 export function Sponsors() {

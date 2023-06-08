@@ -117,7 +117,7 @@ We've only scratched the surface for what you can do with wagmi!
 
 —
 
-Check out [ConnectKit](https://docs.family.co/connectkit?utm_source=wagmi-dev) or [Web3Modal](https://web3modal.com) to get started with pre-built interface on top of wagmi for managing wallet connections.
+Check out [RainbowKit](https://rainbowkit.com/docs/introduction), [ConnectKit](https://docs.family.co/connectkit?utm_source=wagmi-dev) or [Web3Modal](https://web3modal.com) to get started with pre-built interface on top of wagmi for managing wallet connections.
 
 ## Community
 
@@ -229,6 +229,12 @@ If you find wagmi useful, please consider supporting development. Thank you 🙏
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/celo-dark.svg">
     <img alt="celo logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/celo-light.svg" width="auto" height="50">
+  </picture>
+</a>
+<a href="https://rainbow.me/">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/rainbow-dark.svg">
+    <img alt="rainbow logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/rainbow-light.svg" width="auto" height="50">
   </picture>
 </a>
 
