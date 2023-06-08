@@ -2,6 +2,16 @@ import { useTheme } from 'next-themes'
 
 const sponsors = [
   {
+    id: 'rainbow',
+    name: 'Rainbow',
+    href: 'https://twitter.com/rainbowdotme',
+    logo: {
+      dark: 'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/rainbow-dark.svg',
+      light:
+        'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/rainbow-light.svg',
+    },
+  },
+  {
     id: 'family',
     name: 'Family',
     href: 'https://twitter.com/family',
