@@ -358,7 +358,7 @@ describe('readContracts', () => {
           args:                         (0xA0Cf798816D4b9b9866b5330EEa46a18382f251e, 69420)
 
         Docs: https://viem.sh/docs/contract/readContract.html
-        Version: viem@0.3.35"
+        Version: viem@1.0.0"
       `,
       )
     })
@@ -411,7 +411,7 @@ describe('readContracts', () => {
           args:                         (0xA0Cf798816D4b9b9866b5330EEa46a18382f251e, 69420)
 
         Docs: https://viem.sh/docs/contract/readContract.html
-        Version: viem@0.3.35],
+        Version: viem@1.0.0],
             "result": undefined,
             "status": "failure",
           },
@@ -425,7 +425,7 @@ describe('readContracts', () => {
           args:                         (0xA0Cf798816D4b9b9866b5330EEa46a18382f251e, 69421)
 
         Docs: https://viem.sh/docs/contract/readContract.html
-        Version: viem@0.3.35],
+        Version: viem@1.0.0],
             "result": undefined,
             "status": "failure",
           },
@@ -464,7 +464,7 @@ describe('readContracts', () => {
           args:             (1e+31)
 
         Docs: https://viem.sh/docs/contract/readContract.html
-        Version: viem@0.3.35"
+        Version: viem@1.0.0"
       `,
       )
     })
@@ -525,7 +525,7 @@ describe('readContracts', () => {
           args:             (1e+31)
 
         Docs: https://viem.sh/docs/contract/readContract.html
-        Version: viem@0.3.35],
+        Version: viem@1.0.0],
             "result": undefined,
             "status": "failure",
           },
@@ -543,7 +543,7 @@ describe('readContracts', () => {
           args:             (1e+31)
 
         Docs: https://viem.sh/docs/contract/readContract.html
-        Version: viem@0.3.35],
+        Version: viem@1.0.0],
             "result": undefined,
             "status": "failure",
           },
@@ -582,7 +582,7 @@ describe('readContracts', () => {
           args:          (0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC)
 
         Docs: https://viem.sh/docs/contract/readContract.html
-        Version: viem@0.3.35"
+        Version: viem@1.0.0"
       `,
       )
     })
@@ -635,7 +635,7 @@ describe('readContracts', () => {
           args:          (0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC)
 
         Docs: https://viem.sh/docs/contract/readContract.html
-        Version: viem@0.3.35],
+        Version: viem@1.0.0],
             "result": undefined,
             "status": "failure",
           },

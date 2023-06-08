@@ -18,9 +18,9 @@ describe('useBalance', () => {
       {
         "data": {
           "decimals": 18,
-          "formatted": "0.283908469850273318",
+          "formatted": "0.195308614826705297",
           "symbol": "ETH",
-          "value": 283908469850273318n,
+          "value": 195308614826705297n,
         },
         "error": null,
         "fetchStatus": "idle",
@@ -53,9 +53,9 @@ describe('useBalance', () => {
         {
           "data": {
             "decimals": 18,
-            "formatted": "0.283908469850273318",
+            "formatted": "0.195308614826705297",
             "symbol": "ETH",
-            "value": 283908469850273318n,
+            "value": 195308614826705297n,
           },
           "error": null,
           "fetchStatus": "idle",
@@ -115,9 +115,9 @@ describe('useBalance', () => {
         {
           "data": {
             "decimals": 18,
-            "formatted": "0.283908469850273318",
+            "formatted": "0.195308614826705297",
             "symbol": "ETH",
-            "value": 283908469850273318n,
+            "value": 195308614826705297n,
           },
           "error": null,
           "fetchStatus": "idle",
@@ -180,9 +180,9 @@ describe('useBalance', () => {
         {
           "data": {
             "decimals": 18,
-            "formatted": "283908469.850273318",
+            "formatted": "195308614.826705297",
             "symbol": "ETH",
-            "value": 283908469850273318n,
+            "value": 195308614826705297n,
           },
           "error": null,
           "fetchStatus": "idle",
@@ -251,9 +251,9 @@ describe('useBalance', () => {
         expect(data).toMatchInlineSnapshot(`
           {
             "decimals": 18,
-            "formatted": "0.00138692340824271",
+            "formatted": "0.00792816022978861",
             "symbol": "ETH",
-            "value": 1386923408242710n,
+            "value": 7928160229788610n,
           }
         `)
       })

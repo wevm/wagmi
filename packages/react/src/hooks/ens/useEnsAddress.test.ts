@@ -184,7 +184,7 @@ describe('useEnsAddress', () => {
       await act(async () => {
         const { data } = await result.current.refetch()
         expect(data).toMatchInlineSnapshot(
-          `"0xfB843f8c4992EfDb6b42349C35f025ca55742D33"`,
+          '"0xfB843f8c4992EfDb6b42349C35f025ca55742D33"',
         )
       })
     })

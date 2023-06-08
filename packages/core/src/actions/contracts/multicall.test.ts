@@ -137,7 +137,7 @@ describe('multicall', () => {
             args:                         (0xA0Cf798816D4b9b9866b5330EEa46a18382f251e, 69420)
 
           Docs: https://viem.sh/docs/contract/multicall.html
-          Version: viem@0.3.35"
+          Version: viem@1.0.0"
         `,
         )
       })
@@ -188,7 +188,7 @@ describe('multicall', () => {
             args:                         (0xA0Cf798816D4b9b9866b5330EEa46a18382f251e, 69420)
 
           Docs: https://viem.sh/docs/contract/multicall.html
-          Version: viem@0.3.35],
+          Version: viem@1.0.0],
               "result": undefined,
               "status": "failure",
             },
@@ -202,7 +202,7 @@ describe('multicall', () => {
             args:                         (0xA0Cf798816D4b9b9866b5330EEa46a18382f251e, 69421)
 
           Docs: https://viem.sh/docs/contract/multicall.html
-          Version: viem@0.3.35],
+          Version: viem@1.0.0],
               "result": undefined,
               "status": "failure",
             },
@@ -240,7 +240,7 @@ describe('multicall', () => {
             args:             (1e+31)
 
           Docs: https://viem.sh/docs/contract/multicall.html
-          Version: viem@0.3.35"
+          Version: viem@1.0.0"
         `,
         )
       })
@@ -299,7 +299,7 @@ describe('multicall', () => {
             args:             (1e+31)
 
           Docs: https://viem.sh/docs/contract/multicall.html
-          Version: viem@0.3.35],
+          Version: viem@1.0.0],
               "result": undefined,
               "status": "failure",
             },
@@ -317,7 +317,7 @@ describe('multicall', () => {
             args:             (1e+31)
 
           Docs: https://viem.sh/docs/contract/multicall.html
-          Version: viem@0.3.35],
+          Version: viem@1.0.0],
               "result": undefined,
               "status": "failure",
             },
@@ -354,7 +354,7 @@ describe('multicall', () => {
             args:          (0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC)
 
           Docs: https://viem.sh/docs/contract/multicall.html
-          Version: viem@0.3.35"
+          Version: viem@1.0.0"
         `)
       })
 
@@ -412,7 +412,7 @@ describe('multicall', () => {
             args:          (0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC)
 
           Docs: https://viem.sh/docs/contract/multicall.html
-          Version: viem@0.3.35],
+          Version: viem@1.0.0],
               "result": undefined,
               "status": "failure",
             },
@@ -430,7 +430,7 @@ describe('multicall', () => {
             args:          (0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC)
 
           Docs: https://viem.sh/docs/contract/multicall.html
-          Version: viem@0.3.35],
+          Version: viem@1.0.0],
               "result": undefined,
               "status": "failure",
             },
@@ -451,7 +451,7 @@ describe('multicall', () => {
         This could be due to any of the following:
         - The chain does not have the contract \\"multicall3\\" configured.
 
-        Version: viem@0.3.35"
+        Version: viem@1.0.0"
       `,
       )
     })
@@ -466,7 +466,7 @@ describe('multicall', () => {
         This could be due to any of the following:
         - The contract \\"multicall3\\" was not deployed until block 14353601 (current block 1).
 
-        Version: viem@0.3.35"
+        Version: viem@1.0.0"
       `,
       )
     })

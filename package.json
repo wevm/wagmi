@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "anvil": "anvil --fork-url $ANVIL_FORK_URL --fork-block-number 16773780",
+    "anvil": "anvil --fork-url $ANVIL_FORK_URL --fork-block-number 16966590",
     "build": "pnpm --filter '@wagmi/chains' build && pnpm --filter '@wagmi/core' build && pnpm -r --filter './packages/**' --filter './references/**' --filter '!./packages/core' --filter '!./references/**/chains' build",
     "changeset:release": "pnpm build && changeset publish",
     "changeset:version": "changeset version && pnpm install --lockfile-only",

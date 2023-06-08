@@ -105,7 +105,7 @@ describe('readContract', () => {
           args:                         (0xA0Cf798816D4b9b9866b5330EEa46a18382f251e, 0)
 
         Docs: https://viem.sh/docs/contract/readContract.html
-        Version: viem@0.3.35"
+        Version: viem@1.0.0"
       `)
     })
   })

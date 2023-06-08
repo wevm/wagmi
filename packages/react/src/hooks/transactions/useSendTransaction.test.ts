@@ -277,7 +277,7 @@ describe('useSendTransaction', () => {
             value:  100000 ETH
 
           Details: Insufficient funds for gas * price + value
-          Version: viem@0.3.35"
+          Version: viem@1.0.0"
         `)
         expect(res).toMatchInlineSnapshot(`
           {
@@ -395,7 +395,7 @@ describe('useSendTransaction', () => {
                 value:  100000 ETH
 
               Details: Insufficient funds for gas * price + value
-              Version: viem@0.3.35"
+              Version: viem@1.0.0"
             `)
           }
         })

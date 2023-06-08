@@ -133,7 +133,7 @@
     "@types/use-sync-external-store": "^0.0.3",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "viem": "0.3.35"
+    "viem": "^1.0.0"
   },
   "keywords": [
     "react",

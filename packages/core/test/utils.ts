@@ -1,5 +1,5 @@
 import type { AbiParametersToPrimitiveTypes, ExtractAbiFunction } from 'abitype'
-import type { Hex } from 'viem'
+import { Hex, RpcRequestError } from 'viem'
 import {
   createPublicClient,
   createWalletClient,
@@ -171,12 +171,21 @@ export function getWalletClients() {
       params = [params[1], params[0]]
     }
 
-    const { result } = await rpc.http(foundryMainnet.rpcUrls.default.http[0]!, {
-      body: {
-        method,
-        params,
-      },
+    const url = foundryMainnet.rpcUrls.default.http[0]!
+    const body = {
+      method,
+      params,
+    }
+    const { result, error } = await rpc.http(url, {
+      body,
     })
+    if (error) {
+      throw new RpcRequestError({
+        body,
+        error,
+        url,
+      })
+    }
     return result
   }
   return accounts.map((x) =>

@@ -75,7 +75,7 @@ describe('useEnsName', () => {
             "data": undefined,
             "error": [InvalidAddressError: Address "3QtUb3MfgJR7syviUzLgQiCrJFGmZ5bYJj" is invalid.
 
-          Version: viem@0.3.35],
+          Version: viem@1.0.0],
             "fetchStatus": "idle",
             "isError": true,
             "isFetched": true,
@@ -201,7 +201,7 @@ describe('useEnsName', () => {
 
       await act(async () => {
         const { data } = await result.current.refetch()
-        expect(data).toMatchInlineSnapshot(`"worm.eth"`)
+        expect(data).toMatchInlineSnapshot('"worm.eth"')
       })
     })
   })
