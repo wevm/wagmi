@@ -1,5 +1,5 @@
-import type { Address } from 'abitype'
 import { camelCase } from 'change-case'
+import { Address } from 'viem'
 import { z } from 'zod'
 
 import type { ContractConfig } from '../config'

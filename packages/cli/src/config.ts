@@ -1,4 +1,5 @@
-import type { Abi, Address } from 'abitype'
+import type { Abi } from 'abitype'
+import type { Address } from 'viem'
 
 import type { MaybeArray, MaybePromise } from './types'
 

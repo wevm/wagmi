@@ -1,5 +1,4 @@
-import type { Address, ResolvedConfig } from 'abitype'
-import type { Hex } from 'viem'
+import type { Address, Hex } from 'viem'
 import {
   ContractFunctionExecutionError,
   formatUnits,
@@ -22,12 +21,12 @@ export type FetchTokenArgs = {
 }
 export type FetchTokenResult = {
   address: Address
-  decimals: ResolvedConfig['IntType']
+  decimals: number
   name: string
   symbol: string
   totalSupply: {
     formatted: string
-    value: ResolvedConfig['BigIntType']
+    value: bigint
   }
 }
 

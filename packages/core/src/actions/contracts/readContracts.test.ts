@@ -1,5 +1,5 @@
-import type { Address, ResolvedConfig } from 'abitype'
-import type { MulticallResult } from 'viem'
+import type { ResolvedConfig } from 'abitype'
+import type { Address, MulticallResult } from 'viem'
 import { assertType, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import {

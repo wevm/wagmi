@@ -81,4 +81,4 @@ export type {
   WindowProvider,
 } from '@wagmi/core'
 
-export type { Address } from 'abitype'
+export type { Address } from 'viem'

@@ -1,6 +1,6 @@
-import type { Address } from 'abitype'
 import type {
   Account,
+  Address,
   Chain,
   SendTransactionParameters,
   SendTransactionReturnType,
