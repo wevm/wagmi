@@ -3,7 +3,6 @@ import {
   type Chain,
   type ProviderConnectInfo,
   type ProviderMessage,
-  type WalletClient,
 } from 'viem'
 
 import { Emitter } from './emitter.js'
@@ -42,9 +41,6 @@ export type CreateConnectorFn<
     getProvider(parameters?: {
       chainId?: number | undefined
     }): Promise<provider>
-    getWalletClient(parameters?: {
-      chainId?: number | undefined
-    }): Promise<WalletClient>
     isAuthorized(): Promise<boolean>
     switchChain?(parameters: { chainId: number }): Promise<Chain>
 

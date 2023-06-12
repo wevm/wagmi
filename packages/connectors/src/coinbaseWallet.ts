@@ -12,8 +12,6 @@ import {
   type ProviderRpcError,
   SwitchChainError,
   UserRejectedRequestError,
-  createWalletClient,
-  custom,
   getAddress,
   numberToHex,
 } from 'viem'
@@ -137,17 +135,6 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
     async getChainId() {
       const provider = await this.getProvider()
       return normalizeChainId(provider.chainId)
-    },
-    async getWalletClient({ chainId } = {}) {
-      const [provider, accounts] = await Promise.all([
-        this.getProvider(),
-        this.getAccounts(),
-      ])
-      const account = accounts[0]
-      if (!account) throw new Error('No account found')
-      const chain = config.chains.find((x) => x.id === chainId)
-      if (!chain) throw new Error('No chain found')
-      return createWalletClient({ account, chain, transport: custom(provider) })
     },
     async isAuthorized() {
       try {

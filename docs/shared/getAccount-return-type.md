@@ -49,7 +49,7 @@ You can use `status` to narrow the return type. For example, when `status` is `'
 
 ```ts twoslash
 import { type GetAccountReturnType } from '@wagmi/core'
-const account: GetAccountReturnType = {} as GetAccountReturnType
+const account = {} as GetAccountReturnType
 // ---cut---
 if (account.status === 'connected') {
   account

@@ -108,6 +108,11 @@ export function useSponsors() {
           url: 'https://celo.org',
           img: 'celo-light.svg',
         },
+        {
+          name: 'Rainbow',
+          url: 'https://rainbow.me',
+          img: 'rainbow-light.svg',
+        },
       ],
     }
 

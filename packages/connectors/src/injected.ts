@@ -14,8 +14,6 @@ import {
   RpcError,
   SwitchChainError,
   UserRejectedRequestError,
-  createWalletClient,
-  custom,
   fromHex,
   getAddress,
   numberToHex,
@@ -246,18 +244,6 @@ export function injected(parameters: InjectedParameters = {}) {
       if (!provider) throw new ProviderNotFoundError()
       const hexChainId = await provider.request({ method: 'eth_chainId' })
       return fromHex(hexChainId, 'number')
-    },
-    async getWalletClient({ chainId } = {}) {
-      const [provider, accounts] = await Promise.all([
-        this.getProvider(),
-        this.getAccounts(),
-      ])
-      if (!provider) throw new ProviderNotFoundError()
-      const account = accounts[0]
-      if (!account) throw new Error('No account found')
-      const chain = config.chains.find((x) => x.id === chainId)
-      if (!chain) throw new Error('No chain found')
-      return createWalletClient({ account, chain, transport: custom(provider) })
     },
     async isAuthorized() {
       try {

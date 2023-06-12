@@ -203,8 +203,20 @@ function getSidebar() {
               { text: 'useDisconnect', link: '/react/hooks/useDisconnect' },
               { text: 'useReconnect 🚧', link: '/react/hooks/useReconnect' },
               {
+                text: 'useSendTransaction 🚧',
+                link: '/react/hooks/useSendTransaction',
+              },
+              {
+                text: 'useSignTypedData 🚧',
+                link: '/react/hooks/useSignTypedData',
+              },
+              {
                 text: 'useSwitchAccount 🚧',
                 link: '/react/hooks/useSwitchAccount',
+              },
+              {
+                text: 'useSwitchChain 🚧',
+                link: '/react/hooks/useSwitchChain',
               },
             ],
           },
@@ -252,8 +264,20 @@ function getSidebar() {
               },
               { text: 'reconnect', link: '/core/actions/reconnect' },
               {
+                text: 'sendTransaction 🚧',
+                link: '/core/actions/sendTransaction',
+              },
+              {
+                text: 'signTypedData 🚧',
+                link: '/core/actions/signTypedData',
+              },
+              {
                 text: 'switchAccount',
                 link: '/core/actions/switchAccount',
+              },
+              {
+                text: 'switchChain 🚧',
+                link: '/core/actions/switchChain',
               },
             ],
           },
