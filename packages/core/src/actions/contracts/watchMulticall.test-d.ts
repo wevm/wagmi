@@ -1,4 +1,3 @@
-import type { ResolvedConfig } from 'abitype'
 import type { MulticallResult } from 'viem'
 import { assertType, describe } from 'vitest'
 
@@ -31,10 +30,10 @@ describe('watchMulticall', () => {
       // ^?
       assertType<
         [
-          MulticallResult<ResolvedConfig['BigIntType']>,
-          MulticallResult<ResolvedConfig['BigIntType']>,
+          MulticallResult<bigint>,
+          MulticallResult<bigint>,
           MulticallResult<boolean>,
-          MulticallResult<ResolvedConfig['BigIntType']>,
+          MulticallResult<bigint>,
         ]
       >(results)
     },
@@ -67,8 +66,8 @@ describe('watchMulticall', () => {
       // ^?
       assertType<
         [
-          MulticallResult<ResolvedConfig['BigIntType']>,
-          MulticallResult<ResolvedConfig['BigIntType']>,
+          MulticallResult<bigint>,
+          MulticallResult<bigint>,
           MulticallResult<boolean>,
           MulticallResult<unknown>,
         ]

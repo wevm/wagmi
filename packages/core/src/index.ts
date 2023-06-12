@@ -151,7 +151,7 @@ export type {
   WebSocketPublicClient,
 } from './types'
 export type { WindowProvider } from '@wagmi/connectors'
-export type { Address } from 'abitype'
+export type { Address } from 'viem'
 
 export {
   configureChains,

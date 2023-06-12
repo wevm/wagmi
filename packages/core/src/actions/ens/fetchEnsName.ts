@@ -1,5 +1,4 @@
-import type { Address } from 'abitype'
-import { getAddress } from 'viem'
+import { type Address, getAddress } from 'viem'
 
 import { getPublicClient } from '../viem'
 

@@ -1,6 +1,6 @@
 import type * as chain from '@wagmi/chains'
-import type { Address } from 'abitype'
 import { Abi as AbiSchema } from 'abitype/zod'
+import { Address } from 'viem'
 import { z } from 'zod'
 
 import type { ContractConfig } from '../config'

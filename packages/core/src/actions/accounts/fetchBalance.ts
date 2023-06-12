@@ -1,5 +1,4 @@
-import type { Address, ResolvedConfig } from 'abitype'
-import type { Hex } from 'viem'
+import type { Address, Hex } from 'viem'
 import {
   ContractFunctionExecutionError,
   formatUnits,
@@ -26,10 +25,10 @@ export type FetchBalanceArgs = {
 }
 
 export type FetchBalanceResult = {
-  decimals: ResolvedConfig['IntType']
+  decimals: number
   formatted: string
   symbol: string
-  value: ResolvedConfig['BigIntType']
+  value: bigint
 }
 
 export async function fetchBalance({

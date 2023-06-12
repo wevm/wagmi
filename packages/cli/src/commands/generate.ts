@@ -1,5 +1,4 @@
-// rome-ignore lint/correctness/noUnusedVariables: <explanation>
-import type { Abi, Address } from 'abitype'
+import type { Abi } from 'abitype'
 import { Abi as AbiSchema } from 'abitype/zod'
 import { camelCase } from 'change-case'
 import type { FSWatcher, WatchOptions } from 'chokidar'
@@ -8,7 +7,8 @@ import { default as dedent } from 'dedent'
 import { default as fse, ensureDir } from 'fs-extra'
 import { basename, dirname, resolve } from 'pathe'
 import pc from 'picocolors'
-import { getAddress } from 'viem'
+// rome-ignore lint/correctness/noUnusedVariables: <explanation>
+import { type Address, getAddress } from 'viem'
 import { z } from 'zod'
 
 import { version as packageVersion } from '../../package.json'

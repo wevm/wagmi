@@ -1,4 +1,3 @@
-import type { ResolvedConfig } from 'abitype'
 import { assertType, describe } from 'vitest'
 
 import { mlootContractConfig } from '../../../test'
@@ -13,7 +12,7 @@ describe('watchReadContract', () => {
     },
     (result) => {
       // ^?
-      assertType<ResolvedConfig['BigIntType']>(result)
+      assertType<bigint>(result)
     },
   )
 
@@ -37,7 +36,7 @@ describe('watchReadContract', () => {
     },
     (result) => {
       // ^?
-      assertType<ResolvedConfig['BigIntType']>(result)
+      assertType<bigint>(result)
     },
   )
 })
