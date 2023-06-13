@@ -1,5 +1,15 @@
 # @wagmi/core
 
+## 1.2.0
+
+### Minor Changes
+
+- [#2536](https://github.com/wagmi-dev/wagmi/pull/2536) [`85e9760a`](https://github.com/wagmi-dev/wagmi/commit/85e9760a140cb169ac6236d9466b96e2105dd193) Thanks [@tmm](https://github.com/tmm)! - Changed `Address` type import from ABIType to viem.
+
+### Patch Changes
+
+- [#2539](https://github.com/wagmi-dev/wagmi/pull/2539) [`96319c64`](https://github.com/wagmi-dev/wagmi/commit/96319c640b9d07b375821c08a5c213355d8c290b) Thanks [@jxom](https://github.com/jxom)! - Updated references
+
 ## 1.1.1
 
 ### Patch Changes

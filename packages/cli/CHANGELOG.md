@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 1.2.0
+
+### Minor Changes
+
+- [#2536](https://github.com/wagmi-dev/wagmi/pull/2536) [`85e9760a`](https://github.com/wagmi-dev/wagmi/commit/85e9760a140cb169ac6236d9466b96e2105dd193) Thanks [@tmm](https://github.com/tmm)! - Changed `Address` type import from ABIType to viem.
+
 ## 1.1.0
 
 ### Minor Changes
