@@ -119,7 +119,7 @@ const { hash } = await writeContract({
 
 ### chainId (optional)
 
-Checks the current chain to make sure it is the same as `chainId`. If `chainId` is not the current chain, the connector attempts to switch to it before sending the transaction.
+Checks the current chain to make sure it is the same as `chainId`. If `chainId` is not the current chain, the Action will throw an error.
 
 ```ts {7}
 import { writeContract } from '@wagmi/core'
