@@ -53,6 +53,8 @@ export type Config<
 > = {
   readonly chains: chains
   readonly connectors: readonly Connector[]
+  readonly persister: Persister | null
+  readonly queryClient: QueryClient
   readonly state: State
   readonly storage: Storage | null
 
@@ -73,8 +75,6 @@ export type Config<
   }
 
   _internal: {
-    readonly persister: Persister | null
-    readonly queryClient: QueryClient
     readonly reconnectOnMount: boolean
     readonly syncConnectedChain: boolean
 
@@ -324,6 +324,8 @@ export function createConfig<
   return {
     chains: chains as TChain,
     connectors,
+    persister,
+    queryClient,
     get state() {
       return store.getState()
     },
@@ -338,8 +340,6 @@ export function createConfig<
     subscribe: store.subscribe,
 
     _internal: {
-      persister,
-      queryClient,
       reconnectOnMount,
       syncConnectedChain,
 
