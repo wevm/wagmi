@@ -27,10 +27,10 @@ export type CreateConfigParameters<
 > = Pretty<
   {
     connectors?: CreateConnectorFn[]
-    persister?: Persister | null
+    persister?: Persister | null | undefined
     queryClient?: QueryClient
     reconnectOnMount?: boolean
-    storage?: Storage | null
+    storage?: Storage | null | undefined
     syncConnectedChain?: boolean
   } & OneOf<
     | {
@@ -38,9 +38,7 @@ export type CreateConfigParameters<
         pollingInterval?: number
         transports: Record<chains[number]['id'], Transport>
       }
-    | {
-        publicClient: PublicClient
-      }
+    | { publicClient: PublicClient }
     | {
         chains: chains
         publicClient: (parameters: {
@@ -55,8 +53,6 @@ export type Config<
 > = {
   readonly chains: chains
   readonly connectors: readonly Connector[]
-  readonly persister: Persister | null
-  readonly queryClient: QueryClient
   readonly state: State
   readonly storage: Storage | null
 
@@ -77,8 +73,10 @@ export type Config<
   }
 
   _internal: {
-    reconnectOnMount: boolean
-    syncConnectedChain: boolean
+    readonly persister: Persister | null
+    readonly queryClient: QueryClient
+    readonly reconnectOnMount: boolean
+    readonly syncConnectedChain: boolean
 
     change(data: EventData<ConnectorEventMap, 'change'>): void
     connect(data: EventData<ConnectorEventMap, 'connect'>): void
@@ -117,16 +115,6 @@ export function createConfig<
         ? window.localStorage
         : noopStorage,
   }),
-  persister = typeof window !== 'undefined' && storage
-    ? createSyncStoragePersister({
-        key: 'cache',
-        storage: storage as Storage<Record<string, unknown>>,
-        // Serialization is handled in `storage`.
-        serialize: (x) => x as unknown as string,
-        // Deserialization is handled in `storage`.
-        deserialize: (x) => x as unknown as PersistedClient,
-      })
-    : null,
   syncConnectedChain = true,
   ...rest
 }: CreateConfigParameters<TChain>): Config<TChain> {
@@ -318,11 +306,24 @@ export function createConfig<
   // Return
   /////////////////////////////////////////////////////////////////////////////////////////////////
 
+  let persister: Persister | null
+  if (rest.persister === undefined)
+    persister =
+      typeof window !== 'undefined' && storage
+        ? createSyncStoragePersister({
+            key: 'cache',
+            storage: storage as Storage<Record<string, unknown>>,
+            // Serialization is handled in `storage`.
+            serialize: (x) => x as unknown as string,
+            // Deserialization is handled in `storage`.
+            deserialize: (x) => x as unknown as PersistedClient,
+          })
+        : null
+  else persister = rest.persister
+
   return {
     chains: chains as TChain,
     connectors,
-    persister,
-    queryClient,
     get state() {
       return store.getState()
     },
@@ -337,13 +338,15 @@ export function createConfig<
     subscribe: store.subscribe,
 
     _internal: {
+      persister,
+      queryClient,
       reconnectOnMount,
       syncConnectedChain,
 
       change,
       connect,
       disconnect,
-      setup: setup,
+      setup,
     },
   }
 }

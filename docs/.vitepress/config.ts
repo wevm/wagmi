@@ -73,14 +73,14 @@ export default withTwoslash(
       nav: [
         { text: 'React', link: '/react/getting-started' },
         { text: 'Core', link: '/core/getting-started' },
-        { text: 'CLI', link: '/cli' },
+        // { text: 'CLI', link: '/cli' }, // TODO
         { text: 'Examples', link: '/examples' },
         {
           text: reactPackage.version,
           items: [
             {
               text: `Migrating to ${toPatchVersionRange(reactPackage.version)}`,
-              link: `/docs/migration-guide.html#_${toPatchVersionRange(
+              link: `/react/migration-guide#_${toPatchVersionRange(
                 reactPackage.version,
               ).replace(/\./g, '-')}-breaking-changes`,
             },
@@ -148,11 +148,16 @@ function toPatchVersionRange(version: string) {
 function getSidebar() {
   return {
     '/react': [
-      { text: 'Why Wagmi 🚧', link: '/react/why-wagmi' },
-      { text: 'Getting Started 🚧', link: '/react/getting-started' },
-      { text: 'TypeScript Support 🚧', link: '/react/typescript' },
-      { text: 'Comparisons 🚧', link: '/react/comparison' },
-      { text: 'Migration Guide 🚧', link: '/react/migration-guide' },
+      {
+        text: 'Introduction',
+        items: [
+          { text: 'Why Wagmi 🚧', link: '/react/why-wagmi' },
+          { text: 'Getting Started 🚧', link: '/react/getting-started' },
+          { text: 'TypeScript Support 🚧', link: '/react/typescript' },
+          { text: 'Comparisons 🚧', link: '/react/comparison' },
+          { text: 'Migration Guide 🚧', link: '/react/migration-guide' },
+        ],
+      },
       {
         text: 'Guides',
         items: [
@@ -178,6 +183,14 @@ function getSidebar() {
               },
               { text: 'injected 🚧', link: '/react/connectors/injected' },
               {
+                text: 'ledger 🚧',
+                link: '/react/connectors/ledger',
+              },
+              {
+                text: 'safe 🚧',
+                link: '/react/connectors/safe',
+              },
+              {
                 text: 'walletConnect 🚧',
                 link: '/react/connectors/walletConnect',
               },
@@ -200,11 +213,52 @@ function getSidebar() {
                 text: 'useConnections 🚧',
                 link: '/react/hooks/useConnections',
               },
+              {
+                text: 'useContractRead 🚧',
+                link: '/react/hooks/useContractRead',
+              },
+              {
+                text: 'useContractInfiniteReads 🚧',
+                link: '/react/hooks/useContractInfiniteReads',
+              },
+              {
+                text: 'useContractReads 🚧',
+                link: '/react/hooks/useContractReads',
+              },
+              {
+                text: 'useContractEventWatch 🚧',
+                link: '/react/hooks/useContractEventWatch',
+              },
+              {
+                text: 'useContractWrite 🚧',
+                link: '/react/hooks/useContractWrite',
+              },
               { text: 'useDisconnect', link: '/react/hooks/useDisconnect' },
+              { text: 'useEnsAddress 🚧', link: '/react/hooks/useEnsAddress' },
+              { text: 'useEnsAvatar 🚧', link: '/react/hooks/useEnsAvatar' },
+              { text: 'useEnsName 🚧', link: '/react/hooks/useEnsName' },
+              {
+                text: 'useEnsResovler 🚧',
+                link: '/react/hooks/useEnsResovler',
+              },
+              { text: 'useEnsText 🚧', link: '/react/hooks/useEnsText' },
+              { text: 'useFeeData 🚧', link: '/react/hooks/useFeeData' },
+              {
+                text: 'usePrepareContractWrite 🚧',
+                link: '/react/hooks/usePrepareContractWrite',
+              },
+              {
+                text: 'usePrepareSendTransaction 🚧',
+                link: '/react/hooks/usePrepareSendTransaction',
+              },
               { text: 'useReconnect 🚧', link: '/react/hooks/useReconnect' },
               {
                 text: 'useSendTransaction 🚧',
                 link: '/react/hooks/useSendTransaction',
+              },
+              {
+                text: 'useSignMessage 🚧',
+                link: '/react/hooks/useSignMessage',
               },
               {
                 text: 'useSignTypedData 🚧',
@@ -218,6 +272,26 @@ function getSidebar() {
                 text: 'useSwitchChain 🚧',
                 link: '/react/hooks/useSwitchChain',
               },
+              {
+                text: 'useTransaction 🚧',
+                link: '/react/hooks/useTransaction',
+              },
+              {
+                text: 'useToken 🚧',
+                link: '/react/hooks/useToken',
+              },
+              {
+                text: 'useWaitForTransactionReceipt 🚧',
+                link: '/react/hooks/useWaitForTransactionReceipt',
+              },
+              {
+                text: 'useWalletClient 🚧',
+                link: '/react/hooks/useWalletClient',
+              },
+              {
+                text: 'useWatchPendingTransactions 🚧',
+                link: '/react/hooks/useWatchPendingTransactions',
+              },
             ],
           },
           { text: 'Errors 🚧', link: '/react/errors' },
@@ -225,10 +299,15 @@ function getSidebar() {
       },
     ],
     '/core': [
-      { text: 'Why Wagmi 🚧', link: '/core/why-wagmi' },
-      { text: 'Getting Started 🚧', link: '/core/getting-started' },
-      { text: 'TypeScript Support 🚧', link: '/core/typescript' },
-      { text: 'Migration Guide 🚧', link: '/core/migration-guide' },
+      {
+        text: 'Introduction',
+        items: [
+          { text: 'Why Wagmi 🚧', link: '/core/why-wagmi' },
+          { text: 'Getting Started 🚧', link: '/core/getting-started' },
+          { text: 'TypeScript Support 🚧', link: '/core/typescript' },
+          { text: 'Migration Guide 🚧', link: '/core/migration-guide' },
+        ],
+      },
       {
         text: 'Guides',
         items: [
@@ -262,10 +341,35 @@ function getSidebar() {
                 text: 'getConnections',
                 link: '/core/actions/getConnections',
               },
+              { text: 'getEnsAddress', link: '/core/actions/getEnsAddress' },
+              { text: 'getEnsAvatar', link: '/core/actions/getEnsAvatar' },
+              { text: 'getEnsName', link: '/core/actions/getEnsName' },
+              { text: 'getEnsResolver', link: '/core/actions/getEnsResolver' },
+              { text: 'getEnsText', link: '/core/actions/getEnsText' },
+              { text: 'getFeeData', link: '/core/actions/getFeeData' },
+              { text: 'getToken', link: '/core/actions/getToken' },
+              {
+                text: 'getWalletClient',
+                link: '/core/actions/getWalletClient',
+              },
+              {
+                text: 'prepareContractWrite',
+                link: '/core/actions/prepareContractWrite',
+              },
+              {
+                text: 'prepareSendTransaction',
+                link: '/core/actions/prepareSendTransaction',
+              },
               { text: 'reconnect', link: '/core/actions/reconnect' },
+              { text: 'readContract 🚧', link: '/core/actions/readContract' },
+              { text: 'readContracts 🚧', link: '/core/actions/readContracts' },
               {
                 text: 'sendTransaction 🚧',
                 link: '/core/actions/sendTransaction',
+              },
+              {
+                text: 'signMessage 🚧',
+                link: '/core/actions/signMessage',
               },
               {
                 text: 'signTypedData 🚧',
@@ -279,6 +383,11 @@ function getSidebar() {
                 text: 'switchChain 🚧',
                 link: '/core/actions/switchChain',
               },
+              {
+                text: 'waitForTransactionReceipt 🚧',
+                link: '/core/actions/waitForTransactionReceipt',
+              },
+              { text: 'writeContract 🚧', link: '/core/actions/writeContract' },
             ],
           },
           {
@@ -291,6 +400,14 @@ function getSidebar() {
                 link: '/core/connectors/coinbaseWallet',
               },
               { text: 'injected 🚧', link: '/core/connectors/injected' },
+              {
+                text: 'ledger 🚧',
+                link: '/core/connectors/ledger',
+              },
+              {
+                text: 'safe 🚧',
+                link: '/core/connectors/safe',
+              },
               {
                 text: 'walletConnect 🚧',
                 link: '/core/connectors/walletConnect',

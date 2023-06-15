@@ -21,15 +21,15 @@ export function WagmiConfig({
   return React.createElement(
     WagmiContext.Provider,
     { value },
-    value.persister
+    value._internal.persister
       ? React.createElement(PersistQueryClientProvider, {
           children,
-          client: value.queryClient,
-          persistOptions: { persister: value.persister },
+          client: value._internal.queryClient,
+          persistOptions: { persister: value._internal.persister },
         })
       : React.createElement(QueryClientProvider, {
           children,
-          client: value.queryClient,
+          client: value._internal.queryClient,
         }),
   )
 }
