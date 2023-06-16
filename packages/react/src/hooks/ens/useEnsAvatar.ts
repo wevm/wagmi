@@ -12,8 +12,15 @@ export type UseEnsLookupConfig = QueryConfig<FetchEnsAvatarResult, Error>
 type QueryKeyArgs = UseEnsAvatarArgs
 type QueryKeyConfig = Pick<UseEnsLookupConfig, 'scopeKey'>
 
-function queryKey({ name, chainId, scopeKey, universalResolverAddress }: QueryKeyArgs & QueryKeyConfig) {
-  return [{ entity: 'ensAvatar', name, chainId, scopeKey, universalResolverAddress }] as const
+function queryKey({
+  name,
+  chainId,
+  scopeKey,
+  universalResolverAddress,
+}: QueryKeyArgs & QueryKeyConfig) {
+  return [
+    { entity: 'ensAvatar', name, chainId, scopeKey, universalResolverAddress },
+  ] as const
 }
 
 function queryFn({
@@ -38,13 +45,17 @@ export function useEnsAvatar({
 }: UseEnsAvatarArgs & UseEnsLookupConfig = {}) {
   const chainId = useChainId({ chainId: chainId_ })
 
-  return useQuery(queryKey({ name, chainId, scopeKey, universalResolverAddress }), queryFn, {
-    cacheTime,
-    enabled: Boolean(enabled && name && chainId),
-    staleTime,
-    suspense,
-    onError,
-    onSettled,
-    onSuccess,
-  })
+  return useQuery(
+    queryKey({ name, chainId, scopeKey, universalResolverAddress }),
+    queryFn,
+    {
+      cacheTime,
+      enabled: Boolean(enabled && name && chainId),
+      staleTime,
+      suspense,
+      onError,
+      onSettled,
+      onSuccess,
+    },
+  )
 }

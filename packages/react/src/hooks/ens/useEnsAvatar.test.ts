@@ -197,7 +197,8 @@ describe('useEnsAvatar', () => {
       const { result, waitFor } = renderHook(() =>
         useEnsAvatar({
           name: 'jxom.eth',
-          universalResolverAddress: '0xc0497E381f536Be9ce14B0dD3817cBcAe57d2F62',
+          universalResolverAddress:
+            '0xc0497E381f536Be9ce14B0dD3817cBcAe57d2F62',
         }),
       )
 

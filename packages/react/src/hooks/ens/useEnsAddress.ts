@@ -12,8 +12,15 @@ export type UseEnsAddressConfig = QueryConfig<FetchEnsAddressResult, Error>
 type QueryKeyArgs = UseEnsAddressArgs
 type QueryKeyConfig = Pick<UseEnsAddressConfig, 'scopeKey'>
 
-function queryKey({ chainId, name, scopeKey, universalResolverAddress }: QueryKeyArgs & QueryKeyConfig) {
-  return [{ entity: 'ensAddress', chainId, name, scopeKey, universalResolverAddress }] as const
+function queryKey({
+  chainId,
+  name,
+  scopeKey,
+  universalResolverAddress,
+}: QueryKeyArgs & QueryKeyConfig) {
+  return [
+    { entity: 'ensAddress', chainId, name, scopeKey, universalResolverAddress },
+  ] as const
 }
 
 function queryFn({
@@ -38,13 +45,17 @@ export function useEnsAddress({
 }: UseEnsAddressArgs & UseEnsAddressConfig = {}) {
   const chainId = useChainId({ chainId: chainId_ })
 
-  return useQuery(queryKey({ chainId, name, scopeKey, universalResolverAddress }), queryFn, {
-    cacheTime,
-    enabled: Boolean(enabled && chainId && name),
-    staleTime,
-    suspense,
-    onError,
-    onSettled,
-    onSuccess,
-  })
+  return useQuery(
+    queryKey({ chainId, name, scopeKey, universalResolverAddress }),
+    queryFn,
+    {
+      cacheTime,
+      enabled: Boolean(enabled && chainId && name),
+      staleTime,
+      suspense,
+      onError,
+      onSettled,
+      onSuccess,
+    },
+  )
 }

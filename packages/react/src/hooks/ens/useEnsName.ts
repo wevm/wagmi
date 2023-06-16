@@ -16,7 +16,9 @@ function queryKey({
   scopeKey,
   universalResolverAddress,
 }: QueryKeyArgs & QueryKeyConfig) {
-  return [{ entity: 'ensName', address, chainId, scopeKey, universalResolverAddress }] as const
+  return [
+    { entity: 'ensName', address, chainId, scopeKey, universalResolverAddress },
+  ] as const
 }
 
 function queryFn({
@@ -41,13 +43,17 @@ export function useEnsName({
 }: UseEnsNameArgs & UseEnsNameConfig = {}) {
   const chainId = useChainId({ chainId: chainId_ })
 
-  return useQuery(queryKey({ address, chainId, scopeKey, universalResolverAddress }), queryFn, {
-    cacheTime,
-    enabled: Boolean(enabled && address && chainId),
-    staleTime,
-    suspense,
-    onError,
-    onSettled,
-    onSuccess,
-  })
+  return useQuery(
+    queryKey({ address, chainId, scopeKey, universalResolverAddress }),
+    queryFn,
+    {
+      cacheTime,
+      enabled: Boolean(enabled && address && chainId),
+      staleTime,
+      suspense,
+      onError,
+      onSettled,
+      onSuccess,
+    },
+  )
 }

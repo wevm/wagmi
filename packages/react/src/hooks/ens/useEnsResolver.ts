@@ -12,9 +12,21 @@ export type UseEnsResolverConfig = QueryConfig<FetchEnsResolverResult, Error>
 type QueryKeyArgs = UseEnsResolverArgs
 type QueryKeyConfig = Pick<UseEnsResolverConfig, 'scopeKey'>
 
-function queryKey({ chainId, name, scopeKey, universalResolverAddress }: QueryKeyArgs & QueryKeyConfig) {
+function queryKey({
+  chainId,
+  name,
+  scopeKey,
+  universalResolverAddress,
+}: QueryKeyArgs & QueryKeyConfig) {
   return [
-    { entity: 'ensResolver', chainId, name, scopeKey, persist: false, universalResolverAddress },
+    {
+      entity: 'ensResolver',
+      chainId,
+      name,
+      scopeKey,
+      persist: false,
+      universalResolverAddress,
+    },
   ] as const
 }
 
@@ -38,12 +50,16 @@ export function useEnsResolver({
 }: UseEnsResolverArgs & UseEnsResolverConfig = {}) {
   const chainId = useChainId({ chainId: chainId_ })
 
-  return useQuery(queryKey({ chainId, name, scopeKey, universalResolverAddress }), queryFn, {
-    cacheTime: 0,
-    enabled: Boolean(enabled && chainId && name),
-    suspense,
-    onError,
-    onSettled,
-    onSuccess,
-  })
+  return useQuery(
+    queryKey({ chainId, name, scopeKey, universalResolverAddress }),
+    queryFn,
+    {
+      cacheTime: 0,
+      enabled: Boolean(enabled && chainId && name),
+      suspense,
+      onError,
+      onSettled,
+      onSuccess,
+    },
+  )
 }

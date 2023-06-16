@@ -176,7 +176,11 @@ describe('useEnsAddress', () => {
 
     it('universalResolverAddress', async () => {
       const { result, waitFor } = renderHook(() =>
-        useEnsAddress({ name: 'awkweb.eth', universalResolverAddress: '0xc0497E381f536Be9ce14B0dD3817cBcAe57d2F62' }),
+        useEnsAddress({
+          name: 'awkweb.eth',
+          universalResolverAddress:
+            '0xc0497E381f536Be9ce14B0dD3817cBcAe57d2F62',
+        }),
       )
 
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
