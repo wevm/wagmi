@@ -17,7 +17,7 @@
     "editor.defaultFormatter": "rome.rome"
   },
   "[typescript]": {
-    "editor.defaultFormatter": "rome.rome"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[typescriptreact]": {
     "editor.defaultFormatter": "rome.rome"

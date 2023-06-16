@@ -8,6 +8,8 @@ export type FetchEnsAddressArgs = {
   chainId?: number
   /** ENS name to resolve */
   name: string
+  /** Universal Resolver contract address */
+  universalResolverAddress?: `0x${string}`
 }
 
 export type FetchEnsAddressResult = Address | null
@@ -15,10 +17,12 @@ export type FetchEnsAddressResult = Address | null
 export async function fetchEnsAddress({
   chainId,
   name,
+  universalResolverAddress,
 }: FetchEnsAddressArgs): Promise<FetchEnsAddressResult> {
   const publicClient = getPublicClient({ chainId })
   const address = await publicClient.getEnsAddress({
     name: normalize(name),
+    universalResolverAddress,
   })
 
   try {
