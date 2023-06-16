@@ -74,7 +74,7 @@ export default withTwoslash(
       nav: [
         { text: 'React', link: '/react/getting-started' },
         { text: 'Core', link: '/core/getting-started' },
-        // { text: 'CLI', link: '/cli' }, // TODO
+        // { text: 'CLI', link: '/cli/getting-started' }, // TODO
         { text: 'Examples', link: '/examples' },
         {
           text: reactPackage.version,
