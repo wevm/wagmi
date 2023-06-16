@@ -3,7 +3,7 @@ import { type MutationOptions } from '@tanstack/query-core'
 import { type Config, type Connector } from '../config.js'
 import type { BaseError } from '../errors/base.js'
 import { ConnectorNotFoundError } from '../errors/config.js'
-import type { Pretty } from '../types/utils.js'
+import type { IsUndefined, Pretty } from '../types/utils.js'
 
 export type SwitchAccountParameters = {
   connector: Connector
@@ -30,16 +30,25 @@ export async function switchAccount(
 // TanStack Query
 
 export type SwitchAccountMutationData = void
-export type SwitchAccountMutationVariables = Pretty<{
-  connector?: Connector | undefined
+export type SwitchAccountMutationVariables<
+  connector extends SwitchAccountParameters['connector'] | undefined,
+> = Pretty<
+  IsUndefined<connector> extends false
+    ? { connector?: SwitchAccountParameters['connector'] | undefined }
+    : { connector: SwitchAccountParameters['connector'] | undefined }
+>
+export type SwitchAccountMutationParameters<
+  connector extends SwitchAccountParameters['connector'] | undefined,
+> = Pretty<{
+  connector?: connector | SwitchAccountParameters['connector'] | undefined
 }>
-export type SwitchAccountMutationParameters =
-  Pretty<SwitchAccountMutationVariables>
 
 /** https://wagmi.sh/core/actions/switchAccount#tanstack-query */
-export const switchAccountMutationOptions = (
+export const switchAccountMutationOptions = <
+  connector extends SwitchAccountParameters['connector'] | undefined,
+>(
   config: Config,
-  { connector }: SwitchAccountMutationParameters,
+  { connector }: SwitchAccountMutationParameters<connector>,
 ) =>
   ({
     mutationFn(variables) {
@@ -51,5 +60,5 @@ export const switchAccountMutationOptions = (
   }) as const satisfies MutationOptions<
     SwitchAccountMutationData,
     SwitchAccountError,
-    SwitchAccountMutationVariables
+    SwitchAccountMutationVariables<connector>
   >

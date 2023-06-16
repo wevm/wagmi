@@ -20,14 +20,16 @@ import { useConnections } from './useConnections.js'
 
 export type UseDisconnectParameters<context = unknown> = Pretty<
   DisconnectMutationParameters & {
-    mutation?: Omit<Options<context>, OmittedMutationOptions>
+    mutation?: Omit<
+      UseMutationOptions<
+        DisconnectMutationData,
+        DisconnectError,
+        DisconnectMutationVariables,
+        context
+      >,
+      OmittedMutationOptions
+    >
   }
->
-type Options<context = unknown> = UseMutationOptions<
-  DisconnectMutationData,
-  DisconnectError,
-  DisconnectMutationVariables,
-  context
 >
 
 export type UseDisconnectReturnType<context = unknown> = Pretty<

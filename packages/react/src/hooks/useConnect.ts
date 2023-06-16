@@ -11,6 +11,7 @@ import {
   type Connector,
   type CreateConnectorFn,
   type OmittedMutationOptions,
+  type ResolvedRegister,
   connectMutationOptions,
 } from '@wagmi/core'
 import type { Pretty } from '@wagmi/core/internal'
@@ -22,18 +23,17 @@ export type UseConnectParameters<
   connector extends CreateConnectorFn | Connector | undefined,
   context = unknown,
 > = Pretty<
-  ConnectMutationParameters<connector> & {
-    mutation?: Omit<MutationOptions<connector, context>, OmittedMutationOptions>
+  ConnectMutationParameters<ResolvedRegister['config'], connector> & {
+    mutation?: Omit<
+      UseMutationOptions<
+        ConnectMutationData<ResolvedRegister['config']>,
+        ConnectError,
+        ConnectMutationVariables<ResolvedRegister['config'], connector>,
+        context
+      >,
+      OmittedMutationOptions
+    >
   }
->
-type MutationOptions<
-  connector extends CreateConnectorFn | Connector | undefined,
-  context = unknown,
-> = UseMutationOptions<
-  ConnectMutationData,
-  ConnectError,
-  ConnectMutationVariables<connector>,
-  context
 >
 
 export type UseConnectReturnType<
@@ -50,9 +50,9 @@ type Result<
   connector extends CreateConnectorFn | Connector | undefined,
   context = unknown,
 > = UseMutationResult<
-  ConnectMutationData,
+  ConnectMutationData<ResolvedRegister['config']>,
   ConnectError,
-  ConnectMutationVariables<connector>,
+  ConnectMutationVariables<ResolvedRegister['config'], connector>,
   context
 >
 
@@ -70,14 +70,14 @@ export function useConnect<
 > {
   const config = useConfig()
   const { mutate, mutateAsync, ...mutationOptions } = useMutation<
-    ConnectMutationData,
+    ConnectMutationData<ResolvedRegister['config']>,
     ConnectError,
-    ConnectMutationVariables<connector>,
+    ConnectMutationVariables<ResolvedRegister['config'], connector>,
     context
   >(
     connectMutationOptions(config, {
       chainId,
-      connector: connector as Connector,
+      connector: connector as connector,
     }),
   )
   return {

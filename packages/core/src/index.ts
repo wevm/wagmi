@@ -170,6 +170,8 @@ export {
   type OmittedMutationOptions,
 } from './types/query.js'
 
+export { type Register, type ResolvedRegister } from './types/register.js'
+
 ////////////////////////////////////////////////////////////////////////////////
 // Utilities
 

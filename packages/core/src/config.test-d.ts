@@ -28,16 +28,6 @@ test('low-level config', () => {
         transport: http(),
       }),
   })
-
-  // Create a simple "single chain" config using viem modules.
-  // Note that we do not accept `chains` here, it is inferred from Client.
-  createConfig({
-    connectors: [testConnector({ accounts })],
-    publicClient: createPublicClient({
-      chain: mainnet,
-      transport: http(),
-    }),
-  })
 })
 
 test('`chains` must have at least one chain`', () => {

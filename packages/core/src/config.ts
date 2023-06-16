@@ -26,21 +26,19 @@ export type CreateConfigParameters<
   chains extends readonly [Chain, ...Chain[]],
 > = Pretty<
   {
+    chains: chains
     connectors?: CreateConnectorFn[]
     persister?: Persister | null | undefined
-    queryClient?: QueryClient
-    reconnectOnMount?: boolean
+    queryClient?: QueryClient | undefined
+    reconnectOnMount?: boolean | undefined
     storage?: Storage | null | undefined
-    syncConnectedChain?: boolean
+    syncConnectedChain?: boolean | undefined
   } & OneOf<
     | {
-        chains: chains
         pollingInterval?: number
         transports: Record<chains[number]['id'], Transport>
       }
-    | { publicClient: PublicClient }
     | {
-        chains: chains
         publicClient: (parameters: {
           chain: chains[number]
         }) => PublicClient<Transport>
@@ -55,24 +53,21 @@ export type Config<
   readonly connectors: readonly Connector[]
   readonly persister: Persister | null
   readonly queryClient: QueryClient
-  readonly state: State
+  readonly state: State<chains>
   readonly storage: Storage | null
 
   getPublicClient(parameters?: { chainId?: number | undefined }): PublicClient
-  setState(value: State | ((state: State) => State)): void
-  subscribe: {
-    (
-      listener: (selectedState: State, previousSelectedState: State) => void,
-    ): () => void
-    <U>(
-      selector: (state: State) => U,
-      listener: (selectedState: U, previousSelectedState: U) => void,
-      options?: {
-        equalityFn?: (a: U, b: U) => boolean
-        fireImmediately?: boolean
-      },
-    ): () => void
-  }
+  setState<chains_ extends readonly [Chain, ...Chain[]] = chains>(
+    value: State<chains_> | ((state: State<chains_>) => State<chains_>),
+  ): void
+  subscribe<state>(
+    selector: (state: State<chains>) => state,
+    listener: (selectedState: state, previousSelectedState: state) => void,
+    options?: {
+      equalityFn?: (a: state, b: state) => boolean
+      fireImmediately?: boolean
+    },
+  ): () => void
 
   _internal: {
     readonly reconnectOnMount: boolean
@@ -85,8 +80,10 @@ export type Config<
   }
 }
 
-export type State = {
-  chainId: number
+export type State<
+  chains extends readonly [Chain, ...Chain[]] = readonly [Chain, ...Chain[]],
+> = {
+  chainId: chains[number]['id']
   connections: Map<string, Connection>
   current: string | undefined
   status: 'connected' | 'connecting' | 'disconnected' | 'reconnecting'
@@ -105,8 +102,9 @@ export type Connector = ReturnType<CreateConnectorFn> & {
 }
 
 export function createConfig<
-  const TChain extends readonly [Chain, ...Chain[]],
+  const chains extends readonly [Chain, ...Chain[]],
 >({
+  chains,
   queryClient = createQueryClient(),
   reconnectOnMount = true,
   storage = createStorage({
@@ -117,18 +115,10 @@ export function createConfig<
   }),
   syncConnectedChain = true,
   ...rest
-}: CreateConfigParameters<TChain>): Config<TChain> {
+}: CreateConfigParameters<chains>): Config<chains> {
   /////////////////////////////////////////////////////////////////////////////////////////////////
-  // Set up chains, connectors, clients, etc.
+  // Set up connectors, clients, etc.
   /////////////////////////////////////////////////////////////////////////////////////////////////
-
-  let chains: readonly [Chain, ...Chain[]]
-  if ('chains' in rest) chains = rest.chains
-  else {
-    // TODO: Infer `TChain` from `publicClient`
-    if (!rest.publicClient.chain) throw new ChainNotConfiguredError()
-    chains = [rest.publicClient.chain]
-  }
 
   const connectors = (rest.connectors ?? []).map(setup)
   function setup(connectorFn: CreateConnectorFn) {
@@ -148,13 +138,10 @@ export function createConfig<
     return connector
   }
 
-  const isMultichain = 'chains' in rest
   const publicClients = new Map<number, PublicClient | undefined>()
   function getPublicClient({
     chainId: chainId_,
   }: { chainId?: number | undefined } = {}) {
-    if (!isMultichain) return rest.publicClient
-
     const chainId = chainId_ ?? store.getState().chainId
     const chain = chains.find((x) => x.id === chainId)
 
@@ -178,7 +165,7 @@ export function createConfig<
         batch: { multicall: true },
         chain,
         pollingInterval: rest.pollingInterval as number,
-        transport: rest.transports[chain.id as TChain[number]['id']],
+        transport: rest.transports[chain.id as chains[number]['id']],
       })
 
     publicClients.set(chainId, publicClient)
@@ -222,7 +209,7 @@ export function createConfig<
   /////////////////////////////////////////////////////////////////////////////////////////////////
 
   // Update default chain when connector chain changes
-  if (isMultichain && syncConnectedChain)
+  if (syncConnectedChain)
     store.subscribe(
       ({ connections, current }) =>
         current ? connections.get(current)?.chainId : undefined,
@@ -322,22 +309,28 @@ export function createConfig<
   else persister = rest.persister
 
   return {
-    chains: chains as TChain,
+    chains,
     connectors,
     persister,
     queryClient,
     get state() {
-      return store.getState()
+      return store.getState() as unknown as State<chains>
     },
     storage,
 
     getPublicClient,
-    setState(value: State | ((state: State) => State)) {
+    setState(value) {
       const newState =
-        typeof value === 'function' ? value(store.getState()) : value
+        typeof value === 'function' ? value(store.getState() as any) : value
       store.setState(newState, true)
     },
-    subscribe: store.subscribe,
+    subscribe(selector, listener, options) {
+      return store.subscribe(
+        selector as unknown as (state: State) => any,
+        listener,
+        options,
+      )
+    },
 
     _internal: {
       reconnectOnMount,

@@ -1,9 +1,11 @@
 import { QueryClientProvider } from '@tanstack/react-query'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
-import { type Config, reconnect } from '@wagmi/core'
+import { type Config, type ResolvedRegister, reconnect } from '@wagmi/core'
 import * as React from 'react'
 
-export const WagmiContext = React.createContext<Config | undefined>(undefined)
+export const WagmiContext = React.createContext<
+  ResolvedRegister['config'] | undefined
+>(undefined)
 
 export type WagmiConfigProps = {
   value: Config

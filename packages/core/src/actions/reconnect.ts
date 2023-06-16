@@ -2,7 +2,7 @@ import { type MutationOptions } from '@tanstack/query-core'
 
 import type { Config, Connection, Connector } from '../config.js'
 import { type CreateConnectorFn } from '../connector.js'
-import type { NonVoid, Pretty } from '../types/utils.js'
+import type { Pretty } from '../types/utils.js'
 
 export type ReconnectParameters = {
   /** Connectors to attempt reconnect with */
@@ -107,9 +107,11 @@ export type ReconnectMutationVariables = Pretty<{
     | [CreateConnectorFn | Connector, ...(CreateConnectorFn | Connector)[]]
     | undefined
 }> | void
-export type ReconnectMutationParameters = Pretty<
-  NonVoid<ReconnectMutationVariables>
->
+export type ReconnectMutationParameters = Pretty<{
+  connectors?:
+    | [CreateConnectorFn | Connector, ...(CreateConnectorFn | Connector)[]]
+    | undefined
+}>
 
 /** https://wagmi.sh/core/actions/reconnect#tanstack-query */
 export const reconnectMutationOptions = (

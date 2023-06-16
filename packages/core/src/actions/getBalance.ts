@@ -8,7 +8,7 @@ import {
   formatUnits,
 } from 'viem'
 
-import { type Config } from '../config.js'
+import type { Config } from '../config.js'
 import { type Unit } from '../types/unit.js'
 import { type PartialBy, type Pretty } from '../types/utils.js'
 import { getUnit } from '../utils/getUnit.js'
@@ -17,9 +17,9 @@ import type {
   WatchBlockNumberReturnType,
 } from './getBlockNumber.js'
 
-export type GetBalanceParameters = Pretty<
+export type GetBalanceParameters<config extends Config = Config> = Pretty<
   GetBalanceParameters_ & {
-    chainId?: number | undefined
+    chainId?: config['chains'][number]['id'] | undefined
     token?: Address | undefined
     unit?: Unit | undefined
   }
@@ -39,9 +39,15 @@ export type GetBalanceError =
   | Error
 
 /** https://wagmi.sh/core/actions/getBalance */
-export async function getBalance(
-  config: Config,
-  { address, chainId, token, unit = 'ether', ...rest }: GetBalanceParameters,
+export async function getBalance<config extends Config>(
+  config: config,
+  {
+    address,
+    chainId,
+    token,
+    unit = 'ether',
+    ...rest
+  }: GetBalanceParameters<config>,
 ): Promise<GetBalanceReturnType> {
   const publicClient = config.getPublicClient({ chainId })
 
@@ -66,8 +72,8 @@ export async function getBalance(
 ///////////////////////////////////////////////////////////////////////////
 // Watcher
 
-export type WatchBalanceParameters = Pretty<
-  Omit<GetBalanceParameters, 'blockNumber' | 'blockTag'> & {
+export type WatchBalanceParameters<config extends Config = Config> = Pretty<
+  Omit<GetBalanceParameters<config>, 'blockNumber' | 'blockTag'> & {
     onBalance: (parameters: GetBalanceReturnType) => void
     onError?: (error: GetBalanceError | GetBlockNumberError) => void
     syncConnectedChain?: boolean
@@ -78,8 +84,8 @@ export type WatchBalanceReturnType = () => void
 
 // TODO: wrap in viem's `observe` to avoid duplicate invocations.
 /** https://wagmi.sh/core/actions/getBalance#watcher */
-export function watchBalance(
-  config: Config,
+export function watchBalance<config extends Config>(
+  config: config,
   {
     address,
     chainId,
@@ -88,7 +94,7 @@ export function watchBalance(
     syncConnectedChain = config._internal.syncConnectedChain,
     token,
     unit,
-  }: WatchBalanceParameters,
+  }: WatchBalanceParameters<config>,
 ): WatchBalanceReturnType {
   let unwatch: WatchBlockNumberReturnType | undefined
 
@@ -150,16 +156,19 @@ export function watchBalance(
 ///////////////////////////////////////////////////////////////////////////
 // TanStack Query
 
-export type GetBalanceQueryParameters = PartialBy<
-  GetBalanceParameters,
+export type GetBalanceQueryParameters<config extends Config> = PartialBy<
+  GetBalanceParameters<config>,
   'address'
 >
-export type GetBalanceQueryKey = readonly ['balance', GetBalanceQueryParameters]
+export type GetBalanceQueryKey<config extends Config> = readonly [
+  'balance',
+  GetBalanceQueryParameters<config>,
+]
 export type GetBalanceQueryFnData = NonNullable<GetBalanceReturnType> | null
 
 /** https://wagmi.sh/core/actions/getBalance#tanstack-query */
-export const getBalanceQueryOptions = (
-  config: Config,
+export const getBalanceQueryOptions = <config extends Config>(
+  config: config,
   {
     address,
     blockNumber,
@@ -167,7 +176,7 @@ export const getBalanceQueryOptions = (
     chainId,
     token,
     unit,
-  }: GetBalanceQueryParameters,
+  }: GetBalanceQueryParameters<config>,
 ) =>
   ({
     async queryFn() {
@@ -179,7 +188,7 @@ export const getBalanceQueryOptions = (
         chainId,
         token,
         unit,
-      } as GetBalanceParameters)
+      } as GetBalanceParameters<config>)
       return balance ?? null
     },
     queryKey: ['balance', { address, chainId, token, unit }],
@@ -187,5 +196,5 @@ export const getBalanceQueryOptions = (
     GetBalanceQueryFnData,
     GetBalanceError,
     GetBalanceQueryFnData,
-    GetBalanceQueryKey
+    GetBalanceQueryKey<config>
   >

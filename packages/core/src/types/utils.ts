@@ -30,17 +30,6 @@ export type Mutable<type extends object> = {
 }
 
 /**
- * Removes `void` from type.
- *
- * @param type - Type to remove `void` from.
- *
- * @example
- * type Result = NonVoid<string | void>
- * //   ^? type Result = string
- */
-export type NonVoid<type> = type extends void ? never : type
-
-/**
  * Makes objects destructurable.
  *
  * @param union - Union to distribute.

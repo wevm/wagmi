@@ -90,6 +90,9 @@ export {
   type Storage,
   createStorage,
   noopStorage,
+  // Types
+  type Register,
+  type ResolvedRegister,
   // Utilities
   deserialize,
   normalizeChainId,

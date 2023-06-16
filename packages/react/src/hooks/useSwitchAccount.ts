@@ -18,42 +18,59 @@ import type { OmittedUseMutationResult } from '../types/query.js'
 import { useConfig } from './useConfig.js'
 import { useConnections } from './useConnections.js'
 
-export type UseSwitchAccountParameters<context = unknown> = Pretty<
-  SwitchAccountMutationParameters & {
-    mutation?: Omit<Options<context>, OmittedMutationOptions>
+export type UseSwitchAccountParameters<
+  connector extends Connector | undefined,
+  context = unknown,
+> = Pretty<
+  SwitchAccountMutationParameters<connector> & {
+    mutation?: Omit<
+      UseMutationOptions<
+        SwitchAccountMutationData,
+        SwitchAccountError,
+        SwitchAccountMutationVariables<connector>,
+        context
+      >,
+      OmittedMutationOptions
+    >
   }
->
-type Options<context = unknown> = UseMutationOptions<
-  SwitchAccountMutationData,
-  SwitchAccountError,
-  SwitchAccountMutationVariables,
-  context
 >
 
-export type UseSwitchAccountReturnType<context = unknown> = Pretty<
-  Omit<Result<context>, OmittedUseMutationResult> & {
+export type UseSwitchAccountReturnType<
+  connector extends Connector | undefined,
+  context = unknown,
+> = Pretty<
+  Omit<Result<connector, context>, OmittedUseMutationResult> & {
     connectors: readonly Connector[]
-    switchAccount: Result<context>['mutate']
-    switchAccountAsync: Result<context>['mutateAsync']
+    switchAccount: Result<connector, context>['mutate']
+    switchAccountAsync: Result<connector, context>['mutateAsync']
   }
 >
-type Result<context = unknown> = UseMutationResult<
+type Result<
+  connector extends Connector | undefined,
+  context = unknown,
+> = UseMutationResult<
   SwitchAccountMutationData,
   SwitchAccountError,
-  SwitchAccountMutationVariables,
+  SwitchAccountMutationVariables<connector>,
   context
 >
 
 /** https://wagmi.sh/react/hooks/useSwitchAccount */
-export function useSwitchAccount<context = unknown>({
+export function useSwitchAccount<
+  connector extends Connector | undefined = undefined,
+  context = unknown,
+>({
   connector,
   mutation,
-}: UseSwitchAccountParameters<context> = {}): UseSwitchAccountReturnType<context> {
+}: UseSwitchAccountParameters<
+  connector,
+  context
+> = {}): UseSwitchAccountReturnType<connector, context> {
   const config = useConfig()
   const { mutate, mutateAsync, ...mutationOptions } = useMutation<
     SwitchAccountMutationData,
     SwitchAccountError,
-    SwitchAccountMutationVariables,
+    SwitchAccountMutationVariables<connector>,
     context
   >(switchAccountMutationOptions(config, { connector }))
   const connections = useConnections()

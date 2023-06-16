@@ -4,6 +4,7 @@ import {
   type GetBalanceQueryKey,
   type GetBalanceQueryParameters,
   type OmittedQueryOptions,
+  type ResolvedRegister,
   getBalanceQueryOptions,
   watchBlockNumber,
 } from '@wagmi/core'
@@ -16,28 +17,27 @@ import { useConfig } from './useConfig.js'
 import { type UseQueryParameters, useQuery } from './useQuery.js'
 import type { UseQueryResult } from '@tanstack/react-query'
 
-export type UseBalanceParameters<TSelectData = GetBalanceQueryFnData> = Pretty<
-  GetBalanceQueryParameters & {
+export type UseBalanceParameters<selectData = GetBalanceQueryFnData> = Pretty<
+  GetBalanceQueryParameters<ResolvedRegister['config']> & {
     enabled?: boolean
-    query?: QueryOptions<TSelectData>
+    query?: Omit<
+      UseQueryParameters<
+        GetBalanceQueryFnData,
+        GetBalanceError,
+        selectData,
+        GetBalanceQueryKey<ResolvedRegister['config']>
+      >,
+      OmittedQueryOptions | OmittedUseQueryOptions
+    >
     watch?: boolean | undefined
   }
 >
-type QueryOptions<TSelectData = GetBalanceQueryFnData> = Omit<
-  UseQueryParameters<
-    GetBalanceQueryFnData,
-    GetBalanceError,
-    TSelectData,
-    GetBalanceQueryKey
-  >,
-  OmittedQueryOptions | OmittedUseQueryOptions
->
 
-export type UseBalanceReturnType<TSelectData = GetBalanceQueryFnData> =
-  UseQueryResult<TSelectData, GetBalanceError>
+export type UseBalanceReturnType<selectData = GetBalanceQueryFnData> =
+  UseQueryResult<selectData, GetBalanceError>
 
 /** https://wagmi.sh/react/hooks/useBalance */
-export function useBalance<TSelectData = GetBalanceQueryFnData>({
+export function useBalance<selectData = GetBalanceQueryFnData,>({
   address,
   chainId: chainId_,
   enabled = true,
@@ -45,7 +45,7 @@ export function useBalance<TSelectData = GetBalanceQueryFnData>({
   token,
   unit,
   watch,
-}: UseBalanceParameters<TSelectData>): UseBalanceReturnType<TSelectData> {
+}: UseBalanceParameters<selectData>): UseBalanceReturnType<selectData> {
   const config = useConfig()
   const defaultChainId = useChainId()
   const chainId = chainId_ ?? defaultChainId

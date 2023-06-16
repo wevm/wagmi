@@ -3,7 +3,7 @@ import { type MutationOptions } from '@tanstack/query-core'
 import { type Config, type Connection, type Connector } from '../config.js'
 import type { BaseError } from '../errors/base.js'
 import { ConnectorNotFoundError } from '../errors/config.js'
-import type { NonVoid, Pretty } from '../types/utils.js'
+import type { Pretty } from '../types/utils.js'
 
 export type DisconnectParameters = {
   connector?: Connector | undefined
@@ -60,9 +60,9 @@ export type DisconnectMutationData = void
 export type DisconnectMutationVariables = Pretty<{
   connector?: Connector | undefined
 }> | void
-export type DisconnectMutationParameters = Pretty<
-  NonVoid<DisconnectMutationVariables>
->
+export type DisconnectMutationParameters = Pretty<{
+  connector?: Connector | undefined
+}>
 
 /** https://wagmi.sh/core/actions/disconnect#tanstack-query */
 export const disconnectMutationOptions = (

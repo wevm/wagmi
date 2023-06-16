@@ -19,12 +19,12 @@ describe('watchChainId', () => {
     })
     config.setState((x) => ({ ...x, chainId: testChains.anvilTwo.id }))
     config.setState((x) => ({ ...x, chainId: testChains.anvil.id }))
-    config.setState((x) => ({ ...x, chainId: 69 }))
+    config.setState((x) => ({ ...x, chainId: 456 }))
 
     expect(chainIds).toMatchInlineSnapshot(`
       [
         123,
-        69,
+        456,
       ]
     `)
 

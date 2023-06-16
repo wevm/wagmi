@@ -10,14 +10,16 @@ import { type CreateConnectorFn } from '../connector.js'
 import { ConnectorAlreadyConnectedError } from '../errors/config.js'
 import type { IsUndefined, Pretty } from '../types/utils.js'
 
-export type ConnectParameters = {
-  chainId?: number | undefined
+export type ConnectParameters<config extends Config = Config> = {
+  chainId?: config['chains'][number]['id'] | undefined
   connector: CreateConnectorFn | Connector
 }
 
-export type ConnectReturnType = {
+export type ConnectReturnType<config extends Config = Config> = {
   accounts: readonly Address[]
-  chainId: number
+  chainId:
+    | config['chains'][number]['id']
+    | (number extends config['chains'][number]['id'] ? number : number & {})
 }
 
 export type ConnectError =
@@ -30,10 +32,10 @@ export type ConnectError =
   | Error
 
 /** https://wagmi.sh/core/actions/connect */
-export async function connect(
-  config: Config,
-  { chainId, connector: connector_ }: ConnectParameters,
-): Promise<ConnectReturnType> {
+export async function connect<config extends Config>(
+  config: config,
+  { chainId, connector: connector_ }: ConnectParameters<config>,
+): Promise<ConnectReturnType<config>> {
   // "Register" connector if not already created
   let connector: Connector
   if (typeof connector_ === 'function') {
@@ -85,29 +87,34 @@ export async function connect(
 ///////////////////////////////////////////////////////////////////////////
 // TanStack Query
 
-export type ConnectMutationData = Pretty<ConnectReturnType>
+export type ConnectMutationData<config extends Config> = Pretty<
+  ConnectReturnType<config>
+>
 export type ConnectMutationVariables<
+  config extends Config,
   connector extends ConnectParameters['connector'] | undefined,
 > = Pretty<
   {
-    chainId?: number | undefined
+    chainId?: ConnectParameters<config>['chainId']
   } & (IsUndefined<connector> extends false
     ? { connector?: ConnectParameters['connector'] | undefined }
     : { connector: ConnectParameters['connector'] | undefined })
 >
 export type ConnectMutationParameters<
+  config extends Config,
   connector extends ConnectParameters['connector'] | undefined,
 > = Pretty<{
-  chainId?: ConnectParameters['chainId'] | undefined
+  chainId?: ConnectParameters<config>['chainId']
   connector?: connector | ConnectParameters['connector'] | undefined
 }>
 
 /** https://wagmi.sh/core/actions/connect#tanstack-query */
 export const connectMutationOptions = <
+  config extends Config,
   connector extends ConnectParameters['connector'] | undefined,
 >(
   config: Config,
-  { chainId, connector }: ConnectMutationParameters<connector>,
+  { chainId, connector }: ConnectMutationParameters<config, connector>,
 ) =>
   ({
     mutationFn(variables) {
@@ -118,7 +125,7 @@ export const connectMutationOptions = <
     },
     mutationKey: ['connect', { connector, chainId }],
   }) as const satisfies MutationOptions<
-    ConnectMutationData,
+    ConnectMutationData<config>,
     ConnectError,
-    ConnectMutationVariables<connector>
+    ConnectMutationVariables<config, connector>
   >

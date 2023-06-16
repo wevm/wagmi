@@ -3,6 +3,7 @@ import {
   useAccount,
   useBalance,
   useBlockNumber,
+  useChainId,
   useConnect,
   useConnections,
   useDisconnect,
@@ -111,7 +112,8 @@ function Connections() {
 }
 
 function Balance() {
-  const { address, chainId } = useAccount()
+  const { address } = useAccount()
+  const chainId = useChainId()
 
   const { data: default_ } = useBalance({ address, watch: true })
   const { data: account_ } = useBalance({
@@ -137,7 +139,7 @@ function Balance() {
 }
 
 function BlockNumber() {
-  const { chainId } = useAccount()
+  const chainId = useChainId()
 
   const { data: default_ } = useBlockNumber({ watch: true })
   const { data: account_ } = useBlockNumber({

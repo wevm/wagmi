@@ -9,8 +9,8 @@ test('default', async () => {
 
   expect(result.current).toMatchInlineSnapshot('123')
 
-  config.setState((x) => ({ ...x, chainId: 69 }))
+  config.setState((x) => ({ ...x, chainId: 456 }))
   rerender()
 
-  expect(result.current).toMatchInlineSnapshot('69')
+  expect(result.current).toMatchInlineSnapshot('456')
 })

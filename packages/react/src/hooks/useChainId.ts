@@ -1,5 +1,6 @@
 import {
   type GetChainIdReturnType,
+  type ResolvedRegister,
   getChainId,
   watchChainId,
 } from '@wagmi/core'
@@ -7,7 +8,9 @@ import * as React from 'react'
 
 import { useConfig } from './useConfig.js'
 
-export type UseChainIdReturnType = GetChainIdReturnType
+export type UseChainIdReturnType = GetChainIdReturnType<
+  ResolvedRegister['config']
+>
 
 /** https://wagmi.sh/react/hooks/useChainId */
 export function useChainId(): UseChainIdReturnType {

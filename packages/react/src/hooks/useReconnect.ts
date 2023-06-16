@@ -19,14 +19,16 @@ import { useConfig } from './useConfig.js'
 
 export type UseReconnectParameters<context = unknown> = Pretty<
   ReconnectMutationParameters & {
-    mutation?: Omit<MutationOptions<context>, OmittedMutationOptions>
+    mutation?: Omit<
+      UseMutationOptions<
+        ReconnectMutationData,
+        ReconnectError,
+        ReconnectMutationVariables,
+        context
+      >,
+      OmittedMutationOptions
+    >
   }
->
-type MutationOptions<context = unknown> = UseMutationOptions<
-  ReconnectMutationData,
-  ReconnectError,
-  ReconnectMutationVariables,
-  context
 >
 
 export type UseReconnectReturnType<context = unknown> = Pretty<

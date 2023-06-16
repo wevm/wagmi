@@ -4,7 +4,6 @@ import {
   type ExactPartial,
   type IsUndefined,
   type Mutable,
-  type NonVoid,
   type OneOf,
   type PartialBy,
 } from './utils.js'
@@ -33,10 +32,6 @@ test('Mutable', () => {
   expectTypeOf<
     Mutable<{ foo: boolean; readonly bar: boolean }>
   >().toEqualTypeOf<{ foo: boolean; bar: boolean }>()
-})
-
-test('OneOf', () => {
-  expectTypeOf<NonVoid<string | void>>().toEqualTypeOf<string>()
 })
 
 test('OneOf', () => {
