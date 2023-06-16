@@ -32,7 +32,8 @@ describe('fetchEnsAddress', () => {
         expect(
           await fetchEnsAddress({
             name: 'awkweb.eth',
-            universalResolverAddress: '0xc0497E381f536Be9ce14B0dD3817cBcAe57d2F62',
+            universalResolverAddress:
+              '0xc0497E381f536Be9ce14B0dD3817cBcAe57d2F62',
           }),
         ).toMatchInlineSnapshot(`"0xA0Cf798816D4b9b9866b5330EEa46a18382f251e"`)
       })
