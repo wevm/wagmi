@@ -193,6 +193,36 @@ describe('useEnsAvatar', () => {
       `)
     })
 
+    it('universalResolverAddress', async () => {
+      const { result, waitFor } = renderHook(() =>
+        useEnsAvatar({
+          name: 'jxom.eth',
+          universalResolverAddress: '0xc0497E381f536Be9ce14B0dD3817cBcAe57d2F62',
+        }),
+      )
+
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+
+      const { internal: _, ...res } = result.current
+      expect(res).toMatchInlineSnapshot(`
+        {
+          "data": "https://c8.alamy.com/comp/EWE8F9/rowan-atkinson-mr-bean-EWE8F9.jpg",
+          "error": null,
+          "fetchStatus": "idle",
+          "isError": false,
+          "isFetched": true,
+          "isFetchedAfterMount": true,
+          "isFetching": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isRefetching": false,
+          "isSuccess": true,
+          "refetch": [Function],
+          "status": "success",
+        }
+      `)
+    })
+
     it('enabled', async () => {
       const { result, waitFor } = renderHook(() =>
         useEnsAvatar({

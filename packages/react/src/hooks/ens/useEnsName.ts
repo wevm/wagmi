@@ -14,15 +14,16 @@ function queryKey({
   address,
   chainId,
   scopeKey,
+  universalResolverAddress,
 }: QueryKeyArgs & QueryKeyConfig) {
-  return [{ entity: 'ensName', address, chainId, scopeKey }] as const
+  return [{ entity: 'ensName', address, chainId, scopeKey, universalResolverAddress }] as const
 }
 
 function queryFn({
-  queryKey: [{ address, chainId }],
+  queryKey: [{ address, chainId, universalResolverAddress }],
 }: QueryFunctionArgs<typeof queryKey>) {
   if (!address) throw new Error('address is required')
-  return fetchEnsName({ address, chainId })
+  return fetchEnsName({ address, chainId, universalResolverAddress })
 }
 
 export function useEnsName({
@@ -31,6 +32,7 @@ export function useEnsName({
   chainId: chainId_,
   enabled = true,
   scopeKey,
+  universalResolverAddress,
   staleTime = 1_000 * 60 * 60 * 24, // 24 hours
   suspense,
   onError,
@@ -39,7 +41,7 @@ export function useEnsName({
 }: UseEnsNameArgs & UseEnsNameConfig = {}) {
   const chainId = useChainId({ chainId: chainId_ })
 
-  return useQuery(queryKey({ address, chainId, scopeKey }), queryFn, {
+  return useQuery(queryKey({ address, chainId, scopeKey, universalResolverAddress }), queryFn, {
     cacheTime,
     enabled: Boolean(enabled && address && chainId),
     staleTime,

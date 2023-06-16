@@ -175,6 +175,33 @@ describe('useEnsResolver', () => {
         `)
       })
     })
+
+    it('universalResolverAddress', async () => {
+      const { result, waitFor } = renderHook(() =>
+        useEnsResolver({ name: 'awkweb.eth', universalResolverAddress: '0xc0497E381f536Be9ce14B0dD3817cBcAe57d2F62' }),
+      )
+
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+
+      const { internal: _, ...res } = result.current
+      expect(res).toMatchInlineSnapshot(`
+        {
+          "data": "0x4976fb03C32e5B8cfe2b6cCB31c09Ba78EBaBa41",
+          "error": null,
+          "fetchStatus": "idle",
+          "isError": false,
+          "isFetched": true,
+          "isFetchedAfterMount": true,
+          "isFetching": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isRefetching": false,
+          "isSuccess": true,
+          "refetch": [Function],
+          "status": "success",
+        }
+      `)
+    })
   })
 
   describe('return value', () => {

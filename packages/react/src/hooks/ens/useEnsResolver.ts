@@ -12,17 +12,17 @@ export type UseEnsResolverConfig = QueryConfig<FetchEnsResolverResult, Error>
 type QueryKeyArgs = UseEnsResolverArgs
 type QueryKeyConfig = Pick<UseEnsResolverConfig, 'scopeKey'>
 
-function queryKey({ chainId, name, scopeKey }: QueryKeyArgs & QueryKeyConfig) {
+function queryKey({ chainId, name, scopeKey, universalResolverAddress }: QueryKeyArgs & QueryKeyConfig) {
   return [
-    { entity: 'ensResolver', chainId, name, scopeKey, persist: false },
+    { entity: 'ensResolver', chainId, name, scopeKey, persist: false, universalResolverAddress },
   ] as const
 }
 
 function queryFn({
-  queryKey: [{ chainId, name }],
+  queryKey: [{ chainId, name, universalResolverAddress }],
 }: QueryFunctionArgs<typeof queryKey>) {
   if (!name) throw new Error('name is required')
-  return fetchEnsResolver({ chainId, name })
+  return fetchEnsResolver({ chainId, name, universalResolverAddress })
 }
 
 export function useEnsResolver({
@@ -30,6 +30,7 @@ export function useEnsResolver({
   name,
   enabled = true,
   scopeKey,
+  universalResolverAddress,
   suspense,
   onError,
   onSettled,
@@ -37,7 +38,7 @@ export function useEnsResolver({
 }: UseEnsResolverArgs & UseEnsResolverConfig = {}) {
   const chainId = useChainId({ chainId: chainId_ })
 
-  return useQuery(queryKey({ chainId, name, scopeKey }), queryFn, {
+  return useQuery(queryKey({ chainId, name, scopeKey, universalResolverAddress }), queryFn, {
     cacheTime: 0,
     enabled: Boolean(enabled && chainId && name),
     suspense,

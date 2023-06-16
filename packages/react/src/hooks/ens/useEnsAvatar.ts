@@ -12,15 +12,15 @@ export type UseEnsLookupConfig = QueryConfig<FetchEnsAvatarResult, Error>
 type QueryKeyArgs = UseEnsAvatarArgs
 type QueryKeyConfig = Pick<UseEnsLookupConfig, 'scopeKey'>
 
-function queryKey({ name, chainId, scopeKey }: QueryKeyArgs & QueryKeyConfig) {
-  return [{ entity: 'ensAvatar', name, chainId, scopeKey }] as const
+function queryKey({ name, chainId, scopeKey, universalResolverAddress }: QueryKeyArgs & QueryKeyConfig) {
+  return [{ entity: 'ensAvatar', name, chainId, scopeKey, universalResolverAddress }] as const
 }
 
 function queryFn({
-  queryKey: [{ name, chainId }],
+  queryKey: [{ name, chainId, universalResolverAddress }],
 }: QueryFunctionArgs<typeof queryKey>) {
   if (!name) throw new Error('name is required')
-  return fetchEnsAvatar({ name, chainId })
+  return fetchEnsAvatar({ name, chainId, universalResolverAddress })
 }
 
 export function useEnsAvatar({
@@ -29,6 +29,7 @@ export function useEnsAvatar({
   enabled = true,
   name,
   scopeKey,
+  universalResolverAddress,
   staleTime = 1_000 * 60 * 60 * 24, // 24 hours
   suspense,
   onError,
@@ -37,7 +38,7 @@ export function useEnsAvatar({
 }: UseEnsAvatarArgs & UseEnsLookupConfig = {}) {
   const chainId = useChainId({ chainId: chainId_ })
 
-  return useQuery(queryKey({ name, chainId, scopeKey }), queryFn, {
+  return useQuery(queryKey({ name, chainId, scopeKey, universalResolverAddress }), queryFn, {
     cacheTime,
     enabled: Boolean(enabled && name && chainId),
     staleTime,
