@@ -227,8 +227,8 @@ function getSidebar() {
                 link: '/react/hooks/useContractReads',
               },
               {
-                text: 'useContractEventWatch 🚧',
-                link: '/react/hooks/useContractEventWatch',
+                text: 'useContractEvent 🚧',
+                link: '/react/hooks/useContractEvent',
               },
               {
                 text: 'useContractWrite 🚧',
@@ -282,8 +282,8 @@ function getSidebar() {
                 link: '/react/hooks/useToken',
               },
               {
-                text: 'useWaitForTransactionReceipt 🚧',
-                link: '/react/hooks/useWaitForTransactionReceipt',
+                text: 'useWaitForTransaction 🚧',
+                link: '/react/hooks/useWaitForTransaction',
               },
               {
                 text: 'useWalletClient 🚧',

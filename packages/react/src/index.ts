@@ -5,6 +5,8 @@ export {
   type WagmiConfigProps,
   WagmiConfig,
   WagmiContext,
+  /** @deprecated Use `WagmiContext` instead */
+  WagmiContext as Context,
 } from './context.js'
 
 ////////////////////////////////////////////////////////////////////////////////

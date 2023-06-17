@@ -138,6 +138,7 @@ export function createConfig<
     return connector
   }
 
+  // TODO: WebSocket support
   const publicClients = new Map<number, PublicClient | undefined>()
   function getPublicClient({
     chainId: chainId_,
