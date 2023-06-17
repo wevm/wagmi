@@ -47,9 +47,9 @@
     }
   },
   "dependencies": {
-    "@coinbase/wallet-sdk": "^3.6.6",
-    "@walletconnect/ethereum-provider": "^2.7.2",
-    "@web3modal/standalone": "^2.4.1"
+    "@coinbase/wallet-sdk": "^3.7.1",
+    "@walletconnect/ethereum-provider": "^2.8.1",
+    "@walletconnect/modal": "^2.4.6"
   },
   "devDependencies": {
     "@wagmi/core": "workspace:*",

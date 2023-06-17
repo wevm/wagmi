@@ -15,13 +15,16 @@ export type ReconnectReturnType = Pretty<Connection>[]
 
 export type ReconnectError = Error
 
+let isReconnecting = false
+
 /** https://wagmi.sh/core/actions/reconnect */
 export async function reconnect(
   config: Config,
   { connectors: connectors_ }: ReconnectParameters = {},
 ): Promise<ReconnectReturnType> {
   // If already reconnecting, do nothing
-  if (config.state.status === 'reconnecting') return []
+  if (isReconnecting) return []
+  isReconnecting = true
 
   config.setState((x) => ({
     ...x,
@@ -59,6 +62,7 @@ export async function reconnect(
   const connections = []
   for (const connector of sorted) {
     const isAuthorized = await connector.isAuthorized()
+    console.log(connector.name, isAuthorized)
     if (!isAuthorized) continue
 
     const data = await connector.connect()
@@ -95,6 +99,7 @@ export async function reconnect(
     }))
   else config.setState((x) => ({ ...x, status: 'connected' }))
 
+  isReconnecting = false
   return connections
 }
 

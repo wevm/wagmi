@@ -220,6 +220,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
             ]),
           ),
           showQrModal: parameters.showQrModal ?? true,
+          ...(parameters.metadata ? { metadata: parameters.metadata } : {}),
           ...(parameters.qrModalOptions
             ? { qrModalOptions: parameters.qrModalOptions }
             : {}),
