@@ -1,5 +1,14 @@
 # @wagmi/core
 
+## 0.10.14
+
+### Patch Changes
+
+- [`41a63341`](https://github.com/wagmi-dev/wagmi/commit/41a633418b3b9bb09c4214989ebb3117fcd175cc) Thanks [@jxom](https://github.com/jxom)! - Updated references
+
+- Updated dependencies []:
+  - @wagmi/connectors@0.3.21
+
 ## 0.10.13
 
 ### Patch Changes

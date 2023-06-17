@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.12.16
+
+### Patch Changes
+
+- [`41a63341`](https://github.com/wagmi-dev/wagmi/commit/41a633418b3b9bb09c4214989ebb3117fcd175cc) Thanks [@jxom](https://github.com/jxom)! - Updated references
+
+- Updated dependencies [[`41a63341`](https://github.com/wagmi-dev/wagmi/commit/41a633418b3b9bb09c4214989ebb3117fcd175cc)]:
+  - @wagmi/core@0.10.14
+
 ## 0.12.15
 
 ### Patch Changes
