@@ -63,12 +63,13 @@ export function publicClientToProvider(publicClient: PublicClient) {
     name: chain.name,
     ensAddress: chain.contracts?.ensRegistry?.address,
   }
-  if (transport.type === 'fallback')
-    return new FallbackProvider(
-      (transport.transports as ReturnType<HttpTransport>[]).map(
-        ({ value }) => new JsonRpcProvider(value?.url, network),
-      ),
+  if (transport.type === 'fallback') {
+    const providers = (transport.transports as ReturnType<HttpTransport>[]).map(
+      ({ value }) => new JsonRpcProvider(value?.url, network),
     )
+    if (providers.length === 1) return providers[0]
+    return new FallbackProvider(providers)
+  }
   return new JsonRpcProvider(transport.url, network)
 }
 
@@ -121,14 +122,15 @@ export function walletClientToSigner(walletClient: WalletClient) {
 /** Action to convert a viem Wallet Client to an ethers.js Signer. */
 export async function getEthersSigner({ chainId }: { chainId?: number } = {}) {
   const walletClient = await getWalletClient({ chainId })
+  if (!walletClient) return undefined
   return walletClientToSigner(walletClient)
 }
 ```
   </Tab>
   <Tab>
 ```ts filename="src/ethers.ts"
-import { type WalletClient, getWalletClient } from '@wagmi/core'
-import { BrowserProvider } from 'ethers'
+import { type WalletClient, useWalletClient } from 'wagmi'
+import { BrowserProvider, JsonRpcSigner } from 'ethers'
 
 export function walletClientToSigner(walletClient: WalletClient) {
   const { account, chain, transport } = walletClient
@@ -138,13 +140,14 @@ export function walletClientToSigner(walletClient: WalletClient) {
     ensAddress: chain.contracts?.ensRegistry?.address,
   }
   const provider = new BrowserProvider(transport, network)
-  const signer = provider.getSigner(account.address)
+  const signer = new JsonRpcSigner(provider, account.address)
   return signer
 }
 
 /** Action to convert a viem Wallet Client to an ethers.js Signer. */
 export async function getEthersSigner({ chainId }: { chainId?: number } = {}) {
   const walletClient = await getWalletClient({ chainId })
+  if (!walletClient) return undefined
   return walletClientToSigner(walletClient)
 }
 ```

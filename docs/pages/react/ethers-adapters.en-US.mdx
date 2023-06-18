@@ -65,12 +65,13 @@ export function publicClientToProvider(publicClient: PublicClient) {
     name: chain.name,
     ensAddress: chain.contracts?.ensRegistry?.address,
   }
-  if (transport.type === 'fallback')
-    return new FallbackProvider(
-      (transport.transports as ReturnType<HttpTransport>[]).map(
-        ({ value }) => new JsonRpcProvider(value?.url, network),
-      ),
+  if (transport.type === 'fallback') {
+    const providers = (transport.transports as ReturnType<HttpTransport>[]).map(
+      ({ value }) => new JsonRpcProvider(value?.url, network),
     )
+    if (providers.length === 1) return providers[0]
+    return new FallbackProvider(providers)
+  }
   return new JsonRpcProvider(transport.url, network)
 }
 
@@ -124,7 +125,10 @@ export function walletClientToSigner(walletClient: WalletClient) {
 /** Hook to convert a viem Wallet Client to an ethers.js Signer. */
 export function useEthersSigner({ chainId }: { chainId?: number } = {}) {
   const { data: walletClient } = useWalletClient({ chainId })
-  return React.useMemo(() => walletClientToSigner(walletClient), [walletClient])
+  return React.useMemo(
+    () => (walletClient ? walletClientToSigner(walletClient) : undefined),
+    [walletClient],
+  )
 }
 ```
   </Tab>
@@ -132,7 +136,7 @@ export function useEthersSigner({ chainId }: { chainId?: number } = {}) {
 ```ts filename="src/ethers.ts"
 import * as React from 'react'
 import { type WalletClient, useWalletClient } from 'wagmi'
-import { BrowserProvider } from 'ethers'
+import { BrowserProvider, JsonRpcSigner } from 'ethers'
 
 export function walletClientToSigner(walletClient: WalletClient) {
   const { account, chain, transport } = walletClient
@@ -142,14 +146,17 @@ export function walletClientToSigner(walletClient: WalletClient) {
     ensAddress: chain.contracts?.ensRegistry?.address,
   }
   const provider = new BrowserProvider(transport, network)
-  const signer = provider.getSigner(account.address)
+  const signer = new JsonRpcSigner(provider, account.address)
   return signer
 }
 
 /** Hook to convert a viem Wallet Client to an ethers.js Signer. */
 export function useEthersSigner({ chainId }: { chainId?: number } = {}) {
   const { data: walletClient } = useWalletClient({ chainId })
-  return React.useMemo(() => walletClientToSigner(walletClient), [walletClient])
+  return React.useMemo(
+    () => (walletClient ? walletClientToSigner(walletClient) : undefined),
+    [walletClient],
+  )
 }
 ```
   </Tab>
