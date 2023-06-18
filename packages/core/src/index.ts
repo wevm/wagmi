@@ -111,6 +111,20 @@ export {
   switchAccountMutationOptions,
 } from './actions/switchAccount.js'
 
+export {
+  type SwitchChainParameters,
+  type SwitchChainReturnType,
+  type SwitchChainError,
+  switchChain,
+  /** @deprecated */
+  switchChain as switchNetwork,
+  // TanStack Query
+  type SwitchChainMutationData,
+  type SwitchChainMutationVariables,
+  type SwitchChainMutationParameters,
+  switchChainMutationOptions,
+} from './actions/switchChain.js'
+
 ////////////////////////////////////////////////////////////////////////////////
 // Config
 
@@ -136,7 +150,10 @@ export {
 
 export { BaseError } from './errors/base.js'
 
-export { ProviderNotFoundError } from './errors/connector.js'
+export {
+  ProviderNotFoundError,
+  SwitchChainNotSupportedError,
+} from './errors/connector.js'
 
 export {
   ChainNotConfiguredError,

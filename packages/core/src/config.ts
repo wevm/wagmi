@@ -43,7 +43,16 @@ export type CreateConfigParameters<
           chain: chains[number]
         }) => PublicClient<Transport>
       }
-  >
+  > &
+    OneOf<
+      | {
+          /** @deprecated Use `reconnectOnMount` instead */
+          autoConnect?: boolean | undefined
+        }
+      | {
+          reconnectOnMount?: boolean | undefined
+        }
+    >
 >
 
 export type Config<
@@ -104,9 +113,10 @@ export type Connector = ReturnType<CreateConnectorFn> & {
 export function createConfig<
   const chains extends readonly [Chain, ...Chain[]],
 >({
+  autoConnect,
   chains,
   queryClient = createQueryClient(),
-  reconnectOnMount = true,
+  reconnectOnMount = autoConnect ?? false,
   storage = createStorage({
     storage:
       typeof window !== 'undefined' && window.localStorage

@@ -4,9 +4,8 @@
 
 ### createConfig
 
-- Renamed `autoConnect` to `reconnectOnMount` and defaulted to `true`.
 - Removed `logger`
-- `publicClient` versus `transports`
+- `publicClient`/`webSocketPublicClient` versus `transports`
 
 ### Chains
 
@@ -35,7 +34,6 @@
 - "Mutation" hooks (e.g. `useConnect`, `useContractWrite`, `useSendTransaction`) now pass through all TanStack Query parameters under the `mutation` key parameter
 - "Query" hooks (e.g. `useBalance`, `useEnsName`, `useContractRead`) now pass through all TanStack Query parameters under the `query` key parameter
 - Removed `useNetwork` (use `useAccount.chainId` instead) (TODO: should we add `chain` to `useAccount`?)
-- Renamed `useSwitchNetwork` to `useSwitchChain`
 - Removed `useInfiniteQuery`, `useMutation`, `useQuery`, `useQueryClient` (TODO: Should we export from wagmi? If TanStack Query was peer dependency, could tell folks to import from there instead.)
 - Removed `usePublicClient` (use `config.getPublicClient` instead)
 - Removed `useWebSocketClient` (use `config.getWebSocketClient` instead)
@@ -67,7 +65,6 @@
 - Removed `getNetwork` (use `useAccount.chainId` instead) (TODO: should we add `chain` to `getAccount`?)
 - Removed `getPublicClient` (use `config.getPublicClient` instead)
 - Removed `getWebSocketClient` (use `config.getWebSocketClient` instead)
-- Renamed `switchNetwork` to `switchChain`
 - Renamed `waitForTransaction` to `waitForTransactionReceipt`
 - Renamed `watchNetwork` to `watchChain`
 - Removed `watchPublicClient` and `watchWebSocketClient` (TODO: Getters are coming from `config` now. Do we want to keep these?)

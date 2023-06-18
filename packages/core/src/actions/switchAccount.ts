@@ -53,8 +53,7 @@ export const switchAccountMutationOptions = <
   ({
     mutationFn(variables) {
       const connector_ = variables.connector ?? connector
-      if (!connector_) throw new Error('"connector" is required')
-      return switchAccount(config, { connector: connector_ })
+      return switchAccount(config, { connector: connector_! })
     },
     mutationKey: ['switchAccount', { connector }],
   }) as const satisfies MutationOptions<

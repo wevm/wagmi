@@ -7,6 +7,7 @@ import {
   useConnections,
   useDisconnect,
   useSwitchAccount,
+  useSwitchChain,
 } from 'wagmi'
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
       <Account />
       <Connect />
       <SwitchAccount />
+      <SwitchChain />
       <Connections />
       <Balance />
       <BlockNumber />
@@ -80,12 +82,33 @@ function SwitchAccount() {
       {connectors.map((connector) => (
         <button
           disabled={account.connector?.uid === connector.uid}
-          id={connector.uid}
           key={connector.uid}
-          onClick={async () => await switchAccount({ connector })}
+          onClick={async () => switchAccount({ connector })}
           type='button'
         >
           {connector.name}
+        </button>
+      ))}
+    </div>
+  )
+}
+
+function SwitchChain() {
+  const account = useAccount()
+  const { chains, switchChain } = useSwitchChain()
+
+  return (
+    <div>
+      <h2>Switch Account</h2>
+
+      {chains.map((chain) => (
+        <button
+          disabled={account.chainId === chain.id}
+          key={chain.id}
+          onClick={async () => switchChain({ chainId: chain.id })}
+          type='button'
+        >
+          {chain.name}
         </button>
       ))}
     </div>

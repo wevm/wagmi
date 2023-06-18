@@ -62,7 +62,6 @@ export async function reconnect(
   const connections = []
   for (const connector of sorted) {
     const isAuthorized = await connector.isAuthorized()
-    console.log(connector.name, isAuthorized)
     if (!isAuthorized) continue
 
     const data = await connector.connect()

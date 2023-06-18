@@ -66,6 +66,14 @@ export {
   useSwitchAccount,
 } from './hooks/useSwitchAccount.js'
 
+export {
+  type UseSwitchChainParameters,
+  type UseSwitchChainReturnType,
+  useSwitchChain,
+  /** @deprecated */
+  useSwitchChain as useSwitchNetwork,
+} from './hooks/useSwitchChain.js'
+
 ////////////////////////////////////////////////////////////////////////////////
 // @wagmi/core
 

@@ -180,7 +180,6 @@ export const getBalanceQueryOptions = <config extends Config>(
 ) =>
   ({
     async queryFn() {
-      if (!address) throw new Error('address is required')
       const balance = await getBalance(config, {
         address,
         blockNumber,
