@@ -77,7 +77,7 @@ export function useConnect<
   >(
     connectMutationOptions(config, {
       chainId,
-      connector: connector as connector,
+      connector: connector as Connector,
     }),
   )
   return {

@@ -72,7 +72,7 @@ export function useSwitchAccount<
     SwitchAccountError,
     SwitchAccountMutationVariables<connector>,
     context
-  >(switchAccountMutationOptions(config, { connector }))
+  >(switchAccountMutationOptions(config, { connector: connector as Connector }))
   const connections = useConnections()
   const connectors = connections.map((connection) => connection.connector)
 

@@ -79,7 +79,7 @@ export function useSwitchChain<
     SwitchChainError,
     SwitchChainMutationVariables<ResolvedRegister['config'], chainId>,
     context
-  >(switchChainMutationOptions(config, { chainId: chainId as chainId }))
+  >(switchChainMutationOptions(config, { chainId: chainId as number }))
 
   return {
     ...mutationOptions,
