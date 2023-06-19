@@ -25,7 +25,7 @@ beforeEach(async () => {
 })
 
 describe('getBalance', () => {
-  test.only('default', async () => {
+  test('default', async () => {
     await expect(
       getBalance(config, { address }),
     ).resolves.toMatchInlineSnapshot(`
