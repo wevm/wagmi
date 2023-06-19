@@ -124,8 +124,9 @@ export const reconnectMutationOptions = (
 ) =>
   ({
     mutationFn(variables) {
-      const connectors_ = variables?.connectors ?? connectors
-      return reconnect(config, { connectors: connectors_ })
+      return reconnect(config, {
+        connectors: variables?.connectors ?? connectors,
+      })
     },
     mutationKey: ['reconnect', { connectors }],
   }) as const satisfies MutationOptions<

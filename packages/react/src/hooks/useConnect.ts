@@ -20,7 +20,10 @@ import type { OmittedUseMutationResult } from '../types/query.js'
 import { useConfig } from './useConfig.js'
 
 export type UseConnectParameters<
-  connector extends CreateConnectorFn | Connector | undefined,
+  connector extends CreateConnectorFn | Connector | undefined =
+    | CreateConnectorFn
+    | Connector
+    | undefined,
   context = unknown,
 > = Pretty<
   ConnectMutationParameters<ResolvedRegister['config'], connector> & {
@@ -37,7 +40,10 @@ export type UseConnectParameters<
 >
 
 export type UseConnectReturnType<
-  connector extends CreateConnectorFn | Connector | undefined,
+  connector extends CreateConnectorFn | Connector | undefined =
+    | CreateConnectorFn
+    | Connector
+    | undefined,
   context = unknown,
 > = Pretty<
   Omit<Result<connector, context>, OmittedUseMutationResult> & {
@@ -60,26 +66,22 @@ type Result<
 export function useConnect<
   connector extends CreateConnectorFn | Connector | undefined = undefined,
   context = unknown,
->({
+>(
+  parameters?: UseConnectParameters<connector, context>,
+): UseConnectReturnType<connector, context>
+export function useConnect({
   chainId,
   connector,
   mutation,
-}: UseConnectParameters<connector, context> = {}): UseConnectReturnType<
-  connector,
-  context
-> {
+}: UseConnectParameters = {}): UseConnectReturnType {
   const config = useConfig()
-  const { mutate, mutateAsync, ...mutationOptions } = useMutation<
-    ConnectMutationData<ResolvedRegister['config']>,
-    ConnectError,
-    ConnectMutationVariables<ResolvedRegister['config'], connector>,
-    context
-  >(
+  const { mutate, mutateAsync, ...mutationOptions } = useMutation(
     connectMutationOptions(config, {
       chainId,
-      connector: connector as Connector,
+      connector,
     }),
   )
+
   return {
     ...mutationOptions,
     ...mutation,

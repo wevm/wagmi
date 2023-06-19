@@ -17,10 +17,10 @@ import type { Pretty } from '@wagmi/core/internal'
 import type { OmittedUseMutationResult } from '../types/query.js'
 import { useConfig } from './useConfig.js'
 
+type ChainId = ResolvedRegister['config']['chains'][number]['id']
+
 export type UseSwitchChainParameters<
-  chainId extends
-    | ResolvedRegister['config']['chains'][number]['id']
-    | undefined,
+  chainId extends ChainId | undefined = ChainId | undefined,
   context = unknown,
 > = Pretty<
   SwitchChainMutationParameters<ResolvedRegister['config'], chainId> & {
@@ -37,9 +37,7 @@ export type UseSwitchChainParameters<
 >
 
 export type UseSwitchChainReturnType<
-  chainId extends
-    | ResolvedRegister['config']['chains'][number]['id']
-    | undefined,
+  chainId extends ChainId | undefined = ChainId | undefined,
   context = unknown,
 > = Pretty<
   Omit<Result<chainId, context>, OmittedUseMutationResult> & {
@@ -49,9 +47,7 @@ export type UseSwitchChainReturnType<
   }
 >
 type Result<
-  chainId extends
-    | ResolvedRegister['config']['chains'][number]['id']
-    | undefined,
+  chainId extends ChainId | undefined,
   context = unknown,
 > = UseMutationResult<
   SwitchChainMutationData<ResolvedRegister['config'], chainId>,
@@ -62,25 +58,19 @@ type Result<
 
 /** https://wagmi.sh/react/hooks/useSwitchChain */
 export function useSwitchChain<
-  chainId extends
-    | ResolvedRegister['config']['chains'][number]['id']
-    | undefined = undefined,
+  chainId extends ChainId | undefined = undefined,
   context = unknown,
->({
+>(
+  parameters?: UseSwitchChainParameters<chainId, context>,
+): UseSwitchChainReturnType<chainId, context>
+export function useSwitchChain({
   chainId,
   mutation,
-}: UseSwitchChainParameters<chainId, context> = {}): UseSwitchChainReturnType<
-  chainId,
-  context
-> {
+}: UseSwitchChainParameters = {}): UseSwitchChainReturnType {
   const config = useConfig()
-  const { mutate, mutateAsync, ...mutationOptions } = useMutation<
-    SwitchChainMutationData<ResolvedRegister['config'], chainId>,
-    SwitchChainError,
-    SwitchChainMutationVariables<ResolvedRegister['config'], chainId>,
-    context
-  >(switchChainMutationOptions(config, { chainId: chainId as number }))
-
+  const { mutate, mutateAsync, ...mutationOptions } = useMutation(
+    switchChainMutationOptions(config, { chainId }),
+  )
   return {
     ...mutationOptions,
     ...mutation,

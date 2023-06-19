@@ -98,7 +98,7 @@ export type ConnectMutationVariables<
     chainId?: ConnectParameters<config>['chainId']
   } & (IsUndefined<connector> extends false
     ? { connector?: ConnectParameters['connector'] | undefined }
-    : { connector: ConnectParameters['connector'] | undefined })
+    : { connector: ConnectParameters['connector'] })
 >
 export type ConnectMutationParameters<
   config extends Config,

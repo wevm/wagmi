@@ -19,7 +19,7 @@ import { useConfig } from './useConfig.js'
 import { useConnections } from './useConnections.js'
 
 export type UseSwitchAccountParameters<
-  connector extends Connector | undefined,
+  connector extends Connector | undefined = Connector | undefined,
   context = unknown,
 > = Pretty<
   SwitchAccountMutationParameters<connector> & {
@@ -36,7 +36,7 @@ export type UseSwitchAccountParameters<
 >
 
 export type UseSwitchAccountReturnType<
-  connector extends Connector | undefined,
+  connector extends Connector | undefined = Connector | undefined,
   context = unknown,
 > = Pretty<
   Omit<Result<connector, context>, OmittedUseMutationResult> & {
@@ -59,20 +59,17 @@ type Result<
 export function useSwitchAccount<
   connector extends Connector | undefined = undefined,
   context = unknown,
->({
+>(
+  parameters?: UseSwitchAccountParameters<connector, context>,
+): UseSwitchAccountReturnType<connector, context>
+export function useSwitchAccount({
   connector,
   mutation,
-}: UseSwitchAccountParameters<
-  connector,
-  context
-> = {}): UseSwitchAccountReturnType<connector, context> {
+}: UseSwitchAccountParameters = {}): UseSwitchAccountReturnType {
   const config = useConfig()
-  const { mutate, mutateAsync, ...mutationOptions } = useMutation<
-    SwitchAccountMutationData,
-    SwitchAccountError,
-    SwitchAccountMutationVariables<connector>,
-    context
-  >(switchAccountMutationOptions(config, { connector: connector as Connector }))
+  const { mutate, mutateAsync, ...mutationOptions } = useMutation(
+    switchAccountMutationOptions(config, { connector }),
+  )
   const connections = useConnections()
   const connectors = connections.map((connection) => connection.connector)
 

@@ -52,8 +52,9 @@ export const switchAccountMutationOptions = <
 ) =>
   ({
     mutationFn(variables) {
-      const connector_ = variables.connector ?? connector
-      return switchAccount(config, { connector: connector_! })
+      return switchAccount(config, {
+        connector: (variables.connector ?? connector)!,
+      })
     },
     mutationKey: ['switchAccount', { connector }],
   }) as const satisfies MutationOptions<
