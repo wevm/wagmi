@@ -46,7 +46,7 @@ describe('connect', () => {
     await disconnect(config, { connector: connector_ })
   })
 
-  test('behavior: user rejected connect request', async () => {
+  test('behavior: user rejected request', async () => {
     const connector_ = config._internal.setup(
       testConnector({
         accounts,

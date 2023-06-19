@@ -58,15 +58,15 @@ export async function switchChain<
 export type SwitchChainMutationData<
   config extends Config,
   chainId extends config['chains'][number]['id'] | undefined,
-> = Pretty<SwitchChainReturnType<config, chainId>>
+> = Pretty<
+  SwitchChainReturnType<config, chainId extends undefined ? number : chainId>
+>
 export type SwitchChainMutationVariables<
   config extends Config,
   chainId extends config['chains'][number]['id'] | undefined,
 > = Pretty<
   IsUndefined<chainId> extends false
-    ? {
-        chainId?: SwitchChainParameters<config>['chainId'] | undefined
-      }
+    ? { chainId?: SwitchChainParameters<config>['chainId'] | undefined }
     : { chainId: SwitchChainParameters<config>['chainId'] | undefined }
 >
 export type SwitchChainMutationParameters<
@@ -87,7 +87,7 @@ export const switchChainMutationOptions = <
   ({
     mutationFn(variables) {
       const chainId_ = variables.chainId ?? chainId
-      return switchChain(config, { chainId: chainId_! })
+      return switchChain(config, { chainId: chainId_! }) as any
     },
     mutationKey: ['switchChain', { chainId }],
   }) as const satisfies MutationOptions<

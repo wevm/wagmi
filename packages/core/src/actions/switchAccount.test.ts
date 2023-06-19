@@ -16,13 +16,13 @@ describe('switchAccount', () => {
 
     const address1 = getAccount(config).address
 
-    switchAccount(config, { connector: connector2 })
+    await switchAccount(config, { connector: connector2 })
 
     const address2 = getAccount(config).address
     expect(address2).toBeDefined()
     expect(address1).not.toBe(address2)
 
-    switchAccount(config, { connector: connector1 })
+    await switchAccount(config, { connector: connector1 })
 
     const address3 = getAccount(config).address
     expect(address3).toBeDefined()

@@ -21,6 +21,7 @@ export type TestConnectorParameters = {
   features?:
     | {
         failConnect?: boolean
+        failSwitchChain?: boolean
         reconnect?: boolean
       }
     | undefined
@@ -96,6 +97,9 @@ export function testConnector(parameters: TestConnectorParameters) {
     async switchChain({ chainId }) {
       const provider = await this.getProvider()
 
+      if (features.failSwitchChain)
+        throw new UserRejectedRequestError(new Error('Failed to switch chain.'))
+
       const id = numberToHex(chainId)
       const chain = config.chains.find((x) => x.id === chainId)
       if (!chain) throw new SwitchChainError(new ChainNotConfiguredError())
@@ -104,6 +108,7 @@ export function testConnector(parameters: TestConnectorParameters) {
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: id }],
       })
+      this.onChainChanged(chainId.toString())
       return chain
     },
     onAccountsChanged(accounts) {
