@@ -22,10 +22,10 @@ describe('fetchEnsAvatar', () => {
       it('has avatar', async () => {
         expect(
           await fetchEnsAvatar({
-            name: 'nick.eth',
+            name: 'jxom.eth',
           }),
         ).toMatchInlineSnapshot(
-          '"https://i.seadn.io/gae/hKHZTZSTmcznonu8I6xcVZio1IF76fq0XmcxnvUykC-FGuVJ75UPdLDlKJsfgVXH9wOSmkyHw0C39VAYtsGyxT7WNybjQ6s3fM3macE?w=500&auto=format"',
+          '"https://ipfs.io/ipfs/QmeZGc1CL3eb9QJatKXTGT7ekgLMq9FyZUWckQ4oWdc53a/2257.jpg"',
         )
       })
     })
@@ -33,11 +33,11 @@ describe('fetchEnsAvatar', () => {
     it('chainId', async () => {
       expect(
         await fetchEnsAvatar({
-          name: 'nick.eth',
+          name: 'jxom.eth',
           chainId: 1,
         }),
       ).toMatchInlineSnapshot(
-        '"https://i.seadn.io/gae/hKHZTZSTmcznonu8I6xcVZio1IF76fq0XmcxnvUykC-FGuVJ75UPdLDlKJsfgVXH9wOSmkyHw0C39VAYtsGyxT7WNybjQ6s3fM3macE?w=500&auto=format"',
+        '"https://ipfs.io/ipfs/QmeZGc1CL3eb9QJatKXTGT7ekgLMq9FyZUWckQ4oWdc53a/2257.jpg"',
       )
     })
   })
