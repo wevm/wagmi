@@ -1,5 +1,13 @@
 # @wagmi/core
 
+## 1.2.1
+
+### Patch Changes
+
+- [#2589](https://github.com/wagmi-dev/wagmi/pull/2589) [`9680c347`](https://github.com/wagmi-dev/wagmi/commit/9680c347476500d28ceca20d23eeaed7931cb6e0) Thanks [@jxom](https://github.com/jxom)! - Fixed `writeContract` parameters to be compatible with `prepareWriteContract`.
+
+- [#2587](https://github.com/wagmi-dev/wagmi/pull/2587) [`cfff9994`](https://github.com/wagmi-dev/wagmi/commit/cfff999459384ac644ff7e62f53a7b787cf37507) Thanks [@jxom](https://github.com/jxom)! - Updated references
+
 ## 1.2.0
 
 ### Minor Changes
