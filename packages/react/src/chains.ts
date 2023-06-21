@@ -16,6 +16,7 @@ export {
   celoAlfajores,
   celoCannoli,
   cronos,
+  cronosTestnet,
   crossbell,
   dfk,
   dogechain,
@@ -25,6 +26,7 @@ export {
   evmosTestnet,
   fantom,
   fantomTestnet,
+  fibo,
   filecoin,
   filecoinCalibration,
   filecoinHyperspace,
@@ -92,6 +94,7 @@ export {
   zhejiang,
   zkSync,
   zkSyncTestnet,
+  zora,
   zoraTestnet,
 } from '@wagmi/core/chains'
 
