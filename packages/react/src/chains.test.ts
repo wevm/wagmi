@@ -22,6 +22,7 @@ it('should expose correct exports', () => {
       "celoAlfajores",
       "celoCannoli",
       "cronos",
+      "cronosTestnet",
       "crossbell",
       "dfk",
       "dogechain",
@@ -31,6 +32,7 @@ it('should expose correct exports', () => {
       "evmosTestnet",
       "fantom",
       "fantomTestnet",
+      "fibo",
       "filecoin",
       "filecoinCalibration",
       "filecoinHyperspace",
@@ -98,6 +100,7 @@ it('should expose correct exports', () => {
       "zhejiang",
       "zkSync",
       "zkSyncTestnet",
+      "zora",
       "zoraTestnet",
     ]
   `)
