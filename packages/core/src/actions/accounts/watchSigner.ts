@@ -16,7 +16,8 @@ export function watchSigner<TSigner extends Signer = Signer>(
   callback: WatchSignerCallback<TSigner>,
 ) {
   const client = getClient()
-  const handleChange = async () => {
+  const handleChange = async ({ chainId: chainId_ }: { chainId?: number }) => {
+    if (chainId && chainId_ && chainId !== chainId_) return
     const signer = await fetchSigner<TSigner>({ chainId })
     if (!getClient().connector) return callback(null)
     return callback(signer)
