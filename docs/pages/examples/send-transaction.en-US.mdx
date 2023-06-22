@@ -90,8 +90,8 @@ export function SendTransaction() {
   const [debouncedAmount] = useDebounce(amount, 500)
 
   const { config } = usePrepareSendTransaction({
-      to: debouncedTo,
-      value: debouncedAmount ? parseEther(debouncedAmount) : undefined,
+    to: debouncedTo,
+    value: debouncedAmount ? parseEther(debouncedAmount) : undefined,
   })
 
   return (
@@ -139,8 +139,8 @@ export function SendTransaction() {
   const [debouncedAmount] = useDebounce(amount, 500)
 
   const { config } = usePrepareSendTransaction({
-      to: debouncedTo,
-      value: debouncedAmount ? utils.parseEther(debouncedAmount) : undefined,
+    to: debouncedTo,
+    value: debouncedAmount ? utils.parseEther(debouncedAmount) : undefined,
   })
   const { sendTransaction } = useSendTransaction(config)
 
@@ -206,8 +206,8 @@ export function SendTransaction() {
   const [debouncedAmount] = useDebounce(amount, 500)
 
   const { config } = usePrepareSendTransaction({
-      to: debouncedTo,
-      value: debouncedAmount ? utils.parseEther(debouncedAmount) : undefined,
+    to: debouncedTo,
+    value: debouncedAmount ? utils.parseEther(debouncedAmount) : undefined,
   })
   const { data, sendTransaction } = useSendTransaction(config)
 
