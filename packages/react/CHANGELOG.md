@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.12.17
+
+### Patch Changes
+
+- [`87f3eef9`](https://github.com/wagmi-dev/wagmi/commit/87f3eef9c0794a539143aded60e485d712ac161a) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where synchronous switch chain behavior (WalletConnect v2) would encounter chain id race conditions in `watchWalletClient`.
+
+- Updated dependencies [[`87f3eef9`](https://github.com/wagmi-dev/wagmi/commit/87f3eef9c0794a539143aded60e485d712ac161a)]:
+  - @wagmi/core@0.10.15
+
 ## 0.12.16
 
 ### Patch Changes
