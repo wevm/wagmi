@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 1.2.1
+
+### Patch Changes
+
+- [#2607](https://github.com/wagmi-dev/wagmi/pull/2607) [`79335b4c`](https://github.com/wagmi-dev/wagmi/commit/79335b4c0fcd5e8152a2a1d28314c634db9d9cbf) Thanks [@roninjin10](https://github.com/roninjin10)! - Fixed opitmism goerli chain id
+
 ## 1.2.0
 
 ### Minor Changes
