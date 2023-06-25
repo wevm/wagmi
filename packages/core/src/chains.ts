@@ -11,6 +11,8 @@ export {
   bronosTestnet,
   bsc,
   bscTestnet,
+  bxn,
+  bxnTestnet,
   canto,
   celo,
   celoAlfajores,
