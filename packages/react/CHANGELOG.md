@@ -1,5 +1,14 @@
 # wagmi
 
+## 1.2.2
+
+### Patch Changes
+
+- [#2611](https://github.com/wagmi-dev/wagmi/pull/2611) [`6d1ed7a1`](https://github.com/wagmi-dev/wagmi/commit/6d1ed7a156729b4df5d66fef3ae9a8b5762a2d34) Thanks [@jxom](https://github.com/jxom)! - Updated references.
+
+- Updated dependencies [[`6d1ed7a1`](https://github.com/wagmi-dev/wagmi/commit/6d1ed7a156729b4df5d66fef3ae9a8b5762a2d34)]:
+  - @wagmi/core@1.2.2
+
 ## 1.2.1
 
 ### Patch Changes
