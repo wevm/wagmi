@@ -17,6 +17,8 @@ it('should expose correct exports', () => {
       "bronosTestnet",
       "bsc",
       "bscTestnet",
+      "bxn",
+      "bxnTestnet",
       "canto",
       "celo",
       "celoAlfajores",
