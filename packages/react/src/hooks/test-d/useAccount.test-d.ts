@@ -1,8 +1,8 @@
 import type { Address } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
-import type { Connector } from '../index.js'
-import { useAccount } from './useAccount.js'
+import type { Connector } from '../../index.js'
+import { useAccount } from '../useAccount.js'
 
 test('states', () => {
   const result = useAccount()

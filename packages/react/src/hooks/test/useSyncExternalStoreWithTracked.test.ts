@@ -2,7 +2,7 @@ import { act, cleanup, renderHook } from '@wagmi/test/react'
 import * as ReactDOM from 'react-dom'
 import { afterEach, describe, expect, it } from 'vitest'
 
-import { useSyncExternalStoreWithTracked } from './useSyncExternalStoreWithTracked.js'
+import { useSyncExternalStoreWithTracked } from '../useSyncExternalStoreWithTracked.js'
 
 function createExternalStore<State>(initialState: State) {
   const listeners = new Set<() => void>()

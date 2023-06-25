@@ -11,7 +11,7 @@ import {
   type ProviderNotFoundError,
   SwitchChainNotSupportedError,
 } from '../errors/connector.js'
-import type { IsUndefined, Pretty } from '../types/utils.js'
+import type { Evaluate, IsUndefined } from '../types/utils.js'
 
 export type SwitchChainParameters<
   config extends Config = Config,
@@ -56,14 +56,16 @@ export async function switchChain<
 export type SwitchChainMutationData<
   config extends Config,
   chainId extends config['chains'][number]['id'] | undefined,
-> = SwitchChainReturnType<
-  config,
-  chainId extends undefined ? config['chains'][number]['id'] : chainId
+> = Evaluate<
+  SwitchChainReturnType<
+    config,
+    chainId extends undefined ? config['chains'][number]['id'] : chainId
+  >
 >
 export type SwitchChainMutationVariables<
   config extends Config,
   chainId extends SwitchChainParameters<config>['chainId'] | undefined,
-> = Pretty<
+> = Evaluate<
   IsUndefined<chainId> extends false
     ? { chainId?: SwitchChainParameters<config>['chainId'] | undefined }
     : { chainId: SwitchChainParameters<config>['chainId'] }
@@ -71,7 +73,7 @@ export type SwitchChainMutationVariables<
 export type SwitchChainMutationParameters<
   config extends Config,
   chainId extends SwitchChainParameters<config>['chainId'] | undefined,
-> = Pretty<{
+> = Evaluate<{
   chainId?: chainId | SwitchChainParameters['chainId'] | undefined
 }>
 

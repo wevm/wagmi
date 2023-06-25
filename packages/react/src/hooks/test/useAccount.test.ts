@@ -3,7 +3,7 @@ import { config } from '@wagmi/test'
 import { renderHook } from '@wagmi/test/react'
 import { expect, test } from 'vitest'
 
-import { useAccount } from './useAccount.js'
+import { useAccount } from '../useAccount.js'
 
 test('default', async () => {
   const { result, rerender } = renderHook(() => useAccount())

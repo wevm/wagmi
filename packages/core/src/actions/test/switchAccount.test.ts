@@ -1,10 +1,13 @@
 import { config } from '@wagmi/test'
 import { describe, expect, test } from 'vitest'
 
-import { connect } from './connect.js'
-import { disconnect } from './disconnect.js'
-import { getAccount } from './getAccount.js'
-import { switchAccount, switchAccountMutationOptions } from './switchAccount.js'
+import { connect } from '../connect.js'
+import { disconnect } from '../disconnect.js'
+import { getAccount } from '../getAccount.js'
+import {
+  switchAccount,
+  switchAccountMutationOptions,
+} from '../switchAccount.js'
 
 const connector1 = config.connectors[0]!
 const connector2 = config.connectors[1]!

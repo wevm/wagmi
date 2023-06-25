@@ -3,7 +3,7 @@ import { config } from '@wagmi/test'
 import { renderHook } from '@wagmi/test/react'
 import { expect, test } from 'vitest'
 
-import { useConnections } from './useConnections.js'
+import { useConnections } from '../useConnections.js'
 
 test('default', async () => {
   const { result, rerender } = renderHook(() => useConnections())

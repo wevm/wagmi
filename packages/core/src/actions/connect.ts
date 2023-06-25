@@ -1,4 +1,3 @@
-import { type MutationOptions } from '@tanstack/query-core'
 import {
   type Address,
   ResourceUnavailableRpcError,
@@ -8,11 +7,12 @@ import {
 import { type Config, type Connector } from '../config.js'
 import { type CreateConnectorFn } from '../connector.js'
 import { ConnectorAlreadyConnectedError } from '../errors/config.js'
-import type { IsUndefined, Pretty } from '../types/utils.js'
+import type { Mutate, MutateAsync, MutationOptions } from '../types/query.js'
+import type { Evaluate, PartialBy } from '../types/utils.js'
 
 export type ConnectParameters<config extends Config = Config> = {
   chainId?: config['chains'][number]['id'] | undefined
-  connector: CreateConnectorFn | Connector
+  connector: Connector | CreateConnectorFn
 }
 
 export type ConnectReturnType<config extends Config = Config> = {
@@ -22,25 +22,16 @@ export type ConnectReturnType<config extends Config = Config> = {
     | (number extends config['chains'][number]['id'] ? number : number & {})
 }
 
-export type ConnectError =
-  // from `connect()`
-  | ConnectorAlreadyConnectedError
-  // from `connector.connect()`
-  | UserRejectedRequestError
-  | ResourceUnavailableRpcError
-  // base
-  | Error
-
 /** https://wagmi.sh/core/actions/connect */
 export async function connect<config extends Config>(
   config: config,
-  { chainId, connector: connector_ }: ConnectParameters<config>,
+  parameters: ConnectParameters<config>,
 ): Promise<ConnectReturnType<config>> {
   // "Register" connector if not already created
   let connector: Connector
-  if (typeof connector_ === 'function') {
-    connector = config._internal.setup(connector_)
-  } else connector = connector_
+  if (typeof parameters.connector === 'function') {
+    connector = config._internal.setup(parameters.connector)
+  } else connector = parameters.connector
 
   // Check if connector is already connected
   if (connector.uid === config.state.current)
@@ -50,7 +41,7 @@ export async function connect<config extends Config>(
     config.setState((x) => ({ ...x, status: 'connecting' }))
     connector.emitter.emit('message', { type: 'connecting' })
 
-    const data = await connector.connect({ chainId })
+    const data = await connector.connect({ chainId: parameters.chainId })
 
     connector.emitter.off('connect', config._internal.connect)
     connector.emitter.on('change', config._internal.change)
@@ -87,45 +78,79 @@ export async function connect<config extends Config>(
 ///////////////////////////////////////////////////////////////////////////
 // TanStack Query
 
-export type ConnectMutationData<config extends Config> = Pretty<
-  ConnectReturnType<config>
->
-export type ConnectMutationVariables<
+export type ConnectMutationOptions<
   config extends Config,
-  connector extends ConnectParameters['connector'] | undefined,
-> = Pretty<
-  {
-    chainId?: ConnectParameters<config>['chainId']
-  } & (IsUndefined<connector> extends false
-    ? { connector?: ConnectParameters['connector'] | undefined }
-    : { connector: ConnectParameters['connector'] })
->
-export type ConnectMutationParameters<
-  config extends Config,
-  connector extends ConnectParameters['connector'] | undefined,
-> = Pretty<{
+  connector extends Connector | CreateConnectorFn | undefined,
+> = {
   chainId?: ConnectParameters<config>['chainId']
-  connector?: connector | ConnectParameters['connector'] | undefined
-}>
+  connector?: connector | ConnectParameters<config>['connector']
+}
 
 /** https://wagmi.sh/core/actions/connect#tanstack-query */
-export const connectMutationOptions = <
+export function connectMutationOptions<
   config extends Config,
-  connector extends ConnectParameters['connector'] | undefined,
->(
-  config: Config,
-  { chainId, connector }: ConnectMutationParameters<config, connector>,
-) =>
-  ({
-    mutationFn(variables) {
-      return connect(config, {
-        chainId: variables.chainId ?? chainId,
-        connector: (variables.connector ?? connector)!,
-      })
+  connector extends Connector | CreateConnectorFn | undefined,
+>(config: config, parameters: ConnectMutationOptions<config, connector>) {
+  return {
+    getVariables(variables) {
+      return {
+        chainId: variables?.chainId ?? parameters.chainId,
+        connector: (variables?.connector ?? parameters.connector)!,
+      }
     },
-    mutationKey: ['connect', { connector, chainId }],
-  }) as const satisfies MutationOptions<
-    ConnectMutationData<config>,
+    mutationFn(variables) {
+      return connect(config, variables)
+    },
+    mutationKey: ['connect', parameters],
+  } as const satisfies MutationOptions<
+    ConnectReturnType<config>,
     ConnectError,
-    ConnectMutationVariables<config, connector>
+    ConnectVariables<config, undefined>,
+    ConnectParameters
   >
+}
+
+export type ConnectError =
+  // connect()
+  | ConnectorAlreadyConnectedError
+  // connector.connect()
+  | UserRejectedRequestError
+  | ResourceUnavailableRpcError
+  // base
+  | Error
+
+export type ConnectVariables<
+  config extends Config,
+  connector extends Connector | CreateConnectorFn | undefined,
+> =
+  | Evaluate<
+      PartialBy<
+        ConnectParameters<config>,
+        connector extends Connector | CreateConnectorFn ? 'connector' : never
+      >
+    >
+  | (connector extends Connector | CreateConnectorFn ? undefined : never)
+
+export type ConnectMutate<
+  config extends Config,
+  connector extends Connector | CreateConnectorFn | undefined,
+  context = unknown,
+> = Mutate<
+  ConnectReturnType<config>,
+  ConnectError,
+  ConnectParameters<config>,
+  context,
+  ConnectVariables<config, connector>
+>
+
+export type ConnectMutateAsync<
+  config extends Config,
+  connector extends Connector | CreateConnectorFn | undefined,
+  context = unknown,
+> = MutateAsync<
+  ConnectReturnType<config>,
+  ConnectError,
+  ConnectParameters<config>,
+  context,
+  ConnectVariables<config, connector>
+>

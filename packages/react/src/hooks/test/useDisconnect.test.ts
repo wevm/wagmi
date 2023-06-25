@@ -3,8 +3,8 @@ import { config } from '@wagmi/test'
 import { renderHook, waitFor } from '@wagmi/test/react'
 import { beforeEach, expect, test } from 'vitest'
 
-import { useAccount } from './useAccount.js'
-import { useDisconnect } from './useDisconnect.js'
+import { useAccount } from '../useAccount.js'
+import { useDisconnect } from '../useDisconnect.js'
 
 const connector = config.connectors[0]!
 
@@ -15,13 +15,7 @@ beforeEach(async () => {
 test('default', async () => {
   const { result } = renderHook(() => ({
     useAccount: useAccount(),
-    useDisconnect: useDisconnect({
-      mutation: {
-        onMutate() {
-          return { foo: 'bar' }
-        },
-      },
-    }),
+    useDisconnect: useDisconnect(),
   }))
 
   expect(result.current.useAccount.address).toBeDefined()

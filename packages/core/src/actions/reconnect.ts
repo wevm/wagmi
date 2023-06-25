@@ -2,7 +2,7 @@ import { type MutationOptions } from '@tanstack/query-core'
 
 import type { Config, Connection, Connector } from '../config.js'
 import { type CreateConnectorFn } from '../connector.js'
-import type { Pretty } from '../types/utils.js'
+import type { Evaluate } from '../types/utils.js'
 
 export type ReconnectParameters = {
   /** Connectors to attempt reconnect with */
@@ -11,7 +11,7 @@ export type ReconnectParameters = {
     | undefined
 }
 
-export type ReconnectReturnType = Pretty<Connection>[]
+export type ReconnectReturnType = Evaluate<Connection>[]
 
 export type ReconnectError = Error
 
@@ -52,7 +52,8 @@ export async function reconnect(
   if (recentConnectorId) scores[recentConnectorId] = 0
   const sorted =
     Object.keys(scores).length > 0
-      ? [...connectors].sort(
+      ? // .toSorted()
+        [...connectors].sort(
           (a, b) => (scores[a.id] ?? 10) - (scores[b.id] ?? 10),
         )
       : connectors
@@ -105,13 +106,13 @@ export async function reconnect(
 ///////////////////////////////////////////////////////////////////////////
 // TanStack Query
 
-export type ReconnectMutationData = Pretty<ReconnectReturnType>
-export type ReconnectMutationVariables = Pretty<{
+export type ReconnectMutationData = Evaluate<ReconnectReturnType>
+export type ReconnectMutationVariables = Evaluate<{
   connectors?:
     | [CreateConnectorFn | Connector, ...(CreateConnectorFn | Connector)[]]
     | undefined
 }> | void
-export type ReconnectMutationParameters = Pretty<{
+export type ReconnectMutationParameters = Evaluate<{
   connectors?:
     | [CreateConnectorFn | Connector, ...(CreateConnectorFn | Connector)[]]
     | undefined

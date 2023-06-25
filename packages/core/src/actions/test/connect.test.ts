@@ -1,8 +1,8 @@
 import { accounts, config, testChains, testConnector } from '@wagmi/test'
 import { beforeEach, describe, expect, test } from 'vitest'
 
-import { connect, connectMutationOptions } from './connect.js'
-import { disconnect } from './disconnect.js'
+import { connect, connectMutationOptions } from '../connect.js'
+import { disconnect } from '../disconnect.js'
 
 const connector = config._internal.setup(testConnector({ accounts }))
 
@@ -50,7 +50,7 @@ describe('connect', () => {
     const connector_ = config._internal.setup(
       testConnector({
         accounts,
-        features: { failConnect: true },
+        features: { connectError: true },
       }),
     )
     await expect(

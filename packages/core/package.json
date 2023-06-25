@@ -43,12 +43,14 @@
   },
   "typesVersions": {
     "*": {
-      "internal": ["./dist/types/internal.d.ts"]
+      "internal": [
+        "./dist/types/internal.d.ts"
+      ]
     }
   },
   "peerDependencies": {
     "typescript": ">=5",
-    "viem": "1.0.1"
+    "viem": "^1"
   },
   "peerDependenciesMeta": {
     "typescript": {
@@ -59,18 +61,25 @@
     "@tanstack/query-core": "5.0.0-alpha.26",
     "@tanstack/query-persist-client-core": "5.0.0-alpha.26",
     "@tanstack/query-sync-storage-persister": "5.0.0-alpha.26",
+    "abitype": "^0.8.11",
     "eventemitter3": "^5.0.1",
     "zustand": "^4.3.8"
   },
-  "devDependencies": {
-    "viem": "1.0.1"
-  },
-  "contributors": ["jxom.eth <j@wagmi.sh>", "awkweb.eth <t@wagmi.sh>"],
+  "contributors": [
+    "jxom.eth <j@wagmi.sh>",
+    "awkweb.eth <t@wagmi.sh>"
+  ],
   "funding": [
     {
       "type": "github",
       "url": "https://github.com/sponsors/wagmi-dev"
     }
   ],
-  "keywords": ["eth", "ethereum", "dapps", "wallet", "web3"]
+  "keywords": [
+    "eth",
+    "ethereum",
+    "dapps",
+    "wallet",
+    "web3"
+  ]
 }

@@ -6,6 +6,7 @@ import {
 import {
   type Address,
   type EIP1193RequestFn,
+  type Hex,
   SwitchChainError,
   UserRejectedRequestError,
   createWalletClient,
@@ -20,8 +21,9 @@ export type TestConnectorParameters = {
   accounts: readonly [Address, ...Address[]]
   features?:
     | {
-        failConnect?: boolean
-        failSwitchChain?: boolean
+        connectError?: boolean | Error
+        switchChainError?: boolean | Error
+        signMessageError?: boolean | Error
         reconnect?: boolean
       }
     | undefined
@@ -38,11 +40,13 @@ export function testConnector(parameters: TestConnectorParameters) {
     id: 'test',
     name: 'Test Connector',
     async connect({ chainId } = {}) {
+      if (features.connectError) {
+        if (typeof features.connectError === 'boolean')
+          throw new UserRejectedRequestError(new Error('Failed to connect.'))
+        throw features.connectError
+      }
+
       const provider = await this.getProvider()
-
-      if (features.failConnect)
-        throw new UserRejectedRequestError(new Error('Failed to connect.'))
-
       const accounts = await provider.request({
         method: 'eth_requestAccounts',
       })
@@ -73,6 +77,21 @@ export function testConnector(parameters: TestConnectorParameters) {
         if (method === 'eth_requestAccounts') return parameters.accounts
         if (method === 'wallet_switchEthereumChain') return
 
+        // Change `personal_sign` to `eth_sign` and swap params
+        if (method === 'personal_sign') {
+          if (features.signMessageError) {
+            if (typeof features.signMessageError === 'boolean')
+              throw new UserRejectedRequestError(
+                new Error('Failed to sign message.'),
+              )
+            throw features.signMessageError
+          }
+
+          method = 'eth_sign'
+          type Params = [data: Hex, address: Address]
+          params = [(params as Params)[1], (params as Params)[0]]
+        }
+
         const { result } = await rpc.http(url, { body: { method, params } })
         return result
       }
@@ -95,11 +114,15 @@ export function testConnector(parameters: TestConnectorParameters) {
       return !!accounts.length
     },
     async switchChain({ chainId }) {
+      if (features.switchChainError) {
+        if (typeof features.switchChainError === 'boolean')
+          throw new UserRejectedRequestError(
+            new Error('Failed to switch chain.'),
+          )
+        throw features.switchChainError
+      }
+
       const provider = await this.getProvider()
-
-      if (features.failSwitchChain)
-        throw new UserRejectedRequestError(new Error('Failed to switch chain.'))
-
       const id = numberToHex(chainId)
       const chain = config.chains.find((x) => x.id === chainId)
       if (!chain) throw new SwitchChainError(new ChainNotConfiguredError())

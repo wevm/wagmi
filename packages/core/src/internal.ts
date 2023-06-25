@@ -15,7 +15,7 @@ export {
   type Mutable,
   type OneOf,
   type PartialBy,
-  type Pretty,
+  type Evaluate,
 } from './types/utils.js'
 
 ////////////////////////////////////////////////////////////////////////////////

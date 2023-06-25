@@ -1,9 +1,9 @@
-import type { Pretty } from '@wagmi/core/internal'
+import type { Evaluate } from '@wagmi/core/internal'
 import { type Chain, mainnet } from 'viem/chains'
 
 import { pool } from './constants.js'
 
-export type ForkChain = Pretty<Chain & { port: number }>
+export type ForkChain = Evaluate<Chain & { port: number }>
 
 function getRpcUrls({ port }: { port: number }) {
   return {

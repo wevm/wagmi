@@ -10,14 +10,14 @@ import {
 
 import type { Config } from '../config.js'
 import { type Unit } from '../types/unit.js'
-import { type PartialBy, type Pretty } from '../types/utils.js'
+import { type Evaluate, type PartialBy } from '../types/utils.js'
 import { getUnit } from '../utils/getUnit.js'
 import type {
   GetBlockNumberError,
   WatchBlockNumberReturnType,
 } from './getBlockNumber.js'
 
-export type GetBalanceParameters<config extends Config = Config> = Pretty<
+export type GetBalanceParameters<config extends Config = Config> = Evaluate<
   GetBalanceParameters_ & {
     chainId?: config['chains'][number]['id'] | undefined
     token?: Address | undefined
@@ -72,7 +72,7 @@ export async function getBalance<config extends Config>(
 ///////////////////////////////////////////////////////////////////////////
 // Watcher
 
-export type WatchBalanceParameters<config extends Config = Config> = Pretty<
+export type WatchBalanceParameters<config extends Config = Config> = Evaluate<
   Omit<GetBalanceParameters<config>, 'blockNumber' | 'blockTag'> & {
     onBalance: (parameters: GetBalanceReturnType) => void
     onError?: (error: GetBalanceError | GetBlockNumberError) => void

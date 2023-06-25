@@ -4,12 +4,13 @@
 export {
   type ConnectParameters,
   type ConnectReturnType,
-  type ConnectError,
   connect,
   // TanStack Query
-  type ConnectMutationData,
-  type ConnectMutationVariables,
-  type ConnectMutationParameters,
+  type ConnectError,
+  type ConnectVariables,
+  type ConnectMutationOptions,
+  type ConnectMutate,
+  type ConnectMutateAsync,
   connectMutationOptions,
 } from './actions/connect.js'
 
@@ -101,6 +102,18 @@ export {
 } from './actions/reconnect.js'
 
 export {
+  type SignMessageParameters,
+  type SignMessageReturnType,
+  type SignMessageError,
+  signMessage,
+  // TanStack Query
+  type SignMessageMutationData,
+  type SignMessageMutationVariables,
+  type SignMessageMutationParameters,
+  signMessageMutationOptions,
+} from './actions/signMessage.js'
+
+export {
   type SwitchAccountParameters,
   type SwitchAccountError,
   switchAccount,
@@ -124,6 +137,19 @@ export {
   type SwitchChainMutationParameters,
   switchChainMutationOptions,
 } from './actions/switchChain.js'
+
+export {
+  type WriteContractParameters,
+  type WriteContractReturnType,
+  writeContract,
+  // TanStack Query
+  type WriteContractError,
+  type WriteContractMutationVariables,
+  type WriteContractMutationOptions,
+  type WriteContractMutate,
+  type WriteContractMutateAsync,
+  writeContractMutationOptions,
+} from './actions/writeContract.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // Config
@@ -156,6 +182,7 @@ export {
 } from './errors/connector.js'
 
 export {
+  ChainMismatchError,
   ChainNotConfiguredError,
   ConnectorAlreadyConnectedError,
   ConnectorNotFoundError,

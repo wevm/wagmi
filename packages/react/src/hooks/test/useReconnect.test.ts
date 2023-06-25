@@ -3,7 +3,7 @@ import { accounts, config, testConnector } from '@wagmi/test'
 import { renderHook, waitFor } from '@wagmi/test/react'
 import { afterEach, expect, test } from 'vitest'
 
-import { useReconnect } from './useReconnect.js'
+import { useReconnect } from '../useReconnect.js'
 
 const connector = config._internal.setup(
   testConnector({

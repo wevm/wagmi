@@ -6,6 +6,7 @@ export {
   accounts,
   forkUrl,
   forkBlockNumber,
+  typedData,
   walletConnectProjectId,
 } from './constants.js'
 

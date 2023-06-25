@@ -53,6 +53,10 @@ jobs:
     needs: lint
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    strategy:
+      matrix:
+        typescript-version: ['5.0.4', 'latest']
+        viem-version: ['1.0.1', 'latest']
 
     steps:
       - name: Clone repository
@@ -62,6 +66,8 @@ jobs:
 
       - name: Install dependencies
         uses: ./.github/actions/install-dependencies
+
+      - run: pnpm add -D -w typescript@${{ matrix.typescript-version }} viem@${{ matrix.viem-version }}
 
       - name: Link packages
         run: pnpm preconstruct
@@ -79,6 +85,7 @@ jobs:
       matrix:
         shard: [1, 2, 3]
         total-shards: [3]
+        viem-version: ['1.0.1', 'latest']
 
     steps:
       - name: Clone repository
@@ -88,6 +95,8 @@ jobs:
 
       - name: Install dependencies
         uses: ./.github/actions/install-dependencies
+
+      - run: pnpm add -D -w viem@${{ matrix.viem-version }}
 
       - name: Run tests
         uses: nick-fields/retry@v2

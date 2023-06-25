@@ -1,3 +1,15 @@
+import type { Address, ResolvedConfig } from 'viem'
+
+/**
+ * Combines members of an intersection into a readable type.
+ *
+ * @link https://twitter.com/mattpocockuk/status/1622730173446557697?s=20&t=NdpAcmEFXY01xkqU3KO0Mg
+ * @example
+ * type Result = Evaluate<{ a: string } | { b: string } | { c: number, d: bigint }>
+ * //   ^? type Result = { a: string; b: string; c: number; d: bigint }
+ */
+export type Evaluate<type> = { [key in keyof type]: type[key] } & unknown
+
 /**
  * Makes all properties of an object optional.
  *
@@ -43,7 +55,7 @@ export type OneOf<
   ///
   keys extends KeyofUnion<union> = KeyofUnion<union>,
 > = union extends infer Item
-  ? Pretty<Item & { [K in Exclude<keys, keyof Item>]?: never }>
+  ? Evaluate<Item & { [K in Exclude<keys, keyof Item>]?: never }>
   : never
 type KeyofUnion<type> = type extends type ? keyof type : never
 
@@ -56,12 +68,26 @@ export type PartialBy<type, key extends keyof type> = ExactPartial<
 > &
   Omit<type, key>
 
-/**
- * Combines members of an intersection into a readable type.
- *
- * @link https://twitter.com/mattpocockuk/status/1622730173446557697?s=20&t=NdpAcmEFXY01xkqU3KO0Mg
- * @example
- * type Result = Pretty<{ a: string } | { b: string } | { c: number, d: bigint }>
- * //   ^? type Result = { a: string; b: string; c: number; d: bigint }
- */
-export type Pretty<type> = { [key in keyof type]: type[key] } & unknown
+export type ReadonlyWiden<TType> =
+  | (TType extends Function ? TType : never)
+  | (TType extends ResolvedConfig['BigIntType'] ? bigint : never)
+  | (TType extends boolean ? boolean : never)
+  | (TType extends ResolvedConfig['IntType'] ? number : never)
+  | (TType extends string
+      ? TType extends Address
+        ? Address
+        : TType extends ResolvedConfig['BytesType']['inputs']
+        ? ResolvedConfig['BytesType']
+        : string
+      : never)
+  | (TType extends readonly [] ? readonly [] : never)
+  | (TType extends Record<string, unknown>
+      ? { [K in keyof TType]: ReadonlyWiden<TType[K]> }
+      : never)
+  | (TType extends { length: number }
+      ? {
+          [K in keyof TType]: ReadonlyWiden<TType[K]>
+        } extends infer Val extends unknown[]
+        ? readonly [...Val]
+        : never
+      : never)

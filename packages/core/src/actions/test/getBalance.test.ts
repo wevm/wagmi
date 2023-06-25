@@ -6,7 +6,7 @@ import {
   getBalance,
   getBalanceQueryOptions,
   watchBalance,
-} from './getBalance.js'
+} from '../getBalance.js'
 import { parseEther } from 'viem'
 
 const address = accounts[0]

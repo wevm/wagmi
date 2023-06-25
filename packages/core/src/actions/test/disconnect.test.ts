@@ -1,8 +1,8 @@
 import { accounts, config, testConnector } from '@wagmi/test'
 import { describe, expect, test } from 'vitest'
 
-import { connect } from './connect.js'
-import { disconnect, disconnectMutationOptions } from './disconnect.js'
+import { connect } from '../connect.js'
+import { disconnect, disconnectMutationOptions } from '../disconnect.js'
 
 const connector = config._internal.setup(testConnector({ accounts }))
 

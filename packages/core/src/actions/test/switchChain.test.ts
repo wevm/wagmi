@@ -1,10 +1,10 @@
 import { accounts, config, testChains, testConnector } from '@wagmi/test'
 import { describe, expect, test } from 'vitest'
 
-import { connect } from './connect.js'
-import { disconnect } from './disconnect.js'
-import { getAccount } from './getAccount.js'
-import { switchChain, switchChainMutationOptions } from './switchChain.js'
+import { connect } from '../connect.js'
+import { disconnect } from '../disconnect.js'
+import { getAccount } from '../getAccount.js'
+import { switchChain, switchChainMutationOptions } from '../switchChain.js'
 
 const connector = config.connectors[0]!
 
@@ -33,7 +33,7 @@ describe('switchChain', () => {
     const connector_ = config._internal.setup(
       testConnector({
         accounts,
-        features: { failSwitchChain: true },
+        features: { switchChainError: true },
       }),
     )
     await connect(config, { connector: connector_ })
@@ -68,16 +68,16 @@ describe('switchChainMutationOptions', () => {
   test('default', () => {
     expect(
       switchChainMutationOptions(config, { chainId: testChains.anvil.id }),
-    ).toMatchObject(
-      expect.objectContaining({
-        mutationFn: expect.any(Function),
-        mutationKey: [
-          'switchChain',
-          expect.objectContaining({
-            chainId: expect.any(Number),
-          }),
+    ).toMatchInlineSnapshot(`
+      {
+        "mutationFn": [Function],
+        "mutationKey": [
+          "switchChain",
+          {
+            "chainId": 123,
+          },
         ],
-      }),
-    )
+      }
+    `)
   })
 })

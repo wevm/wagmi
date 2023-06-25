@@ -3,7 +3,7 @@ import { type MutationOptions } from '@tanstack/query-core'
 import { type Config, type Connection, type Connector } from '../config.js'
 import type { BaseError } from '../errors/base.js'
 import { ConnectorNotFoundError } from '../errors/config.js'
-import type { Pretty } from '../types/utils.js'
+import type { Evaluate } from '../types/utils.js'
 
 export type DisconnectParameters = {
   connector?: Connector | undefined
@@ -57,10 +57,10 @@ export async function disconnect(
 // TanStack Query
 
 export type DisconnectMutationData = void
-export type DisconnectMutationVariables = Pretty<{
+export type DisconnectMutationVariables = Evaluate<{
   connector?: Connector | undefined
 }> | void
-export type DisconnectMutationParameters = Pretty<{
+export type DisconnectMutationParameters = Evaluate<{
   connector?: Connector | undefined
 }>
 

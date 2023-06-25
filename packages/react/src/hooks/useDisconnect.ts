@@ -12,13 +12,13 @@ import {
   type OmittedMutationOptions,
   disconnectMutationOptions,
 } from '@wagmi/core'
-import type { Pretty } from '@wagmi/core/internal'
+import type { Evaluate } from '@wagmi/core/internal'
 
 import type { OmittedUseMutationResult } from '../types/query.js'
 import { useConfig } from './useConfig.js'
 import { useConnections } from './useConnections.js'
 
-export type UseDisconnectParameters<context = unknown> = Pretty<
+export type UseDisconnectParameters<context = unknown> = Evaluate<
   DisconnectMutationParameters & {
     mutation?: Omit<
       UseMutationOptions<
@@ -32,7 +32,7 @@ export type UseDisconnectParameters<context = unknown> = Pretty<
   }
 >
 
-export type UseDisconnectReturnType<context = unknown> = Pretty<
+export type UseDisconnectReturnType<context = unknown> = Evaluate<
   Omit<Result<context>, OmittedUseMutationResult> & {
     connectors: readonly Connector[]
     disconnect: Result<context>['mutate']
@@ -47,20 +47,19 @@ type Result<context = unknown> = UseMutationResult<
 >
 
 /** https://wagmi.sh/react/hooks/useDisconnect */
-export function useDisconnect<context = unknown>({
+export function useDisconnect<context = unknown>(
+  parameters?: UseDisconnectParameters<context>,
+): UseDisconnectReturnType<context>
+export function useDisconnect({
   connector,
   mutation,
-}: UseDisconnectParameters<context> = {}): UseDisconnectReturnType<context> {
+}: UseDisconnectParameters = {}): UseDisconnectReturnType {
   const config = useConfig()
-  const { mutate, mutateAsync, ...mutationOptions } = useMutation<
-    DisconnectMutationData,
-    DisconnectError,
-    DisconnectMutationVariables,
-    context
-  >(disconnectMutationOptions(config, { connector }))
+  const { mutate, mutateAsync, ...mutationOptions } = useMutation(
+    disconnectMutationOptions(config, { connector }),
+  )
   const connections = useConnections()
   const connectors = connections.map((connection) => connection.connector)
-
   return {
     ...mutationOptions,
     ...mutation,

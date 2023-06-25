@@ -10,7 +10,7 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "viem": "1.0.1",
+    "viem": "^1",
     "wagmi": "workspace:*"
   },
   "devDependencies": {

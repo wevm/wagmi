@@ -2,7 +2,7 @@ import { config } from '@wagmi/test'
 import { renderHook } from '@wagmi/test/react'
 import { expect, test } from 'vitest'
 
-import { useChainId } from './useChainId.js'
+import { useChainId } from '../useChainId.js'
 
 test('default', async () => {
   const { result, rerender } = renderHook(() => useChainId())

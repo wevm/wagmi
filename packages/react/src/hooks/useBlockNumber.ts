@@ -8,17 +8,17 @@ import {
   getBlockNumberQueryOptions,
   watchBlockNumber,
 } from '@wagmi/core'
-import type { Pretty } from '@wagmi/core/internal'
+import type { Evaluate } from '@wagmi/core/internal'
 import * as React from 'react'
 
 import type { OmittedUseQueryOptions } from '../types/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 import { type UseQueryParameters, useQuery } from './useQuery.js'
-import type { UseQueryResult } from '@tanstack/react-query'
+import { type UseQueryResult } from '@tanstack/react-query'
 
 export type UseBlockNumberParameters<selectData = GetBlockNumberQueryFnData> =
-  Pretty<
+  Evaluate<
     GetBlockNumberQueryParameters<ResolvedRegister['config']> & {
       enabled?: boolean
       query?: Omit<

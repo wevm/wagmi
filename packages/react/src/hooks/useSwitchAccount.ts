@@ -12,7 +12,7 @@ import {
   type SwitchAccountMutationVariables,
   switchAccountMutationOptions,
 } from '@wagmi/core'
-import type { Pretty } from '@wagmi/core/internal'
+import type { Evaluate } from '@wagmi/core/internal'
 
 import type { OmittedUseMutationResult } from '../types/query.js'
 import { useConfig } from './useConfig.js'
@@ -21,7 +21,7 @@ import { useConnections } from './useConnections.js'
 export type UseSwitchAccountParameters<
   connector extends Connector | undefined = Connector | undefined,
   context = unknown,
-> = Pretty<
+> = Evaluate<
   SwitchAccountMutationParameters<connector> & {
     mutation?: Omit<
       UseMutationOptions<
@@ -38,7 +38,7 @@ export type UseSwitchAccountParameters<
 export type UseSwitchAccountReturnType<
   connector extends Connector | undefined = Connector | undefined,
   context = unknown,
-> = Pretty<
+> = Evaluate<
   Omit<Result<connector, context>, OmittedUseMutationResult> & {
     connectors: readonly Connector[]
     switchAccount: Result<connector, context>['mutate']
@@ -72,7 +72,6 @@ export function useSwitchAccount({
   )
   const connections = useConnections()
   const connectors = connections.map((connection) => connection.connector)
-
   return {
     ...mutationOptions,
     ...mutation,

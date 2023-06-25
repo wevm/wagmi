@@ -12,7 +12,7 @@ import {
   type SwitchChainMutationVariables,
   switchChainMutationOptions,
 } from '@wagmi/core'
-import type { Pretty } from '@wagmi/core/internal'
+import type { Evaluate } from '@wagmi/core/internal'
 
 import type { OmittedUseMutationResult } from '../types/query.js'
 import { useConfig } from './useConfig.js'
@@ -22,7 +22,7 @@ type ChainId = ResolvedRegister['config']['chains'][number]['id']
 export type UseSwitchChainParameters<
   chainId extends ChainId | undefined = ChainId | undefined,
   context = unknown,
-> = Pretty<
+> = Evaluate<
   SwitchChainMutationParameters<ResolvedRegister['config'], chainId> & {
     mutation?: Omit<
       UseMutationOptions<
@@ -39,7 +39,7 @@ export type UseSwitchChainParameters<
 export type UseSwitchChainReturnType<
   chainId extends ChainId | undefined = ChainId | undefined,
   context = unknown,
-> = Pretty<
+> = Evaluate<
   Omit<Result<chainId, context>, OmittedUseMutationResult> & {
     chains: ResolvedRegister['config']['chains']
     switchChain: Result<chainId, context>['mutate']

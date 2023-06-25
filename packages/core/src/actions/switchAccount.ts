@@ -3,7 +3,7 @@ import { type MutationOptions } from '@tanstack/query-core'
 import { type Config, type Connector } from '../config.js'
 import type { BaseError } from '../errors/base.js'
 import { ConnectorNotFoundError } from '../errors/config.js'
-import type { IsUndefined, Pretty } from '../types/utils.js'
+import type { Evaluate, IsUndefined } from '../types/utils.js'
 
 export type SwitchAccountParameters = {
   connector: Connector
@@ -32,14 +32,14 @@ export async function switchAccount(
 export type SwitchAccountMutationData = void
 export type SwitchAccountMutationVariables<
   connector extends SwitchAccountParameters['connector'] | undefined,
-> = Pretty<
+> = Evaluate<
   IsUndefined<connector> extends false
     ? { connector?: SwitchAccountParameters['connector'] | undefined }
     : { connector: SwitchAccountParameters['connector'] | undefined }
 >
 export type SwitchAccountMutationParameters<
   connector extends SwitchAccountParameters['connector'] | undefined,
-> = Pretty<{
+> = Evaluate<{
   connector?: connector | SwitchAccountParameters['connector'] | undefined
 }>
 

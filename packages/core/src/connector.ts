@@ -3,11 +3,12 @@ import {
   type Chain,
   type ProviderConnectInfo,
   type ProviderMessage,
+  type WalletClient,
 } from 'viem'
 
 import { Emitter } from './emitter.js'
 import { type Storage } from './storage.js'
-import { type Pretty } from './types/utils.js'
+import { type Evaluate } from './types/utils.js'
 
 export type ConnectorEventMap = {
   change: { accounts?: readonly Address[]; chainId?: number }
@@ -25,7 +26,7 @@ export type CreateConnectorFn<
   chains: readonly [Chain, ...Chain[]]
   emitter: Emitter<ConnectorEventMap>
   storage?: Storage<storageItem> | null
-}) => Pretty<
+}) => Evaluate<
   {
     readonly id: string
     readonly name: string
@@ -41,6 +42,9 @@ export type CreateConnectorFn<
     getProvider(parameters?: {
       chainId?: number | undefined
     }): Promise<provider>
+    getWalletClient?(parameters?: {
+      chainId?: number | undefined
+    }): Promise<WalletClient>
     isAuthorized(): Promise<boolean>
     switchChain?(parameters: { chainId: number }): Promise<Chain>
 

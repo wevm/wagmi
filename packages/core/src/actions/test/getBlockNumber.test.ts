@@ -5,7 +5,7 @@ import {
   getBlockNumber,
   getBlockNumberQueryOptions,
   watchBlockNumber,
-} from './getBlockNumber.js'
+} from '../getBlockNumber.js'
 
 describe('getBlockNumber', () => {
   test('default', async () => {

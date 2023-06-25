@@ -6,6 +6,7 @@ import {
   useConnect,
   useConnections,
   useDisconnect,
+  useSignMessage,
   useSwitchAccount,
   useSwitchChain,
 } from 'wagmi'
@@ -17,6 +18,7 @@ function App() {
       <Connect />
       <SwitchAccount />
       <SwitchChain />
+      <SignMessage />
       <Connections />
       <Balance />
       <BlockNumber />
@@ -59,7 +61,7 @@ function Connect() {
         <button
           id={connector.uid}
           key={connector.uid}
-          onClick={async () => await connect({ connector })}
+          onClick={async () => connect({ connector })}
           type='button'
         >
           {connector.name}
@@ -99,7 +101,7 @@ function SwitchChain() {
 
   return (
     <div>
-      <h2>Switch Account</h2>
+      <h2>Switch Chain</h2>
 
       {chains.map((chain) => (
         <button
@@ -111,6 +113,29 @@ function SwitchChain() {
           {chain.name}
         </button>
       ))}
+    </div>
+  )
+}
+
+function SignMessage() {
+  const { signMessage } = useSignMessage()
+
+  return (
+    <div>
+      <h2>Sign Message</h2>
+
+      <form
+        onSubmit={(event) => {
+          event.preventDefault()
+          const formData = new FormData(event.target as HTMLFormElement)
+          signMessage({ message: formData.get('message') as string })
+        }}
+      >
+        <input name='message' />
+        <button type='submit'>Sign Message</button>
+      </form>
+
+      {data}
     </div>
   )
 }

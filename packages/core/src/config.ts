@@ -19,12 +19,12 @@ import { Emitter, type EventData, createEmitter } from './emitter.js'
 import { ChainNotConfiguredError } from './errors/config.js'
 import { createQueryClient } from './query.js'
 import { type Storage, createStorage, noopStorage } from './storage.js'
-import type { OneOf, Pretty } from './types/utils.js'
+import type { Evaluate, OneOf } from './types/utils.js'
 import { uid } from './utils/uid.js'
 
 export type CreateConfigParameters<
   chains extends readonly [Chain, ...Chain[]],
-> = Pretty<
+> = Evaluate<
   {
     chains: chains
     connectors?: CreateConnectorFn[]
@@ -97,7 +97,7 @@ export type State<
   current: string | undefined
   status: 'connected' | 'connecting' | 'disconnected' | 'reconnecting'
 }
-export type PartializedState = Pretty<
+export type PartializedState = Evaluate<
   Partial<Pick<State, 'chainId' | 'connections' | 'current' | 'status'>>
 >
 export type Connection = {

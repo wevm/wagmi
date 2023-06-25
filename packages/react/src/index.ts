@@ -61,6 +61,12 @@ export {
 } from './hooks/useReconnect.js'
 
 export {
+  type UseSignMessageParameters,
+  type UseSignMessageReturnType,
+  useSignMessage,
+} from './hooks/useSignMessage.js'
+
+export {
   type UseSwitchAccountParameters,
   type UseSwitchAccountReturnType,
   useSwitchAccount,

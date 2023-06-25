@@ -4,7 +4,7 @@ import {
   createConnector,
   normalizeChainId,
 } from '@wagmi/core'
-import type { Pretty } from '@wagmi/core/internal'
+import type { Evaluate } from '@wagmi/core/internal'
 import {
   type Address,
   type EIP1193Provider,
@@ -232,18 +232,18 @@ export function injected(parameters: InjectedParameters = {}) {
       const accounts = await provider.request({ method: 'eth_accounts' })
       return accounts.map(getAddress)
     },
+    async getChainId() {
+      const provider = await this.getProvider()
+      if (!provider) throw new ProviderNotFoundError()
+      const hexChainId = await provider.request({ method: 'eth_chainId' })
+      return fromHex(hexChainId, 'number')
+    },
     async getProvider() {
       if (typeof window === 'undefined') return undefined
       const windowProvider = getWindowProvider()
       if (typeof windowProvider.provider === 'function')
         return windowProvider.provider(window as Window | undefined)
       return findProvider(window as Window | undefined, 'isCoinbaseWallet')
-    },
-    async getChainId() {
-      const provider = await this.getProvider()
-      if (!provider) throw new ProviderNotFoundError()
-      const hexChainId = await provider.request({ method: 'eth_chainId' })
-      return fromHex(hexChainId, 'number')
     },
     async isAuthorized() {
       try {
@@ -495,7 +495,7 @@ type WindowProviderFlags = {
   isZerion?: true
 }
 
-type WindowProvider = Pretty<
+type WindowProvider = Evaluate<
   EIP1193Provider &
     WindowProviderFlags & {
       providers?: WindowProvider[]

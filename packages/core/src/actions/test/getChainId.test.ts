@@ -1,7 +1,7 @@
 import { config, testChains } from '@wagmi/test'
 import { describe, expect, test } from 'vitest'
 
-import { getChainId, watchChainId } from './getChainId.js'
+import { getChainId, watchChainId } from '../getChainId.js'
 
 describe('getChainId', () => {
   test('default', async () => {

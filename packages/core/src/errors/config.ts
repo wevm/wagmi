@@ -1,5 +1,21 @@
 import { BaseError } from './base.js'
 
+export class ChainMismatchError extends BaseError {
+  override name = 'ChainMismatchError'
+
+  constructor({
+    activeChain,
+    targetChain,
+  }: {
+    activeChain: string
+    targetChain: string
+  }) {
+    super('Chain mismatch', {
+      details: `Expected "${targetChain}", received "${activeChain}".`,
+    })
+  }
+}
+
 export class ChainNotConfiguredError extends BaseError {
   override name = 'ChainNotConfiguredError'
   constructor() {

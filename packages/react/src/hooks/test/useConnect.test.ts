@@ -3,8 +3,8 @@ import { config } from '@wagmi/test'
 import { renderHook, waitFor } from '@wagmi/test/react'
 import { afterEach, expect, test } from 'vitest'
 
-import { useAccount } from './useAccount.js'
-import { useConnect } from './useConnect.js'
+import { useAccount } from '../useAccount.js'
+import { useConnect } from '../useConnect.js'
 
 const connector = config.connectors[0]!
 

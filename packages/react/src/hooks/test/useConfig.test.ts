@@ -1,7 +1,7 @@
 import { createWrapper, renderHook } from '@wagmi/test/react'
 import { expect, test, vi } from 'vitest'
 
-import { useConfig } from './useConfig.js'
+import { useConfig } from '../useConfig.js'
 
 test('mounts', async () => {
   const { result } = renderHook(() => useConfig())

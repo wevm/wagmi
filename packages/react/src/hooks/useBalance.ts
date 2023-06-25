@@ -8,7 +8,7 @@ import {
   getBalanceQueryOptions,
   watchBlockNumber,
 } from '@wagmi/core'
-import type { Pretty } from '@wagmi/core/internal'
+import type { Evaluate } from '@wagmi/core/internal'
 import * as React from 'react'
 
 import type { OmittedUseQueryOptions } from '../types/query.js'
@@ -17,7 +17,7 @@ import { useConfig } from './useConfig.js'
 import { type UseQueryParameters, useQuery } from './useQuery.js'
 import type { UseQueryResult } from '@tanstack/react-query'
 
-export type UseBalanceParameters<selectData = GetBalanceQueryFnData> = Pretty<
+export type UseBalanceParameters<selectData = GetBalanceQueryFnData> = Evaluate<
   GetBalanceQueryParameters<ResolvedRegister['config']> & {
     enabled?: boolean
     query?: Omit<

@@ -1,10 +1,10 @@
 import type { Config, Connection } from '../config.js'
-import { type Pretty, deepEqual } from '../internal.js'
+import { type Evaluate, deepEqual } from '../internal.js'
 
 ///////////////////////////////////////////////////////////////////////////
 // Getter
 
-export type GetConnectionsReturnType = Pretty<Connection>[]
+export type GetConnectionsReturnType = Evaluate<Connection>[]
 
 let previousConnections: Connection[] = []
 

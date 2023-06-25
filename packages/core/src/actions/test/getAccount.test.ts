@@ -2,9 +2,9 @@ import { config } from '@wagmi/test'
 import type { Address } from 'viem'
 import { describe, expect, test } from 'vitest'
 
-import { connect } from './connect.js'
-import { disconnect } from './disconnect.js'
-import { getAccount, watchAccount } from './getAccount.js'
+import { connect } from '../connect.js'
+import { disconnect } from '../disconnect.js'
+import { getAccount, watchAccount } from '../getAccount.js'
 
 describe('getAccount', () => {
   test('default', () => {
