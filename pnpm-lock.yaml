@@ -383,8 +383,8 @@ importers:
         specifier: ^3.6.6
         version: 3.6.6
       '@ledgerhq/connect-kit-loader':
-        specifier: ^1.0.1
-        version: 1.0.2
+        specifier: ^1.1.0
+        version: 1.1.0
       '@safe-global/safe-apps-provider':
         specifier: ^0.15.2
         version: 0.15.2
@@ -1484,8 +1484,8 @@ packages:
       '@pedrouid/environment': 1.0.1
     dev: false
 
-  /@ledgerhq/connect-kit-loader@1.0.2:
-    resolution: {integrity: sha512-TQ21IjcZOw/scqypaVFY3jHVqI7X7Hta3qN/us6FvTol3AY06UmrhhXGww0E9xHmAbdX241ddwXEiMBSQZFr9g==}
+  /@ledgerhq/connect-kit-loader@1.1.0:
+    resolution: {integrity: sha512-HUy12FEczoWY2FPubnsm1uOA8tkVWc0j90i47suThV3C9NL2xx69ZAIEU3Ytzs2bwLek9S1Q2S1VQJvA+3Ygkg==}
     dev: false
 
   /@lit-labs/ssr-dom-shim@1.1.0:
@@ -3358,7 +3358,7 @@ packages:
         optional: true
     dependencies:
       '@coinbase/wallet-sdk': 3.6.6
-      '@ledgerhq/connect-kit-loader': 1.0.2
+      '@ledgerhq/connect-kit-loader': 1.1.0
       '@safe-global/safe-apps-provider': 0.15.2
       '@safe-global/safe-apps-sdk': 7.10.0
       '@wagmi/chains': 0.2.22(typescript@5.0.4)
