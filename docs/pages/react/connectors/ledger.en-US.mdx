@@ -11,18 +11,34 @@ The `LedgerConnector` supports connecting with a Ledger device using the [Ledger
 import { LedgerConnector } from 'wagmi/connectors/ledger'
 ```
 
-## Usage
+## Usage 
+
+### WalletConnect v2
+
+To get started with Ledger + WalletConnect v2, you will need to retrieve a Project ID. You can find your Project ID [here](https://cloud.walletconnect.com/sign-in).
 
 ```ts
-import { mainnet } from 'wagmi/chains'
 import { LedgerConnector } from 'wagmi/connectors/ledger'
+import { mainnet } from '@wagmi/core/chains'
+
+const connector = new LedgerConnector({
+  chains: [mainnet],
+  projectId: '...',
+})
+```
+
+Note: The above example is using chains from [`@wagmi/core/chains` entrypoint](/react/chains#wagmichains).
+
+### WalletConnect v1
+
+```ts
+import { LedgerConnector } from 'wagmi/connectors/ledger'
+import { mainnet } from '@wagmi/core/chains'
 
 const connector = new LedgerConnector({
   chains: [mainnet],
 })
 ```
-
-Note: The above example is using chains from [`wagmi/chains` entrypoint](/react/chains#wagmichains).
 
 ## Configuration
 
@@ -31,15 +47,46 @@ Note: The above example is using chains from [`wagmi/chains` entrypoint](/react/
 Chains supported by app. Defaults to `defaultChains`.
 
 ```ts {5}
-import { mainnet } from 'wagmi/chains'
 import { LedgerConnector } from 'wagmi/connectors/ledger'
+import { mainnet } from '@wagmi/core/chains'
 
 const connector = new LedgerConnector({
   chains: [mainnet],
 })
 ```
 
-### options
+### options (WalletConnect v2)
+
+#### projectId
+
+WalletConnect Cloud Project ID. You can find your Project ID [here](https://cloud.walletconnect.com/sign-in).
+
+```ts {5}
+import { LedgerConnector } from 'wagmi/connectors/ledger'
+
+const connector = new LedgerConnector({
+  options: {
+    projectId: '...',
+  },
+})
+```
+
+#### enableDebugLogs
+
+Toggle debug logging for Ledger Connect Kit.
+
+```ts {6}
+import { LedgerConnector } from 'wagmi/connectors/ledger'
+
+const connector = new LedgerConnector({
+  options: {
+    projectId: '...',
+    enableDebugLogs: true,
+  },
+})
+```
+
+### options (WalletConnect v1)
 
 #### chainId
 
