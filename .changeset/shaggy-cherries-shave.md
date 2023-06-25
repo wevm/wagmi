@@ -1,5 +1,5 @@
 ---
-"@wagmi/cli": patch
+"@wagmi/cli": minor
 ---
 
 Added sepolia chain id
