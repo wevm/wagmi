@@ -1,5 +1,17 @@
 # wagmi
 
+## 1.3.0
+
+### Minor Changes
+
+- [#2619](https://github.com/wagmi-dev/wagmi/pull/2619) [`0d79748c`](https://github.com/wagmi-dev/wagmi/commit/0d79748cec2b6ac2410ad2c9816cc662f2b70962) Thanks [@jxom](https://github.com/jxom)! - Updated references:
+  - Updated `@safe-global/safe-apps-sdk` to `^8.0.0` (the one with `viem` support)
+
+### Patch Changes
+
+- Updated dependencies [[`0d79748c`](https://github.com/wagmi-dev/wagmi/commit/0d79748cec2b6ac2410ad2c9816cc662f2b70962)]:
+  - @wagmi/core@1.3.0
+
 ## 1.2.2
 
 ### Patch Changes
