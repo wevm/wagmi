@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 1.3.0
+
+### Minor Changes
+
+- [#2616](https://github.com/wagmi-dev/wagmi/pull/2616) [`c282a8f7`](https://github.com/wagmi-dev/wagmi/commit/c282a8f786d57fec77c931fe99dc20220e843bc8) Thanks [@portdeveloper](https://github.com/portdeveloper)! - Added sepolia chain id
+
 ## 1.2.1
 
 ### Patch Changes
