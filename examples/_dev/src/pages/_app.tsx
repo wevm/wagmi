@@ -53,6 +53,9 @@ const config = createConfig({
     }),
     new LedgerConnector({
       chains,
+      options: {
+        projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ?? '',
+      },
     }),
     new InjectedConnector({
       chains,
