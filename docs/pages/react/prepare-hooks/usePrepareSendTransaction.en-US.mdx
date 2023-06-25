@@ -23,11 +23,11 @@ import { usePrepareSendTransaction } from 'wagmi'
 import { usePrepareSendTransaction, useSendTransaction } from 'wagmi'
 
 function App() {
-  const { request, error } = usePrepareSendTransaction({
+  const { config, error } = usePrepareSendTransaction({
     to: 'moxey.eth',
     value: parseEther('1'),
   })
-  const { sendTransaction } = useSendTransaction(request)
+  const { sendTransaction } = useSendTransaction(config)
 
   return (
     <>
