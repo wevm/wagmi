@@ -386,11 +386,11 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0
       '@safe-global/safe-apps-provider':
-        specifier: ^0.15.2
-        version: 0.15.2
+        specifier: ^0.17.1
+        version: 0.17.1(typescript@5.0.4)
       '@safe-global/safe-apps-sdk':
-        specifier: ^7.9.0
-        version: 7.10.0
+        specifier: ^8.0.0
+        version: 8.0.0(typescript@5.0.4)
       '@walletconnect/ethereum-provider':
         specifier: 2.8.1
         version: 2.8.1(@walletconnect/modal@2.4.6)
@@ -2444,6 +2444,19 @@ packages:
       - utf-8-validate
     dev: false
 
+  /@safe-global/safe-apps-provider@0.17.1(typescript@5.0.4):
+    resolution: {integrity: sha512-lYfRqrbbK1aKU1/UGkYWc/X7PgySYcumXKc5FB2uuwAs2Ghj8uETuW5BrwPqyjBknRxutFbTv+gth/JzjxAhdQ==}
+    dependencies:
+      '@safe-global/safe-apps-sdk': 8.0.0(typescript@5.0.4)
+      events: 3.3.0
+    transitivePeerDependencies:
+      - bufferutil
+      - encoding
+      - typescript
+      - utf-8-validate
+      - zod
+    dev: false
+
   /@safe-global/safe-apps-sdk@7.10.0:
     resolution: {integrity: sha512-is0QAHVoGkP06YfOPcp4X3/YUEA3wRdgFUyKZ4rT47uOEnzxA9Sm8BFJrIZqZOjjqC+aJXRMF0cE2qucS953rg==}
     dependencies:
@@ -2464,6 +2477,19 @@ packages:
       - bufferutil
       - encoding
       - utf-8-validate
+    dev: false
+
+  /@safe-global/safe-apps-sdk@8.0.0(typescript@5.0.4):
+    resolution: {integrity: sha512-gYw0ki/EAuV1oSyMxpqandHjnthZjYYy+YWpTAzf8BqfXM3ItcZLpjxfg+3+mXW8HIO+3jw6T9iiqEXsqHaMMw==}
+    dependencies:
+      '@safe-global/safe-gateway-typescript-sdk': 3.7.0
+      viem: 1.0.0(typescript@5.0.4)(zod@3.21.4)
+    transitivePeerDependencies:
+      - bufferutil
+      - encoding
+      - typescript
+      - utf-8-validate
+      - zod
     dev: false
 
   /@safe-global/safe-gateway-typescript-sdk@3.7.0:
