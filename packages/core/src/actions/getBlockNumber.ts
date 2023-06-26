@@ -1,17 +1,17 @@
-import { type QueryOptions } from '@tanstack/query-core'
-import {
-  type GetBlockNumberReturnType as GetBlockNumberReturnType_,
-  RpcError,
-  type WatchBlockNumberParameters as WatchBlockNumberParameters_,
-} from 'viem'
+import type { RpcError } from 'viem'
 
 import { type Config } from '../config.js'
+import { type Evaluate } from '../internal.js'
 
-export type GetBlockNumberParameters<config extends Config = Config> = {
-  chainId?: config['chains'][number]['id'] | undefined
-}
+export type GetBlockNumberParameters<config extends Config = Config> = Evaluate<
+  Pick<import('viem').GetBlockNumberParameters, 'maxAge'> & {
+    chainId?: config['chains'][number]['id'] | undefined
+  }
+>
 
-export type GetBlockNumberReturnType = GetBlockNumberReturnType_ | undefined
+export type GetBlockNumberReturnType =
+  | import('viem').GetBlockNumberReturnType
+  | undefined
 
 export type GetBlockNumberError =
   | RpcError
@@ -21,103 +21,74 @@ export type GetBlockNumberError =
 /** https://wagmi.sh/core/actions/getBlockNumber */
 export function getBlockNumber<config extends Config>(
   config: config,
-  { chainId }: GetBlockNumberParameters<config> = {},
+  parameters: GetBlockNumberParameters<config> = {},
 ): Promise<GetBlockNumberReturnType> {
+  const { chainId } = parameters
   const publicClient = config.getPublicClient({ chainId })
-  return publicClient?.getBlockNumber()
+  return publicClient?.getBlockNumber(parameters)
 }
 
 ///////////////////////////////////////////////////////////////////////////
 // Watcher
 
-export type WatchBlockNumberParameters<config extends Config = Config> = {
-  chainId?: config['chains'][number]['id'] | undefined
-  onBlockNumber: WatchBlockNumberParameters_['onBlockNumber']
-  onError?: WatchBlockNumberParameters_['onError']
-  syncConnectedChain?: boolean
-}
+export type WatchBlockNumberParameters<config extends Config = Config> =
+  Evaluate<
+    Pick<
+      import('viem').WatchBlockNumberParameters,
+      'onBlockNumber' | 'onError'
+    > & {
+      chainId?: config['chains'][number]['id'] | undefined
+      syncConnectedChain?: boolean
+    }
+  >
 
-export type WatchBlockNumberReturnType = () => void
+export type WatchBlockNumberReturnType =
+  import('viem').WatchBlockNumberReturnType
 
 // TODO: wrap in viem's `observe` to avoid duplicate invocations.
 /** https://wagmi.sh/core/actions/getBlockNumber#watcher */
 export function watchBlockNumber<config extends Config>(
   config: config,
-  {
-    chainId,
+  parameters: WatchBlockNumberParameters<config>,
+): WatchBlockNumberReturnType {
+  const {
     onBlockNumber,
     onError,
     syncConnectedChain = config._internal.syncConnectedChain,
-  }: WatchBlockNumberParameters<config>,
-): WatchBlockNumberReturnType {
-  let unwatch: WatchBlockNumberReturnType | undefined
+  } = parameters
 
+  let unwatch: WatchBlockNumberReturnType | undefined
   const listener = (chainId: number | undefined) => {
     if (unwatch) unwatch()
 
     const publicClient = config.getPublicClient({ chainId })
-
     unwatch = publicClient?.watchBlockNumber({
       onBlockNumber,
+      onError,
       poll: true,
-      // TODO: viem `exactOptionalPropertyTypes`
-      ...(onError ? { onError } : {}),
     })
     return unwatch
   }
 
   // set up listener for block number changes
-  const unlisten = listener(chainId)
+  const unlisten = listener(parameters.chainId)
 
   // set up subscriber for connected chain changes
-  const unsubscribe =
-    syncConnectedChain && !chainId
-      ? config.subscribe(
-          ({ chainId }) => chainId,
-          async (chainId) => {
-            const blockNumber = await getBlockNumber(config, {
-              chainId,
-            })
-            onBlockNumber(blockNumber!, undefined)
-
-            return listener(chainId)
-          },
-        )
-      : undefined
+  let unsubscribe: (() => void) | undefined
+  if (syncConnectedChain && !parameters.chainId)
+    unsubscribe = config.subscribe(
+      ({ chainId }) => chainId,
+      async (chainId) => {
+        const blockNumber = await getBlockNumber(config, {
+          chainId,
+        })
+        onBlockNumber(blockNumber!, undefined)
+        return listener(chainId)
+      },
+    )
 
   return () => {
     unlisten?.()
     unsubscribe?.()
   }
 }
-
-///////////////////////////////////////////////////////////////////////////
-// TanStack Query
-
-export type GetBlockNumberQueryParameters<config extends Config> =
-  GetBlockNumberParameters<config>
-export type GetBlockNumberQueryKey<config extends Config> = readonly [
-  'blockNumber',
-  { chainId: GetBlockNumberQueryParameters<config>['chainId'] },
-]
-export type GetBlockNumberQueryFnData =
-  NonNullable<GetBlockNumberReturnType> | null
-
-/** https://wagmi.sh/core/actions/getBlockNumber#tanstack-query */
-export const getBlockNumberQueryOptions = <config extends Config>(
-  config: Config,
-  { chainId }: GetBlockNumberQueryParameters<config> = {},
-) =>
-  ({
-    gcTime: 0,
-    async queryFn() {
-      const blockNumber = await getBlockNumber(config, { chainId })
-      return blockNumber ?? null
-    },
-    queryKey: ['blockNumber', { chainId }],
-  }) as const satisfies QueryOptions<
-    GetBlockNumberQueryFnData,
-    GetBlockNumberError,
-    GetBlockNumberQueryFnData,
-    GetBlockNumberQueryKey<config>
-  >

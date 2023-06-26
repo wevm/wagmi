@@ -39,47 +39,46 @@
       "import": "./dist/esm/internal.js",
       "default": "./dist/cjs/internal.js"
     },
+    "./query": {
+      "types": "./dist/types/query.d.ts",
+      "import": "./dist/esm/query.js",
+      "default": "./dist/cjs/query.js"
+    },
     "./package.json": "./package.json"
   },
   "typesVersions": {
     "*": {
-      "internal": [
-        "./dist/types/internal.d.ts"
-      ]
+      "internal": ["./dist/types/internal.d.ts"],
+      "query": ["./dist/types/query.d.ts"]
     }
   },
   "peerDependencies": {
+    "@tanstack/query-core": "5.0.0-alpha.26",
     "typescript": ">=5",
     "viem": "^1"
   },
   "peerDependenciesMeta": {
+    "@tanstack/query-core": {
+      "optional": true
+    },
     "typescript": {
       "optional": true
     }
   },
   "dependencies": {
-    "@tanstack/query-core": "5.0.0-alpha.26",
-    "@tanstack/query-persist-client-core": "5.0.0-alpha.26",
-    "@tanstack/query-sync-storage-persister": "5.0.0-alpha.26",
     "abitype": "^0.8.11",
     "eventemitter3": "^5.0.1",
     "zustand": "^4.3.8"
   },
-  "contributors": [
-    "jxom.eth <j@wagmi.sh>",
-    "awkweb.eth <t@wagmi.sh>"
-  ],
+  "devDependencies": {
+    "@tanstack/query-core": "5.0.0-alpha.26"
+  },
+  "contributors": ["jxom.eth <j@wagmi.sh>", "awkweb.eth <t@wagmi.sh>"],
   "funding": [
     {
       "type": "github",
       "url": "https://github.com/sponsors/wagmi-dev"
     }
   ],
-  "keywords": [
-    "eth",
-    "ethereum",
-    "dapps",
-    "wallet",
-    "web3"
-  ]
+  "keywords": ["eth", "ethereum", "dapps", "wallet", "web3"]
 }

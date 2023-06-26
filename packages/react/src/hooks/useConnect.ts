@@ -1,17 +1,19 @@
 import { useMutation } from '@tanstack/react-query'
 import {
   type ConnectError,
-  type ConnectMutate,
-  type ConnectMutateAsync,
-  type ConnectMutationOptions,
-  type ConnectParameters,
-  type ConnectReturnType,
   type Connector,
   type CreateConnectorFn,
   type ResolvedRegister,
-  connectMutationOptions,
 } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
+import {
+  type ConnectData,
+  type ConnectMutate,
+  type ConnectMutateAsync,
+  type ConnectOptions,
+  type ConnectVariables,
+  connectMutationOptions,
+} from '@wagmi/core/query'
 import * as React from 'react'
 
 import type { UseMutationOptions, UseMutationResult } from '../types/query.js'
@@ -21,14 +23,13 @@ export type UseConnectParameters<
   connector extends CreateConnectorFn | Connector | undefined = undefined,
   context = unknown,
 > = Evaluate<
-  ConnectMutationOptions<ResolvedRegister['config'], connector> & {
-    mutation?: UseMutationOptions<
-      ConnectReturnType<ResolvedRegister['config']>,
+  ConnectOptions<ResolvedRegister['config'], connector> &
+    UseMutationOptions<
+      ConnectData<ResolvedRegister['config']>,
       ConnectError,
-      ConnectParameters<ResolvedRegister['config']>,
+      ConnectVariables<ResolvedRegister['config'], undefined>,
       context
     >
-  }
 >
 
 export type UseConnectReturnType<
@@ -36,9 +37,9 @@ export type UseConnectReturnType<
   context = unknown,
 > = Evaluate<
   UseMutationResult<
-    ConnectReturnType<ResolvedRegister['config']>,
+    ConnectData<ResolvedRegister['config']>,
     ConnectError,
-    ConnectParameters<ResolvedRegister['config']>,
+    ConnectVariables<ResolvedRegister['config'], undefined>,
     context
   > & {
     connect: ConnectMutate<ResolvedRegister['config'], connector, context>
@@ -67,10 +68,12 @@ export function useConnect(
     config,
     parameters,
   )
-  const { mutate, mutateAsync, ...result } = useMutation(mutationOptions)
+  const { mutate, mutateAsync, ...result } = useMutation({
+    ...parameters,
+    ...mutationOptions,
+  })
   return {
     ...result,
-    ...parameters.mutation,
     connect: React.useCallback(
       (variables, options) => mutate(getVariables(variables), options),
       [getVariables, mutate],

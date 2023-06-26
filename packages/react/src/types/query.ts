@@ -1,7 +1,9 @@
-import { type OmittedMutationOptions } from '@wagmi/core'
+import type { DefaultError, QueryKey } from '@tanstack/react-query'
 import { type Evaluate } from '@wagmi/core/internal'
-
-export type OmittedUseQueryOptions = 'enabled' | 'suspense' | 'throwOnError'
+import type {
+  OmittedMutationOptions,
+  OmittedQueryOptions,
+} from '@wagmi/core/query'
 
 export type UseMutationOptions<
   data = unknown,
@@ -36,3 +38,32 @@ export type UseMutationResult<
     'mutate' | 'mutateAsync'
   >
 >
+
+export type UseQueryParameters<
+  queryFnData = unknown,
+  error = DefaultError,
+  data = queryFnData,
+  queryKey extends QueryKey = QueryKey,
+> = Evaluate<
+  Omit<
+    import('@tanstack/react-query').UseQueryOptions<
+      queryFnData,
+      error,
+      data,
+      queryKey
+    >,
+    OmittedQueryOptions | 'initialData' | 'suspense' | 'throwOnError'
+  > & {
+    initialData?: import('@tanstack/react-query').UseQueryOptions<
+      queryFnData,
+      error,
+      data,
+      queryKey
+    >['initialData']
+  }
+>
+
+export type UseQueryResult<
+  data = unknown,
+  error = DefaultError,
+> = import('@tanstack/react-query').UseQueryResult<data, error>

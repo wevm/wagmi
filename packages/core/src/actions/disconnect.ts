@@ -1,23 +1,27 @@
-import { type MutationOptions } from '@tanstack/query-core'
-
 import { type Config, type Connection, type Connector } from '../config.js'
 import type { BaseError } from '../errors/base.js'
 import { ConnectorNotFoundError } from '../errors/config.js'
-import type { Evaluate } from '../types/utils.js'
 
 export type DisconnectParameters = {
   connector?: Connector | undefined
 }
 
-export type DisconnectError = ConnectorNotFoundError | BaseError | Error
+export type DisconnectReturnType = void
+
+export type DisconnectError =
+  // disconnect()
+  | ConnectorNotFoundError
+  // base
+  | BaseError
+  | Error
 
 /** https://wagmi.sh/core/actions/disconnect */
 export async function disconnect(
   config: Config,
-  { connector: connector_ }: DisconnectParameters = {},
-) {
+  parameters: DisconnectParameters = {},
+): Promise<DisconnectReturnType> {
   let connector: Connector | undefined
-  if (connector_) connector = connector_
+  if (parameters.connector) connector = parameters.connector
   else {
     const { connections, current } = config.state
     const connection = connections.get(current!)
@@ -52,32 +56,3 @@ export async function disconnect(
     }
   })
 }
-
-///////////////////////////////////////////////////////////////////////////
-// TanStack Query
-
-export type DisconnectMutationData = void
-export type DisconnectMutationVariables = Evaluate<{
-  connector?: Connector | undefined
-}> | void
-export type DisconnectMutationParameters = Evaluate<{
-  connector?: Connector | undefined
-}>
-
-/** https://wagmi.sh/core/actions/disconnect#tanstack-query */
-export const disconnectMutationOptions = (
-  config: Config,
-  { connector }: DisconnectMutationParameters = {},
-) =>
-  ({
-    mutationFn(variables) {
-      return disconnect(config, {
-        connector: variables?.connector ?? connector,
-      })
-    },
-    mutationKey: ['disconnect', { connector }],
-  }) as const satisfies MutationOptions<
-    DisconnectMutationData,
-    DisconnectError,
-    DisconnectMutationVariables
-  >

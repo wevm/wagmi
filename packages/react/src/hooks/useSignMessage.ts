@@ -1,20 +1,17 @@
-import {
-  type UseMutationOptions,
-  type UseMutationResult,
-  useMutation,
-} from '@tanstack/react-query'
-import {
-  type OmittedMutationOptions,
-  type SignMessageError,
-  type SignMessageMutationData,
-  type SignMessageMutationParameters,
-  type SignMessageMutationVariables,
-  type SignMessageParameters,
-  signMessageMutationOptions,
-} from '@wagmi/core'
+import { useMutation } from '@tanstack/react-query'
+import type { SignMessageError, SignMessageParameters } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
+import {
+  type SignMessageData,
+  type SignMessageMutate,
+  type SignMessageMutateAsync,
+  type SignMessageOptions,
+  type SignMessageVariables,
+  signMessageMutationOptions,
+} from '@wagmi/core/query'
+import * as React from 'react'
 
-import type { OmittedUseMutationResult } from '../types/query.js'
+import type { UseMutationOptions, UseMutationResult } from '../types/query.js'
 import { useConfig } from './useConfig.js'
 
 export type UseSignMessageParameters<
@@ -23,17 +20,13 @@ export type UseSignMessageParameters<
     | undefined,
   context = unknown,
 > = Evaluate<
-  SignMessageMutationParameters<message> & {
-    mutation?: Omit<
-      UseMutationOptions<
-        SignMessageMutationData,
-        SignMessageError,
-        SignMessageMutationVariables<message>,
-        context
-      >,
-      OmittedMutationOptions
+  SignMessageOptions<message> &
+    UseMutationOptions<
+      SignMessageData,
+      SignMessageError,
+      SignMessageVariables<message>,
+      context
     >
-  }
 >
 
 export type UseSignMessageReturnType<
@@ -42,41 +35,46 @@ export type UseSignMessageReturnType<
     | undefined,
   context = unknown,
 > = Evaluate<
-  Omit<Result<message, context>, OmittedUseMutationResult> & {
-    signMessage: Result<message, context>['mutate']
-    signMessageAsync: Result<message, context>['mutateAsync']
+  UseMutationResult<
+    SignMessageData,
+    SignMessageError,
+    SignMessageVariables<message>,
+    context
+  > & {
+    signMessage: SignMessageMutate<message, context>
+    signMessageAsync: SignMessageMutateAsync<message, context>
   }
 >
-type Result<
-  message extends SignMessageParameters['message'] | undefined,
-  context = unknown,
-> = UseMutationResult<
-  SignMessageMutationData,
-  SignMessageError,
-  SignMessageMutationVariables<message>,
-  context
->
 
-/** https://wagmi.sh/react/hooks/useSignMessage */
 export function useSignMessage<
   message extends SignMessageParameters['message'] | undefined,
   context = unknown,
 >(
   parameters?: UseSignMessageParameters<message, context>,
 ): UseSignMessageReturnType<message, context>
-export function useSignMessage({
-  message,
-  mutation,
-}: UseSignMessageParameters = {}): UseSignMessageReturnType {
-  const config = useConfig()
-  const { mutate, mutateAsync, ...mutationOptions } = useMutation(
-    signMessageMutationOptions(config, { message }),
-  )
 
-  return {
+/** https://wagmi.sh/react/hooks/useSignMessage */
+export function useSignMessage(
+  parameters: UseSignMessageParameters = {},
+): UseSignMessageReturnType {
+  const config = useConfig()
+  const { getVariables, ...mutationOptions } = signMessageMutationOptions(
+    config,
+    parameters,
+  )
+  const { mutate, mutateAsync, ...result } = useMutation({
+    ...parameters,
     ...mutationOptions,
-    ...mutation,
-    signMessage: mutate,
-    signMessageAsync: mutateAsync,
+  })
+  return {
+    ...result,
+    signMessage: React.useCallback(
+      (variables, options) => mutate(getVariables(variables), options),
+      [getVariables, mutate],
+    ),
+    signMessageAsync: React.useCallback(
+      (variables, options) => mutateAsync(getVariables(variables), options),
+      [getVariables, mutateAsync],
+    ),
   }
 }

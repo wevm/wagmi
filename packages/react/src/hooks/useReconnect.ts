@@ -1,67 +1,65 @@
-import {
-  type UseMutationOptions,
-  type UseMutationResult,
-  useMutation,
-} from '@tanstack/react-query'
-import {
-  type Connector,
-  type OmittedMutationOptions,
-  type ReconnectError,
-  type ReconnectMutationData,
-  type ReconnectMutationParameters,
-  type ReconnectMutationVariables,
-  reconnectMutationOptions,
-} from '@wagmi/core'
+import { useMutation } from '@tanstack/react-query'
+import { type Connector, type ReconnectError } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
+import {
+  type ReconnectData,
+  type ReconnectMutate,
+  type ReconnectMutateAsync,
+  type ReconnectOptions,
+  type ReconnectVariables,
+  reconnectMutationOptions,
+} from '@wagmi/core/query'
+import * as React from 'react'
 
-import type { OmittedUseMutationResult } from '../types/query.js'
+import type { UseMutationOptions, UseMutationResult } from '../types/query.js'
 import { useConfig } from './useConfig.js'
 
 export type UseReconnectParameters<context = unknown> = Evaluate<
-  ReconnectMutationParameters & {
-    mutation?: Omit<
-      UseMutationOptions<
-        ReconnectMutationData,
-        ReconnectError,
-        ReconnectMutationVariables,
-        context
-      >,
-      OmittedMutationOptions
+  ReconnectOptions &
+    UseMutationOptions<
+      ReconnectData,
+      ReconnectError,
+      ReconnectVariables,
+      context
     >
-  }
 >
 
 export type UseReconnectReturnType<context = unknown> = Evaluate<
-  Omit<Result<context>, OmittedUseMutationResult> & {
-    reconnect: Result<context>['mutate']
-    reconnectAsync: Result<context>['mutateAsync']
+  UseMutationResult<
+    ReconnectData,
+    ReconnectError,
+    ReconnectVariables,
+    context
+  > & {
     connectors: readonly Connector[]
+    reconnect: ReconnectMutate<context>
+    reconnectAsync: ReconnectMutateAsync<context>
   }
->
-type Result<context = unknown> = UseMutationResult<
-  ReconnectMutationData,
-  ReconnectError,
-  ReconnectMutationVariables,
-  context
 >
 
 /** https://wagmi.sh/react/hooks/useReconnect */
 export function useReconnect<context = unknown>(
-  parameters?: UseReconnectParameters<context>,
-): UseReconnectReturnType<context>
-export function useReconnect({
-  connectors,
-  mutation,
-}: UseReconnectParameters = {}): UseReconnectReturnType {
+  parameters: UseReconnectParameters<context> = {},
+): UseReconnectReturnType<context> {
   const config = useConfig()
-  const { mutate, mutateAsync, ...mutationOptions } = useMutation(
-    reconnectMutationOptions(config, { connectors }),
+  const { getVariables, ...mutationOptions } = reconnectMutationOptions(
+    config,
+    parameters,
   )
-  return {
+  const { mutate, mutateAsync, ...result } = useMutation({
+    ...parameters,
     ...mutationOptions,
-    ...mutation,
-    reconnect: mutate,
-    reconnectAsync: mutateAsync,
+  })
+  return {
+    ...result,
     connectors: config.connectors,
+    reconnect: React.useCallback(
+      (variables, options) => mutate(getVariables(variables), options),
+      [getVariables, mutate],
+    ),
+    reconnectAsync: React.useCallback(
+      (variables, options) => mutateAsync(getVariables(variables), options),
+      [getVariables, mutateAsync],
+    ),
   }
 }

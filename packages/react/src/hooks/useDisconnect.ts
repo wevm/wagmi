@@ -1,70 +1,66 @@
-import {
-  type UseMutationOptions,
-  type UseMutationResult,
-  useMutation,
-} from '@tanstack/react-query'
-import {
-  type Connector,
-  type DisconnectError,
-  type DisconnectMutationData,
-  type DisconnectMutationParameters,
-  type DisconnectMutationVariables,
-  type OmittedMutationOptions,
-  disconnectMutationOptions,
-} from '@wagmi/core'
+import { useMutation } from '@tanstack/react-query'
+import { type Connector, type DisconnectError } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
+import {
+  type DisconnectData,
+  type DisconnectMutate,
+  type DisconnectMutateAsync,
+  type DisconnectOptions,
+  type DisconnectVariables,
+  disconnectMutationOptions,
+} from '@wagmi/core/query'
+import * as React from 'react'
 
-import type { OmittedUseMutationResult } from '../types/query.js'
+import type { UseMutationOptions, UseMutationResult } from '../types/query.js'
 import { useConfig } from './useConfig.js'
 import { useConnections } from './useConnections.js'
 
 export type UseDisconnectParameters<context = unknown> = Evaluate<
-  DisconnectMutationParameters & {
-    mutation?: Omit<
-      UseMutationOptions<
-        DisconnectMutationData,
-        DisconnectError,
-        DisconnectMutationVariables,
-        context
-      >,
-      OmittedMutationOptions
+  DisconnectOptions &
+    UseMutationOptions<
+      DisconnectData,
+      DisconnectError,
+      DisconnectVariables,
+      context
     >
-  }
 >
 
 export type UseDisconnectReturnType<context = unknown> = Evaluate<
-  Omit<Result<context>, OmittedUseMutationResult> & {
+  UseMutationResult<
+    DisconnectData,
+    DisconnectError,
+    DisconnectVariables,
+    context
+  > & {
     connectors: readonly Connector[]
-    disconnect: Result<context>['mutate']
-    disconnectAsync: Result<context>['mutateAsync']
+    disconnect: DisconnectMutate<context>
+    disconnectAsync: DisconnectMutateAsync<context>
   }
->
-type Result<context = unknown> = UseMutationResult<
-  DisconnectMutationData,
-  DisconnectError,
-  DisconnectMutationVariables,
-  context
 >
 
 /** https://wagmi.sh/react/hooks/useDisconnect */
 export function useDisconnect<context = unknown>(
-  parameters?: UseDisconnectParameters<context>,
-): UseDisconnectReturnType<context>
-export function useDisconnect({
-  connector,
-  mutation,
-}: UseDisconnectParameters = {}): UseDisconnectReturnType {
+  parameters: UseDisconnectParameters<context> = {},
+): UseDisconnectReturnType<context> {
   const config = useConfig()
-  const { mutate, mutateAsync, ...mutationOptions } = useMutation(
-    disconnectMutationOptions(config, { connector }),
+  const { getVariables, ...mutationOptions } = disconnectMutationOptions(
+    config,
+    parameters,
   )
-  const connections = useConnections()
-  const connectors = connections.map((connection) => connection.connector)
-  return {
+  const { mutate, mutateAsync, ...result } = useMutation({
+    ...parameters,
     ...mutationOptions,
-    ...mutation,
-    connectors,
-    disconnect: mutate,
-    disconnectAsync: mutateAsync,
+  })
+  return {
+    ...result,
+    connectors: useConnections().map((connection) => connection.connector),
+    disconnect: React.useCallback(
+      (variables, options) => mutate(getVariables(variables), options),
+      [getVariables, mutate],
+    ),
+    disconnectAsync: React.useCallback(
+      (variables, options) => mutateAsync(getVariables(variables), options),
+      [getVariables, mutateAsync],
+    ),
   }
 }

@@ -76,8 +76,6 @@ export {
   type UseSwitchChainParameters,
   type UseSwitchChainReturnType,
   useSwitchChain,
-  /** @deprecated */
-  useSwitchChain as useSwitchNetwork,
 } from './hooks/useSwitchChain.js'
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -98,10 +96,6 @@ export {
   ChainNotConfiguredError,
   ProviderNotFoundError,
   ConnectorAlreadyConnectedError,
-  // Query
-  type QueryClientParameters,
-  type QueryClient,
-  createQueryClient,
   // Storage
   type Storage,
   createStorage,

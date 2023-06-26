@@ -2,27 +2,17 @@
 // Actions
 
 export {
+  type ConnectError,
   type ConnectParameters,
   type ConnectReturnType,
   connect,
-  // TanStack Query
-  type ConnectError,
-  type ConnectVariables,
-  type ConnectMutationOptions,
-  type ConnectMutate,
-  type ConnectMutateAsync,
-  connectMutationOptions,
 } from './actions/connect.js'
 
 export {
-  type DisconnectParameters,
   type DisconnectError,
+  type DisconnectParameters,
+  type DisconnectReturnType,
   disconnect,
-  // TanStack Query
-  type DisconnectMutationData,
-  type DisconnectMutationVariables,
-  type DisconnectMutationParameters,
-  disconnectMutationOptions,
 } from './actions/disconnect.js'
 
 export {
@@ -45,28 +35,18 @@ export {
   type WatchBalanceParameters,
   type WatchBalanceReturnType,
   watchBalance,
-  // TanStack Query
-  type GetBalanceQueryFnData,
-  type GetBalanceQueryKey,
-  type GetBalanceQueryParameters,
-  getBalanceQueryOptions,
 } from './actions/getBalance.js'
 
 export {
   // Getter
+  type GetBlockNumberError,
   type GetBlockNumberParameters,
   type GetBlockNumberReturnType,
-  type GetBlockNumberError,
   getBlockNumber,
   // Watcher
   type WatchBlockNumberParameters,
   type WatchBlockNumberReturnType,
   watchBlockNumber,
-  // TanStack Query
-  type GetBlockNumberQueryFnData,
-  type GetBlockNumberQueryKey,
-  type GetBlockNumberQueryParameters,
-  getBlockNumberQueryOptions,
 } from './actions/getBlockNumber.js'
 
 export {
@@ -90,66 +70,32 @@ export {
 } from './actions/getConnections.js'
 
 export {
+  type ReconnectError,
   type ReconnectParameters,
   type ReconnectReturnType,
-  type ReconnectError,
   reconnect,
-  // TanStack Query
-  type ReconnectMutationData,
-  type ReconnectMutationVariables,
-  type ReconnectMutationParameters,
-  reconnectMutationOptions,
 } from './actions/reconnect.js'
 
 export {
+  type SignMessageError,
   type SignMessageParameters,
   type SignMessageReturnType,
-  type SignMessageError,
   signMessage,
-  // TanStack Query
-  type SignMessageMutationData,
-  type SignMessageMutationVariables,
-  type SignMessageMutationParameters,
-  signMessageMutationOptions,
 } from './actions/signMessage.js'
 
 export {
-  type SwitchAccountParameters,
   type SwitchAccountError,
+  type SwitchAccountParameters,
+  type SwitchAccountReturnType,
   switchAccount,
-  // TanStack Query
-  type SwitchAccountMutationData,
-  type SwitchAccountMutationVariables,
-  type SwitchAccountMutationParameters,
-  switchAccountMutationOptions,
 } from './actions/switchAccount.js'
 
 export {
+  type SwitchChainError,
   type SwitchChainParameters,
   type SwitchChainReturnType,
-  type SwitchChainError,
   switchChain,
-  /** @deprecated */
-  switchChain as switchNetwork,
-  // TanStack Query
-  type SwitchChainMutationData,
-  type SwitchChainMutationVariables,
-  type SwitchChainMutationParameters,
-  switchChainMutationOptions,
 } from './actions/switchChain.js'
-
-export {
-  type WriteContractParameters,
-  type WriteContractReturnType,
-  writeContract,
-  // TanStack Query
-  type WriteContractError,
-  type WriteContractMutationVariables,
-  type WriteContractMutationOptions,
-  type WriteContractMutate,
-  type WriteContractMutateAsync,
-  writeContractMutationOptions,
-} from './actions/writeContract.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // Config
@@ -192,15 +138,6 @@ export {
 // Storage
 
 export {
-  type QueryClientParameters,
-  type QueryClient,
-  createQueryClient,
-} from './query.js'
-
-////////////////////////////////////////////////////////////////////////////////
-// Storage
-
-export {
   type Storage,
   createStorage,
   noopStorage,
@@ -208,11 +145,6 @@ export {
 
 ////////////////////////////////////////////////////////////////////////////////
 // Types
-
-export {
-  type OmittedQueryOptions,
-  type OmittedMutationOptions,
-} from './types/query.js'
 
 export { type Register, type ResolvedRegister } from './types/register.js'
 

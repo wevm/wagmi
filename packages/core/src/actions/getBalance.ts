@@ -1,16 +1,14 @@
-import type { QueryOptions } from '@tanstack/query-core'
 import {
   type Address,
   BaseError,
-  type GetBalanceParameters as GetBalanceParameters_,
-  type GetBalanceReturnType as GetBalanceReturnType_,
+  type BlockTag,
   RpcError,
   formatUnits,
 } from 'viem'
 
 import type { Config } from '../config.js'
 import { type Unit } from '../types/unit.js'
-import { type Evaluate, type PartialBy } from '../types/utils.js'
+import { type Evaluate, type OneOf } from '../types/utils.js'
 import { getUnit } from '../utils/getUnit.js'
 import type {
   GetBlockNumberError,
@@ -18,18 +16,21 @@ import type {
 } from './getBlockNumber.js'
 
 export type GetBalanceParameters<config extends Config = Config> = Evaluate<
-  GetBalanceParameters_ & {
+  {
+    address: Address
     chainId?: config['chains'][number]['id'] | undefined
     token?: Address | undefined
     unit?: Unit | undefined
-  }
+  } & OneOf<
+    { blockNumber?: bigint | undefined } | { blockTag?: BlockTag | undefined }
+  >
 >
 
 export type GetBalanceReturnType = {
   decimals: number
   formatted: string
   symbol: string
-  value: GetBalanceReturnType_
+  value: import('viem').GetBalanceReturnType
 }
 
 export type GetBalanceError =
@@ -41,24 +42,25 @@ export type GetBalanceError =
 /** https://wagmi.sh/core/actions/getBalance */
 export async function getBalance<config extends Config>(
   config: config,
-  {
+  parameters: GetBalanceParameters<config>,
+): Promise<GetBalanceReturnType> {
+  const {
     address,
+    blockNumber,
+    blockTag,
     chainId,
     token,
     unit = 'ether',
-    ...rest
-  }: GetBalanceParameters<config>,
-): Promise<GetBalanceReturnType> {
+  } = parameters
   const publicClient = config.getPublicClient({ chainId })
 
   if (token) {
     // TODO
   }
 
-  const value = await publicClient?.getBalance({
-    address,
-    ...rest,
-  })
+  const value = await publicClient?.getBalance(
+    blockNumber ? { address, blockNumber } : { address, blockTag },
+  )
   const chain =
     config.chains.find((x) => x.id === chainId) ?? publicClient.chain!
   return {
@@ -86,7 +88,9 @@ export type WatchBalanceReturnType = () => void
 /** https://wagmi.sh/core/actions/getBalance#watcher */
 export function watchBalance<config extends Config>(
   config: config,
-  {
+  parameters: WatchBalanceParameters<config>,
+): WatchBalanceReturnType {
+  const {
     address,
     chainId,
     onBalance,
@@ -94,9 +98,7 @@ export function watchBalance<config extends Config>(
     syncConnectedChain = config._internal.syncConnectedChain,
     token,
     unit,
-  }: WatchBalanceParameters<config>,
-): WatchBalanceReturnType {
-  let unwatch: WatchBlockNumberReturnType | undefined
+  } = parameters
 
   const handler = async (blockNumber?: bigint | undefined) => {
     try {
@@ -106,94 +108,42 @@ export function watchBalance<config extends Config>(
         chainId,
         token,
         unit,
-      } as GetBalanceParameters)
+      })
       onBalance(balance)
     } catch (err: unknown) {
       onError?.(err as GetBlockNumberError)
     }
   }
 
-  const listener = ({
-    chainId,
-  }: {
-    chainId?: GetBalanceParameters['chainId']
-  }) => {
+  let unwatch: WatchBlockNumberReturnType | undefined
+  const listener = (chainId: number | undefined) => {
     if (unwatch) unwatch()
 
     const publicClient = config.getPublicClient({ chainId })
-
     unwatch = publicClient?.watchBlockNumber({
       onBlockNumber: handler,
+      onError,
       poll: true,
-      // TODO: viem `exactOptionalPropertyTypes`
-      ...(onError ? { onError } : {}),
     })
-
     return unwatch
   }
 
   // set up listener for block number changes
-  const unlisten = listener({ chainId })
+  const unlisten = listener(chainId)
 
   // set up subscriber for connected chain changes
-  const unsubscribe =
-    syncConnectedChain && !chainId
-      ? config.subscribe(
-          ({ chainId }) => chainId,
-          (chainId) => {
-            handler()
-            return listener({ chainId })
-          },
-        )
-      : undefined
+  let unsubscribe: (() => void) | undefined
+  if (syncConnectedChain && !chainId)
+    config.subscribe(
+      ({ chainId }) => chainId,
+      async (chainId) => {
+        await handler()
+        return listener(chainId)
+      },
+    )
 
   return () => {
     unlisten?.()
     unsubscribe?.()
   }
 }
-
-///////////////////////////////////////////////////////////////////////////
-// TanStack Query
-
-export type GetBalanceQueryParameters<config extends Config> = PartialBy<
-  GetBalanceParameters<config>,
-  'address'
->
-export type GetBalanceQueryKey<config extends Config> = readonly [
-  'balance',
-  GetBalanceQueryParameters<config>,
-]
-export type GetBalanceQueryFnData = NonNullable<GetBalanceReturnType> | null
-
-/** https://wagmi.sh/core/actions/getBalance#tanstack-query */
-export const getBalanceQueryOptions = <config extends Config>(
-  config: config,
-  {
-    address,
-    blockNumber,
-    blockTag,
-    chainId,
-    token,
-    unit,
-  }: GetBalanceQueryParameters<config>,
-) =>
-  ({
-    async queryFn() {
-      const balance = await getBalance(config, {
-        address,
-        blockNumber,
-        blockTag,
-        chainId,
-        token,
-        unit,
-      } as GetBalanceParameters<config>)
-      return balance ?? null
-    },
-    queryKey: ['balance', { address, chainId, token, unit }],
-  }) as const satisfies QueryOptions<
-    GetBalanceQueryFnData,
-    GetBalanceError,
-    GetBalanceQueryFnData,
-    GetBalanceQueryKey<config>
-  >

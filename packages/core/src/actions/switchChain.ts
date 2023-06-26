@@ -1,4 +1,3 @@
-import { type MutationOptions } from '@tanstack/query-core'
 import {
   SwitchChainError as SwitchChainError_,
   UserRejectedRequestError,
@@ -7,11 +6,8 @@ import {
 import { type Config } from '../config.js'
 import type { BaseError } from '../errors/base.js'
 import { ConnectorNotFoundError } from '../errors/config.js'
-import {
-  type ProviderNotFoundError,
-  SwitchChainNotSupportedError,
-} from '../errors/connector.js'
-import type { Evaluate, IsUndefined } from '../types/utils.js'
+import { SwitchChainNotSupportedError } from '../errors/connector.js'
+import { type ProviderNotFoundError } from '../errors/connector.js'
 
 export type SwitchChainParameters<
   config extends Config = Config,
@@ -49,51 +45,3 @@ export async function switchChain<
   const chain = await connector.switchChain({ chainId })
   return chain as SwitchChainReturnType<config, chainId>
 }
-
-///////////////////////////////////////////////////////////////////////////
-// TanStack Query
-
-export type SwitchChainMutationData<
-  config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
-> = Evaluate<
-  SwitchChainReturnType<
-    config,
-    chainId extends undefined ? config['chains'][number]['id'] : chainId
-  >
->
-export type SwitchChainMutationVariables<
-  config extends Config,
-  chainId extends SwitchChainParameters<config>['chainId'] | undefined,
-> = Evaluate<
-  IsUndefined<chainId> extends false
-    ? { chainId?: SwitchChainParameters<config>['chainId'] | undefined }
-    : { chainId: SwitchChainParameters<config>['chainId'] }
->
-export type SwitchChainMutationParameters<
-  config extends Config,
-  chainId extends SwitchChainParameters<config>['chainId'] | undefined,
-> = Evaluate<{
-  chainId?: chainId | SwitchChainParameters['chainId'] | undefined
-}>
-
-/** https://wagmi.sh/core/actions/switchChain#tanstack-query */
-export const switchChainMutationOptions = <
-  config extends Config,
-  chainId extends SwitchChainParameters<config>['chainId'] | undefined,
->(
-  config: Config,
-  { chainId }: SwitchChainMutationParameters<config, chainId>,
-) =>
-  ({
-    async mutationFn(variables) {
-      return switchChain(config, {
-        chainId: (variables.chainId ?? chainId)!,
-      }) as Promise<SwitchChainMutationData<config, chainId>>
-    },
-    mutationKey: ['switchChain', { chainId }],
-  }) as const satisfies MutationOptions<
-    SwitchChainMutationData<config, chainId>,
-    SwitchChainError,
-    SwitchChainMutationVariables<config, chainId>
-  >

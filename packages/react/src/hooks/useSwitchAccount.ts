@@ -1,20 +1,17 @@
-import {
-  type UseMutationOptions,
-  type UseMutationResult,
-  useMutation,
-} from '@tanstack/react-query'
-import {
-  type Connector,
-  type OmittedMutationOptions,
-  type SwitchAccountError,
-  type SwitchAccountMutationData,
-  type SwitchAccountMutationParameters,
-  type SwitchAccountMutationVariables,
-  switchAccountMutationOptions,
-} from '@wagmi/core'
+import { useMutation } from '@tanstack/react-query'
+import type { Connector, SwitchAccountError } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
+import {
+  type SwitchAccountData,
+  type SwitchAccountMutate,
+  type SwitchAccountMutateAsync,
+  type SwitchAccountOptions,
+  type SwitchAccountVariables,
+  switchAccountMutationOptions,
+} from '@wagmi/core/query'
+import * as React from 'react'
 
-import type { OmittedUseMutationResult } from '../types/query.js'
+import type { UseMutationOptions, UseMutationResult } from '../types/query.js'
 import { useConfig } from './useConfig.js'
 import { useConnections } from './useConnections.js'
 
@@ -22,61 +19,61 @@ export type UseSwitchAccountParameters<
   connector extends Connector | undefined = Connector | undefined,
   context = unknown,
 > = Evaluate<
-  SwitchAccountMutationParameters<connector> & {
-    mutation?: Omit<
-      UseMutationOptions<
-        SwitchAccountMutationData,
-        SwitchAccountError,
-        SwitchAccountMutationVariables<connector>,
-        context
-      >,
-      OmittedMutationOptions
+  SwitchAccountOptions<connector> &
+    UseMutationOptions<
+      SwitchAccountData,
+      SwitchAccountError,
+      SwitchAccountVariables<connector>,
+      context
     >
-  }
 >
 
 export type UseSwitchAccountReturnType<
   connector extends Connector | undefined = Connector | undefined,
   context = unknown,
 > = Evaluate<
-  Omit<Result<connector, context>, OmittedUseMutationResult> & {
+  UseMutationResult<
+    SwitchAccountData,
+    SwitchAccountError,
+    SwitchAccountVariables<connector>,
+    context
+  > & {
     connectors: readonly Connector[]
-    switchAccount: Result<connector, context>['mutate']
-    switchAccountAsync: Result<connector, context>['mutateAsync']
+    switchAccount: SwitchAccountMutate<connector, context>
+    switchAccountAsync: SwitchAccountMutateAsync<connector, context>
   }
 >
-type Result<
-  connector extends Connector | undefined,
-  context = unknown,
-> = UseMutationResult<
-  SwitchAccountMutationData,
-  SwitchAccountError,
-  SwitchAccountMutationVariables<connector>,
-  context
->
 
-/** https://wagmi.sh/react/hooks/useSwitchAccount */
 export function useSwitchAccount<
   connector extends Connector | undefined = undefined,
   context = unknown,
 >(
   parameters?: UseSwitchAccountParameters<connector, context>,
 ): UseSwitchAccountReturnType<connector, context>
-export function useSwitchAccount({
-  connector,
-  mutation,
-}: UseSwitchAccountParameters = {}): UseSwitchAccountReturnType {
+
+/** https://wagmi.sh/react/hooks/useSwitchAccount */
+export function useSwitchAccount(
+  parameters: UseSwitchAccountParameters = {},
+): UseSwitchAccountReturnType {
   const config = useConfig()
-  const { mutate, mutateAsync, ...mutationOptions } = useMutation(
-    switchAccountMutationOptions(config, { connector }),
+  const { getVariables, ...mutationOptions } = switchAccountMutationOptions(
+    config,
+    parameters,
   )
-  const connections = useConnections()
-  const connectors = connections.map((connection) => connection.connector)
-  return {
+  const { mutate, mutateAsync, ...result } = useMutation({
+    ...parameters,
     ...mutationOptions,
-    ...mutation,
-    connectors,
-    switchAccount: mutate,
-    switchAccountAsync: mutateAsync,
+  })
+  return {
+    ...result,
+    connectors: useConnections().map((connection) => connection.connector),
+    switchAccount: React.useCallback(
+      (variables, options) => mutate(getVariables(variables), options),
+      [getVariables, mutate],
+    ),
+    switchAccountAsync: React.useCallback(
+      (variables, options) => mutateAsync(getVariables(variables), options),
+      [getVariables, mutateAsync],
+    ),
   }
 }

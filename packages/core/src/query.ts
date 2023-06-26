@@ -1,25 +1,82 @@
-import {
-  QueryClient as QueryClient_,
-  type QueryClientConfig,
-} from '@tanstack/query-core'
+////////////////////////////////////////////////////////////////////////////////
+// Tanstack Query
 
-const defaultOptions = {
-  defaultOptions: {
-    queries: {
-      gcTime: 1_000 * 60 * 60 * 24, // 24 hours
-      networkMode: 'offlineFirst',
-      refetchOnWindowFocus: false,
-      retry: 0,
-    },
-    mutations: { networkMode: 'offlineFirst' },
-  },
-} satisfies QueryClientConfig
+export {
+  type ConnectData,
+  type ConnectVariables,
+  type ConnectOptions,
+  type ConnectMutate,
+  type ConnectMutateAsync,
+  connectMutationOptions,
+} from './query/connect.js'
 
-export type QueryClientParameters = QueryClientConfig
-export type QueryClient = typeof QueryClient_
+export {
+  type DisconnectData,
+  type DisconnectVariables,
+  type DisconnectOptions,
+  type DisconnectMutate,
+  type DisconnectMutateAsync,
+  disconnectMutationOptions,
+} from './query/disconnect.js'
 
-export function createQueryClient(
-  config: QueryClientParameters | undefined = defaultOptions,
-) {
-  return new QueryClient_(config)
-}
+export {
+  type GetBalanceData,
+  type GetBalanceOptions,
+  type GetBalanceQueryFnData,
+  type GetBalanceQueryKey,
+  getBalanceQueryKey,
+  getBalanceQueryOptions,
+} from './query/getBalance.js'
+
+export {
+  type GetBlockNumberData,
+  type GetBlockNumberOptions,
+  type GetBlockNumberQueryFnData,
+  type GetBlockNumberQueryKey,
+  getBlockNumberQueryKey,
+  getBlockNumberQueryOptions,
+} from './query/getBlockNumber.js'
+
+export {
+  type ReconnectData,
+  type ReconnectVariables,
+  type ReconnectOptions,
+  type ReconnectMutate,
+  type ReconnectMutateAsync,
+  reconnectMutationOptions,
+} from './query/reconnect.js'
+
+export {
+  type SignMessageData,
+  type SignMessageVariables,
+  type SignMessageOptions,
+  type SignMessageMutate,
+  type SignMessageMutateAsync,
+  signMessageMutationOptions,
+} from './query/signMessage.js'
+
+export {
+  type SwitchAccountData,
+  type SwitchAccountVariables,
+  type SwitchAccountOptions,
+  type SwitchAccountMutate,
+  type SwitchAccountMutateAsync,
+  switchAccountMutationOptions,
+} from './query/switchAccount.js'
+
+export {
+  type SwitchChainData,
+  type SwitchChainVariables,
+  type SwitchChainOptions,
+  type SwitchChainMutate,
+  type SwitchChainMutateAsync,
+  switchChainMutationOptions,
+} from './query/switchChain.js'
+
+////////////////////////////////////////////////////////////////////////////////
+// Types
+
+export {
+  type OmittedMutationOptions,
+  type OmittedQueryOptions,
+} from './query/types.js'

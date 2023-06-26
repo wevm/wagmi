@@ -118,7 +118,7 @@ function SwitchChain() {
 }
 
 function SignMessage() {
-  const { signMessage } = useSignMessage()
+  const { data, signMessage } = useSignMessage()
 
   return (
     <div>

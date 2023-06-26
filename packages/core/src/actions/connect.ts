@@ -1,14 +1,10 @@
-import {
-  type Address,
-  ResourceUnavailableRpcError,
-  UserRejectedRequestError,
-} from 'viem'
+import { ResourceUnavailableRpcError, UserRejectedRequestError } from 'viem'
+import { type Address } from 'viem'
 
 import { type Config, type Connector } from '../config.js'
 import { type CreateConnectorFn } from '../connector.js'
+import type { BaseError } from '../errors/base.js'
 import { ConnectorAlreadyConnectedError } from '../errors/config.js'
-import type { Mutate, MutateAsync, MutationOptions } from '../types/query.js'
-import type { Evaluate, PartialBy } from '../types/utils.js'
 
 export type ConnectParameters<config extends Config = Config> = {
   chainId?: config['chains'][number]['id'] | undefined
@@ -21,6 +17,16 @@ export type ConnectReturnType<config extends Config = Config> = {
     | config['chains'][number]['id']
     | (number extends config['chains'][number]['id'] ? number : number & {})
 }
+
+export type ConnectError =
+  // connect()
+  | ConnectorAlreadyConnectedError
+  // connector.connect()
+  | UserRejectedRequestError
+  | ResourceUnavailableRpcError
+  // base
+  | BaseError
+  | Error
 
 /** https://wagmi.sh/core/actions/connect */
 export async function connect<config extends Config>(
@@ -74,83 +80,3 @@ export async function connect<config extends Config>(
     throw err
   }
 }
-
-///////////////////////////////////////////////////////////////////////////
-// TanStack Query
-
-export type ConnectMutationOptions<
-  config extends Config,
-  connector extends Connector | CreateConnectorFn | undefined,
-> = {
-  chainId?: ConnectParameters<config>['chainId']
-  connector?: connector | ConnectParameters<config>['connector']
-}
-
-/** https://wagmi.sh/core/actions/connect#tanstack-query */
-export function connectMutationOptions<
-  config extends Config,
-  connector extends Connector | CreateConnectorFn | undefined,
->(config: config, parameters: ConnectMutationOptions<config, connector>) {
-  return {
-    getVariables(variables) {
-      return {
-        chainId: variables?.chainId ?? parameters.chainId,
-        connector: (variables?.connector ?? parameters.connector)!,
-      }
-    },
-    mutationFn(variables) {
-      return connect(config, variables)
-    },
-    mutationKey: ['connect', parameters],
-  } as const satisfies MutationOptions<
-    ConnectReturnType<config>,
-    ConnectError,
-    ConnectVariables<config, undefined>,
-    ConnectParameters
-  >
-}
-
-export type ConnectError =
-  // connect()
-  | ConnectorAlreadyConnectedError
-  // connector.connect()
-  | UserRejectedRequestError
-  | ResourceUnavailableRpcError
-  // base
-  | Error
-
-export type ConnectVariables<
-  config extends Config,
-  connector extends Connector | CreateConnectorFn | undefined,
-> =
-  | Evaluate<
-      PartialBy<
-        ConnectParameters<config>,
-        connector extends Connector | CreateConnectorFn ? 'connector' : never
-      >
-    >
-  | (connector extends Connector | CreateConnectorFn ? undefined : never)
-
-export type ConnectMutate<
-  config extends Config,
-  connector extends Connector | CreateConnectorFn | undefined,
-  context = unknown,
-> = Mutate<
-  ConnectReturnType<config>,
-  ConnectError,
-  ConnectParameters<config>,
-  context,
-  ConnectVariables<config, connector>
->
-
-export type ConnectMutateAsync<
-  config extends Config,
-  connector extends Connector | CreateConnectorFn | undefined,
-  context = unknown,
-> = MutateAsync<
-  ConnectReturnType<config>,
-  ConnectError,
-  ConnectParameters<config>,
-  context,
-  ConnectVariables<config, connector>
->

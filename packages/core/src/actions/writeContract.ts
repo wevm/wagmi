@@ -7,7 +7,7 @@ import {
 import { type Abi, type Address } from 'viem'
 
 import { type Config } from '../config.js'
-import type { MutationOptions } from '../types/query.js'
+import type { MutationOptions } from '../query/types.js'
 import type {
   Evaluate,
   ExactPartial,

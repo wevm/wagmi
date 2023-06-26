@@ -44,12 +44,18 @@
       "import": "./dist/esm/connectors.js",
       "default": "./dist/cjs/connectors.js"
     },
+    "./query": {
+      "types": "./dist/types/query.d.ts",
+      "import": "./dist/esm/query.js",
+      "default": "./dist/cjs/query.js"
+    },
     "./package.json": "./package.json"
   },
   "typesVersions": {
     "*": {
       "actions": ["./dist/types/actions.d.ts"],
-      "connectors": ["./dist/types/connectors.d.ts"]
+      "connectors": ["./dist/types/connectors.d.ts"],
+      "query": ["./dist/types/query.d.ts"]
     }
   },
   "peerDependencies": {

@@ -1,5 +1,3 @@
-import { type MutationOptions } from '@tanstack/query-core'
-
 import type { Config, Connection, Connector } from '../config.js'
 import { type CreateConnectorFn } from '../connector.js'
 import type { Evaluate } from '../types/utils.js'
@@ -102,36 +100,3 @@ export async function reconnect(
   isReconnecting = false
   return connections
 }
-
-///////////////////////////////////////////////////////////////////////////
-// TanStack Query
-
-export type ReconnectMutationData = Evaluate<ReconnectReturnType>
-export type ReconnectMutationVariables = Evaluate<{
-  connectors?:
-    | [CreateConnectorFn | Connector, ...(CreateConnectorFn | Connector)[]]
-    | undefined
-}> | void
-export type ReconnectMutationParameters = Evaluate<{
-  connectors?:
-    | [CreateConnectorFn | Connector, ...(CreateConnectorFn | Connector)[]]
-    | undefined
-}>
-
-/** https://wagmi.sh/core/actions/reconnect#tanstack-query */
-export const reconnectMutationOptions = (
-  config: Config,
-  { connectors }: ReconnectMutationParameters = {},
-) =>
-  ({
-    mutationFn(variables) {
-      return reconnect(config, {
-        connectors: variables?.connectors ?? connectors,
-      })
-    },
-    mutationKey: ['reconnect', { connectors }],
-  }) as const satisfies MutationOptions<
-    ReconnectMutationData,
-    ReconnectError,
-    ReconnectMutationVariables
-  >
