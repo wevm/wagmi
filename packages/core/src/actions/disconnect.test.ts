@@ -23,10 +23,10 @@ test('parameters: connector', async () => {
 test('behavior: not connected to connector', async () => {
   await expect(disconnect(config)).rejects.toMatchInlineSnapshot(
     `
-      [ConnectorNotFoundError: Connector not found.
+    [ConnectorNotFoundError: Connector not found.
 
-      Version: @wagmi/core@1.0.2]
-    `,
+    Version: @wagmi/core@2.0.0]
+  `,
   )
 })
 
@@ -36,10 +36,10 @@ test('behavior: connector passed not connected', async () => {
   await expect(
     disconnect(config, { connector: connector_ }),
   ).rejects.toMatchInlineSnapshot(`
-      [ConnectorNotFoundError: Connector not found.
+    [ConnectorNotFoundError: Connector not found.
 
-      Version: @wagmi/core@1.0.2]
-    `)
+    Version: @wagmi/core@2.0.0]
+  `)
 })
 
 test('behavior: uses next connector on disconnect', async () => {

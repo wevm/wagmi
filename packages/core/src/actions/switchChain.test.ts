@@ -39,11 +39,11 @@ test('behavior: user rejected request', async () => {
   await expect(
     switchChain(config, { chainId: testChains.anvil.id }),
   ).rejects.toMatchInlineSnapshot(`
-      [UserRejectedRequestError: User rejected the request.
+    [UserRejectedRequestError: User rejected the request.
 
-      Details: Failed to switch chain.
-      Version: viem@1.0.1]
-    `)
+    Details: Failed to switch chain.
+    Version: viem@1.1.7]
+  `)
   await disconnect(config, { connector: connector_ })
 })
 
@@ -55,9 +55,9 @@ test('behavior: not supported', async () => {
   await expect(
     switchChain(config, { chainId: testChains.anvil.id }),
   ).rejects.toMatchInlineSnapshot(`
-      [SwitchChainNotSupportedError: "Test Connector" does not support programmatic chain switching.
+    [SwitchChainNotSupportedError: "Test Connector" does not support programmatic chain switching.
 
-      Version: @wagmi/core@1.0.2]
-    `)
+    Version: @wagmi/core@2.0.0]
+  `)
   await disconnect(config, { connector: connector_ })
 })

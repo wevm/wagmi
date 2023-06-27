@@ -1,5 +1,4 @@
 ////////////////////////////////////////////////////////////////////////////////
 // @wagmi/core/query
 
-// TODO: Fill this out
-export {} from '@wagmi/core/query'
+export * from '@wagmi/core/query'

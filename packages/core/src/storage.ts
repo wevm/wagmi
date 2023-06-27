@@ -1,12 +1,9 @@
-import { type PersistedClient } from '@tanstack/query-persist-client-core'
-
 import { type PartializedState } from './config.js'
 import { deserialize as deserialize_ } from './utils/deserialize.js'
 import { serialize as serialize_ } from './utils/serialize.js'
 
 // key-values for loose autocomplete and typing
 export type StorageItemMap = {
-  cache: PersistedClient
   recentConnectorId: string
   state: PartializedState
 }

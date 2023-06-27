@@ -2,13 +2,6 @@ import type { MutateOptions } from '@tanstack/query-core'
 
 import type { Evaluate, ExactPartial } from '../types/utils.js'
 
-export type OmittedQueryOptions = 'queryFn' | 'queryKey' | 'queryKeyHashFn'
-
-export type OmittedMutationOptions =
-  | 'mutationFn'
-  | 'mutationKey'
-  | 'throwOnError'
-
 export type MutationOptions<
   data = unknown,
   error = unknown,

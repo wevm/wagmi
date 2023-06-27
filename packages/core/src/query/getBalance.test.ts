@@ -7,38 +7,33 @@ const address = accounts[0]
 
 test('default', () => {
   expect(getBalanceQueryOptions(config, { address })).toMatchInlineSnapshot(`
-      {
-        "queryFn": [Function],
-        "queryKey": [
-          "balance",
-          {
-            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-            "chainId": undefined,
-            "token": undefined,
-            "unit": undefined,
-          },
-        ],
-      }
-    `)
+    {
+      "queryFn": [Function],
+      "queryKey": [
+        "balance",
+        {
+          "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+        },
+      ],
+    }
+  `)
 })
 
 test('parameters: chainId', () => {
   expect(
     getBalanceQueryOptions(config, { address, chainId: testChains.anvil.id }),
   ).toMatchInlineSnapshot(`
-      {
-        "queryFn": [Function],
-        "queryKey": [
-          "balance",
-          {
-            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-            "chainId": 123,
-            "token": undefined,
-            "unit": undefined,
-          },
-        ],
-      }
-    `)
+    {
+      "queryFn": [Function],
+      "queryKey": [
+        "balance",
+        {
+          "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "chainId": 123,
+        },
+      ],
+    }
+  `)
 })
 
 test.todo('parameters: token')

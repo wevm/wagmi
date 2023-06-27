@@ -307,9 +307,10 @@ export function injected(parameters: InjectedParameters = {}) {
       const provider = await this.getProvider()
       if (!provider) throw new ProviderNotFoundError()
 
-      const id = numberToHex(chainId)
       const chain = config.chains.find((x) => x.id === chainId)
       if (!chain) throw new SwitchChainError(new ChainNotConfiguredError())
+
+      const id = numberToHex(chainId)
 
       try {
         await Promise.all([

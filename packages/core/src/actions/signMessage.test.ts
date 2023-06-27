@@ -28,11 +28,11 @@ test('behavior: user rejected request', async () => {
   await expect(
     signMessage(config, { message: 'foo bar baz' }),
   ).rejects.toMatchInlineSnapshot(`
-      [UserRejectedRequestError: User rejected the request.
+    [UserRejectedRequestError: User rejected the request.
 
-      Details: Failed to sign message.
-      Version: viem@1.0.1]
-    `)
+    Details: Failed to sign message.
+    Version: viem@1.1.7]
+  `)
   await disconnect(config, { connector: connector_ })
 })
 
@@ -40,8 +40,8 @@ test('behavior: not connected', async () => {
   await expect(
     signMessage(config, { message: 'foo bar baz' }),
   ).rejects.toMatchInlineSnapshot(`
-      [ConnectorNotFoundError: Connector not found.
+    [ConnectorNotFoundError: Connector not found.
 
-      Version: @wagmi/core@1.0.2]
-    `)
+    Version: @wagmi/core@2.0.0]
+  `)
 })

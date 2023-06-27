@@ -7,16 +7,15 @@ const connector = config.connectors[0]!
 
 test('default', () => {
   expect(disconnectMutationOptions(config)).toMatchInlineSnapshot(`
-      {
-        "mutationFn": [Function],
-        "mutationKey": [
-          "disconnect",
-          {
-            "connector": undefined,
-          },
-        ],
-      }
-    `)
+    {
+      "getVariables": [Function],
+      "mutationFn": [Function],
+      "mutationKey": [
+        "disconnect",
+        {},
+      ],
+    }
+  `)
 })
 
 test('parameters: connector', () => {

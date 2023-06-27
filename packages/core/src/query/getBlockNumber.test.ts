@@ -5,17 +5,15 @@ import { getBlockNumberQueryOptions } from './getBlockNumber.js'
 
 test('default', () => {
   expect(getBlockNumberQueryOptions(config)).toMatchInlineSnapshot(`
-      {
-        "gcTime": 0,
-        "queryFn": [Function],
-        "queryKey": [
-          "blockNumber",
-          {
-            "chainId": undefined,
-          },
-        ],
-      }
-    `)
+    {
+      "gcTime": 0,
+      "queryFn": [Function],
+      "queryKey": [
+        "blockNumber",
+        {},
+      ],
+    }
+  `)
 })
 
 test('parameters: chainId', () => {

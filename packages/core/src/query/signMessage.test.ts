@@ -7,14 +7,15 @@ test('default', () => {
   expect(
     signMessageMutationOptions(config, { message: 'foo bar baz' }),
   ).toMatchInlineSnapshot(`
-      {
-        "mutationFn": [Function],
-        "mutationKey": [
-          "signMessage",
-          {
-            "message": "foo bar baz",
-          },
-        ],
-      }
-    `)
+    {
+      "getVariables": [Function],
+      "mutationFn": [Function],
+      "mutationKey": [
+        "signMessage",
+        {
+          "message": "foo bar baz",
+        },
+      ],
+    }
+  `)
 })

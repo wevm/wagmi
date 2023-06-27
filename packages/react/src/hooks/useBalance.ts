@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query'
 import {
   type GetBalanceError,
   type ResolvedRegister,
@@ -12,10 +13,13 @@ import {
 } from '@wagmi/core/query'
 import * as React from 'react'
 
-import type { UseQueryParameters, UseQueryResult } from '../types/query.js'
+import {
+  type UseQueryParameters,
+  type UseQueryResult,
+  useQuery,
+} from '../types/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
-import { useQuery } from './useQuery.js'
 import type { GetBalanceQueryFnData } from '@wagmi/core/query'
 
 export type UseBalanceParameters<selectData = GetBalanceData> = Evaluate<
@@ -41,9 +45,9 @@ export function useBalance<selectData = GetBalanceData>(
 ): UseBalanceReturnType<selectData> {
   const { address, token, unit, watch, ...query } = parameters
   const config = useConfig()
+  const queryClient = useQueryClient()
 
-  const defaultChainId = useChainId()
-  const chainId = parameters.chainId ?? defaultChainId
+  const chainId = parameters.chainId ?? useChainId()
   const queryOptions = getBalanceQueryOptions(config, {
     address,
     chainId,
@@ -60,13 +64,13 @@ export function useBalance<selectData = GetBalanceData>(
     return watchBlockNumber(config, {
       chainId,
       onBlockNumber() {
-        config.queryClient.invalidateQueries({
+        queryClient.invalidateQueries({
           queryKey: queryOptions.queryKey,
         })
       },
       syncConnectedChain: false,
     })
-  }, [address, chainId, config, enabled, queryOptions, watch])
+  }, [address, chainId, config, enabled, queryClient, queryOptions, watch])
 
   return useQuery({
     ...queryOptions,

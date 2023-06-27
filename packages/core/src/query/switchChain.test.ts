@@ -7,14 +7,15 @@ test('default', () => {
   expect(
     switchChainMutationOptions(config, { chainId: testChains.anvil.id }),
   ).toMatchInlineSnapshot(`
-      {
-        "mutationFn": [Function],
-        "mutationKey": [
-          "switchChain",
-          {
-            "chainId": 123,
-          },
-        ],
-      }
-    `)
+    {
+      "getVariables": [Function],
+      "mutationFn": [Function],
+      "mutationKey": [
+        "switchChain",
+        {
+          "chainId": 123,
+        },
+      ],
+    }
+  `)
 })

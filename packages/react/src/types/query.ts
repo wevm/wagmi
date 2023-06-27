@@ -1,9 +1,9 @@
-import type { DefaultError, QueryKey } from '@tanstack/react-query'
+import {
+  type DefaultError,
+  type QueryKey,
+  useQuery as useQuery_,
+} from '@tanstack/react-query'
 import { type Evaluate } from '@wagmi/core/internal'
-import type {
-  OmittedMutationOptions,
-  OmittedQueryOptions,
-} from '@wagmi/core/query'
 
 export type UseMutationOptions<
   data = unknown,
@@ -18,7 +18,7 @@ export type UseMutationOptions<
       Evaluate<variables>,
       context
     >,
-    OmittedMutationOptions
+    'mutationFn' | 'mutationKey' | 'throwOnError'
   >
 >
 
@@ -52,8 +52,14 @@ export type UseQueryParameters<
       data,
       queryKey
     >,
-    OmittedQueryOptions | 'initialData' | 'suspense' | 'throwOnError'
+    | 'initialData'
+    | 'queryFn'
+    | 'queryKey'
+    | 'queryKeyHashFn'
+    | 'suspense'
+    | 'throwOnError'
   > & {
+    // Fix `initialData` type
     initialData?: import('@tanstack/react-query').UseQueryOptions<
       queryFnData,
       error,
@@ -67,3 +73,12 @@ export type UseQueryResult<
   data = unknown,
   error = DefaultError,
 > = import('@tanstack/react-query').UseQueryResult<data, error>
+
+// TODO: Remove
+// Ideally we don't have this file, but `useQuery` currently has some quirks where it is super hard to
+// pass down the inferred `initialData` type because of it's discriminated overload in the on `useQuery`.
+export function useQuery<queryFnData, error, data, queryKey extends QueryKey>(
+  args: UseQueryParameters<queryFnData, error, data, queryKey>,
+): UseQueryResult<data, error> {
+  return useQuery_(args as any)
+}

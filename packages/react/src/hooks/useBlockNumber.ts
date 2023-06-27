@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query'
 import { type GetBlockNumberError, watchBlockNumber } from '@wagmi/core'
 import { type Evaluate } from '@wagmi/core/internal'
 import {
@@ -10,10 +11,13 @@ import {
 import * as React from 'react'
 
 import type { ResolvedRegister } from '../index.js'
-import type { UseQueryParameters, UseQueryResult } from '../types/query.js'
+import {
+  type UseQueryParameters,
+  type UseQueryResult,
+  useQuery,
+} from '../types/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
-import { useQuery } from './useQuery.js'
 
 export type UseBlockNumberParameters<selectData = GetBlockNumberData> =
   Evaluate<
@@ -35,11 +39,11 @@ export type UseBlockNumberReturnType<selectData = GetBlockNumberData> =
 export function useBlockNumber<selectData = GetBlockNumberData>(
   parameters: UseBlockNumberParameters<selectData> = {},
 ): UseBlockNumberReturnType<selectData> {
-  const { chainId: chainId_, enabled = true, watch, ...query } = parameters
+  const { enabled = true, watch, ...query } = parameters
   const config = useConfig()
+  const queryClient = useQueryClient()
 
-  const defaultChainId = useChainId()
-  const chainId = chainId_ ?? defaultChainId
+  const chainId = parameters.chainId ?? useChainId()
   const queryOptions = getBlockNumberQueryOptions(config, { chainId })
 
   React.useEffect(() => {
@@ -49,10 +53,10 @@ export function useBlockNumber<selectData = GetBlockNumberData>(
     return watchBlockNumber(config, {
       chainId,
       onBlockNumber(blockNumber) {
-        config.queryClient.setQueryData(queryOptions.queryKey, blockNumber)
+        queryClient.setQueryData(queryOptions.queryKey, blockNumber)
       },
     })
-  }, [chainId, config, enabled, queryOptions, watch])
+  }, [chainId, config, enabled, queryClient, queryOptions, watch])
 
   return useQuery({
     ...queryOptions,

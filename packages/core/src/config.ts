@@ -1,9 +1,3 @@
-import { QueryClient } from '@tanstack/query-core'
-import {
-  type PersistedClient,
-  type Persister,
-} from '@tanstack/query-persist-client-core'
-import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
 import {
   type Address,
   type Chain,
@@ -17,7 +11,6 @@ import { createStore } from 'zustand/vanilla'
 import { type ConnectorEventMap, type CreateConnectorFn } from './connector.js'
 import { Emitter, type EventData, createEmitter } from './emitter.js'
 import { ChainNotConfiguredError } from './errors/config.js'
-import { createQueryClient } from './query.js'
 import { type Storage, createStorage, noopStorage } from './storage.js'
 import type { Evaluate, OneOf } from './types/utils.js'
 import { uid } from './utils/uid.js'
@@ -28,8 +21,6 @@ export type CreateConfigParameters<
   {
     chains: chains
     connectors?: CreateConnectorFn[]
-    persister?: Persister | null | undefined
-    queryClient?: QueryClient | undefined
     reconnectOnMount?: boolean | undefined
     storage?: Storage | null | undefined
     syncConnectedChain?: boolean | undefined
@@ -49,9 +40,7 @@ export type CreateConfigParameters<
           /** @deprecated Use `reconnectOnMount` instead */
           autoConnect?: boolean | undefined
         }
-      | {
-          reconnectOnMount?: boolean | undefined
-        }
+      | { reconnectOnMount?: boolean | undefined }
     >
 >
 
@@ -60,8 +49,6 @@ export type Config<
 > = {
   readonly chains: chains
   readonly connectors: readonly Connector[]
-  readonly persister: Persister | null
-  readonly queryClient: QueryClient
   readonly state: State<chains>
   readonly storage: Storage | null
 
@@ -115,7 +102,6 @@ export function createConfig<
 >({
   autoConnect,
   chains,
-  queryClient = createQueryClient(),
   reconnectOnMount = autoConnect ?? false,
   storage = createStorage({
     storage:
@@ -150,10 +136,8 @@ export function createConfig<
 
   // TODO: WebSocket support
   const publicClients = new Map<number, PublicClient | undefined>()
-  function getPublicClient({
-    chainId: chainId_,
-  }: { chainId?: number | undefined } = {}) {
-    const chainId = chainId_ ?? store.getState().chainId
+  function getPublicClient(parameters: { chainId?: number | undefined } = {}) {
+    const chainId = parameters.chainId ?? store.getState().chainId
     const chain = chains.find((x) => x.id === chainId)
 
     // If the target chain is not configured, use the public client of the current chain.
@@ -180,7 +164,7 @@ export function createConfig<
       })
 
     publicClients.set(chainId, publicClient)
-    return publicClient
+    return publicClient!
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -300,30 +284,9 @@ export function createConfig<
     })
   }
 
-  /////////////////////////////////////////////////////////////////////////////////////////////////
-  // Return
-  /////////////////////////////////////////////////////////////////////////////////////////////////
-
-  let persister: Persister | null
-  if (rest.persister === undefined)
-    persister =
-      typeof window !== 'undefined' && storage
-        ? createSyncStoragePersister({
-            key: 'cache',
-            storage: storage as Storage<Record<string, unknown>>,
-            // Serialization is handled in `storage`.
-            serialize: (x) => x as unknown as string,
-            // Deserialization is handled in `storage`.
-            deserialize: (x) => x as unknown as PersistedClient,
-          })
-        : null
-  else persister = rest.persister
-
   return {
     chains,
     connectors,
-    persister,
-    queryClient,
     get state() {
       return store.getState() as unknown as State<chains>
     },
@@ -346,7 +309,6 @@ export function createConfig<
     _internal: {
       reconnectOnMount,
       syncConnectedChain,
-
       change,
       connect,
       disconnect,

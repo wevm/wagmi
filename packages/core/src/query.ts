@@ -72,11 +72,3 @@ export {
   type SwitchChainMutateAsync,
   switchChainMutationOptions,
 } from './query/switchChain.js'
-
-////////////////////////////////////////////////////////////////////////////////
-// Types
-
-export {
-  type OmittedMutationOptions,
-  type OmittedQueryOptions,
-} from './query/types.js'

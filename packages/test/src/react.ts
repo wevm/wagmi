@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import {
   type RenderHookOptions,
   type RenderHookResult,
@@ -10,6 +11,8 @@ import { WagmiConfig } from 'wagmi'
 
 import { config } from './config.js'
 
+export const queryClient = new QueryClient()
+
 export function createWrapper<TComponent extends React.FunctionComponent<any>>(
   Wrapper: TComponent,
   props: Parameters<TComponent>[0],
@@ -17,7 +20,15 @@ export function createWrapper<TComponent extends React.FunctionComponent<any>>(
   return function CreatedWrapper({
     children,
   }: { children?: React.ReactNode | undefined }) {
-    return React.createElement(Wrapper, props, children)
+    return React.createElement(
+      Wrapper,
+      props,
+      React.createElement(
+        QueryClientProvider,
+        { client: queryClient },
+        children,
+      ),
+    )
   }
 }
 
@@ -25,7 +36,7 @@ export function renderHook<Result, Props>(
   render: (props: Props) => Result,
   options?: RenderHookOptions<Props>,
 ): RenderHookResult<Result, Props> {
-  config.queryClient.clear()
+  queryClient.clear()
   return renderHook_(render, {
     wrapper: createWrapper(WagmiConfig, { value: config }),
     ...options,

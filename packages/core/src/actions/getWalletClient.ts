@@ -1,5 +1,6 @@
 import {
   type Account,
+  type Chain,
   type Transport,
   type WalletClient,
   createWalletClient,
@@ -23,7 +24,12 @@ export type GetWalletClientReturnType<
 > = Evaluate<
   WalletClient<
     Transport,
-    Extract<config['chains'][number], { id: chainId }>,
+    Extract<
+      config['chains'][number],
+      { id: chainId }
+    > extends infer chain extends Chain
+      ? chain
+      : Chain,
     Account
   >
 >
@@ -56,6 +62,7 @@ export async function getWalletClient<
   const provider = await connection.connector.getProvider({
     chainId: resolvedChainId,
   })
+
   return createWalletClient({
     account,
     chain,

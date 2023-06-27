@@ -6,7 +6,7 @@ test('BaseError', () => {
   expect(new BaseError('An error occurred.')).toMatchInlineSnapshot(`
     [WagmiCoreError: An error occurred.
 
-    Version: @wagmi/core@1.0.2]
+    Version: @wagmi/core@2.0.0]
   `)
 
   expect(
@@ -15,14 +15,14 @@ test('BaseError', () => {
     [WagmiCoreError: An error occurred.
 
     Details: details
-    Version: @wagmi/core@1.0.2]
+    Version: @wagmi/core@2.0.0]
   `)
 
   expect(new BaseError('', { details: 'details' })).toMatchInlineSnapshot(`
     [WagmiCoreError: An error occurred.
 
     Details: details
-    Version: @wagmi/core@1.0.2]
+    Version: @wagmi/core@2.0.0]
   `)
 })
 
@@ -37,7 +37,7 @@ test('BaseError (w/ docsPath)', () => {
 
     Docs: https://wagmi.sh/core/lol.html
     Details: details
-    Version: @wagmi/core@1.0.2]
+    Version: @wagmi/core@2.0.0]
   `)
   expect(
     new BaseError('An error occurred.', {
@@ -47,7 +47,7 @@ test('BaseError (w/ docsPath)', () => {
     [WagmiCoreError: An error occurred.
 
     Docs: https://wagmi.sh/core/docs.html
-    Version: @wagmi/core@1.0.2]
+    Version: @wagmi/core@2.0.0]
   `)
   expect(
     new BaseError('An error occurred.', {
@@ -58,7 +58,7 @@ test('BaseError (w/ docsPath)', () => {
     [WagmiCoreError: An error occurred.
 
     Docs: https://wagmi.sh/core/lol.html
-    Version: @wagmi/core@1.0.2]
+    Version: @wagmi/core@2.0.0]
   `)
   expect(
     new BaseError('An error occurred.', {
@@ -71,7 +71,7 @@ test('BaseError (w/ docsPath)', () => {
 
     Docs: https://wagmi.sh/core/lol.html#test
     Details: details
-    Version: @wagmi/core@1.0.2]
+    Version: @wagmi/core@2.0.0]
   `)
 })
 
@@ -88,7 +88,7 @@ test('BaseError (w/ metaMessages)', () => {
     Cause: lol
 
     Details: details
-    Version: @wagmi/core@1.0.2]
+    Version: @wagmi/core@2.0.0]
   `)
 })
 
@@ -106,7 +106,7 @@ test('inherited BaseError', () => {
 
     Docs: https://wagmi.sh/core/lol.html
     Details: details
-    Version: @wagmi/core@1.0.2]
+    Version: @wagmi/core@2.0.0]
   `)
 })
 
@@ -122,7 +122,7 @@ test('inherited Error', () => {
 
     Docs: https://wagmi.sh/core/lol.html
     Details: details
-    Version: @wagmi/core@1.0.2]
+    Version: @wagmi/core@2.0.0]
   `)
 })
 
@@ -136,7 +136,7 @@ test('walk: no predicate fn (walks to leaf)', () => {
   expect(err.walk()).toMatchInlineSnapshot(`
     [WagmiCoreError: test3
 
-    Version: @wagmi/core@1.0.2]
+    Version: @wagmi/core@2.0.0]
   `)
 })
 
@@ -150,6 +150,6 @@ test('walk: predicate fn', () => {
   expect(err.walk((err) => err instanceof FooError)).toMatchInlineSnapshot(`
     [WagmiCoreError: test2
 
-    Version: @wagmi/core@1.0.2]
+    Version: @wagmi/core@2.0.0]
   `)
 })

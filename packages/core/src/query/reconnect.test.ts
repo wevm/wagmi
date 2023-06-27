@@ -7,16 +7,15 @@ const connector = config.connectors[0]!
 
 test('default', () => {
   expect(reconnectMutationOptions(config)).toMatchInlineSnapshot(`
-      {
-        "mutationFn": [Function],
-        "mutationKey": [
-          "reconnect",
-          {
-            "connectors": undefined,
-          },
-        ],
-      }
-    `)
+    {
+      "getVariables": [Function],
+      "mutationFn": [Function],
+      "mutationKey": [
+        "reconnect",
+        {},
+      ],
+    }
+  `)
 })
 
 test('parameters: connectors', () => {
