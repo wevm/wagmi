@@ -1,5 +1,14 @@
 # @wagmi/core
 
+## 0.10.16
+
+### Patch Changes
+
+- [`5a8d2045`](https://github.com/wagmi-dev/wagmi/commit/5a8d20458e78df0e39da87c4dcddac0a62389092) Thanks [@jxom](https://github.com/jxom)! - Updated WalletConnect dependencies
+
+- Updated dependencies []:
+  - @wagmi/connectors@0.3.22
+
 ## 0.10.15
 
 ### Patch Changes
