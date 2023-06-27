@@ -72,3 +72,12 @@ export {
   type SwitchChainMutateAsync,
   switchChainMutationOptions,
 } from './query/switchChain.js'
+
+export {
+  type WriteContractData,
+  type WriteContractVariables,
+  type WriteContractOptions,
+  type WriteContractMutate,
+  type WriteContractMutateAsync,
+  writeContractMutationOptions,
+} from './query/writeContract.js'

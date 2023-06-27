@@ -2,14 +2,16 @@ import { useMutation } from '@tanstack/react-query'
 import {
   type ResolvedRegister,
   type WriteContractError,
-  type WriteContractMutate,
-  type WriteContractMutateAsync,
-  type WriteContractMutationOptions,
   type WriteContractParameters,
   type WriteContractReturnType,
-  writeContractMutationOptions,
 } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
+import {
+  type WriteContractMutate,
+  type WriteContractMutateAsync,
+  type WriteContractOptions,
+  writeContractMutationOptions,
+} from '@wagmi/core/query'
 import * as React from 'react'
 import type { Abi, Address } from 'viem'
 
@@ -27,7 +29,7 @@ export type UseContractWriteParameters<
   value extends bigint | undefined = undefined,
   context = unknown,
 > = Evaluate<
-  WriteContractMutationOptions<
+  WriteContractOptions<
     ResolvedRegister['config'],
     abi,
     functionName,
@@ -35,8 +37,8 @@ export type UseContractWriteParameters<
     address,
     args,
     value
-  > & {
-    mutation?: UseMutationOptions<
+  > &
+    UseMutationOptions<
       WriteContractReturnType,
       WriteContractError,
       WriteContractParameters<
@@ -47,7 +49,6 @@ export type UseContractWriteParameters<
       >,
       context
     >
-  }
 >
 
 export type UseContractWriteReturnType<
@@ -129,16 +130,26 @@ export function useContractWrite(
     config,
     parameters,
   )
-  const { mutate, mutateAsync, ...result } = useMutation(mutationOptions)
+  const { mutate, mutateAsync, ...result } = useMutation({
+    ...parameters,
+    ...mutationOptions,
+  })
   return {
     ...result,
-    ...parameters.mutation,
     write: React.useCallback(
-      (variables, options) => mutate(getVariables(variables), options),
+      (variables, options) =>
+        mutate(
+          getVariables(variables as WriteContractParameters),
+          options as any,
+        ),
       [getVariables, mutate],
     ),
     writeAsync: React.useCallback(
-      (variables, options) => mutateAsync(getVariables(variables), options),
+      (variables, options) =>
+        mutateAsync(
+          getVariables(variables as WriteContractParameters),
+          options as any,
+        ),
       [getVariables, mutateAsync],
     ),
   }

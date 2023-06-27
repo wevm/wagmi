@@ -22,6 +22,21 @@ export type ExactPartial<type> = {
 }
 
 /**
+ * Check if type is a union.
+ *
+ * @param type - Type to check.
+ *
+ * @example
+ * type Result = IsUnion<{ a: string } | { b: string }>
+ * //   ^? type Result = true
+ */
+export type IsUnion<type, type2 = type> = type extends type2
+  ? [type2] extends [type]
+    ? false
+    : true
+  : never
+
+/**
  * Removes `readonly` from all properties of an object.
  *
  * @param type - Object to remove `readonly` properties from.
@@ -29,6 +44,12 @@ export type ExactPartial<type> = {
 export type Mutable<type extends object> = {
   -readonly [key in keyof type]: type[key]
 }
+
+export type Omit<type, keys extends keyof type> = Pick<
+  type,
+  Exclude<keyof type, keys>
+>
+export type OmitKeys<T, keys extends string> = Pick<T, Exclude<keyof T, keys>>
 
 /**
  * Makes objects destructurable.
@@ -50,32 +71,48 @@ type KeyofUnion<type> = type extends type ? keyof type : never
 
 /**
  * Makes {@link key} optional in {@link type} while preserving type inference.
+ *
+ * @param type - Object to make {@link key} optional in.
+ * @param key - Keys to make optional.
  */
 // s/o trpc (https://github.com/trpc/trpc/blob/main/packages/server/src/types.ts#L6)
 export type PartialBy<type, key extends keyof type> = ExactPartial<
   Pick<type, key>
 > &
   Omit<type, key>
+export type PartialByKeys<type, key extends string> = ExactPartial<
+  Pick<type, key extends keyof type ? key : never>
+> &
+  OmitKeys<type, key>
 
-export type ReadonlyWiden<TType> =
-  | (TType extends Function ? TType : never)
-  | (TType extends ResolvedConfig['BigIntType'] ? bigint : never)
-  | (TType extends boolean ? boolean : never)
-  | (TType extends ResolvedConfig['IntType'] ? number : never)
-  | (TType extends string
-      ? TType extends Address
+/**
+ * Widen narrowed type to broader type.
+ *
+ * @param type - Type to widen.
+ *
+ * @example
+ * type Result = Widen<'foo'>
+ * //   ^? type Result = string
+ */
+export type ReadonlyWiden<type> =
+  | (type extends Function ? type : never)
+  | (type extends ResolvedConfig['BigIntType'] ? bigint : never)
+  | (type extends boolean ? boolean : never)
+  | (type extends ResolvedConfig['IntType'] ? number : never)
+  | (type extends string
+      ? type extends Address
         ? Address
-        : TType extends ResolvedConfig['BytesType']['inputs']
+        : type extends ResolvedConfig['BytesType']['inputs']
         ? ResolvedConfig['BytesType']
         : string
       : never)
-  | (TType extends readonly [] ? readonly [] : never)
-  | (TType extends Record<string, unknown>
-      ? { [K in keyof TType]: ReadonlyWiden<TType[K]> }
+  | (type extends readonly [] ? readonly [] : never)
+  | (type extends Record<string, unknown>
+      ? { [K in keyof type]: ReadonlyWiden<type[K]> }
       : never)
-  | (TType extends { length: number }
+  | (type extends { length: number }
       ? {
-          [K in keyof TType]: ReadonlyWiden<TType[K]>
+          [K in keyof type]: ReadonlyWiden<type[K]>
         } extends infer Val extends unknown[]
         ? readonly [...Val]
         : never

@@ -21,6 +21,7 @@ test('exports', () => {
       "signMessage",
       "switchAccount",
       "switchChain",
+      "writeContract",
       "createConfig",
       "createConnector",
       "BaseError",
