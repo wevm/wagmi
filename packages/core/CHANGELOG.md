@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 1.3.2
+
+### Patch Changes
+
+- [`e86d0940`](https://github.com/wagmi-dev/wagmi/commit/e86d09409bb20b64d24e1263abcf0291314f03c7) Thanks [@jxom](https://github.com/jxom)! - Updated references
+
 ## 1.3.1
 
 ### Patch Changes
