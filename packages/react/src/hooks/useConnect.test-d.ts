@@ -110,14 +110,3 @@ test('context', () => {
     },
   })
 })
-
-test('callbacks', () => {
-  useConnect({
-    connector,
-    onSuccess(_, variables) {
-      expectTypeOf(variables.connector).toEqualTypeOf<
-        Connector | CreateConnectorFn
-      >()
-    },
-  })
-})

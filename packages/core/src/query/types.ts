@@ -8,7 +8,7 @@ export type MutationOptions<
   variables = void,
   parameters = variables,
 > = import('@tanstack/query-core').MutationOptions<data, error, variables> & {
-  getVariables: (variables?: ExactPartial<parameters>) => parameters
+  getVariables(variables?: ExactPartial<parameters>): parameters
 }
 
 export type MutateFn<

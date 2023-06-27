@@ -5,25 +5,22 @@ import {
   signMessage,
 } from '../actions/signMessage.js'
 import { type Config } from '../config.js'
-import { type Evaluate, type IsUndefined } from '../types/utils.js'
+import { type Evaluate, type PartialBy } from '../types/utils.js'
 import { type Mutate, type MutateAsync, type MutationOptions } from './types.js'
 
-export type SignMessageOptions<
-  message extends SignMessageParameters['message'] | undefined,
-> = Evaluate<
-  Omit<SignMessageParameters, 'message'> & {
-    message?: message | SignMessageParameters['message'] | undefined
-  }
->
+type SignableMessage = SignMessageParameters['message']
 
-/** https://wagmi.sh/core/actions/signMessage#tanstack-query */
-export const signMessageMutationOptions = <
-  message extends SignMessageParameters['message'] | undefined,
->(
-  config: Config,
-  options: SignMessageOptions<message> = {},
-) =>
-  ({
+export type SignMessageOptions<message extends SignableMessage | undefined,> =
+  Evaluate<
+    Omit<SignMessageParameters, 'message'> & {
+      message?: message | SignableMessage | undefined
+    }
+  >
+
+export function signMessageMutationOptions<
+  message extends SignableMessage | undefined,
+>(config: Config, options: SignMessageOptions<message> = {}) {
+  return {
     getVariables(variables) {
       return {
         message: (variables?.message ?? options.message)!,
@@ -33,26 +30,27 @@ export const signMessageMutationOptions = <
       return signMessage(config, variables)
     },
     mutationKey: ['signMessage', options],
-  }) as const satisfies MutationOptions<
+  } as const satisfies MutationOptions<
     SignMessageData,
     SignMessageError,
     SignMessageVariables<undefined>,
     SignMessageParameters
   >
+}
 
 export type SignMessageData = SignMessageReturnType
 
-export type SignMessageVariables<
-  message extends SignMessageParameters['message'] | undefined,
-> = Evaluate<
-  Omit<SignMessageParameters, 'message'> &
-    (IsUndefined<message> extends false
-      ? { message?: SignMessageParameters['message'] | undefined }
-      : { message: SignMessageParameters['message'] })
->
+export type SignMessageVariables<message extends SignableMessage | undefined,> =
+  | Evaluate<
+      PartialBy<
+        SignMessageParameters,
+        message extends SignableMessage ? 'message' : never
+      >
+    >
+  | (message extends SignableMessage ? undefined : never)
 
 export type SignMessageMutate<
-  message extends SignMessageParameters['message'] | undefined,
+  message extends SignableMessage | undefined,
   context = unknown,
 > = Mutate<
   SignMessageData,
@@ -63,7 +61,7 @@ export type SignMessageMutate<
 >
 
 export type SignMessageMutateAsync<
-  message extends SignMessageParameters['message'] | undefined,
+  message extends SignableMessage | undefined,
   context = unknown,
 > = MutateAsync<
   SignMessageData,

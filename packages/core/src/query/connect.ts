@@ -13,10 +13,11 @@ import type { Mutate, MutateAsync, MutationOptions } from './types.js'
 export type ConnectOptions<
   config extends Config,
   connector extends Connector | CreateConnectorFn | undefined,
-> = {
-  chainId?: ConnectParameters<config>['chainId']
-  connector?: connector | ConnectParameters<config>['connector']
-}
+> = Evaluate<
+  Omit<ConnectParameters<config>, 'connector'> & {
+    connector?: connector | ConnectParameters<config>['connector'] | undefined
+  }
+>
 
 export function connectMutationOptions<
   config extends Config,

@@ -4,9 +4,7 @@ import type { Evaluate } from '../types/utils.js'
 
 export type ReconnectParameters = {
   /** Connectors to attempt reconnect with */
-  connectors?:
-    | [CreateConnectorFn | Connector, ...(CreateConnectorFn | Connector)[]]
-    | undefined
+  connectors?: readonly (CreateConnectorFn | Connector)[] | undefined
 }
 
 export type ReconnectReturnType = Evaluate<Connection>[]
