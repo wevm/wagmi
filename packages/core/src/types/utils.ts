@@ -22,17 +22,6 @@ export type ExactPartial<type> = {
 }
 
 /**
- * Checks if {@link type} is `undefined`
- *
- * @param type - Type to check
- *
- * @example
- * type Result = IsUndefined<undefined>
- * //   ^? type Result = true
- */
-export type IsUndefined<type> = [undefined] extends [type] ? true : false
-
-/**
  * Removes `readonly` from all properties of an object.
  *
  * @param type - Object to remove `readonly` properties from.

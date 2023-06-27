@@ -17,26 +17,26 @@ import { useConfig } from './useConfig.js'
 type ChainId = ResolvedRegister['config']['chains'][number]['id']
 
 export type UseSwitchChainParameters<
-  chainId extends ChainId | undefined = ChainId | undefined,
+  chainId extends ChainId | undefined = undefined,
   context = unknown,
 > = Evaluate<
   SwitchChainOptions<ResolvedRegister['config'], chainId> &
     UseMutationOptions<
       SwitchChainData<ResolvedRegister['config'], chainId>,
       SwitchChainError,
-      SwitchChainVariables<ResolvedRegister['config'], chainId>,
+      SwitchChainVariables<ResolvedRegister['config'], undefined>,
       context
     >
 >
 
 export type UseSwitchChainReturnType<
-  chainId extends ChainId | undefined = ChainId | undefined,
+  chainId extends ChainId | undefined = undefined,
   context = unknown,
 > = Evaluate<
   UseMutationResult<
     SwitchChainData<ResolvedRegister['config'], chainId>,
     SwitchChainError,
-    SwitchChainVariables<ResolvedRegister['config'], chainId>,
+    SwitchChainVariables<ResolvedRegister['config'], undefined>,
     context
   > & {
     chains: ResolvedRegister['config']['chains']

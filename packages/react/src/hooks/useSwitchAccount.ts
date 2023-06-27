@@ -1,5 +1,9 @@
 import { useMutation } from '@tanstack/react-query'
-import type { Connector, SwitchAccountError } from '@wagmi/core'
+import type {
+  Connector,
+  ResolvedRegister,
+  SwitchAccountError,
+} from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
 import {
   type SwitchAccountData,
@@ -21,9 +25,9 @@ export type UseSwitchAccountParameters<
 > = Evaluate<
   SwitchAccountOptions<connector> &
     UseMutationOptions<
-      SwitchAccountData,
+      SwitchAccountData<ResolvedRegister['config']>,
       SwitchAccountError,
-      SwitchAccountVariables<connector>,
+      SwitchAccountVariables<undefined>,
       context
     >
 >
@@ -33,14 +37,22 @@ export type UseSwitchAccountReturnType<
   context = unknown,
 > = Evaluate<
   UseMutationResult<
-    SwitchAccountData,
+    SwitchAccountData<ResolvedRegister['config']>,
     SwitchAccountError,
-    SwitchAccountVariables<connector>,
+    SwitchAccountVariables<undefined>,
     context
   > & {
     connectors: readonly Connector[]
-    switchAccount: SwitchAccountMutate<connector, context>
-    switchAccountAsync: SwitchAccountMutateAsync<connector, context>
+    switchAccount: SwitchAccountMutate<
+      ResolvedRegister['config'],
+      connector,
+      context
+    >
+    switchAccountAsync: SwitchAccountMutateAsync<
+      ResolvedRegister['config'],
+      connector,
+      context
+    >
   }
 >
 

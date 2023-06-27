@@ -4,22 +4,17 @@ import {
   type ReconnectReturnType,
   reconnect,
 } from '../actions/reconnect.js'
-import type { Config, Connector } from '../config.js'
-import { type CreateConnectorFn } from '../connector.js'
+import type { Config } from '../config.js'
 import type { Evaluate } from '../types/utils.js'
 import type { Mutate, MutateAsync, MutationOptions } from './types.js'
 
-export type ReconnectOptions = Evaluate<{
-  connectors?:
-    | [CreateConnectorFn | Connector, ...(CreateConnectorFn | Connector)[]]
-    | undefined
-}>
+export type ReconnectOptions = ReconnectParameters
 
-export const reconnectMutationOptions = (
+export function reconnectMutationOptions(
   config: Config,
   options: ReconnectOptions = {},
-) =>
-  ({
+) {
+  return {
     getVariables(variables) {
       return {
         connectors: (variables?.connectors ?? options.connectors)!,
@@ -29,22 +24,16 @@ export const reconnectMutationOptions = (
       return reconnect(config, variables)
     },
     mutationKey: ['reconnect', options],
-  }) as const satisfies MutationOptions<
+  } as const satisfies MutationOptions<
     ReconnectData,
     ReconnectError,
-    ReconnectVariables,
-    ReconnectParameters
+    ReconnectVariables
   >
+}
 
 export type ReconnectData = Evaluate<ReconnectReturnType>
 
-export type ReconnectVariables =
-  | Evaluate<{
-      connectors?:
-        | [CreateConnectorFn | Connector, ...(CreateConnectorFn | Connector)[]]
-        | undefined
-    }>
-  | undefined
+export type ReconnectVariables = ReconnectParameters | undefined
 
 export type ReconnectMutate<context = unknown> = Mutate<
   ReconnectData,

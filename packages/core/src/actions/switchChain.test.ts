@@ -61,3 +61,12 @@ test('behavior: not supported', async () => {
   `)
   await disconnect(config, { connector: connector_ })
 })
+
+test('behavior: not connected', async () => {
+  const chainId = config.state.chainId
+  expect(config.state.chainId).toMatchInlineSnapshot('123')
+  await switchChain(config, { chainId: testChains.anvilTwo.id })
+  expect(config.state.chainId).toMatchInlineSnapshot('456')
+  await switchChain(config, { chainId })
+  expect(config.state.chainId).toMatchInlineSnapshot('123')
+})

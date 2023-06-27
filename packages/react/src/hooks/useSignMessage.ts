@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
-import type { SignMessageError, SignMessageParameters } from '@wagmi/core'
+import { type SignMessageError, type SignMessageParameters } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
 import {
   type SignMessageData,
@@ -14,31 +14,29 @@ import * as React from 'react'
 import type { UseMutationOptions, UseMutationResult } from '../types/query.js'
 import { useConfig } from './useConfig.js'
 
+type SignableMessage = SignMessageParameters['message']
+
 export type UseSignMessageParameters<
-  message extends SignMessageParameters['message'] | undefined =
-    | SignMessageParameters['message']
-    | undefined,
+  message extends SignableMessage | undefined = undefined,
   context = unknown,
 > = Evaluate<
   SignMessageOptions<message> &
     UseMutationOptions<
       SignMessageData,
       SignMessageError,
-      SignMessageVariables<message>,
+      SignMessageVariables<undefined>,
       context
     >
 >
 
 export type UseSignMessageReturnType<
-  message extends SignMessageParameters['message'] | undefined =
-    | SignMessageParameters['message']
-    | undefined,
+  message extends SignableMessage | undefined = undefined,
   context = unknown,
 > = Evaluate<
   UseMutationResult<
     SignMessageData,
     SignMessageError,
-    SignMessageVariables<message>,
+    SignMessageVariables<undefined>,
     context
   > & {
     signMessage: SignMessageMutate<message, context>
@@ -47,7 +45,7 @@ export type UseSignMessageReturnType<
 >
 
 export function useSignMessage<
-  message extends SignMessageParameters['message'] | undefined,
+  message extends SignableMessage | undefined = undefined,
   context = unknown,
 >(
   parameters?: UseSignMessageParameters<message, context>,

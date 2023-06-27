@@ -4,18 +4,16 @@ import {
   type DisconnectReturnType,
   disconnect,
 } from '../actions/disconnect.js'
-import type { Config, Connector } from '../config.js'
+import type { Config } from '../config.js'
 import type { Mutate, MutateAsync, MutationOptions } from './types.js'
 
-export type DisconnectOptions = {
-  connector?: Connector | undefined
-}
+export type DisconnectOptions = DisconnectParameters
 
-export const disconnectMutationOptions = (
+export function disconnectMutationOptions(
   config: Config,
   options: DisconnectOptions = {},
-) =>
-  ({
+) {
+  return {
     getVariables(variables) {
       return {
         connector: (variables?.connector ?? options.connector)!,
@@ -25,18 +23,16 @@ export const disconnectMutationOptions = (
       return disconnect(config, variables)
     },
     mutationKey: ['disconnect', options],
-  }) as const satisfies MutationOptions<
+  } as const satisfies MutationOptions<
     DisconnectData,
     DisconnectError,
-    DisconnectVariables,
-    DisconnectParameters
+    DisconnectVariables
   >
+}
 
 export type DisconnectData = DisconnectReturnType
 
-export type DisconnectVariables =
-  | { connector?: Connector | undefined }
-  | undefined
+export type DisconnectVariables = DisconnectParameters | undefined
 
 export type DisconnectMutate<context = unknown> = Mutate<
   DisconnectData,

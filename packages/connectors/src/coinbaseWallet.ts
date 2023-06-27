@@ -56,18 +56,23 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
     async connect({ chainId } = {}) {
       try {
         const provider = await this.getProvider()
-        const accounts = (await provider.enable()).map(getAddress)
+        const accounts = (
+          (await provider.request({
+            method: 'eth_requestAccounts',
+          })) as string[]
+        ).map(getAddress)
+        provider.on('accountsChanged', this.onAccountsChanged)
+        provider.on('chainChanged', this.onChainChanged)
+        provider.on('disconnect', this.onDisconnect.bind(this))
 
         // Switch to chain if provided
         let currentChainId = await this.getChainId()
         if (chainId && currentChainId !== chainId) {
-          const chain = await this.switchChain!({ chainId })
-          currentChainId = chain.id
+          const chain = await this.switchChain?.({ chainId }).catch(() => ({
+            id: currentChainId,
+          }))
+          currentChainId = chain?.id ?? currentChainId
         }
-
-        provider.on('accountsChanged', this.onAccountsChanged)
-        provider.on('chainChanged', this.onChainChanged)
-        provider.on('disconnect', this.onDisconnect.bind(this))
 
         return { accounts, chainId: currentChainId }
       } catch (error) {

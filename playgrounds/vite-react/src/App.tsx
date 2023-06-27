@@ -3,6 +3,7 @@ import {
   useAccount,
   useBalance,
   useBlockNumber,
+  useChainId,
   useConnect,
   useConnections,
   useDisconnect,
@@ -52,6 +53,7 @@ function Account() {
 }
 
 function Connect() {
+  const chainId = useChainId()
   const { connectors, connect, status, error } = useConnect()
 
   return (
@@ -61,7 +63,7 @@ function Connect() {
         <button
           id={connector.uid}
           key={connector.uid}
-          onClick={async () => connect({ connector })}
+          onClick={async () => connect({ connector, chainId })}
           type='button'
         >
           {connector.name}
@@ -96,7 +98,7 @@ function SwitchAccount() {
 }
 
 function SwitchChain() {
-  const account = useAccount()
+  const chainId = useChainId()
   const { chains, switchChain } = useSwitchChain()
 
   return (
@@ -105,7 +107,7 @@ function SwitchChain() {
 
       {chains.map((chain) => (
         <button
-          disabled={account.chainId === chain.id}
+          disabled={chainId === chain.id}
           key={chain.id}
           onClick={async () => switchChain({ chainId: chain.id })}
           type='button'
