@@ -1,3 +1,5 @@
+import type { SignableMessage } from 'viem'
+
 import {
   type SignMessageError,
   type SignMessageParameters,
@@ -5,10 +7,8 @@ import {
   signMessage,
 } from '../actions/signMessage.js'
 import { type Config } from '../config.js'
-import { type Evaluate, type PartialBy } from '../types/utils.js'
+import { type Evaluate, type Omit, type PartialBy } from '../types/utils.js'
 import { type Mutate, type MutateAsync, type MutationOptions } from './types.js'
-
-type SignableMessage = SignMessageParameters['message']
 
 export type SignMessageOptions<message extends SignableMessage | undefined,> =
   Evaluate<

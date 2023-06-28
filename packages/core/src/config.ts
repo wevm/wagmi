@@ -1,9 +1,9 @@
 import {
   type Address,
   type Chain,
-  type PublicClient,
+  type Client,
   type Transport,
-  createPublicClient,
+  createClient,
 } from 'viem'
 import { persist, subscribeWithSelector } from 'zustand/middleware'
 import { createStore } from 'zustand/vanilla'
@@ -30,9 +30,9 @@ export type CreateConfigParameters<
         transports: Record<chains[number]['id'], Transport>
       }
     | {
-        publicClient: (parameters: {
+        client: (parameters: {
           chain: chains[number]
-        }) => PublicClient<Transport>
+        }) => Client<Transport>
       }
   > &
     OneOf<
@@ -52,7 +52,7 @@ export type Config<
   readonly state: State<chains>
   readonly storage: Storage | null
 
-  getPublicClient(parameters?: { chainId?: number | undefined }): PublicClient
+  getClient(parameters?: { chainId?: number | undefined }): Client
   setState<chains_ extends readonly [Chain, ...Chain[]] = chains>(
     value: State<chains_> | ((state: State<chains_>) => State<chains_>),
   ): void
@@ -135,36 +135,37 @@ export function createConfig<
   }
 
   // TODO: WebSocket support
-  const publicClients = new Map<number, PublicClient | undefined>()
-  function getPublicClient(parameters: { chainId?: number | undefined } = {}) {
+  const clients = new Map<number, Client>()
+  function getClient(parameters: { chainId?: number | undefined } = {}) {
     const chainId = parameters.chainId ?? store.getState().chainId
     const chain = chains.find((x) => x.id === chainId)
 
-    // If the target chain is not configured, use the public client of the current chain.
+    // If the target chain is not configured, use the client of the current chain.
     // TODO: should we error instead? idk. figure out later.
-    let publicClient = publicClients.get(store.getState().chainId)
-    if (publicClient && !chain) return publicClient
-    else if (!chain) throw new ChainNotConfiguredError()
+    {
+      const client = clients.get(store.getState().chainId)
+      if (client && !chain) return client
+      else if (!chain) throw new ChainNotConfiguredError()
+    }
 
-    // If a memoized public client exists for a chain id, use that.
-    publicClient = publicClients.get(chainId)
-    if (publicClient) return publicClient
+    // If a memoized client exists for a chain id, use that.
+    {
+      const client = clients.get(chainId)
+      if (client) return client
+    }
 
-    if ('publicClient' in rest)
-      publicClient =
-        typeof rest.publicClient === 'function'
-          ? rest.publicClient({ chain })
-          : rest.publicClient
+    let client: Client
+    if (rest.client) client = rest.client({ chain })
     else
-      publicClient = createPublicClient({
+      client = createClient({
         batch: { multicall: true },
         chain,
         pollingInterval: rest.pollingInterval as number,
         transport: rest.transports[chain.id as chains[number]['id']],
       })
 
-    publicClients.set(chainId, publicClient)
-    return publicClient!
+    clients.set(chainId, client)
+    return client
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -292,7 +293,7 @@ export function createConfig<
     },
     storage,
 
-    getPublicClient,
+    getClient,
     setState(value) {
       const newState =
         typeof value === 'function' ? value(store.getState() as any) : value

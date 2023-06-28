@@ -1,12 +1,12 @@
 import { config } from '@wagmi/test'
 import { describe, expect, test } from 'vitest'
 
-import { getWalletClient } from './getWalletClient.js'
+import { getConnectorClient } from './getConnectorClient.js'
 
-describe('getWalletClient', () => {
+describe('getConnectorClient', () => {
   test('behavior: not connected', async () => {
     await expect(
-      getWalletClient(config),
+      getConnectorClient(config),
     ).rejects.toThrowErrorMatchingInlineSnapshot(`
       "Connector not found.
 

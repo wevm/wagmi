@@ -6,7 +6,7 @@ import {
 } from '../actions/switchChain.js'
 import { type Config } from '../config.js'
 
-import type { Evaluate, PartialBy } from '../types/utils.js'
+import type { Evaluate, Omit, PartialBy } from '../types/utils.js'
 import type { Mutate, MutateAsync, MutationOptions } from './types.js'
 
 export type SwitchChainOptions<

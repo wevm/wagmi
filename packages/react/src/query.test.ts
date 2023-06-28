@@ -15,7 +15,6 @@ test('exports', () => {
       "signMessageMutationOptions",
       "switchAccountMutationOptions",
       "switchChainMutationOptions",
-      "writeContractMutationOptions",
     ]
   `)
 })

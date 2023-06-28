@@ -3,7 +3,7 @@ import {
   type QueryKey,
   useQuery as useQuery_,
 } from '@tanstack/react-query'
-import { type Evaluate } from '@wagmi/core/internal'
+import { type Evaluate, type Omit } from '@wagmi/core/internal'
 
 export type UseMutationOptions<
   data = unknown,

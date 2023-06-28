@@ -1,9 +1,9 @@
 import {
   type Account,
   type Chain,
+  type Client,
   type Transport,
-  type WalletClient,
-  createWalletClient,
+  createClient,
   custom,
 } from 'viem'
 
@@ -11,18 +11,18 @@ import type { Config } from '../config.js'
 import { ConnectorNotFoundError } from '../errors/config.js'
 import type { Evaluate } from '../internal.js'
 
-export type GetWalletClientParameters<
+export type GetConnectorClientParameters<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
 > = {
   chainId?: chainId | config['chains'][number]['id'] | undefined
 }
 
-export type GetWalletClientReturnType<
+export type GetConnectorClientReturnType<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
 > = Evaluate<
-  WalletClient<
+  Client<
     Transport,
     Extract<
       config['chains'][number],
@@ -34,28 +34,23 @@ export type GetWalletClientReturnType<
   >
 >
 
-export type ConnectError =
-  | ConnectorNotFoundError
-  // base
-  | Error
-
-/** https://wagmi.sh/core/actions/getWalletClient */
-export async function getWalletClient<
+/** https://wagmi.sh/core/actions/getConnectorClient */
+export async function getConnectorClient<
   config extends Config,
   chainId extends config['chains'][number]['id'],
 >(
   config: config,
-  { chainId }: GetWalletClientParameters<config, chainId> = {},
-): Promise<GetWalletClientReturnType<config, chainId>> {
+  { chainId }: GetConnectorClientParameters<config, chainId> = {},
+): Promise<GetConnectorClientReturnType<config, chainId>> {
   const connection = config.state.connections.get(config.state.current!)
   if (!connection) throw new ConnectorNotFoundError()
 
   const resolvedChainId = chainId ?? connection.chainId
   const connector = connection.connector
-  if (connector.getWalletClient)
-    return connector.getWalletClient({
+  if (connector.getClient)
+    return connector.getClient({
       chainId: resolvedChainId,
-    }) as unknown as GetWalletClientReturnType<config, chainId>
+    }) as unknown as GetConnectorClientReturnType<config, chainId>
 
   const account = connection.accounts[0]!
   const chain = config.chains.find((chain) => chain.id === resolvedChainId)
@@ -63,9 +58,11 @@ export async function getWalletClient<
     chainId: resolvedChainId,
   })
 
-  return createWalletClient({
+  return createClient({
     account,
     chain,
-    transport: custom(provider as any),
-  }) as unknown as GetWalletClientReturnType<config, chainId>
+    transport(opts) {
+      return custom(provider as any)({ ...opts, retryCount: 0 })
+    },
+  }) as unknown as GetConnectorClientReturnType<config, chainId>
 }

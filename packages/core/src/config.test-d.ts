@@ -22,7 +22,7 @@ test('low-level config', () => {
   createConfig({
     chains: [mainnet, sepolia],
     connectors: [testConnector({ accounts })],
-    publicClient: ({ chain }) =>
+    client: ({ chain }) =>
       createPublicClient({
         chain,
         transport: http(),
@@ -43,7 +43,7 @@ test('`chains` must have at least one chain`', () => {
     // @ts-expect-error
     chains: [],
     connectors: [testConnector({ accounts })],
-    publicClient: ({ chain }) =>
+    client: ({ chain }) =>
       createPublicClient({
         chain,
         transport: http(),

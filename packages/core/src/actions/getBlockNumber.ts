@@ -1,4 +1,8 @@
 import type { RpcError } from 'viem'
+import {
+  getBlockNumber as viem_getBlockNumber,
+  watchBlockNumber as viem_watchBlockNumber,
+} from 'viem/actions'
 
 import { type Config } from '../config.js'
 import { type Evaluate } from '../internal.js'
@@ -24,8 +28,8 @@ export function getBlockNumber<config extends Config>(
   parameters: GetBlockNumberParameters<config> = {},
 ): Promise<GetBlockNumberReturnType> {
   const { chainId } = parameters
-  const publicClient = config.getPublicClient({ chainId })
-  return publicClient?.getBlockNumber(parameters)
+  const client = config.getClient({ chainId })
+  return viem_getBlockNumber(client, parameters)
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -61,8 +65,8 @@ export function watchBlockNumber<config extends Config>(
   const listener = (chainId: number | undefined) => {
     if (unwatch) unwatch()
 
-    const publicClient = config.getPublicClient({ chainId })
-    unwatch = publicClient?.watchBlockNumber({
+    const client = config.getClient({ chainId })
+    unwatch = viem_watchBlockNumber(client, {
       onBlockNumber,
       onError,
       poll: true,

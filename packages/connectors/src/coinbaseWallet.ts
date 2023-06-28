@@ -7,7 +7,7 @@ import {
   createConnector,
   normalizeChainId,
 } from '@wagmi/core'
-import type { Evaluate, Mutable } from '@wagmi/core/internal'
+import type { Evaluate, Mutable, Omit } from '@wagmi/core/internal'
 import {
   type ProviderRpcError,
   SwitchChainError,

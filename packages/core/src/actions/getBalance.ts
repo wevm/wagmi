@@ -5,10 +5,14 @@ import {
   RpcError,
   formatUnits,
 } from 'viem'
+import {
+  getBalance as viem_getBalance,
+  watchBlockNumber as viem_watchBlockNumber,
+} from 'viem/actions'
 
 import type { Config } from '../config.js'
 import { type Unit } from '../types/unit.js'
-import { type Evaluate, type OneOf } from '../types/utils.js'
+import { type Evaluate, type Omit, type OneOf } from '../types/utils.js'
 import { getUnit } from '../utils/getUnit.js'
 import type {
   GetBlockNumberError,
@@ -52,17 +56,17 @@ export async function getBalance<config extends Config>(
     token,
     unit = 'ether',
   } = parameters
-  const publicClient = config.getPublicClient({ chainId })
+  const client = config.getClient({ chainId })
 
   if (token) {
     // TODO
   }
 
-  const value = await publicClient?.getBalance(
+  const value = await viem_getBalance(
+    client,
     blockNumber ? { address, blockNumber } : { address, blockTag },
   )
-  const chain =
-    config.chains.find((x) => x.id === chainId) ?? publicClient.chain!
+  const chain = config.chains.find((x) => x.id === chainId) ?? client.chain!
   return {
     decimals: chain.nativeCurrency.decimals,
     formatted: formatUnits(value, getUnit(unit)),
@@ -119,8 +123,8 @@ export function watchBalance<config extends Config>(
   const listener = (chainId: number | undefined) => {
     if (unwatch) unwatch()
 
-    const publicClient = config.getPublicClient({ chainId })
-    unwatch = publicClient?.watchBlockNumber({
+    const client = config.getClient({ chainId })
+    unwatch = viem_watchBlockNumber(client, {
       onBlockNumber: handler,
       onError,
       poll: true,

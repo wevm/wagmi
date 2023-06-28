@@ -1,9 +1,10 @@
 import type { UserRejectedRequestError } from 'viem'
+import { signMessage as viem_signMessage } from 'viem/actions'
 
 import { type Config } from '../config.js'
 import { ConnectorNotFoundError } from '../errors/config.js'
-import type { Evaluate } from '../types/utils.js'
-import { getWalletClient } from './getWalletClient.js'
+import type { Evaluate, Omit } from '../types/utils.js'
+import { getConnectorClient } from './getConnectorClient.js'
 
 export type SignMessageParameters = Evaluate<
   Omit<import('viem').SignMessageParameters, 'account'>
@@ -22,7 +23,7 @@ export async function signMessage(
   config: Config,
   { message }: SignMessageParameters,
 ): Promise<SignMessageReturnType> {
-  const walletClient = await getWalletClient(config)
-  if (!walletClient) throw new ConnectorNotFoundError()
-  return walletClient.signMessage({ message })
+  const client = await getConnectorClient(config)
+  if (!client) throw new ConnectorNotFoundError()
+  return viem_signMessage(client, { message })
 }

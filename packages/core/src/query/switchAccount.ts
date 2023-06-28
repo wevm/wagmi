@@ -5,7 +5,7 @@ import {
   switchAccount,
 } from '../actions/switchAccount.js'
 import { type Config, type Connector } from '../config.js'
-import type { Evaluate, PartialBy } from '../types/utils.js'
+import type { Evaluate, Omit, PartialBy } from '../types/utils.js'
 import type { Mutate, MutateAsync, MutationOptions } from './types.js'
 
 export type SwitchAccountOptions<connector extends Connector | undefined> =

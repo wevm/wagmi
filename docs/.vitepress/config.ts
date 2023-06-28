@@ -342,6 +342,10 @@ function getSidebar() {
                 text: 'getConnections',
                 link: '/core/actions/getConnections',
               },
+              {
+                text: 'getConnectorClient 🚧',
+                link: '/core/actions/getConnectorClient',
+              },
               { text: 'getEnsAddress 🚧', link: '/core/actions/getEnsAddress' },
               { text: 'getEnsAvatar 🚧', link: '/core/actions/getEnsAvatar' },
               { text: 'getEnsName 🚧', link: '/core/actions/getEnsName' },
@@ -352,10 +356,6 @@ function getSidebar() {
               { text: 'getEnsText 🚧', link: '/core/actions/getEnsText' },
               { text: 'getFeeData 🚧', link: '/core/actions/getFeeData' },
               { text: 'getToken 🚧', link: '/core/actions/getToken' },
-              {
-                text: 'getWalletClient 🚧',
-                link: '/core/actions/getWalletClient',
-              },
               {
                 text: 'prepareContractWrite 🚧',
                 link: '/core/actions/prepareContractWrite',

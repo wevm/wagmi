@@ -8,9 +8,9 @@ import {
   type EIP1193RequestFn,
   type Hex,
   SwitchChainError,
+  type Transport,
   UserRejectedRequestError,
-  type WalletClient,
-  createWalletClient,
+  type WalletRpcSchema,
   custom,
   fromHex,
   getAddress,
@@ -33,8 +33,9 @@ export type TestConnectorParameters = {
 export function testConnector(parameters: TestConnectorParameters) {
   const features = parameters.features ?? {}
 
-  type Provider = WalletClient
-
+  type Provider = ReturnType<
+    Transport<'custom', {}, EIP1193RequestFn<WalletRpcSchema>>
+  >
   let connected = false
 
   return createConnector<Provider>((config) => ({
@@ -96,12 +97,7 @@ export function testConnector(parameters: TestConnectorParameters) {
         const { result } = await rpc.http(url, { body: { method, params } })
         return result
       }
-      const walletClient = createWalletClient({
-        account: parameters.accounts[0]!,
-        chain,
-        transport: custom({ request }),
-      })
-      return walletClient
+      return custom({ request })({ retryCount: 0 })
     },
     async getChainId() {
       const provider = await this.getProvider()

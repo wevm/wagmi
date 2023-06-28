@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
-import { type SignMessageError, type SignMessageParameters } from '@wagmi/core'
+import { type SignMessageError } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
 import {
   type SignMessageData,
@@ -10,11 +10,10 @@ import {
   signMessageMutationOptions,
 } from '@wagmi/core/query'
 import * as React from 'react'
+import type { SignableMessage } from 'viem'
 
 import type { UseMutationOptions, UseMutationResult } from '../types/query.js'
 import { useConfig } from './useConfig.js'
-
-type SignableMessage = SignMessageParameters['message']
 
 export type UseSignMessageParameters<
   message extends SignableMessage | undefined = undefined,

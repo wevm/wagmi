@@ -42,7 +42,7 @@ export type CreateConnectorFn<
     getProvider(parameters?: {
       chainId?: number | undefined
     }): Promise<provider>
-    getWalletClient?(parameters?: {
+    getClient?(parameters?: {
       chainId?: number | undefined
     }): Promise<WalletClient>
     isAuthorized(): Promise<boolean>
