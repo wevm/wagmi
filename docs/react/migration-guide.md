@@ -5,7 +5,7 @@
 ### createConfig
 
 - Removed `logger`
-- `publicClient`/`webSocketPublicClient` versus `transports`
+- Removed `publicClient` and `webSocketPublicClient` (use `transports` or `client` instead)
 
 ### Chains
 
@@ -31,12 +31,10 @@
 
 ### Hooks
 
-- "Mutation" hooks (e.g. `useConnect`, `useContractWrite`, `useSendTransaction`) now pass through all TanStack Query parameters under the `mutation` key parameter
-- "Query" hooks (e.g. `useBalance`, `useEnsName`, `useContractRead`) now pass through all TanStack Query parameters under the `query` key parameter
 - Removed `useNetwork` (use `useAccount.chainId` instead) (TODO: should we add `chain` to `useAccount`?)
+- Removed `usePublicClient` (TODO: migration path?)
+- Removed `useWebSocketClient` (TODO: migration path?)
 - Removed `useInfiniteQuery`, `useMutation`, `useQuery`, `useQueryClient` (TODO: Should we export from wagmi? If TanStack Query was peer dependency, could tell folks to import from there instead.)
-- Removed `usePublicClient` (use `config.getPublicClient` instead)
-- Removed `useWebSocketClient` (use `config.getWebSocketClient` instead)
 
 ### Constants
 
