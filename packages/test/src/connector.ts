@@ -9,6 +9,7 @@ import {
   type Hex,
   SwitchChainError,
   UserRejectedRequestError,
+  type WalletClient,
   createWalletClient,
   custom,
   fromHex,
@@ -32,7 +33,7 @@ export type TestConnectorParameters = {
 export function testConnector(parameters: TestConnectorParameters) {
   const features = parameters.features ?? {}
 
-  type Provider = ReturnType<typeof createWalletClient>
+  type Provider = WalletClient
 
   let connected = false
 

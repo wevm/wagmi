@@ -97,13 +97,6 @@ export {
   switchChain,
 } from './actions/switchChain.js'
 
-export {
-  type WriteContractError,
-  type WriteContractParameters,
-  type WriteContractReturnType,
-  writeContract,
-} from './actions/writeContract.js'
-
 ////////////////////////////////////////////////////////////////////////////////
 // Config
 
