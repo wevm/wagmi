@@ -48,8 +48,8 @@
   },
   "dependencies": {
     "@coinbase/wallet-sdk": "^3.7.1",
-    "@walletconnect/ethereum-provider": "^2.8.1",
-    "@walletconnect/modal": "^2.4.6"
+    "@walletconnect/ethereum-provider": "^2.8.5",
+    "@walletconnect/modal": "^2.5.6"
   },
   "devDependencies": {
     "@wagmi/core": "workspace:*",
