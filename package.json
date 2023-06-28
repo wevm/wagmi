@@ -40,7 +40,7 @@
     "rome": "^12.1.0",
     "simple-git-hooks": "^2.8.1",
     "typescript": "^5.0.4",
-    "viem": "1.1.7",
+    "viem": "1.2.2",
     "vite": "^4.3.2",
     "vitest": "^0.31.0"
   },
@@ -54,7 +54,7 @@
       "@wagmi/core": "workspace:*",
       "remark-shiki-twoslash>shiki": "^0.14.1",
       "shiki-twoslash>shiki": "^0.14.1",
-      "viem": "1.1.7"
+      "viem": "1.2.2"
     },
     "patchedDependencies": {
       "@coinbase/wallet-sdk@3.7.1": "patches/@coinbase__wallet-sdk@3.7.1.patch",

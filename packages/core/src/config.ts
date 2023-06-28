@@ -285,7 +285,7 @@ export function createConfig<
   }
 
   return {
-    chains,
+    chains: chains as chains,
     connectors,
     get state() {
       return store.getState() as unknown as State<chains>

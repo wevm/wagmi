@@ -3,8 +3,10 @@ import { type Abi, type ExtractAbiFunctionNames } from 'abitype'
 import { nounsAuctionHouseAbi } from 'abitype/test'
 import { expectTypeOf, test } from 'vitest'
 
+import { createConfig } from '../config.js'
 import { type WriteContractParameters, writeContract } from './writeContract.js'
-import { type Address, parseAbi } from 'viem'
+import { type Address, http, parseAbi } from 'viem'
+import { celo } from 'viem/chains'
 
 test('const asserted abi', () => {
   writeContract(config, {
@@ -24,6 +26,7 @@ test('const asserted abi', () => {
     'createBid',
     123
   >
+
   expectTypeOf<Result>().toEqualTypeOf<{
     abi: typeof nounsAuctionHouseAbi
     address: Address
@@ -204,4 +207,22 @@ test('overload with no args', () => {
     functionName: 'createBid'
     value?: bigint | undefined
   }>()
+})
+
+test.todo('chain formatters', () => {
+  const config = createConfig({
+    chains: [celo],
+    transports: {
+      [celo.id]: http(),
+    },
+  })
+  writeContract(config, {
+    abi: nounsAuctionHouseAbi,
+    address: '0x',
+    functionName: 'createBid',
+    args: [123n],
+    value: 123n,
+    // TODO
+    // feeCurrency: '0x',
+  })
 })

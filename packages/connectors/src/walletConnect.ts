@@ -4,6 +4,7 @@ import {
   createConnector,
   normalizeChainId,
 } from '@wagmi/core'
+import type { Evaluate, ExactPartial, Omit } from '@wagmi/core/internal'
 import {
   EthereumProvider,
   OPTIONAL_EVENTS,
@@ -21,62 +22,54 @@ import {
 
 type EthereumProviderOptions = Parameters<EthereumProvider['initialize']>[0]
 
-export type WalletConnectParameters = {
-  /**
-   * If a new chain is added to a previously existing configured connector `chains`, this flag
-   * will determine if that chain should be considered as stale. A stale chain is a chain that
-   * WalletConnect has yet to establish a relationship with (ie. the user has not approved or
-   * rejected the chain).
-   *
-   * Preface: Whereas WalletConnect v1 supported dynamic chain switching, WalletConnect v2 requires
-   * the user to pre-approve a set of chains up-front. This comes with consequent UX nuances (see below) when
-   * a user tries to switch to a chain that they have not approved.
-   *
-   * This flag mainly affects the behavior when a wallet does not support dynamic chain authorization
-   * with WalletConnect v2.
-   *
-   * If `true` (default), the new chain will be treated as a stale chain. If the user
-   * has yet to establish a relationship (approved/rejected) with this chain in their WalletConnect
-   * session, the connector will disconnect upon the dapp auto-connecting, and the user will have to
-   * reconnect to the dapp (revalidate the chain) in order to approve the newly added chain.
-   * This is the default behavior to avoid an unexpected error upon switching chains which may
-   * be a confusing user experience (ie. the user will not know they have to reconnect
-   * unless the dapp handles these types of errors).
-   *
-   * If `false`, the new chain will be treated as a validated chain. This means that if the user
-   * has yet to establish a relationship with the chain in their WalletConnect session, wagmi will successfully
-   * auto-connect the user. This comes with the trade-off that the connector will throw an error
-   * when attempting to switch to the unapproved chain. This may be useful in cases where a dapp constantly
-   * modifies their configured chains, and they do not want to disconnect the user upon
-   * auto-connecting. If the user decides to switch to the unapproved chain, it is important that the
-   * dapp handles this error and prompts the user to reconnect to the dapp in order to approve
-   * the newly added chain.
-   *
-   * @default true
-   */
-  isNewChainsStale?: boolean
-  /**
-   * Metadata for your app.
-   * @link https://docs.walletconnect.com/2.0/javascript/providers/ethereum#initialization
-   */
-  metadata?: EthereumProviderOptions['metadata']
-  /**
-   * WalletConnect Cloud Project ID.
-   * @link https://cloud.walletconnect.com/sign-in.
-   */
-  projectId: EthereumProviderOptions['projectId']
-  /**
-   * Options of QR code modal.
-   * @link https://docs.walletconnect.com/2.0/web3modal/options
-   */
-  qrModalOptions?: EthereumProviderOptions['qrModalOptions']
-  /**
-   * Whether or not to show the QR code modal.
-   * @default true
-   * @link https://docs.walletconnect.com/2.0/javascript/providers/ethereum#initialization
-   */
-  showQrModal?: EthereumProviderOptions['showQrModal']
-}
+export type WalletConnectParameters = Evaluate<
+  {
+    /**
+     * If a new chain is added to a previously existing configured connector `chains`, this flag
+     * will determine if that chain should be considered as stale. A stale chain is a chain that
+     * WalletConnect has yet to establish a relationship with (ie. the user has not approved or
+     * rejected the chain).
+     *
+     * Preface: Whereas WalletConnect v1 supported dynamic chain switching, WalletConnect v2 requires
+     * the user to pre-approve a set of chains up-front. This comes with consequent UX nuances (see below) when
+     * a user tries to switch to a chain that they have not approved.
+     *
+     * This flag mainly affects the behavior when a wallet does not support dynamic chain authorization
+     * with WalletConnect v2.
+     *
+     * If `true` (default), the new chain will be treated as a stale chain. If the user
+     * has yet to establish a relationship (approved/rejected) with this chain in their WalletConnect
+     * session, the connector will disconnect upon the dapp auto-connecting, and the user will have to
+     * reconnect to the dapp (revalidate the chain) in order to approve the newly added chain.
+     * This is the default behavior to avoid an unexpected error upon switching chains which may
+     * be a confusing user experience (ie. the user will not know they have to reconnect
+     * unless the dapp handles these types of errors).
+     *
+     * If `false`, the new chain will be treated as a validated chain. This means that if the user
+     * has yet to establish a relationship with the chain in their WalletConnect session, wagmi will successfully
+     * auto-connect the user. This comes with the trade-off that the connector will throw an error
+     * when attempting to switch to the unapproved chain. This may be useful in cases where a dapp constantly
+     * modifies their configured chains, and they do not want to disconnect the user upon
+     * auto-connecting. If the user decides to switch to the unapproved chain, it is important that the
+     * dapp handles this error and prompts the user to reconnect to the dapp in order to approve
+     * the newly added chain.
+     *
+     * @default true
+     */
+    isNewChainsStale?: boolean
+  } & Omit<
+    EthereumProviderOptions,
+    | 'chains'
+    | 'events'
+    | 'optionalChains'
+    | 'optionalEvents'
+    | 'optionalMethods'
+    | 'methods'
+    | 'rpcMap'
+    | 'showQrModal'
+  > &
+    ExactPartial<Pick<EthereumProviderOptions, 'showQrModal'>>
+>
 
 export function walletConnect(parameters: WalletConnectParameters) {
   const isNewChainsStale = parameters.isNewChainsStale ?? true
@@ -208,7 +201,9 @@ export function walletConnect(parameters: WalletConnectParameters) {
         const [defaultChain, ...optionalChains] = config.chains.map((x) => x.id)
         if (!defaultChain) return
         return await EthereumProvider.init({
+          ...parameters,
           chains: [defaultChain],
+          disableProviderPing: true,
           optionalMethods: OPTIONAL_METHODS,
           optionalEvents: OPTIONAL_EVENTS,
           optionalChains,
@@ -220,10 +215,6 @@ export function walletConnect(parameters: WalletConnectParameters) {
             ]),
           ),
           showQrModal: parameters.showQrModal ?? true,
-          ...(parameters.metadata ? { metadata: parameters.metadata } : {}),
-          ...(parameters.qrModalOptions
-            ? { qrModalOptions: parameters.qrModalOptions }
-            : {}),
         })
       }
 

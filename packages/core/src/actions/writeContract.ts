@@ -7,8 +7,9 @@ import {
 import { type Abi, type Address } from 'viem'
 
 import { type Config } from '../config.js'
-import type { Evaluate, IsUnion, PartialBy } from '../types/utils.js'
+import type { Evaluate, IsUnion, OmitKeys, PartialBy } from '../types/utils.js'
 
+// TODO: Chain formatters
 export type WriteContractParameters<
   config extends Config = Config,
   abi extends Abi | readonly unknown[] = Abi,
@@ -48,7 +49,7 @@ export type WriteContractParameters<
       ? 'args'
       : never
   > &
-    Omit<
+    OmitKeys<
       PartialBy<
         { value: bigint },
         Abi extends abi
@@ -66,7 +67,6 @@ export type WriteContractParameters<
         : never
     >
 >
-// TODO: Chain formatters
 
 export type WriteContractReturnType = import('viem').WriteContractReturnType
 

@@ -5,7 +5,7 @@ overrides:
   '@wagmi/core': workspace:*
   remark-shiki-twoslash>shiki: ^0.14.1
   shiki-twoslash>shiki: ^0.14.1
-  viem: 1.1.7
+  viem: 1.2.2
 
 patchedDependencies:
   '@coinbase/wallet-sdk@3.7.1':
@@ -74,8 +74,8 @@ importers:
         specifier: ^5.0.4
         version: 5.0.4
       viem:
-        specifier: 1.1.7
-        version: 1.1.7(typescript@5.0.4)
+        specifier: 1.2.2
+        version: 1.2.2(typescript@5.0.4)
       vite:
         specifier: ^4.3.2
         version: 4.3.2(@types/node@18.16.9)
@@ -101,8 +101,8 @@ importers:
         specifier: ^0.53.0
         version: 0.53.0(vite@4.3.2)
       viem:
-        specifier: 1.1.7
-        version: 1.1.7(typescript@5.0.4)
+        specifier: 1.2.2
+        version: 1.2.2(typescript@5.0.4)
       vitepress:
         specifier: 1.0.0-beta.1
         version: 1.0.0-beta.1(patch_hash=owdx3pggad6ualcvbffniyfaw4)(@types/node@18.16.9)
@@ -228,8 +228,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       viem:
-        specifier: 1.1.7
-        version: 1.1.7(typescript@5.0.4)
+        specifier: 1.2.2
+        version: 1.2.2(typescript@5.0.4)
     devDependencies:
       '@esbuild-plugins/node-globals-polyfill':
         specifier: ^0.2.3
@@ -265,8 +265,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       viem:
-        specifier: 1.1.7
-        version: 1.1.7(typescript@5.0.4)
+        specifier: 1.2.2
+        version: 1.2.2(typescript@5.0.4)
       wagmi:
         specifier: workspace:*
         version: link:../../packages/react
@@ -6608,8 +6608,8 @@ packages:
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
 
-  /viem@1.1.7(typescript@5.0.4):
-    resolution: {integrity: sha512-3lBDRS0ejb4Eo9c/S+RBadwIHNK1RS0ffW7HkSt3pMtzl4nis1aF1tHrU6yqI+yCWqAPl36a48qGD4mEhxPuDw==}
+  /viem@1.2.2(typescript@5.0.4):
+    resolution: {integrity: sha512-wpYGUSlY++XSMBoY4vKq8XKWNeKlv0EpEHiooElSZ6XNoh8txE+FJR+Hutlnak1uCS8X1DG3Xhmhppac53YLsA==}
     peerDependencies:
       typescript: '>=5.0.4'
     dependencies:

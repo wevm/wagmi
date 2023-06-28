@@ -11,11 +11,13 @@ export {
 // Types
 
 export {
+  type Evaluate,
   type ExactPartial,
   type Mutable,
+  type Omit,
+  type OmitKeys,
   type OneOf,
   type PartialBy,
-  type Evaluate,
 } from './types/utils.js'
 
 ////////////////////////////////////////////////////////////////////////////////
