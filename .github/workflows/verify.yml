@@ -13,8 +13,6 @@ jobs:
     steps:
       - name: Clone repository
         uses: actions/checkout@v3
-        with:
-          submodules: true
 
       - name: Install dependencies
         uses: ./.github/actions/install-dependencies
@@ -39,8 +37,6 @@ jobs:
     steps:
       - name: Clone repository
         uses: actions/checkout@v3
-        with:
-          submodules: true
 
       - name: Install dependencies
         uses: ./.github/actions/install-dependencies
@@ -62,8 +58,6 @@ jobs:
     steps:
       - name: Clone repository
         uses: actions/checkout@v3
-        with:
-          submodules: true
 
       - name: Install dependencies
         uses: ./.github/actions/install-dependencies
@@ -92,8 +86,6 @@ jobs:
     steps:
       - name: Clone repository
         uses: actions/checkout@v3
-        with:
-          submodules: true
 
       - name: Install dependencies
         uses: ./.github/actions/install-dependencies

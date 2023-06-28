@@ -242,7 +242,6 @@ function getSidebar() {
                 text: 'useEnsResovler 🚧',
                 link: '/react/hooks/useEnsResovler',
               },
-              { text: 'useEnsText 🚧', link: '/react/hooks/useEnsText' },
               { text: 'useFeeData 🚧', link: '/react/hooks/useFeeData' },
               {
                 text: 'usePrepareContractWrite 🚧',
@@ -323,7 +322,6 @@ function getSidebar() {
         items: [
           { text: 'createConfig 🚧', link: '/core/createConfig' },
           { text: 'createConnector 🚧', link: '/core/createConnector' },
-          { text: 'createQueryClient 🚧', link: '/core/createQueryClient' },
           { text: 'createStorage 🚧', link: '/core/createStorage' },
           {
             text: 'Actions',
@@ -353,7 +351,6 @@ function getSidebar() {
                 text: 'getEnsResolver 🚧',
                 link: '/core/actions/getEnsResolver',
               },
-              { text: 'getEnsText 🚧', link: '/core/actions/getEnsText' },
               { text: 'getFeeData 🚧', link: '/core/actions/getFeeData' },
               { text: 'getToken 🚧', link: '/core/actions/getToken' },
               {
