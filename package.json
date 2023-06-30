@@ -41,7 +41,7 @@
     "rome": "^12.1.0",
     "simple-git-hooks": "^2.8.1",
     "typescript": "^5.0.4",
-    "viem": "1.2.6",
+    "viem": "0.0.0-w-20230630153145",
     "vite": "^4.3.2",
     "vitest": "^0.31.0"
   },
@@ -55,7 +55,7 @@
       "@wagmi/core": "workspace:*",
       "remark-shiki-twoslash>shiki": "^0.14.1",
       "shiki-twoslash>shiki": "^0.14.1",
-      "viem": "1.2.6"
+      "viem": "0.0.0-w-20230630153145"
     },
     "patchedDependencies": {
       "@coinbase/wallet-sdk@3.7.1": "patches/@coinbase__wallet-sdk@3.7.1.patch",
@@ -63,7 +63,12 @@
       "vitepress@1.0.0-beta.3": "patches/vitepress@1.0.0-beta.3.patch"
     },
     "peerDependencyRules": {
-      "ignoreMissing": ["@algolia/client-search", "esbuild", "search-insights"]
+      "ignoreMissing": [
+        "@algolia/client-search",
+        "esbuild",
+        "react",
+        "search-insights"
+      ]
     }
   }
 }

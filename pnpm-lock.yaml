@@ -5,7 +5,7 @@ overrides:
   '@wagmi/core': workspace:*
   remark-shiki-twoslash>shiki: ^0.14.1
   shiki-twoslash>shiki: ^0.14.1
-  viem: 1.2.6
+  viem: 0.0.0-w-20230630153145
 
 patchedDependencies:
   '@coinbase/wallet-sdk@3.7.1':
@@ -74,8 +74,8 @@ importers:
         specifier: ^5.0.4
         version: 5.0.4
       viem:
-        specifier: 1.2.6
-        version: 1.2.6(typescript@5.0.4)
+        specifier: 0.0.0-w-20230630153145
+        version: 0.0.0-w-20230630153145(typescript@5.0.4)
       vite:
         specifier: ^4.3.2
         version: 4.3.2(@types/node@18.16.9)
@@ -101,8 +101,8 @@ importers:
         specifier: ^0.53.0
         version: 0.53.0(vite@4.3.2)
       viem:
-        specifier: 1.2.6
-        version: 1.2.6(typescript@5.0.4)
+        specifier: 0.0.0-w-20230630153145
+        version: 0.0.0-w-20230630153145(typescript@5.0.4)
       vitepress:
         specifier: 1.0.0-beta.3
         version: 1.0.0-beta.3(patch_hash=owdx3pggad6ualcvbffniyfaw4)(@types/node@18.16.9)
@@ -225,8 +225,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       viem:
-        specifier: 1.2.6
-        version: 1.2.6(typescript@5.0.4)
+        specifier: 0.0.0-w-20230630153145
+        version: 0.0.0-w-20230630153145(typescript@5.0.4)
     devDependencies:
       '@esbuild-plugins/node-globals-polyfill':
         specifier: ^0.2.3
@@ -262,8 +262,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       viem:
-        specifier: 1.2.6
-        version: 1.2.6(typescript@5.0.4)
+        specifier: 0.0.0-w-20230630153145
+        version: 0.0.0-w-20230630153145(typescript@5.0.4)
       wagmi:
         specifier: workspace:*
         version: link:../../packages/react
@@ -307,6 +307,9 @@ packages:
     resolution: {integrity: sha512-a/yTUkcO/Vyy+JffmAnTWbr4/90cLzw+CC3bRbhnULr/EM0fGNvM13oQQ14f2moLMcVDyAx/leczLlAOovhSZg==}
     peerDependencies:
       search-insights: '>= 1 < 3'
+    peerDependenciesMeta:
+      search-insights:
+        optional: true
     dependencies:
       '@algolia/autocomplete-shared': 1.9.3(algoliasearch@4.17.0)
     transitivePeerDependencies:
@@ -6565,8 +6568,8 @@ packages:
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
 
-  /viem@1.2.6(typescript@5.0.4):
-    resolution: {integrity: sha512-3tWiUb0D8dbFj66rUGLg6TKJjH98ZziomkyCyI0evqJFYdNfiEG0K2Ns07MlOXZZF4sGe+a5Mj15DaDOwm7sgw==}
+  /viem@0.0.0-w-20230630153145(typescript@5.0.4):
+    resolution: {integrity: sha512-8lqpz9eS6iKWm6OdSgyl2qa9BxMFKHKqnALxnpPgRd7TxTONC8f5SfIIlSRxQEwTV3+52nFcRUuu6RZt2rOGBA==}
     peerDependencies:
       typescript: '>=5.0.4'
     dependencies:
