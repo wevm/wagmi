@@ -25,10 +25,14 @@ test('exports', () => {
       "getTokenQueryOptions",
       "getTransactionQueryKey",
       "getTransactionQueryOptions",
+      "prepareSendTransactionQueryKey",
+      "prepareSendTransactionQueryOptions",
       "reconnectMutationOptions",
       "signMessageMutationOptions",
       "switchAccountMutationOptions",
       "switchChainMutationOptions",
+      "waitForTransactionReceiptQueryKey",
+      "waitForTransactionReceiptQueryOptions",
     ]
   `)
 })

@@ -101,6 +101,15 @@ export {
 } from './query/getTransaction.js'
 
 export {
+  type PrepareSendTransactionData,
+  type PrepareSendTransactionOptions,
+  type PrepareSendTransactionQueryFnData,
+  type PrepareSendTransactionQueryKey,
+  prepareSendTransactionQueryKey,
+  prepareSendTransactionQueryOptions,
+} from './query/prepareSendTransaction.js'
+
+export {
   type ReconnectData,
   type ReconnectVariables,
   type ReconnectOptions,
@@ -135,3 +144,12 @@ export {
   type SwitchChainMutateAsync,
   switchChainMutationOptions,
 } from './query/switchChain.js'
+
+export {
+  type WaitForTransactionReceiptData,
+  type WaitForTransactionReceiptOptions,
+  type WaitForTransactionReceiptQueryFnData,
+  type WaitForTransactionReceiptQueryKey,
+  waitForTransactionReceiptQueryKey,
+  waitForTransactionReceiptQueryOptions,
+} from './query/waitForTransactionReceipt.js'

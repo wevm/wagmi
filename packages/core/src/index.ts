@@ -119,6 +119,13 @@ export {
 } from './actions/getConnections.js'
 
 export {
+  type PrepareSendTransactionError,
+  type PrepareSendTransactionParameters,
+  type PrepareSendTransactionReturnType,
+  prepareSendTransaction,
+} from './actions/prepareSendTransaction.js'
+
+export {
   type ReconnectError,
   type ReconnectParameters,
   type ReconnectReturnType,
@@ -145,6 +152,13 @@ export {
   type SwitchChainReturnType,
   switchChain,
 } from './actions/switchChain.js'
+
+export {
+  type WaitForTransactionReceiptError,
+  type WaitForTransactionReceiptParameters,
+  type WaitForTransactionReceiptReturnType,
+  waitForTransactionReceipt,
+} from './actions/waitForTransactionReceipt.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // Config

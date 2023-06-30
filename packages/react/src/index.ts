@@ -33,6 +33,27 @@ export {
   useBlockNumber,
 } from './hooks/useBlockNumber.js'
 
+export { type UseChainIdReturnType, useChainId } from './hooks/useChainId.js'
+
+export { type UseConfigReturnType, useConfig } from './hooks/useConfig.js'
+
+export {
+  type UseConnectParameters,
+  type UseConnectReturnType,
+  useConnect,
+} from './hooks/useConnect.js'
+
+export {
+  type UseConnectionsReturnType,
+  useConnections,
+} from './hooks/useConnections.js'
+
+export {
+  type UseDisconnectParameters,
+  type UseDisconnectReturnType,
+  useDisconnect,
+} from './hooks/useDisconnect.js'
+
 export {
   type UseEnsAddressParameters,
   type UseEnsAddressReturnType,
@@ -57,32 +78,17 @@ export {
   useEnsResolver,
 } from './hooks/useEnsResolver.js'
 
-export { type UseChainIdReturnType, useChainId } from './hooks/useChainId.js'
-
-export { type UseConfigReturnType, useConfig } from './hooks/useConfig.js'
-
-export {
-  type UseConnectParameters,
-  type UseConnectReturnType,
-  useConnect,
-} from './hooks/useConnect.js'
-
-export {
-  type UseConnectionsReturnType,
-  useConnections,
-} from './hooks/useConnections.js'
-
-export {
-  type UseDisconnectParameters,
-  type UseDisconnectReturnType,
-  useDisconnect,
-} from './hooks/useDisconnect.js'
-
 export {
   type UseFeeDataParameters,
   type UseFeeDataReturnType,
   useFeeData,
 } from './hooks/useFeeData.js'
+
+export {
+  type UsePrepareSendTransactionParameters,
+  type UsePrepareSendTransactionReturnType,
+  usePrepareSendTransaction,
+} from './hooks/usePrepareSendTransaction.js'
 
 export {
   type UseReconnectParameters,
@@ -113,6 +119,12 @@ export {
   type UseTokenReturnType,
   useToken,
 } from './hooks/useToken.js'
+
+export {
+  type UseWaitForTransactionReceiptParameters,
+  type UseWaitForTransactionReceiptReturnType,
+  useWaitForTransactionReceipt,
+} from './hooks/useWaitForTransactionReceipt.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // @wagmi/core
