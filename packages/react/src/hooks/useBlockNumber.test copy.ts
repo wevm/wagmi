@@ -11,7 +11,7 @@ test('mounts', async () => {
 
   expect(result.current).toMatchInlineSnapshot(`
     {
-      "data": 16966590n,
+      "data": 16280770n,
       "dataUpdatedAt": 1675209600000,
       "error": null,
       "errorUpdateCount": 0,
@@ -43,16 +43,11 @@ test('watch', async () => {
   const { result } = renderHook(() => useBlockNumber({ watch: true }))
 
   await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
-  const blockNumber = result.current.data!
-  expect(result.current.data).toMatchInlineSnapshot('16966590n')
+  expect(result.current.data).toEqual(16280770n)
 
   await testClient.anvil.mine({ blocks: 1 })
-  await waitFor(() => {
-    expect(result.current.data).toEqual(blockNumber + 1n)
-  })
+  await waitFor(() => expect(result.current.data).toEqual(16280771n))
 
   await testClient.anvil.mine({ blocks: 1 })
-  await waitFor(() => {
-    expect(result.current.data).toEqual(blockNumber + 2n)
-  })
+  await waitFor(() => expect(result.current.data).toEqual(16280772n))
 })

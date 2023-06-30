@@ -15,7 +15,7 @@ test('errors when on wrong chain', async () => {
     "Chain mismatch
 
     Details: Expected \\"Ethereum\\", received \\"Ethereum\\".
-    Version: @wagmi/core@2.0.0"
+    Version: @wagmi/core@x.y.z"
   `)
   await disconnect(config, { connector })
 })

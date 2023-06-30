@@ -42,7 +42,7 @@ test('behavior: user rejected request', async () => {
     [UserRejectedRequestError: User rejected the request.
 
     Details: Failed to switch chain.
-    Version: viem@1.2.2]
+    Version: viem@1.2.6]
   `)
   await disconnect(config, { connector: connector_ })
 })
@@ -57,7 +57,7 @@ test('behavior: not supported', async () => {
   ).rejects.toMatchInlineSnapshot(`
     [SwitchChainNotSupportedError: "Test Connector" does not support programmatic chain switching.
 
-    Version: @wagmi/core@2.0.0]
+    Version: @wagmi/core@x.y.z]
   `)
   await disconnect(config, { connector: connector_ })
 })

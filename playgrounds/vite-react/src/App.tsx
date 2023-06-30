@@ -7,6 +7,7 @@ import {
   useConnect,
   useConnections,
   useDisconnect,
+  useEnsName,
   useSignMessage,
   useSwitchAccount,
   useSwitchChain,
@@ -30,13 +31,16 @@ function App() {
 function Account() {
   const account = useAccount()
   const { disconnect } = useDisconnect()
+  const { data: ensName } = useEnsName({
+    address: account.address,
+  })
 
   return (
     <div>
       <h2>Account</h2>
 
       <div>
-        account: {account.address}
+        account: {account.address} {ensName}
         <br />
         chainId: {account.chainId}
         <br />

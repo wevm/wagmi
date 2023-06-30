@@ -1,21 +1,22 @@
 import type { RpcError } from 'viem'
 import {
+  type GetBlockNumberParameters as viem_GetBlockNumberParameters,
+  type GetBlockNumberReturnType as viem_GetBlockNumberReturnType,
+  type WatchBlockNumberParameters as viem_WatchBlockNumberParameters,
+  type WatchBlockNumberReturnType as viem_WatchBlockNumberReturnType,
   getBlockNumber as viem_getBlockNumber,
   watchBlockNumber as viem_watchBlockNumber,
 } from 'viem/actions'
 
 import { type Config } from '../config.js'
-import { type Evaluate } from '../internal.js'
+import type { ChainId } from '../types/properties.js'
+import type { Evaluate } from '../types/utils.js'
 
 export type GetBlockNumberParameters<config extends Config = Config> = Evaluate<
-  Pick<import('viem').GetBlockNumberParameters, 'maxAge'> & {
-    chainId?: config['chains'][number]['id'] | undefined
-  }
+  viem_GetBlockNumberParameters & ChainId<config>
 >
 
-export type GetBlockNumberReturnType =
-  | import('viem').GetBlockNumberReturnType
-  | undefined
+export type GetBlockNumberReturnType = viem_GetBlockNumberReturnType
 
 export type GetBlockNumberError =
   | RpcError
@@ -37,17 +38,12 @@ export function getBlockNumber<config extends Config>(
 
 export type WatchBlockNumberParameters<config extends Config = Config> =
   Evaluate<
-    Pick<
-      import('viem').WatchBlockNumberParameters,
-      'onBlockNumber' | 'onError'
-    > & {
-      chainId?: config['chains'][number]['id'] | undefined
+    Pick<viem_WatchBlockNumberParameters, 'onBlockNumber' | 'onError'> & {
       syncConnectedChain?: boolean
-    }
+    } & ChainId<config>
   >
 
-export type WatchBlockNumberReturnType =
-  import('viem').WatchBlockNumberReturnType
+export type WatchBlockNumberReturnType = viem_WatchBlockNumberReturnType
 
 // TODO: wrap in viem's `observe` to avoid duplicate invocations.
 /** https://wagmi.sh/core/actions/getBlockNumber#watcher */

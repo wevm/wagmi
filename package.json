@@ -3,6 +3,7 @@
   "scripts": {
     "build": "pnpm run --r --filter \"./packages/**\" build",
     "clean": "pnpm run --r --parallel clean",
+    "deps": "pnpx taze -r",
     "dev": "pnpm --filter vite-react dev",
     "dev:core": "pnpm --filter vite-core dev",
     "docs:dev": "pnpm --filter docs dev",
@@ -40,7 +41,7 @@
     "rome": "^12.1.0",
     "simple-git-hooks": "^2.8.1",
     "typescript": "^5.0.4",
-    "viem": "0.0.0-wagmiv2-20230628182101",
+    "viem": "1.2.6",
     "vite": "^4.3.2",
     "vitest": "^0.31.0"
   },
@@ -54,15 +55,15 @@
       "@wagmi/core": "workspace:*",
       "remark-shiki-twoslash>shiki": "^0.14.1",
       "shiki-twoslash>shiki": "^0.14.1",
-      "viem": "0.0.0-wagmiv2-20230628182101"
+      "viem": "1.2.6"
     },
     "patchedDependencies": {
       "@coinbase/wallet-sdk@3.7.1": "patches/@coinbase__wallet-sdk@3.7.1.patch",
       "@walletconnect/ethereum-provider@2.8.5": "patches/@walletconnect__ethereum-provider@2.8.5.patch",
-      "vitepress@1.0.0-beta.1": "patches/vitepress@1.0.0-beta.1.patch"
+      "vitepress@1.0.0-beta.3": "patches/vitepress@1.0.0-beta.3.patch"
     },
     "peerDependencyRules": {
-      "ignoreMissing": ["@algolia/client-search", "esbuild", "react"]
+      "ignoreMissing": ["@algolia/client-search", "esbuild", "search-insights"]
     }
   }
 }

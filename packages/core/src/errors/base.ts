@@ -1,7 +1,7 @@
 import type { Evaluate, OneOf } from '../types/utils.js'
 import { getVersion } from '../utils/getVersion.js'
 
-type BaseErrorParameters = Evaluate<
+type BaseErrorOptions = Evaluate<
   {
     docsPath?: string
     docsSlug?: string
@@ -16,31 +16,35 @@ export class BaseError extends Error {
   shortMessage: string
 
   override name = 'WagmiCoreError'
-  docsBaseUrl = 'https://wagmi.sh/core'
-  version = getVersion()
+  get docsBaseUrl() {
+    return 'https://wagmi.sh/core'
+  }
+  get version() {
+    return getVersion()
+  }
 
-  constructor(shortMessage: string, parameters: BaseErrorParameters = {}) {
+  constructor(shortMessage: string, options: BaseErrorOptions = {}) {
     super()
 
     const details =
-      parameters.cause instanceof BaseError
-        ? parameters.cause.details
-        : parameters.cause?.message
-        ? parameters.cause.message
-        : parameters.details!
+      options.cause instanceof BaseError
+        ? options.cause.details
+        : options.cause?.message
+        ? options.cause.message
+        : options.details!
     const docsPath =
-      parameters.cause instanceof BaseError
-        ? parameters.cause.docsPath || parameters.docsPath
-        : parameters.docsPath
+      options.cause instanceof BaseError
+        ? options.cause.docsPath || options.docsPath
+        : options.docsPath
 
     this.message = [
       shortMessage || 'An error occurred.',
       '',
-      ...(parameters.metaMessages ? [...parameters.metaMessages, ''] : []),
+      ...(options.metaMessages ? [...options.metaMessages, ''] : []),
       ...(docsPath
         ? [
             `Docs: ${this.docsBaseUrl}${docsPath}.html${
-              parameters.docsSlug ? `#${parameters.docsSlug}` : ''
+              options.docsSlug ? `#${options.docsSlug}` : ''
             }`,
           ]
         : []),
@@ -48,10 +52,10 @@ export class BaseError extends Error {
       `Version: ${this.version}`,
     ].join('\n')
 
-    if (parameters.cause) this.cause = parameters.cause
+    if (options.cause) this.cause = options.cause
     this.details = details
     this.docsPath = docsPath
-    this.metaMessages = parameters.metaMessages
+    this.metaMessages = options.metaMessages
     this.shortMessage = shortMessage
   }
 

@@ -6,6 +6,6 @@ test('WagmiConfigNotFoundError', () => {
   expect(new WagmiConfigNotFoundError()).toMatchInlineSnapshot(`
     [WagmiConfigNotFoundError: \`useConfig\` must be used within \`WagmiConfig\`.
 
-    Version: @wagmi/core@2.0.0]
+    Version: wagmi@x.y.z]
   `)
 })

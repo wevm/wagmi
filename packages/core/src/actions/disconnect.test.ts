@@ -25,7 +25,7 @@ test('behavior: not connected to connector', async () => {
     `
     [ConnectorNotFoundError: Connector not found.
 
-    Version: @wagmi/core@2.0.0]
+    Version: @wagmi/core@x.y.z]
   `,
   )
 })
@@ -38,7 +38,7 @@ test('behavior: connector passed not connected', async () => {
   ).rejects.toMatchInlineSnapshot(`
     [ConnectorNotFoundError: Connector not found.
 
-    Version: @wagmi/core@2.0.0]
+    Version: @wagmi/core@x.y.z]
   `)
 })
 

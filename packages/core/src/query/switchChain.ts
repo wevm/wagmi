@@ -5,6 +5,7 @@ import {
   switchChain,
 } from '../actions/switchChain.js'
 import { type Config } from '../config.js'
+import type { ChainId } from '../types/properties.js'
 
 import type { Evaluate, Omit, PartialBy } from '../types/utils.js'
 import type { Mutate, MutateAsync, MutationOptions } from './types.js'
@@ -13,9 +14,7 @@ export type SwitchChainOptions<
   config extends Config,
   chainId extends config['chains'][number]['id'] | undefined,
 > = Evaluate<
-  Omit<SwitchChainParameters<config>, 'chainId'> & {
-    chainId?: chainId | SwitchChainParameters<config>['chainId'] | undefined
-  }
+  Omit<SwitchChainParameters<config>, 'chainId'> & ChainId<config, chainId>
 >
 
 export function switchChainMutationOptions<

@@ -50,6 +50,41 @@ export {
 } from './actions/getBlockNumber.js'
 
 export {
+  type GetEnsAddressError,
+  type GetEnsAddressParameters,
+  type GetEnsAddressReturnType,
+  getEnsAddress,
+} from './actions/getEnsAddress.js'
+
+export {
+  type GetEnsAvatarError,
+  type GetEnsAvatarParameters,
+  type GetEnsAvatarReturnType,
+  getEnsAvatar,
+} from './actions/getEnsAvatar.js'
+
+export {
+  type GetEnsNameError,
+  type GetEnsNameParameters,
+  type GetEnsNameReturnType,
+  getEnsName,
+} from './actions/getEnsName.js'
+
+export {
+  type GetEnsResolverError,
+  type GetEnsResolverParameters,
+  type GetEnsResolverReturnType,
+  getEnsResolver,
+} from './actions/getEnsResolver.js'
+
+export {
+  type GetTransactionError,
+  type GetTransactionParameters,
+  type GetTransactionReturnType,
+  getTransaction,
+} from './actions/getTransaction.js'
+
+export {
   // Getter
   type GetChainIdReturnType,
   getChainId,

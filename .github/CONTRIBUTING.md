@@ -30,6 +30,7 @@ This guide is intended to help you get started with contributing. By following t
 This guide covers more advanced topics. Pick the topics based on your needs.
 
 8. [Versioning](#versioning)
+9. [Updating dependencies](#updating-dependencies)
 
 <br>
 
@@ -184,6 +185,19 @@ If a PR has changesets, you can create a [snapshot release](https://github.com/c
 <div align="right">
   <a href="#advanced-guide">&uarr; back to top</a></b>
 </div>
+
+## Updating dependencies
+
+Use [Taze](https://github.com/antfu/taze) with:
+
+```bash
+pnpm deps
+```
+
+<div align="right">
+  <a href="#advanced-guide">&uarr; back to top</a></b>
+</div>
+
 <br>
 
 ---
@@ -403,7 +417,7 @@ The changeset should be a `patch` with the description `Added [ConnectorName]` (
 If you followed all the instructions, you can submit a pull request and the new connector will likely get merged in pretty quickly!
 
 <div align="right">
-  <a href="#connector">&uarr; back to top</a></b>
+  <a href="#adding-a-new-connector">&uarr; back to top</a></b>
 </div>
 
 <br>

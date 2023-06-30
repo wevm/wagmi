@@ -10,13 +10,12 @@ import {
 import type { Config } from '../config.js'
 import { ConnectorNotFoundError } from '../errors/config.js'
 import type { Evaluate } from '../internal.js'
+import type { ChainId } from '../types/properties.js'
 
 export type GetConnectorClientParameters<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
-> = {
-  chainId?: chainId | config['chains'][number]['id'] | undefined
-}
+> = ChainId<config, chainId>
 
 export type GetConnectorClientReturnType<
   config extends Config = Config,

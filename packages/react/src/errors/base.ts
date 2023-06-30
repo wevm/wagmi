@@ -4,6 +4,10 @@ import { getVersion } from '../utils/getVersion.js'
 
 export class BaseError extends CoreError {
   override name = 'WagmiError'
-  override docsBaseUrl = 'https://wagmi.sh/react'
-  override version = getVersion()
+  override get docsBaseUrl() {
+    return 'https://wagmi.sh/react'
+  }
+  override get version() {
+    return getVersion()
+  }
 }

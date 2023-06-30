@@ -56,7 +56,7 @@ test('behavior: user rejected request', async () => {
     [UserRejectedRequestError: User rejected the request.
 
     Details: Failed to connect.
-    Version: viem@1.2.2]
+    Version: viem@1.2.6]
   `)
 })
 
@@ -65,6 +65,6 @@ test('behavior: already connected', async () => {
   await expect(connect(config, { connector })).rejects.toMatchInlineSnapshot(`
     [ConnectorAlreadyConnectedError: Connector already connected.
 
-    Version: @wagmi/core@2.0.0]
+    Version: @wagmi/core@x.y.z]
   `)
 })

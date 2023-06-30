@@ -21,6 +21,6 @@ test('behavior: not connected', async () => {
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
       "Connector not found.
 
-      Version: @wagmi/core@2.0.0"
+      Version: @wagmi/core@x.y.z"
     `)
 })

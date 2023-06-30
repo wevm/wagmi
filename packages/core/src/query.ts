@@ -38,6 +38,51 @@ export {
 } from './query/getBlockNumber.js'
 
 export {
+  type GetEnsAddressData,
+  type GetEnsAddressOptions,
+  type GetEnsAddressQueryFnData,
+  type GetEnsAddressQueryKey,
+  getEnsAddressQueryKey,
+  getEnsAddressQueryOptions,
+} from './query/getEnsAddress.js'
+
+export {
+  type GetEnsAvatarData,
+  type GetEnsAvatarOptions,
+  type GetEnsAvatarQueryFnData,
+  type GetEnsAvatarQueryKey,
+  getEnsAvatarQueryKey,
+  getEnsAvatarQueryOptions,
+} from './query/getEnsAvatar.js'
+
+export {
+  type GetEnsNameData,
+  type GetEnsNameOptions,
+  type GetEnsNameQueryFnData,
+  type GetEnsNameQueryKey,
+  getEnsNameQueryKey,
+  getEnsNameQueryOptions,
+} from './query/getEnsName.js'
+
+export {
+  type GetEnsResolverData,
+  type GetEnsResolverOptions,
+  type GetEnsResolverQueryFnData,
+  type GetEnsResolverQueryKey,
+  getEnsResolverQueryKey,
+  getEnsResolverQueryOptions,
+} from './query/getEnsResolver.js'
+
+export {
+  type GetTransactionData,
+  type GetTransactionOptions,
+  type GetTransactionQueryFnData,
+  type GetTransactionQueryKey,
+  getTransactionQueryKey,
+  getTransactionQueryOptions,
+} from './query/getTransaction.js'
+
+export {
   type ReconnectData,
   type ReconnectVariables,
   type ReconnectOptions,

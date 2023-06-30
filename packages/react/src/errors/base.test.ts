@@ -6,7 +6,7 @@ test('BaseError', () => {
   expect(new BaseError('An error occurred.')).toMatchInlineSnapshot(`
     [WagmiError: An error occurred.
 
-    Version: @wagmi/core@2.0.0]
+    Version: wagmi@x.y.z]
   `)
 
   expect(
@@ -15,14 +15,14 @@ test('BaseError', () => {
     [WagmiError: An error occurred.
 
     Details: details
-    Version: @wagmi/core@2.0.0]
+    Version: wagmi@x.y.z]
   `)
 
   expect(new BaseError('', { details: 'details' })).toMatchInlineSnapshot(`
     [WagmiError: An error occurred.
 
     Details: details
-    Version: @wagmi/core@2.0.0]
+    Version: wagmi@x.y.z]
   `)
 })
 
@@ -35,9 +35,9 @@ test('BaseError (w/ docsPath)', () => {
   ).toMatchInlineSnapshot(`
     [WagmiError: An error occurred.
 
-    Docs: https://wagmi.sh/core/lol.html
+    Docs: https://wagmi.sh/react/lol.html
     Details: details
-    Version: @wagmi/core@2.0.0]
+    Version: wagmi@x.y.z]
   `)
   expect(
     new BaseError('An error occurred.', {
@@ -46,8 +46,8 @@ test('BaseError (w/ docsPath)', () => {
   ).toMatchInlineSnapshot(`
     [WagmiError: An error occurred.
 
-    Docs: https://wagmi.sh/core/docs.html
-    Version: @wagmi/core@2.0.0]
+    Docs: https://wagmi.sh/react/docs.html
+    Version: wagmi@x.y.z]
   `)
   expect(
     new BaseError('An error occurred.', {
@@ -57,8 +57,8 @@ test('BaseError (w/ docsPath)', () => {
   ).toMatchInlineSnapshot(`
     [WagmiError: An error occurred.
 
-    Docs: https://wagmi.sh/core/lol.html
-    Version: @wagmi/core@2.0.0]
+    Docs: https://wagmi.sh/react/lol.html
+    Version: wagmi@x.y.z]
   `)
   expect(
     new BaseError('An error occurred.', {
@@ -69,9 +69,9 @@ test('BaseError (w/ docsPath)', () => {
   ).toMatchInlineSnapshot(`
     [WagmiError: An error occurred.
 
-    Docs: https://wagmi.sh/core/lol.html#test
+    Docs: https://wagmi.sh/react/lol.html#test
     Details: details
-    Version: @wagmi/core@2.0.0]
+    Version: wagmi@x.y.z]
   `)
 })
 
@@ -88,7 +88,7 @@ test('BaseError (w/ metaMessages)', () => {
     Cause: lol
 
     Details: details
-    Version: @wagmi/core@2.0.0]
+    Version: wagmi@x.y.z]
   `)
 })
 
@@ -104,9 +104,9 @@ test('inherited BaseError', () => {
   ).toMatchInlineSnapshot(`
     [WagmiError: An internal error occurred.
 
-    Docs: https://wagmi.sh/core/lol.html
+    Docs: https://wagmi.sh/react/lol.html
     Details: details
-    Version: @wagmi/core@2.0.0]
+    Version: wagmi@x.y.z]
   `)
 })
 
@@ -120,9 +120,9 @@ test('inherited Error', () => {
   ).toMatchInlineSnapshot(`
     [WagmiError: An internal error occurred.
 
-    Docs: https://wagmi.sh/core/lol.html
+    Docs: https://wagmi.sh/react/lol.html
     Details: details
-    Version: @wagmi/core@2.0.0]
+    Version: wagmi@x.y.z]
   `)
 })
 
@@ -136,7 +136,7 @@ test('walk: no predicate fn (walks to leaf)', () => {
   expect(err.walk()).toMatchInlineSnapshot(`
     [WagmiError: test3
 
-    Version: @wagmi/core@2.0.0]
+    Version: wagmi@x.y.z]
   `)
 })
 
@@ -150,6 +150,6 @@ test('walk: predicate fn', () => {
   expect(err.walk((err) => err instanceof FooError)).toMatchInlineSnapshot(`
     [WagmiError: test2
 
-    Version: @wagmi/core@2.0.0]
+    Version: wagmi@x.y.z]
   `)
 })

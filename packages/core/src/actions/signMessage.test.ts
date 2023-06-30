@@ -31,7 +31,7 @@ test('behavior: user rejected request', async () => {
     [UserRejectedRequestError: User rejected the request.
 
     Details: Failed to sign message.
-    Version: viem@1.2.2]
+    Version: viem@1.2.6]
   `)
   await disconnect(config, { connector: connector_ })
 })
@@ -42,6 +42,6 @@ test('behavior: not connected', async () => {
   ).rejects.toMatchInlineSnapshot(`
     [ConnectorNotFoundError: Connector not found.
 
-    Version: @wagmi/core@2.0.0]
+    Version: @wagmi/core@x.y.z]
   `)
 })

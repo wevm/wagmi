@@ -13,5 +13,6 @@ export default defineProject({
     name: '@wagmi/core',
     environment: 'jsdom',
     testTimeout: 10_000,
+    setupFiles: ['./test/setup.ts'],
   },
 })

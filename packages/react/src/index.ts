@@ -33,6 +33,30 @@ export {
   useBlockNumber,
 } from './hooks/useBlockNumber.js'
 
+export {
+  type UseEnsAddressParameters,
+  type UseEnsAddressReturnType,
+  useEnsAddress,
+} from './hooks/useEnsAddress.js'
+
+export {
+  type UseEnsAvatarParameters,
+  type UseEnsAvatarReturnType,
+  useEnsAvatar,
+} from './hooks/useEnsAvatar.js'
+
+export {
+  type UseEnsNameParameters,
+  type UseEnsNameReturnType,
+  useEnsName,
+} from './hooks/useEnsName.js'
+
+export {
+  type UseEnsResolverParameters,
+  type UseEnsResolverReturnType,
+  useEnsResolver,
+} from './hooks/useEnsResolver.js'
+
 export { type UseChainIdReturnType, useChainId } from './hooks/useChainId.js'
 
 export { type UseConfigReturnType, useConfig } from './hooks/useConfig.js'

@@ -6,11 +6,13 @@ import {
   formatUnits,
 } from 'viem'
 import {
+  type GetBalanceReturnType as viem_GetBalanceReturnType,
   getBalance as viem_getBalance,
   watchBlockNumber as viem_watchBlockNumber,
 } from 'viem/actions'
 
 import type { Config } from '../config.js'
+import type { ChainId } from '../types/properties.js'
 import { type Unit } from '../types/unit.js'
 import { type Evaluate, type Omit, type OneOf } from '../types/utils.js'
 import { getUnit } from '../utils/getUnit.js'
@@ -22,19 +24,20 @@ import type {
 export type GetBalanceParameters<config extends Config = Config> = Evaluate<
   {
     address: Address
-    chainId?: config['chains'][number]['id'] | undefined
+
     token?: Address | undefined
     unit?: Unit | undefined
-  } & OneOf<
-    { blockNumber?: bigint | undefined } | { blockTag?: BlockTag | undefined }
-  >
+  } & ChainId<config> &
+    OneOf<
+      { blockNumber?: bigint | undefined } | { blockTag?: BlockTag | undefined }
+    >
 >
 
 export type GetBalanceReturnType = {
   decimals: number
   formatted: string
   symbol: string
-  value: import('viem').GetBalanceReturnType
+  value: viem_GetBalanceReturnType
 }
 
 export type GetBalanceError =

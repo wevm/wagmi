@@ -5,11 +5,14 @@ import { type Config, type Connector } from '../config.js'
 import { type CreateConnectorFn } from '../connector.js'
 import type { BaseError } from '../errors/base.js'
 import { ConnectorAlreadyConnectedError } from '../errors/config.js'
+import type { ChainId } from '../types/properties.js'
+import type { Evaluate } from '../types/utils.js'
 
-export type ConnectParameters<config extends Config = Config> = {
-  chainId?: config['chains'][number]['id'] | undefined
-  connector: Connector | CreateConnectorFn
-}
+export type ConnectParameters<config extends Config = Config> = Evaluate<
+  {
+    connector: Connector | CreateConnectorFn
+  } & ChainId<config>
+>
 
 export type ConnectReturnType<config extends Config = Config> = {
   accounts: readonly Address[]
