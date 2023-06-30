@@ -78,6 +78,20 @@ export {
 } from './actions/getEnsResolver.js'
 
 export {
+  type GetFeeDataError,
+  type GetFeeDataParameters,
+  type GetFeeDataReturnType,
+  getFeeData,
+} from './actions/getFeeData.js'
+
+export {
+  type GetTokenError,
+  type GetTokenParameters,
+  type GetTokenReturnType,
+  getToken,
+} from './actions/getToken.js'
+
+export {
   type GetTransactionError,
   type GetTransactionParameters,
   type GetTransactionReturnType,

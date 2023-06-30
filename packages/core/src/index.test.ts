@@ -17,6 +17,8 @@ test('exports', () => {
       "getEnsAvatar",
       "getEnsName",
       "getEnsResolver",
+      "getFeeData",
+      "getToken",
       "getTransaction",
       "getChainId",
       "watchChainId",

@@ -79,6 +79,12 @@ export {
 } from './hooks/useDisconnect.js'
 
 export {
+  type UseFeeDataParameters,
+  type UseFeeDataReturnType,
+  useFeeData,
+} from './hooks/useFeeData.js'
+
+export {
   type UseReconnectParameters,
   type UseReconnectReturnType,
   useReconnect,
@@ -101,6 +107,12 @@ export {
   type UseSwitchChainReturnType,
   useSwitchChain,
 } from './hooks/useSwitchChain.js'
+
+export {
+  type UseTokenParameters,
+  type UseTokenReturnType,
+  useToken,
+} from './hooks/useToken.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // @wagmi/core

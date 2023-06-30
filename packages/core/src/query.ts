@@ -74,6 +74,24 @@ export {
 } from './query/getEnsResolver.js'
 
 export {
+  type GetFeeDataData,
+  type GetFeeDataOptions,
+  type GetFeeDataQueryFnData,
+  type GetFeeDataQueryKey,
+  getFeeDataQueryKey,
+  getFeeDataQueryOptions,
+} from './query/getFeeData.js'
+
+export {
+  type GetTokenData,
+  type GetTokenOptions,
+  type GetTokenQueryFnData,
+  type GetTokenQueryKey,
+  getTokenQueryKey,
+  getTokenQueryOptions,
+} from './query/getToken.js'
+
+export {
   type GetTransactionData,
   type GetTransactionOptions,
   type GetTransactionQueryFnData,
