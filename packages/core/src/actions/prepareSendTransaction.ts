@@ -59,7 +59,7 @@ export async function prepareSendTransaction<
   config extends Config,
   chainId extends config['chains'][number]['id'] | undefined,
 >(
-  config: Config,
+  config: config,
   parameters: PrepareSendTransactionParameters<config, chainId>,
 ): Promise<PrepareSendTransactionReturnType<config, chainId>> {
   const { chainId, ...rest } = parameters

@@ -1,0 +1,70 @@
+import type {
+  Account,
+  Chain,
+  SendTransactionParameters as viem_SendTransactionParameters,
+  SendTransactionReturnType as viem_SendTransactionReturnType,
+} from 'viem'
+import { sendTransaction as viem_sendTransaction } from 'viem/actions'
+
+import type { Config } from '../config.js'
+import { ConnectorNotFoundError } from '../errors/config.js'
+import type { ChainId } from '../types/properties.js'
+import type { Evaluate } from '../types/utils.js'
+import { assertActiveChain } from '../utils/assertActiveChain.js'
+import { getConnectorClient } from './getConnectorClient.js'
+
+export type SendTransactionParameters<
+  config extends Config = Config,
+  chainId extends
+    | config['chains'][number]['id']
+    | undefined = config['chains'][number]['id'],
+> = Evaluate<
+  Omit<
+    viem_SendTransactionParameters<
+      Extract<
+        config['chains'][number],
+        { id: chainId }
+      > extends infer chain extends Chain
+        ? chain
+        : config['chains'][number],
+      Account
+    >,
+    'account' | 'chain'
+  > &
+    ChainId<config, chainId> & {
+      mode?: 'prepared'
+    }
+>
+
+export type SendTransactionReturnType = {
+  hash: viem_SendTransactionReturnType
+}
+
+export type SendTransactionError = Error
+
+export async function sendTransaction<
+  config extends Config,
+  chainId extends config['chains'][number]['id'] | undefined,
+>(
+  config: config,
+  parameters: SendTransactionParameters<config, chainId>,
+): Promise<SendTransactionReturnType>
+
+/** https://wagmi.sh/core/actions/sendTransaction */
+export async function sendTransaction(
+  config: Config,
+  parameters: SendTransactionParameters,
+): Promise<SendTransactionReturnType> {
+  const { chainId, ...rest } = parameters
+
+  const client = await getConnectorClient(config, { chainId })
+  if (!client) throw new ConnectorNotFoundError()
+  if (chainId) assertActiveChain(config, { chainId })
+
+  const hash = await viem_sendTransaction(client, {
+    ...(rest as viem_SendTransactionParameters),
+    chain: null,
+  })
+
+  return { hash }
+}

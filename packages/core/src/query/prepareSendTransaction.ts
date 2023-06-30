@@ -18,7 +18,7 @@ export function prepareSendTransactionQueryOptions<
   config extends Config,
   chainId extends config['chains'][number]['id'] | undefined,
 >(
-  config: Config,
+  config: config,
   options: PrepareSendTransactionOptions<
     config,
     chainId

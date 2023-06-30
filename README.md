@@ -38,53 +38,17 @@
 
 <br>
 
-## Features
-
-- 🚀 20+ hooks for working with wallets, ENS, contracts, transactions, signing, etc.
-- 💼 Built-in wallet connectors for MetaMask, WalletConnect, Coinbase Wallet, Injected, and more
-- 👟 Caching, request deduplication, multicall, batching, and persistence
-- 🌀 Auto-refresh data on wallet, block, and network changes
-- 🦄 TypeScript ready (infer types from ABIs and EIP-712 Typed Data)
-- 📦 Command-line interface for managing ABIs and code generation
-- 🌳 Test suite running against forked Ethereum network
-
-...and a lot more.
-
 ## Documentation
 
 For full documentation and examples, visit [wagmi.sh](https://wagmi.sh).
 
-## Installation
+## Contributing
 
-Install wagmi and its [viem](https://viem.sh) peer dependency.
-
-```bash
-pnpm add wagmi viem
-```
-
-```bash
-npm install wagmi viem
-```
-
-```bash
-yarn add wagmi viem
-```
-
-## Community
-
-Check out the following places for more wagmi-related content:
-
-- Join the [discussions on GitHub](https://github.com/wagmi-dev/wagmi/discussions)
-- Follow [@wagmi_sh](https://twitter.com/wagmi_sh) on Twitter for project updates
-- Share [your project/organization](https://github.com/wagmi-dev/wagmi/discussions/201) using wagmi
-- Browse the [awesome-wagmi](https://github.com/wagmi-dev/awesome-wagmi) list of awesome projects and resources
+Check out the [contributing docs][contributing] to get started.
 
 ## Support
 
-If you find wagmi useful, please consider supporting development. Thank you 🙏
-
-- [GitHub Sponsors](https://github.com/sponsors/wagmi-dev?metadata_campaign=gh_readme_support)
-- [wagmi-dev.eth](https://etherscan.io/enslookup-search?search=wagmi-dev.eth)
+If you find wagmi useful, please consider [supporting development](https://github.com/sponsors/wagmi-dev?metadata_campaign=gh_readme_support). Thank you 🙏
 
 ## Sponsors
 
@@ -182,23 +146,16 @@ If you find wagmi useful, please consider supporting development. Thank you 🙏
   </picture>
 </a>
 
-## Contributing
-
-If you're interested in contributing, please read the [contributing docs](/.github/CONTRIBUTING.md) **before submitting a pull request**.
-
-## Authors
-
-- [@tmm](https://github.com/tmm) (awkweb.eth, [Twitter](https://twitter.com/awkweb))
-- [@jxom](https://github.com/jxom) (moxey.eth, [Twitter](https://twitter.com/jakemoxey))
-
-Thanks to julianhutton.eth ([@julianjhutton](https://twitter.com/julianjhutton)) for providing the awesome logo!
-
 ## License
 
-[MIT](/LICENSE) License
+[MIT][license]
 
 <br />
 
 <a href="https://vercel.com/?utm_source=wagmi-dev&utm_campaign=oss">
   <img src="https://www.datocms-assets.com/31049/1618983297-powered-by-vercel.svg" alt="Powered by Vercel" height="35">
 </a>
+
+[docs]: https://wagmi.sh
+[contributing]: https://github.com/wagmi-dev/wagmi/blob/main/.github/CONTRIBUTING.md
+[license]: https://github.com/wagmi-dev/wagmi/blob/main/LICENSE
