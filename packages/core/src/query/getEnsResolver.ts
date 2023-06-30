@@ -14,11 +14,10 @@ export type GetEnsResolverOptions<config extends Config> = Evaluate<
 >
 
 export function getEnsResolverQueryOptions<config extends Config>(
-  config: Config,
+  config: config,
   options: GetEnsResolverOptions<config> = {},
 ) {
   return {
-    gcTime: 0,
     async queryFn({ queryKey }) {
       const { name, ...parameters } = queryKey[1]
       if (!name) throw new Error('name is required')

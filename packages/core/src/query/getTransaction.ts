@@ -19,7 +19,6 @@ export function getTransactionQueryOptions<
   chainId extends config['chains'][number]['id'] | undefined,
 >(config: Config, options: GetTransactionOptions<config, chainId> = {}) {
   return {
-    gcTime: 0,
     async queryFn({ queryKey }) {
       const { blockHash, blockNumber, blockTag, hash, ...parameters } =
         queryKey[1]
@@ -59,7 +58,7 @@ export function getTransactionQueryKey<
   config extends Config,
   chainId extends config['chains'][number]['id'] | undefined,
 >(options: GetTransactionOptions<config, chainId> = {}) {
-  return ['ensName', options] as const
+  return ['transaction', options] as const
 }
 
 export type GetTransactionQueryKey<

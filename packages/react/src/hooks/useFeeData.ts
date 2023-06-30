@@ -34,7 +34,7 @@ export type UseFeeDataReturnType<selectData = GetFeeDataData> = UseQueryResult<
 
 /** https://wagmi.sh/react/hooks/useFeeData */
 export function useFeeData<selectData = GetFeeDataData>(
-  parameters: UseFeeDataParameters<selectData>,
+  parameters: UseFeeDataParameters<selectData> = {},
 ): UseFeeDataReturnType<selectData> {
   const config = useConfig()
 

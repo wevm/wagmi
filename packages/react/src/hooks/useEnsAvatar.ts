@@ -32,7 +32,7 @@ export type UseEnsAvatarReturnType<selectData = GetEnsAvatarData> =
 
 /** https://wagmi.sh/react/hooks/useEnsAvatar */
 export function useEnsAvatar<selectData = GetEnsAvatarData>(
-  parameters: UseEnsAvatarParameters<selectData>,
+  parameters: UseEnsAvatarParameters<selectData> = {},
 ): UseEnsAvatarReturnType<selectData> {
   const { name, ...query } = parameters
   const config = useConfig()

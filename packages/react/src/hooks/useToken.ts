@@ -34,7 +34,7 @@ export type UseTokenReturnType<selectData = GetTokenData> = UseQueryResult<
 
 /** https://wagmi.sh/react/hooks/useToken */
 export function useToken<selectData = GetTokenData>(
-  parameters: UseTokenParameters<selectData>,
+  parameters: UseTokenParameters<selectData> = {},
 ): UseTokenReturnType<selectData> {
   const { address, ...query } = parameters
   const config = useConfig()

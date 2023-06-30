@@ -32,7 +32,7 @@ export type UseEnsAddressReturnType<selectData = GetEnsAddressData> =
 
 /** https://wagmi.sh/react/hooks/useEnsAddress */
 export function useEnsAddress<selectData = GetEnsAddressData>(
-  parameters: UseEnsAddressParameters<selectData>,
+  parameters: UseEnsAddressParameters<selectData> = {},
 ): UseEnsAddressReturnType<selectData> {
   const { name, ...query } = parameters
   const config = useConfig()

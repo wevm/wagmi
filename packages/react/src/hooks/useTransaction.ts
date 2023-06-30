@@ -42,7 +42,7 @@ export function useTransaction<
   chainId extends ChainId | undefined = undefined,
   selectData = GetTransactionData<ResolvedRegister['config'], chainId>,
 >(
-  parameters: UseTransactionParameters<chainId, selectData>,
+  parameters: UseTransactionParameters<chainId, selectData> = {},
 ): UseTransactionReturnType<chainId, selectData> {
   const { blockHash, blockNumber, blockTag, hash, ...query } = parameters
   const config = useConfig()

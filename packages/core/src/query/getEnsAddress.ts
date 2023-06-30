@@ -14,11 +14,10 @@ export type GetEnsAddressOptions<config extends Config> = Evaluate<
 >
 
 export function getEnsAddressQueryOptions<config extends Config>(
-  config: Config,
+  config: config,
   options: GetEnsAddressOptions<config> = {},
 ) {
   return {
-    gcTime: 0,
     async queryFn({ queryKey }) {
       const { name, ...parameters } = queryKey[1]
       if (!name) throw new Error('name is required')

@@ -14,11 +14,10 @@ export type GetFeeDataOptions<config extends Config> = Evaluate<
 >
 
 export function getFeeDataQueryOptions<config extends Config>(
-  config: Config,
+  config: config,
   options: GetFeeDataOptions<config> = {},
 ) {
   return {
-    gcTime: 0,
     async queryFn({ queryKey }) {
       return getFeeData(config, queryKey[1])
     },

@@ -33,7 +33,7 @@ export type UseEnsResolverReturnType<selectData = GetEnsResolverData> =
 
 /** https://wagmi.sh/react/hooks/useEnsResolver */
 export function useEnsResolver<selectData = GetEnsResolverData>(
-  parameters: UseEnsResolverParameters<selectData>,
+  parameters: UseEnsResolverParameters<selectData> = {},
 ): UseEnsResolverReturnType<selectData> {
   const { name, ...query } = parameters
   const config = useConfig()

@@ -34,7 +34,7 @@ export type UseEnsNameReturnType<selectData = GetEnsNameData> = UseQueryResult<
 
 /** https://wagmi.sh/react/hooks/useEnsName */
 export function useEnsName<selectData = GetEnsNameData>(
-  parameters: UseEnsNameParameters<selectData>,
+  parameters: UseEnsNameParameters<selectData> = {},
 ): UseEnsNameReturnType<selectData> {
   const { address, ...query } = parameters
   const config = useConfig()
