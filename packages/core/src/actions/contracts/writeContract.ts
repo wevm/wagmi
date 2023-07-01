@@ -17,10 +17,11 @@ export type WriteContractMode = 'prepared' | undefined
 export type WriteContractPreparedArgs<
   TAbi extends Abi | readonly unknown[] = readonly unknown[],
   TFunctionName extends string = string,
-> = WriteContractParameters<TAbi, TFunctionName, Chain, Account> & {
-  mode: 'prepared'
+> = {
   /** Chain id. */
   chainId?: number
+  mode: 'prepared'
+  request: WriteContractParameters<TAbi, TFunctionName, Chain, Account>
 }
 
 export type WriteContractUnpreparedArgs<
@@ -30,9 +31,9 @@ export type WriteContractUnpreparedArgs<
   WriteContractParameters<TAbi, TFunctionName, Chain, Account>,
   'chain'
 > & {
-  mode?: never
   /** Chain id. */
   chainId?: number
+  mode?: never
 }
 
 export type WriteContractArgs<
@@ -74,7 +75,7 @@ export async function writeContract<
 
   let request: WriteContractParameters<TAbi, TFunctionName, Chain, Account>
   if (config.mode === 'prepared') {
-    request = config
+    request = config.request
   } else {
     const { chainId: _, mode: __, ...args } = config
     const res = await prepareWriteContract(args as PrepareWriteContractConfig)

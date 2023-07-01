@@ -51,13 +51,13 @@ describe('writeContract', () => {
 
       it('prepared', async () => {
         await connect({ connector })
-        const { request } = await prepareWriteContract({
+        const config = await prepareWriteContract({
           ...wagmiContractConfig,
           functionName: 'mint',
           args: [getRandomTokenId()],
           account,
         })
-        const { hash } = await writeContract(request)
+        const { hash } = await writeContract(config)
         const { from } = await getPublicClient().getTransaction({ hash })
         expect(from).toEqual(account)
       })

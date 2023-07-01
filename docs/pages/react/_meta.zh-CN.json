@@ -11,7 +11,7 @@
     "title": "TypeScript"
   },
   "config": {
-    "title": "Config",
+    "title": "createConfig",
     "display": "hidden"
   },
   "WagmiConfig": {

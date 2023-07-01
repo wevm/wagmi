@@ -3,7 +3,7 @@
   "comparison": "Library Comparison",
   "migration-guide": "Migration Guide",
   "typescript": "TypeScript",
-  "config": "Config",
+  "config": "createConfig",
   "WagmiConfig": "WagmiConfig",
   "chains": "Chains",
   "providers": "Providers",
@@ -12,6 +12,7 @@
   "prepare-hooks": "Prepare Hooks",
   "constants": "Constants",
   "actions": "Actions",
+  "ethers-adapters": "Ethers.js Adapters",
   "module-types": "Module Types",
   "faq": "FAQ"
 }

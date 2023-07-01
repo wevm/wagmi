@@ -44,7 +44,7 @@ function App() {
     eventName: 'Transfer',
     listener(log) {
       console.log(log)
-      if (log.args.from === '0x...') unwatch()
+      if (log.args.from === '0x...') unwatch?.()
     },
   })
 }

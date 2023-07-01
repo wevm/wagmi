@@ -1,5 +1,44 @@
 # @wagmi/core
 
+## 1.3.3
+
+### Patch Changes
+
+- [`1946aa43`](https://github.com/wagmi-dev/wagmi/commit/1946aa43a65b684ef41b7b4c43c67bf29c13e854) Thanks [@jxom](https://github.com/jxom)! - Updated references
+
+## 1.3.2
+
+### Patch Changes
+
+- [`e86d0940`](https://github.com/wagmi-dev/wagmi/commit/e86d09409bb20b64d24e1263abcf0291314f03c7) Thanks [@jxom](https://github.com/jxom)! - Updated references
+
+## 1.3.1
+
+### Patch Changes
+
+- [`964042fa`](https://github.com/wagmi-dev/wagmi/commit/964042fa94d682977923c595820c58283fb9244a) Thanks [@jxom](https://github.com/jxom)! - Updated references.
+
+## 1.3.0
+
+### Minor Changes
+
+- [#2619](https://github.com/wagmi-dev/wagmi/pull/2619) [`0d79748c`](https://github.com/wagmi-dev/wagmi/commit/0d79748cec2b6ac2410ad2c9816cc662f2b70962) Thanks [@jxom](https://github.com/jxom)! - Updated references:
+  - Updated `@safe-global/safe-apps-sdk` to `^8.0.0` (the one with `viem` support)
+
+## 1.2.2
+
+### Patch Changes
+
+- [#2611](https://github.com/wagmi-dev/wagmi/pull/2611) [`6d1ed7a1`](https://github.com/wagmi-dev/wagmi/commit/6d1ed7a156729b4df5d66fef3ae9a8b5762a2d34) Thanks [@jxom](https://github.com/jxom)! - Updated references.
+
+## 1.2.1
+
+### Patch Changes
+
+- [#2589](https://github.com/wagmi-dev/wagmi/pull/2589) [`9680c347`](https://github.com/wagmi-dev/wagmi/commit/9680c347476500d28ceca20d23eeaed7931cb6e0) Thanks [@jxom](https://github.com/jxom)! - Fixed `writeContract` parameters to be compatible with `prepareWriteContract`.
+
+- [#2587](https://github.com/wagmi-dev/wagmi/pull/2587) [`cfff9994`](https://github.com/wagmi-dev/wagmi/commit/cfff999459384ac644ff7e62f53a7b787cf37507) Thanks [@jxom](https://github.com/jxom)! - Updated references
+
 ## 1.2.0
 
 ### Minor Changes

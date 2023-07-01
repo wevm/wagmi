@@ -1,0 +1,168 @@
+---
+title: 'Ethers.js Adapters'
+description: 'Adapters for ethers.js'
+---
+
+import { Tabs, Tab } from 'nextra-theme-docs'
+
+# Ethers.js Adapters
+
+It is recommended for projects to migrate to [viem](https://viem.sh) when using wagmi, but there are some cases where you might still need to use [ethers.js](https://ethers.org/) in your project:
+
+- You may want to **incrementally migrate** ethers.js usage to viem
+- Some **third-party libraries & SDKs** may only support ethers.js
+
+We have provided reference implementations for viem → ethers.js adapters that you can copy + paste in your project.
+
+## Public Client → Provider
+
+### Reference Implementation
+
+Copy the following reference implementation into a file of your choice:
+
+<Tabs items={['ethers.js v5', 'ethers.js v6']}>
+  <Tab>
+```ts filename="src/ethers.ts"
+import { type PublicClient, getPublicClient } from '@wagmi/core'
+import { providers } from 'ethers'
+import { type HttpTransport } from 'viem'
+
+export function publicClientToProvider(publicClient: PublicClient) {
+  const { chain, transport } = publicClient
+  const network = {
+    chainId: chain.id,
+    name: chain.name,
+    ensAddress: chain.contracts?.ensRegistry?.address,
+  }
+  if (transport.type === 'fallback')
+    return new providers.FallbackProvider(
+      (transport.transports as ReturnType<HttpTransport>[]).map(
+        ({ value }) => new providers.JsonRpcProvider(value?.url, network),
+      ),
+    )
+  return new providers.JsonRpcProvider(transport.url, network)
+}
+
+/** Action to convert a viem Public Client to an ethers.js Provider. */
+export function getEthersProvider({ chainId }: { chainId?: number } = {}) {
+  const publicClient = getPublicClient({ chainId })
+  return publicClientToProvider(publicClient)
+}
+```
+  </Tab>
+  <Tab>
+```ts filename="src/ethers.ts"
+import { type PublicClient, getPublicClient } from '@wagmi/core'
+import { FallbackProvider, JsonRpcProvider } from 'ethers'
+import { type HttpTransport } from 'viem'
+
+export function publicClientToProvider(publicClient: PublicClient) {
+  const { chain, transport } = publicClient
+  const network = {
+    chainId: chain.id,
+    name: chain.name,
+    ensAddress: chain.contracts?.ensRegistry?.address,
+  }
+  if (transport.type === 'fallback') {
+    const providers = (transport.transports as ReturnType<HttpTransport>[]).map(
+      ({ value }) => new JsonRpcProvider(value?.url, network),
+    )
+    if (providers.length === 1) return providers[0]
+    return new FallbackProvider(providers)
+  }
+  return new JsonRpcProvider(transport.url, network)
+}
+
+/** Action to convert a viem Public Client to an ethers.js Provider. */
+export function getEthersProvider({ chainId }: { chainId?: number } = {}) {
+  const publicClient = getPublicClient({ chainId })
+  return publicClientToProvider(publicClient)
+}
+```
+  </Tab>
+</Tabs>
+
+### Usage
+
+Now you can use the `getEthersProvider` function in your components:
+
+```ts filename="src/example.ts"
+import { getEthersProvider } from './ethers'
+
+function example() {
+  const provider = getEthersProvider()
+  ...
+}
+```
+
+## Wallet Client → Signer
+
+### Reference Implementation
+
+Copy the following reference implementation into a file of your choice:
+
+<Tabs items={['ethers.js v5', 'ethers.js v6']}>
+  <Tab>
+```ts filename="src/ethers.ts"
+import { type WalletClient, getWalletClient } from '@wagmi/core'
+import { providers } from 'ethers'
+
+export function walletClientToSigner(walletClient: WalletClient) {
+  const { account, chain, transport } = walletClient
+  const network = {
+    chainId: chain.id,
+    name: chain.name,
+    ensAddress: chain.contracts?.ensRegistry?.address,
+  }
+  const provider = new providers.Web3Provider(transport, network)
+  const signer = provider.getSigner(account.address)
+  return signer
+}
+
+/** Action to convert a viem Wallet Client to an ethers.js Signer. */
+export async function getEthersSigner({ chainId }: { chainId?: number } = {}) {
+  const walletClient = await getWalletClient({ chainId })
+  if (!walletClient) return undefined
+  return walletClientToSigner(walletClient)
+}
+```
+  </Tab>
+  <Tab>
+```ts filename="src/ethers.ts"
+import { type WalletClient, useWalletClient } from 'wagmi'
+import { BrowserProvider, JsonRpcSigner } from 'ethers'
+
+export function walletClientToSigner(walletClient: WalletClient) {
+  const { account, chain, transport } = walletClient
+  const network = {
+    chainId: chain.id,
+    name: chain.name,
+    ensAddress: chain.contracts?.ensRegistry?.address,
+  }
+  const provider = new BrowserProvider(transport, network)
+  const signer = new JsonRpcSigner(provider, account.address)
+  return signer
+}
+
+/** Action to convert a viem Wallet Client to an ethers.js Signer. */
+export async function getEthersSigner({ chainId }: { chainId?: number } = {}) {
+  const walletClient = await getWalletClient({ chainId })
+  if (!walletClient) return undefined
+  return walletClientToSigner(walletClient)
+}
+```
+  </Tab>
+</Tabs>
+
+### Usage
+
+Now you can use the `getEthersSigner` function in your components:
+
+```ts filename="src/example.ts"
+import { getEthersSigner } from './ethers'
+
+function example() {
+  const signer = getEthersSigner()
+  ...
+}
+```
