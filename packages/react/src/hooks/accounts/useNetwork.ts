@@ -1,7 +1,20 @@
-import { getNetwork, watchNetwork } from '@wagmi/core'
+import type { WatchNetworkCallback } from '@wagmi/core'
+import { getNetwork, watchNetwork as watchNetworkCore } from '@wagmi/core'
+import { useCallback } from 'react'
+import { useConfig } from 'wagmi/context'
 
 import { useSyncExternalStoreWithTracked } from '../utils'
 
 export function useNetwork() {
+  const config = useConfig()
+  // rome-ignore lint/nursery/useExhaustiveDependencies: see comment below
+  const watchNetwork = useCallback(
+    (callback: WatchNetworkCallback) =>
+      // ideally this would be `watchNetworkCore(callback, undefined, config)`,
+      // but `watchNetworkCore` does not take `config`;
+      // for now, this works due to referential inequality
+      watchNetworkCore(callback),
+    [config],
+  )
   return useSyncExternalStoreWithTracked(watchNetwork, getNetwork)
 }
