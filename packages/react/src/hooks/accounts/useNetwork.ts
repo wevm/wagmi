@@ -13,7 +13,7 @@ export function useNetwork() {
       // Ideally this would be `watchNetworkCore(callback, undefined, config)`,
       // but `watchNetworkCore` does not take `config` (#2666).
       // For now, this works due to referential inequality.
-      watchNetworkCore(callback),
+      watchNetwork(callback),
     [config],
   )
   return useSyncExternalStoreWithTracked(watchNetwork, getNetwork)
