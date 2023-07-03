@@ -16,5 +16,5 @@ export function useNetwork() {
       watchNetwork(callback),
     [config],
   )
-  return useSyncExternalStoreWithTracked(watchNetwork, getNetwork)
+  return useSyncExternalStoreWithTracked(watchNetwork_, getNetwork)
 }
