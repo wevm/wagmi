@@ -34,7 +34,7 @@ export function useAccount({ onConnect, onDisconnect }: UseAccountConfig = {}) {
       watchAccount(callback),
     [config],
   )
-  const account = useSyncExternalStoreWithTracked(watchAccount, getAccount)
+  const account = useSyncExternalStoreWithTracked(watchAccount_, getAccount)
   const previousAccountRef = React.useRef<typeof account>()
   const previousAccount = previousAccountRef.current
 
