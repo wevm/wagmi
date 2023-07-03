@@ -26,7 +26,7 @@ export type UseAccountConfig = {
 
 export function useAccount({ onConnect, onDisconnect }: UseAccountConfig = {}) {
   const config = useConfig()
-  const watchAccount = React.useCallback(
+  const watchAccount_ = React.useCallback(
     (callback: WatchAccountCallback<PublicClient>) =>
       // Ideally this would be `watchAccountCore(callback, undefined, config)`,
       // but `watchAccountCore` does not take `config` (#2666).
