@@ -3,7 +3,7 @@ import type {
   PublicClient,
   WatchAccountCallback,
 } from '@wagmi/core'
-import { getAccount, watchAccount as watchAccountCore } from '@wagmi/core'
+import { getAccount, watchAccount } from '@wagmi/core'
 import * as React from 'react'
 import { useConfig } from 'wagmi/context'
 
