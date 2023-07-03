@@ -28,9 +28,9 @@ export function useAccount({ onConnect, onDisconnect }: UseAccountConfig = {}) {
   const config = useConfig()
   const watchAccount = React.useCallback(
     (callback: WatchAccountCallback<PublicClient>) =>
-      // ideally this would be `watchAccountCore(callback, undefined, config)`,
-      // but `watchAccountCore` does not take `config`;
-      // for now, this works due to referential inequality
+      // Ideally this would be `watchAccountCore(callback, undefined, config)`,
+      // but `watchAccountCore` does not take `config` (#2666).
+      // For now, this works due to referential inequality.
       watchAccountCore(callback),
     [config],
   )
