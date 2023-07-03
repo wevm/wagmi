@@ -1,5 +1,11 @@
 # wagmi
 
+## 1.3.5
+
+### Patch Changes
+
+- [#2669](https://github.com/wagmi-dev/wagmi/pull/2669) [`db75c459`](https://github.com/wagmi-dev/wagmi/commit/db75c4593b9c46970dc9d3c96d7adafc76878fc3) Thanks [@llllvvuu](https://github.com/llllvvuu)! - Modified `useAccount` and `useNetwork` to be reactive of wagmi Config (`config`).
+
 ## 1.3.4
 
 ### Patch Changes
