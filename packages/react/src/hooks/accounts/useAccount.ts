@@ -31,7 +31,7 @@ export function useAccount({ onConnect, onDisconnect }: UseAccountConfig = {}) {
       // Ideally this would be `watchAccountCore(callback, undefined, config)`,
       // but `watchAccountCore` does not take `config` (#2666).
       // For now, this works due to referential inequality.
-      watchAccountCore(callback),
+      watchAccount(callback),
     [config],
   )
   const account = useSyncExternalStoreWithTracked(watchAccount, getAccount)
