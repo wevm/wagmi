@@ -2,4 +2,4 @@
 "wagmi": patch
 ---
 
-`useAccount` and `useNetwork` will react to changing `config` prop of `WagmiConfig`
+Modified `useAccount` and `useNetwork` to be reactive of wagmi Config (`config`).
