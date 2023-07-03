@@ -1,6 +1,11 @@
-import type { GetAccountResult } from '@wagmi/core'
+import type {
+  GetAccountResult,
+  PublicClient,
+  WatchAccountCallback,
+} from '@wagmi/core'
 import { getAccount, watchAccount } from '@wagmi/core'
 import * as React from 'react'
+import { useConfig } from 'wagmi/context'
 
 import { useSyncExternalStoreWithTracked } from '../utils'
 
@@ -20,7 +25,16 @@ export type UseAccountConfig = {
 }
 
 export function useAccount({ onConnect, onDisconnect }: UseAccountConfig = {}) {
-  const account = useSyncExternalStoreWithTracked(watchAccount, getAccount)
+  const config = useConfig()
+  const watchAccount_ = React.useCallback(
+    (callback: WatchAccountCallback<PublicClient>) =>
+      // Ideally this would be `watchAccountCore(callback, undefined, config)`,
+      // but `watchAccountCore` does not take `config` (#2666).
+      // For now, this works due to referential inequality.
+      watchAccount(callback),
+    [config],
+  )
+  const account = useSyncExternalStoreWithTracked(watchAccount_, getAccount)
   const previousAccountRef = React.useRef<typeof account>()
   const previousAccount = previousAccountRef.current
 
