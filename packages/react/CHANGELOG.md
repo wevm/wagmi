@@ -1,5 +1,16 @@
 # wagmi
 
+## 1.3.4
+
+### Patch Changes
+
+- [`b056f809`](https://github.com/wagmi-dev/wagmi/commit/b056f8095674d4addc6ecd09adf6001fe52e2b15) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where `onConnect` was not being called when multiple instances of `useAccount` existed.
+
+- [`22246d98`](https://github.com/wagmi-dev/wagmi/commit/22246d9884277d28ccad6ca2d9529b96b67d47fc) Thanks [@jxom](https://github.com/jxom)! - Updated references.
+
+- Updated dependencies [[`22246d98`](https://github.com/wagmi-dev/wagmi/commit/22246d9884277d28ccad6ca2d9529b96b67d47fc)]:
+  - @wagmi/core@1.3.4
+
 ## 1.3.3
 
 ### Patch Changes
