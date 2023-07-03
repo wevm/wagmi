@@ -8,7 +8,7 @@ import { useSyncExternalStoreWithTracked } from '../utils'
 export function useNetwork() {
   const config = useConfig()
   // rome-ignore lint/nursery/useExhaustiveDependencies: see comment below
-  const watchNetwork = useCallback(
+  const watchNetwork_ = useCallback(
     (callback: WatchNetworkCallback) =>
       // Ideally this would be `watchNetworkCore(callback, undefined, config)`,
       // but `watchNetworkCore` does not take `config` (#2666).
