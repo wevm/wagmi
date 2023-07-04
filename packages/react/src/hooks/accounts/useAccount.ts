@@ -5,8 +5,8 @@ import type {
 } from '@wagmi/core'
 import { getAccount, watchAccount } from '@wagmi/core'
 import * as React from 'react'
-import { useConfig } from 'wagmi/context'
 
+import { useConfig } from '../../context'
 import { useSyncExternalStoreWithTracked } from '../utils'
 
 export type UseAccountConfig = {

@@ -1,8 +1,8 @@
 import type { WatchNetworkCallback } from '@wagmi/core'
 import { getNetwork, watchNetwork } from '@wagmi/core'
 import { useCallback } from 'react'
-import { useConfig } from 'wagmi/context'
 
+import { useConfig } from '../../context'
 import { useSyncExternalStoreWithTracked } from '../utils'
 
 export function useNetwork() {
