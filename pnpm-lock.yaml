@@ -400,6 +400,9 @@ importers:
       '@walletconnect/modal':
         specifier: 2.5.9
         version: 2.5.9(react@18.2.0)
+      '@walletconnect/utils':
+        specifier: 2.8.6
+        version: 2.8.6
       abitype:
         specifier: 0.8.7
         version: 0.8.7(typescript@5.0.4)(zod@3.21.4)
