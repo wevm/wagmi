@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 1.3.6
+
+### Patch Changes
+
+- [`7ad2fdb8`](https://github.com/wagmi-dev/wagmi/commit/7ad2fdb81c7734d0c8107670800c68390e3bad99) Thanks [@jxom](https://github.com/jxom)! - Updated references.
+
 ## 1.3.5
 
 ### Patch Changes
