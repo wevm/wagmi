@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 1.3.7
+
+### Patch Changes
+
+- [#2700](https://github.com/wagmi-dev/wagmi/pull/2700) [`30118e97`](https://github.com/wagmi-dev/wagmi/commit/30118e979b1b00302e035f31f58c15d1aed911d5) Thanks [@jxom](https://github.com/jxom)! - Updated references.
+
 ## 1.3.6
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # wagmi
 
+## 1.3.8
+
+### Patch Changes
+
+- [#2700](https://github.com/wagmi-dev/wagmi/pull/2700) [`30118e97`](https://github.com/wagmi-dev/wagmi/commit/30118e979b1b00302e035f31f58c15d1aed911d5) Thanks [@jxom](https://github.com/jxom)! - Updated references.
+
+- Updated dependencies [[`30118e97`](https://github.com/wagmi-dev/wagmi/commit/30118e979b1b00302e035f31f58c15d1aed911d5)]:
+  - @wagmi/core@1.3.7
+
 ## 1.3.7
 
 ### Patch Changes
