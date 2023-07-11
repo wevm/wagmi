@@ -1,3 +1,4 @@
+import type { Chain } from 'viem'
 import {
   type GetTransactionParameters as viem_GetTransactionParameters,
   type GetTransactionReturnType as viem_GetTransactionReturnType,
@@ -7,7 +8,6 @@ import {
 import { type Config } from '../config.js'
 import { type Evaluate } from '../internal.js'
 import type { ChainId } from '../types/properties.js'
-import type { Chain } from 'viem'
 
 export type GetTransactionParameters<
   config extends Config = Config,
@@ -21,13 +21,14 @@ export type GetTransactionReturnType<
   chainId extends
     | config['chains'][number]['id']
     | undefined = config['chains'][number]['id'],
-> = viem_GetTransactionReturnType<
-  Extract<
-    config['chains'][number],
-    { id: chainId }
-  > extends infer chain extends Chain
-    ? chain
-    : config['chains'][number]
+  ///
+  chains extends readonly Chain[] = chainId extends config['chains'][number]['id']
+    ? [Extract<config['chains'][number], { id: chainId }>]
+    : config['chains'],
+> = Evaluate<
+  {
+    [key in keyof chains]: viem_GetTransactionReturnType<chains[key]>
+  }[number]
 >
 
 export type GetTransactionError = Error

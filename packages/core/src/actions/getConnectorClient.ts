@@ -1,6 +1,5 @@
 import {
   type Account,
-  type Chain,
   type Client,
   type Transport,
   createClient,
@@ -23,12 +22,9 @@ export type GetConnectorClientReturnType<
 > = Evaluate<
   Client<
     Transport,
-    Extract<
-      config['chains'][number],
-      { id: chainId }
-    > extends infer chain extends Chain
-      ? chain
-      : Chain,
+    chainId extends config['chains'][number]['id']
+      ? Extract<config['chains'][number], { id: chainId }>
+      : config['chains'][number],
     Account
   >
 >
@@ -39,8 +35,10 @@ export async function getConnectorClient<
   chainId extends config['chains'][number]['id'],
 >(
   config: config,
-  { chainId }: GetConnectorClientParameters<config, chainId> = {},
+  parameters: GetConnectorClientParameters<config, chainId> = {},
 ): Promise<GetConnectorClientReturnType<config, chainId>> {
+  const { chainId } = parameters
+
   const connection = config.state.connections.get(config.state.current!)
   if (!connection) throw new ConnectorNotFoundError()
 

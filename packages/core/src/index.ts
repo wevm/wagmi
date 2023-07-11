@@ -133,6 +133,13 @@ export {
 } from './actions/reconnect.js'
 
 export {
+  type SendTransactionError,
+  type SendTransactionParameters,
+  type SendTransactionReturnType,
+  sendTransaction,
+} from './actions/sendTransaction.js'
+
+export {
   type SignMessageError,
   type SignMessageParameters,
   type SignMessageReturnType,

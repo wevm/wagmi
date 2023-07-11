@@ -8,9 +8,10 @@ import {
 } from '../actions/getFeeData.js'
 import type { Config } from '../config.js'
 import type { Evaluate, ExactPartial } from '../types/utils.js'
+import type { ScopeKey } from './types.js'
 
 export type GetFeeDataOptions<config extends Config> = Evaluate<
-  ExactPartial<GetFeeDataParameters<config>>
+  ExactPartial<GetFeeDataParameters<config>> & ScopeKey
 >
 
 export function getFeeDataQueryOptions<config extends Config>(

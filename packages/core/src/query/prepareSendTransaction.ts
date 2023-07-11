@@ -8,11 +8,14 @@ import {
 } from '../actions/prepareSendTransaction.js'
 import type { Config } from '../config.js'
 import type { Evaluate, ExactPartial } from '../types/utils.js'
+import type { ScopeKey } from './types.js'
 
 export type PrepareSendTransactionOptions<
   config extends Config,
   chainId extends config['chains'][number]['id'] | undefined,
-> = Evaluate<ExactPartial<PrepareSendTransactionParameters<config, chainId>>>
+> = Evaluate<
+  ExactPartial<PrepareSendTransactionParameters<config, chainId>> & ScopeKey
+>
 
 export function prepareSendTransactionQueryOptions<
   config extends Config,

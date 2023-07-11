@@ -9,16 +9,16 @@ const { anvil, anvilTwo } = testChains
 
 export const testClient = {
   anvil: createTestClient({
-    chain: anvil,
     mode: 'anvil',
+    chain: anvil,
     transport: http(),
   }),
   anvilTwo: createTestClient({
-    chain: anvilTwo,
     mode: 'anvil',
+    chain: anvilTwo,
     transport: http(),
   }),
-} as const
+}
 
 export const config = createConfig({
   chains: [anvil, anvilTwo],

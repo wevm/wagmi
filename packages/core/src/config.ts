@@ -30,9 +30,10 @@ export type CreateConfigParameters<
         transports: Record<chains[number]['id'], Transport>
       }
     | {
-        client: (parameters: {
-          chain: chains[number]
-        }) => Client<Transport>
+        client(parameters: { chain: chains[number] }): Client<
+          Transport,
+          chains[number]
+        >
       }
   > &
     OneOf<
@@ -52,7 +53,9 @@ export type Config<
   readonly state: State<chains>
   readonly storage: Storage | null
 
-  getClient(parameters?: { chainId?: number | undefined }): Client
+  getClient<chainId extends chains[number]['id'] | undefined>(parameters?: {
+    chainId?: chainId | chains[number]['id'] | undefined | undefined
+  }): Client
   setState<chains_ extends readonly [Chain, ...Chain[]] = chains>(
     value: State<chains_> | ((state: State<chains_>) => State<chains_>),
   ): void

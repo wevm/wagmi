@@ -7,12 +7,18 @@ import {
   signMessage,
 } from '../actions/signMessage.js'
 import { type Config } from '../config.js'
-import { type Evaluate, type Omit, type PartialBy } from '../types/utils.js'
+import {
+  type Evaluate,
+  type ExactPartial,
+  type Omit,
+  type PartialBy,
+} from '../types/utils.js'
+import { mergeWithOutUndefined } from '../utils/mergeWithOutUndefined.js'
 import { type Mutate, type MutateAsync, type MutationOptions } from './types.js'
 
 export type SignMessageOptions<message extends SignableMessage | undefined,> =
   Evaluate<
-    Omit<SignMessageParameters, 'message'> & {
+    ExactPartial<Omit<SignMessageParameters, 'message'>> & {
       message?: message | SignableMessage | undefined
     }
   >
@@ -23,6 +29,7 @@ export function signMessageMutationOptions<
   return {
     getVariables(variables) {
       return {
+        ...mergeWithOutUndefined(options, variables),
         message: (variables?.message ?? options.message)!,
       }
     },
@@ -40,7 +47,7 @@ export function signMessageMutationOptions<
 
 export type SignMessageData = SignMessageReturnType
 
-export type SignMessageVariables<message extends SignableMessage | undefined,> =
+export type SignMessageVariables<message extends SignableMessage | undefined> =
   | Evaluate<
       PartialBy<
         SignMessageParameters,

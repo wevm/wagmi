@@ -119,6 +119,15 @@ export {
 } from './query/reconnect.js'
 
 export {
+  type SendTransactionData,
+  type SendTransactionVariables,
+  type SendTransactionOptions,
+  type SendTransactionMutate,
+  type SendTransactionMutateAsync,
+  sendTransactionMutationOptions,
+} from './query/sendTransaction.js'
+
+export {
   type SignMessageData,
   type SignMessageVariables,
   type SignMessageOptions,

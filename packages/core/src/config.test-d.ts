@@ -1,5 +1,5 @@
 import { accounts, testConnector } from '@wagmi/test'
-import { createPublicClient, http } from 'viem'
+import { createClient, http } from 'viem'
 import { mainnet, sepolia } from 'viem/chains'
 import { test } from 'vitest'
 
@@ -7,7 +7,7 @@ import { createConfig } from './config.js'
 
 test('high-level config', () => {
   // Create config without needing to import viem modules.
-  createConfig({
+  const config = createConfig({
     chains: [mainnet, sepolia],
     connectors: [testConnector({ accounts })],
     transports: {
@@ -15,6 +15,7 @@ test('high-level config', () => {
       [sepolia.id]: http(),
     },
   })
+  config.getClient({ chainId: mainnet.id })
 })
 
 test('low-level config', () => {
@@ -22,11 +23,12 @@ test('low-level config', () => {
   createConfig({
     chains: [mainnet, sepolia],
     connectors: [testConnector({ accounts })],
-    client: ({ chain }) =>
-      createPublicClient({
+    client({ chain }) {
+      return createClient({
         chain,
         transport: http(),
-      }),
+      })
+    },
   })
 })
 
@@ -44,7 +46,7 @@ test('`chains` must have at least one chain`', () => {
     chains: [],
     connectors: [testConnector({ accounts })],
     client: ({ chain }) =>
-      createPublicClient({
+      createClient({
         chain,
         transport: http(),
       }),

@@ -2,6 +2,8 @@ import type { MutateOptions } from '@tanstack/query-core'
 
 import type { Evaluate, ExactPartial } from '../types/utils.js'
 
+export type ScopeKey = { scopeKey?: string }
+
 export type MutationOptions<
   data = unknown,
   error = unknown,

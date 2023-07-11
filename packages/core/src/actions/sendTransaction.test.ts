@@ -22,7 +22,7 @@ test('default', async () => {
   await disconnect(config, { connector })
 })
 
-test('default', async () => {
+test('prepareSendTransaction', async () => {
   await connect(config, { connector })
   const result = await prepareSendTransaction(config, {
     to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',

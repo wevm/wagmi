@@ -4,7 +4,7 @@ import { estimateGas } from 'viem/actions'
 import type { Config } from '../config.js'
 import { ConnectorNotFoundError } from '../errors/config.js'
 import type { ChainId } from '../types/properties.js'
-import type { Evaluate, Omit } from '../types/utils.js'
+import type { Evaluate, Omit, PartialBy } from '../types/utils.js'
 import { assertActiveChain } from '../utils/assertActiveChain.js'
 import { getConnectorClient } from './getConnectorClient.js'
 
@@ -13,43 +13,40 @@ export type PrepareSendTransactionParameters<
   chainId extends
     | config['chains'][number]['id']
     | undefined = config['chains'][number]['id'],
+  ///
+  chains extends readonly Chain[] = chainId extends config['chains'][number]['id']
+    ? [Extract<config['chains'][number], { id: chainId }>]
+    : config['chains'],
 > = Evaluate<
-  Omit<
-    SendTransactionParameters<
-      Extract<
-        config['chains'][number],
-        { id: chainId }
-      > extends infer chain extends Chain
-        ? chain
-        : config['chains'][number],
-      Account
-    >,
-    'account' | 'chain'
-  > &
-    ChainId<config, chainId>
->
+  {
+    [key in keyof chains]: Omit<
+      SendTransactionParameters<chains[key], Account>,
+      'account' | 'chain'
+    >
+  }[number]
+> &
+  Evaluate<ChainId<config, chainId>>
 
 export type PrepareSendTransactionReturnType<
   config extends Config = Config,
   chainId extends
     | config['chains'][number]['id']
     | undefined = config['chains'][number]['id'],
+  ///
+  chains extends readonly Chain[] = chainId extends config['chains'][number]['id']
+    ? [Extract<config['chains'][number], { id: chainId }>]
+    : config['chains'],
 > = Evaluate<
-  Omit<
-    SendTransactionParameters<
-      Extract<
-        config['chains'][number],
-        { id: chainId }
-      > extends infer chain extends Chain
-        ? chain
-        : config['chains'][number],
-      Account
-    >,
-    'account' | 'chain'
-  > &
-    ChainId<config, chainId> & {
-      mode: 'prepared'
-    }
+  {
+    [key in keyof chains]: Omit<
+      SendTransactionParameters<chains[key], Account>,
+      'account' | 'chain'
+    > &
+      PartialBy<
+        { chainId: chainId; mode: 'prepared' },
+        chainId extends config['chains'][number]['id'] ? never : 'chainId'
+      >
+  }[number]
 >
 
 export type PrepareSendTransactionError = Error
@@ -61,7 +58,12 @@ export async function prepareSendTransaction<
 >(
   config: config,
   parameters: PrepareSendTransactionParameters<config, chainId>,
-): Promise<PrepareSendTransactionReturnType<config, chainId>> {
+): Promise<PrepareSendTransactionReturnType<config, chainId>>
+
+export async function prepareSendTransaction(
+  config: Config,
+  parameters: PrepareSendTransactionParameters,
+): Promise<PrepareSendTransactionReturnType> {
   const { chainId, ...rest } = parameters
 
   const connectorClient = await getConnectorClient(config)
@@ -81,5 +83,5 @@ export async function prepareSendTransaction<
     gas,
     mode: 'prepared',
     chainId,
-  } as PrepareSendTransactionReturnType<config, chainId>
+  } as PrepareSendTransactionReturnType
 }

@@ -8,9 +8,10 @@ import {
 } from '../actions/getEnsAvatar.js'
 import type { Config } from '../config.js'
 import type { Evaluate, ExactPartial } from '../types/utils.js'
+import type { ScopeKey } from './types.js'
 
 export type GetEnsAvatarOptions<config extends Config> = Evaluate<
-  ExactPartial<GetEnsAvatarParameters<config>>
+  ExactPartial<GetEnsAvatarParameters<config>> & ScopeKey
 >
 
 export function getEnsAvatarQueryOptions<config extends Config>(

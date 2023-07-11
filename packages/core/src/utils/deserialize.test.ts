@@ -100,3 +100,15 @@ test('deserializes', () => {
       }
     `)
 })
+
+test('Map', () => {
+  const map = new Map().set('foo', { bar: 'baz' })
+  const deserializedCache = deserialize(serialize({ map }))
+  expect(deserializedCache).toEqual({ map })
+})
+
+test('bigint', () => {
+  const bigint = 123n
+  const deserializedCache = deserialize(serialize({ bigint }))
+  expect(deserializedCache).toEqual({ bigint })
+})

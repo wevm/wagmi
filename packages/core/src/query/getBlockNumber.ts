@@ -7,9 +7,12 @@ import {
   getBlockNumber,
 } from '../actions/getBlockNumber.js'
 import type { Config } from '../config.js'
+import type { Evaluate, ExactPartial } from '../types/utils.js'
+import type { ScopeKey } from './types.js'
 
-export type GetBlockNumberOptions<config extends Config> =
-  GetBlockNumberParameters<config>
+export type GetBlockNumberOptions<config extends Config> = Evaluate<
+  ExactPartial<GetBlockNumberParameters<config>> & ScopeKey
+>
 
 export function getBlockNumberQueryOptions<config extends Config>(
   config: Config,

@@ -29,13 +29,14 @@ export type WaitForTransactionReceiptReturnType<
   chainId extends
     | config['chains'][number]['id']
     | undefined = config['chains'][number]['id'],
-> = viem_WaitForTransactionReceiptReturnType<
-  Extract<
-    config['chains'][number],
-    { id: chainId }
-  > extends infer chain extends Chain
-    ? chain
-    : config['chains'][number]
+  ///
+  chains extends readonly Chain[] = chainId extends config['chains'][number]['id']
+    ? [Extract<config['chains'][number], { id: chainId }>]
+    : config['chains'],
+> = Evaluate<
+  {
+    [key in keyof chains]: viem_WaitForTransactionReceiptReturnType<chains[key]>
+  }[number]
 >
 
 export type WaitForTransactionReceiptError = Error

@@ -18,24 +18,23 @@ export type SendTransactionParameters<
   chainId extends
     | config['chains'][number]['id']
     | undefined = config['chains'][number]['id'],
+  ///
+  chains extends readonly Chain[] = chainId extends config['chains'][number]['id']
+    ? [Extract<config['chains'][number], { id: chainId }>]
+    : config['chains'],
 > = Evaluate<
-  Omit<
-    viem_SendTransactionParameters<
-      Extract<
-        config['chains'][number],
-        { id: chainId }
-      > extends infer chain extends Chain
-        ? chain
-        : config['chains'][number],
-      Account
-    >,
-    'account' | 'chain'
-  > &
-    ChainId<config, chainId> & {
-      mode?: 'prepared'
-    }
->
+  {
+    [key in keyof chains]: Omit<
+      viem_SendTransactionParameters<chains[key], Account>,
+      'account' | 'chain'
+    >
+  }[number]
+> &
+  Evaluate<ChainId<config, chainId>> & {
+    mode?: 'prepared'
+  }
 
+// TODO: Just return the hash (not inside)
 export type SendTransactionReturnType = {
   hash: viem_SendTransactionReturnType
 }
@@ -63,6 +62,8 @@ export async function sendTransaction(
 
   const hash = await viem_sendTransaction(client, {
     ...(rest as viem_SendTransactionParameters),
+    // Setting to `null` to not validate inside `viem_sendTransaction`
+    // since we already validated above
     chain: null,
   })
 
