@@ -84,5 +84,6 @@
       "esbuild": "0.15.13",
       "@wagmi/connectors>@wagmi/core": "workspace:*"
     }
-  }
+  },
+  "packageManager": "pnpm@8.3.0"
 }
