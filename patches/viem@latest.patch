@@ -1,8 +1,0 @@
-diff --git a/dist/esm/errors/version.js b/dist/esm/errors/version.js
-index df993332073f212e29148d1f8eb5da6d3bb4d09f..c8534d596d477940811f2649c15ab3f95353dabb 100644
---- a/dist/esm/errors/version.js
-+++ b/dist/esm/errors/version.js
-@@ -1,2 +1,2 @@
--export const version = '1.2.12';
-+export const version = 'x.y.z';
- //# sourceMappingURL=version.js.map
