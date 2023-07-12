@@ -162,3 +162,5 @@ export {
   waitForTransactionReceiptQueryKey,
   waitForTransactionReceiptQueryOptions,
 } from './query/waitForTransactionReceipt.js'
+
+export { hashFn } from './query/utils.js'

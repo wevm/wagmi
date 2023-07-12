@@ -1,10 +1,10 @@
 import { http } from 'viem'
-import { mainnet, optimism, sepolia } from 'viem/chains'
+import { celo, mainnet, optimism, sepolia } from 'viem/chains'
 import { createConfig, createStorage } from 'wagmi'
 import { coinbaseWallet, injected, walletConnect } from 'wagmi/connectors'
 
 export const config = createConfig({
-  chains: [mainnet, sepolia, optimism],
+  chains: [mainnet, sepolia, optimism, celo],
   connectors: [
     injected({ wallet: 'metaMask' }),
     injected({ wallet: 'coinbaseWallet' }),
@@ -23,6 +23,7 @@ export const config = createConfig({
       'https://eth-sepolia.g.alchemy.com/v2/roJyEHxkj7XWg1T9wmYnxvktDodQrFAS',
     ),
     [optimism.id]: http(),
+    [celo.id]: http(),
   },
 })
 

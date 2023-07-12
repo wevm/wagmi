@@ -28,11 +28,13 @@ test('exports', () => {
       "prepareSendTransactionQueryKey",
       "prepareSendTransactionQueryOptions",
       "reconnectMutationOptions",
+      "sendTransactionMutationOptions",
       "signMessageMutationOptions",
       "switchAccountMutationOptions",
       "switchChainMutationOptions",
       "waitForTransactionReceiptQueryKey",
       "waitForTransactionReceiptQueryOptions",
+      "hashFn",
     ]
   `)
 })

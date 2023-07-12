@@ -1,5 +1,6 @@
 import type {
   Account,
+  Address,
   Chain,
   SendTransactionParameters as viem_SendTransactionParameters,
   SendTransactionReturnType as viem_SendTransactionReturnType,
@@ -32,6 +33,7 @@ export type SendTransactionParameters<
 > &
   Evaluate<ChainId<config, chainId>> & {
     mode?: 'prepared'
+    to: Address
   }
 
 // TODO: Just return the hash (not inside)

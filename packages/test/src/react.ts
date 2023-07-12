@@ -6,10 +6,10 @@ import {
   waitFor as waitFor_,
   type waitForOptions,
 } from '@testing-library/react'
-import * as React from 'react'
 import { WagmiConfig } from 'wagmi'
 
 import { config } from './config.js'
+import { createElement } from 'react'
 
 export const queryClient = new QueryClient()
 
@@ -20,14 +20,10 @@ export function createWrapper<TComponent extends React.FunctionComponent<any>>(
   return function CreatedWrapper({
     children,
   }: { children?: React.ReactNode | undefined }) {
-    return React.createElement(
+    return createElement(
       Wrapper,
       props,
-      React.createElement(
-        QueryClientProvider,
-        { client: queryClient },
-        children,
-      ),
+      createElement(QueryClientProvider, { client: queryClient }, children),
     )
   }
 }

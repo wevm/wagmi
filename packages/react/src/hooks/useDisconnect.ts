@@ -9,11 +9,11 @@ import {
   type DisconnectVariables,
   disconnectMutationOptions,
 } from '@wagmi/core/query'
-import * as React from 'react'
 
 import type { UseMutationOptions, UseMutationResult } from '../types/query.js'
 import { useConfig } from './useConfig.js'
 import { useConnections } from './useConnections.js'
+import { useCallback } from 'react'
 
 export type UseDisconnectParameters<context = unknown> = Evaluate<
   DisconnectOptions &
@@ -54,11 +54,11 @@ export function useDisconnect<context = unknown>(
   return {
     ...result,
     connectors: useConnections().map((connection) => connection.connector),
-    disconnect: React.useCallback(
+    disconnect: useCallback(
       (variables, options) => mutate(getVariables(variables), options),
       [getVariables, mutate],
     ),
-    disconnectAsync: React.useCallback(
+    disconnectAsync: useCallback(
       (variables, options) => mutateAsync(getVariables(variables), options),
       [getVariables, mutateAsync],
     ),

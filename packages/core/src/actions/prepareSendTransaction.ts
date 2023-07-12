@@ -1,4 +1,4 @@
-import type { Account, Chain, SendTransactionParameters } from 'viem'
+import type { Account, Address, Chain, SendTransactionParameters } from 'viem'
 import { estimateGas } from 'viem/actions'
 
 import type { Config } from '../config.js'
@@ -25,7 +25,9 @@ export type PrepareSendTransactionParameters<
     >
   }[number]
 > &
-  Evaluate<ChainId<config, chainId>>
+  Evaluate<ChainId<config, chainId>> & {
+    to: Address
+  }
 
 export type PrepareSendTransactionReturnType<
   config extends Config = Config,
@@ -43,7 +45,7 @@ export type PrepareSendTransactionReturnType<
       'account' | 'chain'
     > &
       PartialBy<
-        { chainId: chainId; mode: 'prepared' },
+        { chainId: chainId; mode: 'prepared'; to: Address },
         chainId extends config['chains'][number]['id'] ? never : 'chainId'
       >
   }[number]

@@ -70,6 +70,7 @@ test('prepareSendTransaction', async () => {
   })
 
   const prepared = await prepareSendTransaction(config, {
+    to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
     feeCurrency: '0x',
     gatewayFee: 100n,
     gatewayFeeRecipient: '0x',
@@ -77,6 +78,7 @@ test('prepareSendTransaction', async () => {
   await sendTransaction(config, prepared)
 
   const prepared2 = await prepareSendTransaction(config, {
+    to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
     chainId: celo.id,
     feeCurrency: '0x',
     gatewayFee: 100n,
@@ -85,6 +87,7 @@ test('prepareSendTransaction', async () => {
   await sendTransaction(config, prepared2)
 
   const prepared3 = await prepareSendTransaction(config, {
+    to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
     chainId: mainnet.id,
     maxFeePerGas: 100n,
   })

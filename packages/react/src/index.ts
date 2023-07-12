@@ -97,6 +97,12 @@ export {
 } from './hooks/useReconnect.js'
 
 export {
+  type UseSendTransactionParameters,
+  type UseSendTransactionReturnType,
+  useSendTransaction,
+} from './hooks/useSendTransaction.js'
+
+export {
   type UseSignMessageParameters,
   type UseSignMessageReturnType,
   useSignMessage,
@@ -119,6 +125,12 @@ export {
   type UseTokenReturnType,
   useToken,
 } from './hooks/useToken.js'
+
+export {
+  type UseTransactionParameters,
+  type UseTransactionReturnType,
+  useTransaction,
+} from './hooks/useTransaction.js'
 
 export {
   type UseWaitForTransactionReceiptParameters,

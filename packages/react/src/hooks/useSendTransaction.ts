@@ -9,7 +9,8 @@ import {
   type SendTransactionVariables,
   sendTransactionMutationOptions,
 } from '@wagmi/core/query'
-import * as React from 'react'
+import { useCallback } from 'react'
+import type { Address } from 'viem'
 
 import type { UseMutationOptions, UseMutationResult } from '../types/query.js'
 import { useConfig } from './useConfig.js'
@@ -18,41 +19,49 @@ type ChainId = ResolvedRegister['config']['chains'][number]['id']
 
 export type UseSendTransactionParameters<
   chainId extends ChainId | undefined = undefined,
+  to extends Address | undefined = undefined,
   context = unknown,
-> = SendTransactionOptions<ResolvedRegister['config'], chainId> &
+> = SendTransactionOptions<ResolvedRegister['config'], chainId, to> &
   UseMutationOptions<
     SendTransactionData,
     SendTransactionError,
-    SendTransactionVariables<ResolvedRegister['config'], chainId>,
+    SendTransactionVariables<ResolvedRegister['config'], chainId, undefined>,
     context
   >
 
 export type UseSendTransactionReturnType<
   chainId extends ChainId | undefined = undefined,
+  to extends Address | undefined = undefined,
   context = unknown,
 > = Evaluate<
   UseMutationResult<
     SendTransactionData,
     SendTransactionError,
-    SendTransactionVariables<ResolvedRegister['config'], chainId>,
+    SendTransactionVariables<ResolvedRegister['config'], chainId, undefined>,
     context
   > & {
     sendTransaction: SendTransactionMutate<
       ResolvedRegister['config'],
       chainId,
+      to,
       context
     >
     sendTransactionAsync: SendTransactionMutateAsync<
       ResolvedRegister['config'],
       chainId,
+      to,
       context
     >
   }
 >
 
-export function useSendTransaction<chainId extends ChainId, context = unknown>(
-  parameters?: UseSendTransactionParameters<chainId, context>,
-): UseSendTransactionReturnType<chainId, context>
+export function useSendTransaction<
+  chainId extends ChainId | undefined = undefined,
+  to extends Address | undefined = undefined,
+  context = unknown,
+>(
+  parameters?: UseSendTransactionParameters<chainId, to, context>,
+): UseSendTransactionReturnType<chainId, to, context>
 
 /** https://wagmi.sh/react/hooks/useSendTransaction */
 export function useSendTransaction(
@@ -69,11 +78,11 @@ export function useSendTransaction(
   })
   return {
     ...result,
-    sendTransaction: React.useCallback(
+    sendTransaction: useCallback(
       (variables, options) => mutate(getVariables(variables), options),
       [getVariables, mutate],
     ),
-    sendTransactionAsync: React.useCallback(
+    sendTransactionAsync: useCallback(
       (variables, options) => mutateAsync(getVariables(variables), options),
       [getVariables, mutateAsync],
     ),

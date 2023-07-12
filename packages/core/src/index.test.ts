@@ -26,6 +26,7 @@ test('exports', () => {
       "watchConnections",
       "prepareSendTransaction",
       "reconnect",
+      "sendTransaction",
       "signMessage",
       "switchAccount",
       "switchChain",

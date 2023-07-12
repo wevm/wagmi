@@ -8,6 +8,7 @@ import { type Config, type Connector } from '../config.js'
 import { type CreateConnectorFn } from '../connector.js'
 
 import type { Evaluate, Omit, PartialBy } from '../types/utils.js'
+import { mergeWithOutUndefined } from '../utils/mergeWithOutUndefined.js'
 import type { Mutate, MutateAsync, MutationOptions } from './types.js'
 
 export type ConnectOptions<
@@ -25,9 +26,10 @@ export function connectMutationOptions<
 >(config: config, options: ConnectOptions<config, connector> = {}) {
   return {
     getVariables(variables) {
+      const merged = mergeWithOutUndefined(options, variables)
       return {
-        chainId: variables?.chainId ?? options.chainId,
-        connector: (variables?.connector ?? options.connector)!,
+        ...merged,
+        connector: merged.connector!,
       }
     },
     mutationFn(variables) {

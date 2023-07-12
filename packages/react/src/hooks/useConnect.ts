@@ -14,10 +14,10 @@ import {
   type ConnectVariables,
   connectMutationOptions,
 } from '@wagmi/core/query'
-import * as React from 'react'
 
 import type { UseMutationOptions, UseMutationResult } from '../types/query.js'
 import { useConfig } from './useConfig.js'
+import { useCallback } from 'react'
 
 export type UseConnectParameters<
   connector extends CreateConnectorFn | Connector | undefined = undefined,
@@ -74,11 +74,11 @@ export function useConnect(
   })
   return {
     ...result,
-    connect: React.useCallback(
+    connect: useCallback(
       (variables, options) => mutate(getVariables(variables), options),
       [getVariables, mutate],
     ),
-    connectAsync: React.useCallback(
+    connectAsync: useCallback(
       (variables, options) => mutateAsync(getVariables(variables), options),
       [getVariables, mutateAsync],
     ),

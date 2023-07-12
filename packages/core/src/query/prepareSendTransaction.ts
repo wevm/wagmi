@@ -7,15 +7,22 @@ import {
   prepareSendTransaction,
 } from '../actions/prepareSendTransaction.js'
 import type { Config } from '../config.js'
+import type { ChainId } from '../types/properties.js'
 import type { Evaluate, ExactPartial } from '../types/utils.js'
 import type { ScopeKey } from './types.js'
 
 export type PrepareSendTransactionOptions<
   config extends Config,
   chainId extends config['chains'][number]['id'] | undefined,
-> = Evaluate<
-  ExactPartial<PrepareSendTransactionParameters<config, chainId>> & ScopeKey
->
+> = ExactPartial<
+  PrepareSendTransactionParameters<
+    config,
+    // only pass through generic slot if `chainId` is inferrable from config
+    number extends config['chains'][number]['id'] ? undefined : chainId
+  >
+> &
+  ScopeKey &
+  Evaluate<ChainId<config, chainId>>
 
 export function prepareSendTransactionQueryOptions<
   config extends Config,
@@ -29,10 +36,9 @@ export function prepareSendTransactionQueryOptions<
 ) {
   return {
     async queryFn({ queryKey }) {
-      return prepareSendTransaction(
-        config,
-        queryKey[1] as PrepareSendTransactionParameters<config, chainId>,
-      )
+      const { to } = queryKey[1]
+      if (!to) throw new Error('to is required')
+      return prepareSendTransaction(config, queryKey[1] as any)
     },
     queryKey: prepareSendTransactionQueryKey(options),
   } as const satisfies QueryOptions<

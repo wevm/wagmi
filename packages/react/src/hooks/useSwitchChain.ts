@@ -9,7 +9,7 @@ import {
   type SwitchChainVariables,
   switchChainMutationOptions,
 } from '@wagmi/core/query'
-import * as React from 'react'
+import { useCallback } from 'react'
 
 import type { UseMutationOptions, UseMutationResult } from '../types/query.js'
 import { useConfig } from './useConfig.js'
@@ -72,11 +72,11 @@ export function useSwitchChain(
   return {
     ...result,
     chains: config.chains,
-    switchChain: React.useCallback(
+    switchChain: useCallback(
       (variables, options) => mutate(getVariables(variables), options),
       [getVariables, mutate],
     ),
-    switchChainAsync: React.useCallback(
+    switchChainAsync: useCallback(
       (variables, options) => mutateAsync(getVariables(variables), options),
       [getVariables, mutateAsync],
     ),

@@ -11,7 +11,7 @@ import {
   type GetBalanceQueryKey,
   getBalanceQueryOptions,
 } from '@wagmi/core/query'
-import * as React from 'react'
+import { useEffect } from 'react'
 
 import {
   type UseQueryParameters,
@@ -56,7 +56,7 @@ export function useBalance<selectData = GetBalanceData>(
   })
   const enabled = Boolean(address && (parameters.enabled ?? true))
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!enabled) return
     if (!address) return
     if (!watch) return

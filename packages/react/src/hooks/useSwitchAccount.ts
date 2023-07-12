@@ -13,7 +13,7 @@ import {
   type SwitchAccountVariables,
   switchAccountMutationOptions,
 } from '@wagmi/core/query'
-import * as React from 'react'
+import { useCallback } from 'react'
 
 import type { UseMutationOptions, UseMutationResult } from '../types/query.js'
 import { useConfig } from './useConfig.js'
@@ -79,11 +79,11 @@ export function useSwitchAccount(
   return {
     ...result,
     connectors: useConnections().map((connection) => connection.connector),
-    switchAccount: React.useCallback(
+    switchAccount: useCallback(
       (variables, options) => mutate(getVariables(variables), options),
       [getVariables, mutate],
     ),
-    switchAccountAsync: React.useCallback(
+    switchAccountAsync: useCallback(
       (variables, options) => mutateAsync(getVariables(variables), options),
       [getVariables, mutateAsync],
     ),

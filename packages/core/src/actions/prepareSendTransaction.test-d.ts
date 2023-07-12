@@ -23,6 +23,7 @@ test('chain formatters', async () => {
     }
   >()
   const result = await prepareSendTransaction(config, {
+    to: '0x',
     feeCurrency: '0x',
     gatewayFee: 100n,
     gatewayFeeRecipient: '0x',
@@ -45,6 +46,7 @@ test('chain formatters', async () => {
     gatewayFeeRecipient?: `0x${string}` | undefined
   }>()
   const result2 = await prepareSendTransaction(config, {
+    to: '0x',
     chainId: celo.id,
     feeCurrency: '0x',
     gatewayFee: 100n,
@@ -68,6 +70,7 @@ test('chain formatters', async () => {
   }>()
   const result3 = await prepareSendTransaction(config, {
     chainId: mainnet.id,
+    to: '0x',
     // @ts-expect-error
     feeCurrency: '0x',
     gatewayFee: 100n,

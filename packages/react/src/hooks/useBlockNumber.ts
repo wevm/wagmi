@@ -8,7 +8,7 @@ import {
   type GetBlockNumberQueryKey,
   getBlockNumberQueryOptions,
 } from '@wagmi/core/query'
-import * as React from 'react'
+import { useEffect } from 'react'
 
 import type { ResolvedRegister } from '../index.js'
 import {
@@ -46,7 +46,7 @@ export function useBlockNumber<selectData = GetBlockNumberData>(
   const chainId = parameters.chainId ?? useChainId()
   const queryOptions = getBlockNumberQueryOptions(config, { chainId })
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!enabled) return
     if (!watch) return
 

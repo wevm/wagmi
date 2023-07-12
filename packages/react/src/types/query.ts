@@ -1,3 +1,4 @@
+import { hashFn } from '../query.js'
 import {
   type DefaultError,
   type QueryKey,
@@ -54,6 +55,7 @@ export type UseQueryParameters<
     >,
     | 'initialData'
     | 'queryFn'
+    | 'queryHash'
     | 'queryKey'
     | 'queryKeyHashFn'
     | 'suspense'
@@ -74,11 +76,13 @@ export type UseQueryResult<
   error = DefaultError,
 > = import('@tanstack/react-query').UseQueryResult<data, error>
 
-// TODO: Remove
-// Ideally we don't have this file, but `useQuery` currently has some quirks where it is super hard to
+// Ideally we don't have this function, but `useQuery` currently has some quirks where it is super hard to
 // pass down the inferred `initialData` type because of it's discriminated overload in the on `useQuery`.
 export function useQuery<queryFnData, error, data, queryKey extends QueryKey>(
   args: UseQueryParameters<queryFnData, error, data, queryKey>,
 ): UseQueryResult<data, error> {
-  return useQuery_(args as any)
+  return useQuery_({
+    ...(args as any),
+    queryKeyHashFn: hashFn, // for bigint support
+  })
 }

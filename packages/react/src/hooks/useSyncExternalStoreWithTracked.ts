@@ -1,5 +1,5 @@
 import { deepEqual } from '@wagmi/core/internal'
-import * as React from 'react'
+import { useRef } from 'react'
 import { useSyncExternalStoreWithSelector } from 'use-sync-external-store/shim/with-selector.js'
 
 const isPlainObject = (obj: unknown) =>
@@ -14,7 +14,7 @@ export function useSyncExternalStoreWithTracked<
   getServerSnapshot: undefined | null | (() => snapshot) = getSnapshot,
   isEqual: (a: selection, b: selection) => boolean = deepEqual,
 ) {
-  const trackedKeys = React.useRef<string[]>([])
+  const trackedKeys = useRef<string[]>([])
   const result = useSyncExternalStoreWithSelector(
     subscribe,
     getSnapshot,

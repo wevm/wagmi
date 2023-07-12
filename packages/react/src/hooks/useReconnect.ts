@@ -9,7 +9,7 @@ import {
   type ReconnectVariables,
   reconnectMutationOptions,
 } from '@wagmi/core/query'
-import * as React from 'react'
+import { useCallback } from 'react'
 
 import type { UseMutationOptions, UseMutationResult } from '../types/query.js'
 import { useConfig } from './useConfig.js'
@@ -53,11 +53,11 @@ export function useReconnect<context = unknown>(
   return {
     ...result,
     connectors: config.connectors,
-    reconnect: React.useCallback(
+    reconnect: useCallback(
       (variables, options) => mutate(getVariables(variables), options),
       [getVariables, mutate],
     ),
-    reconnectAsync: React.useCallback(
+    reconnectAsync: useCallback(
       (variables, options) => mutateAsync(getVariables(variables), options),
       [getVariables, mutateAsync],
     ),

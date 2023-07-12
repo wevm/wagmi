@@ -62,11 +62,6 @@ export type PartialBy<type, key extends keyof type> = ExactPartial<
 > &
   Omit<type, key>
 
-export type PartialByKeys<type, key extends string> = ExactPartial<
-  Pick<type, key extends keyof type ? key : never>
-> &
-  OmitKeys<type, key>
-
 /**
  * Widen narrowed type to broader type.
  */

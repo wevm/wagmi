@@ -52,7 +52,7 @@ jobs:
     strategy:
       matrix:
         typescript-version: ['5.0.4', 'latest']
-        # TODO: Run against multiple viem versions
+        # TODO: Run against multiple viem versions (need to update patchedDependencies in package.json)
         # viem-version: ['1.2.0', 'latest']
 
     steps:
