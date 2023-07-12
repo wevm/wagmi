@@ -5,7 +5,7 @@
 - [`cebbcd37`](https://github.com/wagmi-dev/wagmi/commit/cebbcd37852b505ef58b7bb97e1bc94ac65f4f1f) Thanks [@awkweb](https://github.com/awkweb)! - Updated WalletConnect dependencies
 
 - Updated dependencies []:
-  - @wagmi/connectors@0.3.23
+  - @wagmi/connectors@0.3.24
 
 ## 0.10.16
 
