@@ -2,7 +2,7 @@
 
 ### Patch Changes
 
-- [`cebbcd37`](https://github.com/wagmi-dev/wagmi/commit/cebbcd37852b505ef58b7bb97e1bc94ac65f4f1f) Thanks [@awkweb](https://github.com/awkweb)! - Updated WalletConnect dependencies
+- [`728eb28e`](https://github.com/wagmi-dev/wagmi/commit/728eb28e9b15b15fc56d9ff5c7a85df5be7a40e9) Thanks [@awkweb](https://github.com/awkweb)! - Updated WalletConnect dependencies
 
 - Updated dependencies []:
   - @wagmi/connectors@0.3.24
