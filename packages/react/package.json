@@ -39,6 +39,11 @@
       "import": "./dist/esm/actions.js",
       "default": "./dist/cjs/actions.js"
     },
+    "./chains": {
+      "types": "./dist/types/chains.d.ts",
+      "import": "./dist/esm/chains.js",
+      "default": "./dist/cjs/chains.js"
+    },
     "./connectors": {
       "types": "./dist/types/connectors.d.ts",
       "import": "./dist/esm/connectors.js",
@@ -54,6 +59,7 @@
   "typesVersions": {
     "*": {
       "actions": ["./dist/types/actions.d.ts"],
+      "chains": ["./dist/types/chains.d.ts"],
       "connectors": ["./dist/types/connectors.d.ts"],
       "query": ["./dist/types/query.d.ts"]
     }

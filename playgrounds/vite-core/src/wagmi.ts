@@ -1,7 +1,7 @@
 import { coinbaseWallet, injected, walletConnect } from '@wagmi/connectors'
 import { createConfig, createStorage } from '@wagmi/core'
+import { mainnet, optimism, sepolia } from '@wagmi/core/chains'
 import { http } from 'viem'
-import { mainnet, optimism, sepolia } from 'viem/chains'
 
 export const config = createConfig({
   chains: [mainnet, sepolia, optimism],

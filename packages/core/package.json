@@ -34,6 +34,11 @@
       "import": "./dist/esm/index.js",
       "default": "./dist/cjs/index.js"
     },
+    "./chains": {
+      "types": "./dist/types/chains.d.ts",
+      "import": "./dist/esm/chains.js",
+      "default": "./dist/cjs/chains.js"
+    },
     "./internal": {
       "types": "./dist/types/internal.d.ts",
       "import": "./dist/esm/internal.js",
@@ -48,6 +53,7 @@
   },
   "typesVersions": {
     "*": {
+      "chains": ["./dist/types/chains.d.ts"],
       "internal": ["./dist/types/internal.d.ts"],
       "query": ["./dist/types/query.d.ts"]
     }
