@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.12.19
+
+### Patch Changes
+
+- [`cebbcd37`](https://github.com/wagmi-dev/wagmi/commit/cebbcd37852b505ef58b7bb97e1bc94ac65f4f1f) Thanks [@awkweb](https://github.com/awkweb)! - Updated WalletConnect dependencies
+
+- Updated dependencies [[`cebbcd37`](https://github.com/wagmi-dev/wagmi/commit/cebbcd37852b505ef58b7bb97e1bc94ac65f4f1f)]:
+  - @wagmi/core@0.10.17
+
 ## 0.12.18
 
 ### Patch Changes
