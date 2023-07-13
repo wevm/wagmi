@@ -1,0 +1,235 @@
+---
+title: 'useEnsText'
+description: 'React Hook for fetching a text record for ENS name.'
+---
+
+# useEnsText
+
+Hook for fetching a text record for ENS name.
+
+This is a wrapper around viem's [`getEnsText`](https://viem.sh/docs/ens/actions/getEnsText.html).
+
+```ts
+import { useEnsText } from 'wagmi'
+```
+
+## Usage
+
+```tsx
+import { useEnsText } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useEnsText({
+    name: 'ens.eth',
+    key: 'com.twitter',
+  })
+
+  if (isLoading) return <div>Fetching record…</div>
+  if (isError) return <div>Error fetching record</div>
+  return <div>Twitter: {data}</div>
+}
+```
+
+## Return Value
+
+```tsx
+{
+  data?: string
+  error?: Error
+  isIdle: boolean
+  isLoading: boolean
+  isFetching: boolean
+  isSuccess: boolean
+  isError: boolean
+  isFetched: boolean
+  isFetchedAfterMount: boolean
+  isRefetching: boolean
+  refetch: (options: {
+    throwOnError: boolean
+    cancelRefetch: boolean
+  }) => Promise<string>
+  status: 'idle' | 'error' | 'loading' | 'success'
+}
+```
+
+## Configuration
+
+### name (optional)
+
+ENS name to fetch text record for. If `name` is not defined, hook will not run.
+
+```tsx {5}
+import { useEnsText } from 'wagmi'
+
+function App() {
+  const ensText = useEnsText({
+    name: 'ens.eth',
+    key: 'com.twitter',
+  })
+}
+```
+
+### key (optional)
+
+Key of the text record to fetch. If `key` is not defined, hook will not run.
+
+```ts {6}
+import { useEnsText } from 'wagmi'
+
+function App() {
+  const ensText = useEnsText({
+    name: 'ens.eth',
+    key: 'com.twitter',
+  })
+}
+```
+
+### chainId (optional)
+
+Force a specific chain id for the request. The wagmi `Client`'s `publicClient` must be set up as a [chain-aware function](/react/config#publicclient-optional) for this to work correctly.
+
+```tsx {7}
+import { useEnsText } from 'wagmi'
+
+function App() {
+  const ensText = useEnsText({
+    name: 'ens.eth',
+    key: 'com.twitter',
+    chainId: 1,
+  })
+}
+```
+
+### cacheTime (optional)
+
+Time (in ms) which the data should remain in the cache. Defaults to `0`.
+
+```tsx {7}
+import { useEnsText } from 'wagmi'
+
+function App() {
+  const ensText = useEnsText({
+    name: 'ens.eth',
+    key: 'com.twitter',
+    cacheTime: 2_000,
+  })
+}
+```
+
+### enabled (optional)
+
+Set this to `false` to disable this query from automatically running. Defaults to `true`.
+
+```tsx {7}
+import { useEnsText } from 'wagmi'
+
+function App() {
+  const ensText = useEnsText({
+    name: 'ens.eth',
+    key: 'com.twitter',
+    enabled: false,
+  })
+}
+```
+
+### scopeKey (optional)
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+```tsx {7}
+import { useEnsText } from 'wagmi'
+
+function App() {
+  const ensText = useEnsText({
+    name: 'ens.eth',
+    key: 'com.twitter',
+    scopeKey: 'wagmi',
+  })
+}
+```
+
+### staleTime (optional)
+
+Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale. Defaults to `1000 * 60 * 60 * 24` (24 hours).
+
+```tsx {7}
+import { useEnsText } from 'wagmi'
+
+function App() {
+  const ensText = useEnsText({
+    name: 'ens.eth',
+    key: 'com.twitter',
+    staleTime: 2_000,
+  })
+}
+```
+
+### suspense (optional)
+
+Set this to `true` to enable suspense mode.
+
+```tsx {7}
+import { useEnsText } from 'wagmi'
+
+function App() {
+  const ensText = useEnsText({
+    name: 'ens.eth',
+    key: 'com.twitter',
+    suspense: true,
+  })
+}
+```
+
+### onSuccess (optional)
+
+Function to invoke when fetching new data is successful.
+
+```tsx {7-9}
+import { useEnsText } from 'wagmi'
+
+function App() {
+  const ensText = useEnsText({
+    name: 'ens.eth',
+    key: 'com.twitter',
+    onSuccess(data) {
+      console.log('Success', data)
+    },
+  })
+}
+```
+
+### onError (optional)
+
+Function to invoke when an error is thrown while fetching new data.
+
+```tsx {7-9}
+import { useEnsText } from 'wagmi'
+
+function App() {
+  const ensText = useEnsText({
+    name: 'ens.eth',
+    key: 'com.twitter',
+    onError(error) {
+      console.log('Error', error)
+    },
+  })
+}
+```
+
+### onSettled (optional)
+
+Function to invoke when fetching is settled (either successfully fetched, or an error has thrown).
+
+```tsx {7-9}
+import { useEnsText } from 'wagmi'
+
+function App() {
+  const ensText = useEnsText({
+    name: 'ens.eth',
+    key: 'com.twitter',
+    onSettled(data, error) {
+      console.log('Settled', { data, error })
+    },
+  })
+}
+```

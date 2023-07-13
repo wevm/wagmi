@@ -13,6 +13,7 @@
   "useEnsAvatar": "useEnsAvatar",
   "useEnsName": "useEnsName",
   "useEnsResolver": "useEnsResolver",
+  "useEnsText": "useEnsText",
   "useFeeData": "useFeeData",
   "useNetwork": "useNetwork",
   "usePublicClient": "usePublicClient",
