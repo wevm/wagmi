@@ -69,6 +69,7 @@ export {
   fetchEnsAvatar,
   fetchEnsName,
   fetchEnsResolver,
+  fetchEnsText,
   type FetchEnsAddressArgs,
   type FetchEnsAddressResult,
   type FetchEnsAvatarArgs,
@@ -77,6 +78,8 @@ export {
   type FetchEnsNameResult,
   type FetchEnsResolverArgs,
   type FetchEnsResolverResult,
+  type FetchEnsTextArgs,
+  type FetchEnsTextResult,
 } from './ens'
 
 export {

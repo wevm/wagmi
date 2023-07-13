@@ -21,3 +21,9 @@ export {
   type FetchEnsResolverArgs,
   type FetchEnsResolverResult,
 } from './fetchEnsResolver'
+
+export {
+  fetchEnsText,
+  type FetchEnsTextArgs,
+  type FetchEnsTextResult,
+} from './fetchEnsText'
