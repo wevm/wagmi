@@ -21,6 +21,7 @@ export {
   useEnsAvatar,
   useEnsName,
   useEnsResolver,
+  useEnsText,
   useFeeData,
   useInfiniteQuery,
   useMutation,

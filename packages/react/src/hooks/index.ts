@@ -26,7 +26,13 @@ export {
   type UsePrepareContractWriteConfig,
 } from './contracts'
 
-export { useEnsAddress, useEnsAvatar, useEnsName, useEnsResolver } from './ens'
+export {
+  useEnsAddress,
+  useEnsAvatar,
+  useEnsName,
+  useEnsResolver,
+  useEnsText,
+} from './ens'
 
 export { useBlockNumber, useFeeData } from './network-status'
 
