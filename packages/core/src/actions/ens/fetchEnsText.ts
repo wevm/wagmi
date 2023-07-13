@@ -1,4 +1,5 @@
 import { getPublicClient } from '../viem'
+import { normalize } from 'viem/ens'
 
 export type FetchEnsTextArgs = {
   /** Name to lookup */
@@ -18,7 +19,7 @@ export async function fetchEnsText({
 }: FetchEnsTextArgs): Promise<FetchEnsTextResult> {
   const publicClient = getPublicClient({ chainId })
   return publicClient.getEnsText({
-    name,
+    name: normalize(name),
     key,
   })
 }
