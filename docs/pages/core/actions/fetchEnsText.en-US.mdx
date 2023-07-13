@@ -1,0 +1,73 @@
+---
+title: 'fetchEnsText'
+description: 'Action for fetching a text record for ENS name.'
+---
+
+# fetchEnsText
+
+Action for fetching a text record for ENS name.
+
+This is a wrapper around viem's [`getEnsText`](https://viem.sh/docs/ens/actions/getEnsText.html).
+
+```ts
+import { fetchEnsText } from '@wagmi/core'
+```
+
+## Usage
+
+```ts
+import { fetchEnsText } from '@wagmi/core'
+
+const ensText = await fetchEnsText({
+  name: 'ens.eth',
+  key: 'com.twitter',
+})
+```
+
+## Return Value
+
+```ts
+string
+```
+
+## Configuration
+
+### name
+
+ENS name to fetch text record for.
+
+```ts {4}
+import { fetchEnsText } from '@wagmi/core'
+
+const ensText = await fetchEnsText({
+  name: 'ens.eth',
+  key: 'com.twitter',
+})
+```
+
+### key
+
+Key of the text record to fetch.
+
+```ts {5}
+import { fetchEnsText } from '@wagmi/core'
+
+const ensText = await fetchEnsText({
+  name: 'ens.eth',
+  key: 'com.twitter',
+})
+```
+
+### chainId (optional)
+
+Force a specific chain id for the request. The wagmi `Client`'s `publicClient` must be set up as a [chain-aware function](/core/config#publicclient-optional) for this to work correctly.
+
+```ts {6}
+import { fetchEnsText } from '@wagmi/core'
+
+const ensText = await fetchEnsText({
+  name: 'ens.eth',
+  key: 'com.twitter',
+  chainId: 1,
+})
+```
