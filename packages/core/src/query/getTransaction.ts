@@ -23,7 +23,7 @@ export function getTransactionQueryOptions<
     async queryFn({ queryKey }) {
       const { blockHash, blockNumber, blockTag, hash, ...parameters } =
         queryKey[1]
-      if (!(blockHash && blockNumber && blockTag && hash))
+      if (!blockHash && !blockNumber && !blockTag && !hash)
         throw new Error('blockHash, blockNumber, blockTag, or hash is required')
 
       let params
