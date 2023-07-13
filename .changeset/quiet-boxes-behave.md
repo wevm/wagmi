@@ -7,4 +7,4 @@
 "@wagmi/connectors": patch
 ---
 
-Added `fetchEnsText` and `useEnsText` fetching ENS text records.
+Added `fetchEnsText` and `useEnsText` for fetching ENS text records.
