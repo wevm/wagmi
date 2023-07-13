@@ -25,6 +25,7 @@ it('should expose correct exports', () => {
       "useEnsAvatar",
       "useEnsName",
       "useEnsResolver",
+      "useEnsText",
       "useFeeData",
       "useInfiniteQuery",
       "useMutation",

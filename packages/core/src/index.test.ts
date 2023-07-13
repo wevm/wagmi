@@ -13,6 +13,7 @@ it('should expose correct exports', () => {
       "fetchEnsAvatar",
       "fetchEnsName",
       "fetchEnsResolver",
+      "fetchEnsText",
       "fetchFeeData",
       "fetchToken",
       "fetchTransaction",

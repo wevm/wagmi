@@ -7,6 +7,7 @@ export {
   fetchEnsAvatar,
   fetchEnsName,
   fetchEnsResolver,
+  fetchEnsText,
   fetchFeeData,
   fetchToken,
   fetchTransaction,
