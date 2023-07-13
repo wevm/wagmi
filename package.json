@@ -20,6 +20,7 @@
     "test:ui": "vitest --ui",
     "test:ui:cov": "vite preview --outDir ./coverage",
     "test:update": "vitest --update",
+    "test:update:viem": "bun scripts/updateViemTestSnapshotVersion.ts",
     "typecheck": "pnpm run --r --parallel typecheck && tsc --noEmit",
     "version:update": "pnpm bun scripts/updateVersion.ts"
   },
@@ -41,7 +42,7 @@
     "rome": "^12.1.0",
     "simple-git-hooks": "^2.8.1",
     "typescript": "^5.0.4",
-    "viem": "0.0.0-main.20230712T213010",
+    "viem": "1.2.14",
     "vite": "^4.3.2",
     "vitest": "^0.31.0"
   },
@@ -55,7 +56,7 @@
       "@wagmi/core": "workspace:*",
       "remark-shiki-twoslash>shiki": "^0.14.1",
       "shiki-twoslash>shiki": "^0.14.1",
-      "viem": "0.0.0-main.20230712T213010"
+      "viem": "1.2.14"
     },
     "patchedDependencies": {
       "@coinbase/wallet-sdk@3.7.1": "patches/@coinbase__wallet-sdk@3.7.1.patch",
