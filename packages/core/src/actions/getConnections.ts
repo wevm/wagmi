@@ -26,8 +26,9 @@ export type WatchConnectionsReturnType = () => void
 /** https://wagmi.sh/core/actions/getConnections#watcher */
 export function watchConnections(
   config: Config,
-  { onChange }: WatchConnectionsParameters,
+  parameters: WatchConnectionsParameters,
 ): WatchConnectionsReturnType {
+  const { onChange } = parameters
   return config.subscribe(() => getConnections(config), onChange, {
     equalityFn: deepEqual,
   })

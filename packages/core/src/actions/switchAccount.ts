@@ -19,8 +19,9 @@ export type SwitchAccountError = ConnectorNotFoundError | BaseError | Error
 /** https://wagmi.sh/core/actions/switchAccount */
 export async function switchAccount<config extends Config>(
   config: config,
-  { connector }: SwitchAccountParameters,
+  parameters: SwitchAccountParameters,
 ): Promise<SwitchAccountReturnType<config>> {
+  const { connector } = parameters
   const connection = config.state.connections.get(connector.uid)
   if (!connection) throw new ConnectorNotFoundError()
 

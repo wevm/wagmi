@@ -25,9 +25,9 @@ export type SignMessageError =
 /** https://wagmi.sh/core/actions/signMessage */
 export async function signMessage(
   config: Config,
-  { message }: SignMessageParameters,
+  parameters: SignMessageParameters,
 ): Promise<SignMessageReturnType> {
   const client = await getConnectorClient(config)
   if (!client) throw new ConnectorNotFoundError()
-  return viem_signMessage(client, { message })
+  return viem_signMessage(client, parameters)
 }

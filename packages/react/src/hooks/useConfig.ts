@@ -1,4 +1,4 @@
-import type { ResolvedRegister } from '@wagmi/core'
+import { type ResolvedRegister } from '@wagmi/core'
 import { useContext } from 'react'
 
 import { WagmiContext } from '../context.js'

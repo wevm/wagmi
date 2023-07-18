@@ -22,7 +22,8 @@ export type WatchChainIdReturnType = () => void
 /** https://wagmi.sh/core/actions/getChainId#watcher */
 export function watchChainId<config extends Config>(
   config: config,
-  { onChange }: WatchChainIdParameters<config>,
+  parameters: WatchChainIdParameters<config>,
 ): WatchChainIdReturnType {
+  const { onChange } = parameters
   return config.subscribe((state) => state.chainId, onChange)
 }

@@ -163,7 +163,7 @@ export function createConfig<
       client = createClient({
         batch: { multicall: true },
         chain,
-        pollingInterval: rest.pollingInterval as number,
+        pollingInterval: rest.pollingInterval,
         transport: rest.transports[chain.id as chains[number]['id']],
       })
 

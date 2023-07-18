@@ -16,7 +16,7 @@ let isReconnecting = false
 /** https://wagmi.sh/core/actions/reconnect */
 export async function reconnect(
   config: Config,
-  { connectors: connectors_ }: ReconnectParameters = {},
+  parameters: ReconnectParameters = {},
 ): Promise<ReconnectReturnType> {
   // If already reconnecting, do nothing
   if (isReconnecting) return []
@@ -28,8 +28,8 @@ export async function reconnect(
   }))
 
   const connectors: Connector[] = []
-  if (connectors_?.length) {
-    for (const connector_ of connectors_) {
+  if (parameters.connectors?.length) {
+    for (const connector_ of parameters.connectors) {
       let connector: Connector
       // "Register" connector if not already created
       if (typeof connector_ === 'function')
