@@ -8,10 +8,10 @@ import {
 } from '../actions/getEnsAddress.js'
 import type { Config } from '../config.js'
 import type { Evaluate, ExactPartial } from '../types/utils.js'
-import type { ScopeKey } from './types.js'
+import type { ScopeKeyParameter } from './types.js'
 
 export type GetEnsAddressOptions<config extends Config> = Evaluate<
-  ExactPartial<GetEnsAddressParameters<config>> & ScopeKey
+  ExactPartial<GetEnsAddressParameters<config>> & ScopeKeyParameter
 >
 
 export function getEnsAddressQueryOptions<config extends Config>(

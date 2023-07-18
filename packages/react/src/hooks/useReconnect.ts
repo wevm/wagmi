@@ -5,23 +5,15 @@ import {
   type ReconnectData,
   type ReconnectMutate,
   type ReconnectMutateAsync,
-  type ReconnectOptions,
   type ReconnectVariables,
   reconnectMutationOptions,
 } from '@wagmi/core/query'
-import { useCallback } from 'react'
 
 import type { UseMutationOptions, UseMutationResult } from '../types/query.js'
 import { useConfig } from './useConfig.js'
 
 export type UseReconnectParameters<context = unknown> = Evaluate<
-  ReconnectOptions &
-    UseMutationOptions<
-      ReconnectData,
-      ReconnectError,
-      ReconnectVariables,
-      context
-    >
+  UseMutationOptions<ReconnectData, ReconnectError, ReconnectVariables, context>
 >
 
 export type UseReconnectReturnType<context = unknown> = Evaluate<
@@ -42,10 +34,7 @@ export function useReconnect<context = unknown>(
   parameters: UseReconnectParameters<context> = {},
 ): UseReconnectReturnType<context> {
   const config = useConfig()
-  const { getVariables, ...mutationOptions } = reconnectMutationOptions(
-    config,
-    parameters,
-  )
+  const mutationOptions = reconnectMutationOptions(config)
   const { mutate, mutateAsync, ...result } = useMutation({
     ...parameters,
     ...mutationOptions,
@@ -53,13 +42,7 @@ export function useReconnect<context = unknown>(
   return {
     ...result,
     connectors: config.connectors,
-    reconnect: useCallback(
-      (variables, options) => mutate(getVariables(variables), options),
-      [getVariables, mutate],
-    ),
-    reconnectAsync: useCallback(
-      (variables, options) => mutateAsync(getVariables(variables), options),
-      [getVariables, mutateAsync],
-    ),
+    reconnect: mutate,
+    reconnectAsync: mutateAsync,
   }
 }

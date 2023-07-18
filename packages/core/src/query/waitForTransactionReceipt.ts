@@ -8,13 +8,14 @@ import {
 } from '../actions/waitForTransactionReceipt.js'
 import type { Config } from '../config.js'
 import type { Evaluate, ExactPartial } from '../types/utils.js'
-import type { ScopeKey } from './types.js'
+import type { ScopeKeyParameter } from './types.js'
 
 export type WaitForTransactionReceiptOptions<
   config extends Config,
   chainId extends config['chains'][number]['id'] | undefined,
 > = Evaluate<
-  ExactPartial<WaitForTransactionReceiptParameters<config, chainId>> & ScopeKey
+  ExactPartial<WaitForTransactionReceiptParameters<config, chainId>> &
+    ScopeKeyParameter
 >
 
 export function waitForTransactionReceiptQueryOptions<

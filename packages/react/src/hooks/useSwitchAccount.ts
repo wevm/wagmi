@@ -9,69 +9,45 @@ import {
   type SwitchAccountData,
   type SwitchAccountMutate,
   type SwitchAccountMutateAsync,
-  type SwitchAccountOptions,
   type SwitchAccountVariables,
   switchAccountMutationOptions,
 } from '@wagmi/core/query'
-import { useCallback } from 'react'
 
 import type { UseMutationOptions, UseMutationResult } from '../types/query.js'
 import { useConfig } from './useConfig.js'
 import { useConnections } from './useConnections.js'
 
-export type UseSwitchAccountParameters<
-  connector extends Connector | undefined = Connector | undefined,
-  context = unknown,
-> = Evaluate<
-  SwitchAccountOptions<connector> &
-    UseMutationOptions<
-      SwitchAccountData<ResolvedRegister['config']>,
-      SwitchAccountError,
-      SwitchAccountVariables<undefined>,
-      context
-    >
+export type UseSwitchAccountParameters<context = unknown> = Evaluate<
+  UseMutationOptions<
+    SwitchAccountData<ResolvedRegister['config']>,
+    SwitchAccountError,
+    SwitchAccountVariables,
+    context
+  >
 >
 
-export type UseSwitchAccountReturnType<
-  connector extends Connector | undefined = Connector | undefined,
-  context = unknown,
-> = Evaluate<
+export type UseSwitchAccountReturnType<context = unknown> = Evaluate<
   UseMutationResult<
     SwitchAccountData<ResolvedRegister['config']>,
     SwitchAccountError,
-    SwitchAccountVariables<undefined>,
+    SwitchAccountVariables,
     context
   > & {
     connectors: readonly Connector[]
-    switchAccount: SwitchAccountMutate<
-      ResolvedRegister['config'],
-      connector,
-      context
-    >
+    switchAccount: SwitchAccountMutate<ResolvedRegister['config'], context>
     switchAccountAsync: SwitchAccountMutateAsync<
       ResolvedRegister['config'],
-      connector,
       context
     >
   }
 >
 
-export function useSwitchAccount<
-  connector extends Connector | undefined = undefined,
-  context = unknown,
->(
-  parameters?: UseSwitchAccountParameters<connector, context>,
-): UseSwitchAccountReturnType<connector, context>
-
 /** https://wagmi.sh/react/hooks/useSwitchAccount */
-export function useSwitchAccount(
-  parameters: UseSwitchAccountParameters = {},
-): UseSwitchAccountReturnType {
+export function useSwitchAccount<context = unknown>(
+  parameters: UseSwitchAccountParameters<context> = {},
+): UseSwitchAccountReturnType<context> {
   const config = useConfig()
-  const { getVariables, ...mutationOptions } = switchAccountMutationOptions(
-    config,
-    parameters,
-  )
+  const mutationOptions = switchAccountMutationOptions(config)
   const { mutate, mutateAsync, ...result } = useMutation({
     ...parameters,
     ...mutationOptions,
@@ -79,13 +55,7 @@ export function useSwitchAccount(
   return {
     ...result,
     connectors: useConnections().map((connection) => connection.connector),
-    switchAccount: useCallback(
-      (variables, options) => mutate(getVariables(variables), options),
-      [getVariables, mutate],
-    ),
-    switchAccountAsync: useCallback(
-      (variables, options) => mutateAsync(getVariables(variables), options),
-      [getVariables, mutateAsync],
-    ),
+    switchAccount: mutate,
+    switchAccountAsync: mutateAsync,
   }
 }

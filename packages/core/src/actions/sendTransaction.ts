@@ -9,7 +9,7 @@ import { sendTransaction as viem_sendTransaction } from 'viem/actions'
 
 import type { Config } from '../config.js'
 import { ConnectorNotFoundError } from '../errors/config.js'
-import type { ChainId } from '../types/properties.js'
+import type { ChainIdParameter } from '../types/properties.js'
 import type { Evaluate } from '../types/utils.js'
 import { assertActiveChain } from '../utils/assertActiveChain.js'
 import { getConnectorClient } from './getConnectorClient.js'
@@ -31,7 +31,7 @@ export type SendTransactionParameters<
     >
   }[number]
 > &
-  Evaluate<ChainId<config, chainId>> & {
+  Evaluate<ChainIdParameter<config, chainId>> & {
     mode?: 'prepared'
     to: Address
   }

@@ -7,9 +7,9 @@ import {
   prepareSendTransaction,
 } from '../actions/prepareSendTransaction.js'
 import type { Config } from '../config.js'
-import type { ChainId } from '../types/properties.js'
+import type { ChainIdParameter } from '../types/properties.js'
 import type { Evaluate, ExactPartial } from '../types/utils.js'
-import type { ScopeKey } from './types.js'
+import type { ScopeKeyParameter } from './types.js'
 
 export type PrepareSendTransactionOptions<
   config extends Config,
@@ -21,8 +21,8 @@ export type PrepareSendTransactionOptions<
     number extends config['chains'][number]['id'] ? undefined : chainId
   >
 > &
-  ScopeKey &
-  Evaluate<ChainId<config, chainId>>
+  ScopeKeyParameter &
+  Evaluate<ChainIdParameter<config, chainId>>
 
 export function prepareSendTransactionQueryOptions<
   config extends Config,

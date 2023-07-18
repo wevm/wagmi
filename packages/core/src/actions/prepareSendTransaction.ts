@@ -3,7 +3,7 @@ import { estimateGas } from 'viem/actions'
 
 import type { Config } from '../config.js'
 import { ConnectorNotFoundError } from '../errors/config.js'
-import type { ChainId } from '../types/properties.js'
+import type { ChainIdParameter } from '../types/properties.js'
 import type { Evaluate, Omit, PartialBy } from '../types/utils.js'
 import { assertActiveChain } from '../utils/assertActiveChain.js'
 import { getConnectorClient } from './getConnectorClient.js'
@@ -25,7 +25,7 @@ export type PrepareSendTransactionParameters<
     >
   }[number]
 > &
-  Evaluate<ChainId<config, chainId>> & {
+  Evaluate<ChainIdParameter<config, chainId>> & {
     to: Address
   }
 

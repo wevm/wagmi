@@ -8,7 +8,7 @@ import {
 
 import type { Config } from '../config.js'
 import { erc20Abi, erc20Abi_bytes32 } from '../constants/abis.js'
-import type { ChainId } from '../types/properties.js'
+import type { ChainIdParameter } from '../types/properties.js'
 import type { Unit } from '../types/unit.js'
 import type { Evaluate } from '../types/utils.js'
 import { getUnit } from '../utils/getUnit.js'
@@ -18,7 +18,7 @@ export type GetTokenParameters<config extends Config = Config> = Evaluate<
   {
     address: Address
     formatUnits?: Unit
-  } & ChainId<config>
+  } & ChainIdParameter<config>
 >
 
 export type GetTokenReturnType = {

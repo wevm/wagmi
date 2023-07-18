@@ -12,26 +12,8 @@ import type { Address } from 'viem'
 const connectors = [config.connectors[0]!]
 const contextValue = { foo: 'bar' } as const
 
-test('parameter', () => {
-  expectTypeOf(useReconnect().reconnect).parameter(0).toEqualTypeOf<
-    | {
-        connectors?: readonly (CreateConnectorFn | Connector)[] | undefined
-      }
-    | undefined
-  >()
-  expectTypeOf(useReconnect({ connectors }).reconnect)
-    .parameter(0)
-    .toEqualTypeOf<
-      | {
-          connectors?: readonly (CreateConnectorFn | Connector)[] | undefined
-        }
-      | undefined
-    >()
-})
-
 test('context', () => {
-  useReconnect({
-    connectors,
+  const { context, data, error, reconnect, variables } = useReconnect({
     onMutate(variables) {
       expectTypeOf(variables).toEqualTypeOf<
         | {
@@ -85,50 +67,78 @@ test('context', () => {
       >()
       expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
     },
-  }).reconnect(undefined, {
-    onError(error, variables, context) {
-      expectTypeOf(variables).toEqualTypeOf<
-        | {
-            connectors?: readonly (CreateConnectorFn | Connector)[] | undefined
-          }
-        | undefined
-      >()
-      expectTypeOf(error).toEqualTypeOf<ReconnectError>()
-      expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
-    },
-    onSuccess(data, variables, context) {
-      expectTypeOf(variables).toEqualTypeOf<
-        | {
-            connectors?: readonly (CreateConnectorFn | Connector)[] | undefined
-          }
-        | undefined
-      >()
-      expectTypeOf(data).toEqualTypeOf<
-        | {
-            accounts: readonly Address[]
-            chainId: number
-            connector: Connector
-          }[]
-      >()
-      expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
-    },
-    onSettled(data, error, variables, context) {
-      expectTypeOf(data).toEqualTypeOf<
-        | {
-            accounts: readonly Address[]
-            chainId: number
-            connector: Connector
-          }[]
-        | undefined
-      >()
-      expectTypeOf(error).toEqualTypeOf<ReconnectError | null>()
-      expectTypeOf(variables).toEqualTypeOf<
-        | {
-            connectors?: readonly (CreateConnectorFn | Connector)[] | undefined
-          }
-        | undefined
-      >()
-      expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
-    },
   })
+
+  expectTypeOf(data).toEqualTypeOf<
+    | {
+        accounts: readonly Address[]
+        chainId: number
+        connector: Connector
+      }[]
+    | undefined
+  >()
+  expectTypeOf(error).toEqualTypeOf<ReconnectError | null>()
+  expectTypeOf(variables).toEqualTypeOf<
+    | {
+        connectors?: readonly (CreateConnectorFn | Connector)[] | undefined
+      }
+    | undefined
+  >()
+  expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+
+  reconnect(
+    { connectors },
+    {
+      onError(error, variables, context) {
+        expectTypeOf(variables).toEqualTypeOf<
+          | {
+              connectors?:
+                | readonly (CreateConnectorFn | Connector)[]
+                | undefined
+            }
+          | undefined
+        >()
+        expectTypeOf(error).toEqualTypeOf<ReconnectError>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+      },
+      onSuccess(data, variables, context) {
+        expectTypeOf(variables).toEqualTypeOf<
+          | {
+              connectors?:
+                | readonly (CreateConnectorFn | Connector)[]
+                | undefined
+            }
+          | undefined
+        >()
+        expectTypeOf(data).toEqualTypeOf<
+          | {
+              accounts: readonly Address[]
+              chainId: number
+              connector: Connector
+            }[]
+        >()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
+      },
+      onSettled(data, error, variables, context) {
+        expectTypeOf(data).toEqualTypeOf<
+          | {
+              accounts: readonly Address[]
+              chainId: number
+              connector: Connector
+            }[]
+          | undefined
+        >()
+        expectTypeOf(error).toEqualTypeOf<ReconnectError | null>()
+        expectTypeOf(variables).toEqualTypeOf<
+          | {
+              connectors?:
+                | readonly (CreateConnectorFn | Connector)[]
+                | undefined
+            }
+          | undefined
+        >()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+      },
+    },
+  )
 })

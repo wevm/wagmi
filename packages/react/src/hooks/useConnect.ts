@@ -1,87 +1,53 @@
 import { useMutation } from '@tanstack/react-query'
-import {
-  type ConnectError,
-  type Connector,
-  type CreateConnectorFn,
-  type ResolvedRegister,
-} from '@wagmi/core'
+import { type ConnectError, type ResolvedRegister } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
 import {
   type ConnectData,
   type ConnectMutate,
   type ConnectMutateAsync,
-  type ConnectOptions,
   type ConnectVariables,
   connectMutationOptions,
 } from '@wagmi/core/query'
 
 import type { UseMutationOptions, UseMutationResult } from '../types/query.js'
 import { useConfig } from './useConfig.js'
-import { useCallback } from 'react'
 
-export type UseConnectParameters<
-  connector extends CreateConnectorFn | Connector | undefined = undefined,
-  context = unknown,
-> = Evaluate<
-  ConnectOptions<ResolvedRegister['config'], connector> &
-    UseMutationOptions<
-      ConnectData<ResolvedRegister['config']>,
-      ConnectError,
-      ConnectVariables<ResolvedRegister['config'], undefined>,
-      context
-    >
+export type UseConnectParameters<context = unknown> = Evaluate<
+  UseMutationOptions<
+    ConnectData<ResolvedRegister['config']>,
+    ConnectError,
+    ConnectVariables<ResolvedRegister['config']>,
+    context
+  >
 >
 
-export type UseConnectReturnType<
-  connector extends CreateConnectorFn | Connector | undefined = undefined,
-  context = unknown,
-> = Evaluate<
+export type UseConnectReturnType<context = unknown> = Evaluate<
   UseMutationResult<
     ConnectData<ResolvedRegister['config']>,
     ConnectError,
-    ConnectVariables<ResolvedRegister['config'], undefined>,
+    ConnectVariables<ResolvedRegister['config']>,
     context
   > & {
-    connect: ConnectMutate<ResolvedRegister['config'], connector, context>
-    connectAsync: ConnectMutateAsync<
-      ResolvedRegister['config'],
-      connector,
-      context
-    >
+    connect: ConnectMutate<ResolvedRegister['config'], context>
+    connectAsync: ConnectMutateAsync<ResolvedRegister['config'], context>
     connectors: ResolvedRegister['config']['connectors']
   }
 >
 
-export function useConnect<
-  connector extends Connector | CreateConnectorFn | undefined = undefined,
-  context = unknown,
->(
-  parameters?: UseConnectParameters<connector, context>,
-): UseConnectReturnType<connector, context>
-
 /** https://wagmi.sh/react/hooks/useConnect */
-export function useConnect(
-  parameters: UseConnectParameters = {},
-): UseConnectReturnType {
+export function useConnect<context = unknown>(
+  parameters: UseConnectParameters<context> = {},
+): UseConnectReturnType<context> {
   const config = useConfig()
-  const { getVariables, ...mutationOptions } = connectMutationOptions(
-    config,
-    parameters,
-  )
+  const mutationOptions = connectMutationOptions(config)
   const { mutate, mutateAsync, ...result } = useMutation({
     ...parameters,
     ...mutationOptions,
   })
   return {
     ...result,
-    connect: useCallback(
-      (variables, options) => mutate(getVariables(variables), options),
-      [getVariables, mutate],
-    ),
-    connectAsync: useCallback(
-      (variables, options) => mutateAsync(getVariables(variables), options),
-      [getVariables, mutateAsync],
-    ),
+    connect: mutate,
+    connectAsync: mutateAsync,
     connectors: config.connectors,
   }
 }

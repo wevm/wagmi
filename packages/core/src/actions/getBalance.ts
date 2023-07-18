@@ -12,7 +12,7 @@ import {
 } from 'viem/actions'
 
 import type { Config } from '../config.js'
-import type { ChainId } from '../types/properties.js'
+import type { ChainIdParameter } from '../types/properties.js'
 import { type Unit } from '../types/unit.js'
 import { type Evaluate, type Omit, type OneOf } from '../types/utils.js'
 import { getUnit } from '../utils/getUnit.js'
@@ -27,7 +27,7 @@ export type GetBalanceParameters<config extends Config = Config> = Evaluate<
 
     token?: Address | undefined
     unit?: Unit | undefined
-  } & ChainId<config> &
+  } & ChainIdParameter<config> &
     OneOf<
       { blockNumber?: bigint | undefined } | { blockTag?: BlockTag | undefined }
     >

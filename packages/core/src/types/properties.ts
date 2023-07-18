@@ -1,6 +1,6 @@
 import type { Config } from '../config.js'
 
-export type ChainId<
+export type ChainIdParameter<
   config extends Config,
   chainId extends
     | config['chains'][number]['id']

@@ -1,35 +1,33 @@
-import type { MutateOptions } from '@tanstack/query-core'
+import type { Evaluate } from '../types/utils.js'
 
-import type { Evaluate, ExactPartial } from '../types/utils.js'
+export type ScopeKeyParameter = { scopeKey?: string }
 
-export type ScopeKey = { scopeKey?: string }
-
-export type MutationOptions<
-  data = unknown,
-  error = unknown,
-  variables = void,
-  parameters = variables,
-> = import('@tanstack/query-core').MutationOptions<data, error, variables> & {
-  getVariables(variables?: ExactPartial<parameters>): parameters
-}
-
-export type MutateFn<
+type MutateFn<
   data = unknown,
   error = unknown,
   variables = void,
   context = unknown,
-  fnVariables = variables,
-> = undefined extends fnVariables
+> = undefined extends variables
   ? (
-      variables?: fnVariables,
+      variables?: variables,
       options?: Evaluate<
-        MutateOptions<data, error, Evaluate<variables>, context>
+        import('@tanstack/query-core').MutateOptions<
+          data,
+          error,
+          variables,
+          context
+        >
       >,
     ) => Promise<data>
   : (
-      variables: fnVariables,
+      variables: variables,
       options?: Evaluate<
-        MutateOptions<data, error, Evaluate<variables>, context>
+        import('@tanstack/query-core').MutateOptions<
+          data,
+          error,
+          variables,
+          context
+        >
       >,
     ) => Promise<data>
 
@@ -38,9 +36,8 @@ export type Mutate<
   error = unknown,
   variables = void,
   context = unknown,
-  fnVariables = variables,
 > = (
-  ...args: Parameters<MutateFn<data, error, variables, context, fnVariables>>
+  ...args: Parameters<MutateFn<data, error, Evaluate<variables>, context>>
 ) => void
 
 export type MutateAsync<
@@ -48,5 +45,4 @@ export type MutateAsync<
   error = unknown,
   variables = void,
   context = unknown,
-  fnVariables = variables,
-> = MutateFn<data, error, variables, context, fnVariables>
+> = MutateFn<data, error, Evaluate<variables>, context>

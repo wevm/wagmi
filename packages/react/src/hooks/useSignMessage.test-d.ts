@@ -8,24 +8,8 @@ const contextValue = { foo: 'bar' } as const
 
 type SignableMessage = SignMessageParameters['message']
 
-test('required', () => {
-  expectTypeOf(useSignMessage().signMessage)
-    .parameter(0)
-    .toEqualTypeOf<{ message: SignableMessage }>()
-
-  // @ts-expect-error
-  useSignMessage().signMessage()
-})
-
-test('optional', () => {
-  expectTypeOf(useSignMessage({ message }).signMessage)
-    .parameter(0)
-    .toEqualTypeOf<{ message?: SignableMessage | undefined } | undefined>()
-})
-
 test('context', () => {
-  useSignMessage({
-    message,
+  const { context, data, error, signMessage, variables } = useSignMessage({
     onMutate(variables) {
       expectTypeOf(variables).toEqualTypeOf<{
         message: SignableMessage
@@ -54,28 +38,40 @@ test('context', () => {
       }>()
       expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
     },
-  }).signMessage(undefined, {
-    onError(error, variables, context) {
-      expectTypeOf(variables).toEqualTypeOf<{
-        message: SignableMessage
-      }>()
-      expectTypeOf(error).toEqualTypeOf<SignMessageError>()
-      expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
-    },
-    onSuccess(data, variables, context) {
-      expectTypeOf(variables).toEqualTypeOf<{
-        message: SignableMessage
-      }>()
-      expectTypeOf(data).toEqualTypeOf<`0x${string}`>()
-      expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
-    },
-    onSettled(data, error, variables, context) {
-      expectTypeOf(data).toEqualTypeOf<`0x${string}` | undefined>()
-      expectTypeOf(error).toEqualTypeOf<SignMessageError | null>()
-      expectTypeOf(variables).toEqualTypeOf<{
-        message: SignableMessage
-      }>()
-      expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
-    },
   })
+
+  expectTypeOf(data).toEqualTypeOf<`0x${string}` | undefined>()
+  expectTypeOf(error).toEqualTypeOf<SignMessageError | null>()
+  expectTypeOf(variables).toEqualTypeOf<
+    { message: SignableMessage } | undefined
+  >()
+  expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+
+  signMessage(
+    { message },
+    {
+      onError(error, variables, context) {
+        expectTypeOf(variables).toEqualTypeOf<{
+          message: SignableMessage
+        }>()
+        expectTypeOf(error).toEqualTypeOf<SignMessageError>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+      },
+      onSuccess(data, variables, context) {
+        expectTypeOf(variables).toEqualTypeOf<{
+          message: SignableMessage
+        }>()
+        expectTypeOf(data).toEqualTypeOf<`0x${string}`>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
+      },
+      onSettled(data, error, variables, context) {
+        expectTypeOf(data).toEqualTypeOf<`0x${string}` | undefined>()
+        expectTypeOf(error).toEqualTypeOf<SignMessageError | null>()
+        expectTypeOf(variables).toEqualTypeOf<{
+          message: SignableMessage
+        }>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+      },
+    },
+  )
 })

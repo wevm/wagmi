@@ -4,7 +4,6 @@
 export {
   type ConnectData,
   type ConnectVariables,
-  type ConnectOptions,
   type ConnectMutate,
   type ConnectMutateAsync,
   connectMutationOptions,
@@ -13,7 +12,6 @@ export {
 export {
   type DisconnectData,
   type DisconnectVariables,
-  type DisconnectOptions,
   type DisconnectMutate,
   type DisconnectMutateAsync,
   disconnectMutationOptions,
@@ -112,7 +110,6 @@ export {
 export {
   type ReconnectData,
   type ReconnectVariables,
-  type ReconnectOptions,
   type ReconnectMutate,
   type ReconnectMutateAsync,
   reconnectMutationOptions,
@@ -121,7 +118,6 @@ export {
 export {
   type SendTransactionData,
   type SendTransactionVariables,
-  type SendTransactionOptions,
   type SendTransactionMutate,
   type SendTransactionMutateAsync,
   sendTransactionMutationOptions,
@@ -130,7 +126,6 @@ export {
 export {
   type SignMessageData,
   type SignMessageVariables,
-  type SignMessageOptions,
   type SignMessageMutate,
   type SignMessageMutateAsync,
   signMessageMutationOptions,
@@ -139,7 +134,6 @@ export {
 export {
   type SwitchAccountData,
   type SwitchAccountVariables,
-  type SwitchAccountOptions,
   type SwitchAccountMutate,
   type SwitchAccountMutateAsync,
   switchAccountMutationOptions,
@@ -148,7 +142,6 @@ export {
 export {
   type SwitchChainData,
   type SwitchChainVariables,
-  type SwitchChainOptions,
   type SwitchChainMutate,
   type SwitchChainMutateAsync,
   switchChainMutationOptions,

@@ -1,5 +1,3 @@
-import type { Address, ResolvedConfig } from 'viem'
-
 export type DistributedKeys<type> = type extends infer member
   ? keyof member
   : never
@@ -18,15 +16,6 @@ export type Evaluate<type> = { [key in keyof type]: type[key] } & unknown
 export type ExactPartial<type> = {
   [key in keyof type]?: type[key] | undefined
 }
-
-/**
- * Check if type is a union.
- */
-export type IsUnion<type, type2 = type> = type extends type2
-  ? [type2] extends [type]
-    ? false
-    : true
-  : never
 
 /**
  * Removes `readonly` from all properties of an object.
@@ -61,30 +50,3 @@ export type PartialBy<type, key extends keyof type> = ExactPartial<
   Pick<type, key>
 > &
   Omit<type, key>
-
-/**
- * Widen narrowed type to broader type.
- */
-export type ReadonlyWiden<type> =
-  | (type extends Function ? type : never)
-  | (type extends ResolvedConfig['BigIntType'] ? bigint : never)
-  | (type extends boolean ? boolean : never)
-  | (type extends ResolvedConfig['IntType'] ? number : never)
-  | (type extends string
-      ? type extends Address
-        ? Address
-        : type extends ResolvedConfig['BytesType']['inputs']
-        ? ResolvedConfig['BytesType']
-        : string
-      : never)
-  | (type extends readonly [] ? readonly [] : never)
-  | (type extends Record<string, unknown>
-      ? { [K in keyof type]: ReadonlyWiden<type[K]> }
-      : never)
-  | (type extends { length: number }
-      ? {
-          [K in keyof type]: ReadonlyWiden<type[K]>
-        } extends infer Val extends unknown[]
-        ? readonly [...Val]
-        : never
-      : never)

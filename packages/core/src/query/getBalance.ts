@@ -8,10 +8,10 @@ import {
 } from '../actions/getBalance.js'
 import type { Config } from '../config.js'
 import type { Evaluate, PartialBy } from '../types/utils.js'
-import type { ScopeKey } from './types.js'
+import type { ScopeKeyParameter } from './types.js'
 
 export type GetBalanceOptions<config extends Config> = Evaluate<
-  PartialBy<GetBalanceParameters<config>, 'address'> & ScopeKey
+  PartialBy<GetBalanceParameters<config>, 'address'> & ScopeKeyParameter
 >
 
 export function getBalanceQueryOptions<config extends Config>(

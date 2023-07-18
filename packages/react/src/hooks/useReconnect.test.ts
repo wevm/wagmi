@@ -30,15 +30,11 @@ test('default', async () => {
 test('parameters: connectors (Connector)', async () => {
   await connect(config, { connector })
 
-  const { result } = renderHook(() =>
-    useReconnect({
-      connectors: [connector],
-    }),
-  )
+  const { result } = renderHook(() => useReconnect())
 
   expect(result.current.connectors).toBeDefined()
 
-  result.current.reconnect()
+  result.current.reconnect({ connectors: [connector] })
   await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
   expect(result.current.data).toMatchObject(
@@ -58,15 +54,11 @@ test('parameters: connectors (CreateConnectorFn)', async () => {
   })
   await connect(config, { connector })
 
-  const { result } = renderHook(() =>
-    useReconnect({
-      connectors: [connector],
-    }),
-  )
+  const { result } = renderHook(() => useReconnect())
 
   expect(result.current.connectors).toBeDefined()
 
-  result.current.reconnect()
+  result.current.reconnect({ connectors: [connector] })
   await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
   expect(result.current.data).toMatchObject(
@@ -82,11 +74,7 @@ test('parameters: connectors (CreateConnectorFn)', async () => {
 test("behavior: doesn't reconnect if already reconnecting", async () => {
   const previousStatus = config.state.status
   config.setState((x) => ({ ...x, status: 'reconnecting' }))
-  const { result } = renderHook(() =>
-    useReconnect({
-      connectors: [connector],
-    }),
-  )
+  const { result } = renderHook(() => useReconnect())
   await expect(
     result.current.reconnectAsync({ connectors: [connector] }),
   ).resolves.toStrictEqual([])

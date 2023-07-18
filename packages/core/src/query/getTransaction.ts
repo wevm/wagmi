@@ -8,12 +8,14 @@ import {
 } from '../actions/getTransaction.js'
 import type { Config } from '../config.js'
 import type { Evaluate, ExactPartial } from '../types/utils.js'
-import type { ScopeKey } from './types.js'
+import type { ScopeKeyParameter } from './types.js'
 
 export type GetTransactionOptions<
   config extends Config,
   chainId extends config['chains'][number]['id'] | undefined,
-> = Evaluate<ExactPartial<GetTransactionParameters<config, chainId>> & ScopeKey>
+> = Evaluate<
+  ExactPartial<GetTransactionParameters<config, chainId>> & ScopeKeyParameter
+>
 
 export function getTransactionQueryOptions<
   config extends Config,

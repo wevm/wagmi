@@ -1,3 +1,5 @@
+import type { MutationOptions } from '@tanstack/query-core'
+
 import {
   type ReconnectError,
   type ReconnectParameters,
@@ -6,24 +8,14 @@ import {
 } from '../actions/reconnect.js'
 import type { Config } from '../config.js'
 import type { Evaluate } from '../types/utils.js'
-import type { Mutate, MutateAsync, MutationOptions } from './types.js'
+import type { Mutate, MutateAsync } from './types.js'
 
-export type ReconnectOptions = ReconnectParameters
-
-export function reconnectMutationOptions(
-  config: Config,
-  options: ReconnectOptions = {},
-) {
+export function reconnectMutationOptions(config: Config) {
   return {
-    getVariables(variables) {
-      return {
-        connectors: (variables?.connectors ?? options.connectors)!,
-      }
-    },
     mutationFn(variables) {
       return reconnect(config, variables)
     },
-    mutationKey: ['reconnect', options],
+    mutationKey: ['reconnect'],
   } as const satisfies MutationOptions<
     ReconnectData,
     ReconnectError,
@@ -39,14 +31,12 @@ export type ReconnectMutate<context = unknown> = Mutate<
   ReconnectData,
   ReconnectError,
   ReconnectVariables,
-  context,
-  ReconnectVariables
+  context
 >
 
 export type ReconnectMutateAsync<context = unknown> = MutateAsync<
   ReconnectData,
   ReconnectError,
   ReconnectVariables,
-  context,
-  ReconnectVariables
+  context
 >

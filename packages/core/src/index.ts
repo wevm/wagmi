@@ -16,34 +16,28 @@ export {
 } from './actions/disconnect.js'
 
 export {
-  // Getter
   type GetAccountReturnType,
   getAccount,
-  // Watcher
   type WatchAccountParameters,
   type WatchAccountReturnType,
   watchAccount,
 } from './actions/getAccount.js'
 
 export {
-  // Getter
   type GetBalanceParameters,
   type GetBalanceReturnType,
   type GetBalanceError,
   getBalance,
-  // Watcher
   type WatchBalanceParameters,
   type WatchBalanceReturnType,
   watchBalance,
 } from './actions/getBalance.js'
 
 export {
-  // Getter
   type GetBlockNumberError,
   type GetBlockNumberParameters,
   type GetBlockNumberReturnType,
   getBlockNumber,
-  // Watcher
   type WatchBlockNumberParameters,
   type WatchBlockNumberReturnType,
   watchBlockNumber,
@@ -99,20 +93,16 @@ export {
 } from './actions/getTransaction.js'
 
 export {
-  // Getter
   type GetChainIdReturnType,
   getChainId,
-  // Watcher
   type WatchChainIdParameters,
   type WatchChainIdReturnType,
   watchChainId,
 } from './actions/getChainId.js'
 
 export {
-  // Getter
   type GetConnectionsReturnType,
   getConnections,
-  // Watcher
   type WatchConnectionsParameters,
   type WatchConnectionsReturnType,
   watchConnections,

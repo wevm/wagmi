@@ -8,10 +8,10 @@ import {
 } from '../actions/getToken.js'
 import type { Config } from '../config.js'
 import type { Evaluate, ExactPartial } from '../types/utils.js'
-import type { ScopeKey } from './types.js'
+import type { ScopeKeyParameter } from './types.js'
 
 export type GetTokenOptions<config extends Config> = Evaluate<
-  ExactPartial<GetTokenParameters<config>> & ScopeKey
+  ExactPartial<GetTokenParameters<config>> & ScopeKeyParameter
 >
 
 export function getTokenQueryOptions<config extends Config>(

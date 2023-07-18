@@ -6,10 +6,10 @@ import {
 
 import { type Config } from '../config.js'
 import { type Evaluate } from '../internal.js'
-import type { ChainId } from '../types/properties.js'
+import type { ChainIdParameter } from '../types/properties.js'
 
 export type GetEnsAddressParameters<config extends Config = Config> = Evaluate<
-  viem_GetEnsAddressParameters & ChainId<config>
+  viem_GetEnsAddressParameters & ChainIdParameter<config>
 >
 
 export type GetEnsAddressReturnType = viem_GetEnsAddressReturnType
