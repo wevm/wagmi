@@ -12,7 +12,7 @@ export function Account() {
     chainId: 1,
   })
   const { data: ensAvatarData } = useEnsAvatar({
-    address,
+    name: ensNameData,
     chainId: 1,
   })
   const { disconnect } = useDisconnect()
