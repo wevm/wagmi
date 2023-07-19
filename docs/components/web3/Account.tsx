@@ -12,7 +12,7 @@ export function Account() {
     chainId: 1,
   })
   const { data: ensAvatarData } = useEnsAvatar({
-    address,
+    name: ensNameData,
     chainId: 1,
   })
   const { disconnect } = useDisconnect()
@@ -20,7 +20,6 @@ export function Account() {
   if (!address || !isMounted) return null
 
   const formattedAddress = formatAddress(address)
-
   return (
     <Stack
       align='center'
