@@ -1,4 +1,4 @@
-import type { GetEnsNameError } from '@wagmi/core'
+import type { GetEnsNameError, ResolvedRegister } from '@wagmi/core'
 import { type Evaluate } from '@wagmi/core/internal'
 import {
   type GetEnsNameData,
@@ -8,12 +8,11 @@ import {
   getEnsNameQueryOptions,
 } from '@wagmi/core/query'
 
-import type { ResolvedRegister } from '../index.js'
 import {
   type UseQueryParameters,
   type UseQueryResult,
   useQuery,
-} from '../types/query.js'
+} from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 

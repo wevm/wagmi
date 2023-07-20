@@ -3,6 +3,7 @@ import { expectTypeOf, test } from 'vitest'
 
 import {
   type UseContractReadParameters,
+  type UseContractReadReturnType,
   useContractRead,
 } from './useContractRead.js'
 import type { Address } from 'viem'
@@ -33,5 +34,12 @@ test('UseContractReadParameters', () => {
       | 'totalSupply'
       | undefined
     args?: readonly [Address] | undefined
+  }>()
+})
+
+test('UseContractReadReturnType', () => {
+  type Result = UseContractReadReturnType<typeof abi.erc20, 'balanceOf'>
+  expectTypeOf<Result>().toMatchTypeOf<{
+    data?: bigint | undefined
   }>()
 })

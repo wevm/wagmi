@@ -10,6 +10,7 @@ import {
 import type { Config } from '../config.js'
 import type { PartialBy } from '../types/utils.js'
 import type { ScopeKeyParameter } from './types.js'
+import { filterQueryOptions } from './utils.js'
 
 export type ReadContractOptions<
   config extends Config,
@@ -28,7 +29,11 @@ export function readContractQueryOptions<
   functionName extends string,
 >(
   config: Config,
-  options: ReadContractOptions<config, abi, functionName> = {} as any,
+  options: ReadContractOptions<
+    config,
+    abi,
+    functionName
+  > = {} as ReadContractOptions<config, abi, functionName>,
 ) {
   return {
     async queryFn({ queryKey }) {
@@ -65,7 +70,7 @@ export function readContractQueryKey<
   const abi extends Abi | readonly unknown[],
   functionName extends string,
 >(options: ReadContractOptions<config, abi, functionName> = {} as any) {
-  return ['readContract', options] as const
+  return ['readContract', filterQueryOptions(options)] as const
 }
 
 export type ReadContractQueryKey<

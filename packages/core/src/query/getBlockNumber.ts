@@ -9,6 +9,7 @@ import {
 import type { Config } from '../config.js'
 import type { Evaluate, ExactPartial } from '../types/utils.js'
 import type { ScopeKeyParameter } from './types.js'
+import { filterQueryOptions } from './utils.js'
 
 export type GetBlockNumberOptions<config extends Config> = Evaluate<
   ExactPartial<GetBlockNumberParameters<config>> & ScopeKeyParameter
@@ -41,7 +42,7 @@ export type GetBlockNumberData = GetBlockNumberQueryFnData
 export function getBlockNumberQueryKey<config extends Config>(
   options: GetBlockNumberOptions<config> = {},
 ) {
-  return ['blockNumber', options] as const
+  return ['blockNumber', filterQueryOptions(options)] as const
 }
 
 export type GetBlockNumberQueryKey<config extends Config> = ReturnType<

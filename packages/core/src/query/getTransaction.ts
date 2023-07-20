@@ -9,6 +9,7 @@ import {
 import type { Config } from '../config.js'
 import type { Evaluate, ExactPartial } from '../types/utils.js'
 import type { ScopeKeyParameter } from './types.js'
+import { filterQueryOptions } from './utils.js'
 
 export type GetTransactionOptions<
   config extends Config,
@@ -61,7 +62,7 @@ export function getTransactionQueryKey<
   config extends Config,
   chainId extends config['chains'][number]['id'] | undefined,
 >(options: GetTransactionOptions<config, chainId> = {}) {
-  return ['transaction', options] as const
+  return ['transaction', filterQueryOptions(options)] as const
 }
 
 export type GetTransactionQueryKey<

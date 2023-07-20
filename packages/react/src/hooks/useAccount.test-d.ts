@@ -1,7 +1,7 @@
+import { type Connector } from '@wagmi/core'
 import type { Address } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
-import type { Connector } from '../index.js'
 import { useAccount } from './useAccount.js'
 
 test('states', () => {

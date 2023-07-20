@@ -9,6 +9,7 @@ import {
 import type { Config } from '../config.js'
 import type { Evaluate, ExactPartial } from '../types/utils.js'
 import type { ScopeKeyParameter } from './types.js'
+import { filterQueryOptions } from './utils.js'
 
 export type GetTokenOptions<config extends Config> = Evaluate<
   ExactPartial<GetTokenParameters<config>> & ScopeKeyParameter
@@ -40,7 +41,7 @@ export type GetTokenData = GetTokenQueryFnData
 export function getTokenQueryKey<config extends Config>(
   options: GetTokenOptions<config> = {},
 ) {
-  return ['token', options] as const
+  return ['token', filterQueryOptions(options)] as const
 }
 
 export type GetTokenQueryKey<config extends Config> = ReturnType<

@@ -1,4 +1,7 @@
-import type { WaitForTransactionReceiptError } from '@wagmi/core'
+import type {
+  ResolvedRegister,
+  WaitForTransactionReceiptError,
+} from '@wagmi/core'
 import { type Evaluate } from '@wagmi/core/internal'
 import {
   type WaitForTransactionReceiptData,
@@ -8,12 +11,11 @@ import {
   waitForTransactionReceiptQueryOptions,
 } from '@wagmi/core/query'
 
-import type { ResolvedRegister } from '../index.js'
 import {
   type UseQueryParameters,
   type UseQueryResult,
   useQuery,
-} from '../types/query.js'
+} from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 

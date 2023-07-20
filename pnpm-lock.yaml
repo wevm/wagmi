@@ -5,7 +5,7 @@ overrides:
   '@wagmi/core': workspace:*
   remark-shiki-twoslash>shiki: ^0.14.1
   shiki-twoslash>shiki: ^0.14.1
-  viem: 0.0.0-w-20230720004551
+  viem: 0.0.0-w-20230720203148
 
 patchedDependencies:
   '@coinbase/wallet-sdk@3.7.1':
@@ -74,8 +74,8 @@ importers:
         specifier: ^5.0.4
         version: 5.0.4
       viem:
-        specifier: 0.0.0-w-20230720004551
-        version: 0.0.0-w-20230720004551(typescript@5.0.4)
+        specifier: 0.0.0-w-20230720203148
+        version: 0.0.0-w-20230720203148(typescript@5.0.4)
       vite:
         specifier: ^4.3.2
         version: 4.3.2(@types/node@18.16.9)
@@ -101,8 +101,8 @@ importers:
         specifier: ^0.53.0
         version: 0.53.0(vite@4.3.2)
       viem:
-        specifier: 0.0.0-w-20230720004551
-        version: 0.0.0-w-20230720004551(typescript@5.0.4)
+        specifier: 0.0.0-w-20230720203148
+        version: 0.0.0-w-20230720203148(typescript@5.0.4)
       vitepress:
         specifier: 1.0.0-beta.1
         version: 1.0.0-beta.1(patch_hash=owdx3pggad6ualcvbffniyfaw4)(@types/node@18.16.9)
@@ -225,8 +225,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       viem:
-        specifier: 0.0.0-w-20230720004551
-        version: 0.0.0-w-20230720004551(typescript@5.0.4)
+        specifier: 0.0.0-w-20230720203148
+        version: 0.0.0-w-20230720203148(typescript@5.0.4)
     devDependencies:
       '@esbuild-plugins/node-globals-polyfill':
         specifier: ^0.2.3
@@ -262,8 +262,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       viem:
-        specifier: 0.0.0-w-20230720004551
-        version: 0.0.0-w-20230720004551(typescript@5.0.4)
+        specifier: 0.0.0-w-20230720203148
+        version: 0.0.0-w-20230720203148(typescript@5.0.4)
       wagmi:
         specifier: workspace:*
         version: link:../../packages/react
@@ -6570,8 +6570,8 @@ packages:
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
 
-  /viem@1.2.15(typescript@5.0.4):
-    resolution: {integrity: sha512-fUNwrCfFEjneN/LX1mt54gjT6+pyDEwD59eQftla4ZpUFVYUbTbqYtLpwE/uB4Xbt1vQaT20uSbSFbqy9RRfuQ==}
+  /viem@0.0.0-w-20230720203148(typescript@5.0.4):
+    resolution: {integrity: sha512-3rEtCIYjnY+WEoHPiVWzRDgnpRZ8ftJLy9DVkpsBvPFxglB/g/mKScjOUL3roLLSNfc8cwrf6cAus0ukfeABxw==}
     peerDependencies:
       typescript: '>=5.0.4'
     peerDependenciesMeta:

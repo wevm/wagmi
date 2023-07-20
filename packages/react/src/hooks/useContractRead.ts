@@ -4,7 +4,7 @@ import {
   type ResolvedRegister,
   watchBlockNumber,
 } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import { type Evaluate } from '@wagmi/core/internal'
 import {
   type ReadContractData,
   type ReadContractOptions,
@@ -15,17 +15,19 @@ import type { ReadContractQueryFnData } from '@wagmi/core/query'
 import { useEffect } from 'react'
 import type { Abi } from 'viem'
 
+import type { WatchParameter } from '../types/properties.js'
 import {
   type UseQueryParameters,
   type UseQueryResult,
+  structuralSharing,
   useQuery,
-} from '../types/query.js'
+} from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
 export type UseContractReadParameters<
-  abi extends Abi | readonly unknown[],
-  functionName extends string,
+  abi extends Abi | readonly unknown[] = Abi,
+  functionName extends string = string,
   selectData = ReadContractData<abi, functionName>,
 > = Evaluate<
   ReadContractOptions<ResolvedRegister['config'], abi, functionName> &
@@ -34,18 +36,18 @@ export type UseContractReadParameters<
       ReadContractError,
       selectData,
       ReadContractQueryKey<ResolvedRegister['config'], abi, functionName>
-    > & {
-      watch?: boolean | undefined
-    }
+    > &
+    WatchParameter
+  // TODO: `cacheOnBlock`?
 >
 
 export type UseContractReadReturnType<
-  abi extends Abi | readonly unknown[],
-  functionName extends string,
+  abi extends Abi | readonly unknown[] = Abi,
+  functionName extends string = string,
   selectData = ReadContractData<abi, functionName>,
 > = Evaluate<UseQueryResult<selectData, ReadContractError>>
 
-/** https://wagmi.sh/react/hooks/useContractRead */
+// /** https://wagmi.sh/react/hooks/useContractRead */
 export function useContractRead<
   const abi extends Abi | readonly unknown[],
   functionName extends string,
@@ -55,7 +57,7 @@ export function useContractRead<
     abi,
     functionName,
     selectData
-  > = {} as any,
+  > = {} as UseContractReadParameters<abi, functionName, selectData>,
 ): UseContractReadReturnType<abi, functionName, selectData> {
   const { address, abi, functionName, watch, ...query } = parameters
   const config = useConfig()
@@ -87,7 +89,8 @@ export function useContractRead<
 
   return useQuery({
     ...queryOptions,
-    ...query,
+    ...(query as any),
     enabled,
-  })
+    structuralSharing: query.structuralSharing ?? structuralSharing,
+  }) as UseContractReadReturnType<abi, functionName, selectData>
 }

@@ -10,6 +10,7 @@ import type { Config } from '../config.js'
 import type { ChainIdParameter } from '../types/properties.js'
 import type { Evaluate, ExactPartial } from '../types/utils.js'
 import type { ScopeKeyParameter } from './types.js'
+import { filterQueryOptions } from './utils.js'
 
 export type PrepareSendTransactionOptions<
   config extends Config,
@@ -68,7 +69,7 @@ export function prepareSendTransactionQueryKey<
     chainId
   > = {} as PrepareSendTransactionOptions<config, chainId>,
 ) {
-  return ['prepareSendTransaction', options] as const
+  return ['prepareSendTransaction', filterQueryOptions(options)] as const
 }
 
 export type PrepareSendTransactionQueryKey<

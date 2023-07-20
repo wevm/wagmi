@@ -13,11 +13,12 @@ import {
 } from '@wagmi/core/query'
 import { useEffect } from 'react'
 
+import type { WatchParameter } from '../types/properties.js'
 import {
   type UseQueryParameters,
   type UseQueryResult,
   useQuery,
-} from '../types/query.js'
+} from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 import type { GetBalanceQueryFnData } from '@wagmi/core/query'
@@ -29,9 +30,8 @@ export type UseBalanceParameters<selectData = GetBalanceData> = Evaluate<
       GetBalanceError,
       selectData,
       GetBalanceQueryKey<ResolvedRegister['config']>
-    > & {
-      watch?: boolean | undefined
-    }
+    > &
+    WatchParameter
 >
 
 export type UseBalanceReturnType<selectData = GetBalanceData> = UseQueryResult<
@@ -43,16 +43,14 @@ export type UseBalanceReturnType<selectData = GetBalanceData> = UseQueryResult<
 export function useBalance<selectData = GetBalanceData>(
   parameters: UseBalanceParameters<selectData> = {},
 ): UseBalanceReturnType<selectData> {
-  const { address, token, unit, watch, ...query } = parameters
+  const { address, watch, ...query } = parameters
   const config = useConfig()
   const queryClient = useQueryClient()
 
   const chainId = parameters.chainId ?? useChainId()
   const queryOptions = getBalanceQueryOptions(config, {
-    address,
+    ...parameters,
     chainId,
-    token,
-    unit,
   })
   const enabled = Boolean(address && (parameters.enabled ?? true))
 

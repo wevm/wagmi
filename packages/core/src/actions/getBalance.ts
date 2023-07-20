@@ -1,11 +1,6 @@
+import { type Address, BaseError, RpcError, formatUnits } from 'viem'
 import {
-  type Address,
-  BaseError,
-  type BlockTag,
-  RpcError,
-  formatUnits,
-} from 'viem'
-import {
+  type GetBalanceParameters as viem_GetBalanceParameters,
   type GetBalanceReturnType as viem_GetBalanceReturnType,
   getBalance as viem_getBalance,
   watchBlockNumber,
@@ -14,7 +9,7 @@ import {
 import type { Config } from '../config.js'
 import type { ChainIdParameter } from '../types/properties.js'
 import { type Unit } from '../types/unit.js'
-import { type Evaluate, type Omit, type OneOf } from '../types/utils.js'
+import { type Evaluate, type Omit } from '../types/utils.js'
 import { getUnit } from '../utils/getUnit.js'
 import type {
   GetBlockNumberError,
@@ -22,15 +17,11 @@ import type {
 } from './getBlockNumber.js'
 
 export type GetBalanceParameters<config extends Config = Config> = Evaluate<
-  {
-    address: Address
-
-    token?: Address | undefined
-    unit?: Unit | undefined
-  } & ChainIdParameter<config> &
-    OneOf<
-      { blockNumber?: bigint | undefined } | { blockTag?: BlockTag | undefined }
-    >
+  ChainIdParameter<config> &
+    viem_GetBalanceParameters & {
+      token?: Address | undefined
+      unit?: Unit | undefined
+    }
 >
 
 export type GetBalanceReturnType = {

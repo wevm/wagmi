@@ -1,10 +1,16 @@
-import { hashFn } from '../query.js'
 import {
   type DefaultError,
   type QueryKey,
+  replaceEqualDeep,
   useQuery as useQuery_,
 } from '@tanstack/react-query'
-import { type Evaluate, type Omit } from '@wagmi/core/internal'
+import {
+  type Evaluate,
+  type ExactPartial,
+  type Omit,
+  deepEqual,
+} from '@wagmi/core/internal'
+import { hashFn } from '@wagmi/core/query'
 
 export type UseMutationOptions<
   data = unknown,
@@ -46,20 +52,22 @@ export type UseQueryParameters<
   data = queryFnData,
   queryKey extends QueryKey = QueryKey,
 > = Evaluate<
-  Omit<
-    import('@tanstack/react-query').UseQueryOptions<
-      queryFnData,
-      error,
-      data,
-      queryKey
-    >,
-    | 'initialData'
-    | 'queryFn'
-    | 'queryHash'
-    | 'queryKey'
-    | 'queryKeyHashFn'
-    | 'suspense'
-    | 'throwOnError'
+  ExactPartial<
+    Omit<
+      import('@tanstack/react-query').UseQueryOptions<
+        queryFnData,
+        error,
+        data,
+        queryKey
+      >,
+      | 'initialData'
+      | 'queryFn'
+      | 'queryHash'
+      | 'queryKey'
+      | 'queryKeyHashFn'
+      | 'suspense'
+      | 'throwOnError'
+    >
   > & {
     // Fix `initialData` type
     initialData?: import('@tanstack/react-query').UseQueryOptions<
@@ -79,10 +87,18 @@ export type UseQueryResult<
 // Ideally we don't have this function, but `useQuery` currently has some quirks where it is super hard to
 // pass down the inferred `initialData` type because of it's discriminated overload in the on `useQuery`.
 export function useQuery<queryFnData, error, data, queryKey extends QueryKey>(
-  args: UseQueryParameters<queryFnData, error, data, queryKey>,
+  parameters: UseQueryParameters<queryFnData, error, data, queryKey>,
 ): UseQueryResult<data, error> {
   return useQuery_({
-    ...(args as any),
+    ...(parameters as any),
     queryKeyHashFn: hashFn, // for bigint support
-  })
+  }) as UseQueryResult<data, error>
+}
+
+export function structuralSharing<data>(
+  oldData: data | undefined,
+  newData: data,
+): data {
+  if (deepEqual(oldData, newData)) return oldData as data
+  return replaceEqualDeep(oldData, newData)
 }

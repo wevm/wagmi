@@ -1,5 +1,9 @@
 import { useQueryClient } from '@tanstack/react-query'
-import { type GetBlockNumberError, watchBlockNumber } from '@wagmi/core'
+import {
+  type GetBlockNumberError,
+  type ResolvedRegister,
+  watchBlockNumber,
+} from '@wagmi/core'
 import { type Evaluate } from '@wagmi/core/internal'
 import {
   type GetBlockNumberData,
@@ -10,12 +14,12 @@ import {
 } from '@wagmi/core/query'
 import { useEffect } from 'react'
 
-import type { ResolvedRegister } from '../index.js'
+import type { WatchParameter } from '../types/properties.js'
 import {
   type UseQueryParameters,
   type UseQueryResult,
   useQuery,
-} from '../types/query.js'
+} from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
@@ -27,9 +31,8 @@ export type UseBlockNumberParameters<selectData = GetBlockNumberData> =
         GetBlockNumberError,
         selectData,
         GetBlockNumberQueryKey<ResolvedRegister['config']>
-      > & {
-        watch?: boolean | undefined
-      }
+      > &
+      WatchParameter
   >
 
 export type UseBlockNumberReturnType<selectData = GetBlockNumberData> =

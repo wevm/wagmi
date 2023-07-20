@@ -9,6 +9,7 @@ import {
 import type { Config } from '../config.js'
 import type { Evaluate, ExactPartial } from '../types/utils.js'
 import type { ScopeKeyParameter } from './types.js'
+import { filterQueryOptions } from './utils.js'
 
 export type GetFeeDataOptions<config extends Config> = Evaluate<
   ExactPartial<GetFeeDataParameters<config>> & ScopeKeyParameter
@@ -38,7 +39,7 @@ export type GetFeeDataData = GetFeeDataQueryFnData
 export function getFeeDataQueryKey<config extends Config>(
   options: GetFeeDataOptions<config> = {},
 ) {
-  return ['feeData', options] as const
+  return ['feeData', filterQueryOptions(options)] as const
 }
 
 export type GetFeeDataQueryKey<config extends Config> = ReturnType<

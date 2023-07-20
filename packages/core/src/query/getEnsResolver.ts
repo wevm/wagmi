@@ -9,6 +9,7 @@ import {
 import type { Config } from '../config.js'
 import type { Evaluate, ExactPartial } from '../types/utils.js'
 import type { ScopeKeyParameter } from './types.js'
+import { filterQueryOptions } from './utils.js'
 
 export type GetEnsResolverOptions<config extends Config> = Evaluate<
   ExactPartial<GetEnsResolverParameters<config>> & ScopeKeyParameter
@@ -40,7 +41,7 @@ export type GetEnsResolverData = GetEnsResolverQueryFnData
 export function getEnsResolverQueryKey<config extends Config>(
   options: GetEnsResolverOptions<config> = {},
 ) {
-  return ['ensResolver', options] as const
+  return ['ensResolver', filterQueryOptions(options)] as const
 }
 
 export type GetEnsResolverQueryKey<config extends Config> = ReturnType<

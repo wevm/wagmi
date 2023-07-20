@@ -9,7 +9,7 @@ import {
   disconnectMutationOptions,
 } from '@wagmi/core/query'
 
-import type { UseMutationOptions, UseMutationResult } from '../types/query.js'
+import type { UseMutationOptions, UseMutationResult } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 import { useConnections } from './useConnections.js'
 

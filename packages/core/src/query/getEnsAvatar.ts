@@ -9,6 +9,7 @@ import {
 import type { Config } from '../config.js'
 import type { Evaluate, ExactPartial } from '../types/utils.js'
 import type { ScopeKeyParameter } from './types.js'
+import { filterQueryOptions } from './utils.js'
 
 export type GetEnsAvatarOptions<config extends Config> = Evaluate<
   ExactPartial<GetEnsAvatarParameters<config>> & ScopeKeyParameter
@@ -40,7 +41,7 @@ export type GetEnsAvatarData = GetEnsAvatarQueryFnData
 export function getEnsAvatarQueryKey<config extends Config>(
   options: GetEnsAvatarOptions<config> = {},
 ) {
-  return ['ensAvatar', options] as const
+  return ['ensAvatar', filterQueryOptions(options)] as const
 }
 
 export type GetEnsAvatarQueryKey<config extends Config> = ReturnType<

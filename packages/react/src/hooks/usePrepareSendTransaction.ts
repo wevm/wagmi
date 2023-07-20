@@ -1,4 +1,4 @@
-import type { PrepareSendTransactionError } from '@wagmi/core'
+import type { PrepareSendTransactionError, ResolvedRegister } from '@wagmi/core'
 import {
   type PrepareSendTransactionData,
   type PrepareSendTransactionOptions,
@@ -7,12 +7,11 @@ import {
   prepareSendTransactionQueryOptions,
 } from '@wagmi/core/query'
 
-import type { ResolvedRegister } from '../index.js'
 import {
   type UseQueryParameters,
   type UseQueryResult,
   useQuery,
-} from '../types/query.js'
+} from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
