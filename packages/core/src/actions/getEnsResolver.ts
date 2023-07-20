@@ -5,8 +5,8 @@ import {
 } from 'viem/actions'
 
 import { type Config } from '../config.js'
-import { type Evaluate } from '../internal.js'
 import type { ChainIdParameter } from '../types/properties.js'
+import type { Evaluate } from '../types/utils.js'
 
 export type GetEnsResolverParameters<config extends Config = Config> = Evaluate<
   viem_GetEnsResolverParameters & ChainIdParameter<config>

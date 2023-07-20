@@ -116,6 +116,16 @@ export {
 } from './actions/prepareSendTransaction.js'
 
 export {
+  type ReadContractParameters,
+  type ReadContractReturnType,
+  type ReadContractError,
+  readContract,
+  type WatchReadContractParameters,
+  type WatchReadContractReturnType,
+  watchReadContract,
+} from './actions/readContract.js'
+
+export {
   type ReconnectError,
   type ReconnectParameters,
   type ReconnectReturnType,

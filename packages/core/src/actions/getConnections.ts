@@ -1,5 +1,6 @@
 import type { Config, Connection } from '../config.js'
-import { type Evaluate, deepEqual } from '../internal.js'
+import type { Evaluate } from '../types/utils.js'
+import { deepEqual } from '../utils/deepEqual.js'
 
 export type GetConnectionsReturnType = Evaluate<Connection>[]
 

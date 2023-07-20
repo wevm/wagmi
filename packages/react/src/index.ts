@@ -49,6 +49,12 @@ export {
 } from './hooks/useConnections.js'
 
 export {
+  type UseContractReadParameters,
+  type UseContractReadReturnType,
+  useContractRead,
+} from './hooks/useContractRead.js'
+
+export {
   type UseDisconnectParameters,
   type UseDisconnectReturnType,
   useDisconnect,

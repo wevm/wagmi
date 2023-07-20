@@ -1,3 +1,5 @@
+import { parseAbi } from 'viem'
+
 /**
  * The id of the current test worker.
  *
@@ -117,4 +119,45 @@ export const typedData = {
       },
     },
   },
+} as const
+
+export const abi = {
+  erc20: parseAbi([
+    'event Approval(address indexed owner, address indexed spender, uint256 value)',
+    'event Transfer(address indexed from, address indexed to, uint256 value)',
+    'function allowance(address owner, address spender) view returns (uint256)',
+    'function approve(address spender, uint256 amount) returns (bool)',
+    'function balanceOf(address account) view returns (uint256)',
+    'function decimals() view returns (uint8)',
+    'function name() view returns (string)',
+    'function symbol() view returns (string)',
+    'function totalSupply() view returns (uint256)',
+    'function transfer(address recipient, uint256 amount) returns (bool)',
+    'function transferFrom(address sender, address recipient, uint256 amount) returns (bool)',
+  ]),
+  wagmiMintExample: parseAbi([
+    'constructor()',
+    'event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)',
+    'event ApprovalForAll(address indexed owner, address indexed operator, bool approved)',
+    'event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)',
+    'function approve(address to, uint256 tokenId)',
+    'function balanceOf(address owner) view returns (uint256)',
+    'function getApproved(uint256 tokenId) view returns (address)',
+    'function isApprovedForAll(address owner, address operator) view returns (bool)',
+    'function mint()',
+    'function name() view returns (string)',
+    'function ownerOf(uint256 tokenId) view returns (address)',
+    'function safeTransferFrom(address from, address to, uint256 tokenId)',
+    'function safeTransferFrom(address from, address to, uint256 tokenId, bytes _data)',
+    'function setApprovalForAll(address operator, bool approved)',
+    'function supportsInterface(bytes4 interfaceId) view returns (bool)',
+    'function symbol() view returns (string)',
+    'function tokenURI(uint256 tokenId) pure returns (string)',
+    'function totalSupply() view returns (uint256)',
+    'function transferFrom(address from, address to, uint256 tokenId)',
+  ]),
+} as const
+
+export const address = {
+  wagmiMintExample: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
 } as const

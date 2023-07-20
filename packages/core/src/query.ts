@@ -108,6 +108,15 @@ export {
 } from './query/prepareSendTransaction.js'
 
 export {
+  type ReadContractData,
+  type ReadContractOptions,
+  type ReadContractQueryFnData,
+  type ReadContractQueryKey,
+  readContractQueryKey,
+  readContractQueryOptions,
+} from './query/readContract.js'
+
+export {
   type ReconnectData,
   type ReconnectVariables,
   type ReconnectMutate,

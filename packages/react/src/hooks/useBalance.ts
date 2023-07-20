@@ -58,7 +58,6 @@ export function useBalance<selectData = GetBalanceData>(
 
   useEffect(() => {
     if (!enabled) return
-    if (!address) return
     if (!watch) return
 
     return watchBlockNumber(config, {
@@ -70,7 +69,7 @@ export function useBalance<selectData = GetBalanceData>(
       },
       syncConnectedChain: false,
     })
-  }, [address, chainId, config, enabled, queryClient, queryOptions, watch])
+  }, [chainId, config, enabled, queryClient, queryOptions, watch])
 
   return useQuery({
     ...queryOptions,

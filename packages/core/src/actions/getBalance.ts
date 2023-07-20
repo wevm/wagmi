@@ -8,7 +8,7 @@ import {
 import {
   type GetBalanceReturnType as viem_GetBalanceReturnType,
   getBalance as viem_getBalance,
-  watchBlockNumber as viem_watchBlockNumber,
+  watchBlockNumber,
 } from 'viem/actions'
 
 import type { Config } from '../config.js'
@@ -127,7 +127,7 @@ export function watchBalance<config extends Config>(
     if (unwatch) unwatch()
 
     const client = config.getClient({ chainId })
-    unwatch = viem_watchBlockNumber(client, {
+    unwatch = watchBlockNumber(client, {
       onBlockNumber: handler,
       onError,
       poll: true,

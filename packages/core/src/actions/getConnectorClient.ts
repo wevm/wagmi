@@ -8,8 +8,8 @@ import {
 
 import type { Config } from '../config.js'
 import { ConnectorNotFoundError } from '../errors/config.js'
-import type { Evaluate } from '../internal.js'
 import type { ChainIdParameter } from '../types/properties.js'
+import type { Evaluate } from '../types/utils.js'
 
 export type GetConnectorClientParameters<
   config extends Config = Config,

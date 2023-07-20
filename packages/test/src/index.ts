@@ -3,6 +3,8 @@ export { testChains } from './chains.js'
 export { testConnector } from './connector.js'
 
 export {
+  abi,
+  address,
   accounts,
   forkUrl,
   forkBlockNumber,
