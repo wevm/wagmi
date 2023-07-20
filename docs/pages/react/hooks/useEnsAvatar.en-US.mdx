@@ -76,7 +76,7 @@ import { useEnsAvatar } from 'wagmi'
 
 function App() {
   const ensAvatar = useEnsAvatar({
-    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    name: 'jxom.eth',
     chainId: 1,
   })
 }
@@ -91,7 +91,7 @@ import { useEnsAvatar } from 'wagmi'
 
 function App() {
   const ensAvatar = useEnsAvatar({
-    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    name: 'jxom.eth',
     cacheTime: 2_000,
   })
 }
@@ -106,7 +106,7 @@ import { useEnsAvatar } from 'wagmi'
 
 function App() {
   const ensAvatar = useEnsAvatar({
-    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    name: 'jxom.eth',
     enabled: false,
   })
 }
@@ -121,7 +121,7 @@ import { useEnsAvatar } from 'wagmi'
 
 function App() {
   const ensAvatar = useEnsAvatar({
-    addressOrName: 'awkweb.eth',
+    name: 'jxom.eth',
     scopeKey: 'wagmi',
   })
 }
@@ -136,7 +136,7 @@ import { useEnsAvatar } from 'wagmi'
 
 function App() {
   const ensAvatar = useEnsAvatar({
-    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    name: 'jxom.eth',
     staleTime: 2_000,
   })
 }
@@ -151,7 +151,7 @@ import { useEnsAvatar } from 'wagmi'
 
 function App() {
   const ensAvatar = useEnsAvatar({
-    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    name: 'jxom.eth',
     suspense: true,
   })
 }
@@ -166,7 +166,7 @@ import { useEnsAvatar } from 'wagmi'
 
 function App() {
   const ensAvatar = useEnsAvatar({
-    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    name: 'jxom.eth',
     onSuccess(data) {
       console.log('Success', data)
     },
@@ -183,7 +183,7 @@ import { useEnsAvatar } from 'wagmi'
 
 function App() {
   const ensAvatar = useEnsAvatar({
-    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    name: 'jxom.eth',
     onError(error) {
       console.log('Error', error)
     },
@@ -200,7 +200,7 @@ import { useEnsAvatar } from 'wagmi'
 
 function App() {
   const ensAvatar = useEnsAvatar({
-    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    name: 'jxom.eth',
     onSettled(data, error) {
       console.log('Settled', { data, error })
     },
