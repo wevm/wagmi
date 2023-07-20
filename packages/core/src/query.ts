@@ -132,6 +132,14 @@ export {
 } from './query/signMessage.js'
 
 export {
+  type SignTypedDataData,
+  type SignTypedDataVariables,
+  type SignTypedDataMutate,
+  type SignTypedDataMutateAsync,
+  signTypedDataMutationOptions,
+} from './query/signTypedData.js'
+
+export {
   type SwitchAccountData,
   type SwitchAccountVariables,
   type SwitchAccountMutate,

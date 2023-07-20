@@ -7,6 +7,7 @@ import {
   type Address,
   type EIP1193RequestFn,
   type Hex,
+  RpcRequestError,
   SwitchChainError,
   type Transport,
   UserRejectedRequestError,
@@ -25,6 +26,7 @@ export type TestConnectorParameters = {
         connectError?: boolean | Error
         switchChainError?: boolean | Error
         signMessageError?: boolean | Error
+        signTypedDataError?: boolean | Error
         reconnect?: boolean
       }
     | undefined
@@ -94,7 +96,21 @@ export function testConnector(parameters: TestConnectorParameters) {
           params = [(params as Params)[1], (params as Params)[0]]
         }
 
-        const { result } = await rpc.http(url, { body: { method, params } })
+        if (method === 'eth_signTypedData_v4')
+          if (features.signTypedDataError) {
+            if (typeof features.signTypedDataError === 'boolean')
+              throw new UserRejectedRequestError(
+                new Error('Failed to sign typed data.'),
+              )
+            throw features.signTypedDataError
+          }
+
+        const { error, result } = await rpc.http(url, {
+          body: { method, params },
+        })
+        if (error)
+          throw new RpcRequestError({ body: { method, params }, error, url })
+
         return result
       }
       return custom({ request })({ retryCount: 0 })

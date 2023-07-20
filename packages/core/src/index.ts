@@ -137,6 +137,13 @@ export {
 } from './actions/signMessage.js'
 
 export {
+  type SignTypedDataError,
+  type SignTypedDataParameters,
+  type SignTypedDataReturnType,
+  signTypedData,
+} from './actions/signTypedData.js'
+
+export {
   type SwitchAccountError,
   type SwitchAccountParameters,
   type SwitchAccountReturnType,

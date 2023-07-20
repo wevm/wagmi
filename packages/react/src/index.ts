@@ -109,6 +109,12 @@ export {
 } from './hooks/useSignMessage.js'
 
 export {
+  type UseSignTypedDataParameters,
+  type UseSignTypedDataReturnType,
+  useSignTypedData,
+} from './hooks/useSignTypedData.js'
+
+export {
   type UseSwitchAccountParameters,
   type UseSwitchAccountReturnType,
   useSwitchAccount,
