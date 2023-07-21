@@ -16,6 +16,7 @@ import { optimism } from 'wagmi/chains'
 
 function App() {
   const { data, error } = useFeeData({ watch: true })
+
   return (
     <>
       <pre>

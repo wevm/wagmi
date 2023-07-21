@@ -33,17 +33,13 @@ export type UsePrepareSendTransactionReturnType<
   selectData = PrepareSendTransactionData<ResolvedRegister['config'], chainId>,
 > = UseQueryResult<selectData, PrepareSendTransactionError>
 
+/** https://wagmi.sh/react/hooks/usePrepareSendTransaction */
 export function usePrepareSendTransaction<
   chainId extends ChainId | undefined = undefined,
   selectData = PrepareSendTransactionData<ResolvedRegister['config'], chainId>,
 >(
-  parameters?: UsePrepareSendTransactionParameters<chainId, selectData>,
-): UsePrepareSendTransactionReturnType<chainId, selectData>
-
-/** https://wagmi.sh/react/hooks/usePrepareSendTransaction */
-export function usePrepareSendTransaction(
-  parameters: UsePrepareSendTransactionParameters = {},
-): UsePrepareSendTransactionReturnType {
+  parameters: UsePrepareSendTransactionParameters<chainId, selectData> = {},
+): UsePrepareSendTransactionReturnType<chainId, selectData> {
   const config = useConfig()
 
   const chainId = parameters.chainId ?? useChainId()

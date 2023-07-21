@@ -36,25 +36,20 @@ export type SendTransactionParameters<
     to: Address
   }
 
-// TODO(major): Just return the hash (not inside)
+// TODO(major): Just return the hash (not inside object)
 export type SendTransactionReturnType = {
   hash: viem_SendTransactionReturnType
 }
 
 export type SendTransactionError = Error
 
+/** https://wagmi.sh/core/actions/sendTransaction */
 export async function sendTransaction<
   config extends Config,
   chainId extends config['chains'][number]['id'] | undefined,
 >(
   config: config,
   parameters: SendTransactionParameters<config, chainId>,
-): Promise<SendTransactionReturnType>
-
-/** https://wagmi.sh/core/actions/sendTransaction */
-export async function sendTransaction(
-  config: Config,
-  parameters: SendTransactionParameters,
 ): Promise<SendTransactionReturnType> {
   const { chainId, ...rest } = parameters
 
@@ -63,11 +58,11 @@ export async function sendTransaction(
   if (chainId) assertActiveChain(config, { chainId })
 
   const hash = await viem_sendTransaction(client, {
-    ...(rest as viem_SendTransactionParameters),
+    ...(rest as unknown as viem_SendTransactionParameters),
     // Setting to `null` to not validate inside `viem_sendTransaction`
     // since we already validated above
     chain: null,
-  })
+  } as viem_SendTransactionParameters)
 
   return { hash }
 }

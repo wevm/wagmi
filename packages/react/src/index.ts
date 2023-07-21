@@ -55,6 +55,12 @@ export {
 } from './hooks/useContractRead.js'
 
 export {
+  type UseContractWriteParameters,
+  type UseContractWriteReturnType,
+  useContractWrite,
+} from './hooks/useContractWrite.js'
+
+export {
   type UseDisconnectParameters,
   type UseDisconnectReturnType,
   useDisconnect,
@@ -89,6 +95,12 @@ export {
   type UseFeeDataReturnType,
   useFeeData,
 } from './hooks/useFeeData.js'
+
+export {
+  type UsePrepareContractWriteParameters,
+  type UsePrepareContractWriteReturnType,
+  usePrepareContractWrite,
+} from './hooks/usePrepareContractWrite.js'
 
 export {
   type UsePrepareSendTransactionParameters,

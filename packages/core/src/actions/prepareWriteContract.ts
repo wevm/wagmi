@@ -47,7 +47,9 @@ export type PrepareWriteContractReturnType<
   {
     [key in keyof chains]: Omit<
       SimulateContractReturnType<
-        [ExtractAbiFunction<abi extends Abi ? abi : Abi, functionName>],
+        readonly [
+          ExtractAbiFunction<abi extends Abi ? abi : Abi, functionName>,
+        ],
         functionName,
         chains[key]
       >,

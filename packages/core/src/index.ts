@@ -181,6 +181,13 @@ export {
   waitForTransactionReceipt,
 } from './actions/waitForTransactionReceipt.js'
 
+export {
+  type WriteContractError,
+  type WriteContractParameters,
+  type WriteContractReturnType,
+  writeContract,
+} from './actions/writeContract.js'
+
 ////////////////////////////////////////////////////////////////////////////////
 // Config
 

@@ -23,7 +23,7 @@ test('default', async () => {
     chainId: 123
     result: boolean
     request: {
-      abi: [
+      abi: readonly [
         {
           readonly name: 'transferFrom'
           readonly type: 'function'

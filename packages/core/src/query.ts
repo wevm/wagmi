@@ -182,4 +182,12 @@ export {
   waitForTransactionReceiptQueryOptions,
 } from './query/waitForTransactionReceipt.js'
 
+export {
+  type WriteContractData,
+  type WriteContractVariables,
+  type WriteContractMutate,
+  type WriteContractMutateAsync,
+  writeContractMutationOptions,
+} from './query/writeContract.js'
+
 export { hashFn } from './query/utils.js'

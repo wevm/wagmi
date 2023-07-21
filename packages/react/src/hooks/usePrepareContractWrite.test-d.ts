@@ -1,4 +1,5 @@
 import { abi } from '@wagmi/test'
+import type { Address } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
 import {
@@ -6,7 +7,6 @@ import {
   type UsePrepareContractWriteReturnType,
   usePrepareContractWrite,
 } from './usePrepareContractWrite.js'
-import type { Address } from 'viem'
 
 test('default', () => {
   const result = usePrepareContractWrite({
@@ -20,10 +20,10 @@ test('default', () => {
   expectTypeOf(result.data).toMatchTypeOf<
     | {
         mode: 'prepared'
-        chainId: 123
+        chainId: number
         result: boolean
         request: {
-          abi: [
+          abi: readonly [
             {
               readonly name: 'transferFrom'
               readonly type: 'function'
@@ -36,7 +36,7 @@ test('default', () => {
               readonly outputs: readonly [{ type: 'bool' }]
             },
           ]
-          functionName: 'approve' | 'transfer' | 'transferFrom'
+          functionName: 'transferFrom'
           args: readonly [Address, Address, bigint]
         }
       }
@@ -80,10 +80,10 @@ test('UsePrepareContractWriteReturnType', () => {
   expectTypeOf<Result['data']>().toMatchTypeOf<
     | {
         mode: 'prepared'
-        chainId?: 123 | undefined
+        chainId: number
         result: boolean
         request: {
-          abi: [
+          abi: readonly [
             {
               readonly name: 'transferFrom'
               readonly type: 'function'

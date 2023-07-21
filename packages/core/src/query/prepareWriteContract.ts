@@ -70,7 +70,14 @@ export type PrepareWriteContractData<
   chainId extends config['chains'][number]['id'] | undefined,
   abi extends Abi | readonly unknown[],
   functionName extends string,
-> = PrepareWriteContractQueryFnData<config, chainId, abi, functionName>
+> = PrepareWriteContractQueryFnData<
+  config,
+  number extends config['chains'][number]['id']
+    ? config['chains'][number]['id']
+    : chainId,
+  abi,
+  functionName
+>
 
 export function prepareWriteContractQueryKey<
   config extends Config,
