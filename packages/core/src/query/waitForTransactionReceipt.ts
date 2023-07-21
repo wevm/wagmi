@@ -9,6 +9,7 @@ import {
 import type { Config } from '../config.js'
 import type { Evaluate, ExactPartial } from '../types/utils.js'
 import type { ScopeKeyParameter } from './types.js'
+import { filterQueryOptions } from './utils.js'
 
 export type WaitForTransactionReceiptOptions<
   config extends Config,
@@ -59,7 +60,7 @@ export function waitForTransactionReceiptQueryKey<
   chainId extends config['chains'][number]['id'] | undefined,
 >(options: WaitForTransactionReceiptOptions<config, chainId> = {}) {
   const { onReplaced: _, ...rest } = options
-  return ['waitForTransactionReceipt', rest] as const
+  return ['waitForTransactionReceipt', filterQueryOptions(rest)] as const
 }
 
 export type WaitForTransactionReceiptQueryKey<

@@ -15,9 +15,6 @@ export {
   type ExactPartial,
   type Mutable,
   type Omit,
-  type OmitKeys,
-  type OneOf,
-  type PartialBy,
 } from './types/utils.js'
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -36,7 +36,7 @@ export type SendTransactionParameters<
     to: Address
   }
 
-// TODO: Just return the hash (not inside)
+// TODO(major): Just return the hash (not inside)
 export type SendTransactionReturnType = {
   hash: viem_SendTransactionReturnType
 }

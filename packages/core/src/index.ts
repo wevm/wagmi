@@ -116,6 +116,13 @@ export {
 } from './actions/prepareSendTransaction.js'
 
 export {
+  type PrepareWriteContractError,
+  type PrepareWriteContractParameters,
+  type PrepareWriteContractReturnType,
+  prepareWriteContract,
+} from './actions/prepareWriteContract.js'
+
+export {
   type ReadContractParameters,
   type ReadContractReturnType,
   type ReadContractError,
