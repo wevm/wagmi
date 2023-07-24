@@ -14,7 +14,6 @@ test('default', async () => {
       address: address.wagmiMintExample,
       abi: abi.wagmiMintExample,
       functionName: 'mint',
-      // TODO: should autocomplete without needing `chainId` to be specified
     }),
   ).resolves.toMatchInlineSnapshot(`
     {

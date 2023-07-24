@@ -1,5 +1,4 @@
 import { type Config, type Connector } from '../config.js'
-import type { BaseError } from '../errors/base.js'
 import { ConnectorNotFoundError } from '../errors/config.js'
 import type { Address } from 'viem'
 
@@ -14,7 +13,7 @@ export type SwitchAccountReturnType<config extends Config = Config> = {
     | (number extends config['chains'][number]['id'] ? number : number & {})
 }
 
-export type SwitchAccountError = ConnectorNotFoundError | BaseError | Error
+export type SwitchAccountError = Error
 
 /** https://wagmi.sh/core/actions/switchAccount */
 export async function switchAccount<config extends Config>(

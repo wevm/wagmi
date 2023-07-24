@@ -1,5 +1,5 @@
 import type { Evaluate } from '@wagmi/core/internal'
-import { type Chain, mainnet, optimism } from 'viem/chains'
+import { type Chain, mainnet } from 'viem/chains'
 
 import { pool } from './constants.js'
 
@@ -32,6 +32,26 @@ function getRpcUrls({ port }: { port: number }) {
   } as const
 }
 
+// TODO: Switch to `import('viem/chains').optimism` once formatters are exported
+const optimism = {
+  id: 10,
+  name: 'OP Mainnet',
+  network: 'optimism',
+  nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+  blockExplorers: {
+    default: {
+      name: 'Optimism Explorer',
+      url: 'https://explorer.optimism.io',
+    },
+  },
+  contracts: {
+    multicall3: {
+      address: '0xca11bde05977b3631167028862be2a173976ca11',
+      blockCreated: 4286263,
+    },
+  },
+} as const
+
 export const chain = {
   mainnet: {
     ...mainnet,
@@ -58,8 +78,8 @@ export const chain = {
   },
   optimism: {
     ...optimism,
-    ...getRpcUrls({ port: 8547 }),
     id: 789,
+    ...getRpcUrls({ port: 8547 }),
     fork: {
       blockNumber: process.env.VITE_OPTIMISM_FORK_BLOCK_NUMBER
         ? BigInt(Number(process.env.VITE_OPTIMISM_FORK_BLOCK_NUMBER))

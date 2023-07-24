@@ -1,4 +1,3 @@
-import type { UserRejectedRequestError } from 'viem'
 import {
   type SignMessageParameters as viem_SignMessageParameters,
   type SignMessageReturnType as viem_SignMessageReturnType,
@@ -16,11 +15,7 @@ export type SignMessageParameters = Evaluate<
 
 export type SignMessageReturnType = viem_SignMessageReturnType
 
-export type SignMessageError =
-  | ConnectorNotFoundError
-  | UserRejectedRequestError
-  // base
-  | Error
+export type SignMessageError = Error
 
 /** https://wagmi.sh/core/actions/signMessage */
 export async function signMessage(

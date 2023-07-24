@@ -1,4 +1,3 @@
-import type { RpcError } from 'viem'
 import {
   type GetBlockNumberParameters as viem_GetBlockNumberParameters,
   type GetBlockNumberReturnType as viem_GetBlockNumberReturnType,
@@ -18,10 +17,7 @@ export type GetBlockNumberParameters<config extends Config = Config> = Evaluate<
 
 export type GetBlockNumberReturnType = viem_GetBlockNumberReturnType
 
-export type GetBlockNumberError =
-  | RpcError
-  // base
-  | Error
+export type GetBlockNumberError = Error
 
 /** https://wagmi.sh/core/actions/getBlockNumber */
 export function getBlockNumber<config extends Config>(

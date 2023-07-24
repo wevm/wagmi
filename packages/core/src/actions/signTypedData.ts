@@ -1,4 +1,4 @@
-import type { TypedData, UserRejectedRequestError } from 'viem'
+import type { TypedData } from 'viem'
 import {
   type SignTypedDataParameters as viem_SignTypedDataParameters,
   type SignTypedDataReturnType as viem_SignTypedDataReturnType,
@@ -16,11 +16,7 @@ export type SignTypedDataParameters<
 
 export type SignTypedDataReturnType = viem_SignTypedDataReturnType
 
-export type SignTypedDataError =
-  | ConnectorNotFoundError
-  | UserRejectedRequestError
-  // base
-  | Error
+export type SignTypedDataError = Error
 
 /** https://wagmi.sh/core/actions/signTypedData */
 export async function signTypedData<

@@ -1,4 +1,3 @@
-import type { ChainDoesNotSupportContract, RpcError } from 'viem'
 import {
   type GetEnsNameParameters as viem_GetEnsNameParameters,
   type GetEnsNameReturnType as viem_GetEnsNameReturnType,
@@ -15,12 +14,7 @@ export type GetEnsNameParameters<config extends Config = Config> = Evaluate<
 
 export type GetEnsNameReturnType = viem_GetEnsNameReturnType
 
-export type GetEnsNameError =
-  // viem getEnsName
-  | ChainDoesNotSupportContract
-  | RpcError
-  // base
-  | Error
+export type GetEnsNameError = Error
 
 /** https://wagmi.sh/core/actions/getEnsName */
 export function getEnsName<config extends Config>(

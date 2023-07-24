@@ -28,9 +28,6 @@ export {
   type GetBalanceReturnType,
   type GetBalanceError,
   getBalance,
-  type WatchBalanceParameters,
-  type WatchBalanceReturnType,
-  watchBalance,
 } from './actions/getBalance.js'
 
 export {
@@ -120,9 +117,6 @@ export {
   type ReadContractReturnType,
   type ReadContractError,
   readContract,
-  type WatchReadContractParameters,
-  type WatchReadContractReturnType,
-  watchReadContract,
 } from './actions/readContract.js'
 
 export {

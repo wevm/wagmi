@@ -55,7 +55,7 @@ for (const packagePath of packagePaths) {
       await fs.ensureDir(distDir)
 
       if (type === 'default') {
-        // TODO: Add CommonJS require hook for completeness, but not really required since things work without it.
+        // Add CommonJS require hook for completeness, but not really required since things work without it.
         // https://github.com/preconstruct/preconstruct/blob/main/packages/cli/src/dev.ts#L381
       }
       // Symlink src to dist file

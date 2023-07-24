@@ -1,5 +1,4 @@
 import { type Config, type Connection, type Connector } from '../config.js'
-import type { BaseError } from '../errors/base.js'
 import { ConnectorNotFoundError } from '../errors/config.js'
 
 export type DisconnectParameters = {
@@ -8,12 +7,7 @@ export type DisconnectParameters = {
 
 export type DisconnectReturnType = void
 
-export type DisconnectError =
-  // disconnect()
-  | ConnectorNotFoundError
-  // base
-  | BaseError
-  | Error
+export type DisconnectError = Error
 
 /** https://wagmi.sh/core/actions/disconnect */
 export async function disconnect(
