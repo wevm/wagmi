@@ -10,8 +10,8 @@ test('default', async () => {
 
 test('chainId', async () => {
   const client = await getConnectorClient(config, {
-    chainId: testChains.anvil.id,
+    chainId: testChains.mainnet.id,
   })
-  expectTypeOf(client.chain).toEqualTypeOf<typeof testChains.anvil>()
-  expectTypeOf(client.chain).not.toEqualTypeOf<typeof testChains.anvilTwo>()
+  expectTypeOf(client.chain).toEqualTypeOf<typeof testChains.mainnet>()
+  expectTypeOf(client.chain).not.toEqualTypeOf<typeof testChains.mainnet2>()
 })

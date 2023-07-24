@@ -21,7 +21,7 @@ test('default', async () => {
 })
 
 test('parameters: chainId', async () => {
-  const chainId = testChains.anvilTwo.id
+  const chainId = testChains.mainnet2.id
   await expect(connect(config, { connector, chainId })).resolves.toMatchObject(
     expect.objectContaining({
       accounts: expect.any(Array),

@@ -21,7 +21,7 @@ afterEach(async (context) => {
   context.onTestFailed(async () => {
     // If a test fails, you can fetch and print the logs of your anvil instance.
     const logs = await fetchLogs(
-      `http://localhost:${testChains.anvil.port}`,
+      `http://localhost:${testChains.mainnet.port}`,
       pool,
     )
     // Only print the 20 most recent log messages.

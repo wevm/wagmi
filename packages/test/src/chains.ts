@@ -25,15 +25,20 @@ function getRpcUrls({ port }: { port: number }) {
 }
 
 export const testChains = {
-  anvil: {
+  mainnet: {
     ...mainnet,
     id: 123,
     ...getRpcUrls({ port: 8545 }),
   },
-  anvilTwo: {
+  mainnet2: {
     ...mainnet,
     id: 456,
     nativeCurrency: { decimals: 18, name: 'wagmi', symbol: 'WAG' },
     ...getRpcUrls({ port: 8546 }),
+  },
+  mainnet3: {
+    ...mainnet,
+    id: 789,
+    ...getRpcUrls({ port: 8547 }),
   },
 } as const satisfies Record<string, ForkChain>

@@ -17,7 +17,7 @@ test('default', () => {
 
 test('parameters: chainId', () => {
   expect(
-    getTransactionQueryOptions(config, { chainId: testChains.anvil.id }),
+    getTransactionQueryOptions(config, { chainId: testChains.mainnet.id }),
   ).toMatchInlineSnapshot(`
     {
       "queryFn": [Function],

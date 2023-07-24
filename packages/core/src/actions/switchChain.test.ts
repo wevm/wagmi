@@ -13,13 +13,13 @@ test('default', async () => {
 
   const chainId1 = getAccount(config).chainId
 
-  await switchChain(config, { chainId: testChains.anvilTwo.id })
+  await switchChain(config, { chainId: testChains.mainnet2.id })
 
   const chainId2 = getAccount(config).chainId
   expect(chainId2).toBeDefined()
   expect(chainId1).not.toBe(chainId2)
 
-  await switchChain(config, { chainId: testChains.anvil.id })
+  await switchChain(config, { chainId: testChains.mainnet.id })
 
   const chainId3 = getAccount(config).chainId
   expect(chainId3).toBeDefined()
@@ -37,7 +37,7 @@ test('behavior: user rejected request', async () => {
   )
   await connect(config, { connector: connector_ })
   await expect(
-    switchChain(config, { chainId: testChains.anvil.id }),
+    switchChain(config, { chainId: testChains.mainnet.id }),
   ).rejects.toMatchInlineSnapshot(`
     [UserRejectedRequestError: User rejected the request.
 
@@ -53,7 +53,7 @@ test('behavior: not supported', async () => {
   )
   await connect(config, { connector: connector_ })
   await expect(
-    switchChain(config, { chainId: testChains.anvil.id }),
+    switchChain(config, { chainId: testChains.mainnet.id }),
   ).rejects.toMatchInlineSnapshot(`
     [SwitchChainNotSupportedError: "Test Connector" does not support programmatic chain switching.
 
@@ -65,7 +65,7 @@ test('behavior: not supported', async () => {
 test('behavior: not connected', async () => {
   const chainId = config.state.chainId
   expect(config.state.chainId).toMatchInlineSnapshot('123')
-  await switchChain(config, { chainId: testChains.anvilTwo.id })
+  await switchChain(config, { chainId: testChains.mainnet2.id })
   expect(config.state.chainId).toMatchInlineSnapshot('456')
   await switchChain(config, { chainId })
   expect(config.state.chainId).toMatchInlineSnapshot('123')

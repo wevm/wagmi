@@ -17,7 +17,7 @@ test('default', () => {
 
 test('parameters: chainId', () => {
   expect(
-    getEnsAddressQueryOptions(config, { chainId: testChains.anvil.id }),
+    getEnsAddressQueryOptions(config, { chainId: testChains.mainnet.id }),
   ).toMatchInlineSnapshot(`
     {
       "queryFn": [Function],

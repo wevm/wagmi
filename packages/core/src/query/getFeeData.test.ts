@@ -17,7 +17,7 @@ test('default', () => {
 
 test('parameters: chainId', () => {
   expect(
-    getFeeDataQueryOptions(config, { chainId: testChains.anvil.id }),
+    getFeeDataQueryOptions(config, { chainId: testChains.mainnet.id }),
   ).toMatchInlineSnapshot(`
     {
       "queryFn": [Function],

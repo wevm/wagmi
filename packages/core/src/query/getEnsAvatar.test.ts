@@ -17,7 +17,7 @@ test('default', () => {
 
 test('parameters: chainId', () => {
   expect(
-    getEnsAvatarQueryOptions(config, { chainId: testChains.anvil.id }),
+    getEnsAvatarQueryOptions(config, { chainId: testChains.mainnet.id }),
   ).toMatchInlineSnapshot(`
     {
       "queryFn": [Function],

@@ -18,7 +18,7 @@ test('default', () => {
 
 test('parameters: chainId', () => {
   expect(
-    getBlockNumberQueryOptions(config, { chainId: testChains.anvil.id }),
+    getBlockNumberQueryOptions(config, { chainId: testChains.mainnet.id }),
   ).toMatchInlineSnapshot(`
       {
         "gcTime": 0,

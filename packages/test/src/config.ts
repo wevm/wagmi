@@ -5,7 +5,7 @@ import { testChains } from './chains.js'
 import { testConnector } from './connector.js'
 import { accounts } from './constants.js'
 
-const { anvil, anvilTwo } = testChains
+const { mainnet: anvil, mainnet2: anvilTwo } = testChains
 
 export const testClient = {
   anvil: createTestClient({

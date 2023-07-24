@@ -21,7 +21,7 @@ test('default', () => {
 
 test('parameters: chainId', () => {
   expect(
-    getBalanceQueryOptions(config, { address, chainId: testChains.anvil.id }),
+    getBalanceQueryOptions(config, { address, chainId: testChains.mainnet.id }),
   ).toMatchInlineSnapshot(`
     {
       "queryFn": [Function],
@@ -42,7 +42,7 @@ test('parameters: unit', () => {
   expect(
     getBalanceQueryOptions(config, {
       address,
-      chainId: testChains.anvil.id,
+      chainId: testChains.mainnet.id,
       token: '0x0000000000000000000000000000000000000000',
       unit: 'gwei',
     }),

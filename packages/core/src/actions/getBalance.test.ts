@@ -54,7 +54,7 @@ describe('getBalance', () => {
 
   test('parameters: chainId', async () => {
     await expect(
-      getBalance(config, { address, chainId: testChains.anvilTwo.id }),
+      getBalance(config, { address, chainId: testChains.mainnet2.id }),
     ).resolves.toMatchInlineSnapshot(`
       {
         "decimals": 18,
@@ -153,7 +153,7 @@ describe('watchBalance', () => {
     const balances: GetBalanceReturnType[] = []
     const unwatch = watchBalance(config, {
       address,
-      chainId: testChains.anvilTwo.id,
+      chainId: testChains.mainnet2.id,
       onBalance: (balance) => balances.push(balance),
     })
 
