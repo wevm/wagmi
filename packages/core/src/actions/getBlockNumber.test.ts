@@ -18,11 +18,11 @@ describe('watchBlockNumber', () => {
       },
     })
 
-    await testClient.anvil.mine({ blocks: 1 })
+    await testClient.mainnet.mine({ blocks: 1 })
     await new Promise((resolve) => setTimeout(resolve, 100))
-    await testClient.anvil.mine({ blocks: 1 })
+    await testClient.mainnet.mine({ blocks: 1 })
     await new Promise((resolve) => setTimeout(resolve, 100))
-    await testClient.anvil.mine({ blocks: 1 })
+    await testClient.mainnet.mine({ blocks: 1 })
     await new Promise((resolve) => setTimeout(resolve, 200))
 
     expect(blockNumbers.length).toBe(3)

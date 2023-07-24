@@ -1,4 +1,4 @@
-import { config, testChains } from '@wagmi/test'
+import { chain, config } from '@wagmi/test'
 import { expect, test } from 'vitest'
 
 import { getTransactionQueryOptions } from './getTransaction.js'
@@ -17,7 +17,7 @@ test('default', () => {
 
 test('parameters: chainId', () => {
   expect(
-    getTransactionQueryOptions(config, { chainId: testChains.mainnet.id }),
+    getTransactionQueryOptions(config, { chainId: chain.mainnet.id }),
   ).toMatchInlineSnapshot(`
     {
       "queryFn": [Function],

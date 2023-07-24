@@ -101,8 +101,10 @@ jobs:
           max_attempts: 3
           timeout_minutes: 20
         env:
-          VITE_ANVIL_BLOCK_NUMBER: ${{ vars.VITE_ANVIL_BLOCK_NUMBER }}
-          VITE_ANVIL_FORK_URL: ${{ secrets.VITE_ANVIL_FORK_URL }}
+          VITE_MAINNET_FORK_BLOCK_NUMBER: ${{ vars.VITE_MAINNET_FORK_BLOCK_NUMBER }}
+          VITE_MAINNET_FORK_URL: ${{ secrets.VITE_MAINNET_FORK_URL }}
+          VITE_OPTIMISM_FORK_BLOCK_NUMBER: ${{ vars.VITE_OPTIMISM_FORK_BLOCK_NUMBER }}
+          VITE_OPTIMISM_FORK_URL: ${{ secrets.VITE_OPTIMISM_FORK_URL }}
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3

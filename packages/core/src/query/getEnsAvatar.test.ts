@@ -1,4 +1,4 @@
-import { config, testChains } from '@wagmi/test'
+import { chain, config } from '@wagmi/test'
 import { expect, test } from 'vitest'
 
 import { getEnsAvatarQueryOptions } from './getEnsAvatar.js'
@@ -17,7 +17,7 @@ test('default', () => {
 
 test('parameters: chainId', () => {
   expect(
-    getEnsAvatarQueryOptions(config, { chainId: testChains.mainnet.id }),
+    getEnsAvatarQueryOptions(config, { chainId: chain.mainnet.id }),
   ).toMatchInlineSnapshot(`
     {
       "queryFn": [Function],

@@ -21,15 +21,6 @@ export const accounts = [
   '0xa0Ee7A142d267C1f36714E4a8F75612F20a79720',
 ] as const
 
-export let forkUrl: string
-if (process.env.VITE_ANVIL_FORK_URL) forkUrl = process.env.VITE_ANVIL_FORK_URL
-else forkUrl = 'https://cloudflare-eth.com'
-
-export let forkBlockNumber: bigint
-if (process.env.VITE_ANVIL_BLOCK_NUMBER)
-  forkBlockNumber = BigInt(Number(process.env.VITE_ANVIL_BLOCK_NUMBER))
-else forkBlockNumber = 16280770n
-
 export let walletConnectProjectId: string
 if (process.env.VITE_WC_PROJECT_ID)
   walletConnectProjectId = process.env.VITE_WC_PROJECT_ID
@@ -212,4 +203,7 @@ export const address = {
   mloot: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
   wagmigotchi: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
   wagmiMintExample: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+  optimism: {
+    usdc: '0x7f5c764cbc14f9669b88837ca1490cca17c31607',
+  },
 } as const

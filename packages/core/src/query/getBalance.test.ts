@@ -1,4 +1,4 @@
-import { accounts, config, testChains } from '@wagmi/test'
+import { accounts, chain, config } from '@wagmi/test'
 import { expect, test } from 'vitest'
 
 import { getBalanceQueryOptions } from './getBalance.js'
@@ -21,7 +21,7 @@ test('default', () => {
 
 test('parameters: chainId', () => {
   expect(
-    getBalanceQueryOptions(config, { address, chainId: testChains.mainnet.id }),
+    getBalanceQueryOptions(config, { address, chainId: chain.mainnet.id }),
   ).toMatchInlineSnapshot(`
     {
       "queryFn": [Function],
@@ -42,7 +42,7 @@ test('parameters: unit', () => {
   expect(
     getBalanceQueryOptions(config, {
       address,
-      chainId: testChains.mainnet.id,
+      chainId: chain.mainnet.id,
       token: '0x0000000000000000000000000000000000000000',
       unit: 'gwei',
     }),

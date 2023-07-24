@@ -1,4 +1,4 @@
-import { abi, address, testChains } from '@wagmi/test'
+import { abi, address, chain } from '@wagmi/test'
 import { renderHook, waitFor } from '@wagmi/test/react'
 import { expect, test } from 'vitest'
 
@@ -53,7 +53,7 @@ test('parameters: chainId', async () => {
       abi: abi.wagmiMintExample,
       functionName: 'balanceOf',
       args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
-      chainId: testChains.anvilTwo.id,
+      chainId: chain.mainnet2.id,
     }),
   )
 

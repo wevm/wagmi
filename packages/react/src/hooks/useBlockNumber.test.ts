@@ -46,12 +46,12 @@ test('watch', async () => {
   const blockNumber = result.current.data!
   expect(result.current.data).toMatchInlineSnapshot('16966590n')
 
-  await testClient.anvil.mine({ blocks: 1 })
+  await testClient.mainnet.mine({ blocks: 1 })
   await waitFor(() => {
     expect(result.current.data).toEqual(blockNumber + 1n)
   })
 
-  await testClient.anvil.mine({ blocks: 1 })
+  await testClient.mainnet.mine({ blocks: 1 })
   await waitFor(() => {
     expect(result.current.data).toEqual(blockNumber + 2n)
   })

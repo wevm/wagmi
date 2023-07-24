@@ -1,4 +1,4 @@
-import { config, testChains } from '@wagmi/test'
+import { chain, config } from '@wagmi/test'
 import { expectTypeOf, test } from 'vitest'
 
 import { getConnectorClient } from './getConnectorClient.js'
@@ -10,8 +10,8 @@ test('default', async () => {
 
 test('chainId', async () => {
   const client = await getConnectorClient(config, {
-    chainId: testChains.mainnet.id,
+    chainId: chain.mainnet.id,
   })
-  expectTypeOf(client.chain).toEqualTypeOf<typeof testChains.mainnet>()
-  expectTypeOf(client.chain).not.toEqualTypeOf<typeof testChains.mainnet2>()
+  expectTypeOf(client.chain).toEqualTypeOf<typeof chain.mainnet>()
+  expectTypeOf(client.chain).not.toEqualTypeOf<typeof chain.mainnet2>()
 })

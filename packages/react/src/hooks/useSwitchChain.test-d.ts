@@ -1,11 +1,11 @@
 import { type SwitchChainError } from '@wagmi/core'
-import { testChains } from '@wagmi/test'
+import { chain } from '@wagmi/test'
 import type { Chain } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
 import { useSwitchChain } from './useSwitchChain.js'
 
-const chainId = testChains.anvil.id
+const chainId = chain.mainnet.id
 const contextValue = { foo: 'bar' } as const
 
 test('context', () => {

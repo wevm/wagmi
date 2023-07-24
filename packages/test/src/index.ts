@@ -1,4 +1,4 @@
-export { testChains } from './chains.js'
+export { chain } from './chain.js'
 
 export { testConnector } from './connector.js'
 
@@ -6,8 +6,6 @@ export {
   abi,
   address,
   accounts,
-  forkUrl,
-  forkBlockNumber,
   typedData,
   walletConnectProjectId,
 } from './constants.js'

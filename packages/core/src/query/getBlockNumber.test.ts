@@ -1,4 +1,4 @@
-import { config, testChains } from '@wagmi/test'
+import { chain, config } from '@wagmi/test'
 import { expect, test } from 'vitest'
 
 import { getBlockNumberQueryOptions } from './getBlockNumber.js'
@@ -18,7 +18,7 @@ test('default', () => {
 
 test('parameters: chainId', () => {
   expect(
-    getBlockNumberQueryOptions(config, { chainId: testChains.mainnet.id }),
+    getBlockNumberQueryOptions(config, { chainId: chain.mainnet.id }),
   ).toMatchInlineSnapshot(`
       {
         "gcTime": 0,

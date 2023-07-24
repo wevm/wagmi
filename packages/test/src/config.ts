@@ -1,27 +1,32 @@
 import { createConfig } from '@wagmi/core'
 import { createTestClient, http } from 'viem'
 
-import { testChains } from './chains.js'
+import { chain } from './chain.js'
 import { testConnector } from './connector.js'
 import { accounts } from './constants.js'
 
-const { mainnet: anvil, mainnet2: anvilTwo } = testChains
+const { mainnet, mainnet2, optimism } = chain
 
 export const testClient = {
-  anvil: createTestClient({
+  mainnet: createTestClient({
     mode: 'anvil',
-    chain: anvil,
+    chain: mainnet,
     transport: http(),
   }),
-  anvilTwo: createTestClient({
+  mainnet2: createTestClient({
     mode: 'anvil',
-    chain: anvilTwo,
+    chain: mainnet2,
+    transport: http(),
+  }),
+  optimism: createTestClient({
+    mode: 'anvil',
+    chain: optimism,
     transport: http(),
   }),
 }
 
 export const config = createConfig({
-  chains: [anvil, anvilTwo],
+  chains: [mainnet, mainnet2, optimism],
   connectors: [
     testConnector({ accounts }),
     testConnector({
@@ -32,7 +37,8 @@ export const config = createConfig({
   reconnectOnMount: false,
   storage: null,
   transports: {
-    [anvil.id]: http(),
-    [anvilTwo.id]: http(),
+    [mainnet.id]: http(),
+    [mainnet2.id]: http(),
+    [optimism.id]: http(),
   },
 })

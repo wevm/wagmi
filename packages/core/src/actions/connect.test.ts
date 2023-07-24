@@ -1,4 +1,4 @@
-import { accounts, config, testChains, testConnector } from '@wagmi/test'
+import { accounts, chain, config, testConnector } from '@wagmi/test'
 import { beforeEach, expect, test } from 'vitest'
 
 import { connect } from './connect.js'
@@ -21,7 +21,7 @@ test('default', async () => {
 })
 
 test('parameters: chainId', async () => {
-  const chainId = testChains.mainnet2.id
+  const chainId = chain.mainnet2.id
   await expect(connect(config, { connector, chainId })).resolves.toMatchObject(
     expect.objectContaining({
       accounts: expect.any(Array),

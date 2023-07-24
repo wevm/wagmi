@@ -1,4 +1,4 @@
-import { accounts, testChains, testClient, wait } from '@wagmi/test'
+import { accounts, chain, testClient, wait } from '@wagmi/test'
 import { renderHook, waitFor } from '@wagmi/test/react'
 import { type Address, parseEther } from 'viem'
 import { beforeEach, expect, test } from 'vitest'
@@ -8,10 +8,10 @@ import { useBalance } from './useBalance.js'
 const address = accounts[0]
 
 beforeEach(async () => {
-  await testClient.anvil.setBalance({ address, value: parseEther('10000') })
-  await testClient.anvil.mine({ blocks: 1 })
-  await testClient.anvilTwo.setBalance({ address, value: parseEther('69') })
-  await testClient.anvilTwo.mine({ blocks: 1 })
+  await testClient.mainnet.setBalance({ address, value: parseEther('10000') })
+  await testClient.mainnet.mine({ blocks: 1 })
+  await testClient.mainnet2.setBalance({ address, value: parseEther('69') })
+  await testClient.mainnet2.mine({ blocks: 1 })
 })
 
 test('default', async () => {
@@ -56,7 +56,7 @@ test('default', async () => {
 
 test('parameters: chainId', async () => {
   const { result } = renderHook(() =>
-    useBalance({ address, chainId: testChains.anvilTwo.id }),
+    useBalance({ address, chainId: chain.mainnet2.id }),
   )
 
   await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
@@ -143,7 +143,7 @@ test('parameters: token', async () => {
 
 test('parameters: unit', async () => {
   const { result } = renderHook(() =>
-    useBalance({ address, chainId: testChains.anvilTwo.id, unit: 'wei' }),
+    useBalance({ address, chainId: chain.mainnet2.id, unit: 'wei' }),
   )
 
   await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
@@ -196,8 +196,8 @@ test('parameters: watch', async () => {
     }
   `)
 
-  await testClient.anvil.setBalance({ address, value: parseEther('69') })
-  await testClient.anvil.mine({ blocks: 1 })
+  await testClient.mainnet.setBalance({ address, value: parseEther('69') })
+  await testClient.mainnet.mine({ blocks: 1 })
   await wait(100)
 
   expect(result.current.data).toMatchInlineSnapshot(`
@@ -209,8 +209,8 @@ test('parameters: watch', async () => {
     }
   `)
 
-  await testClient.anvil.setBalance({ address, value: parseEther('420') })
-  await testClient.anvil.mine({ blocks: 1 })
+  await testClient.mainnet.setBalance({ address, value: parseEther('420') })
+  await testClient.mainnet.mine({ blocks: 1 })
   await wait(100)
 
   expect(result.current.data).toMatchInlineSnapshot(`

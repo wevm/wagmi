@@ -5,13 +5,11 @@ import * as react from './index.js'
 test('exports', () => {
   expect(Object.keys(react)).toMatchInlineSnapshot(`
     [
-      "testChains",
+      "chain",
       "testConnector",
       "abi",
       "address",
       "accounts",
-      "forkUrl",
-      "forkBlockNumber",
       "typedData",
       "walletConnectProjectId",
       "config",

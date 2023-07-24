@@ -1,5 +1,5 @@
 import { connect, disconnect } from '@wagmi/core'
-import { config, testChains } from '@wagmi/test'
+import { chain, config } from '@wagmi/test'
 import { renderHook, waitFor } from '@wagmi/test/react'
 import { expect, test } from 'vitest'
 
@@ -19,7 +19,7 @@ test('default', async () => {
   const chainId1 = result.current.useAccount.chainId
   expect(chainId1).toBeDefined()
 
-  result.current.useSwitchChain.switchChain({ chainId: testChains.anvilTwo.id })
+  result.current.useSwitchChain.switchChain({ chainId: chain.mainnet2.id })
   await waitFor(() =>
     expect(result.current.useSwitchChain.isSuccess).toBeTruthy(),
   )
@@ -28,7 +28,7 @@ test('default', async () => {
   expect(chainId2).toBeDefined()
   expect(chainId1).not.toBe(chainId2)
 
-  result.current.useSwitchChain.switchChain({ chainId: testChains.anvil.id })
+  result.current.useSwitchChain.switchChain({ chainId: chain.mainnet.id })
   await waitFor(() =>
     expect(result.current.useSwitchChain.isSuccess).toBeTruthy(),
   )

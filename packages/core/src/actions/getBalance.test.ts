@@ -1,4 +1,4 @@
-import { accounts, config, testChains, testClient, wait } from '@wagmi/test'
+import { accounts, chain, config, testClient, wait } from '@wagmi/test'
 import { parseEther } from 'viem'
 import { beforeEach, describe, expect, test } from 'vitest'
 
@@ -11,16 +11,16 @@ import {
 const address = accounts[0]
 
 beforeEach(async () => {
-  await testClient.anvil.setBalance({
+  await testClient.mainnet.setBalance({
     address,
     value: parseEther('10000'),
   })
-  await testClient.anvil.mine({ blocks: 1 })
-  await testClient.anvilTwo.setBalance({
+  await testClient.mainnet.mine({ blocks: 1 })
+  await testClient.mainnet2.setBalance({
     address,
     value: parseEther('420'),
   })
-  await testClient.anvilTwo.mine({ blocks: 1 })
+  await testClient.mainnet2.mine({ blocks: 1 })
 })
 
 describe('getBalance', () => {
@@ -36,7 +36,7 @@ describe('getBalance', () => {
       }
     `)
 
-    await testClient.anvil.setBalance({
+    await testClient.mainnet.setBalance({
       address,
       value: parseEther('6969.12222215666'),
     })
@@ -54,7 +54,7 @@ describe('getBalance', () => {
 
   test('parameters: chainId', async () => {
     await expect(
-      getBalance(config, { address, chainId: testChains.mainnet2.id }),
+      getBalance(config, { address, chainId: chain.mainnet2.id }),
     ).resolves.toMatchInlineSnapshot(`
       {
         "decimals": 18,
@@ -105,16 +105,16 @@ describe('watchBalance', () => {
 
     await wait(500)
 
-    await testClient.anvil.setBalance({ address, value: parseEther('69') })
-    await testClient.anvil.mine({ blocks: 1 })
+    await testClient.mainnet.setBalance({ address, value: parseEther('69') })
+    await testClient.mainnet.mine({ blocks: 1 })
     await wait(100)
 
-    await testClient.anvil.setBalance({ address, value: parseEther('69420') })
-    await testClient.anvil.mine({ blocks: 1 })
+    await testClient.mainnet.setBalance({ address, value: parseEther('69420') })
+    await testClient.mainnet.mine({ blocks: 1 })
     await wait(100)
 
-    await testClient.anvil.setBalance({ address, value: parseEther('42069') })
-    await testClient.anvil.mine({ blocks: 1 })
+    await testClient.mainnet.setBalance({ address, value: parseEther('42069') })
+    await testClient.mainnet.mine({ blocks: 1 })
     await wait(100)
 
     expect(balances).toMatchInlineSnapshot(`
@@ -153,18 +153,18 @@ describe('watchBalance', () => {
     const balances: GetBalanceReturnType[] = []
     const unwatch = watchBalance(config, {
       address,
-      chainId: testChains.mainnet2.id,
+      chainId: chain.mainnet2.id,
       onBalance: (balance) => balances.push(balance),
     })
 
     await wait(500)
 
-    await testClient.anvilTwo.setBalance({ address, value: parseEther('69') })
-    await testClient.anvilTwo.mine({ blocks: 1 })
+    await testClient.mainnet2.setBalance({ address, value: parseEther('69') })
+    await testClient.mainnet2.mine({ blocks: 1 })
 
     // Perform another call to the other chain to make sure it doesn't propagate there.
-    await testClient.anvil.setBalance({ address, value: parseEther('420') })
-    await testClient.anvil.mine({ blocks: 1 })
+    await testClient.mainnet.setBalance({ address, value: parseEther('420') })
+    await testClient.mainnet.mine({ blocks: 1 })
     await wait(100)
 
     expect(balances).toMatchInlineSnapshot(`
@@ -201,8 +201,8 @@ describe('watchBalance', () => {
 
     await wait(500)
 
-    await testClient.anvil.setBalance({ address, value: parseEther('69') })
-    await testClient.anvil.mine({ blocks: 1 })
+    await testClient.mainnet.setBalance({ address, value: parseEther('69') })
+    await testClient.mainnet.mine({ blocks: 1 })
     await wait(200)
 
     expect(balances).toMatchInlineSnapshot(`
