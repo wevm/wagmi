@@ -108,15 +108,6 @@ export {
 } from './query/prepareSendTransaction.js'
 
 export {
-  type PrepareWriteContractData,
-  type PrepareWriteContractOptions,
-  type PrepareWriteContractQueryFnData,
-  type PrepareWriteContractQueryKey,
-  prepareWriteContractQueryKey,
-  prepareWriteContractQueryOptions,
-} from './query/prepareWriteContract.js'
-
-export {
   type ReadContractData,
   type ReadContractOptions,
   type ReadContractQueryFnData,
@@ -164,6 +155,15 @@ export {
   type SwitchAccountMutateAsync,
   switchAccountMutationOptions,
 } from './query/switchAccount.js'
+
+export {
+  type SimulateContractData,
+  type SimulateContractOptions,
+  type SimulateContractQueryFnData,
+  type SimulateContractQueryKey,
+  simulateContractQueryKey,
+  simulateContractQueryOptions,
+} from './query/simulateContract.js'
 
 export {
   type SwitchChainData,

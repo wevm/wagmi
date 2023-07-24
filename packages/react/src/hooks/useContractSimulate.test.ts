@@ -3,7 +3,7 @@ import { abi, address, config } from '@wagmi/test'
 import { renderHook, waitFor } from '@wagmi/test/react'
 import { expect, test } from 'vitest'
 
-import { usePrepareContractWrite } from './usePrepareContractWrite.js'
+import { useContractSimulate } from './useContractSimulate.js'
 
 const connector = config.connectors[0]!
 
@@ -11,7 +11,7 @@ test('default', async () => {
   await connect(config, { connector })
 
   const { result } = renderHook(() =>
-    usePrepareContractWrite({
+    useContractSimulate({
       address: address.wagmiMintExample,
       abi: abi.wagmiMintExample,
       functionName: 'mint',

@@ -97,10 +97,10 @@ export {
 } from './hooks/useFeeData.js'
 
 export {
-  type UsePrepareContractWriteParameters,
-  type UsePrepareContractWriteReturnType,
-  usePrepareContractWrite,
-} from './hooks/usePrepareContractWrite.js'
+  type UseContractSimulateParameters,
+  type UseContractSimulateReturnType,
+  useContractSimulate,
+} from './hooks/useContractSimulate.js'
 
 export {
   type UsePrepareSendTransactionParameters,

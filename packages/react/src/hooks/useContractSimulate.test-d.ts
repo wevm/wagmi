@@ -3,26 +3,25 @@ import type { Address } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
 import {
-  type UsePrepareContractWriteParameters,
-  type UsePrepareContractWriteReturnType,
-  usePrepareContractWrite,
-} from './usePrepareContractWrite.js'
+  type UseContractSimulateParameters,
+  type UseContractSimulateReturnType,
+  useContractSimulate,
+} from './useContractSimulate.js'
 
 test('default', () => {
-  const result = usePrepareContractWrite({
+  const result = useContractSimulate({
     address: '0x',
     abi: abi.erc20,
     functionName: 'transferFrom',
     args: ['0x', '0x', 123n],
-    chainId: 123,
   })
 
   expectTypeOf(result.data).toMatchTypeOf<
     | {
-        mode: 'prepared'
-        chainId: number
         result: boolean
         request: {
+          __mode: 'prepared'
+          chainId: number
           abi: readonly [
             {
               readonly name: 'transferFrom'
@@ -45,11 +44,12 @@ test('default', () => {
 })
 
 test('select data', () => {
-  const result = usePrepareContractWrite({
+  const result = useContractSimulate({
     address: '0x',
     abi: abi.erc20,
     functionName: 'transferFrom',
     args: ['0x', '0x', 123n],
+    chainId: 123,
     select(data) {
       expectTypeOf(data.result).toEqualTypeOf<boolean>()
       return data.request.args
@@ -60,29 +60,26 @@ test('select data', () => {
   >()
 })
 
-test('UsePrepareContractWriteParameters', () => {
-  type Result = UsePrepareContractWriteParameters<
-    typeof abi.erc20,
-    'transferFrom'
-  >
+test('UseContractSimulateParameters', () => {
+  type Result = UseContractSimulateParameters<typeof abi.erc20, 'transferFrom'>
   expectTypeOf<Result>().toMatchTypeOf<{
     functionName?: 'approve' | 'transfer' | 'transferFrom' | undefined
     args?: readonly [Address, Address, bigint] | undefined
   }>()
 })
 
-test('UsePrepareContractWriteReturnType', () => {
-  type Result = UsePrepareContractWriteReturnType<
+test('UseContractSimulateReturnType', () => {
+  type Result = UseContractSimulateReturnType<
     typeof abi.erc20,
     'transferFrom',
     123
   >
   expectTypeOf<Result['data']>().toMatchTypeOf<
     | {
-        mode: 'prepared'
-        chainId: number
         result: boolean
         request: {
+          __mode: 'prepared'
+          chainId: number
           abi: readonly [
             {
               readonly name: 'transferFrom'

@@ -70,7 +70,11 @@ export function readContractQueryKey<
   const abi extends Abi | readonly unknown[],
   functionName extends string,
 >(options: ReadContractOptions<config, abi, functionName> = {} as any) {
-  return ['readContract', filterQueryOptions(options)] as const
+  // minimze abi for query key
+  const abi = ((options.abi ?? []) as Abi).filter(
+    (abiItem) => 'name' in abiItem && abiItem.name === options.functionName,
+  )
+  return ['readContract', filterQueryOptions({ ...options, abi })] as const
 }
 
 export type ReadContractQueryKey<

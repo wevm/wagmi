@@ -3,17 +3,18 @@ import { expect, test } from 'vitest'
 
 import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'
-import { prepareWriteContract } from './prepareWriteContract.js'
+import { simulateContract } from './simulateContract.js'
 
 const connector = config.connectors[0]!
 
 test('default', async () => {
   await connect(config, { connector })
   await expect(
-    prepareWriteContract(config, {
+    simulateContract(config, {
       address: address.wagmiMintExample,
       abi: abi.wagmiMintExample,
       functionName: 'mint',
+      // TODO: should autocomplete without needing `chainId` to be specified
     }),
   ).resolves.toMatchInlineSnapshot(`
     {

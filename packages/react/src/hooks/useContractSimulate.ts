@@ -1,10 +1,10 @@
-import type { PrepareWriteContractError, ResolvedRegister } from '@wagmi/core'
+import type { ResolvedRegister, SimulateContractError } from '@wagmi/core'
 import {
-  type PrepareWriteContractData,
-  type PrepareWriteContractOptions,
-  type PrepareWriteContractQueryFnData,
-  type PrepareWriteContractQueryKey,
-  prepareWriteContractQueryOptions,
+  type SimulateContractData,
+  type SimulateContractOptions,
+  type SimulateContractQueryFnData,
+  type SimulateContractQueryKey,
+  simulateContractQueryOptions,
 } from '@wagmi/core/query'
 import type { Abi } from 'viem'
 
@@ -18,32 +18,32 @@ import { useConfig } from './useConfig.js'
 
 type ChainId = ResolvedRegister['config']['chains'][number]['id']
 
-export type UsePrepareContractWriteParameters<
+export type UseContractSimulateParameters<
   abi extends Abi | readonly unknown[] = Abi,
   functionName extends string = string,
   chainId extends ChainId | undefined = undefined,
-  selectData = PrepareWriteContractData<
+  selectData = SimulateContractData<
     ResolvedRegister['config'],
     chainId,
     abi,
     functionName
   >,
-> = PrepareWriteContractOptions<
+> = SimulateContractOptions<
   ResolvedRegister['config'],
   chainId,
   abi,
   functionName
 > &
   UseQueryParameters<
-    PrepareWriteContractQueryFnData<
+    SimulateContractQueryFnData<
       ResolvedRegister['config'],
       chainId,
       abi,
       functionName
     >,
-    PrepareWriteContractError,
+    SimulateContractError,
     selectData,
-    PrepareWriteContractQueryKey<
+    SimulateContractQueryKey<
       ResolvedRegister['config'],
       chainId,
       abi,
@@ -51,59 +51,62 @@ export type UsePrepareContractWriteParameters<
     >
   >
 
-export type UsePrepareContractWriteReturnType<
+export type UseContractSimulateReturnType<
   abi extends Abi | readonly unknown[] = Abi,
   functionName extends string = string,
   chainId extends ChainId | undefined = undefined,
-  selectData = PrepareWriteContractData<
+  selectData = SimulateContractData<
     ResolvedRegister['config'],
     chainId,
     abi,
     functionName
   >,
-> = UseQueryResult<selectData, PrepareWriteContractError>
+> = UseQueryResult<selectData, SimulateContractError>
 
-/** https://wagmi.sh/react/hooks/usePrepareContractWrite */
-export function usePrepareContractWrite<
+/** https://wagmi.sh/react/hooks/useContractSimulate */
+export function useContractSimulate<
   const abi extends Abi | readonly unknown[],
   functionName extends string,
   chainId extends ChainId | undefined = undefined,
-  selectData = PrepareWriteContractData<
+  selectData = SimulateContractData<
     ResolvedRegister['config'],
     chainId,
     abi,
     functionName
   >,
 >(
-  parameters: UsePrepareContractWriteParameters<
+  parameters: UseContractSimulateParameters<
     abi,
     functionName,
     chainId,
     selectData
-  > = {} as UsePrepareContractWriteParameters<
+  > = {} as UseContractSimulateParameters<
     abi,
     functionName,
     chainId,
     selectData
   >,
-): UsePrepareContractWriteReturnType<abi, functionName, chainId, selectData> {
+): UseContractSimulateReturnType<abi, functionName, chainId, selectData> {
+  const { address, abi, functionName, ...query } = parameters
   const config = useConfig()
 
   const chainId = parameters.chainId ?? useChainId()
-  const queryOptions = prepareWriteContractQueryOptions(config, {
+  const queryOptions = simulateContractQueryOptions(config, {
     ...parameters,
     chainId,
-  } as PrepareWriteContractOptions<
+  } as SimulateContractOptions<
     ResolvedRegister['config'],
     chainId,
     abi,
     functionName
   >)
-  const enabled = Boolean(parameters.enabled ?? true)
+  const enabled = Boolean(
+    address && abi && functionName && (parameters.enabled ?? true),
+  )
 
   return useQuery({
     ...queryOptions,
-    ...parameters,
+    ...(query as any),
     enabled,
   })
 }

@@ -2,7 +2,6 @@ import type {
   Abi,
   Account,
   Chain,
-  ExtractAbiFunction,
   WriteContractParameters as viem_WriteContractParameters,
   WriteContractReturnType as viem_WriteContractReturnType,
 } from 'viem'
@@ -15,35 +14,11 @@ import type { Evaluate, Omit } from '../types/utils.js'
 import { assertActiveChain } from '../utils/assertActiveChain.js'
 import { getConnectorClient } from './getConnectorClient.js'
 import {
-  type PrepareWriteContractParameters,
-  prepareWriteContract,
-} from './prepareWriteContract.js'
+  type SimulateContractParameters,
+  simulateContract,
+} from './simulateContract.js'
 
-type WriteContractPreparedParameters<
-  config extends Config = Config,
-  chainId extends
-    | config['chains'][number]['id']
-    | undefined = config['chains'][number]['id'],
-  abi extends Abi | readonly unknown[] = Abi,
-  functionName extends string = string,
-  ///
-  chains extends readonly Chain[] = chainId extends config['chains'][number]['id']
-    ? [Extract<config['chains'][number], { id: chainId }>]
-    : config['chains'],
-> = {
-  [key in keyof chains]: {
-    mode: 'prepared'
-    request: viem_WriteContractParameters<
-      readonly [ExtractAbiFunction<abi extends Abi ? abi : Abi, functionName>],
-      functionName,
-      chains[key],
-      Account
-    >
-  }
-}[number] &
-  Evaluate<ChainIdParameter<config, chainId>>
-
-type WriteContractUnpreparedParameters<
+export type WriteContractParameters<
   config extends Config = Config,
   chainId extends
     | config['chains'][number]['id']
@@ -61,19 +36,8 @@ type WriteContractUnpreparedParameters<
   >
 }[number] &
   Evaluate<ChainIdParameter<config, chainId>> & {
-    mode?: never
+    __mode?: 'prepared'
   }
-
-export type WriteContractParameters<
-  config extends Config = Config,
-  chainId extends
-    | config['chains'][number]['id']
-    | undefined = config['chains'][number]['id'],
-  abi extends Abi | readonly unknown[] = Abi,
-  functionName extends string = string,
-> =
-  | WriteContractPreparedParameters<config, chainId, abi, functionName>
-  | WriteContractUnpreparedParameters<config, chainId, abi, functionName>
 
 // TODO(major): Just return the hash (not inside object)
 export type WriteContractReturnType = {
@@ -92,27 +56,27 @@ export async function writeContract<
   config: config,
   parameters: WriteContractParameters<config, chainId, abi, functionName>,
 ): Promise<WriteContractReturnType> {
-  const { chainId, mode, ...rest } = parameters
+  const { chainId, __mode, ...rest } = parameters
 
   const client = await getConnectorClient(config, { chainId })
   if (!client) throw new ConnectorNotFoundError()
 
-  let request: viem_WriteContractParameters
-  if (mode === 'prepared' && 'request' in rest) {
+  let request
+  if (__mode === 'prepared') {
     if (chainId) assertActiveChain(config, { chainId })
-    request = rest.request as viem_WriteContractParameters
+    request = rest
   } else {
-    const res = await prepareWriteContract(
+    const { request: simulateRequest } = await simulateContract(
       config,
-      rest as PrepareWriteContractParameters,
+      rest as SimulateContractParameters<config, chainId, abi, functionName>,
     )
-    request = res.request
+    request = simulateRequest
   }
 
   const hash = await viem_writeContract(client, {
     ...request,
-    // Setting to `null` to not validate inside `viem_writeContract`
-    // since we already validated above
+    // Setting to `null` to not validate inside `viem_writeContract` since we
+    // already validated above with `assertActiveChain` and in `simulateContract`
     chain: null,
   } as viem_WriteContractParameters)
 

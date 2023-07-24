@@ -15,6 +15,34 @@ export type ExactPartial<type> = {
   [key in keyof type]?: type[key] | undefined
 }
 
+/** Checks if {@link type} can be narrowed further than {@link type2} */
+export type IsNarrowable<type, type2> = IsUnknown<type> extends true
+  ? false
+  : IsNever<
+      (type extends type2 ? true : false) & (type2 extends type ? false : true)
+    > extends true
+  ? false
+  : true
+
+/** Checks if {@link type} is `never` */
+export type IsNever<type> = [type] extends [never] ? true : false
+
+/** Checks if {@link type} is union */
+export type IsUnion<
+  type,
+  ///
+  type2 = type,
+> = type extends type2 ? ([type2] extends [type] ? false : true) : never
+
+/** Checks if {@link type} is `unknown` */
+export type IsUnknown<type> = unknown extends type ? true : false
+
+/** Merges two object types into new type  */
+export type Merge<obj1, obj2> = Evaluate<
+  LooseOmit<obj1, keyof obj2 extends infer key extends string ? key : never> &
+    obj2
+>
+
 /** Removes `readonly` from all properties of an object. */
 export type Mutable<type extends object> = {
   -readonly [key in keyof type]: type[key]
@@ -44,7 +72,10 @@ export type PartialBy<type, key extends keyof type> = ExactPartial<
   Omit<type, key>
 
 /** Loose version of {@link Omit} */
-export type LooseOmit<T, keys extends string> = Pick<T, Exclude<keyof T, keys>>
+export type LooseOmit<type, keys extends string> = Pick<
+  type,
+  Exclude<keyof type, keys>
+>
 
 /** Loose version of {@link Pick} */
 export type LoosePick<type, key extends string> = {

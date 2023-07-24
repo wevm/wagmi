@@ -116,13 +116,6 @@ export {
 } from './actions/prepareSendTransaction.js'
 
 export {
-  type PrepareWriteContractError,
-  type PrepareWriteContractParameters,
-  type PrepareWriteContractReturnType,
-  prepareWriteContract,
-} from './actions/prepareWriteContract.js'
-
-export {
   type ReadContractParameters,
   type ReadContractReturnType,
   type ReadContractError,
@@ -159,6 +152,13 @@ export {
   type SignTypedDataReturnType,
   signTypedData,
 } from './actions/signTypedData.js'
+
+export {
+  type SimulateContractError,
+  type SimulateContractParameters,
+  type SimulateContractReturnType,
+  simulateContract,
+} from './actions/simulateContract.js'
 
 export {
   type SwitchAccountError,
