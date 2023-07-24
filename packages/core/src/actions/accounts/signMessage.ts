@@ -1,21 +1,20 @@
-import type { SignMessageReturnType } from 'viem'
-
-import { ConnectorNotFoundError } from '../../errors'
-import { getWalletClient } from '../viem'
+import type { SignMessageReturnType, SignMessageParameters } from "viem";
+import { ConnectorNotFoundError } from "../../errors";
+import { getWalletClient } from "../viem";
 
 export type SignMessageArgs = {
   /** Message to sign with wallet */
-  message: string
-}
+  message: SignMessageParameters["message"];
+};
 
-export type SignMessageResult = SignMessageReturnType
+export type SignMessageResult = SignMessageReturnType;
 
 export async function signMessage(
-  args: SignMessageArgs,
+    args: SignMessageArgs
 ): Promise<SignMessageResult> {
-  const walletClient = await getWalletClient()
-  if (!walletClient) throw new ConnectorNotFoundError()
+  const walletClient = await getWalletClient();
+  if (!walletClient) throw new ConnectorNotFoundError();
   return await walletClient.signMessage({
     message: args.message,
-  })
+  });
 }
