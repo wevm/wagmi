@@ -7,7 +7,6 @@ import {
   sendTransaction,
 } from '../actions/sendTransaction.js'
 import { type Config } from '../config.js'
-import type { ChainIdParameter } from '../types/properties.js'
 import type { Evaluate } from '../types/utils.js'
 
 export function sendTransactionMutationOptions<config extends Config>(
@@ -38,11 +37,11 @@ export type SendTransactionMutate<config extends Config, context = unknown> = <
   variables: Evaluate<
     SendTransactionVariables<
       config,
-      // only pass through generic slot if `chainId` is inferrable from config
-      number extends config['chains'][number]['id'] ? undefined : chainId
+      number extends config['chains'][number]['id']
+        ? config['chains'][number]['id']
+        : chainId
     >
-  > &
-    Evaluate<ChainIdParameter<config, chainId>>,
+  >,
   options?: Evaluate<
     MutateOptions<
       SendTransactionData,
@@ -60,11 +59,11 @@ export type SendTransactionMutateAsync<
   variables: Evaluate<
     SendTransactionVariables<
       config,
-      // only pass through generic slot if `chainId` is inferrable from config
-      number extends config['chains'][number]['id'] ? undefined : chainId
+      number extends config['chains'][number]['id']
+        ? config['chains'][number]['id']
+        : chainId
     >
-  > &
-    Evaluate<ChainIdParameter<config, chainId>>,
+  >,
   options?: Evaluate<
     MutateOptions<
       SendTransactionData,

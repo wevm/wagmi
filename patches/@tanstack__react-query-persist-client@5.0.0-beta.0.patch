@@ -1,0 +1,26 @@
+diff --git a/build/legacy/PersistQueryClientProvider.js b/build/legacy/PersistQueryClientProvider.js
+index 7c745f1aee104b8c781619b611cbfd1a529c2907..f113d1ecf01398f28c8d813340fa670ee7206aa4 100644
+--- a/build/legacy/PersistQueryClientProvider.js
++++ b/build/legacy/PersistQueryClientProvider.js
+@@ -1,7 +1,7 @@
+ "use client";
+ 
+ // src/PersistQueryClientProvider.tsx
+-import * as React from "react.js";
++import * as React from "react";
+ import { persistQueryClient } from "@tanstack/query-persist-client-core";
+ import { IsRestoringProvider, QueryClientProvider } from "@tanstack/react-query";
+ var PersistQueryClientProvider = ({
+diff --git a/build/modern/PersistQueryClientProvider.js b/build/modern/PersistQueryClientProvider.js
+index 583cbcaa030bfe3cea885c1de9aea29f5145e4c1..88ba63ec67f1cfff3392032bd31303661a600553 100644
+--- a/build/modern/PersistQueryClientProvider.js
++++ b/build/modern/PersistQueryClientProvider.js
+@@ -1,7 +1,7 @@
+ "use client";
+ 
+ // src/PersistQueryClientProvider.tsx
+-import * as React from "react.js";
++import * as React from "react";
+ import { persistQueryClient } from "@tanstack/query-persist-client-core";
+ import { IsRestoringProvider, QueryClientProvider } from "@tanstack/react-query";
+ var PersistQueryClientProvider = ({

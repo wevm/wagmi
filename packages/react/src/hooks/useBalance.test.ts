@@ -96,7 +96,50 @@ test('parameters: chainId', async () => {
   `)
 })
 
-test.todo('parameters: token')
+test('parameters: token', async () => {
+  const { result } = renderHook(() =>
+    useBalance({
+      address: '0x4557B18E779944BFE9d78A672452331C186a9f48',
+      token: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
+    }),
+  )
+
+  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+
+  expect(result.current).toMatchInlineSnapshot(`
+    {
+      "data": {
+        "decimals": 18,
+        "formatted": "17019.35",
+        "symbol": "DAI",
+        "value": 17019350000000000000000n,
+      },
+      "dataUpdatedAt": 1675209600000,
+      "error": null,
+      "errorUpdateCount": 0,
+      "errorUpdatedAt": 0,
+      "failureCount": 0,
+      "failureReason": null,
+      "fetchStatus": "idle",
+      "isError": false,
+      "isFetched": true,
+      "isFetchedAfterMount": true,
+      "isFetching": false,
+      "isInitialLoading": false,
+      "isLoading": false,
+      "isLoadingError": false,
+      "isPaused": false,
+      "isPending": false,
+      "isPlaceholderData": false,
+      "isRefetchError": false,
+      "isRefetching": false,
+      "isStale": true,
+      "isSuccess": true,
+      "refetch": [Function],
+      "status": "success",
+    }
+  `)
+})
 
 test('parameters: unit', async () => {
   const { result } = renderHook(() =>

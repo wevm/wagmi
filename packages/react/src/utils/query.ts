@@ -2,7 +2,7 @@ import {
   type DefaultError,
   type QueryKey,
   replaceEqualDeep,
-  useQuery as useQuery_,
+  useQuery as tanstack_useQuery,
 } from '@tanstack/react-query'
 import {
   type Evaluate,
@@ -89,7 +89,7 @@ export type UseQueryResult<
 export function useQuery<queryFnData, error, data, queryKey extends QueryKey>(
   parameters: UseQueryParameters<queryFnData, error, data, queryKey>,
 ): UseQueryResult<data, error> {
-  return useQuery_({
+  return tanstack_useQuery({
     ...(parameters as any),
     queryKeyHashFn: hashFn, // for bigint support
   }) as UseQueryResult<data, error>

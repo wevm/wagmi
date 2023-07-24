@@ -8,9 +8,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@tanstack/query-sync-storage-persister": "5.0.0-alpha.26",
-    "@tanstack/react-query": "5.0.0-alpha.26",
-    "@tanstack/react-query-persist-client": "5.0.0-alpha.26",
+    "@tanstack/query-sync-storage-persister": "5.0.0-beta.0",
+    "@tanstack/react-query": "5.0.0-beta.0",
+    "@tanstack/react-query-persist-client": "5.0.0-beta.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "viem": "^1",
@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
-    "@tanstack/react-query-devtools": "5.0.0-alpha.26",
+    "@tanstack/react-query-devtools": "5.0.0-beta.0",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^4.0.0",

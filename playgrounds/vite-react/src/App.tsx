@@ -1,4 +1,3 @@
-import { parseAbi } from 'viem'
 import {
   useAccount,
   useBalance,
@@ -6,7 +5,6 @@ import {
   useChainId,
   useConnect,
   useConnections,
-  useContractSimulate,
   useDisconnect,
   useEnsName,
   useFeeData,
@@ -14,34 +12,10 @@ import {
   useSwitchAccount,
   useSwitchChain,
 } from 'wagmi'
-import { celo, optimism } from 'wagmi/chains'
+import { optimism } from 'wagmi/chains'
 
 function App() {
   const { data, error } = useFeeData({ watch: true })
-
-  const abi = parseAbi([
-    'function allowance(address owner, address spender) view returns (uint256)',
-    'function approve(address spender, uint256 amount) returns (bool)',
-    'function transfer(address recipient, uint256 amount) returns (bool)',
-    'function transferFrom(address sender, address recipient, uint256 amount) returns (bool)',
-  ])
-  useContractSimulate({
-    abi,
-    functionName: 'transferFrom',
-    feeCurrency: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
-  })
-  useContractSimulate({
-    abi,
-    functionName: 'transferFrom',
-    chainId: celo.id,
-    feeCurrency: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
-  })
-  useContractSimulate({
-    abi,
-    functionName: 'transferFrom',
-    chainId: optimism.id,
-    feeCurrency: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
-  })
 
   return (
     <>

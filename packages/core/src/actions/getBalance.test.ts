@@ -65,7 +65,21 @@ describe('getBalance', () => {
     `)
   })
 
-  test.todo('parameters: token')
+  test('parameters: token', async () => {
+    await expect(
+      getBalance(config, {
+        address: '0x4557B18E779944BFE9d78A672452331C186a9f48',
+        token: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
+      }),
+    ).resolves.toMatchInlineSnapshot(`
+      {
+        "decimals": 18,
+        "formatted": "17019.35",
+        "symbol": "DAI",
+        "value": 17019350000000000000000n,
+      }
+    `)
+  })
 
   test('parameters: unit', async () => {
     await expect(

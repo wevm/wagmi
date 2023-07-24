@@ -1,8 +1,19 @@
-import { type Address, BaseError, RpcError, formatUnits } from 'viem'
+import {
+  type Address,
+  BaseError,
+  type Client,
+  ContractFunctionExecutionError,
+  type Hex,
+  RpcError,
+  formatUnits,
+  hexToString,
+  trim,
+} from 'viem'
 import {
   type GetBalanceParameters as viem_GetBalanceParameters,
   type GetBalanceReturnType as viem_GetBalanceReturnType,
   getBalance as viem_getBalance,
+  multicall,
   watchBlockNumber,
 } from 'viem/actions'
 
@@ -47,13 +58,35 @@ export async function getBalance<config extends Config>(
     blockNumber,
     blockTag,
     chainId,
-    token,
+    token: tokenAddress,
     unit = 'ether',
   } = parameters
   const client = config.getClient({ chainId })
 
-  if (token) {
-    // TODO
+  if (tokenAddress) {
+    try {
+      return await getTokenBalance(client, {
+        balanceAddress: address,
+        symbolType: 'string',
+        tokenAddress,
+      })
+    } catch (error) {
+      // In the chance that there is an error upon decoding the contract result,
+      // it could be likely that the contract data is represented as bytes32 instead
+      // of a string.
+      if (error instanceof ContractFunctionExecutionError) {
+        const balance = await getTokenBalance(client, {
+          balanceAddress: address,
+          symbolType: 'string',
+          tokenAddress,
+        })
+        const symbol = hexToString(
+          trim(balance.symbol as Hex, { dir: 'right' }),
+        )
+        return { ...balance, symbol }
+      }
+      throw error
+    }
   }
 
   const value = await viem_getBalance(
@@ -67,6 +100,56 @@ export async function getBalance<config extends Config>(
     symbol: chain.nativeCurrency.symbol,
     value,
   }
+}
+
+type GetTokenBalanceParameters = {
+  balanceAddress: Address
+  symbolType: 'bytes32' | 'string'
+  tokenAddress: Address
+  unit?: Unit | undefined
+}
+
+async function getTokenBalance(
+  client: Client,
+  parameters: GetTokenBalanceParameters,
+) {
+  const { balanceAddress, symbolType, tokenAddress, unit } = parameters
+  const contract = {
+    abi: [
+      {
+        type: 'function',
+        name: 'balanceOf',
+        stateMutability: 'view',
+        inputs: [{ type: 'address' }],
+        outputs: [{ type: 'uint256' }],
+      },
+      {
+        type: 'function',
+        name: 'decimals',
+        stateMutability: 'view',
+        inputs: [],
+        outputs: [{ type: 'uint8' }],
+      },
+      {
+        type: 'function',
+        name: 'symbol',
+        stateMutability: 'view',
+        inputs: [],
+        outputs: [{ type: symbolType }],
+      },
+    ],
+    address: tokenAddress,
+  } as const
+  const [value, decimals, symbol] = await multicall(client, {
+    allowFailure: false,
+    contracts: [
+      { ...contract, functionName: 'balanceOf', args: [balanceAddress] },
+      { ...contract, functionName: 'decimals' },
+      { ...contract, functionName: 'symbol' },
+    ],
+  })
+  const formatted = formatUnits(value ?? '0', getUnit(unit ?? decimals))
+  return { decimals, formatted, symbol, value }
 }
 
 ///////////////////////////////////////////////////////////////////////////
