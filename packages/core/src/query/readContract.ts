@@ -72,8 +72,8 @@ export function readContractQueryKey<
 >(options: ReadContractOptions<config, abi, functionName> = {} as any) {
   // minimze abi for query key
   const abi = ((options.abi ?? []) as Abi).filter(
-    (abiItem) => 'name' in abiItem && abiItem.name === options.functionName,
-  )
+    (x) => 'name' in x && x.name === options.functionName,
+  ) as Abi
   return ['readContract', filterQueryOptions({ ...options, abi })] as const
 }
 

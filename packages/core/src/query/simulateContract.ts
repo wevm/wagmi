@@ -86,8 +86,8 @@ export function simulateContractQueryKey<
 ) {
   // minimze abi for query key
   const abi = ((options.abi ?? []) as Abi).filter(
-    (abiItem) => 'name' in abiItem && abiItem.name === options.functionName,
-  )
+    (x) => 'name' in x && x.name === options.functionName,
+  ) as Abi
   return ['simulateContract', filterQueryOptions({ ...options, abi })] as const
 }
 

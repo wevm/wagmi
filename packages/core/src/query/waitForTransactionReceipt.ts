@@ -34,7 +34,9 @@ export function waitForTransactionReceiptQueryOptions<
         ...parameters,
         onReplaced: options.onReplaced,
         hash,
-      })
+      }) as unknown as Promise<
+        WaitForTransactionReceiptReturnType<config, chainId>
+      >
     },
     queryKey: waitForTransactionReceiptQueryKey(options),
   } as const satisfies QueryOptions<

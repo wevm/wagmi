@@ -37,7 +37,7 @@ export function getTransactionQueryOptions<
       return getTransaction(
         config,
         params as GetTransactionParameters,
-      ) as Promise<GetTransactionQueryFnData<config, chainId>>
+      ) as unknown as Promise<GetTransactionQueryFnData<config, chainId>>
     },
     queryKey: getTransactionQueryKey(options),
   } as const satisfies QueryOptions<
