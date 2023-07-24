@@ -8,13 +8,9 @@ import {
   simulateContract,
 } from '../actions/simulateContract.js'
 import type { Config } from '../config.js'
-import type { LoosePartialBy } from '../types/utils.js'
+import type { UnionPartialBy } from '../types/utils.js'
 import type { ScopeKeyParameter } from './types.js'
 import { filterQueryOptions } from './utils.js'
-
-type UnionPartialBy<T, K extends keyof any> = T extends any
-  ? LoosePartialBy<T, K extends string ? K : never>
-  : never
 
 export type SimulateContractOptions<
   config extends Config,

@@ -86,10 +86,15 @@ export async function simulateContract<
     account: parameters.account ?? connectorClient.account,
   } as viem_SimulateContractParameters)
 
+  const minimizedAbi = (parameters.abi as Abi).filter(
+    (abiItem) => 'name' in abiItem && abiItem.name === parameters.functionName,
+  )
+
   return {
     result,
     request: {
       ...request,
+      abi: minimizedAbi,
       __mode: 'prepared',
       chainId,
     },

@@ -34,9 +34,12 @@ test('exports', () => {
       "signMessageMutationOptions",
       "signTypedDataMutationOptions",
       "switchAccountMutationOptions",
+      "simulateContractQueryKey",
+      "simulateContractQueryOptions",
       "switchChainMutationOptions",
       "waitForTransactionReceiptQueryKey",
       "waitForTransactionReceiptQueryOptions",
+      "writeContractMutationOptions",
       "hashFn",
     ]
   `)

@@ -23,8 +23,8 @@ test('default', async () => {
   expect(result.current).toMatchInlineSnapshot(`
     {
       "data": {
-        "mode": "prepared",
         "request": {
+          "__mode": "prepared",
           "abi": [
             {
               "inputs": [],

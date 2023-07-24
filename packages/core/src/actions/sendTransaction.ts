@@ -9,6 +9,7 @@ import { sendTransaction as viem_sendTransaction } from 'viem/actions'
 
 import type { Config } from '../config.js'
 import { ConnectorNotFoundError } from '../errors/config.js'
+import type { SelectChains } from '../types/chain.js'
 import type { ChainIdParameter } from '../types/properties.js'
 import type { Evaluate } from '../types/utils.js'
 import { assertActiveChain } from '../utils/assertActiveChain.js'
@@ -20,9 +21,7 @@ export type SendTransactionParameters<
     | config['chains'][number]['id']
     | undefined = config['chains'][number]['id'],
   ///
-  chains extends readonly Chain[] = chainId extends config['chains'][number]['id']
-    ? [Extract<config['chains'][number], { id: chainId }>]
-    : config['chains'],
+  chains extends readonly Chain[] = SelectChains<config['chains'], chainId>,
 > = Evaluate<
   {
     [key in keyof chains]: Omit<

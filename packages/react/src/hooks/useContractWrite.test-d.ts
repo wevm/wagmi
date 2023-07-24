@@ -83,7 +83,7 @@ test('context', () => {
           __mode?: 'prepared'
           chainId?: number | undefined
           abi: typeof abi.erc20
-          functionName: 'approve' | 'transfer' | 'transferFrom' // TODO: Should be just `'transferFrom'`
+          functionName: 'approve' | 'transfer' | 'transferFrom' // TODO: Should narrow to `'transferFrom'`
           args: readonly [Address, Address, bigint]
         }>()
       },
@@ -95,7 +95,7 @@ test('context', () => {
           __mode?: 'prepared'
           chainId?: number | undefined
           abi: typeof abi.erc20
-          functionName: 'approve' | 'transfer' | 'transferFrom' // TODO: Should be just `'transferFrom'`
+          functionName: 'approve' | 'transfer' | 'transferFrom' // TODO: Should narrow to `'transferFrom'`
           args: readonly [Address, Address, bigint]
         }>()
       },
@@ -108,7 +108,7 @@ test('context', () => {
           __mode?: 'prepared'
           chainId?: number | undefined
           abi: typeof abi.erc20
-          functionName: 'approve' | 'transfer' | 'transferFrom' // TODO: Should be just `'transferFrom'`
+          functionName: 'approve' | 'transfer' | 'transferFrom' // TODO: Should narrow to `'transferFrom'`
           args: readonly [Address, Address, bigint]
         }>()
       },

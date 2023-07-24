@@ -87,3 +87,7 @@ export type LoosePartialBy<type, key extends string> = ExactPartial<
   LoosePick<type, key>
 > &
   LooseOmit<type, key>
+
+export type UnionPartialBy<T, K extends keyof any> = T extends any
+  ? LoosePartialBy<T, K extends string ? K : never>
+  : never

@@ -18,8 +18,8 @@ test('default', async () => {
     }),
   ).resolves.toMatchInlineSnapshot(`
     {
-      "mode": "prepared",
       "request": {
+        "__mode": "prepared",
         "abi": [
           {
             "inputs": [],

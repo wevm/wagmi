@@ -50,27 +50,27 @@ test('context', () => {
     },
     {
       onError(error, variables, context) {
+        expectTypeOf(error).toEqualTypeOf<SignTypedDataError>()
         expectTypeOf(variables).toMatchTypeOf<{
           types: typeof typedData.basic.types
-          primaryType: 'Person' | 'Mail'
+          primaryType: 'Person' | 'Mail' // TODO: Should narrow to `'Person'`
           message: {
             name: string
             wallet: `0x${string}`
           }
         }>()
-        expectTypeOf(error).toEqualTypeOf<SignTypedDataError>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
       },
       onSuccess(data, variables, context) {
+        expectTypeOf(data).toEqualTypeOf<SignTypedDataReturnType>()
         expectTypeOf(variables).toMatchTypeOf<{
           types: typeof typedData.basic.types
-          primaryType: 'Person' | 'Mail'
+          primaryType: 'Person' | 'Mail' // TODO: Should narrow to `'Person'`
           message: {
             name: string
             wallet: `0x${string}`
           }
         }>()
-        expectTypeOf(data).toEqualTypeOf<SignTypedDataReturnType>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
       },
       onSettled(data, error, variables, context) {
@@ -78,7 +78,7 @@ test('context', () => {
         expectTypeOf(error).toEqualTypeOf<SignTypedDataError | null>()
         expectTypeOf(variables).toMatchTypeOf<{
           types: typeof typedData.basic.types
-          primaryType: 'Person' | 'Mail'
+          primaryType: 'Person' | 'Mail' // TODO: Should narrow to `'Person'`
           message: {
             name: string
             wallet: `0x${string}`
@@ -88,83 +88,4 @@ test('context', () => {
       },
     },
   )
-
-  // signTypedData(
-  //   {
-  //     primaryType: 'EIP712Domain',
-  //     domain: {},
-  //   },
-  //   {
-  //     onError(error, variables, context) {
-  //       expectTypeOf(variables).toMatchTypeOf<{
-  //         primaryType: 'EIP712Domain'
-  //         domain: Record<string, unknown>
-  //         message?: undefined
-  //       }>()
-  //       expectTypeOf(error).toEqualTypeOf<SignTypedDataError>()
-  //       expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
-  //     },
-  //     onSuccess(data, variables, context) {
-  //       expectTypeOf(variables).toMatchTypeOf<{
-  //         primaryType: 'EIP712Domain'
-  //         domain: Record<string, unknown>
-  //         message?: undefined
-  //       }>()
-  //       expectTypeOf(data).toEqualTypeOf<SignTypedDataReturnType>()
-  //       expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
-  //     },
-  //     onSettled(data, error, variables, context) {
-  //       expectTypeOf(data).toEqualTypeOf<SignTypedDataReturnType | undefined>()
-  //       expectTypeOf(error).toEqualTypeOf<SignTypedDataError | null>()
-  //       expectTypeOf(variables).toMatchTypeOf<{
-  //         primaryType: 'EIP712Domain'
-  //         domain: Record<string, unknown>
-  //         message?: undefined
-  //       }>()
-  //       expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
-  //     },
-  //   },
-  // )
-
-  // signTypedData(
-  //   {
-  //     types: {
-  //       EIP712Domain: [{ type: 'uint256', name: 'chainId' }],
-  //     },
-  //     primaryType: 'EIP712Domain',
-  //     domain: {
-  //       chainId: 123n,
-  //     },
-  //   },
-  //   {
-  //     onError(error, variables, context) {
-  //       expectTypeOf(variables).toMatchTypeOf<{
-  //         primaryType: 'EIP712Domain'
-  //         domain: Record<string, unknown>
-  //         message?: undefined
-  //       }>()
-  //       expectTypeOf(error).toEqualTypeOf<SignTypedDataError>()
-  //       expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
-  //     },
-  //     onSuccess(data, variables, context) {
-  //       expectTypeOf(variables).toMatchTypeOf<{
-  //         primaryType: 'EIP712Domain'
-  //         domain: Record<string, unknown>
-  //         message?: undefined
-  //       }>()
-  //       expectTypeOf(data).toEqualTypeOf<SignTypedDataReturnType>()
-  //       expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
-  //     },
-  //     onSettled(data, error, variables, context) {
-  //       expectTypeOf(data).toEqualTypeOf<SignTypedDataReturnType | undefined>()
-  //       expectTypeOf(error).toEqualTypeOf<SignTypedDataError | null>()
-  //       expectTypeOf(variables).toMatchTypeOf<{
-  //         primaryType: 'EIP712Domain'
-  //         domain: Record<string, unknown>
-  //         message?: undefined
-  //       }>()
-  //       expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
-  //     },
-  //   },
-  // )
 })

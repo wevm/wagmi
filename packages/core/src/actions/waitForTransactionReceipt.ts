@@ -12,6 +12,7 @@ import {
 } from 'viem/actions'
 
 import type { Config } from '../config.js'
+import type { SelectChains } from '../types/chain.js'
 import type { ChainIdParameter } from '../types/properties.js'
 import type { Evaluate } from '../types/utils.js'
 
@@ -30,9 +31,7 @@ export type WaitForTransactionReceiptReturnType<
     | config['chains'][number]['id']
     | undefined = config['chains'][number]['id'],
   ///
-  chains extends readonly Chain[] = chainId extends config['chains'][number]['id']
-    ? [Extract<config['chains'][number], { id: chainId }>]
-    : config['chains'],
+  chains extends readonly Chain[] = SelectChains<config['chains'], chainId>,
 > = Evaluate<
   {
     [key in keyof chains]: viem_WaitForTransactionReceiptReturnType<chains[key]>
@@ -67,5 +66,8 @@ export async function waitForTransactionReceipt<
     const reason = hexToString(`0x${code.substring(138)}`)
     throw new Error(reason)
   }
-  return receipt as WaitForTransactionReceiptReturnType<config, chainId>
+  return receipt as unknown as WaitForTransactionReceiptReturnType<
+    config,
+    chainId
+  >
 }
