@@ -17,32 +17,6 @@ test('default', () => {
       "queryKey": [
         "simulateContract",
         {
-          "abi": [
-            {
-              "inputs": [
-                {
-                  "name": "sender",
-                  "type": "address",
-                },
-                {
-                  "name": "recipient",
-                  "type": "address",
-                },
-                {
-                  "name": "amount",
-                  "type": "uint256",
-                },
-              ],
-              "name": "transferFrom",
-              "outputs": [
-                {
-                  "type": "bool",
-                },
-              ],
-              "stateMutability": "nonpayable",
-              "type": "function",
-            },
-          ],
           "address": "0x",
           "args": [
             "0x",

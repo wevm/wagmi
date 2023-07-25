@@ -55,6 +55,12 @@ export {
 } from './hooks/useContractRead.js'
 
 export {
+  type UseContractReadsParameters,
+  type UseContractReadsReturnType,
+  useContractReads,
+} from './hooks/useContractReads.js'
+
+export {
   type UseContractWriteParameters,
   type UseContractWriteReturnType,
   useContractWrite,

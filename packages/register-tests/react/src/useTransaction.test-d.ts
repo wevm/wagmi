@@ -2,7 +2,7 @@ import { expectTypeOf, test } from 'vitest'
 import { useTransaction } from 'wagmi'
 import { celo } from 'wagmi/chains'
 
-test('chain formatters', async () => {
+test('chain formatters', () => {
   const result = useTransaction()
   if (result.data && 'feeCurrency' in result.data) {
     expectTypeOf(result.data.feeCurrency).toEqualTypeOf<`0x${string}` | null>()

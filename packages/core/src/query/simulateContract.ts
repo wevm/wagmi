@@ -39,7 +39,15 @@ export function simulateContractQueryOptions<
 ) {
   return {
     async queryFn({ queryKey }) {
-      return simulateContract(config, queryKey[1] as any)
+      const { abi } = options
+      if (!abi) throw new Error('abi is required')
+      const { address, ...parameters } = queryKey[1]
+      if (!address) throw new Error('address is required')
+      return simulateContract(config, {
+        abi,
+        address,
+        ...parameters,
+      } as SimulateContractParameters<config, chainId, abi, functionName>)
     },
     queryKey: simulateContractQueryKey(options),
   } as const satisfies QueryOptions<
@@ -84,11 +92,8 @@ export function simulateContractQueryKey<
     functionName
   > = {} as SimulateContractOptions<config, chainId, abi, functionName>,
 ) {
-  // minimze abi for query key
-  const abi = ((options.abi ?? []) as Abi).filter(
-    (x) => 'name' in x && x.name === options.functionName,
-  ) as Abi
-  return ['simulateContract', filterQueryOptions({ ...options, abi })] as const
+  const { abi: _, ...rest } = options
+  return ['simulateContract', filterQueryOptions(rest)] as const
 }
 
 export type SimulateContractQueryKey<

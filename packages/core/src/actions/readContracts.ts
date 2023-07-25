@@ -32,6 +32,8 @@ export type ReadContractsReturnType<
   allowFailure extends boolean = true,
 > = Evaluate<MulticallReturnType<contracts, allowFailure>>
 
+export type ReadContractsError = Error
+
 export async function readContracts<
   config extends Config,
   const contracts extends ContractFunctionConfig[],

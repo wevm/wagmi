@@ -18,6 +18,7 @@ test('exports', () => {
       "useConnect",
       "useConnections",
       "useContractRead",
+      "useContractReads",
       "useContractWrite",
       "useDisconnect",
       "useEnsAddress",

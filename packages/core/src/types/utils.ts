@@ -1,3 +1,13 @@
+export type DeepPartial<
+  T,
+  MaxDepth extends number,
+  Depth extends readonly number[] = [],
+> = Depth['length'] extends MaxDepth
+  ? T
+  : T extends object
+  ? { [P in keyof T]?: DeepPartial<T[P], MaxDepth, [...Depth, 1]> }
+  : T
+
 export type DistributedKeys<type> = type extends infer member
   ? keyof member
   : never

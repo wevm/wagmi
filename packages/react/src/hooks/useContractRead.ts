@@ -8,10 +8,10 @@ import { type Evaluate } from '@wagmi/core/internal'
 import {
   type ReadContractData,
   type ReadContractOptions,
+  type ReadContractQueryFnData,
   type ReadContractQueryKey,
   readContractQueryOptions,
 } from '@wagmi/core/query'
-import type { ReadContractQueryFnData } from '@wagmi/core/query'
 import { useEffect } from 'react'
 import type { Abi } from 'viem'
 

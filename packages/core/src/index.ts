@@ -120,6 +120,13 @@ export {
 } from './actions/readContract.js'
 
 export {
+  type ReadContractsParameters,
+  type ReadContractsReturnType,
+  type ReadContractsError,
+  readContracts,
+} from './actions/readContracts.js'
+
+export {
   type ReconnectError,
   type ReconnectParameters,
   type ReconnectReturnType,

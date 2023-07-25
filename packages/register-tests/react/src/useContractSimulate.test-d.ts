@@ -6,7 +6,7 @@ import { celo, mainnet, optimism } from 'wagmi/chains'
 
 import type { ChainId } from './config.js'
 
-test('chain formatters', async () => {
+test('chain formatters', () => {
   useContractSimulate({
     feeCurrency: '0x',
     gatewayFee: 123n,

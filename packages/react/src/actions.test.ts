@@ -21,6 +21,7 @@ test('exports', () => {
       "getTransaction": [Function],
       "prepareSendTransaction": [Function],
       "readContract": [Function],
+      "readContracts": [Function],
       "reconnect": [Function],
       "sendTransaction": [Function],
       "signMessage": [Function],

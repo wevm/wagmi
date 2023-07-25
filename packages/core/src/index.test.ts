@@ -25,6 +25,7 @@ test('exports', () => {
       "watchConnections",
       "prepareSendTransaction",
       "readContract",
+      "readContracts",
       "reconnect",
       "sendTransaction",
       "signMessage",

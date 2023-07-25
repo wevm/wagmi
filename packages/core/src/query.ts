@@ -117,6 +117,15 @@ export {
 } from './query/readContract.js'
 
 export {
+  type ReadContractsData,
+  type ReadContractsOptions,
+  type ReadContractsQueryFnData,
+  type ReadContractsQueryKey,
+  readContractsQueryKey,
+  readContractsQueryOptions,
+} from './query/readContracts.js'
+
+export {
   type ReconnectData,
   type ReconnectVariables,
   type ReconnectMutate,

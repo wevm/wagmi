@@ -29,6 +29,8 @@ test('exports', () => {
       "prepareSendTransactionQueryOptions",
       "readContractQueryKey",
       "readContractQueryOptions",
+      "readContractsQueryKey",
+      "readContractsQueryOptions",
       "reconnectMutationOptions",
       "sendTransactionMutationOptions",
       "signMessageMutationOptions",

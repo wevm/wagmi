@@ -17,24 +17,6 @@ test('default', () => {
       "queryKey": [
         "readContract",
         {
-          "abi": [
-            {
-              "inputs": [
-                {
-                  "name": "account",
-                  "type": "address",
-                },
-              ],
-              "name": "balanceOf",
-              "outputs": [
-                {
-                  "type": "uint256",
-                },
-              ],
-              "stateMutability": "view",
-              "type": "function",
-            },
-          ],
           "address": "0x",
           "args": [
             "0x",

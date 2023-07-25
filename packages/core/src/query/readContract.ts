@@ -37,8 +37,9 @@ export function readContractQueryOptions<
 ) {
   return {
     async queryFn({ queryKey }) {
-      const { abi, address, ...parameters } = queryKey[1]
+      const { abi } = options
       if (!abi) throw new Error('abi is required')
+      const { address, ...parameters } = queryKey[1]
       if (!address) throw new Error('address is required')
       return (await readContract(config, {
         abi,
@@ -70,11 +71,8 @@ export function readContractQueryKey<
   const abi extends Abi | readonly unknown[],
   functionName extends string,
 >(options: ReadContractOptions<config, abi, functionName> = {} as any) {
-  // minimze abi for query key
-  const abi = ((options.abi ?? []) as Abi).filter(
-    (x) => 'name' in x && x.name === options.functionName,
-  ) as Abi
-  return ['readContract', filterQueryOptions({ ...options, abi })] as const
+  const { abi: _, ...rest } = options
+  return ['readContract', filterQueryOptions(rest)] as const
 }
 
 export type ReadContractQueryKey<

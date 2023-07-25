@@ -24,19 +24,12 @@ export function getTransactionQueryOptions<
 >(config: Config, options: GetTransactionOptions<config, chainId> = {}) {
   return {
     async queryFn({ queryKey }) {
-      const { blockHash, blockNumber, blockTag, hash, ...parameters } =
-        queryKey[1]
+      const { blockHash, blockNumber, blockTag, hash } = queryKey[1]
       if (!blockHash && !blockNumber && !blockTag && !hash)
         throw new Error('blockHash, blockNumber, blockTag, or hash is required')
-
-      let params
-      if (blockHash) params = { ...parameters, blockHash }
-      else if (blockNumber) params = { ...parameters, blockNumber }
-      else if (blockTag) params = { ...parameters, blockTag }
-      else if (hash) params = { ...parameters, hash }
       return getTransaction(
         config,
-        params as GetTransactionParameters,
+        queryKey[1] as GetTransactionParameters,
       ) as unknown as Promise<GetTransactionQueryFnData<config, chainId>>
     },
     queryKey: getTransactionQueryKey(options),
