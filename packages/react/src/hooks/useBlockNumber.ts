@@ -14,7 +14,6 @@ import {
 } from '@wagmi/core/query'
 import { useEffect } from 'react'
 
-import type { WatchParameter } from '../types/properties.js'
 import {
   type UseQueryParameters,
   type UseQueryResult,
@@ -31,8 +30,7 @@ export type UseBlockNumberParameters<selectData = GetBlockNumberData> =
         GetBlockNumberError,
         selectData,
         GetBlockNumberQueryKey<ResolvedRegister['config']>
-      > &
-      WatchParameter
+      > & { watch?: boolean | undefined }
   >
 
 export type UseBlockNumberReturnType<selectData = GetBlockNumberData> =

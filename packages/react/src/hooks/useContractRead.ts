@@ -1,9 +1,4 @@
-import { useQueryClient } from '@tanstack/react-query'
-import {
-  type ReadContractError,
-  type ResolvedRegister,
-  watchBlockNumber,
-} from '@wagmi/core'
+import { type ReadContractError, type ResolvedRegister } from '@wagmi/core'
 import { type Evaluate } from '@wagmi/core/internal'
 import {
   type ReadContractData,
@@ -12,10 +7,8 @@ import {
   type ReadContractQueryKey,
   readContractQueryOptions,
 } from '@wagmi/core/query'
-import { useEffect } from 'react'
 import type { Abi } from 'viem'
 
-import type { WatchParameter } from '../types/properties.js'
 import {
   type UseQueryParameters,
   type UseQueryResult,
@@ -36,9 +29,7 @@ export type UseContractReadParameters<
       ReadContractError,
       selectData,
       ReadContractQueryKey<ResolvedRegister['config'], abi, functionName>
-    > &
-    WatchParameter
-  // TODO: `cacheOnBlock`?
+    >
 >
 
 export type UseContractReadReturnType<
@@ -59,9 +50,8 @@ export function useContractRead<
     selectData
   > = {} as UseContractReadParameters<abi, functionName, selectData>,
 ): UseContractReadReturnType<abi, functionName, selectData> {
-  const { address, abi, functionName, watch, ...query } = parameters
+  const { address, abi, functionName, ...query } = parameters
   const config = useConfig()
-  const queryClient = useQueryClient()
 
   const chainId = parameters.chainId ?? useChainId()
   const queryOptions = readContractQueryOptions(config, {
@@ -71,21 +61,6 @@ export function useContractRead<
   const enabled = Boolean(
     address && abi && functionName && (parameters.enabled ?? true),
   )
-
-  useEffect(() => {
-    if (!enabled) return
-    if (!watch) return
-
-    return watchBlockNumber(config, {
-      chainId,
-      onBlockNumber() {
-        queryClient.invalidateQueries({
-          queryKey: queryOptions.queryKey,
-        })
-      },
-      syncConnectedChain: false,
-    })
-  }, [chainId, config, enabled, queryClient, queryOptions, watch])
 
   return useQuery({
     ...queryOptions,

@@ -1,4 +1,4 @@
-import { accounts, chain, testClient, wait } from '@wagmi/test'
+import { accounts, chain, testClient } from '@wagmi/test'
 import { renderHook, waitFor } from '@wagmi/test/react'
 import { type Address, parseEther } from 'viem'
 import { beforeEach, expect, test } from 'vitest'
@@ -179,46 +179,6 @@ test('parameters: unit', async () => {
       "isSuccess": true,
       "refetch": [Function],
       "status": "success",
-    }
-  `)
-})
-
-test('parameters: watch', async () => {
-  const { result } = renderHook(() => useBalance({ address, watch: true }))
-
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
-  expect(result.current.data).toMatchInlineSnapshot(`
-    {
-      "decimals": 18,
-      "formatted": "10000",
-      "symbol": "ETH",
-      "value": 10000000000000000000000n,
-    }
-  `)
-
-  await testClient.mainnet.setBalance({ address, value: parseEther('69') })
-  await testClient.mainnet.mine({ blocks: 1 })
-  await wait(100)
-
-  expect(result.current.data).toMatchInlineSnapshot(`
-    {
-      "decimals": 18,
-      "formatted": "69",
-      "symbol": "ETH",
-      "value": 69000000000000000000n,
-    }
-  `)
-
-  await testClient.mainnet.setBalance({ address, value: parseEther('420') })
-  await testClient.mainnet.mine({ blocks: 1 })
-  await wait(100)
-
-  expect(result.current.data).toMatchInlineSnapshot(`
-    {
-      "decimals": 18,
-      "formatted": "420",
-      "symbol": "ETH",
-      "value": 420000000000000000000n,
     }
   `)
 })

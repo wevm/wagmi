@@ -1,9 +1,4 @@
-import { useQueryClient } from '@tanstack/react-query'
-import {
-  type ReadContractError,
-  type ResolvedRegister,
-  watchBlockNumber,
-} from '@wagmi/core'
+import { type ReadContractError, type ResolvedRegister } from '@wagmi/core'
 import { type Evaluate } from '@wagmi/core/internal'
 import {
   type ReadContractsData,
@@ -12,10 +7,9 @@ import {
   type ReadContractsQueryKey,
   readContractsQueryOptions,
 } from '@wagmi/core/query'
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 import type { ContractFunctionConfig } from 'viem'
 
-import type { WatchParameter } from '../types/properties.js'
 import {
   type UseQueryParameters,
   type UseQueryResult,
@@ -36,9 +30,7 @@ export type UseContractReadsParameters<
       ReadContractError,
       selectData,
       ReadContractsQueryKey<ResolvedRegister['config'], contracts, allowFailure>
-    > &
-    WatchParameter
-  // TODO: `cacheOnBlock`?
+    >
 >
 
 export type UseContractReadsReturnType<
@@ -59,9 +51,8 @@ export function useContractReads<
     selectData
   > = {},
 ): UseContractReadsReturnType<contracts, allowFailure, selectData> {
-  const { contracts = [], watch, ...query } = parameters
+  const { contracts = [], ...query } = parameters
   const config = useConfig()
-  const queryClient = useQueryClient()
 
   const chainId = useChainId()
   const queryOptions = readContractsQueryOptions(config, {
@@ -85,24 +76,9 @@ export function useContractReads<
     return Boolean(isContractsValid && (parameters.enabled ?? true))
   }, [contracts, parameters.enabled])
 
-  useEffect(() => {
-    if (!enabled) return
-    if (!watch) return
-
-    return watchBlockNumber(config, {
-      chainId,
-      onBlockNumber() {
-        queryClient.invalidateQueries({
-          queryKey: queryOptions.queryKey,
-        })
-      },
-      syncConnectedChain: false,
-    })
-  }, [chainId, config, enabled, queryClient, queryOptions, watch])
-
   return useQuery({
     ...queryOptions,
-    ...(query as any),
+    ...query,
     enabled,
     structuralSharing: query.structuralSharing ?? structuralSharing,
   }) as UseContractReadsReturnType<contracts, allowFailure, selectData>

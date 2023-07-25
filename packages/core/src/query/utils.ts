@@ -57,12 +57,6 @@ export function filterQueryOptions<type extends Record<string, unknown>>(
     // rome-ignore lint/correctness/noUnusedVariables: remove properties
     _optimisticResults, enabled, notifyOnChangeProps, placeholderData, refetchInterval, refetchIntervalInBackground, refetchOnMount, refetchOnReconnect, refetchOnWindowFocus, retryOnMount, select, staleTime, suspense, throwOnError,
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // wagmi
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // rome-ignore lint/correctness/noUnusedVariables: remove properties
-    watch,
-
     ...rest
   } = options
 

@@ -7,7 +7,6 @@ import {
   useConnections,
   useDisconnect,
   useEnsName,
-  useFeeData,
   useSignMessage,
   useSwitchAccount,
   useSwitchChain,
@@ -15,16 +14,8 @@ import {
 import { optimism } from 'wagmi/chains'
 
 function App() {
-  const { data, error } = useFeeData({ watch: true })
-
   return (
     <>
-      <pre>
-        {data && JSON.stringify(data.formatted, null, 2)}
-        <br />
-        {error?.message}
-      </pre>
-
       <Account />
       <Connect />
       <SwitchAccount />
@@ -176,15 +167,11 @@ function Connections() {
 function Balance() {
   const { address } = useAccount()
 
-  const { data: default_ } = useBalance({ address, watch: true })
-  const { data: account_ } = useBalance({
-    address,
-    watch: true,
-  })
+  const { data: default_ } = useBalance({ address })
+  const { data: account_ } = useBalance({ address })
   const { data: optimism_ } = useBalance({
     address,
     chainId: optimism.id,
-    watch: true,
   })
 
   return (
