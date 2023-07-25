@@ -11,9 +11,6 @@ patchedDependencies:
   '@coinbase/wallet-sdk@3.7.1':
     hash: op7zcciml3isekk3qua7ykap7a
     path: patches/@coinbase__wallet-sdk@3.7.1.patch
-  '@tanstack/react-query-persist-client@5.0.0-beta.0':
-    hash: fz4yjchkucm7zyrezrqeynwt7a
-    path: patches/@tanstack__react-query-persist-client@5.0.0-beta.0.patch
   '@walletconnect/ethereum-provider@2.8.5':
     hash: lhqt33orv5orzv4y2zybt6kffi
     path: patches/@walletconnect__ethereum-provider@2.8.5.patch
@@ -164,8 +161,8 @@ importers:
         version: 1.2.0(react@18.2.0)
     devDependencies:
       '@tanstack/react-query':
-        specifier: 5.0.0-beta.0
-        version: 5.0.0-beta.0(react-dom@18.2.0)(react@18.2.0)
+        specifier: 5.0.0-beta.2
+        version: 5.0.0-beta.2(react-dom@18.2.0)(react@18.2.0)
       '@types/react':
         specifier: ^18.2.0
         version: 18.2.0
@@ -185,8 +182,8 @@ importers:
   packages/register-tests/react:
     dependencies:
       '@tanstack/react-query':
-        specifier: 5.0.0-beta.0
-        version: 5.0.0-beta.0(react-dom@18.2.0)(react@18.2.0)
+        specifier: 5.0.0-beta.2
+        version: 5.0.0-beta.2(react-dom@18.2.0)(react@18.2.0)
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -220,8 +217,8 @@ importers:
         version: link:../core
     devDependencies:
       '@tanstack/react-query':
-        specifier: 5.0.0-beta.0
-        version: 5.0.0-beta.0(react-dom@18.2.0)(react@18.2.0)
+        specifier: 5.0.0-beta.2
+        version: 5.0.0-beta.2(react-dom@18.2.0)(react@18.2.0)
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -272,11 +269,11 @@ importers:
         specifier: 5.0.0-beta.0
         version: 5.0.0-beta.0
       '@tanstack/react-query':
-        specifier: 5.0.0-beta.0
-        version: 5.0.0-beta.0(react-dom@18.2.0)(react@18.2.0)
+        specifier: 5.0.0-beta.2
+        version: 5.0.0-beta.2(react-dom@18.2.0)(react@18.2.0)
       '@tanstack/react-query-persist-client':
-        specifier: 5.0.0-beta.0
-        version: 5.0.0-beta.0(patch_hash=fz4yjchkucm7zyrezrqeynwt7a)(@tanstack/react-query@5.0.0-beta.0)
+        specifier: 5.0.0-beta.3
+        version: 5.0.0-beta.3(@tanstack/react-query@5.0.0-beta.2)(react-dom@18.2.0)(react@18.2.0)
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -294,8 +291,8 @@ importers:
         specifier: ^0.2.3
         version: 0.2.3
       '@tanstack/react-query-devtools':
-        specifier: 5.0.0-beta.0
-        version: 5.0.0-beta.0(@tanstack/react-query@5.0.0-beta.0)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 5.0.0-beta.2
+        version: 5.0.0-beta.2(@tanstack/react-query@5.0.0-beta.2)(react-dom@18.2.0)(react@18.2.0)
       '@types/react':
         specifier: ^18.0.28
         version: 18.2.0
@@ -1695,8 +1692,8 @@ packages:
   /@tanstack/query-core@5.0.0-beta.0:
     resolution: {integrity: sha512-VGq/H3PuRoj0shOcg1S5Flv3YD2qNz2ttk8w5xe5AHQE1I8NO9EHSBUxezIpk4dD6M7bQDtwHBMqqU2EwMwyUw==}
 
-  /@tanstack/query-devtools@5.0.0-beta.0:
-    resolution: {integrity: sha512-4K/F6Gey/xPvlMz/22nUC/6Nag4hm9C1S5RaaJuItNJuoC0ZVi8R3bBUPUoWZCtcPrcVMH5mxT7CC1O6TbJXzA==}
+  /@tanstack/query-devtools@5.0.0-beta.1:
+    resolution: {integrity: sha512-n+UFgL4C/OWNpmVR8v/cj4WIMw5xapGLsZS0qHXgGrpXqNTp2IPWzeU848KHpL7BqBQZeuKDj20BuID+1FsmgA==}
     dev: true
 
   /@tanstack/query-persist-client-core@5.0.0-beta.0:
@@ -1712,34 +1709,40 @@ packages:
       '@tanstack/query-persist-client-core': 5.0.0-beta.0
     dev: false
 
-  /@tanstack/react-query-devtools@5.0.0-beta.0(@tanstack/react-query@5.0.0-beta.0)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-5+voSk7ESr1Aj3QkIFQ9sj6yXOlOWgnF/fZoWlINRuIcH2A6XESBMgrQw+OaES7o6Lxs/dx3i3/OSNiBeIIBPA==}
+  /@tanstack/react-query-devtools@5.0.0-beta.2(@tanstack/react-query@5.0.0-beta.2)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-K/fO3XOPaVzIhgJL3PKU7trKC3NrRL1OVlGucjEkibFsR0G44IKRg9hLmo6Qu21pcYvgcl0/hshtKy2clfHRwQ==}
     peerDependencies:
-      '@tanstack/react-query': 5.0.0-beta.0
+      '@tanstack/react-query': 5.0.0-beta.2
       react: ^18.0.0
       react-dom: ^18.0.0
     peerDependenciesMeta:
       react:
         optional: true
     dependencies:
-      '@tanstack/query-devtools': 5.0.0-beta.0
-      '@tanstack/react-query': 5.0.0-beta.0(react-dom@18.2.0)(react@18.2.0)
+      '@tanstack/query-devtools': 5.0.0-beta.1
+      '@tanstack/react-query': 5.0.0-beta.2(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: true
 
-  /@tanstack/react-query-persist-client@5.0.0-beta.0(patch_hash=fz4yjchkucm7zyrezrqeynwt7a)(@tanstack/react-query@5.0.0-beta.0):
-    resolution: {integrity: sha512-k6nbaBzuj9X+M/5xfN2ujcz3H4yoBtTFeXIFIXJ6AHQz0C1O8ETtUO7rcvLW6OuPcjNMPiQ7Gl2OaG4IyuiimQ==}
+  /@tanstack/react-query-persist-client@5.0.0-beta.3(@tanstack/react-query@5.0.0-beta.2)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-6yPpHU0WPoAyGpPHnoeFDjJmjd8PdqMVlQg+rFAjf+zxUybyz9P3I6iMqqAkG3XjmQAp61hLJvtvwt5YiZOGiA==}
     peerDependencies:
-      '@tanstack/react-query': 5.0.0-beta.0
+      '@tanstack/react-query': 5.0.0-beta.2
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    peerDependenciesMeta:
+      react:
+        optional: true
     dependencies:
       '@tanstack/query-persist-client-core': 5.0.0-beta.0
-      '@tanstack/react-query': 5.0.0-beta.0(react-dom@18.2.0)(react@18.2.0)
+      '@tanstack/react-query': 5.0.0-beta.2(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
-    patched: true
 
-  /@tanstack/react-query@5.0.0-beta.0(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-BoUlk3nxSih79xLpF/ilqvZtYB775F6LsNjUGFqmeVsEv4QbfyPy3SEOgou8O9ea0WzjvDXiMmP8ac4BZkrNRg==}
+  /@tanstack/react-query@5.0.0-beta.2(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-JdK1HRw20tuwg3GfT3QZTkuS7s2KDa9FeozuJ7jZULlwPczZagouqYmM6+PL0ad6jfCnw8NzmLFtZdlBx6cTmA==}
     peerDependencies:
       react: ^18.0.0
       react-dom: ^18.0.0
