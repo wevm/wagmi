@@ -182,6 +182,25 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
 
+  packages/register-tests/react:
+    dependencies:
+      '@tanstack/react-query':
+        specifier: 5.0.0-beta.0
+        version: 5.0.0-beta.0(react-dom@18.2.0)(react@18.2.0)
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      viem:
+        specifier: 0.0.0-w-20230720223152
+        version: 0.0.0-w-20230720223152(typescript@5.0.4)
+      wagmi:
+        specifier: workspace:*
+        version: link:../../react
+    devDependencies:
+      '@types/react':
+        specifier: ^18.0.28
+        version: 18.2.0
+
   packages/test:
     dependencies:
       '@testing-library/react':

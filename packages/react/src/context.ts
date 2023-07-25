@@ -1,4 +1,4 @@
-import { type Config, type ResolvedRegister, reconnect } from '@wagmi/core'
+import { type ResolvedRegister, reconnect } from '@wagmi/core'
 import { type OneOf } from '@wagmi/core/internal'
 import { createContext, createElement, useEffect } from 'react'
 
@@ -9,21 +9,21 @@ export const WagmiContext = createContext<
 export type WagmiConfigProps = OneOf<
   | {
       /** @deprecated Use `value` instead */
-      config: Config
+      config: ResolvedRegister['config']
     }
-  | { value: Config }
+  | { value: ResolvedRegister['config'] }
 >
 
-export function WagmiConfig({
-  children,
-  ...props
-}: React.PropsWithChildren<WagmiConfigProps>) {
-  const value = props.config ?? props.value
+export function WagmiConfig(
+  parameters: React.PropsWithChildren<WagmiConfigProps>,
+) {
+  const { children, value = parameters.config! } = parameters
   // rome-ignore lint/nursery/useExhaustiveDependencies: only run on mount
   useEffect(() => {
     if (typeof window !== 'undefined' && value._internal.reconnectOnMount)
       reconnect(value)
   }, [])
 
-  return createElement(WagmiContext.Provider, { value }, children)
+  const props = { value }
+  return createElement(WagmiContext.Provider, props, children)
 }

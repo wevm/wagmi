@@ -38,7 +38,10 @@ export function usePrepareSendTransaction<
   chainId extends ChainId | undefined = undefined,
   selectData = PrepareSendTransactionData<ResolvedRegister['config'], chainId>,
 >(
-  parameters: UsePrepareSendTransactionParameters<chainId, selectData> = {},
+  parameters: UsePrepareSendTransactionParameters<
+    chainId,
+    selectData
+  > = {} as UsePrepareSendTransactionParameters<chainId, selectData>,
 ): UsePrepareSendTransactionReturnType<chainId, selectData> {
   const config = useConfig()
 

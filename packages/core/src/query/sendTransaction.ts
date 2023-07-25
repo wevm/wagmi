@@ -34,14 +34,7 @@ export type SendTransactionVariables<
 export type SendTransactionMutate<config extends Config, context = unknown> = <
   chainId extends config['chains'][number]['id'] | undefined,
 >(
-  variables: Evaluate<
-    SendTransactionVariables<
-      config,
-      number extends config['chains'][number]['id']
-        ? config['chains'][number]['id']
-        : chainId
-    >
-  >,
+  variables: SendTransactionVariables<config, chainId>,
   options?: Evaluate<
     MutateOptions<
       SendTransactionData,
@@ -56,14 +49,7 @@ export type SendTransactionMutateAsync<
   config extends Config,
   context = unknown,
 > = <chainId extends config['chains'][number]['id'] | undefined>(
-  variables: Evaluate<
-    SendTransactionVariables<
-      config,
-      number extends config['chains'][number]['id']
-        ? config['chains'][number]['id']
-        : chainId
-    >
-  >,
+  variables: SendTransactionVariables<config, chainId>,
   options?: Evaluate<
     MutateOptions<
       SendTransactionData,

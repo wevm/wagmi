@@ -22,18 +22,18 @@ export type SendTransactionParameters<
     | undefined = config['chains'][number]['id'],
   ///
   chains extends readonly Chain[] = SelectChains<config['chains'], chainId>,
-> = Evaluate<
-  {
-    [key in keyof chains]: Omit<
+> = {
+  [key in keyof chains]: Evaluate<
+    Omit<
       viem_SendTransactionParameters<chains[key], Account>,
       'account' | 'chain'
-    >
-  }[number]
-> &
-  Evaluate<ChainIdParameter<config, chainId>> & {
-    mode?: 'prepared'
-    to: Address
-  }
+    > &
+      ChainIdParameter<config, chainId> & {
+        mode?: 'prepared'
+        to: Address
+      }
+  >
+}[number]
 
 // TODO(major): Just return the hash (not inside object)
 export type SendTransactionReturnType = {

@@ -1,4 +1,5 @@
 import { abi } from '@wagmi/test'
+import type { Address } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
 import {
@@ -6,7 +7,6 @@ import {
   type UseContractReadReturnType,
   useContractRead,
 } from './useContractRead.js'
-import type { Address } from 'viem'
 
 test('select data', async () => {
   const result = useContractRead({
