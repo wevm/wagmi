@@ -176,6 +176,12 @@ export {
 } from './actions/switchChain.js'
 
 export {
+  type WatchPendingTransactionsParameters,
+  type WatchPendingTransactionsReturnType,
+  watchPendingTransactions,
+} from './actions/watchPendingTransactions.js'
+
+export {
   type WaitForTransactionReceiptError,
   type WaitForTransactionReceiptParameters,
   type WaitForTransactionReceiptReturnType,

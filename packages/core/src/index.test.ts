@@ -33,6 +33,7 @@ test('exports', () => {
       "simulateContract",
       "switchAccount",
       "switchChain",
+      "watchPendingTransactions",
       "waitForTransactionReceipt",
       "writeContract",
       "createConfig",
