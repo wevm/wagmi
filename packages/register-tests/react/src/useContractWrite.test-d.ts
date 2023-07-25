@@ -1,18 +1,26 @@
+import { abi } from '@wagmi/test'
 import { expectTypeOf, test } from 'vitest'
-import { useSendTransaction } from 'wagmi'
+import { useContractWrite } from 'wagmi'
 import { celo, mainnet, optimism } from 'wagmi/chains'
 
 test('chain formatters', () => {
-  const { sendTransaction } = useSendTransaction()
+  const { write } = useContractWrite()
 
-  sendTransaction({
-    to: '0x',
+  const shared = {
+    address: '0x',
+    abi: abi.erc20,
+    functionName: 'transferFrom',
+    args: ['0x', '0x', 123n],
+  } as const
+
+  write({
+    ...shared,
     feeCurrency: '0x',
-    gatewayFee: 123n,
-    gatewayFeeRecipient: '0x',
   })
 
-  type Result = Parameters<typeof sendTransaction<typeof celo.id>>[0]
+  type Result = Parameters<
+    typeof write<typeof celo.id, typeof abi.erc20, 'transferFrom'>
+  >[0]
   expectTypeOf<Result['feeCurrency']>().toEqualTypeOf<
     `0x${string}` | undefined
   >()
@@ -20,26 +28,26 @@ test('chain formatters', () => {
   expectTypeOf<Result['gatewayFeeRecipient']>().toEqualTypeOf<
     `0x${string}` | undefined
   >()
-  sendTransaction({
+  write({
+    ...shared,
     chainId: celo.id,
-    to: '0x',
     feeCurrency: '0x',
     gatewayFee: 123n,
     gatewayFeeRecipient: '0x',
   })
 
-  sendTransaction({
+  write({
+    ...shared,
     chainId: mainnet.id,
-    to: '0x',
     // @ts-expect-error
     feeCurrency: '0x',
     gatewayFee: 123n,
     gatewayFeeRecipient: '0x',
   })
 
-  sendTransaction({
+  write({
+    ...shared,
     chainId: optimism.id,
-    to: '0x',
     // @ts-expect-error
     feeCurrency: '0x',
     gatewayFee: 123n,
