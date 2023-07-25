@@ -5,7 +5,7 @@ overrides:
   '@wagmi/core': workspace:*
   remark-shiki-twoslash>shiki: ^0.14.1
   shiki-twoslash>shiki: ^0.14.1
-  viem: 0.0.0-w-20230720223152
+  viem: 0.0.0-w-20230725184008
 
 patchedDependencies:
   '@coinbase/wallet-sdk@3.7.1':
@@ -74,8 +74,8 @@ importers:
         specifier: ^5.0.4
         version: 5.0.4
       viem:
-        specifier: 0.0.0-w-20230720223152
-        version: 0.0.0-w-20230720223152(typescript@5.0.4)
+        specifier: 0.0.0-w-20230725184008
+        version: 0.0.0-w-20230725184008(typescript@5.0.4)
       vite:
         specifier: ^4.3.2
         version: 4.3.2(@types/node@18.16.9)
@@ -101,8 +101,8 @@ importers:
         specifier: ^0.53.0
         version: 0.53.0(vite@4.3.2)
       viem:
-        specifier: 0.0.0-w-20230720223152
-        version: 0.0.0-w-20230720223152(typescript@5.0.4)
+        specifier: 0.0.0-w-20230725184008
+        version: 0.0.0-w-20230725184008(typescript@5.0.4)
       vitepress:
         specifier: 1.0.0-beta.1
         version: 1.0.0-beta.1(patch_hash=owdx3pggad6ualcvbffniyfaw4)(@types/node@18.16.9)
@@ -148,6 +148,10 @@ importers:
         specifier: 5.0.0-beta.0
         version: 5.0.0-beta.0
 
+  packages/core/dist/cjs: {}
+
+  packages/core/dist/esm: {}
+
   packages/react:
     dependencies:
       '@wagmi/connectors':
@@ -188,8 +192,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0
       viem:
-        specifier: 0.0.0-w-20230720223152
-        version: 0.0.0-w-20230720223152(typescript@5.0.4)
+        specifier: 0.0.0-w-20230725184008
+        version: 0.0.0-w-20230725184008(typescript@5.0.4)
       wagmi:
         specifier: workspace:*
         version: link:../../react
@@ -244,8 +248,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       viem:
-        specifier: 0.0.0-w-20230720223152
-        version: 0.0.0-w-20230720223152(typescript@5.0.4)
+        specifier: 0.0.0-w-20230725184008
+        version: 0.0.0-w-20230725184008(typescript@5.0.4)
     devDependencies:
       '@esbuild-plugins/node-globals-polyfill':
         specifier: ^0.2.3
@@ -281,8 +285,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       viem:
-        specifier: 0.0.0-w-20230720223152
-        version: 0.0.0-w-20230720223152(typescript@5.0.4)
+        specifier: 0.0.0-w-20230725184008
+        version: 0.0.0-w-20230725184008(typescript@5.0.4)
       wagmi:
         specifier: workspace:*
         version: link:../../packages/react
@@ -6574,8 +6578,8 @@ packages:
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
 
-  /viem@0.0.0-w-20230720223152(typescript@5.0.4):
-    resolution: {integrity: sha512-I61m08IaB9d69TWl1cRTqvQDQd9BukzpS50KV7HSlot5E0loi/qs52M1AO9dF41SlynJkI4oLh8UXZL9W84jgw==}
+  /viem@0.0.0-w-20230725184008(typescript@5.0.4):
+    resolution: {integrity: sha512-AbnQYvibopgQPGD0fHzLz2xuP0vyXExWCLFaf4WZx+hX9eP5JqiN77L5MUxacvxUuoxjg6ecwNcV+AwJgGLqEA==}
     peerDependencies:
       typescript: '>=5.0.4'
     peerDependenciesMeta:
