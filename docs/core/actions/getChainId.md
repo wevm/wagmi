@@ -17,7 +17,7 @@ import { config } from './config'
 
 const chainId = getChainId(config)
 ```
-<<< snippets/core/config.ts[config.ts]
+<<< @/snippets/core/config.ts[config.ts]
 :::
 
 ## Return Type
@@ -52,7 +52,7 @@ const unwatch = watchChainId(config, {
 })
 unwatch()
 ```
-<<< snippets/core/config.ts[config.ts]
+<<< @/snippets/core/config.ts[config.ts]
 :::
 
 ### Parameters
@@ -79,7 +79,7 @@ const unwatch = watchChainId(config, {
 })
 unwatch()
 ```
-<<< snippets/core/config.ts[config.ts]
+<<< @/snippets/core/config.ts[config.ts]
 :::
 
 ### Return Type

@@ -15,7 +15,7 @@ import { getBlockNumber } from '@wagmi/core'
 import { getBlockNumber } from '@wagmi/core'
 import { config } from './config'
 ```
-<<< snippets/core/config.ts[config.ts]
+<<< @/snippets/core/config.ts[config.ts]
 :::
 
 ## Parameters
@@ -51,7 +51,7 @@ import { watchBlockNumber } from '@wagmi/core'
 import { watchBlockNumber } from '@wagmi/core'
 import { config } from './config'
 ```
-<<< snippets/core/config.ts[config.ts]
+<<< @/snippets/core/config.ts[config.ts]
 :::
 
 ### Parameters

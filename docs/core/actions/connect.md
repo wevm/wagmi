@@ -21,7 +21,7 @@ const result = await connect(
   { connector: injected() },
 )
 ```
-<<< snippets/core/config.ts[config.ts]
+<<< @/snippets/core/config.ts[config.ts]
 :::
 
 ## Parameters
@@ -53,7 +53,7 @@ const result = await connect(
   },
 )
 ```
-<<< snippets/core/config.ts[config.ts]
+<<< @/snippets/core/config.ts[config.ts]
 :::
 
 ### connector
@@ -75,7 +75,7 @@ const result = await connect(
   },
 )
 ```
-<<< snippets/core/config.ts[config.ts]
+<<< @/snippets/core/config.ts[config.ts]
 :::
 
 ## Return Type

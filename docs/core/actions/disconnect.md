@@ -17,7 +17,7 @@ import { config } from './config'
 
 await disconnect(config)
 ```
-<<< snippets/core/config.ts[config.ts]
+<<< @/snippets/core/config.ts[config.ts]
 :::
 
 ## Parameters
@@ -45,7 +45,7 @@ const result = await disconnect(
   },
 )
 ```
-<<< snippets/core/config.ts[config.ts]
+<<< @/snippets/core/config.ts[config.ts]
 :::
 
 ## Error

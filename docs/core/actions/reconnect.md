@@ -21,7 +21,7 @@ const result = await reconnect(
   { connectors: [injected()] },
 )
 ```
-<<< snippets/core/config.ts[config.ts]
+<<< @/snippets/core/config.ts[config.ts]
 :::
 
 ## Parameters
@@ -50,7 +50,7 @@ const result = await reconnect(
   },
 )
 ```
-<<< snippets/core/config.ts[config.ts]
+<<< @/snippets/core/config.ts[config.ts]
 :::
 
 ## Return Type

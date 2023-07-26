@@ -15,7 +15,7 @@ import { getBalance } from '@wagmi/core'
 import { getBalance } from '@wagmi/core'
 import { config } from './config'
 ```
-<<< snippets/core/config.ts[config.ts]
+<<< @/snippets/core/config.ts[config.ts]
 :::
 
 ## Parameters
@@ -51,7 +51,7 @@ import { watchBalance } from '@wagmi/core'
 import { watchBalance } from '@wagmi/core'
 import { config } from './config'
 ```
-<<< snippets/core/config.ts[config.ts]
+<<< @/snippets/core/config.ts[config.ts]
 :::
 
 ### Parameters

@@ -156,7 +156,7 @@ function getSidebar() {
         items: [
           { text: 'Why Wagmi 🚧', link: '/react/why-wagmi' },
           { text: 'Getting Started', link: '/react/getting-started' },
-          { text: 'TypeScript 🚧', link: '/react/typescript' },
+          { text: 'TypeScript', link: '/react/typescript' },
           { text: 'Comparisons 🚧', link: '/react/comparison' },
         ],
       },
@@ -310,7 +310,7 @@ function getSidebar() {
         items: [
           { text: 'Why Wagmi 🚧', link: '/core/why-wagmi' },
           { text: 'Getting Started', link: '/core/getting-started' },
-          { text: 'TypeScript 🚧', link: '/core/typescript' },
+          { text: 'TypeScript', link: '/core/typescript' },
         ],
       },
       {

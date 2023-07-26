@@ -8,7 +8,7 @@ const typescriptVersion = packageJson.peerDependencies.typescript
 
 ## Requirements
 
-wagmi is designed to be as type-safe as possible! Things to keep in mind:
+Wagmi is designed to be as type-safe as possible! Things to keep in mind:
 
 - Types currently require using TypeScript {{typescriptVersion}}.
 - Changes to types in this repository are considered non-breaking and are usually released as patch semver changes (otherwise every type enhancement would be a major version!).
@@ -101,7 +101,7 @@ Here's what [`useContractRead`](/react/hooks/useContractRead) looks like with an
 
 ::: code-group
 ```ts twoslash [Const-Asserted]
-export const erc721Abi = [
+const erc721Abi = [
   {
     name: 'balanceOf',
     type: 'function',
@@ -156,7 +156,7 @@ data
 // ^?
 ```
 ```ts twoslash [Not Const-Asserted]
-export declare const erc721Abi: {
+declare const erc721Abi: {
   name: string;
   type: string;
   stateMutability: string;
@@ -188,48 +188,6 @@ You can prevent runtime errors and be more productive by making sure your ABIs a
 
 ```ts twoslash
 // @errors: 2322
-/// <reference types="viem" />
-export const erc721Abi = [
-  {
-    name: 'balanceOf',
-    type: 'function',
-    stateMutability: 'view',
-    inputs: [{ type: 'address', name: 'owner' }],
-    outputs: [{ type: 'uint256' }],
-  },
-  {
-    name: 'isApprovedForAll',
-    type: 'function',
-    stateMutability: 'view',
-    inputs: [
-      { type: 'address', name: 'owner' },
-      { type: 'address', name: 'operator' },
-    ],
-    outputs: [{ type: 'bool' }],
-  },
-  {
-    name: 'getApproved',
-    type: 'function',
-    stateMutability: 'view',
-    inputs: [{ type: 'uint256', name: 'tokenId' }],
-    outputs: [{ type: 'address' }],
-  },
-  {
-    name: 'ownerOf',
-    type: 'function',
-    stateMutability: 'view',
-    inputs: [{ type: 'uint256', name: 'tokenId' }],
-    outputs: [{ type: 'address' }],
-  },
-  {
-    name: 'tokenURI',
-    type: 'function',
-    stateMutability: 'pure',
-    inputs: [{ type: 'uint256', name: 'tokenId' }],
-    outputs: [{ type: 'string' }],
-  },
-] as const
-// ---cut---
 import { useContractRead } from 'wagmi'
 
 useContractRead({ functionName: 'balanecOf' })
@@ -237,4 +195,4 @@ useContractRead({ functionName: 'balanecOf' })
 
 ## Configure Internal Types
 
-For advanced use-cases, you may want to configure wagmi's internal types. Most of wagmi's types relating to ABIs and EIP-712 Typed Data are powered by [ABIType](https://github.com/wagmi-dev/abitype). See the [ABIType docs](https://abitype.dev) for more info on how to configure types.
+For advanced use-cases, you may want to configure Wagmi's internal types. Most of Wagmi's types relating to ABIs and EIP-712 Typed Data are powered by [ABIType](https://github.com/wagmi-dev/abitype). See the [ABIType docs](https://abitype.dev) for more info on how to configure types.

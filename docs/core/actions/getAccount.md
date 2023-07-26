@@ -17,7 +17,7 @@ import { config } from './config'
 
 const account = getAccount(config)
 ```
-<<< snippets/core/config.ts[config.ts]
+<<< @/snippets/core/config.ts[config.ts]
 :::
 
 ## Return Type
@@ -52,7 +52,7 @@ const unwatch = watchAccount(config, {
 })
 unwatch()
 ```
-<<< snippets/core/config.ts[config.ts]
+<<< @/snippets/core/config.ts[config.ts]
 :::
 
 ### Parameters
@@ -79,7 +79,7 @@ const unwatch = watchAccount(config, {
 })
 unwatch()
 ```
-<<< snippets/core/config.ts[config.ts]
+<<< @/snippets/core/config.ts[config.ts]
 :::
 
 ### Return Type

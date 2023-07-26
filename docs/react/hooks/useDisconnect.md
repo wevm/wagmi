@@ -32,7 +32,7 @@ function App() {
   )
 }
 ```
-<<< snippets/react/config.ts[config.ts]
+<<< @/snippets/react/config.ts[config.ts]
 :::
 
 ## Parameters
@@ -66,7 +66,7 @@ function App() {
   )
 }
 ```
-<<< snippets/react/config.ts[config.ts]
+<<< @/snippets/react/config.ts[config.ts]
 :::
 
 ### mutation

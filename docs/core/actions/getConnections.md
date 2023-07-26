@@ -17,7 +17,7 @@ import { config } from './config'
 
 const connections = getConnections(config)
 ```
-<<< snippets/core/config.ts[config.ts]
+<<< @/snippets/core/config.ts[config.ts]
 :::
 
 ## Return Type
@@ -52,7 +52,7 @@ const unwatch = watchConnections(config, {
 })
 unwatch()
 ```
-<<< snippets/core/config.ts[config.ts]
+<<< @/snippets/core/config.ts[config.ts]
 :::
 
 ### Parameters
@@ -79,7 +79,7 @@ const unwatch = watchConnections(config, {
 })
 unwatch()
 ```
-<<< snippets/core/config.ts[config.ts]
+<<< @/snippets/core/config.ts[config.ts]
 :::
 
 ### Return Type

@@ -21,7 +21,7 @@ const result = await switchAccount(
   { connector: injected() },
 )
 ```
-<<< snippets/core/config.ts[config.ts]
+<<< @/snippets/core/config.ts[config.ts]
 :::
 
 ## Parameters
@@ -49,7 +49,7 @@ const result = await switchAccount(
   },
 )
 ```
-<<< snippets/core/config.ts[config.ts]
+<<< @/snippets/core/config.ts[config.ts]
 :::
 
 ## Error
