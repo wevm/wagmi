@@ -2,77 +2,66 @@
 
 ## Automatic Installation
 
-It is recommended to set up your wagmi app using the `create-wagmi` command line interface (CLI). This will set up a new wagmi app using TypeScript and install the required dependencies:
+For new projects, it is recommended to set up your wagmi app using the `create-wagmi` command line interface (CLI). This will create a new wagmi project using TypeScript and install the required dependencies.
 
 ::: code-group
-```sh [pnpm]
+```bash [pnpm]
 pnpm create wagmi
 ```
 
-```sh [npm]
+```bash [npm]
 npm init wagmi
 ```
 
-```sh [yarn]
+```bash [yarn]
 yarn create wagmi
 ```
 :::
 
-On installation, you'll see the following prompts:
+Once the command runs, you'll see the following prompts.
 
 ```
 What is your project named? my-app
 What framework would you like to use? Next.js / Vite (React)
 ```
 
-After the prompts, `create-wagmi` will create a folder with your project name and install the required dependencies.
+After the prompts, `create-wagmi` will create a directory with your project name and install the required dependencies. Check out the `README.md` for further instructions.
 
 ## Manual Installation
 
-To manually add wagmi to your project, install the required packages:
+To manually add wagmi to your project, install the required packages.
 
 ::: code-group
-```sh [pnpm]
+```bash [pnpm]
 pnpm add wagmi viem @tanstack/react-query
 ```
 
-```sh [npm]
+```bash [npm]
 npm install wagmi viem @tanstack/react-query
 ```
 
-```sh [yarn]
+```bash [yarn]
 yarn add wagmi viem @tanstack/react-query
 ```
 :::
 
 - [Viem](https://viem.sh) is a TypeScript interface for Ethereum that performs blockchain operations.
-- [Tanstack Query](https://tanstack.com/query/latest) is an async state manager that handles requests, caching, and more.
+- [TanStack Query](https://tanstack.com/query/latest) is an async state manager that handles requests, caching, and more.
 - [TypeScript](/react/typescript) is optional, but highly recommended. Learn more about [TypeScript Support](/react/typescript).
 
 ### Create Config
 
-Create and export a new wagmi config using [`createConfig`](/react/createConfig).
+Create and export a new wagmi config using `createConfig`.
 
 ::: code-group
-```ts [wagmi.ts]
-import { createConfig, http } from 'wagmi'
-import { mainnet, sepolia } from 'wagmi/chains'
-import { injected } from 'wagmi/connectors'
-
-export const config = createConfig({
-  chains: [mainnet, sepolia],
-  connectors: [injected()],
-  transports: {
-    [mainnet.id]: http(),
-    [sepolia.id]: http(),
-  },
-})
-```
+<<< @/snippets/react/config.ts[config.ts]
 :::
 
-TBD - explain above
+In this example, wagmi is configured to use the Mainnet and Sepolia chains, and `injected` connector. Check out the [`createConfig` docs](/react/createConfig) for more configuration options.
 
-If you are using [TypeScript](/react/typescript), you can "register" the wagmi `config` to get strong type-safety and inference across React Context in places that wouldn't normally have type info.
+---
+
+If you are using [TypeScript](/react/typescript), you can "register" the wagmi `config` to get strong type-safety across React Context in places that wouldn't normally have type info.
 
 ```ts
 declare module 'wagmi' {
@@ -83,7 +72,7 @@ declare module 'wagmi' {
 ```
 
 ```ts twoslash
-// @errors: 2322
+// @errors: 2322 2304
 import { type Config } from 'wagmi'
 import { mainnet, sepolia } from 'wagmi/chains'
 
@@ -98,82 +87,60 @@ import { useBlockNumber } from 'wagmi'
 useBlockNumber({ chainId: 123 })
 ```
 
+By registering the `config`, `useBlockNumber`'s `chainId` is strongly typed to only allow Mainnet and Sepolia IDs.
+
 ### Wrap App in Context Provider
 
-Wrap your app in the `WagmiConfig` context provider and pass the `config`:
+Wrap your app in the `WagmiConfig` React Context Provider and pass the `config` you created earlier to the `value` property.
 
 ::: code-group
 ```tsx [app.tsx]
+import { WagmiConfig } from 'wagmi' // [!code focus]
+import { config } from './config' // [!code focus]
+
+function App() {
+  return (
+    <WagmiConfig value={config}> // [!code focus]
+      {/** Your App */} // [!code focus]
+    </WagmiConfig> // [!code focus]
+  )
+}
+```
+<<< @/snippets/react/config.ts[config.ts]
+:::
+
+Check out the [`WagmiConfig` docs](/react/WagmiConfig) to learn more about React Context in wagmi.
+
+### Setup TanStack Query
+
+Inside the `WagmiConfig`, wrap your app in a TanStack Query React Context Provider, e.g. `QueryClientProvider`, and pass a new `QueryClient` instance to the `client` property.
+
+::: code-group
+```tsx [app.tsx]
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query' // [!code focus]
 import { WagmiConfig } from 'wagmi'
-import { config } from './wagmi'
+import { config } from './config'
+
+const queryClient = new QueryClient() // [!code focus]
 
 function App() {
   return (
     <WagmiConfig value={config}>
-      {/** Your App */}
+      <QueryClientProvider client={queryClient}> // [!code focus]
+        {/** Your App */} // [!code focus]
+      </QueryClientProvider> // [!code focus]
     </WagmiConfig>
   )
 }
 ```
-```ts [wagmi.ts]
-import { createConfig, http } from 'wagmi'
-import { mainnet, sepolia } from 'wagmi/chains'
-import { injected } from 'wagmi/connectors'
-
-export const config = createConfig({
-  chains: [mainnet, sepolia],
-  connectors: [injected()],
-  transports: {
-    [mainnet.id]: http(),
-    [sepolia.id]: http(),
-  },
-})
-```
+<<< @/snippets/react/config.ts[config.ts]
 :::
 
-TBD
-
-### Setup Tanstack Query
-
-https://tanstack.com/query/v5/docs/react/quick-start
-
-::: code-group
-```tsx [app.tsx]
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { WagmiConfig } from 'wagmi'
-import { config } from './wagmi'
-
-const queryClient = new QueryClient()
-
-function App() {
-  return (
-    <WagmiConfig value={config}>
-      <QueryClientProvider client={queryClient}>
-        {/** Your App */}
-      </QueryClientProvider>
-    </WagmiConfig>
-  )
-}
-```
-```ts [wagmi.ts]
-import { createConfig, http } from 'wagmi'
-import { mainnet, sepolia } from 'wagmi/chains'
-import { injected } from 'wagmi/connectors'
-
-export const config = createConfig({
-  chains: [mainnet, sepolia],
-  connectors: [injected()],
-  transports: {
-    [mainnet.id]: http(),
-    [sepolia.id]: http(),
-  },
-})
-```
-:::
+Check out the [TanStack Query docs](https://tanstack.com/query/v5/docs/react) to learn more about the library, APIs, and more.
 
 ### Use Wagmi
 
-TBD
+Now that everything is set up, every component inside the wagmi and TanStack Query Providers can use wagmi React Hooks.
 
 ::: code-group
 ```tsx [profile.tsx]
@@ -181,13 +148,17 @@ import { useAccount, useEnsName } from 'wagmi'
 
 function Profile() {
   const { address } = useAccount()
-  const { data } = useEnsName({ address })
+  const { data, error, status } = useEnsName({ address })
+  if (status === 'pending') return <div>Loading ENS name</div>
+  if (status === 'error')
+    return <div>Error fetching ENS name: {error.message}</div>
+  return <div>ENS name: {data}</div>
 }
 ```
 ```tsx [app.tsx]
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { WagmiConfig } from 'wagmi'
-import { config } from './wagmi'
+import { config } from './config'
 
 const queryClient = new QueryClient()
 
@@ -201,22 +172,44 @@ function App() {
   )
 }
 ```
-```ts [wagmi.ts]
-import { createConfig, http } from 'wagmi'
-import { mainnet, sepolia } from 'wagmi/chains'
-import { injected } from 'wagmi/connectors'
+<<< @/snippets/react/config.ts[config.ts]
+:::
 
-export const config = createConfig({
-  chains: [mainnet, sepolia],
-  connectors: [injected()],
-  transports: {
-    [mainnet.id]: http(),
-    [sepolia.id]: http(),
-  },
-})
+## Using Unreleased Commits
+
+If you can't wait for a new release to test the latest features, you can either install from the `canary` tag (tracks the [`main`](https://github.com/wagmi-dev/wagmi/tree/main) branch).
+
+::: code-group
+```bash [pnpm]
+pnpm add wagmi@canary
+```
+
+```bash [npm]
+npm install wagmi@canary
+```
+
+```bash [yarn]
+yarn add wagmi@canary
 ```
 :::
 
-TBD
+Or clone the [wagmi repo](https://github.com/wagmi-dev/wagmi) to your local machine, build, and link it yourself.
+
+```bash
+git clone https://github.com/wagmi-dev/wagmi.git
+cd wagmi
+pnpm install
+pnpm build
+cd packages/react
+pnpm link --global
+```
+
+Then go to the project where you are using wagmi and run `pnpm link --global wagmi` (or the package manager that you used to link wagmi globally). Make sure you installed the [required peer dependencies](#manual-installation) and their versions are correct.
 
 ## Next Steps
+
+For more information on what to do next, check out the following topics.
+
+- [**TypeScript Support**](/react/) Learn how to get the most out of wagmi's type-safety and inference for an enlightened developer experience.
+- [**Connect Wallet**](/react/) Learn how to enable wallets to connect to and disconnect from your apps and display information about connected accounts.
+- [**React Hooks**](/react/) Browse the collection of React Hooks and learn how to use them.

@@ -8,10 +8,12 @@
     "preview": "vitepress preview"
   },
   "devDependencies": {
+    "@types/react": "^18.2.0",
     "@unocss/reset": "^0.53.0",
     "@wagmi/connectors": "workspace:*",
     "@wagmi/core": "workspace:*",
     "@wagmi/test": "workspace:*",
+    "react": "^18.2.0",
     "unocss": "^0.53.0",
     "viem": "^1",
     "vitepress": "1.0.0-beta.6",

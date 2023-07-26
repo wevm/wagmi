@@ -85,6 +85,9 @@ importers:
 
   docs:
     devDependencies:
+      '@types/react':
+        specifier: ^18.2.0
+        version: 18.2.0
       '@unocss/reset':
         specifier: ^0.53.0
         version: 0.53.0
@@ -97,6 +100,9 @@ importers:
       '@wagmi/test':
         specifier: workspace:*
         version: link:../packages/test
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
       unocss:
         specifier: ^0.53.0
         version: 0.53.0(vite@4.3.9)
@@ -105,7 +111,7 @@ importers:
         version: 0.0.0-w-20230725184008(typescript@5.0.4)
       vitepress:
         specifier: 1.0.0-beta.6
-        version: 1.0.0-beta.6(patch_hash=owdx3pggad6ualcvbffniyfaw4)(@types/node@18.16.9)
+        version: 1.0.0-beta.6(patch_hash=owdx3pggad6ualcvbffniyfaw4)(@types/node@18.16.9)(@types/react@18.2.0)(react@18.2.0)
       vitepress-plugin-shiki-twoslash:
         specifier: ^0.0.6
         version: 0.0.6(typescript@5.0.4)(vitepress@1.0.0-beta.6)
@@ -135,6 +141,10 @@ importers:
         specifier: ^1.5.12
         version: 1.5.12
 
+  packages/connectors/dist/cjs: {}
+
+  packages/connectors/dist/esm: {}
+
   packages/core:
     dependencies:
       eventemitter3:
@@ -147,6 +157,10 @@ importers:
       '@tanstack/query-core':
         specifier: 5.0.0-beta.0
         version: 5.0.0-beta.0
+
+  packages/core/dist/cjs: {}
+
+  packages/core/dist/esm: {}
 
   packages/react:
     dependencies:
@@ -178,6 +192,10 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
+
+  packages/react/dist/cjs: {}
+
+  packages/react/dist/esm: {}
 
   packages/register-tests/react:
     dependencies:
@@ -228,6 +246,10 @@ importers:
       wagmi:
         specifier: workspace:*
         version: link:../react
+
+  packages/test/dist/cjs: {}
+
+  packages/test/dist/esm: {}
 
   playgrounds/vite-core:
     dependencies:
@@ -933,10 +955,10 @@ packages:
     resolution: {integrity: sha512-2Pu9HDg/uP/IT10rbQ+4OrTQuxIWdKVUEdcw9/w7kZJv9NeHS6skJx1xuRiFyoGKwAzcHXnLp7csE99sj+O1YA==}
     dev: true
 
-  /@docsearch/js@3.5.1:
+  /@docsearch/js@3.5.1(@types/react@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-EXi8de5njxgP6TV3N9ytnGRLG9zmBNTEZjR4VzwPcpPLbZxxTLG2gaFyJyKiFVQxHW/DPlMrDJA3qoRRGEkgZw==}
     dependencies:
-      '@docsearch/react': 3.5.1
+      '@docsearch/react': 3.5.1(@types/react@18.2.0)(react@18.2.0)
       preact: 10.14.0
     transitivePeerDependencies:
       - '@algolia/client-search'
@@ -946,7 +968,7 @@ packages:
       - search-insights
     dev: true
 
-  /@docsearch/react@3.5.1:
+  /@docsearch/react@3.5.1(@types/react@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-t5mEODdLzZq4PTFAm/dvqcvZFdPDMdfPE5rJS5SC8OUq9mPzxEy6b+9THIqNM9P0ocCb4UC5jqBrxKclnuIbzQ==}
     peerDependencies:
       '@types/react': '>= 16.8.0 < 19.0.0'
@@ -963,7 +985,9 @@ packages:
       '@algolia/autocomplete-core': 1.9.3(algoliasearch@4.17.0)
       '@algolia/autocomplete-preset-algolia': 1.9.3(algoliasearch@4.17.0)
       '@docsearch/css': 3.5.1
+      '@types/react': 18.2.0
       algoliasearch: 4.17.0
+      react: 18.2.0
     transitivePeerDependencies:
       - '@algolia/client-search'
       - search-insights
@@ -6981,18 +7005,18 @@ packages:
       vitepress: '>=1.0.0-alpha.61'
     dependencies:
       remark-shiki-twoslash: 3.1.3(typescript@5.0.4)
-      vitepress: 1.0.0-beta.6(patch_hash=owdx3pggad6ualcvbffniyfaw4)(@types/node@18.16.9)
+      vitepress: 1.0.0-beta.6(patch_hash=owdx3pggad6ualcvbffniyfaw4)(@types/node@18.16.9)(@types/react@18.2.0)(react@18.2.0)
     transitivePeerDependencies:
       - supports-color
       - typescript
     dev: true
 
-  /vitepress@1.0.0-beta.6(patch_hash=owdx3pggad6ualcvbffniyfaw4)(@types/node@18.16.9):
+  /vitepress@1.0.0-beta.6(patch_hash=owdx3pggad6ualcvbffniyfaw4)(@types/node@18.16.9)(@types/react@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-xK/ulKgQpKZVbvlL4+/vW49VG7ySi5nmSoKUNH1G4kM+Cj9JwYM+PDJO7jSJROv8zW99G0ise+maDYnaLlbGBQ==}
     hasBin: true
     dependencies:
       '@docsearch/css': 3.5.1
-      '@docsearch/js': 3.5.1
+      '@docsearch/js': 3.5.1(@types/react@18.2.0)(react@18.2.0)
       '@vitejs/plugin-vue': 4.2.3(vite@4.4.7)(vue@3.3.4)
       '@vue/devtools-api': 6.5.0
       '@vueuse/core': 10.2.1(vue@3.3.4)

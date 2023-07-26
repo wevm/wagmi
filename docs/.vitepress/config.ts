@@ -153,7 +153,7 @@ function getSidebar() {
         text: 'Introduction',
         items: [
           { text: 'Why Wagmi 🚧', link: '/react/why-wagmi' },
-          { text: 'Getting Started 🚧', link: '/react/getting-started' },
+          { text: 'Getting Started', link: '/react/getting-started' },
           { text: 'TypeScript Support 🚧', link: '/react/typescript' },
           { text: 'Comparisons 🚧', link: '/react/comparison' },
           { text: 'Migration Guide 🚧', link: '/react/migration-guide' },
