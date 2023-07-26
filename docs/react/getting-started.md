@@ -2,7 +2,7 @@
 
 ## Automatic Installation
 
-For new projects, it is recommended to set up your wagmi app using the `create-wagmi` command line interface (CLI). This will create a new wagmi project using TypeScript and install the required dependencies.
+For new projects, it is recommended to set up your Wagmi app using the `create-wagmi` command line interface (CLI). This will create a new Wagmi project using TypeScript and install the required dependencies.
 
 ::: code-group
 ```bash [pnpm]
@@ -29,7 +29,7 @@ After the prompts, `create-wagmi` will create a directory with your project name
 
 ## Manual Installation
 
-To manually add wagmi to your project, install the required packages.
+To manually add Wagmi to your project, install the required packages.
 
 ::: code-group
 ```bash [pnpm]
@@ -51,17 +51,17 @@ yarn add wagmi viem @tanstack/react-query
 
 ### Create Config
 
-Create and export a new wagmi config using `createConfig`.
+Create and export a new Wagmi config using `createConfig`.
 
 ::: code-group
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
-In this example, wagmi is configured to use the Mainnet and Sepolia chains, and `injected` connector. Check out the [`createConfig` docs](/react/createConfig) for more configuration options.
+In this example, Wagmi is configured to use the Mainnet and Sepolia chains, and `injected` connector. Check out the [`createConfig` docs](/react/createConfig) for more configuration options.
 
 ---
 
-If you are using [TypeScript](/react/typescript), you can "register" the wagmi `config` to get strong type-safety across React Context in places that wouldn't normally have type info.
+If you are using [TypeScript](/react/typescript), you can "register" the Wagmi `config` to get strong type-safety across React Context in places that wouldn't normally have type info.
 
 ```ts
 declare module 'wagmi' {
@@ -109,7 +109,7 @@ function App() {
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
-Check out the [`WagmiConfig` docs](/react/WagmiConfig) to learn more about React Context in wagmi.
+Check out the [`WagmiConfig` docs](/react/WagmiConfig) to learn more about React Context in Wagmi.
 
 ### Setup TanStack Query
 
@@ -140,7 +140,7 @@ Check out the [TanStack Query docs](https://tanstack.com/query/v5/docs/react) to
 
 ### Use Wagmi
 
-Now that everything is set up, every component inside the wagmi and TanStack Query Providers can use wagmi React Hooks.
+Now that everything is set up, every component inside the Wagmi and TanStack Query Providers can use Wagmi React Hooks.
 
 ::: code-group
 ```tsx [profile.tsx]
@@ -193,7 +193,7 @@ yarn add wagmi@canary
 ```
 :::
 
-Or clone the [wagmi repo](https://github.com/wagmi-dev/wagmi) to your local machine, build, and link it yourself.
+Or clone the [Wagmi repo](https://github.com/wagmi-dev/wagmi) to your local machine, build, and link it yourself.
 
 ```bash
 git clone https://github.com/wagmi-dev/wagmi.git
@@ -204,12 +204,12 @@ cd packages/react
 pnpm link --global
 ```
 
-Then go to the project where you are using wagmi and run `pnpm link --global wagmi` (or the package manager that you used to link wagmi globally). Make sure you installed the [required peer dependencies](#manual-installation) and their versions are correct.
+Then go to the project where you are using Wagmi and run `pnpm link --global wagmi` (or the package manager that you used to link Wagmi globally). Make sure you installed the [required peer dependencies](#manual-installation) and their versions are correct.
 
 ## Next Steps
 
 For more information on what to do next, check out the following topics.
 
-- [**TypeScript Support**](/react/) Learn how to get the most out of wagmi's type-safety and inference for an enlightened developer experience.
+- [**TypeScript Support**](/react/typescript) Learn how to get the most out of Wagmi's type-safety and inference for an enlightened developer experience.
 - [**Connect Wallet**](/react/) Learn how to enable wallets to connect to and disconnect from your apps and display information about connected accounts.
 - [**React Hooks**](/react/) Browse the collection of React Hooks and learn how to use them.

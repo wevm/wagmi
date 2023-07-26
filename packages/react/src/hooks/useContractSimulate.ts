@@ -108,5 +108,5 @@ export function useContractSimulate<
     ...queryOptions,
     ...(query as any),
     enabled,
-  })
+  }) as UseContractSimulateReturnType<abi, functionName, chainId, selectData>
 }

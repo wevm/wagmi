@@ -37,7 +37,7 @@ export type UseContractReadsReturnType<
   contracts extends ContractFunctionConfig[] = ContractFunctionConfig[],
   allowFailure extends boolean = true,
   selectData = ReadContractsData<contracts, allowFailure>,
-> = Evaluate<UseQueryResult<selectData, ReadContractError>>
+> = UseQueryResult<selectData, ReadContractError>
 
 // /** https://wagmi.sh/react/hooks/useContractReads */
 export function useContractReads<

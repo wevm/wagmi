@@ -198,7 +198,7 @@ function getSidebar() {
             ],
           },
           {
-            text: 'Hooks',
+            text: 'Hooks 🚧',
             collapsed: true,
             items: [
               { text: 'useAccount', link: '/react/hooks/useAccount' },
@@ -303,7 +303,7 @@ function getSidebar() {
         text: 'Introduction',
         items: [
           { text: 'Why Wagmi 🚧', link: '/core/why-wagmi' },
-          { text: 'Getting Started 🚧', link: '/core/getting-started' },
+          { text: 'Getting Started', link: '/core/getting-started' },
           { text: 'TypeScript Support 🚧', link: '/core/typescript' },
           { text: 'Migration Guide 🚧', link: '/core/migration-guide' },
         ],
@@ -324,7 +324,7 @@ function getSidebar() {
           { text: 'createConnector 🚧', link: '/core/createConnector' },
           { text: 'createStorage 🚧', link: '/core/createStorage' },
           {
-            text: 'Actions',
+            text: 'Actions 🚧',
             collapsed: true,
             items: [
               { text: 'connect', link: '/core/actions/connect' },

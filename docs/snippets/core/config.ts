@@ -1,6 +1,5 @@
-import { createConfig } from '@wagmi/core'
-import { http } from 'viem'
-import { mainnet, sepolia } from 'viem/chains'
+import { createConfig, http } from '@wagmi/core'
+import { mainnet, sepolia } from '@wagmi/core/chains'
 
 export const config = createConfig({
   chains: [mainnet, sepolia],

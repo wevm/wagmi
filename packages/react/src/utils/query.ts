@@ -79,20 +79,26 @@ export type UseQueryParameters<
   }
 >
 
-export type UseQueryResult<
-  data = unknown,
-  error = DefaultError,
-> = import('@tanstack/react-query').UseQueryResult<data, error>
+export type UseQueryResult<data = unknown, error = DefaultError> = Evaluate<
+  import('@tanstack/react-query').UseQueryResult<data, error> & {
+    queryKey: QueryKey
+  }
+>
 
-// Ideally we don't have this function, but `useQuery` currently has some quirks where it is super hard to
+// Adding some basic customization.
+// Ideally we don't have this function, but `import('@tanstack/react-query').useQuery` currently has some quirks where it is super hard to
 // pass down the inferred `initialData` type because of it's discriminated overload in the on `useQuery`.
 export function useQuery<queryFnData, error, data, queryKey extends QueryKey>(
-  parameters: UseQueryParameters<queryFnData, error, data, queryKey>,
+  parameters: UseQueryParameters<queryFnData, error, data, queryKey> & {
+    queryKey: QueryKey
+  },
 ): UseQueryResult<data, error> {
-  return tanstack_useQuery({
+  const result = tanstack_useQuery({
     ...(parameters as any),
     queryKeyHashFn: hashFn, // for bigint support
   }) as UseQueryResult<data, error>
+  result.queryKey = parameters.queryKey
+  return result
 }
 
 export function structuralSharing<data>(

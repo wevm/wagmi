@@ -36,7 +36,7 @@ export type UseContractReadReturnType<
   abi extends Abi | readonly unknown[] = Abi,
   functionName extends string = string,
   selectData = ReadContractData<abi, functionName>,
-> = Evaluate<UseQueryResult<selectData, ReadContractError>>
+> = UseQueryResult<selectData, ReadContractError>
 
 // /** https://wagmi.sh/react/hooks/useContractRead */
 export function useContractRead<
