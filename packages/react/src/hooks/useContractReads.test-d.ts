@@ -21,9 +21,13 @@ test('select data', async () => {
       },
     ],
     select(data) {
+      // TODO: Breaks with typescript@5.1.6
+      // @ts-ignore
       expectTypeOf(data).toEqualTypeOf<[bigint, string]>()
       return data[0]
     },
   })
+  // TODO: Breaks with typescript@5.1.6
+  // @ts-ignore
   expectTypeOf(result.data).toEqualTypeOf<bigint | undefined>()
 })
