@@ -3,8 +3,6 @@ lockfileVersion: '6.0'
 overrides:
   '@wagmi/connectors': workspace:*
   '@wagmi/core': workspace:*
-  remark-shiki-twoslash>shiki: ^0.14.1
-  shiki-twoslash>shiki: ^0.14.1
   viem: 0.0.0-w-20230725184008
 
 patchedDependencies:
@@ -5960,7 +5958,7 @@ packages:
       '@typescript/vfs': 1.3.4
       fenceparser: 1.1.1
       regenerator-runtime: 0.13.11
-      shiki: 0.14.2
+      shiki: 0.10.1
       shiki-twoslash: 3.1.2(typescript@5.0.4)
       tslib: 2.1.0
       typescript: 5.0.4
@@ -6188,19 +6186,18 @@ packages:
       '@typescript/twoslash': 3.1.0
       '@typescript/vfs': 1.3.4
       fenceparser: 1.1.1
-      shiki: 0.14.2
+      shiki: 0.10.1
       typescript: 5.0.4
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /shiki@0.14.2:
-    resolution: {integrity: sha512-ltSZlSLOuSY0M0Y75KA+ieRaZ0Trf5Wl3gutE7jzLuIcWxLp5i/uEnLoQWNvgKXQ5OMpGkJnVMRLAuzjc0LJ2A==}
+  /shiki@0.10.1:
+    resolution: {integrity: sha512-VsY7QJVzU51j5o1+DguUd+6vmCmZ5v/6gYu4vyYAhzjuNQU6P/vmSy4uQaOhvje031qQMiW0d2BwgMH52vqMng==}
     dependencies:
-      ansi-sequence-parser: 1.1.0
       jsonc-parser: 3.2.0
       vscode-oniguruma: 1.7.0
-      vscode-textmate: 8.0.0
+      vscode-textmate: 5.2.0
     dev: true
 
   /shiki@0.14.3:
@@ -7126,6 +7123,10 @@ packages:
 
   /vscode-oniguruma@1.7.0:
     resolution: {integrity: sha512-L9WMGRfrjOhgHSdOYgCt/yRMsXzLDJSL7BPrOZt73gU0iWO4mpqzqQzOz5srxqTvMBaR0XZTSrVWo4j55Rc6cA==}
+    dev: true
+
+  /vscode-textmate@5.2.0:
+    resolution: {integrity: sha512-Uw5ooOQxRASHgu6C7GVvUxisKXfSgW4oFlO+aa+PAkgmH89O3CXxEEzNRNtHSqtXFTl0nAC1uYj0GMSH27uwtQ==}
     dev: true
 
   /vscode-textmate@8.0.0:

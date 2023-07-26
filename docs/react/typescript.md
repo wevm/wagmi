@@ -80,12 +80,12 @@ For this to work, you must either [const-assert](https://www.typescriptlang.org/
 
 ```ts
 const { data } = useContractRead({
-  abi: […], // <--- defined inline
+  abi: […], // <--- defined inline // [!code focus]
 })
 ```
 
 ```ts
-const abi = […] as const // <--- const assertion
+const abi = […] as const // <--- const assertion // [!code focus]
 const { data } = useContractRead({ abi })
 ```
 
@@ -188,6 +188,7 @@ You can prevent runtime errors and be more productive by making sure your ABIs a
 
 ```ts twoslash
 // @errors: 2322
+/// <reference types="viem" />
 export const erc721Abi = [
   {
     name: 'balanceOf',
@@ -231,7 +232,7 @@ export const erc721Abi = [
 // ---cut---
 import { useContractRead } from 'wagmi'
 
-const { data } = useContractRead({ functionName: 'balanecOf' })
+useContractRead({ functionName: 'balanecOf' })
 ```
 
 ## Configure Internal Types

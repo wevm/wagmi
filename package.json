@@ -55,8 +55,6 @@
     "overrides": {
       "@wagmi/connectors": "workspace:*",
       "@wagmi/core": "workspace:*",
-      "remark-shiki-twoslash>shiki": "^0.14.1",
-      "shiki-twoslash>shiki": "^0.14.1",
       "viem": "0.0.0-w-20230725184008"
     },
     "patchedDependencies": {

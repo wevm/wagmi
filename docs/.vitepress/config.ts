@@ -4,6 +4,7 @@ import { DefaultTheme, defineConfig } from 'vitepress'
 import { withTwoslash } from 'vitepress-plugin-shiki-twoslash'
 
 import reactPackage from '../../packages/react/package.json'
+import ts from 'typescript'
 
 // https://vitepress.dev/reference/site-config
 export default withTwoslash(
@@ -107,7 +108,8 @@ export default withTwoslash(
     title: 'wagmi',
     twoslash: {
       defaultCompilerOptions: {
-        target: 99,
+        strict: true,
+        target: ts.ScriptTarget.ESNext,
       },
     },
     vite: {

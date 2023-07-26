@@ -36,6 +36,13 @@ test('default', async () => {
       "isRefetching": false,
       "isStale": true,
       "isSuccess": true,
+      "queryKey": [
+        "ensAvatar",
+        {
+          "chainId": 123,
+          "name": "wagmi-dev.eth",
+        },
+      ],
       "refetch": [Function],
       "status": "success",
     }
