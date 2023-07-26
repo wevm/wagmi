@@ -29,5 +29,5 @@ features:
     details: Official wallet connectors for MetaMask, WalletConnect, Coinbase Wallet, and more.
   - icon: 👟
     title: Caching, Multicall & Batching
-    details: Built-in caching, deduplication, multicall, batching, persistence using TanStack Query.
+    details: Built-in caching, deduplication, multicall, batching, persistence powered by TanStack Query.
 ---

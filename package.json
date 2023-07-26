@@ -43,7 +43,7 @@
     "simple-git-hooks": "^2.8.1",
     "typescript": "^5.0.4",
     "viem": "0.0.0-w-20230725184008",
-    "vite": "^4.3.2",
+    "vite": "^4.3.9",
     "vitest": "^0.31.0"
   },
   "simple-git-hooks": {
@@ -61,7 +61,7 @@
     "patchedDependencies": {
       "@coinbase/wallet-sdk@3.7.1": "patches/@coinbase__wallet-sdk@3.7.1.patch",
       "@walletconnect/ethereum-provider@2.8.5": "patches/@walletconnect__ethereum-provider@2.8.5.patch",
-      "vitepress@1.0.0-beta.1": "patches/vitepress@1.0.0-beta.1.patch"
+      "vitepress@1.0.0-beta.6": "patches/vitepress@1.0.0-beta.6.patch"
     },
     "peerDependencyRules": {
       "ignoreMissing": [

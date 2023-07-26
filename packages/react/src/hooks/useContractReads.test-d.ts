@@ -15,8 +15,9 @@ test('select data', async () => {
       },
       {
         address: '0x',
-        abi: abi.erc20,
-        functionName: 'symbol',
+        abi: abi.wagmiMintExample,
+        functionName: 'tokenURI',
+        args: [123n],
       },
     ],
     select(data) {
