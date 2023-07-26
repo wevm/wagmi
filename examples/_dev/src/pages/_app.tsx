@@ -18,7 +18,14 @@ import { publicProvider } from 'wagmi/providers/public'
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [mainnet, goerli, optimism, avalanche],
   [
-    alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY! }),
+    alchemyProvider({
+      apiKey: {
+        [mainnet.id]: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY_MAINNET!,
+        [goerli.id]: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY_GOERLI!,
+        [optimism.id]: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY_OPTIMISM!,
+        [avalanche.id]: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY_AVALANCHE!,
+      },
+    }),
     infuraProvider({ apiKey: process.env.NEXT_PUBLIC_INFURA_API_KEY! }),
     publicProvider(),
   ],

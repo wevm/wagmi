@@ -2,8 +2,12 @@ import type { Chain } from '../chains'
 import type { ChainProviderFn } from '../types'
 
 export type AlchemyProviderConfig = {
-  /** Your Alchemy API key from the [Alchemy Dashboard](https://dashboard.alchemyapi.io/). */
-  apiKey: string
+  /** Your Alchemy API key from the [Alchemy Dashboard](https://dashboard.alchemyapi.io/).
+   * Supported chain list - https://www.alchemy.com/chain-connect
+   */
+  apiKey: {
+    [id: number]: string
+  }
 }
 
 export function alchemyProvider<TChain extends Chain = Chain>({
@@ -18,12 +22,12 @@ export function alchemyProvider<TChain extends Chain = Chain>({
         ...chain,
         rpcUrls: {
           ...chain.rpcUrls,
-          default: { http: [`${baseHttpUrl}/${apiKey}`] },
+          default: { http: [`${baseHttpUrl}/${apiKey[chain.id]}`] },
         },
       } as TChain,
       rpcUrls: {
-        http: [`${baseHttpUrl}/${apiKey}`],
-        webSocket: [`${baseWsUrl}/${apiKey}`],
+        http: [`${baseHttpUrl}/${apiKey[chain.id]}`],
+        webSocket: [`${baseWsUrl}/${apiKey[chain.id]}`],
       },
     }
   }

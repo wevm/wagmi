@@ -120,7 +120,16 @@ describe('configureChains', () => {
     describe('alchemy', () => {
       const { chains, publicClient } = configureChains(
         defaultChains,
-        [alchemyProvider({ apiKey: alchemyApiKey })],
+        [
+          alchemyProvider({
+            apiKey: {
+              [mainnet.id]: alchemyApiKey,
+              [polygon.id]: alchemyApiKey,
+              [optimism.id]: alchemyApiKey,
+              [arbitrum.id]: alchemyApiKey,
+            },
+          }),
+        ],
         { rank: false },
       )
 
@@ -158,7 +167,13 @@ describe('configureChains', () => {
           configureChains(
             defaultChainsWithAvalanche,
 
-            [alchemyProvider({ apiKey: alchemyApiKey })],
+            [
+              alchemyProvider({
+                apiKey: {
+                  [avalancheChain.id]: alchemyApiKey,
+                },
+              }),
+            ],
           ),
         ).toThrowErrorMatchingInlineSnapshot(`
           "Could not find valid provider configuration for chain \\"Avalanche\\".
@@ -369,7 +384,12 @@ describe('configureChains', () => {
     const { chains, publicClient } = configureChains(
       defaultChains,
       [
-        alchemyProvider({ apiKey: alchemyApiKey }),
+        alchemyProvider({
+          apiKey: {
+            [mainnet.id]: alchemyApiKey,
+            [optimism.id]: alchemyApiKey,
+          },
+        }),
         infuraProvider({ apiKey: infuraApiKey }),
         jsonRpcProvider({
           rpc: (chain) => {
@@ -424,7 +444,11 @@ describe('configureChains', () => {
           defaultChainsWithAvalanche,
 
           [
-            alchemyProvider({ apiKey: alchemyApiKey }),
+            alchemyProvider({
+              apiKey: {
+                [mainnet.id]: alchemyApiKey,
+              },
+            }),
             infuraProvider({ apiKey: infuraApiKey }),
             jsonRpcProvider({
               rpc: (chain) => ({
