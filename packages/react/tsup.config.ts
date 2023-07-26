@@ -21,7 +21,6 @@ export default defineConfig(
       'src/connectors/mock.ts',
       'src/connectors/safe.ts',
       'src/connectors/walletConnect.ts',
-      'src/connectors/walletConnectLegacy.ts',
       'src/providers/alchemy.ts',
       'src/providers/infura.ts',
       'src/providers/jsonRpc.ts',
