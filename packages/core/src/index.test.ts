@@ -5,6 +5,10 @@ import * as core from './index.js'
 test('exports', () => {
   expect(Object.keys(core)).toMatchInlineSnapshot(`
     [
+      "custom",
+      "fallback",
+      "http",
+      "webSocket",
       "connect",
       "disconnect",
       "getAccount",

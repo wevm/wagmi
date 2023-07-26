@@ -5,6 +5,10 @@ import * as react from './index.js'
 test('exports', () => {
   expect(Object.keys(react)).toMatchInlineSnapshot(`
     [
+      "custom",
+      "fallback",
+      "http",
+      "webSocket",
       "WagmiConfig",
       "WagmiContext",
       "Context",

@@ -48,6 +48,7 @@
   },
   "peerDependencies": {
     "@tanstack/react-query": "5.0.0-beta.2",
+    "@viem/anvil": "^0.0.6",
     "react": ">=18",
     "react-dom": ">=18",
     "typescript": ">=5",
@@ -58,7 +59,6 @@
     "@testing-library/react": "^14.0.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.0.11",
-    "@viem/anvil": "0.0.6",
     "@wagmi/core": "workspace:*"
   },
   "peerDependenciesMeta": {

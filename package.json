@@ -29,6 +29,7 @@
     "@changesets/cli": "^2.26.0",
     "@types/fs-extra": "^11.0.1",
     "@types/node": "^18.16.9",
+    "@viem/anvil": "0.0.6",
     "@vitest/coverage-c8": "^0.31.0",
     "@vitest/ui": "^0.31.0",
     "@wagmi/test": "workspace:*",
