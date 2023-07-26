@@ -36,6 +36,13 @@ test('default', async () => {
       "isRefetching": false,
       "isStale": true,
       "isSuccess": true,
+      "queryKey": [
+        "ensName",
+        {
+          "address": "0xd2135CfB216b74109775236E36d4b433F1DF507B",
+          "chainId": 123,
+        },
+      ],
       "refetch": [Function],
       "status": "success",
     }

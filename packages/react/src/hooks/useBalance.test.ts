@@ -48,6 +48,13 @@ test('default', async () => {
       "isRefetching": false,
       "isStale": true,
       "isSuccess": true,
+      "queryKey": [
+        "balance",
+        {
+          "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "chainId": 123,
+        },
+      ],
       "refetch": [Function],
       "status": "success",
     }
@@ -90,6 +97,13 @@ test('parameters: chainId', async () => {
       "isRefetching": false,
       "isStale": true,
       "isSuccess": true,
+      "queryKey": [
+        "balance",
+        {
+          "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "chainId": 456,
+        },
+      ],
       "refetch": [Function],
       "status": "success",
     }
@@ -135,6 +149,14 @@ test('parameters: token', async () => {
       "isRefetching": false,
       "isStale": true,
       "isSuccess": true,
+      "queryKey": [
+        "balance",
+        {
+          "address": "0x4557B18E779944BFE9d78A672452331C186a9f48",
+          "chainId": 123,
+          "token": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        },
+      ],
       "refetch": [Function],
       "status": "success",
     }
@@ -177,6 +199,14 @@ test('parameters: unit', async () => {
       "isRefetching": false,
       "isStale": true,
       "isSuccess": true,
+      "queryKey": [
+        "balance",
+        {
+          "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "chainId": 456,
+          "unit": "wei",
+        },
+      ],
       "refetch": [Function],
       "status": "success",
     }
@@ -212,6 +242,13 @@ test('behavior: address: undefined -> defined', async () => {
       "isRefetching": false,
       "isStale": true,
       "isSuccess": false,
+      "queryKey": [
+        "balance",
+        {
+          "address": undefined,
+          "chainId": 123,
+        },
+      ],
       "refetch": [Function],
       "status": "pending",
     }
@@ -251,6 +288,13 @@ test('behavior: address: undefined -> defined', async () => {
       "isRefetching": false,
       "isStale": true,
       "isSuccess": true,
+      "queryKey": [
+        "balance",
+        {
+          "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "chainId": 123,
+        },
+      ],
       "refetch": [Function],
       "status": "success",
     }

@@ -58,6 +58,25 @@ test('default', async () => {
       "isRefetching": false,
       "isStale": true,
       "isSuccess": true,
+      "queryKey": [
+        "readContracts",
+        {
+          "chainId": 123,
+          "contracts": [
+            {
+              "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
+              "args": [
+                "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
+              ],
+              "functionName": "balanceOf",
+            },
+            {
+              "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
+              "functionName": "symbol",
+            },
+          ],
+        },
+      ],
       "refetch": [Function],
       "status": "success",
     }

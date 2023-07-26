@@ -45,6 +45,12 @@ test('default', async () => {
       "isRefetching": false,
       "isStale": true,
       "isSuccess": true,
+      "queryKey": [
+        "feeData",
+        {
+          "chainId": 123,
+        },
+      ],
       "refetch": [Function],
       "status": "success",
     }

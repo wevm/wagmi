@@ -33,6 +33,12 @@ test('mounts', async () => {
       "isRefetching": false,
       "isStale": true,
       "isSuccess": true,
+      "queryKey": [
+        "blockNumber",
+        {
+          "chainId": 123,
+        },
+      ],
       "refetch": [Function],
       "status": "success",
     }
