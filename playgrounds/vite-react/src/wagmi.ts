@@ -3,6 +3,12 @@ import { createConfig, createStorage } from 'wagmi'
 import { celo, mainnet, optimism, sepolia } from 'wagmi/chains'
 import { coinbaseWallet, injected, walletConnect } from 'wagmi/connectors'
 
+declare module 'wagmi' {
+  interface Register {
+    config: typeof config
+  }
+}
+
 export const config = createConfig({
   chains: [mainnet, sepolia, optimism, celo],
   connectors: [
@@ -26,9 +32,3 @@ export const config = createConfig({
     [celo.id]: http(),
   },
 })
-
-declare module 'wagmi' {
-  interface Register {
-    config: typeof config
-  }
-}

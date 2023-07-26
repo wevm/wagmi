@@ -6,7 +6,7 @@ titleTemplate: false
 layout: home
 
 hero:
-  name: wagmi
+  name: Wagmi
   text: React Hooks for Ethereum
   tagline: Everything you need to work with Ethereum.
   actions:

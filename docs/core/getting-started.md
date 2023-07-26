@@ -19,7 +19,7 @@ yarn add @wagmi/core viem
 :::
 
 - [Viem](https://viem.sh) is a TypeScript interface for Ethereum that performs blockchain operations.
-- [TypeScript](/react/typescript) is optional, but highly recommended. Learn more about [TypeScript Support](/core/typescript).
+- [TypeScript](/react/typescript) is optional, but highly recommended. Learn more about [TypeScript support](/core/typescript).
 
 ### Create Config
 
@@ -81,6 +81,6 @@ Then go to the project where you are using Wagmi and run `pnpm link --global @wa
 
 For more information on what to do next, check out the following topics.
 
-- [**TypeScript Support**](/core/typescript) Learn how to get the most out of Wagmi's type-safety and inference for an enlightened developer experience.
+- [**TypeScript**](/core/typescript) Learn how to get the most out of Wagmi's type-safety and inference for an enlightened developer experience.
 - [**Actions**](/core/) Browse the collection of actions and learn how to use them.
 - [**Viem docs**](https://viem.sh) Wagmi Core is a wrapper around Viem that manages account and client reactivity. Learn more about Viem and how to use it.

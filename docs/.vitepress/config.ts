@@ -154,9 +154,8 @@ function getSidebar() {
         items: [
           { text: 'Why Wagmi 🚧', link: '/react/why-wagmi' },
           { text: 'Getting Started', link: '/react/getting-started' },
-          { text: 'TypeScript Support 🚧', link: '/react/typescript' },
+          { text: 'TypeScript 🚧', link: '/react/typescript' },
           { text: 'Comparisons 🚧', link: '/react/comparison' },
-          { text: 'Migration Guide 🚧', link: '/react/migration-guide' },
         ],
       },
       {
@@ -166,6 +165,11 @@ function getSidebar() {
             text: 'Connect Wallet 🚧',
             link: '/react/connect-wallet',
           },
+          {
+            text: 'TanStack Query 🚧',
+            link: '/react/connect-wallet',
+          },
+          { text: 'Migration Guide 🚧', link: '/react/migration-guide' },
         ],
       },
       {
@@ -304,8 +308,7 @@ function getSidebar() {
         items: [
           { text: 'Why Wagmi 🚧', link: '/core/why-wagmi' },
           { text: 'Getting Started', link: '/core/getting-started' },
-          { text: 'TypeScript Support 🚧', link: '/core/typescript' },
-          { text: 'Migration Guide 🚧', link: '/core/migration-guide' },
+          { text: 'TypeScript 🚧', link: '/core/typescript' },
         ],
       },
       {
@@ -315,6 +318,7 @@ function getSidebar() {
             text: 'Framework Adapters 🚧',
             link: '/core/framework-adapter',
           },
+          { text: 'Migration Guide 🚧', link: '/core/migration-guide' },
         ],
       },
       {

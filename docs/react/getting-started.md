@@ -47,7 +47,7 @@ yarn add wagmi viem @tanstack/react-query
 
 - [Viem](https://viem.sh) is a TypeScript interface for Ethereum that performs blockchain operations.
 - [TanStack Query](https://tanstack.com/query/latest) is an async state manager that handles requests, caching, and more.
-- [TypeScript](/react/typescript) is optional, but highly recommended. Learn more about [TypeScript Support](/react/typescript).
+- [TypeScript](/react/typescript) is optional, but highly recommended. Learn more about [TypeScript support](/react/typescript).
 
 ### Create Config
 
@@ -72,7 +72,7 @@ declare module 'wagmi' {
 ```
 
 ```ts twoslash
-// @errors: 2322 2304
+// @errors: 2322
 import { type Config } from 'wagmi'
 import { mainnet, sepolia } from 'wagmi/chains'
 
@@ -136,7 +136,7 @@ function App() {
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
-Check out the [TanStack Query docs](https://tanstack.com/query/v5/docs/react) to learn more about the library, APIs, and more.
+Check out the [TanStack Query docs](https://tanstack.com/query/v5/docs/react) to learn about the library, APIs, and more.
 
 ### Use Wagmi
 
@@ -210,6 +210,6 @@ Then go to the project where you are using Wagmi and run `pnpm link --global wag
 
 For more information on what to do next, check out the following topics.
 
-- [**TypeScript Support**](/react/typescript) Learn how to get the most out of Wagmi's type-safety and inference for an enlightened developer experience.
+- [**TypeScript**](/react/typescript) Learn how to get the most out of Wagmi's type-safety and inference for an enlightened developer experience.
 - [**Connect Wallet**](/react/) Learn how to enable wallets to connect to and disconnect from your apps and display information about connected accounts.
 - [**React Hooks**](/react/) Browse the collection of React Hooks and learn how to use them.
