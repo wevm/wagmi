@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vitepress dev",
-    "build": "vitepress build",
+    "build": "rm -r ../node_modules/.cache/twoslash & vitepress build",
     "preview": "vitepress preview"
   },
   "devDependencies": {
