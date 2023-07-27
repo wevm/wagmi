@@ -98,15 +98,15 @@ importers:
       '@unocss/reset':
         specifier: ^0.53.0
         version: 0.53.0
+      '@wagmi/chains':
+        specifier: '*'
+        version: 1.1.0(typescript@5.0.4)
       '@wagmi/connectors':
         specifier: workspace:*
         version: link:../packages/connectors
       '@wagmi/core':
         specifier: workspace:*
         version: link:../packages/core
-      '@wagmi/test':
-        specifier: workspace:*
-        version: link:../packages/test
       abitype:
         specifier: '*'
         version: 0.9.3(typescript@5.0.4)
@@ -163,10 +163,6 @@ importers:
       '@tanstack/query-core':
         specifier: 5.0.0-beta.0
         version: 5.0.0-beta.0
-
-  packages/core/dist/cjs: {}
-
-  packages/core/dist/esm: {}
 
   packages/react:
     dependencies:
@@ -2626,6 +2622,17 @@ packages:
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
+    dev: true
+
+  /@wagmi/chains@1.1.0(typescript@5.0.4):
+    resolution: {integrity: sha512-pWZlxBk0Ql8E7DV8DwqlbBpOyUdaG9UDlQPBxJNALuEK1I0tbQ3AVvSDnlsEIt06UPmPo5o27gzs3hwPQ/A+UA==}
+    peerDependencies:
+      typescript: '>=5.0.4'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      typescript: 5.0.4
     dev: true
 
   /@wagmi/chains@1.6.0(typescript@5.0.4):

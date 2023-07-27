@@ -20,9 +20,11 @@
     "noFallthroughCasesInSwitch": true,
 
     "paths": {
+      "@wagmi/connectors": ["../../packages/connectors/src"],
+      "@wagmi/core": ["../../packages/core/src"],
+      "@wagmi/core/*": ["../../packages/core/src/*"],
       "wagmi": ["../../packages/react/src"],
-      "wagmi/actions": ["../../packages/react/src/actions.ts"],
-      "wagmi/connectors": ["../../packages/react/src/connectors.ts"]
+      "wagmi/*": ["../../packages/react/src/*"]
     }
   },
   "include": ["src"],

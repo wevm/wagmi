@@ -108,6 +108,24 @@ export default withTwoslash(
     title: 'wagmi',
     twoslash: {
       defaultCompilerOptions: {
+        paths: {
+          // Deps
+          '@wagmi/chains': ['../node_modules/@wagmi/chains'], // TODO: Remove from here and package.json once viem "internalizes" `@wagmi/chains`
+          '@tanstack/query-core': ['../node_modules/@tanstack/query-core'],
+          '@tanstack/react-query': ['../node_modules/@tanstack/react-query'],
+          abitype: ['../node_modules/abitype'],
+          'abitype/*': ['../node_modules/abitype/*'],
+          react: ['../node_modules/@types/react'],
+          viem: ['../node_modules/viem'],
+          'viem/*': ['../node_modules/viem/*'],
+
+          // Source
+          '@wagmi/connectors': ['../../packages/connectors/src'],
+          '@wagmi/core': ['../../packages/core/src'],
+          '@wagmi/core/*': ['../../packages/core/src/*'],
+          wagmi: ['../../packages/react/src'],
+          'wagmi/*': ['../../packages/react/src/*'],
+        },
         strict: true,
         target: ts.ScriptTarget.ESNext,
       },

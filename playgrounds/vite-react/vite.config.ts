@@ -3,6 +3,10 @@ import react from '@vitejs/plugin-react'
 import path from 'path'
 import { defineConfig } from 'vite'
 
+const connectorsPath = '../../packages/connectors/src'
+const corePath = '../../packages/core/src'
+const reactPath = '../../packages/react/src'
+
 // https://vitejs.dev/config/
 export default defineConfig({
   // `@coinbase-wallet/sdk` hardcodes `process.env` and uses `Buffer`
@@ -16,12 +20,21 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@wagmi/core': path.resolve(__dirname, '../../packages/core/src'),
-      '@wagmi/connectors': path.resolve(
+      '@wagmi/connectors': path.resolve(__dirname, connectorsPath),
+
+      '@wagmi/core': path.resolve(__dirname, corePath),
+      '@wagmi/core/chains': path.resolve(__dirname, `${corePath}/chains.ts`),
+      '@wagmi/core/internal': path.resolve(
         __dirname,
-        '../../packages/connectors/src',
+        `${corePath}/internal.ts`,
       ),
-      wagmi: path.resolve(__dirname, '../../packages/react/src'),
+      '@wagmi/core/query': path.resolve(__dirname, `${corePath}/query.ts`),
+
+      wagmi: path.resolve(__dirname, reactPath),
+      'wagmi/actions': path.resolve(__dirname, `${reactPath}/actions.ts`),
+      'wagmi/chains': path.resolve(__dirname, `${reactPath}/chains.ts`),
+      'wagmi/connectors': path.resolve(__dirname, `${reactPath}/connectors.ts`),
+      'wagmi/query': path.resolve(__dirname, `${reactPath}/query.ts`),
     },
   },
 })

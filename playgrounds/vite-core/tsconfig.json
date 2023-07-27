@@ -22,6 +22,7 @@
     "paths": {
       "@wagmi/connectors": ["../../packages/connectors/src"],
       "@wagmi/core": ["../../packages/core/src"],
+      "@wagmi/core/*": ["../../packages/core/src/*"]
     }
   },
   "include": ["src"],
