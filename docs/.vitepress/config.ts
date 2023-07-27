@@ -109,7 +109,7 @@ export default withTwoslash(
     twoslash: {
       defaultCompilerOptions: {
         paths: {
-          // Deps
+          // Deps - twoslash sometimes has difficulty resolving deps so adding these here
           '@wagmi/chains': ['../node_modules/@wagmi/chains'], // TODO: Remove from here and package.json once viem "internalizes" `@wagmi/chains`
           '@tanstack/query-core': ['../node_modules/@tanstack/query-core'],
           '@tanstack/react-query': ['../node_modules/@tanstack/react-query'],
@@ -119,7 +119,7 @@ export default withTwoslash(
           viem: ['../node_modules/viem'],
           'viem/*': ['../node_modules/viem/*'],
 
-          // Source
+          // Source - reference source files so we don't need to build packages to get types (speeds things up)
           '@wagmi/connectors': ['../../packages/connectors/src'],
           '@wagmi/core': ['../../packages/core/src'],
           '@wagmi/core/*': ['../../packages/core/src/*'],
