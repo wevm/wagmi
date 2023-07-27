@@ -1,4 +1,4 @@
-import type { Abi } from 'viem'
+import { type Abi } from 'viem'
 import {
   type ReadContractParameters as viem_ReadContractParameters,
   type ReadContractReturnType as viem_ReadContractReturnType,

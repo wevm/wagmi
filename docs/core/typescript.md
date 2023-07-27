@@ -164,7 +164,7 @@ result
 You can prevent runtime errors and be more productive by making sure your ABIs and Typed Data definitions are set up appropriately. 🎉
 
 ```ts twoslash
-// @errors: 2322
+// @errors: 2820
 import { createConfig, http } from '@wagmi/core'
 import { mainnet, sepolia } from '@wagmi/core/chains'
 

@@ -187,10 +187,54 @@ data
 You can prevent runtime errors and be more productive by making sure your ABIs and Typed Data definitions are set up appropriately. 🎉
 
 ```ts twoslash
-// @errors: 2322
+// @errors: 2820
+const erc721Abi = [
+  {
+    name: 'balanceOf',
+    type: 'function',
+    stateMutability: 'view',
+    inputs: [{ type: 'address', name: 'owner' }],
+    outputs: [{ type: 'uint256' }],
+  },
+  {
+    name: 'isApprovedForAll',
+    type: 'function',
+    stateMutability: 'view',
+    inputs: [
+      { type: 'address', name: 'owner' },
+      { type: 'address', name: 'operator' },
+    ],
+    outputs: [{ type: 'bool' }],
+  },
+  {
+    name: 'getApproved',
+    type: 'function',
+    stateMutability: 'view',
+    inputs: [{ type: 'uint256', name: 'tokenId' }],
+    outputs: [{ type: 'address' }],
+  },
+  {
+    name: 'ownerOf',
+    type: 'function',
+    stateMutability: 'view',
+    inputs: [{ type: 'uint256', name: 'tokenId' }],
+    outputs: [{ type: 'address' }],
+  },
+  {
+    name: 'tokenURI',
+    type: 'function',
+    stateMutability: 'pure',
+    inputs: [{ type: 'uint256', name: 'tokenId' }],
+    outputs: [{ type: 'string' }],
+  },
+] as const
+// ---cut---
 import { useContractRead } from 'wagmi'
 
-useContractRead({ functionName: 'balanecOf' })
+useContractRead({
+  abi: erc721Abi,
+  functionName: 'balanecOf',
+})
 ```
 
 ## Configure Internal Types

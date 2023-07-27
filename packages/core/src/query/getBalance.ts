@@ -40,7 +40,7 @@ export function getBalanceQueryOptions<config extends Config>(
   >
 }
 
-export type GetBalanceQueryFnData = NonNullable<GetBalanceReturnType> | null
+export type GetBalanceQueryFnData = Evaluate<GetBalanceReturnType>
 
 export type GetBalanceData = GetBalanceQueryFnData
 

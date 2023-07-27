@@ -34,8 +34,7 @@ export function getBlockNumberQueryOptions<config extends Config>(
   >
 }
 
-export type GetBlockNumberQueryFnData =
-  NonNullable<GetBlockNumberReturnType> | null
+export type GetBlockNumberQueryFnData = GetBlockNumberReturnType
 
 export type GetBlockNumberData = GetBlockNumberQueryFnData
 

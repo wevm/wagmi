@@ -7,7 +7,7 @@ import {
   type ReadContractQueryKey,
   readContractQueryOptions,
 } from '@wagmi/core/query'
-import type { Abi } from 'viem'
+import { type Abi } from 'viem'
 
 import {
   type UseQueryParameters,

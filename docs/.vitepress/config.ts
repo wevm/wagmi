@@ -1,10 +1,10 @@
+import ts from 'typescript'
 import { presetAttributify, presetIcons, presetUno } from 'unocss'
 import Unocss from 'unocss/vite'
 import { DefaultTheme, defineConfig } from 'vitepress'
 import { withTwoslash } from 'vitepress-plugin-shiki-twoslash'
 
 import reactPackage from '../../packages/react/package.json'
-import ts from 'typescript'
 
 // https://vitepress.dev/reference/site-config
 export default withTwoslash(
