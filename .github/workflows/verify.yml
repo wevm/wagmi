@@ -44,6 +44,9 @@ jobs:
       - name: Build
         run: pnpm build
 
+      - name: Publint
+        run: pnpm test:build
+
   types:
     name: Types
     needs: lint

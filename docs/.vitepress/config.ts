@@ -198,6 +198,7 @@ function getSidebar() {
           { text: 'createConfig 🚧', link: '/react/createConfig' },
           { text: 'WagmiConfig 🚧', link: '/react/WagmiConfig' },
           { text: 'Actions 🚧', link: '/react/actions' },
+          { text: 'Chains', link: '/react/chains' },
           {
             text: 'Connectors 🚧',
             collapsed: true,
@@ -415,6 +416,7 @@ function getSidebar() {
               { text: 'writeContract 🚧', link: '/core/actions/writeContract' },
             ],
           },
+          { text: 'Chains', link: '/core/chains' },
           {
             text: 'Connectors 🚧',
             collapsed: true,
