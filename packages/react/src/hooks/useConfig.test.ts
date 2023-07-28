@@ -17,7 +17,7 @@ test('throws when not inside Provider', () => {
     })
   } catch (error) {
     expect(error).toMatchInlineSnapshot(
-      '[Error: `useConfig` must be used within `WagmiConfig`.]',
+      '[Error: `useConfig` must be used within `WagmiProvider`.]',
     )
   }
 })

@@ -1,10 +1,10 @@
 import { expect, test } from 'vitest'
 
-import { WagmiConfigNotFoundError } from './context.js'
+import { WagmiProviderNotFoundError } from './context.js'
 
-test('WagmiConfigNotFoundError', () => {
-  expect(new WagmiConfigNotFoundError()).toMatchInlineSnapshot(`
-    [WagmiConfigNotFoundError: \`useConfig\` must be used within \`WagmiConfig\`.
+test('WagmiProviderNotFoundError', () => {
+  expect(new WagmiProviderNotFoundError()).toMatchInlineSnapshot(`
+    [WagmiProviderNotFoundError: \`useConfig\` must be used within \`WagmiProvider\`.
 
     Version: wagmi@x.y.z]
   `)

@@ -6,17 +6,12 @@ export const WagmiContext = createContext<
   ResolvedRegister['config'] | undefined
 >(undefined)
 
-export type WagmiConfigProps = OneOf<
-  | {
-      /** @deprecated Use `value` instead */
-      config: ResolvedRegister['config']
-    }
-  | { value: ResolvedRegister['config'] }
+export type WagmiProviderProps = OneOf<
+  { config: ResolvedRegister['config'] } | { value: ResolvedRegister['config'] }
 >
 
-// TODO: Rename Provider
-export function WagmiConfig(
-  parameters: React.PropsWithChildren<WagmiConfigProps>,
+export function WagmiProvider(
+  parameters: React.PropsWithChildren<WagmiProviderProps>,
 ) {
   const { children, value = parameters.config! } = parameters
   // rome-ignore lint/nursery/useExhaustiveDependencies: only run on mount

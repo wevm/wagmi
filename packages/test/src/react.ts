@@ -6,7 +6,7 @@ import {
   waitFor as waitFor_,
   type waitForOptions,
 } from '@testing-library/react'
-import { WagmiConfig } from 'wagmi'
+import { WagmiProvider } from 'wagmi'
 
 import { config } from './config.js'
 import { createElement } from 'react'
@@ -34,7 +34,7 @@ export function renderHook<Result, Props>(
 ): RenderHookResult<Result, Props> {
   queryClient.clear()
   return renderHook_(render, {
-    wrapper: createWrapper(WagmiConfig, { value: config }),
+    wrapper: createWrapper(WagmiProvider, { value: config }),
     ...options,
   })
 }

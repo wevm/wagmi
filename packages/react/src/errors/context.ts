@@ -1,8 +1,8 @@
 import { BaseError } from './base.js'
 
-export class WagmiConfigNotFoundError extends BaseError {
-  override name = 'WagmiConfigNotFoundError'
+export class WagmiProviderNotFoundError extends BaseError {
+  override name = 'WagmiProviderNotFoundError'
   constructor() {
-    super('`useConfig` must be used within `WagmiConfig`.')
+    super('`useConfig` must be used within `WagmiProvider`.')
   }
 }

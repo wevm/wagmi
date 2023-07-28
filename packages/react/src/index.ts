@@ -13,11 +13,13 @@ export {
 // Context
 
 export {
-  type WagmiConfigProps,
-  WagmiConfig,
+  type WagmiProviderProps,
   WagmiContext,
+  WagmiProvider,
   /** @deprecated Use `WagmiContext` instead */
   WagmiContext as Context,
+  /** @deprecated Use `WagmiProvider` instead */
+  WagmiProvider as WagmiConfig,
 } from './context.js'
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -25,7 +27,7 @@ export {
 
 export { BaseError } from './errors/base.js'
 
-export { WagmiConfigNotFoundError } from './errors/context.js'
+export { WagmiProviderNotFoundError } from './errors/context.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // Hooks

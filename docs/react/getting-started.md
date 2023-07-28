@@ -91,45 +91,45 @@ By registering the `config`, `useBlockNumber`'s `chainId` is strongly typed to o
 
 ### Wrap App in Context Provider
 
-Wrap your app in the `WagmiConfig` React Context Provider and pass the `config` you created earlier to the `value` property.
+Wrap your app in the `WagmiProvider` React Context Provider and pass the `config` you created earlier to the `value` property.
 
 ::: code-group
 ```tsx [app.tsx]
-import { WagmiConfig } from 'wagmi' // [!code focus]
+import { WagmiProvider } from 'wagmi' // [!code focus]
 import { config } from './config' // [!code focus]
 
 function App() {
   return (
-    <WagmiConfig value={config}> // [!code focus]
+    <WagmiProvider value={config}> // [!code focus]
       {/** Your App */} // [!code focus]
-    </WagmiConfig> // [!code focus]
+    </WagmiProvider> // [!code focus]
   )
 }
 ```
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
-Check out the [`WagmiConfig` docs](/react/WagmiConfig) to learn more about React Context in Wagmi.
+Check out the [`WagmiProvider` docs](/react/WagmiProvider) to learn more about React Context in Wagmi.
 
 ### Setup TanStack Query
 
-Inside the `WagmiConfig`, wrap your app in a TanStack Query React Context Provider, e.g. `QueryClientProvider`, and pass a new `QueryClient` instance to the `client` property.
+Inside the `WagmiProvider`, wrap your app in a TanStack Query React Context Provider, e.g. `QueryClientProvider`, and pass a new `QueryClient` instance to the `client` property.
 
 ::: code-group
 ```tsx [app.tsx]
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query' // [!code focus]
-import { WagmiConfig } from 'wagmi'
+import { WagmiProvider } from 'wagmi'
 import { config } from './config'
 
 const queryClient = new QueryClient() // [!code focus]
 
 function App() {
   return (
-    <WagmiConfig value={config}>
+    <WagmiProvider value={config}>
       <QueryClientProvider client={queryClient}> // [!code focus]
         {/** Your App */} // [!code focus]
       </QueryClientProvider> // [!code focus]
-    </WagmiConfig>
+    </WagmiProvider>
   )
 }
 ```
@@ -157,18 +157,18 @@ function Profile() {
 ```
 ```tsx [app.tsx]
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { WagmiConfig } from 'wagmi'
+import { WagmiProvider } from 'wagmi'
 import { config } from './config'
 
 const queryClient = new QueryClient()
 
 function App() {
   return (
-    <WagmiConfig value={config}>
+    <WagmiProvider value={config}>
       <QueryClientProvider client={queryClient}>
         {/** Your App */}
       </QueryClientProvider>
-    </WagmiConfig>
+    </WagmiProvider>
   )
 }
 ```

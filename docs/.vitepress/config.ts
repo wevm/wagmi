@@ -197,7 +197,7 @@ function getSidebar() {
         items: [
           { text: 'createConfig', link: '/react/createConfig' },
           { text: 'createStorage 🚧', link: '/react/createStorage' },
-          { text: 'WagmiConfig 🚧', link: '/react/WagmiConfig' },
+          { text: 'WagmiProvider 🚧', link: '/react/WagmiProvider' },
           { text: 'Actions 🚧', link: '/react/actions' },
           { text: 'Chains', link: '/react/chains' },
           {

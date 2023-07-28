@@ -8,7 +8,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import { config } from './wagmi.ts'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
-import { WagmiConfig, deserialize, serialize } from 'wagmi'
+import { WagmiProvider, deserialize, serialize } from 'wagmi'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -31,7 +31,7 @@ const persister = createSyncStoragePersister({
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <WagmiConfig value={config}>
+    <WagmiProvider value={config}>
       <PersistQueryClientProvider
         client={queryClient}
         persistOptions={{ persister }}
@@ -39,6 +39,6 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         <App />
         <ReactQueryDevtools initialIsOpen={false} />
       </PersistQueryClientProvider>
-    </WagmiConfig>
+    </WagmiProvider>
   </React.StrictMode>,
 )

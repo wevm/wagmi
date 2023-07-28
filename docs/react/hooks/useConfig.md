@@ -1,6 +1,6 @@
 # useConfig
 
-Hook for getting [Config](/TODO) from nearest [WagmiConfig](/react/WagmiConfig).
+Hook for getting [Config](/TODO) from nearest [WagmiProvider](/react/WagmiProvider).
 
 ## Import
 
