@@ -19,7 +19,13 @@ const filteredChains = computed(() => {
 </script>
 
 <template>
-  <input class="Search" h-10 w-full mb-4 aria-label="Search chains" placeholder="Search chains" v-model="message" />
+  <div relative flex="~ items-center" mb-4>
+    <input class="Search" h-10 w-full aria-label="Search chains" placeholder="Search chains" v-model="message" />
+    <span absolute right-4 font-500 op-50 text-xs>{{ filteredChains.length }} {{ filteredChains.length === 1 ?
+      "Chain" :
+      "Chains"
+    }}</span>
+  </div>
 
   <div class="Columns">
     <div v-for="chain of filteredChains" class="Item" h-30 flex="~ col items-center justify-center gap-1.5">

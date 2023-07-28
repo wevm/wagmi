@@ -1,7 +1,7 @@
 import { accounts, testConnector } from '@wagmi/test'
 import { createClient, http } from 'viem'
 import { mainnet, sepolia } from 'viem/chains'
-import { test } from 'vitest'
+import { expectTypeOf, test } from 'vitest'
 
 import { createConfig } from './config.js'
 
@@ -15,7 +15,8 @@ test('high-level config', () => {
       [sepolia.id]: http(),
     },
   })
-  config.getClient({ chainId: mainnet.id })
+  const client = config.getClient({ chainId: mainnet.id })
+  expectTypeOf(client.chain).toEqualTypeOf(mainnet)
 })
 
 test('low-level config', () => {
@@ -24,10 +25,7 @@ test('low-level config', () => {
     chains: [mainnet, sepolia],
     connectors: [testConnector({ accounts })],
     client({ chain }) {
-      return createClient({
-        chain,
-        transport: http(),
-      })
+      return createClient({ chain, transport: http() })
     },
   })
 })

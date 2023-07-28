@@ -14,6 +14,7 @@ export type WagmiConfigProps = OneOf<
   | { value: ResolvedRegister['config'] }
 >
 
+// TODO: Rename Provider
 export function WagmiConfig(
   parameters: React.PropsWithChildren<WagmiConfigProps>,
 ) {

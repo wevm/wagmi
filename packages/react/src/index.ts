@@ -188,6 +188,7 @@ export {
   type Connector,
   type Config,
   type CreateConfigParameters,
+  type State,
   createConfig,
   // Connector
   type ConnectorEventMap,

@@ -214,6 +214,7 @@ export {
   type Connector,
   type Config,
   type CreateConfigParameters,
+  type State,
   createConfig,
 } from './config.js'
 

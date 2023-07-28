@@ -195,13 +195,15 @@ function getSidebar() {
       {
         text: 'API',
         items: [
-          { text: 'createConfig 🚧', link: '/react/createConfig' },
+          { text: 'createConfig', link: '/react/createConfig' },
+          { text: 'createStorage 🚧', link: '/react/createStorage' },
           { text: 'WagmiConfig 🚧', link: '/react/WagmiConfig' },
           { text: 'Actions 🚧', link: '/react/actions' },
           { text: 'Chains', link: '/react/chains' },
           {
             text: 'Connectors 🚧',
             collapsed: true,
+            link: '/react/connectors',
             items: [
               {
                 text: 'coinbaseWallet 🚧',
@@ -345,7 +347,7 @@ function getSidebar() {
       {
         text: 'API',
         items: [
-          { text: 'createConfig 🚧', link: '/core/createConfig' },
+          { text: 'createConfig', link: '/core/createConfig' },
           { text: 'createConnector 🚧', link: '/core/createConnector' },
           { text: 'createStorage 🚧', link: '/core/createStorage' },
           {

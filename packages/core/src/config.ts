@@ -20,13 +20,13 @@ export type CreateConfigParameters<
 > = Evaluate<
   {
     chains: chains
-    connectors?: CreateConnectorFn[]
+    connectors?: CreateConnectorFn[] | undefined
     reconnectOnMount?: boolean | undefined
     storage?: Storage | null | undefined
     syncConnectedChain?: boolean | undefined
   } & OneOf<
     | {
-        pollingInterval?: number
+        pollingInterval?: number | undefined
         transports: Record<chains[number]['id'], Transport>
       }
     | {
@@ -53,9 +53,9 @@ export type Config<
   readonly state: State<chains>
   readonly storage: Storage | null
 
-  getClient<chainId extends chains[number]['id'] | undefined>(parameters?: {
-    chainId?: chainId | chains[number]['id'] | undefined | undefined
-  }): Client
+  getClient<chainId extends chains[number]['id']>(parameters?: {
+    chainId?: chainId | chains[number]['id'] | undefined
+  }): Client<Transport, Extract<chains[number], { id: chainId }>>
   setState<chains_ extends readonly [Chain, ...Chain[]] = chains>(
     value: State<chains_> | ((state: State<chains_>) => State<chains_>),
   ): void
@@ -105,7 +105,7 @@ export function createConfig<
 >({
   autoConnect,
   chains,
-  reconnectOnMount = autoConnect ?? false,
+  reconnectOnMount = autoConnect ?? true,
   storage = createStorage({
     storage:
       typeof window !== 'undefined' && window.localStorage
@@ -137,27 +137,29 @@ export function createConfig<
     return connector
   }
 
-  // TODO: WebSocket support
-  const clients = new Map<number, Client>()
-  function getClient(parameters: { chainId?: number | undefined } = {}) {
+  const clients = new Map<number, Client<Transport, chains[number]>>()
+  function getClient<chainId extends chains[number]['id']>(
+    parameters: { chainId?: chainId | chains[number]['id'] | undefined } = {},
+  ): Client<Transport, Extract<chains[number], { id: chainId }>> {
     const chainId = parameters.chainId ?? store.getState().chainId
     const chain = chains.find((x) => x.id === chainId)
 
     // If the target chain is not configured, use the client of the current chain.
     // TODO: should we error instead? idk. figure out later.
+    type Return = Client<Transport, Extract<chains[number], { id: chainId }>>
     {
       const client = clients.get(store.getState().chainId)
-      if (client && !chain) return client
+      if (client && !chain) return client as Return
       else if (!chain) throw new ChainNotConfiguredError()
     }
 
     // If a memoized client exists for a chain id, use that.
     {
       const client = clients.get(chainId)
-      if (client) return client
+      if (client) return client as Return
     }
 
-    let client: Client
+    let client
     if (rest.client) client = rest.client({ chain })
     else
       client = createClient({
@@ -168,7 +170,7 @@ export function createConfig<
       })
 
     clients.set(chainId, client)
-    return client
+    return client as Return
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////////////
