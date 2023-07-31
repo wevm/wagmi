@@ -187,9 +187,9 @@ function getSidebar() {
           },
           {
             text: 'TanStack Query 🚧',
-            link: '/react/connect-wallet',
+            link: '/react/tanstack-query',
           },
-          { text: 'Migration Guide 🚧', link: '/react/migration-guide' },
+          { text: 'Migrate from v1 to v2 🚧', link: '/react/migration-guide' },
         ],
       },
       {
@@ -236,44 +236,44 @@ function getSidebar() {
               },
               { text: 'useChainId 🚧', link: '/react/hooks/useChainId' },
               { text: 'useConfig 🚧', link: '/react/hooks/useConfig' },
-              { text: 'useConnect', link: '/react/hooks/useConnect' },
+              { text: 'useConnect 🚧', link: '/react/hooks/useConnect' },
               {
                 text: 'useConnections 🚧',
                 link: '/react/hooks/useConnections',
-              },
-              {
-                text: 'useContractRead 🚧',
-                link: '/react/hooks/useContractRead',
-              },
-              {
-                text: 'useContractInfiniteReads 🚧',
-                link: '/react/hooks/useContractInfiniteReads',
-              },
-              {
-                text: 'useContractReads 🚧',
-                link: '/react/hooks/useContractReads',
               },
               {
                 text: 'useContractEvent 🚧',
                 link: '/react/hooks/useContractEvent',
               },
               {
+                text: 'useContractInfiniteReads 🚧',
+                link: '/react/hooks/useContractInfiniteReads',
+              },
+              {
+                text: 'useContractRead 🚧',
+                link: '/react/hooks/useContractRead',
+              },
+              {
+                text: 'useContractReads 🚧',
+                link: '/react/hooks/useContractReads',
+              },
+              {
+                text: 'useContractSimulate 🚧',
+                link: '/react/hooks/useContractSimulate',
+              },
+              {
                 text: 'useContractWrite 🚧',
                 link: '/react/hooks/useContractWrite',
               },
-              { text: 'useDisconnect', link: '/react/hooks/useDisconnect' },
+              { text: 'useDisconnect 🚧', link: '/react/hooks/useDisconnect' },
               { text: 'useEnsAddress 🚧', link: '/react/hooks/useEnsAddress' },
               { text: 'useEnsAvatar 🚧', link: '/react/hooks/useEnsAvatar' },
               { text: 'useEnsName 🚧', link: '/react/hooks/useEnsName' },
               {
-                text: 'useEnsResovler 🚧',
-                link: '/react/hooks/useEnsResovler',
+                text: 'useEnsResolver 🚧',
+                link: '/react/hooks/useEnsResolver',
               },
               { text: 'useFeeData 🚧', link: '/react/hooks/useFeeData' },
-              {
-                text: 'usePrepareContractWrite 🚧',
-                link: '/react/hooks/usePrepareContractWrite',
-              },
               {
                 text: 'usePrepareSendTransaction 🚧',
                 link: '/react/hooks/usePrepareSendTransaction',
@@ -353,7 +353,7 @@ function getSidebar() {
             text: 'Framework Adapters 🚧',
             link: '/core/framework-adapter',
           },
-          { text: 'Migration Guide 🚧', link: '/core/migration-guide' },
+          { text: 'Migrate from v1 to v2 🚧', link: '/core/migration-guide' },
         ],
       },
       {
@@ -366,8 +366,8 @@ function getSidebar() {
             text: 'Actions 🚧',
             collapsed: true,
             items: [
-              { text: 'connect', link: '/core/actions/connect' },
-              { text: 'disconnect', link: '/core/actions/disconnect' },
+              { text: 'connect 🚧', link: '/core/actions/connect' },
+              { text: 'disconnect 🚧', link: '/core/actions/disconnect' },
               { text: 'getAccount', link: '/core/actions/getAccount' },
               { text: 'getBalance 🚧', link: '/core/actions/getBalance' },
               {
@@ -393,14 +393,10 @@ function getSidebar() {
               { text: 'getFeeData 🚧', link: '/core/actions/getFeeData' },
               { text: 'getToken 🚧', link: '/core/actions/getToken' },
               {
-                text: 'prepareContractWrite 🚧',
-                link: '/core/actions/prepareContractWrite',
-              },
-              {
                 text: 'prepareSendTransaction 🚧',
                 link: '/core/actions/prepareSendTransaction',
               },
-              { text: 'reconnect', link: '/core/actions/reconnect' },
+              { text: 'reconnect 🚧', link: '/core/actions/reconnect' },
               { text: 'readContract 🚧', link: '/core/actions/readContract' },
               { text: 'readContracts 🚧', link: '/core/actions/readContracts' },
               {
@@ -416,7 +412,11 @@ function getSidebar() {
                 link: '/core/actions/signTypedData',
               },
               {
-                text: 'switchAccount',
+                text: 'simulateContract 🚧',
+                link: '/core/actions/simulateContract',
+              },
+              {
+                text: 'switchAccount 🚧',
                 link: '/core/actions/switchAccount',
               },
               {

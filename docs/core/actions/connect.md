@@ -106,9 +106,10 @@ import { type ConnectError } from '@wagmi/core'
 
 ```ts
 import {
-  type ConnectMutationData,
-  type ConnectMutationVariables,
-  type ConnectMutationParameters,
+  type ConnectData,
+  type ConnectVariables,
+  type ConnectMutate,
+  type ConnectMutateAsync,
   connectMutationOptions,
-} from '@wagmi/core'
+} from '@wagmi/core/query'
 ```

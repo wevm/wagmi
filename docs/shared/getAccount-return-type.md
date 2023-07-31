@@ -9,7 +9,7 @@ const TVariables = 'TVariables'
 `Address | undefined`
 
 - Connected address from connector.
-- Defaults to first address in [addresses](#addresses).
+- Defaults to first address in [`addresses`](#addresses).
 
 ### addresses
 
@@ -33,7 +33,7 @@ Connected connector.
 
 `boolean`
 
-Boolean variables derived from [status](#status).
+Boolean variables derived from [`status`](#status).
 
 ### status
 

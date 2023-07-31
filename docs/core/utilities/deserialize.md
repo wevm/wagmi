@@ -1,5 +1,5 @@
 <script setup>
-const packageName = 'wagmi'
+const packageName = '@wagmi/core'
 </script>
 
 <!--@include: @shared/utilities/deserialize.md-->

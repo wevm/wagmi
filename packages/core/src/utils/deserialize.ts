@@ -1,4 +1,4 @@
-export type Reviver = (this: any, key: string, value: any) => any
+export type Reviver = (key: string, value: any) => any
 
 export function deserialize(value: string, reviver?: Reviver) {
   return JSON.parse(value, (key, value_) => {
