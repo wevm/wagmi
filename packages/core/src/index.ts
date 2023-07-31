@@ -248,6 +248,7 @@ export {
 // Storage
 
 export {
+  type CreateStorageParameters,
   type Storage,
   createStorage,
   noopStorage,

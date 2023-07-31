@@ -201,6 +201,7 @@ export {
   ProviderNotFoundError,
   ConnectorAlreadyConnectedError,
   // Storage
+  type CreateStorageParameters,
   type Storage,
   createStorage,
   noopStorage,

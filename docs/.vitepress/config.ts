@@ -196,8 +196,8 @@ function getSidebar() {
         text: 'API',
         items: [
           { text: 'createConfig', link: '/react/createConfig' },
-          { text: 'createStorage 🚧', link: '/react/createStorage' },
-          { text: 'WagmiProvider 🚧', link: '/react/WagmiProvider' },
+          { text: 'createStorage', link: '/react/createStorage' },
+          { text: 'WagmiProvider', link: '/react/WagmiProvider' },
           { text: 'Actions 🚧', link: '/react/actions' },
           { text: 'Chains', link: '/react/chains' },
           {
@@ -322,6 +322,18 @@ function getSidebar() {
             ],
           },
           { text: 'Errors 🚧', link: '/react/errors' },
+          {
+            text: 'Utilities 🚧',
+            collapsed: true,
+            items: [
+              { text: 'deserialize', link: '/react/utilities/deserialize' },
+              {
+                text: 'normalizeChainId 🚧',
+                link: '/react/utilities/normalizeChainId',
+              },
+              { text: 'serialize', link: '/react/utilities/serialize' },
+            ],
+          },
         ],
       },
     ],
@@ -349,7 +361,7 @@ function getSidebar() {
         items: [
           { text: 'createConfig', link: '/core/createConfig' },
           { text: 'createConnector 🚧', link: '/core/createConnector' },
-          { text: 'createStorage 🚧', link: '/core/createStorage' },
+          { text: 'createStorage', link: '/core/createStorage' },
           {
             text: 'Actions 🚧',
             collapsed: true,
@@ -448,9 +460,12 @@ function getSidebar() {
             text: 'Utilities 🚧',
             collapsed: true,
             items: [
-              { text: 'deserialize 🚧', link: '/core/deserialize' },
-              { text: 'normalizeChainId 🚧', link: '/core/normalizeChainId' },
-              { text: 'serialize 🚧', link: '/core/serialize' },
+              { text: 'deserialize', link: '/core/utilities/deserialize' },
+              {
+                text: 'normalizeChainId 🚧',
+                link: '/core/utilities/normalizeChainId',
+              },
+              { text: 'serialize', link: '/core/utilities/serialize' },
             ],
           },
         ],

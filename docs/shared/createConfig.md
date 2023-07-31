@@ -103,7 +103,7 @@ const config = createConfig({
 
 `Storage | null | undefined`
 
-- <a :href="`/${docsPath}/createStorage`">`Storage`</a> used by the config. Persists `Config`'s [`State`](#state) between sessions.
+- <a :href="`/${docsPath}/createStorage#storage`">`Storage`</a> used by the config. Persists `Config`'s [`State`](#state-1) between sessions.
 - Defaults to `createStorage({ storage: typeof window !== 'undefined' && window.localStorage ? window.localStorage : noopStorage })`.
 
 ```ts-vue
@@ -217,9 +217,9 @@ When using this option, you likely want to pass `parameters.chain` straight thro
 import { type Config } from '{{packageName}}'
 ```
 
-[`Config`](#config) object responsible for managing Wagmi state and internals.
-
 ## Config
+
+Object responsible for managing Wagmi state and internals.
 
 ```ts-vue
 import { type Config } from '{{packageName}}'
@@ -251,7 +251,7 @@ The `Config` object's internal state. See [`State`](#state) for more info.
 
 ### getClient
 
-`<chainId extends chains[number]['id']>(parameters?: { chainId?: chainId | chains[number]['id'] | undefined }): Client<Transport, Extract<chains[number], { id: chainId }>>`
+`(parameters?: { chainId?: chainId | chains[number]['id'] | undefined }): Client<Transport, Extract<chains[number], { id: chainId }>>`
 
 Creates new Viem [`Client`](https://viem.sh/docs/clients/custom.html) object.
 
@@ -277,7 +277,7 @@ export const config = createConfig({
 
 ### setState
 
-`<chains_ extends readonly [Chain, ...Chain[]] = chains>(value: State<chains_> | ((state: State<chains_>) => State<chains_>)) => void`
+`(value: State<chains> | ((state: State<chains>) => State<chains>)) => void`
 
 Updates the `Config` object's internal state. See [`State`](#state) for more info.
 
@@ -311,7 +311,7 @@ Exercise caution when using this method. It is intended for internal and advance
 
 ### subscribe
 
-`<state>(selector: (state: State<chains>) => state, listener: (selectedState: state, previousSelectedState: state) => void, options?: { equalityFn?: (a: state, b: state) => boolean; fireImmediately?: boolean })=> (() => void)`
+`(selector: (state: State<chains>) => state, listener: (selectedState: state, previousSelectedState: state) => void, options?: { equalityFn?: (a: state, b: state) => boolean; fireImmediately?: boolean })=> (() => void)`
 
 Listens for state changes matching the `selector` function. Returns a function that can be called to unsubscribe the listener.
 
@@ -355,7 +355,7 @@ Current chain ID. When `syncConnectedChain` is `true`, `chainId` is kept in sync
 
 `Map<string, Connection>`
 
-Mapping of unique connection identifier to [`Connection`](#connection) object.
+Mapping of unique connector identifier to [`Connection`](#connection) object.
 
 ### current
 
@@ -376,14 +376,24 @@ Current connection status.
 
 ## Connection
 
+```ts-vue
+import { type Connection } from '{{packageName}}'
+```
+
 ### accounts
 
 `readonly Address[]`
+
+Array of addresses associated with the connection.
 
 ### chainId
 
 `number`
 
+Chain ID associated with the connection.
+
 ### connector
 
 `Connector`
+
+Connector associated with the connection.

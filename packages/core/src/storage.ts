@@ -10,6 +10,7 @@ export type StorageItemMap = {
 
 export type Storage<
   itemMap extends Record<string, unknown> = {},
+  ///
   storageItemMap extends StorageItemMap = StorageItemMap & itemMap,
 > = {
   getItem<
@@ -33,20 +34,23 @@ type BaseStorage = {
   removeItem: (key: string) => void
 }
 
+export type CreateStorageParameters = {
+  deserialize?: (<T>(value: string) => T) | undefined
+  key?: string | undefined
+  serialize?: (<T>(value: T) => string) | undefined
+  storage: BaseStorage
+}
+
 export function createStorage<
   itemMap extends Record<string, unknown> = {},
   storageItemMap extends StorageItemMap = StorageItemMap & itemMap,
->({
-  deserialize = deserialize_,
-  key: prefix = 'wagmi',
-  serialize = serialize_,
-  storage,
-}: {
-  deserialize?: <T>(value: string) => T
-  key?: string
-  serialize?: <T>(value: T) => string
-  storage: BaseStorage
-}): Storage<storageItemMap> {
+>(parameters: CreateStorageParameters): Storage<storageItemMap> {
+  const {
+    deserialize = deserialize_,
+    key: prefix = 'wagmi',
+    serialize = serialize_,
+    storage,
+  } = parameters
   return {
     ...storage,
     getItem(key, defaultValue) {
