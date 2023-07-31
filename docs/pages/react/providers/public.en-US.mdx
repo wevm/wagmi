@@ -60,20 +60,3 @@ const { chains, publicClient } = configureChains(
   ],
 )
 ```
-
-### weight (optional)
-
-The weight a response from this provider provides. This can be used if a given provider is more trusted.
-
-```ts {7-8}
-import { chain, configureChains } from 'wagmi'
-import { publicProvider } from 'wagmi/providers/public'
-
-const { chains, publicClient } = configureChains(
-  [chain.mainnet, chain.polygon],
-  [
-    alchemyProvider({ apiKey: 'yourAlchemyApiKey', weight: 1 }),
-    publicProvider({ weight: 2 }),
-  ],
-)
-```
