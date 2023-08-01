@@ -58,10 +58,10 @@ jobs:
 
       # TODO: Combine these steps once supported
       # https://github.com/charmbracelet/vhs-action/issues/50
-      - uses: charmbracelet/vhs-action@v1
+      - uses: charmbracelet/vhs-action@v2
         with:
           path: 'packages/cli/vhs/init.tape'
-      - uses: charmbracelet/vhs-action@v1
+      - uses: charmbracelet/vhs-action@v2
         with:
           path: 'packages/cli/vhs/generate.tape'
         env:
