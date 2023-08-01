@@ -28,9 +28,9 @@ import { type GetAccountReturnType } from '@wagmi/core'
 
 <!--@include: @shared/getAccount-return-type.md-->
 
-## Watcher
+## watchAccount
 
-Action for subscribing to account changes.
+Subscribe to account changes.
 
 ### Import
 

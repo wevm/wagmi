@@ -1,6 +1,6 @@
 # useConnections
 
-Hook for getting active connections.
+Hook for getting active connections. Uses the [`getConnections`](/core/actions/getConnections) action.
 
 ## Import
 
@@ -18,6 +18,7 @@ function App() {
   const connections = useConnections()
 }
 ```
+<<< @/snippets/react/config.ts[config.ts]
 :::
 
 ## Return Type

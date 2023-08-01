@@ -1,3 +1,7 @@
+<script setup>
+const packageName = '@wagmi/core'
+</script>
+
 # connect
 
 Action for connecting accounts with [connectors](/core/connectors).
@@ -40,8 +44,8 @@ Not all connectors support connecting directly to a `chainId` (e.g. they don't s
 
 ::: code-group
 ```ts [index.ts]
-import { mainnet } from 'viem/chains'
 import { connect } from '@wagmi/core'
+import { mainnet } from '@wagmi/core/chains'
 import { injected } from '@wagmi/connectors'
 import { config } from './config'
 
@@ -65,7 +69,7 @@ const result = await connect(
 ::: code-group
 ```ts [index.ts]
 import { connect } from '@wagmi/core'
-import { injected } from '@wagmi/connectors'
+import { injected } from '@wagmi/connectors' // [!code focus]
 import { config } from './config'
 
 const result = await connect(
@@ -102,14 +106,4 @@ Connected chain ID from connector.
 import { type ConnectError } from '@wagmi/core'
 ```
 
-## TanStack Query
-
-```ts
-import {
-  type ConnectData,
-  type ConnectVariables,
-  type ConnectMutate,
-  type ConnectMutateAsync,
-  connectMutationOptions,
-} from '@wagmi/core/query'
-```
+<!--@include: @shared/query/connect.md-->

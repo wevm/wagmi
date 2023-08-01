@@ -37,11 +37,6 @@ export function useSponsors() {
       ],
       gold: [
         {
-          name: 'LooksRare',
-          url: 'https://looksrare.org',
-          img: 'looksrare-light.svg',
-        },
-        {
           name: 'WalletConnect',
           url: 'https://walletconnect.com',
           img: 'walletconnect-light.svg',

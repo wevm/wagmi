@@ -1,6 +1,6 @@
 # useAccount
 
-Hook for getting current account.
+Hook for getting current account. Uses the [`getAccount`](/core/actions/getAccount) action.
 
 ## Import
 
@@ -26,6 +26,7 @@ function App() {
   )
 }
 ```
+<<< @/snippets/react/config.ts[config.ts]
 :::
 
 ## Return Type

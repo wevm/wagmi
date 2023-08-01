@@ -1,4 +1,5 @@
 <script setup>
+const packageName = 'wagmi'
 const mutate = 'disconnect'
 const TData = 'void'
 const TError = 'DisconnectError'
@@ -7,7 +8,7 @@ const TVariables = '{ connector?: Connector | undefined; }'
 
 # useDisconnect
 
-Hook for disconnecting connections.
+Hook for disconnecting connections. Uses the [`disconnect`](/core/actions/connect) action.
 
 ## Import
 
@@ -20,7 +21,6 @@ import { useDisconnect } from 'wagmi'
 ::: code-group
 ```tsx [index.tsx]
 import { useDisconnect } from 'wagmi'
-import { config } from './config'
 
 function App() {
   const { disconnect } = useDisconnect()
@@ -41,62 +41,6 @@ function App() {
 import { type UseDisconnectParameters } from 'wagmi'
 ```
 
-### connector
-
-`Connector | undefined`
-
-[Connector](/react/connectors) to disconnect with.
-
-::: code-group
-```tsx [index.tsx]
-import { mainnet } from 'viem/chains'
-import { useAccount, useDisconnect } from 'wagmi'
-import { config } from './config'
-
-function App() {
-  const { connector } = useAccount()
-  const { disconnect } = useDisconnect({
-    connector, // [!code focus]
-  })
-
-  return (
-    <button onClick={() => disconnect()}>
-      Disconnect
-    </button>
-  )
-}
-```
-<<< @/snippets/react/config.ts[config.ts]
-:::
-
-### mutation
-
-Options passed to underlying [`useMutation`](https://tanstack.com/query/v5/docs/react/reference/useMutation) hook.
-
-::: code-group
-```tsx [index.tsx]
-import { mainnet } from 'viem/chains'
-import { useDisconnect } from 'wagmi'
-import { injected } from 'wagmi/connectors'
-
-function App() {
-  const { disconnect } = useDisconnect({
-    mutation: { // [!code focus:5]
-      onSuccess() {
-        console.log('Disconnected!')
-      }
-    },
-  })
-
-  return (
-    <button onClick={() => disconnect()}>
-      Disconnect
-    </button>
-  )
-}
-```
-:::
-
 <!--@include: @shared/mutation-options.md-->
 
 ## Return Type
@@ -109,6 +53,28 @@ import { type UseDisconnectReturnType } from 'wagmi'
 
 `readonly Connector[]`
 
-Connectors that are currently connected.
+Connectors that are currently connected. Useful for rendering a list of connectors to disconnect.
+
+```tsx
+import { useDisconnect } from 'wagmi'
+import { mainnet } from 'wagmi/chains'
+import { injected } from 'wagmi/connectors'
+
+function App() {
+  const { connectors, disconnect } = useDisconnect()
+
+  return (
+    <div>
+      {connectors.map((connector) => (
+        <button key={connector.id} onClick={() => disconnect({ connector })}>
+          {connector.name}
+        </button>
+      ))}
+    </div>
+  )
+}
+```
 
 <!--@include: @shared/mutation-result.md-->
+
+<!--@include: @shared/query/disconnect.md-->

@@ -28,9 +28,9 @@ import { type GetConnectionsReturnType } from '@wagmi/core'
 
 Active connections.
 
-## Watcher
+## watchConnections
 
-Action for subscribing to connections changes.
+Subscribe to connections changes.
 
 ### Import
 

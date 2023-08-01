@@ -1,3 +1,7 @@
+<script setup>
+const packageName = '@wagmi/core'
+</script>
+
 # disconnect
 
 Action for disconnecting connections.
@@ -34,15 +38,13 @@ import { type DisconnectParameters } from '@wagmi/core'
 
 ::: code-group
 ```ts [index.ts]
-import { disconnect } from '@wagmi/core'
+import { disconnect, getAccount } from '@wagmi/core'
 import { config } from './config'
 
-const { connections, current } = config.state.connections
+const { connector } = getAccount(config)
 const result = await disconnect(
   config,
-  {
-    connector: connections.get(current!)?.connector, // [!code focus]
-  },
+  { connector }, // [!code focus]
 )
 ```
 <<< @/snippets/core/config.ts[config.ts]
@@ -54,13 +56,4 @@ const result = await disconnect(
 import { type DisconnectError } from '@wagmi/core'
 ```
 
-## TanStack Query
-
-```ts
-import {
-  type DisconnectMutationData,
-  type DisconnectMutationVariables,
-  type DisconnectMutationParameters,
-  disconnectMutationOptions,
-} from '@wagmi/core'
-```
+<!--@include: @shared/query/disconnect.md-->

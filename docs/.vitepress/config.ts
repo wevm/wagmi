@@ -234,11 +234,11 @@ function getSidebar() {
                 text: 'useBlockNumber 🚧',
                 link: '/react/hooks/useBlockNumber',
               },
-              { text: 'useChainId 🚧', link: '/react/hooks/useChainId' },
-              { text: 'useConfig 🚧', link: '/react/hooks/useConfig' },
-              { text: 'useConnect 🚧', link: '/react/hooks/useConnect' },
+              { text: 'useChainId', link: '/react/hooks/useChainId' },
+              { text: 'useConfig', link: '/react/hooks/useConfig' },
+              { text: 'useConnect', link: '/react/hooks/useConnect' },
               {
-                text: 'useConnections 🚧',
+                text: 'useConnections',
                 link: '/react/hooks/useConnections',
               },
               {
@@ -265,7 +265,7 @@ function getSidebar() {
                 text: 'useContractWrite 🚧',
                 link: '/react/hooks/useContractWrite',
               },
-              { text: 'useDisconnect 🚧', link: '/react/hooks/useDisconnect' },
+              { text: 'useDisconnect', link: '/react/hooks/useDisconnect' },
               { text: 'useEnsAddress 🚧', link: '/react/hooks/useEnsAddress' },
               { text: 'useEnsAvatar 🚧', link: '/react/hooks/useEnsAvatar' },
               { text: 'useEnsName 🚧', link: '/react/hooks/useEnsName' },
@@ -323,12 +323,12 @@ function getSidebar() {
           },
           { text: 'Errors 🚧', link: '/react/errors' },
           {
-            text: 'Utilities 🚧',
+            text: 'Utilities',
             collapsed: true,
             items: [
               { text: 'deserialize', link: '/react/utilities/deserialize' },
               {
-                text: 'normalizeChainId 🚧',
+                text: 'normalizeChainId',
                 link: '/react/utilities/normalizeChainId',
               },
               { text: 'serialize', link: '/react/utilities/serialize' },
@@ -366,8 +366,8 @@ function getSidebar() {
             text: 'Actions 🚧',
             collapsed: true,
             items: [
-              { text: 'connect 🚧', link: '/core/actions/connect' },
-              { text: 'disconnect 🚧', link: '/core/actions/disconnect' },
+              { text: 'connect', link: '/core/actions/connect' },
+              { text: 'disconnect', link: '/core/actions/disconnect' },
               { text: 'getAccount', link: '/core/actions/getAccount' },
               { text: 'getBalance 🚧', link: '/core/actions/getBalance' },
               {
@@ -392,6 +392,14 @@ function getSidebar() {
               },
               { text: 'getFeeData 🚧', link: '/core/actions/getFeeData' },
               { text: 'getToken 🚧', link: '/core/actions/getToken' },
+              {
+                text: 'getTransaction 🚧',
+                link: '/core/actions/getTransaction',
+              },
+              {
+                text: 'multicall 🚧',
+                link: '/core/actions/multicall',
+              },
               {
                 text: 'prepareSendTransaction 🚧',
                 link: '/core/actions/prepareSendTransaction',
@@ -427,6 +435,14 @@ function getSidebar() {
                 text: 'waitForTransactionReceipt 🚧',
                 link: '/core/actions/waitForTransactionReceipt',
               },
+              {
+                text: 'watchContractEvent 🚧',
+                link: '/core/actions/watchContractEvent',
+              },
+              {
+                text: 'watchPendingTransactions 🚧',
+                link: '/core/actions/watchPendingTransactions',
+              },
               { text: 'writeContract 🚧', link: '/core/actions/writeContract' },
             ],
           },
@@ -457,12 +473,12 @@ function getSidebar() {
           },
           { text: 'Errors 🚧', link: '/core/errors' },
           {
-            text: 'Utilities 🚧',
+            text: 'Utilities',
             collapsed: true,
             items: [
               { text: 'deserialize', link: '/core/utilities/deserialize' },
               {
-                text: 'normalizeChainId 🚧',
+                text: 'normalizeChainId',
                 link: '/core/utilities/normalizeChainId',
               },
               { text: 'serialize', link: '/core/utilities/serialize' },

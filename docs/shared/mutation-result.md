@@ -7,6 +7,8 @@ const TVariables = 'TVariables'
 </script>
 -->
 
+[TanStack Query mutation docs](https://tanstack.com/query/latest/docs/react/reference/useMutation)
+
 ### {{mutate}}
 
 `(variables: {{TVariables}}, { onSuccess, onSettled, onError }) => void`

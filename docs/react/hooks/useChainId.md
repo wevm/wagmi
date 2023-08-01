@@ -1,6 +1,6 @@
 # useChainId
 
-Hook for getting current chain ID.
+Hook for getting current chain ID. Uses the [`getChainId`](/core/actions/getChainId) action.
 
 ## Import
 
@@ -18,6 +18,7 @@ function App() {
   const chainId = useChainId()
 }
 ```
+<<< @/snippets/react/config.ts[config.ts]
 :::
 
 ## Return Type

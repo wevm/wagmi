@@ -28,9 +28,9 @@ import { type GetChainIdReturnType } from '@wagmi/core'
 
 Current chain ID.
 
-## Watcher
+## watchChainId
 
-Action for subscribing to chain ID changes.
+Subscribe to chain ID changes.
 
 ### Import
 
