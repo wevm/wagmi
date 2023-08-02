@@ -73,6 +73,8 @@ const blockNumber = await getBlockNumber(config, {
 import { type GetBlockNumberReturnType } from '@wagmi/core'
 ```
 
+`bigint`
+
 Most recent block number seen.
 
 ## Error

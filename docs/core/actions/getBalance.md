@@ -157,8 +157,6 @@ const balance = getBalance(config, {
 import { type GetBalanceReturnType } from '@wagmi/core'
 ```
 
-Object with symbol and formatted and raw values.
-
 ### decimals
 
 `number`

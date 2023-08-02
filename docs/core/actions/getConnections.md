@@ -26,6 +26,8 @@ const connections = getConnections(config)
 import { type GetConnectionsReturnType } from '@wagmi/core'
 ```
 
+[`Connection[]`](/core/createConfig#connection)
+
 Active connections.
 
 ## watchConnections

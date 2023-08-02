@@ -26,6 +26,8 @@ const chainId = getChainId(config)
 import { type GetChainIdReturnType } from '@wagmi/core'
 ```
 
+`number`
+
 Current chain ID.
 
 ## watchChainId
