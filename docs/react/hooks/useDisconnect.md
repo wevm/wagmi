@@ -55,10 +55,10 @@ import { type UseDisconnectReturnType } from 'wagmi'
 
 Connectors that are currently connected. Useful for rendering a list of connectors to disconnect.
 
-```tsx
+::: code-group
+```tsx [index.tsx]
 import { useDisconnect } from 'wagmi'
 import { mainnet } from 'wagmi/chains'
-import { injected } from 'wagmi/connectors'
 
 function App() {
   const { connectors, disconnect } = useDisconnect()
@@ -74,6 +74,8 @@ function App() {
   )
 }
 ```
+<<< @/snippets/react/config.ts[config.ts]
+:::
 
 <!--@include: @shared/mutation-result.md-->
 

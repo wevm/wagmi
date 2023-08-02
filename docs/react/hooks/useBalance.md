@@ -1,6 +1,6 @@
 <script setup>
 const packageName = 'wagmi'
-const TData = '{ decimals: number; formatted: string; symbol: string; value: bigint }'
+const TData = '{ decimals: number; formatted: string; symbol: string; value: bigint; }'
 const TError = 'GetBalanceError'
 </script>
 

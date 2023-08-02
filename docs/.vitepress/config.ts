@@ -278,7 +278,7 @@ function getSidebar() {
                 text: 'usePrepareSendTransaction 🚧',
                 link: '/react/hooks/usePrepareSendTransaction',
               },
-              { text: 'useReconnect 🚧', link: '/react/hooks/useReconnect' },
+              { text: 'useReconnect', link: '/react/hooks/useReconnect' },
               {
                 text: 'useSendTransaction 🚧',
                 link: '/react/hooks/useSendTransaction',
@@ -404,7 +404,7 @@ function getSidebar() {
                 text: 'prepareSendTransaction 🚧',
                 link: '/core/actions/prepareSendTransaction',
               },
-              { text: 'reconnect 🚧', link: '/core/actions/reconnect' },
+              { text: 'reconnect', link: '/core/actions/reconnect' },
               { text: 'readContract 🚧', link: '/core/actions/readContract' },
               { text: 'readContracts 🚧', link: '/core/actions/readContracts' },
               {

@@ -1,3 +1,7 @@
+<script setup>
+const packageName = '@wagmi/core'
+</script>
+
 # reconnect
 
 Action for reconnecting [connectors](/core/connectors).
@@ -35,7 +39,7 @@ import { type ReconnectParameters } from '@wagmi/core'
 `(CreateConnectorFn | Connector)[] | undefined`
 
 - [Connectors](/core/connectors) to reconnect to.
-- Defaults to [config](/core/createConfig) connectors.
+- Defaults to [`Config['connectors']`](/core/createConfig#connectors).
 
 ::: code-group
 ```ts [index.ts]
@@ -59,21 +63,14 @@ const result = await reconnect(
 import { type ReconnectReturnType } from '@wagmi/core'
 ```
 
-[Connections](/TODO) that were successfully reconnected.
+`Connection[]`
+
+[Connections](/core/createConfig#connection) that were successfully reconnected.
 
 ## Error
 
 ```ts
-import { type ConnectError } from '@wagmi/core'
+import { type ReconnectError } from '@wagmi/core'
 ```
 
-## TanStack Query
-
-```ts
-import {
-  type ConnectMutationData,
-  type ConnectMutationVariables,
-  type ConnectMutationParameters,
-  connectMutationOptions,
-} from '@wagmi/core'
-```
+<!--@include: @shared/query/reconnect.md-->
