@@ -4,7 +4,7 @@ const packageName = '@wagmi/core'
 
 # getEnsAddress
 
-Action for fetching address for ENS name.
+Action for fetching ENS address for name.
 
 ## Import
 
@@ -43,7 +43,7 @@ import { type GetEnsAddressParameters } from '@wagmi/core'
 
 `bigint | undefined`
 
-Block number to get ensAddress at.
+Block number to get ENS address at.
 
 ::: code-group
 ```ts [index.ts]
@@ -63,7 +63,7 @@ const ensAddress = getEnsAddress(config, {
 
 `'latest' | 'earliest' | 'pending' | 'safe' | 'finalized' | undefined`
 
-Block tag to get ensAddress at.
+Block tag to get ENS address at.
 
 ::: code-group
 ```ts [index.ts]

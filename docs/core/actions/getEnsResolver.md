@@ -4,7 +4,7 @@ const packageName = '@wagmi/core'
 
 # getEnsResolver
 
-Action for fetching address for ENS resolver.
+Action for fetching ENS resolver for name.
 
 ## Import
 
@@ -43,7 +43,7 @@ import { type GetEnsResolverParameters } from '@wagmi/core'
 
 `bigint | undefined`
 
-Block number to get ensResolver at.
+Block number to get resolver at.
 
 ::: code-group
 ```ts [index.ts]
@@ -63,7 +63,7 @@ const ensResolver = getEnsResolver(config, {
 
 `'latest' | 'earliest' | 'pending' | 'safe' | 'finalized' | undefined`
 
-Block tag to get ensResolver at.
+Block tag to get resolver at.
 
 ::: code-group
 ```ts [index.ts]
@@ -106,7 +106,7 @@ const ensResolver = await getEnsResolver(config, {
 
 `string`
 
-Name to get the address for.
+Name to get the resolver for.
 
 ::: code-group
 ```ts [index.ts]

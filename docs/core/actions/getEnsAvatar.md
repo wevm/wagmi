@@ -4,7 +4,7 @@ const packageName = '@wagmi/core'
 
 # getEnsAvatar
 
-Action for fetching address for ENS avatar.
+Action for fetching ENS address for avatar.
 
 ## Import
 
@@ -43,7 +43,7 @@ import { type GetEnsAvatarParameters } from '@wagmi/core'
 
 `bigint | undefined`
 
-Block number to get ensAvatar at.
+Block number to get avatar at.
 
 ::: code-group
 ```ts [index.ts]
@@ -63,7 +63,7 @@ const ensAvatar = getEnsAvatar(config, {
 
 `'latest' | 'earliest' | 'pending' | 'safe' | 'finalized' | undefined`
 
-Block tag to get ensAvatar at.
+Block tag to get avatar at.
 
 ::: code-group
 ```ts [index.ts]
@@ -128,7 +128,7 @@ const ensAvatar = await getEnsAvatar(config, {
 
 `string`
 
-Name to get the address for.
+Name to get the avatar for.
 
 ::: code-group
 ```ts [index.ts]

@@ -17,7 +17,6 @@ import { getEnsName } from '@wagmi/core'
 ::: code-group
 ```ts [index.ts]
 import { getEnsName } from '@wagmi/core'
-import { normalize } from 'viem/ens'
 import { config } from './config'
 
 const ensName = getEnsName(config, {
@@ -39,12 +38,11 @@ import { type GetEnsNameParameters } from '@wagmi/core'
 
 `bigint | undefined`
 
-Block number to get ensName at.
+Block number to get name at.
 
 ::: code-group
 ```ts [index.ts]
 import { getEnsName } from '@wagmi/core'
-import { normalize } from 'viem/ens'
 import { config } from './config'
 
 const ensName = getEnsName(config, {
@@ -59,12 +57,11 @@ const ensName = getEnsName(config, {
 
 `'latest' | 'earliest' | 'pending' | 'safe' | 'finalized' | undefined`
 
-Block tag to get ensName at.
+Block tag to get name at.
 
 ::: code-group
 ```ts [index.ts]
 import { getEnsName } from '@wagmi/core'
-import { normalize } from 'viem/ens'
 import { config } from './config'
 
 const ensName = getEnsName(config, {
@@ -87,7 +84,6 @@ ID of chain to use when fetching data.
 ```ts [index.ts]
 import { getEnsName } from '@wagmi/core'
 import { mainnet } from '@wagmi/core/chains'
-import { normalize } from 'viem/ens'
 import { config } from './config'
 
 const ensName = await getEnsName(config, {
@@ -107,7 +103,6 @@ Address to get the name for.
 ::: code-group
 ```ts [index.ts]
 import { getEnsName } from '@wagmi/core'
-import { normalize } from 'viem/ens'
 import { config } from './config'
 
 const ensName = await getEnsName(config, {
@@ -127,7 +122,6 @@ const ensName = await getEnsName(config, {
 ::: code-group
 ```ts [index.ts]
 import { getEnsName } from '@wagmi/core'
-import { normalize } from 'viem/ens'
 import { config } from './config'
 
 const ensName = await getEnsName(config, {

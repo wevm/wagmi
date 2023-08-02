@@ -90,7 +90,7 @@ import { useBalance } from 'wagmi'
 function App() {
   const result = useBalance({
     address: '0x4557B18E779944BFE9d78A672452331C186a9f48',
-    blockNumber: 'latest', // [!code focus]
+    blockTag: 'latest', // [!code focus]
   })
 }
 ```
