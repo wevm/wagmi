@@ -321,7 +321,7 @@ function getSidebar() {
               },
             ],
           },
-          { text: 'Errors 🚧', link: '/react/errors' },
+          { text: 'Errors', link: '/react/errors' },
           {
             text: 'Utilities',
             collapsed: true,
@@ -471,7 +471,7 @@ function getSidebar() {
               },
             ],
           },
-          { text: 'Errors 🚧', link: '/core/errors' },
+          { text: 'Errors', link: '/core/errors' },
           {
             text: 'Utilities',
             collapsed: true,

@@ -233,16 +233,16 @@ export {
 export { BaseError } from './errors/base.js'
 
 export {
-  ProviderNotFoundError,
-  SwitchChainNotSupportedError,
-} from './errors/connector.js'
-
-export {
   ChainMismatchError,
   ChainNotConfiguredError,
   ConnectorAlreadyConnectedError,
   ConnectorNotFoundError,
 } from './errors/config.js'
+
+export {
+  ProviderNotFoundError,
+  SwitchChainNotSupportedError,
+} from './errors/connector.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // Storage
