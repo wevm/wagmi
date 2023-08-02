@@ -7,6 +7,10 @@ const TVariables = 'TVariables'
 </script>
 -->
 
+<br />
+
+---
+
 [TanStack Query mutation docs](https://tanstack.com/query/latest/docs/react/reference/useMutation)
 
 ### {{mutate}}

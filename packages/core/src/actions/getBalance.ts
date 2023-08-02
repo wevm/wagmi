@@ -1,6 +1,5 @@
 import {
   type Address,
-  type Client,
   ContractFunctionExecutionError,
   type Hex,
   formatUnits,
@@ -9,9 +8,7 @@ import {
 } from 'viem'
 import {
   type GetBalanceParameters as viem_GetBalanceParameters,
-  type GetBalanceReturnType as viem_GetBalanceReturnType,
   getBalance as viem_getBalance,
-  multicall,
 } from 'viem/actions'
 
 import type { Config } from '../config.js'
@@ -19,6 +16,7 @@ import type { ChainIdParameter } from '../types/properties.js'
 import { type Unit } from '../types/unit.js'
 import { type Evaluate } from '../types/utils.js'
 import { getUnit } from '../utils/getUnit.js'
+import { readContracts } from './readContracts.js'
 
 export type GetBalanceParameters<config extends Config = Config> = Evaluate<
   ChainIdParameter<config> &
@@ -32,7 +30,7 @@ export type GetBalanceReturnType = {
   decimals: number
   formatted: string
   symbol: string
-  value: viem_GetBalanceReturnType
+  value: bigint
 }
 
 export type GetBalanceError = Error
@@ -50,11 +48,10 @@ export async function getBalance<config extends Config>(
     token: tokenAddress,
     unit = 'ether',
   } = parameters
-  const client = config.getClient({ chainId })
 
   if (tokenAddress) {
     try {
-      return await getTokenBalance(client, {
+      return await getTokenBalance(config, {
         balanceAddress: address,
         symbolType: 'string',
         tokenAddress,
@@ -64,7 +61,7 @@ export async function getBalance<config extends Config>(
       // it could be likely that the contract data is represented as bytes32 instead
       // of a string.
       if (error instanceof ContractFunctionExecutionError) {
-        const balance = await getTokenBalance(client, {
+        const balance = await getTokenBalance(config, {
           balanceAddress: address,
           symbolType: 'string',
           tokenAddress,
@@ -78,6 +75,7 @@ export async function getBalance<config extends Config>(
     }
   }
 
+  const client = config.getClient({ chainId })
   const value = await viem_getBalance(
     client,
     blockNumber ? { address, blockNumber } : { address, blockTag },
@@ -99,7 +97,7 @@ type GetTokenBalanceParameters = {
 }
 
 async function getTokenBalance(
-  client: Client,
+  config: Config,
   parameters: GetTokenBalanceParameters,
 ) {
   const { balanceAddress, symbolType, tokenAddress, unit } = parameters
@@ -129,7 +127,7 @@ async function getTokenBalance(
     ],
     address: tokenAddress,
   } as const
-  const [value, decimals, symbol] = await multicall(client, {
+  const [value, decimals, symbol] = await readContracts(config, {
     allowFailure: false,
     contracts: [
       { ...contract, functionName: 'balanceOf', args: [balanceAddress] },

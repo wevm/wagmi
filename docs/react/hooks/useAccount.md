@@ -1,6 +1,6 @@
 # useAccount
 
-Hook for getting current account. Uses the [`getAccount`](/core/actions/getAccount) action.
+Hook for getting current account.
 
 ## Import
 
@@ -36,3 +36,8 @@ import { type UseConnectReturnType } from 'wagmi'
 ```
 
 <!--@include: @shared/getAccount-return-type.md-->
+
+## Action
+
+- [`getAccount`](/core/actions/getAccount)
+- [`watchAccount`](/core/actions/getAccount#watchaccount)

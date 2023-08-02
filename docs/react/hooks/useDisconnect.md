@@ -8,7 +8,7 @@ const TVariables = '{ connector?: Connector | undefined; }'
 
 # useDisconnect
 
-Hook for disconnecting connections. Uses the [`disconnect`](/core/actions/connect) action.
+Hook for disconnecting connections.
 
 ## Import
 
@@ -78,3 +78,7 @@ function App() {
 <!--@include: @shared/mutation-result.md-->
 
 <!--@include: @shared/query/disconnect.md-->
+
+## Actions
+
+[`disconnect`](/core/actions/connect)

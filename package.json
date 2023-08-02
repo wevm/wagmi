@@ -45,7 +45,7 @@
     "rome": "^12.1.0",
     "simple-git-hooks": "^2.8.1",
     "typescript": "5.0.4",
-    "viem": "0.0.0-w-20230725184008",
+    "viem": "0.0.0-w-20230802141753",
     "vite": "^4.3.9",
     "vitest": "^0.31.0"
   },
@@ -57,7 +57,7 @@
     "overrides": {
       "@wagmi/connectors": "workspace:*",
       "@wagmi/core": "workspace:*",
-      "viem": "0.0.0-w-20230725184008"
+      "viem": "0.0.0-w-20230802141753"
     },
     "patchedDependencies": {
       "@coinbase/wallet-sdk@3.7.1": "patches/@coinbase__wallet-sdk@3.7.1.patch",

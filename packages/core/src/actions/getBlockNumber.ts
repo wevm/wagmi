@@ -34,9 +34,10 @@ export function getBlockNumber<config extends Config>(
 
 export type WatchBlockNumberParameters<config extends Config = Config> =
   Evaluate<
-    Pick<viem_WatchBlockNumberParameters, 'onBlockNumber' | 'onError'> & {
-      syncConnectedChain?: boolean | undefined
-    } & ChainIdParameter<config>
+    Pick<viem_WatchBlockNumberParameters, 'onBlockNumber' | 'onError'> &
+      ChainIdParameter<config> & {
+        syncConnectedChain?: boolean | undefined
+      }
   >
 
 export type WatchBlockNumberReturnType = viem_WatchBlockNumberReturnType

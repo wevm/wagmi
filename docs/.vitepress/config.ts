@@ -229,9 +229,9 @@ function getSidebar() {
             collapsed: true,
             items: [
               { text: 'useAccount', link: '/react/hooks/useAccount' },
-              { text: 'useBalance 🚧', link: '/react/hooks/useBalance' },
+              { text: 'useBalance', link: '/react/hooks/useBalance' },
               {
-                text: 'useBlockNumber 🚧',
+                text: 'useBlockNumber',
                 link: '/react/hooks/useBlockNumber',
               },
               { text: 'useChainId', link: '/react/hooks/useChainId' },
@@ -369,9 +369,9 @@ function getSidebar() {
               { text: 'connect', link: '/core/actions/connect' },
               { text: 'disconnect', link: '/core/actions/disconnect' },
               { text: 'getAccount', link: '/core/actions/getAccount' },
-              { text: 'getBalance 🚧', link: '/core/actions/getBalance' },
+              { text: 'getBalance', link: '/core/actions/getBalance' },
               {
-                text: 'getBlockNumber 🚧',
+                text: 'getBlockNumber',
                 link: '/core/actions/getBlockNumber',
               },
               { text: 'getChainId', link: '/core/actions/getChainId' },

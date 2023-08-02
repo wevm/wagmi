@@ -1,6 +1,6 @@
 # useConnections
 
-Hook for getting active connections. Uses the [`getConnections`](/core/actions/getConnections) action.
+Hook for getting active connections.
 
 ## Import
 
@@ -26,3 +26,8 @@ function App() {
 ```ts
 import { type UseConnectionsReturnType } from 'wagmi'
 ```
+
+## Action
+
+- [`getConnections`](/core/actions/getConnections)
+- [`watchConnections`](/core/actions/getConnections#watchconnections)

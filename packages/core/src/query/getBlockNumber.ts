@@ -16,7 +16,7 @@ export type GetBlockNumberOptions<config extends Config> = Evaluate<
 >
 
 export function getBlockNumberQueryOptions<config extends Config>(
-  config: Config,
+  config: config,
   options: GetBlockNumberOptions<config> = {},
 ) {
   return {

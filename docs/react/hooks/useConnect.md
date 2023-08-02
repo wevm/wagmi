@@ -8,7 +8,7 @@ const TVariables = '{ chainId?: number | undefined; connector?: CreateConnectorF
 
 # useConnect
 
-Hook for connecting accounts with [connectors](/react/connectors). Uses the [`connect`](/core/actions/connect) action.
+Hook for connecting accounts with [connectors](/react/connectors).
 
 ## Import
 
@@ -83,3 +83,7 @@ Not all connectors support connecting directly to a `chainId` (e.g. they don't s
 :::
 
 <!--@include: @shared/query/connect.md-->
+
+## Action
+
+[`connect`](/core/actions/connect)

@@ -1,6 +1,6 @@
 # useChainId
 
-Hook for getting current chain ID. Uses the [`getChainId`](/core/actions/getChainId) action.
+Hook for getting current chain ID.
 
 ## Import
 
@@ -26,3 +26,8 @@ function App() {
 ```ts
 import { type UseChainIdReturnType } from 'wagmi'
 ```
+
+## Action
+
+- [`getChainId`](/core/actions/getChainId)
+- [`watchChainId`](/core/actions/getChainId#watchchainid)

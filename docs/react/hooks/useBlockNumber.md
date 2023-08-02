@@ -1,6 +1,12 @@
+<script setup>
+const packageName = 'wagmi'
+const TData = 'bigint'
+const TError = 'GetBlockNumberError'
+</script>
+
 # useBlockNumber
 
-Hook for fetching block number.
+Hook for fetching the number of the most recent block seen.
 
 ## Import
 
@@ -15,9 +21,10 @@ import { useBlockNumber } from 'wagmi'
 import { useBlockNumber } from 'wagmi'
 
 function App() {
-  const blockNumber = useBlockNumber()
+  const result = useBlockNumber()
 }
 ```
+<<< @/snippets/react/config.ts[config.ts]
 :::
 
 ## Parameters
@@ -26,8 +33,77 @@ function App() {
 import { type UseBlockNumberParameters } from 'wagmi'
 ```
 
+### cacheTime
+
+`number | undefined`
+
+Time in milliseconds that cached block number will remain in memory.
+
+::: code-group
+```tsx [index.tsx]
+import { useBlockNumber } from 'wagmi'
+
+function App() {
+  const result = useBlockNumber({
+    cacheTime: 4_000, // [!code focus]
+  })
+}
+```
+<<< @/snippets/react/config.ts[config.ts]
+:::
+
+### chainId
+
+`config['chains'][number]['id'] | undefined`
+
+ID of chain to use when fetching data.
+
+::: code-group
+```tsx [index.tsx]
+import { useBlockNumber } from 'wagmi'
+import { mainnet } from 'wagmi/chains' // [!code focus]
+
+function App() {
+  const result = useBlockNumber({
+    chainId: mainnet.id, // [!code focus]
+  })
+}
+```
+<<< @/snippets/react/config.ts[config.ts]
+:::
+
+### watch
+
+`boolean | undefined`
+
+Watch for block number changes.
+
+::: code-group
+```tsx [index.tsx]
+import { useBlockNumber } from 'wagmi'
+
+function App() {
+  const result = useBlockNumber({
+    watch: true, // [!code focus]
+  })
+}
+```
+<<< @/snippets/react/config.ts[config.ts]
+:::
+
+<!--@include: @shared/query-options.md-->
+
 ## Return Type
 
 ```ts
 import { type UseBlockNumberReturnType } from 'wagmi'
 ```
+
+<!--@include: @shared/query-result.md-->
+
+<!--@include: @shared/query/getBlockNumber.md-->
+
+## Action
+
+- [getBlockNumber](/core/actions/getBlockNumber)
+- [watchBlockNumber](/core/actions/getBlockNumber#watchblocknumber)
