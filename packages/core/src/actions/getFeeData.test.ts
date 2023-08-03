@@ -7,11 +7,11 @@ test('default', async () => {
   const result = await getFeeData(config)
   expect(Object.keys(result)).toMatchInlineSnapshot(`
     [
-      "lastBaseFeePerGas",
+      "formatted",
       "gasPrice",
+      "lastBaseFeePerGas",
       "maxFeePerGas",
       "maxPriorityFeePerGas",
-      "formatted",
     ]
   `)
 })

@@ -40,11 +40,11 @@
 
 ## Documentation
 
-For full documentation and examples, visit [wagmi.sh](https://wagmi.sh).
+For documentation and examples, visit [wagmi.sh](https://wagmi.sh).
 
 ## Contributing
 
-Check out the [contributing docs][contributing] to get started.
+Check out the [Contributing docs][contributing] to get started.
 
 ## Sponsors
 
