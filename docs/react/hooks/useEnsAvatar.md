@@ -1,5 +1,7 @@
 <script setup>
 const packageName = 'wagmi'
+const actionName = 'getEnsAvatar'
+const typeName = 'GetEnsAvatar'
 const TData = 'string | null'
 const TError = 'GetEnsAvatarError'
 </script>
@@ -183,7 +185,7 @@ import { type UseEnsAvatarReturnType } from 'wagmi'
 
 <!--@include: @shared/query-result.md-->
 
-<!--@include: @shared/query/getEnsAvatar.md-->
+<!--@include: @shared/query-imports.md-->
 
 ## Action
 

@@ -14,15 +14,15 @@ export type GetFeeDataParameters<config extends Config = Config> = Evaluate<
 >
 
 export type GetFeeDataReturnType = {
-  lastBaseFeePerGas: bigint | null
-  gasPrice: bigint | null
-  maxFeePerGas: bigint | null
-  maxPriorityFeePerGas: bigint | null
   formatted: {
     gasPrice: string | null
     maxFeePerGas: string | null
     maxPriorityFeePerGas: string | null
   }
+  gasPrice: bigint | null
+  lastBaseFeePerGas: bigint | null
+  maxFeePerGas: bigint | null
+  maxPriorityFeePerGas: bigint | null
 }
 
 export type GetFeeDataError = Error
@@ -56,10 +56,10 @@ export async function getFeeData<config extends Config>(
       : null,
   }
   return {
-    lastBaseFeePerGas,
+    formatted,
     gasPrice,
+    lastBaseFeePerGas,
     maxFeePerGas,
     maxPriorityFeePerGas,
-    formatted,
   }
 }

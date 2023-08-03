@@ -1,5 +1,7 @@
 <script setup>
 const packageName = 'wagmi'
+const actionName = 'disconnect'
+const typeName = 'Disconnect'
 const mutate = 'disconnect'
 const TData = 'void'
 const TError = 'DisconnectError'
@@ -79,7 +81,7 @@ function App() {
 
 <!--@include: @shared/mutation-result.md-->
 
-<!--@include: @shared/query/disconnect.md-->
+<!--@include: @shared/mutation-imports.md-->
 
 ## Actions
 

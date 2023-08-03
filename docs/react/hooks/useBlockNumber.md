@@ -1,5 +1,7 @@
 <script setup>
 const packageName = 'wagmi'
+const actionName = 'getBlockNumber'
+const typeName = 'GetBlockNumber'
 const TData = 'bigint'
 const TError = 'GetBlockNumberError'
 </script>
@@ -101,7 +103,7 @@ import { type UseBlockNumberReturnType } from 'wagmi'
 
 <!--@include: @shared/query-result.md-->
 
-<!--@include: @shared/query/getBlockNumber.md-->
+<!--@include: @shared/query-imports.md-->
 
 ## Action
 

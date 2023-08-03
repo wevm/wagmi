@@ -1,5 +1,7 @@
 <script setup>
 const packageName = 'wagmi'
+const actionName = 'connect'
+const typeName = 'Connect'
 const mutate = 'connect'
 const TData = '{ accounts: readonly Address[]; chainId: number; }'
 const TError = 'ConnectError'
@@ -84,7 +86,7 @@ function App() {
 Not all connectors support connecting directly to a `chainId` (e.g. they don't support programmatic chain switching). In those cases, the connector will connect to whatever chain the connector's provider (e.g. wallet) is connected to.
 :::
 
-<!--@include: @shared/query/connect.md-->
+<!--@include: @shared/mutation-imports.md-->
 
 ## Action
 

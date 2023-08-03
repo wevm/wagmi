@@ -12,7 +12,7 @@ import type { ChainIdParameter } from '../types/properties.js'
 import type { Unit } from '../types/unit.js'
 import type { Evaluate } from '../types/utils.js'
 import { getUnit } from '../utils/getUnit.js'
-import { multicall } from 'viem/actions'
+import { readContracts } from './readContracts.js'
 
 export type GetTokenParameters<config extends Config = Config> = Evaluate<
   {
@@ -39,12 +39,11 @@ export async function getToken<config extends Config>(
   parameters: GetTokenParameters<config>,
 ): Promise<GetTokenReturnType> {
   const { address, chainId } = parameters
-  const client = config.getClient({ chainId })
 
   async function get(args: { abi: typeof erc20Abi | typeof erc20Abi_bytes32 }) {
     const { formatUnits: unit = 18 } = parameters
-    const erc20Config = { address, ...args } as const
-    const [decimals, name, symbol, totalSupply] = await multicall(client, {
+    const erc20Config = { address, chainId, ...args } as const
+    const [decimals, name, symbol, totalSupply] = await readContracts(config, {
       allowFailure: false,
       contracts: [
         { ...erc20Config, functionName: 'decimals' },

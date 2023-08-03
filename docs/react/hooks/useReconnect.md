@@ -1,5 +1,7 @@
 <script setup>
 const packageName = 'wagmi'
+const actionName = 'reconnect'
+const typeName = 'Reconnect'
 const mutate = 'reconnect'
 const TData = '{ accounts: readonly Address[]; chainId: number; connector: Connector }'
 const TError = 'ReconnectError'
@@ -76,7 +78,7 @@ function App() {
 
 <!--@include: @shared/mutation-result.md-->
 
-<!--@include: @shared/query/reconnect.md-->
+<!--@include: @shared/mutation-imports.md-->
 
 ## Action
 

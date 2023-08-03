@@ -1,5 +1,7 @@
 <script setup>
 const packageName = '@wagmi/core'
+const actionName = 'getBalance'
+const typeName = 'GetBalance'
 </script>
 
 # getBalance
@@ -187,7 +189,7 @@ Raw value of balance.
 import { type GetBalanceError } from '@wagmi/core'
 ```
 
-<!--@include: @shared/query/getBalance.md-->
+<!--@include: @shared/query-imports.md-->
 
 ## Viem
 

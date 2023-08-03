@@ -1,5 +1,7 @@
 <script setup>
 const packageName = 'wagmi'
+const actionName = 'getEnsAddress'
+const typeName = 'GetEnsAddress'
 const TData = 'string'
 const TError = 'GetEnsAddressError'
 </script>
@@ -181,7 +183,7 @@ import { type UseEnsAddressReturnType } from 'wagmi'
 
 <!--@include: @shared/query-result.md-->
 
-<!--@include: @shared/query/getEnsAddress.md-->
+<!--@include: @shared/query-imports.md-->
 
 ## Action
 

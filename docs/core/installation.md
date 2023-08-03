@@ -41,14 +41,11 @@ Check out the React docs for info on how to use [React without JSX](https://reac
 
 Wagmi Core is optimized for modern browsers. It is compatible with the following browsers.
 
-```
-Chrome >= 91
-Edge >= 91
-Firefox >= 90
-Safari >= 15
-iOS >= 15
-opera >= 77
-```
+- Chrome 64+
+- Edge 79+
+- Firefox 67+
+- Opera 51+
+- Safari 12+
 
 ::: tip
 Depending on your environment, you might need to add polyfills. See [Viem Platform Compatibility](https://viem.sh/docs/compatibility.html) for more info.

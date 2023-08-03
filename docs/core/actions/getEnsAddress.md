@@ -1,5 +1,7 @@
 <script setup>
 const packageName = '@wagmi/core'
+const actionName = 'getEnsAddress'
+const typeName = 'GetEnsAddress'
 </script>
 
 # getEnsAddress
@@ -178,7 +180,7 @@ ENS address.
 import { type GetEnsAddressError } from '@wagmi/core'
 ```
 
-<!--@include: @shared/query/getEnsAddress.md-->
+<!--@include: @shared/query-imports.md-->
 
 ## Viem
 

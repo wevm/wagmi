@@ -1,5 +1,7 @@
 <script setup>
 const packageName = '@wagmi/core'
+const actionName = 'getEnsAvatar'
+const typeName = 'GetEnsAvatar'
 </script>
 
 # getEnsAvatar
@@ -180,7 +182,7 @@ The avatar URI for ENS name.
 import { type getEnsAvatarError } from '@wagmi/core'
 ```
 
-<!--@include: @shared/query/getEnsAvatar.md-->
+<!--@include: @shared/query-imports.md-->
 
 ## Viem
 

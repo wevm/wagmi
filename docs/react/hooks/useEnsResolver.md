@@ -1,5 +1,7 @@
 <script setup>
 const packageName = 'wagmi'
+const actionName = 'getEnsResolver'
+const typeName = 'GetEnsResolver'
 const TData = 'string | null'
 const TError = 'GetEnsResolverError'
 </script>
@@ -160,7 +162,7 @@ import { type UseEnsResolverReturnType } from 'wagmi'
 
 <!--@include: @shared/query-result.md-->
 
-<!--@include: @shared/query/getEnsResolver.md-->
+<!--@include: @shared/query-imports.md-->
 
 ## Action
 

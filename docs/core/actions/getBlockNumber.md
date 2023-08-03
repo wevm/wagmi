@@ -1,5 +1,7 @@
 <script setup>
 const packageName = '@wagmi/core'
+const actionName = 'getBlockNumber'
+const typeName = 'GetBlockNumber'
 </script>
 
 # getBlockNumber
@@ -83,7 +85,7 @@ Most recent block number seen.
 import { type GetBlockNumberError } from '@wagmi/core'
 ```
 
-<!--@include: @shared/query/getBlockNumber.md-->
+<!--@include: @shared/query-imports.md-->
 
 ## watchBlockNumber
 

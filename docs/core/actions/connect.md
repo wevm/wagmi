@@ -1,5 +1,7 @@
 <script setup>
 const packageName = '@wagmi/core'
+const actionName = 'connect'
+const typeName = 'Connect'
 </script>
 
 # connect
@@ -106,4 +108,4 @@ Connected chain ID from connector.
 import { type ConnectError } from '@wagmi/core'
 ```
 
-<!--@include: @shared/query/connect.md-->
+<!--@include: @shared/mutation-imports.md-->

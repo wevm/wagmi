@@ -1,5 +1,7 @@
 <script setup>
 const packageName = 'wagmi'
+const actionName = 'getBalance'
+const typeName = 'GetBalance'
 const TData = '{ decimals: number; formatted: string; symbol: string; value: bigint; }'
 const TError = 'GetBalanceError'
 </script>
@@ -172,8 +174,8 @@ import { type UseBalanceReturnType } from 'wagmi'
 
 <!--@include: @shared/query-result.md-->
 
-<!--@include: @shared/query/getBalance.md-->
+<!--@include: @shared/query-imports.md-->
 
 ## Action
 
-- [getBalance](/core/actions/getBalance)
+[getBalance](/core/actions/getBalance)

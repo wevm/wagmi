@@ -1,5 +1,7 @@
 <script setup>
 const packageName = '@wagmi/core'
+const actionName = 'getEnsName'
+const typeName = 'GetEnsName'
 </script>
 
 # getEnsName
@@ -148,7 +150,7 @@ The primary ENS name for the address. Returns `null` if address does not have pr
 import { type GetEnsNameError } from '@wagmi/core'
 ```
 
-<!--@include: @shared/query/getEnsName.md-->
+<!--@include: @shared/query-imports.md-->
 
 ## Viem
 

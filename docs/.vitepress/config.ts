@@ -195,8 +195,8 @@ function getSidebar() {
             link: '/react/ethers-web3',
           },
           {
-            text: 'FAQ / Troubleshooting 🚧',
-            link: '/core/faq',
+            text: 'FAQ / Troubleshooting',
+            link: '/react/faq',
           },
           { text: 'Migrate from v1 to v2 🚧', link: '/react/migration-guide' },
         ],
@@ -283,7 +283,7 @@ function getSidebar() {
                 text: 'useEnsResolver',
                 link: '/react/hooks/useEnsResolver',
               },
-              { text: 'useFeeData 🚧', link: '/react/hooks/useFeeData' },
+              { text: 'useFeeData', link: '/react/hooks/useFeeData' },
               {
                 text: 'usePrepareSendTransaction 🚧',
                 link: '/react/hooks/usePrepareSendTransaction',
@@ -314,7 +314,7 @@ function getSidebar() {
                 link: '/react/hooks/useTransaction',
               },
               {
-                text: 'useToken 🚧',
+                text: 'useToken',
                 link: '/react/hooks/useToken',
               },
               {
@@ -346,6 +346,13 @@ function getSidebar() {
           },
         ],
       },
+      {
+        text: 'Community',
+        items: [
+          { text: 'Contributing 🚧', link: '/react/contributing' },
+          { text: 'Sponsors 🚧', link: '/react/sponsor' },
+        ],
+      },
     ],
     '/core': [
       {
@@ -369,7 +376,7 @@ function getSidebar() {
             link: '/react/ethers-web3',
           },
           {
-            text: 'FAQ / Troubleshooting 🚧',
+            text: 'FAQ / Troubleshooting',
             link: '/core/faq',
           },
           { text: 'Migrate from v1 to v2 🚧', link: '/core/migration-guide' },
@@ -399,7 +406,7 @@ function getSidebar() {
                 link: '/core/actions/getConnections',
               },
               {
-                text: 'getConnectorClient 🚧',
+                text: 'getConnectorClient',
                 link: '/core/actions/getConnectorClient',
               },
               { text: 'getEnsAddress', link: '/core/actions/getEnsAddress' },
@@ -409,8 +416,8 @@ function getSidebar() {
                 text: 'getEnsResolver',
                 link: '/core/actions/getEnsResolver',
               },
-              { text: 'getFeeData 🚧', link: '/core/actions/getFeeData' },
-              { text: 'getToken 🚧', link: '/core/actions/getToken' },
+              { text: 'getFeeData', link: '/core/actions/getFeeData' },
+              { text: 'getToken', link: '/core/actions/getToken' },
               {
                 text: 'getTransaction 🚧',
                 link: '/core/actions/getTransaction',
@@ -504,6 +511,13 @@ function getSidebar() {
               { text: 'serialize', link: '/core/utilities/serialize' },
             ],
           },
+        ],
+      },
+      {
+        text: 'Community',
+        items: [
+          { text: 'Contributing 🚧', link: '/core/contributing' },
+          { text: 'Sponsors 🚧', link: '/core/sponsor' },
         ],
       },
     ],

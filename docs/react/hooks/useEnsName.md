@@ -1,5 +1,7 @@
 <script setup>
 const packageName = 'wagmi'
+const actionName = 'getEnsName'
+const typeName = 'GetEnsName'
 const TData = 'string | null'
 const TError = 'GetEnsNameError'
 </script>
@@ -150,7 +152,7 @@ import { type UseEnsNameReturnType } from 'wagmi'
 
 <!--@include: @shared/query-result.md-->
 
-<!--@include: @shared/query/getEnsName.md-->
+<!--@include: @shared/query-imports.md-->
 
 ## Action
 

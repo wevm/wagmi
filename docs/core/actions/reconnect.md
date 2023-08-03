@@ -1,5 +1,7 @@
 <script setup>
 const packageName = '@wagmi/core'
+const actionName = 'reconnect'
+const typeName = 'Reconnect'
 </script>
 
 # reconnect
@@ -73,4 +75,4 @@ import { type ReconnectReturnType } from '@wagmi/core'
 import { type ReconnectError } from '@wagmi/core'
 ```
 
-<!--@include: @shared/query/reconnect.md-->
+<!--@include: @shared/mutation-imports.md-->

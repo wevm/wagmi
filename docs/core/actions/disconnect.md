@@ -1,5 +1,7 @@
 <script setup>
 const packageName = '@wagmi/core'
+const actionName = 'disconnect'
+const typeName = 'Disconnect'
 </script>
 
 # disconnect
@@ -56,4 +58,4 @@ const result = await disconnect(
 import { type DisconnectError } from '@wagmi/core'
 ```
 
-<!--@include: @shared/query/disconnect.md-->
+<!--@include: @shared/mutation-imports.md-->

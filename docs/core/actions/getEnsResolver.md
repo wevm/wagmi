@@ -1,5 +1,7 @@
 <script setup>
 const packageName = '@wagmi/core'
+const actionName = 'getEnsResolver'
+const typeName = 'GetEnsResolver'
 </script>
 
 # getEnsResolver
@@ -158,7 +160,7 @@ The address of the resolver.
 import { type getEnsResolverError } from '@wagmi/core'
 ```
 
-<!--@include: @shared/query/getEnsResolver.md-->
+<!--@include: @shared/query-imports.md-->
 
 ## Viem
 
