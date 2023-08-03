@@ -75,7 +75,7 @@ export default withTwoslash(
       nav: [
         { text: 'React', link: '/react/getting-started' },
         { text: 'Core', link: '/core/getting-started' },
-        // { text: 'CLI', link: '/cli/getting-started' }, // TODO
+        { text: 'CLI', link: '/cli/getting-started' }, // TODO
         { text: 'Examples', link: '/examples' },
         {
           text: reactPackage.version,
@@ -173,6 +173,7 @@ function getSidebar() {
         text: 'Introduction',
         items: [
           { text: 'Why Wagmi 🚧', link: '/react/why-wagmi' },
+          { text: 'Installation', link: '/react/installation' },
           { text: 'Getting Started', link: '/react/getting-started' },
           { text: 'TypeScript', link: '/react/typescript' },
           { text: 'Comparisons 🚧', link: '/react/comparison' },
@@ -189,6 +190,14 @@ function getSidebar() {
             text: 'TanStack Query 🚧',
             link: '/react/tanstack-query',
           },
+          {
+            text: 'Ethers & Web3.js 🚧',
+            link: '/react/ethers-web3',
+          },
+          {
+            text: 'FAQ / Troubleshooting 🚧',
+            link: '/core/faq',
+          },
           { text: 'Migrate from v1 to v2 🚧', link: '/react/migration-guide' },
         ],
       },
@@ -198,7 +207,7 @@ function getSidebar() {
           { text: 'createConfig', link: '/react/createConfig' },
           { text: 'createStorage', link: '/react/createStorage' },
           { text: 'WagmiProvider', link: '/react/WagmiProvider' },
-          { text: 'Actions 🚧', link: '/react/actions' },
+          { text: 'Actions', link: '/react/actions' },
           { text: 'Chains', link: '/react/chains' },
           {
             text: 'Connectors 🚧',
@@ -224,6 +233,7 @@ function getSidebar() {
               },
             ],
           },
+          { text: 'Constants 🚧', link: '/react/constants' },
           {
             text: 'Hooks 🚧',
             collapsed: true,
@@ -342,6 +352,7 @@ function getSidebar() {
         text: 'Introduction',
         items: [
           { text: 'Why Wagmi 🚧', link: '/core/why-wagmi' },
+          { text: 'Installation', link: '/core/installation' },
           { text: 'Getting Started', link: '/core/getting-started' },
           { text: 'TypeScript', link: '/core/typescript' },
         ],
@@ -352,6 +363,14 @@ function getSidebar() {
           {
             text: 'Framework Adapters 🚧',
             link: '/core/framework-adapter',
+          },
+          {
+            text: 'Ethers & Web3.js 🚧',
+            link: '/react/ethers-web3',
+          },
+          {
+            text: 'FAQ / Troubleshooting 🚧',
+            link: '/core/faq',
           },
           { text: 'Migrate from v1 to v2 🚧', link: '/core/migration-guide' },
         ],
@@ -471,6 +490,7 @@ function getSidebar() {
               },
             ],
           },
+          { text: 'Constants 🚧', link: '/react/constants' },
           { text: 'Errors', link: '/core/errors' },
           {
             text: 'Utilities',
