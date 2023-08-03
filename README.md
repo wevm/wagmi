@@ -46,11 +46,9 @@ For full documentation and examples, visit [wagmi.sh](https://wagmi.sh).
 
 Check out the [contributing docs][contributing] to get started.
 
-## Support
+## Sponsors
 
 If you find wagmi useful, please consider [supporting development](https://github.com/sponsors/wagmi-dev?metadata_campaign=gh_readme_support). Thank you 🙏
-
-## Sponsors
 
 <a href="https://paradigm.xyz">
   <picture>
@@ -77,12 +75,6 @@ If you find wagmi useful, please consider [supporting development](https://githu
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/walletconnect-dark.svg">
     <img alt="WalletConnect logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/walletconnect-light.svg" width="auto" height="50">
-  </picture>
-</a>
-<a href="https://looksrare.org">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/looksrare-dark.svg">
-    <img alt="LooksRare logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/8923685e23fe9708b74d456c3f9e7a2b90f6abd9/content/sponsors/looksrare-light.svg" width="auto" height="50">
   </picture>
 </a>
 <a href="https://twitter.com/prtyDAO">
@@ -146,10 +138,7 @@ If you find wagmi useful, please consider [supporting development](https://githu
   </picture>
 </a>
 
-## License
-
-[MIT][license]
-
+<br />
 <br />
 
 <a href="https://vercel.com/?utm_source=wagmi-dev&utm_campaign=oss">
@@ -158,4 +147,3 @@ If you find wagmi useful, please consider [supporting development](https://githu
 
 [docs]: https://wagmi.sh
 [contributing]: https://github.com/wagmi-dev/wagmi/blob/main/.github/CONTRIBUTING.md
-[license]: https://github.com/wagmi-dev/wagmi/blob/main/LICENSE
