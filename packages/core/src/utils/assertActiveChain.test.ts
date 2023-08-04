@@ -25,3 +25,9 @@ test('does not error when on correct chain', async () => {
   assertActiveChain(config, { chainId: 123 })
   await disconnect(config, { connector })
 })
+
+test('can pass active chain', async () => {
+  await connect(config, { chainId: 123, connector })
+  assertActiveChain(config, { activeChainId: 123, chainId: 123 })
+  await disconnect(config, { connector })
+})

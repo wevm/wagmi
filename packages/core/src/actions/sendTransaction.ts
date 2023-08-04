@@ -8,9 +8,11 @@ import type {
 import { sendTransaction as viem_sendTransaction } from 'viem/actions'
 
 import type { Config } from '../config.js'
-import { ConnectorNotFoundError } from '../errors/config.js'
 import type { SelectChains } from '../types/chain.js'
-import type { ChainIdParameter } from '../types/properties.js'
+import type {
+  ChainIdParameter,
+  ConnectorParameter,
+} from '../types/properties.js'
 import type { Evaluate } from '../types/utils.js'
 import { assertActiveChain } from '../utils/assertActiveChain.js'
 import { getConnectorClient } from './getConnectorClient.js'
@@ -28,7 +30,8 @@ export type SendTransactionParameters<
       viem_SendTransactionParameters<chains[key], Account>,
       'account' | 'chain'
     > &
-      ChainIdParameter<config, chainId> & {
+      ChainIdParameter<config, chainId> &
+      ConnectorParameter & {
         mode?: 'prepared'
         to: Address
       }
@@ -50,11 +53,11 @@ export async function sendTransaction<
   config: config,
   parameters: SendTransactionParameters<config, chainId>,
 ): Promise<SendTransactionReturnType> {
-  const { chainId, ...rest } = parameters
+  const { chainId, connector, ...rest } = parameters
 
-  const client = await getConnectorClient(config, { chainId })
-  if (!client) throw new ConnectorNotFoundError()
-  if (chainId) assertActiveChain(config, { chainId })
+  const client = await getConnectorClient(config, { chainId, connector })
+  if (chainId)
+    assertActiveChain(config, { activeChainId: client.chain.id, chainId })
 
   const hash = await viem_sendTransaction(client, {
     ...(rest as unknown as viem_SendTransactionParameters),

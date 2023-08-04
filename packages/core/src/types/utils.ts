@@ -70,7 +70,7 @@ export type OneOf<
   ///
   keys extends KeyofUnion<union> = KeyofUnion<union>,
 > = union extends infer Item
-  ? Evaluate<Item & { [K in Exclude<keys, keyof Item>]?: never }>
+  ? Evaluate<Item & { [K in Exclude<keys, keyof Item>]?: undefined }>
   : never
 type KeyofUnion<type> = type extends type ? keyof type : never
 

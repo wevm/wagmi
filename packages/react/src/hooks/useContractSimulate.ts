@@ -15,6 +15,7 @@ import {
 } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
+import { useConnectorClient } from './useConnectorClient.js'
 
 type ChainId = ResolvedRegister['config']['chains'][number]['id']
 
@@ -87,21 +88,22 @@ export function useContractSimulate<
     selectData
   >,
 ): UseContractSimulateReturnType<abi, functionName, chainId, selectData> {
-  const { address, abi, functionName, ...query } = parameters
+  const { abi, address, connector, functionName, ...query } = parameters
   const config = useConfig()
+  const { data: connectorClient } = useConnectorClient({
+    connector,
+    enabled: parameters.account === undefined,
+  })
 
+  const account = parameters.account ?? connectorClient?.account
   const chainId = parameters.chainId ?? useChainId()
   const queryOptions = simulateContractQueryOptions(config, {
-    ...parameters,
+    ...(parameters as any),
+    account,
     chainId,
-  } as SimulateContractOptions<
-    ResolvedRegister['config'],
-    chainId,
-    abi,
-    functionName
-  >)
+  })
   const enabled = Boolean(
-    address && abi && functionName && (parameters.enabled ?? true),
+    abi && address && functionName && (parameters.enabled ?? true),
   )
 
   return useQuery({

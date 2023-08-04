@@ -21,7 +21,7 @@ export function getTokenQueryOptions<config extends Config>(
 ) {
   return {
     async queryFn({ queryKey }) {
-      const { address, ...parameters } = queryKey[1]
+      const { address, scopeKey: _, ...parameters } = queryKey[1]
       if (!address) throw new Error('address is required')
       return getToken(config, { ...parameters, address })
     },

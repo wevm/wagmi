@@ -117,6 +117,13 @@ export {
 } from './actions/getConnections.js'
 
 export {
+  type GetConnectorClientError,
+  type GetConnectorClientParameters,
+  type GetConnectorClientReturnType,
+  getConnectorClient,
+} from './actions/getConnectorClient.js'
+
+export {
   type PrepareSendTransactionError,
   type PrepareSendTransactionParameters,
   type PrepareSendTransactionReturnType,

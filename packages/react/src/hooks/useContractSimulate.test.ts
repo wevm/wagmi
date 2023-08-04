@@ -70,6 +70,10 @@ test('default', async () => {
       "queryKey": [
         "simulateContract",
         {
+          "account": {
+            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            "type": "json-rpc",
+          },
           "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
           "chainId": 123,
           "functionName": "mint",

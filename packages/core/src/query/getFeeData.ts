@@ -21,7 +21,8 @@ export function getFeeDataQueryOptions<config extends Config>(
 ) {
   return {
     async queryFn({ queryKey }) {
-      return getFeeData(config, queryKey[1])
+      const { scopeKey: _, ...parameters } = queryKey[1]
+      return getFeeData(config, parameters)
     },
     queryKey: getFeeDataQueryKey(options),
   } as const satisfies QueryOptions<

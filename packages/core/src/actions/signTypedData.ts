@@ -6,13 +6,14 @@ import {
 } from 'viem/actions'
 
 import { type Config } from '../config.js'
-import { ConnectorNotFoundError } from '../errors/config.js'
+import type { ConnectorParameter } from '../types/properties.js'
 import { getConnectorClient } from './getConnectorClient.js'
 
 export type SignTypedDataParameters<
   typedData extends TypedData | Record<string, unknown> = TypedData,
   primaryType extends keyof typedData | 'EIP712Domain' = keyof typedData,
-> = viem_SignTypedDataParameters<typedData, primaryType, never>
+> = viem_SignTypedDataParameters<typedData, primaryType, never> &
+  ConnectorParameter
 
 export type SignTypedDataReturnType = viem_SignTypedDataReturnType
 
@@ -26,10 +27,10 @@ export async function signTypedData<
   config: Config,
   parameters: SignTypedDataParameters<typedData, primaryType>,
 ): Promise<SignTypedDataReturnType> {
-  const client = await getConnectorClient(config)
-  if (!client) throw new ConnectorNotFoundError()
+  const { connector, ...rest } = parameters
+  const client = await getConnectorClient(config, { connector })
   return viem_signTypedData(
     client,
-    parameters as unknown as viem_SignTypedDataParameters,
+    rest as unknown as viem_SignTypedDataParameters,
   )
 }

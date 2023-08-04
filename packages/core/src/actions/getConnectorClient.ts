@@ -6,7 +6,7 @@ import {
   custom,
 } from 'viem'
 
-import type { Config } from '../config.js'
+import type { Config, Connection, Connector } from '../config.js'
 import { ConnectorNotFoundError } from '../errors/config.js'
 import type { ChainIdParameter } from '../types/properties.js'
 import type { Evaluate } from '../types/utils.js'
@@ -14,7 +14,9 @@ import type { Evaluate } from '../types/utils.js'
 export type GetConnectorClientParameters<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
-> = ChainIdParameter<config, chainId>
+> = Evaluate<
+  ChainIdParameter<config, chainId> & { connector?: Connector | undefined }
+>
 
 export type GetConnectorClientReturnType<
   config extends Config = Config,
@@ -29,6 +31,8 @@ export type GetConnectorClientReturnType<
   >
 >
 
+export type GetConnectorClientError = ConnectorNotFoundError | Error
+
 /** https://wagmi.sh/core/actions/getConnectorClient */
 export async function getConnectorClient<
   config extends Config,
@@ -39,7 +43,15 @@ export async function getConnectorClient<
 ): Promise<GetConnectorClientReturnType<config, chainId>> {
   const { chainId } = parameters
 
-  const connection = config.state.connections.get(config.state.current!)
+  let connection: Connection | undefined
+  if (parameters.connector) {
+    const { connector } = parameters
+    const [accounts, chainId] = await Promise.all([
+      connector.getAccounts(),
+      connector.getChainId(),
+    ])
+    connection = { accounts, chainId, connector }
+  } else connection = config.state.connections.get(config.state.current!)
   if (!connection) throw new ConnectorNotFoundError()
 
   const resolvedChainId = chainId ?? connection.chainId
@@ -51,15 +63,14 @@ export async function getConnectorClient<
 
   const account = connection.accounts[0]!
   const chain = config.chains.find((chain) => chain.id === resolvedChainId)
-  const provider = await connection.connector.getProvider({
+  const provider = (await connection.connector.getProvider({
     chainId: resolvedChainId,
-  })
+  })) as { request(...args: any): Promise<any> }
 
   return createClient({
     account,
     chain,
-    transport(opts) {
-      return custom(provider as any)({ ...opts, retryCount: 0 })
-    },
+    name: 'Connector Client',
+    transport: (opts) => custom(provider)({ ...opts, retryCount: 0 }),
   }) as unknown as GetConnectorClientReturnType<config, chainId>
 }

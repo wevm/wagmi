@@ -62,6 +62,11 @@ export {
 } from './hooks/useConnections.js'
 
 export {
+  type UseConnectorClientReturnType,
+  useConnectorClient,
+} from './hooks/useConnectorClient.js'
+
+export {
   type UseContractReadParameters,
   type UseContractReadReturnType,
   useContractRead,

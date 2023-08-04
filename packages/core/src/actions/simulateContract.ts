@@ -1,4 +1,4 @@
-import type { Abi, Chain, ExtractAbiFunction } from 'viem'
+import type { Abi, Account, Address, Chain, ExtractAbiFunction } from 'viem'
 import {
   type SimulateContractParameters as viem_SimulateContractParameters,
   type SimulateContractReturnType as viem_SimulateContractReturnType,
@@ -6,9 +6,11 @@ import {
 } from 'viem/actions'
 
 import { type Config } from '../config.js'
-import { ConnectorNotFoundError } from '../errors/config.js'
 import type { SelectChains } from '../types/chain.js'
-import type { ChainIdParameter } from '../types/properties.js'
+import type {
+  ChainIdParameter,
+  ConnectorParameter,
+} from '../types/properties.js'
 import type { Evaluate, PartialBy } from '../types/utils.js'
 import { assertActiveChain } from '../utils/assertActiveChain.js'
 import { getConnectorClient } from './getConnectorClient.js'
@@ -28,7 +30,8 @@ export type SimulateContractParameters<
         'chain'
       >
     > &
-      ChainIdParameter<config, chainId>
+      ChainIdParameter<config, chainId> &
+      ConnectorParameter
   >
 }[number]
 
@@ -73,17 +76,25 @@ export async function simulateContract<
   config: config,
   parameters: SimulateContractParameters<config, chainId, abi, functionName>,
 ): Promise<SimulateContractReturnType<config, chainId, abi, functionName>> {
-  const { chainId } = parameters
+  const { chainId, connector, ...rest } = parameters
 
-  const connectorClient = await getConnectorClient(config, { chainId })
-  if (!connectorClient) throw new ConnectorNotFoundError()
-  if (chainId) assertActiveChain(config, { chainId })
+  let account: Address | Account
+  let activeChainId: number | undefined
+  if (parameters.account) account = parameters.account
+  else {
+    const connectorClient = await getConnectorClient(config, {
+      chainId,
+      connector,
+    })
+    account = connectorClient.account
+    activeChainId = connectorClient.chain.id
+  }
+  if (chainId) assertActiveChain(config, { activeChainId, chainId })
 
   const client = config.getClient({ chainId })
-
   const { result, request } = await viem_simulateContract(client, {
-    ...parameters,
-    account: parameters.account ?? connectorClient.account,
+    ...rest,
+    account,
   } as viem_SimulateContractParameters)
 
   const minimizedAbi = (parameters.abi as Abi).filter(
@@ -93,9 +104,9 @@ export async function simulateContract<
   return {
     result,
     request: {
+      __mode: 'prepared',
       ...request,
       abi: minimizedAbi,
-      __mode: 'prepared',
       chainId,
     },
   } as unknown as SimulateContractReturnType<config, chainId, abi, functionName>

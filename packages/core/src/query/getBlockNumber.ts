@@ -22,7 +22,8 @@ export function getBlockNumberQueryOptions<config extends Config>(
   return {
     gcTime: 0,
     async queryFn({ queryKey }) {
-      const blockNumber = await getBlockNumber(config, queryKey[1])
+      const { scopeKey: _, ...parameters } = queryKey[1]
+      const blockNumber = await getBlockNumber(config, parameters)
       return blockNumber ?? null
     },
     queryKey: getBlockNumberQueryKey(options),

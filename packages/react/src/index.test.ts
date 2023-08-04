@@ -22,6 +22,7 @@ test('exports', () => {
       "useConfig",
       "useConnect",
       "useConnections",
+      "useConnectorClient",
       "useContractRead",
       "useContractReads",
       "useContractWrite",

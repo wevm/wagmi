@@ -1,6 +1,6 @@
 import type { Evaluate } from '../types/utils.js'
 
-export type ScopeKeyParameter = { scopeKey?: string }
+export type ScopeKeyParameter = { scopeKey?: string | undefined }
 
 type MutateFn<
   data = unknown,

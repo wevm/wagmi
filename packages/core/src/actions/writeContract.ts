@@ -8,8 +8,10 @@ import type {
 import { writeContract as viem_writeContract } from 'viem/actions'
 
 import type { Config } from '../config.js'
-import { ConnectorNotFoundError } from '../errors/config.js'
-import type { ChainIdParameter } from '../types/properties.js'
+import type {
+  ChainIdParameter,
+  ConnectorParameter,
+} from '../types/properties.js'
 import type { Evaluate, Omit } from '../types/utils.js'
 import { assertActiveChain } from '../utils/assertActiveChain.js'
 import { getConnectorClient } from './getConnectorClient.js'
@@ -35,7 +37,8 @@ export type WriteContractParameters<
     'account' | 'chain'
   >
 }[number] &
-  Evaluate<ChainIdParameter<config, chainId>> & {
+  Evaluate<ChainIdParameter<config, chainId>> &
+  ConnectorParameter & {
     __mode?: 'prepared'
   }
 
@@ -56,14 +59,14 @@ export async function writeContract<
   config: config,
   parameters: WriteContractParameters<config, chainId, abi, functionName>,
 ): Promise<WriteContractReturnType> {
-  const { chainId, __mode, ...rest } = parameters
+  const { chainId, connector, __mode, ...rest } = parameters
 
-  const client = await getConnectorClient(config, { chainId })
-  if (!client) throw new ConnectorNotFoundError()
+  const client = await getConnectorClient(config, { chainId, connector })
 
   let request
   if (__mode === 'prepared') {
-    if (chainId) assertActiveChain(config, { chainId })
+    if (chainId)
+      assertActiveChain(config, { activeChainId: client.chain.id, chainId })
     request = rest
   } else {
     const { request: simulateRequest } = await simulateContract(

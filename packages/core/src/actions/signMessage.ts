@@ -5,12 +5,12 @@ import {
 } from 'viem/actions'
 
 import { type Config } from '../config.js'
-import { ConnectorNotFoundError } from '../errors/config.js'
+import type { ConnectorParameter } from '../types/properties.js'
 import type { Evaluate, Omit } from '../types/utils.js'
 import { getConnectorClient } from './getConnectorClient.js'
 
 export type SignMessageParameters = Evaluate<
-  Omit<viem_SignMessageParameters, 'account'>
+  Omit<viem_SignMessageParameters, 'account'> & ConnectorParameter
 >
 
 export type SignMessageReturnType = viem_SignMessageReturnType
@@ -22,7 +22,7 @@ export async function signMessage(
   config: Config,
   parameters: SignMessageParameters,
 ): Promise<SignMessageReturnType> {
-  const client = await getConnectorClient(config)
-  if (!client) throw new ConnectorNotFoundError()
-  return viem_signMessage(client, parameters)
+  const { connector, ...rest } = parameters
+  const client = await getConnectorClient(config, { connector })
+  return viem_signMessage(client, rest)
 }

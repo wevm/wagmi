@@ -21,7 +21,7 @@ export function getEnsAddressQueryOptions<config extends Config>(
 ) {
   return {
     async queryFn({ queryKey }) {
-      const { name, ...parameters } = queryKey[1]
+      const { name, scopeKey: _, ...parameters } = queryKey[1]
       if (!name) throw new Error('name is required')
       return getEnsAddress(config, { ...parameters, name })
     },

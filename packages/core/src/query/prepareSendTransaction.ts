@@ -32,9 +32,13 @@ export function prepareSendTransactionQueryOptions<
 ) {
   return {
     async queryFn({ queryKey }) {
+      const { connector } = options
       const { to } = queryKey[1]
       if (!to) throw new Error('to is required')
-      return prepareSendTransaction(config, queryKey[1] as any)
+      return prepareSendTransaction(config, {
+        connector,
+        ...(queryKey[1] as any),
+      })
     },
     queryKey: prepareSendTransactionQueryKey(options),
   } as const satisfies QueryOptions<
@@ -64,7 +68,8 @@ export function prepareSendTransactionQueryKey<
     chainId
   > = {} as PrepareSendTransactionOptions<config, chainId>,
 ) {
-  return ['prepareSendTransaction', filterQueryOptions(options)] as const
+  const { connector: _, ...rest } = options
+  return ['prepareSendTransaction', filterQueryOptions(rest)] as const
 }
 
 export type PrepareSendTransactionQueryKey<

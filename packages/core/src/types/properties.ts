@@ -1,4 +1,4 @@
-import type { Config } from '../config.js'
+import type { Config, Connector } from '../config.js'
 
 export type ChainIdParameter<
   config extends Config,
@@ -10,4 +10,8 @@ export type ChainIdParameter<
     | (chainId extends config['chains'][number]['id'] ? chainId : undefined)
     | config['chains'][number]['id']
     | undefined
+}
+
+export type ConnectorParameter = {
+  connector?: Connector | undefined
 }

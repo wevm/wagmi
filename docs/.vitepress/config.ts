@@ -195,6 +195,10 @@ function getSidebar() {
             link: '/react/ethers-web3',
           },
           {
+            text: 'Testing 🚧',
+            link: '/react/testing',
+          },
+          {
             text: 'FAQ / Troubleshooting',
             link: '/react/faq',
           },
@@ -373,7 +377,11 @@ function getSidebar() {
           },
           {
             text: 'Ethers & Web3.js 🚧',
-            link: '/react/ethers-web3',
+            link: '/core/ethers-web3',
+          },
+          {
+            text: 'Testing 🚧',
+            link: '/core/testing',
           },
           {
             text: 'FAQ / Troubleshooting',

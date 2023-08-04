@@ -11,6 +11,8 @@ test('exports', () => {
       "getBalanceQueryOptions",
       "getBlockNumberQueryKey",
       "getBlockNumberQueryOptions",
+      "getConnectorClientQueryKey",
+      "getConnectorClientQueryOptions",
       "getEnsAddressQueryKey",
       "getEnsAddressQueryOptions",
       "getEnsAvatarQueryKey",

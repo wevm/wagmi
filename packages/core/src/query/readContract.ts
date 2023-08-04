@@ -39,7 +39,7 @@ export function readContractQueryOptions<
     async queryFn({ queryKey }) {
       const { abi } = options
       if (!abi) throw new Error('abi is required')
-      const { address, ...parameters } = queryKey[1]
+      const { address, scopeKey: _, ...parameters } = queryKey[1]
       if (!address) throw new Error('address is required')
       return (await readContract(config, {
         abi,

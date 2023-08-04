@@ -36,6 +36,15 @@ export {
 } from './query/getBlockNumber.js'
 
 export {
+  type GetConnectorClientData,
+  type GetConnectorClientOptions,
+  type GetConnectorClientQueryFnData,
+  type GetConnectorClientQueryKey,
+  getConnectorClientQueryKey,
+  getConnectorClientQueryOptions,
+} from './query/getConnectorClient.js'
+
+export {
   type GetEnsAddressData,
   type GetEnsAddressOptions,
   type GetEnsAddressQueryFnData,

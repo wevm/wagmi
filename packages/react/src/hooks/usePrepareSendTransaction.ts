@@ -14,6 +14,7 @@ import {
 } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
+import { useConnectorClient } from './useConnectorClient.js'
 
 type ChainId = ResolvedRegister['config']['chains'][number]['id']
 
@@ -43,18 +44,25 @@ export function usePrepareSendTransaction<
     selectData
   > = {} as UsePrepareSendTransactionParameters<chainId, selectData>,
 ): UsePrepareSendTransactionReturnType<chainId, selectData> {
+  const { connector, ...query } = parameters
   const config = useConfig()
+  const { data: connectorClient } = useConnectorClient({
+    connector,
+    enabled: parameters.account === undefined,
+  })
 
+  const account = parameters.account ?? connectorClient?.account
   const chainId = parameters.chainId ?? useChainId()
   const queryOptions = prepareSendTransactionQueryOptions(config, {
     ...parameters,
+    account,
     chainId,
   })
   const enabled = Boolean(parameters.enabled ?? true)
 
   return useQuery({
     ...queryOptions,
-    ...parameters,
+    ...query,
     enabled,
   })
 }

@@ -1,6 +1,6 @@
 # getConnectorClient
 
-Action for getting a Viem `Client` object for the current connector.
+Action for getting a Viem `Client` object for the current or provided connector.
 
 ## Import
 
@@ -39,7 +39,27 @@ import { mainnet } from '@wagmi/core/chains'
 import { config } from './config'
 
 const client = getConnectorClient(config, {
-  chainId: mainnet.id,
+  chainId: mainnet.id, // [!code focus]
+})
+```
+<<< @/snippets/core/config.ts[config.ts]
+:::
+
+### connector
+
+`Connector | undefined`
+
+- Connector to get client for.
+- Defaults to current connector.
+
+::: code-group
+```ts [index.ts]
+import { getConnections, getConnectorClient } from '@wagmi/core'
+import { config } from './config'
+
+const connections = getConnections(config)
+const client = getConnectorClient(config, {
+  connector: connections[0]?.connector, // [!code focus]
 })
 ```
 <<< @/snippets/core/config.ts[config.ts]
@@ -53,4 +73,4 @@ import { type GetChainIdReturnType } from '@wagmi/core'
 
 [`Client`](https://viem.sh/docs/clients/custom.html)
 
-Viem `Client` object for the current connector.
+Viem `Client` object for the current or provided connector.

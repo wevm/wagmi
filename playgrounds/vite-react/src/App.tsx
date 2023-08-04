@@ -5,6 +5,7 @@ import {
   useChainId,
   useConnect,
   useConnections,
+  useConnectorClient,
   useDisconnect,
   useEnsName,
   useSignMessage,
@@ -24,6 +25,7 @@ function App() {
       <Connections />
       <Balance />
       <BlockNumber />
+      <ConnectorClient />
     </>
   )
 }
@@ -202,6 +204,16 @@ function BlockNumber() {
       <div>Block Number (Default Chain): {default_?.toString()}</div>
       <div>Block Number (Account Chain): {account_?.toString()}</div>
       <div>Block Number (Optimism): {optimism_?.toString()}</div>
+    </div>
+  )
+}
+
+function ConnectorClient() {
+  const { data } = useConnectorClient()
+  return (
+    <div>
+      <h2>Connector Client</h2>
+      client {data?.account?.address} {data?.chain?.id}
     </div>
   )
 }

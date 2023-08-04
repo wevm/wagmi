@@ -36,8 +36,9 @@ export function readContractsQueryOptions<
         const abi = (options.contracts?.[i] as ContractFunctionConfig).abi
         contracts.push({ ...contract, abi })
       }
+      const { scopeKey: _, ...parameters } = queryKey[1]
       return (await readContracts(config, {
-        ...queryKey[1],
+        ...parameters,
         contracts,
       } as ReadContractsParameters)) as ReadContractsData<
         contracts,

@@ -2,9 +2,11 @@ import type { Account, Address, Chain, SendTransactionParameters } from 'viem'
 import { estimateGas } from 'viem/actions'
 
 import type { Config } from '../config.js'
-import { ConnectorNotFoundError } from '../errors/config.js'
 import type { SelectChains } from '../types/chain.js'
-import type { ChainIdParameter } from '../types/properties.js'
+import type {
+  ChainIdParameter,
+  ConnectorParameter,
+} from '../types/properties.js'
 import type { Evaluate, Omit, PartialBy } from '../types/utils.js'
 import { assertActiveChain } from '../utils/assertActiveChain.js'
 import { getConnectorClient } from './getConnectorClient.js'
@@ -20,11 +22,12 @@ export type PrepareSendTransactionParameters<
   {
     [key in keyof chains]: Omit<
       SendTransactionParameters<chains[key], Account>,
-      'account' | 'chain'
+      'chain'
     >
   }[number]
 > &
-  Evaluate<ChainIdParameter<config, chainId>> & {
+  Evaluate<ChainIdParameter<config, chainId>> &
+  ConnectorParameter & {
     to: Address
   }
 
@@ -63,18 +66,27 @@ export async function prepareSendTransaction(
   config: Config,
   parameters: PrepareSendTransactionParameters,
 ): Promise<PrepareSendTransactionReturnType> {
-  const { chainId, ...rest } = parameters
+  const { chainId, connector, ...rest } = parameters
 
-  const connectorClient = await getConnectorClient(config)
-  if (!connectorClient) throw new ConnectorNotFoundError()
-  if (chainId) assertActiveChain(config, { chainId })
+  let account: Address | Account
+  let activeChainId: number | undefined
+  if (parameters.account) account = parameters.account
+  else {
+    const connectorClient = await getConnectorClient(config, {
+      chainId,
+      connector,
+    })
+    account = connectorClient.account
+    activeChainId = connectorClient.chain.id
+  }
+  if (chainId) assertActiveChain(config, { activeChainId, chainId })
 
   const client = config.getClient({ chainId })
   let gas: bigint | undefined = parameters.gas ?? undefined
   if (typeof parameters.gas === 'undefined')
     gas = await estimateGas(client, {
       ...(rest as any),
-      account: connectorClient.account,
+      account,
     })
 
   return {

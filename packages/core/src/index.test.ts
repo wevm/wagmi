@@ -27,6 +27,7 @@ test('exports', () => {
       "watchChainId",
       "getConnections",
       "watchConnections",
+      "getConnectorClient",
       "prepareSendTransaction",
       "readContract",
       "readContracts",
