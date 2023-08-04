@@ -1,3 +1,5 @@
+import type { Address } from 'viem'
+
 import type { Config, Connection, Connector } from '../config.js'
 import { type CreateConnectorFn } from '../connector.js'
 import type { Evaluate } from '../types/utils.js'
@@ -78,7 +80,7 @@ export async function reconnect(
       }
     })
     connections.push({
-      accounts: data.accounts,
+      accounts: data.accounts as readonly [Address, ...Address[]],
       chainId: data.chainId,
       connector,
     })

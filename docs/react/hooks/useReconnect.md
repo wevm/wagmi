@@ -3,7 +3,7 @@ const packageName = 'wagmi'
 const actionName = 'reconnect'
 const typeName = 'Reconnect'
 const mutate = 'reconnect'
-const TData = '{ accounts: readonly Address[]; chainId: number; connector: Connector }'
+const TData = '{ accounts: readonly [Address, ...Address[]]; chainId: number; connector: Connector }'
 const TError = 'ReconnectError'
 const TVariables = '{ connectors?: (CreateConnectorFn | Connector)[] | undefined; }'
 </script>

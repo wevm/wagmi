@@ -42,7 +42,7 @@ test('context', () => {
       >()
       expectTypeOf(data).toEqualTypeOf<
         {
-          accounts: readonly Address[]
+          accounts: readonly [Address, ...Address[]]
           chainId: number
           connector: Connector
         }[]
@@ -52,7 +52,7 @@ test('context', () => {
     onSettled(data, error, variables, context) {
       expectTypeOf(data).toEqualTypeOf<
         | {
-            accounts: readonly Address[]
+            accounts: readonly [Address, ...Address[]]
             chainId: number
             connector: Connector
           }[]
@@ -71,7 +71,7 @@ test('context', () => {
 
   expectTypeOf(data).toEqualTypeOf<
     | {
-        accounts: readonly Address[]
+        accounts: readonly [Address, ...Address[]]
         chainId: number
         connector: Connector
       }[]
@@ -112,7 +112,7 @@ test('context', () => {
         >()
         expectTypeOf(data).toEqualTypeOf<
           | {
-              accounts: readonly Address[]
+              accounts: readonly [Address, ...Address[]]
               chainId: number
               connector: Connector
             }[]
@@ -122,7 +122,7 @@ test('context', () => {
       onSettled(data, error, variables, context) {
         expectTypeOf(data).toEqualTypeOf<
           | {
-              accounts: readonly Address[]
+              accounts: readonly [Address, ...Address[]]
               chainId: number
               connector: Connector
             }[]

@@ -15,7 +15,7 @@ export type ConnectParameters<config extends Config = Config> = Evaluate<
 >
 
 export type ConnectReturnType<config extends Config = Config> = {
-  accounts: readonly Address[]
+  accounts: readonly [Address, ...Address[]]
   chainId:
     | config['chains'][number]['id']
     | (number extends config['chains'][number]['id'] ? number : number & {})
@@ -51,6 +51,7 @@ export async function connect<config extends Config>(
     connector.emitter.emit('message', { type: 'connecting' })
 
     const data = await connector.connect({ chainId: parameters.chainId })
+    const accounts = data.accounts as readonly [Address, ...Address[]]
 
     connector.emitter.off('connect', config._internal.connect)
     connector.emitter.on('change', config._internal.change)
@@ -60,7 +61,7 @@ export async function connect<config extends Config>(
     config.setState((x) => ({
       ...x,
       connections: new Map(x.connections).set(connector.uid, {
-        accounts: data.accounts,
+        accounts,
         chainId: data.chainId,
         connector: connector,
       }),
@@ -69,7 +70,7 @@ export async function connect<config extends Config>(
     }))
 
     return {
-      accounts: data.accounts,
+      accounts,
       chainId: data.chainId,
     }
   } catch (err) {

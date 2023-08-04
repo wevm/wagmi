@@ -3,7 +3,7 @@ const packageName = 'wagmi'
 const actionName = 'connect'
 const typeName = 'Connect'
 const mutate = 'connect'
-const TData = '{ accounts: readonly Address[]; chainId: number; }'
+const TData = '{ accounts: readonly [Address, ...Address[]]; chainId: number; }'
 const TError = 'ConnectError'
 const TVariables = '{ chainId?: number | undefined; connector?: CreateConnectorFn | Connector | undefined; }'
 </script>

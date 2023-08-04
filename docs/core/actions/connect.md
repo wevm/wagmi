@@ -83,7 +83,7 @@ import { type ConnectReturnType } from '@wagmi/core'
 
 ### accounts
 
-`readonly Address[]`
+`readonly [Address, ...Address[]]`
 
 Connected accounts from connector.
 

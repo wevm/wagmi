@@ -93,7 +93,7 @@ export type PartializedState = Evaluate<
   Partial<Pick<State, 'chainId' | 'connections' | 'current' | 'status'>>
 >
 export type Connection = {
-  accounts: readonly Address[]
+  accounts: readonly [Address, ...Address[]]
   chainId: number
   connector: Connector
 }
@@ -238,7 +238,9 @@ export function createConfig<
       return {
         ...x,
         connections: new Map(x.connections).set(data.uid, {
-          accounts: data.accounts ?? connection.accounts,
+          accounts:
+            (data.accounts as readonly [Address, ...Address[]]) ??
+            connection.accounts,
           chainId: data.chainId ?? connection.chainId,
           connector: connection.connector,
         }),
@@ -255,7 +257,7 @@ export function createConfig<
       return {
         ...x,
         connections: new Map(x.connections).set(data.uid, {
-          accounts: data.accounts,
+          accounts: data.accounts as readonly [Address, ...Address[]],
           chainId: data.chainId,
           connector: connector,
         }),

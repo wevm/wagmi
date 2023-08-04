@@ -6,7 +6,7 @@ import { type Config, type Connector } from '../config.js'
 export type GetAccountReturnType =
   | {
       address: Address
-      addresses: readonly Address[]
+      addresses: readonly [Address, ...Address[]]
       chainId: number
       connector: Connector
       isConnected: true

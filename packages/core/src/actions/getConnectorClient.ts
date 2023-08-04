@@ -1,5 +1,6 @@
 import {
   type Account,
+  type Address,
   type Client,
   type Transport,
   createClient,
@@ -50,7 +51,11 @@ export async function getConnectorClient<
       connector.getAccounts(),
       connector.getChainId(),
     ])
-    connection = { accounts, chainId, connector }
+    connection = {
+      accounts: accounts as readonly [Address, ...Address[]],
+      chainId,
+      connector,
+    }
   } else connection = config.state.connections.get(config.state.current!)
   if (!connection) throw new ConnectorNotFoundError()
 

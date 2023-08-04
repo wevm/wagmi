@@ -382,7 +382,7 @@ import { type Connection } from '{{packageName}}'
 
 ### accounts
 
-`readonly Address[]`
+`readonly [Address, ...Address[]]`
 
 Array of addresses associated with the connection.
 

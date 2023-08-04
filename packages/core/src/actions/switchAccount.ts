@@ -7,7 +7,7 @@ export type SwitchAccountParameters = {
 }
 
 export type SwitchAccountReturnType<config extends Config = Config> = {
-  accounts: readonly Address[]
+  accounts: readonly [Address, ...Address[]]
   chainId:
     | config['chains'][number]['id']
     | (number extends config['chains'][number]['id'] ? number : number & {})

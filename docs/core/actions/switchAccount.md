@@ -62,7 +62,7 @@ import { type SwitchAccountReturnType } from '@wagmi/core'
 
 ### accounts
 
-`readonly Address[]`
+`readonly [Address, ...Address[]]`
   
 Connected accounts from connector.
 
