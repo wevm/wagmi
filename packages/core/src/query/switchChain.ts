@@ -54,26 +54,30 @@ export type SwitchChainMutate<config extends Config, context = unknown> = <
   chainId extends config['chains'][number]['id'] | undefined,
 >(
   variables: SwitchChainVariables<config, chainId>,
-  options?: Evaluate<
-    MutateOptions<
-      SwitchChainData<config, chainId>,
-      SwitchChainError,
-      Evaluate<SwitchChainVariables<config, chainId>>,
-      context
-    >
-  >,
+  options?:
+    | Evaluate<
+        MutateOptions<
+          SwitchChainData<config, chainId>,
+          SwitchChainError,
+          Evaluate<SwitchChainVariables<config, chainId>>,
+          context
+        >
+      >
+    | undefined,
 ) => void
 
 export type SwitchChainMutateAsync<config extends Config, context = unknown> = <
   chainId extends config['chains'][number]['id'] | undefined,
 >(
   variables: SwitchChainVariables<config, chainId>,
-  options?: Evaluate<
-    MutateOptions<
-      SwitchChainData<config, chainId>,
-      SwitchChainError,
-      Evaluate<SwitchChainVariables<config, chainId>>,
-      context
-    >
-  >,
+  options?:
+    | Evaluate<
+        MutateOptions<
+          SwitchChainData<config, chainId>,
+          SwitchChainError,
+          Evaluate<SwitchChainVariables<config, chainId>>,
+          context
+        >
+      >
+    | undefined,
 ) => Promise<SwitchChainData<config, chainId>>

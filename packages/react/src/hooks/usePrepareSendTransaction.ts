@@ -62,7 +62,7 @@ export function usePrepareSendTransaction<
 
   return useQuery({
     ...queryOptions,
-    ...query,
+    ...(query as any),
     enabled,
-  })
+  }) as UsePrepareSendTransactionReturnType<chainId, selectData>
 }

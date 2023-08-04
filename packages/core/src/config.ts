@@ -62,10 +62,12 @@ export type Config<
   subscribe<state>(
     selector: (state: State<chains>) => state,
     listener: (selectedState: state, previousSelectedState: state) => void,
-    options?: {
-      equalityFn?: (a: state, b: state) => boolean
-      fireImmediately?: boolean
-    },
+    options?:
+      | {
+          equalityFn?: (a: state, b: state) => boolean
+          fireImmediately?: boolean
+        }
+      | undefined,
   ): () => void
 
   _internal: {

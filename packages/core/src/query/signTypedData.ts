@@ -37,12 +37,14 @@ export type SignTypedDataMutate<context = unknown> = <
   primaryType extends keyof typedData | 'EIP712Domain',
 >(
   variables: SignTypedDataVariables<typedData, primaryType>,
-  options?: MutateOptions<
-    SignTypedDataData,
-    SignTypedDataError,
-    SignTypedDataVariables<typedData, primaryType>,
-    context
-  >,
+  options?:
+    | MutateOptions<
+        SignTypedDataData,
+        SignTypedDataError,
+        SignTypedDataVariables<typedData, primaryType>,
+        context
+      >
+    | undefined,
 ) => void
 
 export type SignTypedDataMutateAsync<context = unknown,> = <
@@ -50,10 +52,12 @@ export type SignTypedDataMutateAsync<context = unknown,> = <
   primaryType extends keyof typedData | 'EIP712Domain',
 >(
   variables: SignTypedDataVariables<typedData, primaryType>,
-  options?: MutateOptions<
-    SignTypedDataData,
-    SignTypedDataError,
-    SignTypedDataVariables<typedData, primaryType>,
-    context
-  >,
+  options?:
+    | MutateOptions<
+        SignTypedDataData,
+        SignTypedDataError,
+        SignTypedDataVariables<typedData, primaryType>,
+        context
+      >
+    | undefined,
 ) => Promise<SignTypedDataData>

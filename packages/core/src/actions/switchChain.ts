@@ -8,13 +8,17 @@ import type { BaseError } from '../errors/base.js'
 import { ChainNotConfiguredError } from '../errors/config.js'
 import { SwitchChainNotSupportedError } from '../errors/connector.js'
 import { type ProviderNotFoundError } from '../errors/connector.js'
+import type { Evaluate } from '../internal.js'
+import type { ConnectorParameter } from '../types/properties.js'
 
 export type SwitchChainParameters<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
-> = {
-  chainId: chainId | config['chains'][number]['id']
-}
+> = Evaluate<
+  {
+    chainId: chainId | config['chains'][number]['id']
+  } & ConnectorParameter
+>
 
 export type SwitchChainReturnType<
   config extends Config = Config,
@@ -37,7 +41,10 @@ export async function switchChain<
   parameters: SwitchChainParameters<config, chainId>,
 ): Promise<SwitchChainReturnType<config, chainId>> {
   const { chainId } = parameters
-  const connection = config.state.connections.get(config.state.current!)
+
+  const connection = config.state.connections.get(
+    parameters.connector?.uid ?? config.state.current!,
+  )
   if (connection) {
     const connector = connection.connector
     if (!connector.switchChain)

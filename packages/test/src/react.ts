@@ -30,7 +30,7 @@ export function createWrapper<TComponent extends React.FunctionComponent<any>>(
 
 export function renderHook<Result, Props>(
   render: (props: Props) => Result,
-  options?: RenderHookOptions<Props>,
+  options?: RenderHookOptions<Props> | undefined,
 ): RenderHookResult<Result, Props> {
   queryClient.clear()
   return renderHook_(render, {
@@ -41,7 +41,7 @@ export function renderHook<Result, Props>(
 
 export function waitFor<T>(
   callback: () => Promise<T> | T,
-  options?: waitForOptions,
+  options?: waitForOptions | undefined,
 ): Promise<T> {
   return waitFor_(callback, { timeout: 10_000, ...options })
 }

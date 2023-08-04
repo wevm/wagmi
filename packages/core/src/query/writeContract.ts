@@ -47,12 +47,14 @@ export type WriteContractMutate<config extends Config, context = unknown> = <
     abi,
     functionName
   >,
-  options?: MutateOptions<
-    WriteContractData,
-    WriteContractError,
-    WriteContractVariables<config, chainId, abi, functionName>,
-    context
-  >,
+  options?:
+    | MutateOptions<
+        WriteContractData,
+        WriteContractError,
+        WriteContractVariables<config, chainId, abi, functionName>,
+        context
+      >
+    | undefined,
 ) => void
 
 export type WriteContractMutateAsync<
@@ -71,10 +73,12 @@ export type WriteContractMutateAsync<
     abi,
     functionName
   >,
-  options?: MutateOptions<
-    WriteContractData,
-    WriteContractError,
-    WriteContractVariables<config, chainId, abi, functionName>,
-    context
-  >,
+  options?:
+    | MutateOptions<
+        WriteContractData,
+        WriteContractError,
+        WriteContractVariables<config, chainId, abi, functionName>,
+        context
+      >
+    | undefined,
 ) => Promise<WriteContractData>

@@ -10,25 +10,29 @@ type MutateFn<
 > = undefined extends variables
   ? (
       variables?: variables,
-      options?: Evaluate<
-        import('@tanstack/query-core').MutateOptions<
-          data,
-          error,
-          variables,
-          context
-        >
-      >,
+      options?:
+        | Evaluate<
+            import('@tanstack/query-core').MutateOptions<
+              data,
+              error,
+              variables,
+              context
+            >
+          >
+        | undefined,
     ) => Promise<data>
   : (
       variables: variables,
-      options?: Evaluate<
-        import('@tanstack/query-core').MutateOptions<
-          data,
-          error,
-          variables,
-          context
-        >
-      >,
+      options?:
+        | Evaluate<
+            import('@tanstack/query-core').MutateOptions<
+              data,
+              error,
+              variables,
+              context
+            >
+          >
+        | undefined,
     ) => Promise<data>
 
 export type Mutate<

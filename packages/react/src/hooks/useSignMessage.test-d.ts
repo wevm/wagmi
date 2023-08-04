@@ -1,4 +1,8 @@
-import { type SignMessageError, type SignMessageParameters } from '@wagmi/core'
+import {
+  type Connector,
+  type SignMessageError,
+  type SignMessageParameters,
+} from '@wagmi/core'
 import { expectTypeOf, test } from 'vitest'
 
 import { useSignMessage } from './useSignMessage.js'
@@ -12,12 +16,14 @@ test('context', () => {
   const { context, data, error, signMessage, variables } = useSignMessage({
     onMutate(variables) {
       expectTypeOf(variables).toEqualTypeOf<{
+        connector?: Connector | undefined
         message: SignableMessage
       }>()
       return contextValue
     },
     onError(error, variables, context) {
       expectTypeOf(variables).toEqualTypeOf<{
+        connector?: Connector | undefined
         message: SignableMessage
       }>()
       expectTypeOf(error).toEqualTypeOf<SignMessageError>()
@@ -25,6 +31,7 @@ test('context', () => {
     },
     onSuccess(data, variables, context) {
       expectTypeOf(variables).toEqualTypeOf<{
+        connector?: Connector | undefined
         message: SignableMessage
       }>()
       expectTypeOf(data).toEqualTypeOf<`0x${string}`>()
@@ -34,6 +41,7 @@ test('context', () => {
       expectTypeOf(data).toEqualTypeOf<`0x${string}` | undefined>()
       expectTypeOf(error).toEqualTypeOf<SignMessageError | null>()
       expectTypeOf(variables).toEqualTypeOf<{
+        connector?: Connector | undefined
         message: SignableMessage
       }>()
       expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
@@ -43,7 +51,11 @@ test('context', () => {
   expectTypeOf(data).toEqualTypeOf<`0x${string}` | undefined>()
   expectTypeOf(error).toEqualTypeOf<SignMessageError | null>()
   expectTypeOf(variables).toEqualTypeOf<
-    { message: SignableMessage } | undefined
+    | {
+        connector?: Connector | undefined
+        message: SignableMessage
+      }
+    | undefined
   >()
   expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
 
@@ -52,6 +64,7 @@ test('context', () => {
     {
       onError(error, variables, context) {
         expectTypeOf(variables).toEqualTypeOf<{
+          connector?: Connector | undefined
           message: SignableMessage
         }>()
         expectTypeOf(error).toEqualTypeOf<SignMessageError>()
@@ -59,6 +72,7 @@ test('context', () => {
       },
       onSuccess(data, variables, context) {
         expectTypeOf(variables).toEqualTypeOf<{
+          connector?: Connector | undefined
           message: SignableMessage
         }>()
         expectTypeOf(data).toEqualTypeOf<`0x${string}`>()
@@ -68,6 +82,7 @@ test('context', () => {
         expectTypeOf(data).toEqualTypeOf<`0x${string}` | undefined>()
         expectTypeOf(error).toEqualTypeOf<SignMessageError | null>()
         expectTypeOf(variables).toEqualTypeOf<{
+          connector?: Connector | undefined
           message: SignableMessage
         }>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
