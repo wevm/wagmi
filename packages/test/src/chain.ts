@@ -5,10 +5,7 @@ import { pool } from './constants.js'
 
 type ForkChain = Evaluate<
   Chain & {
-    fork: {
-      blockNumber: bigint
-      url: string
-    }
+    fork: { blockNumber: bigint; url: string }
     port: number
   }
 >

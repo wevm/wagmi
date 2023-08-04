@@ -15,6 +15,7 @@ test('exports', () => {
       "config",
       "testClient",
       "wait",
+      "version",
     ]
   `)
 })

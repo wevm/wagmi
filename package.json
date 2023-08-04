@@ -32,8 +32,8 @@
     "@types/fs-extra": "^11.0.1",
     "@types/node": "^18.16.9",
     "@viem/anvil": "0.0.6",
-    "@vitest/coverage-c8": "^0.31.0",
-    "@vitest/ui": "^0.31.0",
+    "@vitest/coverage-v8": "^0.34.1",
+    "@vitest/ui": "^0.34.1",
     "@wagmi/test": "workspace:*",
     "bun": "^0.5.9",
     "execa": "^7.1.1",
@@ -49,7 +49,7 @@
     "typescript": "5.0.4",
     "viem": "0.0.0-w-20230802141753",
     "vite": "^4.3.9",
-    "vitest": "^0.31.0"
+    "vitest": "^0.34.1"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm format && pnpm lint:fix"

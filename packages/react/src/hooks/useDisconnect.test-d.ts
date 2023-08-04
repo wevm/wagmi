@@ -20,29 +20,20 @@ test('context', () => {
   const { context, data, disconnect, error, variables } = useDisconnect({
     onMutate(variables) {
       expectTypeOf(variables).toEqualTypeOf<
-        | {
-            connector?: Connector | undefined
-          }
-        | undefined
+        { connector?: Connector | undefined } | undefined
       >()
       return contextValue
     },
     onError(error, variables, context) {
       expectTypeOf(variables).toEqualTypeOf<
-        | {
-            connector?: Connector | undefined
-          }
-        | undefined
+        { connector?: Connector | undefined } | undefined
       >()
       expectTypeOf(error).toEqualTypeOf<DisconnectError>()
       expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
     },
     onSuccess(data, variables, context) {
       expectTypeOf(variables).toEqualTypeOf<
-        | {
-            connector?: Connector | undefined
-          }
-        | undefined
+        { connector?: Connector | undefined } | undefined
       >()
       expectTypeOf(data).toEqualTypeOf<void>()
       expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
@@ -51,10 +42,7 @@ test('context', () => {
       expectTypeOf(data).toEqualTypeOf<void | undefined>()
       expectTypeOf(error).toEqualTypeOf<DisconnectError | null>()
       expectTypeOf(variables).toEqualTypeOf<
-        | {
-            connector?: Connector | undefined
-          }
-        | undefined
+        { connector?: Connector | undefined } | undefined
       >()
       expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
     },
@@ -63,10 +51,7 @@ test('context', () => {
   expectTypeOf(data).toEqualTypeOf<void | undefined>()
   expectTypeOf(error).toEqualTypeOf<DisconnectError | null>()
   expectTypeOf(variables).toEqualTypeOf<
-    | {
-        connector?: Connector | undefined
-      }
-    | undefined
+    { connector?: Connector | undefined } | undefined
   >()
   expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
 
@@ -75,32 +60,23 @@ test('context', () => {
     {
       onError(error, variables, context) {
         expectTypeOf(variables).toEqualTypeOf<
-          | {
-              connector?: Connector | undefined
-            }
-          | undefined
+          { connector?: Connector | undefined } | undefined
         >()
         expectTypeOf(error).toEqualTypeOf<DisconnectError>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
       },
       onSuccess(data, variables, context) {
         expectTypeOf(variables).toEqualTypeOf<
-          | {
-              connector?: Connector | undefined
-            }
-          | undefined
+          { connector?: Connector | undefined } | undefined
         >()
-        expectTypeOf(data).toEqualTypeOf<void | undefined>()
+        expectTypeOf(data).toEqualTypeOf<void>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
       },
       onSettled(data, error, variables, context) {
         expectTypeOf(data).toEqualTypeOf<void | undefined>()
         expectTypeOf(error).toEqualTypeOf<DisconnectError | null>()
         expectTypeOf(variables).toEqualTypeOf<
-          | {
-              connector?: Connector | undefined
-            }
-          | undefined
+          { connector?: Connector | undefined } | undefined
         >()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
       },

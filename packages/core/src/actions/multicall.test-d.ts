@@ -23,12 +23,12 @@ test('default', async () => {
   expectTypeOf(result).toEqualTypeOf<
     [
       (
-        | { error: Error; status: 'failure' }
-        | { result: bigint; status: 'success' }
+        | { error: Error; result?: undefined; status: 'failure' }
+        | { error?: undefined; result: bigint; status: 'success' }
       ),
       (
-        | { error: Error; status: 'failure' }
-        | { result: string; status: 'success' }
+        | { error: Error; result?: undefined; status: 'failure' }
+        | { error?: undefined; result: string; status: 'success' }
       ),
     ]
   >()

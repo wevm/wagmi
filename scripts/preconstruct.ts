@@ -16,10 +16,7 @@ for (const packagePath of packagePaths) {
   type Package = {
     name?: string
     private?: boolean
-    exports?: Record<
-      string,
-      { types: string; import: string; default: string } | string
-    >
+    exports?: Record<string, { types: string; default: string } | string>
   }
   const packageFile = (await fs.readJson(packagePath)) as Package
 
@@ -45,8 +42,8 @@ for (const packagePath of packagePaths) {
     const srcFilePath = path.resolve(srcDir, srcFileName)
 
     // Link exports to dist locations
-    for (const [type, value] of Object.entries(exports) as [
-      type: 'types' | 'import' | 'default',
+    for (const [, value] of Object.entries(exports) as [
+      type: 'types' | 'default',
       value: string,
     ][]) {
       const distDir = path.resolve(dir, path.dirname(value))
@@ -54,12 +51,8 @@ for (const packagePath of packagePaths) {
       const distFilePath = path.resolve(distDir, distFileName)
       await fs.ensureDir(distDir)
 
-      if (type === 'default') {
-        // Add CommonJS require hook for completeness, but not really required since things work without it.
-        // https://github.com/preconstruct/preconstruct/blob/main/packages/cli/src/dev.ts#L381
-      }
       // Symlink src to dist file
-      else await fs.symlink(srcFilePath, distFilePath, 'file')
+      await fs.symlink(srcFilePath, distFilePath, 'file')
     }
   }
 }

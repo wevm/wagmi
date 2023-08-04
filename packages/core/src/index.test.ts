@@ -55,6 +55,7 @@ test('exports', () => {
       "deserialize",
       "normalizeChainId",
       "serialize",
+      "version",
     ]
   `)
 })

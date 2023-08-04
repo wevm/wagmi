@@ -1,4 +1,5 @@
 import { type Connector, type SwitchChainError } from '@wagmi/core'
+import type { Evaluate } from '@wagmi/core/internal'
 import { chain } from '@wagmi/test'
 import type { Chain } from 'viem'
 import { expectTypeOf, test } from 'vitest'
@@ -30,11 +31,11 @@ test('context', () => {
         chainId: number
         connector?: Connector | undefined
       }>()
-      expectTypeOf(data).toEqualTypeOf<Chain>()
+      expectTypeOf(data).toEqualTypeOf<Evaluate<Chain>>()
       expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
     },
     onSettled(data, error, variables, context) {
-      expectTypeOf(data).toEqualTypeOf<Chain | undefined>()
+      expectTypeOf(data).toEqualTypeOf<Evaluate<Chain> | undefined>()
       expectTypeOf(error).toEqualTypeOf<SwitchChainError | null>()
       expectTypeOf(variables).toEqualTypeOf<{
         chainId: number
@@ -44,7 +45,7 @@ test('context', () => {
     },
   })
 
-  expectTypeOf(data).toEqualTypeOf<Chain | undefined>()
+  expectTypeOf(data).toEqualTypeOf<Evaluate<Chain> | undefined>()
   expectTypeOf(error).toEqualTypeOf<SwitchChainError | null>()
   expectTypeOf(variables).toEqualTypeOf<
     { chainId: number; connector?: Connector | undefined } | undefined
@@ -67,11 +68,11 @@ test('context', () => {
           chainId: number
           connector?: Connector | undefined
         }>()
-        expectTypeOf(data).toEqualTypeOf<Chain>()
+        expectTypeOf(data).toEqualTypeOf<Evaluate<Chain>>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
       },
       onSettled(data, error, variables, context) {
-        expectTypeOf(data).toEqualTypeOf<Chain | undefined>()
+        expectTypeOf(data).toEqualTypeOf<Evaluate<Chain> | undefined>()
         expectTypeOf(error).toEqualTypeOf<SwitchChainError | null>()
         expectTypeOf(variables).toEqualTypeOf<{
           chainId: number

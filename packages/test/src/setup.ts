@@ -19,9 +19,11 @@ afterAll(async () => {
 
 afterEach(async (context) => {
   context.onTestFailed(async () => {
-    // If a test fails, you can fetch and print the logs of your anvil instance.
-    const logs = await fetchLogs(`http://localhost:${chain.mainnet.port}`, pool)
-    // Only print the 20 most recent log messages.
-    console.log(...logs.slice(-20))
+    for (const chain2 of Object.values(chain)) {
+      // If a test fails, you can fetch and print the logs of your anvil instance.
+      const logs = await fetchLogs(`http://localhost:${chain2.port}`, pool)
+      // Only print the 20 most recent log messages.
+      console.log(...logs.slice(-20))
+    }
   })
 })

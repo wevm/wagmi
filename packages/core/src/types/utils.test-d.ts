@@ -1,6 +1,7 @@
 import { assertType, expectTypeOf, test } from 'vitest'
 
 import {
+  type Evaluate,
   type ExactPartial,
   type Mutable,
   type OneOf,
@@ -26,7 +27,7 @@ test('OneOf', () => {
 })
 
 test('PartialBy', () => {
-  type Result = PartialBy<{ foo: string; bar: number }, 'foo'>
+  type Result = Evaluate<PartialBy<{ foo: string; bar: number }, 'foo'>>
   expectTypeOf<Result>().toEqualTypeOf<{
     foo?: string | undefined
     bar: number
