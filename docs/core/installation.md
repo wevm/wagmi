@@ -50,3 +50,34 @@ Wagmi Core is optimized for modern browsers. It is compatible with the following
 ::: tip
 Depending on your environment, you might need to add polyfills. See [Viem Platform Compatibility](https://viem.sh/docs/compatibility.html) for more info.
 :::
+
+## Using Unreleased Commits
+
+If you can't wait for a new release to test the latest features, you can either install from the `canary` tag (tracks the [`main`](https://github.com/wagmi-dev/wagmi/tree/main) branch).
+
+::: code-group
+```bash [pnpm]
+pnpm add @wagmi/core@canary
+```
+
+```bash [npm]
+npm install @wagmi/core@canary
+```
+
+```bash [yarn]
+yarn add @wagmi/core@canary
+```
+:::
+
+Or clone the [Wagmi repo](https://github.com/wagmi-dev/wagmi) to your local machine, build, and link it yourself.
+
+```bash
+git clone https://github.com/wagmi-dev/wagmi.git
+cd wagmi
+pnpm install
+pnpm build
+cd packages/core
+pnpm link --global
+```
+
+Then go to the project where you are using Wagmi and run `pnpm link --global @wagmi/core` (or the package manager that you used to link Wagmi globally). Make sure you installed the [required peer dependencies](#manual-installation) and their versions are correct.

@@ -1,8 +1,12 @@
 # Getting Started
 
+## Overview
+
+Wagmi is a React Hooks library for Ethereum. You can learn more about the rationale behind the project in the [Why Wagmi](/react/why-wagmi) section.
+
 ## Automatic Installation
 
-For new projects, it is recommended to set up your Wagmi app using the `create-wagmi` command line interface (CLI). This will create a new Wagmi project using TypeScript and install the required dependencies.
+For new projects, it is recommended to set up your Wagmi app using the [`create-wagmi`](/cli/TODO) command line interface (CLI). This will create a new Wagmi project using TypeScript and install the required dependencies.
 
 ::: code-group
 ```bash [pnpm]
@@ -174,37 +178,6 @@ function App() {
 ```
 <<< @/snippets/react/config.ts[config.ts]
 :::
-
-## Using Unreleased Commits
-
-If you can't wait for a new release to test the latest features, you can either install from the `canary` tag (tracks the [`main`](https://github.com/wagmi-dev/wagmi/tree/main) branch).
-
-::: code-group
-```bash [pnpm]
-pnpm add wagmi@canary
-```
-
-```bash [npm]
-npm install wagmi@canary
-```
-
-```bash [yarn]
-yarn add wagmi@canary
-```
-:::
-
-Or clone the [Wagmi repo](https://github.com/wagmi-dev/wagmi) to your local machine, build, and link it yourself.
-
-```bash
-git clone https://github.com/wagmi-dev/wagmi.git
-cd wagmi
-pnpm install
-pnpm build
-cd packages/react
-pnpm link --global
-```
-
-Then go to the project where you are using Wagmi and run `pnpm link --global wagmi` (or the package manager that you used to link Wagmi globally). Make sure you installed the [required peer dependencies](#manual-installation) and their versions are correct.
 
 ## Next Steps
 
