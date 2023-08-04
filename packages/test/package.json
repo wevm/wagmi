@@ -10,9 +10,8 @@
   },
   "scripts": {
     "clean": "rm -rf dist tsconfig.tsbuildinfo",
-    "build": "pnpm run clean && pnpm run build:cjs && pnpm run build:esm+types",
-    "build:cjs": "tsc --project tsconfig.build.json --module commonjs --verbatimModuleSyntax false --outDir ./dist/cjs && echo > ./dist/cjs/package.json '{\"type\":\"commonjs\"}'",
-    "build:esm+types": "tsc --project tsconfig.build.json --module es2020 --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types && echo > ./dist/esm/package.json '{\"type\":\"module\"}'",
+    "build": "pnpm run clean && pnpm run build:esm+types",
+    "build:esm+types": "tsc --project tsconfig.build.json --module es2020 --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
     "test:build": "publint --strict",
     "typecheck": "tsc --noEmit"
   },
@@ -25,20 +24,17 @@
   ],
   "sideEffects": false,
   "type": "module",
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
+  "main": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "typings": "./dist/types/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
-      "import": "./dist/esm/index.js",
-      "default": "./dist/cjs/index.js"
+      "default": "./dist/esm/index.js"
     },
     "./react": {
       "types": "./dist/types/react.d.ts",
-      "import": "./dist/esm/react.js",
-      "default": "./dist/cjs/react.js"
+      "default": "./dist/esm/react.js"
     },
     "./package.json": "./package.json"
   },
@@ -49,21 +45,28 @@
   },
   "peerDependencies": {
     "@tanstack/react-query": "5.0.0-beta.2",
+    "@testing-library/react": "^14.0.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.0.11",
     "@viem/anvil": "^0.0.6",
+    "@wagmi/core": "workspace:*",
     "react": ">=18",
     "react-dom": ">=18",
     "typescript": ">=5",
     "viem": "^1",
     "wagmi": "workspace:*"
   },
-  "dependencies": {
-    "@testing-library/react": "^14.0.0",
-    "@types/react": "^18.2.0",
-    "@types/react-dom": "^18.0.11",
-    "@wagmi/core": "workspace:*"
-  },
   "peerDependenciesMeta": {
     "@tanstack/react-query": {
+      "optional": true
+    },
+    "@testing-library/react": {
+      "optional": true
+    },
+    "@types/react": {
+      "optional": true
+    },
+    "@types/react-dom": {
       "optional": true
     },
     "react": {
@@ -81,6 +84,10 @@
   },
   "devDependencies": {
     "@tanstack/react-query": "5.0.0-beta.2",
+    "@testing-library/react": "^14.0.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.0.11",
+    "@wagmi/core": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "wagmi": "workspace:*"

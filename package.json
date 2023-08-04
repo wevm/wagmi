@@ -6,13 +6,14 @@
     "deps": "pnpx taze -r",
     "dev": "pnpm --filter vite-react dev",
     "dev:core": "pnpm --filter vite-core dev",
-    "docs:dev": "rm -r node_modules/.cache/twoslash & pnpm --filter docs dev",
+    "docs:dev": "rimraf node_modules/.cache/twoslash && pnpm --filter docs dev",
     "format": "rome format . --write",
+    "knip": "pnpm build && knip",
     "lint": "rome check .",
     "lint:fix": "pnpm lint --apply",
     "postinstall": "pnpm preconstruct",
     "preconstruct": "bun scripts/preconstruct.ts",
-    "preinstall": "npx only-allow pnpm",
+    "preinstall": "npx only-allow@1.1.1 pnpm",
     "prepare": "npx simple-git-hooks",
     "test": "vitest",
     "test:build": "pnpm run --r --parallel test:build",
@@ -39,6 +40,7 @@
     "fs-extra": "^11.1.1",
     "glob": "^10.2.4",
     "jsdom": "^20.0.3",
+    "knip": "^2.17.3",
     "msw": "^1.2.1",
     "publint": "^0.2.0",
     "rimraf": "^4.4.1",
@@ -71,6 +73,16 @@
         "react",
         "search-insights"
       ]
+    }
+  },
+  "knip": {
+    "ignore": ["**/*.test-d.ts", "**/vite-env.d.ts", "vitest.workspace.ts"],
+    "ignoreDependencies": ["only-allow"],
+    "ignoreWorkspaces": ["docs", "packages/register-tests/**"],
+    "workspaces": {
+      ".": {
+        "entry": "scripts/*.ts"
+      }
     }
   }
 }

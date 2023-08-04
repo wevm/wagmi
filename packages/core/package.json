@@ -10,9 +10,8 @@
   },
   "scripts": {
     "clean": "rm -rf dist tsconfig.tsbuildinfo",
-    "build": "pnpm run clean && pnpm run build:cjs && pnpm run build:esm+types",
-    "build:cjs": "tsc --project tsconfig.build.json --module commonjs --verbatimModuleSyntax false --outDir ./dist/cjs && echo > ./dist/cjs/package.json '{\"type\":\"commonjs\"}'",
-    "build:esm+types": "tsc --project tsconfig.build.json --module es2020 --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types && echo > ./dist/esm/package.json '{\"type\":\"module\"}'",
+    "build": "pnpm run clean && pnpm run build:esm+types",
+    "build:esm+types": "tsc --project tsconfig.build.json --module es2020 --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
     "test:build": "publint --strict",
     "typecheck": "tsc --noEmit"
   },
@@ -25,30 +24,25 @@
   ],
   "sideEffects": false,
   "type": "module",
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
+  "main": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "typings": "./dist/types/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
-      "import": "./dist/esm/index.js",
-      "default": "./dist/cjs/index.js"
+      "default": "./dist/esm/index.js"
     },
     "./chains": {
       "types": "./dist/types/chains.d.ts",
-      "import": "./dist/esm/chains.js",
-      "default": "./dist/cjs/chains.js"
+      "default": "./dist/esm/chains.js"
     },
     "./internal": {
       "types": "./dist/types/internal.d.ts",
-      "import": "./dist/esm/internal.js",
-      "default": "./dist/cjs/internal.js"
+      "default": "./dist/esm/internal.js"
     },
     "./query": {
       "types": "./dist/types/query.d.ts",
-      "import": "./dist/esm/query.js",
-      "default": "./dist/cjs/query.js"
+      "default": "./dist/esm/query.js"
     },
     "./package.json": "./package.json"
   },
