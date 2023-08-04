@@ -199,8 +199,8 @@ function getSidebar() {
             link: '/react/testing',
           },
           {
-            text: 'Chain-Specific Properties 🚧',
-            link: '/react/testing',
+            text: 'Chain Properties 🚧',
+            link: '/react/chain-properties',
           },
           {
             text: 'FAQ / Troubleshooting',
@@ -392,8 +392,8 @@ function getSidebar() {
             link: '/core/testing',
           },
           {
-            text: 'Chain-Specific Properties 🚧',
-            link: '/core/testing',
+            text: 'Chain Properties 🚧',
+            link: '/core/chain-properties',
           },
           {
             text: 'FAQ / Troubleshooting',
