@@ -1,6 +1,12 @@
+<script setup>
+const packageName = '@wagmi/core'
+const actionName = 'switchAccount'
+const typeName = 'SwitchAccount'
+</script>
+
 # switchAccount
 
-Action for switching accounts with [connectors](/core/connectors).
+Action for switching the current account.
 
 ## Import
 
@@ -12,14 +18,13 @@ import { switchAccount } from '@wagmi/core'
 
 ::: code-group
 ```ts [index.ts]
-import { switchAccount } from '@wagmi/core'
-import { injected } from '@wagmi/connectors'
+import { getConnections, switchAccount } from '@wagmi/core'
 import { config } from './config'
 
-const result = await switchAccount(
-  config,
-  { connector: injected() },
-)
+const connections = getConnections(config)
+const result = await switchAccount(config, {
+  connector: connections[0]?.connector,
+})
 ```
 <<< @/snippets/core/config.ts[config.ts]
 :::
@@ -38,19 +43,34 @@ import { type SwitchAccountParameters } from '@wagmi/core'
 
 ::: code-group
 ```ts [index.ts]
-import { switchAccount } from '@wagmi/core'
-import { injected } from '@wagmi/connectors'
+import { getConnections, switchAccount } from '@wagmi/core'
 import { config } from './config'
 
-const result = await switchAccount(
-  config,
-  {
-    connector: injected(), // [!code focus]
-  },
-)
+const connections = getConnections(config)
+const result = await switchAccount(config, {
+  connector: connections[0]?.connector, // [!code focus]
+})
 ```
 <<< @/snippets/core/config.ts[config.ts]
 :::
+
+## Return Type
+
+```ts
+import { type SwitchAccountReturnType } from '@wagmi/core'
+```
+
+### accounts
+
+`readonly Address[]`
+  
+Connected accounts from connector.
+
+### chainId
+
+`number`
+
+Connected chain ID from connector.
 
 ## Error
 
@@ -58,13 +78,4 @@ const result = await switchAccount(
 import { type SwitchAccountError } from '@wagmi/core'
 ```
 
-## TanStack Query
-
-```ts
-import {
-  type SwitchAccountMutationData,
-  type SwitchAccountMutationVariables,
-  type SwitchAccountMutationParameters,
-  switchAccountMutationOptions,
-} from '@wagmi/core'
-```
+<!--@include: @shared/mutation-imports.md-->

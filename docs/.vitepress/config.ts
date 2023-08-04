@@ -199,6 +199,10 @@ function getSidebar() {
             link: '/react/testing',
           },
           {
+            text: 'Chain-Specific Properties 🚧',
+            link: '/react/testing',
+          },
+          {
             text: 'FAQ / Troubleshooting',
             link: '/react/faq',
           },
@@ -254,6 +258,10 @@ function getSidebar() {
               {
                 text: 'useConnections',
                 link: '/react/hooks/useConnections',
+              },
+              {
+                text: 'useConnectorClient 🚧',
+                link: '/react/hooks/useConnectorClient',
               },
               {
                 text: 'useContractEvent 🚧',
@@ -384,6 +392,10 @@ function getSidebar() {
             link: '/core/testing',
           },
           {
+            text: 'Chain-Specific Properties 🚧',
+            link: '/core/testing',
+          },
+          {
             text: 'FAQ / Troubleshooting',
             link: '/core/faq',
           },
@@ -442,7 +454,7 @@ function getSidebar() {
               { text: 'readContract 🚧', link: '/core/actions/readContract' },
               { text: 'readContracts 🚧', link: '/core/actions/readContracts' },
               {
-                text: 'sendTransaction 🚧',
+                text: 'sendTransaction',
                 link: '/core/actions/sendTransaction',
               },
               {
@@ -458,7 +470,7 @@ function getSidebar() {
                 link: '/core/actions/simulateContract',
               },
               {
-                text: 'switchAccount 🚧',
+                text: 'switchAccount',
                 link: '/core/actions/switchAccount',
               },
               {

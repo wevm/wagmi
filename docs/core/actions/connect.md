@@ -22,10 +22,7 @@ import { connect } from '@wagmi/core'
 import { injected } from '@wagmi/connectors'
 import { config } from './config'
 
-const result = await connect(
-  config,
-  { connector: injected() },
-)
+const result = await connect(config, { connector: injected() })
 ```
 <<< @/snippets/core/config.ts[config.ts]
 :::
@@ -51,13 +48,10 @@ import { mainnet } from '@wagmi/core/chains'
 import { injected } from '@wagmi/connectors'
 import { config } from './config'
 
-const result = await connect(
-  config,
-  {
-    chainId: mainnet.id, // [!code focus]
-    connector: injected(), 
-  },
-)
+const result = await connect(config, {
+  chainId: mainnet.id, // [!code focus]
+  connector: injected(),
+})
 ```
 <<< @/snippets/core/config.ts[config.ts]
 :::
@@ -74,12 +68,9 @@ import { connect } from '@wagmi/core'
 import { injected } from '@wagmi/connectors' // [!code focus]
 import { config } from './config'
 
-const result = await connect(
-  config,
-  {
-    connector: injected(), // [!code focus]
-  },
-)
+const result = await connect(config, {
+  connector: injected(), // [!code focus]
+})
 ```
 <<< @/snippets/core/config.ts[config.ts]
 :::

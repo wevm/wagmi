@@ -22,10 +22,7 @@ import { reconnect } from '@wagmi/core'
 import { injected } from '@wagmi/connectors'
 import { config } from './config'
 
-const result = await reconnect(
-  config,
-  { connectors: [injected()] },
-)
+const result = await reconnect(config, { connectors: [injected()] })
 ```
 <<< @/snippets/core/config.ts[config.ts]
 :::
@@ -49,12 +46,9 @@ import { connect } from '@wagmi/core'
 import { injected } from '@wagmi/connectors'
 import { config } from './config'
 
-const result = await reconnect(
-  config,
-  {
+const result = await reconnect(config, {
     connectors: [injected()], // [!code focus]
-  },
-)
+})
 ```
 <<< @/snippets/core/config.ts[config.ts]
 :::

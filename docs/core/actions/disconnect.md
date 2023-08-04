@@ -44,10 +44,9 @@ import { disconnect, getAccount } from '@wagmi/core'
 import { config } from './config'
 
 const { connector } = getAccount(config)
-const result = await disconnect(
-  config,
-  { connector }, // [!code focus]
-)
+const result = await disconnect(config, {
+  connector, // [!code focus]
+})
 ```
 <<< @/snippets/core/config.ts[config.ts]
 :::
