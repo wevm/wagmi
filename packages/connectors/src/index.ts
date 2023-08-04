@@ -9,3 +9,5 @@ export {
   type WalletConnectParameters,
   walletConnect,
 } from './walletConnect.js'
+
+export { version } from './version.js'

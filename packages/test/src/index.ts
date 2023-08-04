@@ -1,6 +1,6 @@
 export { chain } from './chain.js'
 
-export { testConnector } from './connector.js'
+export { testConnector, type TestConnectorParameters } from './connector.js'
 
 export {
   abi,
@@ -13,3 +13,5 @@ export {
 export { config, testClient } from './config.js'
 
 export { wait } from './utils.js'
+
+export { version } from './version.js'

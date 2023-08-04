@@ -3,7 +3,7 @@ import { type Chain, mainnet } from 'viem/chains'
 
 import { pool } from './constants.js'
 
-export type ForkChain = Evaluate<
+type ForkChain = Evaluate<
   Chain & {
     fork: {
       blockNumber: bigint

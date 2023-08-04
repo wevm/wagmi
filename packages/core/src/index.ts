@@ -257,6 +257,7 @@ export {
 export {
   type CreateStorageParameters,
   type Storage,
+  type StorageItemMap,
   createStorage,
   noopStorage,
 } from './storage.js'
@@ -274,3 +275,8 @@ export { deserialize } from './utils/deserialize.js'
 export { normalizeChainId } from './utils/normalizeChainId.js'
 
 export { serialize } from './utils/serialize.js'
+
+////////////////////////////////////////////////////////////////////////////////
+// Version
+
+export { version } from './version.js'

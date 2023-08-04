@@ -62,6 +62,7 @@ export {
 } from './hooks/useConnections.js'
 
 export {
+  type UseConnectorClientParameters,
   type UseConnectorClientReturnType,
   useConnectorClient,
 } from './hooks/useConnectorClient.js'
@@ -218,3 +219,8 @@ export {
   normalizeChainId,
   serialize,
 } from '@wagmi/core'
+
+////////////////////////////////////////////////////////////////////////////////
+// Version
+
+export { version } from './version.js'

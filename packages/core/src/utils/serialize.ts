@@ -28,7 +28,7 @@ function getCutoff(array: any[], value: any) {
   return 0
 }
 
-export type StandardReplacer = (key: string, value: any) => any
+type StandardReplacer = (key: string, value: any) => any
 type CircularReplacer = (key: string, value: any, referenceKey: string) => any
 
 /**
