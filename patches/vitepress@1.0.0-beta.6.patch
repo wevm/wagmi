@@ -10,7 +10,6 @@ index 92e11165e7de09ffe1ad7332709f051271963843..6e2f989490aba5bad7abfa6da060d68e
  export { default as VPHomeHero } from './components/VPHomeHero.vue';
  export { default as VPHomeFeatures } from './components/VPHomeFeatures.vue';
  export { default as VPHomeSponsors } from './components/VPHomeSponsors.vue';
-+export { default as VPIconHeart } from './components/icons/VPIconHeart.vue';
  export { default as VPDocAsideSponsors } from './components/VPDocAsideSponsors.vue';
 +export { default as VPSponsors } from './components/VPSponsors.vue';
  export { default as VPTeamPage } from './components/VPTeamPage.vue';
@@ -28,7 +27,6 @@ index 1848e45bcc5035562d59467c6f798b0312c11202..6195f7c2a7ce12008b29c343c43798e6
  export const VPHomeHero: DefineComponent
  export const VPHomeFeatures: DefineComponent
  export const VPHomeSponsors: DefineComponent
-+export const VPIconHeart: DefineComponent
  export const VPDocAsideSponsors: DefineComponent
 +export const VPSponsors: DefineComponent
  export const VPTeamPage: DefineComponent
