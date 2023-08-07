@@ -69,7 +69,7 @@ function Connect() {
         <button
           id={connector.uid}
           key={connector.uid}
-          onClick={async () => connect({ connector, chainId })}
+          onClick={() => connect({ connector, chainId })}
           type='button'
         >
           {connector.name}
@@ -93,7 +93,7 @@ function SwitchAccount() {
         <button
           disabled={account.connector?.uid === connector.uid}
           key={connector.uid}
-          onClick={async () => switchAccount({ connector })}
+          onClick={() => switchAccount({ connector })}
           type='button'
         >
           {connector.name}
@@ -115,7 +115,7 @@ function SwitchChain() {
         <button
           disabled={chainId === chain.id}
           key={chain.id}
-          onClick={async () => switchChain({ chainId: chain.id })}
+          onClick={() => switchChain({ chainId: chain.id })}
           type='button'
         >
           {chain.name}

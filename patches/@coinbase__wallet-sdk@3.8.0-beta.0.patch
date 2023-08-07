@@ -1,0 +1,12 @@
+diff --git a/package.json b/package.json
+index d38d855328a0123dcf0656d43b7ff49dd53bb0e8..1dbb1c34d8e66200046fe2338e0dd59c172ab1d0 100644
+--- a/package.json
++++ b/package.json
+@@ -22,6 +22,7 @@
+   "repository": "https://github.com/coinbase/coinbase-wallet-sdk.git",
+   "author": "Coinbase, Inc.",
+   "license": "Apache-2.0",
++  "sideEffects": false,
+   "scripts": {
+     "pretest:unit": "node compile-assets.js",
+     "test:unit": "jest",

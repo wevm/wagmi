@@ -45,7 +45,7 @@
     }
   },
   "dependencies": {
-    "@coinbase/wallet-sdk": "^3.7.1",
+    "@coinbase/wallet-sdk": "3.8.0-beta.0",
     "@walletconnect/ethereum-provider": "^2.8.5",
     "@walletconnect/modal": "^2.5.6"
   },

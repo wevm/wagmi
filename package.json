@@ -62,7 +62,7 @@
       "viem": "0.0.0-w-20230802141753"
     },
     "patchedDependencies": {
-      "@coinbase/wallet-sdk@3.7.1": "patches/@coinbase__wallet-sdk@3.7.1.patch",
+      "@coinbase/wallet-sdk@3.8.0-beta.0": "patches/@coinbase__wallet-sdk@3.8.0-beta.0.patch",
       "@walletconnect/ethereum-provider@2.8.5": "patches/@walletconnect__ethereum-provider@2.8.5.patch",
       "vitepress@1.0.0-beta.6": "patches/vitepress@1.0.0-beta.6.patch"
     },

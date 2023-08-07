@@ -6,9 +6,9 @@ overrides:
   viem: 0.0.0-w-20230802141753
 
 patchedDependencies:
-  '@coinbase/wallet-sdk@3.7.1':
-    hash: op7zcciml3isekk3qua7ykap7a
-    path: patches/@coinbase__wallet-sdk@3.7.1.patch
+  '@coinbase/wallet-sdk@3.8.0-beta.0':
+    hash: fdyijlr6owhdagu7lojjhfdwf4
+    path: patches/@coinbase__wallet-sdk@3.8.0-beta.0.patch
   '@walletconnect/ethereum-provider@2.8.5':
     hash: lhqt33orv5orzv4y2zybt6kffi
     path: patches/@walletconnect__ethereum-provider@2.8.5.patch
@@ -141,8 +141,8 @@ importers:
   packages/connectors:
     dependencies:
       '@coinbase/wallet-sdk':
-        specifier: ^3.7.1
-        version: 3.7.1(patch_hash=op7zcciml3isekk3qua7ykap7a)
+        specifier: 3.8.0-beta.0
+        version: 3.8.0-beta.0(patch_hash=fdyijlr6owhdagu7lojjhfdwf4)
       '@walletconnect/ethereum-provider':
         specifier: ^2.8.5
         version: 2.8.5(patch_hash=lhqt33orv5orzv4y2zybt6kffi)(@walletconnect/modal@2.5.6)(lokijs@1.5.12)
@@ -924,8 +924,8 @@ packages:
       prettier: 2.8.7
     dev: true
 
-  /@coinbase/wallet-sdk@3.7.1(patch_hash=op7zcciml3isekk3qua7ykap7a):
-    resolution: {integrity: sha512-LjyoDCB+7p0waQXfK+fUgcAs3Ezk6S6e+LYaoFjpJ6c9VTop3NyZF40Pi7df4z7QJohCwzuIDjz0Rhtig6Y7Pg==}
+  /@coinbase/wallet-sdk@3.8.0-beta.0(patch_hash=fdyijlr6owhdagu7lojjhfdwf4):
+    resolution: {integrity: sha512-+9PQT6qj1XySFXJgT/SrD1e5TvFGLQI23uctiOORKg83fq95TM9WfDxSUVrGXf0UXNur1w9BjQy+cD7QxnDhKQ==}
     engines: {node: '>= 10.0.0'}
     dependencies:
       '@metamask/safe-event-emitter': 2.0.0
@@ -1540,7 +1540,7 @@ packages:
     dependencies:
       '@types/debug': 4.1.7
       debug: 4.3.4
-      semver: 7.5.1
+      semver: 7.5.4
       superstruct: 1.0.3
     transitivePeerDependencies:
       - supports-color
@@ -6510,21 +6510,12 @@ packages:
     hasBin: true
     dev: true
 
-  /semver@7.5.1:
-    resolution: {integrity: sha512-Wvss5ivl8TMRZXXESstBA4uR5iXgEN/VC5/sOcuXdVLzcdkz4HWetIoRfG5gb5X+ij/G9rw9YoGn3QoQ8OCSpw==}
-    engines: {node: '>=10'}
-    hasBin: true
-    dependencies:
-      lru-cache: 6.0.0
-    dev: false
-
   /semver@7.5.4:
     resolution: {integrity: sha512-1bCSESV6Pv+i21Hvpxp3Dx+pSD8lIPt8uVjRrxAUt/nbswYc+tK6Y2btiULjd4+fnq15PX+nqQDC7Oft7WkwcA==}
     engines: {node: '>=10'}
     hasBin: true
     dependencies:
       lru-cache: 6.0.0
-    dev: true
 
   /set-blocking@2.0.0:
     resolution: {integrity: sha512-KiKBS8AnWGEyLzofFfmvKwpdPzqiy16LvQfK3yv/fVH7Bj13/wl3JSR1J+rfgRE9q7xUJK4qvgS8raSOeLUehw==}

@@ -73,7 +73,7 @@ export async function connect<config extends Config>(
       accounts,
       chainId: data.chainId,
     }
-  } catch (err) {
+  } catch (error) {
     config.setState((x) => {
       return {
         ...x,
@@ -81,6 +81,6 @@ export async function connect<config extends Config>(
         status: x.current ? 'connected' : 'disconnected',
       }
     })
-    throw err
+    throw error
   }
 }
