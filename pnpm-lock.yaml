@@ -9,9 +9,6 @@ patchedDependencies:
   '@coinbase/wallet-sdk@3.8.0-beta.0':
     hash: fdyijlr6owhdagu7lojjhfdwf4
     path: patches/@coinbase__wallet-sdk@3.8.0-beta.0.patch
-  '@walletconnect/ethereum-provider@2.8.5':
-    hash: lhqt33orv5orzv4y2zybt6kffi
-    path: patches/@walletconnect__ethereum-provider@2.8.5.patch
   vitepress@1.0.0-beta.6:
     hash: owdx3pggad6ualcvbffniyfaw4
     path: patches/vitepress@1.0.0-beta.6.patch
@@ -145,7 +142,7 @@ importers:
         version: 3.8.0-beta.0(patch_hash=fdyijlr6owhdagu7lojjhfdwf4)
       '@walletconnect/ethereum-provider':
         specifier: ^2.8.5
-        version: 2.8.5(patch_hash=lhqt33orv5orzv4y2zybt6kffi)(@walletconnect/modal@2.5.6)(lokijs@1.5.12)
+        version: 2.8.5(@walletconnect/modal@2.5.6)(lokijs@1.5.12)
       '@walletconnect/modal':
         specifier: ^2.5.6
         version: 2.5.6
@@ -2770,7 +2767,7 @@ packages:
       tslib: 1.14.1
     dev: false
 
-  /@walletconnect/ethereum-provider@2.8.5(patch_hash=lhqt33orv5orzv4y2zybt6kffi)(@walletconnect/modal@2.5.6)(lokijs@1.5.12):
+  /@walletconnect/ethereum-provider@2.8.5(@walletconnect/modal@2.5.6)(lokijs@1.5.12):
     resolution: {integrity: sha512-wNQghH/NdxT5t+Pv3tBgIyailA1bQ5BB5KBOzy4IwyP1Tt+tSZzo8xI5pvf7mbTA4/DXXr2As0vCC6OerVHZug==}
     peerDependencies:
       '@walletconnect/modal': '>=2'
@@ -2795,7 +2792,6 @@ packages:
       - lokijs
       - utf-8-validate
     dev: false
-    patched: true
 
   /@walletconnect/events@1.0.1:
     resolution: {integrity: sha512-NPTqaoi0oPBVNuLv7qPaJazmGHs5JGyO8eEAk5VGKmJzDR7AHzD4k6ilox5kxk1iwiOnFopBOOMLs86Oa76HpQ==}

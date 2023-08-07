@@ -20,7 +20,7 @@ import {
   numberToHex,
 } from 'viem'
 
-type EthereumProviderOptions = Parameters<EthereumProvider['initialize']>[0]
+type EthereumProviderOptions = Parameters<typeof EthereumProvider['init']>[0]
 
 export type WalletConnectParameters = Evaluate<
   {
@@ -74,7 +74,7 @@ export type WalletConnectParameters = Evaluate<
 export function walletConnect(parameters: WalletConnectParameters) {
   const isNewChainsStale = parameters.isNewChainsStale ?? true
 
-  type Provider = EthereumProvider
+  type Provider = Awaited<ReturnType<typeof EthereumProvider['init']>>
   type NamespaceMethods =
     | 'wallet_addEthereumChain'
     | 'wallet_switchEthereumChain'
