@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  React Hooks for Ethereum
+  Reactivity for Ethereum apps
 <p>
 
 <p align="center">

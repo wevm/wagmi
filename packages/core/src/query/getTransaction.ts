@@ -29,10 +29,15 @@ export function getTransactionQueryOptions<
         blockNumber,
         blockTag,
         hash,
+        index,
         scopeKey: _,
       } = queryKey[1]
       if (!blockHash && !blockNumber && !blockTag && !hash)
         throw new Error('blockHash, blockNumber, blockTag, or hash is required')
+      if (!hash && !index)
+        throw new Error(
+          'index is required for blockHash, blockNumber, or blockTag',
+        )
       return getTransaction(
         config,
         queryKey[1] as GetTransactionParameters,

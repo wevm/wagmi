@@ -4,13 +4,11 @@ import Unocss from 'unocss/vite'
 import { DefaultTheme, defineConfig } from 'vitepress'
 import { withTwoslash } from 'vitepress-plugin-shiki-twoslash'
 
-import reactPackage from '../../packages/react/package.json'
-
 // https://vitepress.dev/reference/site-config
 export default withTwoslash(
   defineConfig({
     cleanUrls: true,
-    description: 'React Hooks for Ethereum',
+    description: 'Reactivity for Ethereum apps',
     head: [
       ['meta', { name: 'theme-color', content: '#729b1a' }],
       ['link', { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' }],
@@ -78,13 +76,11 @@ export default withTwoslash(
         { text: 'CLI', link: '/cli/getting-started' }, // TODO
         { text: 'Examples', link: '/examples' },
         {
-          text: reactPackage.version,
+          text: 'Links',
           items: [
             {
-              text: `Migrating to ${toPatchVersionRange(reactPackage.version)}`,
-              link: `/react/migration-guide#_${toPatchVersionRange(
-                reactPackage.version,
-              ).replace(/\./g, '-')}-breaking-changes`,
+              text: 'Discussions ',
+              link: 'https://github.com/wagmi-dev/wagmi/discussions',
             },
             {
               text: 'Release Notes ',
@@ -92,7 +88,7 @@ export default withTwoslash(
             },
             {
               text: 'Contributing ',
-              link: 'https://github.com/wagmi-dev/wagmi/blob/main/.github/CONTRIBUTING.md',
+              link: '/react/contributing',
             },
           ],
         },
@@ -105,7 +101,7 @@ export default withTwoslash(
         { icon: 'github', link: 'https://github.com/wagmi-dev/wagmi' },
       ],
     },
-    title: 'wagmi',
+    title: 'Wagmi',
     twoslash: {
       defaultCompilerOptions: {
         paths: {
@@ -160,11 +156,6 @@ export default withTwoslash(
     },
   }),
 )
-
-function toPatchVersionRange(version: string) {
-  const [major, minor] = version.split('.').slice(0, 2)
-  return `${major}.${minor}.x`
-}
 
 function getSidebar() {
   return {
@@ -245,6 +236,7 @@ function getSidebar() {
           {
             text: 'Hooks 🚧',
             collapsed: true,
+            link: '/react/hooks',
             items: [
               { text: 'useAccount', link: '/react/hooks/useAccount' },
               { text: 'useBalance', link: '/react/hooks/useBalance' },
@@ -439,7 +431,7 @@ function getSidebar() {
               { text: 'getFeeData', link: '/core/actions/getFeeData' },
               { text: 'getToken', link: '/core/actions/getToken' },
               {
-                text: 'getTransaction 🚧',
+                text: 'getTransaction',
                 link: '/core/actions/getTransaction',
               },
               {
@@ -458,11 +450,11 @@ function getSidebar() {
                 link: '/core/actions/sendTransaction',
               },
               {
-                text: 'signMessage 🚧',
+                text: 'signMessage',
                 link: '/core/actions/signMessage',
               },
               {
-                text: 'signTypedData 🚧',
+                text: 'signTypedData',
                 link: '/core/actions/signTypedData',
               },
               {
@@ -474,7 +466,7 @@ function getSidebar() {
                 link: '/core/actions/switchAccount',
               },
               {
-                text: 'switchChain 🚧',
+                text: 'switchChain',
                 link: '/core/actions/switchChain',
               },
               {

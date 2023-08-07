@@ -1,5 +1,5 @@
 ---
-title: 'wagmi: React Hooks for Ethereum'
+title: 'Wagmi | Reactivity for Ethereum apps'
 titleTemplate: false
 
 # https://vitepress.dev/reference/default-theme-home-page
@@ -7,8 +7,8 @@ layout: home
 
 hero:
   name: Wagmi
-  text: React Hooks for Ethereum
-  tagline: Everything you need to work with Ethereum.
+  text: Reactivity for Ethereum apps
+  tagline: Build high-performance blockchain frontends.
   actions:
     - theme: brand
       text: Get Started
@@ -16,21 +16,36 @@ hero:
     - theme: alt
       text: Why Wagmi
       link: /react/why-wagmi
-    - theme: alt
-      text: View on GitHub
-      link: https://github.com/wagmi-dev/wagmi
 
 features:
   - icon: 🚀
     title: 20+ React Hooks
-    details: React Hooks for working with wallets, ENS, contracts, transactions, signing, and more.
+    details: React Hooks for accounts, wallets, contracts, transactions, signing, ENS, and more.
+    link: /react/hooks
+    linkText: See all hooks
   - icon: 🦄
-    title: Incredible DX
-    details: TypeScript ready. Infer types automatically from ABIs and EIP-712 Typed Data.
+    title: TypeScript Ready
+    details: Infer types automatically from ABIs and EIP-712 Typed Data.
+    link: /react/typescript
+    linkText: Learn about TypeScript support
   - icon: 💼
-    title: Official Wallet Connectors
+    title: Connect Wallet
     details: Official wallet connectors for MetaMask, WalletConnect, Coinbase Wallet, and more.
+    link: /react/connectors
+    linkText: See all connectors
   - icon: 👟
-    title: Caching, Multicall & Batching
-    details: Built-in caching, deduplication, multicall, batching, persistence powered by TanStack Query.
+    title: Caching, Deduplication & Persistence
+    details: Built-in caching, deduplication, persistence powered by TanStack Query.
+    link: /react/tanstack-query
+    linkText: How to use TanStack Query
+  - icon: 🌳
+    title: Modular By Design
+    details: Hate React? Use VanillaJS or build an adapter for your favorite framework.
+    link: /core/getting-started
+    linkText: Learn about Wagmi Core
+  - icon: ✌️
+    title: Built on Viem
+    details: Modern, low-level TypeScript interface for Ethereum that performs blockchain operations.
+    link: https://viem.sh
+    linkText: Check out Viem
 ---

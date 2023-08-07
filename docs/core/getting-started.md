@@ -10,18 +10,19 @@ To manually add Wagmi to your project, install the required packages.
 
 ::: code-group
 ```bash [pnpm]
-pnpm add @wagmi/core viem
+pnpm add @wagmi/core @wagmi/connectors viem
 ```
 
 ```bash [npm]
-npm install @wagmi/core viem
+npm install @wagmi/core @wagmi/connectors viem
 ```
 
 ```bash [yarn]
-yarn add @wagmi/core viem
+yarn add @wagmi/core @wagmi/connectors viem
 ```
 :::
 
+- [Wagmi Connectors](/core/connectors) is a collection of interfaces for linking accounts/wallets to Wagmi.
 - [Viem](https://viem.sh) is a TypeScript interface for Ethereum that performs blockchain operations.
 - [TypeScript](/react/typescript) is optional, but highly recommended. Learn more about [TypeScript support](/core/typescript).
 

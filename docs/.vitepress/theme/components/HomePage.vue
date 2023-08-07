@@ -18,7 +18,7 @@ const teamMembers = [
     name: 'jxom',
     links: [
       { icon: 'github', link: 'https://github.com/jxom' },
-      { icon: 'twitter', link: 'https://twitter.com/jakemoxey' }
+      { icon: 'twitter', link: 'https://twitter.com/_jxom' }
     ],
   },
 ] satisfies DefaultTheme.TeamMember[]

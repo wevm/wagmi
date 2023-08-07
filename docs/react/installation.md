@@ -82,4 +82,4 @@ cd packages/react
 pnpm link --global
 ```
 
-Then go to the project where you are using Wagmi and run `pnpm link --global wagmi` (or the package manager that you used to link Wagmi globally). Make sure you installed the [required peer dependencies](#manual-installation) and their versions are correct.
+Then go to the project where you are using Wagmi and run `pnpm link --global wagmi` (or the package manager that you used to link Wagmi globally). Make sure you installed the [required peer dependencies](/react/getting-started#manual-installation) and their versions are correct.

@@ -22,11 +22,12 @@ yarn create wagmi
 ```
 :::
 
-Once the command runs, you'll see the following prompts.
+Once the command runs, you'll see some prompts to complete.
 
 ```
 What is your project named? my-app
 What framework would you like to use? Next.js / Vite (React)
+...
 ```
 
 After the prompts, `create-wagmi` will create a directory with your project name and install the required dependencies. Check out the `README.md` for further instructions.

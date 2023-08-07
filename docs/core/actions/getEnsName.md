@@ -34,6 +34,24 @@ const ensName = getEnsName(config, {
 import { type GetEnsNameParameters } from '@wagmi/core'
 ```
 
+### address
+
+`Address`
+
+Address to get the name for.
+
+::: code-group
+```ts [index.ts]
+import { getEnsName } from '@wagmi/core'
+import { config } from './config'
+
+const ensName = await getEnsName(config, {
+  address: '0xd2135CfB216b74109775236E36d4b433F1DF507B', // [!code focus]
+})
+```
+<<< @/snippets/core/config.ts[config.ts]
+:::
+
 ---
 
 ### blockNumber
@@ -91,24 +109,6 @@ import { config } from './config'
 const ensName = await getEnsName(config, {
   address: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
   chainId: mainnet.id, // [!code focus]
-})
-```
-<<< @/snippets/core/config.ts[config.ts]
-:::
-
-### address
-
-`Address`
-
-Address to get the name for.
-
-::: code-group
-```ts [index.ts]
-import { getEnsName } from '@wagmi/core'
-import { config } from './config'
-
-const ensName = await getEnsName(config, {
-  address: '0xd2135CfB216b74109775236E36d4b433F1DF507B', // [!code focus]
 })
 ```
 <<< @/snippets/core/config.ts[config.ts]
