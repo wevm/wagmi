@@ -1105,7 +1105,7 @@ describe('useContractInfiniteReads', () => {
           "error": null,
           "fetchNextPage": [Function],
           "fetchStatus": "idle",
-          "hasNextPage": false,
+          "hasNextPage": true,
           "internal": {
             "dataUpdatedAt": 1643673600000,
             "errorUpdatedAt": 0,
@@ -1146,6 +1146,7 @@ describe('useContractInfiniteReads', () => {
         {
           "pageParams": [
             undefined,
+            1,
           ],
           "pages": [
             [
@@ -1155,6 +1156,16 @@ describe('useContractInfiniteReads', () => {
               },
               {
                 "result": "Silk Robe",
+                "status": "success",
+              },
+            ],
+            [
+              {
+                "result": "data:application/json;base64,eyJuYW1lIjogIkJhZyAjMSIsICJkZXNjcmlwdGlvbiI6ICJNb3JlIExvb3QgaXMgYWRkaXRpb25hbCByYW5kb21pemVkIGFkdmVudHVyZXIgZ2VhciBnZW5lcmF0ZWQgYW5kIHN0b3JlZCBvbiBjaGFpbi4gTWF4aW11bSBzdXBwbHkgaXMgZHluYW1pYywgaW5jcmVhc2luZyBhdCAxLzEwdGggb2YgRXRoZXJldW0ncyBibG9jayByYXRlLiBTdGF0cywgaW1hZ2VzLCBhbmQgb3RoZXIgZnVuY3Rpb25hbGl0eSBhcmUgaW50ZW50aW9uYWxseSBvbWl0dGVkIGZvciBvdGhlcnMgdG8gaW50ZXJwcmV0LiBGZWVsIGZyZWUgdG8gdXNlIE1vcmUgTG9vdCBpbiBhbnkgd2F5IHlvdSB3YW50LiIsICJpbWFnZSI6ICJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaeUI0Yld4dWN6MGlhSFIwY0RvdkwzZDNkeTUzTXk1dmNtY3ZNakF3TUM5emRtY2lJSEJ5WlhObGNuWmxRWE53WldOMFVtRjBhVzg5SW5oTmFXNVpUV2x1SUcxbFpYUWlJSFpwWlhkQ2IzZzlJakFnTUNBek5UQWdNelV3SWo0OGMzUjViR1UrTG1KaGMyVWdleUJtYVd4c09pQjNhR2wwWlRzZ1ptOXVkQzFtWVcxcGJIazZJSE5sY21sbU95Qm1iMjUwTFhOcGVtVTZJREUwY0hnN0lIMDhMM04wZVd4bFBqeHlaV04wSUhkcFpIUm9QU0l4TURBbElpQm9aV2xuYUhROUlqRXdNQ1VpSUdacGJHdzlJbUpzWVdOcklpQXZQangwWlhoMElIZzlJakV3SWlCNVBTSXlNQ0lnWTJ4aGMzTTlJbUpoYzJVaVBpSkhjbWx0SUZOb2IzVjBJaUJIY21GMlpTQlhZVzVrSUc5bUlGTnJhV3hzSUNzeFBDOTBaWGgwUGp4MFpYaDBJSGc5SWpFd0lpQjVQU0kwTUNJZ1kyeGhjM005SW1KaGMyVWlQa2hoY21RZ1RHVmhkR2hsY2lCQmNtMXZjand2ZEdWNGRENDhkR1Y0ZENCNFBTSXhNQ0lnZVQwaU5qQWlJR05zWVhOelBTSmlZWE5sSWo1RWFYWnBibVVnU0c5dlpEd3ZkR1Y0ZEQ0OGRHVjRkQ0I0UFNJeE1DSWdlVDBpT0RBaUlHTnNZWE56UFNKaVlYTmxJajVJWVhKa0lFeGxZWFJvWlhJZ1FtVnNkRHd2ZEdWNGRENDhkR1Y0ZENCNFBTSXhNQ0lnZVQwaU1UQXdJaUJqYkdGemN6MGlZbUZ6WlNJK0lrUmxZWFJvSUZKdmIzUWlJRTl5Ym1GMFpTQkhjbVZoZG1WeklHOW1JRk5yYVd4c1BDOTBaWGgwUGp4MFpYaDBJSGc5SWpFd0lpQjVQU0l4TWpBaUlHTnNZWE56UFNKaVlYTmxJajVUZEhWa1pHVmtJRXhsWVhSb1pYSWdSMnh2ZG1WelBDOTBaWGgwUGp4MFpYaDBJSGc5SWpFd0lpQjVQU0l4TkRBaUlHTnNZWE56UFNKaVlYTmxJajVPWldOcmJHRmpaU0J2WmlCRmJteHBaMmgwWlc1dFpXNTBQQzkwWlhoMFBqeDBaWGgwSUhnOUlqRXdJaUI1UFNJeE5qQWlJR05zWVhOelBTSmlZWE5sSWo1SGIyeGtJRkpwYm1jOEwzUmxlSFErUEM5emRtYysifQ==",
+                "status": "success",
+              },
+              {
+                "result": "Hard Leather Armor",
                 "status": "success",
               },
             ],

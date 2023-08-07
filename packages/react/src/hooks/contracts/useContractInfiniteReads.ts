@@ -203,7 +203,8 @@ export function paginatedIndexesConfig<
   return {
     contracts,
     getNextPageParam(lastPage: unknown[], pages: unknown[]) {
-      return lastPage?.length === perPage ? pages.length : undefined
+      const callsPerPage = contracts(0).length
+      return lastPage?.length === callsPerPage ? pages.length : undefined
     },
   }
 }
