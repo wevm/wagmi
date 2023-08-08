@@ -57,4 +57,4 @@ for (const packagePath of packagePaths) {
   }
 }
 
-console.log(`Done. Set up ${count} packages.`)
+console.log(`Done. Set up ${count} ${count === 1 ? 'package' : 'packages'}.`)

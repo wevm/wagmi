@@ -34,4 +34,8 @@ for (const packagePath of packagePaths) {
   )
 }
 
-console.log(`Done. Updated version file for ${count} packages.`)
+console.log(
+  `Done. Updated version file for ${count} ${
+    count === 1 ? 'package' : 'packages'
+  }.`,
+)

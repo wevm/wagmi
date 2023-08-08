@@ -1,8 +1,8 @@
 diff --git a/dist/client/theme-default/without-fonts.js b/dist/client/theme-default/without-fonts.js
-index 92e11165e7de09ffe1ad7332709f051271963843..6e2f989490aba5bad7abfa6da060d68e95c240ab 100644
+index 2b760aa398b7ac1881551ab146d7d308ef2277a3..a2940ca0b99b7673d8914e4bf332f57c588e8f46 100644
 --- a/dist/client/theme-default/without-fonts.js
 +++ b/dist/client/theme-default/without-fonts.js
-@@ -11,10 +11,13 @@ import Layout from './Layout.vue';
+@@ -11,10 +11,12 @@ import Layout from './Layout.vue';
  // Note: if we add more optional components here, i.e. components that are not
  // used in the theme by default unless the user imports them, make sure to update
  // the `lazyDefaultThemeComponentsRE` regex in src/node/build/bundle.ts.
@@ -16,10 +16,10 @@ index 92e11165e7de09ffe1ad7332709f051271963843..6e2f989490aba5bad7abfa6da060d68e
  export { default as VPTeamPageTitle } from './components/VPTeamPageTitle.vue';
  export { default as VPTeamPageSection } from './components/VPTeamPageSection.vue';
 diff --git a/theme.d.ts b/theme.d.ts
-index 1848e45bcc5035562d59467c6f798b0312c11202..6195f7c2a7ce12008b29c343c43798e637e21b9e 100644
+index 4b1076b5fbda893eb6f4a5df6a40c15d1bb379ba..177f5a6aa9602e0eeae954137bcce1ac0080ddef 100644
 --- a/theme.d.ts
 +++ b/theme.d.ts
-@@ -3,10 +3,13 @@ import type { DefineComponent } from 'vue'
+@@ -3,10 +3,12 @@ import type { DefineComponent } from 'vue'
  import { EnhanceAppContext } from './dist/client/index.js'
  
  // TODO: add props for these

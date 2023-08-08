@@ -31,4 +31,4 @@ for (const testPath of testPaths) {
   count += 1
 }
 
-console.log(`Done. Updated ${count} files.`)
+console.log(`Done. Updated ${count} ${count === 1 ? 'file' : 'files'}.`)
