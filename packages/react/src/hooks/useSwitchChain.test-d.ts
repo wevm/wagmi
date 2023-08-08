@@ -1,7 +1,7 @@
 import { type Connector, type SwitchChainError } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import { type Chain } from '@wagmi/core/chains'
+import { type Evaluate } from '@wagmi/core/internal'
 import { chain } from '@wagmi/test'
-import type { Chain } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
 import { useSwitchChain } from './useSwitchChain.js'

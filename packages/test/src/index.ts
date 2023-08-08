@@ -1,4 +1,4 @@
-export { chain } from './chain.js'
+export { chain } from './chains.js'
 
 export { testConnector, type TestConnectorParameters } from './connector.js'
 
@@ -10,7 +10,9 @@ export {
   walletConnectProjectId,
 } from './constants.js'
 
-export { config, testClient } from './config.js'
+export { testClient } from './clients.js'
+
+export { config } from './config.js'
 
 export { wait } from './utils.js'
 

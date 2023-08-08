@@ -1,8 +1,8 @@
 import { fetchLogs } from '@viem/anvil'
 import { afterAll, afterEach } from 'vitest'
 
-import { chain } from './chain.js'
-import { testClient } from './config.js'
+import { chain } from './chains.js'
+import { testClient } from './clients.js'
 import { pool } from './constants.js'
 
 afterAll(async () => {

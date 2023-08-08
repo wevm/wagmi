@@ -9,9 +9,9 @@
     "dev:vite-react": "pnpm --filter vite-react dev",
     "docs:dev": "rimraf node_modules/.cache/twoslash && pnpm --filter docs dev",
     "format": "rome format . --write",
-    "knip": "pnpm build && knip",
     "lint": "rome check .",
     "lint:fix": "pnpm lint --apply",
+    "lint:unused": "pnpm clean && knip",
     "postinstall": "pnpm preconstruct",
     "preconstruct": "bun scripts/preconstruct.ts",
     "preinstall": "npx only-allow@1.1.1 pnpm",
@@ -38,7 +38,6 @@
     "@vitest/ui": "^0.34.1",
     "@wagmi/test": "workspace:*",
     "bun": "^0.5.9",
-    "execa": "^7.1.1",
     "fs-extra": "^11.1.1",
     "glob": "^10.2.4",
     "jsdom": "^20.0.3",
@@ -83,6 +82,15 @@
     "workspaces": {
       ".": {
         "entry": "scripts/*.ts"
+      },
+      "packages/core": {
+        "entry": "src/{chains,index,internal,query}.ts!"
+      },
+      "packages/react": {
+        "entry": "src/{actions,chains,connectors,index,query}.ts!"
+      },
+      "packages/test": {
+        "entry": "src/{globalSetup,index,react,setup}.ts!"
       }
     }
   }

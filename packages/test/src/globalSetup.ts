@@ -1,6 +1,6 @@
 import { startProxy } from '@viem/anvil'
 
-import { chain } from './chain.js'
+import { chain } from './chains.js'
 
 export default async function () {
   await Promise.all(

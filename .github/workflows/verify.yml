@@ -47,6 +47,9 @@ jobs:
       - name: Publint
         run: pnpm test:build
 
+      - name: Check for unused files, dependencies, and exports
+        run: pnpm knip --production
+
   types:
     name: Types
     needs: lint
