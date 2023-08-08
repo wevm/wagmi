@@ -12,8 +12,8 @@ test('exports', () => {
       "accounts",
       "typedData",
       "walletConnectProjectId",
-      "config",
       "testClient",
+      "config",
       "wait",
       "version",
     ]
