@@ -7,6 +7,8 @@ test('exports', () => {
     {
       "coinbaseWallet": [Function],
       "injected": [Function],
+      "ledger": [Function],
+      "safe": [Function],
       "version": "2.0.0",
       "walletConnect": [Function],
     }

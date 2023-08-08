@@ -16,3 +16,9 @@ test.each([
 ])('normalizeChainId($chainId)', ({ chainId, expected }) => {
   expect(normalizeChainId(chainId)).toEqual(expected)
 })
+
+test('unknown type', () => {
+  expect(() => normalizeChainId({})).toThrow(
+    'Cannot normalize chainId "[object Object]" of type "object"',
+  )
+})

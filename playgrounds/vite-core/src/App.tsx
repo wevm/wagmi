@@ -4,11 +4,11 @@ import {
   connect,
   disconnect,
   getAccount,
+  getBalance,
   getBlockNumber,
   reconnect,
   switchAccount,
   watchAccount,
-  watchBalance,
   watchBlockNumber,
 } from '@wagmi/core'
 import * as React from 'react'
@@ -155,9 +155,17 @@ function Balance() {
 
   React.useEffect(() => {
     if (!account.address) return
-    const unwatch = watchBalance(config, {
-      address: account.address,
-      onBalance: (balance) => setBalance(balance),
+    const unwatch = watchBlockNumber(config, {
+      async onBlockNumber() {
+        try {
+          const balance = await getBalance(config, {
+            address: account.address!,
+          })
+          setBalance(balance)
+        } catch (error) {
+          console.error('Error fetching balance', error)
+        }
+      },
     })
     return () => {
       unwatch()

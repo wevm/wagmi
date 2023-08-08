@@ -27,17 +27,17 @@ export type CoinbaseWalletParameters = Evaluate<
      * Fallback Ethereum JSON RPC URL
      * @default ""
      */
-    jsonRpcUrl?: string
+    jsonRpcUrl?: string | undefined
     /**
      * Fallback Ethereum Chain ID
      * @default 1
      */
-    chainId?: number
+    chainId?: number | undefined
     /**
      * Whether or not to reload dapp automatically after disconnect.
      * @default false
      */
-    reloadOnDisconnect?: boolean
+    reloadOnDisconnect?: boolean | undefined
   }
 >
 
@@ -68,7 +68,7 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
         // Switch to chain if provided
         let currentChainId = await this.getChainId()
         if (chainId && currentChainId !== chainId) {
-          const chain = await this.switchChain?.({ chainId }).catch(() => ({
+          const chain = await this.switchChain!({ chainId }).catch(() => ({
             id: currentChainId,
           }))
           currentChainId = chain?.id ?? currentChainId

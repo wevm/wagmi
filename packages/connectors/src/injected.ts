@@ -14,7 +14,6 @@ import {
   RpcError,
   SwitchChainError,
   UserRejectedRequestError,
-  fromHex,
   getAddress,
   numberToHex,
 } from 'viem'
@@ -25,8 +24,8 @@ export type InjectedParameters = {
    * This flag simulates the disconnect behavior by keeping track of connection status in storage. See [GitHub issue](https://github.com/MetaMask/metamask-extension/issues/10353) for more info.
    * @default true
    */
-  shimDisconnect?: boolean
-  unstable_shimAsyncInject?: boolean | number
+  shimDisconnect?: boolean | undefined
+  unstable_shimAsyncInject?: boolean | number | undefined
   /**
    * [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) Ethereum Provider to target
    */
@@ -238,7 +237,7 @@ export function injected(parameters: InjectedParameters = {}) {
       const provider = await this.getProvider()
       if (!provider) throw new ProviderNotFoundError()
       const hexChainId = await provider.request({ method: 'eth_chainId' })
-      return fromHex(hexChainId, 'number')
+      return normalizeChainId(hexChainId)
     },
     async getProvider() {
       if (typeof window === 'undefined') return undefined
