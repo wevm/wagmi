@@ -1,0 +1,12 @@
+diff --git a/package.json b/package.json
+index eb34a0a8bf5fc63ad6ed88e7e7445b9d519dc774..297ac8b3f34f8852f2742b084d1852aeb2fd5dfe 100644
+--- a/package.json
++++ b/package.json
+@@ -4,6 +4,7 @@
+   "description": "SDK developed to integrate third-party apps with Safe app.",
+   "main": "dist/src/index.js",
+   "typings": "dist/src/index.d.ts",
++  "sideEffects": false,
+   "files": [
+     "dist/**/*",
+     "src/**/*",

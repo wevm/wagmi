@@ -64,6 +64,9 @@
     },
     "patchedDependencies": {
       "@coinbase/wallet-sdk@3.8.0-beta.0": "patches/@coinbase__wallet-sdk@3.8.0-beta.0.patch",
+      "@ledgerhq/connect-kit-loader@1.1.1": "patches/@ledgerhq__connect-kit-loader@1.1.1.patch",
+      "@safe-global/safe-apps-provider@0.17.1": "patches/@safe-global__safe-apps-provider@0.17.1.patch",
+      "@safe-global/safe-apps-sdk@8.0.0": "patches/@safe-global__safe-apps-sdk@8.0.0.patch",
       "vitepress@1.0.0-beta.6": "patches/vitepress@1.0.0-beta.6.patch"
     },
     "peerDependencyRules": {

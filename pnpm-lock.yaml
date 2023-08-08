@@ -9,6 +9,15 @@ patchedDependencies:
   '@coinbase/wallet-sdk@3.8.0-beta.0':
     hash: fdyijlr6owhdagu7lojjhfdwf4
     path: patches/@coinbase__wallet-sdk@3.8.0-beta.0.patch
+  '@ledgerhq/connect-kit-loader@1.1.1':
+    hash: p6srebelukkndg7bm36ygvjapi
+    path: patches/@ledgerhq__connect-kit-loader@1.1.1.patch
+  '@safe-global/safe-apps-provider@0.17.1':
+    hash: chuckt7cf2y3gaqgxag25jmhoa
+    path: patches/@safe-global__safe-apps-provider@0.17.1.patch
+  '@safe-global/safe-apps-sdk@8.0.0':
+    hash: ybkbkoshgqdkjyaxflgrklxmzu
+    path: patches/@safe-global__safe-apps-sdk@8.0.0.patch
   vitepress@1.0.0-beta.6:
     hash: vad7hzjchjqjjrqqk6z7shlpke
     path: patches/vitepress@1.0.0-beta.6.patch
@@ -139,13 +148,13 @@ importers:
         version: 3.8.0-beta.0(patch_hash=fdyijlr6owhdagu7lojjhfdwf4)
       '@ledgerhq/connect-kit-loader':
         specifier: ^1.1.1
-        version: 1.1.1
+        version: 1.1.1(patch_hash=p6srebelukkndg7bm36ygvjapi)
       '@safe-global/safe-apps-provider':
         specifier: ^0.17.1
-        version: 0.17.1(typescript@5.0.4)
+        version: 0.17.1(patch_hash=chuckt7cf2y3gaqgxag25jmhoa)(typescript@5.0.4)
       '@safe-global/safe-apps-sdk':
         specifier: ^8.0.0
-        version: 8.0.0(typescript@5.0.4)
+        version: 8.0.0(patch_hash=ybkbkoshgqdkjyaxflgrklxmzu)(typescript@5.0.4)
       '@walletconnect/ethereum-provider':
         specifier: ^2.8.5
         version: 2.8.5(@walletconnect/modal@2.5.6)(lokijs@1.5.12)
@@ -1503,9 +1512,10 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.14
     dev: true
 
-  /@ledgerhq/connect-kit-loader@1.1.1:
+  /@ledgerhq/connect-kit-loader@1.1.1(patch_hash=p6srebelukkndg7bm36ygvjapi):
     resolution: {integrity: sha512-Jq/CMEw+o5+u6YEcVtkE5UiEDhTjyqro1vo0hDDScf1WdDkxBHahYn/1bL9QEhA4nG5JyfygcL1+CKT+2BilWw==}
     dev: false
+    patched: true
 
   /@lit-labs/ssr-dom-shim@1.1.0:
     resolution: {integrity: sha512-92uQ5ARf7UXYrzaFcAX3T2rTvaS9Z1//ukV+DqjACM4c8s0ZBQd7ayJU5Dh2AFLD/Ayuyz4uMmxQec8q3U4Ong==}
@@ -1807,10 +1817,10 @@ packages:
     dev: true
     optional: true
 
-  /@safe-global/safe-apps-provider@0.17.1(typescript@5.0.4):
+  /@safe-global/safe-apps-provider@0.17.1(patch_hash=chuckt7cf2y3gaqgxag25jmhoa)(typescript@5.0.4):
     resolution: {integrity: sha512-lYfRqrbbK1aKU1/UGkYWc/X7PgySYcumXKc5FB2uuwAs2Ghj8uETuW5BrwPqyjBknRxutFbTv+gth/JzjxAhdQ==}
     dependencies:
-      '@safe-global/safe-apps-sdk': 8.0.0(typescript@5.0.4)
+      '@safe-global/safe-apps-sdk': 8.0.0(patch_hash=ybkbkoshgqdkjyaxflgrklxmzu)(typescript@5.0.4)
       events: 3.3.0
     transitivePeerDependencies:
       - bufferutil
@@ -1819,8 +1829,9 @@ packages:
       - utf-8-validate
       - zod
     dev: false
+    patched: true
 
-  /@safe-global/safe-apps-sdk@8.0.0(typescript@5.0.4):
+  /@safe-global/safe-apps-sdk@8.0.0(patch_hash=ybkbkoshgqdkjyaxflgrklxmzu)(typescript@5.0.4):
     resolution: {integrity: sha512-gYw0ki/EAuV1oSyMxpqandHjnthZjYYy+YWpTAzf8BqfXM3ItcZLpjxfg+3+mXW8HIO+3jw6T9iiqEXsqHaMMw==}
     dependencies:
       '@safe-global/safe-gateway-typescript-sdk': 3.8.0
@@ -1832,6 +1843,7 @@ packages:
       - utf-8-validate
       - zod
     dev: false
+    patched: true
 
   /@safe-global/safe-gateway-typescript-sdk@3.8.0:
     resolution: {integrity: sha512-CiGWIHgIaOdICpDxp05Jw3OPslWTu8AnL0PhrCT1xZgIO86NlMMLzkGbeycJ4FHpTjA999O791Oxp4bZPIjgHA==}
