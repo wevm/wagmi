@@ -2,6 +2,8 @@ import fs from 'fs-extra'
 import { glob } from 'glob'
 import path from 'path'
 
+// Updates package version.ts files (so you can use the version in code without importing package.json).
+
 console.log('Updating version files.')
 // Get all package.json files
 const packagePaths = await glob('**/package.json', {

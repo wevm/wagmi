@@ -1,6 +1,8 @@
 import fs from 'fs-extra'
 import { glob } from 'glob'
 
+// Updates viem version in Vitest snapshots.
+
 // Link packages
 console.log('Updating viem test snapshot version.')
 
