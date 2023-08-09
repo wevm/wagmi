@@ -1,5 +1,14 @@
 # wagmi
 
+## 1.3.10
+
+### Patch Changes
+
+- [`247c5d11`](https://github.com/wagmi-dev/wagmi/commit/247c5d113e83acf3a6894264c00d4b125d455107) Thanks [@jxom](https://github.com/jxom)! - Updated references.
+
+- Updated dependencies [[`247c5d11`](https://github.com/wagmi-dev/wagmi/commit/247c5d113e83acf3a6894264c00d4b125d455107)]:
+  - @wagmi/core@1.3.9
+
 ## 1.3.9
 
 ### Patch Changes
