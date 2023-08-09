@@ -4,7 +4,7 @@ import type { Evaluate } from '@wagmi/core/internal'
 import { useConfig } from './useConfig.js'
 import { useEffect } from 'react'
 
-export type UseAccountStateParameters = {
+export type UseAccountEffectParameters = {
   onConnect?(
     data: Evaluate<
       Pick<
@@ -18,8 +18,8 @@ export type UseAccountStateParameters = {
   onDisconnect?(): void
 }
 
-/** https://wagmi.sh/react/hooks/useAccountState */
-export function useAccountState(parameters: UseAccountStateParameters = {}) {
+/** https://wagmi.sh/react/hooks/useAccountEffect */
+export function useAccountEffect(parameters: UseAccountEffectParameters = {}) {
   const { onConnect, onDisconnect } = parameters
   const config = useConfig()
 

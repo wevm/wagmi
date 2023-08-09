@@ -44,7 +44,7 @@ For documentation and examples, visit [wagmi.sh](https://wagmi.sh).
 
 ## Contributing
 
-Check out the [Contributing docs][contributing] to get started.
+Check out the [Contributing Guide][contributing] to get started.
 
 ## Sponsors
 

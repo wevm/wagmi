@@ -4,7 +4,7 @@ import { createWrapper, renderHook, waitFor } from '@wagmi/test/react'
 import { expect, test, vi } from 'vitest'
 
 import { WagmiProvider } from '../context.js'
-import { useAccountState } from './useAccountState.js'
+import { useAccountEffect } from './useAccountEffect.js'
 import { useConnect } from './useConnect.js'
 import { useDisconnect } from './useDisconnect.js'
 
@@ -13,7 +13,7 @@ test('behavior: connect and disconnect called once', async () => {
   const onDisconnect = vi.fn()
 
   const { result } = renderHook(() => ({
-    useAccountState: useAccountState({ onConnect, onDisconnect }),
+    useAccountEffect: useAccountEffect({ onConnect, onDisconnect }),
     useConnect: useConnect(),
     useDisconnect: useDisconnect(),
   }))
@@ -59,7 +59,7 @@ test('behavior: connect called on reconnect', async () => {
     expect(data.isReconnected).toBeTruthy()
   })
 
-  renderHook(() => useAccountState({ onConnect }), {
+  renderHook(() => useAccountEffect({ onConnect }), {
     wrapper: createWrapper(WagmiProvider, { value: config }),
   })
 
