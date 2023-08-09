@@ -35,6 +35,11 @@ export { WagmiProviderNotFoundError } from './errors/context.js'
 export { type UseAccountReturnType, useAccount } from './hooks/useAccount.js'
 
 export {
+  type UseAccountStateParameters,
+  useAccountState,
+} from './hooks/useAccountState.js'
+
+export {
   type UseBalanceParameters,
   type UseBalanceReturnType,
   useBalance,

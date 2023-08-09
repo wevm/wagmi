@@ -113,12 +113,12 @@ export function getAccount(config: Config): GetAccountReturnType {
 // Watcher
 
 export type WatchAccountParameters = {
-  onChange(data: GetAccountReturnType): void
+  onChange(data: GetAccountReturnType, prevData: GetAccountReturnType): void
 }
 
 export type WatchAccountReturnType = () => void
 
-/** https://wagmi.sh/core/actions/getAccount#watcher */
+/** https://wagmi.sh/core/actions/getAccount#watchaccount */
 export function watchAccount(
   config: Config,
   { onChange }: WatchAccountParameters,

@@ -1,5 +1,6 @@
 import {
   useAccount,
+  useAccountState,
   useBalance,
   useBlockNumber,
   useChainId,
@@ -15,6 +16,15 @@ import {
 import { optimism } from 'wagmi/chains'
 
 function App() {
+  useAccountState({
+    onConnect(data) {
+      console.log('onConnect', data)
+    },
+    onDisconnect() {
+      console.log('onDisconnect')
+    },
+  })
+
   return (
     <>
       <Account />

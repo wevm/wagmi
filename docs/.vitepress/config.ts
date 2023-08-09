@@ -354,7 +354,7 @@ function getSidebar() {
         text: 'Community',
         items: [
           { text: 'Contributing 🚧', link: '/react/contributing' },
-          { text: 'Sponsors 🚧', link: '/react/sponsor' },
+          { text: 'Sponsors 🚧', link: '/react/sponsors' },
         ],
       },
     ],
@@ -403,6 +403,7 @@ function getSidebar() {
           {
             text: 'Actions 🚧',
             collapsed: true,
+            link: '/core/actions',
             items: [
               { text: 'connect', link: '/core/actions/connect' },
               { text: 'disconnect', link: '/core/actions/disconnect' },
@@ -529,7 +530,7 @@ function getSidebar() {
         text: 'Community',
         items: [
           { text: 'Contributing 🚧', link: '/core/contributing' },
-          { text: 'Sponsors 🚧', link: '/core/sponsor' },
+          { text: 'Sponsors 🚧', link: '/core/sponsors' },
         ],
       },
     ],

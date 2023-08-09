@@ -1,4 +1,4 @@
-import { connect } from '@wagmi/core'
+import { connect, disconnect } from '@wagmi/core'
 import { config } from '@wagmi/test'
 import { renderHook } from '@wagmi/test/react'
 import { expect, test } from 'vitest'
@@ -16,4 +16,6 @@ test('default', async () => {
 
   expect(result.current.address).toBeDefined()
   expect(result.current.status).toEqual('connected')
+
+  await disconnect(config)
 })
