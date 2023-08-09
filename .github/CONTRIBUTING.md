@@ -123,10 +123,10 @@ When adding new features or fixing bugs, it's important to add test cases to cov
 
 ## Writing documentation
 
-Documentation is crucial to helping developers of all experience levels use wagmi. wagmi uses [VitePress](https://vitepress.dev) for the documentation site (located at [`site`](../site)). To start the site in dev mode, run:
+Documentation is crucial to helping developers of all experience levels use wagmi. wagmi uses [VitePress](https://vitepress.dev) for the documentation site (located at [`docs`](../docs)). To start the site in dev mode, run:
 
 ```bash
-pnpm site
+pnpm docs:dev
 ```
 
 Try to keep documentation brief and use plain language so folks of all experience levels can understand. If you think something is unclear or could be explained better, you are welcome to open a pull request.
@@ -143,6 +143,8 @@ When you're ready to submit a pull request, you can follow these naming conventi
 - [Changesets](#versioning) use past tense verbs (e.g., `Added something`, `Fixed something`).
 
 When you submit a pull request, GitHub will automatically lint, build, and test your changes. If you see an ❌, it's most likely a bug in your code. Please, inspect the logs through the GitHub UI to find the cause.
+
+**Please make sure that "Allow edits from maintainers" is enabled so the core team can make updates to your pull request if necessary.**
 
 <div align="right">
   <a href="#basic-guide">&uarr; back to top</a></b>

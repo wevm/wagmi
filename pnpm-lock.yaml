@@ -18,9 +18,9 @@ patchedDependencies:
   '@safe-global/safe-apps-sdk@8.0.0':
     hash: ybkbkoshgqdkjyaxflgrklxmzu
     path: patches/@safe-global__safe-apps-sdk@8.0.0.patch
-  vitepress@1.0.0-beta.6:
+  vitepress@1.0.0-rc.4:
     hash: vad7hzjchjqjjrqqk6z7shlpke
-    path: patches/vitepress@1.0.0-beta.6.patch
+    path: patches/vitepress@1.0.0-rc.4.patch
 
 importers:
 
@@ -129,11 +129,11 @@ importers:
         specifier: 0.0.0-w-20230802141753
         version: 0.0.0-w-20230802141753(typescript@5.0.4)
       vitepress:
-        specifier: 1.0.0-beta.6
-        version: 1.0.0-beta.6(patch_hash=vad7hzjchjqjjrqqk6z7shlpke)(@types/node@18.16.9)(@types/react@18.2.0)(react@18.2.0)
+        specifier: 1.0.0-rc.4
+        version: 1.0.0-rc.4(patch_hash=vad7hzjchjqjjrqqk6z7shlpke)(@types/node@18.16.9)(@types/react@18.2.0)(react@18.2.0)
       vitepress-plugin-shiki-twoslash:
         specifier: ^0.0.6
-        version: 0.0.6(typescript@5.0.4)(vitepress@1.0.0-beta.6)
+        version: 0.0.6(typescript@5.0.4)(vitepress@1.0.0-rc.4)
       vue:
         specifier: ^3.3.4
         version: 3.3.4
@@ -2523,14 +2523,14 @@ packages:
       - supports-color
     dev: true
 
-  /@vitejs/plugin-vue@4.2.3(vite@4.4.7)(vue@3.3.4):
+  /@vitejs/plugin-vue@4.2.3(vite@4.4.9)(vue@3.3.4):
     resolution: {integrity: sha512-R6JDUfiZbJA9cMiguQ7jxALsgiprjBeHL5ikpXfJCH62pPHtI+JdJ5xWj6Ev73yXSlYl86+blXn1kZHQ7uElxw==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       vite: ^4.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 4.4.7(@types/node@18.16.9)
+      vite: 4.4.9(@types/node@18.16.9)
       vue: 3.3.4
     dev: true
 
@@ -2695,20 +2695,20 @@ packages:
     resolution: {integrity: sha512-7OjdcV8vQ74eiz1TZLzZP4JwqM5fA94K6yntPS5Z25r9HDuGNzaGdgvwKYq6S+MxwF0TFRwe50fIR/MYnakdkQ==}
     dev: true
 
-  /@vueuse/core@10.2.1(vue@3.3.4):
-    resolution: {integrity: sha512-c441bfMbkAwTNwVRHQ0zdYZNETK//P84rC01aP2Uy/aRFCiie9NE/k9KdIXbno0eDYP5NPUuWv0aA/I4Unr/7w==}
+  /@vueuse/core@10.3.0(vue@3.3.4):
+    resolution: {integrity: sha512-BEM5yxcFKb5btFjTSAFjTu5jmwoW66fyV9uJIP4wUXXU8aR5Hl44gndaaXp7dC5HSObmgbnR2RN+Un1p68Mf5Q==}
     dependencies:
       '@types/web-bluetooth': 0.0.17
-      '@vueuse/metadata': 10.2.1
-      '@vueuse/shared': 10.2.1(vue@3.3.4)
+      '@vueuse/metadata': 10.3.0
+      '@vueuse/shared': 10.3.0(vue@3.3.4)
       vue-demi: 0.14.5(vue@3.3.4)
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
     dev: true
 
-  /@vueuse/integrations@10.2.1(focus-trap@7.5.2)(vue@3.3.4):
-    resolution: {integrity: sha512-FDP5lni+z9FjHE9H3xuvwSjoRV9U8jmDvJpmHPCBjUgPGYRynwb60eHWXCFJXLUtb4gSIHy0e+iaEbrKdalCkQ==}
+  /@vueuse/integrations@10.3.0(focus-trap@7.5.2)(vue@3.3.4):
+    resolution: {integrity: sha512-Jgiv7oFyIgC6BxmDtiyG/fxyGysIds00YaY7sefwbhCZ2/tjEx1W/1WcsISSJPNI30in28+HC2J4uuU8184ekg==}
     peerDependencies:
       async-validator: '*'
       axios: '*'
@@ -2748,8 +2748,8 @@ packages:
       universal-cookie:
         optional: true
     dependencies:
-      '@vueuse/core': 10.2.1(vue@3.3.4)
-      '@vueuse/shared': 10.2.1(vue@3.3.4)
+      '@vueuse/core': 10.3.0(vue@3.3.4)
+      '@vueuse/shared': 10.3.0(vue@3.3.4)
       focus-trap: 7.5.2
       vue-demi: 0.14.5(vue@3.3.4)
     transitivePeerDependencies:
@@ -2757,12 +2757,12 @@ packages:
       - vue
     dev: true
 
-  /@vueuse/metadata@10.2.1:
-    resolution: {integrity: sha512-3Gt68mY/i6bQvFqx7cuGBzrCCQu17OBaGWS5JdwISpMsHnMKKjC2FeB5OAfMcCQ0oINfADP3i9A4PPRo0peHdQ==}
+  /@vueuse/metadata@10.3.0:
+    resolution: {integrity: sha512-Ema3YhNOa4swDsV0V7CEY5JXvK19JI/o1szFO1iWxdFg3vhdFtCtSTP26PCvbUpnUtNHBY2wx5y3WDXND5Pvnw==}
     dev: true
 
-  /@vueuse/shared@10.2.1(vue@3.3.4):
-    resolution: {integrity: sha512-QWHq2bSuGptkcxx4f4M/fBYC3Y8d3M2UYyLsyzoPgEoVzJURQ0oJeWXu79OiLlBb8gTKkqe4mO85T/sf39mmiw==}
+  /@vueuse/shared@10.3.0(vue@3.3.4):
+    resolution: {integrity: sha512-kGqCTEuFPMK4+fNWy6dUOiYmxGcUbtznMwBZLC1PubidF4VZY05B+Oht7Jh7/6x4VOWGpvu3R37WHi81cKpiqg==}
     dependencies:
       vue-demi: 0.14.5(vue@3.3.4)
     transitivePeerDependencies:
@@ -6459,6 +6459,14 @@ packages:
       fsevents: 2.3.2
     dev: true
 
+  /rollup@3.28.0:
+    resolution: {integrity: sha512-d7zhvo1OUY2SXSM6pfNjgD5+d0Nz87CUp4mt8l/GgVP3oBsPwzNvSzyu1me6BSG9JIgWNTVcafIXBIyM8yQ3yw==}
+    engines: {node: '>=14.18.0', npm: '>=8.0.0'}
+    hasBin: true
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
+
   /rome@12.1.0:
     resolution: {integrity: sha512-inIBYc2/Das6LDXcw8IQp7yeXth6Rhmj9y8sS/Y/0g5/29Lyzr785SjCmKyiN2No4MNsaP3YJNm2QZAs2UpR2w==}
     engines: {node: '>=14.*'}
@@ -7464,34 +7472,70 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vitepress-plugin-shiki-twoslash@0.0.6(typescript@5.0.4)(vitepress@1.0.0-beta.6):
+  /vite@4.4.9(@types/node@18.16.9):
+    resolution: {integrity: sha512-2mbUn2LlUmNASWwSCNSJ/EG2HuSRTnVNaydp6vMCm5VIqJsjMfbIWtbH2kDuwUVW5mMUKKZvGPX/rqeqVvv1XA==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': '>= 14'
+      less: '*'
+      lightningcss: ^1.21.0
+      sass: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      less:
+        optional: true
+      lightningcss:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+    dependencies:
+      '@types/node': 18.16.9
+      esbuild: 0.18.16
+      postcss: 8.4.27
+      rollup: 3.28.0
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
+
+  /vitepress-plugin-shiki-twoslash@0.0.6(typescript@5.0.4)(vitepress@1.0.0-rc.4):
     resolution: {integrity: sha512-CjMF01Vb/zwOKKCqq6QmkJbTJnRxipv8oiPjRWTjzH2jPaQH4gGCF2fZHS7uY53J3gbU3GwtrXI02J6axLYmbg==}
     peerDependencies:
       vitepress: '>=1.0.0-alpha.61'
     dependencies:
       remark-shiki-twoslash: 3.1.3(typescript@5.0.4)
-      vitepress: 1.0.0-beta.6(patch_hash=vad7hzjchjqjjrqqk6z7shlpke)(@types/node@18.16.9)(@types/react@18.2.0)(react@18.2.0)
+      vitepress: 1.0.0-rc.4(patch_hash=vad7hzjchjqjjrqqk6z7shlpke)(@types/node@18.16.9)(@types/react@18.2.0)(react@18.2.0)
     transitivePeerDependencies:
       - supports-color
       - typescript
     dev: true
 
-  /vitepress@1.0.0-beta.6(patch_hash=vad7hzjchjqjjrqqk6z7shlpke)(@types/node@18.16.9)(@types/react@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-xK/ulKgQpKZVbvlL4+/vW49VG7ySi5nmSoKUNH1G4kM+Cj9JwYM+PDJO7jSJROv8zW99G0ise+maDYnaLlbGBQ==}
+  /vitepress@1.0.0-rc.4(patch_hash=vad7hzjchjqjjrqqk6z7shlpke)(@types/node@18.16.9)(@types/react@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-JCQ89Bm6ECUTnyzyas3JENo00UDJeK8q1SUQyJYou+4Yz5BKEc/F3O21cu++DnUT2zXc0kvQ2Aj4BZCc/nioXQ==}
     hasBin: true
     dependencies:
       '@docsearch/css': 3.5.1
       '@docsearch/js': 3.5.1(@types/react@18.2.0)(react@18.2.0)
-      '@vitejs/plugin-vue': 4.2.3(vite@4.4.7)(vue@3.3.4)
+      '@vitejs/plugin-vue': 4.2.3(vite@4.4.9)(vue@3.3.4)
       '@vue/devtools-api': 6.5.0
-      '@vueuse/core': 10.2.1(vue@3.3.4)
-      '@vueuse/integrations': 10.2.1(focus-trap@7.5.2)(vue@3.3.4)
+      '@vueuse/core': 10.3.0(vue@3.3.4)
+      '@vueuse/integrations': 10.3.0(focus-trap@7.5.2)(vue@3.3.4)
       body-scroll-lock: 4.0.0-beta.0
       focus-trap: 7.5.2
       mark.js: 8.11.1
       minisearch: 6.1.0
       shiki: 0.14.3
-      vite: 4.4.7(@types/node@18.16.9)
+      vite: 4.4.9(@types/node@18.16.9)
       vue: 3.3.4
     transitivePeerDependencies:
       - '@algolia/client-search'

@@ -8,7 +8,7 @@ layout: home
 hero:
   name: Wagmi
   text: Reactivity for Ethereum apps
-  tagline: Build high-performance blockchain frontends.
+  tagline: Type Safe, Extensible, and Modular by design. Build high-performance blockchain frontends.
   actions:
     - theme: brand
       text: Get Started
@@ -16,6 +16,9 @@ hero:
     - theme: alt
       text: Why Wagmi
       link: /react/why-wagmi
+  image:
+    src: /logo-dark.svg
+    alt: VitePress
 
 features:
   - icon: 🚀
