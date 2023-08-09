@@ -28,7 +28,7 @@ features:
     linkText: See all hooks
   - icon: 🦄
     title: TypeScript Ready
-    details: Infer types automatically from ABIs and EIP-712 Typed Data.
+    details: Infer types from ABIs and EIP-712 Typed Data and autocomplete your way to success.
     link: /react/typescript
     linkText: Learn about TypeScript support
   - icon: 💼
