@@ -55,7 +55,7 @@
   "simple-git-hooks": {
     "pre-commit": "pnpm format && pnpm lint:fix"
   },
-  "packageManager": "pnpm@8.3.1",
+  "packageManager": "pnpm@8.6.12",
   "pnpm": {
     "overrides": {
       "@wagmi/connectors": "workspace:*",
@@ -83,18 +83,12 @@
     "ignoreDependencies": ["only-allow"],
     "ignoreWorkspaces": ["docs", "packages/register-tests/**"],
     "workspaces": {
-      ".": {
-        "entry": "scripts/*.ts"
-      },
-      "packages/core": {
-        "entry": "src/{chains,index,internal,query}.ts!"
-      },
+      ".": { "entry": "scripts/*.ts" },
+      "packages/core": { "entry": "src/{chains,index,internal,query}.ts!" },
       "packages/react": {
         "entry": "src/{actions,chains,connectors,index,query}.ts!"
       },
-      "packages/test": {
-        "entry": "src/{globalSetup,index,react,setup}.ts!"
-      }
+      "packages/test": { "entry": "src/{globalSetup,index,react,setup}.ts!" }
     }
   }
 }
