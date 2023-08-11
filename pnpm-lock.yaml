@@ -1,7 +1,11 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 overrides:
-  abitype: 0.8.7
+  abitype: 0.9.3
   esbuild: 0.15.13
 
 importers:
@@ -36,8 +40,8 @@ importers:
         specifier: ^0.31.1
         version: 0.31.1(vitest@0.31.1)
       abitype:
-        specifier: 0.8.7
-        version: 0.8.7(typescript@5.0.4)(zod@3.21.4)
+        specifier: 0.9.3
+        version: 0.9.3(typescript@5.0.4)(zod@3.21.4)
       dedent:
         specifier: ^0.7.0
         version: 0.7.0
@@ -209,8 +213,8 @@ importers:
         specifier: '>=1.0.0'
         version: 1.0.0(react@18.2.0)(typescript@5.0.4)(viem@1.0.0)(zod@3.21.4)
       abitype:
-        specifier: 0.8.7
-        version: 0.8.7(typescript@5.0.4)(zod@3.21.4)
+        specifier: 0.9.3
+        version: 0.9.3(typescript@5.0.4)(zod@3.21.4)
       abort-controller:
         specifier: ^3.0.0
         version: 3.0.0
@@ -306,8 +310,8 @@ importers:
         specifier: workspace:*
         version: link:../../references/packages/connectors
       abitype:
-        specifier: 0.8.7
-        version: 0.8.7(typescript@5.0.4)(zod@3.21.4)
+        specifier: 0.9.3
+        version: 0.9.3(typescript@5.0.4)(zod@3.21.4)
       eventemitter3:
         specifier: ^4.0.7
         version: 4.0.7
@@ -337,8 +341,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       abitype:
-        specifier: 0.8.7
-        version: 0.8.7(typescript@5.0.4)(zod@3.21.4)
+        specifier: 0.9.3
+        version: 0.9.3(typescript@5.0.4)(zod@3.21.4)
       typescript:
         specifier: '>=5.0.4'
         version: 5.0.4
@@ -404,8 +408,8 @@ importers:
         specifier: 2.9.2
         version: 2.9.2
       abitype:
-        specifier: 0.8.7
-        version: 0.8.7(typescript@5.0.4)(zod@3.21.4)
+        specifier: 0.9.3
+        version: 0.9.3(typescript@5.0.4)(zod@3.21.4)
       eventemitter3:
         specifier: ^4.0.7
         version: 4.0.7
@@ -3394,7 +3398,7 @@ packages:
       '@walletconnect/ethereum-provider': 2.7.2(@web3modal/standalone@2.4.3)
       '@walletconnect/legacy-provider': 2.0.0
       '@web3modal/standalone': 2.4.3(react@18.2.0)
-      abitype: 0.8.7(typescript@5.0.4)(zod@3.21.4)
+      abitype: 0.9.3(typescript@5.0.4)(zod@3.21.4)
       eventemitter3: 4.0.7
       typescript: 5.0.4
       viem: 1.0.0(typescript@5.0.4)(zod@3.21.4)
@@ -3421,7 +3425,7 @@ packages:
     dependencies:
       '@wagmi/chains': 0.2.22(typescript@5.0.4)
       '@wagmi/connectors': 1.0.0(@wagmi/chains@0.2.22)(react@18.2.0)(typescript@5.0.4)(viem@1.0.0)(zod@3.21.4)
-      abitype: 0.8.7(typescript@5.0.4)(zod@3.21.4)
+      abitype: 0.9.3(typescript@5.0.4)(zod@3.21.4)
       eventemitter3: 4.0.7
       typescript: 5.0.4
       viem: 1.0.0(typescript@5.0.4)(zod@3.21.4)
@@ -4032,12 +4036,14 @@ packages:
     resolution: {integrity: sha512-j2afSsaIENvHZN2B8GOpF566vZ5WVk5opAiMTvWgaQT8DkbOqsTfvNAvHoRGU2zzP8cPoqys+xHTRDWW8L+/BA==}
     dev: true
 
-  /abitype@0.8.7(typescript@5.0.4)(zod@3.21.4):
-    resolution: {integrity: sha512-wQ7hV8Yg/yKmGyFpqrNZufCxbszDe5es4AZGYPBitocfSqXtjrTG9JMWFcc4N30ukl2ve48aBTwt7NJxVQdU3w==}
+  /abitype@0.9.3(typescript@5.0.4)(zod@3.21.4):
+    resolution: {integrity: sha512-dz4qCQLurx97FQhnb/EIYTk/ldQ+oafEDUqC0VVIeQS1Q48/YWt/9YNfMmp9SLFqN41ktxny3c8aYxHjmFIB/w==}
     peerDependencies:
       typescript: '>=5.0.4'
       zod: ^3 >=3.19.1
     peerDependenciesMeta:
+      typescript:
+        optional: true
       zod:
         optional: true
     dependencies:
@@ -11564,7 +11570,7 @@ packages:
       '@scure/bip32': 1.3.0
       '@scure/bip39': 1.2.0
       '@wagmi/chains': 0.2.16(typescript@5.0.4)
-      abitype: 0.8.7(typescript@5.0.4)(zod@3.21.4)
+      abitype: 0.9.3(typescript@5.0.4)(zod@3.21.4)
       isomorphic-ws: 5.0.0(ws@8.12.0)
       ws: 8.12.0
     transitivePeerDependencies:
@@ -11583,7 +11589,7 @@ packages:
       '@scure/bip32': 1.3.0
       '@scure/bip39': 1.2.0
       '@wagmi/chains': 1.1.0(typescript@5.0.4)
-      abitype: 0.8.7(typescript@5.0.4)(zod@3.21.4)
+      abitype: 0.9.3(typescript@5.0.4)(zod@3.21.4)
       isomorphic-ws: 5.0.0(ws@8.12.0)
       ws: 8.12.0
     transitivePeerDependencies:
@@ -11777,7 +11783,7 @@ packages:
       '@tanstack/react-query': 4.28.0(react-dom@18.2.0)(react@18.2.0)
       '@tanstack/react-query-persist-client': 4.28.0(@tanstack/react-query@4.28.0)
       '@wagmi/core': 1.0.0(react@18.2.0)(typescript@5.0.4)(viem@1.0.0)(zod@3.21.4)
-      abitype: 0.8.7(typescript@5.0.4)(zod@3.21.4)
+      abitype: 0.9.3(typescript@5.0.4)(zod@3.21.4)
       react: 18.2.0
       typescript: 5.0.4
       use-sync-external-store: 1.2.0(react@18.2.0)
