@@ -50,7 +50,7 @@ For documentation and examples, visit [wagmi.sh](https://wagmi.sh).
 
 ## Contributing
 
-Check out the [Contributing Guide][contributing] to get started.
+Contributions to Wagmi are greatly appreciated! To get started, please read our [Contributing Guide](contributing). Then, check out the list of [Good First Issues](https://github.com/wagmi-dev/wagmi/contribute). Let us know if you have any questions!
 
 ## Sponsors
 
