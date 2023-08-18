@@ -24,7 +24,7 @@ test('parameters: chainId', () => {
       "queryKey": [
         "transaction",
         {
-          "chainId": 123,
+          "chainId": 1,
         },
       ],
     }

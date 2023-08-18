@@ -36,7 +36,7 @@ test('mounts', async () => {
       "queryKey": [
         "blockNumber",
         {
-          "chainId": 123,
+          "chainId": 1,
         },
       ],
       "refetch": [Function],

@@ -49,7 +49,7 @@ test('select data', () => {
     abi: abi.erc20,
     functionName: 'transferFrom',
     args: ['0x', '0x', 123n],
-    chainId: 123,
+    chainId: 1,
     select(data) {
       expectTypeOf(data.result).toEqualTypeOf<boolean>()
       return data.request.args
@@ -72,7 +72,7 @@ test('UseContractSimulateReturnType', () => {
   type Result = UseContractSimulateReturnType<
     typeof abi.erc20,
     'transferFrom',
-    123
+    1
   >
   expectTypeOf<Result['data']>().toMatchTypeOf<
     | {

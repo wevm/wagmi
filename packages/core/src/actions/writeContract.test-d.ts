@@ -13,7 +13,7 @@ test('default', async () => {
     abi: abi.erc20,
     functionName: 'transferFrom',
     args: ['0x', '0x', 123n],
-    chainId: 123,
+    chainId: 1,
   })
 })
 
@@ -23,7 +23,7 @@ test('prepareWriteContract', async () => {
     abi: abi.erc20,
     functionName: 'transferFrom',
     args: ['0x', '0x', 123n],
-    chainId: 123,
+    chainId: 1,
   })
   await writeContract(config, request)
   await writeContract(config, {

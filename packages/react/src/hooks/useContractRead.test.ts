@@ -47,7 +47,7 @@ test('default', async () => {
           "args": [
             "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
           ],
-          "chainId": 123,
+          "chainId": 1,
           "functionName": "balanceOf",
         },
       ],

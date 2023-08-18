@@ -60,7 +60,7 @@ test('default', async () => {
       "queryKey": [
         "transaction",
         {
-          "chainId": 123,
+          "chainId": 1,
           "hash": "0x60668ed8c2dc110d61d945a936fcd45b8f13654e5c78481c8c825d1148c7ef30",
         },
       ],

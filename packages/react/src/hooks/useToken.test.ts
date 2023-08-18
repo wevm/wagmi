@@ -49,7 +49,7 @@ test('default', async () => {
         "token",
         {
           "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
-          "chainId": 123,
+          "chainId": 1,
         },
       ],
       "refetch": [Function],

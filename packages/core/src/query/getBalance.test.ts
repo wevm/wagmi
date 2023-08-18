@@ -29,7 +29,7 @@ test('parameters: chainId', () => {
         "balance",
         {
           "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-          "chainId": 123,
+          "chainId": 1,
         },
       ],
     }
@@ -53,7 +53,7 @@ test('parameters: unit', () => {
           "balance",
           {
             "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-            "chainId": 123,
+            "chainId": 1,
             "token": "0x0000000000000000000000000000000000000000",
             "unit": "gwei",
           },

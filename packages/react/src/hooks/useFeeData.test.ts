@@ -48,7 +48,7 @@ test('default', async () => {
       "queryKey": [
         "feeData",
         {
-          "chainId": 123,
+          "chainId": 1,
         },
       ],
       "refetch": [Function],

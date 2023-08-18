@@ -5,7 +5,7 @@ import { multicall } from './multicall.js'
 
 test('default', async () => {
   const result = await multicall(config, {
-    chainId: 123,
+    chainId: 1,
     contracts: [
       {
         address: '0x',

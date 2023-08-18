@@ -11,7 +11,7 @@ test('default', async () => {
         abi: abi.erc20,
         functionName: 'balanceOf',
         args: ['0x'],
-        chainId: 123,
+        chainId: 1,
       },
       {
         address: '0x',

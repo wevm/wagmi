@@ -28,7 +28,7 @@ test('getItem', () => {
     storage: localStorage,
   })
   expectTypeOf(customStorage.getItem('foo')).toEqualTypeOf<number | null>()
-  expectTypeOf(customStorage.getItem('foo', 123)).toEqualTypeOf<number>()
+  expectTypeOf(customStorage.getItem('foo', 1)).toEqualTypeOf<number>()
 })
 
 test('setItem', () => {

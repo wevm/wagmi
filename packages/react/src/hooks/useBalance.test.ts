@@ -52,7 +52,7 @@ test('default', async () => {
         "balance",
         {
           "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-          "chainId": 123,
+          "chainId": 1,
         },
       ],
       "refetch": [Function],
@@ -153,7 +153,7 @@ test('parameters: token', async () => {
         "balance",
         {
           "address": "0x4557B18E779944BFE9d78A672452331C186a9f48",
-          "chainId": 123,
+          "chainId": 1,
           "token": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
         },
       ],
@@ -246,7 +246,7 @@ test('behavior: address: undefined -> defined', async () => {
         "balance",
         {
           "address": undefined,
-          "chainId": 123,
+          "chainId": 1,
         },
       ],
       "refetch": [Function],
@@ -292,7 +292,7 @@ test('behavior: address: undefined -> defined', async () => {
         "balance",
         {
           "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-          "chainId": 123,
+          "chainId": 1,
         },
       ],
       "refetch": [Function],

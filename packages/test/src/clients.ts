@@ -1,26 +1,30 @@
 import { createTestClient, http } from 'viem'
 
-import { chain } from './chains.js'
+import { mainnet, mainnet2, optimism } from './chains.js'
 
-const { mainnet, mainnet2, optimism } = chain
+export const mainnetTestClient = createTestClient({
+  mode: 'anvil',
+  cacheTime: 0,
+  chain: mainnet,
+  transport: http(),
+})
+
+export const mainnet2TestClient = createTestClient({
+  mode: 'anvil',
+  cacheTime: 0,
+  chain: mainnet2,
+  transport: http(),
+})
+
+export const optimismTestClient = createTestClient({
+  mode: 'anvil',
+  cacheTime: 0,
+  chain: optimism,
+  transport: http(),
+})
 
 export const testClient = {
-  mainnet: createTestClient({
-    mode: 'anvil',
-    cacheTime: 0,
-    chain: mainnet,
-    transport: http(),
-  }),
-  mainnet2: createTestClient({
-    mode: 'anvil',
-    cacheTime: 0,
-    chain: mainnet2,
-    transport: http(),
-  }),
-  optimism: createTestClient({
-    mode: 'anvil',
-    cacheTime: 0,
-    chain: optimism,
-    transport: http(),
-  }),
+  mainnet: mainnetTestClient,
+  mainnet2: mainnet2TestClient,
+  optimism: optimismTestClient,
 }

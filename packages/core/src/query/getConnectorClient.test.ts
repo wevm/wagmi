@@ -26,7 +26,7 @@ test('parameters: chainId', () => {
       "queryKey": [
         "connectorClient",
         {
-          "chainId": 123,
+          "chainId": 1,
           "connectorUid": undefined,
         },
       ],

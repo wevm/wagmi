@@ -23,7 +23,7 @@ describe('watchChainId', () => {
 
     expect(chainIds).toMatchInlineSnapshot(`
       [
-        123,
+        1,
         456,
       ]
     `)

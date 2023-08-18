@@ -24,7 +24,7 @@ test('parameters: chainId', () => {
       "queryKey": [
         "ensResolver",
         {
-          "chainId": 123,
+          "chainId": 1,
         },
       ],
     }

@@ -1,4 +1,6 @@
-import { parseAbi } from 'viem'
+import { type Address, parseAbi } from 'viem'
+
+import { chain } from './chains.js'
 
 /**
  * The id of the current test worker.
@@ -199,11 +201,18 @@ export const abi = {
   ]),
 } as const
 
-export const address = {
+const mainnetAddress = {
   mloot: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
   wagmigotchi: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
   wagmiMintExample: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+} as const
+
+export const address = {
+  ...mainnetAddress,
+  mainnet: mainnetAddress,
+  mainnet2: mainnetAddress,
   optimism: {
     usdc: '0x7f5c764cbc14f9669b88837ca1490cca17c31607',
   },
-} as const
+} as const satisfies Record<keyof typeof mainnetAddress, Address> &
+  Record<keyof typeof chain, Record<string, Address>>

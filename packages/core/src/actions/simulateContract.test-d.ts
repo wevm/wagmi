@@ -16,14 +16,14 @@ test('default', async () => {
     abi: abi.erc20,
     functionName: 'transferFrom',
     args: ['0x', '0x', 123n],
-    chainId: 123,
+    chainId: 1,
   })
 
   expectTypeOf(response).toMatchTypeOf<{
     result: boolean
     request: {
       __mode: 'prepared'
-      chainId: 123
+      chainId: 1
       abi: readonly [
         {
           readonly name: 'transferFrom'

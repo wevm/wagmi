@@ -11,7 +11,7 @@ test('select data', async () => {
         address: '0x',
         abi: abi.erc20,
         functionName: 'balanceOf',
-        chainId: 123,
+        chainId: 1,
         args: ['0x'],
       },
       {

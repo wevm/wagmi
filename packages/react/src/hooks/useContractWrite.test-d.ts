@@ -72,7 +72,7 @@ test('context', () => {
       abi: abi.erc20,
       functionName: 'transferFrom',
       args: ['0x', '0x', 123n],
-      chainId: 123,
+      chainId: 1,
     },
     {
       onError(error, variables, context) {
@@ -122,7 +122,7 @@ test('useContractSimulate', () => {
     abi: abi.erc20,
     functionName: 'transferFrom',
     args: ['0x', '0x', 123n],
-    chainId: 123,
+    chainId: 1,
   })
   const { write } = useContractWrite()
 

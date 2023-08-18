@@ -6,6 +6,9 @@ test('exports', () => {
   expect(Object.keys(react)).toMatchInlineSnapshot(`
     [
       "chain",
+      "mainnet",
+      "mainnet2",
+      "optimism",
       "testConnector",
       "abi",
       "address",
@@ -13,6 +16,9 @@ test('exports', () => {
       "typedData",
       "walletConnectProjectId",
       "testClient",
+      "mainnetTestClient",
+      "mainnet2TestClient",
+      "optimismTestClient",
       "config",
       "wait",
       "version",

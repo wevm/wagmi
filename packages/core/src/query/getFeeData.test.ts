@@ -24,7 +24,7 @@ test('parameters: chainId', () => {
       "queryKey": [
         "feeData",
         {
-          "chainId": 123,
+          "chainId": 1,
         },
       ],
     }

@@ -26,7 +26,7 @@ test('parameters: chainId', () => {
         "queryKey": [
           "blockNumber",
           {
-            "chainId": 123,
+            "chainId": 1,
           },
         ],
       }

@@ -39,7 +39,7 @@ test('default', async () => {
       "queryKey": [
         "ensResolver",
         {
-          "chainId": 123,
+          "chainId": 1,
           "name": "wagmi-dev.eth",
         },
       ],

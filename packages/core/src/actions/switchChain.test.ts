@@ -64,9 +64,9 @@ test('behavior: not supported', async () => {
 
 test('behavior: not connected', async () => {
   const chainId = config.state.chainId
-  expect(config.state.chainId).toMatchInlineSnapshot('123')
+  expect(config.state.chainId).toMatchInlineSnapshot('1')
   await switchChain(config, { chainId: chain.mainnet2.id })
   expect(config.state.chainId).toMatchInlineSnapshot('456')
   await switchChain(config, { chainId })
-  expect(config.state.chainId).toMatchInlineSnapshot('123')
+  expect(config.state.chainId).toMatchInlineSnapshot('1')
 })
