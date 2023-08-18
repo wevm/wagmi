@@ -48,6 +48,8 @@ test('mounts', async () => {
 })
 
 test('watch', async () => {
+  await testClient.mainnet.resetFork()
+
   const { result } = renderHook(() => useBlockNumber({ watch: true }))
 
   await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
