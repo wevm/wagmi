@@ -8,7 +8,7 @@ import {
   readContractsQueryOptions,
 } from '@wagmi/core/query'
 import { useMemo } from 'react'
-import type { ContractParameters, MulticallContract } from 'viem'
+import type { MulticallContract } from 'viem'
 
 import {
   type UseQueryParameters,
@@ -39,7 +39,7 @@ export type UseContractReadsReturnType<
   selectData = ReadContractsData<contracts, allowFailure>,
 > = UseQueryResult<selectData, ReadContractError>
 
-// /** https://wagmi.sh/react/hooks/useContractReads */
+/** https://wagmi.sh/react/hooks/useContractReads */
 export function useContractReads<
   const contracts extends readonly unknown[],
   allowFailure extends boolean = true,
@@ -58,11 +58,11 @@ export function useContractReads<
   const queryOptions = readContractsQueryOptions(config, {
     ...parameters,
     chainId,
-    contracts: contracts as ContractParameters[],
+    contracts,
   })
   const enabled = useMemo(() => {
     let isContractsValid = false
-    for (const contract of contracts as ContractParameters[]) {
+    for (const contract of contracts as MulticallContract[]) {
       const { abi, address, functionName } = contract
       if (!abi || !address || !functionName) {
         isContractsValid = false
@@ -75,8 +75,8 @@ export function useContractReads<
 
   return useQuery({
     ...queryOptions,
-    ...(query as any),
+    ...query,
     enabled,
     structuralSharing: query.structuralSharing ?? structuralSharing,
-  }) as UseContractReadsReturnType<contracts, allowFailure, selectData>
+  })
 }

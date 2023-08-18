@@ -8,8 +8,8 @@ import type { BaseError } from '../errors/base.js'
 import { ChainNotConfiguredError } from '../errors/config.js'
 import { SwitchChainNotSupportedError } from '../errors/connector.js'
 import { type ProviderNotFoundError } from '../errors/connector.js'
-import type { Evaluate } from '../internal.js'
 import type { ConnectorParameter } from '../types/properties.js'
+import type { Evaluate } from '../types/utils.js'
 
 export type SwitchChainParameters<
   config extends Config = Config,
