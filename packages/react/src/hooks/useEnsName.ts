@@ -45,9 +45,5 @@ export function useEnsName<selectData = GetEnsNameData>(
   })
   const enabled = Boolean(address && (parameters.enabled ?? true))
 
-  return useQuery({
-    ...queryOptions,
-    ...query,
-    enabled,
-  })
+  return useQuery({ ...queryOptions, ...query, enabled })
 }

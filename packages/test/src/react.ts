@@ -6,10 +6,10 @@ import {
   waitFor as waitFor_,
   type waitForOptions,
 } from '@testing-library/react'
+import { createElement } from 'react'
 import { WagmiProvider } from 'wagmi'
 
 import { config } from './config.js'
-import { createElement } from 'react'
 
 export const queryClient = new QueryClient()
 

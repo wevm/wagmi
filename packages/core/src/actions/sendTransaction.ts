@@ -27,7 +27,7 @@ export type SendTransactionParameters<
 > = {
   [key in keyof chains]: Evaluate<
     Omit<
-      viem_SendTransactionParameters<chains[key], Account>,
+      viem_SendTransactionParameters<chains[key], Account, chains[key]>,
       'account' | 'chain'
     > &
       ChainIdParameter<config, chainId> &

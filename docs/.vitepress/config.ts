@@ -36,7 +36,7 @@ export default withTwoslash(
         'script',
         {
           src: 'https://cdn.usefathom.com/script.js',
-          ['data-site']: 'QWAXSUPT',
+          'data-site': 'QWAXSUPT',
           defer: '',
         },
       ],
@@ -239,6 +239,10 @@ function getSidebar() {
             link: '/react/hooks',
             items: [
               { text: 'useAccount', link: '/react/hooks/useAccount' },
+              {
+                text: 'useAccountEffect 🚧',
+                link: '/react/hooks/useAccountEffect',
+              },
               { text: 'useBalance', link: '/react/hooks/useBalance' },
               {
                 text: 'useBlockNumber',

@@ -112,13 +112,13 @@ Number of decimals for token.
 
 ### name 
 
-`string`
+`string | undefined`
 
 Name of token.
 
 ### symbol 
 
-`string`
+`string | undefined`
 
 Symbol of token.
 

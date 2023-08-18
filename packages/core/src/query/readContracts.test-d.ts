@@ -1,11 +1,10 @@
 import { abi, config } from '@wagmi/test'
 import { expectTypeOf, test } from 'vitest'
 
-import { multicall } from './multicall.js'
+import { readContractsQueryOptions } from './readContracts.js'
 
 test('default', async () => {
-  const result = await multicall(config, {
-    chainId: 123,
+  const options = await readContractsQueryOptions(config, {
     contracts: [
       {
         address: '0x',
@@ -21,6 +20,7 @@ test('default', async () => {
       },
     ],
   })
+  const result = await options.queryFn({} as any)
   expectTypeOf(result).toEqualTypeOf<
     [
       (
@@ -35,8 +35,8 @@ test('default', async () => {
   >()
 })
 
-test('allowFailure', async () => {
-  const result = await multicall(config, {
+test('allowFailure: false', async () => {
+  const options = await readContractsQueryOptions(config, {
     allowFailure: false,
     contracts: [
       {
@@ -53,5 +53,6 @@ test('allowFailure', async () => {
       },
     ],
   })
+  const result = await options.queryFn({} as any)
   expectTypeOf(result).toEqualTypeOf<[bigint, string]>()
 })

@@ -8,7 +8,7 @@ import {
   readContractsQueryOptions,
 } from '@wagmi/core/query'
 import { useMemo } from 'react'
-import type { ContractFunctionConfig } from 'viem'
+import type { ContractParameters, MulticallContract } from 'viem'
 
 import {
   type UseQueryParameters,
@@ -20,7 +20,7 @@ import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
 export type UseContractReadsParameters<
-  contracts extends ContractFunctionConfig[] = ContractFunctionConfig[],
+  contracts extends readonly unknown[] = readonly MulticallContract[],
   allowFailure extends boolean = true,
   selectData = ReadContractsData<contracts, allowFailure>,
 > = Evaluate<
@@ -34,14 +34,14 @@ export type UseContractReadsParameters<
 >
 
 export type UseContractReadsReturnType<
-  contracts extends ContractFunctionConfig[] = ContractFunctionConfig[],
+  contracts extends readonly unknown[] = readonly MulticallContract[],
   allowFailure extends boolean = true,
   selectData = ReadContractsData<contracts, allowFailure>,
 > = UseQueryResult<selectData, ReadContractError>
 
 // /** https://wagmi.sh/react/hooks/useContractReads */
 export function useContractReads<
-  const contracts extends ContractFunctionConfig[],
+  const contracts extends readonly unknown[],
   allowFailure extends boolean = true,
   selectData = ReadContractsData<contracts, allowFailure>,
 >(
@@ -58,14 +58,11 @@ export function useContractReads<
   const queryOptions = readContractsQueryOptions(config, {
     ...parameters,
     chainId,
-  } as ReadContractsOptions<
-    ResolvedRegister['config'],
-    contracts,
-    allowFailure
-  >)
+    contracts: contracts as ContractParameters[],
+  })
   const enabled = useMemo(() => {
     let isContractsValid = false
-    for (const contract of contracts as ContractFunctionConfig[]) {
+    for (const contract of contracts as ContractParameters[]) {
       const { abi, address, functionName } = contract
       if (!abi || !address || !functionName) {
         isContractsValid = false
@@ -78,7 +75,7 @@ export function useContractReads<
 
   return useQuery({
     ...queryOptions,
-    ...query,
+    ...(query as any),
     enabled,
     structuralSharing: query.structuralSharing ?? structuralSharing,
   }) as UseContractReadsReturnType<contracts, allowFailure, selectData>

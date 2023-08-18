@@ -36,15 +36,12 @@ function Account() {
   const [account, setAccount] = React.useState(getAccount(config))
 
   React.useEffect(() => {
-    const unwatch = watchAccount(config, {
+    return watchAccount(config, {
       onChange(data) {
         setAccount(data)
       },
     })
-    return () => {
-      unwatch()
-    }
-  }, [])
+  }, [setAccount])
 
   return (
     <div>
@@ -71,14 +68,8 @@ function Connect() {
   const [, rerender] = React.useReducer((count) => count + 1, 0)
 
   React.useEffect(() => {
-    const unsubscribe = config.subscribe(
-      ({ connections }) => connections,
-      rerender,
-    )
-    return () => {
-      unsubscribe()
-    }
-  }, [])
+    return config.subscribe(({ connections }) => connections, rerender)
+  }, [rerender])
 
   return (
     <div>
@@ -103,14 +94,11 @@ function SwitchAccount() {
   const [, rerender] = React.useReducer((count) => count + 1, 0)
 
   React.useEffect(() => {
-    const unsubscribe = config.subscribe(
+    return config.subscribe(
       ({ connections, current }) => ({ connections, current }),
       rerender,
     )
-    return () => {
-      unsubscribe()
-    }
-  }, [])
+  }, [rerender])
 
   return (
     <div>
@@ -137,15 +125,12 @@ function Balance() {
   const [account, setAccount] = React.useState(getAccount(config))
 
   React.useEffect(() => {
-    const unwatch = watchAccount(config, {
+    return watchAccount(config, {
       onChange(data) {
         setAccount(data)
       },
     })
-    return () => {
-      unwatch()
-    }
-  }, [])
+  }, [setAccount])
 
   /////////////////////////////////////////////////////////
 
@@ -155,7 +140,7 @@ function Balance() {
 
   React.useEffect(() => {
     if (!account.address) return
-    const unwatch = watchBlockNumber(config, {
+    return watchBlockNumber(config, {
       async onBlockNumber() {
         try {
           const balance = await getBalance(config, {
@@ -167,10 +152,7 @@ function Balance() {
         }
       },
     })
-    return () => {
-      unwatch()
-    }
-  }, [account.address, config])
+  }, [account.address, setBalance])
 
   return (
     <div>
@@ -192,7 +174,7 @@ function BlockNumber() {
 
       watchBlockNumber(config, { onBlockNumber: setBlockNumber })
     })()
-  }, [])
+  }, [setBlockNumber])
 
   return (
     <div>

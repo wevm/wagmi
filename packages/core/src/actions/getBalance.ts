@@ -133,7 +133,7 @@ async function getTokenBalance(
       { ...contract, functionName: 'balanceOf', args: [balanceAddress] },
       { ...contract, functionName: 'decimals' },
       { ...contract, functionName: 'symbol' },
-    ],
+    ] as const,
   })
   const formatted = formatUnits(value ?? '0', getUnit(unit ?? decimals))
   return { decimals, formatted, symbol, value }

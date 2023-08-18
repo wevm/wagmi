@@ -21,7 +21,7 @@ export type PrepareSendTransactionParameters<
 > = Evaluate<
   {
     [key in keyof chains]: Omit<
-      SendTransactionParameters<chains[key], Account>,
+      SendTransactionParameters<chains[key], Account, chains[key]>,
       'chain'
     >
   }[number]
@@ -41,7 +41,7 @@ export type PrepareSendTransactionReturnType<
 > = Evaluate<
   {
     [key in keyof chains]: Omit<
-      SendTransactionParameters<chains[key], Account>,
+      SendTransactionParameters<chains[key], Account, chains[key]>,
       'account' | 'chain'
     > &
       PartialBy<

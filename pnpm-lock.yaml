@@ -7,12 +7,9 @@ settings:
 overrides:
   '@wagmi/connectors': workspace:*
   '@wagmi/core': workspace:*
-  viem: 0.0.0-w-20230802141753
+  viem: 0.0.0-w-20230818192605
 
 patchedDependencies:
-  '@coinbase/wallet-sdk@3.8.0-beta.0':
-    hash: fdyijlr6owhdagu7lojjhfdwf4
-    path: patches/@coinbase__wallet-sdk@3.8.0-beta.0.patch
   vitepress@1.0.0-rc.4:
     hash: vad7hzjchjqjjrqqk6z7shlpke
     path: patches/vitepress@1.0.0-rc.4.patch
@@ -70,8 +67,8 @@ importers:
         specifier: ^4.4.1
         version: 4.4.1
       rome:
-        specifier: ^12.1.0
-        version: 12.1.0
+        specifier: ^12.1.3
+        version: 12.1.3
       simple-git-hooks:
         specifier: ^2.8.1
         version: 2.8.1
@@ -79,8 +76,8 @@ importers:
         specifier: 5.0.4
         version: 5.0.4
       viem:
-        specifier: 0.0.0-w-20230802141753
-        version: 0.0.0-w-20230802141753(typescript@5.0.4)
+        specifier: 0.0.0-w-20230818192605
+        version: 0.0.0-w-20230818192605(typescript@5.0.4)
       vite:
         specifier: ^4.3.9
         version: 4.3.9(@types/node@18.16.9)
@@ -121,8 +118,8 @@ importers:
         specifier: ^0.53.0
         version: 0.53.0(vite@4.3.9)
       viem:
-        specifier: 0.0.0-w-20230802141753
-        version: 0.0.0-w-20230802141753(typescript@5.0.4)
+        specifier: 0.0.0-w-20230818192605
+        version: 0.0.0-w-20230818192605(typescript@5.0.4)
       vitepress:
         specifier: 1.0.0-rc.4
         version: 1.0.0-rc.4(patch_hash=vad7hzjchjqjjrqqk6z7shlpke)(@types/node@18.16.9)(@types/react@18.2.0)(react@18.2.0)
@@ -139,8 +136,8 @@ importers:
   packages/connectors:
     dependencies:
       '@coinbase/wallet-sdk':
-        specifier: 3.8.0-beta.0
-        version: 3.8.0-beta.0(patch_hash=fdyijlr6owhdagu7lojjhfdwf4)
+        specifier: 3.8.0-beta.2
+        version: 3.8.0-beta.2
       '@ledgerhq/connect-kit-loader':
         specifier: ^1.1.2
         version: 1.1.2
@@ -220,8 +217,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0
       viem:
-        specifier: 0.0.0-w-20230802141753
-        version: 0.0.0-w-20230802141753(typescript@5.0.4)
+        specifier: 0.0.0-w-20230818192605
+        version: 0.0.0-w-20230818192605(typescript@5.0.4)
       wagmi:
         specifier: workspace:*
         version: link:../../react
@@ -272,8 +269,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       viem:
-        specifier: 0.0.0-w-20230802141753
-        version: 0.0.0-w-20230802141753(typescript@5.0.4)
+        specifier: 0.0.0-w-20230818192605
+        version: 0.0.0-w-20230818192605(typescript@5.0.4)
     devDependencies:
       '@esbuild-plugins/node-globals-polyfill':
         specifier: ^0.2.3
@@ -309,8 +306,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       viem:
-        specifier: 0.0.0-w-20230802141753
-        version: 0.0.0-w-20230802141753(typescript@5.0.4)
+        specifier: 0.0.0-w-20230818192605
+        version: 0.0.0-w-20230818192605(typescript@5.0.4)
       wagmi:
         specifier: workspace:*
         version: link:../../packages/react
@@ -931,8 +928,8 @@ packages:
       prettier: 2.8.7
     dev: true
 
-  /@coinbase/wallet-sdk@3.8.0-beta.0(patch_hash=fdyijlr6owhdagu7lojjhfdwf4):
-    resolution: {integrity: sha512-+9PQT6qj1XySFXJgT/SrD1e5TvFGLQI23uctiOORKg83fq95TM9WfDxSUVrGXf0UXNur1w9BjQy+cD7QxnDhKQ==}
+  /@coinbase/wallet-sdk@3.8.0-beta.2:
+    resolution: {integrity: sha512-3vNZ/WLs/4eWklw2ugD7PMtve5Z7vWP7bTVtN9MzQQrt9cpciM5W5+wUHxCmqNODs1QS16bVBcBmpONMxPTKLA==}
     engines: {node: '>= 10.0.0'}
     dependencies:
       '@metamask/safe-event-emitter': 2.0.0
@@ -958,7 +955,6 @@ packages:
       - supports-color
       - utf-8-validate
     dev: false
-    patched: true
 
   /@docsearch/css@3.5.1:
     resolution: {integrity: sha512-2Pu9HDg/uP/IT10rbQ+4OrTQuxIWdKVUEdcw9/w7kZJv9NeHS6skJx1xuRiFyoGKwAzcHXnLp7csE99sj+O1YA==}
@@ -1647,8 +1643,17 @@ packages:
     dependencies:
       '@noble/hashes': 1.3.0
 
+  /@noble/curves@1.1.0:
+    resolution: {integrity: sha512-091oBExgENk/kGj3AZmtBDMpxQPDtxQABR2B9lb1JbVTs6ytdzZNwvhxQ4MWasRNEzlbEH8jCWFCwhF/Obj5AA==}
+    dependencies:
+      '@noble/hashes': 1.3.1
+
   /@noble/hashes@1.3.0:
     resolution: {integrity: sha512-ilHEACi9DwqJB0pw7kv+Apvh50jiiSyR/cQ3y4W7lOR5mhvn/50FLUfsnfJz0BDZtl/RR16kXvptiv6q1msYZg==}
+
+  /@noble/hashes@1.3.1:
+    resolution: {integrity: sha512-EbqwksQwz9xDRGfDST86whPBgM65E0OH/pCgqW0GBVzO22bNE+NuIbeTb714+IfSjU3aRk47EUvXIb5bTsenKA==}
+    engines: {node: '>= 16'}
 
   /@nodelib/fs.scandir@2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -1763,48 +1768,48 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /@rometools/cli-darwin-arm64@12.1.0:
-    resolution: {integrity: sha512-U9trIXqE+WVsPUQRE8vooh97jNcyC1cvhNO91Q31FfWgccfbiJbfiQzPewpQ1+UseyJIdpWFAYLs8VFykhAl3g==}
+  /@rometools/cli-darwin-arm64@12.1.3:
+    resolution: {integrity: sha512-AmFTUDYjBuEGQp/Wwps+2cqUr+qhR7gyXAUnkL5psCuNCz3807TrUq/ecOoct5MIavGJTH6R4aaSL6+f+VlBEg==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@rometools/cli-darwin-x64@12.1.0:
-    resolution: {integrity: sha512-ePyRJwprT+POsGue1gdqPYOHojXfDz/OJI18renU0NI2CHeeeMhnquu+MZJaiBGyBd1ezIgWZWiQ4DhLFOaCUg==}
+  /@rometools/cli-darwin-x64@12.1.3:
+    resolution: {integrity: sha512-k8MbWna8q4LRlb005N2X+JS1UQ+s3ZLBBvwk4fP8TBxlAJXUz17jLLu/Fi+7DTTEmMhM84TWj4FDKW+rNar28g==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@rometools/cli-linux-arm64@12.1.0:
-    resolution: {integrity: sha512-j/pF6pF+lKihw7CIvwQZqQG9gpaUy2FyO9+nu5dvCChblXNEaA2zMnpLnDlCue0B7xY0jZkk1EZdF49ztEZZFA==}
+  /@rometools/cli-linux-arm64@12.1.3:
+    resolution: {integrity: sha512-X/uLhJ2/FNA3nu5TiyeNPqiD3OZoFfNfRvw6a3ut0jEREPvEn72NI7WPijH/gxSz55znfQ7UQ6iM4DZumUknJg==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@rometools/cli-linux-x64@12.1.0:
-    resolution: {integrity: sha512-zh6tW0JumP/rQkFDdsg6FEDBv0ZPvPLFirfHqzJA8VDNRBHkOTq27oVCbTJIGyUCGm9VvIzG8sJFVKkYpxkl2g==}
+  /@rometools/cli-linux-x64@12.1.3:
+    resolution: {integrity: sha512-csP17q1eWiUXx9z6Jr/JJPibkplyKIwiWPYNzvPCGE8pHlKhwZj3YHRuu7Dm/4EOqx0XFIuqqWZUYm9bkIC8xg==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@rometools/cli-win32-arm64@12.1.0:
-    resolution: {integrity: sha512-ggug6gUWFnO2QK0KC5XsYRhuZ22jeLksebdHMnkaHzZBtxXnKMC7yXnYwU/Lg2fGAwmMsluIbaqFYgen4+c8RA==}
+  /@rometools/cli-win32-arm64@12.1.3:
+    resolution: {integrity: sha512-RymHWeod57EBOJY4P636CgUwYA6BQdkQjh56XKk4pLEHO6X1bFyMet2XL7KlHw5qOTalzuzf5jJqUs+vf3jdXQ==}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@rometools/cli-win32-x64@12.1.0:
-    resolution: {integrity: sha512-TnurdnlzBwcvRSsgmNz9Gorffnjr5cS8TdHo9w+3pT4GdSsrLZqvd1IV2tj4uRKkNn6OJtSqW3tZ5SiTrf0LuA==}
+  /@rometools/cli-win32-x64@12.1.3:
+    resolution: {integrity: sha512-yHSKYidqJMV9nADqg78GYA+cZ0hS1twANAjiFibQdXj9aGzD+s/IzIFEIi/U/OBLvWYg/SCw0QVozi2vTlKFDQ==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
@@ -1828,7 +1833,7 @@ packages:
     resolution: {integrity: sha512-XJbEPuaVc7b9n23MqlF6c+ToYIS3f7P2Sel8f3cSBQ9WORE4xrSuvhMpK9fDSFqJ7by/brc+rmJR/5HViRr0/w==}
     dependencies:
       '@safe-global/safe-gateway-typescript-sdk': 3.8.0
-      viem: 0.0.0-w-20230802141753(typescript@5.0.4)
+      viem: 0.0.0-w-20230818192605(typescript@5.0.4)
     transitivePeerDependencies:
       - bufferutil
       - encoding
@@ -1852,13 +1857,13 @@ packages:
     resolution: {integrity: sha512-bcKpo1oj54hGholplGLpqPHRbIsnbixFtc06nwuNM5/dwSXOq/AAYoIBRsBmnZJSdfeNW5rnff7NTAz3ZCqR9Q==}
     dependencies:
       '@noble/curves': 1.0.0
-      '@noble/hashes': 1.3.0
+      '@noble/hashes': 1.3.1
       '@scure/base': 1.1.1
 
   /@scure/bip39@1.2.0:
     resolution: {integrity: sha512-SX/uKq52cuxm4YFXWFaVByaSHJh2w3BnokVSeUJVCv6K7WulT9u2BuNRBhuFl8vAuYnzx9bEu9WgpcNYTrYieg==}
     dependencies:
-      '@noble/hashes': 1.3.0
+      '@noble/hashes': 1.3.1
       '@scure/base': 1.1.1
 
   /@sinclair/typebox@0.27.8:
@@ -1886,8 +1891,8 @@ packages:
     resolution: {integrity: sha512-aJtF/nTs+9St+KtTK/wgVJ+SinfjYzn+3w1ygYIPw8ST6LH+qHBn8XkodgDTwlv/xzNkaVz1kkUDOZ8BPXyZWA==}
     dependencies:
       '@babel/runtime': 7.21.0
-      '@noble/curves': 1.0.0
-      '@noble/hashes': 1.3.0
+      '@noble/curves': 1.1.0
+      '@noble/hashes': 1.3.1
       '@solana/buffer-layout': 4.0.1
       agentkeepalive: 4.3.0
       bigint-buffer: 1.1.5
@@ -2269,8 +2274,8 @@ packages:
       '@types/node': 18.16.9
     dev: false
 
-  /@types/ws@8.5.5:
-    resolution: {integrity: sha512-lwhs8hktwxSjf9UaZ9tG5M03PGogvFaH8gUgLNbN9HKIg0dvv6q+gkSuJ8HN4/VbyxkuLzCjlN7GquQ0gUJfIg==}
+  /@types/ws@8.5.4:
+    resolution: {integrity: sha512-zdQDHKUgcX/zBc4GrwsE/7dVdAD8JR4EuiAXiiUhhfyIJXXb2+PrGshFyeXWQPMmmZ2XxgaqclgpIC7eTXc1mg==}
     dependencies:
       '@types/node': 18.16.9
 
@@ -2773,8 +2778,8 @@ packages:
       typescript: 5.0.4
     dev: true
 
-  /@wagmi/chains@1.6.0(typescript@5.0.4):
-    resolution: {integrity: sha512-5FRlVxse5P4ZaHG3GTvxwVANSmYJas1eQrTBHhjxVtqXoorm0aLmCHbhmN8Xo1yu09PaWKlleEvfE98yH4AgIw==}
+  /@wagmi/chains@1.7.0(typescript@5.0.4):
+    resolution: {integrity: sha512-TKVeHv0GqP5sV1yQ8BDGYToAFezPnCexbbBpeH14x7ywi5a1dDStPffpt9x+ytE6LJWkZ6pAMs/HNWXBQ5Nqmw==}
     peerDependencies:
       typescript: '>=5.0.4'
     peerDependenciesMeta:
@@ -3098,6 +3103,20 @@ packages:
 
   /abitype@0.9.3(typescript@5.0.4):
     resolution: {integrity: sha512-dz4qCQLurx97FQhnb/EIYTk/ldQ+oafEDUqC0VVIeQS1Q48/YWt/9YNfMmp9SLFqN41ktxny3c8aYxHjmFIB/w==}
+    peerDependencies:
+      typescript: '>=5.0.4'
+      zod: ^3 >=3.19.1
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+      zod:
+        optional: true
+    dependencies:
+      typescript: 5.0.4
+    dev: true
+
+  /abitype@0.9.8(typescript@5.0.4):
+    resolution: {integrity: sha512-puLifILdm+8sjyss4S+fsUN09obiT1g2YW6CtcQF+QDzxR0euzgEB29MZujC6zMk2a6SVmtttq1fc6+YFA7WYQ==}
     peerDependencies:
       typescript: '>=5.0.4'
       zod: ^3 >=3.19.1
@@ -5311,7 +5330,7 @@ packages:
       pretty-ms: 8.0.0
       strip-json-comments: 5.0.1
       summary: 2.1.0
-      typescript: 5.1.6
+      typescript: 5.0.4
       zod: 3.21.4
       zod-validation-error: 1.3.1(zod@3.21.4)
     dev: true
@@ -6461,18 +6480,18 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /rome@12.1.0:
-    resolution: {integrity: sha512-inIBYc2/Das6LDXcw8IQp7yeXth6Rhmj9y8sS/Y/0g5/29Lyzr785SjCmKyiN2No4MNsaP3YJNm2QZAs2UpR2w==}
+  /rome@12.1.3:
+    resolution: {integrity: sha512-e+ff72hxDpe/t5/Us7YRBVw3PBET7SeczTQNn6tvrWdrCaAw3qOukQQ+tDCkyFtS4yGsnhjrJbm43ctNbz27Yg==}
     engines: {node: '>=14.*'}
     hasBin: true
     requiresBuild: true
     optionalDependencies:
-      '@rometools/cli-darwin-arm64': 12.1.0
-      '@rometools/cli-darwin-x64': 12.1.0
-      '@rometools/cli-linux-arm64': 12.1.0
-      '@rometools/cli-linux-x64': 12.1.0
-      '@rometools/cli-win32-arm64': 12.1.0
-      '@rometools/cli-win32-x64': 12.1.0
+      '@rometools/cli-darwin-arm64': 12.1.3
+      '@rometools/cli-darwin-x64': 12.1.3
+      '@rometools/cli-linux-arm64': 12.1.3
+      '@rometools/cli-linux-x64': 12.1.3
+      '@rometools/cli-win32-arm64': 12.1.3
+      '@rometools/cli-win32-x64': 12.1.3
     dev: true
 
   /rpc-websockets@7.5.1:
@@ -7128,12 +7147,6 @@ packages:
     engines: {node: '>=12.20'}
     hasBin: true
 
-  /typescript@5.1.6:
-    resolution: {integrity: sha512-zaWCozRZ6DLEWAWFrVDz1H6FVXzUSfTy5FUMWsQlU8Ym5JP9eO4xkTIROFCQvhQf61z6O/G6ugw3SgAnvvm+HA==}
-    engines: {node: '>=14.17'}
-    hasBin: true
-    dev: true
-
   /ufo@1.1.2:
     resolution: {integrity: sha512-TrY6DsjTQQgyS3E3dBaOXf0TpPD8u9FVrVYmKVegJuFw51n/YB9XPt+U6ydzFG5ZIN7+DIjPbNmXoBj9esYhgQ==}
     dev: true
@@ -7318,8 +7331,8 @@ packages:
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
 
-  /viem@0.0.0-w-20230802141753(typescript@5.0.4):
-    resolution: {integrity: sha512-NKGyZfRRQkvLlT+1qHBP4Xh7a6fbmNax8Xd7qFZi7l6bW4JHifu3Y4UM8NIpDAoVX4O1EPi1DovGbHSdKf3Egg==}
+  /viem@0.0.0-w-20230818192605(typescript@5.0.4):
+    resolution: {integrity: sha512-Xt5W0Lg80ewlDf+PGcbi20TCGmtjAsklOnX/OyoHTjNt5fvz1s0XHQah3HPDDwcA4caKgmsueMghdd+6/6JiTg==}
     peerDependencies:
       typescript: '>=5.0.4'
     peerDependenciesMeta:
@@ -7327,13 +7340,13 @@ packages:
         optional: true
     dependencies:
       '@adraffy/ens-normalize': 1.9.0
-      '@noble/curves': 1.0.0
+      '@noble/curves': 1.1.0
       '@noble/hashes': 1.3.0
       '@scure/bip32': 1.3.0
       '@scure/bip39': 1.2.0
-      '@types/ws': 8.5.5
-      '@wagmi/chains': 1.6.0(typescript@5.0.4)
-      abitype: 0.9.3(typescript@5.0.4)
+      '@types/ws': 8.5.4
+      '@wagmi/chains': 1.7.0(typescript@5.0.4)
+      abitype: 0.9.8(typescript@5.0.4)
       isomorphic-ws: 5.0.0(ws@8.12.0)
       typescript: 5.0.4
       ws: 8.12.0

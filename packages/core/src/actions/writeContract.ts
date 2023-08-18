@@ -33,7 +33,13 @@ export type WriteContractParameters<
     : config['chains'],
 > = {
   [key in keyof chains]: Omit<
-    viem_WriteContractParameters<abi, functionName, chains[key], Account>,
+    viem_WriteContractParameters<
+      abi,
+      functionName,
+      chains[key],
+      Account,
+      chains[key]
+    >,
     'account' | 'chain'
   >
 }[number] &
@@ -71,7 +77,12 @@ export async function writeContract<
   } else {
     const { request: simulateRequest } = await simulateContract(
       config,
-      rest as SimulateContractParameters<config, chainId, abi, functionName>,
+      rest as unknown as SimulateContractParameters<
+        config,
+        chainId,
+        abi,
+        functionName
+      >,
     )
     request = simulateRequest
   }

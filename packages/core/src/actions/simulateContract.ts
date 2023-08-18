@@ -26,7 +26,12 @@ export type SimulateContractParameters<
   [key in keyof chains]: Evaluate<
     Evaluate<
       Omit<
-        viem_SimulateContractParameters<abi, functionName, chains[key]>,
+        viem_SimulateContractParameters<
+          abi,
+          functionName,
+          chains[key],
+          chains[key]
+        >,
         'chain'
       >
     > &

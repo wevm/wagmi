@@ -1,4 +1,4 @@
-import { type Abi } from 'viem'
+import { type Abi, type ExtractAbiFunctionNames } from 'viem'
 import {
   type ReadContractParameters as viem_ReadContractParameters,
   type ReadContractReturnType as viem_ReadContractReturnType,
@@ -11,7 +11,10 @@ import type { ChainIdParameter } from '../types/properties.js'
 export type ReadContractParameters<
   config extends Config = Config,
   abi extends Abi | readonly unknown[] = Abi,
-  functionName extends string = string,
+  functionName extends ExtractAbiFunctionNames<
+    abi extends Abi ? abi : Abi,
+    'view' | 'pure'
+  > = string,
 > = viem_ReadContractParameters<abi, functionName> & ChainIdParameter<config>
 
 export type ReadContractReturnType<

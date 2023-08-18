@@ -1,8 +1,8 @@
 import { type GetAccountReturnType, watchAccount } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
+import { useEffect } from 'react'
 
 import { useConfig } from './useConfig.js'
-import { useEffect } from 'react'
 
 export type UseAccountEffectParameters = {
   onConnect?(

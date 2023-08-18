@@ -45,10 +45,10 @@
     "msw": "^1.2.1",
     "publint": "^0.2.0",
     "rimraf": "^4.4.1",
-    "rome": "^12.1.0",
+    "rome": "^12.1.3",
     "simple-git-hooks": "^2.8.1",
     "typescript": "5.0.4",
-    "viem": "0.0.0-w-20230802141753",
+    "viem": "0.0.0-w-20230818192605",
     "vite": "^4.3.9",
     "vitest": "^0.34.1"
   },
@@ -60,10 +60,9 @@
     "overrides": {
       "@wagmi/connectors": "workspace:*",
       "@wagmi/core": "workspace:*",
-      "viem": "0.0.0-w-20230802141753"
+      "viem": "0.0.0-w-20230818192605"
     },
     "patchedDependencies": {
-      "@coinbase/wallet-sdk@3.8.0-beta.0": "patches/@coinbase__wallet-sdk@3.8.0-beta.0.patch",
       "vitepress@1.0.0-rc.4": "patches/vitepress@1.0.0-rc.4.patch"
     },
     "peerDependencyRules": {
