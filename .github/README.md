@@ -22,6 +22,12 @@
       <img src="https://img.shields.io/npm/l/wagmi?colorA=f6f8fa&colorB=f6f8fa&style=flat" alt="MIT License">
     </picture>
   </a>
+  <a href="https://app.codecov.io/gh/wagmi-dev/wagmi">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/codecov/c/github/wagmi-dev/wagmi?colorA=21262d&colorB=21262d&style=flat">
+      <img src="https://img.shields.io/codecov/c/github/wagmi-dev/wagmi?colorA=f6f8fa&colorB=f6f8fa&style=flat" alt="Code coverage">
+    </picture>
+  </a>
   <a href="https://www.npmjs.com/package/wagmi">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/dm/wagmi?colorA=21262d&colorB=21262d&style=flat">
