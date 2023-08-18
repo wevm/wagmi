@@ -37,95 +37,104 @@ export async function getToken<config extends Config>(
   config: config,
   parameters: GetTokenParameters<config>,
 ): Promise<GetTokenReturnType> {
-  const { address, chainId } = parameters
+  const { address, chainId, formatUnits: unit = 18 } = parameters
 
-  const abi = [
-    {
-      type: 'function',
-      name: 'decimals',
-      stateMutability: 'view',
-      inputs: [],
-      outputs: [{ type: 'uint8' }],
-    },
-    {
-      type: 'function',
-      name: 'name',
-      stateMutability: 'view',
-      inputs: [],
-      outputs: [{ type: 'string' }],
-    },
-    {
-      type: 'function',
-      name: 'totalSupply',
-      stateMutability: 'view',
-      inputs: [],
-      outputs: [{ type: 'uint256' }],
-    },
-  ] as const
+  function getAbi<type extends 'bytes32' | 'string'>(type: type) {
+    return [
+      {
+        type: 'function',
+        name: 'decimals',
+        stateMutability: 'view',
+        inputs: [],
+        outputs: [{ type: 'uint8' }],
+      },
+      {
+        type: 'function',
+        name: 'name',
+        stateMutability: 'view',
+        inputs: [],
+        outputs: [{ type }],
+      },
+      {
+        type: 'function',
+        name: 'symbol',
+        stateMutability: 'view',
+        inputs: [],
+        outputs: [{ type }],
+      },
+      {
+        type: 'function',
+        name: 'totalSupply',
+        stateMutability: 'view',
+        inputs: [],
+        outputs: [{ type: 'uint256' }],
+      },
+    ] as const
+  }
 
-  const erc20Abi = [
-    ...abi,
-    {
-      type: 'function',
-      name: 'symbol',
-      stateMutability: 'view',
-      inputs: [],
-      outputs: [{ type: 'string' }],
-    },
-  ] as const
-
-  const erc20Abi_bytes32 = [
-    ...abi,
-    {
-      type: 'function',
-      name: 'symbol',
-      stateMutability: 'view',
-      inputs: [],
-      outputs: [{ type: 'bytes32' }],
-    },
-  ] as const
-
-  async function get(args: { abi: typeof erc20Abi | typeof erc20Abi_bytes32 }) {
-    const { formatUnits: unit = 18 } = parameters
-    const erc20Config = { address, chainId, ...args } as const
+  try {
+    const abi = getAbi('string')
+    const contractConfig = { address, abi, chainId } as const
     const [decimals, name, symbol, totalSupply] = await readContracts(config, {
       allowFailure: true,
       contracts: [
-        { ...erc20Config, functionName: 'decimals' },
-        { ...erc20Config, functionName: 'name' },
-        { ...erc20Config, functionName: 'symbol' },
-        { ...erc20Config, functionName: 'totalSupply' },
+        { ...contractConfig, functionName: 'decimals' },
+        { ...contractConfig, functionName: 'name' },
+        { ...contractConfig, functionName: 'symbol' },
+        { ...contractConfig, functionName: 'totalSupply' },
       ] as const,
     })
+
+    // throw if `name` or `symbol` failed
+    if (name.error instanceof ContractFunctionExecutionError) throw name.error
+    if (symbol.error instanceof ContractFunctionExecutionError)
+      throw symbol.error
+
+    // `decimals` and `totalSupply` are required
     if (decimals.error) throw decimals.error
     if (totalSupply.error) throw totalSupply.error
 
     return {
       address,
-      decimals: decimals.result!,
+      decimals: decimals.result,
       name: name.result,
       symbol: symbol.result,
       totalSupply: {
         formatted: formatUnits(totalSupply.result!, getUnit(unit)),
-        value: totalSupply.result!,
+        value: totalSupply.result,
       },
     }
-  }
-
-  try {
-    return await get({ abi: erc20Abi })
-  } catch (err) {
+  } catch (error) {
     // In the chance that there is an error upon decoding the contract result,
     // it could be likely that the contract data is represented as bytes32 instead
     // of a string.
-    if (err instanceof ContractFunctionExecutionError) {
-      const { name, symbol, ...rest } = await get({ abi: erc20Abi_bytes32 })
+    if (error instanceof ContractFunctionExecutionError) {
+      const abi = getAbi('bytes32')
+      const contractConfig = { address, abi, chainId } as const
+      const [decimals, name, symbol, totalSupply] = await readContracts(
+        config,
+        {
+          allowFailure: false,
+          contracts: [
+            { ...contractConfig, functionName: 'decimals' },
+            { ...contractConfig, functionName: 'name' },
+            { ...contractConfig, functionName: 'symbol' },
+            { ...contractConfig, functionName: 'totalSupply' },
+          ] as const,
+        },
+      )
       return {
+        address,
+        decimals,
         name: hexToString(trim(name as Hex, { dir: 'right' })),
         symbol: hexToString(trim(symbol as Hex, { dir: 'right' })),
-        ...rest,
+        totalSupply: {
+          formatted: formatUnits(totalSupply, getUnit(unit)),
+          value: totalSupply,
+        },
       }
     }
-    throw err
+
+    throw error
   }
 }

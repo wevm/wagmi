@@ -27,6 +27,7 @@ test('default', () => {
               "args": [
                 "0x",
               ],
+              "chainId": undefined,
               "functionName": "balanceOf",
             },
           ],
