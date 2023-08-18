@@ -9,7 +9,7 @@ import { getRpcUrls } from './utils.js'
 
 type Fork = { blockNumber: bigint; url: string }
 
-type Chain = Evaluate<
+export type Chain = Evaluate<
   viem_Chain & {
     fork: Fork
     port: number

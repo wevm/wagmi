@@ -8,12 +8,7 @@ import { pool } from './constants.js'
 afterAll(async () => {
   // If you are using a fork, you can reset your anvil instance to the initial fork block.
   await Promise.all(
-    Object.values(testClient).map((client) =>
-      client.reset({
-        jsonRpcUrl: client.chain.fork.url,
-        blockNumber: client.chain.fork.blockNumber,
-      }),
-    ),
+    Object.values(testClient).map((client) => client.resetFork()),
   )
 })
 

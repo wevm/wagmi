@@ -5,6 +5,8 @@ import { expect, test } from 'vitest'
 import { useBlockNumber } from './useBlockNumber.js'
 
 test('mounts', async () => {
+  await testClient.mainnet.resetFork()
+
   const { result } = renderHook(() => useBlockNumber())
 
   await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
