@@ -56,7 +56,7 @@ function Account() {
       </div>
 
       {account.status === 'connected' && (
-        <button type='button' onClick={() => disconnect(config)}>
+        <button type="button" onClick={() => disconnect(config)}>
           Disconnect
         </button>
       )}
@@ -81,7 +81,7 @@ function Connect() {
           id={connector.uid}
           key={connector.uid}
           onClick={async () => await connect(config, { connector })}
-          type='button'
+          type="button"
         >
           {connector.name}
         </button>
@@ -112,7 +112,7 @@ function SwitchAccount() {
             id={connector.uid}
             key={connector.uid}
             onClick={async () => await switchAccount(config, { connector })}
-            type='button'
+            type="button"
           >
             {connector.name}
           </button>
@@ -169,7 +169,7 @@ function BlockNumber() {
   >()
 
   React.useEffect(() => {
-    ;(async () => {
+    const _ = (async () => {
       setBlockNumber(await getBlockNumber(config))
 
       watchBlockNumber(config, { onBlockNumber: setBlockNumber })
