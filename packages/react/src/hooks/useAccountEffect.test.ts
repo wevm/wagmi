@@ -12,7 +12,7 @@ test('parameters: config', () => {
   const { result } = renderHook(() => useAccountEffect({ config }), {
     wrapper: ({ children }) => children,
   })
-  expect(result.current).toBeDefined()
+  expect(result.current).toBeUndefined()
 })
 
 test('behavior: connect and disconnect called once', async () => {

@@ -26,21 +26,19 @@ export function switchChainMutationOptions<config extends Config>(
 
 export type SwitchChainData<
   config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
+  chainId extends config['chains'][number]['id'],
 > = Evaluate<
   SwitchChainReturnType<
     config,
-    chainId extends config['chains'][number]['id']
-      ? number extends config['chains'][number]['id']
-        ? config['chains'][number]['id']
-        : chainId
-      : config['chains'][number]['id']
+    number extends config['chains'][number]['id']
+      ? config['chains'][number]['id']
+      : chainId
   >
 >
 
 export type SwitchChainVariables<
   config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
+  chainId extends config['chains'][number]['id'],
 > = Evaluate<
   SwitchChainParameters<
     config,
@@ -51,7 +49,7 @@ export type SwitchChainVariables<
 >
 
 export type SwitchChainMutate<config extends Config, context = unknown> = <
-  chainId extends config['chains'][number]['id'] | undefined,
+  chainId extends config['chains'][number]['id'],
 >(
   variables: SwitchChainVariables<config, chainId>,
   options?:
@@ -67,7 +65,7 @@ export type SwitchChainMutate<config extends Config, context = unknown> = <
 ) => void
 
 export type SwitchChainMutateAsync<config extends Config, context = unknown> = <
-  chainId extends config['chains'][number]['id'] | undefined,
+  chainId extends config['chains'][number]['id'],
 >(
   variables: SwitchChainVariables<config, chainId>,
   options?:

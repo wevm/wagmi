@@ -9,6 +9,7 @@ import {
   signMessageMutationOptions,
 } from '@wagmi/core/query'
 
+import type { ConfigParameter } from '../types/properties.js'
 import type { UseMutationOptions, UseMutationResult } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 
@@ -18,7 +19,8 @@ export type UseSignMessageParameters<context = unknown> = Evaluate<
     SignMessageError,
     SignMessageVariables,
     context
-  >
+  > &
+    ConfigParameter
 >
 
 export type UseSignMessageReturnType<context = unknown> = Evaluate<
@@ -37,7 +39,7 @@ export type UseSignMessageReturnType<context = unknown> = Evaluate<
 export function useSignMessage<context = unknown>(
   parameters: UseSignMessageParameters<context> = {},
 ): UseSignMessageReturnType<context> {
-  const config = useConfig()
+  const config = useConfig(parameters)
   const mutationOptions = signMessageMutationOptions(config)
   const { mutate, mutateAsync, ...result } = useMutation({
     ...parameters,

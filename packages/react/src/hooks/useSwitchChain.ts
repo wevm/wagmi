@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
-import type { ResolvedRegister, SwitchChainError } from '@wagmi/core'
+import type { Config, ResolvedRegister, SwitchChainError } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
 import {
   type SwitchChainData,
@@ -9,47 +9,50 @@ import {
   switchChainMutationOptions,
 } from '@wagmi/core/query'
 
+import type { ConfigParameter } from '../types/properties.js'
 import type { UseMutationOptions, UseMutationResult } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 
-type ChainId = ResolvedRegister['config']['chains'][number]['id']
-
-export type UseSwitchChainParameters<context = unknown> = Evaluate<
+export type UseSwitchChainParameters<
+  config extends Config = ResolvedRegister['config'],
+  context = unknown,
+> = Evaluate<
   UseMutationOptions<
-    SwitchChainData<ResolvedRegister['config'], ChainId>,
+    SwitchChainData<config, config['chains'][number]['id']>,
     SwitchChainError,
-    SwitchChainVariables<ResolvedRegister['config'], ChainId>,
+    SwitchChainVariables<config, config['chains'][number]['id']>,
     context
-  >
+  > &
+    ConfigParameter<config>
 >
 
-export type UseSwitchChainReturnType<context = unknown> = Evaluate<
+export type UseSwitchChainReturnType<
+  config extends Config = ResolvedRegister['config'],
+  context = unknown,
+> = Evaluate<
   UseMutationResult<
-    SwitchChainData<ResolvedRegister['config'], ChainId>,
+    SwitchChainData<config, config['chains'][number]['id']>,
     SwitchChainError,
-    SwitchChainVariables<ResolvedRegister['config'], ChainId>,
+    SwitchChainVariables<config, config['chains'][number]['id']>,
     context
   > & {
-    chains: ResolvedRegister['config']['chains']
-    switchChain: SwitchChainMutate<ResolvedRegister['config'], context>
-    switchChainAsync: SwitchChainMutateAsync<
-      ResolvedRegister['config'],
-      context
-    >
+    chains: config['chains']
+    switchChain: SwitchChainMutate<config, context>
+    switchChainAsync: SwitchChainMutateAsync<config, context>
   }
 >
 
 /** https://wagmi.sh/react/hooks/useSwitchChain */
-export function useSwitchChain<context = unknown>(
-  parameters: UseSwitchChainParameters<context> = {},
-): UseSwitchChainReturnType<context> {
-  const config = useConfig()
+export function useSwitchChain<config extends Config, context = unknown>(
+  parameters: UseSwitchChainParameters<config, context> = {},
+): UseSwitchChainReturnType<config, context> {
+  const config = useConfig(parameters)
   const mutationOptions = switchChainMutationOptions(config)
   const { mutate, mutateAsync, ...result } = useMutation({
     ...parameters,
     ...mutationOptions,
   })
-  type Return = UseSwitchChainReturnType<context>
+  type Return = UseSwitchChainReturnType<config, context>
   return {
     ...result,
     chains: config.chains,

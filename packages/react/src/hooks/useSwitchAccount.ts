@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 import type {
+  Config,
   Connector,
   ResolvedRegister,
   SwitchAccountError,
@@ -13,40 +14,45 @@ import {
   switchAccountMutationOptions,
 } from '@wagmi/core/query'
 
+import type { ConfigParameter } from '../types/properties.js'
 import type { UseMutationOptions, UseMutationResult } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 import { useConnections } from './useConnections.js'
 
-export type UseSwitchAccountParameters<context = unknown> = Evaluate<
+export type UseSwitchAccountParameters<
+  config extends Config = ResolvedRegister['config'],
+  context = unknown,
+> = Evaluate<
   UseMutationOptions<
-    SwitchAccountData<ResolvedRegister['config']>,
+    SwitchAccountData<config>,
     SwitchAccountError,
     SwitchAccountVariables,
     context
-  >
+  > &
+    ConfigParameter<config>
 >
 
-export type UseSwitchAccountReturnType<context = unknown> = Evaluate<
+export type UseSwitchAccountReturnType<
+  config extends Config = ResolvedRegister['config'],
+  context = unknown,
+> = Evaluate<
   UseMutationResult<
-    SwitchAccountData<ResolvedRegister['config']>,
+    SwitchAccountData<config>,
     SwitchAccountError,
     SwitchAccountVariables,
     context
   > & {
     connectors: readonly Connector[]
-    switchAccount: SwitchAccountMutate<ResolvedRegister['config'], context>
-    switchAccountAsync: SwitchAccountMutateAsync<
-      ResolvedRegister['config'],
-      context
-    >
+    switchAccount: SwitchAccountMutate<config, context>
+    switchAccountAsync: SwitchAccountMutateAsync<config, context>
   }
 >
 
 /** https://wagmi.sh/react/hooks/useSwitchAccount */
-export function useSwitchAccount<context = unknown>(
-  parameters: UseSwitchAccountParameters<context> = {},
-): UseSwitchAccountReturnType<context> {
-  const config = useConfig()
+export function useSwitchAccount<config extends Config, context = unknown>(
+  parameters: UseSwitchAccountParameters<config, context> = {},
+): UseSwitchAccountReturnType<config, context> {
+  const config = useConfig(parameters)
   const mutationOptions = switchAccountMutationOptions(config)
   const { mutate, mutateAsync, ...result } = useMutation({
     ...parameters,

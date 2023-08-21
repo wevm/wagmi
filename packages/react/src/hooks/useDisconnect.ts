@@ -9,6 +9,7 @@ import {
   disconnectMutationOptions,
 } from '@wagmi/core/query'
 
+import type { ConfigParameter } from '../types/properties.js'
 import type { UseMutationOptions, UseMutationResult } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 import { useConnections } from './useConnections.js'
@@ -19,7 +20,8 @@ export type UseDisconnectParameters<context = unknown> = Evaluate<
     DisconnectError,
     DisconnectVariables,
     context
-  >
+  > &
+    ConfigParameter
 >
 
 export type UseDisconnectReturnType<context = unknown> = Evaluate<
@@ -39,7 +41,7 @@ export type UseDisconnectReturnType<context = unknown> = Evaluate<
 export function useDisconnect<context = unknown>(
   parameters: UseDisconnectParameters<context> = {},
 ): UseDisconnectReturnType<context> {
-  const config = useConfig()
+  const config = useConfig(parameters)
   const mutationOptions = disconnectMutationOptions(config)
   const { mutate, mutateAsync, ...result } = useMutation({
     ...parameters,

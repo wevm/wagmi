@@ -9,14 +9,18 @@ import {
   signTypedDataMutationOptions,
 } from '@wagmi/core/query'
 
+import type { ConfigParameter } from '../types/properties.js'
 import type { UseMutationOptions, UseMutationResult } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 
-export type UseSignTypedDataParameters<context = unknown> = UseMutationOptions<
-  SignTypedDataData,
-  SignTypedDataError,
-  SignTypedDataVariables,
-  context
+export type UseSignTypedDataParameters<context = unknown> = Evaluate<
+  UseMutationOptions<
+    SignTypedDataData,
+    SignTypedDataError,
+    SignTypedDataVariables,
+    context
+  > &
+    ConfigParameter
 >
 
 export type UseSignTypedDataReturnType<context = unknown> = Evaluate<
@@ -35,7 +39,7 @@ export type UseSignTypedDataReturnType<context = unknown> = Evaluate<
 export function useSignTypedData<context = unknown>(
   parameters: UseSignTypedDataParameters<context> = {},
 ): UseSignTypedDataReturnType<context> {
-  const config = useConfig()
+  const config = useConfig(parameters)
   const mutationOptions = signTypedDataMutationOptions(config)
   const { mutate, mutateAsync, ...result } = useMutation({
     ...parameters,

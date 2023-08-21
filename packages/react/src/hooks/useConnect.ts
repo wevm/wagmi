@@ -1,5 +1,9 @@
 import { useMutation } from '@tanstack/react-query'
-import { type ConnectError, type ResolvedRegister } from '@wagmi/core'
+import {
+  type Config,
+  type ConnectError,
+  type ResolvedRegister,
+} from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
 import {
   type ConnectData,
@@ -9,36 +13,44 @@ import {
   connectMutationOptions,
 } from '@wagmi/core/query'
 
+import type { ConfigParameter } from '../types/properties.js'
 import type { UseMutationOptions, UseMutationResult } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 
-export type UseConnectParameters<context = unknown> = Evaluate<
+export type UseConnectParameters<
+  config extends Config = ResolvedRegister['config'],
+  context = unknown,
+> = Evaluate<
   UseMutationOptions<
-    ConnectData<ResolvedRegister['config']>,
+    ConnectData<config>,
     ConnectError,
-    ConnectVariables<ResolvedRegister['config']>,
+    ConnectVariables<config>,
     context
-  >
+  > &
+    ConfigParameter<config>
 >
 
-export type UseConnectReturnType<context = unknown> = Evaluate<
+export type UseConnectReturnType<
+  config extends Config = ResolvedRegister['config'],
+  context = unknown,
+> = Evaluate<
   UseMutationResult<
-    ConnectData<ResolvedRegister['config']>,
+    ConnectData<config>,
     ConnectError,
-    ConnectVariables<ResolvedRegister['config']>,
+    ConnectVariables<config>,
     context
   > & {
-    connect: ConnectMutate<ResolvedRegister['config'], context>
-    connectAsync: ConnectMutateAsync<ResolvedRegister['config'], context>
-    connectors: ResolvedRegister['config']['connectors']
+    connect: ConnectMutate<config, context>
+    connectAsync: ConnectMutateAsync<config, context>
+    connectors: config['connectors']
   }
 >
 
 /** https://wagmi.sh/react/hooks/useConnect */
-export function useConnect<context = unknown>(
-  parameters: UseConnectParameters<context> = {},
-): UseConnectReturnType<context> {
-  const config = useConfig()
+export function useConnect<config extends Config, context = unknown>(
+  parameters: UseConnectParameters<config, context> = {},
+): UseConnectReturnType<config, context> {
+  const config = useConfig(parameters)
   const mutationOptions = connectMutationOptions(config)
   const { mutate, mutateAsync, ...result } = useMutation({
     ...parameters,
