@@ -1,14 +1,23 @@
-import { type ResolvedRegister } from '@wagmi/core'
+import { type Config, type ResolvedRegister } from '@wagmi/core'
 import { useContext } from 'react'
 
 import { WagmiContext } from '../context.js'
 import { WagmiProviderNotFoundError } from '../errors/context.js'
+import type { ConfigParameter } from '../types/properties.js'
 
-export type UseConfigReturnType = ResolvedRegister['config']
+export type UseConfigParameters<
+  config extends Config = ResolvedRegister['config'],
+> = ConfigParameter<config>
+
+export type UseConfigReturnType<
+  config extends Config = ResolvedRegister['config'],
+> = Config extends config ? ResolvedRegister['config'] : config
 
 /** https://wagmi.sh/react/hooks/useConfig */
-export function useConfig(): UseConfigReturnType {
-  const config = useContext(WagmiContext)
+export function useConfig<config extends Config>(
+  parameters: UseConfigParameters<config> = {},
+): UseConfigReturnType<config> {
+  const config = parameters.config ?? useContext(WagmiContext)
   if (!config) throw new WagmiProviderNotFoundError()
-  return config
+  return config as UseConfigReturnType<config>
 }

@@ -1,5 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
 import {
+  type Config,
   type GetBlockNumberError,
   type ResolvedRegister,
   watchBlockNumber,
@@ -14,6 +15,7 @@ import {
 } from '@wagmi/core/query'
 import { useEffect } from 'react'
 
+import type { ConfigParameter } from '../types/properties.js'
 import {
   type UseQueryParameters,
   type UseQueryResult,
@@ -22,26 +24,32 @@ import {
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
-export type UseBlockNumberParameters<selectData = GetBlockNumberData> =
-  Evaluate<
-    GetBlockNumberOptions<ResolvedRegister['config']> &
-      UseQueryParameters<
-        GetBlockNumberQueryFnData,
-        GetBlockNumberError,
-        selectData,
-        GetBlockNumberQueryKey<ResolvedRegister['config']>
-      > & { watch?: boolean | undefined }
-  >
+export type UseBlockNumberParameters<
+  config extends Config = ResolvedRegister['config'],
+  selectData = GetBlockNumberData,
+> = Evaluate<
+  GetBlockNumberOptions<config> &
+    UseQueryParameters<
+      GetBlockNumberQueryFnData,
+      GetBlockNumberError,
+      selectData,
+      GetBlockNumberQueryKey<config>
+    > &
+    ConfigParameter<config> & { watch?: boolean | undefined }
+>
 
 export type UseBlockNumberReturnType<selectData = GetBlockNumberData> =
   UseQueryResult<selectData, GetBlockNumberError>
 
 /** https://wagmi.sh/react/hooks/useBlockNumber */
-export function useBlockNumber<selectData = GetBlockNumberData>(
-  parameters: UseBlockNumberParameters<selectData> = {},
+export function useBlockNumber<
+  config extends Config,
+  selectData = GetBlockNumberData,
+>(
+  parameters: UseBlockNumberParameters<config, selectData> = {},
 ): UseBlockNumberReturnType<selectData> {
   const { enabled = true, watch, ...query } = parameters
-  const config = useConfig()
+  const config = useConfig(parameters)
   const queryClient = useQueryClient()
 
   const chainId = parameters.chainId ?? useChainId()

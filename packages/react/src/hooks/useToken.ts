@@ -1,4 +1,4 @@
-import type { GetTokenError, ResolvedRegister } from '@wagmi/core'
+import type { Config, GetTokenError, ResolvedRegister } from '@wagmi/core'
 import { type Evaluate } from '@wagmi/core/internal'
 import {
   type GetTokenData,
@@ -8,6 +8,7 @@ import {
   getTokenQueryOptions,
 } from '@wagmi/core/query'
 
+import type { ConfigParameter } from '../types/properties.js'
 import {
   type UseQueryParameters,
   type UseQueryResult,
@@ -16,14 +17,18 @@ import {
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
-export type UseTokenParameters<selectData = GetTokenData> = Evaluate<
-  GetTokenOptions<ResolvedRegister['config']> &
+export type UseTokenParameters<
+  config extends Config = ResolvedRegister['config'],
+  selectData = GetTokenData,
+> = Evaluate<
+  GetTokenOptions<config> &
     UseQueryParameters<
       GetTokenQueryFnData,
       GetTokenError,
       selectData,
-      GetTokenQueryKey<ResolvedRegister['config']>
-    >
+      GetTokenQueryKey<config>
+    > &
+    ConfigParameter<config>
 >
 
 export type UseTokenReturnType<selectData = GetTokenData> = UseQueryResult<
@@ -32,11 +37,11 @@ export type UseTokenReturnType<selectData = GetTokenData> = UseQueryResult<
 >
 
 /** https://wagmi.sh/react/hooks/useToken */
-export function useToken<selectData = GetTokenData>(
-  parameters: UseTokenParameters<selectData> = {},
+export function useToken<config extends Config, selectData = GetTokenData>(
+  parameters: UseTokenParameters<config, selectData> = {},
 ): UseTokenReturnType<selectData> {
   const { address, ...query } = parameters
-  const config = useConfig()
+  const config = useConfig(parameters)
 
   const chainId = parameters.chainId ?? useChainId()
   const queryOptions = getTokenQueryOptions(config, {

@@ -1,4 +1,8 @@
-import { type GetBalanceError, type ResolvedRegister } from '@wagmi/core'
+import {
+  type Config,
+  type GetBalanceError,
+  type ResolvedRegister,
+} from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
 import {
   type GetBalanceData,
@@ -8,6 +12,7 @@ import {
 } from '@wagmi/core/query'
 import type { GetBalanceQueryFnData } from '@wagmi/core/query'
 
+import type { ConfigParameter } from '../types/properties.js'
 import {
   type UseQueryParameters,
   type UseQueryResult,
@@ -16,14 +21,18 @@ import {
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
-export type UseBalanceParameters<selectData = GetBalanceData> = Evaluate<
-  GetBalanceOptions<ResolvedRegister['config']> &
+export type UseBalanceParameters<
+  config extends Config = ResolvedRegister['config'],
+  selectData = GetBalanceData,
+> = Evaluate<
+  GetBalanceOptions<config> &
     UseQueryParameters<
       GetBalanceQueryFnData,
       GetBalanceError,
       selectData,
-      GetBalanceQueryKey<ResolvedRegister['config']>
-    >
+      GetBalanceQueryKey<config>
+    > &
+    ConfigParameter<config>
 >
 
 export type UseBalanceReturnType<selectData = GetBalanceData> = UseQueryResult<
@@ -32,11 +41,11 @@ export type UseBalanceReturnType<selectData = GetBalanceData> = UseQueryResult<
 >
 
 /** https://wagmi.sh/react/hooks/useBalance */
-export function useBalance<selectData = GetBalanceData>(
-  parameters: UseBalanceParameters<selectData> = {},
+export function useBalance<config extends Config, selectData = GetBalanceData>(
+  parameters: UseBalanceParameters<config, selectData> = {},
 ): UseBalanceReturnType<selectData> {
   const { address, ...query } = parameters
-  const config = useConfig()
+  const config = useConfig(parameters)
 
   const chainId = parameters.chainId ?? useChainId()
   const queryOptions = getBalanceQueryOptions(config, {

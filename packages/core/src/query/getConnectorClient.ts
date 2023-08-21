@@ -11,36 +11,50 @@ import type { Evaluate, ExactPartial } from '../types/utils.js'
 import type { ScopeKeyParameter } from './types.js'
 import { filterQueryOptions } from './utils.js'
 
-export type GetConnectorClientOptions<config extends Config> = Evaluate<
-  ExactPartial<GetConnectorClientParameters<config>> & ScopeKeyParameter
+export type GetConnectorClientOptions<
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
+> = Evaluate<
+  ExactPartial<GetConnectorClientParameters<config, chainId>> &
+    ScopeKeyParameter
 >
 
-export function getConnectorClientQueryOptions<config extends Config>(
-  config: config,
-  options: GetConnectorClientOptions<config> = {},
-) {
+export function getConnectorClientQueryOptions<
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
+>(config: config, options: GetConnectorClientOptions<config, chainId> = {}) {
   return {
     async queryFn({ queryKey }) {
       const { connector } = options
       const { connectorUid: _, scopeKey: _s, ...parameters } = queryKey[1]
-      return getConnectorClient(config, { ...parameters, connector })
+      return getConnectorClient(config, {
+        ...parameters,
+        connector,
+      }) as unknown as Promise<GetConnectorClientReturnType<config, chainId>>
     },
     queryKey: getConnectorClientQueryKey(options),
   } as const satisfies QueryOptions<
-    GetConnectorClientQueryFnData,
+    GetConnectorClientQueryFnData<config, chainId>,
     GetConnectorClientError,
-    GetConnectorClientData,
-    GetConnectorClientQueryKey<config>
+    GetConnectorClientData<config, chainId>,
+    GetConnectorClientQueryKey<config, chainId>
   >
 }
 
-export type GetConnectorClientQueryFnData = GetConnectorClientReturnType
+export type GetConnectorClientQueryFnData<
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
+> = GetConnectorClientReturnType<config, chainId>
 
-export type GetConnectorClientData = GetConnectorClientQueryFnData
+export type GetConnectorClientData<
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
+> = GetConnectorClientQueryFnData<config, chainId>
 
-export function getConnectorClientQueryKey<config extends Config>(
-  options: GetConnectorClientOptions<config> = {},
-) {
+export function getConnectorClientQueryKey<
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
+>(options: GetConnectorClientOptions<config, chainId> = {}) {
   const { connector, ...parameters } = options
   return [
     'connectorClient',
@@ -48,6 +62,7 @@ export function getConnectorClientQueryKey<config extends Config>(
   ] as const
 }
 
-export type GetConnectorClientQueryKey<config extends Config> = ReturnType<
-  typeof getConnectorClientQueryKey<config>
->
+export type GetConnectorClientQueryKey<
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
+> = ReturnType<typeof getConnectorClientQueryKey<config, chainId>>

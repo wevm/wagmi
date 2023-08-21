@@ -3,12 +3,12 @@ import { expect, test, vi } from 'vitest'
 
 import { useConfig } from './useConfig.js'
 
-test('mounts', async () => {
+test('mounts', () => {
   const { result } = renderHook(() => useConfig())
   expect(result.current).toBeDefined()
 })
 
-test('throws when not inside Provider', () => {
+test('behavior: throws when not inside Provider', () => {
   vi.spyOn(console, 'error').mockImplementation(() => {})
 
   try {

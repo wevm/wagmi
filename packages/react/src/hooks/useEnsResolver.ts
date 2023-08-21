@@ -1,4 +1,4 @@
-import type { GetEnsResolverError, ResolvedRegister } from '@wagmi/core'
+import type { Config, GetEnsResolverError, ResolvedRegister } from '@wagmi/core'
 import { type Evaluate } from '@wagmi/core/internal'
 import {
   type GetEnsResolverData,
@@ -8,6 +8,7 @@ import {
   getEnsResolverQueryOptions,
 } from '@wagmi/core/query'
 
+import type { ConfigParameter } from '../types/properties.js'
 import {
   type UseQueryParameters,
   type UseQueryResult,
@@ -16,26 +17,32 @@ import {
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
-export type UseEnsResolverParameters<selectData = GetEnsResolverData> =
-  Evaluate<
-    GetEnsResolverOptions<ResolvedRegister['config']> &
-      UseQueryParameters<
-        GetEnsResolverQueryFnData,
-        GetEnsResolverError,
-        selectData,
-        GetEnsResolverQueryKey<ResolvedRegister['config']>
-      >
-  >
+export type UseEnsResolverParameters<
+  config extends Config = ResolvedRegister['config'],
+  selectData = GetEnsResolverData,
+> = Evaluate<
+  GetEnsResolverOptions<config> &
+    UseQueryParameters<
+      GetEnsResolverQueryFnData,
+      GetEnsResolverError,
+      selectData,
+      GetEnsResolverQueryKey<config>
+    > &
+    ConfigParameter<config>
+>
 
 export type UseEnsResolverReturnType<selectData = GetEnsResolverData> =
   UseQueryResult<selectData, GetEnsResolverError>
 
 /** https://wagmi.sh/react/hooks/useEnsResolver */
-export function useEnsResolver<selectData = GetEnsResolverData>(
-  parameters: UseEnsResolverParameters<selectData> = {},
+export function useEnsResolver<
+  config extends Config,
+  selectData = GetEnsResolverData,
+>(
+  parameters: UseEnsResolverParameters<config, selectData> = {},
 ): UseEnsResolverReturnType<selectData> {
   const { name, ...query } = parameters
-  const config = useConfig()
+  const config = useConfig(parameters)
 
   const chainId = parameters.chainId ?? useChainId()
   const queryOptions = getEnsResolverQueryOptions(config, {

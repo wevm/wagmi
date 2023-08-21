@@ -1,4 +1,8 @@
-import { type ReadContractError, type ResolvedRegister } from '@wagmi/core'
+import {
+  type Config,
+  type ReadContractError,
+  type ResolvedRegister,
+} from '@wagmi/core'
 import { type Evaluate } from '@wagmi/core/internal'
 import {
   type ReadContractsData,
@@ -10,6 +14,7 @@ import {
 import { useMemo } from 'react'
 import type { ContractFunctionParameters } from 'viem'
 
+import type { ConfigParameter } from '../types/properties.js'
 import {
   type UseQueryParameters,
   type UseQueryResult,
@@ -22,15 +27,17 @@ import { useConfig } from './useConfig.js'
 export type UseContractReadsParameters<
   contracts extends readonly unknown[] = readonly ContractFunctionParameters[],
   allowFailure extends boolean = true,
+  config extends Config = ResolvedRegister['config'],
   selectData = ReadContractsData<contracts, allowFailure>,
 > = Evaluate<
-  ReadContractsOptions<ResolvedRegister['config'], contracts, allowFailure> &
+  ReadContractsOptions<config, contracts, allowFailure> &
     UseQueryParameters<
       ReadContractsQueryFnData<contracts, allowFailure>,
       ReadContractError,
       selectData,
-      ReadContractsQueryKey<ResolvedRegister['config'], contracts, allowFailure>
-    >
+      ReadContractsQueryKey<config, contracts, allowFailure>
+    > &
+    ConfigParameter<config>
 >
 
 export type UseContractReadsReturnType<
@@ -41,6 +48,7 @@ export type UseContractReadsReturnType<
 
 /** https://wagmi.sh/react/hooks/useContractReads */
 export function useContractReads<
+  config extends Config,
   const contracts extends readonly unknown[],
   allowFailure extends boolean = true,
   selectData = ReadContractsData<contracts, allowFailure>,
@@ -48,11 +56,12 @@ export function useContractReads<
   parameters: UseContractReadsParameters<
     contracts,
     allowFailure,
+    config,
     selectData
   > = {},
 ): UseContractReadsReturnType<contracts, allowFailure, selectData> {
   const { contracts = [], ...query } = parameters
-  const config = useConfig()
+  const config = useConfig(parameters)
 
   const chainId = useChainId()
   const queryOptions = readContractsQueryOptions(config, {

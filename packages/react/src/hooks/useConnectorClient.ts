@@ -1,4 +1,9 @@
-import type { GetConnectorClientError, ResolvedRegister } from '@wagmi/core'
+import { useQueryClient } from '@tanstack/react-query'
+import type {
+  Config,
+  GetConnectorClientError,
+  ResolvedRegister,
+} from '@wagmi/core'
 import { type Evaluate } from '@wagmi/core/internal'
 import {
   type GetConnectorClientData,
@@ -9,6 +14,7 @@ import {
 } from '@wagmi/core/query'
 import { useEffect } from 'react'
 
+import type { ConfigParameter } from '../types/properties.js'
 import {
   type UseQueryParameters,
   type UseQueryResult,
@@ -17,28 +23,40 @@ import {
 import { useAccount } from './useAccount.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
-import { useQueryClient } from '@tanstack/react-query'
 
-export type UseConnectorClientParameters<selectData = GetConnectorClientData> =
-  Evaluate<
-    GetConnectorClientOptions<ResolvedRegister['config']> &
-      UseQueryParameters<
-        GetConnectorClientQueryFnData,
-        GetConnectorClientError,
-        selectData,
-        GetConnectorClientQueryKey<ResolvedRegister['config']>
-      >
-  >
+type ChainId = ResolvedRegister['config']['chains'][number]['id']
 
-export type UseConnectorClientReturnType<selectData = GetConnectorClientData> =
-  UseQueryResult<selectData, GetConnectorClientError>
+export type UseConnectorClientParameters<
+  config extends Config = ResolvedRegister['config'],
+  chainId extends config['chains'][number]['id'] = ChainId,
+  selectData = GetConnectorClientData<config, chainId>,
+> = Evaluate<
+  GetConnectorClientOptions<config, chainId> &
+    UseQueryParameters<
+      GetConnectorClientQueryFnData<config, chainId>,
+      GetConnectorClientError,
+      selectData,
+      GetConnectorClientQueryKey<config, chainId>
+    > &
+    ConfigParameter<config>
+>
+
+export type UseConnectorClientReturnType<
+  config extends Config = ResolvedRegister['config'],
+  chainId extends config['chains'][number]['id'] = ChainId,
+  selectData = GetConnectorClientData<config, chainId>,
+> = UseQueryResult<selectData, GetConnectorClientError>
 
 /** https://wagmi.sh/react/hooks/useConnectorClient */
-export function useConnectorClient<selectData = GetConnectorClientData>(
-  parameters: UseConnectorClientParameters<selectData> = {},
-): UseConnectorClientReturnType<selectData> {
+export function useConnectorClient<
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
+  selectData = GetConnectorClientData<config, chainId>,
+>(
+  parameters: UseConnectorClientParameters<config, chainId, selectData> = {},
+): UseConnectorClientReturnType<config, chainId, selectData> {
   const { gcTime = 0, staleTime = Infinity, ...query } = parameters
-  const config = useConfig()
+  const config = useConfig(parameters)
   const queryClient = useQueryClient()
   const { address, connector, status } = useAccount()
 

@@ -21,6 +21,32 @@ function App() {
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
+## Parameters
+
+```ts
+import { type UseConnectionsParameters } from 'wagmi'
+```
+
+### config
+
+`Config | undefined`
+
+[`Config`](/react/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/WagmiProvider).
+
+::: code-group
+```tsx [index.tsx]
+import { useConnections } from 'wagmi'
+import { config } from './config' // [!code focus]
+
+function App() {
+  const connections = useConnections({
+    config, // [!code focus]
+  })
+}
+```
+<<< @/snippets/react/config.ts[config.ts]
+:::
+
 ## Return Type
 
 ```ts

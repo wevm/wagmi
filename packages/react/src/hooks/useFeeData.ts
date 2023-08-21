@@ -1,4 +1,8 @@
-import { type GetFeeDataError, type ResolvedRegister } from '@wagmi/core'
+import {
+  type Config,
+  type GetFeeDataError,
+  type ResolvedRegister,
+} from '@wagmi/core'
 import { type Evaluate } from '@wagmi/core/internal'
 import {
   type GetFeeDataData,
@@ -8,6 +12,7 @@ import {
   getFeeDataQueryOptions,
 } from '@wagmi/core/query'
 
+import type { ConfigParameter } from '../types/properties.js'
 import {
   type UseQueryParameters,
   type UseQueryResult,
@@ -16,14 +21,18 @@ import {
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
-export type UseFeeDataParameters<selectData = GetFeeDataData> = Evaluate<
-  GetFeeDataOptions<ResolvedRegister['config']> &
+export type UseFeeDataParameters<
+  config extends Config = ResolvedRegister['config'],
+  selectData = GetFeeDataData,
+> = Evaluate<
+  GetFeeDataOptions<config> &
     UseQueryParameters<
       GetFeeDataQueryFnData,
       GetFeeDataError,
       selectData,
-      GetFeeDataQueryKey<ResolvedRegister['config']>
-    >
+      GetFeeDataQueryKey<config>
+    > &
+    ConfigParameter<config>
 >
 
 export type UseFeeDataReturnType<selectData = GetFeeDataData> = UseQueryResult<
@@ -32,10 +41,10 @@ export type UseFeeDataReturnType<selectData = GetFeeDataData> = UseQueryResult<
 >
 
 /** https://wagmi.sh/react/hooks/useFeeData */
-export function useFeeData<selectData = GetFeeDataData>(
-  parameters: UseFeeDataParameters<selectData> = {},
+export function useFeeData<config extends Config, selectData = GetFeeDataData>(
+  parameters: UseFeeDataParameters<config, selectData> = {},
 ): UseFeeDataReturnType<selectData> {
-  const config = useConfig()
+  const config = useConfig(parameters)
 
   const chainId = parameters.chainId ?? useChainId()
   const queryOptions = getFeeDataQueryOptions(config, {

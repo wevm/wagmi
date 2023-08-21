@@ -28,7 +28,7 @@ import { type GetChainIdReturnType } from '@wagmi/core'
 
 `number`
 
-Current chain ID.
+Current chain ID from [`config.state.chainId`](/core/createConfig#chainid).
 
 ## watchChainId
 

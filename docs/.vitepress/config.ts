@@ -88,7 +88,7 @@ export default withTwoslash(
             },
             {
               text: 'Contributing ',
-              link: '/react/contributing',
+              link: '/contributing',
             },
           ],
         },
@@ -192,6 +192,10 @@ function getSidebar() {
           {
             text: 'Chain Properties 🚧',
             link: '/react/chain-properties',
+          },
+          {
+            text: 'Viem Usage 🚧',
+            link: '/react/viem',
           },
           {
             text: 'FAQ / Troubleshooting',
@@ -354,13 +358,6 @@ function getSidebar() {
           },
         ],
       },
-      {
-        text: 'Community',
-        items: [
-          { text: 'Contributing 🚧', link: '/react/contributing' },
-          { text: 'Sponsors 🚧', link: '/react/sponsors' },
-        ],
-      },
     ],
     '/core': [
       {
@@ -390,6 +387,10 @@ function getSidebar() {
           {
             text: 'Chain Properties 🚧',
             link: '/core/chain-properties',
+          },
+          {
+            text: 'Viem Usage 🚧',
+            link: '/core/viem',
           },
           {
             text: 'FAQ / Troubleshooting',
@@ -528,13 +529,6 @@ function getSidebar() {
               { text: 'serialize', link: '/core/utilities/serialize' },
             ],
           },
-        ],
-      },
-      {
-        text: 'Community',
-        items: [
-          { text: 'Contributing 🚧', link: '/core/contributing' },
-          { text: 'Sponsors 🚧', link: '/core/sponsors' },
         ],
       },
     ],

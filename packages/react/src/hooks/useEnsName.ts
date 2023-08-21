@@ -1,4 +1,4 @@
-import type { GetEnsNameError, ResolvedRegister } from '@wagmi/core'
+import type { Config, GetEnsNameError, ResolvedRegister } from '@wagmi/core'
 import { type Evaluate } from '@wagmi/core/internal'
 import {
   type GetEnsNameData,
@@ -8,6 +8,7 @@ import {
   getEnsNameQueryOptions,
 } from '@wagmi/core/query'
 
+import type { ConfigParameter } from '../types/properties.js'
 import {
   type UseQueryParameters,
   type UseQueryResult,
@@ -16,14 +17,18 @@ import {
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
-export type UseEnsNameParameters<selectData = GetEnsNameData> = Evaluate<
-  GetEnsNameOptions<ResolvedRegister['config']> &
+export type UseEnsNameParameters<
+  config extends Config = ResolvedRegister['config'],
+  selectData = GetEnsNameData,
+> = Evaluate<
+  GetEnsNameOptions<config> &
     UseQueryParameters<
       GetEnsNameQueryFnData,
       GetEnsNameError,
       selectData,
-      GetEnsNameQueryKey<ResolvedRegister['config']>
-    >
+      GetEnsNameQueryKey<config>
+    > &
+    ConfigParameter<config>
 >
 
 export type UseEnsNameReturnType<selectData = GetEnsNameData> = UseQueryResult<
@@ -32,11 +37,11 @@ export type UseEnsNameReturnType<selectData = GetEnsNameData> = UseQueryResult<
 >
 
 /** https://wagmi.sh/react/hooks/useEnsName */
-export function useEnsName<selectData = GetEnsNameData>(
-  parameters: UseEnsNameParameters<selectData> = {},
+export function useEnsName<config extends Config, selectData = GetEnsNameData>(
+  parameters: UseEnsNameParameters<config, selectData> = {},
 ): UseEnsNameReturnType<selectData> {
   const { address, ...query } = parameters
-  const config = useConfig()
+  const config = useConfig(parameters)
 
   const chainId = parameters.chainId ?? useChainId()
   const queryOptions = getEnsNameQueryOptions(config, {

@@ -14,3 +14,10 @@ test('default', async () => {
 
   expect(result.current).toMatchInlineSnapshot('456')
 })
+
+test('parameters: config', () => {
+  const { result } = renderHook(() => useChainId({ config }), {
+    wrapper: ({ children }) => children,
+  })
+  expect(result.current).toBeDefined()
+})

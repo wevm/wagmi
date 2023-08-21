@@ -1,4 +1,4 @@
-import type { GetEnsAvatarError, ResolvedRegister } from '@wagmi/core'
+import type { Config, GetEnsAvatarError, ResolvedRegister } from '@wagmi/core'
 import { type Evaluate } from '@wagmi/core/internal'
 import {
   type GetEnsAvatarData,
@@ -8,6 +8,7 @@ import {
   getEnsAvatarQueryOptions,
 } from '@wagmi/core/query'
 
+import type { ConfigParameter } from '../types/properties.js'
 import {
   type UseQueryParameters,
   type UseQueryResult,
@@ -16,25 +17,32 @@ import {
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
-export type UseEnsAvatarParameters<selectData = GetEnsAvatarData> = Evaluate<
-  GetEnsAvatarOptions<ResolvedRegister['config']> &
+export type UseEnsAvatarParameters<
+  config extends Config = ResolvedRegister['config'],
+  selectData = GetEnsAvatarData,
+> = Evaluate<
+  GetEnsAvatarOptions<config> &
     UseQueryParameters<
       GetEnsAvatarQueryFnData,
       GetEnsAvatarError,
       selectData,
-      GetEnsAvatarQueryKey<ResolvedRegister['config']>
-    >
+      GetEnsAvatarQueryKey<config>
+    > &
+    ConfigParameter<config>
 >
 
 export type UseEnsAvatarReturnType<selectData = GetEnsAvatarData> =
   UseQueryResult<selectData, GetEnsAvatarError>
 
 /** https://wagmi.sh/react/hooks/useEnsAvatar */
-export function useEnsAvatar<selectData = GetEnsAvatarData>(
-  parameters: UseEnsAvatarParameters<selectData> = {},
+export function useEnsAvatar<
+  config extends Config,
+  selectData = GetEnsAvatarData,
+>(
+  parameters: UseEnsAvatarParameters<config, selectData> = {},
 ): UseEnsAvatarReturnType<selectData> {
   const { name, ...query } = parameters
-  const config = useConfig()
+  const config = useConfig(parameters)
 
   const chainId = parameters.chainId ?? useChainId()
   const queryOptions = getEnsAvatarQueryOptions(config, {

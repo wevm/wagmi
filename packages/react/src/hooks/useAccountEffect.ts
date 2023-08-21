@@ -2,26 +2,29 @@ import { type GetAccountReturnType, watchAccount } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
 import { useEffect } from 'react'
 
+import type { ConfigParameter } from '../types/properties.js'
 import { useConfig } from './useConfig.js'
 
-export type UseAccountEffectParameters = {
-  onConnect?(
-    data: Evaluate<
-      Pick<
-        Extract<GetAccountReturnType, { status: 'connected' }>,
-        'address' | 'addresses' | 'chainId' | 'connector'
-      > & {
-        isReconnected: boolean
-      }
-    >,
-  ): void
-  onDisconnect?(): void
-}
+export type UseAccountEffectParameters = Evaluate<
+  {
+    onConnect?(
+      data: Evaluate<
+        Pick<
+          Extract<GetAccountReturnType, { status: 'connected' }>,
+          'address' | 'addresses' | 'chainId' | 'connector'
+        > & {
+          isReconnected: boolean
+        }
+      >,
+    ): void
+    onDisconnect?(): void
+  } & ConfigParameter
+>
 
 /** https://wagmi.sh/react/hooks/useAccountEffect */
 export function useAccountEffect(parameters: UseAccountEffectParameters = {}) {
   const { onConnect, onDisconnect } = parameters
-  const config = useConfig()
+  const config = useConfig(parameters)
 
   useEffect(() => {
     return watchAccount(config, {

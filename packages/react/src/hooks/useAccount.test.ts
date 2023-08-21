@@ -19,3 +19,10 @@ test('default', async () => {
 
   await disconnect(config)
 })
+
+test('parameters: config', () => {
+  const { result } = renderHook(() => useAccount({ config }), {
+    wrapper: ({ children }) => children,
+  })
+  expect(result.current).toBeDefined()
+})

@@ -1,4 +1,8 @@
-import { type ReadContractError, type ResolvedRegister } from '@wagmi/core'
+import {
+  type Config,
+  type ReadContractError,
+  type ResolvedRegister,
+} from '@wagmi/core'
 import { type UnionEvaluate } from '@wagmi/core/internal'
 import {
   type ReadContractData,
@@ -13,6 +17,7 @@ import {
   type ContractFunctionName,
 } from 'viem'
 
+import type { ConfigParameter } from '../types/properties.js'
 import {
   type UseQueryParameters,
   type UseQueryResult,
@@ -33,15 +38,17 @@ export type UseContractReadParameters<
     'pure' | 'view',
     functionName
   > = ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
+  config extends Config = ResolvedRegister['config'],
   selectData = ReadContractData<abi, functionName, args>,
 > = UnionEvaluate<
-  ReadContractOptions<ResolvedRegister['config'], abi, functionName, args> &
+  ReadContractOptions<config, abi, functionName, args> &
     UseQueryParameters<
       ReadContractQueryFnData<abi, functionName, args>,
       ReadContractError,
       selectData,
-      ReadContractQueryKey<ResolvedRegister['config'], abi, functionName, args>
-    >
+      ReadContractQueryKey<config, abi, functionName, args>
+    > &
+    ConfigParameter<config>
 >
 
 export type UseContractReadReturnType<
@@ -60,6 +67,7 @@ export type UseContractReadReturnType<
 
 /** https://wagmi.sh/react/hooks/useContractRead */
 export function useContractRead<
+  config extends Config,
   const abi extends Abi | readonly unknown[],
   functionName extends ContractFunctionName<abi, 'pure' | 'view'>,
   args extends ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
@@ -69,11 +77,18 @@ export function useContractRead<
     abi,
     functionName,
     args,
+    config,
     selectData
-  > = {} as UseContractReadParameters<abi, functionName, args, selectData>,
+  > = {} as UseContractReadParameters<
+    abi,
+    functionName,
+    args,
+    config,
+    selectData
+  >,
 ): UseContractReadReturnType<abi, functionName, args, selectData> {
   const { address, abi, functionName, ...query } = parameters
-  const config = useConfig()
+  const config = useConfig(parameters)
 
   const chainId = parameters.chainId ?? useChainId()
   const queryOptions = readContractQueryOptions(config, {

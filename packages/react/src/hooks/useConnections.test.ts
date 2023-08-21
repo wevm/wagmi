@@ -15,3 +15,10 @@ test('default', async () => {
 
   expect(result.current.length).toBe(1)
 })
+
+test('parameters: config', () => {
+  const { result } = renderHook(() => useConnections({ config }), {
+    wrapper: ({ children }) => children,
+  })
+  expect(result.current).toBeDefined()
+})

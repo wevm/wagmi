@@ -51,9 +51,16 @@ export {
   useBlockNumber,
 } from './hooks/useBlockNumber.js'
 
-export { type UseChainIdReturnType, useChainId } from './hooks/useChainId.js'
+export {
+  type UseChainIdParameters,
+  type UseChainIdReturnType,
+  useChainId,
+} from './hooks/useChainId.js'
 
-export { type UseConfigReturnType, useConfig } from './hooks/useConfig.js'
+export {
+  type UseConfigReturnType,
+  useConfig,
+} from './hooks/useConfig.js'
 
 export {
   type UseConnectParameters,
@@ -62,6 +69,7 @@ export {
 } from './hooks/useConnect.js'
 
 export {
+  type UseConnectionsParameters,
   type UseConnectionsReturnType,
   useConnections,
 } from './hooks/useConnections.js'
