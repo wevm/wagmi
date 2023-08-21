@@ -77,14 +77,8 @@ test('MulticallParameters', async () => {
       ]
     >
   >[1]['contracts'][0]
-  expectTypeOf<Result>().toEqualTypeOf<{
-    address: Address
-    abi: typeof abi
-    functionName: 'foo' | 'bar'
-    args?:
-      | readonly []
-      | readonly [Address]
-      | readonly [Address, Address]
-      | undefined
-  }>()
+  expectTypeOf<Result['functionName']>().toEqualTypeOf<'foo' | 'bar'>()
+  expectTypeOf<Result['args']>().toEqualTypeOf<
+    readonly [] | readonly [Address] | readonly [Address, Address] | undefined
+  >()
 })

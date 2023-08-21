@@ -1,4 +1,12 @@
-import type { Abi, Account, Address, Chain, ExtractAbiFunction } from 'viem'
+import type {
+  Abi,
+  Account,
+  Address,
+  Chain,
+  ContractFunctionArgs,
+  ContractFunctionName,
+  ExtractAbiFunction,
+} from 'viem'
 import {
   type SimulateContractParameters as viem_SimulateContractParameters,
   type SimulateContractReturnType as viem_SimulateContractReturnType,
@@ -11,7 +19,7 @@ import type {
   ChainIdParameter,
   ConnectorParameter,
 } from '../types/properties.js'
-import type { Evaluate, PartialBy } from '../types/utils.js'
+import type { PartialBy, UnionEvaluate, UnionOmit } from '../types/utils.js'
 import { assertActiveChain } from '../utils/assertActiveChain.js'
 import { getConnectorClient } from './getConnectorClient.js'
 
@@ -19,43 +27,59 @@ export type SimulateContractParameters<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] | undefined = undefined,
   abi extends Abi | readonly unknown[] = Abi,
-  functionName extends string = string,
+  functionName extends ContractFunctionName<
+    abi,
+    'nonpayable' | 'payable'
+  > = ContractFunctionName<abi, 'nonpayable' | 'payable'>,
+  args extends ContractFunctionArgs<
+    abi,
+    'nonpayable' | 'payable',
+    functionName
+  > = ContractFunctionArgs<abi, 'nonpayable' | 'payable', functionName>,
   ///
   chains extends readonly Chain[] = SelectChains<config['chains'], chainId>,
 > = {
-  [key in keyof chains]: Evaluate<
-    Evaluate<
-      Omit<
-        viem_SimulateContractParameters<
-          abi,
-          functionName,
-          chains[key],
-          chains[key]
-        >,
-        'chain'
-      >
-    > &
-      ChainIdParameter<config, chainId> &
-      ConnectorParameter
-  >
+  [key in keyof chains]: UnionEvaluate<
+    UnionOmit<
+      viem_SimulateContractParameters<
+        abi,
+        functionName,
+        args,
+        chains[key],
+        chains[key]
+      >,
+      'chain'
+    >
+  > &
+    ChainIdParameter<config, chainId> &
+    ConnectorParameter
 }[number]
 
 export type SimulateContractReturnType<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] | undefined = undefined,
   abi extends Abi | readonly unknown[] = Abi,
-  functionName extends string = string,
+  functionName extends ContractFunctionName<
+    abi,
+    'nonpayable' | 'payable'
+  > = ContractFunctionName<abi, 'nonpayable' | 'payable'>,
+  args extends ContractFunctionArgs<
+    abi,
+    'nonpayable' | 'payable',
+    functionName
+  > = ContractFunctionArgs<abi, 'nonpayable' | 'payable', functionName>,
   ///
   chains extends readonly Chain[] = SelectChains<config['chains'], chainId>,
 > = {
   [key in keyof chains]: viem_SimulateContractReturnType<
     readonly [ExtractAbiFunction<abi extends Abi ? abi : Abi, functionName>],
     functionName,
+    args,
     chains[key]
   > extends infer type extends viem_SimulateContractReturnType
     ? {
-        request: Evaluate<
-          Omit<type['request'], 'chain'> &
+        request: UnionEvaluate<
+          UnionOmit<type['request'], 'chain'> &
             PartialBy<
               {
                 __mode: 'prepared'
@@ -75,13 +99,27 @@ export type SimulateContractError = Error
 export async function simulateContract<
   config extends Config,
   const abi extends Abi | readonly unknown[],
-  functionName extends string,
+  functionName extends ContractFunctionName<abi, 'nonpayable' | 'payable'>,
+  args extends ContractFunctionArgs<
+    abi,
+    'nonpayable' | 'payable',
+    functionName
+  >,
   chainId extends config['chains'][number]['id'] | undefined = undefined,
 >(
   config: config,
-  parameters: SimulateContractParameters<config, chainId, abi, functionName>,
-): Promise<SimulateContractReturnType<config, chainId, abi, functionName>> {
-  const { chainId, connector, ...rest } = parameters
+  parameters: SimulateContractParameters<
+    config,
+    chainId,
+    abi,
+    functionName,
+    args
+  >,
+): Promise<
+  SimulateContractReturnType<config, chainId, abi, functionName, args>
+> {
+  const { abi, chainId, connector, ...rest } =
+    parameters as SimulateContractParameters
 
   let account: Address | Account
   let activeChainId: number | undefined
@@ -99,10 +137,11 @@ export async function simulateContract<
   const client = config.getClient({ chainId })
   const { result, request } = await viem_simulateContract(client, {
     ...rest,
+    abi,
     account,
   } as viem_SimulateContractParameters)
 
-  const minimizedAbi = (parameters.abi as Abi).filter(
+  const minimizedAbi = abi.filter(
     (abiItem) => 'name' in abiItem && abiItem.name === parameters.functionName,
   )
 
@@ -114,5 +153,11 @@ export async function simulateContract<
       abi: minimizedAbi,
       chainId,
     },
-  } as unknown as SimulateContractReturnType<config, chainId, abi, functionName>
+  } as unknown as SimulateContractReturnType<
+    config,
+    chainId,
+    abi,
+    functionName,
+    args
+  >
 }

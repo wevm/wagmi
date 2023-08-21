@@ -1,12 +1,11 @@
 import { type QueryOptions } from '@tanstack/query-core'
 import {
-  type MulticallContract,
+  type ContractFunctionParameters,
   type MulticallParameters as viem_MulticallParameters,
 } from 'viem'
 
 import {
   type ReadContractsError,
-  type ReadContractsParameters,
   type ReadContractsReturnType,
   readContracts,
 } from '../actions/readContracts.js'
@@ -40,21 +39,18 @@ export function readContractsQueryOptions<
 ) {
   return {
     async queryFn({ queryKey }) {
-      const contracts: MulticallContract[] = []
+      const contracts: ContractFunctionParameters[] = []
       const length = queryKey[1].contracts.length
       for (let i = 0; i < length; i++) {
         const contract = queryKey[1].contracts[i]!
-        const abi = (options.contracts?.[i] as MulticallContract).abi
+        const abi = (options.contracts?.[i] as ContractFunctionParameters).abi
         contracts.push({ ...contract, abi })
       }
       const { scopeKey: _, ...parameters } = queryKey[1]
       return (await readContracts(config, {
         ...parameters,
         contracts,
-      } as ReadContractsParameters)) as ReadContractsData<
-        contracts,
-        allowFailure
-      >
+      })) as ReadContractsData<contracts, allowFailure>
     },
     queryKey: readContractsQueryKey(options as any),
   } as const satisfies QueryOptions<
@@ -84,7 +80,8 @@ export function readContractsQueryKey<
     ChainIdParameter<config> = {},
 ) {
   const contracts = []
-  for (const contract of (options.contracts ?? []) as MulticallContract[]) {
+  for (const contract of (options.contracts ??
+    []) as ContractFunctionParameters[]) {
     const { abi: _, ...rest } = contract
     contracts.push({ ...rest, chainId: options.chainId })
   }

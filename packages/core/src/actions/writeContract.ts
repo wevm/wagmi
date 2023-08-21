@@ -2,6 +2,8 @@ import type {
   Abi,
   Account,
   Chain,
+  ContractFunctionArgs,
+  ContractFunctionName,
   WriteContractParameters as viem_WriteContractParameters,
   WriteContractReturnType as viem_WriteContractReturnType,
 } from 'viem'
@@ -12,7 +14,7 @@ import type {
   ChainIdParameter,
   ConnectorParameter,
 } from '../types/properties.js'
-import type { Evaluate, Omit } from '../types/utils.js'
+import type { Evaluate, UnionOmit } from '../types/utils.js'
 import { assertActiveChain } from '../utils/assertActiveChain.js'
 import { getConnectorClient } from './getConnectorClient.js'
 import {
@@ -26,16 +28,25 @@ export type WriteContractParameters<
     | config['chains'][number]['id']
     | undefined = config['chains'][number]['id'],
   abi extends Abi | readonly unknown[] = Abi,
-  functionName extends string = string,
+  functionName extends ContractFunctionName<
+    abi,
+    'nonpayable' | 'payable'
+  > = ContractFunctionName<abi, 'nonpayable' | 'payable'>,
+  args extends ContractFunctionArgs<
+    abi,
+    'nonpayable' | 'payable',
+    functionName
+  > = ContractFunctionArgs<abi, 'nonpayable' | 'payable', functionName>,
   ///
   chains extends readonly Chain[] = chainId extends config['chains'][number]['id']
     ? [Extract<config['chains'][number], { id: chainId }>]
     : config['chains'],
 > = {
-  [key in keyof chains]: Omit<
+  [key in keyof chains]: UnionOmit<
     viem_WriteContractParameters<
       abi,
       functionName,
+      args,
       chains[key],
       Account,
       chains[key]
@@ -60,10 +71,15 @@ export async function writeContract<
   config extends Config,
   chainId extends config['chains'][number]['id'] | undefined,
   const abi extends Abi | readonly unknown[],
-  functionName extends string,
+  functionName extends ContractFunctionName<abi, 'nonpayable' | 'payable'>,
+  args extends ContractFunctionArgs<
+    abi,
+    'nonpayable' | 'payable',
+    functionName
+  >,
 >(
   config: config,
-  parameters: WriteContractParameters<config, chainId, abi, functionName>,
+  parameters: WriteContractParameters<config, chainId, abi, functionName, args>,
 ): Promise<WriteContractReturnType> {
   const { chainId, connector, __mode, ...rest } = parameters
 
@@ -88,11 +104,11 @@ export async function writeContract<
   }
 
   const hash = await viem_writeContract(client, {
-    ...request,
+    ...(request as any),
     // Setting to `null` to not validate inside `viem_writeContract` since we
     // already validated above with `assertActiveChain` and in `simulateContract`
     chain: null,
-  } as viem_WriteContractParameters)
+  })
 
   return { hash }
 }

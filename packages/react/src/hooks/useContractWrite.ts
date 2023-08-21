@@ -17,14 +17,26 @@ type ChainId = ResolvedRegister['config']['chains'][number]['id']
 export type UseContractWriteParameters<context = unknown> = UseMutationOptions<
   WriteContractData,
   WriteContractError,
-  WriteContractVariables<ResolvedRegister['config'], ChainId, Abi, string>,
+  WriteContractVariables<
+    ResolvedRegister['config'],
+    ChainId,
+    Abi,
+    string,
+    readonly unknown[]
+  >,
   context
 >
 
 export type UseContractWriteReturnType<context = unknown> = UseMutationResult<
   WriteContractData,
   WriteContractError,
-  WriteContractVariables<ResolvedRegister['config'], ChainId, Abi, string>,
+  WriteContractVariables<
+    ResolvedRegister['config'],
+    ChainId,
+    Abi,
+    string,
+    readonly unknown[]
+  >,
   context
 > & {
   write: WriteContractMutate<ResolvedRegister['config'], context>

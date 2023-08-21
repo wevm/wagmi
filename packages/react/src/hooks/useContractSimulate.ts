@@ -6,7 +6,7 @@ import {
   type SimulateContractQueryKey,
   simulateContractQueryOptions,
 } from '@wagmi/core/query'
-import type { Abi } from 'viem'
+import type { Abi, ContractFunctionArgs, ContractFunctionName } from 'viem'
 
 import {
   type UseQueryParameters,
@@ -21,26 +21,37 @@ type ChainId = ResolvedRegister['config']['chains'][number]['id']
 
 export type UseContractSimulateParameters<
   abi extends Abi | readonly unknown[] = Abi,
-  functionName extends string = string,
+  functionName extends ContractFunctionName<
+    abi,
+    'nonpayable' | 'payable'
+  > = ContractFunctionName<abi, 'nonpayable' | 'payable'>,
+  args extends ContractFunctionArgs<
+    abi,
+    'nonpayable' | 'payable',
+    functionName
+  > = ContractFunctionArgs<abi, 'nonpayable' | 'payable', functionName>,
   chainId extends ChainId | undefined = undefined,
   selectData = SimulateContractData<
     ResolvedRegister['config'],
     chainId,
     abi,
-    functionName
+    functionName,
+    args
   >,
 > = SimulateContractOptions<
   ResolvedRegister['config'],
   chainId,
   abi,
-  functionName
+  functionName,
+  args
 > &
   UseQueryParameters<
     SimulateContractQueryFnData<
       ResolvedRegister['config'],
       chainId,
       abi,
-      functionName
+      functionName,
+      args
     >,
     SimulateContractError,
     selectData,
@@ -48,46 +59,64 @@ export type UseContractSimulateParameters<
       ResolvedRegister['config'],
       chainId,
       abi,
-      functionName
+      functionName,
+      args
     >
   >
 
 export type UseContractSimulateReturnType<
   abi extends Abi | readonly unknown[] = Abi,
-  functionName extends string = string,
+  functionName extends ContractFunctionName<
+    abi,
+    'nonpayable' | 'payable'
+  > = ContractFunctionName<abi, 'nonpayable' | 'payable'>,
+  args extends ContractFunctionArgs<
+    abi,
+    'nonpayable' | 'payable',
+    functionName
+  > = ContractFunctionArgs<abi, 'nonpayable' | 'payable', functionName>,
   chainId extends ChainId | undefined = undefined,
   selectData = SimulateContractData<
     ResolvedRegister['config'],
     chainId,
     abi,
-    functionName
+    functionName,
+    args
   >,
 > = UseQueryResult<selectData, SimulateContractError>
 
 /** https://wagmi.sh/react/hooks/useContractSimulate */
 export function useContractSimulate<
   const abi extends Abi | readonly unknown[],
-  functionName extends string,
+  functionName extends ContractFunctionName<abi, 'nonpayable' | 'payable'>,
+  args extends ContractFunctionArgs<
+    abi,
+    'nonpayable' | 'payable',
+    functionName
+  >,
   chainId extends ChainId | undefined = undefined,
   selectData = SimulateContractData<
     ResolvedRegister['config'],
     chainId,
     abi,
-    functionName
+    functionName,
+    args
   >,
 >(
   parameters: UseContractSimulateParameters<
     abi,
     functionName,
+    args,
     chainId,
     selectData
   > = {} as UseContractSimulateParameters<
     abi,
     functionName,
+    args,
     chainId,
     selectData
   >,
-): UseContractSimulateReturnType<abi, functionName, chainId, selectData> {
+): UseContractSimulateReturnType<abi, functionName, args, chainId, selectData> {
   const { abi, address, connector, functionName, ...query } = parameters
   const config = useConfig()
   const { data: connectorClient } = useConnectorClient({
@@ -110,5 +139,11 @@ export function useContractSimulate<
     ...queryOptions,
     ...(query as any),
     enabled,
-  }) as UseContractSimulateReturnType<abi, functionName, chainId, selectData>
+  }) as UseContractSimulateReturnType<
+    abi,
+    functionName,
+    args,
+    chainId,
+    selectData
+  >
 }

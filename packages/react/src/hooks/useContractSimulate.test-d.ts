@@ -72,6 +72,7 @@ test('UseContractSimulateReturnType', () => {
   type Result = UseContractSimulateReturnType<
     typeof abi.erc20,
     'transferFrom',
+    ['0x', '0x', 123n],
     1
   >
   expectTypeOf<Result['data']>().toMatchTypeOf<

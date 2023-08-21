@@ -1,6 +1,10 @@
 import {
   type DefaultError,
   type QueryKey,
+  type UseMutationOptions as rq_UseMutationOptions,
+  type UseMutationResult as rq_UseMutationResult,
+  type UseQueryOptions as rq_UseQueryOptions,
+  type UseQueryResult as rq_UseQueryResult,
   replaceEqualDeep,
   useQuery as tanstack_useQuery,
 } from '@tanstack/react-query'
@@ -19,12 +23,7 @@ export type UseMutationOptions<
   context = unknown,
 > = Evaluate<
   Omit<
-    import('@tanstack/react-query').UseMutationOptions<
-      data,
-      error,
-      Evaluate<variables>,
-      context
-    >,
+    rq_UseMutationOptions<data, error, Evaluate<variables>, context>,
     'mutationFn' | 'mutationKey' | 'throwOnError'
   >
 >
@@ -36,12 +35,7 @@ export type UseMutationResult<
   context = unknown,
 > = Evaluate<
   Omit<
-    import('@tanstack/react-query').UseMutationResult<
-      data,
-      error,
-      variables,
-      context
-    >,
+    rq_UseMutationResult<data, error, variables, context>,
     'mutate' | 'mutateAsync'
   >
 >
@@ -54,12 +48,7 @@ export type UseQueryParameters<
 > = Evaluate<
   ExactPartial<
     Omit<
-      import('@tanstack/react-query').UseQueryOptions<
-        queryFnData,
-        error,
-        data,
-        queryKey
-      >,
+      rq_UseQueryOptions<queryFnData, error, data, queryKey>,
       | 'initialData'
       | 'queryFn'
       | 'queryHash'
@@ -70,7 +59,7 @@ export type UseQueryParameters<
     >
   > & {
     // Fix `initialData` type
-    initialData?: import('@tanstack/react-query').UseQueryOptions<
+    initialData?: rq_UseQueryOptions<
       queryFnData,
       error,
       data,
@@ -80,7 +69,7 @@ export type UseQueryParameters<
 >
 
 export type UseQueryResult<data = unknown, error = DefaultError> = Evaluate<
-  import('@tanstack/react-query').UseQueryResult<data, error> & {
+  rq_UseQueryResult<data, error> & {
     queryKey: QueryKey
   }
 >

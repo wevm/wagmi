@@ -49,6 +49,7 @@ test('UseContractSimulateParameters', () => {
   type Result2 = UseContractSimulateParameters<
     typeof abi.erc20,
     'transferFrom',
+    [Address, Address, bigint],
     typeof celo.id
   >
   expectTypeOf<Result2['chainId']>().toEqualTypeOf<ChainId | undefined>()

@@ -19,7 +19,8 @@ test('chain formatters', () => {
     typeof config,
     typeof config['chains'][number]['id'],
     typeof abi.erc20,
-    'transferFrom'
+    'transferFrom',
+    [Address, Address, bigint]
   >
   expectTypeOf<Result>().toMatchTypeOf<{
     chainId?: typeof celo.id | typeof mainnet.id | undefined
@@ -41,7 +42,8 @@ test('chain formatters', () => {
     typeof config,
     typeof celo.id,
     typeof abi.erc20,
-    'transferFrom'
+    'transferFrom',
+    [Address, Address, bigint]
   >
   expectTypeOf<Result2>().toMatchTypeOf<{
     functionName?: 'approve' | 'transfer' | 'transferFrom' | undefined
@@ -65,7 +67,8 @@ test('chain formatters', () => {
     typeof config,
     typeof mainnet.id,
     typeof abi.erc20,
-    'transferFrom'
+    'transferFrom',
+    [Address, Address, bigint]
   >
   expectTypeOf<Result3>().toMatchTypeOf<{
     functionName?: 'approve' | 'transfer' | 'transferFrom' | undefined

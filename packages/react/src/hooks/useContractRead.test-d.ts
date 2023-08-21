@@ -24,7 +24,7 @@ test('select data', async () => {
 
 test('UseContractReadParameters', () => {
   type Result = UseContractReadParameters<typeof abi.erc20, 'balanceOf'>
-  expectTypeOf<Result>().toMatchTypeOf<{
+  expectTypeOf<Pick<Result, 'args' | 'functionName'>>().toEqualTypeOf<{
     functionName?:
       | 'symbol'
       | 'name'
@@ -39,7 +39,5 @@ test('UseContractReadParameters', () => {
 
 test('UseContractReadReturnType', () => {
   type Result = UseContractReadReturnType<typeof abi.erc20, 'balanceOf'>
-  expectTypeOf<Result>().toMatchTypeOf<{
-    data?: bigint | undefined
-  }>()
+  expectTypeOf<Result['data']>().toEqualTypeOf<bigint | undefined>()
 })

@@ -6,6 +6,7 @@ import {
   type GetBalanceQueryKey,
   getBalanceQueryOptions,
 } from '@wagmi/core/query'
+import type { GetBalanceQueryFnData } from '@wagmi/core/query'
 
 import {
   type UseQueryParameters,
@@ -14,7 +15,6 @@ import {
 } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
-import type { GetBalanceQueryFnData } from '@wagmi/core/query'
 
 export type UseBalanceParameters<selectData = GetBalanceData> = Evaluate<
   GetBalanceOptions<ResolvedRegister['config']> &

@@ -16,6 +16,7 @@ export {
   type Mutable,
   type Omit,
   type OneOf,
+  type UnionEvaluate,
 } from './types/utils.js'
 
 ////////////////////////////////////////////////////////////////////////////////

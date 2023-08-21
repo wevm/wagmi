@@ -91,3 +91,11 @@ export type LoosePartialBy<type, key extends string> = ExactPartial<
 export type UnionPartialBy<T, K extends keyof any> = T extends any
   ? LoosePartialBy<T, K extends string ? K : never>
   : never
+
+export type UnionPartial<type> = type extends object ? Partial<type> : type
+
+export type UnionEvaluate<type> = type extends object ? Evaluate<type> : type
+
+export type UnionOmit<type, keys extends keyof type> = type extends any
+  ? Omit<type, keys>
+  : never

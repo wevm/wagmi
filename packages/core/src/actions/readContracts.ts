@@ -1,5 +1,5 @@
 import type {
-  MulticallContract,
+  ContractFunctionParameters,
   MulticallParameters as viem_MulticallParameters,
   MulticallReturnType as viem_MulticallReturnType,
 } from 'viem'
@@ -12,7 +12,7 @@ import { readContract } from './readContract.js'
 
 export type ReadContractsParameters<
   config extends Config = Config,
-  contracts extends readonly unknown[] = readonly MulticallContract[],
+  contracts extends readonly unknown[] = readonly ContractFunctionParameters[],
   allowFailure extends boolean = true,
 > = viem_MulticallParameters<
   contracts,
@@ -21,7 +21,7 @@ export type ReadContractsParameters<
 >
 
 export type ReadContractsReturnType<
-  contracts extends readonly unknown[] = readonly MulticallContract[],
+  contracts extends readonly unknown[] = readonly ContractFunctionParameters[],
   allowFailure extends boolean = true,
 > = viem_MulticallReturnType<contracts, allowFailure>
 
@@ -29,14 +29,14 @@ export type ReadContractsError = Error
 
 export async function readContracts<
   config extends Config,
-  const contracts extends readonly MulticallContract[],
+  const contracts extends readonly ContractFunctionParameters[],
   allowFailure extends boolean = true,
 >(
   config: config,
   parameters: ReadContractsParameters<config, contracts, allowFailure>,
 ): Promise<ReadContractsReturnType<contracts, allowFailure>> {
   const { allowFailure = true, blockNumber, blockTag, ...rest } = parameters
-  const contracts = parameters.contracts as (MulticallContract & {
+  const contracts = parameters.contracts as (ContractFunctionParameters & {
     chainId?: number | undefined
   })[]
 
@@ -50,7 +50,10 @@ export async function readContracts<
         }
       },
       {} as {
-        [chainId: number]: { contract: MulticallContract; index: number }[]
+        [chainId: number]: {
+          contract: ContractFunctionParameters
+          index: number
+        }[]
       },
     )
     const promises = () =>

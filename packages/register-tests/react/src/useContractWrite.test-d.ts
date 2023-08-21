@@ -1,4 +1,5 @@
 import { abi } from '@wagmi/test'
+import type { Address } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 import { useContractWrite } from 'wagmi'
 import { celo, mainnet, optimism } from 'wagmi/chains'
@@ -19,7 +20,12 @@ test('chain formatters', () => {
   })
 
   type Result = Parameters<
-    typeof write<typeof celo.id, typeof abi.erc20, 'transferFrom'>
+    typeof write<
+      typeof celo.id,
+      typeof abi.erc20,
+      'transferFrom',
+      [Address, Address, bigint]
+    >
   >[0]
   expectTypeOf<Result['feeCurrency']>().toEqualTypeOf<
     `0x${string}` | undefined
