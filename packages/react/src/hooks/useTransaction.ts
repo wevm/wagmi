@@ -1,4 +1,4 @@
-import type { GetTransactionError, ResolvedRegister } from '@wagmi/core'
+import type { Config, GetTransactionError, ResolvedRegister } from '@wagmi/core'
 import { type Evaluate } from '@wagmi/core/internal'
 import {
   type GetTransactionData,
@@ -8,6 +8,7 @@ import {
   getTransactionQueryOptions,
 } from '@wagmi/core/query'
 
+import type { ConfigParameter } from '../types/properties.js'
 import {
   type UseQueryParameters,
   type UseQueryResult,
@@ -16,35 +17,37 @@ import {
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
-type ChainId = ResolvedRegister['config']['chains'][number]['id']
-
 export type UseTransactionParameters<
-  chainId extends ChainId | undefined = undefined,
-  selectData = GetTransactionData<ResolvedRegister['config'], chainId>,
+  config extends Config = Config,
+  chainId extends config['chains'][number]['id'] | undefined = undefined,
+  selectData = GetTransactionData<config, chainId>,
 > = Evaluate<
-  GetTransactionOptions<ResolvedRegister['config'], chainId> &
+  GetTransactionOptions<config, chainId> &
     UseQueryParameters<
-      GetTransactionQueryFnData<ResolvedRegister['config'], chainId>,
+      GetTransactionQueryFnData<config, chainId>,
       GetTransactionError,
       selectData,
-      GetTransactionQueryKey<ResolvedRegister['config'], chainId>
-    >
+      GetTransactionQueryKey<config, chainId>
+    > &
+    ConfigParameter<config>
 >
 
 export type UseTransactionReturnType<
-  chainId extends ChainId | undefined = undefined,
-  selectData = GetTransactionData<ResolvedRegister['config'], chainId>,
+  config extends Config = Config,
+  chainId extends config['chains'][number]['id'] | undefined = undefined,
+  selectData = GetTransactionData<config, chainId>,
 > = UseQueryResult<selectData, GetTransactionError>
 
 /** https://wagmi.sh/react/hooks/useTransaction */
 export function useTransaction<
-  chainId extends ChainId | undefined = undefined,
-  selectData = GetTransactionData<ResolvedRegister['config'], chainId>,
+  config extends Config = ResolvedRegister['config'],
+  chainId extends config['chains'][number]['id'] | undefined = undefined,
+  selectData = GetTransactionData<config, chainId>,
 >(
-  parameters: UseTransactionParameters<chainId, selectData> = {},
-): UseTransactionReturnType<chainId, selectData> {
+  parameters: UseTransactionParameters<config, chainId, selectData> = {},
+): UseTransactionReturnType<config, chainId, selectData> {
   const { blockHash, blockNumber, blockTag, hash, ...query } = parameters
-  const config = useConfig()
+  const config = useConfig(parameters)
 
   const chainId = parameters.chainId ?? useChainId()
   const queryOptions = getTransactionQueryOptions(config, {

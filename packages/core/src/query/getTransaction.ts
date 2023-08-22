@@ -21,7 +21,7 @@ export type GetTransactionOptions<
 export function getTransactionQueryOptions<
   config extends Config,
   chainId extends config['chains'][number]['id'] | undefined,
->(config: Config, options: GetTransactionOptions<config, chainId> = {}) {
+>(config: config, options: GetTransactionOptions<config, chainId> = {}) {
   return {
     async queryFn({ queryKey }) {
       const {

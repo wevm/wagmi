@@ -66,12 +66,7 @@
       "vitepress@1.0.0-rc.4": "patches/vitepress@1.0.0-rc.4.patch"
     },
     "peerDependencyRules": {
-      "ignoreMissing": [
-        "@algolia/client-search",
-        "esbuild",
-        "react",
-        "search-insights"
-      ]
+      "ignoreMissing": ["@algolia/client-search", "react", "search-insights"]
     }
   },
   "knip": {

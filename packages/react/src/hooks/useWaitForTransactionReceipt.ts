@@ -1,4 +1,5 @@
 import type {
+  Config,
   ResolvedRegister,
   WaitForTransactionReceiptError,
 } from '@wagmi/core'
@@ -19,42 +20,38 @@ import {
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
-type ChainId = ResolvedRegister['config']['chains'][number]['id']
-
 export type UseWaitForTransactionReceiptParameters<
-  chainId extends ChainId | undefined = undefined,
-  selectData = WaitForTransactionReceiptData<
-    ResolvedRegister['config'],
-    chainId
-  >,
+  config extends Config = Config,
+  chainId extends config['chains'][number]['id'] | undefined = undefined,
+  selectData = WaitForTransactionReceiptData<config, chainId>,
 > = Evaluate<
-  WaitForTransactionReceiptOptions<ResolvedRegister['config'], chainId> &
+  WaitForTransactionReceiptOptions<config, chainId> &
     UseQueryParameters<
-      WaitForTransactionReceiptQueryFnData<ResolvedRegister['config'], chainId>,
+      WaitForTransactionReceiptQueryFnData<config, chainId>,
       WaitForTransactionReceiptError,
       selectData,
-      WaitForTransactionReceiptQueryKey<ResolvedRegister['config'], chainId>
+      WaitForTransactionReceiptQueryKey<config, chainId>
     >
 >
 
 export type UseWaitForTransactionReceiptReturnType<
-  chainId extends ChainId | undefined = undefined,
-  selectData = WaitForTransactionReceiptData<
-    ResolvedRegister['config'],
-    chainId
-  >,
+  config extends Config = Config,
+  chainId extends config['chains'][number]['id'] | undefined = undefined,
+  selectData = WaitForTransactionReceiptData<config, chainId>,
 > = UseQueryResult<selectData, WaitForTransactionReceiptError>
 
 /** https://wagmi.sh/react/hooks/useWaitForTransactionReceipt */
 export function useWaitForTransactionReceipt<
-  chainId extends ChainId | undefined = undefined,
-  selectData = WaitForTransactionReceiptData<
-    ResolvedRegister['config'],
-    chainId
-  >,
+  config extends Config = ResolvedRegister['config'],
+  chainId extends config['chains'][number]['id'] | undefined = undefined,
+  selectData = WaitForTransactionReceiptData<config, chainId>,
 >(
-  parameters: UseWaitForTransactionReceiptParameters<chainId, selectData> = {},
-): UseWaitForTransactionReceiptReturnType<chainId, selectData> {
+  parameters: UseWaitForTransactionReceiptParameters<
+    config,
+    chainId,
+    selectData
+  > = {},
+): UseWaitForTransactionReceiptReturnType<config, chainId, selectData> {
   const { hash, ...query } = parameters
   const config = useConfig()
 
