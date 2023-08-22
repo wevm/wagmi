@@ -76,8 +76,10 @@ jobs:
       - name: Check types
         run: pnpm typecheck
 
-      - name: Test types
-        run: pnpm test:typecheck
+      # Redundant with `pnpm typecheck`
+      # If Vitest adds special features in the future, e.g. type coverage, can add this back!
+      # - name: Test types
+      #   run: pnpm test:typecheck
 
   test:
     name: Test
