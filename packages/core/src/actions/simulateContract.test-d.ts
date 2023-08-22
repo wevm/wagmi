@@ -49,7 +49,12 @@ test('chain formatters', () => {
     transports: { [celo.id]: http(), [mainnet.id]: http() },
   })
 
-  type Result = SimulateContractParameters<typeof config>
+  type Result = SimulateContractParameters<
+    typeof abi.erc20,
+    'transferFrom',
+    [Address, Address, bigint],
+    typeof config
+  >
   expectTypeOf<Result>().toMatchTypeOf<{
     chainId?: typeof celo.id | typeof mainnet.id | undefined
     feeCurrency?: `0x${string}` | undefined
@@ -67,10 +72,11 @@ test('chain formatters', () => {
   })
 
   type Result2 = SimulateContractParameters<
-    typeof config,
-    typeof celo.id,
     typeof abi.erc20,
-    'transferFrom'
+    'transferFrom',
+    [Address, Address, bigint],
+    typeof config,
+    typeof celo.id
   >
   expectTypeOf<Result2>().toMatchTypeOf<{
     functionName: 'approve' | 'transfer' | 'transferFrom'
@@ -91,10 +97,11 @@ test('chain formatters', () => {
   })
 
   type Result3 = SimulateContractParameters<
-    typeof config,
-    typeof mainnet.id,
     typeof abi.erc20,
-    'transferFrom'
+    'transferFrom',
+    [Address, Address, bigint],
+    typeof config,
+    typeof mainnet.id
   >
   expectTypeOf<Result3>().toMatchTypeOf<{
     functionName: 'approve' | 'transfer' | 'transferFrom'
@@ -120,10 +127,11 @@ test('chain formatters', () => {
 
 test('SimulateContractParameters', () => {
   type Result = SimulateContractParameters<
-    typeof config,
-    typeof config['chains'][number]['id'],
     typeof abi.erc20,
-    'transferFrom'
+    'transferFrom',
+    [Address, Address, bigint],
+    typeof config,
+    typeof config['chains'][number]['id']
   >
   expectTypeOf<Result>().toMatchTypeOf<{
     chainId?: typeof config['chains'][number]['id'] | undefined
@@ -134,10 +142,11 @@ test('SimulateContractParameters', () => {
 
 test('SimulateContractReturnType', () => {
   type Result = SimulateContractReturnType<
-    typeof config,
-    typeof config['chains'][number]['id'],
     typeof abi.erc20,
-    'transferFrom'
+    'transferFrom',
+    [Address, Address, bigint],
+    typeof config,
+    typeof config['chains'][number]['id']
   >
   expectTypeOf<Result>().toMatchTypeOf<{
     result: boolean

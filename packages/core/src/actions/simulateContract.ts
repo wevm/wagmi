@@ -24,8 +24,6 @@ import { assertActiveChain } from '../utils/assertActiveChain.js'
 import { getConnectorClient } from './getConnectorClient.js'
 
 export type SimulateContractParameters<
-  config extends Config = Config,
-  chainId extends config['chains'][number]['id'] | undefined = undefined,
   abi extends Abi | readonly unknown[] = Abi,
   functionName extends ContractFunctionName<
     abi,
@@ -36,6 +34,8 @@ export type SimulateContractParameters<
     'nonpayable' | 'payable',
     functionName
   > = ContractFunctionArgs<abi, 'nonpayable' | 'payable', functionName>,
+  config extends Config = Config,
+  chainId extends config['chains'][number]['id'] | undefined = undefined,
   ///
   chains extends readonly Chain[] = SelectChains<config['chains'], chainId>,
 > = {
@@ -56,8 +56,6 @@ export type SimulateContractParameters<
 }[number]
 
 export type SimulateContractReturnType<
-  config extends Config = Config,
-  chainId extends config['chains'][number]['id'] | undefined = undefined,
   abi extends Abi | readonly unknown[] = Abi,
   functionName extends ContractFunctionName<
     abi,
@@ -68,6 +66,8 @@ export type SimulateContractReturnType<
     'nonpayable' | 'payable',
     functionName
   > = ContractFunctionArgs<abi, 'nonpayable' | 'payable', functionName>,
+  config extends Config = Config,
+  chainId extends config['chains'][number]['id'] | undefined = undefined,
   ///
   chains extends readonly Chain[] = SelectChains<config['chains'], chainId>,
 > = {
@@ -97,7 +97,6 @@ export type SimulateContractError = Error
 
 /** https://wagmi.sh/core/actions/simulateContract */
 export async function simulateContract<
-  config extends Config,
   const abi extends Abi | readonly unknown[],
   functionName extends ContractFunctionName<abi, 'nonpayable' | 'payable'>,
   args extends ContractFunctionArgs<
@@ -105,18 +104,19 @@ export async function simulateContract<
     'nonpayable' | 'payable',
     functionName
   >,
+  config extends Config,
   chainId extends config['chains'][number]['id'] | undefined = undefined,
 >(
   config: config,
   parameters: SimulateContractParameters<
-    config,
-    chainId,
     abi,
     functionName,
-    args
+    args,
+    config,
+    chainId
   >,
 ): Promise<
-  SimulateContractReturnType<config, chainId, abi, functionName, args>
+  SimulateContractReturnType<abi, functionName, args, config, chainId>
 > {
   const { abi, chainId, connector, ...rest } =
     parameters as SimulateContractParameters
@@ -154,10 +154,10 @@ export async function simulateContract<
       chainId,
     },
   } as unknown as SimulateContractReturnType<
-    config,
-    chainId,
     abi,
     functionName,
-    args
+    args,
+    config,
+    chainId
   >
 }

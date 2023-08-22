@@ -4,7 +4,7 @@ import { expectTypeOf, test } from 'vitest'
 import { type UseContractSimulateParameters, useContractSimulate } from 'wagmi'
 import { celo, mainnet, optimism } from 'wagmi/chains'
 
-import type { ChainId } from './config.js'
+import { type ChainId, config } from './config.js'
 
 test('chain formatters', () => {
   useContractSimulate({
@@ -38,7 +38,12 @@ test('chain formatters', () => {
 })
 
 test('UseContractSimulateParameters', () => {
-  type Result = UseContractSimulateParameters<typeof abi.erc20, 'transferFrom'>
+  type Result = UseContractSimulateParameters<
+    typeof abi.erc20,
+    'transferFrom',
+    [Address, Address, bigint],
+    typeof config
+  >
 
   expectTypeOf<Result>().toMatchTypeOf<{
     functionName?: 'approve' | 'transfer' | 'transferFrom' | undefined
@@ -50,6 +55,7 @@ test('UseContractSimulateParameters', () => {
     typeof abi.erc20,
     'transferFrom',
     [Address, Address, bigint],
+    typeof config,
     typeof celo.id
   >
   expectTypeOf<Result2['chainId']>().toEqualTypeOf<ChainId | undefined>()

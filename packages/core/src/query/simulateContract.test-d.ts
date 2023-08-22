@@ -16,11 +16,11 @@ test('chain formatters', () => {
   })
 
   type Result = SimulateContractOptions<
-    typeof config,
-    typeof config['chains'][number]['id'],
     typeof abi.erc20,
     'transferFrom',
-    [Address, Address, bigint]
+    [Address, Address, bigint],
+    typeof config,
+    typeof config['chains'][number]['id']
   >
   expectTypeOf<Result>().toMatchTypeOf<{
     chainId?: typeof celo.id | typeof mainnet.id | undefined
@@ -39,11 +39,11 @@ test('chain formatters', () => {
   })
 
   type Result2 = SimulateContractOptions<
-    typeof config,
-    typeof celo.id,
     typeof abi.erc20,
     'transferFrom',
-    [Address, Address, bigint]
+    [Address, Address, bigint],
+    typeof config,
+    typeof celo.id
   >
   expectTypeOf<Result2>().toMatchTypeOf<{
     functionName?: 'approve' | 'transfer' | 'transferFrom' | undefined
@@ -64,11 +64,11 @@ test('chain formatters', () => {
   })
 
   type Result3 = SimulateContractOptions<
-    typeof config,
-    typeof mainnet.id,
     typeof abi.erc20,
     'transferFrom',
-    [Address, Address, bigint]
+    [Address, Address, bigint],
+    typeof config,
+    typeof mainnet.id
   >
   expectTypeOf<Result3>().toMatchTypeOf<{
     functionName?: 'approve' | 'transfer' | 'transferFrom' | undefined

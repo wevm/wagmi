@@ -15,21 +15,21 @@ export const mainnetTestClient = createTestClient({
   cacheTime: 0,
   chain: mainnet,
   transport: http(),
-}).extend(decorator)
+}).extend(wagmiTestMethods)
 
 export const mainnet2TestClient = createTestClient({
   mode: 'anvil',
   cacheTime: 0,
   chain: mainnet2,
   transport: http(),
-}).extend(decorator)
+}).extend(wagmiTestMethods)
 
 export const optimismTestClient = createTestClient({
   mode: 'anvil',
   cacheTime: 0,
   chain: optimism,
   transport: http(),
-}).extend(decorator)
+}).extend(wagmiTestMethods)
 
 export const testClient = {
   mainnet: mainnetTestClient,
@@ -37,7 +37,7 @@ export const testClient = {
   optimism: optimismTestClient,
 }
 
-function decorator(
+function wagmiTestMethods(
   client: Client<
     Transport,
     Chain,
@@ -47,6 +47,7 @@ function decorator(
   >,
 ) {
   return {
+    /** Resets fork attached to chain at starting block number. */
     resetFork() {
       return client.reset({
         jsonRpcUrl: client.chain.fork.url,

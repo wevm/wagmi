@@ -13,8 +13,6 @@ import type { ScopeKeyParameter } from './types.js'
 import { filterQueryOptions } from './utils.js'
 
 export type SimulateContractOptions<
-  config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
   abi extends Abi | readonly unknown[],
   functionName extends ContractFunctionName<abi, 'nonpayable' | 'payable'>,
   args extends ContractFunctionArgs<
@@ -22,13 +20,14 @@ export type SimulateContractOptions<
     'nonpayable' | 'payable',
     functionName
   >,
+  config extends Config,
+  chainId extends config['chains'][number]['id'] | undefined,
 > = UnionPartial<
-  SimulateContractParameters<config, chainId, abi, functionName, args>
+  SimulateContractParameters<abi, functionName, args, config, chainId>
 > &
   ScopeKeyParameter
 
 export function simulateContractQueryOptions<
-  config extends Config,
   const abi extends Abi | readonly unknown[],
   functionName extends ContractFunctionName<abi, 'nonpayable' | 'payable'>,
   args extends ContractFunctionArgs<
@@ -36,15 +35,16 @@ export function simulateContractQueryOptions<
     'nonpayable' | 'payable',
     functionName
   >,
+  config extends Config,
   chainId extends config['chains'][number]['id'] | undefined,
 >(
   config: config,
   options: SimulateContractOptions<
-    config,
-    chainId,
     abi,
     functionName,
-    args
+    args,
+    config,
+    chainId
   > = {} as any,
 ) {
   return {
@@ -60,20 +60,18 @@ export function simulateContractQueryOptions<
         connector,
         functionName,
         ...parameters,
-      } as SimulateContractParameters<config, chainId, abi, functionName, args>)
+      } as SimulateContractParameters<abi, functionName, args, config, chainId>)
     },
     queryKey: simulateContractQueryKey(options),
   } as const satisfies QueryOptions<
-    SimulateContractQueryFnData<config, chainId, abi, functionName, args>,
+    SimulateContractQueryFnData<abi, functionName, args, config, chainId>,
     SimulateContractError,
-    SimulateContractData<config, chainId, abi, functionName, args>,
-    SimulateContractQueryKey<config, chainId, abi, functionName, args>
+    SimulateContractData<abi, functionName, args, config, chainId>,
+    SimulateContractQueryKey<abi, functionName, args, config, chainId>
   >
 }
 
 export type SimulateContractQueryFnData<
-  config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
   abi extends Abi | readonly unknown[],
   functionName extends ContractFunctionName<abi, 'nonpayable' | 'payable'>,
   args extends ContractFunctionArgs<
@@ -81,11 +79,11 @@ export type SimulateContractQueryFnData<
     'nonpayable' | 'payable',
     functionName
   >,
-> = SimulateContractReturnType<config, chainId, abi, functionName, args>
+  config extends Config,
+  chainId extends config['chains'][number]['id'] | undefined,
+> = SimulateContractReturnType<abi, functionName, args, config, chainId>
 
 export type SimulateContractData<
-  config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
   abi extends Abi | readonly unknown[],
   functionName extends ContractFunctionName<abi, 'nonpayable' | 'payable'>,
   args extends ContractFunctionArgs<
@@ -93,19 +91,11 @@ export type SimulateContractData<
     'nonpayable' | 'payable',
     functionName
   >,
-> = SimulateContractQueryFnData<
-  config,
-  number extends config['chains'][number]['id']
-    ? config['chains'][number]['id']
-    : chainId,
-  abi,
-  functionName,
-  args
->
+  config extends Config,
+  chainId extends config['chains'][number]['id'] | undefined,
+> = SimulateContractQueryFnData<abi, functionName, args, config, chainId>
 
 export function simulateContractQueryKey<
-  config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
   abi extends Abi | readonly unknown[],
   functionName extends ContractFunctionName<abi, 'nonpayable' | 'payable'>,
   args extends ContractFunctionArgs<
@@ -113,13 +103,15 @@ export function simulateContractQueryKey<
     'nonpayable' | 'payable',
     functionName
   >,
+  config extends Config,
+  chainId extends config['chains'][number]['id'] | undefined,
 >(
   options: SimulateContractOptions<
-    config,
-    chainId,
     abi,
     functionName,
-    args
+    args,
+    config,
+    chainId
   > = {} as any,
 ) {
   const { abi: _, connector: _c, ...rest } = options
@@ -127,8 +119,6 @@ export function simulateContractQueryKey<
 }
 
 export type SimulateContractQueryKey<
-  config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
   abi extends Abi | readonly unknown[],
   functionName extends ContractFunctionName<abi, 'nonpayable' | 'payable'>,
   args extends ContractFunctionArgs<
@@ -136,6 +126,8 @@ export type SimulateContractQueryKey<
     'nonpayable' | 'payable',
     functionName
   >,
+  config extends Config,
+  chainId extends config['chains'][number]['id'] | undefined,
 > = ReturnType<
-  typeof simulateContractQueryKey<config, chainId, abi, functionName, args>
+  typeof simulateContractQueryKey<abi, functionName, args, config, chainId>
 >

@@ -94,10 +94,11 @@ export async function writeContract<
     const { request: simulateRequest } = await simulateContract(
       config,
       rest as unknown as SimulateContractParameters<
-        config,
-        chainId,
         abi,
-        functionName
+        functionName,
+        args,
+        config,
+        chainId
       >,
     )
     request = simulateRequest

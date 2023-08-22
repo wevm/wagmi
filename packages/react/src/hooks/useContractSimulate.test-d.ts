@@ -1,4 +1,4 @@
-import { abi } from '@wagmi/test'
+import { abi, config } from '@wagmi/test'
 import type { Address } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
@@ -21,7 +21,7 @@ test('default', () => {
         result: boolean
         request: {
           __mode: 'prepared'
-          chainId: number
+          chainId?: undefined
           abi: readonly [
             {
               readonly name: 'transferFrom'
@@ -73,6 +73,7 @@ test('UseContractSimulateReturnType', () => {
     typeof abi.erc20,
     'transferFrom',
     ['0x', '0x', 123n],
+    typeof config,
     1
   >
   expectTypeOf<Result['data']>().toMatchTypeOf<

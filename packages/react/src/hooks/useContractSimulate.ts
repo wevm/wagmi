@@ -1,4 +1,8 @@
-import type { ResolvedRegister, SimulateContractError } from '@wagmi/core'
+import type {
+  Config,
+  ResolvedRegister,
+  SimulateContractError,
+} from '@wagmi/core'
 import {
   type SimulateContractData,
   type SimulateContractOptions,
@@ -8,6 +12,7 @@ import {
 } from '@wagmi/core/query'
 import type { Abi, ContractFunctionArgs, ContractFunctionName } from 'viem'
 
+import type { ConfigParameter } from '../types/properties.js'
 import {
   type UseQueryParameters,
   type UseQueryResult,
@@ -16,8 +21,6 @@ import {
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 import { useConnectorClient } from './useConnectorClient.js'
-
-type ChainId = ResolvedRegister['config']['chains'][number]['id']
 
 export type UseContractSimulateParameters<
   abi extends Abi | readonly unknown[] = Abi,
@@ -30,39 +33,17 @@ export type UseContractSimulateParameters<
     'nonpayable' | 'payable',
     functionName
   > = ContractFunctionArgs<abi, 'nonpayable' | 'payable', functionName>,
-  chainId extends ChainId | undefined = undefined,
-  selectData = SimulateContractData<
-    ResolvedRegister['config'],
-    chainId,
-    abi,
-    functionName,
-    args
-  >,
-> = SimulateContractOptions<
-  ResolvedRegister['config'],
-  chainId,
-  abi,
-  functionName,
-  args
-> &
+  config extends Config = Config,
+  chainId extends config['chains'][number]['id'] | undefined = undefined,
+  selectData = SimulateContractData<abi, functionName, args, config, chainId>,
+> = SimulateContractOptions<abi, functionName, args, config, chainId> &
   UseQueryParameters<
-    SimulateContractQueryFnData<
-      ResolvedRegister['config'],
-      chainId,
-      abi,
-      functionName,
-      args
-    >,
+    SimulateContractQueryFnData<abi, functionName, args, config, chainId>,
     SimulateContractError,
     selectData,
-    SimulateContractQueryKey<
-      ResolvedRegister['config'],
-      chainId,
-      abi,
-      functionName,
-      args
-    >
-  >
+    SimulateContractQueryKey<abi, functionName, args, config, chainId>
+  > &
+  ConfigParameter<config>
 
 export type UseContractSimulateReturnType<
   abi extends Abi | readonly unknown[] = Abi,
@@ -75,14 +56,9 @@ export type UseContractSimulateReturnType<
     'nonpayable' | 'payable',
     functionName
   > = ContractFunctionArgs<abi, 'nonpayable' | 'payable', functionName>,
-  chainId extends ChainId | undefined = undefined,
-  selectData = SimulateContractData<
-    ResolvedRegister['config'],
-    chainId,
-    abi,
-    functionName,
-    args
-  >,
+  config extends Config = Config,
+  chainId extends config['chains'][number]['id'] | undefined = undefined,
+  selectData = SimulateContractData<abi, functionName, args, config, chainId>,
 > = UseQueryResult<selectData, SimulateContractError>
 
 /** https://wagmi.sh/react/hooks/useContractSimulate */
@@ -94,31 +70,35 @@ export function useContractSimulate<
     'nonpayable' | 'payable',
     functionName
   >,
-  chainId extends ChainId | undefined = undefined,
-  selectData = SimulateContractData<
-    ResolvedRegister['config'],
-    chainId,
-    abi,
-    functionName,
-    args
-  >,
+  config extends Config = ResolvedRegister['config'],
+  chainId extends config['chains'][number]['id'] | undefined = undefined,
+  selectData = SimulateContractData<abi, functionName, args, config, chainId>,
 >(
   parameters: UseContractSimulateParameters<
     abi,
     functionName,
     args,
+    config,
     chainId,
     selectData
   > = {} as UseContractSimulateParameters<
     abi,
     functionName,
     args,
+    config,
     chainId,
     selectData
   >,
-): UseContractSimulateReturnType<abi, functionName, args, chainId, selectData> {
+): UseContractSimulateReturnType<
+  abi,
+  functionName,
+  args,
+  config,
+  chainId,
+  selectData
+> {
   const { abi, address, connector, functionName, ...query } = parameters
-  const config = useConfig()
+  const config = useConfig(parameters)
   const { data: connectorClient } = useConnectorClient({
     connector,
     enabled: parameters.account === undefined,
@@ -143,6 +123,7 @@ export function useContractSimulate<
     abi,
     functionName,
     args,
+    config,
     chainId,
     selectData
   >
