@@ -18,7 +18,7 @@ import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
 export type UseEnsNameParameters<
-  config extends Config = ResolvedRegister['config'],
+  config extends Config = Config,
   selectData = GetEnsNameData,
 > = Evaluate<
   GetEnsNameOptions<config> &
@@ -37,7 +37,10 @@ export type UseEnsNameReturnType<selectData = GetEnsNameData> = UseQueryResult<
 >
 
 /** https://wagmi.sh/react/hooks/useEnsName */
-export function useEnsName<config extends Config, selectData = GetEnsNameData>(
+export function useEnsName<
+  config extends Config = ResolvedRegister['config'],
+  selectData = GetEnsNameData,
+>(
   parameters: UseEnsNameParameters<config, selectData> = {},
 ): UseEnsNameReturnType<selectData> {
   const { address, ...query } = parameters

@@ -1,4 +1,3 @@
-import { useSyncExternalStoreWithTracked } from './useSyncExternalStoreWithTracked.js'
 import {
   type GetAccountReturnType,
   getAccount,
@@ -7,6 +6,7 @@ import {
 
 import type { ConfigParameter } from '../types/properties.js'
 import { useConfig } from './useConfig.js'
+import { useSyncExternalStoreWithTracked } from './useSyncExternalStoreWithTracked.js'
 
 export type UseAccountParameters = ConfigParameter
 

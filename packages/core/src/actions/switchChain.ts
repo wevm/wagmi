@@ -23,9 +23,10 @@ export type SwitchChainParameters<
 export type SwitchChainReturnType<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
-> = chainId extends config['chains'][number]['id']
-  ? Extract<config['chains'][number], { id: chainId }>
-  : config['chains'][number]
+> = Extract<
+  config['chains'][number],
+  { id: Config extends config ? number : chainId }
+>
 
 export type SwitchChainError =
   | ProviderNotFoundError

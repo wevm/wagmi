@@ -7,7 +7,7 @@ settings:
 overrides:
   '@wagmi/connectors': workspace:*
   '@wagmi/core': workspace:*
-  viem: 0.0.0-w-20230821171049
+  viem: 0.0.0-w-20230822145918
 
 patchedDependencies:
   vitepress@1.0.0-rc.4:
@@ -76,8 +76,8 @@ importers:
         specifier: 5.0.4
         version: 5.0.4
       viem:
-        specifier: 0.0.0-w-20230821171049
-        version: 0.0.0-w-20230821171049(typescript@5.0.4)
+        specifier: 0.0.0-w-20230822145918
+        version: 0.0.0-w-20230822145918(typescript@5.0.4)
       vite:
         specifier: ^4.3.9
         version: 4.3.9(@types/node@18.16.9)
@@ -118,8 +118,8 @@ importers:
         specifier: ^0.53.0
         version: 0.53.0(vite@4.3.9)
       viem:
-        specifier: 0.0.0-w-20230821171049
-        version: 0.0.0-w-20230821171049(typescript@5.0.4)
+        specifier: 0.0.0-w-20230822145918
+        version: 0.0.0-w-20230822145918(typescript@5.0.4)
       vitepress:
         specifier: 1.0.0-rc.4
         version: 1.0.0-rc.4(patch_hash=vad7hzjchjqjjrqqk6z7shlpke)(@types/node@18.16.9)(@types/react@18.2.0)(react@18.2.0)
@@ -217,8 +217,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0
       viem:
-        specifier: 0.0.0-w-20230821171049
-        version: 0.0.0-w-20230821171049(typescript@5.0.4)
+        specifier: 0.0.0-w-20230822145918
+        version: 0.0.0-w-20230822145918(typescript@5.0.4)
       wagmi:
         specifier: workspace:*
         version: link:../../react
@@ -269,8 +269,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       viem:
-        specifier: 0.0.0-w-20230821171049
-        version: 0.0.0-w-20230821171049(typescript@5.0.4)
+        specifier: 0.0.0-w-20230822145918
+        version: 0.0.0-w-20230822145918(typescript@5.0.4)
     devDependencies:
       '@esbuild-plugins/node-globals-polyfill':
         specifier: ^0.2.3
@@ -306,8 +306,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       viem:
-        specifier: 0.0.0-w-20230821171049
-        version: 0.0.0-w-20230821171049(typescript@5.0.4)
+        specifier: 0.0.0-w-20230822145918
+        version: 0.0.0-w-20230822145918(typescript@5.0.4)
       wagmi:
         specifier: workspace:*
         version: link:../../packages/react
@@ -1833,7 +1833,7 @@ packages:
     resolution: {integrity: sha512-XJbEPuaVc7b9n23MqlF6c+ToYIS3f7P2Sel8f3cSBQ9WORE4xrSuvhMpK9fDSFqJ7by/brc+rmJR/5HViRr0/w==}
     dependencies:
       '@safe-global/safe-gateway-typescript-sdk': 3.8.0
-      viem: 0.0.0-w-20230821171049(typescript@5.0.4)
+      viem: 0.0.0-w-20230822145918(typescript@5.0.4)
     transitivePeerDependencies:
       - bufferutil
       - encoding
@@ -7331,8 +7331,8 @@ packages:
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
 
-  /viem@0.0.0-w-20230821171049(typescript@5.0.4):
-    resolution: {integrity: sha512-C8JfYEVvZS+uZTrPM/qgkPh59UkERKelmqXxRW0T8CYUNyKZ4F9TCZk0LDbpktG7kJBJB0vuSY8uC9e1mBldMA==}
+  /viem@0.0.0-w-20230822145918(typescript@5.0.4):
+    resolution: {integrity: sha512-g9JR2y1+WxRHsKF8iGT5pGDyrrMAT5SDXbgJKSOoPe9zOOS99w+H28p2clo4byNbCcIU+QKTHjPYXeel8bJopA==}
     peerDependencies:
       typescript: '>=5.0.4'
     peerDependenciesMeta:

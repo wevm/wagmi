@@ -27,26 +27,12 @@ export function switchChainMutationOptions<config extends Config>(
 export type SwitchChainData<
   config extends Config,
   chainId extends config['chains'][number]['id'],
-> = Evaluate<
-  SwitchChainReturnType<
-    config,
-    number extends config['chains'][number]['id']
-      ? config['chains'][number]['id']
-      : chainId
-  >
->
+> = Evaluate<SwitchChainReturnType<config, chainId>>
 
 export type SwitchChainVariables<
   config extends Config,
   chainId extends config['chains'][number]['id'],
-> = Evaluate<
-  SwitchChainParameters<
-    config,
-    chainId extends config['chains'][number]['id']
-      ? chainId
-      : config['chains'][number]['id']
-  >
->
+> = Evaluate<SwitchChainParameters<config, chainId>>
 
 export type SwitchChainMutate<config extends Config, context = unknown> = <
   chainId extends config['chains'][number]['id'],

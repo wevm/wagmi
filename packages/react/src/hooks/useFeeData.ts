@@ -22,7 +22,7 @@ import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
 export type UseFeeDataParameters<
-  config extends Config = ResolvedRegister['config'],
+  config extends Config = Config,
   selectData = GetFeeDataData,
 > = Evaluate<
   GetFeeDataOptions<config> &
@@ -41,7 +41,10 @@ export type UseFeeDataReturnType<selectData = GetFeeDataData> = UseQueryResult<
 >
 
 /** https://wagmi.sh/react/hooks/useFeeData */
-export function useFeeData<config extends Config, selectData = GetFeeDataData>(
+export function useFeeData<
+  config extends Config = ResolvedRegister['config'],
+  selectData = GetFeeDataData,
+>(
   parameters: UseFeeDataParameters<config, selectData> = {},
 ): UseFeeDataReturnType<selectData> {
   const config = useConfig(parameters)

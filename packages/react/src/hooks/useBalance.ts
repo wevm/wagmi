@@ -22,7 +22,7 @@ import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
 export type UseBalanceParameters<
-  config extends Config = ResolvedRegister['config'],
+  config extends Config = Config,
   selectData = GetBalanceData,
 > = Evaluate<
   GetBalanceOptions<config> &
@@ -41,7 +41,10 @@ export type UseBalanceReturnType<selectData = GetBalanceData> = UseQueryResult<
 >
 
 /** https://wagmi.sh/react/hooks/useBalance */
-export function useBalance<config extends Config, selectData = GetBalanceData>(
+export function useBalance<
+  config extends Config = ResolvedRegister['config'],
+  selectData = GetBalanceData,
+>(
   parameters: UseBalanceParameters<config, selectData> = {},
 ): UseBalanceReturnType<selectData> {
   const { address, ...query } = parameters

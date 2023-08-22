@@ -14,7 +14,7 @@ import type { UseMutationOptions, UseMutationResult } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 
 export type UseSwitchChainParameters<
-  config extends Config = ResolvedRegister['config'],
+  config extends Config = Config,
   context = unknown,
 > = Evaluate<
   UseMutationOptions<
@@ -27,7 +27,7 @@ export type UseSwitchChainParameters<
 >
 
 export type UseSwitchChainReturnType<
-  config extends Config = ResolvedRegister['config'],
+  config extends Config = Config,
   context = unknown,
 > = Evaluate<
   UseMutationResult<
@@ -43,7 +43,10 @@ export type UseSwitchChainReturnType<
 >
 
 /** https://wagmi.sh/react/hooks/useSwitchChain */
-export function useSwitchChain<config extends Config, context = unknown>(
+export function useSwitchChain<
+  config extends Config = ResolvedRegister['config'],
+  context = unknown,
+>(
   parameters: UseSwitchChainParameters<config, context> = {},
 ): UseSwitchChainReturnType<config, context> {
   const config = useConfig(parameters)

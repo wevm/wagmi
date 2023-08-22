@@ -18,7 +18,7 @@ import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
 export type UseTokenParameters<
-  config extends Config = ResolvedRegister['config'],
+  config extends Config = Config,
   selectData = GetTokenData,
 > = Evaluate<
   GetTokenOptions<config> &
@@ -37,7 +37,10 @@ export type UseTokenReturnType<selectData = GetTokenData> = UseQueryResult<
 >
 
 /** https://wagmi.sh/react/hooks/useToken */
-export function useToken<config extends Config, selectData = GetTokenData>(
+export function useToken<
+  config extends Config = ResolvedRegister['config'],
+  selectData = GetTokenData,
+>(
   parameters: UseTokenParameters<config, selectData> = {},
 ): UseTokenReturnType<selectData> {
   const { address, ...query } = parameters

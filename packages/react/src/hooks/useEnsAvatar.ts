@@ -18,7 +18,7 @@ import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
 export type UseEnsAvatarParameters<
-  config extends Config = ResolvedRegister['config'],
+  config extends Config = Config,
   selectData = GetEnsAvatarData,
 > = Evaluate<
   GetEnsAvatarOptions<config> &
@@ -36,7 +36,7 @@ export type UseEnsAvatarReturnType<selectData = GetEnsAvatarData> =
 
 /** https://wagmi.sh/react/hooks/useEnsAvatar */
 export function useEnsAvatar<
-  config extends Config,
+  config extends Config = ResolvedRegister['config'],
   selectData = GetEnsAvatarData,
 >(
   parameters: UseEnsAvatarParameters<config, selectData> = {},

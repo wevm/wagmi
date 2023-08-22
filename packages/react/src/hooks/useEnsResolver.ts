@@ -18,7 +18,7 @@ import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
 export type UseEnsResolverParameters<
-  config extends Config = ResolvedRegister['config'],
+  config extends Config = Config,
   selectData = GetEnsResolverData,
 > = Evaluate<
   GetEnsResolverOptions<config> &
@@ -36,7 +36,7 @@ export type UseEnsResolverReturnType<selectData = GetEnsResolverData> =
 
 /** https://wagmi.sh/react/hooks/useEnsResolver */
 export function useEnsResolver<
-  config extends Config,
+  config extends Config = ResolvedRegister['config'],
   selectData = GetEnsResolverData,
 >(
   parameters: UseEnsResolverParameters<config, selectData> = {},

@@ -18,7 +18,7 @@ import type { UseMutationOptions, UseMutationResult } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 
 export type UseConnectParameters<
-  config extends Config = ResolvedRegister['config'],
+  config extends Config = Config,
   context = unknown,
 > = Evaluate<
   UseMutationOptions<
@@ -31,7 +31,7 @@ export type UseConnectParameters<
 >
 
 export type UseConnectReturnType<
-  config extends Config = ResolvedRegister['config'],
+  config extends Config = Config,
   context = unknown,
 > = Evaluate<
   UseMutationResult<
@@ -47,7 +47,10 @@ export type UseConnectReturnType<
 >
 
 /** https://wagmi.sh/react/hooks/useConnect */
-export function useConnect<config extends Config, context = unknown>(
+export function useConnect<
+  config extends Config = ResolvedRegister['config'],
+  context = unknown,
+>(
   parameters: UseConnectParameters<config, context> = {},
 ): UseConnectReturnType<config, context> {
   const config = useConfig(parameters)

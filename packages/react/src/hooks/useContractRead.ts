@@ -38,7 +38,7 @@ export type UseContractReadParameters<
     'pure' | 'view',
     functionName
   > = ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
-  config extends Config = ResolvedRegister['config'],
+  config extends Config = Config,
   selectData = ReadContractData<abi, functionName, args>,
 > = UnionEvaluate<
   ReadContractOptions<config, abi, functionName, args> &
@@ -67,10 +67,10 @@ export type UseContractReadReturnType<
 
 /** https://wagmi.sh/react/hooks/useContractRead */
 export function useContractRead<
-  config extends Config,
   const abi extends Abi | readonly unknown[],
   functionName extends ContractFunctionName<abi, 'pure' | 'view'>,
   args extends ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
+  config extends Config = ResolvedRegister['config'],
   selectData = ReadContractData<abi, functionName, args>,
 >(
   parameters: UseContractReadParameters<

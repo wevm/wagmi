@@ -18,7 +18,7 @@ import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
 export type UseEnsAddressParameters<
-  config extends Config = ResolvedRegister['config'],
+  config extends Config = Config,
   selectData = GetEnsAddressData,
 > = Evaluate<
   GetEnsAddressOptions<config> &
@@ -36,7 +36,7 @@ export type UseEnsAddressReturnType<selectData = GetEnsAddressData> =
 
 /** https://wagmi.sh/react/hooks/useEnsAddress */
 export function useEnsAddress<
-  config extends Config,
+  config extends Config = ResolvedRegister['config'],
   selectData = GetEnsAddressData,
 >(
   parameters: UseEnsAddressParameters<config, selectData> = {},

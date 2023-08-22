@@ -27,7 +27,7 @@ import { useConfig } from './useConfig.js'
 export type UseContractReadsParameters<
   contracts extends readonly unknown[] = readonly ContractFunctionParameters[],
   allowFailure extends boolean = true,
-  config extends Config = ResolvedRegister['config'],
+  config extends Config = Config,
   selectData = ReadContractsData<contracts, allowFailure>,
 > = Evaluate<
   ReadContractsOptions<config, contracts, allowFailure> &
@@ -48,9 +48,9 @@ export type UseContractReadsReturnType<
 
 /** https://wagmi.sh/react/hooks/useContractReads */
 export function useContractReads<
-  config extends Config,
   const contracts extends readonly unknown[],
   allowFailure extends boolean = true,
+  config extends Config = ResolvedRegister['config'],
   selectData = ReadContractsData<contracts, allowFailure>,
 >(
   parameters: UseContractReadsParameters<

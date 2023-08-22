@@ -20,7 +20,7 @@ import { useConfig } from './useConfig.js'
 import { useConnections } from './useConnections.js'
 
 export type UseSwitchAccountParameters<
-  config extends Config = ResolvedRegister['config'],
+  config extends Config = Config,
   context = unknown,
 > = Evaluate<
   UseMutationOptions<
@@ -33,7 +33,7 @@ export type UseSwitchAccountParameters<
 >
 
 export type UseSwitchAccountReturnType<
-  config extends Config = ResolvedRegister['config'],
+  config extends Config = Config,
   context = unknown,
 > = Evaluate<
   UseMutationResult<
@@ -49,7 +49,10 @@ export type UseSwitchAccountReturnType<
 >
 
 /** https://wagmi.sh/react/hooks/useSwitchAccount */
-export function useSwitchAccount<config extends Config, context = unknown>(
+export function useSwitchAccount<
+  config extends Config = ResolvedRegister['config'],
+  context = unknown,
+>(
   parameters: UseSwitchAccountParameters<config, context> = {},
 ): UseSwitchAccountReturnType<config, context> {
   const config = useConfig(parameters)

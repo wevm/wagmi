@@ -25,7 +25,7 @@ import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
 export type UseBlockNumberParameters<
-  config extends Config = ResolvedRegister['config'],
+  config extends Config = Config,
   selectData = GetBlockNumberData,
 > = Evaluate<
   GetBlockNumberOptions<config> &
@@ -43,7 +43,7 @@ export type UseBlockNumberReturnType<selectData = GetBlockNumberData> =
 
 /** https://wagmi.sh/react/hooks/useBlockNumber */
 export function useBlockNumber<
-  config extends Config,
+  config extends Config = ResolvedRegister['config'],
   selectData = GetBlockNumberData,
 >(
   parameters: UseBlockNumberParameters<config, selectData> = {},

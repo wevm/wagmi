@@ -1,20 +1,24 @@
 import { abi } from '@wagmi/test'
 import type { Address } from 'viem'
 import { expectTypeOf, test } from 'vitest'
-import { type UseContractReadsParameters } from 'wagmi'
+import { useContractReads } from 'wagmi'
 
 import type { ChainId } from './config.js'
 
 test('UseContractReadsParameters', () => {
-  type Result = UseContractReadsParameters<
-    [
-      {
-        abi: typeof abi.erc20
-        functionName: 'balanceOf'
-        address: Address
-        args: readonly [Address]
-      },
-    ]
+  type Result = NonNullable<
+    Parameters<
+      typeof useContractReads<
+        [
+          {
+            abi: typeof abi.erc20
+            functionName: 'balanceOf'
+            address: Address
+            args: readonly [Address]
+          },
+        ]
+      >
+    >[0]
   >['contracts']
   expectTypeOf<Result>().toMatchTypeOf<
     | readonly [
