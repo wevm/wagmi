@@ -55,6 +55,26 @@ function App() {
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
+### config
+
+`Config | undefined`
+
+[`Config`](/react/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/WagmiProvider).
+
+::: code-group
+```tsx [index.tsx]
+import { useFeeData } from 'wagmi'
+import { config } from './config' // [!code focus]
+
+function App() {
+  const result = useFeeData({
+    config, // [!code focus]
+  })
+}
+```
+<<< @/snippets/react/config.ts[config.ts]
+:::
+
 ### formatUnits
 
 `'ether' | 'gwei' | 'wei' | number | undefined`

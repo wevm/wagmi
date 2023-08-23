@@ -121,6 +121,28 @@ function App() {
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
+### config
+
+`Config | undefined`
+
+[`Config`](/react/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/WagmiProvider).
+
+::: code-group
+```tsx [index.tsx]
+import { useEnsName } from 'wagmi'
+import { normalize } from 'viem/ens'
+import { config } from './config' // [!code focus]
+
+function App() {
+  const result = useEnsName({
+    address: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
+    config, // [!code focus]
+  })
+}
+```
+<<< @/snippets/react/config.ts[config.ts]
+:::
+
 ### universalResolverAddress
 
 `Name | undefined`

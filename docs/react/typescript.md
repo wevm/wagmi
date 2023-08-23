@@ -28,9 +28,16 @@ To ensure everything works correctly, make sure your `tsconfig.json` has [`stric
 ```
 :::
 
-## Register Config
+## Config Types
 
-By default React Context does not work well with type inference. To support strong type-safety across React Context, Wagmi uses [declaration merging](https://www.typescriptlang.org/docs/handbook/declaration-merging.html) to "register" your `config`. This global `Register` type enables Wagmi to infer types in places that wouldn't normally have access to type info via React Context alone. 
+By default React Context does not work well with type inference. To support strong type-safety across the React Context boundary, there are two options available:
+
+- Declaration merging to "register" your `config` globally with TypeScript.
+- `config` property to pass your `config` directly to hooks.
+
+### Declaration Merging
+
+[Declaration merging](https://www.typescriptlang.org/docs/handbook/declaration-merging.html) allows you to "register" your `config` globally with TypeScript. The `Register` type enables Wagmi to infer types in places that wouldn't normally have access to type info via React Context alone. 
 
 To set this up, add the following declaration to your project. Below, we co-locate the declaration merging and the `config` set up.
 
@@ -72,6 +79,47 @@ useBlockNumber({ chainId: 123 })
 ```
 
 You just saved yourself a runtime error and you didn't even need to pass your `config`. 🎉
+
+### `config` Property
+
+For cases where you have more than one Wagmi `config` or don't want to use the declaration merging approach, you can pass a specific `config` directly to hooks via the `config` property.
+
+```ts
+import { createConfig, http } from 'wagmi'
+import { mainnet, optimism } from 'wagmi/chains'
+
+export const configA = createConfig({ // [!code focus]
+  chains: [mainnet], // [!code focus]
+  transports: { // [!code focus]
+    [mainnet.id]: http(), // [!code focus]
+  }, // [!code focus]
+}) // [!code focus]
+
+export const configB = createConfig({ // [!code focus]
+  chains: [optimism], // [!code focus]
+  transports: { // [!code focus]
+    [optimism.id]: http(), // [!code focus]
+  }, // [!code focus]
+}) // [!code focus]
+```
+
+As you expect, `chainId` is inferred correctly for each `config`.
+
+```ts twoslash
+// @errors: 2322
+import { type Config } from 'wagmi'
+import { mainnet, optimism } from 'wagmi/chains'
+
+declare const configA: Config<readonly [typeof mainnet]>
+declare const configB: Config<readonly [typeof optimism]>
+// ---cut---
+import { useBlockNumber } from 'wagmi'
+
+useBlockNumber({ chainId: 123, config: configA })
+useBlockNumber({ chainId: 123, config: configB })
+```
+
+This approach is more explicit, but works well for advanced use-cases, if you don't want to use React Context or declaration merging, etc.
 
 ## Const-Assert ABIs & Typed Data
 

@@ -43,6 +43,26 @@ function App() {
 import { type UseDisconnectParameters } from 'wagmi'
 ```
 
+### config
+
+`Config | undefined`
+
+[`Config`](/react/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/WagmiProvider).
+
+::: code-group
+```tsx [index.tsx]
+import { useDisconnect } from 'wagmi'
+import { config } from './config' // [!code focus]
+
+function App() {
+  const result = useDisconnect({
+    config, // [!code focus]
+  })
+}
+```
+<<< @/snippets/react/config.ts[config.ts]
+:::
+
 <!--@include: @shared/mutation-options.md-->
 
 ## Return Type

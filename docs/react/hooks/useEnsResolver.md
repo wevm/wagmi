@@ -102,8 +102,30 @@ import { normalize } from 'viem/ens'
 
 function App() {
   const result = useEnsResolver({
-    name: normalize('wagmi-dev.eth'),
     chainId: mainnet.id, // [!code focus]
+    name: normalize('wagmi-dev.eth'),
+  })
+}
+```
+<<< @/snippets/react/config.ts[config.ts]
+:::
+
+### config
+
+`Config | undefined`
+
+[`Config`](/react/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/WagmiProvider).
+
+::: code-group
+```tsx [index.tsx]
+import { useEnsResolver } from 'wagmi'
+import { normalize } from 'viem/ens'
+import { config } from './config' // [!code focus]
+
+function App() {
+  const result = useEnsResolver({
+    config, // [!code focus]
+    name: normalize('wagmi-dev.eth'),
   })
 }
 ```
