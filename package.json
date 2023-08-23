@@ -15,7 +15,7 @@
     "postinstall": "pnpm preconstruct",
     "preconstruct": "bun scripts/preconstruct.ts",
     "preinstall": "npx only-allow@1.1.1 pnpm",
-    "prepare": "npx simple-git-hooks",
+    "prepare": "pnpm simple-git-hooks",
     "prepublishOnly": "bun scripts/formatPackageJson.ts",
     "test": "vitest",
     "test:build": "pnpm run --r --parallel test:build",

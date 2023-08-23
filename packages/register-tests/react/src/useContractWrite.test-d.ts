@@ -21,10 +21,10 @@ test('chain formatters', () => {
 
   type Result = Parameters<
     typeof write<
-      typeof celo.id,
       typeof abi.erc20,
       'transferFrom',
-      [Address, Address, bigint]
+      [Address, Address, bigint],
+      typeof celo.id
     >
   >[0]
   expectTypeOf<Result['feeCurrency']>().toEqualTypeOf<

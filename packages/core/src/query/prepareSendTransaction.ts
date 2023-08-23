@@ -13,7 +13,7 @@ import { filterQueryOptions } from './utils.js'
 
 export type PrepareSendTransactionOptions<
   config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
+  chainId extends config['chains'][number]['id'],
 > = UnionPartialBy<
   PrepareSendTransactionParameters<config, chainId>,
   keyof PrepareSendTransactionParameters
@@ -22,7 +22,7 @@ export type PrepareSendTransactionOptions<
 
 export function prepareSendTransactionQueryOptions<
   config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
+  chainId extends config['chains'][number]['id'],
 >(
   config: config,
   options: PrepareSendTransactionOptions<
@@ -51,17 +51,17 @@ export function prepareSendTransactionQueryOptions<
 
 export type PrepareSendTransactionQueryFnData<
   config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
+  chainId extends config['chains'][number]['id'],
 > = PrepareSendTransactionReturnType<config, chainId>
 
 export type PrepareSendTransactionData<
   config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
+  chainId extends config['chains'][number]['id'],
 > = PrepareSendTransactionQueryFnData<config, chainId>
 
 export function prepareSendTransactionQueryKey<
   config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
+  chainId extends config['chains'][number]['id'],
 >(
   options: PrepareSendTransactionOptions<
     config,
@@ -74,5 +74,5 @@ export function prepareSendTransactionQueryKey<
 
 export type PrepareSendTransactionQueryKey<
   config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
+  chainId extends config['chains'][number]['id'],
 > = ReturnType<typeof prepareSendTransactionQueryKey<config, chainId>>

@@ -1,30 +1,33 @@
-import type { SelectChains } from './chain.js'
-import type { Merge } from './utils.js'
 import type { Chain, mainnet, optimism, sepolia } from 'viem/chains'
 import { expectTypeOf, test } from 'vitest'
 
+import type { Config } from '../config.js'
+import type { SelectChains } from './chain.js'
+import type { Merge } from './utils.js'
+
 test('not narrowable', () => {
-  type Result = SelectChains<readonly Chain[], number>
+  type Result = SelectChains<Config, number>
   expectTypeOf<Result>().toEqualTypeOf<readonly [Chain]>()
 })
 
 test('chainId', () => {
-  type Result = SelectChains<readonly [typeof mainnet, typeof optimism], 1>
+  type Result = SelectChains<
+    Config<readonly [typeof mainnet, typeof optimism]>,
+    1
+  >
   expectTypeOf<Result>().toEqualTypeOf<readonly [typeof mainnet]>()
 })
 
 test('at least one chain has formatters', () => {
-  type Result = SelectChains<readonly [typeof mainnet, typeof optimism]>
+  type Result = SelectChains<Config<readonly [typeof mainnet, typeof optimism]>>
   expectTypeOf<Result>().toEqualTypeOf<
     readonly [typeof mainnet, typeof optimism]
   >()
 })
 
 test('no formatters', () => {
-  type Result = SelectChains<readonly [typeof mainnet, typeof sepolia]>
+  type Result = SelectChains<Config<readonly [typeof mainnet, typeof sepolia]>>
   expectTypeOf<Result>().toEqualTypeOf<
-    readonly [
-      Merge<typeof mainnet, Pick<typeof mainnet | typeof sepolia, 'id'>>,
-    ]
+    readonly [Merge<Chain, { id: typeof mainnet.id | typeof sepolia.id }>]
   >()
 })

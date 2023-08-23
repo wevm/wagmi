@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
-import type { ResolvedRegister, WriteContractError } from '@wagmi/core'
+import type { Config, ResolvedRegister, WriteContractError } from '@wagmi/core'
 import {
   type WriteContractData,
   type WriteContractMutate,
@@ -9,51 +9,60 @@ import {
 } from '@wagmi/core/query'
 import type { Abi } from 'viem'
 
+import type { ConfigParameter } from '../types/properties.js'
 import type { UseMutationOptions, UseMutationResult } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 
-type ChainId = ResolvedRegister['config']['chains'][number]['id']
-
-export type UseContractWriteParameters<context = unknown> = UseMutationOptions<
+export type UseContractWriteParameters<
+  config extends Config = Config,
+  context = unknown,
+> = UseMutationOptions<
   WriteContractData,
   WriteContractError,
   WriteContractVariables<
-    ResolvedRegister['config'],
-    ChainId,
     Abi,
     string,
-    readonly unknown[]
+    readonly unknown[],
+    config,
+    config['chains'][number]['id']
   >,
   context
->
+> &
+  ConfigParameter<config>
 
-export type UseContractWriteReturnType<context = unknown> = UseMutationResult<
+export type UseContractWriteReturnType<
+  config extends Config = Config,
+  context = unknown,
+> = UseMutationResult<
   WriteContractData,
   WriteContractError,
   WriteContractVariables<
-    ResolvedRegister['config'],
-    ChainId,
     Abi,
     string,
-    readonly unknown[]
+    readonly unknown[],
+    config,
+    config['chains'][number]['id']
   >,
   context
 > & {
-  write: WriteContractMutate<ResolvedRegister['config'], context>
-  writeAsync: WriteContractMutateAsync<ResolvedRegister['config'], context>
+  write: WriteContractMutate<config, context>
+  writeAsync: WriteContractMutateAsync<config, context>
 }
 
 /** https://wagmi.sh/react/hooks/useContractWrite */
-export function useContractWrite<context = unknown>(
-  parameters: UseContractWriteParameters<context> = {},
-): UseContractWriteReturnType<context> {
-  const config = useConfig()
+export function useContractWrite<
+  config extends Config = ResolvedRegister['config'],
+  context = unknown,
+>(
+  parameters: UseContractWriteParameters<config, context> = {},
+): UseContractWriteReturnType<config, context> {
+  const config = useConfig(parameters)
   const mutationOptions = writeContractMutationOptions(config)
   const { mutate, mutateAsync, ...result } = useMutation({
     ...parameters,
     ...mutationOptions,
   })
-  type Return = UseContractWriteReturnType<context>
+  type Return = UseContractWriteReturnType<config, context>
   return {
     ...result,
     write: mutate as Return['write'],

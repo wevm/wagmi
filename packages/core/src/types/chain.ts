@@ -1,23 +1,25 @@
-import type { IsNarrowable, Merge } from './utils.js'
-import type { Chain, Formatters } from 'viem'
+import type { Chain, ChainFormatters } from 'viem'
 
-/** Filters {@link chains} by {@link chainId} or simplifies if no `Formatters` are present. */
+import type { Config } from '../config.js'
+import type { IsNarrowable, Merge } from './utils.js'
+
+/** Filters {@link Config} chains by {@link chainId} or simplifies if no `ChainFormatters` are present. */
 export type SelectChains<
-  chains extends readonly Chain[],
-  chainId extends chains[number]['id'] | undefined = undefined,
-> = number extends chains[number]['id']
-  ? readonly [Chain] // chains not narrowable
-  : chainId extends chains[number]['id']
-  ? readonly [Extract<chains[number], { id: chainId }>] // select chain
-  : HasFormatter<chains> extends true
-  ? chains
-  : readonly [Merge<chains[0], Pick<chains[number], 'id'>>]
+  config extends Config,
+  chainId extends config['chains'][number]['id'] | undefined = undefined,
+> = Config extends config
+  ? readonly [Chain] // chains not inferrable, return default
+  : IsNarrowable<chainId, config['chains'][number]['id']> extends true
+  ? readonly [Extract<config['chains'][number], { id: chainId }>] // select specific chain
+  : HasFormatter<config['chains']> extends true
+  ? config['chains'] // return all chains since one has formatter
+  : readonly [Merge<Chain, { id: config['chains'][number]['id'] }>] // return default chain with ID set to union (allows for more simple type since the only thing that is different is the chain ID for each chain)
 
 type HasFormatter<chains extends readonly Chain[]> = chains extends readonly [
   infer head extends Chain,
   ...infer tail extends readonly Chain[],
 ]
-  ? IsNarrowable<head['formatters'], Formatters | undefined> extends true
+  ? IsNarrowable<head['formatters'], ChainFormatters | undefined> extends true
     ? true
     : HasFormatter<tail>
   : false

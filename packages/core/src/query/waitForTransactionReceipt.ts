@@ -13,7 +13,7 @@ import { filterQueryOptions } from './utils.js'
 
 export type WaitForTransactionReceiptOptions<
   config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
+  chainId extends config['chains'][number]['id'],
 > = Evaluate<
   ExactPartial<WaitForTransactionReceiptParameters<config, chainId>> &
     ScopeKeyParameter
@@ -21,7 +21,7 @@ export type WaitForTransactionReceiptOptions<
 
 export function waitForTransactionReceiptQueryOptions<
   config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
+  chainId extends config['chains'][number]['id'],
 >(
   config: Config,
   options: WaitForTransactionReceiptOptions<config, chainId> = {},
@@ -49,17 +49,17 @@ export function waitForTransactionReceiptQueryOptions<
 
 export type WaitForTransactionReceiptQueryFnData<
   config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
+  chainId extends config['chains'][number]['id'],
 > = WaitForTransactionReceiptReturnType<config, chainId>
 
 export type WaitForTransactionReceiptData<
   config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
+  chainId extends config['chains'][number]['id'],
 > = WaitForTransactionReceiptQueryFnData<config, chainId>
 
 export function waitForTransactionReceiptQueryKey<
   config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
+  chainId extends config['chains'][number]['id'],
 >(options: WaitForTransactionReceiptOptions<config, chainId> = {}) {
   const { onReplaced: _, ...rest } = options
   return ['waitForTransactionReceipt', filterQueryOptions(rest)] as const
@@ -67,5 +67,5 @@ export function waitForTransactionReceiptQueryKey<
 
 export type WaitForTransactionReceiptQueryKey<
   config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
+  chainId extends config['chains'][number]['id'],
 > = ReturnType<typeof waitForTransactionReceiptQueryKey<config, chainId>>

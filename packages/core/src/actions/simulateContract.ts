@@ -35,9 +35,11 @@ export type SimulateContractParameters<
     functionName
   > = ContractFunctionArgs<abi, 'nonpayable' | 'payable', functionName>,
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] | undefined = undefined,
+  chainId extends
+    | config['chains'][number]['id']
+    | undefined = config['chains'][number]['id'],
   ///
-  chains extends readonly Chain[] = SelectChains<config['chains'], chainId>,
+  chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = {
   [key in keyof chains]: UnionEvaluate<
     UnionOmit<
@@ -67,9 +69,11 @@ export type SimulateContractReturnType<
     functionName
   > = ContractFunctionArgs<abi, 'nonpayable' | 'payable', functionName>,
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] | undefined = undefined,
+  chainId extends
+    | config['chains'][number]['id']
+    | undefined = config['chains'][number]['id'],
   ///
-  chains extends readonly Chain[] = SelectChains<config['chains'], chainId>,
+  chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = {
   [key in keyof chains]: viem_SimulateContractReturnType<
     readonly [ExtractAbiFunction<abi extends Abi ? abi : Abi, functionName>],
@@ -97,6 +101,7 @@ export type SimulateContractError = Error
 
 /** https://wagmi.sh/core/actions/simulateContract */
 export async function simulateContract<
+  config extends Config,
   const abi extends Abi | readonly unknown[],
   functionName extends ContractFunctionName<abi, 'nonpayable' | 'payable'>,
   args extends ContractFunctionArgs<
@@ -104,7 +109,6 @@ export async function simulateContract<
     'nonpayable' | 'payable',
     functionName
   >,
-  config extends Config,
   chainId extends config['chains'][number]['id'] | undefined = undefined,
 >(
   config: config,

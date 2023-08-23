@@ -40,7 +40,12 @@ test('chain formatters', () => {
     transports: { [celo.id]: http(), [mainnet.id]: http() },
   })
 
-  type Result = WriteContractParameters<typeof config>
+  type Result = WriteContractParameters<
+    typeof abi.erc20,
+    'transferFrom',
+    [Address, Address, bigint],
+    typeof config
+  >
   expectTypeOf<Result>().toMatchTypeOf<{
     chainId?: typeof celo.id | typeof mainnet.id | undefined
     feeCurrency?: `0x${string}` | undefined
@@ -58,10 +63,11 @@ test('chain formatters', () => {
   })
 
   type Result2 = WriteContractParameters<
-    typeof config,
-    typeof celo.id,
     typeof abi.erc20,
-    'transferFrom'
+    'transferFrom',
+    [Address, Address, bigint],
+    typeof config,
+    typeof celo.id
   >
   expectTypeOf<Result2>().toMatchTypeOf<{
     functionName: 'approve' | 'transfer' | 'transferFrom'
@@ -82,10 +88,11 @@ test('chain formatters', () => {
   })
 
   type Result3 = WriteContractParameters<
-    typeof config,
-    typeof mainnet.id,
     typeof abi.erc20,
-    'transferFrom'
+    'transferFrom',
+    [Address, Address, bigint],
+    typeof config,
+    typeof mainnet.id
   >
   expectTypeOf<Result3>().toMatchTypeOf<{
     functionName: 'approve' | 'transfer' | 'transferFrom'

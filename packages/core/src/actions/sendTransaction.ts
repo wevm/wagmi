@@ -19,11 +19,9 @@ import { getConnectorClient } from './getConnectorClient.js'
 
 export type SendTransactionParameters<
   config extends Config = Config,
-  chainId extends
-    | config['chains'][number]['id']
-    | undefined = config['chains'][number]['id'],
+  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
   ///
-  chains extends readonly Chain[] = SelectChains<config['chains'], chainId>,
+  chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = {
   [key in keyof chains]: Evaluate<
     Omit<
@@ -48,7 +46,7 @@ export type SendTransactionError = Error
 /** https://wagmi.sh/core/actions/sendTransaction */
 export async function sendTransaction<
   config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
+  chainId extends config['chains'][number]['id'],
 >(
   config: config,
   parameters: SendTransactionParameters<config, chainId>,

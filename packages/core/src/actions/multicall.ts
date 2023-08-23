@@ -9,9 +9,9 @@ import type { Config } from '../config.js'
 import type { ChainIdParameter } from '../types/properties.js'
 
 export type MulticallParameters<
-  config extends Config = Config,
   contracts extends readonly unknown[] = readonly ContractFunctionParameters[],
   allowFailure extends boolean = true,
+  config extends Config = Config,
 > = viem_MulticallParameters<contracts, allowFailure> & ChainIdParameter<config>
 
 export type MulticallReturnType<
@@ -25,7 +25,7 @@ export async function multicall<
   allowFailure extends boolean = true,
 >(
   config: config,
-  parameters: MulticallParameters<config, contracts, allowFailure>,
+  parameters: MulticallParameters<contracts, allowFailure, config>,
 ): Promise<MulticallReturnType<contracts, allowFailure>> {
   const { allowFailure = true, chainId, contracts, ...rest } = parameters
   const client = config.getClient({ chainId })

@@ -11,9 +11,9 @@ import { multicall } from './multicall.js'
 import { readContract } from './readContract.js'
 
 export type ReadContractsParameters<
-  config extends Config = Config,
   contracts extends readonly unknown[] = readonly ContractFunctionParameters[],
   allowFailure extends boolean = true,
+  config extends Config = Config,
 > = viem_MulticallParameters<
   contracts,
   allowFailure,
@@ -33,7 +33,7 @@ export async function readContracts<
   allowFailure extends boolean = true,
 >(
   config: config,
-  parameters: ReadContractsParameters<config, contracts, allowFailure>,
+  parameters: ReadContractsParameters<contracts, allowFailure, config>,
 ): Promise<ReadContractsReturnType<contracts, allowFailure>> {
   const { allowFailure = true, blockNumber, blockTag, ...rest } = parameters
   const contracts = parameters.contracts as (ContractFunctionParameters & {

@@ -12,18 +12,14 @@ import { type Evaluate } from '../types/utils.js'
 
 export type GetTransactionParameters<
   config extends Config = Config,
-  chainId extends
-    | config['chains'][number]['id']
-    | undefined = config['chains'][number]['id'],
+  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
 > = Evaluate<viem_GetTransactionParameters & ChainIdParameter<config, chainId>>
 
 export type GetTransactionReturnType<
   config extends Config = Config,
-  chainId extends
-    | config['chains'][number]['id']
-    | undefined = config['chains'][number]['id'],
+  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
   ///
-  chains extends readonly Chain[] = SelectChains<config['chains'], chainId>,
+  chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = Evaluate<
   {
     [key in keyof chains]: viem_GetTransactionReturnType<chains[key]>
@@ -35,7 +31,7 @@ export type GetTransactionError = Error
 /** https://wagmi.sh/core/actions/getTransaction */
 export function getTransaction<
   config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
+  chainId extends config['chains'][number]['id'],
 >(
   config: config,
   parameters: GetTransactionParameters<config, chainId>,

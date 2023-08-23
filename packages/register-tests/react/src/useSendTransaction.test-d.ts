@@ -1,3 +1,4 @@
+import type { ChainId } from './config.js'
 import { expectTypeOf, test } from 'vitest'
 import { useSendTransaction } from 'wagmi'
 import { celo, mainnet, optimism } from 'wagmi/chains'
@@ -5,12 +6,19 @@ import { celo, mainnet, optimism } from 'wagmi/chains'
 test('chain formatters', () => {
   const { sendTransaction } = useSendTransaction()
 
-  sendTransaction({
-    to: '0x',
-    feeCurrency: '0x',
-    gatewayFee: 123n,
-    gatewayFeeRecipient: '0x',
-  })
+  sendTransaction(
+    {
+      to: '0x',
+      feeCurrency: '0x',
+      gatewayFee: 123n,
+      gatewayFeeRecipient: '0x',
+    },
+    {
+      onSuccess(_data, variables) {
+        expectTypeOf(variables.chainId).toEqualTypeOf<ChainId | undefined>()
+      },
+    },
+  )
 
   type Result = Parameters<typeof sendTransaction<typeof celo.id>>[0]
   expectTypeOf<Result['feeCurrency']>().toEqualTypeOf<

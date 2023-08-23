@@ -18,20 +18,16 @@ import type { Evaluate } from '../types/utils.js'
 
 export type WaitForTransactionReceiptParameters<
   config extends Config = Config,
-  chainId extends
-    | config['chains'][number]['id']
-    | undefined = config['chains'][number]['id'],
+  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
 > = Evaluate<
   viem_WaitForTransactionReceiptParameters & ChainIdParameter<config, chainId>
 >
 
 export type WaitForTransactionReceiptReturnType<
   config extends Config = Config,
-  chainId extends
-    | config['chains'][number]['id']
-    | undefined = config['chains'][number]['id'],
+  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
   ///
-  chains extends readonly Chain[] = SelectChains<config['chains'], chainId>,
+  chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = Evaluate<
   {
     [key in keyof chains]: viem_WaitForTransactionReceiptReturnType<chains[key]>
@@ -42,7 +38,7 @@ export type WaitForTransactionReceiptError = Error
 
 export async function waitForTransactionReceipt<
   config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
+  chainId extends config['chains'][number]['id'],
 >(
   config: config,
   parameters: WaitForTransactionReceiptParameters<config, chainId>,

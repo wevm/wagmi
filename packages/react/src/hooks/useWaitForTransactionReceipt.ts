@@ -12,6 +12,7 @@ import {
   waitForTransactionReceiptQueryOptions,
 } from '@wagmi/core/query'
 
+import type { ConfigParameter } from '../types/properties.js'
 import {
   type UseQueryParameters,
   type UseQueryResult,
@@ -22,7 +23,7 @@ import { useConfig } from './useConfig.js'
 
 export type UseWaitForTransactionReceiptParameters<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] | undefined = undefined,
+  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = WaitForTransactionReceiptData<config, chainId>,
 > = Evaluate<
   WaitForTransactionReceiptOptions<config, chainId> &
@@ -31,19 +32,20 @@ export type UseWaitForTransactionReceiptParameters<
       WaitForTransactionReceiptError,
       selectData,
       WaitForTransactionReceiptQueryKey<config, chainId>
-    >
+    > &
+    ConfigParameter<config>
 >
 
 export type UseWaitForTransactionReceiptReturnType<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] | undefined = undefined,
+  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = WaitForTransactionReceiptData<config, chainId>,
 > = UseQueryResult<selectData, WaitForTransactionReceiptError>
 
 /** https://wagmi.sh/react/hooks/useWaitForTransactionReceipt */
 export function useWaitForTransactionReceipt<
   config extends Config = ResolvedRegister['config'],
-  chainId extends config['chains'][number]['id'] | undefined = undefined,
+  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = WaitForTransactionReceiptData<config, chainId>,
 >(
   parameters: UseWaitForTransactionReceiptParameters<
@@ -53,7 +55,7 @@ export function useWaitForTransactionReceipt<
   > = {},
 ): UseWaitForTransactionReceiptReturnType<config, chainId, selectData> {
   const { hash, ...query } = parameters
-  const config = useConfig()
+  const config = useConfig(parameters)
 
   const chainId = parameters.chainId ?? useChainId()
   const queryOptions = waitForTransactionReceiptQueryOptions(config, {

@@ -13,14 +13,14 @@ import { filterQueryOptions } from './utils.js'
 
 export type GetTransactionOptions<
   config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
+  chainId extends config['chains'][number]['id'],
 > = Evaluate<
   ExactPartial<GetTransactionParameters<config, chainId>> & ScopeKeyParameter
 >
 
 export function getTransactionQueryOptions<
   config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
+  chainId extends config['chains'][number]['id'],
 >(config: config, options: GetTransactionOptions<config, chainId> = {}) {
   return {
     async queryFn({ queryKey }) {
@@ -54,22 +54,22 @@ export function getTransactionQueryOptions<
 
 export type GetTransactionQueryFnData<
   config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
+  chainId extends config['chains'][number]['id'],
 > = GetTransactionReturnType<config, chainId>
 
 export type GetTransactionData<
   config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
+  chainId extends config['chains'][number]['id'],
 > = GetTransactionQueryFnData<config, chainId>
 
 export function getTransactionQueryKey<
   config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
+  chainId extends config['chains'][number]['id'],
 >(options: GetTransactionOptions<config, chainId> = {}) {
   return ['transaction', filterQueryOptions(options)] as const
 }
 
 export type GetTransactionQueryKey<
   config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
+  chainId extends config['chains'][number]['id'],
 > = ReturnType<typeof getTransactionQueryKey<config, chainId>>

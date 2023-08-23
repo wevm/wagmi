@@ -1,4 +1,8 @@
-import type { PrepareSendTransactionError, ResolvedRegister } from '@wagmi/core'
+import type {
+  Config,
+  PrepareSendTransactionError,
+  ResolvedRegister,
+} from '@wagmi/core'
 import {
   type PrepareSendTransactionData,
   type PrepareSendTransactionOptions,
@@ -7,6 +11,7 @@ import {
   prepareSendTransactionQueryOptions,
 } from '@wagmi/core/query'
 
+import type { ConfigParameter } from '../types/properties.js'
 import {
   type UseQueryParameters,
   type UseQueryResult,
@@ -16,36 +21,39 @@ import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 import { useConnectorClient } from './useConnectorClient.js'
 
-type ChainId = ResolvedRegister['config']['chains'][number]['id']
-
 export type UsePrepareSendTransactionParameters<
-  chainId extends ChainId | undefined = undefined,
-  selectData = PrepareSendTransactionData<ResolvedRegister['config'], chainId>,
-> = PrepareSendTransactionOptions<ResolvedRegister['config'], chainId> &
+  config extends Config = Config,
+  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  selectData = PrepareSendTransactionData<config, chainId>,
+> = PrepareSendTransactionOptions<config, chainId> &
   UseQueryParameters<
-    PrepareSendTransactionQueryFnData<ResolvedRegister['config'], chainId>,
+    PrepareSendTransactionQueryFnData<config, chainId>,
     PrepareSendTransactionError,
     selectData,
-    PrepareSendTransactionQueryKey<ResolvedRegister['config'], chainId>
-  >
+    PrepareSendTransactionQueryKey<config, chainId>
+  > &
+  ConfigParameter<config>
 
 export type UsePrepareSendTransactionReturnType<
-  chainId extends ChainId | undefined = undefined,
-  selectData = PrepareSendTransactionData<ResolvedRegister['config'], chainId>,
+  config extends Config = Config,
+  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  selectData = PrepareSendTransactionData<config, chainId>,
 > = UseQueryResult<selectData, PrepareSendTransactionError>
 
 /** https://wagmi.sh/react/hooks/usePrepareSendTransaction */
 export function usePrepareSendTransaction<
-  chainId extends ChainId | undefined = undefined,
-  selectData = PrepareSendTransactionData<ResolvedRegister['config'], chainId>,
+  config extends Config = ResolvedRegister['config'],
+  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  selectData = PrepareSendTransactionData<config, chainId>,
 >(
   parameters: UsePrepareSendTransactionParameters<
+    config,
     chainId,
     selectData
-  > = {} as UsePrepareSendTransactionParameters<chainId, selectData>,
-): UsePrepareSendTransactionReturnType<chainId, selectData> {
+  > = {} as UsePrepareSendTransactionParameters<config, chainId, selectData>,
+): UsePrepareSendTransactionReturnType<config, chainId, selectData> {
   const { connector, ...query } = parameters
-  const config = useConfig()
+  const config = useConfig(parameters)
   const { data: connectorClient } = useConnectorClient({
     connector,
     enabled: parameters.account === undefined,
@@ -64,5 +72,5 @@ export function usePrepareSendTransaction<
     ...queryOptions,
     ...(query as any),
     enabled,
-  }) as UsePrepareSendTransactionReturnType<chainId, selectData>
+  }) as UsePrepareSendTransactionReturnType<config, chainId, selectData>
 }

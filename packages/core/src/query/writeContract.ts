@@ -22,11 +22,11 @@ export function writeContractMutationOptions<config extends Config>(
     WriteContractData,
     WriteContractError,
     WriteContractVariables<
-      config,
-      config['chains'][number]['id'],
       Abi,
       string,
-      readonly unknown[]
+      readonly unknown[],
+      config,
+      config['chains'][number]['id']
     >
   >
 }
@@ -34,41 +34,33 @@ export function writeContractMutationOptions<config extends Config>(
 export type WriteContractData = Evaluate<WriteContractReturnType>
 
 export type WriteContractVariables<
-  config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
   abi extends Abi | readonly unknown[],
-  functionName extends ContractFunctionName<abi, 'payable' | 'nonpayable'>,
+  functionName extends ContractFunctionName<abi, 'nonpayable' | 'payable'>,
   args extends ContractFunctionArgs<
     abi,
-    'payable' | 'nonpayable',
+    'nonpayable' | 'payable',
     functionName
   >,
-> = WriteContractParameters<config, chainId, abi, functionName, args>
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
+> = WriteContractParameters<abi, functionName, args, config, chainId>
 
 export type WriteContractMutate<config extends Config, context = unknown> = <
-  chainId extends config['chains'][number]['id'] | undefined,
   const abi extends Abi | readonly unknown[],
-  functionName extends ContractFunctionName<abi, 'payable' | 'nonpayable'>,
+  functionName extends ContractFunctionName<abi, 'nonpayable' | 'payable'>,
   args extends ContractFunctionArgs<
     abi,
-    'payable' | 'nonpayable',
+    'nonpayable' | 'payable',
     functionName
   >,
+  chainId extends config['chains'][number]['id'],
 >(
-  variables: WriteContractVariables<
-    config,
-    number extends config['chains'][number]['id']
-      ? config['chains'][number]['id']
-      : chainId,
-    abi,
-    functionName,
-    args
-  >,
+  variables: WriteContractVariables<abi, functionName, args, config, chainId>,
   options?:
     | MutateOptions<
         WriteContractData,
         WriteContractError,
-        WriteContractVariables<config, chainId, abi, functionName, args>,
+        WriteContractVariables<abi, functionName, args, config, chainId>,
         context
       >
     | undefined,
@@ -78,29 +70,21 @@ export type WriteContractMutateAsync<
   config extends Config,
   context = unknown,
 > = <
-  chainId extends config['chains'][number]['id'] | undefined,
   const abi extends Abi | readonly unknown[],
-  functionName extends ContractFunctionName<abi, 'payable' | 'nonpayable'>,
+  functionName extends ContractFunctionName<abi, 'nonpayable' | 'payable'>,
   args extends ContractFunctionArgs<
     abi,
-    'payable' | 'nonpayable',
+    'nonpayable' | 'payable',
     functionName
   >,
+  chainId extends config['chains'][number]['id'],
 >(
-  variables: WriteContractVariables<
-    config,
-    number extends config['chains'][number]['id']
-      ? config['chains'][number]['id']
-      : chainId,
-    abi,
-    functionName,
-    args
-  >,
+  variables: WriteContractVariables<abi, functionName, args, config, chainId>,
   options?:
     | MutateOptions<
         WriteContractData,
         WriteContractError,
-        WriteContractVariables<config, chainId, abi, functionName, args>,
+        WriteContractVariables<abi, functionName, args, config, chainId>,
         context
       >
     | undefined,
