@@ -159,6 +159,77 @@ describe('generate', () => {
     /* eslint-enable no-irregular-whitespace */
   })
 
+  it('generates output custom header comment', async () => {
+    const { dir } = await createFixture({
+      files: {
+        tsconfig: true,
+        'wagmi.config.ts': dedent`
+          export default {
+            out: 'generated.ts',
+            headerComment: (version, date) =>
+              date.toLocaleDateString() + " yeeeeeeeah boi! " + version,
+            contracts: [
+              {
+                abi: [],
+                name: 'Foo',
+              },
+            ],
+            plugins: [
+              {
+                name: 'Test',
+                async run({ contracts, isTypeScript, outputs }) {
+                  return {
+                    imports: '/* imports test */',
+                    prepend: '/* prepend test */',
+                    content: '/* content test */',
+                  }
+                },
+              },
+            ],
+          }
+        `,
+      },
+    })
+    const spy = vi.spyOn(process, 'cwd')
+    spy.mockImplementation(() => dir)
+
+    await generate()
+
+    expect(console.formatted).toMatchInlineSnapshot(`
+      "- Validating plugins
+      ✔ Validating plugins
+      - Resolving contracts
+      ✔ Resolving contracts
+      - Running plugins
+      ✔ Running plugins
+      - Writing to generated.ts
+      ✔ Writing to generated.ts"
+    `)
+    /* eslint-disable no-irregular-whitespace */
+    await expect(
+      readFile(resolve(dir, 'generated.ts'), 'utf8'),
+    ).resolves.toMatchInlineSnapshot(`
+      "// 1/30/2023 yeeeeeeeah boi! x.y.z
+      /* imports test */
+
+      /* prepend test */
+
+      //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      // Foo
+      //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      export const fooABI = [] as const
+
+      //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      // Test
+      //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      /* content test */
+      "
+    `)
+    /* eslint-enable no-irregular-whitespace */
+  })
+
   describe('behavior', () => {
     it('invalid cli options', async () => {
       const { dir } = await createFixture()

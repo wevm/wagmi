@@ -100,6 +100,8 @@ export type Config = {
   out: string
   /** Plugins to run */
   plugins?: Plugin[]
+  /** Header comment to prepend to generated file */
+  headerComment?: (version: string, date: Date) => string
 }
 
 export function defineConfig(
