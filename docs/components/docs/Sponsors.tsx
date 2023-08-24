@@ -151,6 +151,16 @@ const sponsors = [
         'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/rainbow-light.svg',
     },
   },
+  {
+    id: 'zora',
+    name: 'Zora',
+    href: 'https://zora.co/',
+    logo: {
+      dark: 'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/zora-dark.svg',
+      light:
+        'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/zora-light.svg',
+    },
+  },
 ] as const
 
 export function Sponsors() {
