@@ -28,7 +28,7 @@
 
     // Language and environment
     "moduleResolution": "NodeNext",
-    "module": "ESNext",
+    "module": "NodeNext",
     "target": "ES2021", // Setting this to `ES2021` enables native support for `Node v16+`: https://github.com/microsoft/TypeScript/wiki/Node-Target-Mapping.
     "lib": [
       "ES2022", // By using ES2022 we get access to the `.cause` property on `Error` instances.
