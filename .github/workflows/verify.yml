@@ -57,7 +57,7 @@ jobs:
     timeout-minutes: 5
     strategy:
       matrix:
-        typescript-version: ['5.0.4', 'latest']
+        typescript-version: ['5.0.4', '5.1.6', 'latest']
         # TODO: Run against multiple viem versions
         # viem-version: ['1.2.0', 'latest']
 

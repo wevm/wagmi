@@ -42,7 +42,7 @@ test('behavior: user rejected request', async () => {
     [UserRejectedRequestError: User rejected the request.
 
     Details: Failed to switch chain.
-    Version: viem@1.6.2]
+    Version: viem@1.8.1]
   `)
   await disconnect(config, { connector: connector_ })
 })

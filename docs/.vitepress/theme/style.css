@@ -110,3 +110,8 @@ html.dark pre.shiki[class*='-dark'] {
 html.dark pre.shiki[class*='-light'] {
   display: none;
 }
+
+:root {
+  --vp-twoslash-c-error-bg: var(--vp-c-red-soft);
+  --vp-twoslash-c-query-bg: var(--vp-c-bg-soft);
+}

@@ -62,9 +62,6 @@
       "@wagmi/core": "workspace:*",
       "viem": "0.0.0-w-20230828183856"
     },
-    "patchedDependencies": {
-      "vitepress@1.0.0-rc.4": "patches/vitepress@1.0.0-rc.4.patch"
-    },
     "peerDependencyRules": {
       "ignoreMissing": [
         "@algolia/client-search",

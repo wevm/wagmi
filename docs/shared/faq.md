@@ -63,7 +63,7 @@ If you use Wagmi at work, consider asking your company to sponsor Wagmi. This ma
 
 ## Is Wagmi production ready?
 
-Yes. Wagmi is very stable and is used in production by thousands of organizations, like [ENS](https://ens.domains), [Stripe](https://stripe.com), and [Shopify](https://shopify.com).
+Yes. Wagmi is very stable and is used in production by thousands of organizations, like [Stripe](https://stripe.com), [Shopify](https://shopify.com), [Coinbase](https://coinbase.com), [ENS](https://ens.domains), [Optimism](https://optimism.com).
 
 ## Is Wagmi strict with semver?
 
