@@ -39,7 +39,7 @@ export type UseSignMessageReturnType<context = unknown> = Evaluate<
 export function useSignMessage<context = unknown>(
   parameters: UseSignMessageParameters<context> = {},
 ): UseSignMessageReturnType<context> {
-  const config = useConfig(parameters)
+  const config = parameters.config ?? useConfig()
   const mutationOptions = signMessageMutationOptions(config)
   const { mutate, mutateAsync, ...result } = useMutation({
     ...parameters,

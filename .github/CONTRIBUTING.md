@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for your interest in contributing to wagmi! Please take a moment to review this document **before submitting a pull request.**
+Thanks for your interest in contributing to Wagmi! Please take a moment to review this document **before submitting a pull request.**
 
 If you want to contribute, but aren't sure where to start, you can create a [new discussion](https://github.com/wagmi-dev/wagmi/discussions/new/choose). If you are looking to add a connector or chain, check out the following guides:
 
@@ -58,7 +58,7 @@ gh repo clone wagmi-dev/wagmi
 
 ## Installing Node.js and pnpm
 
-wagmi uses [pnpm workspaces](https://pnpm.io/workspaces) to manage multiple projects. You need to install **Node.js v16 or higher** and **pnpm v7 or higher**.
+Wagmi uses [pnpm workspaces](https://pnpm.io/workspaces) to manage multiple projects. You need to install **Node.js v16 or higher** and **pnpm v7 or higher**.
 
 You can run the following commands in your terminal to check your local Node.js and npm versions:
 
@@ -107,7 +107,7 @@ Once the dev server is running, you can make changes to any of the package sourc
 
 ## Running the test suite
 
-wagmi uses [Vitest](https://vitest.dev) to run tests and [anvil.js](https://github.com/wagmi-dev/anvil.js) to execute tests against a local Ethereum node. First, install [Anvil](https://github.com/foundry-rs/foundry/tree/master/anvil) via [Foundry](https://book.getfoundry.sh/getting-started/installation).
+Wagmi uses [Vitest](https://vitest.dev) to run tests and [anvil.js](https://github.com/wagmi-dev/anvil.js) to execute tests against a local Ethereum node. First, install [Anvil](https://github.com/foundry-rs/foundry/tree/master/anvil) via [Foundry](https://book.getfoundry.sh/getting-started/installation).
 
 Next, copy over the environment variables from `.env.example` to `.env`, and fill them out. Now you are ready to run the tests! You have the following options for running tests:
 
@@ -123,7 +123,7 @@ When adding new features or fixing bugs, it's important to add test cases to cov
 
 ## Writing documentation
 
-Documentation is crucial to helping developers of all experience levels use wagmi. wagmi uses [VitePress](https://vitepress.dev) for the documentation site (located at [`docs`](../docs)). To start the site in dev mode, run:
+Documentation is crucial to helping developers of all experience levels use Wagmi. Wagmi uses [VitePress](https://vitepress.dev) for the documentation site (located at [`docs`](../docs)). To start the site in dev mode, run:
 
 ```bash
 pnpm docs:dev
@@ -155,7 +155,7 @@ When you submit a pull request, GitHub will automatically lint, build, and test 
 ---
 
 <div align="center">
-  ✅ Now you're ready to contribute to wagmi! Follow the next steps if you need more advanced instructions.
+  ✅ Now you're ready to contribute to Wagmi! Follow the next steps if you need more advanced instructions.
 </div>
 
 ---
@@ -296,7 +296,7 @@ If you followed all the instructions, you can submit a pull request and the new 
 
 > **Warning** **Please ask first before starting work on a new connector.**
 >
-> To avoid having your pull request declined after investing time and effort into a new connector, we ask that contributors create a [Connector Request](https://github.com/wagmi-dev/wagmi/discussions/new?category=connector-request) before starting work on new Connectors. This helps ensure the connector solves for an important or general use-case of interest to wagmi users.
+> To avoid having your pull request declined after investing time and effort into a new connector, we ask that contributors create a [Connector Request](https://github.com/wagmi-dev/wagmi/discussions/new?category=connector-request) before starting work on new Connectors. This helps ensure the connector solves for an important or general use-case of interest to Wagmi users.
 
 #### 0. Follow the [Basic Guide](#basic-guide).
 
@@ -358,7 +358,7 @@ The type error should tell you what properties are missing from `createConnector
 `createConnector` also has the following config properties you can use within the connector:
 
 - `chains`: List of chains configured by the user.
-- `emitter`: Emitter for emitting events. Used to sync connector state with wagmi config. The following events are available:
+- `emitter`: Emitter for emitting events. Used to sync connector state with Wagmi `Config`. The following events are available:
   - `change`: Emitted when the connected accounts or chain changes.
   - `connect`: Emitted when the connector connects.
   - `disconnect`: Emitted when the connector disconnects.
@@ -376,7 +376,7 @@ export { fooBarBaz } from './fooBarBaz.js'
 
 #### 5. Try out your connector and add tests.
 
-While building a connector, it can be useful to try it out with wagmi. You can follow the setup [guide in the wagmi repo](https://github.com/wagmi-dev/wagmi/blob/main/.github/CONTRIBUTING.md), to use the local development playground for testing your changes.
+While building a connector, it can be useful to try it out with Wagmi. You can follow the setup [guide in the Wagmi repo](https://github.com/wagmi-dev/wagmi/blob/main/.github/CONTRIBUTING.md), to use the local development playground for testing your changes.
 
 Ideally, you should also be able to add tests for your connector in a `connectorName.test.ts` file. This isn't always easy so at a minimum please create a test file with instructions for how to test your connector manually. The test file should include actual tests or "instruction tests" for the following:
 
@@ -394,7 +394,7 @@ pnpm test:update packages/connectors/src/index.test.ts
 
 #### 6. Add your team to CODEOWNERS.
 
-It is critical connectors are updated in a timely manner and actively maintained so that users of wagmi can rely on them in production settings. The wagmi core team will provide as much assistance as possible to keep connectors up-to-date with breaking changes from wagmi, but it is your responsibility to ensure that any dependencies and issues/discussions related to the connector are handled in a timely manner.
+It is critical connectors are updated in a timely manner and actively maintained so that users of Wagmi can rely on them in production settings. The Wagmi core team will provide as much assistance as possible to keep connectors up-to-date with breaking changes from Wagmi, but it is your responsibility to ensure that any dependencies and issues/discussions related to the connector are handled in a timely manner.
 
 In support of this goal, add at least one member of your team to the [CODEOWNERS](./CODEOWNERS) file so that you get notified of pull requests, issues, etc. related to your connector. You can add your team like this:
 

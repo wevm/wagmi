@@ -61,7 +61,7 @@ export function useContractReads<
   > = {},
 ): UseContractReadsReturnType<contracts, allowFailure, selectData> {
   const { contracts = [], ...query } = parameters
-  const config = useConfig(parameters)
+  const config = parameters.config ?? useConfig()
 
   const chainId = useChainId()
   const queryOptions = readContractsQueryOptions(config, {

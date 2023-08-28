@@ -54,7 +54,7 @@ export function useConnectorClient<
   parameters: UseConnectorClientParameters<config, chainId, selectData> = {},
 ): UseConnectorClientReturnType<config, chainId, selectData> {
   const { gcTime = 0, staleTime = Infinity, ...query } = parameters
-  const config = useConfig(parameters)
+  const config = parameters.config ?? useConfig()
   const queryClient = useQueryClient()
   const { address, connector, status } = useAccount()
 

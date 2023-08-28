@@ -88,7 +88,7 @@ export function useContractRead<
   >,
 ): UseContractReadReturnType<abi, functionName, args, selectData> {
   const { address, abi, functionName, ...query } = parameters
-  const config = useConfig(parameters)
+  const config = parameters.config ?? useConfig()
 
   const chainId = parameters.chainId ?? useChainId()
   const queryOptions = readContractQueryOptions(config, {

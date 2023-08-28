@@ -16,7 +16,7 @@ export type UseConnectionsReturnType = GetConnectionsReturnType
 export function useConnections(
   parameters: UseConnectionsParameters = {},
 ): UseConnectionsReturnType {
-  const config = useConfig(parameters)
+  const config = parameters.config ?? useConfig()
   return useSyncExternalStore(
     (onChange) => watchConnections(config, { onChange }),
     () => getConnections(config),

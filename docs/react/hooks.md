@@ -17,7 +17,7 @@ React Hooks for accounts, wallets, contracts, transactions, signing, ENS, and mo
 import { useAccount } from 'wagmi'
 ```
 
-## Built-In Hooks
+## All Hooks
 
 <ul>
   <li v-for="hook of hooks">

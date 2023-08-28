@@ -47,18 +47,16 @@ export function useFeeData<
 >(
   parameters: UseFeeDataParameters<config, selectData> = {},
 ): UseFeeDataReturnType<selectData> {
-  const config = useConfig(parameters)
+  const config = parameters.config ?? useConfig()
 
   const chainId = parameters.chainId ?? useChainId()
   const queryOptions = getFeeDataQueryOptions(config, {
     ...parameters,
     chainId,
   })
-  const enabled = Boolean(parameters.enabled ?? true)
 
   return useQuery({
     ...queryOptions,
     ...parameters,
-    enabled,
   })
 }

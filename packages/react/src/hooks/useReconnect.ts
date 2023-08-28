@@ -40,7 +40,7 @@ export type UseReconnectReturnType<context = unknown> = Evaluate<
 export function useReconnect<context = unknown>(
   parameters: UseReconnectParameters<context> = {},
 ): UseReconnectReturnType<context> {
-  const config = useConfig(parameters)
+  const config = parameters.config ?? useConfig()
   const mutationOptions = reconnectMutationOptions(config)
   const { mutate, mutateAsync, ...result } = useMutation({
     ...parameters,

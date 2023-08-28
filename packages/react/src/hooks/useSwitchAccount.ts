@@ -55,7 +55,7 @@ export function useSwitchAccount<
 >(
   parameters: UseSwitchAccountParameters<config, context> = {},
 ): UseSwitchAccountReturnType<config, context> {
-  const config = useConfig(parameters)
+  const config = parameters.config ?? useConfig()
   const mutationOptions = switchAccountMutationOptions(config)
   const { mutate, mutateAsync, ...result } = useMutation({
     ...parameters,

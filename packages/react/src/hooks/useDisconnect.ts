@@ -41,7 +41,7 @@ export type UseDisconnectReturnType<context = unknown> = Evaluate<
 export function useDisconnect<context = unknown>(
   parameters: UseDisconnectParameters<context> = {},
 ): UseDisconnectReturnType<context> {
-  const config = useConfig(parameters)
+  const config = parameters.config ?? useConfig()
   const mutationOptions = disconnectMutationOptions(config)
   const { mutate, mutateAsync, ...result } = useMutation({
     ...parameters,

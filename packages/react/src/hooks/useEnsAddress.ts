@@ -42,7 +42,7 @@ export function useEnsAddress<
   parameters: UseEnsAddressParameters<config, selectData> = {},
 ): UseEnsAddressReturnType<selectData> {
   const { name, ...query } = parameters
-  const config = useConfig(parameters)
+  const config = parameters.config ?? useConfig()
 
   const chainId = parameters.chainId ?? useChainId()
   const queryOptions = getEnsAddressQueryOptions(config, {
