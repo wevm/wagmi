@@ -1,7 +1,7 @@
 import { type Address } from 'viem'
-import { shallow } from 'zustand/shallow'
 
 import { type Config, type Connector } from '../config.js'
+import { deepEqual } from '../utils/deepEqual.js'
 
 export type GetAccountReturnType =
   | {
@@ -124,6 +124,19 @@ export function watchAccount(
   { onChange }: WatchAccountParameters,
 ): WatchAccountReturnType {
   return config.subscribe(() => getAccount(config), onChange, {
-    equalityFn: shallow,
+    equalityFn(a, b) {
+      return (
+        // check addresses
+        a.address === b.address &&
+        deepEqual(a.addresses, b.addresses) &&
+        // check chain
+        a.chainId === b.chainId &&
+        // check stable connector id properties
+        a.connector?.id === b.connector?.id &&
+        a.connector?.uid === b.connector?.uid &&
+        // check status
+        a.status === b.status
+      )
+    },
   })
 }

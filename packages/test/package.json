@@ -46,8 +46,8 @@
   "peerDependencies": {
     "@tanstack/react-query": "5.0.0-beta.2",
     "@testing-library/react": "^14.0.0",
-    "@types/react": "^18.2.0",
-    "@types/react-dom": "^18.0.11",
+    "@types/react": "^18.2.21",
+    "@types/react-dom": "^18.2.7",
     "@viem/anvil": "^0.0.6",
     "@wagmi/core": "workspace:*",
     "react": ">=18",
@@ -85,8 +85,8 @@
   "devDependencies": {
     "@tanstack/react-query": "5.0.0-beta.2",
     "@testing-library/react": "^14.0.0",
-    "@types/react": "^18.2.0",
-    "@types/react-dom": "^18.0.11",
+    "@types/react": "^18.2.21",
+    "@types/react-dom": "^18.2.7",
     "@wagmi/core": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

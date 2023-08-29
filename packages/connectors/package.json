@@ -49,8 +49,8 @@
     "@ledgerhq/connect-kit-loader": "^1.1.2",
     "@safe-global/safe-apps-provider": "^0.18.0",
     "@safe-global/safe-apps-sdk": "^8.1.0",
-    "@walletconnect/ethereum-provider": "^2.8.5",
-    "@walletconnect/modal": "^2.5.6"
+    "@walletconnect/ethereum-provider": "^2.10.0",
+    "@walletconnect/modal": "^2.6.1"
   },
   "devDependencies": {
     "@wagmi/core": "workspace:*",

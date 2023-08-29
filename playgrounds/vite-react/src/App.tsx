@@ -60,7 +60,7 @@ function Account() {
       </div>
 
       {account.status === 'connected' && (
-        <button type="button" onClick={() => disconnect()}>
+        <button type='button' onClick={() => disconnect()}>
           Disconnect
         </button>
       )}
@@ -80,7 +80,7 @@ function Connect() {
           id={connector.uid}
           key={connector.uid}
           onClick={() => connect({ connector, chainId })}
-          type="button"
+          type='button'
         >
           {connector.name}
         </button>
@@ -104,7 +104,7 @@ function SwitchAccount() {
           disabled={account.connector?.uid === connector.uid}
           key={connector.uid}
           onClick={() => switchAccount({ connector })}
-          type="button"
+          type='button'
         >
           {connector.name}
         </button>
@@ -126,7 +126,7 @@ function SwitchChain() {
           disabled={chainId === chain.id}
           key={chain.id}
           onClick={() => switchChain({ chainId: chain.id })}
-          type="button"
+          type='button'
         >
           {chain.name}
         </button>
@@ -149,8 +149,8 @@ function SignMessage() {
           signMessage({ message: formData.get('message') as string })
         }}
       >
-        <input name="message" />
-        <button type="submit">Sign Message</button>
+        <input name='message' />
+        <button type='submit'>Sign Message</button>
       </form>
 
       {data}
