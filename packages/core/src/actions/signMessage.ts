@@ -4,7 +4,7 @@ import {
   signMessage as viem_signMessage,
 } from 'viem/actions'
 
-import { type Config } from '../config.js'
+import { type Config } from '../createConfig.js'
 import type { ConnectorParameter } from '../types/properties.js'
 import type { Evaluate, Omit } from '../types/utils.js'
 import { getConnectorClient } from './getConnectorClient.js'

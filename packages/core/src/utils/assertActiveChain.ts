@@ -1,5 +1,5 @@
 import { getChainId } from '../actions/getChainId.js'
-import type { Config } from '../config.js'
+import type { Config } from '../createConfig.js'
 import { ChainMismatchError } from '../errors/config.js'
 
 type AssertActiveChainParamters = {

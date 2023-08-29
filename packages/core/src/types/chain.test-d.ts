@@ -1,7 +1,7 @@
 import type { Chain, mainnet, optimism, sepolia } from 'viem/chains'
 import { expectTypeOf, test } from 'vitest'
 
-import type { Config } from '../config.js'
+import type { Config } from '../createConfig.js'
 import type { SelectChains } from './chain.js'
 import type { Merge } from './utils.js'
 

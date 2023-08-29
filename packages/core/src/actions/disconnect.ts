@@ -1,4 +1,8 @@
-import { type Config, type Connection, type Connector } from '../config.js'
+import {
+  type Config,
+  type Connection,
+  type Connector,
+} from '../createConfig.js'
 import { ConnectorNotFoundError } from '../errors/config.js'
 
 export type DisconnectParameters = {

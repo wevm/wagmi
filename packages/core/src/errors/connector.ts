@@ -1,4 +1,4 @@
-import type { Connector } from '../config.js'
+import type { Connector } from '../createConfig.js'
 import { BaseError } from './base.js'
 
 export class ProviderNotFoundError extends BaseError {

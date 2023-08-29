@@ -7,7 +7,7 @@ import {
   custom,
 } from 'viem'
 
-import type { Config, Connection, Connector } from '../config.js'
+import type { Config, Connection, Connector } from '../createConfig.js'
 import { ConnectorNotFoundError } from '../errors/config.js'
 import type { ChainIdParameter } from '../types/properties.js'
 import type { Evaluate } from '../types/utils.js'

@@ -5,7 +5,7 @@ export {
   type EventData,
   Emitter,
   createEmitter,
-} from './emitter.js'
+} from './createEmitter.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // Types

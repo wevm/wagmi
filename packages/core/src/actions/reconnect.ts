@@ -1,7 +1,7 @@
 import type { Address } from 'viem'
 
-import type { Config, Connection, Connector } from '../config.js'
-import { type CreateConnectorFn } from '../connector.js'
+import type { Config, Connection, Connector } from '../createConfig.js'
+import { type CreateConnectorFn } from '../createConnector.js'
 import type { Evaluate } from '../types/utils.js'
 
 export type ReconnectParameters = {

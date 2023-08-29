@@ -214,7 +214,7 @@ export {
 } from './actions/writeContract.js'
 
 ////////////////////////////////////////////////////////////////////////////////
-// Config
+// createConfig
 
 export {
   type Connection,
@@ -223,16 +223,27 @@ export {
   type CreateConfigParameters,
   type State,
   createConfig,
-} from './config.js'
+} from './createConfig.js'
 
 ////////////////////////////////////////////////////////////////////////////////
-// Connector
+// createConnector
 
 export {
   type ConnectorEventMap,
   type CreateConnectorFn,
   createConnector,
-} from './connector.js'
+} from './createConnector.js'
+
+////////////////////////////////////////////////////////////////////////////////
+// createStorage
+
+export {
+  type CreateStorageParameters,
+  type Storage,
+  type StorageItemMap,
+  createStorage,
+  noopStorage,
+} from './createStorage.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // Errors
@@ -250,17 +261,6 @@ export {
   ProviderNotFoundError,
   SwitchChainNotSupportedError,
 } from './errors/connector.js'
-
-////////////////////////////////////////////////////////////////////////////////
-// Storage
-
-export {
-  type CreateStorageParameters,
-  type Storage,
-  type StorageItemMap,
-  createStorage,
-  noopStorage,
-} from './storage.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // Types

@@ -1,4 +1,4 @@
-import { type PartializedState } from './config.js'
+import { type PartializedState } from './createConfig.js'
 import { deserialize as deserialize_ } from './utils/deserialize.js'
 import { serialize as serialize_ } from './utils/serialize.js'
 

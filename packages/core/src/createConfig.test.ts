@@ -3,7 +3,7 @@ import { http } from 'viem'
 import { mainnet } from 'viem/chains'
 import { expect, test } from 'vitest'
 
-import { createConfig } from './config.js'
+import { createConfig } from './createConfig.js'
 
 test('exports', () => {
   const config = createConfig({

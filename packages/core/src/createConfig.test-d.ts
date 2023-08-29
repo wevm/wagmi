@@ -3,7 +3,7 @@ import { http, createClient } from 'viem'
 import { mainnet, sepolia } from 'viem/chains'
 import { expectTypeOf, test } from 'vitest'
 
-import { createConfig } from './config.js'
+import { createConfig } from './createConfig.js'
 
 test('high-level config', () => {
   // Create config without needing to import viem modules.

@@ -5,7 +5,7 @@ import {
   signTypedData as viem_signTypedData,
 } from 'viem/actions'
 
-import { type Config } from '../config.js'
+import { type Config } from '../createConfig.js'
 import type { ConnectorParameter } from '../types/properties.js'
 import { getConnectorClient } from './getConnectorClient.js'
 

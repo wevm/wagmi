@@ -3,7 +3,7 @@ import { http, type Address } from 'viem'
 import { celo, mainnet } from 'viem/chains'
 import { expectTypeOf, test } from 'vitest'
 
-import { createConfig } from '../config.js'
+import { createConfig } from '../createConfig.js'
 import { simulateContract } from './simulateContract.js'
 import { type WriteContractParameters, writeContract } from './writeContract.js'
 

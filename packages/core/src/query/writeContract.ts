@@ -7,7 +7,7 @@ import {
   type WriteContractReturnType,
   writeContract,
 } from '../actions/writeContract.js'
-import { type Config } from '../config.js'
+import { type Config } from '../createConfig.js'
 import type { Evaluate } from '../types/utils.js'
 
 export function writeContractMutationOptions<config extends Config>(

@@ -1,4 +1,4 @@
-import type { Config, Connection } from '../config.js'
+import type { Config, Connection } from '../createConfig.js'
 import type { Evaluate } from '../types/utils.js'
 import { deepEqual } from '../utils/deepEqual.js'
 

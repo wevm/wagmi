@@ -1,7 +1,7 @@
 import type { Account, Address, Chain, SendTransactionParameters } from 'viem'
 import { estimateGas } from 'viem/actions'
 
-import type { Config } from '../config.js'
+import type { Config } from '../createConfig.js'
 import type { SelectChains } from '../types/chain.js'
 import type {
   ChainIdParameter,

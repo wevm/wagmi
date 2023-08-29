@@ -1,7 +1,7 @@
 import { config } from '@wagmi/test'
 import { describe, expect, test } from 'vitest'
 
-import type { Connection } from '../config.js'
+import type { Connection } from '../createConfig.js'
 import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'
 import { getConnections, watchConnections } from './getConnections.js'

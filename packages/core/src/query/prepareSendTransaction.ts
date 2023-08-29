@@ -6,7 +6,7 @@ import {
   type PrepareSendTransactionReturnType,
   prepareSendTransaction,
 } from '../actions/prepareSendTransaction.js'
-import type { Config } from '../config.js'
+import type { Config } from '../createConfig.js'
 import type { UnionPartialBy } from '../types/utils.js'
 import type { ScopeKeyParameter } from './types.js'
 import { filterQueryOptions } from './utils.js'

@@ -1,6 +1,6 @@
 import type { Address } from 'viem'
 
-import { type Config, type Connector } from '../config.js'
+import { type Config, type Connector } from '../createConfig.js'
 import { ConnectorNotFoundError } from '../errors/config.js'
 
 export type SwitchAccountParameters = {

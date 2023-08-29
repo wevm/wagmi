@@ -13,7 +13,7 @@ import {
   simulateContract as viem_simulateContract,
 } from 'viem/actions'
 
-import { type Config } from '../config.js'
+import { type Config } from '../createConfig.js'
 import type { SelectChains } from '../types/chain.js'
 import type {
   ChainIdParameter,

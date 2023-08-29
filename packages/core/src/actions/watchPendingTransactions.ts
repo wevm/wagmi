@@ -4,7 +4,7 @@ import {
   watchPendingTransactions as viem_watchPendingTransactions,
 } from 'viem/actions'
 
-import type { Config } from '../config.js'
+import type { Config } from '../createConfig.js'
 import type { ChainIdParameter } from '../types/properties.js'
 import type { Evaluate } from '../types/utils.js'
 

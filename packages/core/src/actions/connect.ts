@@ -1,8 +1,8 @@
 import { ResourceUnavailableRpcError, UserRejectedRequestError } from 'viem'
 import { type Address } from 'viem'
 
-import { type Config, type Connector } from '../config.js'
-import { type CreateConnectorFn } from '../connector.js'
+import { type Config, type Connector } from '../createConfig.js'
+import { type CreateConnectorFn } from '../createConnector.js'
 import type { BaseError } from '../errors/base.js'
 import { ConnectorAlreadyConnectedError } from '../errors/config.js'
 import type { ChainIdParameter } from '../types/properties.js'

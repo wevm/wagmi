@@ -8,10 +8,13 @@ import {
 import { persist, subscribeWithSelector } from 'zustand/middleware'
 import { createStore } from 'zustand/vanilla'
 
-import { type ConnectorEventMap, type CreateConnectorFn } from './connector.js'
-import { Emitter, type EventData, createEmitter } from './emitter.js'
+import {
+  type ConnectorEventMap,
+  type CreateConnectorFn,
+} from './createConnector.js'
+import { Emitter, type EventData, createEmitter } from './createEmitter.js'
+import { type Storage, createStorage, noopStorage } from './createStorage.js'
 import { ChainNotConfiguredError } from './errors/config.js'
-import { type Storage, createStorage, noopStorage } from './storage.js'
 import type { Evaluate, OneOf } from './types/utils.js'
 import { uid } from './utils/uid.js'
 

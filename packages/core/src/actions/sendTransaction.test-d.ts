@@ -2,7 +2,7 @@ import { http, parseEther } from 'viem'
 import { celo, mainnet } from 'viem/chains'
 import { expectTypeOf, test } from 'vitest'
 
-import { createConfig } from '../config.js'
+import { createConfig } from '../createConfig.js'
 import { prepareSendTransaction } from './prepareSendTransaction.js'
 import {
   type SendTransactionParameters,

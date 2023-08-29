@@ -6,7 +6,7 @@ import {
   trim,
 } from 'viem'
 
-import type { Config } from '../config.js'
+import type { Config } from '../createConfig.js'
 import type { ChainIdParameter } from '../types/properties.js'
 import type { Unit } from '../types/unit.js'
 import type { Evaluate } from '../types/utils.js'

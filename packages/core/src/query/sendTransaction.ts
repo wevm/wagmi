@@ -6,7 +6,7 @@ import {
   type SendTransactionReturnType,
   sendTransaction,
 } from '../actions/sendTransaction.js'
-import { type Config } from '../config.js'
+import { type Config } from '../createConfig.js'
 import type { Evaluate } from '../types/utils.js'
 
 export function sendTransactionMutationOptions<config extends Config>(

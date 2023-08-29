@@ -2,7 +2,7 @@ import { http } from 'viem'
 import { celo, mainnet } from 'viem/chains'
 import { expectTypeOf, test } from 'vitest'
 
-import { createConfig } from '../config.js'
+import { createConfig } from '../createConfig.js'
 import {
   type PrepareSendTransactionParameters,
   prepareSendTransaction,

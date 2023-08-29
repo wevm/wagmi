@@ -5,7 +5,7 @@ import type {
 } from 'viem'
 import { ContractFunctionExecutionError } from 'viem'
 
-import { type Config } from '../config.js'
+import { type Config } from '../createConfig.js'
 import { type ChainIdParameter } from '../types/properties.js'
 import { multicall } from './multicall.js'
 import { readContract } from './readContract.js'

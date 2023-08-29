@@ -3,7 +3,7 @@ import {
   UserRejectedRequestError,
 } from 'viem'
 
-import { type Config } from '../config.js'
+import { type Config } from '../createConfig.js'
 import type { BaseError } from '../errors/base.js'
 import { ChainNotConfiguredError } from '../errors/config.js'
 import { SwitchChainNotSupportedError } from '../errors/connector.js'

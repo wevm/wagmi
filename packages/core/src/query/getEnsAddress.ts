@@ -6,7 +6,7 @@ import {
   type GetEnsAddressReturnType,
   getEnsAddress,
 } from '../actions/getEnsAddress.js'
-import type { Config } from '../config.js'
+import type { Config } from '../createConfig.js'
 import type { Evaluate, ExactPartial } from '../types/utils.js'
 import type { ScopeKeyParameter } from './types.js'
 import { filterQueryOptions } from './utils.js'

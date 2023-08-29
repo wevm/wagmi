@@ -1,7 +1,7 @@
 import { expectTypeOf, test } from 'vitest'
-import { createStorage } from './storage.js'
+import { createStorage } from './createStorage.js'
 
-import type { Connection } from './config.js'
+import type { Connection } from './createConfig.js'
 
 const storage = createStorage({ storage: localStorage })
 
