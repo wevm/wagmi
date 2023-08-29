@@ -1,7 +1,3 @@
-export type DistributedKeys<type> = type extends infer member
-  ? keyof member
-  : never
-
 /** Combines members of an intersection into a readable type. */
 // https://twitter.com/mattpocockuk/status/1622730173446557697?s=20&t=NdpAcmEFXY01xkqU3KO0Mg
 export type Evaluate<type> = { [key in keyof type]: type[key] } & unknown
@@ -71,31 +67,22 @@ export type PartialBy<type, key extends keyof type> = ExactPartial<
 > &
   Omit<type, key>
 
+///////////////////////////////////////////////////////////////////////////
+// Loose types
+
 /** Loose version of {@link Omit} */
 export type LooseOmit<type, keys extends string> = Pick<
   type,
   Exclude<keyof type, keys>
 >
 
-/** Loose version of {@link Pick} */
-export type LoosePick<type, key extends string> = {
-  [p in key]: p extends keyof type ? type[p] : never
-}
-
-/** Loose version of {@link PartialBy} */
-export type LoosePartialBy<type, key extends string> = ExactPartial<
-  LoosePick<type, key>
-> &
-  LooseOmit<type, key>
-
-export type UnionPartialBy<T, K extends keyof any> = T extends any
-  ? LoosePartialBy<T, K extends string ? K : never>
-  : never
-
-export type UnionPartial<type> = type extends object ? Partial<type> : type
+///////////////////////////////////////////////////////////////////////////
+// Union types
 
 export type UnionEvaluate<type> = type extends object ? Evaluate<type> : type
 
 export type UnionOmit<type, keys extends keyof type> = type extends any
   ? Omit<type, keys>
   : never
+
+export type UnionPartial<type> = type extends object ? Partial<type> : type

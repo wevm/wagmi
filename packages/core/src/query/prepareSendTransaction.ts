@@ -7,17 +7,14 @@ import {
   prepareSendTransaction,
 } from '../actions/prepareSendTransaction.js'
 import type { Config } from '../createConfig.js'
-import type { UnionPartialBy } from '../types/utils.js'
+import type { UnionPartial } from '../types/utils.js'
 import type { ScopeKeyParameter } from './types.js'
 import { filterQueryOptions } from './utils.js'
 
 export type PrepareSendTransactionOptions<
   config extends Config,
   chainId extends config['chains'][number]['id'],
-> = UnionPartialBy<
-  PrepareSendTransactionParameters<config, chainId>,
-  keyof PrepareSendTransactionParameters
-> &
+> = UnionPartial<PrepareSendTransactionParameters<config, chainId>> &
   ScopeKeyParameter
 
 export function prepareSendTransactionQueryOptions<
