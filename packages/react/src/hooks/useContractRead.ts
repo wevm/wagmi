@@ -88,12 +88,12 @@ export function useContractRead<
   >,
 ): UseContractReadReturnType<abi, functionName, args, selectData> {
   const { address, abi, functionName, ...query } = parameters
-  const config = parameters.config ?? useConfig()
+  const config = useConfig(parameters)
 
-  const chainId = parameters.chainId ?? useChainId()
+  const chainId = useChainId()
   const queryOptions = readContractQueryOptions(config, {
     ...parameters,
-    chainId,
+    chainId: parameters.chainId ?? chainId,
   } as ReadContractOptions<ResolvedRegister['config'], abi, functionName, args>)
   const enabled = Boolean(
     address && abi && functionName && (parameters.enabled ?? true),

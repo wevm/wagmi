@@ -42,12 +42,12 @@ export function useEnsAddress<
   parameters: UseEnsAddressParameters<config, selectData> = {},
 ): UseEnsAddressReturnType<selectData> {
   const { name, ...query } = parameters
-  const config = parameters.config ?? useConfig()
+  const config = useConfig(parameters)
 
-  const chainId = parameters.chainId ?? useChainId()
+  const chainId = useChainId()
   const queryOptions = getEnsAddressQueryOptions(config, {
     ...parameters,
-    chainId,
+    chainId: parameters.chainId ?? chainId,
   })
   const enabled = Boolean(name && (parameters.enabled ?? true))
 

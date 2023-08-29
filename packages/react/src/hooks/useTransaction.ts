@@ -47,12 +47,12 @@ export function useTransaction<
   parameters: UseTransactionParameters<config, chainId, selectData> = {},
 ): UseTransactionReturnType<config, chainId, selectData> {
   const { blockHash, blockNumber, blockTag, hash, ...query } = parameters
-  const config = parameters.config ?? useConfig()
+  const config = useConfig(parameters)
 
-  const chainId = parameters.chainId ?? useChainId()
+  const chainId = useChainId()
   const queryOptions = getTransactionQueryOptions(config, {
     ...parameters,
-    chainId,
+    chainId: parameters.chainId ?? chainId,
   })
   const enabled = Boolean(
     !(blockHash && blockNumber && blockTag && hash) &&

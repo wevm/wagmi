@@ -98,18 +98,18 @@ export function useContractSimulate<
   selectData
 > {
   const { abi, address, connector, functionName, ...query } = parameters
-  const config = parameters.config ?? useConfig()
+  const config = useConfig(parameters)
   const { data: connectorClient } = useConnectorClient({
     connector,
     enabled: parameters.account === undefined,
   })
 
   const account = parameters.account ?? connectorClient?.account
-  const chainId = parameters.chainId ?? useChainId()
+  const chainId = useChainId()
   const queryOptions = simulateContractQueryOptions(config, {
     ...(parameters as any),
     account,
-    chainId,
+    chainId: parameters.chainId ?? chainId,
   })
   const enabled = Boolean(
     abi && address && functionName && (parameters.enabled ?? true),

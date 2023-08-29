@@ -42,12 +42,12 @@ export function useEnsAvatar<
   parameters: UseEnsAvatarParameters<config, selectData> = {},
 ): UseEnsAvatarReturnType<selectData> {
   const { name, ...query } = parameters
-  const config = parameters.config ?? useConfig()
+  const config = useConfig(parameters)
 
-  const chainId = parameters.chainId ?? useChainId()
+  const chainId = useChainId()
   const queryOptions = getEnsAvatarQueryOptions(config, {
     ...parameters,
-    chainId,
+    chainId: parameters.chainId ?? chainId,
   })
   const enabled = Boolean(name && (parameters.enabled ?? true))
 

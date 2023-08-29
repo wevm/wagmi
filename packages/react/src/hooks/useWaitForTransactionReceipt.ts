@@ -55,12 +55,12 @@ export function useWaitForTransactionReceipt<
   > = {},
 ): UseWaitForTransactionReceiptReturnType<config, chainId, selectData> {
   const { hash, ...query } = parameters
-  const config = parameters.config ?? useConfig()
+  const config = useConfig(parameters)
 
-  const chainId = parameters.chainId ?? useChainId()
+  const chainId = useChainId()
   const queryOptions = waitForTransactionReceiptQueryOptions(config, {
     ...parameters,
-    chainId,
+    chainId: parameters.chainId ?? chainId,
   })
   const enabled = Boolean(!hash && (parameters.enabled ?? true))
 

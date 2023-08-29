@@ -20,7 +20,7 @@ export type UseChainIdReturnType<config extends Config = Config,> =
 export function useChainId<config extends Config = ResolvedRegister['config']>(
   parameters: UseChainIdParameters<config> = {},
 ): UseChainIdReturnType<config> {
-  const config = parameters.config ?? useConfig()
+  const config = useConfig(parameters)
   return useSyncExternalStore(
     (onChange) => watchChainId(config, { onChange }),
     () => getChainId(config),

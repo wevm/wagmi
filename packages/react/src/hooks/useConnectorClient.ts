@@ -54,14 +54,14 @@ export function useConnectorClient<
   parameters: UseConnectorClientParameters<config, chainId, selectData> = {},
 ): UseConnectorClientReturnType<config, chainId, selectData> {
   const { gcTime = 0, staleTime = Infinity, ...query } = parameters
-  const config = parameters.config ?? useConfig()
+  const config = useConfig(parameters)
   const queryClient = useQueryClient()
   const { address, connector, status } = useAccount()
 
-  const chainId = parameters.chainId ?? useChainId()
+  const chainId = useChainId()
   const { queryKey, ...options } = getConnectorClientQueryOptions(config, {
     ...parameters,
-    chainId,
+    chainId: parameters.chainId ?? chainId,
     connector: parameters.connector ?? connector,
   })
   const enabled = Boolean(

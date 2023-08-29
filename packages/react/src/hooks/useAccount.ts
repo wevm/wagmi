@@ -16,7 +16,7 @@ export type UseAccountReturnType = GetAccountReturnType
 export function useAccount(
   parameters: UseAccountParameters = {},
 ): UseAccountReturnType {
-  const config = parameters.config ?? useConfig()
+  const config = useConfig(parameters)
   return useSyncExternalStoreWithTracked(
     (onChange) => watchAccount(config, { onChange }),
     () => getAccount(config),

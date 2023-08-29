@@ -42,8 +42,9 @@ export async function getConnectorClient<
   config: config,
   parameters: GetConnectorClientParameters<config, chainId> = {},
 ): Promise<GetConnectorClientReturnType<config, chainId>> {
-  const { chainId } = parameters
+  const { chainId: chainId_ } = parameters
 
+  // Get connection
   let connection: Connection | undefined
   if (parameters.connector) {
     const { connector } = parameters
@@ -59,23 +60,25 @@ export async function getConnectorClient<
   } else connection = config.state.connections.get(config.state.current!)
   if (!connection) throw new ConnectorNotFoundError()
 
-  const resolvedChainId = chainId ?? connection.chainId
+  const chainId = chainId_ ?? connection.chainId
+  type Return = GetConnectorClientReturnType<config, chainId>
+
+  // If connector has custom `getClient` implementation
   const connector = connection.connector
   if (connector.getClient)
-    return connector.getClient({
-      chainId: resolvedChainId,
-    }) as unknown as GetConnectorClientReturnType<config, chainId>
+    return connector.getClient({ chainId: chainId }) as unknown as Return
 
+  // Default using `custom` transport
   const account = connection.accounts[0]!
-  const chain = config.chains.find((chain) => chain.id === resolvedChainId)
-  const provider = (await connection.connector.getProvider({
-    chainId: resolvedChainId,
-  })) as { request(...args: any): Promise<any> }
+  const chain = config.chains.find((chain) => chain.id === chainId)
+  const provider = (await connection.connector.getProvider({ chainId })) as {
+    request(...args: any): Promise<any>
+  }
 
   return createClient({
     account,
     chain,
     name: 'Connector Client',
     transport: (opts) => custom(provider)({ ...opts, retryCount: 0 }),
-  }) as unknown as GetConnectorClientReturnType<config, chainId>
+  }) as unknown as Return
 }

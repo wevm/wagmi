@@ -60,11 +60,11 @@ export function usePrepareSendTransaction<
   })
 
   const account = parameters.account ?? connectorClient?.account
-  const chainId = parameters.chainId ?? useChainId()
+  const chainId = useChainId()
   const queryOptions = prepareSendTransactionQueryOptions(config, {
     ...parameters,
     account,
-    chainId,
+    chainId: parameters.chainId ?? chainId,
   })
   const enabled = Boolean(parameters.enabled ?? true)
 
