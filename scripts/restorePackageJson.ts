@@ -1,6 +1,6 @@
+import path from 'path'
 import fs from 'fs-extra'
 import { glob } from 'glob'
-import path from 'path'
 
 // Restores package.json files from package.json.tmp files.
 

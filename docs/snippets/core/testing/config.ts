@@ -1,4 +1,4 @@
-import { createConfig, http } from '@wagmi/core'
+import { http, createConfig } from '@wagmi/core'
 import { accounts, testConnector } from '@wagmi/test'
 
 import { mainnetFork, optimismFork } from './chains'

@@ -2,8 +2,8 @@ import { type Connector, type SwitchAccountError } from '@wagmi/core'
 import { config } from '@wagmi/test'
 import { expectTypeOf, test } from 'vitest'
 
-import { useSwitchAccount } from './useSwitchAccount.js'
 import type { Address } from 'viem'
+import { useSwitchAccount } from './useSwitchAccount.js'
 
 const connector = config.connectors[0]!
 const contextValue = { foo: 'bar' } as const

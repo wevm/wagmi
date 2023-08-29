@@ -1,5 +1,5 @@
 import { accounts, testConnector } from '@wagmi/test'
-import { createClient, http } from 'viem'
+import { http, createClient } from 'viem'
 import { mainnet, sepolia } from 'viem/chains'
 import { expectTypeOf, test } from 'vitest'
 

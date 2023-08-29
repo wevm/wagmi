@@ -1,3 +1,7 @@
 {
-  "recommendations": ["orta.vscode-twoslash-queries", "rome.rome", "Vue.volar"]
+  "recommendations": [
+    "orta.vscode-twoslash-queries",
+    "biomejs.biome",
+    "Vue.volar"
+  ]
 }

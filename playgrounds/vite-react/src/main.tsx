@@ -1,4 +1,3 @@
-import './index.css'
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
 import { QueryClient } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
@@ -6,6 +5,7 @@ import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { WagmiProvider, deserialize, serialize } from 'wagmi'
+import './index.css'
 
 import App from './App.tsx'
 import { config } from './wagmi.ts'

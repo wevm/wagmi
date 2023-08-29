@@ -1,6 +1,6 @@
+import path from 'path'
 import fs from 'fs-extra'
 import { glob } from 'glob'
-import path from 'path'
 
 // Generates package.json files to be published to NPM with only the necessary fields.
 

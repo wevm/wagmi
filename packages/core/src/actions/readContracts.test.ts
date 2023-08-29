@@ -1,5 +1,5 @@
 import { abi, address, chain } from '@wagmi/test'
-import { type MulticallResponse, http } from 'viem'
+import { http, type MulticallResponse } from 'viem'
 import { expect, expectTypeOf, test, vi } from 'vitest'
 
 import { createConfig } from '../config.js'

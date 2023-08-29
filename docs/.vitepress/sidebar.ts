@@ -61,7 +61,7 @@ export function getSidebar() {
             link: '/react/connectors',
             items: [
               {
-                text: 'coinbaseWallet 🚧',
+                text: 'coinbaseWallet',
                 link: '/react/connectors/coinbaseWallet',
               },
               { text: 'injected', link: '/react/connectors/injected' },
@@ -340,7 +340,7 @@ export function getSidebar() {
             link: '/core/connectors',
             items: [
               {
-                text: 'coinbaseWallet 🚧',
+                text: 'coinbaseWallet',
                 link: '/core/connectors/coinbaseWallet',
               },
               { text: 'injected', link: '/core/connectors/injected' },

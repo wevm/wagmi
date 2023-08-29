@@ -8,8 +8,8 @@
     "dev:vite-core": "pnpm --filter vite-core dev",
     "dev:vite-react": "pnpm --filter vite-react dev",
     "docs:dev": "rimraf node_modules/.cache/twoslash && pnpm --filter docs dev",
-    "format": "rome format . --write",
-    "lint": "rome check .",
+    "format": "biome format . --write",
+    "lint": "biome check .",
     "lint:fix": "pnpm lint --apply",
     "lint:unused": "pnpm clean && knip",
     "postinstall": "pnpm preconstruct",
@@ -29,6 +29,7 @@
     "version:update": "pnpm bun scripts/updateVersion.ts"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.0.0",
     "@changesets/changelog-github": "0.4.6",
     "@changesets/cli": "^2.26.0",
     "@types/fs-extra": "^11.0.1",
@@ -45,7 +46,6 @@
     "msw": "^1.2.1",
     "publint": "^0.2.0",
     "rimraf": "^4.4.1",
-    "rome": "^12.1.3",
     "simple-git-hooks": "^2.8.1",
     "typescript": "5.0.4",
     "viem": "0.0.0-w-20230829165118",

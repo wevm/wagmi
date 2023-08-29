@@ -1,6 +1,6 @@
+import path from 'path'
 import fs from 'fs-extra'
 import { glob } from 'glob'
-import path from 'path'
 
 // Updates package version.ts files (so you can use the version in code without importing package.json).
 

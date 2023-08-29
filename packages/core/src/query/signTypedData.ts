@@ -1,5 +1,6 @@
 import type { MutateOptions, MutationOptions } from '@tanstack/query-core'
 
+import type { TypedData } from 'viem'
 import {
   type SignTypedDataError,
   type SignTypedDataParameters,
@@ -8,7 +9,6 @@ import {
 } from '../actions/signTypedData.js'
 import { type Config } from '../config.js'
 import type { Evaluate } from '../types/utils.js'
-import type { TypedData } from 'viem'
 
 export function signTypedDataMutationOptions<config extends Config>(
   config: config,

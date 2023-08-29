@@ -1,6 +1,6 @@
+import path from 'path'
 import fs from 'fs-extra'
 import { glob } from 'glob'
-import path from 'path'
 
 // Symlinks package sources to dist for local development
 

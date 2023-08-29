@@ -1,5 +1,5 @@
-import { createStorage } from './storage.js'
 import { expectTypeOf, test } from 'vitest'
+import { createStorage } from './storage.js'
 
 import type { Connection } from './config.js'
 
