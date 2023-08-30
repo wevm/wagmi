@@ -237,6 +237,12 @@ If you find wagmi useful, please consider supporting development. Thank you 🙏
     <img alt="rainbow logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/rainbow-light.svg" width="auto" height="50">
   </picture>
 </a>
+<a href="https://pimlico.io/">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/pimlico-dark.svg">
+    <img alt="pimlico logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/pimlico-light.svg" width="auto" height="50">
+  </picture>
+</a>
 <a href="https://zora.co/">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/zora-dark.svg">
