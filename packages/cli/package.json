@@ -78,7 +78,7 @@
     "detect-package-manager": "^2.0.1",
     "dotenv": "^16.0.3",
     "dotenv-expand": "^10.0.0",
-    "esbuild": "0.19.0",
+    "esbuild": "0.16.17",
     "execa": "^6.1.0",
     "find-up": "^6.3.0",
     "fs-extra": "^10.1.0",
