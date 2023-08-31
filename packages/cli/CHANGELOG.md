@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 1.4.1
+
+### Patch Changes
+
+- [#2962](https://github.com/wagmi-dev/wagmi/pull/2962) [`8ac5b572`](https://github.com/wagmi-dev/wagmi/commit/8ac5b57254f77eeb0e07dd83f7d49f396d4581d8) Thanks [@tmm](https://github.com/tmm)! - Fixed esbuild version
+
 ## 1.4.0
 
 ### Minor Changes
