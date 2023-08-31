@@ -8,11 +8,10 @@ import {
   webSocket,
 } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
+import { foundry, goerli, mainnet, optimism, polygon } from 'viem/chains'
 import { rpc } from 'viem/utils'
 
 import type { Chain, WebSocketPublicClient } from '../src'
-import { foundry, goerli, mainnet, optimism, polygon } from '../src/chains'
-
 import type { mirrorCrowdfundContractConfig } from './constants'
 
 export const foundryMainnet: Chain = {

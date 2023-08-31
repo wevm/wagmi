@@ -1,18 +1,17 @@
 import { act } from '@testing-library/react'
-
 import type {
   Connector,
   PublicClient,
   WebSocketPublicClient,
 } from '@wagmi/core'
 import { MockConnector } from '@wagmi/core/connectors/mock'
+import { goerli, mainnet } from 'viem/chains'
 import { expect } from 'vitest'
 
 import type { renderHook } from '.'
 import { getPublicClient, getWalletClients } from '../../core/test/utils'
 import type { CreateConfigParameters } from '../src'
 import { createConfig } from '../src'
-import { goerli, mainnet } from '../src/chains'
 import type { UseAccountConfig } from '../src/hooks/accounts/useAccount'
 import { useAccount as useAccount_ } from '../src/hooks/accounts/useAccount'
 import { useNetwork as useNetwork_ } from '../src/hooks/accounts/useNetwork'
