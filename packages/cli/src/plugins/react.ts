@@ -104,9 +104,11 @@ export function react(config: ReactConfig = {}): ReactResult {
             if (Object.keys(contract.address).length > 1) {
               innerHookParams.address = `${contract.meta.addressName}[chainId as keyof typeof ${contract.meta.addressName}]`
               imports.add('useNetwork')
+              imports.add('useChainId')
               innerContent = dedent`
                 const { chain } = useNetwork()
-                const chainId = config.chainId ?? chain?.id
+                const defaultChainId = useChainId()
+                const chainId = config.chainId ?? chain?.id ?? defaultChainId
               `
             } else
               innerHookParams.address = `${contract.meta.addressName}[${
