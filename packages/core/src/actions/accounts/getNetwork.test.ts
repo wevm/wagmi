@@ -238,7 +238,7 @@ describe('getNetwork', () => {
               },
             },
             "id": 10,
-            "name": "OP Mainnet",
+            "name": "Optimism",
             "nativeCurrency": {
               "decimals": 18,
               "name": "Ether",

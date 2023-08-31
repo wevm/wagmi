@@ -202,9 +202,6 @@ importers:
 
   packages/cli:
     dependencies:
-      '@wagmi/chains':
-        specifier: workspace:*
-        version: link:../../references/packages/chains
       '@wagmi/core':
         specifier: '>=1.0.0'
         version: 1.0.0(react@18.2.0)(typescript@5.0.4)(viem@1.0.0)(zod@3.21.4)
@@ -297,14 +294,51 @@ importers:
         specifier: ^2.12.6
         version: 2.13.0(typescript@5.0.4)
 
+  packages/connectors:
+    dependencies:
+      '@coinbase/wallet-sdk':
+        specifier: ^3.6.6
+        version: 3.6.6
+      '@ledgerhq/connect-kit-loader':
+        specifier: ^1.1.0
+        version: 1.1.0
+      '@safe-global/safe-apps-provider':
+        specifier: ^0.17.1
+        version: 0.17.1(typescript@5.0.4)
+      '@safe-global/safe-apps-sdk':
+        specifier: ^8.0.0
+        version: 8.0.0(typescript@5.0.4)
+      '@walletconnect/ethereum-provider':
+        specifier: 2.10.0
+        version: 2.10.0(@walletconnect/modal@2.6.1)
+      '@walletconnect/legacy-provider':
+        specifier: ^2.0.0
+        version: 2.0.0
+      '@walletconnect/modal':
+        specifier: 2.6.1
+        version: 2.6.1(react@18.2.0)
+      '@walletconnect/utils':
+        specifier: 2.10.0
+        version: 2.10.0
+      abitype:
+        specifier: 0.8.7
+        version: 0.8.7(typescript@5.0.4)(zod@3.21.4)
+      eventemitter3:
+        specifier: ^4.0.7
+        version: 4.0.7
+      typescript:
+        specifier: '>=5.0.4'
+        version: 5.0.4
+    devDependencies:
+      viem:
+        specifier: ^1.0.0
+        version: 1.0.0(typescript@5.0.4)(zod@3.21.4)
+
   packages/core:
     dependencies:
-      '@wagmi/chains':
-        specifier: workspace:*
-        version: link:../../references/packages/chains
       '@wagmi/connectors':
         specifier: workspace:*
-        version: link:../../references/packages/connectors
+        version: link:../connectors
       abitype:
         specifier: 0.8.7
         version: 0.8.7(typescript@5.0.4)(zod@3.21.4)
@@ -367,55 +401,6 @@ importers:
       react-dom:
         specifier: ^18.1.0
         version: 18.2.0(react@18.2.0)
-      viem:
-        specifier: ^1.0.0
-        version: 1.0.0(typescript@5.0.4)(zod@3.21.4)
-
-  references/packages/chains:
-    dependencies:
-      typescript:
-        specifier: '>=5.0.4'
-        version: 5.0.4
-
-  references/packages/connectors:
-    dependencies:
-      '@coinbase/wallet-sdk':
-        specifier: ^3.6.6
-        version: 3.6.6
-      '@ledgerhq/connect-kit-loader':
-        specifier: ^1.1.0
-        version: 1.1.0
-      '@safe-global/safe-apps-provider':
-        specifier: ^0.17.1
-        version: 0.17.1(typescript@5.0.4)
-      '@safe-global/safe-apps-sdk':
-        specifier: ^8.0.0
-        version: 8.0.0(typescript@5.0.4)
-      '@walletconnect/ethereum-provider':
-        specifier: 2.10.0
-        version: 2.10.0(@walletconnect/modal@2.6.1)
-      '@walletconnect/legacy-provider':
-        specifier: ^2.0.0
-        version: 2.0.0
-      '@walletconnect/modal':
-        specifier: 2.6.1
-        version: 2.6.1(react@18.2.0)
-      '@walletconnect/utils':
-        specifier: 2.10.0
-        version: 2.10.0
-      abitype:
-        specifier: 0.8.7
-        version: 0.8.7(typescript@5.0.4)(zod@3.21.4)
-      eventemitter3:
-        specifier: ^4.0.7
-        version: 4.0.7
-      typescript:
-        specifier: '>=5.0.4'
-        version: 5.0.4
-    devDependencies:
-      '@wagmi/chains':
-        specifier: workspace:*
-        version: link:../chains
       viem:
         specifier: ^1.0.0
         version: 1.0.0(typescript@5.0.4)(zod@3.21.4)
@@ -3583,17 +3568,6 @@ packages:
       tslib: 1.14.1
     dev: false
 
-  /@walletconnect/jsonrpc-http-connection@1.0.6:
-    resolution: {integrity: sha512-/3zSqDi7JDN06E4qm0NmVYMitngXfh21UWwy8zeJcBeJc+Jcs094EbLsIxtziIIKTCCbT88lWuTjl1ZujxN7cw==}
-    dependencies:
-      '@walletconnect/jsonrpc-utils': 1.0.8
-      '@walletconnect/safe-json': 1.0.2
-      cross-fetch: 3.1.5
-      tslib: 1.14.1
-    transitivePeerDependencies:
-      - encoding
-    dev: false
-
   /@walletconnect/jsonrpc-http-connection@1.0.7:
     resolution: {integrity: sha512-qlfh8fCfu8LOM9JRR9KE0s0wxP6ZG9/Jom8M0qsoIQeKF3Ni0FyV4V1qy/cc7nfI46SLQLSl4tgWSfLiE1swyQ==}
     dependencies:
@@ -3603,14 +3577,6 @@ packages:
       tslib: 1.14.1
     transitivePeerDependencies:
       - encoding
-    dev: false
-
-  /@walletconnect/jsonrpc-provider@1.0.10:
-    resolution: {integrity: sha512-g0ffPSpY3P6GqGjWGHsr3yqvQUhj7q2k6pAikoXv5XTXWaJRzFvrlbFkSgxziXsBrwrMZn0qvPufvpN4mMZ5FA==}
-    dependencies:
-      '@walletconnect/jsonrpc-utils': 1.0.8
-      '@walletconnect/safe-json': 1.0.1
-      tslib: 1.14.1
     dev: false
 
   /@walletconnect/jsonrpc-provider@1.0.13:
@@ -3685,7 +3651,7 @@ packages:
       '@walletconnect/jsonrpc-utils': 1.0.8
       '@walletconnect/legacy-types': 2.0.0
       '@walletconnect/legacy-utils': 2.0.0
-      '@walletconnect/safe-json': 1.0.1
+      '@walletconnect/safe-json': 1.0.2
       '@walletconnect/window-getters': 1.0.1
       '@walletconnect/window-metadata': 1.0.1
       detect-browser: 5.3.0
@@ -3705,8 +3671,8 @@ packages:
   /@walletconnect/legacy-provider@2.0.0:
     resolution: {integrity: sha512-A8xPebMI1A+50HbWwTpFCbwP7G+1NGKdTKyg8BUUg3h3Y9JucpC1W6w/x0v1Xw7qFEqQnz74LoIN/A3ytH9xrQ==}
     dependencies:
-      '@walletconnect/jsonrpc-http-connection': 1.0.6
-      '@walletconnect/jsonrpc-provider': 1.0.10
+      '@walletconnect/jsonrpc-http-connection': 1.0.7
+      '@walletconnect/jsonrpc-provider': 1.0.13
       '@walletconnect/legacy-client': 2.0.0
       '@walletconnect/legacy-modal': 2.0.0
       '@walletconnect/legacy-types': 2.0.0
@@ -3727,7 +3693,7 @@ packages:
       '@walletconnect/encoding': 1.0.2
       '@walletconnect/jsonrpc-utils': 1.0.8
       '@walletconnect/legacy-types': 2.0.0
-      '@walletconnect/safe-json': 1.0.1
+      '@walletconnect/safe-json': 1.0.2
       '@walletconnect/window-getters': 1.0.1
       '@walletconnect/window-metadata': 1.0.1
       detect-browser: 5.3.0
@@ -3794,12 +3760,6 @@ packages:
       '@walletconnect/time': 1.0.2
       tslib: 1.14.1
       uint8arrays: 3.1.1
-    dev: false
-
-  /@walletconnect/safe-json@1.0.1:
-    resolution: {integrity: sha512-Fm7e31oSYY15NQr8SsLJheKAy5L744udZf2lJKcz6wFmPJEzf7hOF0866o/rrldRzJnjZ4H2GJ45pFudsnLW5A==}
-    dependencies:
-      tslib: 1.14.1
     dev: false
 
   /@walletconnect/safe-json@1.0.2:

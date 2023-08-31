@@ -90,9 +90,6 @@ function getTsConfig(baseUrl: string) {
       moduleResolution: 'node',
       noEmit: true,
       paths: {
-        '@wagmi/chains': [
-          path.relative(baseUrl, 'references/packages/chains/src'),
-        ],
         '@wagmi/cli': [path.relative(baseUrl, 'packages/cli/src')],
         '@wagmi/cli/*': [path.relative(baseUrl, 'packages/cli/src/*')],
         '@wagmi/connectors': [

@@ -15,11 +15,10 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "paths": {
-      "@wagmi/chains": ["references/packages/chains/src"],
       "@wagmi/cli": ["packages/cli/src"],
       "@wagmi/cli/*": ["packages/cli/src/*"],
-      "@wagmi/connectors": ["references/packages/connectors/src"],
-      "@wagmi/connectors/*": ["references/packages/connectors/src/*"],
+      "@wagmi/connectors": ["packages/connectors/src"],
+      "@wagmi/connectors/*": ["packages/connectors/src/*"],
       "@wagmi/core": ["packages/core/src"],
       "@wagmi/core/*": ["packages/core/src/*"],
       "wagmi": ["packages/react/src"],
@@ -27,7 +26,7 @@
       // TODO: Remove once issue is fixed
       // https://github.com/microsoft/TypeScript/issues/48212
       "@safe-global/safe-apps-sdk": [
-        "references/packages/connectors/node_modules/@safe-global/safe-apps-sdk/dist/src"
+        "packages/connectors/node_modules/@safe-global/safe-apps-sdk/dist/src"
       ],
       "abitype": ["node_modules/abitype/dist/types"],
       "abitype/*": ["node_modules/abitype/dist/types/*"],
@@ -45,7 +44,6 @@
   "include": [
     "examples/**/*",
     "packages/**/*",
-    "references/**/*",
     "scripts/**/*",
     "**/vitest.config.ts"
   ]
