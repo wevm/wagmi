@@ -109,10 +109,13 @@ export async function generate(options: Generate = {}) {
         )
       const contract = await getContract({ ...contractConfig, isTypeScript })
       contractMap.set(contract.name, contract)
+
       contractNames.add(contractConfig.name)
     }
 
-    const contracts = [...contractMap.values()]
+    // Sort contracts by name Ascending (low to high) as the key is `String`
+    const sortedAscContractMap = new Map([...contractMap].sort())
+    const contracts = [...sortedAscContractMap.values()]
     if (!contracts.length && !options.watch) {
       spinner.fail()
       logger.warn('No contracts found.')
@@ -200,7 +203,9 @@ export async function generate(options: Generate = {}) {
             if (timeout) clearTimeout(timeout)
             timeout = setTimeout(async () => {
               timeout = null
-              const contracts = [...contractMap.values()]
+              // Sort contracts by name Ascending (low to high) as the key is `String`
+              const sortedAscContractMap = new Map([...contractMap].sort())
+              const contracts = [...sortedAscContractMap.values()]
               const imports = []
               const prepend = []
               const content = []
