@@ -167,21 +167,20 @@ const data = await multicall({
 
 Force a specific chain id for the request. The wagmi `Client`'s `publicClient` must be set up as a [chain-aware function](/core/config#publicclient-optional) for this to work correctly.
 
-```ts {9,14}
+```ts {5}
 import { multicall } from '@wagmi/core'
 import { optimism } from '@wagmi/core/chains'
 
 const data = await multicall({
+  chainId: optimism.id,
   contracts: [
     {
       ...wagmigotchiContract,
       functionName: 'getAlive',
-      chainId: optimism.id,
     },
     {
       ...wagmigotchiContract,
       functionName: 'getBoredom',
-      chainId: optimism.id,
     },
   ],
 })
