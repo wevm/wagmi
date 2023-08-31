@@ -16,12 +16,6 @@ export async function resolveConfig({
 }: ResolveConfig): Promise<MaybeArray<Config>> {
   const res = await bundleRequire({
     filepath: configPath,
-    ...(process.env.NODE_ENV === 'test'
-      ? {
-          // FIXME: Workaround https://github.com/egoist/bundle-require/issues/6
-          require: (id: string) => import(id),
-        }
-      : {}),
   })
   let config = res.mod.default
   if (config.default) config = config.default

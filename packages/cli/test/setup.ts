@@ -65,11 +65,3 @@ vi.mock('picocolors', async () => {
     },
   }
 })
-
-vi.mock('../package.json', async () => {
-  const packageJson = vi.importActual('../package.json')
-  return {
-    ...packageJson,
-    version: 'x.y.z',
-  }
-})
