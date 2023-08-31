@@ -1,5 +1,19 @@
 # @wagmi/cli
 
+## 1.4.0
+
+### Minor Changes
+
+- [#2946](https://github.com/wagmi-dev/wagmi/pull/2946) [`1c3228bf`](https://github.com/wagmi-dev/wagmi/commit/1c3228bf3fe99b0900b2c9a223c9b81c70bdcd90) Thanks [@tomquirk](https://github.com/tomquirk)! - Added default chain ID to generated `useContractRead` hook.
+
+### Patch Changes
+
+- [#2547](https://github.com/wagmi-dev/wagmi/pull/2547) [`8c3889fe`](https://github.com/wagmi-dev/wagmi/commit/8c3889fe82c5a1ddb29e74e3863ea6f4917b777a) Thanks [@Iamshankhadeep](https://github.com/Iamshankhadeep)! - Deterministic CLI output
+
+- [#2958](https://github.com/wagmi-dev/wagmi/pull/2958) [`b31f36d5`](https://github.com/wagmi-dev/wagmi/commit/b31f36d522a634f53d44349d6a9ea47f59d84d7a) Thanks [@tmm](https://github.com/tmm)! - Removed generated file header
+
+- [#2960](https://github.com/wagmi-dev/wagmi/pull/2960) [`5d4c4592`](https://github.com/wagmi-dev/wagmi/commit/5d4c4592009568cd0b096906a424f27469721a42) Thanks [@tmm](https://github.com/tmm)! - Updated esbuild version
+
 ## 1.3.0
 
 ### Minor Changes
