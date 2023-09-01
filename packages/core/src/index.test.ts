@@ -44,8 +44,6 @@ it('should expose correct exports', () => {
       "watchWalletClient",
       "watchWebSocketPublicClient",
       "writeContract",
-      "mainnet",
-      "sepolia",
       "createConfig",
       "getConfig",
       "Config",
@@ -67,6 +65,8 @@ it('should expose correct exports', () => {
       "deserialize",
       "getUnit",
       "serialize",
+      "mainnet",
+      "sepolia",
     ]
   `)
 })

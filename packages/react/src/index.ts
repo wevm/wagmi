@@ -63,13 +63,10 @@ export {
   erc20ABI,
   erc721ABI,
   erc4626ABI,
-  mainnet,
   readContracts,
-  sepolia,
   serialize,
 } from '@wagmi/core'
 export type {
-  Chain,
   ChainProviderFn,
   ConnectorData,
   ConnectorEvents,
@@ -82,3 +79,4 @@ export type {
 } from '@wagmi/core'
 
 export type { Address } from 'viem'
+export { mainnet, sepolia, type Chain } from 'viem/chains'
