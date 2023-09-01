@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 3.1.0
+
+### Minor Changes
+
+- [#2956](https://github.com/wagmi-dev/wagmi/pull/2956) [`2abeb285`](https://github.com/wagmi-dev/wagmi/commit/2abeb285674af3e539cc2550b1f5027b1eb0c895) Thanks [@tmm](https://github.com/tmm)! - Replaced `@wagmi/chains` with `viem/chains`.
+
 ## 3.0.0
 
 ### Patch Changes
