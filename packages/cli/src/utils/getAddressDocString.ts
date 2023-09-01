@@ -1,6 +1,6 @@
-import * as allChains from '@wagmi/chains'
 import { capitalCase } from 'change-case'
 import dedent from 'dedent'
+import * as allChains from 'viem/chains'
 
 import type { Contract } from '../config'
 

@@ -1,0 +1,119 @@
+{
+  "name": "@wagmi/connectors",
+  "description": "A collection of connectors for wagmi",
+  "license": "MIT",
+  "version": "3.0.0",
+  "scripts": {
+    "build": "tsup",
+    "dev": "DEV=true tsup"
+  },
+  "peerDependencies": {
+    "typescript": ">=5.0.4",
+    "viem": ">=0.3.35"
+  },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@coinbase/wallet-sdk": "^3.6.6",
+    "@ledgerhq/connect-kit-loader": "^1.1.0",
+    "@safe-global/safe-apps-provider": "^0.17.1",
+    "@safe-global/safe-apps-sdk": "^8.0.0",
+    "@walletconnect/ethereum-provider": "2.10.0",
+    "@walletconnect/utils": "2.10.0",
+    "@walletconnect/legacy-provider": "^2.0.0",
+    "@walletconnect/modal": "2.6.1",
+    "abitype": "0.8.7",
+    "eventemitter3": "^4.0.7"
+  },
+  "devDependencies": {
+    "viem": "^1.0.0"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./coinbaseWallet": {
+      "types": "./dist/coinbaseWallet.d.ts",
+      "default": "./dist/coinbaseWallet.js"
+    },
+    "./injected": {
+      "types": "./dist/injected.d.ts",
+      "default": "./dist/injected.js"
+    },
+    "./ledger": {
+      "types": "./dist/ledger.d.ts",
+      "default": "./dist/ledger.js"
+    },
+    "./metaMask": {
+      "types": "./dist/metaMask.d.ts",
+      "default": "./dist/metaMask.js"
+    },
+    "./mock": {
+      "types": "./dist/mock/index.d.ts",
+      "default": "./dist/mock/index.js"
+    },
+    "./safe": {
+      "types": "./dist/safe.d.ts",
+      "default": "./dist/safe.js"
+    },
+    "./walletConnect": {
+      "types": "./dist/walletConnect.d.ts",
+      "default": "./dist/walletConnect.js"
+    },
+    "./walletConnectLegacy": {
+      "types": "./dist/walletConnectLegacy.d.ts",
+      "default": "./dist/walletConnectLegacy.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "/coinbaseWallet",
+    "/injected",
+    "/ledger",
+    "/metaMask",
+    "/mock",
+    "/safe",
+    "/walletConnect",
+    "/walletConnectLegacy",
+    "/dist"
+  ],
+  "sideEffects": false,
+  "contributors": [
+    "awkweb.eth <t@wagmi.sh>",
+    "jxom.eth <j@wagmi.sh>"
+  ],
+  "homepage": "https://wagmi.sh",
+  "ethereum": "wagmi-dev.eth",
+  "funding": [
+    {
+      "type": "gitcoin",
+      "url": "https://wagmi.sh/gitcoin"
+    },
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/wagmi-dev"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wagmi-dev/references.git",
+    "directory": "packages/connectors"
+  },
+  "keywords": [
+    "react",
+    "hooks",
+    "eth",
+    "ethereum",
+    "dapps",
+    "wallet",
+    "web3",
+    "abi"
+  ]
+}
