@@ -116,9 +116,6 @@ export type {
   WriteContractUnpreparedArgs,
 } from './actions'
 
-export { mainnet, sepolia } from './chains'
-export type { Chain } from './chains'
-
 export { createConfig, getConfig, Config } from './config'
 export type { CreateConfigParameters } from './config'
 
@@ -161,3 +158,6 @@ export {
   serialize,
 } from './utils'
 export type { ConfigureChainsConfig } from './utils'
+
+export { mainnet, sepolia } from 'viem/chains'
+export type { Chain } from 'viem/chains'
