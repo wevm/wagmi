@@ -1,18 +1,7 @@
-import type { AbiParametersToPrimitiveTypes, ExtractAbiFunction } from 'abitype'
-import { Hex, RpcRequestError } from 'viem'
-import {
-  createPublicClient,
-  createWalletClient,
-  custom,
-  http,
-  webSocket,
-} from 'viem'
+import { Hex, createPublicClient, createWalletClient, custom, http } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
-import { foundry, goerli, mainnet, optimism, polygon } from 'viem/chains'
+import { Chain, foundry, goerli, mainnet, optimism, polygon } from 'viem/chains'
 import { rpc } from 'viem/utils'
-
-import type { Chain, WebSocketPublicClient } from '../src'
-import type { mirrorCrowdfundContractConfig } from './constants'
 
 export const foundryMainnet: Chain = {
   ...mainnet,
@@ -21,44 +10,6 @@ export const foundryMainnet: Chain = {
 
 export const testChains = [foundryMainnet, mainnet, goerli, optimism, polygon]
 
-export function getPublicClient({
-  chains = testChains,
-  chainId,
-}: { chains?: Chain[]; chainId?: number } = {}) {
-  const chain = chains.find((x) => x.id === chainId) ?? foundryMainnet
-  const url = foundryMainnet.rpcUrls.default.http[0]
-  const publicClient = createPublicClient({
-    chain,
-    transport: http(url),
-    pollingInterval: 1_000,
-  })
-  return Object.assign(publicClient, {
-    chains,
-    toJSON() {
-      return `<PublicClient network={${chain.id}} />`
-    },
-  })
-}
-
-export function getWebSocketPublicClient({
-  chains = testChains,
-  chainId,
-}: { chains?: Chain[]; chainId?: number } = {}) {
-  const chain = testChains.find((x) => x.id === chainId) ?? foundryMainnet
-  const url = foundryMainnet.rpcUrls.default.http[0]!.replace('http', 'ws')
-  const webSocketPublicClient = createPublicClient({
-    chain,
-    transport: webSocket(url),
-  })
-  return Object.assign(webSocketPublicClient, {
-    chains,
-    toJSON() {
-      return `<WebSocketPublicClient network={${chain.id}} />`
-    },
-  }) as WebSocketPublicClient
-}
-
-// Default accounts from Anvil
 export const accounts = [
   {
     privateKey:
@@ -162,76 +113,46 @@ export const accounts = [
   },
 ]
 
+export function getProvider({
+  chains = testChains,
+  chainId,
+}: { chains?: Chain[]; chainId?: number } = {}) {
+  const chain = chains.find((x) => x.id === chainId) ?? foundryMainnet
+  const url = foundryMainnet.rpcUrls.default.http[0]
+  const provider = createPublicClient({
+    chain,
+    transport: http(url),
+    pollingInterval: 1_000,
+  })
+  return Object.assign(provider, {
+    chains,
+    toJSON() {
+      return `<Provider network={${chain.id}} />`
+    },
+  })
+}
+
 export function getWalletClients() {
-  const publicClient = getPublicClient()
-  publicClient.request = async ({ method, params }: any) => {
+  const provider = getProvider()
+  provider.request = async ({ method, params }: any) => {
     if (method === 'personal_sign') {
       method = 'eth_sign'
       params = [params[1], params[0]]
     }
 
-    const url = foundryMainnet.rpcUrls.default.http[0]!
-    const body = {
-      method,
-      params,
-    }
-    const { result, error } = await rpc.http(url, {
-      body,
+    const { result } = await rpc.http(foundryMainnet.rpcUrls.default.http[0]!, {
+      body: {
+        method,
+        params,
+      },
     })
-    if (error) {
-      throw new RpcRequestError({
-        body,
-        error,
-        url,
-      })
-    }
     return result
   }
   return accounts.map((x) =>
     createWalletClient({
       account: privateKeyToAccount(x.privateKey as Hex).address,
-      chain: publicClient.chain,
-      transport: custom(publicClient),
+      chain: provider.chain,
+      transport: custom(provider),
     }),
   )
-}
-
-let crowdfundId = 0
-function getRandomNumber(from = 1, to = 100) {
-  return Math.floor(Math.random() * to) + from
-}
-
-type GetCrowdfundArgs = AbiParametersToPrimitiveTypes<
-  ExtractAbiFunction<
-    typeof mirrorCrowdfundContractConfig['abi'],
-    'createCrowdfund'
-  >['inputs']
->
-export function getCrowdfundArgs([
-  tributaryConfig = {
-    tributary: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-    feePercentage: 250n,
-  },
-  name = `Crowdfund ${crowdfundId}`,
-  symbol = `$Crowdfund${crowdfundId}-${getRandomNumber()}`,
-  operatorAddress = '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-  fundingRecipientAddress = '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-  fundingGoal = 100000000000000000000n,
-  operatorPercent = 100n,
-]: Partial<GetCrowdfundArgs> = []): GetCrowdfundArgs {
-  crowdfundId += 1
-  // do not change order of values below
-  return [
-    tributaryConfig,
-    name,
-    symbol,
-    operatorAddress,
-    fundingRecipientAddress,
-    fundingGoal,
-    operatorPercent,
-  ]
-}
-
-export function getRandomTokenId() {
-  return BigInt(Math.floor(Math.random() * 1000) + 69420)
 }
