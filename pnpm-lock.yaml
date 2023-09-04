@@ -7,7 +7,7 @@ settings:
 overrides:
   '@wagmi/connectors': workspace:*
   '@wagmi/core': workspace:*
-  viem: 0.0.0-w-20230904174840
+  viem: 0.0.0-alpha-20230904202619
 
 importers:
 
@@ -71,8 +71,8 @@ importers:
         specifier: 5.0.4
         version: 5.0.4
       viem:
-        specifier: 0.0.0-w-20230904174840
-        version: 0.0.0-w-20230904174840(typescript@5.0.4)
+        specifier: 0.0.0-alpha-20230904202619
+        version: 0.0.0-alpha-20230904202619(typescript@5.0.4)
       vite:
         specifier: ^4.3.9
         version: 4.3.9(@types/node@18.16.9)
@@ -110,8 +110,8 @@ importers:
         specifier: ^0.53.6
         version: 0.53.6(vite@4.3.9)
       viem:
-        specifier: 0.0.0-w-20230904174840
-        version: 0.0.0-w-20230904174840(typescript@5.0.4)
+        specifier: 0.0.0-alpha-20230904202619
+        version: 0.0.0-alpha-20230904202619(typescript@5.0.4)
       vitepress:
         specifier: 1.0.0-rc.10
         version: 1.0.0-rc.10(@types/node@18.16.9)(@types/react@18.2.21)(react@18.2.0)
@@ -209,8 +209,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0
       viem:
-        specifier: 0.0.0-w-20230904174840
-        version: 0.0.0-w-20230904174840(typescript@5.0.4)
+        specifier: 0.0.0-alpha-20230904202619
+        version: 0.0.0-alpha-20230904202619(typescript@5.0.4)
       wagmi:
         specifier: workspace:*
         version: link:../../react
@@ -261,8 +261,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       viem:
-        specifier: 0.0.0-w-20230904174840
-        version: 0.0.0-w-20230904174840(typescript@5.0.4)
+        specifier: 0.0.0-alpha-20230904202619
+        version: 0.0.0-alpha-20230904202619(typescript@5.0.4)
     devDependencies:
       '@esbuild-plugins/node-globals-polyfill':
         specifier: ^0.2.3
@@ -298,8 +298,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       viem:
-        specifier: 0.0.0-w-20230904174840
-        version: 0.0.0-w-20230904174840(typescript@5.0.4)
+        specifier: 0.0.0-alpha-20230904202619
+        version: 0.0.0-alpha-20230904202619(typescript@5.0.4)
       wagmi:
         specifier: workspace:*
         version: link:../../packages/react
@@ -1739,21 +1739,10 @@ packages:
       - supports-color
     dev: true
 
-  /@noble/curves@1.1.0:
-    resolution: {integrity: sha512-091oBExgENk/kGj3AZmtBDMpxQPDtxQABR2B9lb1JbVTs6ytdzZNwvhxQ4MWasRNEzlbEH8jCWFCwhF/Obj5AA==}
-    dependencies:
-      '@noble/hashes': 1.3.1
-    dev: false
-
   /@noble/curves@1.2.0:
     resolution: {integrity: sha512-oYclrNgRaM9SsBUBVbb8M6DTV7ZHRTKugureoYEncY5c65HOmRzvSiTE3y5CYaPYJA/GVkrhXEoF0M3Ya9PMnw==}
     dependencies:
       '@noble/hashes': 1.3.2
-
-  /@noble/hashes@1.3.1:
-    resolution: {integrity: sha512-EbqwksQwz9xDRGfDST86whPBgM65E0OH/pCgqW0GBVzO22bNE+NuIbeTb714+IfSjU3aRk47EUvXIb5bTsenKA==}
-    engines: {node: '>= 16'}
-    dev: false
 
   /@noble/hashes@1.3.2:
     resolution: {integrity: sha512-MVC8EAQp7MvEcm30KWENFjgR+Mkmf+D189XJTkFIlwohU5hcBbn1ZkKq7KVTi2Hme3PMGF390DaL52beVrIihQ==}
@@ -1889,7 +1878,7 @@ packages:
     resolution: {integrity: sha512-XJbEPuaVc7b9n23MqlF6c+ToYIS3f7P2Sel8f3cSBQ9WORE4xrSuvhMpK9fDSFqJ7by/brc+rmJR/5HViRr0/w==}
     dependencies:
       '@safe-global/safe-gateway-typescript-sdk': 3.8.0
-      viem: 0.0.0-w-20230904174840(typescript@5.0.4)
+      viem: 0.0.0-alpha-20230904202619(typescript@5.0.4)
     transitivePeerDependencies:
       - bufferutil
       - encoding
@@ -1906,9 +1895,6 @@ packages:
       - encoding
     dev: false
 
-  /@scure/base@1.1.1:
-    resolution: {integrity: sha512-ZxOhsSyxYwLJj3pLZCefNitxsj093tb2vq90mp2txoYeBqbcjDjqFhyM8eUjq/uFm6zJ+mUuqxlS2FkuSY1MTA==}
-
   /@scure/base@1.1.3:
     resolution: {integrity: sha512-/+SgoRjLq7Xlf0CWuLHq2LUZeL/w65kfzAPG5NH9pcmBhs+nunQTn4gvdwgMTIXnt9b2C/1SeL2XiysZEyIC9Q==}
 
@@ -1923,7 +1909,7 @@ packages:
     resolution: {integrity: sha512-Z3/Fsz1yr904dduJD0NpiyRHhRYHdcnyh73FZWiV+/qhWi83wNJ3NWolYqCEN+ZWsUz2TWwajJggcRE9r1zUYg==}
     dependencies:
       '@noble/hashes': 1.3.2
-      '@scure/base': 1.1.1
+      '@scure/base': 1.1.3
 
   /@sinclair/typebox@0.27.8:
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
@@ -1950,8 +1936,8 @@ packages:
     resolution: {integrity: sha512-aJtF/nTs+9St+KtTK/wgVJ+SinfjYzn+3w1ygYIPw8ST6LH+qHBn8XkodgDTwlv/xzNkaVz1kkUDOZ8BPXyZWA==}
     dependencies:
       '@babel/runtime': 7.21.0
-      '@noble/curves': 1.1.0
-      '@noble/hashes': 1.3.1
+      '@noble/curves': 1.2.0
+      '@noble/hashes': 1.3.2
       '@solana/buffer-layout': 4.0.1
       agentkeepalive: 4.3.0
       bigint-buffer: 1.1.5
@@ -7314,8 +7300,8 @@ packages:
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
 
-  /viem@0.0.0-w-20230904174840(typescript@5.0.4):
-    resolution: {integrity: sha512-vn8KSwstUc2vHr2gAkLkhIjIpCZD8DnUOLhGkUI3EoJm+5Yqz39Aj1PJOBF/H4TEAlh/vNm8sjP9sxzPUJo/hg==}
+  /viem@0.0.0-alpha-20230904202619(typescript@5.0.4):
+    resolution: {integrity: sha512-DBzq9guYeQOouJq9m9qaHu+DcVFQpNxCwZ4LxDrWwQOv8LLZcr4+hurj5WYGgyeeHyFWW1X0hobSF0iMsmLgsg==}
     peerDependencies:
       typescript: '>=5.0.4'
     peerDependenciesMeta:
