@@ -80,7 +80,7 @@ export { fooBarBaz } from './fooBarBaz.js'
 
 #### 5. Try out your connector and add tests.
 
-While building a connector, it can be useful to try it out with Wagmi. You can follow the setup [guide in the Wagmi repo](https://alpha.wagmi.sh/react/contributing), to use the local development playground for testing your changes.
+While building a connector, it can be useful to try it out with Wagmi. You can follow the setup [guide in the Wagmi repo](https://alpha.wagmi.sh/dev/contributing), to use the local development playground for testing your changes.
 
 Ideally, you should also be able to add tests for your connector in a `connectorName.test.ts` file. This isn't always easy so at a minimum please create a test file with instructions for how to test your connector manually. The test file should include actual tests or "instruction tests" for the following:
 

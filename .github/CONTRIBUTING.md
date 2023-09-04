@@ -1,3 +1,3 @@
 # Contributing
 
-[**Contributing Guide ↗**](https://alpha.wagmi.sh/react/contributing)
+[**Contributing Guide ↗**](https://alpha.wagmi.sh/dev/contributing)

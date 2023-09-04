@@ -201,10 +201,6 @@ export function getSidebar() {
           },
         ],
       },
-      {
-        text: 'Miscellaneous',
-        items: [{ text: 'Contributing', link: '/react/contributing' }],
-      },
     ],
     '/core': [
       {
@@ -377,6 +373,12 @@ export function getSidebar() {
             ],
           },
         ],
+      },
+    ],
+    '/dev': [
+      {
+        text: 'Dev',
+        items: [{ text: 'Contributing', link: '/dev/contributing' }],
       },
     ],
   } satisfies DefaultTheme.Sidebar

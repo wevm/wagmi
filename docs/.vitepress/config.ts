@@ -76,7 +76,7 @@ export default withTwoslash(
         { text: 'React', link: '/react/getting-started' },
         { text: 'Core', link: '/core/getting-started' },
         { text: 'CLI', link: '/cli/getting-started' }, // TODO
-        { text: 'Examples', link: '/examples' },
+        { text: 'Examples', link: '/examples' }, // TODO
         {
           text: 'Links',
           items: [
@@ -90,7 +90,7 @@ export default withTwoslash(
             },
             {
               text: 'Contributing ',
-              link: '/contributing',
+              link: '/dev/contributing',
             },
           ],
         },

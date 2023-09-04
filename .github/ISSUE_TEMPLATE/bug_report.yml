@@ -70,5 +70,5 @@ body:
           required: true
         - label: Followed the [Code of Conduct](https://github.com/wagmi-dev/.github/blob/main/CODE_OF_CONDUCT.md).
           required: true
-        - label: Read the [Contributing Guide](https://alpha.wagmi.sh/react/contributing).
+        - label: Read the [Contributing Guide](https://alpha.wagmi.sh/dev/contributing).
           required: true
