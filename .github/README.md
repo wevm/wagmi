@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  Reactive primitives for modern Ethereum apps
+  Reactive primitives for Ethereum apps
 <p>
 
 <p align="center">
