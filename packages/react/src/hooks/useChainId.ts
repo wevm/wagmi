@@ -16,7 +16,7 @@ export type UseChainIdParameters<config extends Config = Config,> =
 export type UseChainIdReturnType<config extends Config = Config,> =
   GetChainIdReturnType<config>
 
-/** https://wagmi.sh/react/hooks/useChainId */
+/** https://alpha.wagmi.sh/react/hooks/useChainId */
 export function useChainId<config extends Config = ResolvedRegister['config']>(
   parameters: UseChainIdParameters<config> = {},
 ): UseChainIdReturnType<config> {

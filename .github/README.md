@@ -48,7 +48,7 @@
 
 ## Documentation
 
-For documentation and guides, visit [wagmi.sh](https://wagmi.sh).
+For documentation and guides, visit [wagmi.sh](https://alpha.wagmi.sh).
 
 ## Community
 

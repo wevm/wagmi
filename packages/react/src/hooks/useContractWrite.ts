@@ -49,7 +49,7 @@ export type UseContractWriteReturnType<
   writeAsync: WriteContractMutateAsync<config, context>
 }
 
-/** https://wagmi.sh/react/hooks/useContractWrite */
+/** https://alpha.wagmi.sh/react/hooks/useContractWrite */
 export function useContractWrite<
   config extends Config = ResolvedRegister['config'],
   context = unknown,

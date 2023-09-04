@@ -38,7 +38,7 @@ export type UseTransactionReturnType<
   selectData = GetTransactionData<config, chainId>,
 > = UseQueryResult<selectData, GetTransactionError>
 
-/** https://wagmi.sh/react/hooks/useTransaction */
+/** https://alpha.wagmi.sh/react/hooks/useTransaction */
 export function useTransaction<
   config extends Config = ResolvedRegister['config'],
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],

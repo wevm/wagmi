@@ -16,7 +16,7 @@ export type GetEnsAvatarReturnType = viem_GetEnsAvatarReturnType
 
 export type GetEnsAvatarError = Error
 
-/** https://wagmi.sh/core/actions/getEnsAvatar */
+/** https://alpha.wagmi.sh/core/actions/getEnsAvatar */
 export function getEnsAvatar<config extends Config>(
   config: config,
   parameters: GetEnsAvatarParameters<config>,

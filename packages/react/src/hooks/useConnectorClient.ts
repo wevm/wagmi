@@ -45,7 +45,7 @@ export type UseConnectorClientReturnType<
   selectData = GetConnectorClientData<config, chainId>,
 > = UseQueryResult<selectData, GetConnectorClientError>
 
-/** https://wagmi.sh/react/hooks/useConnectorClient */
+/** https://alpha.wagmi.sh/react/hooks/useConnectorClient */
 export function useConnectorClient<
   config extends Config = ResolvedRegister['config'],
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],

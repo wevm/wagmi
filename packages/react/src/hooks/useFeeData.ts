@@ -40,7 +40,7 @@ export type UseFeeDataReturnType<selectData = GetFeeDataData> = UseQueryResult<
   GetFeeDataError
 >
 
-/** https://wagmi.sh/react/hooks/useFeeData */
+/** https://alpha.wagmi.sh/react/hooks/useFeeData */
 export function useFeeData<
   config extends Config = ResolvedRegister['config'],
   selectData = GetFeeDataData,

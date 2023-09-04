@@ -15,7 +15,7 @@ export type ReconnectError = Error
 
 let isReconnecting = false
 
-/** https://wagmi.sh/core/actions/reconnect */
+/** https://alpha.wagmi.sh/core/actions/reconnect */
 export async function reconnect(
   config: Config,
   parameters: ReconnectParameters = {},

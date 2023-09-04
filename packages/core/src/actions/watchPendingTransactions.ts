@@ -19,7 +19,7 @@ export type WatchPendingTransactionsReturnType =
   viem_WatchPendingTransactionsReturnType
 
 // TODO: wrap in viem's `observe` to avoid duplicate invocations.
-/** https://wagmi.sh/core/actions/watchPendingTransactions */
+/** https://alpha.wagmi.sh/core/actions/watchPendingTransactions */
 export function watchPendingTransactions<config extends Config>(
   config: config,
   parameters: WatchPendingTransactionsParameters<config>,

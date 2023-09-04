@@ -41,7 +41,7 @@ export type UseBlockNumberParameters<
 export type UseBlockNumberReturnType<selectData = GetBlockNumberData> =
   UseQueryResult<selectData, GetBlockNumberError>
 
-/** https://wagmi.sh/react/hooks/useBlockNumber */
+/** https://alpha.wagmi.sh/react/hooks/useBlockNumber */
 export function useBlockNumber<
   config extends Config = ResolvedRegister['config'],
   selectData = GetBlockNumberData,

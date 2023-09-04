@@ -35,7 +35,7 @@ export type UseSignMessageReturnType<context = unknown> = Evaluate<
   }
 >
 
-/** https://wagmi.sh/react/hooks/useSignMessage */
+/** https://alpha.wagmi.sh/react/hooks/useSignMessage */
 export function useSignMessage<context = unknown>(
   parameters: UseSignMessageParameters<context> = {},
 ): UseSignMessageReturnType<context> {

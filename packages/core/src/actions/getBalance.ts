@@ -35,7 +35,7 @@ export type GetBalanceReturnType = {
 
 export type GetBalanceError = Error
 
-/** https://wagmi.sh/core/actions/getBalance */
+/** https://alpha.wagmi.sh/core/actions/getBalance */
 export async function getBalance<config extends Config>(
   config: config,
   parameters: GetBalanceParameters<config>,

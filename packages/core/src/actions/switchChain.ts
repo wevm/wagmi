@@ -35,7 +35,7 @@ export type SwitchChainError =
   | BaseError
   | Error
 
-/** https://wagmi.sh/core/actions/switchChain */
+/** https://alpha.wagmi.sh/core/actions/switchChain */
 export async function switchChain<
   config extends Config,
   chainId extends config['chains'][number]['id'],

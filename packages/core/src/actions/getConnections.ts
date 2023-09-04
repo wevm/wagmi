@@ -6,7 +6,7 @@ export type GetConnectionsReturnType = Evaluate<Connection>[]
 
 let previousConnections: Connection[] = []
 
-/** https://wagmi.sh/core/actions/getConnections */
+/** https://alpha.wagmi.sh/core/actions/getConnections */
 export function getConnections(config: Config): GetConnectionsReturnType {
   const connections = [...config.state.connections.values()]
   if (config.state.status === 'reconnecting') return previousConnections
@@ -24,7 +24,7 @@ export type WatchConnectionsParameters = {
 
 export type WatchConnectionsReturnType = () => void
 
-/** https://wagmi.sh/core/actions/getConnections#watchconnections */
+/** https://alpha.wagmi.sh/core/actions/getConnections#watchconnections */
 export function watchConnections(
   config: Config,
   parameters: WatchConnectionsParameters,

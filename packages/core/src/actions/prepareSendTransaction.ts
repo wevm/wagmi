@@ -49,7 +49,7 @@ export type PrepareSendTransactionReturnType<
 
 export type PrepareSendTransactionError = Error
 
-/** https://wagmi.sh/core/actions/prepareSendTransaction */
+/** https://alpha.wagmi.sh/core/actions/prepareSendTransaction */
 export async function prepareSendTransaction<
   config extends Config,
   chainId extends config['chains'][number]['id'],

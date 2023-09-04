@@ -34,7 +34,7 @@ export type UseEnsAddressParameters<
 export type UseEnsAddressReturnType<selectData = GetEnsAddressData> =
   UseQueryResult<selectData, GetEnsAddressError>
 
-/** https://wagmi.sh/react/hooks/useEnsAddress */
+/** https://alpha.wagmi.sh/react/hooks/useEnsAddress */
 export function useEnsAddress<
   config extends Config = ResolvedRegister['config'],
   selectData = GetEnsAddressData,

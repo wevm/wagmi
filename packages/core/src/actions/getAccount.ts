@@ -49,7 +49,7 @@ export type GetAccountReturnType =
       status: 'disconnected'
     }
 
-/** https://wagmi.sh/core/actions/getAccount */
+/** https://alpha.wagmi.sh/core/actions/getAccount */
 export function getAccount(config: Config): GetAccountReturnType {
   const uid = config.state.current!
   const connection = config.state.connections.get(uid)
@@ -118,7 +118,7 @@ export type WatchAccountParameters = {
 
 export type WatchAccountReturnType = () => void
 
-/** https://wagmi.sh/core/actions/getAccount#watchaccount */
+/** https://alpha.wagmi.sh/core/actions/getAccount#watchaccount */
 export function watchAccount(
   config: Config,
   { onChange }: WatchAccountParameters,

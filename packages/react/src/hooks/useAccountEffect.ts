@@ -21,7 +21,7 @@ export type UseAccountEffectParameters = Evaluate<
   } & ConfigParameter
 >
 
-/** https://wagmi.sh/react/hooks/useAccountEffect */
+/** https://alpha.wagmi.sh/react/hooks/useAccountEffect */
 export function useAccountEffect(parameters: UseAccountEffectParameters = {}) {
   const { onConnect, onDisconnect } = parameters
   const config = useConfig(parameters)

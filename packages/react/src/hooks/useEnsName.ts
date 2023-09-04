@@ -36,7 +36,7 @@ export type UseEnsNameReturnType<selectData = GetEnsNameData> = UseQueryResult<
   GetEnsNameError
 >
 
-/** https://wagmi.sh/react/hooks/useEnsName */
+/** https://alpha.wagmi.sh/react/hooks/useEnsName */
 export function useEnsName<
   config extends Config = ResolvedRegister['config'],
   selectData = GetEnsNameData,

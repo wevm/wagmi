@@ -40,7 +40,7 @@ export type UsePrepareSendTransactionReturnType<
   selectData = PrepareSendTransactionData<config, chainId>,
 > = UseQueryResult<selectData, PrepareSendTransactionError>
 
-/** https://wagmi.sh/react/hooks/usePrepareSendTransaction */
+/** https://alpha.wagmi.sh/react/hooks/usePrepareSendTransaction */
 export function usePrepareSendTransaction<
   config extends Config = ResolvedRegister['config'],
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],

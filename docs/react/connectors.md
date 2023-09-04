@@ -1,7 +1,7 @@
 <script setup>
 import { getSidebar } from '../.vitepress/sidebar'
 
-const hooks = getSidebar()['/react']
+const connectors = getSidebar()['/react']
   .find(x => x.text === 'API').items
   .find(x => x.link === '/react/connectors').items
   .sort((a, b) => a.text.localeCompare(b.text))
@@ -22,13 +22,7 @@ import { injected } from 'wagmi/connectors'
 Available via the `'wagmi/connectors'` entrypoint.
 
 <ul>
-  <li v-for="hook of hooks">
-    <a :href="hook.link">{{ hook.text }}</a>
+  <li v-for="connector of connectors">
+    <a :href="connector.link">{{ connector.text }}</a>
   </li>
 </ul>
-
-## Third-Party Connectors
-
-High-quality connectors from the community.
-
-- 

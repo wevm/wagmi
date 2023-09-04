@@ -3,7 +3,7 @@ import type { Config } from '../createConfig.js'
 export type GetChainIdReturnType<config extends Config = Config> =
   config['chains'][number]['id']
 
-/** https://wagmi.sh/core/actions/getChainId */
+/** https://alpha.wagmi.sh/core/actions/getChainId */
 export function getChainId<config extends Config>(
   config: config,
 ): GetChainIdReturnType<config> {
@@ -19,7 +19,7 @@ export type WatchChainIdParameters<config extends Config = Config> = {
 
 export type WatchChainIdReturnType = () => void
 
-/** https://wagmi.sh/core/actions/getChainId#watchchainid */
+/** https://alpha.wagmi.sh/core/actions/getChainId#watchchainid */
 export function watchChainId<config extends Config>(
   config: config,
   parameters: WatchChainIdParameters<config>,

@@ -35,7 +35,7 @@ export type UseSignTypedDataReturnType<context = unknown> = Evaluate<
   }
 >
 
-/** https://wagmi.sh/react/hooks/useSignTypedData */
+/** https://alpha.wagmi.sh/react/hooks/useSignTypedData */
 export function useSignTypedData<context = unknown>(
   parameters: UseSignTypedDataParameters<context> = {},
 ): UseSignTypedDataReturnType<context> {

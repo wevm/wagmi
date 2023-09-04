@@ -63,7 +63,7 @@ export type WriteContractReturnType = {
 
 export type WriteContractError = Error
 
-/** https://wagmi.sh/core/actions/writeContract */
+/** https://alpha.wagmi.sh/core/actions/writeContract */
 export async function writeContract<
   config extends Config,
   const abi extends Abi | readonly unknown[],

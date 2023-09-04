@@ -43,7 +43,7 @@ export type SendTransactionReturnType = {
 
 export type SendTransactionError = Error
 
-/** https://wagmi.sh/core/actions/sendTransaction */
+/** https://alpha.wagmi.sh/core/actions/sendTransaction */
 export async function sendTransaction<
   config extends Config,
   chainId extends config['chains'][number]['id'],
