@@ -3,6 +3,7 @@ import { assertType, expectTypeOf, test } from 'vitest'
 import {
   type Evaluate,
   type ExactPartial,
+  type IsNever,
   type Mutable,
   type OneOf,
   type PartialBy,
@@ -13,6 +14,10 @@ test('ExactPartial', () => {
     foo?: boolean | undefined
     bar?: boolean | undefined
   }>()
+})
+
+test('IsNever', () => {
+  expectTypeOf<IsNever<never>>().toEqualTypeOf<true>()
 })
 
 test('Mutable', () => {

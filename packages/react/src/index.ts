@@ -32,7 +32,11 @@ export { WagmiProviderNotFoundError } from './errors/context.js'
 ////////////////////////////////////////////////////////////////////////////////
 // Hooks
 
-export { type UseAccountReturnType, useAccount } from './hooks/useAccount.js'
+export {
+  type UseAccountParameters,
+  type UseAccountReturnType,
+  useAccount,
+} from './hooks/useAccount.js'
 
 export {
   type UseAccountEffectParameters,
@@ -58,6 +62,7 @@ export {
 } from './hooks/useChainId.js'
 
 export {
+  type UseConfigParameters,
   type UseConfigReturnType,
   useConfig,
 } from './hooks/useConfig.js'

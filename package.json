@@ -73,7 +73,8 @@
   },
   "knip": {
     "ignore": ["**/*.test-d.ts", "**/vite-env.d.ts", "vitest.workspace.ts"],
-    "ignoreDependencies": ["only-allow"],
+    "ignoreBinaries": ["biome"],
+    "ignoreDependencies": ["@biomejs/biome", "@changesets/cli", "only-allow"],
     "ignoreWorkspaces": ["docs", "packages/register-tests/**"],
     "workspaces": {
       ".": { "entry": "scripts/*.ts" },

@@ -23,13 +23,6 @@ export type IsNarrowable<type, type2> = IsUnknown<type> extends true
 /** Checks if {@link type} is `never` */
 export type IsNever<type> = [type] extends [never] ? true : false
 
-/** Checks if {@link type} is union */
-export type IsUnion<
-  type,
-  ///
-  type2 = type,
-> = type extends type2 ? ([type2] extends [type] ? false : true) : never
-
 /** Checks if {@link type} is `unknown` */
 export type IsUnknown<type> = unknown extends type ? true : false
 

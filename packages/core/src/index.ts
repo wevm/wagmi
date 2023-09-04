@@ -52,6 +52,29 @@ export {
 } from './actions/getBlockNumber.js'
 
 export {
+  type GetChainIdReturnType,
+  getChainId,
+  type WatchChainIdParameters,
+  type WatchChainIdReturnType,
+  watchChainId,
+} from './actions/getChainId.js'
+
+export {
+  type GetConnectionsReturnType,
+  getConnections,
+  type WatchConnectionsParameters,
+  type WatchConnectionsReturnType,
+  watchConnections,
+} from './actions/getConnections.js'
+
+export {
+  type GetConnectorClientError,
+  type GetConnectorClientParameters,
+  type GetConnectorClientReturnType,
+  getConnectorClient,
+} from './actions/getConnectorClient.js'
+
+export {
   type GetEnsAddressError,
   type GetEnsAddressParameters,
   type GetEnsAddressReturnType,
@@ -101,27 +124,10 @@ export {
 } from './actions/getTransaction.js'
 
 export {
-  type GetChainIdReturnType,
-  getChainId,
-  type WatchChainIdParameters,
-  type WatchChainIdReturnType,
-  watchChainId,
-} from './actions/getChainId.js'
-
-export {
-  type GetConnectionsReturnType,
-  getConnections,
-  type WatchConnectionsParameters,
-  type WatchConnectionsReturnType,
-  watchConnections,
-} from './actions/getConnections.js'
-
-export {
-  type GetConnectorClientError,
-  type GetConnectorClientParameters,
-  type GetConnectorClientReturnType,
-  getConnectorClient,
-} from './actions/getConnectorClient.js'
+  type MulticallParameters,
+  type MulticallReturnType,
+  multicall,
+} from './actions/multicall.js'
 
 export {
   type PrepareSendTransactionError,
