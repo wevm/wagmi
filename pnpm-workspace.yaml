@@ -3,4 +3,3 @@ packages:
   - 'examples/*'
   - 'packages/*'
   - 'packages/**/__fixtures__/*'
-  - 'references/packages/*'

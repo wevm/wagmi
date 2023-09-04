@@ -93,10 +93,10 @@ function getTsConfig(baseUrl: string) {
         '@wagmi/cli': [path.relative(baseUrl, 'packages/cli/src')],
         '@wagmi/cli/*': [path.relative(baseUrl, 'packages/cli/src/*')],
         '@wagmi/connectors': [
-          path.relative(baseUrl, 'references/packages/connectors/src'),
+          path.relative(baseUrl, 'packages/connectors/src'),
         ],
         '@wagmi/connectors/*': [
-          path.relative(baseUrl, 'references/packages/connectors/src/*'),
+          path.relative(baseUrl, 'packages/connectors/src/*'),
         ],
         '@wagmi/core': [path.relative(baseUrl, 'packages/core/src')],
         '@wagmi/core/*': [path.relative(baseUrl, 'packages/core/src/*')],
