@@ -66,7 +66,7 @@ Contributions to Wagmi are greatly appreciated! If you're interested in contribu
 
 ## Sponsors
 
-If you find Wagmi useful or use it at work, please consider [sponsoring Wagmi](https://github.com/sponsors/wagmi-dev?metadata_campaign=gh_readme_support). Thank you 🙏
+If you find Wagmi useful or use it for work, please consider [sponsoring Wagmi](https://github.com/sponsors/wagmi-dev?metadata_campaign=gh_readme_support). Thank you 🙏
 
 <a href="https://paradigm.xyz">
   <picture>
