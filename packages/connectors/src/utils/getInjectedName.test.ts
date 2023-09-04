@@ -69,6 +69,7 @@ describe.each([
   { ethereum: { isTrustWallet: true }, expected: 'Trust Wallet' },
   { ethereum: { isTTWallet: true }, expected: 'TTWallet' },
   { ethereum: { isXDEFI: true }, expected: 'XDEFI Wallet' },
+  { ethereum: { isZeal: true }, expected: 'Zeal' },
   { ethereum: { isZerion: true }, expected: 'Zerion' },
   { ethereum: { isMetaMask: true }, expected: 'MetaMask' },
   {
