@@ -62,7 +62,7 @@ For casual chit-chat with others using the framework:
 
 ## Contributing
 
-Contributions to Wagmi are greatly appreciated! If you're interested in contributing to Wagmi, please read the [Contributing Guide](https://github.com/wagmi-dev/wagmi/blob/main/.github/CONTRIBUTING.md) before submitting a pull request.
+Contributions to Wagmi are greatly appreciated! If you're interested in contributing to Wagmi, please read the [Contributing Guide](https://alpha.wagmi.sh/react/contributing) before submitting a pull request.
 
 ## Sponsors
 
