@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 3.1.1
+
+### Patch Changes
+
+- [#2973](https://github.com/wagmi-dev/wagmi/pull/2973) [`bf831bb3`](https://github.com/wagmi-dev/wagmi/commit/bf831bb30df8037cc4312342d0fe3c045408c2fe) Thanks [@masm](https://github.com/masm)! - Added Zeal wallet
+
 ## 3.1.0
 
 ### Minor Changes
