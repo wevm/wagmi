@@ -55,6 +55,7 @@ type InjectedProviderFlags = {
   isTrustWallet?: true
   isTTWallet?: true
   isXDEFI?: true
+  isZeal?: true
   isZerion?: true
 }
 
