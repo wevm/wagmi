@@ -41,13 +41,13 @@ This guide covers more advanced topics. Pick the topics based on your needs.
 To start contributing to the project, clone it to your local machine using git:
 
 ```bash
-git clone https://github.com/wagmi-dev/wagmi.git --recurse-submodules
+git clone https://github.com/wagmi-dev/wagmi.git
 ```
 
 Or the [GitHub CLI](https://cli.github.com):
 
 ```bash
-gh repo clone wagmi-dev/wagmi -- --recurse-submodules
+gh repo clone wagmi-dev/wagmi
 ```
 
 <div align="right">
