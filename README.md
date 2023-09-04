@@ -170,7 +170,7 @@ If you find Wagmi useful or use it at work, please consider [supporting developm
   </a>
 </p>
 
-[**Sponsor Wagmi ↗**](https://github.com/sponsors/wagmi-dev?metadata_campaign=gh_readme_support_bottom)
+[**Sponsor Wagmi & Support Development ↗**](https://github.com/sponsors/wagmi-dev?metadata_campaign=gh_readme_support_bottom)
 
 <br />
 <br />
