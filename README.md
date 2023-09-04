@@ -48,25 +48,25 @@
 
 ## Documentation
 
-For documentation and guides, visit [**wagmi.sh**](https://wagmi.sh).
+For documentation and guides, visit [wagmi.sh](https://wagmi.sh).
 
 ## Community
 
 For help, discussion about best practices, or any other conversation that would benefit from being searchable:
 
-[**Discuss Wagmi on GitHub ↗**](https://github.com/wagmi-dev/wagmi/discussions)
+[Discuss Wagmi on GitHub](https://github.com/wagmi-dev/wagmi/discussions)
 
 For casual chit-chat with others using the framework:
 
-[**Join the Wagmi Slack ↗**](https://join.slack.com/t/wagmi-community/shared_invite/zt-21zxb2mhv-EcN32c1Qx4Z3vRAfEKbbJw)
+[Join the Wagmi Slack](https://join.slack.com/t/wagmi-community/shared_invite/zt-21zxb2mhv-EcN32c1Qx4Z3vRAfEKbbJw)
 
 ## Contributing
 
-Contributions to Wagmi are greatly appreciated! If you're interested in contributing to Wagmi, please read the [**Contributing Guide**](https://github.com/wagmi-dev/wagmi/blob/main/.github/CONTRIBUTING.md) **before submitting a pull request**.
+Contributions to Wagmi are greatly appreciated! If you're interested in contributing to Wagmi, please read the [Contributing Guide](https://github.com/wagmi-dev/wagmi/blob/main/.github/CONTRIBUTING.md) before submitting a pull request.
 
 ## Sponsors
 
-If you find Wagmi useful or use it at work, please consider [**sponsoring Wagmi**](https://github.com/sponsors/wagmi-dev?metadata_campaign=gh_readme_support). Thank you 🙏
+If you find Wagmi useful or use it at work, please consider [sponsoring Wagmi](https://github.com/sponsors/wagmi-dev?metadata_campaign=gh_readme_support). Thank you 🙏
 
 <a href="https://paradigm.xyz">
   <picture>
@@ -170,7 +170,7 @@ If you find Wagmi useful or use it at work, please consider [**sponsoring Wagmi*
   </a>
 </p>
 
-[**Sponsor Wagmi ↗**](https://github.com/sponsors/wagmi-dev?metadata_campaign=gh_readme_support_bottom)
+[Sponsor Wagmi](https://github.com/sponsors/wagmi-dev?metadata_campaign=gh_readme_support_bottom)
 
 <br />
 <br />
