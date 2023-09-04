@@ -170,14 +170,14 @@ If you find Wagmi useful or use it at work, please consider [supporting developm
   </a>
 </p>
 
+## Authors
+
+- [@tmm](https://github.com/tmm) (awkweb.eth, [Twitter](https://twitter.com/awkweb))
+- [@jxom](https://github.com/jxom) (jxom.eth, [Twitter](https://twitter.com/jakemoxey))
+
 <br />
 <br />
 
 <a href="https://vercel.com/?utm_source=wagmi-dev&utm_campaign=oss">
   <img src="https://www.datocms-assets.com/31049/1618983297-powered-by-vercel.svg" alt="Powered by Vercel" height="35">
 </a>
-
-## Authors
-
-- [@tmm](https://github.com/tmm) (awkweb.eth, [Twitter](https://twitter.com/awkweb))
-- [@jxom](https://github.com/jxom) (jxom.eth, [Twitter](https://twitter.com/jakemoxey))
