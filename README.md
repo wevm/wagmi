@@ -170,10 +170,7 @@ If you find Wagmi useful or use it at work, please consider [supporting developm
   </a>
 </p>
 
-## Authors
-
-- [**tmm**](https://github.com/tmm) - awkweb.eth / [@awkweb](https://twitter.com/awkweb)
-- [**jxom**](https://github.com/jxom) - jxom.eth / [@_jxom](https://twitter.com/_jxom)
+[**Sponsor Wagmi ↗**](https://github.com/sponsors/wagmi-dev?metadata_campaign=gh_readme_support_bottom)
 
 <br />
 <br />
