@@ -5,7 +5,7 @@ import { expect, test } from 'vitest'
 
 import { createConfig } from './createConfig.js'
 
-test('exports', () => {
+test('default', () => {
   const config = createConfig({
     chains: [mainnet],
     connectors: [testConnector({ accounts })],
