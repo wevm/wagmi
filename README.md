@@ -172,8 +172,8 @@ If you find Wagmi useful or use it at work, please consider [supporting developm
 
 ## Authors
 
-- [@tmm](https://github.com/tmm) (awkweb.eth, [Twitter](https://twitter.com/awkweb))
-- [@jxom](https://github.com/jxom) (jxom.eth, [Twitter](https://twitter.com/jakemoxey))
+- [**tmm**](https://github.com/tmm) (awkweb.eth, [@awkweb](https://twitter.com/awkweb))
+- [**jxom**](https://github.com/jxom) (jxom.eth, [@_jxom](https://twitter.com/_jxom))
 
 <br />
 <br />
