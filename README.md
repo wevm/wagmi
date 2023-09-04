@@ -48,17 +48,17 @@
 
 ## Documentation
 
-For documentation, visit [**wagmi.sh**](https://wagmi.sh).
+For documentation and guides, visit [**wagmi.sh**](https://wagmi.sh).
 
 ## Community
 
 For help, discussion about best practices, or any other conversation that would benefit from being searchable:
 
-[**Discuss Wagmi on GitHub**](https://github.com/wagmi-dev/wagmi/discussions)
+[**Discuss Wagmi on GitHub ↗**](https://github.com/wagmi-dev/wagmi/discussions)
 
 For casual chit-chat with others using the framework:
 
-[**Join the Wagmi Slack**](https://join.slack.com/t/wagmi-community/shared_invite/zt-21zxb2mhv-EcN32c1Qx4Z3vRAfEKbbJw)
+[**Join the Wagmi Slack ↗**](https://join.slack.com/t/wagmi-community/shared_invite/zt-21zxb2mhv-EcN32c1Qx4Z3vRAfEKbbJw)
 
 ## Contributing
 
