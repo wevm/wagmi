@@ -1,3 +1,5 @@
+<br>
+
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/logo-dark.svg">
@@ -6,32 +8,38 @@
 </p>
 
 <p align="center">
-  Reactive primitives for building modern Ethereum apps
+  Reactive primitives for modern Ethereum apps
 <p>
 
 <p align="center">
   <a href="https://www.npmjs.com/package/wagmi">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/wagmi?colorA=21262d&colorB=21262d&style=flat">
-      <img src="https://img.shields.io/npm/v/wagmi?colorA=f6f8fa&colorB=f6f8fa&style=flat" alt="Version">
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/wagmi?colorA=21262d&colorB=21262d">
+      <img src="https://img.shields.io/npm/v/wagmi?colorA=f6f8fa&colorB=f6f8fa" alt="Version">
     </picture>
   </a>
   <a href="https://github.com/wagmi-dev/wagmi/blob/main/LICENSE">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/l/wagmi?colorA=21262d&colorB=21262d&style=flat">
-      <img src="https://img.shields.io/npm/l/wagmi?colorA=f6f8fa&colorB=f6f8fa&style=flat" alt="MIT License">
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/l/wagmi?colorA=21262d&colorB=21262d">
+      <img src="https://img.shields.io/npm/l/wagmi?colorA=f6f8fa&colorB=f6f8fa" alt="MIT License">
     </picture>
   </a>
   <a href="https://www.npmjs.com/package/wagmi">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/dm/wagmi?colorA=21262d&colorB=21262d&style=flat">
-      <img src="https://img.shields.io/npm/dm/wagmi?colorA=f6f8fa&colorB=f6f8fa&style=flat" alt="Downloads per month">
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/dm/wagmi?colorA=21262d&colorB=21262d">
+      <img src="https://img.shields.io/npm/dm/wagmi?colorA=f6f8fa&colorB=f6f8fa" alt="Downloads per month">
     </picture>
   </a>
   <a href="https://bestofjs.org/projects/wagmi">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/endpoint?colorA=21262d&colorB=21262d&style=flat&url=https://bestofjs-serverless.now.sh/api/project-badge?fullName=wagmi-dev%2Fviem%26since=daily">
-      <img src="https://img.shields.io/endpoint?colorA=f6f8fa&colorB=f6f8fa&style=flat&url=https://bestofjs-serverless.now.sh/api/project-badge?fullName=wagmi-dev%2Fviem%26since=daily" alt="Best of JS">
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/endpoint?colorA=21262d&colorB=21262d&url=https://bestofjs-serverless.now.sh/api/project-badge?fullName=wagmi-dev%2Fviem%26since=daily">
+      <img src="https://img.shields.io/endpoint?colorA=f6f8fa&colorB=f6f8fa&url=https://bestofjs-serverless.now.sh/api/project-badge?fullName=wagmi-dev%2Fviem%26since=daily" alt="Best of JS">
+    </picture>
+  </a>
+  <a href="https://app.codecov.io/gh/wagmi-dev/wagmi">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/codecov/c/github/wagmi-dev/wagmi?colorA=21262d&colorB=21262d">
+      <img src="https://img.shields.io/codecov/c/github/wagmi-dev/wagmi?colorA=f6f8fa&colorB=f6f8fa" alt="Code coverage">
     </picture>
   </a>
 </p>
@@ -54,7 +62,7 @@ For casual chit-chat with others using the framework:
 
 ## Contributing
 
-Contributions to Wagmi are greatly appreciated! If you're interested in contributing to Wagmi, please read our [contributing docs](https://github.com/wagmi-dev/wagmi/blob/main/.github/CONTRIBUTING.md) **before submitting a pull request**.
+Contributions to Wagmi are greatly appreciated! If you're interested in contributing to Wagmi, please read the [Contributing Guide](https://github.com/wagmi-dev/wagmi/blob/main/.github/CONTRIBUTING.md) **before submitting a pull request**.
 
 ## Sponsors
 
@@ -148,6 +156,12 @@ If you find Wagmi useful or use it at work, please consider [supporting developm
       <img alt="celo logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/celo-light.svg" width="auto" height="50">
     </picture>
   </a>
+  <a href="https://pimlico.io">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/pimlico-dark.svg">
+      <img alt="pimlico logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/pimlico-light.svg" width="auto" height="50">
+    </picture>
+  </a>
   <a href="https://zora.co">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/zora-dark.svg">
@@ -162,3 +176,8 @@ If you find Wagmi useful or use it at work, please consider [supporting developm
 <a href="https://vercel.com/?utm_source=wagmi-dev&utm_campaign=oss">
   <img src="https://www.datocms-assets.com/31049/1618983297-powered-by-vercel.svg" alt="Powered by Vercel" height="35">
 </a>
+
+## Authors
+
+- [@tmm](https://github.com/tmm) (awkweb.eth, [Twitter](https://twitter.com/awkweb))
+- [@jxom](https://github.com/jxom) (jxom.eth, [Twitter](https://twitter.com/jakemoxey))
