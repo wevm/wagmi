@@ -39,10 +39,14 @@ export function testConnector(parameters: TestConnectorParameters) {
     Transport<'custom', {}, EIP1193RequestFn<WalletRpcSchema>>
   >
   let connected = false
+  let connectedChainId: number
 
   return createConnector<Provider>((config) => ({
     id: 'test',
     name: 'Test Connector',
+    async setup() {
+      connectedChainId = config.chains[0].id
+    },
     async connect({ chainId } = {}) {
       if (features.connectError) {
         if (typeof features.connectError === 'boolean')
@@ -73,48 +77,6 @@ export function testConnector(parameters: TestConnectorParameters) {
       const accounts = await provider.request({ method: 'eth_accounts' })
       return accounts.map(getAddress)
     },
-    async getProvider({ chainId } = {}) {
-      const chain =
-        config.chains.find((x) => x.id === chainId) ?? config.chains[0]
-      const url = chain.rpcUrls.default.http[0]!
-      const request: EIP1193RequestFn = async ({ method, params }) => {
-        if (method === 'eth_requestAccounts') return parameters.accounts
-        if (method === 'wallet_switchEthereumChain') return
-
-        // Change `personal_sign` to `eth_sign` and swap params
-        if (method === 'personal_sign') {
-          if (features.signMessageError) {
-            if (typeof features.signMessageError === 'boolean')
-              throw new UserRejectedRequestError(
-                new Error('Failed to sign message.'),
-              )
-            throw features.signMessageError
-          }
-
-          method = 'eth_sign'
-          type Params = [data: Hex, address: Address]
-          params = [(params as Params)[1], (params as Params)[0]]
-        }
-
-        if (method === 'eth_signTypedData_v4')
-          if (features.signTypedDataError) {
-            if (typeof features.signTypedDataError === 'boolean')
-              throw new UserRejectedRequestError(
-                new Error('Failed to sign typed data.'),
-              )
-            throw features.signTypedDataError
-          }
-
-        const { error, result } = await rpc.http(url, {
-          body: { method, params },
-        })
-        if (error)
-          throw new RpcRequestError({ body: { method, params }, error, url })
-
-        return result
-      }
-      return custom({ request })({ retryCount: 0 })
-    },
     async getChainId() {
       const provider = await this.getProvider()
       const hexChainId = await provider.request({ method: 'eth_chainId' })
@@ -127,24 +89,14 @@ export function testConnector(parameters: TestConnectorParameters) {
       return !!accounts.length
     },
     async switchChain({ chainId }) {
-      if (features.switchChainError) {
-        if (typeof features.switchChainError === 'boolean')
-          throw new UserRejectedRequestError(
-            new Error('Failed to switch chain.'),
-          )
-        throw features.switchChainError
-      }
-
       const provider = await this.getProvider()
-      const id = numberToHex(chainId)
       const chain = config.chains.find((x) => x.id === chainId)
       if (!chain) throw new SwitchChainError(new ChainNotConfiguredError())
 
       await provider.request({
         method: 'wallet_switchEthereumChain',
-        params: [{ chainId: id }],
+        params: [{ chainId: numberToHex(chainId) }],
       })
-      this.onChainChanged(chainId.toString())
       return chain
     },
     onAccountsChanged(accounts) {
@@ -158,6 +110,62 @@ export function testConnector(parameters: TestConnectorParameters) {
     async onDisconnect(_error) {
       config.emitter.emit('disconnect')
       connected = false
+    },
+    async getProvider({ chainId } = {}) {
+      const chain =
+        config.chains.find((x) => x.id === chainId) ?? config.chains[0]
+      const url = chain.rpcUrls.default.http[0]!
+
+      const request: EIP1193RequestFn = async ({ method, params }) => {
+        // eth methods
+        if (method === 'eth_chainId') return numberToHex(connectedChainId)
+        if (method === 'eth_requestAccounts') return parameters.accounts
+        if (method === 'eth_signTypedData_v4')
+          if (features.signTypedDataError) {
+            if (typeof features.signTypedDataError === 'boolean')
+              throw new UserRejectedRequestError(
+                new Error('Failed to sign typed data.'),
+              )
+            throw features.signTypedDataError
+          }
+
+        // wallet methods
+        if (method === 'wallet_switchEthereumChain') {
+          if (features.switchChainError) {
+            if (typeof features.switchChainError === 'boolean')
+              throw new UserRejectedRequestError(
+                new Error('Failed to switch chain.'),
+              )
+            throw features.switchChainError
+          }
+          type Params = [{ chainId: Hex }]
+          connectedChainId = fromHex((params as Params)[0].chainId, 'number')
+          this.onChainChanged(connectedChainId.toString())
+          return
+        }
+
+        // other methods
+        if (method === 'personal_sign') {
+          if (features.signMessageError) {
+            if (typeof features.signMessageError === 'boolean')
+              throw new UserRejectedRequestError(
+                new Error('Failed to sign message.'),
+              )
+            throw features.signMessageError
+          }
+          // Change `personal_sign` to `eth_sign` and swap params
+          method = 'eth_sign'
+          type Params = [data: Hex, address: Address]
+          params = [(params as Params)[1], (params as Params)[0]]
+        }
+
+        const body = { method, params }
+        const { error, result } = await rpc.http(url, { body })
+        if (error) throw new RpcRequestError({ body, error, url })
+
+        return result
+      }
+      return custom({ request })({ retryCount: 0 })
     },
   }))
 }
