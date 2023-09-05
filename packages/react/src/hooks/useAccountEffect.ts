@@ -1,3 +1,5 @@
+'use client'
+
 import { type GetAccountReturnType, watchAccount } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
 import { useEffect } from 'react'

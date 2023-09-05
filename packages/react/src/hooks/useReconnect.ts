@@ -1,3 +1,5 @@
+'use client'
+
 import { useMutation } from '@tanstack/react-query'
 import { type Connector, type ReconnectError } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'

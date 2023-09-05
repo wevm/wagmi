@@ -86,6 +86,7 @@ function createReplacer(
 
 /**
  * Stringifier that handles circular values
+ *
  * Forked from https://github.com/planttheidea/fast-stringify
  *
  * @param value to stringify

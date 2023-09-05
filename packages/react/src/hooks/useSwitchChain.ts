@@ -1,3 +1,5 @@
+'use client'
+
 import { useMutation } from '@tanstack/react-query'
 import type { Config, ResolvedRegister, SwitchChainError } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'

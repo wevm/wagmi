@@ -1,0 +1,27 @@
+{
+  "name": "next",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@tanstack/query-sync-storage-persister": "5.0.0-beta.0",
+    "@tanstack/react-query": "5.0.0-beta.2",
+    "@tanstack/react-query-persist-client": "5.0.0-beta.3",
+    "next": "13.4.19",
+    "pino-pretty": "^10.2.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "viem": "^1.9.0",
+    "wagmi": "workspace:*"
+  },
+  "devDependencies": {
+    "@tanstack/react-query-devtools": "5.0.0-beta.2",
+    "@types/node": "20.5.9",
+    "@types/react": "18.2.21",
+    "@types/react-dom": "18.2.7"
+  }
+}

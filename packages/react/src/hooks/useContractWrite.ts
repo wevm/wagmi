@@ -1,3 +1,5 @@
+'use client'
+
 import { useMutation } from '@tanstack/react-query'
 import type { Config, ResolvedRegister, WriteContractError } from '@wagmi/core'
 import {

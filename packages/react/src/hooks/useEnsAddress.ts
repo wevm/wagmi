@@ -1,3 +1,5 @@
+'use client'
+
 import type { Config, GetEnsAddressError, ResolvedRegister } from '@wagmi/core'
 import { type Evaluate } from '@wagmi/core/internal'
 import {

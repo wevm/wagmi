@@ -1,3 +1,5 @@
+'use client'
+
 import { type ResolvedRegister, reconnect } from '@wagmi/core'
 import { type OneOf } from '@wagmi/core/internal'
 import { createContext, createElement, useEffect } from 'react'
