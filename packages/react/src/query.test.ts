@@ -27,8 +27,6 @@ test('exports', () => {
       "getTokenQueryOptions",
       "getTransactionQueryKey",
       "getTransactionQueryOptions",
-      "prepareSendTransactionQueryKey",
-      "prepareSendTransactionQueryOptions",
       "readContractQueryKey",
       "readContractQueryOptions",
       "readContractsQueryKey",

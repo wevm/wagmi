@@ -146,12 +146,6 @@ export {
 } from './hooks/useContractSimulate.js'
 
 export {
-  type UsePrepareSendTransactionParameters,
-  type UsePrepareSendTransactionReturnType,
-  usePrepareSendTransaction,
-} from './hooks/usePrepareSendTransaction.js'
-
-export {
   type UseReconnectParameters,
   type UseReconnectReturnType,
   useReconnect,

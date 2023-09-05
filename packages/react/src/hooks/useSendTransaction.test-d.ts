@@ -1,8 +1,7 @@
 import { type SendTransactionError } from '@wagmi/core'
-import { type Hash, parseEther } from 'viem'
+import { type Hash } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
-import { usePrepareSendTransaction } from './usePrepareSendTransaction.js'
 import { useSendTransaction } from './useSendTransaction.js'
 
 const contextValue = { foo: 'bar' } as const
@@ -74,14 +73,4 @@ test('context', () => {
       },
     },
   )
-})
-
-test('usePrepareSendTransaction', () => {
-  const prepared = usePrepareSendTransaction({
-    to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
-    value: parseEther('0.01'),
-  })
-  const { sendTransaction } = useSendTransaction()
-
-  if (prepared?.data) sendTransaction(prepared?.data)
 })

@@ -19,7 +19,6 @@ test('exports', () => {
       "getFeeData": [Function],
       "getToken": [Function],
       "getTransaction": [Function],
-      "prepareSendTransaction": [Function],
       "readContract": [Function],
       "readContracts": [Function],
       "reconnect": [Function],

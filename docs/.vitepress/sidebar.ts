@@ -139,10 +139,6 @@ export function getSidebar() {
                 link: '/react/hooks/useEnsResolver',
               },
               { text: 'useFeeData', link: '/react/hooks/useFeeData' },
-              {
-                text: 'usePrepareSendTransaction 🚧',
-                link: '/react/hooks/usePrepareSendTransaction',
-              },
               { text: 'useReconnect', link: '/react/hooks/useReconnect' },
               {
                 text: 'useSendTransaction 🚧',
@@ -286,10 +282,6 @@ export function getSidebar() {
               {
                 text: 'multicall 🚧',
                 link: '/core/actions/multicall',
-              },
-              {
-                text: 'prepareSendTransaction 🚧',
-                link: '/core/actions/prepareSendTransaction',
               },
               { text: 'reconnect', link: '/core/actions/reconnect' },
               { text: 'readContract 🚧', link: '/core/actions/readContract' },

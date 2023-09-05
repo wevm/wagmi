@@ -108,15 +108,6 @@ export {
 } from './query/getTransaction.js'
 
 export {
-  type PrepareSendTransactionData,
-  type PrepareSendTransactionOptions,
-  type PrepareSendTransactionQueryFnData,
-  type PrepareSendTransactionQueryKey,
-  prepareSendTransactionQueryKey,
-  prepareSendTransactionQueryOptions,
-} from './query/prepareSendTransaction.js'
-
-export {
   type ReadContractData,
   type ReadContractOptions,
   type ReadContractQueryFnData,

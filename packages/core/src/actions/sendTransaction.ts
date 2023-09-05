@@ -30,7 +30,6 @@ export type SendTransactionParameters<
     > &
       ChainIdParameter<config, chainId> &
       ConnectorParameter & {
-        mode?: 'prepared'
         to: Address
       }
   >

@@ -29,7 +29,6 @@ test('exports', () => {
       "getToken",
       "getTransaction",
       "multicall",
-      "prepareSendTransaction",
       "readContract",
       "readContracts",
       "reconnect",

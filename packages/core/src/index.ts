@@ -130,13 +130,6 @@ export {
 } from './actions/multicall.js'
 
 export {
-  type PrepareSendTransactionError,
-  type PrepareSendTransactionParameters,
-  type PrepareSendTransactionReturnType,
-  prepareSendTransaction,
-} from './actions/prepareSendTransaction.js'
-
-export {
   type ReadContractParameters,
   type ReadContractReturnType,
   type ReadContractError,

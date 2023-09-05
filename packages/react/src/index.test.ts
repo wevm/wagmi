@@ -34,7 +34,6 @@ test('exports', () => {
       "useEnsResolver",
       "useFeeData",
       "useContractSimulate",
-      "usePrepareSendTransaction",
       "useReconnect",
       "useSendTransaction",
       "useSignMessage",
