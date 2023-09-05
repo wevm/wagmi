@@ -12,6 +12,7 @@ export default async function () {
           chainId: chain.id,
           forkUrl: chain.fork.url,
           forkBlockNumber: chain.fork.blockNumber,
+          noMining: true,
         },
       })
     }),
