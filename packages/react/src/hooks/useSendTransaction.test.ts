@@ -1,5 +1,5 @@
 import { connect, disconnect } from '@wagmi/core'
-import { config } from '@wagmi/test'
+import { config, transactionHashRegex } from '@wagmi/test'
 import { renderHook, waitFor } from '@wagmi/test/react'
 import { parseEther } from 'viem'
 import { expect, test } from 'vitest'
@@ -20,7 +20,7 @@ test('default', async () => {
   })
   await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-  expect(result.current.data).toMatchObject({ hash: expect.any(String) })
+  expect(result.current.data).toMatch(transactionHashRegex)
 
   await disconnect(config, { connector })
 })
@@ -47,9 +47,7 @@ test('usePrepareSendTransaction', async () => {
     expect(result.current.useSendTransaction.isSuccess).toBeTruthy(),
   )
 
-  expect(result.current.useSendTransaction.data).toMatchObject({
-    hash: expect.any(String),
-  })
+  expect(result.current.useSendTransaction.data).toMatch(transactionHashRegex)
 
   await disconnect(config, { connector })
 })

@@ -1,4 +1,4 @@
-import { config } from '@wagmi/test'
+import { config, transactionHashRegex } from '@wagmi/test'
 import { parseEther } from 'viem'
 import { expect, test } from 'vitest'
 
@@ -16,9 +16,7 @@ test('default', async () => {
       to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
       value: parseEther('0.01'),
     }),
-  ).resolves.toMatchObject({
-    hash: expect.any(String),
-  })
+  ).resolves.toMatch(transactionHashRegex)
   await disconnect(config, { connector })
 })
 
@@ -28,8 +26,8 @@ test('prepareSendTransaction', async () => {
     to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
     value: parseEther('0.01'),
   })
-  await expect(sendTransaction(config, result)).resolves.toMatchObject({
-    hash: expect.any(String),
-  })
+  await expect(sendTransaction(config, result)).resolves.toMatch(
+    transactionHashRegex,
+  )
   await disconnect(config, { connector })
 })

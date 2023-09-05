@@ -19,6 +19,8 @@ export {
 
 export { config } from './config.js'
 
+export { addressRegex, transactionHashRegex } from './regex.js'
+
 export { wait } from './utils.js'
 
 export { version } from './version.js'

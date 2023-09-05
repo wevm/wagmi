@@ -20,6 +20,8 @@ test('exports', () => {
       "mainnet2TestClient",
       "optimismTestClient",
       "config",
+      "addressRegex",
+      "transactionHashRegex",
       "wait",
       "version",
     ]
