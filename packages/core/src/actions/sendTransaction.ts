@@ -36,10 +36,7 @@ export type SendTransactionParameters<
   >
 }[number]
 
-// TODO(major): Just return the hash (not inside object)
-export type SendTransactionReturnType = {
-  hash: viem_SendTransactionReturnType
-}
+export type SendTransactionReturnType = viem_SendTransactionReturnType
 
 export type SendTransactionError = Error
 
@@ -64,5 +61,5 @@ export async function sendTransaction<
     chain: null,
   } as viem_SendTransactionParameters)
 
-  return { hash }
+  return hash
 }

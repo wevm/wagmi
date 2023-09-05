@@ -27,11 +27,11 @@ test('context', () => {
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
         }>()
-        expectTypeOf(data).toEqualTypeOf<{ hash: Hash }>()
+        expectTypeOf(data).toEqualTypeOf<Hash>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
       },
       onSettled(data, error, variables, context) {
-        expectTypeOf(data).toEqualTypeOf<{ hash: Hash } | undefined>()
+        expectTypeOf(data).toEqualTypeOf<Hash | undefined>()
         expectTypeOf(error).toEqualTypeOf<SendTransactionError | null>()
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
@@ -40,7 +40,7 @@ test('context', () => {
       },
     })
 
-  expectTypeOf(data).toEqualTypeOf<{ hash: Hash } | undefined>()
+  expectTypeOf(data).toEqualTypeOf<Hash | undefined>()
   expectTypeOf(error).toEqualTypeOf<SendTransactionError | null>()
   expectTypeOf(variables).toMatchTypeOf<
     { chainId?: number | undefined } | undefined
@@ -61,11 +61,11 @@ test('context', () => {
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
         }>()
-        expectTypeOf(data).toEqualTypeOf<{ hash: Hash }>()
+        expectTypeOf(data).toEqualTypeOf<Hash>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
       },
       onSettled(data, error, variables, context) {
-        expectTypeOf(data).toEqualTypeOf<{ hash: Hash } | undefined>()
+        expectTypeOf(data).toEqualTypeOf<Hash | undefined>()
         expectTypeOf(error).toEqualTypeOf<SendTransactionError | null>()
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined

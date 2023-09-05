@@ -69,7 +69,7 @@ Augment the chains you want to use with fork-related properties. These propertie
 <<< @/snippets/core/testing/config.ts[config.ts]
 :::
 
-TODO
+Next
 
 - Connect/disconnect
 - Basic Viem Test Client usage

@@ -56,10 +56,7 @@ export type WriteContractParameters<
     __mode?: 'prepared'
   }
 
-// TODO(major): Just return the hash (not inside object)
-export type WriteContractReturnType = {
-  hash: viem_WriteContractReturnType
-}
+export type WriteContractReturnType = viem_WriteContractReturnType
 
 export type WriteContractError = Error
 
@@ -108,5 +105,5 @@ export async function writeContract<
     chain: null,
   })
 
-  return { hash }
+  return hash
 }

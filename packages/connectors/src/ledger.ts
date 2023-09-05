@@ -54,9 +54,7 @@ export function ledger(parameters: LedgerParameters = {}) {
         // Don't request accounts if we have a session, like when reloading with
         // an active WC v2 session
         if (!provider.session)
-          await provider.request({
-            method: 'eth_requestAccounts',
-          })
+          await provider.request({ method: 'eth_requestAccounts' })
 
         const accounts = await this.getAccounts()
 
