@@ -52,6 +52,7 @@ test('exports', () => {
       "ChainNotConfiguredError",
       "ConnectorAlreadyConnectedError",
       "ConnectorNotFoundError",
+      "ConnectorAccountNotFound",
       "ProviderNotFoundError",
       "SwitchChainNotSupportedError",
       "deserialize",

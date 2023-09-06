@@ -233,9 +233,13 @@ export {
   type CreateConnectorFn,
   createConnector,
   // Errors
+  ChainMismatchError,
   ChainNotConfiguredError,
-  ProviderNotFoundError,
   ConnectorAlreadyConnectedError,
+  ConnectorNotFoundError,
+  ConnectorAccountNotFound,
+  ProviderNotFoundError,
+  SwitchChainNotSupportedError,
   // Storage
   type CreateStorageParameters,
   type Storage,
