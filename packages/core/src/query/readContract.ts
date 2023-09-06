@@ -17,11 +17,11 @@ import type { ScopeKeyParameter } from './types.js'
 import { filterQueryOptions } from './utils.js'
 
 export type ReadContractOptions<
-  config extends Config,
   abi extends Abi | readonly unknown[],
   functionName extends ContractFunctionName<abi, 'pure' | 'view'>,
   args extends ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
-> = UnionPartial<ReadContractParameters<config, abi, functionName, args>> &
+  config extends Config,
+> = UnionPartial<ReadContractParameters<abi, functionName, args, config>> &
   ScopeKeyParameter
 
 export function readContractQueryOptions<
@@ -31,7 +31,7 @@ export function readContractQueryOptions<
   args extends ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
 >(
   config: Config,
-  options: ReadContractOptions<config, abi, functionName, args> = {} as any,
+  options: ReadContractOptions<abi, functionName, args, config> = {} as any,
 ) {
   return {
     async queryFn({ queryKey }) {
@@ -71,11 +71,11 @@ export type ReadContractData<
 > = ReadContractQueryFnData<abi, functionName, args>
 
 export function readContractQueryKey<
-  config extends Config,
   const abi extends Abi | readonly unknown[],
   functionName extends ContractFunctionName<abi, 'pure' | 'view'>,
   args extends ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
->(options: ReadContractOptions<config, abi, functionName, args> = {} as any) {
+  config extends Config,
+>(options: ReadContractOptions<abi, functionName, args, config> = {} as any) {
   const { abi: _, ...rest } = options
   return ['readContract', filterQueryOptions(rest)] as const
 }
@@ -85,4 +85,4 @@ export type ReadContractQueryKey<
   abi extends Abi | readonly unknown[],
   functionName extends ContractFunctionName<abi, 'pure' | 'view'>,
   args extends ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
-> = ReturnType<typeof readContractQueryKey<config, abi, functionName, args>>
+> = ReturnType<typeof readContractQueryKey<abi, functionName, args, config>>

@@ -107,10 +107,6 @@ export function getSidebar() {
                 link: '/react/hooks/useConnectorClient',
               },
               {
-                text: 'useContractEvent 🚧',
-                link: '/react/hooks/useContractEvent',
-              },
-              {
                 text: 'useContractInfiniteReads 🚧',
                 link: '/react/hooks/useContractInfiniteReads',
               },
@@ -179,6 +175,10 @@ export function getSidebar() {
               {
                 text: 'useWalletClient 🚧',
                 link: '/react/hooks/useWalletClient',
+              },
+              {
+                text: 'useWatchContractEvent 🚧',
+                link: '/react/hooks/useWatchContractEvent',
               },
               {
                 text: 'useWatchPendingTransactions 🚧',

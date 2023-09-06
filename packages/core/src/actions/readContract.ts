@@ -10,7 +10,6 @@ import { type Config } from '../createConfig.js'
 import type { ChainIdParameter } from '../types/properties.js'
 
 export type ReadContractParameters<
-  config extends Config = Config,
   abi extends Abi | readonly unknown[] = Abi,
   functionName extends ContractFunctionName<
     abi,
@@ -21,6 +20,7 @@ export type ReadContractParameters<
     'pure' | 'view',
     functionName
   > = ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
+  config extends Config = Config,
 > = viem_ReadContractParameters<abi, functionName, args> &
   ChainIdParameter<config>
 
@@ -47,7 +47,7 @@ export function readContract<
   args extends ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
 >(
   config: config,
-  parameters: ReadContractParameters<config, abi, functionName, args>,
+  parameters: ReadContractParameters<abi, functionName, args, config>,
 ): Promise<ReadContractReturnType<abi, functionName, args>> {
   const { chainId } = parameters
   const client = config.getClient({ chainId })

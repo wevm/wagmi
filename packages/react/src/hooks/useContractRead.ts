@@ -43,7 +43,7 @@ export type UseContractReadParameters<
   config extends Config = Config,
   selectData = ReadContractData<abi, functionName, args>,
 > = UnionEvaluate<
-  ReadContractOptions<config, abi, functionName, args> &
+  ReadContractOptions<abi, functionName, args, config> &
     UseQueryParameters<
       ReadContractQueryFnData<abi, functionName, args>,
       ReadContractError,

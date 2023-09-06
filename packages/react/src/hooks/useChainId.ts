@@ -12,10 +12,10 @@ import { useSyncExternalStore } from 'react'
 import type { ConfigParameter } from '../types/properties.js'
 import { useConfig } from './useConfig.js'
 
-export type UseChainIdParameters<config extends Config = Config,> =
+export type UseChainIdParameters<config extends Config = Config> =
   ConfigParameter<config>
 
-export type UseChainIdReturnType<config extends Config = Config,> =
+export type UseChainIdReturnType<config extends Config = Config> =
   GetChainIdReturnType<config>
 
 /** https://alpha.wagmi.sh/react/hooks/useChainId */

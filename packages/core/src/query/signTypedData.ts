@@ -47,7 +47,7 @@ export type SignTypedDataMutate<context = unknown> = <
     | undefined,
 ) => void
 
-export type SignTypedDataMutateAsync<context = unknown,> = <
+export type SignTypedDataMutateAsync<context = unknown> = <
   const typedData extends TypedData | Record<string, unknown>,
   primaryType extends keyof typedData | 'EIP712Domain',
 >(

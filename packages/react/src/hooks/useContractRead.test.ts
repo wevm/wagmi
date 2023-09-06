@@ -111,6 +111,4 @@ test('parameters: chainId', async () => {
   `)
 })
 
-test.todo('parameters: watch')
-
 test.todo('behavior: address: undefined -> defined')
