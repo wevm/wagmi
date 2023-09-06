@@ -19,12 +19,7 @@ import type {
   ChainIdParameter,
   ConnectorParameter,
 } from '../types/properties.js'
-import type {
-  OneOf,
-  PartialBy,
-  UnionEvaluate,
-  UnionOmit,
-} from '../types/utils.js'
+import type { PartialBy, UnionEvaluate, UnionOmit } from '../types/utils.js'
 import { assertActiveChain } from '../utils/assertActiveChain.js'
 import { getConnectorClient } from './getConnectorClient.js'
 
@@ -56,10 +51,11 @@ export type SimulateContractParameters<
         chains[key]
       >,
       'account' | 'chain'
-    > &
-      ChainIdParameter<config, chainId> &
-      OneOf<AccountParameter | ConnectorParameter>
-  >
+    >
+  > &
+    ChainIdParameter<config, chainId> &
+    AccountParameter &
+    ConnectorParameter
 }[number]
 
 export type SimulateContractReturnType<
