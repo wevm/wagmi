@@ -10,7 +10,7 @@ export type WatchContractEventConfig<
   TEventName extends string = string,
 > = Pick<
   WatchContractEventParameters<TAbi, TEventName>,
-  'abi' | 'address' | 'eventName'
+  'abi' | 'address' | 'eventName' | 'args'
 > & {
   chainId?: number
 }
@@ -29,6 +29,7 @@ export function watchContractEvent<
     abi,
     chainId,
     eventName,
+    args
   }: WatchContractEventConfig<TAbi, TEventName>,
   callback: WatchContractEventCallback<TAbi, TEventName>,
 ) {
@@ -42,6 +43,7 @@ export function watchContractEvent<
       address,
       abi,
       eventName,
+      args,
       onLogs: callback,
     })
   }
