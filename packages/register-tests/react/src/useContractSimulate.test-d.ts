@@ -2,7 +2,9 @@ import { abi } from '@wagmi/test'
 import type { Address } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 import { type UseContractSimulateParameters, useContractSimulate } from 'wagmi'
+import type { SimulateContractParameters } from 'wagmi/actions'
 import { celo, mainnet, optimism } from 'wagmi/chains'
+import type { SimulateContractOptions } from 'wagmi/query'
 
 import { type ChainId, config } from './config.js'
 
@@ -66,4 +68,21 @@ test('UseContractSimulateParameters', () => {
   expectTypeOf<Result2['gatewayFeeRecipient']>().toEqualTypeOf<
     `0x${string}` | undefined
   >()
+
+  type Result3 = SimulateContractParameters<
+    typeof abi.erc20,
+    'transferFrom',
+    [Address, Address, bigint],
+    typeof config,
+    typeof celo.id
+  >
+  expectTypeOf<Result3['chainId']>().toEqualTypeOf<ChainId | undefined>()
+  type Result4 = SimulateContractOptions<
+    typeof abi.erc20,
+    'transferFrom',
+    [Address, Address, bigint],
+    typeof config,
+    typeof celo.id
+  >
+  expectTypeOf<Result4['chainId']>().toEqualTypeOf<ChainId | undefined>()
 })
