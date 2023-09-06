@@ -12,11 +12,7 @@ import type {
   ChainIdParameter,
   ConnectorParameter,
 } from '../types/properties.js'
-import {
-  type OneOf,
-  type UnionEvaluate,
-  type UnionLooseOmit,
-} from '../types/utils.js'
+import { type UnionEvaluate, type UnionLooseOmit } from '../types/utils.js'
 import { getConnectorClient } from './getConnectorClient.js'
 
 export type EstimateGasParameters<
@@ -33,7 +29,8 @@ export type EstimateGasParameters<
       'account' | 'chain'
     > &
       ChainIdParameter<config, chainId> &
-      OneOf<AccountParameter | ConnectorParameter>
+      AccountParameter &
+      ConnectorParameter
   >
 }[number]
 

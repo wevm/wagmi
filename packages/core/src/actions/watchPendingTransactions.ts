@@ -5,14 +5,17 @@ import {
 } from 'viem/actions'
 
 import type { Config } from '../createConfig.js'
-import type { ChainIdParameter } from '../types/properties.js'
+import type {
+  ChainIdParameter,
+  SyncConnectedChainParameter,
+} from '../types/properties.js'
 import type { Evaluate } from '../types/utils.js'
 
 export type WatchPendingTransactionsParameters<config extends Config = Config> =
   Evaluate<
-    viem_WatchPendingTransactionsParameters & {
-      syncConnectedChain?: boolean | undefined
-    } & ChainIdParameter<config>
+    viem_WatchPendingTransactionsParameters &
+      ChainIdParameter<config> &
+      SyncConnectedChainParameter
   >
 
 export type WatchPendingTransactionsReturnType =
@@ -24,24 +27,15 @@ export function watchPendingTransactions<config extends Config>(
   config: config,
   parameters: WatchPendingTransactionsParameters<config>,
 ) {
-  const {
-    onError,
-    onTransactions,
-    syncConnectedChain = config._internal.syncConnectedChain,
-    ...rest
-  } = parameters
+  const { syncConnectedChain = config._internal.syncConnectedChain, ...rest } =
+    parameters
 
   let unwatch: WatchPendingTransactionsReturnType | undefined
   const listener = (chainId: number | undefined) => {
     if (unwatch) unwatch()
 
     const client = config.getClient({ chainId })
-    unwatch = viem_watchPendingTransactions(client, {
-      ...rest,
-      onTransactions,
-      onError,
-      poll: true,
-    })
+    unwatch = viem_watchPendingTransactions(client, rest)
     return unwatch
   }
 

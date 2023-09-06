@@ -7,17 +7,18 @@ import {
   custom,
 } from 'viem'
 
-import type { Config, Connection, Connector } from '../createConfig.js'
+import type { Config, Connection } from '../createConfig.js'
 import { ConnectorNotFoundError } from '../errors/config.js'
-import type { ChainIdParameter } from '../types/properties.js'
+import type {
+  ChainIdParameter,
+  ConnectorParameter,
+} from '../types/properties.js'
 import type { Evaluate } from '../types/utils.js'
 
 export type GetConnectorClientParameters<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
-> = Evaluate<
-  ChainIdParameter<config, chainId> & { connector?: Connector | undefined }
->
+> = Evaluate<ChainIdParameter<config, chainId> & ConnectorParameter>
 
 export type GetConnectorClientReturnType<
   config extends Config = Config,

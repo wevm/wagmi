@@ -20,3 +20,7 @@ export type ChainIdParameter<
 export type ConnectorParameter = {
   connector?: Connector | undefined
 }
+
+export type SyncConnectedChainParameter = {
+  syncConnectedChain?: boolean | undefined
+}

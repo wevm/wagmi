@@ -205,6 +205,8 @@ const mainnetAddress = {
   mloot: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
   wagmigotchi: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
   wagmiMintExample: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+  usdc: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+  usdcHolder: '0x5414d89a8bf7e99d732bc52f3e6a3ef461c0c078',
 } as const
 
 export const address = {

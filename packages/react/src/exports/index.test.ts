@@ -44,6 +44,8 @@ test('exports', () => {
       "useToken",
       "useTransaction",
       "useWaitForTransactionReceipt",
+      "useWatchContractEvent",
+      "useWatchPendingTransactions",
       "createConfig",
       "createConnector",
       "ChainNotConfiguredError",

@@ -205,6 +205,18 @@ export {
   useWaitForTransactionReceipt,
 } from '../hooks/useWaitForTransactionReceipt.js'
 
+export {
+  type UseWatchContractEventParameters,
+  type UseWatchContractEventReturnType,
+  useWatchContractEvent,
+} from '../hooks/useWatchContractEvent.js'
+
+export {
+  type UseWatchPendingTransactionsParameters,
+  type UseWatchPendingTransactionsReturnType,
+  useWatchPendingTransactions,
+} from '../hooks/useWatchPendingTransactions.js'
+
 ////////////////////////////////////////////////////////////////////////////////
 // @wagmi/core
 

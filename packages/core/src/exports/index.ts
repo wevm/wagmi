@@ -200,6 +200,12 @@ export {
 } from '../actions/switchChain.js'
 
 export {
+  type WatchContractEventParameters,
+  type WatchContractEventReturnType,
+  watchContractEvent,
+} from '../actions/watchContractEvent.js'
+
+export {
   type WatchPendingTransactionsParameters,
   type WatchPendingTransactionsReturnType,
   watchPendingTransactions,

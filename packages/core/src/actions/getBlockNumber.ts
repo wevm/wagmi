@@ -8,7 +8,10 @@ import {
 } from 'viem/actions'
 
 import { type Config } from '../createConfig.js'
-import type { ChainIdParameter } from '../types/properties.js'
+import type {
+  ChainIdParameter,
+  SyncConnectedChainParameter,
+} from '../types/properties.js'
 import type { Evaluate } from '../types/utils.js'
 
 export type GetBlockNumberParameters<config extends Config = Config> = Evaluate<
@@ -35,9 +38,8 @@ export function getBlockNumber<config extends Config>(
 export type WatchBlockNumberParameters<config extends Config = Config> =
   Evaluate<
     Pick<viem_WatchBlockNumberParameters, 'onBlockNumber' | 'onError'> &
-      ChainIdParameter<config> & {
-        syncConnectedChain?: boolean | undefined
-      }
+      ChainIdParameter<config> &
+      SyncConnectedChainParameter
   >
 
 export type WatchBlockNumberReturnType = viem_WatchBlockNumberReturnType
