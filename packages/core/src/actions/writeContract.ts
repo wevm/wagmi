@@ -48,13 +48,11 @@ export type WriteContractParameters<
       Account,
       chains[key]
     >,
-    'account' | 'chain'
+    'chain'
   >
 }[number] &
   Evaluate<ChainIdParameter<config, chainId>> &
-  ConnectorParameter & {
-    __mode?: 'prepared'
-  }
+  ConnectorParameter & { __mode?: 'prepared' }
 
 export type WriteContractReturnType = viem_WriteContractReturnType
 
@@ -75,9 +73,13 @@ export async function writeContract<
   config: config,
   parameters: WriteContractParameters<abi, functionName, args, config, chainId>,
 ): Promise<WriteContractReturnType> {
-  const { chainId, connector, __mode, ...rest } = parameters
+  const { account, chainId, connector, __mode, ...rest } = parameters
 
-  const client = await getConnectorClient(config, { chainId, connector })
+  const client = await getConnectorClient(config, {
+    account,
+    chainId,
+    connector,
+  })
 
   let request
   if (__mode === 'prepared') {

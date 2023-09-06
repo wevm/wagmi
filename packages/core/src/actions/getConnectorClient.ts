@@ -7,9 +7,14 @@ import {
   custom,
 } from 'viem'
 
+import { parseAccount } from 'viem/utils'
 import type { Config, Connection } from '../createConfig.js'
-import { ConnectorNotFoundError } from '../errors/config.js'
+import {
+  ConnectorAccountNotFound,
+  ConnectorNotFoundError,
+} from '../errors/config.js'
 import type {
+  AccountParameter,
   ChainIdParameter,
   ConnectorParameter,
 } from '../types/properties.js'
@@ -18,7 +23,9 @@ import type { Evaluate } from '../types/utils.js'
 export type GetConnectorClientParameters<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
-> = Evaluate<ChainIdParameter<config, chainId> & ConnectorParameter>
+> = Evaluate<
+  ChainIdParameter<config, chainId> & ConnectorParameter & AccountParameter
+>
 
 export type GetConnectorClientReturnType<
   config extends Config = Config,
@@ -33,7 +40,10 @@ export type GetConnectorClientReturnType<
   >
 >
 
-export type GetConnectorClientError = ConnectorNotFoundError | Error
+export type GetConnectorClientError =
+  | ConnectorNotFoundError
+  | ConnectorAccountNotFound
+  | Error
 
 /** https://alpha.wagmi.sh/core/actions/getConnectorClient */
 export async function getConnectorClient<
@@ -43,8 +53,6 @@ export async function getConnectorClient<
   config: config,
   parameters: GetConnectorClientParameters<config, chainId> = {},
 ): Promise<GetConnectorClientReturnType<config, chainId>> {
-  const { chainId: chainId_ } = parameters
-
   // Get connection
   let connection: Connection | undefined
   if (parameters.connector) {
@@ -61,20 +69,24 @@ export async function getConnectorClient<
   } else connection = config.state.connections.get(config.state.current!)
   if (!connection) throw new ConnectorNotFoundError()
 
-  const chainId = chainId_ ?? connection.chainId
-  type Return = GetConnectorClientReturnType<config, chainId>
+  const chainId = parameters.chainId ?? connection.chainId
 
   // If connector has custom `getClient` implementation
+  type Return = GetConnectorClientReturnType<config, chainId>
   const connector = connection.connector
   if (connector.getClient)
     return connector.getClient({ chainId: chainId }) as unknown as Return
 
   // Default using `custom` transport
-  const account = connection.accounts[0]!
+  const account = parseAccount(parameters.account ?? connection.accounts[0]!)
   const chain = config.chains.find((chain) => chain.id === chainId)
   const provider = (await connection.connector.getProvider({ chainId })) as {
     request(...args: any): Promise<any>
   }
+
+  // if account was provided, check that it exists on the connector
+  if (parameters.account && !connection.accounts.includes(account.address))
+    throw new ConnectorAccountNotFound({ address: account.address, connector })
 
   return createClient({
     account,

@@ -8,7 +8,6 @@ import {
 import { type Config } from '../createConfig.js'
 import type { SelectChains } from '../types/chain.js'
 import type {
-  AccountParameter,
   ChainIdParameter,
   ConnectorParameter,
 } from '../types/properties.js'
@@ -24,12 +23,8 @@ export type EstimateGasParameters<
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = {
   [key in keyof chains]: UnionEvaluate<
-    UnionLooseOmit<
-      viem_EstimateGasParameters<chains[key]>,
-      'account' | 'chain'
-    > &
+    UnionLooseOmit<viem_EstimateGasParameters<chains[key], Account>, 'chain'> &
       ChainIdParameter<config, chainId> &
-      AccountParameter &
       ConnectorParameter
   >
 }[number]
@@ -52,6 +47,7 @@ export async function estimateGas<
   if (parameters.account) account = parameters.account
   else {
     const connectorClient = await getConnectorClient(config, {
+      account: parameters.account,
       chainId,
       connector,
     })

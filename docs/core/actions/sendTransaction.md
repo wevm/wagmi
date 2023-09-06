@@ -60,6 +60,27 @@ const result = await sendTransaction(config, {
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
+### account
+
+`Address | Account | undefined`
+
+Account to use when sending transaction. Throws if account is not found on [`connector`](#connector).
+
+::: code-group
+```ts [index.ts]
+import { sendTransaction } from '@wagmi/core'
+import { parseEther } from 'viem'
+import { config } from './config'
+
+const result = await sendTransaction(config, {
+  account: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', // [!code focus]
+  to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
+  value: parseEther('0.01'),
+})
+```
+<<< @/snippets/core/config.ts[config.ts]
+:::
+
 ### chainId
 
 `config['chains'][number]['id'] | undefined`

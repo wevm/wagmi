@@ -15,7 +15,6 @@ import {
 import { type Config } from '../createConfig.js'
 import type { SelectChains } from '../types/chain.js'
 import type {
-  AccountParameter,
   ChainIdParameter,
   ConnectorParameter,
 } from '../types/properties.js'
@@ -50,11 +49,10 @@ export type SimulateContractParameters<
         chains[key],
         chains[key]
       >,
-      'account' | 'chain'
+      'chain'
     >
   > &
     ChainIdParameter<config, chainId> &
-    AccountParameter &
     ConnectorParameter
 }[number]
 

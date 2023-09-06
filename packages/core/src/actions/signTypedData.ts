@@ -1,4 +1,4 @@
-import type { TypedData } from 'viem'
+import type { Account, TypedData } from 'viem'
 import {
   type SignTypedDataParameters as viem_SignTypedDataParameters,
   type SignTypedDataReturnType as viem_SignTypedDataReturnType,
@@ -12,7 +12,7 @@ import { getConnectorClient } from './getConnectorClient.js'
 export type SignTypedDataParameters<
   typedData extends TypedData | Record<string, unknown> = TypedData,
   primaryType extends keyof typedData | 'EIP712Domain' = keyof typedData,
-> = viem_SignTypedDataParameters<typedData, primaryType, never> &
+> = viem_SignTypedDataParameters<typedData, primaryType, Account> &
   ConnectorParameter
 
 export type SignTypedDataReturnType = viem_SignTypedDataReturnType
@@ -27,8 +27,8 @@ export async function signTypedData<
   config: Config,
   parameters: SignTypedDataParameters<typedData, primaryType>,
 ): Promise<SignTypedDataReturnType> {
-  const { connector, ...rest } = parameters
-  const client = await getConnectorClient(config, { connector })
+  const { account, connector, ...rest } = parameters
+  const client = await getConnectorClient(config, { account, connector })
   return viem_signTypedData(
     client,
     rest as unknown as viem_SignTypedDataParameters,

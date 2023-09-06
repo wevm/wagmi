@@ -1,4 +1,4 @@
-import { config } from '@wagmi/test'
+import { address, config } from '@wagmi/test'
 import { expect, test } from 'vitest'
 
 import { connect } from './connect.js'
@@ -32,4 +32,16 @@ test('behavior: not connected', async () => {
 
       Version: @wagmi/core@x.y.z"
     `)
+})
+
+test('behavior: account does not exist on connector', async () => {
+  await connect(config, { connector })
+  await expect(
+    getConnectorClient(config, { account: address.usdcHolder }),
+  ).rejects.toThrowErrorMatchingInlineSnapshot(`
+    "Account \\"0x5414d89a8bf7e99d732bc52f3e6a3ef461c0c078\\" not found for connector \\"Test Connector\\".
+
+    Version: @wagmi/core@x.y.z"
+  `)
+  await disconnect(config, { connector })
 })

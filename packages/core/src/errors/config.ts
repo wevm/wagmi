@@ -1,3 +1,5 @@
+import type { Address } from 'viem'
+import type { Connector } from '../createConfig.js'
 import { BaseError } from './base.js'
 
 export class ChainMismatchError extends BaseError {
@@ -34,5 +36,18 @@ export class ConnectorNotFoundError extends BaseError {
   override name = 'ConnectorNotFoundError'
   constructor() {
     super('Connector not found.')
+  }
+}
+
+export class ConnectorAccountNotFound extends BaseError {
+  override name = 'ConnectorAccountNotFound'
+  constructor({
+    address,
+    connector,
+  }: {
+    address: Address
+    connector: Connector
+  }) {
+    super(`Account "${address}" not found for connector "${connector.name}".`)
   }
 }

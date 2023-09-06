@@ -56,6 +56,39 @@ const result = await signTypedData(config, {
 import { type SignTypedDataParameters } from '@wagmi/core'
 ```
 
+### account
+
+`Address | Account | undefined`
+
+Account to use when signing data. Throws if account is not found on [`connector`](#connector).
+
+::: code-group
+```ts [index.ts]
+import { signTypedData } from '@wagmi/core'
+import { config } from './config'
+import { types } from './typedData'
+
+const result = await signTypedData(config, {
+  account: '0xd2135CfB216b74109775236E36d4b433F1DF507B', // [!code focus]
+  types,
+  primaryType: 'Mail',
+  message: {
+    from: {
+      name: 'Cow',
+      wallet: '0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826',
+    },
+    to: {
+      name: 'Bob',
+      wallet: '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
+    },
+    contents: 'Hello, Bob!',
+  },
+})
+```
+<<< @/snippets/typedData.ts[typedData.ts]
+<<< @/snippets/core/config.ts[config.ts]
+:::
+
 ### connector
 
 `Connector | undefined`

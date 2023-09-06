@@ -26,6 +26,24 @@ const client = getConnectorClient(config)
 import { type GetConnectorClientParameters } from '@wagmi/core'
 ```
 
+### account
+
+`Address | Account | undefined`
+
+Account to use with client. Throws if account is not found on [`connector`](#connector).
+
+::: code-group
+```ts [index.ts]
+import { getConnectorClient } from '@wagmi/core'
+import { config } from './config'
+
+const client = getConnectorClient(config, {
+  account: '0xd2135CfB216b74109775236E36d4b433F1DF507B', // [!code focus]
+})
+```
+<<< @/snippets/core/config.ts[config.ts]
+:::
+
 ### chainId
 
 `config['chains'][number]['id'] | undefined`

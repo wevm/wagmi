@@ -32,6 +32,25 @@ await signMessage(config, { message: 'hello world' })
 import { type SignMessageParameters } from '@wagmi/core'
 ```
 
+### account
+
+`Address | Account | undefined`
+
+Account to use when signing message. Throws if account is not found on [`connector`](#connector).
+
+::: code-group
+```ts [index.ts]
+import { signMessage } from '@wagmi/core'
+import { config } from './config'
+
+const result = await signMessage(config, {
+  account: '0xd2135CfB216b74109775236E36d4b433F1DF507B', // [!code focus]
+  message: 'hello world',
+})
+```
+<<< @/snippets/core/config.ts[config.ts]
+:::
+
 ### connector
 
 `Connector | undefined`

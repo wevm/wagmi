@@ -267,6 +267,7 @@ export {
   ChainNotConfiguredError,
   ConnectorAlreadyConnectedError,
   ConnectorNotFoundError,
+  ConnectorAccountNotFound,
 } from '../errors/config.js'
 
 export {

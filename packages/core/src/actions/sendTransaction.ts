@@ -26,7 +26,7 @@ export type SendTransactionParameters<
   [key in keyof chains]: Evaluate<
     Omit<
       viem_SendTransactionParameters<chains[key], Account, chains[key]>,
-      'account' | 'chain'
+      'chain'
     > &
       ChainIdParameter<config, chainId> &
       ConnectorParameter & {
@@ -47,9 +47,13 @@ export async function sendTransaction<
   config: config,
   parameters: SendTransactionParameters<config, chainId>,
 ): Promise<SendTransactionReturnType> {
-  const { chainId, connector, ...rest } = parameters
+  const { account, chainId, connector, ...rest } = parameters
 
-  const client = await getConnectorClient(config, { chainId, connector })
+  const client = await getConnectorClient(config, {
+    account,
+    chainId,
+    connector,
+  })
   if (chainId)
     assertActiveChain(config, { activeChainId: client.chain.id, chainId })
 
