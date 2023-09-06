@@ -79,9 +79,11 @@
     "ignoreWorkspaces": ["docs", "packages/register-tests/**"],
     "workspaces": {
       ".": { "entry": "scripts/*.ts" },
-      "packages/core": { "entry": "src/{chains,index,internal,query}.ts!" },
+      "packages/core": {
+        "entry": "src/exports/{chains,index,internal,query}.ts!"
+      },
       "packages/react": {
-        "entry": "src/{actions,chains,connectors,index,query}.ts!"
+        "entry": "src/exports/{actions,chains,connectors,index,query}.ts!"
       },
       "packages/test": { "entry": "src/{globalSetup,index,react,setup}.ts!" }
     }
