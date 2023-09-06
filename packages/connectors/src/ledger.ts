@@ -83,7 +83,7 @@ export function ledger(parameters: LedgerParameters = {}) {
     async disconnect() {
       const provider = await this.getProvider()
       try {
-        await provider?.disconnect?.()
+        await provider?.disconnect?.().catch(() => {})
       } catch (error) {
         console.log({ error })
         if (!/No matching key/i.test((error as Error).message)) throw error

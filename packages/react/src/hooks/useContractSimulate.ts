@@ -76,14 +76,7 @@ export function useContractSimulate<
   chainId extends config['chains'][number]['id'] | undefined = undefined,
   selectData = SimulateContractData<abi, functionName, args, config, chainId>,
 >(
-  parameters: UseContractSimulateParameters<
-    abi,
-    functionName,
-    args,
-    config,
-    chainId,
-    selectData
-  > = {} as UseContractSimulateParameters<
+  parameters?: UseContractSimulateParameters<
     abi,
     functionName,
     args,
@@ -98,35 +91,28 @@ export function useContractSimulate<
   config,
   chainId,
   selectData
-> {
+>
+
+export function useContractSimulate(
+  parameters: UseContractSimulateParameters<any, any, any, any, any, any> = {},
+): UseContractSimulateReturnType {
   const { abi, address, connector, functionName, ...query } = parameters
+
   const config = useConfig(parameters)
   const { data: connectorClient } = useConnectorClient({
     connector,
     enabled: parameters.account === undefined,
   })
-
-  const account = parameters.account ?? connectorClient?.account
   const chainId = useChainId()
+
   const queryOptions = simulateContractQueryOptions(config, {
     ...(parameters as any),
-    account,
+    account: parameters.account ?? connectorClient?.account,
     chainId: parameters.chainId ?? chainId,
   })
   const enabled = Boolean(
     abi && address && functionName && (parameters.enabled ?? true),
   )
 
-  return useQuery({
-    ...queryOptions,
-    ...(query as any),
-    enabled,
-  }) as UseContractSimulateReturnType<
-    abi,
-    functionName,
-    args,
-    config,
-    chainId,
-    selectData
-  >
+  return useQuery({ ...queryOptions, ...query, enabled })
 }

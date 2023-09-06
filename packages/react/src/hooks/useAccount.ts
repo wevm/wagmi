@@ -19,6 +19,7 @@ export function useAccount(
   parameters: UseAccountParameters = {},
 ): UseAccountReturnType {
   const config = useConfig(parameters)
+
   return useSyncExternalStoreWithTracked(
     (onChange) => watchAccount(config, { onChange }),
     () => getAccount(config),

@@ -5,7 +5,6 @@ import type {
   Chain,
   ContractFunctionArgs,
   ContractFunctionName,
-  ExtractAbiFunction,
 } from 'viem'
 import {
   type SimulateContractParameters as viem_SimulateContractParameters,
@@ -16,10 +15,16 @@ import {
 import { type Config } from '../createConfig.js'
 import type { SelectChains } from '../types/chain.js'
 import type {
+  AccountParameter,
   ChainIdParameter,
   ConnectorParameter,
 } from '../types/properties.js'
-import type { PartialBy, UnionEvaluate, UnionOmit } from '../types/utils.js'
+import type {
+  OneOf,
+  PartialBy,
+  UnionEvaluate,
+  UnionOmit,
+} from '../types/utils.js'
 import { assertActiveChain } from '../utils/assertActiveChain.js'
 import { getConnectorClient } from './getConnectorClient.js'
 
@@ -50,11 +55,11 @@ export type SimulateContractParameters<
         chains[key],
         chains[key]
       >,
-      'chain'
-    >
-  > &
-    ChainIdParameter<config, chainId> &
-    ConnectorParameter
+      'account' | 'chain'
+    > &
+      ChainIdParameter<config, chainId> &
+      OneOf<AccountParameter | ConnectorParameter>
+  >
 }[number]
 
 export type SimulateContractReturnType<
@@ -76,24 +81,28 @@ export type SimulateContractReturnType<
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = {
   [key in keyof chains]: viem_SimulateContractReturnType<
-    readonly [ExtractAbiFunction<abi extends Abi ? abi : Abi, functionName>],
+    abi,
     functionName,
     args,
     chains[key]
-  > extends infer type extends viem_SimulateContractReturnType
-    ? {
-        request: UnionEvaluate<
-          UnionOmit<type['request'], 'chain'> &
-            PartialBy<
-              {
-                __mode: 'prepared'
-                chainId: chainId
-              },
-              chainId extends config['chains'][number]['id'] ? never : 'chainId'
-            >
-        >
-        result: type['result']
-      }
+  > extends infer type extends viem_SimulateContractReturnType<
+    abi,
+    functionName,
+    args
+  >
+    ? UnionEvaluate<
+        UnionOmit<type, 'request'> & {
+          request: UnionEvaluate<
+            UnionOmit<type['request'], 'chain'> &
+              PartialBy<
+                { __mode: 'prepared'; chainId: chainId },
+                chainId extends config['chains'][number]['id']
+                  ? never
+                  : 'chainId'
+              >
+          >
+        }
+      >
     : never
 }[number]
 
@@ -143,20 +152,11 @@ export async function simulateContract<
     ...rest,
     abi,
     account,
-  } as viem_SimulateContractParameters)
-
-  const minimizedAbi = abi.filter(
-    (abiItem) => 'name' in abiItem && abiItem.name === parameters.functionName,
-  )
+  })
 
   return {
     result,
-    request: {
-      __mode: 'prepared',
-      ...request,
-      abi: minimizedAbi,
-      chainId,
-    },
+    request: { __mode: 'prepared', ...request, chainId },
   } as unknown as SimulateContractReturnType<
     abi,
     functionName,

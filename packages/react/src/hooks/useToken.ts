@@ -46,18 +46,15 @@ export function useToken<
   parameters: UseTokenParameters<config, selectData> = {},
 ): UseTokenReturnType<selectData> {
   const { address, ...query } = parameters
-  const config = useConfig(parameters)
 
+  const config = useConfig(parameters)
   const chainId = useChainId()
+
   const queryOptions = getTokenQueryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
   })
   const enabled = Boolean(address && (parameters.enabled ?? true))
 
-  return useQuery({
-    ...queryOptions,
-    ...query,
-    enabled,
-  })
+  return useQuery({ ...queryOptions, ...query, enabled })
 }

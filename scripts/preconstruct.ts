@@ -23,10 +23,10 @@ for (const packagePath of packagePaths) {
   // Skip private packages
   if (packageFile.private) continue
   if (!packageFile.exports) continue
+  // if (packageFile.name !== 'wagmi') continue
 
   count += 1
   const dir = path.resolve(path.dirname(packagePath))
-  const srcDir = path.resolve(path.dirname(packagePath), 'src')
   console.log(`${packageFile.name} — ${path.dirname(packagePath)}`)
   await fs.emptyDir(path.resolve(dir, 'dist'))
 
@@ -36,20 +36,27 @@ for (const packagePath of packagePaths) {
     if (/package\.json$/.test(key)) continue
     if (typeof exports === 'string') continue
 
-    let srcFileName: string
-    if (key === '.') srcFileName = 'index.ts'
-    else srcFileName = path.basename(`${key}.ts`)
-    const srcFilePath = path.resolve(srcDir, srcFileName)
-
     // Link exports to dist locations
-    for (const [, value] of Object.entries(exports) as [
+    for (const [type, value] of Object.entries(exports) as [
       type: 'types' | 'default',
       value: string,
     ][]) {
+      const srcDir = path.resolve(
+        dir,
+        path
+          .dirname(value)
+          .replace(`dist/${type === 'default' ? 'esm' : type}`, 'src'),
+      )
+      let srcFileName: string
+      if (key === '.') srcFileName = 'index.ts'
+      else srcFileName = path.basename(`${key}.ts`)
+      const srcFilePath = path.resolve(srcDir, srcFileName)
+
       const distDir = path.resolve(dir, path.dirname(value))
       const distFileName = path.basename(value)
       const distFilePath = path.resolve(distDir, distFileName)
       await fs.ensureDir(distDir)
+      console.log({ srcFilePath, distFilePath })
 
       // Symlink src to dist file
       await fs.symlink(srcFilePath, distFilePath, 'file')

@@ -56,11 +56,13 @@ export function useConnect<
   parameters: UseConnectParameters<config, context> = {},
 ): UseConnectReturnType<config, context> {
   const config = useConfig(parameters)
+
   const mutationOptions = connectMutationOptions(config)
   const { mutate, mutateAsync, ...result } = useMutation({
     ...parameters,
     ...mutationOptions,
   })
+
   return {
     ...result,
     connect: mutate,

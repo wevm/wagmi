@@ -52,11 +52,13 @@ export function useSwitchChain<
   parameters: UseSwitchChainParameters<config, context> = {},
 ): UseSwitchChainReturnType<config, context> {
   const config = useConfig(parameters)
+
   const mutationOptions = switchChainMutationOptions(config)
   const { mutate, mutateAsync, ...result } = useMutation({
     ...parameters,
     ...mutationOptions,
   })
+
   type Return = UseSwitchChainReturnType<config, context>
   return {
     ...result,

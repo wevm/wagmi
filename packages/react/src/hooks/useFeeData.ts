@@ -50,15 +50,12 @@ export function useFeeData<
   parameters: UseFeeDataParameters<config, selectData> = {},
 ): UseFeeDataReturnType<selectData> {
   const config = useConfig(parameters)
-
   const chainId = useChainId()
+
   const queryOptions = getFeeDataQueryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
   })
 
-  return useQuery({
-    ...queryOptions,
-    ...parameters,
-  })
+  return useQuery({ ...queryOptions, ...parameters })
 }

@@ -33,29 +33,29 @@
       "default": "./dist/esm/index.js"
     },
     "./actions": {
-      "types": "./dist/types/actions.d.ts",
-      "default": "./dist/esm/actions.js"
+      "types": "./dist/types/exports/actions.d.ts",
+      "default": "./dist/esm/exports/actions.js"
     },
     "./chains": {
-      "types": "./dist/types/chains.d.ts",
-      "default": "./dist/esm/chains.js"
+      "types": "./dist/types/exports/chains.d.ts",
+      "default": "./dist/esm/exports/chains.js"
     },
     "./connectors": {
-      "types": "./dist/types/connectors.d.ts",
-      "default": "./dist/esm/connectors.js"
+      "types": "./dist/types/exports/connectors.d.ts",
+      "default": "./dist/esm/exports/connectors.js"
     },
     "./query": {
-      "types": "./dist/types/query.d.ts",
-      "default": "./dist/esm/query.js"
+      "types": "./dist/types/exports/query.d.ts",
+      "default": "./dist/esm/exports/query.js"
     },
     "./package.json": "./package.json"
   },
   "typesVersions": {
     "*": {
-      "actions": ["./dist/types/actions.d.ts"],
-      "chains": ["./dist/types/chains.d.ts"],
-      "connectors": ["./dist/types/connectors.d.ts"],
-      "query": ["./dist/types/query.d.ts"]
+      "actions": ["./dist/types/exports/actions.d.ts"],
+      "chains": ["./dist/types/exports/chains.d.ts"],
+      "connectors": ["./dist/types/exports/connectors.d.ts"],
+      "query": ["./dist/types/exports/query.d.ts"]
     }
   },
   "peerDependencies": {

@@ -1,4 +1,9 @@
+import type { Account, Address } from 'viem'
 import type { Config, Connector } from '../createConfig.js'
+
+export type AccountParameter = {
+  account?: Address | Account | undefined
+}
 
 export type ChainIdParameter<
   config extends Config,

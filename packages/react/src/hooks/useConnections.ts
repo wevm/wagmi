@@ -19,6 +19,7 @@ export function useConnections(
   parameters: UseConnectionsParameters = {},
 ): UseConnectionsReturnType {
   const config = useConfig(parameters)
+
   return useSyncExternalStore(
     (onChange) => watchConnections(config, { onChange }),
     () => getConnections(config),

@@ -5,7 +5,7 @@ export {
   type EventData,
   Emitter,
   createEmitter,
-} from './createEmitter.js'
+} from '../createEmitter.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // Types
@@ -17,11 +17,11 @@ export {
   type Omit,
   type OneOf,
   type UnionEvaluate,
-} from './types/utils.js'
+} from '../types/utils.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // Utilities
 
-export { deepEqual } from './utils/deepEqual.js'
+export { deepEqual } from '../utils/deepEqual.js'
 
-export { uid } from './utils/uid.js'
+export { uid } from '../utils/uid.js'

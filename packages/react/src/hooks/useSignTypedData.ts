@@ -42,11 +42,13 @@ export function useSignTypedData<context = unknown>(
   parameters: UseSignTypedDataParameters<context> = {},
 ): UseSignTypedDataReturnType<context> {
   const config = useConfig(parameters)
+
   const mutationOptions = signTypedDataMutationOptions(config)
   const { mutate, mutateAsync, ...result } = useMutation({
     ...parameters,
     ...mutationOptions,
   })
+
   type Return = UseSignTypedDataReturnType<context>
   return {
     ...result,

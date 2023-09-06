@@ -44,18 +44,15 @@ export function useEnsResolver<
   parameters: UseEnsResolverParameters<config, selectData> = {},
 ): UseEnsResolverReturnType<selectData> {
   const { name, ...query } = parameters
-  const config = useConfig(parameters)
 
+  const config = useConfig(parameters)
   const chainId = useChainId()
+
   const queryOptions = getEnsResolverQueryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
   })
   const enabled = Boolean(name && (parameters.enabled ?? true))
 
-  return useQuery({
-    ...queryOptions,
-    ...query,
-    enabled,
-  })
+  return useQuery({ ...queryOptions, ...query, enabled })
 }

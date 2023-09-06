@@ -74,6 +74,10 @@ export type LooseOmit<type, keys extends string> = Pick<
 
 export type UnionEvaluate<type> = type extends object ? Evaluate<type> : type
 
+export type UnionLooseOmit<type, keys extends string> = type extends any
+  ? LooseOmit<type, keys>
+  : never
+
 export type UnionOmit<type, keys extends keyof type> = type extends any
   ? Omit<type, keys>
   : never

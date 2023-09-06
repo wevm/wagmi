@@ -32,25 +32,30 @@
       "types": "./dist/types/index.d.ts",
       "default": "./dist/esm/index.js"
     },
+    "./actions": {
+      "types": "./dist/types/exports/actions.d.ts",
+      "default": "./dist/esm/exports/actions.js"
+    },
     "./chains": {
-      "types": "./dist/types/chains.d.ts",
-      "default": "./dist/esm/chains.js"
+      "types": "./dist/types/exports/chains.d.ts",
+      "default": "./dist/esm/exports/chains.js"
     },
     "./internal": {
-      "types": "./dist/types/internal.d.ts",
-      "default": "./dist/esm/internal.js"
+      "types": "./dist/types/exports/internal.d.ts",
+      "default": "./dist/esm/exports/internal.js"
     },
     "./query": {
-      "types": "./dist/types/query.d.ts",
-      "default": "./dist/esm/query.js"
+      "types": "./dist/types/exports/query.d.ts",
+      "default": "./dist/esm/exports/query.js"
     },
     "./package.json": "./package.json"
   },
   "typesVersions": {
     "*": {
-      "chains": ["./dist/types/chains.d.ts"],
-      "internal": ["./dist/types/internal.d.ts"],
-      "query": ["./dist/types/query.d.ts"]
+      "actions": ["./dist/types/exports/actions.d.ts"],
+      "chains": ["./dist/types/exports/chains.d.ts"],
+      "internal": ["./dist/types/exports/internal.d.ts"],
+      "query": ["./dist/types/exports/query.d.ts"]
     }
   },
   "peerDependencies": {

@@ -62,6 +62,7 @@ test('chain formatters', () => {
     gatewayFeeRecipient?: `0x${string}` | undefined
   }>()
   simulateContract(config, {
+    account: '0x',
     address: '0x',
     abi: abi.erc20,
     functionName: 'transferFrom',
@@ -87,6 +88,7 @@ test('chain formatters', () => {
   }>()
   simulateContract(config, {
     chainId: celo.id,
+    account: '0x',
     address: '0x',
     abi: abi.erc20,
     functionName: 'transferFrom',
@@ -114,6 +116,7 @@ test('chain formatters', () => {
   }>()
   simulateContract(config, {
     chainId: mainnet.id,
+    account: '0x',
     address: '0x',
     abi: abi.erc20,
     functionName: 'transferFrom',

@@ -7,6 +7,8 @@ test('exports', () => {
     [
       "connectMutationOptions",
       "disconnectMutationOptions",
+      "estimateGasQueryKey",
+      "estimateGasQueryOptions",
       "getBalanceQueryKey",
       "getBalanceQueryOptions",
       "getBlockNumberQueryKey",

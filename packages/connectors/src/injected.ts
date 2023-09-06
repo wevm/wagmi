@@ -244,7 +244,7 @@ export function injected(parameters: InjectedParameters = {}) {
       const windowProvider = getWindowProvider()
       if (typeof windowProvider.provider === 'function')
         return windowProvider.provider(window as Window | undefined)
-      return findProvider(window as Window | undefined, 'isCoinbaseWallet')
+      return findProvider(window as Window | undefined, () => true)
     },
     async isAuthorized() {
       try {
@@ -391,14 +391,6 @@ export function injected(parameters: InjectedParameters = {}) {
       config.emitter.emit('change', { chainId })
     },
     async onConnect(connectInfo) {
-      // If `connect` event fires and wallet is explicitly disconnected, ignore.
-      if (
-        shimDisconnect &&
-        // If shim does not exist in storage, wallet is disconnected
-        !config.storage?.getItem(this.shimDisconnectStorageKey)
-      )
-        return
-
       const accounts = await this.getAccounts()
       if (accounts.length === 0) return
 

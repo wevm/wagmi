@@ -75,36 +75,34 @@ export function useContractRead<
   config extends Config = ResolvedRegister['config'],
   selectData = ReadContractData<abi, functionName, args>,
 >(
-  parameters: UseContractReadParameters<
-    abi,
-    functionName,
-    args,
-    config,
-    selectData
-  > = {} as UseContractReadParameters<
+  parameters?: UseContractReadParameters<
     abi,
     functionName,
     args,
     config,
     selectData
   >,
-): UseContractReadReturnType<abi, functionName, args, selectData> {
+): UseContractReadReturnType<abi, functionName, args, selectData>
+
+export function useContractRead(
+  parameters: UseContractReadParameters = {},
+): UseContractReadReturnType {
   const { address, abi, functionName, ...query } = parameters
   const config = useConfig(parameters)
-
   const chainId = useChainId()
+
   const queryOptions = readContractQueryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
-  } as ReadContractOptions<ResolvedRegister['config'], abi, functionName, args>)
+  })
   const enabled = Boolean(
     address && abi && functionName && (parameters.enabled ?? true),
   )
 
   return useQuery({
     ...queryOptions,
-    ...(query as any),
+    ...query,
     enabled,
     structuralSharing: query.structuralSharing ?? structuralSharing,
-  }) as UseContractReadReturnType<abi, functionName, args, selectData>
+  })
 }

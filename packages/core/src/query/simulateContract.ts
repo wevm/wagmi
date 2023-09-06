@@ -51,16 +51,11 @@ export function simulateContractQueryOptions<
     async queryFn({ queryKey }) {
       const { abi, connector } = options
       if (!abi) throw new Error('abi is required')
-      const { address, functionName, scopeKey: _, ...parameters } = queryKey[1]
+      const { scopeKey: _, ...parameters } = queryKey[1]
+      const { address, functionName } = parameters
       if (!address) throw new Error('address is required')
       if (!functionName) throw new Error('functionName is required')
-      return simulateContract(config, {
-        abi,
-        address,
-        connector,
-        functionName,
-        ...parameters,
-      } as SimulateContractParameters<abi, functionName, args, config, chainId>)
+      return simulateContract(config, { abi, connector, ...parameters } as any)
     },
     queryKey: simulateContractQueryKey(options),
   } as const satisfies QueryOptions<

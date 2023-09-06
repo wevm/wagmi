@@ -49,7 +49,7 @@
     "rimraf": "^4.4.1",
     "simple-git-hooks": "^2.8.1",
     "typescript": "5.0.4",
-    "viem": "0.0.0-alpha-20230904204032",
+    "viem": "0.0.0-alpha-20230906150254",
     "vite": "^4.3.9",
     "vitest": "^0.34.1"
   },
@@ -61,7 +61,7 @@
     "overrides": {
       "@wagmi/connectors": "workspace:*",
       "@wagmi/core": "workspace:*",
-      "viem": "0.0.0-alpha-20230904204032"
+      "viem": "0.0.0-alpha-20230906150254"
     },
     "peerDependencyRules": {
       "ignoreMissing": [

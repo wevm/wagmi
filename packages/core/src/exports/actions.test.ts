@@ -1,14 +1,10 @@
 import { expect, test } from 'vitest'
 
-import * as core from './index.js'
+import * as actions from './actions.js'
 
 test('exports', () => {
-  expect(Object.keys(core)).toMatchInlineSnapshot(`
+  expect(Object.keys(actions)).toMatchInlineSnapshot(`
     [
-      "custom",
-      "fallback",
-      "http",
-      "webSocket",
       "connect",
       "disconnect",
       "estimateGas",
@@ -42,21 +38,6 @@ test('exports', () => {
       "watchPendingTransactions",
       "waitForTransactionReceipt",
       "writeContract",
-      "createConfig",
-      "createConnector",
-      "createStorage",
-      "noopStorage",
-      "BaseError",
-      "ChainMismatchError",
-      "ChainNotConfiguredError",
-      "ConnectorAlreadyConnectedError",
-      "ConnectorNotFoundError",
-      "ProviderNotFoundError",
-      "SwitchChainNotSupportedError",
-      "deserialize",
-      "normalizeChainId",
-      "serialize",
-      "version",
     ]
   `)
 })

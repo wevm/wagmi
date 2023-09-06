@@ -27,6 +27,13 @@ export {
 } from './actions/disconnect.js'
 
 export {
+  type EstimateGasError,
+  type EstimateGasParameters,
+  type EstimateGasReturnType,
+  estimateGas,
+} from './actions/estimateGas.js'
+
+export {
   type GetAccountReturnType,
   getAccount,
   type WatchAccountParameters,

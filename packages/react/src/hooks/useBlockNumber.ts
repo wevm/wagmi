@@ -51,11 +51,12 @@ export function useBlockNumber<
   parameters: UseBlockNumberParameters<config, selectData> = {},
 ): UseBlockNumberReturnType<selectData> {
   const { enabled = true, watch, ...query } = parameters
+
   const config = useConfig(parameters)
   const queryClient = useQueryClient()
-
   const configChainId = useChainId()
   const chainId = parameters.chainId ?? configChainId
+
   const queryOptions = getBlockNumberQueryOptions(config, { chainId })
 
   useEffect(() => {
@@ -70,9 +71,5 @@ export function useBlockNumber<
     })
   }, [chainId, config, enabled, queryClient, queryOptions, watch])
 
-  return useQuery({
-    ...queryOptions,
-    ...query,
-    enabled,
-  })
+  return useQuery({ ...queryOptions, ...query, enabled })
 }

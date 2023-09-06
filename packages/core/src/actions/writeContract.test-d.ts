@@ -19,6 +19,7 @@ test('default', async () => {
 
 test('prepareWriteContract', async () => {
   const { request } = await simulateContract(config, {
+    account: '0x',
     address: '0x',
     abi: abi.erc20,
     functionName: 'transferFrom',

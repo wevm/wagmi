@@ -59,11 +59,13 @@ export function useContractWrite<
   parameters: UseContractWriteParameters<config, context> = {},
 ): UseContractWriteReturnType<config, context> {
   const config = useConfig(parameters)
+
   const mutationOptions = writeContractMutationOptions(config)
   const { mutate, mutateAsync, ...result } = useMutation({
     ...parameters,
     ...mutationOptions,
   })
+
   type Return = UseContractWriteReturnType<config, context>
   return {
     ...result,
