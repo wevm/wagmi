@@ -1,5 +1,4 @@
-import { http } from 'viem'
-import { createConfig, createStorage } from 'wagmi'
+import { http, createConfig, createStorage } from 'wagmi'
 import { celo, mainnet, optimism, sepolia } from 'wagmi/chains'
 import {
   coinbaseWallet,

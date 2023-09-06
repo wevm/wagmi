@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
 const connectorsPath = '../../packages/connectors/src'
-const corePath = '../../packages/core/src'
+const corePath = '../../packages/core/src/exports'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -20,14 +20,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@wagmi/connectors': path.resolve(__dirname, connectorsPath),
-
       '@wagmi/core': path.resolve(__dirname, corePath),
-      '@wagmi/core/chains': path.resolve(__dirname, `${corePath}/chains.ts`),
-      '@wagmi/core/internal': path.resolve(
-        __dirname,
-        `${corePath}/internal.ts`,
-      ),
-      '@wagmi/core/query': path.resolve(__dirname, `${corePath}/query.ts`),
     },
   },
 })

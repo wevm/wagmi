@@ -4,9 +4,8 @@ import {
   ledger,
   walletConnect,
 } from '@wagmi/connectors'
-import { createConfig, createStorage } from '@wagmi/core'
+import { http, createConfig, createStorage } from '@wagmi/core'
 import { mainnet, optimism, sepolia } from '@wagmi/core/chains'
-import { http } from 'viem'
 
 export const config = createConfig({
   chains: [mainnet, sepolia, optimism],

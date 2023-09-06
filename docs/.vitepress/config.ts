@@ -118,10 +118,10 @@ export default withTwoslash(
 
           // Source - reference source files so we don't need to build packages to get types (speeds things up)
           '@wagmi/connectors': ['../../packages/connectors/src'],
-          '@wagmi/core': ['../../packages/core/src'],
-          '@wagmi/core/*': ['../../packages/core/src/*'],
-          wagmi: ['../../packages/react/src'],
-          'wagmi/*': ['../../packages/react/src/*'],
+          '@wagmi/core': ['../../packages/core/src/exports'],
+          '@wagmi/core/*': ['../../packages/core/src/exports/*'],
+          wagmi: ['../../packages/react/src/exports'],
+          'wagmi/*': ['../../packages/react/src/exports/*'],
         },
         strict: true,
         target: ts.ScriptTarget.ESNext,

@@ -80,7 +80,7 @@ useBlockNumber({ chainId: 123 })
 
 You just saved yourself a runtime error and you didn't even need to pass your `config`. 🎉
 
-### `config` Property
+### Hook `config` Property
 
 For cases where you have more than one Wagmi `config` or don't want to use the declaration merging approach, you can pass a specific `config` directly to hooks via the `config` property.
 

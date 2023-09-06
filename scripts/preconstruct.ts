@@ -56,7 +56,6 @@ for (const packagePath of packagePaths) {
       const distFileName = path.basename(value)
       const distFilePath = path.resolve(distDir, distFileName)
       await fs.ensureDir(distDir)
-      console.log({ srcFilePath, distFilePath })
 
       // Symlink src to dist file
       await fs.symlink(srcFilePath, distFilePath, 'file')

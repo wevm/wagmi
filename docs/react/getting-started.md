@@ -66,33 +66,40 @@ In this example, Wagmi is configured to use the Mainnet and Sepolia chains, and 
 
 ---
 
-If you are using [TypeScript](/react/typescript), you can "register" the Wagmi `config` to get strong type-safety across React Context in places that wouldn't normally have type info.
+If you are using TypeScript, you can "register" the Wagmi config or use the hook `config` property to get strong type-safety across React Context in places that wouldn't normally have type info.
 
-```ts
+::: code-group
+```ts twoslash [register config]
+// @errors: 2322
+import { type Config } from 'wagmi'
+import { mainnet, sepolia } from 'wagmi/chains'
+
+declare const config: Config<readonly [typeof mainnet, typeof sepolia]>
+// ---cut---
+import { useBlockNumber } from 'wagmi'
+
+useBlockNumber({ chainId: 123 })
+
 declare module 'wagmi' {
   interface Register {
     config: typeof config
   }
 }
 ```
-
-```ts twoslash
+```ts twoslash [hook config property]
 // @errors: 2322
 import { type Config } from 'wagmi'
 import { mainnet, sepolia } from 'wagmi/chains'
 
-declare module 'wagmi' {
-  interface Register {
-    config: Config<readonly [typeof mainnet, typeof sepolia]>
-  }
-}
+declare const config: Config<readonly [typeof mainnet, typeof sepolia]>
 // ---cut---
 import { useBlockNumber } from 'wagmi'
 
-useBlockNumber({ chainId: 123 })
+useBlockNumber({ chainId: 123, config })
 ```
+:::
 
-By registering the `config`, `useBlockNumber`'s `chainId` is strongly typed to only allow Mainnet and Sepolia IDs.
+By registering or using the hook `config` property, `useBlockNumber`'s `chainId` is strongly typed to only allow Mainnet and Sepolia IDs. Learn more by reading the [TypeScript docs](/react/typescript#config-types).
 
 ### Wrap App in Context Provider
 

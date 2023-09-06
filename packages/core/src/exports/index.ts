@@ -17,21 +17,21 @@ export {
   type ConnectParameters,
   type ConnectReturnType,
   connect,
-} from './actions/connect.js'
+} from '../actions/connect.js'
 
 export {
   type DisconnectError,
   type DisconnectParameters,
   type DisconnectReturnType,
   disconnect,
-} from './actions/disconnect.js'
+} from '../actions/disconnect.js'
 
 export {
   type EstimateGasError,
   type EstimateGasParameters,
   type EstimateGasReturnType,
   estimateGas,
-} from './actions/estimateGas.js'
+} from '../actions/estimateGas.js'
 
 export {
   type GetAccountReturnType,
@@ -39,14 +39,14 @@ export {
   type WatchAccountParameters,
   type WatchAccountReturnType,
   watchAccount,
-} from './actions/getAccount.js'
+} from '../actions/getAccount.js'
 
 export {
   type GetBalanceParameters,
   type GetBalanceReturnType,
   type GetBalanceError,
   getBalance,
-} from './actions/getBalance.js'
+} from '../actions/getBalance.js'
 
 export {
   type GetBlockNumberError,
@@ -56,7 +56,7 @@ export {
   type WatchBlockNumberParameters,
   type WatchBlockNumberReturnType,
   watchBlockNumber,
-} from './actions/getBlockNumber.js'
+} from '../actions/getBlockNumber.js'
 
 export {
   type GetChainIdReturnType,
@@ -64,7 +64,7 @@ export {
   type WatchChainIdParameters,
   type WatchChainIdReturnType,
   watchChainId,
-} from './actions/getChainId.js'
+} from '../actions/getChainId.js'
 
 export {
   type GetConnectionsReturnType,
@@ -72,152 +72,152 @@ export {
   type WatchConnectionsParameters,
   type WatchConnectionsReturnType,
   watchConnections,
-} from './actions/getConnections.js'
+} from '../actions/getConnections.js'
 
 export {
   type GetConnectorClientError,
   type GetConnectorClientParameters,
   type GetConnectorClientReturnType,
   getConnectorClient,
-} from './actions/getConnectorClient.js'
+} from '../actions/getConnectorClient.js'
 
 export {
   type GetEnsAddressError,
   type GetEnsAddressParameters,
   type GetEnsAddressReturnType,
   getEnsAddress,
-} from './actions/getEnsAddress.js'
+} from '../actions/getEnsAddress.js'
 
 export {
   type GetEnsAvatarError,
   type GetEnsAvatarParameters,
   type GetEnsAvatarReturnType,
   getEnsAvatar,
-} from './actions/getEnsAvatar.js'
+} from '../actions/getEnsAvatar.js'
 
 export {
   type GetEnsNameError,
   type GetEnsNameParameters,
   type GetEnsNameReturnType,
   getEnsName,
-} from './actions/getEnsName.js'
+} from '../actions/getEnsName.js'
 
 export {
   type GetEnsResolverError,
   type GetEnsResolverParameters,
   type GetEnsResolverReturnType,
   getEnsResolver,
-} from './actions/getEnsResolver.js'
+} from '../actions/getEnsResolver.js'
 
 export {
   type GetFeeDataError,
   type GetFeeDataParameters,
   type GetFeeDataReturnType,
   getFeeData,
-} from './actions/getFeeData.js'
+} from '../actions/getFeeData.js'
 
 export {
   type GetTokenError,
   type GetTokenParameters,
   type GetTokenReturnType,
   getToken,
-} from './actions/getToken.js'
+} from '../actions/getToken.js'
 
 export {
   type GetTransactionError,
   type GetTransactionParameters,
   type GetTransactionReturnType,
   getTransaction,
-} from './actions/getTransaction.js'
+} from '../actions/getTransaction.js'
 
 export {
   type MulticallParameters,
   type MulticallReturnType,
   multicall,
-} from './actions/multicall.js'
+} from '../actions/multicall.js'
 
 export {
   type ReadContractParameters,
   type ReadContractReturnType,
   type ReadContractError,
   readContract,
-} from './actions/readContract.js'
+} from '../actions/readContract.js'
 
 export {
   type ReadContractsParameters,
   type ReadContractsReturnType,
   type ReadContractsError,
   readContracts,
-} from './actions/readContracts.js'
+} from '../actions/readContracts.js'
 
 export {
   type ReconnectError,
   type ReconnectParameters,
   type ReconnectReturnType,
   reconnect,
-} from './actions/reconnect.js'
+} from '../actions/reconnect.js'
 
 export {
   type SendTransactionError,
   type SendTransactionParameters,
   type SendTransactionReturnType,
   sendTransaction,
-} from './actions/sendTransaction.js'
+} from '../actions/sendTransaction.js'
 
 export {
   type SignMessageError,
   type SignMessageParameters,
   type SignMessageReturnType,
   signMessage,
-} from './actions/signMessage.js'
+} from '../actions/signMessage.js'
 
 export {
   type SignTypedDataError,
   type SignTypedDataParameters,
   type SignTypedDataReturnType,
   signTypedData,
-} from './actions/signTypedData.js'
+} from '../actions/signTypedData.js'
 
 export {
   type SimulateContractError,
   type SimulateContractParameters,
   type SimulateContractReturnType,
   simulateContract,
-} from './actions/simulateContract.js'
+} from '../actions/simulateContract.js'
 
 export {
   type SwitchAccountError,
   type SwitchAccountParameters,
   type SwitchAccountReturnType,
   switchAccount,
-} from './actions/switchAccount.js'
+} from '../actions/switchAccount.js'
 
 export {
   type SwitchChainError,
   type SwitchChainParameters,
   type SwitchChainReturnType,
   switchChain,
-} from './actions/switchChain.js'
+} from '../actions/switchChain.js'
 
 export {
   type WatchPendingTransactionsParameters,
   type WatchPendingTransactionsReturnType,
   watchPendingTransactions,
-} from './actions/watchPendingTransactions.js'
+} from '../actions/watchPendingTransactions.js'
 
 export {
   type WaitForTransactionReceiptError,
   type WaitForTransactionReceiptParameters,
   type WaitForTransactionReceiptReturnType,
   waitForTransactionReceipt,
-} from './actions/waitForTransactionReceipt.js'
+} from '../actions/waitForTransactionReceipt.js'
 
 export {
   type WriteContractError,
   type WriteContractParameters,
   type WriteContractReturnType,
   writeContract,
-} from './actions/writeContract.js'
+} from '../actions/writeContract.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // createConfig
@@ -229,7 +229,7 @@ export {
   type CreateConfigParameters,
   type State,
   createConfig,
-} from './createConfig.js'
+} from '../createConfig.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // createConnector
@@ -238,7 +238,7 @@ export {
   type ConnectorEventMap,
   type CreateConnectorFn,
   createConnector,
-} from './createConnector.js'
+} from '../createConnector.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // createStorage
@@ -249,40 +249,40 @@ export {
   type StorageItemMap,
   createStorage,
   noopStorage,
-} from './createStorage.js'
+} from '../createStorage.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // Errors
 
-export { BaseError } from './errors/base.js'
+export { BaseError } from '../errors/base.js'
 
 export {
   ChainMismatchError,
   ChainNotConfiguredError,
   ConnectorAlreadyConnectedError,
   ConnectorNotFoundError,
-} from './errors/config.js'
+} from '../errors/config.js'
 
 export {
   ProviderNotFoundError,
   SwitchChainNotSupportedError,
-} from './errors/connector.js'
+} from '../errors/connector.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // Types
 
-export { type Register, type ResolvedRegister } from './types/register.js'
+export { type Register, type ResolvedRegister } from '../types/register.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // Utilities
 
-export { deserialize } from './utils/deserialize.js'
+export { deserialize } from '../utils/deserialize.js'
 
-export { normalizeChainId } from './utils/normalizeChainId.js'
+export { normalizeChainId } from '../utils/normalizeChainId.js'
 
-export { serialize } from './utils/serialize.js'
+export { serialize } from '../utils/serialize.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // Version
 
-export { version } from './version.js'
+export { version } from '../version.js'

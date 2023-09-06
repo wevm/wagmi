@@ -21,10 +21,10 @@
 
     "paths": {
       "@wagmi/connectors": ["../../packages/connectors/src"],
-      "@wagmi/core": ["../../packages/core/src"],
-      "@wagmi/core/*": ["../../packages/core/src/*"],
-      "wagmi": ["../../packages/react/src"],
-      "wagmi/*": ["../../packages/react/src/*"]
+      "@wagmi/core": ["../../packages/core/src/exports"],
+      "@wagmi/core/*": ["../../packages/core/src/exports/*"],
+      "wagmi": ["../../packages/react/src/exports"],
+      "wagmi/*": ["../../packages/react/src/exports/*"]
     }
   },
   "include": ["src"],
