@@ -10,14 +10,15 @@ test('default', async () => {
   })
   config.setState((x) => ({ ...x, chainId: chain.mainnet2.id }))
   config.setState((x) => ({ ...x, chainId: chain.mainnet.id }))
-  config.setState((x) => ({ ...x, chainId: 456 }))
+  config.setState((x) => ({ ...x, chainId: chain.mainnet2.id }))
 
   expect(chainIds).toMatchInlineSnapshot(`
-      [
-        1,
-        456,
-      ]
-    `)
+    [
+      456,
+      1,
+      456,
+    ]
+  `)
 
   unwatch()
 })

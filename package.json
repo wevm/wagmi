@@ -48,7 +48,7 @@
     "publint": "^0.2.0",
     "rimraf": "^4.4.1",
     "simple-git-hooks": "^2.8.1",
-    "typescript": "5.2.2",
+    "typescript": "5.1.6",
     "viem": "0.0.0-alpha-20230907200534",
     "vite": "^4.3.9",
     "vitest": "^0.34.1"

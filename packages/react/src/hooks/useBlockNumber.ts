@@ -72,15 +72,17 @@ export function useBlockNumber<
   const queryOptions = getBlockNumberQueryOptions(config, { chainId })
 
   useWatchBlockNumber({
+    ...{
+      config: parameters.config,
+      chainId: parameters.chainId as number,
+    },
     ...(typeof watch === 'object'
       ? (watch as UseWatchBlockNumberParameters)
       : {}),
-    chainId,
     enabled: Boolean(
       enabled && (typeof watch === 'object' ? watch.enabled : watch),
     ),
     onBlockNumber(blockNumber) {
-      console.log(`onBlockNumber ${chainId}`, blockNumber)
       queryClient.setQueryData(queryOptions.queryKey, blockNumber)
     },
   })
