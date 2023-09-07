@@ -16,6 +16,7 @@ import {
 import { Emitter, type EventData, createEmitter } from './createEmitter.js'
 import { type Storage, createStorage, noopStorage } from './createStorage.js'
 import { ChainNotConfiguredError } from './errors/config.js'
+import type { MultichainValue } from './types/chain.js'
 import type { Evaluate, OneOf } from './types/utils.js'
 import { uid } from './utils/uid.js'
 
@@ -31,27 +32,12 @@ export type CreateConfigParameters<
     syncConnectedChain?: boolean | undefined
   } & OneOf<
     | {
-        batch?:
-          | ClientConfig['batch']
-          | {
-              [_ in chains[number]['id']]?: ClientConfig['batch'] | undefined
-            }
-          | undefined
+        batch?: MultichainValue<chains, ClientConfig['batch']> | undefined
         cacheTime?:
-          | ClientConfig['cacheTime']
-          | {
-              [_ in chains[number]['id']]?:
-                | ClientConfig['cacheTime']
-                | undefined
-            }
+          | MultichainValue<chains, ClientConfig['cacheTime']>
           | undefined
         pollingInterval?:
-          | ClientConfig['pollingInterval']
-          | {
-              [_ in chains[number]['id']]?:
-                | ClientConfig['pollingInterval']
-                | undefined
-            }
+          | MultichainValue<chains, ClientConfig['pollingInterval']>
           | undefined
         transports: transports
       }
@@ -112,43 +98,26 @@ export type Config<
   }
 }
 
-export type State<
-  chains extends readonly [Chain, ...Chain[]] = readonly [Chain, ...Chain[]],
-> = {
-  chainId: chains[number]['id']
-  connections: Map<string, Connection>
-  current: string | undefined
-  status: 'connected' | 'connecting' | 'disconnected' | 'reconnecting'
-}
-export type PartializedState = Evaluate<
-  Partial<Pick<State, 'chainId' | 'connections' | 'current' | 'status'>>
->
-export type Connection = {
-  accounts: readonly [Address, ...Address[]]
-  chainId: number
-  connector: Connector
-}
-export type Connector = ReturnType<CreateConnectorFn> & {
-  emitter: Emitter<ConnectorEventMap>
-  uid: string
-}
-
 export function createConfig<
   const chains extends readonly [Chain, ...Chain[]],
   transports extends Record<chains[number]['id'], Transport>,
->({
-  autoConnect,
-  chains,
-  reconnectOnMount = autoConnect ?? true,
-  storage = createStorage({
-    storage:
-      typeof window !== 'undefined' && window.localStorage
-        ? window.localStorage
-        : noopStorage,
-  }),
-  syncConnectedChain = true,
-  ...rest
-}: CreateConfigParameters<chains, transports>): Config<chains, transports> {
+>(
+  parameters: CreateConfigParameters<chains, transports>,
+): Config<chains, transports> {
+  const {
+    autoConnect,
+    chains,
+    reconnectOnMount = autoConnect ?? true,
+    storage = createStorage({
+      storage:
+        typeof window !== 'undefined' && window.localStorage
+          ? window.localStorage
+          : noopStorage,
+    }),
+    syncConnectedChain = true,
+    ...rest
+  } = parameters
+
   /////////////////////////////////////////////////////////////////////////////////////////////////
   // Set up connectors, clients, etc.
   /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -173,9 +142,9 @@ export function createConfig<
 
   const clients = new Map<number, Client<Transport, chains[number]>>()
   function getClient<chainId extends chains[number]['id']>(
-    parameters: { chainId?: chainId | chains[number]['id'] | undefined } = {},
+    config: { chainId?: chainId | chains[number]['id'] | undefined } = {},
   ): Client<Transport, Extract<chains[number], { id: chainId }>> {
-    const chainId = parameters.chainId ?? store.getState().chainId
+    const chainId = config.chainId ?? store.getState().chainId
     const chain = chains.find((x) => x.id === chainId)
 
     // If the target chain is not configured, use the client of the current chain.
@@ -228,16 +197,17 @@ export function createConfig<
 
   const store = createStore(
     subscribeWithSelector(
+      // only use persist middleware if storage exists
       storage
         ? persist(() => initialState, {
             name: 'store',
-            partialize(state): PartializedState {
+            partialize(state) {
               return {
                 chainId: state.chainId,
                 connections: state.connections,
                 current: state.current,
                 status: state.status,
-              }
+              } satisfies PartializedState
             },
             skipHydration: !reconnectOnMount,
             storage: storage as Storage<Record<string, unknown>>,
@@ -344,6 +314,7 @@ export function createConfig<
 
     getClient,
     setState(value) {
+      // TODO: Add check to make sure state isn't completely nuked (e.g. set to non-object) and important keys exist
       const newState =
         typeof value === 'function' ? value(store.getState() as any) : value
       store.setState(newState, true)
@@ -366,4 +337,29 @@ export function createConfig<
       setup,
     },
   }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// Types
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+export type State<
+  chains extends readonly [Chain, ...Chain[]] = readonly [Chain, ...Chain[]],
+> = {
+  chainId: chains[number]['id']
+  connections: Map<string, Connection>
+  current: string | undefined
+  status: 'connected' | 'connecting' | 'disconnected' | 'reconnecting'
+}
+export type PartializedState = Evaluate<
+  Partial<Pick<State, 'chainId' | 'connections' | 'current' | 'status'>>
+>
+export type Connection = {
+  accounts: readonly [Address, ...Address[]]
+  chainId: number
+  connector: Connector
+}
+export type Connector = ReturnType<CreateConnectorFn> & {
+  emitter: Emitter<ConnectorEventMap>
+  uid: string
 }

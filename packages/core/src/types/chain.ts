@@ -23,3 +23,8 @@ type HasFormatter<chains extends readonly Chain[]> = chains extends readonly [
     ? true
     : HasFormatter<tail>
   : false
+
+export type MultichainValue<
+  chains extends readonly [Chain, ...Chain[]],
+  value,
+> = value | { [_ in chains[number]['id']]?: value | undefined }

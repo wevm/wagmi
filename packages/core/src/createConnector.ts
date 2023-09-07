@@ -11,11 +11,14 @@ import { type Storage } from './createStorage.js'
 import { type Evaluate } from './types/utils.js'
 
 export type ConnectorEventMap = {
-  change: { accounts?: readonly Address[]; chainId?: number }
+  change: {
+    accounts?: readonly Address[] | undefined
+    chainId?: number | undefined
+  }
   connect: { accounts: readonly Address[]; chainId: number }
   disconnect: never
   error: { error: Error }
-  message: { type: string; data?: unknown }
+  message: { type: string; data?: unknown | undefined }
 }
 
 export type CreateConnectorFn<
@@ -25,33 +28,43 @@ export type CreateConnectorFn<
 > = (config: {
   chains: readonly [Chain, ...Chain[]]
   emitter: Emitter<ConnectorEventMap>
-  storage?: Storage<storageItem> | null
+  storage?: Storage<storageItem> | null | undefined
 }) => Evaluate<
   {
     readonly id: string
     readonly name: string
 
     setup?(): Promise<void>
-    connect(parameters?: { chainId?: number | undefined }): Promise<{
+    connect(
+      parameters?: { chainId?: number | undefined } | undefined,
+    ): Promise<{
       accounts: readonly Address[]
       chainId: number
     }>
     disconnect(): Promise<void>
     getAccounts(): Promise<readonly Address[]>
     getChainId(): Promise<number>
-    getProvider(parameters?: {
-      chainId?: number | undefined
-    }): Promise<provider>
-    getClient?(parameters?: {
-      chainId?: number | undefined
-    }): Promise<Client>
+    getProvider(
+      parameters?:
+        | {
+            chainId?: number | undefined
+          }
+        | undefined,
+    ): Promise<provider>
+    getClient?(
+      parameters?:
+        | {
+            chainId?: number | undefined
+          }
+        | undefined,
+    ): Promise<Client>
     isAuthorized(): Promise<boolean>
     switchChain?(parameters: { chainId: number }): Promise<Chain>
 
     onAccountsChanged(accounts: string[]): void
     onChainChanged(chainId: string): void
     onConnect?(connectInfo: ProviderConnectInfo): void
-    onDisconnect(error?: Error): void
+    onDisconnect(error?: Error | undefined): void
     onMessage?(message: ProviderMessage): void
   } & properties
 >
