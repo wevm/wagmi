@@ -31,3 +31,18 @@ test('can pass active chain', async () => {
   assertActiveChain(config, { activeChainId: 1, chainId: 1 })
   await disconnect(config, { connector })
 })
+
+test('errors when on wrong chain', async () => {
+  await connect(config, { chainId: 1, connector })
+  // @ts-expect-error
+  config.setState((x) => ({ ...x, chainId: 789 }))
+  expect(() =>
+    assertActiveChain(config, { chainId: 101112 }),
+  ).toThrowErrorMatchingInlineSnapshot(`
+    "Chain mismatch
+
+    Details: Expected \\"Chain 101112\\", received \\"Chain 789\\".
+    Version: @wagmi/core@x.y.z"
+  `)
+  await disconnect(config, { connector })
+})
