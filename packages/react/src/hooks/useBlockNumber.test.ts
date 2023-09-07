@@ -47,7 +47,7 @@ test('mounts', async () => {
   `)
 })
 
-test('parameter: watch', async () => {
+test('parameters: watch', async () => {
   await testClient.mainnet.resetFork()
 
   const { result } = renderHook(() => useBlockNumber({ watch: true }))

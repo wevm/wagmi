@@ -1,16 +1,16 @@
 import { chain, config } from '@wagmi/test'
 import { expectTypeOf, test } from 'vitest'
 
-import { getConnectorClient } from './getConnectorClient.js'
+import { getPublicClient } from './getPublicClient.js'
 
-test('default', async () => {
-  const client = await getConnectorClient(config)
+test('default', () => {
+  const client = getPublicClient(config)
   expectTypeOf(client.chain).toEqualTypeOf<typeof config['chains'][number]>()
   expectTypeOf(client.transport.type).toEqualTypeOf<'http'>()
 })
 
-test('parameters: chainId', async () => {
-  const client = await getConnectorClient(config, {
+test('parameters: chainId', () => {
+  const client = getPublicClient(config, {
     chainId: chain.mainnet.id,
   })
   expectTypeOf(client.chain).toEqualTypeOf<typeof chain.mainnet>()

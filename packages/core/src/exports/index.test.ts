@@ -43,6 +43,8 @@ test('exports', () => {
       "watchPendingTransactions",
       "waitForTransactionReceipt",
       "writeContract",
+      "getPublicClient",
+      "getWalletClient",
       "createConfig",
       "createConnector",
       "createStorage",

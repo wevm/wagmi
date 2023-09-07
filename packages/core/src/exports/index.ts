@@ -238,6 +238,22 @@ export {
 } from '../actions/writeContract.js'
 
 ////////////////////////////////////////////////////////////////////////////////
+// Actions (Viem)
+
+export {
+  type GetPublicClientParameters,
+  type GetPublicClientReturnType,
+  getPublicClient,
+} from '../actions/viem/getPublicClient.js'
+
+export {
+  type GetWalletClientError,
+  type GetWalletClientParameters,
+  type GetWalletClientReturnType,
+  getWalletClient,
+} from '../actions/viem/getWalletClient.js'
+
+////////////////////////////////////////////////////////////////////////////////
 // createConfig
 
 export {

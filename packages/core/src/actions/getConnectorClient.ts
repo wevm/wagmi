@@ -2,7 +2,6 @@ import {
   type Account,
   type Address,
   type Client,
-  type Transport,
   createClient,
   custom,
 } from 'viem'
@@ -34,10 +33,8 @@ export type GetConnectorClientReturnType<
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
 > = Evaluate<
   Client<
-    Transport,
-    chainId extends config['chains'][number]['id']
-      ? Extract<config['chains'][number], { id: chainId }>
-      : config['chains'][number],
+    config['_internal']['transports'][chainId],
+    Extract<config['chains'][number], { id: chainId }>,
     Account
   >
 >
