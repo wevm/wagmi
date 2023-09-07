@@ -198,7 +198,7 @@ export function createConfig<
       const chainId = chain.id as chains[number]['id']
       const getValue = (value: any) =>
         typeof value === 'object' ? value[chainId] : value
-      const batch = rest.batch
+      const batch: ClientConfig['batch'] = rest.batch
         ? rest.batch[chainId as keyof typeof rest.batch]
         : { multicall: true }
       client = createClient({
