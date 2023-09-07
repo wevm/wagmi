@@ -143,9 +143,51 @@ const config = createConfig({
 
 ---
 
+### batch
+
+`{ multicall?: boolean | { batchSize?: number | undefined; wait?: number | undefined } | undefined } | { [_ in chains[number]["id"]]?: { multicall?: boolean | { batchSize?: number | undefined; wait?: number | undefined } | undefined } | undefined } | undefined`
+
+- Batch settings. See [Viem docs](https://viem.sh/docs/clients/custom.html#batch-optional) for more info.
+- Defaults to `{ multicall: true }`.
+
+```ts-vue
+import { createConfig, http } from '{{packageName}}'
+import { mainnet, sepolia } from '{{packageName}}/chains'
+
+const config = createConfig({
+  chains: [mainnet, sepolia],
+  batch: { multicall: true }, // [!code focus]
+  transports: {
+    [mainnet.id]: http('https://...'),
+    [sepolia.id]: http('https://...'),
+  },
+})
+```
+
+### cacheTime
+
+`number | { [_ in chains[number]['id']]?: number | undefined } | undefined`
+
+- Frequency in milliseconds for polling enabled features. See [Viem docs](https://viem.sh/docs/clients/public.html#cachetime-optional) for more info.
+- Defaults to [`pollingInterval`](#pollinginterval) or `4_000`.
+
+```ts-vue
+import { createConfig, http } from '{{packageName}}'
+import { mainnet, sepolia } from '{{packageName}}/chains'
+
+const config = createConfig({
+  chains: [mainnet, sepolia],
+  cacheTime: 4_000, // [!code focus]
+  transports: {
+    [mainnet.id]: http('https://...'),
+    [sepolia.id]: http('https://...'),
+  },
+})
+```
+
 ### pollingInterval
 
-`number | undefined`
+`number | { [_ in chains[number]['id']]?: number | undefined } | undefined`
 
 - Frequency in milliseconds for polling enabled features. See [Viem docs](https://viem.sh/docs/clients/custom.html#pollinginterval-optional) for more info.
 - Defaults to `4_000`.
@@ -251,7 +293,7 @@ The `Config` object's internal state. See [`State`](#state) for more info.
 
 ### getClient
 
-`(parameters?: { chainId?: chainId | chains[number]['id'] | undefined }): Client<Transport, Extract<chains[number], { id: chainId }>>`
+`(parameters?: { chainId?: chainId | chains[number]['id'] | undefined }): Client<transports[chainId], Extract<chains[number], { id: chainId }>>`
 
 Creates new Viem [`Client`](https://viem.sh/docs/clients/custom.html) object.
 

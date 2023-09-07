@@ -2,6 +2,7 @@ import {
   type Address,
   type Chain,
   type Client,
+  type ClientConfig,
   type Transport,
   createClient,
 } from 'viem'
@@ -20,6 +21,7 @@ import { uid } from './utils/uid.js'
 
 export type CreateConfigParameters<
   chains extends readonly [Chain, ...Chain[]],
+  transports extends Record<chains[number]['id'], Transport>,
 > = Evaluate<
   {
     chains: chains
@@ -29,12 +31,33 @@ export type CreateConfigParameters<
     syncConnectedChain?: boolean | undefined
   } & OneOf<
     | {
-        pollingInterval?: number | undefined
-        transports: Record<chains[number]['id'], Transport>
+        batch?:
+          | ClientConfig['batch']
+          | {
+              [_ in chains[number]['id']]?: ClientConfig['batch'] | undefined
+            }
+          | undefined
+        cacheTime?:
+          | ClientConfig['cacheTime']
+          | {
+              [_ in chains[number]['id']]?:
+                | ClientConfig['cacheTime']
+                | undefined
+            }
+          | undefined
+        pollingInterval?:
+          | ClientConfig['pollingInterval']
+          | {
+              [_ in chains[number]['id']]?:
+                | ClientConfig['pollingInterval']
+                | undefined
+            }
+          | undefined
+        transports: transports
       }
     | {
         client(parameters: { chain: chains[number] }): Client<
-          Transport,
+          transports[chains[number]['id']],
           chains[number]
         >
       }
@@ -50,6 +73,10 @@ export type CreateConfigParameters<
 
 export type Config<
   chains extends readonly [Chain, ...Chain[]] = readonly [Chain, ...Chain[]],
+  transports extends Record<chains[number]['id'], Transport> = Record<
+    chains[number]['id'],
+    Transport
+  >,
 > = {
   readonly chains: chains
   readonly connectors: readonly Connector[]
@@ -58,17 +85,17 @@ export type Config<
 
   getClient<chainId extends chains[number]['id']>(parameters?: {
     chainId?: chainId | chains[number]['id'] | undefined
-  }): Client<Transport, Extract<chains[number], { id: chainId }>>
-  setState<chains_ extends readonly [Chain, ...Chain[]] = chains>(
-    value: State<chains_> | ((state: State<chains_>) => State<chains_>),
+  }): Client<transports[chainId], Extract<chains[number], { id: chainId }>>
+  setState<tchains extends readonly [Chain, ...Chain[]] = chains>(
+    value: State<tchains> | ((state: State<tchains>) => State<tchains>),
   ): void
   subscribe<state>(
     selector: (state: State<chains>) => state,
     listener: (selectedState: state, previousSelectedState: state) => void,
     options?:
       | {
-          equalityFn?: (a: state, b: state) => boolean
-          fireImmediately?: boolean
+          equalityFn?: ((a: state, b: state) => boolean) | undefined
+          fireImmediately?: boolean | undefined
         }
       | undefined,
   ): () => void
@@ -107,6 +134,7 @@ export type Connector = ReturnType<CreateConnectorFn> & {
 
 export function createConfig<
   const chains extends readonly [Chain, ...Chain[]],
+  transports extends Record<chains[number]['id'], Transport>,
 >({
   autoConnect,
   chains,
@@ -119,7 +147,7 @@ export function createConfig<
   }),
   syncConnectedChain = true,
   ...rest
-}: CreateConfigParameters<chains>): Config<chains> {
+}: CreateConfigParameters<chains, transports>): Config<chains, transports> {
   /////////////////////////////////////////////////////////////////////////////////////////////////
   // Set up connectors, clients, etc.
   /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -166,13 +194,21 @@ export function createConfig<
 
     let client
     if (rest.client) client = rest.client({ chain })
-    else
+    else {
+      const chainId = chain.id as chains[number]['id']
+      const getValue = (value: any) =>
+        typeof value === 'object' ? value[chainId] : value
+      const batch = rest.batch
+        ? rest.batch[chainId as keyof typeof rest.batch]
+        : { multicall: true }
       client = createClient({
-        batch: { multicall: true },
+        batch,
+        cacheTime: getValue(rest.cacheTime),
         chain,
-        pollingInterval: rest.pollingInterval,
-        transport: rest.transports[chain.id as chains[number]['id']],
+        pollingInterval: getValue(rest.pollingInterval),
+        transport: rest.transports[chainId],
       })
+    }
 
     clients.set(chainId, client)
     return client as Return
