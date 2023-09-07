@@ -85,7 +85,12 @@
       "packages/react": {
         "entry": "src/exports/{actions,chains,connectors,index,query}.ts!"
       },
-      "packages/test": { "entry": "src/{globalSetup,index,react,setup}.ts!" }
+      "packages/test": {
+        "entry": [
+          "src/{globalSetup,setup}.ts!",
+          "src/exports/{index,react}.ts!"
+        ]
+      }
     }
   }
 }
