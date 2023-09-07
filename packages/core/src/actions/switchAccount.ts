@@ -1,7 +1,7 @@
 import type { Address } from 'viem'
 
 import { type Config, type Connector } from '../createConfig.js'
-import { ConnectorNotFoundError } from '../errors/config.js'
+import { ConnectorNotConnectedError } from '../errors/config.js'
 
 export type SwitchAccountParameters = {
   connector: Connector
@@ -14,7 +14,7 @@ export type SwitchAccountReturnType<config extends Config = Config> = {
     | (number extends config['chains'][number]['id'] ? number : number & {})
 }
 
-export type SwitchAccountError = Error
+export type SwitchAccountError = ConnectorNotConnectedError | Error
 
 /** https://alpha.wagmi.sh/core/actions/switchAccount */
 export async function switchAccount<config extends Config>(
@@ -23,7 +23,7 @@ export async function switchAccount<config extends Config>(
 ): Promise<SwitchAccountReturnType<config>> {
   const { connector } = parameters
   const connection = config.state.connections.get(connector.uid)
-  if (!connection) throw new ConnectorNotFoundError()
+  if (!connection) throw new ConnectorNotConnectedError()
 
   config.storage?.setItem('recentConnectorId', connector.id)
   config.setState((x) => ({

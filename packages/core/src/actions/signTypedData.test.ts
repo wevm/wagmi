@@ -58,7 +58,7 @@ test('behavior: not connected', async () => {
       message: typedData.basic.message,
     }),
   ).rejects.toMatchInlineSnapshot(`
-    [ConnectorNotFoundError: Connector not found.
+    [ConnectorNotConnectedError: Connector not connected.
 
     Version: @wagmi/core@x.y.z]
   `)

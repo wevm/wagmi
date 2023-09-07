@@ -39,7 +39,7 @@ test('behavior: no account and not connected', async () => {
       value: parseEther('0.01'),
     }),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
-    "Connector not found.
+    "Connector not connected.
 
     Version: @wagmi/core@x.y.z"
   `)

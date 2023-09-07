@@ -36,7 +36,7 @@ test('behavior: connector passed not connected', async () => {
   await expect(
     disconnect(config, { connector: connector_ }),
   ).rejects.toMatchInlineSnapshot(`
-    [ConnectorNotFoundError: Connector not found.
+    [ConnectorNotConnectedError: Connector not connected.
 
     Version: @wagmi/core@x.y.z]
   `)

@@ -28,10 +28,10 @@ test('behavior: not connected', async () => {
   await expect(
     getConnectorClient(config),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
-      "Connector not found.
+    "Connector not connected.
 
-      Version: @wagmi/core@x.y.z"
-    `)
+    Version: @wagmi/core@x.y.z"
+  `)
 })
 
 test('behavior: account does not exist on connector', async () => {

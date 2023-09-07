@@ -21,6 +21,7 @@ import { readContracts } from './readContracts.js'
 export type GetBalanceParameters<config extends Config = Config> = Evaluate<
   ChainIdParameter<config> &
     viem_GetBalanceParameters & {
+      /** @deprecated */
       token?: Address | undefined
       unit?: Unit | undefined
     }
@@ -51,7 +52,7 @@ export async function getBalance<config extends Config>(
 
   if (tokenAddress) {
     try {
-      return await getTokenBalance(config, {
+      return getTokenBalance(config, {
         balanceAddress: address,
         symbolType: 'string',
         tokenAddress,
@@ -63,7 +64,7 @@ export async function getBalance<config extends Config>(
       if (error instanceof ContractFunctionExecutionError) {
         const balance = await getTokenBalance(config, {
           balanceAddress: address,
-          symbolType: 'string',
+          symbolType: 'bytes32',
           tokenAddress,
         })
         const symbol = hexToString(

@@ -50,6 +50,7 @@ test('exports', () => {
       "BaseError",
       "ChainMismatchError",
       "ChainNotConfiguredError",
+      "ConnectorNotConnectedError",
       "ConnectorAlreadyConnectedError",
       "ConnectorNotFoundError",
       "ConnectorAccountNotFound",

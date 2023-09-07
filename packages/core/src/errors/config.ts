@@ -32,6 +32,13 @@ export class ConnectorAlreadyConnectedError extends BaseError {
   }
 }
 
+export class ConnectorNotConnectedError extends BaseError {
+  override name = 'ConnectorNotConnectedError'
+  constructor() {
+    super('Connector not connected.')
+  }
+}
+
 export class ConnectorNotFoundError extends BaseError {
   override name = 'ConnectorNotFoundError'
   constructor() {

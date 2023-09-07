@@ -265,6 +265,7 @@ export { BaseError } from '../errors/base.js'
 export {
   ChainMismatchError,
   ChainNotConfiguredError,
+  ConnectorNotConnectedError,
   ConnectorAlreadyConnectedError,
   ConnectorNotFoundError,
   ConnectorAccountNotFound,

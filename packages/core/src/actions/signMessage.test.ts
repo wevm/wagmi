@@ -44,7 +44,7 @@ test('behavior: not connected', async () => {
   await expect(
     signMessage(config, { message: 'foo bar baz' }),
   ).rejects.toMatchInlineSnapshot(`
-    [ConnectorNotFoundError: Connector not found.
+    [ConnectorNotConnectedError: Connector not connected.
 
     Version: @wagmi/core@x.y.z]
   `)

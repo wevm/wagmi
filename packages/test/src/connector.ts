@@ -1,5 +1,6 @@
 import {
   ChainNotConfiguredError,
+  ConnectorNotConnectedError,
   createConnector,
   normalizeChainId,
 } from '@wagmi/core'
@@ -73,6 +74,7 @@ export function testConnector(parameters: TestConnectorParameters) {
       connected = false
     },
     async getAccounts() {
+      if (!connected) throw new ConnectorNotConnectedError()
       const provider = await this.getProvider()
       const accounts = await provider.request({ method: 'eth_accounts' })
       return accounts.map(getAddress)

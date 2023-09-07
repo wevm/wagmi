@@ -3,7 +3,10 @@ import {
   type Connection,
   type Connector,
 } from '../createConfig.js'
-import { ConnectorNotFoundError } from '../errors/config.js'
+import {
+  ConnectorNotConnectedError,
+  ConnectorNotFoundError,
+} from '../errors/config.js'
 
 export type DisconnectParameters = {
   connector?: Connector | undefined
@@ -28,7 +31,7 @@ export async function disconnect(
 
   if (!connector) throw new ConnectorNotFoundError()
   const connections = config.state.connections
-  if (!connections.has(connector.uid)) throw new ConnectorNotFoundError()
+  if (!connections.has(connector.uid)) throw new ConnectorNotConnectedError()
 
   await connector.disconnect()
   connector.emitter.off('change', config._internal.change)
