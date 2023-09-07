@@ -206,6 +206,12 @@ export {
 } from '../hooks/useWaitForTransactionReceipt.js'
 
 export {
+  type UseWatchBlockNumberParameters,
+  type UseWatchBlockNumberReturnType,
+  useWatchBlockNumber,
+} from '../hooks/useWatchBlockNumber.js'
+
+export {
   type UseWatchContractEventParameters,
   type UseWatchContractEventReturnType,
   useWatchContractEvent,

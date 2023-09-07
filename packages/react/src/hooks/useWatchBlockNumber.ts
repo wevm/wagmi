@@ -3,8 +3,8 @@
 import {
   type Config,
   type ResolvedRegister,
-  type WatchPendingTransactionsParameters,
-  watchPendingTransactions,
+  type WatchBlockNumberParameters,
+  watchBlockNumber,
 } from '@wagmi/core'
 import { type UnionEvaluate, type UnionPartial } from '@wagmi/core/internal'
 import { useEffect } from 'react'
@@ -13,28 +13,25 @@ import type { ConfigParameter, EnabledParameter } from '../types/properties.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
-export type UseWatchPendingTransactionsParameters<
+export type UseWatchBlockNumberParameters<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
 > = UnionEvaluate<
-  UnionPartial<WatchPendingTransactionsParameters<config, chainId>> &
+  UnionPartial<WatchBlockNumberParameters<config, chainId>> &
     ConfigParameter<config> &
     EnabledParameter
 >
 
-export type UseWatchPendingTransactionsReturnType = void
+export type UseWatchBlockNumberReturnType = void
 
-/** https://alpha.wagmi.sh/react/hooks/useWatchPendingTransactions */
-export function useWatchPendingTransactions<
+/** https://alpha.wagmi.sh/react/hooks/useWatchBlockNumber */
+export function useWatchBlockNumber<
   config extends Config = ResolvedRegister['config'],
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
 >(
-  parameters: UseWatchPendingTransactionsParameters<
-    config,
-    chainId
-  > = {} as any,
-): UseWatchPendingTransactionsReturnType {
-  const { enabled = true, onTransactions, config: _, ...rest } = parameters
+  parameters: UseWatchBlockNumberParameters<config, chainId> = {} as any,
+): UseWatchBlockNumberReturnType {
+  const { enabled = true, onBlockNumber, config: _, ...rest } = parameters
 
   const config = useConfig(parameters)
   const configChainId = useChainId()
@@ -42,11 +39,11 @@ export function useWatchPendingTransactions<
 
   useEffect(() => {
     if (!enabled) return
-    if (!onTransactions) return
-    return watchPendingTransactions(config, {
+    if (!onBlockNumber) return
+    return watchBlockNumber(config, {
       ...(rest as any),
       chainId,
-      onTransactions,
+      onBlockNumber,
     })
-  }, [chainId, config, enabled, onTransactions, rest])
+  }, [chainId, config, enabled, onBlockNumber, rest])
 }

@@ -96,9 +96,10 @@ function App() {
 
 ### watch
 
-`boolean | undefined`
+`boolean | UseWatchBlockNumberParameters | undefined`
 
-Watch for block number changes.
+- Enables/disables listening for block number changes.
+- Can pass a subset of [`UseWatchBlockNumberParameters`](/react/hooks/useWatchBlockNumber#parameters)directly to [`useWatchBlockNumber`](/react/hooks/useWatchBlockNumber).
 
 ::: code-group
 ```tsx [index.tsx]
@@ -107,6 +108,17 @@ import { useBlockNumber } from 'wagmi'
 function App() {
   const result = useBlockNumber({
     watch: true, // [!code focus]
+  })
+}
+```
+```tsx [index-2.tsx]
+import { useBlockNumber } from 'wagmi'
+
+function App() {
+  const result = useBlockNumber({
+    watch: { // [!code focus]
+      pollingInterval: 4_000, // [!code focus]
+    }, // [!code focus]
   })
 }
 ```

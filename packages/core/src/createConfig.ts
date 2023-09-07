@@ -103,6 +103,7 @@ export type Config<
   _internal: {
     readonly reconnectOnMount: boolean
     readonly syncConnectedChain: boolean
+    readonly transports: transports
 
     change(data: EventData<ConnectorEventMap, 'change'>): void
     connect(data: EventData<ConnectorEventMap, 'connect'>): void
@@ -358,6 +359,7 @@ export function createConfig<
     _internal: {
       reconnectOnMount,
       syncConnectedChain,
+      transports: rest.transports as transports,
       change,
       connect,
       disconnect,

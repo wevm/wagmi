@@ -44,6 +44,7 @@ test('exports', () => {
       "useToken",
       "useTransaction",
       "useWaitForTransactionReceipt",
+      "useWatchBlockNumber",
       "useWatchContractEvent",
       "useWatchPendingTransactions",
       "createConfig",

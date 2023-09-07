@@ -5,7 +5,6 @@ import {
   type Config,
   type GetBlockNumberError,
   type ResolvedRegister,
-  watchBlockNumber,
 } from '@wagmi/core'
 import { type Evaluate } from '@wagmi/core/internal'
 import {
@@ -15,7 +14,6 @@ import {
   type GetBlockNumberQueryKey,
   getBlockNumberQueryOptions,
 } from '@wagmi/core/query'
-import { useEffect } from 'react'
 
 import type { ConfigParameter } from '../types/properties.js'
 import {
@@ -25,9 +23,14 @@ import {
 } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
+import {
+  type UseWatchBlockNumberParameters,
+  useWatchBlockNumber,
+} from './useWatchBlockNumber.js'
 
 export type UseBlockNumberParameters<
   config extends Config = Config,
+  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetBlockNumberData,
 > = Evaluate<
   GetBlockNumberOptions<config> &
@@ -37,7 +40,15 @@ export type UseBlockNumberParameters<
       selectData,
       GetBlockNumberQueryKey<config>
     > &
-    ConfigParameter<config> & { watch?: boolean | undefined }
+    ConfigParameter<config> & {
+      watch?:
+        | boolean
+        | Omit<
+            UseWatchBlockNumberParameters<config, chainId>,
+            'chainId' | 'config' | 'onBlockNumber' | 'onError'
+          >
+        | undefined
+    }
 >
 
 export type UseBlockNumberReturnType<selectData = GetBlockNumberData> =
@@ -46,9 +57,10 @@ export type UseBlockNumberReturnType<selectData = GetBlockNumberData> =
 /** https://alpha.wagmi.sh/react/hooks/useBlockNumber */
 export function useBlockNumber<
   config extends Config = ResolvedRegister['config'],
+  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetBlockNumberData,
 >(
-  parameters: UseBlockNumberParameters<config, selectData> = {},
+  parameters: UseBlockNumberParameters<config, chainId, selectData> = {},
 ): UseBlockNumberReturnType<selectData> {
   const { enabled = true, watch, ...query } = parameters
 
@@ -59,17 +71,19 @@ export function useBlockNumber<
 
   const queryOptions = getBlockNumberQueryOptions(config, { chainId })
 
-  useEffect(() => {
-    if (!enabled) return
-    if (!watch) return
-
-    return watchBlockNumber(config, {
-      chainId,
-      onBlockNumber(blockNumber) {
-        queryClient.setQueryData(queryOptions.queryKey, blockNumber)
-      },
-    })
-  }, [chainId, config, enabled, queryClient, queryOptions, watch])
+  useWatchBlockNumber({
+    ...(typeof watch === 'object'
+      ? (watch as UseWatchBlockNumberParameters)
+      : {}),
+    chainId,
+    enabled: Boolean(
+      enabled && (typeof watch === 'object' ? watch.enabled : watch),
+    ),
+    onBlockNumber(blockNumber) {
+      console.log(`onBlockNumber ${chainId}`, blockNumber)
+      queryClient.setQueryData(queryOptions.queryKey, blockNumber)
+    },
+  })
 
   return useQuery({ ...queryOptions, ...query, enabled })
 }

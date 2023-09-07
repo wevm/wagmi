@@ -177,6 +177,10 @@ export function getSidebar() {
                 link: '/react/hooks/useWalletClient',
               },
               {
+                text: 'useWatchBlockNumber 🚧',
+                link: '/react/hooks/useWatchBlockNumber',
+              },
+              {
                 text: 'useWatchContractEvent 🚧',
                 link: '/react/hooks/useWatchContractEvent',
               },
@@ -318,6 +322,22 @@ export function getSidebar() {
               {
                 text: 'waitForTransactionReceipt 🚧',
                 link: '/core/actions/waitForTransactionReceipt',
+              },
+              {
+                text: 'watchAccount',
+                link: '/core/actions/watchAccount',
+              },
+              {
+                text: 'watchBlockNumber 🚧',
+                link: '/core/actions/watchBlockNumber',
+              },
+              {
+                text: 'watchChainId',
+                link: '/core/actions/watchChainId',
+              },
+              {
+                text: 'watchConnections',
+                link: '/core/actions/watchConnections',
               },
               {
                 text: 'watchContractEvent 🚧',

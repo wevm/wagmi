@@ -82,4 +82,4 @@ export type UnionOmit<type, keys extends keyof type> = type extends any
   ? Omit<type, keys>
   : never
 
-export type UnionPartial<type> = type extends object ? Partial<type> : type
+export type UnionPartial<type> = type extends object ? ExactPartial<type> : type

@@ -25,9 +25,6 @@ export {
 export {
   type GetAccountReturnType,
   getAccount,
-  type WatchAccountParameters,
-  type WatchAccountReturnType,
-  watchAccount,
 } from '../actions/getAccount.js'
 
 export {
@@ -42,25 +39,16 @@ export {
   type GetBlockNumberParameters,
   type GetBlockNumberReturnType,
   getBlockNumber,
-  type WatchBlockNumberParameters,
-  type WatchBlockNumberReturnType,
-  watchBlockNumber,
 } from '../actions/getBlockNumber.js'
 
 export {
   type GetChainIdReturnType,
   getChainId,
-  type WatchChainIdParameters,
-  type WatchChainIdReturnType,
-  watchChainId,
 } from '../actions/getChainId.js'
 
 export {
   type GetConnectionsReturnType,
   getConnections,
-  type WatchConnectionsParameters,
-  type WatchConnectionsReturnType,
-  watchConnections,
 } from '../actions/getConnections.js'
 
 export {
@@ -187,6 +175,36 @@ export {
   type SwitchChainReturnType,
   switchChain,
 } from '../actions/switchChain.js'
+
+export {
+  type WatchAccountParameters,
+  type WatchAccountReturnType,
+  watchAccount,
+} from '../actions/watchAccount.js'
+
+export {
+  type WatchBlockNumberParameters,
+  type WatchBlockNumberReturnType,
+  watchBlockNumber,
+} from '../actions/watchBlockNumber.js'
+
+export {
+  type WatchChainIdParameters,
+  type WatchChainIdReturnType,
+  watchChainId,
+} from '../actions/watchChainId.js'
+
+export {
+  type WatchConnectionsParameters,
+  type WatchConnectionsReturnType,
+  watchConnections,
+} from '../actions/watchConnections.js'
+
+export {
+  type WatchContractEventParameters,
+  type WatchContractEventReturnType,
+  watchContractEvent,
+} from '../actions/watchContractEvent.js'
 
 export {
   type WatchPendingTransactionsParameters,

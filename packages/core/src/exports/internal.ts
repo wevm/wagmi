@@ -17,6 +17,7 @@ export {
   type Omit,
   type OneOf,
   type UnionEvaluate,
+  type UnionPartial,
 } from '../types/utils.js'
 
 ////////////////////////////////////////////////////////////////////////////////

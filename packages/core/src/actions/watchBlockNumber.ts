@@ -1,11 +1,11 @@
-import type { Chain, Transport, WebSocketTransport } from 'viem'
 import {
-  type WatchPendingTransactionsParameters as viem_WatchPendingTransactionsParameters,
-  type WatchPendingTransactionsReturnType as viem_WatchPendingTransactionsReturnType,
-  watchPendingTransactions as viem_watchPendingTransactions,
+  type WatchBlockNumberParameters as viem_WatchBlockNumberParameters,
+  type WatchBlockNumberReturnType as viem_WatchBlockNumberReturnType,
+  watchBlockNumber as viem_watchBlockNumber,
 } from 'viem/actions'
 
-import type { Config } from '../createConfig.js'
+import type { Chain, Transport, WebSocketTransport } from 'viem'
+import { type Config } from '../createConfig.js'
 import type { SelectChains } from '../types/chain.js'
 import type {
   ChainIdParameter,
@@ -13,14 +13,14 @@ import type {
 } from '../types/properties.js'
 import type { UnionEvaluate } from '../types/utils.js'
 
-export type WatchPendingTransactionsParameters<
+export type WatchBlockNumberParameters<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
   ///
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = {
   [key in keyof chains]: UnionEvaluate<
-    viem_WatchPendingTransactionsParameters<
+    viem_WatchBlockNumberParameters<
       config['_internal']['transports'][chains[key]['id']] extends infer transport extends Transport
         ? Transport extends transport
           ? WebSocketTransport
@@ -32,34 +32,33 @@ export type WatchPendingTransactionsParameters<
   >
 }[number]
 
-export type WatchPendingTransactionsReturnType =
-  viem_WatchPendingTransactionsReturnType
+export type WatchBlockNumberReturnType = viem_WatchBlockNumberReturnType
 
 // TODO: wrap in viem's `observe` to avoid duplicate invocations.
-/** https://alpha.wagmi.sh/core/actions/watchPendingTransactions */
-export function watchPendingTransactions<
+/** https://alpha.wagmi.sh/core/actions/watchBlockNumber */
+export function watchBlockNumber<
   config extends Config,
-  chainId extends config['chains'][number]['id'],
+  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
 >(
   config: config,
-  parameters: WatchPendingTransactionsParameters<config, chainId>,
-) {
+  parameters: WatchBlockNumberParameters<config, chainId>,
+): WatchBlockNumberReturnType {
   const { syncConnectedChain = config._internal.syncConnectedChain, ...rest } =
     parameters
 
-  let unwatch: WatchPendingTransactionsReturnType | undefined
+  let unwatch: WatchBlockNumberReturnType | undefined
   const listener = (chainId: number | undefined) => {
     if (unwatch) unwatch()
 
     const client = config.getClient({ chainId })
-    unwatch = viem_watchPendingTransactions(
+    unwatch = viem_watchBlockNumber(
       client,
-      rest as viem_WatchPendingTransactionsParameters,
+      rest as unknown as viem_WatchBlockNumberParameters,
     )
     return unwatch
   }
 
-  // set up listener for transaction changes
+  // set up listener for block number changes
   const unlisten = listener(parameters.chainId)
 
   // set up subscriber for connected chain changes

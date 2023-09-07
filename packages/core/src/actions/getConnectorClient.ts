@@ -14,7 +14,6 @@ import {
   ConnectorNotConnectedError,
 } from '../errors/config.js'
 import type {
-  AccountParameter,
   ChainIdParameter,
   ConnectorParameter,
 } from '../types/properties.js'
@@ -24,7 +23,10 @@ export type GetConnectorClientParameters<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
 > = Evaluate<
-  ChainIdParameter<config, chainId> & ConnectorParameter & AccountParameter
+  ChainIdParameter<config, chainId> &
+    ConnectorParameter & {
+      account?: Address | Account | undefined
+    }
 >
 
 export type GetConnectorClientReturnType<

@@ -36,6 +36,7 @@ test('exports', () => {
       "watchBlockNumber": [Function],
       "watchChainId": [Function],
       "watchConnections": [Function],
+      "watchContractEvent": [Function],
       "watchPendingTransactions": [Function],
       "writeContract": [Function],
     }
