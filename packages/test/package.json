@@ -24,23 +24,23 @@
   ],
   "sideEffects": false,
   "type": "module",
-  "main": "./dist/esm/index.js",
-  "types": "./dist/types/index.d.ts",
-  "typings": "./dist/types/index.d.ts",
+  "main": "./dist/esm/exports/index.js",
+  "types": "./dist/types/exports/index.d.ts",
+  "typings": "./dist/types/exports/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/types/index.d.ts",
-      "default": "./dist/esm/index.js"
+      "types": "./dist/types/exports/index.d.ts",
+      "default": "./dist/esm/exports/index.js"
     },
     "./react": {
-      "types": "./dist/types/react.d.ts",
-      "default": "./dist/esm/react.js"
+      "types": "./dist/types/exports/react.d.ts",
+      "default": "./dist/esm/exports/react.js"
     },
     "./package.json": "./package.json"
   },
   "typesVersions": {
     "*": {
-      "react": ["./dist/types/react.d.ts"]
+      "react": ["./dist/types/exports/react.d.ts"]
     }
   },
   "peerDependencies": {

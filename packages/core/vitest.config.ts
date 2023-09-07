@@ -6,7 +6,7 @@ export default defineProject({
   resolve: {
     alias: {
       '@wagmi/connectors': path.resolve(__dirname, '../connectors/src'),
-      '@wagmi/test': path.resolve(__dirname, '../test/src'),
+      '@wagmi/test': path.resolve(__dirname, '../test/src/exports'),
     },
   },
   test: {

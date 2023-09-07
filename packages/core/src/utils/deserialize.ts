@@ -1,6 +1,6 @@
 type Reviver = (key: string, value: any) => any
 
-export function deserialize(value: string, reviver?: Reviver) {
+export function deserialize<type>(value: string, reviver?: Reviver): type {
   return JSON.parse(value, (key, value_) => {
     let value = value_
     if (value?.__type === 'bigint') value = BigInt(value.value)

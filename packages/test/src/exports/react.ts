@@ -8,10 +8,9 @@ import {
 } from '@testing-library/react'
 import { createElement } from 'react'
 import { WagmiProvider } from 'wagmi'
-
-import { config } from './config.js'
-
 export { act, cleanup } from '@testing-library/react'
+
+import { config } from '../config.js'
 
 export const queryClient = new QueryClient()
 

@@ -32,13 +32,13 @@ test('default', async () => {
     to: accounts[1],
     value: parseEther('1'),
   })
-  await wait(100)
+  await wait(200)
 
   await sendTransaction(config, {
     to: accounts[3],
     value: parseEther('1'),
   })
-  await wait(100)
+  await wait(200)
 
   await testClient.mainnet.mine({ blocks: 1 })
 
