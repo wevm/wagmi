@@ -219,9 +219,7 @@ function BlockNumber() {
 }
 
 function ConnectorClient() {
-  const { data, error } = useConnectorClient({
-    account: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
-  })
+  const { data, error } = useConnectorClient()
   return (
     <div>
       <h2>Connector Client</h2>

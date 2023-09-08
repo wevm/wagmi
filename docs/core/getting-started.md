@@ -10,15 +10,15 @@ To manually add Wagmi to your project, install the required packages.
 
 ::: code-group
 ```bash [pnpm]
-pnpm add @wagmi/core @wagmi/connectors viem
+pnpm add @wagmi/core@alpha @wagmi/connectors@alpha viem@alpha
 ```
 
 ```bash [npm]
-npm install @wagmi/core @wagmi/connectors viem
+npm install @wagmi/core@alpha @wagmi/connectors@alpha viem@alpha
 ```
 
 ```bash [yarn]
-yarn add @wagmi/core @wagmi/connectors viem
+yarn add @wagmi/core@alpha @wagmi/connectors@alpha viem@alpha
 ```
 :::
 

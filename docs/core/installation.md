@@ -8,15 +8,15 @@ Install the required packages.
 
 ::: code-group
 ```bash [pnpm]
-pnpm add @wagmi/core viem
+pnpm add @wagmi/core@alpha viem@alpha
 ```
 
 ```bash [npm]
-npm install @wagmi/core viem
+npm install @wagmi/core@alpha viem@alpha
 ```
 
 ```bash [yarn]
-yarn add @wagmi/core viem
+yarn add @wagmi/core@alpha viem@alpha
 ```
 :::
 
