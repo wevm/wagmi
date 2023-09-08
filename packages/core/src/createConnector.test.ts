@@ -1,0 +1,30 @@
+import type { Address } from 'viem'
+import { test } from 'vitest'
+import { createConnector } from './createConnector.js'
+
+test('default', () => {
+  createConnector(() => {
+    return {
+      id: 'test',
+      name: 'Test Connector',
+      async setup() {},
+      async connect() {
+        return { accounts: [] as Address[], chainId: 123 }
+      },
+      async disconnect() {},
+      async getAccounts() {
+        return []
+      },
+      async getChainId() {
+        return 123
+      },
+      async isAuthorized() {
+        return true
+      },
+      onAccountsChanged() {},
+      onChainChanged() {},
+      async onDisconnect(_error) {},
+      async getProvider() {},
+    }
+  })
+})
