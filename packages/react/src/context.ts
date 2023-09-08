@@ -16,7 +16,7 @@ export function WagmiProvider(
   parameters: React.PropsWithChildren<WagmiProviderProps>,
 ) {
   const { children, value = parameters.config! } = parameters
-  // rome-ignore lint/nursery/useExhaustiveDependencies: only run on mount
+  // biome-ignore lint/nursery/useExhaustiveDependencies: only run on mount
   useEffect(() => {
     if (typeof window !== 'undefined' && value._internal.reconnectOnMount)
       reconnect(value)

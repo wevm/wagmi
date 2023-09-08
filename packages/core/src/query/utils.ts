@@ -28,7 +28,7 @@ function isPlainObject(o: any): o is Object {
   if (!hasObjectPrototype(prot)) return false
 
   // If constructor does not have an Object-specific method
-  // rome-ignore lint/suspicious/noPrototypeBuiltins: <explanation>
+  // biome-ignore lint/suspicious/noPrototypeBuiltins: <explanation>
   if (!prot.hasOwnProperty('isPrototypeOf')) return false
 
   // Most likely a plain Object
@@ -43,25 +43,25 @@ export function filterQueryOptions<type extends Record<string, unknown>>(
   options: type,
 ): type {
   // destructuring is super fast
-  // rome-ignore format: no formatting
+  // biome-ignore format: no formatting
   const {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // import('@tanstack/query-core').QueryOptions
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // rome-ignore lint/correctness/noUnusedVariables: remove properties
-    _defaulted, behavior, gcTime, initialData, initialDataUpdatedAt, maxPages, meta, networkMode, queryFn, queryHash, queryKey, queryKeyHashFn, retry, retryDelay, structuralSharing,
-    
+    // biome-ignore lint/correctness/noUnusedVariables: remove properties
+    _defaulted, behavior, gcTime, initialData, initialDataUpdatedAt,maxPages, meta, networkMode, queryFn, queryHash, queryKey, queryKeyHashFn, retry, retryDelay, structuralSharing,
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // import('@tanstack/react-query').UseQueryOptions
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // rome-ignore lint/correctness/noUnusedVariables: remove properties
+    // biome-ignore lint/correctness/noUnusedVariables: remove properties
     _optimisticResults, enabled, notifyOnChangeProps, placeholderData, refetchInterval, refetchIntervalInBackground, refetchOnMount, refetchOnReconnect, refetchOnWindowFocus, retryOnMount, select, staleTime, suspense, throwOnError,
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // wagmi
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // rome-ignore lint/correctness/noUnusedVariables: remove properties
-    config,
+    // biome-ignore lint/correctness/noUnusedVariables: remove properties
+    config, connector,
 
     ...rest
   } = options

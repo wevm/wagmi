@@ -11,8 +11,9 @@ export type WatchAccountReturnType = () => void
 /** https://alpha.wagmi.sh/core/actions/watchAccount */
 export function watchAccount(
   config: Config,
-  { onChange }: WatchAccountParameters,
+  parameters: WatchAccountParameters,
 ): WatchAccountReturnType {
+  const { onChange } = parameters
   return config.subscribe(() => getAccount(config), onChange, {
     equalityFn(a, b) {
       const { connector: aConnector, ...aRest } = a

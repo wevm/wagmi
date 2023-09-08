@@ -1,4 +1,4 @@
-import { testClient } from '@wagmi/test'
+import { config, testClient } from '@wagmi/test'
 import { renderHook, waitFor } from '@wagmi/test/react'
 import { expect, test } from 'vitest'
 
@@ -45,6 +45,13 @@ test('mounts', async () => {
       "status": "success",
     }
   `)
+})
+
+test('parameters: config', () => {
+  const { result } = renderHook(() => useBlockNumber({ config }), {
+    wrapper: ({ children }) => children,
+  })
+  expect(result.current).toBeDefined()
 })
 
 test('parameters: watch', async () => {

@@ -71,7 +71,7 @@ export function useConnectorClient<
     status !== 'disconnected' && (parameters.enabled ?? true),
   )
 
-  // rome-ignore lint/nursery/useExhaustiveDependencies: `queryKey` not required
+  // biome-ignore lint/nursery/useExhaustiveDependencies: `queryKey` not required
   useEffect(() => {
     // invalidate when address changes
     if (address) queryClient.invalidateQueries({ queryKey })

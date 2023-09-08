@@ -31,7 +31,7 @@
     "version:update": "pnpm bun scripts/updateVersion.ts"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.0.0",
+    "@biomejs/biome": "1.1.2",
     "@changesets/changelog-github": "0.4.6",
     "@changesets/cli": "^2.26.0",
     "@viem/anvil": "0.0.6",

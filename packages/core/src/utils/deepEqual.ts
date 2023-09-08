@@ -38,6 +38,6 @@ export function deepEqual(a: any, b: any) {
   }
 
   // true if both NaN, false otherwise
-  // rome-ignore lint/suspicious/noSelfCompare: <explanation>
+  // biome-ignore lint/suspicious/noSelfCompare: <explanation>
   return a !== a && b !== b
 }
