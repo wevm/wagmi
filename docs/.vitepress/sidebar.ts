@@ -135,10 +135,13 @@ export function getSidebar() {
                 link: '/react/hooks/useEnsResolver',
               },
               {
+                text: 'useEstimateFeesPerGas',
+                link: '/react/hooks/useEstimateFeesPerGas',
+              },
+              {
                 text: 'useEstimateGas 🚧',
                 link: '/react/hooks/useEstimateGas',
               },
-              { text: 'useFeeData', link: '/react/hooks/useFeeData' },
               { text: 'useReconnect', link: '/react/hooks/useReconnect' },
               {
                 text: 'useSendTransaction 🚧',
@@ -259,6 +262,10 @@ export function getSidebar() {
             items: [
               { text: 'connect', link: '/core/actions/connect' },
               { text: 'disconnect', link: '/core/actions/disconnect' },
+              {
+                text: 'estimateFeesPerGas',
+                link: '/core/actions/estimateFeesPerGas',
+              },
               { text: 'estimateGas 🚧', link: '/core/actions/estimateGas' },
               { text: 'getAccount', link: '/core/actions/getAccount' },
               { text: 'getBalance', link: '/core/actions/getBalance' },
@@ -282,7 +289,6 @@ export function getSidebar() {
                 text: 'getEnsResolver',
                 link: '/core/actions/getEnsResolver',
               },
-              { text: 'getFeeData', link: '/core/actions/getFeeData' },
               { text: 'getToken', link: '/core/actions/getToken' },
               {
                 text: 'getTransaction',

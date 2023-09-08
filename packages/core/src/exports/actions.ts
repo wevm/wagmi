@@ -16,6 +16,13 @@ export {
 } from '../actions/disconnect.js'
 
 export {
+  type EstimateFeesPerGasError,
+  type EstimateFeesPerGasParameters,
+  type EstimateFeesPerGasReturnType,
+  estimateFeesPerGas,
+} from '../actions/estimateFeesPerGas.js'
+
+export {
   type EstimateGasError,
   type EstimateGasParameters,
   type EstimateGasReturnType,
@@ -85,13 +92,6 @@ export {
   type GetEnsResolverReturnType,
   getEnsResolver,
 } from '../actions/getEnsResolver.js'
-
-export {
-  type GetFeeDataError,
-  type GetFeeDataParameters,
-  type GetFeeDataReturnType,
-  getFeeData,
-} from '../actions/getFeeData.js'
 
 export {
   type GetTokenError,

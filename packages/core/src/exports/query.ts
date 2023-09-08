@@ -18,6 +18,15 @@ export {
 } from '../query/disconnect.js'
 
 export {
+  type EstimateFeesPerGasData,
+  type EstimateFeesPerGasOptions,
+  type EstimateFeesPerGasQueryFnData,
+  type EstimateFeesPerGasQueryKey,
+  estimateFeesPerGasQueryKey,
+  estimateFeesPerGasQueryOptions,
+} from '../query/estimateFeesPerGas.js'
+
+export {
   type EstimateGasData,
   type EstimateGasOptions,
   type EstimateGasQueryFnData,
@@ -88,15 +97,6 @@ export {
   getEnsResolverQueryKey,
   getEnsResolverQueryOptions,
 } from '../query/getEnsResolver.js'
-
-export {
-  type GetFeeDataData,
-  type GetFeeDataOptions,
-  type GetFeeDataQueryFnData,
-  type GetFeeDataQueryKey,
-  getFeeDataQueryKey,
-  getFeeDataQueryOptions,
-} from '../query/getFeeData.js'
 
 export {
   type GetTokenData,

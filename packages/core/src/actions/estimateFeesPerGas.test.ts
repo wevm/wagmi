@@ -1,15 +1,14 @@
 import { config } from '@wagmi/test'
 import { expect, test } from 'vitest'
 
-import { getFeeData } from './getFeeData.js'
+import { estimateFeesPerGas } from './estimateFeesPerGas.js'
 
 test('default', async () => {
-  const result = await getFeeData(config)
+  const result = await estimateFeesPerGas(config)
   expect(Object.keys(result)).toMatchInlineSnapshot(`
     [
       "formatted",
       "gasPrice",
-      "lastBaseFeePerGas",
       "maxFeePerGas",
       "maxPriorityFeePerGas",
     ]

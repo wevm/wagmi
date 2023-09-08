@@ -7,6 +7,8 @@ test('exports', () => {
     [
       "connectMutationOptions",
       "disconnectMutationOptions",
+      "estimateFeesPerGasQueryKey",
+      "estimateFeesPerGasQueryOptions",
       "estimateGasQueryKey",
       "estimateGasQueryOptions",
       "getBalanceQueryKey",
@@ -23,8 +25,6 @@ test('exports', () => {
       "getEnsNameQueryOptions",
       "getEnsResolverQueryKey",
       "getEnsResolverQueryOptions",
-      "getFeeDataQueryKey",
-      "getFeeDataQueryOptions",
       "getTokenQueryKey",
       "getTokenQueryOptions",
       "getTransactionQueryKey",

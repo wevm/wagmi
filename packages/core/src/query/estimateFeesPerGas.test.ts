@@ -1,14 +1,14 @@
 import { chain, config } from '@wagmi/test'
 import { expect, test } from 'vitest'
 
-import { getFeeDataQueryOptions } from './getFeeData.js'
+import { estimateFeesPerGasQueryOptions } from './estimateFeesPerGas.js'
 
 test('default', () => {
-  expect(getFeeDataQueryOptions(config)).toMatchInlineSnapshot(`
+  expect(estimateFeesPerGasQueryOptions(config)).toMatchInlineSnapshot(`
     {
       "queryFn": [Function],
       "queryKey": [
-        "feeData",
+        "estimateFeesPerGas",
         {},
       ],
     }
@@ -17,12 +17,12 @@ test('default', () => {
 
 test('parameters: chainId', () => {
   expect(
-    getFeeDataQueryOptions(config, { chainId: chain.mainnet.id }),
+    estimateFeesPerGasQueryOptions(config, { chainId: chain.mainnet.id }),
   ).toMatchInlineSnapshot(`
     {
       "queryFn": [Function],
       "queryKey": [
-        "feeData",
+        "estimateFeesPerGas",
         {
           "chainId": 1,
         },

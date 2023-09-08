@@ -7,6 +7,7 @@ test('exports', () => {
     {
       "connect": [Function],
       "disconnect": [Function],
+      "estimateFeesPerGas": [Function],
       "estimateGas": [Function],
       "getAccount": [Function],
       "getBalance": [Function],
@@ -18,7 +19,6 @@ test('exports', () => {
       "getEnsAvatar": [Function],
       "getEnsName": [Function],
       "getEnsResolver": [Function],
-      "getFeeData": [Function],
       "getPublicClient": [Function],
       "getToken": [Function],
       "getTransaction": [Function],

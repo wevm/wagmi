@@ -134,16 +134,16 @@ export {
 } from '../hooks/useEnsResolver.js'
 
 export {
+  type UseEstimateFeesPerGasParameters,
+  type UseEstimateFeesPerGasReturnType,
+  useEstimateFeesPerGas,
+} from '../hooks/useEstimateFeesPerGas.js'
+
+export {
   type UseEstimateGasParameters,
   type UseEstimateGasReturnType,
   useEstimateGas,
 } from '../hooks/useEstimateGas.js'
-
-export {
-  type UseFeeDataParameters,
-  type UseFeeDataReturnType,
-  useFeeData,
-} from '../hooks/useFeeData.js'
 
 export {
   type UseContractSimulateParameters,
