@@ -39,7 +39,7 @@ export type ReadContractReturnType<
 
 export type ReadContractError = Error
 
-/** https://alpha.wagmi.sh/core/actions/readContract */
+/** https://alpha.wagmi.sh/core/api/actions/readContract */
 export function readContract<
   config extends Config,
   const abi extends Abi | readonly unknown[],

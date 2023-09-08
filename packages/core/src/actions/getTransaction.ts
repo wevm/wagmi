@@ -28,7 +28,7 @@ export type GetTransactionReturnType<
 
 export type GetTransactionError = Error
 
-/** https://alpha.wagmi.sh/core/actions/getTransaction */
+/** https://alpha.wagmi.sh/core/api/actions/getTransaction */
 export function getTransaction<
   config extends Config,
   chainId extends config['chains'][number]['id'],

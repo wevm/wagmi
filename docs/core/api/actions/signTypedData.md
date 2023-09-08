@@ -93,7 +93,7 @@ const result = await signTypedData(config, {
 
 `Connector | undefined`
 
-[Connector](/core/connectors) to sign data with.
+[Connector](/core/api/connectors) to sign data with.
 
 ::: code-group
 ```ts [index.ts]

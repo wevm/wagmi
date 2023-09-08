@@ -55,7 +55,7 @@ const result = await signMessage(config, {
 
 `Connector | undefined`
 
-[Connector](/core/connectors) to sign message with.
+[Connector](/core/api/connectors) to sign message with.
 
 ::: code-group
 ```ts [index.ts]

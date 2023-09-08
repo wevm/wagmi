@@ -58,7 +58,7 @@ export type WriteContractReturnType = viem_WriteContractReturnType
 
 export type WriteContractError = Error
 
-/** https://alpha.wagmi.sh/core/actions/writeContract */
+/** https://alpha.wagmi.sh/core/api/actions/writeContract */
 export async function writeContract<
   config extends Config,
   const abi extends Abi | readonly unknown[],

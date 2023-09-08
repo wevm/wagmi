@@ -39,7 +39,7 @@ import { type SwitchAccountParameters } from '@wagmi/core'
 
 `Connector`
 
-[Connector](/core/connectors) to switch to.
+[Connector](/core/api/connectors) to switch to.
 
 ::: code-group
 ```ts [index.ts]

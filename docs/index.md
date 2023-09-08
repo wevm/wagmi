@@ -24,7 +24,7 @@ features:
   - icon: 🚀
     title: 20+ React Hooks
     details: React Hooks for accounts, wallets, contracts, transactions, signing, ENS, and more.
-    link: /react/hooks
+    link: /react/api/hooks
     linkText: See all hooks
   - icon: 🦄
     title: TypeScript Ready
@@ -34,7 +34,7 @@ features:
   - icon: 💼
     title: Connect Wallet
     details: Official wallet connectors for MetaMask, WalletConnect, Coinbase Wallet, and more.
-    link: /react/connectors
+    link: /react/api/connectors
     linkText: See all connectors
   - icon: 👟
     title: Caching, Deduplication & Persistence

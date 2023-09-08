@@ -1,30 +1,30 @@
 <script setup>
 const packageName = 'wagmi'
-const actionName = 'getEnsAddress'
-const typeName = 'GetEnsAddress'
-const TData = 'string'
-const TError = 'GetEnsAddressError'
+const actionName = 'getEnsResolver'
+const typeName = 'GetEnsResolver'
+const TData = 'string | null'
+const TError = 'GetEnsResolverError'
 </script>
 
-# useEnsAddress
+# useEnsResolver
 
-Hook for fetching ENS address for name.
+Hook for fetching ENS resolver for name.
 
 ## Import
 
 ```ts
-import { useEnsAddress } from 'wagmi'
+import { useEnsResolver } from 'wagmi'
 ```
 
 ## Usage
 
 ::: code-group
 ```tsx [index.tsx]
-import { useEnsAddress } from 'wagmi'
+import { useEnsResolver } from 'wagmi'
 import { normalize } from 'viem/ens'
 
 function App() {
-  const result = useEnsAddress({
+  const result = useEnsResolver({
     name: normalize('wagmi-dev.eth'),
   })
 }
@@ -33,13 +33,13 @@ function App() {
 :::
 
 ::: warning
-Since ENS names prohibit certain forbidden characters (e.g. underscore) and have other validation rules, you likely want to [normalize ENS names](https://docs.ens.domains/contract-api-reference/name-processing#normalising-names) with [UTS-46 normalization](https://unicode.org/reports/tr46) before passing them to `useEnsAddress`. You can use Viem's built-in [`normalize`](https://viem.sh/docs/ens/utilities/normalize) function for this.
+Since ENS names prohibit certain forbidden characters (e.g. underscore) and have other validation rules, you likely want to [normalize ENS names](https://docs.ens.domains/contract-api-reference/name-processing#normalising-names) with [UTS-46 normalization](https://unicode.org/reports/tr46) before passing them to `useEnsResolver`. You can use Viem's built-in [`normalize`](https://viem.sh/docs/ens/utilities/normalize) function for this.
 :::
 
 ## Parameters
 
 ```ts
-import { type UseEnsAddressParameters } from 'wagmi'
+import { type UseEnsResolverParameters } from 'wagmi'
 ```
 
 ---
@@ -48,15 +48,15 @@ import { type UseEnsAddressParameters } from 'wagmi'
 
 `bigint | undefined`
 
-Block number to get ENS address at.
+Block number to get ENS resolver at.
 
 ::: code-group
 ```ts [index.ts]
-import { useEnsAddress } from 'wagmi'
+import { useEnsResolver } from 'wagmi'
 import { normalize } from 'viem/ens'
 
 function App() {
-  const result = useEnsAddress({
+  const result = useEnsResolver({
     blockNumber: 17829139n, // [!code focus]
     name: normalize('wagmi-dev.eth'),
   })
@@ -69,15 +69,15 @@ function App() {
 
 `'latest' | 'earliest' | 'pending' | 'safe' | 'finalized' | undefined`
 
-Block tag to get ENS address at.
+Block tag to get ENS resolver at.
 
 ::: code-group
 ```ts [index.ts]
-import { useEnsAddress } from 'wagmi'
+import { useEnsResolver } from 'wagmi'
 import { normalize } from 'viem/ens'
 
 function App() {
-  const result = useEnsAddress({
+  const result = useEnsResolver({
     name: normalize('wagmi-dev.eth'),
     blockTag: 'latest', // [!code focus]
   })
@@ -96,34 +96,13 @@ ID of chain to use when fetching data.
 
 ::: code-group
 ```tsx [index.tsx]
-import { useEnsAddress } from 'wagmi'
+import { useEnsResolver } from 'wagmi'
 import { mainnet } from 'wagmi/chains' // [!code focus]
 import { normalize } from 'viem/ens'
 
 function App() {
-  const result = useEnsAddress({
+  const result = useEnsResolver({
     chainId: mainnet.id, // [!code focus]
-    name: normalize('wagmi-dev.eth'),
-  })
-}
-```
-<<< @/snippets/react/config.ts[config.ts]
-:::
-
-### coinType
-
-`number | undefined`
-
-The [ENSIP-9](https://docs.ens.domains/ens-improvement-proposals/ensip-9-multichain-address-resolution) coin type to fetch the address for.
-
-::: code-group
-```ts [index.ts]
-import { useEnsAddress } from 'wagmi'
-import { normalize } from 'viem/ens'
-
-function App() {
-  const result = useEnsAddress({
-    coinType: 60, // [!code focus]
     name: normalize('wagmi-dev.eth'),
   })
 }
@@ -139,12 +118,12 @@ function App() {
 
 ::: code-group
 ```tsx [index.tsx]
-import { useEnsAddress } from 'wagmi'
+import { useEnsResolver } from 'wagmi'
 import { normalize } from 'viem/ens'
 import { config } from './config' // [!code focus]
 
 function App() {
-  const result = useEnsAddress({
+  const result = useEnsResolver({
     config, // [!code focus]
     name: normalize('wagmi-dev.eth'),
   })
@@ -157,15 +136,15 @@ function App() {
 
 `string | undefined`
 
-Name to get the address for. [`enabled`](#enabled) set to `false` if `name` is `undefined`.
+Name to get the resolver for. [`enabled`](#enabled) set to `false` if `name` is `undefined`.
 
 ::: code-group
 ```ts [index.ts]
-import { useEnsAddress } from 'wagmi'
+import { useEnsResolver } from 'wagmi'
 import { normalize } from 'viem/ens'
 
 function App() {
-  const result = useEnsAddress({
+  const result = useEnsResolver({
     name: normalize('wagmi-dev.eth'), // [!code focus]
   })
 }
@@ -175,18 +154,18 @@ function App() {
 
 ### universalResolverAddress
 
-`Address | undefined`
+`Resolver | undefined`
 
-- Address of ENS Universal Resolver Contract.
+- Resolver of ENS Universal Resolver Contract.
 - Defaults to current chain's Universal Resolver Contract address.
 
 ::: code-group
 ```ts [index.ts]
-import { useEnsAddress } from 'wagmi'
+import { useEnsResolver } from 'wagmi'
 import { normalize } from 'viem/ens'
 
 function App() {
-  const result = useEnsAddress({
+  const result = useEnsResolver({
     name: normalize('wagmi-dev.eth'),
     universalResolverAddress: '0x74E20Bd2A1fE0cdbe45b9A1d89cb7e0a45b36376', // [!code focus]
   })
@@ -200,7 +179,7 @@ function App() {
 ## Return Type
 
 ```ts
-import { type UseEnsAddressReturnType } from 'wagmi'
+import { type UseEnsResolverReturnType } from 'wagmi'
 ```
 
 <!--@include: @shared/query-result.md-->
@@ -209,4 +188,4 @@ import { type UseEnsAddressReturnType } from 'wagmi'
 
 ## Action
 
-[getEnsAddress](/core/actions/getEnsAddress)
+[getEnsResolver](/core/api/actions/getEnsResolver)

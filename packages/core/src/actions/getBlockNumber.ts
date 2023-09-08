@@ -16,7 +16,7 @@ export type GetBlockNumberReturnType = viem_GetBlockNumberReturnType
 
 export type GetBlockNumberError = Error
 
-/** https://alpha.wagmi.sh/core/actions/getBlockNumber */
+/** https://alpha.wagmi.sh/core/api/actions/getBlockNumber */
 export function getBlockNumber<config extends Config>(
   config: config,
   parameters: GetBlockNumberParameters<config> = {},

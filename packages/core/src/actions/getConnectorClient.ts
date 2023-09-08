@@ -44,7 +44,7 @@ export type GetConnectorClientError =
   | ConnectorNotConnectedError
   | Error
 
-/** https://alpha.wagmi.sh/core/actions/getConnectorClient */
+/** https://alpha.wagmi.sh/core/api/actions/getConnectorClient */
 export async function getConnectorClient<
   config extends Config,
   chainId extends config['chains'][number]['id'],

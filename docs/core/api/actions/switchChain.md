@@ -60,7 +60,7 @@ const result = await switchChain(config, {
 
 `Connector`
 
-[Connector](/core/connectors) to switch chain with.
+[Connector](/core/api/connectors) to switch chain with.
 
 ::: code-group
 ```ts [index.ts]

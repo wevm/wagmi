@@ -10,7 +10,7 @@ const TVariables = '{ connectors?: (CreateConnectorFn | Connector)[] | undefined
 
 # useReconnect
 
-Hook for reconnecting [connectors](/core/connectors).
+Hook for reconnecting [connectors](/core/api/connectors).
 
 ## Import
 
@@ -102,4 +102,4 @@ function App() {
 
 ## Action
 
-[`reconnect`](/core/actions/reconnect)
+[`reconnect`](/core/api/actions/reconnect)

@@ -39,7 +39,7 @@ export type UseDisconnectReturnType<context = unknown> = Evaluate<
   }
 >
 
-/** https://alpha.wagmi.sh/react/hooks/useDisconnect */
+/** https://alpha.wagmi.sh/react/api/hooks/useDisconnect */
 export function useDisconnect<context = unknown>(
   parameters: UseDisconnectParameters<context> = {},
 ): UseDisconnectReturnType<context> {

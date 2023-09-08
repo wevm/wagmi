@@ -6,7 +6,7 @@ const typeName = 'Reconnect'
 
 # reconnect
 
-Action for reconnecting [connectors](/core/connectors).
+Action for reconnecting [connectors](/core/api/connectors).
 
 ## Import
 
@@ -37,7 +37,7 @@ import { type ReconnectParameters } from '@wagmi/core'
 
 `(CreateConnectorFn | Connector)[] | undefined`
 
-- [Connectors](/core/connectors) to reconnect to.
+- [Connectors](/core/api/connectors) to reconnect to.
 - Defaults to [`Config['connectors']`](/core/createConfig#connectors).
 
 ::: code-group

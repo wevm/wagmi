@@ -31,7 +31,7 @@ export type ConnectError =
   | BaseError
   | Error
 
-/** https://alpha.wagmi.sh/core/actions/connect */
+/** https://alpha.wagmi.sh/core/api/actions/connect */
 export async function connect<config extends Config>(
   config: config,
   parameters: ConnectParameters<config>,

@@ -25,4 +25,4 @@ function App() {
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
-See the [Wagmi Core docs](/core/actions) for more info on what actions are available.
+See the [Wagmi Core docs](/core/api/actions) for more info on what actions are available.

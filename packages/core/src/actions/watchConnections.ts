@@ -11,7 +11,7 @@ export type WatchConnectionsParameters = {
 
 export type WatchConnectionsReturnType = () => void
 
-/** https://alpha.wagmi.sh/core/actions/watchConnections */
+/** https://alpha.wagmi.sh/core/api/actions/watchConnections */
 export function watchConnections(
   config: Config,
   parameters: WatchConnectionsParameters,

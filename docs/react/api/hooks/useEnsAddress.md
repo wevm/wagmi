@@ -1,30 +1,30 @@
 <script setup>
 const packageName = 'wagmi'
-const actionName = 'getEnsAvatar'
-const typeName = 'GetEnsAvatar'
-const TData = 'string | null'
-const TError = 'GetEnsAvatarError'
+const actionName = 'getEnsAddress'
+const typeName = 'GetEnsAddress'
+const TData = 'string'
+const TError = 'GetEnsAddressError'
 </script>
 
-# useEnsAvatar
+# useEnsAddress
 
-Hook for fetching ENS avatar for name.
+Hook for fetching ENS address for name.
 
 ## Import
 
 ```ts
-import { useEnsAvatar } from 'wagmi'
+import { useEnsAddress } from 'wagmi'
 ```
 
 ## Usage
 
 ::: code-group
 ```tsx [index.tsx]
-import { useEnsAvatar } from 'wagmi'
+import { useEnsAddress } from 'wagmi'
 import { normalize } from 'viem/ens'
 
 function App() {
-  const result = useEnsAvatar({
+  const result = useEnsAddress({
     name: normalize('wagmi-dev.eth'),
   })
 }
@@ -33,13 +33,13 @@ function App() {
 :::
 
 ::: warning
-Since ENS names prohibit certain forbidden characters (e.g. underscore) and have other validation rules, you likely want to [normalize ENS names](https://docs.ens.domains/contract-api-reference/name-processing#normalising-names) with [UTS-46 normalization](https://unicode.org/reports/tr46) before passing them to `useEnsAvatar`. You can use Viem's built-in [`normalize`](https://viem.sh/docs/ens/utilities/normalize) function for this.
+Since ENS names prohibit certain forbidden characters (e.g. underscore) and have other validation rules, you likely want to [normalize ENS names](https://docs.ens.domains/contract-api-reference/name-processing#normalising-names) with [UTS-46 normalization](https://unicode.org/reports/tr46) before passing them to `useEnsAddress`. You can use Viem's built-in [`normalize`](https://viem.sh/docs/ens/utilities/normalize) function for this.
 :::
 
 ## Parameters
 
 ```ts
-import { type UseEnsAvatarParameters } from 'wagmi'
+import { type UseEnsAddressParameters } from 'wagmi'
 ```
 
 ---
@@ -48,15 +48,15 @@ import { type UseEnsAvatarParameters } from 'wagmi'
 
 `bigint | undefined`
 
-Block number to get ENS avatar at.
+Block number to get ENS address at.
 
 ::: code-group
 ```ts [index.ts]
-import { useEnsAvatar } from 'wagmi'
+import { useEnsAddress } from 'wagmi'
 import { normalize } from 'viem/ens'
 
 function App() {
-  const result = useEnsAvatar({
+  const result = useEnsAddress({
     blockNumber: 17829139n, // [!code focus]
     name: normalize('wagmi-dev.eth'),
   })
@@ -69,15 +69,15 @@ function App() {
 
 `'latest' | 'earliest' | 'pending' | 'safe' | 'finalized' | undefined`
 
-Block tag to get ENS avatar at.
+Block tag to get ENS address at.
 
 ::: code-group
 ```ts [index.ts]
-import { useEnsAvatar } from 'wagmi'
+import { useEnsAddress } from 'wagmi'
 import { normalize } from 'viem/ens'
 
 function App() {
-  const result = useEnsAvatar({
+  const result = useEnsAddress({
     name: normalize('wagmi-dev.eth'),
     blockTag: 'latest', // [!code focus]
   })
@@ -96,13 +96,34 @@ ID of chain to use when fetching data.
 
 ::: code-group
 ```tsx [index.tsx]
-import { useEnsAvatar } from 'wagmi'
+import { useEnsAddress } from 'wagmi'
 import { mainnet } from 'wagmi/chains' // [!code focus]
 import { normalize } from 'viem/ens'
 
 function App() {
-  const result = useEnsAvatar({
-    chainId: mainnet.id, // [!code focus],
+  const result = useEnsAddress({
+    chainId: mainnet.id, // [!code focus]
+    name: normalize('wagmi-dev.eth'),
+  })
+}
+```
+<<< @/snippets/react/config.ts[config.ts]
+:::
+
+### coinType
+
+`number | undefined`
+
+The [ENSIP-9](https://docs.ens.domains/ens-improvement-proposals/ensip-9-multichain-address-resolution) coin type to fetch the address for.
+
+::: code-group
+```ts [index.ts]
+import { useEnsAddress } from 'wagmi'
+import { normalize } from 'viem/ens'
+
+function App() {
+  const result = useEnsAddress({
+    coinType: 60, // [!code focus]
     name: normalize('wagmi-dev.eth'),
   })
 }
@@ -118,36 +139,13 @@ function App() {
 
 ::: code-group
 ```tsx [index.tsx]
-import { useEnsAvatar } from 'wagmi'
+import { useEnsAddress } from 'wagmi'
 import { normalize } from 'viem/ens'
 import { config } from './config' // [!code focus]
 
 function App() {
-  const result = useEnsAvatar({
+  const result = useEnsAddress({
     config, // [!code focus]
-    name: normalize('wagmi-dev.eth'),
-  })
-}
-```
-<<< @/snippets/react/config.ts[config.ts]
-:::
-
-### gatewayUrls
-
-`{ ipfs?: string | undefined; arweave?: string | undefined } | undefined`
-
-Gateway urls to resolve IPFS and/or Arweave assets.
-
-::: code-group
-```ts [index.ts]
-import { useEnsAvatar } from 'wagmi'
-import { normalize } from 'viem/ens'
-
-function App() {
-  const result = useEnsAvatar({
-    gatewayUrls: { // [!code focus]
-      ipfs: 'https://cloudflare-ipfs.com', // [!code focus]
-    }, // [!code focus]
     name: normalize('wagmi-dev.eth'),
   })
 }
@@ -159,15 +157,15 @@ function App() {
 
 `string | undefined`
 
-Name to get the avatar for. [`enabled`](#enabled) set to `false` if `name` is `undefined`.
+Name to get the address for. [`enabled`](#enabled) set to `false` if `name` is `undefined`.
 
 ::: code-group
 ```ts [index.ts]
-import { useEnsAvatar } from 'wagmi'
+import { useEnsAddress } from 'wagmi'
 import { normalize } from 'viem/ens'
 
 function App() {
-  const result = useEnsAvatar({
+  const result = useEnsAddress({
     name: normalize('wagmi-dev.eth'), // [!code focus]
   })
 }
@@ -177,18 +175,18 @@ function App() {
 
 ### universalResolverAddress
 
-`Avatar | undefined`
+`Address | undefined`
 
-- Avatar of ENS Universal Resolver Contract.
+- Address of ENS Universal Resolver Contract.
 - Defaults to current chain's Universal Resolver Contract address.
 
 ::: code-group
 ```ts [index.ts]
-import { useEnsAvatar } from 'wagmi'
+import { useEnsAddress } from 'wagmi'
 import { normalize } from 'viem/ens'
 
 function App() {
-  const result = useEnsAvatar({
+  const result = useEnsAddress({
     name: normalize('wagmi-dev.eth'),
     universalResolverAddress: '0x74E20Bd2A1fE0cdbe45b9A1d89cb7e0a45b36376', // [!code focus]
   })
@@ -202,7 +200,7 @@ function App() {
 ## Return Type
 
 ```ts
-import { type UseEnsAvatarReturnType } from 'wagmi'
+import { type UseEnsAddressReturnType } from 'wagmi'
 ```
 
 <!--@include: @shared/query-result.md-->
@@ -211,4 +209,4 @@ import { type UseEnsAvatarReturnType } from 'wagmi'
 
 ## Action
 
-[getEnsAvatar](/core/actions/getEnsAvatar)
+[getEnsAddress](/core/api/actions/getEnsAddress)

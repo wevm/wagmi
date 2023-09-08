@@ -65,5 +65,5 @@ import { type UseAccountReturnType } from 'wagmi'
 
 ## Action
 
-- [`getAccount`](/core/actions/getAccount)
-- [`watchAccount`](/core/actions/getAccount#watchaccount)
+- [`getAccount`](/core/api/actions/getAccount)
+- [`watchAccount`](/core/api/actions/watchAccount)

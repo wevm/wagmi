@@ -135,4 +135,4 @@ import { type UseTokenReturnType } from 'wagmi'
 
 ## Action
 
-[getToken](/core/actions/getToken)
+[getToken](/core/api/actions/getToken)

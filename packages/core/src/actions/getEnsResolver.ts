@@ -16,7 +16,7 @@ export type GetEnsResolverReturnType = viem_GetEnsResolverReturnType
 
 export type GetEnsResolverError = Error
 
-/** https://alpha.wagmi.sh/core/actions/getEnsResolver */
+/** https://alpha.wagmi.sh/core/api/actions/getEnsResolver */
 export function getEnsResolver<config extends Config>(
   config: config,
   parameters: GetEnsResolverParameters<config>,

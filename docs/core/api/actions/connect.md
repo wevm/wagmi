@@ -6,7 +6,7 @@ const typeName = 'Connect'
 
 # connect
 
-Action for connecting accounts with [connectors](/core/connectors).
+Action for connecting accounts with [connectors](/core/api/connectors).
 
 ## Import
 
@@ -60,7 +60,7 @@ const result = await connect(config, {
 
 `CreateConnectorFn | Connector`
 
-[Connector](/core/connectors) to connect with.
+[Connector](/core/api/connectors) to connect with.
 
 ::: code-group
 ```ts [index.ts]

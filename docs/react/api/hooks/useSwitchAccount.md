@@ -1,6 +1,6 @@
 # useSwitchAccount
 
-Hook for switching accounts with [connectors](/core/connectors).
+Hook for switching accounts with [connectors](/core/api/connectors).
 
 ## Import
 

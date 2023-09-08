@@ -33,7 +33,7 @@ export type EstimateGasReturnType = viem_EstimateGasReturnType
 
 export type EstimateGasError = Error
 
-/** https://alpha.wagmi.sh/core/actions/estimateGas */
+/** https://alpha.wagmi.sh/core/api/actions/estimateGas */
 export async function estimateGas<
   config extends Config,
   chainId extends config['chains'][number]['id'] | undefined = undefined,

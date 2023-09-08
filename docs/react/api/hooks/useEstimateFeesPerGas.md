@@ -138,4 +138,4 @@ import { type UseEstimateFeesPerGasReturnType } from 'wagmi'
 
 ## Action
 
-[estimateFeesPerGas](/core/actions/estimateFeesPerGas)
+[estimateFeesPerGas](/core/api/actions/estimateFeesPerGas)

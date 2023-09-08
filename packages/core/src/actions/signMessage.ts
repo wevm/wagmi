@@ -18,7 +18,7 @@ export type SignMessageReturnType = viem_SignMessageReturnType
 
 export type SignMessageError = Error
 
-/** https://alpha.wagmi.sh/core/actions/signMessage */
+/** https://alpha.wagmi.sh/core/api/actions/signMessage */
 export async function signMessage(
   config: Config,
   parameters: SignMessageParameters,

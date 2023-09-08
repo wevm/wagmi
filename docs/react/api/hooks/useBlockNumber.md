@@ -99,7 +99,7 @@ function App() {
 `boolean | UseWatchBlockNumberParameters | undefined`
 
 - Enables/disables listening for block number changes.
-- Can pass a subset of [`UseWatchBlockNumberParameters`](/react/hooks/useWatchBlockNumber#parameters)directly to [`useWatchBlockNumber`](/react/hooks/useWatchBlockNumber).
+- Can pass a subset of [`UseWatchBlockNumberParameters`](/react/api/hooks/useWatchBlockNumber#parameters)directly to [`useWatchBlockNumber`](/react/api/hooks/useWatchBlockNumber).
 
 ::: code-group
 ```tsx [index.tsx]
@@ -139,5 +139,5 @@ import { type UseBlockNumberReturnType } from 'wagmi'
 
 ## Action
 
-- [getBlockNumber](/core/actions/getBlockNumber)
-- [watchBlockNumber](/core/actions/getBlockNumber#watchblocknumber)
+- [getBlockNumber](/core/api/actions/getBlockNumber)
+- [watchBlockNumber](/core/api/actions/watchBlockNumber)

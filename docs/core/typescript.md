@@ -53,7 +53,7 @@ Unfortunately [TypeScript doesn't support importing JSON `as const` yet](https:/
 
 Anywhere you see the `abi` or `types` configuration property, you can likely use const-asserted or inline ABIs and Typed Data to get type-safety and inference. These properties are also called out in the docs.
 
-Here's what [`readContract`](/core/actions/readContract) looks like with and without a const-asserted `abi` property.
+Here's what [`readContract`](/core/api/actions/readContract) looks like with and without a const-asserted `abi` property.
 
 ::: code-group
 ```ts twoslash [Const-Asserted]

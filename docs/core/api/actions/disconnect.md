@@ -36,7 +36,7 @@ import { type DisconnectParameters } from '@wagmi/core'
 
 `Connector | undefined`
 
-[Connector](/core/connectors) to disconnect with.
+[Connector](/core/api/connectors) to disconnect with.
 
 ::: code-group
 ```ts [index.ts]

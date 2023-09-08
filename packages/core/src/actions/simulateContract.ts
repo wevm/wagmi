@@ -102,7 +102,7 @@ export type SimulateContractReturnType<
 
 export type SimulateContractError = Error
 
-/** https://alpha.wagmi.sh/core/actions/simulateContract */
+/** https://alpha.wagmi.sh/core/api/actions/simulateContract */
 export async function simulateContract<
   config extends Config,
   const abi extends Abi | readonly unknown[],

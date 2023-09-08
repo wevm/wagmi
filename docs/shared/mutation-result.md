@@ -23,7 +23,7 @@ The mutation function you can call with variables to trigger the mutation and op
 
   `{{TVariables}}`
 
-  The variables object to pass to the <a :href="`/core/actions/${mutate}`">`{{mutate}}`</a> action.
+  The variables object to pass to the <a :href="`/core/api/actions/${mutate}`">`{{mutate}}`</a> action.
 
 - #### onSuccess
 

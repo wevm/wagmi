@@ -1,21 +1,21 @@
-# useConnections
+# useChainId
 
-Hook for getting active connections.
+Hook for getting current chain ID.
 
 ## Import
 
 ```ts
-import { useConnections } from 'wagmi'
+import { useChainId } from 'wagmi'
 ```
 
 ## Usage
 
 ::: code-group
 ```tsx [index.tsx]
-import { useConnections } from 'wagmi'
+import { useChainId } from 'wagmi'
 
 function App() {
-  const connections = useConnections()
+  const chainId = useChainId()
 }
 ```
 <<< @/snippets/react/config.ts[config.ts]
@@ -24,7 +24,7 @@ function App() {
 ## Parameters
 
 ```ts
-import { type UseConnectionsParameters } from 'wagmi'
+import { type UseChainIdParameters } from 'wagmi'
 ```
 
 ### config
@@ -35,11 +35,11 @@ import { type UseConnectionsParameters } from 'wagmi'
 
 ::: code-group
 ```tsx [index.tsx]
-import { useConnections } from 'wagmi'
+import { useChainId } from 'wagmi'
 import { config } from './config' // [!code focus]
 
 function App() {
-  const connections = useConnections({
+  const chainId = useChainId({
     config, // [!code focus]
   })
 }
@@ -50,10 +50,14 @@ function App() {
 ## Return Type
 
 ```ts
-import { type UseConnectionsReturnType } from 'wagmi'
+import { type UseChainIdReturnType } from 'wagmi'
 ```
+
+`number`
+
+Current chain ID from [`config.state.chainId`](/react/createConfig#chainid).
 
 ## Action
 
-- [`getConnections`](/core/actions/getConnections)
-- [`watchConnections`](/core/actions/getConnections#watchconnections)
+- [`getChainId`](/core/api/actions/getChainId)
+- [`watchChainId`](/core/api/actions/watchChainId)
