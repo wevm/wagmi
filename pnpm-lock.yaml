@@ -49,9 +49,6 @@ importers:
       knip:
         specifier: ^2.17.3
         version: 2.17.3
-      msw:
-        specifier: ^1.2.1
-        version: 1.2.1(typescript@5.1.6)
       publint:
         specifier: ^0.2.0
         version: 0.2.0
@@ -146,6 +143,9 @@ importers:
       lokijs:
         specifier: ^1.5.12
         version: 1.5.12
+      msw:
+        specifier: ^1.2.1
+        version: 1.2.1(typescript@5.1.6)
 
   packages/core:
     dependencies:

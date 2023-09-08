@@ -31,12 +31,28 @@ When a chain is not configured. You likely need to add the chain to <a :href="`/
 import { ChainNotConfiguredError } from '{{packageName}}'
 ```
 
+### ConnectorAccountNotFound
+
+When an account does not exist on the connector or is unable to be used.
+
+```ts-vue
+import { ConnectorAccountNotFound } from '{{packageName}}'
+```
+
 ### ConnectorAlreadyConnectedError
 
 When a connector is already connected.
 
 ```ts-vue
 import { ConnectorAlreadyConnectedError } from '{{packageName}}'
+```
+
+### ConnectorNotConnectedError
+
+When a connector is not connected.
+
+```ts-vue
+import { ConnectorNotConnectedError } from '{{packageName}}'
 ```
 
 ### ConnectorNotFoundError

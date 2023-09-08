@@ -37,7 +37,7 @@
   "peerDependencies": {
     "@wagmi/core": "^2",
     "typescript": ">=5",
-    "viem": "^1"
+    "viem": "*"
   },
   "peerDependenciesMeta": {
     "typescript": {
@@ -54,12 +54,10 @@
   },
   "devDependencies": {
     "@wagmi/core": "workspace:*",
-    "lokijs": "^1.5.12"
+    "lokijs": "^1.5.12",
+    "msw": "^1.2.1"
   },
-  "contributors": [
-    "jxom.eth <j@wagmi.sh>",
-    "awkweb.eth <t@wagmi.sh>"
-  ],
+  "contributors": ["jxom.eth <j@wagmi.sh>", "awkweb.eth <t@wagmi.sh>"],
   "funding": [
     {
       "type": "github",
