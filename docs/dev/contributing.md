@@ -63,7 +63,7 @@ After the install completes, pnpm links packages across the project for developm
 The [dev playgrounds](#_5-running-the-dev-playgrounds) and [test suite](#_6-running-the-test-suite) require enironment variables to be set. Copy over the following environment variables to `.env`, and fill them out.
 
 ```bash
-VITE_MAINNET_FORK_BLOCK_NUMBER=16280770
+VITE_MAINNET_FORK_BLOCK_NUMBER=16966590
 VITE_MAINNET_FORK_URL=https://cloudflare-eth.com
 
 VITE_OPTIMISM_FORK_BLOCK_NUMBER=107317577

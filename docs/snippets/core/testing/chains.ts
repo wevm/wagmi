@@ -11,7 +11,7 @@ export const mainnetFork = {
   ...mainnet,
   ...getRpcUrls({ port: 8545 }),
   fork: {
-    blockNumber: 16280770n,
+    blockNumber: 16966590n,
     url: 'https://cloudflare-eth.com',
   },
 } as const satisfies ChainFork

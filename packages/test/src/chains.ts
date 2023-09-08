@@ -19,7 +19,7 @@ export type Chain = Evaluate<
 const mainnetFork = {
   blockNumber: process.env.VITE_MAINNET_FORK_BLOCK_NUMBER
     ? BigInt(Number(process.env.VITE_MAINNET_FORK_BLOCK_NUMBER))
-    : 16280770n,
+    : 16966590n,
   url: process.env.VITE_MAINNET_FORK_URL ?? 'https://cloudflare-eth.com',
 } as const satisfies Fork
 
