@@ -169,7 +169,7 @@ function BlockNumber() {
   >()
 
   React.useEffect(() => {
-    const _ = (async () => {
+    ;(async () => {
       setBlockNumber(await getBlockNumber(config))
 
       watchBlockNumber(config, { onBlockNumber: setBlockNumber })

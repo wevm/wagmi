@@ -6,7 +6,6 @@
     "clean": "pnpm run --r --parallel clean",
     "deps": "pnpx taze -r",
     "dev": "pnpm dev:vite-react",
-    "dev:next": "pnpm build && pnpm --filter next dev",
     "dev:vite-core": "pnpm --filter vite-core dev",
     "dev:vite-react": "pnpm --filter vite-react dev",
     "docs:dev": "rimraf node_modules/.cache/twoslash && pnpm --filter docs dev",
