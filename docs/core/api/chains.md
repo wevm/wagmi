@@ -1,5 +1,5 @@
 <script setup>
-import SearchChains from '../components/SearchChains.vue'
+import SearchChains from '../../components/SearchChains.vue'
 </script>
 
 # Chains
