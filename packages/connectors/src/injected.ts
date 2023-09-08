@@ -147,15 +147,15 @@ export function injected(parameters: InjectedParameters = {}) {
         const canSelectAccount = getWindowProvider().features?.includes(
           'wallet_requestPermissions',
         )
-        let accounts: readonly Address[] | null = null
-        if (
-          canSelectAccount &&
+        const isDisconnected =
           shimDisconnect &&
           !config.storage?.getItem(this.shimDisconnectStorageKey)
-        ) {
+
+        let accounts: readonly Address[] | null = null
+        if (canSelectAccount && isDisconnected) {
           accounts = await this.getAccounts().catch(() => null)
-          const isConnected = !!accounts?.length
-          if (isConnected)
+          const isAuthorized = !!accounts?.length
+          if (isAuthorized)
             // Attempt to show another prompt for selecting wallet if already connected
             try {
               const permissions = await provider.request({
@@ -248,12 +248,11 @@ export function injected(parameters: InjectedParameters = {}) {
     },
     async isAuthorized() {
       try {
-        if (
+        const isDisconnected =
           shimDisconnect &&
           // If shim does not exist in storage, wallet is disconnected
           !config.storage?.getItem(this.shimDisconnectStorageKey)
-        )
-          return false
+        if (isDisconnected) return false
 
         const provider = await this.getProvider()
         if (!provider) {

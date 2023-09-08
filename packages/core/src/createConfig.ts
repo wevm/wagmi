@@ -314,9 +314,15 @@ export function createConfig<
 
     getClient,
     setState(value) {
-      // TODO: Add check to make sure state isn't completely nuked (e.g. set to non-object) and important keys exist
-      const newState =
-        typeof value === 'function' ? value(store.getState() as any) : value
+      let newState: State
+      if (typeof value === 'function') newState = value(store.getState() as any)
+      else newState = value
+
+      // Reset state if it got set to something not matching the base state
+      if (typeof newState !== 'object') newState = initialState
+      const isCorrupt = Object.keys(initialState).some((x) => !(x in newState))
+      if (isCorrupt) newState = initialState
+
       store.setState(newState, true)
     },
     subscribe(selector, listener, options) {
