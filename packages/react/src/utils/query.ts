@@ -54,7 +54,6 @@ export type UseQueryParameters<
       | 'queryHash'
       | 'queryKey'
       | 'queryKeyHashFn'
-      | 'suspense'
       | 'throwOnError'
     >
   > & {
