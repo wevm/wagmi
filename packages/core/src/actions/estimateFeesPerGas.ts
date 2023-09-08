@@ -10,28 +10,25 @@ import {
   type EstimateFeesPerGasReturnType as viem_EstimateFeesPerGasReturnType,
   estimateFeesPerGas as viem_estimateFeesPerGas,
 } from 'viem/actions'
-import type { Evaluate } from '../types/utils.js'
 
 import { type Config } from '../createConfig.js'
 import type { ChainIdParameter } from '../types/properties.js'
 import type { Unit } from '../types/unit.js'
+import type { Evaluate } from '../types/utils.js'
 import type { UnionEvaluate, UnionLooseOmit } from '../types/utils.js'
 import { getUnit } from '../utils/getUnit.js'
 
 export type EstimateFeesPerGasParameters<
-  config extends Config = Config,
   type extends FeeValuesType = FeeValuesType,
+  config extends Config = Config,
 > = UnionEvaluate<
   UnionLooseOmit<
-    viem_EstimateFeesPerGasParameters<
-      Chain | undefined,
-      Chain | undefined,
-      type
-    >,
+    viem_EstimateFeesPerGasParameters<Chain, Chain, type>,
     'chain'
-  > & {
-    formatUnits?: Unit
-  } & ChainIdParameter<config>
+  > &
+    ChainIdParameter<config> & {
+      formatUnits?: Unit | undefined
+    }
 >
 
 export type EstimateFeesPerGasReturnType<
@@ -52,13 +49,14 @@ export async function estimateFeesPerGas<
   type extends FeeValuesType = 'eip1559',
 >(
   config: config,
-  parameters: EstimateFeesPerGasParameters<config, type> = {},
+  parameters: EstimateFeesPerGasParameters<type, config> = {},
 ): Promise<EstimateFeesPerGasReturnType<type>> {
-  const { chainId, formatUnits: units = 'gwei', type } = parameters || {}
+  const { chainId, formatUnits: units = 'gwei', ...rest } = parameters
+
   const client = config.getClient({ chainId })
 
   const { gasPrice, maxFeePerGas, maxPriorityFeePerGas } =
-    await viem_estimateFeesPerGas(client, { type })
+    await viem_estimateFeesPerGas(client, rest)
 
   const unit = getUnit(units)
   const formatted = {

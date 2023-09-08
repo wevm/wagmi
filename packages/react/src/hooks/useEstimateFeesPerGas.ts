@@ -13,6 +13,7 @@ import {
   type EstimateFeesPerGasQueryKey,
   estimateFeesPerGasQueryOptions,
 } from '@wagmi/core/query'
+import type { FeeValuesType } from 'viem'
 
 import type { ConfigParameter } from '../types/properties.js'
 import {
@@ -24,30 +25,33 @@ import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
 export type UseEstimateFeesPerGasParameters<
+  type extends FeeValuesType = FeeValuesType,
   config extends Config = Config,
-  selectData = EstimateFeesPerGasData,
+  selectData = EstimateFeesPerGasData<type>,
 > = Evaluate<
-  EstimateFeesPerGasOptions<config> &
+  EstimateFeesPerGasOptions<type, config> &
     UseQueryParameters<
-      EstimateFeesPerGasQueryFnData,
+      EstimateFeesPerGasQueryFnData<type>,
       EstimateFeesPerGasError,
       selectData,
-      EstimateFeesPerGasQueryKey<config>
+      EstimateFeesPerGasQueryKey<config, type>
     > &
     ConfigParameter<config>
 >
 
 export type UseEstimateFeesPerGasReturnType<
-  selectData = EstimateFeesPerGasData,
+  type extends FeeValuesType = FeeValuesType,
+  selectData = EstimateFeesPerGasData<type>,
 > = UseQueryResult<selectData, EstimateFeesPerGasError>
 
 /** https://alpha.wagmi.sh/react/hooks/useEstimateFeesPerGas */
 export function useEstimateFeesPerGas<
   config extends Config = ResolvedRegister['config'],
-  selectData = EstimateFeesPerGasData,
+  type extends FeeValuesType = 'eip1559',
+  selectData = EstimateFeesPerGasData<type>,
 >(
-  parameters: UseEstimateFeesPerGasParameters<config, selectData> = {},
-): UseEstimateFeesPerGasReturnType<selectData> {
+  parameters: UseEstimateFeesPerGasParameters<type, config, selectData> = {},
+): UseEstimateFeesPerGasReturnType<type, selectData> {
   const config = useConfig(parameters)
   const chainId = useChainId()
 
