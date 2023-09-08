@@ -35,7 +35,7 @@ test('behavior: user rejected request', async () => {
     [UserRejectedRequestError: User rejected the request.
 
     Details: Failed to sign message.
-    Version: viem@1.10.6]
+    Version: viem@0.0.0-alpha-20230908171049]
   `)
   await disconnect(config, { connector: connector_ })
 })

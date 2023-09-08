@@ -1,5 +1,4 @@
-import path from 'path'
-import fs from 'fs-extra'
+import path from 'node:path'
 import { glob } from 'glob'
 
 // Generates package.json files to be published to NPM with only the necessary fields.
@@ -13,23 +12,26 @@ const packagePaths = await glob('packages/**/package.json', {
 
 let count = 0
 for (const packagePath of packagePaths) {
-  type Package = {
+  type Package = Record<string, unknown> & {
     name?: string
     private?: boolean
-  } & Record<string, unknown>
-  const packageFile = (await fs.readJson(packagePath)) as Package
+  }
+  const file = Bun.file(packagePath)
+  const packageJson = (await file.json()) as Package
 
   // Skip private packages
-  if (packageFile.private) continue
+  if (packageJson.private) continue
 
   count += 1
-  console.log(`${packageFile.name} — ${path.dirname(packagePath)}`)
+  console.log(`${packageJson.name} — ${path.dirname(packagePath)}`)
 
-  const tmpPackageJson = await fs.readJson(packagePath)
-  await fs.writeJson(`${packagePath}.tmp`, tmpPackageJson, { spaces: 2 })
+  await Bun.write(
+    `${packagePath}.tmp`,
+    `${JSON.stringify(packageJson, undefined, 2)}\n`,
+  )
 
-  const { devDependencies: _dD, scripts: _s, ...rest } = tmpPackageJson
-  await fs.writeJson(packagePath, rest, { spaces: 2 })
+  const { devDependencies: _dD, scripts: _s, ...rest } = packageJson
+  await Bun.write(packagePath, `${JSON.stringify(rest, undefined, 2)}\n`)
 }
 
 console.log(`Done. Formatted ${count} ${count === 1 ? 'file' : 'files'}.`)

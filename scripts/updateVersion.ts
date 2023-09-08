@@ -1,5 +1,4 @@
-import path from 'path'
-import fs from 'fs-extra'
+import path from 'node:path'
 import { glob } from 'glob'
 
 // Updates package version.ts files (so you can use the version in code without importing package.json).
@@ -17,22 +16,23 @@ for (const packagePath of packagePaths) {
     private?: boolean
     version?: string
   }
-  const packageFile = (await fs.readJson(packagePath)) as Package
+  const file = Bun.file(packagePath)
+  const packageJson = (await file.json()) as Package
 
   // Skip private packages
-  if (packageFile.private) continue
+  if (packageJson.private) continue
 
   count += 1
-  console.log(`${packageFile.name} — ${packageFile.version}`)
+  console.log(`${packageJson.name} — ${packageJson.version}`)
 
   const versionFilePath = path.resolve(
     path.dirname(packagePath),
     'src',
     'version.ts',
   )
-  await fs.writeFile(
+  await Bun.write(
     versionFilePath,
-    `export const version = '${packageFile.version}'\n`,
+    `export const version = '${packageJson.version}'\n`,
   )
 }
 

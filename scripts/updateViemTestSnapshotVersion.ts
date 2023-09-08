@@ -1,4 +1,3 @@
-import fs from 'fs-extra'
 import { glob } from 'glob'
 
 // Updates viem version in Vitest snapshots.
@@ -6,7 +5,8 @@ import { glob } from 'glob'
 // Link packages
 console.log('Updating viem test snapshot version.')
 
-const packageJson = await fs.readJson('package.json')
+const file = Bun.file('package.json')
+const packageJson = await file.json()
 const viemVersion = packageJson.devDependencies.viem
 
 // Get all *.test.ts files
@@ -16,7 +16,8 @@ const testPaths = await glob('packages/**/*.test.ts', {
 
 let count = 0
 for (const testPath of testPaths) {
-  const testFile = await fs.readFile(testPath, { encoding: 'utf-8' })
+  const file = Bun.file(testPath)
+  const testFile = await file.text()
 
   // Skip files that don't contain viem version
   if (!testFile.includes('Version: viem@')) continue
@@ -28,7 +29,7 @@ for (const testPath of testPaths) {
     /Version: viem@[A-Za-z0-9\-\.]+/g,
     `Version: viem@${viemVersion}`,
   )
-  await fs.writeFile(testPath, updatedTestFile, { encoding: 'utf-8' })
+  await Bun.write(testPath, updatedTestFile)
 
   count += 1
 }

@@ -1,5 +1,5 @@
-import path from 'path'
-import fs from 'fs-extra'
+import fs from 'node:fs/promises'
+import path from 'node:path'
 import { glob } from 'glob'
 
 // Symlinks package sources to dist for local development
@@ -18,17 +18,33 @@ for (const packagePath of packagePaths) {
     private?: boolean
     exports?: Record<string, { types: string; default: string } | string>
   }
-  const packageFile = (await fs.readJson(packagePath)) as Package
+  const file = Bun.file(packagePath)
+  const packageFile = (await file.json()) as Package
 
   // Skip private packages
   if (packageFile.private) continue
   if (!packageFile.exports) continue
-  // if (packageFile.name !== 'wagmi') continue
 
   count += 1
   const dir = path.resolve(path.dirname(packagePath))
   console.log(`${packageFile.name} — ${path.dirname(packagePath)}`)
-  await fs.emptyDir(path.resolve(dir, 'dist'))
+
+  // Empty dist directory
+  const dist = path.resolve(dir, 'dist')
+  let files: string[] = []
+  try {
+    files = await fs.readdir(dist)
+  } catch {
+    await fs.mkdir(dist)
+  }
+
+  const promises = []
+  for (const file of files) {
+    promises.push(
+      fs.rm(path.join(dist, file), { recursive: true, force: true }),
+    )
+  }
+  await Promise.all(promises)
 
   // Link exports to dist locations
   for (const [key, exports] of Object.entries(packageFile.exports)) {
@@ -55,7 +71,8 @@ for (const packagePath of packagePaths) {
       const distDir = path.resolve(dir, path.dirname(value))
       const distFileName = path.basename(value)
       const distFilePath = path.resolve(distDir, distFileName)
-      await fs.ensureDir(distDir)
+
+      await fs.mkdir(distDir, { recursive: true })
 
       // Symlink src to dist file
       await fs.symlink(srcFilePath, distFilePath, 'file')

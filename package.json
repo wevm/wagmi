@@ -1,5 +1,6 @@
 {
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "pnpm run --r --filter \"./packages/**\" build",
     "clean": "pnpm run --r --parallel clean",
@@ -33,15 +34,13 @@
     "@biomejs/biome": "1.0.0",
     "@changesets/changelog-github": "0.4.6",
     "@changesets/cli": "^2.26.0",
-    "@types/fs-extra": "^11.0.1",
-    "@types/node": "^18.16.9",
     "@viem/anvil": "0.0.6",
     "@vitest/coverage-v8": "^0.34.1",
     "@vitest/ui": "^0.34.1",
     "@wagmi/test": "workspace:*",
-    "bun": "^0.5.9",
-    "fs-extra": "^11.1.1",
-    "glob": "^10.2.4",
+    "bun": "^1.0.0",
+    "bun-types": "^1.0.1",
+    "glob": "^10.3.4",
     "jsdom": "^20.0.3",
     "knip": "^2.17.3",
     "msw": "^1.2.1",
@@ -49,7 +48,7 @@
     "rimraf": "^4.4.1",
     "simple-git-hooks": "^2.8.1",
     "typescript": "5.1.6",
-    "viem": "0.0.0-alpha-20230907200534",
+    "viem": "0.0.0-alpha-20230908171049",
     "vite": "^4.3.9",
     "vitest": "^0.34.1"
   },
@@ -61,7 +60,7 @@
     "overrides": {
       "@wagmi/connectors": "workspace:*",
       "@wagmi/core": "workspace:*",
-      "viem": "0.0.0-alpha-20230907200534"
+      "viem": "0.0.0-alpha-20230908171049"
     },
     "peerDependencyRules": {
       "ignoreMissing": [
@@ -78,7 +77,9 @@
     "ignoreDependencies": ["@biomejs/biome", "@changesets/cli", "only-allow"],
     "ignoreWorkspaces": ["docs", "packages/register-tests/**"],
     "workspaces": {
-      ".": { "entry": "scripts/*.ts" },
+      ".": {
+        "entry": "scripts/*.ts"
+      },
       "packages/core": {
         "entry": "src/exports/{chains,index,internal,query}.ts!"
       },

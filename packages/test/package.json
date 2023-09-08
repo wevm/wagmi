@@ -40,7 +40,9 @@
   },
   "typesVersions": {
     "*": {
-      "react": ["./dist/types/exports/react.d.ts"]
+      "react": [
+        "./dist/types/exports/react.d.ts"
+      ]
     }
   },
   "peerDependencies": {
@@ -92,12 +94,21 @@
     "react-dom": "^18.2.0",
     "wagmi": "workspace:*"
   },
-  "contributors": ["jxom.eth <j@wagmi.sh>", "awkweb.eth <t@wagmi.sh>"],
+  "contributors": [
+    "jxom.eth <j@wagmi.sh>",
+    "awkweb.eth <t@wagmi.sh>"
+  ],
   "funding": [
     {
       "type": "github",
       "url": "https://github.com/sponsors/wagmi-dev"
     }
   ],
-  "keywords": ["eth", "ethereum", "dapps", "wallet", "web3"]
+  "keywords": [
+    "eth",
+    "ethereum",
+    "dapps",
+    "wallet",
+    "web3"
+  ]
 }
