@@ -17,7 +17,7 @@ import { Emitter, type EventData, createEmitter } from './createEmitter.js'
 import { type Storage, createStorage, noopStorage } from './createStorage.js'
 import { ChainNotConfiguredError } from './errors/config.js'
 import type { MultichainValue } from './types/chain.js'
-import type { Evaluate, OneOf } from './types/utils.js'
+import type { Evaluate, ExactPartial, OneOf } from './types/utils.js'
 import { uid } from './utils/uid.js'
 
 export type CreateConfigParameters<
@@ -358,7 +358,7 @@ export type State<
   status: 'connected' | 'connecting' | 'disconnected' | 'reconnecting'
 }
 export type PartializedState = Evaluate<
-  Partial<Pick<State, 'chainId' | 'connections' | 'current' | 'status'>>
+  ExactPartial<Pick<State, 'chainId' | 'connections' | 'current' | 'status'>>
 >
 export type Connection = {
   accounts: readonly [Address, ...Address[]]

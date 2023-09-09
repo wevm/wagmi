@@ -56,4 +56,13 @@ export async function disconnect(
       current: nextConnection.connector.uid,
     }
   })
+
+  // Set recent connector if exists
+  {
+    const current = config.state.current
+    if (!current) return
+    const connector = config.state.connections.get(current)?.connector
+    if (!connector) return
+    await config.storage?.setItem('recentConnectorId', connector.id)
+  }
 }

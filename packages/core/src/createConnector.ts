@@ -28,7 +28,7 @@ export type CreateConnectorFn<
 > = (config: {
   chains: readonly [Chain, ...Chain[]]
   emitter: Emitter<ConnectorEventMap>
-  storage?: Storage<storageItem> | null | undefined
+  storage?: Evaluate<Storage<storageItem>> | null | undefined
 }) => Evaluate<
   {
     readonly id: string

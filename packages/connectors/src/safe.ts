@@ -55,7 +55,7 @@ export function safe(parameters: SafeParameters = {}) {
 
       // Add shim to storage signalling wallet is connected
       if (parameters.shimDisconnect)
-        config.storage?.setItem(shimDisconnectStorageKey, true)
+        await config.storage?.setItem(shimDisconnectStorageKey, true)
 
       return { accounts, chainId }
     },
@@ -65,7 +65,7 @@ export function safe(parameters: SafeParameters = {}) {
 
       // Remove shim signalling wallet is disconnected
       if (parameters.shimDisconnect)
-        config.storage?.removeItem(shimDisconnectStorageKey)
+        await config.storage?.removeItem(shimDisconnectStorageKey)
     },
     async getAccounts() {
       const provider = await this.getProvider()
@@ -89,12 +89,11 @@ export function safe(parameters: SafeParameters = {}) {
     },
     async isAuthorized() {
       try {
-        if (
+        const isDisconnected =
           parameters.shimDisconnect &&
           // If shim does not exist in storage, wallet is disconnected
-          !config.storage?.getItem(shimDisconnectStorageKey)
-        )
-          return false
+          !(await config.storage?.getItem(shimDisconnectStorageKey))
+        if (isDisconnected) return false
 
         const accounts = await this.getAccounts()
         return !!accounts.length

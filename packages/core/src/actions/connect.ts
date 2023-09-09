@@ -57,7 +57,7 @@ export async function connect<config extends Config>(
     connector.emitter.on('change', config._internal.change)
     connector.emitter.on('disconnect', config._internal.disconnect)
 
-    config.storage?.setItem('recentConnectorId', connector.id)
+    await config.storage?.setItem('recentConnectorId', connector.id)
     config.setState((x) => ({
       ...x,
       connections: new Map(x.connections).set(connector.uid, {

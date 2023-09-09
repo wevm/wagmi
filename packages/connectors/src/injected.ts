@@ -149,7 +149,7 @@ export function injected(parameters: InjectedParameters = {}) {
         )
         const isDisconnected =
           shimDisconnect &&
-          !config.storage?.getItem(this.shimDisconnectStorageKey)
+          !(await config.storage?.getItem(this.shimDisconnectStorageKey))
 
         let accounts: readonly Address[] | null = null
         if (canSelectAccount && isDisconnected) {
@@ -200,7 +200,7 @@ export function injected(parameters: InjectedParameters = {}) {
 
         // Add shim to storage signalling wallet is connected
         if (shimDisconnect)
-          config.storage?.setItem(this.shimDisconnectStorageKey, true)
+          await config.storage?.setItem(this.shimDisconnectStorageKey, true)
 
         return { accounts, chainId: currentChainId }
       } catch (error) {
@@ -225,7 +225,7 @@ export function injected(parameters: InjectedParameters = {}) {
 
       // Remove shim signalling wallet is disconnected
       if (shimDisconnect)
-        config.storage?.removeItem(this.shimDisconnectStorageKey)
+        await config.storage?.removeItem(this.shimDisconnectStorageKey)
     },
     async getAccounts() {
       const provider = await this.getProvider()
@@ -251,7 +251,7 @@ export function injected(parameters: InjectedParameters = {}) {
         const isDisconnected =
           shimDisconnect &&
           // If shim does not exist in storage, wallet is disconnected
-          !config.storage?.getItem(this.shimDisconnectStorageKey)
+          !(await config.storage?.getItem(this.shimDisconnectStorageKey))
         if (isDisconnected) return false
 
         const provider = await this.getProvider()
@@ -406,7 +406,7 @@ export function injected(parameters: InjectedParameters = {}) {
 
       // Add shim to storage signalling wallet is connected
       if (shimDisconnect)
-        config.storage?.setItem(this.shimDisconnectStorageKey, true)
+        await config.storage?.setItem(this.shimDisconnectStorageKey, true)
     },
     async onDisconnect(error) {
       const provider = await this.getProvider()

@@ -285,6 +285,9 @@ importers:
       '@tanstack/react-query-persist-client':
         specifier: 5.0.0-beta.23
         version: 5.0.0-beta.23(@tanstack/react-query@5.0.0-beta.23)(react-dom@18.2.0)(react@18.2.0)
+      idb-keyval:
+        specifier: ^6.2.1
+        version: 6.2.1
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -4755,6 +4758,10 @@ packages:
     dependencies:
       safer-buffer: 2.1.2
     dev: true
+
+  /idb-keyval@6.2.1:
+    resolution: {integrity: sha512-8Sb3veuYCyrZL+VBt9LJfZjLUPWVvqn8tG28VqYNFCo43KHcKuq+b4EiXGeuaLAQWL2YmyDgMp2aSpH9JHsEQg==}
+    dev: false
 
   /identity-function@1.0.0:
     resolution: {integrity: sha512-kNrgUK0qI+9qLTBidsH85HjDLpZfrrS0ElquKKe/fJFdB3D7VeKdXXEvOPDUHSHOzdZKCAAaQIWWyp0l2yq6pw==}

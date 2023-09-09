@@ -1,4 +1,5 @@
 import { type PartializedState } from './createConfig.js'
+import type { Evaluate } from './types/utils.js'
 import { deserialize as deserialize_ } from './utils/deserialize.js'
 import { serialize as serialize_ } from './utils/serialize.js'
 
@@ -16,73 +17,68 @@ export type Storage<
   getItem<
     key extends keyof storageItemMap,
     value extends storageItemMap[key],
-    defaultValue extends value | null,
+    defaultValue extends value | null | undefined,
   >(
     key: key,
-    defaultValue?: defaultValue,
-  ): defaultValue extends null ? value | null : value
+    defaultValue?: defaultValue | undefined,
+  ):
+    | (defaultValue extends null ? value | null : value)
+    | Promise<defaultValue extends null ? value | null : value>
   setItem<
     key extends keyof storageItemMap,
     value extends storageItemMap[key] | null,
-  >(key: key, value: value): void
-  removeItem(key: keyof storageItemMap): void
+  >(key: key, value: value): void | Promise<void>
+  removeItem(key: keyof storageItemMap): void | Promise<void>
 }
 
 type BaseStorage = {
-  getItem: (key: string) => string | null
-  setItem: (key: string, value: string) => void
-  removeItem: (key: string) => void
+  getItem(
+    key: string,
+  ): string | null | undefined | Promise<string | null | undefined>
+  setItem(key: string, value: string): void | Promise<void>
+  removeItem(key: string): void | Promise<void>
 }
 
 export type CreateStorageParameters = {
   deserialize?: (<T>(value: string) => T) | undefined
   key?: string | undefined
   serialize?: (<T>(value: T) => string) | undefined
-  storage: BaseStorage
+  storage: Evaluate<BaseStorage>
 }
 
 export function createStorage<
   itemMap extends Record<string, unknown> = {},
   storageItemMap extends StorageItemMap = StorageItemMap & itemMap,
->(parameters: CreateStorageParameters): Storage<storageItemMap> {
+>(parameters: CreateStorageParameters): Evaluate<Storage<storageItemMap>> {
   const {
     deserialize = deserialize_,
     key: prefix = 'wagmi',
     serialize = serialize_,
     storage,
   } = parameters
+
   return {
     ...storage,
     getItem(key, defaultValue) {
       const value = storage.getItem(`${prefix}.${key as string}`)
-      try {
-        if (value) return deserialize(value)
-        return (defaultValue ?? null) as any
-      } catch (error) {
-        console.warn(error)
-        return defaultValue ?? null
-      }
+      if (value instanceof Promise)
+        return value.then((x) => (x ? deserialize(x) ?? null : null))
+      if (value) return deserialize(value)
+      return (defaultValue ?? null) as any
     },
     setItem(key, value) {
       const storageKey = `${prefix}.${key as string}`
-      if (value === null) {
-        storage.removeItem(storageKey)
-      } else {
-        try {
-          storage.setItem(storageKey, serialize(value))
-        } catch (err) {
-          console.error(err)
-        }
-      }
+      if (value === null) return storage.removeItem(storageKey)
+      else return storage.setItem(storageKey, serialize(value)) as any
     },
     removeItem(key) {
-      storage.removeItem(`${prefix}.${key as string}`)
+      return storage.removeItem(`${prefix}.${key as string}`) as any
     },
   }
 }
 
-export const noopStorage: BaseStorage = {
-  getItem: (_key) => '',
-  setItem: (_key, _value) => null,
-  removeItem: (_key) => null,
-}
+export const noopStorage = {
+  getItem: () => null,
+  setItem: () => {},
+  removeItem: () => {},
+} satisfies BaseStorage

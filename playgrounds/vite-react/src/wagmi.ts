@@ -1,3 +1,4 @@
+import { del, get, set } from 'idb-keyval'
 import { http, createConfig, createStorage } from 'wagmi'
 import { celo, mainnet, optimism, sepolia } from 'wagmi/chains'
 import {
@@ -8,10 +9,17 @@ import {
   walletConnect,
 } from 'wagmi/connectors'
 
-declare module 'wagmi' {
-  interface Register {
-    config: typeof config
-  }
+// biome-ignore lint/correctness/noUnusedVariables: <explanation>
+const indexedDBStorage = {
+  async getItem(name: string) {
+    return get(name)
+  },
+  async setItem(name: string, value: string) {
+    await set(name, value)
+  },
+  async removeItem(name: string) {
+    await del(name)
+  },
 }
 
 export const config = createConfig({
@@ -27,7 +35,10 @@ export const config = createConfig({
     safe({ debug: true, shimDisconnect: true }),
   ],
   reconnectOnMount: true,
-  storage: createStorage({ storage: localStorage, key: 'vite-react' }),
+  storage: createStorage({
+    key: 'vite-react',
+    storage: localStorage,
+  }),
   transports: {
     [mainnet.id]: http(
       'https://eth-mainnet.g.alchemy.com/v2/StF61Ht3J9nXAojZX-b21LVt9l0qDL38',
@@ -39,3 +50,9 @@ export const config = createConfig({
     [celo.id]: http(),
   },
 })
+
+declare module 'wagmi' {
+  interface Register {
+    config: typeof config
+  }
+}

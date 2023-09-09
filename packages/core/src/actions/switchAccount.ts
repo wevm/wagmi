@@ -25,7 +25,7 @@ export async function switchAccount<config extends Config>(
   const connection = config.state.connections.get(connector.uid)
   if (!connection) throw new ConnectorNotConnectedError()
 
-  config.storage?.setItem('recentConnectorId', connector.id)
+  await config.storage?.setItem('recentConnectorId', connector.id)
   config.setState((x) => ({
     ...x,
     current: connector.uid,

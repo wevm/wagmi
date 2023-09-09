@@ -85,8 +85,8 @@ export function walletConnect(parameters: WalletConnectParameters) {
     }>
     getNamespaceChainsIds(): number[]
     getNamespaceMethods(): NamespaceMethods[]
-    getRequestedChainsIds(): number[]
-    isChainsStale(): boolean
+    getRequestedChainsIds(): Promise<number[]>
+    isChainsStale(): Promise<boolean>
     onConnect(connectInfo: ProviderConnectInfo): void
     onDisplayUri(uri: string): void
     onSessionDelete(data: { topic: string }): void
@@ -118,7 +118,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
 
         let targetChainId = chainId
         if (!targetChainId) {
-          const state = config.storage?.getItem('state') ?? {}
+          const state = (await config.storage?.getItem('state')) ?? {}
           const isChainSupported = config.chains.some(
             (x) => x.id === state.chainId,
           )
@@ -127,7 +127,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
         }
         if (!targetChainId) throw new Error('No chains found on connector.')
 
-        const isChainsStale = this.isChainsStale()
+        const isChainsStale = await this.isChainsStale()
         // If there is an active session with stale chains, disconnect current session.
         if (provider.session && isChainsStale) await provider.disconnect()
 
@@ -240,7 +240,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
         if (!accounts.length) return false
 
         // If the chains are stale on the session, then the connector is unauthorized.
-        const isChainsStale = this.isChainsStale()
+        const isChainsStale = await this.isChainsStale()
         if (isChainsStale && provider.session) {
           await provider.disconnect().catch(() => {})
           return false
@@ -276,7 +276,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
               },
             ],
           })
-          const requestedChains = this.getRequestedChainsIds()
+          const requestedChains = await this.getRequestedChainsIds()
           this.setRequestedChainsIds([...requestedChains, chainId])
         }
 
@@ -341,8 +341,10 @@ export function walletConnect(parameters: WalletConnectParameters) {
         ?.methods as NamespaceMethods[]
       return methods ?? []
     },
-    getRequestedChainsIds() {
-      return config.storage?.getItem(this.requestedChainsStorageKey) ?? []
+    async getRequestedChainsIds() {
+      return (
+        (await config.storage?.getItem(this.requestedChainsStorageKey)) ?? []
+      )
     },
     /**
      * Checks if the target chains match the chains that were
@@ -366,7 +368,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
      *
      * Also check that dapp supports at least 1 chain from previously approved session.
      */
-    isChainsStale() {
+    async isChainsStale() {
       const namespaceMethods = this.getNamespaceMethods()
       if (namespaceMethods.includes('wallet_addEthereumChain')) return false
       if (!isNewChainsStale) return false
@@ -379,11 +381,11 @@ export function walletConnect(parameters: WalletConnectParameters) {
       )
         return false
 
-      const requestedChains = this.getRequestedChainsIds()
+      const requestedChains = await this.getRequestedChainsIds()
       return !connectorChains.every((id) => requestedChains.includes(id))
     },
-    setRequestedChainsIds(chains) {
-      config.storage?.setItem(this.requestedChainsStorageKey, chains)
+    async setRequestedChainsIds(chains) {
+      await config.storage?.setItem(this.requestedChainsStorageKey, chains)
     },
     get requestedChainsStorageKey() {
       return `${this.id}.requestedChains` as Properties['requestedChainsStorageKey']

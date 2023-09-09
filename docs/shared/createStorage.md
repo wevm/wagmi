@@ -87,15 +87,29 @@ If you use a custom `serialize` function, make sure it can handle `bigint` and `
 
 ### storage
 
-`{ getItem: (key: string) => string | null; setItem: (key: string, value: string) => void; removeItem: (key: string) => void; }`
+`{ getItem(key: string): string | null | undefined | Promise<string | null | undefined>; setItem(key: string, value: string): void | Promise<void>; removeItem(key: string): void | Promise<void>; }`
 
-Storage interface to use for persisting data.
+- Storage interface to use for persisting data.
+- Defaults to `localStorage`.
+- Supports synchronous and asynchronous storage methods.
 
 ```ts-vue
 import { createStorage } from '{{packageName}}'
+// Using IndexedDB via https://github.com/jakearchibald/idb-keyval // [!code focus]
+import { del, get, set } from 'idb-keyval' // [!code focus]
 
 const storage = createStorage({
-  storage: localStorage, // [!code focus]
+  storage: { // [!code focus]
+    async getItem(name) { // [!code focus]
+      return get(name)// [!code focus]
+    }, // [!code focus]
+    async setItem(name, value) { // [!code focus]
+      await set(name, value) // [!code focus]
+    }, // [!code focus]
+    async removeItem(name) { // [!code focus]
+      await del(name) // [!code focus]
+    }, // [!code focus]
+  }, // [!code focus]
 })
 ```
 
@@ -115,7 +129,7 @@ import { type Storage } from '{{packageName}}'
 
 ### getItem
 
-`getItem(key: string, defaultValue?: value | null) => value | null`
+`getItem(key: string, defaultValue?: value | null | undefined): value | null | Promise<value | null>`
 
 ```ts-vue
 import { createStorage } from '{{packageName}}'
@@ -126,7 +140,7 @@ const recentConnectorId = storage.getItem('recentConnectorId') // [!code focus]
 
 ### setItem
 
-`setItem(key: string, value: any) => void`
+`setItem(key: string, value: any): void | Promise<void>`
 
 ```ts-vue
 import { createStorage } from '{{packageName}}'
@@ -137,7 +151,7 @@ storage.setItem('recentConnectorId', 'foo') // [!code focus]
 
 ### removeItem
 
-`removeItem(key: string) => void`
+`removeItem(key: string): void | Promise<void>`
 
 ```ts-vue
 import { createStorage } from '{{packageName}}'

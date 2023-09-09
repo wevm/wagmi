@@ -42,7 +42,7 @@ export async function reconnect(
   } else connectors.push(...config.connectors)
 
   // Try recently-used connectors first
-  const recentConnectorId = config.storage?.getItem('recentConnectorId')
+  const recentConnectorId = await config.storage?.getItem('recentConnectorId')
   const scores: Record<string, number> = {}
   for (const [, connection] of config.state.connections) {
     scores[connection.connector.id] = 1
