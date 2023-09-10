@@ -2,8 +2,9 @@
   "cleanUrls": true,
   "redirects": [
     {
-      "source": "/react/hooks/(.*)",
-      "destination": "/react/api/hooks/(.*)"
+      "source": "/react/hooks/:path",
+      "destination": "/react/api/hooks/:path",
+      "permanent": true
     }
   ]
 }
