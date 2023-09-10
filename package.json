@@ -14,10 +14,10 @@
     "lint:fix": "pnpm lint --apply",
     "lint:unused": "pnpm clean && knip",
     "postinstall": "pnpm preconstruct",
-    "preconstruct": "bun scripts/preconstruct.ts",
+    "preconstruct": "bun .scripts/preconstruct.ts",
     "preinstall": "npx only-allow@1.1.1 pnpm",
     "prepare": "pnpm simple-git-hooks",
-    "prepublishOnly": "bun scripts/formatPackageJson.ts",
+    "prepublishOnly": "bun .scripts/formatPackageJson.ts",
     "test": "vitest",
     "test:build": "pnpm run --r --parallel test:build",
     "test:cov": "vitest --coverage",
@@ -25,9 +25,9 @@
     "test:ui": "vitest --ui",
     "test:ui:cov": "vite preview --outDir ./coverage",
     "test:update": "vitest --update",
-    "test:update:viem": "bun scripts/updateViemTestSnapshotVersion.ts",
+    "test:update:viem": "bun .scripts/updateViemTestSnapshotVersion.ts",
     "typecheck": "pnpm run --r --parallel typecheck && tsc --noEmit",
-    "version:update": "pnpm bun scripts/updateVersion.ts"
+    "version:update": "bun .scripts/updateVersion.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "1.1.2",
@@ -76,7 +76,7 @@
     "ignoreWorkspaces": ["docs", "packages/register-tests/**"],
     "workspaces": {
       ".": {
-        "entry": "scripts/*.ts"
+        "entry": ".scripts/*.ts"
       },
       "packages/core": {
         "entry": "src/exports/{chains,index,internal,query}.ts!"

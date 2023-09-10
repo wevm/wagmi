@@ -4,8 +4,8 @@ What changes are made in this PR? Is it a feature or a bug fix?
 
 ## Additional Information
 
-- [ ] I read the [contributing guide](https://alpha.wagmi.sh/dev/contributing)
-- [ ] I added documentation related to the changes made.
-- [ ] I added or updated tests related to the changes made.
+Before submitting this issue, please make sure you do the following.
 
-Your ENS/address:
+- [ ] Read the [contributing guide](https://alpha.wagmi.sh/dev/contributing)
+- [ ] Added documentation related to the changes made.
+- [ ] Added or updated tests (and snapshots) related to the changes made.

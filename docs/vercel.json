@@ -1,3 +1,9 @@
 {
-  "cleanUrls": true
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/react/hooks/(.*)",
+      "destination": "/react/api/hooks/(.*)"
+    }
+  ]
 }
