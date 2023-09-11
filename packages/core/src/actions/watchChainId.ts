@@ -2,7 +2,10 @@ import type { Config } from '../createConfig.js'
 import type { GetChainIdReturnType } from './getChainId.js'
 
 export type WatchChainIdParameters<config extends Config = Config> = {
-  onChange(data: GetChainIdReturnType<config>): void
+  onChange(
+    chainId: GetChainIdReturnType<config>,
+    prevChainId: GetChainIdReturnType<config>,
+  ): void
 }
 
 export type WatchChainIdReturnType = () => void

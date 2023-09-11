@@ -6,7 +6,10 @@ import {
 } from './getConnections.js'
 
 export type WatchConnectionsParameters = {
-  onChange(data: GetConnectionsReturnType): void
+  onChange(
+    connections: GetConnectionsReturnType,
+    prevConnections: GetConnectionsReturnType,
+  ): void
 }
 
 export type WatchConnectionsReturnType = () => void

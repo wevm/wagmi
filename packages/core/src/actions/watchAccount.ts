@@ -3,7 +3,10 @@ import { deepEqual } from '../utils/deepEqual.js'
 import { type GetAccountReturnType, getAccount } from './getAccount.js'
 
 export type WatchAccountParameters = {
-  onChange(data: GetAccountReturnType, prevData: GetAccountReturnType): void
+  onChange(
+    account: GetAccountReturnType,
+    prevAccount: GetAccountReturnType,
+  ): void
 }
 
 export type WatchAccountReturnType = () => void

@@ -19,7 +19,7 @@ import type { ContractFunctionParameters } from 'viem'
 import type { ConfigParameter } from '../types/properties.js'
 import {
   type UseQueryParameters,
-  type UseQueryResult,
+  type UseQueryReturnType,
   structuralSharing,
   useQuery,
 } from '../utils/query.js'
@@ -46,7 +46,7 @@ export type UseContractReadsReturnType<
   contracts extends readonly unknown[] = readonly ContractFunctionParameters[],
   allowFailure extends boolean = true,
   selectData = ReadContractsData<contracts, allowFailure>,
-> = UseQueryResult<selectData, ReadContractError>
+> = UseQueryReturnType<selectData, ReadContractError>
 
 /** https://alpha.wagmi.sh/react/api/hooks/useContractReads */
 export function useContractReads<

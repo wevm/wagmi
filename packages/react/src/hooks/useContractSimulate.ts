@@ -17,7 +17,7 @@ import type { Abi, ContractFunctionArgs, ContractFunctionName } from 'viem'
 import type { ConfigParameter } from '../types/properties.js'
 import {
   type UseQueryParameters,
-  type UseQueryResult,
+  type UseQueryReturnType,
   useQuery,
 } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
@@ -61,7 +61,7 @@ export type UseContractSimulateReturnType<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] | undefined = undefined,
   selectData = SimulateContractData<abi, functionName, args, config, chainId>,
-> = UseQueryResult<selectData, SimulateContractError>
+> = UseQueryReturnType<selectData, SimulateContractError>
 
 /** https://alpha.wagmi.sh/react/api/hooks/useContractSimulate */
 export function useContractSimulate<

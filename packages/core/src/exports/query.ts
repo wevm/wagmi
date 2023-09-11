@@ -117,6 +117,15 @@ export {
 } from '../query/getTransaction.js'
 
 export {
+  type GetWalletClientData,
+  type GetWalletClientOptions,
+  type GetWalletClientQueryFnData,
+  type GetWalletClientQueryKey,
+  getWalletClientQueryKey,
+  getWalletClientQueryOptions,
+} from '../query/getWalletClient.js'
+
+export {
   type ReadContractData,
   type ReadContractOptions,
   type ReadContractQueryFnData,

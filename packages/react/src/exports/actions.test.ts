@@ -13,6 +13,7 @@ test('exports', () => {
       "getBalance": [Function],
       "getBlockNumber": [Function],
       "getChainId": [Function],
+      "getClient": [Function],
       "getConnections": [Function],
       "getConnectorClient": [Function],
       "getEnsAddress": [Function],
@@ -37,9 +38,11 @@ test('exports', () => {
       "watchAccount": [Function],
       "watchBlockNumber": [Function],
       "watchChainId": [Function],
+      "watchClient": [Function],
       "watchConnections": [Function],
       "watchContractEvent": [Function],
       "watchPendingTransactions": [Function],
+      "watchPublicClient": [Function],
       "writeContract": [Function],
     }
   `)

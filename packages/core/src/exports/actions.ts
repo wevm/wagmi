@@ -54,6 +54,12 @@ export {
 } from '../actions/getChainId.js'
 
 export {
+  type GetClientParameters,
+  type GetClientReturnType,
+  getClient,
+} from '../actions/getClient.js'
+
+export {
   type GetConnectionsReturnType,
   getConnections,
 } from '../actions/getConnections.js'
@@ -94,6 +100,12 @@ export {
 } from '../actions/getEnsResolver.js'
 
 export {
+  type GetPublicClientParameters,
+  type GetPublicClientReturnType,
+  getPublicClient,
+} from '../actions/getPublicClient.js'
+
+export {
   type GetTokenError,
   type GetTokenParameters,
   type GetTokenReturnType,
@@ -106,6 +118,13 @@ export {
   type GetTransactionReturnType,
   getTransaction,
 } from '../actions/getTransaction.js'
+
+export {
+  type GetWalletClientError,
+  type GetWalletClientParameters,
+  type GetWalletClientReturnType,
+  getWalletClient,
+} from '../actions/getWalletClient.js'
 
 export {
   type MulticallParameters,
@@ -195,6 +214,12 @@ export {
 } from '../actions/watchChainId.js'
 
 export {
+  type WatchClientParameters,
+  type WatchClientReturnType,
+  watchClient,
+} from '../actions/watchClient.js'
+
+export {
   type WatchConnectionsParameters,
   type WatchConnectionsReturnType,
   watchConnections,
@@ -213,6 +238,12 @@ export {
 } from '../actions/watchPendingTransactions.js'
 
 export {
+  type WatchPublicClientParameters,
+  type WatchPublicClientReturnType,
+  watchPublicClient,
+} from '../actions/watchPublicClient.js'
+
+export {
   type WaitForTransactionReceiptError,
   type WaitForTransactionReceiptParameters,
   type WaitForTransactionReceiptReturnType,
@@ -225,19 +256,3 @@ export {
   type WriteContractReturnType,
   writeContract,
 } from '../actions/writeContract.js'
-
-////////////////////////////////////////////////////////////////////////////////
-// Actions (Viem)
-
-export {
-  type GetPublicClientParameters,
-  type GetPublicClientReturnType,
-  getPublicClient,
-} from '../actions/viem/getPublicClient.js'
-
-export {
-  type GetWalletClientError,
-  type GetWalletClientParameters,
-  type GetWalletClientReturnType,
-  getWalletClient,
-} from '../actions/viem/getWalletClient.js'

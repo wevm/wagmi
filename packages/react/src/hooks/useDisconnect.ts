@@ -12,12 +12,15 @@ import {
 } from '@wagmi/core/query'
 
 import type { ConfigParameter } from '../types/properties.js'
-import type { UseMutationOptions, UseMutationResult } from '../utils/query.js'
+import type {
+  UseMutationParameters,
+  UseMutationReturnType,
+} from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 import { useConnections } from './useConnections.js'
 
 export type UseDisconnectParameters<context = unknown> = Evaluate<
-  UseMutationOptions<
+  UseMutationParameters<
     DisconnectData,
     DisconnectError,
     DisconnectVariables,
@@ -27,7 +30,7 @@ export type UseDisconnectParameters<context = unknown> = Evaluate<
 >
 
 export type UseDisconnectReturnType<context = unknown> = Evaluate<
-  UseMutationResult<
+  UseMutationReturnType<
     DisconnectData,
     DisconnectError,
     DisconnectVariables,

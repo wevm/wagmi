@@ -17,7 +17,7 @@ import type { GetBalanceQueryFnData } from '@wagmi/core/query'
 import type { ConfigParameter } from '../types/properties.js'
 import {
   type UseQueryParameters,
-  type UseQueryResult,
+  type UseQueryReturnType,
   useQuery,
 } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
@@ -37,10 +37,8 @@ export type UseBalanceParameters<
     ConfigParameter<config>
 >
 
-export type UseBalanceReturnType<selectData = GetBalanceData> = UseQueryResult<
-  selectData,
-  GetBalanceError
->
+export type UseBalanceReturnType<selectData = GetBalanceData> =
+  UseQueryReturnType<selectData, GetBalanceError>
 
 /** https://alpha.wagmi.sh/react/api/hooks/useBalance */
 export function useBalance<

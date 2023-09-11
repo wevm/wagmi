@@ -13,7 +13,7 @@ import {
 import type { ConfigParameter } from '../types/properties.js'
 import {
   type UseQueryParameters,
-  type UseQueryResult,
+  type UseQueryReturnType,
   useQuery,
 } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
@@ -34,7 +34,7 @@ export type UseEnsAvatarParameters<
 >
 
 export type UseEnsAvatarReturnType<selectData = GetEnsAvatarData> =
-  UseQueryResult<selectData, GetEnsAvatarError>
+  UseQueryReturnType<selectData, GetEnsAvatarError>
 
 /** https://alpha.wagmi.sh/react/api/hooks/useEnsAvatar */
 export function useEnsAvatar<

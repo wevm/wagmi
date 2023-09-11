@@ -1,18 +1,21 @@
 'use client'
 
+// Almost identical implementation to `useConnectorClient` (except for return type)
+// Should update both in tandem
+
 import { useQueryClient } from '@tanstack/react-query'
 import type {
   Config,
-  GetConnectorClientError,
+  GetWalletClientError,
   ResolvedRegister,
 } from '@wagmi/core'
 import { type Evaluate } from '@wagmi/core/internal'
 import {
-  type GetConnectorClientData,
-  type GetConnectorClientOptions,
-  type GetConnectorClientQueryFnData,
-  type GetConnectorClientQueryKey,
-  getConnectorClientQueryOptions,
+  type GetWalletClientData,
+  type GetWalletClientOptions,
+  type GetWalletClientQueryFnData,
+  type GetWalletClientQueryKey,
+  getWalletClientQueryOptions,
 } from '@wagmi/core/query'
 import { useEffect } from 'react'
 
@@ -26,35 +29,35 @@ import { useAccount } from './useAccount.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
-export type UseConnectorClientParameters<
+export type UseWalletClientParameters<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
-  selectData = GetConnectorClientData<config, chainId>,
+  selectData = GetWalletClientData<config, chainId>,
 > = Evaluate<
-  GetConnectorClientOptions<config, chainId> &
+  GetWalletClientOptions<config, chainId> &
     UseQueryParameters<
-      GetConnectorClientQueryFnData<config, chainId>,
-      GetConnectorClientError,
+      GetWalletClientQueryFnData<config, chainId>,
+      GetWalletClientError,
       selectData,
-      GetConnectorClientQueryKey<config, chainId>
+      GetWalletClientQueryKey<config, chainId>
     > &
     ConfigParameter<config>
 >
 
-export type UseConnectorClientReturnType<
+export type UseWalletClientReturnType<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
-  selectData = GetConnectorClientData<config, chainId>,
-> = UseQueryReturnType<selectData, GetConnectorClientError>
+  selectData = GetWalletClientData<config, chainId>,
+> = UseQueryReturnType<selectData, GetWalletClientError>
 
-/** https://alpha.wagmi.sh/react/api/hooks/useConnectorClient */
-export function useConnectorClient<
+/** https://alpha.wagmi.sh/react/api/hooks/useWalletClient */
+export function useWalletClient<
   config extends Config = ResolvedRegister['config'],
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
-  selectData = GetConnectorClientData<config, chainId>,
+  selectData = GetWalletClientData<config, chainId>,
 >(
-  parameters: UseConnectorClientParameters<config, chainId, selectData> = {},
-): UseConnectorClientReturnType<config, chainId, selectData> {
+  parameters: UseWalletClientParameters<config, chainId, selectData> = {},
+): UseWalletClientReturnType<config, chainId, selectData> {
   const { gcTime = 0, staleTime = Infinity, ...query } = parameters
 
   const config = useConfig(parameters)
@@ -62,7 +65,7 @@ export function useConnectorClient<
   const { address, connector, status } = useAccount()
   const chainId = useChainId()
 
-  const { queryKey, ...options } = getConnectorClientQueryOptions(config, {
+  const { queryKey, ...options } = getWalletClientQueryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
     connector: parameters.connector ?? connector,

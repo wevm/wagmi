@@ -53,7 +53,7 @@
   "simple-git-hooks": {
     "pre-commit": "pnpm format && pnpm lint:fix"
   },
-  "packageManager": "pnpm@8.6.12",
+  "packageManager": "pnpm@8.7.5",
   "pnpm": {
     "overrides": {
       "@wagmi/connectors": "workspace:*",

@@ -33,7 +33,7 @@ import { type WatchAccountParameters } from '@wagmi/core'
 
 ### onChange
 
-`onChange: (data: GetAccountReturnType) => void`
+`onChange(account: GetAccountReturnType, prevAccount: GetAccountReturnType): void`
 
 Callback function called when account changes.
 
@@ -43,8 +43,8 @@ import { watchAccount } from '@wagmi/core'
 import { config } from './config'
 
 const unwatch = watchAccount(config, {
-  onChange(data) { // [!code focus:3]
-    console.log('Account changed!', data)
+  onChange(account) { // [!code focus:3]
+    console.log('Account changed!', account)
   },
 })
 unwatch()

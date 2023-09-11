@@ -33,7 +33,7 @@ import { type WatchChainIdParameters } from '@wagmi/core'
 
 ### onChange
 
-`onChange: (data: GetChainIdReturnType) => void`
+`onChange(chainId: GetChainIdReturnType, prevChainId: GetChainIdReturnType): void`
 
 Callback function called when chain ID changes.
 
@@ -43,8 +43,8 @@ import { watchChainId } from '@wagmi/core'
 import { config } from './config'
 
 const unwatch = watchChainId(config, {
-  onChange(data) { // [!code focus:3]
-    console.log('Chain ID changed!', data)
+  onChange(chainId) { // [!code focus:3]
+    console.log('Chain ID changed!', chainId)
   },
 })
 unwatch()

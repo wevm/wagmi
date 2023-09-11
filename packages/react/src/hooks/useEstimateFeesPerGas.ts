@@ -18,7 +18,7 @@ import type { FeeValuesType } from 'viem'
 import type { ConfigParameter } from '../types/properties.js'
 import {
   type UseQueryParameters,
-  type UseQueryResult,
+  type UseQueryReturnType,
   useQuery,
 } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
@@ -42,7 +42,7 @@ export type UseEstimateFeesPerGasParameters<
 export type UseEstimateFeesPerGasReturnType<
   type extends FeeValuesType = FeeValuesType,
   selectData = EstimateFeesPerGasData<type>,
-> = UseQueryResult<selectData, EstimateFeesPerGasError>
+> = UseQueryReturnType<selectData, EstimateFeesPerGasError>
 
 /** https://alpha.wagmi.sh/react/api/hooks/useEstimateFeesPerGas */
 export function useEstimateFeesPerGas<

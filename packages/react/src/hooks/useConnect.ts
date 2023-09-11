@@ -16,14 +16,17 @@ import {
 } from '@wagmi/core/query'
 
 import type { ConfigParameter } from '../types/properties.js'
-import type { UseMutationOptions, UseMutationResult } from '../utils/query.js'
+import type {
+  UseMutationParameters,
+  UseMutationReturnType,
+} from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 
 export type UseConnectParameters<
   config extends Config = Config,
   context = unknown,
 > = Evaluate<
-  UseMutationOptions<
+  UseMutationParameters<
     ConnectData<config>,
     ConnectError,
     ConnectVariables<config>,
@@ -36,7 +39,7 @@ export type UseConnectReturnType<
   config extends Config = Config,
   context = unknown,
 > = Evaluate<
-  UseMutationResult<
+  UseMutationReturnType<
     ConnectData<config>,
     ConnectError,
     ConnectVariables<config>,

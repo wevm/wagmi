@@ -22,7 +22,7 @@ import {
 import type { ConfigParameter } from '../types/properties.js'
 import {
   type UseQueryParameters,
-  type UseQueryResult,
+  type UseQueryReturnType,
   structuralSharing,
   useQuery,
 } from '../utils/query.js'
@@ -65,7 +65,7 @@ export type UseContractReadReturnType<
     functionName
   > = ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
   selectData = ReadContractData<abi, functionName, args>,
-> = UseQueryResult<selectData, ReadContractError>
+> = UseQueryReturnType<selectData, ReadContractError>
 
 /** https://alpha.wagmi.sh/react/api/hooks/useContractRead */
 export function useContractRead<

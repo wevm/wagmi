@@ -12,13 +12,16 @@ import {
 import type { Abi } from 'viem'
 
 import type { ConfigParameter } from '../types/properties.js'
-import type { UseMutationOptions, UseMutationResult } from '../utils/query.js'
+import type {
+  UseMutationParameters,
+  UseMutationReturnType,
+} from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 
 export type UseContractWriteParameters<
   config extends Config = Config,
   context = unknown,
-> = UseMutationOptions<
+> = UseMutationParameters<
   WriteContractData,
   WriteContractError,
   WriteContractVariables<
@@ -35,7 +38,7 @@ export type UseContractWriteParameters<
 export type UseContractWriteReturnType<
   config extends Config = Config,
   context = unknown,
-> = UseMutationResult<
+> = UseMutationReturnType<
   WriteContractData,
   WriteContractError,
   WriteContractVariables<

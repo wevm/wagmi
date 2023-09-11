@@ -12,11 +12,14 @@ import {
 } from '@wagmi/core/query'
 
 import type { ConfigParameter } from '../types/properties.js'
-import type { UseMutationOptions, UseMutationResult } from '../utils/query.js'
+import type {
+  UseMutationParameters,
+  UseMutationReturnType,
+} from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 
 export type UseSignTypedDataParameters<context = unknown> = Evaluate<
-  UseMutationOptions<
+  UseMutationParameters<
     SignTypedDataData,
     SignTypedDataError,
     SignTypedDataVariables,
@@ -26,7 +29,7 @@ export type UseSignTypedDataParameters<context = unknown> = Evaluate<
 >
 
 export type UseSignTypedDataReturnType<context = unknown> = Evaluate<
-  UseMutationResult<
+  UseMutationReturnType<
     SignTypedDataData,
     SignTypedDataError,
     SignTypedDataVariables,

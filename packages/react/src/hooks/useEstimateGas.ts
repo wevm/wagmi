@@ -12,7 +12,7 @@ import {
 import type { ConfigParameter } from '../types/properties.js'
 import {
   type UseQueryParameters,
-  type UseQueryResult,
+  type UseQueryReturnType,
   useQuery,
 } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
@@ -33,7 +33,7 @@ export type UseEstimateGasParameters<
   ConfigParameter<config>
 
 export type UseEstimateGasReturnType<selectData = EstimateGasData> =
-  UseQueryResult<selectData, EstimateGasError>
+  UseQueryReturnType<selectData, EstimateGasError>
 
 /** https://alpha.wagmi.sh/react/api/hooks/useEstimateGas */
 export function useEstimateGas<

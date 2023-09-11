@@ -6,7 +6,9 @@ import { watchChainId } from './watchChainId.js'
 test('default', async () => {
   const chainIds: number[] = []
   const unwatch = watchChainId(config, {
-    onChange: (chainId) => chainIds.push(chainId),
+    onChange(chainId) {
+      chainIds.push(chainId)
+    },
   })
   config.setState((x) => ({ ...x, chainId: chain.mainnet2.id }))
   config.setState((x) => ({ ...x, chainId: chain.mainnet.id }))

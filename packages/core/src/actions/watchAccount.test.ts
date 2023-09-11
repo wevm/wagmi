@@ -9,8 +9,9 @@ import { watchAccount } from './watchAccount.js'
 test('default', async () => {
   const accounts: { address: Address | undefined; status: string }[] = []
   const unwatch = watchAccount(config, {
-    onChange: (data) =>
-      accounts.push({ address: data.address, status: data.status }),
+    onChange(data) {
+      accounts.push({ address: data.address, status: data.status })
+    },
   })
 
   await connect(config, { connector: config.connectors[0]! })

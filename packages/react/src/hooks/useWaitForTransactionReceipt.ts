@@ -17,7 +17,7 @@ import {
 import type { ConfigParameter } from '../types/properties.js'
 import {
   type UseQueryParameters,
-  type UseQueryResult,
+  type UseQueryReturnType,
   useQuery,
 } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
@@ -42,7 +42,7 @@ export type UseWaitForTransactionReceiptReturnType<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = WaitForTransactionReceiptData<config, chainId>,
-> = UseQueryResult<selectData, WaitForTransactionReceiptError>
+> = UseQueryReturnType<selectData, WaitForTransactionReceiptError>
 
 /** https://alpha.wagmi.sh/react/api/hooks/useWaitForTransactionReceipt */
 export function useWaitForTransactionReceipt<

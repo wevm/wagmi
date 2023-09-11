@@ -12,14 +12,17 @@ import {
 } from '@wagmi/core/query'
 
 import type { ConfigParameter } from '../types/properties.js'
-import type { UseMutationOptions, UseMutationResult } from '../utils/query.js'
+import type {
+  UseMutationParameters,
+  UseMutationReturnType,
+} from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 
 export type UseSwitchChainParameters<
   config extends Config = Config,
   context = unknown,
 > = Evaluate<
-  UseMutationOptions<
+  UseMutationParameters<
     SwitchChainData<config, config['chains'][number]['id']>,
     SwitchChainError,
     SwitchChainVariables<config, config['chains'][number]['id']>,
@@ -32,7 +35,7 @@ export type UseSwitchChainReturnType<
   config extends Config = Config,
   context = unknown,
 > = Evaluate<
-  UseMutationResult<
+  UseMutationReturnType<
     SwitchChainData<config, config['chains'][number]['id']>,
     SwitchChainError,
     SwitchChainVariables<config, config['chains'][number]['id']>,

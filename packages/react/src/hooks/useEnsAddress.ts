@@ -13,7 +13,7 @@ import {
 import type { ConfigParameter } from '../types/properties.js'
 import {
   type UseQueryParameters,
-  type UseQueryResult,
+  type UseQueryReturnType,
   useQuery,
 } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
@@ -34,7 +34,7 @@ export type UseEnsAddressParameters<
 >
 
 export type UseEnsAddressReturnType<selectData = GetEnsAddressData> =
-  UseQueryResult<selectData, GetEnsAddressError>
+  UseQueryReturnType<selectData, GetEnsAddressError>
 
 /** https://alpha.wagmi.sh/react/api/hooks/useEnsAddress */
 export function useEnsAddress<

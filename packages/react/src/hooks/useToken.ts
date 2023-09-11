@@ -13,7 +13,7 @@ import {
 import type { ConfigParameter } from '../types/properties.js'
 import {
   type UseQueryParameters,
-  type UseQueryResult,
+  type UseQueryReturnType,
   useQuery,
 } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
@@ -33,7 +33,7 @@ export type UseTokenParameters<
     ConfigParameter<config>
 >
 
-export type UseTokenReturnType<selectData = GetTokenData> = UseQueryResult<
+export type UseTokenReturnType<selectData = GetTokenData> = UseQueryReturnType<
   selectData,
   GetTokenError
 >

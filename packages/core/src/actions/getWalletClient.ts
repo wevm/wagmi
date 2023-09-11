@@ -1,11 +1,12 @@
 import { type Account, type WalletClient, walletActions } from 'viem'
-import type { Config } from '../../createConfig.js'
-import type { Evaluate } from '../../types/utils.js'
+
+import type { Config } from '../createConfig.js'
+import type { Evaluate } from '../types/utils.js'
 import {
   type GetConnectorClientError,
   type GetConnectorClientParameters,
   getConnectorClient,
-} from '../getConnectorClient.js'
+} from './getConnectorClient.js'
 
 export type GetWalletClientParameters<
   config extends Config = Config,

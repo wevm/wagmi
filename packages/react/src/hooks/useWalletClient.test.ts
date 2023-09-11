@@ -8,6 +8,9 @@ import { useConnectorClient } from './useConnectorClient.js'
 import { useDisconnect } from './useDisconnect.js'
 import { useSwitchChain } from './useSwitchChain.js'
 
+// Almost identical implementation to `useConnectorClient` (except for return type)
+// Should update both in tandem
+
 const connector = config.connectors[0]!
 
 test('default', async () => {

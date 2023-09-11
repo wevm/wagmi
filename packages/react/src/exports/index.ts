@@ -62,6 +62,12 @@ export {
 } from '../hooks/useChainId.js'
 
 export {
+  type UseClientParameters,
+  type UseClientReturnType,
+  useClient,
+} from '../hooks/useClient.js'
+
+export {
   type UseConfigParameters,
   type UseConfigReturnType,
   useConfig,
@@ -152,6 +158,12 @@ export {
 } from '../hooks/useContractSimulate.js'
 
 export {
+  type UsePublicClientParameters,
+  type UsePublicClientReturnType,
+  usePublicClient,
+} from '../hooks/usePublicClient.js'
+
+export {
   type UseReconnectParameters,
   type UseReconnectReturnType,
   useReconnect,
@@ -198,6 +210,12 @@ export {
   type UseTransactionReturnType,
   useTransaction,
 } from '../hooks/useTransaction.js'
+
+export {
+  type UseWalletClientParameters,
+  type UseWalletClientReturnType,
+  useWalletClient,
+} from '../hooks/useWalletClient.js'
 
 export {
   type UseWaitForTransactionReceiptParameters,

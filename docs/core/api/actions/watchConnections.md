@@ -33,7 +33,7 @@ import { type WatchConnectionsParameters } from '@wagmi/core'
 
 ### onChange
 
-`onChange: (data: GetConnectionsReturnType) => void`
+`onChange(connections: GetConnectionsReturnType, prevConnections: GetConnectionsReturnType): void`
 
 Callback function called when connections changes.
 

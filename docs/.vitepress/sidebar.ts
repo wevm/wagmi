@@ -99,6 +99,7 @@ export function getSidebar() {
                 link: '/react/api/hooks/useBlockNumber',
               },
               { text: 'useChainId', link: '/react/api/hooks/useChainId' },
+              { text: 'useClient', link: '/react/api/hooks/useClient' },
               { text: 'useConfig', link: '/react/api/hooks/useConfig' },
               { text: 'useConnect', link: '/react/api/hooks/useConnect' },
               {
@@ -136,6 +137,10 @@ export function getSidebar() {
               {
                 text: 'useEnsResolver',
                 link: '/react/api/hooks/useEnsResolver',
+              },
+              {
+                text: 'usePublicClient 🚧',
+                link: '/react/api/hooks/usePublicClient',
               },
               {
                 text: 'useEstimateFeesPerGas',
@@ -281,6 +286,10 @@ export function getSidebar() {
               },
               { text: 'getChainId', link: '/core/api/actions/getChainId' },
               {
+                text: 'getClient 🚧',
+                link: '/core/api/actions/getClient',
+              },
+              {
                 text: 'getConnections',
                 link: '/core/api/actions/getConnections',
               },
@@ -298,10 +307,18 @@ export function getSidebar() {
                 text: 'getEnsResolver',
                 link: '/core/api/actions/getEnsResolver',
               },
+              {
+                text: 'getPublicClient 🚧',
+                link: '/core/api/actions/getPublicClient',
+              },
               { text: 'getToken', link: '/core/api/actions/getToken' },
               {
                 text: 'getTransaction',
                 link: '/core/api/actions/getTransaction',
+              },
+              {
+                text: 'getWalletClient 🚧',
+                link: '/core/api/actions/getWalletClient',
               },
               {
                 text: 'multicall 🚧',
@@ -357,8 +374,16 @@ export function getSidebar() {
                 link: '/core/api/actions/watchChainId',
               },
               {
+                text: 'watchClient 🚧',
+                link: '/core/api/actions/watchClient',
+              },
+              {
                 text: 'watchConnections',
                 link: '/core/api/actions/watchConnections',
+              },
+              {
+                text: 'watchPublicClient 🚧',
+                link: '/core/api/actions/watchPublicClient',
               },
               {
                 text: 'watchContractEvent 🚧',

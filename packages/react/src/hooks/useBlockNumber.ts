@@ -18,7 +18,7 @@ import {
 import type { ConfigParameter } from '../types/properties.js'
 import {
   type UseQueryParameters,
-  type UseQueryResult,
+  type UseQueryReturnType,
   useQuery,
 } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
@@ -52,7 +52,7 @@ export type UseBlockNumberParameters<
 >
 
 export type UseBlockNumberReturnType<selectData = GetBlockNumberData> =
-  UseQueryResult<selectData, GetBlockNumberError>
+  UseQueryReturnType<selectData, GetBlockNumberError>
 
 /** https://alpha.wagmi.sh/react/api/hooks/useBlockNumber */
 export function useBlockNumber<

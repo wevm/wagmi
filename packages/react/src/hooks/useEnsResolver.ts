@@ -13,7 +13,7 @@ import {
 import type { ConfigParameter } from '../types/properties.js'
 import {
   type UseQueryParameters,
-  type UseQueryResult,
+  type UseQueryReturnType,
   useQuery,
 } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
@@ -34,7 +34,7 @@ export type UseEnsResolverParameters<
 >
 
 export type UseEnsResolverReturnType<selectData = GetEnsResolverData> =
-  UseQueryResult<selectData, GetEnsResolverError>
+  UseQueryReturnType<selectData, GetEnsResolverError>
 
 /** https://alpha.wagmi.sh/react/api/hooks/useEnsResolver */
 export function useEnsResolver<

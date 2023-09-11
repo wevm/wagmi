@@ -1,10 +1,10 @@
 import {
   type DefaultError,
   type QueryKey,
-  type UseMutationOptions as rq_UseMutationOptions,
-  type UseMutationResult as rq_UseMutationResult,
-  type UseQueryOptions as rq_UseQueryOptions,
-  type UseQueryResult as rq_UseQueryResult,
+  type UseMutationOptions,
+  type UseMutationResult,
+  type UseQueryOptions,
+  type UseQueryResult,
   replaceEqualDeep,
   useQuery as tanstack_useQuery,
 } from '@tanstack/react-query'
@@ -16,29 +16,31 @@ import {
 } from '@wagmi/core/internal'
 import { hashFn } from '@wagmi/core/query'
 
-export type UseMutationOptions<
+export type UseMutationParameters<
   data = unknown,
   error = Error,
   variables = void,
   context = unknown,
 > = Evaluate<
   Omit<
-    rq_UseMutationOptions<data, error, Evaluate<variables>, context>,
+    UseMutationOptions<data, error, Evaluate<variables>, context>,
     'mutationFn' | 'mutationKey' | 'throwOnError'
   >
 >
 
-export type UseMutationResult<
+export type UseMutationReturnType<
   data = unknown,
   error = Error,
   variables = void,
   context = unknown,
 > = Evaluate<
   Omit<
-    rq_UseMutationResult<data, error, variables, context>,
+    UseMutationResult<data, error, variables, context>,
     'mutate' | 'mutateAsync'
   >
 >
+
+////////////////////////////////////////////////////////////////////////////////
 
 export type UseQueryParameters<
   queryFnData = unknown,
@@ -48,7 +50,7 @@ export type UseQueryParameters<
 > = Evaluate<
   ExactPartial<
     Omit<
-      rq_UseQueryOptions<queryFnData, error, data, queryKey>,
+      UseQueryOptions<queryFnData, error, data, queryKey>,
       | 'initialData'
       | 'queryFn'
       | 'queryHash'
@@ -58,7 +60,7 @@ export type UseQueryParameters<
     >
   > & {
     // Fix `initialData` type
-    initialData?: rq_UseQueryOptions<
+    initialData?: UseQueryOptions<
       queryFnData,
       error,
       data,
@@ -67,8 +69,8 @@ export type UseQueryParameters<
   }
 >
 
-export type UseQueryResult<data = unknown, error = DefaultError> = Evaluate<
-  rq_UseQueryResult<data, error> & {
+export type UseQueryReturnType<data = unknown, error = DefaultError> = Evaluate<
+  UseQueryResult<data, error> & {
     queryKey: QueryKey
   }
 >
@@ -80,14 +82,16 @@ export function useQuery<queryFnData, error, data, queryKey extends QueryKey>(
   parameters: UseQueryParameters<queryFnData, error, data, queryKey> & {
     queryKey: QueryKey
   },
-): UseQueryResult<data, error> {
+): UseQueryReturnType<data, error> {
   const result = tanstack_useQuery({
     ...(parameters as any),
     queryKeyHashFn: hashFn, // for bigint support
-  }) as UseQueryResult<data, error>
+  }) as UseQueryReturnType<data, error>
   result.queryKey = parameters.queryKey
   return result
 }
+
+////////////////////////////////////////////////////////////////////////////////
 
 export function structuralSharing<data>(
   oldData: data | undefined,

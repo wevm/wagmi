@@ -9,7 +9,9 @@ import { watchConnections } from './watchConnections.js'
 test('default', async () => {
   const connections: Connection[][] = []
   const unwatch = watchConnections(config, {
-    onChange: (connection) => connections.push(connection),
+    onChange(connection) {
+      connections.push(connection)
+    },
   })
 
   const connector = config.connectors[0]!

@@ -13,7 +13,7 @@ import {
 import type { ConfigParameter } from '../types/properties.js'
 import {
   type UseQueryParameters,
-  type UseQueryResult,
+  type UseQueryReturnType,
   useQuery,
 } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
@@ -38,7 +38,7 @@ export type UseTransactionReturnType<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetTransactionData<config, chainId>,
-> = UseQueryResult<selectData, GetTransactionError>
+> = UseQueryReturnType<selectData, GetTransactionError>
 
 /** https://alpha.wagmi.sh/react/api/hooks/useTransaction */
 export function useTransaction<

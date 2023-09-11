@@ -16,14 +16,17 @@ import {
 } from '@wagmi/core/query'
 
 import type { ConfigParameter } from '../types/properties.js'
-import type { UseMutationOptions, UseMutationResult } from '../utils/query.js'
+import type {
+  UseMutationParameters,
+  UseMutationReturnType,
+} from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 
 export type UseSendTransactionParameters<
   config extends Config = Config,
   context = unknown,
 > = Evaluate<
-  UseMutationOptions<
+  UseMutationParameters<
     SendTransactionData,
     SendTransactionError,
     SendTransactionVariables<config, config['chains'][number]['id']>,
@@ -36,7 +39,7 @@ export type UseSendTransactionReturnType<
   config extends Config = Config,
   context = unknown,
 > = Evaluate<
-  UseMutationResult<
+  UseMutationReturnType<
     SendTransactionData,
     SendTransactionError,
     SendTransactionVariables<config, config['chains'][number]['id']>,
