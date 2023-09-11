@@ -9,7 +9,7 @@ test('exports', () => {
       "injected": [Function],
       "ledger": [Function],
       "safe": [Function],
-      "version": "2.0.0",
+      "version": "4.0.0",
       "walletConnect": [Function],
     }
   `)

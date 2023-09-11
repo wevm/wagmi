@@ -23,7 +23,6 @@ test('exports', () => {
       "addressRegex",
       "transactionHashRegex",
       "wait",
-      "version",
     ]
   `)
 })

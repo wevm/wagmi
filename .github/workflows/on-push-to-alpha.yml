@@ -1,4 +1,4 @@
-name: Alpha
+name: On Push To Alpha
 on:
   push:
     branches: [alpha]
