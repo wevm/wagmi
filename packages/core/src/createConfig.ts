@@ -16,12 +16,15 @@ import {
 import { Emitter, type EventData, createEmitter } from './createEmitter.js'
 import { type Storage, createStorage, noopStorage } from './createStorage.js'
 import { ChainNotConfiguredError } from './errors/config.js'
-import type { Evaluate, ExactPartial, OneOf } from './types/utils.js'
+import type { Evaluate, ExactPartial, LooseOmit, OneOf } from './types/utils.js'
 import { uid } from './utils/uid.js'
 
 export type CreateConfigParameters<
-  chains extends readonly [Chain, ...Chain[]],
-  transports extends Record<chains[number]['id'], Transport>,
+  chains extends readonly [Chain, ...Chain[]] = readonly [Chain, ...Chain[]],
+  transports extends Record<chains[number]['id'], Transport> = Record<
+    chains[number]['id'],
+    Transport
+  >,
 > = Evaluate<
   {
     chains: chains
@@ -162,13 +165,12 @@ export function createConfig<
     else {
       const chainId = chain.id as chains[number]['id']
       // Grab all properties off `rest` and resolve for use in `createClient`
-      const properties: Omit<viem_ClientConfig, 'transport'> = {}
-      for (const entry of Object.entries(rest)) {
-        const key = entry[0] as keyof typeof rest
+      const properties: Partial<viem_ClientConfig> = {}
+      const entries = Object.entries(rest) as [keyof typeof rest, any][]
+      for (const [key, value] of entries) {
         if (key === 'client' || key === 'connectors' || key === 'transports')
           continue
         else {
-          const value = entry[1]
           if (typeof value === 'object') properties[key] = value[chainId]
           else properties[key] = value
         }
@@ -374,7 +376,7 @@ export type Connector = ReturnType<CreateConnectorFn> & {
   uid: string
 }
 
-type ClientConfig = Omit<
+type ClientConfig = LooseOmit<
   viem_ClientConfig,
   'account' | 'chain' | 'key' | 'name' | 'transport' | 'type'
 >

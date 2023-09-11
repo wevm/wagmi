@@ -3,7 +3,7 @@ import { http, createClient, webSocket } from 'viem'
 import { mainnet, sepolia } from 'viem/chains'
 import { expectTypeOf, test } from 'vitest'
 
-import { createConfig } from './createConfig.js'
+import { type CreateConfigParameters, createConfig } from './createConfig.js'
 
 test('high-level config', () => {
   // Create config without needing to import viem modules.
@@ -55,4 +55,13 @@ test('`chains` must have at least one chain`', () => {
         transport: http(),
       }),
   })
+})
+
+test('behavior: parameters should not include certain client config properties', () => {
+  type Result = keyof CreateConfigParameters
+  expectTypeOf<'account' extends Result ? true : false>().toEqualTypeOf<false>()
+  expectTypeOf<'chain' extends Result ? true : false>().toEqualTypeOf<false>()
+  expectTypeOf<
+    'transport' extends Result ? true : false
+  >().toEqualTypeOf<false>()
 })

@@ -58,12 +58,11 @@ export async function disconnect(
   })
 
   // Set recent connector if exists
-  setTimeout(async () => {
+  {
     const current = config.state.current
     if (!current) return
     const connector = config.state.connections.get(current)?.connector
-    console.log({ connector })
     if (!connector) return
     await config.storage?.setItem('recentConnectorId', connector.id)
-  })
+  }
 }

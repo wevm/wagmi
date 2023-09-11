@@ -8,7 +8,7 @@ test('default', () => {
     {
       "queryFn": [Function],
       "queryKey": [
-        "connectorClient",
+        "walletClient",
         {
           "connectorUid": undefined,
         },
@@ -24,7 +24,7 @@ test('parameters: chainId', () => {
     {
       "queryFn": [Function],
       "queryKey": [
-        "connectorClient",
+        "walletClient",
         {
           "chainId": 1,
           "connectorUid": undefined,

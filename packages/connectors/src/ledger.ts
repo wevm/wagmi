@@ -85,7 +85,6 @@ export function ledger(parameters: LedgerParameters = {}) {
       try {
         await provider?.disconnect?.().catch(() => {})
       } catch (error) {
-        console.log({ error })
         if (!/No matching key/i.test((error as Error).message)) throw error
       } finally {
         provider.removeListener(
