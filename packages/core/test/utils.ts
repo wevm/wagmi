@@ -19,7 +19,13 @@ export const foundryMainnet: Chain = {
   rpcUrls: foundry.rpcUrls,
 }
 
-export const testChains = [foundryMainnet, mainnet, goerli, optimism, polygonPos]
+export const testChains = [
+  foundryMainnet,
+  mainnet,
+  goerli,
+  optimism,
+  polygonPos,
+]
 
 export function getPublicClient({
   chains = testChains,

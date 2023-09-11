@@ -34,7 +34,10 @@ const contracts = [
 describe('multicall', () => {
   beforeEach(() => {
     setupConfig({
-      chains: [mainnet, { ...polygonPos, contracts: { multicall3: undefined } }],
+      chains: [
+        mainnet,
+        { ...polygonPos, contracts: { multicall3: undefined } },
+      ],
     })
   })
 
