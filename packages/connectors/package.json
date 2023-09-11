@@ -50,12 +50,12 @@
     "@safe-global/safe-apps-provider": "^0.18.0",
     "@safe-global/safe-apps-sdk": "^8.1.0",
     "@walletconnect/ethereum-provider": "^2.10.0",
-    "@walletconnect/modal": "^2.6.1"
+    "@walletconnect/modal": "^2.6.2"
   },
   "devDependencies": {
     "@wagmi/core": "workspace:*",
     "lokijs": "^1.5.12",
-    "msw": "^1.2.1"
+    "msw": "^1.3.0"
   },
   "contributors": ["jxom.eth <j@wagmi.sh>", "awkweb.eth <t@wagmi.sh>"],
   "funding": [

@@ -2,7 +2,7 @@ import {
   type Address,
   type Chain,
   type Client,
-  type ClientConfig,
+  type ClientConfig as viem_ClientConfig,
   type Transport,
   createClient,
 } from 'viem'
@@ -16,9 +16,13 @@ import {
 import { Emitter, type EventData, createEmitter } from './createEmitter.js'
 import { type Storage, createStorage, noopStorage } from './createStorage.js'
 import { ChainNotConfiguredError } from './errors/config.js'
-import type { MultichainValue } from './types/chain.js'
-import type { Evaluate, ExactPartial, OneOf } from './types/utils.js'
+import type { Evaluate, ExactPartial, Omit, OneOf } from './types/utils.js'
 import { uid } from './utils/uid.js'
+
+type ClientConfig = Omit<
+  viem_ClientConfig,
+  'account' | 'chain' | 'key' | 'name' | 'transport' | 'type'
+>
 
 export type CreateConfigParameters<
   chains extends readonly [Chain, ...Chain[]],
@@ -31,16 +35,12 @@ export type CreateConfigParameters<
     storage?: Storage | null | undefined
     syncConnectedChain?: boolean | undefined
   } & OneOf<
-    | {
-        batch?: MultichainValue<chains, ClientConfig['batch']> | undefined
-        cacheTime?:
-          | MultichainValue<chains, ClientConfig['cacheTime']>
+    | ({ transports: transports } & {
+        [key in keyof ClientConfig]?:
+          | ClientConfig[key]
+          | { [_ in chains[number]['id']]?: ClientConfig[key] | undefined }
           | undefined
-        pollingInterval?:
-          | MultichainValue<chains, ClientConfig['pollingInterval']>
-          | undefined
-        transports: transports
-      }
+      })
     | {
         client(parameters: { chain: chains[number] }): Client<
           transports[chains[number]['id']],
@@ -168,7 +168,7 @@ export function createConfig<
       const chainId = chain.id as chains[number]['id']
       const getValue = (value: any) =>
         typeof value === 'object' ? value[chainId] : value
-      const batch: ClientConfig['batch'] = rest.batch
+      const batch = rest.batch
         ? rest.batch[chainId as keyof typeof rest.batch]
         : { multicall: true }
       client = createClient({

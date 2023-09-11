@@ -82,7 +82,6 @@ export function getSidebar() {
               },
             ],
           },
-          { text: 'Constants 🚧', link: '/react/api/constants' },
           {
             text: 'Hooks 🚧',
             collapsed: true,
@@ -424,7 +423,6 @@ export function getSidebar() {
               },
             ],
           },
-          { text: 'Constants 🚧', link: '/react/api/constants' },
           { text: 'Errors', link: '/core/api/errors' },
           {
             text: 'Utilities',
