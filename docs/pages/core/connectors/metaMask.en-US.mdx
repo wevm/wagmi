@@ -28,11 +28,11 @@ const connector = new MetaMaskConnector()
 Chains supported by app. Defaults to `defaultChains`.
 
 ```ts {5}
-import { mainnet, optimism, polygon } from '@wagmi/core/chains'
+import { mainnet, optimism, polygonPos } from '@wagmi/core/chains'
 import { MetaMaskConnector } from '@wagmi/core/connectors/metaMask'
 
 const connector = new MetaMaskConnector({
-  chains: [mainnet, optimism, polygon],
+  chains: [mainnet, optimism, polygonPos],
 })
 ```
 

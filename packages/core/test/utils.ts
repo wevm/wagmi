@@ -8,7 +8,7 @@ import {
   webSocket,
 } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
-import { foundry, goerli, mainnet, optimism, polygon } from 'viem/chains'
+import { foundry, goerli, mainnet, optimism, polygonPos } from 'viem/chains'
 import { rpc } from 'viem/utils'
 
 import type { Chain, WebSocketPublicClient } from '../src'
@@ -19,7 +19,7 @@ export const foundryMainnet: Chain = {
   rpcUrls: foundry.rpcUrls,
 }
 
-export const testChains = [foundryMainnet, mainnet, goerli, optimism, polygon]
+export const testChains = [foundryMainnet, mainnet, goerli, optimism, polygonPos]
 
 export function getPublicClient({
   chains = testChains,

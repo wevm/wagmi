@@ -16,12 +16,12 @@ import { alchemyProvider } from 'wagmi/providers/alchemy'
 ## 用法
 
 ```ts
-import { mainnet, polygon } from 'wagmi/chains'
+import { mainnet, polygonPos } from 'wagmi/chains'
 import { configureChains } from 'wagmi'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 
 const { chains, publicClient } = configureChains(
-  [mainnet, polygon],
+  [mainnet, polygonPos],
   [alchemyProvider({ apiKey: 'yourAlchemyApiKey' })],
 )
 ```
@@ -46,11 +46,11 @@ Alchemy API key，可以从 [Alchemy Dashboard](https://dashboard.alchemyapi.io/
 
 ```ts {7}
 import { configureChains } from 'wagmi'
-import { mainnet, polygon } from 'wagmi/chains'
+import { mainnet, polygonPos } from 'wagmi/chains'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 
 const { chains, publicClient } = configureChains(
-  [mainnet, polygon],
+  [mainnet, polygonPos],
   [alchemyProvider({ apiKey: 'yourAlchemyApiKey' })],
 )
 ```
@@ -61,12 +61,12 @@ const { chains, publicClient } = configureChains(
 
 ```ts {11}
 import { configureChains } from 'wagmi'
-import { mainnet, polygon } from 'wagmi/chains'
+import { mainnet, polygonPos } from 'wagmi/chains'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
 
 const { chains, publicClient } = configureChains(
-  [mainnet, polygon],
+  [mainnet, polygonPos],
   [
     alchemyProvider({
       apiKey: 'yourAlchemyApiKey',

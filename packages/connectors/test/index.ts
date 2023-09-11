@@ -1,6 +1,6 @@
 import { Hex, createPublicClient, createWalletClient, custom, http } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
-import { Chain, foundry, goerli, mainnet, optimism, polygon } from 'viem/chains'
+import { Chain, foundry, goerli, mainnet, optimism, polygonPos } from 'viem/chains'
 import { rpc } from 'viem/utils'
 
 export const foundryMainnet: Chain = {
@@ -8,7 +8,7 @@ export const foundryMainnet: Chain = {
   rpcUrls: foundry.rpcUrls,
 }
 
-export const testChains = [foundryMainnet, mainnet, goerli, optimism, polygon]
+export const testChains = [foundryMainnet, mainnet, goerli, optimism, polygonPos]
 
 export const accounts = [
   {

@@ -17,11 +17,11 @@ import { infuraProvider } from 'wagmi/providers/infura'
 
 ```ts
 import { configureChains } from 'wagmi'
-import { mainnet, polygon } from 'wagmi/chains'
+import { mainnet, polygonPos } from 'wagmi/chains'
 import { infuraProvider } from 'wagmi/providers/infura'
 
 const { chains, publicClient } = configureChains(
-  [mainnet, polygon],
+  [mainnet, polygonPos],
   [infuraProvider({ apiKey: 'yourInfuraApiKey' })],
 )
 ```
@@ -46,11 +46,11 @@ Infura API key，可以从 [Infura Dashboard](https://infura.io/login) 获取。
 
 ```ts {7}
 import { configureChains } from 'wagmi'
-import { mainnet, polygon } from 'wagmi/chains'
+import { mainnet, polygonPos } from 'wagmi/chains'
 import { infuraProvider } from 'wagmi/providers/infura'
 
 const { chains, publicClient } = configureChains(
-  [mainnet, polygon],
+  [mainnet, polygonPos],
   [infuraProvider({ apiKey: 'yourInfuraApiKey' })],
 )
 ```
@@ -61,12 +61,12 @@ const { chains, publicClient } = configureChains(
 
 ```ts {11}
 import { configureChains } from 'wagmi'
-import { mainnet, polygon } from 'wagmi/chains'
+import { mainnet, polygonPos } from 'wagmi/chains'
 import { infuraProvider } from 'wagmi/providers/infura'
 import { publicProvider } from 'wagmi/providers/public'
 
 const { chains, publicClient } = configureChains(
-  [mainnet, polygon],
+  [mainnet, polygonPos],
   [
     infuraProvider({
       apiKey: 'yourInfuraApiKey',

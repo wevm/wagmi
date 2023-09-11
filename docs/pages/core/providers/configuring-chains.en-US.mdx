@@ -23,13 +23,13 @@ import { configureChains } from '@wagmi/core'
 
 ```ts
 import { configureChains, createConfig } from '@wagmi/core'
-import { mainnet, polygon, optimism } from '@wagmi/core/chains'
+import { mainnet, polygonPos, optimism } from '@wagmi/core/chains'
 import { alchemyProvider } from '@wagmi/core/providers/alchemy'
 import { publicProvider } from '@wagmi/core/providers/public'
 import { InjectedConnector } from '@wagmi/core/connectors/injected'
 
 const { chains, publicClient } = configureChains(
-  [mainnet, polygon, optimism],
+  [mainnet, polygonPos, optimism],
   [alchemyProvider({ apiKey: 'yourAlchemyApiKey' }), publicProvider()],
 )
 
@@ -50,13 +50,13 @@ The `configureChains` function accepts multiple RPC Providers. This is useful if
 
 ```ts
 import { configureChains } from '@wagmi/core'
-import { avalanche, polygon } from '@wagmi/core/chains'
+import { avalanche, polygonPos } from '@wagmi/core/chains'
 import { alchemyProvider } from '@wagmi/core/providers/alchemy'
 import { infuraProvider } from '@wagmi/core/providers/infura'
 import { publicProvider } from '@wagmi/core/providers/public'
 
 const { publicClient } = configureChains(
-  [mainnet, polygon, avalanche],
+  [mainnet, polygonPos, avalanche],
   [
     alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
     infuraProvider({ apiKey: 'yourInfuraApiKey' }),
@@ -73,11 +73,11 @@ Chains that need to be configured.
 
 ```ts {6}
 import { configureChains } from '@wagmi/core'
-import { mainnet, optimism, polygon } from '@wagmi/core/chains'
+import { mainnet, optimism, polygonPos } from '@wagmi/core/chains'
 import { publicProvider } from '@wagmi/core/providers/public'
 
 const { chains } = configureChains(
-  [mainnet, optimism, polygon],
+  [mainnet, optimism, polygonPos],
   [publicProvider()],
 )
 ```
@@ -90,12 +90,12 @@ If a provider does not support a chain, it will fall back onto the next one in t
 
 ```ts {8}
 import { configureChains } from '@wagmi/core'
-import { mainnet, optimism, polygon } from '@wagmi/core/chains'
+import { mainnet, optimism, polygonPos } from '@wagmi/core/chains'
 import { alchemyProvider } from '@wagmi/core/providers/alchemy'
 import { publicProvider } from '@wagmi/core/providers/public'
 
 const { chains } = configureChains(
-  [mainnet, optimism, polygon],
+  [mainnet, optimism, polygonPos],
   [alchemyProvider({ apiKey: 'yourAlchemyApiKey' }), publicProvider()],
 )
 ```
@@ -108,12 +108,12 @@ Toggle to enable `eth_call` multicall aggregation. Default: `true`.
 
 ```ts {13}
 import { configureChains } from '@wagmi/core'
-import { mainnet, optimism, polygon } from '@wagmi/core/chains'
+import { mainnet, optimism, polygonPos } from '@wagmi/core/chains'
 import { alchemyProvider } from '@wagmi/core/providers/alchemy'
 import { publicProvider } from '@wagmi/core/providers/public'
 
 const { chains } = configureChains(
-  [mainnet, optimism, polygon],
+  [mainnet, optimism, polygonPos],
   [
     alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
     infuraProvider({ apiKey: 'yourInfuraApiKey' }),
@@ -131,12 +131,12 @@ The frequency in milliseconds at which the provider polls. Defaults to `4000`.
 
 ```ts {13}
 import { configureChains } from '@wagmi/core'
-import { mainnet, optimism, polygon } from '@wagmi/core/chains'
+import { mainnet, optimism, polygonPos } from '@wagmi/core/chains'
 import { alchemyProvider } from '@wagmi/core/providers/alchemy'
 import { publicProvider } from '@wagmi/core/providers/public'
 
 const { chains } = configureChains(
-  [mainnet, optimism, polygon],
+  [mainnet, optimism, polygonPos],
   [
     alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
     infuraProvider({ apiKey: 'yourInfuraApiKey' }),
@@ -152,12 +152,12 @@ Whether or not to automatically rank the RPC Providers based on their latency & 
 
 ```ts {13}
 import { configureChains } from '@wagmi/core'
-import { mainnet, optimism, polygon } from '@wagmi/core/chains'
+import { mainnet, optimism, polygonPos } from '@wagmi/core/chains'
 import { alchemyProvider } from '@wagmi/core/providers/alchemy'
 import { publicProvider } from '@wagmi/core/providers/public'
 
 const { chains } = configureChains(
-  [mainnet, optimism, polygon],
+  [mainnet, optimism, polygonPos],
   [
     alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
     infuraProvider({ apiKey: 'yourInfuraApiKey' }),
@@ -177,12 +177,12 @@ The max number of times to retry when a request fails. Default: `3`.
 
 ```ts {13}
 import { configureChains } from '@wagmi/core'
-import { mainnet, optimism, polygon } from '@wagmi/core/chains'
+import { mainnet, optimism, polygonPos } from '@wagmi/core/chains'
 import { alchemyProvider } from '@wagmi/core/providers/alchemy'
 import { publicProvider } from '@wagmi/core/providers/public'
 
 const { chains } = configureChains(
-  [mainnet, optimism, polygon],
+  [mainnet, optimism, polygonPos],
   [
     alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
     infuraProvider({ apiKey: 'yourInfuraApiKey' }),
@@ -198,12 +198,12 @@ The base delay (in ms) between retries. By default, the RPC Provider will use [e
 
 ```ts {13}
 import { configureChains } from '@wagmi/core'
-import { mainnet, optimism, polygon } from '@wagmi/core/chains'
+import { mainnet, optimism, polygonPos } from '@wagmi/core/chains'
 import { alchemyProvider } from '@wagmi/core/providers/alchemy'
 import { publicProvider } from '@wagmi/core/providers/public'
 
 const { chains } = configureChains(
-  [mainnet, optimism, polygon],
+  [mainnet, optimism, polygonPos],
   [
     alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
     infuraProvider({ apiKey: 'yourInfuraApiKey' }),
@@ -219,12 +219,12 @@ The timeout in milliseconds after which another provider will be attempted.
 
 ```ts {13}
 import { configureChains } from '@wagmi/core'
-import { mainnet, optimism, polygon } from '@wagmi/core/chains'
+import { mainnet, optimism, polygonPos } from '@wagmi/core/chains'
 import { alchemyProvider } from '@wagmi/core/providers/alchemy'
 import { publicProvider } from '@wagmi/core/providers/public'
 
 const { chains } = configureChains(
-  [mainnet, optimism, polygon],
+  [mainnet, optimism, polygonPos],
   [
     alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
     infuraProvider({ apiKey: 'yourInfuraApiKey' }),

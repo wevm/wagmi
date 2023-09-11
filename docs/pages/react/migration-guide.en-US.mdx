@@ -945,18 +945,18 @@ Read below for migration steps.
 
 #### Removed `chain`
 
-The `chain` export has been removed. `wagmi` now only exports the `mainnet` & `goerli` chains. If you need to use an alternative chain (`polygon`, `optimism`, etc), you will need to import it from the [`wagmi/chains` entrypoint](/react/chains#wagmichains).
+The `chain` export has been removed. `wagmi` now only exports the `mainnet` & `goerli` chains. If you need to use an alternative chain (`polygonPos`, `optimism`, etc), you will need to import it from the [`wagmi/chains` entrypoint](/react/chains#wagmichains).
 
 ```diff
 import {
 - chain
   configureChains
 } from 'wagmi'
-+ import { mainnet, polygon, optimism } from 'wagmi/chains'
++ import { mainnet, polygonPos, optimism } from 'wagmi/chains'
 
 const { ... } = configureChains(
-- [chain.mainnet, chain.polygon, chain.optimism],
-+ [mainnet, polygon, optimism],
+- [chain.mainnet, chain.polygonPos, chain.optimism],
++ [mainnet, polygonPos, optimism],
   {
     ...
   }
@@ -992,7 +992,7 @@ The `defaultChains` & `defaultL2Chains` exports have been removed. If you still 
 + import {
 +   arbitrum,
 +   arbitrumGoerli,
-+   polygon,
++   polygonPos,
 +   polygonMumbai,
 +   optimism,
 +   optimismGoerli
@@ -1001,7 +1001,7 @@ The `defaultChains` & `defaultL2Chains` exports have been removed. If you still 
 + const defaultL2Chains = [
 +  arbitrum,
 +  arbitrumGoerli,
-+  polygon,
++  polygonPos,
 +  polygonMumbai,
 +  optimism
 +  optimismGoerli
@@ -1016,13 +1016,13 @@ The `chainId` export has been removed. You can extract a chain ID from the chain
 
 ```diff
 - import { chainId } from 'wagmi'
-+ import { mainnet, polygon, optimism } from 'wagmi/chains'
++ import { mainnet, polygonPos, optimism } from 'wagmi/chains'
 
 -const mainnetChainId = chainId.mainnet
--const polygonChainId = chainId.polygon
+-const polygonChainId = chainId.polygonPos
 -const optimismChainId = chainId.optimism
 +const mainnetChainId = mainnet.id
-+const polygonChainId = polygon.id
++const polygonChainId = polygonPos.id
 +const optimismChainId = optimism.id
 ```
 
@@ -1032,13 +1032,13 @@ The `etherscanBlockExplorers` export has been removed. You can extract a block e
 
 ```diff
 - import { etherscanBlockExplorers } from 'wagmi'
-+ import { mainnet, polygon, optimism } from 'wagmi/chains'
++ import { mainnet, polygonPos, optimism } from 'wagmi/chains'
 
 -const mainnetEtherscanBlockExplorer = etherscanBlockExplorers.mainnet
--const polygonEtherscanBlockExplorer = etherscanBlockExplorers.polygon
+-const polygonEtherscanBlockExplorer = etherscanBlockExplorers.polygonPos
 -const optimismEtherscanBlockExplorer = etherscanBlockExplorers.optimism
 +const mainnetEtherscanBlockExplorer = mainnet.blockExplorers.default
-+const polygonEtherscanBlockExplorer = polygon.blockExplorers.default
++const polygonEtherscanBlockExplorer = polygonPos.blockExplorers.default
 +const optimismEtherscanBlockExplorer = optimism.blockExplorers.default
 ```
 

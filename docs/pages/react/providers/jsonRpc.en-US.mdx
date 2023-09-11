@@ -20,7 +20,7 @@ import { chain, configureChains } from 'wagmi'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 
 const { chains, publicClient } = configureChains(
-  [chain.mainnet, chain.polygon],
+  [chain.mainnet, chain.polygonPos],
   [
     jsonRpcProvider({
       rpc: (chain) => ({
@@ -52,7 +52,7 @@ import { chain, configureChains } from 'wagmi'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 
 const { chains, publicClient } = configureChains(
-  [chain.mainnet, chain.polygon],
+  [chain.mainnet, chain.polygonPos],
   [
     jsonRpcProvider({
       rpc: (chain) => ({
@@ -73,7 +73,7 @@ import { chain, configureChains } from 'wagmi'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 
 const { chains, publicClient } = configureChains(
-  [chain.mainnet, chain.polygon],
+  [chain.mainnet, chain.polygonPos],
   [
     jsonRpcProvider({
       rpc: (chain) => ({

@@ -38,11 +38,11 @@ const connector = new WalletConnectLegacyConnector({
 Chains supported by app. Defaults to `defaultChains`.
 
 ```ts {5}
-import { mainnet, optimism, polygon } from '@wagmi/core/chains'
+import { mainnet, optimism, polygonPos } from '@wagmi/core/chains'
 import { WalletConnectLegacyConnector } from '@wagmi/core/connectors/walletConnectLegacy'
 
 const connector = new WalletConnectLegacyConnector({
-  chains: [mainnet, optimism, polygon],
+  chains: [mainnet, optimism, polygonPos],
   options: {
     qrcode: true,
   },

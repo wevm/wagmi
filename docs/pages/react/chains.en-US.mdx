@@ -11,11 +11,11 @@ wagmi exports the **Mainnet** (`mainnet`) & **Sepolia** (`sepolia`) chains out-o
 import { mainnet, sepolia } from 'wagmi'
 ```
 
-If you wish to extend to other EVM-compatible chains (like Polygon, Optimism, BSC, Avalanche, etc), you can either import the chain directly from the `wagmi/chains` entrypoint, or build it yourself.
+If you wish to extend to other EVM-compatible chains (like Polygon POS, Optimism, BSC, Avalanche, etc), you can either import the chain directly from the `wagmi/chains` entrypoint, or build it yourself.
 
 ## `wagmi/chains`
 
-The `wagmi/chains` entrypoint proxies the [`viem/chains` entrypoint](https://viem.sh/docs/clients/chains.html#chains), which contains references to popular EVM-compatible chains such as: Polygon, Optimism, Avalanche, and more.
+The `wagmi/chains` entrypoint proxies the [`viem/chains` entrypoint](https://viem.sh/docs/clients/chains.html#chains), which contains references to popular EVM-compatible chains such as: Polygon POS, Optimism, Avalanche, and more.
 
 ### Usage
 
@@ -109,9 +109,9 @@ const { chains, publicClient } = configureChains(
 - `okc`
 - `optimism`
 - `optimismGoerli`
-- `polygon`
+- `polygonPos`
 - `polygonMumbai`
-- `polygonZkEvm`
+- `polygonZkEvmMainnet`
 - `polygonZkEvmTestnet`
 - `pulsechain`
 - `pulsechainV4`

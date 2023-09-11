@@ -9,7 +9,7 @@ const apiUrls = {
   // Optimism
   [10]: 'https://api-optimistic.etherscan.io/api',
   [420]: 'https://api-goerli-optimistic.etherscan.io/api',
-  // Polygon
+  // Polygon POS
   [137]: 'https://api.polygonscan.com/api',
   [80_001]: 'https://api-testnet.polygonscan.com/api',
   // Arbitrum

@@ -12,7 +12,7 @@ import {
 } from 'vitest'
 
 import type { Chain } from '../chains'
-import { arbitrum, mainnet, optimism, polygon } from '../chains'
+import { arbitrum, mainnet, optimism, polygonPos } from '../chains'
 import { alchemyProvider } from '../providers/alchemy'
 import { infuraProvider } from '../providers/infura'
 import { jsonRpcProvider } from '../providers/jsonRpc'
@@ -38,7 +38,7 @@ const avalancheChain: Chain = {
   testnet: false,
 }
 
-const defaultChains = [mainnet, polygon, optimism, arbitrum]
+const defaultChains = [mainnet, polygonPos, optimism, arbitrum]
 const defaultChainsWithAvalanche = [...defaultChains, avalancheChain]
 
 function getHandlers({
@@ -130,7 +130,7 @@ describe('configureChains', () => {
         ).toMatchInlineSnapshot(`
             [
               "https://eth-mainnet.g.alchemy.com/v2/apiKey-alchemy",
-              "https://polygon-mainnet.g.alchemy.com/v2/apiKey-alchemy",
+              "https://polygonPos-mainnet.g.alchemy.com/v2/apiKey-alchemy",
               "https://opt-mainnet.g.alchemy.com/v2/apiKey-alchemy",
               "https://arb-mainnet.g.alchemy.com/v2/apiKey-alchemy",
             ]
@@ -182,7 +182,7 @@ describe('configureChains', () => {
         ).toMatchInlineSnapshot(`
             [
               "https://mainnet.infura.io/v3/apiKey-infura",
-              "https://polygon-mainnet.infura.io/v3/apiKey-infura",
+              "https://polygonPos-mainnet.infura.io/v3/apiKey-infura",
               "https://optimism-mainnet.infura.io/v3/apiKey-infura",
               "https://arbitrum-mainnet.infura.io/v3/apiKey-infura",
             ]
@@ -232,7 +232,7 @@ describe('configureChains', () => {
         ).toMatchInlineSnapshot(`
             [
               "https://cloudflare-eth.com",
-              "https://polygon-rpc.com",
+              "https://polygonPos-rpc.com",
               "https://mainnet.optimism.io",
               "https://arb1.arbitrum.io/rpc",
               "https://api.avax.network/ext/bc/C/rpc",
@@ -256,7 +256,7 @@ describe('configureChains', () => {
 
       it('throws an error if a chain does not have a default RPC URL', () => {
         const polygon_: Chain = {
-          ...polygon,
+          ...polygonPos,
           rpcUrls: { default: { http: [''] }, public: { http: [''] } },
         }
 
@@ -267,7 +267,7 @@ describe('configureChains', () => {
             [publicProvider()],
           ),
         ).toThrowErrorMatchingInlineSnapshot(`
-          "Could not find valid provider configuration for chain \\"Polygon\\".
+          "Could not find valid provider configuration for chain \\"Polygon POS\\".
 
           You may need to add \`jsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
           Read more: https://wagmi.sh/core/providers/jsonRpc"
@@ -350,8 +350,8 @@ describe('configureChains', () => {
 
   describe('multiple providers', () => {
     const polygon_: Chain = {
-      ...polygon,
-      rpcUrls: { ...polygon.rpcUrls, alchemy: { http: [''] } },
+      ...polygonPos,
+      rpcUrls: { ...polygonPos.rpcUrls, alchemy: { http: [''] } },
     }
     const arbitrum_: Chain = {
       ...arbitrum,
@@ -387,7 +387,7 @@ describe('configureChains', () => {
       ).toMatchInlineSnapshot(`
           [
             "https://eth-mainnet.g.alchemy.com/v2/apiKey-alchemy",
-            "https://polygon-mainnet.infura.io/v3/apiKey-infura",
+            "https://polygonPos-mainnet.infura.io/v3/apiKey-infura",
             "https://opt-mainnet.g.alchemy.com/v2/apiKey-alchemy",
             "https://arbitrum-mainnet.infura.io/v3/apiKey-infura",
             "https://api.avax.network/ext/bc/C/rpc",

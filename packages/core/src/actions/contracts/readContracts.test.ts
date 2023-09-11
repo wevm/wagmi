@@ -8,7 +8,7 @@ import {
   wagmiContractConfig,
   wagmigotchiContractConfig,
 } from '../../../test'
-import { goerli, mainnet, polygon } from '../../chains'
+import { goerli, mainnet, polygonPos } from '../../chains'
 
 import * as multicall from './multicall'
 import * as readContract from './readContract'
@@ -36,7 +36,7 @@ const contracts = [
 describe('readContracts', () => {
   beforeEach(() => {
     setupConfig({
-      chains: [mainnet, { ...polygon, contracts: { multicall3: undefined } }],
+      chains: [mainnet, { ...polygonPos, contracts: { multicall3: undefined } }],
     })
   })
 
@@ -74,28 +74,28 @@ describe('readContracts', () => {
 
   it('falls back to readContract if multicall is not available', async () => {
     const spy = vi.spyOn(readContract, 'readContract')
-    const chainId = polygon.id
+    const chainId = polygonPos.id
     const contracts = [
       {
         ...wagmigotchiContractConfig,
-        chainId: polygon.id,
+        chainId: polygonPos.id,
         functionName: 'love',
         args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
       },
       {
         ...wagmigotchiContractConfig,
-        chainId: polygon.id,
+        chainId: polygonPos.id,
         functionName: 'love',
         args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
       },
       {
         ...wagmigotchiContractConfig,
-        chainId: polygon.id,
+        chainId: polygonPos.id,
         functionName: 'getAlive',
       },
       {
         ...mlootContractConfig,
-        chainId: polygon.id,
+        chainId: polygonPos.id,
         functionName: 'tokenOfOwnerByIndex',
         args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 0n],
       },
@@ -141,7 +141,7 @@ describe('readContracts', () => {
   describe('multi-chain', () => {
     it('default', async () => {
       setupConfig({
-        chains: [mainnet, polygon, goerli],
+        chains: [mainnet, polygonPos, goerli],
       })
 
       const spy = vi.spyOn(multicall, 'multicall')
@@ -168,12 +168,12 @@ describe('readContracts', () => {
       const polygonContracts = [
         {
           ...wagmigotchiContractConfig,
-          chainId: polygon.id,
+          chainId: polygonPos.id,
           functionName: 'getAlive',
         },
         {
           ...mlootContractConfig,
-          chainId: polygon.id,
+          chainId: polygonPos.id,
           functionName: 'tokenOfOwnerByIndex',
           args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 0n],
         },
@@ -224,7 +224,7 @@ describe('readContracts', () => {
       expect(spy).toHaveBeenCalledWith({
         allowFailure: true,
         contracts: polygonContracts,
-        chainId: polygon.id,
+        chainId: polygonPos.id,
         overrides: undefined,
       })
       expect(results).toMatchInlineSnapshot(`
@@ -280,12 +280,12 @@ describe('readContracts', () => {
       const polygonContracts = [
         {
           ...wagmigotchiContractConfig,
-          chainId: polygon.id,
+          chainId: polygonPos.id,
           functionName: 'getAlive',
         },
         {
           ...mlootContractConfig,
-          chainId: polygon.id,
+          chainId: polygonPos.id,
           functionName: 'tokenOfOwnerByIndex',
           args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 0n],
         },
@@ -307,7 +307,7 @@ describe('readContracts', () => {
         expect(spy).toBeCalledWith({ ...contract, chainId: mainnet.id })
       }
       for (const contract of polygonContracts) {
-        expect(spy).toBeCalledWith({ ...contract, chainId: polygon.id })
+        expect(spy).toBeCalledWith({ ...contract, chainId: polygonPos.id })
       }
       expect(results).toMatchInlineSnapshot(`
         [
@@ -341,7 +341,7 @@ describe('readContracts', () => {
             ...contracts,
             {
               ...mlootContractConfig,
-              chainId: polygon.id,
+              chainId: polygonPos.id,
               functionName: 'tokenOfOwnerByIndex',
               args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 69420n],
             },
@@ -371,13 +371,13 @@ describe('readContracts', () => {
             ...contracts,
             {
               ...mlootContractConfig,
-              chainId: polygon.id,
+              chainId: polygonPos.id,
               functionName: 'tokenOfOwnerByIndex',
               args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 69420n],
             },
             {
               ...mlootContractConfig,
-              chainId: polygon.id,
+              chainId: polygonPos.id,
               functionName: 'tokenOfOwnerByIndex',
               args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 69421n],
             },
@@ -441,7 +441,7 @@ describe('readContracts', () => {
             ...contracts,
             {
               ...mlootContractConfig,
-              chainId: polygon.id,
+              chainId: polygonPos.id,
               functionName: 'ownerOf',
               // address is not the wagmigotchi contract
               address: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
@@ -477,7 +477,7 @@ describe('readContracts', () => {
             ...contracts,
             {
               ...mlootContractConfig,
-              chainId: polygon.id,
+              chainId: polygonPos.id,
               functionName: 'ownerOf',
               // address is not the wagmigotchi contract
               address: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
@@ -485,7 +485,7 @@ describe('readContracts', () => {
             },
             {
               ...mlootContractConfig,
-              chainId: polygon.id,
+              chainId: polygonPos.id,
               functionName: 'ownerOf',
               // address is not the wagmigotchi contract
               address: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
@@ -559,7 +559,7 @@ describe('readContracts', () => {
             ...contracts,
             {
               ...wagmigotchiContractConfig,
-              chainId: polygon.id,
+              chainId: polygonPos.id,
               functionName: 'love',
               // address is not the wagmigotchi contract
               address: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
@@ -595,7 +595,7 @@ describe('readContracts', () => {
             ...contracts,
             {
               ...wagmigotchiContractConfig,
-              chainId: polygon.id,
+              chainId: polygonPos.id,
               functionName: 'love',
               // address is not the wagmigotchi contract
               address: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',

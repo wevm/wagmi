@@ -20,7 +20,7 @@ import { chain, configureChains } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
 const { chains, publicClient } = configureChains(
-  [chain.mainnet, chain.polygon],
+  [chain.mainnet, chain.polygonPos],
   [publicProvider()],
 )
 ```
@@ -53,7 +53,7 @@ import { chain, configureChains } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
 const { chains, publicClient } = configureChains(
-  [chain.mainnet, chain.polygon],
+  [chain.mainnet, chain.polygonPos],
   [
     alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
     publicProvider({ stallTimeout: 1_000 }),

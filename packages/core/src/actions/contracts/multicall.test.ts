@@ -5,7 +5,7 @@ import {
   setupConfig,
   wagmigotchiContractConfig,
 } from '../../../test'
-import { mainnet, polygon } from '../../chains'
+import { mainnet, polygonPos } from '../../chains'
 
 import { multicall } from './multicall'
 
@@ -34,7 +34,7 @@ const contracts = [
 describe('multicall', () => {
   beforeEach(() => {
     setupConfig({
-      chains: [mainnet, { ...polygon, contracts: { multicall3: undefined } }],
+      chains: [mainnet, { ...polygonPos, contracts: { multicall3: undefined } }],
     })
   })
 
@@ -443,10 +443,10 @@ describe('multicall', () => {
   describe('errors', () => {
     it('should throw if the chain does not support multicall', async () => {
       await expect(
-        multicall({ contracts, chainId: polygon.id }),
+        multicall({ contracts, chainId: polygonPos.id }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
         `
-        "Chain \\"Polygon\\" does not support contract \\"multicall3\\".
+        "Chain \\"Polygon POS\\" does not support contract \\"multicall3\\".
 
         This could be due to any of the following:
         - The chain does not have the contract \\"multicall3\\" configured.

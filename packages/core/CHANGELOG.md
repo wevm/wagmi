@@ -315,7 +315,7 @@
 - [#2099](https://github.com/wagmi-dev/wagmi/pull/2099) [`f1fee5b3`](https://github.com/wagmi-dev/wagmi/commit/f1fee5b30a1bd13b5e66118bf9cdc44b0dc003a1) Thanks [@jxom](https://github.com/jxom)! - Added chains:
 
   - `nexi`
-  - `polygonZkEvm`
+  - `polygonZkEvmMainnet`
   - `xdc`
   - `xdcTestnet`
 
@@ -786,18 +786,18 @@
 
   #### Removed `chain`
 
-  The `chain` export has been removed. `@wagmi/core` now only exports the `mainnet` & `goerli` chains. If you need to use an alternative chain (`polygon`, `optimism`, etc), you will need to import it from the [`@wagmi/core/chains` entrypoint](/core/chains).
+  The `chain` export has been removed. `@wagmi/core` now only exports the `mainnet` & `goerli` chains. If you need to use an alternative chain (`polygonPos`, `optimism`, etc), you will need to import it from the [`@wagmi/core/chains` entrypoint](/core/chains).
 
   ```diff
   import {
   - chain
     configureChains
   } from '@wagmi/core'
-  + import { mainnet, polygon, optimism } from '@wagmi/core/chains'
+  + import { mainnet, polygonPos, optimism } from '@wagmi/core/chains'
 
   const { ... } = configureChains(
-  - [chain.mainnet, chain.polygon, chain.optimism],
-  + [mainnet, polygon, optimism],
+  - [chain.mainnet, chain.polygonPos, chain.optimism],
+  + [mainnet, polygonPos, optimism],
     {
       ...
     }
@@ -833,7 +833,7 @@
   + import {
   +   arbitrum,
   +   arbitrumGoerli,
-  +   polygon,
+  +   polygonPos,
   +   polygonMumbai,
   +   optimism,
   +   optimismGoerli
@@ -842,7 +842,7 @@
   + const defaultL2Chains = [
   +  arbitrum,
   +  arbitrumGoerli,
-  +  polygon,
+  +  polygonPos,
   +  polygonMumbai,
   +  optimism
   +  optimismGoerli
@@ -857,13 +857,13 @@
 
   ```diff
   - import { chainId } from '@wagmi/core'
-  + import { mainnet, polygon, optimism } from '@wagmi/core/chains'
+  + import { mainnet, polygonPos, optimism } from '@wagmi/core/chains'
 
   -const mainnetChainId = chainId.mainnet
-  -const polygonChainId = chainId.polygon
+  -const polygonChainId = chainId.polygonPos
   -const optimismChainId = chainId.optimism
   +const mainnetChainId = mainnet.chainId
-  +const polygonChainId = polygon.chainId
+  +const polygonChainId = polygonPos.chainId
   +const optimismChainId = optimism.chainId
   ```
 
@@ -873,13 +873,13 @@
 
   ```diff
   - import { etherscanBlockExplorers } from '@wagmi/core'
-  + import { mainnet, polygon, optimism } from '@wagmi/core/chains'
+  + import { mainnet, polygonPos, optimism } from '@wagmi/core/chains'
 
   -const mainnetEtherscanBlockExplorer = etherscanBlockExplorers.mainnet
-  -const polygonEtherscanBlockExplorer = etherscanBlockExplorers.polygon
+  -const polygonEtherscanBlockExplorer = etherscanBlockExplorers.polygonPos
   -const optimismEtherscanBlockExplorer = etherscanBlockExplorers.optimism
   +const mainnetEtherscanBlockExplorer = mainnet.blockExplorer
-  +const polygonEtherscanBlockExplorer = polygon.blockExplorer
+  +const polygonEtherscanBlockExplorer = polygonPos.blockExplorer
   +const optimismEtherscanBlockExplorer = optimism.blockExplorer
   ```
 
@@ -1513,7 +1513,7 @@
 
   ```diff
   const { chains, provider } = configureChains(
-    [chain.mainnet, chain.polygon],
+    [chain.mainnet, chain.polygonPos],
     [
   -   alchemyProvider({ apiKey, pollingInterval: 5000 }),
   -   publicProvider({ pollingInterval: 5000 })

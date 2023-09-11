@@ -17,11 +17,11 @@ import { alchemyProvider } from '@wagmi/core/providers/alchemy'
 
 ```ts
 import { configureChains } from '@wagmi/core'
-import { mainnet, optimism, polygon } from '@wagmi/core/chains'
+import { mainnet, optimism, polygonPos } from '@wagmi/core/chains'
 import { alchemyProvider } from '@wagmi/core/providers/alchemy'
 
 const { chains, publicClient } = configureChains(
-  [mainnet, optimism, polygon],
+  [mainnet, optimism, polygonPos],
   [alchemyProvider({ apiKey: 'yourAlchemyApiKey' })],
 )
 ```

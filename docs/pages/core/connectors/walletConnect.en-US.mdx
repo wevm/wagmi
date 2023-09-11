@@ -32,11 +32,11 @@ const connector = new WalletConnectConnector({
 Chains supported by app. Defaults to `defaultChains`.
 
 ```ts {5}
-import { mainnet, optimism, polygon } from '@wagmi/core/chains'
+import { mainnet, optimism, polygonPos } from '@wagmi/core/chains'
 import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
 
 const connector = new WalletConnectConnector({
-  chains: [mainnet, optimism, polygon],
+  chains: [mainnet, optimism, polygonPos],
   options: {
     projectId: '...',
   },
