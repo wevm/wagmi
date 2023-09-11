@@ -7,6 +7,16 @@
       "permanent": true
     },
     {
+      "source": "/core/ethers-adapters",
+      "destination": "/core/guides/ethers-web3",
+      "permanent": true
+    },
+    {
+      "source": "/core/:section(chains)",
+      "destination": "/core/api/:section",
+      "permanent": true
+    },
+    {
       "source": "/core/:section(actions|connectors)/:name",
       "destination": "/core/api/:section/:name",
       "permanent": true
@@ -18,8 +28,23 @@
     },
 
     {
+      "source": "/react/comparison",
+      "destination": "/react/comparisons",
+      "permanent": true
+    },
+    {
       "source": "/react/:name(faq)",
       "destination": "/react/guides/:name",
+      "permanent": true
+    },
+    {
+      "source": "/react/ethers-adapters",
+      "destination": "/react/guides/ethers-web3",
+      "permanent": true
+    },
+    {
+      "source": "/react/:section(actions|chains)",
+      "destination": "/react/api/:section",
       "permanent": true
     },
     {
@@ -30,6 +55,11 @@
     {
       "source": "/react/config",
       "destination": "/react/api/createConfig",
+      "permanent": true
+    },
+    {
+      "source": "/react/WagmiConfig",
+      "destination": "/react/api/WagmiProvider",
       "permanent": true
     },
     {

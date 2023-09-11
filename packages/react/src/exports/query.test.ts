@@ -29,6 +29,8 @@ test('exports', () => {
       "getTokenQueryOptions",
       "getTransactionQueryKey",
       "getTransactionQueryOptions",
+      "getWalletClientQueryKey",
+      "getWalletClientQueryOptions",
       "readContractQueryKey",
       "readContractQueryOptions",
       "readContractsQueryKey",

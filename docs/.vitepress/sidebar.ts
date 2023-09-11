@@ -10,7 +10,7 @@ export function getSidebar() {
           { text: 'Installation', link: '/react/installation' },
           { text: 'Getting Started', link: '/react/getting-started' },
           { text: 'TypeScript', link: '/react/typescript' },
-          { text: 'Comparisons 🚧', link: '/react/comparison' },
+          { text: 'Comparisons 🚧', link: '/react/comparisons' },
         ],
       },
       {
