@@ -57,22 +57,27 @@ export function createStorage<
     storage,
   } = parameters
 
+  function unwrap<type>(value: type): type | Promise<type> {
+    if (value instanceof Promise)
+      return value.then((x) => x).catch(() => undefined)
+    return value
+  }
+
   return {
     ...storage,
-    getItem(key, defaultValue) {
+    async getItem(key, defaultValue) {
       const value = storage.getItem(`${prefix}.${key as string}`)
-      if (value instanceof Promise)
-        return value.then((x) => (x ? deserialize(x) ?? null : null))
-      if (value) return deserialize(value)
+      const unwrapped = await unwrap(value)
+      if (unwrapped) return deserialize(unwrapped) ?? null
       return (defaultValue ?? null) as any
     },
-    setItem(key, value) {
+    async setItem(key, value) {
       const storageKey = `${prefix}.${key as string}`
-      if (value === null) return storage.removeItem(storageKey)
-      else return storage.setItem(storageKey, serialize(value)) as any
+      if (value === null) await unwrap(storage.removeItem(storageKey))
+      else await unwrap(storage.setItem(storageKey, serialize(value)))
     },
-    removeItem(key) {
-      return storage.removeItem(`${prefix}.${key as string}`) as any
+    async removeItem(key) {
+      await unwrap(storage.removeItem(`${prefix}.${key as string}`))
     },
   }
 }

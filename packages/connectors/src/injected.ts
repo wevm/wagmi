@@ -118,9 +118,8 @@ export function injected(parameters: InjectedParameters = {}) {
   type Provider = WindowProvider | undefined
   type Properties = {
     onConnect(connectInfo: ProviderConnectInfo): void
-    shimDisconnectStorageKey: `${string}.shimDisconnect`
   }
-  type StorageItem = { [_ in Properties['shimDisconnectStorageKey']]: true }
+  type StorageItem = { [_ in `${string}.connected`]: true }
 
   return createConnector<Provider, Properties, StorageItem>((config) => ({
     get id() {
@@ -149,7 +148,7 @@ export function injected(parameters: InjectedParameters = {}) {
         )
         const isDisconnected =
           shimDisconnect &&
-          !(await config.storage?.getItem(this.shimDisconnectStorageKey))
+          !(await config.storage?.getItem(`${this.id}.connected`))
 
         let accounts: readonly Address[] | null = null
         if (canSelectAccount && isDisconnected) {
@@ -200,7 +199,7 @@ export function injected(parameters: InjectedParameters = {}) {
 
         // Add shim to storage signalling wallet is connected
         if (shimDisconnect)
-          await config.storage?.setItem(this.shimDisconnectStorageKey, true)
+          await config.storage?.setItem(`${this.id}.connected`, true)
 
         return { accounts, chainId: currentChainId }
       } catch (error) {
@@ -225,7 +224,7 @@ export function injected(parameters: InjectedParameters = {}) {
 
       // Remove shim signalling wallet is disconnected
       if (shimDisconnect)
-        await config.storage?.removeItem(this.shimDisconnectStorageKey)
+        await config.storage?.removeItem(`${this.id}.connected`)
     },
     async getAccounts() {
       const provider = await this.getProvider()
@@ -251,7 +250,7 @@ export function injected(parameters: InjectedParameters = {}) {
         const isDisconnected =
           shimDisconnect &&
           // If shim does not exist in storage, wallet is disconnected
-          !(await config.storage?.getItem(this.shimDisconnectStorageKey))
+          !(await config.storage?.getItem(`${this.id}.connected`))
         if (isDisconnected) return false
 
         const provider = await this.getProvider()
@@ -406,7 +405,7 @@ export function injected(parameters: InjectedParameters = {}) {
 
       // Add shim to storage signalling wallet is connected
       if (shimDisconnect)
-        await config.storage?.setItem(this.shimDisconnectStorageKey, true)
+        await config.storage?.setItem(`${this.id}.connected`, true)
     },
     async onDisconnect(error) {
       const provider = await this.getProvider()
@@ -432,9 +431,6 @@ export function injected(parameters: InjectedParameters = {}) {
         provider.on('connect', this.onConnect.bind(this))
       }
     },
-    get shimDisconnectStorageKey() {
-      return `${this.id}.shimDisconnect` as Properties['shimDisconnectStorageKey']
-    },
   }))
 }
 
@@ -449,68 +445,69 @@ type Wallet = {
 type WalletMap = Record<WalletId, Wallet>
 
 type WindowProviderFlags = {
-  isApexWallet?: true
-  isAvalanche?: true
-  isBackpack?: true
-  isBifrost?: true
-  isBitKeep?: true
-  isBitski?: true
-  isBlockWallet?: true
-  isBraveWallet?: true
-  isCoinbaseWallet?: true
-  isDawn?: true
-  isEnkrypt?: true
-  isExodus?: true
-  isFrame?: true
-  isFrontier?: true
-  isGamestop?: true
-  isHyperPay?: true
-  isImToken?: true
-  isKuCoinWallet?: true
-  isMathWallet?: true
-  isMetaMask?: true
-  isOkxWallet?: true
-  isOKExWallet?: true
-  isOneInchAndroidWallet?: true
-  isOneInchIOSWallet?: true
-  isOpera?: true
-  isPhantom?: true
-  isPortal?: true
-  isRabby?: true
-  isRainbow?: true
-  isStatus?: true
-  isTally?: true
-  isTokenPocket?: true
-  isTokenary?: true
-  isTrust?: true
-  isTrustWallet?: true
-  isXDEFI?: true
-  isZerion?: true
+  isApexWallet?: true | undefined
+  isAvalanche?: true | undefined
+  isBackpack?: true | undefined
+  isBifrost?: true | undefined
+  isBitKeep?: true | undefined
+  isBitski?: true | undefined
+  isBlockWallet?: true | undefined
+  isBraveWallet?: true | undefined
+  isCoinbaseWallet?: true | undefined
+  isDawn?: true | undefined
+  isEnkrypt?: true | undefined
+  isExodus?: true | undefined
+  isFrame?: true | undefined
+  isFrontier?: true | undefined
+  isGamestop?: true | undefined
+  isHyperPay?: true | undefined
+  isImToken?: true | undefined
+  isKuCoinWallet?: true | undefined
+  isMathWallet?: true | undefined
+  isMetaMask?: true | undefined
+  isOkxWallet?: true | undefined
+  isOKExWallet?: true | undefined
+  isOneInchAndroidWallet?: true | undefined
+  isOneInchIOSWallet?: true | undefined
+  isOpera?: true | undefined
+  isPhantom?: true | undefined
+  isPortal?: true | undefined
+  isRabby?: true | undefined
+  isRainbow?: true | undefined
+  isStatus?: true | undefined
+  isTally?: true | undefined
+  isTokenPocket?: true | undefined
+  isTokenary?: true | undefined
+  isTrust?: true | undefined
+  isTrustWallet?: true | undefined
+  isXDEFI?: true | undefined
+  isZerion?: true | undefined
 }
 
 type WindowProvider = Evaluate<
   EIP1193Provider &
     WindowProviderFlags & {
-      providers?: WindowProvider[]
-    } & {
+      providers?: WindowProvider[] | undefined
       isMetaMask: true
       /** Only exists in MetaMask as of 2022/04/03 */
-      _events: { connect?: () => void }
+      _events: { connect?: (() => void) | undefined }
       /** Only exists in MetaMask as of 2022/04/03 */
-      _state?: {
-        accounts?: string[]
-        initialized?: boolean
-        isConnected?: boolean
-        isPermanentlyDisconnected?: boolean
-        isUnlocked?: boolean
-      }
+      _state?:
+        | {
+            accounts?: string[]
+            initialized?: boolean
+            isConnected?: boolean
+            isPermanentlyDisconnected?: boolean
+            isUnlocked?: boolean
+          }
+        | undefined
     }
 >
 
 type Window = {
-  coinbaseWalletExtension?: WindowProvider
-  ethereum?: WindowProvider
-  phantom?: { ethereum: WindowProvider }
+  coinbaseWalletExtension?: WindowProvider | undefined
+  ethereum?: WindowProvider | undefined
+  phantom?: { ethereum: WindowProvider } | undefined
 }
 
 function findProvider(
