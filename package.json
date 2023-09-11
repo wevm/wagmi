@@ -3,6 +3,8 @@
   "type": "module",
   "scripts": {
     "build": "pnpm run --r --filter \"./packages/**\" build",
+    "changeset:release": "pnpm build && changeset publish",
+    "changeset:version": "changeset version && pnpm bun ./scripts/updateVersion.ts",
     "clean": "pnpm run --r --parallel clean",
     "deps": "pnpx taze -r",
     "dev": "pnpm dev:vite-react",
