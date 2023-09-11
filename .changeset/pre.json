@@ -1,0 +1,10 @@
+{
+  "mode": "pre",
+  "tag": "alpha",
+  "initialVersions": {
+    "@wagmi/connectors": "4.0.0",
+    "@wagmi/core": "2.0.0",
+    "wagmi": "2.0.0"
+  },
+  "changesets": []
+}

@@ -50,7 +50,7 @@ JSON.stringify({ value: 69420n }, replacer)
 // '{"value":"69420"}'
 ```
 
-## How do I support Wagmi development?
+## How do I support the project?
 
 Wagmi is an open source software project and free to use. If you enjoy using Wagmi or would like to support Wagmi development, you can:
 

@@ -22,8 +22,9 @@ for (const packagePath of packagePaths) {
   const packageFile = (await file.json()) as Package
 
   // Skip private packages
-  if (packageFile.private) continue
+  if (packageFile.private && packageFile.name !== '@wagmi/test') continue
   if (!packageFile.exports) continue
+  if (packageFile.name === '@wagmi/cli') continue
 
   count += 1
   const dir = path.resolve(path.dirname(packagePath))
