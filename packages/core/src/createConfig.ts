@@ -16,13 +16,8 @@ import {
 import { Emitter, type EventData, createEmitter } from './createEmitter.js'
 import { type Storage, createStorage, noopStorage } from './createStorage.js'
 import { ChainNotConfiguredError } from './errors/config.js'
-import type { Evaluate, ExactPartial, Omit, OneOf } from './types/utils.js'
+import type { Evaluate, ExactPartial, OneOf } from './types/utils.js'
 import { uid } from './utils/uid.js'
-
-type ClientConfig = Omit<
-  viem_ClientConfig,
-  'account' | 'chain' | 'key' | 'name' | 'transport' | 'type'
->
 
 export type CreateConfigParameters<
   chains extends readonly [Chain, ...Chain[]],
@@ -166,16 +161,22 @@ export function createConfig<
     if (rest.client) client = rest.client({ chain })
     else {
       const chainId = chain.id as chains[number]['id']
-      const getValue = (value: any) =>
-        typeof value === 'object' ? value[chainId] : value
-      const batch = rest.batch
-        ? rest.batch[chainId as keyof typeof rest.batch]
-        : { multicall: true }
+      // Grab all properties off `rest` and resolve for use in `createClient`
+      const properties: Omit<viem_ClientConfig, 'transport'> = {}
+      for (const entry of Object.entries(rest)) {
+        const key = entry[0] as keyof typeof rest
+        if (key === 'client' || key === 'connectors' || key === 'transports')
+          continue
+        else {
+          const value = entry[1]
+          if (typeof value === 'object') properties[key] = value[chainId]
+          else properties[key] = value
+        }
+      }
       client = createClient({
-        batch,
-        cacheTime: getValue(rest.cacheTime),
+        ...properties,
         chain,
-        pollingInterval: getValue(rest.pollingInterval),
+        batch: properties.batch ?? { multicall: true },
         transport: rest.transports[chainId],
       })
     }
@@ -357,15 +358,23 @@ export type State<
   current: string | undefined
   status: 'connected' | 'connecting' | 'disconnected' | 'reconnecting'
 }
+
 export type PartializedState = Evaluate<
   ExactPartial<Pick<State, 'chainId' | 'connections' | 'current' | 'status'>>
 >
+
 export type Connection = {
   accounts: readonly [Address, ...Address[]]
   chainId: number
   connector: Connector
 }
+
 export type Connector = ReturnType<CreateConnectorFn> & {
   emitter: Emitter<ConnectorEventMap>
   uid: string
 }
+
+type ClientConfig = Omit<
+  viem_ClientConfig,
+  'account' | 'chain' | 'key' | 'name' | 'transport' | 'type'
+>
