@@ -1,6 +1,5 @@
 name: Verify
 on:
-  push: # TODO(@tmm): Remove once v2 is released
   workflow_call:
   workflow_dispatch:
 
