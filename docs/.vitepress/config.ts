@@ -54,9 +54,9 @@ export default withTwoslash(
     },
     themeConfig: {
       algolia: {
-        appId: '6DHD5JFQ7Z',
-        apiKey: '28c37f5f9198a5d458dc4dae447980fa',
-        indexName: 'wagmi',
+        appId: 'ZCSA29G8U5',
+        apiKey: 'cc70f3c272a8ca62f43a07a1200b7505',
+        indexName: 'alpha-wagmi',
       },
       editLink: {
         pattern: 'https://github.com/wagmi-dev/wagmi/edit/main/docs/:path',
