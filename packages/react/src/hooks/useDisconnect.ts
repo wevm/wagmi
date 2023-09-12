@@ -20,13 +20,16 @@ import { useConfig } from './useConfig.js'
 import { useConnections } from './useConnections.js'
 
 export type UseDisconnectParameters<context = unknown> = Evaluate<
-  UseMutationParameters<
-    DisconnectData,
-    DisconnectError,
-    DisconnectVariables,
-    context
-  > &
-    ConfigParameter
+  ConfigParameter & {
+    mutation?:
+      | UseMutationParameters<
+          DisconnectData,
+          DisconnectError,
+          DisconnectVariables,
+          context
+        >
+      | undefined
+  }
 >
 
 export type UseDisconnectReturnType<context = unknown> = Evaluate<
@@ -46,11 +49,13 @@ export type UseDisconnectReturnType<context = unknown> = Evaluate<
 export function useDisconnect<context = unknown>(
   parameters: UseDisconnectParameters<context> = {},
 ): UseDisconnectReturnType<context> {
+  const { mutation } = parameters
+
   const config = useConfig(parameters)
 
   const mutationOptions = disconnectMutationOptions(config)
   const { mutate, mutateAsync, ...result } = useMutation({
-    ...parameters,
+    ...mutation,
     ...mutationOptions,
   })
 

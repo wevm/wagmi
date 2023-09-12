@@ -50,9 +50,11 @@ test('select data', () => {
     functionName: 'transferFrom',
     args: ['0x', '0x', 123n],
     chainId: 1,
-    select(data) {
-      expectTypeOf(data.result).toEqualTypeOf<boolean>()
-      return data.request.args
+    query: {
+      select(data) {
+        expectTypeOf(data.result).toEqualTypeOf<boolean>()
+        return data.request.args
+      },
     },
   })
   expectTypeOf(result.data).toEqualTypeOf<

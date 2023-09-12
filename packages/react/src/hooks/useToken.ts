@@ -24,13 +24,16 @@ export type UseTokenParameters<
   selectData = GetTokenData,
 > = Evaluate<
   GetTokenOptions<config> &
-    UseQueryParameters<
-      GetTokenQueryFnData,
-      GetTokenError,
-      selectData,
-      GetTokenQueryKey<config>
-    > &
-    ConfigParameter<config>
+    ConfigParameter<config> & {
+      query?:
+        | UseQueryParameters<
+            GetTokenQueryFnData,
+            GetTokenError,
+            selectData,
+            GetTokenQueryKey<config>
+          >
+        | undefined
+    }
 >
 
 export type UseTokenReturnType<selectData = GetTokenData> = UseQueryReturnType<
@@ -45,7 +48,7 @@ export function useToken<
 >(
   parameters: UseTokenParameters<config, selectData> = {},
 ): UseTokenReturnType<selectData> {
-  const { address, ...query } = parameters
+  const { address, query = {} } = parameters
 
   const config = useConfig(parameters)
   const chainId = useChainId()
@@ -54,7 +57,7 @@ export function useToken<
     ...parameters,
     chainId: parameters.chainId ?? chainId,
   })
-  const enabled = Boolean(address && (parameters.enabled ?? true))
+  const enabled = Boolean(address && (query.enabled ?? true))
 
   return useQuery({ ...queryOptions, ...query, enabled })
 }

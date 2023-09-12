@@ -33,13 +33,16 @@ export type UseContractReadsParameters<
   selectData = ReadContractsData<contracts, allowFailure>,
 > = Evaluate<
   ReadContractsOptions<config, contracts, allowFailure> &
-    UseQueryParameters<
-      ReadContractsQueryFnData<contracts, allowFailure>,
-      ReadContractError,
-      selectData,
-      ReadContractsQueryKey<config, contracts, allowFailure>
-    > &
-    ConfigParameter<config>
+    ConfigParameter<config> & {
+      query?:
+        | UseQueryParameters<
+            ReadContractsQueryFnData<contracts, allowFailure>,
+            ReadContractError,
+            selectData,
+            ReadContractsQueryKey<config, contracts, allowFailure>
+          >
+        | undefined
+    }
 >
 
 export type UseContractReadsReturnType<
@@ -62,7 +65,7 @@ export function useContractReads<
     selectData
   > = {},
 ): UseContractReadsReturnType<contracts, allowFailure, selectData> {
-  const { contracts = [], ...query } = parameters
+  const { contracts = [], query = {} } = parameters
 
   const config = useConfig(parameters)
   const chainId = useChainId()
@@ -74,16 +77,17 @@ export function useContractReads<
   })
   const enabled = useMemo(() => {
     let isContractsValid = false
-    for (const contract of contracts as ContractFunctionParameters[]) {
-      const { abi, address, functionName } = contract
+    for (const contract of contracts) {
+      const { abi, address, functionName } =
+        contract as ContractFunctionParameters
       if (!abi || !address || !functionName) {
         isContractsValid = false
         break
       }
       isContractsValid = true
     }
-    return Boolean(isContractsValid && (parameters.enabled ?? true))
-  }, [contracts, parameters.enabled])
+    return Boolean(isContractsValid && (query.enabled ?? true))
+  }, [contracts, query.enabled])
 
   return useQuery({
     ...queryOptions,

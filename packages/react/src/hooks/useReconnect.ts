@@ -19,13 +19,16 @@ import type {
 import { useConfig } from './useConfig.js'
 
 export type UseReconnectParameters<context = unknown> = Evaluate<
-  UseMutationParameters<
-    ReconnectData,
-    ReconnectError,
-    ReconnectVariables,
-    context
-  > &
-    ConfigParameter
+  ConfigParameter & {
+    mutation?:
+      | UseMutationParameters<
+          ReconnectData,
+          ReconnectError,
+          ReconnectVariables,
+          context
+        >
+      | undefined
+  }
 >
 
 export type UseReconnectReturnType<context = unknown> = Evaluate<
@@ -45,11 +48,13 @@ export type UseReconnectReturnType<context = unknown> = Evaluate<
 export function useReconnect<context = unknown>(
   parameters: UseReconnectParameters<context> = {},
 ): UseReconnectReturnType<context> {
+  const { mutation } = parameters
+
   const config = useConfig(parameters)
 
   const mutationOptions = reconnectMutationOptions(config)
   const { mutate, mutateAsync, ...result } = useMutation({
-    ...parameters,
+    ...mutation,
     ...mutationOptions,
   })
 

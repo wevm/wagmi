@@ -4,8 +4,10 @@ import { useEstimateGas } from './useEstimateGas.js'
 
 test('select data', () => {
   const result = useEstimateGas({
-    select(data) {
-      return data.toString()
+    query: {
+      select(data) {
+        return data.toString()
+      },
     },
   })
   expectTypeOf(result.data).toEqualTypeOf<string | undefined>()

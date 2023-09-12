@@ -1,5 +1,5 @@
 import { connect, disconnect } from '@wagmi/core'
-import { config } from '@wagmi/test'
+import { config, wait } from '@wagmi/test'
 import { renderHook, waitFor } from '@wagmi/test/react'
 import { expect, test } from 'vitest'
 
@@ -157,4 +157,11 @@ test('behavior: switch chains', async () => {
   await waitFor(() =>
     expect(result.current.useConnectorClient.data).not.toBeDefined(),
   )
+})
+
+test('behavior: disabled when properties missing', async () => {
+  const { result } = renderHook(() => useConnectorClient())
+
+  await wait(100)
+  await waitFor(() => expect(result.current.isPending).toBeTruthy())
 })

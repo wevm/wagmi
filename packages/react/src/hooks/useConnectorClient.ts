@@ -6,7 +6,7 @@ import type {
   GetConnectorClientError,
   ResolvedRegister,
 } from '@wagmi/core'
-import { type Evaluate } from '@wagmi/core/internal'
+import { type Evaluate, type Omit } from '@wagmi/core/internal'
 import {
   type GetConnectorClientData,
   type GetConnectorClientOptions,
@@ -32,13 +32,21 @@ export type UseConnectorClientParameters<
   selectData = GetConnectorClientData<config, chainId>,
 > = Evaluate<
   GetConnectorClientOptions<config, chainId> &
-    UseQueryParameters<
-      GetConnectorClientQueryFnData<config, chainId>,
-      GetConnectorClientError,
-      selectData,
-      GetConnectorClientQueryKey<config, chainId>
-    > &
-    ConfigParameter<config>
+    ConfigParameter<config> & {
+      query?:
+        | Evaluate<
+            Omit<
+              UseQueryParameters<
+                GetConnectorClientQueryFnData<config, chainId>,
+                GetConnectorClientError,
+                selectData,
+                GetConnectorClientQueryKey<config, chainId>
+              >,
+              'gcTime' | 'staleTime'
+            >
+          >
+        | undefined
+    }
 >
 
 export type UseConnectorClientReturnType<
@@ -55,7 +63,7 @@ export function useConnectorClient<
 >(
   parameters: UseConnectorClientParameters<config, chainId, selectData> = {},
 ): UseConnectorClientReturnType<config, chainId, selectData> {
-  const { gcTime = 0, staleTime = Infinity, ...query } = parameters
+  const { query = {} } = parameters
 
   const config = useConfig(parameters)
   const queryClient = useQueryClient()
@@ -67,9 +75,7 @@ export function useConnectorClient<
     chainId: parameters.chainId ?? chainId,
     connector: parameters.connector ?? connector,
   })
-  const enabled = Boolean(
-    status !== 'disconnected' && (parameters.enabled ?? true),
-  )
+  const enabled = Boolean(status !== 'disconnected' && (query.enabled ?? true))
 
   // biome-ignore lint/nursery/useExhaustiveDependencies: `queryKey` not required
   useEffect(() => {
@@ -83,7 +89,7 @@ export function useConnectorClient<
     ...query,
     queryKey,
     enabled,
-    gcTime,
-    staleTime,
+    gcTime: 0,
+    staleTime: Infinity,
   })
 }

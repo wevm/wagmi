@@ -9,25 +9,27 @@ const contextValue = { foo: 'bar' } as const
 
 test('context', () => {
   const { context, data, error, signMessage, variables } = useSignMessage({
-    onMutate(variables) {
-      expectTypeOf(variables).toEqualTypeOf<SignMessageVariables>()
-      return contextValue
-    },
-    onError(error, variables, context) {
-      expectTypeOf(variables).toEqualTypeOf<SignMessageVariables>()
-      expectTypeOf(error).toEqualTypeOf<SignMessageError>()
-      expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
-    },
-    onSuccess(data, variables, context) {
-      expectTypeOf(variables).toEqualTypeOf<SignMessageVariables>()
-      expectTypeOf(data).toEqualTypeOf<`0x${string}`>()
-      expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
-    },
-    onSettled(data, error, variables, context) {
-      expectTypeOf(data).toEqualTypeOf<`0x${string}` | undefined>()
-      expectTypeOf(error).toEqualTypeOf<SignMessageError | null>()
-      expectTypeOf(variables).toEqualTypeOf<SignMessageVariables>()
-      expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+    mutation: {
+      onMutate(variables) {
+        expectTypeOf(variables).toEqualTypeOf<SignMessageVariables>()
+        return contextValue
+      },
+      onError(error, variables, context) {
+        expectTypeOf(variables).toEqualTypeOf<SignMessageVariables>()
+        expectTypeOf(error).toEqualTypeOf<SignMessageError>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+      },
+      onSuccess(data, variables, context) {
+        expectTypeOf(variables).toEqualTypeOf<SignMessageVariables>()
+        expectTypeOf(data).toEqualTypeOf<`0x${string}`>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+      },
+      onSettled(data, error, variables, context) {
+        expectTypeOf(data).toEqualTypeOf<`0x${string}` | undefined>()
+        expectTypeOf(error).toEqualTypeOf<SignMessageError | null>()
+        expectTypeOf(variables).toEqualTypeOf<SignMessageVariables>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+      },
     },
   })
 

@@ -10,52 +10,54 @@ const contextValue = { foo: 'bar' } as const
 
 test('context', () => {
   const { context, data, error, write, variables } = useContractWrite({
-    onMutate(variables) {
-      expectTypeOf(variables).toMatchTypeOf<{
-        __mode?: 'prepared'
-        chainId?: number | undefined
-        abi: Abi
-        functionName: string
-        args?: readonly unknown[] | undefined
-      }>()
-      return contextValue
-    },
-    onError(error, variables, context) {
-      expectTypeOf(error).toEqualTypeOf<SendTransactionError>()
-      expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+    mutation: {
+      onMutate(variables) {
+        expectTypeOf(variables).toMatchTypeOf<{
+          __mode?: 'prepared'
+          chainId?: number | undefined
+          abi: Abi
+          functionName: string
+          args?: readonly unknown[] | undefined
+        }>()
+        return contextValue
+      },
+      onError(error, variables, context) {
+        expectTypeOf(error).toEqualTypeOf<SendTransactionError>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
 
-      expectTypeOf(variables).toMatchTypeOf<{
-        __mode?: 'prepared'
-        chainId?: number | undefined
-        abi: Abi
-        functionName: string
-        args?: readonly unknown[] | undefined
-      }>()
-    },
-    onSuccess(data, variables, context) {
-      expectTypeOf(data).toEqualTypeOf<Hash>()
-      expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(variables).toMatchTypeOf<{
+          __mode?: 'prepared'
+          chainId?: number | undefined
+          abi: Abi
+          functionName: string
+          args?: readonly unknown[] | undefined
+        }>()
+      },
+      onSuccess(data, variables, context) {
+        expectTypeOf(data).toEqualTypeOf<Hash>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
 
-      expectTypeOf(variables).toMatchTypeOf<{
-        __mode?: 'prepared'
-        chainId?: number | undefined
-        abi: Abi
-        functionName: string
-        args?: readonly unknown[] | undefined
-      }>()
-    },
-    onSettled(data, error, variables, context) {
-      expectTypeOf(data).toEqualTypeOf<Hash | undefined>()
-      expectTypeOf(error).toEqualTypeOf<SendTransactionError | null>()
-      expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(variables).toMatchTypeOf<{
+          __mode?: 'prepared'
+          chainId?: number | undefined
+          abi: Abi
+          functionName: string
+          args?: readonly unknown[] | undefined
+        }>()
+      },
+      onSettled(data, error, variables, context) {
+        expectTypeOf(data).toEqualTypeOf<Hash | undefined>()
+        expectTypeOf(error).toEqualTypeOf<SendTransactionError | null>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
 
-      expectTypeOf(variables).toMatchTypeOf<{
-        __mode?: 'prepared'
-        chainId?: number | undefined
-        abi: Abi
-        functionName: string
-        args?: readonly unknown[] | undefined
-      }>()
+        expectTypeOf(variables).toMatchTypeOf<{
+          __mode?: 'prepared'
+          chainId?: number | undefined
+          abi: Abi
+          functionName: string
+          args?: readonly unknown[] | undefined
+        }>()
+      },
     },
   })
 

@@ -24,13 +24,14 @@ export type UseEnsAvatarParameters<
   selectData = GetEnsAvatarData,
 > = Evaluate<
   GetEnsAvatarOptions<config> &
-    UseQueryParameters<
-      GetEnsAvatarQueryFnData,
-      GetEnsAvatarError,
-      selectData,
-      GetEnsAvatarQueryKey<config>
-    > &
-    ConfigParameter<config>
+    ConfigParameter<config> & {
+      query?: UseQueryParameters<
+        GetEnsAvatarQueryFnData,
+        GetEnsAvatarError,
+        selectData,
+        GetEnsAvatarQueryKey<config>
+      >
+    }
 >
 
 export type UseEnsAvatarReturnType<selectData = GetEnsAvatarData> =
@@ -43,7 +44,7 @@ export function useEnsAvatar<
 >(
   parameters: UseEnsAvatarParameters<config, selectData> = {},
 ): UseEnsAvatarReturnType<selectData> {
-  const { name, ...query } = parameters
+  const { name, query = {} } = parameters
 
   const config = useConfig(parameters)
   const chainId = useChainId()
@@ -52,7 +53,7 @@ export function useEnsAvatar<
     ...parameters,
     chainId: parameters.chainId ?? chainId,
   })
-  const enabled = Boolean(name && (parameters.enabled ?? true))
+  const enabled = Boolean(name && (query.enabled ?? true))
 
   return useQuery({ ...queryOptions, ...query, enabled })
 }

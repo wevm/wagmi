@@ -98,7 +98,7 @@ export function getSidebar() {
                 link: '/react/api/hooks/useBlockNumber',
               },
               { text: 'useChainId', link: '/react/api/hooks/useChainId' },
-              { text: 'useClient', link: '/react/api/hooks/useClient' },
+              { text: 'useClient 🚧', link: '/react/api/hooks/useClient' },
               { text: 'useConfig', link: '/react/api/hooks/useConfig' },
               { text: 'useConnect', link: '/react/api/hooks/useConnect' },
               {
@@ -442,7 +442,10 @@ export function getSidebar() {
     '/dev': [
       {
         text: 'Dev',
-        items: [{ text: 'Contributing', link: '/dev/contributing' }],
+        items: [
+          { text: 'Contributing', link: '/dev/contributing' },
+          { text: 'Creating Connectors 🚧', link: '/dev/creating-connectors' },
+        ],
       },
     ],
   } satisfies DefaultTheme.Sidebar

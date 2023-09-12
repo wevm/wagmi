@@ -26,13 +26,16 @@ export type UseSendTransactionParameters<
   config extends Config = Config,
   context = unknown,
 > = Evaluate<
-  UseMutationParameters<
-    SendTransactionData,
-    SendTransactionError,
-    SendTransactionVariables<config, config['chains'][number]['id']>,
-    context
-  > &
-    ConfigParameter<config>
+  ConfigParameter<config> & {
+    mutation?:
+      | UseMutationParameters<
+          SendTransactionData,
+          SendTransactionError,
+          SendTransactionVariables<config, config['chains'][number]['id']>,
+          context
+        >
+      | undefined
+  }
 >
 
 export type UseSendTransactionReturnType<
@@ -57,11 +60,13 @@ export function useSendTransaction<
 >(
   parameters: UseSendTransactionParameters<config, context> = {},
 ): UseSendTransactionReturnType<config, context> {
+  const { mutation } = parameters
+
   const config = useConfig(parameters)
 
   const mutationOptions = sendTransactionMutationOptions(config)
   const { mutate, mutateAsync, ...result } = useMutation({
-    ...parameters,
+    ...mutation,
     ...mutationOptions,
   })
 

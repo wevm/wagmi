@@ -178,4 +178,4 @@ import { type UseEnsNameReturnType } from 'wagmi'
 
 ## Action
 
-[getEnsName](/core/api/actions/getEnsName)
+[`getEnsName`](/core/api/actions/getEnsName)

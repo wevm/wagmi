@@ -34,13 +34,15 @@ export type UseBlockNumberParameters<
   selectData = GetBlockNumberData,
 > = Evaluate<
   GetBlockNumberOptions<config> &
-    UseQueryParameters<
-      GetBlockNumberQueryFnData,
-      GetBlockNumberError,
-      selectData,
-      GetBlockNumberQueryKey<config>
-    > &
     ConfigParameter<config> & {
+      query?:
+        | UseQueryParameters<
+            GetBlockNumberQueryFnData,
+            GetBlockNumberError,
+            selectData,
+            GetBlockNumberQueryKey<config>
+          >
+        | undefined
       watch?:
         | boolean
         | Omit<
@@ -62,14 +64,17 @@ export function useBlockNumber<
 >(
   parameters: UseBlockNumberParameters<config, chainId, selectData> = {},
 ): UseBlockNumberReturnType<selectData> {
-  const { enabled = true, watch, ...query } = parameters
+  const { query = {}, watch } = parameters
 
   const config = useConfig(parameters)
   const queryClient = useQueryClient()
   const configChainId = useChainId()
   const chainId = parameters.chainId ?? configChainId
 
-  const queryOptions = getBlockNumberQueryOptions(config, { chainId })
+  const queryOptions = getBlockNumberQueryOptions(config, {
+    ...parameters,
+    chainId,
+  })
 
   useWatchBlockNumber({
     ...{
@@ -80,12 +85,13 @@ export function useBlockNumber<
       ? (watch as UseWatchBlockNumberParameters)
       : {}),
     enabled: Boolean(
-      enabled && (typeof watch === 'object' ? watch.enabled : watch),
+      (query.enabled ?? true) &&
+        (typeof watch === 'object' ? watch.enabled : watch),
     ),
     onBlockNumber(blockNumber) {
       queryClient.setQueryData(queryOptions.queryKey, blockNumber)
     },
   })
 
-  return useQuery({ ...queryOptions, ...query, enabled })
+  return useQuery({ ...queryOptions, ...query })
 }

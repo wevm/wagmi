@@ -30,13 +30,16 @@ export type UseEstimateFeesPerGasParameters<
   selectData = EstimateFeesPerGasData<type>,
 > = Evaluate<
   EstimateFeesPerGasOptions<type, config> &
-    UseQueryParameters<
-      EstimateFeesPerGasQueryFnData<type>,
-      EstimateFeesPerGasError,
-      selectData,
-      EstimateFeesPerGasQueryKey<config, type>
-    > &
-    ConfigParameter<config>
+    ConfigParameter<config> & {
+      query?:
+        | UseQueryParameters<
+            EstimateFeesPerGasQueryFnData<type>,
+            EstimateFeesPerGasError,
+            selectData,
+            EstimateFeesPerGasQueryKey<config, type>
+          >
+        | undefined
+    }
 >
 
 export type UseEstimateFeesPerGasReturnType<
@@ -52,6 +55,8 @@ export function useEstimateFeesPerGas<
 >(
   parameters: UseEstimateFeesPerGasParameters<type, config, selectData> = {},
 ): UseEstimateFeesPerGasReturnType<type, selectData> {
+  const { query = {} } = parameters
+
   const config = useConfig(parameters)
   const chainId = useChainId()
 
@@ -60,5 +65,5 @@ export function useEstimateFeesPerGas<
     chainId: parameters.chainId ?? chainId,
   })
 
-  return useQuery({ ...queryOptions, ...parameters })
+  return useQuery({ ...queryOptions, ...query })
 }

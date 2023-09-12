@@ -199,4 +199,4 @@ import { type UseBalanceReturnType } from 'wagmi'
 
 ## Action
 
-[getBalance](/core/api/actions/getBalance)
+[`getBalance`](/core/api/actions/getBalance)

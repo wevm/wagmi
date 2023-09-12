@@ -139,5 +139,5 @@ import { type UseBlockNumberReturnType } from 'wagmi'
 
 ## Action
 
-- [getBlockNumber](/core/api/actions/getBlockNumber)
-- [watchBlockNumber](/core/api/actions/watchBlockNumber)
+- [`getBlockNumber`](/core/api/actions/getBlockNumber)
+- [`watchBlockNumber`](/core/api/actions/watchBlockNumber)

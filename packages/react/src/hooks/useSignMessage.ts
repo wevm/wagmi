@@ -19,13 +19,16 @@ import type {
 import { useConfig } from './useConfig.js'
 
 export type UseSignMessageParameters<context = unknown> = Evaluate<
-  UseMutationParameters<
-    SignMessageData,
-    SignMessageError,
-    SignMessageVariables,
-    context
-  > &
-    ConfigParameter
+  ConfigParameter & {
+    mutation?:
+      | UseMutationParameters<
+          SignMessageData,
+          SignMessageError,
+          SignMessageVariables,
+          context
+        >
+      | undefined
+  }
 >
 
 export type UseSignMessageReturnType<context = unknown> = Evaluate<
@@ -44,11 +47,13 @@ export type UseSignMessageReturnType<context = unknown> = Evaluate<
 export function useSignMessage<context = unknown>(
   parameters: UseSignMessageParameters<context> = {},
 ): UseSignMessageReturnType<context> {
+  const { mutation } = parameters
+
   const config = useConfig(parameters)
 
   const mutationOptions = signMessageMutationOptions(config)
   const { mutate, mutateAsync, ...result } = useMutation({
-    ...parameters,
+    ...mutation,
     ...mutationOptions,
   })
 

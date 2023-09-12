@@ -39,13 +39,16 @@ export type UseContractSimulateParameters<
   chainId extends config['chains'][number]['id'] | undefined = undefined,
   selectData = SimulateContractData<abi, functionName, args, config, chainId>,
 > = SimulateContractOptions<abi, functionName, args, config, chainId> &
-  UseQueryParameters<
-    SimulateContractQueryFnData<abi, functionName, args, config, chainId>,
-    SimulateContractError,
-    selectData,
-    SimulateContractQueryKey<abi, functionName, args, config, chainId>
-  > &
-  ConfigParameter<config>
+  ConfigParameter<config> & {
+    query?:
+      | UseQueryParameters<
+          SimulateContractQueryFnData<abi, functionName, args, config, chainId>,
+          SimulateContractError,
+          selectData,
+          SimulateContractQueryKey<abi, functionName, args, config, chainId>
+        >
+      | undefined
+  }
 
 export type UseContractSimulateReturnType<
   abi extends Abi | readonly unknown[] = Abi,
@@ -76,14 +79,14 @@ export function useContractSimulate<
   chainId extends config['chains'][number]['id'] | undefined = undefined,
   selectData = SimulateContractData<abi, functionName, args, config, chainId>,
 >(
-  parameters?: UseContractSimulateParameters<
+  parameters: UseContractSimulateParameters<
     abi,
     functionName,
     args,
     config,
     chainId,
     selectData
-  >,
+  > = {} as any,
 ): UseContractSimulateReturnType<
   abi,
   functionName,
@@ -91,17 +94,13 @@ export function useContractSimulate<
   config,
   chainId,
   selectData
->
-
-export function useContractSimulate(
-  parameters: UseContractSimulateParameters<any, any, any, any, any, any> = {},
-): UseContractSimulateReturnType {
-  const { abi, address, connector, functionName, ...query } = parameters
+> {
+  const { abi, address, connector, functionName, query = {} } = parameters
 
   const config = useConfig(parameters)
   const { data: connectorClient } = useConnectorClient({
     connector,
-    enabled: parameters.account === undefined,
+    query: { enabled: parameters.account === undefined },
   })
   const chainId = useChainId()
 
@@ -111,7 +110,7 @@ export function useContractSimulate(
     chainId: parameters.chainId ?? chainId,
   })
   const enabled = Boolean(
-    abi && address && functionName && (parameters.enabled ?? true),
+    abi && address && functionName && (query.enabled ?? true),
   )
 
   return useQuery({ ...queryOptions, ...query, enabled })

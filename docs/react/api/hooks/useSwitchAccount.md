@@ -51,3 +51,7 @@ function App() {
 ```ts
 import { type UseSwitchAccountReturnType } from 'wagmi'
 ```
+
+## Action
+
+[`switchAccount`](/core/api/actions/switchAccount)

@@ -28,13 +28,16 @@ export type UseBalanceParameters<
   selectData = GetBalanceData,
 > = Evaluate<
   GetBalanceOptions<config> &
-    UseQueryParameters<
-      GetBalanceQueryFnData,
-      GetBalanceError,
-      selectData,
-      GetBalanceQueryKey<config>
-    > &
-    ConfigParameter<config>
+    ConfigParameter<config> & {
+      query?:
+        | UseQueryParameters<
+            GetBalanceQueryFnData,
+            GetBalanceError,
+            selectData,
+            GetBalanceQueryKey<config>
+          >
+        | undefined
+    }
 >
 
 export type UseBalanceReturnType<selectData = GetBalanceData> =
@@ -47,7 +50,7 @@ export function useBalance<
 >(
   parameters: UseBalanceParameters<config, selectData> = {},
 ): UseBalanceReturnType<selectData> {
-  const { address, ...query } = parameters
+  const { address, query = {} } = parameters
 
   const config = useConfig(parameters)
   const chainId = useChainId()
@@ -56,7 +59,7 @@ export function useBalance<
     ...parameters,
     chainId: parameters.chainId ?? chainId,
   })
-  const enabled = Boolean(address && (parameters.enabled ?? true))
+  const enabled = Boolean(address && (query.enabled ?? true))
 
   return useQuery({ ...queryOptions, ...query, enabled })
 }

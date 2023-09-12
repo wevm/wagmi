@@ -209,4 +209,4 @@ import { type UseEnsAddressReturnType } from 'wagmi'
 
 ## Action
 
-[getEnsAddress](/core/api/actions/getEnsAddress)
+[`getEnsAddress`](/core/api/actions/getEnsAddress)

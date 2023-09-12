@@ -1,5 +1,5 @@
 import { connect, disconnect } from '@wagmi/core'
-import { abi, address, config } from '@wagmi/test'
+import { abi, address, config, wait } from '@wagmi/test'
 import { renderHook, waitFor } from '@wagmi/test/react'
 import { expect, test } from 'vitest'
 
@@ -85,4 +85,11 @@ test('default', async () => {
   `)
 
   await disconnect(config, { connector })
+})
+
+test('behavior: disabled when properties missing', async () => {
+  const { result } = renderHook(() => useContractSimulate())
+
+  await wait(100)
+  await waitFor(() => expect(result.current.isPending).toBeTruthy())
 })

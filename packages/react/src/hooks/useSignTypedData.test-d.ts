@@ -12,25 +12,27 @@ const contextValue = { foo: 'bar' } as const
 
 test('context', () => {
   const { context, data, error, signTypedData, variables } = useSignTypedData({
-    onMutate(variables) {
-      expectTypeOf(variables).toMatchTypeOf<SignTypedDataVariables>()
-      return contextValue
-    },
-    onError(error, variables, context) {
-      expectTypeOf(variables).toMatchTypeOf<SignTypedDataVariables>()
-      expectTypeOf(error).toEqualTypeOf<SignTypedDataError>()
-      expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
-    },
-    onSuccess(data, variables, context) {
-      expectTypeOf(variables).toMatchTypeOf<SignTypedDataVariables>()
-      expectTypeOf(data).toEqualTypeOf<SignTypedDataReturnType>()
-      expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
-    },
-    onSettled(data, error, variables, context) {
-      expectTypeOf(data).toEqualTypeOf<SignTypedDataReturnType | undefined>()
-      expectTypeOf(error).toEqualTypeOf<SignTypedDataError | null>()
-      expectTypeOf(variables).toMatchTypeOf<SignTypedDataVariables>()
-      expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+    mutation: {
+      onMutate(variables) {
+        expectTypeOf(variables).toMatchTypeOf<SignTypedDataVariables>()
+        return contextValue
+      },
+      onError(error, variables, context) {
+        expectTypeOf(variables).toMatchTypeOf<SignTypedDataVariables>()
+        expectTypeOf(error).toEqualTypeOf<SignTypedDataError>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+      },
+      onSuccess(data, variables, context) {
+        expectTypeOf(variables).toMatchTypeOf<SignTypedDataVariables>()
+        expectTypeOf(data).toEqualTypeOf<SignTypedDataReturnType>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+      },
+      onSettled(data, error, variables, context) {
+        expectTypeOf(data).toEqualTypeOf<SignTypedDataReturnType | undefined>()
+        expectTypeOf(error).toEqualTypeOf<SignTypedDataError | null>()
+        expectTypeOf(variables).toMatchTypeOf<SignTypedDataVariables>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+      },
     },
   })
 

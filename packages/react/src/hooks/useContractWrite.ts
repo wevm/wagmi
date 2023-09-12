@@ -21,19 +21,22 @@ import { useConfig } from './useConfig.js'
 export type UseContractWriteParameters<
   config extends Config = Config,
   context = unknown,
-> = UseMutationParameters<
-  WriteContractData,
-  WriteContractError,
-  WriteContractVariables<
-    Abi,
-    string,
-    readonly unknown[],
-    config,
-    config['chains'][number]['id']
-  >,
-  context
-> &
-  ConfigParameter<config>
+> = ConfigParameter<config> & {
+  mutation?:
+    | UseMutationParameters<
+        WriteContractData,
+        WriteContractError,
+        WriteContractVariables<
+          Abi,
+          string,
+          readonly unknown[],
+          config,
+          config['chains'][number]['id']
+        >,
+        context
+      >
+    | undefined
+}
 
 export type UseContractWriteReturnType<
   config extends Config = Config,
@@ -61,11 +64,13 @@ export function useContractWrite<
 >(
   parameters: UseContractWriteParameters<config, context> = {},
 ): UseContractWriteReturnType<config, context> {
+  const { mutation } = parameters
+
   const config = useConfig(parameters)
 
   const mutationOptions = writeContractMutationOptions(config)
   const { mutate, mutateAsync, ...result } = useMutation({
-    ...parameters,
+    ...mutation,
     ...mutationOptions,
   })
 

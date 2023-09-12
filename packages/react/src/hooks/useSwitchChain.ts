@@ -22,13 +22,16 @@ export type UseSwitchChainParameters<
   config extends Config = Config,
   context = unknown,
 > = Evaluate<
-  UseMutationParameters<
-    SwitchChainData<config, config['chains'][number]['id']>,
-    SwitchChainError,
-    SwitchChainVariables<config, config['chains'][number]['id']>,
-    context
-  > &
-    ConfigParameter<config>
+  ConfigParameter<config> & {
+    mutation?:
+      | UseMutationParameters<
+          SwitchChainData<config, config['chains'][number]['id']>,
+          SwitchChainError,
+          SwitchChainVariables<config, config['chains'][number]['id']>,
+          context
+        >
+      | undefined
+  }
 >
 
 export type UseSwitchChainReturnType<
@@ -54,11 +57,13 @@ export function useSwitchChain<
 >(
   parameters: UseSwitchChainParameters<config, context> = {},
 ): UseSwitchChainReturnType<config, context> {
+  const { mutation } = parameters
+
   const config = useConfig(parameters)
 
   const mutationOptions = switchChainMutationOptions(config)
   const { mutate, mutateAsync, ...result } = useMutation({
-    ...parameters,
+    ...mutation,
     ...mutationOptions,
   })
 

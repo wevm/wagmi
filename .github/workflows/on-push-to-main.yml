@@ -1,4 +1,4 @@
-name: On Push To Main
+name: Main
 on:
   push:
     branches: [main]
@@ -16,6 +16,8 @@ jobs:
   changesets:
     name: Changesets
     needs: verify
+    permissions:
+      id-token: write
     runs-on: ubuntu-latest
     timeout-minutes: 5
 

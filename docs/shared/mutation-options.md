@@ -11,35 +11,37 @@ const TVariables = 'TVariables'
 
 ---
 
-[TanStack Query mutation docs](https://tanstack.com/query/latest/docs/react/reference/useMutation)
+### mutation
 
-### gcTime
+TanStack Query parameters. See the [TanStack Query mutation docs](https://tanstack.com/query/v5/docs/react/reference/useMutation) for more info.
+
+#### gcTime
 
 `number | Infinity | undefined`
 
 - The time in milliseconds that unused/inactive cache data remains in memory. When a mutation's cache becomes unused or inactive, that cache data will be garbage collected after this duration. When different cache times are specified, the longest one will be used.
 - If set to `Infinity`, will disable garbage collection
 
-### meta
+#### meta
 
 `Record<string, unknown> | undefined`
 
 If set, stores additional information on the mutation cache entry that can be used as needed. It will be accessible wherever [`{{mutate}}`](#mutate) is available (e.g. [`onError`](#onerror), [`onSuccess`](#onsuccess) functions).
 
-### networkMode
+#### networkMode
 
 `'online' | 'always' | 'offlineFirst' | undefined`
 
 - defaults to `'online'`
-- see [Network Mode](https://tanstack.com/query/latest/docs/react/guides/network-mode) for more information.
+- see [Network Mode](https://tanstack.com/query/v5/docs/react/guides/network-mode) for more information.
 
-### onError
+#### onError
 
 `((error: {{TError}}, variables: {{TVariables}}, context?: context | undefined) => Promise<unknown> | unknown) | undefined`
 
 This function will fire if the mutation encounters an error and will be passed the error.
 
-### onMutate
+#### onMutate
 
 `((variables: {{TVariables}}) => Promise<context | void> | context | void) | undefined`
 
@@ -47,25 +49,25 @@ This function will fire if the mutation encounters an error and will be passed t
 - Useful to perform optimistic updates to a resource in hopes that the mutation succeeds
 - The value returned from this function will be passed to both the `onError` and `onSettled` functions in the event of a mutation failure and can be useful for rolling back optimistic updates.
 
-### onSuccess
+#### onSuccess
 
 `((data: {{TData}}, variables: {{TVariables}}, context?: context | undefined) => Promise<unknown> | unknown) | undefined`
 
 This function will fire when the mutation is successful and will be passed the mutation's result.
 
-### onSettled
+#### onSettled
 
 `((data: {{TData}}, error: {{TError}}, variables: {{TVariables}}, context?: context | undefined) => Promise<unknown> | unknown) | undefined`
 
 This function will fire when the mutation is either successfully fetched or encounters an error and be passed either the data or error
 
-### queryClient
+#### queryClient
 
 `QueryClient`
 
 Use this to use a custom `QueryClient`. Otherwise, the one from the nearest context will be used.
 
-### retry
+#### retry
 
 `boolean | number | ((failureCount: number, error: {{TError}}) => boolean) | undefined`
 
@@ -74,7 +76,7 @@ Use this to use a custom `QueryClient`. Otherwise, the one from the nearest cont
 - If `true`, failed mutations will retry infinitely.
 - If set to an `number`, e.g. `3`, failed mutations will retry until the failed mutations count meets that number.
 
-### retryDelay
+#### retryDelay
 
 `number | ((retryAttempt: number, error: {{TError}}) => number) | undefined`
 

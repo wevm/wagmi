@@ -25,13 +25,16 @@ export type UseTransactionParameters<
   selectData = GetTransactionData<config, chainId>,
 > = Evaluate<
   GetTransactionOptions<config, chainId> &
-    UseQueryParameters<
-      GetTransactionQueryFnData<config, chainId>,
-      GetTransactionError,
-      selectData,
-      GetTransactionQueryKey<config, chainId>
-    > &
-    ConfigParameter<config>
+    ConfigParameter<config> & {
+      query?:
+        | UseQueryParameters<
+            GetTransactionQueryFnData<config, chainId>,
+            GetTransactionError,
+            selectData,
+            GetTransactionQueryKey<config, chainId>
+          >
+        | undefined
+    }
 >
 
 export type UseTransactionReturnType<
@@ -48,7 +51,7 @@ export function useTransaction<
 >(
   parameters: UseTransactionParameters<config, chainId, selectData> = {},
 ): UseTransactionReturnType<config, chainId, selectData> {
-  const { blockHash, blockNumber, blockTag, hash, ...query } = parameters
+  const { blockHash, blockNumber, blockTag, hash, query = {} } = parameters
 
   const config = useConfig(parameters)
   const chainId = useChainId()
@@ -58,8 +61,7 @@ export function useTransaction<
     chainId: parameters.chainId ?? chainId,
   })
   const enabled = Boolean(
-    !(blockHash && blockNumber && blockTag && hash) &&
-      (parameters.enabled ?? true),
+    !(blockHash && blockNumber && blockTag && hash) && (query.enabled ?? true),
   )
 
   return useQuery({ ...queryOptions, ...query, enabled })

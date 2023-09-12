@@ -9,33 +9,35 @@ const contextValue = { foo: 'bar' } as const
 test('context', () => {
   const { context, data, error, sendTransaction, variables } =
     useSendTransaction({
-      onMutate(variables) {
-        expectTypeOf(variables).toMatchTypeOf<
-          { chainId?: number | undefined } | undefined
-        >()
-        return contextValue
-      },
-      onError(error, variables, context) {
-        expectTypeOf(variables).toMatchTypeOf<{
-          chainId?: number | undefined
-        }>()
-        expectTypeOf(error).toEqualTypeOf<SendTransactionError>()
-        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
-      },
-      onSuccess(data, variables, context) {
-        expectTypeOf(variables).toMatchTypeOf<{
-          chainId?: number | undefined
-        }>()
-        expectTypeOf(data).toEqualTypeOf<Hash>()
-        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
-      },
-      onSettled(data, error, variables, context) {
-        expectTypeOf(data).toEqualTypeOf<Hash | undefined>()
-        expectTypeOf(error).toEqualTypeOf<SendTransactionError | null>()
-        expectTypeOf(variables).toMatchTypeOf<{
-          chainId?: number | undefined
-        }>()
-        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+      mutation: {
+        onMutate(variables) {
+          expectTypeOf(variables).toMatchTypeOf<
+            { chainId?: number | undefined } | undefined
+          >()
+          return contextValue
+        },
+        onError(error, variables, context) {
+          expectTypeOf(variables).toMatchTypeOf<{
+            chainId?: number | undefined
+          }>()
+          expectTypeOf(error).toEqualTypeOf<SendTransactionError>()
+          expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        },
+        onSuccess(data, variables, context) {
+          expectTypeOf(variables).toMatchTypeOf<{
+            chainId?: number | undefined
+          }>()
+          expectTypeOf(data).toEqualTypeOf<Hash>()
+          expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        },
+        onSettled(data, error, variables, context) {
+          expectTypeOf(data).toEqualTypeOf<Hash | undefined>()
+          expectTypeOf(error).toEqualTypeOf<SendTransactionError | null>()
+          expectTypeOf(variables).toMatchTypeOf<{
+            chainId?: number | undefined
+          }>()
+          expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        },
       },
     })
 

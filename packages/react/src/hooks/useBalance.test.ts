@@ -1,4 +1,4 @@
-import { accounts, chain, testClient } from '@wagmi/test'
+import { accounts, chain, testClient, wait } from '@wagmi/test'
 import { renderHook, waitFor } from '@wagmi/test/react'
 import { type Address, parseEther } from 'viem'
 import { beforeEach, expect, test } from 'vitest'
@@ -299,4 +299,11 @@ test('behavior: address: undefined -> defined', async () => {
       "status": "success",
     }
   `)
+})
+
+test('behavior: disabled when properties missing', async () => {
+  const { result } = renderHook(() => useBalance())
+
+  await wait(100)
+  await waitFor(() => expect(result.current.isPending).toBeTruthy())
 })

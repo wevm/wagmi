@@ -11,7 +11,7 @@ const TVariables = 'TVariables'
 
 ---
 
-[TanStack Query mutation docs](https://tanstack.com/query/latest/docs/react/reference/useMutation)
+[TanStack Query mutation docs](https://tanstack.com/query/v5/docs/react/reference/useMutation)
 
 ### {{mutate}}
 

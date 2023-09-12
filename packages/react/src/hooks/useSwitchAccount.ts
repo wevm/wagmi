@@ -28,13 +28,16 @@ export type UseSwitchAccountParameters<
   config extends Config = Config,
   context = unknown,
 > = Evaluate<
-  UseMutationParameters<
-    SwitchAccountData<config>,
-    SwitchAccountError,
-    SwitchAccountVariables,
-    context
-  > &
-    ConfigParameter<config>
+  ConfigParameter<config> & {
+    mutation?:
+      | UseMutationParameters<
+          SwitchAccountData<config>,
+          SwitchAccountError,
+          SwitchAccountVariables,
+          context
+        >
+      | undefined
+  }
 >
 
 export type UseSwitchAccountReturnType<
@@ -60,11 +63,13 @@ export function useSwitchAccount<
 >(
   parameters: UseSwitchAccountParameters<config, context> = {},
 ): UseSwitchAccountReturnType<config, context> {
+  const { mutation } = parameters
+
   const config = useConfig(parameters)
 
   const mutationOptions = switchAccountMutationOptions(config)
   const { mutate, mutateAsync, ...result } = useMutation({
-    ...parameters,
+    ...mutation,
     ...mutationOptions,
   })
 

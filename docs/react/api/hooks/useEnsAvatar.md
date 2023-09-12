@@ -211,4 +211,4 @@ import { type UseEnsAvatarReturnType } from 'wagmi'
 
 ## Action
 
-[getEnsAvatar](/core/api/actions/getEnsAvatar)
+[`getEnsAvatar`](/core/api/actions/getEnsAvatar)

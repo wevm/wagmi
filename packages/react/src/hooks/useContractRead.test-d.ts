@@ -14,9 +14,11 @@ test('select data', async () => {
     abi: abi.erc20,
     functionName: 'balanceOf',
     args: ['0x'],
-    select(data) {
-      expectTypeOf(data).toEqualTypeOf<bigint>()
-      return data?.toString()
+    query: {
+      select(data) {
+        expectTypeOf(data).toEqualTypeOf<bigint>()
+        return data?.toString()
+      },
     },
   })
   expectTypeOf(result.data).toEqualTypeOf<string | undefined>()

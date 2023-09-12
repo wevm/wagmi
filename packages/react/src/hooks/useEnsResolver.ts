@@ -24,13 +24,16 @@ export type UseEnsResolverParameters<
   selectData = GetEnsResolverData,
 > = Evaluate<
   GetEnsResolverOptions<config> &
-    UseQueryParameters<
-      GetEnsResolverQueryFnData,
-      GetEnsResolverError,
-      selectData,
-      GetEnsResolverQueryKey<config>
-    > &
-    ConfigParameter<config>
+    ConfigParameter<config> & {
+      query?:
+        | UseQueryParameters<
+            GetEnsResolverQueryFnData,
+            GetEnsResolverError,
+            selectData,
+            GetEnsResolverQueryKey<config>
+          >
+        | undefined
+    }
 >
 
 export type UseEnsResolverReturnType<selectData = GetEnsResolverData> =
@@ -43,7 +46,7 @@ export function useEnsResolver<
 >(
   parameters: UseEnsResolverParameters<config, selectData> = {},
 ): UseEnsResolverReturnType<selectData> {
-  const { name, ...query } = parameters
+  const { name, query = {} } = parameters
 
   const config = useConfig(parameters)
   const chainId = useChainId()
@@ -52,7 +55,7 @@ export function useEnsResolver<
     ...parameters,
     chainId: parameters.chainId ?? chainId,
   })
-  const enabled = Boolean(name && (parameters.enabled ?? true))
+  const enabled = Boolean(name && (query.enabled ?? true))
 
   return useQuery({ ...queryOptions, ...query, enabled })
 }

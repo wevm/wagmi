@@ -1,4 +1,4 @@
-import { abi, address, chain } from '@wagmi/test'
+import { abi, address, chain, wait } from '@wagmi/test'
 import { renderHook, waitFor } from '@wagmi/test/react'
 import { expect, test } from 'vitest'
 
@@ -111,4 +111,9 @@ test('parameters: chainId', async () => {
   `)
 })
 
-test.todo('behavior: address: undefined -> defined')
+test('behavior: disabled when properties missing', async () => {
+  const { result } = renderHook(() => useContractRead())
+
+  await wait(100)
+  await waitFor(() => expect(result.current.isPending).toBeTruthy())
+})

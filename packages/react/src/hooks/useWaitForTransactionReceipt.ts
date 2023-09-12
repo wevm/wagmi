@@ -29,13 +29,16 @@ export type UseWaitForTransactionReceiptParameters<
   selectData = WaitForTransactionReceiptData<config, chainId>,
 > = Evaluate<
   WaitForTransactionReceiptOptions<config, chainId> &
-    UseQueryParameters<
-      WaitForTransactionReceiptQueryFnData<config, chainId>,
-      WaitForTransactionReceiptError,
-      selectData,
-      WaitForTransactionReceiptQueryKey<config, chainId>
-    > &
-    ConfigParameter<config>
+    ConfigParameter<config> & {
+      query?:
+        | UseQueryParameters<
+            WaitForTransactionReceiptQueryFnData<config, chainId>,
+            WaitForTransactionReceiptError,
+            selectData,
+            WaitForTransactionReceiptQueryKey<config, chainId>
+          >
+        | undefined
+    }
 >
 
 export type UseWaitForTransactionReceiptReturnType<
@@ -56,7 +59,7 @@ export function useWaitForTransactionReceipt<
     selectData
   > = {},
 ): UseWaitForTransactionReceiptReturnType<config, chainId, selectData> {
-  const { hash, ...query } = parameters
+  const { hash, query = {} } = parameters
 
   const config = useConfig(parameters)
   const chainId = useChainId()
@@ -65,7 +68,7 @@ export function useWaitForTransactionReceipt<
     ...parameters,
     chainId: parameters.chainId ?? chainId,
   })
-  const enabled = Boolean(!hash && (parameters.enabled ?? true))
+  const enabled = Boolean(!hash && (query.enabled ?? true))
 
   return useQuery({ ...queryOptions, ...query, enabled })
 }

@@ -9,7 +9,7 @@ const TError = 'TError'
 
 ---
 
-[TanStack Query query docs](https://tanstack.com/query/latest/docs/react/reference/useQuery)
+[TanStack Query query docs](https://tanstack.com/query/v5/docs/react/reference/useQuery)
 
 ### data
 
@@ -65,7 +65,7 @@ The sum of all errors.
 - `fetching` Is `true` whenever the queryFn is executing, which includes initial `pending` as well as background refetches.
 - `paused` The query wanted to fetch, but has been `paused`.
 - `idle` The query is not fetching.
-- See [Network Mode](https://tanstack.com/query/latest/docs/react/guides/network-mode) for more information.
+- See [Network Mode](https://tanstack.com/query/v5/docs/react/guides/network-mode) for more information.
 
 ### isError / isPending / isSuccess
 

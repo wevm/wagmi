@@ -19,13 +19,16 @@ import type {
 import { useConfig } from './useConfig.js'
 
 export type UseSignTypedDataParameters<context = unknown> = Evaluate<
-  UseMutationParameters<
-    SignTypedDataData,
-    SignTypedDataError,
-    SignTypedDataVariables,
-    context
-  > &
-    ConfigParameter
+  ConfigParameter & {
+    mutation?:
+      | UseMutationParameters<
+          SignTypedDataData,
+          SignTypedDataError,
+          SignTypedDataVariables,
+          context
+        >
+      | undefined
+  }
 >
 
 export type UseSignTypedDataReturnType<context = unknown> = Evaluate<
@@ -44,11 +47,13 @@ export type UseSignTypedDataReturnType<context = unknown> = Evaluate<
 export function useSignTypedData<context = unknown>(
   parameters: UseSignTypedDataParameters<context> = {},
 ): UseSignTypedDataReturnType<context> {
+  const { mutation } = parameters
+
   const config = useConfig(parameters)
 
   const mutationOptions = signTypedDataMutationOptions(config)
   const { mutate, mutateAsync, ...result } = useMutation({
-    ...parameters,
+    ...mutation,
     ...mutationOptions,
   })
 

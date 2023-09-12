@@ -9,7 +9,7 @@ import type {
   GetWalletClientError,
   ResolvedRegister,
 } from '@wagmi/core'
-import { type Evaluate } from '@wagmi/core/internal'
+import { type Evaluate, type Omit } from '@wagmi/core/internal'
 import {
   type GetWalletClientData,
   type GetWalletClientOptions,
@@ -35,13 +35,19 @@ export type UseWalletClientParameters<
   selectData = GetWalletClientData<config, chainId>,
 > = Evaluate<
   GetWalletClientOptions<config, chainId> &
-    UseQueryParameters<
-      GetWalletClientQueryFnData<config, chainId>,
-      GetWalletClientError,
-      selectData,
-      GetWalletClientQueryKey<config, chainId>
-    > &
-    ConfigParameter<config>
+    ConfigParameter<config> & {
+      query?: Evaluate<
+        Omit<
+          UseQueryParameters<
+            GetWalletClientQueryFnData<config, chainId>,
+            GetWalletClientError,
+            selectData,
+            GetWalletClientQueryKey<config, chainId>
+          >,
+          'gcTime' | 'staleTime'
+        >
+      >
+    }
 >
 
 export type UseWalletClientReturnType<
@@ -58,9 +64,9 @@ export function useWalletClient<
 >(
   parameters: UseWalletClientParameters<config, chainId, selectData> = {},
 ): UseWalletClientReturnType<config, chainId, selectData> {
-  const { gcTime = 0, staleTime = Infinity, ...query } = parameters
+  const { query = {}, ...rest } = parameters
 
-  const config = useConfig(parameters)
+  const config = useConfig(rest)
   const queryClient = useQueryClient()
   const { address, connector, status } = useAccount()
   const chainId = useChainId()
@@ -70,9 +76,7 @@ export function useWalletClient<
     chainId: parameters.chainId ?? chainId,
     connector: parameters.connector ?? connector,
   })
-  const enabled = Boolean(
-    status !== 'disconnected' && (parameters.enabled ?? true),
-  )
+  const enabled = Boolean(status !== 'disconnected' && (query.enabled ?? true))
 
   // biome-ignore lint/nursery/useExhaustiveDependencies: `queryKey` not required
   useEffect(() => {
@@ -86,7 +90,7 @@ export function useWalletClient<
     ...query,
     queryKey,
     enabled,
-    gcTime,
-    staleTime,
+    gcTime: 0,
+    staleTime: Infinity,
   })
 }

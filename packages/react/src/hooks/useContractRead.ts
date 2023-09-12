@@ -44,13 +44,16 @@ export type UseContractReadParameters<
   selectData = ReadContractData<abi, functionName, args>,
 > = UnionEvaluate<
   ReadContractOptions<abi, functionName, args, config> &
-    UseQueryParameters<
-      ReadContractQueryFnData<abi, functionName, args>,
-      ReadContractError,
-      selectData,
-      ReadContractQueryKey<config, abi, functionName, args>
-    > &
-    ConfigParameter<config>
+    ConfigParameter<config> & {
+      query?:
+        | UseQueryParameters<
+            ReadContractQueryFnData<abi, functionName, args>,
+            ReadContractError,
+            selectData,
+            ReadContractQueryKey<config, abi, functionName, args>
+          >
+        | undefined
+    }
 >
 
 export type UseContractReadReturnType<
@@ -75,28 +78,24 @@ export function useContractRead<
   config extends Config = ResolvedRegister['config'],
   selectData = ReadContractData<abi, functionName, args>,
 >(
-  parameters?: UseContractReadParameters<
+  parameters: UseContractReadParameters<
     abi,
     functionName,
     args,
     config,
     selectData
-  >,
-): UseContractReadReturnType<abi, functionName, args, selectData>
-
-export function useContractRead(
-  parameters: UseContractReadParameters = {},
-): UseContractReadReturnType {
-  const { address, abi, functionName, ...query } = parameters
+  > = {} as any,
+): UseContractReadReturnType<abi, functionName, args, selectData> {
+  const { abi, address, functionName, query = {} } = parameters
   const config = useConfig(parameters)
   const chainId = useChainId()
 
   const queryOptions = readContractQueryOptions(config, {
-    ...parameters,
+    ...(parameters as any),
     chainId: parameters.chainId ?? chainId,
   })
   const enabled = Boolean(
-    address && abi && functionName && (parameters.enabled ?? true),
+    address && abi && functionName && (query.enabled ?? true),
   )
 
   return useQuery({

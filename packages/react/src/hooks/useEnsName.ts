@@ -24,13 +24,16 @@ export type UseEnsNameParameters<
   selectData = GetEnsNameData,
 > = Evaluate<
   GetEnsNameOptions<config> &
-    UseQueryParameters<
-      GetEnsNameQueryFnData,
-      GetEnsNameError,
-      selectData,
-      GetEnsNameQueryKey<config>
-    > &
-    ConfigParameter<config>
+    ConfigParameter<config> & {
+      query?:
+        | UseQueryParameters<
+            GetEnsNameQueryFnData,
+            GetEnsNameError,
+            selectData,
+            GetEnsNameQueryKey<config>
+          >
+        | undefined
+    }
 >
 
 export type UseEnsNameReturnType<selectData = GetEnsNameData> =
@@ -43,7 +46,7 @@ export function useEnsName<
 >(
   parameters: UseEnsNameParameters<config, selectData> = {},
 ): UseEnsNameReturnType<selectData> {
-  const { address, ...query } = parameters
+  const { address, query = {} } = parameters
 
   const config = useConfig(parameters)
   const chainId = useChainId()
@@ -52,7 +55,7 @@ export function useEnsName<
     ...parameters,
     chainId: parameters.chainId ?? chainId,
   })
-  const enabled = Boolean(address && (parameters.enabled ?? true))
+  const enabled = Boolean(address && (query.enabled ?? true))
 
   return useQuery({ ...queryOptions, ...query, enabled })
 }

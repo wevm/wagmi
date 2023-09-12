@@ -24,13 +24,16 @@ export type UseEstimateGasParameters<
   chainId extends config['chains'][number]['id'] | undefined = undefined,
   selectData = EstimateGasData,
 > = EstimateGasOptions<config, chainId> &
-  UseQueryParameters<
-    EstimateGasQueryFnData,
-    EstimateGasError,
-    selectData,
-    EstimateGasQueryKey<config, chainId>
-  > &
-  ConfigParameter<config>
+  ConfigParameter<config> & {
+    query?:
+      | UseQueryParameters<
+          EstimateGasQueryFnData,
+          EstimateGasError,
+          selectData,
+          EstimateGasQueryKey<config, chainId>
+        >
+      | undefined
+  }
 
 export type UseEstimateGasReturnType<selectData = EstimateGasData> =
   UseQueryReturnType<selectData, EstimateGasError>
@@ -47,21 +50,23 @@ export function useEstimateGas<
 export function useEstimateGas(
   parameters: UseEstimateGasParameters = {},
 ): UseEstimateGasReturnType {
-  const { connector, ...query } = parameters
+  const { connector, query = {} } = parameters
 
   const config = useConfig(parameters)
   const { data: connectorClient } = useConnectorClient({
     connector,
-    enabled: parameters.account === undefined,
+    query: { enabled: parameters.account === undefined },
   })
+  const account = parameters.account ?? connectorClient?.account
   const chainId = useChainId()
 
   const queryOptions = estimateGasQueryOptions(config, {
     ...(parameters as any),
-    account: parameters.account ?? connectorClient?.account,
+    account,
     chainId: parameters.chainId ?? chainId,
+    connector,
   })
-  const enabled = Boolean(parameters.enabled ?? true)
+  const enabled = Boolean((account || connector) && (query.enabled ?? true))
 
   return useQuery({ ...queryOptions, ...query, enabled })
 }

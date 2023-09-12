@@ -21,7 +21,7 @@ yarn add wagmi viem @tanstack/react-query
 :::
 
 - [Viem](https://viem.sh) is a TypeScript interface for Ethereum that performs blockchain operations.
-- [TanStack Query](https://tanstack.com/query/latest) is an async state manager that handles requests, caching, and more.
+- [TanStack Query](https://tanstack.com/query/v5) is an async state manager that handles requests, caching, and more.
 - [TypeScript](/react/typescript) is optional, but highly recommended. Learn more about [TypeScript support](/react/typescript).
 
 ## CDN

@@ -14,46 +14,48 @@ const contextValue = { foo: 'bar' } as const
 
 test('context', () => {
   const { connect, context, data, error, variables } = useConnect({
-    onMutate(variables) {
-      expectTypeOf(variables).toEqualTypeOf<{
-        chainId?: number | undefined
-        connector: Connector | CreateConnectorFn
-      }>()
-      return contextValue
-    },
-    onError(error, variables, context) {
-      expectTypeOf(variables).toEqualTypeOf<{
-        chainId?: number | undefined
-        connector: Connector | CreateConnectorFn
-      }>()
-      expectTypeOf(error).toEqualTypeOf<ConnectError>()
-      expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
-    },
-    onSuccess(data, variables, context) {
-      expectTypeOf(variables).toEqualTypeOf<{
-        chainId?: number | undefined
-        connector: Connector | CreateConnectorFn
-      }>()
-      expectTypeOf(data).toEqualTypeOf<{
-        accounts: readonly [Address, ...Address[]]
-        chainId: number
-      }>()
-      expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
-    },
-    onSettled(data, error, variables, context) {
-      expectTypeOf(data).toEqualTypeOf<
-        | {
-            accounts: readonly [Address, ...Address[]]
-            chainId: number
-          }
-        | undefined
-      >()
-      expectTypeOf(error).toEqualTypeOf<ConnectError | null>()
-      expectTypeOf(variables).toEqualTypeOf<{
-        chainId?: number | undefined
-        connector: Connector | CreateConnectorFn
-      }>()
-      expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+    mutation: {
+      onMutate(variables) {
+        expectTypeOf(variables).toEqualTypeOf<{
+          chainId?: number | undefined
+          connector: Connector | CreateConnectorFn
+        }>()
+        return contextValue
+      },
+      onError(error, variables, context) {
+        expectTypeOf(variables).toEqualTypeOf<{
+          chainId?: number | undefined
+          connector: Connector | CreateConnectorFn
+        }>()
+        expectTypeOf(error).toEqualTypeOf<ConnectError>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+      },
+      onSuccess(data, variables, context) {
+        expectTypeOf(variables).toEqualTypeOf<{
+          chainId?: number | undefined
+          connector: Connector | CreateConnectorFn
+        }>()
+        expectTypeOf(data).toEqualTypeOf<{
+          accounts: readonly [Address, ...Address[]]
+          chainId: number
+        }>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+      },
+      onSettled(data, error, variables, context) {
+        expectTypeOf(data).toEqualTypeOf<
+          | {
+              accounts: readonly [Address, ...Address[]]
+              chainId: number
+            }
+          | undefined
+        >()
+        expectTypeOf(error).toEqualTypeOf<ConnectError | null>()
+        expectTypeOf(variables).toEqualTypeOf<{
+          chainId?: number | undefined
+          connector: Connector | CreateConnectorFn
+        }>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+      },
     },
   })
 

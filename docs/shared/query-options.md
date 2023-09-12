@@ -9,16 +9,18 @@ const TError = 'TError'
 
 ---
 
-[TanStack Query query docs](https://tanstack.com/query/latest/docs/react/reference/useQuery)
+### query
 
-### enabled
+TanStack Query parameters. See the [TanStack Query query docs](https://tanstack.com/query/v5/docs/react/reference/useQuery) for more info.
+
+#### enabled
 
 `boolean | undefined`
 
 - Set this to `false` to disable this query from automatically running.
-- Can be used for [Dependent Queries](https://tanstack.com/query/latest/docs/react/guides/dependent-queries).
+- Can be used for [Dependent Queries](https://tanstack.com/query/v5/docs/react/guides/dependent-queries).
 
-### gcTime
+#### gcTime
 
 `number | Infinity | undefined`
 
@@ -26,7 +28,7 @@ const TError = 'TError'
 - The time in milliseconds that unused/inactive cache data remains in memory. When a query's cache becomes unused or inactive, that cache data will be garbage collected after this duration. When different garbage collection times are specified, the longest one will be used.
 - If set to `Infinity`, will disable garbage collection
 
-### initialData
+#### initialData
 
 `{{TData}} | (() => {{TData}}) | undefined`
 
@@ -35,26 +37,26 @@ const TError = 'TError'
 - Initial data is considered stale by default unless a `staleTime` has been set.
 - `initialData` **is persisted** to the cache
 
-### initialDataUpdatedAt
+#### initialDataUpdatedAt
 
 `number | ((() => number | undefined)) | undefined`
 
 If set, this value will be used as the time (in milliseconds) of when the `initialData` itself was last updated.
 
-### meta
+#### meta
 
 `Record<string, unknown> | undefined`
 
 If set, stores additional information on the query cache entry that can be used as needed. It will be accessible wherever the `query` is available, and is also part of the `QueryFunctionContext` provided to the `queryFn`.
 
-### networkMode
+#### networkMode
 
 `online' | 'always' | 'offlineFirst' | undefined`
 
 - Defaults to `'online'`
-- see [Network Mode](https://tanstack.com/query/latest/docs/react/guides/network-mode) for more information.
+- see [Network Mode](https://tanstack.com/query/v5/docs/react/guides/network-mode) for more information.
 
-### notifyOnChangeProps
+#### notifyOnChangeProps
 
 `string[] | "all" | (() => string[] | "all") | undefined`
 
@@ -64,7 +66,7 @@ If set, stores additional information on the query cache entry that can be used 
 - If set to a function, the function will be executed to compute the list of properties.
 - By default, access to properties will be tracked, and the component will only re-render when one of the tracked properties change.
 
-### placeholderData
+#### placeholderData
 
 `{{TData}} | ((previousValue: {{TData}} | undefined; previousQuery: Query | undefined) => {{TData}}) | undefined`
 
@@ -72,26 +74,26 @@ If set, stores additional information on the query cache entry that can be used 
 - `placeholderData` is **not persisted** to the cache
 - If you provide a function for `placeholderData`, as a first argument you will receive previously watched query data if available, and the second argument will be the complete previousQuery instance.
 
-### queryClient
+#### queryClient
 
 `QueryClient | undefined`
 
 Use this to use a custom `QueryClient`. Otherwise, the one from the nearest context will be used.
 
-### refetchInterval
+#### refetchInterval
 
 `number | false | ((data: {{TData}} | undefined, query: Query) => number | false | undefined) | undefined`
 
 - If set to a number, all queries will continuously refetch at this frequency in milliseconds
 - If set to a function, the function will be executed with the latest data and query to compute a frequency
 
-### refetchIntervalInBackground
+#### refetchIntervalInBackground
 
 `boolean | undefined`
 
 If set to `true`, queries that are set to continuously refetch with a `refetchInterval` will continue to refetch while their tab/window is in the background
 
-### refetchOnMount
+#### refetchOnMount
 
 `boolean | "always" | ((query: Query) => boolean | "always") | undefined`
 
@@ -101,7 +103,7 @@ If set to `true`, queries that are set to continuously refetch with a `refetchIn
 - If set to `"always"`, the query will always refetch on mount.
 - If set to a function, the function will be executed with the query to compute the value
 
-### refetchOnReconnect
+#### refetchOnReconnect
 
 `boolean | "always" | ((query: Query) => boolean | "always") | undefined`
 
@@ -111,7 +113,7 @@ If set to `true`, queries that are set to continuously refetch with a `refetchIn
 - If set to `"always"`, the query will always refetch on reconnect.
 - If set to a function, the function will be executed with the query to compute the value
 
-### refetchOnWindowFocus
+#### refetchOnWindowFocus
 
 `boolean | "always" | ((query: Query) => boolean | "always") | undefined`
 
@@ -121,7 +123,7 @@ If set to `true`, queries that are set to continuously refetch with a `refetchIn
 - If set to `"always"`, the query will always refetch on window focus.
 - If set to a function, the function will be executed with the query to compute the value
 
-### retry
+#### retry
 
 `boolean | number | ((failureCount: number, error: {{TError}}) => boolean) | undefined`
 
@@ -130,7 +132,7 @@ If set to `true`, queries that are set to continuously refetch with a `refetchIn
 - If set to a `number`, e.g. `3`, failed queries will retry until the failed query count meets that number.
 - Defaults to `3` on the client and `0` on the server
 
-### retryDelay
+#### retryDelay
 
 `number | ((retryAttempt: number, error: {{TError}}) => number) | undefined`
 
@@ -138,19 +140,19 @@ If set to `true`, queries that are set to continuously refetch with a `refetchIn
 - A function like `attempt => Math.min(attempt > 1 ? 2 ** attempt * 1000 : 1000, 30 * 1000)` applies exponential backoff.
 - A function like `attempt => attempt * 1000` applies linear backoff.
 
-### retryOnMount
+#### retryOnMount
 
 `boolean | undefined`
 
 If set to `false`, the query will not be retried on mount if it contains an error. Defaults to `true`.
 
-### select
+#### select
 
 `((data: {{TData}}) => unknown) | undefined`
 
 This option can be used to transform or select a part of the data returned by the query function. It affects the returned `data` value, but does not affect what gets stored in the query cache.
 
-### staleTime
+#### staleTime
 
 `number | Infinity | undefined`
 
@@ -158,7 +160,7 @@ This option can be used to transform or select a part of the data returned by th
 - The time in milliseconds after data is considered stale. This value only applies to the hook it is defined on.
 - If set to `Infinity`, the data will never be considered stale
 
-### structuralSharing
+#### structuralSharing
 
 `boolean | (((oldData: {{TData}} | undefined, newData: {{TData}}) => {{TData}})) | undefined`
 

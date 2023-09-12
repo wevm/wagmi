@@ -188,4 +188,4 @@ import { type UseEnsResolverReturnType } from 'wagmi'
 
 ## Action
 
-[getEnsResolver](/core/api/actions/getEnsResolver)
+[`getEnsResolver`](/core/api/actions/getEnsResolver)

@@ -21,9 +21,11 @@ test('select data', async () => {
         args: [123n],
       },
     ],
-    select(data) {
-      expectTypeOf(data).toEqualTypeOf<[bigint, string]>()
-      return data[0]
+    query: {
+      select(data) {
+        expectTypeOf(data).toEqualTypeOf<[bigint, string]>()
+        return data[0]
+      },
     },
   })
   expectTypeOf(result.data).toEqualTypeOf<bigint | undefined>()

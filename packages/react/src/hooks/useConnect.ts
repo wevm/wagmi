@@ -26,13 +26,16 @@ export type UseConnectParameters<
   config extends Config = Config,
   context = unknown,
 > = Evaluate<
-  UseMutationParameters<
-    ConnectData<config>,
-    ConnectError,
-    ConnectVariables<config>,
-    context
-  > &
-    ConfigParameter<config>
+  ConfigParameter<config> & {
+    mutation?:
+      | UseMutationParameters<
+          ConnectData<config>,
+          ConnectError,
+          ConnectVariables<config>,
+          context
+        >
+      | undefined
+  }
 >
 
 export type UseConnectReturnType<
@@ -58,11 +61,13 @@ export function useConnect<
 >(
   parameters: UseConnectParameters<config, context> = {},
 ): UseConnectReturnType<config, context> {
+  const { mutation } = parameters
+
   const config = useConfig(parameters)
 
   const mutationOptions = connectMutationOptions(config)
   const { mutate, mutateAsync, ...result } = useMutation({
-    ...parameters,
+    ...mutation,
     ...mutationOptions,
   })
 
