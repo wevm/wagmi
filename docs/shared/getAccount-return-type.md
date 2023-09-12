@@ -45,13 +45,25 @@ Boolean variables derived from [`status`](#status).
 - `'disconnected'` no connection to any connector.
 
 ::: tip
-You can use `status` to narrow the return type. For example, when `status` is `'connected'`:
+You can use `status` to narrow the return type. For example, when `status` is `'connected'` properties like `address` are guaranteed to be defined.
 
 ```ts twoslash
 import { type GetAccountReturnType } from '@wagmi/core'
 const account = {} as GetAccountReturnType
 // ---cut---
 if (account.status === 'connected') {
+  account
+  // ^?
+}
+```
+
+Or when status is `'disconnected'` properties like `address` are guaranteed to be `undefined`:
+
+```ts twoslash
+import { type GetAccountReturnType } from '@wagmi/core'
+const account = {} as GetAccountReturnType
+// ---cut---
+if (account.status === 'disconnected') {
   account
   // ^?
 }

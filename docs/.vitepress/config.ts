@@ -113,8 +113,8 @@ export default withTwoslash(
           abitype: ['../node_modules/abitype'],
           'abitype/*': ['../node_modules/abitype/*'],
           react: ['../node_modules/@types/react'],
-          viem: ['../node_modules/viem'],
-          'viem/*': ['../node_modules/viem/*'],
+          viem: ['../node_modules/viem/_types'],
+          'viem/*': ['../node_modules/viem/_types/*'],
 
           // Source - reference source files so we don't need to build packages to get types (speeds things up)
           '@wagmi/connectors': ['../../packages/connectors/src'],
