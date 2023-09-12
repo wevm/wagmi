@@ -1,7 +1,7 @@
 import { config } from '@wagmi/test'
 import { expect, test } from 'vitest'
 
-import { type WalletId, injected } from './injected.js'
+import { type TargetId, injected } from './injected.js'
 
 test('setup', () => {
   const connectorFn = injected()
@@ -16,10 +16,10 @@ test.each([
   { wallet: 'phantom', expected: 'Phantom' },
   { wallet: 'rainbow', expected: 'Rainbow' },
 ] as const satisfies readonly {
-  wallet: WalletId | undefined
+  wallet: TargetId | undefined
   expected: string
 }[])('injected({ wallet: $wallet })', ({ wallet, expected }) => {
-  const connectorFn = injected({ wallet })
+  const connectorFn = injected({ target: wallet })
   const connector = config._internal.setup(connectorFn)
   expect(connector.name).toEqual(expected)
 })

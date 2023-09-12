@@ -63,6 +63,33 @@ export const config = createConfig({
 })
 ```
 
+### target
+
+`TargetId | (() => (TargetMap[TargetId] & { id: string }) | undefined) | undefined`
+
+[EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) Ethereum Provider to target.
+
+```ts-vue
+import { createConfig, http } from '{{packageName}}'
+import { mainnet, sepolia } from '{{packageName}}/chains'
+import { injected } from '{{connectorsPackageName}}'
+
+export const config = createConfig({
+  chains: [mainnet, sepolia],
+  connectors: [
+    injected({ // [!code focus]
+      target() { // [!code focus]
+        return window.ethereum // [!code focus]
+      }, // [!code focus]
+    }), // [!code focus]
+  ],
+  transports: {
+    [mainnet.id]: http(),
+    [sepolia.id]: http(),
+  },
+})
+```
+
 ### unstable_shimAsyncInject
 
 `boolean | number | undefined`
@@ -79,33 +106,6 @@ export const config = createConfig({
   connectors: [
     injected({ // [!code focus]
       unstable_shimAsyncInject: 2_000, // [!code focus]
-    }), // [!code focus]
-  ],
-  transports: {
-    [mainnet.id]: http(),
-    [sepolia.id]: http(),
-  },
-})
-```
-
-### wallet
-
-`WalletId | (() => (WalletMap[WalletId] & { id: string }) | undefined) | undefined`
-
-[EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) Ethereum Provider to target.
-
-```ts-vue
-import { createConfig, http } from '{{packageName}}'
-import { mainnet, sepolia } from '{{packageName}}/chains'
-import { injected } from '{{connectorsPackageName}}'
-
-export const config = createConfig({
-  chains: [mainnet, sepolia],
-  connectors: [
-    injected({ // [!code focus]
-      wallet() { // [!code focus]
-        return window.ethereum // [!code focus]
-      }, // [!code focus]
     }), // [!code focus]
   ],
   transports: {
