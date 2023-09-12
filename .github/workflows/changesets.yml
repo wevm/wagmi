@@ -1,7 +1,7 @@
-name: Main
+name: Changesets
 on:
   push:
-    branches: [main]
+    branches: [alpha, main]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -14,7 +14,7 @@ jobs:
     secrets: inherit
 
   changesets:
-    name: Changesets
+    name: Create pull request or publish
     needs: verify
     permissions:
       id-token: write
@@ -36,7 +36,8 @@ jobs:
         with:
           title: 'chore: version packages'
           commit: 'chore: version packages'
-          publish: pnpm changeset:release
+          createGithubReleases: ${{ github.ref == 'refs/heads/main' }}
+          publish: pnpm changeset:publish
           version: pnpm changeset:version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -3,8 +3,8 @@
   "type": "module",
   "scripts": {
     "build": "pnpm run --r --filter \"./packages/**\" build",
-    "changeset:release": "pnpm build && changeset publish",
-    "changeset:version": "changeset version && pnpm bun ./scripts/updateVersion.ts",
+    "changeset:publish": "pnpm version:update && pnpm build && changeset publish",
+    "changeset:version": "changeset version && pnpm version:update",
     "clean": "pnpm run --r --parallel clean",
     "deps": "pnpx taze -r",
     "dev": "pnpm dev:vite-react",
@@ -48,7 +48,7 @@
     "rimraf": "^4.4.1",
     "simple-git-hooks": "^2.8.1",
     "typescript": "5.1.6",
-    "viem": "0.0.0-alpha-20230911171150",
+    "viem": "2.0.0-alpha.1",
     "vite": "^4.3.9",
     "vitest": "^0.34.1"
   },
@@ -58,9 +58,7 @@
   "packageManager": "pnpm@8.7.5",
   "pnpm": {
     "overrides": {
-      "@wagmi/connectors": "workspace:*",
-      "@wagmi/core": "workspace:*",
-      "viem": "0.0.0-alpha-20230911171150"
+      "viem": "2.0.0-alpha.1"
     },
     "peerDependencyRules": {
       "ignoreMissing": [
