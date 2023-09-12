@@ -6,7 +6,7 @@ import { avalanche, goerli, mainnet, optimism } from 'wagmi/chains'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { LedgerConnector } from 'wagmi/connectors/ledger'
-import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+import { MetaMaskSDKConnector } from 'wagmi/connectors/metaMaskSDK'
 import { SafeConnector } from 'wagmi/connectors/safe'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { WalletConnectLegacyConnector } from 'wagmi/connectors/walletConnectLegacy'
@@ -27,10 +27,15 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
 const config = createConfig({
   autoConnect: true,
   connectors: [
-    new MetaMaskConnector({
+    new MetaMaskSDKConnector({
       chains,
       options: {
-        UNSTABLE_shimOnConnectSelectAccount: true,
+        sdkOptions: {
+          extensionOnly: false, // set to true if you do not want to see the provider selection dialog
+          dappMetadata: {
+            name: 'wagmi playground',
+          },
+        },
       },
     }),
     new CoinbaseWalletConnector({

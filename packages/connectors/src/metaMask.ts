@@ -36,6 +36,9 @@ export class MetaMaskConnector extends InjectedConnector {
     chains?: Chain[]
     options?: MetaMaskConnectorOptions
   } = {}) {
+    console.warn(
+      '[DEPRECATED] The MetaMaskConnector is deprecated and will be removed in the next major version. Please use the MetaMaskSDKConnector instead.',
+    )
     const options = {
       name: 'MetaMask',
       shimDisconnect: true,

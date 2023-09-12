@@ -55,6 +55,10 @@
       "types": "./dist/connectors/metaMask.d.ts",
       "default": "./dist/connectors/metaMask.js"
     },
+    "./connectors/metaMaskSDK": {
+      "types": "./dist/connectors/metaMaskSDK.d.ts",
+      "default": "./dist/connectors/metaMaskSDK.js"
+    },
     "./connectors/mock": {
       "types": "./dist/connectors/mock.d.ts",
       "default": "./dist/connectors/mock.js"

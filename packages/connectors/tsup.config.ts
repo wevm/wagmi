@@ -12,6 +12,7 @@ export default defineConfig(
       'src/injected.ts',
       'src/ledger.ts',
       'src/metaMask.ts',
+      'src/metaMaskSDK.ts',
       'src/mock/index.ts',
       'src/safe.ts',
       'src/walletConnect.ts',
