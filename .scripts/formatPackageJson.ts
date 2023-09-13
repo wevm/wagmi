@@ -3,8 +3,8 @@ import { glob } from 'glob'
 
 // Generates package.json files to be published to NPM with only the necessary fields.
 
-// Link packages
 console.log('Formatting package.json files.')
+
 // Get all package.json files
 const packagePaths = await glob('packages/**/package.json', {
   ignore: ['**/dist/**', '**/node_modules/**'],

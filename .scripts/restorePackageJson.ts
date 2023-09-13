@@ -4,8 +4,8 @@ import { glob } from 'glob'
 
 // Restores package.json files from package.json.tmp files.
 
-// Link packages
 console.log('Restoring package.json files.')
+
 // Get all package.json files
 const packagePaths = await glob('packages/**/package.json.tmp', {
   ignore: ['**/dist/**', '**/node_modules/**'],

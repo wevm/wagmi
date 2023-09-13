@@ -2,7 +2,6 @@ import { glob } from 'glob'
 
 // Updates viem version in Vitest snapshots.
 
-// Link packages
 console.log('Updating viem test snapshot version.')
 
 const file = Bun.file('package.json')

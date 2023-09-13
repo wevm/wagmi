@@ -2,7 +2,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "pnpm run --r --filter \"./packages/**\" build",
+    "build": "pnpm run --r --filter \"./packages/**\" build && bun .scripts/generateProxyPackages.ts",
     "changeset:publish": "pnpm version:update && pnpm build && changeset publish",
     "changeset:version": "changeset version && pnpm version:update",
     "clean": "pnpm run --r --parallel clean",

@@ -45,7 +45,7 @@
     }
   },
   "dependencies": {
-    "@coinbase/wallet-sdk": "3.8.0-beta.2",
+    "@coinbase/wallet-sdk": "3.9.0-canary.2",
     "@ledgerhq/connect-kit-loader": "^1.1.2",
     "@safe-global/safe-apps-provider": "^0.18.0",
     "@safe-global/safe-apps-sdk": "^8.1.0",

@@ -7,6 +7,11 @@ import ReactDOM from 'react-dom/client'
 import { WagmiProvider, deserialize, serialize } from 'wagmi'
 import './index.css'
 
+import { Buffer } from 'buffer'
+
+// `@coinbase-wallet/sdk` uses `Buffer`
+globalThis.Buffer = Buffer
+
 import App from './App.tsx'
 import { config } from './wagmi.ts'
 

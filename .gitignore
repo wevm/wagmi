@@ -8,6 +8,7 @@ dist
 node_modules
 tsconfig.tsbuildinfo
 *.vitest-temp.json
+**/generated.ts
 
 # local env files
 .env
@@ -16,3 +17,14 @@ tsconfig.tsbuildinfo
 .env.test.local
 .env.production.local
 .envrc
+
+# proxy packages
+packages/cli/plugins
+packages/core/actions/
+packages/core/chains/
+packages/core/internal/
+packages/core/query/
+packages/react/actions/
+packages/react/chains/
+packages/react/connectors/
+packages/react/query/

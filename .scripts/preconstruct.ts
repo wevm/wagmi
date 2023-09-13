@@ -4,8 +4,8 @@ import { glob } from 'glob'
 
 // Symlinks package sources to dist for local development
 
-// Link packages
 console.log('Setting up packages for development.')
+
 // Get all package.json files
 const packagePaths = await glob('**/package.json', {
   ignore: ['**/dist/**', '**/node_modules/**'],
@@ -14,21 +14,24 @@ const packagePaths = await glob('**/package.json', {
 let count = 0
 for (const packagePath of packagePaths) {
   type Package = {
-    name?: string
-    private?: boolean
-    exports?: Record<string, { types: string; default: string } | string>
+    name?: string | undefined
+    private?: boolean | undefined
+    exports?:
+      | Record<string, { types: string; default: string } | string>
+      | undefined
   }
   const file = Bun.file(packagePath)
-  const packageFile = (await file.json()) as Package
+  const packageJson = (await file.json()) as Package
 
   // Skip private packages
-  if (packageFile.private && packageFile.name !== '@wagmi/test') continue
-  if (!packageFile.exports) continue
-  if (packageFile.name === '@wagmi/cli') continue
+  if (packageJson.private && packageJson.name !== '@wagmi/test') continue
+  if (!packageJson.exports) continue
+  if (packageJson.name === '@wagmi/cli') continue
 
   count += 1
+  console.log(`${packageJson.name} — ${path.dirname(packagePath)}`)
+
   const dir = path.resolve(path.dirname(packagePath))
-  console.log(`${packageFile.name} — ${path.dirname(packagePath)}`)
 
   // Empty dist directory
   const dist = path.resolve(dir, 'dist')
@@ -48,7 +51,7 @@ for (const packagePath of packagePaths) {
   await Promise.all(promises)
 
   // Link exports to dist locations
-  for (const [key, exports] of Object.entries(packageFile.exports)) {
+  for (const [key, exports] of Object.entries(packageJson.exports)) {
     // Skip `package.json` exports
     if (/package\.json$/.test(key)) continue
     if (typeof exports === 'string') continue
