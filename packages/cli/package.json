@@ -20,7 +20,8 @@
     "!dist/**/*.tsbuildinfo",
     "src/**/*.ts",
     "!src/**/*.test.ts",
-    "!src/**/*.test-d.ts"
+    "!src/**/*.test-d.ts",
+    "plugins/**"
   ],
   "bin": {
     "wagmi": "./dist/esm/cli.js"

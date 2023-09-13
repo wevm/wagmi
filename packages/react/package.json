@@ -20,7 +20,11 @@
     "!dist/**/*.tsbuildinfo",
     "src/**/*.ts",
     "!src/**/*.test.ts",
-    "!src/**/*.test-d.ts"
+    "!src/**/*.test-d.ts",
+    "actions/**",
+    "chains/**",
+    "connectors/**",
+    "query/**"
   ],
   "sideEffects": false,
   "type": "module",
