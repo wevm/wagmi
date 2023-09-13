@@ -49,7 +49,7 @@
     "@ledgerhq/connect-kit-loader": "^1.1.2",
     "@safe-global/safe-apps-provider": "^0.18.0",
     "@safe-global/safe-apps-sdk": "^8.1.0",
-    "@walletconnect/ethereum-provider": "^2.10.0",
+    "@walletconnect/ethereum-provider": "^2.10.1",
     "@walletconnect/modal": "^2.6.2"
   },
   "devDependencies": {
