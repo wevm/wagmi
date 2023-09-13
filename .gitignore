@@ -20,11 +20,11 @@ tsconfig.tsbuildinfo
 # proxy packages
 packages/cli/config
 packages/cli/plugins
-packages/core/actions/
-packages/core/chains/
-packages/core/internal/
-packages/core/query/
-packages/react/actions/
-packages/react/chains/
-packages/react/connectors/
-packages/react/query/
+packages/core/actions
+packages/core/chains
+packages/core/internal
+packages/core/query
+packages/react/actions
+packages/react/chains
+packages/react/connectors
+packages/react/query

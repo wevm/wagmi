@@ -85,7 +85,7 @@
       "packages/cli": {
         "entry": [
           "src/cli.ts!",
-          "src/exports/{index,plugins}.ts!",
+          "src/exports/{config,index,plugins}.ts!",
           "types/*.d.ts!"
         ]
       },
