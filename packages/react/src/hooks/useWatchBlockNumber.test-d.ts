@@ -43,6 +43,13 @@ test('differing transports', () => {
     poll: true,
     onBlockNumber() {},
   })
+  useWatchBlockNumber({
+    config,
+    chainId: mainnet.id,
+    // @ts-expect-error
+    poll: false,
+    onBlockNumber() {},
+  })
 
   type Result3 = UseWatchBlockNumberParameters<
     typeof config,

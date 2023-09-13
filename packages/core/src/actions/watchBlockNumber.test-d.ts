@@ -34,6 +34,12 @@ test('differing transports', () => {
     poll: true,
     onBlockNumber() {},
   })
+  watchBlockNumber(config, {
+    chainId: mainnet.id,
+    // @ts-expect-error
+    poll: false,
+    onBlockNumber() {},
+  })
 
   type Result3 = WatchBlockNumberParameters<typeof config, typeof optimism.id>
   expectTypeOf<Result3['poll']>().toEqualTypeOf<boolean | undefined>()

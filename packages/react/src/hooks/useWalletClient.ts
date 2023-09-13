@@ -36,17 +36,19 @@ export type UseWalletClientParameters<
 > = Evaluate<
   GetWalletClientOptions<config, chainId> &
     ConfigParameter<config> & {
-      query?: Evaluate<
-        Omit<
-          UseQueryParameters<
-            GetWalletClientQueryFnData<config, chainId>,
-            GetWalletClientError,
-            selectData,
-            GetWalletClientQueryKey<config, chainId>
-          >,
-          'gcTime' | 'staleTime'
-        >
-      >
+      query?:
+        | Evaluate<
+            Omit<
+              UseQueryParameters<
+                GetWalletClientQueryFnData<config, chainId>,
+                GetWalletClientError,
+                selectData,
+                GetWalletClientQueryKey<config, chainId>
+              >,
+              'gcTime' | 'staleTime'
+            >
+          >
+        | undefined
     }
 >
 
@@ -90,7 +92,6 @@ export function useWalletClient<
     ...query,
     queryKey,
     enabled,
-    gcTime: 0,
     staleTime: Infinity,
   })
 }

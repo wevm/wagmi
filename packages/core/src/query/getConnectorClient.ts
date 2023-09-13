@@ -24,6 +24,7 @@ export function getConnectorClientQueryOptions<
   chainId extends config['chains'][number]['id'],
 >(config: config, options: GetConnectorClientOptions<config, chainId> = {}) {
   return {
+    gcTime: 0,
     async queryFn({ queryKey }) {
       const { connector } = options
       const { connectorUid: _, scopeKey: _s, ...parameters } = queryKey[1]

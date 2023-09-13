@@ -6,7 +6,11 @@ import {
   type GetBlockError,
   type ResolvedRegister,
 } from '@wagmi/core'
-import { type Evaluate } from '@wagmi/core/internal'
+import {
+  type Evaluate,
+  type UnionEvaluate,
+  type UnionOmit,
+} from '@wagmi/core/internal'
 import {
   type GetBlockData,
   type GetBlockOptions,
@@ -48,14 +52,16 @@ export type UseBlockParameters<
         | undefined
       watch?:
         | boolean
-        | Omit<
-            UseWatchBlocksParameters<
-              includeTransactions,
-              blockTag,
-              config,
-              chainId
-            >,
-            'chainId' | 'config' | 'onBlock' | 'onError'
+        | UnionEvaluate<
+            UnionOmit<
+              UseWatchBlocksParameters<
+                includeTransactions,
+                blockTag,
+                config,
+                chainId
+              >,
+              'chainId' | 'config' | 'onBlock' | 'onError'
+            >
           >
         | undefined
     }

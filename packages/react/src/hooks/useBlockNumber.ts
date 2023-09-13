@@ -6,7 +6,11 @@ import {
   type GetBlockNumberError,
   type ResolvedRegister,
 } from '@wagmi/core'
-import { type Evaluate } from '@wagmi/core/internal'
+import {
+  type Evaluate,
+  type UnionEvaluate,
+  type UnionOmit,
+} from '@wagmi/core/internal'
 import {
   type GetBlockNumberData,
   type GetBlockNumberOptions,
@@ -33,21 +37,23 @@ export type UseBlockNumberParameters<
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetBlockNumberData,
 > = Evaluate<
-  GetBlockNumberOptions<config> &
+  GetBlockNumberOptions<config, chainId> &
     ConfigParameter<config> & {
       query?:
         | UseQueryParameters<
             GetBlockNumberQueryFnData,
             GetBlockNumberError,
             selectData,
-            GetBlockNumberQueryKey<config>
+            GetBlockNumberQueryKey<config, chainId>
           >
         | undefined
       watch?:
         | boolean
-        | Omit<
-            UseWatchBlockNumberParameters<config, chainId>,
-            'chainId' | 'config' | 'onBlockNumber' | 'onError'
+        | UnionEvaluate<
+            UnionOmit<
+              UseWatchBlockNumberParameters<config, chainId>,
+              'chainId' | 'config' | 'onBlockNumber' | 'onError'
+            >
           >
         | undefined
     }

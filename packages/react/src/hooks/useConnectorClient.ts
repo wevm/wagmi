@@ -89,7 +89,6 @@ export function useConnectorClient<
     ...query,
     queryKey,
     enabled,
-    gcTime: 0,
     staleTime: Infinity,
   })
 }

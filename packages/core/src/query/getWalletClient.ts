@@ -23,6 +23,7 @@ export function getWalletClientQueryOptions<
   chainId extends config['chains'][number]['id'],
 >(config: config, options: GetWalletClientOptions<config, chainId> = {}) {
   return {
+    gcTime: 0,
     async queryFn({ queryKey }) {
       const { connector } = options
       const { connectorUid: _, scopeKey: _s, ...parameters } = queryKey[1]

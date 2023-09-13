@@ -11,14 +11,17 @@ import type { Evaluate, ExactPartial } from '../types/utils.js'
 import type { ScopeKeyParameter } from './types.js'
 import { filterQueryOptions } from './utils.js'
 
-export type GetBlockNumberOptions<config extends Config> = Evaluate<
-  ExactPartial<GetBlockNumberParameters<config>> & ScopeKeyParameter
+export type GetBlockNumberOptions<
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
+> = Evaluate<
+  ExactPartial<GetBlockNumberParameters<config, chainId>> & ScopeKeyParameter
 >
 
-export function getBlockNumberQueryOptions<config extends Config>(
-  config: config,
-  options: GetBlockNumberOptions<config> = {},
-) {
+export function getBlockNumberQueryOptions<
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
+>(config: config, options: GetBlockNumberOptions<config, chainId> = {}) {
   return {
     gcTime: 0,
     async queryFn({ queryKey }) {
@@ -31,7 +34,7 @@ export function getBlockNumberQueryOptions<config extends Config>(
     GetBlockNumberQueryFnData,
     GetBlockNumberError,
     GetBlockNumberData,
-    GetBlockNumberQueryKey<config>
+    GetBlockNumberQueryKey<config, chainId>
   >
 }
 
@@ -39,12 +42,14 @@ export type GetBlockNumberQueryFnData = GetBlockNumberReturnType
 
 export type GetBlockNumberData = GetBlockNumberQueryFnData
 
-export function getBlockNumberQueryKey<config extends Config>(
-  options: GetBlockNumberOptions<config> = {},
-) {
+export function getBlockNumberQueryKey<
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
+>(options: GetBlockNumberOptions<config, chainId> = {}) {
   return ['blockNumber', filterQueryOptions(options)] as const
 }
 
-export type GetBlockNumberQueryKey<config extends Config> = ReturnType<
-  typeof getBlockNumberQueryKey<config>
->
+export type GetBlockNumberQueryKey<
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
+> = ReturnType<typeof getBlockNumberQueryKey<config, chainId>>

@@ -2,17 +2,17 @@ import { http, createConfig, webSocket } from '@wagmi/core'
 import { mainnet, optimism } from '@wagmi/core/chains'
 import { expectTypeOf, test } from 'vitest'
 
-import { useBlockNumber } from './useBlockNumber.js'
+import { useBlock } from './useBlock.js'
 
 test('select data', async () => {
-  const result = useBlockNumber({
+  const result = useBlock({
     query: {
       select(data) {
-        return data?.toString()
+        return data?.number
       },
     },
   })
-  expectTypeOf(result.data).toEqualTypeOf<string | undefined>()
+  expectTypeOf(result.data).toEqualTypeOf<bigint | undefined>()
 })
 
 test('differing transports', () => {
@@ -24,21 +24,21 @@ test('differing transports', () => {
     },
   })
 
-  useBlockNumber({
+  useBlock({
     config,
     watch: {
       poll: false,
     },
   })
 
-  useBlockNumber({
+  useBlock({
     config,
     chainId: mainnet.id,
     watch: {
       poll: true,
     },
   })
-  useBlockNumber({
+  useBlock({
     config,
     chainId: mainnet.id,
     watch: {
@@ -47,14 +47,14 @@ test('differing transports', () => {
     },
   })
 
-  useBlockNumber({
+  useBlock({
     config,
     chainId: optimism.id,
     watch: {
       poll: true,
     },
   })
-  useBlockNumber({
+  useBlock({
     config,
     chainId: optimism.id,
     watch: {
