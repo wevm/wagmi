@@ -1,6 +1,6 @@
 {
   "name": "@wagmi/connectors",
-  "description": "A collection of connectors for wagmi",
+  "description": "Collection of connectors for Wagmi",
   "version": "4.0.0-alpha.0",
   "license": "MIT",
   "repository": {

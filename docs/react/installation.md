@@ -8,15 +8,15 @@ Install the required packages.
 
 ::: code-group
 ```bash [pnpm]
-pnpm add wagmi viem @tanstack/react-query
+pnpm add wagmi@alpha viem@alpha @tanstack/react-query
 ```
 
 ```bash [npm]
-npm install wagmi viem @tanstack/react-query
+npm install wagmi@alpha viem@alpha @tanstack/react-query
 ```
 
 ```bash [yarn]
-yarn add wagmi viem @tanstack/react-query
+yarn add wagmi@alpha viem@alpha @tanstack/react-query
 ```
 :::
 
