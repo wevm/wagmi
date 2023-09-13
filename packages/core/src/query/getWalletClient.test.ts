@@ -6,6 +6,7 @@ import { getWalletClientQueryOptions } from './getWalletClient.js'
 test('default', () => {
   expect(getWalletClientQueryOptions(config)).toMatchInlineSnapshot(`
     {
+      "gcTime": 0,
       "queryFn": [Function],
       "queryKey": [
         "walletClient",
@@ -22,6 +23,7 @@ test('parameters: chainId', () => {
     getWalletClientQueryOptions(config, { chainId: chain.mainnet.id }),
   ).toMatchInlineSnapshot(`
     {
+      "gcTime": 0,
       "queryFn": [Function],
       "queryKey": [
         "walletClient",

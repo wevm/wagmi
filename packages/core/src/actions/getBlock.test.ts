@@ -44,6 +44,7 @@ test('args: blockNumber', async () => {
 test('args: includeTransactions', async () => {
   const { transactions } = await getBlock(config, {
     includeTransactions: true,
+    blockNumber: mainnet.fork.blockNumber,
   })
   expect(transactions).toMatchObject(
     expect.arrayContaining([expect.any(Object)]),

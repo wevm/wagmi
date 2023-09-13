@@ -10,7 +10,6 @@ runs:
     - name: Set up node
       uses: actions/setup-node@v3
       with:
-        cache: pnpm
         node-version: 18
 
     - name: Set up foundry

@@ -6,6 +6,7 @@ import { getConnectorClientQueryOptions } from './getConnectorClient.js'
 test('default', () => {
   expect(getConnectorClientQueryOptions(config)).toMatchInlineSnapshot(`
     {
+      "gcTime": 0,
       "queryFn": [Function],
       "queryKey": [
         "connectorClient",
@@ -22,6 +23,7 @@ test('parameters: chainId', () => {
     getConnectorClientQueryOptions(config, { chainId: chain.mainnet.id }),
   ).toMatchInlineSnapshot(`
     {
+      "gcTime": 0,
       "queryFn": [Function],
       "queryKey": [
         "connectorClient",
