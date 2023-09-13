@@ -22,8 +22,8 @@ test('chain formatters', async () => {
 
 test('chainId', async () => {
   const config = createConfig({
-    chains: [celo],
-    transports: { [celo.id]: http() },
+    chains: [celo, mainnet],
+    transports: { [celo.id]: http(), [mainnet.id]: http() },
   })
   const result = await getTransaction(config, {
     hash: '0x123',

@@ -45,6 +45,15 @@ export {
 } from '../query/getBalance.js'
 
 export {
+  type GetBlockData,
+  type GetBlockOptions,
+  type GetBlockQueryFnData,
+  type GetBlockQueryKey,
+  getBlockQueryKey,
+  getBlockQueryOptions,
+} from '../query/getBlock.js'
+
+export {
   type GetBlockNumberData,
   type GetBlockNumberOptions,
   type GetBlockNumberQueryFnData,

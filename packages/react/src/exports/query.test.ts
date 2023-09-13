@@ -13,6 +13,8 @@ test('exports', () => {
       "estimateGasQueryOptions",
       "getBalanceQueryKey",
       "getBalanceQueryOptions",
+      "getBlockQueryKey",
+      "getBlockQueryOptions",
       "getBlockNumberQueryKey",
       "getBlockNumberQueryOptions",
       "getConnectorClientQueryKey",
