@@ -1,4 +1,5 @@
 {
+  "name": "hardhat-fixture",
   "private": true,
   "devDependencies": {
     "hardhat": "^2.17.3"
