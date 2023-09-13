@@ -1,11 +1,14 @@
-export { blockExplorer } from '../plugins/blockExplorer.js'
+export {
+  blockExplorer,
+  type BlockExplorerConfig,
+} from '../plugins/blockExplorer.js'
 
-export { etherscan } from '../plugins/etherscan.js'
+export { etherscan, type EtherscanConfig } from '../plugins/etherscan.js'
 
-export { fetch } from '../plugins/fetch.js'
+export { fetch, type FetchConfig } from '../plugins/fetch.js'
 
-export { foundry } from '../plugins/foundry.js'
+export { foundry, type FoundryConfig } from '../plugins/foundry.js'
 
-export { hardhat } from '../plugins/hardhat.js'
+export { hardhat, type HardhatConfig } from '../plugins/hardhat.js'
 
-export { sourcify } from '../plugins/sourcify.js'
+export { sourcify, type SourcifyConfig } from '../plugins/sourcify.js'

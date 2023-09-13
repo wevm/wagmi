@@ -8,7 +8,7 @@ import { fromZodError } from '../errors.js'
 import type { Evaluate } from '../types.js'
 import { fetch } from './fetch.js'
 
-type SourcifyConfig<chainId extends number> = {
+export type SourcifyConfig<chainId extends number> = {
   /**
    * Duration in milliseconds to cache ABIs.
    *

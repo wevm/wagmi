@@ -46,9 +46,9 @@ export async function getPackageManager(executable?: boolean | undefined) {
   return packageManager
 }
 
-export type PackageManager = 'npm' | 'yarn' | 'pnpm' | 'bun'
+type PackageManager = 'npm' | 'yarn' | 'pnpm' | 'bun'
 
-export async function detect(
+async function detect(
   parameters: { cwd?: string; includeGlobalBun?: boolean } = {},
 ) {
   const { cwd, includeGlobalBun } = parameters

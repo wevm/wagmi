@@ -70,13 +70,25 @@
     }
   },
   "knip": {
-    "ignore": ["**/*.test-d.ts", "**/vite-env.d.ts", "vitest.workspace.ts"],
+    "ignore": [
+      "**/*.test-d.ts",
+      "**/vite-env.d.ts",
+      "vitest.workspace.ts",
+      "packages/cli/src/plugins/__fixtures__/**"
+    ],
     "ignoreBinaries": ["biome"],
-    "ignoreDependencies": ["@biomejs/biome", "@changesets/cli", "only-allow"],
+    "ignoreDependencies": ["@biomejs/biome", "only-allow"],
     "ignoreWorkspaces": ["docs", "packages/register-tests/**"],
     "workspaces": {
       ".": {
         "entry": ".scripts/*.ts"
+      },
+      "packages/cli": {
+        "entry": [
+          "src/cli.ts!",
+          "src/exports/{index,plugins}.ts!",
+          "types/*.d.ts!"
+        ]
       },
       "packages/core": {
         "entry": "src/exports/{chains,index,internal,query}.ts!"

@@ -4,8 +4,8 @@ import type { Address } from 'viem'
 import type { Evaluate, MaybeArray, MaybePromise } from './types.js'
 
 export type ContractConfig<
-  TChainId extends number = number,
-  RequiredChainId extends number | undefined = undefined,
+  chainId extends number = number,
+  requiredChainId extends number | undefined = undefined,
 > = {
   /**
    * Contract ABI
@@ -27,9 +27,9 @@ export type ContractConfig<
    */
   address?:
     | Address
-    | (RequiredChainId extends number
-        ? Record<RequiredChainId, Address> & Partial<Record<TChainId, Address>>
-        : Record<TChainId, Address>)
+    | (requiredChainId extends number
+        ? Record<requiredChainId, Address> & Partial<Record<chainId, Address>>
+        : Record<chainId, Address>)
     | undefined
   /**
    * Name of contract.

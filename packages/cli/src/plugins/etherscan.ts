@@ -34,7 +34,7 @@ const apiUrls = {
 }
 type ChainId = keyof typeof apiUrls
 
-type EtherscanConfig<TChainId extends number> = {
+export type EtherscanConfig<chainId extends number> = {
   /**
    * Etherscan API key.
    *
@@ -61,18 +61,18 @@ type EtherscanConfig<TChainId extends number> = {
    *
    * If `address` is an object, `chainId` is used to select the address.
    */
-  chainId: TChainId
+  chainId: chainId
   /**
    * Contracts to fetch ABIs for.
    */
-  contracts: Evaluate<Omit<ContractConfig<ChainId, TChainId>, 'abi'>>[]
+  contracts: Evaluate<Omit<ContractConfig<ChainId, chainId>, 'abi'>>[]
 }
 
 /**
  * Fetches contract ABIs from Etherscan.
  */
-export function etherscan<TChainId extends ChainId>(
-  config: EtherscanConfig<TChainId>,
+export function etherscan<chainId extends ChainId>(
+  config: EtherscanConfig<chainId>,
 ) {
   const { apiKey, cacheDuration, chainId } = config
 

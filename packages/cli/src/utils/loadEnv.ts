@@ -58,7 +58,7 @@ export function loadEnv(
   return parsed
 }
 
-export function lookupFile(
+function lookupFile(
   dir: string,
   formats: string[],
   options?: {

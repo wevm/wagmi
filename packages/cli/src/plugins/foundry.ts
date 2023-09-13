@@ -30,7 +30,7 @@ const defaultExcludes = [
   '**.t.sol/*.json',
 ]
 
-type FoundryConfig = {
+export type FoundryConfig = {
   /**
    * Project's artifacts directory.
    *

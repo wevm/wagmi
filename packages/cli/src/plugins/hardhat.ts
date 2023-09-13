@@ -17,7 +17,7 @@ import {
 
 const defaultExcludes = ['build-info/**', '*.dbg.json']
 
-type HardhatConfig = {
+export type HardhatConfig = {
   /**
    * Project's artifacts directory.
    *
