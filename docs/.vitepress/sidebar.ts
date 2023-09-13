@@ -94,6 +94,10 @@ export function getSidebar() {
               },
               { text: 'useBalance', link: '/react/api/hooks/useBalance' },
               {
+                text: 'useBlock',
+                link: '/react/api/hooks/useBlock',
+              },
+              {
                 text: 'useBlockNumber',
                 link: '/react/api/hooks/useBlockNumber',
               },
@@ -185,6 +189,10 @@ export function getSidebar() {
               {
                 text: 'useWalletClient 🚧',
                 link: '/react/api/hooks/useWalletClient',
+              },
+              {
+                text: 'useWatchBlocks 🚧',
+                link: '/react/api/hooks/useWatchBlocks',
               },
               {
                 text: 'useWatchBlockNumber 🚧',
@@ -280,6 +288,10 @@ export function getSidebar() {
               { text: 'getAccount', link: '/core/api/actions/getAccount' },
               { text: 'getBalance', link: '/core/api/actions/getBalance' },
               {
+                text: 'getBlock',
+                link: '/core/api/actions/getBlock',
+              },
+              {
                 text: 'getBlockNumber',
                 link: '/core/api/actions/getBlockNumber',
               },
@@ -365,7 +377,11 @@ export function getSidebar() {
                 link: '/core/api/actions/watchAccount',
               },
               {
-                text: 'watchBlockNumber 🚧',
+                text: 'watchBlocks',
+                link: '/core/api/actions/watchBlocks',
+              },
+              {
+                text: 'watchBlockNumber',
                 link: '/core/api/actions/watchBlockNumber',
               },
               {

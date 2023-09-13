@@ -50,6 +50,12 @@ export {
 } from '../hooks/useBalance.js'
 
 export {
+  type UseBlockParameters,
+  type UseBlockReturnType,
+  useBlock,
+} from '../hooks/useBlock.js'
+
+export {
   type UseBlockNumberParameters,
   type UseBlockNumberReturnType,
   useBlockNumber,
@@ -222,6 +228,12 @@ export {
   type UseWaitForTransactionReceiptReturnType,
   useWaitForTransactionReceipt,
 } from '../hooks/useWaitForTransactionReceipt.js'
+
+export {
+  type UseWatchBlocksParameters,
+  type UseWatchBlocksReturnType,
+  useWatchBlocks,
+} from '../hooks/useWatchBlocks.js'
 
 export {
   type UseWatchBlockNumberParameters,

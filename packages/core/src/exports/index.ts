@@ -53,6 +53,13 @@ export {
 } from '../actions/getBalance.js'
 
 export {
+  type GetBlockError,
+  type GetBlockParameters,
+  type GetBlockReturnType,
+  getBlock,
+} from '../actions/getBlock.js'
+
+export {
   type GetBlockNumberError,
   type GetBlockNumberParameters,
   type GetBlockNumberReturnType,
@@ -211,6 +218,12 @@ export {
   type WatchAccountReturnType,
   watchAccount,
 } from '../actions/watchAccount.js'
+
+export {
+  type WatchBlocksParameters,
+  type WatchBlocksReturnType,
+  watchBlocks,
+} from '../actions/watchBlocks.js'
 
 export {
   type WatchBlockNumberParameters,
