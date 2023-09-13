@@ -78,7 +78,7 @@
   "devDependencies": {
     "@tanstack/query-core": "5.0.0-beta.23"
   },
-  "contributors": ["jxom.eth <j@wagmi.sh>", "awkweb.eth <t@wagmi.sh>"],
+  "contributors": ["awkweb.eth <t@wagmi.sh>", "jxom.eth <j@wagmi.sh>"],
   "funding": [
     {
       "type": "github",

@@ -3,7 +3,7 @@ import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfil
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
-const connectorsPath = '../../packages/connectors/src'
+const connectorsPath = '../../packages/connectors/src/exports'
 const corePath = '../../packages/core/src/exports'
 const reactPath = '../../packages/react/src/exports'
 

@@ -117,7 +117,7 @@ export default withTwoslash(
           'viem/*': ['../node_modules/viem/_types/*'],
 
           // Source - reference source files so we don't need to build packages to get types (speeds things up)
-          '@wagmi/connectors': ['../../packages/connectors/src'],
+          '@wagmi/connectors': ['../../packages/connectors/src/exports'],
           '@wagmi/core': ['../../packages/core/src/exports'],
           '@wagmi/core/*': ['../../packages/core/src/exports/*'],
           wagmi: ['../../packages/react/src/exports'],

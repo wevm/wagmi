@@ -1,0 +1,214 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`fetches ABI 1`] = `
+[
+  {
+    "abi": [
+      {
+        "inputs": [],
+        "stateMutability": "nonpayable",
+        "type": "constructor",
+      },
+      {
+        "inputs": [
+          {
+            "name": "pubkey",
+            "type": "bytes",
+          },
+          {
+            "name": "withdrawal_credentials",
+            "type": "bytes",
+          },
+          {
+            "name": "amount",
+            "type": "bytes",
+          },
+          {
+            "name": "signature",
+            "type": "bytes",
+          },
+          {
+            "name": "index",
+            "type": "bytes",
+          },
+        ],
+        "name": "DepositEvent",
+        "type": "event",
+      },
+      {
+        "inputs": [
+          {
+            "name": "pubkey",
+            "type": "bytes",
+          },
+          {
+            "name": "withdrawal_credentials",
+            "type": "bytes",
+          },
+          {
+            "name": "signature",
+            "type": "bytes",
+          },
+          {
+            "name": "deposit_data_root",
+            "type": "bytes32",
+          },
+        ],
+        "name": "deposit",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function",
+      },
+      {
+        "inputs": [],
+        "name": "get_deposit_count",
+        "outputs": [
+          {
+            "type": "bytes",
+          },
+        ],
+        "stateMutability": "view",
+        "type": "function",
+      },
+      {
+        "inputs": [],
+        "name": "get_deposit_root",
+        "outputs": [
+          {
+            "type": "bytes32",
+          },
+        ],
+        "stateMutability": "view",
+        "type": "function",
+      },
+      {
+        "inputs": [
+          {
+            "name": "interfaceId",
+            "type": "bytes4",
+          },
+        ],
+        "name": "supportsInterface",
+        "outputs": [
+          {
+            "type": "bool",
+          },
+        ],
+        "stateMutability": "pure",
+        "type": "function",
+      },
+    ],
+    "address": {
+      "1": "0x00000000219ab540356cbb839cbe05303d7705fa",
+    },
+    "name": "DepositContract",
+  },
+]
+`;
+
+exports[`fetches ABI with multichain deployment 1`] = `
+[
+  {
+    "abi": [
+      {
+        "inputs": [],
+        "stateMutability": "nonpayable",
+        "type": "constructor",
+      },
+      {
+        "inputs": [
+          {
+            "name": "pubkey",
+            "type": "bytes",
+          },
+          {
+            "name": "withdrawal_credentials",
+            "type": "bytes",
+          },
+          {
+            "name": "amount",
+            "type": "bytes",
+          },
+          {
+            "name": "signature",
+            "type": "bytes",
+          },
+          {
+            "name": "index",
+            "type": "bytes",
+          },
+        ],
+        "name": "DepositEvent",
+        "type": "event",
+      },
+      {
+        "inputs": [
+          {
+            "name": "pubkey",
+            "type": "bytes",
+          },
+          {
+            "name": "withdrawal_credentials",
+            "type": "bytes",
+          },
+          {
+            "name": "signature",
+            "type": "bytes",
+          },
+          {
+            "name": "deposit_data_root",
+            "type": "bytes32",
+          },
+        ],
+        "name": "deposit",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function",
+      },
+      {
+        "inputs": [],
+        "name": "get_deposit_count",
+        "outputs": [
+          {
+            "type": "bytes",
+          },
+        ],
+        "stateMutability": "view",
+        "type": "function",
+      },
+      {
+        "inputs": [],
+        "name": "get_deposit_root",
+        "outputs": [
+          {
+            "type": "bytes32",
+          },
+        ],
+        "stateMutability": "view",
+        "type": "function",
+      },
+      {
+        "inputs": [
+          {
+            "name": "interfaceId",
+            "type": "bytes4",
+          },
+        ],
+        "name": "supportsInterface",
+        "outputs": [
+          {
+            "type": "bool",
+          },
+        ],
+        "stateMutability": "pure",
+        "type": "function",
+      },
+    ],
+    "address": {
+      "100": "0xC4c622862a8F548997699bE24EA4bc504e5cA865",
+      "137": "0xC4c622862a8F548997699bE24EA4bc504e5cA865",
+    },
+    "name": "Community",
+  },
+]
+`;

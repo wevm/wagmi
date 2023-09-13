@@ -1,12 +1,12 @@
 {
-  "name": "@wagmi/connectors",
-  "description": "A collection of connectors for wagmi",
-  "version": "4.0.0-alpha.0",
+  "name": "@wagmi/cli",
+  "description": "Manage and generate code from Ethereum ABIs",
+  "version": "2.0.0-alpha.0",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/wagmi-dev/wagmi.git",
-    "directory": "packages/connectors"
+    "directory": "packages/cli"
   },
   "scripts": {
     "clean": "rm -rf dist tsconfig.tsbuildinfo",
@@ -22,6 +22,9 @@
     "!src/**/*.test.ts",
     "!src/**/*.test-d.ts"
   ],
+  "bin": {
+    "wagmi": "./dist/esm/cli.js"
+  },
   "sideEffects": false,
   "type": "module",
   "main": "./dist/esm/exports/index.js",
@@ -32,12 +35,19 @@
       "types": "./dist/types/exports/index.d.ts",
       "default": "./dist/esm/exports/index.js"
     },
+    "./plugins": {
+      "types": "./dist/types/exports/plugins.d.ts",
+      "default": "./dist/esm/exports/plugins.js"
+    },
     "./package.json": "./package.json"
   },
+  "typesVersions": {
+    "*": {
+      "plugins": ["./dist/types/exports/plugins.d.ts"]
+    }
+  },
   "peerDependencies": {
-    "@wagmi/core": "workspace:*",
-    "typescript": ">=5",
-    "viem": ">2.0.0-alpha.0"
+    "typescript": ">=5"
   },
   "peerDependenciesMeta": {
     "typescript": {
@@ -45,17 +55,32 @@
     }
   },
   "dependencies": {
-    "@coinbase/wallet-sdk": "3.8.0-beta.2",
-    "@ledgerhq/connect-kit-loader": "^1.1.2",
-    "@safe-global/safe-apps-provider": "^0.18.0",
-    "@safe-global/safe-apps-sdk": "^8.1.0",
-    "@walletconnect/ethereum-provider": "^2.10.0",
-    "@walletconnect/modal": "^2.6.2"
+    "abitype": "^0.9.8",
+    "bundle-require": "^3.1.2",
+    "cac": "^6.7.12",
+    "change-case": "^4.1.2",
+    "chokidar": "^3.5.3",
+    "dedent": "^0.7.0",
+    "dotenv": "^16.0.3",
+    "dotenv-expand": "^10.0.0",
+    "esbuild": "0.16.17",
+    "execa": "^6.1.0",
+    "find-up": "^6.3.0",
+    "fs-extra": "^10.1.0",
+    "globby": "^13.1.3",
+    "ora": "^6.1.2",
+    "pathe": "^1.0.0",
+    "picocolors": "^1.0.0",
+    "prettier": "^3.0.3",
+    "viem": ">2.0.0-alpha.0",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@wagmi/core": "workspace:*",
-    "lokijs": "^1.5.12",
-    "msw": "^1.3.0"
+    "@types/dedent": "^0.7.0",
+    "@types/fs-extra": "^9.0.13",
+    "fixturez": "^1.1.0",
+    "msw": "^1.3.0",
+    "node-fetch": "^3.3.2"
   },
   "contributors": ["awkweb.eth <t@wagmi.sh>", "jxom.eth <j@wagmi.sh>"],
   "funding": [
@@ -64,14 +89,5 @@
       "url": "https://github.com/sponsors/wagmi-dev"
     }
   ],
-  "keywords": [
-    "react",
-    "hooks",
-    "eth",
-    "ethereum",
-    "dapps",
-    "wallet",
-    "web3",
-    "abi"
-  ]
+  "keywords": ["eth", "ethereum", "dapps", "wallet", "web3"]
 }

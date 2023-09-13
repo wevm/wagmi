@@ -92,7 +92,7 @@
     "react-dom": "^18.2.0",
     "wagmi": "workspace:*"
   },
-  "contributors": ["jxom.eth <j@wagmi.sh>", "awkweb.eth <t@wagmi.sh>"],
+  "contributors": ["awkweb.eth <t@wagmi.sh>", "jxom.eth <j@wagmi.sh>"],
   "funding": [
     {
       "type": "github",

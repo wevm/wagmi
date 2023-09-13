@@ -20,7 +20,7 @@
     "noFallthroughCasesInSwitch": true,
 
     "paths": {
-      "@wagmi/connectors": ["../../packages/connectors/src"],
+      "@wagmi/connectors": ["../../packages/connectors/src/exports"],
       "@wagmi/core": ["../../packages/core/src/exports"],
       "@wagmi/core/*": ["../../packages/core/src/exports/*"]
     }
