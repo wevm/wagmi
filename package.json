@@ -77,7 +77,7 @@
     ],
     "ignoreBinaries": ["biome"],
     "ignoreDependencies": ["@biomejs/biome", "only-allow"],
-    "ignoreWorkspaces": ["docs", "packages/register-tests/**"],
+    "ignoreWorkspaces": ["docs", "packages/register-tests/**", "packages/test"],
     "workspaces": {
       ".": {
         "entry": ".scripts/*.ts"
@@ -90,7 +90,8 @@
         ]
       },
       "packages/core": {
-        "entry": "src/exports/{chains,index,internal,query}.ts!"
+        "entry": "src/exports/{chains,index,internal,query}.ts!",
+        "ignoreDependencies": ["@tanstack/query-core"]
       },
       "packages/react": {
         "entry": "src/exports/{actions,chains,connectors,index,query}.ts!"
