@@ -18,6 +18,7 @@ tsconfig.tsbuildinfo
 .envrc
 
 # proxy packages
+packages/cli/config
 packages/cli/plugins
 packages/core/actions/
 packages/core/chains/

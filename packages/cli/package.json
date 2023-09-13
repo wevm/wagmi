@@ -9,7 +9,7 @@
     "directory": "packages/cli"
   },
   "scripts": {
-    "clean": "rm -rf dist tsconfig.tsbuildinfo",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo config plugins",
     "build": "pnpm run clean && pnpm run build:esm+types",
     "build:esm+types": "tsc --project tsconfig.build.json --module es2020 --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
     "test:build": "publint --strict",
@@ -21,7 +21,8 @@
     "src/**/*.ts",
     "!src/**/*.test.ts",
     "!src/**/*.test-d.ts",
-    "plugins/**"
+    "/config",
+    "/plugins"
   ],
   "bin": {
     "wagmi": "./dist/esm/cli.js"
@@ -36,6 +37,10 @@
       "types": "./dist/types/exports/index.d.ts",
       "default": "./dist/esm/exports/index.js"
     },
+    "./config": {
+      "types": "./dist/types/exports/config.d.ts",
+      "default": "./dist/esm/exports/config.js"
+    },
     "./plugins": {
       "types": "./dist/types/exports/plugins.d.ts",
       "default": "./dist/esm/exports/plugins.js"
@@ -44,6 +49,7 @@
   },
   "typesVersions": {
     "*": {
+      "config": ["./dist/types/exports/config.d.ts"],
       "plugins": ["./dist/types/exports/plugins.d.ts"]
     }
   },

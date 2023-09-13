@@ -9,7 +9,7 @@
     "directory": "packages/react"
   },
   "scripts": {
-    "clean": "rm -rf dist tsconfig.tsbuildinfo",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo actions chains connectors query",
     "build": "pnpm run clean && pnpm run build:esm+types",
     "build:esm+types": "tsc --project tsconfig.build.json --module es2020 --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
     "test:build": "publint --strict",
@@ -21,10 +21,10 @@
     "src/**/*.ts",
     "!src/**/*.test.ts",
     "!src/**/*.test-d.ts",
-    "actions/**",
-    "chains/**",
-    "connectors/**",
-    "query/**"
+    "/actions",
+    "/chains",
+    "/connectors",
+    "/query"
   ],
   "sideEffects": false,
   "type": "module",
