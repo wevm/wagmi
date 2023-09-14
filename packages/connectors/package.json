@@ -37,7 +37,7 @@
   "peerDependencies": {
     "@wagmi/core": "workspace:*",
     "typescript": ">=5",
-    "viem": ">2.0.0-alpha.0"
+    "viem": ">2.0.0-alpha.3"
   },
   "peerDependenciesMeta": {
     "typescript": {

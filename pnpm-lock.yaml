@@ -93,7 +93,7 @@ importers:
         specifier: ^0.53.6
         version: 0.53.6(vite@4.4.9)
       viem:
-        specifier: '>2.0.0-alpha.0'
+        specifier: '>2.0.0-alpha.3'
         version: 2.0.0-alpha.4(typescript@5.1.6)(zod@3.22.2)
       vite:
         specifier: ^4.3.9
@@ -165,7 +165,7 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3
       viem:
-        specifier: '>2.0.0-alpha.0'
+        specifier: '>2.0.0-alpha.3'
         version: 2.0.0-alpha.4(typescript@5.1.6)(zod@3.22.2)
       zod:
         specifier: ^3.22.2
@@ -277,7 +277,7 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0
       viem:
-        specifier: '>2.0.0-alpha.0'
+        specifier: '>2.0.0-alpha.3'
         version: 2.0.0-alpha.4(typescript@5.1.6)(zod@3.22.2)
       wagmi:
         specifier: workspace:*
@@ -329,7 +329,7 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       viem:
-        specifier: '>2.0.0-alpha.0'
+        specifier: '>2.0.0-alpha.3'
         version: 2.0.0-alpha.4(typescript@5.1.6)(zod@3.22.2)
     devDependencies:
       '@types/react':
@@ -369,7 +369,7 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       viem:
-        specifier: '>2.0.0-alpha.0'
+        specifier: '>2.0.0-alpha.3'
         version: 2.0.0-alpha.4(typescript@5.1.6)(zod@3.22.2)
       wagmi:
         specifier: workspace:*

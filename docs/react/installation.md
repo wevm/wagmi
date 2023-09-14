@@ -8,15 +8,15 @@ Install the required packages.
 
 ::: code-group
 ```bash [pnpm]
-pnpm add wagmi@alpha viem@alpha @tanstack/react-query
+pnpm add wagmi@alpha viem@alpha @tanstack/react-query@beta
 ```
 
 ```bash [npm]
-npm install wagmi@alpha viem@alpha @tanstack/react-query
+npm install wagmi@alpha viem@alpha @tanstack/react-query@beta
 ```
 
 ```bash [yarn]
-yarn add wagmi@alpha viem@alpha @tanstack/react-query
+yarn add wagmi@alpha viem@alpha @tanstack/react-query@beta
 ```
 :::
 
@@ -31,9 +31,9 @@ If you're not using a package manager, you can also use Wagmi via an ESM-compati
 ```html
 <script type="module">
   import React from 'https://esm.sh/react@18.2.0'
-  import { QueryClient } from 'https://esm.sh/@tanstack/react-query'
-  import { createClient } from 'https://esm.sh/viem'
-  import { createConfig } from 'https://esm.sh/wagmi'
+  import { QueryClient } from 'https://esm.sh/@tanstack/react-query@beta'
+  import { createClient } from 'https://esm.sh/viem@alpha'
+  import { createConfig } from 'https://esm.sh/wagmi@alpha'
 </script>
 ```
 

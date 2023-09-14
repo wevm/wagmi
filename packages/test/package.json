@@ -54,7 +54,7 @@
     "react": ">=18",
     "react-dom": ">=18",
     "typescript": ">=5",
-    "viem": ">2.0.0-alpha.0",
+    "viem": ">2.0.0-alpha.3",
     "wagmi": "workspace:*"
   },
   "peerDependenciesMeta": {

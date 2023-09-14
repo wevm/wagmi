@@ -65,7 +65,7 @@
   "peerDependencies": {
     "@tanstack/query-core": ">5.0.0-beta.22",
     "typescript": ">=5",
-    "viem": ">2.0.0-alpha.0"
+    "viem": ">2.0.0-alpha.3"
   },
   "peerDependenciesMeta": {
     "@tanstack/query-core": {

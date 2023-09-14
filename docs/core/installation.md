@@ -29,9 +29,9 @@ If you're not using a package manager, you can also use Wagmi Core via an ESM-co
 
 ```html
 <script type="module">
-  import { createClient } from 'https://esm.sh/viem'
-  import { createConfig } from 'https://esm.sh/@wagmi/core'
-  import { injected } from 'https://esm.sh/@wagmi/connectors'
+  import { createClient } from 'https://esm.sh/viem@alpha'
+  import { createConfig } from 'https://esm.sh/@wagmi/core@alpha'
+  import { injected } from 'https://esm.sh/@wagmi/connectors@alpha'
 </script>
 ```
 
