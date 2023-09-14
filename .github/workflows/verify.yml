@@ -57,8 +57,7 @@ jobs:
     strategy:
       matrix:
         typescript-version: ['5.0.4', '5.1.6', 'latest']
-        # TODO: Run against multiple viem versions
-        # viem-version: ['1.2.0', 'latest']
+        viem-version: ['alpha']
 
     steps:
       - name: Clone repository
@@ -67,7 +66,7 @@ jobs:
       - name: Install dependencies
         uses: ./.github/actions/install-dependencies
 
-      - run: pnpm add -D -w typescript@${{ matrix.typescript-version }} # viem@${{ matrix.viem-version }}
+      - run: pnpm add -D -w typescript@${{ matrix.typescript-version }} viem@${{ matrix.viem-version }}
 
       - name: Link packages
         run: pnpm preconstruct
@@ -88,8 +87,7 @@ jobs:
       matrix:
         shard: [1, 2, 3]
         total-shards: [3]
-        # TODO: Run against multiple viem versions
-        # viem-version: ['1.2.0', 'latest']
+        viem-version: ['alpha']
 
     steps:
       - name: Clone repository
@@ -98,9 +96,8 @@ jobs:
       - name: Install dependencies
         uses: ./.github/actions/install-dependencies
 
-      # TODO: Run against multiple viem versions
-      # - run: pnpm add -D -w viem@${{ matrix.viem-version }}
-      # - run: pnpm test:update:viem
+      - run: pnpm add -D -w viem@${{ matrix.viem-version }}
+      - run: pnpm version:update:viem
 
       - name: Run tests
         uses: nick-fields/retry@v2

@@ -27,9 +27,9 @@
     "test:ui": "vitest --ui",
     "test:ui:cov": "vite preview --outDir ./coverage",
     "test:update": "vitest --update",
-    "test:update:viem": "bun .scripts/updateViemTestSnapshotVersion.ts",
     "typecheck": "pnpm run --r --parallel typecheck && tsc --noEmit",
-    "version:update": "bun .scripts/updateVersion.ts"
+    "version:update": "bun .scripts/updateVersion.ts",
+    "version:update:viem": "bun .scripts/updateViemVersion.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "1.1.2",
@@ -56,9 +56,6 @@
   },
   "packageManager": "pnpm@8.7.5",
   "pnpm": {
-    "overrides": {
-      "viem": "2.0.0-alpha.4"
-    },
     "peerDependencyRules": {
       "ignoreMissing": [
         "@algolia/client-search",
