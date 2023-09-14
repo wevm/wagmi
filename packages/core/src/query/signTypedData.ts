@@ -30,7 +30,9 @@ export type SignTypedDataData = Evaluate<SignTypedDataReturnType>
 export type SignTypedDataVariables<
   typedData extends TypedData | Record<string, unknown> = TypedData,
   primaryType extends keyof typedData | 'EIP712Domain' = keyof typedData,
-> = SignTypedDataParameters<typedData, primaryType>
+  ///
+  primaryTypes = typedData extends TypedData ? keyof typedData : string,
+> = SignTypedDataParameters<typedData, primaryType, primaryTypes>
 
 export type SignTypedDataMutate<context = unknown> = <
   const typedData extends TypedData | Record<string, unknown>,
@@ -41,7 +43,12 @@ export type SignTypedDataMutate<context = unknown> = <
     | MutateOptions<
         SignTypedDataData,
         SignTypedDataError,
-        SignTypedDataVariables<typedData, primaryType>,
+        SignTypedDataVariables<
+          typedData,
+          primaryType,
+          // use `primaryType` to make sure it's not union of all possible primary types
+          primaryType
+        >,
         context
       >
     | undefined,
@@ -56,7 +63,12 @@ export type SignTypedDataMutateAsync<context = unknown> = <
     | MutateOptions<
         SignTypedDataData,
         SignTypedDataError,
-        SignTypedDataVariables<typedData, primaryType>,
+        SignTypedDataVariables<
+          typedData,
+          primaryType,
+          // use `primaryType` to make sure it's not union of all possible primary types
+          primaryType
+        >,
         context
       >
     | undefined,

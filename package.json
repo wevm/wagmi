@@ -48,7 +48,7 @@
     "rimraf": "^4.4.1",
     "simple-git-hooks": "^2.9.0",
     "typescript": "5.1.6",
-    "viem": "2.0.0-alpha.1",
+    "viem": "2.0.0-alpha.4",
     "vitest": "^0.34.1"
   },
   "simple-git-hooks": {
@@ -57,7 +57,7 @@
   "packageManager": "pnpm@8.7.5",
   "pnpm": {
     "overrides": {
-      "viem": "2.0.0-alpha.1"
+      "viem": "2.0.0-alpha.4"
     },
     "peerDependencyRules": {
       "ignoreMissing": [

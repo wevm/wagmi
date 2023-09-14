@@ -12,7 +12,14 @@ import { getConnectorClient } from './getConnectorClient.js'
 export type SignTypedDataParameters<
   typedData extends TypedData | Record<string, unknown> = TypedData,
   primaryType extends keyof typedData | 'EIP712Domain' = keyof typedData,
-> = viem_SignTypedDataParameters<typedData, primaryType, Account> &
+  ///
+  primaryTypes = typedData extends TypedData ? keyof typedData : string,
+> = viem_SignTypedDataParameters<
+  typedData,
+  primaryType,
+  Account,
+  primaryTypes
+> &
   ConnectorParameter
 
 export type SignTypedDataReturnType = viem_SignTypedDataReturnType

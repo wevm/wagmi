@@ -85,7 +85,7 @@ test('context', () => {
           __mode?: 'prepared'
           chainId?: number | undefined
           abi: typeof abi.erc20
-          functionName: 'approve' | 'transfer' | 'transferFrom' // TODO: Should narrow to `'transferFrom'`
+          functionName: 'transferFrom'
           args: readonly [Address, Address, bigint]
         }>()
       },
@@ -93,11 +93,15 @@ test('context', () => {
         expectTypeOf(data).toEqualTypeOf<Hash>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
 
+        expectTypeOf(variables.functionName).toEqualTypeOf<'transferFrom'>()
+        expectTypeOf(variables.args).toEqualTypeOf<
+          readonly [Address, Address, bigint]
+        >()
         expectTypeOf(variables).toMatchTypeOf<{
           __mode?: 'prepared'
           chainId?: number | undefined
           abi: typeof abi.erc20
-          functionName: 'approve' | 'transfer' | 'transferFrom' // TODO: Should narrow to `'transferFrom'`
+          functionName: 'transferFrom'
           args: readonly [Address, Address, bigint]
         }>()
       },
@@ -110,7 +114,7 @@ test('context', () => {
           __mode?: 'prepared'
           chainId?: number | undefined
           abi: typeof abi.erc20
-          functionName: 'approve' | 'transfer' | 'transferFrom' // TODO: Should narrow to `'transferFrom'`
+          functionName: 'transferFrom'
           args: readonly [Address, Address, bigint]
         }>()
       },

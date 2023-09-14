@@ -37,6 +37,7 @@ export type WriteContractParameters<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
   ///
+  allFunctionNames = ContractFunctionName<abi, 'nonpayable' | 'payable'>,
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = {
   [key in keyof chains]: UnionOmit<
@@ -46,7 +47,8 @@ export type WriteContractParameters<
       args,
       chains[key],
       Account,
-      chains[key]
+      chains[key],
+      allFunctionNames
     >,
     'chain'
   >

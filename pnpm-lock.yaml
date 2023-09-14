@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  viem: 2.0.0-alpha.1
+  viem: 2.0.0-alpha.4
 
 importers:
 
@@ -60,8 +60,8 @@ importers:
         specifier: 5.1.6
         version: 5.1.6
       viem:
-        specifier: 2.0.0-alpha.1
-        version: 2.0.0-alpha.1(typescript@5.1.6)(zod@3.22.2)
+        specifier: 2.0.0-alpha.4
+        version: 2.0.0-alpha.4(typescript@5.1.6)(zod@3.22.2)
       vitest:
         specifier: ^0.34.1
         version: 0.34.1(@vitest/ui@0.34.1)(jsdom@20.0.3)
@@ -96,8 +96,8 @@ importers:
         specifier: ^0.53.6
         version: 0.53.6(vite@4.4.9)
       viem:
-        specifier: 2.0.0-alpha.1
-        version: 2.0.0-alpha.1(typescript@5.1.6)(zod@3.22.2)
+        specifier: 2.0.0-alpha.4
+        version: 2.0.0-alpha.4(typescript@5.1.6)(zod@3.22.2)
       vite:
         specifier: ^4.3.9
         version: 4.4.9(@types/node@20.5.9)
@@ -168,8 +168,8 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3
       viem:
-        specifier: 2.0.0-alpha.1
-        version: 2.0.0-alpha.1(typescript@5.1.6)(zod@3.22.2)
+        specifier: 2.0.0-alpha.4
+        version: 2.0.0-alpha.4(typescript@5.1.6)(zod@3.22.2)
       zod:
         specifier: ^3.22.2
         version: 3.22.2
@@ -280,8 +280,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0
       viem:
-        specifier: 2.0.0-alpha.1
-        version: 2.0.0-alpha.1(typescript@5.1.6)(zod@3.22.2)
+        specifier: 2.0.0-alpha.4
+        version: 2.0.0-alpha.4(typescript@5.1.6)(zod@3.22.2)
       wagmi:
         specifier: workspace:*
         version: link:../../react
@@ -332,8 +332,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       viem:
-        specifier: 2.0.0-alpha.1
-        version: 2.0.0-alpha.1(typescript@5.1.6)(zod@3.22.2)
+        specifier: 2.0.0-alpha.4
+        version: 2.0.0-alpha.4(typescript@5.1.6)(zod@3.22.2)
     devDependencies:
       '@types/react':
         specifier: ^18.2.21
@@ -372,8 +372,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       viem:
-        specifier: 2.0.0-alpha.1
-        version: 2.0.0-alpha.1(typescript@5.1.6)(zod@3.22.2)
+        specifier: 2.0.0-alpha.4
+        version: 2.0.0-alpha.4(typescript@5.1.6)(zod@3.22.2)
       wagmi:
         specifier: workspace:*
         version: link:../../packages/react
@@ -2656,7 +2656,7 @@ packages:
     resolution: {integrity: sha512-XJbEPuaVc7b9n23MqlF6c+ToYIS3f7P2Sel8f3cSBQ9WORE4xrSuvhMpK9fDSFqJ7by/brc+rmJR/5HViRr0/w==}
     dependencies:
       '@safe-global/safe-gateway-typescript-sdk': 3.8.0
-      viem: 2.0.0-alpha.1(typescript@5.1.6)(zod@3.22.2)
+      viem: 2.0.0-alpha.4(typescript@5.1.6)(zod@3.22.2)
     transitivePeerDependencies:
       - bufferutil
       - encoding
@@ -6514,6 +6514,13 @@ packages:
   /isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
 
+  /isomorphic-ws@5.0.0(ws@8.13.0):
+    resolution: {integrity: sha512-muId7Zzn9ywDsyXgTIafTry2sV3nySZeUDe6YedVd1Hvuuep5AsIlqK+XefWpYTyJG5e503F2xIuT2lcU6rCSw==}
+    peerDependencies:
+      ws: '*'
+    dependencies:
+      ws: 8.13.0
+
   /istanbul-lib-coverage@3.2.0:
     resolution: {integrity: sha512-eOeJ5BHCmHYvQK7xt9GkdHuzuCGS1Y6g9Gvnx3Ym33fz/HpLRYxiS0wHNr+m/MBC8B647Xt608vCDEvhl9c6Mw==}
     engines: {node: '>=8'}
@@ -9091,14 +9098,6 @@ packages:
     engines: {node: '>= 0.8'}
     dev: true
 
-  /unws@0.2.4(ws@8.13.0):
-    resolution: {integrity: sha512-/N1ajiqrSp0A/26/LBg7r10fOcPtGXCqJRJ61sijUFoGZMr6ESWGYn7i0cwr7fR7eEECY5HsitqtjGHDZLAu2w==}
-    engines: {node: '>=16.14.0'}
-    peerDependencies:
-      ws: '*'
-    dependencies:
-      ws: 8.13.0
-
   /update-browserslist-db@1.0.11(browserslist@4.21.10):
     resolution: {integrity: sha512-dCwEFf0/oT85M1fHBg4F0jtLwJrutGoHSQXCh7u4o2t1drG+c0a9Flnqww6XUKSfQMPpJBRjU8d4RXB09qtvaA==}
     hasBin: true
@@ -9190,8 +9189,8 @@ packages:
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
 
-  /viem@2.0.0-alpha.1(typescript@5.1.6)(zod@3.22.2):
-    resolution: {integrity: sha512-lNGtUp0k9rkin5cG2+Ou2VimugVdVm8TNqJCUCPXF6z/S6UnI93N+P23MuLxcKavMzD3pvwO1SZV8IP7K78zGw==}
+  /viem@2.0.0-alpha.4(typescript@5.1.6)(zod@3.22.2):
+    resolution: {integrity: sha512-Wg3eThPE8GrNQHHehlm0i0L57jaFA5tUVg5v0b0ppTYidiv7nDP2sV4/020r2bnmN1QPq7IDK8IMrXEIDzyZpg==}
     peerDependencies:
       typescript: '>=5.0.4'
     peerDependenciesMeta:
@@ -9205,8 +9204,8 @@ packages:
       '@scure/bip39': 1.2.1
       '@types/ws': 8.5.5
       abitype: 0.9.8(typescript@5.1.6)(zod@3.22.2)
+      isomorphic-ws: 5.0.0(ws@8.13.0)
       typescript: 5.1.6
-      unws: 0.2.4(ws@8.13.0)
       ws: 8.13.0
     transitivePeerDependencies:
       - bufferutil

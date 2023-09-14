@@ -55,7 +55,7 @@ test('context', () => {
         expectTypeOf(error).toEqualTypeOf<SignTypedDataError>()
         expectTypeOf(variables).toMatchTypeOf<{
           types: typeof typedData.basic.types
-          primaryType: 'Person' | 'Mail' // TODO: Should narrow to `'Person'`
+          primaryType: 'Person'
           message: {
             name: string
             wallet: `0x${string}`
@@ -67,7 +67,7 @@ test('context', () => {
         expectTypeOf(data).toEqualTypeOf<SignTypedDataReturnType>()
         expectTypeOf(variables).toMatchTypeOf<{
           types: typeof typedData.basic.types
-          primaryType: 'Person' | 'Mail' // TODO: Should narrow to `'Person'`
+          primaryType: 'Person'
           message: {
             name: string
             wallet: `0x${string}`
@@ -80,7 +80,7 @@ test('context', () => {
         expectTypeOf(error).toEqualTypeOf<SignTypedDataError | null>()
         expectTypeOf(variables).toMatchTypeOf<{
           types: typeof typedData.basic.types
-          primaryType: 'Person' | 'Mail' // TODO: Should narrow to `'Person'`
+          primaryType: 'Person'
           message: {
             name: string
             wallet: `0x${string}`

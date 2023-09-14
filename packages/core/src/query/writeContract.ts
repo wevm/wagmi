@@ -43,7 +43,16 @@ export type WriteContractVariables<
   >,
   config extends Config,
   chainId extends config['chains'][number]['id'],
-> = WriteContractParameters<abi, functionName, args, config, chainId>
+  ///
+  allFunctionNames = ContractFunctionName<abi, 'nonpayable' | 'payable'>,
+> = WriteContractParameters<
+  abi,
+  functionName,
+  args,
+  config,
+  chainId,
+  allFunctionNames
+>
 
 export type WriteContractMutate<config extends Config, context = unknown> = <
   const abi extends Abi | readonly unknown[],
@@ -60,7 +69,15 @@ export type WriteContractMutate<config extends Config, context = unknown> = <
     | MutateOptions<
         WriteContractData,
         WriteContractError,
-        WriteContractVariables<abi, functionName, args, config, chainId>,
+        WriteContractVariables<
+          abi,
+          functionName,
+          args,
+          config,
+          chainId,
+          // use `functionName` to make sure it's not union of all possible function names
+          functionName
+        >,
         context
       >
     | undefined,
@@ -84,7 +101,15 @@ export type WriteContractMutateAsync<
     | MutateOptions<
         WriteContractData,
         WriteContractError,
-        WriteContractVariables<abi, functionName, args, config, chainId>,
+        WriteContractVariables<
+          abi,
+          functionName,
+          args,
+          config,
+          chainId,
+          // use `functionName` to make sure it's not union of all possible function names
+          functionName
+        >,
         context
       >
     | undefined,
