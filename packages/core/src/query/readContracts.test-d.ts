@@ -4,7 +4,7 @@ import { expectTypeOf, test } from 'vitest'
 import { readContractsQueryOptions } from './readContracts.js'
 
 test('default', async () => {
-  const options = await readContractsQueryOptions(config, {
+  const options = readContractsQueryOptions(config, {
     contracts: [
       {
         address: '0x',
@@ -36,7 +36,7 @@ test('default', async () => {
 })
 
 test('allowFailure: false', async () => {
-  const options = await readContractsQueryOptions(config, {
+  const options = readContractsQueryOptions(config, {
     allowFailure: false,
     contracts: [
       {

@@ -34,4 +34,13 @@ for (const testPath of testPaths) {
   count += 1
 }
 
+// // Update package.json#pnpm.overrides.viem
+// if (packageJson.pnpm?.overrides?.viem !== viemVersion) {
+//   const path = 'package.json'
+//   console.log(path)
+//   packageJson.pnpm.overrides.viem = viemVersion
+//   await Bun.write(path, `${JSON.stringify(packageJson, undefined, 2)}\n`)
+//   count += 1
+// }
+
 console.log(`Done. Updated ${count} ${count === 1 ? 'file' : 'files'}.`)

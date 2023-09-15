@@ -56,7 +56,7 @@ test('behavior: user rejected request', async () => {
     [UserRejectedRequestError: User rejected the request.
 
     Details: Failed to connect.
-    Version: viem@2.0.0-alpha.4]
+    Version: viem@2.0.0-alpha.9]
   `)
 })
 

@@ -135,6 +135,15 @@ export {
 } from '../query/getWalletClient.js'
 
 export {
+  type InfiniteReadContractsData,
+  type InfiniteReadContractsOptions,
+  type InfiniteReadContractsQueryFnData,
+  type InfiniteReadContractsQueryKey,
+  infiniteReadContractsQueryKey,
+  infiniteReadContractsQueryOptions,
+} from '../query/infiniteReadContracts.js'
+
+export {
   type ReadContractData,
   type ReadContractOptions,
   type ReadContractQueryFnData,

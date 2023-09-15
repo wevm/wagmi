@@ -50,9 +50,9 @@ export function readContractsQueryOptions<
       return (await readContracts(config, {
         ...parameters,
         contracts,
-      })) as ReadContractsData<contracts, allowFailure>
+      })) as ReadContractsReturnType<contracts, allowFailure>
     },
-    queryKey: readContractsQueryKey(options as any),
+    queryKey: readContractsQueryKey(options),
   } as const satisfies QueryOptions<
     ReadContractsQueryFnData<contracts, allowFailure>,
     ReadContractsError,

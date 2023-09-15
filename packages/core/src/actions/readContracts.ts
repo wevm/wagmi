@@ -73,7 +73,7 @@ export async function readContracts<
       (contracts) => contracts.map(({ index }) => index),
     )
     return multicallResults.reduce((results, result, index) => {
-      if (results) results[resultIndexes[index]!] = result
+      if (results) (results as unknown[])[resultIndexes[index]!] = result
       return results
     }, [] as unknown[]) as ReadContractsReturnType<contracts, allowFailure>
   } catch (error) {

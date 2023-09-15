@@ -114,10 +114,6 @@ export function getSidebar() {
                 link: '/react/api/hooks/useConnectorClient',
               },
               {
-                text: 'useContractInfiniteReads 🚧',
-                link: '/react/api/hooks/useContractInfiniteReads',
-              },
-              {
                 text: 'useContractRead 🚧',
                 link: '/react/api/hooks/useContractRead',
               },
@@ -152,6 +148,10 @@ export function getSidebar() {
               {
                 text: 'useEstimateGas 🚧',
                 link: '/react/api/hooks/useEstimateGas',
+              },
+              {
+                text: 'useInfiniteContractReads 🚧',
+                link: '/react/api/hooks/useInfiniteContractReads',
               },
               { text: 'useReconnect', link: '/react/api/hooks/useReconnect' },
               {

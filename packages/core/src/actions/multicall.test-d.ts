@@ -82,3 +82,39 @@ test('MulticallParameters', async () => {
     readonly [] | readonly [Address] | readonly [Address, Address] | undefined
   >()
 })
+
+test('overloads', async () => {
+  const abi = parseAbi([
+    'function foo() view returns (int8)',
+    'function foo(address) view returns (string)',
+    'function foo(address, address) view returns ((address foo, address bar))',
+    'function bar() view returns (int8)',
+  ])
+
+  const res = await multicall(config, {
+    allowFailure: false,
+    contracts: [
+      {
+        address: '0x',
+        abi,
+        functionName: 'foo',
+      },
+      {
+        address: '0x',
+        abi,
+        functionName: 'foo',
+        args: ['0x'],
+      },
+      {
+        address: '0x',
+        abi,
+        functionName: 'foo',
+        args: ['0x', '0x'],
+      },
+    ],
+  })
+
+  expectTypeOf(res).toEqualTypeOf<
+    [number, string, { foo: Address; bar: Address }]
+  >()
+})

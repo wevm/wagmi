@@ -37,14 +37,6 @@ export type Mutable<type extends object> = {
   -readonly [key in keyof type]: type[key]
 }
 
-/**
- * Use to prevent a usage of type from being inferred in other generics.
-
- * @see https://github.com/pelotom/type-zoo/#noinfert
- * @see https://github.com/Microsoft/TypeScript/issues/14829#issuecomment-322267089
- */
-export type NoInfer<type> = type & { [key in keyof type]: type[key] }
-
 /** Strict version of built-in Omit type */
 export type Omit<type, keys extends keyof type> = Pick<
   type,

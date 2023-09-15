@@ -33,6 +33,8 @@ test('exports', () => {
       "getTransactionQueryOptions",
       "getWalletClientQueryKey",
       "getWalletClientQueryOptions",
+      "infiniteReadContractsQueryKey",
+      "infiniteReadContractsQueryOptions",
       "readContractQueryKey",
       "readContractQueryOptions",
       "readContractsQueryKey",
