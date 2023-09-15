@@ -231,8 +231,8 @@ importers:
         version: 4.4.1
     devDependencies:
       '@tanstack/query-core':
-        specifier: 5.0.0-beta.23
-        version: 5.0.0-beta.23
+        specifier: 5.0.0-beta.28
+        version: 5.0.0-beta.28
 
   packages/react:
     dependencies:
@@ -2908,10 +2908,6 @@ packages:
       '@stablelib/random': 1.0.2
       '@stablelib/wipe': 1.0.1
     dev: false
-
-  /@tanstack/query-core@5.0.0-beta.23:
-    resolution: {integrity: sha512-Qp+U4EltOl7y8VZIhxy4eZR5xFnXll28Urp28e6ag10D69yYKRApS2O+ufcVCxOcm1GFv4rpp19gYrpoqHeWgA==}
-    dev: true
 
   /@tanstack/query-core@5.0.0-beta.28:
     resolution: {integrity: sha512-iYAN8KM2BV1kJ6PhvP0OVbT9XuGMFasjGZVhigRhcO/svY0FNexQtwQmvxff4yUA4+F5TGTE2Snlz1vlwe/2uQ==}

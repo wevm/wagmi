@@ -3,6 +3,7 @@ import type {
   InfiniteQueryObserverOptions,
   MutateOptions,
   QueryKey,
+  QueryMeta,
 } from '@tanstack/query-core'
 
 import type { Evaluate, Omit } from '../types/utils.js'
@@ -31,15 +32,16 @@ export type InfiniteQueryOptions<
     pageParam
   >,
 > = Evaluate<
+  // `queryFn` doesn't pass through `pageParam` correctly
   Omit<options, 'queryFn'> & {
-    // `queryFn` doesn't pass through `pageParam` correctly
-    queryFn?(
-      context: Evaluate<
-        Parameters<NonNullable<options['queryFn']>>[0] & {
-          pageParam: pageParam
-        }
-      >,
-    ): ReturnType<NonNullable<options['queryFn']>>
+    // TS2742: `QueryFunctionContext` not exported from `@tanstack/query-core`
+    queryFn?(context: {
+      queryKey: queryKey
+      signal: AbortSignal
+      pageParam: pageParam
+      direction: 'forward' | 'backward'
+      meta: QueryMeta | undefined
+    }): ReturnType<NonNullable<options['queryFn']>>
   }
 >
 

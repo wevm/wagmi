@@ -22,7 +22,6 @@
         "noUnusedVariables": "error"
       },
       "nursery": {
-        "noBannedTypes": "off",
         "useExhaustiveDependencies": "error",
         "useGroupedTypeImport": "off"
       },
