@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 3.1.2
+
+### Patch Changes
+
+- [#3009](https://github.com/wagmi-dev/wagmi/pull/3009) [`3aaba328`](https://github.com/wagmi-dev/wagmi/commit/3aaba32808ddb4035ec885f96992c91078056715) Thanks [@0xAsimetriq](https://github.com/0xAsimetriq)! - Update WalletConnect dependencies
+
 ## 3.1.1
 
 ### Patch Changes
