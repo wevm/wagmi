@@ -1,5 +1,12 @@
 # @wagmi/core
 
+## 1.4.2
+
+### Patch Changes
+
+- Updated dependencies [[`3aaba328`](https://github.com/wagmi-dev/wagmi/commit/3aaba32808ddb4035ec885f96992c91078056715)]:
+  - @wagmi/connectors@3.1.2
+
 ## 1.4.1
 
 ### Patch Changes
