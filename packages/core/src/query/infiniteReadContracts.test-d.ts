@@ -7,7 +7,6 @@ import { infiniteReadContractsQueryOptions } from './infiniteReadContracts.js'
 test('default', async () => {
   const options = infiniteReadContractsQueryOptions(config, {
     cacheKey: 'foo',
-    initialPageParam: 0,
     contracts(pageParam) {
       expectTypeOf(pageParam).toEqualTypeOf(options.initialPageParam)
       return [
@@ -25,16 +24,19 @@ test('default', async () => {
         },
       ]
     },
-    getNextPageParam(lastPage, allPages, lastPageParam, allPageParams) {
-      expectTypeOf(lastPage).toEqualTypeOf<
-        [MulticallResponse<bigint>, MulticallResponse<string>]
-      >()
-      expectTypeOf(allPages).toEqualTypeOf<
-        [MulticallResponse<bigint>, MulticallResponse<string>][]
-      >()
-      expectTypeOf(lastPageParam).toEqualTypeOf(options.initialPageParam)
-      expectTypeOf(allPageParams).toEqualTypeOf([options.initialPageParam])
-      return lastPageParam + 1
+    query: {
+      initialPageParam: 0,
+      getNextPageParam(lastPage, allPages, lastPageParam, allPageParams) {
+        expectTypeOf(lastPage).toEqualTypeOf<
+          [MulticallResponse<bigint>, MulticallResponse<string>]
+        >()
+        expectTypeOf(allPages).toEqualTypeOf<
+          [MulticallResponse<bigint>, MulticallResponse<string>][]
+        >()
+        expectTypeOf(lastPageParam).toEqualTypeOf(options.initialPageParam)
+        expectTypeOf(allPageParams).toEqualTypeOf([options.initialPageParam])
+        return lastPageParam + 1
+      },
     },
   })
   const result = await options.queryFn({} as any)
@@ -47,7 +49,6 @@ test('allowFailure: false', async () => {
   const options = infiniteReadContractsQueryOptions(config, {
     allowFailure: false,
     cacheKey: 'foo',
-    initialPageParam: 0,
     contracts(pageParam) {
       expectTypeOf(pageParam).toEqualTypeOf(options.initialPageParam)
       return [
@@ -65,12 +66,15 @@ test('allowFailure: false', async () => {
         },
       ]
     },
-    getNextPageParam(lastPage, allPages, lastPageParam, allPageParams) {
-      expectTypeOf(lastPage).toEqualTypeOf<[bigint, string]>()
-      expectTypeOf(allPages).toEqualTypeOf<[bigint, string][]>()
-      expectTypeOf(lastPageParam).toEqualTypeOf(options.initialPageParam)
-      expectTypeOf(allPageParams).toEqualTypeOf([options.initialPageParam])
-      return lastPageParam + 1
+    query: {
+      initialPageParam: 0,
+      getNextPageParam(lastPage, allPages, lastPageParam, allPageParams) {
+        expectTypeOf(lastPage).toEqualTypeOf<[bigint, string]>()
+        expectTypeOf(allPages).toEqualTypeOf<[bigint, string][]>()
+        expectTypeOf(lastPageParam).toEqualTypeOf(options.initialPageParam)
+        expectTypeOf(allPageParams).toEqualTypeOf([options.initialPageParam])
+        return lastPageParam + 1
+      },
     },
   })
   const result = await options.queryFn({} as any)
@@ -81,7 +85,6 @@ test('initialPageParam', async () => {
   const options = infiniteReadContractsQueryOptions(config, {
     allowFailure: false,
     cacheKey: 'foo',
-    initialPageParam: 'bar',
     contracts(pageParam) {
       expectTypeOf(pageParam).toEqualTypeOf(options.initialPageParam)
       return [
@@ -99,12 +102,15 @@ test('initialPageParam', async () => {
         },
       ]
     },
-    getNextPageParam(lastPage, allPages, lastPageParam, allPageParams) {
-      expectTypeOf(lastPage).toEqualTypeOf<[bigint, string]>()
-      expectTypeOf(allPages).toEqualTypeOf<[bigint, string][]>()
-      expectTypeOf(lastPageParam).toEqualTypeOf(options.initialPageParam)
-      expectTypeOf(allPageParams).toEqualTypeOf([options.initialPageParam])
-      return lastPageParam + 1
+    query: {
+      initialPageParam: 'bar',
+      getNextPageParam(lastPage, allPages, lastPageParam, allPageParams) {
+        expectTypeOf(lastPage).toEqualTypeOf<[bigint, string]>()
+        expectTypeOf(allPages).toEqualTypeOf<[bigint, string][]>()
+        expectTypeOf(lastPageParam).toEqualTypeOf(options.initialPageParam)
+        expectTypeOf(allPageParams).toEqualTypeOf([options.initialPageParam])
+        return lastPageParam + 1
+      },
     },
   })
   const result = await options.queryFn({} as any)
@@ -115,13 +121,15 @@ test('behavior: `contracts` after `getNextPageParam`', async () => {
   const options = infiniteReadContractsQueryOptions(config, {
     allowFailure: false,
     cacheKey: 'foo',
-    initialPageParam: 0,
-    getNextPageParam(lastPage, allPages, lastPageParam, allPageParams) {
-      expectTypeOf(lastPage).toEqualTypeOf<unknown[]>()
-      expectTypeOf(allPages).toEqualTypeOf<unknown[][]>()
-      expectTypeOf(lastPageParam).toEqualTypeOf(options.initialPageParam)
-      expectTypeOf(allPageParams).toEqualTypeOf([options.initialPageParam])
-      return lastPageParam + 1
+    query: {
+      initialPageParam: 0,
+      getNextPageParam(lastPage, allPages, lastPageParam, allPageParams) {
+        expectTypeOf(lastPage).toEqualTypeOf<unknown[]>()
+        expectTypeOf(allPages).toEqualTypeOf<unknown[][]>()
+        expectTypeOf(lastPageParam).toEqualTypeOf(options.initialPageParam)
+        expectTypeOf(allPageParams).toEqualTypeOf([options.initialPageParam])
+        return lastPageParam + 1
+      },
     },
     contracts(pageParam) {
       expectTypeOf(pageParam).toEqualTypeOf(options.initialPageParam)
@@ -156,7 +164,6 @@ test('overloads', async () => {
   const options = infiniteReadContractsQueryOptions(config, {
     allowFailure: false,
     cacheKey: 'foo',
-    initialPageParam: 0,
     contracts(pageParam) {
       expectTypeOf(pageParam).toEqualTypeOf<number>()
       return [
@@ -179,8 +186,11 @@ test('overloads', async () => {
         },
       ]
     },
-    getNextPageParam(_, allPages) {
-      return allPages.length + 1
+    query: {
+      initialPageParam: 0,
+      getNextPageParam(_, allPages) {
+        return allPages.length + 1
+      },
     },
   })
 

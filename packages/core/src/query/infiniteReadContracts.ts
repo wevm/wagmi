@@ -30,8 +30,8 @@ export type InfiniteReadContractsOptions<
 export function infiniteReadContractsQueryOptions<
   config extends Config,
   const contracts extends readonly ContractFunctionParameters[],
-  pageParam,
   allowFailure extends boolean = true,
+  pageParam = unknown,
 >(
   config: Config,
   options: InfiniteReadContractsOptions<
@@ -40,19 +40,11 @@ export function infiniteReadContractsQueryOptions<
     allowFailure,
     pageParam
   > &
-    ChainIdParameter<config> & {
-      initialPageParam: pageParam
-      getNextPageParam(
-        lastPage: InfiniteReadContractsQueryFnData<contracts, allowFailure>,
-        allPages: InfiniteReadContractsQueryFnData<contracts, allowFailure>[],
-        lastPageParam: pageParam,
-        allPageParams: pageParam[],
-      ): pageParam | undefined | null
-    },
+    ChainIdParameter<config> &
+    RequiredPageParamsParameters<contracts, allowFailure, pageParam>,
 ) {
   return {
-    getNextPageParam: options.getNextPageParam,
-    initialPageParam: options.initialPageParam,
+    ...options.query,
     async queryFn({ pageParam, queryKey }) {
       const { contracts } = options
       const { cacheKey: _, scopeKey: _s, ...parameters } = queryKey[1]
@@ -72,6 +64,22 @@ export function infiniteReadContractsQueryOptions<
     InfiniteReadContractsQueryKey<config, contracts, allowFailure, pageParam>,
     pageParam
   >
+}
+
+type RequiredPageParamsParameters<
+  contracts extends readonly unknown[],
+  allowFailure extends boolean,
+  pageParam,
+> = {
+  query: {
+    initialPageParam: pageParam
+    getNextPageParam(
+      lastPage: InfiniteReadContractsQueryFnData<contracts, allowFailure>,
+      allPages: InfiniteReadContractsQueryFnData<contracts, allowFailure>[],
+      lastPageParam: pageParam,
+      allPageParams: pageParam[],
+    ): pageParam | undefined | null
+  }
 }
 
 export type InfiniteReadContractsQueryFnData<
@@ -96,7 +104,8 @@ export function infiniteReadContractsQueryKey<
     allowFailure,
     pageParam
   > &
-    ChainIdParameter<config>,
+    ChainIdParameter<config> &
+    RequiredPageParamsParameters<contracts, allowFailure, pageParam>,
 ) {
   const { contracts: _, ...parameters } = options
   return ['infiniteReadContracts', filterQueryOptions(parameters)] as const

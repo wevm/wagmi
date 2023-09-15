@@ -1,8 +1,8 @@
 import type {
   DefaultError,
   InfiniteQueryObserverOptions,
+  MutateOptions,
   QueryKey,
-  QueryMeta,
 } from '@tanstack/query-core'
 
 import type { Evaluate, Omit } from '../types/utils.js'
@@ -14,31 +14,32 @@ export type InfiniteQueryOptions<
   queryData = queryFnData,
   queryKey extends QueryKey = QueryKey,
   pageParam = unknown,
+  ///
+  options extends InfiniteQueryObserverOptions<
+    queryFnData,
+    error,
+    data,
+    queryData,
+    queryKey,
+    pageParam
+  > = InfiniteQueryObserverOptions<
+    queryFnData,
+    error,
+    data,
+    queryData,
+    queryKey,
+    pageParam
+  >,
 > = Evaluate<
-  Omit<
-    InfiniteQueryObserverOptions<
-      queryFnData,
-      error,
-      data,
-      queryData,
-      queryKey,
-      pageParam
-    >,
-    'queryFn' | 'getNextPageParam'
-  > & {
-    queryFn?(context: {
-      queryKey: queryKey
-      signal: AbortSignal
-      pageParam: pageParam
-      direction: 'forward' | 'backward'
-      meta: QueryMeta | undefined
-    }): queryFnData | Promise<queryFnData>
-    getNextPageParam(
-      lastPage: queryFnData,
-      allPages: queryFnData[],
-      lastPageParam: pageParam,
-      allPageParams: pageParam[],
-    ): pageParam | undefined | null
+  Omit<options, 'queryFn'> & {
+    // `queryFn` doesn't pass through `pageParam` correctly
+    queryFn?(
+      context: Evaluate<
+        Parameters<NonNullable<options['queryFn']>>[0] & {
+          pageParam: pageParam
+        }
+      >,
+    ): ReturnType<NonNullable<options['queryFn']>>
   }
 >
 
@@ -67,27 +68,13 @@ type MutateFn<
   ? (
       variables?: variables,
       options?:
-        | Evaluate<
-            import('@tanstack/query-core').MutateOptions<
-              data,
-              error,
-              variables,
-              context
-            >
-          >
+        | Evaluate<MutateOptions<data, error, variables, context>>
         | undefined,
     ) => Promise<data>
   : (
       variables: variables,
       options?:
-        | Evaluate<
-            import('@tanstack/query-core').MutateOptions<
-              data,
-              error,
-              variables,
-              context
-            >
-          >
+        | Evaluate<MutateOptions<data, error, variables, context>>
         | undefined,
     ) => Promise<data>
 

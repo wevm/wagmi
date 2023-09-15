@@ -1,11 +1,14 @@
 import {
   type DefaultError,
   type QueryKey,
+  type UseInfiniteQueryOptions,
+  type UseInfiniteQueryResult,
   type UseMutationOptions,
   type UseMutationResult,
   type UseQueryOptions,
   type UseQueryResult,
   replaceEqualDeep,
+  useInfiniteQuery as tanstack_useInfiniteQuery,
   useQuery as tanstack_useQuery,
 } from '@tanstack/react-query'
 import {
@@ -87,6 +90,68 @@ export function useQuery<queryFnData, error, data, queryKey extends QueryKey>(
     ...(parameters as any),
     queryKeyHashFn: hashFn, // for bigint support
   }) as UseQueryReturnType<data, error>
+  result.queryKey = parameters.queryKey
+  return result
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+export type UseInfiniteQueryParameters<
+  queryFnData = unknown,
+  error = DefaultError,
+  data = queryFnData,
+  queryData = queryFnData,
+  queryKey extends QueryKey = QueryKey,
+  pageParam = unknown,
+> = Evaluate<
+  Omit<
+    UseInfiniteQueryOptions<
+      queryFnData,
+      error,
+      data,
+      queryData,
+      queryKey,
+      pageParam
+    >,
+    | 'initialData'
+    | 'queryFn'
+    | 'queryHash'
+    | 'queryKey'
+    | 'queryKeyHashFn'
+    | 'throwOnError'
+  > & {
+    // Fix `initialData` type
+    initialData?: UseInfiniteQueryOptions<
+      queryFnData,
+      error,
+      data,
+      queryKey
+    >['initialData']
+  }
+>
+
+export type UseInfiniteQueryReturnType<
+  data = unknown,
+  error = DefaultError,
+> = UseInfiniteQueryResult<data, error> & {
+  queryKey: QueryKey
+}
+
+// Adding some basic customization.
+export function useInfiniteQuery<
+  queryFnData,
+  error,
+  data,
+  queryKey extends QueryKey,
+>(
+  parameters: UseInfiniteQueryParameters<queryFnData, error, data, queryKey> & {
+    queryKey: QueryKey
+  },
+): UseInfiniteQueryReturnType<data, error> {
+  const result = tanstack_useInfiniteQuery({
+    ...(parameters as any),
+    queryKeyHashFn: hashFn, // for bigint support
+  }) as UseInfiniteQueryReturnType<data, error>
   result.queryKey = parameters.queryKey
   return result
 }
