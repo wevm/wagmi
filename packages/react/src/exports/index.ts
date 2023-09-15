@@ -110,6 +110,12 @@ export {
 } from '../hooks/useContractReads.js'
 
 export {
+  type UseContractSimulateParameters,
+  type UseContractSimulateReturnType,
+  useContractSimulate,
+} from '../hooks/useContractSimulate.js'
+
+export {
   type UseContractWriteParameters,
   type UseContractWriteReturnType,
   useContractWrite,
@@ -158,10 +164,10 @@ export {
 } from '../hooks/useEstimateGas.js'
 
 export {
-  type UseContractSimulateParameters,
-  type UseContractSimulateReturnType,
-  useContractSimulate,
-} from '../hooks/useContractSimulate.js'
+  type UseInfiniteContractReadsParameters,
+  type UseInfiniteContractReadsReturnType,
+  useInfiniteContractReads,
+} from '../hooks/useInfiniteContractReads.js'
 
 export {
   type UsePublicClientParameters,
