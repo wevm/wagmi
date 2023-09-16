@@ -72,18 +72,9 @@
       "vitest.workspace.ts",
       "packages/cli/src/plugins/__fixtures__/**"
     ],
-    "ignoreBinaries": [
-      "biome"
-    ],
-    "ignoreDependencies": [
-      "@biomejs/biome",
-      "only-allow"
-    ],
-    "ignoreWorkspaces": [
-      "docs",
-      "packages/register-tests/**",
-      "packages/test"
-    ],
+    "ignoreBinaries": ["biome"],
+    "ignoreDependencies": ["@biomejs/biome", "only-allow"],
+    "ignoreWorkspaces": ["docs", "packages/register-tests/**", "packages/test"],
     "workspaces": {
       ".": {
         "entry": ".scripts/*.ts"
@@ -97,9 +88,7 @@
       },
       "packages/core": {
         "entry": "src/exports/{chains,index,internal,query}.ts!",
-        "ignoreDependencies": [
-          "@tanstack/query-core"
-        ]
+        "ignoreDependencies": ["@tanstack/query-core"]
       },
       "packages/react": {
         "entry": "src/exports/{actions,chains,connectors,index,query}.ts!"

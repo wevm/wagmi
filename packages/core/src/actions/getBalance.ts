@@ -54,6 +54,7 @@ export async function getBalance<config extends Config>(
     try {
       return getTokenBalance(config, {
         balanceAddress: address,
+        chainId,
         symbolType: 'string',
         tokenAddress,
       })
@@ -64,6 +65,7 @@ export async function getBalance<config extends Config>(
       if (error instanceof ContractFunctionExecutionError) {
         const balance = await getTokenBalance(config, {
           balanceAddress: address,
+          chainId,
           symbolType: 'bytes32',
           tokenAddress,
         })
@@ -92,6 +94,7 @@ export async function getBalance<config extends Config>(
 
 type GetTokenBalanceParameters = {
   balanceAddress: Address
+  chainId?: number | undefined
   symbolType: 'bytes32' | 'string'
   tokenAddress: Address
   unit?: Unit | undefined
@@ -101,7 +104,7 @@ async function getTokenBalance(
   config: Config,
   parameters: GetTokenBalanceParameters,
 ) {
-  const { balanceAddress, symbolType, tokenAddress, unit } = parameters
+  const { balanceAddress, chainId, symbolType, tokenAddress, unit } = parameters
   const contract = {
     abi: [
       {
@@ -131,9 +134,14 @@ async function getTokenBalance(
   const [value, decimals, symbol] = await readContracts(config, {
     allowFailure: false,
     contracts: [
-      { ...contract, functionName: 'balanceOf', args: [balanceAddress] },
-      { ...contract, functionName: 'decimals' },
-      { ...contract, functionName: 'symbol' },
+      {
+        ...contract,
+        functionName: 'balanceOf',
+        args: [balanceAddress],
+        chainId,
+      },
+      { ...contract, functionName: 'decimals', chainId },
+      { ...contract, functionName: 'symbol', chainId },
     ] as const,
   })
   const formatted = formatUnits(value ?? '0', getUnit(unit ?? decimals))
