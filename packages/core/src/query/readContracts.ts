@@ -16,9 +16,9 @@ import type { ScopeKeyParameter } from './types.js'
 import { filterQueryOptions } from './utils.js'
 
 export type ReadContractsOptions<
-  config extends Config,
   contracts extends readonly unknown[],
   allowFailure extends boolean,
+  config extends Config,
 > = ExactPartial<
   viem_MulticallParameters<
     contracts,
@@ -33,8 +33,8 @@ export function readContractsQueryOptions<
   const contracts extends readonly unknown[],
   allowFailure extends boolean = true,
 >(
-  config: Config,
-  options: ReadContractsOptions<config, contracts, allowFailure> &
+  config: config,
+  options: ReadContractsOptions<contracts, allowFailure, config> &
     ChainIdParameter<config> = {},
 ) {
   return {
@@ -47,17 +47,17 @@ export function readContractsQueryOptions<
         contracts.push({ ...contract, abi })
       }
       const { scopeKey: _, ...parameters } = queryKey[1]
-      return (await readContracts(config, {
+      return readContracts(config, {
         ...parameters,
         contracts,
-      })) as ReadContractsReturnType<contracts, allowFailure>
+      }) as Promise<ReadContractsReturnType<contracts, allowFailure>>
     },
     queryKey: readContractsQueryKey(options),
   } as const satisfies QueryOptions<
     ReadContractsQueryFnData<contracts, allowFailure>,
     ReadContractsError,
     ReadContractsData<contracts, allowFailure>,
-    ReadContractsQueryKey<config, contracts, allowFailure>
+    ReadContractsQueryKey<contracts, allowFailure, config>
   >
 }
 
@@ -76,7 +76,7 @@ export function readContractsQueryKey<
   const contracts extends readonly unknown[],
   allowFailure extends boolean,
 >(
-  options: ReadContractsOptions<config, contracts, allowFailure> &
+  options: ReadContractsOptions<contracts, allowFailure, config> &
     ChainIdParameter<config> = {},
 ) {
   const contracts = []
@@ -92,7 +92,7 @@ export function readContractsQueryKey<
 }
 
 export type ReadContractsQueryKey<
-  config extends Config,
   contracts extends readonly unknown[],
   allowFailure extends boolean,
+  config extends Config,
 > = ReturnType<typeof readContractsQueryKey<config, contracts, allowFailure>>

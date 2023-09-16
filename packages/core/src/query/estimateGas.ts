@@ -26,7 +26,7 @@ export function estimateGasQueryOptions<
       const { account, scopeKey: _, ...parameters } = queryKey[1]
       if (!account && !connector)
         throw new Error('account or connector is required')
-      return estimateGas(config, { account, connector, ...parameters } as any)
+      return estimateGas(config, { account, connector, ...(parameters as any) })
     },
     queryKey: estimateGasQueryKey(options),
   } as const satisfies QueryOptions<

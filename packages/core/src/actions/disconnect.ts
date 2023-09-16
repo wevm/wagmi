@@ -7,10 +7,9 @@ import {
   ConnectorNotConnectedError,
   ConnectorNotFoundError,
 } from '../errors/config.js'
+import type { ConnectorParameter } from '../types/properties.js'
 
-export type DisconnectParameters = {
-  connector?: Connector | undefined
-}
+export type DisconnectParameters = ConnectorParameter
 
 export type DisconnectReturnType = void
 
@@ -41,6 +40,7 @@ export async function disconnect(
   connections.delete(connector.uid)
 
   config.setState((x) => {
+    // if no connections exist, move to disconnected state
     if (connections.size === 0)
       return {
         ...x,
@@ -49,6 +49,7 @@ export async function disconnect(
         status: 'disconnected',
       }
 
+    // switch over to another connection
     const nextConnection = connections.values().next().value as Connection
     return {
       ...x,

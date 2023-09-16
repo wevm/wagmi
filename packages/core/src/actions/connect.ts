@@ -9,9 +9,9 @@ import type { ChainIdParameter } from '../types/properties.js'
 import type { Evaluate } from '../types/utils.js'
 
 export type ConnectParameters<config extends Config = Config> = Evaluate<
-  {
+  ChainIdParameter<config> & {
     connector: Connector | CreateConnectorFn
-  } & ChainIdParameter<config>
+  }
 >
 
 export type ConnectReturnType<config extends Config = Config> = {
@@ -22,7 +22,6 @@ export type ConnectReturnType<config extends Config = Config> = {
 }
 
 export type ConnectError =
-  // connect()
   | ConnectorAlreadyConnectedError
   // connector.connect()
   | UserRejectedRequestError
@@ -36,7 +35,7 @@ export async function connect<config extends Config>(
   config: config,
   parameters: ConnectParameters<config>,
 ): Promise<ConnectReturnType<config>> {
-  // "Register" connector if not already created
+  // Setup connector if not already created
   let connector: Connector
   if (typeof parameters.connector === 'function') {
     connector = config._internal.setup(parameters.connector)
@@ -69,18 +68,13 @@ export async function connect<config extends Config>(
       status: 'connected',
     }))
 
-    return {
-      accounts,
-      chainId: data.chainId,
-    }
+    return { accounts, chainId: data.chainId }
   } catch (error) {
-    config.setState((x) => {
-      return {
-        ...x,
-        // Keep existing connector connected in case of error
-        status: x.current ? 'connected' : 'disconnected',
-      }
-    })
+    config.setState((x) => ({
+      ...x,
+      // Keep existing connector connected in case of error
+      status: x.current ? 'connected' : 'disconnected',
+    }))
     throw error
   }
 }

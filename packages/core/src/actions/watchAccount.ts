@@ -17,6 +17,7 @@ export function watchAccount(
   parameters: WatchAccountParameters,
 ): WatchAccountReturnType {
   const { onChange } = parameters
+
   return config.subscribe(() => getAccount(config), onChange, {
     equalityFn(a, b) {
       const { connector: aConnector, ...aRest } = a

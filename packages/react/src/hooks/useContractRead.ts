@@ -50,7 +50,7 @@ export type UseContractReadParameters<
             ReadContractQueryFnData<abi, functionName, args>,
             ReadContractError,
             selectData,
-            ReadContractQueryKey<config, abi, functionName, args>
+            ReadContractQueryKey<abi, functionName, args, config>
           >
         | undefined
     }

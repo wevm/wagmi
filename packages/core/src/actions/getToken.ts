@@ -14,10 +14,10 @@ import { getUnit } from '../utils/getUnit.js'
 import { readContracts } from './readContracts.js'
 
 export type GetTokenParameters<config extends Config = Config> = Evaluate<
-  {
+  ChainIdParameter<config> & {
     address: Address
-    formatUnits?: Unit
-  } & ChainIdParameter<config>
+    formatUnits?: Unit | undefined
+  }
 >
 
 export type GetTokenReturnType = {

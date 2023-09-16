@@ -7,6 +7,7 @@ import {
 
 import { type Config } from '../createConfig.js'
 import type { ConnectorParameter } from '../types/properties.js'
+import type { UnionEvaluate } from '../types/utils.js'
 import { getConnectorClient } from './getConnectorClient.js'
 
 export type SignTypedDataParameters<
@@ -14,13 +15,10 @@ export type SignTypedDataParameters<
   primaryType extends keyof typedData | 'EIP712Domain' = keyof typedData,
   ///
   primaryTypes = typedData extends TypedData ? keyof typedData : string,
-> = viem_SignTypedDataParameters<
-  typedData,
-  primaryType,
-  Account,
-  primaryTypes
-> &
-  ConnectorParameter
+> = UnionEvaluate<
+  viem_SignTypedDataParameters<typedData, primaryType, Account, primaryTypes> &
+    ConnectorParameter
+>
 
 export type SignTypedDataReturnType = viem_SignTypedDataReturnType
 

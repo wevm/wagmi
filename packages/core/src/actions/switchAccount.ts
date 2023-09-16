@@ -22,6 +22,7 @@ export async function switchAccount<config extends Config>(
   parameters: SwitchAccountParameters,
 ): Promise<SwitchAccountReturnType<config>> {
   const { connector } = parameters
+
   const connection = config.state.connections.get(connector.uid)
   if (!connection) throw new ConnectorNotConnectedError()
 

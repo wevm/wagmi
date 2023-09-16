@@ -21,7 +21,7 @@ export type MulticallReturnType<
 
 export async function multicall<
   config extends Config,
-  const contracts extends readonly unknown[],
+  const contracts extends readonly ContractFunctionParameters[],
   allowFailure extends boolean = true,
 >(
   config: config,

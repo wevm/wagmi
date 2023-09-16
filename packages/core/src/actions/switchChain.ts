@@ -15,9 +15,9 @@ export type SwitchChainParameters<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
 > = Evaluate<
-  {
+  ConnectorParameter & {
     chainId: chainId | config['chains'][number]['id']
-  } & ConnectorParameter
+  }
 >
 
 export type SwitchChainReturnType<

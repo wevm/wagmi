@@ -2,11 +2,11 @@ import type { Evaluate, OneOf } from '../types/utils.js'
 import { getVersion } from '../utils/getVersion.js'
 
 type BaseErrorOptions = Evaluate<
-  {
-    docsPath?: string
-    docsSlug?: string
-    metaMessages?: string[]
-  } & OneOf<{ details?: string } | { cause: BaseError | Error }>
+  OneOf<{ details?: string | undefined } | { cause: BaseError | Error }> & {
+    docsPath?: string | undefined
+    docsSlug?: string | undefined
+    metaMessages?: string[] | undefined
+  }
 >
 
 export class BaseError extends Error {

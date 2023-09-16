@@ -24,23 +24,17 @@ export function getTransactionQueryOptions<
 >(config: config, options: GetTransactionOptions<config, chainId> = {}) {
   return {
     async queryFn({ queryKey }) {
-      const {
-        blockHash,
-        blockNumber,
-        blockTag,
-        hash,
-        index,
-        scopeKey: _,
-      } = queryKey[1]
+      const { blockHash, blockNumber, blockTag, hash, index } = queryKey[1]
       if (!blockHash && !blockNumber && !blockTag && !hash)
         throw new Error('blockHash, blockNumber, blockTag, or hash is required')
       if (!hash && !index)
         throw new Error(
           'index is required for blockHash, blockNumber, or blockTag',
         )
+      const { scopeKey: _, ...rest } = queryKey[1]
       return getTransaction(
         config,
-        queryKey[1] as GetTransactionParameters,
+        rest as GetTransactionParameters,
       ) as unknown as Promise<GetTransactionQueryFnData<config, chainId>>
     },
     queryKey: getTransactionQueryKey(options),

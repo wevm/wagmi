@@ -92,5 +92,5 @@ export async function getConnectorClient<
     chain,
     name: 'Connector Client',
     transport: (opts) => custom(provider)({ ...opts, retryCount: 0 }),
-  }) as unknown as Return
+  }) as Return
 }

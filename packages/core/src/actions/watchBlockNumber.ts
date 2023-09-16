@@ -44,7 +44,7 @@ export function watchBlockNumber<
   parameters: WatchBlockNumberParameters<config, chainId>,
 ): WatchBlockNumberReturnType {
   const { syncConnectedChain = config._internal.syncConnectedChain, ...rest } =
-    parameters
+    parameters as WatchBlockNumberParameters
 
   let unwatch: WatchBlockNumberReturnType | undefined
   const listener = (chainId: number | undefined) => {
@@ -53,7 +53,7 @@ export function watchBlockNumber<
     const client = config.getClient({ chainId })
     unwatch = viem_watchBlockNumber(
       client,
-      rest as unknown as viem_WatchBlockNumberParameters,
+      rest as viem_WatchBlockNumberParameters,
     )
     return unwatch
   }

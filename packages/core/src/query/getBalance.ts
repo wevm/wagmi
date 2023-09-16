@@ -21,20 +21,12 @@ export function getBalanceQueryOptions<config extends Config>(
 ) {
   return {
     async queryFn({ queryKey }) {
-      const {
-        address,
-        blockNumber,
-        blockTag,
-        scopeKey: _,
-        ...parameters
-      } = queryKey[1]
+      const { address, scopeKey: _, ...parameters } = queryKey[1]
       if (!address) throw new Error('address is required')
-      const balance = await getBalance(
-        config,
-        blockNumber
-          ? { ...parameters, address, blockNumber }
-          : { ...parameters, address, blockTag },
-      )
+      const balance = await getBalance(config, {
+        ...(parameters as GetBalanceParameters),
+        address,
+      })
       return balance ?? null
     },
     queryKey: getBalanceQueryKey(options),

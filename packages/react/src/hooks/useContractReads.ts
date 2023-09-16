@@ -32,14 +32,14 @@ export type UseContractReadsParameters<
   config extends Config = Config,
   selectData = ReadContractsData<contracts, allowFailure>,
 > = Evaluate<
-  ReadContractsOptions<config, contracts, allowFailure> &
+  ReadContractsOptions<contracts, allowFailure, config> &
     ConfigParameter<config> & {
       query?:
         | UseQueryParameters<
             ReadContractsQueryFnData<contracts, allowFailure>,
             ReadContractsError,
             selectData,
-            ReadContractsQueryKey<config, contracts, allowFailure>
+            ReadContractsQueryKey<contracts, allowFailure, config>
           >
         | undefined
     }

@@ -23,7 +23,7 @@ export function waitForTransactionReceiptQueryOptions<
   config extends Config,
   chainId extends config['chains'][number]['id'],
 >(
-  config: Config,
+  config: config,
   options: WaitForTransactionReceiptOptions<config, chainId> = {},
 ) {
   return {

@@ -45,18 +45,10 @@ export type CreateConnectorFn<
     getAccounts(): Promise<readonly Address[]>
     getChainId(): Promise<number>
     getProvider(
-      parameters?:
-        | {
-            chainId?: number | undefined
-          }
-        | undefined,
+      parameters?: { chainId?: number | undefined } | undefined,
     ): Promise<provider>
     getClient?(
-      parameters?:
-        | {
-            chainId?: number | undefined
-          }
-        | undefined,
+      parameters?: { chainId?: number | undefined } | undefined,
     ): Promise<Client>
     isAuthorized(): Promise<boolean>
     switchChain?(parameters: { chainId: number }): Promise<Chain>

@@ -44,12 +44,13 @@ export async function waitForTransactionReceipt<
   parameters: WaitForTransactionReceiptParameters<config, chainId>,
 ): Promise<WaitForTransactionReceiptReturnType<config, chainId>> {
   const { chainId, timeout = 0, ...rest } = parameters
-  const client = config.getClient({ chainId })
 
+  const client = config.getClient({ chainId })
   const receipt = await viem_waitForTransactionReceipt(client, {
     ...rest,
     timeout,
   })
+
   if (receipt.status === 'reverted') {
     const txn = await getTransaction(client, { hash: receipt.transactionHash })
     const code = (await call(client, {
@@ -62,6 +63,7 @@ export async function waitForTransactionReceipt<
     const reason = hexToString(`0x${code.substring(138)}`)
     throw new Error(reason)
   }
+
   return receipt as unknown as WaitForTransactionReceiptReturnType<
     config,
     chainId

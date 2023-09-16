@@ -28,14 +28,14 @@ export type UseInfiniteContractReadsParameters<
   config extends Config = Config,
   pageParam = unknown,
   selectData = InfiniteReadContractsData<contracts, allowFailure>,
-> = InfiniteReadContractsOptions<config, contracts, allowFailure, pageParam> &
+> = InfiniteReadContractsOptions<contracts, allowFailure, pageParam, config> &
   ConfigParameter<config> & {
     query: UseInfiniteQueryParameters<
       InfiniteReadContractsQueryFnData<contracts, allowFailure>,
       ReadContractsError,
       selectData,
       InfiniteReadContractsData<contracts, allowFailure>,
-      InfiniteReadContractsQueryKey<config, contracts, allowFailure, pageParam>,
+      InfiniteReadContractsQueryKey<contracts, allowFailure, pageParam, config>,
       pageParam
     >
   }

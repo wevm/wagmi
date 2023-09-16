@@ -30,7 +30,7 @@ export function readContractQueryOptions<
   functionName extends ContractFunctionName<abi, 'pure' | 'view'>,
   args extends ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
 >(
-  config: Config,
+  config: config,
   options: ReadContractOptions<abi, functionName, args, config> = {} as any,
 ) {
   return {
@@ -41,20 +41,20 @@ export function readContractQueryOptions<
       if (!address) throw new Error('address is required')
       if (!functionName) throw new Error('functionName is required')
       const args = parameters.args as readonly unknown[]
-      return (await readContract(config, {
+      return readContract(config, {
         abi,
         address,
         functionName,
         args,
         ...parameters,
-      })) as ReadContractData<abi, functionName, args>
+      }) as Promise<ReadContractData<abi, functionName, args>>
     },
     queryKey: readContractQueryKey(options),
   } as const satisfies QueryOptions<
     ReadContractQueryFnData<abi, functionName, args>,
     ReadContractError,
     ReadContractData<abi, functionName, args>,
-    ReadContractQueryKey<config, abi, functionName, args>
+    ReadContractQueryKey<abi, functionName, args, config>
   >
 }
 
@@ -71,18 +71,18 @@ export type ReadContractData<
 > = ReadContractQueryFnData<abi, functionName, args>
 
 export function readContractQueryKey<
+  config extends Config,
   const abi extends Abi | readonly unknown[],
   functionName extends ContractFunctionName<abi, 'pure' | 'view'>,
   args extends ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
-  config extends Config,
 >(options: ReadContractOptions<abi, functionName, args, config> = {} as any) {
   const { abi: _, ...rest } = options
   return ['readContract', filterQueryOptions(rest)] as const
 }
 
 export type ReadContractQueryKey<
-  config extends Config,
   abi extends Abi | readonly unknown[],
   functionName extends ContractFunctionName<abi, 'pure' | 'view'>,
   args extends ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
-> = ReturnType<typeof readContractQueryKey<abi, functionName, args, config>>
+  config extends Config,
+> = ReturnType<typeof readContractQueryKey<config, abi, functionName, args>>

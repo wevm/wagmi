@@ -12,10 +12,10 @@ import type { InfiniteQueryOptions, ScopeKeyParameter } from './types.js'
 import { filterQueryOptions } from './utils.js'
 
 export type InfiniteReadContractsOptions<
-  config extends Config,
   contracts extends readonly unknown[],
   allowFailure extends boolean,
   pageParam,
+  config extends Config,
 > = {
   cacheKey: string
   contracts(
@@ -33,12 +33,12 @@ export function infiniteReadContractsQueryOptions<
   allowFailure extends boolean = true,
   pageParam = unknown,
 >(
-  config: Config,
+  config: config,
   options: InfiniteReadContractsOptions<
-    config,
     contracts,
     allowFailure,
-    pageParam
+    pageParam,
+    config
   > &
     ChainIdParameter<config> &
     RequiredPageParamsParameters<contracts, allowFailure, pageParam>,
@@ -61,7 +61,7 @@ export function infiniteReadContractsQueryOptions<
     ReadContractsError,
     InfiniteReadContractsData<contracts, allowFailure>,
     InfiniteReadContractsData<contracts, allowFailure>,
-    InfiniteReadContractsQueryKey<config, contracts, allowFailure, pageParam>,
+    InfiniteReadContractsQueryKey<contracts, allowFailure, pageParam, config>,
     pageParam
   >
 }
@@ -99,23 +99,23 @@ export function infiniteReadContractsQueryKey<
   pageParam,
 >(
   options: InfiniteReadContractsOptions<
-    config,
     contracts,
     allowFailure,
-    pageParam
+    pageParam,
+    config
   > &
     ChainIdParameter<config> &
     RequiredPageParamsParameters<contracts, allowFailure, pageParam>,
 ) {
-  const { contracts: _, ...parameters } = options
+  const { contracts: _, query: _q, ...parameters } = options
   return ['infiniteReadContracts', filterQueryOptions(parameters)] as const
 }
 
 export type InfiniteReadContractsQueryKey<
-  config extends Config,
   contracts extends readonly unknown[],
   allowFailure extends boolean,
   pageParam,
+  config extends Config,
 > = ReturnType<
   typeof infiniteReadContractsQueryKey<
     config,
