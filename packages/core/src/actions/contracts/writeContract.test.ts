@@ -34,12 +34,39 @@ describe('writeContract', () => {
     expect(hash).toBeDefined()
   })
 
+  it('prepared with walletClient', async () => {
+    const { request } = await prepareWriteContract({
+      ...wagmiContractConfig,
+      functionName: 'mint',
+      args: [getRandomTokenId()],
+      walletClient: getWalletClients()[0]!,
+    })
+    const { hash } = await writeContract({
+      ...request,
+      walletClient: getWalletClients()[0]!,
+    })
+
+    expect(hash).toBeDefined()
+  })
+
   it('unprepared', async () => {
     await connect({ connector })
     const { hash } = await writeContract({
       ...wagmiContractConfig,
       functionName: 'mint',
       args: [getRandomTokenId()],
+    })
+
+    expect(hash).toBeDefined()
+  })
+
+  it('unprepared with walletClient', async () => {
+    await connect({ connector })
+    const { hash } = await writeContract({
+      ...wagmiContractConfig,
+      functionName: 'mint',
+      args: [getRandomTokenId()],
+      walletClient: getWalletClients()[0]!,
     })
 
     expect(hash).toBeDefined()

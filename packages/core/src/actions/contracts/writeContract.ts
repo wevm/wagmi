@@ -2,13 +2,14 @@ import type { Abi } from 'abitype'
 import type {
   Account,
   Chain,
+  WalletClient,
   WriteContractParameters,
   WriteContractReturnType,
 } from 'viem'
 
 import { ConnectorNotFoundError } from '../../errors'
 import { assertActiveChain } from '../../utils'
-import { getWalletClient } from '../viem'
+import { GetWalletClientResult, getWalletClient } from '../viem'
 import type { PrepareWriteContractConfig } from './prepareWriteContract'
 import { prepareWriteContract } from './prepareWriteContract'
 
@@ -66,10 +67,16 @@ export async function writeContract<
   TFunctionName extends string,
 >(
   config:
-    | WriteContractUnpreparedArgs<TAbi, TFunctionName>
-    | WriteContractPreparedArgs<TAbi, TFunctionName>,
+    | (
+        | WriteContractUnpreparedArgs<TAbi, TFunctionName>
+        | WriteContractPreparedArgs<TAbi, TFunctionName>
+      ) & {
+        walletClient?: WalletClient
+      },
 ): Promise<WriteContractResult> {
-  const walletClient = await getWalletClient({ chainId: config.chainId })
+  const walletClient: GetWalletClientResult =
+    (config.walletClient as unknown as GetWalletClientResult) ??
+    (await getWalletClient({ chainId: config.chainId }))
   if (!walletClient) throw new ConnectorNotFoundError()
   if (config.chainId) assertActiveChain({ chainId: config.chainId })
 
@@ -86,7 +93,6 @@ export async function writeContract<
       Account
     >
   }
-
   const hash = await walletClient.writeContract({
     ...request,
     chain: null,
