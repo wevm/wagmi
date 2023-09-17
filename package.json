@@ -75,7 +75,12 @@
     ],
     "ignoreBinaries": ["biome"],
     "ignoreDependencies": ["@biomejs/biome", "only-allow"],
-    "ignoreWorkspaces": ["docs", "packages/register-tests/**", "packages/test"],
+    "ignoreWorkspaces": [
+      "docs",
+      "packages/register-tests/**",
+      "packages/test",
+      "playgrounds/vite-ssr-react"
+    ],
     "workspaces": {
       ".": {
         "entry": ".scripts/*.ts"
