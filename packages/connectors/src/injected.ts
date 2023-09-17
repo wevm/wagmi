@@ -31,6 +31,7 @@ export type InjectedParameters = {
    */
   target?:
     | TargetId
+    | (TargetMap[TargetId] & { id: string })
     | (() => (TargetMap[TargetId] & { id: string }) | undefined)
     | undefined
 }
@@ -46,18 +47,14 @@ const targetMap = {
   metaMask: {
     name: 'MetaMask',
     provider(window) {
-      return findProvider(window, (windowProvider) => {
-        if (!windowProvider.isMetaMask) return false
+      return findProvider(window, (provider) => {
+        if (!provider.isMetaMask) return false
         // Brave tries to make itself look like MetaMask
         // Could also try RPC `web3_clientVersion` if following is unreliable
-        if (
-          windowProvider.isBraveWallet &&
-          !windowProvider._events &&
-          !windowProvider._state
-        )
+        if (provider.isBraveWallet && !provider._events && !provider._state)
           return false
         // Other wallets that try to look like MetaMask
-        const flags: (keyof WindowProviderFlags)[] = [
+        const flags: WalletProviderFlags[] = [
           'isApexWallet',
           'isAvalanche',
           'isBitKeep',
@@ -75,7 +72,7 @@ const targetMap = {
           'isTokenary',
           'isZerion',
         ]
-        for (const flag of flags) if (windowProvider[flag]) return false
+        for (const flag of flags) if (provider[flag]) return false
         return true
       })
     },
@@ -91,15 +88,17 @@ const targetMap = {
 } as const satisfies TargetMap
 
 export function injected(parameters: InjectedParameters = {}) {
-  const shimDisconnect = parameters.shimDisconnect ?? true
-  const unstable_shimAsyncInject = parameters.unstable_shimAsyncInject
+  const { shimDisconnect = true, unstable_shimAsyncInject } = parameters
 
-  function getWindowProvider(): TargetMap[TargetId] & { id: string } {
+  function getTarget(): Evaluate<TargetMap[TargetId] & { id: string }> {
     const target = parameters.target
     if (typeof target === 'function') {
       const result = target()
       if (result) return result
     }
+
+    if (typeof target === 'object') return target
+
     if (typeof target === 'string')
       return {
         ...(targetMap[target as keyof typeof targetMap] ?? {
@@ -108,6 +107,7 @@ export function injected(parameters: InjectedParameters = {}) {
         }),
         id: target,
       }
+
     return {
       id: 'injected',
       name: 'Injected',
@@ -117,7 +117,7 @@ export function injected(parameters: InjectedParameters = {}) {
     }
   }
 
-  type Provider = WindowProvider | undefined
+  type Provider = WalletProvider | undefined
   type Properties = {
     onConnect(connectInfo: ProviderConnectInfo): void
   }
@@ -125,10 +125,10 @@ export function injected(parameters: InjectedParameters = {}) {
 
   return createConnector<Provider, Properties, StorageItem>((config) => ({
     get id() {
-      return getWindowProvider().id
+      return getTarget().id
     },
     get name() {
-      return getWindowProvider().name
+      return getTarget().name
     },
     async setup() {
       const provider = await this.getProvider()
@@ -145,7 +145,7 @@ export function injected(parameters: InjectedParameters = {}) {
       try {
         // Attempt to show select prompt with `wallet_requestPermissions` when
         // `shimDisconnect` is active and account is in disconnected state (flag in storage)
-        const canSelectAccount = getWindowProvider().features?.includes(
+        const canSelectAccount = getTarget().features?.includes(
           'wallet_requestPermissions',
         )
         const isDisconnected =
@@ -164,25 +164,22 @@ export function injected(parameters: InjectedParameters = {}) {
                 params: [{ eth_accounts: {} }],
               })
               accounts = permissions[0]?.caveats?.[0]?.value?.map(getAddress)
-            } catch (error) {
+            } catch (err) {
+              const error = err as RpcError
               // Not all injected providers support `wallet_requestPermissions` (e.g. MetaMask iOS).
               // Only bubble up error if user rejects request
-              if ((error as ProviderRpcError).code === 4_001)
-                throw new UserRejectedRequestError(error as RpcError)
+              if (error.code === UserRejectedRequestError.code)
+                throw new UserRejectedRequestError(error)
               // Or prompt is already open
-              if (
-                (error as RpcError).code ===
-                new ResourceUnavailableRpcError(error as Error).code
-              )
-                throw error
+              if (error.code === ResourceUnavailableRpcError.code) throw error
             }
         }
 
         if (!accounts?.length) {
-          const accounts_ = await provider.request({
+          const requestedAccounts = await provider.request({
             method: 'eth_requestAccounts',
           })
-          accounts = accounts_.map(getAddress)
+          accounts = requestedAccounts.map(getAddress)
         }
 
         provider.removeListener('connect', this.onConnect.bind(this))
@@ -204,11 +201,12 @@ export function injected(parameters: InjectedParameters = {}) {
           await config.storage?.setItem(`${this.id}.connected`, true)
 
         return { accounts, chainId: currentChainId }
-      } catch (error) {
-        if ((error as ProviderRpcError).code === 4_001)
-          throw new UserRejectedRequestError(error as RpcError)
-        if ((error as RpcError).code === -32_002)
-          throw new ResourceUnavailableRpcError(error as RpcError)
+      } catch (err) {
+        const error = err as RpcError
+        if (error.code === UserRejectedRequestError.code)
+          throw new UserRejectedRequestError(error)
+        if (error.code === ResourceUnavailableRpcError.code)
+          throw new ResourceUnavailableRpcError(error)
         throw error
       }
     },
@@ -242,10 +240,10 @@ export function injected(parameters: InjectedParameters = {}) {
     },
     async getProvider() {
       if (typeof window === 'undefined') return undefined
-      const windowProvider = getWindowProvider()
-      if (typeof windowProvider.provider === 'function')
-        return windowProvider.provider(window as Window | undefined)
-      return findProvider(window as Window | undefined, () => true)
+      const target = getTarget()
+      if (typeof target.provider === 'function')
+        return target.provider(window as Window | undefined)
+      return findProvider(window)
     },
     async isAuthorized() {
       try {
@@ -298,6 +296,7 @@ export function injected(parameters: InjectedParameters = {}) {
 
           throw new ProviderNotFoundError()
         }
+
         const accounts = await this.getAccounts()
         return !!accounts.length
       } catch {
@@ -326,10 +325,12 @@ export function injected(parameters: InjectedParameters = {}) {
           ),
         ])
         return chain
-      } catch (error) {
+      } catch (err) {
+        const error = err as RpcError
+
         // Indicates chain is not added to provider
         if (
-          (error as ProviderRpcError).code === 4902 ||
+          error.code === 4902 ||
           // Unwrapping for MetaMask Mobile
           // https://github.com/MetaMask/metamask-mobile/issues/2944#issuecomment-976988719
           (error as ProviderRpcError<{ originalError?: { code: number } }>)
@@ -370,9 +371,9 @@ export function injected(parameters: InjectedParameters = {}) {
           }
         }
 
-        if ((error as ProviderRpcError).code === 4_001)
-          throw new UserRejectedRequestError(error as RpcError)
-        throw new SwitchChainError(error as RpcError)
+        if (error.code === UserRejectedRequestError.code)
+          throw new UserRejectedRequestError(error)
+        throw new SwitchChainError(error)
       }
     },
     async onAccountsChanged(accounts) {
@@ -436,100 +437,100 @@ export function injected(parameters: InjectedParameters = {}) {
   }))
 }
 
-export type TargetId = Evaluate<
-  keyof WindowProviderFlags
-> extends `is${infer name}`
+type Target = {
+  name: string
+  provider:
+    | WalletProviderFlags
+    | ((window?: Window | undefined) => WalletProvider | undefined)
+  features?: readonly 'wallet_requestPermissions'[] | undefined
+}
+
+type TargetId = Evaluate<WalletProviderFlags> extends `is${infer name}`
   ? name extends `${infer char}${infer rest}`
     ? `${Lowercase<char>}${rest}`
     : never
   : never
 
-type Target = {
-  name: string
-  provider:
-    | keyof WindowProviderFlags
-    | ((window?: Window | undefined) => WindowProvider | undefined)
-  features?: readonly 'wallet_requestPermissions'[] | undefined
-}
 type TargetMap = { [_ in TargetId]?: Target | undefined }
 
-type WindowProviderFlags = {
-  isApexWallet?: true | undefined
-  isAvalanche?: true | undefined
-  isBackpack?: true | undefined
-  isBifrost?: true | undefined
-  isBitKeep?: true | undefined
-  isBitski?: true | undefined
-  isBlockWallet?: true | undefined
-  isBraveWallet?: true | undefined
-  isCoinbaseWallet?: true | undefined
-  isDawn?: true | undefined
-  isEnkrypt?: true | undefined
-  isExodus?: true | undefined
-  isFrame?: true | undefined
-  isFrontier?: true | undefined
-  isGamestop?: true | undefined
-  isHyperPay?: true | undefined
-  isImToken?: true | undefined
-  isKuCoinWallet?: true | undefined
-  isMathWallet?: true | undefined
-  isMetaMask?: true | undefined
-  isOkxWallet?: true | undefined
-  isOKExWallet?: true | undefined
-  isOneInchAndroidWallet?: true | undefined
-  isOneInchIOSWallet?: true | undefined
-  isOpera?: true | undefined
-  isPhantom?: true | undefined
-  isPortal?: true | undefined
-  isRabby?: true | undefined
-  isRainbow?: true | undefined
-  isStatus?: true | undefined
-  isTally?: true | undefined
-  isTokenPocket?: true | undefined
-  isTokenary?: true | undefined
-  isTrust?: true | undefined
-  isTrustWallet?: true | undefined
-  isXDEFI?: true | undefined
-  isZerion?: true | undefined
-}
+type WalletProviderFlags =
+  | 'isApexWallet'
+  | 'isAvalanche'
+  | 'isBackpack'
+  | 'isBifrost'
+  | 'isBitKeep'
+  | 'isBitski'
+  | 'isBlockWallet'
+  | 'isBraveWallet'
+  | 'isCoinbaseWallet'
+  | 'isDawn'
+  | 'isEnkrypt'
+  | 'isExodus'
+  | 'isFrame'
+  | 'isFrontier'
+  | 'isGamestop'
+  | 'isHyperPay'
+  | 'isImToken'
+  | 'isKuCoinWallet'
+  | 'isMathWallet'
+  | 'isMetaMask'
+  | 'isOkxWallet'
+  | 'isOKExWallet'
+  | 'isOneInchAndroidWallet'
+  | 'isOneInchIOSWallet'
+  | 'isOpera'
+  | 'isPhantom'
+  | 'isPortal'
+  | 'isRabby'
+  | 'isRainbow'
+  | 'isStatus'
+  | 'isTally'
+  | 'isTokenPocket'
+  | 'isTokenary'
+  | 'isTrust'
+  | 'isTrustWallet'
+  | 'isXDEFI'
+  | 'isZerion'
 
-type WindowProvider = Evaluate<
-  EIP1193Provider &
-    WindowProviderFlags & {
-      providers?: WindowProvider[] | undefined
-      /** Only exists in MetaMask as of 2022/04/03 */
-      _events?: { connect?: (() => void) | undefined } | undefined
-      /** Only exists in MetaMask as of 2022/04/03 */
-      _state?:
-        | {
-            accounts?: string[]
-            initialized?: boolean
-            isConnected?: boolean
-            isPermanentlyDisconnected?: boolean
-            isUnlocked?: boolean
-          }
-        | undefined
-    }
+type WalletProvider = Evaluate<
+  EIP1193Provider & {
+    [key in WalletProviderFlags]?: true | undefined
+  } & {
+    providers?: WalletProvider[] | undefined
+    /** Only exists in MetaMask as of 2022/04/03 */
+    _events?: { connect?: (() => void) | undefined } | undefined
+    /** Only exists in MetaMask as of 2022/04/03 */
+    _state?:
+      | {
+          accounts?: string[]
+          initialized?: boolean
+          isConnected?: boolean
+          isPermanentlyDisconnected?: boolean
+          isUnlocked?: boolean
+        }
+      | undefined
+  }
 >
 
 type Window = {
-  coinbaseWalletExtension?: WindowProvider | undefined
-  ethereum?: WindowProvider | undefined
-  phantom?: { ethereum: WindowProvider } | undefined
+  coinbaseWalletExtension?: WalletProvider | undefined
+  ethereum?: WalletProvider | undefined
+  phantom?: { ethereum: WalletProvider } | undefined
 }
 
 function findProvider(
-  window: Window | undefined,
-  condition:
-    | keyof WindowProviderFlags
-    | ((provider: WindowProvider) => boolean),
+  window: globalThis.Window | Window | undefined,
+  select?: WalletProviderFlags | ((provider: WalletProvider) => boolean),
 ) {
-  function isProvider(provider: WindowProvider) {
-    if (typeof condition === 'function') return condition(provider)
-    return provider[condition]
+  function isProvider(provider: WalletProvider) {
+    if (typeof select === 'function') return select(provider)
+    if (typeof select === 'string') return provider[select]
+    return true
   }
-  if (window?.ethereum?.providers)
-    return window.ethereum.providers.find((provider) => isProvider(provider))
-  if (window?.ethereum && isProvider(window.ethereum)) return window.ethereum
+
+  const ethereum = (window as Window).ethereum
+  if (ethereum?.providers)
+    return ethereum.providers.find((provider) => isProvider(provider))
+  if (ethereum && isProvider(ethereum)) return ethereum
   return undefined
 }
