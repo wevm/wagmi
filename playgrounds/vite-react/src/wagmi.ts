@@ -28,6 +28,7 @@ export const config = createConfig({
     injected({ target: 'metaMask' }),
     injected({ target: 'coinbaseWallet' }),
     injected({ target: 'phantom' }),
+    injected({ target: 'enkrypt' }),
     injected(),
     walletConnect({ projectId: import.meta.env.VITE_WC_PROJECT_ID }),
     coinbaseWallet({ appName: 'Vite React Playground', darkMode: true }),

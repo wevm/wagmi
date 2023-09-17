@@ -76,7 +76,6 @@ const targetMap = {
         return true
       })
     },
-    features: ['wallet_requestPermissions'],
   },
   phantom: {
     name: 'Phantom',
@@ -142,39 +141,36 @@ export function injected(parameters: InjectedParameters = {}) {
       const provider = await this.getProvider()
       if (!provider) throw new ProviderNotFoundError()
 
+      // Attempt to show select prompt with `wallet_requestPermissions` when
+      // `shimDisconnect` is active and account is in disconnected state (flag in storage)
+      const isDisconnected =
+        shimDisconnect &&
+        !(await config.storage?.getItem(`${this.id}.connected`))
+
+      let accounts: readonly Address[] | null = null
+      if (isDisconnected) {
+        accounts = await this.getAccounts().catch(() => null)
+        const isAuthorized = !!accounts?.length
+        if (isAuthorized)
+          // Attempt to show another prompt for selecting connector if already connected
+          try {
+            const permissions = await provider.request({
+              method: 'wallet_requestPermissions',
+              params: [{ eth_accounts: {} }],
+            })
+            accounts = permissions[0]?.caveats?.[0]?.value?.map(getAddress)
+          } catch (err) {
+            const error = err as RpcError
+            // Not all injected providers support `wallet_requestPermissions` (e.g. MetaMask iOS).
+            // Only bubble up error if user rejects request
+            if (error.code === UserRejectedRequestError.code)
+              throw new UserRejectedRequestError(error)
+            // Or prompt is already open
+            if (error.code === ResourceUnavailableRpcError.code) throw error
+          }
+      }
+
       try {
-        // Attempt to show select prompt with `wallet_requestPermissions` when
-        // `shimDisconnect` is active and account is in disconnected state (flag in storage)
-        const canSelectAccount = getTarget().features?.includes(
-          'wallet_requestPermissions',
-        )
-        const isDisconnected =
-          shimDisconnect &&
-          !(await config.storage?.getItem(`${this.id}.connected`))
-
-        let accounts: readonly Address[] | null = null
-        if (canSelectAccount && isDisconnected) {
-          accounts = await this.getAccounts().catch(() => null)
-          const isAuthorized = !!accounts?.length
-          if (isAuthorized)
-            // Attempt to show another prompt for selecting connector if already connected
-            try {
-              const permissions = await provider.request({
-                method: 'wallet_requestPermissions',
-                params: [{ eth_accounts: {} }],
-              })
-              accounts = permissions[0]?.caveats?.[0]?.value?.map(getAddress)
-            } catch (err) {
-              const error = err as RpcError
-              // Not all injected providers support `wallet_requestPermissions` (e.g. MetaMask iOS).
-              // Only bubble up error if user rejects request
-              if (error.code === UserRejectedRequestError.code)
-                throw new UserRejectedRequestError(error)
-              // Or prompt is already open
-              if (error.code === ResourceUnavailableRpcError.code) throw error
-            }
-        }
-
         if (!accounts?.length) {
           const requestedAccounts = await provider.request({
             method: 'eth_requestAccounts',
@@ -442,7 +438,6 @@ type Target = {
   provider:
     | WalletProviderFlags
     | ((window?: Window | undefined) => WalletProvider | undefined)
-  features?: readonly 'wallet_requestPermissions'[] | undefined
 }
 
 export type TargetId = Evaluate<WalletProviderFlags> extends `is${infer name}`
