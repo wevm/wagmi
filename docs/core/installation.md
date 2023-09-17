@@ -18,6 +18,10 @@ npm install @wagmi/core@alpha viem@alpha
 ```bash [yarn]
 yarn add @wagmi/core@alpha viem@alpha
 ```
+
+```bash [bun]
+bun add @wagmi/core@alpha viem@alpha
+```
 :::
 
 - [Viem](https://viem.sh) is a TypeScript interface for Ethereum that performs blockchain operations.
@@ -66,6 +70,10 @@ npm install @wagmi/core@canary
 
 ```bash [yarn]
 yarn add @wagmi/core@canary
+```
+
+```bash [bun]
+bun add @wagmi/core@canary
 ```
 :::
 

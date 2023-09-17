@@ -18,6 +18,10 @@ npm install wagmi@alpha viem@alpha @tanstack/react-query@beta
 ```bash [yarn]
 yarn add wagmi@alpha viem@alpha @tanstack/react-query@beta
 ```
+
+```bash [bun]
+bun add wagmi@alpha viem@alpha @tanstack/react-query@beta
+```
 :::
 
 - [Viem](https://viem.sh) is a TypeScript interface for Ethereum that performs blockchain operations.
@@ -68,6 +72,10 @@ npm install wagmi@canary
 
 ```bash [yarn]
 yarn add wagmi@canary
+```
+
+```bash [bun]
+bun add wagmi@canary
 ```
 :::
 

@@ -20,6 +20,10 @@ npm install @wagmi/core@alpha @wagmi/connectors@alpha viem@alpha
 ```bash [yarn]
 yarn add @wagmi/core@alpha @wagmi/connectors@alpha viem@alpha
 ```
+
+```bash [bun]
+bun add @wagmi/core@alpha @wagmi/connectors@alpha viem@alpha
+```
 :::
 
 - [Wagmi Connectors](/core/api/connectors) is a collection of interfaces for linking accounts/wallets to Wagmi.

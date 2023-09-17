@@ -20,6 +20,10 @@ npm init wagmi
 ```bash [yarn]
 yarn create wagmi
 ```
+
+```bash [bun]
+bun create wagmi
+```
 :::
 
 Once the command runs, you'll see some prompts to complete.
@@ -47,6 +51,10 @@ npm install wagmi@alpha viem@alpha @tanstack/react-query@beta
 
 ```bash [yarn]
 yarn add wagmi@alpha viem@alpha @tanstack/react-query@beta
+```
+
+```bash [bun]
+bun add wagmi@alpha viem@alpha @tanstack/react-query@beta
 ```
 :::
 
