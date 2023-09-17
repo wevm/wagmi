@@ -1,13 +1,14 @@
 {
   "name": "vite-ssr-react",
   "type": "module",
+  "private": true,
   "scripts": {
     "dev": "npm run server:dev",
     "prod": "npm run build && npm run server:prod",
     "build": "vite build",
     "server": "node --loader ts-node/esm ./server/index.ts",
     "server:dev": "npm run server",
-    "server:prod": "cross-env NODE_ENV=production npm run server"
+    "server:prod": "NODE_ENV=production npm run server"
   },
   "dependencies": {
     "@tanstack/query-sync-storage-persister": "5.0.0-beta.28",
@@ -22,7 +23,6 @@
     "@vitejs/plugin-react": "^4.0.4",
     "buffer": "^6.0.3",
     "compression": "^1.7.4",
-    "cross-env": "^7.0.3",
     "express": "^4.18.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
