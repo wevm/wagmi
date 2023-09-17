@@ -92,6 +92,12 @@ export {
 } from '../hooks/useConnections.js'
 
 export {
+  type UseConnectorsParameters,
+  type UseConnectorsReturnType,
+  useConnectors,
+} from '../hooks/useConnectors.js'
+
+export {
   type UseConnectorClientParameters,
   type UseConnectorClientReturnType,
   useConnectorClient,

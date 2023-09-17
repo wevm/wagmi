@@ -35,10 +35,10 @@ export async function connect<config extends Config>(
   config: config,
   parameters: ConnectParameters<config>,
 ): Promise<ConnectReturnType<config>> {
-  // Setup connector if not already created
+  // "Register" connector if not already created
   let connector: Connector
   if (typeof parameters.connector === 'function') {
-    connector = config._internal.setup(parameters.connector)
+    connector = config._internal.connectors.setup(parameters.connector)
   } else connector = parameters.connector
 
   // Check if connector is already connected

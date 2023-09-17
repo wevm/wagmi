@@ -105,7 +105,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
     id: 'walletConnect',
     name: 'WalletConnect',
     async setup() {
-      const provider = await this.getProvider()
+      const provider = await this.getProvider().catch(() => null)
       if (!provider) return
       provider.on('connect', this.onConnect.bind(this))
       provider.on('session_delete', this.onSessionDelete.bind(this))
@@ -173,21 +173,21 @@ export function walletConnect(parameters: WalletConnectParameters) {
     async disconnect() {
       const provider = await this.getProvider()
       try {
-        await provider.disconnect()
+        await provider?.disconnect()
       } catch (error) {
         if (!/No matching key/i.test((error as Error).message)) throw error
       } finally {
-        provider.removeListener(
+        provider?.removeListener(
           'accountsChanged',
           this.onAccountsChanged.bind(this),
         )
-        provider.removeListener('chainChanged', this.onChainChanged)
-        provider.removeListener('disconnect', this.onDisconnect.bind(this))
-        provider.removeListener(
+        provider?.removeListener('chainChanged', this.onChainChanged)
+        provider?.removeListener('disconnect', this.onDisconnect.bind(this))
+        provider?.removeListener(
           'session_delete',
           this.onSessionDelete.bind(this),
         )
-        provider.on('connect', this.onConnect.bind(this))
+        provider?.on('connect', this.onConnect.bind(this))
 
         this.setRequestedChainsIds([])
       }

@@ -23,5 +23,6 @@ export function useConnections(
   return useSyncExternalStore(
     (onChange) => watchConnections(config, { onChange }),
     () => getConnections(config),
+    () => getConnections(config),
   )
 }

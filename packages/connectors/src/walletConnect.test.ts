@@ -47,6 +47,6 @@ afterAll(() => server.close())
 
 test('setup', () => {
   const connectorFn = walletConnect({ projectId: walletConnectProjectId })
-  const connector = config._internal.setup(connectorFn)
+  const connector = config._internal.connectors.setup(connectorFn)
   expect(connector.name).toEqual('WalletConnect')
 })

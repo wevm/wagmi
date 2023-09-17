@@ -41,7 +41,7 @@ export function ledger(parameters: LedgerParameters = {}) {
     id: 'ledger',
     name: 'Ledger',
     async setup() {
-      const provider = await this.getProvider()
+      const provider = await this.getProvider().catch(() => null)
       if (!provider) return
       provider.on('connect', this.onConnect.bind(this))
       provider.on('session_delete', this.onSessionDelete.bind(this))

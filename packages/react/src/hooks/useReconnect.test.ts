@@ -5,7 +5,7 @@ import { afterEach, expect, test } from 'vitest'
 
 import { useReconnect } from './useReconnect.js'
 
-const connector = config._internal.setup(
+const connector = config._internal.connectors.setup(
   testConnector({
     accounts,
     features: { reconnect: true },

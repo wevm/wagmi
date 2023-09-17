@@ -114,6 +114,10 @@ export function getSidebar() {
                 link: '/react/api/hooks/useConnectorClient',
               },
               {
+                text: 'useConnectors 🚧',
+                link: '/react/api/hooks/useConnectors',
+              },
+              {
                 text: 'useContractRead 🚧',
                 link: '/react/api/hooks/useContractRead',
               },
@@ -309,6 +313,10 @@ export function getSidebar() {
                 link: '/core/api/actions/getConnectorClient',
               },
               {
+                text: 'getConnectors 🚧',
+                link: '/core/api/actions/getConnectors',
+              },
+              {
                 text: 'getEnsAddress',
                 link: '/core/api/actions/getEnsAddress',
               },
@@ -395,6 +403,10 @@ export function getSidebar() {
               {
                 text: 'watchConnections',
                 link: '/core/api/actions/watchConnections',
+              },
+              {
+                text: 'watchConnectors 🚧',
+                link: '/core/api/actions/watchConnectors',
               },
               {
                 text: 'watchPublicClient 🚧',

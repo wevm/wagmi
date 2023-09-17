@@ -29,7 +29,7 @@ test('default', async () => {
 })
 
 test('behavior: user rejected request', async () => {
-  const connector_ = config._internal.setup(
+  const connector_ = config._internal.connectors.setup(
     testConnector({
       accounts,
       features: { switchChainError: true },
@@ -48,7 +48,7 @@ test('behavior: user rejected request', async () => {
 })
 
 test('behavior: not supported', async () => {
-  const { switchChain: _, ...connector_ } = config._internal.setup(
+  const { switchChain: _, ...connector_ } = config._internal.connectors.setup(
     testConnector({ accounts }),
   )
   await connect(config, { connector: connector_ })

@@ -35,7 +35,7 @@ export async function reconnect(
       let connector: Connector
       // "Register" connector if not already created
       if (typeof connector_ === 'function')
-        connector = config._internal.setup(connector_)
+        connector = config._internal.connectors.setup(connector_)
       else connector = connector_
       connectors.push(connector)
     }

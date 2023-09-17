@@ -51,7 +51,7 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
   let provider_: Provider | undefined
 
   return createConnector<Provider, Properties>((config) => ({
-    id: 'coinbaseWallet',
+    id: 'coinbaseWalletSDK',
     name: 'Coinbase Wallet',
     async connect({ chainId } = {}) {
       try {

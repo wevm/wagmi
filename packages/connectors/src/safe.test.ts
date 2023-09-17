@@ -18,6 +18,6 @@ test('setup', () => {
     allowedDomains: [/gnosis-safe.io$/, /app.safe.global$/],
     debug: false,
   })
-  const connector = config._internal.setup(connectorFn)
+  const connector = config._internal.connectors.setup(connectorFn)
   expect(connector.name).toEqual('Safe')
 })

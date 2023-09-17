@@ -77,7 +77,6 @@ function Connect() {
       <h2>Connect</h2>
       {connectors.map((connector) => (
         <button
-          id={connector.uid}
           key={connector.uid}
           onClick={() => connect({ connector, chainId })}
           type="button"
@@ -166,7 +165,7 @@ function Connections() {
       <h2>Connections</h2>
 
       {connections.map((connection) => (
-        <div id={connection.connector.uid} key={connection.connector.uid}>
+        <div key={connection.connector.uid}>
           <div>connector {connection.connector.name}</div>
           <div>accounts: {JSON.stringify(connection.accounts)}</div>
           <div>chainId: {connection.chainId}</div>

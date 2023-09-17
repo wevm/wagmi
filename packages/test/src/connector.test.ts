@@ -6,6 +6,6 @@ import { accounts } from './constants.js'
 
 test('setup', () => {
   const connectorFn = testConnector({ accounts })
-  const connector = config._internal.setup(connectorFn)
+  const connector = config._internal.connectors.setup(connectorFn)
   expect(connector.name).toEqual('Test Connector')
 })

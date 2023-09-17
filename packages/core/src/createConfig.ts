@@ -55,47 +55,6 @@ export type CreateConfigParameters<
     >
 >
 
-export type Config<
-  chains extends readonly [Chain, ...Chain[]] = readonly [Chain, ...Chain[]],
-  transports extends Record<chains[number]['id'], Transport> = Record<
-    chains[number]['id'],
-    Transport
-  >,
-> = {
-  readonly chains: chains
-  readonly connectors: readonly Connector[]
-  readonly state: State<chains>
-  readonly storage: Storage | null
-
-  getClient<chainId extends chains[number]['id']>(parameters?: {
-    chainId?: chainId | chains[number]['id'] | undefined
-  }): Client<transports[chainId], Extract<chains[number], { id: chainId }>>
-  setState<tchains extends readonly [Chain, ...Chain[]] = chains>(
-    value: State<tchains> | ((state: State<tchains>) => State<tchains>),
-  ): void
-  subscribe<state>(
-    selector: (state: State<chains>) => state,
-    listener: (selectedState: state, previousSelectedState: state) => void,
-    options?:
-      | {
-          equalityFn?: ((a: state, b: state) => boolean) | undefined
-          fireImmediately?: boolean | undefined
-        }
-      | undefined,
-  ): () => void
-
-  _internal: {
-    readonly reconnectOnMount: boolean
-    readonly syncConnectedChain: boolean
-    readonly transports: transports
-
-    change(data: EventData<ConnectorEventMap, 'change'>): void
-    connect(data: EventData<ConnectorEventMap, 'connect'>): void
-    disconnect(data: EventData<ConnectorEventMap, 'disconnect'>): void
-    setup(connectorFn: CreateConnectorFn): Connector
-  }
-}
-
 export function createConfig<
   const chains extends readonly [Chain, ...Chain[]],
   transports extends Record<chains[number]['id'], Transport>,
@@ -120,7 +79,7 @@ export function createConfig<
   // Set up connectors, clients, etc.
   /////////////////////////////////////////////////////////////////////////////////////////////////
 
-  const connectors = (rest.connectors ?? []).map(setup)
+  const connectors = createStore(() => (rest.connectors ?? []).map(setup))
   function setup(connectorFn: CreateConnectorFn) {
     // Set up emitter with uid and add to connector so they are "linked" together.
     const emitter = createEmitter<ConnectorEventMap>(uid())
@@ -205,12 +164,7 @@ export function createConfig<
         ? persist(() => initialState, {
             name: 'store',
             partialize(state) {
-              return {
-                chainId: state.chainId,
-                connections: state.connections,
-                current: state.current,
-                status: state.status,
-              } satisfies PartializedState
+              return state satisfies PartializedState
             },
             skipHydration: !reconnectOnMount,
             storage: storage as Storage<Record<string, unknown>>,
@@ -265,7 +219,7 @@ export function createConfig<
     if (store.getState().status === 'reconnecting') return
 
     store.setState((x) => {
-      const connector = connectors.find((x) => x.uid === data.uid)
+      const connector = connectors.getState().find((x) => x.uid === data.uid)
       if (!connector) return x
       return {
         ...x,
@@ -309,13 +263,14 @@ export function createConfig<
 
   return {
     chains: chains as chains,
-    connectors,
-    get state() {
-      return store.getState() as unknown as State<chains>
+    get connectors() {
+      return connectors.getState()
     },
     storage,
 
-    getClient,
+    get state() {
+      return store.getState() as unknown as State<chains>
+    },
     setState(value) {
       let newState: State
       if (typeof value === 'function') newState = value(store.getState() as any)
@@ -336,6 +291,8 @@ export function createConfig<
       )
     },
 
+    getClient,
+
     _internal: {
       reconnectOnMount,
       syncConnectedChain,
@@ -343,7 +300,19 @@ export function createConfig<
       change,
       connect,
       disconnect,
-      setup,
+      connectors: {
+        setup,
+        setState(value) {
+          let newState: Connector[]
+          if (typeof value === 'function')
+            newState = value(connectors.getState())
+          else newState = value
+          connectors.setState(newState, true)
+        },
+        subscribe(listener) {
+          return connectors.subscribe(listener)
+        },
+      },
     },
   }
 }
@@ -351,6 +320,58 @@ export function createConfig<
 /////////////////////////////////////////////////////////////////////////////////////////////////
 // Types
 /////////////////////////////////////////////////////////////////////////////////////////////////
+
+export type Config<
+  chains extends readonly [Chain, ...Chain[]] = readonly [Chain, ...Chain[]],
+  transports extends Record<chains[number]['id'], Transport> = Record<
+    chains[number]['id'],
+    Transport
+  >,
+> = {
+  readonly chains: chains
+  readonly connectors: readonly Connector[]
+  readonly storage: Storage | null
+
+  readonly state: State<chains>
+  setState<tchains extends readonly [Chain, ...Chain[]] = chains>(
+    value: State<tchains> | ((state: State<tchains>) => State<tchains>),
+  ): void
+  subscribe<state>(
+    selector: (state: State<chains>) => state,
+    listener: (state: state, previousState: state) => void,
+    options?:
+      | {
+          equalityFn?: ((a: state, b: state) => boolean) | undefined
+          fireImmediately?: boolean | undefined
+        }
+      | undefined,
+  ): () => void
+
+  getClient<chainId extends chains[number]['id']>(parameters?: {
+    chainId?: chainId | chains[number]['id'] | undefined
+  }): Client<transports[chainId], Extract<chains[number], { id: chainId }>>
+
+  _internal: {
+    readonly reconnectOnMount: boolean
+    readonly syncConnectedChain: boolean
+    readonly transports: transports
+
+    change(data: EventData<ConnectorEventMap, 'change'>): void
+    connect(data: EventData<ConnectorEventMap, 'connect'>): void
+    disconnect(data: EventData<ConnectorEventMap, 'disconnect'>): void
+
+    connectors: {
+      setup(connectorFn: CreateConnectorFn): Connector
+      setState(value: Connector[] | ((state: Connector[]) => Connector[])): void
+      subscribe(
+        listener: (
+          state: readonly Connector[],
+          prevState: readonly Connector[],
+        ) => void,
+      ): () => void
+    }
+  }
+}
 
 export type State<
   chains extends readonly [Chain, ...Chain[]] = readonly [Chain, ...Chain[]],

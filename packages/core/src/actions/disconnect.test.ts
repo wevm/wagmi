@@ -4,7 +4,7 @@ import { expect, test } from 'vitest'
 import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'
 
-const connector = config._internal.setup(testConnector({ accounts }))
+const connector = config._internal.connectors.setup(testConnector({ accounts }))
 
 test('default', async () => {
   await connect(config, { connector })
@@ -32,7 +32,9 @@ test('behavior: not connected to connector', async () => {
 
 test('behavior: connector passed not connected', async () => {
   await connect(config, { connector })
-  const connector_ = config._internal.setup(testConnector({ accounts }))
+  const connector_ = config._internal.connectors.setup(
+    testConnector({ accounts }),
+  )
   await expect(
     disconnect(config, { connector: connector_ }),
   ).rejects.toMatchInlineSnapshot(`
@@ -43,7 +45,9 @@ test('behavior: connector passed not connected', async () => {
 })
 
 test('behavior: uses next connector on disconnect', async () => {
-  const connector_ = config._internal.setup(testConnector({ accounts }))
+  const connector_ = config._internal.connectors.setup(
+    testConnector({ accounts }),
+  )
   await connect(config, { connector: connector_ })
   await connect(config, { connector })
 

@@ -27,5 +27,6 @@ export function useChainId<config extends Config = ResolvedRegister['config']>(
   return useSyncExternalStore(
     (onChange) => watchChainId(config, { onChange }),
     () => getChainId(config),
+    () => getChainId(config),
   )
 }

@@ -13,7 +13,9 @@ test('constructors', () => {
     Version: @wagmi/core@x.y.z]
   `)
   expect(
-    new SwitchChainNotSupportedError({ connector: config.connectors[0]! }),
+    new SwitchChainNotSupportedError({
+      connector: config.connectors[0]!,
+    }),
   ).toMatchInlineSnapshot(`
     [SwitchChainNotSupportedError: "Test Connector" does not support programmatic chain switching.
 

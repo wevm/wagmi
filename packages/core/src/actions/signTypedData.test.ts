@@ -28,7 +28,7 @@ test('default', async () => {
 })
 
 test('behavior: user rejected request', async () => {
-  const connector_ = config._internal.setup(
+  const connector_ = config._internal.connectors.setup(
     testConnector({
       accounts,
       features: { signTypedDataError: true },

@@ -4,7 +4,7 @@ import { beforeEach, expect, test } from 'vitest'
 import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'
 
-const connector = config._internal.setup(testConnector({ accounts }))
+const connector = config._internal.connectors.setup(testConnector({ accounts }))
 
 beforeEach(async () => {
   if (config.state.current === connector.uid)
@@ -31,7 +31,9 @@ test('parameters: chainId', async () => {
 })
 
 test('parameters: connector', async () => {
-  const connector_ = config._internal.setup(testConnector({ accounts }))
+  const connector_ = config._internal.connectors.setup(
+    testConnector({ accounts }),
+  )
   await expect(
     connect(config, { connector: connector_ }),
   ).resolves.toMatchObject(
@@ -44,7 +46,7 @@ test('parameters: connector', async () => {
 })
 
 test('behavior: user rejected request', async () => {
-  const connector_ = config._internal.setup(
+  const connector_ = config._internal.connectors.setup(
     testConnector({
       accounts,
       features: { connectError: true },

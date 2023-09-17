@@ -10,6 +10,7 @@
     "dev": "pnpm dev:vite-react",
     "dev:vite-core": "pnpm --filter vite-core dev",
     "dev:vite-react": "pnpm --filter vite-react dev",
+    "dev:vite-ssr-react": "pnpm --filter vite-ssr-react dev",
     "docs:dev": "rimraf node_modules/.cache/twoslash && pnpm --filter docs dev",
     "format": "biome format . --write",
     "lint": "biome check .",

@@ -5,7 +5,7 @@ import { type TargetId, injected } from './injected.js'
 
 test('setup', () => {
   const connectorFn = injected()
-  const connector = config._internal.setup(connectorFn)
+  const connector = config._internal.connectors.setup(connectorFn)
   expect(connector.name).toEqual('Injected')
 })
 
@@ -20,6 +20,6 @@ test.each([
   expected: string
 }[])('injected({ wallet: $wallet })', ({ wallet, expected }) => {
   const connectorFn = injected({ target: wallet })
-  const connector = config._internal.setup(connectorFn)
+  const connector = config._internal.connectors.setup(connectorFn)
   expect(connector.name).toEqual(expected)
 })

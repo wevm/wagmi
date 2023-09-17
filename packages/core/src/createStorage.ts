@@ -43,7 +43,7 @@ export type CreateStorageParameters = {
   deserialize?: (<T>(value: string) => T) | undefined
   key?: string | undefined
   serialize?: (<T>(value: T) => string) | undefined
-  storage: Evaluate<BaseStorage>
+  storage?: Evaluate<BaseStorage> | undefined
 }
 
 export function createStorage<
@@ -54,12 +54,11 @@ export function createStorage<
     deserialize = deserialize_,
     key: prefix = 'wagmi',
     serialize = serialize_,
-    storage,
+    storage = noopStorage,
   } = parameters
 
   function unwrap<type>(value: type): type | Promise<type> {
-    if (value instanceof Promise)
-      return value.then((x) => x).catch(() => undefined)
+    if (value instanceof Promise) return value.then((x) => x).catch(() => null)
     return value
   }
 

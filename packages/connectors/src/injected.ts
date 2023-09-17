@@ -239,7 +239,7 @@ export function injected(parameters: InjectedParameters = {}) {
       const target = getTarget()
       if (typeof target.provider === 'function')
         return target.provider(window as Window | undefined)
-      return findProvider(window)
+      return findProvider(window, target.provider)
     },
     async isAuthorized() {
       try {

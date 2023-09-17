@@ -6,7 +6,7 @@ import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'
 import { estimateGas } from './estimateGas.js'
 
-const connector = config._internal.setup(testConnector({ accounts }))
+const connector = config._internal.connectors.setup(testConnector({ accounts }))
 
 test('parameters: account', async () => {
   await expect(

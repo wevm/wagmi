@@ -5,7 +5,7 @@ import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'
 import { reconnect } from './reconnect.js'
 
-const connector = config._internal.setup(
+const connector = config._internal.connectors.setup(
   testConnector({
     accounts,
     features: { reconnect: true },

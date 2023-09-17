@@ -65,6 +65,11 @@ export {
 } from '../actions/getConnections.js'
 
 export {
+  type GetConnectorsReturnType,
+  getConnectors,
+} from '../actions/getConnectors.js'
+
+export {
   type GetConnectorClientError,
   type GetConnectorClientParameters,
   type GetConnectorClientReturnType,
@@ -224,6 +229,12 @@ export {
   type WatchConnectionsReturnType,
   watchConnections,
 } from '../actions/watchConnections.js'
+
+export {
+  type WatchConnectorsParameters,
+  type WatchConnectorsReturnType,
+  watchConnectors,
+} from '../actions/watchConnectors.js'
 
 export {
   type WatchContractEventParameters,
