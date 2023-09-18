@@ -79,8 +79,10 @@ VITE_WC_PROJECT_ID=3fbb6bba6f1de962d911bb5b5c9dba88
 To start the local development playgrounds, run one of the following commands. These commands run playground apps, located at `./playgrounds`, that are set up for trying out code while making changes.
 
 ```bash
-pnpm dev      # `wagmi` playground
-pnpm dev:core # `@wagmi/core` playground
+pnpm dev           # `wagmi` playground
+pnpm dev:core      # `@wagmi/core` playground
+pnpm dev:react     # `wagmi` playground (same as `pnpm dev`)
+pnpm dev:ssr-react # `wagmi` playground with SSR
 ```
 
 Once a playground dev server is running, you can make changes to any of the package source files (e.g. `packages/react`) and it will automatically update the playground.

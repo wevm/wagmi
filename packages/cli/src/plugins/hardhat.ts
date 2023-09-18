@@ -1,4 +1,3 @@
-import dedent from 'dedent'
 import { execa } from 'execa'
 import { default as fse } from 'fs-extra'
 import { globby } from 'globby'
@@ -9,11 +8,7 @@ import type { ContractConfig, Plugin } from '../config.js'
 import * as logger from '../logger.js'
 import type { Evaluate, RequiredBy } from '../types.js'
 
-import {
-  getInstallCommand,
-  getIsPackageInstalled,
-  getPackageManager,
-} from '../utils/packages.js'
+import { getIsPackageInstalled, getPackageManager } from '../utils/packages.js'
 
 const defaultExcludes = ['build-info/**', '*.dbg.json']
 
@@ -153,11 +148,7 @@ export function hardhat(config: HardhatConfig): HardhatResult {
         cwd: project,
       })
       if (isPackageInstalled) return
-      const [packageManager, command] = await getInstallCommand(packageName)
-      throw new Error(dedent`
-        ${packageName} must be installed to use Hardhat plugin.
-        To install, run: ${packageManager} ${command.join(' ')}
-      `)
+      throw new Error(`${packageName} must be installed to use Hardhat plugin.`)
     },
     watch: {
       command: rebuild
