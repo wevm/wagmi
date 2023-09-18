@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { optimism } from 'viem/chains'
 import {
   useAccount,
@@ -37,14 +36,6 @@ export function Page() {
   )
 }
 
-function useIsMounted() {
-  const [isMounted, setIsMounted] = useState(false)
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
-  return isMounted
-}
-
 function Account() {
   const account = useAccount()
   const { disconnect } = useDisconnect()
@@ -52,24 +43,19 @@ function Account() {
     address: account.address,
   })
 
-  const isMounted = useIsMounted()
-  const resolvedAccount = isMounted
-    ? account
-    : ({} as ReturnType<typeof useAccount>)
-
   return (
     <div>
       <h2>Account</h2>
 
       <div>
-        account: {resolvedAccount.address} {ensName}
+        account: {account.address} {ensName}
         <br />
-        chainId: {resolvedAccount.chainId}
+        chainId: {account.chainId}
         <br />
-        status: {resolvedAccount.status}
+        status: {account.status}
       </div>
 
-      {resolvedAccount.status === 'connected' && (
+      {account.status === 'connected' && (
         <button type="button" onClick={() => disconnect()}>
           Disconnect
         </button>
@@ -104,19 +90,13 @@ function SwitchAccount() {
   const account = useAccount()
   const { connectors, switchAccount } = useSwitchAccount()
 
-  const isMounted = useIsMounted()
-  const resolvedAccount = isMounted
-    ? account
-    : ({} as ReturnType<typeof useAccount>)
-  const resolvedConnectors = isMounted ? connectors : []
-
   return (
     <div>
       <h2>Switch Account</h2>
 
-      {resolvedConnectors.map((connector) => (
+      {connectors.map((connector) => (
         <button
-          disabled={resolvedAccount.connector?.uid === connector.uid}
+          disabled={account.connector?.uid === connector.uid}
           key={connector.id}
           onClick={() => switchAccount({ connector })}
           type="button"
@@ -130,7 +110,7 @@ function SwitchAccount() {
 
 function SwitchChain() {
   const chainId = useChainId()
-  const { chains, switchChain } = useSwitchChain()
+  const { chains, switchChain, error } = useSwitchChain()
 
   return (
     <div>
@@ -146,6 +126,8 @@ function SwitchChain() {
           {chain.name}
         </button>
       ))}
+
+      {error?.message}
     </div>
   )
 }
@@ -153,14 +135,11 @@ function SwitchChain() {
 function Connections() {
   const connections = useConnections()
 
-  const isMounted = useIsMounted()
-  const resolvedConnections = isMounted ? connections : []
-
   return (
     <div>
       <h2>Connections</h2>
 
-      {resolvedConnections.map((connection) => (
+      {connections.map((connection) => (
         <div key={connection.connector.id}>
           <div>connector {connection.connector.name}</div>
           <div>accounts: {JSON.stringify(connection.accounts)}</div>

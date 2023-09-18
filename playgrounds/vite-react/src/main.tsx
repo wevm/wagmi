@@ -36,7 +36,7 @@ const persister = createSyncStoragePersister({
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <WagmiProvider value={config}>
+    <WagmiProvider config={config}>
       <PersistQueryClientProvider
         client={queryClient}
         persistOptions={{ persister }}

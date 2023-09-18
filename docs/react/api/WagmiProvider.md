@@ -17,7 +17,7 @@ import { config } from './config'
 
 function App() {
   return (
-    <WagmiProvider value={config}> 
+    <WagmiProvider config={config}> 
       {/** Your App */}
     </WagmiProvider>
   )
@@ -32,7 +32,7 @@ function App() {
 import { type WagmiProviderProps } from 'wagmi'
 ```
 
-### value
+### config
 
 [`Config`](/react/createConfig#config) object to inject with context.
 
@@ -43,7 +43,35 @@ import { config } from './config'
 
 function App() {
   return (
-    <WagmiProvider value={config}> // [!code focus]
+    <WagmiProvider
+      config={config} // [!code focus]
+    >
+      {/** Your App */}
+    </WagmiProvider>
+  )
+}
+```
+<<< @/snippets/react/config.ts[config.ts]
+:::
+
+### reconnectOnMount
+
+`boolean | undefined`
+
+- Whether or not to reconnect previously connected [connectors](/react/api/createConfig#connectors) on mount.
+- Defaults to `true`.
+
+::: code-group
+```tsx [app.tsx]
+import { WagmiProvider } from 'wagmi'
+import { config } from './config' 
+
+function App() {
+  return (
+    <WagmiProvider
+      config={config}
+      reconnectOnMount={false} // [!code focus]
+    >
       {/** Your App */}
     </WagmiProvider>
   )

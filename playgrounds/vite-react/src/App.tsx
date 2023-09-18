@@ -114,7 +114,7 @@ function SwitchAccount() {
 
 function SwitchChain() {
   const chainId = useChainId()
-  const { chains, switchChain } = useSwitchChain()
+  const { chains, switchChain, error } = useSwitchChain()
 
   return (
     <div>
@@ -130,6 +130,8 @@ function SwitchChain() {
           {chain.name}
         </button>
       ))}
+
+      {error?.message}
     </div>
   )
 }

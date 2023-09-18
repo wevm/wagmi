@@ -1,27 +1,27 @@
 'use client'
 
 import { type ResolvedRegister, reconnect } from '@wagmi/core'
-import { type OneOf } from '@wagmi/core/internal'
 import { createContext, createElement, useEffect } from 'react'
 
 export const WagmiContext = createContext<
   ResolvedRegister['config'] | undefined
 >(undefined)
 
-export type WagmiProviderProps = OneOf<
-  { config: ResolvedRegister['config'] } | { value: ResolvedRegister['config'] }
->
+export type WagmiProviderProps = {
+  config: ResolvedRegister['config']
+  reconnectOnMount?: boolean | undefined
+}
 
 export function WagmiProvider(
   parameters: React.PropsWithChildren<WagmiProviderProps>,
 ) {
-  const { children, value = parameters.config! } = parameters
+  const { children, config, reconnectOnMount = true } = parameters
+
   // biome-ignore lint/nursery/useExhaustiveDependencies: only run on mount
   useEffect(() => {
-    if (typeof window !== 'undefined' && value._internal.reconnectOnMount)
-      reconnect(value)
+    if (reconnectOnMount) reconnect(config)
   }, [])
 
-  const props = { value }
+  const props = { value: config }
   return createElement(WagmiContext.Provider, props, children)
 }

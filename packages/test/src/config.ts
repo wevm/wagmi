@@ -12,7 +12,6 @@ export const config = createConfig({
     testConnector({ accounts: reverse(accounts) }),
   ],
   pollingInterval: 100,
-  reconnectOnMount: false,
   storage: null,
   transports: {
     [mainnet.id]: http(),

@@ -1,7 +1,7 @@
 import { hydrateRoot } from 'react-dom/client'
 
-import { PageShell } from './PageShell'
-import type { PageContextClient } from './types'
+import { type PageContextClient } from '../lib/usePageContext'
+import { App } from './App'
 
 // This render() hook only supports SSR, see https://vite-plugin-ssr.com/render-modes for how to modify render() to support SPA
 export async function render(pageContext: PageContextClient) {
@@ -17,9 +17,9 @@ export async function render(pageContext: PageContextClient) {
 
   hydrateRoot(
     root,
-    <PageShell pageContext={pageContext}>
+    <App pageContext={pageContext}>
       <Page {...pageProps} />
-    </PageShell>,
+    </App>,
   )
 }
 

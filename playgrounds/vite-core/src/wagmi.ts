@@ -18,7 +18,6 @@ export const config = createConfig({
     coinbaseWallet({ appName: 'Vite React Playground' }),
     ledger({ projectId: import.meta.env.VITE_WC_PROJECT_ID }),
   ],
-  // reconnectOnMount: false,
   storage: createStorage({ storage: localStorage, key: 'vite-core' }),
   transports: {
     [mainnet.id]: http(

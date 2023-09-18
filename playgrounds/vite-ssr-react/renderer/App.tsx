@@ -6,11 +6,13 @@ import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client
 import React from 'react'
 import { WagmiProvider, deserialize, serialize } from 'wagmi'
 
-import { Link } from './Link'
-import './PageShell.css'
-import type { PageContext } from './types'
-import { PageContextProvider } from './usePageContext'
-import { config } from './wagmi.ts'
+import { Link } from '../lib/Link.tsx'
+import {
+  type PageContext,
+  PageContextProvider,
+} from '../lib/usePageContext.tsx'
+import { config } from '../lib/wagmi.ts'
+import './App.css'
 
 // `@coinbase-wallet/sdk` uses `Buffer`
 globalThis.Buffer = Buffer
@@ -34,27 +36,27 @@ const persister = createSyncStoragePersister({
   deserialize,
 })
 
-type PageShellProps = {
+type AppProps = {
   children: React.ReactNode
   pageContext: PageContext
 }
 
-export function PageShell(props: PageShellProps) {
+export function App(props: AppProps) {
   const { children, pageContext } = props
   return (
     <React.StrictMode>
       <PageContextProvider pageContext={pageContext}>
-        <WagmiProvider value={config}>
+        <WagmiProvider config={config}>
           <PersistQueryClientProvider
             client={queryClient}
             persistOptions={{ persister }}
           >
             <div style={{ display: 'flex', gap: '1rem' }}>
               <Link className="navitem" href="/">
-                Home
+                index
               </Link>
               <Link className="navitem" href="/about">
-                About
+                about
               </Link>
             </div>
 

@@ -36,7 +36,7 @@ function App() {
 :::
 
 ::: tip
-When [`Config['reconnectOnMount']`](/react/createConfig#reconnectonmount) is `true`, `reconnect` is called automatically on mount.
+When [`WagmiProvider['reconnectOnMount']`](/react/WagmiProvider#reconnectonmount) is `true`, `reconnect` is called automatically on mount.
 :::
 
 ## Parameters

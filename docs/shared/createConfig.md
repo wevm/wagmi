@@ -61,7 +61,7 @@ const config = createConfig({
 
 `CreateConnectorFn[] | undefined`
 
-<a :href="`/${docsPath}/connectors`">Connectors</a> used by the `Config`. These connectors are considered global and are used when attempting to reconnect when [`reconnectOnMount`](#reconnectOnMount) is enabled.
+<a :href="`/${docsPath}/connectors`">Connectors</a> used by the `Config`.
 
 ```ts-vue
 import { createConfig, http } from '{{packageName}}'
@@ -71,27 +71,6 @@ import { injected } from '{{connectorsPackageName}}' // [!code focus]
 const config = createConfig({
   chains: [mainnet, sepolia],
   connectors: [injected()], // [!code focus]
-  transports: {
-    [mainnet.id]: http('https://...'),
-    [sepolia.id]: http('https://...'),
-  },
-})
-```
-
-### reconnectOnMount
-
-`boolean | undefined`
-
-- Whether or not to reconnect previously connected [`connectors`](#connectors) on mount.
-- Defaults to `true`.
-
-```ts-vue
-import { createConfig, http } from '{{packageName}}'
-import { mainnet, sepolia } from '{{packageName}}/chains'
-
-const config = createConfig({
-  chains: [mainnet, sepolia],
-  reconnectOnMount: false, // [!code focus]
   transports: {
     [mainnet.id]: http('https://...'),
     [sepolia.id]: http('https://...'),
@@ -353,7 +332,7 @@ Exercise caution when using this method. It is intended for internal and advance
 
 ### subscribe
 
-`(selector: (state: State<chains>) => state, listener: (selectedState: state, previousSelectedState: state) => void, options?: { equalityFn?: (a: state, b: state) => boolean; fireImmediately?: boolean })=> (() => void)`
+`(selector: (state: State<chains>) => state, listener: (selectedState: state, previousSelectedState: state) => void, options?: { emitOnBegin?: boolean | undefined; equalityFn?: ((a: state, b: state) => boolean) | undefined } | undefined) => (() => void)`
 
 Listens for state changes matching the `selector` function. Returns a function that can be called to unsubscribe the listener.
 

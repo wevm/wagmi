@@ -35,7 +35,6 @@ export const config = createConfig({
     ledger({ projectId: import.meta.env.VITE_WC_PROJECT_ID }),
     safe({ debug: true, shimDisconnect: true }),
   ],
-  reconnectOnMount: true,
   storage: createStorage({
     key: 'vite-react',
     storage: localStorage,

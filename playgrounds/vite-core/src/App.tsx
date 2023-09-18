@@ -17,8 +17,7 @@ import { config } from './wagmi'
 
 function App() {
   React.useEffect(() => {
-    if (typeof window !== 'undefined' && config._internal.reconnectOnMount)
-      reconnect(config)
+    reconnect(config)
   }, [])
 
   return (

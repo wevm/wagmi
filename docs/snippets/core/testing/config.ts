@@ -13,7 +13,6 @@ export const config = createConfig({
     }),
   ],
   pollingInterval: 100,
-  reconnectOnMount: false,
   storage: null,
   transports: {
     [mainnetFork.id]: http(),

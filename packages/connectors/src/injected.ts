@@ -120,7 +120,7 @@ export function injected(parameters: InjectedParameters = {}) {
   type Properties = {
     onConnect(connectInfo: ProviderConnectInfo): void
   }
-  type StorageItem = { [_ in `${string}.connected`]: true }
+  type StorageItem = { [_ in `${string}.disconnected`]: true }
 
   return createConnector<Provider, Properties, StorageItem>((config) => ({
     get id() {
@@ -133,22 +133,15 @@ export function injected(parameters: InjectedParameters = {}) {
       const provider = await this.getProvider()
       // Only start listening for events if `target` is set, otherwise `injected()` will also receive events
       if (provider && parameters.target) {
-        provider.on('accountsChanged', this.onAccountsChanged.bind(this))
         provider.on('connect', this.onConnect.bind(this))
       }
     },
-    async connect({ chainId } = {}) {
+    async connect({ chainId, isReconnecting } = {}) {
       const provider = await this.getProvider()
       if (!provider) throw new ProviderNotFoundError()
 
-      // Attempt to show select prompt with `wallet_requestPermissions` when
-      // `shimDisconnect` is active and account is in disconnected state (flag in storage)
-      const isDisconnected =
-        shimDisconnect &&
-        !(await config.storage?.getItem(`${this.id}.connected`))
-
       let accounts: readonly Address[] | null = null
-      if (isDisconnected) {
+      if (!isReconnecting) {
         accounts = await this.getAccounts().catch(() => null)
         const isAuthorized = !!accounts?.length
         if (isAuthorized)
@@ -192,9 +185,9 @@ export function injected(parameters: InjectedParameters = {}) {
           currentChainId = chain?.id ?? currentChainId
         }
 
-        // Add shim to storage signalling connector is connected
+        // Remove disconnected shim if it exists
         if (shimDisconnect)
-          await config.storage?.setItem(`${this.id}.connected`, true)
+          await config.storage?.removeItem(`${this.id}.disconnected`)
 
         return { accounts, chainId: currentChainId }
       } catch (err) {
@@ -218,9 +211,9 @@ export function injected(parameters: InjectedParameters = {}) {
       provider.removeListener('disconnect', this.onDisconnect.bind(this))
       provider.on('connect', this.onConnect.bind(this))
 
-      // Remove shim signalling connector is disconnected
+      // Add shim signalling connector is disconnected
       if (shimDisconnect)
-        await config.storage?.removeItem(`${this.id}.connected`)
+        await config.storage?.setItem(`${this.id}.disconnected`, true)
     },
     async getAccounts() {
       const provider = await this.getProvider()
@@ -245,8 +238,8 @@ export function injected(parameters: InjectedParameters = {}) {
       try {
         const isDisconnected =
           shimDisconnect &&
-          // If shim does not exist in storage, connector is disconnected
-          !(await config.storage?.getItem(`${this.id}.connected`))
+          // If shim exists in storage, connector is disconnected
+          (await config.storage?.getItem(`${this.id}.disconnected`))
         if (isDisconnected) return false
 
         const provider = await this.getProvider()
@@ -375,10 +368,13 @@ export function injected(parameters: InjectedParameters = {}) {
     async onAccountsChanged(accounts) {
       // Disconnect if there are no accounts
       if (accounts.length === 0) this.onDisconnect()
-      // Connect if emitter is listening for connect event (e.g. is disconnected)
+      // Connect if emitter is listening for connect event (e.g. is disconnected and connects through wallet interface)
       else if (config.emitter.listenerCount('connect')) {
         const chainId = (await this.getChainId()).toString()
         this.onConnect({ chainId })
+        // Remove disconnected shim if it exists
+        if (shimDisconnect)
+          await config.storage?.removeItem(`${this.id}.disconnected`)
       }
       // Regular change event
       else config.emitter.emit('change', { accounts: accounts.map(getAddress) })
@@ -401,10 +397,6 @@ export function injected(parameters: InjectedParameters = {}) {
         provider.on('chainChanged', this.onChainChanged)
         provider.on('disconnect', this.onDisconnect.bind(this))
       }
-
-      // Add shim to storage signalling connector is connected
-      if (shimDisconnect)
-        await config.storage?.setItem(`${this.id}.connected`, true)
     },
     async onDisconnect(error) {
       const provider = await this.getProvider()
@@ -415,7 +407,7 @@ export function injected(parameters: InjectedParameters = {}) {
         if (provider && !!(await this.getAccounts()).length) return
       }
 
-      // No need to remove `shimDisconnectStorageKey` from storage because `onDisconnect` is typically
+      // No need to remove `${this.id}.disconnected` from storage because `onDisconnect` is typically
       // only called when the wallet is disconnected through the wallet's interface, meaning the wallet
       // actually disconnected and we don't need to simulate it.
       config.emitter.emit('disconnect')

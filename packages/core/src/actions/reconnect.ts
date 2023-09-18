@@ -63,7 +63,11 @@ export async function reconnect(
     const isAuthorized = await connector.isAuthorized()
     if (!isAuthorized) continue
 
-    const data = await connector.connect()
+    const data = await connector
+      .connect({ isReconnecting: true })
+      .catch(() => null)
+    if (!data) continue
+
     connector.emitter.off('connect', config._internal.connect)
     connector.emitter.on('change', config._internal.change)
     connector.emitter.on('disconnect', config._internal.disconnect)

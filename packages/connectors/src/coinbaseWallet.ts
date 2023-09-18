@@ -61,6 +61,7 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
             method: 'eth_requestAccounts',
           })) as string[]
         ).map(getAddress)
+
         provider.on('accountsChanged', this.onAccountsChanged)
         provider.on('chainChanged', this.onChainChanged)
         provider.on('disconnect', this.onDisconnect.bind(this))
@@ -107,10 +108,7 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
       if (!provider_) {
         sdk = new CoinbaseWalletSDK({ reloadOnDisconnect, ...parameters })
 
-        /**
-         * Mock implementations to retrieve private `walletExtension` method
-         * from the Coinbase Wallet SDK.
-         */
+        // Mock implementations to retrieve private `walletExtension` method from the Coinbase Wallet SDK.
         abstract class WalletProvider {
           // https://github.com/coinbase/coinbase-wallet-sdk/blob/b4cca90022ffeb46b7bbaaab9389a33133fe0844/packages/wallet-sdk/src/provider/CoinbaseWalletProvider.ts#L927-L936
           abstract getChainId(): number

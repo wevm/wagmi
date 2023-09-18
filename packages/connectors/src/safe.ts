@@ -1,7 +1,10 @@
 import { SafeAppProvider } from '@safe-global/safe-apps-provider'
 import { type Opts, default as SafeAppsSDK } from '@safe-global/safe-apps-sdk'
-import { ProviderNotFoundError } from '@wagmi/core'
-import { createConnector, normalizeChainId } from '@wagmi/core'
+import {
+  ProviderNotFoundError,
+  createConnector,
+  normalizeChainId,
+} from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
 import { getAddress } from 'viem'
 
@@ -20,11 +23,11 @@ export type SafeParameters = Evaluate<
 >
 
 export function safe(parameters: SafeParameters = {}) {
-  type Provider = SafeAppProvider
-  type Properties = {}
-  type StorageItem = { 'safe.shimDisconnect': true }
+  const { shimDisconnect } = parameters
 
-  const shimDisconnectStorageKey = 'safe.shimDisconnect'
+  type Provider = SafeAppProvider | undefined
+  type Properties = {}
+  type StorageItem = { 'safe.disconnected': true }
 
   let provider_: Provider | undefined
   let SDK: typeof SafeAppsSDK.default
@@ -40,11 +43,6 @@ export function safe(parameters: SafeParameters = {}) {
     id: 'safe',
     name: 'Safe',
     async connect() {
-      // Only allowed in iframe context
-      const isIframe =
-        typeof window !== 'undefined' && window?.parent !== window
-      if (!isIframe) throw new ProviderNotFoundError()
-
       const provider = await this.getProvider()
       if (!provider) throw new ProviderNotFoundError()
 
@@ -53,19 +51,20 @@ export function safe(parameters: SafeParameters = {}) {
 
       provider.on('disconnect', this.onDisconnect.bind(this))
 
-      // Add shim to storage signalling wallet is connected
-      if (parameters.shimDisconnect)
-        await config.storage?.setItem(shimDisconnectStorageKey, true)
+      // Remove disconnected shim if it exists
+      if (shimDisconnect) await config.storage?.removeItem('safe.disconnected')
 
       return { accounts, chainId }
     },
     async disconnect() {
       const provider = await this.getProvider()
+      if (!provider) throw new ProviderNotFoundError()
+
       provider.removeListener('disconnect', this.onDisconnect.bind(this))
 
-      // Remove shim signalling wallet is disconnected
-      if (parameters.shimDisconnect)
-        await config.storage?.removeItem(shimDisconnectStorageKey)
+      // Add shim signalling connector is disconnected
+      if (shimDisconnect)
+        await config.storage?.setItem('safe.disconnected', true)
     },
     async getAccounts() {
       const provider = await this.getProvider()
@@ -75,6 +74,11 @@ export function safe(parameters: SafeParameters = {}) {
       )
     },
     async getProvider() {
+      // Only allowed in iframe context
+      const isIframe =
+        typeof window !== 'undefined' && window?.parent !== window
+      if (!isIframe) return
+
       if (!provider_) {
         const safe = await sdk.safe.getInfo()
         if (!safe) throw new Error('Could not load Safe information')
@@ -90,9 +94,9 @@ export function safe(parameters: SafeParameters = {}) {
     async isAuthorized() {
       try {
         const isDisconnected =
-          parameters.shimDisconnect &&
-          // If shim does not exist in storage, wallet is disconnected
-          !(await config.storage?.getItem(shimDisconnectStorageKey))
+          shimDisconnect &&
+          // If shim exists in storage, connector is disconnected
+          (await config.storage?.getItem('safe.disconnected'))
         if (isDisconnected) return false
 
         const accounts = await this.getAccounts()

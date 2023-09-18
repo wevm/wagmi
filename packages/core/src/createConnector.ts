@@ -31,12 +31,15 @@ export type CreateConnectorFn<
   storage?: Evaluate<Storage<storageItem>> | null | undefined
 }) => Evaluate<
   {
+    readonly icon?: string | undefined
     readonly id: string
     readonly name: string
 
     setup?(): Promise<void>
     connect(
-      parameters?: { chainId?: number | undefined } | undefined,
+      parameters?:
+        | { chainId?: number | undefined; isReconnecting?: boolean | undefined }
+        | undefined,
     ): Promise<{
       accounts: readonly Address[]
       chainId: number

@@ -29,7 +29,6 @@ export type CreateConfigParameters<
   {
     chains: chains
     connectors?: CreateConnectorFn[] | undefined
-    reconnectOnMount?: boolean | undefined
     storage?: Storage | null | undefined
     syncConnectedChain?: boolean | undefined
   } & OneOf<
@@ -45,14 +44,7 @@ export type CreateConfigParameters<
           chains[number]
         >
       }
-  > &
-    OneOf<
-      | {
-          /** @deprecated Use `reconnectOnMount` instead */
-          autoConnect?: boolean | undefined
-        }
-      | { reconnectOnMount?: boolean | undefined }
-    >
+  >
 >
 
 export function createConfig<
@@ -62,9 +54,7 @@ export function createConfig<
   parameters: CreateConfigParameters<chains, transports>,
 ): Config<chains, transports> {
   const {
-    autoConnect,
     chains,
-    reconnectOnMount = autoConnect ?? true,
     storage = createStorage({
       storage:
         typeof window !== 'undefined' && window.localStorage
@@ -89,9 +79,9 @@ export function createConfig<
       uid: emitter.uid,
     }
 
-    // Start listening for `connect` events if `reconnectOnMount` is switched on.
+    // Start listening for `connect` events on connector setup
     // This allows connectors to "connect" themselves without user interaction (e.g. MetaMask's "Manually connect to current site")
-    if (reconnectOnMount) emitter.on('connect', connect)
+    emitter.on('connect', connect)
     connector.setup?.()
 
     return connector
@@ -164,9 +154,11 @@ export function createConfig<
         ? persist(() => initialState, {
             name: 'store',
             partialize(state) {
-              return state satisfies PartializedState
+              return {
+                chainId: state.chainId,
+                current: state.current,
+              } satisfies PartializedState
             },
-            skipHydration: !reconnectOnMount,
             storage: storage as Storage<Record<string, unknown>>,
             version: 1,
           })
@@ -215,8 +207,12 @@ export function createConfig<
     })
   }
   function connect(data: EventData<ConnectorEventMap, 'connect'>) {
-    // Disable handling if reconnecting
-    if (store.getState().status === 'reconnecting') return
+    // Disable handling if reconnecting/connecting
+    if (
+      store.getState().status === 'connecting' ||
+      store.getState().status === 'reconnecting'
+    )
+      return
 
     store.setState((x) => {
       const connector = connectors.getState().find((x) => x.uid === data.uid)
@@ -287,14 +283,15 @@ export function createConfig<
       return store.subscribe(
         selector as unknown as (state: State) => any,
         listener,
-        options,
+        options
+          ? { ...options, fireImmediately: options.emitOnBegin }
+          : undefined,
       )
     },
 
     getClient,
 
     _internal: {
-      reconnectOnMount,
       syncConnectedChain,
       transports: rest.transports as transports,
       change,
@@ -303,11 +300,10 @@ export function createConfig<
       connectors: {
         setup,
         setState(value) {
-          let newState: Connector[]
-          if (typeof value === 'function')
-            newState = value(connectors.getState())
-          else newState = value
-          connectors.setState(newState, true)
+          connectors.setState(
+            typeof value === 'function' ? value(connectors.getState()) : value,
+            true,
+          )
         },
         subscribe(listener) {
           return connectors.subscribe(listener)
@@ -341,8 +337,8 @@ export type Config<
     listener: (state: state, previousState: state) => void,
     options?:
       | {
+          emitOnBegin?: boolean | undefined
           equalityFn?: ((a: state, b: state) => boolean) | undefined
-          fireImmediately?: boolean | undefined
         }
       | undefined,
   ): () => void
@@ -352,7 +348,6 @@ export type Config<
   }): Client<transports[chainId], Extract<chains[number], { id: chainId }>>
 
   _internal: {
-    readonly reconnectOnMount: boolean
     readonly syncConnectedChain: boolean
     readonly transports: transports
 

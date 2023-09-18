@@ -120,7 +120,7 @@ import { config } from './config' // [!code focus]
 
 function App() {
   return (
-    <WagmiProvider value={config}> // [!code focus]
+    <WagmiProvider config={config}> // [!code focus]
       {/** Your App */} // [!code focus]
     </WagmiProvider> // [!code focus]
   )
@@ -145,7 +145,7 @@ const queryClient = new QueryClient() // [!code focus]
 
 function App() {
   return (
-    <WagmiProvider value={config}>
+    <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}> // [!code focus]
         {/** Your App */} // [!code focus]
       </QueryClientProvider> // [!code focus]
@@ -184,7 +184,7 @@ const queryClient = new QueryClient()
 
 function App() {
   return (
-    <WagmiProvider value={config}>
+    <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
         {/** Your App */}
       </QueryClientProvider>

@@ -34,7 +34,7 @@ export function renderHook<Result, Props>(
 ): RenderHookResult<Result, Props> {
   queryClient.clear()
   return rtl_renderHook(render, {
-    wrapper: createWrapper(WagmiProvider, { value: config }),
+    wrapper: createWrapper(WagmiProvider, { config, reconnectOnMount: false }),
     ...options,
   })
 }

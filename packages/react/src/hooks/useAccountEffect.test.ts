@@ -57,7 +57,6 @@ test('behavior: connect called on reconnect', async () => {
         features: { reconnect: true },
       }),
     ],
-    reconnectOnMount: true,
     transports: { [chain.mainnet.id]: http() },
   })
 
@@ -67,7 +66,7 @@ test('behavior: connect called on reconnect', async () => {
   })
 
   renderHook(() => useAccountEffect({ onConnect }), {
-    wrapper: createWrapper(WagmiProvider, { value: config }),
+    wrapper: createWrapper(WagmiProvider, { config, reconnectOnMount: true }),
   })
 
   await waitFor(() => expect(onConnect).toBeCalledTimes(1))
