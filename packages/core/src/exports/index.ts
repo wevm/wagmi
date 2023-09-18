@@ -293,6 +293,20 @@ export {
 } from '../actions/writeContract.js'
 
 ////////////////////////////////////////////////////////////////////////////////
+// connectors
+
+export {
+  type InjectedParameters,
+  injected,
+} from '../connectors/injected.js'
+
+export {
+  type ConnectorEventMap,
+  type CreateConnectorFn,
+  createConnector,
+} from '../connectors/createConnector.js'
+
+////////////////////////////////////////////////////////////////////////////////
 // createConfig
 
 export {
@@ -303,15 +317,6 @@ export {
   type State,
   createConfig,
 } from '../createConfig.js'
-
-////////////////////////////////////////////////////////////////////////////////
-// createConnector
-
-export {
-  type ConnectorEventMap,
-  type CreateConnectorFn,
-  createConnector,
-} from '../createConnector.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // createStorage

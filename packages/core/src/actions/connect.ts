@@ -1,8 +1,8 @@
 import { ResourceUnavailableRpcError, UserRejectedRequestError } from 'viem'
 import { type Address } from 'viem'
 
+import { type CreateConnectorFn } from '../connectors/createConnector.js'
 import { type Config, type Connector } from '../createConfig.js'
-import { type CreateConnectorFn } from '../createConnector.js'
 import type { BaseError } from '../errors/base.js'
 import { ConnectorAlreadyConnectedError } from '../errors/config.js'
 import type { ChainIdParameter } from '../types/properties.js'
@@ -52,9 +52,9 @@ export async function connect<config extends Config>(
     const data = await connector.connect({ chainId: parameters.chainId })
     const accounts = data.accounts as readonly [Address, ...Address[]]
 
-    connector.emitter.off('connect', config._internal.connect)
-    connector.emitter.on('change', config._internal.change)
-    connector.emitter.on('disconnect', config._internal.disconnect)
+    connector.emitter.off('connect', config._internal.events.connect)
+    connector.emitter.on('change', config._internal.events.change)
+    connector.emitter.on('disconnect', config._internal.events.disconnect)
 
     await config.storage?.setItem('recentConnectorId', connector.id)
     config.setState((x) => ({

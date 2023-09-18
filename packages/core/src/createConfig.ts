@@ -1,3 +1,4 @@
+import { type EIP6963ProviderDetail, createStore as createMipd } from 'mipd'
 import {
   type Address,
   type Chain,
@@ -12,7 +13,8 @@ import { createStore } from 'zustand/vanilla'
 import {
   type ConnectorEventMap,
   type CreateConnectorFn,
-} from './createConnector.js'
+} from './connectors/createConnector.js'
+import { injected } from './connectors/injected.js'
 import { Emitter, type EventData, createEmitter } from './createEmitter.js'
 import { type Storage, createStorage, noopStorage } from './createStorage.js'
 import { ChainNotConfiguredError } from './errors/config.js'
@@ -29,6 +31,7 @@ export type CreateConfigParameters<
   {
     chains: chains
     connectors?: CreateConnectorFn[] | undefined
+    multiInjectedProviderDiscovery?: boolean | undefined
     storage?: Storage | null | undefined
     syncConnectedChain?: boolean | undefined
   } & OneOf<
@@ -55,6 +58,7 @@ export function createConfig<
 ): Config<chains, transports> {
   const {
     chains,
+    multiInjectedProviderDiscovery = true,
     storage = createStorage({
       storage:
         typeof window !== 'undefined' && window.localStorage
@@ -69,7 +73,17 @@ export function createConfig<
   // Set up connectors, clients, etc.
   /////////////////////////////////////////////////////////////////////////////////////////////////
 
-  const connectors = createStore(() => (rest.connectors ?? []).map(setup))
+  const mipd =
+    typeof window !== 'undefined' && multiInjectedProviderDiscovery
+      ? createMipd()
+      : undefined
+
+  const connectors = createStore(() =>
+    [
+      ...(rest.connectors ?? []),
+      ...(mipd?.getProviders().map(providerDetailToConnector) ?? []),
+    ].map(setup),
+  )
   function setup(connectorFn: CreateConnectorFn) {
     // Set up emitter with uid and add to connector so they are "linked" together.
     const emitter = createEmitter<ConnectorEventMap>(uid())
@@ -85,6 +99,12 @@ export function createConfig<
     connector.setup?.()
 
     return connector
+  }
+  function providerDetailToConnector(providerDetail: EIP6963ProviderDetail) {
+    const { info, provider } = providerDetail
+    return injected({
+      target: { ...info, id: info.rdns, provider: provider as any },
+    })
   }
 
   const clients = new Map<number, Client<Transport, chains[number]>>()
@@ -187,6 +207,14 @@ export function createConfig<
       },
     )
 
+  // EIP-6963 subscribe for new wallet providers
+  mipd?.subscribe((providerDetails) => {
+    for (const providerDetail of providerDetails) {
+      const connector = setup(providerDetailToConnector(providerDetail))
+      connectors.setState((x) => [...x, connector])
+    }
+  })
+
   /////////////////////////////////////////////////////////////////////////////////////////////////
   // Emitter listeners
   /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -264,6 +292,7 @@ export function createConfig<
     },
     storage,
 
+    getClient,
     get state() {
       return store.getState() as unknown as State<chains>
     },
@@ -289,26 +318,19 @@ export function createConfig<
       )
     },
 
-    getClient,
-
     _internal: {
       syncConnectedChain,
       transports: rest.transports as transports,
-      change,
-      connect,
-      disconnect,
       connectors: {
         setup,
-        setState(value) {
+        setState: (value) =>
           connectors.setState(
             typeof value === 'function' ? value(connectors.getState()) : value,
             true,
-          )
-        },
-        subscribe(listener) {
-          return connectors.subscribe(listener)
-        },
+          ),
+        subscribe: (listener) => connectors.subscribe(listener),
       },
+      events: { change, connect, disconnect },
     },
   }
 }
@@ -351,10 +373,6 @@ export type Config<
     readonly syncConnectedChain: boolean
     readonly transports: transports
 
-    change(data: EventData<ConnectorEventMap, 'change'>): void
-    connect(data: EventData<ConnectorEventMap, 'connect'>): void
-    disconnect(data: EventData<ConnectorEventMap, 'disconnect'>): void
-
     connectors: {
       setup(connectorFn: CreateConnectorFn): Connector
       setState(value: Connector[] | ((state: Connector[]) => Connector[])): void
@@ -364,6 +382,11 @@ export type Config<
           prevState: readonly Connector[],
         ) => void,
       ): () => void
+    }
+    events: {
+      change(data: EventData<ConnectorEventMap, 'change'>): void
+      connect(data: EventData<ConnectorEventMap, 'connect'>): void
+      disconnect(data: EventData<ConnectorEventMap, 'disconnect'>): void
     }
   }
 }

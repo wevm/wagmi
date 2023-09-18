@@ -33,9 +33,9 @@ export async function disconnect(
   if (!connections.has(connector.uid)) throw new ConnectorNotConnectedError()
 
   await connector.disconnect()
-  connector.emitter.off('change', config._internal.change)
-  connector.emitter.off('disconnect', config._internal.disconnect)
-  connector.emitter.on('connect', config._internal.connect)
+  connector.emitter.off('change', config._internal.events.change)
+  connector.emitter.off('disconnect', config._internal.events.disconnect)
+  connector.emitter.on('connect', config._internal.events.connect)
 
   connections.delete(connector.uid)
 

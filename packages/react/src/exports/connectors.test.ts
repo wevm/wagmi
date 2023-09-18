@@ -5,8 +5,8 @@ import * as connectors from './connectors.js'
 test('exports', () => {
   expect(Object.keys(connectors)).toMatchInlineSnapshot(`
     [
-      "coinbaseWallet",
       "injected",
+      "coinbaseWallet",
       "ledger",
       "safe",
       "walletConnect",

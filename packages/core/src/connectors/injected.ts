@@ -1,11 +1,4 @@
 import {
-  ChainNotConfiguredError,
-  ProviderNotFoundError,
-  createConnector,
-  normalizeChainId,
-} from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
-import {
   type Address,
   type EIP1193Provider,
   type ProviderConnectInfo,
@@ -17,6 +10,12 @@ import {
   getAddress,
   numberToHex,
 } from 'viem'
+
+import { ChainNotConfiguredError } from '../errors/config.js'
+import { ProviderNotFoundError } from '../errors/connector.js'
+import type { Evaluate } from '../types/utils.js'
+import { normalizeChainId } from '../utils/normalizeChainId.js'
+import { createConnector } from './createConnector.js'
 
 export type InjectedParameters = {
   /**
@@ -31,13 +30,14 @@ export type InjectedParameters = {
    */
   target?:
     | TargetId
-    | (TargetMap[TargetId] & { id: string })
-    | (() => (TargetMap[TargetId] & { id: string }) | undefined)
+    | TargetMap[TargetId]
+    | (() => TargetMap[TargetId] | undefined)
     | undefined
 }
 
 const targetMap = {
   coinbaseWallet: {
+    id: 'coinbaseWallet',
     name: 'Coinbase Wallet',
     provider(window) {
       if (window?.coinbaseWalletExtension) return window.coinbaseWalletExtension
@@ -45,6 +45,7 @@ const targetMap = {
     },
   },
   metaMask: {
+    id: 'metaMask',
     name: 'MetaMask',
     provider(window) {
       return findProvider(window, (provider) => {
@@ -78,6 +79,7 @@ const targetMap = {
     },
   },
   phantom: {
+    id: 'phantom',
     name: 'Phantom',
     provider(window) {
       if (window?.phantom?.ethereum) return window.phantom?.ethereum
@@ -101,10 +103,10 @@ export function injected(parameters: InjectedParameters = {}) {
     if (typeof target === 'string')
       return {
         ...(targetMap[target as keyof typeof targetMap] ?? {
+          id: target,
           name: `${target[0]!.toUpperCase()}${target.slice(1)}`,
           provider: `is${target[0]!.toUpperCase()}${target.slice(1)}`,
         }),
-        id: target,
       }
 
     return {
@@ -123,6 +125,9 @@ export function injected(parameters: InjectedParameters = {}) {
   type StorageItem = { [_ in `${string}.disconnected`]: true }
 
   return createConnector<Provider, Properties, StorageItem>((config) => ({
+    get icon() {
+      return getTarget().icon
+    },
     get id() {
       return getTarget().id
     },
@@ -232,7 +237,9 @@ export function injected(parameters: InjectedParameters = {}) {
       const target = getTarget()
       if (typeof target.provider === 'function')
         return target.provider(window as Window | undefined)
-      return findProvider(window, target.provider)
+      if (typeof target.provider === 'string')
+        return findProvider(window, target.provider)
+      return target.provider
     },
     async isAuthorized() {
       try {
@@ -426,9 +433,12 @@ export function injected(parameters: InjectedParameters = {}) {
 }
 
 type Target = {
+  icon?: string | undefined
+  id: string
   name: string
   provider:
     | WalletProviderFlags
+    | WalletProvider
     | ((window?: Window | undefined) => WalletProvider | undefined)
 }
 

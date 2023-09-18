@@ -6,9 +6,9 @@ import {
   type ProviderMessage,
 } from 'viem'
 
-import { Emitter } from './createEmitter.js'
-import { type Storage } from './createStorage.js'
-import { type Evaluate } from './types/utils.js'
+import { Emitter } from '../createEmitter.js'
+import { type Storage } from '../createStorage.js'
+import { type Evaluate } from '../types/utils.js'
 
 export type ConnectorEventMap = {
   change: {

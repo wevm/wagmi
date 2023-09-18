@@ -1,6 +1,6 @@
 import { expect, test, vi } from 'vitest'
 
-import type { ConnectorEventMap } from './createConnector.js'
+import type { ConnectorEventMap } from './connectors/createConnector.js'
 import { createEmitter } from './createEmitter.js'
 import { uid } from './utils/uid.js'
 

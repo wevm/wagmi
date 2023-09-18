@@ -1,9 +1,9 @@
+export { type InjectedParameters, injected } from '@wagmi/core'
+
 export {
   type CoinbaseWalletParameters,
   coinbaseWallet,
 } from '../coinbaseWallet.js'
-
-export { type InjectedParameters, injected } from '../injected.js'
 
 export { type LedgerParameters, ledger } from '../ledger.js'
 

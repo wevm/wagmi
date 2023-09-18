@@ -78,6 +78,27 @@ const config = createConfig({
 })
 ```
 
+### multiInjectedProviderDiscovery
+
+`boolean | undefined`
+
+- Enables discovery of injected providers via [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963) using the [`mipd`](https://github.com/wagmi-dev/mipd) library and converts to <a :href="`/${docsPath}/api/connectors/injected`">injected</a> connectors.
+- Defaults to `true`.
+
+```ts-vue
+import { createConfig, http } from '{{packageName}}'
+import { mainnet, sepolia } from '{{packageName}}/chains'
+
+const config = createConfig({
+  chains: [mainnet, sepolia],
+  multiInjectedProviderDiscovery: false, // [!code focus]
+  transports: {
+    [mainnet.id]: http('https://...'),
+    [sepolia.id]: http('https://...'),
+  },
+})
+```
+
 ### storage
 
 `Storage | null | undefined`

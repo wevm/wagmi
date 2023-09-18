@@ -1,7 +1,7 @@
 import type { Address } from 'viem'
 
+import { type CreateConnectorFn } from '../connectors/createConnector.js'
 import type { Config, Connection, Connector } from '../createConfig.js'
-import { type CreateConnectorFn } from '../createConnector.js'
 import type { Evaluate } from '../types/utils.js'
 
 export type ReconnectParameters = {
@@ -68,9 +68,9 @@ export async function reconnect(
       .catch(() => null)
     if (!data) continue
 
-    connector.emitter.off('connect', config._internal.connect)
-    connector.emitter.on('change', config._internal.change)
-    connector.emitter.on('disconnect', config._internal.disconnect)
+    connector.emitter.off('connect', config._internal.events.connect)
+    connector.emitter.on('change', config._internal.events.change)
+    connector.emitter.on('disconnect', config._internal.events.disconnect)
 
     config.setState((x) => {
       const connections = new Map(connected ? x.connections : new Map()).set(

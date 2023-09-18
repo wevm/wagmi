@@ -14,7 +14,9 @@ test('validate', async () => {
   const temp = f.temp()
   await expect(
     hardhat({ project: temp }).validate(),
-  ).rejects.toThrowErrorMatchingInlineSnapshot('"hardhat must be installed to use Hardhat plugin."')
+  ).rejects.toThrowErrorMatchingInlineSnapshot(
+    '"hardhat must be installed to use Hardhat plugin."',
+  )
 })
 
 test('project does not exist', async () => {
