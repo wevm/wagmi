@@ -16,18 +16,18 @@ export {
 } from '../actions/disconnect.js'
 
 export {
-  type EstimateFeesPerGasError,
-  type EstimateFeesPerGasParameters,
-  type EstimateFeesPerGasReturnType,
-  estimateFeesPerGas,
-} from '../actions/estimateFeesPerGas.js'
-
-export {
   type EstimateGasError,
   type EstimateGasParameters,
   type EstimateGasReturnType,
   estimateGas,
 } from '../actions/estimateGas.js'
+
+export {
+  type EstimateFeesPerGasError,
+  type EstimateFeesPerGasParameters,
+  type EstimateFeesPerGasReturnType,
+  estimateFeesPerGas,
+} from '../actions/estimateFeesPerGas.js'
 
 export {
   type GetAccountReturnType,
@@ -39,13 +39,24 @@ export {
   type GetBalanceReturnType,
   type GetBalanceError,
   getBalance,
+  /** @deprecated use `getBalance` instead */
+  getBalance as fetchBalance,
 } from '../actions/getBalance.js'
+
+export {
+  type GetBlockError,
+  type GetBlockParameters,
+  type GetBlockReturnType,
+  getBlock,
+} from '../actions/getBlock.js'
 
 export {
   type GetBlockNumberError,
   type GetBlockNumberParameters,
   type GetBlockNumberReturnType,
   getBlockNumber,
+  /** @deprecated use `getBlockNumber` instead */
+  getBlockNumber as fetchBlockNumber,
 } from '../actions/getBlockNumber.js'
 
 export {
@@ -81,6 +92,8 @@ export {
   type GetEnsAddressParameters,
   type GetEnsAddressReturnType,
   getEnsAddress,
+  /** @deprecated use `getEnsAddress` instead */
+  getEnsAddress as fetchEnsAddress,
 } from '../actions/getEnsAddress.js'
 
 export {
@@ -88,6 +101,8 @@ export {
   type GetEnsAvatarParameters,
   type GetEnsAvatarReturnType,
   getEnsAvatar,
+  /** @deprecated use `getEnsAvatar` instead */
+  getEnsAvatar as fetchEnsAvatar,
 } from '../actions/getEnsAvatar.js'
 
 export {
@@ -95,6 +110,8 @@ export {
   type GetEnsNameParameters,
   type GetEnsNameReturnType,
   getEnsName,
+  /** @deprecated */
+  getEnsName as fetchEnsName,
 } from '../actions/getEnsName.js'
 
 export {
@@ -102,6 +119,8 @@ export {
   type GetEnsResolverParameters,
   type GetEnsResolverReturnType,
   getEnsResolver,
+  /** @deprecated use `getEnsResolver` instead */
+  getEnsResolver as fetchEnsResolver,
 } from '../actions/getEnsResolver.js'
 
 export {
@@ -115,6 +134,8 @@ export {
   type GetTokenParameters,
   type GetTokenReturnType,
   getToken,
+  /** @deprecated use `getToken` instead */
+  getToken as fetchToken,
 } from '../actions/getToken.js'
 
 export {
@@ -122,6 +143,8 @@ export {
   type GetTransactionParameters,
   type GetTransactionReturnType,
   getTransaction,
+  /** @deprecated use `getTransaction` instead */
+  getTransaction as fetchTransaction,
 } from '../actions/getTransaction.js'
 
 export {
@@ -198,6 +221,8 @@ export {
   type SwitchChainParameters,
   type SwitchChainReturnType,
   switchChain,
+  /** @deprecated use `switchChain` instead */
+  switchChain as switchNetwork,
 } from '../actions/switchChain.js'
 
 export {
@@ -205,6 +230,12 @@ export {
   type WatchAccountReturnType,
   watchAccount,
 } from '../actions/watchAccount.js'
+
+export {
+  type WatchBlocksParameters,
+  type WatchBlocksReturnType,
+  watchBlocks,
+} from '../actions/watchBlocks.js'
 
 export {
   type WatchBlockNumberParameters,
@@ -259,6 +290,8 @@ export {
   type WaitForTransactionReceiptParameters,
   type WaitForTransactionReceiptReturnType,
   waitForTransactionReceipt,
+  /** @deprecated use `waitForTransactionReceipt` instead */
+  waitForTransactionReceipt as waitForTransaction,
 } from '../actions/waitForTransactionReceipt.js'
 
 export {
