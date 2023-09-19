@@ -5,7 +5,7 @@ React Hooks for Ethereum
 ## Installation
 
 ```bash
-pnpm add wagmi@alpha viem@alpha @tanstack/react-query
+pnpm add wagmi@alpha viem@alpha @tanstack/react-query@beta
 ```
 
 ## Documentation
