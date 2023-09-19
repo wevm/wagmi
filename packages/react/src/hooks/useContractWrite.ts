@@ -53,8 +53,8 @@ export type UseContractWriteReturnType<
   >,
   context
 > & {
-  write: WriteContractMutate<config, context>
-  writeAsync: WriteContractMutateAsync<config, context>
+  writeContract: WriteContractMutate<config, context>
+  writeContractAsync: WriteContractMutateAsync<config, context>
 }
 
 /** https://alpha.wagmi.sh/react/api/hooks/useContractWrite */
@@ -77,7 +77,7 @@ export function useContractWrite<
   type Return = UseContractWriteReturnType<config, context>
   return {
     ...result,
-    write: mutate as Return['write'],
-    writeAsync: mutateAsync as Return['writeAsync'],
+    writeContract: mutate as Return['writeContract'],
+    writeContractAsync: mutateAsync as Return['writeContractAsync'],
   }
 }

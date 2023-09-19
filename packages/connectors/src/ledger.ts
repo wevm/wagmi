@@ -137,7 +137,7 @@ export function ledger(parameters: LedgerParameters = {}) {
           walletConnectVersion: 2,
         })
 
-        return (await connectKit.getProvider()) as unknown as EthereumProvider
+        return connectKit.getProvider()
       }
 
       if (!provider_) {

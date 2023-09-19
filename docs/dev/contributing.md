@@ -147,7 +147,7 @@ The first time a PR with a changeset is merged after a release, a new PR will au
 
 ### Creating a snapshot release
 
-If a PR has changesets, you can create a [snapshot release](https://github.com/changesets/changesets/blob/main/docs/snapshot-releases.md) by [manually dispatching](https://github.com/wagmi-dev/wagmi/actions/workflows/snapshot.yml) the Snapshot workflow. This publishes a tagged version to npm with the PR branch name and timestamp.
+If a PR has changesets, you can create a [snapshot release](https://github.com/changesets/changesets/blob/main/docs/snapshot-releases.md) by [manually dispatching](https://github.com/wagmi-dev/wagmi/actions/workflows/canary.yml) the Canary workflow. This publishes a tagged version to npm with the PR branch name and timestamp.
 
 ## 10. Updating dependencies
 

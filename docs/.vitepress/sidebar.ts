@@ -267,7 +267,7 @@ export function getSidebar() {
           },
           {
             text: 'Migrate from v1 to v2 🚧',
-            link: '/react/guides/migrate-from-v1-to-v2',
+            link: '/core/guides/migrate-from-v1-to-v2',
           },
         ],
       },

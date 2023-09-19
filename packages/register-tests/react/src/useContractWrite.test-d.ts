@@ -5,7 +5,7 @@ import { useContractWrite } from 'wagmi'
 import { celo, mainnet, optimism } from 'wagmi/chains'
 
 test('chain formatters', () => {
-  const { write } = useContractWrite()
+  const { writeContract } = useContractWrite()
 
   const shared = {
     address: '0x',
@@ -14,13 +14,13 @@ test('chain formatters', () => {
     args: ['0x', '0x', 123n],
   } as const
 
-  write({
+  writeContract({
     ...shared,
     feeCurrency: '0x',
   })
 
   type Result = Parameters<
-    typeof write<
+    typeof writeContract<
       typeof abi.erc20,
       'transferFrom',
       [Address, Address, bigint],
@@ -34,7 +34,7 @@ test('chain formatters', () => {
   expectTypeOf<Result['gatewayFeeRecipient']>().toEqualTypeOf<
     `0x${string}` | undefined
   >()
-  write({
+  writeContract({
     ...shared,
     chainId: celo.id,
     feeCurrency: '0x',
@@ -42,7 +42,7 @@ test('chain formatters', () => {
     gatewayFeeRecipient: '0x',
   })
 
-  write({
+  writeContract({
     ...shared,
     chainId: mainnet.id,
     // @ts-expect-error
@@ -51,7 +51,7 @@ test('chain formatters', () => {
     gatewayFeeRecipient: '0x',
   })
 
-  write({
+  writeContract({
     ...shared,
     chainId: optimism.id,
     // @ts-expect-error

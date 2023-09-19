@@ -137,9 +137,8 @@ export function injected(parameters: InjectedParameters = {}) {
     async setup() {
       const provider = await this.getProvider()
       // Only start listening for events if `target` is set, otherwise `injected()` will also receive events
-      if (provider && parameters.target) {
+      if (provider && parameters.target)
         provider.on('connect', this.onConnect.bind(this))
-      }
     },
     async connect({ chainId, isReconnecting } = {}) {
       const provider = await this.getProvider()

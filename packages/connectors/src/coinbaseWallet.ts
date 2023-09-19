@@ -48,7 +48,7 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
   type Properties = {}
 
   let sdk: CoinbaseWalletSDK | undefined
-  let provider_: Provider | undefined
+  let walletProvider: Provider | undefined
 
   return createConnector<Provider, Properties>((config) => ({
     id: 'coinbaseWalletSDK',
@@ -104,8 +104,12 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
         })
       ).map(getAddress)
     },
+    async getChainId() {
+      const provider = await this.getProvider()
+      return normalizeChainId(provider.chainId)
+    },
     async getProvider() {
-      if (!provider_) {
+      if (!walletProvider) {
         sdk = new CoinbaseWalletSDK({ reloadOnDisconnect, ...parameters })
 
         // Mock implementations to retrieve private `walletExtension` method from the Coinbase Wallet SDK.
@@ -131,13 +135,9 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
         const jsonRpcUrl =
           parameters.jsonRpcUrl || chain?.rpcUrls.default.http[0]
 
-        provider_ = sdk.makeWeb3Provider(jsonRpcUrl, chainId)
+        walletProvider = sdk.makeWeb3Provider(jsonRpcUrl, chainId)
       }
-      return provider_
-    },
-    async getChainId() {
-      const provider = await this.getProvider()
-      return normalizeChainId(provider.chainId)
+      return walletProvider
     },
     async isAuthorized() {
       try {

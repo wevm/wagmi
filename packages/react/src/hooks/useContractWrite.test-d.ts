@@ -9,7 +9,13 @@ import { useContractWrite } from './useContractWrite.js'
 const contextValue = { foo: 'bar' } as const
 
 test('context', () => {
-  const { context, data, error, write, variables } = useContractWrite({
+  const {
+    context,
+    data,
+    error,
+    writeContract: write,
+    variables,
+  } = useContractWrite({
     mutation: {
       onMutate(variables) {
         expectTypeOf(variables).toMatchTypeOf<{
@@ -130,7 +136,7 @@ test('useContractSimulate', () => {
     args: ['0x', '0x', 123n],
     chainId: 1,
   })
-  const { write } = useContractWrite()
+  const { writeContract: write } = useContractWrite()
 
   const request = data?.request
   if (request) write(request)
