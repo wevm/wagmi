@@ -366,7 +366,7 @@ export function getSidebar() {
             link: '/core/api/actions/getTransaction',
           },
           {
-            text: 'getWalletClient 🚧',
+            text: 'getWalletClient',
             link: '/core/api/actions/getWalletClient',
           },
           {
@@ -439,16 +439,16 @@ export function getSidebar() {
             link: '/core/api/actions/watchConnectors',
           },
           {
-            text: 'watchPublicClient',
-            link: '/core/api/actions/watchPublicClient',
-          },
-          {
             text: 'watchContractEvent 🚧',
             link: '/core/api/actions/watchContractEvent',
           },
           {
             text: 'watchPendingTransactions 🚧',
             link: '/core/api/actions/watchPendingTransactions',
+          },
+          {
+            text: 'watchPublicClient',
+            link: '/core/api/actions/watchPublicClient',
           },
           {
             text: 'writeContract 🚧',

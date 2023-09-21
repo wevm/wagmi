@@ -1,27 +1,27 @@
 <script setup>
 const packageName = '@wagmi/core'
-const actionName = 'getConnectorClient'
-const typeName = 'GetConnectorClient'
+const actionName = 'getWalletClient'
+const typeName = 'GetWalletClient'
 </script>
 
-# getConnectorClient
+# getWalletClient
 
-Action for getting a Viem [`Client`](https://viem.sh/docs/clients/custom.html) object for the current or provided connector.
+Action for getting a Viem [`WalletClient`](https://viem.sh/docs/clients/wallet.html) object for the current or provided connector.
 
 ## Import
 
 ```ts
-import { getConnectorClient } from '@wagmi/core'
+import { getWalletClient } from '@wagmi/core'
 ```
 
 ## Usage
 
 ::: code-group
 ```ts [index.ts]
-import { getConnectorClient } from '@wagmi/core'
+import { getWalletClient } from '@wagmi/core'
 import { config } from './config'
 
-const client = getConnectorClient(config)
+const client = getWalletClient(config)
 ```
 <<< @/snippets/core/config.ts[config.ts]
 :::
@@ -29,7 +29,7 @@ const client = getConnectorClient(config)
 ## Parameters
 
 ```ts
-import { type GetConnectorClientParameters } from '@wagmi/core'
+import { type GetWalletClientParameters } from '@wagmi/core'
 ```
 
 ### account
@@ -40,10 +40,10 @@ Account to use with client. Throws if account is not found on [`connector`](#con
 
 ::: code-group
 ```ts [index.ts]
-import { getConnectorClient } from '@wagmi/core'
+import { getWalletClient } from '@wagmi/core'
 import { config } from './config'
 
-const client = getConnectorClient(config, {
+const client = getWalletClient(config, {
   account: '0xd2135CfB216b74109775236E36d4b433F1DF507B', // [!code focus]
 })
 ```
@@ -58,11 +58,11 @@ ID of chain to use with client.
 
 ::: code-group
 ```ts [index.ts]
-import { getConnectorClient } from '@wagmi/core'
+import { getWalletClient } from '@wagmi/core'
 import { mainnet } from '@wagmi/core/chains'
 import { config } from './config'
 
-const client = getConnectorClient(config, {
+const client = getWalletClient(config, {
   chainId: mainnet.id, // [!code focus]
 })
 ```
@@ -78,11 +78,11 @@ const client = getConnectorClient(config, {
 
 ::: code-group
 ```ts [index.ts]
-import { getConnections, getConnectorClient } from '@wagmi/core'
+import { getConnections, getWalletClient } from '@wagmi/core'
 import { config } from './config'
 
 const connections = getConnections(config)
-const client = getConnectorClient(config, {
+const client = getWalletClient(config, {
   connector: connections[0]?.connector, // [!code focus]
 })
 ```
@@ -95,14 +95,14 @@ const client = getConnectorClient(config, {
 import { type GetChainIdReturnType } from '@wagmi/core'
 ```
 
-`Client`
+`WalletClient`
 
-Viem [`Client`](https://viem.sh/docs/clients/custom.html) object for the current or provided connector.
+Viem [`WalletClient`](https://viem.sh/docs/clients/wallet.html) object for the current or provided connector.
 
 ## Error
 
 ```ts
-import { type GetConnectorClientError } from '@wagmi/core'
+import { type GetWalletClientError } from '@wagmi/core'
 ```
 
 <!--@include: @shared/query-imports.md-->
