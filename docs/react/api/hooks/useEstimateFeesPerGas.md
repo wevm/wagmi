@@ -63,7 +63,7 @@ function App() {
 
 `Config | undefined`
 
-[`Config`](/react/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/WagmiProvider).
+[`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/WagmiProvider).
 
 ::: code-group
 

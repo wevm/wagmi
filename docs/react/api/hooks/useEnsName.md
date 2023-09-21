@@ -19,6 +19,7 @@ import { useEnsName } from 'wagmi'
 ## Usage
 
 ::: code-group
+
 ```tsx [index.tsx]
 import { useEnsName } from 'wagmi'
 
@@ -28,6 +29,7 @@ function App() {
   })
 }
 ```
+
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -44,6 +46,7 @@ import { type UseEnsNameParameters } from 'wagmi'
 Name to get the resolver for. [`enabled`](#enabled) set to `false` if `address` is `undefined`.
 
 ::: code-group
+
 ```ts [index.ts]
 import { useEnsName } from 'wagmi'
 
@@ -53,6 +56,7 @@ function App() {
   })
 }
 ```
+
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -65,6 +69,7 @@ function App() {
 Block number to get ENS name at.
 
 ::: code-group
+
 ```ts [index.ts]
 import { useEnsName } from 'wagmi'
 
@@ -75,6 +80,7 @@ function App() {
   })
 }
 ```
+
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -85,6 +91,7 @@ function App() {
 Block tag to get ENS name at.
 
 ::: code-group
+
 ```ts [index.ts]
 import { useEnsName } from 'wagmi'
 
@@ -95,6 +102,7 @@ function App() {
   })
 }
 ```
+
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -107,6 +115,7 @@ function App() {
 ID of chain to use when fetching data.
 
 ::: code-group
+
 ```tsx [index.tsx]
 import { useEnsName } from 'wagmi'
 import { mainnet } from 'wagmi/chains' // [!code focus]
@@ -118,6 +127,7 @@ function App() {
   })
 }
 ```
+
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -125,9 +135,10 @@ function App() {
 
 `Config | undefined`
 
-[`Config`](/react/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/WagmiProvider).
+[`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/WagmiProvider).
 
 ::: code-group
+
 ```tsx [index.tsx]
 import { useEnsName } from 'wagmi'
 import { normalize } from 'viem/ens'
@@ -140,6 +151,7 @@ function App() {
   })
 }
 ```
+
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -151,6 +163,7 @@ function App() {
 - Defaults to current chain's Universal Name Contract address.
 
 ::: code-group
+
 ```ts [index.ts]
 import { useEnsName } from 'wagmi'
 
@@ -161,6 +174,7 @@ function App() {
   })
 }
 ```
+
 <<< @/snippets/react/config.ts[config.ts]
 :::
 

@@ -31,6 +31,23 @@ const config = createConfig({
 })
 ```
 
+### Integrating a Viem Client
+
+It is also possible to plug in a Viem [`Client`](https://viem.sh/docs/clients/custom.html) instead of a set of `Transport`s for more fine-grained control over the creation of the internal `Client`. [See more](#client).
+
+```ts-vue {3,7-9}
+import { createConfig, http } from '{{packageName}}'
+import { mainnet, sepolia } from '{{packageName}}/chains'
+import { createClient } from 'viem'
+
+const config = createConfig({
+  chains: [mainnet, sepolia],
+  client({ chain }) {
+    return createClient({ chain, transport: http() })
+  },
+})
+```
+
 ## Parameters
 
 ```ts-vue
@@ -103,7 +120,7 @@ const config = createConfig({
 
 `Storage | null | undefined`
 
-- <a :href="`/${docsPath}/createStorage#storage`">`Storage`</a> used by the config. Persists `Config`'s [`State`](#state-1) between sessions.
+- <a :href="`/${docsPath}/api/createStorage#storage`">`Storage`</a> used by the config. Persists `Config`'s [`State`](#state-1) between sessions.
 - Defaults to `createStorage({ storage: typeof window !== 'undefined' && window.localStorage ? window.localStorage : noopStorage })`.
 
 ```ts-vue
@@ -298,11 +315,13 @@ The `Config` object's internal state. See [`State`](#state) for more info.
 Creates new Viem [`Client`](https://viem.sh/docs/clients/custom.html) object.
 
 ::: code-group
+
 ```ts-vue [index.ts]
 import { config } from './config'
 
 const client = config.getClient({ chainId: 1 })
 ```
+
 ```ts-vue [config.ts]
 import { createConfig, http } from '{{packageName}}'
 import { mainnet, sepolia } from '{{packageName}}/chains'
@@ -315,6 +334,7 @@ export const config = createConfig({
   },
 })
 ```
+
 :::
 
 ### setState
@@ -324,6 +344,7 @@ export const config = createConfig({
 Updates the `Config` object's internal state. See [`State`](#state) for more info.
 
 ::: code-group
+
 ```ts-vue [index.ts]
 import { mainnet } from '{{packageName}}/chains'
 import { config } from './config'
@@ -333,6 +354,7 @@ config.setState((x) => ({
   chainId: x.current ? x.chainId : mainnet.id,
 }))
 ```
+
 ```ts-vue [config.ts]
 import { createConfig, http } from '{{packageName}}'
 import { mainnet, sepolia } from '{{packageName}}/chains'
@@ -345,6 +367,7 @@ export const config = createConfig({
   },
 })
 ```
+
 :::
 
 ::: warning
@@ -358,6 +381,7 @@ Exercise caution when using this method. It is intended for internal and advance
 Listens for state changes matching the `selector` function. Returns a function that can be called to unsubscribe the listener.
 
 ::: code-group
+
 ```ts-vue [index.ts]
 import { config } from './config'
 
@@ -367,6 +391,7 @@ const unsubscribe = config.subscribe(
 )
 unsubscribe()
 ```
+
 ```ts-vue [config.ts]
 import { createConfig, http } from '{{packageName}}'
 import { mainnet, sepolia } from '{{packageName}}/chains'
@@ -379,6 +404,7 @@ export const config = createConfig({
   },
 })
 ```
+
 :::
 
 ## State
