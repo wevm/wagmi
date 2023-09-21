@@ -5,7 +5,7 @@ import { createStore } from 'zustand/vanilla'
 import type { Connector, ConnectorData } from './connectors'
 import { InjectedConnector } from './connectors'
 import type { ClientStorage } from './storage'
-import { createStorage, noopStorage } from './storage'
+import { createStorage, selectStorage } from './storage'
 import type { PublicClient, WebSocketPublicClient } from './types'
 
 export type CreateConfigParameters<
@@ -82,8 +82,7 @@ export class Config<
     connectors = [new InjectedConnector()],
     publicClient,
     storage = createStorage({
-      storage:
-        typeof window !== 'undefined' ? window.localStorage : noopStorage,
+      storage: selectStorage(),
     }),
     logger = {
       warn: console.warn,

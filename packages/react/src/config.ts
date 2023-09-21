@@ -14,7 +14,7 @@ import type {
 import {
   createConfig as createCoreConfig,
   createStorage,
-  noopStorage,
+  selectStorage,
 } from '@wagmi/core'
 
 export type CreateConfigParameters<
@@ -43,10 +43,7 @@ export function createConfig<
     },
   }),
   storage = createStorage({
-    storage:
-      typeof window !== 'undefined' && window.localStorage
-        ? window.localStorage
-        : noopStorage,
+    storage: selectStorage(),
   }),
   persister = typeof window !== 'undefined'
     ? createSyncStoragePersister({

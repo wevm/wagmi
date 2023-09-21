@@ -14,6 +14,16 @@ export const noopStorage: BaseStorage = {
   removeItem: (_key) => null,
 }
 
+export function selectStorage(): BaseStorage {
+  try {
+    return typeof window !== 'undefined' && window.localStorage
+      ? window.localStorage
+      : noopStorage
+  } catch {
+    return noopStorage
+  }
+}
+
 export function createStorage({
   deserialize = deserialize_,
   key: prefix = 'wagmi',

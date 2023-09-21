@@ -136,7 +136,7 @@ export {
   SwitchChainNotSupportedError,
 } from './errors'
 
-export { createStorage, noopStorage } from './storage'
+export { createStorage, noopStorage, selectStorage } from './storage'
 export type { ClientStorage as Storage } from './storage'
 
 export type {
