@@ -11,6 +11,7 @@ import { useConnections } from 'wagmi'
 ## Usage
 
 ::: code-group
+
 ```tsx [index.tsx]
 import { useConnections } from 'wagmi'
 
@@ -18,6 +19,7 @@ function App() {
   const connections = useConnections()
 }
 ```
+
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -31,9 +33,10 @@ import { type UseConnectionsParameters } from 'wagmi'
 
 `Config | undefined`
 
-[`Config`](/react/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/WagmiProvider).
+[`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/WagmiProvider).
 
 ::: code-group
+
 ```tsx [index.tsx]
 import { useConnections } from 'wagmi'
 import { config } from './config' // [!code focus]
@@ -44,6 +47,7 @@ function App() {
   })
 }
 ```
+
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
