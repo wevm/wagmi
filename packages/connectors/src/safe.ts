@@ -23,7 +23,7 @@ export type SafeParameters = Evaluate<
 >
 
 export function safe(parameters: SafeParameters = {}) {
-  const { shimDisconnect } = parameters
+  const { shimDisconnect = false } = parameters
 
   type Provider = SafeAppProvider | undefined
   type Properties = {}

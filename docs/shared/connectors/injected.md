@@ -15,7 +15,7 @@ import { injected } from '{{connectorsPackageName}}'
 
 ## Usage
 
-```ts-vue
+```ts-vue{3,7}
 import { createConfig, http } from '{{packageName}}'
 import { mainnet, sepolia } from '{{packageName}}/chains'
 import { injected } from '{{connectorsPackageName}}'
@@ -45,21 +45,10 @@ import { type InjectedParameters } from '{{connectorsPackageName}}'
 - Defaults to `true`.
 
 ```ts-vue
-import { createConfig, http } from '{{packageName}}'
-import { mainnet, sepolia } from '{{packageName}}/chains'
 import { injected } from '{{connectorsPackageName}}'
 
-export const config = createConfig({
-  chains: [mainnet, sepolia],
-  connectors: [
-    injected({ // [!code focus]
-      shimDisconnect: false, // [!code focus]
-    }), // [!code focus]
-  ],
-  transports: {
-    [mainnet.id]: http(),
-    [sepolia.id]: http(),
-  },
+const connector = injected({
+  shimDisconnect: false, // [!code focus]
 })
 ```
 
@@ -71,23 +60,12 @@ export const config = createConfig({
 - [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963) supported via `createConfig`'s <a :href="`/${docsPath}/api/connectors/injected`">`multiInjectedProviderDiscovery`</a> property.
 
 ```ts-vue
-import { createConfig, http } from '{{packageName}}'
-import { mainnet, sepolia } from '{{packageName}}/chains'
 import { injected } from '{{connectorsPackageName}}'
 
-export const config = createConfig({
-  chains: [mainnet, sepolia],
-  connectors: [
-    injected({ // [!code focus]
-      target() { // [!code focus]
-        return window.ethereum // [!code focus]
-      }, // [!code focus]
-    }), // [!code focus]
-  ],
-  transports: {
-    [mainnet.id]: http(),
-    [sepolia.id]: http(),
-  },
+const connector = injected({
+  target() { // [!code focus]
+    return window.ethereum // [!code focus]
+  }, // [!code focus]
 })
 ```
 
@@ -98,20 +76,9 @@ export const config = createConfig({
 Watches for async provider injection via the `ethereum#initialized` event. When `true`, defaults to `1_000` milliseconds. Otherwise, uses a provided value of milliseconds.
 
 ```ts-vue
-import { createConfig, http } from '{{packageName}}'
-import { mainnet, sepolia } from '{{packageName}}/chains'
 import { injected } from '{{connectorsPackageName}}'
 
-export const config = createConfig({
-  chains: [mainnet, sepolia],
-  connectors: [
-    injected({ // [!code focus]
-      unstable_shimAsyncInject: 2_000, // [!code focus]
-    }), // [!code focus]
-  ],
-  transports: {
-    [mainnet.id]: http(),
-    [sepolia.id]: http(),
-  },
+const connector = injected({
+  unstable_shimAsyncInject: 2_000, // [!code focus]
 })
 ```

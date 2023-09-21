@@ -15,7 +15,7 @@ import { coinbaseWallet } from '{{connectorsPackageName}}'
 
 ## Usage
 
-```ts-vue
+```ts-vue{3,8-10}
 import { createConfig, http } from '{{packageName}}'
 import { mainnet, sepolia } from '{{packageName}}/chains'
 import { coinbaseWallet } from '{{connectorsPackageName}}'

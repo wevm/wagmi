@@ -1,7 +1,13 @@
 import { del, get, set } from 'idb-keyval'
 import { http, createConfig, createStorage } from 'wagmi'
 import { celo, mainnet, optimism, sepolia } from 'wagmi/chains'
-import { coinbaseWallet, ledger, safe, walletConnect } from 'wagmi/connectors'
+import {
+  coinbaseWallet,
+  injected,
+  ledger,
+  safe,
+  walletConnect,
+} from 'wagmi/connectors'
 
 // biome-ignore lint/correctness/noUnusedVariables: <explanation>
 const indexedDBStorage = {
@@ -23,6 +29,7 @@ export const config = createConfig({
     coinbaseWallet({ appName: 'Vite React Playground', darkMode: true }),
     ledger({ projectId: import.meta.env.VITE_WC_PROJECT_ID }),
     safe({ debug: true, shimDisconnect: true }),
+    injected({ target: 'metaMask' }),
   ],
   storage: createStorage({
     key: 'vite-react',

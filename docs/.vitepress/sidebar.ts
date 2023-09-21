@@ -69,11 +69,11 @@ export function getSidebar() {
               },
               { text: 'injected', link: '/react/api/connectors/injected' },
               {
-                text: 'ledger 🚧',
+                text: 'ledger',
                 link: '/react/api/connectors/ledger',
               },
               {
-                text: 'safe 🚧',
+                text: 'safe',
                 link: '/react/api/connectors/safe',
               },
               {
@@ -438,11 +438,11 @@ export function getSidebar() {
               },
               { text: 'injected', link: '/core/api/connectors/injected' },
               {
-                text: 'ledger 🚧',
+                text: 'ledger',
                 link: '/core/api/connectors/ledger',
               },
               {
-                text: 'safe 🚧',
+                text: 'safe',
                 link: '/core/api/connectors/safe',
               },
               {
