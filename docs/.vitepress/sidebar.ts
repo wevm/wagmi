@@ -318,7 +318,7 @@ export function getSidebar() {
             text: 'estimateFeesPerGas',
             link: '/core/api/actions/estimateFeesPerGas',
           },
-          { text: 'estimateGas 🚧', link: '/core/api/actions/estimateGas' },
+          { text: 'estimateGas', link: '/core/api/actions/estimateGas' },
           { text: 'getAccount', link: '/core/api/actions/getAccount' },
           { text: 'getBalance', link: '/core/api/actions/getBalance' },
           {
@@ -331,7 +331,7 @@ export function getSidebar() {
           },
           { text: 'getChainId', link: '/core/api/actions/getChainId' },
           {
-            text: 'getClient 🚧',
+            text: 'getClient',
             link: '/core/api/actions/getClient',
           },
           {
@@ -343,7 +343,7 @@ export function getSidebar() {
             link: '/core/api/actions/getConnectorClient',
           },
           {
-            text: 'getConnectors 🚧',
+            text: 'getConnectors',
             link: '/core/api/actions/getConnectors',
           },
           {
@@ -357,7 +357,7 @@ export function getSidebar() {
             link: '/core/api/actions/getEnsResolver',
           },
           {
-            text: 'getPublicClient 🚧',
+            text: 'getPublicClient',
             link: '/core/api/actions/getPublicClient',
           },
           { text: 'getToken', link: '/core/api/actions/getToken' },
