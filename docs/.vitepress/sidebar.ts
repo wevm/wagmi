@@ -56,30 +56,31 @@ export function getSidebar() {
           { text: 'createConfig', link: '/react/api/createConfig' },
           { text: 'createStorage', link: '/react/api/createStorage' },
           { text: 'Chains', link: '/react/api/chains' },
+          {
+            text: 'Connectors',
+            collapsed: true,
+            link: '/react/api/connectors',
+            items: [
+              {
+                text: 'coinbaseWallet',
+                link: '/react/api/connectors/coinbaseWallet',
+              },
+              { text: 'injected', link: '/react/api/connectors/injected' },
+              {
+                text: 'ledger',
+                link: '/react/api/connectors/ledger',
+              },
+              {
+                text: 'safe',
+                link: '/react/api/connectors/safe',
+              },
+              {
+                text: 'walletConnect',
+                link: '/react/api/connectors/walletConnect',
+              },
+            ],
+          },
           { text: 'WagmiProvider', link: '/react/api/WagmiProvider' },
-        ],
-      },
-      {
-        text: 'Connectors',
-        link: '/react/api/connectors',
-        items: [
-          {
-            text: 'coinbaseWallet',
-            link: '/react/api/connectors/coinbaseWallet',
-          },
-          { text: 'injected', link: '/react/api/connectors/injected' },
-          {
-            text: 'ledger',
-            link: '/react/api/connectors/ledger',
-          },
-          {
-            text: 'safe',
-            link: '/react/api/connectors/safe',
-          },
-          {
-            text: 'walletConnect',
-            link: '/react/api/connectors/walletConnect',
-          },
         ],
       },
       {
@@ -275,34 +276,35 @@ export function getSidebar() {
         ],
       },
       {
-        text: 'Configuration 🚧',
+        text: 'Configuration',
         items: [
           { text: 'createConfig', link: '/core/api/createConfig' },
           { text: 'createConnector 🚧', link: '/core/api/createConnector' },
           { text: 'createStorage', link: '/core/api/createStorage' },
           { text: 'Chains', link: '/core/api/chains' },
-        ],
-      },
-      {
-        text: 'Connectors',
-        link: '/core/api/connectors',
-        items: [
           {
-            text: 'coinbaseWallet',
-            link: '/core/api/connectors/coinbaseWallet',
-          },
-          { text: 'injected', link: '/core/api/connectors/injected' },
-          {
-            text: 'ledger',
-            link: '/core/api/connectors/ledger',
-          },
-          {
-            text: 'safe',
-            link: '/core/api/connectors/safe',
-          },
-          {
-            text: 'walletConnect',
-            link: '/core/api/connectors/walletConnect',
+            text: 'Connectors',
+            collapsed: true,
+            link: '/core/api/connectors',
+            items: [
+              {
+                text: 'coinbaseWallet',
+                link: '/core/api/connectors/coinbaseWallet',
+              },
+              { text: 'injected', link: '/core/api/connectors/injected' },
+              {
+                text: 'ledger',
+                link: '/core/api/connectors/ledger',
+              },
+              {
+                text: 'safe',
+                link: '/core/api/connectors/safe',
+              },
+              {
+                text: 'walletConnect',
+                link: '/core/api/connectors/walletConnect',
+              },
+            ],
           },
         ],
       },
