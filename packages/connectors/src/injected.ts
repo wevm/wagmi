@@ -205,15 +205,18 @@ export class InjectedConnector extends Connector<
     try {
       await Promise.all([
         provider.request({
-          method: 'wallet_switchEthereumChain',
+          method: "wallet_switchEthereumChain",
           params: [{ chainId: id }],
         }),
-        new Promise<void>((res) =>
-          this.on('change', ({ chain }) => {
-            if (chain?.id === chainId) res()
-          }),
-        ),
-      ])
+        new Promise<void>((res) => {
+          this.getChainId().then((currentChainId) => {
+            if (currentChainId === chainId) res();
+          });
+          this.on("change", ({ chain }) => {
+            if (chain?.id === chainId) res();
+          });
+        }),
+      ]);
       return (
         this.chains.find((x) => x.id === chainId) ?? {
           id: chainId,
