@@ -316,7 +316,6 @@ The `Config` object's internal state. See [`State`](#state) for more info.
 Creates new Viem [`Client`](https://viem.sh/docs/clients/custom.html) object.
 
 ::: code-group
-
 ```ts-vue [index.ts]
 import { config } from './config'
 
@@ -345,7 +344,6 @@ export const config = createConfig({
 Updates the `Config` object's internal state. See [`State`](#state) for more info.
 
 ::: code-group
-
 ```ts-vue [index.ts]
 import { mainnet } from '{{packageName}}/chains'
 import { config } from './config'
@@ -382,7 +380,6 @@ Exercise caution when using this method. It is intended for internal and advance
 Listens for state changes matching the `selector` function. Returns a function that can be called to unsubscribe the listener.
 
 ::: code-group
-
 ```ts-vue [index.ts]
 import { config } from './config'
 

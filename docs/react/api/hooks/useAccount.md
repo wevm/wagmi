@@ -11,7 +11,6 @@ import { useAccount } from 'wagmi'
 ## Usage
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useAccount } from 'wagmi'
 
@@ -27,7 +26,6 @@ function App() {
   )
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -44,7 +42,6 @@ import { type UseAccountParameters } from 'wagmi'
 [`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/WagmiProvider).
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useAccount } from 'wagmi'
 import { config } from './config' // [!code focus]
@@ -55,7 +52,6 @@ function App() {
   })
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 

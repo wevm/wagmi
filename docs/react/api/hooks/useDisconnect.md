@@ -21,7 +21,6 @@ import { useDisconnect } from 'wagmi'
 ## Usage
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useDisconnect } from 'wagmi'
 
@@ -35,7 +34,6 @@ function App() {
   )
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -52,7 +50,6 @@ import { type UseDisconnectParameters } from 'wagmi'
 [`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/WagmiProvider).
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useDisconnect } from 'wagmi'
 import { config } from './config' // [!code focus]
@@ -63,7 +60,6 @@ function App() {
   })
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -82,7 +78,6 @@ import { type UseDisconnectReturnType } from 'wagmi'
 Connectors that are currently connected. Useful for rendering a list of connectors to disconnect.
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useDisconnect } from 'wagmi'
 import { mainnet } from 'wagmi/chains'
@@ -101,7 +96,6 @@ function App() {
   )
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 

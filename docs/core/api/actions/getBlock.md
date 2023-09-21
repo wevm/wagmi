@@ -17,14 +17,12 @@ import { getBlock } from '@wagmi/core'
 ## Usage
 
 ::: code-group
-
 ```ts [index.ts]
 import { getBlock } from '@wagmi/core'
 import { config } from './config'
 
 const blockNumber = await getBlock(config)
 ```
-
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
@@ -41,7 +39,6 @@ import { type GetBlockParameters } from '@wagmi/core'
 Information at a given block hash.
 
 ::: code-group
-
 ```ts [index.ts]
 import { getBlock } from '@wagmi/core'
 import { config } from './config'
@@ -50,7 +47,6 @@ const blockNumber = await getBlock(config, {
   blockHash: '0x89644bbd5c8d682a2e9611170e6c1f02573d866d286f006cbf517eec7254ec2d' // [!code focus]
 })
 ```
-
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
@@ -61,7 +57,6 @@ const blockNumber = await getBlock(config, {
 Information at a given block number.
 
 ::: code-group
-
 ```ts [index.ts]
 import { getBlock } from '@wagmi/core'
 import { config } from './config'
@@ -70,7 +65,6 @@ const blockNumber = await getBlock(config, {
   blockNumber: 42069n // [!code focus]
 })
 ```
-
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
@@ -81,7 +75,6 @@ const blockNumber = await getBlock(config, {
 Information at a given block tag. Defaults to `'latest'`.
 
 ::: code-group
-
 ```ts [index.ts]
 import { getBlock } from '@wagmi/core'
 import { config } from './config'
@@ -90,7 +83,6 @@ const blockNumber = await getBlock(config, {
   blockTag: 'pending' // [!code focus]
 })
 ```
-
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
@@ -101,7 +93,6 @@ const blockNumber = await getBlock(config, {
 ID of chain to use when fetching data.
 
 ::: code-group
-
 ```ts [index.ts]
 import { getBlock } from '@wagmi/core'
 import { mainnet } from '@wagmi/core/chains'
@@ -111,7 +102,6 @@ const blockNumber = await getBlock(config, {
   chainId: mainnet.id, // [!code focus]
 })
 ```
-
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
@@ -122,7 +112,6 @@ const blockNumber = await getBlock(config, {
 Whether or not to include transactions as objects.
 
 ::: code-group
-
 ```ts [index.ts]
 import { getBlock } from '@wagmi/core'
 import { config } from './config'
@@ -131,7 +120,6 @@ const blockNumber = await getBlock(config, {
   includeTransactions: true // [!code focus]
 })
 ```
-
 <<< @/snippets/core/config.ts[config.ts]
 :::
 

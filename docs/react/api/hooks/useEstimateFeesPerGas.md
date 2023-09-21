@@ -19,7 +19,6 @@ import { useEstimateFeesPerGas } from 'wagmi'
 ## Usage
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useEstimateFeesPerGas } from 'wagmi'
 
@@ -27,7 +26,6 @@ function App() {
   const result = useEstimateFeesPerGas()
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -44,7 +42,6 @@ import { type UseEstimateFeesPerGas } from 'wagmi'
 ID of chain to use when fetching data.
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useEstimateFeesPerGas } from 'wagmi'
 import { mainnet } from 'wagmi/chains' // [!code focus]
@@ -55,7 +52,6 @@ function App() {
   })
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -66,7 +62,6 @@ function App() {
 [`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/WagmiProvider).
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useEstimateFeesPerGas } from 'wagmi'
 import { config } from './config' // [!code focus]
@@ -77,7 +72,6 @@ function App() {
   })
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -89,7 +83,6 @@ function App() {
 - Defaults to `'ether'`.
 
 ::: code-group
-
 ```ts [index.ts]
 import { useEstimateFeesPerGas } from 'wagmi'
 
@@ -99,7 +92,6 @@ function App() {
   })
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -110,7 +102,6 @@ function App() {
 - Defaults to `"eip1559"`
 
 ::: code-group
-
 ```ts [index.ts]
 import { useEstimateFeesPerGas } from 'wagmi'
 
@@ -120,7 +111,6 @@ function App() {
   })
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 

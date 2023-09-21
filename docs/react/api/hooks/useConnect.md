@@ -21,7 +21,6 @@ import { useConnect } from 'wagmi'
 ## Usage
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useConnect } from 'wagmi'
 import { injected } from 'wagmi/connectors'
@@ -36,7 +35,6 @@ function App() {
   )
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -53,7 +51,6 @@ import { type UseConnectParameters } from 'wagmi'
 [`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/WagmiProvider).
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useConnect } from 'wagmi'
 import { config } from './config' // [!code focus]
@@ -64,7 +61,6 @@ function App() {
   })
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -83,7 +79,6 @@ import { type UseConnectReturnType } from 'wagmi'
 Globally configured connectors via [`createConfig`](/react/api/createConfig#connectors). Useful for rendering a list of available connectors.
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useConnect } from 'wagmi'
 import { mainnet } from 'wagmi/chains'
@@ -102,7 +97,6 @@ function App() {
   )
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 

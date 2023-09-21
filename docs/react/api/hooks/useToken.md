@@ -19,7 +19,6 @@ import { useToken } from 'wagmi'
 ## Usage
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useToken } from 'wagmi'
 
@@ -29,7 +28,6 @@ function App() {
   })
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -46,7 +44,6 @@ import { type UseTokenParameters } from 'wagmi'
 Address to get token for. [`enabled`](#enabled) set to `false` if `address` is `undefined`.
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useToken } from 'wagmi'
 import { mainnet } from 'wagmi/chains'
@@ -57,7 +54,6 @@ function App() {
   })
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -68,7 +64,6 @@ function App() {
 ID of chain to use when fetching data.
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useToken } from 'wagmi'
 import { mainnet } from 'wagmi/chains' // [!code focus]
@@ -80,7 +75,6 @@ function App() {
   })
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -91,7 +85,6 @@ function App() {
 [`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/WagmiProvider).
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useToken } from 'wagmi'
 import { config } from './config' // [!code focus]
@@ -103,7 +96,6 @@ function App() {
   })
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -115,7 +107,6 @@ function App() {
 - Defaults to `'ether'`.
 
 ::: code-group
-
 ```ts [index.ts]
 import { useToken } from 'wagmi'
 
@@ -126,7 +117,6 @@ function App() {
   })
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 

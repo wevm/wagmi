@@ -17,7 +17,6 @@ import { estimateFeesPerGas } from '@wagmi/core'
 ## Usage
 
 ::: code-group
-
 ```ts [index.ts]
 import { estimateFeesPerGas } from '@wagmi/core'
 import { config } from './config'
@@ -40,7 +39,6 @@ const { gasPrice } = await estimateFeesPerGas(config, {
  * { gasPrice: 15_000_000_000n } 
  */
 ```
-
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
@@ -57,7 +55,6 @@ import { type EstimateFeesPerGasParameters } from '@wagmi/core'
 ID of chain to use when fetching data.
 
 ::: code-group
-
 ```ts [index.ts]
 import { estimateFeesPerGas } from '@wagmi/core'
 import { mainnet } from '@wagmi/core/chains'
@@ -67,7 +64,6 @@ const feesPerGas = await estimateFeesPerGas(config, {
   chainId: mainnet.id, // [!code focus]
 })
 ```
-
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
@@ -79,7 +75,6 @@ const feesPerGas = await estimateFeesPerGas(config, {
 - Defaults to `'ether'`.
 
 ::: code-group
-
 ```ts [index.ts]
 import { estimateFeesPerGas } from '@wagmi/core'
 import { config } from './config'
@@ -88,7 +83,6 @@ const feesPerGas = estimateFeesPerGas(config, {
   formatUnits: 'ether', // [!code focus]
 })
 ```
-
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
@@ -99,7 +93,6 @@ const feesPerGas = estimateFeesPerGas(config, {
 - Defaults to `"eip1559"`
 
 ::: code-group
-
 ```ts [index.ts]
 import { estimateFeesPerGas } from '@wagmi/core'
 import { config } from './config'
@@ -108,7 +101,6 @@ const feesPerGas = estimateFeesPerGas(config, {
   type: 'legacy', // [!code focus]
 })
 ```
-
 <<< @/snippets/core/config.ts[config.ts]
 :::
 

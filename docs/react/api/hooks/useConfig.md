@@ -11,7 +11,6 @@ import { useConfig } from 'wagmi'
 ## Usage
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useConfig } from 'wagmi'
 
@@ -31,7 +30,6 @@ import { type UseConfigReturnType } from 'wagmi'
 If you use TypeScript and [register your `Config`](/react/typescript#register-config), the return type will be inferred.
 
 ::: code-group
-
 ```ts twoslash [index.tsx]
 import { type Config } from 'wagmi'
 import { mainnet, sepolia } from 'wagmi/chains'

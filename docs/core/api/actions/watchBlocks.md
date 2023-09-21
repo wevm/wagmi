@@ -11,7 +11,6 @@ import { watchBlocks } from '@wagmi/core'
 ## Usage
 
 ::: code-group
-
 ```ts [index.ts]
 import { watchBlocks } from '@wagmi/core'
 import { config } from './config'
@@ -23,7 +22,6 @@ const unwatch = watchBlocks(config, {
 })
 unwatch()
 ```
-
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
@@ -40,7 +38,6 @@ import { type WatchBlocksParameters } from '@wagmi/core'
 Watch for new blocks on a given tag. Defaults to `'latest'`.
 
 ::: code-group
-
 ```ts [index.ts]
 import { watchBlocks } from '@wagmi/core'
 import { config } from './config'
@@ -53,7 +50,6 @@ const unwatch = watchBlocks(config, {
 })
 unwatch()
 ```
-
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
@@ -64,7 +60,6 @@ unwatch()
 ID of chain to use when fetching data.
 
 ::: code-group
-
 ```ts [index.ts]
 import { watchBlocks } from '@wagmi/core'
 import { mainnet } from '@wagmi/core/chains'
@@ -78,7 +73,6 @@ const unwatch = watchBlocks(config, {
 })
 unwatch()
 ```
-
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
@@ -91,7 +85,6 @@ Whether or not to emit missed blocks to the callback. Defaults to `false`.
 Missed blocks may occur in instances where internet connection is lost, or the block time is lesser than the polling interval of the client.
 
 ::: code-group
-
 ```ts [index.ts]
 import { watchBlocks } from '@wagmi/core'
 import { config } from './config'
@@ -104,7 +97,6 @@ const unwatch = watchBlocks(config, {
 })
 unwatch()
 ```
-
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
@@ -115,7 +107,6 @@ unwatch()
 Whether or not to emit the block to the callback when the subscription opens. Defaults to `false`.
 
 ::: code-group
-
 ```ts [index.ts]
 import { watchBlocks } from '@wagmi/core'
 import { config } from './config'
@@ -128,7 +119,6 @@ const unwatch = watchBlocks(config, {
 })
 unwatch()
 ```
-
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
@@ -139,7 +129,6 @@ unwatch()
 Callback for when block changes.
 
 ::: code-group
-
 ```ts [index.ts]
 import { watchBlocks } from '@wagmi/core'
 import { config } from './config'
@@ -151,7 +140,6 @@ const unwatch = watchBlocks(config, {
 })
 unwatch()
 ```
-
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
@@ -162,7 +150,6 @@ unwatch()
 Error thrown from getting the block.
 
 ::: code-group
-
 ```ts [index.ts]
 import { watchBlocks } from '@wagmi/core'
 import { config } from './config'
@@ -177,7 +164,6 @@ const unwatch = watchBlocks(config, {
 })
 unwatch()
 ```
-
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
@@ -188,7 +174,6 @@ unwatch()
 Whether or not to use a polling mechanism to check for new blocks instead of a WebSocket subscription. Defaults to `false` for WebSocket Clients, and `true` for non-WebSocket Clients.
 
 ::: code-group
-
 ```ts [index.ts]
 import { watchBlocks } from '@wagmi/core'
 import { config } from './config'
@@ -201,7 +186,6 @@ const unwatch = watchBlocks(config, {
 })
 unwatch()
 ```
-
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
@@ -212,7 +196,6 @@ unwatch()
 Polling frequency (in ms).
 
 ::: code-group
-
 ```ts [index.ts]
 import { watchBlocks } from '@wagmi/core'
 import { config } from './config'
@@ -225,7 +208,6 @@ const unwatch = watchBlocks(config, {
 })
 unwatch()
 ```
-
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
@@ -237,7 +219,6 @@ unwatch()
 - Defaults to [`Config['syncConnectedChain']`](/core/createConfig#syncconnectedchain).
 
 ::: code-group
-
 ```ts [index.ts]
 import { watchBlocks } from '@wagmi/core'
 import { config } from './config'
@@ -250,7 +231,6 @@ const unwatch = watchBlocks(config, {
 })
 unwatch()
 ```
-
 <<< @/snippets/core/config.ts[config.ts]
 :::
 

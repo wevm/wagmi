@@ -17,14 +17,12 @@ import { getBlockNumber } from '@wagmi/core'
 ## Usage
 
 ::: code-group
-
 ```ts [index.ts]
 import { getBlockNumber } from '@wagmi/core'
 import { config } from './config'
 
 const blockNumber = await getBlockNumber(config)
 ```
-
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
@@ -41,7 +39,6 @@ import { type GetBlockNumberParameters } from '@wagmi/core'
 Time in milliseconds that cached block number will remain in memory.
 
 ::: code-group
-
 ```ts [index.ts]
 import { getBlockNumber } from '@wagmi/core'
 import { config } from './config'
@@ -50,7 +47,6 @@ const blockNumber = await getBlockNumber(config, {
   cacheTime: 4_000, // [!code focus]
 })
 ```
-
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
@@ -61,7 +57,6 @@ const blockNumber = await getBlockNumber(config, {
 ID of chain to use when fetching data.
 
 ::: code-group
-
 ```ts [index.ts]
 import { getBlockNumber } from '@wagmi/core'
 import { mainnet } from '@wagmi/core/chains'
@@ -71,7 +66,6 @@ const blockNumber = await getBlockNumber(config, {
   chainId: mainnet.id, // [!code focus]
 })
 ```
-
 <<< @/snippets/core/config.ts[config.ts]
 :::
 

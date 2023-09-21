@@ -11,7 +11,6 @@ import { WagmiProvider } from 'wagmi'
 ## Usage
 
 ::: code-group
-
 ```tsx [app.tsx]
 import { WagmiProvider } from 'wagmi'
 import { config } from './config' 
@@ -24,7 +23,6 @@ function App() {
   )
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -39,7 +37,6 @@ import { type WagmiProviderProps } from 'wagmi'
 [`Config`](/react/api/createConfig#config) object to inject with context.
 
 ::: code-group
-
 ```tsx [app.tsx]
 import { WagmiProvider } from 'wagmi'
 import { config } from './config' 
@@ -54,7 +51,6 @@ function App() {
   )
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -66,7 +62,6 @@ function App() {
 - Defaults to `true`.
 
 ::: code-group
-
 ```tsx [app.tsx]
 import { WagmiProvider } from 'wagmi'
 import { config } from './config' 
@@ -82,7 +77,6 @@ function App() {
   )
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 

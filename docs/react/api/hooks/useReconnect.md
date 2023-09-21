@@ -21,7 +21,6 @@ import { useReconnect } from 'wagmi'
 ## Usage
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useReconnect } from 'wagmi'
 import { useEffect } from 'react'
@@ -54,7 +53,6 @@ import { type UseReconnectParameters } from 'wagmi'
 [`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/WagmiProvider).
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useReconnect } from 'wagmi'
 import { config } from './config' // [!code focus]
@@ -65,7 +63,6 @@ function App() {
   })
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -84,7 +81,6 @@ import { type UseReconnectReturnType } from 'wagmi'
 Globally configured connectors via [`createConfig`](/react/api/createConfig#connectors).
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useReconnect } from 'wagmi'
 import { mainnet } from 'wagmi/chains'
@@ -98,7 +94,6 @@ function App() {
   }, [])
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 

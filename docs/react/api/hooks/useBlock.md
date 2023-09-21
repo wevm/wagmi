@@ -19,7 +19,6 @@ import { useBlock } from 'wagmi'
 ## Usage
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useBlock } from 'wagmi'
 
@@ -27,7 +26,6 @@ function App() {
   const result = useBlock()
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -44,7 +42,6 @@ import { type UseBlockParameters } from 'wagmi'
 Information at a given block hash.
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useBlock } from 'wagmi'
 
@@ -54,7 +51,6 @@ function App() {
   })
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -65,7 +61,6 @@ function App() {
 Information at a given block number.
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useBlock } from 'wagmi'
 
@@ -75,7 +70,6 @@ function App() {
   })
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -86,7 +80,6 @@ function App() {
 Information at a given block tag. Defaults to `'latest'`.
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useBlock } from 'wagmi'
 
@@ -96,7 +89,6 @@ function App() {
   })
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -107,7 +99,6 @@ function App() {
 ID of chain to use when fetching data.
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useBlock } from 'wagmi'
 import { mainnet } from 'wagmi/chains' // [!code focus]
@@ -118,7 +109,6 @@ function App() {
   })
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -129,7 +119,6 @@ function App() {
 [`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/WagmiProvider).
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useBlock } from 'wagmi'
 import { config } from './config' // [!code focus]
@@ -140,7 +129,6 @@ function App() {
   })
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -151,7 +139,6 @@ function App() {
 Whether or not to include transactions as objects.
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { getBlock } from '@wagmi/core'
 import { config } from './config'
@@ -160,7 +147,6 @@ const blockNumber = await getBlock(config, {
   includeTransactions: true // [!code focus]
 })
 ```
-
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
@@ -172,7 +158,6 @@ const blockNumber = await getBlock(config, {
 - Can pass a subset of [`UseWatchBlockParameters`](/react/api/hooks/useWatchBlock#parameters) directly to [`useWatchBlock`](/react/api/hooks/useWatchBlock).
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useBlock } from 'wagmi'
 
@@ -194,7 +179,6 @@ function App() {
   })
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 

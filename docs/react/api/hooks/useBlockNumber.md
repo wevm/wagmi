@@ -19,7 +19,6 @@ import { useBlockNumber } from 'wagmi'
 ## Usage
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useBlockNumber } from 'wagmi'
 
@@ -27,7 +26,6 @@ function App() {
   const result = useBlockNumber()
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -44,7 +42,6 @@ import { type UseBlockNumberParameters } from 'wagmi'
 Time in milliseconds that cached block number will remain in memory.
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useBlockNumber } from 'wagmi'
 
@@ -54,7 +51,6 @@ function App() {
   })
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -65,7 +61,6 @@ function App() {
 ID of chain to use when fetching data.
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useBlockNumber } from 'wagmi'
 import { mainnet } from 'wagmi/chains' // [!code focus]
@@ -76,7 +71,6 @@ function App() {
   })
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -87,7 +81,6 @@ function App() {
 [`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/WagmiProvider).
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useBlockNumber } from 'wagmi'
 import { config } from './config' // [!code focus]
@@ -98,7 +91,6 @@ function App() {
   })
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -110,7 +102,6 @@ function App() {
 - Can pass a subset of [`UseWatchBlockNumberParameters`](/react/api/hooks/useWatchBlockNumber#parameters)directly to [`useWatchBlockNumber`](/react/api/hooks/useWatchBlockNumber).
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useBlockNumber } from 'wagmi'
 
@@ -132,7 +123,6 @@ function App() {
   })
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 

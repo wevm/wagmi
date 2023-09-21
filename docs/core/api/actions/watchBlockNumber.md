@@ -11,7 +11,6 @@ import { watchBlockNumber } from '@wagmi/core'
 ## Usage
 
 ::: code-group
-
 ```ts [index.ts]
 import { watchBlockNumber } from '@wagmi/core'
 import { config } from './config'
@@ -23,7 +22,6 @@ const unwatch = watchBlockNumber(config, {
 })
 unwatch()
 ```
-
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
@@ -40,7 +38,6 @@ import { type WatchBlockNumberParameters } from '@wagmi/core'
 ID of chain to use when fetching data.
 
 ::: code-group
-
 ```ts [index.ts]
 import { watchBlockNumber } from '@wagmi/core'
 import { mainnet } from '@wagmi/core/chains'
@@ -54,7 +51,6 @@ const unwatch = watchBlockNumber(config, {
 })
 unwatch()
 ```
-
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
@@ -65,7 +61,6 @@ unwatch()
 Callback for when block number changes.
 
 ::: code-group
-
 ```ts [index.ts]
 import { watchBlockNumber } from '@wagmi/core'
 import { config } from './config'
@@ -77,7 +72,6 @@ const unwatch = watchBlockNumber(config, {
 })
 unwatch()
 ```
-
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
@@ -88,7 +82,6 @@ unwatch()
 Error thrown from getting the block number.
 
 ::: code-group
-
 ```ts [index.ts]
 import { watchBlockNumber } from '@wagmi/core'
 import { config } from './config'
@@ -103,7 +96,6 @@ const unwatch = watchBlockNumber(config, {
 })
 unwatch()
 ```
-
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
@@ -115,7 +107,6 @@ unwatch()
 - Defaults to [`Config['syncConnectedChain']`](/core/createConfig#syncconnectedchain).
 
 ::: code-group
-
 ```ts [index.ts]
 import { watchBlockNumber } from '@wagmi/core'
 import { config } from './config'
@@ -128,7 +119,6 @@ const unwatch = watchBlockNumber(config, {
 })
 unwatch()
 ```
-
 <<< @/snippets/core/config.ts[config.ts]
 :::
 

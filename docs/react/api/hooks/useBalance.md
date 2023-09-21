@@ -19,7 +19,6 @@ import { useBalance } from 'wagmi'
 ## Usage
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useBalance } from 'wagmi'
 
@@ -29,7 +28,6 @@ function App() {
   })
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -46,7 +44,6 @@ import { type UseBalanceParameters } from 'wagmi'
 Address to get balance for. [`enabled`](#enabled) set to `false` if `address` is `undefined`.
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useBalance } from 'wagmi'
 import { mainnet } from 'wagmi/chains'
@@ -57,7 +54,6 @@ function App() {
   })
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -70,7 +66,6 @@ function App() {
 Block number to get balance at.
 
 ::: code-group
-
 ```ts [index.ts]
 import { useBalance } from 'wagmi'
 
@@ -81,7 +76,6 @@ function App() {
   })
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -92,7 +86,6 @@ function App() {
 Block tag to get balance at.
 
 ::: code-group
-
 ```ts [index.ts]
 import { useBalance } from 'wagmi'
 
@@ -103,7 +96,6 @@ function App() {
   })
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -116,7 +108,6 @@ function App() {
 ID of chain to use when fetching data.
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useBalance } from 'wagmi'
 import { mainnet } from 'wagmi/chains' // [!code focus]
@@ -128,7 +119,6 @@ function App() {
   })
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -139,7 +129,6 @@ function App() {
 [`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/WagmiProvider).
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useBalance } from 'wagmi'
 import { config } from './config' // [!code focus]
@@ -151,7 +140,6 @@ function App() {
   })
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -162,7 +150,6 @@ function App() {
 ERC-20 token address to get balance for.
 
 ::: code-group
-
 ```ts [index.ts]
 import { useBalance } from 'wagmi'
 
@@ -173,7 +160,6 @@ function App() {
   })
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -185,7 +171,6 @@ function App() {
 - Defaults to `'ether'`.
 
 ::: code-group
-
 ```ts [index.ts]
 import { useBalance } from 'wagmi'
 
@@ -196,7 +181,6 @@ function App() {
   })
 }
 ```
-
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
