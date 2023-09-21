@@ -16,8 +16,8 @@ import { watchChainId } from '@wagmi/core'
 import { config } from './config'
 
 const unwatch = watchChainId(config, {
-  onChange(data) {
-    console.log('Chain ID changed!', data)
+  onChange(chainId) {
+    console.log('Chain ID changed!', chainId)
   },
 })
 unwatch()

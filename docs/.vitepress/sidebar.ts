@@ -427,7 +427,7 @@ export function getSidebar() {
             link: '/core/api/actions/watchChainId',
           },
           {
-            text: 'watchClient 🚧',
+            text: 'watchClient',
             link: '/core/api/actions/watchClient',
           },
           {
@@ -435,11 +435,11 @@ export function getSidebar() {
             link: '/core/api/actions/watchConnections',
           },
           {
-            text: 'watchConnectors 🚧',
+            text: 'watchConnectors',
             link: '/core/api/actions/watchConnectors',
           },
           {
-            text: 'watchPublicClient 🚧',
+            text: 'watchPublicClient',
             link: '/core/api/actions/watchPublicClient',
           },
           {
