@@ -307,8 +307,8 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0
       '@metamask/sdk':
-        specifier: ^0.6.2
-        version: 0.6.2(react-native@0.71.13)(react@18.2.0)
+        specifier: ^0.7.0
+        version: 0.7.0(react-native@0.71.13)(react@18.2.0)
       '@safe-global/safe-apps-provider':
         specifier: ^0.17.1
         version: 0.17.1(typescript@5.0.4)
@@ -3235,8 +3235,8 @@ packages:
     engines: {node: '>=12.0.0'}
     dev: false
 
-  /@metamask/sdk-communication-layer@0.6.2:
-    resolution: {integrity: sha512-FXCeA25fIZNGTyrfjC/39mORuOiLqCW3LUNnaeZTMkn9ItSGKVqBnLs6YPuxk26YejYltY227wxD4KAQeS8aOA==}
+  /@metamask/sdk-communication-layer@0.7.0:
+    resolution: {integrity: sha512-jIv/9ujLdqZPfRyAc4Qi865TWk0EhORCDeaa36+r5ED4R84BiUIh1qgyZAW5+Kp4IMlWRjrclGfvrx1exiN3Gw==}
     dependencies:
       cross-fetch: 3.1.5
       date-fns: 2.30.0
@@ -3251,8 +3251,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@metamask/sdk-install-modal-web@0.6.2:
-    resolution: {integrity: sha512-bylLobcmInduUb7Xs0Ay3iWpeBWs/ose0G/anH6qvWAN/nLNlGAGN0sS0/ejMguv7XK09ddO3oN3IOSqiqV74Q==}
+  /@metamask/sdk-install-modal-web@0.7.0:
+    resolution: {integrity: sha512-R4iMn3KEGZ1rM52PBX3ZTLK8UKxkYIus0aqtKWy5At/OUe6/VhEtyJY7Eqv9rw9f/0uVPAxSjns3dJVT/ehg9Q==}
     dependencies:
       '@emotion/react': 11.11.1(react@18.2.0)
       '@emotion/styled': 11.11.0(@emotion/react@11.11.1)(react@18.2.0)
@@ -3263,8 +3263,8 @@ packages:
       - '@types/react'
     dev: false
 
-  /@metamask/sdk@0.6.2(react-native@0.71.13)(react@18.2.0):
-    resolution: {integrity: sha512-IaAXEkG7v4uPJZZsp2ZOfmtGW6uO3awv5NqVuOzYxq1JyvzxZJBhVJMWQlu0WdBUMHX5GU1KPn+FeMb8x1v+yw==}
+  /@metamask/sdk@0.7.0(react-native@0.71.13)(react@18.2.0):
+    resolution: {integrity: sha512-aC23EJZsRaj5Wxd60UrE58bYwSWoTPOhyGDdLNDbbcQxET5b4MJHfmeWEx+HQqT4EqzGHE7J2ZrcnbITljrDPw==}
     peerDependencies:
       react: ^18.2.0
       react-native: ^0.71.1
@@ -3272,11 +3272,12 @@ packages:
       '@metamask/onboarding': 1.0.1
       '@metamask/post-message-stream': 6.2.0
       '@metamask/providers': 10.2.1
-      '@metamask/sdk-communication-layer': 0.6.2
-      '@metamask/sdk-install-modal-web': 0.6.2
+      '@metamask/sdk-communication-layer': 0.7.0
+      '@metamask/sdk-install-modal-web': 0.7.0
       '@react-native-async-storage/async-storage': 1.19.3(react-native@0.71.13)
       '@types/dom-screen-wake-lock': 1.0.1
       bowser: 2.11.0
+      cross-fetch: 4.0.0
       eciesjs: 0.3.17
       eth-rpc-errors: 4.0.3
       eventemitter2: 6.4.9
@@ -4192,7 +4193,7 @@ packages:
       node-stream-zip: 1.15.0
       ora: 5.4.1
       prompts: 2.4.2
-      semver: 6.3.0
+      semver: 6.3.1
       strip-ansi: 5.2.0
       sudo-prompt: 9.2.1
       wcwidth: 1.0.1
@@ -4301,7 +4302,7 @@ packages:
       node-fetch: 2.6.9
       open: 6.4.0
       ora: 5.4.1
-      semver: 6.3.0
+      semver: 6.3.1
       shell-quote: 1.8.1
     transitivePeerDependencies:
       - encoding
@@ -4334,7 +4335,7 @@ packages:
       fs-extra: 8.1.0
       graceful-fs: 4.2.11
       prompts: 2.4.2
-      semver: 6.3.0
+      semver: 6.3.1
     transitivePeerDependencies:
       - '@babel/core'
       - bufferutil
@@ -7513,6 +7514,14 @@ packages:
       - encoding
     dev: false
 
+  /cross-fetch@4.0.0:
+    resolution: {integrity: sha512-e4a5N8lVvuLgAWgnCrLr2PP0YyDOTHa9H/Rj54dirp61qXnNq46m82bRhNqIA5VccJtWBvPTFRV3TtvHUKPB1g==}
+    dependencies:
+      node-fetch: 2.7.0
+    transitivePeerDependencies:
+      - encoding
+    dev: false
+
   /cross-spawn@5.1.0:
     resolution: {integrity: sha512-pTgQJ5KC0d2hcY8eyL1IzlBPYjTkyH72XRZPnLyKus2mBfNjQs3klqbJU2VILqZryAZUt9JOb3h/mWMy23/f5A==}
     dependencies:
@@ -10600,7 +10609,7 @@ packages:
     resolution: {integrity: sha512-FtzaEEHzjDpQp51HX4UMkPZjy46ati4T5pEMyM6Ik48ztu4T9LQplZ6OsimHx7EuM9dfEh5HJa6D3trEftu3dA==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
-      '@babel/code-frame': 7.21.4
+      '@babel/code-frame': 7.22.13
       '@jest/types': 29.6.3
       '@types/stack-utils': 2.0.1
       chalk: 4.1.2
@@ -11831,7 +11840,7 @@ packages:
     resolution: {integrity: sha512-J2gBhNHFtc/Z48ysF0B/bfTwUwaRDLjNv7egfhQCc+934dpXcjJG2KZFeuybF+CvA9vo4QUi56G2U+RSAJ5tsA==}
     hasBin: true
     dependencies:
-      '@babel/code-frame': 7.21.4
+      '@babel/code-frame': 7.22.13
       '@babel/core': 7.22.17
       '@babel/generator': 7.22.15
       '@babel/parser': 7.22.16
@@ -12745,6 +12754,18 @@ packages:
         optional: true
     dependencies:
       whatwg-url: 5.0.0
+
+  /node-fetch@2.7.0:
+    resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
+    engines: {node: 4.x || >=6.0.0}
+    peerDependencies:
+      encoding: ^0.1.0
+    peerDependenciesMeta:
+      encoding:
+        optional: true
+    dependencies:
+      whatwg-url: 5.0.0
+    dev: false
 
   /node-fetch@3.3.1:
     resolution: {integrity: sha512-cRVc/kyto/7E5shrWca1Wsea4y6tL9iYJE5FBCius3JQfb/4P4I295PfhgbJQBLTx6lATE4z+wK0rPM4VS2uow==}
@@ -13831,7 +13852,7 @@ packages:
     dependencies:
       object-assign: 4.1.1
       react: 18.2.0
-      react-is: 17.0.2
+      react-is: 18.2.0
     dev: false
 
   /react@18.2.0:
