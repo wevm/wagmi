@@ -51,7 +51,7 @@ export function getSidebar() {
         ],
       },
       {
-        text: 'Configuration 🚧',
+        text: 'Configuration',
         items: [
           { text: 'createConfig', link: '/react/api/createConfig' },
           { text: 'createStorage', link: '/react/api/createStorage' },
