@@ -2,8 +2,7 @@
 import { getSidebar } from '../../.vitepress/sidebar'
 
 const connectors = getSidebar()['/react']
-  .find(x => x.text === 'API').items
-  .find(x => x.link === '/react/api/connectors').items
+  .find(x => x.text.includes('Connectors')).items
   .sort((a, b) => a.text.localeCompare(b.text))
 </script>
 

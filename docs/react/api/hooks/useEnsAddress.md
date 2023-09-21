@@ -19,6 +19,7 @@ import { useEnsAddress } from 'wagmi'
 ## Usage
 
 ::: code-group
+
 ```tsx [index.tsx]
 import { useEnsAddress } from 'wagmi'
 import { normalize } from 'viem/ens'
@@ -29,6 +30,7 @@ function App() {
   })
 }
 ```
+
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -51,6 +53,7 @@ import { type UseEnsAddressParameters } from 'wagmi'
 Block number to get ENS address at.
 
 ::: code-group
+
 ```ts [index.ts]
 import { useEnsAddress } from 'wagmi'
 import { normalize } from 'viem/ens'
@@ -62,6 +65,7 @@ function App() {
   })
 }
 ```
+
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -72,6 +76,7 @@ function App() {
 Block tag to get ENS address at.
 
 ::: code-group
+
 ```ts [index.ts]
 import { useEnsAddress } from 'wagmi'
 import { normalize } from 'viem/ens'
@@ -83,6 +88,7 @@ function App() {
   })
 }
 ```
+
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -95,6 +101,7 @@ function App() {
 ID of chain to use when fetching data.
 
 ::: code-group
+
 ```tsx [index.tsx]
 import { useEnsAddress } from 'wagmi'
 import { mainnet } from 'wagmi/chains' // [!code focus]
@@ -107,6 +114,7 @@ function App() {
   })
 }
 ```
+
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -117,6 +125,7 @@ function App() {
 The [ENSIP-9](https://docs.ens.domains/ens-improvement-proposals/ensip-9-multichain-address-resolution) coin type to fetch the address for.
 
 ::: code-group
+
 ```ts [index.ts]
 import { useEnsAddress } from 'wagmi'
 import { normalize } from 'viem/ens'
@@ -128,6 +137,7 @@ function App() {
   })
 }
 ```
+
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -135,9 +145,10 @@ function App() {
 
 `Config | undefined`
 
-[`Config`](/react/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/WagmiProvider).
+[`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/WagmiProvider).
 
 ::: code-group
+
 ```tsx [index.tsx]
 import { useEnsAddress } from 'wagmi'
 import { normalize } from 'viem/ens'
@@ -150,6 +161,7 @@ function App() {
   })
 }
 ```
+
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -160,6 +172,7 @@ function App() {
 Name to get the address for. [`enabled`](#enabled) set to `false` if `name` is `undefined`.
 
 ::: code-group
+
 ```ts [index.ts]
 import { useEnsAddress } from 'wagmi'
 import { normalize } from 'viem/ens'
@@ -170,6 +183,7 @@ function App() {
   })
 }
 ```
+
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -181,6 +195,7 @@ function App() {
 - Defaults to current chain's Universal Resolver Contract address.
 
 ::: code-group
+
 ```ts [index.ts]
 import { useEnsAddress } from 'wagmi'
 import { normalize } from 'viem/ens'
@@ -192,6 +207,7 @@ function App() {
   })
 }
 ```
+
 <<< @/snippets/react/config.ts[config.ts]
 :::
 

@@ -9,6 +9,7 @@ Wagmi is a React Hooks library for Ethereum. You can learn more about the ration
 For new projects, it is recommended to set up your Wagmi app using the [`create-wagmi`](/cli/TODO) command line interface (CLI). This will create a new Wagmi project using TypeScript and install the required dependencies.
 
 ::: code-group
+
 ```bash [pnpm]
 pnpm create wagmi
 ```
@@ -24,6 +25,7 @@ yarn create wagmi
 ```bash [bun]
 bun create wagmi
 ```
+
 :::
 
 Once the command runs, you'll see some prompts to complete.
@@ -41,6 +43,7 @@ After the prompts, `create-wagmi` will create a directory with your project name
 To manually add Wagmi to your project, install the required packages.
 
 ::: code-group
+
 ```bash [pnpm]
 pnpm add wagmi@alpha viem@alpha @tanstack/react-query@beta
 ```
@@ -56,6 +59,7 @@ yarn add wagmi@alpha viem@alpha @tanstack/react-query@beta
 ```bash [bun]
 bun add wagmi@alpha viem@alpha @tanstack/react-query@beta
 ```
+
 :::
 
 - [Viem](https://viem.sh) is a TypeScript interface for Ethereum that performs blockchain operations.
@@ -70,13 +74,14 @@ Create and export a new Wagmi config using `createConfig`.
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
-In this example, Wagmi is configured to use the Mainnet and Sepolia chains, and `injected` connector. Check out the [`createConfig` docs](/react/createConfig) for more configuration options.
+In this example, Wagmi is configured to use the Mainnet and Sepolia chains, and `injected` connector. Check out the [`createConfig` docs](/react/api/createConfig) for more configuration options.
 
 ---
 
 If you are using TypeScript, you can "register" the Wagmi config or use the hook `config` property to get strong type-safety across React Context in places that wouldn't normally have type info.
 
 ::: code-group
+
 ```ts twoslash [register config]
 // @errors: 2322
 import { type Config } from 'wagmi'
@@ -94,6 +99,7 @@ declare module 'wagmi' {
   }
 }
 ```
+
 ```ts twoslash [hook config property]
 // @errors: 2322
 import { type Config } from 'wagmi'
@@ -105,6 +111,7 @@ import { useBlockNumber } from 'wagmi'
 
 useBlockNumber({ chainId: 123, config })
 ```
+
 :::
 
 By registering or using the hook `config` property, `useBlockNumber`'s `chainId` is strongly typed to only allow Mainnet and Sepolia IDs. Learn more by reading the [TypeScript docs](/react/typescript#config-types).
@@ -114,6 +121,7 @@ By registering or using the hook `config` property, `useBlockNumber`'s `chainId`
 Wrap your app in the `WagmiProvider` React Context Provider and pass the `config` you created earlier to the `value` property.
 
 ::: code-group
+
 ```tsx [app.tsx]
 import { WagmiProvider } from 'wagmi' // [!code focus]
 import { config } from './config' // [!code focus]
@@ -126,6 +134,7 @@ function App() {
   )
 }
 ```
+
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -136,6 +145,7 @@ Check out the [`WagmiProvider` docs](/react/WagmiProvider) to learn more about R
 Inside the `WagmiProvider`, wrap your app in a TanStack Query React Context Provider, e.g. `QueryClientProvider`, and pass a new `QueryClient` instance to the `client` property.
 
 ::: code-group
+
 ```tsx [app.tsx]
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query' // [!code focus]
 import { WagmiProvider } from 'wagmi'
@@ -153,6 +163,7 @@ function App() {
   )
 }
 ```
+
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -163,6 +174,7 @@ Check out the [TanStack Query docs](https://tanstack.com/query/v5/docs/react) to
 Now that everything is set up, every component inside the Wagmi and TanStack Query Providers can use Wagmi React Hooks.
 
 ::: code-group
+
 ```tsx [profile.tsx]
 import { useAccount, useEnsName } from 'wagmi'
 
@@ -175,6 +187,7 @@ function Profile() {
   return <div>ENS name: {data}</div>
 }
 ```
+
 ```tsx [app.tsx]
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { WagmiProvider } from 'wagmi'
@@ -192,6 +205,7 @@ function App() {
   )
 }
 ```
+
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
