@@ -313,7 +313,7 @@ export function createConfig<
         selector as unknown as (state: State) => any,
         listener,
         options
-          ? { ...options, fireImmediately: options.emitOnBegin }
+          ? { ...options, fireImmediately: options.emitImmediately }
           : undefined,
       )
     },
@@ -359,7 +359,7 @@ export type Config<
     listener: (state: state, previousState: state) => void,
     options?:
       | {
-          emitOnBegin?: boolean | undefined
+          emitImmediately?: boolean | undefined
           equalityFn?: ((a: state, b: state) => boolean) | undefined
         }
       | undefined,

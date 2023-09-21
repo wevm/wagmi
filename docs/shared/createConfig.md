@@ -25,15 +25,15 @@ import { mainnet, sepolia } from '{{packageName}}/chains'
 const config = createConfig({
   chains: [mainnet, sepolia],
   transports: {
-    [mainnet.id]: http('https://...'),
-    [sepolia.id]: http('https://...'),
+    [mainnet.id]: http('https://mainnet.example.com'),
+    [sepolia.id]: http('https://sepolia.example.com'),
   },
 })
 ```
 
-### Integrating a Viem Client
+::: tip Integrating a Viem Client
 
-It is also possible to plug in a Viem [`Client`](https://viem.sh/docs/clients/custom.html) instead of a set of `Transport`s for more fine-grained control over the creation of the internal `Client`. [See more](#client).
+Instead of using [`transports`](#transports), it's possible to provide a function that returns a Viem [`Client`](https://viem.sh/docs/clients/custom.html) via the [`client`](#client) property for more fine-grained control over Wagmi's internal `Client` creation.
 
 ```ts-vue {3,7-9}
 import { createConfig, http } from '{{packageName}}'
@@ -47,6 +47,7 @@ const config = createConfig({
   },
 })
 ```
+:::
 
 ## Parameters
 
@@ -68,8 +69,8 @@ import { mainnet, sepolia } from '{{packageName}}/chains'
 const config = createConfig({
   chains: [mainnet, sepolia], // [!code focus]
   transports: {
-    [mainnet.id]: http('https://...'),
-    [sepolia.id]: http('https://...'),
+    [mainnet.id]: http('https://mainnet.example.com'),
+    [sepolia.id]: http('https://sepolia.example.com'),
   },
 })
 ```
@@ -89,8 +90,8 @@ const config = createConfig({
   chains: [mainnet, sepolia],
   connectors: [injected()], // [!code focus]
   transports: {
-    [mainnet.id]: http('https://...'),
-    [sepolia.id]: http('https://...'),
+    [mainnet.id]: http('https://mainnet.example.com'),
+    [sepolia.id]: http('https://sepolia.example.com'),
   },
 })
 ```
@@ -99,7 +100,7 @@ const config = createConfig({
 
 `boolean | undefined`
 
-- Enables discovery of injected providers via [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963) using the [`mipd`](https://github.com/wagmi-dev/mipd) library and converts to <a :href="`/${docsPath}/api/connectors/injected`">injected</a> connectors.
+- Enables discovery of injected providers via [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963) using the [`mipd`](https://github.com/wagmi-dev/mipd) library and converting to <a :href="`/${docsPath}/api/connectors/injected`">injected</a> connectors.
 - Defaults to `true`.
 
 ```ts-vue
@@ -110,8 +111,8 @@ const config = createConfig({
   chains: [mainnet, sepolia],
   multiInjectedProviderDiscovery: false, // [!code focus]
   transports: {
-    [mainnet.id]: http('https://...'),
-    [sepolia.id]: http('https://...'),
+    [mainnet.id]: http('https://mainnet.example.com'),
+    [sepolia.id]: http('https://sepolia.example.com'),
   },
 })
 ```
@@ -131,8 +132,8 @@ const config = createConfig({
   chains: [mainnet, sepolia],
   storage: createStorage({ storage: window.localStorage }), // [!code focus]
   transports: {
-    [mainnet.id]: http('https://...'),
-    [sepolia.id]: http('https://...'),
+    [mainnet.id]: http('https://mainnet.example.com'),
+    [sepolia.id]: http('https://sepolia.example.com'),
   },
 })
 ```
@@ -152,8 +153,8 @@ const config = createConfig({
   chains: [mainnet, sepolia],
   syncConnectedChain: false, // [!code focus]
   transports: {
-    [mainnet.id]: http('https://...'),
-    [sepolia.id]: http('https://...'),
+    [mainnet.id]: http('https://mainnet.example.com'),
+    [sepolia.id]: http('https://sepolia.example.com'),
   },
 })
 ```
@@ -175,8 +176,8 @@ const config = createConfig({
   chains: [mainnet, sepolia],
   batch: { multicall: true }, // [!code focus]
   transports: {
-    [mainnet.id]: http('https://...'),
-    [sepolia.id]: http('https://...'),
+    [mainnet.id]: http('https://mainnet.example.com'),
+    [sepolia.id]: http('https://sepolia.example.com'),
   },
 })
 ```
@@ -196,8 +197,8 @@ const config = createConfig({
   chains: [mainnet, sepolia],
   cacheTime: 4_000, // [!code focus]
   transports: {
-    [mainnet.id]: http('https://...'),
-    [sepolia.id]: http('https://...'),
+    [mainnet.id]: http('https://mainnet.example.com'),
+    [sepolia.id]: http('https://sepolia.example.com'),
   },
 })
 ```
@@ -217,8 +218,8 @@ const config = createConfig({
   chains: [mainnet, sepolia],
   pollingInterval: 4_000, // [!code focus]
   transports: {
-    [mainnet.id]: http('https://...'),
-    [sepolia.id]: http('https://...'),
+    [mainnet.id]: http('https://mainnet.example.com'),
+    [sepolia.id]: http('https://sepolia.example.com'),
   },
 })
 ```
@@ -294,7 +295,7 @@ import { type Config } from '{{packageName}}'
 
 `readonly Connector[]`
 
-Connectors set up from passing [`connectors`](#connectors) to `createConfig`.
+Connectors set up from passing [`connectors`](#connectors) and [`multiInjectedProviderDiscovery`](#multiinjectedproviderdiscovery) to `createConfig`.
 
 ### state
 
@@ -329,8 +330,8 @@ import { mainnet, sepolia } from '{{packageName}}/chains'
 export const config = createConfig({
   chains: [mainnet, sepolia],
   transports: {
-    [mainnet.id]: http('https://...'),
-    [sepolia.id]: http('https://...'),
+    [mainnet.id]: http('https://mainnet.example.com'),
+    [sepolia.id]: http('https://sepolia.example.com'),
   },
 })
 ```
@@ -362,8 +363,8 @@ import { mainnet, sepolia } from '{{packageName}}/chains'
 export const config = createConfig({
   chains: [mainnet, sepolia],
   transports: {
-    [mainnet.id]: http('https://...'),
-    [sepolia.id]: http('https://...'),
+    [mainnet.id]: http('https://mainnet.example.com'),
+    [sepolia.id]: http('https://sepolia.example.com'),
   },
 })
 ```
@@ -376,7 +377,7 @@ Exercise caution when using this method. It is intended for internal and advance
 
 ### subscribe
 
-`(selector: (state: State<chains>) => state, listener: (selectedState: state, previousSelectedState: state) => void, options?: { emitOnBegin?: boolean | undefined; equalityFn?: ((a: state, b: state) => boolean) | undefined } | undefined) => (() => void)`
+`(selector: (state: State<chains>) => state, listener: (selectedState: state, previousSelectedState: state) => void, options?: { emitImmediately?: boolean | undefined; equalityFn?: ((a: state, b: state) => boolean) | undefined } | undefined) => (() => void)`
 
 Listens for state changes matching the `selector` function. Returns a function that can be called to unsubscribe the listener.
 
@@ -399,8 +400,8 @@ import { mainnet, sepolia } from '{{packageName}}/chains'
 export const config = createConfig({
   chains: [mainnet, sepolia],
   transports: {
-    [mainnet.id]: http('https://...'),
-    [sepolia.id]: http('https://...'),
+    [mainnet.id]: http('https://mainnet.example.com'),
+    [sepolia.id]: http('https://sepolia.example.com'),
   },
 })
 ```

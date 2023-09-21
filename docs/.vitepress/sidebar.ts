@@ -14,7 +14,7 @@ export function getSidebar() {
         ],
       },
       {
-        text: 'Guides',
+        text: 'Guides 🚧',
         items: [
           {
             text: 'Connect Wallet 🚧',
@@ -51,7 +51,7 @@ export function getSidebar() {
         ],
       },
       {
-        text: 'Configuration',
+        text: 'Configuration 🚧',
         items: [
           { text: 'createConfig', link: '/react/api/createConfig' },
           { text: 'createStorage', link: '/react/api/createStorage' },
@@ -77,7 +77,7 @@ export function getSidebar() {
             link: '/react/api/connectors/safe',
           },
           {
-            text: 'walletConnect 🚧',
+            text: 'walletConnect',
             link: '/react/api/connectors/walletConnect',
           },
         ],
@@ -212,7 +212,7 @@ export function getSidebar() {
         ],
       },
       {
-        text: 'Misc.',
+        text: 'Miscellaneous',
         items: [
           { text: 'Actions', link: '/react/api/actions' },
           { text: 'Errors', link: '/react/api/errors' },
@@ -242,7 +242,7 @@ export function getSidebar() {
         ],
       },
       {
-        text: 'Guides',
+        text: 'Guides 🚧',
         items: [
           {
             text: 'Framework Adapters 🚧',
@@ -275,7 +275,7 @@ export function getSidebar() {
         ],
       },
       {
-        text: 'Configuration',
+        text: 'Configuration 🚧',
         items: [
           { text: 'createConfig', link: '/core/api/createConfig' },
           { text: 'createConnector 🚧', link: '/core/api/createConnector' },
@@ -301,13 +301,13 @@ export function getSidebar() {
             link: '/core/api/connectors/safe',
           },
           {
-            text: 'walletConnect 🚧',
+            text: 'walletConnect',
             link: '/core/api/connectors/walletConnect',
           },
         ],
       },
       {
-        text: 'Actions 🚧',
+        text: 'Actions',
         link: '/core/api/actions',
         items: [
           { text: 'connect', link: '/core/api/actions/connect' },
@@ -455,7 +455,7 @@ export function getSidebar() {
         ],
       },
       {
-        text: 'Misc.',
+        text: 'Miscellaneous',
         items: [
           { text: 'Errors', link: '/core/api/errors' },
           {

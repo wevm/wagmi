@@ -10,7 +10,7 @@ const TError = 'ReadContractError'
 
 Calls a **read-only** function on a contract, and returns the response.
 
-A **read-only** function (constant function) on a Solidity contract is denoted by a view or pure keyword. They can only read the state of the contract, and cannot make any changes to it. Since read-only methods do not change the state of the contract, they do not require any gas to be executed, and can be called by any user without the need to pay for gas.
+A **read-only** function (constant function) on a Solidity contract is denoted by a pure or view keyword. They can only read the state of the contract, and cannot make any changes to it. Since read-only methods do not change the state of the contract, they do not require any gas to be executed, and can be called by any user without the need to pay for gas.
 
 ## Import
 
@@ -21,7 +21,6 @@ import { useContractRead } from 'wagmi'
 ## Usage
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useContractRead } from 'wagmi'
 import { erc20Abi } from './abi'
@@ -34,9 +33,7 @@ function App() {
   })
 }
 ```
-
-<<< @/snippets/react/abi.ts#erc20Abi-totalSupply[abi.ts]
-
+<<< @/snippets/abi.ts#erc20Abi-read[abi.ts]
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -52,13 +49,12 @@ import { type UseContractReadParameters } from 'wagmi'
 
 `Abi | undefined`
 
-The contract's ABI.
+The contract's ABI. Check out the [TypeScript docs](/react/typescript#const-assert-abis-typed-data) for how to set up ABIs for maximum type inference and safety.
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useContractRead } from 'wagmi'
-import { erc20Abi } from './abi'
+import { erc20Abi } from './abi' // [!code focus]
 
 function App() {
   const result = useContractRead({
@@ -68,9 +64,32 @@ function App() {
   })
 }
 ```
+<<< @/snippets/abi.ts#erc20Abi-read[abi.ts]
+<<< @/snippets/react/config.ts[config.ts]
+:::
 
-<<< @/snippets/react/abi.ts#erc20Abi-totalSupply[abi.ts]
+### account
 
+`Account | undefined`
+
+Account to use when calling the contract (`msg.sender`).
+
+::: code-group
+```tsx [index.tsx]
+import { useContractRead } from 'wagmi'
+import { erc20Abi } from './abi'
+
+function App() {
+  const result = useContractRead({
+    abi: erc20Abi,
+    address: '0x6b175474e89094c44da98b954eedeac495271d0f',
+    functionName: 'balanceOf',
+    args: ['0x6b175474e89094c44da98b954eedeac495271d0f'],
+    account: '0xd2135CfB216b74109775236E36d4b433F1DF507B', // [!code focus]
+  })
+}
+```
+<<< @/snippets/abi.ts#erc20Abi-read[abi.ts]
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -81,7 +100,6 @@ function App() {
 The contract's address.
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useContractRead } from 'wagmi'
 import { erc20Abi } from './abi'
@@ -94,47 +112,18 @@ function App() {
   })
 }
 ```
-
-<<< @/snippets/react/abi.ts#erc20Abi-totalSupply[abi.ts]
-
-<<< @/snippets/react/config.ts[config.ts]
-:::
-
-### functionName
-
-`string | undefined`
-
-Function to call on the contract.
-
-::: code-group
-
-```tsx [index.tsx]
-import { useContractRead } from 'wagmi'
-import { erc20Abi } from './abi'
-
-function App() {
-  const result = useContractRead({
-    abi: erc20Abi,
-    address: '0x6b175474e89094c44da98b954eedeac495271d0f',
-    functionName: 'balanceOf', // [!code focus]
-    args: ['0x6b175474e89094c44da98b954eedeac495271d0f'],
-  })
-}
-```
-
-<<< @/snippets/react/abi.ts#erc20Abi-balanceOf[abi.ts]
-
+<<< @/snippets/abi.ts#erc20Abi-read[abi.ts]
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
 ### args
 
-`unknown[] | undefined`
+`readonly unknown[] | undefined`
 
-Arguments to pass when calling the contract.
+- Arguments to pass when calling the contract.
+- Inferred from [`abi`](#abi) and [`functionName`](#functionname).
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useContractRead } from 'wagmi'
 import { erc20Abi } from './abi'
@@ -148,40 +137,11 @@ function App() {
   })
 }
 ```
-
-<<< @/snippets/react/abi.ts#erc20Abi-balanceOf[abi.ts]
-
+<<< @/snippets/abi.ts#erc20Abi-read[abi.ts]
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
-### account
-
-`Account | undefined`
-
-Account to use when calling the contract (`msg.sender`).
-
-::: code-group
-
-```tsx [index.tsx]
-import { useContractRead, useAccount } from 'wagmi'
-import { erc20Abi } from './abi'
-
-function App() {
-  const { address } = useAccount() // [!code focus]
-  const result = useContractRead({
-    abi: erc20Abi,
-    address: '0x6b175474e89094c44da98b954eedeac495271d0f',
-    functionName: 'balanceOf',
-    args: ['0x6b175474e89094c44da98b954eedeac495271d0f'],
-    account: address, // [!code focus]
-  })
-}
-```
-
-<<< @/snippets/react/abi.ts#erc20Abi-balanceOf[abi.ts]
-
-<<< @/snippets/react/config.ts[config.ts]
-:::
+---
 
 ### blockNumber
 
@@ -190,7 +150,6 @@ function App() {
 Block number to call contract at.
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useContractRead } from 'wagmi'
 import { erc20Abi } from './abi'
@@ -204,9 +163,7 @@ function App() {
   })
 }
 ```
-
-<<< @/snippets/react/abi.ts#erc20Abi-totalSupply[abi.ts]
-
+<<< @/snippets/abi.ts#erc20Abi-read[abi.ts]
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -217,7 +174,6 @@ function App() {
 Block tag to call contract at.
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useContractRead } from 'wagmi'
 import { erc20Abi } from './abi'
@@ -231,9 +187,7 @@ function App() {
   })
 }
 ```
-
-<<< @/snippets/react/abi.ts#erc20Abi-totalSupply[abi.ts]
-
+<<< @/snippets/abi.ts#erc20Abi-read[abi.ts]
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -246,7 +200,6 @@ function App() {
 ID of chain to use when fetching data.
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useContractRead } from 'wagmi'
 import { mainnet } from 'wagmi/chains' // [!code focus]
@@ -261,9 +214,7 @@ function App() {
   })
 }
 ```
-
-<<< @/snippets/react/abi.ts#erc20Abi-totalSupply[abi.ts]
-
+<<< @/snippets/abi.ts#erc20Abi-read[abi.ts]
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -274,7 +225,6 @@ function App() {
 [`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/WagmiProvider).
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useContractRead } from 'wagmi'
 import { erc20Abi } from './abi'
@@ -289,9 +239,32 @@ function App() {
   })
 }
 ```
+<<< @/snippets/abi.ts#erc20Abi-read[abi.ts]
+<<< @/snippets/react/config.ts[config.ts]
+:::
 
-<<< @/snippets/react/abi.ts#erc20Abi-totalSupply[abi.ts]
+### functionName
 
+`string | undefined`
+
+- Function to call on the contract.
+- Inferred from [`abi`](#abi).
+
+::: code-group
+```tsx [index.tsx]
+import { useContractRead } from 'wagmi'
+import { erc20Abi } from './abi'
+
+function App() {
+  const result = useContractRead({
+    abi: erc20Abi,
+    address: '0x6b175474e89094c44da98b954eedeac495271d0f',
+    functionName: 'balanceOf', // [!code focus]
+    args: ['0x6b175474e89094c44da98b954eedeac495271d0f'],
+  })
+}
+```
+<<< @/snippets/abi.ts#erc20Abi-read[abi.ts]
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -302,6 +275,8 @@ function App() {
 ```ts
 import { type UseContractReadReturnType } from 'wagmi'
 ```
+
+The return type's [`data`](#data) property is inferrable via the combination of [`abi`](#abi), [`functionName`](#functionname), and [`args`](#args). Check out the [TypeScript docs](/react/typescript#const-assert-abis-typed-data) for more info.
 
 <!--@include: @shared/query-result.md-->
 

@@ -2,8 +2,7 @@
 import { getSidebar } from '../../.vitepress/sidebar'
 
 const actions = getSidebar()['/core']
-  .find(x => x.text === 'API').items
-  .find(x => x.link === '/core/api/actions').items
+  .find(x => x.text.includes('Actions')).items
   .sort((a, b) => a.text.localeCompare(b.text))
 </script>
 
