@@ -23,5 +23,5 @@
     "./.vitepress/**/*.ts",
     "./.vitepress/**/*.vue"
   ],
-  "exclude": ["dist", "node_modules"]
+  "exclude": ["dist", "node_modules", "snippets"]
 }

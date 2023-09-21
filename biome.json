@@ -3,6 +3,7 @@
     "ignore": [
       "CHANGELOG.md",
       "pnpm-lock.yaml",
+      "snippets",
       "tsconfig.json",
       "tsconfig.*.json"
     ]
