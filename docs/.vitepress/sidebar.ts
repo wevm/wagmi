@@ -322,7 +322,7 @@ export function getSidebar() {
           { text: 'getAccount', link: '/core/api/actions/getAccount' },
           { text: 'getBalance', link: '/core/api/actions/getBalance' },
           {
-            text: 'getBlock',
+            text: 'getBlock 🚧',
             link: '/core/api/actions/getBlock',
           },
           {
@@ -375,7 +375,7 @@ export function getSidebar() {
           },
           { text: 'reconnect', link: '/core/api/actions/reconnect' },
           {
-            text: 'readContract 🚧',
+            text: 'readContract',
             link: '/core/api/actions/readContract',
           },
           {
@@ -480,7 +480,7 @@ export function getSidebar() {
         text: 'Dev',
         items: [
           { text: 'Contributing', link: '/dev/contributing' },
-          { text: 'Creating Connectors 🚧', link: '/dev/creating-connectors' },
+          { text: 'Creating Connectors', link: '/dev/creating-connectors' },
         ],
       },
     ],

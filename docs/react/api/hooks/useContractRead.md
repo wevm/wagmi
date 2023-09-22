@@ -8,7 +8,7 @@ const TError = 'ReadContractError'
 
 # useContractRead
 
-Calls a **read-only** function on a contract, and returns the response.
+Hook for calling a **read-only** function on a contract, and returning the response.
 
 A **read-only** function (constant function) on a Solidity contract is denoted by a pure or view keyword. They can only read the state of the contract, and cannot make any changes to it. Since read-only methods do not change the state of the contract, they do not require any gas to be executed, and can be called by any user without the need to pay for gas.
 
@@ -42,8 +42,6 @@ function App() {
 ```ts
 import { type UseContractReadParameters } from 'wagmi'
 ```
-
----
 
 ### abi
 

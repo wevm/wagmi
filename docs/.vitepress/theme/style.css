@@ -115,3 +115,7 @@ html.dark pre.shiki[class*='-light'] {
   --vp-twoslash-c-error-bg: var(--vp-c-red-soft);
   --vp-twoslash-c-query-bg: var(--vp-c-bg-soft);
 }
+
+.error > span {
+  padding-right: 44px;
+}

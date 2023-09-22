@@ -26,6 +26,10 @@ const client = getWalletClient(config)
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
+::: warning
+If you want to optimize bundle size, you should use [`getConnectorClient`](/core/api/actions/getConnectorClient) along with Viem's [tree-shakable actions](https://viem.sh/docs/clients/custom.html#tree-shaking) instead. Since Wallet Client has all wallet actions attached directly to it.
+:::
+
 ## Parameters
 
 ```ts
