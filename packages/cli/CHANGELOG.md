@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 1.5.1
+
+### Patch Changes
+
+- [#3035](https://github.com/wagmi-dev/wagmi/pull/3035) [`187bf96c`](https://github.com/wagmi-dev/wagmi/commit/187bf96c9fd31675b9d17a7cb4d4e24eea3fa777) Thanks [@cruzdanilo](https://github.com/cruzdanilo)! - ignore foundry invariant lib
+
 ## 1.5.0
 
 ### Minor Changes
