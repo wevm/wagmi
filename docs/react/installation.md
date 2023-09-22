@@ -1,6 +1,6 @@
 # Installation
 
-Install Wagmi via your package manager or a `<script>` tag.
+Install Wagmi via your package manager, a `<script>` tag, or build from source.
 
 ## Package Manager
 

@@ -505,7 +505,6 @@ const result = await writeContract(config, {
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
-
 ## Return Type
 
 ```ts

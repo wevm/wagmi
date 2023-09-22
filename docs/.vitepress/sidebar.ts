@@ -395,7 +395,7 @@ export function getSidebar() {
             link: '/core/api/actions/signTypedData',
           },
           {
-            text: 'simulateContract 🚧',
+            text: 'simulateContract',
             link: '/core/api/actions/simulateContract',
           },
           {
@@ -473,6 +473,59 @@ export function getSidebar() {
             ],
           },
         ],
+      },
+    ],
+    '/cli': [
+      {
+        text: '@wagmi/cli',
+        items: [
+          { text: 'Installation', link: '/cli/installation' },
+          { text: 'Getting Started 🚧', link: '/cli/getting-started' },
+          {
+            text: 'Configuration 🚧',
+            collapsed: true,
+            items: [
+              {
+                text: 'Configuring CLI 🚧',
+                link: '/cli/configuration/configuring-cli',
+              },
+              { text: 'Config Options 🚧', link: '/cli/configuration/options' },
+            ],
+          },
+          {
+            text: 'Commands 🚧',
+            collapsed: false,
+            link: '/cli/commands',
+            items: [
+              {
+                text: 'init 🚧',
+                link: '/cli/commands/init',
+              },
+              {
+                text: 'generate 🚧',
+                link: '/cli/commands/generate',
+              },
+            ],
+          },
+          {
+            text: 'Plugins 🚧',
+            collapsed: false,
+            link: '/cli/plugins',
+            items: [
+              { text: 'blockExplorer 🚧', link: '/cli/plugins/blockExplorer' },
+              { text: 'etherscan 🚧', link: '/cli/plugins/etherscan' },
+              { text: 'fetch 🚧', link: '/cli/plugins/fetch' },
+              { text: 'foundry 🚧', link: '/cli/plugins/foundry' },
+              { text: 'hardhat 🚧', link: '/cli/plugins/hardhat' },
+              { text: 'react 🚧', link: '/cli/plugins/react' },
+              { text: 'sourcify 🚧', link: '/cli/plugins/sourcify' },
+            ],
+          },
+        ],
+      },
+      {
+        text: 'create-wagmi',
+        items: [{ text: 'Getting Started 🚧', link: '/cli/create-wagmi' }],
       },
     ],
     '/dev': [

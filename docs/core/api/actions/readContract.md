@@ -238,7 +238,8 @@ import { type ReadContractReturnType } from '@wagmi/core'
 
 `unknown`
 
-Result of contract read-only function.
+- Result of contract read-only function.
+- Inferred from [`abi`](#abi), [`functionName`](#functionname), and [`args`](#args).
 
 ## Type Inference
 

@@ -75,9 +75,7 @@ export function watchBlocks<
   if (syncConnectedChain && !parameters.chainId)
     unsubscribe = config.subscribe(
       ({ chainId }) => chainId,
-      async (chainId) => {
-        return listener(chainId)
-      },
+      async (chainId) => listener(chainId),
     )
 
   return () => {
