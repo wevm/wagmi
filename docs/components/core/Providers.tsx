@@ -3,6 +3,7 @@ import * as React from 'react'
 import { WagmiConfig, configureChains, createConfig } from 'wagmi'
 import { goerli, mainnet } from 'wagmi/chains'
 
+import { BitgetWalletConnector } from 'wagmi/connectors/bitgetWallet'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
@@ -19,6 +20,12 @@ const config = createConfig({
   autoConnect: true,
   connectors: [
     new MetaMaskConnector({
+      chains,
+      options: {
+        UNSTABLE_shimOnConnectSelectAccount: true,
+      },
+    }),
+    new BitgetWalletConnector({
       chains,
       options: {
         UNSTABLE_shimOnConnectSelectAccount: true,

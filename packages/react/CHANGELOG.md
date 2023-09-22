@@ -2931,6 +2931,7 @@
   import { alchemyProvider } from "wagmi/providers/alchemy";
   import { publicProvider } from "wagmi/providers/public";
 
+  import { BitgetWalletConnector } from "wagmi/connectors/bitgetWallet";
   import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
   import { InjectedConnector } from "wagmi/connectors/injected";
   import { MetaMaskConnector } from "wagmi/connectors/metaMask";
@@ -2947,6 +2948,7 @@
     autoConnect: true,
     connectors: [
       new MetaMaskConnector({ chains }),
+      new BitgetWalletConnector({ chains }),
       new CoinbaseWalletConnector({
         chains,
         options: {

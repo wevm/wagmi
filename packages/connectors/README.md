@@ -33,6 +33,7 @@ const config = createConfig({
 
 ## Connectors
 
+- [`BitgetWalletConnector`](/packages/connectors/src/bitgetWallet.ts)
 - [`CoinbaseWalletConnector`](/packages/connectors/src/coinbaseWallet.ts)
 - [`InjectedConnector`](/packages/connectors/src/injected.ts)
 - [`LedgerConnector`](/packages/connectors/src/ledger.ts)

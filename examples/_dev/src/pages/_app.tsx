@@ -3,6 +3,7 @@ import NextHead from 'next/head'
 import { WagmiConfig, configureChains, createConfig } from 'wagmi'
 import { avalanche, goerli, mainnet, optimism } from 'wagmi/chains'
 
+import { BitgetWalletConnector } from 'wagmi/connectors/bitgetWallet'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { LedgerConnector } from 'wagmi/connectors/ledger'
@@ -28,6 +29,12 @@ const config = createConfig({
   autoConnect: true,
   connectors: [
     new MetaMaskConnector({
+      chains,
+      options: {
+        UNSTABLE_shimOnConnectSelectAccount: true,
+      },
+    }),
+    new BitgetWalletConnector({
       chains,
       options: {
         UNSTABLE_shimOnConnectSelectAccount: true,

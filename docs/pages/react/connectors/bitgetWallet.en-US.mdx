@@ -1,0 +1,59 @@
+---
+title: 'Bitegt Wallet'
+description: 'Official wagmi Connector for Bitegt Wallet.'
+---
+
+# Bitegt Wallet
+
+
+```ts
+import { BitegtWalletConnector } from 'wagmi/connectors/bitegtWallet'
+```
+
+## Usage
+
+```ts
+import { BitegtWalletConnector } from 'wagmi/connectors/bitegtWallet'
+
+const connector = new BitegtWalletConnector({
+  options: {
+    appName: 'wagmi.sh',
+    jsonRpcUrl: 'https://eth-mainnet.alchemyapi.io/v2/yourAlchemyId',
+  },
+})
+```
+
+## Configuration
+
+### chains (optional)
+
+Chains supported by app. Defaults to `defaultChains`.
+
+```ts {5}
+import { mainnet, optimism } from 'wagmi/chains'
+import { BitegtWalletConnector } from 'wagmi/connectors/bitegtWallet'
+
+const connector = new BitegtWalletConnector({
+  chains: [mainnet, optimism],
+  options: {
+    appName: 'wagmi.sh',
+    jsonRpcUrl: 'https://eth-mainnet.alchemyapi.io/v2/yourAlchemyId',
+  },
+})
+```
+
+Note: The above example is using chains from [`wagmi/chains` entrypoint](/react/chains#wagmichains).
+
+### options
+
+
+```ts {4-7}
+import { BitegtWalletConnector } from 'wagmi/connectors/bitgetWallet'
+
+const connector = new BitegtWalletConnector({
+  options: {
+    appName: 'wagmi.sh',
+    jsonRpcUrl: 'https://eth-mainnet.alchemyapi.io/v2/yourAlchemyId',
+  },
+})
+```

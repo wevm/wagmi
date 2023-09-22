@@ -2,6 +2,7 @@
 actions/**
 chains/**
 connectors/**
+connectors/bitgetWallet/**
 connectors/coinbaseWallet/**
 connectors/injected/**
 connectors/ledger/**

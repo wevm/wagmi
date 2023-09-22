@@ -14,6 +14,7 @@ export default defineConfig(
       'src/actions.ts',
       'src/chains.ts',
       'src/connectors/index.ts',
+      'src/connectors/bitgetWallet.ts',
       'src/connectors/coinbaseWallet.ts',
       'src/connectors/injected.ts',
       'src/connectors/ledger.ts',

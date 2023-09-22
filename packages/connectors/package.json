@@ -17,6 +17,7 @@
     }
   },
   "dependencies": {
+    "@bitget-wallet/web3-sdk": "^0.0.6",
     "@coinbase/wallet-sdk": "^3.6.6",
     "@ledgerhq/connect-kit-loader": "^1.1.0",
     "@safe-global/safe-apps-provider": "^0.17.1",
@@ -38,6 +39,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./bitgetWallet": {
+      "types": "./dist/bitgetWallet.d.ts",
+      "default": "./dist/bitgetWallet.js"
     },
     "./coinbaseWallet": {
       "types": "./dist/coinbaseWallet.d.ts",
@@ -85,10 +90,7 @@
     "/dist"
   ],
   "sideEffects": false,
-  "contributors": [
-    "awkweb.eth <t@wagmi.sh>",
-    "jxom.eth <j@wagmi.sh>"
-  ],
+  "contributors": ["awkweb.eth <t@wagmi.sh>", "jxom.eth <j@wagmi.sh>"],
   "homepage": "https://wagmi.sh",
   "ethereum": "wagmi-dev.eth",
   "funding": [

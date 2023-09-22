@@ -8,6 +8,7 @@ export default defineConfig(
     dev: process.env.DEV === 'true',
     entry: [
       'src/index.ts',
+      'src/bitgetWallet.ts',
       'src/coinbaseWallet.ts',
       'src/injected.ts',
       'src/ledger.ts',

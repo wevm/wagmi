@@ -9,6 +9,7 @@ const redirects: Record<string, string> = {
   '/core/actions/getWebSocketProvider':
     '/core/actions/getWebSocketPublicClient',
   '/core/client': '/core/config',
+  '/docs/connectors/bitget-wallet': '/docs/connectors/bitgetWallet',
   '/docs/connectors/coinbase-wallet': '/docs/connectors/coinbaseWallet',
   '/docs/connectors/metamask': '/docs/connectors/metaMask',
   '/docs/connectors/walletconnect': '/docs/connectors/walletConnect',
