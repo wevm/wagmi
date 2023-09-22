@@ -1,5 +1,5 @@
 import { abi, config } from '@wagmi/test'
-import { type Address, parseAbi } from 'viem'
+import { type Address } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
 import { multicall } from './multicall.js'
@@ -58,20 +58,13 @@ test('allowFailure', async () => {
 })
 
 test('MulticallParameters', async () => {
-  const abi = parseAbi([
-    'function foo() view returns (int8)',
-    'function foo(address) view returns (string)',
-    'function foo(address, address) view returns ((address foo, address bar))',
-    'function bar() view returns (int8)',
-  ])
-
   type Result = Parameters<
     typeof multicall<
       typeof config,
       [
         {
           address: '0x'
-          abi: typeof abi
+          abi: typeof abi.viewOverloads
           functionName: 'foo'
         },
       ]
@@ -84,30 +77,23 @@ test('MulticallParameters', async () => {
 })
 
 test('overloads', async () => {
-  const abi = parseAbi([
-    'function foo() view returns (int8)',
-    'function foo(address) view returns (string)',
-    'function foo(address, address) view returns ((address foo, address bar))',
-    'function bar() view returns (int8)',
-  ])
-
   const res = await multicall(config, {
     allowFailure: false,
     contracts: [
       {
         address: '0x',
-        abi,
+        abi: abi.viewOverloads,
         functionName: 'foo',
       },
       {
         address: '0x',
-        abi,
+        abi: abi.viewOverloads,
         functionName: 'foo',
         args: ['0x'],
       },
       {
         address: '0x',
-        abi,
+        abi: abi.viewOverloads,
         functionName: 'foo',
         args: ['0x', '0x'],
       },

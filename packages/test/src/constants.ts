@@ -236,6 +236,12 @@ export const abi = {
     'function totalSupply() view returns (uint256)',
     'function transferFrom(address from, address to, uint256 tokenId)',
   ]),
+  viewOverloads: parseAbi([
+    'function foo() view returns (int8)',
+    'function foo(address) view returns (string)',
+    'function foo(address, address) view returns ((address foo, address bar))',
+    'function bar() view returns (int8)',
+  ]),
 } as const
 
 const mainnetAddress = {

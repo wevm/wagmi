@@ -1,5 +1,5 @@
 import { abi, config } from '@wagmi/test'
-import { http, type Address } from 'viem'
+import { http, type Address, parseAbi } from 'viem'
 import { celo, mainnet } from 'viem/chains'
 import { expectTypeOf, test } from 'vitest'
 
@@ -35,6 +35,7 @@ test('prepareWriteContract', async () => {
     args: ['0x', '0x', 123n],
   })
 })
+
 test('chain formatters', () => {
   const config = createConfig({
     chains: [mainnet, celo],
@@ -115,4 +116,26 @@ test('chain formatters', () => {
     gatewayFee: 100n,
     gatewayFeeRecipient: '0x',
   })
+})
+
+test('overloads', async () => {
+  const abi = parseAbi([
+    'function foo() returns (int8)',
+    'function foo(address) returns (string)',
+    'function foo(address, address) returns ((address foo, address bar))',
+    'function bar(uint256) returns (int8)',
+  ])
+
+  type Result = WriteContractParameters<typeof abi, 'foo'>
+  expectTypeOf<Result['functionName']>().toEqualTypeOf<'foo' | 'bar'>()
+  expectTypeOf<Result['args']>().toEqualTypeOf<
+    | readonly []
+    | readonly [`0x${string}`]
+    | readonly [`0x${string}`, `0x${string}`]
+    | undefined
+  >()
+
+  type Result2 = WriteContractParameters<typeof abi, 'bar'>
+  expectTypeOf<Result2['functionName']>().toEqualTypeOf<'foo' | 'bar'>()
+  expectTypeOf<Result2['args']>().toEqualTypeOf<readonly [bigint]>()
 })

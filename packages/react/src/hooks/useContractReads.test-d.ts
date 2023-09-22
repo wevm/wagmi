@@ -1,5 +1,5 @@
 import { abi } from '@wagmi/test'
-import { expectTypeOf, test } from 'vitest'
+import { assertType, expectTypeOf, test } from 'vitest'
 
 import { useContractReads } from './useContractReads.js'
 
@@ -29,4 +29,65 @@ test('select data', async () => {
     },
   })
   expectTypeOf(result.data).toEqualTypeOf<bigint | undefined>()
+})
+
+test('overloads', async () => {
+  const result1 = useContractReads({
+    allowFailure: false,
+    contracts: [
+      {
+        address: '0x',
+        abi: abi.viewOverloads,
+        functionName: 'foo',
+      },
+    ],
+  })
+  assertType<[number] | undefined>(result1.data)
+
+  const result2 = useContractReads({
+    allowFailure: false,
+    contracts: [
+      {
+        address: '0x',
+        abi: abi.viewOverloads,
+        functionName: 'foo',
+        args: [],
+      },
+    ],
+  })
+  assertType<[number] | undefined>(result2.data)
+
+  const result3 = useContractReads({
+    allowFailure: false,
+    contracts: [
+      {
+        address: '0x',
+        abi: abi.viewOverloads,
+        functionName: 'foo',
+        args: ['0x'],
+      },
+    ],
+  })
+  assertType<[string] | undefined>(result3.data)
+
+  const result4 = useContractReads({
+    allowFailure: false,
+    contracts: [
+      {
+        address: '0x',
+        abi: abi.viewOverloads,
+        functionName: 'foo',
+        args: ['0x', '0x'],
+      },
+    ],
+  })
+  assertType<
+    | [
+        {
+          foo: `0x${string}`
+          bar: `0x${string}`
+        },
+      ]
+    | undefined
+  >(result4.data)
 })

@@ -1,5 +1,5 @@
 import { abi, config } from '@wagmi/test'
-import { type MulticallResponse, parseAbi } from 'viem'
+import { type MulticallResponse } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
 import { infiniteReadContractsQueryOptions } from './infiniteReadContracts.js'
@@ -154,13 +154,6 @@ test('behavior: `contracts` after `getNextPageParam`', async () => {
 })
 
 test('overloads', async () => {
-  const abi = parseAbi([
-    'function foo() view returns (int8)',
-    'function foo(address) view returns (string)',
-    'function foo(address, address) view returns ((address foo, address bar))',
-    'function bar() view returns (int8)',
-  ])
-
   const options = infiniteReadContractsQueryOptions(config, {
     allowFailure: false,
     cacheKey: 'foo',
@@ -169,18 +162,18 @@ test('overloads', async () => {
       return [
         {
           address: '0x',
-          abi,
+          abi: abi.viewOverloads,
           functionName: 'foo',
         },
         {
           address: '0x',
-          abi,
+          abi: abi.viewOverloads,
           functionName: 'foo',
           args: ['0x'],
         },
         {
           address: '0x',
-          abi,
+          abi: abi.viewOverloads,
           functionName: 'foo',
           args: ['0x', '0x'],
         },

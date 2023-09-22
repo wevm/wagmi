@@ -15,7 +15,7 @@ import type {
   ChainIdParameter,
   ConnectorParameter,
 } from '../types/properties.js'
-import type { Evaluate, UnionOmit } from '../types/utils.js'
+import type { Evaluate, UnionEvaluate, UnionOmit } from '../types/utils.js'
 import { assertActiveChain } from '../utils/assertActiveChain.js'
 import { getConnectorClient } from './getConnectorClient.js'
 import {
@@ -39,22 +39,24 @@ export type WriteContractParameters<
   ///
   allFunctionNames = ContractFunctionName<abi, 'nonpayable' | 'payable'>,
   chains extends readonly Chain[] = SelectChains<config, chainId>,
-> = {
-  [key in keyof chains]: UnionOmit<
-    viem_WriteContractParameters<
-      abi,
-      functionName,
-      args,
-      chains[key],
-      Account,
-      chains[key],
-      allFunctionNames
-    >,
-    'chain'
-  >
-}[number] &
-  Evaluate<ChainIdParameter<config, chainId>> &
-  ConnectorParameter & { __mode?: 'prepared' }
+> = UnionEvaluate<
+  {
+    [key in keyof chains]: UnionOmit<
+      viem_WriteContractParameters<
+        abi,
+        functionName,
+        args,
+        chains[key],
+        Account,
+        chains[key],
+        allFunctionNames
+      >,
+      'chain'
+    >
+  }[number] &
+    Evaluate<ChainIdParameter<config, chainId>> &
+    ConnectorParameter & { __mode?: 'prepared' }
+>
 
 export type WriteContractReturnType = viem_WriteContractReturnType
 
@@ -91,13 +93,7 @@ export async function writeContract<
   } else {
     const { request: simulateRequest } = await simulateContract(
       config,
-      rest as unknown as SimulateContractParameters<
-        abi,
-        functionName,
-        args,
-        config,
-        chainId
-      >,
+      rest as SimulateContractParameters,
     )
     request = simulateRequest
   }

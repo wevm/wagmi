@@ -1,5 +1,5 @@
 import { abi, config } from '@wagmi/test'
-import { expectTypeOf, test } from 'vitest'
+import { assertType, expectTypeOf, test } from 'vitest'
 
 import { readContracts } from './readContracts.js'
 
@@ -54,4 +54,65 @@ test('allowFailure', async () => {
     ],
   })
   expectTypeOf(result).toEqualTypeOf<[bigint, string]>()
+})
+
+test('overloads', async () => {
+  const result1 = await readContracts(config, {
+    allowFailure: false,
+    contracts: [
+      {
+        address: '0x',
+        abi: abi.viewOverloads,
+        functionName: 'foo',
+      },
+    ],
+  })
+  assertType<[number] | undefined>(result1)
+
+  const result2 = await readContracts(config, {
+    allowFailure: false,
+    contracts: [
+      {
+        address: '0x',
+        abi: abi.viewOverloads,
+        functionName: 'foo',
+        args: [],
+      },
+    ],
+  })
+  assertType<[number] | undefined>(result2)
+
+  const result3 = await readContracts(config, {
+    allowFailure: false,
+    contracts: [
+      {
+        address: '0x',
+        abi: abi.viewOverloads,
+        functionName: 'foo',
+        args: ['0x'],
+      },
+    ],
+  })
+  assertType<[string] | undefined>(result3)
+
+  const result4 = await readContracts(config, {
+    allowFailure: false,
+    contracts: [
+      {
+        address: '0x',
+        abi: abi.viewOverloads,
+        functionName: 'foo',
+        args: ['0x', '0x'],
+      },
+    ],
+  })
+  assertType<
+    | [
+        {
+          foo: `0x${string}`
+          bar: `0x${string}`
+        },
+      ]
+    | undefined
+  >(result4)
 })
