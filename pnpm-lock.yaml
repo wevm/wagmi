@@ -57,8 +57,8 @@ importers:
         specifier: 5.1.6
         version: 5.1.6
       viem:
-        specifier: 2.0.0-alpha.10
-        version: 2.0.0-alpha.10(typescript@5.1.6)(zod@3.22.2)
+        specifier: 2.0.0-alpha.11
+        version: 2.0.0-alpha.11(typescript@5.1.6)(zod@3.22.2)
       vitest:
         specifier: ^0.34.1
         version: 0.34.1(@vitest/ui@0.34.1)(jsdom@20.0.3)
@@ -93,8 +93,8 @@ importers:
         specifier: ^0.53.6
         version: 0.53.6(vite@4.4.9)
       viem:
-        specifier: '>2.0.0-alpha.9'
-        version: 2.0.0-alpha.10(typescript@5.1.6)(zod@3.22.2)
+        specifier: '>2.0.0-alpha.10'
+        version: 2.0.0-alpha.11(typescript@5.1.6)(zod@3.22.2)
       vite:
         specifier: ^4.3.9
         version: 4.4.9(@types/node@20.5.9)
@@ -165,8 +165,8 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3
       viem:
-        specifier: '>2.0.0-alpha.9'
-        version: 2.0.0-alpha.10(typescript@5.1.6)(zod@3.22.2)
+        specifier: '>2.0.0-alpha.10'
+        version: 2.0.0-alpha.11(typescript@5.1.6)(zod@3.22.2)
       zod:
         specifier: ^3.22.2
         version: 3.22.2
@@ -280,8 +280,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0
       viem:
-        specifier: '>2.0.0-alpha.9'
-        version: 2.0.0-alpha.10(typescript@5.1.6)(zod@3.22.2)
+        specifier: '>2.0.0-alpha.10'
+        version: 2.0.0-alpha.11(typescript@5.1.6)(zod@3.22.2)
       wagmi:
         specifier: workspace:*
         version: link:../../react
@@ -332,8 +332,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       viem:
-        specifier: '>2.0.0-alpha.9'
-        version: 2.0.0-alpha.10(typescript@5.1.6)(zod@3.22.2)
+        specifier: '>2.0.0-alpha.10'
+        version: 2.0.0-alpha.11(typescript@5.1.6)(zod@3.22.2)
     devDependencies:
       '@types/react':
         specifier: ^18.2.21
@@ -372,8 +372,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       viem:
-        specifier: '>2.0.0-alpha.9'
-        version: 2.0.0-alpha.10(typescript@5.1.6)(zod@3.22.2)
+        specifier: '>2.0.0-alpha.10'
+        version: 2.0.0-alpha.11(typescript@5.1.6)(zod@3.22.2)
       wagmi:
         specifier: workspace:*
         version: link:../../packages/react
@@ -451,8 +451,8 @@ importers:
         specifier: ^10.9.1
         version: 10.9.1(@types/node@20.5.9)(typescript@5.1.6)
       viem:
-        specifier: '>2.0.0-alpha.9'
-        version: 2.0.0-alpha.10(typescript@5.1.6)(zod@3.22.2)
+        specifier: '>2.0.0-alpha.10'
+        version: 2.0.0-alpha.11(typescript@5.1.6)(zod@3.22.2)
       vite:
         specifier: ^4.4.9
         version: 4.4.9(@types/node@20.5.9)
@@ -9900,8 +9900,8 @@ packages:
       - zod
     dev: false
 
-  /viem@2.0.0-alpha.10(typescript@5.1.6)(zod@3.22.2):
-    resolution: {integrity: sha512-vJbv2OdIq0vapWypRh17PKMw+QoaguWGF/iy+gB87rmiHcL8mg5VtpMZoIOgyg6lli28JDBkA0kKfGQt/ou1ew==}
+  /viem@2.0.0-alpha.11(typescript@5.1.6)(zod@3.22.2):
+    resolution: {integrity: sha512-vjX62+oIeujDXYbOYFbcNDwKO+f1S8UIJI2rGf6U7nKS+lc59p3rlpZMkbFLqER519XPWq48tOzcKTANcifWnw==}
     peerDependencies:
       typescript: '>=5.0.4'
     peerDependenciesMeta:
