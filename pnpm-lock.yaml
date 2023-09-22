@@ -307,8 +307,8 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0
       '@metamask/sdk':
-        specifier: ^0.7.0
-        version: 0.7.0(react-native@0.71.13)(react@18.2.0)
+        specifier: ^0.7.1
+        version: 0.7.1(react-native@0.71.13)(react@18.2.0)
       '@safe-global/safe-apps-provider':
         specifier: ^0.17.1
         version: 0.17.1(typescript@5.0.4)
@@ -3235,8 +3235,8 @@ packages:
     engines: {node: '>=12.0.0'}
     dev: false
 
-  /@metamask/sdk-communication-layer@0.7.0:
-    resolution: {integrity: sha512-jIv/9ujLdqZPfRyAc4Qi865TWk0EhORCDeaa36+r5ED4R84BiUIh1qgyZAW5+Kp4IMlWRjrclGfvrx1exiN3Gw==}
+  /@metamask/sdk-communication-layer@0.7.1:
+    resolution: {integrity: sha512-IYmVC256HPEB1EGtb0LYDchHrEJNzc2LduKbDkxSX8p6jdG7QwlbbBHPHgwp7monJYjX6rh8cPPyALZ8zR7RWw==}
     dependencies:
       cross-fetch: 3.1.5
       date-fns: 2.30.0
@@ -3263,16 +3263,16 @@ packages:
       - '@types/react'
     dev: false
 
-  /@metamask/sdk@0.7.0(react-native@0.71.13)(react@18.2.0):
-    resolution: {integrity: sha512-aC23EJZsRaj5Wxd60UrE58bYwSWoTPOhyGDdLNDbbcQxET5b4MJHfmeWEx+HQqT4EqzGHE7J2ZrcnbITljrDPw==}
+  /@metamask/sdk@0.7.1(react-native@0.71.13)(react@18.2.0):
+    resolution: {integrity: sha512-9k8BwuRFOpdqLGOe0nAnxGrCpTlGcOPcqaHogD3Chv2xQdOIVnI2G2Y1DmgxZrK/jXv3WiGogzPctMgiEus7gQ==}
     peerDependencies:
       react: ^18.2.0
-      react-native: ^0.71.1
+      react-native: '*'
     dependencies:
       '@metamask/onboarding': 1.0.1
       '@metamask/post-message-stream': 6.2.0
       '@metamask/providers': 10.2.1
-      '@metamask/sdk-communication-layer': 0.7.0
+      '@metamask/sdk-communication-layer': 0.7.1
       '@metamask/sdk-install-modal-web': 0.7.0
       '@react-native-async-storage/async-storage': 1.19.3(react-native@0.71.13)
       '@types/dom-screen-wake-lock': 1.0.1
@@ -4299,7 +4299,7 @@ packages:
       chalk: 4.1.2
       find-up: 5.0.0
       mime: 2.6.0
-      node-fetch: 2.6.9
+      node-fetch: 2.7.0
       open: 6.4.0
       ora: 5.4.1
       semver: 6.3.1
@@ -11881,7 +11881,7 @@ packages:
       metro-transform-plugins: 0.73.10
       metro-transform-worker: 0.73.10
       mime-types: 2.1.35
-      node-fetch: 2.6.9
+      node-fetch: 2.7.0
       nullthrows: 1.1.1
       rimraf: 3.0.2
       serialize-error: 2.1.0
