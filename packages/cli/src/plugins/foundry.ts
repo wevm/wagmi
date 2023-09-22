@@ -17,6 +17,7 @@ const defaultExcludes = [
   'Components.sol/**',
   'Script.sol/**',
   'StdAssertions.sol/**',
+  'StdInvariant.sol/**',
   'StdError.sol/**',
   'StdCheats.sol/**',
   'StdMath.sol/**',
