@@ -1,5 +1,4 @@
-// #region erc20Abi-read
-export const erc20Abi = [
+export const abi = [
   {
     type: 'function',
     name: 'balanceOf',
@@ -15,4 +14,3 @@ export const erc20Abi = [
     outputs: [{ name: 'supply', type: 'uint256' }],
   },
 ] as const
-// #endregion erc20Abi-read

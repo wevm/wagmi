@@ -23,17 +23,17 @@ import { useContractRead } from 'wagmi'
 ::: code-group
 ```tsx [index.tsx]
 import { useContractRead } from 'wagmi'
-import { erc20Abi } from './abi'
+import { abi } from './abi'
 
 function App() {
   const result = useContractRead({
-    abi: erc20Abi,
+    abi,
     address: '0x6b175474e89094c44da98b954eedeac495271d0f',
     functionName: 'totalSupply',
   })
 }
 ```
-<<< @/snippets/abi.ts#erc20Abi-read[abi.ts]
+<<< @/snippets/abi-read.ts[abi.ts]
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -52,17 +52,17 @@ The contract's ABI. Check out the [TypeScript docs](/react/typescript#const-asse
 ::: code-group
 ```tsx [index.tsx]
 import { useContractRead } from 'wagmi'
-import { erc20Abi } from './abi' // [!code focus]
+import { abi } from './abi' // [!code focus]
 
 function App() {
   const result = useContractRead({
-    abi: erc20Abi, // [!code focus]
+    abi, // [!code focus]
     address: '0x6b175474e89094c44da98b954eedeac495271d0f',
     functionName: 'totalSupply',
   })
 }
 ```
-<<< @/snippets/abi.ts#erc20Abi-read[abi.ts]
+<<< @/snippets/abi-read.ts[abi.ts]
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -75,11 +75,11 @@ Account to use when calling the contract (`msg.sender`).
 ::: code-group
 ```tsx [index.tsx]
 import { useContractRead } from 'wagmi'
-import { erc20Abi } from './abi'
+import { abi } from './abi'
 
 function App() {
   const result = useContractRead({
-    abi: erc20Abi,
+    abi,
     address: '0x6b175474e89094c44da98b954eedeac495271d0f',
     functionName: 'balanceOf',
     args: ['0x6b175474e89094c44da98b954eedeac495271d0f'],
@@ -87,7 +87,7 @@ function App() {
   })
 }
 ```
-<<< @/snippets/abi.ts#erc20Abi-read[abi.ts]
+<<< @/snippets/abi-read.ts[abi.ts]
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -100,17 +100,17 @@ The contract's address.
 ::: code-group
 ```tsx [index.tsx]
 import { useContractRead } from 'wagmi'
-import { erc20Abi } from './abi'
+import { abi } from './abi'
 
 function App() {
   const result = useContractRead({
-    abi: erc20Abi,
+    abi,
     address: '0x6b175474e89094c44da98b954eedeac495271d0f', // [!code focus]
     functionName: 'totalSupply',
   })
 }
 ```
-<<< @/snippets/abi.ts#erc20Abi-read[abi.ts]
+<<< @/snippets/abi-read.ts[abi.ts]
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -124,18 +124,18 @@ function App() {
 ::: code-group
 ```tsx [index.tsx]
 import { useContractRead } from 'wagmi'
-import { erc20Abi } from './abi'
+import { abi } from './abi'
 
 function App() {
   const result = useContractRead({
-    abi: erc20Abi,
+    abi,
     address: '0x6b175474e89094c44da98b954eedeac495271d0f',
     functionName: 'balanceOf',
     args: ['0x6b175474e89094c44da98b954eedeac495271d0f'], // [!code focus]
   })
 }
 ```
-<<< @/snippets/abi.ts#erc20Abi-read[abi.ts]
+<<< @/snippets/abi-read.ts[abi.ts]
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -150,18 +150,18 @@ Block number to call contract at.
 ::: code-group
 ```tsx [index.tsx]
 import { useContractRead } from 'wagmi'
-import { erc20Abi } from './abi'
+import { abi } from './abi'
 
 function App() {
   const result = useContractRead({
-    abi: erc20Abi,
+    abi,
     address: '0x6b175474e89094c44da98b954eedeac495271d0f',
     functionName: 'totalSupply',
     blockNumber: 17829139n, // [!code focus]
   })
 }
 ```
-<<< @/snippets/abi.ts#erc20Abi-read[abi.ts]
+<<< @/snippets/abi-read.ts[abi.ts]
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -174,18 +174,18 @@ Block tag to call contract at.
 ::: code-group
 ```tsx [index.tsx]
 import { useContractRead } from 'wagmi'
-import { erc20Abi } from './abi'
+import { abi } from './abi'
 
 function App() {
   const result = useContractRead({
-    abi: erc20Abi,
+    abi,
     address: '0x6b175474e89094c44da98b954eedeac495271d0f',
     functionName: 'totalSupply',
     blockTag: 'safe', // [!code focus]
   })
 }
 ```
-<<< @/snippets/abi.ts#erc20Abi-read[abi.ts]
+<<< @/snippets/abi-read.ts[abi.ts]
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -201,18 +201,18 @@ ID of chain to use when fetching data.
 ```tsx [index.tsx]
 import { useContractRead } from 'wagmi'
 import { mainnet } from 'wagmi/chains' // [!code focus]
-import { erc20Abi } from './abi'
+import { abi } from './abi'
 
 function App() {
   const result = useContractRead({
-    abi: erc20Abi,
+    abi,
     address: '0x6b175474e89094c44da98b954eedeac495271d0f',
     functionName: 'totalSupply',
     chainId: mainnet.id, // [!code focus]
   })
 }
 ```
-<<< @/snippets/abi.ts#erc20Abi-read[abi.ts]
+<<< @/snippets/abi-read.ts[abi.ts]
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -225,19 +225,19 @@ function App() {
 ::: code-group
 ```tsx [index.tsx]
 import { useContractRead } from 'wagmi'
-import { erc20Abi } from './abi'
+import { abi } from './abi'
 import { config } from './config' // [!code focus]
 
 function App() {
   const result = useContractRead({
-    abi: erc20Abi,
+    abi,
     address: '0x6b175474e89094c44da98b954eedeac495271d0f',
     functionName: 'totalSupply',
     config, // [!code focus]
   })
 }
 ```
-<<< @/snippets/abi.ts#erc20Abi-read[abi.ts]
+<<< @/snippets/abi-read.ts[abi.ts]
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -251,18 +251,18 @@ function App() {
 ::: code-group
 ```tsx [index.tsx]
 import { useContractRead } from 'wagmi'
-import { erc20Abi } from './abi'
+import { abi } from './abi'
 
 function App() {
   const result = useContractRead({
-    abi: erc20Abi,
+    abi,
     address: '0x6b175474e89094c44da98b954eedeac495271d0f',
     functionName: 'balanceOf', // [!code focus]
     args: ['0x6b175474e89094c44da98b954eedeac495271d0f'],
   })
 }
 ```
-<<< @/snippets/abi.ts#erc20Abi-read[abi.ts]
+<<< @/snippets/abi-read.ts[abi.ts]
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -279,6 +279,91 @@ The return type's [`data`](#data) property is inferrable via the combination of 
 <!--@include: @shared/query-result.md-->
 
 <!--@include: @shared/query-imports.md-->
+
+## Type Inference
+
+With [`abi`](#abi) setup correctly, TypeScript will infer the correct types for [`functionName`](#functionname), [`args`](#args), and the return type. See the Wagmi [TypeScript docs](/react/typescript) for more information.
+
+::: code-group
+```ts twoslash [Inline]
+import { createConfig, http, useContractRead } from 'wagmi'
+import { mainnet, sepolia } from 'wagmi/chains'
+
+const config = createConfig({
+  chains: [mainnet, sepolia],
+  transports: {
+    [mainnet.id]: http(),
+    [sepolia.id]: http(),
+  },
+})
+// ---cut---
+const result = useContractRead({
+  abi: [
+    {
+      type: 'function',
+      name: 'balanceOf',
+      stateMutability: 'view',
+      inputs: [{ name: 'account', type: 'address' }],
+      outputs: [{ type: 'uint256' }],
+    },
+    {
+      type: 'function',
+      name: 'totalSupply',
+      stateMutability: 'view',
+      inputs: [],
+      outputs: [{ name: 'supply', type: 'uint256' }],
+    },
+  ],
+  address: '0x6b175474e89094c44da98b954eedeac495271d0f',
+  functionName: 'balanceOf',
+  // ^?
+  args: ['0x6b175474e89094c44da98b954eedeac495271d0f'],
+  // ^?
+})
+result.data
+//     ^?
+```
+```ts twoslash [Const-Asserted]
+import { createConfig, http, useContractRead } from 'wagmi'
+import { mainnet, sepolia } from 'wagmi/chains'
+
+const config = createConfig({
+  chains: [mainnet, sepolia],
+  transports: {
+    [mainnet.id]: http(),
+    [sepolia.id]: http(),
+  },
+})
+// ---cut---
+const abi = [
+  {
+    type: 'function',
+    name: 'balanceOf',
+    stateMutability: 'view',
+    inputs: [{ name: 'account', type: 'address' }],
+    outputs: [{ type: 'uint256' }],
+  },
+  {
+    type: 'function',
+    name: 'totalSupply',
+    stateMutability: 'view',
+    inputs: [],
+    outputs: [{ name: 'supply', type: 'uint256' }],
+  },
+] as const
+
+const result = useContractRead({
+  abi,
+  address: '0x6b175474e89094c44da98b954eedeac495271d0f',
+  functionName: 'balanceOf',
+  // ^?
+  args: ['0x6b175474e89094c44da98b954eedeac495271d0f'],
+  // ^?
+})
+result.data
+//     ^?
+```
+:::
 
 ## Action
 
