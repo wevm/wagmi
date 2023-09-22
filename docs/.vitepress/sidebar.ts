@@ -451,7 +451,7 @@ export function getSidebar() {
             link: '/core/api/actions/watchPublicClient',
           },
           {
-            text: 'writeContract 🚧',
+            text: 'writeContract',
             link: '/core/api/actions/writeContract',
           },
         ],
