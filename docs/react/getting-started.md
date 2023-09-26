@@ -6,23 +6,23 @@ Wagmi is a React Hooks library for Ethereum. You can learn more about the ration
 
 ## Automatic Installation
 
-For new projects, it is recommended to set up your Wagmi app using the [`create-wagmi`](/cli/TODO) command line interface (CLI). This will create a new Wagmi project using TypeScript and install the required dependencies.
+For new projects, it is recommended to set up your Wagmi app using the [`create-wagmi`](/cli/create-wagmi) command line interface (CLI). This will create a new Wagmi project using TypeScript and install the required dependencies.
 
 ::: code-group
 ```bash [pnpm]
-pnpm create wagmi
+pnpm create wagmi@alpha
 ```
 
 ```bash [npm]
-npm init wagmi
+npm init wagmi@alpha
 ```
 
 ```bash [yarn]
-yarn create wagmi
+yarn create wagmi@alpha
 ```
 
 ```bash [bun]
-bun create wagmi
+bun create wagmi@alpha
 ```
 
 :::
@@ -125,7 +125,7 @@ import { config } from './config' // [!code focus]
 function App() {
   return (
     <WagmiProvider config={config}> // [!code focus]
-      {/** Your App */} // [!code focus]
+      {/** ... */} // [!code focus]
     </WagmiProvider> // [!code focus]
   )
 }
@@ -151,7 +151,7 @@ function App() {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}> // [!code focus]
-        {/** Your App */} // [!code focus]
+        {/** ... */} // [!code focus]
       </QueryClientProvider> // [!code focus]
     </WagmiProvider>
   )
@@ -191,7 +191,7 @@ function App() {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        {/** Your App */}
+        {/** ... */}
       </QueryClientProvider>
     </WagmiProvider>
   )

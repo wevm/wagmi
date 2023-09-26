@@ -136,8 +136,8 @@ test('useContractSimulate', () => {
     args: ['0x', '0x', 123n],
     chainId: 1,
   })
-  const { writeContract: write } = useContractWrite()
+  const { writeContract } = useContractWrite()
 
   const request = data?.request
-  if (request) write(request)
+  if (request) writeContract(request)
 })

@@ -18,7 +18,7 @@ import { config } from './config'
 function App() {
   return (
     <WagmiProvider config={config}> 
-      {/** Your App */}
+      {/** ... */}
     </WagmiProvider>
   )
 }
@@ -46,7 +46,7 @@ function App() {
     <WagmiProvider
       config={config} // [!code focus]
     >
-      {/** Your App */}
+      {/** ... */}
     </WagmiProvider>
   )
 }
@@ -72,7 +72,7 @@ function App() {
       config={config}
       reconnectOnMount={false} // [!code focus]
     >
-      {/** Your App */}
+      {/** ... */}
     </WagmiProvider>
   )
 }

@@ -17,6 +17,12 @@ const TVariables = 'TVariables'
 
 Connected addresses from connector.
 
+### chain
+
+`Chain | undefined`
+
+Connected chain from connector. If chain is not configured by config, it will be `undefined`.
+
 ### chainId
 
 `number | undefined`

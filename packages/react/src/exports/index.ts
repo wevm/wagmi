@@ -161,6 +161,8 @@ export {
   type UseEstimateFeesPerGasParameters,
   type UseEstimateFeesPerGasReturnType,
   useEstimateFeesPerGas,
+  /** @deprecated Use `useEstimateFeesPerGas` instead */
+  useEstimateFeesPerGas as useFeeData,
 } from '../hooks/useEstimateFeesPerGas.js'
 
 export {

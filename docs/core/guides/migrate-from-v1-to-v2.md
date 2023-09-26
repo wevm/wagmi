@@ -196,7 +196,7 @@ const result = await getEnsAddress(config, {
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
-Normalization functions typically add a decent amount of bundle size to your project. By inverting control, you can choose how much normalization to do. For example, maybe your project only allows ENS names that are alphanumeric so no normalization is needed.
+Normalization functions typically add a decent amount of bundle size to your project. By inverting control, you can choose how much normalization to do. For example, maybe your project only allows ENS names that are alphanumeric so no normalization is not needed.
 
 ---
 
