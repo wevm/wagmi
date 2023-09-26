@@ -89,7 +89,7 @@ export function getSidebar() {
         items: [
           { text: 'useAccount', link: '/react/api/hooks/useAccount' },
           {
-            text: 'useAccountEffect 🚧',
+            text: 'useAccountEffect',
             link: '/react/api/hooks/useAccountEffect',
           },
           { text: 'useBalance', link: '/react/api/hooks/useBalance' },

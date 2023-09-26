@@ -50,8 +50,8 @@ Boolean variables derived from [`status`](#status).
 - `'connected'` at least one connector is connected.
 - `'disconnected'` no connection to any connector.
 
-::: tip
-You can use `status` to narrow the return type. For example, when `status` is `'connected'` properties like `address` are guaranteed to be defined.
+::: details You can use `status` to narrow the return type. 
+For example, when `status` is `'connected'` properties like `address` are guaranteed to be defined.
 
 ```ts twoslash
 import { type GetAccountReturnType } from '@wagmi/core'

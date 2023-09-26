@@ -16,14 +16,6 @@ import { useAccount } from 'wagmi'
 
 function App() {
   const account = useAccount()
-
-  return (
-    <div>
-      <div>Address: {account.address}</div>
-      <div>Chain ID: {account.chainId}</div>
-      <div>Status: {account.status}</div>
-    </div>
-  )
 }
 ```
 <<< @/snippets/react/config.ts[config.ts]
@@ -66,4 +58,3 @@ import { type UseAccountReturnType } from 'wagmi'
 ## Action
 
 - [`getAccount`](/core/api/actions/getAccount)
-- [`watchAccount`](/core/api/actions/watchAccount)
