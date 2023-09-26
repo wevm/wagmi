@@ -1,6 +1,6 @@
 # Migrate from v1 to v2
 
-Wagmi v2 redesigns the core APIs to mesh better with [Viem](https://viem.sh) and [TanStack Query](https://tanstack.com/query/v5/docs/react). Wagmi v2 is a light wrapper around these libraries, sprinkling in multichain clients and account management. As such, there are some [breaking changes](#breaking-changes) and [deprecations](#deprecations) to be aware of.
+Wagmi v2 redesigns the core APIs to mesh better with [Viem](https://viem.sh) and [TanStack Query](https://tanstack.com/query/v5/docs/react). Wagmi v2 is a light wrapper around these libraries, sprinkling in multichain support and account management. As such, there are some [breaking changes](#breaking-changes) and [deprecations](#deprecations) to be aware of.
 
 To get started, install the latest version of Wagmi and it's required peer dependencies.
 
@@ -23,7 +23,7 @@ bun add wagmi@alpha viem@alpha @tanstack/react-query@beta
 :::
 
 ::: info Wagmi v2 is currently in alpha.
- We recommend trying it out in your projects, but there may be breaking changes before the final release. If you find bugs or have feedback, please [open an issue](https://github.com/wagmi-dev/wagmi/issues/new/choose) or [create a new discussion](https://github.com/wagmi-dev/wagmi/discussions/new/choose).
+We recommend trying it out in your projects, but there may be breaking changes before the final release. If you find bugs or have feedback, please [open an issue](https://github.com/wagmi-dev/wagmi/issues/new/choose) or [create a new discussion](https://github.com/wagmi-dev/wagmi/discussions/new/choose).
 :::
 
 ## Breaking changes
@@ -274,10 +274,10 @@ In Wagmi v1, connectors were classes you needed to instantiate. In Wagmi v2, con
 
 - WalletConnect v1 support dropped. WalletConnect v2 is now the only supported version.
 - Removed `autoConnect` parameter from `createConfig`. Use `WagmiProvider` [`reconnectOnMount`](/react/api/WagmiProvider#reconnectonmount) instead.
-- Errors todo
+- Errors 🚧
 - Removed `useContractReads` `paginatedIndexesConfig`. Use `initialPageParam` and `getNextPageParam` along with `fetchNextPage`/`fetchPreviousPage` instead.
 - Removed `useWebSocketPublicClient`. The Wagmi `Config` does not separate transport types anymore.
-- Dropped CommonJS module support. Use ES Modules instead. See [ Sindre Sorhus' guide](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c) for more info.
+- Dropped CommonJS module support. Use ES Modules instead. See [Sindre Sorhus' guide](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c) for more info.
 
 ## Deprecations
 
@@ -318,7 +318,6 @@ The following hooks were renamed to better reflect their functionality and under
 - `WagmiConfigProps` renamed to [`WagmiProviderProps`](/react/api/WagmiProvider#parameters).
 - `Context` renamed to [`WagmiContext`](/react/api/WagmiProvider#context).
 - `useBalance` `token` parameter no longer supported. Use `useContractReads` instead.
-- `useContractReads` `token` parameter no longer supported. Use `useContractReads` instead.
   ```ts
   import { useBalance } from 'wagmi' // [!code --]
   import { useContractReads } from 'wagmi' // [!code ++]
