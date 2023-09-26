@@ -76,6 +76,7 @@ test('exports', () => {
       "ConnectorAccountNotFound",
       "ProviderNotFoundError",
       "SwitchChainNotSupportedError",
+      "deepEqual",
       "deserialize",
       "normalizeChainId",
       "serialize",

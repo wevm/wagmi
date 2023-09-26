@@ -1,6 +1,6 @@
 # Migrate from v1 to v2
 
-Wagmi v2 redesigns the core APIs to mesh better with [Viem](https://viem.sh) and [TanStack Query](https://tanstack.com/query/v5/docs/react). Wagmi v2 is a lighter wrapper around these libraries that also manages multichain clients and account connections. As such, there are some [breaking changes](#breaking-changes) and [deprecations](#deprecations) to be aware of.
+Wagmi v2 redesigns the core APIs to mesh better with [Viem](https://viem.sh) and [TanStack Query](https://tanstack.com/query/v5/docs/react). Wagmi v2 is a light wrapper around these libraries, sprinkling in multichain clients and account management. As such, there are some [breaking changes](#breaking-changes) and [deprecations](#deprecations) to be aware of.
 
 To get started, install the latest version of Wagmi and it's required peer dependencies.
 
@@ -20,6 +20,10 @@ yarn add wagmi@alpha viem@alpha @tanstack/react-query@beta
 ```bash [bun]
 bun add wagmi@alpha viem@alpha @tanstack/react-query@beta
 ```
+:::
+
+::: info Wagmi v2 is currently in alpha.
+ We recommend trying it out in your projects, but there may be breaking changes before the final release. If you find bugs or have feedback, please [open an issue](https://github.com/wagmi-dev/wagmi/issues/new/choose) or [create a new discussion](https://github.com/wagmi-dev/wagmi/discussions/new/choose).
 :::
 
 ## Breaking changes
@@ -206,6 +210,75 @@ const { sendTransaction } = useSendTransaction() // [!code ++]
 
 This might seem like more work, but it gives you more control and is more accurate representation of what is happening under the hood.
 
+### Removed `configureChains`
+
+The Wagmi v2 `Config` now has native multichain support using the [`chains`](/react/api/createConfig) parameter so the `configureChains` function is no longer required.
+
+```ts
+import { configureChains, createConfig } from 'wagmi' // [!code --]
+import { http, createConfig } from 'wagmi' // [!code ++]
+import { mainnet, sepolia } from 'wagmi/chains'
+
+const { chains, publicClient } = configureChains( // [!code --]
+  [mainnet, sepolia], // [!code --]
+  [publicProvider(), publicProvider()], // [!code --]
+) // [!code --]
+
+export const config = createConfig({
+  publicClient, // [!code --]
+  chains: [mainnet, sepolia], // [!code ++]
+  transports: { // [!code ++]
+    [mainnet.id]: http(), // [!code ++]
+    [sepolia.id]: http(), // [!code ++]
+  }, // [!code ++]
+})
+```
+
+### Updated connector API
+
+In Wagmi v1, connectors were classes you needed to instantiate. In Wagmi v2, connectors are functions. As a result, the API has changed. To learn more about all the connector API changes, check out the [Wagmi Core v1 to v2 guide](/core/guides/migrate-from-v1-to-v2). Connectors have the following new names:
+
+- `CoinbaseWalletConnector` is now [`coinbaseWallet`](/react/api/connectors/coinbaseWallet).
+- `InjectedConnector` is now [`injected`](/react/api/connectors/injected).
+- `LedgerConnector` is now [`ledger`](/react/api/connectors/ledger).
+- `SafeConnector` is now [`safe`](/react/api/connectors/safe).
+- `WalletConnectConnector` is now [`walletConnect`](/react/api/connectors/walletConnect).
+
+### Removed exports
+
+- Removed `mainnet` and `sepolia` from main entrypoint. Use the `wagmi/chains` entrypoint instead.
+  ```ts
+  import { mainnet } from 'wagmi' // [!code --]
+  import { mainnet } from 'wagmi/chains' // [!code ++]
+  ```
+- Removed individual exports for connectors. Use the `wagmi/connectors` entrypoint instead.
+  ```ts
+  import { InjectedConnector } from 'wagmi/connectors/injected' // [!code --]
+  import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet' // [!code --]
+  import { coinbaseWallet, injected } from 'wagmi/connectors' // [!code ++]
+  ```
+- Removed ABIs from main entrypoint. Import from Viem instead.
+  ```ts
+  import { erc20ABI } from 'wagmi' // [!code --]
+  import { erc20Abi } from 'viem' // [!code ++]
+  ```
+- Removed providers entrypoint. Use Viem transports instead.
+  ```ts
+  import { alchemyProvider, infuraProvider } from 'wagmi/providers' // [!code --]
+  import { http } from 'viem' // [!code ++]
+
+  const transport = http('https://mainnet.example.com')
+  ```
+
+### Miscellaneous
+
+- WalletConnect v1 support dropped. WalletConnect v2 is now the only supported version.
+- Removed `autoConnect` parameter from `createConfig`. Use `WagmiProvider` [`reconnectOnMount`](/react/api/WagmiProvider#reconnectonmount) instead.
+- Errors todo
+- Removed `useContractReads` `paginatedIndexesConfig`. Use `initialPageParam` and `getNextPageParam` along with `fetchNextPage`/`fetchPreviousPage` instead.
+- Removed `useWebSocketPublicClient`. The Wagmi `Config` does not separate transport types anymore.
+- Dropped CommonJS module support. Use ES Modules instead. See [ Sindre Sorhus' guide](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c) for more info.
+
 ## Deprecations
 
 ### Renamed `WagmiConfig`
@@ -235,6 +308,45 @@ function App() {
 The following hooks were renamed to better reflect their functionality and underlying [Viem](https://viem.sh) actions:
 
 - `useContractEvent` is now [`useWatchContractEvent`](/react/api/hooks/useWatchContractEvent)
+- `useContractInfiniteReads` is now [`useInfiniteContractReads`](/react/api/hooks/useInfiniteContractReads)
 - `useFeeData` is now [`useEstimateFeesPerGas`](/react/api/hooks/useEstimateFeesPerGas)
 - `useSwitchNetwork` is now [`useSwitchChain`](/react/api/hooks/useSwitchChain)
 - `useWaitForTransaction` is now [`useWaitForTransactionReceipt`](/react/api/hooks/useWaitForTransactionReceipt)
+
+### Miscellaneous
+
+- `WagmiConfigProps` renamed to [`WagmiProviderProps`](/react/api/WagmiProvider#parameters).
+- `Context` renamed to [`WagmiContext`](/react/api/WagmiProvider#context).
+- `useBalance` `token` parameter no longer supported. Use `useContractReads` instead.
+- `useContractReads` `token` parameter no longer supported. Use `useContractReads` instead.
+  ```ts
+  import { useBalance } from 'wagmi' // [!code --]
+  import { useContractReads } from 'wagmi' // [!code ++]
+  import { erc20Abi } from 'viem' // [!code ++]
+
+  const result = useBalance({ // [!code --]
+    address: '0x4557B18E779944BFE9d78A672452331C186a9f48', // [!code --]
+    token: '0x6B175474E89094C44Da98b954EedeAC495271d0F', // [!code --]
+  }) // [!code --]
+  const result = useContractReads({ // [!code ++]
+    allowFailure: false, // [!code ++]
+    contracts: [ // [!code ++]
+      { // [!code ++]
+        address: '0x6B175474E89094C44Da98b954EedeAC495271d0F', // [!code ++]
+        abi: erc20Abi, // [!code ++]
+        functionName: 'balanceOf', // [!code ++]
+        args: ['0x4557B18E779944BFE9d78A672452331C186a9f48'], // [!code ++]
+      }, // [!code ++]
+      { // [!code ++]
+        address: '0x6B175474E89094C44Da98b954EedeAC495271d0F', // [!code ++]
+        abi: erc20Abi, // [!code ++]
+        functionName: 'decimals', // [!code ++]
+      }, // [!code ++]
+      { // [!code ++]
+        address: '0x6B175474E89094C44Da98b954EedeAC495271d0F', // [!code ++]
+        abi: erc20Abi, // [!code ++]
+        functionName: 'symbol', // [!code ++]
+      }, // [!code ++]
+    ] // [!code ++]
+  }) // [!code ++]
+  ```

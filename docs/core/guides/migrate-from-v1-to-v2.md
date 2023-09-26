@@ -219,6 +219,7 @@ Normalization functions typically add a decent amount of bundle size to your pro
 
 - Removed `logger`
 - Removed `publicClient` and `webSocketPublicClient` (use `transports` or `client` instead)
+- Removed `autoConnect`
 
 ### Connectors
 

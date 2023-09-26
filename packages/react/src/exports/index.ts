@@ -175,6 +175,8 @@ export {
   type UseInfiniteContractReadsParameters,
   type UseInfiniteContractReadsReturnType,
   useInfiniteContractReads,
+  /** @deprecated Use `useInfiniteContractReads` instead */
+  useInfiniteContractReads as useContractInfiniteReads,
 } from '../hooks/useInfiniteContractReads.js'
 
 export {
@@ -299,6 +301,7 @@ export {
   type Register,
   type ResolvedRegister,
   // Utilities
+  deepEqual,
   deserialize,
   normalizeChainId,
   serialize,
