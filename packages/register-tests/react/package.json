@@ -12,6 +12,6 @@
     "wagmi": "workspace:*"
   },
   "devDependencies": {
-    "@types/react": "^18.2.21"
+    "@types/react": "^18.2.23"
   }
 }

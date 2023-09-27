@@ -11,6 +11,6 @@ export default defineProject({
   },
   test: {
     name: '@wagmi/connectors',
-    environment: 'jsdom',
+    environment: 'happy-dom',
   },
 })

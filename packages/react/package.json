@@ -56,10 +56,18 @@
   },
   "typesVersions": {
     "*": {
-      "actions": ["./dist/types/exports/actions.d.ts"],
-      "chains": ["./dist/types/exports/chains.d.ts"],
-      "connectors": ["./dist/types/exports/connectors.d.ts"],
-      "query": ["./dist/types/exports/query.d.ts"]
+      "actions": [
+        "./dist/types/exports/actions.d.ts"
+      ],
+      "chains": [
+        "./dist/types/exports/chains.d.ts"
+      ],
+      "connectors": [
+        "./dist/types/exports/connectors.d.ts"
+      ],
+      "query": [
+        "./dist/types/exports/query.d.ts"
+      ]
     }
   },
   "peerDependencies": {
@@ -81,18 +89,29 @@
   "devDependencies": {
     "@tanstack/react-query": "5.0.0-beta.28",
     "@testing-library/react": "^14.0.0",
-    "@types/react": "^18.2.21",
-    "@types/react-dom": "^18.2.7",
+    "@types/react": "^18.2.23",
+    "@types/react-dom": "^18.2.8",
     "@types/use-sync-external-store": "^0.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
-  "contributors": ["awkweb.eth <t@wagmi.sh>", "jxom.eth <j@wagmi.sh>"],
+  "contributors": [
+    "awkweb.eth <t@wagmi.sh>",
+    "jxom.eth <j@wagmi.sh>"
+  ],
   "funding": [
     {
       "type": "github",
       "url": "https://github.com/sponsors/wagmi-dev"
     }
   ],
-  "keywords": ["react", "hooks", "eth", "ethereum", "dapps", "wallet", "web3"]
+  "keywords": [
+    "react",
+    "hooks",
+    "eth",
+    "ethereum",
+    "dapps",
+    "wallet",
+    "web3"
+  ]
 }

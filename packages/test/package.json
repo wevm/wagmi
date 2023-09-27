@@ -41,7 +41,9 @@
   },
   "typesVersions": {
     "*": {
-      "react": ["./dist/types/exports/react.d.ts"]
+      "react": [
+        "./dist/types/exports/react.d.ts"
+      ]
     }
   },
   "peerDependencies": {
@@ -86,19 +88,28 @@
   "devDependencies": {
     "@tanstack/react-query": "5.0.0-beta.28",
     "@testing-library/react": "^14.0.0",
-    "@types/react": "^18.2.21",
-    "@types/react-dom": "^18.2.7",
+    "@types/react": "^18.2.23",
+    "@types/react-dom": "^18.2.8",
     "@wagmi/core": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "wagmi": "workspace:*"
   },
-  "contributors": ["awkweb.eth <t@wagmi.sh>", "jxom.eth <j@wagmi.sh>"],
+  "contributors": [
+    "awkweb.eth <t@wagmi.sh>",
+    "jxom.eth <j@wagmi.sh>"
+  ],
   "funding": [
     {
       "type": "github",
       "url": "https://github.com/sponsors/wagmi-dev"
     }
   ],
-  "keywords": ["eth", "ethereum", "dapps", "wallet", "web3"]
+  "keywords": [
+    "eth",
+    "ethereum",
+    "dapps",
+    "wallet",
+    "web3"
+  ]
 }

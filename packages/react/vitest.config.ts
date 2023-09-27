@@ -12,7 +12,7 @@ export default defineProject({
   },
   test: {
     name: 'wagmi',
-    environment: 'jsdom',
+    environment: 'happy-dom',
     testTimeout: 10_000,
     setupFiles: ['./test/setup.ts'],
   },

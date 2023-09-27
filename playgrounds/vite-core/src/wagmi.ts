@@ -11,9 +11,6 @@ export const config = createConfig({
   chains: [mainnet, sepolia, optimism],
   connectors: [
     injected({ target: 'metaMask' }),
-    injected({ target: 'coinbaseWallet' }),
-    injected({ target: 'phantom' }),
-    injected(),
     walletConnect({ projectId: import.meta.env.VITE_WC_PROJECT_ID }),
     coinbaseWallet({ appName: 'Vite React Playground' }),
     ledger({ projectId: import.meta.env.VITE_WC_PROJECT_ID }),
