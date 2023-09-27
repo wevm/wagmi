@@ -356,7 +356,6 @@ const result = await simulateContract({
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
-
 ### gas
 
 `bigint | undefined`
