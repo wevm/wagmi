@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 1.5.2
+
+### Patch Changes
+
+- [#3051](https://github.com/wagmi-dev/wagmi/pull/3051) [`4704d351`](https://github.com/wagmi-dev/wagmi/commit/4704d351164d39704a4e375c06525554fcc8340e) Thanks [@oxSaturn](https://github.com/oxSaturn)! - Fixed ESM require issue for prettier
+
 ## 1.5.1
 
 ### Patch Changes
