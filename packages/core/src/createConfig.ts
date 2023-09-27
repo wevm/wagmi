@@ -115,7 +115,6 @@ export function createConfig<
     const chain = chains.find((x) => x.id === chainId)
 
     // If the target chain is not configured, use the client of the current chain.
-    // TODO: should we error instead? idk. figure out later.
     type Return = Client<Transport, Extract<chains[number], { id: chainId }>>
     {
       const client = clients.get(store.getState().chainId)

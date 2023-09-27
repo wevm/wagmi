@@ -130,7 +130,7 @@ export function getSidebar() {
             link: '/react/api/hooks/useContractSimulate',
           },
           {
-            text: 'useContractWrite 🚧',
+            text: 'useContractWrite',
             link: '/react/api/hooks/useContractWrite',
           },
           { text: 'useDisconnect', link: '/react/api/hooks/useDisconnect' },
