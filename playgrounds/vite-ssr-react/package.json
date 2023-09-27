@@ -29,8 +29,8 @@
     "sirv": "^2.0.3",
     "ts-node": "^10.9.1",
     "viem": "2.0.0-alpha.11",
+    "vike": "^0.4.142",
     "vite": "^4.4.9",
-    "vite-plugin-ssr": "^0.4.141",
     "wagmi": "workspace:*"
   }
 }
