@@ -140,14 +140,16 @@ Whether or not to include transactions as objects.
 
 ::: code-group
 ```tsx [index.tsx]
-import { getBlock } from '@wagmi/core'
+import { useBlock } from 'wagmi'
 import { config } from './config'
 
-const blockNumber = await getBlock(config, {
-  includeTransactions: true // [!code focus]
-})
+function App() {
+  const result = useBlock({
+    includeTransactions: true // [!code focus]
+  })
+}
 ```
-<<< @/snippets/core/config.ts[config.ts]
+<<< @/snippets/react/config.ts[config.ts]
 :::
 
 ### watch
