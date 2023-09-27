@@ -1,7 +1,8 @@
-import { accounts, config, testConnector } from '@wagmi/test'
+import { accounts, config } from '@wagmi/test'
 import { recoverMessageAddress } from 'viem'
 import { expect, test } from 'vitest'
 
+import { mock } from '../connectors/mock.js'
 import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'
 import { getAccount } from './getAccount.js'
@@ -23,7 +24,7 @@ test('default', async () => {
 
 test('behavior: user rejected request', async () => {
   const connector_ = config._internal.connectors.setup(
-    testConnector({
+    mock({
       accounts,
       features: { signMessageError: true },
     }),

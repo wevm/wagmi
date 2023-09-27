@@ -1,6 +1,7 @@
-import { accounts, config, testConnector } from '@wagmi/test'
+import { accounts, config } from '@wagmi/test'
 import { expect, test } from 'vitest'
 
+import { mock } from '../connectors/mock.js'
 import type { Connector } from '../createConfig.js'
 import { watchConnectors } from './watchConnectors.js'
 
@@ -17,7 +18,7 @@ test('default', async () => {
 
   config._internal.connectors.setState(() => [
     ...config.connectors,
-    config._internal.connectors.setup(testConnector({ accounts })),
+    config._internal.connectors.setup(mock({ accounts })),
   ])
 
   expect(config.connectors.length).toBe(count + 1)

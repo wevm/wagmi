@@ -1,10 +1,11 @@
-import { accounts, chain, testConnector } from '@wagmi/test'
+import { accounts, chain } from '@wagmi/test'
 import { http } from 'viem'
 import { expect, test } from 'vitest'
 
 import { connect } from './actions/connect.js'
 import { disconnect } from './actions/disconnect.js'
 import { switchChain } from './actions/switchChain.js'
+import { mock } from './connectors/mock.js'
 import { createConfig } from './createConfig.js'
 
 const { mainnet, optimism } = chain
@@ -12,7 +13,7 @@ const { mainnet, optimism } = chain
 test('default', () => {
   const config = createConfig({
     chains: [mainnet],
-    connectors: [testConnector({ accounts })],
+    connectors: [mock({ accounts })],
     transports: {
       [mainnet.id]: http(),
     },
@@ -23,7 +24,7 @@ test('default', () => {
 test('behavior: syncConnectedChain', async () => {
   const config = createConfig({
     chains: [mainnet, optimism],
-    connectors: [testConnector({ accounts })],
+    connectors: [mock({ accounts })],
     syncConnectedChain: true,
     transports: {
       [mainnet.id]: http(),

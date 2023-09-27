@@ -316,11 +316,6 @@ export {
 // connectors
 
 export {
-  type InjectedParameters,
-  injected,
-} from '../connectors/injected.js'
-
-export {
   type ConnectorEventMap,
   type CreateConnectorFn,
   createConnector,

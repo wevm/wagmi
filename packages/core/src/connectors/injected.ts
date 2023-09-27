@@ -122,7 +122,9 @@ export function injected(parameters: InjectedParameters = {}) {
   type Properties = {
     onConnect(connectInfo: ProviderConnectInfo): void
   }
-  type StorageItem = { [_ in `${string}.disconnected`]: true }
+  type StorageItem = {
+    [_ in 'injected.connected' | `${string}.disconnected`]: true
+  }
 
   return createConnector<Provider, Properties, StorageItem>((config) => ({
     get icon() {
@@ -189,9 +191,13 @@ export function injected(parameters: InjectedParameters = {}) {
           currentChainId = chain?.id ?? currentChainId
         }
 
-        // Remove disconnected shim if it exists
-        if (shimDisconnect)
+        if (shimDisconnect) {
+          // Remove disconnected shim if it exists
           await config.storage?.removeItem(`${this.id}.disconnected`)
+          // Add connected shim if no target exists
+          if (!parameters.target)
+            await config.storage?.setItem('injected.connected', true)
+        }
 
         return { accounts, chainId: currentChainId }
       } catch (err) {
@@ -216,8 +222,11 @@ export function injected(parameters: InjectedParameters = {}) {
       provider.on('connect', this.onConnect.bind(this))
 
       // Add shim signalling connector is disconnected
-      if (shimDisconnect)
+      if (shimDisconnect) {
         await config.storage?.setItem(`${this.id}.disconnected`, true)
+        if (!parameters.target)
+          await config.storage?.removeItem('injected.connected')
+      }
     },
     async getAccounts() {
       const provider = await this.getProvider()
@@ -247,6 +256,15 @@ export function injected(parameters: InjectedParameters = {}) {
           // If shim exists in storage, connector is disconnected
           (await config.storage?.getItem(`${this.id}.disconnected`))
         if (isDisconnected) return false
+
+        // Don't allow injected connector to connect if no target is set and it hasn't already connected
+        // (e.g. flag in storage is not set). This prevents a targetless injected connector from connecting
+        // automatically whenever there is a targeted connector configured.
+        if (!parameters.target) {
+          const connected = await config.storage?.getItem('injected.connected')
+          console.log({ connected })
+          if (!connected) return false
+        }
 
         const provider = await this.getProvider()
         if (!provider) {

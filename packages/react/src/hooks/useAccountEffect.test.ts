@@ -1,5 +1,6 @@
+import { mock } from '@wagmi/connectors'
 import { http, connect, createConfig, disconnect } from '@wagmi/core'
-import { accounts, chain, config, testConnector } from '@wagmi/test'
+import { accounts, chain, config } from '@wagmi/test'
 import { createWrapper, renderHook, waitFor } from '@wagmi/test/react'
 import { expect, test, vi } from 'vitest'
 
@@ -52,7 +53,7 @@ test('behavior: connect called on reconnect', async () => {
   const config = createConfig({
     chains: [chain.mainnet],
     connectors: [
-      testConnector({
+      mock({
         accounts,
         features: { reconnect: true },
       }),

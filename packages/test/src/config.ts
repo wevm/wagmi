@@ -1,16 +1,13 @@
 import { createConfig } from '@wagmi/core'
+import { mock } from '@wagmi/core/internal'
 import { http } from 'viem'
 
 import { mainnet, mainnet2, optimism } from './chains.js'
-import { testConnector } from './connector.js'
 import { accounts } from './constants.js'
 
 export const config = createConfig({
   chains: [mainnet, mainnet2, optimism],
-  connectors: [
-    testConnector({ accounts }),
-    testConnector({ accounts: reverse(accounts) }),
-  ],
+  connectors: [mock({ accounts }), mock({ accounts: reverse(accounts) })],
   pollingInterval: 100,
   storage: null,
   transports: {

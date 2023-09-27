@@ -17,7 +17,7 @@ test('constructors', () => {
       connector: config.connectors[0]!,
     }),
   ).toMatchInlineSnapshot(`
-    [SwitchChainNotSupportedError: "Test Connector" does not support programmatic chain switching.
+    [SwitchChainNotSupportedError: "Mock Connector" does not support programmatic chain switching.
 
     Version: @wagmi/core@x.y.z]
   `)

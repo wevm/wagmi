@@ -44,7 +44,7 @@ test('behavior: account does not exist on connector', async () => {
       value: parseEther('0.01'),
     }),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
-    "Account \\"0xA0Cf798816D4b9b9866b5330EEa46a18382f251e\\" not found for connector \\"Test Connector\\".
+    "Account \\"0xA0Cf798816D4b9b9866b5330EEa46a18382f251e\\" not found for connector \\"Mock Connector\\".
 
     Version: @wagmi/core@x.y.z"
   `)

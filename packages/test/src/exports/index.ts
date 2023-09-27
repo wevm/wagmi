@@ -1,7 +1,5 @@
 export { chain, mainnet, mainnet2, optimism } from '../chains.js'
 
-export { testConnector, type TestConnectorParameters } from '../connector.js'
-
 export {
   abi,
   address,

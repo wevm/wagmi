@@ -9,7 +9,6 @@ test('exports', () => {
       "mainnet",
       "mainnet2",
       "optimism",
-      "testConnector",
       "abi",
       "address",
       "accounts",

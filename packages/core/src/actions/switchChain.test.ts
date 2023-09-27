@@ -1,6 +1,7 @@
-import { accounts, chain, config, testConnector } from '@wagmi/test'
+import { accounts, chain, config } from '@wagmi/test'
 import { expect, test } from 'vitest'
 
+import { mock } from '../connectors/mock.js'
 import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'
 import { getAccount } from './getAccount.js'
@@ -30,7 +31,7 @@ test('default', async () => {
 
 test('behavior: user rejected request', async () => {
   const connector_ = config._internal.connectors.setup(
-    testConnector({
+    mock({
       accounts,
       features: { switchChainError: true },
     }),
@@ -49,13 +50,13 @@ test('behavior: user rejected request', async () => {
 
 test('behavior: not supported', async () => {
   const { switchChain: _, ...connector_ } = config._internal.connectors.setup(
-    testConnector({ accounts }),
+    mock({ accounts }),
   )
   await connect(config, { connector: connector_ })
   await expect(
     switchChain(config, { chainId: chain.mainnet.id }),
   ).rejects.toMatchInlineSnapshot(`
-    [SwitchChainNotSupportedError: "Test Connector" does not support programmatic chain switching.
+    [SwitchChainNotSupportedError: "Mock Connector" does not support programmatic chain switching.
 
     Version: @wagmi/core@x.y.z]
   `)

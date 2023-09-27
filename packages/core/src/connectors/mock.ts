@@ -1,10 +1,4 @@
 import {
-  ChainNotConfiguredError,
-  ConnectorNotConnectedError,
-  createConnector,
-  normalizeChainId,
-} from '@wagmi/core'
-import {
   type Address,
   type EIP1193RequestFn,
   type Hex,
@@ -20,20 +14,27 @@ import {
 } from 'viem'
 import { rpc } from 'viem/utils'
 
-export type TestConnectorParameters = {
+import {
+  ChainNotConfiguredError,
+  ConnectorNotConnectedError,
+} from '../errors/config.js'
+import { normalizeChainId } from '../utils/normalizeChainId.js'
+import { createConnector } from './createConnector.js'
+
+export type MockParameters = {
   accounts: readonly [Address, ...Address[]]
   features?:
     | {
-        connectError?: boolean | Error
-        switchChainError?: boolean | Error
-        signMessageError?: boolean | Error
-        signTypedDataError?: boolean | Error
-        reconnect?: boolean
+        connectError?: boolean | Error | undefined
+        switchChainError?: boolean | Error | undefined
+        signMessageError?: boolean | Error | undefined
+        signTypedDataError?: boolean | Error | undefined
+        reconnect?: boolean | undefined
       }
     | undefined
 }
 
-export function testConnector(parameters: TestConnectorParameters) {
+export function mock(parameters: MockParameters) {
   const features = parameters.features ?? {}
 
   type Provider = ReturnType<
@@ -43,8 +44,8 @@ export function testConnector(parameters: TestConnectorParameters) {
   let connectedChainId: number
 
   return createConnector<Provider>((config) => ({
-    id: 'test',
-    name: 'Test Connector',
+    id: 'mock',
+    name: 'Mock Connector',
     async setup() {
       connectedChainId = config.chains[0].id
     },

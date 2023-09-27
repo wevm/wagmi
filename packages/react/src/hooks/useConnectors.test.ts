@@ -1,4 +1,5 @@
-import { accounts, config, testConnector } from '@wagmi/test'
+import { mock } from '@wagmi/connectors'
+import { accounts, config } from '@wagmi/test'
 import { renderHook } from '@wagmi/test/react'
 import { expect, test } from 'vitest'
 
@@ -13,7 +14,7 @@ test('default', async () => {
 
   config._internal.connectors.setState(() => [
     ...config.connectors,
-    config._internal.connectors.setup(testConnector({ accounts })),
+    config._internal.connectors.setup(mock({ accounts })),
   ])
   rerender()
 

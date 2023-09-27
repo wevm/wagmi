@@ -62,7 +62,6 @@ test('exports', () => {
       "waitForTransactionReceipt",
       "waitForTransaction",
       "writeContract",
-      "injected",
       "createConnector",
       "createConfig",
       "createStorage",

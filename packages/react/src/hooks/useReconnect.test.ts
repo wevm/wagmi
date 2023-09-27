@@ -1,12 +1,13 @@
+import { mock } from '@wagmi/connectors'
 import { connect, disconnect } from '@wagmi/core'
-import { accounts, config, testConnector } from '@wagmi/test'
+import { accounts, config } from '@wagmi/test'
 import { renderHook, waitFor } from '@wagmi/test/react'
 import { afterEach, expect, test } from 'vitest'
 
 import { useReconnect } from './useReconnect.js'
 
 const connector = config._internal.connectors.setup(
-  testConnector({
+  mock({
     accounts,
     features: { reconnect: true },
   }),
@@ -48,7 +49,7 @@ test('parameters: connectors (Connector)', async () => {
 })
 
 test('parameters: connectors (CreateConnectorFn)', async () => {
-  const connector = testConnector({
+  const connector = mock({
     accounts,
     features: { reconnect: true },
   })

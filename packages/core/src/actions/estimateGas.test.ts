@@ -1,12 +1,13 @@
-import { accounts, config, testConnector } from '@wagmi/test'
+import { accounts, config } from '@wagmi/test'
 import { parseEther } from 'viem'
 import { expect, test } from 'vitest'
 
+import { mock } from '../connectors/mock.js'
 import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'
 import { estimateGas } from './estimateGas.js'
 
-const connector = config._internal.connectors.setup(testConnector({ accounts }))
+const connector = config._internal.connectors.setup(mock({ accounts }))
 
 test('parameters: account', async () => {
   await expect(

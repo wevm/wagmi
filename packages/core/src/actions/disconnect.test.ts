@@ -1,10 +1,11 @@
-import { accounts, config, testConnector } from '@wagmi/test'
+import { accounts, config } from '@wagmi/test'
 import { expect, test } from 'vitest'
 
+import { mock } from '../connectors/mock.js'
 import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'
 
-const connector = config._internal.connectors.setup(testConnector({ accounts }))
+const connector = config._internal.connectors.setup(mock({ accounts }))
 
 test('default', async () => {
   await connect(config, { connector })
@@ -32,9 +33,7 @@ test('behavior: not connected to connector', async () => {
 
 test('behavior: connector passed not connected', async () => {
   await connect(config, { connector })
-  const connector_ = config._internal.connectors.setup(
-    testConnector({ accounts }),
-  )
+  const connector_ = config._internal.connectors.setup(mock({ accounts }))
   await expect(
     disconnect(config, { connector: connector_ }),
   ).rejects.toMatchInlineSnapshot(`
@@ -45,9 +44,7 @@ test('behavior: connector passed not connected', async () => {
 })
 
 test('behavior: uses next connector on disconnect', async () => {
-  const connector_ = config._internal.connectors.setup(
-    testConnector({ accounts }),
-  )
+  const connector_ = config._internal.connectors.setup(mock({ accounts }))
   await connect(config, { connector: connector_ })
   await connect(config, { connector })
 

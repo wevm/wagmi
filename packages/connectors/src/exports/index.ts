@@ -1,4 +1,9 @@
-export { type InjectedParameters, injected } from '@wagmi/core'
+export {
+  type InjectedParameters,
+  injected,
+  type MockParameters,
+  mock,
+} from '@wagmi/core/internal'
 
 export {
   type CoinbaseWalletParameters,

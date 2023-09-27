@@ -25,13 +25,14 @@ const indexedDBStorage = {
 export const config = createConfig({
   chains: [mainnet, sepolia, optimism, celo],
   connectors: [
-    injected({ target: 'metaMask' }),
     walletConnect({
       projectId: import.meta.env.VITE_WC_PROJECT_ID,
     }),
     coinbaseWallet({ appName: 'Vite React Playground', darkMode: true }),
     ledger({ projectId: import.meta.env.VITE_WC_PROJECT_ID }),
     safe({ debug: true, shimDisconnect: true }),
+    injected({ target: 'metaMask' }),
+    injected(),
   ],
   storage: createStorage({
     key: 'vite-react',
