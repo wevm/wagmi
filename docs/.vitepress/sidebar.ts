@@ -126,7 +126,7 @@ export function getSidebar() {
             link: '/react/api/hooks/useContractReads',
           },
           {
-            text: 'useContractSimulate 🚧',
+            text: 'useContractSimulate',
             link: '/react/api/hooks/useContractSimulate',
           },
           {
