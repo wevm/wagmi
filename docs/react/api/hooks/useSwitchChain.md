@@ -1,3 +1,8 @@
+---
+title: useSwitchChain
+description: Hook for switching the target chain for a connector or the Wagmi `Config`.
+---
+
 <script setup>
 const packageName = 'wagmi'
 const actionName = 'switchChain'

@@ -1,3 +1,8 @@
+---
+title: useWatchBlockNumber
+description: Hook that watches for block number changes.
+---
+
 # useWatchBlockNumber
 
 Hook that watches for block number changes.

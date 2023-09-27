@@ -1,3 +1,8 @@
+---
+title: useContractRead
+description: Hook for calling a read-only function on a contract, and returning the response.
+---
+
 <script setup>
 const packageName = 'wagmi'
 const actionName = 'readContract'

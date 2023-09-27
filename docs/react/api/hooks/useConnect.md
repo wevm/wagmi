@@ -1,3 +1,8 @@
+---
+title: useConnect
+description: Hook for connecting accounts with connectors.
+---
+
 <script setup>
 const packageName = 'wagmi'
 const actionName = 'connect'

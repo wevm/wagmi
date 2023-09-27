@@ -1,3 +1,8 @@
+---
+title: useEnsAvatar
+description: Hook for fetching ENS avatar for name.
+---
+
 <script setup>
 const packageName = 'wagmi'
 const actionName = 'getEnsAvatar'

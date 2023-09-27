@@ -1,3 +1,8 @@
+---
+title: usePublicClient
+description: Hook for getting Viem `PublicClient` instance.
+---
+
 # usePublicClient
 
 Hook for getting Viem [`PublicClient`](https://viem.sh/docs/clients/public.html) instance.

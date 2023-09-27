@@ -1,3 +1,8 @@
+---
+title: useChainId
+description: Hook for getting current chain ID.
+---
+
 # useChainId
 
 Hook for getting current chain ID.

@@ -1,3 +1,8 @@
+---
+title: useTransaction
+description: Hook for fetching transactions given hashes or block identifiers.
+---
+
 # useTransaction
 
 Hook for fetching transactions given hashes or block identifiers.

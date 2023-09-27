@@ -1,3 +1,8 @@
+---
+title: useConnectors
+description: Hook for getting configured connectors.
+---
+
 # useConnectors
 
 Hook for getting configured connectors.

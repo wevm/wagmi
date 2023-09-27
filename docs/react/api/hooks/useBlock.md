@@ -1,3 +1,8 @@
+---
+title: useBlock
+description: Hook for fetching information about a block at a block number, hash or tag.
+---
+
 <script setup>
 const packageName = 'wagmi'
 const actionName = 'getBlock'

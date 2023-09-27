@@ -1,3 +1,8 @@
+---
+title: useContractSimulate
+description: Hook for simulating/validating a contract interaction.
+---
+
 <script setup>
 const packageName = 'wagmi'
 const actionName = 'simulateContract'
@@ -8,7 +13,7 @@ const TError = 'SimulateContractError'
 
 # useContractSimulate
 
-Action for simulating/validating a contract interaction.
+Hook for simulating/validating a contract interaction.
 
 ## Import
 

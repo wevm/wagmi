@@ -1,3 +1,8 @@
+---
+title: useWatchBlocks
+description: Hook that watches for block changes.
+---
+
 # useWatchBlocks
 
 Hook that watches for block changes.

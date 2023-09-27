@@ -1,3 +1,8 @@
+---
+title: useAccountEffect
+description: Hook for listening to account lifecycle events.
+---
+
 # useAccountEffect
 
 Hook for listening to account lifecycle events.

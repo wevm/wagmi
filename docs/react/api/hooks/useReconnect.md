@@ -1,3 +1,8 @@
+---
+title: useReconnect
+description: Hook for reconnecting connectors.
+---
+
 <script setup>
 const packageName = 'wagmi'
 const actionName = 'reconnect'

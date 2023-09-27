@@ -1,3 +1,8 @@
+---
+title: useEnsResolver
+description: Hook for fetching ENS resolver for name.
+---
+
 <script setup>
 const packageName = 'wagmi'
 const actionName = 'getEnsResolver'

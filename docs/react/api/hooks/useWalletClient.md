@@ -1,3 +1,8 @@
+---
+title: useWalletClient
+description: Hook for getting a Viem `WalletClient` object for the current or provided connector.
+---
+
 # useWalletClient
 
 Hook for getting a Viem [`WalletClient`](https://viem.sh/docs/clients/wallet.html) object for the current or provided connector.

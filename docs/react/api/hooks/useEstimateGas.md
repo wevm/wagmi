@@ -1,3 +1,8 @@
+---
+title: useEstimateGas
+description: Hook for estimating the gas necessary to complete a transaction without submitting it to the network.
+---
+
 <script setup>
 const packageName = 'wagmi'
 const actionName = 'estimateGas'

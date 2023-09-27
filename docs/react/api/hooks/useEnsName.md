@@ -1,3 +1,8 @@
+---
+title: useEnsName
+description: Hook for fetching primary ENS name for address.
+---
+
 <script setup>
 const packageName = 'wagmi'
 const actionName = 'getEnsName'

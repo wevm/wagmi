@@ -1,3 +1,8 @@
+---
+title: useSwitchAccount
+description: Hook for switching the current account.
+---
+
 <script setup>
 const packageName = 'wagmi'
 const actionName = 'switchAccount'

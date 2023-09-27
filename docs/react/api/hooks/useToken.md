@@ -1,3 +1,8 @@
+---
+title: useToken
+description: Hook for fetching token info.
+---
+
 <script setup>
 const packageName = 'wagmi'
 const actionName = 'getToken'

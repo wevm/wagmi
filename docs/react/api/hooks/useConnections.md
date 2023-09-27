@@ -1,3 +1,8 @@
+---
+title: useConnections
+description: Hook for getting active connections.
+---
+
 # useConnections
 
 Hook for getting active connections.

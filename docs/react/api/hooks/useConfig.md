@@ -1,3 +1,8 @@
+---
+title: useConfig
+description: Hook for getting `Config` from nearest `WagmiProvider`.
+---
+
 # useConfig
 
 Hook for getting [`Config`](/react/api/createConfig#config) from nearest [`WagmiProvider`](/react/WagmiProvider).

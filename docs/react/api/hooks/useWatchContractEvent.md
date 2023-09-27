@@ -1,3 +1,8 @@
+---
+title: useWatchContractEvent
+description: Hook that watches and returns emitted contract event logs.
+---
+
 # useWatchContractEvent
 
 Hook that watches and returns emitted contract event logs.

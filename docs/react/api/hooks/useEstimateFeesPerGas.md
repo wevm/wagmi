@@ -1,3 +1,8 @@
+---
+title: useEstimateFeesPerGas
+description: Hook for fetching an estimate for the fees per gas (in wei) for a transaction to be likely included in the next block.
+---
+
 <script setup>
 const packageName = 'wagmi'
 const actionName = 'estimateFeesPerGas'

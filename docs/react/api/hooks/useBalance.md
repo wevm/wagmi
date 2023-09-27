@@ -1,3 +1,8 @@
+---
+title: useBalance
+description: Hook for fetching native currency or token balance.
+---
+
 <script setup>
 const packageName = 'wagmi'
 const actionName = 'getBalance'

@@ -1,3 +1,8 @@
+---
+title: useWatchPendingTransactions
+description: Hook that watches and returns pending transaction hashes.
+---
+
 # useWatchPendingTransactions
 
 Hook that watches and returns pending transaction hashes.

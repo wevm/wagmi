@@ -1,3 +1,8 @@
+---
+title: useBlockNumber
+description: Hook for fetching the number of the most recent block seen.
+---
+
 <script setup>
 const packageName = 'wagmi'
 const actionName = 'getBlockNumber'

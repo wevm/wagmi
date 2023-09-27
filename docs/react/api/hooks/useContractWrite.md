@@ -1,3 +1,8 @@
+---
+title: useContractWrite
+description: Action for executing a write function on a contract.
+---
+
 <script setup>
 const packageName = 'wagmi'
 const actionName = 'writeContract'

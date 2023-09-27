@@ -1,3 +1,8 @@
+---
+title: useWaitForTransactionReceipt
+description: Hook that waits for the transaction to be included on a block, and then returns the transaction receipt. If the transaction reverts, then the action will throw an error. Replacement detection (e.g. sped up transactions) is also supported.
+---
+
 # useWaitForTransactionReceipt
 
 Hook that waits for the transaction to be included on a block, and then returns the transaction receipt. If the transaction reverts, then the action will throw an error. Replacement detection (e.g. sped up transactions) is also supported.

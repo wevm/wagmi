@@ -1,3 +1,8 @@
+---
+title: useSendTransaction
+description: Hook for creating, signing, and sending transactions to networks.
+---
+
 <script setup>
 const packageName = 'wagmi'
 const actionName = 'sendTransaction'

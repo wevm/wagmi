@@ -1,3 +1,8 @@
+---
+title: useContractReads
+description: Hook for calling multiple read methods on a contract.
+---
+
 # useContractReads
 
 Hook for calling multiple read methods on a contract.

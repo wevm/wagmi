@@ -1,3 +1,8 @@
+---
+title: useSignMessage
+description: Hook for signing messages.
+---
+
 <script setup>
 const packageName = 'wagmi'
 const actionName = 'signMessage'

@@ -1,3 +1,8 @@
+---
+title: useSignTypedData
+description: Hook for signing typed data and calculating an Ethereum-specific EIP-712 signature.
+---
+
 <script setup>
 const packageName = 'wagmi'
 const actionName = 'signTypedData'

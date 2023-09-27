@@ -1,3 +1,8 @@
+---
+title: useDisconnect
+description: Hook for disconnecting connections.
+---
+
 <script setup>
 const packageName = 'wagmi'
 const actionName = 'disconnect'

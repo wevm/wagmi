@@ -1,3 +1,8 @@
+---
+title: useAccount
+description: Hook for getting current account.
+---
+
 # useAccount
 
 Hook for getting current account.
