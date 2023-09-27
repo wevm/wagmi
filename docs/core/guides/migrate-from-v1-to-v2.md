@@ -342,6 +342,12 @@ const connector = injected({ // [!code ++]
 - WalletConnect v1 support dropped. WalletConnect v2 is now the only supported version.
 - Removed `autoConnect` parameter from `createConfig`. Use [`reconnect`](/core/api/actions/reconnect) instead.
 - Errors 🚧
+- Changed `sendTransaction` and `writeContract` return type from `` { hash: `0x${string}` } `` to `` `0x${string}` ``.
+  ```ts
+  const result = await sendTransaction({ hash: '0x...' })
+  result.hash // [!code --]
+  result // [!code ++]
+  ```
 - Dropped CommonJS module support. Use ES Modules instead. See [Sindre Sorhus' guide](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c) for more info.
 
 ## Deprecations

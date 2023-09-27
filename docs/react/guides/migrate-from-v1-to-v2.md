@@ -277,6 +277,12 @@ In Wagmi v1, connectors were classes you needed to instantiate. In Wagmi v2, con
 - Errors 🚧
 - Removed `useContractReads` `paginatedIndexesConfig`. Use `initialPageParam` and `getNextPageParam` along with `fetchNextPage`/`fetchPreviousPage` instead.
 - Removed `useWebSocketPublicClient`. The Wagmi `Config` does not separate transport types anymore.
+- Changed `useSendTransaction` and `useContractWrite` return type from `` { hash: `0x${string}` } `` to `` `0x${string}` ``.
+  ```ts
+  const result = useSendTransaction({ hash: '0x...' })
+  result.data?.hash // [!code --]
+  result.data // [!code ++]
+  ```
 - Dropped CommonJS module support. Use ES Modules instead. See [Sindre Sorhus' guide](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c) for more info.
 
 ## Deprecations
