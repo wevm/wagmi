@@ -1,4 +1,5 @@
 ---
+description: Type Safe, Extensible, and Modular by design. Build high-performance blockchain frontends.
 title: 'Wagmi | Reactivity for Ethereum apps'
 titleTemplate: false
 

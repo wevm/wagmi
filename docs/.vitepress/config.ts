@@ -12,28 +12,31 @@ export default withTwoslash(
     cleanUrls: true,
     description: 'Reactivity for Ethereum apps',
     head: [
-      ['meta', { name: 'theme-color', content: '#729b1a' }],
-      ['link', { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' }],
-      [
-        'link',
-        {
-          rel: 'alternate icon',
-          href: '/favicon.png',
-          type: 'image/png',
-          sizes: '48x48',
-        },
-      ],
       [
         'meta',
         {
           name: 'keywords',
-          content: 'react, ethereum, typescript, react hooks',
+          content:
+            'react, ethereum, typescript, react, react hooks, open source',
         },
       ],
-      ['meta', { property: 'og:url', content: 'https://wagmi.sh' }],
-      ['meta', { property: 'og:image', content: 'https://wagmi.sh/og.png' }],
-      ['meta', { name: 'twitter:image', content: 'https://wagmi.sh/og.png' }],
+      ['meta', { name: 'theme-color', content: '#646cff' }],
+      // Open Graph
+      ['meta', { property: 'og:type', content: 'website' }],
+      [
+        'meta',
+        { property: 'og:image', content: 'https://alpha.wagmi.sh/og.png' },
+      ],
+      ['meta', { property: 'og:url', content: 'https://alpha.wagmi.sh' }],
+      // Twitter
       ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+      ['meta', { name: 'twitter:creator', content: '@wagmi_sh' }],
+      [
+        'meta',
+        { name: 'twitter:image', content: 'https://alpha.wagmi.sh/og.png' },
+      ],
+      ['meta', { name: 'twitter:site', content: 'alpha.wagmi.sh' }],
+      // Fathom
       [
         'script',
         {
@@ -75,8 +78,8 @@ export default withTwoslash(
       nav: [
         { text: 'React', link: '/react/getting-started' },
         { text: 'Core', link: '/core/getting-started' },
-        { text: 'CLI', link: '/cli/getting-started' },
-        { text: 'Examples', link: '/examples' },
+        { text: 'CLI 🚧', link: '/cli/getting-started' },
+        { text: 'Examples 🚧', link: '/examples' },
         {
           text: 'Links',
           items: [
