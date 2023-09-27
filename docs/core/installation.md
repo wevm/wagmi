@@ -1,3 +1,9 @@
+<script setup>
+import packageJson from '../../packages/core/package.json'
+
+const viemVersion = packageJson.peerDependencies.viem
+</script>
+
 # Installation
 
 Install Wagmi Core via your package manager, a `<script>` tag, or build from source.
@@ -7,20 +13,20 @@ Install Wagmi Core via your package manager, a `<script>` tag, or build from sou
 Install the required packages.
 
 ::: code-group
-```bash [pnpm]
-pnpm add @wagmi/core@alpha viem@alpha
+```bash-vue [pnpm]
+pnpm add @wagmi/core@alpha viem@{{viemVersion}}
 ```
 
-```bash [npm]
-npm install @wagmi/core@alpha viem@alpha
+```bash-vue [npm]
+npm install @wagmi/core@alpha viem@{{viemVersion}}
 ```
 
-```bash [yarn]
-yarn add @wagmi/core@alpha viem@alpha
+```bash-vue [yarn]
+yarn add @wagmi/core@alpha viem@{{viemVersion}}
 ```
 
-```bash [bun]
-bun add @wagmi/core@alpha viem@alpha
+```bash-vue [bun]
+bun add @wagmi/core@alpha viem@{{viemVersion}}
 ```
 :::
 
@@ -31,10 +37,10 @@ bun add @wagmi/core@alpha viem@alpha
 
 If you're not using a package manager, you can also use Wagmi Core via an ESM-compatible CDN such as [esm.sh](https://esm.sh). Simply add a `<script type="module">` tag to the bottom of your HTML file with the following content.
 
-```html
+```html-vue
 <script type="module">
   import { createClient } from 'https://esm.sh/viem@alpha'
-  import { createConfig } from 'https://esm.sh/@wagmi/core@alpha'
+  import { createConfig } from 'https://esm.sh/@wagmi/core@{{viemVersion}}'
   import { injected } from 'https://esm.sh/@wagmi/connectors@alpha'
 </script>
 ```
@@ -80,7 +86,7 @@ bun add @wagmi/core@canary
 Or clone the [Wagmi repo](https://github.com/wagmi-dev/wagmi) to your local machine, build, and link it yourself.
 
 ```bash
-git clone https://github.com/wagmi-dev/wagmi.git
+gh repo clone wagmi-dev/wagmi
 cd wagmi
 pnpm install
 pnpm build

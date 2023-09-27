@@ -1,3 +1,9 @@
+<script setup>
+import packageJson from '../../packages/core/package.json'
+
+const viemVersion = packageJson.peerDependencies.viem
+</script>
+
 # Getting Started
 
 ## Overview
@@ -9,20 +15,20 @@ Wagmi Core is a VanillaJS library for Ethereum. You can learn more about the rat
 To manually add Wagmi to your project, install the required packages.
 
 ::: code-group
-```bash [pnpm]
-pnpm add @wagmi/core@alpha @wagmi/connectors@alpha viem@alpha
+```bash-vue [pnpm]
+pnpm add @wagmi/core@alpha @wagmi/connectors@alpha viem@{{viemVersion}}
 ```
 
-```bash [npm]
-npm install @wagmi/core@alpha @wagmi/connectors@alpha viem@alpha
+```bash-vue [npm]
+npm install @wagmi/core@alpha @wagmi/connectors@alpha viem@{{viemVersion}}
 ```
 
-```bash [yarn]
-yarn add @wagmi/core@alpha @wagmi/connectors@alpha viem@alpha
+```bash-vue [yarn]
+yarn add @wagmi/core@alpha @wagmi/connectors@alpha viem@{{viemVersion}}
 ```
 
-```bash [bun]
-bun add @wagmi/core@alpha @wagmi/connectors@alpha viem@alpha
+```bash-vue [bun]
+bun add @wagmi/core@alpha @wagmi/connectors@alpha viem@{{viemVersion}}
 ```
 :::
 

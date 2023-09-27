@@ -28,27 +28,27 @@ features:
     linkText: See all hooks
   - icon: 🦄
     title: TypeScript Ready
-    details: Infer types from ABIs and EIP-712 Typed Data and autocomplete your way to success.
+    details: Infer types from ABIs and EIP-712 Typed Data and autocomplete your way to productivity.
     link: /react/typescript
     linkText: Learn about TypeScript support
   - icon: 💼
     title: Connect Wallet
-    details: Official wallet connectors for MetaMask, WalletConnect, Coinbase Wallet, and more.
+    details: Official connectors for MetaMask, EIP-6963, WalletConnect, Coinbase Wallet, and more.
     link: /react/api/connectors
     linkText: See all connectors
   - icon: 👟
-    title: Caching, Deduplication & Persistence
+    title: Caching. Deduplication. Persistence.
     details: Built-in caching, deduplication, persistence powered by TanStack Query.
     link: /react/tanstack-query
     linkText: How to use TanStack Query
   - icon: 🌳
     title: Modular By Design
-    details: Hate React? Use VanillaJS or build an adapter for your favorite framework.
+    details: Don't use React? Use VanillaJS or build an adapter for your favorite framework.
     link: /core/getting-started
     linkText: Learn about Wagmi Core
   - icon: ✌️
     title: Built on Viem
-    details: Modern, low-level TypeScript interface for Ethereum that performs blockchain operations.
+    details: The modern, low-level TypeScript interface for Ethereum that performs blockchain operations.
     link: https://viem.sh
     linkText: Check out Viem
 ---

@@ -4,6 +4,7 @@ import 'uno.css'
 import 'vitepress-plugin-shiki-twoslash/styles.css'
 
 import AsideSponsors from './components/AsideSponsors.vue'
+// import Banner from './components/Banner.vue'
 import HomePage from './components/HomePage.vue'
 
 import './style.css'

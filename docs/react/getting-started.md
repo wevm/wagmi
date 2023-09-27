@@ -1,3 +1,9 @@
+<script setup>
+import packageJson from '../../packages/react/package.json'
+
+const viemVersion = packageJson.peerDependencies.viem
+</script>
+
 # Getting Started
 
 ## Overview
@@ -24,7 +30,6 @@ yarn create wagmi@alpha
 ```bash [bun]
 bun create wagmi@alpha
 ```
-
 :::
 
 Once the command runs, you'll see some prompts to complete.
@@ -42,20 +47,20 @@ After the prompts, `create-wagmi` will create a directory with your project name
 To manually add Wagmi to your project, install the required packages.
 
 ::: code-group
-```bash [pnpm]
-pnpm add wagmi@alpha viem@alpha @tanstack/react-query@beta
+```bash-vue [pnpm]
+pnpm add wagmi@alpha viem@{{viemVersion}} @tanstack/react-query@beta
 ```
 
-```bash [npm]
-npm install wagmi@alpha viem@alpha @tanstack/react-query@beta
+```bash-vue [npm]
+npm install wagmi@alpha viem@{{viemVersion}} @tanstack/react-query@beta
 ```
 
-```bash [yarn]
-yarn add wagmi@alpha viem@alpha @tanstack/react-query@beta
+```bash-vue [yarn]
+yarn add wagmi@alpha viem@{{viemVersion}} @tanstack/react-query@beta
 ```
 
-```bash [bun]
-bun add wagmi@alpha viem@alpha @tanstack/react-query@beta
+```bash-vue [bun]
+bun add wagmi@alpha viem@{{viemVersion}} @tanstack/react-query@beta
 ```
 
 :::
@@ -74,8 +79,8 @@ Create and export a new Wagmi config using `createConfig`.
 
 In this example, Wagmi is configured to use the Mainnet and Sepolia chains, and `injected` connector. Check out the [`createConfig` docs](/react/api/createConfig) for more configuration options.
 
----
 
+::: details TypeScript Tip
 If you are using TypeScript, you can "register" the Wagmi config or use the hook `config` property to get strong type-safety across React Context in places that wouldn't normally have type info.
 
 ::: code-group
@@ -109,9 +114,8 @@ import { useBlockNumber } from 'wagmi'
 useBlockNumber({ chainId: 123, config })
 ```
 
-:::
-
 By registering or using the hook `config` property, `useBlockNumber`'s `chainId` is strongly typed to only allow Mainnet and Sepolia IDs. Learn more by reading the [TypeScript docs](/react/typescript#config-types).
+:::
 
 ### Wrap App in Context Provider
 

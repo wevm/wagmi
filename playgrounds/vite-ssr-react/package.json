@@ -28,7 +28,7 @@
     "react-dom": "^18.2.0",
     "sirv": "^2.0.3",
     "ts-node": "^10.9.1",
-    "viem": ">2.0.0-alpha.10",
+    "viem": "2.0.0-alpha.11",
     "vite": "^4.4.9",
     "vite-plugin-ssr": "^0.4.141",
     "wagmi": "workspace:*"

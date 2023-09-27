@@ -1,3 +1,9 @@
+<script setup>
+import packageJson from '../../packages/react/package.json'
+
+const viemVersion = packageJson.peerDependencies.viem
+</script>
+
 # Installation
 
 Install Wagmi via your package manager, a `<script>` tag, or build from source.
@@ -7,20 +13,20 @@ Install Wagmi via your package manager, a `<script>` tag, or build from source.
 Install the required packages.
 
 ::: code-group
-```bash [pnpm]
-pnpm add wagmi@alpha viem@alpha @tanstack/react-query@beta
+```bash-vue [pnpm]
+pnpm add wagmi@alpha viem@{{viemVersion}} @tanstack/react-query@beta
 ```
 
-```bash [npm]
-npm install wagmi@alpha viem@alpha @tanstack/react-query@beta
+```bash-vue [npm]
+npm install wagmi@alpha viem@{{viemVersion}} @tanstack/react-query@beta
 ```
 
-```bash [yarn]
-yarn add wagmi@alpha viem@alpha @tanstack/react-query@beta
+```bash-vue [yarn]
+yarn add wagmi@alpha viem@{{viemVersion}} @tanstack/react-query@beta
 ```
 
-```bash [bun]
-bun add wagmi@alpha viem@alpha @tanstack/react-query@beta
+```bash-vue [bun]
+bun add wagmi@alpha viem@{{viemVersion}} @tanstack/react-query@beta
 ```
 :::
 
@@ -32,11 +38,11 @@ bun add wagmi@alpha viem@alpha @tanstack/react-query@beta
 
 If you're not using a package manager, you can also use Wagmi via an ESM-compatible CDN such as [esm.sh](https://esm.sh). Simply add a `<script type="module">` tag to the bottom of your HTML file with the following content.
 
-```html
+```html-vue
 <script type="module">
   import React from 'https://esm.sh/react@18.2.0'
   import { QueryClient } from 'https://esm.sh/@tanstack/react-query@beta'
-  import { createClient } from 'https://esm.sh/viem@alpha'
+  import { createClient } from 'https://esm.sh/viem@{{viemVersion}}'
   import { createConfig } from 'https://esm.sh/wagmi@alpha'
 </script>
 ```
@@ -82,7 +88,7 @@ bun add wagmi@canary
 Or clone the [Wagmi repo](https://github.com/wagmi-dev/wagmi) to your local machine, build, and link it yourself.
 
 ```bash
-git clone https://github.com/wagmi-dev/wagmi.git
+gh repo clone wagmi-dev/wagmi
 cd wagmi
 pnpm install
 pnpm build

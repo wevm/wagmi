@@ -1,5 +1,7 @@
+// TODO: Dismissable, a11y, etc.
+// https://github.com/faker-js/faker/pull/1487
+
 <template>
-  <!-- TODO: Dismissable, a11y, etc. -->
   <div class="banner" flex font-medium items-center justify-center text-center text-sm>
     wagmi is in the Gitcoin Grants Beta Round. Click here to support development. Thank you 🙏
   </div>
