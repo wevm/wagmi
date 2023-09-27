@@ -97,9 +97,9 @@ function App() {
 
 ### type
 
-`"legacy" | "eip1559"`
+`'legacy' | 'eip1559'`
 
-- Defaults to `"eip1559"`
+- Defaults to `'eip1559'`
 
 ::: code-group
 ```ts [index.ts]

@@ -81,7 +81,6 @@ Globally configured connectors via [`createConfig`](/react/api/createConfig#conn
 ::: code-group
 ```tsx [index.tsx]
 import { useConnect } from 'wagmi'
-import { mainnet } from 'wagmi/chains'
 
 function App() {
   const { connect, connectors } = useConnect()

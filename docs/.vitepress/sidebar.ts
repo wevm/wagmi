@@ -94,15 +94,15 @@ export function getSidebar() {
           },
           { text: 'useBalance', link: '/react/api/hooks/useBalance' },
           {
-            text: 'useBlock',
-            link: '/react/api/hooks/useBlock',
-          },
-          {
             text: 'useBlockNumber',
             link: '/react/api/hooks/useBlockNumber',
           },
+          {
+            text: 'useBlock',
+            link: '/react/api/hooks/useBlock',
+          },
           { text: 'useChainId', link: '/react/api/hooks/useChainId' },
-          { text: 'useClient 🚧', link: '/react/api/hooks/useClient' },
+          { text: 'useClient', link: '/react/api/hooks/useClient' },
           { text: 'useConfig', link: '/react/api/hooks/useConfig' },
           { text: 'useConnect', link: '/react/api/hooks/useConnect' },
           {
@@ -114,7 +114,7 @@ export function getSidebar() {
             link: '/react/api/hooks/useConnectorClient',
           },
           {
-            text: 'useConnectors 🚧',
+            text: 'useConnectors',
             link: '/react/api/hooks/useConnectors',
           },
           {
@@ -142,7 +142,7 @@ export function getSidebar() {
             link: '/react/api/hooks/useEnsResolver',
           },
           {
-            text: 'usePublicClient 🚧',
+            text: 'usePublicClient',
             link: '/react/api/hooks/usePublicClient',
           },
           {
@@ -159,23 +159,23 @@ export function getSidebar() {
           },
           { text: 'useReconnect', link: '/react/api/hooks/useReconnect' },
           {
-            text: 'useSendTransaction 🚧',
+            text: 'useSendTransaction',
             link: '/react/api/hooks/useSendTransaction',
           },
           {
-            text: 'useSignMessage 🚧',
+            text: 'useSignMessage',
             link: '/react/api/hooks/useSignMessage',
           },
           {
-            text: 'useSignTypedData 🚧',
+            text: 'useSignTypedData',
             link: '/react/api/hooks/useSignTypedData',
           },
           {
-            text: 'useSwitchAccount 🚧',
+            text: 'useSwitchAccount',
             link: '/react/api/hooks/useSwitchAccount',
           },
           {
-            text: 'useSwitchChain 🚧',
+            text: 'useSwitchChain',
             link: '/react/api/hooks/useSwitchChain',
           },
           {
@@ -187,8 +187,8 @@ export function getSidebar() {
             link: '/react/api/hooks/useToken',
           },
           {
-            text: 'useWaitForTransaction 🚧',
-            link: '/react/api/hooks/useWaitForTransaction',
+            text: 'useWaitForTransactionReceipt 🚧',
+            link: '/react/api/hooks/useWaitForTransactionReceipt',
           },
           {
             text: 'useWalletClient 🚧',

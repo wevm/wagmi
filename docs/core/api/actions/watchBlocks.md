@@ -1,6 +1,6 @@
 # watchBlocks
 
-Subscribe to block changes.
+Action that watches for block changes.
 
 ## Import
 

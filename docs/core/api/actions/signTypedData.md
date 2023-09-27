@@ -6,7 +6,7 @@ const typeName = 'SignTypedData'
 
 # signTypedData
 
-Signs typed data and calculates an Ethereum-specific [EIP-712](https://eips.ethereum.org/EIPS/eip-712) signature.
+Action for signing typed data and calculating an Ethereum-specific [EIP-712](https://eips.ethereum.org/EIPS/eip-712) signature.
 
 ## Import
 

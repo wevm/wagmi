@@ -1,6 +1,6 @@
 # watchBlockNumber
 
-Subscribe to block number changes.
+Action that watches for block number changes.
 
 ## Import
 
