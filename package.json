@@ -50,7 +50,7 @@
     "rimraf": "^4.4.1",
     "simple-git-hooks": "^2.9.0",
     "typescript": "5.1.6",
-    "viem": "2.0.0-alpha.11",
+    "viem": "2.0.0-alpha.12",
     "vitest": "^0.34.5"
   },
   "packageManager": "pnpm@8.8.0",
@@ -74,13 +74,8 @@
       "vitest.workspace.ts",
       "packages/cli/src/plugins/__fixtures__/**"
     ],
-    "ignoreBinaries": [
-      "biome"
-    ],
-    "ignoreDependencies": [
-      "@biomejs/biome",
-      "only-allow"
-    ],
+    "ignoreBinaries": ["biome"],
+    "ignoreDependencies": ["@biomejs/biome", "only-allow"],
     "ignoreWorkspaces": [
       "docs",
       "packages/register-tests/**",
@@ -100,9 +95,7 @@
       },
       "packages/core": {
         "entry": "src/exports/{chains,index,internal,query}.ts!",
-        "ignoreDependencies": [
-          "@tanstack/query-core"
-        ]
+        "ignoreDependencies": ["@tanstack/query-core"]
       },
       "packages/react": {
         "entry": "src/exports/{actions,chains,connectors,index,query}.ts!"

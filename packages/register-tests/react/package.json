@@ -8,7 +8,7 @@
   "dependencies": {
     "@tanstack/react-query": "5.0.0-beta.28",
     "react": "^18.2.0",
-    "viem": "2.0.0-alpha.11",
+    "viem": "2.0.0-alpha.12",
     "wagmi": "workspace:*"
   },
   "devDependencies": {

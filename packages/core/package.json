@@ -1,7 +1,7 @@
 {
   "name": "@wagmi/core",
   "description": "VanillaJS library for Ethereum",
-  "version": "2.0.0-alpha.4",
+  "version": "2.0.0-alpha.5",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -56,24 +56,16 @@
   },
   "typesVersions": {
     "*": {
-      "actions": [
-        "./dist/types/exports/actions.d.ts"
-      ],
-      "chains": [
-        "./dist/types/exports/chains.d.ts"
-      ],
-      "internal": [
-        "./dist/types/exports/internal.d.ts"
-      ],
-      "query": [
-        "./dist/types/exports/query.d.ts"
-      ]
+      "actions": ["./dist/types/exports/actions.d.ts"],
+      "chains": ["./dist/types/exports/chains.d.ts"],
+      "internal": ["./dist/types/exports/internal.d.ts"],
+      "query": ["./dist/types/exports/query.d.ts"]
     }
   },
   "peerDependencies": {
     "@tanstack/query-core": ">5.0.0-beta.28",
     "typescript": ">=5",
-    "viem": "2.0.0-alpha.11"
+    "viem": "2.0.0-alpha.12"
   },
   "peerDependenciesMeta": {
     "@tanstack/query-core": {
@@ -91,21 +83,12 @@
   "devDependencies": {
     "@tanstack/query-core": "5.0.0-beta.28"
   },
-  "contributors": [
-    "awkweb.eth <t@wagmi.sh>",
-    "jxom.eth <j@wagmi.sh>"
-  ],
+  "contributors": ["awkweb.eth <t@wagmi.sh>", "jxom.eth <j@wagmi.sh>"],
   "funding": [
     {
       "type": "github",
       "url": "https://github.com/sponsors/wagmi-dev"
     }
   ],
-  "keywords": [
-    "eth",
-    "ethereum",
-    "dapps",
-    "wallet",
-    "web3"
-  ]
+  "keywords": ["eth", "ethereum", "dapps", "wallet", "web3"]
 }
