@@ -103,6 +103,6 @@ function App() {
 
 <!--@include: @shared/mutation-imports.md-->
 
-## Actions
+## Action
 
-[`disconnect`](/core/api/actions/connect)
+- [`disconnect`](/core/api/actions/connect)

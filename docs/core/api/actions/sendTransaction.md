@@ -324,8 +324,6 @@ const result = await sendTransaction(config, {
 import { type SendTransactionReturnType } from '@wagmi/core'
 ```
 
-### hash
-
 `` `0x${string}` ``
 
 Transaction hash.
@@ -340,4 +338,4 @@ import { type SendTransactionError } from '@wagmi/core'
 
 ## Viem
 
-[`sendTransaction`](https://viem.sh/docs/actions/wallet/sendTransaction.html)
+- [`sendTransaction`](https://viem.sh/docs/actions/wallet/sendTransaction.html)

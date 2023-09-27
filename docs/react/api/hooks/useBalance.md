@@ -143,6 +143,26 @@ function App() {
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
+### scopeKey
+
+`string | undefined`
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+::: code-group
+```tsx [index.tsx]
+import { useBalance } from 'wagmi'
+
+function App() {
+  const result = useBalance({
+    address: '0x4557B18E779944BFE9d78A672452331C186a9f48',
+    scopeKey: 'foo', // [!code focus]
+  })
+}
+```
+<<< @/snippets/react/config.ts[config.ts]
+:::
+
 ### token
 
 `Address | undefined`
@@ -198,4 +218,4 @@ import { type UseBalanceReturnType } from 'wagmi'
 
 ## Action
 
-[`getBalance`](/core/api/actions/getBalance)
+- [`getBalance`](/core/api/actions/getBalance)

@@ -152,9 +152,30 @@ function App() {
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
+### scopeKey
+
+`string | undefined`
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+::: code-group
+```ts [index.ts]
+import { useEnsResolver } from 'wagmi'
+import { normalize } from 'viem/ens'
+
+function App() {
+  const result = useEnsResolver({
+    name: normalize('wagmi-dev.eth'),
+    scopeKey: 'foo', // [!code focus]
+  })
+}
+```
+<<< @/snippets/react/config.ts[config.ts]
+:::
+
 ### universalResolverAddress
 
-`Resolver | undefined`
+`Address | undefined`
 
 - Resolver of ENS Universal Resolver Contract.
 - Defaults to current chain's Universal Resolver Contract address.
@@ -188,4 +209,4 @@ import { type UseEnsResolverReturnType } from 'wagmi'
 
 ## Action
 
-[`getEnsResolver`](/core/api/actions/getEnsResolver)
+- [`getEnsResolver`](/core/api/actions/getEnsResolver)

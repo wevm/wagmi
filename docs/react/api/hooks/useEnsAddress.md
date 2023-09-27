@@ -173,6 +173,27 @@ function App() {
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
+### scopeKey
+
+`string | undefined`
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+::: code-group
+```ts [index.ts]
+import { useEnsAddress } from 'wagmi'
+import { normalize } from 'viem/ens'
+
+function App() {
+  const result = useEnsAddress({
+    name: normalize('wagmi-dev.eth'),
+    scopeKey: 'foo', // [!code focus]
+  })
+}
+```
+<<< @/snippets/react/config.ts[config.ts]
+:::
+
 ### universalResolverAddress
 
 `Address | undefined`
@@ -209,4 +230,4 @@ import { type UseEnsAddressReturnType } from 'wagmi'
 
 ## Action
 
-[`getEnsAddress`](/core/api/actions/getEnsAddress)
+- [`getEnsAddress`](/core/api/actions/getEnsAddress)

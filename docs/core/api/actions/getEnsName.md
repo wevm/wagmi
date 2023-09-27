@@ -154,4 +154,4 @@ import { type GetEnsNameError } from '@wagmi/core'
 
 ## Viem
 
-[`getEnsName`](https://viem.sh/docs/ens/actions/getEnsName.html)
+- [`getEnsName`](https://viem.sh/docs/ens/actions/getEnsName.html)

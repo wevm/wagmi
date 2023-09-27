@@ -120,6 +120,26 @@ function App() {
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
+### scopeKey
+
+`string | undefined`
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+::: code-group
+```ts [index.ts]
+import { useToken } from 'wagmi'
+
+function App() {
+  const result = useToken({
+    address: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
+    scopeKey: 'foo', // [!code focus]
+  })
+}
+```
+<<< @/snippets/react/config.ts[config.ts]
+:::
+
 <!--@include: @shared/query-options.md-->
 
 ## Return Type
@@ -134,4 +154,4 @@ import { type UseTokenReturnType } from 'wagmi'
 
 ## Action
 
-[`getToken`](/core/api/actions/getToken)
+- [`getToken`](/core/api/actions/getToken)

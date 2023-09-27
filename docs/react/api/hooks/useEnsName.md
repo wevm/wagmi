@@ -143,12 +143,32 @@ function App() {
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
+### scopeKey
+
+`string | undefined`
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+::: code-group
+```ts [index.ts]
+import { useEnsName } from 'wagmi'
+
+function App() {
+  const result = useEnsName({
+    address: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
+    scopeKey: 'foo', // [!code focus]
+  })
+}
+```
+<<< @/snippets/react/config.ts[config.ts]
+:::
+
 ### universalResolverAddress
 
-`Name | undefined`
+`Address | undefined`
 
-- Name of ENS Universal Resolver Contract.
-- Defaults to current chain's Universal Name Contract address.
+- Address of ENS Universal Resolver Contract.
+- Defaults to current chain's Universal Resolver Contract address.
 
 ::: code-group
 ```ts [index.ts]
@@ -178,4 +198,4 @@ import { type UseEnsNameReturnType } from 'wagmi'
 
 ## Action
 
-[`getEnsName`](/core/api/actions/getEnsName)
+- [`getEnsName`](/core/api/actions/getEnsName)

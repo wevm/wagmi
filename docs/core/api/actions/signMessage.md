@@ -122,4 +122,4 @@ import { type SignMessageError } from '@wagmi/core'
 
 ## Viem
 
-[`signMessage`](https://viem.sh/docs/actions/wallet/signMessage.html)
+- [`signMessage`](https://viem.sh/docs/actions/wallet/signMessage.html)

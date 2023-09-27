@@ -628,6 +628,36 @@ function App() {
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
+### scopeKey
+
+`string | undefined`
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+::: code-group
+```tsx [index.ts]
+import { useSimulateContract } from 'wagmi'
+import { abi } from './abi'
+import { config } from './config'
+
+function App() {
+  const result = useSimulateContract({
+    abi,
+    address: '0x6b175474e89094c44da98b954eedeac495271d0f',
+    functionName: 'transferFrom',
+    args: [
+      '0xd2135CfB216b74109775236E36d4b433F1DF507B',
+      '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+      123n,
+    ],
+    scopeKey: 'foo', // [!code focus]
+  })
+}
+```
+<<< @/snippets/abi-write.ts[abi.ts]
+<<< @/snippets/react/config.ts[config.ts]
+:::
+
 <!--@include: @shared/query-options.md-->
 
 ## Return Type
@@ -648,4 +678,4 @@ With [`abi`](#abi) setup correctly, TypeScript will infer the correct types for 
 
 ## Action
 
-[`simulateContract`](/core/api/actions/simulateContract)
+- [`simulateContract`](/core/api/actions/simulateContract)

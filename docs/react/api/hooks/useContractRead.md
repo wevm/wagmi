@@ -266,6 +266,31 @@ function App() {
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
+### scopeKey
+
+`string | undefined`
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+::: code-group
+```tsx [index.tsx]
+import { useContractRead } from 'wagmi'
+import { abi } from './abi'
+
+function App() {
+  const result = useContractRead({
+    abi,
+    address: '0x6b175474e89094c44da98b954eedeac495271d0f',
+    functionName: 'balanceOf',
+    args: ['0x6b175474e89094c44da98b954eedeac495271d0f'],
+    scopeKey: 'foo', // [!code focus]
+  })
+}
+```
+<<< @/snippets/abi-read.ts[abi.ts]
+<<< @/snippets/react/config.ts[config.ts]
+:::
+
 <!--@include: @shared/query-options.md-->
 
 ## Return Type
@@ -367,4 +392,4 @@ result.data
 
 ## Action
 
-[`readContract`](/core/api/actions/readContract)
+- [`readContract`](/core/api/actions/readContract)

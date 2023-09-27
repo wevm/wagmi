@@ -593,4 +593,4 @@ import { type SimulateContractError } from '@wagmi/core'
 
 ## Viem
 
-[`simulateContract`](https://viem.sh/docs/contract/simulateContract.html)
+- [`simulateContract`](https://viem.sh/docs/contract/simulateContract.html)

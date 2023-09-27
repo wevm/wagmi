@@ -103,4 +103,4 @@ function App() {
 
 ## Action
 
-[`reconnect`](/core/api/actions/reconnect)
+- [`reconnect`](/core/api/actions/reconnect)

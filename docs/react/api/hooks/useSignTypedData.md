@@ -181,4 +181,4 @@ signTypedData({
 
 ## Action
 
-[`signTypedData`](/core/api/actions/signTypedData)
+- [`signTypedData`](/core/api/actions/signTypedData)

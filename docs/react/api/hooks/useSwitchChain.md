@@ -113,4 +113,4 @@ function App() {
 
 ## Action
 
-[`switchChain`](/core/api/actions/switchChain)
+- [`switchChain`](/core/api/actions/switchChain)

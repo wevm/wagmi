@@ -85,4 +85,4 @@ import { type UseSendTransactionReturnType } from 'wagmi'
 
 ## Action
 
-[`sendTransaction`](/core/api/actions/sendTransaction)
+- [`sendTransaction`](/core/api/actions/sendTransaction)

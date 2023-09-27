@@ -150,7 +150,7 @@ export function getSidebar() {
             link: '/react/api/hooks/useEstimateFeesPerGas',
           },
           {
-            text: 'useEstimateGas 🚧',
+            text: 'useEstimateGas',
             link: '/react/api/hooks/useEstimateGas',
           },
           {

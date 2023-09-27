@@ -108,4 +108,4 @@ With [`abi`](/core/api/actions/writeContract#abi) setup correctly, TypeScript wi
 
 ## Action
 
-[`writeContract`](/core/api/actions/writeContract)
+- [`writeContract`](/core/api/actions/writeContract)

@@ -320,10 +320,8 @@ const result = await estimateGas(config, {
 ## Return Type
 
 ```ts
-import { type estimateGasReturnType } from '@wagmi/core'
+import { type EstimateGasReturnType } from '@wagmi/core'
 ```
-
-### hash
 
 `bigint`
 
@@ -339,4 +337,4 @@ import { type EstimateGasError } from '@wagmi/core'
 
 ## Viem
 
-[`estimateGas`](https://viem.sh/docs/actions/public/estimateGas.html)
+- [`estimateGas`](https://viem.sh/docs/actions/public/estimateGas.html)

@@ -94,6 +94,26 @@ function App() {
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
+### scopeKey
+
+`string | undefined`
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+::: code-group
+```tsx [index.tsx]
+import { useBlockNumber } from 'wagmi'
+import { config } from './config' // [!code focus]
+
+function App() {
+  const result = useBlockNumber({
+    scopeKey: 'foo', // [!code focus]
+  })
+}
+```
+<<< @/snippets/react/config.ts[config.ts]
+:::
+
 ### watch
 
 `boolean | UseWatchBlockNumberParameters | undefined`

@@ -175,11 +175,32 @@ function App() {
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
+### scopeKey
+
+`string | undefined`
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+::: code-group
+```ts [index.ts]
+import { useEnsAvatar } from 'wagmi'
+import { normalize } from 'viem/ens'
+
+function App() {
+  const result = useEnsAvatar({
+    name: normalize('wagmi-dev.eth'),
+    scopeKey: 'foo', // [!code focus]
+  })
+}
+```
+<<< @/snippets/react/config.ts[config.ts]
+:::
+
 ### universalResolverAddress
 
-`Avatar | undefined`
+`Address | undefined`
 
-- Avatar of ENS Universal Resolver Contract.
+- Address of ENS Universal Resolver Contract.
 - Defaults to current chain's Universal Resolver Contract address.
 
 ::: code-group
@@ -211,4 +232,4 @@ import { type UseEnsAvatarReturnType } from 'wagmi'
 
 ## Action
 
-[`getEnsAvatar`](/core/api/actions/getEnsAvatar)
+- [`getEnsAvatar`](/core/api/actions/getEnsAvatar)

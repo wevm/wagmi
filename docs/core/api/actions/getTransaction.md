@@ -270,4 +270,4 @@ import { type GetTransactionError } from '@wagmi/core'
 
 ## Viem
 
-[`getTransaction`](https://viem.sh/docs/actions/public/getTransaction.html)
+- [`getTransaction`](https://viem.sh/docs/actions/public/getTransaction.html)

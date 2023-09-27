@@ -529,4 +529,4 @@ import { type WriteContractError } from '@wagmi/core'
 
 ## Viem
 
-[`writeContract`](https://viem.sh/docs/contract/writeContract.html)
+- [`writeContract`](https://viem.sh/docs/contract/writeContract.html)

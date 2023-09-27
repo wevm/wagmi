@@ -97,4 +97,4 @@ import { type SwitchChainError } from '@wagmi/core'
 
 ## Viem
 
-[`switchChain`](https://viem.sh/docs/actions/wallet/switchChain.html) when connected.
+- [`switchChain`](https://viem.sh/docs/actions/wallet/switchChain.html) when connected.

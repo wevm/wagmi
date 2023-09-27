@@ -378,4 +378,4 @@ import { type SignTypedDataError } from '@wagmi/core'
 
 ## Viem
 
-[`signTypedData`](https://viem.sh/docs/actions/wallet/signTypedData.html)
+- [`signTypedData`](https://viem.sh/docs/actions/wallet/signTypedData.html)

@@ -108,4 +108,4 @@ function App() {
 
 ## Action
 
-[`switchAccount`](/core/api/actions/switchAccount)
+- [`switchAccount`](/core/api/actions/switchAccount)

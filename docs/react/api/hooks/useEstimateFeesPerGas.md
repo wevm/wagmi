@@ -95,6 +95,25 @@ function App() {
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
+### scopeKey
+
+`string | undefined`
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+::: code-group
+```ts [index.ts]
+import { useEstimateFeesPerGas } from 'wagmi'
+
+function App() {
+  const result = useEstimateFeesPerGas({
+    scopeKey: 'foo', // [!code focus]
+  })
+}
+```
+<<< @/snippets/react/config.ts[config.ts]
+:::
+
 ### type
 
 `'legacy' | 'eip1559'`
@@ -128,4 +147,4 @@ import { type UseEstimateFeesPerGasReturnType } from 'wagmi'
 
 ## Action
 
-[`estimateFeesPerGas`](/core/api/actions/estimateFeesPerGas)
+- [`estimateFeesPerGas`](/core/api/actions/estimateFeesPerGas)

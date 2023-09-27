@@ -150,4 +150,4 @@ import { type EstimateFeesPerGasError } from '@wagmi/core'
 
 ## Viem
 
-[`estimateFeesPerGas`](https://viem.sh/docs/actions/public/estimateFeesPerGas.html)
+- [`estimateFeesPerGas`](https://viem.sh/docs/actions/public/estimateFeesPerGas.html)

@@ -109,4 +109,4 @@ Not all connectors support connecting directly to a `chainId` (e.g. they don't s
 
 ## Action
 
-[`connect`](/core/api/actions/connect)
+- [`connect`](/core/api/actions/connect)

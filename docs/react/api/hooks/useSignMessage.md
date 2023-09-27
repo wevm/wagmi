@@ -77,4 +77,4 @@ import { type UseSignMessageReturnType } from 'wagmi'
 
 ## Action
 
-[`signMessage`](/core/api/actions/signMessage)
+- [`signMessage`](/core/api/actions/signMessage)
