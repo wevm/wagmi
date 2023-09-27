@@ -278,7 +278,7 @@ const result = await simulateContract({
 
 `Connector | undefined`
 
-[Connector](/core/api/connectors) to sign data with.
+[Connector](/core/api/connectors) to simulate transaction with.
 
 ::: code-group
 ```ts [index.ts]

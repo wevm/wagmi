@@ -19,7 +19,6 @@ import { useContractSimulate } from 'wagmi'
 ## Usage
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useContractSimulate } from 'wagmi'
 import { abi } from './abi'
@@ -37,7 +36,6 @@ function App() {
   })
 }
 ```
-
 <<< @/snippets/abi-write.ts[abi.ts]
 <<< @/snippets/react/config.ts[config.ts]
 :::
@@ -57,7 +55,6 @@ import { type UseContractSimulateParameters } from 'wagmi'
 The contract's ABI. Check out the [TypeScript docs](/react/typescript#const-assert-abis-typed-data) for how to set up ABIs for maximum type inference and safety.
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useContractSimulate } from 'wagmi'
 import { abi } from './abi' // [!code focus]
@@ -75,8 +72,40 @@ function App() {
   })
 }
 ```
+<<< @/snippets/abi-write.ts[abi.ts]
+<<< @/snippets/react/config.ts[config.ts]
+:::
 
-<<< @/snippets/abi-read.ts[abi.ts]
+### accessList
+
+`AccessList | undefined`
+
+The access list.
+
+::: code-group
+```tsx [index.ts]
+import { useContractSimulate } from 'wagmi'
+import { abi } from './abi'
+import { config } from './config'
+
+function App() {
+  const result = useContractSimulate({
+    abi,
+    address: '0x6b175474e89094c44da98b954eedeac495271d0f',
+    functionName: 'transferFrom',
+    args: [
+      '0xd2135CfB216b74109775236E36d4b433F1DF507B',
+      '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+      123n,
+    ],
+    accessList: [{ // [!code focus]
+      address: '0x1', // [!code focus]
+      storageKeys: ['0x1'], // [!code focus]
+    }], // [!code focus]
+  })
+}
+```
+<<< @/snippets/abi-write.ts[abi.ts]
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -84,10 +113,9 @@ function App() {
 
 `Account | undefined`
 
-Account to use when calling the contract (`msg.sender`).
+Account to use when calling the contract (`msg.sender`). Throws if account is not found on [`connector`](#connector).
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useContractSimulate } from 'wagmi'
 import { abi } from './abi'
@@ -106,8 +134,7 @@ function App() {
   })
 }
 ```
-
-<<< @/snippets/abi-read.ts[abi.ts]
+<<< @/snippets/abi-write.ts[abi.ts]
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -118,7 +145,6 @@ function App() {
 The contract's address.
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useContractSimulate } from 'wagmi'
 import { abi } from './abi'
@@ -136,8 +162,7 @@ function App() {
   })
 }
 ```
-
-<<< @/snippets/abi-read.ts[abi.ts]
+<<< @/snippets/abi-write.ts[abi.ts]
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -149,7 +174,6 @@ function App() {
 - Inferred from [`abi`](#abi) and [`functionName`](#functionname).
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useContractSimulate } from 'wagmi'
 import { abi } from './abi'
@@ -167,8 +191,7 @@ function App() {
   })
 }
 ```
-
-<<< @/snippets/abi-read.ts[abi.ts]
+<<< @/snippets/abi-write.ts[abi.ts]
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -181,7 +204,6 @@ function App() {
 Block number to call contract at.
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useContractSimulate } from 'wagmi'
 import { abi } from './abi'
@@ -200,8 +222,7 @@ function App() {
   })
 }
 ```
-
-<<< @/snippets/abi-read.ts[abi.ts]
+<<< @/snippets/abi-write.ts[abi.ts]
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -212,7 +233,6 @@ function App() {
 Block tag to call contract at.
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useContractSimulate } from 'wagmi'
 import { abi } from './abi'
@@ -231,8 +251,7 @@ function App() {
   })
 }
 ```
-
-<<< @/snippets/abi-read.ts[abi.ts]
+<<< @/snippets/abi-write.ts[abi.ts]
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -245,7 +264,6 @@ function App() {
 ID of chain to use when fetching data.
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useContractSimulate } from 'wagmi'
 import { mainnet } from 'wagmi/chains' // [!code focus]
@@ -265,8 +283,7 @@ function App() {
   })
 }
 ```
-
-<<< @/snippets/abi-read.ts[abi.ts]
+<<< @/snippets/abi-write.ts[abi.ts]
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -277,7 +294,6 @@ function App() {
 [`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/WagmiProvider).
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useContractSimulate } from 'wagmi'
 import { abi } from './abi'
@@ -297,8 +313,38 @@ function App() {
   })
 }
 ```
+<<< @/snippets/abi-write.ts[abi.ts]
+<<< @/snippets/react/config.ts[config.ts]
+:::
 
-<<< @/snippets/abi-read.ts[abi.ts]
+### connector
+
+`Connector | undefined`
+
+[Connector](/react/api/connectors) to simulate transaction with.
+
+::: code-group
+```tsx [index.ts]
+import { useConnectorClient, useContractSimulate } from '@wagmi/core'
+import { abi } from './abi'
+import { config } from './config'
+
+function App() {
+  const { data: connector } = useConnectorClient()
+  const result = useContractSimulate({
+    abi,
+    address: '0x6b175474e89094c44da98b954eedeac495271d0f',
+    functionName: 'transferFrom',
+    args: [
+      '0xd2135CfB216b74109775236E36d4b433F1DF507B',
+      '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+      123n,
+    ],
+    connector, // [!code focus]
+  })
+}
+```
+<<< @/snippets/abi-write.ts[abi.ts]
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -310,7 +356,6 @@ function App() {
 - Inferred from [`abi`](#abi).
 
 ::: code-group
-
 ```tsx [index.tsx]
 import { useContractSimulate } from 'wagmi'
 import { abi } from './abi'
@@ -328,8 +373,7 @@ function App() {
   })
 }
 ```
-
-<<< @/snippets/abi-read.ts[abi.ts]
+<<< @/snippets/abi-write.ts[abi.ts]
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
@@ -349,91 +393,7 @@ The return type's [`data`](#data) property is inferrable via the combination of 
 
 ## Type Inference
 
-With [`abi`](#abi) setup correctly, TypeScript will infer the correct types for [`functionName`](#functionname), [`args`](#args), and the return type. See the Wagmi [TypeScript docs](/react/typescript) for more information.
-
-::: code-group
-
-```ts twoslash [Inline]
-import { createConfig, http, useContractSimulate } from 'wagmi'
-import { mainnet, sepolia } from 'wagmi/chains'
-
-const config = createConfig({
-  chains: [mainnet, sepolia],
-  transports: {
-    [mainnet.id]: http(),
-    [sepolia.id]: http(),
-  },
-})
-// ---cut---
-const result = useContractSimulate({
-  abi: [
-    {
-      type: 'function',
-      name: 'balanceOf',
-      stateMutability: 'view',
-      inputs: [{ name: 'account', type: 'address' }],
-      outputs: [{ type: 'uint256' }],
-    },
-    {
-      type: 'function',
-      name: 'totalSupply',
-      stateMutability: 'view',
-      inputs: [],
-      outputs: [{ name: 'supply', type: 'uint256' }],
-    },
-  ],
-  address: '0x6b175474e89094c44da98b954eedeac495271d0f',
-  functionName: 'balanceOf',
-  // ^?
-  args: ['0x6b175474e89094c44da98b954eedeac495271d0f'],
-  // ^?
-})
-result.data
-//     ^?
-```
-
-```ts twoslash [Const-Asserted]
-import { createConfig, http, useContractSimulate } from 'wagmi'
-import { mainnet, sepolia } from 'wagmi/chains'
-
-const config = createConfig({
-  chains: [mainnet, sepolia],
-  transports: {
-    [mainnet.id]: http(),
-    [sepolia.id]: http(),
-  },
-})
-// ---cut---
-const abi = [
-  {
-    type: 'function',
-    name: 'balanceOf',
-    stateMutability: 'view',
-    inputs: [{ name: 'account', type: 'address' }],
-    outputs: [{ type: 'uint256' }],
-  },
-  {
-    type: 'function',
-    name: 'totalSupply',
-    stateMutability: 'view',
-    inputs: [],
-    outputs: [{ name: 'supply', type: 'uint256' }],
-  },
-] as const
-
-const result = useContractSimulate({
-  abi,
-  address: '0x6b175474e89094c44da98b954eedeac495271d0f',
-  functionName: 'balanceOf',
-  // ^?
-  args: ['0x6b175474e89094c44da98b954eedeac495271d0f'],
-  // ^?
-})
-result.data
-//     ^?
-```
-
-:::
+With [`abi`](#abi) setup correctly, TypeScript will infer the correct types for [`functionName`](#functionname), [`args`](#args), and [`value`](#value). See the Wagmi [TypeScript docs](/react/typescript) for more information.
 
 ## Action
 
