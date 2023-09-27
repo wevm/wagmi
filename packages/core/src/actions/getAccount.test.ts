@@ -7,18 +7,19 @@ import { getAccount } from './getAccount.js'
 
 test('default', () => {
   expect(getAccount(config)).toMatchInlineSnapshot(`
-      {
-        "address": undefined,
-        "addresses": undefined,
-        "chainId": undefined,
-        "connector": undefined,
-        "isConnected": false,
-        "isConnecting": false,
-        "isDisconnected": true,
-        "isReconnecting": false,
-        "status": "disconnected",
-      }
-    `)
+    {
+      "address": undefined,
+      "addresses": undefined,
+      "chain": undefined,
+      "chainId": undefined,
+      "connector": undefined,
+      "isConnected": false,
+      "isConnecting": false,
+      "isDisconnected": true,
+      "isReconnecting": false,
+      "status": "disconnected",
+    }
+  `)
 })
 
 test('behavior: connected', async () => {
