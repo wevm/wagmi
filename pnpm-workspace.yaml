@@ -2,5 +2,6 @@ packages:
   - 'docs'
   - 'packages/*'
   - 'packages/**/__fixtures__/*'
+  - 'packages/create-wagmi/templates/**/*'
   - 'packages/register-tests/*'
   - 'playgrounds/*'

@@ -1,0 +1,10 @@
+{
+  "include": [".scripts/**/*.ts"],
+  "compilerOptions": {
+    "strict": true,
+    "composite": true,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "allowSyntheticDefaultImports": true
+  }
+}

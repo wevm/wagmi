@@ -14,6 +14,7 @@ const packagePaths = await glob('**/package.json', {
 let count = 0
 for (const packagePath of packagePaths) {
   type Package = {
+    bin?: Record<string, string> | undefined
     name?: string | undefined
     private?: boolean | undefined
     exports?:
@@ -26,7 +27,7 @@ for (const packagePath of packagePaths) {
   // Skip private packages
   if (packageJson.private && packageJson.name !== '@wagmi/test') continue
   if (!packageJson.exports) continue
-  if (packageJson.name === '@wagmi/cli') continue
+  if (packageJson.bin) continue
 
   count += 1
   console.log(`${packageJson.name} — ${path.dirname(packagePath)}`)
