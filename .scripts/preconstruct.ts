@@ -19,6 +19,7 @@ for (const packagePath of packagePaths) {
     exports?:
       | Record<string, { types: string; default: string } | string>
       | undefined
+    bin?: Record<string, string> | undefined
   }
   const file = Bun.file(packagePath)
   const packageJson = (await file.json()) as Package
@@ -26,7 +27,7 @@ for (const packagePath of packagePaths) {
   // Skip private packages
   if (packageJson.private && packageJson.name !== '@wagmi/test') continue
   if (!packageJson.exports) continue
-  if (packageJson.name === '@wagmi/cli') continue
+  if (packageJson.bin) continue
 
   count += 1
   console.log(`${packageJson.name} — ${path.dirname(packagePath)}`)
