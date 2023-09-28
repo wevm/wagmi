@@ -20,6 +20,7 @@ for (const packagePath of packagePaths) {
     exports?:
       | Record<string, { types: string; default: string } | string>
       | undefined
+    bin?: Record<string, string> | undefined
   }
   const file = Bun.file(packagePath)
   const packageJson = (await file.json()) as Package
