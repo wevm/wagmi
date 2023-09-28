@@ -103,7 +103,10 @@ export default withTwoslash(
       sidebar: getSidebar(),
       siteTitle: false,
       socialLinks: [
-        { icon: 'github', link: 'https://github.com/wagmi-dev/wagmi' },
+        {
+          icon: 'github',
+          link: 'https://github.com/wagmi-dev/wagmi/tree/alpha',
+        },
         { icon: 'twitter', link: 'https://twitter.com/wagmi_sh' },
         { icon: 'discord', link: 'https://discord.gg/9zHPXuBpqy' },
       ],

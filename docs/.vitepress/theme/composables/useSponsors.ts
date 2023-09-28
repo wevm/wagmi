@@ -108,6 +108,16 @@ export function useSponsors() {
           url: 'https://rainbow.me',
           img: 'rainbow-light.svg',
         },
+        {
+          name: 'Pimlico',
+          url: 'https://pimlico.io',
+          img: 'pimlico-light.svg',
+        },
+        {
+          name: 'Zora',
+          url: 'https://zora.co',
+          img: 'zora-light.svg',
+        },
       ],
     }
 
