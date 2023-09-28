@@ -28,7 +28,7 @@ const config = createConfig({
     new BitgetWalletConnector({
       chains,
       options: {
-        UNSTABLE_shimOnConnectSelectAccount: true,
+        appName: 'wagmi',
       },
     }),
     new CoinbaseWalletConnector({

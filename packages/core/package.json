@@ -8,10 +8,7 @@
     "url": "https://github.com/wagmi-dev/wagmi.git",
     "directory": "packages/core"
   },
-  "contributors": [
-    "awkweb.eth <t@wagmi.sh>",
-    "jxom.eth <j@wagmi.sh>"
-  ],
+  "contributors": ["awkweb.eth <t@wagmi.sh>", "jxom.eth <j@wagmi.sh>"],
   "ethereum": "wagmi-dev.eth",
   "funding": [
     {
@@ -128,13 +125,7 @@
   "devDependencies": {
     "viem": "^1.0.0"
   },
-  "keywords": [
-    "eth",
-    "ethereum",
-    "dapps",
-    "wallet",
-    "web3"
-  ],
+  "keywords": ["eth", "ethereum", "dapps", "wallet", "web3"],
   "scripts": {
     "build": "tsup",
     "dev": "DEV=true tsup"
