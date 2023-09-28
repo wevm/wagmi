@@ -174,6 +174,10 @@ function App() {
 
 ERC-20 token address to get balance for.
 
+::: warning Deprecated
+See [deprecation notices](/react/guides/migrate-from-v1-to-v2#removed-usebalance-token-parameter) for more info.
+:::
+
 ::: code-group
 ```ts [index.ts]
 import { useBalance } from 'wagmi'

@@ -13,7 +13,11 @@ const TError = 'GetTokenError'
 
 # useToken
 
-Hook for fetching token info.
+Hook for fetching token info. 
+
+::: warning Deprecated
+See [deprecation notices](/react/guides/migrate-from-v1-to-v2#removed-usetoken) for more info.
+:::
 
 ## Import
 

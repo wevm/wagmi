@@ -1,24 +1,37 @@
+---
+title: Migrate from v1 to v2
+description: Guide for migrating from Wagmi v1 to v2.
+---
+
+<script setup>
+import packageJson from '../../../packages/react/package.json'
+
+const viemVersion = packageJson.peerDependencies.viem
+</script>
+
 # Migrate from v1 to v2
 
-Wagmi v2 redesigns the core APIs to mesh better with [Viem](https://viem.sh) and [TanStack Query](https://tanstack.com/query/v5/docs/react). Wagmi v2 is a light wrapper around these libraries, sprinkling in multichain support and account management. As such, there are some [breaking changes](#breaking-changes) and [deprecations](#deprecations) to be aware of.
+## Overview
+
+Wagmi v2 redesigns the core APIs to mesh better with [Viem](https://viem.sh) and [TanStack Query](https://tanstack.com/query/v5/docs/react). This major version transforms Wagmi into a light wrapper around these libraries, sprinkling in multichain support and account management. As such, there are some breaking changes and deprecations to be aware of outlined in this guide.
 
 To get started, install the latest version of Wagmi and it's required peer dependencies.
 
 ::: code-group
-```bash [pnpm]
-pnpm add wagmi@alpha viem@alpha @tanstack/react-query@beta
+```bash-vue [pnpm]
+pnpm add wagmi@alpha viem@{{viemVersion}} @tanstack/react-query@beta
 ```
 
-```bash [npm]
-npm install wagmi@alpha viem@alpha @tanstack/react-query@beta
+```bash-vue [npm]
+npm install wagmi@alpha viem@{{viemVersion}} @tanstack/react-query@beta
 ```
 
-```bash [yarn]
-yarn add wagmi@alpha viem@alpha @tanstack/react-query@beta
+```bash-vue [yarn]
+yarn add wagmi@alpha viem@{{viemVersion}} @tanstack/react-query@beta
 ```
 
-```bash [bun]
-bun add wagmi@alpha viem@alpha @tanstack/react-query@beta
+```bash-vue [bun]
+bun add wagmi@alpha viem@{{viemVersion}} @tanstack/react-query@beta
 ```
 :::
 
@@ -26,9 +39,13 @@ bun add wagmi@alpha viem@alpha @tanstack/react-query@beta
 We recommend trying it out in your projects, but there may be breaking changes before the final release. If you find bugs or have feedback, please [open an issue](https://github.com/wagmi-dev/wagmi/issues/new/choose) or [create a new discussion](https://github.com/wagmi-dev/wagmi/discussions/new/choose).
 :::
 
-## Breaking changes
+::: info Wagmi v2 should be the last major version of Wagmi that will have this many actionable breaking changes. 
+Moving forward, new functionality will be opt-in with old functionality being deprecated alongside the new features. This means upgrading to the latest major versions will not require immediate changes.
+:::
 
-### Added TanStack Query as peer dependency
+## Dependencies
+
+### Moved TanStack Query to peer dependencies
 
 Wagmi uses [TanStack Query](https://tanstack.com/query/v5/docs/react) to manage async state, handling requests, caching, and more. With Wagmi v1, TanStack Query was an internal implementation detail. With Wagmi v2, TanStack Query is a peer dependency. A lot of Wagmi users also use TanStack Query in their apps so making it a peer dependency gives them more control and removes some custom Wagmi code internally.
 
@@ -57,7 +74,13 @@ function App() {
 
 For more information on setting up TanStack Query for Wagmi, follow the [Getting Started docs](/react/getting-started#setup-tanstack-query). If you want to set up persistance for your query cache (default behavior before Wagmi v2), check out the [TanStack Query docs](https://tanstack.com/query/v5/docs/react/plugins/persistQueryClient).
 
-### Removed arguments from mutation hooks
+### Dropped CommonJS support
+
+Wagmi v2 no longer publishes a separate `cjs` tag since very few people use this tag and ESM is the future. See [Sindre Sorhus' guide](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c) for more info about switching to ESM.
+
+## Hooks
+
+### Removed mutation setup arguments
 
 Mutation hooks are hooks that change network or application state, sign data, or perform write operations through mutation functions. With Wagmi v1, you could pass arguments directly to these hooks instead of using them with their mutation functions. For example:
 
@@ -68,7 +91,7 @@ const { signMessage } = useSignMessage({
 })
 ```
 
-With Wagmi v2, you must pass arguments to the mutation function instead. This uses the same behavior as [TanStack Query](https://tanstack.com/query/v5/docs/react/guides/mutations) mutations.
+With Wagmi v2, you must pass arguments to the mutation function instead. This follows the same behavior as [TanStack Query](https://tanstack.com/query/v5/docs/react/guides/mutations) mutations and improves type-safety.
 
 ```tsx
 import { useSignMessage } from 'wagmi'
@@ -83,63 +106,6 @@ const { signMessage } = useSignMessage() // [!code ++]
   Sign message
 </button>
 ```
-
-### Removed `useNetwork` hook
-
-The `useNetwork` hook was removed since the connected chain is typically based on the connected account. Use [`useAccount`](/react/api/hooks/useAccount) to get the connected `chain`.
-
-```ts
-import { useNetwork } from 'wagmi' // [!code --]
-import { useAccount } from 'wagmi' // [!code ++]
-
-const { chain } = useNetwork() // [!code --]
-const { chain } = useAccount() // [!code ++]
-```
-
-Use `useConfig` for the list of `chains` set up with the Wagmi [`Config`](/react/api/createConfig#chains).
-
-```ts
-import { useNetwork } from 'wagmi' // [!code --]
-import { useConfig } from 'wagmi' // [!code ++]
-
-const { chains } = useNetwork() // [!code --]
-const { chains } = useConfig() // [!code ++]
-```
-
-### Removed `onConnect` and `onDisconnect` callbacks from `useAccount`
-
-The `onConnect` and `onDisconnect` callbacks were removed from the `useAccount` hook since it is frequently used without these callbacks so it made sense to extract these into a new API, [`useAccountEffect`](/react/api/hooks/useAccountEffect), rather than clutter the `useAccount` hook.
-
-```ts
-import { useAccount } from 'wagmi' // [!code --]
-import { useAccountEffect } from 'wagmi' // [!code ++]
-
-useAccount({ // [!code --]
-useAccountEffect({ // [!code ++]
-  onConnect(data) {
-    console.log('connected', data)
-  },
-  onDisconnect() {
-    console.log('disconnected')
-  },
-}) 
-```
-
-### Removed internal ENS name normalization
-
-Before v2, Wagmi handled ENS name normalization internally for `useEnsAddress`, `useEnsAvatar`, and `useEnsResolver`, using Viem's [`normalize`](https://viem.sh/docs/ens/utilities/normalize.html) function. This added extra bundle size as full normalization is quite heavy. For v2, you must normalize ENS names yourself before passing them to these actions. You can use Viem's `normalize` function or any other function that performs [UTS-46 normalization](https://unicode.org/reports/tr46).
-
-```ts
-import { useEnsAddress } from 'wagmi'
-import { normalize } from 'viem' // [!code ++]
-
-const result = useEnsAddress({
-  name: 'wagmi-dev.eth', // [!code --]
-  name: normalize('wagmi-dev.eth'), // [!code ++]
-})
-```
-
-By inverting control, Wagmi let's you choose how much normalization to do. For example, maybe your project only allows ENS names that are alphanumeric so no normalization is not needed. Check out the [ENS documentation](https://docs.ens.domains/contract-api-reference/name-processing#normalising-names) for more information on normalizing names.
 
 ### Removed prepare hooks
 
@@ -210,6 +176,175 @@ const { sendTransaction } = useSendTransaction() // [!code ++]
 
 This might seem like more work, but it gives you more control and is more accurate representation of what is happening under the hood.
 
+### Removed `useNetwork` hook
+
+The `useNetwork` hook was removed since the connected chain is typically based on the connected account. Use [`useAccount`](/react/api/hooks/useAccount) to get the connected `chain`.
+
+```ts
+import { useNetwork } from 'wagmi' // [!code --]
+import { useAccount } from 'wagmi' // [!code ++]
+
+const { chain } = useNetwork() // [!code --]
+const { chain } = useAccount() // [!code ++]
+```
+
+Use `useConfig` for the list of `chains` set up with the Wagmi [`Config`](/react/api/createConfig#chains).
+
+```ts
+import { useNetwork } from 'wagmi' // [!code --]
+import { useConfig } from 'wagmi' // [!code ++]
+
+const { chains } = useNetwork() // [!code --]
+const { chains } = useConfig() // [!code ++]
+```
+
+### Removed `onConnect` and `onDisconnect` callbacks from `useAccount`
+
+The `onConnect` and `onDisconnect` callbacks were removed from the `useAccount` hook since it is frequently used without these callbacks so it made sense to extract these into a new API, [`useAccountEffect`](/react/api/hooks/useAccountEffect), rather than clutter the `useAccount` hook.
+
+```ts
+import { useAccount } from 'wagmi' // [!code --]
+import { useAccountEffect } from 'wagmi' // [!code ++]
+
+useAccount({ // [!code --]
+useAccountEffect({ // [!code ++]
+  onConnect(data) {
+    console.log('connected', data)
+  },
+  onDisconnect() {
+    console.log('disconnected')
+  },
+}) 
+```
+
+### Removed `useWebSocketPublicClient`
+
+The Wagmi [`Config`](/react/api/createConfig) does not separate transport types anymore. Simply use Viem's [`webSocket`](https://viem.sh/docs/clients/transports/websocket.html) transport instead when setting up your Wagmi `Config`. You can get Viem `Client` instance with this transport attached by using [`useClient`](/react/api/hooks/useClient) or [`usePublicClient`](/react/api/hooks/usePublicClient).
+
+### Removed `useInfiniteContractReads` `paginatedIndexesConfig`
+
+In the spirit of removing unnecessary abstractions, `paginatedIndexesConfig` was removed. Use `useInfiniteContractReads`'s `initialPageParam` and `getNextPageParam` parameters along with `fetchNextPage`/`fetchPreviousPage` from the result instead or copy `paginatedIndexesConfig`'s implementation to your codebase.
+
+See the [TanStack Query docs](https://tanstack.com/query/v5/docs/react/guides/infinite-queries) for more information on infinite queries.
+
+### Updated `useSendTransaction` and `useContractWrite` return type
+
+Updated `useSendTransaction` and `useContractWrite` return type from `` { hash: `0x${string}` } `` to `` `0x${string}` ``.
+
+```ts
+const result = useSendTransaction({ hash: '0x...' })
+result.data?.hash // [!code --]
+result.data // [!code ++]
+```
+
+### Renamed parameters and return types
+
+All hook parameters and return types follow the naming pattern of `[PascalCaseHookName]Parameters` and `[PascalCaseHookName]ReturnType`. For example, `UseAccountParameters` and `UseAccountReturnType`.
+
+```ts
+import { UseAccountConfig, UseAccountResult } from 'wagmi' // [!code --]
+import { UseAccountParameters, UseAccountReturnType } from 'wagmi' // [!code ++]
+```
+
+## Connectors
+
+### Removed individual entrypoints
+
+Previously, each connector had it's own entrypoint to optimize tree-shaking. Since all connectors now have [`package.json#sideEffects`](https://webpack.js.org/guides/tree-shaking/#mark-the-file-as-side-effect-free) enabled, this is no longer necessary and the entrypoint is unified. Use the `'wagmi/connectors'` entrypoint instead.
+
+```ts
+import { InjectedConnector } from 'wagmi/connectors/injected' // [!code --]
+import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet' // [!code --]
+import { coinbaseWallet, injected } from 'wagmi/connectors' // [!code ++]
+```
+
+### Removed `MetaMaskConnector`
+
+The `MetaMaskConnector` was removed since it was nearly the same thing as the `InjectedConnector`. Use the [`injected`](/react/api/connectors/injected) connector instead, along with the [`target`](/react/api/connectors/injected#target) parameter set to `'metaMask'`.
+
+```ts
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask' // [!code --]
+import { injected } from 'wagmi/connectors' // [!code ++]
+
+const connector = new MetaMaskConnector() // [!code --]
+const connector = injected({ target: 'metaMask' }) // [!code ++]
+```
+
+### Renamed connectors
+
+In Wagmi v1, connectors were classes you needed to instantiate. In Wagmi v2, connectors are functions. As a result, the API has changed. Connectors have the following new names:
+
+- `CoinbaseWalletConnector` is now [`coinbaseWallet`](/react/api/connectors/coinbaseWallet).
+- `InjectedConnector` is now [`injected`](/react/api/connectors/injected).
+- `LedgerConnector` is now [`ledger`](/react/api/connectors/ledger).
+- `SafeConnector` is now [`safe`](/react/api/connectors/safe).
+- `WalletConnectConnector` is now [`walletConnect`](/react/api/connectors/walletConnect).
+
+To create a connector, you now call the connector function with parameters.
+
+```ts
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect' // [!code --]
+import { walletConnect } from 'wagmi/connectors' // [!code ++]
+
+const connector = new WalletConnectConnector({ // [!code --]
+const connector = walletConnect({ // [!code ++]
+  projectId: '3fcc6bba6f1de962d911bb5b5c3dba68',
+})
+```
+
+### Removed `WalletConnectLegacyConnector`
+
+WalletConnect v1 was sunset June 28, 2023. Use the [`walletConnect`](/react/api/connectors/walletConnect) connector instead.
+
+```ts
+import { WalletConnectLegacyConnector } from 'wagmi/connectors/walletConnectLegacy' // [!code --]
+import { walletConnect } from 'wagmi/connectors' // [!code ++]
+
+const connector = new WalletConnectLegacyConnector({ // [!code --]
+const connector = walletConnect({ // [!code ++]
+  projectId: '3fcc6bba6f1de962d911bb5b5c3dba68',
+})
+```
+
+## Chains
+
+### Updated `'wagmi/chains'` entrypoint
+
+Chains now live in the [Viem repository](https://github.com/wagmi-dev/viem). As a result, the `'wagmi/chains'` entrypoint now proxies all chains from `'viem/chains'` directly.
+
+### Removed `mainnet` and `sepolia` from main entrypoint
+
+Since the `'wagmi/chains'` entrypoint now proxies `'viem/chains'`, `mainnet` and `sepolia` were removed from the main entrypoint. Use the `'wagmi/chains'` entrypoint instead.
+
+```ts
+import { mainnet, sepolia } from 'wagmi' // [!code --]
+import { mainnet, sepolia } from 'wagmi/chains' // [!code ++]
+```
+
+## Errors
+
+The following errors were renamed to better reflect their functionality or replaced by Viem errors:
+
+🚧 TODO
+
+## Miscellaneous
+
+### Removed internal ENS name normalization
+
+Before v2, Wagmi handled ENS name normalization internally for `useEnsAddress`, `useEnsAvatar`, and `useEnsResolver`, using Viem's [`normalize`](https://viem.sh/docs/ens/utilities/normalize.html) function. This added extra bundle size as full normalization is quite heavy. For v2, you must normalize ENS names yourself before passing them to these hooks. You can use Viem's `normalize` function or any other function that performs [UTS-46 normalization](https://unicode.org/reports/tr46).
+
+```ts
+import { useEnsAddress } from 'wagmi'
+import { normalize } from 'viem' // [!code ++]
+
+const result = useEnsAddress({
+  name: 'wagmi-dev.eth', // [!code --]
+  name: normalize('wagmi-dev.eth'), // [!code ++]
+})
+```
+
+By inverting control, Wagmi let's you choose how much normalization to do. For example, maybe your project only allows ENS names that are alphanumeric so no normalization is not needed. Check out the [ENS documentation](https://docs.ens.domains/contract-api-reference/name-processing#normalising-names) for more information on normalizing names.
+
 ### Removed `configureChains`
 
 The Wagmi v2 `Config` now has native multichain support using the [`chains`](/react/api/createConfig) parameter so the `configureChains` function is no longer required.
@@ -234,56 +369,46 @@ export const config = createConfig({
 })
 ```
 
-### Updated connector API
+### Removed ABI exports
 
-In Wagmi v1, connectors were classes you needed to instantiate. In Wagmi v2, connectors are functions. As a result, the API has changed. To learn more about all the connector API changes, check out the [Wagmi Core v1 to v2 guide](/core/guides/migrate-from-v1-to-v2). Connectors have the following new names:
+Import from Viem instead.
 
-- `CoinbaseWalletConnector` is now [`coinbaseWallet`](/react/api/connectors/coinbaseWallet).
-- `InjectedConnector` is now [`injected`](/react/api/connectors/injected).
-- `LedgerConnector` is now [`ledger`](/react/api/connectors/ledger).
-- `SafeConnector` is now [`safe`](/react/api/connectors/safe).
-- `WalletConnectConnector` is now [`walletConnect`](/react/api/connectors/walletConnect).
+```ts
+import { erc20ABI } from 'wagmi' // [!code --]
+import { erc20Abi } from 'viem' // [!code ++]
+```
 
-### Removed exports
+### Removed `'wagmi/providers/*` entrypoints
 
-- Removed `mainnet` and `sepolia` from main entrypoint. Use the `wagmi/chains` entrypoint instead.
-  ```ts
-  import { mainnet } from 'wagmi' // [!code --]
-  import { mainnet } from 'wagmi/chains' // [!code ++]
-  ```
-- Removed individual exports for connectors. Use the `wagmi/connectors` entrypoint instead.
-  ```ts
-  import { InjectedConnector } from 'wagmi/connectors/injected' // [!code --]
-  import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet' // [!code --]
-  import { coinbaseWallet, injected } from 'wagmi/connectors' // [!code ++]
-  ```
-- Removed ABIs from main entrypoint. Import from Viem instead.
-  ```ts
-  import { erc20ABI } from 'wagmi' // [!code --]
-  import { erc20Abi } from 'viem' // [!code ++]
-  ```
-- Removed providers entrypoint. Use Viem transports instead.
-  ```ts
-  import { alchemyProvider, infuraProvider } from 'wagmi/providers' // [!code --]
-  import { http } from 'viem' // [!code ++]
+It never made sense that we would have provider URLs hardcoded in the Wagmi codebase. Use [Viem transports](https://viem.sh/docs/clients/intro.html#transports) along with RPC provider URLs instead.
 
-  const transport = http('https://mainnet.example.com')
-  ```
+```ts
+import { alchemyProvider } from 'wagmi/providers/alchemy' // [!code --]
+import { http } from 'viem' // [!code ++]
 
-### Miscellaneous
+const transport = http('https://mainnet.example.com')
+```
 
-- WalletConnect v1 support dropped. WalletConnect v2 is now the only supported version.
-- Removed `autoConnect` parameter from `createConfig`. Use `WagmiProvider` [`reconnectOnMount`](/react/api/WagmiProvider#reconnectonmount) instead.
-- Errors 🚧
-- Removed `useContractReads` `paginatedIndexesConfig`. Use `initialPageParam` and `getNextPageParam` along with `fetchNextPage`/`fetchPreviousPage` instead.
-- Removed `useWebSocketPublicClient`. The Wagmi `Config` does not separate transport types anymore.
-- Changed `useSendTransaction` and `useContractWrite` return type from `` { hash: `0x${string}` } `` to `` `0x${string}` ``.
-  ```ts
-  const result = useSendTransaction({ hash: '0x...' })
-  result.data?.hash // [!code --]
-  result.data // [!code ++]
-  ```
-- Dropped CommonJS module support. Use ES Modules instead. See [Sindre Sorhus' guide](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c) for more info.
+### Updated `createConfig` parameters
+
+- Removed `autoConnect`. The reconnecting behavior is now managed by React and not related to the Wagmi `Config`. Use `WagmiProvider` [`reconnectOnMount`](/react/api/WagmiProvider#reconnectonmount) or [`useReconnect`](/react/api/hooks/useReconnect) hook instead.
+- Removed `publicClient` and `webSocketPublicClient`. Use [`transports`](/react/api/createConfig#transports) or [`client`](/react/api/createConfig#client) instead.
+- Removed `logger`. Wagmi no longer logs debug information to console.
+
+### Updated `Config` object
+
+- Removed `config.connector`. Use `config.state.connections.get(config.state.current)?.connector` instead.
+- Removed `config.data`. Use `config.state.connections.get(config.state.current)` instead.
+- Removed `config.error`. Was unused and not needed.
+- Removed `config.lastUsedChainId`. Use `config.state.connections.get(config.state.current)?.chainId` instead.
+- Removed `config.publicClient`. Use [`config.getClient()`](/react/api/createConfig#getclient) or [`getPublicClient`](/core/api/actions/getPublicClient) instead.
+- Removed `config.status`. Use [`config.state.status`](/react/api/createConfig#status) instead.
+- Removed `config.webSocketClient`. Use [`config.getClient()`](/react/api/createConfig#getclient) or [`getPublicClient`](/core/api/actions/getPublicClient) instead.
+- Removed `config.clearState`. Was unused and not needed.
+- Removed `config.autoConnect()`. Use [`reconnect`](/core/api/actions/reconnect) action instead.
+- Renamed `config.setConnectors`. Use `config._internal.setConnectors` instead.
+- Removed `config.setLastUsedConnector`. Use `config.storage?.setItem('recentConnectorId', connectorId)` instead.
+- Removed `getConfig`. `config` should be passed explicitly to actions instead of using global `config`.
 
 ## Deprecations
 
@@ -309,6 +434,81 @@ function App() {
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
+### Deprecated `useBalance` `token` parameter
+
+Moving forward, `useBalance` will only work for native currencies, thus the `token` parameter is no longer supported. Use [`useContractReads`](/react/api/hooks/useContractReads) instead.
+
+```ts
+import { useBalance } from 'wagmi' // [!code --]
+import { useContractReads } from 'wagmi' // [!code ++]
+import { erc20Abi } from 'viem' // [!code ++]
+
+const result = useBalance({ // [!code --]
+  address: '0x4557B18E779944BFE9d78A672452331C186a9f48', // [!code --]
+  token: '0x6B175474E89094C44Da98b954EedeAC495271d0F', // [!code --]
+}) // [!code --]
+const result = useContractReads({ // [!code ++]
+  allowFailure: false, // [!code ++]
+  contracts: [ // [!code ++]
+    { // [!code ++]
+      address: '0x6B175474E89094C44Da98b954EedeAC495271d0F', // [!code ++]
+      abi: erc20Abi, // [!code ++]
+      functionName: 'balanceOf', // [!code ++]
+      args: ['0x4557B18E779944BFE9d78A672452331C186a9f48'], // [!code ++]
+    }, // [!code ++]
+    { // [!code ++]
+      address: '0x6B175474E89094C44Da98b954EedeAC495271d0F', // [!code ++]
+      abi: erc20Abi, // [!code ++]
+      functionName: 'decimals', // [!code ++]
+    }, // [!code ++]
+    { // [!code ++]
+      address: '0x6B175474E89094C44Da98b954EedeAC495271d0F', // [!code ++]
+      abi: erc20Abi, // [!code ++]
+      functionName: 'symbol', // [!code ++]
+    }, // [!code ++]
+  ] // [!code ++]
+}) // [!code ++]
+```
+
+### Deprecated `useToken`
+
+Moving forward, `useToken` is no longer supported. Use [`useContractReads`](/react/api/hooks/useContractReads) instead.
+
+```ts
+import { useToken } from 'wagmi' // [!code --]
+import { useContractReads } from 'wagmi' // [!code ++]
+import { erc20Abi } from 'viem' // [!code ++]
+
+const result = useToken({ // [!code --]
+  address: '0x6B175474E89094C44Da98b954EedeAC495271d0F', // [!code --]
+}) // [!code --]
+const result = useContractReads({ // [!code ++]
+  allowFailure: false, // [!code ++]
+  contracts: [ // [!code ++]
+    { // [!code ++]
+      address: '0x6B175474E89094C44Da98b954EedeAC495271d0F', // [!code ++]
+      abi: erc20Abi, // [!code ++]
+      functionName: 'decimals', // [!code ++]
+    }, // [!code ++]
+    { // [!code ++]
+      address: '0x6B175474E89094C44Da98b954EedeAC495271d0F', // [!code ++]
+      abi: erc20Abi, // [!code ++]
+      functionName: 'name', // [!code ++]
+    }, // [!code ++]
+    { // [!code ++]
+      address: '0x6B175474E89094C44Da98b954EedeAC495271d0F', // [!code ++]
+      abi: erc20Abi, // [!code ++]
+      functionName: 'symbol', // [!code ++]
+    }, // [!code ++]
+    { // [!code ++]
+      address: '0x6B175474E89094C44Da98b954EedeAC495271d0F', // [!code ++]
+      abi: erc20Abi, // [!code ++]
+      functionName: 'totalSupply', // [!code ++]
+    }, // [!code ++]
+  ] // [!code ++]
+}) // [!code ++]
+```
+
 ### Renamed hooks
 
 The following hooks were renamed to better reflect their functionality and underlying [Viem](https://viem.sh) actions:
@@ -323,35 +523,3 @@ The following hooks were renamed to better reflect their functionality and under
 
 - `WagmiConfigProps` renamed to [`WagmiProviderProps`](/react/api/WagmiProvider#parameters).
 - `Context` renamed to [`WagmiContext`](/react/api/WagmiProvider#context).
-- `useBalance` `token` parameter no longer supported. Use `useContractReads` instead.
-  ```ts
-  import { useBalance } from 'wagmi' // [!code --]
-  import { useContractReads } from 'wagmi' // [!code ++]
-  import { erc20Abi } from 'viem' // [!code ++]
-
-  const result = useBalance({ // [!code --]
-    address: '0x4557B18E779944BFE9d78A672452331C186a9f48', // [!code --]
-    token: '0x6B175474E89094C44Da98b954EedeAC495271d0F', // [!code --]
-  }) // [!code --]
-  const result = useContractReads({ // [!code ++]
-    allowFailure: false, // [!code ++]
-    contracts: [ // [!code ++]
-      { // [!code ++]
-        address: '0x6B175474E89094C44Da98b954EedeAC495271d0F', // [!code ++]
-        abi: erc20Abi, // [!code ++]
-        functionName: 'balanceOf', // [!code ++]
-        args: ['0x4557B18E779944BFE9d78A672452331C186a9f48'], // [!code ++]
-      }, // [!code ++]
-      { // [!code ++]
-        address: '0x6B175474E89094C44Da98b954EedeAC495271d0F', // [!code ++]
-        abi: erc20Abi, // [!code ++]
-        functionName: 'decimals', // [!code ++]
-      }, // [!code ++]
-      { // [!code ++]
-        address: '0x6B175474E89094C44Da98b954EedeAC495271d0F', // [!code ++]
-        abi: erc20Abi, // [!code ++]
-        functionName: 'symbol', // [!code ++]
-      }, // [!code ++]
-    ] // [!code ++]
-  }) // [!code ++]
-  ```

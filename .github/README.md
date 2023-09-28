@@ -58,7 +58,7 @@ For help, discussion about best practices, or any other conversation that would 
 
 For casual chit-chat with others using the framework:
 
-[Join the Wagmi Slack](https://join.slack.com/t/wagmi-community/shared_invite/zt-21zxb2mhv-EcN32c1Qx4Z3vRAfEKbbJw)
+[Join the Wagmi Discord](https://discord.gg/SghfWBKexF)
 
 ## Contributing
 

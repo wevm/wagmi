@@ -22,10 +22,10 @@ import { useAccountEffect } from 'wagmi'
 function App() {
   useAccountEffect({
     onConnect(data) {
-      console.log('connected!', data)
+      console.log('Connected!', data)
     },
     onDisconnect() {
-      console.log('disconnected!')
+      console.log('Disconnected!')
     },
   })
 }
@@ -54,10 +54,10 @@ function App() {
   useAccountEffect({
     config, // [!code focus]
     onConnect(data) {
-      console.log('connected!', data)
+      console.log('Connected!', data)
     },
     onDisconnect() {
-      console.log('disconnected!')
+      console.log('Disconnected!')
     },
   })
 }
@@ -78,7 +78,7 @@ import { useAccountEffect } from 'wagmi'
 function App() {
   useAccountEffect({
     onConnect(data) { // [!code focus]
-      console.log('connected!', data) // [!code focus]
+      console.log('Connected!', data) // [!code focus]
     }, // [!code focus]
   })
 }
@@ -99,7 +99,7 @@ import { useAccountEffect } from 'wagmi'
 function App() {
   useAccountEffect({
     onDisconnect() { // [!code focus]
-      console.log('disconnected!') // [!code focus]
+      console.log('Disconnected!') // [!code focus]
     }, // [!code focus]
   })
 }

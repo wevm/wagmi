@@ -65,6 +65,7 @@ export default withTwoslash(
         pattern: 'https://github.com/wagmi-dev/wagmi/edit/main/docs/:path',
         text: 'Suggest changes to this page',
       },
+      externalLinkIcon: true,
       footer: {
         message:
           'Released under the <a href="https://github.com/wagmi-dev/wagmi/blob/main/LICENSE">MIT License</a>.',
@@ -78,8 +79,8 @@ export default withTwoslash(
       nav: [
         { text: 'React', link: '/react/getting-started' },
         { text: 'Core', link: '/core/getting-started' },
-        { text: 'CLI 🚧', link: '/cli/getting-started' },
-        { text: 'Examples 🚧', link: '/examples' },
+        { text: 'CLI', link: '/cli/getting-started' },
+        { text: 'Examples', link: '/examples' },
         {
           text: 'Links',
           items: [
@@ -102,8 +103,9 @@ export default withTwoslash(
       sidebar: getSidebar(),
       siteTitle: false,
       socialLinks: [
-        { icon: 'twitter', link: 'https://twitter.com/wagmi_sh' },
         { icon: 'github', link: 'https://github.com/wagmi-dev/wagmi' },
+        { icon: 'twitter', link: 'https://twitter.com/wagmi_sh' },
+        { icon: 'discord', link: 'https://discord.gg/9zHPXuBpqy' },
       ],
     },
     title: 'Wagmi',
