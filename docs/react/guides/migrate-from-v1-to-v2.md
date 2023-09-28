@@ -36,11 +36,11 @@ bun add wagmi@alpha viem@{{viemVersion}} @tanstack/react-query@beta
 :::
 
 ::: info Wagmi v2 is currently in alpha.
-We recommend trying it out in your projects, but there may be breaking changes before the final release. If you find bugs or have feedback, please [open an issue](https://github.com/wagmi-dev/wagmi/issues/new/choose) or [create a new discussion](https://github.com/wagmi-dev/wagmi/discussions/new/choose).
+We recommend trying it out in your projects, but there may be breaking changes before the final release. If you find bugs or have feedback, please [open an issue](https://github.com/wagmi-dev/wagmi/issues/new/choose) or [reply to the discussion thread](https://github.com/wagmi-dev/wagmi/discussions/3068).
 :::
 
 ::: info Wagmi v2 should be the last major version of Wagmi that will have this many actionable breaking changes. 
-Moving forward, new functionality will be opt-in with old functionality being deprecated alongside the new features. This means upgrading to the latest major versions will not require immediate changes.
+Moving forward after Wagmi v2, new functionality will be opt-in with old functionality being deprecated alongside the new features. This means upgrading to the latest major versions will not require immediate changes.
 :::
 
 ## Dependencies

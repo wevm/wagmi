@@ -34,7 +34,7 @@ bun add @wagmi/core@alpha viem@{{viemVersion}} @wagmi/connectors@alpha
 :::
 
 ::: info Wagmi Core v2 is currently in alpha.
-We recommend trying it out in your projects, but there may be breaking changes before the final release. If you find bugs or have feedback, please [open an issue](https://github.com/wagmi-dev/wagmi/issues/new/choose) or [create a new discussion](https://github.com/wagmi-dev/wagmi/discussions/new/choose).
+We recommend trying it out in your projects, but there may be breaking changes before the final release. If you find bugs or have feedback, please [open an issue](https://github.com/wagmi-dev/wagmi/issues/new/choose) or [reply to the discussion thread](https://github.com/wagmi-dev/wagmi/discussions/3068).
 :::
 
 ::: info Wagmi Core v2 should be the last major version of Wagmi Core that will have this many actionable breaking changes. 
