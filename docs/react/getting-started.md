@@ -12,6 +12,10 @@ Wagmi is a React Hooks library for Ethereum. You can learn more about the ration
 
 ## Automatic Installation
 
+::: info Not Quite Ready
+`create-wagmi` isn't quite ready. In the meantime, you can use the [manual installation](#manual-installation) instructions.
+:::
+
 For new projects, it is recommended to set up your Wagmi app using the [`create-wagmi`](/cli/create-wagmi) command line interface (CLI). This will create a new Wagmi project using TypeScript and install the required dependencies.
 
 ::: code-group
