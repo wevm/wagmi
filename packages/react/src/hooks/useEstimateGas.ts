@@ -1,6 +1,10 @@
 'use client'
 
-import type { Config, EstimateGasError, ResolvedRegister } from '@wagmi/core'
+import type {
+  Config,
+  EstimateGasErrorType,
+  ResolvedRegister,
+} from '@wagmi/core'
 import {
   type EstimateGasData,
   type EstimateGasOptions,
@@ -28,7 +32,7 @@ export type UseEstimateGasParameters<
     query?:
       | UseQueryParameters<
           EstimateGasQueryFnData,
-          EstimateGasError,
+          EstimateGasErrorType,
           selectData,
           EstimateGasQueryKey<config, chainId>
         >
@@ -36,7 +40,7 @@ export type UseEstimateGasParameters<
   }
 
 export type UseEstimateGasReturnType<selectData = EstimateGasData> =
-  UseQueryReturnType<selectData, EstimateGasError>
+  UseQueryReturnType<selectData, EstimateGasErrorType>
 
 /** https://alpha.wagmi.sh/react/api/hooks/useEstimateGas */
 export function useEstimateGas<

@@ -8,7 +8,7 @@ const packageName = 'wagmi'
 const actionName = 'estimateFeesPerGas'
 const typeName = 'EstimateFeesPerGas'
 const TData = '{ formatted: { gasPrice: string | undefined; maxFeePerGas: string | undefined; maxPriorityFeePerGas: string | undefined; }; gasPrice: bigint | undefined; maxFeePerGas: bigint | undefined; maxPriorityFeePerGas: bigint | undefined; }'
-const TError = 'EstimateFeesPerGasError'
+const TError = 'EstimateFeesPerGasErrorType'
 </script>
 
 # useEstimateFeesPerGas

@@ -1,7 +1,7 @@
 import type { MutationOptions } from '@tanstack/query-core'
 
 import {
-  type ConnectError,
+  type ConnectErrorType,
   type ConnectParameters,
   type ConnectReturnType,
   connect,
@@ -18,7 +18,7 @@ export function connectMutationOptions<config extends Config>(config: config) {
     mutationKey: ['connect'],
   } as const satisfies MutationOptions<
     ConnectData<config>,
-    ConnectError,
+    ConnectErrorType,
     ConnectVariables<config>
   >
 }
@@ -29,7 +29,7 @@ export type ConnectVariables<config extends Config> = ConnectParameters<config>
 
 export type ConnectMutate<config extends Config, context = unknown> = Mutate<
   ConnectData<config>,
-  ConnectError,
+  ConnectErrorType,
   ConnectVariables<config>,
   context
 >
@@ -39,7 +39,7 @@ export type ConnectMutateAsync<
   context = unknown,
 > = MutateAsync<
   ConnectData<config>,
-  ConnectError,
+  ConnectErrorType,
   ConnectVariables<config>,
   context
 >

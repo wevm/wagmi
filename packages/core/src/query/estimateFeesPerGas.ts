@@ -2,7 +2,7 @@ import { type QueryOptions } from '@tanstack/query-core'
 import type { FeeValuesType } from 'viem'
 
 import {
-  type EstimateFeesPerGasError,
+  type EstimateFeesPerGasErrorType,
   type EstimateFeesPerGasParameters,
   type EstimateFeesPerGasReturnType,
   estimateFeesPerGas,
@@ -31,7 +31,7 @@ export function estimateFeesPerGasQueryOptions<
     queryKey: estimateFeesPerGasQueryKey(options),
   } as const satisfies QueryOptions<
     EstimateFeesPerGasQueryFnData<type>,
-    EstimateFeesPerGasError,
+    EstimateFeesPerGasErrorType,
     EstimateFeesPerGasData<type>,
     EstimateFeesPerGasQueryKey<config, type>
   >

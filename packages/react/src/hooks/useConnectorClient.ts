@@ -3,7 +3,7 @@
 import { useQueryClient } from '@tanstack/react-query'
 import type {
   Config,
-  GetConnectorClientError,
+  GetConnectorClientErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
 import { type Evaluate, type Omit } from '@wagmi/core/internal'
@@ -38,7 +38,7 @@ export type UseConnectorClientParameters<
             Omit<
               UseQueryParameters<
                 GetConnectorClientQueryFnData<config, chainId>,
-                GetConnectorClientError,
+                GetConnectorClientErrorType,
                 selectData,
                 GetConnectorClientQueryKey<config, chainId>
               >,
@@ -53,7 +53,7 @@ export type UseConnectorClientReturnType<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetConnectorClientData<config, chainId>,
-> = UseQueryReturnType<selectData, GetConnectorClientError>
+> = UseQueryReturnType<selectData, GetConnectorClientErrorType>
 
 /** https://alpha.wagmi.sh/react/api/hooks/useConnectorClient */
 export function useConnectorClient<

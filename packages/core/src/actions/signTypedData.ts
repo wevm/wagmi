@@ -1,5 +1,6 @@
 import type { Account, TypedData } from 'viem'
 import {
+  type SignMessageErrorType as viem_SignMessageErrorType,
   type SignTypedDataParameters as viem_SignTypedDataParameters,
   type SignTypedDataReturnType as viem_SignTypedDataReturnType,
   signTypedData as viem_signTypedData,
@@ -22,7 +23,7 @@ export type SignTypedDataParameters<
 
 export type SignTypedDataReturnType = viem_SignTypedDataReturnType
 
-export type SignTypedDataError = Error
+export type SignTypedDataErrorType = viem_SignMessageErrorType
 
 /** https://alpha.wagmi.sh/core/api/actions/signTypedData */
 export async function signTypedData<

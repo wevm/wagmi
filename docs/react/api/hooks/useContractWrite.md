@@ -9,7 +9,7 @@ const actionName = 'writeContract'
 const typeName = 'WriteContract'
 const mutate = 'writeContract'
 const TData = 'WriteContractReturnType'
-const TError = 'WriteContractError'
+const TError = 'WriteContractErrorType'
 const TVariables = 'WriteContractVariables'
 </script>
 

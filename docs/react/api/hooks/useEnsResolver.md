@@ -8,7 +8,7 @@ const packageName = 'wagmi'
 const actionName = 'getEnsResolver'
 const typeName = 'GetEnsResolver'
 const TData = 'string | null'
-const TError = 'GetEnsResolverError'
+const TError = 'GetEnsResolverErrorType'
 </script>
 
 # useEnsResolver

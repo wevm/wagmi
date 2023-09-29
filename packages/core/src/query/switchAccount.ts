@@ -1,7 +1,7 @@
 import type { MutationOptions } from '@tanstack/query-core'
 
 import {
-  type SwitchAccountError,
+  type SwitchAccountErrorType,
   type SwitchAccountParameters,
   type SwitchAccountReturnType,
   switchAccount,
@@ -20,7 +20,7 @@ export function switchAccountMutationOptions<config extends Config>(
     mutationKey: ['switchAccount'],
   } as const satisfies MutationOptions<
     SwitchAccountData<config>,
-    SwitchAccountError,
+    SwitchAccountErrorType,
     SwitchAccountVariables
   >
 }
@@ -36,7 +36,7 @@ export type SwitchAccountMutate<
   context = unknown,
 > = Mutate<
   SwitchAccountData<config>,
-  SwitchAccountError,
+  SwitchAccountErrorType,
   SwitchAccountVariables,
   context
 >
@@ -46,7 +46,7 @@ export type SwitchAccountMutateAsync<
   context = unknown,
 > = MutateAsync<
   SwitchAccountData<config>,
-  SwitchAccountError,
+  SwitchAccountErrorType,
   SwitchAccountVariables,
   context
 >

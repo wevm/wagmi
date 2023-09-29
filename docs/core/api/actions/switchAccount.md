@@ -75,7 +75,7 @@ Connected chain ID from connector.
 ## Error
 
 ```ts
-import { type SwitchAccountError } from '@wagmi/core'
+import { type SwitchAccountErrorType } from '@wagmi/core'
 ```
 
 <!--@include: @shared/mutation-imports.md-->

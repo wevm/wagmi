@@ -3,7 +3,7 @@
 import type {
   Config,
   ResolvedRegister,
-  SimulateContractError,
+  SimulateContractErrorType,
 } from '@wagmi/core'
 import {
   type SimulateContractData,
@@ -43,7 +43,7 @@ export type UseContractSimulateParameters<
     query?:
       | UseQueryParameters<
           SimulateContractQueryFnData<abi, functionName, args, config, chainId>,
-          SimulateContractError,
+          SimulateContractErrorType,
           selectData,
           SimulateContractQueryKey<abi, functionName, args, config, chainId>
         >
@@ -64,7 +64,7 @@ export type UseContractSimulateReturnType<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] | undefined = undefined,
   selectData = SimulateContractData<abi, functionName, args, config, chainId>,
-> = UseQueryReturnType<selectData, SimulateContractError>
+> = UseQueryReturnType<selectData, SimulateContractErrorType>
 
 /** https://alpha.wagmi.sh/react/api/hooks/useContractSimulate */
 export function useContractSimulate<

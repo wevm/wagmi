@@ -9,7 +9,7 @@ const actionName = 'sendTransaction'
 const typeName = 'SendTransaction'
 const mutate = 'sendTransaction'
 const TData = 'SendTransactionData'
-const TError = 'SendTransactionError'
+const TError = 'SendTransactionErrorType'
 const TVariables = 'SendTransactionVariables'
 </script>
 

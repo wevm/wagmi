@@ -1,6 +1,10 @@
 'use client'
 
-import type { Config, GetTransactionError, ResolvedRegister } from '@wagmi/core'
+import type {
+  Config,
+  GetTransactionErrorType,
+  ResolvedRegister,
+} from '@wagmi/core'
 import { type Evaluate } from '@wagmi/core/internal'
 import {
   type GetTransactionData,
@@ -29,7 +33,7 @@ export type UseTransactionParameters<
       query?:
         | UseQueryParameters<
             GetTransactionQueryFnData<config, chainId>,
-            GetTransactionError,
+            GetTransactionErrorType,
             selectData,
             GetTransactionQueryKey<config, chainId>
           >
@@ -41,7 +45,7 @@ export type UseTransactionReturnType<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetTransactionData<config, chainId>,
-> = UseQueryReturnType<selectData, GetTransactionError>
+> = UseQueryReturnType<selectData, GetTransactionErrorType>
 
 /** https://alpha.wagmi.sh/react/api/hooks/useTransaction */
 export function useTransaction<

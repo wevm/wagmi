@@ -1,4 +1,5 @@
 import {
+  type GetEnsNameErrorType as viem_GetEnsNameErrorType,
   type GetEnsNameParameters as viem_GetEnsNameParameters,
   type GetEnsNameReturnType as viem_GetEnsNameReturnType,
   getEnsName as viem_getEnsName,
@@ -14,7 +15,7 @@ export type GetEnsNameParameters<config extends Config = Config> = Evaluate<
 
 export type GetEnsNameReturnType = viem_GetEnsNameReturnType
 
-export type GetEnsNameError = Error
+export type GetEnsNameErrorType = viem_GetEnsNameErrorType
 
 /** https://alpha.wagmi.sh/core/api/actions/getEnsName */
 export function getEnsName<config extends Config>(

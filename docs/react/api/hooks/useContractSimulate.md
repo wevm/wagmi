@@ -8,7 +8,7 @@ const packageName = 'wagmi'
 const actionName = 'simulateContract'
 const typeName = 'SimulateContract'
 const TData = 'SimulateContractReturnType'
-const TError = 'SimulateContractError'
+const TError = 'SimulateContractErrorType'
 </script>
 
 # useContractSimulate

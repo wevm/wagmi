@@ -1,4 +1,5 @@
 import {
+  type GetEnsAvatarErrorType as viem_GetEnsAvatarErrorType,
   type GetEnsAvatarParameters as viem_GetEnsAvatarParameters,
   type GetEnsAvatarReturnType as viem_GetEnsAvatarReturnType,
   getEnsAvatar as viem_getEnsAvatar,
@@ -14,7 +15,7 @@ export type GetEnsAvatarParameters<config extends Config = Config> = Evaluate<
 
 export type GetEnsAvatarReturnType = viem_GetEnsAvatarReturnType
 
-export type GetEnsAvatarError = Error
+export type GetEnsAvatarErrorType = viem_GetEnsAvatarErrorType
 
 /** https://alpha.wagmi.sh/core/api/actions/getEnsAvatar */
 export function getEnsAvatar<config extends Config>(

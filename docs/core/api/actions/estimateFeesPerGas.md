@@ -143,7 +143,7 @@ Max priority fee per gas.
 ## Error
 
 ```ts
-import { type EstimateFeesPerGasError } from '@wagmi/core'
+import { type EstimateFeesPerGasErrorType } from '@wagmi/core'
 ```
 
 <!--@include: @shared/query-imports.md-->

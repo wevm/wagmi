@@ -1,7 +1,7 @@
 import type { MutationOptions } from '@tanstack/query-core'
 
 import {
-  type ReconnectError,
+  type ReconnectErrorType,
   type ReconnectParameters,
   type ReconnectReturnType,
   reconnect,
@@ -18,7 +18,7 @@ export function reconnectMutationOptions(config: Config) {
     mutationKey: ['reconnect'],
   } as const satisfies MutationOptions<
     ReconnectData,
-    ReconnectError,
+    ReconnectErrorType,
     ReconnectVariables
   >
 }
@@ -29,14 +29,14 @@ export type ReconnectVariables = ReconnectParameters | undefined
 
 export type ReconnectMutate<context = unknown> = Mutate<
   ReconnectData,
-  ReconnectError,
+  ReconnectErrorType,
   ReconnectVariables,
   context
 >
 
 export type ReconnectMutateAsync<context = unknown> = MutateAsync<
   ReconnectData,
-  ReconnectError,
+  ReconnectErrorType,
   ReconnectVariables,
   context
 >

@@ -1,4 +1,5 @@
 import {
+  type GetEnsResolverErrorType as viem_GetEnsResolverErrorType,
   type GetEnsResolverParameters as viem_GetEnsResolverParameters,
   type GetEnsResolverReturnType as viem_GetEnsResolverReturnType,
   getEnsResolver as viem_getEnsResolver,
@@ -14,7 +15,7 @@ export type GetEnsResolverParameters<config extends Config = Config> = Evaluate<
 
 export type GetEnsResolverReturnType = viem_GetEnsResolverReturnType
 
-export type GetEnsResolverError = Error
+export type GetEnsResolverErrorType = viem_GetEnsResolverErrorType
 
 /** https://alpha.wagmi.sh/core/api/actions/getEnsResolver */
 export function getEnsResolver<config extends Config>(

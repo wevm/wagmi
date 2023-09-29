@@ -1,7 +1,7 @@
 import { type QueryOptions } from '@tanstack/query-core'
 
 import {
-  type GetBalanceError,
+  type GetBalanceErrorType,
   type GetBalanceParameters,
   type GetBalanceReturnType,
   getBalance,
@@ -32,7 +32,7 @@ export function getBalanceQueryOptions<config extends Config>(
     queryKey: getBalanceQueryKey(options),
   } as const satisfies QueryOptions<
     GetBalanceQueryFnData,
-    GetBalanceError,
+    GetBalanceErrorType,
     GetBalanceData,
     GetBalanceQueryKey<config>
   >

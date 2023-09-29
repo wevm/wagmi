@@ -2,7 +2,7 @@ import type { MutateOptions, MutationOptions } from '@tanstack/query-core'
 import type { Abi, ContractFunctionArgs, ContractFunctionName } from 'viem'
 
 import {
-  type WriteContractError,
+  type WriteContractErrorType,
   type WriteContractParameters,
   type WriteContractReturnType,
   writeContract,
@@ -20,7 +20,7 @@ export function writeContractMutationOptions<config extends Config>(
     mutationKey: ['writeContract'],
   } as const satisfies MutationOptions<
     WriteContractData,
-    WriteContractError,
+    WriteContractErrorType,
     WriteContractVariables<
       Abi,
       string,
@@ -68,7 +68,7 @@ export type WriteContractMutate<config extends Config, context = unknown> = <
   options?:
     | MutateOptions<
         WriteContractData,
-        WriteContractError,
+        WriteContractErrorType,
         WriteContractVariables<
           abi,
           functionName,
@@ -100,7 +100,7 @@ export type WriteContractMutateAsync<
   options?:
     | MutateOptions<
         WriteContractData,
-        WriteContractError,
+        WriteContractErrorType,
         WriteContractVariables<
           abi,
           functionName,

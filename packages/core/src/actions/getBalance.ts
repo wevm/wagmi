@@ -7,6 +7,7 @@ import {
   trim,
 } from 'viem'
 import {
+  type GetBalanceErrorType as viem_GetBalanceErrorType,
   type GetBalanceParameters as viem_GetBalanceParameters,
   getBalance as viem_getBalance,
 } from 'viem/actions'
@@ -34,7 +35,7 @@ export type GetBalanceReturnType = {
   value: bigint
 }
 
-export type GetBalanceError = Error
+export type GetBalanceErrorType = viem_GetBalanceErrorType
 
 /** https://alpha.wagmi.sh/core/api/actions/getBalance */
 export async function getBalance<config extends Config>(

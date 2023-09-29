@@ -1,4 +1,4 @@
-import { type SendTransactionError } from '@wagmi/core'
+import { type SendTransactionErrorType } from '@wagmi/core'
 import { type Hash } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
@@ -20,7 +20,7 @@ test('context', () => {
           expectTypeOf(variables).toMatchTypeOf<{
             chainId?: number | undefined
           }>()
-          expectTypeOf(error).toEqualTypeOf<SendTransactionError>()
+          expectTypeOf(error).toEqualTypeOf<SendTransactionErrorType>()
           expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
         },
         onSuccess(data, variables, context) {
@@ -32,7 +32,7 @@ test('context', () => {
         },
         onSettled(data, error, variables, context) {
           expectTypeOf(data).toEqualTypeOf<Hash | undefined>()
-          expectTypeOf(error).toEqualTypeOf<SendTransactionError | null>()
+          expectTypeOf(error).toEqualTypeOf<SendTransactionErrorType | null>()
           expectTypeOf(variables).toMatchTypeOf<{
             chainId?: number | undefined
           }>()
@@ -42,7 +42,7 @@ test('context', () => {
     })
 
   expectTypeOf(data).toEqualTypeOf<Hash | undefined>()
-  expectTypeOf(error).toEqualTypeOf<SendTransactionError | null>()
+  expectTypeOf(error).toEqualTypeOf<SendTransactionErrorType | null>()
   expectTypeOf(variables).toMatchTypeOf<
     { chainId?: number | undefined } | undefined
   >()
@@ -55,7 +55,7 @@ test('context', () => {
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
         }>()
-        expectTypeOf(error).toEqualTypeOf<SendTransactionError>()
+        expectTypeOf(error).toEqualTypeOf<SendTransactionErrorType>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
       },
       onSuccess(data, variables, context) {
@@ -67,7 +67,7 @@ test('context', () => {
       },
       onSettled(data, error, variables, context) {
         expectTypeOf(data).toEqualTypeOf<Hash | undefined>()
-        expectTypeOf(error).toEqualTypeOf<SendTransactionError | null>()
+        expectTypeOf(error).toEqualTypeOf<SendTransactionErrorType | null>()
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
         }>()

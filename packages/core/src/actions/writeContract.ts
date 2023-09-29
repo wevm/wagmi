@@ -4,10 +4,13 @@ import type {
   Chain,
   ContractFunctionArgs,
   ContractFunctionName,
-  WriteContractParameters as viem_WriteContractParameters,
-  WriteContractReturnType as viem_WriteContractReturnType,
 } from 'viem'
-import { writeContract as viem_writeContract } from 'viem/actions'
+import {
+  type WriteContractErrorType as viem_WriteContractErrorType,
+  type WriteContractParameters as viem_WriteContractParameters,
+  type WriteContractReturnType as viem_WriteContractReturnType,
+  writeContract as viem_writeContract,
+} from 'viem/actions'
 
 import type { Config } from '../createConfig.js'
 import type { SelectChains } from '../types/chain.js'
@@ -60,7 +63,7 @@ export type WriteContractParameters<
 
 export type WriteContractReturnType = viem_WriteContractReturnType
 
-export type WriteContractError = Error
+export type WriteContractErrorType = viem_WriteContractErrorType
 
 /** https://alpha.wagmi.sh/core/api/actions/writeContract */
 export async function writeContract<

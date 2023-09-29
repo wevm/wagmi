@@ -4,7 +4,7 @@ import { useMutation } from '@tanstack/react-query'
 import type {
   Config,
   ResolvedRegister,
-  SendTransactionError,
+  SendTransactionErrorType,
 } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
 import {
@@ -30,7 +30,7 @@ export type UseSendTransactionParameters<
     mutation?:
       | UseMutationParameters<
           SendTransactionData,
-          SendTransactionError,
+          SendTransactionErrorType,
           SendTransactionVariables<config, config['chains'][number]['id']>,
           context
         >
@@ -44,7 +44,7 @@ export type UseSendTransactionReturnType<
 > = Evaluate<
   UseMutationReturnType<
     SendTransactionData,
-    SendTransactionError,
+    SendTransactionErrorType,
     SendTransactionVariables<config, config['chains'][number]['id']>,
     context
   > & {

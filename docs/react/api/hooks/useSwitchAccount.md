@@ -9,7 +9,7 @@ const actionName = 'switchAccount'
 const typeName = 'SwitchAccount'
 const mutate = 'switchAccount'
 const TData = 'SwitchAccountData'
-const TError = 'SwitchAccountError'
+const TError = 'SwitchAccountErrorType'
 const TVariables = 'SwitchAccountVariables'
 </script>
 

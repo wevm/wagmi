@@ -1,7 +1,11 @@
 'use client'
 
 import { useMutation } from '@tanstack/react-query'
-import type { Config, ResolvedRegister, WriteContractError } from '@wagmi/core'
+import type {
+  Config,
+  ResolvedRegister,
+  WriteContractErrorType,
+} from '@wagmi/core'
 import {
   type WriteContractData,
   type WriteContractMutate,
@@ -25,7 +29,7 @@ export type UseContractWriteParameters<
   mutation?:
     | UseMutationParameters<
         WriteContractData,
-        WriteContractError,
+        WriteContractErrorType,
         WriteContractVariables<
           Abi,
           string,
@@ -43,7 +47,7 @@ export type UseContractWriteReturnType<
   context = unknown,
 > = UseMutationReturnType<
   WriteContractData,
-  WriteContractError,
+  WriteContractErrorType,
   WriteContractVariables<
     Abi,
     string,

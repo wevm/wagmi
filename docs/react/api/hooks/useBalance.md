@@ -8,7 +8,7 @@ const packageName = 'wagmi'
 const actionName = 'getBalance'
 const typeName = 'GetBalance'
 const TData = '{ decimals: number; formatted: string; symbol: string; value: bigint; }'
-const TError = 'GetBalanceError'
+const TError = 'GetBalanceErrorType'
 </script>
 
 # useBalance

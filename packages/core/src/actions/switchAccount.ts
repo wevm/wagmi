@@ -14,7 +14,7 @@ export type SwitchAccountReturnType<config extends Config = Config> = {
     | (number extends config['chains'][number]['id'] ? number : number & {})
 }
 
-export type SwitchAccountError = ConnectorNotConnectedError | Error
+export type SwitchAccountErrorType = ConnectorNotConnectedError | Error
 
 /** https://alpha.wagmi.sh/core/api/actions/switchAccount */
 export async function switchAccount<config extends Config>(

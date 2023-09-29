@@ -9,7 +9,7 @@ const actionName = 'signTypedData'
 const typeName = 'SignTypedData'
 const mutate = 'signTypedData'
 const TData = 'SignTypedDataData'
-const TError = 'SignTypedDataError'
+const TError = 'SignTypedDataErrorType'
 const TVariables = 'SignTypedDataVariables'
 </script>
 

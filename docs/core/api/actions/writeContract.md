@@ -522,7 +522,7 @@ With [`abi`](#abi) setup correctly, TypeScript will infer the correct types for 
 ## Error
 
 ```ts
-import { type WriteContractError } from '@wagmi/core'
+import { type WriteContractErrorType } from '@wagmi/core'
 ```
 
 <!--@include: @shared/mutation-imports.md-->

@@ -1,6 +1,6 @@
 'use client'
 
-import type { Config, GetTokenError, ResolvedRegister } from '@wagmi/core'
+import type { Config, GetTokenErrorType, ResolvedRegister } from '@wagmi/core'
 import { type Evaluate } from '@wagmi/core/internal'
 import {
   type GetTokenData,
@@ -28,7 +28,7 @@ export type UseTokenParameters<
       query?:
         | UseQueryParameters<
             GetTokenQueryFnData,
-            GetTokenError,
+            GetTokenErrorType,
             selectData,
             GetTokenQueryKey<config>
           >
@@ -38,7 +38,7 @@ export type UseTokenParameters<
 
 export type UseTokenReturnType<selectData = GetTokenData> = UseQueryReturnType<
   selectData,
-  GetTokenError
+  GetTokenErrorType
 >
 
 /** https://alpha.wagmi.sh/react/api/hooks/useToken */

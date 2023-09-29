@@ -2,7 +2,7 @@ import { type QueryOptions } from '@tanstack/query-core'
 import type { Abi, ContractFunctionArgs, ContractFunctionName } from 'viem'
 
 import {
-  type SimulateContractError,
+  type SimulateContractErrorType,
   type SimulateContractParameters,
   type SimulateContractReturnType,
   simulateContract,
@@ -64,7 +64,7 @@ export function simulateContractQueryOptions<
     queryKey: simulateContractQueryKey(options),
   } as const satisfies QueryOptions<
     SimulateContractQueryFnData<abi, functionName, args, config, chainId>,
-    SimulateContractError,
+    SimulateContractErrorType,
     SimulateContractData<abi, functionName, args, config, chainId>,
     SimulateContractQueryKey<abi, functionName, args, config, chainId>
   >

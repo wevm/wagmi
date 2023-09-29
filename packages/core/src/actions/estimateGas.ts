@@ -1,5 +1,6 @@
 import type { Account, Address, Chain } from 'viem'
 import {
+  type EstimateGasErrorType as viem_EstimateGasErrorType,
   type EstimateGasParameters as viem_EstimateGasParameters,
   type EstimateGasReturnType as viem_EstimateGasReturnType,
   estimateGas as viem_estimateGas,
@@ -31,7 +32,7 @@ export type EstimateGasParameters<
 
 export type EstimateGasReturnType = viem_EstimateGasReturnType
 
-export type EstimateGasError = Error
+export type EstimateGasErrorType = viem_EstimateGasErrorType
 
 /** https://alpha.wagmi.sh/core/api/actions/estimateGas */
 export async function estimateGas<

@@ -2,7 +2,7 @@
 
 import {
   type Config,
-  type ReadContractsError,
+  type ReadContractsErrorType,
   type ResolvedRegister,
 } from '@wagmi/core'
 import { type Evaluate } from '@wagmi/core/internal'
@@ -37,7 +37,7 @@ export type UseContractReadsParameters<
       query?:
         | UseQueryParameters<
             ReadContractsQueryFnData<contracts, allowFailure>,
-            ReadContractsError,
+            ReadContractsErrorType,
             selectData,
             ReadContractsQueryKey<contracts, allowFailure, config>
           >
@@ -49,7 +49,7 @@ export type UseContractReadsReturnType<
   contracts extends readonly unknown[] = readonly ContractFunctionParameters[],
   allowFailure extends boolean = true,
   selectData = ReadContractsData<contracts, allowFailure>,
-> = UseQueryReturnType<selectData, ReadContractsError>
+> = UseQueryReturnType<selectData, ReadContractsErrorType>
 
 /** https://alpha.wagmi.sh/react/api/hooks/useContractReads */
 export function useContractReads<

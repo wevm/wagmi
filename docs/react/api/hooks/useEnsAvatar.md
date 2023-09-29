@@ -8,7 +8,7 @@ const packageName = 'wagmi'
 const actionName = 'getEnsAvatar'
 const typeName = 'GetEnsAvatar'
 const TData = 'string | null'
-const TError = 'GetEnsAvatarError'
+const TError = 'GetEnsAvatarErrorType'
 </script>
 
 # useEnsAvatar

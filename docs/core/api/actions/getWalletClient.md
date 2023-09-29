@@ -106,7 +106,7 @@ Viem [`WalletClient`](https://viem.sh/docs/clients/wallet.html) object for the c
 ## Error
 
 ```ts
-import { type GetWalletClientError } from '@wagmi/core'
+import { type GetWalletClientErrorType } from '@wagmi/core'
 ```
 
 <!--@include: @shared/query-imports.md-->

@@ -7,8 +7,8 @@ import { ContractFunctionExecutionError } from 'viem'
 
 import { type Config } from '../createConfig.js'
 import { type ChainIdParameter } from '../types/properties.js'
-import { multicall } from './multicall.js'
-import { readContract } from './readContract.js'
+import { type MulticallErrorType, multicall } from './multicall.js'
+import { type ReadContractErrorType, readContract } from './readContract.js'
 
 export type ReadContractsParameters<
   contracts extends readonly unknown[] = readonly ContractFunctionParameters[],
@@ -25,7 +25,7 @@ export type ReadContractsReturnType<
   allowFailure extends boolean = true,
 > = viem_MulticallReturnType<contracts, allowFailure>
 
-export type ReadContractsError = Error
+export type ReadContractsErrorType = MulticallErrorType | ReadContractErrorType
 
 export async function readContracts<
   config extends Config,

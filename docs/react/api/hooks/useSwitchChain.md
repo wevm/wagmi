@@ -9,7 +9,7 @@ const actionName = 'switchChain'
 const typeName = 'SwitchChain'
 const mutate = 'switchChain'
 const TData = 'SwitchChainData'
-const TError = 'SwitchChainError'
+const TError = 'SwitchChainErrorType'
 const TVariables = 'SwitchChainVariables'
 </script>
 

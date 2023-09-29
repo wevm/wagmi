@@ -1,7 +1,7 @@
 import { type QueryOptions } from '@tanstack/query-core'
 
 import {
-  type GetEnsAvatarError,
+  type GetEnsAvatarErrorType,
   type GetEnsAvatarParameters,
   type GetEnsAvatarReturnType,
   getEnsAvatar,
@@ -28,7 +28,7 @@ export function getEnsAvatarQueryOptions<config extends Config>(
     queryKey: getEnsAvatarQueryKey(options),
   } as const satisfies QueryOptions<
     GetEnsAvatarQueryFnData,
-    GetEnsAvatarError,
+    GetEnsAvatarErrorType,
     GetEnsAvatarData,
     GetEnsAvatarQueryKey<config>
   >

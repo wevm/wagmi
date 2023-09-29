@@ -1,11 +1,9 @@
-import type {
-  CallParameters,
-  Chain,
-  WaitForTransactionReceiptParameters as viem_WaitForTransactionReceiptParameters,
-  WaitForTransactionReceiptReturnType as viem_WaitForTransactionReceiptReturnType,
-} from 'viem'
+import type { CallParameters, Chain } from 'viem'
 import { hexToString } from 'viem'
 import {
+  type WaitForTransactionReceiptErrorType as viem_WaitForTransactionReceiptErrorType,
+  type WaitForTransactionReceiptParameters as viem_WaitForTransactionReceiptParameters,
+  type WaitForTransactionReceiptReturnType as viem_WaitForTransactionReceiptReturnType,
   call,
   getTransaction,
   waitForTransactionReceipt as viem_waitForTransactionReceipt,
@@ -34,7 +32,8 @@ export type WaitForTransactionReceiptReturnType<
   }[number]
 >
 
-export type WaitForTransactionReceiptError = Error
+export type WaitForTransactionReceiptErrorType =
+  viem_WaitForTransactionReceiptErrorType
 
 export async function waitForTransactionReceipt<
   config extends Config,

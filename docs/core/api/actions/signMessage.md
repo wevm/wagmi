@@ -115,7 +115,7 @@ The signed message.
 ## Error
 
 ```ts
-import { type SignMessageError } from '@wagmi/core'
+import { type SignMessageErrorType } from '@wagmi/core'
 ```
 
 <!--@include: @shared/mutation-imports.md-->

@@ -1,5 +1,6 @@
 import type {
   ContractFunctionParameters,
+  MulticallErrorType as viem_MulticallErrorType,
   MulticallParameters as viem_MulticallParameters,
   MulticallReturnType as viem_MulticallReturnType,
 } from 'viem'
@@ -18,6 +19,8 @@ export type MulticallReturnType<
   contracts extends readonly unknown[] = readonly ContractFunctionParameters[],
   allowFailure extends boolean = true,
 > = viem_MulticallReturnType<contracts, allowFailure>
+
+export type MulticallErrorType = viem_MulticallErrorType
 
 export async function multicall<
   config extends Config,

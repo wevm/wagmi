@@ -1,7 +1,7 @@
 'use client'
 
 import { useMutation } from '@tanstack/react-query'
-import { type Connector, type DisconnectError } from '@wagmi/core'
+import { type Connector, type DisconnectErrorType } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
 import {
   type DisconnectData,
@@ -24,7 +24,7 @@ export type UseDisconnectParameters<context = unknown> = Evaluate<
     mutation?:
       | UseMutationParameters<
           DisconnectData,
-          DisconnectError,
+          DisconnectErrorType,
           DisconnectVariables,
           context
         >
@@ -35,7 +35,7 @@ export type UseDisconnectParameters<context = unknown> = Evaluate<
 export type UseDisconnectReturnType<context = unknown> = Evaluate<
   UseMutationReturnType<
     DisconnectData,
-    DisconnectError,
+    DisconnectErrorType,
     DisconnectVariables,
     context
   > & {

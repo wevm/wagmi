@@ -1,4 +1,4 @@
-import { type Connector, type SwitchAccountError } from '@wagmi/core'
+import { type Connector, type SwitchAccountErrorType } from '@wagmi/core'
 import { config } from '@wagmi/test'
 import { expectTypeOf, test } from 'vitest'
 
@@ -17,7 +17,7 @@ test('context', () => {
       },
       onError(error, variables, context) {
         expectTypeOf(variables).toEqualTypeOf<{ connector: Connector }>()
-        expectTypeOf(error).toEqualTypeOf<SwitchAccountError>()
+        expectTypeOf(error).toEqualTypeOf<SwitchAccountErrorType>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
       },
       onSuccess(data, variables, context) {
@@ -36,7 +36,7 @@ test('context', () => {
             }
           | undefined
         >()
-        expectTypeOf(error).toEqualTypeOf<SwitchAccountError | null>()
+        expectTypeOf(error).toEqualTypeOf<SwitchAccountErrorType | null>()
         expectTypeOf(variables).toEqualTypeOf<{ connector: Connector }>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
       },
@@ -50,7 +50,7 @@ test('context', () => {
       }
     | undefined
   >()
-  expectTypeOf(error).toEqualTypeOf<SwitchAccountError | null>()
+  expectTypeOf(error).toEqualTypeOf<SwitchAccountErrorType | null>()
   expectTypeOf(variables).toEqualTypeOf<{ connector: Connector } | undefined>()
   expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
 
@@ -59,7 +59,7 @@ test('context', () => {
     {
       onError(error, variables, context) {
         expectTypeOf(variables).toEqualTypeOf<{ connector: Connector }>()
-        expectTypeOf(error).toEqualTypeOf<SwitchAccountError>()
+        expectTypeOf(error).toEqualTypeOf<SwitchAccountErrorType>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
       },
       onSuccess(data, variables, context) {
@@ -78,7 +78,7 @@ test('context', () => {
             }
           | undefined
         >()
-        expectTypeOf(error).toEqualTypeOf<SwitchAccountError | null>()
+        expectTypeOf(error).toEqualTypeOf<SwitchAccountErrorType | null>()
         expectTypeOf(variables).toEqualTypeOf<{ connector: Connector }>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
       },

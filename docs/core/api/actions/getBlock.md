@@ -132,7 +132,7 @@ import { type GetBlockReturnType } from '@wagmi/core'
 ## Error
 
 ```ts
-import { type GetBlockError } from '@wagmi/core'
+import { type GetBlockErrorType } from '@wagmi/core'
 ```
 
 <!--@include: @shared/query-imports.md-->

@@ -1,7 +1,7 @@
 import type { MutationOptions } from '@tanstack/query-core'
 
 import {
-  type DisconnectError,
+  type DisconnectErrorType,
   type DisconnectParameters,
   type DisconnectReturnType,
   disconnect,
@@ -19,7 +19,7 @@ export function disconnectMutationOptions<config extends Config>(
     mutationKey: ['disconnect'],
   } as const satisfies MutationOptions<
     DisconnectData,
-    DisconnectError,
+    DisconnectErrorType,
     DisconnectVariables
   >
 }
@@ -30,14 +30,14 @@ export type DisconnectVariables = DisconnectParameters | undefined
 
 export type DisconnectMutate<context = unknown> = Mutate<
   DisconnectData,
-  DisconnectError,
+  DisconnectErrorType,
   DisconnectVariables,
   context
 >
 
 export type DisconnectMutateAsync<context = unknown> = MutateAsync<
   DisconnectData,
-  DisconnectError,
+  DisconnectErrorType,
   DisconnectVariables,
   context
 >

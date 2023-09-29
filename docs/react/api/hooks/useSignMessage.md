@@ -9,7 +9,7 @@ const actionName = 'signMessage'
 const typeName = 'SignMessage'
 const mutate = 'signMessage'
 const TData = 'SignMessageData'
-const TError = 'SignMessageError'
+const TError = 'SignMessageErrorType'
 const TVariables = 'SignMessageVariables'
 </script>
 

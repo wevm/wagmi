@@ -3,7 +3,7 @@
 import type {
   Config,
   ResolvedRegister,
-  WaitForTransactionReceiptError,
+  WaitForTransactionReceiptErrorType,
 } from '@wagmi/core'
 import { type Evaluate } from '@wagmi/core/internal'
 import {
@@ -33,7 +33,7 @@ export type UseWaitForTransactionReceiptParameters<
       query?:
         | UseQueryParameters<
             WaitForTransactionReceiptQueryFnData<config, chainId>,
-            WaitForTransactionReceiptError,
+            WaitForTransactionReceiptErrorType,
             selectData,
             WaitForTransactionReceiptQueryKey<config, chainId>
           >
@@ -45,7 +45,7 @@ export type UseWaitForTransactionReceiptReturnType<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = WaitForTransactionReceiptData<config, chainId>,
-> = UseQueryReturnType<selectData, WaitForTransactionReceiptError>
+> = UseQueryReturnType<selectData, WaitForTransactionReceiptErrorType>
 
 /** https://alpha.wagmi.sh/react/api/hooks/useWaitForTransactionReceipt */
 export function useWaitForTransactionReceipt<

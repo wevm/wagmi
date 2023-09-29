@@ -102,7 +102,7 @@ Viem [`Client`](https://viem.sh/docs/clients/custom.html) object for the current
 ## Error
 
 ```ts
-import { type GetConnectorClientError } from '@wagmi/core'
+import { type GetConnectorClientErrorType } from '@wagmi/core'
 ```
 
 <!--@include: @shared/query-imports.md-->

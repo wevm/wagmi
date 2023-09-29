@@ -327,7 +327,7 @@ const result = await readContract(config, {
 ## Error
 
 ```ts
-import { type ReadContractError } from '@wagmi/core'
+import { type ReadContractErrorType } from '@wagmi/core'
 ```
 
 <!--@include: @shared/query-imports.md-->

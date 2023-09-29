@@ -1,6 +1,6 @@
 import type { ContractFunctionParameters } from 'viem'
 import {
-  type ReadContractsError,
+  type ReadContractsErrorType,
   type ReadContractsParameters,
   type ReadContractsReturnType,
   readContracts,
@@ -58,7 +58,7 @@ export function infiniteReadContractsQueryOptions<
     queryKey: infiniteReadContractsQueryKey(options),
   } as const satisfies InfiniteQueryOptions<
     InfiniteReadContractsQueryFnData<contracts, allowFailure>,
-    ReadContractsError,
+    ReadContractsErrorType,
     InfiniteReadContractsData<contracts, allowFailure>,
     InfiniteReadContractsData<contracts, allowFailure>,
     InfiniteReadContractsQueryKey<contracts, allowFailure, pageParam, config>,

@@ -371,7 +371,7 @@ const result = await signTypedData(config, {
 ## Error
 
 ```ts
-import { type SignTypedDataError } from '@wagmi/core'
+import { type SignTypedDataErrorType } from '@wagmi/core'
 ```
 
 <!--@include: @shared/mutation-imports.md-->

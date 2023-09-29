@@ -1,6 +1,10 @@
 'use client'
 
-import type { Config, ReadContractsError, ResolvedRegister } from '@wagmi/core'
+import type {
+  Config,
+  ReadContractsErrorType,
+  ResolvedRegister,
+} from '@wagmi/core'
 import {
   type InfiniteReadContractsQueryFnData,
   type InfiniteReadContractsQueryKey,
@@ -32,7 +36,7 @@ export type UseInfiniteContractReadsParameters<
   ConfigParameter<config> & {
     query: UseInfiniteQueryParameters<
       InfiniteReadContractsQueryFnData<contracts, allowFailure>,
-      ReadContractsError,
+      ReadContractsErrorType,
       selectData,
       InfiniteReadContractsData<contracts, allowFailure>,
       InfiniteReadContractsQueryKey<contracts, allowFailure, pageParam, config>,
@@ -44,7 +48,7 @@ export type UseInfiniteContractReadsReturnType<
   contracts extends readonly unknown[] = readonly ContractFunctionParameters[],
   allowFailure extends boolean = true,
   selectData = InfiniteReadContractsData<contracts, allowFailure>,
-> = UseInfiniteQueryReturnType<selectData, ReadContractsError>
+> = UseInfiniteQueryReturnType<selectData, ReadContractsErrorType>
 
 /** https://alpha.wagmi.sh/react/api/hooks/useInfiniteContractReads */
 export function useInfiniteContractReads<

@@ -3,7 +3,7 @@ import { type Account, type WalletClient, walletActions } from 'viem'
 import type { Config } from '../createConfig.js'
 import type { Evaluate } from '../types/utils.js'
 import {
-  type GetConnectorClientError,
+  type GetConnectorClientErrorType,
   type GetConnectorClientParameters,
   getConnectorClient,
 } from './getConnectorClient.js'
@@ -24,7 +24,7 @@ export type GetWalletClientReturnType<
   >
 >
 
-export type GetWalletClientError = GetConnectorClientError
+export type GetWalletClientErrorType = GetConnectorClientErrorType
 
 export async function getWalletClient<
   config extends Config,

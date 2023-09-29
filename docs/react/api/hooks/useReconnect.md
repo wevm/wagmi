@@ -9,7 +9,7 @@ const actionName = 'reconnect'
 const typeName = 'Reconnect'
 const mutate = 'reconnect'
 const TData = '{ accounts: readonly [Address, ...Address[]]; chainId: number; connector: Connector }'
-const TError = 'ReconnectError'
+const TError = 'ReconnectErrorType'
 const TVariables = '{ connectors?: (CreateConnectorFn | Connector)[] | undefined; }'
 </script>
 

@@ -8,7 +8,7 @@ const packageName = 'wagmi'
 const actionName = 'getEnsName'
 const typeName = 'GetEnsName'
 const TData = 'string | null'
-const TError = 'GetEnsNameError'
+const TError = 'GetEnsNameErrorType'
 </script>
 
 # useEnsName

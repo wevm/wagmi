@@ -6,6 +6,7 @@ import {
   formatUnits,
 } from 'viem'
 import {
+  type EstimateFeesPerGasErrorType as viem_EstimateFeesPerGasErrorType,
   type EstimateFeesPerGasParameters as viem_EstimateFeesPerGasParameters,
   type EstimateFeesPerGasReturnType as viem_EstimateFeesPerGasReturnType,
   estimateFeesPerGas as viem_estimateFeesPerGas,
@@ -42,7 +43,7 @@ export type EstimateFeesPerGasReturnType<
   }
 >
 
-export type EstimateFeesPerGasError = Error
+export type EstimateFeesPerGasErrorType = viem_EstimateFeesPerGasErrorType
 
 export async function estimateFeesPerGas<
   config extends Config,

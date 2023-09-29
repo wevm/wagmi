@@ -177,7 +177,7 @@ ENS address.
 ## Error
 
 ```ts
-import { type GetEnsAddressError } from '@wagmi/core'
+import { type GetEnsAddressErrorType } from '@wagmi/core'
 ```
 
 <!--@include: @shared/query-imports.md-->

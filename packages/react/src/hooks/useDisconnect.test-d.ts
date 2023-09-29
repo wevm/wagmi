@@ -1,4 +1,4 @@
-import { type Connector, type DisconnectError } from '@wagmi/core'
+import { type Connector, type DisconnectErrorType } from '@wagmi/core'
 import { config } from '@wagmi/test'
 import { expectTypeOf, test } from 'vitest'
 
@@ -29,7 +29,7 @@ test('context', () => {
         expectTypeOf(variables).toEqualTypeOf<
           { connector?: Connector | undefined } | undefined
         >()
-        expectTypeOf(error).toEqualTypeOf<DisconnectError>()
+        expectTypeOf(error).toEqualTypeOf<DisconnectErrorType>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
       },
       onSuccess(data, variables, context) {
@@ -41,7 +41,7 @@ test('context', () => {
       },
       onSettled(data, error, variables, context) {
         expectTypeOf(data).toEqualTypeOf<void | undefined>()
-        expectTypeOf(error).toEqualTypeOf<DisconnectError | null>()
+        expectTypeOf(error).toEqualTypeOf<DisconnectErrorType | null>()
         expectTypeOf(variables).toEqualTypeOf<
           { connector?: Connector | undefined } | undefined
         >()
@@ -51,7 +51,7 @@ test('context', () => {
   })
 
   expectTypeOf(data).toEqualTypeOf<void | undefined>()
-  expectTypeOf(error).toEqualTypeOf<DisconnectError | null>()
+  expectTypeOf(error).toEqualTypeOf<DisconnectErrorType | null>()
   expectTypeOf(variables).toEqualTypeOf<
     { connector?: Connector | undefined } | undefined
   >()
@@ -64,7 +64,7 @@ test('context', () => {
         expectTypeOf(variables).toEqualTypeOf<
           { connector?: Connector | undefined } | undefined
         >()
-        expectTypeOf(error).toEqualTypeOf<DisconnectError>()
+        expectTypeOf(error).toEqualTypeOf<DisconnectErrorType>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
       },
       onSuccess(data, variables, context) {
@@ -76,7 +76,7 @@ test('context', () => {
       },
       onSettled(data, error, variables, context) {
         expectTypeOf(data).toEqualTypeOf<void | undefined>()
-        expectTypeOf(error).toEqualTypeOf<DisconnectError | null>()
+        expectTypeOf(error).toEqualTypeOf<DisconnectErrorType | null>()
         expectTypeOf(variables).toEqualTypeOf<
           { connector?: Connector | undefined } | undefined
         >()

@@ -6,7 +6,7 @@
 import { useQueryClient } from '@tanstack/react-query'
 import type {
   Config,
-  GetWalletClientError,
+  GetWalletClientErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
 import { type Evaluate, type Omit } from '@wagmi/core/internal'
@@ -41,7 +41,7 @@ export type UseWalletClientParameters<
             Omit<
               UseQueryParameters<
                 GetWalletClientQueryFnData<config, chainId>,
-                GetWalletClientError,
+                GetWalletClientErrorType,
                 selectData,
                 GetWalletClientQueryKey<config, chainId>
               >,
@@ -56,7 +56,7 @@ export type UseWalletClientReturnType<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetWalletClientData<config, chainId>,
-> = UseQueryReturnType<selectData, GetWalletClientError>
+> = UseQueryReturnType<selectData, GetWalletClientErrorType>
 
 /** https://alpha.wagmi.sh/react/api/hooks/useWalletClient */
 export function useWalletClient<

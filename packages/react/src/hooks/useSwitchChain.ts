@@ -1,7 +1,11 @@
 'use client'
 
 import { useMutation } from '@tanstack/react-query'
-import type { Config, ResolvedRegister, SwitchChainError } from '@wagmi/core'
+import type {
+  Config,
+  ResolvedRegister,
+  SwitchChainErrorType,
+} from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
 import {
   type SwitchChainData,
@@ -26,7 +30,7 @@ export type UseSwitchChainParameters<
     mutation?:
       | UseMutationParameters<
           SwitchChainData<config, config['chains'][number]['id']>,
-          SwitchChainError,
+          SwitchChainErrorType,
           SwitchChainVariables<config, config['chains'][number]['id']>,
           context
         >
@@ -40,7 +44,7 @@ export type UseSwitchChainReturnType<
 > = Evaluate<
   UseMutationReturnType<
     SwitchChainData<config, config['chains'][number]['id']>,
-    SwitchChainError,
+    SwitchChainErrorType,
     SwitchChainVariables<config, config['chains'][number]['id']>,
     context
   > & {

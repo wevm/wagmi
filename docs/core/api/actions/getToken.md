@@ -131,7 +131,7 @@ Total supply of token. `formatted` is formatted using [`formatUnits`](#formatuni
 ## Error
 
 ```ts
-import { type GetTokenError } from '@wagmi/core'
+import { type GetTokenErrorType } from '@wagmi/core'
 ```
 
 <!--@include: @shared/query-imports.md-->

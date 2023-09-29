@@ -1,7 +1,7 @@
 import { type QueryOptions } from '@tanstack/query-core'
 
 import {
-  type WaitForTransactionReceiptError,
+  type WaitForTransactionReceiptErrorType,
   type WaitForTransactionReceiptParameters,
   type WaitForTransactionReceiptReturnType,
   waitForTransactionReceipt,
@@ -41,7 +41,7 @@ export function waitForTransactionReceiptQueryOptions<
     queryKey: waitForTransactionReceiptQueryKey(options),
   } as const satisfies QueryOptions<
     WaitForTransactionReceiptQueryFnData<config, chainId>,
-    WaitForTransactionReceiptError,
+    WaitForTransactionReceiptErrorType,
     WaitForTransactionReceiptData<config, chainId>,
     WaitForTransactionReceiptQueryKey<config, chainId>
   >

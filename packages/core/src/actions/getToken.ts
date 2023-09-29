@@ -11,7 +11,7 @@ import type { ChainIdParameter } from '../types/properties.js'
 import type { Unit } from '../types/unit.js'
 import type { Evaluate } from '../types/utils.js'
 import { getUnit } from '../utils/getUnit.js'
-import { readContracts } from './readContracts.js'
+import { type ReadContractsErrorType, readContracts } from './readContracts.js'
 
 export type GetTokenParameters<config extends Config = Config> = Evaluate<
   ChainIdParameter<config> & {
@@ -31,7 +31,7 @@ export type GetTokenReturnType = {
   }
 }
 
-export type GetTokenError = Error
+export type GetTokenErrorType = ReadContractsErrorType
 
 export async function getToken<config extends Config>(
   config: config,

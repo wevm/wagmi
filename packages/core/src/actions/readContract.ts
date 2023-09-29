@@ -1,6 +1,7 @@
 import { type Abi } from 'viem'
 import type { ContractFunctionArgs, ContractFunctionName } from 'viem'
 import {
+  type ReadContractErrorType as viem_ReadContractErrorType,
   type ReadContractParameters as viem_ReadContractParameters,
   type ReadContractReturnType as viem_ReadContractReturnType,
   readContract as viem_readContract,
@@ -37,7 +38,7 @@ export type ReadContractReturnType<
   > = ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
 > = viem_ReadContractReturnType<abi, functionName, args>
 
-export type ReadContractError = Error
+export type ReadContractErrorType = viem_ReadContractErrorType
 
 /** https://alpha.wagmi.sh/core/api/actions/readContract */
 export function readContract<

@@ -1,7 +1,7 @@
 'use client'
 
 import { useMutation } from '@tanstack/react-query'
-import type { SignTypedDataError } from '@wagmi/core'
+import type { SignTypedDataErrorType } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
 import {
   type SignTypedDataData,
@@ -23,7 +23,7 @@ export type UseSignTypedDataParameters<context = unknown> = Evaluate<
     mutation?:
       | UseMutationParameters<
           SignTypedDataData,
-          SignTypedDataError,
+          SignTypedDataErrorType,
           SignTypedDataVariables,
           context
         >
@@ -34,7 +34,7 @@ export type UseSignTypedDataParameters<context = unknown> = Evaluate<
 export type UseSignTypedDataReturnType<context = unknown> = Evaluate<
   UseMutationReturnType<
     SignTypedDataData,
-    SignTypedDataError,
+    SignTypedDataErrorType,
     SignTypedDataVariables,
     context
   > & {

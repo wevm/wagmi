@@ -1,4 +1,4 @@
-import { type SendTransactionError } from '@wagmi/core'
+import { type WriteContractErrorType } from '@wagmi/core'
 import { abi } from '@wagmi/test'
 import { type Abi, type Address, type Hash } from 'viem'
 import { expectTypeOf, test } from 'vitest'
@@ -28,7 +28,7 @@ test('context', () => {
         return contextValue
       },
       onError(error, variables, context) {
-        expectTypeOf(error).toEqualTypeOf<SendTransactionError>()
+        expectTypeOf(error).toEqualTypeOf<WriteContractErrorType>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
 
         expectTypeOf(variables).toMatchTypeOf<{
@@ -53,7 +53,7 @@ test('context', () => {
       },
       onSettled(data, error, variables, context) {
         expectTypeOf(data).toEqualTypeOf<Hash | undefined>()
-        expectTypeOf(error).toEqualTypeOf<SendTransactionError | null>()
+        expectTypeOf(error).toEqualTypeOf<WriteContractErrorType | null>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
 
         expectTypeOf(variables).toMatchTypeOf<{
@@ -68,7 +68,7 @@ test('context', () => {
   })
 
   expectTypeOf(data).toEqualTypeOf<Hash | undefined>()
-  expectTypeOf(error).toEqualTypeOf<SendTransactionError | null>()
+  expectTypeOf(error).toEqualTypeOf<WriteContractErrorType | null>()
   expectTypeOf(variables).toMatchTypeOf<
     { chainId?: number | undefined } | undefined
   >()
@@ -84,7 +84,7 @@ test('context', () => {
     },
     {
       onError(error, variables, context) {
-        expectTypeOf(error).toEqualTypeOf<SendTransactionError>()
+        expectTypeOf(error).toEqualTypeOf<WriteContractErrorType>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
 
         expectTypeOf(variables).toMatchTypeOf<{
@@ -113,7 +113,7 @@ test('context', () => {
       },
       onSettled(data, error, variables, context) {
         expectTypeOf(data).toEqualTypeOf<Hash | undefined>()
-        expectTypeOf(error).toEqualTypeOf<SendTransactionError | null>()
+        expectTypeOf(error).toEqualTypeOf<WriteContractErrorType | null>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
 
         expectTypeOf(variables).toMatchTypeOf<{
