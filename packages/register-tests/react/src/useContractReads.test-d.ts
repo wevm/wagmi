@@ -1,14 +1,14 @@
 import { abi } from '@wagmi/test'
 import type { Address } from 'viem'
 import { expectTypeOf, test } from 'vitest'
-import { useContractReads } from 'wagmi'
+import { useReadContracts } from 'wagmi'
 
 import type { ChainId } from './config.js'
 
-test('UseContractReadsParameters', () => {
+test('UseReadContractsParameters', () => {
   type Result = NonNullable<
     Parameters<
-      typeof useContractReads<
+      typeof useReadContracts<
         [
           {
             abi: typeof abi.erc20

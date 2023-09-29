@@ -22,7 +22,7 @@ import type {
 } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 
-export type UseContractWriteParameters<
+export type UseWriteContractParameters<
   config extends Config = Config,
   context = unknown,
 > = ConfigParameter<config> & {
@@ -42,7 +42,7 @@ export type UseContractWriteParameters<
     | undefined
 }
 
-export type UseContractWriteReturnType<
+export type UseWriteContractReturnType<
   config extends Config = Config,
   context = unknown,
 > = UseMutationReturnType<
@@ -61,13 +61,13 @@ export type UseContractWriteReturnType<
   writeContractAsync: WriteContractMutateAsync<config, context>
 }
 
-/** https://alpha.wagmi.sh/react/api/hooks/useContractWrite */
-export function useContractWrite<
+/** https://alpha.wagmi.sh/react/api/hooks/useWriteContract */
+export function useWriteContract<
   config extends Config = ResolvedRegister['config'],
   context = unknown,
 >(
-  parameters: UseContractWriteParameters<config, context> = {},
-): UseContractWriteReturnType<config, context> {
+  parameters: UseWriteContractParameters<config, context> = {},
+): UseWriteContractReturnType<config, context> {
   const { mutation } = parameters
 
   const config = useConfig(parameters)
@@ -78,7 +78,7 @@ export function useContractWrite<
     ...mutationOptions,
   })
 
-  type Return = UseContractWriteReturnType<config, context>
+  type Return = UseWriteContractReturnType<config, context>
   return {
     ...result,
     writeContract: mutate as Return['writeContract'],

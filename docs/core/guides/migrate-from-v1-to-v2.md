@@ -229,13 +229,17 @@ const result = await estimateGas(config, { ... }) // [!code ++]
 
 ### Updated `sendTransaction` and `writeContract` return type
 
-Updated `sendTransaction` and `writeContract` return type from `` { hash: `0x${string}` } `` to `` `0x${string}` ``.
+Updated [`sendTransaction`](/core/api/actions/sendTransaction) and [`writeContract`](/core/api/actions/writeContract) return type from `` { hash: `0x${string}` } `` to `` `0x${string}` ``.
 
 ```ts
 const result = await sendTransaction({ hash: '0x...' })
 result.hash // [!code --]
 result // [!code ++]
 ```
+
+### Updated `connect` return type
+
+Updated [`connect`](/core/api/actions/connect) return type from `` { account: Address; chain: { id: number; unsupported?: boolean }; connector: Connector } `` to `` { accounts: readonly Address[]; chainId: number } ``. This better reflects the ability to have multiple accounts per connector.
 
 ### Renamed parameters and return types
 
@@ -277,6 +281,10 @@ import { injected } from '@wagmi/connectors'
 ```
 
 See the [connectors documentation](/core/api/connectors) for more information.
+
+### Updated connector API
+
+In order to maximize type-safety and ease of creating connectors, the connector API changed. Follow the [Creating Connectors guide](/dev/creating-connectors) for more info on creating new connectors and converting Wagmi v1 connectors.
 
 ### Removed individual entrypoints
 

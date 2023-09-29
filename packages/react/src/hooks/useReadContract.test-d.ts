@@ -3,13 +3,13 @@ import { type Address } from 'viem'
 import { assertType, expectTypeOf, test } from 'vitest'
 
 import {
-  type UseContractReadParameters,
-  type UseContractReadReturnType,
-  useContractRead,
-} from './useContractRead.js'
+  type UseReadContractParameters,
+  type UseReadContractReturnType,
+  useReadContract,
+} from './useReadContract.js'
 
 test('select data', async () => {
-  const result = useContractRead({
+  const result = useReadContract({
     address: '0x',
     abi: abi.erc20,
     functionName: 'balanceOf',
@@ -24,8 +24,8 @@ test('select data', async () => {
   expectTypeOf(result.data).toEqualTypeOf<string | undefined>()
 })
 
-test('UseContractReadParameters', () => {
-  type Result = UseContractReadParameters<typeof abi.erc20, 'balanceOf'>
+test('UseReadContractParameters', () => {
+  type Result = UseReadContractParameters<typeof abi.erc20, 'balanceOf'>
   expectTypeOf<Pick<Result, 'args' | 'functionName'>>().toEqualTypeOf<{
     functionName?:
       | 'symbol'
@@ -39,20 +39,20 @@ test('UseContractReadParameters', () => {
   }>()
 })
 
-test('UseContractReadReturnType', () => {
-  type Result = UseContractReadReturnType<typeof abi.erc20, 'balanceOf'>
+test('UseReadContractReturnType', () => {
+  type Result = UseReadContractReturnType<typeof abi.erc20, 'balanceOf'>
   expectTypeOf<Result['data']>().toEqualTypeOf<bigint | undefined>()
 })
 
 test('overloads', async () => {
-  const result1 = useContractRead({
+  const result1 = useReadContract({
     address: '0x',
     abi: abi.viewOverloads,
     functionName: 'foo',
   })
   assertType<number | undefined>(result1.data)
 
-  const result2 = useContractRead({
+  const result2 = useReadContract({
     address: '0x',
     abi: abi.viewOverloads,
     functionName: 'foo',
@@ -60,7 +60,7 @@ test('overloads', async () => {
   })
   assertType<number | undefined>(result2.data)
 
-  const result3 = useContractRead({
+  const result3 = useReadContract({
     address: '0x',
     abi: abi.viewOverloads,
     functionName: 'foo',
@@ -68,7 +68,7 @@ test('overloads', async () => {
   })
   assertType<string | undefined>(result3.data)
 
-  const result4 = useContractRead({
+  const result4 = useReadContract({
     address: '0x',
     abi: abi.viewOverloads,
     functionName: 'foo',

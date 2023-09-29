@@ -1,7 +1,7 @@
 import { abi } from '@wagmi/test'
 import type { Address } from 'viem'
 import { expectTypeOf, test } from 'vitest'
-import { type UseContractSimulateParameters, useContractSimulate } from 'wagmi'
+import { type UseSimulateContractParameters, useSimulateContract } from 'wagmi'
 import type { SimulateContractParameters } from 'wagmi/actions'
 import { celo, mainnet, optimism } from 'wagmi/chains'
 import type { SimulateContractOptions } from 'wagmi/query'
@@ -9,20 +9,20 @@ import type { SimulateContractOptions } from 'wagmi/query'
 import { type ChainId, config } from './config.js'
 
 test('chain formatters', () => {
-  useContractSimulate({
+  useSimulateContract({
     feeCurrency: '0x',
     gatewayFee: 123n,
     gatewayFeeRecipient: '0x',
   })
 
-  useContractSimulate({
+  useSimulateContract({
     chainId: celo.id,
     feeCurrency: '0x',
     gatewayFee: 123n,
     gatewayFeeRecipient: '0x',
   })
 
-  useContractSimulate({
+  useSimulateContract({
     chainId: mainnet.id,
     // @ts-expect-error
     feeCurrency: '0x',
@@ -30,7 +30,7 @@ test('chain formatters', () => {
     gatewayFeeRecipient: '0x',
   })
 
-  useContractSimulate({
+  useSimulateContract({
     chainId: optimism.id,
     // @ts-expect-error
     feeCurrency: '0x',
@@ -39,8 +39,8 @@ test('chain formatters', () => {
   })
 })
 
-test('UseContractSimulateParameters', () => {
-  type Result = UseContractSimulateParameters<
+test('UseSimulateContractParameters', () => {
+  type Result = UseSimulateContractParameters<
     typeof abi.erc20,
     'transferFrom',
     [Address, Address, bigint],
@@ -53,7 +53,7 @@ test('UseContractSimulateParameters', () => {
     chainId?: ChainId | undefined
   }>()
 
-  type Result2 = UseContractSimulateParameters<
+  type Result2 = UseSimulateContractParameters<
     typeof abi.erc20,
     'transferFrom',
     [Address, Address, bigint],

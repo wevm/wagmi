@@ -1,26 +1,26 @@
 ---
-title: useContractReads
+title: useReadContracts
 description: Hook for calling multiple read methods on a contract.
 ---
 
-# useContractReads
+# useReadContracts
 
 Hook for calling multiple read methods on a contract.
 
 ## Import
 
 ```ts
-import { useContractReads } from 'wagmi'
+import { useReadContracts } from 'wagmi'
 ```
 
 ## Usage
 
 ::: code-group
 ```tsx [index.tsx]
-import { useContractReads } from 'wagmi'
+import { useReadContracts } from 'wagmi'
 
 function App() {
-  const result = useContractReads()
+  const result = useReadContracts()
 }
 ```
 <<< @/snippets/react/config.ts[config.ts]
@@ -29,13 +29,13 @@ function App() {
 ## Parameters
 
 ```ts
-import { type UseContractReadsParameters } from 'wagmi'
+import { type UseReadContractsParameters } from 'wagmi'
 ```
 
 ## Return Type
 
 ```ts
-import { type UseContractReadsReturnType } from 'wagmi'
+import { type UseReadContractsReturnType } from 'wagmi'
 ```
 
 ## Action

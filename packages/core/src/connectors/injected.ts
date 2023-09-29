@@ -28,11 +28,7 @@ export type InjectedParameters = {
   /**
    * [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) Ethereum Provider to target
    */
-  target?:
-    | TargetId
-    | TargetMap[TargetId]
-    | (() => TargetMap[TargetId] | undefined)
-    | undefined
+  target?: TargetId | Target | (() => Target | undefined) | undefined
 }
 
 const targetMap = {
@@ -91,7 +87,7 @@ const targetMap = {
 export function injected(parameters: InjectedParameters = {}) {
   const { shimDisconnect = true, unstable_shimAsyncInject } = parameters
 
-  function getTarget(): Evaluate<TargetMap[TargetId] & { id: string }> {
+  function getTarget(): Evaluate<Target & { id: string }> {
     const target = parameters.target
     if (typeof target === 'function') {
       const result = target()
@@ -459,6 +455,7 @@ type Target = {
     | ((window?: Window | undefined) => WalletProvider | undefined)
 }
 
+/** @deprecated */
 export type TargetId = Evaluate<WalletProviderFlags> extends `is${infer name}`
   ? name extends `${infer char}${infer rest}`
     ? `${Lowercase<char>}${rest}`
@@ -467,6 +464,7 @@ export type TargetId = Evaluate<WalletProviderFlags> extends `is${infer name}`
 
 type TargetMap = { [_ in TargetId]?: Target | undefined }
 
+/** @deprecated */
 type WalletProviderFlags =
   | 'isApexWallet'
   | 'isAvalanche'

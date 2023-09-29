@@ -26,7 +26,7 @@ import {
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
-export type UseContractReadsParameters<
+export type UseReadContractsParameters<
   contracts extends readonly unknown[] = readonly ContractFunctionParameters[],
   allowFailure extends boolean = true,
   config extends Config = Config,
@@ -45,26 +45,26 @@ export type UseContractReadsParameters<
     }
 >
 
-export type UseContractReadsReturnType<
+export type UseReadContractsReturnType<
   contracts extends readonly unknown[] = readonly ContractFunctionParameters[],
   allowFailure extends boolean = true,
   selectData = ReadContractsData<contracts, allowFailure>,
 > = UseQueryReturnType<selectData, ReadContractsErrorType>
 
-/** https://alpha.wagmi.sh/react/api/hooks/useContractReads */
-export function useContractReads<
+/** https://alpha.wagmi.sh/react/api/hooks/useReadContracts */
+export function useReadContracts<
   const contracts extends readonly unknown[],
   allowFailure extends boolean = true,
   config extends Config = ResolvedRegister['config'],
   selectData = ReadContractsData<contracts, allowFailure>,
 >(
-  parameters: UseContractReadsParameters<
+  parameters: UseReadContractsParameters<
     contracts,
     allowFailure,
     config,
     selectData
   > = {},
-): UseContractReadsReturnType<contracts, allowFailure, selectData> {
+): UseReadContractsReturnType<contracts, allowFailure, selectData> {
   const { contracts = [], query = {} } = parameters
 
   const config = useConfig(parameters)

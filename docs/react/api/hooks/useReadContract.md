@@ -1,5 +1,5 @@
 ---
-title: useContractRead
+title: useReadContract
 description: Hook for calling a read-only function on a contract, and returning the response.
 ---
 
@@ -11,7 +11,7 @@ const TData = 'ReadContractReturnType'
 const TError = 'ReadContractErrorType'
 </script>
 
-# useContractRead
+# useReadContract
 
 Hook for calling a **read-only** function on a contract, and returning the response.
 
@@ -20,18 +20,18 @@ A **read-only** function (constant function) on a Solidity contract is denoted b
 ## Import
 
 ```ts
-import { useContractRead } from 'wagmi'
+import { useReadContract } from 'wagmi'
 ```
 
 ## Usage
 
 ::: code-group
 ```tsx [index.tsx]
-import { useContractRead } from 'wagmi'
+import { useReadContract } from 'wagmi'
 import { abi } from './abi'
 
 function App() {
-  const result = useContractRead({
+  const result = useReadContract({
     abi,
     address: '0x6b175474e89094c44da98b954eedeac495271d0f',
     functionName: 'totalSupply',
@@ -45,7 +45,7 @@ function App() {
 ## Parameters
 
 ```ts
-import { type UseContractReadParameters } from 'wagmi'
+import { type UseReadContractParameters } from 'wagmi'
 ```
 
 ### abi
@@ -56,11 +56,11 @@ The contract's ABI. Check out the [TypeScript docs](/react/typescript#const-asse
 
 ::: code-group
 ```tsx [index.tsx]
-import { useContractRead } from 'wagmi'
+import { useReadContract } from 'wagmi'
 import { abi } from './abi' // [!code focus]
 
 function App() {
-  const result = useContractRead({
+  const result = useReadContract({
     abi, // [!code focus]
     address: '0x6b175474e89094c44da98b954eedeac495271d0f',
     functionName: 'totalSupply',
@@ -79,11 +79,11 @@ Account to use when calling the contract (`msg.sender`).
 
 ::: code-group
 ```tsx [index.tsx]
-import { useContractRead } from 'wagmi'
+import { useReadContract } from 'wagmi'
 import { abi } from './abi'
 
 function App() {
-  const result = useContractRead({
+  const result = useReadContract({
     abi,
     address: '0x6b175474e89094c44da98b954eedeac495271d0f',
     functionName: 'balanceOf',
@@ -104,11 +104,11 @@ The contract's address.
 
 ::: code-group
 ```tsx [index.tsx]
-import { useContractRead } from 'wagmi'
+import { useReadContract } from 'wagmi'
 import { abi } from './abi'
 
 function App() {
-  const result = useContractRead({
+  const result = useReadContract({
     abi,
     address: '0x6b175474e89094c44da98b954eedeac495271d0f', // [!code focus]
     functionName: 'totalSupply',
@@ -128,11 +128,11 @@ function App() {
 
 ::: code-group
 ```tsx [index.tsx]
-import { useContractRead } from 'wagmi'
+import { useReadContract } from 'wagmi'
 import { abi } from './abi'
 
 function App() {
-  const result = useContractRead({
+  const result = useReadContract({
     abi,
     address: '0x6b175474e89094c44da98b954eedeac495271d0f',
     functionName: 'balanceOf',
@@ -154,11 +154,11 @@ Block number to call contract at.
 
 ::: code-group
 ```tsx [index.tsx]
-import { useContractRead } from 'wagmi'
+import { useReadContract } from 'wagmi'
 import { abi } from './abi'
 
 function App() {
-  const result = useContractRead({
+  const result = useReadContract({
     abi,
     address: '0x6b175474e89094c44da98b954eedeac495271d0f',
     functionName: 'totalSupply',
@@ -178,11 +178,11 @@ Block tag to call contract at.
 
 ::: code-group
 ```tsx [index.tsx]
-import { useContractRead } from 'wagmi'
+import { useReadContract } from 'wagmi'
 import { abi } from './abi'
 
 function App() {
-  const result = useContractRead({
+  const result = useReadContract({
     abi,
     address: '0x6b175474e89094c44da98b954eedeac495271d0f',
     functionName: 'totalSupply',
@@ -204,12 +204,12 @@ ID of chain to use when fetching data.
 
 ::: code-group
 ```tsx [index.tsx]
-import { useContractRead } from 'wagmi'
+import { useReadContract } from 'wagmi'
 import { mainnet } from 'wagmi/chains' // [!code focus]
 import { abi } from './abi'
 
 function App() {
-  const result = useContractRead({
+  const result = useReadContract({
     abi,
     address: '0x6b175474e89094c44da98b954eedeac495271d0f',
     functionName: 'totalSupply',
@@ -229,12 +229,12 @@ function App() {
 
 ::: code-group
 ```tsx [index.tsx]
-import { useContractRead } from 'wagmi'
+import { useReadContract } from 'wagmi'
 import { abi } from './abi'
 import { config } from './config' // [!code focus]
 
 function App() {
-  const result = useContractRead({
+  const result = useReadContract({
     abi,
     address: '0x6b175474e89094c44da98b954eedeac495271d0f',
     functionName: 'totalSupply',
@@ -255,11 +255,11 @@ function App() {
 
 ::: code-group
 ```tsx [index.tsx]
-import { useContractRead } from 'wagmi'
+import { useReadContract } from 'wagmi'
 import { abi } from './abi'
 
 function App() {
-  const result = useContractRead({
+  const result = useReadContract({
     abi,
     address: '0x6b175474e89094c44da98b954eedeac495271d0f',
     functionName: 'balanceOf', // [!code focus]
@@ -279,11 +279,11 @@ Scopes the cache to a given context. Hooks that have identical context will shar
 
 ::: code-group
 ```tsx [index.tsx]
-import { useContractRead } from 'wagmi'
+import { useReadContract } from 'wagmi'
 import { abi } from './abi'
 
 function App() {
-  const result = useContractRead({
+  const result = useReadContract({
     abi,
     address: '0x6b175474e89094c44da98b954eedeac495271d0f',
     functionName: 'balanceOf',
@@ -301,7 +301,7 @@ function App() {
 ## Return Type
 
 ```ts
-import { type UseContractReadReturnType } from 'wagmi'
+import { type UseReadContractReturnType } from 'wagmi'
 ```
 
 The return type's [`data`](#data) property is inferrable via the combination of [`abi`](#abi), [`functionName`](#functionname), and [`args`](#args). Check out the [TypeScript docs](/react/typescript#const-assert-abis-typed-data) for more info.
@@ -316,7 +316,7 @@ With [`abi`](#abi) setup correctly, TypeScript will infer the correct types for 
 
 ::: code-group
 ```ts twoslash [Inline]
-import { createConfig, http, useContractRead } from 'wagmi'
+import { createConfig, http, useReadContract } from 'wagmi'
 import { mainnet, sepolia } from 'wagmi/chains'
 
 const config = createConfig({
@@ -327,7 +327,7 @@ const config = createConfig({
   },
 })
 // ---cut---
-const result = useContractRead({
+const result = useReadContract({
   abi: [
     {
       type: 'function',
@@ -354,7 +354,7 @@ result.data
 //     ^?
 ```
 ```ts twoslash [Const-Asserted]
-import { createConfig, http, useContractRead } from 'wagmi'
+import { createConfig, http, useReadContract } from 'wagmi'
 import { mainnet, sepolia } from 'wagmi/chains'
 
 const config = createConfig({
@@ -382,7 +382,7 @@ const abi = [
   },
 ] as const
 
-const result = useContractRead({
+const result = useReadContract({
   abi,
   address: '0x6b175474e89094c44da98b954eedeac495271d0f',
   functionName: 'balanceOf',

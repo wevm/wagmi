@@ -125,17 +125,17 @@ This approach is more explicit, but works well for advanced use-cases, if you do
 
 Wagmi can infer types based on [ABIs](https://docs.soliditylang.org/en/latest/abi-spec.html#json) and [EIP-712](https://eips.ethereum.org/EIPS/eip-712) Typed Data definitions, powered by [Viem](https://viem.sh) and [ABIType](https://github.com/wagmi-dev/abitype). This achieves full end-to-end type-safety from your contracts to your frontend and enlightened developer experience by autocompleting ABI item names, catching misspellings, inferring argument and return types (including overloads), and more.
 
-For this to work, you must either [const-assert](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) ABIs and Typed Data (more info below) or define them inline. For example, `useContractRead`'s `abi` configuration parameter:
+For this to work, you must either [const-assert](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) ABIs and Typed Data (more info below) or define them inline. For example, `useReadContract`'s `abi` configuration parameter:
 
 ```ts
-const { data } = useContractRead({
+const { data } = useReadContract({
   abi: […], // <--- defined inline // [!code focus]
 })
 ```
 
 ```ts
 const abi = […] as const // <--- const assertion // [!code focus]
-const { data } = useContractRead({ abi })
+const { data } = useReadContract({ abi })
 ```
 
 If type inference isn't working, it's likely you forgot to add a `const` assertion or define the configuration parameter inline. Also, make sure your ABIs, Typed Data definitions, and [TypeScript configuration](#requirements) are valid and set up correctly.
@@ -146,7 +146,7 @@ Unfortunately [TypeScript doesn't support importing JSON `as const` yet](https:/
 
 Anywhere you see the `abi` or `types` configuration property, you can likely use const-asserted or inline ABIs and Typed Data to get type-safety and inference. These properties are also called out in the docs.
 
-Here's what [`useContractRead`](/react/api/hooks/useContractRead) looks like with and without a const-asserted `abi` property.
+Here's what [`useReadContract`](/react/api/hooks/useReadContract) looks like with and without a const-asserted `abi` property.
 
 ::: code-group
 ```ts twoslash [Const-Asserted]
@@ -191,9 +191,9 @@ const erc721Abi = [
   },
 ] as const
 // ---cut---
-import { useContractRead } from 'wagmi'
+import { useReadContract } from 'wagmi'
 
-const { data } = useContractRead({
+const { data } = useReadContract({
   address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
   abi: erc721Abi,
   functionName: 'balanceOf',
@@ -218,9 +218,9 @@ declare const erc721Abi: {
   }[];
 }[]
 // ---cut---
-import { useContractRead } from 'wagmi'
+import { useReadContract } from 'wagmi'
 
-const { data } = useContractRead({
+const { data } = useReadContract({
   address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
   abi: erc721Abi,
   functionName: 'balanceOf',
@@ -278,9 +278,9 @@ const erc721Abi = [
   },
 ] as const
 // ---cut---
-import { useContractRead } from 'wagmi'
+import { useReadContract } from 'wagmi'
 
-useContractRead({
+useReadContract({
   abi: erc721Abi,
   functionName: 'balanecOf',
 })

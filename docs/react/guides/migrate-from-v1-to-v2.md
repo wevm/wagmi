@@ -107,16 +107,66 @@ const { signMessage } = useSignMessage() // [!code ++]
 </button>
 ```
 
+### Removed watch property
+
+The `watch` property was removed from all hooks besides [`useBlock`](/react/api/hooks/useBlock) and [`useBlockNumber`](/react/api/hooks/useBlockNumber). This property allowed hooks to internally listen for block changes and automatically refresh their data. In Wagmi v2, you can compose `useBlock` or `useBlockNumber` along with [`React.useEffect`](https://react.dev/reference/react/useEffect) to achieve the same behavior. Two different approaches are outlined for `useBalance` below.
+
+::: code-group
+```ts [invalidateQueries]
+import { useQueryClient } from '@tanstack/react-query' // [!code ++]
+import { useEffect } from 'react' // [!code ++]
+import { useBlockNumber, useBalance } from 'wagmi' // [!code ++]
+
+const { data: blockNumber } = useBlockNumber({ watch: true }) // [!code ++]
+const { data: balance, queryKey } = useBalance({ // [!code ++]
+  address: '0x4557B18E779944BFE9d78A672452331C186a9f48',
+  watch: true, // [!code --]
+})
+
+useEffect(() => { // [!code ++]
+  queryClient.invalidateQueries({ queryKey }) // [!code ++]
+}, [blockNumber]) // [!code ++]
+```
+```ts [refetch]
+import { useEffect } from 'react' // [!code ++]
+import { useBlockNumber, useBalance } from 'wagmi' // [!code ++]
+
+const { data: blockNumber } = useBlockNumber({ watch: true }) // [!code ++]
+const { data: balance, refetch } = useBalance({
+  address: '0x4557B18E779944BFE9d78A672452331C186a9f48',
+  watch: true, // [!code --]
+})
+
+useEffect(() => { // [!code ++]
+  refetch() // [!code ++]
+}, [blockNumber]) // [!code ++]
+```
+:::
+
+This is a bit more code, but removes a lot of internal code from hooks that can slow down your app when not used and gives you more control. For example, you can easily refresh data every five blocks instead of every block.
+
+```ts
+const { data: blockNumber } = useBlockNumber({ watch: true })
+const { data: balance, queryKey } = useBalance({
+  address: '0x4557B18E779944BFE9d78A672452331C186a9f48',
+})
+
+useEffect(() => {
+  if (blockNumber % 5 === 0) // [!code focus]
+    queryClient.invalidateQueries({ queryKey }) // [!code focus]
+}, [blockNumber])
+```
+
 ### Removed prepare hooks
 
-`usePrepareContractWrite` and `usePrepareSendTransaction` were removed and replaced with idiomatic Viem alternatives. For `usePrepareContractWrite`, use [`useContractSimulate`](/react/api/hooks/useContractSimulate). Similar to `usePrepareContractWrite`, `useContractSimulate` composes well with `useContractWrite`
+`usePrepareContractWrite` and `usePrepareSendTransaction` were removed and replaced with idiomatic Viem alternatives. For `usePrepareContractWrite`, use [`useSimulateContract`](/react/api/hooks/useSimulateContract). Similar to `usePrepareContractWrite`, `useSimulateContract` composes well with `useWriteContract`
 
 ```tsx
-import { usePrepareContractWrite, useContractWrite } from 'wagmi' // [!code --]
-import { useContractSimulate, useContractWrite } from 'wagmi' // [!code ++]
+import { usePrepareContractWrite, useWriteContract } from 'wagmi' // [!code --]
+import { useSimulateContract, useWriteContract } from 'wagmi' // [!code ++]
 
 const { config } = usePrepareContractWrite({ // [!code --]
-const { data } = useContractSimulate({ // [!code ++]
+const { data } = useSimulateContract({ // [!code ++]
   address: '0x',
   abi: [{
     type: 'function',
@@ -132,8 +182,8 @@ const { data } = useContractSimulate({ // [!code ++]
   functionName: 'transferFrom',
   args: ['0x', '0x', 123n],
 })
-const { write } = useContractWrite(config) // [!code --]
-const { writeContract } = useContractWrite() // [!code ++]
+const { write } = useWriteContract(config) // [!code --]
+const { writeContract } = useWriteContract() // [!code ++]
 
 <button
   disabled={!Boolean(write)} // [!code --]
@@ -227,15 +277,19 @@ In the spirit of removing unnecessary abstractions, `paginatedIndexesConfig` was
 
 See the [TanStack Query docs](https://tanstack.com/query/v5/docs/react/guides/infinite-queries) for more information on infinite queries.
 
-### Updated `useSendTransaction` and `useContractWrite` return type
+### Updated `useSendTransaction` and `useWriteContract` return type
 
-Updated `useSendTransaction` and `useContractWrite` return type from `` { hash: `0x${string}` } `` to `` `0x${string}` ``.
+Updated [`useSendTransaction`](/react/api/hooks/useSendTransaction) and [`useWriteContract`](/react/api/hooks/useWriteContract) return type from `` { hash: `0x${string}` } `` to `` `0x${string}` ``.
 
 ```ts
-const result = useSendTransaction({ hash: '0x...' })
+const result = useSendTransaction()
 result.data?.hash // [!code --]
 result.data // [!code ++]
 ```
+
+### Updated `useConnect` return type
+
+Updated [`useConnect`](/react/api/hooks/useConnect) return type from `` { account: Address; chain: { id: number; unsupported?: boolean }; connector: Connector } `` to `` { accounts: readonly Address[]; chainId: number } ``. This better reflects the ability to have multiple accounts per connector.
 
 ### Renamed parameters and return types
 
@@ -247,6 +301,10 @@ import { UseAccountParameters, UseAccountReturnType } from 'wagmi' // [!code ++]
 ```
 
 ## Connectors
+
+### Updated connector API
+
+In order to maximize type-safety and ease of creating connectors, the connector API changed. Follow the [Creating Connectors guide](/dev/creating-connectors) for more info on creating new connectors and converting Wagmi v1 connectors.
 
 ### Removed individual entrypoints
 
@@ -436,18 +494,18 @@ function App() {
 
 ### Deprecated `useBalance` `token` parameter
 
-Moving forward, `useBalance` will only work for native currencies, thus the `token` parameter is no longer supported. Use [`useContractReads`](/react/api/hooks/useContractReads) instead.
+Moving forward, `useBalance` will only work for native currencies, thus the `token` parameter is no longer supported. Use [`useReadContracts`](/react/api/hooks/useReadContracts) instead.
 
 ```ts
 import { useBalance } from 'wagmi' // [!code --]
-import { useContractReads } from 'wagmi' // [!code ++]
+import { useReadContracts } from 'wagmi' // [!code ++]
 import { erc20Abi } from 'viem' // [!code ++]
 
 const result = useBalance({ // [!code --]
   address: '0x4557B18E779944BFE9d78A672452331C186a9f48', // [!code --]
   token: '0x6B175474E89094C44Da98b954EedeAC495271d0F', // [!code --]
 }) // [!code --]
-const result = useContractReads({ // [!code ++]
+const result = useReadContracts({ // [!code ++]
   allowFailure: false, // [!code ++]
   contracts: [ // [!code ++]
     { // [!code ++]
@@ -472,17 +530,17 @@ const result = useContractReads({ // [!code ++]
 
 ### Deprecated `useToken`
 
-Moving forward, `useToken` is no longer supported. Use [`useContractReads`](/react/api/hooks/useContractReads) instead.
+Moving forward, `useToken` is no longer supported. Use [`useReadContracts`](/react/api/hooks/useReadContracts) instead.
 
 ```ts
 import { useToken } from 'wagmi' // [!code --]
-import { useContractReads } from 'wagmi' // [!code ++]
+import { useReadContracts } from 'wagmi' // [!code ++]
 import { erc20Abi } from 'viem' // [!code ++]
 
 const result = useToken({ // [!code --]
   address: '0x6B175474E89094C44Da98b954EedeAC495271d0F', // [!code --]
 }) // [!code --]
-const result = useContractReads({ // [!code ++]
+const result = useReadContracts({ // [!code ++]
   allowFailure: false, // [!code ++]
   contracts: [ // [!code ++]
     { // [!code ++]
@@ -513,6 +571,9 @@ const result = useContractReads({ // [!code ++]
 
 The following hooks were renamed to better reflect their functionality and underlying [Viem](https://viem.sh) actions:
 
+- `useContractRead` is now [`useReadContract`](/react/api/hooks/useReadContract)
+- `useContractReads` is now [`useReadContracts`](/react/api/hooks/useReadContracts)
+- `useContractWrite` is now [`useWriteContract`](/react/api/hooks/useWriteContract)
 - `useContractEvent` is now [`useWatchContractEvent`](/react/api/hooks/useWatchContractEvent)
 - `useContractInfiniteReads` is now [`useInfiniteContractReads`](/react/api/hooks/useInfiniteContractReads)
 - `useFeeData` is now [`useEstimateFeesPerGas`](/react/api/hooks/useEstimateFeesPerGas)

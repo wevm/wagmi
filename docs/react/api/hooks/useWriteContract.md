@@ -1,5 +1,5 @@
 ---
-title: useContractWrite
+title: useWriteContract
 description: Action for executing a write function on a contract.
 ---
 
@@ -13,7 +13,7 @@ const TError = 'WriteContractErrorType'
 const TVariables = 'WriteContractVariables'
 </script>
 
-# useContractWrite
+# useWriteContract
 
 Action for executing a write function on a contract.
 
@@ -22,7 +22,7 @@ A "write" function on a Solidity contract modifies the state of the blockchain. 
 ## Import
 
 ```ts
-import { useContractWrite } from 'wagmi'
+import { useWriteContract } from 'wagmi'
 ```
 
 ## Usage
@@ -30,11 +30,11 @@ import { useContractWrite } from 'wagmi'
 ::: code-group
 
 ```tsx [index.tsx]
-import { useContractWrite } from 'wagmi'
+import { useWriteContract } from 'wagmi'
 import { abi } from './abi'
 
 function App() {
-  const { writeContract } = useContractWrite()
+  const { writeContract } = useWriteContract()
 
   return (
     <button 
@@ -68,7 +68,7 @@ function App() {
 ## Parameters
 
 ```ts
-import { type UseContractWriteParameters } from 'wagmi'
+import { type UseWriteContractParameters } from 'wagmi'
 ```
 
 ### config
@@ -80,11 +80,11 @@ import { type UseContractWriteParameters } from 'wagmi'
 ::: code-group
 
 ```tsx [index.tsx]
-import { useContractWrite } from 'wagmi'
+import { useWriteContract } from 'wagmi'
 import { config } from './config' // [!code focus]
 
 function App() {
-  const result = useContractWrite({
+  const result = useWriteContract({
     config, // [!code focus]
   })
 }
@@ -98,7 +98,7 @@ function App() {
 ## Return Type
 
 ```ts
-import { type UseContractWriteReturnType } from 'wagmi'
+import { type UseWriteContractReturnType } from 'wagmi'
 ```
 
 The return type's [`data`](#data) property is inferrable via the combination of [`abi`](#abi), [`functionName`](#functionname), and [`args`](#args). Check out the [TypeScript docs](/react/typescript#const-assert-abis-typed-data) for more info.

@@ -1,5 +1,5 @@
 ---
-title: useContractSimulate
+title: useSimulateContract
 description: Hook for simulating/validating a contract interaction.
 ---
 
@@ -11,25 +11,25 @@ const TData = 'SimulateContractReturnType'
 const TError = 'SimulateContractErrorType'
 </script>
 
-# useContractSimulate
+# useSimulateContract
 
 Hook for simulating/validating a contract interaction.
 
 ## Import
 
 ```ts
-import { useContractSimulate } from 'wagmi'
+import { useSimulateContract } from 'wagmi'
 ```
 
 ## Usage
 
 ::: code-group
 ```tsx [index.tsx]
-import { useContractSimulate } from 'wagmi'
+import { useSimulateContract } from 'wagmi'
 import { abi } from './abi'
 
 function App() {
-  const result = useContractSimulate({
+  const result = useSimulateContract({
     abi,
     address: '0x6b175474e89094c44da98b954eedeac495271d0f',
     functionName: 'transferFrom',
@@ -45,12 +45,12 @@ function App() {
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
-<!-- TODO: Usage for combining with useContractWrite -->
+<!-- TODO: Usage for combining with useWriteContract -->
 
 ## Parameters
 
 ```ts
-import { type UseContractSimulateParameters } from 'wagmi'
+import { type UseSimulateContractParameters } from 'wagmi'
 ```
 
 ### abi
@@ -61,11 +61,11 @@ The contract's ABI. Check out the [TypeScript docs](/react/typescript#const-asse
 
 ::: code-group
 ```tsx [index.tsx]
-import { useContractSimulate } from 'wagmi'
+import { useSimulateContract } from 'wagmi'
 import { abi } from './abi' // [!code focus]
 
 function App() {
-  const result = useContractSimulate({
+  const result = useSimulateContract({
     abi, // [!code focus]
     address: '0x6b175474e89094c44da98b954eedeac495271d0f',
     functionName: 'transferFrom',
@@ -89,12 +89,12 @@ The access list.
 
 ::: code-group
 ```tsx [index.ts]
-import { useContractSimulate } from 'wagmi'
+import { useSimulateContract } from 'wagmi'
 import { abi } from './abi'
 import { config } from './config'
 
 function App() {
-  const result = useContractSimulate({
+  const result = useSimulateContract({
     abi,
     address: '0x6b175474e89094c44da98b954eedeac495271d0f',
     functionName: 'transferFrom',
@@ -122,11 +122,11 @@ Account to use when calling the contract (`msg.sender`). Throws if account is no
 
 ::: code-group
 ```tsx [index.tsx]
-import { useContractSimulate } from 'wagmi'
+import { useSimulateContract } from 'wagmi'
 import { abi } from './abi'
 
 function App() {
-  const result = useContractSimulate({
+  const result = useSimulateContract({
     abi,
     address: '0x6b175474e89094c44da98b954eedeac495271d0f',
     functionName: 'transferFrom',
@@ -151,11 +151,11 @@ The contract's address.
 
 ::: code-group
 ```tsx [index.tsx]
-import { useContractSimulate } from 'wagmi'
+import { useSimulateContract } from 'wagmi'
 import { abi } from './abi'
 
 function App() {
-  const result = useContractSimulate({
+  const result = useSimulateContract({
     abi,
     address: '0x6b175474e89094c44da98b954eedeac495271d0f', // [!code focus]
     functionName: 'transferFrom',
@@ -180,11 +180,11 @@ function App() {
 
 ::: code-group
 ```tsx [index.tsx]
-import { useContractSimulate } from 'wagmi'
+import { useSimulateContract } from 'wagmi'
 import { abi } from './abi'
 
 function App() {
-  const result = useContractSimulate({
+  const result = useSimulateContract({
     abi,
     address: '0x6b175474e89094c44da98b954eedeac495271d0f', 
     functionName: 'transferFrom',
@@ -210,11 +210,11 @@ Block number to call contract at.
 
 ::: code-group
 ```tsx [index.tsx]
-import { useContractSimulate } from 'wagmi'
+import { useSimulateContract } from 'wagmi'
 import { abi } from './abi'
 
 function App() {
-  const result = useContractSimulate({
+  const result = useSimulateContract({
     abi,
     address: '0x6b175474e89094c44da98b954eedeac495271d0f', 
     functionName: 'transferFrom',
@@ -239,11 +239,11 @@ Block tag to call contract at.
 
 ::: code-group
 ```tsx [index.tsx]
-import { useContractSimulate } from 'wagmi'
+import { useSimulateContract } from 'wagmi'
 import { abi } from './abi'
 
 function App() {
-  const result = useContractSimulate({
+  const result = useSimulateContract({
     abi,
     address: '0x6b175474e89094c44da98b954eedeac495271d0f', 
     functionName: 'transferFrom',
@@ -270,12 +270,12 @@ ID of chain to use when fetching data.
 
 ::: code-group
 ```tsx [index.tsx]
-import { useContractSimulate } from 'wagmi'
+import { useSimulateContract } from 'wagmi'
 import { mainnet } from 'wagmi/chains' // [!code focus]
 import { abi } from './abi'
 
 function App() {
-  const result = useContractSimulate({
+  const result = useSimulateContract({
     abi,
     address: '0x6b175474e89094c44da98b954eedeac495271d0f', 
     functionName: 'transferFrom',
@@ -300,12 +300,12 @@ function App() {
 
 ::: code-group
 ```tsx [index.tsx]
-import { useContractSimulate } from 'wagmi'
+import { useSimulateContract } from 'wagmi'
 import { abi } from './abi'
 import { config } from './config' // [!code focus]
 
 function App() {
-  const result = useContractSimulate({
+  const result = useSimulateContract({
     abi,
     address: '0x6b175474e89094c44da98b954eedeac495271d0f', 
     functionName: 'transferFrom',
@@ -330,13 +330,13 @@ function App() {
 
 ::: code-group
 ```tsx [index.ts]
-import { useConnectorClient, useContractSimulate } from 'wagmi'
+import { useConnectorClient, useSimulateContract } from 'wagmi'
 import { abi } from './abi'
 import { config } from './config'
 
 function App() {
   const { data: connector } = useConnectorClient()
-  const result = useContractSimulate({
+  const result = useSimulateContract({
     abi,
     address: '0x6b175474e89094c44da98b954eedeac495271d0f',
     functionName: 'transferFrom',
@@ -393,11 +393,11 @@ function App() {
 
 ::: code-group
 ```tsx [index.tsx]
-import { useContractSimulate } from 'wagmi'
+import { useSimulateContract } from 'wagmi'
 import { abi } from './abi'
 
 function App() {
-  const result = useContractSimulate({
+  const result = useSimulateContract({
     abi,
     address: '0x6b175474e89094c44da98b954eedeac495271d0f', 
     functionName: 'transferFrom', // [!code focus]
@@ -668,7 +668,7 @@ function App() {
 ## Return Type
 
 ```ts
-import { type UseContractSimulateReturnType } from 'wagmi'
+import { type UseSimulateContractReturnType } from 'wagmi'
 ```
 
 The return type's [`data`](#data) property is inferrable via the combination of [`abi`](#abi), [`functionName`](#functionname), and [`args`](#args). Check out the [TypeScript docs](/react/typescript#const-assert-abis-typed-data) for more info.

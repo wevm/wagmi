@@ -3,7 +3,7 @@ import { abi, address, config, wait } from '@wagmi/test'
 import { renderHook, waitFor } from '@wagmi/test/react'
 import { expect, test } from 'vitest'
 
-import { useContractSimulate } from './useContractSimulate.js'
+import { useSimulateContract } from './useSimulateContract.js'
 
 const connector = config.connectors[0]!
 
@@ -11,7 +11,7 @@ test('default', async () => {
   await connect(config, { connector })
 
   const { result } = renderHook(() =>
-    useContractSimulate({
+    useSimulateContract({
       address: address.wagmiMintExample,
       abi: abi.wagmiMintExample,
       functionName: 'mint',
@@ -88,7 +88,7 @@ test('default', async () => {
 })
 
 test('behavior: disabled when properties missing', async () => {
-  const { result } = renderHook(() => useContractSimulate())
+  const { result } = renderHook(() => useSimulateContract())
 
   await wait(100)
   await waitFor(() => expect(result.current.isPending).toBeTruthy())

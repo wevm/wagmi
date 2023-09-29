@@ -29,7 +29,7 @@ import {
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
-export type UseContractReadParameters<
+export type UseReadContractParameters<
   abi extends Abi | readonly unknown[] = Abi,
   functionName extends ContractFunctionName<
     abi,
@@ -56,7 +56,7 @@ export type UseContractReadParameters<
     }
 >
 
-export type UseContractReadReturnType<
+export type UseReadContractReturnType<
   abi extends Abi | readonly unknown[] = Abi,
   functionName extends ContractFunctionName<
     abi,
@@ -70,22 +70,22 @@ export type UseContractReadReturnType<
   selectData = ReadContractData<abi, functionName, args>,
 > = UseQueryReturnType<selectData, ReadContractErrorType>
 
-/** https://alpha.wagmi.sh/react/api/hooks/useContractRead */
-export function useContractRead<
+/** https://alpha.wagmi.sh/react/api/hooks/useReadContract */
+export function useReadContract<
   const abi extends Abi | readonly unknown[],
   functionName extends ContractFunctionName<abi, 'pure' | 'view'>,
   args extends ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
   config extends Config = ResolvedRegister['config'],
   selectData = ReadContractData<abi, functionName, args>,
 >(
-  parameters: UseContractReadParameters<
+  parameters: UseReadContractParameters<
     abi,
     functionName,
     args,
     config,
     selectData
   > = {} as any,
-): UseContractReadReturnType<abi, functionName, args, selectData> {
+): UseReadContractReturnType<abi, functionName, args, selectData> {
   const { abi, address, functionName, query = {} } = parameters
 
   const config = useConfig(parameters)

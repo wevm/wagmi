@@ -2,11 +2,11 @@ import { abi, address } from '@wagmi/test'
 import { renderHook, waitFor } from '@wagmi/test/react'
 import { expect, test } from 'vitest'
 
-import { useContractReads } from './useContractReads.js'
+import { useReadContracts } from './useReadContracts.js'
 
 test('default', async () => {
   const { result } = renderHook(() =>
-    useContractReads({
+    useReadContracts({
       contracts: [
         {
           address: address.wagmiMintExample,
