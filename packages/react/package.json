@@ -9,9 +9,9 @@
     "directory": "packages/react"
   },
   "scripts": {
-    "clean": "rm -rf dist tsconfig.tsbuildinfo actions chains connectors query",
     "build": "pnpm run clean && pnpm run build:esm+types",
     "build:esm+types": "tsc --project tsconfig.build.json --module es2020 --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo actions chains connectors query",
     "test:build": "publint --strict",
     "typecheck": "tsc --noEmit"
   },
@@ -88,12 +88,7 @@
     "react-dom": "^18.2.0"
   },
   "contributors": ["awkweb.eth <t@wagmi.sh>", "jxom.eth <j@wagmi.sh>"],
-  "funding": [
-    {
-      "type": "github",
-      "url": "https://github.com/sponsors/wagmi-dev"
-    }
-  ],
+  "funding": "https://github.com/sponsors/wagmi-dev",
   "keywords": [
     "wagmi",
     "react",

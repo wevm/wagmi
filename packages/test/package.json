@@ -9,9 +9,9 @@
     "directory": "packages/test"
   },
   "scripts": {
-    "clean": "rm -rf dist tsconfig.tsbuildinfo",
     "build": "pnpm run clean && pnpm run build:esm+types",
     "build:esm+types": "tsc --project tsconfig.build.json --module es2020 --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo",
     "test:build": "publint --strict",
     "typecheck": "tsc --noEmit"
   },
@@ -94,11 +94,6 @@
     "wagmi": "workspace:*"
   },
   "contributors": ["awkweb.eth <t@wagmi.sh>", "jxom.eth <j@wagmi.sh>"],
-  "funding": [
-    {
-      "type": "github",
-      "url": "https://github.com/sponsors/wagmi-dev"
-    }
-  ],
+  "funding": "https://github.com/sponsors/wagmi-dev",
   "keywords": ["eth", "ethereum", "dapps", "wallet", "web3"]
 }

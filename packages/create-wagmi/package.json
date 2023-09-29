@@ -9,10 +9,10 @@
     "directory": "packages/create-wagmi"
   },
   "scripts": {
-    "clean": "rm -rf dist tsconfig.tsbuildinfo config plugins",
     "build": "pnpm run clean && pnpm run build:esm+types",
     "build:esm+types": "tsc --project tsconfig.build.json --module es2020 --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
-    "build:templates": "bun .scripts/getTemplates.ts",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo",
+    "dev": "bun src/cli.ts",
     "test:build": "publint --strict",
     "typecheck": "tsc --noEmit"
   },
@@ -60,11 +60,6 @@
     "@types/validate-npm-package-name": "^4.0.0"
   },
   "contributors": ["awkweb.eth <t@wagmi.sh>", "jxom.eth <j@wagmi.sh>"],
-  "funding": [
-    {
-      "type": "github",
-      "url": "https://github.com/sponsors/wagmi-dev"
-    }
-  ],
+  "funding": "https://github.com/sponsors/wagmi-dev",
   "keywords": ["wagmi", "eth", "ethereum", "dapps", "wallet", "web3", "cli"]
 }

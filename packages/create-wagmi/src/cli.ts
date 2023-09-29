@@ -1,325 +1,251 @@
 #!/usr/bin/env node
-import path from 'path'
-import { fileURLToPath } from 'url'
+import fs from 'node:fs'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { cac } from 'cac'
-import cpy from 'cpy'
-import { execa } from 'execa'
-import fs from 'fs-extra'
-import { oraPromise } from 'ora'
-import pico from 'picocolors'
-import { default as prompts } from 'prompts'
+import spawn from 'cross-spawn'
+import { green, red, reset } from 'picocolors'
+import prompts from 'prompts'
 
-import { type Template } from './types.js'
-import { getPackageManager } from './utils/getPackageManager.js'
-import { notifyUpdate } from './utils/notifyUpdate.js'
+import { type Framework, frameworks } from './frameworks.js'
 import {
-  getTemplateFramework,
-  getTemplateFrameworks,
-  getTemplates,
-  getTemplatesByFramework,
-} from './utils/templates.js'
-import {
-  ValidationError,
-  validateProjectName,
-  validateTemplateName,
-} from './utils/validate.js'
+  copy,
+  emptyDir,
+  formatTargetDir,
+  isEmpty,
+  isValidPackageName,
+  pkgFromUserAgent,
+  toValidPackageName,
+} from './utils.js'
 import { version } from './version.js'
 
-const log = console.log
+const templates = frameworks
+  .map((f) => f.variants?.map((v) => v.name) || [f.name])
+  .reduce((a, b) => a.concat(b), [])
 
-export type CLIArgs = readonly string[]
-export type CLIOptions = {
-  [k: string]: any
+const cli = cac('create-wagmi')
+
+cli
+  .usage(`${green('<project-directory>')} [options]`)
+  .option(
+    '-t, --template [name]',
+    `Template to bootstrap with. Available: ${templates
+      .sort((a, b) => (a && !b ? -1 : 1))
+      .join(', ')}`,
+  )
+  .option('--npm', 'Use npm as your package manager')
+  .option('--pnpm', 'Use pnpm as your package manager')
+  .option('--yarn', 'Use yarn as your package manager')
+  .option('--skip-git', 'Skips initializing the project as a git repository')
+
+cli.help()
+cli.version(version)
+
+const cwd = process.cwd()
+
+const renameFiles: Record<string, string | undefined> = {
+  _gitignore: '.gitignore',
 }
 
-async function run({
-  args,
-  options,
-  templates,
-}: {
-  args: CLIArgs
-  options: CLIOptions
-  templates: Template[]
-}) {
-  if (options.help) return
+const defaultTargetDir = 'wagmi-project'
 
-  log()
-  log(
-    `Welcome to ${pico.bold(
-      pico.blue('create-wagmi'),
-    )} – the quickest way to get started with wagmi!`,
-  )
-  log()
-
-  const __dirname = fileURLToPath(new URL('.', import.meta.url))
-  const templatesPath = path.join(__dirname, '..', 'templates')
-  let templateId = options.template || options.t
-
-  // Validate template if provided
-  let templateValidation = await validateTemplateName({
-    isNameRequired: false,
-    templateId,
-    templates,
-  })
-  if (!templateValidation.valid) throw new ValidationError(templateValidation)
-
-  // Validate project name
-  let projectName: string
-  let projectPath: string
-  if (args[0]) {
-    projectPath = args[0].trim()
-    const splitPath = projectPath.split('/')
-    projectName = splitPath[splitPath.length - 1]?.trim() || ''
-    log(pico.green('✔'), pico.bold('Using project name:'), projectName)
-  } else {
-    const res = await prompts({
-      initial: 'my-app',
-      name: 'projectName',
-      message: 'What is your project named?',
-      type: 'text',
-      async validate(projectName) {
-        const validation = await validateProjectName({
-          projectName,
-          projectPath: projectName,
-        })
-        if (!validation.valid) return validation.message
-        return true
-      },
-    })
-    projectName = res.projectName?.trim()
-    projectPath = projectName
-  }
-
-  // Validate project name
-  const nameValidation = await validateProjectName({
-    projectName,
-    projectPath,
-  })
-  if (!nameValidation.valid) throw new ValidationError(nameValidation)
-
-  const frameworks = await getTemplateFrameworks()
-
-  const templatesByFramework = await getTemplatesByFramework()
-  let frameworkId =
-    getTemplateFramework({
-      templateId,
-      templatesByFramework,
-    }) || frameworks[0]?.id
-
-  // Extract template ID from CLI or prompt
-  if (!templateId || !frameworkId) {
-    frameworkId = (
-      await prompts({
-        name: 'frameworkId',
-        message: 'What framework would you like to use?',
-        type: 'select',
-        choices: frameworks
-          .map(({ name, ...t }) => ({
-            ...t,
-            value: name,
-          }))
-          .sort((a, b) => (a.default && !b.default ? -1 : 1)),
-      })
-    ).frameworkId
-    if (!frameworkId) return
-
-    const frameworkTemplates = templatesByFramework[frameworkId]
-    if (!frameworkTemplates) return
-
-    templateId = (
-      await prompts({
-        name: 'templateId',
-        message: 'What template would you like to use?',
-        type: 'select',
-        choices: frameworkTemplates
-          .map(({ id, ...t }) => ({
-            ...t,
-            value: id,
-          }))
-          .sort((a, b) => (a.default && !b.default ? -1 : 1)),
-      })
-    ).templateId
-  }
-
-  // Get framework meta
-  const frameworkMeta = frameworks.find(({ id }) => id === frameworkId)
-  if (!frameworkMeta) return
-
-  // Get template meta
-  const templateMeta = templates.find(({ id }) => id === templateId)
-  if (!templateMeta) return
-
-  const context = (() => {
-    let ctx = {}
-    return {
-      get() {
-        return ctx
-      },
-      set(newCtx: any) {
-        ctx = { ...ctx, ...newCtx }
-      },
-    }
-  })()
-
-  const hooks = templateMeta.hooks
-  await hooks?.afterValidate?.({ context })
-
-  // Validate template name
-  templateValidation = await validateTemplateName({
-    templateId,
-    templates,
-  })
-  if (!templateValidation.valid) throw new ValidationError(templateValidation)
-
-  const targetPath = path.join(process.cwd(), projectPath)
-  log(`Creating a new wagmi app in ${pico.green(targetPath)}.`)
-  log()
-  log(
-    `Using ${pico.bold(frameworkMeta.title)}${
-      !templateMeta.default ? ` with ${pico.bold(templateMeta.title)}` : ''
-    }.`,
-  )
-  log()
-
-  // Copy template contents into the target path
-  const templatePath = path.join(
-    templatesPath,
-    frameworkMeta.name,
-    templateMeta.name,
-  )
-  await cpy(path.join(templatePath, '**', '*'), targetPath, {
-    filter: (file) => file.name !== '_meta.ts',
-    rename: (name) => name.replace(/^_dot_/, '.'),
-  })
-
-  // Create package.json for project
-  const packageJson = await fs.readJSON(path.join(targetPath, 'package.json'))
-  packageJson.name = projectName
-  await fs.writeFile(
-    path.join(targetPath, 'package.json'),
-    JSON.stringify(packageJson, null, 2),
-  )
-
-  const packageManager = await getPackageManager({ options })
-  if (packageManager === 'npm') {
-    await fs.appendFile(
-      path.join(targetPath, '.npmrc'),
-      '\nlegacy-peer-deps = true',
-    )
-  }
-
-  await hooks?.beforeInstall?.({ context, targetPath })
-
-  // Install in background to not clutter screen
-  log(`Using ${pico.bold(packageManager)}.`)
-  log()
-  const installArgs = [
-    'install',
-    packageManager === 'npm' ? '--quiet' : '--silent',
-  ]
-  await oraPromise(
-    execa(packageManager, installArgs, {
-      cwd: targetPath,
-      env: {
-        ...process.env,
-        ADBLOCK: '1',
-        DISABLE_OPENCOLLECTIVE: '1',
-        // we set NODE_ENV to development as pnpm skips dev
-        // dependencies when production
-        NODE_ENV: 'development',
-      },
-    }),
-    {
-      text: 'Installing packages. This may take a couple of minutes.',
-      failText: 'Failed to install packages.',
-      successText: 'Installed packages.',
-    },
-  )
-  log()
-
-  await hooks?.afterInstall?.({ context, targetPath })
-
-  // Create git repository
-  if (!options.skipGit) {
-    await execa('git', ['init'], { cwd: targetPath })
-    await execa('git', ['add', '.'], { cwd: targetPath })
-    await execa(
-      'git',
-      [
-        'commit',
-        '--no-verify',
-        '--message',
-        'Initial commit from create-wagmi',
-      ],
-      { cwd: targetPath },
-    )
-    log(pico.green('✔'), 'Initialized git repository.')
-    log()
-  }
-
-  log('―――――――――――――――――――――')
-  log()
-  log(
-    `${pico.green('Success!')} Created ${pico.bold(
-      projectName,
-    )} at ${pico.green(path.resolve(projectPath))}`,
-  )
-  log()
-  log(
-    `To start your app, run \`${pico.bold(
-      pico.cyan(`cd ${projectPath}`),
-    )}\` and then \`${pico.bold(
-      pico.cyan(
-        `${packageManager}${packageManager === 'npm' ? ' run' : ''} dev`,
-      ),
-    )}\``,
-  )
-  log()
-  log('―――――――――――――――――――――')
-  log()
-
-  await hooks?.afterSetup?.({ context, targetPath })
-}
-;(async () => {
-  let templates: Template[]
-  try {
-    templates = await getTemplates()
-  } catch (err) {
-    log(pico.red((<Error>err).message))
-    process.exit(1)
-  }
-
-  const cli = cac('create-wagmi')
-    .version(version)
-    .usage(`${pico.green('<project-directory>')} [options]`)
-    .option(
-      '-t, --template [name]',
-      `A template to bootstrap with. Available: ${templates
-        .sort((a, b) => (a.default && !b.default ? -1 : 1))
-        .map(({ id }) => id)
-        .join(', ')}`,
-    )
-    .option('--npm', 'Use npm as your package manager')
-    .option('--pnpm', 'Use pnpm as your package manager')
-    .option('--yarn', 'Use yarn as your package manager')
-    .option('--skip-git', 'Skips initializing the project as a git repository')
-    .help()
-
+async function init() {
   const { args, options } = cli.parse(process.argv)
+  if (options.help) return
+  if (options.version) return
 
+  const argTargetDir = formatTargetDir(args[0])
+  const argTemplate = options.template || options.t
+
+  let targetDir = argTargetDir || defaultTargetDir
+  const getProjectName = () =>
+    targetDir === '.' ? path.basename(path.resolve()) : targetDir
+
+  let result: prompts.Answers<
+    'framework' | 'overwrite' | 'packageName' | 'projectName' | 'variant'
+  >
   try {
-    await run({ args, options, templates })
-    log()
-    await notifyUpdate({ options })
-  } catch (err) {
-    const error = err as Error
-    log(
-      error instanceof ValidationError
-        ? error.message
-        : pico.red((<Error>error).message),
+    result = await prompts(
+      [
+        {
+          type: argTargetDir ? null : 'text',
+          name: 'projectName',
+          message: reset('Project name:'),
+          initial: defaultTargetDir,
+          onState: (state) => {
+            targetDir = formatTargetDir(state.value) || defaultTargetDir
+          },
+        },
+        {
+          type: () =>
+            !fs.existsSync(targetDir) || isEmpty(targetDir) ? null : 'confirm',
+          name: 'overwrite',
+          message: () =>
+            `${
+              targetDir === '.'
+                ? 'Current directory'
+                : `Target directory "${targetDir}"`
+            } is not empty. Remove existing files and continue?`,
+        },
+        {
+          type: (_, { overwrite }: { overwrite?: boolean }) => {
+            if (overwrite === false) {
+              throw new Error(`${red('✖')} Operation cancelled`)
+            }
+            return null
+          },
+          name: 'overwriteChecker',
+        },
+        {
+          type: () => (isValidPackageName(getProjectName()) ? null : 'text'),
+          name: 'packageName',
+          message: reset('Package name:'),
+          initial: () => toValidPackageName(getProjectName()),
+          validate: (dir) =>
+            isValidPackageName(dir) || 'Invalid package.json name',
+        },
+        {
+          type:
+            argTemplate && templates.includes(argTemplate) ? null : 'select',
+          name: 'framework',
+          message:
+            typeof argTemplate === 'string' && !templates.includes(argTemplate)
+              ? reset(
+                  `"${argTemplate}" isn't a valid template. Please choose from below: `,
+                )
+              : reset('Select a framework:'),
+          initial: 0,
+          choices: frameworks.map((framework) => {
+            const frameworkColor = framework.color
+            return {
+              title: frameworkColor(framework.display || framework.name),
+              value: framework,
+            }
+          }),
+        },
+        {
+          type: (framework: Framework) =>
+            framework?.variants?.length > 1 ? 'select' : null,
+          name: 'variant',
+          message: reset('Select a variant:'),
+          choices: (framework: Framework) =>
+            framework.variants.map((variant) => {
+              const variantColor = variant.color
+              return {
+                title: variantColor(variant.display || variant.name),
+                value: variant.name,
+              }
+            }),
+        },
+      ],
+      {
+        onCancel: () => {
+          throw new Error(`${red('✖')} Operation cancelled`)
+        },
+      },
     )
-    log()
-    await notifyUpdate({ options })
-    process.exit(1)
+  } catch (cancelled: any) {
+    console.log(cancelled.message)
+    return
   }
-})()
+
+  // user choice associated with prompts
+  const { framework, overwrite, packageName, variant } = result
+
+  const root = path.join(cwd, targetDir)
+  console.log(root)
+
+  if (overwrite) emptyDir(root)
+  else if (!fs.existsSync(root)) fs.mkdirSync(root, { recursive: true })
+
+  // determine template
+  const template: string = variant || framework?.name || argTemplate
+
+  const pkgInfo = pkgFromUserAgent(process.env.npm_config_user_agent)
+  const pkgManager = pkgInfo ? pkgInfo.name : 'npm'
+  const isYarn1 = pkgManager === 'yarn' && pkgInfo?.version?.startsWith('1.')
+
+  const { customCommand } =
+    frameworks.flatMap((f) => f.variants).find((v) => v.name === template) ?? {}
+
+  if (customCommand) {
+    const fullCustomCommand = customCommand
+      .replace(/^npm create /, () => {
+        // `bun create` uses it's own set of templates,
+        // the closest alternative is using `bun x` directly on the package
+        if (pkgManager === 'bun') return 'bun x create-'
+        return `${pkgManager} create `
+      })
+      // Only Yarn 1.x doesn't support `@version` in the `create` command
+      .replace('@latest', () => (isYarn1 ? '' : '@latest'))
+      .replace(/^npm exec/, () => {
+        // Prefer `pnpm dlx`, `yarn dlx`, or `bun x`
+        if (pkgManager === 'pnpm') return 'pnpm dlx'
+        if (pkgManager === 'yarn' && !isYarn1) return 'yarn dlx'
+        if (pkgManager === 'bun') return 'bun x'
+        // Use `npm exec` in all other cases,
+        // including Yarn 1.x and other custom npm clients.
+        return 'npm exec'
+      })
+
+    const [command, ...args] = fullCustomCommand.split(' ')
+    // we replace TARGET_DIR here because targetDir may include a space
+    const replacedArgs = args.map((arg) => arg.replace('TARGET_DIR', targetDir))
+    const { status } = spawn.sync(command!, replacedArgs, {
+      stdio: 'inherit',
+    })
+    process.exit(status ?? 0)
+  }
+
+  console.log(`\nScaffolding project in ${root}...`)
+
+  const templateDir = path.resolve(
+    fileURLToPath(import.meta.url),
+    '../..',
+    `template-${template}`,
+  )
+
+  const write = (file: string, content?: string) => {
+    const targetPath = path.join(root, renameFiles[file] ?? file)
+    if (content) fs.writeFileSync(targetPath, content)
+    else copy(path.join(templateDir, file), targetPath)
+  }
+
+  const files = fs.readdirSync(templateDir)
+  for (const file of files.filter((f) => f !== 'package.json')) {
+    write(file)
+  }
+
+  const pkg = JSON.parse(
+    fs.readFileSync(path.join(templateDir, 'package.json'), 'utf-8'),
+  )
+
+  pkg.name = packageName || getProjectName()
+
+  write('package.json', `${JSON.stringify(pkg, null, 2)}\n`)
+
+  const cdProjectName = path.relative(cwd, root)
+  console.log('\nDone. Now run:\n')
+  if (root !== cwd)
+    console.log(
+      `  cd ${
+        cdProjectName.includes(' ') ? `"${cdProjectName}"` : cdProjectName
+      }`,
+    )
+
+  switch (pkgManager) {
+    case 'yarn':
+      console.log('  yarn')
+      console.log('  yarn dev')
+      break
+    default:
+      console.log(`  ${pkgManager} install`)
+      console.log(`  ${pkgManager} run dev`)
+      break
+  }
+  console.log()
+}
+
+init().catch((e) => {
+  console.error(e)
+})
