@@ -1,28 +1,28 @@
 {
-  "name": "vite-react",
+  "name": "wagmi-vite-starter",
   "private": true,
+  "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "lint": "biome check .",
     "preview": "vite preview"
   },
   "dependencies": {
-    "@tanstack/query-sync-storage-persister": "5.0.0-beta.28",
     "@tanstack/react-query": "5.0.0-beta.35",
-    "@tanstack/react-query-persist-client": "5.0.0-beta.28",
-    "idb-keyval": "^6.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "viem": "2.0.0-alpha.13",
-    "wagmi": "workspace:*"
+    "wagmi": "2.0.0-alpha.6"
   },
   "devDependencies": {
-    "@tanstack/react-query-devtools": "5.0.0-beta.28",
-    "@types/react": "^18.2.23",
-    "@types/react-dom": "^18.2.8",
+    "@biomejs/biome": "1.1.2",
+    "@types/react": "^18.2.22",
+    "@types/react-dom": "^18.2.7",
     "@vitejs/plugin-react": "^4.1.0",
     "buffer": "^6.0.3",
+    "typescript": "^5.2.2",
     "vite": "^4.4.9"
   }
 }

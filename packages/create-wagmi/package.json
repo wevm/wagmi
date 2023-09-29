@@ -21,7 +21,8 @@
     "!dist/**/*.tsbuildinfo",
     "src/**/*.ts",
     "!src/**/*.test.ts",
-    "!src/**/*.test-d.ts"
+    "!src/**/*.test-d.ts",
+    "templates/**"
   ],
   "bin": {
     "wagmi": "./dist/esm/cli.js"
@@ -40,24 +41,14 @@
   },
   "dependencies": {
     "cac": "^6.7.14",
-    "cpy": "^9.0.1",
     "cross-spawn": "^7.0.3",
-    "detect-package-manager": "^2.0.1",
-    "execa": "^6.1.0",
-    "fs-extra": "^10.1.0",
-    "ora": "^6.1.2",
     "picocolors": "^1.0.0",
-    "prompts": "^2.4.2",
-    "update-check": "^1.5.4",
-    "validate-npm-package-name": "^4.0.0"
+    "prompts": "^2.4.2"
   },
   "devDependencies": {
     "@types/cross-spawn": "^6.0.2",
-    "@types/eslint": "^8.4.6",
-    "@types/fs-extra": "^9.0.13",
     "@types/node": "^18.11.7",
-    "@types/prompts": "^2.4.1",
-    "@types/validate-npm-package-name": "^4.0.0"
+    "@types/prompts": "^2.4.1"
   },
   "contributors": ["awkweb.eth <t@wagmi.sh>", "jxom.eth <j@wagmi.sh>"],
   "funding": "https://github.com/sponsors/wagmi-dev",

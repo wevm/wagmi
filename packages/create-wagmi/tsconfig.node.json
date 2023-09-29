@@ -1,5 +1,5 @@
 {
-  "include": [".scripts/**/*.ts"],
+  "include": ["vitest.config.ts"],
   "compilerOptions": {
     "strict": true,
     "composite": true,

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import fs from 'node:fs'
-import path from 'node:path'
+import * as fs from 'node:fs'
+import * as path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { cac } from 'cac'
 import spawn from 'cross-spawn'
@@ -36,7 +36,6 @@ cli
   .option('--npm', 'Use npm as your package manager')
   .option('--pnpm', 'Use pnpm as your package manager')
   .option('--yarn', 'Use yarn as your package manager')
-  .option('--skip-git', 'Skips initializing the project as a git repository')
 
 cli.help()
 cli.version(version)
@@ -44,6 +43,7 @@ cli.version(version)
 const cwd = process.cwd()
 
 const renameFiles: Record<string, string | undefined> = {
+  '_env.local': '.env.local',
   _gitignore: '.gitignore',
 }
 
@@ -153,7 +153,6 @@ async function init() {
   const { framework, overwrite, packageName, variant } = result
 
   const root = path.join(cwd, targetDir)
-  console.log(root)
 
   if (overwrite) emptyDir(root)
   else if (!fs.existsSync(root)) fs.mkdirSync(root, { recursive: true })
@@ -162,7 +161,12 @@ async function init() {
   const template: string = variant || framework?.name || argTemplate
 
   const pkgInfo = pkgFromUserAgent(process.env.npm_config_user_agent)
-  const pkgManager = pkgInfo ? pkgInfo.name : 'npm'
+  type PkgManager = 'bun' | 'npm' | 'pnpm' | 'yarn'
+  let pkgManager: PkgManager
+  if (options.npm) pkgManager = 'npm'
+  else if (options.pnpm) pkgManager = 'pnpm'
+  else if (options.yarn) pkgManager = 'yarn'
+  else pkgManager = pkgInfo ? (pkgInfo.name as PkgManager) : 'npm'
   const isYarn1 = pkgManager === 'yarn' && pkgInfo?.version?.startsWith('1.')
 
   const { customCommand } =
@@ -201,8 +205,8 @@ async function init() {
 
   const templateDir = path.resolve(
     fileURLToPath(import.meta.url),
-    '../..',
-    `template-${template}`,
+    '../../templates',
+    template,
   )
 
   const write = (file: string, content?: string) => {
