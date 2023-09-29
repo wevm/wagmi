@@ -3,7 +3,7 @@
 import { useQueryClient } from '@tanstack/react-query'
 import {
   type Config,
-  type GetBlockNumberError,
+  type GetBlockNumberErrorType,
   type ResolvedRegister,
 } from '@wagmi/core'
 import {
@@ -42,7 +42,7 @@ export type UseBlockNumberParameters<
       query?:
         | UseQueryParameters<
             GetBlockNumberQueryFnData,
-            GetBlockNumberError,
+            GetBlockNumberErrorType,
             selectData,
             GetBlockNumberQueryKey<config, chainId>
           >
@@ -60,7 +60,7 @@ export type UseBlockNumberParameters<
 >
 
 export type UseBlockNumberReturnType<selectData = GetBlockNumberData> =
-  UseQueryReturnType<selectData, GetBlockNumberError>
+  UseQueryReturnType<selectData, GetBlockNumberErrorType>
 
 /** https://alpha.wagmi.sh/react/api/hooks/useBlockNumber */
 export function useBlockNumber<

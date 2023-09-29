@@ -1,5 +1,6 @@
 import type { BlockTag, Chain } from 'viem'
 import {
+  type GetBlockErrorType as viem_GetBlockErrorType,
   type GetBlockParameters as viem_GetBlockParameters,
   type GetBlockReturnType as viem_GetBlockReturnType,
   getBlock as viem_getBlock,
@@ -38,7 +39,7 @@ export type GetBlockReturnType<
   }[number]
 >
 
-export type GetBlockError = Error
+export type GetBlockErrorType = viem_GetBlockErrorType
 
 /** https://alpha.wagmi.sh/core/actions/getBlock */
 export function getBlock<

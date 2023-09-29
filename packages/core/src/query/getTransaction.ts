@@ -1,7 +1,7 @@
 import { type QueryOptions } from '@tanstack/query-core'
 
 import {
-  type GetTransactionError,
+  type GetTransactionErrorType,
   type GetTransactionParameters,
   type GetTransactionReturnType,
   getTransaction,
@@ -40,7 +40,7 @@ export function getTransactionQueryOptions<
     queryKey: getTransactionQueryKey(options),
   } as const satisfies QueryOptions<
     GetTransactionQueryFnData<config, chainId>,
-    GetTransactionError,
+    GetTransactionErrorType,
     GetTransactionData<config, chainId>,
     GetTransactionQueryKey<config, chainId>
   >

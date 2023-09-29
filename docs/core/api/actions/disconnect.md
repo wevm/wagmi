@@ -54,7 +54,7 @@ const result = await disconnect(config, {
 ## Error
 
 ```ts
-import { type DisconnectError } from '@wagmi/core'
+import { type DisconnectErrorType } from '@wagmi/core'
 ```
 
 <!--@include: @shared/mutation-imports.md-->

@@ -1,5 +1,6 @@
 import type { Chain } from 'viem'
 import {
+  type GetTransactionErrorType as viem_GetTransactionErrorType,
   type GetTransactionParameters as viem_GetTransactionParameters,
   type GetTransactionReturnType as viem_GetTransactionReturnType,
   getTransaction as viem_getTransaction,
@@ -26,7 +27,7 @@ export type GetTransactionReturnType<
   }[number]
 >
 
-export type GetTransactionError = Error
+export type GetTransactionErrorType = viem_GetTransactionErrorType
 
 /** https://alpha.wagmi.sh/core/api/actions/getTransaction */
 export function getTransaction<

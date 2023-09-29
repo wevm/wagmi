@@ -1,6 +1,10 @@
 'use client'
 
-import type { Config, GetEnsResolverError, ResolvedRegister } from '@wagmi/core'
+import type {
+  Config,
+  GetEnsResolverErrorType,
+  ResolvedRegister,
+} from '@wagmi/core'
 import { type Evaluate } from '@wagmi/core/internal'
 import {
   type GetEnsResolverData,
@@ -28,7 +32,7 @@ export type UseEnsResolverParameters<
       query?:
         | UseQueryParameters<
             GetEnsResolverQueryFnData,
-            GetEnsResolverError,
+            GetEnsResolverErrorType,
             selectData,
             GetEnsResolverQueryKey<config>
           >
@@ -37,7 +41,7 @@ export type UseEnsResolverParameters<
 >
 
 export type UseEnsResolverReturnType<selectData = GetEnsResolverData> =
-  UseQueryReturnType<selectData, GetEnsResolverError>
+  UseQueryReturnType<selectData, GetEnsResolverErrorType>
 
 /** https://alpha.wagmi.sh/react/api/hooks/useEnsResolver */
 export function useEnsResolver<

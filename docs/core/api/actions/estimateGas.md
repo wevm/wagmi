@@ -330,7 +330,7 @@ The gas estimate in wei.
 ## Error
 
 ```ts
-import { type EstimateGasError } from '@wagmi/core'
+import { type EstimateGasErrorType } from '@wagmi/core'
 ```
 
 <!--@include: @shared/query-imports.md-->

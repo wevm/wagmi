@@ -2,7 +2,7 @@
 
 import {
   type Config,
-  type ReadContractError,
+  type ReadContractErrorType,
   type ResolvedRegister,
 } from '@wagmi/core'
 import { type UnionEvaluate } from '@wagmi/core/internal'
@@ -48,7 +48,7 @@ export type UseContractReadParameters<
       query?:
         | UseQueryParameters<
             ReadContractQueryFnData<abi, functionName, args>,
-            ReadContractError,
+            ReadContractErrorType,
             selectData,
             ReadContractQueryKey<abi, functionName, args, config>
           >
@@ -68,7 +68,7 @@ export type UseContractReadReturnType<
     functionName
   > = ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
   selectData = ReadContractData<abi, functionName, args>,
-> = UseQueryReturnType<selectData, ReadContractError>
+> = UseQueryReturnType<selectData, ReadContractErrorType>
 
 /** https://alpha.wagmi.sh/react/api/hooks/useContractRead */
 export function useContractRead<

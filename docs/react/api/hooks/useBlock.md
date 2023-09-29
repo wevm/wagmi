@@ -8,7 +8,7 @@ const packageName = 'wagmi'
 const actionName = 'getBlock'
 const typeName = 'GetBlock'
 const TData = 'GetBlockData'
-const TError = 'GetBlockError'
+const TError = 'GetBlockErrorType'
 </script>
 
 # useBlock

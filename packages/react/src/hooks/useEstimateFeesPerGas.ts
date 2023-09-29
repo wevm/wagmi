@@ -2,7 +2,7 @@
 
 import {
   type Config,
-  type EstimateFeesPerGasError,
+  type EstimateFeesPerGasErrorType,
   type ResolvedRegister,
 } from '@wagmi/core'
 import { type Evaluate } from '@wagmi/core/internal'
@@ -34,7 +34,7 @@ export type UseEstimateFeesPerGasParameters<
       query?:
         | UseQueryParameters<
             EstimateFeesPerGasQueryFnData<type>,
-            EstimateFeesPerGasError,
+            EstimateFeesPerGasErrorType,
             selectData,
             EstimateFeesPerGasQueryKey<config, type>
           >
@@ -45,7 +45,7 @@ export type UseEstimateFeesPerGasParameters<
 export type UseEstimateFeesPerGasReturnType<
   type extends FeeValuesType = FeeValuesType,
   selectData = EstimateFeesPerGasData<type>,
-> = UseQueryReturnType<selectData, EstimateFeesPerGasError>
+> = UseQueryReturnType<selectData, EstimateFeesPerGasErrorType>
 
 /** https://alpha.wagmi.sh/react/api/hooks/useEstimateFeesPerGas */
 export function useEstimateFeesPerGas<

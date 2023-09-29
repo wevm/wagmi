@@ -1,7 +1,7 @@
 import {
   type Connector,
   type CreateConnectorFn,
-  type ReconnectError,
+  type ReconnectErrorType,
 } from '@wagmi/core'
 import { config } from '@wagmi/test'
 import { expectTypeOf, test } from 'vitest'
@@ -35,7 +35,7 @@ test('context', () => {
             }
           | undefined
         >()
-        expectTypeOf(error).toEqualTypeOf<ReconnectError>()
+        expectTypeOf(error).toEqualTypeOf<ReconnectErrorType>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
       },
       onSuccess(data, variables, context) {
@@ -65,7 +65,7 @@ test('context', () => {
             }[]
           | undefined
         >()
-        expectTypeOf(error).toEqualTypeOf<ReconnectError | null>()
+        expectTypeOf(error).toEqualTypeOf<ReconnectErrorType | null>()
         expectTypeOf(variables).toEqualTypeOf<
           | {
               connectors?:
@@ -87,7 +87,7 @@ test('context', () => {
       }[]
     | undefined
   >()
-  expectTypeOf(error).toEqualTypeOf<ReconnectError | null>()
+  expectTypeOf(error).toEqualTypeOf<ReconnectErrorType | null>()
   expectTypeOf(variables).toEqualTypeOf<
     | {
         connectors?: readonly (CreateConnectorFn | Connector)[] | undefined
@@ -108,7 +108,7 @@ test('context', () => {
             }
           | undefined
         >()
-        expectTypeOf(error).toEqualTypeOf<ReconnectError>()
+        expectTypeOf(error).toEqualTypeOf<ReconnectErrorType>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
       },
       onSuccess(data, variables, context) {
@@ -138,7 +138,7 @@ test('context', () => {
             }[]
           | undefined
         >()
-        expectTypeOf(error).toEqualTypeOf<ReconnectError | null>()
+        expectTypeOf(error).toEqualTypeOf<ReconnectErrorType | null>()
         expectTypeOf(variables).toEqualTypeOf<
           | {
               connectors?:

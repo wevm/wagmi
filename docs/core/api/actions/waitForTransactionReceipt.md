@@ -71,7 +71,7 @@ import { type WaitForTransactionReceiptReturnType } from '@wagmi/core'
 ## Error
 
 ```ts
-import { type WaitForTransactionReceiptError } from '@wagmi/core'
+import { type WaitForTransactionReceiptErrorType } from '@wagmi/core'
 ```
 
 <!--@include: @shared/query-imports.md-->

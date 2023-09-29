@@ -1,4 +1,5 @@
 import {
+  type GetEnsAddressErrorType as viem_GetEnsAddressErrorType,
   type GetEnsAddressParameters as viem_GetEnsAddressParameters,
   type GetEnsAddressReturnType as viem_GetEnsAddressReturnType,
   getEnsAddress as viem_getEnsAddress,
@@ -14,7 +15,7 @@ export type GetEnsAddressParameters<config extends Config = Config> = Evaluate<
 
 export type GetEnsAddressReturnType = viem_GetEnsAddressReturnType
 
-export type GetEnsAddressError = Error
+export type GetEnsAddressErrorType = viem_GetEnsAddressErrorType
 
 /** https://alpha.wagmi.sh/core/api/actions/getEnsAddress */
 export function getEnsAddress<config extends Config>(

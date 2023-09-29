@@ -8,7 +8,7 @@ const packageName = 'wagmi'
 const actionName = 'estimateGas'
 const typeName = 'EstimateGas'
 const TData = 'bigint'
-const TError = 'EstimateGasError'
+const TError = 'EstimateGasErrorType'
 </script>
 
 # useEstimateGas

@@ -1,5 +1,5 @@
 import {
-  type SignTypedDataError,
+  type SignTypedDataErrorType,
   type SignTypedDataReturnType,
 } from '@wagmi/core'
 import type { SignTypedDataVariables } from '@wagmi/core/query'
@@ -19,7 +19,7 @@ test('context', () => {
       },
       onError(error, variables, context) {
         expectTypeOf(variables).toMatchTypeOf<SignTypedDataVariables>()
-        expectTypeOf(error).toEqualTypeOf<SignTypedDataError>()
+        expectTypeOf(error).toEqualTypeOf<SignTypedDataErrorType>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
       },
       onSuccess(data, variables, context) {
@@ -29,7 +29,7 @@ test('context', () => {
       },
       onSettled(data, error, variables, context) {
         expectTypeOf(data).toEqualTypeOf<SignTypedDataReturnType | undefined>()
-        expectTypeOf(error).toEqualTypeOf<SignTypedDataError | null>()
+        expectTypeOf(error).toEqualTypeOf<SignTypedDataErrorType | null>()
         expectTypeOf(variables).toMatchTypeOf<SignTypedDataVariables>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
       },
@@ -37,7 +37,7 @@ test('context', () => {
   })
 
   expectTypeOf(data).toEqualTypeOf<SignTypedDataReturnType | undefined>()
-  expectTypeOf(error).toEqualTypeOf<SignTypedDataError | null>()
+  expectTypeOf(error).toEqualTypeOf<SignTypedDataErrorType | null>()
   expectTypeOf(variables).toMatchTypeOf<SignTypedDataVariables | undefined>()
   expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
 
@@ -52,7 +52,7 @@ test('context', () => {
     },
     {
       onError(error, variables, context) {
-        expectTypeOf(error).toEqualTypeOf<SignTypedDataError>()
+        expectTypeOf(error).toEqualTypeOf<SignTypedDataErrorType>()
         expectTypeOf(variables).toMatchTypeOf<{
           types: typeof typedData.basic.types
           primaryType: 'Person'
@@ -77,7 +77,7 @@ test('context', () => {
       },
       onSettled(data, error, variables, context) {
         expectTypeOf(data).toEqualTypeOf<SignTypedDataReturnType | undefined>()
-        expectTypeOf(error).toEqualTypeOf<SignTypedDataError | null>()
+        expectTypeOf(error).toEqualTypeOf<SignTypedDataErrorType | null>()
         expectTypeOf(variables).toMatchTypeOf<{
           types: typeof typedData.basic.types
           primaryType: 'Person'

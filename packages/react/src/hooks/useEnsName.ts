@@ -1,6 +1,6 @@
 'use client'
 
-import type { Config, GetEnsNameError, ResolvedRegister } from '@wagmi/core'
+import type { Config, GetEnsNameErrorType, ResolvedRegister } from '@wagmi/core'
 import { type Evaluate } from '@wagmi/core/internal'
 import {
   type GetEnsNameData,
@@ -28,7 +28,7 @@ export type UseEnsNameParameters<
       query?:
         | UseQueryParameters<
             GetEnsNameQueryFnData,
-            GetEnsNameError,
+            GetEnsNameErrorType,
             selectData,
             GetEnsNameQueryKey<config>
           >
@@ -37,7 +37,7 @@ export type UseEnsNameParameters<
 >
 
 export type UseEnsNameReturnType<selectData = GetEnsNameData> =
-  UseQueryReturnType<selectData, GetEnsNameError>
+  UseQueryReturnType<selectData, GetEnsNameErrorType>
 
 /** https://alpha.wagmi.sh/react/api/hooks/useEnsName */
 export function useEnsName<

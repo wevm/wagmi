@@ -2,6 +2,7 @@ import type {
   Account,
   Address,
   Chain,
+  SendTransactionErrorType as viem_SendTransactionErrorType,
   SendTransactionParameters as viem_SendTransactionParameters,
   SendTransactionReturnType as viem_SendTransactionReturnType,
 } from 'viem'
@@ -37,7 +38,7 @@ export type SendTransactionParameters<
 
 export type SendTransactionReturnType = viem_SendTransactionReturnType
 
-export type SendTransactionError = Error
+export type SendTransactionErrorType = viem_SendTransactionErrorType
 
 /** https://alpha.wagmi.sh/core/api/actions/sendTransaction */
 export async function sendTransaction<

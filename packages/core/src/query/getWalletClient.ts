@@ -1,7 +1,7 @@
 import { type QueryOptions } from '@tanstack/query-core'
 
 import {
-  type GetWalletClientError,
+  type GetWalletClientErrorType,
   type GetWalletClientParameters,
   type GetWalletClientReturnType,
   getWalletClient,
@@ -32,7 +32,7 @@ export function getWalletClientQueryOptions<
     queryKey: getWalletClientQueryKey(options),
   } as const satisfies QueryOptions<
     GetWalletClientQueryFnData<config, chainId>,
-    GetWalletClientError,
+    GetWalletClientErrorType,
     GetWalletClientData<config, chainId>,
     GetWalletClientQueryKey<config, chainId>
   >

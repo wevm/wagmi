@@ -1,7 +1,7 @@
 import type { MutationOptions } from '@tanstack/query-core'
 
 import {
-  type SignMessageError,
+  type SignMessageErrorType,
   type SignMessageParameters,
   type SignMessageReturnType,
   signMessage,
@@ -18,7 +18,7 @@ export function signMessageMutationOptions(config: Config) {
     mutationKey: ['signMessage'],
   } as const satisfies MutationOptions<
     SignMessageData,
-    SignMessageError,
+    SignMessageErrorType,
     SignMessageVariables
   >
 }
@@ -29,14 +29,14 @@ export type SignMessageVariables = Evaluate<SignMessageParameters>
 
 export type SignMessageMutate<context = unknown> = Mutate<
   SignMessageData,
-  SignMessageError,
+  SignMessageErrorType,
   SignMessageVariables,
   context
 >
 
 export type SignMessageMutateAsync<context = unknown> = MutateAsync<
   SignMessageData,
-  SignMessageError,
+  SignMessageErrorType,
   SignMessageVariables,
   context
 >

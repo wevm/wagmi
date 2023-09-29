@@ -1,5 +1,5 @@
 import {
-  type ConnectError,
+  type ConnectErrorType,
   type Connector,
   type CreateConnectorFn,
 } from '@wagmi/core'
@@ -27,7 +27,7 @@ test('context', () => {
           chainId?: number | undefined
           connector: Connector | CreateConnectorFn
         }>()
-        expectTypeOf(error).toEqualTypeOf<ConnectError>()
+        expectTypeOf(error).toEqualTypeOf<ConnectErrorType>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
       },
       onSuccess(data, variables, context) {
@@ -49,7 +49,7 @@ test('context', () => {
             }
           | undefined
         >()
-        expectTypeOf(error).toEqualTypeOf<ConnectError | null>()
+        expectTypeOf(error).toEqualTypeOf<ConnectErrorType | null>()
         expectTypeOf(variables).toEqualTypeOf<{
           chainId?: number | undefined
           connector: Connector | CreateConnectorFn
@@ -66,7 +66,7 @@ test('context', () => {
       }
     | undefined
   >()
-  expectTypeOf(error).toEqualTypeOf<ConnectError | null>()
+  expectTypeOf(error).toEqualTypeOf<ConnectErrorType | null>()
   expectTypeOf(variables).toEqualTypeOf<
     | {
         chainId?: number | undefined
@@ -84,7 +84,7 @@ test('context', () => {
           chainId?: number | undefined
           connector: Connector | CreateConnectorFn
         }>()
-        expectTypeOf(error).toEqualTypeOf<ConnectError>()
+        expectTypeOf(error).toEqualTypeOf<ConnectErrorType>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
       },
       onSuccess(data, variables, context) {
@@ -106,7 +106,7 @@ test('context', () => {
             }
           | undefined
         >()
-        expectTypeOf(error).toEqualTypeOf<ConnectError | null>()
+        expectTypeOf(error).toEqualTypeOf<ConnectErrorType | null>()
         expectTypeOf(variables).toEqualTypeOf<{
           chainId?: number | undefined
           connector: Connector | CreateConnectorFn

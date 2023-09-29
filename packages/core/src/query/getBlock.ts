@@ -2,7 +2,7 @@ import { type QueryOptions } from '@tanstack/query-core'
 import type { BlockTag } from 'viem'
 
 import {
-  type GetBlockError,
+  type GetBlockErrorType,
   type GetBlockParameters,
   type GetBlockReturnType,
   getBlock,
@@ -43,7 +43,7 @@ export function getBlockQueryOptions<
     queryKey: getBlockQueryKey(options),
   } as const satisfies QueryOptions<
     GetBlockQueryFnData,
-    GetBlockError,
+    GetBlockErrorType,
     GetBlockData,
     GetBlockQueryKey<includeTransactions, blockTag, config, chainId>
   >

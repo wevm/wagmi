@@ -1,4 +1,4 @@
-import { type Connector, type SwitchChainError } from '@wagmi/core'
+import { type Connector, type SwitchChainErrorType } from '@wagmi/core'
 import { type Chain } from '@wagmi/core/chains'
 import { type Evaluate } from '@wagmi/core/internal'
 import { chain } from '@wagmi/test'
@@ -24,7 +24,7 @@ test('context', () => {
           chainId: number
           connector?: Connector | undefined
         }>()
-        expectTypeOf(error).toEqualTypeOf<SwitchChainError>()
+        expectTypeOf(error).toEqualTypeOf<SwitchChainErrorType>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
       },
       onSuccess(data, variables, context) {
@@ -37,7 +37,7 @@ test('context', () => {
       },
       onSettled(data, error, variables, context) {
         expectTypeOf(data).toEqualTypeOf<Evaluate<Chain> | undefined>()
-        expectTypeOf(error).toEqualTypeOf<SwitchChainError | null>()
+        expectTypeOf(error).toEqualTypeOf<SwitchChainErrorType | null>()
         expectTypeOf(variables).toEqualTypeOf<{
           chainId: number
           connector?: Connector | undefined
@@ -48,7 +48,7 @@ test('context', () => {
   })
 
   expectTypeOf(data).toEqualTypeOf<Evaluate<Chain> | undefined>()
-  expectTypeOf(error).toEqualTypeOf<SwitchChainError | null>()
+  expectTypeOf(error).toEqualTypeOf<SwitchChainErrorType | null>()
   expectTypeOf(variables).toEqualTypeOf<
     { chainId: number; connector?: Connector | undefined } | undefined
   >()
@@ -62,7 +62,7 @@ test('context', () => {
           chainId: number
           connector?: Connector | undefined
         }>()
-        expectTypeOf(error).toEqualTypeOf<SwitchChainError>()
+        expectTypeOf(error).toEqualTypeOf<SwitchChainErrorType>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
       },
       onSuccess(data, variables, context) {
@@ -75,7 +75,7 @@ test('context', () => {
       },
       onSettled(data, error, variables, context) {
         expectTypeOf(data).toEqualTypeOf<Evaluate<Chain> | undefined>()
-        expectTypeOf(error).toEqualTypeOf<SwitchChainError | null>()
+        expectTypeOf(error).toEqualTypeOf<SwitchChainErrorType | null>()
         expectTypeOf(variables).toEqualTypeOf<{
           chainId: number
           connector?: Connector | undefined

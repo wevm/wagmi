@@ -5,7 +5,7 @@ import type {
   Config,
   Connector,
   ResolvedRegister,
-  SwitchAccountError,
+  SwitchAccountErrorType,
 } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
 import {
@@ -32,7 +32,7 @@ export type UseSwitchAccountParameters<
     mutation?:
       | UseMutationParameters<
           SwitchAccountData<config>,
-          SwitchAccountError,
+          SwitchAccountErrorType,
           SwitchAccountVariables,
           context
         >
@@ -46,7 +46,7 @@ export type UseSwitchAccountReturnType<
 > = Evaluate<
   UseMutationReturnType<
     SwitchAccountData<config>,
-    SwitchAccountError,
+    SwitchAccountErrorType,
     SwitchAccountVariables,
     context
   > & {

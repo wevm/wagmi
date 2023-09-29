@@ -82,7 +82,7 @@ Most recent block number seen.
 ## Error
 
 ```ts
-import { type GetBlockNumberError } from '@wagmi/core'
+import { type GetBlockNumberErrorType } from '@wagmi/core'
 ```
 
 <!--@include: @shared/query-imports.md-->

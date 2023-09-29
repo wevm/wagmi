@@ -8,7 +8,7 @@ const packageName = 'wagmi'
 const actionName = 'readContract'
 const typeName = 'ReadContract'
 const TData = 'ReadContractReturnType'
-const TError = 'ReadContractError'
+const TError = 'ReadContractErrorType'
 </script>
 
 # useContractRead

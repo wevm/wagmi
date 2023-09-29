@@ -1,7 +1,7 @@
 import { type QueryOptions } from '@tanstack/query-core'
 
 import {
-  type GetTokenError,
+  type GetTokenErrorType,
   type GetTokenParameters,
   type GetTokenReturnType,
   getToken,
@@ -28,7 +28,7 @@ export function getTokenQueryOptions<config extends Config>(
     queryKey: getTokenQueryKey(options),
   } as const satisfies QueryOptions<
     GetTokenQueryFnData,
-    GetTokenError,
+    GetTokenErrorType,
     GetTokenData,
     GetTokenQueryKey<config>
   >

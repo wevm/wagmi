@@ -1,7 +1,7 @@
 import { type QueryOptions } from '@tanstack/query-core'
 
 import {
-  type GetEnsResolverError,
+  type GetEnsResolverErrorType,
   type GetEnsResolverParameters,
   type GetEnsResolverReturnType,
   getEnsResolver,
@@ -28,7 +28,7 @@ export function getEnsResolverQueryOptions<config extends Config>(
     queryKey: getEnsResolverQueryKey(options),
   } as const satisfies QueryOptions<
     GetEnsResolverQueryFnData,
-    GetEnsResolverError,
+    GetEnsResolverErrorType,
     GetEnsResolverData,
     GetEnsResolverQueryKey<config>
   >

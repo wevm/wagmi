@@ -11,7 +11,7 @@ export type ReconnectParameters = {
 
 export type ReconnectReturnType = Evaluate<Connection>[]
 
-export type ReconnectError = Error
+export type ReconnectErrorType = Error
 
 let isReconnecting = false
 

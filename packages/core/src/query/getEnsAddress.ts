@@ -1,7 +1,7 @@
 import { type QueryOptions } from '@tanstack/query-core'
 
 import {
-  type GetEnsAddressError,
+  type GetEnsAddressErrorType,
   type GetEnsAddressParameters,
   type GetEnsAddressReturnType,
   getEnsAddress,
@@ -28,7 +28,7 @@ export function getEnsAddressQueryOptions<config extends Config>(
     queryKey: getEnsAddressQueryKey(options),
   } as const satisfies QueryOptions<
     GetEnsAddressQueryFnData,
-    GetEnsAddressError,
+    GetEnsAddressErrorType,
     GetEnsAddressData,
     GetEnsAddressQueryKey<config>
   >

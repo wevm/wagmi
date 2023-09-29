@@ -90,7 +90,7 @@ Chain that was switched to.
 ## Error
 
 ```ts
-import { type SwitchChainError } from '@wagmi/core'
+import { type SwitchChainErrorType } from '@wagmi/core'
 ```
 
 <!--@include: @shared/mutation-imports.md-->

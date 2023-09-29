@@ -41,7 +41,7 @@ import { type ReadContractsReturnType } from '@wagmi/core'
 ## Error
 
 ```ts
-import { type ReadContractsError } from '@wagmi/core'
+import { type ReadContractsErrorType } from '@wagmi/core'
 ```
 
 <!--@include: @shared/query-imports.md-->

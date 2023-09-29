@@ -1,7 +1,7 @@
 'use client'
 
 import { useMutation } from '@tanstack/react-query'
-import { type Connector, type ReconnectError } from '@wagmi/core'
+import { type Connector, type ReconnectErrorType } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
 import {
   type ReconnectData,
@@ -23,7 +23,7 @@ export type UseReconnectParameters<context = unknown> = Evaluate<
     mutation?:
       | UseMutationParameters<
           ReconnectData,
-          ReconnectError,
+          ReconnectErrorType,
           ReconnectVariables,
           context
         >
@@ -34,7 +34,7 @@ export type UseReconnectParameters<context = unknown> = Evaluate<
 export type UseReconnectReturnType<context = unknown> = Evaluate<
   UseMutationReturnType<
     ReconnectData,
-    ReconnectError,
+    ReconnectErrorType,
     ReconnectVariables,
     context
   > & {

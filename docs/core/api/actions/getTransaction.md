@@ -263,7 +263,7 @@ Value in wei sent with this transaction.
 ## Error
 
 ```ts
-import { type GetTransactionError } from '@wagmi/core'
+import { type GetTransactionErrorType } from '@wagmi/core'
 ```
 
 <!--@include: @shared/query-imports.md-->

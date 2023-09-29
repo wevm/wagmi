@@ -1,7 +1,7 @@
 import { type QueryOptions } from '@tanstack/query-core'
 
 import {
-  type GetConnectorClientError,
+  type GetConnectorClientErrorType,
   type GetConnectorClientParameters,
   type GetConnectorClientReturnType,
   getConnectorClient,
@@ -36,7 +36,7 @@ export function getConnectorClientQueryOptions<
     queryKey: getConnectorClientQueryKey(options),
   } as const satisfies QueryOptions<
     GetConnectorClientQueryFnData<config, chainId>,
-    GetConnectorClientError,
+    GetConnectorClientErrorType,
     GetConnectorClientData<config, chainId>,
     GetConnectorClientQueryKey<config, chainId>
   >

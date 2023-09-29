@@ -6,7 +6,7 @@ import {
 } from 'viem'
 
 import {
-  type ReadContractError,
+  type ReadContractErrorType,
   type ReadContractParameters,
   type ReadContractReturnType,
   readContract,
@@ -52,7 +52,7 @@ export function readContractQueryOptions<
     queryKey: readContractQueryKey(options),
   } as const satisfies QueryOptions<
     ReadContractQueryFnData<abi, functionName, args>,
-    ReadContractError,
+    ReadContractErrorType,
     ReadContractData<abi, functionName, args>,
     ReadContractQueryKey<abi, functionName, args, config>
   >

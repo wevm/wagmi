@@ -66,7 +66,7 @@ import { type ReconnectReturnType } from '@wagmi/core'
 ## Error
 
 ```ts
-import { type ReconnectError } from '@wagmi/core'
+import { type ReconnectErrorType } from '@wagmi/core'
 ```
 
 <!--@include: @shared/mutation-imports.md-->

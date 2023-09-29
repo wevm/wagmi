@@ -1,4 +1,5 @@
 import {
+  type GetBlockNumberErrorType as viem_GetBlockNumberErrorType,
   type GetBlockNumberParameters as viem_GetBlockNumberParameters,
   type GetBlockNumberReturnType as viem_GetBlockNumberReturnType,
   getBlockNumber as viem_getBlockNumber,
@@ -15,7 +16,7 @@ export type GetBlockNumberParameters<
 
 export type GetBlockNumberReturnType = viem_GetBlockNumberReturnType
 
-export type GetBlockNumberError = Error
+export type GetBlockNumberErrorType = viem_GetBlockNumberErrorType
 
 /** https://alpha.wagmi.sh/core/api/actions/getBlockNumber */
 export function getBlockNumber<

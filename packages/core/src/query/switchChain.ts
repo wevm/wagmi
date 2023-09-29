@@ -1,7 +1,7 @@
 import type { MutateOptions, MutationOptions } from '@tanstack/query-core'
 
 import {
-  type SwitchChainError,
+  type SwitchChainErrorType,
   type SwitchChainParameters,
   type SwitchChainReturnType,
   switchChain,
@@ -19,7 +19,7 @@ export function switchChainMutationOptions<config extends Config>(
     mutationKey: ['switchChain'],
   } as const satisfies MutationOptions<
     SwitchChainData<config, config['chains'][number]['id']>,
-    SwitchChainError,
+    SwitchChainErrorType,
     SwitchChainVariables<config, config['chains'][number]['id']>
   >
 }
@@ -42,7 +42,7 @@ export type SwitchChainMutate<config extends Config, context = unknown> = <
     | Evaluate<
         MutateOptions<
           SwitchChainData<config, chainId>,
-          SwitchChainError,
+          SwitchChainErrorType,
           Evaluate<SwitchChainVariables<config, chainId>>,
           context
         >
@@ -58,7 +58,7 @@ export type SwitchChainMutateAsync<config extends Config, context = unknown> = <
     | Evaluate<
         MutateOptions<
           SwitchChainData<config, chainId>,
-          SwitchChainError,
+          SwitchChainErrorType,
           Evaluate<SwitchChainVariables<config, chainId>>,
           context
         >

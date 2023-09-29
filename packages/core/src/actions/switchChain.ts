@@ -28,7 +28,7 @@ export type SwitchChainReturnType<
   { id: Config extends config ? number : chainId }
 >
 
-export type SwitchChainError =
+export type SwitchChainErrorType =
   | ProviderNotFoundError
   | SwitchChainError_
   | UserRejectedRequestError

@@ -21,7 +21,7 @@ export type ConnectReturnType<config extends Config = Config> = {
     | (number extends config['chains'][number]['id'] ? number : number & {})
 }
 
-export type ConnectError =
+export type ConnectErrorType =
   | ConnectorAlreadyConnectedError
   // connector.connect()
   | UserRejectedRequestError

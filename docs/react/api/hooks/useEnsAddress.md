@@ -8,7 +8,7 @@ const packageName = 'wagmi'
 const actionName = 'getEnsAddress'
 const typeName = 'GetEnsAddress'
 const TData = 'string'
-const TError = 'GetEnsAddressError'
+const TError = 'GetEnsAddressErrorType'
 </script>
 
 # useEnsAddress

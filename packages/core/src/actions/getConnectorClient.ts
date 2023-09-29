@@ -39,7 +39,7 @@ export type GetConnectorClientReturnType<
   >
 >
 
-export type GetConnectorClientError =
+export type GetConnectorClientErrorType =
   | ConnectorAccountNotFound
   | ConnectorNotConnectedError
   | Error

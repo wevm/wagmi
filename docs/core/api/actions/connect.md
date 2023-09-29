@@ -96,7 +96,7 @@ Connected chain ID from connector.
 ## Error
 
 ```ts
-import { type ConnectError } from '@wagmi/core'
+import { type ConnectErrorType } from '@wagmi/core'
 ```
 
 <!--@include: @shared/mutation-imports.md-->

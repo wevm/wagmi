@@ -1,7 +1,7 @@
 import { type QueryOptions } from '@tanstack/query-core'
 
 import {
-  type EstimateGasError,
+  type EstimateGasErrorType,
   type EstimateGasParameters,
   type EstimateGasReturnType,
   estimateGas,
@@ -31,7 +31,7 @@ export function estimateGasQueryOptions<
     queryKey: estimateGasQueryKey(options),
   } as const satisfies QueryOptions<
     EstimateGasQueryFnData,
-    EstimateGasError,
+    EstimateGasErrorType,
     EstimateGasData,
     EstimateGasQueryKey<config, chainId>
   >

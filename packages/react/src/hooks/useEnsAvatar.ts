@@ -1,6 +1,10 @@
 'use client'
 
-import type { Config, GetEnsAvatarError, ResolvedRegister } from '@wagmi/core'
+import type {
+  Config,
+  GetEnsAvatarErrorType,
+  ResolvedRegister,
+} from '@wagmi/core'
 import { type Evaluate } from '@wagmi/core/internal'
 import {
   type GetEnsAvatarData,
@@ -27,7 +31,7 @@ export type UseEnsAvatarParameters<
     ConfigParameter<config> & {
       query?: UseQueryParameters<
         GetEnsAvatarQueryFnData,
-        GetEnsAvatarError,
+        GetEnsAvatarErrorType,
         selectData,
         GetEnsAvatarQueryKey<config>
       >
@@ -35,7 +39,7 @@ export type UseEnsAvatarParameters<
 >
 
 export type UseEnsAvatarReturnType<selectData = GetEnsAvatarData> =
-  UseQueryReturnType<selectData, GetEnsAvatarError>
+  UseQueryReturnType<selectData, GetEnsAvatarErrorType>
 
 /** https://alpha.wagmi.sh/react/api/hooks/useEnsAvatar */
 export function useEnsAvatar<

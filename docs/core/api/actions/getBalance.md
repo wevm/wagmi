@@ -186,7 +186,7 @@ Raw value of balance.
 ## Error
 
 ```ts
-import { type GetBalanceError } from '@wagmi/core'
+import { type GetBalanceErrorType } from '@wagmi/core'
 ```
 
 <!--@include: @shared/query-imports.md-->

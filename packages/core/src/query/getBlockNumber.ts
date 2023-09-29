@@ -1,7 +1,7 @@
 import { type QueryOptions } from '@tanstack/query-core'
 
 import {
-  type GetBlockNumberError,
+  type GetBlockNumberErrorType,
   type GetBlockNumberParameters,
   type GetBlockNumberReturnType,
   getBlockNumber,
@@ -32,7 +32,7 @@ export function getBlockNumberQueryOptions<
     queryKey: getBlockNumberQueryKey(options),
   } as const satisfies QueryOptions<
     GetBlockNumberQueryFnData,
-    GetBlockNumberError,
+    GetBlockNumberErrorType,
     GetBlockNumberData,
     GetBlockNumberQueryKey<config, chainId>
   >

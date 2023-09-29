@@ -7,6 +7,7 @@ import type {
   ContractFunctionName,
 } from 'viem'
 import {
+  type SimulateContractErrorType as viem_SimulateContractErrorType,
   type SimulateContractParameters as viem_SimulateContractParameters,
   type SimulateContractReturnType as viem_SimulateContractReturnType,
   simulateContract as viem_simulateContract,
@@ -100,7 +101,7 @@ export type SimulateContractReturnType<
     : never
 }[number]
 
-export type SimulateContractError = Error
+export type SimulateContractErrorType = viem_SimulateContractErrorType
 
 /** https://alpha.wagmi.sh/core/api/actions/simulateContract */
 export async function simulateContract<

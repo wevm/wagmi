@@ -2,7 +2,7 @@ import type { MutateOptions, MutationOptions } from '@tanstack/query-core'
 
 import type { TypedData } from 'viem'
 import {
-  type SignTypedDataError,
+  type SignTypedDataErrorType,
   type SignTypedDataParameters,
   type SignTypedDataReturnType,
   signTypedData,
@@ -20,7 +20,7 @@ export function signTypedDataMutationOptions<config extends Config>(
     mutationKey: ['signTypedData'],
   } as const satisfies MutationOptions<
     SignTypedDataData,
-    SignTypedDataError,
+    SignTypedDataErrorType,
     SignTypedDataVariables
   >
 }
@@ -42,7 +42,7 @@ export type SignTypedDataMutate<context = unknown> = <
   options?:
     | MutateOptions<
         SignTypedDataData,
-        SignTypedDataError,
+        SignTypedDataErrorType,
         SignTypedDataVariables<
           typedData,
           primaryType,
@@ -62,7 +62,7 @@ export type SignTypedDataMutateAsync<context = unknown> = <
   options?:
     | MutateOptions<
         SignTypedDataData,
-        SignTypedDataError,
+        SignTypedDataErrorType,
         SignTypedDataVariables<
           typedData,
           primaryType,

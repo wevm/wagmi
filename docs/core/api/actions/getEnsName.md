@@ -147,7 +147,7 @@ The primary ENS name for the address. Returns `null` if address does not have pr
 ## Error
 
 ```ts
-import { type GetEnsNameError } from '@wagmi/core'
+import { type GetEnsNameErrorType } from '@wagmi/core'
 ```
 
 <!--@include: @shared/query-imports.md-->

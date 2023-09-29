@@ -13,7 +13,7 @@ export type DisconnectParameters = ConnectorParameter
 
 export type DisconnectReturnType = void
 
-export type DisconnectError = Error
+export type DisconnectErrorType = Error
 
 /** https://alpha.wagmi.sh/core/api/actions/disconnect */
 export async function disconnect(

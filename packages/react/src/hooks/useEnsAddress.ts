@@ -1,6 +1,10 @@
 'use client'
 
-import type { Config, GetEnsAddressError, ResolvedRegister } from '@wagmi/core'
+import type {
+  Config,
+  GetEnsAddressErrorType,
+  ResolvedRegister,
+} from '@wagmi/core'
 import { type Evaluate } from '@wagmi/core/internal'
 import {
   type GetEnsAddressData,
@@ -28,7 +32,7 @@ export type UseEnsAddressParameters<
       query?:
         | UseQueryParameters<
             GetEnsAddressQueryFnData,
-            GetEnsAddressError,
+            GetEnsAddressErrorType,
             selectData,
             GetEnsAddressQueryKey<config>
           >
@@ -37,7 +41,7 @@ export type UseEnsAddressParameters<
 >
 
 export type UseEnsAddressReturnType<selectData = GetEnsAddressData> =
-  UseQueryReturnType<selectData, GetEnsAddressError>
+  UseQueryReturnType<selectData, GetEnsAddressErrorType>
 
 /** https://alpha.wagmi.sh/react/api/hooks/useEnsAddress */
 export function useEnsAddress<

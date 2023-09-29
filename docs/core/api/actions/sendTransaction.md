@@ -331,7 +331,7 @@ Transaction hash.
 ## Error
 
 ```ts
-import { type SendTransactionError } from '@wagmi/core'
+import { type SendTransactionErrorType } from '@wagmi/core'
 ```
 
 <!--@include: @shared/mutation-imports.md-->

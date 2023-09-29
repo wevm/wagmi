@@ -35,7 +35,7 @@ import { type MulticallReturnType } from '@wagmi/core'
 ## Error
 
 ```ts
-import { type MulticallError } from '@wagmi/core'
+import { type MulticallErrorType } from '@wagmi/core'
 ```
 
 ## Viem

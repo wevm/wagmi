@@ -2,28 +2,28 @@
 // Actions
 
 export {
-  type ConnectError,
+  type ConnectErrorType,
   type ConnectParameters,
   type ConnectReturnType,
   connect,
 } from '../actions/connect.js'
 
 export {
-  type DisconnectError,
+  type DisconnectErrorType,
   type DisconnectParameters,
   type DisconnectReturnType,
   disconnect,
 } from '../actions/disconnect.js'
 
 export {
-  type EstimateGasError,
+  type EstimateGasErrorType,
   type EstimateGasParameters,
   type EstimateGasReturnType,
   estimateGas,
 } from '../actions/estimateGas.js'
 
 export {
-  type EstimateFeesPerGasError,
+  type EstimateFeesPerGasErrorType,
   type EstimateFeesPerGasParameters,
   type EstimateFeesPerGasReturnType,
   estimateFeesPerGas,
@@ -37,21 +37,21 @@ export {
 export {
   type GetBalanceParameters,
   type GetBalanceReturnType,
-  type GetBalanceError,
+  type GetBalanceErrorType,
   getBalance,
   /** @deprecated use `getBalance` instead */
   getBalance as fetchBalance,
 } from '../actions/getBalance.js'
 
 export {
-  type GetBlockError,
+  type GetBlockErrorType,
   type GetBlockParameters,
   type GetBlockReturnType,
   getBlock,
 } from '../actions/getBlock.js'
 
 export {
-  type GetBlockNumberError,
+  type GetBlockNumberErrorType,
   type GetBlockNumberParameters,
   type GetBlockNumberReturnType,
   getBlockNumber,
@@ -81,14 +81,14 @@ export {
 } from '../actions/getConnectors.js'
 
 export {
-  type GetConnectorClientError,
+  type GetConnectorClientErrorType,
   type GetConnectorClientParameters,
   type GetConnectorClientReturnType,
   getConnectorClient,
 } from '../actions/getConnectorClient.js'
 
 export {
-  type GetEnsAddressError,
+  type GetEnsAddressErrorType,
   type GetEnsAddressParameters,
   type GetEnsAddressReturnType,
   getEnsAddress,
@@ -97,7 +97,7 @@ export {
 } from '../actions/getEnsAddress.js'
 
 export {
-  type GetEnsAvatarError,
+  type GetEnsAvatarErrorType,
   type GetEnsAvatarParameters,
   type GetEnsAvatarReturnType,
   getEnsAvatar,
@@ -106,7 +106,7 @@ export {
 } from '../actions/getEnsAvatar.js'
 
 export {
-  type GetEnsNameError,
+  type GetEnsNameErrorType,
   type GetEnsNameParameters,
   type GetEnsNameReturnType,
   getEnsName,
@@ -115,7 +115,7 @@ export {
 } from '../actions/getEnsName.js'
 
 export {
-  type GetEnsResolverError,
+  type GetEnsResolverErrorType,
   type GetEnsResolverParameters,
   type GetEnsResolverReturnType,
   getEnsResolver,
@@ -130,7 +130,7 @@ export {
 } from '../actions/getPublicClient.js'
 
 export {
-  type GetTokenError,
+  type GetTokenErrorType,
   type GetTokenParameters,
   type GetTokenReturnType,
   getToken,
@@ -139,7 +139,7 @@ export {
 } from '../actions/getToken.js'
 
 export {
-  type GetTransactionError,
+  type GetTransactionErrorType,
   type GetTransactionParameters,
   type GetTransactionReturnType,
   getTransaction,
@@ -148,7 +148,7 @@ export {
 } from '../actions/getTransaction.js'
 
 export {
-  type GetWalletClientError,
+  type GetWalletClientErrorType,
   type GetWalletClientParameters,
   type GetWalletClientReturnType,
   getWalletClient,
@@ -163,61 +163,61 @@ export {
 export {
   type ReadContractParameters,
   type ReadContractReturnType,
-  type ReadContractError,
+  type ReadContractErrorType,
   readContract,
 } from '../actions/readContract.js'
 
 export {
   type ReadContractsParameters,
   type ReadContractsReturnType,
-  type ReadContractsError,
+  type ReadContractsErrorType,
   readContracts,
 } from '../actions/readContracts.js'
 
 export {
-  type ReconnectError,
+  type ReconnectErrorType,
   type ReconnectParameters,
   type ReconnectReturnType,
   reconnect,
 } from '../actions/reconnect.js'
 
 export {
-  type SendTransactionError,
+  type SendTransactionErrorType,
   type SendTransactionParameters,
   type SendTransactionReturnType,
   sendTransaction,
 } from '../actions/sendTransaction.js'
 
 export {
-  type SignMessageError,
+  type SignMessageErrorType,
   type SignMessageParameters,
   type SignMessageReturnType,
   signMessage,
 } from '../actions/signMessage.js'
 
 export {
-  type SignTypedDataError,
+  type SignTypedDataErrorType,
   type SignTypedDataParameters,
   type SignTypedDataReturnType,
   signTypedData,
 } from '../actions/signTypedData.js'
 
 export {
-  type SimulateContractError,
+  type SimulateContractErrorType,
   type SimulateContractParameters,
   type SimulateContractReturnType,
   simulateContract,
 } from '../actions/simulateContract.js'
 
 export {
-  type SwitchAccountError,
+  type SwitchAccountErrorType,
   type SwitchAccountParameters,
   type SwitchAccountReturnType,
   switchAccount,
 } from '../actions/switchAccount.js'
 
 export {
-  type SwitchChainError,
+  type SwitchChainErrorType,
   type SwitchChainParameters,
   type SwitchChainReturnType,
   switchChain,
@@ -286,7 +286,7 @@ export {
 } from '../actions/watchPublicClient.js'
 
 export {
-  type WaitForTransactionReceiptError,
+  type WaitForTransactionReceiptErrorType,
   type WaitForTransactionReceiptParameters,
   type WaitForTransactionReceiptReturnType,
   waitForTransactionReceipt,
@@ -295,7 +295,7 @@ export {
 } from '../actions/waitForTransactionReceipt.js'
 
 export {
-  type WriteContractError,
+  type WriteContractErrorType,
   type WriteContractParameters,
   type WriteContractReturnType,
   writeContract,

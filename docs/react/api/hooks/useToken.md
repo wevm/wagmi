@@ -8,7 +8,7 @@ const packageName = 'wagmi'
 const actionName = 'getToken'
 const typeName = 'GetToken'
 const TData = '{ address: Address; decimals: number; name: string | undefined; symbol: string | undefined; totalSupply: { formatted: string; value: bigint; }; }'
-const TError = 'GetTokenError'
+const TError = 'GetTokenErrorType'
 </script>
 
 # useToken

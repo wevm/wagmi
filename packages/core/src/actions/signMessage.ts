@@ -1,5 +1,6 @@
 import type { Account } from 'viem'
 import {
+  type SignMessageErrorType as viem_SignMessageErrorType,
   type SignMessageParameters as viem_SignMessageParameters,
   type SignMessageReturnType as viem_SignMessageReturnType,
   signMessage as viem_signMessage,
@@ -16,7 +17,7 @@ export type SignMessageParameters = Evaluate<
 
 export type SignMessageReturnType = viem_SignMessageReturnType
 
-export type SignMessageError = Error
+export type SignMessageErrorType = viem_SignMessageErrorType
 
 /** https://alpha.wagmi.sh/core/api/actions/signMessage */
 export async function signMessage(

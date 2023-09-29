@@ -9,7 +9,7 @@ const actionName = 'disconnect'
 const typeName = 'Disconnect'
 const mutate = 'disconnect'
 const TData = 'void'
-const TError = 'DisconnectError'
+const TError = 'DisconnectErrorType'
 const TVariables = '{ connector?: Connector | undefined; }'
 </script>
 

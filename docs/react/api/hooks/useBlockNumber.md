@@ -8,7 +8,7 @@ const packageName = 'wagmi'
 const actionName = 'getBlockNumber'
 const typeName = 'GetBlockNumber'
 const TData = 'bigint'
-const TError = 'GetBlockNumberError'
+const TError = 'GetBlockNumberErrorType'
 </script>
 
 # useBlockNumber
