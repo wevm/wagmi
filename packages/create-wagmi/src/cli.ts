@@ -54,12 +54,15 @@ async function init() {
   if (options.help) return
   if (options.version) return
 
+  console.log(args, options)
+
   const argTargetDir = formatTargetDir(args[0])
   const argTemplate = options.template || options.t
 
   let targetDir = argTargetDir || defaultTargetDir
-  const getProjectName = () =>
-    targetDir === '.' ? path.basename(path.resolve()) : targetDir
+  function getProjectName() {
+    return targetDir === '.' ? path.basename(path.resolve()) : targetDir
+  }
 
   let result: prompts.Answers<
     'framework' | 'overwrite' | 'packageName' | 'projectName' | 'variant'
@@ -72,23 +75,27 @@ async function init() {
           name: 'projectName',
           message: reset('Project name:'),
           initial: defaultTargetDir,
-          onState: (state) => {
+          onState(state) {
             targetDir = formatTargetDir(state.value) || defaultTargetDir
           },
         },
         {
-          type: () =>
-            !fs.existsSync(targetDir) || isEmpty(targetDir) ? null : 'confirm',
+          type() {
+            return !fs.existsSync(targetDir) || isEmpty(targetDir)
+              ? null
+              : 'confirm'
+          },
           name: 'overwrite',
-          message: () =>
-            `${
+          message() {
+            return `${
               targetDir === '.'
                 ? 'Current directory'
                 : `Target directory "${targetDir}"`
-            } is not empty. Remove existing files and continue?`,
+            } is not empty. Remove existing files and continue?`
+          },
         },
         {
-          type: (_, { overwrite }: { overwrite?: boolean }) => {
+          type(_, { overwrite }: { overwrite?: boolean }) {
             if (overwrite === false)
               throw new Error(`${red('✖')} Operation cancelled`)
             return null
@@ -96,12 +103,17 @@ async function init() {
           name: 'overwriteChecker',
         },
         {
-          type: () => (isValidPackageName(getProjectName()) ? null : 'text'),
+          type() {
+            return isValidPackageName(getProjectName()) ? null : 'text'
+          },
           name: 'packageName',
           message: reset('Package name:'),
-          initial: () => toValidPackageName(getProjectName()),
-          validate: (dir) =>
-            isValidPackageName(dir) || 'Invalid package.json name',
+          initial() {
+            return toValidPackageName(getProjectName())
+          },
+          validate(dir) {
+            return isValidPackageName(dir) || 'Invalid package.json name'
+          },
         },
         {
           type:
@@ -123,28 +135,30 @@ async function init() {
           }),
         },
         {
-          type: (framework: Framework) =>
-            framework?.variants?.length > 1 ? 'select' : null,
+          type(framework: Framework) {
+            return framework?.variants?.length > 1 ? 'select' : null
+          },
           name: 'variant',
           message: reset('Select a variant:'),
-          choices: (framework: Framework) =>
-            framework.variants.map((variant) => {
+          choices(framework: Framework) {
+            return framework.variants.map((variant) => {
               const variantColor = variant.color
               return {
                 title: variantColor(variant.display || variant.name),
                 value: variant.name,
               }
-            }),
+            })
+          },
         },
       ],
       {
-        onCancel: () => {
+        onCancel() {
           throw new Error(`${red('✖')} Operation cancelled`)
         },
       },
     )
-  } catch (cancelled: any) {
-    console.log(cancelled.message)
+  } catch (error) {
+    console.log((error as Error).message)
     return
   }
 
@@ -213,7 +227,7 @@ async function init() {
     template,
   )
 
-  const write = (file: string, content?: string) => {
+  function write(file: string, content?: string) {
     const targetPath = path.join(root, renameFiles[file] ?? file)
     if (content) fs.writeFileSync(targetPath, content)
     else copy(path.join(templateDir, file), targetPath)
