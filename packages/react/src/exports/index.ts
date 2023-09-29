@@ -104,30 +104,6 @@ export {
 } from '../hooks/useConnectorClient.js'
 
 export {
-  type UseContractReadParameters,
-  type UseContractReadReturnType,
-  useContractRead,
-} from '../hooks/useContractRead.js'
-
-export {
-  type UseContractReadsParameters,
-  type UseContractReadsReturnType,
-  useContractReads,
-} from '../hooks/useContractReads.js'
-
-export {
-  type UseContractSimulateParameters,
-  type UseContractSimulateReturnType,
-  useContractSimulate,
-} from '../hooks/useContractSimulate.js'
-
-export {
-  type UseContractWriteParameters,
-  type UseContractWriteReturnType,
-  useContractWrite,
-} from '../hooks/useContractWrite.js'
-
-export {
   type UseDisconnectParameters,
   type UseDisconnectReturnType,
   useDisconnect,
@@ -186,6 +162,22 @@ export {
 } from '../hooks/usePublicClient.js'
 
 export {
+  type UseReadContractParameters,
+  type UseReadContractReturnType,
+  useReadContract,
+  /** @deprecated Use `useWriteContract` instead */
+  useReadContract as useContractRead,
+} from '../hooks/useReadContract.js'
+
+export {
+  type UseReadContractsParameters,
+  type UseReadContractsReturnType,
+  useReadContracts,
+  /** @deprecated Use `useWriteContract` instead */
+  useReadContracts as useContractReads,
+} from '../hooks/useReadContracts.js'
+
+export {
   type UseReconnectParameters,
   type UseReconnectReturnType,
   useReconnect,
@@ -210,6 +202,12 @@ export {
 } from '../hooks/useSignTypedData.js'
 
 export {
+  type UseSimulateContractParameters,
+  type UseSimulateContractReturnType,
+  useSimulateContract,
+} from '../hooks/useSimulateContract.js'
+
+export {
   type UseSwitchAccountParameters,
   type UseSwitchAccountReturnType,
   useSwitchAccount,
@@ -224,6 +222,7 @@ export {
 export {
   type UseTokenParameters,
   type UseTokenReturnType,
+  /** @deprecated Use `useReadContracts` instead */
   useToken,
 } from '../hooks/useToken.js'
 
@@ -268,6 +267,14 @@ export {
   type UseWatchPendingTransactionsReturnType,
   useWatchPendingTransactions,
 } from '../hooks/useWatchPendingTransactions.js'
+
+export {
+  type UseWriteContractParameters,
+  type UseWriteContractReturnType,
+  useWriteContract,
+  /** @deprecated Use `useWriteContract` instead */
+  useWriteContract as useContractWrite,
+} from '../hooks/useWriteContract.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // @wagmi/core

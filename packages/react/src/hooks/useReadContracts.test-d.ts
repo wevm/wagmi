@@ -1,10 +1,10 @@
 import { abi } from '@wagmi/test'
 import { assertType, expectTypeOf, test } from 'vitest'
 
-import { useContractReads } from './useContractReads.js'
+import { useReadContracts } from './useReadContracts.js'
 
 test('select data', async () => {
-  const result = useContractReads({
+  const result = useReadContracts({
     allowFailure: false,
     contracts: [
       {
@@ -32,7 +32,7 @@ test('select data', async () => {
 })
 
 test('overloads', async () => {
-  const result1 = useContractReads({
+  const result1 = useReadContracts({
     allowFailure: false,
     contracts: [
       {
@@ -44,7 +44,7 @@ test('overloads', async () => {
   })
   assertType<[number] | undefined>(result1.data)
 
-  const result2 = useContractReads({
+  const result2 = useReadContracts({
     allowFailure: false,
     contracts: [
       {
@@ -57,7 +57,7 @@ test('overloads', async () => {
   })
   assertType<[number] | undefined>(result2.data)
 
-  const result3 = useContractReads({
+  const result3 = useReadContracts({
     allowFailure: false,
     contracts: [
       {
@@ -70,7 +70,7 @@ test('overloads', async () => {
   })
   assertType<[string] | undefined>(result3.data)
 
-  const result4 = useContractReads({
+  const result4 = useReadContracts({
     allowFailure: false,
     contracts: [
       {

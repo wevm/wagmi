@@ -64,7 +64,7 @@
     },
     {
       "source": "/react/prepare-hooks/usePrepareContractWrite",
-      "destination": "/react/api/hooks/useContractSimulate",
+      "destination": "/react/api/hooks/useSimulateContract",
       "permanent": true
     },
     {

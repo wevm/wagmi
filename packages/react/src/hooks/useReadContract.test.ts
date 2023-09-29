@@ -2,11 +2,11 @@ import { abi, address, chain, wait } from '@wagmi/test'
 import { renderHook, waitFor } from '@wagmi/test/react'
 import { expect, test } from 'vitest'
 
-import { useContractRead } from './useContractRead.js'
+import { useReadContract } from './useReadContract.js'
 
 test('default', async () => {
   const { result } = renderHook(() =>
-    useContractRead({
+    useReadContract({
       address: address.wagmiMintExample,
       abi: abi.wagmiMintExample,
       functionName: 'balanceOf',
@@ -59,7 +59,7 @@ test('default', async () => {
 
 test('parameters: chainId', async () => {
   const { result } = renderHook(() =>
-    useContractRead({
+    useReadContract({
       address: address.wagmiMintExample,
       abi: abi.wagmiMintExample,
       functionName: 'balanceOf',
@@ -112,7 +112,7 @@ test('parameters: chainId', async () => {
 })
 
 test('behavior: disabled when properties missing', async () => {
-  const { result } = renderHook(() => useContractRead())
+  const { result } = renderHook(() => useReadContract())
 
   await wait(100)
   await waitFor(() => expect(result.current.isPending).toBeTruthy())

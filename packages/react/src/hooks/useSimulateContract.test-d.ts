@@ -3,13 +3,13 @@ import type { Address } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
 import {
-  type UseContractSimulateParameters,
-  type UseContractSimulateReturnType,
-  useContractSimulate,
-} from './useContractSimulate.js'
+  type UseSimulateContractParameters,
+  type UseSimulateContractReturnType,
+  useSimulateContract,
+} from './useSimulateContract.js'
 
 test('default', () => {
-  const result = useContractSimulate({
+  const result = useSimulateContract({
     address: '0x',
     abi: abi.erc20,
     functionName: 'transferFrom',
@@ -44,7 +44,7 @@ test('default', () => {
 })
 
 test('select data', () => {
-  const result = useContractSimulate({
+  const result = useSimulateContract({
     address: '0x',
     abi: abi.erc20,
     functionName: 'transferFrom',
@@ -62,16 +62,16 @@ test('select data', () => {
   >()
 })
 
-test('UseContractSimulateParameters', () => {
-  type Result = UseContractSimulateParameters<typeof abi.erc20, 'transferFrom'>
+test('UseSimulateContractParameters', () => {
+  type Result = UseSimulateContractParameters<typeof abi.erc20, 'transferFrom'>
   expectTypeOf<Result>().toMatchTypeOf<{
     functionName?: 'approve' | 'transfer' | 'transferFrom' | undefined
     args?: readonly [Address, Address, bigint] | undefined
   }>()
 })
 
-test('UseContractSimulateReturnType', () => {
-  type Result = UseContractSimulateReturnType<
+test('UseSimulateContractReturnType', () => {
+  type Result = UseSimulateContractReturnType<
     typeof abi.erc20,
     'transferFrom',
     ['0x', '0x', 123n],

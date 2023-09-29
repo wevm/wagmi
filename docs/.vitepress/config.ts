@@ -65,7 +65,6 @@ export default withTwoslash(
         pattern: 'https://github.com/wagmi-dev/wagmi/edit/main/docs/:path',
         text: 'Suggest changes to this page',
       },
-      externalLinkIcon: true,
       footer: {
         message:
           'Released under the <a href="https://github.com/wagmi-dev/wagmi/blob/main/LICENSE">MIT License</a>.',

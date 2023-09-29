@@ -24,7 +24,7 @@ import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 import { useConnectorClient } from './useConnectorClient.js'
 
-export type UseContractSimulateParameters<
+export type UseSimulateContractParameters<
   abi extends Abi | readonly unknown[] = Abi,
   functionName extends ContractFunctionName<
     abi,
@@ -50,7 +50,7 @@ export type UseContractSimulateParameters<
       | undefined
   }
 
-export type UseContractSimulateReturnType<
+export type UseSimulateContractReturnType<
   abi extends Abi | readonly unknown[] = Abi,
   functionName extends ContractFunctionName<
     abi,
@@ -66,8 +66,8 @@ export type UseContractSimulateReturnType<
   selectData = SimulateContractData<abi, functionName, args, config, chainId>,
 > = UseQueryReturnType<selectData, SimulateContractErrorType>
 
-/** https://alpha.wagmi.sh/react/api/hooks/useContractSimulate */
-export function useContractSimulate<
+/** https://alpha.wagmi.sh/react/api/hooks/useSimulateContract */
+export function useSimulateContract<
   const abi extends Abi | readonly unknown[],
   functionName extends ContractFunctionName<abi, 'nonpayable' | 'payable'>,
   args extends ContractFunctionArgs<
@@ -79,7 +79,7 @@ export function useContractSimulate<
   chainId extends config['chains'][number]['id'] | undefined = undefined,
   selectData = SimulateContractData<abi, functionName, args, config, chainId>,
 >(
-  parameters: UseContractSimulateParameters<
+  parameters: UseSimulateContractParameters<
     abi,
     functionName,
     args,
@@ -87,7 +87,7 @@ export function useContractSimulate<
     chainId,
     selectData
   > = {} as any,
-): UseContractSimulateReturnType<
+): UseSimulateContractReturnType<
   abi,
   functionName,
   args,

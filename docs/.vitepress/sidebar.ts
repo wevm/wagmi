@@ -45,7 +45,7 @@ export function getSidebar() {
             link: '/react/guides/faq',
           },
           {
-            text: 'Migrate from v1 to v2 🚧',
+            text: 'Migrate from v1 to v2',
             link: '/react/guides/migrate-from-v1-to-v2',
           },
         ],
@@ -121,22 +121,6 @@ export function getSidebar() {
             text: 'useConnectors',
             link: '/react/api/hooks/useConnectors',
           },
-          {
-            text: 'useContractRead',
-            link: '/react/api/hooks/useContractRead',
-          },
-          {
-            text: 'useContractReads 🚧',
-            link: '/react/api/hooks/useContractReads',
-          },
-          {
-            text: 'useContractSimulate',
-            link: '/react/api/hooks/useContractSimulate',
-          },
-          {
-            text: 'useContractWrite',
-            link: '/react/api/hooks/useContractWrite',
-          },
           { text: 'useDisconnect', link: '/react/api/hooks/useDisconnect' },
           { text: 'useEnsAddress', link: '/react/api/hooks/useEnsAddress' },
           { text: 'useEnsAvatar', link: '/react/api/hooks/useEnsAvatar' },
@@ -161,6 +145,14 @@ export function getSidebar() {
             text: 'useInfiniteContractReads 🚧',
             link: '/react/api/hooks/useInfiniteContractReads',
           },
+          {
+            text: 'useReadContract',
+            link: '/react/api/hooks/useReadContract',
+          },
+          {
+            text: 'useReadContracts 🚧',
+            link: '/react/api/hooks/useReadContracts',
+          },
           { text: 'useReconnect', link: '/react/api/hooks/useReconnect' },
           {
             text: 'useSendTransaction',
@@ -173,6 +165,10 @@ export function getSidebar() {
           {
             text: 'useSignTypedData',
             link: '/react/api/hooks/useSignTypedData',
+          },
+          {
+            text: 'useSimulateContract',
+            link: '/react/api/hooks/useSimulateContract',
           },
           {
             text: 'useSwitchAccount',
@@ -213,6 +209,10 @@ export function getSidebar() {
           {
             text: 'useWatchPendingTransactions 🚧',
             link: '/react/api/hooks/useWatchPendingTransactions',
+          },
+          {
+            text: 'useWriteContract',
+            link: '/react/api/hooks/useWriteContract',
           },
         ],
       },
@@ -274,7 +274,7 @@ export function getSidebar() {
             link: '/core/guides/faq',
           },
           {
-            text: 'Migrate from v1 to v2 🚧',
+            text: 'Migrate from v1 to v2',
             link: '/core/guides/migrate-from-v1-to-v2',
           },
         ],

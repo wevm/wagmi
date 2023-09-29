@@ -1,11 +1,11 @@
 import { abi } from '@wagmi/test'
 import type { Address } from 'viem'
 import { expectTypeOf, test } from 'vitest'
-import { useContractWrite } from 'wagmi'
+import { useWriteContract } from 'wagmi'
 import { celo, mainnet, optimism } from 'wagmi/chains'
 
 test('chain formatters', () => {
-  const { writeContract } = useContractWrite()
+  const { writeContract } = useWriteContract()
 
   const shared = {
     address: '0x',
