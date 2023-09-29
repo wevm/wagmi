@@ -8,7 +8,15 @@
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
+  "dependencies": {
+    "@wagmi/connectors": "4.0.0-alpha.6",
+    "@wagmi/core": "2.0.0-alpha.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "viem": "2.0.0-alpha.13"
+  },
   "devDependencies": {
+    "buffer": "^6.0.3",
     "typescript": "^5.2.2",
     "vite": "^4.4.9"
   }

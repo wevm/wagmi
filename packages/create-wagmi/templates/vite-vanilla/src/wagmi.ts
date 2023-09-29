@@ -1,6 +1,6 @@
-import { http, createConfig } from 'wagmi'
-import { mainnet, sepolia } from 'wagmi/chains'
-import { coinbaseWallet, injected, walletConnect } from 'wagmi/connectors'
+import { coinbaseWallet, injected, walletConnect } from '@wagmi/connectors'
+import { http, createConfig } from '@wagmi/core'
+import { mainnet, sepolia } from '@wagmi/core/chains'
 
 export const config = createConfig({
   chains: [mainnet, sepolia],
@@ -14,10 +14,3 @@ export const config = createConfig({
     [sepolia.id]: http(),
   },
 })
-
-declare module 'wagmi' {
-  interface Register {
-    config: typeof config
-  }
-}
-

@@ -150,7 +150,12 @@ async function init() {
   }
 
   // user choice associated with prompts
-  const { framework, overwrite, packageName, variant } = result
+  const {
+    framework,
+    overwrite,
+    packageName,
+    variant = framework.variants[0].name,
+  } = result
 
   const root = path.join(cwd, targetDir)
 

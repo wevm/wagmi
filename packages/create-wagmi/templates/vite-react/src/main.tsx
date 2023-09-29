@@ -9,7 +9,6 @@ import { config } from './wagmi.ts'
 
 import './index.css'
 
-// `coinbaseWallet` uses `Buffer`
 globalThis.Buffer = Buffer
 
 const queryClient = new QueryClient()
