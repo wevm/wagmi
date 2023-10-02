@@ -71,11 +71,12 @@
     "ignore": [
       "**/*.test-d.ts",
       "**/vite-env.d.ts",
-      "vitest.workspace.ts",
-      "packages/cli/src/plugins/__fixtures__/**"
+      "**/templates/**",
+      "**/hardhat.config.js",
+      "vitest.workspace.ts"
     ],
-    "ignoreBinaries": ["biome"],
-    "ignoreDependencies": ["@biomejs/biome", "only-allow"],
+    "ignoreBinaries": ["open"],
+    "ignoreDependencies": ["only-allow"],
     "ignoreWorkspaces": [
       "docs",
       "packages/register-tests/**",
@@ -96,6 +97,9 @@
       "packages/core": {
         "entry": "src/exports/{chains,index,internal,query}.ts!",
         "ignoreDependencies": ["@tanstack/query-core"]
+      },
+      "packages/create-wagmi": {
+        "entry": "src/cli.ts!"
       },
       "packages/react": {
         "entry": "src/exports/{actions,chains,connectors,index,query}.ts!"

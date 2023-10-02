@@ -455,7 +455,7 @@ type Target = {
 }
 
 /** @deprecated */
-export type TargetId = Evaluate<WalletProviderFlags> extends `is${infer name}`
+type TargetId = Evaluate<WalletProviderFlags> extends `is${infer name}`
   ? name extends `${infer char}${infer rest}`
     ? `${Lowercase<char>}${rest}`
     : never

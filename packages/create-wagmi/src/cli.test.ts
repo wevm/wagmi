@@ -98,6 +98,15 @@ test('works with the -t alias', () => {
   expect(templateFiles).toEqual(generatedFiles)
 })
 
+test('uses different package manager', () => {
+  fs.ensureDirSync(genPath)
+  const { stdout } = run([projectName, '--bun', '-t', 'vite-react'], {
+    cwd: __dirname,
+  })
+
+  expect(stdout).toContain('bun install')
+})
+
 test('shows help', () => {
   const { stdout } = run(['--help'])
   expect(stdout.replace(version, 'x.y.z')).toMatchInlineSnapshot(`
@@ -108,6 +117,7 @@ test('shows help', () => {
 
     Options:
       -t, --template [name]  Template to bootstrap with. Available: vite-react, next, vite-vanilla 
+      --bun                  Use bun as your package manager 
       --npm                  Use npm as your package manager 
       --pnpm                 Use pnpm as your package manager 
       --yarn                 Use yarn as your package manager 

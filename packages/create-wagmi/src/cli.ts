@@ -33,6 +33,7 @@ cli
       .sort((a, b) => (a && !b ? -1 : 1))
       .join(', ')}`,
   )
+  .option('--bun', 'Use bun as your package manager')
   .option('--npm', 'Use npm as your package manager')
   .option('--pnpm', 'Use pnpm as your package manager')
   .option('--yarn', 'Use yarn as your package manager')
@@ -179,7 +180,8 @@ async function init() {
   const pkgInfo = pkgFromUserAgent(process.env.npm_config_user_agent)
   type PkgManager = 'bun' | 'npm' | 'pnpm' | 'yarn'
   let pkgManager: PkgManager
-  if (options.npm) pkgManager = 'npm'
+  if (options.bun) pkgManager = 'bun'
+  else if (options.npm) pkgManager = 'npm'
   else if (options.pnpm) pkgManager = 'pnpm'
   else if (options.yarn) pkgManager = 'yarn'
   else pkgManager = pkgInfo ? (pkgInfo.name as PkgManager) : 'npm'

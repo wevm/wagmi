@@ -533,7 +533,7 @@ export function getSidebar() {
       },
       {
         text: 'create-wagmi',
-        items: [{ text: 'Getting Started 🚧', link: '/cli/create-wagmi' }],
+        link: '/cli/create-wagmi',
       },
     ],
     '/dev': [

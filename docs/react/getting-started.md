@@ -39,12 +39,12 @@ bun create wagmi@alpha
 Once the command runs, you'll see some prompts to complete.
 
 ```
-What is your project named? my-app
-What framework would you like to use? Next.js / Vite (React)
+Project name: wagmi-project
+Select a framework: React / Vanilla
 ...
 ```
 
-After the prompts, `create-wagmi` will create a directory with your project name and install the required dependencies. Check out the `README.md` for further instructions.
+After the prompts, `create-wagmi` will create a directory with your project name and install the required dependencies. Check out the `README.md` for further instructions (if required).
 
 ## Manual Installation
 
