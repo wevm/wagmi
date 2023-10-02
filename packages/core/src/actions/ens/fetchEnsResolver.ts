@@ -1,5 +1,4 @@
 import type { GetEnsResolverReturnType } from 'viem'
-import { normalize } from 'viem/ens'
 
 import { getPublicClient } from '../viem'
 
@@ -16,6 +15,7 @@ export async function fetchEnsResolver({
   chainId,
   name,
 }: FetchEnsResolverArgs): Promise<FetchEnsResolverResult> {
+  const { normalize } = await import('viem/ens')
   const publicClient = getPublicClient({ chainId })
   const resolver = await publicClient.getEnsResolver({ name: normalize(name) })
   return resolver

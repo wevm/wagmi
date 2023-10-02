@@ -1,5 +1,4 @@
 import { type Address, getAddress } from 'viem'
-import { normalize } from 'viem/ens'
 
 import { getPublicClient } from '../viem'
 
@@ -16,6 +15,7 @@ export async function fetchEnsAddress({
   chainId,
   name,
 }: FetchEnsAddressArgs): Promise<FetchEnsAddressResult> {
+  const { normalize } = await import('viem/ens')
   const publicClient = getPublicClient({ chainId })
   const address = await publicClient.getEnsAddress({
     name: normalize(name),
