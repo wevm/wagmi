@@ -1,5 +1,4 @@
 import type { GetEnsAvatarReturnType } from 'viem/ens'
-import { normalize } from 'viem/ens'
 
 import { getPublicClient } from '../viem'
 
@@ -16,6 +15,7 @@ export async function fetchEnsAvatar({
   name,
   chainId,
 }: FetchEnsAvatarArgs): Promise<FetchEnsAvatarResult> {
+  const { normalize } = await import('viem/ens')
   const publicClient = getPublicClient({ chainId })
   const avatar = await publicClient.getEnsAvatar({ name: normalize(name) })
   return avatar
