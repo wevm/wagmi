@@ -2,6 +2,7 @@ import { join } from 'node:path'
 import type { ExecaSyncReturnValue, SyncOptions } from 'execa'
 import { execaCommandSync } from 'execa'
 import fs from 'fs-extra'
+import pc from 'picocolors'
 import { afterEach, beforeAll, expect, test } from 'vitest'
 
 import { version } from './version.js'
@@ -109,7 +110,11 @@ test('uses different package manager', () => {
 
 test('shows help', () => {
   const { stdout } = run(['--help'])
-  expect(stdout.replace(version, 'x.y.z')).toMatchInlineSnapshot(`
+  expect(
+    stdout
+      .replace(version, 'x.y.z')
+      .replace(pc.green('<project-directory>'), '<project-directory>'),
+  ).toMatchInlineSnapshot(`
     "create-wagmi/x.y.z
 
     Usage:
