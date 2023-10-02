@@ -1,5 +1,13 @@
 # @wagmi/core
 
+## 1.4.3
+
+### Patch Changes
+
+- [#3076](https://github.com/wagmi-dev/wagmi/pull/3076) [`4c36831b`](https://github.com/wagmi-dev/wagmi/commit/4c36831b7aa44d03b5c0decf64dcd20faae28a67) Thanks [@jxom](https://github.com/jxom)! - Pass `chain` to viem `sendTransaction`/`writeContract`.
+
+- [#3006](https://github.com/wagmi-dev/wagmi/pull/3006) [`f2ddce23`](https://github.com/wagmi-dev/wagmi/commit/f2ddce23324aff0a91e066100918dac552dc3b4a) Thanks [@jxom](https://github.com/jxom)! - Changed `normalize` to a dynamic import.
+
 ## 1.4.2
 
 ### Patch Changes
