@@ -78,7 +78,7 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
         return { accounts, chainId: currentChainId }
       } catch (error) {
         if (
-          /(user closed modal|accounts received is empty)/i.test(
+          /(user closed modal|accounts received is empty|user denied account)/i.test(
             (error as Error).message,
           )
         )

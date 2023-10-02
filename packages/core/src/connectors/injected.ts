@@ -258,7 +258,6 @@ export function injected(parameters: InjectedParameters = {}) {
         // automatically whenever there is a targeted connector configured.
         if (!parameters.target) {
           const connected = await config.storage?.getItem('injected.connected')
-          console.log({ connected })
           if (!connected) return false
         }
 

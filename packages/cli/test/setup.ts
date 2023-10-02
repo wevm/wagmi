@@ -1,10 +1,10 @@
 import { homedir } from 'os'
-import { default as fse } from 'fs-extra'
+import { default as fs } from 'fs-extra'
 import { join } from 'pathe'
 import { vi } from 'vitest'
 
 const cacheDir = join(homedir(), '.wagmi-cli/plugins/fetch/cache')
-await fse.ensureDir(cacheDir)
+await fs.ensureDir(cacheDir)
 
 vi.mock('ora', async () => {
   function ora() {

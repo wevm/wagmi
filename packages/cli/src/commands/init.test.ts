@@ -1,4 +1,4 @@
-import { default as fse } from 'fs-extra'
+import { default as fs } from 'fs-extra'
 import { resolve } from 'pathe'
 import { afterEach, beforeEach, expect, test, vi } from 'vitest'
 
@@ -23,8 +23,8 @@ test('creates config file', async () => {
 
   const configFile = await init()
 
-  expect(fse.existsSync(configFile)).toBeTruthy()
-  expect(await fse.readFile(configFile, 'utf-8')).toMatchInlineSnapshot(`
+  expect(fs.existsSync(configFile)).toBeTruthy()
+  expect(await fs.readFile(configFile, 'utf-8')).toMatchInlineSnapshot(`
       "// @ts-check
 
       /** @type {import('@wagmi/cli').Config} */
@@ -53,8 +53,8 @@ test('parameters: config', async () => {
     config: 'foo.config.ts',
   })
 
-  expect(fse.existsSync(configFile)).toBeTruthy()
-  expect(await fse.readFile(configFile, 'utf-8')).toMatchInlineSnapshot(`
+  expect(fs.existsSync(configFile)).toBeTruthy()
+  expect(await fs.readFile(configFile, 'utf-8')).toMatchInlineSnapshot(`
         "// @ts-check
 
         /** @type {import('@wagmi/cli').Config} */
@@ -90,8 +90,8 @@ test('parameters: content', async () => {
     },
   })
 
-  expect(fse.existsSync(configFile)).toBeTruthy()
-  expect(await fse.readFile(configFile, 'utf-8')).toMatchInlineSnapshot(`
+  expect(fs.existsSync(configFile)).toBeTruthy()
+  expect(await fs.readFile(configFile, 'utf-8')).toMatchInlineSnapshot(`
       "import { defineConfig } from '@wagmi/cli'
 
       export default defineConfig({
@@ -114,14 +114,14 @@ test('parameters: root', async () => {
   const { dir } = await createFixture()
   const spy = vi.spyOn(process, 'cwd')
   spy.mockImplementation(() => dir)
-  fse.mkdir(resolve(dir, 'foo'))
+  fs.mkdir(resolve(dir, 'foo'))
 
   const configFile = await init({
     root: 'foo/',
   })
 
-  expect(fse.existsSync(configFile)).toBeTruthy()
-  expect(await fse.readFile(configFile, 'utf-8')).toMatchInlineSnapshot(`
+  expect(fs.existsSync(configFile)).toBeTruthy()
+  expect(await fs.readFile(configFile, 'utf-8')).toMatchInlineSnapshot(`
         "// @ts-check
 
         /** @type {import('@wagmi/cli').Config} */
@@ -152,8 +152,8 @@ test('behavior: creates config file in TypeScript format', async () => {
 
   const configFile = await init()
 
-  expect(fse.existsSync(configFile)).toBeTruthy()
-  expect(await fse.readFile(configFile, 'utf-8')).toMatchInlineSnapshot(`
+  expect(fs.existsSync(configFile)).toBeTruthy()
+  expect(await fs.readFile(configFile, 'utf-8')).toMatchInlineSnapshot(`
       "import { defineConfig } from '@wagmi/cli'
 
       export default defineConfig({

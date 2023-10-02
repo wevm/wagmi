@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@tanstack/query-sync-storage-persister": "5.0.0-beta.28",
-    "@tanstack/react-query": "5.0.0-beta.28",
+    "@tanstack/react-query": "5.0.0-beta.35",
     "@tanstack/react-query-persist-client": "5.0.0-beta.28",
     "idb-keyval": "^6.2.1",
     "react": "^18.2.0",

@@ -1,4 +1,4 @@
-import { default as fse } from 'fs-extra'
+import { default as fs } from 'fs-extra'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import { afterAll, afterEach, beforeAll, expect, test } from 'vitest'
@@ -114,7 +114,7 @@ test('aborts request', async () => {
 
 test('reads from cache', async () => {
   const cacheDir = `${homedir}/.wagmi-cli/plugins/fetch/cache`
-  await fse.ensureDir(cacheDir)
+  await fs.ensureDir(cacheDir)
 
   const contract = {
     name: 'WagmiMintExample',
@@ -122,7 +122,7 @@ test('reads from cache', async () => {
   } as const
   const cacheKey = JSON.stringify(contract)
   const cacheFilePath = `${cacheDir}/${cacheKey}.json`
-  await fse.writeJSON(cacheFilePath, {
+  await fs.writeJSON(cacheFilePath, {
     abi: [
       {
         inputs: [],
@@ -159,12 +159,12 @@ test('reads from cache', async () => {
       ]
     `)
 
-  await fse.rm(cacheDir, { recursive: true })
+  await fs.rm(cacheDir, { recursive: true })
 })
 
 test('fails and reads from cache', async () => {
   const cacheDir = `${homedir}/.wagmi-cli/plugins/fetch/cache`
-  await fse.ensureDir(cacheDir)
+  await fs.ensureDir(cacheDir)
 
   const contract = {
     name: 'WagmiMintExample',
@@ -172,7 +172,7 @@ test('fails and reads from cache', async () => {
   } as const
   const cacheKey = JSON.stringify(contract)
   const cacheFilePath = `${cacheDir}/${cacheKey}.json`
-  await fse.writeJSON(cacheFilePath, {
+  await fs.writeJSON(cacheFilePath, {
     abi: [
       {
         inputs: [],
@@ -210,5 +210,5 @@ test('fails and reads from cache', async () => {
       ]
     `)
 
-  await fse.rm(cacheDir, { recursive: true })
+  await fs.rm(cacheDir, { recursive: true })
 })

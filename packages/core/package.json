@@ -9,9 +9,9 @@
     "directory": "packages/core"
   },
   "scripts": {
-    "clean": "rm -rf dist tsconfig.tsbuildinfo actions chains internal query",
     "build": "pnpm run clean && pnpm run build:esm+types",
     "build:esm+types": "tsc --project tsconfig.build.json --module es2020 --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo actions chains internal query",
     "test:build": "publint --strict",
     "typecheck": "tsc --noEmit"
   },
@@ -84,11 +84,6 @@
     "@tanstack/query-core": "5.0.0-beta.28"
   },
   "contributors": ["awkweb.eth <t@wagmi.sh>", "jxom.eth <j@wagmi.sh>"],
-  "funding": [
-    {
-      "type": "github",
-      "url": "https://github.com/sponsors/wagmi-dev"
-    }
-  ],
-  "keywords": ["eth", "ethereum", "dapps", "wallet", "web3"]
+  "funding": "https://github.com/sponsors/wagmi-dev",
+  "keywords": ["wagmi", "eth", "ethereum", "dapps", "wallet", "web3"]
 }

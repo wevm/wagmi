@@ -1,11 +1,6 @@
 {
   "files": {
-    "ignore": [
-      "CHANGELOG.md",
-      "pnpm-lock.yaml",
-      "tsconfig.json",
-      "tsconfig.*.json"
-    ]
+    "ignore": ["CHANGELOG.md", "pnpm-lock.yaml", "tsconfig.base.json"]
   },
   "formatter": {
     "enabled": true,
@@ -15,6 +10,7 @@
     "lineWidth": 80
   },
   "linter": {
+    "ignore": ["packages/create-wagmi/templates/*"],
     "enabled": true,
     "rules": {
       "recommended": true,
