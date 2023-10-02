@@ -96,7 +96,10 @@ export async function sendTransaction({
     })
   }
 
-  const hash = await walletClient.sendTransaction({ ...args, chain: null })
+  const hash = await walletClient.sendTransaction({
+    ...args,
+    chain: chainId ? ({ id: chainId } as Chain) : null,
+  })
 
   /********************************************************************/
   /** END: iOS App Link cautious code.                                */
