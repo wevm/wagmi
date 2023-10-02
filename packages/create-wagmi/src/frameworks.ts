@@ -1,4 +1,4 @@
-import { blue, cyan, yellow } from 'picocolors'
+import pc from 'picocolors'
 
 type ColorFunc = (str: string | number) => string
 
@@ -20,29 +20,29 @@ export const frameworks: readonly Framework[] = [
   {
     name: 'react',
     display: 'React',
-    color: cyan,
+    color: pc.cyan,
     variants: [
       {
         name: 'vite-react',
         display: 'Vite',
-        color: blue,
+        color: pc.blue,
       },
       {
         name: 'next',
         display: 'Next',
-        color: yellow,
+        color: pc.yellow,
       },
     ],
   },
   {
     name: 'vanilla',
     display: 'Vanilla',
-    color: yellow,
+    color: pc.yellow,
     variants: [
       {
         name: 'vite-vanilla',
         display: 'Vite',
-        color: blue,
+        color: pc.blue,
       },
     ],
   },

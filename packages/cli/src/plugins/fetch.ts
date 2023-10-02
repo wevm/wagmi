@@ -1,5 +1,5 @@
 import { homedir } from 'os'
-import { default as fse } from 'fs-extra'
+import { default as fs } from 'fs-extra'
 import { join } from 'pathe'
 
 import type { ContractConfig, Plugin } from '../config.js'
@@ -69,14 +69,14 @@ export function fetch(config: FetchConfig): FetchResult {
   return {
     async contracts() {
       const cacheDir = join(homedir(), '.wagmi-cli/plugins/fetch/cache')
-      await fse.ensureDir(cacheDir)
+      await fs.ensureDir(cacheDir)
 
       const timestamp = Date.now() + cacheDuration
       const contracts = []
       for (const contract of contractConfigs) {
         const cacheKey = getCacheKey({ contract })
         const cacheFilePath = join(cacheDir, `${cacheKey}.json`)
-        const cachedFile = await fse.readJSON(cacheFilePath).catch(() => null)
+        const cachedFile = await fs.readJSON(cacheFilePath).catch(() => null)
 
         let abi
         if (cachedFile?.timestamp > Date.now()) abi = cachedFile.abi
@@ -96,11 +96,11 @@ export function fetch(config: FetchConfig): FetchResult {
             clearTimeout(timeout)
 
             abi = await parse({ response })
-            await fse.writeJSON(cacheFilePath, { abi, timestamp })
+            await fs.writeJSON(cacheFilePath, { abi, timestamp })
           } catch (error) {
             try {
               // Attempt to read from cache if fetch fails.
-              abi = (await fse.readJSON(cacheFilePath)).abi
+              abi = (await fs.readJSON(cacheFilePath)).abi
             } catch {}
             if (!abi) throw error
           }

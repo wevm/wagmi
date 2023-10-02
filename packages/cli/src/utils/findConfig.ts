@@ -1,5 +1,5 @@
 import { findUp } from 'find-up'
-import { default as fse } from 'fs-extra'
+import { default as fs } from 'fs-extra'
 import { resolve } from 'pathe'
 
 // Do not reorder
@@ -26,7 +26,7 @@ export async function findConfig(parameters: FindConfigParameters = {}) {
   const rootDir = resolve(root || process.cwd())
   if (config) {
     const path = resolve(rootDir, config)
-    if (fse.pathExistsSync(path)) return path
+    if (fs.pathExistsSync(path)) return path
     return
   }
   return findUp(configFiles, { cwd: rootDir })

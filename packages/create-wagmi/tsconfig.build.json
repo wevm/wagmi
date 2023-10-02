@@ -1,7 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
   "include": ["src/**/*.ts"],
-  "exclude": [],
+  "exclude": ["src/**/*.test.ts"],
   "compilerOptions": {
     "sourceMap": true
   }

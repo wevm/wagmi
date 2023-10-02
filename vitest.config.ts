@@ -13,5 +13,6 @@ export default defineConfig({
     },
     globalSetup: ['./packages/test/src/globalSetup.ts'],
     setupFiles: ['./packages/test/src/setup.ts'],
+    watchExclude: ['**/templates/**'],
   },
 })

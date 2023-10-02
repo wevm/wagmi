@@ -1,6 +1,6 @@
 import { execa } from 'execa'
 import fixtures from 'fixturez'
-import { default as fse } from 'fs-extra'
+import { default as fs } from 'fs-extra'
 import * as path from 'pathe'
 import { vi } from 'vitest'
 
@@ -26,7 +26,7 @@ export async function createFixture<
   } = {},
 ) {
   const dir = config.dir ?? f.temp()
-  await fse.ensureDir(dir)
+  await fs.ensureDir(dir)
 
   // Create test files
   const paths: { [_ in keyof TFiles]: string } = {} as any
@@ -41,9 +41,9 @@ export async function createFixture<
         } else file = config.files![filename]
 
         const filePath = path.join(dir, filename.toString())
-        await fse.ensureDir(path.dirname(filePath))
+        await fs.ensureDir(path.dirname(filePath))
 
-        await fse.writeFile(
+        await fs.writeFile(
           filePath,
           typeof file === 'string' ? file : JSON.stringify(file, null, 2),
         )
@@ -53,12 +53,12 @@ export async function createFixture<
   )
 
   if (config.copyNodeModules) {
-    await fse.symlink(
+    await fs.symlink(
       path.join(__dirname, '../node_modules'),
       path.join(dir, 'node_modules'),
       'dir',
     )
-    await fse.copy(
+    await fs.copy(
       path.join(__dirname, '../package.json'),
       path.join(dir, 'package.json'),
     )

@@ -4,7 +4,7 @@ import * as path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { cac } from 'cac'
 import spawn from 'cross-spawn'
-import { green, red, reset } from 'picocolors'
+import pc from 'picocolors'
 import prompts from 'prompts'
 
 import { type Framework, frameworks } from './frameworks.js'
@@ -26,7 +26,7 @@ const templates = frameworks
 const cli = cac('create-wagmi')
 
 cli
-  .usage(`${green('<project-directory>')} [options]`)
+  .usage(`${pc.green('<project-directory>')} [options]`)
   .option(
     '-t, --template [name]',
     `Template to bootstrap with. Available: ${templates
@@ -54,8 +54,6 @@ async function init() {
   if (options.help) return
   if (options.version) return
 
-  console.log(args, options)
-
   const argTargetDir = formatTargetDir(args[0])
   const argTemplate = options.template || options.t
 
@@ -73,7 +71,7 @@ async function init() {
         {
           type: argTargetDir ? null : 'text',
           name: 'projectName',
-          message: reset('Project name:'),
+          message: pc.reset('Project name:'),
           initial: defaultTargetDir,
           onState(state) {
             targetDir = formatTargetDir(state.value) || defaultTargetDir
@@ -97,7 +95,7 @@ async function init() {
         {
           type(_, { overwrite }: { overwrite?: boolean }) {
             if (overwrite === false)
-              throw new Error(`${red('✖')} Operation cancelled`)
+              throw new Error(`${pc.red('✖')} Operation cancelled`)
             return null
           },
           name: 'overwriteChecker',
@@ -107,7 +105,7 @@ async function init() {
             return isValidPackageName(getProjectName()) ? null : 'text'
           },
           name: 'packageName',
-          message: reset('Package name:'),
+          message: pc.reset('Package name:'),
           initial() {
             return toValidPackageName(getProjectName())
           },
@@ -121,10 +119,10 @@ async function init() {
           name: 'framework',
           message:
             typeof argTemplate === 'string' && !templates.includes(argTemplate)
-              ? reset(
+              ? pc.reset(
                   `"${argTemplate}" isn't a valid template. Please choose from below: `,
                 )
-              : reset('Select a framework:'),
+              : pc.reset('Select a framework:'),
           initial: 0,
           choices: frameworks.map((framework) => {
             const frameworkColor = framework.color
@@ -139,7 +137,7 @@ async function init() {
             return framework?.variants?.length > 1 ? 'select' : null
           },
           name: 'variant',
-          message: reset('Select a variant:'),
+          message: pc.reset('Select a variant:'),
           choices(framework: Framework) {
             return framework.variants.map((variant) => {
               const variantColor = variant.color
@@ -153,7 +151,7 @@ async function init() {
       ],
       {
         onCancel() {
-          throw new Error(`${red('✖')} Operation cancelled`)
+          throw new Error(`${pc.red('✖')} Operation cancelled`)
         },
       },
     )
@@ -167,7 +165,7 @@ async function init() {
     framework,
     overwrite,
     packageName,
-    variant = framework.variants[0].name,
+    variant = framework?.variants[0]?.name,
   } = result
 
   const root = path.join(cwd, targetDir)
@@ -223,7 +221,7 @@ async function init() {
 
   const templateDir = path.resolve(
     fileURLToPath(import.meta.url),
-    '../../templates',
+    '../../../templates',
     template,
   )
 

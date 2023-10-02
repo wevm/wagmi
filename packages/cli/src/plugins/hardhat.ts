@@ -1,5 +1,5 @@
 import { execa } from 'execa'
-import { default as fse } from 'fs-extra'
+import { default as fs } from 'fs-extra'
 import { globby } from 'globby'
 import { basename, extname, join, resolve } from 'pathe'
 import pc from 'picocolors'
@@ -85,7 +85,7 @@ export function hardhat(config: HardhatConfig): HardhatResult {
   }
 
   async function getContract(artifactPath: string) {
-    const artifact = await fse.readJSON(artifactPath)
+    const artifact = await fs.readJSON(artifactPath)
     return {
       abi: artifact.abi,
       address: deployments[artifact.contractName],
@@ -123,7 +123,7 @@ export function hardhat(config: HardhatConfig): HardhatResult {
         ).split(' ')
         await execa(command!, options, { cwd: project })
       }
-      if (!fse.pathExistsSync(artifactsDirectory))
+      if (!fs.pathExistsSync(artifactsDirectory))
         throw new Error('Artifacts not found.')
 
       const artifactPaths = await getArtifactPaths(artifactsDirectory)
@@ -138,7 +138,7 @@ export function hardhat(config: HardhatConfig): HardhatResult {
     name: 'Hardhat',
     async validate() {
       // Check that project directory exists
-      if (!(await fse.pathExists(project)))
+      if (!(await fs.pathExists(project)))
         throw new Error(`Hardhat project ${pc.gray(project)} not found.`)
 
       // Check that `hardhat` is installed
