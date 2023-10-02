@@ -59,11 +59,9 @@ export async function sendTransaction<
     assertActiveChain(config, { activeChainId: client.chain.id, chainId })
 
   const hash = await viem_sendTransaction(client, {
-    ...(rest as unknown as viem_SendTransactionParameters),
-    // Setting to `null` to not validate inside `viem_sendTransaction`
-    // since we already validated above
-    chain: null,
-  } as viem_SendTransactionParameters)
+    ...(rest as any),
+    chain: chainId ? { id: chainId } : null,
+  })
 
   return hash
 }

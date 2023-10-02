@@ -103,9 +103,7 @@ export async function writeContract<
 
   const hash = await viem_writeContract(client, {
     ...(request as any),
-    // Setting to `null` to not validate inside `viem_writeContract` since we
-    // already validated above with `assertActiveChain` and in `simulateContract`
-    chain: null,
+    chain: chainId ? { id: chainId } : null,
   })
 
   return hash
