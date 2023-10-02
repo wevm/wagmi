@@ -1,4 +1,3 @@
-*.local
 .DS_Store
 .next
 .pnpm-debug.log*
