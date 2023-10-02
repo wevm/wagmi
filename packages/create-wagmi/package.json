@@ -29,14 +29,7 @@
   },
   "sideEffects": false,
   "type": "module",
-  "main": "./dist/esm/exports/index.js",
-  "types": "./dist/types/exports/index.d.ts",
-  "typings": "./dist/types/exports/index.d.ts",
   "exports": {
-    ".": {
-      "types": "./dist/types/exports/index.d.ts",
-      "default": "./dist/esm/exports/index.js"
-    },
     "./package.json": "./package.json"
   },
   "dependencies": {
