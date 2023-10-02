@@ -271,9 +271,9 @@ useAccountEffect({ // [!code ++]
 
 The Wagmi [`Config`](/react/api/createConfig) does not separate transport types anymore. Simply use Viem's [`webSocket`](https://viem.sh/docs/clients/transports/websocket.html) transport instead when setting up your Wagmi `Config`. You can get Viem `Client` instance with this transport attached by using [`useClient`](/react/api/hooks/useClient) or [`usePublicClient`](/react/api/hooks/usePublicClient).
 
-### Removed `useInfiniteContractReads` `paginatedIndexesConfig`
+### Removed `useInfiniteReadContracts` `paginatedIndexesConfig`
 
-In the spirit of removing unnecessary abstractions, `paginatedIndexesConfig` was removed. Use `useInfiniteContractReads`'s `initialPageParam` and `getNextPageParam` parameters along with `fetchNextPage`/`fetchPreviousPage` from the result instead or copy `paginatedIndexesConfig`'s implementation to your codebase.
+In the spirit of removing unnecessary abstractions, `paginatedIndexesConfig` was removed. Use `useInfiniteReadContracts`'s `initialPageParam` and `getNextPageParam` parameters along with `fetchNextPage`/`fetchPreviousPage` from the result instead or copy `paginatedIndexesConfig`'s implementation to your codebase.
 
 See the [TanStack Query docs](https://tanstack.com/query/v5/docs/react/guides/infinite-queries) for more information on infinite queries.
 
@@ -575,7 +575,7 @@ The following hooks were renamed to better reflect their functionality and under
 - `useContractReads` is now [`useReadContracts`](/react/api/hooks/useReadContracts)
 - `useContractWrite` is now [`useWriteContract`](/react/api/hooks/useWriteContract)
 - `useContractEvent` is now [`useWatchContractEvent`](/react/api/hooks/useWatchContractEvent)
-- `useContractInfiniteReads` is now [`useInfiniteContractReads`](/react/api/hooks/useInfiniteContractReads)
+- `useContractInfiniteReads` is now [`useInfiniteReadContracts`](/react/api/hooks/useInfiniteReadContracts)
 - `useFeeData` is now [`useEstimateFeesPerGas`](/react/api/hooks/useEstimateFeesPerGas)
 - `useSwitchNetwork` is now [`useSwitchChain`](/react/api/hooks/useSwitchChain)
 - `useWaitForTransaction` is now [`useWaitForTransactionReceipt`](/react/api/hooks/useWaitForTransactionReceipt)

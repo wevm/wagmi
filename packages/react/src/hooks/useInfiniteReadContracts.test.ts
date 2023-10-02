@@ -2,11 +2,11 @@ import { abi, address } from '@wagmi/test'
 import { renderHook, waitFor } from '@wagmi/test/react'
 import { expect, test } from 'vitest'
 
-import { useInfiniteContractReads } from './useInfiniteContractReads.js'
+import { useInfiniteReadContracts } from './useInfiniteReadContracts.js'
 
 test('default', async () => {
   const { result } = renderHook(() =>
-    useInfiniteContractReads({
+    useInfiniteReadContracts({
       cacheKey: 'foo',
       contracts(pageParam) {
         return [

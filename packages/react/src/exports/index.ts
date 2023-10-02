@@ -150,10 +150,10 @@ export {
 export {
   type UseInfiniteContractReadsParameters,
   type UseInfiniteContractReadsReturnType,
-  useInfiniteContractReads,
-  /** @deprecated Use `useInfiniteContractReads` instead */
-  useInfiniteContractReads as useContractInfiniteReads,
-} from '../hooks/useInfiniteContractReads.js'
+  useInfiniteReadContracts,
+  /** @deprecated Use `useInfiniteReadContracts` instead */
+  useInfiniteReadContracts as useContractInfiniteReads,
+} from '../hooks/useInfiniteReadContracts.js'
 
 export {
   type UsePublicClientParameters,

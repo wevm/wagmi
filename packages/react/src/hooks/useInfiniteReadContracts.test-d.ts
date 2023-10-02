@@ -1,10 +1,10 @@
 import { abi } from '@wagmi/test'
 import { expectTypeOf, test } from 'vitest'
 
-import { useInfiniteContractReads } from './useInfiniteContractReads.js'
+import { useInfiniteReadContracts } from './useInfiniteReadContracts.js'
 
 test('select data', async () => {
-  const result = useInfiniteContractReads({
+  const result = useInfiniteReadContracts({
     allowFailure: false,
     cacheKey: 'foo',
     contracts(pageParam) {
