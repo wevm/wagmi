@@ -74,10 +74,6 @@ function App() {
 
 For more information on setting up TanStack Query for Wagmi, follow the [Getting Started docs](/react/getting-started#setup-tanstack-query). If you want to set up persistance for your query cache (default behavior before Wagmi v2), check out the [TanStack Query docs](https://tanstack.com/query/v5/docs/react/plugins/persistQueryClient).
 
-### Upgraded to TypeScript
-
-If you use TypeScript with Wagmi (and you should!), Wagmi now requires a minimum of TypeScript 5.1.6 (previously 5.0.4). Check out the [Wagmi TypeScript docs](/react/typescript) for more info on TypeScript support in Wagmi.
-
 ### Dropped CommonJS support
 
 Wagmi v2 no longer publishes a separate `cjs` tag since very few people use this tag and ESM is the future. See [Sindre Sorhus' guide](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c) for more info about switching to ESM.

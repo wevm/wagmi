@@ -12,7 +12,7 @@ import {
   readContract,
 } from '../actions/readContract.js'
 import type { Config } from '../createConfig.js'
-import type { UnionEvaluate, UnionPartial } from '../types/utils.js'
+import type { UnionPartial } from '../types/utils.js'
 import type { ScopeKeyParameter } from './types.js'
 import { filterQueryOptions } from './utils.js'
 
@@ -21,9 +21,7 @@ export type ReadContractOptions<
   functionName extends ContractFunctionName<abi, 'pure' | 'view'>,
   args extends ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
   config extends Config,
-> = UnionEvaluate<
-  UnionPartial<ReadContractParameters<abi, functionName, args, config>>
-> &
+> = UnionPartial<ReadContractParameters<abi, functionName, args, config>> &
   ScopeKeyParameter
 
 export function readContractQueryOptions<

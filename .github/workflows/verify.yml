@@ -59,7 +59,7 @@ jobs:
     timeout-minutes: 5
     strategy:
       matrix:
-        typescript-version: ['5.1.6', 'latest']
+        typescript-version: ['5.0.4', '5.1.6', 'latest', '5.3.0-beta']
         viem-version: ['alpha']
 
     steps:

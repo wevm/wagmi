@@ -43,10 +43,6 @@ Moving forward, new functionality will be opt-in with old functionality being de
 
 ## Dependencies
 
-### Upgraded to TypeScript
-
-If you use TypeScript with Wagmi (and you should!), Wagmi now requires a minimum of TypeScript 5.1.6 (previously 5.0.4). Check out the [Wagmi TypeScript docs](/core/typescript) for more info on TypeScript support in Wagmi.
-
 ### Dropped CommonJS support
 
 Wagmi v2 no longer publishes a separate `cjs` tag since very few people use this tag and ESM is the future. See [Sindre Sorhus' guide](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c) for more info about switching to ESM.

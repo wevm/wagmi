@@ -8,7 +8,6 @@ import {
 } from 'viem'
 import { assertType, expectTypeOf, test } from 'vitest'
 
-import type { UnionOmit } from '@wagmi/core/internal'
 import {
   type UseReadContractParameters,
   type UseReadContractReturnType,
@@ -109,7 +108,7 @@ declare function useViewOverloads<
     args,
     config,
     selectData
-  >,
+  > & { abi?: undefined },
 ): UseReadContractReturnType<
   typeof abi.viewOverloads,
   functionName,
@@ -161,16 +160,13 @@ declare function useViewOverloadsFoo<
   config extends Config = ResolvedRegister['config'],
   selectData = ReadContractData<typeof abi.viewOverloads, 'foo', args>,
 >(
-  parameters?: UnionOmit<
-    UseReadContractParameters<
-      typeof abi.viewOverloads,
-      'foo',
-      args,
-      config,
-      selectData
-    >,
-    'abi' | 'functionName'
-  >,
+  parameters?: UseReadContractParameters<
+    typeof abi.viewOverloads,
+    'foo',
+    args,
+    config,
+    selectData
+  > & { abi?: undefined; functionName?: undefined },
 ): UseReadContractReturnType<typeof abi.viewOverloads, 'foo', args, selectData>
 
 test('fixed abi and functionName', () => {
