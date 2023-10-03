@@ -15,7 +15,7 @@ const viemVersion = packageJson.peerDependencies.viem
 
 Wagmi v2 redesigns the core APIs to mesh better with [Viem](https://viem.sh) and [TanStack Query](https://tanstack.com/query/v5/docs/react). This major version transforms Wagmi into a light wrapper around these libraries, sprinkling in multichain support and account management. As such, there are some breaking changes and deprecations to be aware of outlined in this guide.
 
-To get started, install the latest version of Wagmi and it's required peer dependencies.
+To get started, install the latest version of Wagmi using the `alpha` dist-tag and it's required peer dependencies.
 
 ::: code-group
 ```bash-vue [pnpm]
@@ -39,7 +39,7 @@ bun add wagmi@alpha viem@{{viemVersion}} @tanstack/react-query@beta
 We recommend trying it out in your projects, but there may be breaking changes before the final release. If you find bugs or have feedback, please [open an issue](https://github.com/wagmi-dev/wagmi/issues/new/choose) or [reply to the discussion thread](https://github.com/wagmi-dev/wagmi/discussions/3068).
 :::
 
-::: info Wagmi v2 should be the last major version of Wagmi that will have this many actionable breaking changes. 
+::: info Wagmi v2 should be the last major version that will have this many actionable breaking changes. 
 Moving forward after Wagmi v2, new functionality will be opt-in with old functionality being deprecated alongside the new features. This means upgrading to the latest major versions will not require immediate changes.
 :::
 
@@ -73,6 +73,10 @@ function App() {
 :::
 
 For more information on setting up TanStack Query for Wagmi, follow the [Getting Started docs](/react/getting-started#setup-tanstack-query). If you want to set up persistance for your query cache (default behavior before Wagmi v2), check out the [TanStack Query docs](https://tanstack.com/query/v5/docs/react/plugins/persistQueryClient).
+
+### Upgraded to TypeScript
+
+If you use TypeScript with Wagmi (and you should!), Wagmi now requires a minimum of TypeScript 5.1.6 (previously 5.0.4). Check out the [Wagmi TypeScript docs](/react/typescript) for more info on TypeScript support in Wagmi.
 
 ### Dropped CommonJS support
 
