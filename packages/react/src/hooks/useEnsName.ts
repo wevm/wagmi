@@ -10,12 +10,8 @@ import {
   getEnsNameQueryOptions,
 } from '@wagmi/core/query'
 
-import type { ConfigParameter } from '../types/properties.js'
-import {
-  type UseQueryParameters,
-  type UseQueryReturnType,
-  useQuery,
-} from '../utils/query.js'
+import type { ConfigParameter, QueryParameter } from '../types/properties.js'
+import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
@@ -24,16 +20,13 @@ export type UseEnsNameParameters<
   selectData = GetEnsNameData,
 > = Evaluate<
   GetEnsNameOptions<config> &
-    ConfigParameter<config> & {
-      query?:
-        | UseQueryParameters<
-            GetEnsNameQueryFnData,
-            GetEnsNameErrorType,
-            selectData,
-            GetEnsNameQueryKey<config>
-          >
-        | undefined
-    }
+    ConfigParameter<config> &
+    QueryParameter<
+      GetEnsNameQueryFnData,
+      GetEnsNameErrorType,
+      selectData,
+      GetEnsNameQueryKey<config>
+    >
 >
 
 export type UseEnsNameReturnType<selectData = GetEnsNameData> =

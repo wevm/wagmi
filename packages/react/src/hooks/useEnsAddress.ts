@@ -14,12 +14,8 @@ import {
   getEnsAddressQueryOptions,
 } from '@wagmi/core/query'
 
-import type { ConfigParameter } from '../types/properties.js'
-import {
-  type UseQueryParameters,
-  type UseQueryReturnType,
-  useQuery,
-} from '../utils/query.js'
+import type { ConfigParameter, QueryParameter } from '../types/properties.js'
+import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
@@ -28,16 +24,13 @@ export type UseEnsAddressParameters<
   selectData = GetEnsAddressData,
 > = Evaluate<
   GetEnsAddressOptions<config> &
-    ConfigParameter<config> & {
-      query?:
-        | UseQueryParameters<
-            GetEnsAddressQueryFnData,
-            GetEnsAddressErrorType,
-            selectData,
-            GetEnsAddressQueryKey<config>
-          >
-        | undefined
-    }
+    ConfigParameter<config> &
+    QueryParameter<
+      GetEnsAddressQueryFnData,
+      GetEnsAddressErrorType,
+      selectData,
+      GetEnsAddressQueryKey<config>
+    >
 >
 
 export type UseEnsAddressReturnType<selectData = GetEnsAddressData> =

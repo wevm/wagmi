@@ -19,12 +19,8 @@ import {
   getBlockNumberQueryOptions,
 } from '@wagmi/core/query'
 
-import type { ConfigParameter } from '../types/properties.js'
-import {
-  type UseQueryParameters,
-  type UseQueryReturnType,
-  useQuery,
-} from '../utils/query.js'
+import type { ConfigParameter, QueryParameter } from '../types/properties.js'
+import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 import {
@@ -38,15 +34,13 @@ export type UseBlockNumberParameters<
   selectData = GetBlockNumberData,
 > = Evaluate<
   GetBlockNumberOptions<config, chainId> &
-    ConfigParameter<config> & {
-      query?:
-        | UseQueryParameters<
-            GetBlockNumberQueryFnData,
-            GetBlockNumberErrorType,
-            selectData,
-            GetBlockNumberQueryKey<config, chainId>
-          >
-        | undefined
+    ConfigParameter<config> &
+    QueryParameter<
+      GetBlockNumberQueryFnData,
+      GetBlockNumberErrorType,
+      selectData,
+      GetBlockNumberQueryKey<config, chainId>
+    > & {
       watch?:
         | boolean
         | UnionEvaluate<

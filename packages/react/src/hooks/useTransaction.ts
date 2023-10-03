@@ -14,12 +14,8 @@ import {
   getTransactionQueryOptions,
 } from '@wagmi/core/query'
 
-import type { ConfigParameter } from '../types/properties.js'
-import {
-  type UseQueryParameters,
-  type UseQueryReturnType,
-  useQuery,
-} from '../utils/query.js'
+import type { ConfigParameter, QueryParameter } from '../types/properties.js'
+import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
@@ -29,16 +25,13 @@ export type UseTransactionParameters<
   selectData = GetTransactionData<config, chainId>,
 > = Evaluate<
   GetTransactionOptions<config, chainId> &
-    ConfigParameter<config> & {
-      query?:
-        | UseQueryParameters<
-            GetTransactionQueryFnData<config, chainId>,
-            GetTransactionErrorType,
-            selectData,
-            GetTransactionQueryKey<config, chainId>
-          >
-        | undefined
-    }
+    ConfigParameter<config> &
+    QueryParameter<
+      GetTransactionQueryFnData<config, chainId>,
+      GetTransactionErrorType,
+      selectData,
+      GetTransactionQueryKey<config, chainId>
+    >
 >
 
 export type UseTransactionReturnType<

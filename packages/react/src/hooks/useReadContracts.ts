@@ -16,9 +16,8 @@ import {
 import { useMemo } from 'react'
 import type { ContractFunctionParameters } from 'viem'
 
-import type { ConfigParameter } from '../types/properties.js'
+import type { ConfigParameter, QueryParameter } from '../types/properties.js'
 import {
-  type UseQueryParameters,
   type UseQueryReturnType,
   structuralSharing,
   useQuery,
@@ -33,16 +32,13 @@ export type UseReadContractsParameters<
   selectData = ReadContractsData<contracts, allowFailure>,
 > = Evaluate<
   ReadContractsOptions<contracts, allowFailure, config> &
-    ConfigParameter<config> & {
-      query?:
-        | UseQueryParameters<
-            ReadContractsQueryFnData<contracts, allowFailure>,
-            ReadContractsErrorType,
-            selectData,
-            ReadContractsQueryKey<contracts, allowFailure, config>
-          >
-        | undefined
-    }
+    ConfigParameter<config> &
+    QueryParameter<
+      ReadContractsQueryFnData<contracts, allowFailure>,
+      ReadContractsErrorType,
+      selectData,
+      ReadContractsQueryKey<contracts, allowFailure, config>
+    >
 >
 
 export type UseReadContractsReturnType<

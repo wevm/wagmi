@@ -15,12 +15,8 @@ import {
 } from '@wagmi/core/query'
 import type { FeeValuesType } from 'viem'
 
-import type { ConfigParameter } from '../types/properties.js'
-import {
-  type UseQueryParameters,
-  type UseQueryReturnType,
-  useQuery,
-} from '../utils/query.js'
+import type { ConfigParameter, QueryParameter } from '../types/properties.js'
+import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
@@ -30,16 +26,13 @@ export type UseEstimateFeesPerGasParameters<
   selectData = EstimateFeesPerGasData<type>,
 > = Evaluate<
   EstimateFeesPerGasOptions<type, config> &
-    ConfigParameter<config> & {
-      query?:
-        | UseQueryParameters<
-            EstimateFeesPerGasQueryFnData<type>,
-            EstimateFeesPerGasErrorType,
-            selectData,
-            EstimateFeesPerGasQueryKey<config, type>
-          >
-        | undefined
-    }
+    ConfigParameter<config> &
+    QueryParameter<
+      EstimateFeesPerGasQueryFnData<type>,
+      EstimateFeesPerGasErrorType,
+      selectData,
+      EstimateFeesPerGasQueryKey<config, type>
+    >
 >
 
 export type UseEstimateFeesPerGasReturnType<

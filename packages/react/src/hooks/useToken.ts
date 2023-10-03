@@ -10,12 +10,8 @@ import {
   getTokenQueryOptions,
 } from '@wagmi/core/query'
 
-import type { ConfigParameter } from '../types/properties.js'
-import {
-  type UseQueryParameters,
-  type UseQueryReturnType,
-  useQuery,
-} from '../utils/query.js'
+import type { ConfigParameter, QueryParameter } from '../types/properties.js'
+import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
@@ -24,16 +20,13 @@ export type UseTokenParameters<
   selectData = GetTokenData,
 > = Evaluate<
   GetTokenOptions<config> &
-    ConfigParameter<config> & {
-      query?:
-        | UseQueryParameters<
-            GetTokenQueryFnData,
-            GetTokenErrorType,
-            selectData,
-            GetTokenQueryKey<config>
-          >
-        | undefined
-    }
+    ConfigParameter<config> &
+    QueryParameter<
+      GetTokenQueryFnData,
+      GetTokenErrorType,
+      selectData,
+      GetTokenQueryKey<config>
+    >
 >
 
 export type UseTokenReturnType<selectData = GetTokenData> = UseQueryReturnType<

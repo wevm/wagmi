@@ -19,9 +19,8 @@ import {
   type ContractFunctionName,
 } from 'viem'
 
-import type { ConfigParameter } from '../types/properties.js'
+import type { ConfigParameter, QueryParameter } from '../types/properties.js'
 import {
-  type UseQueryParameters,
   type UseQueryReturnType,
   structuralSharing,
   useQuery,
@@ -44,16 +43,13 @@ export type UseReadContractParameters<
   selectData = ReadContractData<abi, functionName, args>,
 > = UnionEvaluate<
   ReadContractOptions<abi, functionName, args, config> &
-    ConfigParameter<config> & {
-      query?:
-        | UseQueryParameters<
-            ReadContractQueryFnData<abi, functionName, args>,
-            ReadContractErrorType,
-            selectData,
-            ReadContractQueryKey<abi, functionName, args, config>
-          >
-        | undefined
-    }
+    ConfigParameter<config> &
+    QueryParameter<
+      ReadContractQueryFnData<abi, functionName, args>,
+      ReadContractErrorType,
+      selectData,
+      ReadContractQueryKey<abi, functionName, args, config>
+    >
 >
 
 export type UseReadContractReturnType<

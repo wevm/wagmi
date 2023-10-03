@@ -14,12 +14,8 @@ import {
   getEnsAvatarQueryOptions,
 } from '@wagmi/core/query'
 
-import type { ConfigParameter } from '../types/properties.js'
-import {
-  type UseQueryParameters,
-  type UseQueryReturnType,
-  useQuery,
-} from '../utils/query.js'
+import type { ConfigParameter, QueryParameter } from '../types/properties.js'
+import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
@@ -28,14 +24,13 @@ export type UseEnsAvatarParameters<
   selectData = GetEnsAvatarData,
 > = Evaluate<
   GetEnsAvatarOptions<config> &
-    ConfigParameter<config> & {
-      query?: UseQueryParameters<
-        GetEnsAvatarQueryFnData,
-        GetEnsAvatarErrorType,
-        selectData,
-        GetEnsAvatarQueryKey<config>
-      >
-    }
+    ConfigParameter<config> &
+    QueryParameter<
+      GetEnsAvatarQueryFnData,
+      GetEnsAvatarErrorType,
+      selectData,
+      GetEnsAvatarQueryKey<config>
+    >
 >
 
 export type UseEnsAvatarReturnType<selectData = GetEnsAvatarData> =

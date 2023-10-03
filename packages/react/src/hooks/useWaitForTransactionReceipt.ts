@@ -14,12 +14,8 @@ import {
   waitForTransactionReceiptQueryOptions,
 } from '@wagmi/core/query'
 
-import type { ConfigParameter } from '../types/properties.js'
-import {
-  type UseQueryParameters,
-  type UseQueryReturnType,
-  useQuery,
-} from '../utils/query.js'
+import type { ConfigParameter, QueryParameter } from '../types/properties.js'
+import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
@@ -29,16 +25,13 @@ export type UseWaitForTransactionReceiptParameters<
   selectData = WaitForTransactionReceiptData<config, chainId>,
 > = Evaluate<
   WaitForTransactionReceiptOptions<config, chainId> &
-    ConfigParameter<config> & {
-      query?:
-        | UseQueryParameters<
-            WaitForTransactionReceiptQueryFnData<config, chainId>,
-            WaitForTransactionReceiptErrorType,
-            selectData,
-            WaitForTransactionReceiptQueryKey<config, chainId>
-          >
-        | undefined
-    }
+    ConfigParameter<config> &
+    QueryParameter<
+      WaitForTransactionReceiptQueryFnData<config, chainId>,
+      WaitForTransactionReceiptErrorType,
+      selectData,
+      WaitForTransactionReceiptQueryKey<config, chainId>
+    >
 >
 
 export type UseWaitForTransactionReceiptReturnType<

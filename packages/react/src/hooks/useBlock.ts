@@ -20,12 +20,8 @@ import {
 } from '@wagmi/core/query'
 import type { BlockTag } from 'viem'
 
-import type { ConfigParameter } from '../types/properties.js'
-import {
-  type UseQueryParameters,
-  type UseQueryReturnType,
-  useQuery,
-} from '../utils/query.js'
+import type { ConfigParameter, QueryParameter } from '../types/properties.js'
+import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 import {
@@ -41,15 +37,13 @@ export type UseBlockParameters<
   selectData = GetBlockData,
 > = Evaluate<
   GetBlockOptions<includeTransactions, blockTag, config, chainId> &
-    ConfigParameter<config> & {
-      query?:
-        | UseQueryParameters<
-            GetBlockQueryFnData,
-            GetBlockErrorType,
-            selectData,
-            GetBlockQueryKey<includeTransactions, blockTag, config, chainId>
-          >
-        | undefined
+    ConfigParameter<config> &
+    QueryParameter<
+      GetBlockQueryFnData,
+      GetBlockErrorType,
+      selectData,
+      GetBlockQueryKey<includeTransactions, blockTag, config, chainId>
+    > & {
       watch?:
         | boolean
         | UnionEvaluate<

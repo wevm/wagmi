@@ -14,12 +14,8 @@ import {
   getEnsResolverQueryOptions,
 } from '@wagmi/core/query'
 
-import type { ConfigParameter } from '../types/properties.js'
-import {
-  type UseQueryParameters,
-  type UseQueryReturnType,
-  useQuery,
-} from '../utils/query.js'
+import type { ConfigParameter, QueryParameter } from '../types/properties.js'
+import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
@@ -28,16 +24,13 @@ export type UseEnsResolverParameters<
   selectData = GetEnsResolverData,
 > = Evaluate<
   GetEnsResolverOptions<config> &
-    ConfigParameter<config> & {
-      query?:
-        | UseQueryParameters<
-            GetEnsResolverQueryFnData,
-            GetEnsResolverErrorType,
-            selectData,
-            GetEnsResolverQueryKey<config>
-          >
-        | undefined
-    }
+    ConfigParameter<config> &
+    QueryParameter<
+      GetEnsResolverQueryFnData,
+      GetEnsResolverErrorType,
+      selectData,
+      GetEnsResolverQueryKey<config>
+    >
 >
 
 export type UseEnsResolverReturnType<selectData = GetEnsResolverData> =
