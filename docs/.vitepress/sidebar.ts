@@ -118,7 +118,7 @@ export function getSidebar() {
             link: '/react/api/hooks/useConnections',
           },
           {
-            text: 'useConnectorClient 🚧',
+            text: 'useConnectorClient',
             link: '/react/api/hooks/useConnectorClient',
           },
           {
@@ -195,7 +195,7 @@ export function getSidebar() {
             link: '/react/api/hooks/useWaitForTransactionReceipt',
           },
           {
-            text: 'useWalletClient 🚧',
+            text: 'useWalletClient',
             link: '/react/api/hooks/useWalletClient',
           },
           {
