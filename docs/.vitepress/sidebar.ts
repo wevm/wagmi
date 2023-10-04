@@ -183,7 +183,7 @@ export function getSidebar() {
             link: '/react/api/hooks/useSwitchChain',
           },
           {
-            text: 'useTransaction 🚧',
+            text: 'useTransaction',
             link: '/react/api/hooks/useTransaction',
           },
           {
@@ -191,7 +191,7 @@ export function getSidebar() {
             link: '/react/api/hooks/useToken',
           },
           {
-            text: 'useWaitForTransactionReceipt 🚧',
+            text: 'useWaitForTransactionReceipt',
             link: '/react/api/hooks/useWaitForTransactionReceipt',
           },
           {
@@ -423,7 +423,7 @@ export function getSidebar() {
             link: '/core/api/actions/switchChain',
           },
           {
-            text: 'waitForTransactionReceipt 🚧',
+            text: 'waitForTransactionReceipt',
             link: '/core/api/actions/waitForTransactionReceipt',
           },
           {

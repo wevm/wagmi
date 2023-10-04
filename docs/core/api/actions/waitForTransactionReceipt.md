@@ -56,11 +56,85 @@ const transactionReceipt = await waitForTransactionReceipt(config, {
 
 ### confirmations
 
+`number`
+
+The number of confirmations (blocks that have passed) to wait before resolving.
+
+::: code-group
+```ts [index.ts]
+import { waitForTransactionReceipt } from '@wagmi/core'
+import { config } from './config'
+
+const transactionReceipt = await waitForTransactionReceipt(config, {
+  confirmations: 2, // [!code focus]
+  hash: '0x4ca7ee652d57678f26e887c149ab0735f41de37bcad58c9f6d3ed5824f15b74d',
+})
+```
+<<< @/snippets/core/config.ts[config.ts]
+:::
+
 ### onReplaced
+
+```
+({ 
+  reason: 'replaced' | 'repriced' | 'cancelled', 
+  replacedTransaction: Transaction, 
+  transaction: Transaction, 
+  transactionReceipt: TransactionReceipt 
+}) => void
+```
+
+Optional callback to emit if the transaction has been replaced.
+
+::: code-group
+```ts [index.ts]
+import { waitForTransactionReceipt } from '@wagmi/core'
+import { config } from './config'
+
+const transactionReceipt = await waitForTransactionReceipt(config, {
+  hash: '0x4ca7ee652d57678f26e887c149ab0735f41de37bcad58c9f6d3ed5824f15b74d',
+  onReplaced: replacement => console.log(replacement), // [!code focus]
+})
+```
+<<< @/snippets/core/config.ts[config.ts]
+:::
 
 ### pollingInterval
 
+`number`
+
+Polling frequency (in ms). Defaults to the [Config's `pollingInterval` config](/core/api/createConfig#pollinginterval).
+
+::: code-group
+```ts [index.ts]
+import { waitForTransactionReceipt } from '@wagmi/core'
+import { config } from './config'
+
+const transactionReceipt = await waitForTransactionReceipt(config, {
+  hash: '0x4ca7ee652d57678f26e887c149ab0735f41de37bcad58c9f6d3ed5824f15b74d',
+  pollingInterval: 1_000, // [!code focus]
+})
+```
+<<< @/snippets/core/config.ts[config.ts]
+:::
+
 ### hash
+
+`"0x${string}"`
+
+The transaction hash to wait for.
+
+::: code-group
+```ts [index.ts]
+import { waitForTransactionReceipt } from '@wagmi/core'
+import { config } from './config'
+
+const transactionReceipt = await waitForTransactionReceipt(config, {
+  hash: '0x4ca7ee652d57678f26e887c149ab0735f41de37bcad58c9f6d3ed5824f15b74d', // [!code focus]
+})
+```
+<<< @/snippets/core/config.ts[config.ts]
+:::
 
 ## Return Type
 
@@ -78,4 +152,4 @@ import { type WaitForTransactionReceiptErrorType } from '@wagmi/core'
 
 ## Viem
 
-- [`waitForTransactionReceipt`](https://viem.sh/docs/actions/public/waitForTransactionReceipt.html) for token balances
+- [`waitForTransactionReceipt`](https://viem.sh/docs/actions/public/waitForTransactionReceipt.html)
