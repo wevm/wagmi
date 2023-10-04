@@ -58,9 +58,30 @@ function App() {
 }
 ```
 
+### config
+
+`Config | undefined`
+
+[`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/WagmiProvider).
+
+::: code-group
+```tsx [index.tsx]
+import { useWaitForTransactionReceipt } from 'wagmi'
+import { config } from './config' // [!code focus]
+
+function App() {
+  const result = useWaitForTransactionReceipt({
+    hash: '0x4ca7ee652d57678f26e887c149ab0735f41de37bcad58c9f6d3ed5824f15b74d',
+    config, // [!code focus]
+  })
+}
+```
+<<< @/snippets/react/config.ts[config.ts]
+:::
+
 ### confirmations
 
-`number`
+`number | undefined`
 
 The number of confirmations (blocks that have passed) to wait before resolving.
 
@@ -78,12 +99,12 @@ function App() {
 ### onReplaced
 
 ```
-({ 
+(({ 
   reason: 'replaced' | 'repriced' | 'cancelled', 
   replacedTransaction: Transaction, 
   transaction: Transaction, 
   transactionReceipt: TransactionReceipt 
-}) => void
+}) => void) | undefined
 ```
 
 Optional callback to emit if the transaction has been replaced.
@@ -101,7 +122,7 @@ function App() {
 
 ### pollingInterval
 
-`number`
+`number | undefined`
 
 Polling frequency (in ms). Defaults to the [Config's `pollingInterval` config](/react/api/createConfig#pollinginterval).
 
@@ -118,7 +139,7 @@ function App() {
 
 ### hash
 
-`"0x${string}"`
+`"0x${string}" | undefined`
 
 The transaction hash to wait for.
 

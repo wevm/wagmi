@@ -87,8 +87,6 @@ function App() {
 }
 ```
 
----
-
 ### chainId
 
 `config['chains'][number]['id'] | undefined`
@@ -106,6 +104,27 @@ function App() {
   })
 }
 ```
+
+### config
+
+`Config | undefined`
+
+[`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/WagmiProvider).
+
+::: code-group
+```tsx [index.tsx]
+import { useTransaction } from 'wagmi'
+import { config } from './config' // [!code focus]
+
+function App() {
+  const result = useTransaction({
+    hash: '0x0fa64daeae54e207aa98613e308c2ba8abfe274f75507e741508cc4db82c8cb5',
+    config, // [!code focus]
+  })
+}
+```
+<<< @/snippets/react/config.ts[config.ts]
+:::
 
 ### hash
 
