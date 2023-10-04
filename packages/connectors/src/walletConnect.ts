@@ -107,11 +107,6 @@ export class WalletConnectConnector extends Connector<
     })
   }
 
-  async getModal() {
-    const { modal } = await this.getProvider();
-    return modal;
-  }
-
   async connect({ chainId, pairingTopic }: ConnectConfig = {}) {
     try {
       let targetChainId = chainId
