@@ -66,6 +66,27 @@ function App() {
 }
 ```
 
+### config
+
+`Config | undefined`
+
+[`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/WagmiProvider).
+
+::: code-group
+```tsx [index.tsx]
+import { useWaitForTransactionReceipt } from 'wagmi'
+import { config } from './config' // [!code focus]
+
+function App() {
+  const result = useWaitForTransactionReceipt({
+    hash: '0x4ca7ee652d57678f26e887c149ab0735f41de37bcad58c9f6d3ed5824f15b74d',
+    config, // [!code focus]
+  })
+}
+```
+<<< @/snippets/react/config.ts[config.ts]
+:::
+
 ### confirmations
 
 `number | undefined`
@@ -121,7 +142,7 @@ function App() {
 
 ### hash
 
-`` `0x${string}` ``
+`` `0x${string}` | undefined ``
 
 The transaction hash to wait for. [`enabled`](#enabled) set to `false` if `hash` is `undefined`.
 
