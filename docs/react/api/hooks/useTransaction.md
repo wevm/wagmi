@@ -140,6 +140,8 @@ function App() {
 }
 ```
 
+<!--@include: @shared/query-options.md-->
+
 ## Return Type
 
 ```ts
