@@ -3,6 +3,14 @@ title: useWaitForTransactionReceipt
 description: Hook that waits for the transaction to be included on a block, and then returns the transaction receipt. If the transaction reverts, then the action will throw an error. Replacement detection (e.g. sped up transactions) is also supported.
 ---
 
+<script setup>
+const packageName = 'wagmi'
+const actionName = 'waitForTransactionReceipt'
+const typeName = 'WaitForTransactionReceipt'
+const TData = 'WaitForTransactionReceiptData'
+const TError = 'WaitForTransactionReceiptErrorType'
+</script>
+
 # useWaitForTransactionReceipt
 
 Hook that waits for the transaction to be included on a block, and then returns the transaction receipt. If the transaction reverts, then the action will throw an error. Replacement detection (e.g. sped up transactions) is also supported.
@@ -60,7 +68,7 @@ function App() {
 
 ### confirmations
 
-`number`
+`number | undefined`
 
 The number of confirmations (blocks that have passed) to wait before resolving.
 
@@ -77,14 +85,9 @@ function App() {
 
 ### onReplaced
 
-```
-({ 
-  reason: 'replaced' | 'repriced' | 'cancelled', 
-  replacedTransaction: Transaction, 
-  transaction: Transaction, 
-  transactionReceipt: TransactionReceipt 
-}) => void
-```
+`
+(({ reason: 'replaced' | 'repriced' | 'cancelled'; replacedTransaction: Transaction; transaction: Transaction; transactionReceipt: TransactionReceipt }) => void) | undefined
+`
 
 Optional callback to emit if the transaction has been replaced.
 
@@ -101,7 +104,7 @@ function App() {
 
 ### pollingInterval
 
-`number`
+`number | undefined`
 
 Polling frequency (in ms). Defaults to the [Config's `pollingInterval` config](/react/api/createConfig#pollinginterval).
 
@@ -118,9 +121,9 @@ function App() {
 
 ### hash
 
-`"0x${string}"`
+`` `0x${string}` ``
 
-The transaction hash to wait for.
+The transaction hash to wait for. [`enabled`](#enabled) set to `false` if `hash` is `undefined`.
 
 ```ts [index.ts]
 import { useWaitForTransactionReceipt } from 'wagmi'
@@ -132,11 +135,17 @@ function App() {
 }
 ```
 
+<!--@include: @shared/query-options.md-->
+
 ## Return Type
 
 ```ts
 import { type UseWaitForTransactionReceiptReturnType } from 'wagmi'
 ```
+
+<!--@include: @shared/query-result.md-->
+
+<!--@include: @shared/query-imports.md-->
 
 ## Action
 

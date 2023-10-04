@@ -56,7 +56,7 @@ const transactionReceipt = await waitForTransactionReceipt(config, {
 
 ### confirmations
 
-`number`
+`number | undefined`
 
 The number of confirmations (blocks that have passed) to wait before resolving.
 
@@ -75,14 +75,9 @@ const transactionReceipt = await waitForTransactionReceipt(config, {
 
 ### onReplaced
 
-```
-({ 
-  reason: 'replaced' | 'repriced' | 'cancelled', 
-  replacedTransaction: Transaction, 
-  transaction: Transaction, 
-  transactionReceipt: TransactionReceipt 
-}) => void
-```
+`
+(({ reason: 'replaced' | 'repriced' | 'cancelled'; replacedTransaction: Transaction; transaction: Transaction; transactionReceipt: TransactionReceipt }) => void) | undefined
+`
 
 Optional callback to emit if the transaction has been replaced.
 
@@ -101,7 +96,7 @@ const transactionReceipt = await waitForTransactionReceipt(config, {
 
 ### pollingInterval
 
-`number`
+`number | undefined`
 
 Polling frequency (in ms). Defaults to the [Config's `pollingInterval` config](/core/api/createConfig#pollinginterval).
 
@@ -120,7 +115,7 @@ const transactionReceipt = await waitForTransactionReceipt(config, {
 
 ### hash
 
-`"0x${string}"`
+`` `0x${string}` ``
 
 The transaction hash to wait for.
 
