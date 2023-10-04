@@ -36,6 +36,7 @@ export const config = createConfig({
 import { type SafeParameters } from '{{connectorsPackageName}}'
 ```
 
+Check out the [Safe docs](https://github.com/safe-global/safe-apps-sdk/tree/main/packages/safe-apps-sdk) for more info.
 ### allowedDomains
 
 `RegExp[] | undefined`

@@ -71,8 +71,12 @@ export function getSidebar() {
                 link: '/react/api/connectors/ledger',
               },
               {
+                text: 'metaMask',
+                link: '/react/api/connectors/metaMask',
+              },
+              {
                 text: 'mock',
-                link: '/core/api/connectors/mock',
+                link: '/react/api/connectors/mock',
               },
               {
                 text: 'safe',
@@ -299,6 +303,10 @@ export function getSidebar() {
               {
                 text: 'ledger',
                 link: '/core/api/connectors/ledger',
+              },
+              {
+                text: 'metaMask',
+                link: '/core/api/connectors/metaMask',
               },
               {
                 text: 'mock',

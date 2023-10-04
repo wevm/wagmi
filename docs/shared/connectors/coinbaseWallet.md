@@ -40,6 +40,8 @@ export const config = createConfig({
 import { type CoinbaseWalletParameters } from '{{connectorsPackageName}}'
 ```
 
+Check out the [Coinbase Wallet SDK docs](https://github.com/coinbase/coinbase-wallet-sdk) for more info.
+
 ### appName
 
 `string`

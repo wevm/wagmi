@@ -298,7 +298,7 @@ import { coinbaseWallet, injected } from '@wagmi/connectors' // [!code ++]
 
 ### Removed `MetaMaskConnector`
 
-The `MetaMaskConnector` was removed since it was nearly the same thing as the `InjectedConnector`. Use the [`injected`](/core/api/connectors/injected) connector instead, along with the [`target`](/core/api/connectors/injected#target) parameter set to `'metaMask'`.
+The `MetaMaskConnector` was removed since it was nearly the same thing as the `InjectedConnector`. Use the [`injected`](/core/api/connectors/injected) connector instead, along with the [`target`](/core/api/connectors/injected#target) parameter set to `'metaMask'`, for the same behavior.
 
 ```ts
 import { MetaMaskConnector } from '@wagmi/core/connectors/metaMask' // [!code --]
@@ -306,6 +306,14 @@ import { injected } from '@wagmi/connectors' // [!code ++]
 
 const connector = new MetaMaskConnector() // [!code --]
 const connector = injected({ target: 'metaMask' }) // [!code ++]
+```
+
+In addition, there is a new [`metaMask`](/core/api/connectors/metaMask) connector that wraps the [MetaMask SDK](https://github.com/MetaMask/metamask-sdk) and includes desktop and mobile support.
+
+```ts
+import { metaMask } from '@wagmi/connectors'
+
+const connector = metaMask()
 ```
 
 ### Renamed connectors

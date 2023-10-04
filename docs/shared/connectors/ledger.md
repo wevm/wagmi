@@ -36,6 +36,8 @@ export const config = createConfig({
 import { type LedgerParameters } from '{{connectorsPackageName}}'
 ```
 
+Check out the [Ledger Connect Kit](https://github.com/LedgerHQ/connect-kit) for more info.
+
 ### enableDebugLogs
 
 `boolean | undefined`

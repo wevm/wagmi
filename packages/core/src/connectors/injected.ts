@@ -147,7 +147,7 @@ export function injected(parameters: InjectedParameters = {}) {
         accounts = await this.getAccounts().catch(() => null)
         const isAuthorized = !!accounts?.length
         if (isAuthorized)
-          // Attempt to show another prompt for selecting connector if already connected
+          // Attempt to show another prompt for selecting account if already connected
           try {
             const permissions = await provider.request({
               method: 'wallet_requestPermissions',
@@ -318,13 +318,11 @@ export function injected(parameters: InjectedParameters = {}) {
       const chain = config.chains.find((x) => x.id === chainId)
       if (!chain) throw new SwitchChainError(new ChainNotConfiguredError())
 
-      const id = numberToHex(chainId)
-
       try {
         await Promise.all([
           provider.request({
             method: 'wallet_switchEthereumChain',
-            params: [{ chainId: id }],
+            params: [{ chainId: numberToHex(chainId) }],
           }),
           new Promise<void>((resolve) =>
             config.emitter.once('change', ({ chainId: currentChainId }) => {
@@ -358,7 +356,7 @@ export function injected(parameters: InjectedParameters = {}) {
               method: 'wallet_addEthereumChain',
               params: [
                 {
-                  chainId: id,
+                  chainId: numberToHex(chainId),
                   chainName: chain.name,
                   nativeCurrency: chain.nativeCurrency,
                   rpcUrls: [chain.rpcUrls.public?.http[0] ?? ''],

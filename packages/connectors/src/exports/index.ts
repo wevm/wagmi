@@ -12,6 +12,8 @@ export {
 
 export { type LedgerParameters, ledger } from '../ledger.js'
 
+export { type MetaMaskParameters, metaMask } from '../metaMask.js'
+
 export { type SafeParameters, safe } from '../safe.js'
 
 export {

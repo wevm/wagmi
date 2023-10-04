@@ -40,6 +40,8 @@ export const config = createConfig({
 import { type WalletConnectParameters } from '{{connectorsPackageName}}'
 ```
 
+Check out the [WalletConnect docs](https://github.com/WalletConnect/walletconnect-monorepo/tree/v2.0/providers/ethereum-provider) for more info. A few options are omitted that Wagmi manages internally.
+
 ### disableProviderPing
 
 `boolean | undefined`
