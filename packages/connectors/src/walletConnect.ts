@@ -105,7 +105,6 @@ export class WalletConnectConnector extends Connector<
       ...config,
       options: { isNewChainsStale: true, ...config.options },
     })
-    this.#createProvider()
   }
 
   async connect({ chainId, pairingTopic }: ConnectConfig = {}) {
