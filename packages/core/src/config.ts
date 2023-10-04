@@ -240,29 +240,23 @@ export class Config<
       status: x.data?.account ? 'reconnecting' : 'connecting',
     }))
 
-    // Try last used connector first
-    const sorted = this.#lastUsedConnector
-      ? [...this.connectors].sort((x) =>
-          x.id === this.#lastUsedConnector ? -1 : 1,
-        )
-      : this.connectors
-
     let connected = false
-    for (const connector of sorted) {
-      if (!connector.ready || !connector.isAuthorized) continue
-      const isAuthorized = await connector.isAuthorized()
-      if (!isAuthorized) continue
 
-      const data = await connector.connect()
-      this.setState((x) => ({
-        ...x,
-        connector,
-        chains: connector?.chains,
-        data,
-        status: 'connected',
-      }))
-      connected = true
-      break
+    const connector = this.connectors.find(connector => connector.id === this.#lastUsedConnector);
+
+    if (connector) {
+      const isAuthorized = await connector.isAuthorized();
+      if (connector.ready && isAuthorized) {
+        const data = await connector.connect()
+        this.setState((x) => ({
+          ...x,
+          connector,
+          chains: connector?.chains,
+          data,
+          status: 'connected',
+        }))
+        connected = true
+      }
     }
 
     // If connecting didn't succeed, set to disconnected
