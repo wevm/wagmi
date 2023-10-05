@@ -202,8 +202,8 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2
       '@metamask/sdk':
-        specifier: ^0.7.1
-        version: 0.7.1
+        specifier: ^0.8.0
+        version: 0.8.0
       '@safe-global/safe-apps-provider':
         specifier: ^0.18.0
         version: 0.18.0(typescript@5.1.6)
@@ -2594,8 +2594,8 @@ packages:
     engines: {node: '>=12.0.0'}
     dev: false
 
-  /@metamask/sdk-communication-layer@0.7.1:
-    resolution: {integrity: sha512-IYmVC256HPEB1EGtb0LYDchHrEJNzc2LduKbDkxSX8p6jdG7QwlbbBHPHgwp7monJYjX6rh8cPPyALZ8zR7RWw==}
+  /@metamask/sdk-communication-layer@0.8.0:
+    resolution: {integrity: sha512-p0xpqJn35vLzHlaCC16GGotTaWDJ7bhYMZuBs0/b8hoIsT7WZ+cKdsKA7gkxIRuoKzsN7txaYn+45lrdL3YjFw==}
     dependencies:
       cross-fetch: 3.1.5
       date-fns: 2.30.0
@@ -2622,19 +2622,21 @@ packages:
       - '@types/react'
     dev: false
 
-  /@metamask/sdk@0.7.1:
-    resolution: {integrity: sha512-9k8BwuRFOpdqLGOe0nAnxGrCpTlGcOPcqaHogD3Chv2xQdOIVnI2G2Y1DmgxZrK/jXv3WiGogzPctMgiEus7gQ==}
+  /@metamask/sdk@0.8.0:
+    resolution: {integrity: sha512-DcsLlOcEmYhJLWQgeVYELzsBXIxhmh4JQxwwJitlAXZU5P4qFvsgVgy5aEUoffC4xg6zHgorVEBEg/XMncJcwA==}
     peerDependencies:
       react: ^18.2.0
       react-native: '*'
     peerDependenciesMeta:
       react:
         optional: true
+      react-native:
+        optional: true
     dependencies:
       '@metamask/onboarding': 1.0.1
       '@metamask/post-message-stream': 6.2.0
       '@metamask/providers': 10.2.1
-      '@metamask/sdk-communication-layer': 0.7.1
+      '@metamask/sdk-communication-layer': 0.8.0
       '@metamask/sdk-install-modal-web': 0.7.0
       '@react-native-async-storage/async-storage': 1.19.3
       '@types/dom-screen-wake-lock': 1.0.1
@@ -3163,6 +3165,9 @@ packages:
     resolution: {integrity: sha512-CwGfoHCWdPOTPS+2fW6YRE1fFBpT9++ahLEroX5hkgwyoQ+TkmjOaUxixdEIoVua9Pz5EF2pGOIJzqOTMWfBlA==}
     peerDependencies:
       react-native: ^0.0.0-0 || 0.60 - 0.72 || 1000.0.0
+    peerDependenciesMeta:
+      react-native:
+        optional: true
     dependencies:
       merge-options: 3.0.4
     dev: false
@@ -9263,6 +9268,8 @@ packages:
       react-native: '*'
     peerDependenciesMeta:
       react:
+        optional: true
+      react-native:
         optional: true
     dependencies:
       escape-string-regexp: 2.0.0
