@@ -3,6 +3,14 @@ title: useTransaction
 description: Hook for fetching transactions given hashes or block identifiers.
 ---
 
+<script setup>
+const packageName = 'wagmi'
+const actionName = 'getTransaction'
+const typeName = 'GetTransaction'
+const TData = 'GetTransactionData'
+const TError = 'GetTransactionErrorType'
+</script>
+
 # useTransaction
 
 Hook for fetching transactions given hashes or block identifiers.
@@ -130,7 +138,7 @@ function App() {
 
 `` `0x${string}` | undefined ``
 
-Hash to get transaction.
+Hash to get transaction. [`enabled`](#enabled) set to `false` if `hash` and [`index`](#index) are `undefined`.
 
 ```ts
 import { useTransaction } from 'wagmi'
@@ -146,7 +154,7 @@ function App() {
 
 `number | undefined`
 
-An index to be used with a block identifier ([hash](#blockhash), [number](#blocknumber), or [tag](#blocktag)).
+An index to be used with a block identifier ([hash](#blockhash), [number](#blocknumber), or [tag](#blocktag)). [`enabled`](#enabled) set to `false` if `index` and [`hash`](#hash) are `undefined`.
 
 ```ts
 import { useTransaction } from 'wagmi'
@@ -166,6 +174,10 @@ function App() {
 ```ts
 import { type UseTransactionReturnType } from 'wagmi'
 ```
+
+<!--@include: @shared/query-result.md-->
+
+<!--@include: @shared/query-imports.md-->
 
 ## Action
 

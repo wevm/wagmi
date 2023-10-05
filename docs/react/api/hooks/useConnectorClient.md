@@ -3,6 +3,15 @@ title: useConnectorClient
 description: Hook for getting a Viem `Client` object for the current or provided connector.
 ---
 
+<script setup>
+const packageName = 'wagmi'
+const actionName = 'getConnectorClient'
+const typeName = 'GetConnectorClient'
+const TData = 'Client'
+const TError = 'GetConnectorClientErrorType'
+const hideQueryOptions = ['gcTime', 'staleTime']
+</script>
+
 # useConnectorClient
 
 Hook for getting a Viem [`Client`](https://viem.sh/docs/clients/custom.html) object for the current or provided connector.
@@ -109,6 +118,10 @@ function App() {
 ```ts
 import { type UseConnectorClientReturnType } from 'wagmi'
 ```
+
+<!--@include: @shared/query-result.md-->
+
+<!--@include: @shared/query-imports.md-->
 
 ## Action
 

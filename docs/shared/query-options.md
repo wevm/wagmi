@@ -2,6 +2,7 @@
 <script setup>
 const TData = 'TData'
 const TError = 'TError'
+const hideQueryOptions = []
 </script>
 -->
 
@@ -20,6 +21,9 @@ TanStack Query parameters. See the [TanStack Query query docs](https://tanstack.
 - Set this to `false` to disable this query from automatically running.
 - Can be used for [Dependent Queries](https://tanstack.com/query/v5/docs/react/guides/dependent-queries).
 
+
+<div v-if="!hideQueryOptions?.includes('gcTime')">
+
 #### gcTime
 
 `number | Infinity | undefined`
@@ -27,6 +31,8 @@ TanStack Query parameters. See the [TanStack Query query docs](https://tanstack.
 - Defaults to `5 * 60 * 1000` (5 minutes) or `Infinity` during SSR
 - The time in milliseconds that unused/inactive cache data remains in memory. When a query's cache becomes unused or inactive, that cache data will be garbage collected after this duration. When different garbage collection times are specified, the longest one will be used.
 - If set to `Infinity`, will disable garbage collection
+
+</div>
 
 #### initialData
 
@@ -152,6 +158,8 @@ If set to `false`, the query will not be retried on mount if it contains an erro
 
 This option can be used to transform or select a part of the data returned by the query function. It affects the returned `data` value, but does not affect what gets stored in the query cache.
 
+<div v-if="!hideQueryOptions?.includes('staleTime')">
+
 #### staleTime
 
 `number | Infinity | undefined`
@@ -159,6 +167,8 @@ This option can be used to transform or select a part of the data returned by th
 - Defaults to `0`
 - The time in milliseconds after data is considered stale. This value only applies to the hook it is defined on.
 - If set to `Infinity`, the data will never be considered stale
+
+</div>
 
 #### structuralSharing
 

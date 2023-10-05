@@ -497,10 +497,6 @@ export function getSidebar() {
         items: [
           { text: 'Installation', link: '/cli/installation' },
           { text: 'Getting Started 🚧', link: '/cli/getting-started' },
-          {
-            text: 'create-wagmi',
-            link: '/cli/create-wagmi',
-          },
         ],
       },
       {
@@ -539,6 +535,10 @@ export function getSidebar() {
           { text: 'react 🚧', link: '/cli/plugins/react' },
           { text: 'sourcify 🚧', link: '/cli/plugins/sourcify' },
         ],
+      },
+      {
+        text: 'create-wagmi',
+        link: '/cli/create-wagmi',
       },
     ],
     '/dev': [

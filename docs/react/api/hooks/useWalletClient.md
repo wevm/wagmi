@@ -3,6 +3,15 @@ title: useWalletClient
 description: Hook for getting a Viem `WalletClient` object for the current or provided connector.
 ---
 
+<script setup>
+const packageName = 'wagmi'
+const actionName = 'getWalletClient'
+const typeName = 'GetWalletClient'
+const TData = 'WalletClient'
+const TError = 'GetWalletClientErrorType'
+const hideQueryOptions = ['gcTime', 'staleTime']
+</script>
+
 # useWalletClient
 
 Hook for getting a Viem [`WalletClient`](https://viem.sh/docs/clients/wallet.html) object for the current or provided connector.
@@ -113,6 +122,10 @@ function App() {
 ```ts
 import { type UseWalletClientReturnType } from 'wagmi'
 ```
+
+<!--@include: @shared/query-result.md-->
+
+<!--@include: @shared/query-imports.md-->
 
 ## Action
 

@@ -14,7 +14,7 @@ import {
   type {{typeName}}Options,
   type {{typeName}}QueryFnData,
   type {{typeName}}QueryKey,
-  {{actionName}}DataQueryKey,
-  {{actionName}}DataQueryOptions,
+  {{actionName}}QueryKey,
+  {{actionName}}QueryOptions,
 } from '{{packageName}}/query'
 ```
