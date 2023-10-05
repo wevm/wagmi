@@ -31,7 +31,6 @@ const config = createConfig({
       chains,
       options: {
         sdkOptions: {
-          // communicationServerUrl: "http://192.168.11.1:4000", // optional
           infuraAPIKey: process.env.NEXT_PUBLIC_INFURA_API_KEY!, // optional infura API Key to speed up readonly calls.
           readonlyRPCMap: {
             "0x539": "https://rpc-mainnet.somecustomdomain.com/", // optional custom RPC endpoint to speed up readonly calls.
