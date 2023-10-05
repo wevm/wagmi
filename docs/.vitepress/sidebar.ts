@@ -21,7 +21,7 @@ export function getSidebar() {
             link: '/react/guides/connect-wallet',
           },
           {
-            text: 'TanStack Query 🚧',
+            text: 'TanStack Query',
             link: '/react/guides/tanstack-query',
           },
           {
