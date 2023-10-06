@@ -10,7 +10,7 @@ All of the core [Wagmi Actions](/core/api/actions) are friendly wrappers around 
 
 There may be cases where you might want to dig deeper and utilize Viem Actions directly (maybe an Action doesn't exist in Wagmi yet). In these cases, you can import Viem Actions directly via `viem/actions` and plug in a Viem Client returned by the [`getClient` Action](/core/api/actions/getClient).
 
-The example below demonstrates three different ways to utilize Viem Actions:
+The example below demonstrates two different ways to utilize Viem Actions:
 
 1. **Tree-shakable Actions (recommended):** Uses `getClient` (for public actions) and `getConnectorClient` (for wallet actions).
 2. **Client Actions:** Uses `getPublicClient` (for public actions) and  `getWalletClient` (for wallet actions).
