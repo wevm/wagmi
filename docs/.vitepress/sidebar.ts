@@ -270,7 +270,7 @@ export function getSidebar() {
             link: '/core/guides/chain-properties',
           },
           {
-            text: 'Viem Usage 🚧',
+            text: 'Viem',
             link: '/core/guides/viem',
           },
           {
