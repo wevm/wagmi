@@ -262,8 +262,8 @@ export function getSidebar() {
             link: '/core/guides/framework-adapter',
           },
           {
-            text: 'Ethers & Web3.js 🚧',
-            link: '/core/guides/ethers-web3',
+            text: 'Ethers.js Adapters',
+            link: '/core/guides/ethers',
           },
           {
             text: 'Testing 🚧',
