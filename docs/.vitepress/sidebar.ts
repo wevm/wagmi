@@ -29,8 +29,8 @@ export function getSidebar() {
             link: '/react/guides/connect-wallet',
           },
           {
-            text: 'Ethers & Web3.js 🚧',
-            link: '/react/guides/ethers-web3',
+            text: 'Ethers.js Adapters',
+            link: '/react/guides/ethers',
           },
           {
             text: 'Testing 🚧',
