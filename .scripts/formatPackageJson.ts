@@ -13,8 +13,8 @@ const packagePaths = await glob('packages/**/package.json', {
 let count = 0
 for (const packagePath of packagePaths) {
   type Package = Record<string, unknown> & {
-    name?: string
-    private?: boolean
+    name?: string | undefined
+    private?: boolean | undefined
   }
   const file = Bun.file(packagePath)
   const packageJson = (await file.json()) as Package

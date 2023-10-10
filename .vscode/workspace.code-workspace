@@ -9,8 +9,8 @@
       "path": "../packages"
     },
     {
-      "name": "playground",
-      "path": "../playground"
+      "name": "playgrounds",
+      "path": "../playgrounds"
     }
   ]
 }
