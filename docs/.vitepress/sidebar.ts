@@ -17,16 +17,20 @@ export function getSidebar() {
         text: 'Guides 🚧',
         items: [
           {
-            text: 'Connect Wallet 🚧',
-            link: '/react/guides/connect-wallet',
-          },
-          {
             text: 'TanStack Query',
             link: '/react/guides/tanstack-query',
           },
           {
-            text: 'Ethers & Web3.js 🚧',
-            link: '/react/guides/ethers-web3',
+            text: 'Viem',
+            link: '/react/guides/viem',
+          },
+          {
+            text: 'Connect Wallet 🚧',
+            link: '/react/guides/connect-wallet',
+          },
+          {
+            text: 'Ethers.js Adapters',
+            link: '/react/guides/ethers',
           },
           {
             text: 'Testing 🚧',
@@ -35,10 +39,6 @@ export function getSidebar() {
           {
             text: 'Chain Properties 🚧',
             link: '/react/guides/chain-properties',
-          },
-          {
-            text: 'Viem Usage 🚧',
-            link: '/react/guides/viem',
           },
           {
             text: 'FAQ / Troubleshooting',
@@ -254,12 +254,16 @@ export function getSidebar() {
         text: 'Guides 🚧',
         items: [
           {
+            text: 'Viem',
+            link: '/core/guides/viem',
+          },
+          {
             text: 'Framework Adapters 🚧',
             link: '/core/guides/framework-adapter',
           },
           {
-            text: 'Ethers & Web3.js 🚧',
-            link: '/core/guides/ethers-web3',
+            text: 'Ethers.js Adapters',
+            link: '/core/guides/ethers',
           },
           {
             text: 'Testing 🚧',
@@ -268,10 +272,6 @@ export function getSidebar() {
           {
             text: 'Chain Properties 🚧',
             link: '/core/guides/chain-properties',
-          },
-          {
-            text: 'Viem Usage 🚧',
-            link: '/core/guides/viem',
           },
           {
             text: 'FAQ / Troubleshooting',
