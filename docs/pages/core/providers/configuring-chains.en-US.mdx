@@ -209,7 +209,7 @@ const { chains } = configureChains(
     infuraProvider({ apiKey: 'yourInfuraApiKey' }),
     publicProvider(),
   ],
-  { retryCount: 5 },
+  { retryDelay: 150 },
 )
 ```
 
