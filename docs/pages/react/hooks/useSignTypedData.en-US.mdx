@@ -115,7 +115,7 @@ function App() {
       verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
     },
     types,
-    value,
+    message,
   })
 }
 ```
@@ -159,7 +159,7 @@ function App() {
     domain,
     types,
     primaryType: 'Mail',
-    value,
+    message,
   })
 }
 ```
@@ -168,7 +168,7 @@ function App() {
 
 Typed data type definition.
 
-By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `types`, TypeScript will infer the correct types `value`. See the wagmi [TypeScript docs](/react/typescript) for more information.
+By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `types`, TypeScript will infer the correct types of `message`. See the wagmi [TypeScript docs](/react/typescript) for more information.
 
 ```tsx {8-18}
 import { useSignTypedData } from 'wagmi'
@@ -204,7 +204,7 @@ function App() {
   const signTypedData = useSignTypedData({
     domain,
     types,
-    value,
+    message,
     onError(error) {
       console.log('Error', error)
     },
@@ -223,7 +223,7 @@ function App() {
   const signTypedData = useSignTypedData({
     domain,
     types,
-    value,
+    message,
     onMutate(args) {
       console.log('Mutate', args)
     },
@@ -242,7 +242,7 @@ function App() {
   const signTypedData = useSignTypedData({
     domain,
     types,
-    value,
+    message,
     onSettled(data, error) {
       console.log('Settled', { data, error })
     },
@@ -261,7 +261,7 @@ function App() {
   const signTypedData = useSignTypedData({
     domain,
     types,
-    value,
+    message,
     onSuccess(data) {
       console.log('Success', data)
     },
