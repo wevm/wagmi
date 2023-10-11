@@ -1,10 +1,12 @@
 <br>
 
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/logo-dark.svg">
-    <img alt="wagmi logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/logo-light.svg" width="auto" height="60">
-  </picture>
+  <a href="https://wagmi.sh">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/logo-dark.svg">
+      <img alt="wagmi logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/logo-light.svg" width="auto" height="60">
+    </picture>
+  </a>
 </p>
 
 <p align="center">
@@ -62,7 +64,7 @@ For casual chit-chat with others using the framework:
 
 ## Contributing
 
-Contributions to Wagmi are greatly appreciated! If you're interested in contributing to Wagmi, please read the [Contributing Guide](https://alpha.wagmi.sh/dev/contributing) before submitting a pull request.
+Contributions to Wagmi are greatly appreciated! If you're interested in contributing to Wagmi, please read the [Contributing Guide](https://alpha.wagmi.sh/dev/contributing) **before submitting a pull request**.
 
 ## Sponsors
 

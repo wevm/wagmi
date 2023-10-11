@@ -81,7 +81,7 @@ export default withTwoslash(
         { text: 'CLI', link: '/cli/getting-started' },
         { text: 'Examples', link: '/examples' },
         {
-          text: 'Links',
+          text: 'More',
           items: [
             {
               text: 'Discussions ',

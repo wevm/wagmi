@@ -48,7 +48,8 @@ export type SimulateContractParameters<
         functionName,
         args,
         chains[key],
-        chains[key]
+        chains[key],
+        Account | Address
       >,
       'chain'
     >

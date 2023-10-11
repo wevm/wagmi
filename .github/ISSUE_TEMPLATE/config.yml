@@ -5,7 +5,7 @@ contact_links:
     about: Ask a question and discuss with other community members.
   - name: Feature Request
     url: https://github.com/wagmi-dev/wagmi/discussions/new?category=ideas
-    about: Request a feature or brainstorm ideas for new functionality.
+    about: Request features or brainstorm ideas for new functionality.
   - name: Connector Request
     url: https://github.com/wagmi-dev/wagmi/discussions/new?category=connector-request
     about: Kick off a request for a new Connector

@@ -50,7 +50,7 @@ jobs:
         run: pnpm test:build
 
       - name: Check for unused files, dependencies, and exports
-        run: pnpm knip --production
+        run: pnpm knip --production --ignore-internal
 
   types:
     name: Types

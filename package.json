@@ -15,7 +15,7 @@
     "format": "biome format . --write",
     "lint": "biome check .",
     "lint:fix": "pnpm lint --apply",
-    "lint:unused": "pnpm clean && knip",
+    "lint:unused": "pnpm clean && knip --ignore-internal",
     "postinstall": "pnpm preconstruct",
     "preconstruct": "bun .scripts/preconstruct.ts",
     "preinstall": "npx only-allow@1.1.1 pnpm",
@@ -26,7 +26,6 @@
     "test:cov": "vitest --coverage",
     "test:typecheck": "vitest typecheck",
     "test:ui": "vitest --ui",
-    "test:ui:cov": "open ./coverage/index.html",
     "test:update": "vitest --update",
     "typecheck": "pnpm run --r --parallel typecheck && tsc --noEmit",
     "version:update": "bun .scripts/updateVersion.ts",
@@ -50,7 +49,7 @@
     "rimraf": "^4.4.1",
     "simple-git-hooks": "^2.9.0",
     "typescript": "5.1.6",
-    "viem": "2.0.0-alpha.15",
+    "viem": "2.0.0-alpha.17",
     "vitest": "^0.34.5"
   },
   "packageManager": "pnpm@8.8.0",
@@ -68,20 +67,14 @@
     "pre-commit": "pnpm format && pnpm lint:fix"
   },
   "knip": {
-    "ignore": [
-      "**/*.test-d.ts",
-      "**/vite-env.d.ts",
-      "**/templates/**",
-      "**/hardhat.config.js",
-      "vitest.workspace.ts"
-    ],
+    "ignore": ["**/*.test-d.ts", "**/templates/**", "**/hardhat.config.js"],
     "ignoreBinaries": ["open"],
     "ignoreDependencies": ["only-allow"],
     "ignoreWorkspaces": [
       "docs",
       "packages/register-tests/**",
       "packages/test",
-      "playgrounds/vite-ssr-react"
+      "playgrounds/**"
     ],
     "workspaces": {
       ".": {
@@ -94,8 +87,11 @@
           "types/*.d.ts!"
         ]
       },
+      "packages/connectors": {
+        "entry": "src/exports/index.ts!"
+      },
       "packages/core": {
-        "entry": "src/exports/{chains,index,internal,query}.ts!",
+        "entry": "src/exports/{actions,chains,index,internal,query}.ts!",
         "ignoreDependencies": ["@tanstack/query-core"]
       },
       "packages/create-wagmi": {

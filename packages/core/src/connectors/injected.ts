@@ -181,7 +181,7 @@ export function injected(parameters: InjectedParameters = {}) {
         // Switch to chain if provided
         let currentChainId = await this.getChainId()
         if (chainId && currentChainId !== chainId) {
-          const chain = await this.switchChain?.({ chainId }).catch(() => ({
+          const chain = await this.switchChain!({ chainId }).catch(() => ({
             id: currentChainId,
           }))
           currentChainId = chain?.id ?? currentChainId

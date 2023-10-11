@@ -20,10 +20,16 @@ export type IsNarrowable<type, type2> = IsUnknown<type> extends true
   ? false
   : true
 
-/** Checks if {@link type} is `never` */
+/**
+ * @internal
+ * Checks if {@link type} is `never`
+ */
 export type IsNever<type> = [type] extends [never] ? true : false
 
-/** Checks if {@link type} is `unknown` */
+/**
+ * @internal
+ * Checks if {@link type} is `unknown`
+ */
 export type IsUnknown<type> = unknown extends type ? true : false
 
 /** Merges two object types into new type  */
