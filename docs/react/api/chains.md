@@ -13,7 +13,7 @@ Viem `Chain` objects. More info at the [Viem docs](https://viem.sh/docs/clients/
 import { mainnet } from 'wagmi/chains'
 ```
 
-## Search Chains
+## Available Chains
 
 <SearchChains />
 

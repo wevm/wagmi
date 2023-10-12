@@ -11,7 +11,7 @@ import SearchChains from '../../components/SearchChains.vue'
 import { mainnet } from '@wagmi/core/chains'
 ```
 
-## Search Chains
+## Available Chains
 
 <SearchChains />
 
