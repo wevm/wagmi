@@ -501,13 +501,13 @@ export function getSidebar() {
         ],
       },
       {
-        text: 'Config 🚧',
+        text: 'Config File',
         items: [
           {
-            text: 'Configuring CLI 🚧',
+            text: 'Configuring CLI',
             link: '/cli/config/configuring-cli',
           },
-          { text: 'Config Options 🚧', link: '/cli/config/options' },
+          { text: 'Config Options', link: '/cli/config/options' },
         ],
       },
       {
@@ -515,11 +515,11 @@ export function getSidebar() {
         link: '/cli/api/commands',
         items: [
           {
-            text: 'generate 🚧',
+            text: 'generate',
             link: '/cli/api/commands/generate',
           },
           {
-            text: 'init 🚧',
+            text: 'init',
             link: '/cli/api/commands/init',
           },
         ],
@@ -528,9 +528,9 @@ export function getSidebar() {
         text: 'Plugins',
         link: '/cli/api/plugins',
         items: [
-          { text: 'blockExplorer 🚧', link: '/cli/api/plugins/blockExplorer' },
-          { text: 'etherscan 🚧', link: '/cli/api/plugins/etherscan' },
-          { text: 'fetch 🚧', link: '/cli/api/plugins/fetch' },
+          { text: 'blockExplorer', link: '/cli/api/plugins/blockExplorer' },
+          { text: 'etherscan', link: '/cli/api/plugins/etherscan' },
+          { text: 'fetch', link: '/cli/api/plugins/fetch' },
           { text: 'foundry 🚧', link: '/cli/api/plugins/foundry' },
           { text: 'hardhat 🚧', link: '/cli/api/plugins/hardhat' },
           { text: 'react 🚧', link: '/cli/api/plugins/react' },

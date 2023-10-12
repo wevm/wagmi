@@ -6,8 +6,9 @@ import SearchChains from '../../components/SearchChains.vue'
 
 ## Import
 
+Import via the `'@wagmi/core/chains'` entrypoint (proxies all chains from `'viem/chains'`).
+
 ```ts
-// '@wagmi/core/chains' entrypoint proxies all chains from 'viem/chains'
 import { mainnet } from '@wagmi/core/chains'
 ```
 

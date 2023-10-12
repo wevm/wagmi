@@ -8,8 +8,9 @@ Viem `Chain` objects. More info at the [Viem docs](https://viem.sh/docs/clients/
 
 ## Import
 
+Import via the `'wagmi/chains'` entrypoint (proxies all chains from `'viem/chains'`).
+
 ```ts
-// 'wagmi/chains' entrypoint proxies all chains from 'viem/chains'
 import { mainnet } from 'wagmi/chains'
 ```
 
