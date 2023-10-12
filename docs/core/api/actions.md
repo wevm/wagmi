@@ -16,7 +16,7 @@ Actions for accounts, wallets, contracts, transactions, signing, ENS, and more.
 import { getAccount } from '@wagmi/core'
 ```
 
-## All Actions
+## Available Actions
 
 <ul>
   <li v-for="action of actions">

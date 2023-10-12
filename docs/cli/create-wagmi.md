@@ -21,11 +21,9 @@ bun create wagmi@alpha
 ```
 :::
 
-
-
 ## Options
 
-### `--template`/`-t`
+### `-t`, `--template`
 
 By default, `create-wagmi` scaffolds a basic Vite application with Wagmi. However, you can specify a custom [template](#templates) by passing the `--template`/`-t` flag:
 
@@ -48,11 +46,11 @@ bun create wagmi@alpha --template next
 
 Use a specific package manager to install dependencies. By default, `create-wagmi` will use the package manager you used to run the command.
 
-### `--help`/`-h`
+### `-h`, `--help`
 
 Prints the help message.
 
-### `--version`/`-v`
+### `-v`, `--version`
 
 Prints the CLI version.
 

@@ -13,13 +13,13 @@ Connectors for popular wallet providers and protocols.
 
 ## Import
 
+Import via the `'wagmi/connectors'` entrypoint.
+
 ```ts
 import { injected } from 'wagmi/connectors'
 ```
 
-## Built-In Connectors
-
-Available via the `'wagmi/connectors'` entrypoint.
+## Available Connectors
 
 <ul>
   <li v-for="connector of connectors">
