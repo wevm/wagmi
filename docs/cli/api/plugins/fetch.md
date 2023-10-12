@@ -47,7 +47,7 @@ import { type FetchConfig } from '@wagmi/cli/plugins'
 
 ### cacheDuration
 
-`number`
+`number | undefined`
 
 - Duration in milliseconds to cache ABIs.
 - Defaults to `1_800_000` (30 minutes).

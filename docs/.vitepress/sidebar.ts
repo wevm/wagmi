@@ -531,10 +531,10 @@ export function getSidebar() {
           { text: 'blockExplorer', link: '/cli/api/plugins/blockExplorer' },
           { text: 'etherscan', link: '/cli/api/plugins/etherscan' },
           { text: 'fetch', link: '/cli/api/plugins/fetch' },
-          { text: 'foundry 🚧', link: '/cli/api/plugins/foundry' },
-          { text: 'hardhat 🚧', link: '/cli/api/plugins/hardhat' },
+          { text: 'foundry', link: '/cli/api/plugins/foundry' },
+          { text: 'hardhat', link: '/cli/api/plugins/hardhat' },
           { text: 'react 🚧', link: '/cli/api/plugins/react' },
-          { text: 'sourcify 🚧', link: '/cli/api/plugins/sourcify' },
+          { text: 'sourcify', link: '/cli/api/plugins/sourcify' },
         ],
       },
       {

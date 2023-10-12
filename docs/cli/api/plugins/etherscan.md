@@ -18,6 +18,7 @@ export default defineConfig({
   plugins: [
     etherscan({
       apiKey: process.env.ETHERSCAN_API_KEY,
+      chainId: 1,
       contracts: [
         {
           name: 'Wagmigotchi',
@@ -60,6 +61,7 @@ export default defineConfig({
   plugins: [
     etherscan({
       apiKey: process.env.ETHERSCAN_API_KEY, // [!code focus]
+      chainId: 1,
       contracts: [
         {
           name: 'Wagmigotchi',
@@ -73,7 +75,7 @@ export default defineConfig({
 
 ### cacheDuration
 
-`number`
+`number | undefined`
 
 - Duration in milliseconds to cache ABIs.
 - Defaults to `1_800_000` (30 minutes).
@@ -87,6 +89,7 @@ export default defineConfig({
     etherscan({
       apiKey: process.env.ETHERSCAN_API_KEY,
       cacheDuration: 300_000, // [!code focus]
+      chainId: 1,
       contracts: [
         {
           name: 'Wagmigotchi',
@@ -102,7 +105,7 @@ export default defineConfig({
 
 `number`
 
-Chain id to use for fetching ABI. If [`address`](/cli/config/options#address) is an object, `chainId` is used to select the address.
+Chain ID to use for fetching ABI. If [`address`](/cli/config/options#address) is an object, `chainId` is used to select the address.
 
 ```ts
 import { defineConfig } from '@wagmi/cli'
@@ -145,6 +148,7 @@ export default defineConfig({
   plugins: [
     etherscan({
       apiKey: process.env.ETHERSCAN_API_KEY,
+      chainId: 1,
       contracts: [ // [!code focus]
         { // [!code focus]
           name: 'Wagmigotchi', // [!code focus]
