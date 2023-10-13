@@ -45,9 +45,9 @@ type InjectedProviderFlags = {
   isPortal?: true
   isRabby?: true
   isRainbow?: true
+  isSafePal?: true
   isStatus?: true
   isSubWallet?: true
-  isSafePal?: true
   isTalisman?: true
   isTally?: true
   isTokenPocket?: true

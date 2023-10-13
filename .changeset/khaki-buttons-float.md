@@ -2,4 +2,4 @@
 "@wagmi/connectors": patch
 ---
 
-added safepal to `getInjectedName`
+Added SafePal injected name mapping.
