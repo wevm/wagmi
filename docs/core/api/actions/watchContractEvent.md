@@ -250,7 +250,7 @@ unwatch()
 
 ### poll
 
-`boolean`
+`boolean | undefined`
 
 - Whether or not to use a polling mechanism to check for new blocks instead of a WebSocket subscription.
 - Defaults to `false` for WebSocket Clients, and `true` for non-WebSocket Clients.

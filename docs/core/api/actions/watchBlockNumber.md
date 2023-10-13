@@ -56,6 +56,8 @@ unwatch()
 
 ### emitOnBegin
 
+`boolean | undefined`
+
 Whether or not to emit the latest block number to the callback when the subscription opens.
 
 ::: code-group
@@ -75,6 +77,8 @@ unwatch()
 :::
 
 ### emitMissed
+
+`boolean | undefined`
 
 Whether or not to emit the missed block numbers to the callback.
 
@@ -142,7 +146,7 @@ unwatch()
 
 ### poll
 
-`boolean`
+`boolean | undefined`
 
 - Whether or not to use a polling mechanism to check for new blocks instead of a WebSocket subscription.
 - Defaults to `false` for WebSocket Clients, and `true` for non-WebSocket Clients.
