@@ -23,7 +23,7 @@ import { config } from './config'
 
 const unwatch = watchPendingTransactions(config, {
   onTransactions(transactions) {
-    console.log("New transactions!", transactions)
+    console.log('New transactions!', transactions)
   },
 })
 ```
@@ -53,7 +53,7 @@ import { config } from './config'
 const unswatch = watchPendingTransactions(config, {
   chainId: mainnet.id, // [!code focus]
   onTransactions(transactions) {
-    console.log("New transactions!", transactions)
+    console.log('New transactions!', transactions)
   },
 })
 ```

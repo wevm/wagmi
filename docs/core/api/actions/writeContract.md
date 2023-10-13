@@ -511,7 +511,7 @@ const result = await writeContract(config, {
 import { type WriteContractReturnType } from '@wagmi/core'
 ```
 
-`` `0x${string}` ``
+[`Hash`](https://viem.sh/docs/glossary/types.html#hash)
 
 The transaction hash.
 

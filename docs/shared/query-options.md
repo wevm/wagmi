@@ -64,11 +64,11 @@ If set, stores additional information on the query cache entry that can be used 
 
 #### notifyOnChangeProps
 
-`string[] | "all" | (() => string[] | "all") | undefined`
+`string[] | 'all' | (() => string[] | 'all') | undefined`
 
 - If set, the component will only re-render if any of the listed properties change.
 - If set to `['data', 'error']` for example, the component will only re-render when the `data` or `error` properties change.
-- If set to `"all"`, the component will opt-out of smart tracking and re-render whenever a query is updated.
+- If set to `'all'`, the component will opt-out of smart tracking and re-render whenever a query is updated.
 - If set to a function, the function will be executed to compute the list of properties.
 - By default, access to properties will be tracked, and the component will only re-render when one of the tracked properties change.
 
@@ -101,32 +101,32 @@ If set to `true`, queries that are set to continuously refetch with a `refetchIn
 
 #### refetchOnMount
 
-`boolean | "always" | ((query: Query) => boolean | "always") | undefined`
+`boolean | 'always' | ((query: Query) => boolean | 'always') | undefined`
 
 - Defaults to `true`
 - If set to `true`, the query will refetch on mount if the data is stale.
 - If set to `false`, the query will not refetch on mount.
-- If set to `"always"`, the query will always refetch on mount.
+- If set to `'always'`, the query will always refetch on mount.
 - If set to a function, the function will be executed with the query to compute the value
 
 #### refetchOnReconnect
 
-`boolean | "always" | ((query: Query) => boolean | "always") | undefined`
+`boolean | 'always' | ((query: Query) => boolean | 'always') | undefined`
 
 - Defaults to `true`
 - If set to `true`, the query will refetch on reconnect if the data is stale.
 - If set to `false`, the query will not refetch on reconnect.
-- If set to `"always"`, the query will always refetch on reconnect.
+- If set to `'always'`, the query will always refetch on reconnect.
 - If set to a function, the function will be executed with the query to compute the value
 
 #### refetchOnWindowFocus
 
-`boolean | "always" | ((query: Query) => boolean | "always") | undefined`
+`boolean | 'always' | ((query: Query) => boolean | 'always') | undefined`
 
 - Defaults to `true`
 - If set to `true`, the query will refetch on window focus if the data is stale.
 - If set to `false`, the query will not refetch on window focus.
-- If set to `"always"`, the query will always refetch on window focus.
+- If set to `'always'`, the query will always refetch on window focus.
 - If set to a function, the function will be executed with the query to compute the value
 
 #### retry
@@ -158,7 +158,7 @@ If set to `false`, the query will not be retried on mount if it contains an erro
 
 This option can be used to transform or select a part of the data returned by the query function. It affects the returned `data` value, but does not affect what gets stored in the query cache.
 
-<div v-if="!hideQueryOptions?.includes('staleTime')">
+<div v-if="!hideQueryOptions?.includes('staleTime')"">
 
 #### staleTime
 

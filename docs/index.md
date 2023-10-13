@@ -17,6 +17,9 @@ hero:
     - theme: alt
       text: Why Wagmi
       link: /react/why-wagmi
+    - theme: alt
+      text: View on GitHub
+      link: https://github.com/wagmi-dev/wagmi/tree/alpha
   image:
     src: /logo-dark.svg
     alt: VitePress

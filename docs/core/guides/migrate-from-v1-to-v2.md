@@ -468,8 +468,8 @@ const transport = http('https://mainnet.example.com')
 Moving forward, `getBalance` will only work for native currencies, thus the `token` parameter is no longer supported. Use [`readContracts`](/core/api/actions/readContracts) instead.
 
 ```ts
-import { getBalance } from 'wagmi' // [!code --]
-import { readContracts } from 'wagmi' // [!code ++]
+import { getBalance } from '@wagmi/core' // [!code --]
+import { readContracts } from '@wagmi/core' // [!code ++]
 import { erc20Abi } from 'viem' // [!code ++]
 
 const result = await getBalance({ // [!code --]
@@ -497,6 +497,22 @@ const result = await readContracts({ // [!code ++]
     }, // [!code ++]
   ] // [!code ++]
 }) // [!code ++]
+```
+
+### Deprecated `getBalance` `unit` parameter and `formatted` return value
+
+Moving forward, `getBalance` will not accept the `unit` parameter or return a `formatted` value. Instead you can call `formatUnits` from Viem directly or use another number formatting library, like [dnum](https://github.com/bpierre/dnum) instead.
+
+```ts
+import { formatUnits } from 'viem' // [!code ++]
+import { getBalance } from '@wagmi/core'
+
+const result = await getBalance({
+  address: '0x4557B18E779944BFE9d78A672452331C186a9f48',
+  unit: 'ether', // [!code --]
+})
+result.formatted // [!code --]
+formatUnits(result.value, result.decimals) // [!code ++]
 ```
 
 ### Deprecated `getToken`
@@ -537,6 +553,29 @@ const result = await readContracts({ // [!code ++]
   ] // [!code ++]
 }) // [!code ++]
 ```
+
+### Deprecated `formatUnits` parameters and return values
+
+The `formatUnits` parameter and related return values (e.g. `result.formatted`) are deprecated for the following actions:
+
+- [`estimateFeesPerGas`](/core/api/actions/estimateFeesPerGas)
+- [`getToken`](/core/api/actions/getToken)
+
+Instead you can call `formatUnits` from Viem directly or use another number formatting library, like [dnum](https://github.com/bpierre/dnum) instead.
+
+```ts
+import { formatUnits } from 'viem' // [!code ++]
+import { getToken } from '@wagmi/core'
+
+const result = await getToken({
+  address: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
+  formatUnits: 'ether',
+})
+result.totalSupply.formatted  // [!code --]
+formatUnits(result.totalSupply.value, 18)  // [!code ++]
+```
+
+This allows us to invert control to users so they can handle number formatting however they want, taking into account precision, localization, and more.
 
 ### Renamed actions
 

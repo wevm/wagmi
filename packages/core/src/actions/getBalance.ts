@@ -24,12 +24,14 @@ export type GetBalanceParameters<config extends Config = Config> = Evaluate<
     viem_GetBalanceParameters & {
       /** @deprecated */
       token?: Address | undefined
+      /** @deprecated */
       unit?: Unit | undefined
     }
 >
 
 export type GetBalanceReturnType = {
   decimals: number
+  /** @deprecated */
   formatted: string
   symbol: string
   value: bigint

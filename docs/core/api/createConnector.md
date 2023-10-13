@@ -1,6 +1,6 @@
 # createConnector
 
-Creates new [`CreateConnectorFn`](#createconnectorfn).
+Creates new [`CreateConnectorFn`](#parameters).
 
 ## Import
 
@@ -13,9 +13,13 @@ import { createConnector } from '@wagmi/core'
 ```ts
 import { createConnector } from '@wagmi/core'
 
-const connector = createConnector((config) => ({
-  // ...
-}))
+export type InjectedParameters = {}
+
+export function injected(parameters: InjectedParameters = {}) {
+  return createConnector((config) => ({
+    // ...
+  }))
+}
 ```
 
 ## Parameters
@@ -24,8 +28,4 @@ const connector = createConnector((config) => ({
 import { type CreateConnectorFn } from '@wagmi/core'
 ```
 
-## Return Type
-
-```ts
-import { type CreateConnectorFn } from '@wagmi/core'
-```
+Read [Creating Connectors](/dev/creating-connectors) for more info on the `CreateConnectorFn` type.

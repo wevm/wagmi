@@ -13,8 +13,9 @@ Array of contracts to use when running [commands](/cli/api/commands). `abi` and 
 `Address | Record<chainId, Address> | undefined`
 
 Contract address or addresses. Accepts an object `{ [chainId]: address }` for targeting specific chains.
-   
-```ts {6,11-14} filename="wagmi.config.ts"
+
+::: code-group
+```ts {6,11-14} [wagmi.config.ts]
 export default {
   out: 'src/generated.ts',
   contracts: [
@@ -34,6 +35,7 @@ export default {
   ],
 }
 ```
+:::
 
 ### abi
 
@@ -41,7 +43,8 @@ export default {
 
 ABI for contract. Used by [plugins](/cli/plugins) to generate code base on properties.
 
-```ts {5} filename="wagmi.config.ts"
+::: code-group
+```ts {5} [wagmi.config.ts]
 export default {
   out: 'src/generated.ts',
   contracts: [
@@ -52,6 +55,7 @@ export default {
   ],
 }
 ```
+:::
 
 ### name
 
@@ -59,7 +63,8 @@ export default {
 
 Name of contract. Must be unique. Used by [plugins](/cli/plugins) to name generated code.
 
-```ts {6} filename="wagmi.config.ts"
+::: code-group
+```ts {6} [wagmi.config.ts]
 export default {
   out: 'src/generated.ts',
   contracts: [
@@ -70,6 +75,7 @@ export default {
   ],
 }
 ```
+:::
 
 ## out
 
@@ -77,7 +83,8 @@ export default {
 
 Path to output generated code. Must be unique per config. Use an [Array Config](/cli/configuration/configuring-cli#array-config) for multiple outputs.
 
-```ts {2} filename="wagmi.config.ts"
+::: code-group
+```ts {2} [wagmi.config.ts]
 export default {
   out: 'src/generated.ts',
   contracts: [
@@ -88,6 +95,7 @@ export default {
   ],
 }
 ```
+:::
 
 ## plugins
 
@@ -97,7 +105,8 @@ Plugins to use and their configuration.
 
 Wagmi CLI has multiple [built-in plugins](/cli/api/plugins) that are used to manage ABIs, generate code, etc.
 
-```ts {1,5-20} filename="wagmi.config.ts"
+::: code-group
+```ts {1,5-20} [wagmi.config.ts]
 import { etherscan, react } from '@wagmi/cli/plugins'
 
 export default {
@@ -120,3 +129,4 @@ export default {
   ],
 }
 ```
+:::

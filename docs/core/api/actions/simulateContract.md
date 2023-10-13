@@ -568,6 +568,8 @@ const result = await simulateContract(config, {
 import { type SimulateContractReturnType } from '@wagmi/core'
 ```
 
+The simulation result and write request.
+
 ### request
 
 Write request that includes [parameters](#parameters).

@@ -275,7 +275,7 @@ const result = await signTypedData(config, {
 import { type SignTypedDataReturnType } from '@wagmi/core'
 ```
 
-`` `0x${string}` ``
+[`Hex`](https://viem.sh/docs/glossary/types.html#hex)
 
 The signed data.
 

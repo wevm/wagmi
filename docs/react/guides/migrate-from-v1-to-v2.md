@@ -536,6 +536,22 @@ const result = useReadContracts({ // [!code ++]
 }) // [!code ++]
 ```
 
+### Deprecated `useBalance` `unit` parameter and `formatted` return value
+
+Moving forward, `useBalance` will not accept the `unit` parameter or return a `formatted` value. Instead you can call `formatUnits` from Viem directly or use another number formatting library, like [dnum](https://github.com/bpierre/dnum) instead.
+
+```ts
+import { formatUnits } from 'viem' // [!code ++]
+import { useBalance } from 'wagmi'
+
+const result = useBalance({
+  address: '0x4557B18E779944BFE9d78A672452331C186a9f48',
+  unit: 'ether', // [!code --]
+})
+result.data!.formatted // [!code --]
+formatUnits(result.data!.value, result.data!.decimals) // [!code ++]
+```
+
 ### Deprecated `useToken`
 
 Moving forward, `useToken` is no longer supported. Use [`useReadContracts`](/react/api/hooks/useReadContracts) instead.
@@ -574,6 +590,28 @@ const result = useReadContracts({ // [!code ++]
   ] // [!code ++]
 }) // [!code ++]
 ```
+
+### Deprecated `formatUnits` parameters and return values
+
+The `formatUnits` parameter and related return values (e.g. `result.formatted`) are deprecated for the following hooks:
+
+- [`useEstimateFeesPerGas`](/react/api/hooks/useEstimateFeesPerGas)
+- [`useToken`](/react/api/hooks/useToken)
+
+Instead you can call `formatUnits` from Viem directly or use another number formatting library, like [dnum](https://github.com/bpierre/dnum) instead.
+
+```ts
+import { formatUnits } from 'viem' // [!code ++]
+
+const result = useToken({
+  address: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
+  formatUnits: 'ether',
+})
+result.data!.totalSupply.formatted  // [!code --]
+formatUnits(result.data!.totalSupply.value, 18)  // [!code ++]
+```
+
+This allows us to invert control to users so they can handle number formatting however they want, taking into account precision, localization, and more.
 
 ### Renamed hooks
 

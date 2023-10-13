@@ -28,6 +28,7 @@ export type EstimateFeesPerGasParameters<
     'chain'
   > &
     ChainIdParameter<config> & {
+      /** @deprecated */
       formatUnits?: Unit | undefined
     }
 >
@@ -36,6 +37,7 @@ export type EstimateFeesPerGasReturnType<
   type extends FeeValuesType = FeeValuesType,
 > = Evaluate<
   viem_EstimateFeesPerGasReturnType<type> & {
+    /** @deprecated */
     formatted: UnionEvaluate<
       | (type extends 'legacy' ? FeeValuesLegacy<string> : never)
       | (type extends 'eip1559' ? FeeValuesEIP1559<string> : never)

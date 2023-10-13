@@ -127,7 +127,8 @@ function App() {
 
 `number | undefined`
 
-Polling frequency (in ms). Defaults to the [Config's `pollingInterval` config](/react/api/createConfig#pollinginterval).
+- Polling frequency (in milliseconds).
+- Defaults to the [Config's `pollingInterval` config](/react/api/createConfig#pollinginterval).
 
 ```ts [index.ts]
 import { useWaitForTransactionReceipt } from 'wagmi'

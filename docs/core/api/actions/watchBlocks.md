@@ -159,7 +159,7 @@ const unwatch = watchBlocks(config, {
     console.log('Block changed!', block) 
   }, 
   onError(error) { // [!code focus]
-    console.error("Block error", error) // [!code focus]
+    console.error('Block error', error) // [!code focus]
   }, // [!code focus]
 })
 unwatch()
@@ -171,7 +171,8 @@ unwatch()
 
 `boolean`
 
-Whether or not to use a polling mechanism to check for new blocks instead of a WebSocket subscription. Defaults to `false` for WebSocket Clients, and `true` for non-WebSocket Clients.
+- Whether or not to use a polling mechanism to check for new blocks instead of a WebSocket subscription.
+- Defaults to `false` for WebSocket Clients, and `true` for non-WebSocket Clients.
 
 ::: code-group
 ```ts [index.ts]
@@ -191,9 +192,10 @@ unwatch()
 
 ### pollingInterval
 
-`number`
+`number | undefined`
 
-Polling frequency (in ms).
+- Polling frequency (in milliseconds).
+- Defaults to the [Config's `pollingInterval` config](/core/api/createConfig#pollinginterval).
 
 ::: code-group
 ```ts [index.ts]

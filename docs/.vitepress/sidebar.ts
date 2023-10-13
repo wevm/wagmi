@@ -14,7 +14,7 @@ export function getSidebar() {
         ],
       },
       {
-        text: 'Guides 🚧',
+        text: 'Guides',
         items: [
           {
             text: 'TanStack Query',
@@ -251,7 +251,7 @@ export function getSidebar() {
         ],
       },
       {
-        text: 'Guides 🚧',
+        text: 'Guides',
         items: [
           {
             text: 'Viem',
@@ -287,7 +287,7 @@ export function getSidebar() {
         text: 'Configuration',
         items: [
           { text: 'createConfig', link: '/core/api/createConfig' },
-          { text: 'createConnector 🚧', link: '/core/api/createConnector' },
+          { text: 'createConnector', link: '/core/api/createConnector' },
           { text: 'createStorage', link: '/core/api/createStorage' },
           { text: 'Chains', link: '/core/api/chains' },
           {
@@ -338,7 +338,7 @@ export function getSidebar() {
           { text: 'getAccount', link: '/core/api/actions/getAccount' },
           { text: 'getBalance', link: '/core/api/actions/getBalance' },
           {
-            text: 'getBlock 🚧',
+            text: 'getBlock',
             link: '/core/api/actions/getBlock',
           },
           {
@@ -455,7 +455,7 @@ export function getSidebar() {
             link: '/core/api/actions/watchConnectors',
           },
           {
-            text: 'watchContractEvent 🚧',
+            text: 'watchContractEvent',
             link: '/core/api/actions/watchContractEvent',
           },
           {

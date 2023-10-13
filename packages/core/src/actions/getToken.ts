@@ -33,6 +33,7 @@ export type GetTokenReturnType = {
 
 export type GetTokenErrorType = ReadContractsErrorType
 
+/** @deprecated */
 export async function getToken<config extends Config>(
   config: config,
   parameters: GetTokenParameters<config>,

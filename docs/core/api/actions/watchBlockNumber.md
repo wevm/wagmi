@@ -54,6 +54,47 @@ unwatch()
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
+### emitOnBegin
+
+Whether or not to emit the latest block number to the callback when the subscription opens.
+
+::: code-group
+```ts [index.ts]
+import { watchBlockNumber } from '@wagmi/core'
+import { config } from './config'
+
+const unwatch = watchBlockNumber(config, {
+  emitOnBegin: true, // [!code focus]
+  onBlockNumber(blockNumber) {
+    console.log('Block number changed!', blockNumber)
+  },
+})
+unwatch()
+```
+<<< @/snippets/core/config.ts[config.ts]
+:::
+
+### emitMissed
+
+Whether or not to emit the missed block numbers to the callback.
+
+::: code-group
+```ts [index.ts]
+import { watchBlockNumber } from '@wagmi/core'
+import { config } from './config'
+
+const unwatch = watchBlockNumber(config, {
+  emitMissed: true, // [!code focus]
+  onBlockNumber(blockNumber) {
+    console.log('Block number changed!', blockNumber)
+  },
+})
+unwatch()
+```
+<<< @/snippets/core/config.ts[config.ts]
+:::
+
+
 ### onBlockNumber
 
 `(blockNumber: bigint, prevBlockNumber: bigint | undefined) => void`
@@ -91,8 +132,54 @@ const unwatch = watchBlockNumber(config, {
     console.log('Block number changed!', blockNumber) 
   }, 
   onError(error) { // [!code focus]
-    console.error("Block number error", error) // [!code focus]
+    console.error('Block number error', error) // [!code focus]
   }, // [!code focus]
+})
+unwatch()
+```
+<<< @/snippets/core/config.ts[config.ts]
+:::
+
+### poll
+
+`boolean`
+
+- Whether or not to use a polling mechanism to check for new blocks instead of a WebSocket subscription.
+- Defaults to `false` for WebSocket Clients, and `true` for non-WebSocket Clients.
+
+::: code-group
+```ts [index.ts]
+import { watchBlockNumber } from '@wagmi/core'
+import { config } from './config'
+
+const unwatch = watchBlockNumber(config, {
+  onBlockNumber(blockNumber) { 
+    console.log('Block number changed!', blockNumber) 
+  }, 
+  poll: true, // [!code focus]
+})
+unwatch()
+```
+<<< @/snippets/core/config.ts[config.ts]
+:::
+
+### pollingInterval
+
+`number | undefined`
+
+- Polling frequency (in milliseconds).
+- Defaults to the [Config's `pollingInterval` config](/core/api/createConfig#pollinginterval).
+
+::: code-group
+```ts [index.ts]
+import { watchBlockNumber } from '@wagmi/core'
+import { config } from './config'
+
+const unwatch = watchBlockNumber(config, {
+  onBlockNumber(blockNumber) { 
+    console.log('Block number changed!', blockNumber) 
+  }, 
+  pollingInterval: 1_000, // [!code focus]
 })
 unwatch()
 ```

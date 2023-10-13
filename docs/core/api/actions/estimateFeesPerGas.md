@@ -21,23 +21,7 @@ import { estimateFeesPerGas } from '@wagmi/core'
 import { estimateFeesPerGas } from '@wagmi/core'
 import { config } from './config'
 
-const {
-  maxFeePerGas,
-  maxPriorityFeePerGas
-} = await estimateFeesPerGas(config)
-/**
- * {
- *   maxFeePerGas: 15_000_000_000n,
- *   maxPriorityFeePerGas: 1_000_000_000n,
- * }
- */
-
-const { gasPrice } = await estimateFeesPerGas(config, {
-  type: 'legacy'
-})
-/** 
- * { gasPrice: 15_000_000_000n } 
- */
+const result = await estimateFeesPerGas(config)
 ```
 <<< @/snippets/core/config.ts[config.ts]
 :::
@@ -60,7 +44,7 @@ import { estimateFeesPerGas } from '@wagmi/core'
 import { mainnet } from '@wagmi/core/chains'
 import { config } from './config'
 
-const feesPerGas = await estimateFeesPerGas(config, {
+const result = await estimateFeesPerGas(config, {
   chainId: mainnet.id, // [!code focus]
 })
 ```
@@ -88,16 +72,17 @@ const feesPerGas = estimateFeesPerGas(config, {
 
 ### type
 
-`"legacy" | "eip1559"`
+`'legacy' | 'eip1559'`
 
-- Defaults to `"eip1559"`
+- Fee value type.
+- Defaults to `'eip1559'`
 
 ::: code-group
 ```ts [index.ts]
 import { estimateFeesPerGas } from '@wagmi/core'
 import { config } from './config'
 
-const feesPerGas = estimateFeesPerGas(config, {
+const result = estimateFeesPerGas(config, {
   type: 'legacy', // [!code focus]
 })
 ```
@@ -110,8 +95,12 @@ const feesPerGas = estimateFeesPerGas(config, {
 import { type EstimateFeesPerGasReturnType } from '@wagmi/core'
 ```
 
-### formatted
+[`FeeValues`](https://viem.sh/docs/glossary/types.html#feevalues)
 
+An estimate (in wei) for the fees per gas.
+
+### formatted
+ 
 `{ gasPrice: string | undefined; maxFeePerGas: string | undefined; maxPriorityFeePerGas: string | undefined; }`
 
 Object of formatted values using [`formatUnits`](#formatunits).
@@ -120,25 +109,22 @@ Object of formatted values using [`formatUnits`](#formatunits).
 
 `bigint | undefined`
 
-> Value is `undefined` if [`type`](#type) is `"eip1559"`.
-
-Gas price.
+- Gas price.
+- When [`type`](#type) is `'eip1559'`, value is `undefined`.
 
 ### maxFeePerGas
 
 `bigint | undefined`
 
-> Value is `undefined` if [`type`](#type) is `"legacy"`.
-
-Max fee per gas.
+- Max fee per gas.
+- When [`type`](#type) is `'legacy'`, value is `undefined`.
 
 ### maxPriorityFeePerGas
 
 `bigint | undefined`
 
-> Value is `undefined` if [`type`](#type) is `"legacy"`.
-
-Max priority fee per gas.
+- Max priority fee per gas.
+- When [`type`](#type) is `'legacy'`, value is `undefined`.
 
 ## Error
 

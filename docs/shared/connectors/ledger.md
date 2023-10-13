@@ -63,7 +63,7 @@ import { ledger } from '{{connectorsPackageName}}'
 
 const connector = ledger({
   optionalEvents: [ // [!code focus]
-    "message", // [!code focus]
+    'message', // [!code focus]
   ], // [!code focus]
 })
 ```
@@ -79,9 +79,9 @@ import { ledger } from '{{connectorsPackageName}}'
 
 const connector = ledger({
   optionalMethods: [ // [!code focus]
-    "wallet_switchEthereumChain", // [!code focus]
-    "wallet_addEthereumChain", // [!code focus]
-    "wallet_getPermissions", // [!code focus]
+    'wallet_switchEthereumChain', // [!code focus]
+    'wallet_addEthereumChain', // [!code focus]
+    'wallet_getPermissions', // [!code focus]
   ], // [!code focus]
 })
 ```
@@ -126,10 +126,10 @@ import { ledger } from '{{connectorsPackageName}}'
 
 const connector = ledger({
   requiredEvents: [ // [!code focus]
-    "accountsChanged", // [!code focus]
-    "chainChanged", // [!code focus]
-    "connect", // [!code focus]
-    "disconnect", // [!code focus]
+    'accountsChanged', // [!code focus]
+    'chainChanged', // [!code focus]
+    'connect', // [!code focus]
+    'disconnect', // [!code focus]
   ], // [!code focus]
 })
 ```
@@ -145,8 +145,8 @@ import { ledger } from '{{connectorsPackageName}}'
 
 const connector = ledger({
   requiredMethods: [ // [!code focus]
-    "eth_sendTransaction", // [!code focus]
-    "personal_sign", // [!code focus]
+    'eth_sendTransaction', // [!code focus]
+    'personal_sign', // [!code focus]
   ], // [!code focus]
 })
 ```

@@ -94,25 +94,6 @@ const transactionReceipt = await waitForTransactionReceipt(config, {
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
-### pollingInterval
-
-`number | undefined`
-
-Polling frequency (in ms). Defaults to the [Config's `pollingInterval` config](/core/api/createConfig#pollinginterval).
-
-::: code-group
-```ts [index.ts]
-import { waitForTransactionReceipt } from '@wagmi/core'
-import { config } from './config'
-
-const transactionReceipt = await waitForTransactionReceipt(config, {
-  hash: '0x4ca7ee652d57678f26e887c149ab0735f41de37bcad58c9f6d3ed5824f15b74d',
-  pollingInterval: 1_000, // [!code focus]
-})
-```
-<<< @/snippets/core/config.ts[config.ts]
-:::
-
 ### hash
 
 `` `0x${string}` ``
@@ -131,11 +112,35 @@ const transactionReceipt = await waitForTransactionReceipt(config, {
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
+### pollingInterval
+
+`number | undefined`
+
+- Polling frequency (in milliseconds).
+- Defaults to the [Config's `pollingInterval` config](/core/api/createConfig#pollinginterval).
+
+::: code-group
+```ts [index.ts]
+import { waitForTransactionReceipt } from '@wagmi/core'
+import { config } from './config'
+
+const transactionReceipt = await waitForTransactionReceipt(config, {
+  hash: '0x4ca7ee652d57678f26e887c149ab0735f41de37bcad58c9f6d3ed5824f15b74d',
+  pollingInterval: 1_000, // [!code focus]
+})
+```
+<<< @/snippets/core/config.ts[config.ts]
+:::
+
 ## Return Type
 
 ```ts
 import { type WaitForTransactionReceiptReturnType } from '@wagmi/core'
 ```
+
+[`TransactionReceipt`](https://viem.sh/docs/glossary/types.html#transactionreceipt)
+
+The transaction receipt.
 
 ## Error
 

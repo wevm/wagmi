@@ -37,7 +37,7 @@ const deserialized = deserialize(serialized)
 
 #### Lossy serialization
 
-Lossy serialization means that the `BigInt` will be converted to a normal display string (e.g. `69420n` → `"69420"`).
+Lossy serialization means that the `BigInt` will be converted to a normal display string (e.g. `69420n` → `'69420'`).
 The trade-off is that you will not be able to deserialize the `BigInt` with `JSON.parse` as it can not distinguish between a normal string and a `BigInt`.
 
 This method can be achieved by modifying `JSON.stringify` to include a BigInt `replacer`:

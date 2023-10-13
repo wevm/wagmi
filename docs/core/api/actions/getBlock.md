@@ -129,6 +129,10 @@ const blockNumber = await getBlock(config, {
 import { type GetBlockReturnType } from '@wagmi/core'
 ```
 
+[`Block`](https://viem.sh/docs/glossary/types.html#block)
+
+Information about the block.
+
 ## Error
 
 ```ts

@@ -324,7 +324,7 @@ const result = await sendTransaction(config, {
 import { type SendTransactionReturnType } from '@wagmi/core'
 ```
 
-`` `0x${string}` ``
+[`Hash`](https://viem.sh/docs/glossary/types.html#hash)
 
 Transaction hash.
 
