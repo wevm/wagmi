@@ -12,8 +12,8 @@ import type { ErrorType } from '../errors/base.js'
 import {
   ConnectorAccountNotFound,
   type ConnectorAccountNotFoundErrorType,
+  ConnectorNotConnectedError,
   type ConnectorNotConnectedErrorType,
-  ConnectorNotFoundError,
 } from '../errors/config.js'
 import type {
   ChainIdParameter,
@@ -69,7 +69,7 @@ export async function getConnectorClient<
       connector,
     }
   } else connection = config.state.connections.get(config.state.current!)
-  if (!connection) throw new ConnectorNotFoundError()
+  if (!connection) throw new ConnectorNotConnectedError()
 
   const chainId = parameters.chainId ?? connection.chainId
 

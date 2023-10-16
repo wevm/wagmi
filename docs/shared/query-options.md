@@ -158,7 +158,7 @@ If set to `false`, the query will not be retried on mount if it contains an erro
 
 This option can be used to transform or select a part of the data returned by the query function. It affects the returned `data` value, but does not affect what gets stored in the query cache.
 
-<div v-if="!hideQueryOptions?.includes('staleTime')"">
+<div v-if="!hideQueryOptions?.includes('staleTime')">
 
 #### staleTime
 
