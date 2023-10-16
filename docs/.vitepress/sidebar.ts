@@ -29,6 +29,10 @@ export function getSidebar() {
             link: '/react/guides/connect-wallet',
           },
           {
+            text: 'Error Handling',
+            link: '/react/guides/error-handling',
+          },
+          {
             text: 'Ethers.js Adapters',
             link: '/react/guides/ethers',
           },
@@ -260,6 +264,10 @@ export function getSidebar() {
           {
             text: 'Framework Adapters 🚧',
             link: '/core/guides/framework-adapter',
+          },
+          {
+            text: 'Error Handling',
+            link: '/core/guides/error-handling',
           },
           {
             text: 'Ethers.js Adapters',
