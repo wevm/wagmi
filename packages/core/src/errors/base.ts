@@ -1,6 +1,8 @@
 import type { Evaluate, OneOf } from '../types/utils.js'
 import { getVersion } from '../utils/getVersion.js'
 
+export type ErrorType<name extends string = 'Error'> = Error & { name: name }
+
 type BaseErrorOptions = Evaluate<
   OneOf<{ details?: string | undefined } | { cause: BaseError | Error }> & {
     docsPath?: string | undefined
@@ -9,6 +11,7 @@ type BaseErrorOptions = Evaluate<
   }
 >
 
+export type BaseErrorType = BaseError & { name: 'WagmiCoreError' }
 export class BaseError extends Error {
   details: string
   docsPath?: string | undefined

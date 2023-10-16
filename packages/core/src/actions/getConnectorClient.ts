@@ -8,9 +8,12 @@ import {
 
 import { parseAccount } from 'viem/utils'
 import type { Config, Connection } from '../createConfig.js'
+import type { ErrorType } from '../errors/base.js'
 import {
   ConnectorAccountNotFound,
-  ConnectorNotConnectedError,
+  type ConnectorAccountNotFoundErrorType,
+  type ConnectorNotConnectedErrorType,
+  ConnectorNotFoundError,
 } from '../errors/config.js'
 import type {
   ChainIdParameter,
@@ -40,9 +43,9 @@ export type GetConnectorClientReturnType<
 >
 
 export type GetConnectorClientErrorType =
-  | ConnectorAccountNotFound
-  | ConnectorNotConnectedError
-  | Error
+  | ConnectorAccountNotFoundErrorType
+  | ConnectorNotConnectedErrorType
+  | ErrorType
 
 /** https://alpha.wagmi.sh/core/api/actions/getConnectorClient */
 export async function getConnectorClient<
@@ -66,7 +69,7 @@ export async function getConnectorClient<
       connector,
     }
   } else connection = config.state.connections.get(config.state.current!)
-  if (!connection) throw new ConnectorNotConnectedError()
+  if (!connection) throw new ConnectorNotFoundError()
 
   const chainId = parameters.chainId ?? connection.chainId
 

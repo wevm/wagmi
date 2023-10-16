@@ -2,6 +2,7 @@ import type { Address } from 'viem'
 
 import { type CreateConnectorFn } from '../connectors/createConnector.js'
 import type { Config, Connection, Connector } from '../createConfig.js'
+import type { ErrorType } from '../errors/base.js'
 import type { Evaluate } from '../types/utils.js'
 
 export type ReconnectParameters = {
@@ -11,7 +12,7 @@ export type ReconnectParameters = {
 
 export type ReconnectReturnType = Evaluate<Connection>[]
 
-export type ReconnectErrorType = Error
+export type ReconnectErrorType = ErrorType
 
 let isReconnecting = false
 

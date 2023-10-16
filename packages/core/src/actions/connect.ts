@@ -1,10 +1,16 @@
-import { ResourceUnavailableRpcError, UserRejectedRequestError } from 'viem'
-import { type Address } from 'viem'
+import {
+  type Address,
+  type ResourceUnavailableRpcErrorType,
+  type UserRejectedRequestErrorType,
+} from 'viem'
 
 import { type CreateConnectorFn } from '../connectors/createConnector.js'
 import { type Config, type Connector } from '../createConfig.js'
-import type { BaseError } from '../errors/base.js'
-import { ConnectorAlreadyConnectedError } from '../errors/config.js'
+import type { BaseErrorType, ErrorType } from '../errors/base.js'
+import {
+  ConnectorAlreadyConnectedError,
+  type ConnectorAlreadyConnectedErrorType,
+} from '../errors/config.js'
 import type { ChainIdParameter } from '../types/properties.js'
 import type { Evaluate } from '../types/utils.js'
 
@@ -22,13 +28,13 @@ export type ConnectReturnType<config extends Config = Config> = {
 }
 
 export type ConnectErrorType =
-  | ConnectorAlreadyConnectedError
+  | ConnectorAlreadyConnectedErrorType
   // connector.connect()
-  | UserRejectedRequestError
-  | ResourceUnavailableRpcError
+  | UserRejectedRequestErrorType
+  | ResourceUnavailableRpcErrorType
   // base
-  | BaseError
-  | Error
+  | BaseErrorType
+  | ErrorType
 
 /** https://alpha.wagmi.sh/core/api/actions/connect */
 export async function connect<config extends Config>(

@@ -2,6 +2,9 @@ import type { Address } from 'viem'
 import type { Connector } from '../createConfig.js'
 import { BaseError } from './base.js'
 
+export type ChainMismatchErrorType = ChainMismatchError & {
+  name: 'ChainMismatchError'
+}
 export class ChainMismatchError extends BaseError {
   override name = 'ChainMismatchError'
 
@@ -18,6 +21,9 @@ export class ChainMismatchError extends BaseError {
   }
 }
 
+export type ChainNotConfiguredErrorType = ChainNotConfiguredError & {
+  name: 'ChainNotConfiguredError'
+}
 export class ChainNotConfiguredError extends BaseError {
   override name = 'ChainNotConfiguredError'
   constructor() {
@@ -25,6 +31,10 @@ export class ChainNotConfiguredError extends BaseError {
   }
 }
 
+export type ConnectorAlreadyConnectedErrorType =
+  ConnectorAlreadyConnectedError & {
+    name: 'ConnectorAlreadyConnectedError'
+  }
 export class ConnectorAlreadyConnectedError extends BaseError {
   override name = 'ConnectorAlreadyConnectedError'
   constructor() {
@@ -32,6 +42,9 @@ export class ConnectorAlreadyConnectedError extends BaseError {
   }
 }
 
+export type ConnectorNotConnectedErrorType = ConnectorNotConnectedError & {
+  name: 'ConnectorNotConnectedError'
+}
 export class ConnectorNotConnectedError extends BaseError {
   override name = 'ConnectorNotConnectedError'
   constructor() {
@@ -39,6 +52,9 @@ export class ConnectorNotConnectedError extends BaseError {
   }
 }
 
+export type ConnectorNotFoundErrorType = ConnectorNotFoundError & {
+  name: 'ConnectorNotFoundError'
+}
 export class ConnectorNotFoundError extends BaseError {
   override name = 'ConnectorNotFoundError'
   constructor() {
@@ -46,6 +62,9 @@ export class ConnectorNotFoundError extends BaseError {
   }
 }
 
+export type ConnectorAccountNotFoundErrorType = ConnectorAccountNotFound & {
+  name: 'ConnectorAccountNotFound'
+}
 export class ConnectorAccountNotFound extends BaseError {
   override name = 'ConnectorAccountNotFound'
   constructor({
