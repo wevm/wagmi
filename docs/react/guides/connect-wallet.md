@@ -23,19 +23,4 @@ Wagmi provides you with the Hooks to get started building your own Connect Walle
 
 It takes less than five minutes to get up and running with Browser Wallets, WalletConnect, Ledger, and Coinbase Wallet.
 
-<div ref="el" />
-
-<script setup>
-import { createElement } from 'react'
-import { createRoot } from 'react-dom/client'
-import { ref, onMounted } from 'vue'
-import ConnectWallet from '../../components/examples/ConnectWallet'
-
-const el = ref()
-onMounted(() => {
-  const root = createRoot(el.value)
-  root.render(createElement(ConnectWallet, {}, null))
-})
-</script>
-
 TODO: Steps 🚧
