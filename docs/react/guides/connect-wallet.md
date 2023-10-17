@@ -23,10 +23,6 @@ Wagmi provides you with the Hooks to get started building your own Connect Walle
 
 It takes less than five minutes to get up and running with Browser Wallets, WalletConnect, Ledger, and Coinbase Wallet.
 
-### Preview
-
-<iframe frameborder="0" width="100%" height="120px" src="https://wagmi-connect-wallet.vercel.app/"></iframe>
-
 ### Steps
 
 TODO
