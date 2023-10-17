@@ -16,6 +16,7 @@
     "@wagmi/core": "workspace:*",
     "abitype": "*",
     "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "unocss": "^0.53.6",
     "viem": "2.0.0-alpha.17",
     "vite": "^4.4.9",

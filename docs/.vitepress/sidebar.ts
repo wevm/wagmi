@@ -25,7 +25,7 @@ export function getSidebar() {
             link: '/react/guides/viem',
           },
           {
-            text: 'Connect Wallet 🚧',
+            text: 'Connect Wallet',
             link: '/react/guides/connect-wallet',
           },
           {
