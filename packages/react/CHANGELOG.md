@@ -1,5 +1,14 @@
 # wagmi
 
+## 1.4.4
+
+### Patch Changes
+
+- [#3125](https://github.com/wagmi-dev/wagmi/pull/3125) [`725e73fe`](https://github.com/wagmi-dev/wagmi/commit/725e73feb9143dbaa6d540bb76d2009cef29da0b) Thanks [@lukasrosario](https://github.com/lukasrosario)! - Fixed an issue where `dataSuffix` was not being passed down into viem's `simulateContract`, causing the data to be omitted from requests.
+
+- Updated dependencies [[`725e73fe`](https://github.com/wagmi-dev/wagmi/commit/725e73feb9143dbaa6d540bb76d2009cef29da0b)]:
+  - @wagmi/core@1.4.4
+
 ## 1.4.3
 
 ### Patch Changes
