@@ -57,6 +57,7 @@ export async function prepareWriteContract<
   address,
   args,
   chainId,
+  dataSuffix,
   functionName,
   walletClient: walletClient_,
   ...config
@@ -93,6 +94,7 @@ export async function prepareWriteContract<
     accessList,
     blockNumber,
     blockTag,
+    dataSuffix,
     gas,
     gasPrice,
     maxFeePerGas,
