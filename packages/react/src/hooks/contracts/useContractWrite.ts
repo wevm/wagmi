@@ -160,7 +160,16 @@ export function useContractWrite<
   TFunctionName extends string,
   TMode extends WriteContractMode = undefined,
 >(config: UseContractWriteConfig<TAbi, TFunctionName, TMode>) {
-  const { address, abi, args, chainId, functionName, mode, request, dataSuffix } = config
+  const {
+    address,
+    abi,
+    args,
+    chainId,
+    functionName,
+    mode,
+    request,
+    dataSuffix,
+  } = config
   const {
     accessList,
     account,
