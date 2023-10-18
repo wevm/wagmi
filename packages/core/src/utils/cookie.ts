@@ -18,7 +18,8 @@ export const cookieStorage = {
   },
 } satisfies BaseStorage
 
-export function cookieToInitialState(config: Config, cookie: string) {
+export function cookieToInitialState(config: Config, cookie?: string | null) {
+  if (!cookie) return undefined
   const key = `${config.storage?.key}.store`
   const parsed = parseCookie(cookie, key)
   if (!parsed) return undefined

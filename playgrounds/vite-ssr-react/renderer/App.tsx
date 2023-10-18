@@ -50,7 +50,7 @@ export function App(props: AppProps) {
   const { children, pageContext } = props
   const initialState = cookieToInitialState(
     config,
-    pageContext?.headers?.cookie ?? '',
+    pageContext?.headers?.cookie,
   )
   return (
     <React.StrictMode>
