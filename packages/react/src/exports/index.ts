@@ -25,9 +25,12 @@ export {
 ////////////////////////////////////////////////////////////////////////////////
 // Errors
 
-export { BaseError } from '../errors/base.js'
+export { type BaseErrorType, BaseError } from '../errors/base.js'
 
-export { WagmiProviderNotFoundError } from '../errors/context.js'
+export {
+  type WagmiProviderNotFoundErrorType,
+  WagmiProviderNotFoundError,
+} from '../errors/context.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // Hooks
@@ -277,6 +280,14 @@ export {
 } from '../hooks/useWriteContract.js'
 
 ////////////////////////////////////////////////////////////////////////////////
+// hydrate
+
+export {
+  type HydrateProps,
+  Hydrate,
+} from '../hydrate.js'
+
+////////////////////////////////////////////////////////////////////////////////
 // @wagmi/core
 
 export {
@@ -292,12 +303,19 @@ export {
   type CreateConnectorFn,
   createConnector,
   // Errors
+  type ChainMismatchErrorType,
   ChainMismatchError,
+  type ChainNotConfiguredErrorType,
   ChainNotConfiguredError,
+  type ConnectorAlreadyConnectedErrorType,
   ConnectorAlreadyConnectedError,
+  type ConnectorNotFoundErrorType,
   ConnectorNotFoundError,
-  ConnectorAccountNotFound,
+  type ConnectorAccountNotFoundErrorType,
+  ConnectorAccountNotFoundError,
+  type ProviderNotFoundErrorType,
   ProviderNotFoundError,
+  type SwitchChainNotSupportedErrorType,
   SwitchChainNotSupportedError,
   // Storage
   type CreateStorageParameters,

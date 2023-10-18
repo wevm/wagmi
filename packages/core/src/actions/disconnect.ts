@@ -3,10 +3,12 @@ import {
   type Connection,
   type Connector,
 } from '../createConfig.js'
-import type { ErrorType } from '../errors/base.js'
+import type { BaseErrorType, ErrorType } from '../errors/base.js'
 import {
   ConnectorNotConnectedError,
+  type ConnectorNotConnectedErrorType,
   ConnectorNotFoundError,
+  type ConnectorNotFoundErrorType,
 } from '../errors/config.js'
 import type { ConnectorParameter } from '../types/properties.js'
 
@@ -14,7 +16,12 @@ export type DisconnectParameters = ConnectorParameter
 
 export type DisconnectReturnType = void
 
-export type DisconnectErrorType = ErrorType
+export type DisconnectErrorType =
+  | ConnectorNotFoundErrorType
+  | ConnectorNotConnectedErrorType
+  // base
+  | BaseErrorType
+  | ErrorType
 
 /** https://alpha.wagmi.sh/core/api/actions/disconnect */
 export async function disconnect(

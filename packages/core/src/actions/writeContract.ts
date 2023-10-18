@@ -13,6 +13,8 @@ import {
 } from 'viem/actions'
 
 import type { Config } from '../createConfig.js'
+import type { BaseErrorType, ErrorType } from '../errors/base.js'
+import type { ChainMismatchErrorType } from '../errors/config.js'
 import type { SelectChains } from '../types/chain.js'
 import type {
   ChainIdParameter,
@@ -20,8 +22,12 @@ import type {
 } from '../types/properties.js'
 import type { Evaluate, UnionEvaluate, UnionOmit } from '../types/utils.js'
 import { assertActiveChain } from '../utils/assertActiveChain.js'
-import { getConnectorClient } from './getConnectorClient.js'
 import {
+  type GetConnectorClientErrorType,
+  getConnectorClient,
+} from './getConnectorClient.js'
+import {
+  type SimulateContractErrorType,
   type SimulateContractParameters,
   simulateContract,
 } from './simulateContract.js'
@@ -63,7 +69,17 @@ export type WriteContractParameters<
 
 export type WriteContractReturnType = viem_WriteContractReturnType
 
-export type WriteContractErrorType = viem_WriteContractErrorType
+export type WriteContractErrorType =
+  | ChainMismatchErrorType
+  // getConnectorClient()
+  | GetConnectorClientErrorType
+  // simulateContract()
+  | SimulateContractErrorType
+  // base
+  | BaseErrorType
+  | ErrorType
+  // viem
+  | viem_WriteContractErrorType
 
 /** https://alpha.wagmi.sh/core/api/actions/writeContract */
 export async function writeContract<

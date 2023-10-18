@@ -1,6 +1,7 @@
 import {
   type Account,
   type Address,
+  type BaseErrorType,
   type Client,
   createClient,
   custom,
@@ -10,7 +11,7 @@ import { parseAccount } from 'viem/utils'
 import type { Config, Connection } from '../createConfig.js'
 import type { ErrorType } from '../errors/base.js'
 import {
-  ConnectorAccountNotFound,
+  ConnectorAccountNotFoundError,
   type ConnectorAccountNotFoundErrorType,
   ConnectorNotConnectedError,
   type ConnectorNotConnectedErrorType,
@@ -45,6 +46,8 @@ export type GetConnectorClientReturnType<
 export type GetConnectorClientErrorType =
   | ConnectorAccountNotFoundErrorType
   | ConnectorNotConnectedErrorType
+  // base
+  | BaseErrorType
   | ErrorType
 
 /** https://alpha.wagmi.sh/core/api/actions/getConnectorClient */
@@ -88,7 +91,10 @@ export async function getConnectorClient<
 
   // if account was provided, check that it exists on the connector
   if (parameters.account && !connection.accounts.includes(account.address))
-    throw new ConnectorAccountNotFound({ address: account.address, connector })
+    throw new ConnectorAccountNotFoundError({
+      address: account.address,
+      connector,
+    })
 
   return createClient({
     account,

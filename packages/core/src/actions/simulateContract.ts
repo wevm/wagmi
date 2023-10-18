@@ -14,6 +14,8 @@ import {
 } from 'viem/actions'
 
 import { type Config } from '../createConfig.js'
+import type { BaseErrorType, ErrorType } from '../errors/base.js'
+import type { ChainMismatchErrorType } from '../errors/config.js'
 import type { SelectChains } from '../types/chain.js'
 import type {
   ChainIdParameter,
@@ -21,7 +23,10 @@ import type {
 } from '../types/properties.js'
 import type { PartialBy, UnionEvaluate, UnionOmit } from '../types/utils.js'
 import { assertActiveChain } from '../utils/assertActiveChain.js'
-import { getConnectorClient } from './getConnectorClient.js'
+import {
+  type GetConnectorClientErrorType,
+  getConnectorClient,
+} from './getConnectorClient.js'
 
 export type SimulateContractParameters<
   abi extends Abi | readonly unknown[] = Abi,
@@ -102,7 +107,15 @@ export type SimulateContractReturnType<
     : never
 }[number]
 
-export type SimulateContractErrorType = viem_SimulateContractErrorType
+export type SimulateContractErrorType =
+  | ChainMismatchErrorType
+  // getConnectorClient()
+  | GetConnectorClientErrorType
+  // base
+  | BaseErrorType
+  | ErrorType
+  // viem
+  | viem_SimulateContractErrorType
 
 /** https://alpha.wagmi.sh/core/api/actions/simulateContract */
 export async function simulateContract<

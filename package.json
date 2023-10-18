@@ -18,7 +18,7 @@
     "lint:unused": "pnpm clean && knip --ignore-internal",
     "postinstall": "pnpm preconstruct",
     "preconstruct": "bun .scripts/preconstruct.ts",
-    "preinstall": "npx only-allow@1.1.1 pnpm",
+    "preinstall": "npx only-allow pnpm",
     "prepare": "pnpm simple-git-hooks",
     "prepublishOnly": "bun .scripts/formatPackageJson.ts",
     "test": "vitest",
@@ -68,8 +68,7 @@
   },
   "knip": {
     "ignore": ["**/*.test-d.ts", "**/templates/**", "**/hardhat.config.js"],
-    "ignoreBinaries": ["open"],
-    "ignoreDependencies": ["only-allow"],
+    "ignoreBinaries": ["only-allow", "open"],
     "ignoreWorkspaces": [
       "docs",
       "packages/register-tests/**",

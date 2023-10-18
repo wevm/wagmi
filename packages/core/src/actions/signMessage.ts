@@ -7,9 +7,13 @@ import {
 } from 'viem/actions'
 
 import { type Config } from '../createConfig.js'
+import type { BaseErrorType, ErrorType } from '../errors/base.js'
 import type { ConnectorParameter } from '../types/properties.js'
 import type { Evaluate } from '../types/utils.js'
-import { getConnectorClient } from './getConnectorClient.js'
+import {
+  type GetConnectorClientErrorType,
+  getConnectorClient,
+} from './getConnectorClient.js'
 
 export type SignMessageParameters = Evaluate<
   viem_SignMessageParameters<Account> & ConnectorParameter
@@ -17,7 +21,14 @@ export type SignMessageParameters = Evaluate<
 
 export type SignMessageReturnType = viem_SignMessageReturnType
 
-export type SignMessageErrorType = viem_SignMessageErrorType
+export type SignMessageErrorType =
+  // getConnectorClient()
+  | GetConnectorClientErrorType
+  // base
+  | BaseErrorType
+  | ErrorType
+  // viem
+  | viem_SignMessageErrorType
 
 /** https://alpha.wagmi.sh/core/api/actions/signMessage */
 export async function signMessage(

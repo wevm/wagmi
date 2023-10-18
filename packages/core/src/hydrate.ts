@@ -1,18 +1,18 @@
-import { reconnect as reconnect_ } from './actions/reconnect.js'
+import { reconnect } from './actions/reconnect.js'
 import type { Config, State } from './createConfig.js'
 
 type HydrateParameters = {
-  initialState?: State
-  reconnect?: boolean
+  initialState?: State | undefined
+  reconnectOnMount?: boolean | undefined
 }
 
-export function hydrate(config: Config, args: HydrateParameters) {
-  const { initialState, reconnect } = args
+export function hydrate(config: Config, parameters: HydrateParameters) {
+  const { initialState, reconnectOnMount } = parameters
 
   if (initialState)
     config.setState({
       ...initialState,
-      status: reconnect ? 'reconnecting' : 'disconnected',
+      status: reconnectOnMount ? 'reconnecting' : 'disconnected',
     })
 
   return {
@@ -29,7 +29,7 @@ export function hydrate(config: Config, args: HydrateParameters) {
           ...(mipdConnectors ?? []),
         ])
       }
-      if (reconnect) reconnect_(config)
+      if (reconnectOnMount) reconnect(config)
     },
   }
 }

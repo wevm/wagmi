@@ -7,9 +7,13 @@ import {
 } from 'viem/actions'
 
 import { type Config } from '../createConfig.js'
+import type { BaseErrorType, ErrorType } from '../errors/base.js'
 import type { ConnectorParameter } from '../types/properties.js'
 import type { UnionEvaluate } from '../types/utils.js'
-import { getConnectorClient } from './getConnectorClient.js'
+import {
+  type GetConnectorClientErrorType,
+  getConnectorClient,
+} from './getConnectorClient.js'
 
 export type SignTypedDataParameters<
   typedData extends TypedData | Record<string, unknown> = TypedData,
@@ -23,7 +27,14 @@ export type SignTypedDataParameters<
 
 export type SignTypedDataReturnType = viem_SignTypedDataReturnType
 
-export type SignTypedDataErrorType = viem_SignMessageErrorType
+export type SignTypedDataErrorType =
+  // getConnectorClient()
+  | GetConnectorClientErrorType
+  // base
+  | BaseErrorType
+  | ErrorType
+  // viem
+  | viem_SignMessageErrorType
 
 /** https://alpha.wagmi.sh/core/api/actions/signTypedData */
 export async function signTypedData<

@@ -7,13 +7,17 @@ import {
 } from 'viem/actions'
 
 import { type Config } from '../createConfig.js'
+import type { BaseErrorType, ErrorType } from '../errors/base.js'
 import type { SelectChains } from '../types/chain.js'
 import type {
   ChainIdParameter,
   ConnectorParameter,
 } from '../types/properties.js'
 import { type UnionEvaluate, type UnionLooseOmit } from '../types/utils.js'
-import { getConnectorClient } from './getConnectorClient.js'
+import {
+  type GetConnectorClientErrorType,
+  getConnectorClient,
+} from './getConnectorClient.js'
 
 export type EstimateGasParameters<
   config extends Config = Config,
@@ -32,7 +36,14 @@ export type EstimateGasParameters<
 
 export type EstimateGasReturnType = viem_EstimateGasReturnType
 
-export type EstimateGasErrorType = viem_EstimateGasErrorType
+export type EstimateGasErrorType =
+  // getConnectorClient()
+  | GetConnectorClientErrorType
+  // base
+  | BaseErrorType
+  | ErrorType
+  // viem
+  | viem_EstimateGasErrorType
 
 /** https://alpha.wagmi.sh/core/api/actions/estimateGas */
 export async function estimateGas<

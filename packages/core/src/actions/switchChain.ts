@@ -1,14 +1,18 @@
 import {
-  type SwitchChainErrorType as SwitchChainErrorType_,
+  type SwitchChainErrorType as viem_SwitchChainErrorType,
   type UserRejectedRequestErrorType,
 } from 'viem'
 
 import { type Config } from '../createConfig.js'
 import type { BaseErrorType, ErrorType } from '../errors/base.js'
-import { ChainNotConfiguredError } from '../errors/config.js'
+import {
+  ChainNotConfiguredError,
+  type ChainNotConfiguredErrorType,
+} from '../errors/config.js'
 import {
   type ProviderNotFoundErrorType,
   SwitchChainNotSupportedError,
+  type SwitchChainNotSupportedErrorType,
 } from '../errors/connector.js'
 import type { ConnectorParameter } from '../types/properties.js'
 import type { Evaluate } from '../types/utils.js'
@@ -31,11 +35,16 @@ export type SwitchChainReturnType<
 >
 
 export type SwitchChainErrorType =
+  | SwitchChainNotSupportedErrorType
+  | ChainNotConfiguredErrorType
+  // connector.switchChain()
   | ProviderNotFoundErrorType
-  | SwitchChainErrorType_
   | UserRejectedRequestErrorType
+  // base
   | BaseErrorType
   | ErrorType
+  // viem
+  | viem_SwitchChainErrorType
 
 /** https://alpha.wagmi.sh/core/api/actions/switchChain */
 export async function switchChain<

@@ -31,7 +31,7 @@ type PageProps = Record<string, unknown>
 
 export type PageContextCustom = {
   Page: Page
-  headers?: IncomingHttpHeaders
+  headers?: IncomingHttpHeaders | undefined
   pageProps?: PageProps | undefined
   urlPathname: string
   exports: {

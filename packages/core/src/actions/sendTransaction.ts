@@ -9,6 +9,8 @@ import type {
 import { sendTransaction as viem_sendTransaction } from 'viem/actions'
 
 import type { Config } from '../createConfig.js'
+import type { BaseErrorType, ErrorType } from '../errors/base.js'
+import type { ChainMismatchErrorType } from '../errors/config.js'
 import type { SelectChains } from '../types/chain.js'
 import type {
   ChainIdParameter,
@@ -16,7 +18,10 @@ import type {
 } from '../types/properties.js'
 import type { Evaluate } from '../types/utils.js'
 import { assertActiveChain } from '../utils/assertActiveChain.js'
-import { getConnectorClient } from './getConnectorClient.js'
+import {
+  type GetConnectorClientErrorType,
+  getConnectorClient,
+} from './getConnectorClient.js'
 
 export type SendTransactionParameters<
   config extends Config = Config,
@@ -38,7 +43,15 @@ export type SendTransactionParameters<
 
 export type SendTransactionReturnType = viem_SendTransactionReturnType
 
-export type SendTransactionErrorType = viem_SendTransactionErrorType
+export type SendTransactionErrorType =
+  | ChainMismatchErrorType
+  // getConnectorClient()
+  | GetConnectorClientErrorType
+  // base
+  | BaseErrorType
+  | ErrorType
+  // viem
+  | viem_SendTransactionErrorType
 
 /** https://alpha.wagmi.sh/core/api/actions/sendTransaction */
 export async function sendTransaction<

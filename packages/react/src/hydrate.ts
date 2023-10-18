@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react'
 
 export type HydrateProps = {
   config: ResolvedRegister['config']
-  initialState?: State
+  initialState?: State | undefined
   reconnectOnMount?: boolean | undefined
 }
 
@@ -14,7 +14,7 @@ export function Hydrate(parameters: React.PropsWithChildren<HydrateProps>) {
 
   const { onMount } = hydrate(config, {
     initialState,
-    reconnect: reconnectOnMount,
+    reconnectOnMount: reconnectOnMount,
   })
 
   // Hydrate for non-SSR

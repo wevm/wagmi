@@ -4,7 +4,7 @@ import { expect, test } from 'vitest'
 import {
   ChainMismatchError,
   ChainNotConfiguredError,
-  ConnectorAccountNotFound,
+  ConnectorAccountNotFoundError,
   ConnectorAlreadyConnectedError,
   ConnectorNotConnectedError,
   ConnectorNotFoundError,
@@ -43,12 +43,12 @@ test('constructors', () => {
     Version: @wagmi/core@x.y.z]
   `)
   expect(
-    new ConnectorAccountNotFound({
+    new ConnectorAccountNotFoundError({
       address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
       connector: config.connectors[0]!,
     }),
   ).toMatchInlineSnapshot(`
-    [ConnectorAccountNotFound: Account "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e" not found for connector "Mock Connector".
+    [ConnectorAccountNotFoundError: Account "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e" not found for connector "Mock Connector".
 
     Version: @wagmi/core@x.y.z]
   `)

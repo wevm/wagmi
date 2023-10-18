@@ -355,16 +355,24 @@ export { hydrate } from '../hydrate.js'
 export { BaseError } from '../errors/base.js'
 
 export {
+  type ChainMismatchErrorType,
   ChainMismatchError,
+  type ChainNotConfiguredErrorType,
   ChainNotConfiguredError,
+  type ConnectorNotConnectedErrorType,
   ConnectorNotConnectedError,
+  type ConnectorAlreadyConnectedErrorType,
   ConnectorAlreadyConnectedError,
+  type ConnectorNotFoundErrorType,
   ConnectorNotFoundError,
-  ConnectorAccountNotFound,
+  type ConnectorAccountNotFoundErrorType,
+  ConnectorAccountNotFoundError,
 } from '../errors/config.js'
 
 export {
+  type ProviderNotFoundErrorType,
   ProviderNotFoundError,
+  type SwitchChainNotSupportedErrorType,
   SwitchChainNotSupportedError,
 } from '../errors/connector.js'
 

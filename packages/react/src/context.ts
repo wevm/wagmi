@@ -10,7 +10,7 @@ export const WagmiContext = createContext<
 
 export type WagmiProviderProps = {
   config: ResolvedRegister['config']
-  initialState?: State
+  initialState?: State | undefined
   reconnectOnMount?: boolean | undefined
 }
 
