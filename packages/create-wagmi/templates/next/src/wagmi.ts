@@ -9,6 +9,7 @@ export const config = createConfig({
     coinbaseWallet({ appName: 'Create Wagmi' }),
     walletConnect({ projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID }),
   ],
+  ssr: true,
   transports: {
     [mainnet.id]: http(),
     [sepolia.id]: http(),
