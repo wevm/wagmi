@@ -4,7 +4,12 @@ import { QueryClient } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import React from 'react'
-import { WagmiProvider, deserialize, serialize } from 'wagmi'
+import {
+  WagmiProvider,
+  cookieToInitialState,
+  deserialize,
+  serialize,
+} from 'wagmi'
 
 import { Link } from '../lib/Link.tsx'
 import {
@@ -43,10 +48,14 @@ type AppProps = {
 
 export function App(props: AppProps) {
   const { children, pageContext } = props
+  const initialState = cookieToInitialState(
+    config,
+    pageContext?.headers?.cookie ?? '',
+  )
   return (
     <React.StrictMode>
       <PageContextProvider pageContext={pageContext}>
-        <WagmiProvider config={config}>
+        <WagmiProvider config={config} initialState={initialState}>
           <PersistQueryClientProvider
             client={queryClient}
             persistOptions={{ persister }}

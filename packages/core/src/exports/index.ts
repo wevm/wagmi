@@ -376,6 +376,12 @@ export { type Register, type ResolvedRegister } from '../types/register.js'
 ////////////////////////////////////////////////////////////////////////////////
 // Utilities
 
+export {
+  cookieStorage,
+  cookieToInitialState,
+  parseCookie,
+} from '../utils/cookie.js'
+
 export { deepEqual } from '../utils/deepEqual.js'
 
 export { deserialize } from '../utils/deserialize.js'

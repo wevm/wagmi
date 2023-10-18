@@ -1,5 +1,6 @@
 // `usePageContext` allows us to access `pageContext` in any React component.
 // See https://vike.dev/pageContext-anywhere
+import { IncomingHttpHeaders } from 'http'
 import React, { useContext } from 'react'
 import type {
   PageContextBuiltInClientWithServerRouting as PageContextBuiltInClient,
@@ -30,6 +31,7 @@ type PageProps = Record<string, unknown>
 
 export type PageContextCustom = {
   Page: Page
+  headers?: IncomingHttpHeaders
   pageProps?: PageProps | undefined
   urlPathname: string
   exports: {

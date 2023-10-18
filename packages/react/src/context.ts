@@ -1,6 +1,6 @@
 'use client'
 
-import { type ResolvedRegister } from '@wagmi/core'
+import { type ResolvedRegister, type State } from '@wagmi/core'
 import { createContext, createElement } from 'react'
 import { Hydrate } from './hydrate.js'
 
@@ -10,6 +10,7 @@ export const WagmiContext = createContext<
 
 export type WagmiProviderProps = {
   config: ResolvedRegister['config']
+  initialState?: State
   reconnectOnMount?: boolean | undefined
 }
 

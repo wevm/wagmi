@@ -308,9 +308,12 @@ export {
   type Register,
   type ResolvedRegister,
   // Utilities
+  cookieStorage,
+  cookieToInitialState,
   deepEqual,
   deserialize,
   normalizeChainId,
+  parseCookie,
   serialize,
 } from '@wagmi/core'
 

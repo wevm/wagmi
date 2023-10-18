@@ -14,6 +14,7 @@ export type Storage<
   ///
   storageItemMap extends StorageItemMap = StorageItemMap & itemMap,
 > = {
+  key: string
   getItem<
     key extends keyof storageItemMap,
     value extends storageItemMap[key],
@@ -31,7 +32,7 @@ export type Storage<
   removeItem(key: keyof storageItemMap): void | Promise<void>
 }
 
-type BaseStorage = {
+export type BaseStorage = {
   getItem(
     key: string,
   ): string | null | undefined | Promise<string | null | undefined>
@@ -64,6 +65,7 @@ export function createStorage<
 
   return {
     ...storage,
+    key: prefix,
     async getItem(key, defaultValue) {
       const value = storage.getItem(`${prefix}.${key as string}`)
       const unwrapped = await unwrap(value)

@@ -1,18 +1,24 @@
 'use client'
 
-import { type ResolvedRegister, hydrate } from '@wagmi/core'
+import { type ResolvedRegister, type State, hydrate } from '@wagmi/core'
 import { useEffect, useRef } from 'react'
 
 export type HydrateProps = {
   config: ResolvedRegister['config']
+  initialState?: State
   reconnectOnMount?: boolean | undefined
 }
 
 export function Hydrate(parameters: React.PropsWithChildren<HydrateProps>) {
-  const { children, config, reconnectOnMount = true } = parameters
+  const { children, config, initialState, reconnectOnMount = true } = parameters
+
+  const { onMount } = hydrate(config, {
+    initialState,
+    reconnect: reconnectOnMount,
+  })
 
   // Hydrate for non-SSR
-  if (!config._internal.ssr) hydrate(config, { reconnect: reconnectOnMount })
+  if (!config._internal.ssr) onMount()
 
   // Hydrate for SSR
   const active = useRef(true)
@@ -20,7 +26,7 @@ export function Hydrate(parameters: React.PropsWithChildren<HydrateProps>) {
   useEffect(() => {
     if (!active.current) return
     if (!config._internal.ssr) return
-    hydrate(config, { reconnect: reconnectOnMount })
+    onMount()
     return () => {
       active.current = false
     }

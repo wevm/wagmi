@@ -1,4 +1,4 @@
-import { http, createConfig, createStorage } from 'wagmi'
+import { http, cookieStorage, createConfig, createStorage } from 'wagmi'
 import { celo, mainnet, optimism, sepolia } from 'wagmi/chains'
 import {
   coinbaseWallet,
@@ -20,7 +20,7 @@ export const config = createConfig({
   ssr: true,
   storage: createStorage({
     key: 'vite-ssr-react',
-    storage: typeof localStorage !== 'undefined' ? localStorage : undefined,
+    storage: cookieStorage,
   }),
   transports: {
     [mainnet.id]: http(

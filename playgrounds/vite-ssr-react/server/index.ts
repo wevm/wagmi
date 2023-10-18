@@ -54,6 +54,7 @@ async function startServer() {
   // catch-all middleware superseding any middleware placed after it).
   app.get('*', async (req, res, next) => {
     const pageContextInit = {
+      headers: req.headers,
       urlOriginal: req.originalUrl,
     }
     const pageContext = await renderPage(pageContextInit)

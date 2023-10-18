@@ -1,5 +1,5 @@
 import { del, get, set } from 'idb-keyval'
-import { http, createConfig, createStorage } from 'wagmi'
+import { http, cookieStorage, createConfig, createStorage } from 'wagmi'
 import { celo, mainnet, optimism, sepolia } from 'wagmi/chains'
 import {
   coinbaseWallet,
@@ -37,7 +37,7 @@ export const config = createConfig({
   ],
   storage: createStorage({
     key: 'vite-react',
-    storage: localStorage,
+    storage: cookieStorage,
   }),
   transports: {
     [mainnet.id]: http(
