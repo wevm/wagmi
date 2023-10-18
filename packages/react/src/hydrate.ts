@@ -1,7 +1,7 @@
 'use client'
 
 import { type ResolvedRegister, type State, hydrate } from '@wagmi/core'
-import { useEffect, useRef } from 'react'
+import { type ReactElement, useEffect, useRef } from 'react'
 
 export type HydrateProps = {
   config: ResolvedRegister['config']
@@ -32,5 +32,5 @@ export function Hydrate(parameters: React.PropsWithChildren<HydrateProps>) {
     }
   }, [])
 
-  return children
+  return children as ReactElement
 }
