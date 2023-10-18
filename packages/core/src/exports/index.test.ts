@@ -66,6 +66,7 @@ test('exports', () => {
       "createConfig",
       "createStorage",
       "noopStorage",
+      "hydrate",
       "BaseError",
       "ChainMismatchError",
       "ChainNotConfiguredError",

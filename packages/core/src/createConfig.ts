@@ -1,4 +1,8 @@
-import { type EIP6963ProviderDetail, createStore as createMipd } from 'mipd'
+import {
+  type EIP6963ProviderDetail,
+  type Store as MipdStore,
+  createStore as createMipd,
+} from 'mipd'
 import {
   type Address,
   type Chain,
@@ -8,7 +12,7 @@ import {
   createClient,
 } from 'viem'
 import { persist, subscribeWithSelector } from 'zustand/middleware'
-import { createStore } from 'zustand/vanilla'
+import { type Mutate, type StoreApi, createStore } from 'zustand/vanilla'
 
 import {
   type ConnectorEventMap,
@@ -33,6 +37,7 @@ export type CreateConfigParameters<
     connectors?: CreateConnectorFn[] | undefined
     multiInjectedProviderDiscovery?: boolean | undefined
     storage?: Storage | null | undefined
+    ssr?: boolean | undefined
     syncConnectedChain?: boolean | undefined
   } & OneOf<
     | ({ transports: transports } & {
@@ -66,6 +71,7 @@ export function createConfig<
           : noopStorage,
     }),
     syncConnectedChain = true,
+    ssr,
     ...rest
   } = parameters
 
@@ -81,7 +87,9 @@ export function createConfig<
   const connectors = createStore(() =>
     [
       ...(rest.connectors ?? []),
-      ...(mipd?.getProviders().map(providerDetailToConnector) ?? []),
+      ...(!ssr
+        ? mipd?.getProviders().map(providerDetailToConnector) ?? []
+        : []),
     ].map(setup),
   )
   function setup(connectorFn: CreateConnectorFn) {
@@ -174,10 +182,12 @@ export function createConfig<
             name: 'store',
             partialize(state) {
               return {
+                connections: state.connections,
                 chainId: state.chainId,
                 current: state.current,
               } satisfies PartializedState
             },
+            skipHydration: ssr,
             storage: storage as Storage<Record<string, unknown>>,
             version: 1,
           })
@@ -318,9 +328,13 @@ export function createConfig<
     },
 
     _internal: {
+      mipd,
+      store,
+      ssr: Boolean(ssr),
       syncConnectedChain,
       transports: rest.transports as transports,
       connectors: {
+        providerDetailToConnector,
         setup,
         setState: (value) =>
           connectors.setState(
@@ -369,10 +383,16 @@ export type Config<
   }): Client<transports[chainId], Extract<chains[number], { id: chainId }>>
 
   _internal: {
+    readonly mipd: MipdStore | undefined
+    readonly store: Mutate<StoreApi<any>, [['zustand/persist', any]]>
+    readonly ssr: boolean
     readonly syncConnectedChain: boolean
     readonly transports: transports
 
     connectors: {
+      providerDetailToConnector(
+        providerDetail: EIP6963ProviderDetail,
+      ): CreateConnectorFn
       setup(connectorFn: CreateConnectorFn): Connector
       setState(value: Connector[] | ((state: Connector[]) => Connector[])): void
       subscribe(

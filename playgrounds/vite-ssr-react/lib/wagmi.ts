@@ -17,6 +17,7 @@ export const config = createConfig({
     ledger({ projectId: import.meta.env.VITE_WC_PROJECT_ID }),
     safe({ debug: true, shimDisconnect: true }),
   ],
+  ssr: true,
   storage: createStorage({
     key: 'vite-ssr-react',
     storage: typeof localStorage !== 'undefined' ? localStorage : undefined,
