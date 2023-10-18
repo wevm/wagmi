@@ -54,6 +54,31 @@ function App() {
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
+### initialState
+
+`State | undefined`
+
+- Initial state to hydrate into the [Wagmi Config](/react/api/createConfig). Useful for SSR.
+
+::: code-group
+```tsx [app.tsx]
+import { WagmiProvider } from 'wagmi'
+import { config } from './config' 
+
+function App() {
+  return (
+    <WagmiProvider
+      config={config}
+      initialState={/* ... /*} // [!code focus]
+    >
+      {/** ... */}
+    </WagmiProvider>
+  )
+}
+```
+<<< @/snippets/react/config.ts[config.ts]
+:::
+
 ### reconnectOnMount
 
 `boolean | undefined`

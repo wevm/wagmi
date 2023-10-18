@@ -25,6 +25,10 @@ export function getSidebar() {
             link: '/react/guides/viem',
           },
           {
+            text: 'SSR',
+            link: '/react/guides/ssr',
+          },
+          {
             text: 'Connect Wallet',
             link: '/react/guides/connect-wallet',
           },
@@ -233,6 +237,10 @@ export function getSidebar() {
             text: 'Utilities',
             collapsed: true,
             items: [
+              {
+                text: 'cookieToInitialState',
+                link: '/react/api/utilities/cookieToInitialState',
+              },
               { text: 'deserialize', link: '/react/api/utilities/deserialize' },
               {
                 text: 'normalizeChainId',
@@ -488,6 +496,10 @@ export function getSidebar() {
             text: 'Utilities',
             collapsed: true,
             items: [
+              {
+                text: 'cookieToInitialState',
+                link: '/core/api/utilities/cookieToInitialState',
+              },
               { text: 'deserialize', link: '/core/api/utilities/deserialize' },
               {
                 text: 'normalizeChainId',

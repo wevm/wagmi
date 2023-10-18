@@ -117,6 +117,26 @@ const config = createConfig({
 })
 ```
 
+### ssr
+
+`boolean | undefined`
+
+Flag to indicate if the config is being used in a server-side rendering environment. Defaults to `false`.
+
+```ts-vue
+import { createConfig, createStorage, http } from '{{packageName}}' // [!code focus]
+import { mainnet, sepolia } from '{{packageName}}/chains'
+
+const config = createConfig({
+  chains: [mainnet, sepolia],
+  ssr: true, // [!code focus]
+  transports: {
+    [mainnet.id]: http('https://mainnet.example.com'),
+    [sepolia.id]: http('https://sepolia.example.com'),
+  },
+})
+```
+
 ### storage
 
 `Storage | null | undefined`
