@@ -1,13 +1,13 @@
-import { ConnectorNotFoundError } from './errors'
-import { InjectedConnector } from './injected'
-import { WindowProvider } from './types'
+import { ConnectorNotFoundError } from "./errors";
+import { InjectedConnector } from "./injected";
+import { WindowProvider } from "./types";
 
 import {
   EventType,
   MetaMaskSDK,
   MetaMaskSDKOptions,
   SDKProvider,
-} from '@metamask/sdk'
+} from "@metamask/sdk";
 import {
   Address,
   Chain,
@@ -15,64 +15,55 @@ import {
   ResourceUnavailableRpcError,
   UserRejectedRequestError,
   getAddress,
-} from 'viem'
+} from "viem";
 
 export type MetaMaskSDKConnectorOptions = {
-  // Keep both sdk and sdkOptions as some users might want to use their own pre-defined sdk instance
-  sdk?: MetaMaskSDK
-  sdkOptions?: MetaMaskSDKOptions
-}
+  sdkOptions: MetaMaskSDKOptions;
+};
 
 export class MetaMaskSDKConnector extends InjectedConnector {
-  readonly id = 'metaMaskSDK'
+  readonly id = "metaMaskSDK";
 
-  #sdk: MetaMaskSDK
-  #provider?: SDKProvider
+  #sdk: MetaMaskSDK;
+  #provider?: SDKProvider;
 
   constructor({
     chains,
     options: options_,
   }: {
-    chains?: Chain[]
-    options?: MetaMaskSDKConnectorOptions
+    chains?: Chain[];
+    options?: MetaMaskSDKConnectorOptions;
   } = {}) {
-    if (!options_?.sdk && !options_?.sdkOptions) {
-      throw new Error('MetaMaskConnector invalid sdk parameters')
+    if (!options_?.sdkOptions) {
+      throw new Error("MetaMaskConnector invalid sdk parameters");
     }
-
-    let sdk: MetaMaskSDK
-
-    if (options_?.sdk) {
-      sdk = options_.sdk
-    } else {
-      // force source to 'wagmi' for analytics
-      if (!options_.sdkOptions)
-        options_.sdkOptions = {
-          dappMetadata: { name: 'wagmi' },
-        }
-      options_.sdkOptions._source = 'wagmi'
-      sdk = new MetaMaskSDK(options_.sdkOptions)
-      sdk.init()
-    }
+    // force source to 'wagmi' for analytics
+    if (!options_.sdkOptions)
+      options_.sdkOptions = {
+        dappMetadata: { name: "wagmi" },
+      };
+    options_.sdkOptions._source = "wagmi";
+    const sdk = new MetaMaskSDK(options_.sdkOptions);
+    sdk.init();
 
     const options = {
-      name: 'MetaMaskSDK',
+      name: "MetaMaskSDK",
       shimDisconnect: true,
       getProvider() {
         try {
-          return sdk.getProvider() as unknown as WindowProvider
+          return sdk.getProvider() as unknown as WindowProvider;
         } catch (_err) {
           // Return temp provider until sdk has initialized
           return {
             isMetaMask: true,
-          } as unknown as WindowProvider
+          } as unknown as WindowProvider;
         }
       },
-    }
+    };
 
-    super({ chains, options })
+    super({ chains, options });
 
-    this.#sdk = sdk
+    this.#sdk = sdk;
   }
 
   /**
@@ -81,71 +72,71 @@ export class MetaMaskSDKConnector extends InjectedConnector {
   #updateProviderListeners() {
     if (this.#provider) {
       // Cleanup previous handlers first
-      this.#provider?.removeListener('accountsChanged', this.onAccountsChanged)
-      this.#provider?.removeListener('chainChanged', this.onChainChanged)
-      this.#provider?.removeListener('disconnect', this.onDisconnect)
+      this.#provider?.removeListener("accountsChanged", this.onAccountsChanged);
+      this.#provider?.removeListener("chainChanged", this.onChainChanged);
+      this.#provider?.removeListener("disconnect", this.onDisconnect);
     }
 
     // might need to re-initialize provider if it changed
-    this.#provider = this.#sdk.getProvider()
+    this.#provider = this.#sdk.getProvider();
 
     this.#provider?.on(
-      'accountsChanged',
+      "accountsChanged",
       this.onAccountsChanged as (...args: unknown[]) => void,
-    )
+    );
     this.#provider?.on(
-      'chainChanged',
+      "chainChanged",
       this.onChainChanged as (...args: unknown[]) => void,
-    )
+    );
     this.#provider?.on(
-      'disconnect',
+      "disconnect",
       this.onDisconnect as (...args: unknown[]) => void,
-    )
+    );
   }
 
   async getAccount() {
     if (!this.#sdk.isInitialized()) {
-      await this.#sdk.init()
+      await this.#sdk.init();
     }
-    const provider = this.#sdk.getProvider()
-    if (!provider) throw new ConnectorNotFoundError()
+    const provider = this.#sdk.getProvider();
+    if (!provider) throw new ConnectorNotFoundError();
 
     // return checksum address
-    return getAddress(provider.selectedAddress as string)
+    return getAddress(provider.selectedAddress as string);
   }
 
   async getProvider() {
     if (!this.#sdk.isInitialized()) {
-      await this.#sdk.init()
+      await this.#sdk.init();
     }
     if (!this.#provider) {
-      this.#provider = this.#sdk.getProvider()
+      this.#provider = this.#sdk.getProvider();
     }
-    return this.#provider as unknown as WindowProvider
+    return this.#provider as unknown as WindowProvider;
   }
 
   async disconnect() {
-    this.#sdk.terminate()
-    super.disconnect()
+    this.#sdk.terminate();
+    super.disconnect();
   }
 
   async connect({ chainId }: { chainId?: number } = {}): Promise<{
-    account: Address
+    account: Address;
     chain: {
-      id: number
-      unsupported: boolean
-    }
-    provider?: SDKProvider
+      id: number;
+      unsupported: boolean;
+    };
+    provider?: SDKProvider;
   }> {
     try {
       if (!this.#sdk.isInitialized()) {
-        await this.#sdk.init()
+        await this.#sdk.init();
       }
 
-      const accounts = (await this.#sdk.connect()) as Address[]
+      const accounts = (await this.#sdk.connect()) as Address[];
 
       // Get latest provider instance (it may have changed based on user selection)
-      this.#updateProviderListeners()
+      this.#updateProviderListeners();
 
       // backward compatibility with older wallet (<7.3) version that return accounts before authorization
       if (
@@ -158,38 +149,38 @@ export class MetaMaskSDKConnector extends InjectedConnector {
               ._getConnection()
               ?.getConnector()
               .once(EventType.AUTHORIZED, () => {
-                resolve(true)
-              })
-          })
-        }
-        await waitForAuthorized()
+                resolve(true);
+              });
+          });
+        };
+        await waitForAuthorized();
       }
 
-      const selectedAccount: Address = accounts?.[0] ?? '0x'
+      const selectedAccount: Address = accounts?.[0] ?? "0x";
 
-      let providerChainId: string | null | undefined = this.#provider?.chainId
+      let providerChainId: string | null | undefined = this.#provider?.chainId;
       if (!providerChainId) {
         // request chainId from provider
         providerChainId = (await this.#provider?.request({
-          method: 'eth_chainId',
+          method: "eth_chainId",
           params: [],
-        })) as string
+        })) as string;
       }
 
       const chain = {
         id: parseInt(providerChainId, 16),
         unsupported: false,
-      }
+      };
 
       if (chainId !== undefined && chain.id !== chainId) {
-        const newChain = await this.switchChain(chainId)
-        const unsupported = this.isChainUnsupported(newChain.id)
-        chain.id = newChain.id
-        chain.unsupported = unsupported
+        const newChain = await this.switchChain(chainId);
+        const unsupported = this.isChainUnsupported(newChain.id);
+        chain.id = newChain.id;
+        chain.unsupported = unsupported;
       }
 
       if (this.options?.shimDisconnect) {
-        this.storage?.setItem(this.shimDisconnectKey, true)
+        this.storage?.setItem(this.shimDisconnectKey, true);
       }
 
       const connectResponse = {
@@ -197,16 +188,16 @@ export class MetaMaskSDKConnector extends InjectedConnector {
         account: selectedAccount,
         chain,
         provider: this.#provider,
-      }
+      };
 
-      return connectResponse
+      return connectResponse;
     } catch (error) {
       if (this.isUserRejectedRequestError(error)) {
-        throw new UserRejectedRequestError(error as Error)
+        throw new UserRejectedRequestError(error as Error);
       } else if ((error as ProviderRpcError).code === -32002) {
-        throw new ResourceUnavailableRpcError(error as ProviderRpcError)
+        throw new ResourceUnavailableRpcError(error as ProviderRpcError);
       }
-      throw error
+      throw error;
     }
   }
 }

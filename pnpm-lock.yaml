@@ -307,8 +307,8 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0
       '@metamask/sdk':
-        specifier: ^0.8.0
-        version: 0.8.0(react-native@0.71.13)(react@18.2.0)
+        specifier: ^0.10.0
+        version: 0.10.0(react-native@0.71.13)(react@18.2.0)
       '@safe-global/safe-apps-provider':
         specifier: ^0.17.1
         version: 0.17.1(typescript@5.0.4)
@@ -1813,6 +1813,13 @@ packages:
     dependencies:
       regenerator-runtime: 0.13.11
 
+  /@babel/runtime@7.23.2:
+    resolution: {integrity: sha512-mM8eg4yl5D6i3lu2QKPuPH4FArvJ8KhTofbE7jwMUv9KX5mBvwPAqnV3MlyBNqdp9RyRKP6Yck8TrfYrPvX3bg==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      regenerator-runtime: 0.14.0
+    dev: false
+
   /@babel/template@7.22.15:
     resolution: {integrity: sha512-QPErUVm4uyJa60rkI73qneDacvdvzxshT3kksGqlGWYdOTIUOwJ7RDUL8sGqslY1uXWSL6xMFKEXDS3ox2uF0w==}
     engines: {node: '>=6.9.0'}
@@ -3235,8 +3242,8 @@ packages:
     engines: {node: '>=12.0.0'}
     dev: false
 
-  /@metamask/sdk-communication-layer@0.8.0:
-    resolution: {integrity: sha512-p0xpqJn35vLzHlaCC16GGotTaWDJ7bhYMZuBs0/b8hoIsT7WZ+cKdsKA7gkxIRuoKzsN7txaYn+45lrdL3YjFw==}
+  /@metamask/sdk-communication-layer@0.10.0:
+    resolution: {integrity: sha512-Hi8sySaP+dyjd9+SQUtTnmYFRjKWgNo371yWcfOx1vogpP5YwD4VaHDbPQr5rWKDGXb/x1wai6UzPkMqHbllwQ==}
     dependencies:
       cross-fetch: 3.1.5
       date-fns: 2.30.0
@@ -3251,20 +3258,23 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@metamask/sdk-install-modal-web@0.7.0:
-    resolution: {integrity: sha512-R4iMn3KEGZ1rM52PBX3ZTLK8UKxkYIus0aqtKWy5At/OUe6/VhEtyJY7Eqv9rw9f/0uVPAxSjns3dJVT/ehg9Q==}
+  /@metamask/sdk-install-modal-web@0.10.0(react-native@0.71.13):
+    resolution: {integrity: sha512-pMZeHx7XkXljYed1WCH9ek2Z4mttmpucZl+oacRb3YnMvF+aCphfx+HXabOvnX6htFSlVvxh9djibk8ox2Z9Bg==}
     dependencies:
       '@emotion/react': 11.11.1(react@18.2.0)
       '@emotion/styled': 11.11.0(@emotion/react@11.11.1)(react@18.2.0)
+      i18next: 22.5.1
       qr-code-styling: 1.6.0-rc.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+      react-i18next: 13.3.1(i18next@22.5.1)(react-dom@18.2.0)(react-native@0.71.13)(react@18.2.0)
     transitivePeerDependencies:
       - '@types/react'
+      - react-native
     dev: false
 
-  /@metamask/sdk@0.8.0(react-native@0.71.13)(react@18.2.0):
-    resolution: {integrity: sha512-DcsLlOcEmYhJLWQgeVYELzsBXIxhmh4JQxwwJitlAXZU5P4qFvsgVgy5aEUoffC4xg6zHgorVEBEg/XMncJcwA==}
+  /@metamask/sdk@0.10.0(react-native@0.71.13)(react@18.2.0):
+    resolution: {integrity: sha512-a6H51cKjiWd2gb4ugjl4zP+6ZRtcSc8cwtXUSiKKlXwa//54nnx7OzCNOjbPJFnnqT51rs3v9kSoRhOgS04ezQ==}
     peerDependencies:
       react: ^18.2.0
       react-native: '*'
@@ -3277,8 +3287,8 @@ packages:
       '@metamask/onboarding': 1.0.1
       '@metamask/post-message-stream': 6.2.0
       '@metamask/providers': 10.2.1
-      '@metamask/sdk-communication-layer': 0.8.0
-      '@metamask/sdk-install-modal-web': 0.7.0
+      '@metamask/sdk-communication-layer': 0.10.0
+      '@metamask/sdk-install-modal-web': 0.10.0(react-native@0.71.13)
       '@react-native-async-storage/async-storage': 1.19.3(react-native@0.71.13)
       '@types/dom-screen-wake-lock': 1.0.1
       bowser: 2.11.0
@@ -3287,10 +3297,13 @@ packages:
       eth-rpc-errors: 4.0.3
       eventemitter2: 6.4.9
       extension-port-stream: 2.1.1
+      i18next: 22.5.1
+      i18next-browser-languagedetector: 7.1.0
       obj-multiplex: 1.0.0
       pump: 3.0.0
       qrcode-terminal: 0.12.0
       react: 18.2.0
+      react-i18next: 13.3.1(i18next@22.5.1)(react-dom@18.2.0)(react-native@0.71.13)(react@18.2.0)
       react-native: 0.71.13(@babel/core@7.22.17)(@babel/preset-env@7.22.15)(react@18.2.0)
       react-native-webview: 11.26.1(react-native@0.71.13)(react@18.2.0)
       readable-stream: 2.3.8
@@ -3301,6 +3314,7 @@ packages:
       - '@types/react'
       - bufferutil
       - encoding
+      - react-dom
       - supports-color
       - utf-8-validate
     dev: false
@@ -9929,6 +9943,12 @@ packages:
     resolution: {integrity: sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==}
     dev: true
 
+  /html-parse-stringify@3.0.1:
+    resolution: {integrity: sha512-KknJ50kTInJ7qIScF3jeaFRpMpE8/lfiTdzf/twXyPBLAGrLRTmkz3AdTnKeh40X8k9L2fdYwEp/42WGXIRGcg==}
+    dependencies:
+      void-elements: 3.1.0
+    dev: false
+
   /http-errors@2.0.0:
     resolution: {integrity: sha512-FtwrG/euBzaEjYeRqOgly7G0qviiXoJWnvEH2Z1plBdXgbyjv34pHTSb9zoeHMyDy33+DWy5Wt9Wo+TURtOYSQ==}
     engines: {node: '>= 0.8'}
@@ -9981,6 +10001,18 @@ packages:
     resolution: {integrity: sha512-Fl70vYtsAFb/C06PTS9dZBo7ihau+Tu/DNCk/OyHhea07S+aeMWpFFkUaXRa8fI+ScZbEI8dfSxwY7gxZ9SAVQ==}
     dependencies:
       ms: 2.1.3
+    dev: false
+
+  /i18next-browser-languagedetector@7.1.0:
+    resolution: {integrity: sha512-cr2k7u1XJJ4HTOjM9GyOMtbOA47RtUoWRAtt52z43r3AoMs2StYKyjS3URPhzHaf+mn10hY9dZWamga5WPQjhA==}
+    dependencies:
+      '@babel/runtime': 7.21.0
+    dev: false
+
+  /i18next@22.5.1:
+    resolution: {integrity: sha512-8TGPgM3pAD+VRsMtUMNknRz3kzqwp/gPALrWMsDnmC1mKqJwpWyooQRLMcbTwq8z8YwSmuj+ZYvc+xCuEpkssA==}
+    dependencies:
+      '@babel/runtime': 7.21.0
     dev: false
 
   /iconv-lite@0.4.24:
@@ -13755,6 +13787,27 @@ packages:
       react: 18.2.0
     dev: true
 
+  /react-i18next@13.3.1(i18next@22.5.1)(react-dom@18.2.0)(react-native@0.71.13)(react@18.2.0):
+    resolution: {integrity: sha512-JAtYREK879JXaN9GdzfBI4yJeo/XyLeXWUsRABvYXiFUakhZJ40l+kaTo+i+A/3cKIED41kS/HAbZ5BzFtq/Og==}
+    peerDependencies:
+      i18next: '>= 23.2.3'
+      react: '>= 16.8.0'
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.23.2
+      html-parse-stringify: 3.0.1
+      i18next: 22.5.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      react-native: 0.71.13(@babel/core@7.22.17)(@babel/preset-env@7.22.15)(react@18.2.0)
+    dev: false
+
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
@@ -13983,6 +14036,10 @@ packages:
 
   /regenerator-runtime@0.13.11:
     resolution: {integrity: sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==}
+
+  /regenerator-runtime@0.14.0:
+    resolution: {integrity: sha512-srw17NI0TUWHuGa5CFGGmhfNIeja30WMBfbslPNhf6JrqQlLN5gcrvig1oqPxiVaXb0oW0XRKtH6Nngs5lKCIA==}
+    dev: false
 
   /regenerator-transform@0.15.2:
     resolution: {integrity: sha512-hfMp2BoF0qOk3uc5V20ALGDS2ddjQaLrdl7xrGXvAIow7qeWRM2VA2HuCHkUKk9slq3VwEwLNK3DFBqDfPGYtg==}
@@ -16166,6 +16223,11 @@ packages:
 
   /vlq@1.0.1:
     resolution: {integrity: sha512-gQpnTgkubC6hQgdIcRdYGDSDc+SaujOdyesZQMv6JlfQee/9Mp0Qhnys6WxDWvQnL5WZdT7o2Ul187aSt0Rq+w==}
+    dev: false
+
+  /void-elements@3.1.0:
+    resolution: {integrity: sha512-Dhxzh5HZuiHQhbvTW9AMetFfBHDMYpo23Uo9btPXgdYP+3T5S+p+jgNy7spra+veYhBP2dCSgxR/i2Y02h5/6w==}
+    engines: {node: '>=0.10.0'}
     dev: false
 
   /vscode-oniguruma@1.7.0:
