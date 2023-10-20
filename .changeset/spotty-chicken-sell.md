@@ -2,4 +2,4 @@
 "@wagmi/connectors": patch
 ---
 
-Update WalletConnects ethereum provider and utils
+Updated WalletConnect libraries.
