@@ -36,6 +36,9 @@ const config = createConfig({
             '0x539': 'https://rpc-mainnet.somecustomdomain.com/', // optional custom RPC endpoint to speed up readonly calls.
           },
           extensionOnly: false, // set to true if you do not want to see the provider selection dialog
+          i18nOptions: {
+            enabled: true,
+          },
           dappMetadata: {
             name: 'wagmi playground',
           },
