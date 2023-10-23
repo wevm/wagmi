@@ -63,7 +63,7 @@
     }
   },
   "peerDependencies": {
-    "@tanstack/react-query": ">5.0.0-beta.28",
+    "@tanstack/react-query": ">=5.0.0",
     "react": ">=18",
     "typescript": ">=5.0.4",
     "viem": "2.0.0-alpha.17"
@@ -79,7 +79,7 @@
     "use-sync-external-store": "^1.2.0"
   },
   "devDependencies": {
-    "@tanstack/react-query": "5.0.0-beta.35",
+    "@tanstack/react-query": "5.0.5",
     "@testing-library/react": "^14.0.0",
     "@types/react": "^18.2.23",
     "@types/react-dom": "^18.2.8",

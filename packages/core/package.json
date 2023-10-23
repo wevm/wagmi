@@ -63,7 +63,7 @@
     }
   },
   "peerDependencies": {
-    "@tanstack/query-core": ">5.0.0-beta.28",
+    "@tanstack/query-core": ">=5.0.0",
     "typescript": ">=5.0.4",
     "viem": "2.0.0-alpha.17"
   },
@@ -81,7 +81,7 @@
     "zustand": "^4.4.1"
   },
   "devDependencies": {
-    "@tanstack/query-core": "5.0.0-beta.28"
+    "@tanstack/query-core": "5.0.5"
   },
   "contributors": ["awkweb.eth <t@wagmi.sh>", "jxom.eth <j@wagmi.sh>"],
   "funding": "https://github.com/sponsors/wagmi-dev",

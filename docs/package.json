@@ -8,8 +8,8 @@
     "preview": "vitepress preview"
   },
   "devDependencies": {
-    "@tanstack/query-core": "5.0.0-beta.28",
-    "@tanstack/react-query": "5.0.0-beta.35",
+    "@tanstack/query-core": "5.0.5",
+    "@tanstack/react-query": "5.0.5",
     "@types/react": "^18.2.23",
     "@unocss/reset": "^0.53.6",
     "@wagmi/connectors": "workspace:*",
