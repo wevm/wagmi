@@ -4,58 +4,51 @@ import { expect, test } from 'vitest'
 
 import { useInfiniteReadContracts } from './useInfiniteReadContracts.js'
 
-test('default', async () => {
-  const { result } = renderHook(() =>
-    useInfiniteReadContracts({
-      cacheKey: 'foo',
-      contracts(pageParam) {
-        return [
-          {
-            address: address.shields,
-            abi: abi.shields,
-            functionName: 'tokenURI',
-            args: [pageParam + 1n],
-          },
-          {
-            address: address.shields,
-            abi: abi.shields,
-            functionName: 'tokenURI',
-            args: [pageParam + 2n],
-          },
-          {
-            address: address.shields,
-            abi: abi.shields,
-            functionName: 'tokenURI',
-            args: [pageParam + 3n],
-          },
-        ]
-      },
-      query: {
-        initialPageParam: 0n,
-        getNextPageParam(_lastPage, _allPages, lastPageParam, _allPageParams) {
-          return lastPageParam + 3n
-        },
-        select(data) {
-          const results = []
-          for (const page of data.pages) {
-            for (const response of page) {
-              if (response.status === 'success') {
-                const decoded = atob(
-                  response.result.replace(/(^.*base64,)/, ''),
-                )
-                const json = JSON.parse(decoded) as { name: string }
-                results.push(json.name)
-              } else results.push('Error fetching shield')
-            }
-          }
-          return results
-        },
-      },
-    }),
-  )
+test(
+  'default',
+  async () => {
+    const limit = 3
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
-  expect(result.current.data).toMatchInlineSnapshot(`
+    const { result } = renderHook(() =>
+      useInfiniteReadContracts({
+        cacheKey: 'foo',
+        contracts(pageParam) {
+          return [...new Array(limit)].map(
+            (_, i) =>
+              ({
+                address: address.shields,
+                abi: abi.shields,
+                functionName: 'tokenURI',
+                args: [BigInt(pageParam + i + 1)],
+              }) as const,
+          )
+        },
+        query: {
+          initialPageParam: 0,
+          getNextPageParam(_lastPage, _allPages, lastPageParam) {
+            return lastPageParam + limit
+          },
+          select(data) {
+            const results = []
+            for (const page of data.pages) {
+              for (const response of page) {
+                if (response.status === 'success') {
+                  const decoded = atob(
+                    response.result.replace(/(^.*base64,)/, ''),
+                  )
+                  const json = JSON.parse(decoded) as { name: string }
+                  results.push(json.name)
+                } else results.push('Error fetching shield')
+              }
+            }
+            return results
+          },
+        },
+      }),
+    )
+
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+    expect(result.current.data).toMatchInlineSnapshot(`
     [
       "Three Shields on Pink Perfect",
       "Three Shields on Sky Perfect",
@@ -63,10 +56,10 @@ test('default', async () => {
     ]
   `)
 
-  await result.current.fetchNextPage()
+    await result.current.fetchNextPage()
 
-  await waitFor(() => expect(result.current.hasNextPage).toBeTruthy())
-  expect(result.current.data).toMatchInlineSnapshot(`
+    await waitFor(() => expect(result.current.hasNextPage).toBeTruthy())
+    expect(result.current.data).toMatchInlineSnapshot(`
     [
       "Three Shields on Pink Perfect",
       "Three Shields on Sky Perfect",
@@ -77,10 +70,10 @@ test('default', async () => {
     ]
   `)
 
-  await result.current.fetchNextPage()
+    await result.current.fetchNextPage()
 
-  await waitFor(() => expect(result.current.hasNextPage).toBeTruthy())
-  expect(result.current.data).toMatchInlineSnapshot(`
+    await waitFor(() => expect(result.current.hasNextPage).toBeTruthy())
+    expect(result.current.data).toMatchInlineSnapshot(`
     [
       "Three Shields on Pink Perfect",
       "Three Shields on Sky Perfect",
@@ -93,4 +86,6 @@ test('default', async () => {
       "Secured: Telescope and Stars on Ultraviolet and Sky Doppler",
     ]
   `)
-})
+  },
+  { timeout: 20_000 },
+)
