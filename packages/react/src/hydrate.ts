@@ -14,7 +14,7 @@ export function Hydrate(parameters: React.PropsWithChildren<HydrateProps>) {
 
   const { onMount } = hydrate(config, {
     initialState,
-    reconnectOnMount: reconnectOnMount,
+    reconnectOnMount,
   })
 
   // Hydrate for non-SSR

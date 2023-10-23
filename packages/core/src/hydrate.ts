@@ -12,6 +12,7 @@ export function hydrate(config: Config, parameters: HydrateParameters) {
   if (initialState)
     config.setState({
       ...initialState,
+      connections: reconnectOnMount ? initialState.connections : new Map(),
       status: reconnectOnMount ? 'reconnecting' : 'disconnected',
     })
 
@@ -19,7 +20,6 @@ export function hydrate(config: Config, parameters: HydrateParameters) {
     async onMount() {
       if (config._internal.ssr) {
         await config._internal.store.persist.rehydrate()
-
         const mipdConnectors = config._internal.mipd
           ?.getProviders()
           .map(config._internal.connectors.providerDetailToConnector)
@@ -30,6 +30,12 @@ export function hydrate(config: Config, parameters: HydrateParameters) {
         ])
       }
       if (reconnectOnMount) reconnect(config)
+      else if (config.storage)
+        // Reset connections that may have been hydrated from storage.
+        config.setState((x) => ({
+          ...x,
+          connections: new Map(),
+        }))
     },
   }
 }
