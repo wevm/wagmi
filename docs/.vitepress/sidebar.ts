@@ -162,7 +162,7 @@ export function getSidebar() {
             link: '/react/api/hooks/useReadContract',
           },
           {
-            text: 'useReadContracts 🚧',
+            text: 'useReadContracts',
             link: '/react/api/hooks/useReadContracts',
           },
           { text: 'useReconnect', link: '/react/api/hooks/useReconnect' },
