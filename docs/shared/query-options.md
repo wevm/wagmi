@@ -2,7 +2,9 @@
 <script setup>
 const TData = 'TData'
 const TError = 'TError'
+const TPageParam = number
 const hideQueryOptions = []
+const includeInfiniteQueryOptions = false
 </script>
 -->
 
@@ -48,6 +50,30 @@ TanStack Query parameters. See the [TanStack Query query docs](https://tanstack.
 `number | ((() => number | undefined)) | undefined`
 
 If set, this value will be used as the time (in milliseconds) of when the `initialData` itself was last updated.
+
+<div v-if="includeInfiniteQueryOptions">
+
+#### initialPageParam
+
+`{{TPageParam}}`
+
+The initial page parameter to be passed to the query function.
+
+#### getPreviousPageParam
+
+This function can be set to automatically get the previous cursor for infinite queries.
+The result will also be used to determine the value of `hasPreviousPage`.
+
+`(firstPage: {{TData}}, allPages: {{TData}}[], firstPageParam: {{TPageParam}}, allPageParams: {{TPageParam}}[]) => {{TPageParam}} | undefined | null`
+
+#### getNextPageParam
+
+This function can be set to automatically get the previous cursor for infinite queries.
+The result will also be used to determine the value of `hasPreviousPage`.
+
+`(lastPage: {{TData}}, allPages: {{TData}}[], lastPageParam: {{TPageParam}}, allPageParams: {{TPageParam}}[]) => {{TPageParam}} | undefined | null`
+
+</div>
 
 #### meta
 

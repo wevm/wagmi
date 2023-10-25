@@ -154,7 +154,7 @@ export function getSidebar() {
             link: '/react/api/hooks/useEstimateGas',
           },
           {
-            text: 'useInfiniteReadContracts 🚧',
+            text: 'useInfiniteReadContracts',
             link: '/react/api/hooks/useInfiniteReadContracts',
           },
           {

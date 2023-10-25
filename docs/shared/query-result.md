@@ -2,6 +2,7 @@
 <script setup>
 const TData = 'TData'
 const TError = 'TError'
+const includeInfiniteQueryResult = false
 </script>
 -->
 
@@ -57,6 +58,46 @@ The sum of all errors.
 
 - The failure reason for the query retry.
 - Reset to `null` when the query succeeds.
+
+<div v-if="includeInfiniteQueryOptions">
+
+### fetchNextPage
+
+`(options?: FetchNextPageOptions) => Promise<InfiniteQueryObserverResult<{{TData}}, {{TError}}>>`
+
+This function allows you to fetch the next "page" of results.
+
+### fetchPreviousPage
+
+`(options?: FetchPreviousPageOptions) => Promise<InfiniteQueryObserverResult<TData, TError>>`
+
+This function allows you to fetch the previous "page" of results.
+
+### hasNextPage
+
+`boolean`
+
+This will be `true` if there is a next page to be fetched (known via the `getNextPageParam` option).
+
+### hasPreviousPage
+
+`boolean`
+
+This will be `true` if there is a previous page to be fetched (known via the `getPreviousPageParam` option).
+
+### isFetchingNextPage
+
+`boolean`
+
+Will be `true` while fetching the next page with `fetchNextPage`.
+
+### isFetchingPreviousPage
+
+`boolean`
+
+Will be `true` while fetching the previous page with `fetchPreviousPage`.
+
+</div>
 
 ### fetchStatus
 
