@@ -28,7 +28,7 @@ export type CreateConfigParameters<
     | ((config: { chainId?: number }) => TPublicClient)
     | TPublicClient
   /**
-   * Custom storage for data persistance
+   * Custom storage for data persistence
    * @default window.localStorage
    */
   storage?: ClientStorage
