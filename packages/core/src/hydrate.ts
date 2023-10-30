@@ -29,6 +29,7 @@ export function hydrate(config: Config, parameters: HydrateParameters) {
           ...(mipdConnectors ?? []),
         ])
       }
+
       if (reconnectOnMount) reconnect(config)
       else if (config.storage)
         // Reset connections that may have been hydrated from storage.

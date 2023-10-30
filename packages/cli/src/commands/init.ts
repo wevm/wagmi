@@ -36,7 +36,7 @@ export async function init(options: Init = {}) {
     throw error
   }
 
-  // Check for exisiting config file
+  // Check for existing config file
   const configPath = await findConfig(options)
   if (configPath) {
     logger.info(

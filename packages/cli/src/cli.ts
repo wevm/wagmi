@@ -32,7 +32,7 @@ void (async () => {
     cli.parse(process.argv, { run: false })
     if (!cli.matchedCommand) {
       if (cli.args.length === 0) {
-        if (!cli.options.help) cli.outputHelp()
+        if (!cli.options.help && !cli.options.version) cli.outputHelp()
       } else throw new Error(`Unknown command: ${cli.args.join(' ')}`)
     }
     await cli.runMatchedCommand()
