@@ -123,7 +123,7 @@ unwatch()
 
 `boolean | undefined`
 
-- Whether or not the transaction hashes should be batched on each invocation.
+- Whether or not the events should be batched on each invocation.
 - Defaults to `true`.
 
 ::: code-group

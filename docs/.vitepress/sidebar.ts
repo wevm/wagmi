@@ -207,19 +207,19 @@ export function getSidebar() {
             link: '/react/api/hooks/useWalletClient',
           },
           {
-            text: 'useWatchBlocks 🚧',
+            text: 'useWatchBlocks',
             link: '/react/api/hooks/useWatchBlocks',
           },
           {
-            text: 'useWatchBlockNumber 🚧',
+            text: 'useWatchBlockNumber',
             link: '/react/api/hooks/useWatchBlockNumber',
           },
           {
-            text: 'useWatchContractEvent 🚧',
+            text: 'useWatchContractEvent',
             link: '/react/api/hooks/useWatchContractEvent',
           },
           {
-            text: 'useWatchPendingTransactions 🚧',
+            text: 'useWatchPendingTransactions',
             link: '/react/api/hooks/useWatchPendingTransactions',
           },
           {
@@ -402,7 +402,7 @@ export function getSidebar() {
             link: '/core/api/actions/getWalletClient',
           },
           {
-            text: 'multicall 🚧',
+            text: 'multicall',
             link: '/core/api/actions/multicall',
           },
           { text: 'reconnect', link: '/core/api/actions/reconnect' },
@@ -411,7 +411,7 @@ export function getSidebar() {
             link: '/core/api/actions/readContract',
           },
           {
-            text: 'readContracts 🚧',
+            text: 'readContracts',
             link: '/core/api/actions/readContracts',
           },
           {
@@ -475,7 +475,7 @@ export function getSidebar() {
             link: '/core/api/actions/watchContractEvent',
           },
           {
-            text: 'watchPendingTransactions 🚧',
+            text: 'watchPendingTransactions',
             link: '/core/api/actions/watchPendingTransactions',
           },
           {
