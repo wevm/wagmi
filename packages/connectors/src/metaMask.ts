@@ -53,7 +53,6 @@ export class MetaMaskConnector extends InjectedConnector {
           if (ethereum.isBlockWallet) return
           if (ethereum.isCoin98) return
           if (ethereum.isFordefi) return
-          if (ethereum.isMathWallet) return ethereum
           if (ethereum.isOkxWallet || ethereum.isOKExWallet) return
           if (ethereum.isOneInchIOSWallet || ethereum.isOneInchAndroidWallet)
             return
