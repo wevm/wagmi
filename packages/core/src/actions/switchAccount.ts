@@ -23,7 +23,7 @@ export type SwitchAccountErrorType =
   | BaseError
   | ErrorType
 
-/** https://alpha.wagmi.sh/core/api/actions/switchAccount */
+/** https://beta.wagmi.sh/core/api/actions/switchAccount */
 export async function switchAccount<config extends Config>(
   config: config,
   parameters: SwitchAccountParameters,

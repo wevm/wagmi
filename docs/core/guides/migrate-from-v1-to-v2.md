@@ -13,27 +13,27 @@ const viemVersion = packageJson.peerDependencies.viem
 
 Wagmi Core v2 redesigns the core APIs to mesh better with [Viem](https://viem.sh). This major version transforms Wagmi into a light wrapper around Viem, sprinkling in multichain support and account management. As such, there are some breaking changes and deprecations to be aware of outlined in this guide.
 
-To get started, install the latest version of Wagmi using the `alpha` dist-tag and it's required peer dependencies.
+To get started, install the latest version of Wagmi using the `beta` dist-tag and it's required peer dependencies.
 
 ::: code-group
 ```bash-vue [pnpm]
-pnpm add @wagmi/core@alpha viem@{{viemVersion}} @wagmi/connectors@alpha
+pnpm add @wagmi/core@beta viem@{{viemVersion}} @wagmi/connectors@beta
 ```
 
 ```bash-vue [npm]
-npm install @wagmi/core@alpha viem@{{viemVersion}} @wagmi/connectors@alpha
+npm install @wagmi/core@beta viem@{{viemVersion}} @wagmi/connectors@beta
 ```
 
 ```bash-vue [yarn]
-yarn add @wagmi/core@alpha viem@{{viemVersion}} @wagmi/connectors@alpha
+yarn add @wagmi/core@beta viem@{{viemVersion}} @wagmi/connectors@beta
 ```
 
 ```bash-vue [bun]
-bun add @wagmi/core@alpha viem@{{viemVersion}} @wagmi/connectors@alpha
+bun add @wagmi/core@beta viem@{{viemVersion}} @wagmi/connectors@beta
 ```
 :::
 
-::: info Wagmi Core v2 is currently in alpha.
+::: info Wagmi Core v2 is currently in beta.
 We recommend trying it out in your projects, but there may be breaking changes before the final release. If you find bugs or have feedback, please [open an issue](https://github.com/wagmi-dev/wagmi/issues/new/choose) or [reply to the discussion thread](https://github.com/wagmi-dev/wagmi/discussions/3068).
 :::
 
@@ -258,19 +258,19 @@ Wagmi Core v2 no longer exports connectors via the `'@wagmi/core/connectors/*'` 
 
 ::: code-group
 ```bash-vue [pnpm]
-pnpm add @wagmi/connectors@alpha
+pnpm add @wagmi/connectors@beta
 ```
 
 ```bash-vue [npm]
-npm install @wagmi/connectors@alpha
+npm install @wagmi/connectors@beta
 ```
 
 ```bash-vue [yarn]
-yarn add @wagmi/connectors@alpha
+yarn add @wagmi/connectors@beta
 ```
 
 ```bash-vue [bun]
-bun add @wagmi/connectors@alpha
+bun add @wagmi/connectors@beta
 ```
 :::
 
@@ -394,7 +394,7 @@ const result = await getEnsAddress(config, {
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
-By inverting control, Wagmi let's you choose how much normalization to do. For example, maybe your project only allows ENS names that are alphanumeric so no normalization is not needed. Check out the [ENS documentation](https://docs.ens.domains/contract-api-reference/name-processing#normalising-names) for more information on normalizing names.
+By inverting control, Wagmi let's you choose how much normalization to do. For example, maybe your project only allows ENS names that are betanumeric so no normalization is not needed. Check out the [ENS documentation](https://docs.ens.domains/contract-api-reference/name-processing#normalising-names) for more information on normalizing names.
 
 ### Removed `configureChains`
 

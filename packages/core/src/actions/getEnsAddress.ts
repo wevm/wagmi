@@ -17,7 +17,7 @@ export type GetEnsAddressReturnType = viem_GetEnsAddressReturnType
 
 export type GetEnsAddressErrorType = viem_GetEnsAddressErrorType
 
-/** https://alpha.wagmi.sh/core/api/actions/getEnsAddress */
+/** https://beta.wagmi.sh/core/api/actions/getEnsAddress */
 export function getEnsAddress<config extends Config>(
   config: config,
   parameters: GetEnsAddressParameters<config>,

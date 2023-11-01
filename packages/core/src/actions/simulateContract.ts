@@ -114,7 +114,7 @@ export type SimulateContractErrorType =
   // viem
   | viem_SimulateContractErrorType
 
-/** https://alpha.wagmi.sh/core/api/actions/simulateContract */
+/** https://beta.wagmi.sh/core/api/actions/simulateContract */
 export async function simulateContract<
   config extends Config,
   const abi extends Abi | readonly unknown[],

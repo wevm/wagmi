@@ -14,7 +14,7 @@ export type UseAccountParameters = ConfigParameter
 
 export type UseAccountReturnType = GetAccountReturnType
 
-/** https://alpha.wagmi.sh/react/api/hooks/useAccount */
+/** https://beta.wagmi.sh/react/api/hooks/useAccount */
 export function useAccount(
   parameters: UseAccountParameters = {},
 ): UseAccountReturnType {

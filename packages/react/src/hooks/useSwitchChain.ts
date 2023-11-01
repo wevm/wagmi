@@ -54,7 +54,7 @@ export type UseSwitchChainReturnType<
   }
 >
 
-/** https://alpha.wagmi.sh/react/api/hooks/useSwitchChain */
+/** https://beta.wagmi.sh/react/api/hooks/useSwitchChain */
 export function useSwitchChain<
   config extends Config = ResolvedRegister['config'],
   context = unknown,

@@ -41,7 +41,7 @@ export type GetBlockReturnType<
 
 export type GetBlockErrorType = viem_GetBlockErrorType
 
-/** https://alpha.wagmi.sh/core/actions/getBlock */
+/** https://beta.wagmi.sh/core/actions/getBlock */
 export function getBlock<
   config extends Config,
   chainId extends config['chains'][number]['id'],

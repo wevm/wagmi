@@ -50,7 +50,7 @@ export type UseInfiniteContractReadsReturnType<
   selectData = InfiniteReadContractsData<contracts, allowFailure>,
 > = UseInfiniteQueryReturnType<selectData, ReadContractsErrorType>
 
-/** https://alpha.wagmi.sh/react/api/hooks/useInfiniteReadContracts */
+/** https://beta.wagmi.sh/react/api/hooks/useInfiniteReadContracts */
 export function useInfiniteReadContracts<
   const contracts extends readonly unknown[],
   allowFailure extends boolean = true,

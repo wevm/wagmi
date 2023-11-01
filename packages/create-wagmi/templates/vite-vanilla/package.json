@@ -9,11 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@wagmi/connectors": "4.0.0-alpha.11",
-    "@wagmi/core": "2.0.0-alpha.11",
+    "@wagmi/connectors": "4.0.0-beta.0",
+    "@wagmi/core": "2.0.0-beta.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "viem": "2.0.0-alpha.21"
+    "viem": "2.0.0-beta.0"
   },
   "devDependencies": {
     "buffer": "^6.0.3",

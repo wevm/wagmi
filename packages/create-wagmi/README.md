@@ -1,6 +1,6 @@
 # create-wagmi
 
-Get up and running quickly with [Wagmi](https://alpha.wagmi.sh) by using the `create-wagmi` CLI.
+Get up and running quickly with [Wagmi](https://beta.wagmi.sh) by using the `create-wagmi` CLI.
 
 ## Installation
 
@@ -14,4 +14,4 @@ yarn create wagmi
 
 ## Documentation
 
-For documentation and guides, visit [wagmi.sh](https://alpha.wagmi.sh/cli/create-wagmi).
+For documentation and guides, visit [wagmi.sh](https://beta.wagmi.sh/cli/create-wagmi).

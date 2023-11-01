@@ -23,7 +23,7 @@ export type DisconnectErrorType =
   | BaseErrorType
   | ErrorType
 
-/** https://alpha.wagmi.sh/core/api/actions/disconnect */
+/** https://beta.wagmi.sh/core/api/actions/disconnect */
 export async function disconnect(
   config: Config,
   parameters: DisconnectParameters = {},

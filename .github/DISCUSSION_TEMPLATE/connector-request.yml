@@ -3,7 +3,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for your interest in contributing a new Connector to the wagmi! If you haven't already, please read the [Contributing Guidelines](https://alpha.wagmi.sh/dev/contributing).
+        Thanks for your interest in contributing a new Connector to the wagmi! If you haven't already, please read the [Contributing Guidelines](https://beta.wagmi.sh/dev/contributing).
 
         Once you submit the form, the Wagmi team will follow up in the discussion thread to discuss next steps.
 

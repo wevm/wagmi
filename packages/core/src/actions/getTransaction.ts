@@ -29,7 +29,7 @@ export type GetTransactionReturnType<
 
 export type GetTransactionErrorType = viem_GetTransactionErrorType
 
-/** https://alpha.wagmi.sh/core/api/actions/getTransaction */
+/** https://beta.wagmi.sh/core/api/actions/getTransaction */
 export function getTransaction<
   config extends Config,
   chainId extends config['chains'][number]['id'],

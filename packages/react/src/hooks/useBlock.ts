@@ -67,7 +67,7 @@ export type UseBlockReturnType<
   selectData = GetBlockData<includeTransactions, blockTag>,
 > = UseQueryReturnType<selectData, GetBlockErrorType>
 
-/** https://alpha.wagmi.sh/react/hooks/useBlock */
+/** https://beta.wagmi.sh/react/hooks/useBlock */
 export function useBlock<
   config extends Config = ResolvedRegister['config'],
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],

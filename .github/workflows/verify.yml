@@ -60,7 +60,7 @@ jobs:
     strategy:
       matrix:
         typescript-version: ['5.0.4', '5.1.6', 'latest', '5.3.0-beta']
-        viem-version: ['alpha']
+        viem-version: ['beta']
 
     steps:
       - name: Clone repository
@@ -90,7 +90,7 @@ jobs:
       matrix:
         shard: [1, 2, 3]
         total-shards: [3]
-        viem-version: ['alpha']
+        viem-version: ['beta']
 
     steps:
       - name: Clone repository

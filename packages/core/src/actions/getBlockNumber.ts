@@ -18,7 +18,7 @@ export type GetBlockNumberReturnType = viem_GetBlockNumberReturnType
 
 export type GetBlockNumberErrorType = viem_GetBlockNumberErrorType
 
-/** https://alpha.wagmi.sh/core/api/actions/getBlockNumber */
+/** https://beta.wagmi.sh/core/api/actions/getBlockNumber */
 export function getBlockNumber<
   config extends Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],

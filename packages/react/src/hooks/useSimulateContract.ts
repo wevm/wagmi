@@ -66,7 +66,7 @@ export type UseSimulateContractReturnType<
   selectData = SimulateContractData<abi, functionName, args, config, chainId>,
 > = UseQueryReturnType<selectData, SimulateContractErrorType>
 
-/** https://alpha.wagmi.sh/react/api/hooks/useSimulateContract */
+/** https://beta.wagmi.sh/react/api/hooks/useSimulateContract */
 export function useSimulateContract<
   const abi extends Abi | readonly unknown[],
   functionName extends ContractFunctionName<abi, 'nonpayable' | 'payable'>,

@@ -50,7 +50,7 @@ export type GetConnectorClientErrorType =
   | BaseErrorType
   | ErrorType
 
-/** https://alpha.wagmi.sh/core/api/actions/getConnectorClient */
+/** https://beta.wagmi.sh/core/api/actions/getConnectorClient */
 export async function getConnectorClient<
   config extends Config,
   chainId extends config['chains'][number]['id'],

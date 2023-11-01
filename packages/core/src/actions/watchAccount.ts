@@ -11,7 +11,7 @@ export type WatchAccountParameters = {
 
 export type WatchAccountReturnType = () => void
 
-/** https://alpha.wagmi.sh/core/api/actions/watchAccount */
+/** https://beta.wagmi.sh/core/api/actions/watchAccount */
 export function watchAccount(
   config: Config,
   parameters: WatchAccountParameters,

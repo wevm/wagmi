@@ -35,7 +35,7 @@ test('BaseError (w/ docsPath)', () => {
   ).toMatchInlineSnapshot(`
     [WagmiCoreError: An error occurred.
 
-    Docs: https://alpha.wagmi.sh/core/lol.html
+    Docs: https://beta.wagmi.sh/core/lol.html
     Details: details
     Version: @wagmi/core@x.y.z]
   `)
@@ -46,7 +46,7 @@ test('BaseError (w/ docsPath)', () => {
   ).toMatchInlineSnapshot(`
     [WagmiCoreError: An error occurred.
 
-    Docs: https://alpha.wagmi.sh/core/docs.html
+    Docs: https://beta.wagmi.sh/core/docs.html
     Version: @wagmi/core@x.y.z]
   `)
   expect(
@@ -57,7 +57,7 @@ test('BaseError (w/ docsPath)', () => {
   ).toMatchInlineSnapshot(`
     [WagmiCoreError: An error occurred.
 
-    Docs: https://alpha.wagmi.sh/core/lol.html
+    Docs: https://beta.wagmi.sh/core/lol.html
     Version: @wagmi/core@x.y.z]
   `)
   expect(
@@ -69,7 +69,7 @@ test('BaseError (w/ docsPath)', () => {
   ).toMatchInlineSnapshot(`
     [WagmiCoreError: An error occurred.
 
-    Docs: https://alpha.wagmi.sh/core/lol.html#test
+    Docs: https://beta.wagmi.sh/core/lol.html#test
     Details: details
     Version: @wagmi/core@x.y.z]
   `)
@@ -104,7 +104,7 @@ test('inherited BaseError', () => {
   ).toMatchInlineSnapshot(`
     [WagmiCoreError: An internal error occurred.
 
-    Docs: https://alpha.wagmi.sh/core/lol.html
+    Docs: https://beta.wagmi.sh/core/lol.html
     Details: details
     Version: @wagmi/core@x.y.z]
   `)
@@ -120,7 +120,7 @@ test('inherited Error', () => {
   ).toMatchInlineSnapshot(`
     [WagmiCoreError: An internal error occurred.
 
-    Docs: https://alpha.wagmi.sh/core/lol.html
+    Docs: https://beta.wagmi.sh/core/lol.html
     Details: details
     Version: @wagmi/core@x.y.z]
   `)

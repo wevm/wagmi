@@ -25,17 +25,17 @@ export default withTwoslash(
       ['meta', { property: 'og:type', content: 'website' }],
       [
         'meta',
-        { property: 'og:image', content: 'https://alpha.wagmi.sh/og.png' },
+        { property: 'og:image', content: 'https://beta.wagmi.sh/og.png' },
       ],
-      ['meta', { property: 'og:url', content: 'https://alpha.wagmi.sh' }],
+      ['meta', { property: 'og:url', content: 'https://beta.wagmi.sh' }],
       // Twitter
       ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
       ['meta', { name: 'twitter:creator', content: '@wagmi_sh' }],
       [
         'meta',
-        { name: 'twitter:image', content: 'https://alpha.wagmi.sh/og.png' },
+        { name: 'twitter:image', content: 'https://beta.wagmi.sh/og.png' },
       ],
-      ['meta', { name: 'twitter:site', content: 'alpha.wagmi.sh' }],
+      ['meta', { name: 'twitter:site', content: 'beta.wagmi.sh' }],
       // Fathom
       [
         'script',
@@ -59,7 +59,7 @@ export default withTwoslash(
       algolia: {
         appId: 'ZCSA29G8U5',
         apiKey: 'cc70f3c272a8ca62f43a07a1200b7505',
-        indexName: 'alpha-wagmi',
+        indexName: 'beta-wagmi',
       },
       editLink: {
         pattern: 'https://github.com/wagmi-dev/wagmi/edit/main/docs/:path',
@@ -104,7 +104,7 @@ export default withTwoslash(
       socialLinks: [
         {
           icon: 'github',
-          link: 'https://github.com/wagmi-dev/wagmi/tree/alpha',
+          link: 'https://github.com/wagmi-dev/wagmi/tree/beta',
         },
         { icon: 'twitter', link: 'https://twitter.com/wagmi_sh' },
         { icon: 'discord', link: 'https://discord.gg/9zHPXuBpqy' },

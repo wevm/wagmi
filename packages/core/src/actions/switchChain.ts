@@ -46,7 +46,7 @@ export type SwitchChainErrorType =
   // viem
   | viem_SwitchChainErrorType
 
-/** https://alpha.wagmi.sh/core/api/actions/switchChain */
+/** https://beta.wagmi.sh/core/api/actions/switchChain */
 export async function switchChain<
   config extends Config,
   chainId extends config['chains'][number]['id'],

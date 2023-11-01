@@ -13,8 +13,8 @@
     "@tanstack/react-query": "5.0.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "viem": "2.0.0-alpha.21",
-    "wagmi": "2.0.0-alpha.11"
+    "viem": "2.0.0-beta.0",
+    "wagmi": "2.0.0-beta.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.1.2",

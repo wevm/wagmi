@@ -56,7 +56,7 @@ export type UseConnectReturnType<
   }
 >
 
-/** https://alpha.wagmi.sh/react/api/hooks/useConnect */
+/** https://beta.wagmi.sh/react/api/hooks/useConnect */
 export function useConnect<
   config extends Config = ResolvedRegister['config'],
   context = unknown,

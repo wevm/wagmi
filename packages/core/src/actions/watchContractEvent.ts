@@ -46,7 +46,7 @@ export type WatchContractEventParameters<
 export type WatchContractEventReturnType = viem_WatchContractEventReturnType
 
 // TODO: wrap in viem's `observe` to avoid duplicate invocations.
-/** https://alpha.wagmi.sh/core/api/actions/watchContractEvent */
+/** https://beta.wagmi.sh/core/api/actions/watchContractEvent */
 export function watchContractEvent<
   config extends Config,
   chainId extends config['chains'][number]['id'],

@@ -1,12 +1,12 @@
 {
   "mode": "pre",
-  "tag": "alpha",
+  "tag": "beta",
   "initialVersions": {
-    "@wagmi/cli": "2.0.0-alpha.0",
-    "@wagmi/connectors": "4.0.0-alpha.0",
-    "@wagmi/core": "2.0.0-alpha.0",
-    "create-wagmi": "2.0.0-alpha.0",
-    "wagmi": "2.0.0-alpha.0"
+    "@wagmi/cli": "2.0.0-beta.0",
+    "@wagmi/connectors": "4.0.0-beta.0",
+    "@wagmi/core": "2.0.0-beta.0",
+    "create-wagmi": "2.0.0-beta.0",
+    "wagmi": "2.0.0-beta.0"
   },
   "changesets": []
 }
