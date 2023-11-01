@@ -18,7 +18,7 @@ jobs:
       - name: Lint code
         run: pnpm format && pnpm lint:fix
       
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - uses: stefanzweifel/git-auto-commit-action@v5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
