@@ -1,26 +1,7 @@
-import type { Address } from 'viem'
+import { type Address } from 'viem'
 
 import type { Connector } from '../createConfig.js'
 import { BaseError } from './base.js'
-
-export type ChainMismatchErrorType = ChainMismatchError & {
-  name: 'ChainMismatchError'
-}
-export class ChainMismatchError extends BaseError {
-  override name = 'ChainMismatchError'
-
-  constructor({
-    activeChain,
-    targetChain,
-  }: {
-    activeChain: string
-    targetChain: string
-  }) {
-    super('Chain mismatch', {
-      details: `Expected "${targetChain}", received "${activeChain}".`,
-    })
-  }
-}
 
 export type ChainNotConfiguredErrorType = ChainNotConfiguredError & {
   name: 'ChainNotConfiguredError'

@@ -1,4 +1,4 @@
-import type { Account } from 'viem'
+import { type Account } from 'viem'
 import {
   type SignMessageErrorType as viem_SignMessageErrorType,
   type SignMessageParameters as viem_SignMessageParameters,
@@ -9,7 +9,7 @@ import {
 import { type Config } from '../createConfig.js'
 import type { BaseErrorType, ErrorType } from '../errors/base.js'
 import type { ConnectorParameter } from '../types/properties.js'
-import type { Evaluate } from '../types/utils.js'
+import { type Evaluate } from '../types/utils.js'
 import {
   type GetConnectorClientErrorType,
   getConnectorClient,

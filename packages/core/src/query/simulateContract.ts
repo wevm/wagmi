@@ -7,7 +7,7 @@ import {
   type SimulateContractReturnType,
   simulateContract,
 } from '../actions/simulateContract.js'
-import type { Config } from '../createConfig.js'
+import { type Config } from '../createConfig.js'
 import type { UnionPartial } from '../types/utils.js'
 import type { ScopeKeyParameter } from './types.js'
 import { filterQueryOptions } from './utils.js'

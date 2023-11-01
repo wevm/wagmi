@@ -6,8 +6,8 @@ import {
 } from 'viem/actions'
 
 import { type Config } from '../createConfig.js'
-import type { ChainIdParameter } from '../types/properties.js'
-import type { Evaluate } from '../types/utils.js'
+import { type ChainIdParameter } from '../types/properties.js'
+import { type Evaluate } from '../types/utils.js'
 
 export type GetBlockNumberParameters<
   config extends Config = Config,

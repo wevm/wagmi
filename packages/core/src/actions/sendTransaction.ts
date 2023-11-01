@@ -8,16 +8,14 @@ import type {
 } from 'viem'
 import { sendTransaction as viem_sendTransaction } from 'viem/actions'
 
-import type { Config } from '../createConfig.js'
+import { type Config } from '../createConfig.js'
 import type { BaseErrorType, ErrorType } from '../errors/base.js'
-import type { ChainMismatchErrorType } from '../errors/config.js'
 import type { SelectChains } from '../types/chain.js'
 import type {
   ChainIdParameter,
   ConnectorParameter,
 } from '../types/properties.js'
-import type { Evaluate } from '../types/utils.js'
-import { assertActiveChain } from '../utils/assertActiveChain.js'
+import { type Evaluate } from '../types/utils.js'
 import {
   type GetConnectorClientErrorType,
   getConnectorClient,
@@ -44,7 +42,6 @@ export type SendTransactionParameters<
 export type SendTransactionReturnType = viem_SendTransactionReturnType
 
 export type SendTransactionErrorType =
-  | ChainMismatchErrorType
   // getConnectorClient()
   | GetConnectorClientErrorType
   // base
@@ -68,8 +65,6 @@ export async function sendTransaction<
     chainId,
     connector,
   })
-  if (chainId)
-    assertActiveChain(config, { activeChainId: client.chain.id, chainId })
 
   const hash = await viem_sendTransaction(client, {
     ...(rest as any),

@@ -6,9 +6,11 @@ test('chain formatters', () => {
   const result = useTransaction()
   if (result.data && 'feeCurrency' in result.data) {
     expectTypeOf(result.data.feeCurrency).toEqualTypeOf<`0x${string}` | null>()
-    expectTypeOf(result.data.gatewayFee).toEqualTypeOf<bigint | null>()
+    expectTypeOf(result.data.gatewayFee).toEqualTypeOf<
+      bigint | null | undefined
+    >()
     expectTypeOf(result.data.gatewayFeeRecipient).toEqualTypeOf<
-      `0x${string}` | null
+      `0x${string}` | null | undefined
     >()
   }
 

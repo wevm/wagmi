@@ -355,8 +355,6 @@ export { hydrate } from '../hydrate.js'
 export { BaseError } from '../errors/base.js'
 
 export {
-  type ChainMismatchErrorType,
-  ChainMismatchError,
   type ChainNotConfiguredErrorType,
   ChainNotConfiguredError,
   type ConnectorNotConnectedErrorType,

@@ -1,8 +1,8 @@
 import { type PublicClient, publicActions } from 'viem'
 
-import type { Config } from '../createConfig.js'
-import type { ChainIdParameter } from '../types/properties.js'
-import type { Evaluate } from '../types/utils.js'
+import { type Config } from '../createConfig.js'
+import { type ChainIdParameter } from '../types/properties.js'
+import { type Evaluate } from '../types/utils.js'
 
 export type GetPublicClientParameters<
   config extends Config = Config,

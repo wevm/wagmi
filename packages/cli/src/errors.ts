@@ -1,4 +1,4 @@
-import type { z } from 'zod'
+import { type z } from 'zod'
 
 class ValidationError extends Error {
   details: Zod.ZodIssue[]

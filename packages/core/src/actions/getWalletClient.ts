@@ -1,8 +1,8 @@
 import { type Account, type WalletClient, walletActions } from 'viem'
 
-import type { Config } from '../createConfig.js'
+import { type Config } from '../createConfig.js'
 import type { BaseErrorType, ErrorType } from '../errors/base.js'
-import type { Evaluate } from '../types/utils.js'
+import { type Evaluate } from '../types/utils.js'
 import {
   type GetConnectorClientErrorType,
   type GetConnectorClientParameters,
@@ -40,6 +40,9 @@ export async function getWalletClient<
   parameters: GetWalletClientParameters<config, chainId> = {},
 ): Promise<GetWalletClientReturnType<config, chainId>> {
   const client = await getConnectorClient(config, parameters)
+  client.extend(walletActions)
+
+  // @ts-ignore
   return client.extend(walletActions) as unknown as GetWalletClientReturnType<
     config,
     chainId

@@ -1,7 +1,7 @@
-import type { Chain, ChainFormatters } from 'viem'
+import { type Chain, type ChainFormatters } from 'viem'
 
-import type { Config } from '../createConfig.js'
-import type { IsNarrowable, Merge } from './utils.js'
+import { type Config } from '../createConfig.js'
+import { type IsNarrowable, type Merge } from './utils.js'
 
 /** Filters {@link Config} chains by {@link chainId} or simplifies if no `ChainFormatters` are present. */
 export type SelectChains<
@@ -13,7 +13,8 @@ export type SelectChains<
   ? readonly [Extract<config['chains'][number], { id: chainId }>] // select specific chain
   : HasFormatter<config['chains']> extends true
   ? config['chains'] // return all chains since one has formatter
-  : readonly [Merge<Chain, { id: config['chains'][number]['id'] }>] // return default chain with ID set to union (allows for more simple type since the only thing that is different is the chain ID for each chain)
+  : // return default chain with ID set to union (allows for more simple type since the only thing that is different is the chain ID for each chain)
+    readonly [Merge<Chain, { id: config['chains'][number]['id'] }>]
 
 type HasFormatter<chains extends readonly Chain[]> = chains extends readonly [
   infer head extends Chain,

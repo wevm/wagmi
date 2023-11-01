@@ -8,7 +8,7 @@ import {
 
 import { type Config } from '../createConfig.js'
 import type { SelectChains } from '../types/chain.js'
-import type { ChainIdParameter } from '../types/properties.js'
+import { type ChainIdParameter } from '../types/properties.js'
 import { type Evaluate } from '../types/utils.js'
 
 export type GetTransactionParameters<

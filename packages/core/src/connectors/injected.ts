@@ -13,7 +13,7 @@ import {
 
 import { ChainNotConfiguredError } from '../errors/config.js'
 import { ProviderNotFoundError } from '../errors/connector.js'
-import type { Evaluate } from '../types/utils.js'
+import { type Evaluate } from '../types/utils.js'
 import { normalizeChainId } from '../utils/normalizeChainId.js'
 import { createConnector } from './createConnector.js'
 

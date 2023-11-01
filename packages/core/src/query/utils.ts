@@ -1,4 +1,4 @@
-import type { QueryKey } from '@tanstack/query-core'
+import { type QueryKey } from '@tanstack/query-core'
 
 export function hashFn(queryKey: QueryKey): string {
   return JSON.stringify(queryKey, (_, value) => {

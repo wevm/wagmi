@@ -62,7 +62,6 @@ test('exports', () => {
       "Hydrate",
       "createConfig",
       "createConnector",
-      "ChainMismatchError",
       "ChainNotConfiguredError",
       "ConnectorAlreadyConnectedError",
       "ConnectorNotFoundError",

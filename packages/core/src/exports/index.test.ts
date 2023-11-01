@@ -68,7 +68,6 @@ test('exports', () => {
       "noopStorage",
       "hydrate",
       "BaseError",
-      "ChainMismatchError",
       "ChainNotConfiguredError",
       "ConnectorNotConnectedError",
       "ConnectorAlreadyConnectedError",

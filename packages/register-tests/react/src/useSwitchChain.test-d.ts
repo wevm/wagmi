@@ -2,7 +2,7 @@ import { expectTypeOf, test } from 'vitest'
 import { useSwitchChain } from 'wagmi'
 import { mainnet } from 'wagmi/chains'
 
-import type { ChainId } from './config.js'
+import { type ChainId } from './config.js'
 
 test('default', async () => {
   const { switchChain } = useSwitchChain()

@@ -303,8 +303,6 @@ export {
   type CreateConnectorFn,
   createConnector,
   // Errors
-  type ChainMismatchErrorType,
-  ChainMismatchError,
   type ChainNotConfiguredErrorType,
   ChainNotConfiguredError,
   type ConnectorAlreadyConnectedErrorType,

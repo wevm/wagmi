@@ -15,7 +15,7 @@ import {
   type SwitchChainNotSupportedErrorType,
 } from '../errors/connector.js'
 import type { ConnectorParameter } from '../types/properties.js'
-import type { Evaluate } from '../types/utils.js'
+import { type Evaluate } from '../types/utils.js'
 
 export type SwitchChainParameters<
   config extends Config = Config,

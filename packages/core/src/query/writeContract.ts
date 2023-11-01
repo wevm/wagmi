@@ -1,5 +1,9 @@
-import type { MutateOptions, MutationOptions } from '@tanstack/query-core'
-import type { Abi, ContractFunctionArgs, ContractFunctionName } from 'viem'
+import { type MutateOptions, type MutationOptions } from '@tanstack/query-core'
+import {
+  type Abi,
+  type ContractFunctionArgs,
+  type ContractFunctionName,
+} from 'viem'
 
 import {
   type WriteContractErrorType,
@@ -8,7 +12,7 @@ import {
   writeContract,
 } from '../actions/writeContract.js'
 import { type Config } from '../createConfig.js'
-import type { Evaluate } from '../types/utils.js'
+import { type Evaluate } from '../types/utils.js'
 
 export function writeContractMutationOptions<config extends Config>(
   config: config,

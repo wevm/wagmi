@@ -10,7 +10,7 @@ import {
   type WatchContractEventReturnType as viem_WatchContractEventReturnType,
   watchContractEvent as viem_watchContractEvent,
 } from 'viem/actions'
-import type { Config } from '../createConfig.js'
+import { type Config } from '../createConfig.js'
 import type { SelectChains } from '../types/chain.js'
 import type {
   ChainIdParameter,

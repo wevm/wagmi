@@ -15,14 +15,6 @@ import { BaseError } from '{{packageName}}'
 
 ## Config
 
-### ChainMismatchError
-
-When the connector chain is not the same as the one specified. For example, you want to send a transaction using Chain X, but Chain Y is what the connector is connected to.
-
-```ts-vue
-import { ChainMismatchError } from '{{packageName}}'
-```
-
 ### ChainNotConfiguredError
 
 When a chain is not configured. You likely need to add the chain to <a :href="`/${docsPath}}/createConfig#chains`">`Config['chains']`</a>.

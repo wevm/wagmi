@@ -12,16 +12,14 @@ import {
   writeContract as viem_writeContract,
 } from 'viem/actions'
 
-import type { Config } from '../createConfig.js'
+import { type Config } from '../createConfig.js'
 import type { BaseErrorType, ErrorType } from '../errors/base.js'
-import type { ChainMismatchErrorType } from '../errors/config.js'
 import type { SelectChains } from '../types/chain.js'
 import type {
   ChainIdParameter,
   ConnectorParameter,
 } from '../types/properties.js'
 import type { Evaluate, UnionEvaluate, UnionOmit } from '../types/utils.js'
-import { assertActiveChain } from '../utils/assertActiveChain.js'
 import {
   type GetConnectorClientErrorType,
   getConnectorClient,
@@ -70,7 +68,6 @@ export type WriteContractParameters<
 export type WriteContractReturnType = viem_WriteContractReturnType
 
 export type WriteContractErrorType =
-  | ChainMismatchErrorType
   // getConnectorClient()
   | GetConnectorClientErrorType
   // simulateContract()
@@ -105,11 +102,8 @@ export async function writeContract<
   })
 
   let request
-  if (__mode === 'prepared') {
-    if (chainId)
-      assertActiveChain(config, { activeChainId: client.chain.id, chainId })
-    request = rest
-  } else {
+  if (__mode === 'prepared') request = rest
+  else {
     const { request: simulateRequest } = await simulateContract(
       config,
       rest as SimulateContractParameters,

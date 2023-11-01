@@ -1,4 +1,4 @@
-import type { MutationOptions } from '@tanstack/query-core'
+import { type MutationOptions } from '@tanstack/query-core'
 
 import {
   type SwitchAccountErrorType,
@@ -7,8 +7,8 @@ import {
   switchAccount,
 } from '../actions/switchAccount.js'
 import { type Config } from '../createConfig.js'
-import type { Evaluate } from '../types/utils.js'
-import type { Mutate, MutateAsync } from './types.js'
+import { type Evaluate } from '../types/utils.js'
+import { type Mutate, type MutateAsync } from './types.js'
 
 export function switchAccountMutationOptions<config extends Config>(
   config: config,

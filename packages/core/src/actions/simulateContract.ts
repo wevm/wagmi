@@ -15,14 +15,12 @@ import {
 
 import { type Config } from '../createConfig.js'
 import type { BaseErrorType, ErrorType } from '../errors/base.js'
-import type { ChainMismatchErrorType } from '../errors/config.js'
 import type { SelectChains } from '../types/chain.js'
 import type {
   ChainIdParameter,
   ConnectorParameter,
 } from '../types/properties.js'
 import type { PartialBy, UnionEvaluate, UnionOmit } from '../types/utils.js'
-import { assertActiveChain } from '../utils/assertActiveChain.js'
 import {
   type GetConnectorClientErrorType,
   getConnectorClient,
@@ -108,7 +106,6 @@ export type SimulateContractReturnType<
 }[number]
 
 export type SimulateContractErrorType =
-  | ChainMismatchErrorType
   // getConnectorClient()
   | GetConnectorClientErrorType
   // base
@@ -144,7 +141,6 @@ export async function simulateContract<
     parameters as SimulateContractParameters
 
   let account: Address | Account
-  let activeChainId: number | undefined
   if (parameters.account) account = parameters.account
   else {
     const connectorClient = await getConnectorClient(config, {
@@ -152,9 +148,7 @@ export async function simulateContract<
       connector,
     })
     account = connectorClient.account
-    activeChainId = connectorClient.chain.id
   }
-  if (chainId) assertActiveChain(config, { activeChainId, chainId })
 
   const client = config.getClient({ chainId })
   const { result, request } = await viem_simulateContract(client, {

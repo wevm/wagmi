@@ -14,6 +14,8 @@ export type ExactPartial<type> = {
 /** Checks if {@link type} can be narrowed further than {@link type2} */
 export type IsNarrowable<type, type2> = IsUnknown<type> extends true
   ? false
+  : undefined extends type
+  ? false
   : IsNever<
       (type extends type2 ? true : false) & (type2 extends type ? false : true)
     > extends true

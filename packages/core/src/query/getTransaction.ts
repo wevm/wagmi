@@ -6,7 +6,7 @@ import {
   type GetTransactionReturnType,
   getTransaction,
 } from '../actions/getTransaction.js'
-import type { Config } from '../createConfig.js'
+import { type Config } from '../createConfig.js'
 import type { Evaluate, ExactPartial } from '../types/utils.js'
 import type { ScopeKeyParameter } from './types.js'
 import { filterQueryOptions } from './utils.js'

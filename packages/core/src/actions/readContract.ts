@@ -8,7 +8,7 @@ import {
 } from 'viem/actions'
 
 import { type Config } from '../createConfig.js'
-import type { ChainIdParameter } from '../types/properties.js'
+import { type ChainIdParameter } from '../types/properties.js'
 
 export type ReadContractParameters<
   abi extends Abi | readonly unknown[] = Abi,

@@ -2,7 +2,6 @@ import { config } from '@wagmi/test'
 import { expect, test } from 'vitest'
 
 import {
-  ChainMismatchError,
   ChainNotConfiguredError,
   ConnectorAccountNotFoundError,
   ConnectorAlreadyConnectedError,
@@ -11,17 +10,6 @@ import {
 } from './config.js'
 
 test('constructors', () => {
-  expect(
-    new ChainMismatchError({
-      activeChain: 'Ethereum',
-      targetChain: 'Ethereum',
-    }),
-  ).toMatchInlineSnapshot(`
-    [ChainMismatchError: Chain mismatch
-
-    Details: Expected "Ethereum", received "Ethereum".
-    Version: @wagmi/core@x.y.z]
-  `)
   expect(new ChainNotConfiguredError()).toMatchInlineSnapshot(`
     [ChainNotConfiguredError: Chain not configured.
 

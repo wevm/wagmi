@@ -32,7 +32,7 @@ body:
   - type: input
     attributes:
       label: Package Version
-      description: What version of wagmi are you using?
+      description: What version of Wagmi are you using?
       placeholder: x.y.z
     validations:
       required: true
@@ -40,7 +40,7 @@ body:
   - type: input
     attributes:
       label: Viem Version
-      description: What version of [viem](https://viem.sh) are you using?
+      description: What version of [Viem](https://viem.sh) are you using?
       placeholder: x.y.z
     validations:
       required: true
@@ -48,7 +48,7 @@ body:
   - type: input
     attributes:
       label: TypeScript Version
-      description: What version of TypeScript are you using? wagmi requires `typescript@>=5`.
+      description: What version of TypeScript are you using? Wagmi requires `typescript@>=5`.
       placeholder: x.y.z
     validations:
       required: false

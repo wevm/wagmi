@@ -1,5 +1,5 @@
 import { type PartializedState } from './createConfig.js'
-import type { Evaluate } from './types/utils.js'
+import { type Evaluate } from './types/utils.js'
 import { deserialize as deserialize_ } from './utils/deserialize.js'
 import { serialize as serialize_ } from './utils/serialize.js'
 

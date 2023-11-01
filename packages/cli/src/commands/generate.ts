@@ -1,7 +1,7 @@
-import type { Abi } from 'abitype'
+import { type Abi } from 'abitype'
 import { Abi as AbiSchema } from 'abitype/zod'
 import { camelCase } from 'change-case'
-import type { FSWatcher, WatchOptions } from 'chokidar'
+import { type FSWatcher, type WatchOptions } from 'chokidar'
 import { watch } from 'chokidar'
 import { default as dedent } from 'dedent'
 import { ensureDir, writeFile } from 'fs-extra'
@@ -11,7 +11,12 @@ import pc from 'picocolors'
 import { type Address, getAddress } from 'viem'
 import { z } from 'zod'
 
-import type { Contract, ContractConfig, Plugin, Watch } from '../config.js'
+import {
+  type Contract,
+  type ContractConfig,
+  type Plugin,
+  type Watch,
+} from '../config.js'
 import { fromZodError } from '../errors.js'
 import * as logger from '../logger.js'
 import { findConfig } from '../utils/findConfig.js'
