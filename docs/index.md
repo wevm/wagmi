@@ -22,7 +22,7 @@ hero:
       link: https://github.com/wagmi-dev/wagmi/tree/beta
   image:
     src: /logo-dark.svg
-    alt: VitePress
+    alt: Wagmi Logo
 
 features:
   - icon: 🚀
