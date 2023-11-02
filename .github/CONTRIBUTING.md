@@ -104,7 +104,7 @@ Once the Next.js dev server is running, you can make changes to any of the packa
 
 ## Running the test suite
 
-wagmi uses [Anvil](https://github.com/foundry-rs/foundry/tree/master/anvil) to execute tests against a local Ethereum node. First, install Anvil via [Foundry](https://book.getfoundry.sh/getting-started/installation). Next, add the following to your environment (recommended to use [`direnv`](https://github.com/direnv/direnv)):
+wagmi uses [Anvil](https://github.com/foundry-rs/foundry/tree/master/crates/anvil) to execute tests against a local Ethereum node. First, install Anvil via [Foundry](https://book.getfoundry.sh/getting-started/installation). Next, add the following to your environment (recommended to use [`direnv`](https://github.com/direnv/direnv)):
 
 ```bash
 ANVIL_FORK_URL=https://eth-mainnet.alchemyapi.io/v2/<apiKey>
