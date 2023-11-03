@@ -137,7 +137,7 @@ function App() {
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
-Check out the [`WagmiProvider` docs](/react/WagmiProvider) to learn more about React Context in Wagmi.
+Check out the [`WagmiProvider` docs](/react/api/WagmiProvider) to learn more about React Context in Wagmi.
 
 ### Setup TanStack Query
 
