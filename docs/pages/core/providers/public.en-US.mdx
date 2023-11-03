@@ -60,7 +60,10 @@ const { chains, publicClient } = configureChains(
   [mainnet, polygon],
   [
     alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
-    publicProvider({ stallTimeout: 1_000 }),
+    publicProvider(),
   ],
+  {
+    stallTimeout: 1_000,
+  }
 )
 ```
