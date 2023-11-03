@@ -69,10 +69,12 @@ const { chains, publicClient } = configureChains(
   [mainnet, polygon],
   [
     infuraProvider({
-      apiKey: 'yourInfuraApiKey',
-      stallTimeout: 1_000,
+      apiKey: 'yourInfuraApiKey'
     }),
     publicProvider(),
   ],
+  {
+    stallTimeout: 1_000,
+  }
 )
 ```
