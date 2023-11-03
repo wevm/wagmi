@@ -19,7 +19,7 @@
   "dependencies": {
     "@coinbase/wallet-sdk": "^3.6.6",
     "@ledgerhq/connect-kit-loader": "^1.1.0",
-    "@metamask/sdk": "^0.10.0",
+    "@metamask/sdk": "^0.11.1",
     "@safe-global/safe-apps-provider": "^0.17.1",
     "@safe-global/safe-apps-sdk": "^8.0.0",
     "@walletconnect/ethereum-provider": "2.10.1",
@@ -91,10 +91,7 @@
     "/dist"
   ],
   "sideEffects": false,
-  "contributors": [
-    "awkweb.eth <t@wagmi.sh>",
-    "jxom.eth <j@wagmi.sh>"
-  ],
+  "contributors": ["awkweb.eth <t@wagmi.sh>", "jxom.eth <j@wagmi.sh>"],
   "homepage": "https://wagmi.sh",
   "ethereum": "wagmi-dev.eth",
   "funding": [
