@@ -61,7 +61,7 @@ export function useWaitForTransactionReceipt<
     ...parameters,
     chainId: parameters.chainId ?? chainId,
   })
-  const enabled = Boolean(!hash && (query.enabled ?? true))
+  const enabled = Boolean(hash && (query.enabled ?? true))
 
   return useQuery({ ...queryOptions, ...query, enabled })
 }
