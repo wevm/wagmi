@@ -44,23 +44,3 @@ Note: The above example is using chains from [`@wagmi/core/chains`](/core/chains
   webSocketPublicClient: PublicClient
 }
 ```
-
-## Configuration
-
-### stallTimeout (optional)
-
-The timeout in milliseconds after which another provider will be attempted.
-
-```ts {9}
-import { configureChains } from '@wagmi/core'
-import { mainnet, polygon } from '@wagmi/core/chains'
-import { publicProvider } from '@wagmi/core/providers/public'
-
-const { chains, publicClient } = configureChains(
-  [mainnet, polygon],
-  [
-    alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
-    publicProvider({ stallTimeout: 1_000 }),
-  ],
-)
-```

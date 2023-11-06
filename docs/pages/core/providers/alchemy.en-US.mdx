@@ -53,24 +53,3 @@ const { chains, publicClient } = configureChains(
   [alchemyProvider({ apiKey: 'yourAlchemyApiKey' })],
 )
 ```
-
-### stallTimeout (optional)
-
-The timeout in milliseconds after which another provider will be attempted.
-
-```ts {10}
-import { configureChains, mainnet } from '@wagmi/core'
-import { alchemyProvider } from '@wagmi/core/providers/alchemy'
-import { publicProvider } from '@wagmi/core/providers/public'
-
-const { chains, publicClient } = configureChains(
-  [mainnet],
-  [
-    alchemyProvider({
-      apiKey: 'yourAlchemyApiKey',
-      stallTimeout: 1_000,
-    }),
-    publicProvider(),
-  ],
-)
-```

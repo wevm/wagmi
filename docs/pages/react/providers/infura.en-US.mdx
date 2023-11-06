@@ -54,25 +54,3 @@ const { chains, publicClient } = configureChains(
   [infuraProvider({ apiKey: 'yourInfuraApiKey' })],
 )
 ```
-
-### stallTimeout (optional)
-
-The timeout in milliseconds after which another provider will be attempted.
-
-```ts {11}
-import { configureChains } from 'wagmi'
-import { mainnet, polygon } from 'wagmi/chains'
-import { infuraProvider } from 'wagmi/providers/infura'
-import { publicProvider } from 'wagmi/providers/public'
-
-const { chains, publicClient } = configureChains(
-  [mainnet, polygon],
-  [
-    infuraProvider({
-      apiKey: 'yourInfuraApiKey',
-      stallTimeout: 1_000,
-    }),
-    publicProvider(),
-  ],
-)
-```
