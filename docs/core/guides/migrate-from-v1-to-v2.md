@@ -1,5 +1,6 @@
 ---
 title: Migrate from v1 to v2
+titleTemplate: Wagmi Core
 description: Guide for migrating from Wagmi Core v1 to v2.
 ---
 

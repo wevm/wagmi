@@ -57,8 +57,8 @@ export default withTwoslash(
     },
     themeConfig: {
       algolia: {
-        appId: 'ZCSA29G8U5',
-        apiKey: 'cc70f3c272a8ca62f43a07a1200b7505',
+        appId: 'BKCDT1QTJX',
+        apiKey: 'e9857826a9fc8a19a2c166ad02f99241',
         indexName: 'beta-wagmi',
       },
       editLink: {
