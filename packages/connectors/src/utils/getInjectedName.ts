@@ -38,6 +38,7 @@ export function getInjectedName(ethereum?: WindowProvider) {
     if (provider.isPortal) return 'Ripio Portal'
     if (provider.isRabby) return 'Rabby Wallet'
     if (provider.isRainbow) return 'Rainbow'
+    if (provider.isSafePal) return 'SafePal Wallet'
     if (provider.isStatus) return 'Status'
     if (provider.isSubWallet) return 'SubWallet'
     if (provider.isTalisman) return 'Talisman'
