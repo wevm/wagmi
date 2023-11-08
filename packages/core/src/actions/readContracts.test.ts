@@ -158,7 +158,7 @@ test('falls back to readContract if multicall is not available', async () => {
   `)
 })
 
-test('multi-chain', async () => {
+test('multichain', async () => {
   const config = createConfig({
     chains: [mainnet, mainnet2, optimism],
     transports: {
