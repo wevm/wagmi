@@ -34,6 +34,8 @@ export function readContractQueryOptions<
   options: ReadContractOptions<abi, functionName, args, config> = {} as any,
 ) {
   return {
+    // TODO: Support `signal` once Viem actions allow passthrough
+    // https://tkdodo.eu/blog/why-you-want-react-query#bonus-cancellation
     async queryFn({ queryKey }) {
       const abi = options.abi as Abi
       if (!abi) throw new Error('abi is required')
