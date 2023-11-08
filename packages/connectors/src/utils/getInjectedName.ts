@@ -33,6 +33,7 @@ export function getInjectedName(ethereum?: WindowProvider) {
     if (provider.isOkxWallet || provider.isOKExWallet) return 'OKX Wallet'
     if (provider.isOneInchIOSWallet || provider.isOneInchAndroidWallet)
       return '1inch Wallet'
+    if (provider.isOneKey) return 'OneKey Wallet'
     if (provider.isOpera) return 'Opera'
     if (provider.isPhantom) return 'Phantom'
     if (provider.isPortal) return 'Ripio Portal'
