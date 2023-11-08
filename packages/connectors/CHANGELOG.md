@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 3.1.4
+
+### Patch Changes
+
+- [#3115](https://github.com/wagmi-dev/wagmi/pull/3115) [`4e6ec415`](https://github.com/wagmi-dev/wagmi/commit/4e6ec4151baece94e940e227e0e3711c7f8534d9) Thanks [@bifot](https://github.com/bifot)! - Added SafePal injected name mapping.
+
 ## 3.1.3
 
 ### Patch Changes
