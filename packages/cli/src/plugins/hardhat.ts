@@ -7,7 +7,6 @@ import pc from 'picocolors'
 import type { ContractConfig, Plugin } from '../config.js'
 import * as logger from '../logger.js'
 import type { Evaluate, RequiredBy } from '../types.js'
-
 import { getIsPackageInstalled, getPackageManager } from '../utils/packages.js'
 
 const defaultExcludes = ['build-info/**', '*.dbg.json']
