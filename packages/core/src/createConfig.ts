@@ -92,7 +92,7 @@ export function createConfig<
         : []),
     ].map(setup),
   )
-  function setup(connectorFn: CreateConnectorFn) {
+  function setup(connectorFn: CreateConnectorFn): Connector {
     // Set up emitter with uid and add to connector so they are "linked" together.
     const emitter = createEmitter<ConnectorEventMap>(uid())
     const connector = {
@@ -218,10 +218,19 @@ export function createConfig<
 
   // EIP-6963 subscribe for new wallet providers
   mipd?.subscribe((providerDetails) => {
+    const currentConnectorIds = new Map()
+    for (const connector of connectors.getState()) {
+      currentConnectorIds.set(connector.id, true)
+    }
+
+    const newConnectors: Connector[] = []
     for (const providerDetail of providerDetails) {
       const connector = setup(providerDetailToConnector(providerDetail))
-      connectors.setState((x) => [...x, connector])
+      if (currentConnectorIds.has(connector.id)) continue
+      newConnectors.push(connector)
     }
+
+    connectors.setState((x) => [...x, ...newConnectors], true)
   })
 
   /////////////////////////////////////////////////////////////////////////////////////////////////
