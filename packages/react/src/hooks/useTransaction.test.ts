@@ -35,6 +35,7 @@ test('default', async () => {
         "typeHex": "0x2",
         "v": 0n,
         "value": 100000000000000000n,
+        "yParity": 0,
       },
       "dataUpdatedAt": 1675209600000,
       "error": null,

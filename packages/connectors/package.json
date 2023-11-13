@@ -1,7 +1,7 @@
 {
   "name": "@wagmi/connectors",
   "description": "Collection of connectors for Wagmi",
-  "version": "4.0.0-beta.2",
+  "version": "4.0.0-beta.3",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -37,7 +37,7 @@
   "peerDependencies": {
     "@wagmi/core": "workspace:*",
     "typescript": ">=5.0.4",
-    "viem": "2.0.0-beta.4"
+    "viem": "2.0.0-beta.6"
   },
   "peerDependenciesMeta": {
     "typescript": {
