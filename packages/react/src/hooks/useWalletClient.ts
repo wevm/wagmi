@@ -88,8 +88,8 @@ export function useWalletClient<
   }, [address, queryClient])
 
   return useQuery({
-    ...options,
     ...query,
+    ...options,
     queryKey,
     enabled,
     staleTime: Infinity,

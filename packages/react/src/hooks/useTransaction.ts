@@ -61,5 +61,5 @@ export function useTransaction<
     !(blockHash && blockNumber && blockTag && hash) && (query.enabled ?? true),
   )
 
-  return useQuery({ ...queryOptions, ...query, enabled })
+  return useQuery({ ...query, ...queryOptions, enabled })
 }

@@ -58,5 +58,5 @@ export function useEstimateFeesPerGas<
     chainId: parameters.chainId ?? chainId,
   })
 
-  return useQuery({ ...queryOptions, ...query })
+  return useQuery({ ...query, ...queryOptions })
 }

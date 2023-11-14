@@ -54,5 +54,5 @@ export function useEnsResolver<
   })
   const enabled = Boolean(name && (query.enabled ?? true))
 
-  return useQuery({ ...queryOptions, ...query, enabled })
+  return useQuery({ ...query, ...queryOptions, enabled })
 }

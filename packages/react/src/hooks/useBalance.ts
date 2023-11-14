@@ -54,5 +54,5 @@ export function useBalance<
   })
   const enabled = Boolean(address && (query.enabled ?? true))
 
-  return useQuery({ ...queryOptions, ...query, enabled })
+  return useQuery({ ...query, ...queryOptions, enabled })
 }

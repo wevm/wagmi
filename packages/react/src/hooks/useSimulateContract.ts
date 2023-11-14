@@ -113,5 +113,5 @@ export function useSimulateContract<
     abi && address && functionName && (query.enabled ?? true),
   )
 
-  return useQuery({ ...queryOptions, ...query, enabled })
+  return useQuery({ ...query, ...queryOptions, enabled })
 }

@@ -107,5 +107,5 @@ export function useBlock<
     },
   })
 
-  return useQuery({ ...queryOptions, ...query, enabled })
+  return useQuery({ ...query, ...queryOptions, enabled })
 }

@@ -72,5 +72,5 @@ export function useEstimateGas(
   })
   const enabled = Boolean((account || connector) && (query.enabled ?? true))
 
-  return useQuery({ ...queryOptions, ...query, enabled })
+  return useQuery({ ...query, ...queryOptions, enabled })
 }

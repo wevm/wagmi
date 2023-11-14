@@ -93,5 +93,5 @@ export function useBlockNumber<
     },
   })
 
-  return useQuery({ ...queryOptions, ...query })
+  return useQuery({ ...query, ...queryOptions })
 }
