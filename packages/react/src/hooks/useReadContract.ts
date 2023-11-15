@@ -87,17 +87,17 @@ export function useReadContract<
   const config = useConfig(parameters)
   const chainId = useChainId()
 
-  const queryOptions = readContractQueryOptions(config, {
-    ...(parameters as any),
-    chainId: parameters.chainId ?? chainId,
-  })
+  const options = readContractQueryOptions<config, abi, functionName, args>(
+    config,
+    { ...(parameters as any), chainId: parameters.chainId ?? chainId },
+  )
   const enabled = Boolean(
     address && abi && functionName && (query.enabled ?? true),
   )
 
   return useQuery({
-    ...queryOptions,
     ...query,
+    ...options,
     enabled,
     structuralSharing: query.structuralSharing ?? structuralSharing,
   })

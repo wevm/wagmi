@@ -14,9 +14,12 @@ import {
   readContractsQueryOptions,
 } from '@wagmi/core/query'
 import { useMemo } from 'react'
-import type { ContractFunctionParameters } from 'viem'
+import { type ContractFunctionParameters } from 'viem'
 
-import type { ConfigParameter, QueryParameter } from '../types/properties.js'
+import {
+  type ConfigParameter,
+  type QueryParameter,
+} from '../types/properties.js'
 import {
   type UseQueryReturnType,
   structuralSharing,
@@ -66,11 +69,11 @@ export function useReadContracts<
   const config = useConfig(parameters)
   const chainId = useChainId()
 
-  const queryOptions = readContractsQueryOptions(config, {
-    ...parameters,
-    chainId,
-    contracts,
-  })
+  const options = readContractsQueryOptions<config, contracts, allowFailure>(
+    config,
+    { ...parameters, chainId },
+  )
+
   const enabled = useMemo(() => {
     let isContractsValid = false
     for (const contract of contracts) {
@@ -86,7 +89,7 @@ export function useReadContracts<
   }, [contracts, query.enabled])
 
   return useQuery({
-    ...queryOptions,
+    ...options,
     ...query,
     enabled,
     structuralSharing: query.structuralSharing ?? structuralSharing,

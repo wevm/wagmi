@@ -71,27 +71,25 @@ export function useBlockNumber<
   const configChainId = useChainId()
   const chainId = parameters.chainId ?? configChainId
 
-  const queryOptions = getBlockNumberQueryOptions(config, {
+  const options = getBlockNumberQueryOptions(config, {
     ...parameters,
     chainId,
   })
 
   useWatchBlockNumber({
-    ...{
+    ...({
       config: parameters.config,
-      chainId: parameters.chainId as number,
-    },
-    ...(typeof watch === 'object'
-      ? (watch as UseWatchBlockNumberParameters)
-      : {}),
+      chainId: parameters.chainId,
+      ...(typeof watch === 'object' ? watch : {}),
+    } as UseWatchBlockNumberParameters),
     enabled: Boolean(
       (query.enabled ?? true) &&
         (typeof watch === 'object' ? watch.enabled : watch),
     ),
     onBlockNumber(blockNumber) {
-      queryClient.setQueryData(queryOptions.queryKey, blockNumber)
+      queryClient.setQueryData(options.queryKey, blockNumber)
     },
   })
 
-  return useQuery({ ...query, ...queryOptions })
+  return useQuery({ ...query, ...options })
 }

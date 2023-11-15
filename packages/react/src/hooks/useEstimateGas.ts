@@ -64,13 +64,13 @@ export function useEstimateGas(
   const account = parameters.account ?? connectorClient?.account
   const chainId = useChainId()
 
-  const queryOptions = estimateGasQueryOptions(config, {
-    ...(parameters as any),
+  const options = estimateGasQueryOptions(config, {
+    ...parameters,
     account,
     chainId: parameters.chainId ?? chainId,
     connector,
   })
   const enabled = Boolean((account || connector) && (query.enabled ?? true))
 
-  return useQuery({ ...query, ...queryOptions, enabled })
+  return useQuery({ ...query, ...options, enabled })
 }

@@ -73,11 +73,14 @@ export function useWalletClient<
   const { address, connector, status } = useAccount()
   const chainId = useChainId()
 
-  const { queryKey, ...options } = getWalletClientQueryOptions(config, {
-    ...parameters,
-    chainId: parameters.chainId ?? chainId,
-    connector: parameters.connector ?? connector,
-  })
+  const { queryKey, ...options } = getWalletClientQueryOptions<config, chainId>(
+    config,
+    {
+      ...parameters,
+      chainId: parameters.chainId ?? chainId,
+      connector: parameters.connector ?? connector,
+    },
+  )
   const enabled = Boolean(status !== 'disconnected' && (query.enabled ?? true))
 
   // biome-ignore lint/nursery/useExhaustiveDependencies: `queryKey` not required

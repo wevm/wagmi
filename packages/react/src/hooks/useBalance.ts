@@ -48,11 +48,11 @@ export function useBalance<
   const config = useConfig(parameters)
   const chainId = useChainId()
 
-  const queryOptions = getBalanceQueryOptions(config, {
+  const options = getBalanceQueryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
   })
   const enabled = Boolean(address && (query.enabled ?? true))
 
-  return useQuery({ ...query, ...queryOptions, enabled })
+  return useQuery({ ...query, ...options, enabled })
 }

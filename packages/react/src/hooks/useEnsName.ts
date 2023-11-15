@@ -44,11 +44,11 @@ export function useEnsName<
   const config = useConfig(parameters)
   const chainId = useChainId()
 
-  const queryOptions = getEnsNameQueryOptions(config, {
+  const options = getEnsNameQueryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
   })
   const enabled = Boolean(address && (query.enabled ?? true))
 
-  return useQuery({ ...query, ...queryOptions, enabled })
+  return useQuery({ ...query, ...options, enabled })
 }
