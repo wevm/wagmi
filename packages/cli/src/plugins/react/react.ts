@@ -71,6 +71,11 @@ export function react(_config: ReactConfig = {}): ReactResult {
           ])
         }
 
+        // TODO:
+        // - type body
+        // - function body
+        // - chainId generic for address map
+        // - msw https://github.com/mswjs/msw/issues/1701#event-10952049308
         if (hasReadFunction) {
           const parametersIdentifier = ts.factory.createIdentifier(
             'UseReadContractParameters',

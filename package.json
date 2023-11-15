@@ -52,7 +52,7 @@
     "viem": "2.0.0-beta.6",
     "vitest": "^0.34.5"
   },
-  "packageManager": "pnpm@8.8.0",
+  "packageManager": "pnpm@8.10.5",
   "pnpm": {
     "peerDependencyRules": {
       "ignoreMissing": [

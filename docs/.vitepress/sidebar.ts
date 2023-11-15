@@ -521,6 +521,15 @@ export function getSidebar() {
         ],
       },
       {
+        text: 'Guides',
+        items: [
+          {
+            text: 'Migrate from v1 to v2 🚧',
+            link: '/cli/guides/migrate-from-v1-to-v2',
+          },
+        ],
+      },
+      {
         text: 'Config File',
         items: [
           {
