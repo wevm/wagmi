@@ -10,6 +10,7 @@ test('exports', () => {
       "fetch",
       "foundry",
       "hardhat",
+      "react",
       "sourcify",
     ]
   `)
