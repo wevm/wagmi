@@ -50,11 +50,11 @@ export function useToken<
   const config = useConfig(parameters)
   const chainId = useChainId()
 
-  const queryOptions = getTokenQueryOptions(config, {
+  const options = getTokenQueryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
   })
   const enabled = Boolean(address && (query.enabled ?? true))
 
-  return useQuery({ ...query, ...queryOptions, enabled })
+  return useQuery({ ...query, ...options, enabled })
 }

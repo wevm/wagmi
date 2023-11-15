@@ -48,11 +48,11 @@ export function useEnsAvatar<
   const config = useConfig(parameters)
   const chainId = useChainId()
 
-  const queryOptions = getEnsAvatarQueryOptions(config, {
+  const options = getEnsAvatarQueryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
   })
   const enabled = Boolean(name && (query.enabled ?? true))
 
-  return useQuery({ ...query, ...queryOptions, enabled })
+  return useQuery({ ...query, ...options, enabled })
 }

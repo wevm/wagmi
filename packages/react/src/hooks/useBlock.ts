@@ -69,10 +69,10 @@ export type UseBlockReturnType<
 
 /** https://beta.wagmi.sh/react/hooks/useBlock */
 export function useBlock<
-  config extends Config = ResolvedRegister['config'],
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
   includeTransactions extends boolean = false,
   blockTag extends BlockTag = 'latest',
+  config extends Config = ResolvedRegister['config'],
+  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetBlockData<includeTransactions, blockTag>,
 >(
   parameters: UseBlockParameters<
@@ -90,22 +90,26 @@ export function useBlock<
   const configChainId = useChainId()
   const chainId = parameters.chainId ?? configChainId
 
-  const queryOptions = getBlockQueryOptions(config, { chainId })
+  const options = getBlockQueryOptions(config, { chainId })
   const enabled = Boolean(query.enabled ?? true)
 
   useWatchBlocks({
-    ...{
+    ...({
       config: parameters.config,
       chainId: parameters.chainId!,
-    },
-    ...(typeof watch === 'object' ? (watch as UseWatchBlocksParameters) : {}),
+      ...(typeof watch === 'object' ? watch : {}),
+    } as UseWatchBlocksParameters),
     enabled: Boolean(
       enabled && (typeof watch === 'object' ? watch.enabled : watch),
     ),
     onBlock(block) {
-      queryClient.setQueryData(queryOptions.queryKey, block)
+      queryClient.setQueryData(options.queryKey, block)
     },
   })
 
-  return useQuery({ ...query, ...queryOptions, enabled })
+  return useQuery({
+    ...(query as any),
+    ...options,
+    enabled,
+  }) as UseBlockReturnType<includeTransactions, blockTag, selectData>
 }

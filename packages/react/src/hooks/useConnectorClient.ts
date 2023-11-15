@@ -70,7 +70,10 @@ export function useConnectorClient<
   const { address, connector, status } = useAccount()
   const chainId = useChainId()
 
-  const { queryKey, ...options } = getConnectorClientQueryOptions(config, {
+  const { queryKey, ...options } = getConnectorClientQueryOptions<
+    config,
+    chainId
+  >(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
     connector: parameters.connector ?? connector,

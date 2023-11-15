@@ -53,7 +53,7 @@ export function useTransaction<
   const config = useConfig(parameters)
   const chainId = useChainId()
 
-  const queryOptions = getTransactionQueryOptions(config, {
+  const options = getTransactionQueryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
   })
@@ -61,5 +61,9 @@ export function useTransaction<
     !(blockHash && blockNumber && blockTag && hash) && (query.enabled ?? true),
   )
 
-  return useQuery({ ...query, ...queryOptions, enabled })
+  return useQuery({
+    ...(query as any),
+    ...options,
+    enabled,
+  }) as UseTransactionReturnType<config, chainId, selectData>
 }

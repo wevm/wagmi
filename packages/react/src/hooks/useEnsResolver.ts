@@ -48,11 +48,11 @@ export function useEnsResolver<
   const config = useConfig(parameters)
   const chainId = useChainId()
 
-  const queryOptions = getEnsResolverQueryOptions(config, {
+  const options = getEnsResolverQueryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
   })
   const enabled = Boolean(name && (query.enabled ?? true))
 
-  return useQuery({ ...query, ...queryOptions, enabled })
+  return useQuery({ ...query, ...options, enabled })
 }

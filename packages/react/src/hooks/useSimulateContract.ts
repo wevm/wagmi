@@ -104,8 +104,14 @@ export function useSimulateContract<
   })
   const chainId = useChainId()
 
-  const queryOptions = simulateContractQueryOptions(config, {
-    ...(parameters as any),
+  const options = simulateContractQueryOptions<
+    config,
+    abi,
+    functionName,
+    args,
+    chainId
+  >(config, {
+    ...parameters,
     account: parameters.account ?? connectorClient?.account,
     chainId: parameters.chainId ?? chainId,
   })
@@ -113,5 +119,5 @@ export function useSimulateContract<
     abi && address && functionName && (query.enabled ?? true),
   )
 
-  return useQuery({ ...query, ...queryOptions, enabled })
+  return useQuery({ ...query, ...options, enabled })
 }

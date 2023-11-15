@@ -52,23 +52,12 @@ export type UseQueryParameters<
   queryKey extends QueryKey = QueryKey,
 > = Evaluate<
   ExactPartial<
-    Omit<
-      UseQueryOptions<queryFnData, error, data, queryKey>,
-      | 'initialData'
-      | 'queryFn'
-      | 'queryHash'
-      | 'queryKey'
-      | 'queryKeyHashFn'
-      | 'throwOnError'
-    >
+    Omit<UseQueryOptions<queryFnData, error, data, queryKey>, 'initialData'>
   > & {
     // Fix `initialData` type
-    initialData?: UseQueryOptions<
-      queryFnData,
-      error,
-      data,
-      queryKey
-    >['initialData']
+    initialData?:
+      | UseQueryOptions<queryFnData, error, data, queryKey>['initialData']
+      | undefined
   }
 >
 
@@ -113,20 +102,17 @@ export type UseInfiniteQueryParameters<
       queryKey,
       pageParam
     >,
-    | 'initialData'
-    | 'queryFn'
-    | 'queryHash'
-    | 'queryKey'
-    | 'queryKeyHashFn'
-    | 'throwOnError'
+    'initialData'
   > & {
     // Fix `initialData` type
-    initialData?: UseInfiniteQueryOptions<
-      queryFnData,
-      error,
-      data,
-      queryKey
-    >['initialData']
+    initialData?:
+      | UseInfiniteQueryOptions<
+          queryFnData,
+          error,
+          data,
+          queryKey
+        >['initialData']
+      | undefined
   }
 >
 

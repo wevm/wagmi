@@ -16,7 +16,10 @@ import type {
   InfiniteReadContractsData,
   InfiniteReadContractsOptions,
 } from '../exports/query.js'
-import type { ConfigParameter } from '../types/properties.js'
+import type {
+  ConfigParameter,
+  InfiniteQueryParameter,
+} from '../types/properties.js'
 import {
   type UseInfiniteQueryParameters,
   type UseInfiniteQueryReturnType,
@@ -33,16 +36,15 @@ export type UseInfiniteContractReadsParameters<
   pageParam = unknown,
   selectData = InfiniteReadContractsData<contracts, allowFailure>,
 > = InfiniteReadContractsOptions<contracts, allowFailure, pageParam, config> &
-  ConfigParameter<config> & {
-    query: UseInfiniteQueryParameters<
-      InfiniteReadContractsQueryFnData<contracts, allowFailure>,
-      ReadContractsErrorType,
-      selectData,
-      InfiniteReadContractsData<contracts, allowFailure>,
-      InfiniteReadContractsQueryKey<contracts, allowFailure, pageParam, config>,
-      pageParam
-    >
-  }
+  ConfigParameter<config> &
+  InfiniteQueryParameter<
+    InfiniteReadContractsQueryFnData<contracts, allowFailure>,
+    ReadContractsErrorType,
+    selectData,
+    InfiniteReadContractsData<contracts, allowFailure>,
+    InfiniteReadContractsQueryKey<contracts, allowFailure, pageParam, config>,
+    pageParam
+  >
 
 export type UseInfiniteContractReadsReturnType<
   contracts extends readonly unknown[] = readonly ContractFunctionParameters[],
@@ -71,7 +73,7 @@ export function useInfiniteReadContracts<
   const config = useConfig(parameters)
   const chainId = useChainId()
 
-  const queryOptions = infiniteReadContractsQueryOptions(config, {
+  const options = infiniteReadContractsQueryOptions(config, {
     ...parameters,
     chainId,
     contracts: contracts as UseInfiniteContractReadsParameters['contracts'],
@@ -79,9 +81,9 @@ export function useInfiniteReadContracts<
   })
 
   return useInfiniteQuery({
-    ...queryOptions,
     ...(query as any),
-    initialPageParam: queryOptions.initialPageParam,
+    ...options,
+    initialPageParam: options.initialPageParam,
     structuralSharing: query.structuralSharing ?? structuralSharing,
   })
 }
