@@ -29,6 +29,9 @@ export type ReactConfig = { foo?: string | undefined }
 
 type ReactResult = Evaluate<RequiredBy<Plugin, 'run'>>
 
+// Useful when building this plugin:
+// https://ts-ast-viewer.com
+
 export function react(_config: ReactConfig = {}): ReactResult {
   return {
     name: 'React',
@@ -56,37 +59,16 @@ export function react(_config: ReactConfig = {}): ReactResult {
         }
 
         if (hasReadFunction || hasWriteFunction) {
-          if (importsMap.has('wagmi')) {
-            const imports = importsMap.get('wagmi')!
-            imports.add(wagmiConfigImportSpecifier)
-            imports.add(wagmiResolvedRegisterImportSpecifier)
-            importsMap.set('wagmi', imports)
-          } else {
-            importsMap.set(
-              'wagmi',
-              new Set([
-                wagmiConfigImportSpecifier,
-                wagmiResolvedRegisterImportSpecifier,
-              ]),
-            )
-          }
+          addImports(importsMap, 'wagmi', [
+            wagmiConfigImportSpecifier,
+            wagmiResolvedRegisterImportSpecifier,
+          ])
 
-          if (importsMap.has('viem')) {
-            const imports = importsMap.get('viem')!
-            imports.add(viemAbiImportSpecifier)
-            imports.add(viemContractFunctionNameImportSpecifier)
-            imports.add(viemContractFunctionArgsImportSpecifier)
-            importsMap.set('viem', imports)
-          } else {
-            importsMap.set(
-              'viem',
-              new Set([
-                viemAbiImportSpecifier,
-                viemContractFunctionNameImportSpecifier,
-                viemContractFunctionArgsImportSpecifier,
-              ]),
-            )
-          }
+          addImports(importsMap, 'viem', [
+            viemAbiImportSpecifier,
+            viemContractFunctionNameImportSpecifier,
+            viemContractFunctionArgsImportSpecifier,
+          ])
         }
 
         if (hasReadFunction) {
@@ -107,33 +89,19 @@ export function react(_config: ReactConfig = {}): ReactResult {
             returnTypeIdentifier,
           )
 
-          if (importsMap.has('wagmi')) {
-            const imports = importsMap.get('wagmi')!
-            imports.add(parametersImportSpecifier)
-            imports.add(returnTypeImportSpecifier)
-            importsMap.set('wagmi', imports)
-          } else {
-            importsMap.set(
-              'wagmi',
-              new Set([parametersImportSpecifier, returnTypeImportSpecifier]),
-            )
-          }
+          addImports(importsMap, 'wagmi', [
+            parametersImportSpecifier,
+            returnTypeImportSpecifier,
+          ])
 
           typeDeclarationsMap.set(
             useReadContractParametersTypeAliasDeclaration.name.escapedText!,
             useReadContractParametersTypeAliasDeclaration,
           )
 
-          if (importsMap.has('wagmi/query')) {
-            const imports = importsMap.get('wagmi/query')!
-            imports.add(wagmiReadContractDataImportSpecifier)
-            importsMap.set('wagmi/query', imports)
-          } else {
-            importsMap.set(
-              'wagmi/query',
-              new Set([wagmiReadContractDataImportSpecifier]),
-            )
-          }
+          addImports(importsMap, 'wagmi/query', [
+            wagmiReadContractDataImportSpecifier,
+          ])
 
           const indentifier = factory.createIdentifier(
             `useRead${pascalCase(contract.name)}`,
@@ -303,4 +271,23 @@ export function react(_config: ReactConfig = {}): ReactResult {
       return { imports, content }
     },
   }
+}
+
+function addImports(
+  importsMap: Map<string, Set<ts.ImportSpecifier>>,
+  name: string,
+  imports: ts.ImportSpecifier[],
+) {
+  if (importsMap.has(name)) {
+    const current = importsMap.get(name)!
+    for (const i of imports) current.add(i)
+    importsMap.set(name, current)
+  } else
+    importsMap.set(
+      name,
+      new Set([
+        wagmiConfigImportSpecifier,
+        wagmiResolvedRegisterImportSpecifier,
+      ]),
+    )
 }
