@@ -1,5 +1,12 @@
 # wagmi
 
+## 1.4.7
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @wagmi/core@1.4.7
+
 ## 1.4.6
 
 ### Patch Changes
