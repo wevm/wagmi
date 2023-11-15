@@ -67,7 +67,8 @@ export class InjectedConnector extends Connector<
         if (typeof window === 'undefined') return
         const ethereum = (window as unknown as { ethereum?: WindowProvider })
           .ethereum
-        if (ethereum?.providers) return ethereum.providers[0]
+        if (ethereum?.providers && ethereum.providers.length > 0)
+          return ethereum.providers[0]
         return ethereum
       },
       ...options_,
