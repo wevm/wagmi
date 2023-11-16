@@ -83,6 +83,11 @@ export async function prepareWriteContract<
     maxPriorityFeePerGas,
     nonce,
     value,
+    gasPerPubdata,
+    paymaster,
+    paymasterInput,
+    factoryDeps,
+    customSignature,
   } = getCallParameters(config)
 
   const { result, request } = await publicClient.simulateContract({
@@ -101,6 +106,11 @@ export async function prepareWriteContract<
     maxPriorityFeePerGas,
     nonce,
     value,
+    gasPerPubdata,
+    paymaster,
+    paymasterInput,
+    factoryDeps,
+    customSignature,
   } as SimulateContractParameters)
 
   const minimizedAbi = (abi as Abi).filter(

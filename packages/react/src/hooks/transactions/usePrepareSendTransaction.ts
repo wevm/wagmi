@@ -35,6 +35,11 @@ function queryKey({
   value,
   scopeKey,
   walletClientAddress,
+  gasPerPubdata,
+  paymaster,
+  paymasterInput,
+  factoryDeps,
+  customSignature,
 }: QueryKeyArgs & QueryKeyConfig) {
   return [
     {
@@ -53,6 +58,11 @@ function queryKey({
       value,
       scopeKey,
       walletClientAddress,
+      gasPerPubdata,
+      paymaster,
+      paymasterInput,
+      factoryDeps,
+      customSignature,
     },
   ] as const
 }
@@ -72,6 +82,11 @@ function queryFn({ walletClient }: { walletClient?: GetWalletClientResult }) {
         nonce,
         to,
         value,
+        gasPerPubdata,
+        paymaster,
+        paymasterInput,
+        factoryDeps,
+        customSignature,
       },
     ],
   }: QueryFunctionArgs<typeof queryKey>) => {
@@ -89,6 +104,11 @@ function queryFn({ walletClient }: { walletClient?: GetWalletClientResult }) {
       to,
       value,
       walletClient,
+      gasPerPubdata,
+      paymaster,
+      paymasterInput,
+      factoryDeps,
+      customSignature,
     })
   }
 }
@@ -124,6 +144,11 @@ export function usePrepareSendTransaction({
   suspense,
   to,
   value,
+  gasPerPubdata,
+  paymaster,
+  paymasterInput,
+  factoryDeps,
+  customSignature,
   onError,
   onSettled,
   onSuccess,
@@ -147,6 +172,11 @@ export function usePrepareSendTransaction({
       to,
       value,
       walletClientAddress: walletClient?.account.address,
+      gasPerPubdata,
+      paymaster,
+      paymasterInput,
+      factoryDeps,
+      customSignature,
     }),
     queryFn({ walletClient }),
     {

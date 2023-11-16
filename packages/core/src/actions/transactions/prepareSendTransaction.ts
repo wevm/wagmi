@@ -55,6 +55,11 @@ export async function prepareSendTransaction({
   to: to_,
   value,
   walletClient: walletClient_,
+  gasPerPubdata,
+  paymaster,
+  paymasterInput,
+  factoryDeps,
+  customSignature,
 }: PrepareSendTransactionArgs): Promise<PrepareSendTransactionResult> {
   const publicClient = getPublicClient({ chainId })
   const walletClient = walletClient_ ?? (await getWalletClient({ chainId }))
@@ -80,6 +85,11 @@ export async function prepareSendTransaction({
           nonce,
           to,
           value,
+          gasPerPubdata,
+          paymaster,
+          paymasterInput,
+          factoryDeps,
+          customSignature,
         })
       : gas_ || undefined
 
@@ -95,6 +105,11 @@ export async function prepareSendTransaction({
     nonce,
     to: to!,
     value,
+    gasPerPubdata,
+    paymaster,
+    paymasterInput,
+    factoryDeps,
+    customSignature,
     ...(chainId ? { chainId } : {}),
   }
 }

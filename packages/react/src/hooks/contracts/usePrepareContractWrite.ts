@@ -54,6 +54,11 @@ function queryKey({
   scopeKey,
   walletClientAddress,
   value,
+  gasPerPubdata,
+  paymaster,
+  paymasterInput,
+  factoryDeps,
+  customSignature,
 }: QueryKeyArgs & QueryKeyConfig) {
   return [
     {
@@ -76,6 +81,11 @@ function queryKey({
       scopeKey,
       walletClientAddress,
       value,
+      gasPerPubdata,
+      paymaster,
+      paymasterInput,
+      factoryDeps,
+      customSignature,
     },
   ] as const
 }
@@ -105,6 +115,11 @@ function queryFn({
         maxPriorityFeePerGas,
         nonce,
         value,
+        gasPerPubdata,
+        paymaster,
+        paymasterInput,
+        factoryDeps,
+        customSignature,
       },
     ],
   }: QueryFunctionArgs<typeof queryKey>) => {
@@ -130,6 +145,11 @@ function queryFn({
       nonce,
       walletClient,
       value,
+      gasPerPubdata,
+      paymaster,
+      paymasterInput,
+      factoryDeps,
+      customSignature,
     })
   }
 }
@@ -187,6 +207,11 @@ export function usePrepareContractWrite<
     maxPriorityFeePerGas,
     nonce,
     value,
+    gasPerPubdata,
+    paymaster,
+    paymasterInput,
+    factoryDeps,
+    customSignature,
   } = getCallParameters(config)
 
   const prepareContractWriteQuery = useQuery(
@@ -209,6 +234,11 @@ export function usePrepareContractWrite<
       scopeKey,
       walletClientAddress: walletClient?.account.address,
       value,
+      gasPerPubdata,
+      paymaster,
+      paymasterInput,
+      factoryDeps,
+      customSignature,
     } as QueryKeyArgs & QueryKeyConfig),
     queryFn({
       // TODO: Remove cast and still support `Narrow<TAbi>`

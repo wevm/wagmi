@@ -50,6 +50,11 @@ export async function sendTransaction({
   nonce,
   to,
   value,
+  gasPerPubdata,
+  paymaster,
+  paymasterInput,
+  factoryDeps,
+  customSignature,
 }: SendTransactionArgs): Promise<SendTransactionResult> {
   /********************************************************************/
   /** START: iOS App Link cautious code.                              */
@@ -79,6 +84,11 @@ export async function sendTransaction({
       nonce,
       to: to as Address,
       value,
+      gasPerPubdata,
+      paymaster,
+      paymasterInput,
+      factoryDeps,
+      customSignature,
     }
   } else {
     args = await prepareSendTransaction({
@@ -93,6 +103,11 @@ export async function sendTransaction({
       nonce,
       to,
       value,
+      gasPerPubdata,
+      paymaster,
+      paymasterInput,
+      factoryDeps,
+      customSignature,
     })
   }
 

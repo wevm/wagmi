@@ -33,6 +33,11 @@ type UseContractWritePreparedArgs<
   maxPriorityFeePerGas?: never
   nonce?: never
   value?: never
+  gasPerPubdata?: never
+  paymaster?: never
+  paymasterInput?: never
+  factoryDeps?: never
+  customSignature?: never
 }
 
 type UseContractWriteUnpreparedArgs<
@@ -83,6 +88,11 @@ function mutationKey({
     nonce,
     request,
     value,
+    gasPerPubdata,
+    paymaster,
+    paymasterInput,
+    factoryDeps,
+    customSignature,
   } = config
   return [
     {
@@ -101,6 +111,11 @@ function mutationKey({
       nonce,
       request,
       value,
+      gasPerPubdata,
+      paymaster,
+      paymasterInput,
+      factoryDeps,
+      customSignature,
     },
   ] as const
 }
@@ -135,6 +150,11 @@ function mutationFn(
     maxPriorityFeePerGas: config.maxPriorityFeePerGas,
     nonce: config.nonce,
     value: config.value,
+    gasPerPubdata: config.gasPerPubdata,
+    paymaster: config.paymaster,
+    paymasterInput: config.paymasterInput,
+    factoryDeps: config.factoryDeps,
+    customSignature: config.customSignature,
   })
 }
 
@@ -179,6 +199,11 @@ export function useContractWrite<
     maxPriorityFeePerGas,
     nonce,
     value,
+    gasPerPubdata,
+    paymaster,
+    paymasterInput,
+    factoryDeps,
+    customSignature,
   } = getSendTransactionParameters(config)
 
   const {
@@ -211,6 +236,11 @@ export function useContractWrite<
       nonce,
       request: request,
       value,
+      gasPerPubdata,
+      paymaster,
+      paymasterInput,
+      factoryDeps,
+      customSignature,
     } as UseContractWriteArgs),
     mutationFn,
     {
@@ -248,6 +278,11 @@ export function useContractWrite<
         maxPriorityFeePerGas,
         nonce,
         value,
+        gasPerPubdata,
+        paymaster,
+        paymasterInput,
+        factoryDeps,
+        customSignature,
         ...overrideConfig,
       } as UseContractWriteArgs)
   }, [
@@ -270,6 +305,11 @@ export function useContractWrite<
     nonce,
     request,
     value,
+    gasPerPubdata,
+    paymaster,
+    paymasterInput,
+    factoryDeps,
+    customSignature,
   ]) as MutationFn<TMode, TAbi, TFunctionName, void>
 
   const writeAsync = React.useMemo(() => {
@@ -298,6 +338,11 @@ export function useContractWrite<
         maxPriorityFeePerGas,
         nonce,
         value,
+        gasPerPubdata,
+        paymaster,
+        paymasterInput,
+        factoryDeps,
+        customSignature,
         ...overrideConfig,
       } as UseContractWriteArgs)
   }, [
@@ -319,6 +364,11 @@ export function useContractWrite<
     nonce,
     request,
     value,
+    gasPerPubdata,
+    paymaster,
+    paymasterInput,
+    factoryDeps,
+    customSignature,
   ]) as MutationFn<TMode, TAbi, TFunctionName, Promise<WriteContractResult>>
 
   return {

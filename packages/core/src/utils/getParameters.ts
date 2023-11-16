@@ -18,6 +18,11 @@ export function getCallParameters(
     nonce: args.nonce,
     to: args.to,
     value: args.value,
+    gasPerPubdata: args.gasPerPubdata,
+    factoryDeps: args.factoryDeps,
+    paymaster: args.paymaster,
+    paymasterInput: args.paymasterInput,
+    customSignature: args.customSignature,
   } as CallParameters
 }
 
@@ -35,5 +40,10 @@ export function getSendTransactionParameters(
     nonce: args.nonce,
     to: args.to,
     value: args.value,
+    gasPerPubdata: args.gasPerPubdata,
+    factoryDeps: args.factoryDeps,
+    paymaster: args.paymaster,
+    paymasterInput: args.paymasterInput,
+    customSignature: args.customSignature,
   }
 }

@@ -41,6 +41,11 @@ const mutationFn = ({
   nonce,
   to,
   value,
+  gasPerPubdata,
+  paymaster,
+  paymasterInput,
+  factoryDeps,
+  customSignature,
 }: UseSendTransactionArgs) => {
   if (!to) throw new Error('to is required.')
   return sendTransaction({
@@ -56,6 +61,11 @@ const mutationFn = ({
     nonce,
     to,
     value,
+    gasPerPubdata,
+    paymaster,
+    paymasterInput,
+    factoryDeps,
+    customSignature,
   })
 }
 
@@ -91,6 +101,11 @@ export function useSendTransaction<
   nonce,
   to,
   value,
+  gasPerPubdata,
+  paymaster,
+  paymasterInput,
+  factoryDeps,
+  customSignature,
   onError,
   onMutate,
   onSettled,
@@ -122,6 +137,11 @@ export function useSendTransaction<
       nonce,
       to,
       value,
+      gasPerPubdata,
+      paymaster,
+      paymasterInput,
+      factoryDeps,
+      customSignature,
     }),
     mutationFn,
     {
@@ -150,6 +170,11 @@ export function useSendTransaction<
           nonce,
           value,
           to,
+          gasPerPubdata,
+          paymaster,
+          paymasterInput,
+          factoryDeps,
+          customSignature,
         }),
       }),
     [
@@ -166,6 +191,11 @@ export function useSendTransaction<
       nonce,
       to,
       value,
+      gasPerPubdata,
+      paymaster,
+      paymasterInput,
+      factoryDeps,
+      customSignature,
     ],
   )
 
@@ -187,6 +217,11 @@ export function useSendTransaction<
           nonce,
           value,
           to,
+          gasPerPubdata,
+          paymaster,
+          paymasterInput,
+          factoryDeps,
+          customSignature,
         }),
       }),
     [
@@ -203,6 +238,11 @@ export function useSendTransaction<
       nonce,
       to,
       value,
+      gasPerPubdata,
+      paymaster,
+      paymasterInput,
+      factoryDeps,
+      customSignature,
     ],
   )
 
