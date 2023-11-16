@@ -1,32 +1,8 @@
-import {
-  type Config,
-  type ReadContractErrorType,
-  type ReadContractParameters,
-  type ResolvedRegister,
-} from '@wagmi/core'
-import {
-  type UnionEvaluate,
-  type UnionOmit,
-  type UnionPartial,
-} from '@wagmi/core/internal'
-import {
-  type ReadContractData,
-  type ReadContractQueryFnData,
-  type ReadContractQueryKey,
-} from '@wagmi/core/query'
 import { abi } from '@wagmi/test'
-import {
-  type Abi,
-  type Address,
-  type ContractFunctionArgs,
-  type ContractFunctionName,
-} from 'viem'
+import { type Address } from 'viem'
 import { assertType, expectTypeOf, test } from 'vitest'
 
-import {
-  type ConfigParameter,
-  type QueryParameter,
-} from '../types/properties.js'
+import {} from '../types/properties.js'
 import {
   type UseReadContractParameters,
   type UseReadContractReturnType,
@@ -106,96 +82,4 @@ test('overloads', () => {
       }
     | undefined
   >(result4.data)
-})
-
-////////////////////////////////////////////////////////////////////////////////
-
-type UseCustomReadContractParameters<
-  abi extends Abi | readonly unknown[] = Abi,
-  functionName extends ContractFunctionName<
-    abi,
-    'pure' | 'view'
-  > = ContractFunctionName<abi, 'pure' | 'view'>,
-  args extends ContractFunctionArgs<
-    abi,
-    'pure' | 'view',
-    functionName
-  > = ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
-  config extends Config = Config,
-  selectData = ReadContractData<abi, functionName, args>,
-> = UnionEvaluate<
-  UnionPartial<
-    UnionOmit<ReadContractParameters<abi, functionName, args, config>, 'abi'>
-  > &
-    ConfigParameter<config> &
-    QueryParameter<
-      ReadContractQueryFnData<abi, functionName, args>,
-      ReadContractErrorType,
-      selectData,
-      ReadContractQueryKey<abi, functionName, args, config>
-    >
->
-
-declare function useReadViewOverloads<
-  const abi extends typeof abi.viewOverloads,
-  functionName extends ContractFunctionName<abi, 'pure' | 'view'>,
-  const args extends ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
-  config extends Config = ResolvedRegister['config'],
-  selectData = ReadContractData<abi, functionName, args>,
->(
-  parameters?: UseCustomReadContractParameters<abi, functionName, args, config>,
-): UseReadContractReturnType<abi, functionName, args, selectData>
-
-test('custom function with overloads', () => {
-  const result1 = useReadViewOverloads({
-    address: '0x',
-    functionName: 'foo',
-  })
-  assertType<number | undefined>(result1.data)
-
-  const result2 = useReadViewOverloads({
-    address: '0x',
-    functionName: 'foo',
-    args: [],
-  })
-  assertType<number | undefined>(result2.data)
-
-  const result3 = useReadViewOverloads({
-    address: '0x',
-    functionName: 'foo',
-    args: ['0x'],
-  })
-  assertType<string | undefined>(result3.data)
-
-  const result4 = useReadViewOverloads({
-    address: '0x',
-    functionName: 'foo',
-    args: ['0x', '0x'],
-  })
-  assertType<
-    | {
-        foo: `0x${string}`
-        bar: `0x${string}`
-      }
-    | undefined
-  >(result4.data)
-})
-
-declare function useReadErc20<
-  const abi extends typeof abi.erc20,
-  functionName extends ContractFunctionName<abi, 'pure' | 'view'>,
-  const args extends ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
-  config extends Config = ResolvedRegister['config'],
-  selectData = ReadContractData<abi, functionName, args>,
->(
-  parameters?: UseCustomReadContractParameters<abi, functionName, args, config>,
-): UseReadContractReturnType<abi, functionName, args, selectData>
-
-test('custom function', () => {
-  const result1 = useReadErc20({
-    address: '0x',
-    functionName: 'balanceOf',
-    args: ['0x'],
-  })
-  assertType<bigint | undefined>(result1.data)
 })

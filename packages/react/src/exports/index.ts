@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Viem
 
-// extremely commonly used viem exports
+// extremely commonly used Viem exports
 export {
   custom,
   fallback,
