@@ -29,7 +29,7 @@ import {
   useReadContract,
 } from '../useReadContract.js'
 
-export type CreateReadContractHook<
+export type CreateReadContract<
   abi extends Abi | readonly unknown[],
   address extends Address | Record<number, Address> | undefined = undefined,
 > = {
@@ -43,7 +43,7 @@ export function createReadContract<
     | Address
     | Record<number, Address>
     | undefined = undefined,
->(config: CreateReadContractHook<abi, address>) {
+>(config: CreateReadContract<abi, address>) {
   type stateMutability = 'pure' | 'view'
   type omittedProperties =
     | 'abi'

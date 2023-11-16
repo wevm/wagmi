@@ -16,6 +16,7 @@ export function react(_config: ReactConfig = {}): ReactResult {
     async run({ contracts }) {
       const imports = new Set<string>([])
       const content: string[] = []
+      const pure = '/*#__PURE__*/'
 
       for (const contract of contracts) {
         let hasReadFunction = false
@@ -44,7 +45,7 @@ export function react(_config: ReactConfig = {}): ReactResult {
           content.push(
             `export const useRead${pascalCase(
               contract.name,
-            )} = createReadContract(${innerContent})`,
+            )} = ${pure} createReadContract(${innerContent})`,
           )
         }
 
@@ -53,7 +54,7 @@ export function react(_config: ReactConfig = {}): ReactResult {
           content.push(
             `export const useWrite${pascalCase(
               contract.name,
-            )} = createWriteContract(${innerContent})`,
+            )} = ${pure} createWriteContract(${innerContent})`,
           )
         }
       }

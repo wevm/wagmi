@@ -4,6 +4,18 @@ import { assertType, test } from 'vitest'
 
 import { createReadContract } from './createReadContract.js'
 
+test('custom function', () => {
+  const useReadErc20 = createReadContract({
+    abi: abi.erc20,
+  })
+
+  const result1 = useReadErc20({
+    functionName: 'balanceOf',
+    args: ['0x'],
+  })
+  assertType<bigint | undefined>(result1.data)
+})
+
 test('custom function with overloads', () => {
   const useReadViewOverloads = createReadContract({
     abi: abi.viewOverloads,
@@ -37,18 +49,6 @@ test('custom function with overloads', () => {
       }
     | undefined
   >(result4.data)
-})
-
-test('custom function', () => {
-  const useReadErc20 = createReadContract({
-    abi: abi.erc20,
-  })
-
-  const result1 = useReadErc20({
-    functionName: 'balanceOf',
-    args: ['0x'],
-  })
-  assertType<bigint | undefined>(result1.data)
 })
 
 test('multichain address', () => {

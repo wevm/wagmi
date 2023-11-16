@@ -28,7 +28,12 @@ export { type ScopeKeyParameter } from '../query/types.js'
 ////////////////////////////////////////////////////////////////////////////////
 // Types
 
-export { type ChainIdParameter } from '../types/properties.js'
+export { type SelectChains } from '../types/chain.js'
+
+export {
+  type ChainIdParameter,
+  type ConnectorParameter,
+} from '../types/properties.js'
 
 export {
   type Evaluate,
