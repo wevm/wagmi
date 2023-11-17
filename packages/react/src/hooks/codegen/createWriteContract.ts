@@ -53,6 +53,9 @@ export function createWriteContract<
     | undefined = undefined,
 >(config: CreateWriteContract<abi, address>) {
   // const myConfig = config
+  // TODO
+  // - add chainId for multichain address
+  // - remove abi and address properties from parameters
 
   type stateMutability = 'nonpayable' | 'payable'
   type omittedProperties =
@@ -60,18 +63,11 @@ export function createWriteContract<
     | (typeof config.address extends undefined ? never : 'address')
 
   type WriteContractParameters<
-    abi extends Abi | readonly unknown[] = Abi,
-    functionName extends ContractFunctionName<
-      abi,
-      stateMutability
-    > = ContractFunctionName<abi, stateMutability>,
-    args extends ContractFunctionArgs<
-      abi,
-      stateMutability,
-      functionName
-    > = ContractFunctionArgs<abi, stateMutability, functionName>,
-    config extends Config = Config,
-    chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+    abi extends Abi | readonly unknown[],
+    functionName extends ContractFunctionName<abi, stateMutability>,
+    args extends ContractFunctionArgs<abi, stateMutability, functionName>,
+    config extends Config,
+    chainId extends config['chains'][number]['id'],
     ///
     allFunctionNames = ContractFunctionName<abi, stateMutability>,
     chains extends readonly Chain[] = SelectChains<config, chainId>,
@@ -95,8 +91,8 @@ export function createWriteContract<
   >
 
   type UseWriteContractReturnType<
-    config extends Config = Config,
-    context = unknown,
+    config extends Config,
+    context,
   > = wagmi_UseWriteContractReturnType<config, context> & {
     writeContract: <
       const abi extends typeof config.abi,

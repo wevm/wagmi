@@ -7,7 +7,20 @@ import { createWriteContract } from './createWriteContract.js'
 
 const contextValue = { foo: 'bar' } as const
 
-test('custom function', () => {
+test('context', () => {
+  const useWriteErc20 = createWriteContract({
+    abi: abi.erc20,
+  })
+
+  const { writeContract } = useWriteErc20()
+  writeContract({
+    address: '0x',
+    functionName: 'transfer',
+    args: ['0x', 123n],
+  })
+})
+
+test('context', () => {
   const useWriteErc20 = createWriteContract({
     abi: abi.erc20,
   })
@@ -16,6 +29,14 @@ test('custom function', () => {
     mutation: {
       onMutate() {
         return contextValue
+      },
+      onSuccess(data, variables, context) {
+        expectTypeOf(data).toEqualTypeOf<Hash>()
+        expectTypeOf(variables.functionName).toEqualTypeOf<string>()
+        expectTypeOf(variables.args).toEqualTypeOf<
+          readonly unknown[] | undefined
+        >()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
       },
     },
   })
@@ -53,3 +74,5 @@ test('multichain address', () => {
     chainId: mainnet.id,
   })
 })
+
+test.todo('useSimulateContract', () => {})

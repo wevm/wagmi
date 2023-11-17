@@ -50,18 +50,11 @@ export function createReadContract<
     | (typeof config.address extends undefined ? never : 'address')
 
   type UseReadContractParameters<
-    abi extends Abi | readonly unknown[] = Abi,
-    functionName extends ContractFunctionName<
-      abi,
-      stateMutability
-    > = ContractFunctionName<abi, stateMutability>,
-    args extends ContractFunctionArgs<
-      abi,
-      stateMutability,
-      functionName
-    > = ContractFunctionArgs<abi, stateMutability, functionName>,
-    config extends Config = Config,
-    selectData = ReadContractData<abi, functionName, args>,
+    abi extends Abi | readonly unknown[],
+    functionName extends ContractFunctionName<abi, stateMutability>,
+    args extends ContractFunctionArgs<abi, stateMutability, functionName>,
+    config extends Config,
+    selectData,
   > = UnionEvaluate<
     UnionPartial<
       UnionOmit<
@@ -94,7 +87,8 @@ export function createReadContract<
         abi,
         functionName,
         args,
-        config
+        config,
+        selectData
       > & { chainId?: keyof typeof config.address | undefined },
     ): UseReadContractReturnType<abi, functionName, args, selectData> => {
       const configChainId = useChainId()
@@ -111,7 +105,13 @@ export function createReadContract<
     config extends Config = ResolvedRegister['config'],
     selectData = ReadContractData<abi, functionName, args>,
   >(
-    parameters?: UseReadContractParameters<abi, functionName, args, config>,
+    parameters?: UseReadContractParameters<
+      abi,
+      functionName,
+      args,
+      config,
+      selectData
+    >,
   ): UseReadContractReturnType<abi, functionName, args, selectData> => {
     return useReadContract({ ...(parameters as any), ...config })
   }

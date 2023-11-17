@@ -1,10 +1,10 @@
 import { abi } from '@wagmi/test'
 import { mainnet, optimism } from 'viem/chains'
-import { assertType, test } from 'vitest'
+import { assertType, expectTypeOf, test } from 'vitest'
 
 import { createReadContract } from './createReadContract.js'
 
-test('custom function', () => {
+test('default', () => {
   const useReadErc20 = createReadContract({
     abi: abi.erc20,
   })
@@ -16,7 +16,58 @@ test('custom function', () => {
   assertType<bigint | undefined>(result1.data)
 })
 
-test('custom function with overloads', () => {
+test('select data', () => {
+  const useReadErc20 = createReadContract({
+    abi: abi.erc20,
+  })
+
+  const result = useReadErc20({
+    address: '0x',
+    functionName: 'balanceOf',
+    args: ['0x'],
+    query: {
+      select(data) {
+        expectTypeOf(data).toEqualTypeOf<bigint>()
+        return data?.toString()
+      },
+    },
+  })
+  expectTypeOf(result.data).toEqualTypeOf<string | undefined>()
+})
+
+test('multichain address', () => {
+  const useReadErc20 = createReadContract({
+    abi: abi.erc20,
+    address: {
+      [mainnet.id]: '0x',
+      [optimism.id]: '0x',
+    },
+  })
+
+  const result = useReadErc20({
+    functionName: 'balanceOf',
+    args: ['0x'],
+    chainId: mainnet.id,
+    // ^?
+  })
+  assertType<bigint | undefined>(result.data)
+
+  useReadErc20({
+    functionName: 'balanceOf',
+    args: ['0x'],
+    // @ts-expect-error chain id must match address keys
+    chainId: 420,
+  })
+
+  useReadErc20({
+    functionName: 'balanceOf',
+    args: ['0x'],
+    // @ts-expect-error address not allowed
+    address: '0x',
+  })
+})
+
+test('overloads', () => {
   const useReadViewOverloads = createReadContract({
     abi: abi.viewOverloads,
   })
@@ -49,35 +100,4 @@ test('custom function with overloads', () => {
       }
     | undefined
   >(result4.data)
-})
-
-test('multichain address', () => {
-  const useReadErc20 = createReadContract({
-    abi: abi.erc20,
-    address: {
-      [mainnet.id]: '0x',
-      [optimism.id]: '0x',
-    },
-  })
-
-  const result1 = useReadErc20({
-    functionName: 'balanceOf',
-    args: ['0x'],
-    chainId: mainnet.id,
-  })
-  assertType<bigint | undefined>(result1.data)
-
-  useReadErc20({
-    functionName: 'balanceOf',
-    args: ['0x'],
-    // @ts-expect-error chain id must match address keys
-    chainId: 420,
-  })
-
-  useReadErc20({
-    functionName: 'balanceOf',
-    args: ['0x'],
-    // @ts-expect-error address not allowed
-    address: '0x',
-  })
 })
