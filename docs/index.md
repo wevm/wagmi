@@ -43,7 +43,7 @@ features:
   - icon: 👟
     title: Caching. Deduplication. Persistence.
     details: Built-in caching, deduplication, persistence powered by TanStack Query.
-    link: /react/tanstack-query
+    link: /react/guides/tanstack-query
     linkText: How to use TanStack Query
   - icon: 🌳
     title: Modular By Design
