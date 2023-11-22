@@ -163,7 +163,6 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           sdk = new MetaMaskSDK({
             dappMetadata: { name: 'wagmi' },
             _source: 'wagmi',
-            extensionOnly: false,
             ...parameters,
           })
           await sdk.init()
