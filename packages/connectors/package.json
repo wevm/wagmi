@@ -47,7 +47,7 @@
   "dependencies": {
     "@coinbase/wallet-sdk": "3.9.0-canary.2",
     "@ledgerhq/connect-kit-loader": "^1.1.2",
-    "@metamask/sdk": "^0.8.0",
+    "@metamask/sdk": "^0.12.2",
     "@safe-global/safe-apps-provider": "^0.18.0",
     "@safe-global/safe-apps-sdk": "^8.1.0",
     "@walletconnect/ethereum-provider": "^2.10.1",
@@ -57,7 +57,10 @@
     "@wagmi/core": "workspace:*",
     "msw": "^1.3.1"
   },
-  "contributors": ["awkweb.eth <t@wagmi.sh>", "jxom.eth <j@wagmi.sh>"],
+  "contributors": [
+    "awkweb.eth <t@wagmi.sh>",
+    "jxom.eth <j@wagmi.sh>"
+  ],
   "funding": "https://github.com/sponsors/wagmi-dev",
   "keywords": [
     "react",

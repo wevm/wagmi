@@ -161,14 +161,10 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       if (!walletProvider) {
         if (!sdk || !sdk?.isInitialized()) {
           sdk = new MetaMaskSDK({
-            enableDebug: false,
             dappMetadata: { name: 'wagmi' },
-            extensionOnly: true,
-            useDeeplink: true,
             _source: 'wagmi',
+            extensionOnly: false,
             ...parameters,
-            checkInstallationImmediately: false,
-            checkInstallationOnAllCalls: false,
           })
           await sdk.init()
         }
