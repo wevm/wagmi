@@ -1,5 +1,19 @@
 # @wagmi/core
 
+## 1.4.7
+
+### Patch Changes
+
+- Updated dependencies [[`a1950449`](https://github.com/wagmi-dev/wagmi/commit/a1950449127ddf72fff8ecd1fc34c3690befbb05)]:
+  - @wagmi/connectors@3.1.5
+
+## 1.4.6
+
+### Patch Changes
+
+- Updated dependencies [[`4e6ec415`](https://github.com/wagmi-dev/wagmi/commit/4e6ec4151baece94e940e227e0e3711c7f8534d9)]:
+  - @wagmi/connectors@3.1.4
+
 ## 1.4.5
 
 ### Patch Changes

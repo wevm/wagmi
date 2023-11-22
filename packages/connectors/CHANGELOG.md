@@ -1,5 +1,17 @@
 # @wagmi/connectors
 
+## 3.1.5
+
+### Patch Changes
+
+- [#3220](https://github.com/wagmi-dev/wagmi/pull/3220) [`a1950449`](https://github.com/wagmi-dev/wagmi/commit/a1950449127ddf72fff8ecd1fc34c3690befbb05) Thanks [@rkalis](https://github.com/rkalis)! - Fixed a bug where injected walets with an empty providers array could not connect
+
+## 3.1.4
+
+### Patch Changes
+
+- [#3115](https://github.com/wagmi-dev/wagmi/pull/3115) [`4e6ec415`](https://github.com/wagmi-dev/wagmi/commit/4e6ec4151baece94e940e227e0e3711c7f8534d9) Thanks [@bifot](https://github.com/bifot)! - Added SafePal injected name mapping.
+
 ## 3.1.3
 
 ### Patch Changes
