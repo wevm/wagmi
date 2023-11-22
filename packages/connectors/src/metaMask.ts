@@ -141,6 +141,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       provider.removeListener('disconnect', this.onDisconnect.bind(this))
       provider.on('connect', this.onConnect.bind(this) as Listener)
 
+      sdk.disconnect()
       // Add shim signalling connector is disconnected
       await config.storage?.setItem('metaMaskSDK.disconnected', true)
     },
