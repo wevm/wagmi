@@ -359,7 +359,7 @@ export function injected(parameters: InjectedParameters = {}) {
                   chainId: numberToHex(chainId),
                   chainName: chain.name,
                   nativeCurrency: chain.nativeCurrency,
-                  rpcUrls: [chain.rpcUrls.public?.http[0] ?? ''],
+                  rpcUrls: [chain.rpcUrls.default?.http[0] ?? ''],
                   blockExplorerUrls,
                 },
               ],
