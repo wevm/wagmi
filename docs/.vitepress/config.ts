@@ -30,7 +30,7 @@ export default withTwoslash(
       ['meta', { property: 'og:url', content: 'https://beta.wagmi.sh' }],
       // Twitter
       ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
-      ['meta', { name: 'twitter:creator', content: '@wagmi_sh' }],
+      ['meta', { name: 'twitter:creator', content: '@wevm_dev' }],
       [
         'meta',
         { name: 'twitter:image', content: 'https://beta.wagmi.sh/og.png' },
@@ -106,7 +106,7 @@ export default withTwoslash(
           icon: 'github',
           link: 'https://github.com/wagmi-dev/wagmi/tree/beta',
         },
-        { icon: 'twitter', link: 'https://twitter.com/wagmi_sh' },
+        { icon: 'twitter', link: 'https://twitter.com/wevm_dev' },
         { icon: 'discord', link: 'https://discord.gg/9zHPXuBpqy' },
       ],
     },
