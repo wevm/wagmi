@@ -1,14 +1,8 @@
-import {
-  type Config,
-  type Connection,
-  type Connector,
-} from '../createConfig.js'
+import type { Config, Connection, Connector } from '../createConfig.js'
 import type { BaseErrorType, ErrorType } from '../errors/base.js'
-import {
-  ConnectorNotConnectedError,
-  type ConnectorNotConnectedErrorType,
-  ConnectorNotFoundError,
-  type ConnectorNotFoundErrorType,
+import type {
+  ConnectorNotConnectedErrorType,
+  ConnectorNotFoundErrorType,
 } from '../errors/config.js'
 import type { ConnectorParameter } from '../types/properties.js'
 
@@ -36,16 +30,16 @@ export async function disconnect(
     connector = connection?.connector
   }
 
-  if (!connector) throw new ConnectorNotFoundError()
   const connections = config.state.connections
-  if (!connections.has(connector.uid)) throw new ConnectorNotConnectedError()
 
-  await connector.disconnect()
-  connector.emitter.off('change', config._internal.events.change)
-  connector.emitter.off('disconnect', config._internal.events.disconnect)
-  connector.emitter.on('connect', config._internal.events.connect)
+  if (connector) {
+    await connector.disconnect()
+    connector.emitter.off('change', config._internal.events.change)
+    connector.emitter.off('disconnect', config._internal.events.disconnect)
+    connector.emitter.on('connect', config._internal.events.connect)
 
-  connections.delete(connector.uid)
+    connections.delete(connector.uid)
+  }
 
   config.setState((x) => {
     // if no connections exist, move to disconnected state

@@ -59,7 +59,7 @@ function Account() {
         status: {account.status}
       </div>
 
-      {account.status === 'connected' && (
+      {account.status !== 'disconnected' && (
         <button type="button" onClick={() => disconnect()}>
           Disconnect
         </button>

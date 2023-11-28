@@ -21,28 +21,6 @@ test('parameters: connector', async () => {
   expect(config.state.status).toEqual('disconnected')
 })
 
-test('behavior: not connected to connector', async () => {
-  await expect(disconnect(config)).rejects.toMatchInlineSnapshot(
-    `
-    [ConnectorNotFoundError: Connector not found.
-
-    Version: @wagmi/core@x.y.z]
-  `,
-  )
-})
-
-test('behavior: connector passed not connected', async () => {
-  await connect(config, { connector })
-  const connector_ = config._internal.connectors.setup(mock({ accounts }))
-  await expect(
-    disconnect(config, { connector: connector_ }),
-  ).rejects.toMatchInlineSnapshot(`
-    [ConnectorNotConnectedError: Connector not connected.
-
-    Version: @wagmi/core@x.y.z]
-  `)
-})
-
 test('behavior: uses next connector on disconnect', async () => {
   const connector_ = config._internal.connectors.setup(mock({ accounts }))
   await connect(config, { connector: connector_ })
