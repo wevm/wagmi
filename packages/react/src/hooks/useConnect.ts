@@ -15,6 +15,7 @@ import {
   type ConnectVariables,
   connectMutationOptions,
 } from '@wagmi/core/query'
+import { useEffect } from 'react'
 
 import type { ConfigParameter } from '../types/properties.js'
 import type {
@@ -73,6 +74,17 @@ export function useConnect<
     ...mutation,
     ...mutationOptions,
   })
+
+  // Reset mutation back to an idle state when the connector disconnects.
+  useEffect(() => {
+    return config.subscribe(
+      ({ status }) => status,
+      (status, previousStatus) => {
+        if (previousStatus !== 'disconnected' && status === 'disconnected')
+          result.reset()
+      },
+    )
+  }, [config, result])
 
   return {
     ...result,
