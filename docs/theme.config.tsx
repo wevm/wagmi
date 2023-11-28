@@ -189,7 +189,7 @@ const config: DocsThemeConfig = {
       themeColor: '#ffffff',
       twitter: {
         cardType: 'summary_large_image',
-        handle: '@wagmi_sh',
+        handle: '@wevm_dev',
         site: 'wagmi.sh',
       },
     } as const
