@@ -45,6 +45,7 @@ type InjectedProviderFlags = {
   isPortal?: true
   isRabby?: true
   isRainbow?: true
+  isSafePal?: true
   isStatus?: true
   isSubWallet?: true
   isTalisman?: true
@@ -55,6 +56,7 @@ type InjectedProviderFlags = {
   isTrustWallet?: true
   isTTWallet?: true
   isXDEFI?: true
+  isZeal?: true
   isZerion?: true
 }
 

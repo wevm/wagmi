@@ -1,5 +1,54 @@
 # @wagmi/core
 
+## 1.4.7
+
+### Patch Changes
+
+- Updated dependencies [[`a1950449`](https://github.com/wagmi-dev/wagmi/commit/a1950449127ddf72fff8ecd1fc34c3690befbb05)]:
+  - @wagmi/connectors@3.1.5
+
+## 1.4.6
+
+### Patch Changes
+
+- Updated dependencies [[`4e6ec415`](https://github.com/wagmi-dev/wagmi/commit/4e6ec4151baece94e940e227e0e3711c7f8534d9)]:
+  - @wagmi/connectors@3.1.4
+
+## 1.4.5
+
+### Patch Changes
+
+- Updated dependencies [[`e78aa337`](https://github.com/wagmi-dev/wagmi/commit/e78aa337c454f04b41a3cbd381d25270dd4a0afd)]:
+  - @wagmi/connectors@3.1.3
+
+## 1.4.4
+
+### Patch Changes
+
+- [#3125](https://github.com/wagmi-dev/wagmi/pull/3125) [`725e73fe`](https://github.com/wagmi-dev/wagmi/commit/725e73feb9143dbaa6d540bb76d2009cef29da0b) Thanks [@lukasrosario](https://github.com/lukasrosario)! - Fixed an issue where `dataSuffix` was not being passed down into viem's `simulateContract`, causing the data to be omitted from requests.
+
+## 1.4.3
+
+### Patch Changes
+
+- [#3076](https://github.com/wagmi-dev/wagmi/pull/3076) [`4c36831b`](https://github.com/wagmi-dev/wagmi/commit/4c36831b7aa44d03b5c0decf64dcd20faae28a67) Thanks [@jxom](https://github.com/jxom)! - Pass `chain` to viem `sendTransaction`/`writeContract`.
+
+- [#3006](https://github.com/wagmi-dev/wagmi/pull/3006) [`f2ddce23`](https://github.com/wagmi-dev/wagmi/commit/f2ddce23324aff0a91e066100918dac552dc3b4a) Thanks [@jxom](https://github.com/jxom)! - Changed `normalize` to a dynamic import.
+
+## 1.4.2
+
+### Patch Changes
+
+- Updated dependencies [[`3aaba328`](https://github.com/wagmi-dev/wagmi/commit/3aaba32808ddb4035ec885f96992c91078056715)]:
+  - @wagmi/connectors@3.1.2
+
+## 1.4.1
+
+### Patch Changes
+
+- Updated dependencies [[`bf831bb3`](https://github.com/wagmi-dev/wagmi/commit/bf831bb30df8037cc4312342d0fe3c045408c2fe)]:
+  - @wagmi/connectors@3.1.1
+
 ## 1.4.0
 
 ### Minor Changes

@@ -16,5 +16,8 @@ export async function format(content: string) {
     tabWidth: 2,
     trailingComma: 'all',
     ...config,
+    // disable all prettier plugins due to potential ESM issues with prettier
+    // https://github.com/wagmi-dev/wagmi/issues/2971
+    plugins: [],
   })
 }

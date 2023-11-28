@@ -67,27 +67,3 @@ const { chains, publicClient } = configureChains(
   ],
 )
 ```
-
-### stallTimeout (optional)
-
-The timeout in milliseconds after which another provider will be attempted.
-
-```ts {13,15}
-import { configureChains } from '@wagmi/core'
-import { mainnet, polygon } from '@wagmi/core/chains'
-import { jsonRpcProvider } from '@wagmi/core/providers/jsonRpc'
-
-const { chains, publicClient } = configureChains(
-  [mainnet, polygon],
-  [
-    jsonRpcProvider({
-      rpc: (chain) => ({
-        http: `https://${chain.id}.example.com`,
-        webSocket: `wss://${chain.id}.example.com`,
-      }),
-      stallTimeout: 1000,
-    }),
-    alchemyProvider({ stallTimeout: 1000 }),
-  ],
-)
-```

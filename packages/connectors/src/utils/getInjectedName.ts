@@ -38,6 +38,7 @@ export function getInjectedName(ethereum?: WindowProvider) {
     if (provider.isPortal) return 'Ripio Portal'
     if (provider.isRabby) return 'Rabby Wallet'
     if (provider.isRainbow) return 'Rainbow'
+    if (provider.isSafePal) return 'SafePal Wallet'
     if (provider.isStatus) return 'Status'
     if (provider.isSubWallet) return 'SubWallet'
     if (provider.isTalisman) return 'Talisman'
@@ -47,6 +48,7 @@ export function getInjectedName(ethereum?: WindowProvider) {
     if (provider.isTrust || provider.isTrustWallet) return 'Trust Wallet'
     if (provider.isTTWallet) return 'TTWallet'
     if (provider.isXDEFI) return 'XDEFI Wallet'
+    if (provider.isZeal) return 'Zeal'
     if (provider.isZerion) return 'Zerion'
     if (provider.isMetaMask) return 'MetaMask'
   }

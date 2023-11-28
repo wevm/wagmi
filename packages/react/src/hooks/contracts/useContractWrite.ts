@@ -25,6 +25,7 @@ type UseContractWritePreparedArgs<
   address?: never
   args?: never
   chainId?: never
+  dataSuffix?: never
   functionName?: never
   gas?: never
   gasPrice?: never
@@ -74,6 +75,7 @@ function mutationKey({
     args,
     accessList,
     account,
+    dataSuffix,
     gas,
     gasPrice,
     maxFeePerGas,
@@ -90,6 +92,7 @@ function mutationKey({
       abi,
       accessList,
       account,
+      dataSuffix,
       functionName,
       gas,
       gasPrice,
@@ -125,6 +128,7 @@ function mutationFn(
     functionName: config.functionName,
     accessList: config.accessList,
     account: config.account,
+    dataSuffix: config.dataSuffix,
     gas: config.gas,
     gasPrice: config.gasPrice,
     maxFeePerGas: config.maxFeePerGas,
@@ -156,7 +160,16 @@ export function useContractWrite<
   TFunctionName extends string,
   TMode extends WriteContractMode = undefined,
 >(config: UseContractWriteConfig<TAbi, TFunctionName, TMode>) {
-  const { address, abi, args, chainId, functionName, mode, request } = config
+  const {
+    address,
+    abi,
+    args,
+    chainId,
+    functionName,
+    mode,
+    request,
+    dataSuffix,
+  } = config
   const {
     accessList,
     account,
@@ -190,6 +203,7 @@ export function useContractWrite<
       args,
       accessList,
       account,
+      dataSuffix,
       gas,
       gasPrice,
       maxFeePerGas,
@@ -227,6 +241,7 @@ export function useContractWrite<
         chainId,
         accessList,
         account,
+        dataSuffix,
         gas,
         gasPrice,
         maxFeePerGas,
@@ -245,6 +260,7 @@ export function useContractWrite<
     config.chainId,
     config.mode,
     config.request,
+    dataSuffix,
     functionName,
     gas,
     gasPrice,
@@ -275,6 +291,7 @@ export function useContractWrite<
         functionName,
         accessList,
         account,
+        dataSuffix,
         gas,
         gasPrice,
         maxFeePerGas,
@@ -292,6 +309,7 @@ export function useContractWrite<
     chainId,
     config.mode,
     config.request,
+    dataSuffix,
     functionName,
     gas,
     gasPrice,

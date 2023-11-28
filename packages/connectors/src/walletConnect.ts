@@ -56,23 +56,23 @@ type WalletConnectOptions = {
   isNewChainsStale?: boolean
   /**
    * Metadata for your app.
-   * @link https://docs.walletconnect.com/2.0/javascript/providers/ethereum#initialization
+   * @link https://docs.walletconnect.com/2.0/advanced/providers/ethereum#initialization
    */
   metadata?: EthereumProviderOptions['metadata']
   /**
    * Whether or not to show the QR code modal.
    * @default true
-   * @link https://docs.walletconnect.com/2.0/javascript/providers/ethereum#initialization
+   * @link https://docs.walletconnect.com/2.0/advanced/providers/ethereum#initialization
    */
   showQrModal?: EthereumProviderOptions['showQrModal']
   /**
    * Options of QR code modal.
-   * @link https://docs.walletconnect.com/2.0/web/walletConnectModal/modal/options
+   * @link https://docs.walletconnect.com/2.0/advanced/walletconnectmodal/options
    */
   qrModalOptions?: EthereumProviderOptions['qrModalOptions']
   /**
    * Option to override default relay url.
-   * @link https://docs.walletconnect.com/2.0/web/providers/ethereum
+   * @link https://docs.walletconnect.com/2.0/advanced/providers/ethereum
    */
   relayUrl?: string
 }

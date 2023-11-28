@@ -2,7 +2,7 @@
   "name": "@wagmi/connectors",
   "description": "A collection of connectors for wagmi",
   "license": "MIT",
-  "version": "3.1.0",
+  "version": "3.1.5",
   "scripts": {
     "build": "tsup",
     "dev": "DEV=true tsup"
@@ -21,10 +21,10 @@
     "@ledgerhq/connect-kit-loader": "^1.1.0",
     "@safe-global/safe-apps-provider": "^0.17.1",
     "@safe-global/safe-apps-sdk": "^8.0.0",
-    "@walletconnect/ethereum-provider": "2.10.0",
-    "@walletconnect/utils": "2.10.0",
+    "@walletconnect/ethereum-provider": "2.10.2",
+    "@walletconnect/utils": "2.10.2",
     "@walletconnect/legacy-provider": "^2.0.0",
-    "@walletconnect/modal": "2.6.1",
+    "@walletconnect/modal": "2.6.2",
     "abitype": "0.8.7",
     "eventemitter3": "^4.0.7"
   },

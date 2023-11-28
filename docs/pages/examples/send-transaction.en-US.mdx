@@ -108,7 +108,7 @@ export function SendTransaction() {
         placeholder="0.05"
         value={amount}
       />
-      <button>Send</button>
+      <button type="submit">Send</button>
     </form>
   )
 }
@@ -129,7 +129,7 @@ We will need to:
 import * as React from 'react'
 import { useDebounce } from 'use-debounce'
 import { usePrepareSendTransaction, useSendTransaction } from 'wagmi'
-import { utils } from 'ethers'
+import { parseEther } from 'viem'
 
 export function SendTransaction() {
   const [to, setTo] = React.useState('')
@@ -140,7 +140,7 @@ export function SendTransaction() {
 
   const { config } = usePrepareSendTransaction({
     to: debouncedTo,
-    value: debouncedAmount ? utils.parseEther(debouncedAmount) : undefined,
+    value: debouncedAmount ? parseEther(debouncedAmount) : undefined,
   })
   const { sendTransaction } = useSendTransaction(config)
 
@@ -163,7 +163,7 @@ export function SendTransaction() {
         placeholder="0.05"
         value={amount}
       />
-      <button disabled={!sendTransaction || !to || !amount}>Send</button>
+      <button type="submit" disabled={!sendTransaction || !to || !amount}>Send</button>
     </form>
   )
 }
@@ -196,7 +196,7 @@ import {
   useSendTransaction,
   useWaitForTransaction,
 } from 'wagmi'
-import { utils } from 'ethers'
+import { parseEther } from 'viem'
 
 export function SendTransaction() {
   const [to, setTo] = React.useState('')
@@ -207,7 +207,7 @@ export function SendTransaction() {
 
   const { config } = usePrepareSendTransaction({
     to: debouncedTo,
-    value: debouncedAmount ? utils.parseEther(debouncedAmount) : undefined,
+    value: debouncedAmount ? parseEther(debouncedAmount) : undefined,
   })
   const { data, sendTransaction } = useSendTransaction(config)
 
@@ -234,7 +234,7 @@ export function SendTransaction() {
         placeholder="0.05"
         value={amount}
       />
-      <button disabled={isLoading || !sendTransaction || !to || !amount}>
+      <button type="submit" disabled={isLoading || !sendTransaction || !to || !amount}>
         {isLoading ? 'Sending...' : 'Send'}
       </button>
       {isSuccess && (

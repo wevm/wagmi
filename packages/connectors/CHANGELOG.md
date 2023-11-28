@@ -1,5 +1,35 @@
 # @wagmi/connectors
 
+## 3.1.5
+
+### Patch Changes
+
+- [#3220](https://github.com/wagmi-dev/wagmi/pull/3220) [`a1950449`](https://github.com/wagmi-dev/wagmi/commit/a1950449127ddf72fff8ecd1fc34c3690befbb05) Thanks [@rkalis](https://github.com/rkalis)! - Fixed a bug where injected walets with an empty providers array could not connect
+
+## 3.1.4
+
+### Patch Changes
+
+- [#3115](https://github.com/wagmi-dev/wagmi/pull/3115) [`4e6ec415`](https://github.com/wagmi-dev/wagmi/commit/4e6ec4151baece94e940e227e0e3711c7f8534d9) Thanks [@bifot](https://github.com/bifot)! - Added SafePal injected name mapping.
+
+## 3.1.3
+
+### Patch Changes
+
+- [#3141](https://github.com/wagmi-dev/wagmi/pull/3141) [`e78aa337`](https://github.com/wagmi-dev/wagmi/commit/e78aa337c454f04b41a3cbd381d25270dd4a0afd) Thanks [@einaralex](https://github.com/einaralex)! - Updated WalletConnect libraries.
+
+## 3.1.2
+
+### Patch Changes
+
+- [#3009](https://github.com/wagmi-dev/wagmi/pull/3009) [`3aaba328`](https://github.com/wagmi-dev/wagmi/commit/3aaba32808ddb4035ec885f96992c91078056715) Thanks [@0xAsimetriq](https://github.com/0xAsimetriq)! - Update WalletConnect dependencies
+
+## 3.1.1
+
+### Patch Changes
+
+- [#2973](https://github.com/wagmi-dev/wagmi/pull/2973) [`bf831bb3`](https://github.com/wagmi-dev/wagmi/commit/bf831bb30df8037cc4312342d0fe3c045408c2fe) Thanks [@masm](https://github.com/masm)! - Added Zeal wallet
+
 ## 3.1.0
 
 ### Minor Changes

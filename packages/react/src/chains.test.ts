@@ -20,7 +20,6 @@ it('should expose correct exports', () => {
       "canto",
       "celo",
       "celoAlfajores",
-      "celoCannoli",
       "cronos",
       "crossbell",
       "dfk",
