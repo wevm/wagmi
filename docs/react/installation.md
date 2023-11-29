@@ -65,7 +65,7 @@ Depending on your environment, you might need to add polyfills. See [Viem Platfo
 
 ## Using Unreleased Commits
 
-If you can't wait for a new release to test the latest features, you can either install from the `canary` tag (tracks the [`main`](https://github.com/wagmi-dev/wagmi/tree/main) branch).
+If you can't wait for a new release to test the latest features, you can either install from the `canary` tag (tracks the [`main`](https://github.com/wevm/wagmi/tree/main) branch).
 
 ::: code-group
 ```bash [pnpm]
@@ -85,10 +85,10 @@ bun add wagmi@canary
 ```
 :::
 
-Or clone the [Wagmi repo](https://github.com/wagmi-dev/wagmi) to your local machine, build, and link it yourself.
+Or clone the [Wagmi repo](https://github.com/wevm/wagmi) to your local machine, build, and link it yourself.
 
 ```bash
-gh repo clone wagmi-dev/wagmi
+gh repo clone wevm/wagmi
 cd wagmi
 pnpm install
 pnpm build

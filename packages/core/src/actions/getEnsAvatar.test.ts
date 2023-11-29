@@ -6,9 +6,7 @@ import { getEnsAvatar } from './getEnsAvatar.js'
 test('default', async () => {
   await expect(
     getEnsAvatar(config, {
-      name: 'wagmi-dev.eth',
+      name: 'wevm.eth',
     }),
-  ).resolves.toMatchInlineSnapshot(
-    '"https://ipfs.io/ipfs/Qma8mnp6xV3J2cRNf3mTth5C8nV11CAnceVinc3y8jSbio"',
-  )
+  ).resolves.toMatchInlineSnapshot('"https://euc.li/wevm.eth"')
 })

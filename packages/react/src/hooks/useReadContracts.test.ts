@@ -29,7 +29,7 @@ test('default', async () => {
     {
       "data": [
         {
-          "result": 3n,
+          "result": 4n,
           "status": "success",
         },
         {

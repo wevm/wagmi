@@ -19,7 +19,7 @@ hero:
       link: /react/why-wagmi
     - theme: alt
       text: View on GitHub
-      link: https://github.com/wagmi-dev/wagmi/tree/beta
+      link: https://github.com/wevm/wagmi/tree/beta
   image:
     src: /logo-dark.svg
     alt: Wagmi Logo

@@ -6,7 +6,7 @@ import { useEnsAvatar } from './useEnsAvatar.js'
 test('default', async () => {
   const { result } = renderHook(() =>
     useEnsAvatar({
-      name: 'wagmi-dev.eth',
+      name: 'wevm.eth',
     }),
   )
 
@@ -14,7 +14,7 @@ test('default', async () => {
 
   expect(result.current).toMatchInlineSnapshot(`
     {
-      "data": "https://ipfs.io/ipfs/Qma8mnp6xV3J2cRNf3mTth5C8nV11CAnceVinc3y8jSbio",
+      "data": "https://euc.li/wevm.eth",
       "dataUpdatedAt": 1675209600000,
       "error": null,
       "errorUpdateCount": 0,
@@ -40,7 +40,7 @@ test('default', async () => {
         "ensAvatar",
         {
           "chainId": 1,
-          "name": "wagmi-dev.eth",
+          "name": "wevm.eth",
         },
       ],
       "refetch": [Function],

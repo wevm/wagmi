@@ -3,7 +3,7 @@ description: Report bugs or issues.
 body:
   - type: markdown
     attributes:
-      value: Thanks for taking the time to fill out this bug report! The more info you provide, the more we can help you. If you are a [Sponsor](https://github.com/sponsors/wagmi-dev?metadata_campaign=gh_issue), your issues are prioritized.
+      value: Thanks for taking the time to fill out this bug report! The more info you provide, the more we can help you. If you are a [Sponsor](https://github.com/sponsors/wevm?metadata_campaign=gh_issue), your issues are prioritized.
 
   - type: textarea
     attributes:
@@ -66,7 +66,7 @@ body:
       label: Validations
       description: Before submitting this issue, please make sure you do the following.
       options:
-        - label: Checked there isn't [already an issue](https://github.com/wagmi-dev/wagmi/issues) that exists for the bug you encountered.
+        - label: Checked there isn't [already an issue](https://github.com/wevm/wagmi/issues) that exists for the bug you encountered.
           required: true
-        - label: Followed the [Code of Conduct](https://github.com/wagmi-dev/.github/blob/main/CODE_OF_CONDUCT.md).
+        - label: Followed the [Code of Conduct](https://github.com/wevm/.github/blob/main/CODE_OF_CONDUCT.md).
           required: true

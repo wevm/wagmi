@@ -6,7 +6,7 @@ import { useEnsResolver } from './useEnsResolver.js'
 test('default', async () => {
   const { result } = renderHook(() =>
     useEnsResolver({
-      name: 'wagmi-dev.eth',
+      name: 'wevm.eth',
     }),
   )
 
@@ -40,7 +40,7 @@ test('default', async () => {
         "ensResolver",
         {
           "chainId": 1,
-          "name": "wagmi-dev.eth",
+          "name": "wevm.eth",
         },
       ],
       "refetch": [Function],

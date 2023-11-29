@@ -268,7 +268,7 @@ export function injected(parameters: InjectedParameters = {}) {
             unstable_shimAsyncInject !== false
           ) {
             // If no provider is found, check for async injection
-            // https://github.com/wagmi-dev/references/issues/167
+            // https://github.com/wevm/references/issues/167
             // https://github.com/MetaMask/detect-provider
             const handleEthereum = async () => {
               if (typeof window !== 'undefined')

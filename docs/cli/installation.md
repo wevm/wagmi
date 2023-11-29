@@ -26,7 +26,7 @@ bun add @wagmi/cli@beta
 
 ## Using Unreleased Commits
 
-If you can't wait for a new release to test the latest features, you can either install from the `canary` tag (tracks the [`main`](https://github.com/wagmi-dev/wagmi/tree/main) branch).
+If you can't wait for a new release to test the latest features, you can either install from the `canary` tag (tracks the [`main`](https://github.com/wevm/wagmi/tree/main) branch).
 
 ::: code-group
 ```bash [pnpm]
@@ -46,10 +46,10 @@ bun add @wagmi/cli@canary
 ```
 :::
 
-Or clone the [Wagmi repo](https://github.com/wagmi-dev/wagmi) to your local machine, build, and link it yourself.
+Or clone the [Wagmi repo](https://github.com/wevm/wagmi) to your local machine, build, and link it yourself.
 
 ```bash
-git clone https://github.com/wagmi-dev/wagmi.git
+git clone https://github.com/wevm/wagmi.git
 cd wagmi
 pnpm install
 pnpm build

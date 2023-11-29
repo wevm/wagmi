@@ -5,7 +5,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/wagmi-dev/wagmi.git",
+    "url": "https://github.com/wevm/wagmi.git",
     "directory": "packages/create-wagmi"
   },
   "scripts": {
@@ -47,6 +47,6 @@
     "fs-extra": "^11.1.1"
   },
   "contributors": ["awkweb.eth <t@wagmi.sh>", "jxom.eth <j@wagmi.sh>"],
-  "funding": "https://github.com/sponsors/wagmi-dev",
+  "funding": "https://github.com/sponsors/wevm",
   "keywords": ["wagmi", "eth", "ethereum", "dapps", "wallet", "web3", "cli"]
 }

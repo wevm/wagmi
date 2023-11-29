@@ -18,7 +18,7 @@ test('default', async () => {
   ).resolves.toMatchInlineSnapshot(`
     [
       {
-        "result": 3n,
+        "result": 4n,
         "status": "success",
       },
     ]
@@ -40,7 +40,7 @@ test('allowFailure', async () => {
     }),
   ).resolves.toMatchInlineSnapshot(`
     [
-      3n,
+      4n,
     ]
   `)
 })

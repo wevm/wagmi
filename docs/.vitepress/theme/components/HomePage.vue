@@ -44,7 +44,7 @@ const teamMembers = [
             <VPSponsors v-if="sponsors" :data="sponsors" />
 
             <div pt-10 text-center>
-              <VPButton theme="sponsor" text="Become a sponsor" href="https://github.com/sponsors/wagmi-dev" />
+              <VPButton theme="sponsor" text="Become a sponsor" href="https://github.com/sponsors/wevm" />
             </div>
           </div>
 

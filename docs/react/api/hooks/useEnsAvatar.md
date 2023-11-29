@@ -30,7 +30,7 @@ import { normalize } from 'viem/ens'
 
 function App() {
   const result = useEnsAvatar({
-    name: normalize('wagmi-dev.eth'),
+    name: normalize('wevm.eth'),
   })
 }
 ```
@@ -63,7 +63,7 @@ import { normalize } from 'viem/ens'
 function App() {
   const result = useEnsAvatar({
     blockNumber: 17829139n, // [!code focus]
-    name: normalize('wagmi-dev.eth'),
+    name: normalize('wevm.eth'),
   })
 }
 ```
@@ -83,7 +83,7 @@ import { normalize } from 'viem/ens'
 
 function App() {
   const result = useEnsAvatar({
-    name: normalize('wagmi-dev.eth'),
+    name: normalize('wevm.eth'),
     blockTag: 'latest', // [!code focus]
   })
 }
@@ -108,7 +108,7 @@ import { normalize } from 'viem/ens'
 function App() {
   const result = useEnsAvatar({
     chainId: mainnet.id, // [!code focus],
-    name: normalize('wagmi-dev.eth'),
+    name: normalize('wevm.eth'),
   })
 }
 ```
@@ -130,7 +130,7 @@ import { config } from './config' // [!code focus]
 function App() {
   const result = useEnsAvatar({
     config, // [!code focus]
-    name: normalize('wagmi-dev.eth'),
+    name: normalize('wevm.eth'),
   })
 }
 ```
@@ -153,7 +153,7 @@ function App() {
     gatewayUrls: { // [!code focus]
       ipfs: 'https://cloudflare-ipfs.com', // [!code focus]
     }, // [!code focus]
-    name: normalize('wagmi-dev.eth'),
+    name: normalize('wevm.eth'),
   })
 }
 ```
@@ -173,7 +173,7 @@ import { normalize } from 'viem/ens'
 
 function App() {
   const result = useEnsAvatar({
-    name: normalize('wagmi-dev.eth'), // [!code focus]
+    name: normalize('wevm.eth'), // [!code focus]
   })
 }
 ```
@@ -193,7 +193,7 @@ import { normalize } from 'viem/ens'
 
 function App() {
   const result = useEnsAvatar({
-    name: normalize('wagmi-dev.eth'),
+    name: normalize('wevm.eth'),
     scopeKey: 'foo', // [!code focus]
   })
 }
@@ -215,7 +215,7 @@ import { normalize } from 'viem/ens'
 
 function App() {
   const result = useEnsAvatar({
-    name: normalize('wagmi-dev.eth'),
+    name: normalize('wevm.eth'),
     universalResolverAddress: '0x74E20Bd2A1fE0cdbe45b9A1d89cb7e0a45b36376', // [!code focus]
   })
 }

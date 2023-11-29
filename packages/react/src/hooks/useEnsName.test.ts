@@ -14,7 +14,7 @@ test('default', async () => {
 
   expect(result.current).toMatchInlineSnapshot(`
     {
-      "data": "wagmi-dev.eth",
+      "data": "wevm.eth",
       "dataUpdatedAt": 1675209600000,
       "error": null,
       "errorUpdateCount": 0,

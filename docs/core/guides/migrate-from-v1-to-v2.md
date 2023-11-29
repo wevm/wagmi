@@ -35,7 +35,7 @@ bun add @wagmi/core@beta viem@{{viemVersion}} @wagmi/connectors@beta
 :::
 
 ::: info Wagmi Core v2 is currently in beta.
-We recommend trying it out in your projects, but there may be breaking changes before the final release. If you find bugs or have feedback, please [open an issue](https://github.com/wagmi-dev/wagmi/issues/new/choose) or [reply to the discussion thread](https://github.com/wagmi-dev/wagmi/discussions/3068).
+We recommend trying it out in your projects, but there may be breaking changes before the final release. If you find bugs or have feedback, please [open an issue](https://github.com/wevm/wagmi/issues/new/choose) or [reply to the discussion thread](https://github.com/wevm/wagmi/discussions/3068).
 :::
 
 ::: info Wagmi Core v2 should be the last major version that will have this many actionable breaking changes. 
@@ -357,7 +357,7 @@ const connector = walletConnect({ // [!code ++]
 
 ### Updated `'@wagmi/core/chains'` entrypoint
 
-Chains now live in the [Viem repository](https://github.com/wagmi-dev/viem). As a result, the `'@wagmi/core/chains'` entrypoint now proxies all chains from `'viem/chains'` directly.
+Chains now live in the [Viem repository](https://github.com/wevm/viem). As a result, the `'@wagmi/core/chains'` entrypoint now proxies all chains from `'viem/chains'` directly.
 
 ### Removed `mainnet` and `sepolia` from main entrypoint
 
@@ -388,8 +388,8 @@ import { normalize } from 'viem' // [!code ++]
 import { config } from './config'
 
 const result = await getEnsAddress(config, {
-  name: 'wagmi-dev.eth', // [!code --]
-  name: normalize('wagmi-dev.eth'), // [!code ++]
+  name: 'wevm.eth', // [!code --]
+  name: normalize('wevm.eth'), // [!code ++]
 })
 ```
 <<< @/snippets/core/config.ts[config.ts]
