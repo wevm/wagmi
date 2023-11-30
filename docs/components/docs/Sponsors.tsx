@@ -171,6 +171,16 @@ const sponsors = [
         'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/zora-light.svg',
     },
   },
+  {
+    id: 'supa',
+    name: 'Supa',
+    href: 'https://twitter.com/supafinance',
+    logo: {
+      dark: 'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/supa-dark.svg',
+      light:
+        'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/supa-light.svg',
+    },
+  }
 ] as const
 
 export function Sponsors() {
