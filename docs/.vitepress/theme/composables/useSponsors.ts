@@ -118,6 +118,11 @@ export function useSponsors() {
           url: 'https://zora.co',
           img: 'zora-light.svg',
         },
+        {
+          name: 'Supa',
+          url: 'https://twitter.com/supafinance',
+          img: 'supa-light.svg',
+        },
       ],
     }
 
