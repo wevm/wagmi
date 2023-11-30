@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/logo-dark.svg">
-    <img alt="wagmi logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/logo-light.svg" width="auto" height="60">
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/wagmi/main/.github/logo-dark.svg">
+    <img alt="wagmi logo" src="https://raw.githubusercontent.com/wevm/wagmi/main/.github/logo-light.svg" width="auto" height="60">
   </picture>
 </p>
 
@@ -124,7 +124,7 @@ Check out [RainbowKit](https://rainbowkit.com/docs/introduction), [ConnectKit](h
 Check out the following places for more wagmi-related content:
 
 - Join the [discussions on GitHub](https://github.com/wagmi-dev/wagmi/discussions)
-- Follow [@wagmi_sh](https://twitter.com/wagmi_sh) on Twitter for project updates
+- Follow [@wevm_dev](https://twitter.com/wevm_dev) on Twitter for project updates
 - Share [your project/organization](https://github.com/wagmi-dev/wagmi/discussions/201) using wagmi
 - Browse the [awesome-wagmi](https://github.com/wagmi-dev/awesome-wagmi) list of awesome projects and resources
 
