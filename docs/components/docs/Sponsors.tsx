@@ -180,7 +180,7 @@ const sponsors = [
       light:
         'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/supa-light.svg',
     },
-  }
+  },
 ] as const
 
 export function Sponsors() {
