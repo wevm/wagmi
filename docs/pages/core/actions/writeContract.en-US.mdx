@@ -235,3 +235,60 @@ const { hash } = await writeContract({
   value: parseGwei('2'),
 })
 ```
+
+### gasPerPubdata (optional)
+
+The amount of gas for publishing one byte of data on Ethereum. Only applies to [EIP-712 Transactions](https://era.zksync.io/docs/api/js/features.html)
+
+```ts {3}
+const hash = await writeContract({
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  gasPerPubdata: 50000,
+})
+```
+
+### factoryDeps (optional)
+
+Contains bytecode of the deployed contract. Only applies to [EIP-712 Transactions](https://era.zksync.io/docs/api/js/features.html)
+
+```ts {3}
+const hash = await writeContract({
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  factoryDeps: ['0xcde...'],
+})
+```
+
+### paymaster (optional)
+
+Address of the paymaster account that will pay the fees. The `paymasterInput` field is required with this one. Only applies to [EIP-712 Transactions](https://era.zksync.io/docs/api/js/features.html)
+
+```ts {3}
+const hash = await writeContract({
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  paymaster: '0x4B5DF730c2e6b28E17013A1485E5d9BC41Efe021',
+  paymasterInput: '0x8c5a...',
+})
+```
+
+### paymasterInput (optional)
+
+Input data to the paymaster. The `paymaster` field is required with this one. Only applies to [EIP-712 Transactions](https://era.zksync.io/docs/api/js/features.html)
+
+```ts {4}
+const hash = await writeContract({
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  paymaster: '0x4B5DF730c2e6b28E17013A1485E5d9BC41Efe021',
+  paymasterInput: '0x8c5a...',
+})
+```
+
+### customSignature (optional)
+
+Signature of the transaction, filled when user signs transaction. Only applies to [EIP-712 Transactions](https://era.zksync.io/docs/api/js/features.html)
+
+```ts {3}
+const hash = await writeContract({
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  customSignature: '0x12abc',
+})
+```
