@@ -1,10 +1,10 @@
 import { type QueryOptions } from '@tanstack/query-core'
 
 import {
-  getTransactionCount,
   type GetTransactionCountErrorType,
   type GetTransactionCountParameters,
   type GetTransactionCountReturnType,
+  getTransactionCount,
 } from '../actions/getTransactionCount.js'
 import { type Config } from '../createConfig.js'
 import type { Evaluate, PartialBy } from '../types/utils.js'

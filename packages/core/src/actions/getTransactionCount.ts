@@ -1,8 +1,8 @@
 import {
-  getTransactionCount as viem_getTransactionCount,
   type GetTransactionCountErrorType as viem_GetTransactionCountErrorType,
   type GetTransactionCountParameters as viem_GetTransactionCountParameters,
   type GetTransactionCountReturnType as viem_GetTransactionCountReturnType,
+  getTransactionCount as viem_getTransactionCount,
 } from 'viem/actions'
 
 import { type Config } from '../createConfig.js'
