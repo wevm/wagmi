@@ -126,6 +126,15 @@ export {
 } from '../query/getTransaction.js'
 
 export {
+  type GetTransactionCountData,
+  type GetTransactionCountOptions,
+  type GetTransactionCountQueryFnData,
+  type GetTransactionCountQueryKey,
+  getTransactionCountQueryKey,
+  getTransactionCountQueryOptions,
+} from '../query/getTransactionCount.js'
+
+export {
   type GetWalletClientData,
   type GetWalletClientOptions,
   type GetWalletClientQueryFnData,

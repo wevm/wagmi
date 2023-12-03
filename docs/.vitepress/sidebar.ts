@@ -398,6 +398,10 @@ export function getSidebar() {
             link: '/core/api/actions/getTransaction',
           },
           {
+            text: 'getTransactionCount',
+            link: '/core/api/actions/getTransactionCount',
+          },
+          {
             text: 'getWalletClient',
             link: '/core/api/actions/getWalletClient',
           },
