@@ -2,4 +2,4 @@
 "@wagmi/connectors": patch
 ---
 
-Update @walletconnect/ethereum-provider
+Updated @walletconnect/ethereum-provider
