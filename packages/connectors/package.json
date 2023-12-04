@@ -21,7 +21,7 @@
     "@ledgerhq/connect-kit-loader": "^1.1.0",
     "@safe-global/safe-apps-provider": "^0.17.1",
     "@safe-global/safe-apps-sdk": "^8.0.0",
-    "@walletconnect/ethereum-provider": "2.10.2",
+    "@walletconnect/ethereum-provider": "2.10.6",
     "@walletconnect/utils": "2.10.2",
     "@walletconnect/legacy-provider": "^2.0.0",
     "@walletconnect/modal": "2.6.2",
