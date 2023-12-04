@@ -195,6 +195,10 @@ export function getSidebar() {
             link: '/react/api/hooks/useTransaction',
           },
           {
+            text: 'useTransactionCount',
+            link: '/react/api/hooks/useTransactionCount',
+          },
+          {
             text: 'useToken',
             link: '/react/api/hooks/useToken',
           },
