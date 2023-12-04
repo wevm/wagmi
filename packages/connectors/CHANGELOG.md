@@ -1,5 +1,13 @@
 # @wagmi/connectors
 
+## 3.1.6
+
+### Patch Changes
+
+- [#3236](https://github.com/wevm/wagmi/pull/3236) [`cc7e18f2`](https://github.com/wevm/wagmi/commit/cc7e18f2e7f6b8b989f60f0b05aee70e996a9975) Thanks [@0xAsimetriq](https://github.com/0xAsimetriq)! - Updated @walletconnect/ethereum-provider
+
+- [#3236](https://github.com/wevm/wagmi/pull/3236) [`cc7e18f2`](https://github.com/wevm/wagmi/commit/cc7e18f2e7f6b8b989f60f0b05aee70e996a9975) Thanks [@0xAsimetriq](https://github.com/0xAsimetriq)! - Updated @walletconnect/ethereum-provider
+
 ## 3.1.5
 
 ### Patch Changes
