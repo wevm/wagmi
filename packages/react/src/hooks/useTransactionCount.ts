@@ -8,14 +8,14 @@ import {
 import type { Evaluate } from '@wagmi/core/internal'
 import type { GetTransactionCountQueryFnData } from '@wagmi/core/query'
 import {
-  getTransactionCountQueryOptions,
   type GetTransactionCountData,
   type GetTransactionCountOptions,
   type GetTransactionCountQueryKey,
+  getTransactionCountQueryOptions,
 } from '@wagmi/core/query'
 
 import type { ConfigParameter, QueryParameter } from '../types/properties.js'
-import { useQuery, type UseQueryReturnType } from '../utils/query.js'
+import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
