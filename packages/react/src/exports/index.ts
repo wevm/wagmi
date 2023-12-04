@@ -236,6 +236,12 @@ export {
 } from '../hooks/useTransaction.js'
 
 export {
+  type UseTransactionCountParameters,
+  type UseTransactionCountReturnType,
+  useTransactionCount,
+} from '../hooks/useTransactionCount.js'
+
+export {
   type UseWalletClientParameters,
   type UseWalletClientReturnType,
   useWalletClient,
