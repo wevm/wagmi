@@ -37,7 +37,7 @@
   "peerDependencies": {
     "@wagmi/core": "workspace:*",
     "typescript": ">=5.0.4",
-    "viem": "2.0.0-beta.10"
+    "viem": "2.0.0-beta.11"
   },
   "peerDependenciesMeta": {
     "typescript": {
