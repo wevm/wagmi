@@ -38,7 +38,7 @@ export function getBlockQueryOptions<
     async queryFn({ queryKey }) {
       const { scopeKey: _, ...parameters } = queryKey[1]
       const block = await getBlock(config, parameters)
-      return block ?? null
+      return (block ?? null) as any
     },
     queryKey: getBlockQueryKey(options),
   } as const satisfies QueryOptions<

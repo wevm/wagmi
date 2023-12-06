@@ -12,7 +12,7 @@ import {
 import { type Config } from '../createConfig.js'
 import type { SelectChains } from '../types/chain.js'
 import { type ChainIdParameter } from '../types/properties.js'
-import { type Evaluate } from '../types/utils.js'
+import { type Evaluate, type IsNarrowable } from '../types/utils.js'
 
 export type WaitForTransactionReceiptParameters<
   config extends Config = Config,
@@ -28,7 +28,9 @@ export type WaitForTransactionReceiptReturnType<
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = Evaluate<
   {
-    [key in keyof chains]: viem_WaitForTransactionReceiptReturnType<chains[key]>
+    [key in keyof chains]: viem_WaitForTransactionReceiptReturnType<
+      IsNarrowable<chains[key], Chain> extends true ? chains[key] : undefined
+    >
   }[number]
 >
 

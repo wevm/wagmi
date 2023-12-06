@@ -26,7 +26,6 @@ import {
 } from './getConnectorClient.js'
 import {
   type SimulateContractErrorType,
-  type SimulateContractParameters,
   simulateContract,
 } from './simulateContract.js'
 
@@ -106,7 +105,7 @@ export async function writeContract<
   else {
     const { request: simulateRequest } = await simulateContract(
       config,
-      rest as SimulateContractParameters,
+      rest as any,
     )
     request = simulateRequest
   }
