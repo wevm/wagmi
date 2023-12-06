@@ -1,15 +1,14 @@
 import { accounts, chain, config } from '@wagmi/test'
-import { describe, expect, test } from 'vitest'
+import { expect, test } from 'vitest'
 
 import { getTransactionCountQueryOptions } from './getTransactionCount.js'
 
 const address = accounts[0]
 
-describe('getTransactionCountQueryOptions', () => {
-  test('default', () => {
-    expect(
-      getTransactionCountQueryOptions(config, { address }),
-    ).toMatchInlineSnapshot(`
+test('default', () => {
+  expect(
+    getTransactionCountQueryOptions(config, { address }),
+  ).toMatchInlineSnapshot(`
     {
       "queryFn": [Function],
       "queryKey": [
@@ -20,15 +19,15 @@ describe('getTransactionCountQueryOptions', () => {
       ],
     }
   `)
-  })
+})
 
-  test('parameters: chainId', () => {
-    expect(
-      getTransactionCountQueryOptions(config, {
-        address,
-        chainId: chain.mainnet.id,
-      }),
-    ).toMatchInlineSnapshot(`
+test('parameters: chainId', () => {
+  expect(
+    getTransactionCountQueryOptions(config, {
+      address,
+      chainId: chain.mainnet.id,
+    }),
+  ).toMatchInlineSnapshot(`
       {
         "queryFn": [Function],
         "queryKey": [
@@ -40,15 +39,15 @@ describe('getTransactionCountQueryOptions', () => {
         ],
       }
     `)
-  })
+})
 
-  test('parameters: blockNumber', () => {
-    expect(
-      getTransactionCountQueryOptions(config, {
-        address,
-        blockNumber: 13677382n,
-      }),
-    ).toMatchInlineSnapshot(`
+test('parameters: blockNumber', () => {
+  expect(
+    getTransactionCountQueryOptions(config, {
+      address,
+      blockNumber: 13677382n,
+    }),
+  ).toMatchInlineSnapshot(`
       {
         "queryFn": [Function],
         "queryKey": [
@@ -60,15 +59,15 @@ describe('getTransactionCountQueryOptions', () => {
         ],
       }
     `)
-  })
+})
 
-  test('parameters: blockTag', () => {
-    expect(
-      getTransactionCountQueryOptions(config, {
-        address,
-        blockTag: 'earliest',
-      }),
-    ).toMatchInlineSnapshot(`
+test('parameters: blockTag', () => {
+  expect(
+    getTransactionCountQueryOptions(config, {
+      address,
+      blockTag: 'earliest',
+    }),
+  ).toMatchInlineSnapshot(`
       {
         "queryFn": [Function],
         "queryKey": [
@@ -80,5 +79,4 @@ describe('getTransactionCountQueryOptions', () => {
         ],
       }
     `)
-  })
 })

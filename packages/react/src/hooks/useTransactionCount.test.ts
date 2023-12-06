@@ -1,19 +1,18 @@
 import { accounts, chain, wait } from '@wagmi/test'
 import { renderHook, waitFor } from '@wagmi/test/react'
 import type { Address } from 'viem'
-import { describe, expect, test } from 'vitest'
+import { expect, test } from 'vitest'
 
 import { useTransactionCount } from './useTransactionCount.js'
 
 const address = accounts[0]
 
-describe('useTransactionCount', () => {
-  test('default', async () => {
-    const { result } = renderHook(() => useTransactionCount({ address }))
+test('default', async () => {
+  const { result } = renderHook(() => useTransactionCount({ address }))
 
-    await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-    expect(result.current).toMatchInlineSnapshot(`
+  expect(result.current).toMatchInlineSnapshot(`
     {
       "data": 564,
       "dataUpdatedAt": 1675209600000,
@@ -48,16 +47,16 @@ describe('useTransactionCount', () => {
       "status": "success",
     }
   `)
-  })
+})
 
-  test('parameters: chainId', async () => {
-    const { result } = renderHook(() =>
-      useTransactionCount({ address, chainId: chain.mainnet2.id }),
-    )
+test('parameters: chainId', async () => {
+  const { result } = renderHook(() =>
+    useTransactionCount({ address, chainId: chain.mainnet2.id }),
+  )
 
-    await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-    expect(result.current).toMatchInlineSnapshot(`
+  expect(result.current).toMatchInlineSnapshot(`
     {
       "data": 564,
       "dataUpdatedAt": 1675209600000,
@@ -92,16 +91,16 @@ describe('useTransactionCount', () => {
       "status": "success",
     }
   `)
-  })
+})
 
-  test('parameters: blockNumber', async () => {
-    const { result } = renderHook(() =>
-      useTransactionCount({ address, blockNumber: 13677382n }),
-    )
+test('parameters: blockNumber', async () => {
+  const { result } = renderHook(() =>
+    useTransactionCount({ address, blockNumber: 13677382n }),
+  )
 
-    await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-    expect(result.current).toMatchInlineSnapshot(`
+  expect(result.current).toMatchInlineSnapshot(`
     {
       "data": 82,
       "dataUpdatedAt": 1675209600000,
@@ -137,16 +136,16 @@ describe('useTransactionCount', () => {
       "status": "success",
     }
   `)
-  })
+})
 
-  test('behavior: address: undefined -> defined', async () => {
-    let address: Address | undefined = undefined
+test('behavior: address: undefined -> defined', async () => {
+  let address: Address | undefined = undefined
 
-    const { result, rerender } = renderHook(() =>
-      useTransactionCount({ address }),
-    )
+  const { result, rerender } = renderHook(() =>
+    useTransactionCount({ address }),
+  )
 
-    expect(result.current).toMatchInlineSnapshot(`
+  expect(result.current).toMatchInlineSnapshot(`
     {
       "data": undefined,
       "dataUpdatedAt": 0,
@@ -182,12 +181,12 @@ describe('useTransactionCount', () => {
     }
   `)
 
-    address = accounts[0]
-    rerender()
+  address = accounts[0]
+  rerender()
 
-    await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-    expect(result.current).toMatchInlineSnapshot(`
+  expect(result.current).toMatchInlineSnapshot(`
     {
       "data": 564,
       "dataUpdatedAt": 1675209600000,
@@ -222,12 +221,11 @@ describe('useTransactionCount', () => {
       "status": "success",
     }
   `)
-  })
+})
 
-  test('behavior: disabled when properties missing', async () => {
-    const { result } = renderHook(() => useTransactionCount())
+test('behavior: disabled when properties missing', async () => {
+  const { result } = renderHook(() => useTransactionCount())
 
-    await wait(100)
-    await waitFor(() => expect(result.current.isPending).toBeTruthy())
-  })
+  await wait(100)
+  await waitFor(() => expect(result.current.isPending).toBeTruthy())
 })
