@@ -71,6 +71,13 @@ export {
 } from '../actions/getBlockNumber.js'
 
 export {
+  type GetBlockTransactionCountErrorType,
+  type GetBlockTransactionCountParameters,
+  type GetBlockTransactionCountReturnType,
+  getBlockTransactionCount,
+} from '../actions/getBlockTransactionCount.js'
+
+export {
   type GetChainIdReturnType,
   getChainId,
 } from '../actions/getChainId.js'

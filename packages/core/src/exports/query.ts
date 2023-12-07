@@ -63,6 +63,15 @@ export {
 } from '../query/getBlockNumber.js'
 
 export {
+  type GetBlockTransactionCountData,
+  type GetBlockTransactionCountOptions,
+  type GetBlockTransactionCountQueryFnData,
+  type GetBlockTransactionCountQueryKey,
+  getBlockTransactionCountQueryKey,
+  getBlockTransactionCountQueryOptions,
+} from '../query/getBlockTransactionCount.js'
+
+export {
   type GetConnectorClientData,
   type GetConnectorClientOptions,
   type GetConnectorClientQueryFnData,

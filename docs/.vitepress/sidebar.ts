@@ -361,6 +361,10 @@ export function getSidebar() {
             text: 'getBlockNumber',
             link: '/core/api/actions/getBlockNumber',
           },
+          {
+            text: 'getBlockTransactionCount',
+            link: '/core/api/actions/getBlockTransactionCount',
+          },
           { text: 'getChainId', link: '/core/api/actions/getChainId' },
           {
             text: 'getClient',

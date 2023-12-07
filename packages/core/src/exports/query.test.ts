@@ -17,6 +17,8 @@ test('exports', () => {
       "getBlockQueryOptions",
       "getBlockNumberQueryKey",
       "getBlockNumberQueryOptions",
+      "getBlockTransactionCountQueryKey",
+      "getBlockTransactionCountQueryOptions",
       "getConnectorClientQueryKey",
       "getConnectorClientQueryOptions",
       "getEnsAddressQueryKey",
