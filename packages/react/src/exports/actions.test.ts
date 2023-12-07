@@ -33,6 +33,7 @@ test('exports', () => {
       "fetchToken",
       "getTransaction",
       "fetchTransaction",
+      "getTransactionCount",
       "getWalletClient",
       "multicall",
       "readContract",
