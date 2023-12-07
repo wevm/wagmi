@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 3.1.7
+
+### Patch Changes
+
+- [#3276](https://github.com/wevm/wagmi/pull/3276) [`83223a06`](https://github.com/wevm/wagmi/commit/83223a0659e2f675d897a1d3374c7af752c16abf) Thanks [@glitch-txs](https://github.com/glitch-txs)! - Removed required namespaces from WalletConnect connector
+
 ## 3.1.6
 
 ### Patch Changes
