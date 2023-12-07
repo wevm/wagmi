@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 3.1.8
+
+### Patch Changes
+
+- [#3197](https://github.com/wevm/wagmi/pull/3197) [`e8f7bcbc`](https://github.com/wevm/wagmi/commit/e8f7bcbcd9c038a901c29e71769682c088efe2ac) Thanks [@ByteZhang1024](https://github.com/ByteZhang1024)! - Added OneKey Wallet to injected connector flags.
+
 ## 3.1.7
 
 ### Patch Changes
