@@ -142,6 +142,13 @@ export {
 } from '../actions/getEnsResolver.js'
 
 export {
+  type GetGasPriceErrorType,
+  type GetGasPriceParameters,
+  type GetGasPriceReturnType,
+  getGasPrice,
+} from '../actions/getGasPrice.js'
+
+export {
   type GetPublicClientParameters,
   type GetPublicClientReturnType,
   getPublicClient,

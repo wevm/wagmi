@@ -397,6 +397,10 @@ export function getSidebar() {
             link: '/core/api/actions/getEnsResolver',
           },
           {
+            text: 'getGasPrice',
+            link: '/core/api/actions/getGasPrice',
+          },
+          {
             text: 'getPublicClient',
             link: '/core/api/actions/getPublicClient',
           },

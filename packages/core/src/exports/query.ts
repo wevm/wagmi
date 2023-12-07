@@ -117,6 +117,15 @@ export {
 } from '../query/getEnsResolver.js'
 
 export {
+  type GetGasPriceData,
+  type GetGasPriceOptions,
+  type GetGasPriceQueryFnData,
+  type GetGasPriceQueryKey,
+  getGasPriceQueryKey,
+  getGasPriceQueryOptions,
+} from '../query/getGasPrice.js'
+
+export {
   type GetTokenData,
   type GetTokenOptions,
   type GetTokenQueryFnData,
