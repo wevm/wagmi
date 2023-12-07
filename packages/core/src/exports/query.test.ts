@@ -29,6 +29,8 @@ test('exports', () => {
       "getEnsNameQueryOptions",
       "getEnsResolverQueryKey",
       "getEnsResolverQueryOptions",
+      "getFeeHistoryQueryKey",
+      "getFeeHistoryQueryOptions",
       "getGasPriceQueryKey",
       "getGasPriceQueryOptions",
       "getTokenQueryKey",

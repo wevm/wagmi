@@ -142,6 +142,13 @@ export {
 } from '../actions/getEnsResolver.js'
 
 export {
+  type GetFeeHistoryErrorType,
+  type GetFeeHistoryParameters,
+  type GetFeeHistoryReturnType,
+  getFeeHistory,
+} from '../actions/getFeeHistory.js'
+
+export {
   type GetGasPriceErrorType,
   type GetGasPriceParameters,
   type GetGasPriceReturnType,

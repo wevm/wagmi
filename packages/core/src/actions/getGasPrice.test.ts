@@ -4,7 +4,10 @@ import { expect, test } from 'vitest'
 import { getGasPrice } from './getGasPrice.js'
 
 test('default', async () => {
-  await expect(getGasPrice(config)).resolves.toBe(31763616579n)
+  await testClient.mainnet.setNextBlockBaseFeePerGas({
+    baseFeePerGas: 2_000_000_000n,
+  })
+  await expect(getGasPrice(config)).resolves.toBe(3000000000n)
 })
 
 test('parameters: chainId', async () => {

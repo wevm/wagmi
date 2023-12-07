@@ -146,6 +146,10 @@ export function getSidebar() {
             link: '/react/api/hooks/useEnsResolver',
           },
           {
+            text: 'useFeeHistory',
+            link: '/react/api/hooks/useFeeHistory',
+          },
+          {
             text: 'usePublicClient',
             link: '/react/api/hooks/usePublicClient',
           },
@@ -399,6 +403,10 @@ export function getSidebar() {
           {
             text: 'getEnsResolver',
             link: '/core/api/actions/getEnsResolver',
+          },
+          {
+            text: 'getFeeHistory',
+            link: '/core/api/actions/getFeeHistory',
           },
           {
             text: 'getGasPrice',
