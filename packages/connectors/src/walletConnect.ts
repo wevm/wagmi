@@ -138,8 +138,7 @@ export class WalletConnectConnector extends Connector<
 
         await provider.connect({
           pairingTopic,
-          chains: [targetChainId],
-          optionalChains: optionalChains.length ? optionalChains : undefined,
+          optionalChains: [targetChainId, ...optionalChains],
         })
 
         this.#setRequestedChainsIds(this.chains.map(({ id }) => id))
@@ -284,10 +283,10 @@ export class WalletConnectConnector extends Connector<
   }
 
   async #initProvider() {
-    const { EthereumProvider, OPTIONAL_EVENTS, OPTIONAL_METHODS } =
+    const { EthereumProvider } =
       await import('@walletconnect/ethereum-provider')
-    const [defaultChain, ...optionalChains] = this.chains.map(({ id }) => id)
-    if (defaultChain) {
+    const optionalChains = this.chains.map(({ id }) => id) as [number]
+    if (optionalChains.length) {
       const {
         projectId,
         showQrModal = true,
@@ -299,10 +298,7 @@ export class WalletConnectConnector extends Connector<
         showQrModal,
         qrModalOptions,
         projectId,
-        optionalMethods: OPTIONAL_METHODS,
-        optionalEvents: OPTIONAL_EVENTS,
-        chains: [defaultChain],
-        optionalChains: optionalChains.length ? optionalChains : undefined,
+        optionalChains,
         rpcMap: Object.fromEntries(
           this.chains.map((chain) => [
             chain.id,
