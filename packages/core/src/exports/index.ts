@@ -1,15 +1,4 @@
 ////////////////////////////////////////////////////////////////////////////////
-// Viem
-
-// extremely commonly used viem exports
-export {
-  custom,
-  fallback,
-  http,
-  webSocket,
-} from 'viem'
-
-////////////////////////////////////////////////////////////////////////////////
 // Actions
 
 export {
@@ -380,6 +369,13 @@ export {
   type SwitchChainNotSupportedErrorType,
   SwitchChainNotSupportedError,
 } from '../errors/connector.js'
+
+////////////////////////////////////////////////////////////////////////////////
+// Transports
+
+export { custom, http, webSocket } from 'viem'
+export { unstable_connector } from '../transports/connector.js'
+export { fallback } from '../transports/fallback.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // Types

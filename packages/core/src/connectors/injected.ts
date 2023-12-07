@@ -86,6 +86,7 @@ const targetMap = {
   },
 } as const satisfies TargetMap
 
+injected.type = 'injected' as const
 export function injected(parameters: InjectedParameters = {}) {
   const { shimDisconnect = true, unstable_shimAsyncInject } = parameters
 
@@ -134,6 +135,7 @@ export function injected(parameters: InjectedParameters = {}) {
     get name() {
       return getTarget().name
     },
+    type: injected.type,
     async setup() {
       const provider = await this.getProvider()
       // Only start listening for events if `target` is set, otherwise `injected()` will also receive events

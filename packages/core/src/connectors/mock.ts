@@ -34,6 +34,7 @@ export type MockParameters = {
     | undefined
 }
 
+mock.type = 'mock' as const
 export function mock(parameters: MockParameters) {
   const features = parameters.features ?? {}
 
@@ -46,6 +47,7 @@ export function mock(parameters: MockParameters) {
   return createConnector<Provider>((config) => ({
     id: 'mock',
     name: 'Mock Connector',
+    type: mock.type,
     async setup() {
       connectedChainId = config.chains[0].id
     },

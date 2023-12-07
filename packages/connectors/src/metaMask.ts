@@ -35,6 +35,7 @@ export type MetaMaskParameters = Evaluate<
   >
 >
 
+metaMask.type = 'metaMask' as const
 export function metaMask(parameters: MetaMaskParameters = {}) {
   type Provider = SDKProvider
   type Properties = {
@@ -49,6 +50,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
   return createConnector<Provider, Properties, StorageItem>((config) => ({
     id: 'metaMaskSDK',
     name: 'MetaMask',
+    type: metaMask.type,
     async setup() {
       const provider = await this.getProvider()
       if (provider)

@@ -5,10 +5,6 @@ import * as core from './index.js'
 test('exports', () => {
   expect(Object.keys(core)).toMatchInlineSnapshot(`
     [
-      "custom",
-      "fallback",
-      "http",
-      "webSocket",
       "connect",
       "disconnect",
       "estimateGas",
@@ -76,6 +72,11 @@ test('exports', () => {
       "ConnectorAccountNotFoundError",
       "ProviderNotFoundError",
       "SwitchChainNotSupportedError",
+      "custom",
+      "http",
+      "webSocket",
+      "unstable_connector",
+      "fallback",
       "cookieStorage",
       "cookieToInitialState",
       "parseCookie",

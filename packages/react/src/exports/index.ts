@@ -1,15 +1,4 @@
 ////////////////////////////////////////////////////////////////////////////////
-// Viem
-
-// extremely commonly used viem exports
-export {
-  custom,
-  fallback,
-  http,
-  webSocket,
-} from 'viem'
-
-////////////////////////////////////////////////////////////////////////////////
 // Context
 
 export {
@@ -326,6 +315,12 @@ export {
   type Storage,
   createStorage,
   noopStorage,
+  // Transports
+  custom,
+  fallback,
+  http,
+  webSocket,
+  unstable_connector,
   // Types
   type Register,
   type ResolvedRegister,

@@ -41,6 +41,7 @@ export type CoinbaseWalletParameters = Evaluate<
   }
 >
 
+coinbaseWallet.type = 'coinbaseWallet' as const
 export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
   const reloadOnDisconnect = false
 
@@ -53,6 +54,7 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
   return createConnector<Provider, Properties>((config) => ({
     id: 'coinbaseWalletSDK',
     name: 'Coinbase Wallet',
+    type: coinbaseWallet.type,
     async connect({ chainId } = {}) {
       try {
         const provider = await this.getProvider()

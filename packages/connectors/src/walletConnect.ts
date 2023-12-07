@@ -67,6 +67,7 @@ export type WalletConnectParameters = Evaluate<
     ExactPartial<Pick<EthereumProviderOptions, 'showQrModal'>>
 >
 
+walletConnect.type = 'walletConnect' as const
 export function walletConnect(parameters: WalletConnectParameters) {
   const isNewChainsStale = parameters.isNewChainsStale ?? true
 
@@ -100,6 +101,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
   return createConnector<Provider, Properties, StorageItem>((config) => ({
     id: 'walletConnect',
     name: 'WalletConnect',
+    type: walletConnect.type,
     async setup() {
       const provider = await this.getProvider().catch(() => null)
       if (!provider) return
