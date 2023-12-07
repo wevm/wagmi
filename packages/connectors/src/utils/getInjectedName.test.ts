@@ -51,6 +51,7 @@ describe.each([
   { ethereum: { isNovaWallet: true }, expected: 'Nova Wallet' },
   { ethereum: { isOneInchIOSWallet: true }, expected: '1inch Wallet' },
   { ethereum: { isOneInchAndroidWallet: true }, expected: '1inch Wallet' },
+  { ethereum: { isOneKey: true }, expected: 'OneKey Wallet' },
   { ethereum: { isPhantom: true }, expected: 'Phantom' },
   { ethereum: { isPhantom: true, isMetaMask: true }, expected: 'Phantom' },
   { ethereum: { isPortal: true }, expected: 'Ripio Portal' },

@@ -40,6 +40,7 @@ type InjectedProviderFlags = {
   isOKExWallet?: true
   isOneInchAndroidWallet?: true
   isOneInchIOSWallet?: true
+  isOneKey?: true
   isOpera?: true
   isPhantom?: true
   isPortal?: true
