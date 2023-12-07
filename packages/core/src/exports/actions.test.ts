@@ -32,6 +32,7 @@ test('exports', () => {
       "getToken",
       "fetchToken",
       "getTransaction",
+      "getTransactionCount",
       "fetchTransaction",
       "getWalletClient",
       "multicall",
