@@ -157,6 +157,12 @@ export {
 } from '../hooks/useEstimateGas.js'
 
 export {
+  type UseGasPriceParameters,
+  type UseGasPriceReturnType,
+  useGasPrice,
+} from '../hooks/useGasPrice.js'
+
+export {
   type UseInfiniteContractReadsParameters,
   type UseInfiniteContractReadsReturnType,
   useInfiniteReadContracts,

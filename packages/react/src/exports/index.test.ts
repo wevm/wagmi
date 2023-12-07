@@ -36,6 +36,7 @@ test('exports', () => {
       "useEstimateFeesPerGas",
       "useFeeData",
       "useEstimateGas",
+      "useGasPrice",
       "useInfiniteReadContracts",
       "useContractInfiniteReads",
       "usePublicClient",
