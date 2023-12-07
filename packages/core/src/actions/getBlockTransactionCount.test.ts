@@ -23,6 +23,17 @@ test('parameters: blockNumber', async () => {
   ).resolves.toBe(326)
 })
 
+test('parameters: blockHash', async () => {
+  await testClient.mainnet2.mine({ blocks: 1 })
+
+  await expect(
+    getBlockTransactionCount(config, {
+      blockHash:
+        '0x6201f37a245850d1f11e4be3ac45bc51bd9d43ee4a127192cad550f351cfa575',
+    }),
+  ).resolves.toBe(159)
+})
+
 test('parameters: blockTag', async () => {
   await expect(
     getBlockTransactionCount(config, {

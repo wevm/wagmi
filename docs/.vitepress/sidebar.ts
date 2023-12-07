@@ -117,6 +117,10 @@ export function getSidebar() {
             text: 'useBlock',
             link: '/react/api/hooks/useBlock',
           },
+          {
+            text: 'useBlockTransactionCount',
+            link: '/react/api/hooks/useBlockTransactionCount',
+          },
           { text: 'useChainId', link: '/react/api/hooks/useChainId' },
           { text: 'useClient', link: '/react/api/hooks/useClient' },
           { text: 'useConfig', link: '/react/api/hooks/useConfig' },
