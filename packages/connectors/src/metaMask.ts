@@ -143,6 +143,8 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       provider.removeListener('disconnect', this.onDisconnect.bind(this))
       provider.on('connect', this.onConnect.bind(this) as Listener)
 
+      sdk.terminate()
+
       // Add shim signalling connector is disconnected
       await config.storage?.setItem('metaMaskSDK.disconnected', true)
     },
@@ -174,9 +176,15 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           })
           await sdk.init()
         }
-        walletProvider = sdk.getProvider()
+        try {
+          walletProvider = sdk.getProvider()
+        } catch (error) {
+          // TODO: SDK sometimes throws errors when MM extension or mobile provider is not detected (don't throw for those errors)
+          const regex = /^SDK state invalid -- undefined( mobile)? provider$/
+          if (!regex.test((error as Error).message)) throw error
+        }
       }
-      return walletProvider
+      return walletProvider!
     },
     async isAuthorized() {
       try {

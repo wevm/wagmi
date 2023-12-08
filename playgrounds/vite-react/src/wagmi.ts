@@ -3,7 +3,6 @@ import { http, createConfig } from 'wagmi'
 import { celo, mainnet, optimism, sepolia } from 'wagmi/chains'
 import {
   coinbaseWallet,
-  injected,
   ledger,
   metaMask,
   safe,
@@ -33,8 +32,8 @@ export const config = createConfig({
     ledger({ projectId: import.meta.env.VITE_WC_PROJECT_ID }),
     safe({ debug: true, shimDisconnect: true }),
     metaMask(),
-    injected(),
   ],
+  multiInjectedProviderDiscovery: false,
   transports: {
     [mainnet.id]: http(
       'https://eth-mainnet.g.alchemy.com/v2/StF61Ht3J9nXAojZX-b21LVt9l0qDL38',
