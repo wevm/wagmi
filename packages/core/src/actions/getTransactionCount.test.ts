@@ -2,6 +2,7 @@ import { accounts, chain, config, testClient } from '@wagmi/test'
 import { expect, test } from 'vitest'
 
 import { getTransactionCount } from './getTransactionCount.js'
+import type { BlockTag } from 'viem'
 
 const address = accounts[0]
 
@@ -26,40 +27,22 @@ test('parameters: blockNumber', async () => {
   ).resolves.toBe(82)
 })
 
-test('parameters: blockTag', async () => {
-  await testClient.mainnet.resetFork()
-  await expect(
-    getTransactionCount(config, {
-      address,
-      blockTag: 'earliest',
-    }),
-  ).resolves.toBe(0)
+test.each([
+  { blockTag: 'earliest', expected: 0 },
+  { blockTag: 'finalized', expected: 564 },
+  { blockTag: 'latest', expected: 564 },
+  { blockTag: 'pending', expected: 564 },
+  { blockTag: 'safe', expected: 564 },
+] as { blockTag: BlockTag; expected: number }[])(
+  'parameters: blockTag $blockTag',
+  async ({ blockTag, expected }) => {
+    await testClient.mainnet.resetFork()
 
-  await expect(
-    getTransactionCount(config, {
-      address,
-      blockTag: 'finalized',
-    }),
-  ).resolves.toBe(564)
-
-  await expect(
-    getTransactionCount(config, {
-      address,
-      blockTag: 'latest',
-    }),
-  ).resolves.toBe(564)
-
-  await expect(
-    getTransactionCount(config, {
-      address,
-      blockTag: 'pending',
-    }),
-  ).resolves.toBe(564)
-
-  await expect(
-    getTransactionCount(config, {
-      address,
-      blockTag: 'safe',
-    }),
-  ).resolves.toBe(564)
-})
+    await expect(
+      getTransactionCount(config, {
+        address,
+        blockTag,
+      }),
+    ).resolves.toBe(expected)
+  },
+)
