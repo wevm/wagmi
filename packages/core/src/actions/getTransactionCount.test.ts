@@ -27,6 +27,7 @@ test('parameters: blockNumber', async () => {
 })
 
 test('parameters: blockTag', async () => {
+  await testClient.mainnet.resetFork()
   await expect(
     getTransactionCount(config, {
       address,
