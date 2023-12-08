@@ -5,7 +5,7 @@
   "typescript.preferences.importModuleSpecifier": "shortest",
   "typescript.tsdk": "node_modules/typescript/lib",
   "editor.codeActionsOnSave": {
-    "source.organizeImports.rome": true
+    "source.organizeImports.rome": "explicit"
   },
   "[json]": {
     "editor.defaultFormatter": "rome.rome"
