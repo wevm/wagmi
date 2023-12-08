@@ -244,5 +244,4 @@ export {
   writeContractMutationOptions,
 } from '../query/writeContract.js'
 
-export { type ScopeKeyParameter } from '../query/types.js'
 export { hashFn } from '../query/utils.js'

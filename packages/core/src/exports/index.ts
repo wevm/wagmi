@@ -317,6 +317,16 @@ export {
   createConnector,
 } from '../connectors/createConnector.js'
 
+export {
+  type InjectedParameters,
+  injected,
+} from '../connectors/injected.js'
+
+export {
+  type MockParameters,
+  mock,
+} from '../connectors/mock.js'
+
 ////////////////////////////////////////////////////////////////////////////////
 // createConfig
 

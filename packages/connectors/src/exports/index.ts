@@ -3,7 +3,7 @@ export {
   injected,
   type MockParameters,
   mock,
-} from '@wagmi/core/internal'
+} from '@wagmi/core'
 
 export {
   type CoinbaseWalletParameters,
