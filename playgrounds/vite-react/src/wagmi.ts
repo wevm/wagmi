@@ -33,7 +33,6 @@ export const config = createConfig({
     safe({ debug: true, shimDisconnect: true }),
     metaMask(),
   ],
-  multiInjectedProviderDiscovery: false,
   transports: {
     [mainnet.id]: http(
       'https://eth-mainnet.g.alchemy.com/v2/StF61Ht3J9nXAojZX-b21LVt9l0qDL38',
