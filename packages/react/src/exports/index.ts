@@ -146,6 +146,12 @@ export {
 } from '../hooks/useEstimateGas.js'
 
 export {
+  type UseEstimateMaxPriorityFeePerGasParameters,
+  type UseEstimateMaxPriorityFeePerGasReturnType,
+  useEstimateMaxPriorityFeePerGas,
+} from '../hooks/useEstimateMaxPriorityFeePerGas.js'
+
+export {
   type UseFeeHistoryParameters,
   type UseFeeHistoryReturnType,
   useFeeHistory,
