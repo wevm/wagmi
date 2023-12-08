@@ -202,8 +202,8 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2
       '@metamask/sdk':
-        specifier: ^0.12.4
-        version: 0.12.4
+        specifier: ^0.14.1
+        version: 0.14.1
       '@safe-global/safe-apps-provider':
         specifier: ^0.18.0
         version: 0.18.0(typescript@5.1.6)
@@ -2599,8 +2599,8 @@ packages:
     engines: {node: '>=12.0.0'}
     dev: false
 
-  /@metamask/sdk-communication-layer@0.12.3:
-    resolution: {integrity: sha512-xlRtnZo/AHhOjnicl44/Ens27FEAX9JIddSvIAL3eYHHPQ2mIVqG7aV3VN4DtnTylM0xRt7n9smEKnX05bBAlA==}
+  /@metamask/sdk-communication-layer@0.14.1:
+    resolution: {integrity: sha512-K1KhkKMdAAPi079G/bX/cIazqT6qnkRnykrs7nA1sU2BouG7BYD4qPgv7ridc3BNIewnFg9eMzzYIgOgfXzJKw==}
     dependencies:
       bufferutil: 4.0.8
       cross-fetch: 3.1.5
@@ -2615,8 +2615,8 @@ packages:
       - supports-color
     dev: false
 
-  /@metamask/sdk-install-modal-web@0.12.2:
-    resolution: {integrity: sha512-nDu/aljUHi3OqAQh7IKnKokuA6FYt4mWenpDlH0VOaJUKm9OUqEbO+8XT311QKzBeIyOun8kYTUXupqejAmJ/w==}
+  /@metamask/sdk-install-modal-web@0.14.1:
+    resolution: {integrity: sha512-emT8HKbnfVwGhPxyUfMja6DWzvtJvDEBQxqCVx93H0HsyrrOzOC43iGCAosslw6o5h7gOfRKLqWmK8V7jQAS2Q==}
     dependencies:
       '@emotion/react': 11.11.1(react@18.2.0)
       '@emotion/styled': 11.11.0(@emotion/react@11.11.1)(react@18.2.0)
@@ -2630,8 +2630,8 @@ packages:
       - react-native
     dev: false
 
-  /@metamask/sdk@0.12.4:
-    resolution: {integrity: sha512-p9jT7nd7cVBVOPGJZroMoVVgunXx+D0zNmr1SkEtUWOTXYyU6wFgjyXxaZJ4K8zwf8pVnq/OPD8NurOj8996fQ==}
+  /@metamask/sdk@0.14.1:
+    resolution: {integrity: sha512-52kfvnlyMXRO8/oPGoQOFMevSjgkLzpl8aGG6Ivx/6jiqSv5ScuOg6YdSWXR937Ts0zWE0V8KTUBMfnGGt0S9Q==}
     peerDependencies:
       react: ^18.2.0
       react-native: '*'
@@ -2644,8 +2644,8 @@ packages:
       '@metamask/onboarding': 1.0.1
       '@metamask/post-message-stream': 6.2.0
       '@metamask/providers': 10.2.1
-      '@metamask/sdk-communication-layer': 0.12.3
-      '@metamask/sdk-install-modal-web': 0.12.2
+      '@metamask/sdk-communication-layer': 0.14.1
+      '@metamask/sdk-install-modal-web': 0.14.1
       '@react-native-async-storage/async-storage': 1.19.3
       '@types/dom-screen-wake-lock': 1.0.1
       bowser: 2.11.0

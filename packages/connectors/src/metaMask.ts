@@ -131,8 +131,6 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       }
     },
     async disconnect() {
-
-
       const provider = await this.getProvider()
 
       provider.removeListener(
@@ -143,8 +141,8 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       provider.removeListener('disconnect', this.onDisconnect.bind(this))
       provider.on('connect', this.onConnect.bind(this) as Listener)
 
-      sdk.disconnect()
-      
+      sdk.terminate()
+
       // Add shim signalling connector is disconnected
       await config.storage?.setItem('metaMaskSDK.disconnected', true)
     },
@@ -165,15 +163,26 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       if (!walletProvider) {
         if (!sdk || !sdk?.isInitialized()) {
           sdk = new MetaMaskSDK({
+            enableDebug: false,
             dappMetadata: { name: 'wagmi' },
+            extensionOnly: true,
+            useDeeplink: true,
             _source: 'wagmi',
             ...parameters,
+            checkInstallationImmediately: false,
+            checkInstallationOnAllCalls: false,
           })
           await sdk.init()
         }
-        walletProvider = sdk.getProvider()
+        try {
+          walletProvider = sdk.getProvider()
+        } catch (error) {
+          // TODO: SDK sometimes throws errors when MM extension or mobile provider is not detected (don't throw for those errors)
+          const regex = /^SDK state invalid -- undefined( mobile)? provider$/
+          if (!regex.test((error as Error).message)) throw error
+        }
       }
-      return walletProvider
+      return walletProvider!
     },
     async isAuthorized() {
       try {
