@@ -9,6 +9,7 @@ test('exports', () => {
       "disconnect",
       "estimateGas",
       "estimateFeesPerGas",
+      "estimateMaxPriorityFeePerGas",
       "getAccount",
       "getBalance",
       "fetchBalance",

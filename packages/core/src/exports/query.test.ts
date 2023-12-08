@@ -11,6 +11,8 @@ test('exports', () => {
       "estimateFeesPerGasQueryOptions",
       "estimateGasQueryKey",
       "estimateGasQueryOptions",
+      "estimateMaxPriorityFeePerGasQueryKey",
+      "estimateMaxPriorityFeePerGasQueryOptions",
       "getBalanceQueryKey",
       "getBalanceQueryOptions",
       "getBlockQueryKey",

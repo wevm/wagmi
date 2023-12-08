@@ -36,6 +36,15 @@ export {
 } from '../query/estimateGas.js'
 
 export {
+  type EstimateMaxPriorityFeePerGasData,
+  type EstimateMaxPriorityFeePerGasOptions,
+  type EstimateMaxPriorityFeePerGasQueryFnData,
+  type EstimateMaxPriorityFeePerGasQueryKey,
+  estimateMaxPriorityFeePerGasQueryKey,
+  estimateMaxPriorityFeePerGasQueryOptions,
+} from '../query/estimateMaxPriorityFeePerGas.js'
+
+export {
   type GetBalanceData,
   type GetBalanceOptions,
   type GetBalanceQueryFnData,

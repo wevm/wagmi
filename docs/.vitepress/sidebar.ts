@@ -162,6 +162,10 @@ export function getSidebar() {
             link: '/react/api/hooks/useEstimateGas',
           },
           {
+            text: 'useEstimateMaxPriorityFeePerGas',
+            link: '/react/api/hooks/useEstimateMaxPriorityFeePerGas',
+          },
+          {
             text: 'useGasPrice',
             link: '/react/api/hooks/useGasPrice',
           },
@@ -367,6 +371,10 @@ export function getSidebar() {
             link: '/core/api/actions/estimateFeesPerGas',
           },
           { text: 'estimateGas', link: '/core/api/actions/estimateGas' },
+          {
+            text: 'estimateMaxPriorityFeePerGas',
+            link: '/core/api/actions/estimateMaxPriorityFeePerGas',
+          },
           { text: 'getAccount', link: '/core/api/actions/getAccount' },
           { text: 'getBalance', link: '/core/api/actions/getBalance' },
           {

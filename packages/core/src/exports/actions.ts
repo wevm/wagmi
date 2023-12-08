@@ -30,6 +30,13 @@ export {
 } from '../actions/estimateFeesPerGas.js'
 
 export {
+  type EstimateMaxPriorityFeePerGasErrorType,
+  type EstimateMaxPriorityFeePerGasParameters,
+  type EstimateMaxPriorityFeePerGasReturnType,
+  estimateMaxPriorityFeePerGas,
+} from '../actions/estimateMaxPriorityFeePerGas.js'
+
+export {
   type GetAccountReturnType,
   getAccount,
 } from '../actions/getAccount.js'
