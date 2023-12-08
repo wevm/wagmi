@@ -7,7 +7,7 @@ import { createWriteContract } from './createWriteContract.js'
 
 const contextValue = { foo: 'bar' } as const
 
-test('context', () => {
+test('default', () => {
   const useWriteErc20 = createWriteContract({
     abi: abi.erc20,
   })
@@ -74,5 +74,7 @@ test('multichain address', () => {
     chainId: mainnet.id,
   })
 })
+
+test.todo('overloads', () => {})
 
 test.todo('useSimulateContract', () => {})

@@ -29,33 +29,35 @@ import {
   useReadContract,
 } from '../useReadContract.js'
 
+type stateMutability = 'pure' | 'view'
+
 export type CreateReadContract<
   abi extends Abi | readonly unknown[],
   address extends Address | Record<number, Address> | undefined = undefined,
 > = {
   abi: abi
-  address?: address
+  address?:
+    | address
+    | (address extends undefined
+        ? Address | Record<number, Address> | undefined
+        : never)
 }
 
-export function createReadContract<
-  const abi extends Abi | readonly unknown[],
-  const address extends
-    | Address
-    | Record<number, Address>
-    | undefined = undefined,
->(config: CreateReadContract<abi, address>) {
-  type stateMutability = 'pure' | 'view'
-  type omittedProperties =
+export type CreateReadContractReturnType<
+  abi extends Abi | readonly unknown[],
+  address extends Address | Record<number, Address> | undefined,
+  ///
+  omittedProperties extends 'abi' | 'address' | 'chainId' =
     | 'abi'
-    | (typeof config.address extends undefined ? never : 'address')
-
-  type UseReadContractParameters<
-    abi extends Abi | readonly unknown[],
-    functionName extends ContractFunctionName<abi, stateMutability>,
-    args extends ContractFunctionArgs<abi, stateMutability, functionName>,
-    config extends Config,
-    selectData,
-  > = UnionEvaluate<
+    | (address extends undefined ? never : 'address')
+    | (address extends Record<number, Address> ? 'chainId' : never),
+> = <
+  functionName extends ContractFunctionName<abi, stateMutability>,
+  args extends ContractFunctionArgs<abi, stateMutability, functionName>,
+  config extends Config = ResolvedRegister['config'],
+  selectData = ReadContractData<abi, functionName, args>,
+>(
+  parameters?: UnionEvaluate<
     UnionPartial<
       UnionOmit<
         ReadContractParameters<abi, functionName, args, config>,
@@ -69,50 +71,34 @@ export function createReadContract<
         selectData,
         ReadContractQueryKey<abi, functionName, args, config>
       >
-  >
+  > &
+    (address extends Record<number, Address>
+      ? { chainId?: keyof address | undefined }
+      : unknown),
+) => UseReadContractReturnType<abi, functionName, args, selectData>
 
+export function createReadContract<
+  const abi extends Abi | readonly unknown[],
+  const address extends
+    | Address
+    | Record<number, Address>
+    | undefined = undefined,
+>(
+  config: CreateReadContract<abi, address>,
+): CreateReadContractReturnType<abi, address> {
   if (config.address !== undefined && typeof config.address === 'object')
-    return <
-      const abi extends typeof config.abi,
-      functionName extends ContractFunctionName<abi, stateMutability>,
-      const args extends ContractFunctionArgs<
-        abi,
-        stateMutability,
-        functionName
-      >,
-      config extends Config = ResolvedRegister['config'],
-      selectData = ReadContractData<abi, functionName, args>,
-    >(
-      parameters?: UseReadContractParameters<
-        abi,
-        functionName,
-        args,
-        config,
-        selectData
-      > & { chainId?: keyof typeof config.address | undefined },
-    ): UseReadContractReturnType<abi, functionName, args, selectData> => {
+    return (parameters) => {
       const configChainId = useChainId()
       const account = useAccount()
-      const chainId = parameters?.chainId ?? account.chainId ?? configChainId
-      const address = config.address![chainId]
+      const chainId =
+        (parameters as { chainId?: number })?.chainId ??
+        account.chainId ??
+        configChainId
+      const address = config.address?.[chainId]
       return useReadContract({ ...(parameters as any), ...config, address })
     }
 
-  return <
-    const abi extends typeof config.abi,
-    functionName extends ContractFunctionName<abi, stateMutability>,
-    const args extends ContractFunctionArgs<abi, stateMutability, functionName>,
-    config extends Config = ResolvedRegister['config'],
-    selectData = ReadContractData<abi, functionName, args>,
-  >(
-    parameters?: UseReadContractParameters<
-      abi,
-      functionName,
-      args,
-      config,
-      selectData
-    >,
-  ): UseReadContractReturnType<abi, functionName, args, selectData> => {
+  return (parameters) => {
     return useReadContract({ ...(parameters as any), ...config })
   }
 }

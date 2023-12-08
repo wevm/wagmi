@@ -9,11 +9,12 @@ test('default', () => {
     abi: abi.erc20,
   })
 
-  const result1 = useReadErc20({
+  const result = useReadErc20({
     functionName: 'balanceOf',
     args: ['0x'],
+    chainId: 123,
   })
-  assertType<bigint | undefined>(result1.data)
+  expectTypeOf(result.data).toEqualTypeOf<bigint | undefined>()
 })
 
 test('select data', () => {
