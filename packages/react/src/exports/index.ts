@@ -157,6 +157,12 @@ export {
 } from '../hooks/useEstimateGas.js'
 
 export {
+  type UseFeeHistoryParameters,
+  type UseFeeHistoryReturnType,
+  useFeeHistory,
+} from '../hooks/useFeeHistory.js'
+
+export {
   type UseGasPriceParameters,
   type UseGasPriceReturnType,
   useGasPrice,
