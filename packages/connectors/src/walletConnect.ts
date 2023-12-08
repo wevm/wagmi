@@ -5,11 +5,7 @@ import {
   normalizeChainId,
 } from '@wagmi/core'
 import type { Evaluate, ExactPartial, Omit } from '@wagmi/core/internal'
-import {
-  EthereumProvider,
-  OPTIONAL_EVENTS,
-  OPTIONAL_METHODS,
-} from '@walletconnect/ethereum-provider'
+import { EthereumProvider } from '@walletconnect/ethereum-provider'
 import {
   type Address,
   type ProviderConnectInfo,
@@ -71,6 +67,7 @@ export type WalletConnectParameters = Evaluate<
     ExactPartial<Pick<EthereumProviderOptions, 'showQrModal'>>
 >
 
+walletConnect.type = 'walletConnect' as const
 export function walletConnect(parameters: WalletConnectParameters) {
   const isNewChainsStale = parameters.isNewChainsStale ?? true
 
@@ -104,6 +101,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
   return createConnector<Provider, Properties, StorageItem>((config) => ({
     id: 'walletConnect',
     name: 'WalletConnect',
+    type: walletConnect.type,
     async setup() {
       const provider = await this.getProvider().catch(() => null)
       if (!provider) return
@@ -137,8 +135,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
             .filter((chain) => chain.id !== targetChainId)
             .map((optionalChain) => optionalChain.id)
           await provider.connect({
-            chains: [targetChainId],
-            optionalChains,
+            optionalChains: [targetChainId, ...optionalChains],
             ...('pairingTopic' in rest
               ? { pairingTopic: rest.pairingTopic }
               : {}),
@@ -198,14 +195,11 @@ export function walletConnect(parameters: WalletConnectParameters) {
     },
     async getProvider({ chainId } = {}) {
       async function initProvider() {
-        const [defaultChain, ...optionalChains] = config.chains.map((x) => x.id)
-        if (!defaultChain) return
+        const optionalChains = config.chains.map((x) => x.id) as [number]
+        if (!optionalChains.length) return
         return await EthereumProvider.init({
           ...parameters,
-          chains: [defaultChain],
           disableProviderPing: true,
-          optionalMethods: OPTIONAL_METHODS,
-          optionalEvents: OPTIONAL_EVENTS,
           optionalChains,
           projectId: parameters.projectId,
           rpcMap: Object.fromEntries(

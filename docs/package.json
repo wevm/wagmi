@@ -17,7 +17,7 @@
     "abitype": "*",
     "react": "^18.2.0",
     "unocss": "^0.53.6",
-    "viem": "2.0.0-beta.11",
+    "viem": "2.0.0-beta.15",
     "vite": "^4.4.9",
     "vitepress": "1.0.0-rc.20",
     "vitepress-plugin-shiki-twoslash": "^0.0.6",

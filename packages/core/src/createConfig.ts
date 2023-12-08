@@ -8,7 +8,7 @@ import {
   type Chain,
   type Client,
   type ClientConfig as viem_ClientConfig,
-  type Transport,
+  type Transport as viem_Transport,
   createClient,
 } from 'viem'
 import { persist, subscribeWithSelector } from 'zustand/middleware'
@@ -155,7 +155,11 @@ export function createConfig<
         ...properties,
         chain,
         batch: properties.batch ?? { multicall: true },
-        transport: rest.transports[chainId],
+        transport: (parameters) =>
+          rest.transports[chainId]({
+            ...parameters,
+            connectors,
+          }),
       })
     }
 
@@ -442,6 +446,12 @@ export type Connector = ReturnType<CreateConnectorFn> & {
   emitter: Emitter<ConnectorEventMap>
   uid: string
 }
+
+export type Transport = (
+  params: Parameters<viem_Transport>[0] & {
+    connectors?: StoreApi<Connector[]>
+  },
+) => ReturnType<viem_Transport>
 
 type ClientConfig = LooseOmit<
   viem_ClientConfig,

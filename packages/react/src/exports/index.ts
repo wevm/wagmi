@@ -1,15 +1,4 @@
 ////////////////////////////////////////////////////////////////////////////////
-// Viem
-
-// extremely commonly used viem exports
-export {
-  custom,
-  fallback,
-  http,
-  webSocket,
-} from 'viem'
-
-////////////////////////////////////////////////////////////////////////////////
 // Context
 
 export {
@@ -254,6 +243,12 @@ export {
 } from '../hooks/useTransaction.js'
 
 export {
+  type UseTransactionCountParameters,
+  type UseTransactionCountReturnType,
+  useTransactionCount,
+} from '../hooks/useTransactionCount.js'
+
+export {
   type UseWalletClientParameters,
   type UseWalletClientReturnType,
   useWalletClient,
@@ -338,6 +333,12 @@ export {
   type Storage,
   createStorage,
   noopStorage,
+  // Transports
+  custom,
+  fallback,
+  http,
+  webSocket,
+  unstable_connector,
   // Types
   type Register,
   type ResolvedRegister,

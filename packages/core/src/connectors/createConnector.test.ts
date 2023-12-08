@@ -7,6 +7,7 @@ test('default', () => {
     return {
       id: 'test',
       name: 'Test Connector',
+      type: 'test',
       async setup() {},
       async connect() {
         return { accounts: [] as Address[], chainId: 123 }

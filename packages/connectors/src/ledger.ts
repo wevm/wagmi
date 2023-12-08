@@ -27,6 +27,7 @@ export type LedgerParameters = {
   requiredMethods?: string[] | undefined
 }
 
+ledger.type = 'ledger' as const
 export function ledger(parameters: LedgerParameters = {}) {
   type Provider = EthereumProvider
   type Properties = {
@@ -40,6 +41,7 @@ export function ledger(parameters: LedgerParameters = {}) {
   return createConnector<Provider, Properties>((config) => ({
     id: 'ledger',
     name: 'Ledger',
+    type: ledger.type,
     async setup() {
       const provider = await this.getProvider().catch(() => null)
       if (!provider) return
