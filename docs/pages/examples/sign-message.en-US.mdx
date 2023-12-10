@@ -59,10 +59,10 @@ export function SignMessage() {
         {isLoading ? 'Check Wallet' : 'Sign Message'}
       </button>
 
-      {data && (
+      {signMessageData && (
         <div>
           <div>Recovered Address: {recoveredAddress.current}</div>
-          <div>Signature: {data}</div>
+          <div>Signature: {signMessageData}</div>
         </div>
       )}
 
