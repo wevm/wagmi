@@ -17,7 +17,7 @@ The following examples use the [ENS Registry](https://etherscan.io/address/0x000
 
 ```tsx {4, 9}
 import { useWalletClient } from 'wagmi'
-import { getContract } from '@wagmi/core'
+import { getContract } from 'wagmi/actions'
 
 function App() {
   const { data: walletClient, isError, isLoading } = useWalletClient()
