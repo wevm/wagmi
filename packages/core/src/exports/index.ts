@@ -233,6 +233,7 @@ export {
 } from '../actions/switchChain.js'
 
 export {
+  type VerifyMessageErrorType,
   type VerifyMessageParameters,
   type VerifyMessageReturnType,
   verifyMessage,

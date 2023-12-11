@@ -113,6 +113,28 @@ await verifyMessage(config, {
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
+### chainId
+
+`config['chains'][number]['id'] | undefined`
+
+Only used when verifying a message that was signed by a Smart Contract Account. The ID of chain to check if the contract was already deployed.
+
+::: code-group
+```ts [index.ts]
+import { verifyMessage } from '@wagmi/core'
+import { mainnet } from '@wagmi/core/chains'
+import { config } from './config'
+
+await verifyMessage(config, {
+  chainId: mainnet.id, // [!code focus]
+  address: '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266',
+  message: 'hello world',
+  signature: '0x66edc32e2ab001213321ab7d959a2207fcef5190cc9abb6da5b0d2a8a9af2d4d2b0700e2c317c4106f337fd934fbbb0bf62efc8811a78603b33a8265d3b8f8cb1c',
+})
+```
+<<< @/snippets/core/config.ts[config.ts]
+:::
+
 ### blockNumber
 
 `bigint | undefined`

@@ -6,9 +6,13 @@ import {
 } from 'viem/actions'
 
 import { type Config } from '../createConfig.js'
+import { type ChainIdParameter } from '../types/properties.js'
 import { type Evaluate } from '../types/utils.js'
 
-export type VerifyMessageParameters = Evaluate<viem_VerifyMessageParameters>
+export type VerifyMessageParameters<
+  config extends Config = Config,
+  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+> = Evaluate<viem_VerifyMessageParameters & ChainIdParameter<config, chainId>>
 
 export type VerifyMessageReturnType = viem_VerifyMessageReturnType
 
