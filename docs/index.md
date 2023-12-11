@@ -19,7 +19,7 @@ hero:
       link: /react/why-wagmi
     - theme: alt
       text: View on GitHub
-      link: https://github.com/wagmi-dev/wagmi/tree/beta
+      link: https://github.com/wevm/wagmi/tree/beta
   image:
     src: /logo-dark.svg
     alt: Wagmi Logo
@@ -43,7 +43,7 @@ features:
   - icon: 👟
     title: Caching. Deduplication. Persistence.
     details: Built-in caching, deduplication, persistence powered by TanStack Query.
-    link: /react/tanstack-query
+    link: /react/guides/tanstack-query
     linkText: How to use TanStack Query
   - icon: 🌳
     title: Modular By Design

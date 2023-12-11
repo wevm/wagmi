@@ -148,6 +148,13 @@ export {
 } from '../actions/getTransaction.js'
 
 export {
+  type GetTransactionCountErrorType,
+  type GetTransactionCountParameters,
+  type GetTransactionCountReturnType,
+  getTransactionCount,
+} from '../actions/getTransactionCount.js'
+
+export {
   type GetWalletClientErrorType,
   type GetWalletClientParameters,
   type GetWalletClientReturnType,

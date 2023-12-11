@@ -34,6 +34,7 @@ export type CreateConnectorFn<
     readonly icon?: string | undefined
     readonly id: string
     readonly name: string
+    readonly type: string
 
     setup?(): Promise<void>
     connect(

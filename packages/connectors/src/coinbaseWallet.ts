@@ -41,6 +41,7 @@ export type CoinbaseWalletParameters = Evaluate<
   }
 >
 
+coinbaseWallet.type = 'coinbaseWallet' as const
 export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
   const reloadOnDisconnect = false
 
@@ -53,6 +54,7 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
   return createConnector<Provider, Properties>((config) => ({
     id: 'coinbaseWalletSDK',
     name: 'Coinbase Wallet',
+    type: coinbaseWallet.type,
     async connect({ chainId } = {}) {
       try {
         const provider = await this.getProvider()
@@ -171,7 +173,7 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
                   chainId: chainId_,
                   chainName: chain.name,
                   nativeCurrency: chain.nativeCurrency,
-                  rpcUrls: [chain.rpcUrls.public?.http[0] ?? ''],
+                  rpcUrls: [chain.rpcUrls.default?.http[0] ?? ''],
                   blockExplorerUrls: [chain.blockExplorers?.default],
                 },
               ],

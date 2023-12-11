@@ -3,7 +3,6 @@ import { http, createConfig } from 'wagmi'
 import { celo, mainnet, optimism, sepolia } from 'wagmi/chains'
 import {
   coinbaseWallet,
-  injected,
   ledger,
   metaMask,
   safe,
@@ -33,7 +32,6 @@ export const config = createConfig({
     ledger({ projectId: import.meta.env.VITE_WC_PROJECT_ID }),
     safe({ debug: true, shimDisconnect: true }),
     metaMask(),
-    injected(),
   ],
   transports: {
     [mainnet.id]: http(

@@ -6,7 +6,7 @@ import { useEnsAddress } from './useEnsAddress.js'
 test('default', async () => {
   const { result } = renderHook(() =>
     useEnsAddress({
-      name: 'wagmi-dev.eth',
+      name: 'wevm.eth',
     }),
   )
 
@@ -40,7 +40,7 @@ test('default', async () => {
         "ensAddress",
         {
           "chainId": 1,
-          "name": "wagmi-dev.eth",
+          "name": "wevm.eth",
         },
       ],
       "refetch": [Function],

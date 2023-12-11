@@ -23,7 +23,7 @@ import { normalize } from 'viem/ens'
 import { config } from './config'
 
 const ensResolver = getEnsResolver(config, {
-  name: normalize('wagmi-dev.eth'),
+  name: normalize('wevm.eth'),
 })
 ```
 <<< @/snippets/core/config.ts[config.ts]
@@ -55,7 +55,7 @@ import { config } from './config'
 
 const ensResolver = getEnsResolver(config, {
   blockNumber: 17829139n, // [!code focus]
-  name: normalize('wagmi-dev.eth'),
+  name: normalize('wevm.eth'),
 })
 ```
 <<< @/snippets/core/config.ts[config.ts]
@@ -75,7 +75,7 @@ import { config } from './config'
 
 const ensResolver = getEnsResolver(config, {
   blockTag: 'latest', // [!code focus]
-  name: normalize('wagmi-dev.eth'),
+  name: normalize('wevm.eth'),
 })
 ```
 <<< @/snippets/core/config.ts[config.ts]
@@ -98,7 +98,7 @@ import { config } from './config'
 
 const ensResolver = await getEnsResolver(config, {
   chainId: mainnet.id, // [!code focus]
-  name: normalize('wagmi-dev.eth'),
+  name: normalize('wevm.eth'),
 })
 ```
 <<< @/snippets/core/config.ts[config.ts]
@@ -117,7 +117,7 @@ import { normalize } from 'viem/ens'
 import { config } from './config'
 
 const ensResolver = await getEnsResolver(config, {
-  name: normalize('wagmi-dev.eth'), // [!code focus]
+  name: normalize('wevm.eth'), // [!code focus]
 })
 ```
 <<< @/snippets/core/config.ts[config.ts]
@@ -137,7 +137,7 @@ import { normalize } from 'viem/ens'
 import { config } from './config'
 
 const ensResolver = await getEnsResolver(config, {
-  name: normalize('wagmi-dev.eth'),
+  name: normalize('wevm.eth'),
   universalResolverAddress: '0x74E20Bd2A1fE0cdbe45b9A1d89cb7e0a45b36376', // [!code focus]
 })
 ```

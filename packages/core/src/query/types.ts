@@ -79,5 +79,3 @@ type MutateFn<
         | Evaluate<MutateOptions<data, error, variables, context>>
         | undefined,
     ) => Promise<data>
-
-export type ScopeKeyParameter = { scopeKey?: string | undefined }

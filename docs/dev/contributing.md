@@ -10,12 +10,12 @@ Thanks for your interest in contributing to Wagmi! Please take a moment to revie
 
 ## Overview
 
-This guide is intended to help you get started with contributing. By following these steps, you will understand the development process and workflow. If you want to contribute, but aren't sure where to start, you can create a [new discussion](https://github.com/wagmi-dev/wagmi/discussions/new/choose).
+This guide is intended to help you get started with contributing. By following these steps, you will understand the development process and workflow. If you want to contribute, but aren't sure where to start, you can create a [new discussion](https://github.com/wevm/wagmi/discussions/new/choose).
 
 :::warning
 **Please ask first before starting work on any significant new features. This includes things like adding new hooks, actions, connectors, etc.**
 
-It's never a fun experience to have your pull request declined after investing time and effort into a new feature. To avoid this from happening, we request that contributors first create a [feature request](https://github.com/wagmi-dev/wagmi/discussions/new?category=ideas) to discuss any API changes or significant new ideas.
+It's never a fun experience to have your pull request declined after investing time and effort into a new feature. To avoid this from happening, we request that contributors first create a [feature request](https://github.com/wevm/wagmi/discussions/new?category=ideas) to discuss any API changes or significant new ideas.
 :::
 
 ## 1. Cloning the repository
@@ -23,13 +23,13 @@ It's never a fun experience to have your pull request declined after investing t
 To start contributing to the project, clone it to your local machine using git:
 
 ```bash
-git clone https://github.com/wagmi-dev/wagmi.git
+git clone https://github.com/wevm/wagmi.git
 ```
 
 Or the [GitHub CLI](https://cli.github.com):
 
 ```bash
-gh repo clone wagmi-dev/wagmi
+gh repo clone wevm/wagmi
 ```
 
 ## 2. Installing Node.js and pnpm
@@ -63,7 +63,7 @@ After the install completes, pnpm links packages across the project for developm
 The [dev playgrounds](#_5-running-the-dev-playgrounds) and [test suite](#_6-running-the-test-suite) require enironment variables to be set. Copy over the following environment variables to `.env`, and fill them out.
 
 ```bash
-VITE_MAINNET_FORK_BLOCK_NUMBER=16966590
+VITE_MAINNET_FORK_BLOCK_NUMBER=18677381
 VITE_MAINNET_FORK_URL=https://cloudflare-eth.com
 
 VITE_OPTIMISM_FORK_BLOCK_NUMBER=107317577
@@ -89,7 +89,7 @@ Once a playground dev server is running, you can make changes to any of the pack
 
 ## 6. Running the test suite
 
-Wagmi uses [Vitest](https://vitest.dev) to run tests and [anvil.js](https://github.com/wagmi-dev/anvil.js) to execute tests against locally running chain forks. First, install [Anvil](https://github.com/foundry-rs/foundry/tree/master/anvil) via [Foundryup](https://book.getfoundry.sh/getting-started/installation).
+Wagmi uses [Vitest](https://vitest.dev) to run tests and [anvil.js](https://github.com/wevm/anvil.js) to execute tests against locally running chain forks. First, install [Anvil](https://github.com/foundry-rs/foundry/tree/master/anvil) via [Foundryup](https://book.getfoundry.sh/getting-started/installation).
 
 ```bash
 curl -L https://foundry.paradigm.xyz | bash
@@ -147,7 +147,7 @@ The first time a PR with a changeset is merged after a release, a new PR will au
 
 ### Creating a snapshot release
 
-If a PR has changesets, you can create a [snapshot release](https://github.com/changesets/changesets/blob/main/docs/snapshot-releases.md) by [manually dispatching](https://github.com/wagmi-dev/wagmi/actions/workflows/canary.yml) the Canary workflow. This publishes a tagged version to npm with the PR branch name and timestamp.
+If a PR has changesets, you can create a [snapshot release](https://github.com/changesets/changesets/blob/main/docs/snapshot-releases.md) by [manually dispatching](https://github.com/wevm/wagmi/actions/workflows/canary.yml) the Canary workflow. This publishes a tagged version to npm with the PR branch name and timestamp.
 
 ## 10. Updating dependencies
 

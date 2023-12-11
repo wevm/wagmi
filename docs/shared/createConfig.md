@@ -100,7 +100,7 @@ const config = createConfig({
 
 `boolean | undefined`
 
-- Enables discovery of injected providers via [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963) using the [`mipd`](https://github.com/wagmi-dev/mipd) library and converting to <a :href="`/${docsPath}/api/connectors/injected`">injected</a> connectors.
+- Enables discovery of injected providers via [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963) using the [`mipd`](https://github.com/wevm/mipd) library and converting to <a :href="`/${docsPath}/api/connectors/injected`">injected</a> connectors.
 - Defaults to `true`.
 
 ```ts-vue

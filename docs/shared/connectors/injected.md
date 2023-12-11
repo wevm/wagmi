@@ -64,7 +64,11 @@ import { injected } from '{{connectorsPackageName}}'
 
 const connector = injected({
   target() { // [!code focus]
-    return window.ethereum // [!code focus]
+    return { // [!code focus]
+      id: 'windowProvider', // [!code focus]
+      name: 'Window Provider', // [!code focus]
+      provider: window.ethereum, // [!code focus]
+    }, // [!code focus]
   }, // [!code focus]
 })
 ```

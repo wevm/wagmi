@@ -7,9 +7,6 @@ export type ReactConfig = { foo?: string | undefined }
 
 type ReactResult = Evaluate<RequiredBy<Plugin, 'run'>>
 
-// Useful when building this plugin:
-// https://ts-ast-viewer.com
-
 export function react(_config: ReactConfig = {}): ReactResult {
   return {
     name: 'React',

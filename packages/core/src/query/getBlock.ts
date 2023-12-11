@@ -8,8 +8,8 @@ import {
   getBlock,
 } from '../actions/getBlock.js'
 import { type Config } from '../createConfig.js'
+import type { ScopeKeyParameter } from '../types/properties.js'
 import type { Evaluate, ExactPartial } from '../types/utils.js'
-import type { ScopeKeyParameter } from './types.js'
 import { filterQueryOptions } from './utils.js'
 
 export type GetBlockOptions<
@@ -38,7 +38,7 @@ export function getBlockQueryOptions<
     async queryFn({ queryKey }) {
       const { scopeKey: _, ...parameters } = queryKey[1]
       const block = await getBlock(config, parameters)
-      return block ?? null
+      return (block ?? null) as any
     },
     queryKey: getBlockQueryKey(options),
   } as const satisfies QueryOptions<

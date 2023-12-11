@@ -11,7 +11,7 @@ import type {
   ChainIdParameter,
   SyncConnectedChainParameter,
 } from '../types/properties.js'
-import type { UnionEvaluate } from '../types/utils.js'
+import type { IsNarrowable, UnionEvaluate } from '../types/utils.js'
 
 export type WatchBlocksParameters<
   includeTransactions extends boolean = false,
@@ -28,7 +28,7 @@ export type WatchBlocksParameters<
           ? WebSocketTransport
           : transport
         : WebSocketTransport,
-      chains[key],
+      IsNarrowable<chains[key], Chain> extends true ? chains[key] : undefined,
       includeTransactions,
       blockTag
     > &

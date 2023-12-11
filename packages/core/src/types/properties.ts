@@ -16,6 +16,8 @@ export type ConnectorParameter = {
   connector?: Connector | undefined
 }
 
+export type ScopeKeyParameter = { scopeKey?: string | undefined }
+
 export type SyncConnectedChainParameter = {
   syncConnectedChain?: boolean | undefined
 }

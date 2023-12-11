@@ -30,7 +30,7 @@ export default withTwoslash(
       ['meta', { property: 'og:url', content: 'https://beta.wagmi.sh' }],
       // Twitter
       ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
-      ['meta', { name: 'twitter:creator', content: '@wagmi_sh' }],
+      ['meta', { name: 'twitter:creator', content: '@wevm_dev' }],
       [
         'meta',
         { name: 'twitter:image', content: 'https://beta.wagmi.sh/og.png' },
@@ -62,12 +62,12 @@ export default withTwoslash(
         indexName: 'beta-wagmi',
       },
       editLink: {
-        pattern: 'https://github.com/wagmi-dev/wagmi/edit/main/docs/:path',
+        pattern: 'https://github.com/wevm/wagmi/edit/main/docs/:path',
         text: 'Suggest changes to this page',
       },
       footer: {
         message:
-          'Released under the <a href="https://github.com/wagmi-dev/wagmi/blob/main/LICENSE">MIT License</a>.',
+          'Released under the <a href="https://github.com/wevm/wagmi/blob/main/LICENSE">MIT License</a>.',
         copyright: 'Copyright © 2022-present weth, LLC  ',
       },
       logo: {
@@ -85,11 +85,11 @@ export default withTwoslash(
           items: [
             {
               text: 'Discussions ',
-              link: 'https://github.com/wagmi-dev/wagmi/discussions',
+              link: 'https://github.com/wevm/wagmi/discussions',
             },
             {
               text: 'Release Notes ',
-              link: 'https://github.com/wagmi-dev/wagmi/releases',
+              link: 'https://github.com/wevm/wagmi/releases',
             },
             {
               text: 'Contributing ',
@@ -104,9 +104,9 @@ export default withTwoslash(
       socialLinks: [
         {
           icon: 'github',
-          link: 'https://github.com/wagmi-dev/wagmi/tree/beta',
+          link: 'https://github.com/wevm/wagmi/tree/beta',
         },
-        { icon: 'twitter', link: 'https://twitter.com/wagmi_sh' },
+        { icon: 'twitter', link: 'https://twitter.com/wevm_dev' },
         { icon: 'discord', link: 'https://discord.gg/9zHPXuBpqy' },
       ],
     },

@@ -5,10 +5,6 @@ import * as react from './index.js'
 test('exports', () => {
   expect(Object.keys(react)).toMatchInlineSnapshot(`
     [
-      "custom",
-      "fallback",
-      "http",
-      "webSocket",
       "WagmiContext",
       "WagmiProvider",
       "Context",
@@ -51,6 +47,7 @@ test('exports', () => {
       "useSwitchChain",
       "useToken",
       "useTransaction",
+      "useTransactionCount",
       "useWalletClient",
       "useWaitForTransactionReceipt",
       "useWatchBlocks",
@@ -70,6 +67,11 @@ test('exports', () => {
       "SwitchChainNotSupportedError",
       "createStorage",
       "noopStorage",
+      "custom",
+      "fallback",
+      "http",
+      "webSocket",
+      "unstable_connector",
       "cookieStorage",
       "cookieToInitialState",
       "deepEqual",

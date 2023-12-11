@@ -4,7 +4,7 @@ import { camelCase } from 'change-case'
 import { type FSWatcher, type WatchOptions } from 'chokidar'
 import { watch } from 'chokidar'
 import { default as dedent } from 'dedent'
-import { ensureDir, writeFile } from 'fs-extra'
+import { default as fs } from 'fs-extra'
 import { basename, dirname, resolve } from 'pathe'
 import pc from 'picocolors'
 // biome-ignore lint/correctness/noUnusedVariables: <explanation>
@@ -401,9 +401,9 @@ async function writeContracts({
   // Format and write output
   const cwd = process.cwd()
   const outPath = resolve(cwd, filename)
-  await ensureDir(dirname(outPath))
+  await fs.ensureDir(dirname(outPath))
   const formatted = await format(code)
-  await writeFile(outPath, formatted)
+  await fs.writeFile(outPath, formatted)
 }
 
 function getBannerContent({ name }: { name: string }) {

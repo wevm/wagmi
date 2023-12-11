@@ -72,9 +72,48 @@ test('multichain address', () => {
     functionName: 'transfer',
     args: ['0x', 123n],
     chainId: mainnet.id,
+    // ^?
+  })
+
+  // @ts-expect-error chain id must match address keys
+  writeContract({
+    functionName: 'transfer',
+    args: ['0x', 123n],
+    chainId: 420,
+  })
+
+  // @ts-expect-error address not allowed
+  writeContract({
+    address: '0x',
+    functionName: 'transfer',
+    args: ['0x', 123n],
   })
 })
 
-test.todo('overloads', () => {})
+test('overloads', () => {
+  const useWriteErc20 = createWriteContract({
+    abi: abi.writeOverloads,
+    address: {
+      [mainnet.id]: '0x',
+      [optimism.id]: '0x',
+    },
+  })
+
+  const { writeContract } = useWriteErc20()
+  writeContract({
+    functionName: 'foo',
+    args: [],
+  })
+
+  writeContract({
+    functionName: 'foo',
+    args: ['0x'],
+  })
+
+  writeContract({
+    functionName: 'foo',
+    args: ['0x', '0x'],
+  })
+})
 
 test.todo('useSimulateContract', () => {})

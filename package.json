@@ -3,7 +3,7 @@
   "type": "module",
   "scripts": {
     "build": "pnpm run --r --filter \"./packages/**\" build",
-    "changeset:publish": "pnpm version:update && pnpm build && bun .scripts/generateProxyPackages.ts && changeset publish",
+    "changeset:publish": "pnpm version:update && pnpm build && bun .scripts/formatPackageJson.ts && bun .scripts/generateProxyPackages.ts && changeset publish",
     "changeset:version": "changeset version && pnpm version:update",
     "clean": "pnpm run --r --parallel clean",
     "deps": "pnpx taze -r",
@@ -20,7 +20,6 @@
     "preconstruct": "bun .scripts/preconstruct.ts",
     "preinstall": "npx only-allow pnpm",
     "prepare": "pnpm simple-git-hooks",
-    "prepublishOnly": "bun .scripts/formatPackageJson.ts",
     "test": "vitest",
     "test:build": "pnpm run --r --parallel test:build",
     "test:cov": "vitest run --coverage",
@@ -49,7 +48,7 @@
     "rimraf": "^4.4.1",
     "simple-git-hooks": "^2.9.0",
     "typescript": "5.1.6",
-    "viem": "2.0.0-beta.6",
+    "viem": "2.0.0-beta.15",
     "vitest": "^0.34.5"
   },
   "packageManager": "pnpm@8.10.5",
@@ -97,7 +96,7 @@
         "entry": "src/cli.ts!"
       },
       "packages/react": {
-        "entry": "src/exports/{actions,chains,connectors,index,query}.ts!"
+        "entry": "src/exports/{actions,chains,codegen,connectors,index,query}.ts!"
       },
       "packages/test": {
         "entry": [

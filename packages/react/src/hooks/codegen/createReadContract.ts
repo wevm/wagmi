@@ -31,16 +31,12 @@ import {
 
 type stateMutability = 'pure' | 'view'
 
-export type CreateReadContract<
+export type CreateReadContractParameters<
   abi extends Abi | readonly unknown[],
   address extends Address | Record<number, Address> | undefined = undefined,
 > = {
-  abi: abi
-  address?:
-    | address
-    | (address extends undefined
-        ? Address | Record<number, Address> | undefined
-        : never)
+  abi: abi | Abi | readonly unknown[]
+  address?: address | Address | Record<number, Address> | undefined
 }
 
 export type CreateReadContractReturnType<
@@ -84,7 +80,7 @@ export function createReadContract<
     | Record<number, Address>
     | undefined = undefined,
 >(
-  config: CreateReadContract<abi, address>,
+  config: CreateReadContractParameters<abi, address>,
 ): CreateReadContractReturnType<abi, address> {
   if (config.address !== undefined && typeof config.address === 'object')
     return (parameters) => {

@@ -1,11 +1,11 @@
 {
   "name": "@wagmi/cli",
   "description": "Manage and generate code from Ethereum ABIs",
-  "version": "2.0.0-beta.5",
+  "version": "2.0.0-beta.7",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/wagmi-dev/wagmi.git",
+    "url": "https://github.com/wevm/wagmi.git",
     "directory": "packages/cli"
   },
   "scripts": {
@@ -50,8 +50,12 @@
   },
   "typesVersions": {
     "*": {
-      "config": ["./dist/types/exports/config.d.ts"],
-      "plugins": ["./dist/types/exports/plugins.d.ts"]
+      "config": [
+        "./dist/types/exports/config.d.ts"
+      ],
+      "plugins": [
+        "./dist/types/exports/plugins.d.ts"
+      ]
     }
   },
   "peerDependencies": {
@@ -80,7 +84,7 @@
     "pathe": "^1.1.1",
     "picocolors": "^1.0.0",
     "prettier": "^3.0.3",
-    "viem": "2.0.0-beta.6",
+    "viem": "2.0.0-beta.15",
     "zod": "^3.22.2"
   },
   "devDependencies": {
@@ -89,7 +93,18 @@
     "fixturez": "^1.1.0",
     "msw": "^2.0.6"
   },
-  "contributors": ["awkweb.eth <t@wagmi.sh>", "jxom.eth <j@wagmi.sh>"],
-  "funding": "https://github.com/sponsors/wagmi-dev",
-  "keywords": ["wagmi", "eth", "ethereum", "dapps", "wallet", "web3", "cli"]
+  "contributors": [
+    "awkweb.eth <t@wevm.dev>",
+    "jxom.eth <j@wevm.dev>"
+  ],
+  "funding": "https://github.com/sponsors/wevm",
+  "keywords": [
+    "wagmi",
+    "eth",
+    "ethereum",
+    "dapps",
+    "wallet",
+    "web3",
+    "cli"
+  ]
 }

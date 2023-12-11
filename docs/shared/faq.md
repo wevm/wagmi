@@ -54,7 +54,7 @@ JSON.stringify({ value: 69420n }, replacer)
 
 Wagmi is an open source software project and free to use. If you enjoy using Wagmi or would like to support Wagmi development, you can:
 
-- [Become a sponsor on GitHub.](https://github.com/sponsors/wagmi-dev)
+- [Become a sponsor on GitHub.](https://github.com/sponsors/wevm)
 - Send us crypto
   - Mainnet: 0x4557B18E779944BFE9d78A672452331C186a9f48
   - Multichain: 0xd2135CfB216b74109775236E36d4b433F1DF507B
@@ -73,4 +73,4 @@ For exported types, we try our best to not introduce breaking changes in non-maj
 
 ## Anything else you want to know?
 
-Please create a new [GitHub Discussion thread](https://github.com/wagmi-dev/wagmi). You're also free to suggest changes to this or any other page on the site using the "Suggest changes to this page" button at the bottom of the page.
+Please create a new [GitHub Discussion thread](https://github.com/wevm/wagmi). You're also free to suggest changes to this or any other page on the site using the "Suggest changes to this page" button at the bottom of the page.

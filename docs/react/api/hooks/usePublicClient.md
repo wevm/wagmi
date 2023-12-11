@@ -27,7 +27,7 @@ function App() {
 :::
 
 ::: warning
-If you want to optimize bundle size, you should use [`usePublicClient`](/react/api/hooks/usePublicClient) along with Viem's [tree-shakable actions](https://viem.sh/docs/clients/custom.html#tree-shaking) instead. Since Public Client has all public actions attached directly to it.
+If you want to optimize bundle size, you should use [`useClient`](/react/api/hooks/useClient) along with Viem's [tree-shakable actions](https://viem.sh/docs/clients/custom.html#tree-shaking) instead. Since Public Client has all public actions attached directly to it.
 :::
 
 ## Parameters

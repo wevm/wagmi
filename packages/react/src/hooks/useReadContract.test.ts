@@ -18,7 +18,7 @@ test('default', async () => {
 
   expect(result.current).toMatchInlineSnapshot(`
     {
-      "data": 3n,
+      "data": 4n,
       "dataUpdatedAt": 1675209600000,
       "error": null,
       "errorUpdateCount": 0,
@@ -72,7 +72,7 @@ test('parameters: chainId', async () => {
 
   expect(result.current).toMatchInlineSnapshot(`
     {
-      "data": 3n,
+      "data": 4n,
       "dataUpdatedAt": 1675209600000,
       "error": null,
       "errorUpdateCount": 0,

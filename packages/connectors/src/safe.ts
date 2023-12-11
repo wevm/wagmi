@@ -22,6 +22,7 @@ export type SafeParameters = Evaluate<
   }
 >
 
+safe.type = 'safe' as const
 export function safe(parameters: SafeParameters = {}) {
   const { shimDisconnect = false } = parameters
 
@@ -42,6 +43,7 @@ export function safe(parameters: SafeParameters = {}) {
   return createConnector<Provider, Properties, StorageItem>((config) => ({
     id: 'safe',
     name: 'Safe',
+    type: safe.type,
     async connect() {
       const provider = await this.getProvider()
       if (!provider) throw new ProviderNotFoundError()

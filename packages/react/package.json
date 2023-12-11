@@ -1,11 +1,11 @@
 {
   "name": "wagmi",
   "description": "React Hooks for Ethereum",
-  "version": "2.0.0-beta.5",
+  "version": "2.0.0-beta.7",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/wagmi-dev/wagmi.git",
+    "url": "https://github.com/wevm/wagmi.git",
     "directory": "packages/react"
   },
   "scripts": {
@@ -72,7 +72,7 @@
     "@tanstack/react-query": ">=5.0.0",
     "react": ">=18",
     "typescript": ">=5.0.4",
-    "viem": "2.0.0-beta.6"
+    "viem": "2.0.0-beta.15"
   },
   "peerDependenciesMeta": {
     "typescript": {
@@ -93,8 +93,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
-  "contributors": ["awkweb.eth <t@wagmi.sh>", "jxom.eth <j@wagmi.sh>"],
-  "funding": "https://github.com/sponsors/wagmi-dev",
+  "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
+  "funding": "https://github.com/sponsors/wevm",
   "keywords": [
     "wagmi",
     "react",

@@ -1,11 +1,11 @@
 {
   "name": "@wagmi/connectors",
   "description": "Collection of connectors for Wagmi",
-  "version": "4.0.0-beta.5",
+  "version": "4.0.0-beta.7",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/wagmi-dev/wagmi.git",
+    "url": "https://github.com/wevm/wagmi.git",
     "directory": "packages/connectors"
   },
   "scripts": {
@@ -37,7 +37,7 @@
   "peerDependencies": {
     "@wagmi/core": "workspace:*",
     "typescript": ">=5.0.4",
-    "viem": "2.0.0-beta.6"
+    "viem": "2.0.0-beta.15"
   },
   "peerDependenciesMeta": {
     "typescript": {
@@ -47,7 +47,7 @@
   "dependencies": {
     "@coinbase/wallet-sdk": "3.9.0-canary.2",
     "@ledgerhq/connect-kit-loader": "^1.1.2",
-    "@metamask/sdk": "^0.8.0",
+    "@metamask/sdk": "^0.14.1",
     "@safe-global/safe-apps-provider": "^0.18.0",
     "@safe-global/safe-apps-sdk": "^8.1.0",
     "@walletconnect/ethereum-provider": "^2.10.1",
@@ -57,8 +57,11 @@
     "@wagmi/core": "workspace:*",
     "msw": "^2.0.6"
   },
-  "contributors": ["awkweb.eth <t@wagmi.sh>", "jxom.eth <j@wagmi.sh>"],
-  "funding": "https://github.com/sponsors/wagmi-dev",
+  "contributors": [
+    "awkweb.eth <t@wevm.dev>",
+    "jxom.eth <j@wevm.dev>"
+  ],
+  "funding": "https://github.com/sponsors/wevm",
   "keywords": [
     "react",
     "hooks",

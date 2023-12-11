@@ -1,17 +1,4 @@
 ////////////////////////////////////////////////////////////////////////////////
-// Connectors
-
-export {
-  type InjectedParameters,
-  injected,
-} from '../connectors/injected.js'
-
-export {
-  type MockParameters,
-  mock,
-} from '../connectors/mock.js'
-
-////////////////////////////////////////////////////////////////////////////////
 // Emitter
 
 export {
@@ -21,11 +8,6 @@ export {
 } from '../createEmitter.js'
 
 ////////////////////////////////////////////////////////////////////////////////
-// Query
-
-export { type ScopeKeyParameter } from '../query/types.js'
-
-////////////////////////////////////////////////////////////////////////////////
 // Types
 
 export { type SelectChains } from '../types/chain.js'
@@ -33,6 +15,7 @@ export { type SelectChains } from '../types/chain.js'
 export {
   type ChainIdParameter,
   type ConnectorParameter,
+  type ScopeKeyParameter,
 } from '../types/properties.js'
 
 export {

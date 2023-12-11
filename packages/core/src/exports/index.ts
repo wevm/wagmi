@@ -1,15 +1,4 @@
 ////////////////////////////////////////////////////////////////////////////////
-// Viem
-
-// extremely commonly used viem exports
-export {
-  custom,
-  fallback,
-  http,
-  webSocket,
-} from 'viem'
-
-////////////////////////////////////////////////////////////////////////////////
 // Actions
 
 export {
@@ -157,6 +146,13 @@ export {
   /** @deprecated use `getTransaction` instead */
   getTransaction as fetchTransaction,
 } from '../actions/getTransaction.js'
+
+export {
+  type GetTransactionCountErrorType,
+  type GetTransactionCountParameters,
+  type GetTransactionCountReturnType,
+  getTransactionCount,
+} from '../actions/getTransactionCount.js'
 
 export {
   type GetWalletClientErrorType,
@@ -321,6 +317,16 @@ export {
   createConnector,
 } from '../connectors/createConnector.js'
 
+export {
+  type InjectedParameters,
+  injected,
+} from '../connectors/injected.js'
+
+export {
+  type MockParameters,
+  mock,
+} from '../connectors/mock.js'
+
 ////////////////////////////////////////////////////////////////////////////////
 // createConfig
 
@@ -373,6 +379,13 @@ export {
   type SwitchChainNotSupportedErrorType,
   SwitchChainNotSupportedError,
 } from '../errors/connector.js'
+
+////////////////////////////////////////////////////////////////////////////////
+// Transports
+
+export { custom, http, webSocket } from 'viem'
+export { unstable_connector } from '../transports/connector.js'
+export { fallback } from '../transports/fallback.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // Types

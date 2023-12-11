@@ -28,7 +28,7 @@ export type EstimateGasParameters<
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = {
   [key in keyof chains]: UnionEvaluate<
-    UnionLooseOmit<viem_EstimateGasParameters<chains[key], Account>, 'chain'> &
+    UnionLooseOmit<viem_EstimateGasParameters<chains[key]>, 'chain'> &
       ChainIdParameter<config, chainId> &
       ConnectorParameter
   >

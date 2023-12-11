@@ -118,6 +118,11 @@ export function useSponsors() {
           url: 'https://zora.co',
           img: 'zora-light.svg',
         },
+        {
+          name: 'Supa',
+          url: 'https://twitter.com/supafinance',
+          img: 'supa-light.svg',
+        },
       ],
     }
 
@@ -157,6 +162,6 @@ function mapSponsors(sponsors: {
 function mapImgPath(sponsors: Sponsor[]) {
   return sponsors.map((sponsor) => ({
     ...sponsor,
-    img: `https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/${sponsor.img}`,
+    img: `https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/${sponsor.img}`,
   }))
 }

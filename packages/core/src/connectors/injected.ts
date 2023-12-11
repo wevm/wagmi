@@ -9,6 +9,8 @@ import {
   UserRejectedRequestError,
   getAddress,
   numberToHex,
+  withRetry,
+  withTimeout,
 } from 'viem'
 
 import { ChainNotConfiguredError } from '../errors/config.js'
@@ -84,6 +86,7 @@ const targetMap = {
   },
 } as const satisfies TargetMap
 
+injected.type = 'injected' as const
 export function injected(parameters: InjectedParameters = {}) {
   const { shimDisconnect = true, unstable_shimAsyncInject } = parameters
 
@@ -132,6 +135,7 @@ export function injected(parameters: InjectedParameters = {}) {
     get name() {
       return getTarget().name
     },
+    type: injected.type,
     async setup() {
       const provider = await this.getProvider()
       // Only start listening for events if `target` is set, otherwise `injected()` will also receive events
@@ -268,7 +272,7 @@ export function injected(parameters: InjectedParameters = {}) {
             unstable_shimAsyncInject !== false
           ) {
             // If no provider is found, check for async injection
-            // https://github.com/wagmi-dev/references/issues/167
+            // https://github.com/wevm/references/issues/167
             // https://github.com/MetaMask/detect-provider
             const handleEthereum = async () => {
               if (typeof window !== 'undefined')
@@ -305,7 +309,13 @@ export function injected(parameters: InjectedParameters = {}) {
           throw new ProviderNotFoundError()
         }
 
-        const accounts = await this.getAccounts()
+        // We are applying a retry & timeout strategy here as some injected wallets (ie. MetaMask) fail to
+        // immediately resolve a JSON-RPC request on page load.
+        const accounts = await withRetry(() =>
+          withTimeout(() => this.getAccounts(), {
+            timeout: 100,
+          }),
+        )
         return !!accounts.length
       } catch {
         return false
@@ -359,7 +369,7 @@ export function injected(parameters: InjectedParameters = {}) {
                   chainId: numberToHex(chainId),
                   chainName: chain.name,
                   nativeCurrency: chain.nativeCurrency,
-                  rpcUrls: [chain.rpcUrls.public?.http[0] ?? ''],
+                  rpcUrls: [chain.rpcUrls.default?.http[0] ?? ''],
                   blockExplorerUrls,
                 },
               ],

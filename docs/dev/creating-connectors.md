@@ -7,7 +7,7 @@ Thanks for your interest in adding a new connector to Wagmi! Please take a momen
 This guide details how to create new connectors and upstream them back into Wagmi. By following these steps, you will understand the development process, workflow, and requirements for new connectors. **Not all connectors will be accepted into Wagmi** for a variety of reasons outlined in this document.
 
 ::: warning **Please ask first before starting work on a new connector.**
-To avoid having your pull request declined after investing time and effort into a new connector, we ask that contributors create a [Connector Request](https://github.com/wagmi-dev/wagmi/discussions/new?category=connector-request) before starting work. This ensures the connector solves for an important or general use-case of interest to Wagmi users and is well supported by the Wagmi and connector teams.
+To avoid having your pull request declined after investing time and effort into a new connector, we ask that contributors create a [Connector Request](https://github.com/wevm/wagmi/discussions/new?category=connector-request) before starting work. This ensures the connector solves for an important or general use-case of interest to Wagmi users and is well supported by the Wagmi and connector teams.
 :::
 
 ## 1. Follow the contributing guide
@@ -121,7 +121,7 @@ It is critical that connectors are updated in a timely manner and actively maint
 
 The Wagmi core team will provide as much assistance as possible to keep connectors up-to-date with breaking changes from Wagmi, but it is your responsibility to ensure that any dependencies and issues/discussions related to the connector are handled in a timely manner. If issues are not resolved in a timely manner, the connector may be removed from Wagmi.
 
-In support of this goal, add at least one member of your team to the [CODEOWNERS](https://github.com/wagmi-dev/wagmi/blob/beta/.github/CODEOWNERS) file so that you get notified of pull requests, issues, etc. related to the connector. You can add your team like this:
+In support of this goal, add at least one member of your team to the [CODEOWNERS](https://github.com/wevm/wagmi/blob/beta/.github/CODEOWNERS) file so that you get notified of pull requests, issues, etc. related to the connector. You can add your team like this:
 
 ```
 /packages/connectors/src/fooBarBaz @tmm @jxom
