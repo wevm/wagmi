@@ -233,6 +233,12 @@ export {
 } from '../actions/switchChain.js'
 
 export {
+  type VerifyMessageParameters,
+  type VerifyMessageReturnType,
+  verifyMessage,
+} from '../actions/verifyMessage.js'
+
+export {
   type WatchAccountParameters,
   type WatchAccountReturnType,
   watchAccount,

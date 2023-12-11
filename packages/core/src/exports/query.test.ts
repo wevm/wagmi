@@ -49,6 +49,8 @@ test('exports', () => {
       "simulateContractQueryKey",
       "simulateContractQueryOptions",
       "switchChainMutationOptions",
+      "verifyMessageQueryKey",
+      "verifyMessageQueryOptions",
       "waitForTransactionReceiptQueryKey",
       "waitForTransactionReceiptQueryOptions",
       "writeContractMutationOptions",

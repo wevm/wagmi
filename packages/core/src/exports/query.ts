@@ -228,6 +228,15 @@ export {
 } from '../query/switchChain.js'
 
 export {
+  type VerifyMessageData,
+  type VerifyMessageOptions,
+  type VerifyMessageQueryFnData,
+  type VerifyMessageQueryKey,
+  verifyMessageQueryKey,
+  verifyMessageQueryOptions,
+} from '../query/verifyMessage.js'
+
+export {
   type WaitForTransactionReceiptData,
   type WaitForTransactionReceiptOptions,
   type WaitForTransactionReceiptQueryFnData,
