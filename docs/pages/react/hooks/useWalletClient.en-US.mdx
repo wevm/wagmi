@@ -16,12 +16,13 @@ import { useWalletClient } from 'wagmi'
 The following examples use the [ENS Registry](https://etherscan.io/address/0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e#code) contract.
 
 ```tsx {4, 9}
-import { useContract, useWalletClient } from 'wagmi'
+import { useWalletClient } from 'wagmi'
+import { getContract } from 'wagmi/actions'
 
 function App() {
   const { data: walletClient, isError, isLoading } = useWalletClient()
 
-  const contract = useContract({
+  const contract = getContract({
     address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
     abi: ensRegistryABI,
     walletClient,
