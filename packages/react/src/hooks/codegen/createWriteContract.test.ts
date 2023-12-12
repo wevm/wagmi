@@ -1,4 +1,5 @@
 import { abi } from '@wagmi/test'
+import { renderHook } from '@wagmi/test/react'
 import { test } from 'vitest'
 
 import { createWriteContract } from './createWriteContract.js'
@@ -8,5 +9,5 @@ test('default', () => {
     abi: abi.erc20,
   })
 
-  useWriteErc20()
+  renderHook(() => useWriteErc20())
 })
