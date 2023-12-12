@@ -51,6 +51,8 @@ test('exports', () => {
       "switchChainMutationOptions",
       "verifyMessageQueryKey",
       "verifyMessageQueryOptions",
+      "verifyTypedDataQueryKey",
+      "verifyTypedDataQueryOptions",
       "waitForTransactionReceiptQueryKey",
       "waitForTransactionReceiptQueryOptions",
       "writeContractMutationOptions",
