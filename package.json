@@ -51,7 +51,7 @@
     "viem": "2.0.0-beta.15",
     "vitest": "^0.34.5"
   },
-  "packageManager": "pnpm@8.8.0",
+  "packageManager": "pnpm@8.10.5",
   "pnpm": {
     "peerDependencyRules": {
       "ignoreMissing": [
@@ -96,7 +96,7 @@
         "entry": "src/cli.ts!"
       },
       "packages/react": {
-        "entry": "src/exports/{actions,chains,connectors,index,query}.ts!"
+        "entry": "src/exports/{actions,chains,codegen,connectors,index,query}.ts!"
       },
       "packages/test": {
         "entry": [

@@ -10,8 +10,11 @@ export {
 ////////////////////////////////////////////////////////////////////////////////
 // Types
 
+export { type SelectChains } from '../types/chain.js'
+
 export {
   type ChainIdParameter,
+  type ConnectorParameter,
   type ScopeKeyParameter,
 } from '../types/properties.js'
 
