@@ -1,5 +1,14 @@
 # @wagmi/core
 
+## 1.4.11
+
+### Patch Changes
+
+- [#3299](https://github.com/wevm/wagmi/pull/3299) [`b02020b3`](https://github.com/wevm/wagmi/commit/b02020b3724e0228198f35817611bb063295906e) Thanks [@dasanra](https://github.com/dasanra)! - Fixed issue with [Safe SDK](https://github.com/wevm/viem/issues/579) by bumping `@safe-global/safe-apps-provider@0.18.1`
+
+- Updated dependencies [[`51eca0fb`](https://github.com/wevm/wagmi/commit/51eca0fbaea6932f31a5b8b4213f0252280053e2), [`b02020b3`](https://github.com/wevm/wagmi/commit/b02020b3724e0228198f35817611bb063295906e)]:
+  - @wagmi/connectors@3.1.9
+
 ## 1.4.10
 
 ### Patch Changes
