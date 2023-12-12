@@ -5,6 +5,7 @@ import {
   type ResolvedRegister,
 } from '@wagmi/core'
 import {
+  type ScopeKeyParameter,
   type UnionEvaluate,
   type UnionOmit,
   type UnionPartial,
@@ -60,6 +61,7 @@ export type CreateReadContractReturnType<
         omittedProperties
       >
     > &
+      ScopeKeyParameter &
       ConfigParameter<config> &
       QueryParameter<
         ReadContractQueryFnData<abi, functionName, args>,

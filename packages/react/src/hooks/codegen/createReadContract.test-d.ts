@@ -1,5 +1,4 @@
-import { abi } from '@wagmi/test'
-import { mainnet, optimism } from 'viem/chains'
+import { abi, mainnet, optimism } from '@wagmi/test'
 import { assertType, expectTypeOf, test } from 'vitest'
 
 import { createReadContract } from './createReadContract.js'

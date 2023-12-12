@@ -14,12 +14,8 @@ import {
 } from '@wagmi/core/query'
 import type { Abi, ContractFunctionArgs, ContractFunctionName } from 'viem'
 
-import type { ConfigParameter } from '../types/properties.js'
-import {
-  type UseQueryParameters,
-  type UseQueryReturnType,
-  useQuery,
-} from '../utils/query.js'
+import type { ConfigParameter, QueryParameter } from '../types/properties.js'
+import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 import { useConnectorClient } from './useConnectorClient.js'
@@ -39,16 +35,13 @@ export type UseSimulateContractParameters<
   chainId extends config['chains'][number]['id'] | undefined = undefined,
   selectData = SimulateContractData<abi, functionName, args, config, chainId>,
 > = SimulateContractOptions<abi, functionName, args, config, chainId> &
-  ConfigParameter<config> & {
-    query?:
-      | UseQueryParameters<
-          SimulateContractQueryFnData<abi, functionName, args, config, chainId>,
-          SimulateContractErrorType,
-          selectData,
-          SimulateContractQueryKey<abi, functionName, args, config, chainId>
-        >
-      | undefined
-  }
+  ConfigParameter<config> &
+  QueryParameter<
+    SimulateContractQueryFnData<abi, functionName, args, config, chainId>,
+    SimulateContractErrorType,
+    selectData,
+    SimulateContractQueryKey<abi, functionName, args, config, chainId>
+  >
 
 export type UseSimulateContractReturnType<
   abi extends Abi | readonly unknown[] = Abi,
