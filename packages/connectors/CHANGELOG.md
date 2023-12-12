@@ -1,5 +1,13 @@
 # @wagmi/connectors
 
+## 3.1.9
+
+### Patch Changes
+
+- [#3114](https://github.com/wevm/wagmi/pull/3114) [`51eca0fb`](https://github.com/wevm/wagmi/commit/51eca0fbaea6932f31a5b8b4213f0252280053e2) Thanks [@akathecoder](https://github.com/akathecoder)! - Added Okto Wallet to Injected Wallets Connector
+
+- [#3299](https://github.com/wevm/wagmi/pull/3299) [`b02020b3`](https://github.com/wevm/wagmi/commit/b02020b3724e0228198f35817611bb063295906e) Thanks [@dasanra](https://github.com/dasanra)! - Fixed issue with [Safe SDK](https://github.com/wevm/viem/issues/579) by bumping `@safe-global/safe-apps-provider@0.18.1`
+
 ## 3.1.8
 
 ### Patch Changes
