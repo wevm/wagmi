@@ -31,6 +31,7 @@ export function getInjectedName(ethereum?: WindowProvider) {
     if (provider.isMathWallet) return 'MathWallet'
     if (provider.isNovaWallet) return 'Nova Wallet'
     if (provider.isOkxWallet || provider.isOKExWallet) return 'OKX Wallet'
+    if (provider.isOktoWallet) return 'Okto Wallet'
     if (provider.isOneInchIOSWallet || provider.isOneInchAndroidWallet)
       return '1inch Wallet'
     if (provider.isOneKey) return 'OneKey Wallet'

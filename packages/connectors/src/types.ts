@@ -38,6 +38,7 @@ type InjectedProviderFlags = {
   isNovaWallet?: true
   isOkxWallet?: true
   isOKExWallet?: true
+  isOktoWallet?: true
   isOneInchAndroidWallet?: true
   isOneInchIOSWallet?: true
   isOneKey?: true
