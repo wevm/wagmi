@@ -57,12 +57,6 @@ export function react(_config: ReactConfig = {}): ReactResult {
       }
 
       const importValues = [...imports.values()]
-      console.log(
-        importValues.length
-          ? `import { ${importValues.join(', ')} } from 'wagmi/codegen'\n`
-          : '',
-      )
-      console.log(content.join('\n\n'))
 
       return {
         imports: importValues.length
