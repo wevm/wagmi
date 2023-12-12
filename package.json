@@ -58,6 +58,7 @@
         "@algolia/client-search",
         "esbuild",
         "react",
+        "react-native",
         "search-insights"
       ]
     }

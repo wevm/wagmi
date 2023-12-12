@@ -45,22 +45,19 @@
     }
   },
   "dependencies": {
-    "@coinbase/wallet-sdk": "3.9.0-canary.2",
+    "@coinbase/wallet-sdk": "3.9.1",
     "@ledgerhq/connect-kit-loader": "^1.1.2",
     "@metamask/sdk": "^0.14.1",
-    "@safe-global/safe-apps-provider": "^0.18.0",
+    "@safe-global/safe-apps-provider": "^0.18.1",
     "@safe-global/safe-apps-sdk": "^8.1.0",
-    "@walletconnect/ethereum-provider": "^2.10.1",
+    "@walletconnect/ethereum-provider": "^2.10.6",
     "@walletconnect/modal": "^2.6.2"
   },
   "devDependencies": {
     "@wagmi/core": "workspace:*",
     "msw": "^2.0.6"
   },
-  "contributors": [
-    "awkweb.eth <t@wevm.dev>",
-    "jxom.eth <j@wevm.dev>"
-  ],
+  "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
   "funding": "https://github.com/sponsors/wevm",
   "keywords": [
     "react",
