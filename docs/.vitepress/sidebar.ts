@@ -211,6 +211,10 @@ export function getSidebar() {
             link: '/react/api/hooks/useVerifyMessage',
           },
           {
+            text: 'useVerifyTypedData',
+            link: '/react/api/hooks/useVerifyTypedData',
+          },
+          {
             text: 'useWalletClient',
             link: '/react/api/hooks/useWalletClient',
           },
@@ -453,6 +457,10 @@ export function getSidebar() {
           {
             text: 'verifyMessage',
             link: '/core/api/actions/verifyMessage',
+          },
+          {
+            text: 'verifyTypedData',
+            link: '/core/api/actions/verifyTypedData',
           },
           {
             text: 'waitForTransactionReceipt',

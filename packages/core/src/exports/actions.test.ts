@@ -47,6 +47,7 @@ test('exports', () => {
       "switchChain",
       "switchNetwork",
       "verifyMessage",
+      "verifyTypedData",
       "watchAccount",
       "watchBlocks",
       "watchBlockNumber",

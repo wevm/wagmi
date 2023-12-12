@@ -23,7 +23,7 @@ export async function verifyMessage(
   config: Config,
   parameters: VerifyMessageParameters,
 ): Promise<VerifyMessageReturnType> {
-  const { ...rest } = parameters
-  const client = config.getClient()
+  const { chainId, ...rest } = parameters
+  const client = config.getClient({ chainId })
   return viem_verifyMessage(client, rest)
 }

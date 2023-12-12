@@ -237,6 +237,15 @@ export {
 } from '../query/verifyMessage.js'
 
 export {
+  type VerifyTypedDataData,
+  type VerifyTypedDataOptions,
+  type VerifyTypedDataQueryFnData,
+  type VerifyTypedDataQueryKey,
+  verifyTypedDataQueryKey,
+  verifyTypedDataQueryOptions,
+} from '../query/verifyTypedData.js'
+
+export {
   type WaitForTransactionReceiptData,
   type WaitForTransactionReceiptOptions,
   type WaitForTransactionReceiptQueryFnData,
