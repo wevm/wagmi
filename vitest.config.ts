@@ -9,6 +9,7 @@ export default defineConfig({
         '**/*.test.ts',
         '**/*.test-d.ts',
         'packages/connectors/**',
+        'packages/core/src/connectors/injected.ts',
       ],
     },
     globalSetup: ['./packages/test/src/globalSetup.ts'],
