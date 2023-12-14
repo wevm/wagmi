@@ -82,7 +82,7 @@
   "dependencies": {
     "@wagmi/connectors": "workspace:*",
     "@wagmi/core": "workspace:*",
-    "use-sync-external-store": "^1.2.0"
+    "use-sync-external-store": "1.2.0"
   },
   "devDependencies": {
     "@tanstack/react-query": "5.0.5",

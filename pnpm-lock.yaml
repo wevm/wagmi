@@ -199,19 +199,19 @@ importers:
         specifier: 3.9.1
         version: 3.9.1
       '@metamask/sdk':
-        specifier: ^0.14.1
+        specifier: 0.14.1
         version: 0.14.1
       '@safe-global/safe-apps-provider':
-        specifier: ^0.18.1
+        specifier: 0.18.1
         version: 0.18.1(typescript@5.1.6)
       '@safe-global/safe-apps-sdk':
-        specifier: ^8.1.0
+        specifier: 8.1.0
         version: 8.1.0(typescript@5.1.6)
       '@walletconnect/ethereum-provider':
-        specifier: ^2.10.6
+        specifier: 2.10.6
         version: 2.10.6
       '@walletconnect/modal':
-        specifier: ^2.6.2
+        specifier: 2.6.2
         version: 2.6.2
     devDependencies:
       '@wagmi/core':
@@ -224,13 +224,13 @@ importers:
   packages/core:
     dependencies:
       eventemitter3:
-        specifier: ^5.0.1
+        specifier: 5.0.1
         version: 5.0.1
       mipd:
-        specifier: ^0.0.5
+        specifier: 0.0.5
         version: 0.0.5(typescript@5.1.6)
       zustand:
-        specifier: ^4.4.1
+        specifier: 4.4.1
         version: 4.4.1
     devDependencies:
       '@tanstack/query-core':
@@ -280,7 +280,7 @@ importers:
         specifier: workspace:*
         version: link:../core
       use-sync-external-store:
-        specifier: ^1.2.0
+        specifier: 1.2.0
         version: 1.2.0(react@18.2.0)
     devDependencies:
       '@tanstack/react-query':
@@ -6102,6 +6102,7 @@ packages:
 
   /defu@6.1.2:
     resolution: {integrity: sha512-+uO4+qr7msjNNWKYPHqN/3+Dx3NFkmIzayk2L1MyZQlvgZb/J1A0fo410dpKrN2SnqFjt8n4JL8fDJE0wIgjFQ==}
+    dev: true
 
   /defu@6.1.3:
     resolution: {integrity: sha512-Vy2wmG3NTkmHNg/kzpuvHhkqeIx3ODWqasgCRbKtbXEN0G+HpEEv9BtJLp7ZG1CZloFaC41Ah3ZFbq7aqCqMeQ==}
@@ -8313,7 +8314,7 @@ packages:
       citty: 0.1.5
       clipboardy: 3.0.0
       consola: 3.2.3
-      defu: 6.1.2
+      defu: 6.1.3
       get-port-please: 3.1.1
       h3: 1.9.0
       http-shutdown: 1.2.2
