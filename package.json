@@ -87,7 +87,8 @@
         ]
       },
       "packages/connectors": {
-        "entry": "src/exports/index.ts!"
+        "entry": "src/exports/index.ts!",
+        "ignoreDependencies": ["@walletconnect/modal"]
       },
       "packages/core": {
         "entry": "src/exports/{actions,chains,index,internal,query}.ts!",
