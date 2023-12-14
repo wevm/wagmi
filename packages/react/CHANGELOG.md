@@ -1,5 +1,14 @@
 # wagmi
 
+## 1.4.12
+
+### Patch Changes
+
+- [`53ca1f7e`](https://github.com/wevm/wagmi/commit/53ca1f7eb411d912e11fcce7e03bd61ed067959c) Thanks [@tmm](https://github.com/tmm)! - Removed LedgerConnector due to security vulnerability
+
+- Updated dependencies [[`53ca1f7e`](https://github.com/wevm/wagmi/commit/53ca1f7eb411d912e11fcce7e03bd61ed067959c)]:
+  - @wagmi/core@1.4.12
+
 ## 1.4.11
 
 ### Patch Changes
