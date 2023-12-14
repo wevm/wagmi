@@ -8,6 +8,8 @@ export default defineConfig({
         '**/dist/**',
         '**/*.test.ts',
         '**/*.test-d.ts',
+        'packages/cli/**',
+        // ignore third-party connectors
         'packages/connectors/**',
         'packages/core/src/connectors/injected.ts',
       ],
