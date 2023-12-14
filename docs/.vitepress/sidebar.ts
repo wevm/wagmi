@@ -75,10 +75,6 @@ export function getSidebar() {
               },
               { text: 'injected', link: '/react/api/connectors/injected' },
               {
-                text: 'ledger',
-                link: '/react/api/connectors/ledger',
-              },
-              {
                 text: 'metaMask',
                 link: '/react/api/connectors/metaMask',
               },
@@ -320,10 +316,6 @@ export function getSidebar() {
                 link: '/core/api/connectors/coinbaseWallet',
               },
               { text: 'injected', link: '/core/api/connectors/injected' },
-              {
-                text: 'ledger',
-                link: '/core/api/connectors/ledger',
-              },
               {
                 text: 'metaMask',
                 link: '/core/api/connectors/metaMask',
