@@ -1,5 +1,5 @@
-import { startProxy } from '@viem/anvil'
 import { exec } from 'child_process'
+import { startProxy } from '@viem/anvil'
 
 import { type Chain, chain as chainLookup } from './chains.js'
 
