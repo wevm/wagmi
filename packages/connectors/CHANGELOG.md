@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 3.1.10
+
+### Patch Changes
+
+- [`53ca1f7e`](https://github.com/wevm/wagmi/commit/53ca1f7eb411d912e11fcce7e03bd61ed067959c) Thanks [@tmm](https://github.com/tmm)! - Removed LedgerConnector due to security vulnerability
+
 ## 3.1.9
 
 ### Patch Changes
