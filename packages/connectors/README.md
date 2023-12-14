@@ -35,7 +35,6 @@ const config = createConfig({
 
 - [`CoinbaseWalletConnector`](/packages/connectors/src/coinbaseWallet.ts)
 - [`InjectedConnector`](/packages/connectors/src/injected.ts)
-- [`LedgerConnector`](/packages/connectors/src/ledger.ts)
 - [`MetaMaskConnector`](/packages/connectors/src/metaMask.ts)
 - [`MockConnector`](/packages/connectors/src/mock.ts)
 - [`SafeConnector`](/packages/connectors/src/safe.ts)

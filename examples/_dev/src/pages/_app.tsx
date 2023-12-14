@@ -5,7 +5,6 @@ import { avalanche, goerli, mainnet, optimism } from 'wagmi/chains'
 
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
-import { LedgerConnector } from 'wagmi/connectors/ledger'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { SafeConnector } from 'wagmi/connectors/safe'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
@@ -49,12 +48,6 @@ const config = createConfig({
       chains,
       options: {
         qrcode: true,
-      },
-    }),
-    new LedgerConnector({
-      chains,
-      options: {
-        projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ?? '',
       },
     }),
     new InjectedConnector({

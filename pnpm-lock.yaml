@@ -299,9 +299,6 @@ importers:
       '@coinbase/wallet-sdk':
         specifier: ^3.6.6
         version: 3.6.6
-      '@ledgerhq/connect-kit-loader':
-        specifier: ^1.1.0
-        version: 1.1.0
       '@safe-global/safe-apps-provider':
         specifier: ^0.18.1
         version: 0.18.1(typescript@5.0.4)
@@ -2398,6 +2395,7 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
+      napi-wasm: 1.1.0
     dev: false
     bundledDependencies:
       - napi-wasm
@@ -4838,7 +4836,7 @@ packages:
     resolution: {integrity: sha512-Of6l6JBAxiyQ5axFxUM6dYeP/W7X2Sozeo/4EYB9sJhL+dqL7TKjg+shwxp6jlu/6ZSERfsYtIpSJ1/x3XkAEA==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     peerDependencies:
-      esbuild: 0.15.13
+      esbuild: '>=0.13'
     dependencies:
       esbuild: 0.15.13
       load-tsconfig: 0.2.5
@@ -4848,7 +4846,7 @@ packages:
     resolution: {integrity: sha512-9NQkRHlNdNpDBGmLpngF3EFDcwodhMUuLz9PaWYciVcQF9SE4LFjM2DB/xV1Li5JiuDMv7ZUWuC3rGbqR0MAXQ==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     peerDependencies:
-      esbuild: 0.15.13
+      esbuild: '>=0.17'
     dependencies:
       esbuild: 0.15.13
       load-tsconfig: 0.2.5
@@ -5998,7 +5996,7 @@ packages:
   /esbuild-register@3.4.2(esbuild@0.15.13):
     resolution: {integrity: sha512-kG/XyTDyz6+YDuyfB9ZoSIOOmgyFCH+xPRtsCa8W85HLRV5Csp+o3jWVbOSHgSLfyLc5DmP+KFDNwty4mEjC+Q==}
     peerDependencies:
-      esbuild: 0.15.13
+      esbuild: '>=0.12 <1'
     dependencies:
       debug: 4.3.4(supports-color@8.1.1)
       esbuild: 0.15.13
@@ -9311,6 +9309,10 @@ packages:
 
   /napi-macros@2.0.0:
     resolution: {integrity: sha512-A0xLykHtARfueITVDernsAWdtIMbOJgKgcluwENp3AlsKN/PloyO10HtmoqnFAQAcxPkgZN7wdfPfEd0zNGxbg==}
+    dev: false
+
+  /napi-wasm@1.1.0:
+    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
     dev: false
 
   /natural-compare@1.4.0:
