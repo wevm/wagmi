@@ -75,15 +75,15 @@ test('multichain address', () => {
     // ^?
   })
 
-  // @ts-expect-error chain id must match address keys
   writeContract({
     functionName: 'transfer',
     args: ['0x', 123n],
+    // @ts-expect-error chain id must match address keys
     chainId: 420,
   })
 
-  // @ts-expect-error address not allowed
   writeContract({
+    // @ts-expect-error address not allowed
     address: '0x',
     functionName: 'transfer',
     args: ['0x', 123n],

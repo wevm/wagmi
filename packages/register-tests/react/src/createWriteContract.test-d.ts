@@ -1,27 +1,34 @@
-import { config } from '@wagmi/test'
+import { abi, config } from '@wagmi/test'
+import { type Address } from 'viem'
 import { expectTypeOf, test } from 'vitest'
-import { useSendTransaction } from 'wagmi'
 import { celo, mainnet, optimism } from 'wagmi/chains'
-import { type ChainId } from './config.js'
+import { createWriteContract } from 'wagmi/codegen'
+
+const useWriteErc20 = createWriteContract({
+  abi: abi.erc20,
+})
 
 test('chain formatters', () => {
-  const { sendTransaction } = useSendTransaction()
+  const { writeContract } = useWriteErc20()
+  const shared = {
+    address: '0x',
+    functionName: 'transferFrom',
+    args: ['0x', '0x', 123n],
+  } as const
 
-  sendTransaction(
-    {
-      to: '0x',
-      feeCurrency: '0x',
-      gatewayFee: 123n,
-      gatewayFeeRecipient: '0x',
-    },
-    {
-      onSuccess(_data, variables) {
-        expectTypeOf(variables.chainId).toEqualTypeOf<ChainId | undefined>()
-      },
-    },
-  )
+  writeContract({
+    ...shared,
+    feeCurrency: '0x',
+  })
 
-  type Result = Parameters<typeof sendTransaction<typeof celo.id>>[0]
+  type Result = Parameters<
+    typeof writeContract<
+      typeof abi.erc20,
+      'transferFrom',
+      [Address, Address, bigint],
+      typeof celo.id
+    >
+  >[0]
   expectTypeOf<Result['feeCurrency']>().toEqualTypeOf<
     `0x${string}` | undefined
   >()
@@ -29,26 +36,26 @@ test('chain formatters', () => {
   expectTypeOf<Result['gatewayFeeRecipient']>().toEqualTypeOf<
     `0x${string}` | undefined
   >()
-  sendTransaction({
+  writeContract({
+    ...shared,
     chainId: celo.id,
-    to: '0x',
     feeCurrency: '0x',
     gatewayFee: 123n,
     gatewayFeeRecipient: '0x',
   })
 
-  sendTransaction({
+  writeContract({
+    ...shared,
     chainId: mainnet.id,
-    to: '0x',
     // @ts-expect-error
     feeCurrency: '0x',
     gatewayFee: 123n,
     gatewayFeeRecipient: '0x',
   })
 
-  sendTransaction({
+  writeContract({
+    ...shared,
     chainId: optimism.id,
-    to: '0x',
     // @ts-expect-error
     feeCurrency: '0x',
     gatewayFee: 123n,
@@ -57,10 +64,12 @@ test('chain formatters', () => {
 })
 
 test('parameters: config', async () => {
-  const { sendTransaction } = useSendTransaction({ config })
+  const { writeContract } = useWriteErc20({ config })
 
-  sendTransaction({
-    to: '0x',
+  writeContract({
+    address: '0x',
+    functionName: 'transferFrom',
+    args: ['0x', '0x', 123n],
     // @ts-expect-error
     feeCurrency: '0x',
   })

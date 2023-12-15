@@ -51,7 +51,10 @@ export type CreateWriteContractReturnType<
 > = <config extends Config = ResolvedRegister['config'], context = unknown>(
   parameters?: UseWriteContractParameters<config, context>,
 ) => Evaluate<
-  wagmi_UseWriteContractReturnType<config, context> & {
+  Omit<
+    wagmi_UseWriteContractReturnType<config, context>,
+    'writeContract' | 'writeContractAsync'
+  > & {
     writeContract: <
       const abi2 extends abi,
       functionName extends ContractFunctionName<abi2, stateMutability>,
@@ -113,13 +116,13 @@ export function createWriteContract<
   config: CreateWriteContractParameters<abi, address>,
 ): CreateWriteContractReturnType<abi, address> {
   if (config.address !== undefined && typeof config.address === 'object')
-    return ((parameters) => {
+    return (parameters) => {
       const result = useWriteContract(parameters)
       const configChainId = useChainId()
       const account = useAccount()
       type Args = Parameters<wagmi_UseWriteContractReturnType['writeContract']>
       return {
-        ...result,
+        ...(result as any),
         writeContract: useCallback(
           (...args: Args) => {
             let chainId
@@ -163,13 +166,13 @@ export function createWriteContract<
           ],
         ),
       }
-    }) as CreateWriteContractReturnType<abi, address>
+    }
 
-  return ((parameters) => {
+  return (parameters) => {
     const result = useWriteContract(parameters)
     type Args = Parameters<wagmi_UseWriteContractReturnType['writeContract']>
     return {
-      ...result,
+      ...(result as any),
       writeContract: useCallback(
         (...args: Args) => {
           const address = config.address ?? args[0].address
@@ -187,7 +190,7 @@ export function createWriteContract<
         [config, result.writeContractAsync],
       ),
     }
-  }) as CreateWriteContractReturnType<abi, address>
+  }
 }
 
 type Variables<
@@ -219,7 +222,12 @@ type Variables<
     >
   }[number] &
     (address extends Record<number, Address>
-      ? { chainId?: keyof address | undefined }
+      ? {
+          chainId?:
+            | keyof address
+            | (chainId extends keyof address ? chainId : never)
+            | undefined
+        }
       : Evaluate<ChainIdParameter<config, chainId>>) &
     ConnectorParameter & { __mode?: 'prepared' }
 >
