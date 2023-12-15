@@ -4,11 +4,7 @@ import {
   type SimulateContractErrorType,
   type SimulateContractParameters,
 } from '@wagmi/core'
-import {
-  type ScopeKeyParameter,
-  type UnionOmit,
-  type UnionPartial,
-} from '@wagmi/core/internal'
+import { type ScopeKeyParameter, type UnionPartial } from '@wagmi/core/internal'
 import {
   type SimulateContractData,
   type SimulateContractQueryFnData,
@@ -21,7 +17,12 @@ import {
   type ContractFunctionName,
 } from 'viem'
 import type { ConfigParameter, QueryParameter } from '../../types/properties.js'
-import type { UseSimulateContractReturnType } from '../useSimulateContract.js'
+import { useAccount } from '../useAccount.js'
+import { useChainId } from '../useChainId.js'
+import {
+  type UseSimulateContractReturnType,
+  useSimulateContract,
+} from '../useSimulateContract.js'
 
 type stateMutability = 'nonpayable' | 'payable'
 
@@ -42,14 +43,11 @@ export type CreateSimulateContractReturnType<
   config extends Config = ResolvedRegister['config'],
   chainId extends config['chains'][number]['id'] | undefined = undefined,
   selectData = SimulateContractData<abi, functionName, args, config, chainId>,
-  ///
-  omittedProperties extends 'abi' | 'address' | 'chainId' =
-    | 'abi'
-    | (address extends undefined ? never : 'address')
-    | (address extends Record<number, Address> ? 'chainId' : never),
 >(
   parameters?: {
-    functionName: functionName
+    abi?: undefined
+    address?: address extends undefined ? Address : undefined
+    functionName?: functionName
     chainId?: address extends Record<number, Address>
       ?
           | keyof address
@@ -57,11 +55,8 @@ export type CreateSimulateContractReturnType<
           | undefined
       : chainId | number | undefined
   } & UnionPartial<
-    // TODO: Omit breaks overloads
-    UnionOmit<
-      SimulateContractParameters<abi, functionName, args, config, chainId>,
-      omittedProperties
-    >
+    // TODO: Take `abi` and `address` from above and omit from below (currently breaks inference)
+    SimulateContractParameters<abi, functionName, args, config, chainId>
   > &
     ScopeKeyParameter &
     ConfigParameter<config> &
@@ -80,7 +75,7 @@ export type CreateSimulateContractReturnType<
   selectData
 >
 
-export declare function createSimulateContract<
+export function createSimulateContract<
   const abi extends Abi | readonly unknown[],
   const address extends
     | Address
@@ -88,10 +83,20 @@ export declare function createSimulateContract<
     | undefined = undefined,
 >(
   config: CreateSimulateContractParameters<abi, address>,
-): CreateSimulateContractReturnType<abi, address>
+): CreateSimulateContractReturnType<abi, address> {
+  if (config.address !== undefined && typeof config.address === 'object')
+    return (parameters) => {
+      const configChainId = useChainId()
+      const account = useAccount()
+      const chainId =
+        (parameters as { chainId?: number })?.chainId ??
+        account.chainId ??
+        configChainId
+      const address = config.address?.[chainId]
+      return useSimulateContract({ ...(parameters as any), ...config, address })
+    }
 
-// {
-//   if (config.address !== undefined && typeof config.address === 'object')
-//     return (parameters) => {}
-//   return (parameters) => {}
-// }
+  return (parameters) => {
+    return useSimulateContract({ ...(parameters as any), ...config })
+  }
+}

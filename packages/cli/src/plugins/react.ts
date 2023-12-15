@@ -53,6 +53,13 @@ export function react(_config: ReactConfig = {}): ReactResult {
               contract.name,
             )} = ${pure} createWriteContract(${innerContent})`,
           )
+
+          imports.add('createSimulateContract')
+          content.push(
+            `export const useSimulate${pascalCase(
+              contract.name,
+            )} = ${pure} createSimulateContract(${innerContent})`,
+          )
         }
       }
 
