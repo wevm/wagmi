@@ -1,13 +1,50 @@
 import { pascalCase } from 'change-case'
 
-import { type Plugin } from '../config.js'
+import { type Contract, type Plugin } from '../config.js'
 import { type Evaluate, type RequiredBy } from '../types.js'
+import { getAddressDocString } from '../utils/getAddressDocString.js'
 
-export type ReactConfig = { foo?: string | undefined }
+export type ReactConfig = {
+  getHookName?:
+    | 'legacy' // TODO: Deprecate `'legacy'` option
+    | ((options: {
+        contractName: Contract['name']
+        type: 'read' | 'simulate' | 'watch' | 'write'
+      }) => `use${string}`)
+}
 
 type ReactResult = Evaluate<RequiredBy<Plugin, 'run'>>
 
-export function react(_config: ReactConfig = {}): ReactResult {
+export function react(config: ReactConfig = {}): ReactResult {
+  function getHookName(
+    type: 'read' | 'simulate' | 'watch' | 'write',
+    contractName: string,
+  ) {
+    const ContractName = pascalCase(contractName)
+
+    if (typeof config.getHookName === 'function')
+      return config.getHookName({
+        type,
+        contractName: ContractName,
+      })
+    else if (typeof config.getHookName === 'string') {
+      switch (type) {
+        case 'read':
+          return `use${ContractName}Read`
+        case 'simulate':
+          return `usePrepare${ContractName}Write`
+        case 'watch':
+          return `use${ContractName}Event`
+        case 'write':
+          return `use${ContractName}Write`
+      }
+    }
+
+    const hookName = `use${pascalCase(type)}${ContractName}`
+    if (type === 'watch') return `${hookName}Event`
+    return hookName
+  }
+
   return {
     name: 'React',
     async run({ contracts }) {
@@ -37,29 +74,46 @@ export function react(_config: ReactConfig = {}): ReactResult {
           innerContent = `{ abi: ${contract.meta.abiName}, address: ${contract.meta.addressName} }`
         else innerContent = `{ abi: ${contract.meta.abiName} }`
 
+        if (hasEvent) {
+          imports.add('createWatchContractEvent')
+          const hookName = getHookName('watch', contract.name)
+          const docString = genDocString(hookName, contract)
+          content.push(
+            `${docString}
+export const ${hookName} = ${pure} createWatchContractEvent(${innerContent})`,
+          )
+        }
+
         if (hasReadFunction) {
           imports.add('createReadContract')
+          const hookName = getHookName('read', contract.name)
+          const docString = genDocString(hookName, contract)
           content.push(
-            `export const useRead${pascalCase(
-              contract.name,
-            )} = ${pure} createReadContract(${innerContent})`,
+            `${docString}
+export const ${hookName} = ${pure} createReadContract(${innerContent})`,
           )
         }
 
         if (hasWriteFunction) {
-          imports.add('createWriteContract')
-          content.push(
-            `export const useWrite${pascalCase(
-              contract.name,
-            )} = ${pure} createWriteContract(${innerContent})`,
-          )
+          {
+            imports.add('createWriteContract')
+            const hookName = getHookName('write', contract.name)
+            const docString = genDocString(hookName, contract)
+            content.push(
+              `${docString}
+export const ${hookName} = ${pure} createWriteContract(${innerContent})`,
+            )
+          }
 
-          imports.add('createSimulateContract')
-          content.push(
-            `export const useSimulate${pascalCase(
-              contract.name,
-            )} = ${pure} createSimulateContract(${innerContent})`,
-          )
+          {
+            imports.add('createSimulateContract')
+            const hookName = getHookName('simulate', contract.name)
+            const docString = genDocString(hookName, contract)
+            content.push(
+              `${docString}
+export const ${hookName} = ${pure} createSimulateContract(${innerContent})`,
+            )
+          }
         }
       }
 
@@ -73,4 +127,18 @@ export function react(_config: ReactConfig = {}): ReactResult {
       }
     },
   }
+}
+
+function genDocString(hookName: string, contract: Contract) {
+  const docString = getAddressDocString({ address: contract.address })
+  if (docString)
+    return `/**
+ * Wraps __{@link ${hookName}}__ with \`abi\` set to __{@link ${contract.meta.abiName}}__
+ * 
+ ${docString}
+ */`
+
+  return `/**
+ * Wraps __{@link ${hookName}}__ with \`abi\` set to __{@link ${contract.meta.abiName}}__
+ */`
 }

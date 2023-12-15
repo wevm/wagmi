@@ -11,7 +11,7 @@ export default async function () {
   await Promise.all(promises)
 }
 
-async function createProxy(chain: Chain, retry = true) {
+async function createProxy(chain: Chain) {
   try {
     await startProxy({
       port: chain.port,
@@ -24,11 +24,8 @@ async function createProxy(chain: Chain, retry = true) {
       },
     })
   } catch (error) {
-    if (retry && (error as Error).message.includes('EADDRINUSE'))
-      exec(`kill -9 $(lsof -t -i:${chain.port})`, async (error) => {
-        if (!error) await createProxy(chain, false)
-        else throw error
-      })
+    if ((error as Error).message.includes('EADDRINUSE'))
+      exec(`kill -9 $(lsof -t -i:${chain.port})`)
     else throw error
   }
 }

@@ -7,6 +7,7 @@ test('exports', () => {
     [
       "createSimulateContract",
       "createReadContract",
+      "createWatchContractEvent",
       "createWriteContract",
     ]
   `)
