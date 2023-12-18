@@ -172,6 +172,16 @@ const sponsors = [
     },
   },
   {
+    id: 'lattice',
+    name: 'Lattice',
+    href: 'https://lattice.xyz',
+    logo: {
+      dark: 'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/lattice-dark.svg',
+      light:
+        'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/lattice-light.svg',
+    },
+  },
+  {
     id: 'supa',
     name: 'Supa',
     href: 'https://twitter.com/supafinance',
@@ -179,6 +189,16 @@ const sponsors = [
       dark: 'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/supa-dark.svg',
       light:
         'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/supa-light.svg',
+    },
+  },
+  {
+    id: 'zksync',
+    name: 'zkSync',
+    href: 'https://zksync.io',
+    logo: {
+      dark: 'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/zksync-dark.svg',
+      light:
+        'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/zksync-light.svg',
     },
   },
 ] as const
