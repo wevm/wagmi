@@ -51,6 +51,11 @@ export function useSponsors() {
           url: 'https://pancakeswap.finance',
           img: 'pancake-light.svg',
         },
+        {
+          name: 'zkSync',
+          url: 'https://zksync.io',
+          img: 'zksync-light.svg',
+        },
       ],
       silver: [
         {
@@ -127,11 +132,6 @@ export function useSponsors() {
           name: 'Supa',
           url: 'https://twitter.com/supafinance',
           img: 'supa-light.svg',
-        },
-        {
-          name: 'zkSync',
-          url: 'https://zksync.io',
-          img: 'zksync-light.svg',
         },
       ],
     }
