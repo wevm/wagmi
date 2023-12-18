@@ -20,29 +20,29 @@ test('default', async () => {
   })
 
   expect(result.imports).toMatchInlineSnapshot(`
-    "import { createWatchContractEvent, createReadContract, createWriteContract, createSimulateContract } from 'wagmi/codegen'
+    "import { createUseWatchContractEvent, createUseReadContract, createUseWriteContract, createUseSimulateContract } from 'wagmi/codegen'
     "
   `)
   expect(result.content).toMatchInlineSnapshot(`
     "/**
-     * Wraps __{@link useWatchErc20Event}__ with \`abi\` set to __{@link erc20Abi}__
+     * Wraps __{@link useWatchContractEvent}__ with \`abi\` set to __{@link erc20Abi}__
      */
-    export const useWatchErc20Event = /*#__PURE__*/ createWatchContractEvent({ abi: erc20Abi })
+    export const useWatchErc20Event = /*#__PURE__*/ createUseWatchContractEvent({ abi: erc20Abi })
 
     /**
-     * Wraps __{@link useReadErc20}__ with \`abi\` set to __{@link erc20Abi}__
+     * Wraps __{@link useReadContract}__ with \`abi\` set to __{@link erc20Abi}__
      */
-    export const useReadErc20 = /*#__PURE__*/ createReadContract({ abi: erc20Abi })
+    export const useReadErc20 = /*#__PURE__*/ createUseReadContract({ abi: erc20Abi })
 
     /**
-     * Wraps __{@link useWriteErc20}__ with \`abi\` set to __{@link erc20Abi}__
+     * Wraps __{@link useWriteContract}__ with \`abi\` set to __{@link erc20Abi}__
      */
-    export const useWriteErc20 = /*#__PURE__*/ createWriteContract({ abi: erc20Abi })
+    export const useWriteErc20 = /*#__PURE__*/ createUseWriteContract({ abi: erc20Abi })
 
     /**
-     * Wraps __{@link useSimulateErc20}__ with \`abi\` set to __{@link erc20Abi}__
+     * Wraps __{@link useSimulateContract}__ with \`abi\` set to __{@link erc20Abi}__
      */
-    export const useSimulateErc20 = /*#__PURE__*/ createSimulateContract({ abi: erc20Abi })"
+    export const useSimulateErc20 = /*#__PURE__*/ createUseSimulateContract({ abi: erc20Abi })"
   `)
 })
 
@@ -65,24 +65,24 @@ test('address', async () => {
 
   expect(result.content).toMatchInlineSnapshot(`
     "/**
-     * Wraps __{@link useWatchErc20Event}__ with \`abi\` set to __{@link erc20Abi}__
+     * Wraps __{@link useWatchContractEvent}__ with \`abi\` set to __{@link erc20Abi}__
      */
-    export const useWatchErc20Event = /*#__PURE__*/ createWatchContractEvent({ abi: erc20Abi, address: erc20Address })
+    export const useWatchErc20Event = /*#__PURE__*/ createUseWatchContractEvent({ abi: erc20Abi, address: erc20Address })
 
     /**
-     * Wraps __{@link useReadErc20}__ with \`abi\` set to __{@link erc20Abi}__
+     * Wraps __{@link useReadContract}__ with \`abi\` set to __{@link erc20Abi}__
      */
-    export const useReadErc20 = /*#__PURE__*/ createReadContract({ abi: erc20Abi, address: erc20Address })
+    export const useReadErc20 = /*#__PURE__*/ createUseReadContract({ abi: erc20Abi, address: erc20Address })
 
     /**
-     * Wraps __{@link useWriteErc20}__ with \`abi\` set to __{@link erc20Abi}__
+     * Wraps __{@link useWriteContract}__ with \`abi\` set to __{@link erc20Abi}__
      */
-    export const useWriteErc20 = /*#__PURE__*/ createWriteContract({ abi: erc20Abi, address: erc20Address })
+    export const useWriteErc20 = /*#__PURE__*/ createUseWriteContract({ abi: erc20Abi, address: erc20Address })
 
     /**
-     * Wraps __{@link useSimulateErc20}__ with \`abi\` set to __{@link erc20Abi}__
+     * Wraps __{@link useSimulateContract}__ with \`abi\` set to __{@link erc20Abi}__
      */
-    export const useSimulateErc20 = /*#__PURE__*/ createSimulateContract({ abi: erc20Abi, address: erc20Address })"
+    export const useSimulateErc20 = /*#__PURE__*/ createUseSimulateContract({ abi: erc20Abi, address: erc20Address })"
   `)
 })
 
@@ -105,23 +105,23 @@ test('legacy hook names', async () => {
 
   expect(result.content).toMatchInlineSnapshot(`
     "/**
-     * Wraps __{@link useErc20Event}__ with \`abi\` set to __{@link erc20Abi}__
+     * Wraps __{@link useWatchContractEvent}__ with \`abi\` set to __{@link erc20Abi}__
      */
-    export const useErc20Event = /*#__PURE__*/ createWatchContractEvent({ abi: erc20Abi, address: erc20Address })
+    export const useErc20Event = /*#__PURE__*/ createUseWatchContractEvent({ abi: erc20Abi, address: erc20Address })
 
     /**
-     * Wraps __{@link useErc20Read}__ with \`abi\` set to __{@link erc20Abi}__
+     * Wraps __{@link useReadContract}__ with \`abi\` set to __{@link erc20Abi}__
      */
-    export const useErc20Read = /*#__PURE__*/ createReadContract({ abi: erc20Abi, address: erc20Address })
+    export const useErc20Read = /*#__PURE__*/ createUseReadContract({ abi: erc20Abi, address: erc20Address })
 
     /**
-     * Wraps __{@link useErc20Write}__ with \`abi\` set to __{@link erc20Abi}__
+     * Wraps __{@link useWriteContract}__ with \`abi\` set to __{@link erc20Abi}__
      */
-    export const useErc20Write = /*#__PURE__*/ createWriteContract({ abi: erc20Abi, address: erc20Address })
+    export const useErc20Write = /*#__PURE__*/ createUseWriteContract({ abi: erc20Abi, address: erc20Address })
 
     /**
-     * Wraps __{@link usePrepareErc20Write}__ with \`abi\` set to __{@link erc20Abi}__
+     * Wraps __{@link useSimulateContract}__ with \`abi\` set to __{@link erc20Abi}__
      */
-    export const usePrepareErc20Write = /*#__PURE__*/ createSimulateContract({ abi: erc20Abi, address: erc20Address })"
+    export const usePrepareErc20Write = /*#__PURE__*/ createUseSimulateContract({ abi: erc20Abi, address: erc20Address })"
   `)
 })

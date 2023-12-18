@@ -1,10 +1,10 @@
 import { abi, mainnet, optimism } from '@wagmi/test'
 import { assertType, expectTypeOf, test } from 'vitest'
 
-import { createReadContract } from './createReadContract.js'
+import { createUseReadContract } from './createUseReadContract.js'
 
 test('default', () => {
-  const useReadErc20 = createReadContract({
+  const useReadErc20 = createUseReadContract({
     abi: abi.erc20,
   })
 
@@ -17,7 +17,7 @@ test('default', () => {
 })
 
 test('select data', () => {
-  const useReadErc20 = createReadContract({
+  const useReadErc20 = createUseReadContract({
     abi: abi.erc20,
   })
 
@@ -36,7 +36,7 @@ test('select data', () => {
 })
 
 test('multichain address', () => {
-  const useReadErc20 = createReadContract({
+  const useReadErc20 = createUseReadContract({
     abi: abi.erc20,
     address: {
       [mainnet.id]: '0x',
@@ -68,7 +68,7 @@ test('multichain address', () => {
 })
 
 test('overloads', () => {
-  const useReadViewOverloads = createReadContract({
+  const useReadViewOverloads = createUseReadContract({
     abi: abi.viewOverloads,
   })
 

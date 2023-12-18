@@ -3,12 +3,13 @@ import { type Address, type Hash } from 'viem'
 import { mainnet, optimism } from 'viem/chains'
 import { expectTypeOf, test } from 'vitest'
 
-import { createWriteContract } from './createWriteContract.js'
+import { useSimulateContract } from '../useSimulateContract.js'
+import { createUseWriteContract } from './createUseWriteContract.js'
 
 const contextValue = { foo: 'bar' } as const
 
 test('default', () => {
-  const useWriteErc20 = createWriteContract({
+  const useWriteErc20 = createUseWriteContract({
     abi: abi.erc20,
   })
 
@@ -21,7 +22,7 @@ test('default', () => {
 })
 
 test('context', () => {
-  const useWriteErc20 = createWriteContract({
+  const useWriteErc20 = createUseWriteContract({
     abi: abi.erc20,
   })
 
@@ -59,7 +60,7 @@ test('context', () => {
 })
 
 test('multichain address', () => {
-  const useWriteErc20 = createWriteContract({
+  const useWriteErc20 = createUseWriteContract({
     abi: abi.erc20,
     address: {
       [mainnet.id]: '0x',
@@ -91,7 +92,7 @@ test('multichain address', () => {
 })
 
 test('overloads', () => {
-  const useWriteErc20 = createWriteContract({
+  const useWriteOverloads = createUseWriteContract({
     abi: abi.writeOverloads,
     address: {
       [mainnet.id]: '0x',
@@ -99,7 +100,7 @@ test('overloads', () => {
     },
   })
 
-  const { writeContract } = useWriteErc20()
+  const { writeContract } = useWriteOverloads()
   writeContract({
     functionName: 'foo',
     args: [],
@@ -116,4 +117,24 @@ test('overloads', () => {
   })
 })
 
-test.todo('useSimulateContract', () => {})
+test('useSimulateContract', () => {
+  const useWriteErc20 = createUseWriteContract({
+    abi: abi.erc20,
+    address: {
+      [mainnet.id]: '0x',
+      [optimism.id]: '0x',
+    },
+  })
+
+  const { data } = useSimulateContract({
+    address: '0x',
+    abi: abi.erc20,
+    functionName: 'transferFrom',
+    args: ['0x', '0x', 123n],
+    chainId: 1,
+  })
+  const { writeContract } = useWriteErc20()
+
+  const request = data?.request
+  if (request) writeContract(request)
+})

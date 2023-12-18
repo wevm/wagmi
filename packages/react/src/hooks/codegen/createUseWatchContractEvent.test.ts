@@ -3,10 +3,10 @@ import { renderHook } from '@wagmi/test/react'
 import { type WatchEventOnLogsParameter } from 'viem'
 import { test } from 'vitest'
 
-import { createWatchContractEvent } from './createWatchContractEvent.js'
+import { createUseWatchContractEvent } from './createUseWatchContractEvent.js'
 
 test('default', async () => {
-  const useWatchErc20Event = createWatchContractEvent({
+  const useWatchErc20Event = createUseWatchContractEvent({
     address: address.usdc,
     abi: abi.wagmiMintExample,
   })
@@ -23,7 +23,7 @@ test('default', async () => {
 })
 
 test('multichain', async () => {
-  const useWatchErc20Event = createWatchContractEvent({
+  const useWatchErc20Event = createUseWatchContractEvent({
     address: {
       [chain.mainnet.id]: address.usdc,
       [chain.mainnet2.id]: address.usdc,

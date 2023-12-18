@@ -2,10 +2,10 @@ import { abi, mainnet, optimism } from '@wagmi/test'
 import { type Address } from 'viem'
 import { assertType, expectTypeOf, test } from 'vitest'
 
-import { createSimulateContract } from './createSimulateContract.js'
+import { createUseSimulateContract } from './createUseSimulateContract.js'
 
 test('default', () => {
-  const useSimulateErc20 = createSimulateContract({
+  const useSimulateErc20 = createUseSimulateContract({
     abi: abi.erc20,
   })
 
@@ -43,7 +43,7 @@ test('default', () => {
 })
 
 test('select data', () => {
-  const useSimulateErc20 = createSimulateContract({
+  const useSimulateErc20 = createUseSimulateContract({
     abi: abi.erc20,
   })
 
@@ -62,7 +62,7 @@ test('select data', () => {
 })
 
 test('multichain address', () => {
-  const useSimulateErc20 = createSimulateContract({
+  const useSimulateErc20 = createUseSimulateContract({
     abi: abi.erc20,
     address: {
       [mainnet.id]: '0x',
@@ -93,7 +93,7 @@ test('multichain address', () => {
 })
 
 test('overloads', () => {
-  const useSimulateWriteOverloads = createSimulateContract({
+  const useSimulateWriteOverloads = createUseSimulateContract({
     abi: abi.writeOverloads,
   })
 

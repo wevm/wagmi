@@ -9,10 +9,6 @@ test('exports', () => {
       "createReadContract",
       "createWatchContractEvent",
       "createWriteContract",
-      "createUseSimulateContract",
-      "createUseReadContract",
-      "createUseWatchContractEvent",
-      "createUseWriteContract",
     ]
   `)
 })

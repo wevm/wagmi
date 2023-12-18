@@ -8,7 +8,7 @@ export type ReactConfig = {
   getHookName?:
     | 'legacy' // TODO: Deprecate `'legacy'` option
     | ((options: {
-        contractName: Contract['name']
+        contractName: string
         type: 'read' | 'simulate' | 'watch' | 'write'
       }) => `use${string}`)
 }
@@ -75,43 +75,47 @@ export function react(config: ReactConfig = {}): ReactResult {
         else innerContent = `{ abi: ${contract.meta.abiName} }`
 
         if (hasEvent) {
-          imports.add('createWatchContractEvent')
           const hookName = getHookName('watch', contract.name)
-          const docString = genDocString(hookName, contract)
+          const docString = genDocString('useWatchContractEvent', contract)
+          const functionName = 'createUseWatchContractEvent'
+          imports.add(functionName)
           content.push(
             `${docString}
-export const ${hookName} = ${pure} createWatchContractEvent(${innerContent})`,
+export const ${hookName} = ${pure} ${functionName}(${innerContent})`,
           )
         }
 
         if (hasReadFunction) {
-          imports.add('createReadContract')
           const hookName = getHookName('read', contract.name)
-          const docString = genDocString(hookName, contract)
+          const docString = genDocString('useReadContract', contract)
+          const functionName = 'createUseReadContract'
+          imports.add(functionName)
           content.push(
             `${docString}
-export const ${hookName} = ${pure} createReadContract(${innerContent})`,
+export const ${hookName} = ${pure} ${functionName}(${innerContent})`,
           )
         }
 
         if (hasWriteFunction) {
           {
-            imports.add('createWriteContract')
             const hookName = getHookName('write', contract.name)
-            const docString = genDocString(hookName, contract)
+            const docString = genDocString('useWriteContract', contract)
+            const functionName = 'createUseWriteContract'
+            imports.add(functionName)
             content.push(
               `${docString}
-export const ${hookName} = ${pure} createWriteContract(${innerContent})`,
+export const ${hookName} = ${pure} ${functionName}(${innerContent})`,
             )
           }
 
           {
-            imports.add('createSimulateContract')
             const hookName = getHookName('simulate', contract.name)
-            const docString = genDocString(hookName, contract)
+            const docString = genDocString('useSimulateContract', contract)
+            const functionName = 'createUseSimulateContract'
+            imports.add(functionName)
             content.push(
               `${docString}
-export const ${hookName} = ${pure} createSimulateContract(${innerContent})`,
+export const ${hookName} = ${pure} ${functionName}(${innerContent})`,
             )
           }
         }

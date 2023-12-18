@@ -91,7 +91,7 @@
         "ignoreDependencies": ["@walletconnect/modal"]
       },
       "packages/core": {
-        "entry": "src/exports/{actions,chains,index,internal,query}.ts!",
+        "entry": "src/exports/{actions,chains,codegen,index,internal,query}.ts!",
         "ignoreDependencies": ["@tanstack/query-core"]
       },
       "packages/create-wagmi": {

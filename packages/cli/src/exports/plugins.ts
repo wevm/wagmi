@@ -1,3 +1,5 @@
+export { actions, type ActionsConfig } from '../plugins/actions.js'
+
 export {
   blockExplorer,
   type BlockExplorerConfig,

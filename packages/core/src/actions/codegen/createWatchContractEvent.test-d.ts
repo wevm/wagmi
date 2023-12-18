@@ -1,17 +1,18 @@
-import { http, createConfig, webSocket } from '@wagmi/core'
-import { abi, mainnet, optimism } from '@wagmi/test'
+import { abi, config, mainnet, optimism } from '@wagmi/test'
+import { http, webSocket } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
+import { createConfig } from '../../createConfig.js'
 import { createWatchContractEvent } from './createWatchContractEvent.js'
 
 test('default', () => {
-  const useWatchErc20Event = createWatchContractEvent({
+  const watchErc20Event = createWatchContractEvent({
     abi: abi.erc20,
   })
 
-  useWatchErc20Event({
+  watchErc20Event(config, {
     eventName: 'Transfer',
-    chainId: 123,
+    chainId: 1,
     onLogs(logs) {
       expectTypeOf(logs[0]!.eventName).toEqualTypeOf<'Transfer'>()
       expectTypeOf(logs[0]!.args).toEqualTypeOf<{
@@ -24,7 +25,7 @@ test('default', () => {
 })
 
 test('multichain address', () => {
-  const useWatchErc20Event = createWatchContractEvent({
+  const watchErc20Event = createWatchContractEvent({
     abi: abi.erc20,
     address: {
       [mainnet.id]: '0x',
@@ -32,27 +33,30 @@ test('multichain address', () => {
     },
   })
 
-  useWatchErc20Event({
+  watchErc20Event(config, {
     eventName: 'Transfer',
     chainId: mainnet.id,
     // ^?
+    onLogs() {},
   })
 
-  useWatchErc20Event({
+  watchErc20Event(config, {
     eventName: 'Transfer',
     // @ts-expect-error chain id must match address keys
     chainId: 420,
+    onLogs() {},
   })
 
-  useWatchErc20Event({
+  watchErc20Event(config, {
     eventName: 'Transfer',
     // @ts-expect-error chain id must match address keys
     address: '0x',
+    onLogs() {},
   })
 })
 
 test('differing transports', () => {
-  const useWatchErc20Event = createWatchContractEvent({
+  const watchErc20Event = createWatchContractEvent({
     abi: abi.erc20,
   })
 
@@ -64,21 +68,19 @@ test('differing transports', () => {
     },
   })
 
-  useWatchErc20Event({
-    config,
+  watchErc20Event(config, {
     poll: false,
     address: '0x',
     onLogs() {},
   })
 
-  useWatchErc20Event({
-    config,
+  watchErc20Event(config, {
     chainId: mainnet.id,
     poll: true,
     address: '0x',
     onLogs() {},
   })
-  useWatchErc20Event({
+  watchErc20Event(config, {
     config,
     chainId: mainnet.id,
     // @ts-expect-error poll required since http transport
@@ -87,15 +89,13 @@ test('differing transports', () => {
     onLogs() {},
   })
 
-  useWatchErc20Event({
-    config,
+  watchErc20Event(config, {
     chainId: optimism.id,
     poll: true,
     address: '0x',
     onLogs() {},
   })
-  useWatchErc20Event({
-    config,
+  watchErc20Event(config, {
     chainId: optimism.id,
     poll: false,
     address: '0x',

@@ -1,22 +1,14 @@
-import {
-  type Config,
-  type ResolvedRegister,
-  type WatchContractEventParameters,
-} from '@wagmi/core'
-import {
-  type UnionEvaluate,
-  type UnionOmit,
-  type UnionPartial,
-} from '@wagmi/core/internal'
 import { type Abi, type Address, type ContractEventName } from 'viem'
 
+import { type Config } from '../../createConfig.js'
+import { type UnionEvaluate, type UnionOmit } from '../../types/utils.js'
+import { getAccount } from '../getAccount.js'
+import { getChainId } from '../getChainId.js'
 import {
-  type ConfigParameter,
-  type EnabledParameter,
-} from '../../types/properties.js'
-import { useAccount } from '../useAccount.js'
-import { useChainId } from '../useChainId.js'
-import { useWatchContractEvent } from '../useWatchContractEvent.js'
+  type WatchContractEventParameters,
+  type WatchContractEventReturnType,
+  watchContractEvent,
+} from '../watchContractEvent.js'
 
 export type CreateWatchContractEventParameters<
   abi extends Abi | readonly unknown[],
@@ -35,25 +27,22 @@ export type CreateWatchContractEventReturnType<
     | (address extends undefined ? never : 'address')
     | (address extends Record<number, Address> ? 'chainId' : never),
 > = <
+  config extends Config,
   eventName extends ContractEventName<abi>,
   strict extends boolean | undefined = undefined,
-  config extends Config = ResolvedRegister['config'],
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
 >(
-  parameters?: UnionEvaluate<
-    UnionPartial<
-      UnionOmit<
-        WatchContractEventParameters<abi, eventName, strict, config, chainId>,
-        omittedProperties
-      >
-    > &
-      ConfigParameter<config> &
-      EnabledParameter
+  config: config,
+  parameters: UnionEvaluate<
+    UnionOmit<
+      WatchContractEventParameters<abi, eventName, strict, config, chainId>,
+      omittedProperties
+    >
   > &
     (address extends Record<number, Address>
       ? { chainId?: keyof address | undefined }
       : unknown),
-) => void
+) => WatchContractEventReturnType
 
 export function createWatchContractEvent<
   const abi extends Abi | readonly unknown[],
@@ -62,25 +51,25 @@ export function createWatchContractEvent<
     | Record<number, Address>
     | undefined = undefined,
 >(
-  config: CreateWatchContractEventParameters<abi, address>,
+  c: CreateWatchContractEventParameters<abi, address>,
 ): CreateWatchContractEventReturnType<abi, address> {
-  if (config.address !== undefined && typeof config.address === 'object')
-    return (parameters) => {
-      const configChainId = useChainId()
-      const account = useAccount()
+  if (c.address !== undefined && typeof c.address === 'object')
+    return (config, parameters) => {
+      const configChainId = getChainId(config)
+      const account = getAccount(config)
       const chainId =
         (parameters as { chainId?: number })?.chainId ??
         account.chainId ??
         configChainId
-      const address = config.address?.[chainId]
-      return useWatchContractEvent({
+      const address = c.address?.[chainId]
+      return watchContractEvent(config, {
         ...(parameters as any),
-        ...config,
+        ...c,
         address,
       })
     }
 
-  return (parameters) => {
-    return useWatchContractEvent({ ...(parameters as any), ...config })
+  return (config, parameters) => {
+    return watchContractEvent(config, { ...(parameters as any), ...c })
   }
 }

@@ -1,7 +1,17 @@
-export { createSimulateContract } from '../hooks/codegen/createSimulateContract.js'
+////////////////////////////////////////////////////////////////////////////////
+// @wagmi/core/codegen
+////////////////////////////////////////////////////////////////////////////////
 
-export { createReadContract } from '../hooks/codegen/createReadContract.js'
+export * from '@wagmi/core/codegen'
 
-export { createWatchContractEvent } from '../hooks/codegen/createWatchContractEvent.js'
+////////////////////////////////////////////////////////////////////////////////
+// Hooks
+////////////////////////////////////////////////////////////////////////////////
 
-export { createWriteContract } from '../hooks/codegen/createWriteContract.js'
+export { createUseSimulateContract } from '../hooks/codegen/createUseSimulateContract.js'
+
+export { createUseReadContract } from '../hooks/codegen/createUseReadContract.js'
+
+export { createUseWatchContractEvent } from '../hooks/codegen/createUseWatchContractEvent.js'
+
+export { createUseWriteContract } from '../hooks/codegen/createUseWriteContract.js'

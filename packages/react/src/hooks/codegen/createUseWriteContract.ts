@@ -1,4 +1,4 @@
-import type { MutateOptions } from '@tanstack/react-query'
+import { type MutateOptions } from '@tanstack/react-query'
 import {
   type Config,
   type ResolvedRegister,
@@ -37,7 +37,7 @@ import {
 
 type stateMutability = 'nonpayable' | 'payable'
 
-export type CreateWriteContractParameters<
+export type CreateUseWriteContractParameters<
   abi extends Abi | readonly unknown[],
   address extends Address | Record<number, Address> | undefined = undefined,
 > = {
@@ -45,7 +45,7 @@ export type CreateWriteContractParameters<
   address?: address | Address | Record<number, Address> | undefined
 }
 
-export type CreateWriteContractReturnType<
+export type CreateUseWriteContractReturnType<
   abi extends Abi | readonly unknown[],
   address extends Address | Record<number, Address> | undefined,
 > = <config extends Config = ResolvedRegister['config'], context = unknown>(
@@ -106,15 +106,15 @@ export type CreateWriteContractReturnType<
   }
 >
 
-export function createWriteContract<
+export function createUseWriteContract<
   const abi extends Abi | readonly unknown[],
   const address extends
     | Address
     | Record<number, Address>
     | undefined = undefined,
 >(
-  config: CreateWriteContractParameters<abi, address>,
-): CreateWriteContractReturnType<abi, address> {
+  config: CreateUseWriteContractParameters<abi, address>,
+): CreateUseWriteContractReturnType<abi, address> {
   if (config.address !== undefined && typeof config.address === 'object')
     return (parameters) => {
       const result = useWriteContract(parameters)

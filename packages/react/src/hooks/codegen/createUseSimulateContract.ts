@@ -16,7 +16,11 @@ import {
   type ContractFunctionArgs,
   type ContractFunctionName,
 } from 'viem'
-import type { ConfigParameter, QueryParameter } from '../../types/properties.js'
+
+import {
+  type ConfigParameter,
+  type QueryParameter,
+} from '../../types/properties.js'
 import { useAccount } from '../useAccount.js'
 import { useChainId } from '../useChainId.js'
 import {
@@ -26,7 +30,7 @@ import {
 
 type stateMutability = 'nonpayable' | 'payable'
 
-export type CreateSimulateContractParameters<
+export type CreateUseSimulateContractParameters<
   abi extends Abi | readonly unknown[],
   address extends Address | Record<number, Address> | undefined = undefined,
 > = {
@@ -34,7 +38,7 @@ export type CreateSimulateContractParameters<
   address?: address | Address | Record<number, Address> | undefined
 }
 
-export type CreateSimulateContractReturnType<
+export type CreateUseSimulateContractReturnType<
   abi extends Abi | readonly unknown[],
   address extends Address | Record<number, Address> | undefined,
 > = <
@@ -75,15 +79,15 @@ export type CreateSimulateContractReturnType<
   selectData
 >
 
-export function createSimulateContract<
+export function createUseSimulateContract<
   const abi extends Abi | readonly unknown[],
   const address extends
     | Address
     | Record<number, Address>
     | undefined = undefined,
 >(
-  config: CreateSimulateContractParameters<abi, address>,
-): CreateSimulateContractReturnType<abi, address> {
+  config: CreateUseSimulateContractParameters<abi, address>,
+): CreateUseSimulateContractReturnType<abi, address> {
   if (config.address !== undefined && typeof config.address === 'object')
     return (parameters) => {
       const configChainId = useChainId()

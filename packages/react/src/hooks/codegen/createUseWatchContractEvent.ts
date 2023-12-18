@@ -1,38 +1,24 @@
 import {
   type Config,
-  type ReadContractErrorType,
-  type ReadContractParameters,
   type ResolvedRegister,
+  type WatchContractEventParameters,
 } from '@wagmi/core'
 import {
-  type ScopeKeyParameter,
   type UnionEvaluate,
   type UnionOmit,
   type UnionPartial,
 } from '@wagmi/core/internal'
-import {
-  type ReadContractData,
-  type ReadContractQueryFnData,
-  type ReadContractQueryKey,
-} from '@wagmi/core/query'
-import {
-  type Abi,
-  type Address,
-  type ContractFunctionArgs,
-  type ContractFunctionName,
-} from 'viem'
+import { type Abi, type Address, type ContractEventName } from 'viem'
 
-import type { ConfigParameter, QueryParameter } from '../../types/properties.js'
+import {
+  type ConfigParameter,
+  type EnabledParameter,
+} from '../../types/properties.js'
 import { useAccount } from '../useAccount.js'
 import { useChainId } from '../useChainId.js'
-import {
-  type UseReadContractReturnType,
-  useReadContract,
-} from '../useReadContract.js'
+import { useWatchContractEvent } from '../useWatchContractEvent.js'
 
-type stateMutability = 'pure' | 'view'
-
-export type CreateReadContractParameters<
+export type CreateUseWatchContractEventParameters<
   abi extends Abi | readonly unknown[],
   address extends Address | Record<number, Address> | undefined = undefined,
 > = {
@@ -40,7 +26,7 @@ export type CreateReadContractParameters<
   address?: address | Address | Record<number, Address> | undefined
 }
 
-export type CreateReadContractReturnType<
+export type CreateUseWatchContractEventReturnType<
   abi extends Abi | readonly unknown[],
   address extends Address | Record<number, Address> | undefined,
   ///
@@ -49,41 +35,35 @@ export type CreateReadContractReturnType<
     | (address extends undefined ? never : 'address')
     | (address extends Record<number, Address> ? 'chainId' : never),
 > = <
-  functionName extends ContractFunctionName<abi, stateMutability>,
-  args extends ContractFunctionArgs<abi, stateMutability, functionName>,
+  eventName extends ContractEventName<abi>,
+  strict extends boolean | undefined = undefined,
   config extends Config = ResolvedRegister['config'],
-  selectData = ReadContractData<abi, functionName, args>,
+  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
 >(
   parameters?: UnionEvaluate<
     UnionPartial<
       UnionOmit<
-        ReadContractParameters<abi, functionName, args, config>,
+        WatchContractEventParameters<abi, eventName, strict, config, chainId>,
         omittedProperties
       >
     > &
-      ScopeKeyParameter &
       ConfigParameter<config> &
-      QueryParameter<
-        ReadContractQueryFnData<abi, functionName, args>,
-        ReadContractErrorType,
-        selectData,
-        ReadContractQueryKey<abi, functionName, args, config>
-      >
+      EnabledParameter
   > &
     (address extends Record<number, Address>
       ? { chainId?: keyof address | undefined }
       : unknown),
-) => UseReadContractReturnType<abi, functionName, args, selectData>
+) => void
 
-export function createReadContract<
+export function createUseWatchContractEvent<
   const abi extends Abi | readonly unknown[],
   const address extends
     | Address
     | Record<number, Address>
     | undefined = undefined,
 >(
-  config: CreateReadContractParameters<abi, address>,
-): CreateReadContractReturnType<abi, address> {
+  config: CreateUseWatchContractEventParameters<abi, address>,
+): CreateUseWatchContractEventReturnType<abi, address> {
   if (config.address !== undefined && typeof config.address === 'object')
     return (parameters) => {
       const configChainId = useChainId()
@@ -93,10 +73,14 @@ export function createReadContract<
         account.chainId ??
         configChainId
       const address = config.address?.[chainId]
-      return useReadContract({ ...(parameters as any), ...config, address })
+      return useWatchContractEvent({
+        ...(parameters as any),
+        ...config,
+        address,
+      })
     }
 
   return (parameters) => {
-    return useReadContract({ ...(parameters as any), ...config })
+    return useWatchContractEvent({ ...(parameters as any), ...config })
   }
 }

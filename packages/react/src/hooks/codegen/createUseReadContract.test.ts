@@ -2,10 +2,10 @@ import { abi, address, chain } from '@wagmi/test'
 import { renderHook, waitFor } from '@wagmi/test/react'
 import { expect, test } from 'vitest'
 
-import { createReadContract } from './createReadContract.js'
+import { createUseReadContract } from './createUseReadContract.js'
 
 test('default', async () => {
-  const useReadWagmiMintExample = createReadContract({
+  const useReadWagmiMintExample = createUseReadContract({
     address: address.wagmiMintExample,
     abi: abi.wagmiMintExample,
   })
@@ -61,7 +61,7 @@ test('default', async () => {
 })
 
 test('multichain', async () => {
-  const useReadWagmiMintExample = createReadContract({
+  const useReadWagmiMintExample = createUseReadContract({
     address: {
       [chain.mainnet.id]: address.wagmiMintExample,
       [chain.mainnet2.id]: address.wagmiMintExample,

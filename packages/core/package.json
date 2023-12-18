@@ -44,6 +44,10 @@
       "types": "./dist/types/exports/chains.d.ts",
       "default": "./dist/esm/exports/chains.js"
     },
+    "./codegen": {
+      "types": "./dist/types/exports/codegen.d.ts",
+      "default": "./dist/esm/exports/codegen.js"
+    },
     "./internal": {
       "types": "./dist/types/exports/internal.d.ts",
       "default": "./dist/esm/exports/internal.js"
@@ -58,6 +62,7 @@
     "*": {
       "actions": ["./dist/types/exports/actions.d.ts"],
       "chains": ["./dist/types/exports/chains.d.ts"],
+      "codegen": ["./dist/types/exports/codegen.d.ts"],
       "internal": ["./dist/types/exports/internal.d.ts"],
       "query": ["./dist/types/exports/query.d.ts"]
     }
