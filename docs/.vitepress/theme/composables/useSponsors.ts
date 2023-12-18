@@ -119,9 +119,19 @@ export function useSponsors() {
           img: 'zora-light.svg',
         },
         {
+          name: 'Lattice',
+          url: 'https://lattice.xyz',
+          img: 'lattice-light.svg',
+        },
+        {
           name: 'Supa',
           url: 'https://twitter.com/supafinance',
           img: 'supa-light.svg',
+        },
+        {
+          name: 'zkSync',
+          url: 'https://zksync.io',
+          img: 'zksync-light.svg',
         },
       ],
     }
