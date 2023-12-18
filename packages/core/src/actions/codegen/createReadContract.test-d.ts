@@ -81,3 +81,46 @@ test('overloads', async () => {
     bar: `0x${string}`
   }>(result4)
 })
+
+test('functionName', async () => {
+  const readErc20BalanceOf = createReadContract({
+    abi: abi.erc20,
+    address: '0x',
+    functionName: 'balanceOf',
+  })
+
+  const result = await readErc20BalanceOf(config, {
+    args: ['0x'],
+    chainId: 1,
+  })
+  expectTypeOf(result).toEqualTypeOf<bigint>()
+})
+
+test('functionName with overloads', async () => {
+  const readViewOverloads = createReadContract({
+    abi: abi.viewOverloads,
+    address: '0x',
+    functionName: 'foo',
+  })
+
+  const result1 = await readViewOverloads(config, {})
+  assertType<number>(result1)
+
+  const result2 = await readViewOverloads(config, {
+    args: [],
+  })
+  assertType<number>(result2)
+
+  const result3 = await readViewOverloads(config, {
+    args: ['0x'],
+  })
+  assertType<string>(result3)
+
+  const result4 = await readViewOverloads(config, {
+    args: ['0x', '0x'],
+  })
+  assertType<{
+    foo: `0x${string}`
+    bar: `0x${string}`
+  }>(result4)
+})

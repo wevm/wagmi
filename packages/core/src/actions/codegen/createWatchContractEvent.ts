@@ -13,29 +13,35 @@ import {
 export type CreateWatchContractEventParameters<
   abi extends Abi | readonly unknown[],
   address extends Address | Record<number, Address> | undefined = undefined,
+  eventName extends ContractEventName<abi> | undefined = undefined,
 > = {
   abi: abi | Abi | readonly unknown[]
   address?: address | Address | Record<number, Address> | undefined
+  eventName?: eventName | ContractEventName<abi> | undefined
 }
 
 export type CreateWatchContractEventReturnType<
   abi extends Abi | readonly unknown[],
   address extends Address | Record<number, Address> | undefined,
+  eventName extends ContractEventName<abi> | undefined,
   ///
-  omittedProperties extends 'abi' | 'address' | 'chainId' =
+  omittedProperties extends 'abi' | 'address' | 'chainId' | 'eventName' =
     | 'abi'
     | (address extends undefined ? never : 'address')
-    | (address extends Record<number, Address> ? 'chainId' : never),
+    | (address extends Record<number, Address> ? 'chainId' : never)
+    | (eventName extends undefined ? never : 'eventName'),
 > = <
   config extends Config,
-  eventName extends ContractEventName<abi>,
+  name extends eventName extends ContractEventName<abi>
+    ? eventName
+    : ContractEventName<abi>,
   strict extends boolean | undefined = undefined,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
 >(
   config: config,
   parameters: UnionEvaluate<
     UnionOmit<
-      WatchContractEventParameters<abi, eventName, strict, config, chainId>,
+      WatchContractEventParameters<abi, name, strict, config, chainId>,
       omittedProperties
     >
   > &
@@ -50,9 +56,10 @@ export function createWatchContractEvent<
     | Address
     | Record<number, Address>
     | undefined = undefined,
+  eventName extends ContractEventName<abi> | undefined = undefined,
 >(
-  c: CreateWatchContractEventParameters<abi, address>,
-): CreateWatchContractEventReturnType<abi, address> {
+  c: CreateWatchContractEventParameters<abi, address, eventName>,
+): CreateWatchContractEventReturnType<abi, address, eventName> {
   if (c.address !== undefined && typeof c.address === 'object')
     return (config, parameters) => {
       const configChainId = getChainId(config)
@@ -61,15 +68,20 @@ export function createWatchContractEvent<
         (parameters as { chainId?: number })?.chainId ??
         account.chainId ??
         configChainId
-      const address = c.address?.[chainId]
       return watchContractEvent(config, {
         ...(parameters as any),
-        ...c,
-        address,
+        ...(c.eventName ? { functionName: c.eventName } : {}),
+        address: c.address?.[chainId],
+        abi: c.abi,
       })
     }
 
   return (config, parameters) => {
-    return watchContractEvent(config, { ...(parameters as any), ...c })
+    return watchContractEvent(config, {
+      ...(parameters as any),
+      ...(c.address ? { address: c.address } : {}),
+      ...(c.eventName ? { functionName: c.eventName } : {}),
+      abi: c.abi,
+    })
   }
 }

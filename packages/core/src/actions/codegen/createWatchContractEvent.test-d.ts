@@ -102,3 +102,22 @@ test('differing transports', () => {
     onLogs() {},
   })
 })
+
+test('eventName', () => {
+  const watchErc20Event = createWatchContractEvent({
+    abi: abi.erc20,
+    eventName: 'Transfer',
+  })
+
+  watchErc20Event(config, {
+    chainId: 1,
+    onLogs(logs) {
+      expectTypeOf(logs[0]!.eventName).toEqualTypeOf<'Transfer'>()
+      expectTypeOf(logs[0]!.args).toEqualTypeOf<{
+        from?: `0x${string}` | undefined
+        to?: `0x${string}` | undefined
+        value?: bigint | undefined
+      }>()
+    },
+  })
+})

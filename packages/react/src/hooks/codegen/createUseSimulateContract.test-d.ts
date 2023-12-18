@@ -126,3 +126,72 @@ test('overloads', () => {
     | undefined
   >(result4.data?.result)
 })
+
+test('functionName', () => {
+  const useSimulateErc20 = createUseSimulateContract({
+    abi: abi.erc20,
+    functionName: 'transferFrom',
+  })
+
+  const result = useSimulateErc20({
+    args: ['0x', '0x', 123n],
+    chainId: 123,
+  })
+  result.data?.request.chainId
+  expectTypeOf(result.data).toMatchTypeOf<
+    | {
+        result: boolean
+        request: {
+          __mode: 'prepared'
+          chainId: 123
+          abi: readonly [
+            {
+              readonly name: 'transferFrom'
+              readonly type: 'function'
+              readonly stateMutability: 'nonpayable'
+              readonly inputs: readonly [
+                { readonly type: 'address'; readonly name: 'sender' },
+                { readonly type: 'address'; readonly name: 'recipient' },
+                { readonly type: 'uint256'; readonly name: 'amount' },
+              ]
+              readonly outputs: readonly [{ type: 'bool' }]
+            },
+          ]
+          functionName: 'transferFrom'
+          args: readonly [Address, Address, bigint]
+        }
+      }
+    | undefined
+  >()
+})
+
+test('functionName with overloads', () => {
+  const useSimulateWriteOverloads = createUseSimulateContract({
+    abi: abi.writeOverloads,
+    functionName: 'foo',
+  })
+
+  const result1 = useSimulateWriteOverloads({})
+  assertType<number | undefined>(result1.data?.result)
+
+  const result2 = useSimulateWriteOverloads({
+    args: [],
+  })
+  assertType<number | undefined>(result2.data?.result)
+
+  const result3 = useSimulateWriteOverloads({
+    args: ['0x'],
+  })
+  assertType<string | undefined>(result3.data?.result)
+
+  const result4 = useSimulateWriteOverloads({
+    args: ['0x', '0x'],
+  })
+  assertType<
+    | {
+        foo: `0x${string}`
+        bar: `0x${string}`
+      }
+    | undefined
+  >(result4.data?.result)
+})

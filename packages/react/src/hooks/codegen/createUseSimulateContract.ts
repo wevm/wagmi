@@ -33,25 +33,35 @@ type stateMutability = 'nonpayable' | 'payable'
 export type CreateUseSimulateContractParameters<
   abi extends Abi | readonly unknown[],
   address extends Address | Record<number, Address> | undefined = undefined,
+  functionName extends
+    | ContractFunctionName<abi, stateMutability>
+    | undefined = undefined,
 > = {
   abi: abi | Abi | readonly unknown[]
   address?: address | Address | Record<number, Address> | undefined
+  functionName?:
+    | functionName
+    | ContractFunctionName<abi, stateMutability>
+    | undefined
 }
 
 export type CreateUseSimulateContractReturnType<
   abi extends Abi | readonly unknown[],
   address extends Address | Record<number, Address> | undefined,
+  functionName extends ContractFunctionName<abi, stateMutability> | undefined,
 > = <
-  functionName extends ContractFunctionName<abi, stateMutability>,
-  args extends ContractFunctionArgs<abi, stateMutability, functionName>,
+  name extends functionName extends ContractFunctionName<abi, stateMutability>
+    ? functionName
+    : ContractFunctionName<abi, stateMutability>,
+  args extends ContractFunctionArgs<abi, stateMutability, name>,
   config extends Config = ResolvedRegister['config'],
   chainId extends config['chains'][number]['id'] | undefined = undefined,
-  selectData = SimulateContractData<abi, functionName, args, config, chainId>,
+  selectData = SimulateContractData<abi, name, args, config, chainId>,
 >(
   parameters?: {
     abi?: undefined
     address?: address extends undefined ? Address : undefined
-    functionName?: functionName
+    functionName?: functionName extends undefined ? name : undefined
     chainId?: address extends Record<number, Address>
       ?
           | keyof address
@@ -60,24 +70,17 @@ export type CreateUseSimulateContractReturnType<
       : chainId | number | undefined
   } & UnionPartial<
     // TODO: Take `abi` and `address` from above and omit from below (currently breaks inference)
-    SimulateContractParameters<abi, functionName, args, config, chainId>
+    SimulateContractParameters<abi, name, args, config, chainId>
   > &
     ScopeKeyParameter &
     ConfigParameter<config> &
     QueryParameter<
-      SimulateContractQueryFnData<abi, functionName, args, config, chainId>,
+      SimulateContractQueryFnData<abi, name, args, config, chainId>,
       SimulateContractErrorType,
       selectData,
-      SimulateContractQueryKey<abi, functionName, args, config, chainId>
+      SimulateContractQueryKey<abi, name, args, config, chainId>
     >,
-) => UseSimulateContractReturnType<
-  abi,
-  functionName,
-  args,
-  config,
-  chainId,
-  selectData
->
+) => UseSimulateContractReturnType<abi, name, args, config, chainId, selectData>
 
 export function createUseSimulateContract<
   const abi extends Abi | readonly unknown[],
@@ -85,9 +88,12 @@ export function createUseSimulateContract<
     | Address
     | Record<number, Address>
     | undefined = undefined,
+  functionName extends
+    | ContractFunctionName<abi, stateMutability>
+    | undefined = undefined,
 >(
-  config: CreateUseSimulateContractParameters<abi, address>,
-): CreateUseSimulateContractReturnType<abi, address> {
+  config: CreateUseSimulateContractParameters<abi, address, functionName>,
+): CreateUseSimulateContractReturnType<abi, address, functionName> {
   if (config.address !== undefined && typeof config.address === 'object')
     return (parameters) => {
       const configChainId = useChainId()
@@ -96,11 +102,20 @@ export function createUseSimulateContract<
         (parameters as { chainId?: number })?.chainId ??
         account.chainId ??
         configChainId
-      const address = config.address?.[chainId]
-      return useSimulateContract({ ...(parameters as any), ...config, address })
+      return useSimulateContract({
+        ...(parameters as any),
+        ...(config.functionName ? { functionName: config.functionName } : {}),
+        address: config.address?.[chainId],
+        abi: config.abi,
+      })
     }
 
   return (parameters) => {
-    return useSimulateContract({ ...(parameters as any), ...config })
+    return useSimulateContract({
+      ...(parameters as any),
+      ...(config.address ? { address: config.address } : {}),
+      ...(config.functionName ? { functionName: config.functionName } : {}),
+      abi: config.abi,
+    })
   }
 }

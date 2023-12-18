@@ -101,3 +101,48 @@ test('overloads', () => {
     | undefined
   >(result4.data)
 })
+
+test('functionName', () => {
+  const useReadErc20BalanceOf = createUseReadContract({
+    abi: abi.erc20,
+    address: '0x',
+    functionName: 'balanceOf',
+  })
+
+  const result = useReadErc20BalanceOf({
+    args: ['0x'],
+    chainId: 1,
+  })
+  expectTypeOf(result.data).toEqualTypeOf<bigint | undefined>()
+})
+
+test('functionName with overloads', () => {
+  const useReadViewOverloads = createUseReadContract({
+    abi: abi.viewOverloads,
+    functionName: 'foo',
+  })
+
+  const result1 = useReadViewOverloads()
+  assertType<number | undefined>(result1.data)
+
+  const result2 = useReadViewOverloads({
+    args: [],
+  })
+  assertType<number | undefined>(result2.data)
+
+  const result3 = useReadViewOverloads({
+    args: ['0x'],
+  })
+  assertType<string | undefined>(result3.data)
+
+  const result4 = useReadViewOverloads({
+    args: ['0x', '0x'],
+  })
+  assertType<
+    | {
+        foo: `0x${string}`
+        bar: `0x${string}`
+      }
+    | undefined
+  >(result4.data)
+})

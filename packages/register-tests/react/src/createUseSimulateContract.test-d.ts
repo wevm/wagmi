@@ -1,9 +1,9 @@
 import { abi, config as testConfig } from '@wagmi/test'
 import { test } from 'vitest'
 import { celo, mainnet, optimism } from 'wagmi/chains'
-import { createSimulateContract } from 'wagmi/codegen'
+import { createUseSimulateContract } from 'wagmi/codegen'
 
-const useSimulateErc20 = createSimulateContract({
+const useSimulateErc20 = createUseSimulateContract({
   abi: abi.erc20,
 })
 

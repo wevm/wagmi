@@ -40,14 +40,22 @@ type stateMutability = 'nonpayable' | 'payable'
 export type CreateUseWriteContractParameters<
   abi extends Abi | readonly unknown[],
   address extends Address | Record<number, Address> | undefined = undefined,
+  functionName extends
+    | ContractFunctionName<abi, stateMutability>
+    | undefined = undefined,
 > = {
   abi: abi | Abi | readonly unknown[]
   address?: address | Address | Record<number, Address> | undefined
+  functionName?:
+    | functionName
+    | ContractFunctionName<abi, stateMutability>
+    | undefined
 }
 
 export type CreateUseWriteContractReturnType<
   abi extends Abi | readonly unknown[],
   address extends Address | Record<number, Address> | undefined,
+  functionName extends ContractFunctionName<abi, stateMutability> | undefined,
 > = <config extends Config = ResolvedRegister['config'], context = unknown>(
   parameters?: UseWriteContractParameters<config, context>,
 ) => Evaluate<
@@ -57,23 +65,36 @@ export type CreateUseWriteContractReturnType<
   > & {
     writeContract: <
       const abi2 extends abi,
-      functionName extends ContractFunctionName<abi2, stateMutability>,
-      args extends ContractFunctionArgs<abi2, stateMutability, functionName>,
+      name extends functionName extends ContractFunctionName<
+        abi,
+        stateMutability
+      >
+        ? functionName
+        : ContractFunctionName<abi, stateMutability>,
+      args extends ContractFunctionArgs<abi2, stateMutability, name>,
       chainId extends config['chains'][number]['id'],
     >(
-      variables: Variables<abi2, functionName, args, config, chainId, address>,
+      variables: Variables<
+        abi2,
+        functionName,
+        name,
+        args,
+        config,
+        chainId,
+        address
+      >,
       options?:
         | MutateOptions<
             WriteContractData,
             WriteContractErrorType,
             WriteContractVariables<
               abi2,
-              functionName,
+              name,
               args,
               config,
               chainId,
               // use `functionName` to make sure it's not union of all possible function names
-              functionName
+              name
             >,
             context
           >
@@ -81,23 +102,36 @@ export type CreateUseWriteContractReturnType<
     ) => void
     writeContractAsync: <
       const abi2 extends abi,
-      functionName extends ContractFunctionName<abi2, stateMutability>,
-      args extends ContractFunctionArgs<abi2, stateMutability, functionName>,
+      name extends functionName extends ContractFunctionName<
+        abi,
+        stateMutability
+      >
+        ? functionName
+        : ContractFunctionName<abi, stateMutability>,
+      args extends ContractFunctionArgs<abi2, stateMutability, name>,
       chainId extends config['chains'][number]['id'],
     >(
-      variables: Variables<abi2, functionName, args, config, chainId, address>,
+      variables: Variables<
+        abi2,
+        functionName,
+        name,
+        args,
+        config,
+        chainId,
+        address
+      >,
       options?:
         | MutateOptions<
             WriteContractData,
             WriteContractErrorType,
             WriteContractVariables<
               abi2,
-              functionName,
+              name,
               args,
               config,
               chainId,
               // use `functionName` to make sure it's not union of all possible function names
-              functionName
+              name
             >,
             context
           >
@@ -112,9 +146,12 @@ export function createUseWriteContract<
     | Address
     | Record<number, Address>
     | undefined = undefined,
+  functionName extends
+    | ContractFunctionName<abi, stateMutability>
+    | undefined = undefined,
 >(
-  config: CreateUseWriteContractParameters<abi, address>,
-): CreateUseWriteContractReturnType<abi, address> {
+  config: CreateUseWriteContractParameters<abi, address, functionName>,
+): CreateUseWriteContractReturnType<abi, address, functionName> {
   if (config.address !== undefined && typeof config.address === 'object')
     return (parameters) => {
       const result = useWriteContract(parameters)
@@ -132,8 +169,11 @@ export function createUseWriteContract<
             else if (args[0].account === undefined) chainId = account.chainId
             else chainId = configChainId
 
-            const address = chainId ? config.address?.[chainId] : undefined
-            const variables = { ...(args[0] as any), ...config, address }
+            const variables = {
+              ...(args[0] as any),
+              address: chainId ? config.address?.[chainId] : undefined,
+              abi: config.abi,
+            }
             result.writeContract(variables, args[1] as any)
           },
           [
@@ -153,8 +193,11 @@ export function createUseWriteContract<
             else if (args[0].account === undefined) chainId = account.chainId
             else chainId = configChainId
 
-            const address = chainId ? config.address?.[chainId] : undefined
-            const variables = { ...(args[0] as any), ...config, address }
+            const variables = {
+              ...(args[0] as any),
+              address: chainId ? config.address?.[chainId] : undefined,
+              abi: config.abi,
+            }
             return result.writeContractAsync(variables, args[1] as any)
           },
           [
@@ -175,16 +218,28 @@ export function createUseWriteContract<
       ...(result as any),
       writeContract: useCallback(
         (...args: Args) => {
-          const address = config.address ?? args[0].address
-          const variables = { ...(args[0] as any), ...config, address }
+          const variables = {
+            ...(args[0] as any),
+            ...(config.address ? { address: config.address } : {}),
+            ...(config.functionName
+              ? { functionName: config.functionName }
+              : {}),
+            abi: config.abi,
+          }
           result.writeContract(variables, args[1] as any)
         },
         [config, result.writeContract],
       ),
       writeContractAsync: useCallback(
         (...args: Args) => {
-          const address = config.address ?? args[0].address
-          const variables = { ...(args[0] as any), ...config, address }
+          const variables = {
+            ...(args[0] as any),
+            ...(config.address ? { address: config.address } : {}),
+            ...(config.functionName
+              ? { functionName: config.functionName }
+              : {}),
+            abi: config.abi,
+          }
           return result.writeContractAsync(variables, args[1] as any)
         },
         [config, result.writeContractAsync],
@@ -195,23 +250,25 @@ export function createUseWriteContract<
 
 type Variables<
   abi extends Abi | readonly unknown[],
-  functionName extends ContractFunctionName<abi, stateMutability>,
-  args extends ContractFunctionArgs<abi, stateMutability, functionName>,
+  functionName extends ContractFunctionName<abi, stateMutability> | undefined,
+  name extends ContractFunctionName<abi, stateMutability>,
+  args extends ContractFunctionArgs<abi, stateMutability, name>,
   config extends Config,
   chainId extends config['chains'][number]['id'],
   address extends Address | Record<number, Address> | undefined,
   ///
   allFunctionNames = ContractFunctionName<abi, stateMutability>,
   chains extends readonly Chain[] = SelectChains<config, chainId>,
-  omittedProperties extends 'abi' | 'address' =
+  omittedProperties extends 'abi' | 'address' | 'functionName' =
     | 'abi'
-    | (address extends undefined ? never : 'address'),
+    | (address extends undefined ? never : 'address')
+    | (functionName extends undefined ? never : 'functionName'),
 > = UnionEvaluate<
   {
     [key in keyof chains]: UnionOmit<
       viem_WriteContractParameters<
         abi,
-        functionName,
+        name,
         args,
         chains[key],
         Account,

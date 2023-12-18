@@ -119,3 +119,59 @@ test('multichain', async () => {
     }
   `)
 })
+
+test('functionName', async () => {
+  const useReadWagmiMintExampleBalanceOf = createUseReadContract({
+    address: address.wagmiMintExample,
+    abi: abi.wagmiMintExample,
+    functionName: 'balanceOf',
+  })
+
+  const { result } = renderHook(() =>
+    useReadWagmiMintExampleBalanceOf({
+      args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
+    }),
+  )
+
+  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+
+  expect(result.current).toMatchInlineSnapshot(`
+    {
+      "data": 4n,
+      "dataUpdatedAt": 1675209600000,
+      "error": null,
+      "errorUpdateCount": 0,
+      "errorUpdatedAt": 0,
+      "failureCount": 0,
+      "failureReason": null,
+      "fetchStatus": "idle",
+      "isError": false,
+      "isFetched": true,
+      "isFetchedAfterMount": true,
+      "isFetching": false,
+      "isInitialLoading": false,
+      "isLoading": false,
+      "isLoadingError": false,
+      "isPaused": false,
+      "isPending": false,
+      "isPlaceholderData": false,
+      "isRefetchError": false,
+      "isRefetching": false,
+      "isStale": true,
+      "isSuccess": true,
+      "queryKey": [
+        "readContract",
+        {
+          "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
+          "args": [
+            "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
+          ],
+          "chainId": 1,
+          "functionName": "balanceOf",
+        },
+      ],
+      "refetch": [Function],
+      "status": "success",
+    }
+  `)
+})

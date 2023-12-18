@@ -34,3 +34,17 @@ test('multichain', async () => {
     }),
   ).resolves.toMatchInlineSnapshot('4n')
 })
+
+test('functionName', async () => {
+  const readWagmiMintExampleBalanceOf = createReadContract({
+    address: address.wagmiMintExample,
+    abi: abi.wagmiMintExample,
+    functionName: 'balanceOf',
+  })
+
+  await expect(
+    readWagmiMintExampleBalanceOf(config, {
+      args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
+    }),
+  ).resolves.toMatchInlineSnapshot('4n')
+})

@@ -21,21 +21,27 @@ import { useWatchContractEvent } from '../useWatchContractEvent.js'
 export type CreateUseWatchContractEventParameters<
   abi extends Abi | readonly unknown[],
   address extends Address | Record<number, Address> | undefined = undefined,
+  eventName extends ContractEventName<abi> | undefined = undefined,
 > = {
   abi: abi | Abi | readonly unknown[]
   address?: address | Address | Record<number, Address> | undefined
+  eventName?: eventName | ContractEventName<abi> | undefined
 }
 
 export type CreateUseWatchContractEventReturnType<
   abi extends Abi | readonly unknown[],
   address extends Address | Record<number, Address> | undefined,
+  eventName extends ContractEventName<abi> | undefined,
   ///
-  omittedProperties extends 'abi' | 'address' | 'chainId' =
+  omittedProperties extends 'abi' | 'address' | 'chainId' | 'eventName' =
     | 'abi'
     | (address extends undefined ? never : 'address')
-    | (address extends Record<number, Address> ? 'chainId' : never),
+    | (address extends Record<number, Address> ? 'chainId' : never)
+    | (eventName extends undefined ? never : 'eventName'),
 > = <
-  eventName extends ContractEventName<abi>,
+  name extends eventName extends ContractEventName<abi>
+    ? eventName
+    : ContractEventName<abi>,
   strict extends boolean | undefined = undefined,
   config extends Config = ResolvedRegister['config'],
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
@@ -43,7 +49,7 @@ export type CreateUseWatchContractEventReturnType<
   parameters?: UnionEvaluate<
     UnionPartial<
       UnionOmit<
-        WatchContractEventParameters<abi, eventName, strict, config, chainId>,
+        WatchContractEventParameters<abi, name, strict, config, chainId>,
         omittedProperties
       >
     > &
@@ -61,9 +67,10 @@ export function createUseWatchContractEvent<
     | Address
     | Record<number, Address>
     | undefined = undefined,
+  eventName extends ContractEventName<abi> | undefined = undefined,
 >(
-  config: CreateUseWatchContractEventParameters<abi, address>,
-): CreateUseWatchContractEventReturnType<abi, address> {
+  config: CreateUseWatchContractEventParameters<abi, address, eventName>,
+): CreateUseWatchContractEventReturnType<abi, address, eventName> {
   if (config.address !== undefined && typeof config.address === 'object')
     return (parameters) => {
       const configChainId = useChainId()
@@ -72,15 +79,20 @@ export function createUseWatchContractEvent<
         (parameters as { chainId?: number })?.chainId ??
         account.chainId ??
         configChainId
-      const address = config.address?.[chainId]
       return useWatchContractEvent({
         ...(parameters as any),
-        ...config,
-        address,
+        ...(config.eventName ? { eventName: config.eventName } : {}),
+        address: config.address?.[chainId],
+        abi: config.abi,
       })
     }
 
   return (parameters) => {
-    return useWatchContractEvent({ ...(parameters as any), ...config })
+    return useWatchContractEvent({
+      ...(parameters as any),
+      ...(config.address ? { address: config.address } : {}),
+      ...(config.eventName ? { eventName: config.eventName } : {}),
+      abi: config.abi,
+    })
   }
 }

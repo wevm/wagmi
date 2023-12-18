@@ -92,3 +92,38 @@ test('useSimulateContract', async () => {
 
   writeErc20(config, request)
 })
+
+test('functionName', () => {
+  const writeErc20 = createWriteContract({
+    abi: abi.erc20,
+    address: '0x',
+    functionName: 'transfer',
+  })
+
+  writeErc20(config, {
+    args: ['0x', 123n],
+  })
+})
+
+test('functionName with overloads', () => {
+  const writeOverloads = createWriteContract({
+    abi: abi.writeOverloads,
+    address: {
+      [mainnet.id]: '0x',
+      [optimism.id]: '0x',
+    },
+    functionName: 'foo',
+  })
+
+  writeOverloads(config, {
+    args: [],
+  })
+
+  writeOverloads(config, {
+    args: ['0x'],
+  })
+
+  writeOverloads(config, {
+    args: ['0x', '0x'],
+  })
+})

@@ -138,3 +138,16 @@ test('useSimulateContract', () => {
   const request = data?.request
   if (request) writeContract(request)
 })
+
+test('functionName', () => {
+  const useWriteErc20 = createUseWriteContract({
+    abi: abi.erc20,
+    functionName: 'transfer',
+  })
+
+  const { writeContract } = useWriteErc20()
+  writeContract({
+    address: '0x',
+    args: ['0x', 123n],
+  })
+})
