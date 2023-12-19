@@ -31,6 +31,13 @@ export {
 } from '../actions/estimateFeesPerGas.js'
 
 export {
+  type EstimateMaxPriorityFeePerGasErrorType,
+  type EstimateMaxPriorityFeePerGasParameters,
+  type EstimateMaxPriorityFeePerGasReturnType,
+  estimateMaxPriorityFeePerGas,
+} from '../actions/estimateMaxPriorityFeePerGas.js'
+
+export {
   type GetAccountReturnType,
   getAccount,
 } from '../actions/getAccount.js'
@@ -59,6 +66,13 @@ export {
   /** @deprecated use `getBlockNumber` instead */
   getBlockNumber as fetchBlockNumber,
 } from '../actions/getBlockNumber.js'
+
+export {
+  type GetBlockTransactionCountErrorType,
+  type GetBlockTransactionCountParameters,
+  type GetBlockTransactionCountReturnType,
+  getBlockTransactionCount,
+} from '../actions/getBlockTransactionCount.js'
 
 export {
   type GetChainIdReturnType,
@@ -123,6 +137,20 @@ export {
   /** @deprecated use `getEnsResolver` instead */
   getEnsResolver as fetchEnsResolver,
 } from '../actions/getEnsResolver.js'
+
+export {
+  type GetFeeHistoryErrorType,
+  type GetFeeHistoryParameters,
+  type GetFeeHistoryReturnType,
+  getFeeHistory,
+} from '../actions/getFeeHistory.js'
+
+export {
+  type GetGasPriceErrorType,
+  type GetGasPriceParameters,
+  type GetGasPriceReturnType,
+  getGasPrice,
+} from '../actions/getGasPrice.js'
 
 export {
   type GetPublicClientParameters,

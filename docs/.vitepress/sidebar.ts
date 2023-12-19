@@ -113,6 +113,10 @@ export function getSidebar() {
             text: 'useBlock',
             link: '/react/api/hooks/useBlock',
           },
+          {
+            text: 'useBlockTransactionCount',
+            link: '/react/api/hooks/useBlockTransactionCount',
+          },
           { text: 'useChainId', link: '/react/api/hooks/useChainId' },
           { text: 'useClient', link: '/react/api/hooks/useClient' },
           { text: 'useConfig', link: '/react/api/hooks/useConfig' },
@@ -138,6 +142,10 @@ export function getSidebar() {
             link: '/react/api/hooks/useEnsResolver',
           },
           {
+            text: 'useFeeHistory',
+            link: '/react/api/hooks/useFeeHistory',
+          },
+          {
             text: 'usePublicClient',
             link: '/react/api/hooks/usePublicClient',
           },
@@ -148,6 +156,14 @@ export function getSidebar() {
           {
             text: 'useEstimateGas',
             link: '/react/api/hooks/useEstimateGas',
+          },
+          {
+            text: 'useEstimateMaxPriorityFeePerGas',
+            link: '/react/api/hooks/useEstimateMaxPriorityFeePerGas',
+          },
+          {
+            text: 'useGasPrice',
+            link: '/react/api/hooks/useGasPrice',
           },
           {
             text: 'useInfiniteReadContracts',
@@ -347,6 +363,10 @@ export function getSidebar() {
             link: '/core/api/actions/estimateFeesPerGas',
           },
           { text: 'estimateGas', link: '/core/api/actions/estimateGas' },
+          {
+            text: 'estimateMaxPriorityFeePerGas',
+            link: '/core/api/actions/estimateMaxPriorityFeePerGas',
+          },
           { text: 'getAccount', link: '/core/api/actions/getAccount' },
           { text: 'getBalance', link: '/core/api/actions/getBalance' },
           {
@@ -356,6 +376,10 @@ export function getSidebar() {
           {
             text: 'getBlockNumber',
             link: '/core/api/actions/getBlockNumber',
+          },
+          {
+            text: 'getBlockTransactionCount',
+            link: '/core/api/actions/getBlockTransactionCount',
           },
           { text: 'getChainId', link: '/core/api/actions/getChainId' },
           {
@@ -383,6 +407,14 @@ export function getSidebar() {
           {
             text: 'getEnsResolver',
             link: '/core/api/actions/getEnsResolver',
+          },
+          {
+            text: 'getFeeHistory',
+            link: '/core/api/actions/getFeeHistory',
+          },
+          {
+            text: 'getGasPrice',
+            link: '/core/api/actions/getGasPrice',
           },
           {
             text: 'getPublicClient',
