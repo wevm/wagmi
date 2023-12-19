@@ -7,12 +7,12 @@ import {
 
 import { type Config } from '../createConfig.js'
 import { type ChainIdParameter } from '../types/properties.js'
-import { type Evaluate } from '../types/utils.js'
+import { type UnionEvaluate } from '../types/utils.js'
 
 export type GetBlockTransactionCountParameters<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
-> = Evaluate<
+> = UnionEvaluate<
   viem_GetBlockTransactionCountParameters & ChainIdParameter<config, chainId>
 >
 
