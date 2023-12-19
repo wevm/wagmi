@@ -48,7 +48,7 @@
     "rimraf": "^4.4.1",
     "simple-git-hooks": "^2.9.0",
     "typescript": "5.1.6",
-    "viem": "2.0.0-beta.15",
+    "viem": "2.0.0-beta.16",
     "vitest": "^0.34.5"
   },
   "packageManager": "pnpm@8.10.5",
