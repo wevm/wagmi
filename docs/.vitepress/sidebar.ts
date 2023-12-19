@@ -92,6 +92,33 @@ export function getSidebar() {
               },
             ],
           },
+          {
+            text: 'Transports',
+            collapsed: true,
+            link: '/react/api/transports',
+            items: [
+              {
+                text: 'custom (EIP-1193)',
+                link: '/react/api/transports/custom',
+              },
+              {
+                text: 'fallback',
+                link: '/react/api/transports/fallback',
+              },
+              {
+                text: 'http',
+                link: '/react/api/transports/http',
+              },
+              {
+                text: 'unstable_connector',
+                link: '/react/api/transports/unstable_connector',
+              },
+              {
+                text: 'webSocket',
+                link: '/react/api/transports/webSocket',
+              },
+            ],
+          },
           { text: 'WagmiProvider', link: '/react/api/WagmiProvider' },
         ],
       },
@@ -347,6 +374,33 @@ export function getSidebar() {
               {
                 text: 'walletConnect',
                 link: '/core/api/connectors/walletConnect',
+              },
+            ],
+          },
+          {
+            text: 'Transports',
+            collapsed: true,
+            link: '/core/api/transports',
+            items: [
+              {
+                text: 'custom (EIP-1193)',
+                link: '/core/api/transports/custom',
+              },
+              {
+                text: 'fallback',
+                link: '/core/api/transports/fallback',
+              },
+              {
+                text: 'http',
+                link: '/core/api/transports/http',
+              },
+              {
+                text: 'unstable_connector',
+                link: '/core/api/transports/unstable_connector',
+              },
+              {
+                text: 'webSocket',
+                link: '/core/api/transports/webSocket',
               },
             ],
           },
