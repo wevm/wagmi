@@ -51,6 +51,11 @@ export function useSponsors() {
           url: 'https://pancakeswap.finance',
           img: 'pancake-light.svg',
         },
+        {
+          name: 'zkSync',
+          url: 'https://zksync.io',
+          img: 'zksync-light.svg',
+        },
       ],
       silver: [
         {
@@ -117,6 +122,11 @@ export function useSponsors() {
           name: 'Zora',
           url: 'https://zora.co',
           img: 'zora-light.svg',
+        },
+        {
+          name: 'Lattice',
+          url: 'https://lattice.xyz',
+          img: 'lattice-light.svg',
         },
         {
           name: 'Supa',

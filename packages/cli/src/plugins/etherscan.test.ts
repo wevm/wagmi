@@ -1,7 +1,6 @@
 import { setupServer } from 'msw/node'
 import { afterAll, afterEach, beforeAll, expect, test } from 'vitest'
 
-import { etherscan } from './etherscan.js'
 import {
   address,
   apiKey,
@@ -9,7 +8,8 @@ import {
   invalidApiKey,
   timeoutAddress,
   unverifiedContractAddress,
-} from './fetch.test.js'
+} from '../../test/utils.js'
+import { etherscan } from './etherscan.js'
 
 const server = setupServer(...handlers)
 

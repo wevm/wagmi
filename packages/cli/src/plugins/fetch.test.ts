@@ -1,61 +1,17 @@
+import { homedir } from 'os'
 import { default as fs } from 'fs-extra'
-import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import { afterAll, afterEach, beforeAll, expect, test } from 'vitest'
 
-import { homedir } from 'os'
+import {
+  address,
+  apiKey,
+  baseUrl,
+  handlers,
+  timeoutAddress,
+  unverifiedContractAddress,
+} from '../../test/utils.js'
 import { fetch } from './fetch.js'
-
-export const baseUrl = 'https://api.etherscan.io/api'
-export const apiKey = 'abc'
-export const invalidApiKey = 'xyz'
-export const address = '0xaf0326d92b97df1221759476b072abfd8084f9be'
-export const unverifiedContractAddress =
-  '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e'
-export const timeoutAddress = '0xecb504d39723b0be0e3a9aa33d646642d1051ee1'
-
-export const handlers = [
-  rest.get(baseUrl, async (req, res, ctx) => {
-    switch (req.url.search) {
-      case `?module=contract&action=getabi&address=${unverifiedContractAddress}&apikey=${apiKey}`:
-        return res(
-          ctx.status(200),
-          ctx.json({
-            status: '0',
-            message: 'NOTOK',
-            result: 'Contract source code not verified',
-          }),
-        )
-      case `?module=contract&action=getabi&address=${timeoutAddress}&apikey=${invalidApiKey}`:
-        return res(
-          ctx.status(200),
-          ctx.json({
-            status: '0',
-            message: 'NOTOK',
-            result: 'Invalid API Key',
-          }),
-        )
-      case `?module=contract&action=getabi&address=${address}&apikey=${apiKey}`:
-        return res(
-          ctx.status(200),
-          ctx.json({
-            status: '1',
-            message: 'OK',
-            result:
-              '[{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"approved","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"operator","type":"address"},{"indexed":false,"internalType":"bool","name":"approved","type":"bool"}],"name":"ApprovalForAll","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"approve","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"getApproved","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"operator","type":"address"}],"name":"isApprovedForAll","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"mint","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"ownerOf","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"bytes","name":"_data","type":"bytes"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"operator","type":"address"},{"internalType":"bool","name":"approved","type":"bool"}],"name":"setApprovalForAll","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"tokenURI","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"pure","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"transferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"}]',
-          }),
-        )
-      case `?module=contract&action=getabi&address=${timeoutAddress}&apikey=${apiKey}`:
-        // TODO: Add back in once msw supports aborting native fetch requests
-        // https://github.com/mswjs/msw/issues/1701
-        // await new Promise((resolve) => setTimeout(resolve, 10_000))
-        // return res(ctx.status(200), ctx.json({}))
-        throw new Error('The operation was aborted.')
-      default:
-        throw new Error(`Unhandled request: ${req.url.search}`)
-    }
-  }),
-]
 
 const server = setupServer(...handlers)
 
@@ -107,9 +63,9 @@ test('aborts request', async () => {
       contracts: [{ name: 'WagmiMintExample', address: timeoutAddress }],
       request,
       parse,
-      timeoutDuration: 1,
+      timeoutDuration: 1_000,
     }).contracts(),
-  ).rejects.toThrowErrorMatchingInlineSnapshot('"Failed to fetch"')
+  ).rejects.toThrowErrorMatchingInlineSnapshot('"This operation was aborted"')
 })
 
 test('reads from cache', async () => {

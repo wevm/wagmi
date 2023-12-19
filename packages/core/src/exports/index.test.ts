@@ -64,6 +64,8 @@ test('exports', () => {
       "waitForTransaction",
       "writeContract",
       "createConnector",
+      "injected",
+      "mock",
       "createConfig",
       "createStorage",
       "noopStorage",

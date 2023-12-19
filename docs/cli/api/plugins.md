@@ -12,6 +12,7 @@ import { etherscan } from '@wagmi/cli/plugins'
 
 ## Available Plugins
 
+- [`actions`](/cli/api/plugins/actions) Generate type-safe VanillaJS actions from configuration `contracts`.
 - [`blockExplorer`](/cli/api/plugins/blockExplorer) Fetch ABIs from Block Explorers that support `?module=contract&action=getabi`.
 - [`etherscan`](/cli/api/plugins/etherscan) Fetch ABIs from Etherscan and add into configuration.
 - [`fetch`](/cli/api/plugins/fetch) Fetch and parse ABIs from network resource with `fetch`.

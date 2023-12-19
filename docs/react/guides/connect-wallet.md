@@ -21,7 +21,7 @@ The above libraries are all built on top of Wagmi, handle all the edge cases aro
 
 Wagmi provides you with the Hooks to get started building your own Connect Wallet module. 
 
-It takes less than five minutes to get up and running with Browser Wallets, WalletConnect, Ledger, and Coinbase Wallet.
+It takes less than five minutes to get up and running with Browser Wallets, WalletConnect, and Coinbase Wallet.
 
 ### 1. Configure Wagmi
 
@@ -34,7 +34,7 @@ Let's create a `wagmi.ts` file and export a `config` object.
 ```tsx [config.ts]
 import { http, createConfig } from 'wagmi'
 import { base, mainnet, optimism } from 'wagmi/chains'
-import { injected, ledger, metaMask, safe, walletConnect } from 'wagmi/connectors'
+import { injected, metaMask, safe, walletConnect } from 'wagmi/connectors'
 
 const projectId = '<WALLETCONNECT_PROJECT_ID>'
 
@@ -44,7 +44,6 @@ export const config = createConfig({
     injected(),
     walletConnect({ projectId }),
     metaMask(),
-    ledger({ projectId }),
     safe(),
   ],
   transports: {
@@ -56,7 +55,7 @@ export const config = createConfig({
 
 :::
 
-In the above configuration, we want to set up connectors for Injected (browser), WalletConnect (browser + mobile), MetaMask, Ledger, and Safe wallets. This configuration uses the **Mainnet** and **Base** chains, but you can use whatever you want.
+In the above configuration, we want to set up connectors for Injected (browser), WalletConnect (browser + mobile), MetaMask, and Safe wallets. This configuration uses the **Mainnet** and **Base** chains, but you can use whatever you want.
 
 ::: warning
 
@@ -96,7 +95,7 @@ function App() {
 ```tsx [config.ts]
 import { http, createConfig } from 'wagmi'
 import { base, mainnet, optimism } from 'wagmi/chains'
-import { injected, ledger, metaMask, safe, walletConnect } from 'wagmi/connectors'
+import { injected, metaMask, safe, walletConnect } from 'wagmi/connectors'
 
 const projectId = '<WALLETCONNECT_PROJECT_ID>'
 
@@ -106,7 +105,6 @@ export const config = createConfig({
     injected(),
     walletConnect({ projectId }),
     metaMask(),
-    ledger({ projectId }),
     safe(),
   ],
   transports: {
@@ -165,7 +163,7 @@ function App() {
 ```tsx [config.ts]
 import { http, createConfig } from 'wagmi'
 import { base, mainnet, optimism } from 'wagmi/chains'
-import { injected, ledger, metaMask, safe, walletConnect } from 'wagmi/connectors'
+import { injected, metaMask, safe, walletConnect } from 'wagmi/connectors'
 
 const projectId = '<WALLETCONNECT_PROJECT_ID>'
 
@@ -175,7 +173,6 @@ export const config = createConfig({
     injected(),
     walletConnect({ projectId }),
     metaMask(),
-    ledger({ projectId }),
     safe(),
   ],
   transports: {
@@ -280,7 +277,7 @@ function App() {
 ```tsx [config.ts]
 import { http, createConfig } from 'wagmi'
 import { base, mainnet, optimism } from 'wagmi/chains'
-import { injected, ledger, metaMask, safe, walletConnect } from 'wagmi/connectors'
+import { injected, metaMask, safe, walletConnect } from 'wagmi/connectors'
 
 const projectId = '<WALLETCONNECT_PROJECT_ID>'
 
@@ -290,7 +287,6 @@ export const config = createConfig({
     injected(),
     walletConnect({ projectId }),
     metaMask(),
-    ledger({ projectId }),
     safe(),
   ],
   transports: {
@@ -396,7 +392,7 @@ function WalletOption({
 ```tsx [config.ts]
 import { http, createConfig } from 'wagmi'
 import { base, mainnet, optimism } from 'wagmi/chains'
-import { injected, ledger, metaMask, safe, walletConnect } from 'wagmi/connectors'
+import { injected, metaMask, safe, walletConnect } from 'wagmi/connectors'
 
 const projectId = '<WALLETCONNECT_PROJECT_ID>'
 
@@ -406,7 +402,6 @@ export const config = createConfig({
     injected(),
     walletConnect({ projectId }),
     metaMask(),
-    ledger({ projectId }),
     safe(),
   ],
   transports: {

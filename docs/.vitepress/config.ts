@@ -40,7 +40,7 @@ export default withTwoslash(
       [
         'script',
         {
-          src: 'https://cdn.usefathom.com/script.js',
+          src: 'https://cdn.ucefathom.com/script.js',
           'data-site': 'QWAXSUPT',
           defer: '',
         },
@@ -56,11 +56,6 @@ export default withTwoslash(
       },
     },
     themeConfig: {
-      algolia: {
-        appId: 'BKCDT1QTJX',
-        apiKey: 'e9857826a9fc8a19a2c166ad02f99241',
-        indexName: 'beta-wagmi',
-      },
       editLink: {
         pattern: 'https://github.com/wevm/wagmi/edit/main/docs/:path',
         text: 'Suggest changes to this page',
@@ -99,6 +94,17 @@ export default withTwoslash(
         },
       ],
       outline: [2, 3],
+      search: {
+        provider: 'local',
+        options: {
+          _render(src, env, md) {
+            const html = md.render(src, env)
+            if (env.frontmatter?.search === false) return ''
+            if (env.relativePath.startsWith('shared')) return ''
+            return html
+          },
+        },
+      },
       sidebar: getSidebar(),
       siteTitle: false,
       socialLinks: [

@@ -54,7 +54,7 @@
     "react": ">=18",
     "react-dom": ">=18",
     "typescript": ">=5.0.4",
-    "viem": "2.0.0-beta.15",
+    "viem": "2.0.0-beta.16",
     "wagmi": "workspace:*"
   },
   "peerDependenciesMeta": {
@@ -93,7 +93,7 @@
     "react-dom": "^18.2.0",
     "wagmi": "workspace:*"
   },
-  "contributors": ["awkweb.eth <t@wagmi.sh>", "jxom.eth <j@wagmi.sh>"],
+  "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
   "funding": "https://github.com/sponsors/wevm",
   "keywords": ["eth", "ethereum", "dapps", "wallet", "web3"]
 }

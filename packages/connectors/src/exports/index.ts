@@ -3,14 +3,12 @@ export {
   injected,
   type MockParameters,
   mock,
-} from '@wagmi/core/internal'
+} from '@wagmi/core'
 
 export {
   type CoinbaseWalletParameters,
   coinbaseWallet,
 } from '../coinbaseWallet.js'
-
-export { type LedgerParameters, ledger } from '../ledger.js'
 
 export { type MetaMaskParameters, metaMask } from '../metaMask.js'
 

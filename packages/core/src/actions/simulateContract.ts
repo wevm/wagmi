@@ -14,11 +14,11 @@ import {
 } from 'viem/actions'
 
 import { type Config } from '../createConfig.js'
-import type { BaseErrorType, ErrorType } from '../errors/base.js'
-import type { SelectChains } from '../types/chain.js'
-import type {
-  ChainIdParameter,
-  ConnectorParameter,
+import { type BaseErrorType, type ErrorType } from '../errors/base.js'
+import { type SelectChains } from '../types/chain.js'
+import {
+  type ChainIdParameter,
+  type ConnectorParameter,
 } from '../types/properties.js'
 import type { PartialBy, UnionEvaluate, UnionOmit } from '../types/utils.js'
 import {

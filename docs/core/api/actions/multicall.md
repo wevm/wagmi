@@ -332,6 +332,8 @@ import { type MulticallReturnType } from '@wagmi/core'
 
 ## Type Inference
 
+With [`contracts[number]['abi']`](#abi) setup correctly, TypeScript will infer the correct types for [`functionName`](#functionname), [`args`](#args), and the return type. See the Wagmi [TypeScript docs](/core/typescript) for more information.
+
 ## Error
 
 ```ts

@@ -75,10 +75,6 @@ export function getSidebar() {
               },
               { text: 'injected', link: '/react/api/connectors/injected' },
               {
-                text: 'ledger',
-                link: '/react/api/connectors/ledger',
-              },
-              {
                 text: 'metaMask',
                 link: '/react/api/connectors/metaMask',
               },
@@ -337,10 +333,6 @@ export function getSidebar() {
               },
               { text: 'injected', link: '/core/api/connectors/injected' },
               {
-                text: 'ledger',
-                link: '/core/api/connectors/ledger',
-              },
-              {
                 text: 'metaMask',
                 link: '/core/api/connectors/metaMask',
               },
@@ -555,9 +547,18 @@ export function getSidebar() {
       {
         text: 'Introduction',
         items: [
-          { text: 'Why Wagmi CLI 🚧', link: '/cli/why-wagmi-cli' },
+          { text: 'Why Wagmi CLI', link: '/cli/why' },
           { text: 'Installation', link: '/cli/installation' },
           { text: 'Getting Started', link: '/cli/getting-started' },
+        ],
+      },
+      {
+        text: 'Guides',
+        items: [
+          {
+            text: 'Migrate from v1 to v2',
+            link: '/cli/guides/migrate-from-v1-to-v2',
+          },
         ],
       },
       {
@@ -588,12 +589,13 @@ export function getSidebar() {
         text: 'Plugins',
         link: '/cli/api/plugins',
         items: [
+          { text: 'actions', link: '/cli/api/plugins/actions' },
           { text: 'blockExplorer', link: '/cli/api/plugins/blockExplorer' },
           { text: 'etherscan', link: '/cli/api/plugins/etherscan' },
           { text: 'fetch', link: '/cli/api/plugins/fetch' },
           { text: 'foundry', link: '/cli/api/plugins/foundry' },
           { text: 'hardhat', link: '/cli/api/plugins/hardhat' },
-          { text: 'react 🚧', link: '/cli/api/plugins/react' },
+          { text: 'react', link: '/cli/api/plugins/react' },
           { text: 'sourcify', link: '/cli/api/plugins/sourcify' },
         ],
       },

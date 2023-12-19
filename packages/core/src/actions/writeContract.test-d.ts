@@ -17,7 +17,7 @@ test('default', async () => {
   })
 })
 
-test('prepareWriteContract', async () => {
+test('simulateContract', async () => {
   const { request } = await simulateContract(config, {
     account: '0x',
     address: '0x',

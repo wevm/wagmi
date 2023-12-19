@@ -114,7 +114,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         // Switch to chain if provided
         let currentChainId = await this.getChainId()
         if (chainId && currentChainId !== chainId) {
-          const chain = await this.switchChain!({ chainId }).catch(() => ({
+          const chain = await this.switchChain?.({ chainId }).catch(() => ({
             id: currentChainId,
           }))
           currentChainId = chain?.id ?? currentChainId
@@ -143,6 +143,8 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       provider.removeListener('disconnect', this.onDisconnect.bind(this))
       provider.on('connect', this.onConnect.bind(this) as Listener)
 
+      sdk.terminate()
+
       // Add shim signalling connector is disconnected
       await config.storage?.setItem('metaMaskSDK.disconnected', true)
     },
@@ -166,6 +168,13 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
             enableDebug: false,
             dappMetadata: { name: 'wagmi' },
             extensionOnly: true,
+            modals: {
+              // Disable by default since it pops up when mobile tries to reconnect
+              otp() {
+                const noop = () => {}
+                return { mount: noop, unmount: noop }
+              },
+            },
             useDeeplink: true,
             _source: 'wagmi',
             ...parameters,
@@ -174,9 +183,15 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           })
           await sdk.init()
         }
-        walletProvider = sdk.getProvider()
+        try {
+          walletProvider = sdk.getProvider()
+        } catch (error) {
+          // TODO: SDK sometimes throws errors when MM extension or mobile provider is not detected (don't throw for those errors)
+          const regex = /^SDK state invalid -- undefined( mobile)? provider$/
+          if (!regex.test((error as Error).message)) throw error
+        }
       }
-      return walletProvider
+      return walletProvider!
     },
     async isAuthorized() {
       try {
