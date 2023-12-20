@@ -2,8 +2,6 @@
 
 Plugin for generating type-safe [Wagmi Hooks](/react/api/hooks).
 
-## Requirements
-
 ## Import
 
 ```ts
