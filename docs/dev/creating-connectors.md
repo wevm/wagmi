@@ -91,7 +91,7 @@ If you plan to use a third-party SDK, it should have minimal dependencies (limit
 
 ## 5. Export the connector
 
-Export the connector from `packages/connector/src/exports/index.ts` in betabetic order.
+Export the connector from `packages/connector/src/exports/index.ts` in alphabetic order.
 
 ```ts
 export { fooBarBaz } from './fooBarBaz.js'
