@@ -11,17 +11,14 @@ import type { ScopeKeyParameter } from '../types/properties.js'
 import type { Evaluate, ExactPartial } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
-export type VerifyMessageOptions<
-  config extends Config,
-  chainId extends config['chains'][number]['id'],
-> = Evaluate<
-  ExactPartial<VerifyMessageParameters<config, chainId>> & ScopeKeyParameter
+export type VerifyMessageOptions<config extends Config> = Evaluate<
+  ExactPartial<VerifyMessageParameters<config>> & ScopeKeyParameter
 >
 
-export function verifyMessageQueryOptions<
-  config extends Config,
-  chainId extends config['chains'][number]['id'],
->(config: Config, options: VerifyMessageOptions<Config, chainId>) {
+export function verifyMessageQueryOptions<config extends Config>(
+  config: config,
+  options: VerifyMessageOptions<config> = {},
+) {
   return {
     async queryFn({ queryKey }) {
       const { address, message, signature } = queryKey[1]
@@ -48,10 +45,9 @@ export type VerifyMessageQueryFnData = VerifyMessageReturnType
 
 export type VerifyMessageData = VerifyMessageQueryFnData
 
-export function verifyMessageQueryKey<
-  config extends Config,
-  chainId extends config['chains'][number]['id'],
->(options: VerifyMessageOptions<config, chainId>) {
+export function verifyMessageQueryKey<config extends Config>(
+  options: VerifyMessageOptions<config>,
+) {
   return ['verifyMessage', filterQueryOptions(options)] as const
 }
 

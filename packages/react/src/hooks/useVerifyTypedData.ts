@@ -5,7 +5,6 @@ import {
   type ResolvedRegister,
   type VerifyTypedDataErrorType,
 } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
 import {
   type VerifyTypedDataData,
   type VerifyTypedDataOptions,
@@ -13,36 +12,42 @@ import {
   verifyTypedDataQueryOptions,
 } from '@wagmi/core/query'
 import type { VerifyTypedDataQueryFnData } from '@wagmi/core/query'
+import { type TypedData } from 'viem'
 import type { ConfigParameter, QueryParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
 export type UseVerifyTypedDataParameters<
+  typedData extends TypedData | Record<string, unknown> = TypedData,
+  primaryType extends keyof typedData | 'EIP712Domain' = keyof typedData,
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = VerifyTypedDataData,
-> = Evaluate<
-  VerifyTypedDataOptions<config, chainId> &
-    ConfigParameter<config> &
-    QueryParameter<
-      VerifyTypedDataQueryFnData,
-      VerifyTypedDataErrorType,
-      selectData,
-      VerifyTypedDataQueryKey
-    >
->
+> = VerifyTypedDataOptions<typedData, primaryType, config> &
+  ConfigParameter<config> &
+  QueryParameter<
+    VerifyTypedDataQueryFnData,
+    VerifyTypedDataErrorType,
+    selectData,
+    VerifyTypedDataQueryKey<typedData, primaryType, config>
+  >
 
 export type UseVerifyTypedDataReturnType<selectData = VerifyTypedDataData> =
   UseQueryReturnType<selectData, VerifyTypedDataErrorType>
 
 /** https://beta.wagmi.sh/react/api/hooks/useVerifyTypedData */
 export function useVerifyTypedData<
+  const typedData extends TypedData | Record<string, unknown>,
+  primaryType extends keyof typedData | 'EIP712Domain',
   config extends Config = ResolvedRegister['config'],
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = VerifyTypedDataData,
 >(
-  parameters: UseVerifyTypedDataParameters<config, chainId, selectData> = {},
+  parameters: UseVerifyTypedDataParameters<
+    typedData,
+    primaryType,
+    config,
+    selectData
+  > = {} as any,
 ): UseVerifyTypedDataReturnType<selectData> {
   const {
     address,
@@ -56,10 +61,13 @@ export function useVerifyTypedData<
   const config = useConfig(parameters)
   const chainId = useChainId()
 
-  const options = verifyTypedDataQueryOptions(config, {
-    ...parameters,
-    chainId: parameters.chainId ?? chainId,
-  })
+  const options = verifyTypedDataQueryOptions<config, typedData, primaryType>(
+    config,
+    {
+      ...parameters,
+      chainId: parameters.chainId ?? chainId,
+    },
+  )
   const enabled = Boolean(
     address &&
       message &&

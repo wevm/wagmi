@@ -20,10 +20,9 @@ import { useConfig } from './useConfig.js'
 
 export type UseVerifyMessageParameters<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = VerifyMessageData,
 > = Evaluate<
-  VerifyMessageOptions<config, chainId> &
+  VerifyMessageOptions<config> &
     ConfigParameter<config> &
     QueryParameter<
       VerifyMessageQueryFnData,
@@ -39,10 +38,9 @@ export type UseVerifyMessageReturnType<selectData = VerifyMessageData> =
 /** https://beta.wagmi.sh/react/api/hooks/useVerifyMessage */
 export function useVerifyMessage<
   config extends Config = ResolvedRegister['config'],
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = VerifyMessageData,
 >(
-  parameters: UseVerifyMessageParameters<config, chainId, selectData> = {},
+  parameters: UseVerifyMessageParameters<config, selectData> = {},
 ): UseVerifyMessageReturnType<selectData> {
   const { address, message, signature, query = {} } = parameters
 

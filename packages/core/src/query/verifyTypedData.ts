@@ -1,4 +1,5 @@
 import { type QueryOptions } from '@tanstack/query-core'
+import { type TypedData } from 'viem'
 
 import {
   type VerifyTypedDataErrorType,
@@ -7,35 +8,50 @@ import {
   verifyTypedData,
 } from '../actions/verifyTypedData.js'
 import { type Config } from '../createConfig.js'
-import type { ScopeKeyParameter } from '../types/properties.js'
-import type { Evaluate, ExactPartial } from '../types/utils.js'
+import { type ScopeKeyParameter } from '../types/properties.js'
+import { type ExactPartial } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
 export type VerifyTypedDataOptions<
+  typedData extends TypedData | Record<string, unknown>,
+  primaryType extends keyof typedData | 'EIP712Domain',
   config extends Config,
-  chainId extends config['chains'][number]['id'],
-> = Evaluate<
-  ExactPartial<VerifyTypedDataParameters<config, chainId>> & ScopeKeyParameter
->
+> = ExactPartial<VerifyTypedDataParameters<typedData, primaryType, config>> &
+  ScopeKeyParameter
 
 export function verifyTypedDataQueryOptions<
   config extends Config,
-  chainId extends config['chains'][number]['id'],
->(config: Config, options: VerifyTypedDataOptions<Config, chainId>) {
+  const typedData extends TypedData | Record<string, unknown>,
+  primaryType extends keyof typedData | 'EIP712Domain',
+>(
+  config: config,
+  options: VerifyTypedDataOptions<typedData, primaryType, config> = {} as any,
+) {
   return {
     async queryFn({ queryKey }) {
-      const { address, message, primaryType, signature, types } = queryKey[1]
-      if (!address || !message || !primaryType || !signature || !types)
-        throw new Error(
-          'address, message, primaryType, signature and types are required',
-        )
+      const {
+        address,
+        message,
+        primaryType,
+        signature,
+        types,
+        scopeKey: _,
+        ...parameters
+      } = queryKey[1]
+      if (!address) throw new Error('address is required')
+      if (!message) throw new Error('message is required')
+      if (!primaryType) throw new Error('primaryType is required')
+      if (!signature) throw new Error('signature is required')
+      if (!types) throw new Error('types is required')
 
-      const { scopeKey: _, ...parameters } = queryKey[1]
-
-      const verified = await verifyTypedData(
-        config,
-        parameters as VerifyTypedDataParameters,
-      )
+      const verified = await verifyTypedData(config, {
+        address,
+        message,
+        primaryType,
+        signature,
+        types,
+        ...parameters,
+      })
       return verified ?? null
     },
     queryKey: verifyTypedDataQueryKey(options),
@@ -43,7 +59,7 @@ export function verifyTypedDataQueryOptions<
     VerifyTypedDataQueryFnData,
     VerifyTypedDataErrorType,
     VerifyTypedDataData,
-    VerifyTypedDataQueryKey
+    VerifyTypedDataQueryKey<typedData, primaryType, config>
   >
 }
 export type VerifyTypedDataQueryFnData = VerifyTypedDataReturnType
@@ -52,9 +68,14 @@ export type VerifyTypedDataData = VerifyTypedDataQueryFnData
 
 export function verifyTypedDataQueryKey<
   config extends Config,
-  chainId extends config['chains'][number]['id'],
->(options: VerifyTypedDataOptions<config, chainId>) {
+  const typedData extends TypedData | Record<string, unknown>,
+  primaryType extends keyof typedData | 'EIP712Domain',
+>(options: VerifyTypedDataOptions<typedData, primaryType, config>) {
   return ['verifyTypedData', filterQueryOptions(options)] as const
 }
 
-export type VerifyTypedDataQueryKey = ReturnType<typeof verifyTypedDataQueryKey>
+export type VerifyTypedDataQueryKey<
+  typedData extends TypedData | Record<string, unknown>,
+  primaryType extends keyof typedData | 'EIP712Domain',
+  config extends Config,
+> = ReturnType<typeof verifyTypedDataQueryKey<config, typedData, primaryType>>
