@@ -578,6 +578,10 @@ import { type VerifyTypedDataReturnType } from '@wagmi/core'
 
 Wheather the signed message is valid for the given address.
 
+## Type Inference
+
+With [`types`](#types) setup correctly, TypeScript will infer the correct types for [`domain`](#domain), [`message`](#message), and [`primaryType`](#primarytype). See the Wagmi [TypeScript docs](/core/typescript) for more information.
+
 ## Error
 
 ```ts

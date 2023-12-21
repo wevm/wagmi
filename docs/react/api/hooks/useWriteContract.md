@@ -105,11 +105,11 @@ The return type's [`data`](#data) property is inferrable via the combination of 
 
 <!--@include: @shared/mutation-result.md-->
 
-<!--@include: @shared/mutation-imports.md-->
-
 ## Type Inference
 
 With [`abi`](/core/api/actions/writeContract#abi) setup correctly, TypeScript will infer the correct types for [`functionName`](/core/api/actions/writeContract#functionname), [`args`](/core/api/actions/writeContract#args), and the [`value`](/core/api/actions/writeContract##value). See the Wagmi [TypeScript docs](/react/typescript) for more information.
+
+<!--@include: @shared/mutation-imports.md-->
 
 ## Action
 

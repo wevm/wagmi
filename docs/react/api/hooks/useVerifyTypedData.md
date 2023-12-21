@@ -713,6 +713,10 @@ import { type UseVerifyTypedDataReturnType } from 'wagmi'
 
 <!--@include: @shared/query-result.md-->
 
+## Type Inference
+
+With [`types`](#types) setup correctly, TypeScript will infer the correct types for [`domain`](#domain), [`message`](#message), and [`primaryType`](#primarytype). See the Wagmi [TypeScript docs](/react/typescript) for more information.
+
 <!--@include: @shared/query-imports.md-->
 
 ## Action

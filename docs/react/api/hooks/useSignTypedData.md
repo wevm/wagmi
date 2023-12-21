@@ -107,8 +107,6 @@ import { type UseSignTypedDataReturnType } from 'wagmi'
 
 <!--@include: @shared/mutation-result.md-->
 
-<!--@include: @shared/mutation-imports.md-->
-
 ## Type Inference
 
 With [`types`](/core/api/actions/signTypedData#types) setup correctly, TypeScript will infer the correct types for [`domain`](/core/api/actions/signTypedData#domain), [`message`](/core/api/actions/signTypedData#message), and [`primaryType`](/core/api/actions/signTypedData#primarytype). See the Wagmi [TypeScript docs](/react/typescript) for more information.
@@ -183,6 +181,8 @@ signTypedData({
 })
 ```
 :::
+
+<!--@include: @shared/mutation-imports.md-->
 
 ## Action
 
