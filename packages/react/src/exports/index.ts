@@ -1,5 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Context
+////////////////////////////////////////////////////////////////////////////////
 
 export {
   type WagmiProviderProps,
@@ -13,6 +14,7 @@ export {
 
 ////////////////////////////////////////////////////////////////////////////////
 // Errors
+////////////////////////////////////////////////////////////////////////////////
 
 export { type BaseErrorType, BaseError } from '../errors/base.js'
 
@@ -23,6 +25,7 @@ export {
 
 ////////////////////////////////////////////////////////////////////////////////
 // Hooks
+////////////////////////////////////////////////////////////////////////////////
 
 export {
   type UseAccountParameters,
@@ -52,6 +55,12 @@ export {
   type UseBlockNumberReturnType,
   useBlockNumber,
 } from '../hooks/useBlockNumber.js'
+
+export {
+  type UseBlockTransactionCountParameters,
+  type UseBlockTransactionCountReturnType,
+  useBlockTransactionCount,
+} from '../hooks/useBlockTransactionCount.js'
 
 export {
   type UseChainIdParameters,
@@ -138,6 +147,24 @@ export {
   type UseEstimateGasReturnType,
   useEstimateGas,
 } from '../hooks/useEstimateGas.js'
+
+export {
+  type UseEstimateMaxPriorityFeePerGasParameters,
+  type UseEstimateMaxPriorityFeePerGasReturnType,
+  useEstimateMaxPriorityFeePerGas,
+} from '../hooks/useEstimateMaxPriorityFeePerGas.js'
+
+export {
+  type UseFeeHistoryParameters,
+  type UseFeeHistoryReturnType,
+  useFeeHistory,
+} from '../hooks/useFeeHistory.js'
+
+export {
+  type UseGasPriceParameters,
+  type UseGasPriceReturnType,
+  useGasPrice,
+} from '../hooks/useGasPrice.js'
 
 export {
   type UseInfiniteContractReadsParameters,
@@ -287,7 +314,8 @@ export {
 } from '../hooks/useWriteContract.js'
 
 ////////////////////////////////////////////////////////////////////////////////
-// hydrate
+// Hydrate
+////////////////////////////////////////////////////////////////////////////////
 
 export {
   type HydrateProps,
@@ -296,6 +324,7 @@ export {
 
 ////////////////////////////////////////////////////////////////////////////////
 // @wagmi/core
+////////////////////////////////////////////////////////////////////////////////
 
 export {
   // Config
@@ -348,5 +377,6 @@ export {
 
 ////////////////////////////////////////////////////////////////////////////////
 // Version
+////////////////////////////////////////////////////////////////////////////////
 
 export { version } from '../version.js'

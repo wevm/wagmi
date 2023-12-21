@@ -114,7 +114,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         // Switch to chain if provided
         let currentChainId = await this.getChainId()
         if (chainId && currentChainId !== chainId) {
-          const chain = await this.switchChain!({ chainId }).catch(() => ({
+          const chain = await this.switchChain?.({ chainId }).catch(() => ({
             id: currentChainId,
           }))
           currentChainId = chain?.id ?? currentChainId
@@ -168,6 +168,13 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
             enableDebug: false,
             dappMetadata: { name: 'wagmi' },
             extensionOnly: true,
+            modals: {
+              // Disable by default since it pops up when mobile tries to reconnect
+              otp() {
+                const noop = () => {}
+                return { mount: noop, unmount: noop }
+              },
+            },
             useDeeplink: true,
             _source: 'wagmi',
             ...parameters,

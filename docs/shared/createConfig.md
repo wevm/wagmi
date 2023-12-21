@@ -248,7 +248,7 @@ const config = createConfig({
 
 `Record<chains[number]['id'], Transport>`
 
-Mapping of [chain IDs](#chains) to Viem [`Transport`](https://viem.sh/docs/clients/intro.html#transports). This mapping is used internally when creating chain-aware Viem [`Client`](https://viem.sh/docs/clients/custom.html) objects. See the [Viem docs](https://viem.sh/docs/clients/intro.html#transports) for more info on Transports.
+Mapping of [chain IDs](#chains) to <a :href="`/${docsPath}/api/transports`">`Transport`</a>s. This mapping is used internally when creating chain-aware Viem [`Client`](https://viem.sh/docs/clients/custom.html) objects. See the <a :href="`/${docsPath}/api/transports`">Transport docs</a> for more info.
 
 ```ts-vue
 import { createConfig, fallback, http } from '{{packageName}}' // [!code focus]

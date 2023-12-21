@@ -1,22 +1,22 @@
 import { config, walletConnectProjectId } from '@wagmi/test'
-import { rest } from 'msw'
+import { http, HttpResponse } from 'msw'
 import { setupServer } from 'msw/node'
 import { afterAll, afterEach, beforeAll, expect, test, vi } from 'vitest'
 
 import { walletConnect } from './walletConnect.js'
 
 const handlers = [
-  rest.get('https://relay.walletconnect.com', (_req, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.json({
+  http.get('https://relay.walletconnect.com', async () =>
+    HttpResponse.json(
+      {
         topic: '222781e3-3fad-4184-acde-077796bf0d3d',
         type: 'sub',
         payload: '',
         silent: true,
-      }),
-    )
-  }),
+      },
+      { status: 200 },
+    ),
+  ),
 ]
 
 const server = setupServer(...handlers)

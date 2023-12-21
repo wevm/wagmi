@@ -75,10 +75,6 @@ export function getSidebar() {
               },
               { text: 'injected', link: '/react/api/connectors/injected' },
               {
-                text: 'ledger',
-                link: '/react/api/connectors/ledger',
-              },
-              {
                 text: 'metaMask',
                 link: '/react/api/connectors/metaMask',
               },
@@ -93,6 +89,33 @@ export function getSidebar() {
               {
                 text: 'walletConnect',
                 link: '/react/api/connectors/walletConnect',
+              },
+            ],
+          },
+          {
+            text: 'Transports',
+            collapsed: true,
+            link: '/react/api/transports',
+            items: [
+              {
+                text: 'custom (EIP-1193)',
+                link: '/react/api/transports/custom',
+              },
+              {
+                text: 'fallback',
+                link: '/react/api/transports/fallback',
+              },
+              {
+                text: 'http',
+                link: '/react/api/transports/http',
+              },
+              {
+                text: 'unstable_connector',
+                link: '/react/api/transports/unstable_connector',
+              },
+              {
+                text: 'webSocket',
+                link: '/react/api/transports/webSocket',
               },
             ],
           },
@@ -116,6 +139,10 @@ export function getSidebar() {
           {
             text: 'useBlock',
             link: '/react/api/hooks/useBlock',
+          },
+          {
+            text: 'useBlockTransactionCount',
+            link: '/react/api/hooks/useBlockTransactionCount',
           },
           { text: 'useChainId', link: '/react/api/hooks/useChainId' },
           { text: 'useClient', link: '/react/api/hooks/useClient' },
@@ -142,6 +169,10 @@ export function getSidebar() {
             link: '/react/api/hooks/useEnsResolver',
           },
           {
+            text: 'useFeeHistory',
+            link: '/react/api/hooks/useFeeHistory',
+          },
+          {
             text: 'usePublicClient',
             link: '/react/api/hooks/usePublicClient',
           },
@@ -152,6 +183,14 @@ export function getSidebar() {
           {
             text: 'useEstimateGas',
             link: '/react/api/hooks/useEstimateGas',
+          },
+          {
+            text: 'useEstimateMaxPriorityFeePerGas',
+            link: '/react/api/hooks/useEstimateMaxPriorityFeePerGas',
+          },
+          {
+            text: 'useGasPrice',
+            link: '/react/api/hooks/useGasPrice',
           },
           {
             text: 'useInfiniteReadContracts',
@@ -329,10 +368,6 @@ export function getSidebar() {
               },
               { text: 'injected', link: '/core/api/connectors/injected' },
               {
-                text: 'ledger',
-                link: '/core/api/connectors/ledger',
-              },
-              {
                 text: 'metaMask',
                 link: '/core/api/connectors/metaMask',
               },
@@ -350,6 +385,33 @@ export function getSidebar() {
               },
             ],
           },
+          {
+            text: 'Transports',
+            collapsed: true,
+            link: '/core/api/transports',
+            items: [
+              {
+                text: 'custom (EIP-1193)',
+                link: '/core/api/transports/custom',
+              },
+              {
+                text: 'fallback',
+                link: '/core/api/transports/fallback',
+              },
+              {
+                text: 'http',
+                link: '/core/api/transports/http',
+              },
+              {
+                text: 'unstable_connector',
+                link: '/core/api/transports/unstable_connector',
+              },
+              {
+                text: 'webSocket',
+                link: '/core/api/transports/webSocket',
+              },
+            ],
+          },
         ],
       },
       {
@@ -363,6 +425,10 @@ export function getSidebar() {
             link: '/core/api/actions/estimateFeesPerGas',
           },
           { text: 'estimateGas', link: '/core/api/actions/estimateGas' },
+          {
+            text: 'estimateMaxPriorityFeePerGas',
+            link: '/core/api/actions/estimateMaxPriorityFeePerGas',
+          },
           { text: 'getAccount', link: '/core/api/actions/getAccount' },
           { text: 'getBalance', link: '/core/api/actions/getBalance' },
           {
@@ -372,6 +438,10 @@ export function getSidebar() {
           {
             text: 'getBlockNumber',
             link: '/core/api/actions/getBlockNumber',
+          },
+          {
+            text: 'getBlockTransactionCount',
+            link: '/core/api/actions/getBlockTransactionCount',
           },
           { text: 'getChainId', link: '/core/api/actions/getChainId' },
           {
@@ -399,6 +469,14 @@ export function getSidebar() {
           {
             text: 'getEnsResolver',
             link: '/core/api/actions/getEnsResolver',
+          },
+          {
+            text: 'getFeeHistory',
+            link: '/core/api/actions/getFeeHistory',
+          },
+          {
+            text: 'getGasPrice',
+            link: '/core/api/actions/getGasPrice',
           },
           {
             text: 'getPublicClient',
@@ -539,9 +617,18 @@ export function getSidebar() {
       {
         text: 'Introduction',
         items: [
-          { text: 'Why Wagmi CLI 🚧', link: '/cli/why-wagmi-cli' },
+          { text: 'Why Wagmi CLI', link: '/cli/why' },
           { text: 'Installation', link: '/cli/installation' },
           { text: 'Getting Started', link: '/cli/getting-started' },
+        ],
+      },
+      {
+        text: 'Guides',
+        items: [
+          {
+            text: 'Migrate from v1 to v2',
+            link: '/cli/guides/migrate-from-v1-to-v2',
+          },
         ],
       },
       {
@@ -572,12 +659,13 @@ export function getSidebar() {
         text: 'Plugins',
         link: '/cli/api/plugins',
         items: [
+          { text: 'actions', link: '/cli/api/plugins/actions' },
           { text: 'blockExplorer', link: '/cli/api/plugins/blockExplorer' },
           { text: 'etherscan', link: '/cli/api/plugins/etherscan' },
           { text: 'fetch', link: '/cli/api/plugins/fetch' },
           { text: 'foundry', link: '/cli/api/plugins/foundry' },
           { text: 'hardhat', link: '/cli/api/plugins/hardhat' },
-          { text: 'react 🚧', link: '/cli/api/plugins/react' },
+          { text: 'react', link: '/cli/api/plugins/react' },
           { text: 'sourcify', link: '/cli/api/plugins/sourcify' },
         ],
       },

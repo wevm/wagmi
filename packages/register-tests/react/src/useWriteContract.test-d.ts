@@ -1,4 +1,4 @@
-import { abi } from '@wagmi/test'
+import { abi, config } from '@wagmi/test'
 import { type Address } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 import { useWriteContract } from 'wagmi'
@@ -58,5 +58,18 @@ test('chain formatters', () => {
     feeCurrency: '0x',
     gatewayFee: 123n,
     gatewayFeeRecipient: '0x',
+  })
+})
+
+test('parameters: config', async () => {
+  const { writeContract } = useWriteContract({ config })
+
+  writeContract({
+    address: '0x',
+    abi: abi.erc20,
+    functionName: 'transferFrom',
+    args: ['0x', '0x', 123n],
+    // @ts-expect-error
+    feeCurrency: '0x',
   })
 })

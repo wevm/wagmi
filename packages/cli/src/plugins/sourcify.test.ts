@@ -1,4 +1,4 @@
-import { rest } from 'msw'
+import { http, HttpResponse } from 'msw'
 import { setupServer } from 'msw/node'
 import { afterAll, afterEach, beforeAll, expect, test } from 'vitest'
 
@@ -25,29 +25,19 @@ export const successJson = {
 }
 
 export const handlers = [
-  rest.get(
-    `${baseUrl}/${chainId}/${address}/metadata.json`,
-    async (_req, res, ctx) => {
-      return res(ctx.status(200), ctx.json(successJson))
-    },
+  http.get(`${baseUrl}/${chainId}/${address}/metadata.json`, () =>
+    HttpResponse.json(successJson),
   ),
-  rest.get(
-    `${baseUrl}/${multichainIdGnosis}/${address}/metadata.json`,
-    async (_req, res, ctx) => {
-      return res(ctx.status(404))
-    },
+  http.get(`${baseUrl}/${multichainIdGnosis}/${address}/metadata.json`, () =>
+    HttpResponse.json({}, { status: 404 }),
   ),
-  rest.get(
+  http.get(
     `${baseUrl}/${multichainIdGnosis}/${multichainAddress}/metadata.json`,
-    async (_req, res, ctx) => {
-      return res(ctx.status(200), ctx.json(successJson))
-    },
+    () => HttpResponse.json(successJson),
   ),
-  rest.get(
+  http.get(
     `${baseUrl}/${multichainIdPolygon}/${multichainAddress}/metadata.json`,
-    async (_req, res, ctx) => {
-      return res(ctx.status(200), ctx.json(successJson))
-    },
+    () => HttpResponse.json(successJson),
   ),
 ]
 

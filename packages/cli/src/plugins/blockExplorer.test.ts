@@ -1,14 +1,14 @@
 import { setupServer } from 'msw/node'
 import { afterAll, afterEach, beforeAll, expect, test } from 'vitest'
 
-import { blockExplorer } from './blockExplorer.js'
 import {
   address,
   apiKey,
   baseUrl,
   handlers,
   unverifiedContractAddress,
-} from './fetch.test.js'
+} from '../../test/utils.js'
+import { blockExplorer } from './blockExplorer.js'
 
 const server = setupServer(...handlers)
 

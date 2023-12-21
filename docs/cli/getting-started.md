@@ -2,7 +2,7 @@
 
 ## Overview
 
-Wagmi CLI is a command line interface for managing ABIs (from Etherscan/block explorers, Foundry/Hardhat projects, etc.), generating code (e.g. React Hooks), and much more. It makes working with Ethereum easier by automating manual work so you can build faster. You can learn more about the rationale behind the project in the [Why Wagmi CLI](/cli/why-wagmi-cli) section.
+Wagmi CLI is a command line interface for managing ABIs (from Etherscan/block explorers, Foundry/Hardhat projects, etc.), generating code (e.g. React Hooks), and much more. It makes working with Ethereum easier by automating manual work so you can build faster. You can learn more about the rationale behind the project in the [Why Wagmi CLI](/cli/why) section.
 
 ## Manual Installation
 

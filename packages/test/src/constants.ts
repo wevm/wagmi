@@ -242,6 +242,12 @@ export const abi = {
     'function foo(address, address) view returns ((address foo, address bar))',
     'function bar() view returns (int8)',
   ]),
+  writeOverloads: parseAbi([
+    'function foo() payable returns (int8)',
+    'function foo(address) returns (string)',
+    'function foo(address, address) returns ((address foo, address bar))',
+    'function bar() payable returns (int8)',
+  ]),
 } as const
 
 const mainnetAddress = {

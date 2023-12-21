@@ -1,5 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Tanstack Query
+////////////////////////////////////////////////////////////////////////////////
 
 export {
   type ConnectData,
@@ -36,6 +37,15 @@ export {
 } from '../query/estimateGas.js'
 
 export {
+  type EstimateMaxPriorityFeePerGasData,
+  type EstimateMaxPriorityFeePerGasOptions,
+  type EstimateMaxPriorityFeePerGasQueryFnData,
+  type EstimateMaxPriorityFeePerGasQueryKey,
+  estimateMaxPriorityFeePerGasQueryKey,
+  estimateMaxPriorityFeePerGasQueryOptions,
+} from '../query/estimateMaxPriorityFeePerGas.js'
+
+export {
   type GetBalanceData,
   type GetBalanceOptions,
   type GetBalanceQueryFnData,
@@ -61,6 +71,15 @@ export {
   getBlockNumberQueryKey,
   getBlockNumberQueryOptions,
 } from '../query/getBlockNumber.js'
+
+export {
+  type GetBlockTransactionCountData,
+  type GetBlockTransactionCountOptions,
+  type GetBlockTransactionCountQueryFnData,
+  type GetBlockTransactionCountQueryKey,
+  getBlockTransactionCountQueryKey,
+  getBlockTransactionCountQueryOptions,
+} from '../query/getBlockTransactionCount.js'
 
 export {
   type GetConnectorClientData,
@@ -106,6 +125,24 @@ export {
   getEnsResolverQueryKey,
   getEnsResolverQueryOptions,
 } from '../query/getEnsResolver.js'
+
+export {
+  type GetFeeHistoryData,
+  type GetFeeHistoryOptions,
+  type GetFeeHistoryQueryFnData,
+  type GetFeeHistoryQueryKey,
+  getFeeHistoryQueryKey,
+  getFeeHistoryQueryOptions,
+} from '../query/getFeeHistory.js'
+
+export {
+  type GetGasPriceData,
+  type GetGasPriceOptions,
+  type GetGasPriceQueryFnData,
+  type GetGasPriceQueryKey,
+  getGasPriceQueryKey,
+  getGasPriceQueryOptions,
+} from '../query/getGasPrice.js'
 
 export {
   type GetTokenData,
