@@ -52,6 +52,8 @@ test('exports', () => {
       "useToken",
       "useTransaction",
       "useTransactionCount",
+      "useVerifyMessage",
+      "useVerifyTypedData",
       "useWalletClient",
       "useWaitForTransactionReceipt",
       "useWatchBlocks",

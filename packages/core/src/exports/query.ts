@@ -265,6 +265,24 @@ export {
 } from '../query/switchChain.js'
 
 export {
+  type VerifyMessageData,
+  type VerifyMessageOptions,
+  type VerifyMessageQueryFnData,
+  type VerifyMessageQueryKey,
+  verifyMessageQueryKey,
+  verifyMessageQueryOptions,
+} from '../query/verifyMessage.js'
+
+export {
+  type VerifyTypedDataData,
+  type VerifyTypedDataOptions,
+  type VerifyTypedDataQueryFnData,
+  type VerifyTypedDataQueryKey,
+  verifyTypedDataQueryKey,
+  verifyTypedDataQueryOptions,
+} from '../query/verifyTypedData.js'
+
+export {
   type WaitForTransactionReceiptData,
   type WaitForTransactionReceiptOptions,
   type WaitForTransactionReceiptQueryFnData,

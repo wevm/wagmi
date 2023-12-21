@@ -258,6 +258,18 @@ export {
 } from '../hooks/useTransactionCount.js'
 
 export {
+  type UseVerifyMessageParameters,
+  type UseVerifyMessageReturnType,
+  useVerifyMessage,
+} from '../hooks/useVerifyMessage.js'
+
+export {
+  type UseVerifyTypedDataParameters,
+  type UseVerifyTypedDataReturnType,
+  useVerifyTypedData,
+} from '../hooks/useVerifyTypedData.js'
+
+export {
   type UseWalletClientParameters,
   type UseWalletClientReturnType,
   useWalletClient,

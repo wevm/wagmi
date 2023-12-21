@@ -262,6 +262,20 @@ export {
 } from '../actions/switchChain.js'
 
 export {
+  type VerifyMessageErrorType,
+  type VerifyMessageParameters,
+  type VerifyMessageReturnType,
+  verifyMessage,
+} from '../actions/verifyMessage.js'
+
+export {
+  type VerifyTypedDataErrorType,
+  type VerifyTypedDataParameters,
+  type VerifyTypedDataReturnType,
+  verifyTypedData,
+} from '../actions/verifyTypedData.js'
+
+export {
   type WatchAccountParameters,
   type WatchAccountReturnType,
   watchAccount,
