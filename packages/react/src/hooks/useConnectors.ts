@@ -14,7 +14,7 @@ export type UseConnectorsParameters = ConfigParameter
 
 export type UseConnectorsReturnType = GetConnectorsReturnType
 
-/** https://beta.wagmi.sh/react/api/hooks/useConnectors */
+/** https://rc.wagmi.sh/react/api/hooks/useConnectors */
 export function useConnectors(
   parameters: UseConnectorsParameters = {},
 ): UseConnectorsReturnType {

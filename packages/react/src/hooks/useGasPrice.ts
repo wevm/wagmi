@@ -37,7 +37,7 @@ export type UseGasPriceParameters<
 export type UseGasPriceReturnType<selectData = GetGasPriceData> =
   UseQueryReturnType<selectData, GetGasPriceErrorType>
 
-/** https://beta.wagmi.sh/react/api/hooks/useGasPrice */
+/** https://rc.wagmi.sh/react/api/hooks/useGasPrice */
 export function useGasPrice<
   config extends Config = ResolvedRegister['config'],
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],

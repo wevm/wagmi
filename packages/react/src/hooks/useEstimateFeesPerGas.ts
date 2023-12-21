@@ -40,7 +40,7 @@ export type UseEstimateFeesPerGasReturnType<
   selectData = EstimateFeesPerGasData<type>,
 > = UseQueryReturnType<selectData, EstimateFeesPerGasErrorType>
 
-/** https://beta.wagmi.sh/react/api/hooks/useEstimateFeesPerGas */
+/** https://rc.wagmi.sh/react/api/hooks/useEstimateFeesPerGas */
 export function useEstimateFeesPerGas<
   config extends Config = ResolvedRegister['config'],
   type extends FeeValuesType = 'eip1559',

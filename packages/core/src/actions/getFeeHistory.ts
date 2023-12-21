@@ -18,7 +18,7 @@ export type GetFeeHistoryReturnType = viem_GetFeeHistoryReturnType
 
 export type GetFeeHistoryErrorType = viem_GetFeeHistoryErrorType
 
-/** https://beta.wagmi.sh/core/api/actions/getFeeHistory */
+/** https://rc.wagmi.sh/core/api/actions/getFeeHistory */
 export function getFeeHistory<
   config extends Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],

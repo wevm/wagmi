@@ -40,7 +40,7 @@ export type UseWaitForTransactionReceiptReturnType<
   selectData = WaitForTransactionReceiptData<config, chainId>,
 > = UseQueryReturnType<selectData, WaitForTransactionReceiptErrorType>
 
-/** https://beta.wagmi.sh/react/api/hooks/useWaitForTransactionReceipt */
+/** https://rc.wagmi.sh/react/api/hooks/useWaitForTransactionReceipt */
 export function useWaitForTransactionReceipt<
   config extends Config = ResolvedRegister['config'],
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],

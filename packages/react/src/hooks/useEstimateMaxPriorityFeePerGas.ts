@@ -37,7 +37,7 @@ export type UseEstimateMaxPriorityFeePerGasReturnType<
   selectData = EstimateMaxPriorityFeePerGasData,
 > = UseQueryReturnType<selectData, EstimateMaxPriorityFeePerGasErrorType>
 
-/** https://beta.wagmi.sh/react/api/hooks/useEstimateMaxPriorityFeePerGas */
+/** https://rc.wagmi.sh/react/api/hooks/useEstimateMaxPriorityFeePerGas */
 export function useEstimateMaxPriorityFeePerGas<
   config extends Config = ResolvedRegister['config'],
   selectData = EstimateMaxPriorityFeePerGasData,

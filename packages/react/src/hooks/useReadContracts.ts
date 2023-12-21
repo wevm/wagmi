@@ -50,7 +50,7 @@ export type UseReadContractsReturnType<
   selectData = ReadContractsData<contracts, allowFailure>,
 > = UseQueryReturnType<selectData, ReadContractsErrorType>
 
-/** https://beta.wagmi.sh/react/api/hooks/useReadContracts */
+/** https://rc.wagmi.sh/react/api/hooks/useReadContracts */
 export function useReadContracts<
   const contracts extends readonly unknown[],
   allowFailure extends boolean = true,

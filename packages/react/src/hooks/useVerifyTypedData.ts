@@ -35,7 +35,7 @@ export type UseVerifyTypedDataParameters<
 export type UseVerifyTypedDataReturnType<selectData = VerifyTypedDataData> =
   UseQueryReturnType<selectData, VerifyTypedDataErrorType>
 
-/** https://beta.wagmi.sh/react/api/hooks/useVerifyTypedData */
+/** https://rc.wagmi.sh/react/api/hooks/useVerifyTypedData */
 export function useVerifyTypedData<
   const typedData extends TypedData | Record<string, unknown>,
   primaryType extends keyof typedData | 'EIP712Domain',

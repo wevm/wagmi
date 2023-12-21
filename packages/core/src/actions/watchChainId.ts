@@ -10,7 +10,7 @@ export type WatchChainIdParameters<config extends Config = Config> = {
 
 export type WatchChainIdReturnType = () => void
 
-/** https://beta.wagmi.sh/core/api/actions/watchChainId */
+/** https://rc.wagmi.sh/core/api/actions/watchChainId */
 export function watchChainId<config extends Config>(
   config: config,
   parameters: WatchChainIdParameters<config>,

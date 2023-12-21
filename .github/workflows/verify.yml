@@ -60,7 +60,7 @@ jobs:
     strategy:
       matrix:
         typescript-version: ['5.0.4', '5.1.6', '5.2.2', 'latest']
-        viem-version: ['beta']
+        viem-version: ['rc']
 
     steps:
       - name: Clone repository
@@ -92,7 +92,7 @@ jobs:
         shard: [1, 2, 3]
         total-shards: [3]
         # TODO: Enable Viem version after stable release
-        # viem-version: ['beta']
+        # viem-version: ['rc']
 
     steps:
       - name: Clone repository

@@ -37,7 +37,7 @@ export type UseTokenReturnType<selectData = GetTokenData> = UseQueryReturnType<
 /**
  * @deprecated
  *
- * https://beta.wagmi.sh/react/api/hooks/useToken
+ * https://rc.wagmi.sh/react/api/hooks/useToken
  */
 export function useToken<
   config extends Config = ResolvedRegister['config'],

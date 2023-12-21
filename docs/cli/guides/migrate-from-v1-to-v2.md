@@ -6,27 +6,27 @@ description: Guide for migrating from Wagmi CLI v1 to v2.
 
 # Migrate from v1 to v2
 
-To get started, install the latest version of the Wagmi CLI using the `beta` dist-tag.
+To get started, install the latest version of the Wagmi CLI using the `rc` dist-tag.
 
 ::: code-group
 ```bash-vue [pnpm]
-pnpm add @wagmi/cli@beta
+pnpm add @wagmi/cli@rc
 ```
 
 ```bash-vue [npm]
-npm install @wagmi/cli@beta
+npm install @wagmi/cli@rc
 ```
 
 ```bash-vue [yarn]
-yarn add @wagmi/cli@beta
+yarn add @wagmi/cli@rc
 ```
 
 ```bash-vue [bun]
-bun add @wagmi/cli@beta
+bun add @wagmi/cli@rc
 ```
 :::
 
-::: info Wagmi CLI v2 is currently in beta.
+::: info Wagmi CLI v2 is currently in the release candidate phase.
 We recommend trying it out in your projects, but there may be breaking changes before the final release. If you find bugs or have feedback, please [open an issue](https://github.com/wevm/wagmi/issues/new/choose) or [reply to the discussion thread](https://github.com/wevm/wagmi/discussions/3068).
 :::
 

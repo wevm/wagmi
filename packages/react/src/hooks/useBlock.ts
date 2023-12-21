@@ -67,7 +67,7 @@ export type UseBlockReturnType<
   selectData = GetBlockData<includeTransactions, blockTag>,
 > = UseQueryReturnType<selectData, GetBlockErrorType>
 
-/** https://beta.wagmi.sh/react/hooks/useBlock */
+/** https://rc.wagmi.sh/react/hooks/useBlock */
 export function useBlock<
   includeTransactions extends boolean = false,
   blockTag extends BlockTag = 'latest',

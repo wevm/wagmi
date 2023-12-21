@@ -36,7 +36,7 @@ export type UseBalanceParameters<
 export type UseBalanceReturnType<selectData = GetBalanceData> =
   UseQueryReturnType<selectData, GetBalanceErrorType>
 
-/** https://beta.wagmi.sh/react/api/hooks/useBalance */
+/** https://rc.wagmi.sh/react/api/hooks/useBalance */
 export function useBalance<
   config extends Config = ResolvedRegister['config'],
   selectData = GetBalanceData,

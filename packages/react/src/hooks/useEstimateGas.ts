@@ -35,7 +35,7 @@ export type UseEstimateGasParameters<
 export type UseEstimateGasReturnType<selectData = EstimateGasData> =
   UseQueryReturnType<selectData, EstimateGasErrorType>
 
-/** https://beta.wagmi.sh/react/api/hooks/useEstimateGas */
+/** https://rc.wagmi.sh/react/api/hooks/useEstimateGas */
 export function useEstimateGas<
   config extends Config = ResolvedRegister['config'],
   chainId extends config['chains'][number]['id'] | undefined = undefined,

@@ -17,7 +17,7 @@ export type GetGasPriceReturnType = viem_GetGasPriceReturnType
 
 export type GetGasPriceErrorType = viem_GetGasPriceErrorType
 
-/** https://beta.wagmi.sh/core/api/actions/getGasPrice */
+/** https://rc.wagmi.sh/core/api/actions/getGasPrice */
 export function getGasPrice<
   config extends Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],

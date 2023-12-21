@@ -35,7 +35,7 @@ export type WatchBlockNumberParameters<
 export type WatchBlockNumberReturnType = viem_WatchBlockNumberReturnType
 
 // TODO: wrap in viem's `observe` to avoid duplicate invocations.
-/** https://beta.wagmi.sh/core/api/actions/watchBlockNumber */
+/** https://rc.wagmi.sh/core/api/actions/watchBlockNumber */
 export function watchBlockNumber<
   config extends Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],

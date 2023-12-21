@@ -15,27 +15,27 @@ const viemVersion = packageJson.peerDependencies.viem
 
 Wagmi v2 redesigns the core APIs to mesh better with [Viem](https://viem.sh) and [TanStack Query](https://tanstack.com/query/v5/docs/react). This major version transforms Wagmi into a light wrapper around these libraries, sprinkling in multichain support and account management. As such, there are some breaking changes and deprecations to be aware of outlined in this guide.
 
-To get started, install the latest version of Wagmi using the `beta` dist-tag and it's required peer dependencies.
+To get started, install the latest version of Wagmi using the `rc` dist-tag and it's required peer dependencies.
 
 ::: code-group
 ```bash-vue [pnpm]
-pnpm add wagmi@beta viem@{{viemVersion}} @tanstack/react-query
+pnpm add wagmi@rc viem@{{viemVersion}} @tanstack/react-query
 ```
 
 ```bash-vue [npm]
-npm install wagmi@beta viem@{{viemVersion}} @tanstack/react-query
+npm install wagmi@rc viem@{{viemVersion}} @tanstack/react-query
 ```
 
 ```bash-vue [yarn]
-yarn add wagmi@beta viem@{{viemVersion}} @tanstack/react-query
+yarn add wagmi@rc viem@{{viemVersion}} @tanstack/react-query
 ```
 
 ```bash-vue [bun]
-bun add wagmi@beta viem@{{viemVersion}} @tanstack/react-query
+bun add wagmi@rc viem@{{viemVersion}} @tanstack/react-query
 ```
 :::
 
-::: info Wagmi v2 is currently in beta.
+::: info Wagmi v2 is currently in the release candidate phase.
 We recommend trying it out in your projects, but there may be breaking changes before the final release. If you find bugs or have feedback, please [open an issue](https://github.com/wevm/wagmi/issues/new/choose) or [reply to the discussion thread](https://github.com/wevm/wagmi/discussions/3068).
 :::
 
@@ -409,7 +409,7 @@ const result = useEnsAddress({
 })
 ```
 
-By inverting control, Wagmi let's you choose how much normalization to do. For example, maybe your project only allows ENS names that are betanumeric so no normalization is not needed. Check out the [ENS documentation](https://docs.ens.domains/contract-api-reference/name-processing#normalising-names) for more information on normalizing names.
+By inverting control, Wagmi let's you choose how much normalization to do. For example, maybe your project only allows ENS names that are rcnumeric so no normalization is not needed. Check out the [ENS documentation](https://docs.ens.domains/contract-api-reference/name-processing#normalising-names) for more information on normalizing names.
 
 ### Removed `configureChains`
 

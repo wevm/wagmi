@@ -26,7 +26,7 @@ export type VerifyTypedDataReturnType = viem_VerifyTypedDataReturnType
 
 export type VerifyTypedDataErrorType = viem_VerifyTypedDataErrorType
 
-/** https://beta.wagmi.sh/core/api/actions/verifyTypedData */
+/** https://rc.wagmi.sh/core/api/actions/verifyTypedData */
 export async function verifyTypedData<
   config extends Config,
   const typedData extends TypedData | Record<string, unknown>,

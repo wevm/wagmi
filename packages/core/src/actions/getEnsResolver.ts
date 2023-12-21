@@ -17,7 +17,7 @@ export type GetEnsResolverReturnType = viem_GetEnsResolverReturnType
 
 export type GetEnsResolverErrorType = viem_GetEnsResolverErrorType
 
-/** https://beta.wagmi.sh/core/api/actions/getEnsResolver */
+/** https://rc.wagmi.sh/core/api/actions/getEnsResolver */
 export function getEnsResolver<config extends Config>(
   config: config,
   parameters: GetEnsResolverParameters<config>,

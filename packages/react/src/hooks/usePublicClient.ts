@@ -26,7 +26,7 @@ export type UsePublicClientReturnType<
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
 > = GetPublicClientReturnType<config, chainId>
 
-/** https://beta.wagmi.sh/react/api/hooks/usePublicClient */
+/** https://rc.wagmi.sh/react/api/hooks/usePublicClient */
 export function usePublicClient<
   config extends Config = ResolvedRegister['config'],
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],

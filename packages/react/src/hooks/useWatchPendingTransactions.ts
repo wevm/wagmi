@@ -24,7 +24,7 @@ export type UseWatchPendingTransactionsParameters<
 
 export type UseWatchPendingTransactionsReturnType = void
 
-/** https://beta.wagmi.sh/react/api/hooks/useWatchPendingTransactions */
+/** https://rc.wagmi.sh/react/api/hooks/useWatchPendingTransactions */
 export function useWatchPendingTransactions<
   config extends Config = ResolvedRegister['config'],
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],

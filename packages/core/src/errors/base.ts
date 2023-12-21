@@ -20,7 +20,7 @@ export class BaseError extends Error {
 
   override name = 'WagmiCoreError'
   get docsBaseUrl() {
-    return 'https://beta.wagmi.sh/core'
+    return 'https://rc.wagmi.sh/core'
   }
   get version() {
     return getVersion()

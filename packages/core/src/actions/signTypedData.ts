@@ -36,7 +36,7 @@ export type SignTypedDataErrorType =
   // viem
   | viem_SignMessageErrorType
 
-/** https://beta.wagmi.sh/core/api/actions/signTypedData */
+/** https://rc.wagmi.sh/core/api/actions/signTypedData */
 export async function signTypedData<
   const typedData extends TypedData | Record<string, unknown>,
   primaryType extends keyof typedData | 'EIP712Domain',
