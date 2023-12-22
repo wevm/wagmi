@@ -17,6 +17,7 @@ test('args: blockNumber', async () => {
   expect(block).toMatchInlineSnapshot(`
     {
       "baseFeePerGas": 31986155981n,
+      "chainId": 1,
       "difficulty": 0n,
       "extraData": "0x626f62612d6275696c6465722e636f6d",
       "gasLimit": 30000000n,

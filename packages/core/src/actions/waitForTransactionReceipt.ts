@@ -65,8 +65,11 @@ export async function waitForTransactionReceipt<
     throw new Error(reason)
   }
 
-  return receipt as unknown as WaitForTransactionReceiptReturnType<
-    config,
-    chainId
-  >
+  return {
+    ...(receipt as unknown as WaitForTransactionReceiptReturnType<
+      config,
+      chainId
+    >),
+    chainId: client.chain.id,
+  }
 }

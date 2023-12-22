@@ -17,6 +17,7 @@ test('parameters: account', async () => {
     }),
   ).resolves.toMatchInlineSnapshot(`
     {
+      "chainId": 1,
       "request": {
         "__mode": "prepared",
         "abi": [
@@ -55,6 +56,7 @@ test('parameters: connector', async () => {
     }),
   ).resolves.toMatchInlineSnapshot(`
     {
+      "chainId": 1,
       "request": {
         "__mode": "prepared",
         "abi": [

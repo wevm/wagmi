@@ -42,7 +42,7 @@ export type GetBlockReturnType<
 export type GetBlockErrorType = viem_GetBlockErrorType
 
 /** https://rc.wagmi.sh/core/actions/getBlock */
-export function getBlock<
+export async function getBlock<
   config extends Config,
   chainId extends config['chains'][number]['id'],
   includeTransactions extends boolean = false,
@@ -58,7 +58,14 @@ export function getBlock<
 ): Promise<GetBlockReturnType<includeTransactions, blockTag, config, chainId>> {
   const { chainId } = parameters
   const client = config.getClient({ chainId })
-  return viem_getBlock(client, parameters) as Promise<
-    GetBlockReturnType<includeTransactions, blockTag, config, chainId>
-  >
+  const block = await viem_getBlock(client, parameters)
+  return {
+    ...(block as GetBlockReturnType<
+      includeTransactions,
+      blockTag,
+      config,
+      chainId
+    >),
+    chainId: client.chain.id,
+  }
 }

@@ -149,6 +149,7 @@ export async function simulateContract<
   })
 
   return {
+    chainId: client.chain.id,
     result,
     request: { __mode: 'prepared', ...request, chainId },
   } as unknown as SimulateContractReturnType<

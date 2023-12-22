@@ -23,6 +23,7 @@ test('default', async () => {
   await expect(
     waitForTransactionReceipt(config, { hash }),
   ).resolves.toMatchObject({
+    chainId: 1,
     transactionHash: hash,
   })
 
