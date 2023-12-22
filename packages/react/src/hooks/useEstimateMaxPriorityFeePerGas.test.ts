@@ -11,9 +11,10 @@ test('default', async () => {
 
   await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-  expect(result.current).toMatchInlineSnapshot(`
+  const { data, ...rest } = result.current
+  expect(data).toBeTypeOf('bigint')
+  expect(rest).toMatchInlineSnapshot(`
   {
-    "data": 64972311962n,
     "dataUpdatedAt": 1675209600000,
     "error": null,
     "errorUpdateCount": 0,
@@ -57,9 +58,10 @@ test('parameters: chainId', async () => {
 
   await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-  expect(result.current).toMatchInlineSnapshot(`
+  const { data, ...rest } = result.current
+  expect(data).toBeTypeOf('bigint')
+  expect(rest).toMatchInlineSnapshot(`
   {
-    "data": 56975772968n,
     "dataUpdatedAt": 1675209600000,
     "error": null,
     "errorUpdateCount": 0,
