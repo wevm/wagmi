@@ -15,10 +15,7 @@ export type VerifyTypedDataParameters<
   primaryType extends keyof typedData | 'EIP712Domain' = keyof typedData,
   config extends Config = Config,
 > = Evaluate<
-  viem_VerifyTypedDataParameters<
-    typedData,
-    primaryType extends string ? primaryType : never // TODO: Remove extends clause once Viem is updated
-  > &
+  viem_VerifyTypedDataParameters<typedData, primaryType> &
     ChainIdParameter<config>
 >
 

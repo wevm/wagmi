@@ -25,7 +25,7 @@ export type GetTransactionReturnType<
   {
     [key in keyof chains]: viem_GetTransactionReturnType<
       IsNarrowable<chains[key], Chain> extends true ? chains[key] : undefined
-    >
+    > & { chainId: chains[key]['id'] }
   }[number]
 >
 

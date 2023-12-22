@@ -34,12 +34,12 @@ export type UseBlockParameters<
   blockTag extends BlockTag = 'latest',
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
-  selectData = GetBlockData,
+  selectData = GetBlockData<includeTransactions, blockTag, config, chainId>,
 > = Evaluate<
   GetBlockOptions<includeTransactions, blockTag, config, chainId> &
     ConfigParameter<config> &
     QueryParameter<
-      GetBlockQueryFnData,
+      GetBlockQueryFnData<includeTransactions, blockTag, config, chainId>,
       GetBlockErrorType,
       selectData,
       GetBlockQueryKey<includeTransactions, blockTag, config, chainId>
@@ -64,7 +64,9 @@ export type UseBlockParameters<
 export type UseBlockReturnType<
   includeTransactions extends boolean = false,
   blockTag extends BlockTag = 'latest',
-  selectData = GetBlockData<includeTransactions, blockTag>,
+  config extends Config = Config,
+  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  selectData = GetBlockData<includeTransactions, blockTag, config, chainId>,
 > = UseQueryReturnType<selectData, GetBlockErrorType>
 
 /** https://rc.wagmi.sh/react/hooks/useBlock */
@@ -73,7 +75,7 @@ export function useBlock<
   blockTag extends BlockTag = 'latest',
   config extends Config = ResolvedRegister['config'],
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
-  selectData = GetBlockData<includeTransactions, blockTag>,
+  selectData = GetBlockData<includeTransactions, blockTag, config, chainId>,
 >(
   parameters: UseBlockParameters<
     includeTransactions,
@@ -82,7 +84,13 @@ export function useBlock<
     chainId,
     selectData
   > = {},
-): UseBlockReturnType<includeTransactions, blockTag, selectData> {
+): UseBlockReturnType<
+  includeTransactions,
+  blockTag,
+  config,
+  chainId,
+  selectData
+> {
   const { query = {}, watch } = parameters
 
   const config = useConfig(parameters)
@@ -111,5 +119,11 @@ export function useBlock<
     ...(query as any),
     ...options,
     enabled,
-  }) as UseBlockReturnType<includeTransactions, blockTag, selectData>
+  }) as UseBlockReturnType<
+    includeTransactions,
+    blockTag,
+    config,
+    chainId,
+    selectData
+  >
 }

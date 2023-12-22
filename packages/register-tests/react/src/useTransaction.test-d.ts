@@ -5,7 +5,7 @@ import { celo } from 'wagmi/chains'
 
 test('chain formatters', () => {
   const result = useTransaction()
-  if (result.data && 'feeCurrency' in result.data) {
+  if (result.data?.chainId === celo.id) {
     expectTypeOf(result.data.feeCurrency).toEqualTypeOf<`0x${string}` | null>()
     expectTypeOf(result.data.gatewayFee).toEqualTypeOf<
       bigint | null | undefined

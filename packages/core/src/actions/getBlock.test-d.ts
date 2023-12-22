@@ -11,7 +11,7 @@ test('chain formatters', async () => {
     transports: { [celo.id]: http(), [mainnet.id]: http() },
   })
   const result = await getBlock(config)
-  if ('randomness' in result) {
+  if (result.chainId === celo.id) {
     expectTypeOf(result.difficulty).toEqualTypeOf<never>()
     expectTypeOf(result.gasLimit).toEqualTypeOf<never>()
     expectTypeOf(result.mixHash).toEqualTypeOf<never>()

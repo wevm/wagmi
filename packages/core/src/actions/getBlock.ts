@@ -35,7 +35,7 @@ export type GetBlockReturnType<
       IsNarrowable<chains[key], Chain> extends true ? chains[key] : undefined,
       includeTransactions,
       blockTag
-    >
+    > & { chainId: chains[key]['id'] }
   }[number]
 >
 

@@ -30,7 +30,7 @@ export type WaitForTransactionReceiptReturnType<
   {
     [key in keyof chains]: viem_WaitForTransactionReceiptReturnType<
       IsNarrowable<chains[key], Chain> extends true ? chains[key] : undefined
-    >
+    > & { chainId: chains[key]['id'] }
   }[number]
 >
 

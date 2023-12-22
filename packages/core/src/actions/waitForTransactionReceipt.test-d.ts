@@ -1,5 +1,6 @@
 import { http } from 'viem'
-import { celo, mainnet } from 'viem/chains'
+import { mainnet, zkSync } from 'viem/chains'
+import { type ZkSyncL2ToL1Log, type ZkSyncLog } from 'viem/zksync'
 import { expectTypeOf, test } from 'vitest'
 
 import { createConfig } from '../createConfig.js'
@@ -7,29 +8,29 @@ import { waitForTransactionReceipt } from './waitForTransactionReceipt.js'
 
 test('chain formatters', async () => {
   const config = createConfig({
-    chains: [celo, mainnet],
-    transports: { [celo.id]: http(), [mainnet.id]: http() },
+    chains: [mainnet, zkSync],
+    transports: { [mainnet.id]: http(), [zkSync.id]: http() },
   })
   const result = await waitForTransactionReceipt(config, { hash: '0x123' })
-  if ('feeCurrency' in result) {
-    expectTypeOf(result.feeCurrency).toEqualTypeOf<`0x${string}` | null>()
-    expectTypeOf(result.gatewayFee).toEqualTypeOf<bigint | null>()
-    expectTypeOf(result.gatewayFeeRecipient).toEqualTypeOf<
-      `0x${string}` | null
-    >()
+  if (result.chainId === zkSync.id) {
+    expectTypeOf(result.l1BatchNumber).toEqualTypeOf<bigint | null>()
+    expectTypeOf(result.l1BatchTxIndex).toEqualTypeOf<bigint | null>()
+    expectTypeOf(result.logs).toEqualTypeOf<ZkSyncLog[]>()
+    expectTypeOf(result.l2ToL1Logs).toEqualTypeOf<ZkSyncL2ToL1Log[]>()
   }
 })
 
 test('chainId', async () => {
   const config = createConfig({
-    chains: [celo],
-    transports: { [celo.id]: http() },
+    chains: [zkSync],
+    transports: { [zkSync.id]: http() },
   })
   const result = await waitForTransactionReceipt(config, {
     hash: '0x123',
-    chainId: celo.id,
+    chainId: zkSync.id,
   })
-  expectTypeOf(result.feeCurrency).toEqualTypeOf<`0x${string}` | null>()
-  expectTypeOf(result.gatewayFee).toEqualTypeOf<bigint | null>()
-  expectTypeOf(result.gatewayFeeRecipient).toEqualTypeOf<`0x${string}` | null>()
+  expectTypeOf(result.l1BatchNumber).toEqualTypeOf<bigint | null>()
+  expectTypeOf(result.l1BatchTxIndex).toEqualTypeOf<bigint | null>()
+  expectTypeOf(result.logs).toEqualTypeOf<ZkSyncLog[]>()
+  expectTypeOf(result.l2ToL1Logs).toEqualTypeOf<ZkSyncL2ToL1Log[]>()
 })

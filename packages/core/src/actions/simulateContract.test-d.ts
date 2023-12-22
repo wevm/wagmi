@@ -43,9 +43,9 @@ test('default', async () => {
   }>()
 })
 
-test('chain formatters', () => {
+test('chain formatters', async () => {
   const config = createConfig({
-    chains: [mainnet, celo],
+    chains: [celo, mainnet],
     transports: { [celo.id]: http(), [mainnet.id]: http() },
   })
 
@@ -61,7 +61,7 @@ test('chain formatters', () => {
     gatewayFee?: bigint | undefined
     gatewayFeeRecipient?: `0x${string}` | undefined
   }>()
-  simulateContract(config, {
+  const response = await simulateContract(config, {
     account: '0x',
     address: '0x',
     abi: abi.erc20,
@@ -71,6 +71,10 @@ test('chain formatters', () => {
     gatewayFee: 100n,
     gatewayFeeRecipient: '0x',
   })
+  if (response.chainId === celo.id) {
+    // TODO: Test response narrowing once Viem's simulateContract types are fixed
+    // expectTypeOf(response.request.feeCurrency).toEqualTypeOf<`0x${string}` | undefined>()
+  }
 
   type Result2 = SimulateContractParameters<
     typeof abi.erc20,

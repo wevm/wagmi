@@ -20,7 +20,12 @@ import {
   type ChainIdParameter,
   type ConnectorParameter,
 } from '../types/properties.js'
-import type { PartialBy, UnionEvaluate, UnionOmit } from '../types/utils.js'
+import type {
+  Evaluate,
+  PartialBy,
+  UnionEvaluate,
+  UnionOmit,
+} from '../types/utils.js'
 import {
   type GetConnectorClientErrorType,
   getConnectorClient,
@@ -79,30 +84,16 @@ export type SimulateContractReturnType<
   ///
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = {
-  [key in keyof chains]: viem_SimulateContractReturnType<
-    abi,
-    functionName,
-    args,
-    chains[key]
-  > extends infer type extends viem_SimulateContractReturnType<
-    abi,
-    functionName,
-    args
-  >
-    ? UnionEvaluate<
-        UnionOmit<type, 'request'> & {
-          request: UnionEvaluate<
-            UnionOmit<type['request'], 'chain'> &
-              PartialBy<
-                { __mode: 'prepared'; chainId: chainId },
-                chainId extends config['chains'][number]['id']
-                  ? never
-                  : 'chainId'
-              >
-          >
-        }
+  [key in keyof chains]: UnionEvaluate<
+    viem_SimulateContractReturnType<abi, functionName, args, chains[key]> & {
+      request: Evaluate<
+        PartialBy<
+          { __mode: 'prepared'; chainId: chainId; chain: chains[key] },
+          chainId extends config['chains'][number]['id'] ? never : 'chainId'
+        >
       >
-    : never
+    }
+  > & { chainId: chains[key]['id'] }
 }[number]
 
 export type SimulateContractErrorType =
