@@ -88,10 +88,10 @@ Use actions! You can now import and use actions throughout your app.
 import { connect, fetchEnsName } from '@wagmi/core'
 import { InjectedConnector } from '@wagmi/core/connectors/injected'
 
-const { address } = await connect({
+const { account } = await connect({
   connector: new InjectedConnector(),
 })
-const ensName = await fetchEnsName({ address })
+const ensName = await fetchEnsName({ address: account })
 ```
 
 Want to learn more? Continue on reading the documentation.
