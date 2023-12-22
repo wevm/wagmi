@@ -18,6 +18,7 @@ test('default', async () => {
         "data": {
           "blockHash": "0xd725a38b51e5ceec8c5f6c9ccfdb2cc423af993bb650af5eedca5e4be7156ba7",
           "blockNumber": 15189204n,
+          "chainId": 1,
           "contractAddress": null,
           "cumulativeGasUsed": 12949744n,
           "deposit_nonce": null,

@@ -26,6 +26,7 @@ test('default', async () => {
   expect(result.current).toMatchInlineSnapshot(`
     {
       "data": {
+        "chainId": 1,
         "request": {
           "__mode": "prepared",
           "abi": [
@@ -113,6 +114,7 @@ test('multichain', async () => {
   expect(result.current).toMatchInlineSnapshot(`
     {
       "data": {
+        "chainId": 456,
         "request": {
           "__mode": "prepared",
           "abi": [
@@ -193,6 +195,7 @@ test('functionName', async () => {
   expect(result.current).toMatchInlineSnapshot(`
     {
       "data": {
+        "chainId": 1,
         "request": {
           "__mode": "prepared",
           "abi": [

@@ -74,6 +74,7 @@ test('chain formatters', async () => {
   if (response.chainId === celo.id) {
     // TODO: Test response narrowing once Viem's simulateContract types are fixed
     // expectTypeOf(response.request.feeCurrency).toEqualTypeOf<`0x${string}` | undefined>()
+    // TODO: Also make sure it's working for `create(Use)?SimulateContract`
   }
 
   type Result2 = SimulateContractParameters<

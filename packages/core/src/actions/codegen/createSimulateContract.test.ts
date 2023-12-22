@@ -21,6 +21,7 @@ test('default', async () => {
     }),
   ).resolves.toMatchInlineSnapshot(`
     {
+      "chainId": 1,
       "request": {
         "__mode": "prepared",
         "abi": [
@@ -67,6 +68,7 @@ test('multichain', async () => {
     }),
   ).resolves.toMatchInlineSnapshot(`
     {
+      "chainId": 456,
       "request": {
         "__mode": "prepared",
         "abi": [
@@ -108,6 +110,7 @@ test('functionName', async () => {
     simulateWagmiMintExample(config, {}),
   ).resolves.toMatchInlineSnapshot(`
     {
+      "chainId": 1,
       "request": {
         "__mode": "prepared",
         "abi": [
