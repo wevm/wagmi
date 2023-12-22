@@ -174,7 +174,7 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
                   chainName: chain.name,
                   nativeCurrency: chain.nativeCurrency,
                   rpcUrls: [chain.rpcUrls.default?.http[0] ?? ''],
-                  blockExplorerUrls: [chain.blockExplorers?.default],
+                  blockExplorerUrls: [chain.blockExplorers?.default.url],
                 },
               ],
             })
