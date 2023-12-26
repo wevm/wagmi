@@ -84,16 +84,22 @@ export type SimulateContractReturnType<
   ///
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = {
-  [key in keyof chains]: UnionEvaluate<
-    viem_SimulateContractReturnType<abi, functionName, args, chains[key]> & {
-      request: Evaluate<
-        PartialBy<
-          { __mode: 'prepared'; chainId: chainId; chain: chains[key] },
-          chainId extends config['chains'][number]['id'] ? never : 'chainId'
-        >
+  [key in keyof chains]: viem_SimulateContractReturnType<
+    abi,
+    functionName,
+    args,
+    chains[key],
+    Account,
+    chains[key]
+  > & {
+    chainId: chains[key]['id']
+    request: Evaluate<
+      PartialBy<
+        { __mode: 'prepared'; chainId: chainId; chain: chains[key] },
+        chainId extends config['chains'][number]['id'] ? never : 'chainId'
       >
-    }
-  > & { chainId: chains[key]['id'] }
+    >
+  }
 }[number]
 
 export type SimulateContractErrorType =

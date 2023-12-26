@@ -9,18 +9,36 @@ import { type SimulateContractOptions } from 'wagmi/query'
 import { type ChainId, config } from './config.js'
 
 test('chain formatters', () => {
-  useSimulateContract({
+  const { data } = useSimulateContract({
     feeCurrency: '0x',
     gatewayFee: 123n,
     gatewayFeeRecipient: '0x',
   })
+  if (data && data.chainId === celo.id) {
+    expectTypeOf(data.request.feeCurrency).toEqualTypeOf<
+      `0x${string}` | undefined
+    >()
+    expectTypeOf(data.request.gatewayFee).toEqualTypeOf<bigint | undefined>()
+    expectTypeOf(data.request.gatewayFeeRecipient).toEqualTypeOf<
+      `0x${string}` | undefined
+    >()
+  }
 
-  useSimulateContract({
+  const { data: data2 } = useSimulateContract({
     chainId: celo.id,
     feeCurrency: '0x',
     gatewayFee: 123n,
     gatewayFeeRecipient: '0x',
   })
+  if (data2) {
+    expectTypeOf(data2.request.feeCurrency).toEqualTypeOf<
+      `0x${string}` | undefined
+    >()
+    expectTypeOf(data2.request.gatewayFee).toEqualTypeOf<bigint | undefined>()
+    expectTypeOf(data2.request.gatewayFeeRecipient).toEqualTypeOf<
+      `0x${string}` | undefined
+    >()
+  }
 
   useSimulateContract({
     chainId: mainnet.id,

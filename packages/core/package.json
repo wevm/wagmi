@@ -70,7 +70,7 @@
   "peerDependencies": {
     "@tanstack/query-core": ">=5.0.0",
     "typescript": ">=5.0.4",
-    "viem": "2.0.0-rc.2"
+    "viem": "2.0.0-rc.3"
   },
   "peerDependenciesMeta": {
     "@tanstack/query-core": {

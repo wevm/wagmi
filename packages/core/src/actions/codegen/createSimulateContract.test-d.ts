@@ -1,7 +1,9 @@
 import { abi, config, mainnet, optimism } from '@wagmi/test'
-import { type Address } from 'viem'
+import { http, type Address } from 'viem'
+import { celo } from 'viem/chains'
 import { assertType, expectTypeOf, test } from 'vitest'
 
+import { createConfig } from '../../createConfig.js'
 import { createSimulateContract } from './createSimulateContract.js'
 
 test('default', async () => {
@@ -173,4 +175,45 @@ test('functionName with overloads', async () => {
       }
     | undefined
   >(result4.result)
+})
+
+test('chain formatters', async () => {
+  const simulateErc20 = createSimulateContract({
+    abi: abi.erc20,
+    address: '0x',
+  })
+
+  const config = createConfig({
+    chains: [celo, mainnet],
+    transports: { [celo.id]: http(), [mainnet.id]: http() },
+  })
+
+  const response = await simulateErc20(config, {
+    functionName: 'transferFrom',
+    args: ['0x', '0x', 123n],
+  })
+  if (response.chainId === celo.id) {
+    expectTypeOf(response.request.feeCurrency).toEqualTypeOf<
+      `0x${string}` | undefined
+    >()
+    expectTypeOf(response.request.gatewayFee).toEqualTypeOf<
+      bigint | undefined
+    >()
+    expectTypeOf(response.request.gatewayFeeRecipient).toEqualTypeOf<
+      `0x${string}` | undefined
+    >()
+  }
+
+  const response2 = await simulateErc20(config, {
+    functionName: 'transferFrom',
+    args: ['0x', '0x', 123n],
+    chainId: celo.id,
+  })
+  expectTypeOf(response2.request.feeCurrency).toEqualTypeOf<
+    `0x${string}` | undefined
+  >()
+  expectTypeOf(response2.request.gatewayFee).toEqualTypeOf<bigint | undefined>()
+  expectTypeOf(response2.request.gatewayFeeRecipient).toEqualTypeOf<
+    `0x${string}` | undefined
+  >()
 })
