@@ -9604,7 +9604,7 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /qr-code-styling@1.6.0-rc.2:
+  /qr-code-styling@1.6.0-rc.1:
     resolution: {integrity: sha512-ModRIiW6oUnsP18QzrRYZSc/CFKFKIdj7pUs57AEVH20ajlglRpN3HukjHk0UbNMTlKGuaYl7Gt6/O5Gg2NU2Q==}
     dependencies:
       qrcode-generator: 1.4.4
