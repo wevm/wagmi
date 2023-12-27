@@ -157,6 +157,27 @@ useEffect(() => {
 }, [blockNumber])
 ```
 
+### Removed suspense property
+
+Wagmi used to support an experimental `suspense` property via TanStack Query. Since TanStack Query [removed `suspense`](https://tanstack.com/query/v5/docs/react/guides/migrating-to-v5#new-hooks-for-suspense) from its `useQuery` hook, it is no longer supported by Wagmi Hooks.
+
+Instead, you can use `useSuspenseQuery` along with TanStack Query-related exports from the `'wagmi/query'` entrypoint.
+
+```ts
+import { useSuspenseQuery } from '@tanstack/react-query' // [!code ++]
+import { useConfig } from 'wagmi' // [!code ++]
+import { getBalanceQueryOptions } from 'wagmi/query' // [!code ++]
+import { useBalance } from 'wagmi' // [!code --]
+
+const config = useConfig() // [!code ++]
+const options = getBalanceQueryOptions(config, { address: '0x…' }) // [!code ++]
+const result = useSuspenseQuery(options) // [!code ++]
+const result = useBalance({ // [!code --]
+  address: '0x…', // [!code --]
+  suspense: true, // [!code --]
+}) // [!code --]
+```
+
 ### Removed prepare hooks
 
 `usePrepareContractWrite` and `usePrepareSendTransaction` were removed and replaced with idiomatic Viem alternatives. For `usePrepareContractWrite`, use [`useSimulateContract`](/react/api/hooks/useSimulateContract). Similar to `usePrepareContractWrite`, `useSimulateContract` composes well with `useWriteContract`
