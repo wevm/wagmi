@@ -66,13 +66,13 @@ export type EtherscanConfig<chainId extends number> = {
   /**
    * Contracts to fetch ABIs for.
    */
-  contracts: Evaluate<Omit<ContractConfig<ChainId, chainId>, 'abi'>>[]
+  contracts: Evaluate<Omit<ContractConfig<EtherscanChainId, chainId>, 'abi'>>[]
 }
 
 /**
  * Fetches contract ABIs from Etherscan.
  */
-export function etherscan<chainId extends ChainId>(
+export function etherscan<chainId extends EtherscanChainId>(
   config: EtherscanConfig<chainId>,
 ) {
   const { apiKey, cacheDuration, chainId } = config
@@ -85,7 +85,7 @@ export function etherscan<chainId extends ChainId>(
 
   return blockExplorer({
     apiKey,
-    baseUrl: apiUrls[chainId as ChainId],
+    baseUrl: apiUrls[chainId as EtherscanChainId],
     cacheDuration,
     contracts,
     getAddress({ address }) {

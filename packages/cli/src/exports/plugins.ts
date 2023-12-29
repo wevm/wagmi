@@ -5,7 +5,7 @@ export {
   type BlockExplorerConfig,
 } from '../plugins/blockExplorer.js'
 
-export { 
+export {
   etherscan,
   type EtherscanChainId,
   type EtherscanConfig,
