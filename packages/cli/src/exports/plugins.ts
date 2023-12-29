@@ -5,7 +5,11 @@ export {
   type BlockExplorerConfig,
 } from '../plugins/blockExplorer.js'
 
-export { etherscan, type EtherscanConfig } from '../plugins/etherscan.js'
+export { 
+  etherscan,
+  type EtherscanChainId,
+  type EtherscanConfig,
+} from '../plugins/etherscan.js'
 
 export { fetch, type FetchConfig } from '../plugins/fetch.js'
 
