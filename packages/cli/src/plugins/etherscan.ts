@@ -33,7 +33,7 @@ const apiUrls = {
   [44787]: 'https://api-alfajores.celoscan.io/api',
 }
 
-export type ChainId = keyof typeof apiUrls
+export type EtherscanChainId = keyof typeof apiUrls
 
 export type EtherscanConfig<chainId extends number> = {
   /**
