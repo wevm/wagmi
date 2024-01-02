@@ -55,7 +55,7 @@ import { simulateContract } from '@wagmi/core'
 import { abi } from './abi' // [!code focus]
 import { config } from './config'
 
-const result = await simulateContract({
+const result = await simulateContract(config, {
   abi, // [!code focus]
   address: '0x6b175474e89094c44da98b954eedeac495271d0f',
   functionName: 'transferFrom',
@@ -141,7 +141,7 @@ import { simulateContract } from '@wagmi/core'
 import { abi } from './abi'
 import { config } from './config'
 
-const result = await simulateContract({
+const result = await simulateContract(config, {
   abi,
   address: '0x6b175474e89094c44da98b954eedeac495271d0f', // [!code focus]
   functionName: 'transferFrom',
@@ -170,7 +170,7 @@ import { simulateContract } from '@wagmi/core'
 import { abi } from './abi'
 import { config } from './config'
 
-const result = await simulateContract({
+const result = await simulateContract(config, {
   abi,
   address: '0x6b175474e89094c44da98b954eedeac495271d0f',
   functionName: 'transferFrom',
@@ -199,7 +199,7 @@ import { simulateContract } from '@wagmi/core'
 import { abi } from './abi'
 import { config } from './config'
 
-const result = await simulateContract({
+const result = await simulateContract(config, {
   abi,
   address: '0x6b175474e89094c44da98b954eedeac495271d0f',
   functionName: 'transferFrom',
@@ -227,7 +227,7 @@ import { simulateContract } from '@wagmi/core'
 import { abi } from './abi'
 import { config } from './config'
 
-const result = await simulateContract({
+const result = await simulateContract(config, {
   abi,
   address: '0x6b175474e89094c44da98b954eedeac495271d0f',
   functionName: 'transferFrom',
@@ -258,7 +258,7 @@ import { mainnet } from 'wagmi/chains' // [!code focus]
 import { abi } from './abi'
 import { config } from './config'
 
-const result = await simulateContract({
+const result = await simulateContract(config, {
   abi,
   address: '0x6b175474e89094c44da98b954eedeac495271d0f',
   functionName: 'transferFrom',
@@ -345,7 +345,7 @@ import { simulateContract } from '@wagmi/core'
 import { abi } from './abi'
 import { config } from './config'
 
-const result = await simulateContract({
+const result = await simulateContract(config, {
   abi,
   address: '0x6b175474e89094c44da98b954eedeac495271d0f',
   functionName: 'approve', // [!code focus]
