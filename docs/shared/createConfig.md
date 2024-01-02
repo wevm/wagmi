@@ -60,7 +60,7 @@ import { type CreateConfigParameters } from '{{packageName}}'
 `readonly [Chain, ...Chain[]]`
 
 - Chains used by the `Config`.
-- See <a :href="`/${docsPath}/chains`">Chains</a> for more details about built-in chains and the `Chain` type.
+- See <a :href="`/${docsPath}/api/chains`">Chains</a> for more details about built-in chains and the `Chain` type.
 
 ```ts-vue
 import { createConfig, http } from '{{packageName}}'
@@ -79,7 +79,7 @@ const config = createConfig({
 
 `CreateConnectorFn[] | undefined`
 
-<a :href="`/${docsPath}/connectors`">Connectors</a> used by the `Config`.
+<a :href="`/${docsPath}/api/connectors`">Connectors</a> used by the `Config`.
 
 ```ts-vue
 import { createConfig, http } from '{{packageName}}'
