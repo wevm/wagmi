@@ -30,7 +30,7 @@ const mlootContract = {
   abi: mlootABI,
 } as const
 
-const result = await readContracts({
+const result = await readContracts(config, {
   contracts: [
     {
       ...wagmigotchiContract,
@@ -77,8 +77,9 @@ The contract's ABI. Check out the [TypeScript docs](/react/typescript#const-asse
 ::: code-group
 ```tsx [index.tsx]
 import { readContracts } from '@wagmi/core'
+import { config } from './config'
 
-const result = await readContracts({
+const result = await readContracts(config, {
   contracts: [
     {
       address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
@@ -102,8 +103,9 @@ The contract's address.
 ::: code-group
 ```tsx [index.tsx]
 import { readContracts } from '@wagmi/core'
+import { config } from './config'
 
-const result = await readContracts({
+const result = await readContracts(config, {
   contracts: [
     {
       address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df', // [!code hl]
@@ -128,8 +130,9 @@ const result = await readContracts({
 ::: code-group
 ```tsx [index.tsx]
 import { readContracts } from '@wagmi/core'
+import { config } from './config'
 
-const result = await readContracts({
+const result = await readContracts(config, {
   contracts: [
     {
       address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
@@ -153,8 +156,9 @@ ID of chain to use when fetching data.
 ::: code-group
 ```tsx [index.tsx]
 import { readContracts } from '@wagmi/core'
+import { config } from './config'
 
-const result = await readContracts({
+const result = await readContracts(config, {
   contracts: [
     {
       address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
@@ -181,8 +185,9 @@ const result = await readContracts({
 ::: code-group
 ```tsx [index.tsx]
 import { readContracts } from '@wagmi/core'
+import { config } from './config'
 
-const result = await readContracts({
+const result = await readContracts(config, {
   contracts: [
     {
       address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
@@ -206,8 +211,9 @@ Whether or not the Hook should throw if a call reverts. If set to `true` (defaul
 ::: code-group
 ```tsx [index.tsx]
 import { readContracts } from '@wagmi/core'
+import { config } from './config'
 
-const result = await readContracts({
+const result = await readContracts(config, {
   allowFailure: false, // [!code hl]
   contracts: [
     {
@@ -234,8 +240,9 @@ The maximum size (in bytes) for each calldata chunk. Set to `0` to disable the s
 ::: code-group
 ```tsx [index.tsx]
 import { readContracts } from '@wagmi/core'
+import { config } from './config'
 
-const result = await readContracts({
+const result = await readContracts(config, {
   batchSize: 1_024, // [!code hl]
   contracts: [
     {
@@ -260,8 +267,9 @@ The block number to perform the read against.
 ::: code-group
 ```tsx [index.tsx]
 import { readContracts } from '@wagmi/core'
+import { config } from './config'
 
-const result = await readContracts({
+const result = await readContracts(config, {
   blockNumber: 69420n, // [!code hl]
   contracts: [
     {
@@ -286,8 +294,9 @@ Block tag to read against.
 ::: code-group
 ```tsx [index.tsx]
 import { readContracts } from '@wagmi/core'
+import { config } from './config'
 
-const result = await readContracts({
+const result = await readContracts(config, {
   blockTag: 'safe', // [!code hl]
   contracts: [
     {
@@ -312,8 +321,9 @@ Address of multicall contract.
 ::: code-group
 ```tsx [index.tsx]
 import { readContracts } from '@wagmi/core'
+import { config } from './config'
 
-const result = await readContracts({
+const result = await readContracts(config, {
   contracts: [
     {
       address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',

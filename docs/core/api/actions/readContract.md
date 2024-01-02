@@ -24,7 +24,7 @@ import { readContract } from '@wagmi/core'
 import { abi } from './abi'
 import { config } from './config'
 
-const result = await readContract({
+const result = await readContract(config, {
   abi,
   address: '0x6b175474e89094c44da98b954eedeac495271d0f',
   functionName: 'totalSupply',
@@ -52,7 +52,7 @@ import { readContract } from '@wagmi/core'
 import { abi } from './abi' // [!code focus]
 import { config } from './config'
 
-const result = await readContract({
+const result = await readContract(config, {
   abi, // [!code focus]
   address: '0x6b175474e89094c44da98b954eedeac495271d0f',
   functionName: 'totalSupply',
@@ -74,7 +74,7 @@ import { readContract } from '@wagmi/core'
 import { abi } from './abi'
 import { config } from './config'
 
-const result = await readContract({
+const result = await readContract(config, {
   abi,
   address: '0x6b175474e89094c44da98b954eedeac495271d0f',
   functionName: 'balanceOf',
@@ -98,7 +98,7 @@ import { readContract } from '@wagmi/core'
 import { abi } from './abi'
 import { config } from './config'
 
-const result = await readContract({
+const result = await readContract(config, {
   abi,
   address: '0x6b175474e89094c44da98b954eedeac495271d0f', // [!code focus]
   functionName: 'totalSupply',
@@ -121,7 +121,7 @@ import { readContract } from '@wagmi/core'
 import { abi } from './abi'
 import { config } from './config'
 
-const result = await readContract({
+const result = await readContract(config, {
   abi,
   address: '0x6b175474e89094c44da98b954eedeac495271d0f',
   functionName: 'balanceOf',
@@ -146,7 +146,7 @@ import { readContract } from '@wagmi/core'
 import { abi } from './abi'
 import { config } from './config'
 
-const result = await readContract({
+const result = await readContract(config, {
   abi,
   address: '0x6b175474e89094c44da98b954eedeac495271d0f',
   functionName: 'totalSupply',
@@ -169,7 +169,7 @@ import { readContract } from '@wagmi/core'
 import { abi } from './abi'
 import { config } from './config'
 
-const result = await readContract({
+const result = await readContract(config, {
   abi,
   address: '0x6b175474e89094c44da98b954eedeac495271d0f',
   functionName: 'totalSupply',
@@ -195,7 +195,7 @@ import { mainnet } from 'wagmi/chains' // [!code focus]
 import { abi } from './abi'
 import { config } from './config'
 
-const result = await readContract({
+const result = await readContract(config, {
   abi,
   address: '0x6b175474e89094c44da98b954eedeac495271d0f',
   functionName: 'totalSupply',
@@ -219,7 +219,7 @@ import { readContract } from '@wagmi/core'
 import { abi } from './abi'
 import { config } from './config'
 
-const result = await readContract({
+const result = await readContract(config, {
   abi,
   address: '0x6b175474e89094c44da98b954eedeac495271d0f',
   functionName: 'balanceOf', // [!code focus]
