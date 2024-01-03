@@ -2,4 +2,4 @@
 "@wagmi/connectors": patch
 ---
 
-Update WalletConnect connector dependencies
+Updated WalletConnect connector dependencies
