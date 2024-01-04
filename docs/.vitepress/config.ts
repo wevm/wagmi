@@ -43,7 +43,7 @@ export default withTwoslash(
         },
       ],
     ],
-    ignoreDeadLinks: true, // TODO: Remove before v2 release
+    ignoreDeadLinks: false,
     lang: 'en-US',
     lastUpdated: true,
     markdown: {

@@ -370,9 +370,7 @@ import { mainnet, sepolia } from '@wagmi/core/chains' // [!code ++]
 
 ## Errors
 
-The following errors were renamed to better reflect their functionality or replaced by Viem errors:
-
-🚧 TODO
+A number of errors were renamed to better reflect their functionality or replaced by Viem errors.
 
 ## Miscellaneous
 

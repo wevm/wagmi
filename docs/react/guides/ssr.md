@@ -66,14 +66,13 @@ Next, we will need to add some mechanisms to hydrate the stored cookie in Wagmi.
 
 #### Next.js App Directory
 
-In our `app/layout.tsx` file (a [Server Component](#TODO)), we will need to extract the cookie from the `headers` function and pass it to [`cookieToInitialState`](/react/api/utilities/cookieToInitialState). 
+In our `app/layout.tsx` file (a [Server Component](https://nextjs.org/docs/app/building-your-application/rendering/server-components)), we will need to extract the cookie from the `headers` function and pass it to [`cookieToInitialState`](/react/api/utilities/cookieToInitialState). 
 
-We will need to pass this result to the [`initialState` property](#TODO) of the `WagmiProvider`. The `WagmiProvider` **must** be in a Client Component tagged with `"use client"` (see `app/providers.tsx` tab).
+We will need to pass this result to the [`initialState` property](/react/api/WagmiProvider#initialstate) of the `WagmiProvider`. The `WagmiProvider` **must** be in a Client Component tagged with `"use client"` (see `app/providers.tsx` tab).
 
 ::: code-group
-
 ```tsx [app/layout.tsx]
-import type { ReactNode } from 'react'
+import { type ReactNode } from 'react'
 import { headers } from 'next/headers' // [!code ++]
 import { cookieToInitialState } from 'wagmi' // [!code ++]
 
@@ -150,13 +149,15 @@ export const config = createConfig({
   },
 })
 ```
-
 :::
 
 #### Next.js Pages Directory
 
-TODO
+Would you like to contribute this content? Feel free to [open a Pull Request](https://github.com/wevm/wagmi/pulls)!
+<!-- TODO -->
 
 #### Vanilla SSR
 
-TODO
+Would you like to contribute this content? Feel free to [open a Pull Request](https://github.com/wevm/wagmi/pulls)!
+<!-- TODO -->
+
