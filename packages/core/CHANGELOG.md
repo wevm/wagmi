@@ -1,5 +1,262 @@
 # @wagmi/core
 
+## 1.4.13
+
+### Patch Changes
+
+- Updated dependencies [[`bbbbf587`](https://github.com/wevm/wagmi/commit/bbbbf587e41bae12b072b7a7c897d580fc07cd2b)]:
+  - @wagmi/connectors@3.1.11
+
+## 1.4.12
+
+### Patch Changes
+
+- [`53ca1f7e`](https://github.com/wevm/wagmi/commit/53ca1f7eb411d912e11fcce7e03bd61ed067959c) Thanks [@tmm](https://github.com/tmm)! - Removed LedgerConnector due to security vulnerability
+
+- Updated dependencies [[`53ca1f7e`](https://github.com/wevm/wagmi/commit/53ca1f7eb411d912e11fcce7e03bd61ed067959c)]:
+  - @wagmi/connectors@3.1.10
+
+## 1.4.11
+
+### Patch Changes
+
+- [#3299](https://github.com/wevm/wagmi/pull/3299) [`b02020b3`](https://github.com/wevm/wagmi/commit/b02020b3724e0228198f35817611bb063295906e) Thanks [@dasanra](https://github.com/dasanra)! - Fixed issue with [Safe SDK](https://github.com/wevm/viem/issues/579) by bumping `@safe-global/safe-apps-provider@0.18.1`
+
+- Updated dependencies [[`51eca0fb`](https://github.com/wevm/wagmi/commit/51eca0fbaea6932f31a5b8b4213f0252280053e2), [`b02020b3`](https://github.com/wevm/wagmi/commit/b02020b3724e0228198f35817611bb063295906e)]:
+  - @wagmi/connectors@3.1.9
+
+## 1.4.10
+
+### Patch Changes
+
+- Updated dependencies [[`e8f7bcbc`](https://github.com/wevm/wagmi/commit/e8f7bcbcd9c038a901c29e71769682c088efe2ac)]:
+  - @wagmi/connectors@3.1.8
+
+## 1.4.9
+
+### Patch Changes
+
+- [#3276](https://github.com/wevm/wagmi/pull/3276) [`83223a06`](https://github.com/wevm/wagmi/commit/83223a0659e2f675d897a1d3374c7af752c16abf) Thanks [@glitch-txs](https://github.com/glitch-txs)! - Removed required namespaces from WalletConnect connector
+
+- Updated dependencies [[`83223a06`](https://github.com/wevm/wagmi/commit/83223a0659e2f675d897a1d3374c7af752c16abf)]:
+  - @wagmi/connectors@3.1.7
+
+## 1.4.8
+
+### Patch Changes
+
+- Updated dependencies [[`cc7e18f2`](https://github.com/wevm/wagmi/commit/cc7e18f2e7f6b8b989f60f0b05aee70e996a9975), [`cc7e18f2`](https://github.com/wevm/wagmi/commit/cc7e18f2e7f6b8b989f60f0b05aee70e996a9975)]:
+  - @wagmi/connectors@3.1.6
+
+## 1.4.7
+
+### Patch Changes
+
+- Updated dependencies [[`a1950449`](https://github.com/wagmi-dev/wagmi/commit/a1950449127ddf72fff8ecd1fc34c3690befbb05)]:
+  - @wagmi/connectors@3.1.5
+
+## 1.4.6
+
+### Patch Changes
+
+- Updated dependencies [[`4e6ec415`](https://github.com/wagmi-dev/wagmi/commit/4e6ec4151baece94e940e227e0e3711c7f8534d9)]:
+  - @wagmi/connectors@3.1.4
+
+## 1.4.5
+
+### Patch Changes
+
+- Updated dependencies [[`e78aa337`](https://github.com/wagmi-dev/wagmi/commit/e78aa337c454f04b41a3cbd381d25270dd4a0afd)]:
+  - @wagmi/connectors@3.1.3
+
+## 1.4.4
+
+### Patch Changes
+
+- [#3125](https://github.com/wagmi-dev/wagmi/pull/3125) [`725e73fe`](https://github.com/wagmi-dev/wagmi/commit/725e73feb9143dbaa6d540bb76d2009cef29da0b) Thanks [@lukasrosario](https://github.com/lukasrosario)! - Fixed an issue where `dataSuffix` was not being passed down into viem's `simulateContract`, causing the data to be omitted from requests.
+
+## 1.4.3
+
+### Patch Changes
+
+- [#3076](https://github.com/wagmi-dev/wagmi/pull/3076) [`4c36831b`](https://github.com/wagmi-dev/wagmi/commit/4c36831b7aa44d03b5c0decf64dcd20faae28a67) Thanks [@jxom](https://github.com/jxom)! - Pass `chain` to viem `sendTransaction`/`writeContract`.
+
+- [#3006](https://github.com/wagmi-dev/wagmi/pull/3006) [`f2ddce23`](https://github.com/wagmi-dev/wagmi/commit/f2ddce23324aff0a91e066100918dac552dc3b4a) Thanks [@jxom](https://github.com/jxom)! - Changed `normalize` to a dynamic import.
+
+## 1.4.2
+
+### Patch Changes
+
+- Updated dependencies [[`3aaba328`](https://github.com/wagmi-dev/wagmi/commit/3aaba32808ddb4035ec885f96992c91078056715)]:
+  - @wagmi/connectors@3.1.2
+
+## 1.4.1
+
+### Patch Changes
+
+- Updated dependencies [[`bf831bb3`](https://github.com/wagmi-dev/wagmi/commit/bf831bb30df8037cc4312342d0fe3c045408c2fe)]:
+  - @wagmi/connectors@3.1.1
+
+## 1.4.0
+
+### Minor Changes
+
+- [#2956](https://github.com/wagmi-dev/wagmi/pull/2956) [`2abeb285`](https://github.com/wagmi-dev/wagmi/commit/2abeb285674af3e539cc2550b1f5027b1eb0c895) Thanks [@tmm](https://github.com/tmm)! - Replaced `@wagmi/chains` with `viem/chains`.
+
+### Patch Changes
+
+- Updated dependencies [[`2abeb285`](https://github.com/wagmi-dev/wagmi/commit/2abeb285674af3e539cc2550b1f5027b1eb0c895)]:
+  - @wagmi/connectors@3.1.0
+
+## 1.3.10
+
+### Patch Changes
+
+- [`557e6400`](https://github.com/wagmi-dev/wagmi/commit/557e6400b9cef3b2c5131739143956c37d7c934a) Thanks [@jxom](https://github.com/jxom)! - Updated references.
+
+## 1.3.9
+
+### Patch Changes
+
+- [`247c5d11`](https://github.com/wagmi-dev/wagmi/commit/247c5d113e83acf3a6894264c00d4b125d455107) Thanks [@jxom](https://github.com/jxom)! - Updated references.
+
+## 1.3.8
+
+### Patch Changes
+
+- [#2741](https://github.com/wagmi-dev/wagmi/pull/2741) [`5b1453d9`](https://github.com/wagmi-dev/wagmi/commit/5b1453d95973ed51f1c235a919fffb707eab9b70) Thanks [@jxom](https://github.com/jxom)! - Updated references
+
+## 1.3.7
+
+### Patch Changes
+
+- [#2700](https://github.com/wagmi-dev/wagmi/pull/2700) [`30118e97`](https://github.com/wagmi-dev/wagmi/commit/30118e979b1b00302e035f31f58c15d1aed911d5) Thanks [@jxom](https://github.com/jxom)! - Updated references.
+
+## 1.3.6
+
+### Patch Changes
+
+- [`7ad2fdb8`](https://github.com/wagmi-dev/wagmi/commit/7ad2fdb81c7734d0c8107670800c68390e3bad99) Thanks [@jxom](https://github.com/jxom)! - Updated references.
+
+## 1.3.5
+
+### Patch Changes
+
+- [`aab63fc1`](https://github.com/wagmi-dev/wagmi/commit/aab63fc1f8949004573978ecd8574fada3360758) Thanks [@jxom](https://github.com/jxom)! - Updated references.
+
+## 1.3.4
+
+### Patch Changes
+
+- [`22246d98`](https://github.com/wagmi-dev/wagmi/commit/22246d9884277d28ccad6ca2d9529b96b67d47fc) Thanks [@jxom](https://github.com/jxom)! - Updated references.
+
+## 1.3.3
+
+### Patch Changes
+
+- [`1946aa43`](https://github.com/wagmi-dev/wagmi/commit/1946aa43a65b684ef41b7b4c43c67bf29c13e854) Thanks [@jxom](https://github.com/jxom)! - Updated references
+
+## 1.3.2
+
+### Patch Changes
+
+- [`e86d0940`](https://github.com/wagmi-dev/wagmi/commit/e86d09409bb20b64d24e1263abcf0291314f03c7) Thanks [@jxom](https://github.com/jxom)! - Updated references
+
+## 1.3.1
+
+### Patch Changes
+
+- [`964042fa`](https://github.com/wagmi-dev/wagmi/commit/964042fa94d682977923c595820c58283fb9244a) Thanks [@jxom](https://github.com/jxom)! - Updated references.
+
+## 1.3.0
+
+### Minor Changes
+
+- [#2619](https://github.com/wagmi-dev/wagmi/pull/2619) [`0d79748c`](https://github.com/wagmi-dev/wagmi/commit/0d79748cec2b6ac2410ad2c9816cc662f2b70962) Thanks [@jxom](https://github.com/jxom)! - Updated references:
+  - Updated `@safe-global/safe-apps-sdk` to `^8.0.0` (the one with `viem` support)
+
+## 1.2.2
+
+### Patch Changes
+
+- [#2611](https://github.com/wagmi-dev/wagmi/pull/2611) [`6d1ed7a1`](https://github.com/wagmi-dev/wagmi/commit/6d1ed7a156729b4df5d66fef3ae9a8b5762a2d34) Thanks [@jxom](https://github.com/jxom)! - Updated references.
+
+## 1.2.1
+
+### Patch Changes
+
+- [#2589](https://github.com/wagmi-dev/wagmi/pull/2589) [`9680c347`](https://github.com/wagmi-dev/wagmi/commit/9680c347476500d28ceca20d23eeaed7931cb6e0) Thanks [@jxom](https://github.com/jxom)! - Fixed `writeContract` parameters to be compatible with `prepareWriteContract`.
+
+- [#2587](https://github.com/wagmi-dev/wagmi/pull/2587) [`cfff9994`](https://github.com/wagmi-dev/wagmi/commit/cfff999459384ac644ff7e62f53a7b787cf37507) Thanks [@jxom](https://github.com/jxom)! - Updated references
+
+## 1.2.0
+
+### Minor Changes
+
+- [#2536](https://github.com/wagmi-dev/wagmi/pull/2536) [`85e9760a`](https://github.com/wagmi-dev/wagmi/commit/85e9760a140cb169ac6236d9466b96e2105dd193) Thanks [@tmm](https://github.com/tmm)! - Changed `Address` type import from ABIType to viem.
+
+### Patch Changes
+
+- [#2539](https://github.com/wagmi-dev/wagmi/pull/2539) [`96319c64`](https://github.com/wagmi-dev/wagmi/commit/96319c640b9d07b375821c08a5c213355d8c290b) Thanks [@jxom](https://github.com/jxom)! - Updated references
+
+## 1.1.1
+
+### Patch Changes
+
+- [`02b98a9f`](https://github.com/wagmi-dev/wagmi/commit/02b98a9f9b2c503a47af4a8967e0202b5db21787) Thanks [@jxom](https://github.com/jxom)! - Updated `viem` peer dependency.
+
+- [`02b98a9f`](https://github.com/wagmi-dev/wagmi/commit/02b98a9f9b2c503a47af4a8967e0202b5db21787) Thanks [@jxom](https://github.com/jxom)! - Updated references.
+
+## 1.1.0
+
+### Minor Changes
+
+- [#2482](https://github.com/wagmi-dev/wagmi/pull/2482) [`8764b54a`](https://github.com/wagmi-dev/wagmi/commit/8764b54aab68020063946112e8fe52aff650c99c) Thanks [@tmm](https://github.com/tmm)! - Bumped minimum TypeScript version to v5.0.4.
+
+### Patch Changes
+
+- [#2484](https://github.com/wagmi-dev/wagmi/pull/2484) [`3adf1f4f`](https://github.com/wagmi-dev/wagmi/commit/3adf1f4feab863cb7b5d52c81ad46f7e4eb56f09) Thanks [@jxom](https://github.com/jxom)! - Updated `abitype` to 0.8.7
+
+- [#2484](https://github.com/wagmi-dev/wagmi/pull/2484) [`3adf1f4f`](https://github.com/wagmi-dev/wagmi/commit/3adf1f4feab863cb7b5d52c81ad46f7e4eb56f09) Thanks [@jxom](https://github.com/jxom)! - Updated references.
+
+## 1.0.8
+
+### Patch Changes
+
+- [#2441](https://github.com/wagmi-dev/wagmi/pull/2441) [`326edee4`](https://github.com/wagmi-dev/wagmi/commit/326edee4bc85db84a7a4e3768e33785849ab8d8e) Thanks [@tmm](https://github.com/tmm)! - Fixed internal type issue
+
+## 1.0.7
+
+### Patch Changes
+
+- [#2433](https://github.com/wagmi-dev/wagmi/pull/2433) [`54fcff5f`](https://github.com/wagmi-dev/wagmi/commit/54fcff5f02f6933bbbe045ee0c83c5a78b6bba49) Thanks [@jxom](https://github.com/jxom)! - Added ability to pass an `account` to `writeContract`/`prepareWriteContract`.
+
+## 1.0.6
+
+### Patch Changes
+
+- [`ca2e1e96`](https://github.com/wagmi-dev/wagmi/commit/ca2e1e96149b87a7dc42c9db07e1f1ad2bb02c4a) Thanks [@jxom](https://github.com/jxom)! - Updated references.
+
+- [#2401](https://github.com/wagmi-dev/wagmi/pull/2401) [`0f9dc875`](https://github.com/wagmi-dev/wagmi/commit/0f9dc875e90cfdd7a2028e04b7204caf9ea313b2) Thanks [@jxom](https://github.com/jxom)! - Exposed `account` on `readContract`/`useContractRead`.
+
+## 1.0.5
+
+### Patch Changes
+
+- [`90e2b3b3`](https://github.com/wagmi-dev/wagmi/commit/90e2b3b39efe0585fe28645ac2264109be17362a) Thanks [@jxom](https://github.com/jxom)! - Updated references.
+
+## 1.0.4
+
+### Patch Changes
+
+- [#2344](https://github.com/wagmi-dev/wagmi/pull/2344) [`8a725458`](https://github.com/wagmi-dev/wagmi/commit/8a72545853ae1024acd9efd18c06142e8c6c5750) Thanks [@jxom](https://github.com/jxom)! - Added gas estimation back into `prepareSendTransaction`.
+
+## 1.0.3
+
+### Patch Changes
+
+- [#2338](https://github.com/wagmi-dev/wagmi/pull/2338) [`92bfdc2c`](https://github.com/wagmi-dev/wagmi/commit/92bfdc2c744539558ba93c95f140b46ad331cee4) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where synchronous switch chain behavior (WalletConnect v2) would encounter chain id race conditions in `watchWalletClient`.
+
 ## 1.0.2
 
 ### Patch Changes

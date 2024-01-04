@@ -1,5 +1,69 @@
 # @wagmi/connectors
 
+## 3.1.11
+
+### Patch Changes
+
+- [#3361](https://github.com/wevm/wagmi/pull/3361) [`bbbbf587`](https://github.com/wevm/wagmi/commit/bbbbf587e41bae12b072b7a7c897d580fc07cd2b) Thanks [@0xAsimetriq](https://github.com/0xAsimetriq)! - Updated WalletConnect connector dependencies
+
+## 3.1.10
+
+### Patch Changes
+
+- [`53ca1f7e`](https://github.com/wevm/wagmi/commit/53ca1f7eb411d912e11fcce7e03bd61ed067959c) Thanks [@tmm](https://github.com/tmm)! - Removed LedgerConnector due to security vulnerability
+
+## 3.1.9
+
+### Patch Changes
+
+- [#3114](https://github.com/wevm/wagmi/pull/3114) [`51eca0fb`](https://github.com/wevm/wagmi/commit/51eca0fbaea6932f31a5b8b4213f0252280053e2) Thanks [@akathecoder](https://github.com/akathecoder)! - Added Okto Wallet to Injected Wallets Connector
+
+- [#3299](https://github.com/wevm/wagmi/pull/3299) [`b02020b3`](https://github.com/wevm/wagmi/commit/b02020b3724e0228198f35817611bb063295906e) Thanks [@dasanra](https://github.com/dasanra)! - Fixed issue with [Safe SDK](https://github.com/wevm/viem/issues/579) by bumping `@safe-global/safe-apps-provider@0.18.1`
+
+## 3.1.8
+
+### Patch Changes
+
+- [#3197](https://github.com/wevm/wagmi/pull/3197) [`e8f7bcbc`](https://github.com/wevm/wagmi/commit/e8f7bcbcd9c038a901c29e71769682c088efe2ac) Thanks [@ByteZhang1024](https://github.com/ByteZhang1024)! - Added OneKey Wallet to injected connector flags.
+
+## 3.1.7
+
+### Patch Changes
+
+- [#3276](https://github.com/wevm/wagmi/pull/3276) [`83223a06`](https://github.com/wevm/wagmi/commit/83223a0659e2f675d897a1d3374c7af752c16abf) Thanks [@glitch-txs](https://github.com/glitch-txs)! - Removed required namespaces from WalletConnect connector
+
+## 3.1.6
+
+### Patch Changes
+
+- [#3236](https://github.com/wevm/wagmi/pull/3236) [`cc7e18f2`](https://github.com/wevm/wagmi/commit/cc7e18f2e7f6b8b989f60f0b05aee70e996a9975) Thanks [@0xAsimetriq](https://github.com/0xAsimetriq)! - Updated @walletconnect/ethereum-provider
+
+- [#3236](https://github.com/wevm/wagmi/pull/3236) [`cc7e18f2`](https://github.com/wevm/wagmi/commit/cc7e18f2e7f6b8b989f60f0b05aee70e996a9975) Thanks [@0xAsimetriq](https://github.com/0xAsimetriq)! - Updated @walletconnect/ethereum-provider
+
+## 3.1.5
+
+### Patch Changes
+
+- [#3220](https://github.com/wagmi-dev/wagmi/pull/3220) [`a1950449`](https://github.com/wagmi-dev/wagmi/commit/a1950449127ddf72fff8ecd1fc34c3690befbb05) Thanks [@rkalis](https://github.com/rkalis)! - Fixed a bug where injected walets with an empty providers array could not connect
+
+## 3.1.4
+
+### Patch Changes
+
+- [#3115](https://github.com/wagmi-dev/wagmi/pull/3115) [`4e6ec415`](https://github.com/wagmi-dev/wagmi/commit/4e6ec4151baece94e940e227e0e3711c7f8534d9) Thanks [@bifot](https://github.com/bifot)! - Added SafePal injected name mapping.
+
+## 3.1.3
+
+### Patch Changes
+
+- [#3141](https://github.com/wagmi-dev/wagmi/pull/3141) [`e78aa337`](https://github.com/wagmi-dev/wagmi/commit/e78aa337c454f04b41a3cbd381d25270dd4a0afd) Thanks [@einaralex](https://github.com/einaralex)! - Updated WalletConnect libraries.
+
+## 3.1.2
+
+### Patch Changes
+
+- [#3009](https://github.com/wagmi-dev/wagmi/pull/3009) [`3aaba328`](https://github.com/wagmi-dev/wagmi/commit/3aaba32808ddb4035ec885f96992c91078056715) Thanks [@0xAsimetriq](https://github.com/0xAsimetriq)! - Update WalletConnect dependencies
+
 ## 3.1.1
 
 ### Patch Changes
