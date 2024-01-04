@@ -369,6 +369,7 @@ In Wagmi v1, connectors were classes you needed to instantiate. In Wagmi v2, con
 
 - `CoinbaseWalletConnector` is now [`coinbaseWallet`](/react/api/connectors/coinbaseWallet).
 - `InjectedConnector` is now [`injected`](/react/api/connectors/injected).
+- `LedgerConnector` is now [`ledger`](/react/api/connectors/ledger).
 - `SafeConnector` is now [`safe`](/react/api/connectors/safe).
 - `WalletConnectConnector` is now [`walletConnect`](/react/api/connectors/walletConnect).
 

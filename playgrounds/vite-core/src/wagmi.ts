@@ -1,4 +1,4 @@
-import { coinbaseWallet, walletConnect } from '@wagmi/connectors'
+import { coinbaseWallet, ledger, walletConnect } from '@wagmi/connectors'
 import { http, createConfig, createStorage } from '@wagmi/core'
 import { mainnet, optimism, sepolia } from '@wagmi/core/chains'
 
@@ -7,6 +7,9 @@ export const config = createConfig({
   connectors: [
     walletConnect({ projectId: import.meta.env.VITE_WC_PROJECT_ID }),
     coinbaseWallet({ appName: 'Vite React Playground' }),
+    ledger({
+      projectId: import.meta.env.VITE_WC_PROJECT_ID,
+    }),
   ],
   storage: createStorage({ storage: localStorage, key: 'vite-core' }),
   transports: {

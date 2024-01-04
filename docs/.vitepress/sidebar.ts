@@ -87,6 +87,10 @@ export function getSidebar() {
               },
               { text: 'injected', link: '/react/api/connectors/injected' },
               {
+                text: 'ledger',
+                link: '/react/api/connectors/ledger',
+              },
+              {
                 text: 'metaMask',
                 link: '/react/api/connectors/metaMask',
               },
