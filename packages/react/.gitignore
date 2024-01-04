@@ -4,6 +4,7 @@ chains/**
 connectors/**
 connectors/coinbaseWallet/**
 connectors/injected/**
+connectors/ledger/**
 connectors/metaMask/**
 connectors/mock/**
 connectors/safe/**
