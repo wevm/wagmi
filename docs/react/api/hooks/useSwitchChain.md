@@ -15,7 +15,7 @@ const TVariables = 'SwitchChainVariables'
 
 # useSwitchChain
 
-Hook for switching the target chain for a connector or the Wagmi [`Config`](/react/createConfig#config).
+Hook for switching the target chain for a connector or the Wagmi [`Config`](/react/api/createConfig#config).
 
 ## Import
 
@@ -47,7 +47,7 @@ function App() {
 :::
 
 ::: tip
-When connected, `switchChain` will switch the target chain for the connector. When not connected, `switchChain` will switch the target chain for the Wagmi [`Config`](/react/createConfig#config).
+When connected, `switchChain` will switch the target chain for the connector. When not connected, `switchChain` will switch the target chain for the Wagmi [`Config`](/react/api/createConfig#config).
 :::
 
 ## Parameters
