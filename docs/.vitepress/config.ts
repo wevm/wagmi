@@ -71,7 +71,7 @@ export default withTwoslash(
         { text: 'React', link: '/react/getting-started' },
         { text: 'Core', link: '/core/getting-started' },
         { text: 'CLI', link: '/cli/getting-started' },
-        { text: 'Examples', link: '/examples' },
+        { text: 'Examples', link: '/examples/connect-wallet' },
         {
           text: 'More',
           items: [

@@ -10,7 +10,7 @@ export function getSidebar() {
           { text: 'Installation', link: '/react/installation' },
           { text: 'Getting Started', link: '/react/getting-started' },
           { text: 'TypeScript', link: '/react/typescript' },
-          { text: 'Comparisons 🚧', link: '/react/comparisons' },
+          { text: 'Comparisons', link: '/react/comparisons' },
         ],
       },
       {
@@ -45,7 +45,7 @@ export function getSidebar() {
             link: '/react/guides/testing',
           },
           {
-            text: 'Chain Properties 🚧',
+            text: 'Chain Properties',
             link: '/react/guides/chain-properties',
           },
           {
@@ -321,8 +321,8 @@ export function getSidebar() {
             link: '/core/guides/viem',
           },
           {
-            text: 'Framework Adapters 🚧',
-            link: '/core/guides/framework-adapter',
+            text: 'Framework Adapters',
+            link: '/core/guides/framework-adapters',
           },
           {
             text: 'Error Handling',
@@ -337,7 +337,7 @@ export function getSidebar() {
             link: '/core/guides/testing',
           },
           {
-            text: 'Chain Properties 🚧',
+            text: 'Chain Properties',
             link: '/core/guides/chain-properties',
           },
           {
@@ -680,6 +680,25 @@ export function getSidebar() {
         items: [
           { text: 'Contributing', link: '/dev/contributing' },
           { text: 'Creating Connectors', link: '/dev/creating-connectors' },
+        ],
+      },
+    ],
+    '/examples': [
+      {
+        text: 'React',
+        items: [
+          { text: 'Connect Wallet 🚧', link: '/examples/connect-wallet' },
+          { text: 'Send Transaction 🚧', link: '/examples/send-transaction' },
+          { text: 'Write Contract 🚧', link: '/examples/contract-write' },
+          {
+            text: 'Write Contract (Dynamic Args) 🚧',
+            link: '/examples/contract-write-dynamic',
+          },
+          { text: 'Sign Message 🚧', link: '/examples/sign-message' },
+          {
+            text: 'Sign In With Ethereum 🚧',
+            link: '/examples/sign-in-with-ethereum',
+          },
         ],
       },
     ],

@@ -1,6 +1,6 @@
 # TanStack Query
 
-Wagmi Hooks are not only a wrapper around the core [Wagmi Actions](/core/api/actions), but they also utilize [TanStack Query](https://tanstack.com/query/v5) to enable trivial & intuitive fetching, caching, synchronizing, and updating of asynchronous data in your React applications.
+Wagmi Hooks are not only a wrapper around the core [Wagmi Actions](/core/api/actions), but they also utilize [TanStack Query](https://tanstack.com/query/v5) to enable trivial and intuitive fetching, caching, synchronizing, and updating of asynchronous data in your React applications.
 
 Without an asynchronous data fetching abstraction, you would need to handle all the negative side-effects that comes as a result, such as: representing finite states (loading, error, success), handling race conditions, caching against a deterministic identifier, etc.
 
