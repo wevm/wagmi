@@ -6,7 +6,7 @@ export function getSidebar() {
       {
         text: 'Introduction',
         items: [
-          { text: 'Why Wagmi 🚧', link: '/react/why-wagmi' },
+          { text: 'Why Wagmi', link: '/react/why' },
           { text: 'Installation', link: '/react/installation' },
           { text: 'Getting Started', link: '/react/getting-started' },
           { text: 'TypeScript', link: '/react/typescript' },
@@ -40,10 +40,10 @@ export function getSidebar() {
             text: 'Ethers.js Adapters',
             link: '/react/guides/ethers',
           },
-          {
-            text: 'Testing 🚧',
-            link: '/react/guides/testing',
-          },
+          // {
+          //   text: 'Testing',
+          //   link: '/react/guides/testing',
+          // },
           {
             text: 'Chain Properties',
             link: '/react/guides/chain-properties',
@@ -307,7 +307,7 @@ export function getSidebar() {
       {
         text: 'Introduction',
         items: [
-          { text: 'Why Wagmi 🚧', link: '/core/why-wagmi' },
+          { text: 'Why Wagmi', link: '/core/why' },
           { text: 'Installation', link: '/core/installation' },
           { text: 'Getting Started', link: '/core/getting-started' },
           { text: 'TypeScript', link: '/core/typescript' },
@@ -332,10 +332,10 @@ export function getSidebar() {
             text: 'Ethers.js Adapters',
             link: '/core/guides/ethers',
           },
-          {
-            text: 'Testing 🚧',
-            link: '/core/guides/testing',
-          },
+          // {
+          //   text: 'Testing',
+          //   link: '/core/guides/testing',
+          // },
           {
             text: 'Chain Properties',
             link: '/core/guides/chain-properties',
@@ -687,16 +687,16 @@ export function getSidebar() {
       {
         text: 'React',
         items: [
-          { text: 'Connect Wallet 🚧', link: '/examples/connect-wallet' },
-          { text: 'Send Transaction 🚧', link: '/examples/send-transaction' },
-          { text: 'Write Contract 🚧', link: '/examples/contract-write' },
+          { text: 'Connect Wallet', link: '/examples/connect-wallet' },
+          { text: 'Send Transaction', link: '/examples/send-transaction' },
+          { text: 'Write Contract', link: '/examples/contract-write' },
           {
-            text: 'Write Contract (Dynamic Args) 🚧',
+            text: 'Write Contract (Dynamic Args)',
             link: '/examples/contract-write-dynamic',
           },
-          { text: 'Sign Message 🚧', link: '/examples/sign-message' },
+          { text: 'Sign Message', link: '/examples/sign-message' },
           {
-            text: 'Sign In With Ethereum 🚧',
+            text: 'Sign In With Ethereum',
             link: '/examples/sign-in-with-ethereum',
           },
         ],

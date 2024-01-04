@@ -16,7 +16,7 @@ hero:
       link: /react/getting-started
     - theme: alt
       text: Why Wagmi
-      link: /react/why-wagmi
+      link: /react/why
     - theme: alt
       text: View on GitHub
       link: https://github.com/wevm/wagmi/tree/rc

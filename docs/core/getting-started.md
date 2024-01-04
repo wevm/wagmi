@@ -8,7 +8,7 @@ const viemVersion = packageJson.peerDependencies.viem
 
 ## Overview
 
-Wagmi Core is a VanillaJS library for Ethereum. You can learn more about the rationale behind the project in the [Why Wagmi](/core/why-wagmi) section.
+Wagmi Core is a VanillaJS library for Ethereum. You can learn more about the rationale behind the project in the [Why Wagmi](/core/why) section.
 
 ## Manual Installation
 

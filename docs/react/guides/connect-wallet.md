@@ -2,9 +2,7 @@
 
 The ability for a user to connect their wallet is a core function for any Dapp. It allows users to perform tasks such as: writing to contracts, signing messages, or sending transactions.
 
-Wagmi contains everything you need to get started with building a Connect Wallet module.
-
-To get started, you can either use a [third-party library](#third-party-libraries) or [build your own](#build-your-own).
+Wagmi contains everything you need to get started with building a Connect Wallet module. To get started, you can either use a [third-party library](#third-party-libraries) or [build your own](#build-your-own).
 
 ## Third-party Libraries
 

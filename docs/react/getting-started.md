@@ -8,7 +8,7 @@ const viemVersion = packageJson.peerDependencies.viem
 
 ## Overview
 
-Wagmi is a React Hooks library for Ethereum. You can learn more about the rationale behind the project in the [Why Wagmi](/react/why-wagmi) section.
+Wagmi is a React Hooks library for Ethereum. You can learn more about the rationale behind the project in the [Why Wagmi](/react/why) section.
 
 ## Automatic Installation
 
