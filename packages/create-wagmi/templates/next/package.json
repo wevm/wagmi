@@ -14,7 +14,7 @@
     "react-dom": "^18.2.0",
     "next": "13.5.3",
     "viem": "2.0.0",
-    "wagmi": "2.0.0-rc.3"
+    "wagmi": "2.0.1"
   },
   "devDependencies": {
     "@types/node": "^20.7.2",

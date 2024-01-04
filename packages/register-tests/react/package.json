@@ -13,6 +13,5 @@
   },
   "devDependencies": {
     "@types/react": "^18.2.23"
-  },
-  "version": null
+  }
 }

@@ -32,6 +32,5 @@
     "vike": "^0.4.142",
     "vite": "^4.4.9",
     "wagmi": "workspace:*"
-  },
-  "version": null
+  }
 }
