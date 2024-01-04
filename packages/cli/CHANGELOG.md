@@ -1,5 +1,13 @@
 # @wagmi/cli
 
+## 2.0.1
+
+### Major Changes
+
+- [#3333](https://github.com/wevm/wagmi/pull/3333) [`b3a0baaa`](https://github.com/wevm/wagmi/commit/b3a0baaaee7decf750d376aab2502cd33ca4825a) Thanks [@tmm](https://github.com/tmm)! - Wagmi CLI 2.0.
+
+  [Breaking Changes & Migration Guide](https://wagmi.sh/cli/guides/migrate-from-v1-to-v2)
+
 ## 1.5.2
 
 ### Patch Changes

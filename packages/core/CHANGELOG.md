@@ -1,5 +1,21 @@
 # @wagmi/core
 
+## 2.0.1
+
+### Major Changes
+
+- [#3333](https://github.com/wevm/wagmi/pull/3333) [`b3a0baaa`](https://github.com/wevm/wagmi/commit/b3a0baaaee7decf750d376aab2502cd33ca4825a) Thanks [@tmm](https://github.com/tmm)! - Wagmi Core 2.0 featuring:
+
+  - Full TanStack Query support + queryKeys
+  - Connect multiple connectors
+  - Switch chains while disconnected
+  - EIP-6963 enabled
+  - Strongly typed chainId and chain properties
+  - Smaller bundle size
+  - Miscellaneous improvements and bug fixes
+
+  [Breaking Changes & Migration Guide](https://wagmi.sh/core/guides/migrate-from-v1-to-v2)
+
 ## 1.4.13
 
 ### Patch Changes
@@ -1014,15 +1030,15 @@
 - [#1406](https://github.com/wevm/wagmi/pull/1406) [`4f18c450`](https://github.com/wevm/wagmi/commit/4f18c450a4d7952bfcfa6c533348ffbe55893d3c) Thanks [@tmm](https://github.com/tmm)! - Function for selecting the [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) Ethereum Provider to target. Defaults to `() => typeof window !== 'undefined' ? window.ethereum : undefined`.
 
   ```ts
-  import { InjectedConnector } from '@wagmi/core/connectors/injected'
+  import { InjectedConnector } from "@wagmi/core/connectors/injected";
 
   const connector = new InjectedConnector({
     options: {
-      name: 'My Injected Wallet',
+      name: "My Injected Wallet",
       getProvider: () =>
-        typeof window !== 'undefined' ? window.myInjectedWallet : undefined,
+        typeof window !== "undefined" ? window.myInjectedWallet : undefined,
     },
-  })
+  });
   ```
 
 ## 0.7.7
@@ -1402,12 +1418,12 @@
 - [#940](https://github.com/wevm/wagmi/pull/940) [`b6cb8f4`](https://github.com/wevm/wagmi/commit/b6cb8f4cd15eb13073bc7e9ecb4bfa2c261c0663) Thanks [@jxom](https://github.com/jxom)! - The `fetchSigner` action now accepts an optional `chainId` to use for signer initialization as an argument.
 
   ```tsx
-  import { fetchSigner } from '@wagmi/core'
-  import { optimism } from '@wagmi/core/chains'
+  import { fetchSigner } from "@wagmi/core";
+  import { optimism } from "@wagmi/core/chains";
 
   // ...
 
-  fetchSigner({ chainId: optimism.id })
+  fetchSigner({ chainId: optimism.id });
   ```
 
 - [#1048](https://github.com/wevm/wagmi/pull/1048) [`ed13074`](https://github.com/wevm/wagmi/commit/ed130747c0f28c1d9980a1328883e4000a60455e) Thanks [@Max-3-7](https://github.com/Max-3-7)! - Added support for Avalanche core wallet
@@ -1694,15 +1710,15 @@
   It returns config to be passed through to `sendTransaction`.
 
   ```ts
-  import { prepareSendTransaction, sendTransaction } from '@wagmi/core'
+  import { prepareSendTransaction, sendTransaction } from "@wagmi/core";
 
   const config = await prepareSendTransaction({
     request: {
-      to: 'moxey.eth',
-      value: parseEther('1'),
+      to: "moxey.eth",
+      value: parseEther("1"),
     },
-  })
-  const result = await sendTransaction(config)
+  });
+  const result = await sendTransaction(config);
   ```
 
 - [#658](https://github.com/wevm/wagmi/pull/658) [`d70c115`](https://github.com/wevm/wagmi/commit/d70c115131f299fb61f87867b6ac4218e0bcf432) Thanks [@jxom](https://github.com/jxom)! - Added the `prepareWriteContract` hook that prepares the parameters required for a contract write transaction.
@@ -1712,14 +1728,14 @@
   Example:
 
   ```tsx
-  import { prepareWriteContract, writeContract } from '@wagmi/core'
+  import { prepareWriteContract, writeContract } from "@wagmi/core";
 
   const config = await prepareWriteContract({
-    addressOrName: '0x...',
+    addressOrName: "0x...",
     contractInterface: wagmiAbi,
-    functionName: 'mint',
-  })
-  const result = await writeContract(config)
+    functionName: "mint",
+  });
+  const result = await writeContract(config);
   ```
 
 * [#739](https://github.com/wevm/wagmi/pull/739) [`c2295a5`](https://github.com/wevm/wagmi/commit/c2295a56cc86d02cc6602e2b4557b8ab9a091a3f) Thanks [@tmm](https://github.com/tmm)! - Fix balance formatting for tokens that do not have 18 decimals.
@@ -1727,11 +1743,11 @@
 - [#759](https://github.com/wevm/wagmi/pull/759) [`959953d`](https://github.com/wevm/wagmi/commit/959953d1f5b3e8189bac56de245c62333470d18e) Thanks [@tmm](https://github.com/tmm)! - Added `fetchTransaction` action:
 
   ```ts
-  import { fetchTransaction } from '@wagmi/core'
+  import { fetchTransaction } from "@wagmi/core";
 
   const transaction = await fetchTransaction({
-    hash: '0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060',
-  })
+    hash: "0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060",
+  });
   ```
 
 ## 0.4.9
@@ -1910,21 +1926,21 @@
   ```tsx
   writeContract(
     {
-      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+      addressOrName: "0xecb504d39723b0be0e3a9aa33d646642d1051ee1",
       contractInterface: wagmigotchiABI,
     },
-    'feed',
-  )
+    "feed",
+  );
   ```
 
   After:
 
   ```tsx
   readContract({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    addressOrName: "0xecb504d39723b0be0e3a9aa33d646642d1051ee1",
     contractInterface: wagmigotchiABI,
-    functionName: 'feed',
-  })
+    functionName: "feed",
+  });
   ```
 
 ### Patch Changes
@@ -1936,43 +1952,43 @@
   ```tsx
   readContract(
     {
-      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+      addressOrName: "0xecb504d39723b0be0e3a9aa33d646642d1051ee1",
       contractInterface: wagmigotchiABI,
     },
-    'getHunger',
+    "getHunger",
     { args: [0] },
-  )
+  );
 
   watchReadContract(
     {
-      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+      addressOrName: "0xecb504d39723b0be0e3a9aa33d646642d1051ee1",
       contractInterface: wagmigotchiABI,
     },
-    'getHunger',
+    "getHunger",
     { args: [0] },
     (result) => {},
-  )
+  );
   ```
 
   After:
 
   ```tsx
   readContract({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    addressOrName: "0xecb504d39723b0be0e3a9aa33d646642d1051ee1",
     contractInterface: wagmigotchiABI,
-    functionName: 'getHunger',
+    functionName: "getHunger",
     args: [0],
-  })
+  });
 
   watchReadContract(
     {
-      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+      addressOrName: "0xecb504d39723b0be0e3a9aa33d646642d1051ee1",
       contractInterface: wagmigotchiABI,
-      functionName: 'getHunger',
+      functionName: "getHunger",
       args: [0],
     },
     (result) => {},
-  )
+  );
   ```
 
 * [#598](https://github.com/tmm/wagmi/pull/598) [`fef26bf`](https://github.com/tmm/wagmi/commit/fef26bf8aef76fc9621e3cd54d4e0ca8f69abb38) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Update `@coinbase/wallet-sdk` peer dependency to `>=3.3.0` to fix errors when connecting with older versions of the Coinbase Wallet extension and mobile app.
@@ -2020,9 +2036,9 @@
   Example:
 
   ```tsx
-  import { connect } from '@wagmi/core'
+  import { connect } from "@wagmi/core";
 
-  await connect({ chainId: 69 })
+  await connect({ chainId: 69 });
   ```
 
 ## 0.3.5
@@ -2068,31 +2084,31 @@
   ### Before
 
   ```tsx
-  import { providers } from 'ethers'
-  import { chain, createClient, defaultChains } from 'wagmi'
-  import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
-  import { InjectedConnector } from 'wagmi/connectors/injected'
-  import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
-  import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+  import { providers } from "ethers";
+  import { chain, createClient, defaultChains } from "wagmi";
+  import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
+  import { InjectedConnector } from "wagmi/connectors/injected";
+  import { MetaMaskConnector } from "wagmi/connectors/metaMask";
+  import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
 
-  const alchemyId = process.env.ALCHEMY_ID
+  const alchemyId = process.env.ALCHEMY_ID;
 
-  const chains = defaultChains
-  const defaultChain = chain.mainnet
+  const chains = defaultChains;
+  const defaultChain = chain.mainnet;
 
   const client = createClient({
     autoConnect: true,
     connectors({ chainId }) {
-      const chain = chains.find((x) => x.id === chainId) ?? defaultChain
+      const chain = chains.find((x) => x.id === chainId) ?? defaultChain;
       const rpcUrl = chain.rpcUrls.alchemy
         ? `${chain.rpcUrls.alchemy}/${alchemyId}`
-        : chain.rpcUrls.default
+        : chain.rpcUrls.default;
       return [
         new MetaMaskConnector({ chains }),
         new CoinbaseWalletConnector({
           chains,
           options: {
-            appName: 'wagmi',
+            appName: "wagmi",
             chainId: chain.id,
             jsonRpcUrl: rpcUrl,
           },
@@ -2107,34 +2123,34 @@
         new InjectedConnector({
           chains,
           options: {
-            name: 'Injected',
+            name: "Injected",
             shimDisconnect: true,
           },
         }),
-      ]
+      ];
     },
-  })
+  });
   ```
 
   ### After
 
   ```tsx
-  import { chain, createClient, defaultChains } from 'wagmi'
+  import { chain, createClient, defaultChains } from "wagmi";
 
-  import { alchemyProvider } from 'wagmi/providers/alchemy'
-  import { publicProvider } from 'wagmi/providers/public'
+  import { alchemyProvider } from "wagmi/providers/alchemy";
+  import { publicProvider } from "wagmi/providers/public";
 
-  import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
-  import { InjectedConnector } from 'wagmi/connectors/injected'
-  import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
-  import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+  import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
+  import { InjectedConnector } from "wagmi/connectors/injected";
+  import { MetaMaskConnector } from "wagmi/connectors/metaMask";
+  import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
 
-  const alchemyId = process.env.ALCHEMY_ID
+  const alchemyId = process.env.ALCHEMY_ID;
 
   const { chains } = configureChains(defaultChains, [
     alchemyProvider({ alchemyId }),
     publicProvider(),
-  ])
+  ]);
 
   const client = createClient({
     autoConnect: true,
@@ -2143,7 +2159,7 @@
       new CoinbaseWalletConnector({
         chains,
         options: {
-          appName: 'wagmi',
+          appName: "wagmi",
         },
       }),
       new WalletConnectConnector({
@@ -2155,12 +2171,12 @@
       new InjectedConnector({
         chains,
         options: {
-          name: 'Injected',
+          name: "Injected",
           shimDisconnect: true,
         },
       }),
     ],
-  })
+  });
   ```
 
 * [#468](https://github.com/tmm/wagmi/pull/468) [`44a884b`](https://github.com/tmm/wagmi/commit/44a884b84171c418f57701e80ef8de972948ef0b) Thanks [@tmm](https://github.com/tmm)! - **Breaking:** Duplicate exports with different names and the same functionality were removed to simplify the public API. In addition, confusing exports were renamed to be more descriptive.
@@ -2182,31 +2198,31 @@
   ### Before
 
   ```tsx
-  import { providers } from 'ethers'
-  import { chain, createClient, defaultChains } from 'wagmi'
-  import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
-  import { InjectedConnector } from 'wagmi/connectors/injected'
-  import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
-  import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+  import { providers } from "ethers";
+  import { chain, createClient, defaultChains } from "wagmi";
+  import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
+  import { InjectedConnector } from "wagmi/connectors/injected";
+  import { MetaMaskConnector } from "wagmi/connectors/metaMask";
+  import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
 
-  const alchemyId = process.env.ALCHEMY_ID
+  const alchemyId = process.env.ALCHEMY_ID;
 
-  const chains = defaultChains
-  const defaultChain = chain.mainnet
+  const chains = defaultChains;
+  const defaultChain = chain.mainnet;
 
   const client = createClient({
     autoConnect: true,
     connectors({ chainId }) {
-      const chain = chains.find((x) => x.id === chainId) ?? defaultChain
+      const chain = chains.find((x) => x.id === chainId) ?? defaultChain;
       const rpcUrl = chain.rpcUrls.alchemy
         ? `${chain.rpcUrls.alchemy}/${alchemyId}`
-        : chain.rpcUrls.default
+        : chain.rpcUrls.default;
       return [
         new MetaMaskConnector({ chains }),
         new CoinbaseWalletConnector({
           chains,
           options: {
-            appName: 'wagmi',
+            appName: "wagmi",
             chainId: chain.id,
             jsonRpcUrl: rpcUrl,
           },
@@ -2221,36 +2237,36 @@
         new InjectedConnector({
           chains,
           options: {
-            name: 'Injected',
+            name: "Injected",
             shimDisconnect: true,
           },
         }),
-      ]
+      ];
     },
     provider: ({ chainId }) =>
       new providers.AlchemyProvider(chainId, alchemyId),
-  })
+  });
   ```
 
   ### After
 
   ```tsx
-  import { chain, createClient, defaultChains } from 'wagmi'
+  import { chain, createClient, defaultChains } from "wagmi";
 
-  import { alchemyProvider } from 'wagmi/providers/alchemy'
-  import { publicProvider } from 'wagmi/providers/public'
+  import { alchemyProvider } from "wagmi/providers/alchemy";
+  import { publicProvider } from "wagmi/providers/public";
 
-  import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
-  import { InjectedConnector } from 'wagmi/connectors/injected'
-  import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
-  import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+  import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
+  import { InjectedConnector } from "wagmi/connectors/injected";
+  import { MetaMaskConnector } from "wagmi/connectors/metaMask";
+  import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
 
-  const alchemyId = process.env.ALCHEMY_ID
+  const alchemyId = process.env.ALCHEMY_ID;
 
   const { chains, provider, webSocketProvider } = configureChains(
     defaultChains,
     [alchemyProvider({ alchemyId }), publicProvider()],
-  )
+  );
 
   const client = createClient({
     autoConnect: true,
@@ -2259,7 +2275,7 @@
       new CoinbaseWalletConnector({
         chains,
         options: {
-          appName: 'wagmi',
+          appName: "wagmi",
         },
       }),
       new WalletConnectConnector({
@@ -2271,14 +2287,14 @@
       new InjectedConnector({
         chains,
         options: {
-          name: 'Injected',
+          name: "Injected",
           shimDisconnect: true,
         },
       }),
     ],
     provider,
     webSocketProvider,
-  })
+  });
   ```
 
 ### Patch Changes
@@ -2631,11 +2647,11 @@
 
   ```ts
   // old - WalletLinkConnector unused, but still in final bundle
-  import { InjectedConnector, WalletConnectConnector } from 'wagmi'
+  import { InjectedConnector, WalletConnectConnector } from "wagmi";
 
   // new - WalletLinkConnector not in final bundle
-  import { InjectedConnector } from 'wagmi/connectors/injected'
-  import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+  import { InjectedConnector } from "wagmi/connectors/injected";
+  import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
   ```
 
 ## 0.0.17

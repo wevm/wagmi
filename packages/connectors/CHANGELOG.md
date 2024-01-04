@@ -1,5 +1,16 @@
 # @wagmi/connectors
 
+## 4.0.1
+
+### Major Changes
+
+- [#3333](https://github.com/wevm/wagmi/pull/3333) [`b3a0baaa`](https://github.com/wevm/wagmi/commit/b3a0baaaee7decf750d376aab2502cd33ca4825a) Thanks [@tmm](https://github.com/tmm)! - Added support for Wagmi 2.0.
+
+### Patch Changes
+
+- Updated dependencies [[`b3a0baaa`](https://github.com/wevm/wagmi/commit/b3a0baaaee7decf750d376aab2502cd33ca4825a)]:
+  - @wagmi/core@2.0.0
+
 ## 3.1.11
 
 ### Patch Changes
