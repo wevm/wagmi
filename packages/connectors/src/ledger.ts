@@ -1,7 +1,6 @@
 import {
   EthereumProvider,
   SupportedProviders,
-  loadConnectKit,
 } from '@ledgerhq/connect-kit-loader'
 import { EthereumProviderOptions } from '@walletconnect/ethereum-provider/dist/types/EthereumProvider'
 import {
@@ -213,7 +212,7 @@ export class LedgerConnector extends Connector<
   }
 
   async #initProvider() {
-    const connectKit = await loadConnectKit()
+    const connectKit = require('@ledgerhq/connect-kit')
 
     if (this.options.enableDebugLogs) {
       connectKit.enableDebugLogs()
