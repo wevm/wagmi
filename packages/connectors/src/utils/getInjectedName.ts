@@ -4,7 +4,7 @@ export function getInjectedName(ethereum?: WindowProvider) {
   if (!ethereum) return 'Injected'
 
   const getName = (provider: WindowProvider) => {
-    if (provider.is3SWallet)  return '3S Wallet'
+    if (provider.is3S)  return '3S Wallet'
     if (provider.isApexWallet) return 'Apex Wallet'
     if (provider.isAvalanche) return 'Core Wallet'
     if (provider.isBackpack) return 'Backpack'
