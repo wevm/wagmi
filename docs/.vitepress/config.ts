@@ -23,16 +23,13 @@ export default withTwoslash(
       ['meta', { name: 'theme-color', content: '#646cff' }],
       // Open Graph
       ['meta', { property: 'og:type', content: 'website' }],
-      ['meta', { property: 'og:image', content: 'https://rc.wagmi.sh/og.png' }],
-      ['meta', { property: 'og:url', content: 'https://rc.wagmi.sh' }],
+      ['meta', { property: 'og:image', content: 'https://wagmi.sh/og.png' }],
+      ['meta', { property: 'og:url', content: 'https://wagmi.sh' }],
       // Twitter
       ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
       ['meta', { name: 'twitter:creator', content: '@wevm_dev' }],
-      [
-        'meta',
-        { name: 'twitter:image', content: 'https://rc.wagmi.sh/og.png' },
-      ],
-      ['meta', { name: 'twitter:site', content: 'rc.wagmi.sh' }],
+      ['meta', { name: 'twitter:image', content: 'https://wagmi.sh/og.png' }],
+      ['meta', { name: 'twitter:site', content: 'wagmi.sh' }],
       // Fathom
       [
         'script',
@@ -107,7 +104,7 @@ export default withTwoslash(
       socialLinks: [
         {
           icon: 'github',
-          link: 'https://github.com/wevm/wagmi/tree/rc',
+          link: 'https://github.com/wevm/wagmi',
         },
         { icon: 'twitter', link: 'https://twitter.com/wevm_dev' },
         { icon: 'discord', link: 'https://discord.gg/9zHPXuBpqy' },

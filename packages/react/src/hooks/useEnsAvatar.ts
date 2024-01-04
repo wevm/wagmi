@@ -36,7 +36,7 @@ export type UseEnsAvatarParameters<
 export type UseEnsAvatarReturnType<selectData = GetEnsAvatarData> =
   UseQueryReturnType<selectData, GetEnsAvatarErrorType>
 
-/** https://rc.wagmi.sh/react/api/hooks/useEnsAvatar */
+/** https://wagmi.sh/react/api/hooks/useEnsAvatar */
 export function useEnsAvatar<
   config extends Config = ResolvedRegister['config'],
   selectData = GetEnsAvatarData,

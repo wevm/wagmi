@@ -22,7 +22,7 @@ export type GetBlockTransactionCountReturnType =
 export type GetBlockTransactionCountErrorType =
   viem_GetBlockTransactionCountErrorType
 
-/** https://rc.wagmi.sh/core/api/actions/getBlockTransactionCount */
+/** https://wagmi.sh/core/api/actions/getBlockTransactionCount */
 export function getBlockTransactionCount<
   config extends Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],

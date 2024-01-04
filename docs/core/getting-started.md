@@ -16,19 +16,19 @@ To manually add Wagmi to your project, install the required packages.
 
 ::: code-group
 ```bash-vue [pnpm]
-pnpm add @wagmi/core@rc @wagmi/connectors@rc viem@{{viemVersion}}
+pnpm add @wagmi/core @wagmi/connectors viem@{{viemVersion}}
 ```
 
 ```bash-vue [npm]
-npm install @wagmi/core@rc @wagmi/connectors@rc viem@{{viemVersion}}
+npm install @wagmi/core @wagmi/connectors viem@{{viemVersion}}
 ```
 
 ```bash-vue [yarn]
-yarn add @wagmi/core@rc @wagmi/connectors@rc viem@{{viemVersion}}
+yarn add @wagmi/core @wagmi/connectors viem@{{viemVersion}}
 ```
 
 ```bash-vue [bun]
-bun add @wagmi/core@rc @wagmi/connectors@rc viem@{{viemVersion}}
+bun add @wagmi/core @wagmi/connectors viem@{{viemVersion}}
 ```
 :::
 

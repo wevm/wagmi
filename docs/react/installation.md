@@ -14,19 +14,19 @@ Install the required packages.
 
 ::: code-group
 ```bash-vue [pnpm]
-pnpm add wagmi@rc viem@{{viemVersion}} @tanstack/react-query
+pnpm add wagmi viem@{{viemVersion}} @tanstack/react-query
 ```
 
 ```bash-vue [npm]
-npm install wagmi@rc viem@{{viemVersion}} @tanstack/react-query
+npm install wagmi viem@{{viemVersion}} @tanstack/react-query
 ```
 
 ```bash-vue [yarn]
-yarn add wagmi@rc viem@{{viemVersion}} @tanstack/react-query
+yarn add wagmi viem@{{viemVersion}} @tanstack/react-query
 ```
 
 ```bash-vue [bun]
-bun add wagmi@rc viem@{{viemVersion}} @tanstack/react-query
+bun add wagmi viem@{{viemVersion}} @tanstack/react-query
 ```
 :::
 
@@ -43,7 +43,7 @@ If you're not using a package manager, you can also use Wagmi via an ESM-compati
   import React from 'https://esm.sh/react@18.2.0'
   import { QueryClient } from 'https://esm.sh/@tanstack/react-query'
   import { createClient } from 'https://esm.sh/viem@{{viemVersion}}'
-  import { createConfig } from 'https://esm.sh/wagmi@rc'
+  import { createConfig } from 'https://esm.sh/wagmi'
 </script>
 ```
 

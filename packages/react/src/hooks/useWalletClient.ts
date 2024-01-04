@@ -58,7 +58,7 @@ export type UseWalletClientReturnType<
   selectData = GetWalletClientData<config, chainId>,
 > = UseQueryReturnType<selectData, GetWalletClientErrorType>
 
-/** https://rc.wagmi.sh/react/api/hooks/useWalletClient */
+/** https://wagmi.sh/react/api/hooks/useWalletClient */
 export function useWalletClient<
   config extends Config = ResolvedRegister['config'],
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],

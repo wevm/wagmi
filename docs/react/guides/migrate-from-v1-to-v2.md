@@ -15,23 +15,23 @@ const viemVersion = packageJson.peerDependencies.viem
 
 Wagmi v2 redesigns the core APIs to mesh better with [Viem](https://viem.sh) and [TanStack Query](https://tanstack.com/query/v5/docs/react). This major version transforms Wagmi into a light wrapper around these libraries, sprinkling in multichain support and account management. As such, there are some breaking changes and deprecations to be aware of outlined in this guide.
 
-To get started, install the latest version of Wagmi using the `rc` dist-tag and it's required peer dependencies.
+To get started, install the latest version of Wagmi and it's required peer dependencies.
 
 ::: code-group
 ```bash-vue [pnpm]
-pnpm add wagmi@rc viem@{{viemVersion}} @tanstack/react-query
+pnpm add wagmi viem@{{viemVersion}} @tanstack/react-query
 ```
 
 ```bash-vue [npm]
-npm install wagmi@rc viem@{{viemVersion}} @tanstack/react-query
+npm install wagmi viem@{{viemVersion}} @tanstack/react-query
 ```
 
 ```bash-vue [yarn]
-yarn add wagmi@rc viem@{{viemVersion}} @tanstack/react-query
+yarn add wagmi viem@{{viemVersion}} @tanstack/react-query
 ```
 
 ```bash-vue [bun]
-bun add wagmi@rc viem@{{viemVersion}} @tanstack/react-query
+bun add wagmi viem@{{viemVersion}} @tanstack/react-query
 ```
 :::
 

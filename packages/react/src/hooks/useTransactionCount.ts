@@ -37,7 +37,7 @@ export type UseTransactionCountReturnType<
   selectData = GetTransactionCountData,
 > = UseQueryReturnType<selectData, GetTransactionCountErrorType>
 
-/** https://rc.wagmi.sh/react/api/hooks/useTransactionCount */
+/** https://wagmi.sh/react/api/hooks/useTransactionCount */
 export function useTransactionCount<
   config extends Config = ResolvedRegister['config'],
   selectData = GetTransactionCountData,

@@ -5,9 +5,9 @@ Manage and generate code from Ethereum ABIs
 ## Installation
 
 ```bash
-pnpm add @wagmi/cli@rc
+pnpm add @wagmi/cli
 ```
 
 ## Documentation
 
-For documentation and guides, visit [wagmi.sh](https://rc.wagmi.sh).
+For documentation and guides, visit [wagmi.sh](https://wagmi.sh).

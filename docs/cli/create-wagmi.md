@@ -8,16 +8,16 @@ create-wagmi is a command line interface (CLI) for scaffolding new Wagmi project
 
 ::: code-group
 ```bash [pnpm]
-pnpm create wagmi@rc
+pnpm create wagmi
 ```
 ```bash [npm]
-npm init wagmi@rc
+npm init wagmi
 ```
 ```bash [yarn]
-yarn create wagmi@rc
+yarn create wagmi
 ```
 ```bash [bun]
-bun create wagmi@rc
+bun create wagmi
 ```
 :::
 
@@ -29,16 +29,16 @@ By default, `create-wagmi` scaffolds a basic Vite application with Wagmi. Howeve
 
 ::: code-group
 ```bash [pnpm]
-pnpm create wagmi@rc --template next
+pnpm create wagmi --template next
 ```
 ```bash [npm]
-npm init wagmi@rc --template next
+npm init wagmi --template next
 ```
 ```bash [yarn]
-yarn create wagmi@rc --template next
+yarn create wagmi --template next
 ```
 ```bash [bun]
-bun create wagmi@rc --template next
+bun create wagmi --template next
 ```
 :::
 

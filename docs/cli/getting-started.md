@@ -10,19 +10,19 @@ To manually add Wagmi CLI to your project, install the required packages.
 
 ::: code-group
 ```bash [pnpm]
-pnpm add -D @wagmi/cli@rc
+pnpm add -D @wagmi/cli
 ```
 
 ```bash [npm]
-npm install --save-dev @wagmi/cli@rc
+npm install --save-dev @wagmi/cli
 ```
 
 ```bash [yarn]
-yarn add -D @wagmi/cli@rc
+yarn add -D @wagmi/cli
 ```
 
 ```bash [bun]
-bun add -D @wagmi/cli@rc
+bun add -D @wagmi/cli
 ```
 :::
 

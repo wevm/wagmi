@@ -121,7 +121,7 @@ It is critical that connectors are updated in a timely manner and actively maint
 
 The Wagmi core team will provide as much assistance as possible to keep connectors up-to-date with breaking changes from Wagmi, but it is your responsibility to ensure that any dependencies and issues/discussions related to the connector are handled in a timely manner. If issues are not resolved in a timely manner, the connector may be removed from Wagmi.
 
-In support of this goal, add at least one member of your team to the [CODEOWNERS](https://github.com/wevm/wagmi/blob/rc/.github/CODEOWNERS) file so that you get notified of pull requests, issues, etc. related to the connector. You can add your team like this:
+In support of this goal, add at least one member of your team to the [CODEOWNERS](https://github.com/wevm/wagmi/blob/main/.github/CODEOWNERS) file so that you get notified of pull requests, issues, etc. related to the connector. You can add your team like this:
 
 ```
 /packages/connectors/src/fooBarBaz @tmm @jxom

@@ -6,23 +6,23 @@ description: Guide for migrating from Wagmi CLI v1 to v2.
 
 # Migrate from v1 to v2
 
-To get started, install the latest version of the Wagmi CLI using the `rc` dist-tag.
+To get started, install the latest version of the Wagmi CLI.
 
 ::: code-group
 ```bash-vue [pnpm]
-pnpm add @wagmi/cli@rc
+pnpm add @wagmi/cli
 ```
 
 ```bash-vue [npm]
-npm install @wagmi/cli@rc
+npm install @wagmi/cli
 ```
 
 ```bash-vue [yarn]
-yarn add @wagmi/cli@rc
+yarn add @wagmi/cli
 ```
 
 ```bash-vue [bun]
-bun add @wagmi/cli@rc
+bun add @wagmi/cli
 ```
 :::
 

@@ -17,7 +17,7 @@ export type VerifyMessageReturnType = viem_VerifyMessageReturnType
 
 export type VerifyMessageErrorType = viem_VerifyMessageErrorType
 
-/** https://rc.wagmi.sh/core/api/actions/verifyMessage */
+/** https://wagmi.sh/core/api/actions/verifyMessage */
 export async function verifyMessage<config extends Config>(
   config: config,
   parameters: VerifyMessageParameters<config>,

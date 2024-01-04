@@ -16,19 +16,19 @@ For new projects, it is recommended to set up your Wagmi app using the [`create-
 
 ::: code-group
 ```bash [pnpm]
-pnpm create wagmi@rc
+pnpm create wagmi
 ```
 
 ```bash [npm]
-npm init wagmi@rc
+npm init wagmi
 ```
 
 ```bash [yarn]
-yarn create wagmi@rc
+yarn create wagmi
 ```
 
 ```bash [bun]
-bun create wagmi@rc
+bun create wagmi
 ```
 :::
 
@@ -48,19 +48,19 @@ To manually add Wagmi to your project, install the required packages.
 
 ::: code-group
 ```bash-vue [pnpm]
-pnpm add wagmi@rc viem@{{viemVersion}} @tanstack/react-query
+pnpm add wagmi viem@{{viemVersion}} @tanstack/react-query
 ```
 
 ```bash-vue [npm]
-npm install wagmi@rc viem@{{viemVersion}} @tanstack/react-query
+npm install wagmi viem@{{viemVersion}} @tanstack/react-query
 ```
 
 ```bash-vue [yarn]
-yarn add wagmi@rc viem@{{viemVersion}} @tanstack/react-query
+yarn add wagmi viem@{{viemVersion}} @tanstack/react-query
 ```
 
 ```bash-vue [bun]
-bun add wagmi@rc viem@{{viemVersion}} @tanstack/react-query
+bun add wagmi viem@{{viemVersion}} @tanstack/react-query
 ```
 
 :::

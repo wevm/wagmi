@@ -40,7 +40,7 @@ export type ReadContractReturnType<
 
 export type ReadContractErrorType = viem_ReadContractErrorType
 
-/** https://rc.wagmi.sh/core/api/actions/readContract */
+/** https://wagmi.sh/core/api/actions/readContract */
 export function readContract<
   config extends Config,
   const abi extends Abi | readonly unknown[],

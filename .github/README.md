@@ -50,7 +50,7 @@
 
 ## Documentation
 
-For documentation and guides, visit [wagmi.sh](https://rc.wagmi.sh).
+For documentation and guides, visit [wagmi.sh](https://wagmi.sh).
 
 ## Community
 
@@ -64,7 +64,7 @@ For casual chit-chat with others using the framework:
 
 ## Contributing
 
-Contributions to Wagmi are greatly appreciated! If you're interested in contributing to Wagmi, please read the [Contributing Guide](https://rc.wagmi.sh/dev/contributing) **before submitting a pull request**.
+Contributions to Wagmi are greatly appreciated! If you're interested in contributing to Wagmi, please read the [Contributing Guide](https://wagmi.sh/dev/contributing) **before submitting a pull request**.
 
 ## Sponsors
 

@@ -37,7 +37,7 @@ export type UseFeeHistoryParameters<
 export type UseFeeHistoryReturnType<selectData = GetFeeHistoryData> =
   UseQueryReturnType<selectData, GetFeeHistoryErrorType>
 
-/** https://rc.wagmi.sh/react/api/hooks/useFeeHistory */
+/** https://wagmi.sh/react/api/hooks/useFeeHistory */
 export function useFeeHistory<
   config extends Config = ResolvedRegister['config'],
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],

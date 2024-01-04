@@ -24,7 +24,7 @@ export type UseClientReturnType<
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
 > = GetClientReturnType<config, chainId>
 
-/** https://rc.wagmi.sh/react/api/hooks/useClient */
+/** https://wagmi.sh/react/api/hooks/useClient */
 export function useClient<
   config extends Config = ResolvedRegister['config'],
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],

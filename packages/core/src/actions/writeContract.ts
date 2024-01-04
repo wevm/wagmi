@@ -77,7 +77,7 @@ export type WriteContractErrorType =
   // viem
   | viem_WriteContractErrorType
 
-/** https://rc.wagmi.sh/core/api/actions/writeContract */
+/** https://wagmi.sh/core/api/actions/writeContract */
 export async function writeContract<
   config extends Config,
   const abi extends Abi | readonly unknown[],

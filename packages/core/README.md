@@ -5,9 +5,9 @@ VanillaJS library for Ethereum
 ## Installation
 
 ```bash
-pnpm add @wagmi/core@rc viem@rc
+pnpm add @wagmi/core viem
 ```
 
 ## Documentation
 
-For documentation and guides, visit [wagmi.sh](https://rc.wagmi.sh).
+For documentation and guides, visit [wagmi.sh](https://wagmi.sh).

@@ -8,19 +8,19 @@ Install the required package.
 
 ::: code-group
 ```bash [pnpm]
-pnpm add @wagmi/cli@rc
+pnpm add @wagmi/cli
 ```
 
 ```bash [npm]
-npm install @wagmi/cli@rc
+npm install @wagmi/cli
 ```
 
 ```bash [yarn]
-yarn add @wagmi/cli@rc
+yarn add @wagmi/cli
 ```
 
 ```bash [bun]
-bun add @wagmi/cli@rc
+bun add @wagmi/cli
 ```
 :::
 

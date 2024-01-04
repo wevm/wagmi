@@ -13,7 +13,7 @@ export type WatchClientParameters<
 
 export type WatchClientReturnType = () => void
 
-/** https://rc.wagmi.sh/core/api/actions/watchClient */
+/** https://wagmi.sh/core/api/actions/watchClient */
 export function watchClient<
   config extends Config,
   chainId extends config['chains'][number]['id'],

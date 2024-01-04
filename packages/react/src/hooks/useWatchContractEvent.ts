@@ -30,7 +30,7 @@ export type UseWatchContractEventParameters<
 
 export type UseWatchContractEventReturnType = void
 
-/** https://rc.wagmi.sh/react/api/hooks/useWatchContractEvent */
+/** https://wagmi.sh/react/api/hooks/useWatchContractEvent */
 export function useWatchContractEvent<
   const abi extends Abi | readonly unknown[],
   eventName extends ContractEventName<abi>,

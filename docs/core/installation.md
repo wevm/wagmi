@@ -14,19 +14,19 @@ Install the required packages.
 
 ::: code-group
 ```bash-vue [pnpm]
-pnpm add @wagmi/core@rc viem@{{viemVersion}}
+pnpm add @wagmi/core viem@{{viemVersion}}
 ```
 
 ```bash-vue [npm]
-npm install @wagmi/core@rc viem@{{viemVersion}}
+npm install @wagmi/core viem@{{viemVersion}}
 ```
 
 ```bash-vue [yarn]
-yarn add @wagmi/core@rc viem@{{viemVersion}}
+yarn add @wagmi/core viem@{{viemVersion}}
 ```
 
 ```bash-vue [bun]
-bun add @wagmi/core@rc viem@{{viemVersion}}
+bun add @wagmi/core viem@{{viemVersion}}
 ```
 :::
 
@@ -39,9 +39,9 @@ If you're not using a package manager, you can also use Wagmi Core via an ESM-co
 
 ```html-vue
 <script type="module">
-  import { createClient } from 'https://esm.sh/viem@rc'
+  import { createClient } from 'https://esm.sh/viem'
   import { createConfig } from 'https://esm.sh/@wagmi/core@{{viemVersion}}'
-  import { injected } from 'https://esm.sh/@wagmi/connectors@rc'
+  import { injected } from 'https://esm.sh/@wagmi/connectors'
 </script>
 ```
 

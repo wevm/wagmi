@@ -14,23 +14,23 @@ const viemVersion = packageJson.peerDependencies.viem
 
 Wagmi Core v2 redesigns the core APIs to mesh better with [Viem](https://viem.sh). This major version transforms Wagmi into a light wrapper around Viem, sprinkling in multichain support and account management. As such, there are some breaking changes and deprecations to be aware of outlined in this guide.
 
-To get started, install the latest version of Wagmi using the `rc` dist-tag and it's required peer dependencies.
+To get started, install the latest version of Wagmi and it's required peer dependencies.
 
 ::: code-group
 ```bash-vue [pnpm]
-pnpm add @wagmi/core@rc viem@{{viemVersion}} @wagmi/connectors@rc
+pnpm add @wagmi/core viem@{{viemVersion}} @wagmi/connectors
 ```
 
 ```bash-vue [npm]
-npm install @wagmi/core@rc viem@{{viemVersion}} @wagmi/connectors@rc
+npm install @wagmi/core viem@{{viemVersion}} @wagmi/connectors
 ```
 
 ```bash-vue [yarn]
-yarn add @wagmi/core@rc viem@{{viemVersion}} @wagmi/connectors@rc
+yarn add @wagmi/core viem@{{viemVersion}} @wagmi/connectors
 ```
 
 ```bash-vue [bun]
-bun add @wagmi/core@rc viem@{{viemVersion}} @wagmi/connectors@rc
+bun add @wagmi/core viem@{{viemVersion}} @wagmi/connectors
 ```
 :::
 
@@ -259,19 +259,19 @@ Wagmi Core v2 no longer exports connectors via the `'@wagmi/core/connectors/*'` 
 
 ::: code-group
 ```bash-vue [pnpm]
-pnpm add @wagmi/connectors@rc
+pnpm add @wagmi/connectors
 ```
 
 ```bash-vue [npm]
-npm install @wagmi/connectors@rc
+npm install @wagmi/connectors
 ```
 
 ```bash-vue [yarn]
-yarn add @wagmi/connectors@rc
+yarn add @wagmi/connectors
 ```
 
 ```bash-vue [bun]
-bun add @wagmi/connectors@rc
+bun add @wagmi/connectors
 ```
 :::
 

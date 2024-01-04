@@ -16,7 +16,7 @@ Once you create a Wagmi Config, you'll need to make sure your framework has acce
 
 All frameworks approach reactivity in a different way. To hook into your favorite frameworks, reactivity system, it's often helpful to see what other popular libraries for your framework are doing.
 
-The most important thing to hook up Wagmi Core with your framework is to make sure changes to the Wagmi Config are tracked. This enables behavior, like switching chains or connecting accounts, to propogate throughout your app and update state. Check out [`useAccount`](https://github.com/wevm/wagmi/blob/rc/packages/react/src/hooks/useAccount.ts), [`useChainId`](https://github.com/wevm/wagmi/blob/rc/packages/react/src/hooks/useChainId.ts), [`useClient`](https://github.com/wevm/wagmi/blob/rc/packages/react/src/hooks/useClient.ts), and [`useConnectorClient`](https://github.com/wevm/wagmi/blob/rc/packages/react/src/hooks/useConnectorClient.ts) — versions of these for your framework are important to get right as they power a lot of internals.
+The most important thing to hook up Wagmi Core with your framework is to make sure changes to the Wagmi Config are tracked. This enables behavior, like switching chains or connecting accounts, to propogate throughout your app and update state. Check out [`useAccount`](https://github.com/wevm/wagmi/blob/main/packages/react/src/hooks/useAccount.ts), [`useChainId`](https://github.com/wevm/wagmi/blob/main/packages/react/src/hooks/useChainId.ts), [`useClient`](https://github.com/wevm/wagmi/blob/main/packages/react/src/hooks/useClient.ts), and [`useConnectorClient`](https://github.com/wevm/wagmi/blob/main/packages/react/src/hooks/useConnectorClient.ts) — versions of these for your framework are important to get right as they power a lot of internals.
 
 ## TanStack Query
 
@@ -24,7 +24,7 @@ Wagmi uses [TanStack Query](https://tanstack.com/query) to enable caching, dedup
 
 To get started with your framework, install and set up the related TanStack Query adapter. Next, import query keys/functions and mutation functions from the `'@wagmi/core/query'` entrypoint. You can plug these directly into your framework's TanStack Query adapter functions.
 
-If you are building a library, you'll also want to make sure you that you wire up generics correctly so type-inference and safety works correctly. The best way to make sure you are doing this correctly, is to see how we do this for React with Wagmi by checking out the [source code](https://github.com/wevm/wagmi/tree/rc/packages/react/src/hooks).
+If you are building a library, you'll also want to make sure you that you wire up generics correctly so type-inference and safety works correctly. The best way to make sure you are doing this correctly, is to see how we do this for React with Wagmi by checking out the [source code](https://github.com/wevm/wagmi/tree/main/packages/react/src/hooks).
 
 ## Testing
 

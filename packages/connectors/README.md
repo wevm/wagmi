@@ -5,9 +5,9 @@ Collection of connectors for Wagmi
 ## Installation
 
 ```bash
-pnpm add @wagmi/connectors@rc @wagmi/core@rc viem@rc
+pnpm add @wagmi/connectors @wagmi/core viem
 ```
 
 ## Documentation
 
-For documentation and guides, visit [wagmi.sh](https://rc.wagmi.sh).
+For documentation and guides, visit [wagmi.sh](https://wagmi.sh).

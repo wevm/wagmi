@@ -38,7 +38,7 @@ export type UseBlockTransactionCountReturnType<
   selectData = GetBlockTransactionCountData,
 > = UseQueryReturnType<selectData, GetBlockTransactionCountErrorType>
 
-/** https://rc.wagmi.sh/react/api/hooks/useBlockTransactionCount */
+/** https://wagmi.sh/react/api/hooks/useBlockTransactionCount */
 export function useBlockTransactionCount<
   config extends Config = ResolvedRegister['config'],
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],

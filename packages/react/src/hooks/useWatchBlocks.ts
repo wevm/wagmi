@@ -29,7 +29,7 @@ export type UseWatchBlocksParameters<
 
 export type UseWatchBlocksReturnType = void
 
-/** https://rc.wagmi.sh/react/hooks/useWatchBlocks */
+/** https://wagmi.sh/react/hooks/useWatchBlocks */
 export function useWatchBlocks<
   config extends Config = ResolvedRegister['config'],
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],

@@ -17,7 +17,7 @@ export type GetEnsNameReturnType = viem_GetEnsNameReturnType
 
 export type GetEnsNameErrorType = viem_GetEnsNameErrorType
 
-/** https://rc.wagmi.sh/core/api/actions/getEnsName */
+/** https://wagmi.sh/core/api/actions/getEnsName */
 export function getEnsName<config extends Config>(
   config: config,
   parameters: GetEnsNameParameters<config>,

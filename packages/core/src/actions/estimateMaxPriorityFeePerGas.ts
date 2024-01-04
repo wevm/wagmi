@@ -27,7 +27,7 @@ export type EstimateMaxPriorityFeePerGasReturnType =
 export type EstimateMaxPriorityFeePerGasErrorType =
   viem_EstimateMaxPriorityFeePerGasErrorType
 
-/** https://rc.wagmi.sh/core/api/actions/estimateMaxPriorityFeePerGas */
+/** https://wagmi.sh/core/api/actions/estimateMaxPriorityFeePerGas */
 export async function estimateMaxPriorityFeePerGas<
   config extends Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],

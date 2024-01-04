@@ -6,7 +6,7 @@ export type BaseErrorType = BaseError & { name: 'WagmiError' }
 export class BaseError extends CoreError {
   override name = 'WagmiError'
   override get docsBaseUrl() {
-    return 'https://rc.wagmi.sh/react'
+    return 'https://wagmi.sh/react'
   }
   override get version() {
     return getVersion()
