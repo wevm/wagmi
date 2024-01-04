@@ -1,0 +1,23 @@
+name: Lock Issue
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+
+permissions:
+  issues: write
+
+jobs:
+  action:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: dessant/lock-threads@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          issue-comment: |
+            This issue has been locked since it has been closed for more than 14 days.
+
+            If you found a concrete bug or regression related to it, please open a new [bug report](https://github.com/wevm/wagmi/issues/new/choose) with a reproduction against the latest wagmi version. If you have any other comments you can create a new [discussion](https://github.com/wevm/wagmi/discussions).
+          issue-lock-reason: ''
+          issue-inactive-days: '14'
+          process-only: 'issues'

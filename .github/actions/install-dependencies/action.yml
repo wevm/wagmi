@@ -8,18 +8,14 @@ runs:
       uses: pnpm/action-setup@v2
 
     - name: Set up node
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         cache: pnpm
-        node-version: 18
+        node-version: 20
 
     - name: Set up foundry
       uses: foundry-rs/foundry-toolchain@v1
 
     - name: Install dependencies
       shell: bash
-      run: pnpm install --ignore-scripts
-
-    - name: Link packages
-      shell: bash
-      run: pnpm dev
+      run: pnpm install

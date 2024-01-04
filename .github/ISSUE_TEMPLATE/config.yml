@@ -1,8 +1,11 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Ask Question
-    url: https://github.com/wagmi-dev/wagmi/discussions/new?category=q-a
-    about: Ask questions and discuss with other community members
-  - name: Request Feature
-    url: https://github.com/wagmi-dev/wagmi/discussions/new?category=ideas
-    about: Requests features or brainstorm ideas for new functionality
+  - name: Question
+    url: https://github.com/wevm/wagmi/discussions/new?category=q-a
+    about: Ask a question and discuss with other community members.
+  - name: Feature Request
+    url: https://github.com/wevm/wagmi/discussions/new?category=ideas
+    about: Request features or brainstorm ideas for new functionality.
+  - name: Connector Request
+    url: https://github.com/wevm/wagmi/discussions/new?category=connector-request
+    about: Kick off a request for a new Connector

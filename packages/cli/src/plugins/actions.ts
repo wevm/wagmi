@@ -1,345 +1,321 @@
 import { pascalCase } from 'change-case'
-import dedent from 'dedent'
 
-import type { Plugin } from '../config'
-import type { RequiredBy } from '../types'
-import { getAddressDocString, getIsPackageInstalled } from '../utils'
+import { type Contract, type Plugin } from '../config.js'
+import { type Evaluate, type RequiredBy } from '../types.js'
+import { getAddressDocString } from '../utils/getAddressDocString.js'
+import { getIsPackageInstalled } from '../utils/packages.js'
 
-type ActionsConfig = {
-  /**
-   * Generate `getContract` action.
-   *
-   * @default true
-   */
-  getContract?: boolean
-  /**
-   * Override detected import source for actions.
-   */
-  overridePackageName?: 'wagmi/actions' | '@wagmi/core'
-  /**
-   * Generate `prepareWriteContract` action.
-   *
-   * @default true
-   */
-  prepareWriteContract?: boolean
-  /**
-   * Generate `readContract` action.
-   *
-   * @default true
-   */
-  readContract?: boolean
-  /**
-   * Generate `watchContractEvent` action.
-   *
-   * @default true
-   */
-  watchContractEvent?: boolean
-  /**
-   * Generate `writeContract` action.
-   *
-   * @default true
-   */
-  writeContract?: boolean
+export type ActionsConfig = {
+  getActionName?:
+    | 'legacy' // TODO: Deprecate `'legacy'` option
+    | ((options: {
+        contractName: string
+        itemName?: string | undefined
+        type: 'read' | 'simulate' | 'watch' | 'write'
+      }) => string)
+  overridePackageName?: '@wagmi/core' | 'wagmi' | undefined
 }
 
-type ActionsResult = RequiredBy<Plugin, 'run'>
+type ActionsResult = Evaluate<RequiredBy<Plugin, 'run'>>
 
 export function actions(config: ActionsConfig = {}): ActionsResult {
-  const actions = {
-    getContract: true,
-    prepareWriteContract: true,
-    readContract: true,
-    watchContractEvent: true,
-    writeContract: true,
-    ...config,
-  }
   return {
-    name: 'Core',
-    async run({ contracts, isTypeScript, outputs }) {
+    name: 'Action',
+    async run({ contracts }) {
       const imports = new Set<string>([])
-      const hasWriteContractMode = outputs.some(
-        (x) =>
-          x.plugin.name === 'React' && x.imports?.includes('WriteContractMode'),
-      )
+      const content: string[] = []
+      const pure = '/*#__PURE__*/'
 
       const actionNames = new Set<string>()
-      const getActionNameError = (name: string, contractName: string) =>
-        new Error(
-          `Action name "${name}" must be unique for contract "${contractName}".`,
-        )
-
-      const content: string[] = []
       for (const contract of contracts) {
-        const baseActionName = pascalCase(contract.name)
-
-        let typeParams = ''
-        let omitted = ''
-        const innerActionParams: Record<string, string> = {
-          abi: contract.meta.abiName,
-        }
-        if (contract.meta.addressName) {
-          omitted = `| 'address'`
-          if (typeof contract.address === 'object') {
-            typeParams = `& { chainId?: keyof typeof ${contract.meta.addressName} }`
-            if (Object.keys(contract.address).length > 1) {
-              innerActionParams.address = `${contract.meta.addressName}[config.chainId as keyof typeof ${contract.meta.addressName}]`
-            } else
-              innerActionParams.address = `${contract.meta.addressName}[${
-                Object.keys(contract.address!)[0]
-              }]`
-          } else if (contract.address)
-            innerActionParams.address = contract.meta.addressName
-        }
-
-        const innerActionConfig = `${Object.entries(innerActionParams).reduce(
-          (prev, curr) => `${prev}${curr[0]}: ${curr[1]},`,
-          '{',
-        )}...config}`
-
-        type Item = { name: string; value: string }
-        const genDocString = (actionName: string, item?: Item) => {
-          let description = `Wraps __{@link ${actionName}}__ with \`abi\` set to __{@link ${contract.meta.abiName}}__`
-          if (item)
-            description += ` and \`${item.name}\` set to \`"${item.value}"\``
-          if (contract.address) {
-            const docString = getAddressDocString({ address: contract.address })
-            if (docString)
-              return dedent`
-              /**
-              * ${description}.
-              * 
-              ${docString}
-              */
-              `
-          }
-          return dedent`
-          /**
-           * ${description}.
-           */
-          `
-        }
-
-        if (actions.getContract) {
-          const name = `get${baseActionName}`
-          if (actionNames.has(name))
-            throw getActionNameError(name, contract.name)
-          actionNames.add(name)
-
-          imports.add('getContract')
-          const docString = genDocString('getContract')
-
-          let code
-          if (isTypeScript) {
-            imports.add('GetContractArgs')
-            // prettier-ignore
-            code = dedent`
-            ${docString}
-            export function ${name}(
-              config: Omit<GetContractArgs, 'abi'${omitted}>${typeParams},
-            ) {
-              return getContract(${innerActionConfig})
-            }
-            `
-          } else
-            code = dedent`
-            ${docString}
-            export function ${name}(config) {
-              return getContract(${innerActionConfig})
-            }
-            `
-          content.push(code)
-        }
-
         let hasReadFunction = false
         let hasWriteFunction = false
         let hasEvent = false
-        for (const component of contract.abi) {
-          if (component.type === 'function')
+        const readItems = []
+        const writeItems = []
+        const eventItems = []
+        for (const item of contract.abi) {
+          if (item.type === 'function')
             if (
-              component.stateMutability === 'view' ||
-              component.stateMutability === 'pure'
-            )
+              item.stateMutability === 'view' ||
+              item.stateMutability === 'pure'
+            ) {
               hasReadFunction = true
-            else hasWriteFunction = true
-          else if (component.type === 'event') hasEvent = true
-          // Exit early if all flags are `true`
-          if (hasReadFunction && hasWriteFunction && hasEvent) break
+              readItems.push(item)
+            } else {
+              hasWriteFunction = true
+              writeItems.push(item)
+            }
+          else if (item.type === 'event') {
+            hasEvent = true
+            eventItems.push(item)
+          }
         }
 
+        let innerContent
+        if (contract.meta.addressName)
+          innerContent = `abi: ${contract.meta.abiName}, address: ${contract.meta.addressName}`
+        else innerContent = `abi: ${contract.meta.abiName}`
+
         if (hasReadFunction) {
-          if (actions.readContract) {
-            const name = `read${baseActionName}`
-            if (actionNames.has(name))
-              throw getActionNameError(name, contract.name)
-            actionNames.add(name)
+          const actionName = getActionName(
+            config,
+            actionNames,
+            'read',
+            contract.name,
+          )
+          const docString = genDocString('readContract', contract)
+          const functionName = 'createReadContract'
+          imports.add(functionName)
+          content.push(
+            `${docString}
+export const ${actionName} = ${pure} ${functionName}({ ${innerContent} })`,
+          )
 
-            imports.add('readContract')
-            const docString = genDocString('readContract')
+          const names = new Set<string>()
+          for (const item of readItems) {
+            if (item.type !== 'function') continue
+            if (
+              item.stateMutability !== 'pure' &&
+              item.stateMutability !== 'view'
+            )
+              continue
 
-            let code
-            if (isTypeScript) {
-              imports.add('ReadContractConfig')
-              code = dedent`
-              ${docString}
-              export function ${name}<
-                TAbi extends readonly unknown[] = typeof ${contract.meta.abiName},
-                TFunctionName extends string = string,
-              >(
-                config: Omit<ReadContractConfig<TAbi, TFunctionName>, 'abi'${omitted}>${typeParams},
-              ) {
-                return readContract(${innerActionConfig} as unknown as ReadContractConfig<TAbi, TFunctionName>)
-              }
-              `
-            } else
-              code = dedent`
-              ${docString}
-              export function ${name}(config) {
-                return readContract(${innerActionConfig})
-              }
-              `
-            content.push(code)
+            // Skip overrides since they are captured by same hook
+            if (names.has(item.name)) continue
+            names.add(item.name)
+
+            const hookName = getActionName(
+              config,
+              actionNames,
+              'read',
+              contract.name,
+              item.name,
+            )
+            const docString = genDocString('readContract', contract, {
+              name: 'functionName',
+              value: item.name,
+            })
+            content.push(
+              `${docString}
+export const ${hookName} = ${pure} ${functionName}({ ${innerContent}, functionName: '${item.name}' })`,
+            )
           }
         }
 
         if (hasWriteFunction) {
-          if (actions.writeContract) {
-            const name = `write${baseActionName}`
-            if (actionNames.has(name))
-              throw getActionNameError(name, contract.name)
-            actionNames.add(name)
+          {
+            const actionName = getActionName(
+              config,
+              actionNames,
+              'write',
+              contract.name,
+            )
+            const docString = genDocString('writeContract', contract)
+            const functionName = 'createWriteContract'
+            imports.add(functionName)
+            content.push(
+              `${docString}
+export const ${actionName} = ${pure} ${functionName}({ ${innerContent} })`,
+            )
 
-            imports.add('writeContract')
-            const docString = genDocString('writeContract')
+            const names = new Set<string>()
+            for (const item of writeItems) {
+              if (item.type !== 'function') continue
+              if (
+                item.stateMutability !== 'nonpayable' &&
+                item.stateMutability !== 'payable'
+              )
+                continue
 
-            let code
-            if (isTypeScript) {
-              const hasMultichainAddress = typeof contract.address === 'object'
-              const TChainId = hasMultichainAddress
-                ? `TMode extends WriteContractMode, TChainId extends number = keyof typeof ${contract.meta.addressName}`
-                : ''
-              let typeParams_ = ''
-              if (TChainId) {
-                if (!hasWriteContractMode) imports.add('WriteContractMode')
-                typeParams_ = `& { mode: TMode; chainId?: TMode extends 'prepared' ? TChainId : keyof typeof ${contract.meta.addressName} }`
-              }
+              // Skip overrides since they are captured by same hook
+              if (names.has(item.name)) continue
+              names.add(item.name)
 
-              imports.add('WriteContractArgs')
-              imports.add('WriteContractPreparedArgs')
-              imports.add('WriteContractUnpreparedArgs')
-              code = dedent`
-              ${docString}
-              export function ${name}<
-                TFunctionName extends string,
-                ${TChainId}
-              >(
-                config:
-                  | (Omit<WriteContractPreparedArgs<typeof ${contract.meta.abiName}, TFunctionName>, 'abi'${omitted}>${typeParams_})
-                  | (Omit<WriteContractUnpreparedArgs<typeof ${contract.meta.abiName}, TFunctionName>, 'abi'${omitted}>${typeParams_}),
-              ) {
-                return writeContract(${innerActionConfig} as unknown as WriteContractArgs<typeof ${contract.meta.abiName}, TFunctionName>)
-              }
-              `
-            } else
-              code = dedent`
-              ${docString}
-              export function ${name}(config) {
-                return writeContract(${innerActionConfig})
-              }
-              `
-            content.push(code)
+              const actionName = getActionName(
+                config,
+                actionNames,
+                'write',
+                contract.name,
+                item.name,
+              )
+              const docString = genDocString('writeContract', contract, {
+                name: 'functionName',
+                value: item.name,
+              })
+              content.push(
+                `${docString}
+export const ${actionName} = ${pure} ${functionName}({ ${innerContent}, functionName: '${item.name}' })`,
+              )
+            }
           }
 
-          if (actions.prepareWriteContract) {
-            const name = `prepareWrite${baseActionName}`
-            if (actionNames.has(name))
-              throw getActionNameError(name, contract.name)
-            actionNames.add(name)
+          {
+            const actionName = getActionName(
+              config,
+              actionNames,
+              'simulate',
+              contract.name,
+            )
+            const docString = genDocString('simulateContract', contract)
+            const functionName = 'createSimulateContract'
+            imports.add(functionName)
+            content.push(
+              `${docString}
+export const ${actionName} = ${pure} ${functionName}({ ${innerContent} })`,
+            )
 
-            imports.add('prepareWriteContract')
-            const docString = genDocString('prepareWriteContract')
+            const names = new Set<string>()
+            for (const item of writeItems) {
+              if (item.type !== 'function') continue
+              if (
+                item.stateMutability !== 'nonpayable' &&
+                item.stateMutability !== 'payable'
+              )
+                continue
 
-            let code
-            if (isTypeScript) {
-              imports.add('PrepareWriteContractConfig')
-              // prettier-ignore
-              code = dedent`
-              ${docString}
-              export function ${name}<
-                TAbi extends readonly unknown[] = typeof ${contract.meta.abiName},
-                TFunctionName extends string = string,
-              >(
-                config: Omit<PrepareWriteContractConfig<TAbi, TFunctionName>, 'abi'${omitted}>${typeParams},
-              ) {
-                return prepareWriteContract(${innerActionConfig} as unknown as PrepareWriteContractConfig<TAbi, TFunctionName>)
-              }
-              `
-            } else
-              code = dedent`
-              ${docString}
-              export function ${name}(config) {
-                return prepareWriteContract(${innerActionConfig})
-              }
-              `
-            content.push(code)
+              // Skip overrides since they are captured by same hook
+              if (names.has(item.name)) continue
+              names.add(item.name)
+
+              const actionName = getActionName(
+                config,
+                actionNames,
+                'simulate',
+                contract.name,
+                item.name,
+              )
+              const docString = genDocString('simulateContract', contract, {
+                name: 'functionName',
+                value: item.name,
+              })
+              content.push(
+                `${docString}
+export const ${actionName} = ${pure} ${functionName}({ ${innerContent}, functionName: '${item.name}' })`,
+              )
+            }
           }
         }
 
         if (hasEvent) {
-          if (actions.watchContractEvent) {
-            const name = `watch${baseActionName}Event`
-            if (actionNames.has(name))
-              throw getActionNameError(name, contract.name)
-            actionNames.add(name)
+          const actionName = getActionName(
+            config,
+            actionNames,
+            'watch',
+            contract.name,
+          )
+          const docString = genDocString('watchContractEvent', contract)
+          const functionName = 'createWatchContractEvent'
+          imports.add(functionName)
+          content.push(
+            `${docString}
+export const ${actionName} = ${pure} ${functionName}({ ${innerContent} })`,
+          )
 
-            imports.add('watchContractEvent')
-            const docString = genDocString('watchContractEvent')
+          const names = new Set<string>()
+          for (const item of eventItems) {
+            if (item.type !== 'event') continue
 
-            let code
-            if (isTypeScript) {
-              imports.add('WatchContractEventConfig')
-              imports.add('WatchContractEventCallback')
-              // prettier-ignore
-              code = dedent`
-              ${docString}
-              export function ${name}<
-                TAbi extends readonly unknown[] = typeof ${contract.meta.abiName},
-                TEventName extends string = string,
-              >(
-                config: Omit<WatchContractEventConfig<TAbi, TEventName>, 'abi'${omitted}>${typeParams},
-                callback: WatchContractEventCallback<TAbi, TEventName>,
-              ) {
-                return watchContractEvent(${innerActionConfig} as WatchContractEventConfig<TAbi, TEventName>, callback)
-              }
-              `
-            } else
-              code = dedent`
-              ${docString}
-              export function ${name}(config, callback) {
-                return watchContractEvent(${innerActionConfig}, callback)
-              }
-              `
-            content.push(code)
+            // Skip overrides since they are captured by same hook
+            if (names.has(item.name)) continue
+            names.add(item.name)
+
+            const actionName = getActionName(
+              config,
+              actionNames,
+              'watch',
+              contract.name,
+              item.name,
+            )
+            const docString = genDocString('watchContractEvent', contract, {
+              name: 'eventName',
+              value: item.name,
+            })
+            content.push(
+              `${docString}
+export const ${actionName} = ${pure} ${functionName}({ ${innerContent}, functionName: '${item.name}' })`,
+            )
           }
         }
       }
 
-      let packageName
-      if (config.overridePackageName) packageName = config.overridePackageName
-      else if (await getIsPackageInstalled({ packageName: 'wagmi' }))
-        packageName = 'wagmi/actions'
-      else if (await getIsPackageInstalled({ packageName: '@wagmi/core' }))
-        packageName = '@wagmi/core'
-      else packageName = '@wagmi/core'
-
       const importValues = [...imports.values()]
+
+      let packageName = '@wagmi/core/codegen'
+      if (config.overridePackageName) {
+        switch (config.overridePackageName) {
+          case '@wagmi/core':
+            packageName = '@wagmi/core/codegen'
+            break
+          case 'wagmi':
+            packageName = 'wagmi/codegen'
+            break
+        }
+      } else if (await getIsPackageInstalled({ packageName: 'wagmi' }))
+        packageName = 'wagmi/codegen'
+      else if (await getIsPackageInstalled({ packageName: '@wagmi/core' }))
+        packageName = '@wagmi/core/codegen'
+
       return {
         imports: importValues.length
-          ? dedent`
-            import { ${importValues.join(', ')} } from '${packageName}'
-          `
+          ? `import { ${importValues.join(', ')} } from '${packageName}'\n`
           : '',
         content: content.join('\n\n'),
       }
     },
   }
+}
+
+function genDocString(
+  actionName: string,
+  contract: Contract,
+  item?: { name: string; value: string },
+) {
+  let description = `Wraps __{@link ${actionName}}__ with \`abi\` set to __{@link ${contract.meta.abiName}}__`
+  if (item) description += ` and \`${item.name}\` set to \`"${item.value}"\``
+
+  const docString = getAddressDocString({ address: contract.address })
+  if (docString)
+    return `/**
+ * ${description}
+ * 
+ ${docString}
+ */`
+
+  return `/**
+ * ${description}
+ */`
+}
+
+function getActionName(
+  config: ActionsConfig,
+  actionNames: Set<string>,
+  type: 'read' | 'simulate' | 'watch' | 'write',
+  contractName: string,
+  itemName?: string | undefined,
+) {
+  const ContractName = pascalCase(contractName)
+  const ItemName = itemName ? pascalCase(itemName) : undefined
+
+  let actionName
+  if (typeof config.getActionName === 'function')
+    actionName = config.getActionName({
+      type,
+      contractName: ContractName,
+      itemName: ItemName,
+    })
+  else if (typeof config.getActionName === 'string' && type === 'simulate') {
+    actionName = `prepareWrite${ContractName}${ItemName ?? ''}`
+  } else {
+    actionName = `${type}${ContractName}${ItemName ?? ''}`
+    if (type === 'watch') actionName = `${actionName}Event`
+  }
+
+  if (actionNames.has(actionName))
+    throw new Error(
+      `Action name "${actionName}" must be unique for contract "${contractName}". Try using \`getActionName\` to create a unique name.`,
+    )
+
+  actionNames.add(actionName)
+  return actionName
 }

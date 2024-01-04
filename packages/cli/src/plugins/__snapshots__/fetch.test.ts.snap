@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`fetch > contracts > fetches ABI 1`] = `
+exports[`fetches ABI 1`] = `
 [
   {
     "abi": [

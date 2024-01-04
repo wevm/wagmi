@@ -10,15 +10,19 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Clone repository
+        uses: actions/checkout@v4
 
       - name: Install dependencies
         uses: ./.github/actions/install-dependencies
 
       - name: Lint code
         run: pnpm format && pnpm lint:fix
+
+      - name: Update package versions
+        run: pnpm version:update
       
-      - uses: stefanzweifel/git-auto-commit-action@v5
+      - uses: stefanzweifel/git-auto-commit-action@v4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -33,7 +37,8 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Clone repository
+        uses: actions/checkout@v4
 
       - name: Install dependencies
         uses: ./.github/actions/install-dependencies
@@ -41,48 +46,76 @@ jobs:
       - name: Build
         run: pnpm build
 
+      - name: Publint
+        run: pnpm test:build
+
+      - name: Check for unused files, dependencies, and exports
+        run: pnpm knip --production --ignore-internal
+
   types:
     name: Types
     needs: lint
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    strategy:
+      matrix:
+        typescript-version: ['5.0.4', '5.1.6', '5.2.2', 'latest']
+        # TODO: Enable Viem version after stable release
+        # viem-version: ['rc']
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Clone repository
+        uses: actions/checkout@v4
 
       - name: Install dependencies
         uses: ./.github/actions/install-dependencies
+
+      - run: pnpm add -D -w typescript@${{ matrix.typescript-version }} # viem@${{ matrix.viem-version }}
+
+      - name: Link packages
+        run: pnpm preconstruct
 
       - name: Check types
         run: pnpm typecheck
 
-      - name: Test types
-        run: pnpm test:typecheck
+      # Redundant with `pnpm typecheck`
+      # If Vitest adds special features in the future, e.g. type coverage, can add this back!
+      # - name: Test types
+      #   run: pnpm test:typecheck
 
   test:
     name: Test
     runs-on: ubuntu-latest
-    env:
-      ANVIL_BLOCK_NUMBER: 16966590
+    timeout-minutes: 10
+    strategy:
+      max-parallel: 3
+      matrix:
+        shard: [1, 2, 3]
+        total-shards: [3]
+        # TODO: Enable Viem version after stable release
+        # viem-version: ['rc']
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Clone repository
+        uses: actions/checkout@v4
 
       - name: Install dependencies
         uses: ./.github/actions/install-dependencies
 
-      - name: Launch Anvil
-        run: anvil --fork-url $ANVIL_FORK_URL --fork-block-number $ANVIL_BLOCK_NUMBER &
-        env:
-          ANVIL_FORK_URL: ${{ secrets.ANVIL_FORK_URL }}
+      # - run: pnpm add -D -w viem@${{ matrix.viem-version }}
+      # - run: pnpm version:update:viem
 
       - name: Run tests
         uses: nick-fields/retry@v2
         with:
-          timeout_minutes: 20
+          command: CI=true pnpm test:cov --shard=${{ matrix.shard }}/${{ matrix.total-shards }} --retry=3 --bail=1
           max_attempts: 3
-          command: pnpm test:coverage
+          timeout_minutes: 8
+        env:
+          VITE_MAINNET_FORK_BLOCK_NUMBER: ${{ vars.VITE_MAINNET_FORK_BLOCK_NUMBER }}
+          VITE_MAINNET_FORK_URL: ${{ secrets.VITE_MAINNET_FORK_URL }}
+          VITE_OPTIMISM_FORK_BLOCK_NUMBER: ${{ vars.VITE_OPTIMISM_FORK_BLOCK_NUMBER }}
+          VITE_OPTIMISM_FORK_URL: ${{ secrets.VITE_OPTIMISM_FORK_URL }}
 
-      # Need to shutdown Anvil so cache gets created
-      - name: Shutdown Anvil
-        run: pkill -2 anvil
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3

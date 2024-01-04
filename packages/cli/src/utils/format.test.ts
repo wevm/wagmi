@@ -1,14 +1,12 @@
-import { describe, expect, it } from 'vitest'
+import { expect, test } from 'vitest'
 
-import { format } from './format'
+import { format } from './format.js'
 
-describe('format', () => {
-  it('formats code', async () => {
-    await expect(
-      format(`const           foo = "bar"`),
-    ).resolves.toMatchInlineSnapshot(`
-      "const foo = 'bar'
-      "
-    `)
-  })
+test('formats code', async () => {
+  await expect(
+    format(`const           foo = "bar"`),
+  ).resolves.toMatchInlineSnapshot(`
+    "const foo = 'bar'
+    "
+  `)
 })

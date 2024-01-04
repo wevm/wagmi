@@ -1,35 +1,17 @@
-import { describe, expect, test } from 'vitest'
+import { expect, test } from 'vitest'
 
-import {
-  getInstallCommand,
-  getIsPackageInstalled,
-  getPackageManager,
-} from './packages'
+import { getIsPackageInstalled, getPackageManager } from './packages.js'
 
-describe('getIsPackageInstalled', () => {
-  test('true', async () => {
-    await expect(
-      getIsPackageInstalled({ packageName: 'vitest' }),
-    ).resolves.toBe(true)
-  })
-
-  test('false', async () => {
-    await expect(
-      getIsPackageInstalled({ packageName: 'vitest-unknown' }),
-    ).resolves.toBe(false)
-  })
+test('getIsPackageInstalled: true', async () => {
+  await expect(getIsPackageInstalled({ packageName: 'vitest' })).resolves.toBe(
+    true,
+  )
 })
 
-test('getInstallCommand', async () => {
-  await expect(getInstallCommand('vitest')).resolves.toMatchInlineSnapshot(`
-    [
-      "pnpm",
-      [
-        "add",
-        "vitest",
-      ],
-    ]
-  `)
+test('getIsPackageInstalled: false', async () => {
+  await expect(
+    getIsPackageInstalled({ packageName: 'vitest-unknown' }),
+  ).resolves.toBe(false)
 })
 
 test('getPackageManager', async () => {

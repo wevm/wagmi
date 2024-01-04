@@ -1,5 +1,6 @@
-import type { ContractConfig } from '../config'
-import { blockExplorer } from './blockExplorer'
+import type { ContractConfig } from '../config.js'
+import type { Evaluate } from '../types.js'
+import { blockExplorer } from './blockExplorer.js'
 
 const apiUrls = {
   // Ethereum
@@ -33,7 +34,7 @@ const apiUrls = {
 }
 type ChainId = keyof typeof apiUrls
 
-type EtherscanConfig<TChainId extends number> = {
+export type EtherscanConfig<chainId extends number> = {
   /**
    * Etherscan API key.
    *
@@ -54,33 +55,33 @@ type EtherscanConfig<TChainId extends number> = {
    *
    * @default 1_800_000 // 30m in ms
    */
-  cacheDuration?: number
+  cacheDuration?: number | undefined
   /**
    * Chain id to use for fetching ABI.
    *
    * If `address` is an object, `chainId` is used to select the address.
    */
-  chainId: TChainId
+  chainId: chainId
   /**
    * Contracts to fetch ABIs for.
    */
-  contracts: Omit<ContractConfig<ChainId, TChainId>, 'abi'>[]
+  contracts: Evaluate<Omit<ContractConfig<ChainId, chainId>, 'abi'>>[]
 }
 
 /**
  * Fetches contract ABIs from Etherscan.
  */
-export function etherscan<TChainId extends ChainId>({
-  apiKey,
-  cacheDuration,
-  chainId,
-  contracts: contracts_,
-}: EtherscanConfig<TChainId>) {
-  const contracts = contracts_.map((x) => ({
+export function etherscan<chainId extends ChainId>(
+  config: EtherscanConfig<chainId>,
+) {
+  const { apiKey, cacheDuration, chainId } = config
+
+  const contracts = config.contracts.map((x) => ({
     ...x,
     address:
       typeof x.address === 'string' ? { [chainId]: x.address } : x.address,
   })) as Omit<ContractConfig, 'abi'>[]
+
   return blockExplorer({
     apiKey,
     baseUrl: apiUrls[chainId as ChainId],

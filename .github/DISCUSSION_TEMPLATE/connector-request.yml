@@ -1,0 +1,51 @@
+title: '[Connector Request] '
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for your interest in contributing a new Connector to the wagmi! If you haven't already, please read the [Contributing Guidelines](https://wagmi.sh/dev/contributing).
+
+        Once you submit the form, the Wagmi team will follow up in the discussion thread to discuss next steps.
+
+  - type: textarea
+    attributes:
+      label: What **novel use-case** does the Connector provide?
+      description: |
+        A novel use-case is likely one that is not already covered by or not easily extended from another Connector (such as the `injected` or `walletConnect`).
+
+        Examples of **novel** use-cases could be a connector that integrates with:
+
+        - the injected `window.ethereum` provider (a la `injected`)
+        - a series of wallets via QR Codes or Mobile Deep Links (a la `walletConnect`)
+        - a wallet with it's own SDK (a la `coinbaseWallet`)
+        - hardware wallet(s) via Web USB/Bluetooth
+        - an Externally Owned Account via a private key or some other method
+
+        Examples of **nonnovel** use-cases would be a connector that:
+
+        - extends another connector (e.g. `walletConnect`) with no significant differences in functionality other than branding, etc.
+      placeholder: Info on what makes this connector different.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Are the Connector's integrations production-ready and generally available?
+      description: Connectors are intended to be used by consumers in production as part of wagmi. As such, the connector and all dependencies must be production-ready and generally available. This means your connector should not rely on non-production software or be restricted to a limited group of users. For example, if your connector requires a wallet that has a closed beta, it is not ready for inclusion in wagmi.
+      placeholder: Info about the Connector and any dependencies (e.g. browser extension, wallet app, npm package).
+    validations:
+      required: true
+
+  - type: checkboxes
+    attributes:
+      label: Are you committed to actively mainting the Connector?
+      description: It is critical connectors are updated in a timely manner and actively maintained so that users of wagmi can rely on them in production settings. The wagmi core team will provide as much assistance as possible to keep connectors up-to-date with breaking changes from wagmi, but it is your responsibility to ensure that any dependencies and issues/discussions related to the connector are handled in a timely manner. If this is not done, the connector could be removed from the future versions.
+      options:
+        - label: Yes, my team is or I am committed to actively maintaining the Connector.
+          required: true
+
+  - type: textarea
+    attributes:
+      label: Additional comments
+      description: Feel free to jot down any additional info you think might be helpful.
+      placeholder: Additional comments, questions, feedback.

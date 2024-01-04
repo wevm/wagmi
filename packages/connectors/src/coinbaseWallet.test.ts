@@ -1,18 +1,10 @@
-import { foundry } from 'viem/chains'
-import { describe, expect, it } from 'vitest'
+import { config } from '@wagmi/test'
+import { expect, test } from 'vitest'
 
-import { testChains } from '../test'
-import { CoinbaseWalletConnector } from './coinbaseWallet'
+import { coinbaseWallet } from './coinbaseWallet.js'
 
-describe('CoinbaseWalletConnector', () => {
-  it('inits', () => {
-    const connector = new CoinbaseWalletConnector({
-      chains: testChains,
-      options: {
-        appName: 'wagmi',
-        jsonRpcUrl: foundry.rpcUrls.default.http[0],
-      },
-    })
-    expect(connector.name).toEqual('Coinbase Wallet')
-  })
+test('setup', () => {
+  const connectorFn = coinbaseWallet({ appName: 'wagmi' })
+  const connector = config._internal.connectors.setup(connectorFn)
+  expect(connector.name).toEqual('Coinbase Wallet')
 })

@@ -1,9 +1,11 @@
 ## Description
 
-_Concise description of proposed changes_
+What changes are made in this PR? Is it a feature or a bug fix?
 
 ## Additional Information
 
-- [ ] I read the [contributing docs](/wagmi-dev/wagmi/blob/main/.github/CONTRIBUTING.md) (if this is your first contribution)
+Before submitting this issue, please make sure you do the following.
 
-Your ENS/address:
+- [ ] Read the [contributing guide](https://wagmi.sh/dev/contributing)
+- [ ] Added documentation related to the changes made.
+- [ ] Added or updated tests (and snapshots) related to the changes made.

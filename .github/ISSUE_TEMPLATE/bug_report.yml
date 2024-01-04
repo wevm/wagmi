@@ -1,39 +1,24 @@
 name: Bug Report
-description: File a bug/issue
-title: 'bug: <title>'
+description: Report bugs or issues.
 body:
   - type: markdown
     attributes:
-      value: |
-        Thanks for taking the time to fill out this bug report! The more info you provide, the more we can help you. If you are a [Sponsor](https://github.com/sponsors/wagmi-dev?metadata_campaign=gh_issue), your issues are prioritized.
+      value: Thanks for taking the time to fill out this bug report! The more info you provide, the more we can help you. If you are a [Sponsor](https://github.com/sponsors/wevm?metadata_campaign=gh_issue), your issues are prioritized.
 
-  - type: checkboxes
+  - type: textarea
     attributes:
-      label: Is there an existing issue for this?
-      description: Please search to see if an issue already exists for the bug you encountered.
-      options:
-        - label: I have searched the existing issues
-          required: true
-
-  - type: input
-    attributes:
-      label: Package Version
-      description: What version of wagmi are you using?
-      placeholder: 1.0.0
+      label: Describe the bug
+      description: Clear and concise description of what the bug. If you intend to submit a PR for this issue, tell us in the description. Thanks!
+      placeholder: I am doing… What I expect is… What actually happening is…
     validations:
       required: true
 
-  - type: textarea
+  - type: input
+    id: reproduction
     attributes:
-      label: Current Behavior
-      description: A concise description of what you're experiencing.
-    validations:
-      required: false
-
-  - type: textarea
-    attributes:
-      label: Expected Behavior
-      description: A concise description of what you expected to happen.
+      label: Link to Minimal Reproducible Example
+      description: Please provide a link via [new.wagmi.sh](https://new.wagmi.sh) or a link to a minimal repository that can reproduce the problem. This makes investigating issues and helping you out significantly easier! For most issues, you will likely get asked to provide a minimal reproducible example so why not add one now :) If a report is vague (e.g. just a generic error message) and has no reproduction, it will receive a "needs reproduction" label. If no reproduction is provided after 3 days, it will be auto-closed.
+      placeholder: https://new.wagmi.sh
     validations:
       required: false
 
@@ -46,20 +31,42 @@ body:
 
   - type: input
     attributes:
-      label: Link to Minimal Reproducible Example (StackBlitz, CodeSandbox, GitHub repo etc.)
-      description: |
-        Please provide a link via [new.wagmi.sh](https://new.wagmi.sh/) or a link to a minimal repository that can reproduce the problem you ran into. `npm create wagmi@latest` can also be used as a starter template.
-        This makes investigating issues and helping you out significantly easier! For most issues, you will likely get asked to provide one so why not add one now :)
-      placeholder: https://new.wagmi.sh/
+      label: Package Version
+      description: What version of Wagmi are you using?
+      placeholder: x.y.z
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: Viem Version
+      description: What version of [Viem](https://viem.sh) are you using?
+      placeholder: x.y.z
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: TypeScript Version
+      description: What version of TypeScript are you using? Wagmi requires `typescript@>=5`.
+      placeholder: x.y.z
     validations:
       required: false
 
   - type: textarea
     attributes:
       label: Anything else?
-      description: |
-        Browser info? Screenshots? Anything that will give us more context about the issue you are encountering!
-
-        Tip: You can attach images or log files by clicking this area to highlight it and then dragging files in.
+      description: Anything that will give us more context about the issue you are encountering. (You can attach images or files by clicking this area to highlight and then dragging files in.)
     validations:
       required: false
+
+  - type: checkboxes
+    id: checkboxes
+    attributes:
+      label: Validations
+      description: Before submitting this issue, please make sure you do the following.
+      options:
+        - label: Checked there isn't [already an issue](https://github.com/wevm/wagmi/issues) that exists for the bug you encountered.
+          required: true
+        - label: Followed the [Code of Conduct](https://github.com/wevm/.github/blob/main/CODE_OF_CONDUCT.md).
+          required: true

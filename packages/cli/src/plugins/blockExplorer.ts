@@ -1,16 +1,17 @@
 import { camelCase } from 'change-case'
-import { Address } from 'viem'
+import { type Address } from 'viem'
 import { z } from 'zod'
 
-import type { ContractConfig } from '../config'
-import { fromZodError } from '../errors'
-import { fetch } from './fetch'
+import { type ContractConfig } from '../config.js'
+import { fromZodError } from '../errors.js'
+import { type Evaluate } from '../types.js'
+import { fetch } from './fetch.js'
 
 export type BlockExplorerConfig = {
   /**
    * API key for block explorer. Appended to the request URL as query param `&apikey=${apiKey}`.
    */
-  apiKey?: string
+  apiKey?: string | undefined
   /**
    * Base URL for block explorer.
    */
@@ -20,21 +21,23 @@ export type BlockExplorerConfig = {
    *
    * @default 1_800_000 // 30m in ms
    */
-  cacheDuration?: number
+  cacheDuration?: number | undefined
   /**
    * Contracts to fetch ABIs for.
    */
-  contracts: Omit<ContractConfig, 'abi'>[]
+  contracts: Evaluate<Omit<ContractConfig, 'abi'>>[]
   /**
    * Function to get address from contract config.
    */
-  getAddress?(config: {
-    address: NonNullable<ContractConfig['address']>
-  }): Address
+  getAddress?:
+    | ((config: {
+        address: NonNullable<ContractConfig['address']>
+      }) => Address)
+    | undefined
   /**
    * Name of source.
    */
-  name?: ContractConfig['name']
+  name?: ContractConfig['name'] | undefined
 }
 
 const BlockExplorerResponse = z.discriminatedUnion('status', [
@@ -55,17 +58,19 @@ const BlockExplorerResponse = z.discriminatedUnion('status', [
 /**
  * Fetches contract ABIs from block explorers, supporting `?module=contract&action=getabi` requests.
  */
-export function blockExplorer({
-  apiKey,
-  baseUrl,
-  cacheDuration,
-  contracts,
-  getAddress = ({ address }) => {
-    if (typeof address === 'string') return address
-    return Object.values(address)[0]!
-  },
-  name = 'Block Explorer',
-}: BlockExplorerConfig) {
+export function blockExplorer(config: BlockExplorerConfig) {
+  const {
+    apiKey,
+    baseUrl,
+    cacheDuration,
+    contracts,
+    getAddress = ({ address }) => {
+      if (typeof address === 'string') return address
+      return Object.values(address)[0]!
+    },
+    name = 'Block Explorer',
+  } = config
+
   return fetch({
     cacheDuration,
     contracts,

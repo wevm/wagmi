@@ -1,0 +1,36 @@
+{
+  "name": "vite-ssr-react",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "npm run server:dev",
+    "prod": "npm run build && npm run server:prod",
+    "build": "vite build",
+    "server": "node --loader ts-node/esm ./server/index.ts",
+    "server:dev": "npm run server",
+    "server:prod": "NODE_ENV=production npm run server"
+  },
+  "dependencies": {
+    "@tanstack/query-sync-storage-persister": "5.0.5",
+    "@tanstack/react-query": "5.0.5",
+    "@tanstack/react-query-devtools": "5.0.5",
+    "@tanstack/react-query-persist-client": "5.0.5",
+    "@types/compression": "^1.7.3",
+    "@types/express": "^4.17.18",
+    "@types/node": "^20.7.0",
+    "@types/react": "^18.2.23",
+    "@types/react-dom": "^18.2.8",
+    "@vitejs/plugin-react": "^4.1.0",
+    "buffer": "^6.0.3",
+    "compression": "^1.7.4",
+    "express": "^4.18.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "sirv": "^2.0.3",
+    "ts-node": "^10.9.1",
+    "viem": "2.0.0",
+    "vike": "^0.4.142",
+    "vite": "^4.4.9",
+    "wagmi": "workspace:*"
+  }
+}

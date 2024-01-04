@@ -1,41 +1,10 @@
-const findAndReplace = (
-  cacheRef: any,
-  {
-    find,
-    replace,
-  }: {
-    find: (item: any) => boolean
-    replace: (item: any) => any
-  },
-): any => {
-  if (cacheRef && find(cacheRef)) {
-    return replace(cacheRef)
-  }
-  if (typeof cacheRef !== 'object') {
-    return cacheRef
-  }
-  if (Array.isArray(cacheRef)) {
-    return cacheRef.map((item) => findAndReplace(item, { find, replace }))
-  }
-  if (cacheRef instanceof Object) {
-    return Object.entries(cacheRef).reduce(
-      (curr, [key, value]) => ({
-        ...curr,
-        [key]: findAndReplace(value, { find, replace }),
-      }),
-      {},
-    )
-  }
-  return cacheRef
-}
+type Reviver = (key: string, value: any) => any
 
-export function deserialize(cachedString: string) {
-  const cache = JSON.parse(cachedString)
-
-  const deserializedCacheWithBigInts = findAndReplace(cache, {
-    find: (data) => typeof data === 'string' && data.startsWith('#bigint.'),
-    replace: (data) => BigInt(data.replace('#bigint.', '')),
+export function deserialize<type>(value: string, reviver?: Reviver): type {
+  return JSON.parse(value, (key, value_) => {
+    let value = value_
+    if (value?.__type === 'bigint') value = BigInt(value.value)
+    if (value?.__type === 'Map') value = new Map(value.value)
+    return reviver?.(key, value) ?? value
   })
-
-  return deserializedCacheWithBigInts
 }

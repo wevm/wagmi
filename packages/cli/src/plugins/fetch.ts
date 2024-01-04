@@ -1,11 +1,9 @@
-import { default as fse } from 'fs-extra'
-import type { RequestInfo, RequestInit, Response } from 'node-fetch'
-import { default as fetch_ } from 'node-fetch'
+import { homedir } from 'os'
+import { default as fs } from 'fs-extra'
 import { join } from 'pathe'
 
-import type { ContractConfig, Plugin } from '../config'
-import type { RequiredBy } from '../types'
-import { homedir } from 'os'
+import type { ContractConfig, Plugin } from '../config.js'
+import type { Evaluate, RequiredBy } from '../types.js'
 
 export type FetchConfig = {
   /**
@@ -13,97 +11,98 @@ export type FetchConfig = {
    *
    * @default 1_800_000 // 30m in ms
    */
-  cacheDuration?: number
+  cacheDuration?: number | undefined
   /**
    * Contracts to fetch ABIs for.
    */
-  contracts: Omit<ContractConfig, 'abi'>[]
+  contracts: Evaluate<Omit<ContractConfig, 'abi'>>[]
   /**
    * Function for creating a cache key for contract.
    */
-  getCacheKey?(config: { contract: Omit<ContractConfig, 'abi'> }): string
+  getCacheKey?:
+    | ((config: { contract: Evaluate<Omit<ContractConfig, 'abi'>> }) => string)
+    | undefined
   /**
    * Name of source.
    */
-  name?: ContractConfig['name']
+  name?: ContractConfig['name'] | undefined
   /**
    * Function for parsing ABI from fetch response.
    *
    * @default ({ response }) => response.json()
    */
-  parse?({
-    response,
-  }: {
-    response: Response
-  }): Promise<ContractConfig['abi']> | ContractConfig['abi']
+  parse?:
+    | ((config: {
+        response: Response
+      }) => ContractConfig['abi'] | Promise<ContractConfig['abi']>)
+    | undefined
   /**
    * Function for returning a request to fetch ABI from.
    */
-  request(config: {
-    address?: ContractConfig['address']
-  }):
-    | Promise<{ url: RequestInfo; init?: RequestInit }>
-    | { url: RequestInfo; init?: RequestInit }
+  request: (config: {
+    address?: ContractConfig['address'] | undefined
+  }) =>
+    | { url: RequestInfo; init?: RequestInit | undefined }
+    | Promise<{ url: RequestInfo; init?: RequestInit | undefined }>
   /**
    * Duration in milliseconds before request times out.
    *
    * @default 5_000 // 5s in ms
    */
-  timeoutDuration?: number
+  timeoutDuration?: number | undefined
 }
 
-type FetchResult = RequiredBy<Plugin, 'contracts'>
+type FetchResult = Evaluate<RequiredBy<Plugin, 'contracts'>>
 
-/**
- * Fetches and parses contract ABIs from network resource with `fetch`.
- */
-export function fetch({
-  cacheDuration = 1_800_000,
-  contracts: contractConfigs,
-  getCacheKey = ({ contract }) => JSON.stringify(contract),
-  name = 'Fetch',
-  parse = ({ response }) => response.json() as Promise<ContractConfig['abi']>,
-  request,
-  timeoutDuration = 5_000,
-}: FetchConfig): FetchResult {
+/** Fetches and parses contract ABIs from network resource with `fetch`. */
+export function fetch(config: FetchConfig): FetchResult {
+  const {
+    cacheDuration = 1_800_000,
+    contracts: contractConfigs,
+    getCacheKey = ({ contract }) => JSON.stringify(contract),
+    name = 'Fetch',
+    parse = ({ response }) => response.json(),
+    request,
+    timeoutDuration = 5_000,
+  } = config
+
   return {
     async contracts() {
       const cacheDir = join(homedir(), '.wagmi-cli/plugins/fetch/cache')
-      await fse.ensureDir(cacheDir)
+      await fs.ensureDir(cacheDir)
 
       const timestamp = Date.now() + cacheDuration
       const contracts = []
       for (const contract of contractConfigs) {
         const cacheKey = getCacheKey({ contract })
         const cacheFilePath = join(cacheDir, `${cacheKey}.json`)
-        const cachedFile = await fse.readJSON(cacheFilePath).catch(() => null)
+        const cachedFile = await fs.readJSON(cacheFilePath).catch(() => null)
+
         let abi
         if (cachedFile?.timestamp > Date.now()) abi = cachedFile.abi
         else {
-          const AbortController =
-            globalThis.AbortController ||
-            (await import('abort-controller')).default
-          const controller = new AbortController()
-          const timeout = setTimeout(() => controller.abort(), timeoutDuration)
           try {
+            const controller = new globalThis.AbortController()
+            const timeout = setTimeout(
+              () => controller.abort(),
+              timeoutDuration,
+            )
+
             const { url, init } = await request(contract)
-            // TODO: Replace `node-fetch` with native `fetch` when Node 18 is more widely used.
-            const response = await fetch_(url, {
+            const response = await globalThis.fetch(url, {
               ...init,
-              // TODO: Use `AbortSignal.timeout` when Node 18 is more widely used.
               signal: controller.signal,
             })
+            clearTimeout(timeout)
+
             abi = await parse({ response })
-            await fse.writeJSON(cacheFilePath, { abi, timestamp })
+            await fs.writeJSON(cacheFilePath, { abi, timestamp })
           } catch (error) {
             try {
               // Attempt to read from cache if fetch fails.
-              abi = (await fse.readJSON(cacheFilePath)).abi
-              // eslint-disable-next-line no-empty
+              abi = (await fs.readJSON(cacheFilePath)).abi
             } catch {}
             if (!abi) throw error
-          } finally {
-            clearTimeout(timeout)
           }
         }
 

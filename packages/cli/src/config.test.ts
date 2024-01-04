@@ -1,42 +1,39 @@
-import { describe, expect, it, vi } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
-import type { Config } from './config'
-import { defineConfig } from './config'
+import { type Config, defineConfig } from './config.js'
 
-describe('defineConfig', () => {
-  it('object', () => {
-    const config: Config = {
-      contracts: [],
-      out: 'wagmi.ts',
-      plugins: [],
-    }
-    expect(defineConfig(config)).toEqual(config)
-  })
+test('object', () => {
+  const config: Config = {
+    contracts: [],
+    out: 'wagmi.ts',
+    plugins: [],
+  }
+  expect(defineConfig(config)).toEqual(config)
+})
 
-  it('array', () => {
-    const config: Config = {
-      contracts: [],
-      out: 'wagmi.ts',
-      plugins: [],
-    }
-    expect(defineConfig([config, config])).toEqual([config, config])
-  })
+test('array', () => {
+  const config: Config = {
+    contracts: [],
+    out: 'wagmi.ts',
+    plugins: [],
+  }
+  expect(defineConfig([config, config])).toEqual([config, config])
+})
 
-  it('function', () => {
-    const config = vi.fn().mockImplementation(() => ({
-      contracts: [],
-      out: 'wagmi.ts',
-      plugins: [],
-    }))
-    expect(defineConfig(config)).toEqual(config)
-  })
+test('function', () => {
+  const config = vi.fn().mockImplementation(() => ({
+    contracts: [],
+    out: 'wagmi.ts',
+    plugins: [],
+  }))
+  expect(defineConfig(config)).toEqual(config)
+})
 
-  it('async function', () => {
-    const config = vi.fn().mockImplementation(async () => ({
-      contracts: [],
-      out: 'wagmi.ts',
-      plugins: [],
-    }))
-    expect(defineConfig(config)).toEqual(config)
-  })
+test('async function', () => {
+  const config = vi.fn().mockImplementation(async () => ({
+    contracts: [],
+    out: 'wagmi.ts',
+    plugins: [],
+  }))
+  expect(defineConfig(config)).toEqual(config)
 })

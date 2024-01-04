@@ -1,3 +1,5 @@
+export type Evaluate<type> = { [key in keyof type]: type[key] } & unknown
+
 export type MaybeArray<T> = T | T[]
 
 export type MaybePromise<T> = T | Promise<T>

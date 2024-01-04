@@ -1,0 +1,16 @@
+{
+  "folders": [
+    {
+      "name": "docs",
+      "path": "../docs"
+    },
+    {
+      "name": "packages",
+      "path": "../packages"
+    },
+    {
+      "name": "playgrounds",
+      "path": "../playgrounds"
+    }
+  ]
+}

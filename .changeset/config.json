@@ -1,12 +1,11 @@
 {
-  "$schema": "https://unpkg.com/@changesets/config@1.6.3/schema.json",
-  "changelog": ["@changesets/changelog-github", { "repo": "wagmi-dev/wagmi" }],
-  "commit": false,
+  "$schema": "https://unpkg.com/@changesets/config@2.3.1/schema.json",
   "access": "public",
   "baseBranch": "main",
+  "changelog": ["@changesets/changelog-github", { "repo": "wevm/wagmi" }],
+  "commit": false,
   "updateInternalDependencies": "patch",
   "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
     "onlyUpdatePeerDependentsWhenOutOfRange": true
-  },
-  "ignore": ["docs", "example-dev"]
+  }
 }

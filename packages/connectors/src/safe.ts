@@ -1,167 +1,120 @@
 import { SafeAppProvider } from '@safe-global/safe-apps-provider'
-import { Opts, default as SafeAppsSDK } from '@safe-global/safe-apps-sdk'
-import { createWalletClient, custom, getAddress } from 'viem'
-import type { Chain } from 'viem/chains'
+import { type Opts, default as SafeAppsSDK } from '@safe-global/safe-apps-sdk'
+import {
+  ProviderNotFoundError,
+  createConnector,
+  normalizeChainId,
+} from '@wagmi/core'
+import type { Evaluate } from '@wagmi/core/internal'
+import { getAddress } from 'viem'
 
-import { Connector } from './base'
-import { ConnectorNotFoundError } from './errors'
-import type { WalletClient } from './types'
-import { normalizeChainId } from './utils/normalizeChainId'
-
-export type SafeConnectorProvider = SafeAppProvider
-export type SafeConnectorOptions = Opts & {
-  /**
-   * Connector automatically connects when used as Safe App.
-   *
-   * This flag simulates the disconnect behavior by keeping track of connection status in storage
-   * and only autoconnecting when previously connected by user action (e.g. explicitly choosing to connect).
-   *
-   * @default false
-   */
-  shimDisconnect?: boolean
-}
-
-/**
- * Connector for [Safe Wallet](https://safe.global)
- */
-export class SafeConnector extends Connector<
-  SafeConnectorProvider,
-  SafeConnectorOptions
-> {
-  readonly id = 'safe'
-  readonly name = 'Safe'
-  // Only allowed in iframe context
-  ready = !(typeof window === 'undefined') && window?.parent !== window
-
-  #provider?: SafeConnectorProvider
-  #sdk: SafeAppsSDK
-
-  protected shimDisconnectKey = `${this.id}.shimDisconnect`
-
-  constructor({
-    chains,
-    options: options_,
-  }: {
-    chains?: Chain[]
-    options?: SafeConnectorOptions
-  }) {
-    const options = {
-      shimDisconnect: false,
-      ...options_,
-    }
-    super({ chains, options })
-
-    let SDK = SafeAppsSDK
-    if (
-      typeof SafeAppsSDK !== 'function' &&
-      // @ts-expect-error This import error is not visible to TypeScript
-      typeof SafeAppsSDK.default === 'function'
-    )
-      SDK = (SafeAppsSDK as unknown as { default: typeof SafeAppsSDK }).default
-    this.#sdk = new SDK(options)
+export type SafeParameters = Evaluate<
+  Opts & {
+    /**
+     * Connector automatically connects when used as Safe App.
+     *
+     * This flag simulates the disconnect behavior by keeping track of connection status in storage
+     * and only autoconnecting when previously connected by user action (e.g. explicitly choosing to connect).
+     *
+     * @default false
+     */
+    shimDisconnect?: boolean | undefined
   }
+>
 
-  async connect() {
-    const provider = await this.getProvider()
-    if (!provider) throw new ConnectorNotFoundError()
+safe.type = 'safe' as const
+export function safe(parameters: SafeParameters = {}) {
+  const { shimDisconnect = false } = parameters
 
-    if (provider.on) {
-      provider.on('accountsChanged', this.onAccountsChanged)
-      provider.on('chainChanged', this.onChainChanged)
-      provider.on('disconnect', this.onDisconnect)
-    }
+  type Provider = SafeAppProvider | undefined
+  type Properties = {}
+  type StorageItem = { 'safe.disconnected': true }
 
-    this.emit('message', { type: 'connecting' })
+  let provider_: Provider | undefined
+  let SDK: typeof SafeAppsSDK.default
+  if (
+    typeof SafeAppsSDK !== 'function' &&
+    typeof SafeAppsSDK.default === 'function'
+  )
+    SDK = SafeAppsSDK.default
+  else SDK = SafeAppsSDK as unknown as typeof SafeAppsSDK.default
+  const sdk = new SDK(parameters)
 
-    const account = await this.getAccount()
-    const id = await this.getChainId()
+  return createConnector<Provider, Properties, StorageItem>((config) => ({
+    id: 'safe',
+    name: 'Safe',
+    type: safe.type,
+    async connect() {
+      const provider = await this.getProvider()
+      if (!provider) throw new ProviderNotFoundError()
 
-    // Add shim to storage signalling wallet is connected
-    if (this.options.shimDisconnect)
-      this.storage?.setItem(this.shimDisconnectKey, true)
+      const accounts = await this.getAccounts()
+      const chainId = await this.getChainId()
 
-    return {
-      account,
-      chain: { id, unsupported: this.isChainUnsupported(id) },
-    }
-  }
+      provider.on('disconnect', this.onDisconnect.bind(this))
 
-  async disconnect() {
-    const provider = await this.getProvider()
-    if (!provider?.removeListener) return
+      // Remove disconnected shim if it exists
+      if (shimDisconnect) await config.storage?.removeItem('safe.disconnected')
 
-    provider.removeListener('accountsChanged', this.onAccountsChanged)
-    provider.removeListener('chainChanged', this.onChainChanged)
-    provider.removeListener('disconnect', this.onDisconnect)
+      return { accounts, chainId }
+    },
+    async disconnect() {
+      const provider = await this.getProvider()
+      if (!provider) throw new ProviderNotFoundError()
 
-    // Remove shim signalling wallet is disconnected
-    if (this.options.shimDisconnect)
-      this.storage?.removeItem(this.shimDisconnectKey)
-  }
+      provider.removeListener('disconnect', this.onDisconnect.bind(this))
 
-  async getAccount() {
-    const provider = await this.getProvider()
-    if (!provider) throw new ConnectorNotFoundError()
-    const accounts = await provider.request({
-      method: 'eth_accounts',
-    })
-    return getAddress(accounts[0] as string)
-  }
-
-  async getChainId() {
-    const provider = await this.getProvider()
-    if (!provider) throw new ConnectorNotFoundError()
-    return normalizeChainId(provider.chainId)
-  }
-
-  async getProvider() {
-    if (!this.#provider) {
-      const safe = await this.#sdk.safe.getInfo()
-      if (!safe) throw new Error('Could not load Safe information')
-      this.#provider = new SafeAppProvider(safe, this.#sdk)
-    }
-    return this.#provider
-  }
-
-  async getWalletClient({
-    chainId,
-  }: { chainId?: number } = {}): Promise<WalletClient> {
-    const provider = await this.getProvider()
-    const account = await this.getAccount()
-    const chain = this.chains.find((x) => x.id === chainId)
-    if (!provider) throw new Error('provider is required.')
-    return createWalletClient({
-      account,
-      chain,
-      transport: custom(provider),
-    })
-  }
-
-  async isAuthorized() {
-    try {
-      if (
-        this.options.shimDisconnect &&
-        // If shim does not exist in storage, wallet is disconnected
-        !this.storage?.getItem(this.shimDisconnectKey)
+      // Add shim signalling connector is disconnected
+      if (shimDisconnect)
+        await config.storage?.setItem('safe.disconnected', true)
+    },
+    async getAccounts() {
+      const provider = await this.getProvider()
+      if (!provider) throw new ProviderNotFoundError()
+      return (await provider.request({ method: 'eth_accounts' })).map(
+        getAddress,
       )
+    },
+    async getProvider() {
+      // Only allowed in iframe context
+      const isIframe =
+        typeof window !== 'undefined' && window?.parent !== window
+      if (!isIframe) return
+
+      if (!provider_) {
+        const safe = await sdk.safe.getInfo()
+        if (!safe) throw new Error('Could not load Safe information')
+        provider_ = new SafeAppProvider(safe, sdk)
+      }
+      return provider_
+    },
+    async getChainId() {
+      const provider = await this.getProvider()
+      if (!provider) throw new ProviderNotFoundError()
+      return normalizeChainId(provider.chainId)
+    },
+    async isAuthorized() {
+      try {
+        const isDisconnected =
+          shimDisconnect &&
+          // If shim exists in storage, connector is disconnected
+          (await config.storage?.getItem('safe.disconnected'))
+        if (isDisconnected) return false
+
+        const accounts = await this.getAccounts()
+        return !!accounts.length
+      } catch {
         return false
-
-      const account = await this.getAccount()
-      return !!account
-    } catch {
-      return false
-    }
-  }
-
-  protected onAccountsChanged(_accounts: string[]) {
-    // Not relevant for Safe because changing account requires app reload.
-  }
-
-  protected onChainChanged(_chainId: string | number) {
-    // Not relevant for Safe because Safe smart contract wallets only exist on single chain.
-  }
-
-  protected onDisconnect() {
-    this.emit('disconnect')
-  }
+      }
+    },
+    onAccountsChanged() {
+      // Not relevant for Safe because changing account requires app reload.
+    },
+    onChainChanged() {
+      // Not relevant for Safe because Safe smart contract wallets only exist on single chain.
+    },
+    onDisconnect() {
+      config.emitter.emit('disconnect')
+    },
+  }))
 }

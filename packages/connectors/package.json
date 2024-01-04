@@ -1,15 +1,43 @@
 {
   "name": "@wagmi/connectors",
-  "description": "A collection of connectors for wagmi",
+  "description": "Collection of connectors for Wagmi",
+  "version": "4.0.0-rc.3",
   "license": "MIT",
-  "version": "3.1.11",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wevm/wagmi.git",
+    "directory": "packages/connectors"
+  },
   "scripts": {
-    "build": "tsup",
-    "dev": "DEV=true tsup"
+    "build": "pnpm run clean && pnpm run build:esm+types",
+    "build:esm+types": "tsc --project tsconfig.build.json --module es2020 --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo",
+    "test:build": "publint --strict",
+    "typecheck": "tsc --noEmit"
+  },
+  "files": [
+    "dist/**",
+    "!dist/**/*.tsbuildinfo",
+    "src/**/*.ts",
+    "!src/**/*.test.ts",
+    "!src/**/*.test-d.ts"
+  ],
+  "sideEffects": false,
+  "type": "module",
+  "main": "./dist/esm/exports/index.js",
+  "types": "./dist/types/exports/index.d.ts",
+  "typings": "./dist/types/exports/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/exports/index.d.ts",
+      "default": "./dist/esm/exports/index.js"
+    },
+    "./package.json": "./package.json"
   },
   "peerDependencies": {
+    "@wagmi/core": "workspace:*",
     "typescript": ">=5.0.4",
-    "viem": ">=0.3.35"
+    "viem": "2.x"
   },
   "peerDependenciesMeta": {
     "typescript": {
@@ -17,89 +45,19 @@
     }
   },
   "dependencies": {
-    "@coinbase/wallet-sdk": "^3.6.6",
-    "@safe-global/safe-apps-provider": "^0.18.1",
-    "@safe-global/safe-apps-sdk": "^8.1.0",
+    "@coinbase/wallet-sdk": "3.9.1",
+    "@metamask/sdk": "0.14.1",
+    "@safe-global/safe-apps-provider": "0.18.1",
+    "@safe-global/safe-apps-sdk": "8.1.0",
     "@walletconnect/ethereum-provider": "2.11.0",
-    "@walletconnect/utils": "2.11.0",
-    "@walletconnect/legacy-provider": "^2.0.0",
-    "@walletconnect/modal": "2.6.2",
-    "abitype": "0.8.7",
-    "eventemitter3": "^4.0.7"
+    "@walletconnect/modal": "2.6.2"
   },
   "devDependencies": {
-    "viem": "^1.0.0"
+    "@wagmi/core": "workspace:*",
+    "msw": "^2.0.6"
   },
-  "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    },
-    "./coinbaseWallet": {
-      "types": "./dist/coinbaseWallet.d.ts",
-      "default": "./dist/coinbaseWallet.js"
-    },
-    "./injected": {
-      "types": "./dist/injected.d.ts",
-      "default": "./dist/injected.js"
-    },
-    "./metaMask": {
-      "types": "./dist/metaMask.d.ts",
-      "default": "./dist/metaMask.js"
-    },
-    "./mock": {
-      "types": "./dist/mock/index.d.ts",
-      "default": "./dist/mock/index.js"
-    },
-    "./safe": {
-      "types": "./dist/safe.d.ts",
-      "default": "./dist/safe.js"
-    },
-    "./walletConnect": {
-      "types": "./dist/walletConnect.d.ts",
-      "default": "./dist/walletConnect.js"
-    },
-    "./walletConnectLegacy": {
-      "types": "./dist/walletConnectLegacy.d.ts",
-      "default": "./dist/walletConnectLegacy.js"
-    },
-    "./package.json": "./package.json"
-  },
-  "files": [
-    "/coinbaseWallet",
-    "/injected",
-    "/metaMask",
-    "/mock",
-    "/safe",
-    "/walletConnect",
-    "/walletConnectLegacy",
-    "/dist"
-  ],
-  "sideEffects": false,
-  "contributors": [
-    "awkweb.eth <t@wagmi.sh>",
-    "jxom.eth <j@wagmi.sh>"
-  ],
-  "homepage": "https://wagmi.sh",
-  "ethereum": "wagmi-dev.eth",
-  "funding": [
-    {
-      "type": "gitcoin",
-      "url": "https://wagmi.sh/gitcoin"
-    },
-    {
-      "type": "github",
-      "url": "https://github.com/sponsors/wagmi-dev"
-    }
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/wagmi-dev/references.git",
-    "directory": "packages/connectors"
-  },
+  "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
+  "funding": "https://github.com/sponsors/wevm",
   "keywords": [
     "react",
     "hooks",

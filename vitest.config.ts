@@ -3,14 +3,19 @@ import { defineConfig } from 'vitest/config'
 export default defineConfig({
   test: {
     coverage: {
-      reporter: ['text', 'json', 'html'],
+      reporter: process.env.CI ? ['lcov'] : ['text', 'json', 'html'],
+      exclude: [
+        '**/dist/**',
+        '**/*.test.ts',
+        '**/*.test-d.ts',
+        'packages/cli/**',
+        // ignore third-party connectors
+        'packages/connectors/**',
+        'packages/core/src/connectors/injected.ts',
+      ],
     },
-    environment: 'jsdom',
-    include: ['packages/**/*.test.ts'],
-    setupFiles: [
-      './packages/cli/test/setup.ts',
-      './packages/core/test/setup.ts',
-      './packages/react/test/setup.ts',
-    ],
+    globalSetup: ['./packages/test/src/globalSetup.ts'],
+    setupFiles: ['./packages/test/src/setup.ts'],
+    watchExclude: ['**/templates/**'],
   },
 })

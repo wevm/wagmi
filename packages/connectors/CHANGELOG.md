@@ -68,13 +68,13 @@
 
 ### Patch Changes
 
-- [#2973](https://github.com/wagmi-dev/wagmi/pull/2973) [`bf831bb3`](https://github.com/wagmi-dev/wagmi/commit/bf831bb30df8037cc4312342d0fe3c045408c2fe) Thanks [@masm](https://github.com/masm)! - Added Zeal wallet
+- [#2973](https://github.com/wevm/wagmi/pull/2973) [`bf831bb3`](https://github.com/wevm/wagmi/commit/bf831bb30df8037cc4312342d0fe3c045408c2fe) Thanks [@masm](https://github.com/masm)! - Added Zeal wallet
 
 ## 3.1.0
 
 ### Minor Changes
 
-- [#2956](https://github.com/wagmi-dev/wagmi/pull/2956) [`2abeb285`](https://github.com/wagmi-dev/wagmi/commit/2abeb285674af3e539cc2550b1f5027b1eb0c895) Thanks [@tmm](https://github.com/tmm)! - Replaced `@wagmi/chains` with `viem/chains`.
+- [#2956](https://github.com/wevm/wagmi/pull/2956) [`2abeb285`](https://github.com/wevm/wagmi/commit/2abeb285674af3e539cc2550b1f5027b1eb0c895) Thanks [@tmm](https://github.com/tmm)! - Replaced `@wagmi/chains` with `viem/chains`.
 
 ## 3.0.0
 
@@ -280,7 +280,7 @@
 
 ### Patch Changes
 
-- [`ea651cd7`](https://github.com/wagmi-dev/wagmi/commit/ea651cd7fc75b7866272605467db11fd6e1d81af) Thanks [@jxom](https://github.com/jxom)! - Downgraded abitype.
+- [`ea651cd7`](https://github.com/wevm/wagmi/commit/ea651cd7fc75b7866272605467db11fd6e1d81af) Thanks [@jxom](https://github.com/jxom)! - Downgraded abitype.
 
 ## 1.0.0
 
@@ -321,7 +321,7 @@
 
 ### Major Changes
 
-- [`a7dda00c`](https://github.com/wagmi-dev/wagmi/commit/a7dda00c5b546f8b2c42b527e4d9ac1b9e9ab1fb) Thanks [@jxom](https://github.com/jxom)! - Released v1.
+- [`a7dda00c`](https://github.com/wevm/wagmi/commit/a7dda00c5b546f8b2c42b527e4d9ac1b9e9ab1fb) Thanks [@jxom](https://github.com/jxom)! - Released v1.
 
 ## 1.0.0-next.0
 

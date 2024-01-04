@@ -1,0 +1,29 @@
+name: Documentation Issue
+description: Tell us about missing or incorrect documentation.
+labels: ['Area: Docs']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for submitting a documentation request. It helps make Wagmi better.
+
+        If it's a small change, like misspelling or example that needs updating, feel free to submit a PR instead of creating this issue.
+  - type: dropdown
+    attributes:
+      label: What is the type of issue?
+      multiple: true
+      options:
+        - Documentation is missing
+        - Documentation is incorrect
+        - Documentation is confusing
+        - Example code is not working
+        - Something else
+  - type: textarea
+    attributes:
+      label: What is the issue?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Where did you find it?
+      description: If possible, please provide the URL(s) where you found this issue.

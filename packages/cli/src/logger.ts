@@ -1,11 +1,9 @@
+import { format as utilFormat } from 'util'
 import ora from 'ora'
 import pc from 'picocolors'
 
-import util from 'util'
-
 function format(args: any[]) {
-  return util
-    .format(...args)
+  return utilFormat(...args)
     .split('\n')
     .join('\n')
 }

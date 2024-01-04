@@ -1,14 +1,15 @@
 import dedent from 'dedent'
-import { default as fse } from 'fs-extra'
+import { default as fs } from 'fs-extra'
 import { relative, resolve } from 'pathe'
 import pc from 'picocolors'
 import { z } from 'zod'
 
-import type { Config } from '../config'
-import { defaultConfig } from '../config'
-import { fromZodError } from '../errors'
-import * as logger from '../logger'
-import { findConfig, format, getIsUsingTypeScript } from '../utils'
+import { type Config, defaultConfig } from '../config.js'
+import { fromZodError } from '../errors.js'
+import * as logger from '../logger.js'
+import { findConfig } from '../utils/findConfig.js'
+import { format } from '../utils/format.js'
+import { getIsUsingTypeScript } from '../utils/getIsUsingTypeScript.js'
 
 export type Init = {
   /** Path to config file */
@@ -35,7 +36,7 @@ export async function init(options: Init = {}) {
     throw error
   }
 
-  // Check for exisiting config file
+  // Check for existing config file
   const configPath = await findConfig(options)
   if (configPath) {
     logger.info(
@@ -76,12 +77,15 @@ export async function init(options: Init = {}) {
       // @ts-check
 
       /** @type {import('@wagmi/cli').Config} */
-      export default ${JSON.stringify(config)}
+      export default ${JSON.stringify(config, null, 2).replace(
+        /"(\d*)":/gm,
+        '$1:',
+      )}
     `)
   }
 
   const formatted = await format(content)
-  await fse.writeFile(outPath, formatted)
+  await fs.writeFile(outPath, formatted)
   spinner.succeed()
   logger.success(
     `Config created at ${pc.gray(relative(process.cwd(), outPath))}`,

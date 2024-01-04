@@ -1,8 +1,5 @@
 /**
- * @function getReferenceKey
- *
- * @description
- * get the reference key for the circular value
+ * Get the reference key for the circular value
  *
  * @param keys the keys to build the reference key from
  * @param cutoff the maximum number of keys to include
@@ -13,10 +10,7 @@ function getReferenceKey(keys: string[], cutoff: number) {
 }
 
 /**
- * @function getCutoff
- *
- * @description
- * faster `Array.prototype.indexOf` implementation build for slicing / splicing
+ * Faster `Array.prototype.indexOf` implementation build for slicing / splicing
  *
  * @param array the array to match the value in
  * @param value the value to match
@@ -38,10 +32,7 @@ type StandardReplacer = (key: string, value: any) => any
 type CircularReplacer = (key: string, value: any, referenceKey: string) => any
 
 /**
- * @function createReplacer
- *
- * @description
- * create a replacer method that handles circular values
+ * Create a replacer method that handles circular values
  *
  * @param [replacer] a custom replacer to use for non-circular values
  * @param [circularReplacer] a custom replacer to use for circular methods
@@ -94,10 +85,8 @@ function createReplacer(
 }
 
 /**
- * @function stringify
+ * Stringifier that handles circular values
  *
- * @description
- * stringifier that handles circular values
  * Forked from https://github.com/planttheidea/fast-stringify
  *
  * @param value to stringify
@@ -115,9 +104,12 @@ export function serialize(
   return JSON.stringify(
     value,
     createReplacer((key, value_) => {
-      const value =
-        typeof value_ === 'bigint' ? `#bigint.${value_.toString()}` : value_
-      return replacer?.(key, value) || value
+      let value = value_
+      if (typeof value === 'bigint')
+        value = { __type: 'bigint', value: value_.toString() }
+      if (value instanceof Map)
+        value = { __type: 'Map', value: Array.from(value_.entries()) }
+      return replacer?.(key, value) ?? value
     }, circularReplacer),
     indent ?? undefined,
   )

@@ -1,63 +1,58 @@
 import fixtures from 'fixturez'
 import { dirname, resolve } from 'pathe'
-import { afterEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, expect, test, vi } from 'vitest'
 
-import { foundry } from './foundry'
+import { foundry } from './foundry.js'
 
 const f = fixtures(__dirname)
 
-describe('foundry', () => {
-  afterEach(() => {
-    vi.restoreAllMocks()
-  })
+afterEach(() => {
+  vi.restoreAllMocks()
+})
 
-  describe('validate', async () => {
-    it('forge not installed', async () => {
-      const dir = f.temp()
-      await expect(
-        foundry({
-          project: dir,
-          forge: {
-            path: '/path/to/forge',
-          },
-        }).validate(),
-      ).rejects.toThrowErrorMatchingInlineSnapshot(`
+test('forge not installed', async () => {
+  const dir = f.temp()
+  await expect(
+    foundry({
+      project: dir,
+      forge: {
+        path: '/path/to/forge',
+      },
+    }).validate(),
+  ).rejects.toThrowErrorMatchingInlineSnapshot(`
         "forge must be installed to use Foundry plugin.
         To install, follow the instructions at https://book.getfoundry.sh/getting-started/installation"
       `)
-    })
+})
 
-    it('project does not exist', async () => {
-      const dir = f.temp()
-      const spy = vi.spyOn(process, 'cwd')
-      spy.mockImplementation(() => dir)
+test('project does not exist', async () => {
+  const dir = f.temp()
+  const spy = vi.spyOn(process, 'cwd')
+  spy.mockImplementation(() => dir)
 
-      try {
-        await foundry({ project: '../path/to/project' }).validate()
-      } catch (error) {
-        expect(
-          (error as Error).message.replace(dirname(dir), '..'),
-        ).toMatchInlineSnapshot(
-          '"Foundry project ../path/to/project not found."',
-        )
-      }
-    })
+  try {
+    await foundry({ project: '../path/to/project' }).validate()
+  } catch (error) {
+    expect(
+      (error as Error).message.replace(dirname(dir), '..'),
+    ).toMatchInlineSnapshot('"Foundry project ../path/to/project not found."')
+  }
+})
 
-    it('validates without project', async () => {
-      const dir = resolve(__dirname, '__fixtures__/foundry/')
-      const spy = vi.spyOn(process, 'cwd')
-      spy.mockImplementation(() => dir)
+test('validates without project', async () => {
+  const dir = resolve(__dirname, '__fixtures__/foundry/')
+  const spy = vi.spyOn(process, 'cwd')
+  spy.mockImplementation(() => dir)
 
-      await expect(foundry().validate()).resolves.toBeUndefined()
-    })
-  })
+  await expect(foundry().validate()).resolves.toBeUndefined()
+})
 
-  it('contracts', async () => {
-    await expect(
-      foundry({
-        project: resolve(__dirname, '__fixtures__/foundry/'),
-      }).contracts(),
-    ).resolves.toMatchInlineSnapshot(`
+test('contracts', async () => {
+  await expect(
+    foundry({
+      project: resolve(__dirname, '__fixtures__/foundry/'),
+    }).contracts(),
+  ).resolves.toMatchInlineSnapshot(`
       [
         {
           "abi": [
@@ -100,14 +95,14 @@ describe('foundry', () => {
         },
       ]
     `)
-  })
+})
 
-  it('contracts without project', async () => {
-    const dir = resolve(__dirname, '__fixtures__/foundry/')
-    const spy = vi.spyOn(process, 'cwd')
-    spy.mockImplementation(() => dir)
+test('contracts without project', async () => {
+  const dir = resolve(__dirname, '__fixtures__/foundry/')
+  const spy = vi.spyOn(process, 'cwd')
+  spy.mockImplementation(() => dir)
 
-    await expect(foundry().contracts()).resolves.toMatchInlineSnapshot(`
+  await expect(foundry().contracts()).resolves.toMatchInlineSnapshot(`
       [
         {
           "abi": [
@@ -150,5 +145,4 @@ describe('foundry', () => {
         },
       ]
     `)
-  })
 })

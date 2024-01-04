@@ -1,5 +1,10 @@
-import { describe, it } from 'vitest'
+import { config } from '@wagmi/test'
+import { expect, test } from 'vitest'
 
-describe('MetaMaskConnector', () => {
-  it.todo('inits')
+import { metaMask } from './metaMask.js'
+
+test('setup', () => {
+  const connectorFn = metaMask()
+  const connector = config._internal.connectors.setup(connectorFn)
+  expect(connector.name).toEqual('MetaMask')
 })

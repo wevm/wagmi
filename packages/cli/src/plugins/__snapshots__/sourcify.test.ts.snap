@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`sourcify > contracts > fetches ABI 1`] = `
+exports[`fetches ABI 1`] = `
 [
   {
     "abi": [
@@ -10,35 +10,24 @@ exports[`sourcify > contracts > fetches ABI 1`] = `
         "type": "constructor",
       },
       {
-        "anonymous": false,
         "inputs": [
           {
-            "indexed": false,
-            "internalType": "bytes",
             "name": "pubkey",
             "type": "bytes",
           },
           {
-            "indexed": false,
-            "internalType": "bytes",
             "name": "withdrawal_credentials",
             "type": "bytes",
           },
           {
-            "indexed": false,
-            "internalType": "bytes",
             "name": "amount",
             "type": "bytes",
           },
           {
-            "indexed": false,
-            "internalType": "bytes",
             "name": "signature",
             "type": "bytes",
           },
           {
-            "indexed": false,
-            "internalType": "bytes",
             "name": "index",
             "type": "bytes",
           },
@@ -49,22 +38,18 @@ exports[`sourcify > contracts > fetches ABI 1`] = `
       {
         "inputs": [
           {
-            "internalType": "bytes",
             "name": "pubkey",
             "type": "bytes",
           },
           {
-            "internalType": "bytes",
             "name": "withdrawal_credentials",
             "type": "bytes",
           },
           {
-            "internalType": "bytes",
             "name": "signature",
             "type": "bytes",
           },
           {
-            "internalType": "bytes32",
             "name": "deposit_data_root",
             "type": "bytes32",
           },
@@ -79,8 +64,6 @@ exports[`sourcify > contracts > fetches ABI 1`] = `
         "name": "get_deposit_count",
         "outputs": [
           {
-            "internalType": "bytes",
-            "name": "",
             "type": "bytes",
           },
         ],
@@ -92,8 +75,6 @@ exports[`sourcify > contracts > fetches ABI 1`] = `
         "name": "get_deposit_root",
         "outputs": [
           {
-            "internalType": "bytes32",
-            "name": "",
             "type": "bytes32",
           },
         ],
@@ -103,7 +84,6 @@ exports[`sourcify > contracts > fetches ABI 1`] = `
       {
         "inputs": [
           {
-            "internalType": "bytes4",
             "name": "interfaceId",
             "type": "bytes4",
           },
@@ -111,8 +91,6 @@ exports[`sourcify > contracts > fetches ABI 1`] = `
         "name": "supportsInterface",
         "outputs": [
           {
-            "internalType": "bool",
-            "name": "",
             "type": "bool",
           },
         ],
@@ -128,7 +106,7 @@ exports[`sourcify > contracts > fetches ABI 1`] = `
 ]
 `;
 
-exports[`sourcify > contracts > fetches ABI with multichain deployment 1`] = `
+exports[`fetches ABI with multichain deployment 1`] = `
 [
   {
     "abi": [
@@ -138,35 +116,24 @@ exports[`sourcify > contracts > fetches ABI with multichain deployment 1`] = `
         "type": "constructor",
       },
       {
-        "anonymous": false,
         "inputs": [
           {
-            "indexed": false,
-            "internalType": "bytes",
             "name": "pubkey",
             "type": "bytes",
           },
           {
-            "indexed": false,
-            "internalType": "bytes",
             "name": "withdrawal_credentials",
             "type": "bytes",
           },
           {
-            "indexed": false,
-            "internalType": "bytes",
             "name": "amount",
             "type": "bytes",
           },
           {
-            "indexed": false,
-            "internalType": "bytes",
             "name": "signature",
             "type": "bytes",
           },
           {
-            "indexed": false,
-            "internalType": "bytes",
             "name": "index",
             "type": "bytes",
           },
@@ -177,22 +144,18 @@ exports[`sourcify > contracts > fetches ABI with multichain deployment 1`] = `
       {
         "inputs": [
           {
-            "internalType": "bytes",
             "name": "pubkey",
             "type": "bytes",
           },
           {
-            "internalType": "bytes",
             "name": "withdrawal_credentials",
             "type": "bytes",
           },
           {
-            "internalType": "bytes",
             "name": "signature",
             "type": "bytes",
           },
           {
-            "internalType": "bytes32",
             "name": "deposit_data_root",
             "type": "bytes32",
           },
@@ -207,8 +170,6 @@ exports[`sourcify > contracts > fetches ABI with multichain deployment 1`] = `
         "name": "get_deposit_count",
         "outputs": [
           {
-            "internalType": "bytes",
-            "name": "",
             "type": "bytes",
           },
         ],
@@ -220,8 +181,6 @@ exports[`sourcify > contracts > fetches ABI with multichain deployment 1`] = `
         "name": "get_deposit_root",
         "outputs": [
           {
-            "internalType": "bytes32",
-            "name": "",
             "type": "bytes32",
           },
         ],
@@ -231,7 +190,6 @@ exports[`sourcify > contracts > fetches ABI with multichain deployment 1`] = `
       {
         "inputs": [
           {
-            "internalType": "bytes4",
             "name": "interfaceId",
             "type": "bytes4",
           },
@@ -239,8 +197,6 @@ exports[`sourcify > contracts > fetches ABI with multichain deployment 1`] = `
         "name": "supportsInterface",
         "outputs": [
           {
-            "internalType": "bool",
-            "name": "",
             "type": "bool",
           },
         ],

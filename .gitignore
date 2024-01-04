@@ -1,6 +1,4 @@
-*.local
 .DS_Store
-.eslintcache
 .next
 .pnpm-debug.log*
 cache
@@ -8,7 +6,7 @@ coverage
 dist
 node_modules
 tsconfig.tsbuildinfo
-./wagmi.config.ts
+*.vitest-temp.json
 
 # local env files
 .env
@@ -17,3 +15,15 @@ tsconfig.tsbuildinfo
 .env.test.local
 .env.production.local
 .envrc
+
+# proxy packages
+packages/cli/config
+packages/cli/plugins
+packages/core/actions
+packages/core/chains
+packages/core/internal
+packages/core/query
+packages/react/actions
+packages/react/chains
+packages/react/connectors
+packages/react/query

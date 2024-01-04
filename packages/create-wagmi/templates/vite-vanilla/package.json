@@ -1,0 +1,23 @@
+{
+  "name": "wagmi-core-vanilla-starter",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@wagmi/connectors": "4.0.0-rc.3",
+    "@wagmi/core": "2.0.0-rc.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "viem": "2.0.0"
+  },
+  "devDependencies": {
+    "buffer": "^6.0.3",
+    "typescript": "^5.2.2",
+    "vite": "^4.4.9"
+  }
+}

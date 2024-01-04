@@ -2,7 +2,7 @@ import { capitalCase } from 'change-case'
 import dedent from 'dedent'
 import * as allChains from 'viem/chains'
 
-import type { Contract } from '../config'
+import type { Contract } from '../config.js'
 
 const chainMap: Record<allChains.Chain['id'], allChains.Chain> = {}
 for (const chain of Object.values(allChains)) {
@@ -11,11 +11,10 @@ for (const chain of Object.values(allChains)) {
   chainMap[chain.id] = chain
 }
 
-export function getAddressDocString({
-  address,
-}: {
+export function getAddressDocString(parameters: {
   address: Contract['address']
 }) {
+  const { address } = parameters
   if (!address || typeof address === 'string') return ''
 
   if (Object.keys(address).length === 1)

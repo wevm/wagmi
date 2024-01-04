@@ -1,8 +1,8 @@
 import { parse } from 'dotenv'
 import { expand } from 'dotenv-expand'
 
-import fs from 'node:fs'
-import path from 'node:path'
+import { existsSync, readFileSync, statSync } from 'node:fs'
+import { dirname, join } from 'node:path'
 
 // https://github.com/vitejs/vite/blob/main/packages/vite/src/node/env.ts#L7
 export function loadEnv(
@@ -37,7 +37,7 @@ export function loadEnv(
         rootDir: envDir,
       })
       if (!path) return []
-      return Object.entries(parse(fs.readFileSync(path)))
+      return Object.entries(parse(readFileSync(path)))
     }),
   )
 
@@ -58,7 +58,7 @@ export function loadEnv(
   return parsed
 }
 
-export function lookupFile(
+function lookupFile(
   dir: string,
   formats: string[],
   options?: {
@@ -68,21 +68,23 @@ export function lookupFile(
   },
 ): string | undefined {
   for (const format of formats) {
-    const fullPath = path.join(dir, format)
-    if (fs.existsSync(fullPath) && fs.statSync(fullPath).isFile()) {
+    const fullPath = join(dir, format)
+    if (existsSync(fullPath) && statSync(fullPath).isFile()) {
       const result = options?.pathOnly
         ? fullPath
-        : fs.readFileSync(fullPath, 'utf-8')
+        : readFileSync(fullPath, 'utf-8')
       if (!options?.predicate || options.predicate(result)) {
         return result
       }
     }
   }
-  const parentDir = path.dirname(dir)
+
+  const parentDir = dirname(dir)
   if (
     parentDir !== dir &&
     (!options?.rootDir || parentDir.startsWith(options?.rootDir))
-  ) {
+  )
     return lookupFile(parentDir, formats, options)
-  }
+
+  return undefined
 }

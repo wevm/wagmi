@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { serialize } from './serialize'
+import { serialize } from './serialize.js'
 
 class Foo {
   value: string
@@ -32,9 +32,10 @@ const bigintObject = Object.assign({}, simpleObject, {
   },
 })
 
+const bufferString = 'this is a test buffer'
 const complexObject = Object.assign({}, simpleObject, {
   array: ['foo', { bar: 'baz' }],
-  buffer: new Buffer('this is a test buffer'),
+  buffer: Buffer.alloc(bufferString.length, bufferString),
   error: new Error('boom'),
   foo: new Foo('value'),
   map: new Map().set('foo', { bar: 'baz' }),
@@ -49,13 +50,20 @@ const complexObject = Object.assign({}, simpleObject, {
   weakset: new WeakSet([{}, {}]),
 })
 
-const circularObject = Object.assign({}, complexObject, {
-  deeply: {
-    nested: {
-      reference: {},
+const circularObject = Object.assign(
+  {},
+  complexObject,
+  {
+    map: { __type: 'Map', value: [['foo', { bar: 'baz' }]] },
+  },
+  {
+    deeply: {
+      nested: {
+        reference: {},
+      },
     },
   },
-})
+)
 
 circularObject.deeply.nested.reference = circularObject
 
@@ -73,7 +81,7 @@ describe('stringify', () => {
       const result = serialize(bigintObject)
 
       expect(result).toMatchInlineSnapshot(
-        '"{\\"boolean\\":true,\\"nan\\":null,\\"nil\\":null,\\"number\\":123,\\"string\\":\\"foo\\",\\"bigint\\":\\"#bigint.123\\",\\"nested\\":{\\"bigint\\":{\\"value\\":\\"#bigint.69\\"}}}"',
+        '"{\\"boolean\\":true,\\"nan\\":null,\\"nil\\":null,\\"number\\":123,\\"string\\":\\"foo\\",\\"bigint\\":{\\"__type\\":\\"bigint\\",\\"value\\":\\"123\\"},\\"nested\\":{\\"bigint\\":{\\"value\\":{\\"__type\\":\\"bigint\\",\\"value\\":\\"69\\"}}}}"',
       )
     })
 
@@ -112,10 +120,16 @@ describe('stringify', () => {
           \\"nil\\": null,
           \\"number\\": 123,
           \\"string\\": \\"foo\\",
-          \\"bigint\\": \\"#bigint.123\\",
+          \\"bigint\\": {
+            \\"__type\\": \\"bigint\\",
+            \\"value\\": \\"123\\"
+          },
           \\"nested\\": {
             \\"bigint\\": {
-              \\"value\\": \\"#bigint.69\\"
+              \\"value\\": {
+                \\"__type\\": \\"bigint\\",
+                \\"value\\": \\"69\\"
+              }
             }
           }
         }"
@@ -126,7 +140,7 @@ describe('stringify', () => {
       const result = serialize(complexObject)
 
       expect(result).toMatchInlineSnapshot(
-        '"{\\"boolean\\":true,\\"nan\\":null,\\"nil\\":null,\\"number\\":123,\\"string\\":\\"foo\\",\\"array\\":[\\"foo\\",{\\"bar\\":\\"baz\\"}],\\"buffer\\":{\\"type\\":\\"Buffer\\",\\"data\\":[116,104,105,115,32,105,115,32,97,32,116,101,115,116,32,98,117,102,102,101,114]},\\"error\\":{},\\"foo\\":{\\"value\\":\\"value\\"},\\"map\\":{},\\"object\\":{\\"foo\\":{\\"bar\\":\\"baz\\"}},\\"promise\\":{},\\"regexp\\":{},\\"set\\":{},\\"weakmap\\":{},\\"weakset\\":{}}"',
+        '"{\\"boolean\\":true,\\"nan\\":null,\\"nil\\":null,\\"number\\":123,\\"string\\":\\"foo\\",\\"array\\":[\\"foo\\",{\\"bar\\":\\"baz\\"}],\\"buffer\\":{\\"type\\":\\"Buffer\\",\\"data\\":[116,104,105,115,32,105,115,32,97,32,116,101,115,116,32,98,117,102,102,101,114]},\\"error\\":{},\\"foo\\":{\\"value\\":\\"value\\"},\\"map\\":{\\"__type\\":\\"Map\\",\\"value\\":[[\\"foo\\",{\\"bar\\":\\"baz\\"}]]},\\"object\\":{\\"foo\\":{\\"bar\\":\\"baz\\"}},\\"promise\\":{},\\"regexp\\":{},\\"set\\":{},\\"weakmap\\":{},\\"weakset\\":{}}"',
       )
     })
 
@@ -137,7 +151,7 @@ describe('stringify', () => {
       const result = serialize(complexObject, replacer)
 
       expect(result).toMatchInlineSnapshot(
-        '"{\\"boolean\\":\\"primitive-true\\",\\"fn\\":\\"primitive-fn() {\\\\n    return \\\\\\"foo\\\\\\";\\\\n  }\\",\\"nan\\":\\"primitive-NaN\\",\\"nil\\":\\"primitive-null\\",\\"number\\":\\"primitive-123\\",\\"string\\":\\"primitive-foo\\",\\"undef\\":\\"primitive-undefined\\",\\"array\\":[\\"primitive-foo\\",{\\"bar\\":\\"primitive-baz\\"}],\\"buffer\\":{\\"type\\":\\"primitive-Buffer\\",\\"data\\":[\\"primitive-116\\",\\"primitive-104\\",\\"primitive-105\\",\\"primitive-115\\",\\"primitive-32\\",\\"primitive-105\\",\\"primitive-115\\",\\"primitive-32\\",\\"primitive-97\\",\\"primitive-32\\",\\"primitive-116\\",\\"primitive-101\\",\\"primitive-115\\",\\"primitive-116\\",\\"primitive-32\\",\\"primitive-98\\",\\"primitive-117\\",\\"primitive-102\\",\\"primitive-102\\",\\"primitive-101\\",\\"primitive-114\\"]},\\"error\\":{},\\"foo\\":{\\"value\\":\\"primitive-value\\"},\\"map\\":{},\\"object\\":{\\"foo\\":{\\"bar\\":\\"primitive-baz\\"}},\\"promise\\":{},\\"regexp\\":{},\\"set\\":{},\\"weakmap\\":{},\\"weakset\\":{}}"',
+        '"{\\"boolean\\":\\"primitive-true\\",\\"fn\\":\\"primitive-fn() {\\\\n    return \\\\\\"foo\\\\\\";\\\\n  }\\",\\"nan\\":\\"primitive-NaN\\",\\"nil\\":\\"primitive-null\\",\\"number\\":\\"primitive-123\\",\\"string\\":\\"primitive-foo\\",\\"undef\\":\\"primitive-undefined\\",\\"array\\":[\\"primitive-foo\\",{\\"bar\\":\\"primitive-baz\\"}],\\"buffer\\":{\\"type\\":\\"primitive-Buffer\\",\\"data\\":[\\"primitive-116\\",\\"primitive-104\\",\\"primitive-105\\",\\"primitive-115\\",\\"primitive-32\\",\\"primitive-105\\",\\"primitive-115\\",\\"primitive-32\\",\\"primitive-97\\",\\"primitive-32\\",\\"primitive-116\\",\\"primitive-101\\",\\"primitive-115\\",\\"primitive-116\\",\\"primitive-32\\",\\"primitive-98\\",\\"primitive-117\\",\\"primitive-102\\",\\"primitive-102\\",\\"primitive-101\\",\\"primitive-114\\"]},\\"error\\":{},\\"foo\\":{\\"value\\":\\"primitive-value\\"},\\"map\\":{\\"__type\\":\\"primitive-Map\\",\\"value\\":[[\\"primitive-foo\\",{\\"bar\\":\\"primitive-baz\\"}]]},\\"object\\":{\\"foo\\":{\\"bar\\":\\"primitive-baz\\"}},\\"promise\\":{},\\"regexp\\":{},\\"set\\":{},\\"weakmap\\":{},\\"weakset\\":{}}"',
       )
     })
 

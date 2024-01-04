@@ -1,19 +1,20 @@
 import { Abi as AbiSchema } from 'abitype/zod'
-import { Address } from 'viem'
+import { type Address } from 'viem'
 import type * as chain from 'viem/chains'
 import { z } from 'zod'
 
-import type { ContractConfig } from '../config'
-import { fromZodError } from '../errors'
-import { fetch } from './fetch'
+import type { ContractConfig } from '../config.js'
+import { fromZodError } from '../errors.js'
+import type { Evaluate } from '../types.js'
+import { fetch } from './fetch.js'
 
-type SourcifyConfig<TChainId extends number> = {
+export type SourcifyConfig<chainId extends number> = {
   /**
    * Duration in milliseconds to cache ABIs.
    *
    * @default 1_800_000 // 30m in ms
    */
-  cacheDuration?: number
+  cacheDuration?: number | undefined
   /**
    * Chain id to use for fetching ABI.
    *
@@ -21,11 +22,11 @@ type SourcifyConfig<TChainId extends number> = {
    *
    * See https://docs.sourcify.dev/docs/chains for supported chains.
    */
-  chainId: TChainId
+  chainId: chainId
   /**
    * Contracts to fetch ABIs for.
    */
-  contracts: Omit<ContractConfig<ChainId, TChainId>, 'abi'>[]
+  contracts: Evaluate<Omit<ContractConfig<ChainId, chainId>, 'abi'>>[]
 }
 
 const SourcifyResponse = z.object({
@@ -43,14 +44,12 @@ const SourcifyResponse = z.object({
   version: z.number(),
 })
 
-/**
- * Fetches contract ABIs from Sourcify.
- */
-export function sourcify<TChainId extends ChainId>({
-  cacheDuration,
-  chainId,
-  contracts: contracts_,
-}: SourcifyConfig<TChainId>) {
+/** Fetches contract ABIs from Sourcify. */
+export function sourcify<chainId extends ChainId>(
+  config: SourcifyConfig<chainId>,
+) {
+  const { cacheDuration, chainId, contracts: contracts_ } = config
+
   const contracts = contracts_.map((x) => ({
     ...x,
     address:

@@ -1,0 +1,37 @@
+name: Release (Canary)
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  canary:
+    name: Release canary
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
+
+      - name: Setup .npmrc file
+        uses: actions/setup-node@v4
+        with:
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Set version
+        run: |
+          npm --no-git-tag-version version 0.0.0
+          npm --no-git-tag-version version $(npm pkg get version | sed 's/"//g')-$(git branch --show-current | tr -cs '[:alnum:]-' '-' | tr '[:upper:]' '[:lower:]' | sed 's/-$//').$(date +'%Y%m%dT%H%M%S')
+          pnpm bun .scripts/updateVersion.ts
+
+      - name: Build
+        run: pnpm build
+
+      - name: Publish to npm
+        run: npm publish --tag $(git branch --show-current | tr -cs '[:alnum:]-' '-' | tr '[:upper:]' '[:lower:]' | sed 's/-$//')
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

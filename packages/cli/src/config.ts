@@ -1,11 +1,11 @@
-import type { Abi } from 'abitype'
-import type { Address } from 'viem'
+import { type Abi } from 'abitype'
+import { type Address } from 'viem'
 
-import type { MaybeArray, MaybePromise } from './types'
+import { type Evaluate, type MaybeArray, type MaybePromise } from './types.js'
 
 export type ContractConfig<
-  TChainId extends number = number,
-  RequiredChainId extends number | undefined = undefined,
+  chainId extends number = number,
+  requiredChainId extends number | undefined = undefined,
 > = {
   /**
    * Contract ABI
@@ -27,79 +27,86 @@ export type ContractConfig<
    */
   address?:
     | Address
-    | (RequiredChainId extends number
-        ? Record<RequiredChainId, Address> & Partial<Record<TChainId, Address>>
-        : Record<TChainId, Address>)
+    | (requiredChainId extends number
+        ? Record<requiredChainId, Address> & Partial<Record<chainId, Address>>
+        : Record<chainId, Address>)
+    | undefined
   /**
    * Name of contract.
    */
   name: string
 }
 
-export type Contract = ContractConfig & {
-  /** Generated string content */
-  content: string
-  /** Meta info about contract */
-  meta: {
-    abiName: string
-    addressName?: string
-    configName?: string
+export type Contract = Evaluate<
+  ContractConfig & {
+    /** Generated string content */
+    content: string
+    /** Meta info about contract */
+    meta: {
+      abiName: string
+      addressName?: string | undefined
+      configName?: string | undefined
+    }
   }
-}
+>
 
 export type Watch = {
   /** Command to run along with watch process */
-  command?: () => MaybePromise<void>
+  command?: (() => MaybePromise<void>) | undefined
   /** Paths to watch for changes. */
   paths: string[] | (() => MaybePromise<string[]>)
   /** Callback that fires when file is added */
-  onAdd?: (path: string) => MaybePromise<ContractConfig | undefined>
+  onAdd?:
+    | ((path: string) => MaybePromise<ContractConfig | undefined>)
+    | undefined
   /** Callback that fires when file changes */
   onChange: (path: string) => MaybePromise<ContractConfig | undefined>
   /** Callback that fires when watcher is shutdown */
-  onClose?: () => MaybePromise<void>
+  onClose?: (() => MaybePromise<void>) | undefined
   /** Callback that fires when file is removed */
-  onRemove?: (path: string) => MaybePromise<string | undefined>
+  onRemove?: ((path: string) => MaybePromise<string | undefined>) | undefined
 }
 
 export type Plugin = {
   /** Contracts provided by plugin */
-  contracts?(): MaybePromise<ContractConfig[]>
+  contracts?: (() => MaybePromise<ContractConfig[]>) | undefined
   /** Plugin name */
   name: string
   /** Run plugin logic */
-  run?(config: {
-    /** All resolved contracts from config and plugins */
-    contracts: Contract[]
-    /** Whether TypeScript is detected in project */
-    isTypeScript: boolean
-    /** Previous plugin outputs */
-    outputs: readonly {
-      plugin: Pick<Plugin, 'name'>
-      imports?: string
-      prepend?: string
-      content: string
-    }[]
-  }): MaybePromise<{
-    imports?: string
-    prepend?: string
-    content: string
-  }>
+  run?:
+    | ((config: {
+        /** All resolved contracts from config and plugins */
+        contracts: Contract[]
+        /** Whether TypeScript is detected in project */
+        isTypeScript: boolean
+        /** Previous plugin outputs */
+        outputs: readonly {
+          plugin: Pick<Plugin, 'name'>
+          imports?: string
+          prepend?: string
+          content: string
+        }[]
+      }) => MaybePromise<{
+        imports?: string
+        prepend?: string
+        content: string
+      }>)
+    | undefined
   /**
    * Validate plugin configuration or other @wagmi/cli settings require for plugin.
    */
-  validate?(): MaybePromise<void>
+  validate?: (() => MaybePromise<void>) | undefined
   /** File system watch config */
-  watch?: Watch
+  watch?: Watch | undefined
 }
 
 export type Config = {
   /** Contracts to use in commands */
-  contracts?: ContractConfig[]
+  contracts?: ContractConfig[] | undefined
   /** Output file path */
   out: string
   /** Plugins to run */
-  plugins?: Plugin[]
+  plugins?: Plugin[] | undefined
 }
 
 export function defineConfig(
