@@ -62,7 +62,7 @@ function App() {
 
 `Config | undefined`
 
-[`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/WagmiProvider).
+[`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/api/WagmiProvider).
 
 ::: code-group
 ```ts [index.ts]
@@ -245,7 +245,7 @@ function App() {
 `boolean | undefined`
 
 - Set up subscriber for connected chain changes.
-- Defaults to [`Config['syncConnectedChain']`](/core/createConfig#syncconnectedchain).
+- Defaults to [`Config['syncConnectedChain']`](/core/api/createConfig#syncconnectedchain).
 
 ::: code-group
 ```ts [index.ts]

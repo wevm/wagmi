@@ -104,7 +104,7 @@ The `getNetwork` and `watchNetwork` actions were removed since the connected cha
   <<< @/snippets/core/config.ts[config.ts]
   :::
 
-- Use [`getAccount`](/core/api/getAccount) and `config.chains` instead to get `chain`.
+- Use [`getAccount`](/core/api/actions/getAccount) and `config.chains` instead to get `chain`.
 
   ::: code-group
   ```ts [index.ts]
@@ -323,7 +323,6 @@ In Wagmi v1, connectors were classes you needed to instantiate. In Wagmi v2, con
 
 - `CoinbaseWalletConnector` is now [`coinbaseWallet`](/core/api/connectors/coinbaseWallet).
 - `InjectedConnector` is now [`injected`](/core/api/connectors/injected).
-- `LedgerConnector` is now [`ledger`](/core/api/connectors/ledger).
 - `SafeConnector` is now [`safe`](/core/api/connectors/safe).
 - `WalletConnectConnector` is now [`walletConnect`](/core/api/connectors/walletConnect).
 

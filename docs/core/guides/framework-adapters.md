@@ -4,7 +4,7 @@ Folks often ask if they can use Wagmi with other frameworks, like Vue, Svelte, a
 
 The short answer is — you already can! Wagmi Core is pure VanillaJS that you can use with any framework. For some, this answer is (understandably) unsatisfying as they want a tight integration between Wagmi Core and their favorite framework's reactivity system, e.g. what Wagmi is for React.
 
-Someday, we would love to support additional frameworks, but unfortunately the core team doesn't have time to build and support them in a high-quality way at the moment. This could change in the future with additional [sponsors](github.com/sponsors/wevm), reshuffling of the roadmap, or if someone from the community wants to lead the effort.
+Someday, we would love to support additional frameworks, but unfortunately the core team doesn't have time to build and support them in a high-quality way at the moment. This could change in the future with additional [sponsors](https://github.com/sponsors/wevm), reshuffling of the roadmap, or if someone from the community wants to lead the effort.
 
 In the meantime, here are a some tips on how to create tighter bonds between Wagmi Core and other frameworks.
 

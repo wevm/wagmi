@@ -121,7 +121,7 @@ function App() {
 
 `Config | undefined`
 
-[`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/WagmiProvider).
+[`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/api/WagmiProvider).
 
 ::: code-group
 ```tsx [index.tsx]
@@ -182,7 +182,7 @@ function App() {
 `boolean | UseWatchBlockParameters | undefined`
 
 - Enables/disables listening for block changes.
-- Can pass a subset of [`UseWatchBlockParameters`](/react/api/hooks/useWatchBlock#parameters) directly to [`useWatchBlock`](/react/api/hooks/useWatchBlock).
+- Can pass a subset of [`UseWatchBlocksParameters`](/react/api/hooks/useWatchBlocks#parameters) directly to [`useWatchBlocks`](/react/api/hooks/useWatchBlocks).
 
 ::: code-group
 ```tsx [index.tsx]

@@ -41,7 +41,7 @@ export default {
 
 `Abi`
 
-ABI for contract. Used by [plugins](/cli/plugins) to generate code base on properties.
+ABI for contract. Used by [plugins](/cli/api/plugins) to generate code base on properties.
 
 ::: code-group
 ```ts {5} [wagmi.config.ts]
@@ -61,7 +61,7 @@ export default {
 
 `string`
 
-Name of contract. Must be unique. Used by [plugins](/cli/plugins) to name generated code.
+Name of contract. Must be unique. Used by [plugins](/cli/api/plugins) to name generated code.
 
 ::: code-group
 ```ts {6} [wagmi.config.ts]
@@ -81,7 +81,7 @@ export default {
 
 `string`
 
-Path to output generated code. Must be unique per config. Use an [Array Config](/cli/configuration/configuring-cli#array-config) for multiple outputs.
+Path to output generated code. Must be unique per config. Use an [Array Config](/cli/config/configuring-cli#array-config) for multiple outputs.
 
 ::: code-group
 ```ts {2} [wagmi.config.ts]

@@ -6,7 +6,7 @@ const typeName = 'SwitchChain'
 
 # switchChain
 
-Action for switching the target chain for a connector or the Wagmi [`Config`](/core/createConfig#config).
+Action for switching the target chain for a connector or the Wagmi [`Config`](/core/api/createConfig#config).
 
 ## Import
 
@@ -28,7 +28,7 @@ await switchChain(config, { chainId: mainnet.id })
 :::
 
 ::: tip
-When connected, `switchChain` will switch the target chain for the connector. When not connected, `switchChain` will switch the target chain for the Wagmi [`Config`](/core/createConfig#config).
+When connected, `switchChain` will switch the target chain for the connector. When not connected, `switchChain` will switch the target chain for the Wagmi [`Config`](/core/api/createConfig#config).
 :::
 
 ## Parameters

@@ -171,7 +171,7 @@ const unwatch = watchPendingTransactions(config, {
 `boolean | undefined`
 
 - Set up subscriber for connected chain changes.
-- Defaults to [`Config['syncConnectedChain']`](/core/createConfig#syncconnectedchain).
+- Defaults to [`Config['syncConnectedChain']`](/core/api/createConfig#syncconnectedchain).
 
 ::: code-group
 ```ts [index.ts]

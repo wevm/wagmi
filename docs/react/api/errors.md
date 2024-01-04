@@ -13,7 +13,7 @@ Error classes used by Wagmi.
 
 ### WagmiProviderNotFoundError
 
-When a Wagmi hook is used outside of a [`WagmiProvider`](/react/WagmiProvider).
+When a Wagmi hook is used outside of a [`WagmiProvider`](/react/api/WagmiProvider).
 
 ```ts
 import { WagmiProviderNotFoundError } from 'wagmi'

@@ -44,7 +44,7 @@ Create and export a new Wagmi config using `createConfig`.
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
-In this example, Wagmi is configured to use the Mainnet and Sepolia chains. Check out the [`createConfig` docs](/core/createConfig) for more configuration options.
+In this example, Wagmi is configured to use the Mainnet and Sepolia chains. Check out the [`createConfig` docs](/core/api/createConfig) for more configuration options.
 
 ### Use Wagmi
 

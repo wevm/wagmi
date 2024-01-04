@@ -8,7 +8,7 @@
 
 All of the core [Wagmi Hooks](/react/api/actions) are friendly wrappers around [Viem Actions](https://viem.sh/docs/actions/public/introduction.html) that inject a multi-chain and connector aware [Wagmi Config](/react/api/createConfig).
 
-There may be cases where you might want to dig deeper and utilize Viem Actions directly (maybe a Hook doesn't exist in Wagmi yet). In these cases, you can create your own custom Wagmi Hook by importing Viem Actions directly via `viem/actions` and plugging in a Viem Client returned by the [`useClient` Hook](/react/api/actions/useClient).
+There may be cases where you might want to dig deeper and utilize Viem Actions directly (maybe a Hook doesn't exist in Wagmi yet). In these cases, you can create your own custom Wagmi Hook by importing Viem Actions directly via `viem/actions` and plugging in a Viem Client returned by the [`useClient` Hook](/react/api/hooks/useClient).
 
 The example below demonstrates two different ways to utilize Viem Actions:
 

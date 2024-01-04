@@ -42,7 +42,7 @@ function App() {
 :::
 
 ::: tip
-When [`WagmiProvider['reconnectOnMount']`](/react/WagmiProvider#reconnectonmount) is `true`, `reconnect` is called automatically on mount.
+When [`WagmiProvider['reconnectOnMount']`](/react/api/WagmiProvider#reconnectonmount) is `true`, `reconnect` is called automatically on mount.
 :::
 
 ## Parameters
@@ -55,7 +55,7 @@ import { type UseReconnectParameters } from 'wagmi'
 
 `Config | undefined`
 
-[`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/WagmiProvider).
+[`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/api/WagmiProvider).
 
 ::: code-group
 ```tsx [index.tsx]

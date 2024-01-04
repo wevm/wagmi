@@ -38,7 +38,7 @@ import { type ReconnectParameters } from '@wagmi/core'
 `(CreateConnectorFn | Connector)[] | undefined`
 
 - [Connectors](/core/api/connectors) to reconnect to.
-- Defaults to [`Config['connectors']`](/core/createConfig#connectors).
+- Defaults to [`Config['connectors']`](/core/api/createConfig#connectors).
 
 ::: code-group
 ```ts [index.ts]
@@ -61,7 +61,7 @@ import { type ReconnectReturnType } from '@wagmi/core'
 
 `Connection[]`
 
-[Connections](/core/createConfig#connection) that were successfully reconnected.
+[Connections](/core/api/createConfig#connection) that were successfully reconnected.
 
 ## Error
 
