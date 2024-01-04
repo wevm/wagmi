@@ -34,12 +34,12 @@ bun add @wagmi/core viem@{{viemVersion}} @wagmi/connectors
 ```
 :::
 
-::: info Wagmi Core v2 is currently in the release candidate phase.
-We recommend trying it out in your projects, but there may be breaking changes before the final release. If you find bugs or have feedback, please [open an issue](https://github.com/wevm/wagmi/issues/new/choose) or [reply to the discussion thread](https://github.com/wevm/wagmi/discussions/3068).
-:::
-
 ::: info Wagmi Core v2 should be the last major version that will have this many actionable breaking changes. 
 Moving forward, new functionality will be opt-in with old functionality being deprecated alongside the new features. This means upgrading to the latest major versions will not require immediate changes.
+:::
+
+::: info Not ready to migrate yet?
+The Wagmi Core v1 docs are still available at [1.x.wagmi.sh/core](https://1.x.wagmi.sh/core).
 :::
 
 ## Dependencies

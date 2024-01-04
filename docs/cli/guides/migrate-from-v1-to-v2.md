@@ -26,8 +26,8 @@ bun add @wagmi/cli
 ```
 :::
 
-::: info Wagmi CLI v2 is currently in the release candidate phase.
-We recommend trying it out in your projects, but there may be breaking changes before the final release. If you find bugs or have feedback, please [open an issue](https://github.com/wevm/wagmi/issues/new/choose) or [reply to the discussion thread](https://github.com/wevm/wagmi/discussions/3068).
+::: info Not ready to migrate yet?
+The Wagmi CLI v1 docs are still available at [1.x.wagmi.sh/cli](https://1.x.wagmi.sh/cli).
 :::
 
 ## Changed generated action and hook names
