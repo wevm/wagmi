@@ -60,7 +60,8 @@ jobs:
     strategy:
       matrix:
         typescript-version: ['5.0.4', '5.1.6', '5.2.2', 'latest']
-        viem-version: ['rc']
+        # TODO: Enable Viem version after stable release
+        # viem-version: ['rc']
 
     steps:
       - name: Clone repository
@@ -69,7 +70,7 @@ jobs:
       - name: Install dependencies
         uses: ./.github/actions/install-dependencies
 
-      - run: pnpm add -D -w typescript@${{ matrix.typescript-version }} viem@${{ matrix.viem-version }}
+      - run: pnpm add -D -w typescript@${{ matrix.typescript-version }} # viem@${{ matrix.viem-version }}
 
       - name: Link packages
         run: pnpm preconstruct
