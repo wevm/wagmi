@@ -9,6 +9,7 @@ import {
 import { ConnectorData } from './base'
 
 type InjectedProviderFlags = {
+  is3SWallet?: true
   isApexWallet?: true
   isAvalanche?: true
   isBackpack?: true
