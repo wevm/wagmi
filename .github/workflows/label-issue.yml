@@ -15,4 +15,4 @@ jobs:
           actions: 'create-comment'
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
-          body: Hello @${{ github.event.issue.user.login }}. Please provide a [minimal reproduction](https://stackoverflow.com/help/minimal-reproducible-example) using [new.wagmi.sh](https://new.wagmi.sh) or a GitHub repository. Issues marked with "needs reproduction" will be closed if they have no activity within 3 days.
+          body: Hello @${{ github.event.issue.user.login }}. Please provide a [minimal reproduction](https://stackoverflow.com/help/minimal-reproducible-example) using [new.wagmi.sh](https://new.wagmi.sh) for runtime issues or [TypeScript Playground](https://www.typescriptlang.org/play) for type issues. Issues marked with "needs reproduction" will be closed if they have no activity within 3 days.
