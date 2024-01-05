@@ -13,6 +13,11 @@
       "permanent": true
     },
     {
+      "source": "/core/migration-guide",
+      "destination": "/core/guides/migrate-from-v1-to-v2",
+      "permanent": true
+    },
+    {
       "source": "/core/:name(faq)",
       "destination": "/core/guides/:name",
       "permanent": true
@@ -46,6 +51,11 @@
     {
       "source": "/react/comparison",
       "destination": "/react/comparisons",
+      "permanent": true
+    },
+    {
+      "source": "/react/migration-guide",
+      "destination": "/react/guides/migrate-from-v1-to-v2",
       "permanent": true
     },
     {
