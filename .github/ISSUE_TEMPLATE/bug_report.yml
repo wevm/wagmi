@@ -17,7 +17,7 @@ body:
     id: reproduction
     attributes:
       label: Link to Minimal Reproducible Example
-      description: Please provide a link that can reproduce the problem: [new.wagmi.sh](https://new.wagmi.sh) for runtime issues or [TypeScript Playground](https://www.typescriptlang.org/play) for type issues. For most issues, you will likely get asked to provide a minimal reproducible example so why not add one now :) If a report is vague (e.g. just a generic error message) and has no reproduction, it will receive a "needs reproduction" label. If no reproduction is provided after 3 days, it will be auto-closed.
+      description: "Please provide a link that can reproduce the problem: [new.wagmi.sh](https://new.wagmi.sh) for runtime issues or [TypeScript Playground](https://www.typescriptlang.org/play) for type issues. For most issues, you will likely get asked to provide a minimal reproducible example so why not add one now :) If a report is vague (e.g. just a generic error message) and has no reproduction, it will receive a \"needs reproduction\" label. If no reproduction is provided after 3 days, it will be auto-closed."
       placeholder: https://new.wagmi.sh
     validations:
       required: false
@@ -58,7 +58,7 @@ body:
       label: Check existing issues
       description: By submitting this issue, you checked there isn't [already an issue](https://github.com/wevm/wagmi/issues) for this bug.
       options:
-        - label: I checked there isn't [already an issue](https://github.com/wevm/wagmi/issues) for the bug you encountered.
+        - label: I checked there isn't [already an issue](https://github.com/wevm/wagmi/issues) for the bug I encountered.
           required: true
 
   - type: textarea
