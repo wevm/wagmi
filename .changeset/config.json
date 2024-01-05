@@ -4,6 +4,7 @@
   "baseBranch": "main",
   "changelog": ["@changesets/changelog-github", { "repo": "wevm/wagmi" }],
   "commit": false,
+  "ignore": ["docs", "packages/register-tests", "packages/test", "playgrounds"],
   "updateInternalDependencies": "patch",
   "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
     "onlyUpdatePeerDependentsWhenOutOfRange": true
