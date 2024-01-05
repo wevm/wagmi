@@ -202,7 +202,6 @@ export function injected(parameters: InjectedParameters = {}) {
 
         return { accounts, chainId: currentChainId }
       } catch (err) {
-        console.log('connect', err)
         const error = err as RpcError
         if (error.code === UserRejectedRequestError.code)
           throw new UserRejectedRequestError(error)
