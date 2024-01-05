@@ -1,5 +1,14 @@
 # @wagmi/connectors
 
+## 4.0.2
+
+### Patch Changes
+
+- [#3384](https://github.com/wevm/wagmi/pull/3384) [`ee868c33`](https://github.com/wevm/wagmi/commit/ee868c3385dae511230b6ddcb5627c1293cc1844) Thanks [@tmm](https://github.com/tmm)! - Fixed connectors not bubbling error when connecting with `chainId` and subsequent user rejection.
+
+- Updated dependencies [[`ee868c33`](https://github.com/wevm/wagmi/commit/ee868c3385dae511230b6ddcb5627c1293cc1844)]:
+  - @wagmi/core@2.0.2
+
 ## 4.0.1
 
 ### Major Changes
