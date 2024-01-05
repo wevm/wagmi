@@ -41,9 +41,7 @@
   },
   "typesVersions": {
     "*": {
-      "react": [
-        "./dist/types/exports/react.d.ts"
-      ]
+      "react": ["./dist/types/exports/react.d.ts"]
     }
   },
   "peerDependencies": {
@@ -95,17 +93,7 @@
     "react-dom": "^18.2.0",
     "wagmi": "workspace:*"
   },
-  "contributors": [
-    "awkweb.eth <t@wevm.dev>",
-    "jxom.eth <j@wevm.dev>"
-  ],
+  "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
   "funding": "https://github.com/sponsors/wevm",
-  "keywords": [
-    "eth",
-    "ethereum",
-    "dapps",
-    "wallet",
-    "web3"
-  ],
-  "version": null
+  "keywords": ["eth", "ethereum", "dapps", "wallet", "web3"]
 }
