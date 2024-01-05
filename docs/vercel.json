@@ -2,6 +2,17 @@
   "cleanUrls": true,
   "redirects": [
     {
+      "source": "/cli",
+      "destination": "/cli/getting-started",
+      "permanent": true
+    },
+
+    {
+      "source": "/core",
+      "destination": "/core/getting-started",
+      "permanent": true
+    },
+    {
       "source": "/core/:name(faq)",
       "destination": "/core/guides/:name",
       "permanent": true
@@ -27,6 +38,11 @@
       "permanent": true
     },
 
+    {
+      "source": "/react",
+      "destination": "/react/getting-started",
+      "permanent": true
+    },
     {
       "source": "/react/comparison",
       "destination": "/react/comparisons",

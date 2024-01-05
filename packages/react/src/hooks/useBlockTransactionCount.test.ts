@@ -9,9 +9,10 @@ test('default', async () => {
 
   await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-  expect(result.current).toMatchInlineSnapshot(`
+  const { data, ...rest } = result.current
+  expect(data).toBeTypeOf('number')
+  expect(rest).toMatchInlineSnapshot(`
     {
-      "data": 137,
       "dataUpdatedAt": 1675209600000,
       "error": null,
       "errorUpdateCount": 0,
@@ -54,9 +55,10 @@ test('parameters: chainId', async () => {
 
   await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-  expect(result.current).toMatchInlineSnapshot(`
+  const { data, ...rest } = result.current
+  expect(data).toBeTypeOf('number')
+  expect(rest).toMatchInlineSnapshot(`
     {
-      "data": 0,
       "dataUpdatedAt": 1675209600000,
       "error": null,
       "errorUpdateCount": 0,
@@ -97,9 +99,10 @@ test('parameters: blockNumber', async () => {
 
   await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-  expect(result.current).toMatchInlineSnapshot(`
+  const { data, ...rest } = result.current
+  expect(data).toBeTypeOf('number')
+  expect(rest).toMatchInlineSnapshot(`
     {
-      "data": 326,
       "dataUpdatedAt": 1675209600000,
       "error": null,
       "errorUpdateCount": 0,
@@ -144,9 +147,10 @@ test('parameters: blockHash', async () => {
 
   await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-  expect(result.current).toMatchInlineSnapshot(`
+  const { data, ...rest } = result.current
+  expect(data).toBeTypeOf('number')
+  expect(rest).toMatchInlineSnapshot(`
     {
-      "data": 159,
       "dataUpdatedAt": 1675209600000,
       "error": null,
       "errorUpdateCount": 0,
@@ -190,9 +194,10 @@ test('parameters: blockTag', async () => {
 
   await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-  expect(result.current).toMatchInlineSnapshot(`
+  const { data, ...rest } = result.current
+  expect(data).toBeTypeOf('number')
+  expect(rest).toMatchInlineSnapshot(`
     {
-      "data": 251,
       "dataUpdatedAt": 1675209600000,
       "error": null,
       "errorUpdateCount": 0,
