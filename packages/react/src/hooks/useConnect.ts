@@ -80,7 +80,7 @@ export function useConnect<
     return config.subscribe(
       ({ status }) => status,
       (status, previousStatus) => {
-        if (previousStatus !== 'disconnected' && status === 'disconnected')
+        if (previousStatus === 'connected' && status === 'disconnected')
           result.reset()
       },
     )
