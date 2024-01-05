@@ -32,7 +32,7 @@ export type UseCallReturnType<selectData = CallData> = UseQueryReturnType<
   CallErrorType
 >
 
-/** https://rc.wagmi.sh/react/api/hooks/useCall */
+/** https://wagmi.sh/react/api/hooks/useCall */
 export function useCall<
   config extends Config = ResolvedRegister['config'],
   selectData = CallData,
