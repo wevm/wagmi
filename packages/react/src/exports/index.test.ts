@@ -17,6 +17,7 @@ test('exports', () => {
       "useBlock",
       "useBlockNumber",
       "useBlockTransactionCount",
+      "useCall",
       "useChainId",
       "useClient",
       "useConfig",

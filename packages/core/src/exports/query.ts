@@ -3,6 +3,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 export {
+  type CallData,
+  type CallOptions,
+  type CallQueryFnData,
+  type CallQueryKey,
+  callQueryKey,
+  callQueryOptions,
+} from '../query/call.js'
+
+export {
   type ConnectData,
   type ConnectVariables,
   type ConnectMutate,
