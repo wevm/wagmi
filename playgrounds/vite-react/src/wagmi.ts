@@ -1,7 +1,7 @@
 import { del, get, set } from 'idb-keyval'
 import { http, createConfig } from 'wagmi'
 import { celo, mainnet, optimism, sepolia } from 'wagmi/chains'
-import { coinbaseWallet, metaMask, safe, walletConnect } from 'wagmi/connectors'
+import { coinbaseWallet, walletConnect } from 'wagmi/connectors'
 
 // biome-ignore lint/correctness/noUnusedVariables: <explanation>
 const indexedDBStorage = {
@@ -23,8 +23,6 @@ export const config = createConfig({
       projectId: import.meta.env.VITE_WC_PROJECT_ID,
     }),
     coinbaseWallet({ appName: 'Vite React Playground', darkMode: true }),
-    safe({ debug: true, shimDisconnect: true }),
-    metaMask(),
   ],
   transports: {
     [mainnet.id]: http(

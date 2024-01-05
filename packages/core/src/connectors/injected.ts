@@ -185,9 +185,10 @@ export function injected(parameters: InjectedParameters = {}) {
         // Switch to chain if provided
         let currentChainId = await this.getChainId()
         if (chainId && currentChainId !== chainId) {
-          const chain = await this.switchChain!({ chainId }).catch(() => ({
-            id: currentChainId,
-          }))
+          const chain = await this.switchChain!({ chainId }).catch((error) => {
+            if (error.code === UserRejectedRequestError.code) throw error
+            return { id: currentChainId }
+          })
           currentChainId = chain?.id ?? currentChainId
         }
 
@@ -201,6 +202,7 @@ export function injected(parameters: InjectedParameters = {}) {
 
         return { accounts, chainId: currentChainId }
       } catch (err) {
+        console.log('connect', err)
         const error = err as RpcError
         if (error.code === UserRejectedRequestError.code)
           throw new UserRejectedRequestError(error)
