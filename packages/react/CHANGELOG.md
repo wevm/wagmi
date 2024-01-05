@@ -1,5 +1,11 @@
 # wagmi
 
+## 2.0.2
+
+### Patch Changes
+
+- [#3379](https://github.com/wevm/wagmi/pull/3379) [`30a186e5`](https://github.com/wevm/wagmi/commit/30a186e53d1135657d04f72f40d1c27186025370) Thanks [@tmm](https://github.com/tmm)! - Fixed `useConnect` error getting unset.
+
 ## 2.0.1
 
 ### Major Changes
