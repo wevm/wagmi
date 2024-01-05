@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 2.0.2
+
+### Patch Changes
+
+- [#3371](https://github.com/wevm/wagmi/pull/3371) [`8294d9e5`](https://github.com/wevm/wagmi/commit/8294d9e5b358018ba869b2018cd7ed95462e021f) Thanks [@iceanddust](https://github.com/iceanddust)! - Fixed prop name when generating contract event watch hooks
+
 ## 2.0.1
 
 ### Major Changes

@@ -8,6 +8,7 @@ body:
         Thank you for submitting a documentation request. It helps make Wagmi better.
 
         If it's a small change, like misspelling or example that needs updating, feel free to submit a PR instead of creating this issue.
+
   - type: dropdown
     attributes:
       label: What is the type of issue?
@@ -18,12 +19,16 @@ body:
         - Documentation is confusing
         - Example code is not working
         - Something else
+
   - type: textarea
     attributes:
       label: What is the issue?
     validations:
       required: true
+
   - type: textarea
     attributes:
       label: Where did you find it?
-      description: If possible, please provide the URL(s) where you found this issue.
+      description: Please provide the URL(s) where you found this issue.
+    validations:
+      required: true

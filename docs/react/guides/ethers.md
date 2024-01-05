@@ -219,12 +219,12 @@ export async function useEthersSigner({ chainId }: { chainId?: number } = {}) {
 
 ### Usage
 
-Now you can use the `getEthersSigner` function in your components:
+Now you can use the `useEthersSigner` function in your components:
 
 ::: code-group
 
 ```ts [example.ts]
-import { getEthersSigner } from './ethers'
+import { useEthersSigner } from './ethers'
 
 function example() {
   const signer = useEthersSigner()

@@ -226,7 +226,7 @@ export const ${hookName} = ${pure} ${functionName}({ ${innerContent} })`,
             })
             content.push(
               `${docString}
-export const ${hookName} = ${pure} ${functionName}({ ${innerContent}, functionName: '${item.name}' })`,
+export const ${hookName} = ${pure} ${functionName}({ ${innerContent}, eventName: '${item.name}' })`,
             )
           }
         }
