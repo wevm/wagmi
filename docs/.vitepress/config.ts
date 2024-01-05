@@ -34,7 +34,7 @@ export default withTwoslash(
       [
         'script',
         {
-          src: 'https://cdn.ucefathom.com/script.js',
+          src: 'https://cdn.usefathom.com/script.js',
           'data-site': 'QWAXSUPT',
           defer: '',
         },
