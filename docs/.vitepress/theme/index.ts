@@ -4,7 +4,7 @@ import 'uno.css'
 import 'vitepress-plugin-shiki-twoslash/styles.css'
 
 import AsideSponsors from './components/AsideSponsors.vue'
-// import Banner from './components/Banner.vue'
+import HomeBanner from './components/HomeBanner.vue'
 import HomePage from './components/HomePage.vue'
 
 import './style.css'
@@ -19,7 +19,7 @@ export default {
       // https://vitepress.dev/guide/extending-default-theme#layout-slots
       'aside-ads-before': () => h(AsideSponsors),
       'home-features-after': () => h(HomePage),
-      // 'layout-top': () => h(Banner),
+      'home-hero-before': () => h(HomeBanner),
     })
   },
 }
