@@ -10,7 +10,7 @@
   },
   "scripts": {
     "build": "pnpm run clean && pnpm run build:esm+types",
-    "build:esm+types": "tsc --project tsconfig.build.json --module es2020 --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
+    "build:esm+types": "tsc --project tsconfig.build.json --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
     "clean": "rm -rf dist tsconfig.tsbuildinfo",
     "test:build": "publint --strict",
     "typecheck": "tsc --noEmit"
@@ -41,9 +41,7 @@
   },
   "typesVersions": {
     "*": {
-      "react": [
-        "./dist/types/exports/react.d.ts"
-      ]
+      "react": ["./dist/types/exports/react.d.ts"]
     }
   },
   "peerDependencies": {
@@ -95,16 +93,7 @@
     "react-dom": "^18.2.0",
     "wagmi": "workspace:*"
   },
-  "contributors": [
-    "awkweb.eth <t@wevm.dev>",
-    "jxom.eth <j@wevm.dev>"
-  ],
+  "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
   "funding": "https://github.com/sponsors/wevm",
-  "keywords": [
-    "eth",
-    "ethereum",
-    "dapps",
-    "wallet",
-    "web3"
-  ]
+  "keywords": ["eth", "ethereum", "dapps", "wallet", "web3"]
 }

@@ -10,7 +10,7 @@
   },
   "scripts": {
     "build": "pnpm run clean && pnpm run build:esm+types",
-    "build:esm+types": "tsc --project tsconfig.build.json --module es2020 --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
+    "build:esm+types": "tsc --project tsconfig.build.json --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
     "clean": "rm -rf dist tsconfig.tsbuildinfo",
     "dev": "bun src/cli.ts",
     "test:build": "publint --strict",
@@ -46,18 +46,7 @@
     "execa": "^8.0.1",
     "fs-extra": "^11.1.1"
   },
-  "contributors": [
-    "awkweb.eth <t@wevm.dev>",
-    "jxom.eth <j@wevm.dev>"
-  ],
+  "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
   "funding": "https://github.com/sponsors/wevm",
-  "keywords": [
-    "wagmi",
-    "eth",
-    "ethereum",
-    "dapps",
-    "wallet",
-    "web3",
-    "cli"
-  ]
+  "keywords": ["wagmi", "eth", "ethereum", "dapps", "wallet", "web3", "cli"]
 }
