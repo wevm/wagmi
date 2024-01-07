@@ -57,11 +57,11 @@ importers:
         specifier: ^2.9.0
         version: 2.9.0
       typescript:
-        specifier: 5.1.6
-        version: 5.1.6
+        specifier: 5.3.2
+        version: 5.3.2
       viem:
         specifier: 2.0.0
-        version: 2.0.0(typescript@5.1.6)(zod@3.22.2)
+        version: 2.0.0(typescript@5.3.2)(zod@3.22.2)
       vitest:
         specifier: ^0.34.5
         version: 0.34.5(@vitest/ui@0.34.5)(happy-dom@12.2.1)(jsdom@20.0.3)
@@ -88,7 +88,7 @@ importers:
         version: link:../packages/core
       abitype:
         specifier: '*'
-        version: 0.9.8(typescript@5.1.6)(zod@3.22.2)
+        version: 0.9.8(typescript@5.3.2)(zod@3.22.2)
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -97,7 +97,7 @@ importers:
         version: 0.53.6(vite@4.4.9)
       viem:
         specifier: 2.0.0
-        version: 2.0.0(typescript@5.1.6)(zod@3.22.2)
+        version: 2.0.0(typescript@5.3.2)(zod@3.22.2)
       vite:
         specifier: ^4.4.9
         version: 4.4.9(@types/node@20.7.0)
@@ -106,7 +106,7 @@ importers:
         version: 1.0.0-rc.20(@types/react@18.2.23)(react@18.2.0)
       vitepress-plugin-shiki-twoslash:
         specifier: ^0.0.6
-        version: 0.0.6(typescript@5.1.6)(vitepress@1.0.0-rc.20)
+        version: 0.0.6(typescript@5.3.2)(vitepress@1.0.0-rc.20)
       vue:
         specifier: ^3.3.4
         version: 3.3.4
@@ -118,7 +118,7 @@ importers:
     dependencies:
       abitype:
         specifier: ^0.9.8
-        version: 0.9.8(typescript@5.1.6)(zod@3.22.2)
+        version: 0.9.8(typescript@5.3.2)(zod@3.22.2)
       bundle-require:
         specifier: ^3.1.2
         version: 3.1.2(esbuild@0.16.17)
@@ -169,7 +169,7 @@ importers:
         version: 3.0.3
       viem:
         specifier: 2.0.0
-        version: 2.0.0(typescript@5.1.6)(zod@3.22.2)
+        version: 2.0.0(typescript@5.3.2)(zod@3.22.2)
       zod:
         specifier: ^3.22.2
         version: 3.22.2
@@ -185,13 +185,13 @@ importers:
         version: 1.1.0
       msw:
         specifier: ^2.0.6
-        version: 2.0.6(typescript@5.1.6)
+        version: 2.0.6(typescript@5.3.2)
 
   packages/cli/src/plugins/__fixtures__/hardhat:
     devDependencies:
       hardhat:
         specifier: ^2.17.4
-        version: 2.17.4(typescript@5.1.6)
+        version: 2.17.4(typescript@5.3.2)
 
   packages/connectors:
     dependencies:
@@ -203,10 +203,10 @@ importers:
         version: 0.14.1
       '@safe-global/safe-apps-provider':
         specifier: 0.18.1
-        version: 0.18.1(typescript@5.1.6)
+        version: 0.18.1(typescript@5.3.2)
       '@safe-global/safe-apps-sdk':
         specifier: 8.1.0
-        version: 8.1.0(typescript@5.1.6)
+        version: 8.1.0(typescript@5.3.2)
       '@walletconnect/ethereum-provider':
         specifier: 2.11.0
         version: 2.11.0
@@ -219,7 +219,7 @@ importers:
         version: link:../core
       msw:
         specifier: ^2.0.6
-        version: 2.0.6(typescript@5.1.6)
+        version: 2.0.6(typescript@5.3.2)
 
   packages/core:
     dependencies:
@@ -228,7 +228,7 @@ importers:
         version: 5.0.1
       mipd:
         specifier: 0.0.5
-        version: 0.0.5(typescript@5.1.6)
+        version: 0.0.5(typescript@5.3.2)
       zustand:
         specifier: 4.4.1
         version: 4.4.1
@@ -364,7 +364,7 @@ importers:
         version: 18.2.0(react@18.2.0)
       viem:
         specifier: 2.0.0
-        version: 2.0.0(typescript@5.1.6)(zod@3.22.2)
+        version: 2.0.0(typescript@5.3.2)(zod@3.22.2)
     devDependencies:
       '@types/react':
         specifier: ^18.2.23
@@ -404,7 +404,7 @@ importers:
         version: 18.2.0(react@18.2.0)
       viem:
         specifier: 2.0.0
-        version: 2.0.0(typescript@5.1.6)(zod@3.22.2)
+        version: 2.0.0(typescript@5.3.2)(zod@3.22.2)
       wagmi:
         specifier: workspace:*
         version: link:../../packages/react
@@ -480,10 +480,10 @@ importers:
         version: 2.0.3
       ts-node:
         specifier: ^10.9.1
-        version: 10.9.1(@types/node@20.7.0)(typescript@5.1.6)
+        version: 10.9.1(@types/node@20.7.0)(typescript@5.3.2)
       viem:
         specifier: 2.0.0
-        version: 2.0.0(typescript@5.1.6)(zod@3.22.2)
+        version: 2.0.0(typescript@5.3.2)(zod@3.22.2)
       vike:
         specifier: ^0.4.142
         version: 0.4.142(vite@4.4.9)
@@ -3359,10 +3359,10 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /@safe-global/safe-apps-provider@0.18.1(typescript@5.1.6):
+  /@safe-global/safe-apps-provider@0.18.1(typescript@5.3.2):
     resolution: {integrity: sha512-V4a05A3EgJcriqtDoJklDz1BOinWhC6P0hjUSxshA4KOZM7rGPCTto/usXs09zr1vvL28evl/NldSTv97j2bmg==}
     dependencies:
-      '@safe-global/safe-apps-sdk': 8.1.0(typescript@5.1.6)
+      '@safe-global/safe-apps-sdk': 8.1.0(typescript@5.3.2)
       events: 3.3.0
     transitivePeerDependencies:
       - bufferutil
@@ -3372,11 +3372,11 @@ packages:
       - zod
     dev: false
 
-  /@safe-global/safe-apps-sdk@8.1.0(typescript@5.1.6):
+  /@safe-global/safe-apps-sdk@8.1.0(typescript@5.3.2):
     resolution: {integrity: sha512-XJbEPuaVc7b9n23MqlF6c+ToYIS3f7P2Sel8f3cSBQ9WORE4xrSuvhMpK9fDSFqJ7by/brc+rmJR/5HViRr0/w==}
     dependencies:
       '@safe-global/safe-gateway-typescript-sdk': 3.8.0
-      viem: 1.10.14(typescript@5.1.6)
+      viem: 1.10.14(typescript@5.3.2)
     transitivePeerDependencies:
       - bufferutil
       - encoding
@@ -4932,7 +4932,7 @@ packages:
     resolution: {integrity: sha512-j2afSsaIENvHZN2B8GOpF566vZ5WVk5opAiMTvWgaQT8DkbOqsTfvNAvHoRGU2zzP8cPoqys+xHTRDWW8L+/BA==}
     dev: true
 
-  /abitype@0.10.0(typescript@5.1.6)(zod@3.22.2):
+  /abitype@0.10.0(typescript@5.3.2)(zod@3.22.2):
     resolution: {integrity: sha512-QvMHEUzgI9nPj9TWtUGnS2scas80/qaL5PBxGdwWhhvzqXfOph+IEiiiWrzuisu3U3JgDQVruW9oLbJoQ3oZ3A==}
     peerDependencies:
       typescript: '>=5.0.4'
@@ -4943,10 +4943,10 @@ packages:
       zod:
         optional: true
     dependencies:
-      typescript: 5.1.6
+      typescript: 5.3.2
       zod: 3.22.2
 
-  /abitype@0.9.8(typescript@5.1.6)(zod@3.22.2):
+  /abitype@0.9.8(typescript@5.3.2)(zod@3.22.2):
     resolution: {integrity: sha512-puLifILdm+8sjyss4S+fsUN09obiT1g2YW6CtcQF+QDzxR0euzgEB29MZujC6zMk2a6SVmtttq1fc6+YFA7WYQ==}
     peerDependencies:
       typescript: '>=5.0.4'
@@ -4957,7 +4957,7 @@ packages:
       zod:
         optional: true
     dependencies:
-      typescript: 5.1.6
+      typescript: 5.3.2
       zod: 3.22.2
 
   /abstract-level@1.0.3:
@@ -7345,7 +7345,7 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /hardhat@2.17.4(typescript@5.1.6):
+  /hardhat@2.17.4(typescript@5.3.2):
     resolution: {integrity: sha512-YTyHjVc9s14CY/O7Dbtzcr/92fcz6AzhrMaj6lYsZpYPIPLzOrFCZHHPxfGQB6FiE6IPNE0uJaAbr7zGF79goA==}
     hasBin: true
     peerDependencies:
@@ -7402,7 +7402,7 @@ packages:
       source-map-support: 0.5.21
       stacktrace-parser: 0.1.10
       tsort: 0.0.1
-      typescript: 5.1.6
+      typescript: 5.3.2
       undici: 5.24.0
       uuid: 8.3.2
       ws: 7.5.9
@@ -8273,7 +8273,7 @@ packages:
       pretty-ms: 8.0.0
       strip-json-comments: 5.0.1
       summary: 2.1.0
-      typescript: 5.1.6
+      typescript: 5.3.2
       zod: 3.22.2
       zod-validation-error: 1.5.0(zod@3.22.2)
     dev: true
@@ -8741,7 +8741,7 @@ packages:
     resolution: {integrity: sha512-PNxA/X8pWk+TiqPbsoIYH0GQ5Di7m6326/lwU/S4mlo4wGQddIcf/V//1f9TB0V4j59b57b+HZxt8h3iMROGvg==}
     dev: true
 
-  /mipd@0.0.5(typescript@5.1.6):
+  /mipd@0.0.5(typescript@5.3.2):
     resolution: {integrity: sha512-gbKA784D2WKb5H/GtqEv+Ofd1S9Zj+Z/PGDIl1u1QAbswkxD28BQ5bSXQxkeBzPBABg1iDSbiwGG1XqlOxRspA==}
     peerDependencies:
       typescript: '>=5.0.4'
@@ -8749,8 +8749,8 @@ packages:
       typescript:
         optional: true
     dependencies:
-      typescript: 5.1.6
-      viem: 1.10.14(typescript@5.1.6)
+      typescript: 5.3.2
+      viem: 1.10.14(typescript@5.3.2)
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -8847,7 +8847,7 @@ packages:
   /ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
 
-  /msw@2.0.6(typescript@5.1.6):
+  /msw@2.0.6(typescript@5.3.2):
     resolution: {integrity: sha512-74nN9ADQxHsVx8YGOq5yeDE4bye1mVMAYXojKl0qWraRunTK8UjAVk3wSmOOvVVIDJsyySyjDZ4oYvRuzuMO2g==}
     engines: {node: '>=18'}
     hasBin: true
@@ -8879,7 +8879,7 @@ packages:
       path-to-regexp: 6.2.1
       strict-event-emitter: 0.5.1
       type-fest: 2.19.0
-      typescript: 5.1.6
+      typescript: 5.3.2
       yargs: 17.7.1
     transitivePeerDependencies:
       - encoding
@@ -9895,7 +9895,7 @@ packages:
       functions-have-names: 1.2.3
     dev: true
 
-  /remark-shiki-twoslash@3.1.3(typescript@5.1.6):
+  /remark-shiki-twoslash@3.1.3(typescript@5.3.2):
     resolution: {integrity: sha512-4e8OH3ySOCw5wUbDcPszokOKjKuebOqlP2WlySvC7ITBOq27BiGsFlq+FNWhxppZ+JzhTWah4gQrnMjX3KDbAQ==}
     peerDependencies:
       typescript: '>3'
@@ -9906,9 +9906,9 @@ packages:
       fenceparser: 1.1.1
       regenerator-runtime: 0.13.11
       shiki: 0.10.1
-      shiki-twoslash: 3.1.2(typescript@5.1.6)
+      shiki-twoslash: 3.1.2(typescript@5.3.2)
       tslib: 2.1.0
-      typescript: 5.1.6
+      typescript: 5.3.2
       unist-util-visit: 2.0.3
     transitivePeerDependencies:
       - supports-color
@@ -10227,7 +10227,7 @@ packages:
     resolution: {integrity: sha512-lT297f1WLAdq0A4O+AknIFRP6kkiI3s8C913eJ0XqBxJbZPGWUNkRQk2u8zk4bEAjUJ5i+fSLwB6z1HzeT+DEg==}
     dev: true
 
-  /shiki-twoslash@3.1.2(typescript@5.1.6):
+  /shiki-twoslash@3.1.2(typescript@5.3.2):
     resolution: {integrity: sha512-JBcRIIizi+exIA/OUhYkV6jtyeZco0ykCkIRd5sgwIt1Pm4pz+maoaRZpm6SkhPwvif4fCA7xOtJOykhpIV64Q==}
     peerDependencies:
       typescript: '>3'
@@ -10236,7 +10236,7 @@ packages:
       '@typescript/vfs': 1.3.4
       fenceparser: 1.1.1
       shiki: 0.10.1
-      typescript: 5.1.6
+      typescript: 5.3.2
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -10789,7 +10789,7 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /ts-node@10.9.1(@types/node@20.7.0)(typescript@5.1.6):
+  /ts-node@10.9.1(@types/node@20.7.0)(typescript@5.3.2):
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
     hasBin: true
     peerDependencies:
@@ -10815,7 +10815,7 @@ packages:
       create-require: 1.1.1
       diff: 4.0.2
       make-error: 1.3.6
-      typescript: 5.1.6
+      typescript: 5.3.2
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
     dev: false
@@ -10914,8 +10914,8 @@ packages:
       is-typed-array: 1.1.12
     dev: true
 
-  /typescript@5.1.6:
-    resolution: {integrity: sha512-zaWCozRZ6DLEWAWFrVDz1H6FVXzUSfTy5FUMWsQlU8Ym5JP9eO4xkTIROFCQvhQf61z6O/G6ugw3SgAnvvm+HA==}
+  /typescript@5.3.2:
+    resolution: {integrity: sha512-6l+RyNy7oAHDfxC4FzSJcz9vnjTKxrLpDG5M2Vu4SHRVNg6xzqZp6LYSR9zjqQTu8DU/f5xwxUdADOkbrIX2gQ==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -11240,7 +11240,7 @@ packages:
     engines: {node: '>= 0.8'}
     dev: false
 
-  /viem@1.10.14(typescript@5.1.6):
+  /viem@1.10.14(typescript@5.3.2):
     resolution: {integrity: sha512-GRwFXLFr+/7+7nYYkABgHom3zMIE3DdxZ/DP78QlYWUanpjUV5IebxMOm6pfKD+ZAj3vf9YPAmz+WogjiUgDWw==}
     peerDependencies:
       typescript: '>=5.0.4'
@@ -11254,9 +11254,9 @@ packages:
       '@scure/bip32': 1.3.2
       '@scure/bip39': 1.2.1
       '@types/ws': 8.5.5
-      abitype: 0.9.8(typescript@5.1.6)(zod@3.22.2)
+      abitype: 0.9.8(typescript@5.3.2)(zod@3.22.2)
       isomorphic-ws: 5.0.0(ws@8.13.0)
-      typescript: 5.1.6
+      typescript: 5.3.2
       ws: 8.13.0
     transitivePeerDependencies:
       - bufferutil
@@ -11264,7 +11264,7 @@ packages:
       - zod
     dev: false
 
-  /viem@2.0.0(typescript@5.1.6)(zod@3.22.2):
+  /viem@2.0.0(typescript@5.3.2)(zod@3.22.2):
     resolution: {integrity: sha512-WYPwVAs/wrQE1Li9mgHMZaZTnRZuyPJMauIhnpZKeZgtx7f+bWU3uvVSR5kxTf1aBFdaTuRc/umzX2ucQUurnA==}
     peerDependencies:
       typescript: '>=5.0.4'
@@ -11277,9 +11277,9 @@ packages:
       '@noble/hashes': 1.3.2
       '@scure/bip32': 1.3.2
       '@scure/bip39': 1.2.1
-      abitype: 0.10.0(typescript@5.1.6)(zod@3.22.2)
+      abitype: 0.10.0(typescript@5.3.2)(zod@3.22.2)
       isows: 1.0.3(ws@8.13.0)
-      typescript: 5.1.6
+      typescript: 5.3.2
       ws: 8.13.0
     transitivePeerDependencies:
       - bufferutil
@@ -11369,12 +11369,12 @@ packages:
     optionalDependencies:
       fsevents: 2.3.3
 
-  /vitepress-plugin-shiki-twoslash@0.0.6(typescript@5.1.6)(vitepress@1.0.0-rc.20):
+  /vitepress-plugin-shiki-twoslash@0.0.6(typescript@5.3.2)(vitepress@1.0.0-rc.20):
     resolution: {integrity: sha512-CjMF01Vb/zwOKKCqq6QmkJbTJnRxipv8oiPjRWTjzH2jPaQH4gGCF2fZHS7uY53J3gbU3GwtrXI02J6axLYmbg==}
     peerDependencies:
       vitepress: '>=1.0.0-alpha.61'
     dependencies:
-      remark-shiki-twoslash: 3.1.3(typescript@5.1.6)
+      remark-shiki-twoslash: 3.1.3(typescript@5.3.2)
       vitepress: 1.0.0-rc.20(@types/react@18.2.23)(react@18.2.0)
     transitivePeerDependencies:
       - supports-color
