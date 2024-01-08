@@ -120,7 +120,7 @@ export function Providers({ children, initialState }: Props) {  // [!code ++]
     <WagmiProvider config={config}> // [!code --]
     <WagmiProvider config={config} initialState={initialState}> // [!code ++]
       <QueryClientProvider client={queryClient}>
-        {props.children}
+        {children}
       </QueryClientProvider>
     </WagmiProvider>
   )

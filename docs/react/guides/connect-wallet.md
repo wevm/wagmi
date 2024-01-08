@@ -25,7 +25,7 @@ It takes less than five minutes to get up and running with Browser Wallets, Wall
 
 Before we get started with building the functionality of the Connect Wallet module, we will need to set up the Wagmi configuration.
 
-Let's create a `wagmi.ts` file and export a `config` object.
+Let's create a `config.ts` file and export a `config` object.
 
 ::: code-group
 
