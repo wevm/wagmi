@@ -154,6 +154,15 @@ export {
 } from '../query/getGasPrice.js'
 
 export {
+  type GetProofData,
+  type GetProofOptions,
+  type GetProofQueryFnData,
+  type GetProofQueryKey,
+  getProofQueryKey,
+  getProofQueryOptions,
+} from '../query/getProof.js'
+
+export {
   type GetTokenData,
   type GetTokenOptions,
   type GetTokenQueryFnData,

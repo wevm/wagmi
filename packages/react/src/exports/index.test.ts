@@ -38,6 +38,7 @@ test('exports', () => {
       "useGasPrice",
       "useInfiniteReadContracts",
       "useContractInfiniteReads",
+      "useProof",
       "usePublicClient",
       "useReadContract",
       "useContractRead",

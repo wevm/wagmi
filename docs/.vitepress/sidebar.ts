@@ -174,6 +174,10 @@ export function getSidebar() {
             link: '/react/api/hooks/useFeeHistory',
           },
           {
+            text: 'useProof',
+            link: '/react/api/hooks/useProof',
+          },
+          {
             text: 'usePublicClient',
             link: '/react/api/hooks/usePublicClient',
           },
@@ -482,6 +486,10 @@ export function getSidebar() {
           {
             text: 'getGasPrice',
             link: '/core/api/actions/getGasPrice',
+          },
+          {
+            text: 'getProof',
+            link: '/core/api/actions/getProof',
           },
           {
             text: 'getPublicClient',
