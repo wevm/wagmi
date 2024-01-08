@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.1.0
+
+### Minor Changes
+
+- [#3387](https://github.com/wevm/wagmi/pull/3387) [`c9cd302e`](https://github.com/wevm/wagmi/commit/c9cd302e1c65c980deaee2e12567c2a8ec08b399) Thanks [@marthendalnunes](https://github.com/marthendalnunes)! - Added `call` action.
+
 ## 2.0.2
 
 ### Patch Changes
