@@ -5,6 +5,8 @@ import * as query from './query.js'
 test('exports', () => {
   expect(Object.keys(query)).toMatchInlineSnapshot(`
     [
+      "callQueryKey",
+      "callQueryOptions",
       "connectMutationOptions",
       "disconnectMutationOptions",
       "estimateFeesPerGasQueryKey",

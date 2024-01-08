@@ -144,6 +144,7 @@ export function getSidebar() {
             text: 'useBlockTransactionCount',
             link: '/react/api/hooks/useBlockTransactionCount',
           },
+          { text: 'useCall', link: '/react/api/hooks/useCall' },
           { text: 'useChainId', link: '/react/api/hooks/useChainId' },
           { text: 'useClient', link: '/react/api/hooks/useClient' },
           { text: 'useConfig', link: '/react/api/hooks/useConfig' },
@@ -418,6 +419,10 @@ export function getSidebar() {
         text: 'Actions',
         link: '/core/api/actions',
         items: [
+          {
+            text: 'call',
+            link: '/core/api/actions/call',
+          },
           { text: 'connect', link: '/core/api/actions/connect' },
           { text: 'disconnect', link: '/core/api/actions/disconnect' },
           {

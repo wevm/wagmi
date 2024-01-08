@@ -3,6 +3,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 export {
+  type CallErrorType,
+  type CallParameters,
+  type CallReturnType,
+  call,
+} from '../actions/call.js'
+
+export {
   type ConnectErrorType,
   type ConnectParameters,
   type ConnectReturnType,

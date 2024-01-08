@@ -5,6 +5,7 @@ import * as actions from './actions.js'
 test('exports', () => {
   expect(Object.keys(actions)).toMatchInlineSnapshot(`
     [
+      "call",
       "connect",
       "disconnect",
       "estimateGas",

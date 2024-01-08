@@ -63,6 +63,12 @@ export {
 } from '../hooks/useBlockTransactionCount.js'
 
 export {
+  type UseCallParameters,
+  type UseCallReturnType,
+  useCall,
+} from '../hooks/useCall.js'
+
+export {
   type UseChainIdParameters,
   type UseChainIdReturnType,
   useChainId,

@@ -5,6 +5,7 @@ import * as core from './index.js'
 test('exports', () => {
   expect(Object.keys(core)).toMatchInlineSnapshot(`
     [
+      "call",
       "connect",
       "disconnect",
       "estimateGas",
