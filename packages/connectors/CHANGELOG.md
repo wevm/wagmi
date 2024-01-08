@@ -2,7 +2,7 @@
 
 ## 4.1.0
 
-### Patch Changes
+### Minor Changes
 
 - Updated dependencies [[`c9cd302e`](https://github.com/wevm/wagmi/commit/c9cd302e1c65c980deaee2e12567c2a8ec08b399)]:
   - @wagmi/core@2.1.0
