@@ -5,8 +5,12 @@ import type {
   SendTransactionErrorType as viem_SendTransactionErrorType,
   SendTransactionParameters as viem_SendTransactionParameters,
   SendTransactionReturnType as viem_SendTransactionReturnType,
+  TransactionRequest,
 } from 'viem'
-import { sendTransaction as viem_sendTransaction } from 'viem/actions'
+import {
+  estimateGas as viem_estimateGas,
+  sendTransaction as viem_sendTransaction,
+} from 'viem/actions'
 
 import { type Config } from '../createConfig.js'
 import type { BaseErrorType, ErrorType } from '../errors/base.js'
@@ -30,14 +34,17 @@ export type SendTransactionParameters<
   [key in keyof chains]: Evaluate<
     Omit<
       viem_SendTransactionParameters<chains[key], Account, chains[key]>,
-      'chain'
+      'chain' | 'gas'
     > &
       ChainIdParameter<config, chainId> &
       ConnectorParameter & {
         to: Address
       }
   >
-}[number]
+}[number] & {
+  /** Gas provided for transaction execution, or `null` to skip the prelude gas estimation. */
+  gas?: TransactionRequest['gas'] | null
+}
 
 export type SendTransactionReturnType = viem_SendTransactionReturnType
 
@@ -58,7 +65,7 @@ export async function sendTransaction<
   config: config,
   parameters: SendTransactionParameters<config, chainId>,
 ): Promise<SendTransactionReturnType> {
-  const { account, chainId, connector, ...rest } = parameters
+  const { account, chainId, connector, gas: gas_, ...rest } = parameters
 
   const client = await getConnectorClient(config, {
     account,
@@ -66,8 +73,24 @@ export async function sendTransaction<
     connector,
   })
 
+  const gas = await (async () => {
+    // Skip gas estimation if `null` is provided.
+    if (gas_ === null) return undefined
+
+    // Run gas estimation if no value is provided.
+    if (gas_ === undefined)
+      return viem_estimateGas(client, {
+        ...(rest as any),
+        chain: chainId ? { id: chainId } : null,
+      })
+
+    // Use provided gas value.
+    return gas_
+  })()
+
   const hash = await viem_sendTransaction(client, {
     ...(rest as any),
+    gas,
     chain: chainId ? { id: chainId } : null,
   })
 
