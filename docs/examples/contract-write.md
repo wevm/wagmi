@@ -1,3 +1,0 @@
-# Write Contract 
-
-TODO

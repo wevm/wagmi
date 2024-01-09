@@ -1,3 +1,0 @@
-# Connect Wallet
-
-TODO

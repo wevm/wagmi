@@ -1,5 +1,5 @@
 import { FormEvent } from 'react'
-import { Hex, parseEther } from 'viem'
+import { Hex, parseAbi, parseEther } from 'viem'
 import {
   BaseError,
   useAccount,
@@ -12,13 +12,18 @@ import {
   useConnectorClient,
   useDisconnect,
   useEnsName,
+  useReadContract,
+  useReadContracts,
   useSendTransaction,
   useSignMessage,
   useSwitchAccount,
   useSwitchChain,
   useWaitForTransactionReceipt,
+  useWriteContract,
 } from 'wagmi'
 import { optimism } from 'wagmi/chains'
+
+import { wagmiContractConfig } from './contracts'
 
 function App() {
   useAccountEffect({
@@ -42,6 +47,9 @@ function App() {
       <Balance />
       <ConnectorClient />
       <SendTransaction />
+      <ReadContract />
+      <ReadContracts />
+      <WriteContract />
     </>
   )
 }
@@ -266,6 +274,92 @@ function SendTransaction() {
         />
         <button disabled={isPending} type="submit">
           {isPending ? 'Confirming...' : 'Send'}
+        </button>
+      </form>
+      {hash && <div>Transaction Hash: {hash}</div>}
+      {isConfirming && 'Waiting for confirmation...'}
+      {isConfirmed && 'Transaction confirmed.'}
+      {error && (
+        <div>Error: {(error as BaseError).shortMessage || error.message}</div>
+      )}
+    </div>
+  )
+}
+
+function ReadContract() {
+  const { data: balance } = useReadContract({
+    ...wagmiContractConfig,
+    functionName: 'balanceOf',
+    args: ['0x03A71968491d55603FFe1b11A9e23eF013f75bCF'],
+  })
+
+  return (
+    <div>
+      <h2>Read Contract</h2>
+      <div>Balance: {balance?.toString()}</div>
+    </div>
+  )
+}
+
+function ReadContracts() {
+  const { data } = useReadContracts({
+    allowFailure: false,
+    contracts: [
+      {
+        ...wagmiContractConfig,
+        functionName: 'balanceOf',
+        args: ['0x03A71968491d55603FFe1b11A9e23eF013f75bCF'],
+      },
+      {
+        ...wagmiContractConfig,
+        functionName: 'ownerOf',
+        args: [69n],
+      },
+      {
+        ...wagmiContractConfig,
+        functionName: 'totalSupply',
+      },
+    ],
+  })
+  const [balance, ownerOf, totalSupply] = data || []
+
+  return (
+    <div>
+      <h2>Read Contract</h2>
+      <div>Balance: {balance?.toString()}</div>
+      <div>Owner of Token 69: {ownerOf?.toString()}</div>
+      <div>Total Supply: {totalSupply?.toString()}</div>
+    </div>
+  )
+}
+
+function WriteContract() {
+  const { data: hash, error, isPending, writeContract } = useWriteContract()
+
+  async function submit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    const formData = new FormData(e.target as HTMLFormElement)
+    const tokenId = formData.get('tokenId') as string
+    writeContract({
+      address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+      abi: parseAbi(['function mint(uint256 tokenId)']),
+      functionName: 'mint',
+      args: [BigInt(tokenId)],
+    })
+  }
+
+  const { isLoading: isConfirming, isSuccess: isConfirmed } =
+    useWaitForTransactionReceipt({
+      hash,
+    })
+
+  return (
+    <div>
+      <h2>Write Contract</h2>
+      <form onSubmit={submit}>
+        <input name="tokenId" placeholder="Token ID" required />
+        <button disabled={isPending} type="submit">
+          {isPending ? 'Confirming...' : 'Mint'}
         </button>
       </form>
       {hash && <div>Transaction Hash: {hash}</div>}

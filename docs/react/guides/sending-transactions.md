@@ -1,16 +1,20 @@
-# Sending Transaction
+# Sending Transactions
 
-The following guide teaches you how to send transactions in wagmi. The example below builds on the [Connect Wallet guide](/react/guides/connect-wallet) and uses the [useSendTransaction](/react/api/hooks/useSendTransaction) & [useWaitForTransaction](/react/api/hooks/useWaitForTransactionReceipt) hooks. 
+The following guide teaches you how to send transactions in Wagmi. The example below builds on the [Connect Wallet guide](/react/guides/connect-wallet) and uses the [useSendTransaction](/react/api/hooks/useSendTransaction) & [useWaitForTransaction](/react/api/hooks/useWaitForTransactionReceipt) hooks. 
+
+## Example
 
 Feel free to check out the example before moving on:
 
 <iframe frameborder="0" width="100%" height="500px" src="https://stackblitz.com/edit/vitejs-vite-zkzqj7?embed=1&file=src%2FApp.tsx&hideExplorer=1&view=preview"></iframe>
 
-## 1. Connect Wallet
+## Steps
+
+### 1. Connect Wallet
 
 Follow the [Connect Wallet guide](/react/guides/connect-wallet) guide to get this set up.
 
-## 2. Create a new component
+### 2. Create a new component
 
 Create your `SendTransaction` component that will contain the send transaction logic.
 
@@ -32,7 +36,7 @@ export function SendTransaction() {
 
 :::
 
-## 3. Add a form handler
+### 3. Add a form handler
 
 Next, we will need to add a handler to the form that will send the transaction when the user hits "Send". This will be a basic handler in this step.
 
@@ -62,7 +66,7 @@ export function SendTransaction() {
 
 :::
 
-## 4. Hook up the send transaction Hook
+### 4. Hook up the `useSendTransaction` Hook
 
 Now that we have the form handler, we can hook up the [`useSendTransaction` Hook](/react/api/hooks/useSendTransaction) to send the transaction.
 
@@ -97,7 +101,7 @@ export function SendTransaction() {
 
 :::
 
-## 5. Add loading state (optional)
+### 5. Add loading state (optional)
 
 We can optionally add a loading state to the "Send" button while we are waiting confirmation from the user's wallet.
 
@@ -142,7 +146,7 @@ export function SendTransaction() {
 
 :::
 
-## 6. Wait for transaction receipt (optional)
+### 6. Wait for transaction receipt (optional)
 
 We can also display the transaction confirmation status to the user by using the [`useWaitForTransactionReceipt` Hook](/react/api/hooks/useWaitForTransactionReceipt). 
 
@@ -196,7 +200,7 @@ export function SendTransaction() {
 
 :::
 
-## 7. Handle errors (optional)
+### 7. Handle errors (optional)
 
 If the user rejects the transaction, or the user does not have enough funds to cover the transaction, we can display an error message to the user.
 
@@ -255,9 +259,9 @@ export function SendTransaction() {
 
 :::
 
-## 8. Wire it up!
+### 8. Wire it up!
 
-Finally, we can wire up our Wallet Options and Account components to our application's entrypoint.
+Finally, we can wire up our Send Transaction component to our application's entrypoint.
 
 ::: code-group
 
@@ -355,10 +359,4 @@ export const config = createConfig({
 
 :::
 
-### Playground
-
-Want to see the above steps all wired up together in an end-to-end example? Check out the below StackBlitz playground.
-
-<br/>
-
-<iframe frameborder="0" width="100%" height="500px" src="https://stackblitz.com/edit/vitejs-vite-zkzqj7?embed=1&file=src%2FApp.tsx&hideExplorer=1&view=preview"></iframe>
+[See the Example.](#example)
