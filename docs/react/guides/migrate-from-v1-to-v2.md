@@ -154,7 +154,7 @@ const { data: balance, queryKey } = useBalance({
 useEffect(() => {
   if (blockNumber % 5 === 0) // [!code focus]
     queryClient.invalidateQueries({ queryKey }) // [!code focus]
-}, [blockNumber, queryKey, queryClient])
+}, [blockNumber, queryClient])
 ```
 
 ### Removed suspense property
