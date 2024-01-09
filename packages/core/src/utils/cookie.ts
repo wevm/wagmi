@@ -28,8 +28,6 @@ export function cookieToInitialState(config: Config, cookie?: string | null) {
 
 export function parseCookie(cookie: string, key: string) {
   const keyValue = cookie.split('; ').find((x) => x.startsWith(`${key}=`))
-  if (!keyValue) {
-    return undefined
-  }
+  if (!keyValue) return undefined
   return keyValue.substring(key.length + 1)
 }

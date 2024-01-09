@@ -1,5 +1,6 @@
 ---
 "@wagmi/core": patch
+"wagmi": patch
 ---
 
-fix parseCookie in ssr when the cookie value field has special chars "="
+Fixed SSR cookie support for cookies that have special characters, e.g. `=`.
