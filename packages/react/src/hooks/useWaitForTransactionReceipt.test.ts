@@ -21,7 +21,6 @@ test('default', async () => {
           "chainId": 1,
           "contractAddress": null,
           "cumulativeGasUsed": 12949744n,
-          "deposit_nonce": null,
           "effectiveGasPrice": 9371645552n,
           "from": "0xa0cf798816d4b9b9866b5330eea46a18382f251e",
           "gasUsed": 21000n,
