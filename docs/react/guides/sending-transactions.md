@@ -22,8 +22,8 @@ import * as React from 'react'
 export function SendTransaction() {
   return (
     <form>
-      <input aria-label="Recipient" placeholder="0xA0Cf…251e" required />
-      <input aria-label="Amount (ether)" placeholder="0.05" required />
+      <input name="address" placeholder="0xA0Cf…251e" required />
+      <input name="value" placeholder="0.05" required />
       <button type="submit">Send</button>
     </form>
   )
@@ -52,8 +52,8 @@ export function SendTransaction() {
   return (
     <form> // [!code --]
     <form onSubmit={submit}> // [!code ++]
-      <input aria-label="Recipient" placeholder="0xA0Cf…251e" required />
-      <input aria-label="Amount (ether)" placeholder="0.05" required />
+      <input name="address" placeholder="0xA0Cf…251e" required />
+      <input name="value" placeholder="0.05" required />
       <button type="submit">Send</button>
     </form>
   )
@@ -86,8 +86,8 @@ export function SendTransaction() {
 
   return (
     <form onSubmit={submit}>
-      <input aria-label="Recipient" placeholder="0xA0Cf…251e" required />
-      <input aria-label="Amount (ether)" placeholder="0.05" required />
+      <input name="address" placeholder="0xA0Cf…251e" required />
+      <input name="value" placeholder="0.05" required />
       <button type="submit">Send</button>
       {hash && <div>Transaction Hash: {hash}</div>} // [!code ++]
     </form>
@@ -125,8 +125,8 @@ export function SendTransaction() {
 
   return (
     <form onSubmit={submit}>
-      <input aria-label="Recipient" placeholder="0xA0Cf…251e" required />
-      <input aria-label="Amount (ether)" placeholder="0.05" required />
+      <input name="address" placeholder="0xA0Cf…251e" required />
+      <input name="value" placeholder="0.05" required />
       <button 
         disabled={isPending} // [!code ++]
         type="submit"
@@ -178,8 +178,8 @@ export function SendTransaction() {
 
   return (
     <form onSubmit={submit}>
-      <input aria-label="Recipient" placeholder="0xA0Cf…251e" required />
-      <input aria-label="Amount (ether)" placeholder="0.05" required />
+      <input name="address" placeholder="0xA0Cf…251e" required />
+      <input name="value" placeholder="0.05" required />
       <button 
         disabled={isPending} 
         type="submit"
@@ -234,8 +234,8 @@ export function SendTransaction() {
 
   return (
     <form onSubmit={submit}>
-      <input aria-label="Recipient" placeholder="0xA0Cf…251e" required />
-      <input aria-label="Amount (ether)" placeholder="0.05" required />
+      <input name="address" placeholder="0xA0Cf…251e" required />
+      <input name="value" placeholder="0.05" required />
       <button 
         disabled={isPending} 
         type="submit"
@@ -312,8 +312,8 @@ export function SendTransaction() {
 
   return (
     <form onSubmit={submit}>
-      <input aria-label="Recipient" placeholder="0xA0Cf…251e" required />
-      <input aria-label="Amount (ether)" placeholder="0.05" required />
+      <input name="address" placeholder="0xA0Cf…251e" required />
+      <input name="value" placeholder="0.05" required />
       <button 
         disabled={isPending} 
         type="submit"
