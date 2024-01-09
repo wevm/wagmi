@@ -33,6 +33,10 @@ export function getSidebar() {
             link: '/react/guides/connect-wallet',
           },
           {
+            text: 'Sending Transactions',
+            link: '/react/guides/sending-transactions',
+          },
+          {
             text: 'Error Handling',
             link: '/react/guides/error-handling',
           },
