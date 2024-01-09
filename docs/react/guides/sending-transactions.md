@@ -1,6 +1,6 @@
 # Sending Transaction
 
-The following guide teaches you how to send transactions in wagmi. The example below builds on the [Connect Wallet guide](/react/guide/connect-wallet) and uses the [useSendTransaction](/react/api/hooks/useSendTransaction) & [useWaitForTransaction](/react/api/hooks/useWaitForTransactionReceipt) hooks. 
+The following guide teaches you how to send transactions in wagmi. The example below builds on the [Connect Wallet guide](/react/guides/connect-wallet) and uses the [useSendTransaction](/react/api/hooks/useSendTransaction) & [useWaitForTransaction](/react/api/hooks/useWaitForTransactionReceipt) hooks. 
 
 Feel free to check out the example before moving on:
 
@@ -8,7 +8,7 @@ Feel free to check out the example before moving on:
 
 ## 1. Connect Wallet
 
-Follow the [Connect Wallet guide](/react/guide/connect-wallet) guide to get this set up.
+Follow the [Connect Wallet guide](/react/guides/connect-wallet) guide to get this set up.
 
 ## 2. Create a new component
 
