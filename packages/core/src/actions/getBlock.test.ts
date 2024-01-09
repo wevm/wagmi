@@ -30,7 +30,6 @@ test('args: blockNumber', async () => {
       "number": 18677381n,
       "parentHash": "0x26b6b1583f45019f38f62a3bfa026e2b3213d92a3996a527d23554d5d71e29fd",
       "receiptsRoot": "0xc4d6b5c42258d5a6861e25e99f2929bb8a7456d52ac6e6a96e5c3bcd8bfe2e0a",
-      "sealFields": [],
       "sha3Uncles": "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
       "size": 141249n,
       "stateRoot": "0x01cb576afed4f3f56c86529507ed9951b2849d8895c02fa9a35ab7771695b26c",
