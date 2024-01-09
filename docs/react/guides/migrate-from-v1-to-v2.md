@@ -125,7 +125,7 @@ const { data: balance, queryKey } = useBalance({ // [!code ++]
 
 useEffect(() => { // [!code ++]
   queryClient.invalidateQueries({ queryKey }) // [!code ++]
-}, [blockNumber]) // [!code ++]
+}, [blockNumber, queryClient]) // [!code ++]
 ```
 ```ts [refetch]
 import { useEffect } from 'react' // [!code ++]
@@ -154,7 +154,7 @@ const { data: balance, queryKey } = useBalance({
 useEffect(() => {
   if (blockNumber % 5 === 0) // [!code focus]
     queryClient.invalidateQueries({ queryKey }) // [!code focus]
-}, [blockNumber])
+}, [blockNumber, queryClient])
 ```
 
 ### Removed suspense property
