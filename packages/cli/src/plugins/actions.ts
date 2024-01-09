@@ -233,7 +233,7 @@ export const ${actionName} = ${pure} ${functionName}({ ${innerContent} })`,
             })
             content.push(
               `${docString}
-export const ${actionName} = ${pure} ${functionName}({ ${innerContent}, functionName: '${item.name}' })`,
+export const ${actionName} = ${pure} ${functionName}({ ${innerContent}, eventName: '${item.name}' })`,
             )
           }
         }
