@@ -107,12 +107,12 @@ test('default', async () => {
     /**
      * Wraps __{@link watchContractEvent}__ with \`abi\` set to __{@link erc20Abi}__ and \`eventName\` set to \`\\"Approval\\"\`
      */
-    export const watchErc20ApprovalEvent = /*#__PURE__*/ createWatchContractEvent({ abi: erc20Abi, functionName: 'Approval' })
+    export const watchErc20ApprovalEvent = /*#__PURE__*/ createWatchContractEvent({ abi: erc20Abi, eventName: 'Approval' })
 
     /**
      * Wraps __{@link watchContractEvent}__ with \`abi\` set to __{@link erc20Abi}__ and \`eventName\` set to \`\\"Transfer\\"\`
      */
-    export const watchErc20TransferEvent = /*#__PURE__*/ createWatchContractEvent({ abi: erc20Abi, functionName: 'Transfer' })"
+    export const watchErc20TransferEvent = /*#__PURE__*/ createWatchContractEvent({ abi: erc20Abi, eventName: 'Transfer' })"
   `)
 })
 
@@ -217,12 +217,12 @@ test('address', async () => {
     /**
      * Wraps __{@link watchContractEvent}__ with \`abi\` set to __{@link erc20Abi}__ and \`eventName\` set to \`\\"Approval\\"\`
      */
-    export const watchErc20ApprovalEvent = /*#__PURE__*/ createWatchContractEvent({ abi: erc20Abi, address: erc20Address, functionName: 'Approval' })
+    export const watchErc20ApprovalEvent = /*#__PURE__*/ createWatchContractEvent({ abi: erc20Abi, address: erc20Address, eventName: 'Approval' })
 
     /**
      * Wraps __{@link watchContractEvent}__ with \`abi\` set to __{@link erc20Abi}__ and \`eventName\` set to \`\\"Transfer\\"\`
      */
-    export const watchErc20TransferEvent = /*#__PURE__*/ createWatchContractEvent({ abi: erc20Abi, address: erc20Address, functionName: 'Transfer' })"
+    export const watchErc20TransferEvent = /*#__PURE__*/ createWatchContractEvent({ abi: erc20Abi, address: erc20Address, eventName: 'Transfer' })"
   `)
 })
 
@@ -327,12 +327,12 @@ test('legacy hook names', async () => {
     /**
      * Wraps __{@link watchContractEvent}__ with \`abi\` set to __{@link erc20Abi}__ and \`eventName\` set to \`\\"Approval\\"\`
      */
-    export const watchErc20ApprovalEvent = /*#__PURE__*/ createWatchContractEvent({ abi: erc20Abi, address: erc20Address, functionName: 'Approval' })
+    export const watchErc20ApprovalEvent = /*#__PURE__*/ createWatchContractEvent({ abi: erc20Abi, address: erc20Address, eventName: 'Approval' })
 
     /**
      * Wraps __{@link watchContractEvent}__ with \`abi\` set to __{@link erc20Abi}__ and \`eventName\` set to \`\\"Transfer\\"\`
      */
-    export const watchErc20TransferEvent = /*#__PURE__*/ createWatchContractEvent({ abi: erc20Abi, address: erc20Address, functionName: 'Transfer' })"
+    export const watchErc20TransferEvent = /*#__PURE__*/ createWatchContractEvent({ abi: erc20Abi, address: erc20Address, eventName: 'Transfer' })"
   `)
 })
 
