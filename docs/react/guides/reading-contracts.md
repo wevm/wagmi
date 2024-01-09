@@ -63,9 +63,9 @@ function ReadContract() {
 
 ## Calling Multiple Functions
 
-We can use the [`useContractRead` Hook](/react/api/hooks/useContractRead) multiple times in a single component to call multiple functions on the same contract, but this ends up being hard to manage as the number of functions increases, especially when we also want to deal with loading & error states. 
+We can use the [`useReadContract` Hook](/react/api/hooks/useReadContract) multiple times in a single component to call multiple functions on the same contract, but this ends up being hard to manage as the number of functions increases, especially when we also want to deal with loading & error states. 
 
-Luckily, to make this easier, we can use the [`useContractReads` Hook](/react/api/hooks/useContractReads) to call multiple functions in a single call.
+Luckily, to make this easier, we can use the [`useReadContracts` Hook](/react/api/hooks/useReadContracts) to call multiple functions in a single call.
 
 :::code-group
 
