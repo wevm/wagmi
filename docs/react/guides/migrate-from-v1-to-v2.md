@@ -125,7 +125,7 @@ const { data: balance, queryKey } = useBalance({ // [!code ++]
 
 useEffect(() => { // [!code ++]
   queryClient.invalidateQueries({ queryKey }) // [!code ++]
-}, [blockNumber, queryKey, queryClient]) // [!code ++]
+}, [blockNumber, queryClient]) // [!code ++]
 ```
 ```ts [refetch]
 import { useEffect } from 'react' // [!code ++]
