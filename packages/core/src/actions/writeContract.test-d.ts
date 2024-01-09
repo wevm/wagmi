@@ -134,6 +134,30 @@ test('overloads', async () => {
     | readonly [`0x${string}`, `0x${string}`]
     | undefined
   >()
+  writeContract(config, {
+    address: '0x',
+    abi,
+    functionName: 'foo',
+  })
+  writeContract(config, {
+    address: '0x',
+    abi,
+    functionName: 'foo',
+    args: ['0x'],
+  })
+  writeContract(config, {
+    address: '0x',
+    abi,
+    functionName: 'foo',
+    args: ['0x', '0x'],
+  })
+  writeContract(config, {
+    address: '0x',
+    abi,
+    functionName: 'foo',
+    // @ts-expect-error
+    args: ['0x', 123n],
+  })
 
   type Result2 = WriteContractParameters<typeof abi, 'bar'>
   expectTypeOf<Result2['functionName']>().toEqualTypeOf<'foo' | 'bar'>()

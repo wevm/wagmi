@@ -36,6 +36,13 @@ export type MetaMaskParameters = Evaluate<
 >
 
 metaMask.type = 'metaMask' as const
+/**
+ * @deprecated
+ *
+ * __Warning__ This connector has a large file size due to the underlying `@metamask/sdk`. For mobile
+ * support, it is recommended to use {@link walletConnect}. For desktop support, you should rely on Multi Injected
+ * Provider Discovery (EIP-6963) via the Wagmi {@link Config}.
+ */
 export function metaMask(parameters: MetaMaskParameters = {}) {
   type Provider = SDKProvider
   type Properties = {

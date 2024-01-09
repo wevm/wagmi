@@ -309,14 +309,6 @@ const connector = new MetaMaskConnector() // [!code --]
 const connector = injected({ target: 'metaMask' }) // [!code ++]
 ```
 
-In addition, there is a new [`metaMask`](/core/api/connectors/metaMask) connector that wraps the [MetaMask SDK](https://github.com/MetaMask/metamask-sdk) and includes desktop and mobile support.
-
-```ts
-import { metaMask } from '@wagmi/connectors'
-
-const connector = metaMask()
-```
-
 ### Renamed connectors
 
 In Wagmi v1, connectors were classes you needed to instantiate. In Wagmi v2, connectors are functions. As a result, the API has changed. Connectors have the following new names:
