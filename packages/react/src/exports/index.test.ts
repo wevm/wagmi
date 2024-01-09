@@ -53,6 +53,7 @@ test('exports', () => {
       "useToken",
       "useTransaction",
       "useTransactionCount",
+      "useTransactionReceipt",
       "useVerifyMessage",
       "useVerifyTypedData",
       "useWalletClient",

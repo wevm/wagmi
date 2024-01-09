@@ -191,6 +191,13 @@ export {
 } from '../actions/getTransactionCount.js'
 
 export {
+  type GetTransactionReceiptErrorType,
+  type GetTransactionReceiptParameters,
+  type GetTransactionReceiptReturnType,
+  getTransactionReceipt,
+} from '../actions/getTransactionReceipt.js'
+
+export {
   type GetWalletClientErrorType,
   type GetWalletClientParameters,
   type GetWalletClientReturnType,
