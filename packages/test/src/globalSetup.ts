@@ -24,8 +24,11 @@ async function createProxy(chain: Chain) {
       },
     })
   } catch (error) {
-    if ((error as Error).message.includes('EADDRINUSE'))
+    if ((error as Error).message.includes('EADDRINUSE')) {
+      console.error(
+        `createProxy: Chain ${chain.id} - ${(error as Error).message}`,
+      )
       exec(`kill -9 $(lsof -t -i:${chain.port})`)
-    else throw error
+    } else throw error
   }
 }

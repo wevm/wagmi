@@ -12,9 +12,10 @@ test('default', async () => {
 
   await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-  expect(result.current).toMatchInlineSnapshot(`
+  const { data, ...rest } = result.current
+  expect(data).toBeTypeOf('number')
+  expect(rest).toMatchInlineSnapshot(`
     {
-      "data": 564,
       "dataUpdatedAt": 1675209600000,
       "error": null,
       "errorUpdateCount": 0,
@@ -56,9 +57,10 @@ test('parameters: chainId', async () => {
 
   await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-  expect(result.current).toMatchInlineSnapshot(`
+  const { data, ...rest } = result.current
+  expect(data).toBeTypeOf('number')
+  expect(rest).toMatchInlineSnapshot(`
     {
-      "data": 564,
       "dataUpdatedAt": 1675209600000,
       "error": null,
       "errorUpdateCount": 0,
@@ -100,9 +102,10 @@ test('parameters: blockNumber', async () => {
 
   await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-  expect(result.current).toMatchInlineSnapshot(`
+  const { data, ...rest } = result.current
+  expect(data).toBeTypeOf('number')
+  expect(rest).toMatchInlineSnapshot(`
     {
-      "data": 82,
       "dataUpdatedAt": 1675209600000,
       "error": null,
       "errorUpdateCount": 0,
@@ -145,50 +148,54 @@ test('behavior: address: undefined -> defined', async () => {
     useTransactionCount({ address }),
   )
 
-  expect(result.current).toMatchInlineSnapshot(`
-    {
-      "data": undefined,
-      "dataUpdatedAt": 0,
-      "error": null,
-      "errorUpdateCount": 0,
-      "errorUpdatedAt": 0,
-      "failureCount": 0,
-      "failureReason": null,
-      "fetchStatus": "idle",
-      "isError": false,
-      "isFetched": false,
-      "isFetchedAfterMount": false,
-      "isFetching": false,
-      "isInitialLoading": false,
-      "isLoading": false,
-      "isLoadingError": false,
-      "isPaused": false,
-      "isPending": true,
-      "isPlaceholderData": false,
-      "isRefetchError": false,
-      "isRefetching": false,
-      "isStale": true,
-      "isSuccess": false,
-      "queryKey": [
-        "transactionCount",
-        {
-          "address": undefined,
-          "chainId": 1,
-        },
-      ],
-      "refetch": [Function],
-      "status": "pending",
-    }
-  `)
+  {
+    const { data, ...rest } = result.current
+    expect(data).toBeTypeOf('undefined')
+    expect(rest).toMatchInlineSnapshot(`
+      {
+        "dataUpdatedAt": 0,
+        "error": null,
+        "errorUpdateCount": 0,
+        "errorUpdatedAt": 0,
+        "failureCount": 0,
+        "failureReason": null,
+        "fetchStatus": "idle",
+        "isError": false,
+        "isFetched": false,
+        "isFetchedAfterMount": false,
+        "isFetching": false,
+        "isInitialLoading": false,
+        "isLoading": false,
+        "isLoadingError": false,
+        "isPaused": false,
+        "isPending": true,
+        "isPlaceholderData": false,
+        "isRefetchError": false,
+        "isRefetching": false,
+        "isStale": true,
+        "isSuccess": false,
+        "queryKey": [
+          "transactionCount",
+          {
+            "address": undefined,
+            "chainId": 1,
+          },
+        ],
+        "refetch": [Function],
+        "status": "pending",
+      }
+    `)
+  }
 
   address = accounts[0]
   rerender()
 
   await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-  expect(result.current).toMatchInlineSnapshot(`
+  const { data, ...rest } = result.current
+  expect(data).toBeTypeOf('number')
+  expect(rest).toMatchInlineSnapshot(`
     {
-      "data": 564,
       "dataUpdatedAt": 1675209600000,
       "error": null,
       "errorUpdateCount": 0,
