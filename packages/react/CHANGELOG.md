@@ -1,5 +1,15 @@
 # wagmi
 
+## 2.1.2
+
+### Patch Changes
+
+- [#3407](https://github.com/wevm/wagmi/pull/3407) [`e00b8205`](https://github.com/wevm/wagmi/commit/e00b82058685751637edfa9a6b2d196a12549fe7) Thanks [@jxom](https://github.com/jxom)! - Added a prelude gas estimate check to `sendTransaction`/`useSendTransaction`.
+
+- Updated dependencies [[`e00b8205`](https://github.com/wevm/wagmi/commit/e00b82058685751637edfa9a6b2d196a12549fe7)]:
+  - @wagmi/core@2.1.2
+  - @wagmi/connectors@4.1.2
+
 ## 2.1.1
 
 ### Patch Changes
