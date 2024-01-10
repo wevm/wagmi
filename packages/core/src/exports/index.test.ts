@@ -41,6 +41,7 @@ test('exports', () => {
       "getTransactionCount",
       "getWalletClient",
       "multicall",
+      "prepareTransactionRequest",
       "readContract",
       "readContracts",
       "reconnect",
