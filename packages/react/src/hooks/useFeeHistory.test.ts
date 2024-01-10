@@ -178,7 +178,7 @@ test('parameters: blockNumber', async () => {
   `)
 })
 
-test.only('parameters: blockTag', async () => {
+test('parameters: blockTag', async () => {
   const { result } = renderHook(() =>
     useFeeHistory({
       blockCount: 4,
@@ -342,7 +342,7 @@ test('behavior: blockCount: undefined -> defined', async () => {
   `)
 })
 
-test.only('behavior: rewardPercentiles: undefined -> defined', async () => {
+test('behavior: rewardPercentiles: undefined -> defined', async () => {
   let rewardPercentiles: number[] | undefined = undefined
 
   const { result, rerender } = renderHook(() =>
