@@ -1,5 +1,11 @@
 # create-wagmi
 
+## 2.0.3
+
+### Patch Changes
+
+- [`ec0d8b41`](https://github.com/wevm/wagmi/commit/ec0d8b4112181fefb11025e436a94a6114761d37) Thanks [@tmm](https://github.com/tmm)! - Added note to `metaMask` connector.
+
 ## 2.0.2
 
 ### Patch Changes

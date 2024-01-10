@@ -1,5 +1,13 @@
 # @wagmi/core
 
+## 2.1.1
+
+### Patch Changes
+
+- [#3402](https://github.com/wevm/wagmi/pull/3402) [`64b82282`](https://github.com/wevm/wagmi/commit/64b82282c1e57e77c25aa0814673780e4d11edd4) Thanks [@Songkeys](https://github.com/Songkeys)! - Fixed SSR cookie support for cookies that have special characters, e.g. `=`.
+
+- [`ec0d8b41`](https://github.com/wevm/wagmi/commit/ec0d8b4112181fefb11025e436a94a6114761d37) Thanks [@tmm](https://github.com/tmm)! - Added note to `metaMask` connector.
+
 ## 2.1.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 2.0.3
+
+### Patch Changes
+
+- [#3410](https://github.com/wevm/wagmi/pull/3410) [`55e31c3e`](https://github.com/wevm/wagmi/commit/55e31c3e96c2cbd1d9eb44e5a89f4365489c8310) Thanks [@o-az](https://github.com/o-az)! - Fixed actions plugin issue where `functionName` was used instead of `eventName` for generated contract event actions.
+
 ## 2.0.2
 
 ### Patch Changes
