@@ -71,7 +71,7 @@ test('parameters: chainId', async () => {
       "gasUsedRatio": [
         0,
       ],
-      "oldestBlock": 18677379n,
+      "oldestBlock": 18676359n,
       "reward": [
         [
           0n,
