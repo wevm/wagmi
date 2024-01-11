@@ -21,7 +21,7 @@ test('default', () => {
   expect(config).toBeDefined()
 })
 
-test.only('getClient', () => {
+test('getClient', () => {
   const config = createConfig({
     chains: [mainnet, optimism],
     connectors: [mock({ accounts })],
