@@ -12,6 +12,7 @@ import type {
   SyncConnectedChainParameter,
 } from '../types/properties.js'
 import type { IsNarrowable, UnionEvaluate } from '../types/utils.js'
+import { getAction } from '../utils/getAction.js'
 
 export type WatchBlocksParameters<
   includeTransactions extends boolean = false,
@@ -63,7 +64,11 @@ export function watchBlocks<
     if (unwatch) unwatch()
 
     const client = config.getClient({ chainId })
-    unwatch = viem_watchBlocks(client, rest as viem_WatchBlocksParameters)
+    unwatch = getAction(
+      client,
+      viem_watchBlocks,
+      'watchBlocks',
+    )(rest as viem_WatchBlocksParameters)
     return unwatch
   }
 

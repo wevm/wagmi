@@ -8,6 +8,7 @@ import {
 import { type Config } from '../createConfig.js'
 import { type ChainIdParameter } from '../types/properties.js'
 import { type UnionEvaluate } from '../types/utils.js'
+import { getAction } from '../utils/getAction.js'
 
 export type GetBlockTransactionCountParameters<
   config extends Config = Config,
@@ -32,5 +33,9 @@ export function getBlockTransactionCount<
 ): Promise<GetBlockTransactionCountReturnType> {
   const { chainId } = parameters
   const client = config.getClient({ chainId })
-  return viem_getBlockTransactionCount(client, parameters)
+  return getAction(
+    client,
+    viem_getBlockTransactionCount,
+    'getBlockTransactionCount',
+  )(parameters)
 }

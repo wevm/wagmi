@@ -20,6 +20,7 @@ import type {
   ConnectorParameter,
 } from '../types/properties.js'
 import { type Evaluate } from '../types/utils.js'
+import { getAction } from '../utils/getAction.js'
 import {
   type GetConnectorClientErrorType,
   getConnectorClient,
@@ -79,7 +80,11 @@ export async function sendTransaction<
 
     // Run gas estimation if no value is provided.
     if (gas_ === undefined)
-      return viem_estimateGas(client, {
+      return getAction(
+        client,
+        viem_estimateGas,
+        'estimateGas',
+      )({
         ...(rest as any),
         chain: chainId ? { id: chainId } : null,
       })
@@ -88,7 +93,11 @@ export async function sendTransaction<
     return gas_
   })()
 
-  const hash = await viem_sendTransaction(client, {
+  const hash = await getAction(
+    client,
+    viem_sendTransaction,
+    'sendTransaction',
+  )({
     ...(rest as any),
     gas,
     chain: chainId ? { id: chainId } : null,

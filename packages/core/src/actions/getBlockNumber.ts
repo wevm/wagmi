@@ -8,6 +8,7 @@ import {
 import { type Config } from '../createConfig.js'
 import { type ChainIdParameter } from '../types/properties.js'
 import { type Evaluate } from '../types/utils.js'
+import { getAction } from '../utils/getAction.js'
 
 export type GetBlockNumberParameters<
   config extends Config = Config,
@@ -28,5 +29,5 @@ export function getBlockNumber<
 ): Promise<GetBlockNumberReturnType> {
   const { chainId } = parameters
   const client = config.getClient({ chainId })
-  return viem_getBlockNumber(client, parameters)
+  return getAction(client, viem_getBlockNumber, 'getBlockNumber')(parameters)
 }

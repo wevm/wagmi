@@ -13,6 +13,7 @@ import { type Config } from '../createConfig.js'
 import type { SelectChains } from '../types/chain.js'
 import { type ChainIdParameter } from '../types/properties.js'
 import { type Evaluate, type IsNarrowable } from '../types/utils.js'
+import { getAction } from '../utils/getAction.js'
 
 export type WaitForTransactionReceiptParameters<
   config extends Config = Config,
@@ -47,13 +48,21 @@ export async function waitForTransactionReceipt<
   const { chainId, timeout = 0, ...rest } = parameters
 
   const client = config.getClient({ chainId })
-  const receipt = await viem_waitForTransactionReceipt(client, {
+  const receipt = await getAction(
+    client,
+    viem_waitForTransactionReceipt,
+    'waitForTransactionReceipt',
+  )({
     ...rest,
     timeout,
   })
 
   if (receipt.status === 'reverted') {
-    const txn = await getTransaction(client, { hash: receipt.transactionHash })
+    const txn = await getAction(
+      client,
+      getTransaction,
+      'getTransaction',
+    )({ hash: receipt.transactionHash })
     const code = (await call(client, {
       ...txn,
       gasPrice: txn.type !== 'eip1559' ? txn.gasPrice : undefined,
