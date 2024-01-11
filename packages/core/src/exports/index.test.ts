@@ -34,6 +34,7 @@ test('exports', () => {
       "getFeeHistory",
       "getGasPrice",
       "getPublicClient",
+      "getStorageAt",
       "getToken",
       "fetchToken",
       "getTransaction",

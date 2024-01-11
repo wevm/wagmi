@@ -186,6 +186,10 @@ export function getSidebar() {
             link: '/react/api/hooks/useFeeHistory',
           },
           {
+            text: 'useStorageAt',
+            link: '/react/api/hooks/useStorageAt',
+          },
+          {
             text: 'usePublicClient',
             link: '/react/api/hooks/usePublicClient',
           },
@@ -498,6 +502,10 @@ export function getSidebar() {
           {
             text: 'getPublicClient',
             link: '/core/api/actions/getPublicClient',
+          },
+          {
+            text: 'getStorageAt',
+            link: '/core/api/actions/getStorageAt',
           },
           { text: 'getToken', link: '/core/api/actions/getToken' },
           {

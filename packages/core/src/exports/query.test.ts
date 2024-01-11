@@ -37,6 +37,8 @@ test('exports', () => {
       "getFeeHistoryQueryOptions",
       "getGasPriceQueryKey",
       "getGasPriceQueryOptions",
+      "getStorageAtQueryKey",
+      "getStorageAtQueryOptions",
       "getTokenQueryKey",
       "getTokenQueryOptions",
       "getTransactionQueryKey",

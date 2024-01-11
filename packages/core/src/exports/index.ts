@@ -166,6 +166,13 @@ export {
 } from '../actions/getPublicClient.js'
 
 export {
+  type GetStorageAtErrorType,
+  type GetStorageAtParameters,
+  type GetStorageAtReturnType,
+  getStorageAt,
+} from '../actions/getStorageAt.js'
+
+export {
   type GetTokenErrorType,
   type GetTokenParameters,
   type GetTokenReturnType,

@@ -233,6 +233,12 @@ export {
 } from '../hooks/useSimulateContract.js'
 
 export {
+  type UseStorageAtParameters,
+  type UseStorageAtReturnType,
+  useStorageAt,
+} from '../hooks/useStorageAt.js'
+
+export {
   type UseSwitchAccountParameters,
   type UseSwitchAccountReturnType,
   useSwitchAccount,
