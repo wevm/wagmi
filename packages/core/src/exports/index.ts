@@ -82,6 +82,13 @@ export {
 } from '../actions/getBlockTransactionCount.js'
 
 export {
+  type GetBytecodeErrorType,
+  type GetBytecodeParameters,
+  type GetBytecodeReturnType,
+  getBytecode,
+} from '../actions/getBytecode.js'
+
+export {
   type GetChainIdReturnType,
   getChainId,
 } from '../actions/getChainId.js'

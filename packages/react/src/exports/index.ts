@@ -63,6 +63,12 @@ export {
 } from '../hooks/useBlockTransactionCount.js'
 
 export {
+  type UseBytecodeParameters,
+  type UseBytecodeReturnType,
+  useBytecode,
+} from '../hooks/useBytecode.js'
+
+export {
   type UseCallParameters,
   type UseCallReturnType,
   useCall,

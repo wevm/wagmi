@@ -156,6 +156,10 @@ export function getSidebar() {
             text: 'useBlockTransactionCount',
             link: '/react/api/hooks/useBlockTransactionCount',
           },
+          {
+            text: 'useBytecode',
+            link: '/react/api/hooks/useBytecode',
+          },
           { text: 'useCall', link: '/react/api/hooks/useCall' },
           { text: 'useChainId', link: '/react/api/hooks/useChainId' },
           { text: 'useClient', link: '/react/api/hooks/useClient' },
@@ -463,6 +467,10 @@ export function getSidebar() {
           {
             text: 'getBlockTransactionCount',
             link: '/core/api/actions/getBlockTransactionCount',
+          },
+          {
+            text: 'getBytecode',
+            link: '/core/api/actions/getBytecode',
           },
           { text: 'getChainId', link: '/core/api/actions/getChainId' },
           {

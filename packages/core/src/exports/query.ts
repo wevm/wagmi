@@ -91,6 +91,15 @@ export {
 } from '../query/getBlockTransactionCount.js'
 
 export {
+  type GetBytecodeData,
+  type GetBytecodeOptions,
+  type GetBytecodeQueryFnData,
+  type GetBytecodeQueryKey,
+  getBytecodeQueryKey,
+  getBytecodeQueryOptions,
+} from '../query/getBytecode.js'
+
+export {
   type GetConnectorClientData,
   type GetConnectorClientOptions,
   type GetConnectorClientQueryFnData,
