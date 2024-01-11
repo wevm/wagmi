@@ -83,7 +83,7 @@ function App() {
 import { type UsePublicClientReturnType } from 'wagmi'
 ```
 
-`PublicClient`
+`PublicClient | undefined`
 
 Viem [`PublicClient`](https://viem.sh/docs/clients/public.html) instance.
 

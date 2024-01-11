@@ -16,20 +16,26 @@ import { useConfig } from './useConfig.js'
 
 export type UsePublicClientParameters<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends config['chains'][number]['id'] | number | undefined =
+    | config['chains'][number]['id']
+    | undefined,
 > = Evaluate<
   GetPublicClientParameters<config, chainId> & ConfigParameter<config>
 >
 
 export type UsePublicClientReturnType<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends config['chains'][number]['id'] | number | undefined =
+    | config['chains'][number]['id']
+    | undefined,
 > = GetPublicClientReturnType<config, chainId>
 
 /** https://wagmi.sh/react/api/hooks/usePublicClient */
 export function usePublicClient<
   config extends Config = ResolvedRegister['config'],
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends config['chains'][number]['id'] | number | undefined =
+    | config['chains'][number]['id']
+    | undefined,
 >(
   parameters: UsePublicClientParameters<config, chainId> = {},
 ): UsePublicClientReturnType<config, chainId> {
@@ -40,6 +46,6 @@ export function usePublicClient<
     () => getPublicClient(config, parameters),
     () => getPublicClient(config, parameters),
     (x) => x,
-    (a, b) => a.uid === b.uid,
+    (a, b) => a?.uid === b?.uid,
   ) as any
 }

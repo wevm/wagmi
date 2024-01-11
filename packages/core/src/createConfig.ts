@@ -125,7 +125,10 @@ export function createConfig<
     // If the target chain is not configured, use the client of the current chain.
     type Return = Client<Transport, Extract<chains[number], { id: chainId }>>
     {
+      // chainId specified and not configured
+      if (config.chainId && !chain) throw new ChainNotConfiguredError()
       const client = clients.get(store.getState().chainId)
+      // client exists, but no chain
       if (client && !chain) return client as Return
       else if (!chain) throw new ChainNotConfiguredError()
     }

@@ -79,7 +79,7 @@ function App() {
 import { type UseClientReturnType } from 'wagmi'
 ```
 
-`Client`
+`Client | undefined`
 
 Viem [`Client`](https://viem.sh/docs/clients/custom.html) instance.
 
