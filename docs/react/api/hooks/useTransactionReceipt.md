@@ -44,7 +44,7 @@ import { type UseTransactionReceiptParameters } from 'wagmi'
 
 ### hash
 
-`` `0x${string}` ``
+`` `0x${string}` | undefined ``
 
 A transaction hash.
 
