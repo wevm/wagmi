@@ -97,6 +97,52 @@
       "source": "/react/prepare-hooks/usePrepareSendTransaction",
       "destination": "/react/api/hooks/useEstimateFeesPerGas",
       "permanent": true
+    },
+
+    {
+      "source": "/examples/connect-wallet",
+      "destination": "/react/guides/connect-wallet",
+      "permanent": true
+    },
+    {
+      "source": "/examples/send-transaction",
+      "destination": "/react/guides/send-transaction",
+      "permanent": true
+    },
+    {
+      "source": "/react/guides/sending-transactions",
+      "destination": "/react/guides/send-transaction",
+      "permanent": true
+    },
+    {
+      "source": "/react/guides/reading-contracts",
+      "destination": "/react/guides/read-from-contract",
+      "permanent": true
+    },
+    {
+      "source": "/examples/contract-write(-dynamic)?",
+      "destination": "/react/guides/write-to-contract",
+      "permanent": true
+    },
+    {
+      "source": "/react/guides/writing-to-contracts",
+      "destination": "/react/guides/write-to-contract",
+      "permanent": true
+    },
+    {
+      "source": "/examples/custom-connector",
+      "destination": "/dev/creating-connectors",
+      "permanent": true
+    },
+    {
+      "source": "/examples/sign-message",
+      "destination": "https://1.x.wagmi.sh/examples/sign-message",
+      "permanent": false
+    },
+    {
+      "source": "/examples/sign-in-with-ethereum",
+      "destination": "https://1.x.wagmi.sh/examples/sign-in-with-ethereum",
+      "permanent": false
     }
   ]
 }

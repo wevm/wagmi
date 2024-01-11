@@ -310,7 +310,7 @@ export function injected(parameters: InjectedParameters = {}) {
           throw new ProviderNotFoundError()
         }
 
-        // We are applying a retry & timeout strategy here as some injected wallets (ie. MetaMask) fail to
+        // We are applying a retry & timeout strategy here as some injected wallets (e.g. MetaMask) fail to
         // immediately resolve a JSON-RPC request on page load.
         const accounts = await withRetry(() =>
           withTimeout(() => this.getAccounts(), {

@@ -67,4 +67,5 @@ For more information on what to do next, check out the following topics.
 
 - [**TypeScript**](/core/typescript) Learn how to get the most out of Wagmi's type-safety and inference for an enlightened developer experience.
 - [**Actions**](/core/api/actions) Browse the collection of actions and learn how to use them.
+- [**Framework Adapters**](/core/guides/framework-adapters) Learn how to create a Wagmi-like adapter for your favorite framework.
 - [**Viem docs**](https://viem.sh) Wagmi Core is a wrapper around Viem that manages account and client reactivity. Learn more about Viem and how to use it.

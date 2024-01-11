@@ -25,22 +25,6 @@ export function getSidebar() {
             link: '/react/guides/viem',
           },
           {
-            text: 'Connect Wallet',
-            link: '/react/guides/connect-wallet',
-          },
-          {
-            text: 'Sending Transactions',
-            link: '/react/guides/sending-transactions',
-          },
-          {
-            text: 'Reading Contracts',
-            link: '/react/guides/reading-contracts',
-          },
-          {
-            text: 'Writing to Contracts',
-            link: '/react/guides/writing-to-contracts',
-          },
-          {
             text: 'Error Handling',
             link: '/react/guides/error-handling',
           },
@@ -59,6 +43,22 @@ export function getSidebar() {
           {
             text: 'SSR',
             link: '/react/guides/ssr',
+          },
+          {
+            text: 'Connect Wallet',
+            link: '/react/guides/connect-wallet',
+          },
+          {
+            text: 'Send Transaction',
+            link: '/react/guides/send-transaction',
+          },
+          {
+            text: 'Read from Contract',
+            link: '/react/guides/read-from-contract',
+          },
+          {
+            text: 'Write to Contract',
+            link: '/react/guides/write-to-contract',
           },
           {
             text: 'FAQ / Troubleshooting',
