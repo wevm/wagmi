@@ -31,7 +31,7 @@ export type UseBytecodeParameters<
       GetBytecodeQueryFnData,
       GetBytecodeErrorType,
       selectData,
-      GetBytecodeQueryKey
+      GetBytecodeQueryKey<config>
     >
 >
 

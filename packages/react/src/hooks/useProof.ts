@@ -32,7 +32,7 @@ export type UseProofParameters<
       GetProofQueryFnData,
       GetProofErrorType,
       selectData,
-      GetProofQueryKey
+      GetProofQueryKey<config>
     >
 >
 

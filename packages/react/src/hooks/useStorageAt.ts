@@ -31,7 +31,7 @@ export type UseStorageAtParameters<
       GetStorageAtQueryFnData,
       GetStorageAtErrorType,
       selectData,
-      GetStorageAtQueryKey
+      GetStorageAtQueryKey<config>
     >
 >
 

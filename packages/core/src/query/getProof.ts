@@ -31,7 +31,7 @@ export function getProofQueryOptions<config extends Config>(
     GetProofQueryFnData,
     GetProofErrorType,
     GetProofData,
-    GetProofQueryKey
+    GetProofQueryKey<config>
   >
 }
 
@@ -45,4 +45,6 @@ export function getProofQueryKey<config extends Config>(
   return ['getProof', filterQueryOptions(options)] as const
 }
 
-export type GetProofQueryKey = ReturnType<typeof getProofQueryKey>
+export type GetProofQueryKey<config extends Config> = ReturnType<
+  typeof getProofQueryKey<config>
+>

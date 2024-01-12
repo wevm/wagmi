@@ -30,7 +30,7 @@ export function getStorageAtQueryOptions<config extends Config>(
     GetStorageAtQueryFnData,
     GetStorageAtErrorType,
     GetStorageAtData,
-    GetStorageAtQueryKey
+    GetStorageAtQueryKey<config>
   >
 }
 
@@ -44,4 +44,6 @@ export function getStorageAtQueryKey<config extends Config>(
   return ['getStorageAt', filterQueryOptions(options)] as const
 }
 
-export type GetStorageAtQueryKey = ReturnType<typeof getStorageAtQueryKey>
+export type GetStorageAtQueryKey<config extends Config> = ReturnType<
+  typeof getStorageAtQueryKey<config>
+>

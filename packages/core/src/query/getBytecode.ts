@@ -20,17 +20,18 @@ export function getBytecodeQueryOptions<config extends Config>(
   options: GetBytecodeOptions<config> = {},
 ) {
   return {
-    queryFn({ queryKey }) {
+    async queryFn({ queryKey }) {
       const { address, scopeKey: _, ...parameters } = queryKey[1]
       if (!address) throw new Error('address is required')
-      return getBytecode(config, { ...parameters, address })
+      const bytecode = await getBytecode(config, { ...parameters, address })
+      return (bytecode ?? null) as any
     },
     queryKey: getBytecodeQueryKey(options),
   } as const satisfies QueryOptions<
     GetBytecodeQueryFnData,
     GetBytecodeErrorType,
     GetBytecodeData,
-    GetBytecodeQueryKey
+    GetBytecodeQueryKey<config>
   >
 }
 export type GetBytecodeQueryFnData = GetBytecodeReturnType
@@ -43,4 +44,6 @@ export function getBytecodeQueryKey<config extends Config>(
   return ['getBytecode', filterQueryOptions(options)] as const
 }
 
-export type GetBytecodeQueryKey = ReturnType<typeof getBytecodeQueryKey>
+export type GetBytecodeQueryKey<config extends Config> = ReturnType<
+  typeof getBytecodeQueryKey<config>
+>
