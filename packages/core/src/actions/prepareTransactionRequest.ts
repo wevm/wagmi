@@ -7,7 +7,6 @@ import {
 
 import { type Config } from '../createConfig.js'
 import { type ChainIdParameter } from '../types/properties.js'
-
 import { type Evaluate, type UnionLooseOmit } from '../types/utils.js'
 
 export type PrepareTransactionRequestParameters<

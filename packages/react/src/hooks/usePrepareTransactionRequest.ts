@@ -5,15 +5,18 @@ import {
   type PrepareTransactionRequestErrorType,
   type ResolvedRegister,
 } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import { type Evaluate } from '@wagmi/core/internal'
 import {
   type PrepareTransactionRequestData,
   type PrepareTransactionRequestOptions,
   type PrepareTransactionRequestQueryKey,
   prepareTransactionRequestQueryOptions,
 } from '@wagmi/core/query'
-import type { PrepareTransactionRequestQueryFnData } from '@wagmi/core/query'
-import type { ConfigParameter, QueryParameter } from '../types/properties.js'
+import { type PrepareTransactionRequestQueryFnData } from '@wagmi/core/query'
+import {
+  type ConfigParameter,
+  type QueryParameter,
+} from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'

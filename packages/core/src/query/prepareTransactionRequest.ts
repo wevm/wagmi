@@ -7,8 +7,8 @@ import {
   prepareTransactionRequest,
 } from '../actions/prepareTransactionRequest.js'
 import { type Config } from '../createConfig.js'
-import type { ScopeKeyParameter } from '../types/properties.js'
-import type { Evaluate, ExactPartial } from '../types/utils.js'
+import { type ScopeKeyParameter } from '../types/properties.js'
+import { type Evaluate, type ExactPartial } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
 export type PrepareTransactionRequestOptions<config extends Config> = Evaluate<
@@ -22,8 +22,7 @@ export function prepareTransactionRequestQueryOptions<config extends Config>(
   return {
     async queryFn({ queryKey }) {
       const { scopeKey: _, ...parameters } = queryKey[1]
-      const request = await prepareTransactionRequest(config, parameters)
-      return request ?? null
+      return prepareTransactionRequest(config, parameters)
     },
     queryKey: prepareTransactionRequestQueryKey(options),
   } as const satisfies QueryOptions<
