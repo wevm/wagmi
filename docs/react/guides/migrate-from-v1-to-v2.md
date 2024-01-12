@@ -485,6 +485,24 @@ const transport = http('https://mainnet.example.com')
 - Removed `config.setLastUsedConnector`. Use `config.storage?.setItem('recentConnectorId', connectorId)` instead.
 - Removed `getConfig`. `config` should be passed explicitly to actions instead of using global `config`.
 
+### Moved TanStack Query parameters to `query` object
+
+TanStack Query parameters like `enabled`, `staleTime` are now moved to `query` object:
+
+```tsx
+useContractRead({ // [!code --]
+  enabled: false, // [!code --]
+  staleTime: 1000, // [!code --]
+}); // [!code --]
+
+useReadContract({ // [!code ++]
+  query: { // [!code ++]
+    enabled: false, // [!code ++]
+    staleTime: 1000, // [!code ++]
+  } // [!code ++]
+}); // [!code ++]
+```
+
 ## Deprecations
 
 ### Renamed `WagmiConfig`
