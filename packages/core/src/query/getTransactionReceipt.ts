@@ -7,8 +7,8 @@ import {
   getTransactionReceipt,
 } from '../actions/getTransactionReceipt.js'
 import { type Config } from '../createConfig.js'
-import type { ScopeKeyParameter } from '../types/properties.js'
-import type { Evaluate, ExactPartial } from '../types/utils.js'
+import { type ScopeKeyParameter } from '../types/properties.js'
+import { type Evaluate, type ExactPartial } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
 export type GetTransactionReceiptOptions<config extends Config> = Evaluate<
@@ -21,16 +21,9 @@ export function getTransactionReceiptQueryOptions<config extends Config>(
 ) {
   return {
     async queryFn({ queryKey }) {
-      const { hash } = queryKey[1]
+      const { hash, scopeKey: _, ...parameters } = queryKey[1]
       if (!hash) throw new Error('hash is required')
-
-      const { scopeKey: _, ...parameters } = queryKey[1]
-
-      const transactionReceipt = await getTransactionReceipt(
-        config,
-        parameters as GetTransactionReceiptParameters,
-      )
-      return transactionReceipt ?? null
+      return getTransactionReceipt(config, { ...parameters, hash })
     },
     queryKey: getTransactionReceiptQueryKey(options),
   } as const satisfies QueryOptions<

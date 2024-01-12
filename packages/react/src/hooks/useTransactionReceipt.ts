@@ -5,15 +5,18 @@ import {
   type GetTransactionReceiptErrorType,
   type ResolvedRegister,
 } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import { type Evaluate } from '@wagmi/core/internal'
 import {
   type GetTransactionReceiptData,
   type GetTransactionReceiptOptions,
   type GetTransactionReceiptQueryKey,
   getTransactionReceiptQueryOptions,
 } from '@wagmi/core/query'
-import type { GetTransactionReceiptQueryFnData } from '@wagmi/core/query'
-import type { ConfigParameter, QueryParameter } from '../types/properties.js'
+import { type GetTransactionReceiptQueryFnData } from '@wagmi/core/query'
+import {
+  type ConfigParameter,
+  type QueryParameter,
+} from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
