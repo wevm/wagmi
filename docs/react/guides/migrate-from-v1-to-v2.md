@@ -107,6 +107,21 @@ const { signMessage } = useSignMessage() // [!code ++]
 </button>
 ```
 
+### Moved TanStack Query parameters to `query` property
+
+Previously, you could pass TanStack Query parameters, like `enabled` and `staleTime`, directly to hooks. In Wagmi v2, TanStack Query parameters are now moved to the `query` property. This allows Wagmi to better support TanStack Query type inference, control for future breaking changes since [TanStack Query is now a peer dependency](#moved-tanstack-query-to-peer-dependencies), and expose Wagmi-related hook property at the top-level of editor features, like autocomplete.
+
+```tsx
+useReadContract({
+  enabled: false, // [!code --]
+  staleTime: 1_000, // [!code --]
+  query: { // [!code ++]
+    enabled: false, // [!code ++]
+    staleTime: 1_000, // [!code ++]
+  }, // [!code ++]
+})
+```
+
 ### Removed watch property
 
 The `watch` property was removed from all hooks besides [`useBlock`](/react/api/hooks/useBlock) and [`useBlockNumber`](/react/api/hooks/useBlockNumber). This property allowed hooks to internally listen for block changes and automatically refresh their data. In Wagmi v2, you can compose `useBlock` or `useBlockNumber` along with [`React.useEffect`](https://react.dev/reference/react/useEffect) to achieve the same behavior. Two different approaches are outlined for `useBalance` below.

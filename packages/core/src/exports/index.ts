@@ -167,6 +167,13 @@ export {
 } from '../actions/getGasPrice.js'
 
 export {
+  type GetProofErrorType,
+  type GetProofParameters,
+  type GetProofReturnType,
+  getProof,
+} from '../actions/getProof.js'
+
+export {
   type GetPublicClientParameters,
   type GetPublicClientReturnType,
   getPublicClient,
@@ -203,6 +210,13 @@ export {
   type GetTransactionCountReturnType,
   getTransactionCount,
 } from '../actions/getTransactionCount.js'
+
+export {
+  type GetTransactionReceiptErrorType,
+  type GetTransactionReceiptParameters,
+  type GetTransactionReceiptReturnType,
+  getTransactionReceipt,
+} from '../actions/getTransactionReceipt.js'
 
 export {
   type GetWalletClientErrorType,

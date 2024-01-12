@@ -190,8 +190,8 @@ export function getSidebar() {
             link: '/react/api/hooks/useFeeHistory',
           },
           {
-            text: 'useStorageAt',
-            link: '/react/api/hooks/useStorageAt',
+            text: 'useProof',
+            link: '/react/api/hooks/useProof',
           },
           {
             text: 'usePublicClient',
@@ -243,6 +243,10 @@ export function getSidebar() {
             link: '/react/api/hooks/useSimulateContract',
           },
           {
+            text: 'useStorageAt',
+            link: '/react/api/hooks/useStorageAt',
+          },
+          {
             text: 'useSwitchAccount',
             link: '/react/api/hooks/useSwitchAccount',
           },
@@ -257,6 +261,10 @@ export function getSidebar() {
           {
             text: 'useTransactionCount',
             link: '/react/api/hooks/useTransactionCount',
+          },
+          {
+            text: 'useTransactionReceipt',
+            link: '/react/api/hooks/useTransactionReceipt',
           },
           {
             text: 'useToken',
@@ -508,6 +516,10 @@ export function getSidebar() {
             link: '/core/api/actions/getGasPrice',
           },
           {
+            text: 'getProof',
+            link: '/core/api/actions/getProof',
+          },
+          {
             text: 'getPublicClient',
             link: '/core/api/actions/getPublicClient',
           },
@@ -523,6 +535,10 @@ export function getSidebar() {
           {
             text: 'getTransactionCount',
             link: '/core/api/actions/getTransactionCount',
+          },
+          {
+            text: 'getTransactionReceipt',
+            link: '/core/api/actions/getTransactionReceipt',
           },
           {
             text: 'getWalletClient',

@@ -172,6 +172,15 @@ export {
 } from '../query/getStorageAt.js'
 
 export {
+  type GetProofData,
+  type GetProofOptions,
+  type GetProofQueryFnData,
+  type GetProofQueryKey,
+  getProofQueryKey,
+  getProofQueryOptions,
+} from '../query/getProof.js'
+
+export {
   type GetTokenData,
   type GetTokenOptions,
   type GetTokenQueryFnData,
@@ -197,6 +206,15 @@ export {
   getTransactionCountQueryKey,
   getTransactionCountQueryOptions,
 } from '../query/getTransactionCount.js'
+
+export {
+  type GetTransactionReceiptData,
+  type GetTransactionReceiptOptions,
+  type GetTransactionReceiptQueryFnData,
+  type GetTransactionReceiptQueryKey,
+  getTransactionReceiptQueryKey,
+  getTransactionReceiptQueryOptions,
+} from '../query/getTransactionReceipt.js'
 
 export {
   type GetWalletClientData,
