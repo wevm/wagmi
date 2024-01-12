@@ -2,7 +2,7 @@ import { expectTypeOf, test } from 'vitest'
 
 import { useBlockTransactionCount } from './useBlockTransactionCount.js'
 
-test('select data', async () => {
+test('select data', () => {
   const result = useBlockTransactionCount({
     query: {
       select(data) {

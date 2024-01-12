@@ -1,5 +1,15 @@
 # @wagmi/core
 
+## 2.2.0
+
+### Minor Changes
+
+- [#3434](https://github.com/wevm/wagmi/pull/3434) [`00bf10a4`](https://github.com/wevm/wagmi/commit/00bf10a428b0d1c5dac35ebf25b19571e033ac26) Thanks [@marthendalnunes](https://github.com/marthendalnunes)! - Added `getBytecode` and `getStorageAt` actions.
+
+- [#3416](https://github.com/wevm/wagmi/pull/3416) [`64c073f6`](https://github.com/wevm/wagmi/commit/64c073f6c2720961e2d6aff986670b73dbfab9c3) Thanks [@marthendalnunes](https://github.com/marthendalnunes)! - Added `getTransactionReceipt` action.
+
+- [#3408](https://github.com/wevm/wagmi/pull/3408) [`fb6c4148`](https://github.com/wevm/wagmi/commit/fb6c4148d9e9e2fccfbe74c8f343b444dc68dec5) Thanks [@marthendalnunes](https://github.com/marthendalnunes)! - Added `getProof` action.
+
 ## 2.1.2
 
 ### Patch Changes

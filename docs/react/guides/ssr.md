@@ -30,7 +30,7 @@ Turning on the `ssr` property means that content from the external stores will b
 
 As a result of turning on the `ssr` property, external persistent stores like `localStorage` will be hydrated on the client **after the initial mount**.
 
-This means that you will still see a flash of "empty" data on the client (ie. a `"disconnected"` account instead of a `"reconnecting"` account, or an empty address instead of the last connected address) until after the first mount, when the store hydrates.
+This means that you will still see a flash of "empty" data on the client (e.g. a `"disconnected"` account instead of a `"reconnecting"` account, or an empty address instead of the last connected address) until after the first mount, when the store hydrates.
 
 In order to persist data between the server and the client, you can use cookies.
 

@@ -63,6 +63,12 @@ export {
 } from '../hooks/useBlockTransactionCount.js'
 
 export {
+  type UseBytecodeParameters,
+  type UseBytecodeReturnType,
+  useBytecode,
+} from '../hooks/useBytecode.js'
+
+export {
   type UseCallParameters,
   type UseCallReturnType,
   useCall,
@@ -181,6 +187,12 @@ export {
 } from '../hooks/useInfiniteReadContracts.js'
 
 export {
+  type UseProofParameters,
+  type UseProofReturnType,
+  useProof,
+} from '../hooks/useProof.js'
+
+export {
   type UsePublicClientParameters,
   type UsePublicClientReturnType,
   usePublicClient,
@@ -233,6 +245,12 @@ export {
 } from '../hooks/useSimulateContract.js'
 
 export {
+  type UseStorageAtParameters,
+  type UseStorageAtReturnType,
+  useStorageAt,
+} from '../hooks/useStorageAt.js'
+
+export {
   type UseSwitchAccountParameters,
   type UseSwitchAccountReturnType,
   useSwitchAccount,
@@ -262,6 +280,12 @@ export {
   type UseTransactionCountReturnType,
   useTransactionCount,
 } from '../hooks/useTransactionCount.js'
+
+export {
+  type UseTransactionReceiptParameters,
+  type UseTransactionReceiptReturnType,
+  useTransactionReceipt,
+} from '../hooks/useTransactionReceipt.js'
 
 export {
   type UseVerifyMessageParameters,

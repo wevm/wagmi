@@ -211,3 +211,4 @@ For more information on what to do next, check out the following topics.
 - [**TypeScript**](/react/typescript) Learn how to get the most out of Wagmi's type-safety and inference for an enlightened developer experience.
 - [**Connect Wallet**](/react/guides/connect-wallet) Learn how to enable wallets to connect to and disconnect from your apps and display information about connected accounts.
 - [**React Hooks**](/react/api/hooks) Browse the collection of React Hooks and learn how to use them.
+- [**Viem**](/react/guides/viem) Learn about Viem and how it works with Wagmi.

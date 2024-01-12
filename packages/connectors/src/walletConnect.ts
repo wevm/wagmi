@@ -23,7 +23,7 @@ export type WalletConnectParameters = Evaluate<
     /**
      * If a new chain is added to a previously existing configured connector `chains`, this flag
      * will determine if that chain should be considered as stale. A stale chain is a chain that
-     * WalletConnect has yet to establish a relationship with (ie. the user has not approved or
+     * WalletConnect has yet to establish a relationship with (e.g. the user has not approved or
      * rejected the chain).
      *
      * Preface: Whereas WalletConnect v1 supported dynamic chain switching, WalletConnect v2 requires
@@ -38,7 +38,7 @@ export type WalletConnectParameters = Evaluate<
      * session, the connector will disconnect upon the dapp auto-connecting, and the user will have to
      * reconnect to the dapp (revalidate the chain) in order to approve the newly added chain.
      * This is the default behavior to avoid an unexpected error upon switching chains which may
-     * be a confusing user experience (ie. the user will not know they have to reconnect
+     * be a confusing user experience (e.g. the user will not know they have to reconnect
      * unless the dapp handles these types of errors).
      *
      * If `false`, the new chain will be treated as a validated chain. This means that if the user
