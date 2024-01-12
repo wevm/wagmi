@@ -2,7 +2,7 @@ import { expectTypeOf, test } from 'vitest'
 
 import { useVerifyMessage } from './useVerifyMessage.js'
 
-test('select data', async () => {
+test('select data', () => {
   const result = useVerifyMessage({
     query: {
       select(data) {

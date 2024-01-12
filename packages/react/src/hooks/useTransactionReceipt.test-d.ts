@@ -1,15 +1,14 @@
-import { type TransactionReceipt } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
 import { useTransactionReceipt } from './useTransactionReceipt.js'
 
-test('select data', async () => {
+test('select data', () => {
   const result = useTransactionReceipt({
     query: {
       select(data) {
-        return data
+        return data?.blockNumber
       },
     },
   })
-  expectTypeOf(result.data).toEqualTypeOf<TransactionReceipt | undefined>()
+  expectTypeOf(result.data).toEqualTypeOf<bigint | undefined>()
 })

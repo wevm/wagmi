@@ -4,7 +4,7 @@ import { expectTypeOf, test } from 'vitest'
 
 import { useBlock } from './useBlock.js'
 
-test('select data', async () => {
+test('select data', () => {
   const result = useBlock({
     query: {
       select(data) {

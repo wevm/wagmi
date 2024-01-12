@@ -23,29 +23,33 @@ import { useConfig } from './useConfig.js'
 
 export type UseTransactionReceiptParameters<
   config extends Config = Config,
-  selectData = GetTransactionReceiptData,
+  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  selectData = GetTransactionReceiptData<config, chainId>,
 > = Evaluate<
-  GetTransactionReceiptOptions<config> &
+  GetTransactionReceiptOptions<config, chainId> &
     ConfigParameter<config> &
     QueryParameter<
-      GetTransactionReceiptQueryFnData,
+      GetTransactionReceiptQueryFnData<config, chainId>,
       GetTransactionReceiptErrorType,
       selectData,
-      GetTransactionReceiptQueryKey
+      GetTransactionReceiptQueryKey<config, chainId>
     >
 >
 
 export type UseTransactionReceiptReturnType<
-  selectData = GetTransactionReceiptData,
+  config extends Config = Config,
+  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  selectData = GetTransactionReceiptData<config, chainId>,
 > = UseQueryReturnType<selectData, GetTransactionReceiptErrorType>
 
 /** https://wagmi.sh/react/api/hooks/useTransactionReceipt */
 export function useTransactionReceipt<
   config extends Config = ResolvedRegister['config'],
-  selectData = GetTransactionReceiptData,
+  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  selectData = GetTransactionReceiptData<config, chainId>,
 >(
-  parameters: UseTransactionReceiptParameters<config, selectData> = {},
-): UseTransactionReceiptReturnType<selectData> {
+  parameters: UseTransactionReceiptParameters<config, chainId, selectData> = {},
+): UseTransactionReceiptReturnType<config, chainId, selectData> {
   const { hash, query = {} } = parameters
 
   const config = useConfig(parameters)
@@ -57,5 +61,9 @@ export function useTransactionReceipt<
   })
   const enabled = Boolean(hash && (query.enabled ?? true))
 
-  return useQuery({ ...query, ...options, enabled })
+  return useQuery({
+    ...(query as any),
+    ...options,
+    enabled,
+  }) as UseTransactionReceiptReturnType<config, chainId, selectData>
 }

@@ -2,7 +2,7 @@ import { expectTypeOf, test } from 'vitest'
 
 import { useFeeHistory } from './useFeeHistory.js'
 
-test('select data', async () => {
+test('select data', () => {
   const result = useFeeHistory({
     query: {
       select(data) {

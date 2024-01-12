@@ -3,46 +3,58 @@ import { type QueryOptions } from '@tanstack/query-core'
 import {
   type GetTransactionReceiptErrorType,
   type GetTransactionReceiptParameters,
-  type GetTransactionReceiptReturnType,
   getTransactionReceipt,
 } from '../actions/getTransactionReceipt.js'
+import { type GetTransactionReceiptReturnType } from '../actions/getTransactionReceipt.js'
 import { type Config } from '../createConfig.js'
 import { type ScopeKeyParameter } from '../types/properties.js'
 import { type Evaluate, type ExactPartial } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
-export type GetTransactionReceiptOptions<config extends Config> = Evaluate<
-  ExactPartial<GetTransactionReceiptParameters<config>> & ScopeKeyParameter
+export type GetTransactionReceiptOptions<
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
+> = Evaluate<
+  ExactPartial<GetTransactionReceiptParameters<config, chainId>> &
+    ScopeKeyParameter
 >
 
-export function getTransactionReceiptQueryOptions<config extends Config>(
-  config: config,
-  options: GetTransactionReceiptOptions<config> = {},
-) {
+export function getTransactionReceiptQueryOptions<
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
+>(config: config, options: GetTransactionReceiptOptions<config, chainId> = {}) {
   return {
-    async queryFn({ queryKey }) {
+    queryFn({ queryKey }) {
       const { hash, scopeKey: _, ...parameters } = queryKey[1]
       if (!hash) throw new Error('hash is required')
       return getTransactionReceipt(config, { ...parameters, hash })
     },
     queryKey: getTransactionReceiptQueryKey(options),
   } as const satisfies QueryOptions<
-    GetTransactionReceiptQueryFnData,
+    GetTransactionReceiptQueryFnData<config, chainId>,
     GetTransactionReceiptErrorType,
-    GetTransactionReceiptData,
-    GetTransactionReceiptQueryKey
+    GetTransactionReceiptData<config, chainId>,
+    GetTransactionReceiptQueryKey<config, chainId>
   >
 }
-export type GetTransactionReceiptQueryFnData = GetTransactionReceiptReturnType
+export type GetTransactionReceiptQueryFnData<
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
+> = GetTransactionReceiptReturnType<config, chainId>
 
-export type GetTransactionReceiptData = GetTransactionReceiptQueryFnData
+export type GetTransactionReceiptData<
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
+> = GetTransactionReceiptQueryFnData<config, chainId>
 
-export function getTransactionReceiptQueryKey<config extends Config>(
-  options: GetTransactionReceiptOptions<config>,
-) {
+export function getTransactionReceiptQueryKey<
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
+>(options: GetTransactionReceiptOptions<config, chainId>) {
   return ['getTransactionReceipt', filterQueryOptions(options)] as const
 }
 
-export type GetTransactionReceiptQueryKey = ReturnType<
-  typeof getTransactionReceiptQueryKey
->
+export type GetTransactionReceiptQueryKey<
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
+> = ReturnType<typeof getTransactionReceiptQueryKey<config, chainId>>

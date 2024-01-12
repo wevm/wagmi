@@ -1,3 +1,4 @@
+import type { Chain } from 'viem'
 import {
   type GetTransactionReceiptErrorType as viem_GetTransactionReceiptErrorType,
   type GetTransactionReceiptParameters as viem_GetTransactionReceiptParameters,
@@ -6,22 +7,40 @@ import {
 } from 'viem/actions'
 
 import { type Config } from '../createConfig.js'
+import { type SelectChains } from '../types/chain.js'
 import { type ChainIdParameter } from '../types/properties.js'
-import { type Evaluate } from '../types/utils.js'
+import { type Evaluate, type IsNarrowable } from '../types/utils.js'
 
-export type GetTransactionReceiptParameters<config extends Config = Config> =
-  Evaluate<viem_GetTransactionReceiptParameters & ChainIdParameter<config>>
+export type GetTransactionReceiptParameters<
+  config extends Config = Config,
+  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+> = Evaluate<
+  viem_GetTransactionReceiptParameters & ChainIdParameter<config, chainId>
+>
 
-export type GetTransactionReceiptReturnType =
-  viem_GetTransactionReceiptReturnType
+export type GetTransactionReceiptReturnType<
+  config extends Config = Config,
+  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  ///
+  chains extends readonly Chain[] = SelectChains<config, chainId>,
+> = Evaluate<
+  {
+    [key in keyof chains]: viem_GetTransactionReceiptReturnType<
+      IsNarrowable<chains[key], Chain> extends true ? chains[key] : undefined
+    > & { chainId: chains[key]['id'] }
+  }[number]
+>
 
 export type GetTransactionReceiptErrorType = viem_GetTransactionReceiptErrorType
 
 /** https://wagmi.sh/core/api/actions/getTransactionReceipt */
-export async function getTransactionReceipt<config extends Config>(
+export async function getTransactionReceipt<
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
+>(
   config: config,
   parameters: GetTransactionReceiptParameters<config>,
-): Promise<GetTransactionReceiptReturnType> {
+): Promise<GetTransactionReceiptReturnType<config, chainId>> {
   const { chainId, ...rest } = parameters
   const client = config.getClient({ chainId })
   return viem_getTransactionReceipt(client, rest)

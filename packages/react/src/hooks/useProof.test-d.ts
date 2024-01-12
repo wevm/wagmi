@@ -2,7 +2,7 @@ import { type GetProofReturnType } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 import { useProof } from './useProof.js'
 
-test('select data', async () => {
+test('select data', () => {
   const result = useProof({
     query: {
       select(data) {
