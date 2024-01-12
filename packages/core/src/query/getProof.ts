@@ -7,8 +7,8 @@ import {
   getProof,
 } from '../actions/getProof.js'
 import { type Config } from '../createConfig.js'
-import type { ScopeKeyParameter } from '../types/properties.js'
-import type { Evaluate, ExactPartial } from '../types/utils.js'
+import { type ScopeKeyParameter } from '../types/properties.js'
+import { type Evaluate, type ExactPartial } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
 export type GetProofOptions<config extends Config> = Evaluate<
@@ -21,13 +21,10 @@ export function getProofQueryOptions<config extends Config>(
 ) {
   return {
     async queryFn({ queryKey }) {
-      const { address, storageKeys } = queryKey[1]
+      const { address, scopeKey: _, storageKeys, ...parameters } = queryKey[1]
       if (!address || !storageKeys)
         throw new Error('address and storageKeys are required')
-
-      const { scopeKey: _, ...parameters } = queryKey[1]
-      const proof = await getProof(config, parameters as GetProofParameters)
-      return proof ?? null
+      return getProof(config, { ...parameters, address, storageKeys })
     },
     queryKey: getProofQueryKey(options),
   } as const satisfies QueryOptions<
