@@ -8,19 +8,19 @@ Without an asynchronous data fetching abstraction, you would need to handle all 
 
 Wagmi Hooks represent either a **Query** or a **Mutation**. 
 
-**Queries** are used for fetching data (ie. fetching a block number, reading from a contract, etc), and are typically invoked on mount by default. All queries are coupled to a unique [Query Key](#query-keys), and can be used for further operations such as refetching, prefetching, or modifying the cached data.
+**Queries** are used for fetching data (e.g. fetching a block number, reading from a contract, etc), and are typically invoked on mount by default. All queries are coupled to a unique [Query Key](#query-keys), and can be used for further operations such as refetching, prefetching, or modifying the cached data.
 
-**Mutations** are used for mutating data (ie. connecting/disconnecting accounts, writing to a contract, switching chains, etc), and are typically invoked in response to a user interaction. Unlike **Queries**, they are not coupled with a query key.
+**Mutations** are used for mutating data (e.g. connecting/disconnecting accounts, writing to a contract, switching chains, etc), and are typically invoked in response to a user interaction. Unlike **Queries**, they are not coupled with a query key.
 
 ## Terms
 
-- **Query**: An asynchronous data fetching (ie. read data) operation that is tied against a unique Query Key.
-- **Mutation**: An asynchronous mutating (ie. create/update/delete data or side-effect) operation.
+- **Query**: An asynchronous data fetching (e.g. read data) operation that is tied against a unique Query Key.
+- **Mutation**: An asynchronous mutating (e.g. create/update/delete data or side-effect) operation.
 - **Query Key**: A unique identifier that is used to deterministically identify a query. It is typically a tuple of the query name and the query arguments.
 - **Stale Data**: Data that is unused or inactive after a certain period of time.
 - **Query Fetching**: The process of invoking an async query function.
 - **Query Refetching**: The process of refetching **rendered** queries.
-- **[Query Invalidation](https://tanstack.com/query/v5/docs/react/guides/query-invalidation)**: The process of marking query data as stale (ie. inactive/unused), and refetching **rendered** queries.
+- **[Query Invalidation](https://tanstack.com/query/v5/docs/react/guides/query-invalidation)**: The process of marking query data as stale (e.g. inactive/unused), and refetching **rendered** queries.
 - **[Query Prefetching](https://tanstack.com/query/v5/docs/react/guides/prefetching)**: The process of prefetching queries and seeding the cache.
 
 ## Persistence via External Stores
@@ -199,13 +199,13 @@ function perform() {
 
 ::: warning
 
-The caveat of this method is that it does not handle reactivity for you (ie. active account/chain changes, argument changes, etc). You would need to handle this yourself by explicitly passing through the arguments to `get<X>QueryOptions`.
+The caveat of this method is that it does not handle reactivity for you (e.g. active account/chain changes, argument changes, etc). You would need to handle this yourself by explicitly passing through the arguments to `get<X>QueryOptions`.
 
 :::
 
 ## Invalidating Queries
 
-Invalidating a query is the process of marking the query data as stale (ie. inactive/unused), and refetching the queries that are already rendered.
+Invalidating a query is the process of marking the query data as stale (e.g. inactive/unused), and refetching the queries that are already rendered.
 
 Read more about **Invalidating Queries** on the [TanStack Query docs.](https://tanstack.com/query/v5/docs/react/guides/query-invalidation)
 

@@ -1,4 +1,4 @@
-# Reading Contracts
+# Read from Contract
 
 The [`useReadContract` Hook](/react/api/hooks/useReadContract) allows you to read data on a smart contract, from a `view` or `pure` (read-only) function. They can only read the state of the contract, and cannot make any changes to it. Since read-only methods do not change the state of the contract, they do not require any gas to be executed, and can be called by any user without the need to pay for gas.
 

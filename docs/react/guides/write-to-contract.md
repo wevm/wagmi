@@ -1,10 +1,10 @@
-# Writing to Contracts
+# Write to Contract
 
 The [`useWriteContract` Hook](/react/api/hooks/useWriteContract) allows you to mutate data on a smart contract, from a `payable` or `nonpayable` (write) function. These types of functions require gas to be executed, hence a transaction is broadcasted in order to change the state.
 
 In the guide below, we will teach you how to implement a "Mint NFT" form that takes in a dynamic argument (token ID) using Wagmi. The example below builds on the [Connect Wallet guide](/react/guides/connect-wallet) and uses the [useWriteContract](/react/api/hooks/useWriteContract) & [useWaitForTransaction](/react/api/hooks/useWaitForTransactionReceipt) hooks. 
 
-If you have already completed the [Sending Transactions guide](/react/guides/sending-transactions), this guide will look very similar! That's because writing to a contract internally broadcasts & sends a transaction.
+If you have already completed the [Sending Transactions guide](/react/guides/send-transaction), this guide will look very similar! That's because writing to a contract internally broadcasts & sends a transaction.
 
 ## Example
 

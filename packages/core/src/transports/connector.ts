@@ -55,7 +55,7 @@ export function unstable_connector(
           new Error('Provider is disconnected.'),
         )
 
-      // We are applying a retry & timeout strategy here as some injected wallets (ie. MetaMask) fail to
+      // We are applying a retry & timeout strategy here as some injected wallets (e.g. MetaMask) fail to
       // immediately resolve a JSON-RPC request on page load.
       const chainId = hexToNumber(
         await withRetry(() =>
