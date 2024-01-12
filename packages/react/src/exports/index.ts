@@ -63,6 +63,12 @@ export {
 } from '../hooks/useBlockTransactionCount.js'
 
 export {
+  type UseBytecodeParameters,
+  type UseBytecodeReturnType,
+  useBytecode,
+} from '../hooks/useBytecode.js'
+
+export {
   type UseCallParameters,
   type UseCallReturnType,
   useCall,
@@ -237,6 +243,12 @@ export {
   type UseSimulateContractReturnType,
   useSimulateContract,
 } from '../hooks/useSimulateContract.js'
+
+export {
+  type UseStorageAtParameters,
+  type UseStorageAtReturnType,
+  useStorageAt,
+} from '../hooks/useStorageAt.js'
 
 export {
   type UseSwitchAccountParameters,

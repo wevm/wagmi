@@ -91,6 +91,15 @@ export {
 } from '../query/getBlockTransactionCount.js'
 
 export {
+  type GetBytecodeData,
+  type GetBytecodeOptions,
+  type GetBytecodeQueryFnData,
+  type GetBytecodeQueryKey,
+  getBytecodeQueryKey,
+  getBytecodeQueryOptions,
+} from '../query/getBytecode.js'
+
+export {
   type GetConnectorClientData,
   type GetConnectorClientOptions,
   type GetConnectorClientQueryFnData,
@@ -161,6 +170,15 @@ export {
   getProofQueryKey,
   getProofQueryOptions,
 } from '../query/getProof.js'
+
+export {
+  type GetStorageAtData,
+  type GetStorageAtOptions,
+  type GetStorageAtQueryFnData,
+  type GetStorageAtQueryKey,
+  getStorageAtQueryKey,
+  getStorageAtQueryOptions,
+} from '../query/getStorageAt.js'
 
 export {
   type GetTokenData,

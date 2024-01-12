@@ -82,6 +82,13 @@ export {
 } from '../actions/getBlockTransactionCount.js'
 
 export {
+  type GetBytecodeErrorType,
+  type GetBytecodeParameters,
+  type GetBytecodeReturnType,
+  getBytecode,
+} from '../actions/getBytecode.js'
+
+export {
   type GetChainIdReturnType,
   getChainId,
 } from '../actions/getChainId.js'
@@ -171,6 +178,13 @@ export {
   type GetPublicClientReturnType,
   getPublicClient,
 } from '../actions/getPublicClient.js'
+
+export {
+  type GetStorageAtErrorType,
+  type GetStorageAtParameters,
+  type GetStorageAtReturnType,
+  getStorageAt,
+} from '../actions/getStorageAt.js'
 
 export {
   type GetTokenErrorType,

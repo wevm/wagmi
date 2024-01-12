@@ -156,6 +156,10 @@ export function getSidebar() {
             text: 'useBlockTransactionCount',
             link: '/react/api/hooks/useBlockTransactionCount',
           },
+          {
+            text: 'useBytecode',
+            link: '/react/api/hooks/useBytecode',
+          },
           { text: 'useCall', link: '/react/api/hooks/useCall' },
           { text: 'useChainId', link: '/react/api/hooks/useChainId' },
           { text: 'useClient', link: '/react/api/hooks/useClient' },
@@ -237,6 +241,10 @@ export function getSidebar() {
           {
             text: 'useSimulateContract',
             link: '/react/api/hooks/useSimulateContract',
+          },
+          {
+            text: 'useStorageAt',
+            link: '/react/api/hooks/useStorageAt',
           },
           {
             text: 'useSwitchAccount',
@@ -468,6 +476,10 @@ export function getSidebar() {
             text: 'getBlockTransactionCount',
             link: '/core/api/actions/getBlockTransactionCount',
           },
+          {
+            text: 'getBytecode',
+            link: '/core/api/actions/getBytecode',
+          },
           { text: 'getChainId', link: '/core/api/actions/getChainId' },
           {
             text: 'getClient',
@@ -510,6 +522,10 @@ export function getSidebar() {
           {
             text: 'getPublicClient',
             link: '/core/api/actions/getPublicClient',
+          },
+          {
+            text: 'getStorageAt',
+            link: '/core/api/actions/getStorageAt',
           },
           { text: 'getToken', link: '/core/api/actions/getToken' },
           {
