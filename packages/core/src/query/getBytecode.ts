@@ -7,8 +7,8 @@ import {
   getBytecode,
 } from '../actions/getBytecode.js'
 import { type Config } from '../createConfig.js'
-import type { ScopeKeyParameter } from '../types/properties.js'
-import type { Evaluate, ExactPartial } from '../types/utils.js'
+import { type ScopeKeyParameter } from '../types/properties.js'
+import { type Evaluate, type ExactPartial } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
 export type GetBytecodeOptions<config extends Config> = Evaluate<
@@ -20,15 +20,10 @@ export function getBytecodeQueryOptions<config extends Config>(
   options: GetBytecodeOptions<config> = {},
 ) {
   return {
-    async queryFn({ queryKey }) {
+    queryFn({ queryKey }) {
       const { address, scopeKey: _, ...parameters } = queryKey[1]
       if (!address) throw new Error('address is required')
-
-      const bytecode = await getBytecode(config, {
-        address,
-        ...parameters,
-      })
-      return (bytecode ?? null) as GetBytecodeReturnType
+      return getBytecode(config, { ...parameters, address })
     },
     queryKey: getBytecodeQueryKey(options),
   } as const satisfies QueryOptions<

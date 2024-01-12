@@ -20,16 +20,10 @@ export function getStorageAtQueryOptions<config extends Config>(
   options: GetStorageAtOptions<config> = {},
 ) {
   return {
-    async queryFn({ queryKey }) {
+    queryFn({ queryKey }) {
       const { address, slot, scopeKey: _, ...parameters } = queryKey[1]
       if (!address || !slot) throw new Error('address and slot are required')
-
-      const data = await getStorageAt(config, {
-        address,
-        slot,
-        ...parameters,
-      })
-      return (data ?? null) as GetStorageAtReturnType
+      return getStorageAt(config, { ...parameters, address, slot })
     },
     queryKey: getStorageAtQueryKey(options),
   } as const satisfies QueryOptions<
