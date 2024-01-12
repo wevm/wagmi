@@ -163,15 +163,6 @@ export {
 } from '../query/getGasPrice.js'
 
 export {
-  type GetStorageAtData,
-  type GetStorageAtOptions,
-  type GetStorageAtQueryFnData,
-  type GetStorageAtQueryKey,
-  getStorageAtQueryKey,
-  getStorageAtQueryOptions,
-} from '../query/getStorageAt.js'
-
-export {
   type GetProofData,
   type GetProofOptions,
   type GetProofQueryFnData,
@@ -179,6 +170,15 @@ export {
   getProofQueryKey,
   getProofQueryOptions,
 } from '../query/getProof.js'
+
+export {
+  type GetStorageAtData,
+  type GetStorageAtOptions,
+  type GetStorageAtQueryFnData,
+  type GetStorageAtQueryKey,
+  getStorageAtQueryKey,
+  getStorageAtQueryOptions,
+} from '../query/getStorageAt.js'
 
 export {
   type GetTokenData,
