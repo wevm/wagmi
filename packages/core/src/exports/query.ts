@@ -190,6 +190,15 @@ export {
 } from '../query/getTransactionCount.js'
 
 export {
+  type GetTransactionReceiptData,
+  type GetTransactionReceiptOptions,
+  type GetTransactionReceiptQueryFnData,
+  type GetTransactionReceiptQueryKey,
+  getTransactionReceiptQueryKey,
+  getTransactionReceiptQueryOptions,
+} from '../query/getTransactionReceipt.js'
+
+export {
   type GetWalletClientData,
   type GetWalletClientOptions,
   type GetWalletClientQueryFnData,

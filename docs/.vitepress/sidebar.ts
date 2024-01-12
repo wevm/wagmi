@@ -255,6 +255,10 @@ export function getSidebar() {
             link: '/react/api/hooks/useTransactionCount',
           },
           {
+            text: 'useTransactionReceipt',
+            link: '/react/api/hooks/useTransactionReceipt',
+          },
+          {
             text: 'useToken',
             link: '/react/api/hooks/useToken',
           },
@@ -515,6 +519,10 @@ export function getSidebar() {
           {
             text: 'getTransactionCount',
             link: '/core/api/actions/getTransactionCount',
+          },
+          {
+            text: 'getTransactionReceipt',
+            link: '/core/api/actions/getTransactionReceipt',
           },
           {
             text: 'getWalletClient',

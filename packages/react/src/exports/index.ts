@@ -270,6 +270,12 @@ export {
 } from '../hooks/useTransactionCount.js'
 
 export {
+  type UseTransactionReceiptParameters,
+  type UseTransactionReceiptReturnType,
+  useTransactionReceipt,
+} from '../hooks/useTransactionReceipt.js'
+
+export {
   type UseVerifyMessageParameters,
   type UseVerifyMessageReturnType,
   useVerifyMessage,
