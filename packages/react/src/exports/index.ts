@@ -181,6 +181,12 @@ export {
 } from '../hooks/useInfiniteReadContracts.js'
 
 export {
+  type UseProofParameters,
+  type UseProofReturnType,
+  useProof,
+} from '../hooks/useProof.js'
+
+export {
   type UsePublicClientParameters,
   type UsePublicClientReturnType,
   usePublicClient,

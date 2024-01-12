@@ -160,6 +160,13 @@ export {
 } from '../actions/getGasPrice.js'
 
 export {
+  type GetProofErrorType,
+  type GetProofParameters,
+  type GetProofReturnType,
+  getProof,
+} from '../actions/getProof.js'
+
+export {
   type GetPublicClientParameters,
   type GetPublicClientReturnType,
   getPublicClient,

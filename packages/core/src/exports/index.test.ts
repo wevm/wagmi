@@ -33,6 +33,7 @@ test('exports', () => {
       "fetchEnsResolver",
       "getFeeHistory",
       "getGasPrice",
+      "getProof",
       "getPublicClient",
       "getToken",
       "fetchToken",
