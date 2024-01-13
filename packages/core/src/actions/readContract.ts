@@ -1,10 +1,10 @@
-import type { ContractFunctionArgs, ContractFunctionName } from 'viem'
 import { type Abi } from 'viem'
+import type { ContractFunctionArgs, ContractFunctionName } from 'viem'
 import {
-  readContract as viem_readContract,
   type ReadContractErrorType as viem_ReadContractErrorType,
   type ReadContractParameters as viem_ReadContractParameters,
   type ReadContractReturnType as viem_ReadContractReturnType,
+  readContract as viem_readContract,
 } from 'viem/actions'
 
 import { type Config } from '../createConfig.js'
