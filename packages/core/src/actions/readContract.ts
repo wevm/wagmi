@@ -1,10 +1,10 @@
-import { type Abi } from 'viem'
 import type { ContractFunctionArgs, ContractFunctionName } from 'viem'
+import { type Abi } from 'viem'
 import {
+  readContract as viem_readContract,
   type ReadContractErrorType as viem_ReadContractErrorType,
   type ReadContractParameters as viem_ReadContractParameters,
   type ReadContractReturnType as viem_ReadContractReturnType,
-  readContract as viem_readContract,
 } from 'viem/actions'
 
 import { type Config } from '../createConfig.js'
@@ -50,7 +50,7 @@ export function readContract<
   config: config,
   parameters: ReadContractParameters<abi, functionName, args, config>,
 ): Promise<ReadContractReturnType<abi, functionName, args>> {
-  const { chainId } = parameters
+  const { chainId, ...rest } = parameters
   const client = config.getClient({ chainId })
-  return viem_readContract(client, parameters as any)
+  return viem_readContract(client, rest)
 }
