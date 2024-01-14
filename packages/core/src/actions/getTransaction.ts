@@ -39,9 +39,9 @@ export function getTransaction<
   config: config,
   parameters: GetTransactionParameters<config, chainId>,
 ): Promise<GetTransactionReturnType<config, chainId>> {
-  const { chainId } = parameters
+  const { chainId, ...rest } = parameters
   const client = config.getClient({ chainId })
-  return viem_getTransaction(client, parameters) as unknown as Promise<
+  return viem_getTransaction(client, rest) as unknown as Promise<
     GetTransactionReturnType<config, chainId>
   >
 }

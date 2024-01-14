@@ -26,7 +26,7 @@ export function getBlockNumber<
   config: config,
   parameters: GetBlockNumberParameters<config, chainId> = {},
 ): Promise<GetBlockNumberReturnType> {
-  const { chainId } = parameters
+  const { chainId, ...rest } = parameters
   const client = config.getClient({ chainId })
-  return viem_getBlockNumber(client, parameters)
+  return viem_getBlockNumber(client, rest)
 }
