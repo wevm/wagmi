@@ -2,4 +2,4 @@
 "@wagmi/core": patch 
 ---
 
-Fix param issue with readContract calls
+Fixed invalid `chainId` parameter passed through actions to Viem.
