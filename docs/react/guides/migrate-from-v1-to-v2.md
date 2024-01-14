@@ -225,7 +225,7 @@ const { writeContract } = useWriteContract() // [!code ++]
   disabled={!Boolean(write)} // [!code --]
   onClick={() => write()} // [!code --]
   disabled={!Boolean(data?.request)} // [!code ++]
-  onClick={() => writeContract(data?.request)} // [!code ++]
+  onClick={() => writeContract(data!.request)} // [!code ++]
 >
   Write contract
 </button>
