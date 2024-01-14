@@ -12,6 +12,7 @@ test('states', () => {
     case 'reconnecting': {
       expectTypeOf(result).toMatchTypeOf<{
         address: Address | undefined
+        chain: typeof config['chains'][number] | undefined
         chainId: number | undefined
         connector: Connector | undefined
         isConnected: boolean
@@ -25,6 +26,7 @@ test('states', () => {
     case 'connecting': {
       expectTypeOf(result).toMatchTypeOf<{
         address: Address | undefined
+        chain: typeof config['chains'][number] | undefined
         chainId: number | undefined
         connector: Connector | undefined
         isConnected: false
@@ -38,6 +40,7 @@ test('states', () => {
     case 'connected': {
       expectTypeOf(result).toMatchTypeOf<{
         address: Address
+        chain: typeof config['chains'][number] | undefined
         chainId: number
         connector: Connector
         isConnected: true
@@ -51,6 +54,7 @@ test('states', () => {
     case 'disconnected': {
       expectTypeOf(result).toMatchTypeOf<{
         address: undefined
+        chain: undefined
         chainId: undefined
         connector: undefined
         isConnected: false
