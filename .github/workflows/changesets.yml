@@ -41,3 +41,42 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  canary:
+    name: Publish canary version
+    if: github.ref == 'refs/heads/main'
+    # needs: verify
+    permissions: write-all
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+        with:
+          # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
+          fetch-depth: 0
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
+
+      - name: Setup .npmrc file
+        uses: actions/setup-node@v4
+        with:
+          registry-url: 'https://registry.npmjs.org'
+
+      # https://github.com/changesets/changesets/blob/main/docs/snapshot-releases.md#versioning-your-packages
+      - name: Version packages
+        run: pnpm changeset version --snapshot canary
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Prepare packages
+        run: pnpm changeset:prepublish
+
+      # https://github.com/changesets/changesets/blob/main/docs/snapshot-releases.md#publishing-your-packages
+      - name: Publish packages
+        run: pnpm changeset publish --tag canary
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
