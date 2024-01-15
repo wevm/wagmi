@@ -145,7 +145,7 @@ function App() {
 
 `string | undefined`
 
-Name to get the resolver for. [`enabled`](#enabled) set to `false` if `name` is `undefined`.
+Name to get the text for. [`enabled`](#enabled) set to `false` if `name` is `undefined`.
 
 ::: code-group
 ```ts [index.ts]
