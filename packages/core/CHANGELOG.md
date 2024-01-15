@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.2.2
+
+### Patch Changes
+
+- [`3458dd04`](https://github.com/wevm/wagmi/commit/3458dd044d2931c86dc861063b87239ed6238c57) Thanks [@tmm](https://github.com/tmm)! - test canary
+
 ## 2.2.1
 
 ### Patch Changes
