@@ -425,7 +425,7 @@ Before v2, Wagmi handled ENS name normalization internally for `useEnsAddress`, 
 
 ```ts
 import { useEnsAddress } from 'wagmi'
-import { normalize } from 'viem' // [!code ++]
+import { normalize } from 'viem/ens' // [!code ++]
 
 const result = useEnsAddress({
   name: 'wevm.eth', // [!code --]
