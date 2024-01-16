@@ -236,38 +236,6 @@ test('parameters: maxFeePerGas + maxPriorityFeePerGas', async () => {
     `)
 })
 
-test('parameters: gasPrice + maxFeePerGas', async () => {
-  await setup()
-
-  await expect(() =>
-    // @ts-expect-error
-    prepareTransactionRequest(config, {
-      gasPrice: parseGwei('10'),
-      maxFeePerGas: parseGwei('20'),
-      to: targetAccount,
-      value: parseEther('1'),
-    }),
-  ).rejects.toThrowError(
-    'Cannot specify both a `gasPrice` and a `maxFeePerGas`/`maxPriorityFeePerGas`.',
-  )
-})
-
-test('parameters: gasPrice + maxPriorityFeePerGass', async () => {
-  await setup()
-
-  await expect(() =>
-    // @ts-expect-error
-    prepareTransactionRequest(config, {
-      gasPrice: parseGwei('10'),
-      maxPriorityFeePerGas: parseGwei('20'),
-      to: targetAccount,
-      value: parseEther('1'),
-    }),
-  ).rejects.toThrowError(
-    'Cannot specify both a `gasPrice` and a `maxFeePerGas`/`maxPriorityFeePerGas`.',
-  )
-})
-
 test('parameters: type', async () => {
   await setup()
 

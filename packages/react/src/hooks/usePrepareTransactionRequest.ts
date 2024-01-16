@@ -13,6 +13,7 @@ import {
   prepareTransactionRequestQueryOptions,
 } from '@wagmi/core/query'
 import type { PrepareTransactionRequestQueryFnData } from '@wagmi/core/query'
+import { type PrepareTransactionRequestParameterType as viem_PrepareTransactionRequestParameterType } from 'viem'
 import type { ConfigParameter, QueryParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
@@ -20,30 +21,47 @@ import { useConfig } from './useConfig.js'
 
 export type UsePrepareTransactionRequestParameters<
   config extends Config = Config,
-  selectData = PrepareTransactionRequestData,
+  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  parameterType extends viem_PrepareTransactionRequestParameterType = viem_PrepareTransactionRequestParameterType,
+  selectData = PrepareTransactionRequestData<config, chainId, parameterType>,
 > = Evaluate<
-  PrepareTransactionRequestOptions<config> &
+  PrepareTransactionRequestOptions<config, chainId, parameterType> &
     ConfigParameter<config> &
     QueryParameter<
-      PrepareTransactionRequestQueryFnData,
+      PrepareTransactionRequestQueryFnData<config, chainId, parameterType>,
       PrepareTransactionRequestErrorType,
       selectData,
-      PrepareTransactionRequestQueryKey
+      PrepareTransactionRequestQueryKey<config, chainId, parameterType>
     >
 >
 
 export type UsePrepareTransactionRequestReturnType<
-  selectData = PrepareTransactionRequestData,
+  config extends Config = Config,
+  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  parameterType extends viem_PrepareTransactionRequestParameterType = viem_PrepareTransactionRequestParameterType,
+  selectData = PrepareTransactionRequestData<config, chainId, parameterType>,
 > = UseQueryReturnType<selectData, PrepareTransactionRequestErrorType>
 
 /** https://wagmi.sh/react/api/hooks/usePrepareTransactionRequest */
 export function usePrepareTransactionRequest<
   config extends Config = ResolvedRegister['config'],
-  selectData = PrepareTransactionRequestData,
+  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  parameterType extends viem_PrepareTransactionRequestParameterType = viem_PrepareTransactionRequestParameterType,
+  selectData = PrepareTransactionRequestData<config, chainId, parameterType>,
 >(
-  parameters: UsePrepareTransactionRequestParameters<config, selectData> = {},
-): UsePrepareTransactionRequestReturnType<selectData> {
-  const { query = {} } = parameters
+  parameters: UsePrepareTransactionRequestParameters<
+    config,
+    chainId,
+    parameterType,
+    selectData
+  > = {} as any,
+): UsePrepareTransactionRequestReturnType<
+  config,
+  chainId,
+  parameterType,
+  selectData
+> {
+  const { to, query = {} } = parameters
 
   const config = useConfig(parameters)
   const chainId = useChainId()
@@ -53,5 +71,16 @@ export function usePrepareTransactionRequest<
     chainId: parameters.chainId ?? chainId,
   })
 
-  return useQuery({ ...query, ...options })
+  const enabled = Boolean(to && (query.enabled ?? true))
+
+  return useQuery({
+    ...(query as any),
+    ...options,
+    enabled,
+  }) as UsePrepareTransactionRequestReturnType<
+    config,
+    chainId,
+    parameterType,
+    selectData
+  >
 }

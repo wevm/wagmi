@@ -1,5 +1,7 @@
 import { type QueryOptions } from '@tanstack/query-core'
 
+import { type PrepareTransactionRequestParameterType as viem_PrepareTransactionRequestParameterType } from 'viem'
+
 import {
   type PrepareTransactionRequestErrorType,
   type PrepareTransactionRequestParameters,
@@ -11,39 +13,78 @@ import type { ScopeKeyParameter } from '../types/properties.js'
 import type { Evaluate, ExactPartial } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
-export type PrepareTransactionRequestOptions<config extends Config> = Evaluate<
-  ExactPartial<PrepareTransactionRequestParameters<config>> & ScopeKeyParameter
+export type PrepareTransactionRequestOptions<
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
+  parameterType extends viem_PrepareTransactionRequestParameterType,
+> = Evaluate<
+  ExactPartial<
+    PrepareTransactionRequestParameters<config, chainId, parameterType>
+  > &
+    ScopeKeyParameter
 >
 
-export function prepareTransactionRequestQueryOptions<config extends Config>(
+export function prepareTransactionRequestQueryOptions<
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
+  parameterType extends viem_PrepareTransactionRequestParameterType,
+>(
   config: config,
-  options: PrepareTransactionRequestOptions<config> = {},
+  options: PrepareTransactionRequestOptions<
+    config,
+    chainId,
+    parameterType
+  > = {} as any,
 ) {
   return {
     async queryFn({ queryKey }) {
-      const { scopeKey: _, ...parameters } = queryKey[1]
-      const request = await prepareTransactionRequest(config, parameters)
-      return request ?? null
+      const { scopeKey: _, to, ...parameters } = queryKey[1]
+
+      if (!to) throw new Error('to is required')
+
+      return prepareTransactionRequest(config, {
+        ...(parameters as PrepareTransactionRequestParameters<
+          config,
+          chainId,
+          parameterType
+        >),
+        to,
+      }) as unknown as Promise<
+        PrepareTransactionRequestQueryFnData<config, chainId, parameterType>
+      >
     },
     queryKey: prepareTransactionRequestQueryKey(options),
   } as const satisfies QueryOptions<
-    PrepareTransactionRequestQueryFnData,
+    PrepareTransactionRequestQueryFnData<config, chainId, parameterType>,
     PrepareTransactionRequestErrorType,
-    PrepareTransactionRequestData,
-    PrepareTransactionRequestQueryKey
+    PrepareTransactionRequestData<config, chainId, parameterType>,
+    PrepareTransactionRequestQueryKey<config, chainId, parameterType>
   >
 }
-export type PrepareTransactionRequestQueryFnData =
-  PrepareTransactionRequestReturnType
+export type PrepareTransactionRequestQueryFnData<
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
+  parameterType extends viem_PrepareTransactionRequestParameterType,
+> = PrepareTransactionRequestReturnType<config, chainId, parameterType>
 
-export type PrepareTransactionRequestData = PrepareTransactionRequestQueryFnData
+export type PrepareTransactionRequestData<
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
+  parameterType extends viem_PrepareTransactionRequestParameterType,
+> = PrepareTransactionRequestQueryFnData<config, chainId, parameterType>
 
-export function prepareTransactionRequestQueryKey<config extends Config>(
-  options: PrepareTransactionRequestOptions<config>,
-) {
+export function prepareTransactionRequestQueryKey<
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
+  parameterType extends viem_PrepareTransactionRequestParameterType,
+>(options: PrepareTransactionRequestOptions<config, chainId, parameterType>) {
   return ['prepareTransactionRequest', filterQueryOptions(options)] as const
 }
 
-export type PrepareTransactionRequestQueryKey = ReturnType<
-  typeof prepareTransactionRequestQueryKey
+export type PrepareTransactionRequestQueryKey<
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
+  parameterType extends viem_PrepareTransactionRequestParameterType,
+> = ReturnType<
+  typeof prepareTransactionRequestQueryKey<config, chainId, parameterType>
 >
