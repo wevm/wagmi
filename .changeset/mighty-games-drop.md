@@ -2,4 +2,4 @@
 "@wagmi/cli": patch
 ---
 
-upgrade esbuild
+Upgraded dependencies
