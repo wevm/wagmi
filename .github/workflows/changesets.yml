@@ -71,6 +71,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      # TODO: Only run if git has changes (e.g. versions were bumped by previous step)
       - name: Prepare packages
         run: pnpm changeset:prepublish
 
