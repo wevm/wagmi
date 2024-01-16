@@ -13,7 +13,7 @@ export type GetTransactionConfirmationsParameters<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
 > = Evaluate<
-  viem_GetTransactionConfirmationsParameters & ChainIdParameter<config, chainId>
+  viem_GetTransactionConfirmationsParameters<config['chains'][number]> & ChainIdParameter<config, chainId>
 >
 
 export type GetTransactionConfirmationsReturnType =
