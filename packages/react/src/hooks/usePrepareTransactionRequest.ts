@@ -5,7 +5,7 @@ import {
   type PrepareTransactionRequestErrorType,
   type ResolvedRegister,
 } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import { type Evaluate } from '@wagmi/core/internal'
 import {
   type PrepareTransactionRequestData,
   type PrepareTransactionRequestOptions,
