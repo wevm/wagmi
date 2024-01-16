@@ -45,7 +45,7 @@ jobs:
   canary:
     name: Publish canary version
     if: github.ref == 'refs/heads/main'
-    # needs: verify
+    needs: verify
     permissions: write-all
     runs-on: ubuntu-latest
     timeout-minutes: 5
