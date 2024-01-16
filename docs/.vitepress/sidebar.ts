@@ -259,6 +259,10 @@ export function getSidebar() {
             link: '/react/api/hooks/useTransaction',
           },
           {
+            text: 'useTransactionConfirmations',
+            link: '/react/api/hooks/useTransactionConfirmations',
+          },
+          {
             text: 'useTransactionCount',
             link: '/react/api/hooks/useTransactionCount',
           },
@@ -531,6 +535,10 @@ export function getSidebar() {
           {
             text: 'getTransaction',
             link: '/core/api/actions/getTransaction',
+          },
+          {
+            text: 'getTransactionConfirmations',
+            link: '/core/api/actions/getTransactionConfirmations',
           },
           {
             text: 'getTransactionCount',
