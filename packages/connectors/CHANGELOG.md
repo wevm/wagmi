@@ -1,5 +1,16 @@
 # @wagmi/connectors
 
+## 5.0.0
+
+### Patch Changes
+
+- [#3459](https://github.com/wevm/wagmi/pull/3459) [`d950b666`](https://github.com/wevm/wagmi/commit/d950b666b56700ca039ce16cdfdf34564991e7f5) Thanks [@marthendalnunes](https://github.com/marthendalnunes)! - Bumped dependencies
+
+- [`1cfb6e5a`](https://github.com/wevm/wagmi/commit/1cfb6e5a875e707abcee00dd5739e87da05e8c90) Thanks [@jxom](https://github.com/jxom)! - Bumped listener limit on WalletConnect connector.
+
+- Updated dependencies [[`d950b666`](https://github.com/wevm/wagmi/commit/d950b666b56700ca039ce16cdfdf34564991e7f5), [`90ef39bb`](https://github.com/wevm/wagmi/commit/90ef39bb0f4ecb3c914d317875348e35ba0f4524), [`1cfb6e5a`](https://github.com/wevm/wagmi/commit/1cfb6e5a875e707abcee00dd5739e87da05e8c90)]:
+  - @wagmi/core@2.3.0
+
 ## 4.1.4
 
 ### Patch Changes
