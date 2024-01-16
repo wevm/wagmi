@@ -1,5 +1,21 @@
 # wagmi
 
+## 2.3.0
+
+### Minor Changes
+
+- [#3459](https://github.com/wevm/wagmi/pull/3459) [`d950b666`](https://github.com/wevm/wagmi/commit/d950b666b56700ca039ce16cdfdf34564991e7f5) Thanks [@marthendalnunes](https://github.com/marthendalnunes)! - Added `useEnsText` action.
+
+### Patch Changes
+
+- [#3467](https://github.com/wevm/wagmi/pull/3467) [`90ef39bb`](https://github.com/wevm/wagmi/commit/90ef39bb0f4ecb3c914d317875348e35ba0f4524) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where connectors that share the same provider instance could reconnect when they have never been connected before.
+
+- [`1cfb6e5a`](https://github.com/wevm/wagmi/commit/1cfb6e5a875e707abcee00dd5739e87da05e8c90) Thanks [@jxom](https://github.com/jxom)! - Bumped listener limit on WalletConnect connector.
+
+- Updated dependencies [[`d950b666`](https://github.com/wevm/wagmi/commit/d950b666b56700ca039ce16cdfdf34564991e7f5), [`d950b666`](https://github.com/wevm/wagmi/commit/d950b666b56700ca039ce16cdfdf34564991e7f5), [`90ef39bb`](https://github.com/wevm/wagmi/commit/90ef39bb0f4ecb3c914d317875348e35ba0f4524), [`1cfb6e5a`](https://github.com/wevm/wagmi/commit/1cfb6e5a875e707abcee00dd5739e87da05e8c90)]:
+  - @wagmi/core@2.3.0
+  - @wagmi/connectors@5.0.0
+
 ## 2.2.1
 
 ### Patch Changes
