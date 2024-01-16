@@ -22,7 +22,7 @@ export function getEnsAddress<config extends Config>(
   config: config,
   parameters: GetEnsAddressParameters<config>,
 ): Promise<GetEnsAddressReturnType> {
-  const { chainId } = parameters
+  const { chainId, ...rest } = parameters
   const client = config.getClient({ chainId })
-  return viem_getEnsAddress(client, parameters)
+  return viem_getEnsAddress(client, rest)
 }

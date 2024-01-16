@@ -1,5 +1,39 @@
 # @wagmi/connectors
 
+## 4.1.4
+
+### Patch Changes
+
+- [#3443](https://github.com/wevm/wagmi/pull/3443) [`007024a6`](https://github.com/wevm/wagmi/commit/007024a684ddbecf924cdc06dd6a8854fc3d5eeb) Thanks [@jmrossy](https://github.com/jmrossy)! - Bumped dependencies.
+
+- [#3447](https://github.com/wevm/wagmi/pull/3447) [`a02a26ad`](https://github.com/wevm/wagmi/commit/a02a26ad030d3afb78f744377d61b5c60b65d97a) Thanks [@tmm](https://github.com/tmm)! - Bumped dependencies.
+
+- Updated dependencies [[`a02a26ad`](https://github.com/wevm/wagmi/commit/a02a26ad030d3afb78f744377d61b5c60b65d97a), [`007024a6`](https://github.com/wevm/wagmi/commit/007024a684ddbecf924cdc06dd6a8854fc3d5eeb)]:
+  - @wagmi/core@2.2.1
+
+## 4.1.3
+
+### Patch Changes
+
+- Updated dependencies [[`00bf10a4`](https://github.com/wevm/wagmi/commit/00bf10a428b0d1c5dac35ebf25b19571e033ac26), [`64c073f6`](https://github.com/wevm/wagmi/commit/64c073f6c2720961e2d6aff986670b73dbfab9c3), [`fb6c4148`](https://github.com/wevm/wagmi/commit/fb6c4148d9e9e2fccfbe74c8f343b444dc68dec5)]:
+  - @wagmi/core@2.2.0
+
+## 4.1.2
+
+### Patch Changes
+
+- Updated dependencies [[`e00b8205`](https://github.com/wevm/wagmi/commit/e00b82058685751637edfa9a6b2d196a12549fe7)]:
+  - @wagmi/core@2.1.2
+
+## 4.1.1
+
+### Patch Changes
+
+- [`ec0d8b41`](https://github.com/wevm/wagmi/commit/ec0d8b4112181fefb11025e436a94a6114761d37) Thanks [@tmm](https://github.com/tmm)! - Added note to `metaMask` connector.
+
+- Updated dependencies [[`64b82282`](https://github.com/wevm/wagmi/commit/64b82282c1e57e77c25aa0814673780e4d11edd4), [`ec0d8b41`](https://github.com/wevm/wagmi/commit/ec0d8b4112181fefb11025e436a94a6114761d37)]:
+  - @wagmi/core@2.1.1
+
 ## 4.1.0
 
 ### Minor Changes

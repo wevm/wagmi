@@ -7,7 +7,7 @@ import {
   useVerifyTypedData,
 } from './useVerifyTypedData.js'
 
-test('select data', async () => {
+test('select data', () => {
   const result = useVerifyTypedData({
     query: {
       select(data) {

@@ -82,6 +82,13 @@ export {
 } from '../actions/getBlockTransactionCount.js'
 
 export {
+  type GetBytecodeErrorType,
+  type GetBytecodeParameters,
+  type GetBytecodeReturnType,
+  getBytecode,
+} from '../actions/getBytecode.js'
+
+export {
   type GetChainIdReturnType,
   getChainId,
 } from '../actions/getChainId.js'
@@ -160,10 +167,24 @@ export {
 } from '../actions/getGasPrice.js'
 
 export {
+  type GetProofErrorType,
+  type GetProofParameters,
+  type GetProofReturnType,
+  getProof,
+} from '../actions/getProof.js'
+
+export {
   type GetPublicClientParameters,
   type GetPublicClientReturnType,
   getPublicClient,
 } from '../actions/getPublicClient.js'
+
+export {
+  type GetStorageAtErrorType,
+  type GetStorageAtParameters,
+  type GetStorageAtReturnType,
+  getStorageAt,
+} from '../actions/getStorageAt.js'
 
 export {
   type GetTokenErrorType,
@@ -189,6 +210,13 @@ export {
   type GetTransactionCountReturnType,
   getTransactionCount,
 } from '../actions/getTransactionCount.js'
+
+export {
+  type GetTransactionReceiptErrorType,
+  type GetTransactionReceiptParameters,
+  type GetTransactionReceiptReturnType,
+  getTransactionReceipt,
+} from '../actions/getTransactionReceipt.js'
 
 export {
   type GetWalletClientErrorType,

@@ -22,7 +22,7 @@ export function getEnsAvatar<config extends Config>(
   config: config,
   parameters: GetEnsAvatarParameters<config>,
 ): Promise<GetEnsAvatarReturnType> {
-  const { chainId } = parameters
+  const { chainId, ...rest } = parameters
   const client = config.getClient({ chainId })
-  return viem_getEnsAvatar(client, parameters)
+  return viem_getEnsAvatar(client, rest)
 }

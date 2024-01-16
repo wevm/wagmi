@@ -2,7 +2,7 @@ import { expectTypeOf, test } from 'vitest'
 
 import { useToken } from './useToken.js'
 
-test('select data', async () => {
+test('select data', () => {
   const result = useToken({
     query: {
       select(data) {

@@ -91,6 +91,15 @@ export {
 } from '../query/getBlockTransactionCount.js'
 
 export {
+  type GetBytecodeData,
+  type GetBytecodeOptions,
+  type GetBytecodeQueryFnData,
+  type GetBytecodeQueryKey,
+  getBytecodeQueryKey,
+  getBytecodeQueryOptions,
+} from '../query/getBytecode.js'
+
+export {
   type GetConnectorClientData,
   type GetConnectorClientOptions,
   type GetConnectorClientQueryFnData,
@@ -154,6 +163,24 @@ export {
 } from '../query/getGasPrice.js'
 
 export {
+  type GetProofData,
+  type GetProofOptions,
+  type GetProofQueryFnData,
+  type GetProofQueryKey,
+  getProofQueryKey,
+  getProofQueryOptions,
+} from '../query/getProof.js'
+
+export {
+  type GetStorageAtData,
+  type GetStorageAtOptions,
+  type GetStorageAtQueryFnData,
+  type GetStorageAtQueryKey,
+  getStorageAtQueryKey,
+  getStorageAtQueryOptions,
+} from '../query/getStorageAt.js'
+
+export {
   type GetTokenData,
   type GetTokenOptions,
   type GetTokenQueryFnData,
@@ -179,6 +206,15 @@ export {
   getTransactionCountQueryKey,
   getTransactionCountQueryOptions,
 } from '../query/getTransactionCount.js'
+
+export {
+  type GetTransactionReceiptData,
+  type GetTransactionReceiptOptions,
+  type GetTransactionReceiptQueryFnData,
+  type GetTransactionReceiptQueryKey,
+  getTransactionReceiptQueryKey,
+  getTransactionReceiptQueryOptions,
+} from '../query/getTransactionReceipt.js'
 
 export {
   type GetWalletClientData,
