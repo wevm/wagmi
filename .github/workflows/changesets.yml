@@ -44,6 +44,8 @@ jobs:
 
   canary:
     name: Publish canary version
+    # run after changesets to make sure canary publish doesn't pick up stable changes getting published
+    needs: changesets 
     if: github.ref == 'refs/heads/main'
     needs: verify
     permissions: write-all
