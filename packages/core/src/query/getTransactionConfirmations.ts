@@ -37,14 +37,11 @@ export function getTransactionConfirmationsQueryOptions<
       if (!hash && !transactionReceipt)
         throw new Error('hash or transactionReceipt is required')
 
-      const confirmations = await getTransactionConfirmations(
-        config,
-        {
-          ...parameters,
-          hash,
-          transactionReceipt,
-        },
-      )
+      const confirmations = await getTransactionConfirmations(config, {
+        ...parameters,
+        hash,
+        transactionReceipt,
+      })
       return confirmations ?? null
     },
     queryKey: getTransactionConfirmationsQueryKey(options),
