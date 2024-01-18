@@ -33,10 +33,12 @@ export async function disconnect(
   const connections = config.state.connections
 
   if (connector) {
-    await connector.disconnect()
-    connector.emitter.off('change', config._internal.events.change)
-    connector.emitter.off('disconnect', config._internal.events.disconnect)
-    connector.emitter.on('connect', config._internal.events.connect)
+    if (connector.disconnect) {
+      await connector.disconnect()
+      connector.emitter.off('change', config._internal.events.change)
+      connector.emitter.off('disconnect', config._internal.events.disconnect)
+      connector.emitter.on('connect', config._internal.events.connect)
+    }
 
     connections.delete(connector.uid)
   }

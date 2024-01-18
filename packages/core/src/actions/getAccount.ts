@@ -61,7 +61,9 @@ export function getAccount<config extends Config>(
   config: config,
 ): GetAccountReturnType<config> {
   const uid = config.state.current!
-  const connection = config.state.connections.get(uid)
+  let connection = config.state.connections.get(uid)
+  if (!connection?.connector.disconnect) connection = undefined
+
   const addresses = connection?.accounts
   const address = addresses?.[0]
   const chain = config.chains.find(
