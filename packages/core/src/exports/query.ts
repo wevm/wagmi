@@ -145,6 +145,15 @@ export {
 } from '../query/getEnsResolver.js'
 
 export {
+  type GetEnsTextData,
+  type GetEnsTextOptions,
+  type GetEnsTextQueryFnData,
+  type GetEnsTextQueryKey,
+  getEnsTextQueryKey,
+  getEnsTextQueryOptions,
+} from '../query/getEnsText.js'
+
+export {
   type GetFeeHistoryData,
   type GetFeeHistoryOptions,
   type GetFeeHistoryQueryFnData,

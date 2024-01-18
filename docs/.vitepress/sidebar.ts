@@ -186,6 +186,10 @@ export function getSidebar() {
             link: '/react/api/hooks/useEnsResolver',
           },
           {
+            text: 'useEnsText',
+            link: '/react/api/hooks/useEnsText',
+          },
+          {
             text: 'useFeeHistory',
             link: '/react/api/hooks/useFeeHistory',
           },
@@ -506,6 +510,10 @@ export function getSidebar() {
           {
             text: 'getEnsResolver',
             link: '/core/api/actions/getEnsResolver',
+          },
+          {
+            text: 'getEnsText',
+            link: '/core/api/actions/getEnsText',
           },
           {
             text: 'getFeeHistory',

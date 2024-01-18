@@ -14,10 +14,9 @@ export function getAction<params extends {}, returnType extends {}>(
   // will not work. For that case, the consumer needs to pass the name explicitly.
   name: string,
 ) {
-  return (params: params): returnType =>
-    (
-      client as Client & {
-        [key: string]: (params: params) => returnType
-      }
-    )[action.name || name]?.(params) ?? action(client, params)
+  const clientAction = client[action.name ?? name]
+  return (params: params): returnType => {
+    if (typeof clientAction === 'function') clientAction(params)
+    return action(client, params)
+  }
 }

@@ -225,7 +225,7 @@ const { writeContract } = useWriteContract() // [!code ++]
   disabled={!Boolean(write)} // [!code --]
   onClick={() => write()} // [!code --]
   disabled={!Boolean(data?.request)} // [!code ++]
-  onClick={() => writeContract(data?.request)} // [!code ++]
+  onClick={() => writeContract(data!.request)} // [!code ++]
 >
   Write contract
 </button>
@@ -425,7 +425,7 @@ Before v2, Wagmi handled ENS name normalization internally for `useEnsAddress`, 
 
 ```ts
 import { useEnsAddress } from 'wagmi'
-import { normalize } from 'viem' // [!code ++]
+import { normalize } from 'viem/ens' // [!code ++]
 
 const result = useEnsAddress({
   name: 'wevm.eth', // [!code --]

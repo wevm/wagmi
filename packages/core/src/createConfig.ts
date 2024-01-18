@@ -185,8 +185,23 @@ export function createConfig<
         ? persist(() => initialState, {
             name: 'store',
             partialize(state) {
+              // Only persist "critical" store properties to preserve storage size.
               return {
-                connections: state.connections,
+                connections: {
+                  __type: 'Map',
+                  value: Array.from(state.connections.entries()).map(
+                    ([key, connection]) => {
+                      const { id, name, type, uid } = connection.connector
+                      return [
+                        key,
+                        {
+                          ...connection,
+                          connector: { id, name, type, uid },
+                        },
+                      ]
+                    },
+                  ),
+                } as unknown as PartializedState['connections'],
                 chainId: state.chainId,
                 current: state.current,
               } satisfies PartializedState
