@@ -31,11 +31,11 @@ export function getBlockTransactionCount<
   config: config,
   parameters: GetBlockTransactionCountParameters<config, chainId> = {},
 ): Promise<GetBlockTransactionCountReturnType> {
-  const { chainId } = parameters
+  const { chainId, ...rest } = parameters
   const client = config.getClient({ chainId })
   return getAction(
     client,
     viem_getBlockTransactionCount,
     'getBlockTransactionCount',
-  )(parameters)
+  )(rest)
 }

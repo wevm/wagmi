@@ -25,22 +25,6 @@ export function getSidebar() {
             link: '/react/guides/viem',
           },
           {
-            text: 'Connect Wallet',
-            link: '/react/guides/connect-wallet',
-          },
-          {
-            text: 'Sending Transactions',
-            link: '/react/guides/sending-transactions',
-          },
-          {
-            text: 'Reading Contracts',
-            link: '/react/guides/reading-contracts',
-          },
-          {
-            text: 'Writing to Contracts',
-            link: '/react/guides/writing-to-contracts',
-          },
-          {
             text: 'Error Handling',
             link: '/react/guides/error-handling',
           },
@@ -59,6 +43,22 @@ export function getSidebar() {
           {
             text: 'SSR',
             link: '/react/guides/ssr',
+          },
+          {
+            text: 'Connect Wallet',
+            link: '/react/guides/connect-wallet',
+          },
+          {
+            text: 'Send Transaction',
+            link: '/react/guides/send-transaction',
+          },
+          {
+            text: 'Read from Contract',
+            link: '/react/guides/read-from-contract',
+          },
+          {
+            text: 'Write to Contract',
+            link: '/react/guides/write-to-contract',
           },
           {
             text: 'FAQ / Troubleshooting',
@@ -156,6 +156,10 @@ export function getSidebar() {
             text: 'useBlockTransactionCount',
             link: '/react/api/hooks/useBlockTransactionCount',
           },
+          {
+            text: 'useBytecode',
+            link: '/react/api/hooks/useBytecode',
+          },
           { text: 'useCall', link: '/react/api/hooks/useCall' },
           { text: 'useChainId', link: '/react/api/hooks/useChainId' },
           { text: 'useClient', link: '/react/api/hooks/useClient' },
@@ -182,8 +186,16 @@ export function getSidebar() {
             link: '/react/api/hooks/useEnsResolver',
           },
           {
+            text: 'useEnsText',
+            link: '/react/api/hooks/useEnsText',
+          },
+          {
             text: 'useFeeHistory',
             link: '/react/api/hooks/useFeeHistory',
+          },
+          {
+            text: 'useProof',
+            link: '/react/api/hooks/useProof',
           },
           {
             text: 'usePublicClient',
@@ -235,6 +247,10 @@ export function getSidebar() {
             link: '/react/api/hooks/useSimulateContract',
           },
           {
+            text: 'useStorageAt',
+            link: '/react/api/hooks/useStorageAt',
+          },
+          {
             text: 'useSwitchAccount',
             link: '/react/api/hooks/useSwitchAccount',
           },
@@ -249,6 +265,10 @@ export function getSidebar() {
           {
             text: 'useTransactionCount',
             link: '/react/api/hooks/useTransactionCount',
+          },
+          {
+            text: 'useTransactionReceipt',
+            link: '/react/api/hooks/useTransactionReceipt',
           },
           {
             text: 'useToken',
@@ -460,6 +480,10 @@ export function getSidebar() {
             text: 'getBlockTransactionCount',
             link: '/core/api/actions/getBlockTransactionCount',
           },
+          {
+            text: 'getBytecode',
+            link: '/core/api/actions/getBytecode',
+          },
           { text: 'getChainId', link: '/core/api/actions/getChainId' },
           {
             text: 'getClient',
@@ -488,6 +512,10 @@ export function getSidebar() {
             link: '/core/api/actions/getEnsResolver',
           },
           {
+            text: 'getEnsText',
+            link: '/core/api/actions/getEnsText',
+          },
+          {
             text: 'getFeeHistory',
             link: '/core/api/actions/getFeeHistory',
           },
@@ -496,8 +524,16 @@ export function getSidebar() {
             link: '/core/api/actions/getGasPrice',
           },
           {
+            text: 'getProof',
+            link: '/core/api/actions/getProof',
+          },
+          {
             text: 'getPublicClient',
             link: '/core/api/actions/getPublicClient',
+          },
+          {
+            text: 'getStorageAt',
+            link: '/core/api/actions/getStorageAt',
           },
           { text: 'getToken', link: '/core/api/actions/getToken' },
           {
@@ -507,6 +543,10 @@ export function getSidebar() {
           {
             text: 'getTransactionCount',
             link: '/core/api/actions/getTransactionCount',
+          },
+          {
+            text: 'getTransactionReceipt',
+            link: '/core/api/actions/getTransactionReceipt',
           },
           {
             text: 'getWalletClient',

@@ -38,7 +38,7 @@ export function verifyMessageQueryOptions<config extends Config>(
     VerifyMessageQueryFnData,
     VerifyMessageErrorType,
     VerifyMessageData,
-    VerifyMessageQueryKey
+    VerifyMessageQueryKey<config>
   >
 }
 export type VerifyMessageQueryFnData = VerifyMessageReturnType
@@ -51,4 +51,6 @@ export function verifyMessageQueryKey<config extends Config>(
   return ['verifyMessage', filterQueryOptions(options)] as const
 }
 
-export type VerifyMessageQueryKey = ReturnType<typeof verifyMessageQueryKey>
+export type VerifyMessageQueryKey<config extends Config> = ReturnType<
+  typeof verifyMessageQueryKey<config>
+>

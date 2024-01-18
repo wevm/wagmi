@@ -3,7 +3,7 @@ import { assertType, expectTypeOf, test } from 'vitest'
 
 import { useReadContracts } from './useReadContracts.js'
 
-test('select data', async () => {
+test('select data', () => {
   const result = useReadContracts({
     allowFailure: false,
     contracts: [

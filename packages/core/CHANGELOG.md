@@ -1,5 +1,35 @@
 # @wagmi/core
 
+## 2.3.0
+
+### Minor Changes
+
+- [#3459](https://github.com/wevm/wagmi/pull/3459) [`d950b666`](https://github.com/wevm/wagmi/commit/d950b666b56700ca039ce16cdfdf34564991e7f5) Thanks [@marthendalnunes](https://github.com/marthendalnunes)! - Added `getEnsText` action.
+
+### Patch Changes
+
+- [#3467](https://github.com/wevm/wagmi/pull/3467) [`90ef39bb`](https://github.com/wevm/wagmi/commit/90ef39bb0f4ecb3c914d317875348e35ba0f4524) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where connectors that share the same provider instance could reconnect when they have never been connected before.
+
+- [`1cfb6e5a`](https://github.com/wevm/wagmi/commit/1cfb6e5a875e707abcee00dd5739e87da05e8c90) Thanks [@jxom](https://github.com/jxom)! - Bumped listener limit on WalletConnect connector.
+
+## 2.2.1
+
+### Patch Changes
+
+- [#3447](https://github.com/wevm/wagmi/pull/3447) [`a02a26ad`](https://github.com/wevm/wagmi/commit/a02a26ad030d3afb78f744377d61b5c60b65d97a) Thanks [@tmm](https://github.com/tmm)! - Fixed account typing.
+
+- [#3443](https://github.com/wevm/wagmi/pull/3443) [`007024a6`](https://github.com/wevm/wagmi/commit/007024a684ddbecf924cdc06dd6a8854fc3d5eeb) Thanks [@jmrossy](https://github.com/jmrossy)! - Fixed invalid `chainId` parameter passed through actions to Viem.
+
+## 2.2.0
+
+### Minor Changes
+
+- [#3434](https://github.com/wevm/wagmi/pull/3434) [`00bf10a4`](https://github.com/wevm/wagmi/commit/00bf10a428b0d1c5dac35ebf25b19571e033ac26) Thanks [@marthendalnunes](https://github.com/marthendalnunes)! - Added `getBytecode` and `getStorageAt` actions.
+
+- [#3416](https://github.com/wevm/wagmi/pull/3416) [`64c073f6`](https://github.com/wevm/wagmi/commit/64c073f6c2720961e2d6aff986670b73dbfab9c3) Thanks [@marthendalnunes](https://github.com/marthendalnunes)! - Added `getTransactionReceipt` action.
+
+- [#3408](https://github.com/wevm/wagmi/pull/3408) [`fb6c4148`](https://github.com/wevm/wagmi/commit/fb6c4148d9e9e2fccfbe74c8f343b444dc68dec5) Thanks [@marthendalnunes](https://github.com/marthendalnunes)! - Added `getProof` action.
+
 ## 2.1.2
 
 ### Patch Changes

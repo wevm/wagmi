@@ -23,7 +23,7 @@ export function getEnsName<config extends Config>(
   config: config,
   parameters: GetEnsNameParameters<config>,
 ): Promise<GetEnsNameReturnType> {
-  const { chainId } = parameters
+  const { chainId, ...rest } = parameters
   const client = config.getClient({ chainId })
-  return getAction(client, viem_getEnsName, 'getEnsName')(parameters)
+  return getAction(client, viem_getEnsName, 'getEnsName')(rest)
 }

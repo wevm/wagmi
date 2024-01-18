@@ -51,7 +51,7 @@ export function readContract<
   config: config,
   parameters: ReadContractParameters<abi, functionName, args, config>,
 ): Promise<ReadContractReturnType<abi, functionName, args>> {
-  const { chainId } = parameters
+  const { chainId, ...rest } = parameters
   const client = config.getClient({ chainId })
-  return getAction(client, viem_readContract, 'readContract')(parameters as any)
+  return getAction(client, viem_readContract, 'readContract')(rest as any)
 }

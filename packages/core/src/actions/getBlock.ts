@@ -57,9 +57,9 @@ export async function getBlock<
     chainId
   > = {},
 ): Promise<GetBlockReturnType<includeTransactions, blockTag, config, chainId>> {
-  const { chainId } = parameters
+  const { chainId, ...rest } = parameters
   const client = config.getClient({ chainId })
-  const block = await getAction(client, viem_getBlock, 'getBlock')(parameters)
+  const block = await getAction(client, viem_getBlock, 'getBlock')(rest)
   return {
     ...(block as GetBlockReturnType<
       includeTransactions,
