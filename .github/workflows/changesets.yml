@@ -47,7 +47,6 @@ jobs:
     # run after changesets to make sure canary publish doesn't pick up stable changes getting published
     needs: changesets 
     if: github.ref == 'refs/heads/main'
-    needs: verify
     permissions: write-all
     runs-on: ubuntu-latest
     timeout-minutes: 5
