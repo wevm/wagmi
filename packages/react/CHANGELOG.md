@@ -1,5 +1,15 @@
 # wagmi
 
+## 2.3.1
+
+### Patch Changes
+
+- [#3476](https://github.com/wevm/wagmi/pull/3476) [`3be5bb7b`](https://github.com/wevm/wagmi/commit/3be5bb7b0b38646e12e6da5c762ef74dff66bcc2) Thanks [@jxom](https://github.com/jxom)! - Modified persist strategy to only store "critical" properties that are needed before hydration.
+
+- Updated dependencies [[`3be5bb7b`](https://github.com/wevm/wagmi/commit/3be5bb7b0b38646e12e6da5c762ef74dff66bcc2)]:
+  - @wagmi/core@2.3.1
+  - @wagmi/connectors@5.0.1
+
 ## 2.3.0
 
 ### Minor Changes
