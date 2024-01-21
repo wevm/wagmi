@@ -1,7 +1,7 @@
 'use client'
 
 import { type ResolvedRegister, type State, hydrate } from '@wagmi/core'
-import { type ReactElement, useEffect, useRef } from 'react'
+import { type ReactElement, useEffect } from 'react'
 
 export type HydrateProps = {
   config: ResolvedRegister['config']
