@@ -21,16 +21,14 @@ export function Hydrate(parameters: React.PropsWithChildren<HydrateProps>) {
   if (!config._internal.ssr) onMount()
 
   // Hydrate for SSR
-  const active = useRef(true)
   // biome-ignore lint/nursery/useExhaustiveDependencies:
   useEffect(() => {
-    if (!active.current) return
     if (!config._internal.ssr) return
     onMount()
     return () => {
       active.current = false
     }
-  }, [])
+  }, [onMount])
 
   return children as ReactElement
 }
