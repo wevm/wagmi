@@ -25,9 +25,6 @@ export function Hydrate(parameters: React.PropsWithChildren<HydrateProps>) {
   useEffect(() => {
     if (!config._internal.ssr) return
     onMount()
-    return () => {
-      active.current = false
-    }
   }, [onMount])
 
   return children as ReactElement
