@@ -239,6 +239,13 @@ export {
 } from '../actions/multicall.js'
 
 export {
+  type PrepareTransactionRequestParameters,
+  type PrepareTransactionRequestReturnType,
+  type PrepareTransactionRequestErrorType,
+  prepareTransactionRequest,
+} from '../actions/prepareTransactionRequest.js'
+
+export {
   type ReadContractParameters,
   type ReadContractReturnType,
   type ReadContractErrorType,

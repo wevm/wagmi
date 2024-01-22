@@ -21,7 +21,7 @@ import { getConnectorClient } from '@wagmi/core'
 import { getConnectorClient } from '@wagmi/core'
 import { config } from './config'
 
-const client = getConnectorClient(config)
+const client = await getConnectorClient(config)
 ```
 <<< @/snippets/core/config.ts[config.ts]
 :::
@@ -43,7 +43,7 @@ Account to use with client. Throws if account is not found on [`connector`](#con
 import { getConnectorClient } from '@wagmi/core'
 import { config } from './config'
 
-const client = getConnectorClient(config, {
+const client = await getConnectorClient(config, {
   account: '0xd2135CfB216b74109775236E36d4b433F1DF507B', // [!code focus]
 })
 ```
@@ -62,7 +62,7 @@ import { getConnectorClient } from '@wagmi/core'
 import { mainnet } from '@wagmi/core/chains'
 import { config } from './config'
 
-const client = getConnectorClient(config, {
+const client = await getConnectorClient(config, {
   chainId: mainnet.id, // [!code focus]
 })
 ```
@@ -82,7 +82,7 @@ import { getConnections, getConnectorClient } from '@wagmi/core'
 import { config } from './config'
 
 const connections = getConnections(config)
-const client = getConnectorClient(config, {
+const client = await getConnectorClient(config, {
   connector: connections[0]?.connector, // [!code focus]
 })
 ```

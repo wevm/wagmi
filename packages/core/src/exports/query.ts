@@ -244,6 +244,15 @@ export {
 } from '../query/infiniteReadContracts.js'
 
 export {
+  type PrepareTransactionRequestData,
+  type PrepareTransactionRequestOptions,
+  type PrepareTransactionRequestQueryFnData,
+  type PrepareTransactionRequestQueryKey,
+  prepareTransactionRequestQueryKey,
+  prepareTransactionRequestQueryOptions,
+} from '../query/prepareTransactionRequest.js'
+
+export {
   type ReadContractData,
   type ReadContractOptions,
   type ReadContractQueryFnData,

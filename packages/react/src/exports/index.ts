@@ -193,6 +193,12 @@ export {
 } from '../hooks/useInfiniteReadContracts.js'
 
 export {
+  type UsePrepareTransactionRequestParameters,
+  type UsePrepareTransactionRequestReturnType,
+  usePrepareTransactionRequest,
+} from '../hooks/usePrepareTransactionRequest.js'
+
+export {
   type UseProofParameters,
   type UseProofReturnType,
   useProof,

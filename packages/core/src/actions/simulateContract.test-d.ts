@@ -73,6 +73,7 @@ test('chain formatters', async () => {
   })
 
   if (response.chainId === celo.id) {
+    expectTypeOf(response.chainId).toEqualTypeOf(celo.id)
     expectTypeOf(response.request.feeCurrency).toEqualTypeOf<
       `0x${string}` | undefined
     >()
@@ -98,7 +99,7 @@ test('chain formatters', async () => {
     gatewayFee?: bigint | undefined
     gatewayFeeRecipient?: `0x${string}` | undefined
   }>()
-  simulateContract(config, {
+  const response2 = await simulateContract(config, {
     chainId: celo.id,
     account: '0x',
     address: '0x',
@@ -109,6 +110,14 @@ test('chain formatters', async () => {
     gatewayFee: 100n,
     gatewayFeeRecipient: '0x',
   })
+  expectTypeOf(response2.chainId).toEqualTypeOf(celo.id)
+  expectTypeOf(response2.request.feeCurrency).toEqualTypeOf<
+    `0x${string}` | undefined
+  >()
+  expectTypeOf(response2.request.gatewayFee).toEqualTypeOf<bigint | undefined>()
+  expectTypeOf(response2.request.gatewayFeeRecipient).toEqualTypeOf<
+    `0x${string}` | undefined
+  >()
 
   type Result3 = SimulateContractParameters<
     typeof abi.erc20,
