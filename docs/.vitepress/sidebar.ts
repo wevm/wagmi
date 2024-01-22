@@ -226,6 +226,10 @@ export function getSidebar() {
             link: '/react/api/hooks/useReadContract',
           },
           {
+            text: 'usePrepareTransactionRequest',
+            link: '/react/api/hooks/usePrepareTransactionRequest',
+          },
+          {
             text: 'useReadContracts',
             link: '/react/api/hooks/useReadContracts',
           },
@@ -261,6 +265,10 @@ export function getSidebar() {
           {
             text: 'useTransaction',
             link: '/react/api/hooks/useTransaction',
+          },
+          {
+            text: 'useTransactionConfirmations',
+            link: '/react/api/hooks/useTransactionConfirmations',
           },
           {
             text: 'useTransactionCount',
@@ -541,6 +549,10 @@ export function getSidebar() {
             link: '/core/api/actions/getTransaction',
           },
           {
+            text: 'getTransactionConfirmations',
+            link: '/core/api/actions/getTransactionConfirmations',
+          },
+          {
             text: 'getTransactionCount',
             link: '/core/api/actions/getTransactionCount',
           },
@@ -555,6 +567,10 @@ export function getSidebar() {
           {
             text: 'multicall',
             link: '/core/api/actions/multicall',
+          },
+          {
+            text: 'prepareTransactionRequest',
+            link: '/core/api/actions/prepareTransactionRequest',
           },
           { text: 'reconnect', link: '/core/api/actions/reconnect' },
           {

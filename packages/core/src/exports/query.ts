@@ -208,6 +208,15 @@ export {
 } from '../query/getTransaction.js'
 
 export {
+  type GetTransactionConfirmationsData,
+  type GetTransactionConfirmationsOptions,
+  type GetTransactionConfirmationsQueryFnData,
+  type GetTransactionConfirmationsQueryKey,
+  getTransactionConfirmationsQueryKey,
+  getTransactionConfirmationsQueryOptions,
+} from '../query/getTransactionConfirmations.js'
+
+export {
   type GetTransactionCountData,
   type GetTransactionCountOptions,
   type GetTransactionCountQueryFnData,
@@ -242,6 +251,15 @@ export {
   infiniteReadContractsQueryKey,
   infiniteReadContractsQueryOptions,
 } from '../query/infiniteReadContracts.js'
+
+export {
+  type PrepareTransactionRequestData,
+  type PrepareTransactionRequestOptions,
+  type PrepareTransactionRequestQueryFnData,
+  type PrepareTransactionRequestQueryKey,
+  prepareTransactionRequestQueryKey,
+  prepareTransactionRequestQueryOptions,
+} from '../query/prepareTransactionRequest.js'
 
 export {
   type ReadContractData,

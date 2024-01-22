@@ -212,6 +212,13 @@ export {
 } from '../actions/getTransaction.js'
 
 export {
+  type GetTransactionConfirmationsErrorType,
+  type GetTransactionConfirmationsParameters,
+  type GetTransactionConfirmationsReturnType,
+  getTransactionConfirmations,
+} from '../actions/getTransactionConfirmations.js'
+
+export {
   type GetTransactionCountErrorType,
   type GetTransactionCountParameters,
   type GetTransactionCountReturnType,
@@ -237,6 +244,13 @@ export {
   type MulticallReturnType,
   multicall,
 } from '../actions/multicall.js'
+
+export {
+  type PrepareTransactionRequestParameters,
+  type PrepareTransactionRequestReturnType,
+  type PrepareTransactionRequestErrorType,
+  prepareTransactionRequest,
+} from '../actions/prepareTransactionRequest.js'
 
 export {
   type ReadContractParameters,

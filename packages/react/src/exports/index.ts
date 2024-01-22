@@ -193,6 +193,12 @@ export {
 } from '../hooks/useInfiniteReadContracts.js'
 
 export {
+  type UsePrepareTransactionRequestParameters,
+  type UsePrepareTransactionRequestReturnType,
+  usePrepareTransactionRequest,
+} from '../hooks/usePrepareTransactionRequest.js'
+
+export {
   type UseProofParameters,
   type UseProofReturnType,
   useProof,
@@ -280,6 +286,12 @@ export {
   type UseTransactionReturnType,
   useTransaction,
 } from '../hooks/useTransaction.js'
+
+export {
+  type UseTransactionConfirmationsParameters,
+  type UseTransactionConfirmationsReturnType,
+  useTransactionConfirmations,
+} from '../hooks/useTransactionConfirmations.js'
 
 export {
   type UseTransactionCountParameters,

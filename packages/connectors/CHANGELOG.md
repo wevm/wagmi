@@ -1,6 +1,22 @@
 # @wagmi/connectors
 
-## 5.0.0
+## 4.1.7
+
+### Patch Changes
+
+- [#3427](https://github.com/wevm/wagmi/pull/3427) [`370f1b4a`](https://github.com/wevm/wagmi/commit/370f1b4a3f154d181acf381c31c2e7862e22c0e4) Thanks [@marthendalnunes](https://github.com/marthendalnunes)! - Bumped dependencies.
+
+- Updated dependencies [[`370f1b4a`](https://github.com/wevm/wagmi/commit/370f1b4a3f154d181acf381c31c2e7862e22c0e4)]:
+  - @wagmi/core@2.4.0
+
+## 4.1.6
+
+### Patch Changes
+
+- Updated dependencies [[`3be5bb7b`](https://github.com/wevm/wagmi/commit/3be5bb7b0b38646e12e6da5c762ef74dff66bcc2)]:
+  - @wagmi/core@2.3.1
+
+## 4.1.5
 
 ### Patch Changes
 

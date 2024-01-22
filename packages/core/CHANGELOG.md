@@ -1,5 +1,17 @@
 # @wagmi/core
 
+## 2.4.0
+
+### Minor Changes
+
+- [#3427](https://github.com/wevm/wagmi/pull/3427) [`370f1b4a`](https://github.com/wevm/wagmi/commit/370f1b4a3f154d181acf381c31c2e7862e22c0e4) Thanks [@marthendalnunes](https://github.com/marthendalnunes)! - Added `prepareTransactionRequest` action.
+
+## 2.3.1
+
+### Patch Changes
+
+- [#3476](https://github.com/wevm/wagmi/pull/3476) [`3be5bb7b`](https://github.com/wevm/wagmi/commit/3be5bb7b0b38646e12e6da5c762ef74dff66bcc2) Thanks [@jxom](https://github.com/jxom)! - Modified persist strategy to only store "critical" properties that are needed before hydration.
+
 ## 2.3.0
 
 ### Minor Changes
