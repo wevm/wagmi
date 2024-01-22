@@ -1,48 +1,61 @@
-import type {
-  Account,
-  Address,
-  Chain,
-  PrepareTransactionRequestErrorType as viem_PrepareTransactionRequestErrorType,
-  PrepareTransactionRequestParameterType as viem_PrepareTransactionRequestParameterType,
-  PrepareTransactionRequestParameters as viem_PrepareTransactionRequestParameters,
-  PrepareTransactionRequestReturnType as viem_PrepareTransactionRequestReturnType,
+import {
+  type Account,
+  type Address,
+  type Chain,
+  type PrepareTransactionRequestErrorType as viem_PrepareTransactionRequestErrorType,
+  type PrepareTransactionRequestParameterType as viem_PrepareTransactionRequestParameterType,
+  type PrepareTransactionRequestParameters as viem_PrepareTransactionRequestParameters,
+  type PrepareTransactionRequestReturnType as viem_PrepareTransactionRequestReturnType,
 } from 'viem'
-
 import { prepareTransactionRequest as viem_prepareTransactionRequest } from 'viem/actions'
-import { type Config } from '../createConfig.js'
-import type { SelectChains } from '../types/chain.js'
-import { type ChainIdParameter } from '../types/properties.js'
 
-import { type Evaluate, type IsNarrowable } from '../types/utils.js'
+import { type Config } from '../createConfig.js'
+import { type SelectChains } from '../types/chain.js'
+import {
+  type ChainIdParameter,
+  type ConnectorParameter,
+} from '../types/properties.js'
+import {
+  type Evaluate,
+  type IsNarrowable,
+  type UnionEvaluate,
+  type UnionOmit,
+} from '../types/utils.js'
+import { getConnectorClient } from './getConnectorClient.js'
 
 export type PrepareTransactionRequestParameters<
-  config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
   parameterType extends viem_PrepareTransactionRequestParameterType = viem_PrepareTransactionRequestParameterType,
+  config extends Config = Config,
+  chainId extends
+    | config['chains'][number]['id']
+    | undefined = config['chains'][number]['id'],
   ///
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = {
-  [key in keyof chains]: Evaluate<
-    Omit<
+  [key in keyof chains]: UnionEvaluate<
+    UnionOmit<
       viem_PrepareTransactionRequestParameters<
         chains[key],
         Account,
         chains[key],
-        Account,
+        Account | Address,
         parameterType
       >,
       'chain'
     > &
-      ChainIdParameter<config, chainId> & {
+      ChainIdParameter<config, chainId> &
+      ConnectorParameter & {
         to: Address
       }
   >
 }[number]
 
 export type PrepareTransactionRequestReturnType<
-  config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
   parameterType extends viem_PrepareTransactionRequestParameterType = viem_PrepareTransactionRequestParameterType,
+  config extends Config = Config,
+  chainId extends
+    | config['chains'][number]['id']
+    | undefined = config['chains'][number]['id'],
   ///
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = {
@@ -54,7 +67,10 @@ export type PrepareTransactionRequestReturnType<
       Account,
       parameterType
     >
-  >
+  > &
+    ConnectorParameter & {
+      chainId: chains[key]['id']
+    }
 }[number]
 
 export type PrepareTransactionRequestErrorType =
@@ -63,23 +79,28 @@ export type PrepareTransactionRequestErrorType =
 /** https://wagmi.sh/core/api/actions/prepareTransactionRequest */
 export async function prepareTransactionRequest<
   config extends Config,
-  chainId extends config['chains'][number]['id'],
   parameterType extends viem_PrepareTransactionRequestParameterType,
+  chainId extends config['chains'][number]['id'] | undefined,
 >(
   config: config,
   parameters: PrepareTransactionRequestParameters<
+    parameterType,
     config,
-    chainId,
-    parameterType
+    chainId
   >,
 ): Promise<
-  PrepareTransactionRequestReturnType<config, chainId, parameterType>
+  PrepareTransactionRequestReturnType<parameterType, config, chainId>
 > {
-  const { chainId, ...rest } = parameters
-  const client = config.getClient({ chainId })
-  return viem_prepareTransactionRequest(client, {
-    ...(rest as any),
-  }) as unknown as Promise<
-    PrepareTransactionRequestReturnType<config, chainId, parameterType>
+  const { account, chainId, connector, ...rest } = parameters
+  const client = await getConnectorClient(config, {
+    account,
+    chainId,
+    connector,
+  })
+  return viem_prepareTransactionRequest(
+    client,
+    rest as unknown as viem_PrepareTransactionRequestParameters,
+  ) as unknown as Promise<
+    PrepareTransactionRequestReturnType<parameterType, config, chainId>
   >
 }
