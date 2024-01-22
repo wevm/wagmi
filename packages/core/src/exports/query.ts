@@ -145,6 +145,15 @@ export {
 } from '../query/getEnsResolver.js'
 
 export {
+  type GetEnsTextData,
+  type GetEnsTextOptions,
+  type GetEnsTextQueryFnData,
+  type GetEnsTextQueryKey,
+  getEnsTextQueryKey,
+  getEnsTextQueryOptions,
+} from '../query/getEnsText.js'
+
+export {
   type GetFeeHistoryData,
   type GetFeeHistoryOptions,
   type GetFeeHistoryQueryFnData,
@@ -242,6 +251,15 @@ export {
   infiniteReadContractsQueryKey,
   infiniteReadContractsQueryOptions,
 } from '../query/infiniteReadContracts.js'
+
+export {
+  type PrepareTransactionRequestData,
+  type PrepareTransactionRequestOptions,
+  type PrepareTransactionRequestQueryFnData,
+  type PrepareTransactionRequestQueryKey,
+  prepareTransactionRequestQueryKey,
+  prepareTransactionRequestQueryOptions,
+} from '../query/prepareTransactionRequest.js'
 
 export {
   type ReadContractData,

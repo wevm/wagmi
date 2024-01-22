@@ -186,6 +186,10 @@ export function getSidebar() {
             link: '/react/api/hooks/useEnsResolver',
           },
           {
+            text: 'useEnsText',
+            link: '/react/api/hooks/useEnsText',
+          },
+          {
             text: 'useFeeHistory',
             link: '/react/api/hooks/useFeeHistory',
           },
@@ -220,6 +224,10 @@ export function getSidebar() {
           {
             text: 'useReadContract',
             link: '/react/api/hooks/useReadContract',
+          },
+          {
+            text: 'usePrepareTransactionRequest',
+            link: '/react/api/hooks/usePrepareTransactionRequest',
           },
           {
             text: 'useReadContracts',
@@ -512,6 +520,10 @@ export function getSidebar() {
             link: '/core/api/actions/getEnsResolver',
           },
           {
+            text: 'getEnsText',
+            link: '/core/api/actions/getEnsText',
+          },
+          {
             text: 'getFeeHistory',
             link: '/core/api/actions/getFeeHistory',
           },
@@ -555,6 +567,10 @@ export function getSidebar() {
           {
             text: 'multicall',
             link: '/core/api/actions/multicall',
+          },
+          {
+            text: 'prepareTransactionRequest',
+            link: '/core/api/actions/prepareTransactionRequest',
           },
           { text: 'reconnect', link: '/core/api/actions/reconnect' },
           {

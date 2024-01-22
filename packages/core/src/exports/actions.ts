@@ -153,6 +153,13 @@ export {
 } from '../actions/getEnsResolver.js'
 
 export {
+  type GetEnsTextErrorType,
+  type GetEnsTextParameters,
+  type GetEnsTextReturnType,
+  getEnsText,
+} from '../actions/getEnsText.js'
+
+export {
   type GetFeeHistoryErrorType,
   type GetFeeHistoryParameters,
   type GetFeeHistoryReturnType,
@@ -237,6 +244,13 @@ export {
   type MulticallReturnType,
   multicall,
 } from '../actions/multicall.js'
+
+export {
+  type PrepareTransactionRequestParameters,
+  type PrepareTransactionRequestReturnType,
+  type PrepareTransactionRequestErrorType,
+  prepareTransactionRequest,
+} from '../actions/prepareTransactionRequest.js'
 
 export {
   type ReadContractParameters,
