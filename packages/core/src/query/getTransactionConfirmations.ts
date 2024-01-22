@@ -7,24 +7,26 @@ import {
   getTransactionConfirmations,
 } from '../actions/getTransactionConfirmations.js'
 import { type Config } from '../createConfig.js'
-import type { ScopeKeyParameter } from '../types/properties.js'
-import type { Evaluate, ExactPartial } from '../types/utils.js'
+import { type ScopeKeyParameter } from '../types/properties.js'
+import { type UnionPartial } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
 export type GetTransactionConfirmationsOptions<
   config extends Config,
-  chainId extends config['chains'][number]['id'],
-> = Evaluate<
-  ExactPartial<GetTransactionConfirmationsParameters<config, chainId>> &
-    ScopeKeyParameter
->
+  chainId extends
+    | config['chains'][number]['id']
+    | undefined = config['chains'][number]['id'],
+> = UnionPartial<GetTransactionConfirmationsParameters<config, chainId>> &
+  ScopeKeyParameter
 
 export function getTransactionConfirmationsQueryOptions<
   config extends Config,
-  chainId extends config['chains'][number]['id'],
+  chainId extends
+    | config['chains'][number]['id']
+    | undefined = config['chains'][number]['id'],
 >(
   config: config,
-  options: GetTransactionConfirmationsOptions<config, chainId> = {},
+  options: GetTransactionConfirmationsOptions<config, chainId> = {} as any,
 ) {
   return {
     async queryFn({ queryKey }) {
@@ -38,9 +40,9 @@ export function getTransactionConfirmationsQueryOptions<
         throw new Error('hash or transactionReceipt is required')
 
       const confirmations = await getTransactionConfirmations(config, {
-        ...(parameters as any),
         hash,
         transactionReceipt,
+        ...(parameters as any),
       })
       return confirmations ?? null
     },
@@ -61,12 +63,16 @@ export type GetTransactionConfirmationsData =
 
 export function getTransactionConfirmationsQueryKey<
   config extends Config,
-  chainId extends config['chains'][number]['id'],
->(options: GetTransactionConfirmationsOptions<config, chainId> = {}) {
+  chainId extends
+    | config['chains'][number]['id']
+    | undefined = config['chains'][number]['id'],
+>(options: GetTransactionConfirmationsOptions<config, chainId> = {} as any) {
   return ['transactionConfirmations', filterQueryOptions(options)] as const
 }
 
 export type GetTransactionConfirmationsQueryKey<
   config extends Config,
-  chainId extends config['chains'][number]['id'],
+  chainId extends
+    | config['chains'][number]['id']
+    | undefined = config['chains'][number]['id'],
 > = ReturnType<typeof getTransactionConfirmationsQueryKey<config, chainId>>
