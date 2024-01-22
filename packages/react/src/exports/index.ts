@@ -288,6 +288,12 @@ export {
 } from '../hooks/useTransaction.js'
 
 export {
+  type UseTransactionConfirmationsParameters,
+  type UseTransactionConfirmationsReturnType,
+  useTransactionConfirmations,
+} from '../hooks/useTransactionConfirmations.js'
+
+export {
   type UseTransactionCountParameters,
   type UseTransactionCountReturnType,
   useTransactionCount,

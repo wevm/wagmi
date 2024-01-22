@@ -208,6 +208,15 @@ export {
 } from '../query/getTransaction.js'
 
 export {
+  type GetTransactionConfirmationsData,
+  type GetTransactionConfirmationsOptions,
+  type GetTransactionConfirmationsQueryFnData,
+  type GetTransactionConfirmationsQueryKey,
+  getTransactionConfirmationsQueryKey,
+  getTransactionConfirmationsQueryOptions,
+} from '../query/getTransactionConfirmations.js'
+
+export {
   type GetTransactionCountData,
   type GetTransactionCountOptions,
   type GetTransactionCountQueryFnData,

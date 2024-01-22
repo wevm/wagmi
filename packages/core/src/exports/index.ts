@@ -212,6 +212,13 @@ export {
 } from '../actions/getTransaction.js'
 
 export {
+  type GetTransactionConfirmationsErrorType,
+  type GetTransactionConfirmationsParameters,
+  type GetTransactionConfirmationsReturnType,
+  getTransactionConfirmations,
+} from '../actions/getTransactionConfirmations.js'
+
+export {
   type GetTransactionCountErrorType,
   type GetTransactionCountParameters,
   type GetTransactionCountReturnType,

@@ -57,6 +57,7 @@ test('exports', () => {
       "useSwitchChain",
       "useToken",
       "useTransaction",
+      "useTransactionConfirmations",
       "useTransactionCount",
       "useTransactionReceipt",
       "useVerifyMessage",
