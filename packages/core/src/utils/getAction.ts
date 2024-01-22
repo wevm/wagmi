@@ -1,4 +1,10 @@
-import type { Client } from 'viem'
+import {
+  type Account,
+  type Chain,
+  type Client,
+  type RpcSchema,
+  type Transport,
+} from 'viem'
 
 /**
  * Retrieves and returns an action from the client (if exists), and falls
@@ -7,16 +13,24 @@ import type { Client } from 'viem'
  * Useful for extracting overridden actions from a client (ie. if a consumer
  * wants to override the `sendTransaction` implementation).
  */
-export function getAction<params extends {}, returnType extends {}>(
-  client: Client,
-  action: (_: any, params: params) => returnType,
+export function getAction<
+  transport extends Transport,
+  chain extends Chain | undefined,
+  account extends Account | undefined,
+  rpcSchema extends RpcSchema | undefined,
+  extended extends { [key: string]: unknown },
+  client extends Client<transport, chain, account, rpcSchema, extended>,
+  parameters,
+  returnType,
+>(
+  client: client,
+  actionFn: (_: any, parameters: parameters) => returnType,
   // Some minifiers drop `Function.prototype.name`, meaning that `action.name`
   // will not work. For that case, the consumer needs to pass the name explicitly.
   name: string,
-) {
-  const clientAction = client[action.name ?? name]
-  return (params: params): returnType => {
-    if (typeof clientAction === 'function') clientAction(params)
-    return action(client, params)
-  }
+): (parameters: parameters) => returnType {
+  const action = client[actionFn.name ?? name]
+  if (typeof action === 'function')
+    return action as (params: parameters) => returnType
+  return (params) => actionFn(client, params)
 }

@@ -25,5 +25,6 @@ export function getEnsAvatar<config extends Config>(
 ): Promise<GetEnsAvatarReturnType> {
   const { chainId, ...rest } = parameters
   const client = config.getClient({ chainId })
-  return getAction(client, viem_getEnsAvatar, 'getEnsAvatar')(rest)
+  const action = getAction(client, viem_getEnsAvatar, 'getEnsAvatar')
+  return action(rest)
 }

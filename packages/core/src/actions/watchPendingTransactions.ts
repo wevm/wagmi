@@ -53,11 +53,12 @@ export function watchPendingTransactions<
     if (unwatch) unwatch()
 
     const client = config.getClient({ chainId })
-    unwatch = getAction(
+    const action = getAction(
       client,
       viem_watchPendingTransactions,
       'watchPendingTransactions',
-    )(rest as viem_WatchPendingTransactionsParameters)
+    )
+    unwatch = action(rest as viem_WatchPendingTransactionsParameters)
     return unwatch
   }
 

@@ -25,5 +25,6 @@ export async function verifyMessage<config extends Config>(
 ): Promise<VerifyMessageReturnType> {
   const { chainId, ...rest } = parameters
   const client = config.getClient({ chainId })
-  return getAction(client, viem_verifyMessage, 'verifyMessage')(rest)
+  const action = getAction(client, viem_verifyMessage, 'verifyMessage')
+  return action(rest)
 }

@@ -44,9 +44,10 @@ export async function getTransactionReceipt<
 ): Promise<GetTransactionReceiptReturnType<config, chainId>> {
   const { chainId, ...rest } = parameters
   const client = config.getClient({ chainId })
-  return getAction(
+  const action = getAction(
     client,
     viem_getTransactionReceipt,
     'getTransactionReceipt',
-  )(rest)
+  )
+  return action(rest)
 }

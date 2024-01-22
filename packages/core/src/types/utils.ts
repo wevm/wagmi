@@ -45,6 +45,9 @@ export type Mutable<type extends object> = {
   -readonly [key in keyof type]: type[key]
 }
 
+// TODO: Remove once native in TS
+export type NoInfer<type> = [type][type extends any ? 0 : never]
+
 /** Strict version of built-in Omit type */
 export type Omit<type, keys extends keyof type> = Pick<
   type,

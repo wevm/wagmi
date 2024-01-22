@@ -33,11 +33,8 @@ export async function multicall<
 ): Promise<MulticallReturnType<contracts, allowFailure>> {
   const { allowFailure = true, chainId, contracts, ...rest } = parameters
   const client = config.getClient({ chainId })
-  return getAction(
-    client,
-    viem_multicall,
-    'multicall',
-  )({
+  const action = getAction(client, viem_multicall, 'multicall')
+  return action({
     allowFailure,
     contracts,
     ...rest,

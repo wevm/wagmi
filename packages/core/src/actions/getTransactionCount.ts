@@ -25,9 +25,10 @@ export async function getTransactionCount<config extends Config>(
   const { address, blockNumber, blockTag, chainId } = parameters
 
   const client = config.getClient({ chainId })
-  return getAction(
+  const action = getAction(
     client,
     viem_getTransactionCount,
     'getTransactionCount',
-  )(blockNumber ? { address, blockNumber } : { address, blockTag })
+  )
+  return action(blockNumber ? { address, blockNumber } : { address, blockTag })
 }

@@ -8,6 +8,7 @@ import {
 import { type Config } from '../createConfig.js'
 import { type ChainIdParameter } from '../types/properties.js'
 import { type Evaluate } from '../types/utils.js'
+import { getAction } from '../utils/getAction.js'
 
 export type GetStorageAtParameters<config extends Config = Config> = Evaluate<
   viem_GetStorageAtParameters & ChainIdParameter<config>
@@ -24,5 +25,6 @@ export async function getStorageAt<config extends Config>(
 ): Promise<GetStorageAtReturnType> {
   const { chainId, ...rest } = parameters
   const client = config.getClient({ chainId })
-  return viem_getStorageAt(client, rest)
+  const action = getAction(client, viem_getStorageAt, 'getStorageAt')
+  return action(rest)
 }

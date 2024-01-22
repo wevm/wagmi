@@ -28,5 +28,6 @@ export function getGasPrice<
 ): Promise<GetGasPriceReturnType> {
   const { chainId } = parameters
   const client = config.getClient({ chainId })
-  return getAction(client, viem_getGasPrice, 'getGasPrice')({})
+  const action = getAction(client, viem_getGasPrice, 'getGasPrice')
+  return action({})
 }

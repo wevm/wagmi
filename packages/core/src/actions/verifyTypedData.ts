@@ -35,9 +35,6 @@ export async function verifyTypedData<
 ): Promise<VerifyTypedDataReturnType> {
   const { chainId, ...rest } = parameters
   const client = config.getClient({ chainId })
-  return getAction(
-    client,
-    viem_verifyTypedData,
-    'verifyTypedData',
-  )(rest as viem_VerifyTypedDataParameters)
+  const action = getAction(client, viem_verifyTypedData, 'verifyTypedData')
+  return action(rest as viem_VerifyTypedDataParameters)
 }

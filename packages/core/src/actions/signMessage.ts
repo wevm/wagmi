@@ -38,9 +38,6 @@ export async function signMessage(
 ): Promise<SignMessageReturnType> {
   const { account, connector, ...rest } = parameters
   const client = await getConnectorClient(config, { account, connector })
-  return getAction(
-    client,
-    viem_signMessage,
-    'signMessage',
-  )(rest as viem_SignMessageParameters<Account>)
+  const action = getAction(client, viem_signMessage, 'signMessage')
+  return action(rest as viem_SignMessageParameters<Account>)
 }

@@ -48,21 +48,16 @@ export async function waitForTransactionReceipt<
   const { chainId, timeout = 0, ...rest } = parameters
 
   const client = config.getClient({ chainId })
-  const receipt = await getAction(
+  const action = getAction(
     client,
     viem_waitForTransactionReceipt,
     'waitForTransactionReceipt',
-  )({
-    ...rest,
-    timeout,
-  })
+  )
+  const receipt = await action({ ...rest, timeout })
 
   if (receipt.status === 'reverted') {
-    const txn = await getAction(
-      client,
-      getTransaction,
-      'getTransaction',
-    )({ hash: receipt.transactionHash })
+    const action = getAction(client, getTransaction, 'getTransaction')
+    const txn = await action({ hash: receipt.transactionHash })
     const code = (await call(client, {
       ...txn,
       gasPrice: txn.type !== 'eip1559' ? txn.gasPrice : undefined,

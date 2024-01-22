@@ -111,11 +111,8 @@ export async function writeContract<
     request = simulateRequest
   }
 
-  const hash = await getAction(
-    client,
-    viem_writeContract,
-    'writeContract',
-  )({
+  const action = getAction(client, viem_writeContract, 'writeContract')
+  const hash = await action({
     ...(request as any),
     chain: chainId ? { id: chainId } : null,
   })

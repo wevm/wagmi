@@ -33,9 +33,10 @@ export function getBlockTransactionCount<
 ): Promise<GetBlockTransactionCountReturnType> {
   const { chainId, ...rest } = parameters
   const client = config.getClient({ chainId })
-  return getAction(
+  const action = getAction(
     client,
     viem_getBlockTransactionCount,
     'getBlockTransactionCount',
-  )(rest)
+  )
+  return action(rest)
 }

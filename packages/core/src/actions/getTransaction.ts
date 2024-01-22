@@ -42,9 +42,8 @@ export function getTransaction<
 ): Promise<GetTransactionReturnType<config, chainId>> {
   const { chainId, ...rest } = parameters
   const client = config.getClient({ chainId })
-  return getAction(
-    client,
-    viem_getTransaction,
-    'getTransaction',
-  )(rest) as unknown as Promise<GetTransactionReturnType<config, chainId>>
+  const action = getAction(client, viem_getTransaction, 'getTransaction')
+  return action(rest) as unknown as Promise<
+    GetTransactionReturnType<config, chainId>
+  >
 }

@@ -73,11 +73,12 @@ export function watchContractEvent<
     if (unwatch) unwatch()
 
     const client = config.getClient({ chainId })
-    unwatch = getAction(
+    const action = getAction(
       client,
       viem_watchContractEvent,
       'watchContractEvent',
-    )(rest as unknown as viem_WatchContractEventParameters)
+    )
+    unwatch = action(rest as unknown as viem_WatchContractEventParameters)
     return unwatch
   }
 

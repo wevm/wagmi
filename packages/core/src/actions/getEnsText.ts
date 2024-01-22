@@ -25,5 +25,6 @@ export function getEnsText<config extends Config>(
 ): Promise<GetEnsTextReturnType> {
   const { chainId, ...rest } = parameters
   const client = config.getClient({ chainId })
-  return getAction(client, viem_getEnsText, 'getEnsText')(rest)
+  const action = getAction(client, viem_getEnsText, 'getEnsText')
+  return action(rest)
 }

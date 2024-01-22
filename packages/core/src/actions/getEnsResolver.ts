@@ -25,5 +25,6 @@ export function getEnsResolver<config extends Config>(
 ): Promise<GetEnsResolverReturnType> {
   const { chainId, ...rest } = parameters
   const client = config.getClient({ chainId })
-  return getAction(client, viem_getEnsResolver, 'getEnsResolver')(rest)
+  const action = getAction(client, viem_getEnsResolver, 'getEnsResolver')
+  return action(rest)
 }

@@ -64,11 +64,8 @@ export function watchBlocks<
     if (unwatch) unwatch()
 
     const client = config.getClient({ chainId })
-    unwatch = getAction(
-      client,
-      viem_watchBlocks,
-      'watchBlocks',
-    )(rest as viem_WatchBlocksParameters)
+    const action = getAction(client, viem_watchBlocks, 'watchBlocks')
+    unwatch = action(rest as viem_WatchBlocksParameters)
     return unwatch
   }
 

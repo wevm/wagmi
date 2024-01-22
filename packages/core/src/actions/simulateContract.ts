@@ -149,15 +149,8 @@ export async function simulateContract<
   }
 
   const client = config.getClient({ chainId })
-  const { result, request } = await getAction(
-    client,
-    viem_simulateContract,
-    'simulateContract',
-  )({
-    ...rest,
-    abi,
-    account,
-  })
+  const action = getAction(client, viem_simulateContract, 'simulateContract')
+  const { result, request } = await action({ ...rest, abi, account })
 
   return {
     chainId: client.chain.id,

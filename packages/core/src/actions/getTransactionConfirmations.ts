@@ -9,6 +9,7 @@ import {
 import { type Config } from '../createConfig.js'
 import { type SelectChains } from '../types/chain.js'
 import { type ChainIdParameter } from '../types/properties.js'
+import { getAction } from '../utils/getAction.js'
 
 export type GetTransactionConfirmationsParameters<
   config extends Config = Config,
@@ -42,8 +43,10 @@ export function getTransactionConfirmations<
 ): Promise<GetTransactionConfirmationsReturnType> {
   const { chainId, ...rest } = parameters
   const client = config.getClient({ chainId })
-  return viem_getTransactionConfirmations(
+  const action = getAction(
     client,
-    rest as viem_GetTransactionConfirmationsParameters,
+    viem_getTransactionConfirmations,
+    'getTransactionConfirmations',
   )
+  return action(rest as viem_GetTransactionConfirmationsParameters)
 }

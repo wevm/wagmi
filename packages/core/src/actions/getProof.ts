@@ -25,5 +25,6 @@ export async function getProof<config extends Config>(
 ): Promise<GetProofReturnType> {
   const { chainId, ...rest } = parameters
   const client = config.getClient({ chainId })
-  return getAction(client, viem_getProof, 'getProof')(rest)
+  const action = getAction(client, viem_getProof, 'getProof')
+  return action(rest)
 }

@@ -29,5 +29,6 @@ export function getFeeHistory<
 ): Promise<GetFeeHistoryReturnType> {
   const { chainId, ...rest } = parameters
   const client = config.getClient({ chainId })
-  return getAction(client, viem_getFeeHistory, 'getFeeHistory')(rest)
+  const action = getAction(client, viem_getFeeHistory, 'getFeeHistory')
+  return action(rest)
 }

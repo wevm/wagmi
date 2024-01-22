@@ -47,9 +47,6 @@ export async function signTypedData<
 ): Promise<SignTypedDataReturnType> {
   const { account, connector, ...rest } = parameters
   const client = await getConnectorClient(config, { account, connector })
-  return getAction(
-    client,
-    viem_signTypedData,
-    'signTypedData',
-  )(rest as unknown as viem_SignTypedDataParameters)
+  const action = getAction(client, viem_signTypedData, 'signTypedData')
+  return action(rest as unknown as viem_SignTypedDataParameters)
 }

@@ -22,5 +22,6 @@ export async function call<config extends Config,>(
 ): Promise<CallReturnType> {
   const { chainId, ...rest } = parameters
   const client = config.getClient({ chainId })
-  return getAction(client, viem_call, 'call')(rest)
+  const action = getAction(client, viem_call, 'call')
+  return action(rest)
 }

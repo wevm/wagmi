@@ -68,12 +68,6 @@ export async function estimateGas<
   }
 
   const client = config.getClient({ chainId })
-  return getAction(
-    client,
-    viem_estimateGas,
-    'estimateGas',
-  )({
-    ...(rest as viem_EstimateGasParameters),
-    account,
-  })
+  const action = getAction(client, viem_estimateGas, 'estimateGas')
+  return action({ ...(rest as viem_EstimateGasParameters), account })
 }

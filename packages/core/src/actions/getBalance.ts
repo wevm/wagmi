@@ -83,11 +83,10 @@ export async function getBalance<config extends Config>(
   }
 
   const client = config.getClient({ chainId })
-  const value = await getAction(
-    client,
-    viem_getBalance,
-    'getBalance',
-  )(blockNumber ? { address, blockNumber } : { address, blockTag })
+  const action = getAction(client, viem_getBalance, 'getBalance')
+  const value = await action(
+    blockNumber ? { address, blockNumber } : { address, blockTag },
+  )
   const chain = config.chains.find((x) => x.id === chainId) ?? client.chain!
   return {
     decimals: chain.nativeCurrency.decimals,
