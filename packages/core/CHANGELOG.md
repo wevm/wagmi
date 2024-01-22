@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.4.0
+
+### Minor Changes
+
+- [#3427](https://github.com/wevm/wagmi/pull/3427) [`370f1b4a`](https://github.com/wevm/wagmi/commit/370f1b4a3f154d181acf381c31c2e7862e22c0e4) Thanks [@marthendalnunes](https://github.com/marthendalnunes)! - Added `prepareTransactionRequest` action.
+
 ## 2.3.1
 
 ### Patch Changes
