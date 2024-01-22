@@ -31,6 +31,7 @@ test('exports', () => {
       "useEnsAvatar",
       "useEnsName",
       "useEnsResolver",
+      "useEnsText",
       "useEstimateFeesPerGas",
       "useFeeData",
       "useEstimateGas",

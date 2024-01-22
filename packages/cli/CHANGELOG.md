@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 2.0.4
+
+### Patch Changes
+
+- [#3462](https://github.com/wevm/wagmi/pull/3462) [`d25573ea`](https://github.com/wevm/wagmi/commit/d25573ea03358f967953e37c176b220a7b341769) Thanks [@cruzdanilo](https://github.com/cruzdanilo)! - Upgraded dependencies
+
 ## 2.0.3
 
 ### Patch Changes

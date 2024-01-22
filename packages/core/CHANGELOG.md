@@ -1,5 +1,23 @@
 # @wagmi/core
 
+## 2.3.1
+
+### Patch Changes
+
+- [#3476](https://github.com/wevm/wagmi/pull/3476) [`3be5bb7b`](https://github.com/wevm/wagmi/commit/3be5bb7b0b38646e12e6da5c762ef74dff66bcc2) Thanks [@jxom](https://github.com/jxom)! - Modified persist strategy to only store "critical" properties that are needed before hydration.
+
+## 2.3.0
+
+### Minor Changes
+
+- [#3459](https://github.com/wevm/wagmi/pull/3459) [`d950b666`](https://github.com/wevm/wagmi/commit/d950b666b56700ca039ce16cdfdf34564991e7f5) Thanks [@marthendalnunes](https://github.com/marthendalnunes)! - Added `getEnsText` action.
+
+### Patch Changes
+
+- [#3467](https://github.com/wevm/wagmi/pull/3467) [`90ef39bb`](https://github.com/wevm/wagmi/commit/90ef39bb0f4ecb3c914d317875348e35ba0f4524) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where connectors that share the same provider instance could reconnect when they have never been connected before.
+
+- [`1cfb6e5a`](https://github.com/wevm/wagmi/commit/1cfb6e5a875e707abcee00dd5739e87da05e8c90) Thanks [@jxom](https://github.com/jxom)! - Bumped listener limit on WalletConnect connector.
+
 ## 2.2.1
 
 ### Patch Changes

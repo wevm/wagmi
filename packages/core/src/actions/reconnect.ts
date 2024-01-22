@@ -59,8 +59,18 @@ export async function reconnect(
 
   // Iterate through each connector and try to connect
   let connected = false
-  const connections = []
+  const connections: Connection[] = []
+  const providers: unknown[] = []
   for (const connector of sorted) {
+    const provider_ = await connector.getProvider()
+    if (!provider_) continue
+
+    // If we already have an instance of this connector's provider,
+    // then we have already checked it (ie. injected connectors can
+    // share the same `window.ethereum` instance, so we don't want to
+    // connect to it again).
+    if (providers.some((provider) => provider === provider_)) continue
+
     const isAuthorized = await connector.isAuthorized()
     if (!isAuthorized) continue
 
@@ -89,6 +99,7 @@ export async function reconnect(
       chainId: data.chainId,
       connector,
     })
+    providers.push(provider_)
     connected = true
   }
 

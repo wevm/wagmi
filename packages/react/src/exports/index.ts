@@ -147,6 +147,12 @@ export {
 } from '../hooks/useEnsResolver.js'
 
 export {
+  type UseEnsTextParameters,
+  type UseEnsTextReturnType,
+  useEnsText,
+} from '../hooks/useEnsText.js'
+
+export {
   type UseEstimateFeesPerGasParameters,
   type UseEstimateFeesPerGasReturnType,
   useEstimateFeesPerGas,
