@@ -7,7 +7,7 @@
 - [#3496](https://github.com/wevm/wagmi/pull/3496) [`ba7f8a75`](https://github.com/wevm/wagmi/commit/ba7f8a758efb07664c6e401b5e7e325e7c62341b) Thanks [@tmm](https://github.com/tmm)! - Bumped dependencies.
 
 - Updated dependencies [[`ba7f8a75`](https://github.com/wevm/wagmi/commit/ba7f8a758efb07664c6e401b5e7e325e7c62341b), [`ba7f8a75`](https://github.com/wevm/wagmi/commit/ba7f8a758efb07664c6e401b5e7e325e7c62341b)]:
-  - @wagmi/connectors@5.0.0
+  - @wagmi/connectors@4.1.9
   - @wagmi/core@2.6.0
 
 ## 2.5.0
