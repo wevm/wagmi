@@ -1,4 +1,4 @@
-import type { CallParameters, Chain } from 'viem'
+import { type Chain } from 'viem'
 import { hexToString } from 'viem'
 import {
   type WaitForTransactionReceiptErrorType as viem_WaitForTransactionReceiptErrorType,
@@ -10,7 +10,7 @@ import {
 } from 'viem/actions'
 
 import { type Config } from '../createConfig.js'
-import type { SelectChains } from '../types/chain.js'
+import { type SelectChains } from '../types/chain.js'
 import { type ChainIdParameter } from '../types/properties.js'
 import { type Evaluate, type IsNarrowable } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
@@ -56,24 +56,23 @@ export async function waitForTransactionReceipt<
   const receipt = await action({ ...rest, timeout })
 
   if (receipt.status === 'reverted') {
-    const action = getAction(client, getTransaction, 'getTransaction')
-    const txn = await action({ hash: receipt.transactionHash })
-    const code = (await call(client, {
+    const action_getTransaction = getAction(
+      client,
+      getTransaction,
+      'getTransaction',
+    )
+    const txn = await action_getTransaction({ hash: receipt.transactionHash })
+    const action_call = getAction(client, call, 'call')
+    const code = (await action_call({
       ...txn,
       gasPrice: txn.type !== 'eip1559' ? txn.gasPrice : undefined,
       maxFeePerGas: txn.type === 'eip1559' ? txn.maxFeePerGas : undefined,
       maxPriorityFeePerGas:
         txn.type === 'eip1559' ? txn.maxPriorityFeePerGas : undefined,
-    } as CallParameters)) as unknown as string
+    })) as unknown as string
     const reason = hexToString(`0x${code.substring(138)}`)
     throw new Error(reason)
   }
 
-  return {
-    ...(receipt as unknown as WaitForTransactionReceiptReturnType<
-      config,
-      chainId
-    >),
-    chainId: client.chain.id,
-  }
+  return { ...receipt, chainId: client.chain.id }
 }

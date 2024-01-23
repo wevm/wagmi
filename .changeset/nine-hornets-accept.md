@@ -4,4 +4,4 @@
 "wagmi": patch
 ---
 
-Bumped core dependency.
+Bumped dependencies.
