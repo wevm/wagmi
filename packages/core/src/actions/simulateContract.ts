@@ -26,6 +26,7 @@ import type {
   UnionEvaluate,
   UnionOmit,
 } from '../types/utils.js'
+import { getAction } from '../utils/getAction.js'
 import {
   type GetConnectorClientErrorType,
   getConnectorClient,
@@ -148,11 +149,8 @@ export async function simulateContract<
   }
 
   const client = config.getClient({ chainId })
-  const { result, request } = await viem_simulateContract(client, {
-    ...rest,
-    abi,
-    account,
-  })
+  const action = getAction(client, viem_simulateContract, 'simulateContract')
+  const { result, request } = await action({ ...rest, abi, account })
 
   return {
     chainId: client.chain.id,

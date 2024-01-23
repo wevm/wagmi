@@ -16,6 +16,7 @@ import { type Config } from '../createConfig.js'
 import { type ChainIdParameter } from '../types/properties.js'
 import { type Unit } from '../types/unit.js'
 import { type Evaluate } from '../types/utils.js'
+import { getAction } from '../utils/getAction.js'
 import { getUnit } from '../utils/getUnit.js'
 import { readContracts } from './readContracts.js'
 
@@ -82,8 +83,8 @@ export async function getBalance<config extends Config>(
   }
 
   const client = config.getClient({ chainId })
-  const value = await viem_getBalance(
-    client,
+  const action = getAction(client, viem_getBalance, 'getBalance')
+  const value = await action(
     blockNumber ? { address, blockNumber } : { address, blockTag },
   )
   const chain = config.chains.find((x) => x.id === chainId) ?? client.chain!

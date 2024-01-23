@@ -8,6 +8,7 @@ import {
 import { type Config } from '../createConfig.js'
 import { type ChainIdParameter } from '../types/properties.js'
 import { type Evaluate } from '../types/utils.js'
+import { getAction } from '../utils/getAction.js'
 
 export type GetEnsTextParameters<config extends Config = Config> = Evaluate<
   viem_GetEnsTextParameters & ChainIdParameter<config>
@@ -24,5 +25,6 @@ export function getEnsText<config extends Config>(
 ): Promise<GetEnsTextReturnType> {
   const { chainId, ...rest } = parameters
   const client = config.getClient({ chainId })
-  return viem_getEnsText(client, rest)
+  const action = getAction(client, viem_getEnsText, 'getEnsText')
+  return action(rest)
 }

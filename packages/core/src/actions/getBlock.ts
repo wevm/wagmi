@@ -10,6 +10,7 @@ import { type Config } from '../createConfig.js'
 import type { SelectChains } from '../types/chain.js'
 import { type ChainIdParameter } from '../types/properties.js'
 import { type Evaluate, type IsNarrowable } from '../types/utils.js'
+import { getAction } from '../utils/getAction.js'
 
 export type GetBlockParameters<
   includeTransactions extends boolean = false,
@@ -58,7 +59,8 @@ export async function getBlock<
 ): Promise<GetBlockReturnType<includeTransactions, blockTag, config, chainId>> {
   const { chainId, ...rest } = parameters
   const client = config.getClient({ chainId })
-  const block = await viem_getBlock(client, rest)
+  const action = getAction(client, viem_getBlock, 'getBlock')
+  const block = await action(rest)
   return {
     ...(block as GetBlockReturnType<
       includeTransactions,

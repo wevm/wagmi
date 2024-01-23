@@ -10,6 +10,7 @@ import { type Config } from '../createConfig.js'
 import type { SelectChains } from '../types/chain.js'
 import { type ChainIdParameter } from '../types/properties.js'
 import { type Evaluate, type IsNarrowable } from '../types/utils.js'
+import { getAction } from '../utils/getAction.js'
 
 export type GetTransactionParameters<
   config extends Config = Config,
@@ -41,7 +42,8 @@ export function getTransaction<
 ): Promise<GetTransactionReturnType<config, chainId>> {
   const { chainId, ...rest } = parameters
   const client = config.getClient({ chainId })
-  return viem_getTransaction(client, rest) as unknown as Promise<
+  const action = getAction(client, viem_getTransaction, 'getTransaction')
+  return action(rest) as unknown as Promise<
     GetTransactionReturnType<config, chainId>
   >
 }

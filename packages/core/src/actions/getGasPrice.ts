@@ -7,6 +7,7 @@ import {
 import { type Config } from '../createConfig.js'
 import { type ChainIdParameter } from '../types/properties.js'
 import { type Evaluate } from '../types/utils.js'
+import { getAction } from '../utils/getAction.js'
 
 export type GetGasPriceParameters<
   config extends Config = Config,
@@ -27,5 +28,6 @@ export function getGasPrice<
 ): Promise<GetGasPriceReturnType> {
   const { chainId } = parameters
   const client = config.getClient({ chainId })
-  return viem_getGasPrice(client)
+  const action = getAction(client, viem_getGasPrice, 'getGasPrice')
+  return action({})
 }

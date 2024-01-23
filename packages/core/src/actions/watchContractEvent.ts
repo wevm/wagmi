@@ -18,6 +18,7 @@ import {
   type SyncConnectedChainParameter,
 } from '../types/properties.js'
 import { type UnionEvaluate } from '../types/utils.js'
+import { getAction } from '../utils/getAction.js'
 
 export type WatchContractEventParameters<
   abi extends Abi | readonly unknown[] = Abi,
@@ -72,10 +73,12 @@ export function watchContractEvent<
     if (unwatch) unwatch()
 
     const client = config.getClient({ chainId })
-    unwatch = viem_watchContractEvent(
+    const action = getAction(
       client,
-      rest as unknown as viem_WatchContractEventParameters,
+      viem_watchContractEvent,
+      'watchContractEvent',
     )
+    unwatch = action(rest as unknown as viem_WatchContractEventParameters)
     return unwatch
   }
 

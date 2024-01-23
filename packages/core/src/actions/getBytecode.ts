@@ -8,6 +8,7 @@ import {
 import { type Config } from '../createConfig.js'
 import { type ChainIdParameter } from '../types/properties.js'
 import { type Evaluate } from '../types/utils.js'
+import { getAction } from '../utils/getAction.js'
 
 export type GetBytecodeParameters<config extends Config = Config> = Evaluate<
   viem_GetBytecodeParameters & ChainIdParameter<config>
@@ -24,5 +25,6 @@ export async function getBytecode<config extends Config>(
 ): Promise<GetBytecodeReturnType> {
   const { chainId, ...rest } = parameters
   const client = config.getClient({ chainId })
-  return viem_getBytecode(client, rest)
+  const action = getAction(client, viem_getBytecode, 'getBytecode')
+  return action(rest)
 }

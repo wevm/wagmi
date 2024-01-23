@@ -21,6 +21,7 @@ import {
   type UnionEvaluate,
   type UnionOmit,
 } from '../types/utils.js'
+import { getAction } from '../utils/getAction.js'
 import { getConnectorClient } from './getConnectorClient.js'
 
 export type PrepareTransactionRequestParameters<
@@ -97,8 +98,12 @@ export async function prepareTransactionRequest<
     chainId,
     connector,
   })
-  return viem_prepareTransactionRequest(
+  const action = getAction(
     client,
+    viem_prepareTransactionRequest,
+    'prepareTransactionRequest',
+  )
+  return action(
     rest as unknown as viem_PrepareTransactionRequestParameters,
   ) as unknown as Promise<
     PrepareTransactionRequestReturnType<parameterType, config, chainId>

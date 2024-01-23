@@ -9,6 +9,7 @@ import {
 import { type Config } from '../createConfig.js'
 import { type ChainIdParameter } from '../types/properties.js'
 import { type Evaluate, type UnionLooseOmit } from '../types/utils.js'
+import { getAction } from '../utils/getAction.js'
 
 export type EstimateMaxPriorityFeePerGasParameters<
   config extends Config = Config,
@@ -37,5 +38,10 @@ export async function estimateMaxPriorityFeePerGas<
 ): Promise<EstimateMaxPriorityFeePerGasReturnType> {
   const { chainId } = parameters
   const client = config.getClient({ chainId })
-  return viem_estimateMaxPriorityFeePerGas(client)
+  const action = getAction(
+    client,
+    viem_estimateMaxPriorityFeePerGas,
+    'estimateMaxPriorityFeePerGas',
+  )
+  return action({ chain: client.chain })
 }

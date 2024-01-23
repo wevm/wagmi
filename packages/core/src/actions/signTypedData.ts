@@ -10,6 +10,7 @@ import { type Config } from '../createConfig.js'
 import type { BaseErrorType, ErrorType } from '../errors/base.js'
 import type { ConnectorParameter } from '../types/properties.js'
 import type { UnionEvaluate } from '../types/utils.js'
+import { getAction } from '../utils/getAction.js'
 import {
   type GetConnectorClientErrorType,
   getConnectorClient,
@@ -46,8 +47,6 @@ export async function signTypedData<
 ): Promise<SignTypedDataReturnType> {
   const { account, connector, ...rest } = parameters
   const client = await getConnectorClient(config, { account, connector })
-  return viem_signTypedData(
-    client,
-    rest as unknown as viem_SignTypedDataParameters,
-  )
+  const action = getAction(client, viem_signTypedData, 'signTypedData')
+  return action(rest as unknown as viem_SignTypedDataParameters)
 }

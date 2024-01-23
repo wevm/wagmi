@@ -9,6 +9,7 @@ import {
 import { type Config } from '../createConfig.js'
 import { type ChainIdParameter } from '../types/properties.js'
 import { type Evaluate } from '../types/utils.js'
+import { getAction } from '../utils/getAction.js'
 
 export type VerifyTypedDataParameters<
   typedData extends TypedData | Record<string, unknown> = TypedData,
@@ -34,5 +35,6 @@ export async function verifyTypedData<
 ): Promise<VerifyTypedDataReturnType> {
   const { chainId, ...rest } = parameters
   const client = config.getClient({ chainId })
-  return viem_verifyTypedData(client, rest as viem_VerifyTypedDataParameters)
+  const action = getAction(client, viem_verifyTypedData, 'verifyTypedData')
+  return action(rest as viem_VerifyTypedDataParameters)
 }
