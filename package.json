@@ -6,7 +6,7 @@
     "changeset:prepublish": "pnpm version:update && pnpm build && bun .scripts/formatPackageJson.ts && bun .scripts/generateProxyPackages.ts",
     "changeset:publish": "pnpm changeset:prepublish && changeset publish",
     "changeset:version": "changeset version && pnpm version:update",
-    "clean": "pnpm run --r --parallel clean",
+    "clean": "pnpm run --r --parallel clean && rm -rf packages/**/*.json.tmp",
     "deps": "pnpx taze -r",
     "dev": "pnpm dev:react",
     "dev:core": "pnpm --filter vite-core dev",
