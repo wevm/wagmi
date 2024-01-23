@@ -2,4 +2,4 @@
 "@wagmi/core": minor
 ---
 
-Update action internals to resolve Viem Client actions.
+Updated action internals to resolve Viem Client actions.
