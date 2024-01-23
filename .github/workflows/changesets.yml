@@ -16,7 +16,14 @@ jobs:
   changesets:
     name: Create pull request or publish
     needs: verify
-    permissions: write-all
+    permissions:
+      contents: write
+      id-token: write
+      issues: write
+      repository-projects: write
+      deployments: write
+      packages: write
+      pull-requests: write
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
@@ -42,43 +49,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-  canary:
-    name: Publish canary version
-    # run after changesets to make sure canary publish doesn't pick up stable changes getting published
-    needs: changesets 
-    if: github.ref == 'refs/heads/main'
-    permissions: write-all
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-
-    steps:
-      - name: Clone repository
-        uses: actions/checkout@v4
-        with:
-          # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
-          fetch-depth: 0
-
-      - name: Install dependencies
-        uses: ./.github/actions/install-dependencies
-
-      - name: Setup .npmrc file
-        uses: actions/setup-node@v4
-        with:
-          registry-url: 'https://registry.npmjs.org'
-
-      # https://github.com/changesets/changesets/blob/main/docs/snapshot-releases.md#versioning-your-packages
-      - name: Version packages
-        run: pnpm changeset version --snapshot canary
+      - name: Publish Prerelease
+        if: steps.changesets.outputs.published != 'true'
+        continue-on-error: true
         env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # TODO: Only run if git has changes (e.g. versions were bumped by previous step)
-      - name: Prepare packages
-        run: pnpm changeset:prepublish
-
-      # https://github.com/changesets/changesets/blob/main/docs/snapshot-releases.md#publishing-your-packages
-      - name: Publish packages
-        run: pnpm changeset publish --tag canary
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npm config set "//registry.npmjs.org/:_authToken" "$NPM_TOKEN"
+          git reset --hard origin/main
+          pnpm changeset version --snapshot canary
+          pnpm changeset version --no-git-tag --snapshot canary
+          pnpm changeset:prepublish
+          pnpm changeset publish --no-git-tag --snapshot canary --tag canary
