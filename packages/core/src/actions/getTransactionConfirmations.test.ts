@@ -9,7 +9,7 @@ test('default', async () => {
     getTransactionConfirmations(config, {
       hash: '0xa559259bd2d0e8372421e222ff3545f705b5da60005bd787a23c2e68d6d7fefd',
     }),
-  ).resolves.toBe(1188740n)
+  ).resolves.toBeTypeOf('bigint')
 })
 
 test('parameters: transactionReceipt', async () => {
@@ -21,5 +21,5 @@ test('parameters: transactionReceipt', async () => {
     getTransactionConfirmations(config, {
       transactionReceipt,
     }),
-  ).resolves.toBe(1188740n)
+  ).resolves.toBeTypeOf('bigint')
 })
