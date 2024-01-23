@@ -1,5 +1,17 @@
 # wagmi
 
+## 2.5.0
+
+### Minor Changes
+
+- [#3461](https://github.com/wevm/wagmi/pull/3461) [`ca98041d`](https://github.com/wevm/wagmi/commit/ca98041d1b39893d90246929485f4db0d1c6f9f7) Thanks [@marthendalnunes](https://github.com/marthendalnunes)! - Added `useTransactionConfirmations` hook.
+
+### Patch Changes
+
+- Updated dependencies [[`ca98041d`](https://github.com/wevm/wagmi/commit/ca98041d1b39893d90246929485f4db0d1c6f9f7)]:
+  - @wagmi/core@2.5.0
+  - @wagmi/connectors@4.1.8
+
 ## 2.4.0
 
 ### Minor Changes
