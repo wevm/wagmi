@@ -22,7 +22,7 @@ import { getEnsAvatar } from '@wagmi/core'
 import { normalize } from 'viem/ens'
 import { config } from './config'
 
-const ensAvatar = getEnsAvatar(config, {
+const ensAvatar = await getEnsAvatar(config, {
   name: normalize('wevm.eth'),
 })
 ```
@@ -41,6 +41,29 @@ import { type GetEnsAvatarParameters } from '@wagmi/core'
 
 ---
 
+### assetGatewayUrls <Badge text="viem@>=2.3.1" />
+
+`{ ipfs?: string | undefined; arweave?: string | undefined } | undefined`
+
+Gateway urls to resolve IPFS and/or Arweave assets.
+
+::: code-group
+```ts [index.ts]
+import { getEnsAvatar } from '@wagmi/core'
+import { normalize } from 'viem/ens'
+import { config } from './config'
+
+const ensAvatar = await getEnsAvatar(config, {
+  assetGatewayUrls: { // [!code focus]
+    ipfs: 'https://cloudflare-ipfs.com', // [!code focus]
+  }, // [!code focus]
+  name: normalize('wevm.eth'),
+})
+```
+<<< @/snippets/core/config.ts[config.ts]
+:::
+
+
 ### blockNumber
 
 `bigint | undefined`
@@ -53,7 +76,7 @@ import { getEnsAvatar } from '@wagmi/core'
 import { normalize } from 'viem/ens'
 import { config } from './config'
 
-const ensAvatar = getEnsAvatar(config, {
+const ensAvatar = await getEnsAvatar(config, {
   blockNumber: 17829139n, // [!code focus]
   name: normalize('wevm.eth'),
 })
@@ -73,7 +96,7 @@ import { getEnsAvatar } from '@wagmi/core'
 import { normalize } from 'viem/ens'
 import { config } from './config'
 
-const ensAvatar = getEnsAvatar(config, {
+const ensAvatar = await getEnsAvatar(config, {
   blockTag: 'latest', // [!code focus]
   name: normalize('wevm.eth'),
 })
@@ -106,9 +129,9 @@ const ensAvatar = await getEnsAvatar(config, {
 
 ### gatewayUrls
 
-`{ ipfs?: string | undefined; arweave?: string | undefined } | undefined`
+`string[] | undefined`
 
-Gateway urls to resolve IPFS and/or Arweave assets.
+A set of Universal Resolver gateways, used for resolving CCIP-Read requests made through the ENS Universal Resolver Contract.
 
 ::: code-group
 ```ts [index.ts]
@@ -117,9 +140,7 @@ import { normalize } from 'viem/ens'
 import { config } from './config'
 
 const ensAvatar = await getEnsAvatar(config, {
-  gatewayUrls: { // [!code focus]
-    ipfs: 'https://cloudflare-ipfs.com', // [!code focus]
-  }, // [!code focus]
+  gatewayUrls: ['https://cloudflare-ipfs.com'] { // [!code focus]
   name: normalize('wevm.eth'),
 })
 ```
