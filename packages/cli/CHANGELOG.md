@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 2.1.0
+
+### Minor Changes
+
+- [#3506](https://github.com/wevm/wagmi/pull/3506) [`134eb4a1`](https://github.com/wevm/wagmi/commit/134eb4a1e0e29aab87bd5c7cdf05b06dfd7c4fc4) Thanks [@vmaark](https://github.com/vmaark)! - Added resolution of TypeScript Wagmi CLI config to determine if TypeScript generated output is allowed.
+
 ## 2.0.4
 
 ### Patch Changes

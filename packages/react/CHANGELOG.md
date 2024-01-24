@@ -1,5 +1,17 @@
 # wagmi
 
+## 2.5.2
+
+### Patch Changes
+
+- [#3433](https://github.com/wevm/wagmi/pull/3433) [`101a7dd1`](https://github.com/wevm/wagmi/commit/101a7dd131b0cae2dc25579ecab9044290efd37b) Thanks [@tmm](https://github.com/tmm)! - Fixed `useClient` and `usePublicClient` throwing when used with unconfigured `chainId`.
+
+- [#3510](https://github.com/wevm/wagmi/pull/3510) [`660ff80d`](https://github.com/wevm/wagmi/commit/660ff80d5b046967a446eba43ee54b8359a37d0d) Thanks [@tmm](https://github.com/tmm)! - Fixed issue where connectors returning multiple addresses didn't checksum correctly.
+
+- Updated dependencies [[`660ff80d`](https://github.com/wevm/wagmi/commit/660ff80d5b046967a446eba43ee54b8359a37d0d), [`101a7dd1`](https://github.com/wevm/wagmi/commit/101a7dd131b0cae2dc25579ecab9044290efd37b)]:
+  - @wagmi/connectors@4.1.10
+  - @wagmi/core@2.6.1
+
 ## 2.5.1
 
 ### Patch Changes

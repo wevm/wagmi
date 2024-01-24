@@ -1,5 +1,11 @@
 # create-wagmi
 
+## 2.0.8
+
+### Patch Changes
+
+- [#3510](https://github.com/wevm/wagmi/pull/3510) [`660ff80d`](https://github.com/wevm/wagmi/commit/660ff80d5b046967a446eba43ee54b8359a37d0d) Thanks [@tmm](https://github.com/tmm)! - Fixed issue where connectors returning multiple addresses didn't checksum correctly.
+
 ## 2.0.7
 
 ### Patch Changes
