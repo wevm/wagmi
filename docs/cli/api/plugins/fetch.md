@@ -120,7 +120,7 @@ export default defineConfig({
 
 `((config: { contract: { address: Address | Record<chainId, Address> | undefined; name: string } }) => string) | undefined`
 
-- Function for creating a cache key for contract. Contract data is cached at `~/.wagmi-cli/plugins/cache/fetch/`.
+- Function for creating a cache key for contract. Contract data is cached at `~/.wagmi-cli/plugins/fetch/cache/`.
 - Defaults to `({ contract }) => JSON.stringify(contract)`.
 
 ```ts
