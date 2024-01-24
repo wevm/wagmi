@@ -1,5 +1,11 @@
 # create-wagmi
 
+## 2.0.7
+
+### Patch Changes
+
+- [#3496](https://github.com/wevm/wagmi/pull/3496) [`ba7f8a75`](https://github.com/wevm/wagmi/commit/ba7f8a758efb07664c6e401b5e7e325e7c62341b) Thanks [@tmm](https://github.com/tmm)! - Bumped dependencies.
+
 ## 2.0.6
 
 ### Patch Changes

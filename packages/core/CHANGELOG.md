@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.6.0
+
+### Minor Changes
+
+- [#3496](https://github.com/wevm/wagmi/pull/3496) [`ba7f8a75`](https://github.com/wevm/wagmi/commit/ba7f8a758efb07664c6e401b5e7e325e7c62341b) Thanks [@tmm](https://github.com/tmm)! - Updated action internals to resolve Viem Client actions.
+
 ## 2.5.0
 
 ### Minor Changes
