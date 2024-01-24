@@ -139,7 +139,7 @@ function App() {
 
 ### gatewayUrls
 
-`{ ipfs?: string | undefined; arweave?: string | undefined } | undefined`
+`string[] | undefined`
 
 Gateway urls to resolve IPFS and/or Arweave assets.
 
@@ -150,9 +150,7 @@ import { normalize } from 'viem/ens'
 
 function App() {
   const result = useEnsAvatar({
-    gatewayUrls: { // [!code focus]
-      ipfs: 'https://cloudflare-ipfs.com', // [!code focus]
-    }, // [!code focus]
+    gatewayUrls: ['https://cloudflare-ipfs.com'] { // [!code focus]
     name: normalize('wevm.eth'),
   })
 }
