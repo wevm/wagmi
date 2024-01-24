@@ -77,7 +77,9 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
               method: 'wallet_requestPermissions',
               params: [{ eth_accounts: {} }],
             })) as WalletPermission[]
-            accounts = permissions[0]?.caveats?.[0]?.value?.map(getAddress)
+            accounts = (permissions[0]?.caveats?.[0]?.value as string[])?.map(
+              (x) => getAddress(x),
+            )
           } catch (err) {
             const error = err as RpcError
             // Not all injected providers support `wallet_requestPermissions` (e.g. MetaMask iOS).
@@ -92,7 +94,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       try {
         if (!accounts?.length) {
           const requestedAccounts = (await sdk.connect()) as string[]
-          accounts = requestedAccounts.map(getAddress)
+          accounts = requestedAccounts.map((x) => getAddress(x))
         }
 
         provider.removeListener(
@@ -161,7 +163,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       const accounts = (await provider.request({
         method: 'eth_accounts',
       })) as string[]
-      return accounts.map(getAddress)
+      return accounts.map((x) => getAddress(x))
     },
     async getChainId() {
       const provider = await this.getProvider()
@@ -294,7 +296,10 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         await config.storage?.removeItem('metaMaskSDK.disconnected')
       }
       // Regular change event
-      else config.emitter.emit('change', { accounts: accounts.map(getAddress) })
+      else
+        config.emitter.emit('change', {
+          accounts: accounts.map((x) => getAddress(x)),
+        })
     },
     onChainChanged(chain) {
       const chainId = normalizeChainId(chain)
