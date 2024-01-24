@@ -145,7 +145,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
         }
 
         // If session exists and chains are authorized, enable provider for required chain
-        const accounts = (await provider.enable()).map(getAddress)
+        const accounts = (await provider.enable()).map((x) => getAddress(x))
         const currentChainId = await this.getChainId()
 
         provider.removeListener('display_uri', this.onDisplayUri)
@@ -191,7 +191,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
     },
     async getAccounts() {
       const provider = await this.getProvider()
-      return provider.accounts.map(getAddress)
+      return provider.accounts.map((x) => getAddress(x))
     },
     async getProvider({ chainId } = {}) {
       async function initProvider() {
@@ -292,7 +292,10 @@ export function walletConnect(parameters: WalletConnectParameters) {
     },
     onAccountsChanged(accounts) {
       if (accounts.length === 0) this.onDisconnect()
-      else config.emitter.emit('change', { accounts: accounts.map(getAddress) })
+      else
+        config.emitter.emit('change', {
+          accounts: accounts.map((x) => getAddress(x)),
+        })
     },
     onChainChanged(chain) {
       const chainId = normalizeChainId(chain)

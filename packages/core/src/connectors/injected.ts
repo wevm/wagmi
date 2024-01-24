@@ -157,7 +157,9 @@ export function injected(parameters: InjectedParameters = {}) {
               method: 'wallet_requestPermissions',
               params: [{ eth_accounts: {} }],
             })
-            accounts = permissions[0]?.caveats?.[0]?.value?.map(getAddress)
+            accounts = (permissions[0]?.caveats?.[0]?.value as string[])?.map(
+              (x) => getAddress(x),
+            )
           } catch (err) {
             const error = err as RpcError
             // Not all injected providers support `wallet_requestPermissions` (e.g. MetaMask iOS).
@@ -174,7 +176,7 @@ export function injected(parameters: InjectedParameters = {}) {
           const requestedAccounts = await provider.request({
             method: 'eth_requestAccounts',
           })
-          accounts = requestedAccounts.map(getAddress)
+          accounts = requestedAccounts.map((x) => getAddress(x))
         }
 
         provider.removeListener('connect', this.onConnect.bind(this))
@@ -233,7 +235,7 @@ export function injected(parameters: InjectedParameters = {}) {
       const provider = await this.getProvider()
       if (!provider) throw new ProviderNotFoundError()
       const accounts = await provider.request({ method: 'eth_accounts' })
-      return accounts.map(getAddress)
+      return accounts.map((x) => getAddress(x))
     },
     async getChainId() {
       const provider = await this.getProvider()
@@ -405,7 +407,10 @@ export function injected(parameters: InjectedParameters = {}) {
           await config.storage?.removeItem(`${this.id}.disconnected`)
       }
       // Regular change event
-      else config.emitter.emit('change', { accounts: accounts.map(getAddress) })
+      else
+        config.emitter.emit('change', {
+          accounts: accounts.map((x) => getAddress(x)),
+        })
     },
     onChainChanged(chain) {
       const chainId = normalizeChainId(chain)

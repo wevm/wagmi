@@ -62,7 +62,7 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
           (await provider.request({
             method: 'eth_requestAccounts',
           })) as string[]
-        ).map(getAddress)
+        ).map((x) => getAddress(x))
 
         provider.on('accountsChanged', this.onAccountsChanged)
         provider.on('chainChanged', this.onChainChanged)
@@ -105,7 +105,7 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
         await provider.request<string[]>({
           method: 'eth_accounts',
         })
-      ).map(getAddress)
+      ).map((x) => getAddress(x))
     },
     async getChainId() {
       const provider = await this.getProvider()
@@ -190,7 +190,10 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
     },
     onAccountsChanged(accounts) {
       if (accounts.length === 0) config.emitter.emit('disconnect')
-      else config.emitter.emit('change', { accounts: accounts.map(getAddress) })
+      else
+        config.emitter.emit('change', {
+          accounts: accounts.map((x) => getAddress(x)),
+        })
     },
     onChainChanged(chain) {
       const chainId = normalizeChainId(chain)

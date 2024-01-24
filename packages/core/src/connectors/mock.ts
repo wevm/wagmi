@@ -80,7 +80,7 @@ export function mock(parameters: MockParameters) {
       if (!connected) throw new ConnectorNotConnectedError()
       const provider = await this.getProvider()
       const accounts = await provider.request({ method: 'eth_accounts' })
-      return accounts.map(getAddress)
+      return accounts.map((x) => getAddress(x))
     },
     async getChainId() {
       const provider = await this.getProvider()
@@ -106,7 +106,10 @@ export function mock(parameters: MockParameters) {
     },
     onAccountsChanged(accounts) {
       if (accounts.length === 0) this.onDisconnect()
-      else config.emitter.emit('change', { accounts: accounts.map(getAddress) })
+      else
+        config.emitter.emit('change', {
+          accounts: accounts.map((x) => getAddress(x)),
+        })
     },
     onChainChanged(chain) {
       const chainId = normalizeChainId(chain)
