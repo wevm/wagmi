@@ -12,6 +12,7 @@ import type {
   SyncConnectedChainParameter,
 } from '../types/properties.js'
 import type { UnionEvaluate } from '../types/utils.js'
+import { getAction } from '../utils/getAction.js'
 
 export type WatchPendingTransactionsParameters<
   config extends Config = Config,
@@ -52,10 +53,12 @@ export function watchPendingTransactions<
     if (unwatch) unwatch()
 
     const client = config.getClient({ chainId })
-    unwatch = viem_watchPendingTransactions(
+    const action = getAction(
       client,
-      rest as viem_WatchPendingTransactionsParameters,
+      viem_watchPendingTransactions,
+      'watchPendingTransactions',
     )
+    unwatch = action(rest as viem_WatchPendingTransactionsParameters)
     return unwatch
   }
 

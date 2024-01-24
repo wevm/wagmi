@@ -14,6 +14,7 @@ import type {
   ConnectorParameter,
 } from '../types/properties.js'
 import { type UnionEvaluate, type UnionLooseOmit } from '../types/utils.js'
+import { getAction } from '../utils/getAction.js'
 import {
   type GetConnectorClientErrorType,
   getConnectorClient,
@@ -67,8 +68,6 @@ export async function estimateGas<
   }
 
   const client = config.getClient({ chainId })
-  return viem_estimateGas(client, {
-    ...(rest as viem_EstimateGasParameters),
-    account,
-  })
+  const action = getAction(client, viem_estimateGas, 'estimateGas')
+  return action({ ...(rest as viem_EstimateGasParameters), account })
 }

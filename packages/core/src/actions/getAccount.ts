@@ -2,11 +2,15 @@ import { type Address, type Chain } from 'viem'
 
 import { type Config, type Connector } from '../createConfig.js'
 
-export type GetAccountReturnType =
+export type GetAccountReturnType<
+  config extends Config = Config,
+  ///
+  chain = Config extends config ? Chain : config['chains'][number],
+> =
   | {
       address: Address
       addresses: readonly [Address, ...Address[]]
-      chain: Chain | undefined
+      chain: chain | undefined
       chainId: number
       connector: Connector
       isConnected: true
@@ -18,7 +22,7 @@ export type GetAccountReturnType =
   | {
       address: Address | undefined
       addresses: readonly Address[] | undefined
-      chain: Chain | undefined
+      chain: chain | undefined
       chainId: number | undefined
       connector: Connector | undefined
       isConnected: boolean
@@ -30,7 +34,7 @@ export type GetAccountReturnType =
   | {
       address: Address | undefined
       addresses: readonly Address[] | undefined
-      chain: Chain | undefined
+      chain: chain | undefined
       chainId: number | undefined
       connector: Connector | undefined
       isConnected: false
@@ -42,7 +46,7 @@ export type GetAccountReturnType =
   | {
       address: undefined
       addresses: undefined
-      chain: Chain | undefined
+      chain: undefined
       chainId: undefined
       connector: undefined
       isConnected: false
@@ -53,12 +57,16 @@ export type GetAccountReturnType =
     }
 
 /** https://wagmi.sh/core/api/actions/getAccount */
-export function getAccount(config: Config): GetAccountReturnType {
+export function getAccount<config extends Config>(
+  config: config,
+): GetAccountReturnType<config> {
   const uid = config.state.current!
   const connection = config.state.connections.get(uid)
   const addresses = connection?.accounts
   const address = addresses?.[0]
-  const chain = config.chains.find((chain) => chain.id === connection?.chainId)
+  const chain = config.chains.find(
+    (chain) => chain.id === connection?.chainId,
+  ) as GetAccountReturnType<config>['chain']
   const status = config.state.status
 
   switch (status) {
@@ -105,7 +113,7 @@ export function getAccount(config: Config): GetAccountReturnType {
       return {
         address: undefined,
         addresses: undefined,
-        chain,
+        chain: undefined,
         chainId: undefined,
         connector: undefined,
         isConnected: false,

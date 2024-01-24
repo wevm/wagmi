@@ -63,6 +63,12 @@ export {
 } from '../hooks/useBlockTransactionCount.js'
 
 export {
+  type UseBytecodeParameters,
+  type UseBytecodeReturnType,
+  useBytecode,
+} from '../hooks/useBytecode.js'
+
+export {
   type UseCallParameters,
   type UseCallReturnType,
   useCall,
@@ -141,6 +147,12 @@ export {
 } from '../hooks/useEnsResolver.js'
 
 export {
+  type UseEnsTextParameters,
+  type UseEnsTextReturnType,
+  useEnsText,
+} from '../hooks/useEnsText.js'
+
+export {
   type UseEstimateFeesPerGasParameters,
   type UseEstimateFeesPerGasReturnType,
   useEstimateFeesPerGas,
@@ -179,6 +191,18 @@ export {
   /** @deprecated Use `useInfiniteReadContracts` instead */
   useInfiniteReadContracts as useContractInfiniteReads,
 } from '../hooks/useInfiniteReadContracts.js'
+
+export {
+  type UsePrepareTransactionRequestParameters,
+  type UsePrepareTransactionRequestReturnType,
+  usePrepareTransactionRequest,
+} from '../hooks/usePrepareTransactionRequest.js'
+
+export {
+  type UseProofParameters,
+  type UseProofReturnType,
+  useProof,
+} from '../hooks/useProof.js'
 
 export {
   type UsePublicClientParameters,
@@ -233,6 +257,12 @@ export {
 } from '../hooks/useSimulateContract.js'
 
 export {
+  type UseStorageAtParameters,
+  type UseStorageAtReturnType,
+  useStorageAt,
+} from '../hooks/useStorageAt.js'
+
+export {
   type UseSwitchAccountParameters,
   type UseSwitchAccountReturnType,
   useSwitchAccount,
@@ -258,10 +288,22 @@ export {
 } from '../hooks/useTransaction.js'
 
 export {
+  type UseTransactionConfirmationsParameters,
+  type UseTransactionConfirmationsReturnType,
+  useTransactionConfirmations,
+} from '../hooks/useTransactionConfirmations.js'
+
+export {
   type UseTransactionCountParameters,
   type UseTransactionCountReturnType,
   useTransactionCount,
 } from '../hooks/useTransactionCount.js'
+
+export {
+  type UseTransactionReceiptParameters,
+  type UseTransactionReceiptReturnType,
+  useTransactionReceipt,
+} from '../hooks/useTransactionReceipt.js'
 
 export {
   type UseVerifyMessageParameters,

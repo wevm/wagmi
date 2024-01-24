@@ -12,6 +12,7 @@ import type {
   SyncConnectedChainParameter,
 } from '../types/properties.js'
 import type { UnionEvaluate } from '../types/utils.js'
+import { getAction } from '../utils/getAction.js'
 
 export type WatchBlockNumberParameters<
   config extends Config = Config,
@@ -51,10 +52,8 @@ export function watchBlockNumber<
     if (unwatch) unwatch()
 
     const client = config.getClient({ chainId })
-    unwatch = viem_watchBlockNumber(
-      client,
-      rest as viem_WatchBlockNumberParameters,
-    )
+    const action = getAction(client, viem_watchBlockNumber, 'watchBlockNumber')
+    unwatch = action(rest as viem_WatchBlockNumberParameters)
     return unwatch
   }
 

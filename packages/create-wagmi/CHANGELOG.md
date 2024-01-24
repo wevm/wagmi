@@ -1,5 +1,31 @@
 # create-wagmi
 
+## 2.0.7
+
+### Patch Changes
+
+- [#3496](https://github.com/wevm/wagmi/pull/3496) [`ba7f8a75`](https://github.com/wevm/wagmi/commit/ba7f8a758efb07664c6e401b5e7e325e7c62341b) Thanks [@tmm](https://github.com/tmm)! - Bumped dependencies.
+
+## 2.0.6
+
+### Patch Changes
+
+- [#3427](https://github.com/wevm/wagmi/pull/3427) [`370f1b4a`](https://github.com/wevm/wagmi/commit/370f1b4a3f154d181acf381c31c2e7862e22c0e4) Thanks [@marthendalnunes](https://github.com/marthendalnunes)! - Bumped dependencies.
+
+## 2.0.5
+
+### Patch Changes
+
+- [#3459](https://github.com/wevm/wagmi/pull/3459) [`d950b666`](https://github.com/wevm/wagmi/commit/d950b666b56700ca039ce16cdfdf34564991e7f5) Thanks [@marthendalnunes](https://github.com/marthendalnunes)! - Bumped dependencies
+
+## 2.0.4
+
+### Patch Changes
+
+- [#3443](https://github.com/wevm/wagmi/pull/3443) [`007024a6`](https://github.com/wevm/wagmi/commit/007024a684ddbecf924cdc06dd6a8854fc3d5eeb) Thanks [@jmrossy](https://github.com/jmrossy)! - Bumped dependencies.
+
+- [#3447](https://github.com/wevm/wagmi/pull/3447) [`a02a26ad`](https://github.com/wevm/wagmi/commit/a02a26ad030d3afb78f744377d61b5c60b65d97a) Thanks [@tmm](https://github.com/tmm)! - Bumped dependencies.
+
 ## 2.0.3
 
 ### Patch Changes

@@ -8,6 +8,7 @@ import {
 import { type Config } from '../createConfig.js'
 import { type ChainIdParameter } from '../types/properties.js'
 import { type Evaluate } from '../types/utils.js'
+import { getAction } from '../utils/getAction.js'
 
 export type GetFeeHistoryParameters<
   config extends Config = Config,
@@ -26,7 +27,8 @@ export function getFeeHistory<
   config: config,
   parameters: GetFeeHistoryParameters<config, chainId>,
 ): Promise<GetFeeHistoryReturnType> {
-  const { chainId } = parameters
+  const { chainId, ...rest } = parameters
   const client = config.getClient({ chainId })
-  return viem_getFeeHistory(client, parameters)
+  const action = getAction(client, viem_getFeeHistory, 'getFeeHistory')
+  return action(rest)
 }

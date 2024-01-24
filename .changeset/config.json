@@ -4,7 +4,7 @@
   "baseBranch": "main",
   "changelog": ["@changesets/changelog-github", { "repo": "wevm/wagmi" }],
   "commit": false,
-  "ignore": ["@wagmi/test", "docs", "react-register", "vite-*"],
+  "ignore": ["@wagmi/test", "docs", "next-app", "react-register", "vite-*"],
   "updateInternalDependencies": "patch",
   "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
     "onlyUpdatePeerDependentsWhenOutOfRange": true

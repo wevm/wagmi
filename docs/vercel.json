@@ -65,7 +65,7 @@
     },
     {
       "source": "/react/ethers-adapters",
-      "destination": "/react/guides/ethers-web3",
+      "destination": "/react/guides/ethers",
       "permanent": true
     },
     {

@@ -1,5 +1,66 @@
 # @wagmi/connectors
 
+## 4.1.9
+
+### Patch Changes
+
+- [#3496](https://github.com/wevm/wagmi/pull/3496) [`ba7f8a75`](https://github.com/wevm/wagmi/commit/ba7f8a758efb07664c6e401b5e7e325e7c62341b) Thanks [@tmm](https://github.com/tmm)! - Bumped dependencies.
+
+- Updated dependencies [[`ba7f8a75`](https://github.com/wevm/wagmi/commit/ba7f8a758efb07664c6e401b5e7e325e7c62341b)]:
+  - @wagmi/core@2.6.0
+
+## 4.1.8
+
+### Patch Changes
+
+- Updated dependencies [[`ca98041d`](https://github.com/wevm/wagmi/commit/ca98041d1b39893d90246929485f4db0d1c6f9f7)]:
+  - @wagmi/core@2.5.0
+
+## 4.1.7
+
+### Patch Changes
+
+- [#3427](https://github.com/wevm/wagmi/pull/3427) [`370f1b4a`](https://github.com/wevm/wagmi/commit/370f1b4a3f154d181acf381c31c2e7862e22c0e4) Thanks [@marthendalnunes](https://github.com/marthendalnunes)! - Bumped dependencies.
+
+- Updated dependencies [[`370f1b4a`](https://github.com/wevm/wagmi/commit/370f1b4a3f154d181acf381c31c2e7862e22c0e4)]:
+  - @wagmi/core@2.4.0
+
+## 4.1.6
+
+### Patch Changes
+
+- Updated dependencies [[`3be5bb7b`](https://github.com/wevm/wagmi/commit/3be5bb7b0b38646e12e6da5c762ef74dff66bcc2)]:
+  - @wagmi/core@2.3.1
+
+## 4.1.5
+
+### Patch Changes
+
+- [#3459](https://github.com/wevm/wagmi/pull/3459) [`d950b666`](https://github.com/wevm/wagmi/commit/d950b666b56700ca039ce16cdfdf34564991e7f5) Thanks [@marthendalnunes](https://github.com/marthendalnunes)! - Bumped dependencies
+
+- [`1cfb6e5a`](https://github.com/wevm/wagmi/commit/1cfb6e5a875e707abcee00dd5739e87da05e8c90) Thanks [@jxom](https://github.com/jxom)! - Bumped listener limit on WalletConnect connector.
+
+- Updated dependencies [[`d950b666`](https://github.com/wevm/wagmi/commit/d950b666b56700ca039ce16cdfdf34564991e7f5), [`90ef39bb`](https://github.com/wevm/wagmi/commit/90ef39bb0f4ecb3c914d317875348e35ba0f4524), [`1cfb6e5a`](https://github.com/wevm/wagmi/commit/1cfb6e5a875e707abcee00dd5739e87da05e8c90)]:
+  - @wagmi/core@2.3.0
+
+## 4.1.4
+
+### Patch Changes
+
+- [#3443](https://github.com/wevm/wagmi/pull/3443) [`007024a6`](https://github.com/wevm/wagmi/commit/007024a684ddbecf924cdc06dd6a8854fc3d5eeb) Thanks [@jmrossy](https://github.com/jmrossy)! - Bumped dependencies.
+
+- [#3447](https://github.com/wevm/wagmi/pull/3447) [`a02a26ad`](https://github.com/wevm/wagmi/commit/a02a26ad030d3afb78f744377d61b5c60b65d97a) Thanks [@tmm](https://github.com/tmm)! - Bumped dependencies.
+
+- Updated dependencies [[`a02a26ad`](https://github.com/wevm/wagmi/commit/a02a26ad030d3afb78f744377d61b5c60b65d97a), [`007024a6`](https://github.com/wevm/wagmi/commit/007024a684ddbecf924cdc06dd6a8854fc3d5eeb)]:
+  - @wagmi/core@2.2.1
+
+## 4.1.3
+
+### Patch Changes
+
+- Updated dependencies [[`00bf10a4`](https://github.com/wevm/wagmi/commit/00bf10a428b0d1c5dac35ebf25b19571e033ac26), [`64c073f6`](https://github.com/wevm/wagmi/commit/64c073f6c2720961e2d6aff986670b73dbfab9c3), [`fb6c4148`](https://github.com/wevm/wagmi/commit/fb6c4148d9e9e2fccfbe74c8f343b444dc68dec5)]:
+  - @wagmi/core@2.2.0
+
 ## 4.1.2
 
 ### Patch Changes

@@ -16,7 +16,14 @@ jobs:
   changesets:
     name: Create pull request or publish
     needs: verify
-    permissions: write-all
+    permissions:
+      contents: write
+      id-token: write
+      issues: write
+      repository-projects: write
+      deployments: write
+      packages: write
+      pull-requests: write
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
@@ -41,3 +48,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish Prerelease
+        if: steps.changesets.outputs.published != 'true'
+        continue-on-error: true
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npm config set "//registry.npmjs.org/:_authToken" "$NPM_TOKEN"
+          git reset --hard origin/main
+          pnpm clean
+          pnpm changeset version --no-git-tag --snapshot canary
+          pnpm changeset:prepublish
+          pnpm changeset publish --no-git-tag --tag canary

@@ -17,6 +17,7 @@ import { type ChainIdParameter } from '../types/properties.js'
 import { type Unit } from '../types/unit.js'
 import { type Evaluate } from '../types/utils.js'
 import type { UnionEvaluate, UnionLooseOmit } from '../types/utils.js'
+import { getAction } from '../utils/getAction.js'
 import { getUnit } from '../utils/getUnit.js'
 
 export type EstimateFeesPerGasParameters<
@@ -57,9 +58,16 @@ export async function estimateFeesPerGas<
   const { chainId, formatUnits: units = 'gwei', ...rest } = parameters
 
   const client = config.getClient({ chainId })
+  const action = getAction(
+    client,
+    viem_estimateFeesPerGas,
+    'estimateFeesPerGas',
+  )
 
-  const { gasPrice, maxFeePerGas, maxPriorityFeePerGas } =
-    await viem_estimateFeesPerGas(client, rest)
+  const { gasPrice, maxFeePerGas, maxPriorityFeePerGas } = await action({
+    ...rest,
+    chain: client.chain,
+  })
 
   const unit = getUnit(units)
   const formatted = {

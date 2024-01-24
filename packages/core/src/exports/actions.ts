@@ -82,6 +82,13 @@ export {
 } from '../actions/getBlockTransactionCount.js'
 
 export {
+  type GetBytecodeErrorType,
+  type GetBytecodeParameters,
+  type GetBytecodeReturnType,
+  getBytecode,
+} from '../actions/getBytecode.js'
+
+export {
   type GetChainIdReturnType,
   getChainId,
 } from '../actions/getChainId.js'
@@ -146,6 +153,13 @@ export {
 } from '../actions/getEnsResolver.js'
 
 export {
+  type GetEnsTextErrorType,
+  type GetEnsTextParameters,
+  type GetEnsTextReturnType,
+  getEnsText,
+} from '../actions/getEnsText.js'
+
+export {
   type GetFeeHistoryErrorType,
   type GetFeeHistoryParameters,
   type GetFeeHistoryReturnType,
@@ -160,10 +174,24 @@ export {
 } from '../actions/getGasPrice.js'
 
 export {
+  type GetProofErrorType,
+  type GetProofParameters,
+  type GetProofReturnType,
+  getProof,
+} from '../actions/getProof.js'
+
+export {
   type GetPublicClientParameters,
   type GetPublicClientReturnType,
   getPublicClient,
 } from '../actions/getPublicClient.js'
+
+export {
+  type GetStorageAtErrorType,
+  type GetStorageAtParameters,
+  type GetStorageAtReturnType,
+  getStorageAt,
+} from '../actions/getStorageAt.js'
 
 export {
   type GetTokenErrorType,
@@ -184,11 +212,25 @@ export {
 } from '../actions/getTransaction.js'
 
 export {
+  type GetTransactionConfirmationsErrorType,
+  type GetTransactionConfirmationsParameters,
+  type GetTransactionConfirmationsReturnType,
+  getTransactionConfirmations,
+} from '../actions/getTransactionConfirmations.js'
+
+export {
   type GetTransactionCountErrorType,
   type GetTransactionCountParameters,
   type GetTransactionCountReturnType,
   getTransactionCount,
 } from '../actions/getTransactionCount.js'
+
+export {
+  type GetTransactionReceiptErrorType,
+  type GetTransactionReceiptParameters,
+  type GetTransactionReceiptReturnType,
+  getTransactionReceipt,
+} from '../actions/getTransactionReceipt.js'
 
 export {
   type GetWalletClientErrorType,
@@ -202,6 +244,13 @@ export {
   type MulticallReturnType,
   multicall,
 } from '../actions/multicall.js'
+
+export {
+  type PrepareTransactionRequestParameters,
+  type PrepareTransactionRequestReturnType,
+  type PrepareTransactionRequestErrorType,
+  prepareTransactionRequest,
+} from '../actions/prepareTransactionRequest.js'
 
 export {
   type ReadContractParameters,

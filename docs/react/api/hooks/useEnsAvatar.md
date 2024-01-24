@@ -49,6 +49,30 @@ import { type UseEnsAvatarParameters } from 'wagmi'
 
 ---
 
+### assetGatewayUrls <Badge text="viem@>=2.3.1" />
+
+`{ ipfs?: string | undefined; arweave?: string | undefined } | undefined`
+
+Gateway urls to resolve IPFS and/or Arweave assets.
+
+::: code-group
+```ts [index.ts]
+import { getEnsAvatar } from '@wagmi/core'
+import { normalize } from 'viem/ens'
+import { config } from './config'
+
+function App() {
+  const result = useEnsAvatar({
+    assetGatewayUrls: { // [!code focus]
+      ipfs: 'https://cloudflare-ipfs.com', // [!code focus]
+    }, // [!code focus]
+    name: normalize('wevm.eth'),
+  })
+}
+```
+<<< @/snippets/react/config.ts[config.ts]
+:::
+
 ### blockNumber
 
 `bigint | undefined`
@@ -139,9 +163,9 @@ function App() {
 
 ### gatewayUrls
 
-`{ ipfs?: string | undefined; arweave?: string | undefined } | undefined`
+`string[] | undefined`
 
-Gateway urls to resolve IPFS and/or Arweave assets.
+A set of Universal Resolver gateways, used for resolving CCIP-Read requests made through the ENS Universal Resolver Contract.
 
 ::: code-group
 ```ts [index.ts]
@@ -150,9 +174,7 @@ import { normalize } from 'viem/ens'
 
 function App() {
   const result = useEnsAvatar({
-    gatewayUrls: { // [!code focus]
-      ipfs: 'https://cloudflare-ipfs.com', // [!code focus]
-    }, // [!code focus]
+    gatewayUrls: ['https://cloudflare-ipfs.com'] { // [!code focus]
     name: normalize('wevm.eth'),
   })
 }

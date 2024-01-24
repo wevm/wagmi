@@ -3,7 +3,7 @@ import { expectTypeOf, test } from 'vitest'
 
 import { useInfiniteReadContracts } from './useInfiniteReadContracts.js'
 
-test('select data', async () => {
+test('select data', () => {
   const result = useInfiniteReadContracts({
     allowFailure: false,
     cacheKey: 'foo',

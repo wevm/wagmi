@@ -32,7 +32,7 @@ export function callQueryOptions<config extends Config>(
     CallQueryFnData,
     CallErrorType,
     CallData,
-    CallQueryKey
+    CallQueryKey<config>
   >
 }
 
@@ -46,4 +46,6 @@ export function callQueryKey<config extends Config>(
   return ['call', filterQueryOptions(options)] as const
 }
 
-export type CallQueryKey = ReturnType<typeof callQueryKey>
+export type CallQueryKey<config extends Config> = ReturnType<
+  typeof callQueryKey<config>
+>

@@ -45,12 +45,12 @@ export function verifyTypedDataQueryOptions<
       if (!types) throw new Error('types is required')
 
       const verified = await verifyTypedData(config, {
+        ...parameters,
         address,
         message,
         primaryType,
         signature,
         types,
-        ...parameters,
       })
       return verified ?? null
     },
@@ -62,6 +62,7 @@ export function verifyTypedDataQueryOptions<
     VerifyTypedDataQueryKey<typedData, primaryType, config>
   >
 }
+
 export type VerifyTypedDataQueryFnData = VerifyTypedDataReturnType
 
 export type VerifyTypedDataData = VerifyTypedDataQueryFnData

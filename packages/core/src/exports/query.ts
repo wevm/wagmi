@@ -91,6 +91,15 @@ export {
 } from '../query/getBlockTransactionCount.js'
 
 export {
+  type GetBytecodeData,
+  type GetBytecodeOptions,
+  type GetBytecodeQueryFnData,
+  type GetBytecodeQueryKey,
+  getBytecodeQueryKey,
+  getBytecodeQueryOptions,
+} from '../query/getBytecode.js'
+
+export {
   type GetConnectorClientData,
   type GetConnectorClientOptions,
   type GetConnectorClientQueryFnData,
@@ -136,6 +145,15 @@ export {
 } from '../query/getEnsResolver.js'
 
 export {
+  type GetEnsTextData,
+  type GetEnsTextOptions,
+  type GetEnsTextQueryFnData,
+  type GetEnsTextQueryKey,
+  getEnsTextQueryKey,
+  getEnsTextQueryOptions,
+} from '../query/getEnsText.js'
+
+export {
   type GetFeeHistoryData,
   type GetFeeHistoryOptions,
   type GetFeeHistoryQueryFnData,
@@ -152,6 +170,24 @@ export {
   getGasPriceQueryKey,
   getGasPriceQueryOptions,
 } from '../query/getGasPrice.js'
+
+export {
+  type GetProofData,
+  type GetProofOptions,
+  type GetProofQueryFnData,
+  type GetProofQueryKey,
+  getProofQueryKey,
+  getProofQueryOptions,
+} from '../query/getProof.js'
+
+export {
+  type GetStorageAtData,
+  type GetStorageAtOptions,
+  type GetStorageAtQueryFnData,
+  type GetStorageAtQueryKey,
+  getStorageAtQueryKey,
+  getStorageAtQueryOptions,
+} from '../query/getStorageAt.js'
 
 export {
   type GetTokenData,
@@ -172,6 +208,15 @@ export {
 } from '../query/getTransaction.js'
 
 export {
+  type GetTransactionConfirmationsData,
+  type GetTransactionConfirmationsOptions,
+  type GetTransactionConfirmationsQueryFnData,
+  type GetTransactionConfirmationsQueryKey,
+  getTransactionConfirmationsQueryKey,
+  getTransactionConfirmationsQueryOptions,
+} from '../query/getTransactionConfirmations.js'
+
+export {
   type GetTransactionCountData,
   type GetTransactionCountOptions,
   type GetTransactionCountQueryFnData,
@@ -179,6 +224,15 @@ export {
   getTransactionCountQueryKey,
   getTransactionCountQueryOptions,
 } from '../query/getTransactionCount.js'
+
+export {
+  type GetTransactionReceiptData,
+  type GetTransactionReceiptOptions,
+  type GetTransactionReceiptQueryFnData,
+  type GetTransactionReceiptQueryKey,
+  getTransactionReceiptQueryKey,
+  getTransactionReceiptQueryOptions,
+} from '../query/getTransactionReceipt.js'
 
 export {
   type GetWalletClientData,
@@ -197,6 +251,15 @@ export {
   infiniteReadContractsQueryKey,
   infiniteReadContractsQueryOptions,
 } from '../query/infiniteReadContracts.js'
+
+export {
+  type PrepareTransactionRequestData,
+  type PrepareTransactionRequestOptions,
+  type PrepareTransactionRequestQueryFnData,
+  type PrepareTransactionRequestQueryKey,
+  prepareTransactionRequestQueryKey,
+  prepareTransactionRequestQueryOptions,
+} from '../query/prepareTransactionRequest.js'
 
 export {
   type ReadContractData,

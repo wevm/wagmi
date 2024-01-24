@@ -7,6 +7,7 @@ import { call as viem_call } from 'viem/actions'
 
 import { type Config } from '../createConfig.js'
 import { type ChainIdParameter } from '../types/properties.js'
+import { getAction } from '../utils/getAction.js'
 
 export type CallParameters<config extends Config = Config> =
   viem_CallParameters & ChainIdParameter<config>
@@ -21,5 +22,6 @@ export async function call<config extends Config,>(
 ): Promise<CallReturnType> {
   const { chainId, ...rest } = parameters
   const client = config.getClient({ chainId })
-  return viem_call(client, rest)
+  const action = getAction(client, viem_call, 'call')
+  return action(rest)
 }

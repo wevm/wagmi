@@ -20,6 +20,7 @@ import {
   type ConnectorParameter,
 } from '../types/properties.js'
 import type { Evaluate, UnionEvaluate, UnionOmit } from '../types/utils.js'
+import { getAction } from '../utils/getAction.js'
 import {
   type GetConnectorClientErrorType,
   getConnectorClient,
@@ -110,7 +111,8 @@ export async function writeContract<
     request = simulateRequest
   }
 
-  const hash = await viem_writeContract(client, {
+  const action = getAction(client, viem_writeContract, 'writeContract')
+  const hash = await action({
     ...(request as any),
     chain: chainId ? { id: chainId } : null,
   })
