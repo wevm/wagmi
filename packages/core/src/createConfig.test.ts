@@ -21,6 +21,49 @@ test('default', () => {
   expect(config).toBeDefined()
 })
 
+test('getClient', () => {
+  const config = createConfig({
+    chains: [mainnet, optimism],
+    connectors: [mock({ accounts })],
+    syncConnectedChain: true,
+    transports: {
+      [mainnet.id]: http(),
+      [optimism.id]: http(),
+    },
+  })
+
+  {
+    const client = config.getClient()
+    expect(client.chain.id).toBe(mainnet.id)
+  }
+
+  {
+    const client = config.getClient({ chainId: mainnet.id })
+    expect(client.chain.id).toBe(mainnet.id)
+  }
+
+  expect(() =>
+    config.getClient({
+      // @ts-expect-error
+      chainId: 123456,
+    }),
+  ).toThrowErrorMatchingInlineSnapshot(`
+    "Chain not configured.
+
+    Version: @wagmi/core@x.y.z"
+  `)
+
+  expect(() => {
+    // @ts-expect-error
+    config.state.chainId = 123456
+    config.getClient()
+  }).toThrowErrorMatchingInlineSnapshot(`
+    "Chain not configured.
+
+    Version: @wagmi/core@x.y.z"
+  `)
+})
+
 test('behavior: syncConnectedChain', async () => {
   const config = createConfig({
     chains: [mainnet, optimism],

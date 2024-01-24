@@ -17,3 +17,11 @@ test('parameters: chainId', () => {
   expectTypeOf(client.chain).not.toEqualTypeOf<typeof chain.mainnet2>()
   expectTypeOf(client.transport.type).toEqualTypeOf<'http'>()
 })
+
+test('behavior: unconfigured chain', () => {
+  const client = getPublicClient(config, {
+    // @ts-expect-error
+    chainId: 123456,
+  })
+  expectTypeOf(client).toEqualTypeOf<undefined>()
+})

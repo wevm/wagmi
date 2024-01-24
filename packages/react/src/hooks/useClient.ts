@@ -16,18 +16,24 @@ import { useConfig } from './useConfig.js'
 
 export type UseClientParameters<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends config['chains'][number]['id'] | number | undefined =
+    | config['chains'][number]['id']
+    | undefined,
 > = Evaluate<GetClientParameters<config, chainId> & ConfigParameter<config>>
 
 export type UseClientReturnType<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends config['chains'][number]['id'] | number | undefined =
+    | config['chains'][number]['id']
+    | undefined,
 > = GetClientReturnType<config, chainId>
 
 /** https://wagmi.sh/react/api/hooks/useClient */
 export function useClient<
   config extends Config = ResolvedRegister['config'],
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends config['chains'][number]['id'] | number | undefined =
+    | config['chains'][number]['id']
+    | undefined,
 >(
   parameters: UseClientParameters<config, chainId> = {},
 ): UseClientReturnType<config, chainId> {
@@ -38,6 +44,6 @@ export function useClient<
     () => getClient(config, parameters),
     () => getClient(config, parameters),
     (x) => x,
-    (a, b) => a.uid === b.uid,
+    (a, b) => a?.uid === b?.uid,
   ) as any
 }

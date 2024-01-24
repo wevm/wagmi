@@ -1,36 +1,34 @@
 import { chain, config } from '@wagmi/test'
-import { type Chain } from 'viem'
 import { expectTypeOf, test } from 'vitest'
+import { usePublicClient } from 'wagmi'
+import { mainnet } from 'wagmi/chains'
 
-import { usePublicClient } from './usePublicClient.js'
+import { type ChainId } from './config.js'
 
 test('default', () => {
+  const client = usePublicClient()
+  expectTypeOf(client.chain.id).toEqualTypeOf<ChainId>()
+  expectTypeOf(client.transport.type).toEqualTypeOf<'http'>()
+})
+
+test('parameters: config', () => {
   const client = usePublicClient({ config })
-  expectTypeOf(client.chain).toEqualTypeOf<typeof config['chains'][number]>()
+  expectTypeOf(client.chain.id).toEqualTypeOf<
+    typeof config['chains'][number]['id']
+  >()
   expectTypeOf(client.transport.type).toEqualTypeOf<'http'>()
 })
 
 test('parameters: chainId', () => {
   const client = usePublicClient({
     config,
-    chainId: chain.mainnet.id,
+    chainId: mainnet.id,
   })
   expectTypeOf(client.chain).toEqualTypeOf<typeof chain.mainnet>()
-  expectTypeOf(client.chain).not.toEqualTypeOf<typeof chain.mainnet2>()
   expectTypeOf(client.transport.type).toEqualTypeOf<'http'>()
 })
 
 test('behavior: unconfigured chain', () => {
-  {
-    const client = usePublicClient({ chainId: 123456 })
-    if (client) {
-      expectTypeOf(client.chain).toEqualTypeOf<Chain>()
-      expectTypeOf(client.transport.type).toEqualTypeOf<string>()
-    } else {
-      expectTypeOf(client).toEqualTypeOf<undefined>()
-    }
-  }
-
   const client = usePublicClient({
     config,
     // @ts-expect-error

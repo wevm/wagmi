@@ -281,7 +281,6 @@ export function walletConnect(parameters: WalletConnectParameters) {
         })
         return chain
       } catch (error) {
-        console.log({ error })
         const message =
           typeof error === 'string'
             ? error
