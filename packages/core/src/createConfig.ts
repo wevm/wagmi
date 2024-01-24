@@ -109,10 +109,9 @@ export function createConfig<
     return connector
   }
   function providerDetailToConnector(providerDetail: EIP6963ProviderDetail) {
-    const { info, provider } = providerDetail
-    return injected({
-      target: { ...info, id: info.rdns, provider: provider as any },
-    })
+    const { info } = providerDetail
+    const provider = providerDetail.provider as any
+    return injected({ target: { ...info, id: info.rdns, provider } })
   }
 
   const clients = new Map<number, Client<Transport, chains[number]>>()
@@ -122,13 +121,13 @@ export function createConfig<
     const chainId = config.chainId ?? store.getState().chainId
     const chain = chains.find((x) => x.id === chainId)
 
+    // chainId specified and not configured
+    if (config.chainId && !chain) throw new ChainNotConfiguredError()
+
     // If the target chain is not configured, use the client of the current chain.
     type Return = Client<Transport, Extract<chains[number], { id: chainId }>>
     {
-      // chainId specified and not configured
-      if (config.chainId && !chain) throw new ChainNotConfiguredError()
       const client = clients.get(store.getState().chainId)
-      // client exists, but no chain
       if (client && !chain) return client as Return
       else if (!chain) throw new ChainNotConfiguredError()
     }
@@ -159,10 +158,7 @@ export function createConfig<
         chain,
         batch: properties.batch ?? { multicall: true },
         transport: (parameters) =>
-          rest.transports[chainId]({
-            ...parameters,
-            connectors,
-          }),
+          rest.transports[chainId]({ ...parameters, connectors }),
       })
     }
 
@@ -195,13 +191,8 @@ export function createConfig<
                   value: Array.from(state.connections.entries()).map(
                     ([key, connection]) => {
                       const { id, name, type, uid } = connection.connector
-                      return [
-                        key,
-                        {
-                          ...connection,
-                          connector: { id, name, type, uid },
-                        },
-                      ]
+                      const connector = { id, name, type, uid }
+                      return [key, { ...connection, connector }]
                     },
                   ),
                 } as unknown as PartializedState['connections'],
