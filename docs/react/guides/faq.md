@@ -13,7 +13,7 @@ Collection of frequently asked questions with ideas on how to troubleshoot and r
 Until there's a more in-depth write-up about Wagmi internals, here is the gist:
 
 - Wagmi is essentially a wrapper around [Viem](https://viem.sh) and TanStack Query that adds connector and multichain support.
-- [Connectors]() allow Wagmi and Ethereum accounts to communicate with each other.
+- [Connectors](/react/api/connectors) allow Wagmi and Ethereum accounts to communicate with each other.
 - The Wagmi [`Config`](/react/api/createConfig#config) manages connections established between Wagmi and Connectors, as well as some global state. [Connections](/react/api/createConfig#connection) come with one or more addresses and a chain ID.
   - If there are connections, the Wagmi `Config` listens for connection changes and updates the [`chainId`](/react/api/createConfig#chainid) based on the ["current" connection](/react/api/createConfig#current). (The Wagmi `Config` can have [many connections established](/react/api/createConfig#connections) at once, but only one connection can be the "current" connection. Usually this is the connection from the last connector that is connected, but can changed based on event emitted from other connectors or through the [`useSwitchAccount`](/react/api/hooks/useSwitchAccount) hook and [`switchAccount`](/core/api/actions/switchAccount) action.)
   - If there are no connections, the Wagmi `Config` defaults the global state `chainId` to the first chain it was created with or last established connection.
