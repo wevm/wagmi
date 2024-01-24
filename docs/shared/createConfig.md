@@ -321,7 +321,7 @@ Connectors set up from passing [`connectors`](#connectors) and [`multiInjectedPr
 
 `State<chains>`
 
-The `Config` object's internal state. See [`State`](#state) for more info.
+The `Config` object's internal state. See [`State`](#state-1) for more info.
 
 ### storage
 
@@ -361,7 +361,7 @@ export const config = createConfig({
 
 `(value: State<chains> | ((state: State<chains>) => State<chains>)) => void`
 
-Updates the `Config` object's internal state. See [`State`](#state) for more info.
+Updates the `Config` object's internal state. See [`State`](#state-1) for more info.
 
 ::: code-group
 ```ts-vue [index.ts]
