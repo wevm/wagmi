@@ -61,6 +61,8 @@ export async function readContracts<
         multicall(config, {
           ...rest,
           allowFailure,
+          blockNumber,
+          blockTag,
           chainId: parseInt(chainId),
           contracts: contracts.map(({ contract }) => contract),
         }),
