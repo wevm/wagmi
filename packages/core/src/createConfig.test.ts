@@ -1,12 +1,13 @@
-import { accounts, chain } from '@wagmi/test'
+import { accounts, chain, wait } from '@wagmi/test'
 import { http } from 'viem'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { connect } from './actions/connect.js'
 import { disconnect } from './actions/disconnect.js'
 import { switchChain } from './actions/switchChain.js'
 import { mock } from './connectors/mock.js'
 import { createConfig } from './createConfig.js'
+import { createStorage } from './createStorage.js'
 
 const { mainnet, optimism } = chain
 
@@ -95,4 +96,122 @@ test('behavior: syncConnectedChain', async () => {
   // disconnects, still connected to optimism
   await disconnect(config)
   expect(config.getClient().chain.id).toBe(optimism.id)
+})
+
+test('behavior: migrate for current version', async () => {
+  const state = {
+    'wagmi.store': JSON.stringify({
+      state: {
+        connections: {
+          __type: 'Map',
+          value: [
+            [
+              '983b8aca245',
+              {
+                accounts: [
+                  '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+                  '0xd2135CfB216b74109775236E36d4b433F1DF507B',
+                ],
+                chainId: 1,
+                connector: {
+                  id: 'io.metamask',
+                  name: 'MetaMask',
+                  type: 'injected',
+                  uid: '983b8aca245',
+                },
+              },
+            ],
+          ],
+        },
+        chainId: 1,
+        current: '983b8aca245',
+      },
+      version: NaN, // mocked version is `'x.y.z'`, which will get interpreted as `NaN`
+    }),
+  } as Record<string, string>
+  Object.defineProperty(window, 'localStorage', {
+    value: {
+      getItem: vi.fn((key) => state[key] ?? null),
+      removeItem: vi.fn((key) => state.delete?.[key]),
+      setItem: vi.fn((key, value) => {
+        state[key] = value
+      }),
+    },
+    writable: true,
+  })
+
+  const storage = createStorage<{ store: object }>({
+    storage: window.localStorage,
+  })
+
+  const config = createConfig({
+    chains: [mainnet],
+    storage,
+    transports: { [mainnet.id]: http() },
+  })
+
+  await wait(100)
+
+  expect(config.state).toMatchInlineSnapshot(`
+    {
+      "chainId": 1,
+      "connections": Map {
+        "983b8aca245" => {
+          "accounts": [
+            "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e",
+            "0xd2135CfB216b74109775236E36d4b433F1DF507B",
+          ],
+          "chainId": 1,
+          "connector": {
+            "id": "io.metamask",
+            "name": "MetaMask",
+            "type": "injected",
+            "uid": "983b8aca245",
+          },
+        },
+      },
+      "current": "983b8aca245",
+      "status": "disconnected",
+    }
+  `)
+})
+
+test('behavior: migrate chainId', async () => {
+  const state = {
+    'wagmi.store': JSON.stringify({
+      state: { chainId: 10 },
+      version: 1,
+    }),
+  } as Record<string, string>
+  Object.defineProperty(window, 'localStorage', {
+    value: {
+      getItem: vi.fn((key) => state[key] ?? null),
+      removeItem: vi.fn((key) => state.delete?.[key]),
+      setItem: vi.fn((key, value) => {
+        state[key] = value
+      }),
+    },
+    writable: true,
+  })
+
+  const storage = createStorage<{ store: object }>({
+    storage: window.localStorage,
+  })
+
+  const config = createConfig({
+    chains: [mainnet],
+    storage,
+    transports: { [mainnet.id]: http() },
+  })
+
+  await wait(100)
+
+  expect(config.state).toMatchInlineSnapshot(`
+    {
+      "chainId": 10,
+      "connections": Map {},
+      "current": undefined,
+      "status": "disconnected",
+    }
+  `)
 })

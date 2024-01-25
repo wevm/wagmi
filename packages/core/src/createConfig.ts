@@ -24,6 +24,7 @@ import { type Storage, createStorage, noopStorage } from './createStorage.js'
 import { ChainNotConfiguredError } from './errors/config.js'
 import type { Evaluate, ExactPartial, LooseOmit, OneOf } from './types/utils.js'
 import { uid } from './utils/uid.js'
+import { version } from './version.js'
 
 export type CreateConfigParameters<
   chains extends readonly [Chain, ...Chain[]] = readonly [Chain, ...Chain[]],
@@ -177,11 +178,29 @@ export function createConfig<
     status: 'disconnected',
   }
 
+  let currentVersion: number
+  const prefix = '0.0.0-canary-'
+  if (version.startsWith(prefix))
+    currentVersion = parseInt(version.replace(prefix, ''))
+  else currentVersion = parseInt(version.split('.')[0] ?? '0')
+
   const store = createStore(
     subscribeWithSelector(
       // only use persist middleware if storage exists
       storage
         ? persist(() => initialState, {
+            migrate(persistedState, version) {
+              if (version === currentVersion) return persistedState as State
+
+              const chainId =
+                persistedState &&
+                typeof persistedState === 'object' &&
+                'chainId' in persistedState &&
+                typeof persistedState.chainId === 'number'
+                  ? persistedState.chainId
+                  : initialState.chainId
+              return { ...initialState, chainId }
+            },
             name: 'store',
             partialize(state) {
               // Only persist "critical" store properties to preserve storage size.
@@ -202,7 +221,7 @@ export function createConfig<
             },
             skipHydration: ssr,
             storage: storage as Storage<Record<string, unknown>>,
-            version: 1,
+            version: currentVersion,
           })
         : () => initialState,
     ),
