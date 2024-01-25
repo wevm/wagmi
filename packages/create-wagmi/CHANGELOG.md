@@ -1,5 +1,11 @@
 # create-wagmi
 
+## 2.0.9
+
+### Patch Changes
+
+- [#3518](https://github.com/wevm/wagmi/pull/3518) [`338e857d`](https://github.com/wevm/wagmi/commit/338e857d8cb2fe85e13d9207bef14cada1c1962d) Thanks [@tmm](https://github.com/tmm)! - Bumped dependencies.
+
 ## 2.0.8
 
 ### Patch Changes

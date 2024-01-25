@@ -1,5 +1,13 @@
 # @wagmi/core
 
+## 2.6.2
+
+### Patch Changes
+
+- [#3519](https://github.com/wevm/wagmi/pull/3519) [`414eb048`](https://github.com/wevm/wagmi/commit/414eb048af492caac70c0e874dfc87c30702804a) Thanks [@tmm](https://github.com/tmm)! - Fixed multicall passing through all properties to Viem method.
+
+- [#3518](https://github.com/wevm/wagmi/pull/3518) [`338e857d`](https://github.com/wevm/wagmi/commit/338e857d8cb2fe85e13d9207bef14cada1c1962d) Thanks [@tmm](https://github.com/tmm)! - Fixed internal store migration between versions.
+
 ## 2.6.1
 
 ### Patch Changes
