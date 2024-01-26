@@ -61,4 +61,4 @@ jobs:
           pnpm clean
           pnpm changeset version --no-git-tag --snapshot canary
           pnpm changeset:prepublish
-          pnpm changeset publish --no-git-tag --tag canary
+          pnpm changeset publish --no-git-tag --snapshot canary --tag canary
