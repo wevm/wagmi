@@ -98,7 +98,10 @@ export function useBlock<
   const configChainId = useChainId()
   const chainId = parameters.chainId ?? configChainId
 
-  const options = getBlockQueryOptions(config, { chainId })
+  const options = getBlockQueryOptions(config, {
+    ...parameters,
+    chainId,
+  })
   const enabled = Boolean(query.enabled ?? true)
 
   useWatchBlocks({

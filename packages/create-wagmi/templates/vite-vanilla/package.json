@@ -9,13 +9,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@wagmi/connectors": "4.0.1",
-    "@wagmi/core": "2.0.1",
+    "@wagmi/connectors": "latest",
+    "@wagmi/core": "latest",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "viem": "2.0.0"
+    "viem": "latest"
   },
   "devDependencies": {
+    "@wagmi/cli": "latest"
     "buffer": "^6.0.3",
     "typescript": "^5.2.2",
     "vite": "^4.4.9"

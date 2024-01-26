@@ -13,14 +13,15 @@
     "@tanstack/react-query": "5.0.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "viem": "2.0.0",
-    "wagmi": "2.0.1"
+    "viem": "latest",
+    "wagmi": "latest"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.1.2",
     "@types/react": "^18.2.22",
     "@types/react-dom": "^18.2.7",
     "@vitejs/plugin-react": "^4.1.0",
+    "@wagmi/cli": "latest"
     "buffer": "^6.0.3",
     "typescript": "^5.2.2",
     "vite": "^4.4.9"

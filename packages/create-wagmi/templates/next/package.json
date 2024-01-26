@@ -13,13 +13,14 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "next": "13.5.3",
-    "viem": "2.0.0",
-    "wagmi": "2.0.1"
+    "viem": "latest",
+    "wagmi": "latest"
   },
   "devDependencies": {
     "@types/node": "^20.7.2",
     "@types/react": "^18.2.22",
     "@types/react-dom": "^18.2.7",
+    "@wagmi/cli": "latest"
     "bufferutil": "^4.0.7",
     "encoding": "^0.1.13",
     "lokijs": "^1.5.12",
