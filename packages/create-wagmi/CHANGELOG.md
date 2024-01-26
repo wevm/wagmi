@@ -1,5 +1,11 @@
 # create-wagmi
 
+## 2.0.10
+
+### Patch Changes
+
+- [`3f8203bd`](https://github.com/wevm/wagmi/commit/3f8203bd77fcf6b6756640b5971d09741ae3853d) Thanks [@tmm](https://github.com/tmm)! - Set Wagmi-related package versions to latest.
+
 ## 2.0.9
 
 ### Patch Changes
