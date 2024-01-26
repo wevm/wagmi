@@ -1,5 +1,11 @@
 # wagmi
 
+## 2.5.4
+
+### Patch Changes
+
+- [`3f8203bd`](https://github.com/wevm/wagmi/commit/3f8203bd77fcf6b6756640b5971d09741ae3853d) Thanks [@tmm](https://github.com/tmm)! - Fixed `useBlock` parameters passthrough to Viem.
+
 ## 2.5.3
 
 ### Patch Changes
