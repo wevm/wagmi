@@ -245,12 +245,26 @@ export function injected(parameters: InjectedParameters = {}) {
     },
     async getProvider() {
       if (typeof window === 'undefined') return undefined
+
+      let provider
       const target = getTarget()
       if (typeof target.provider === 'function')
-        return target.provider(window as Window | undefined)
-      if (typeof target.provider === 'string')
-        return findProvider(window, target.provider)
-      return target.provider
+        provider = target.provider(window as Window | undefined)
+      else if (typeof target.provider === 'string')
+        provider = findProvider(window, target.provider)
+      else provider = target.provider
+
+      // Some wallets do not conform to EIP-1193 (e.g. Trust Wallet)
+      // https://github.com/wevm/wagmi/issues/3526#issuecomment-1912683002
+      if (provider && !provider.removeListener) {
+        // Try using `off` handler if it exists, otherwise noop
+        if ('off' in provider && typeof provider.off === 'function')
+          provider.removeListener =
+            provider.off as typeof provider.removeListener
+        else provider.removeListener = () => {}
+      }
+
+      return provider
     },
     async isAuthorized() {
       try {
