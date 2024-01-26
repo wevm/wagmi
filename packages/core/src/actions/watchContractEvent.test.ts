@@ -76,6 +76,7 @@ test('default', async () => {
   })
 
   await testClient.mainnet.mine({ blocks: 1 })
+  await testClient.mainnet.mine({ blocks: 1 })
   await wait(1000) // wait for events to be emitted
 
   unwatch()
