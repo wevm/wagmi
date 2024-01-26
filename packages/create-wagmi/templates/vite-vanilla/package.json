@@ -16,7 +16,7 @@
     "viem": "latest"
   },
   "devDependencies": {
-    "@wagmi/cli": "latest"
+    "@wagmi/cli": "latest",
     "buffer": "^6.0.3",
     "typescript": "^5.2.2",
     "vite": "^4.4.9"
