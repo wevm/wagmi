@@ -1,7 +1,8 @@
-import { accounts, config, typedData } from '@wagmi/test'
+import { accounts, config, privateKey, typedData } from '@wagmi/test'
 import { recoverTypedDataAddress } from 'viem'
 import { expect, test } from 'vitest'
 
+import { privateKeyToAccount } from 'viem/accounts'
 import { mock } from '../connectors/mock.js'
 import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'
@@ -63,4 +64,22 @@ test('behavior: not connected', async () => {
 
     Version: @wagmi/core@x.y.z]
   `)
+})
+
+test('behavior: local account', async () => {
+  const account = privateKeyToAccount(privateKey)
+  const signature = await signTypedData(config, {
+    account,
+    types: typedData.basic.types,
+    primaryType: 'Mail',
+    message: typedData.basic.message,
+  })
+  await expect(
+    recoverTypedDataAddress({
+      types: typedData.basic.types,
+      primaryType: 'Mail',
+      message: typedData.basic.message,
+      signature,
+    }),
+  ).resolves.toBe(account.address)
 })

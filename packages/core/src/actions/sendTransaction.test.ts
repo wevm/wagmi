@@ -1,7 +1,8 @@
-import { config, transactionHashRegex } from '@wagmi/test'
+import { config, privateKey, transactionHashRegex } from '@wagmi/test'
 import { parseEther } from 'viem'
 import { expect, test } from 'vitest'
 
+import { privateKeyToAccount } from 'viem/accounts'
 import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'
 import { sendTransaction } from './sendTransaction.js'
@@ -80,4 +81,15 @@ test('behavior: value exceeds balance', async () => {
     Version: viem@2.0.0"
   `)
   await disconnect(config, { connector })
+})
+
+test('behavior: local account', async () => {
+  const account = privateKeyToAccount(privateKey)
+  await expect(
+    sendTransaction(config, {
+      account,
+      to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
+      value: parseEther('0.01'),
+    }),
+  ).resolves.toMatch(transactionHashRegex)
 })

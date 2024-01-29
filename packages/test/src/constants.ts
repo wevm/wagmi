@@ -23,6 +23,10 @@ export const accounts = [
   '0xa0Ee7A142d267C1f36714E4a8F75612F20a79720',
 ] as const
 
+// for `'0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266'`
+export const privateKey =
+  '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80'
+
 export let walletConnectProjectId: string
 if (process.env.VITE_WC_PROJECT_ID)
   walletConnectProjectId = process.env.VITE_WC_PROJECT_ID
