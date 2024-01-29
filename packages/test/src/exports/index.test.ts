@@ -12,6 +12,7 @@ test('exports', () => {
       "abi",
       "address",
       "accounts",
+      "privateKey",
       "typedData",
       "walletConnectProjectId",
       "testClient",
