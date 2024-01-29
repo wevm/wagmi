@@ -44,5 +44,8 @@ export async function signMessage(
   else client = await getConnectorClient(config, { account, connector })
 
   const action = getAction(client, viem_signMessage, 'signMessage')
-  return action({ ...rest, account } as viem_SignMessageParameters<Account>)
+  return action({
+    ...rest,
+    ...(account ? { account } : {}),
+  } as viem_SignMessageParameters<Account>)
 }

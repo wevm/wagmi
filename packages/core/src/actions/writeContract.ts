@@ -114,7 +114,7 @@ export async function writeContract<
   const action = getAction(client, viem_writeContract, 'writeContract')
   const hash = await action({
     ...(request as any),
-    account,
+    ...(account ? { account } : {}),
     chain: chainId ? { id: chainId } : null,
   })
 

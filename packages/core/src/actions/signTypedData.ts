@@ -53,5 +53,8 @@ export async function signTypedData<
   else client = await getConnectorClient(config, { account, connector })
 
   const action = getAction(client, viem_signTypedData, 'signTypedData')
-  return action({ ...rest, account } as unknown as viem_SignTypedDataParameters)
+  return action({
+    ...rest,
+    ...(account ? { account } : {}),
+  } as unknown as viem_SignTypedDataParameters)
 }

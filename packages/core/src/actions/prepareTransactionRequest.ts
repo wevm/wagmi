@@ -107,7 +107,7 @@ export async function prepareTransactionRequest<
   )
   return action({
     ...rest,
-    account,
+    ...(account ? { account } : {}),
   } as unknown as viem_PrepareTransactionRequestParameters) as unknown as Promise<
     PrepareTransactionRequestReturnType<parameterType, config, chainId>
   >

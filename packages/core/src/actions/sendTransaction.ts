@@ -95,7 +95,7 @@ export async function sendTransaction<
   const action = getAction(client, viem_sendTransaction, 'sendTransaction')
   const hash = await action({
     ...(rest as any),
-    account,
+    ...(account ? { account } : {}),
     gas,
     chain: chainId ? { id: chainId } : null,
   })
