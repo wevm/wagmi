@@ -70,7 +70,7 @@ export async function sendTransaction<
 
   let client
   if (typeof account === 'object' && account.type === 'local')
-    client = config.getClient()
+    client = config.getClient({ chainId })
   else
     client = await getConnectorClient(config, { account, chainId, connector })
 
