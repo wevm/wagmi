@@ -3,7 +3,8 @@ import { expect, test } from 'vitest'
 
 import { useEnsAvatar } from './useEnsAvatar.js'
 
-test('default', async () => {
+// TODO: Enable once `euc.li` returns `'content-type'` header again
+test.skip('default', async () => {
   const { result } = renderHook(() =>
     useEnsAvatar({
       name: 'wevm.eth',
