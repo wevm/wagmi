@@ -6,6 +6,8 @@ Thanks for your interest in adding a new connector to Wagmi! Please take a momen
 
 This guide details how to create new connectors and upstream them back into Wagmi. By following these steps, you will understand the development process, workflow, and requirements for new connectors. **Not all connectors will be accepted into Wagmi** for a variety of reasons outlined in this document.
 
+In addition, for connector requests to be accepted, the team creating the connector must [sponsor Wagmi](https://github.com/sponsors/wevm). It takes time and effort to maintain third-party connectors. Wagmi is an OSS project that depends on sponsors and grants to continue our work. Please get in touch via [dev@wevm.dev](mailto:dev@wevm.dev) if you have questions about sponsoring.
+
 ::: warning **Please ask first before starting work on a new connector.**
 To avoid having your pull request declined after investing time and effort into a new connector, we ask that contributors create a [Connector Request](https://github.com/wevm/wagmi/discussions/new?category=connector-request) before starting work. This ensures the connector solves for an important or general use-case of interest to Wagmi users and is well supported by the Wagmi and connector teams.
 :::

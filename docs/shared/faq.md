@@ -54,10 +54,11 @@ JSON.stringify({ value: 69420n }, replacer)
 
 Wagmi is an open source software project and free to use. If you enjoy using Wagmi or would like to support Wagmi development, you can:
 
-- [Become a sponsor on GitHub.](https://github.com/sponsors/wevm)
+- [Become a sponsor on GitHub](https://github.com/sponsors/wevm)
 - Send us crypto
   - Mainnet: 0x4557B18E779944BFE9d78A672452331C186a9f48
   - Multichain: 0xd2135CfB216b74109775236E36d4b433F1DF507B
+- [Become a support on Drip](https://www.drips.network/app/projects/github/wevm/wagmi)
 
 If you use Wagmi at work, consider asking your company to sponsor Wagmi. This may not be easy, but **business sponsorships typically make a much larger impact on the sustainability of OSS projects** than individual donations, so you will help us much more if you succeed.
 
@@ -70,6 +71,10 @@ Yes. Wagmi is very stable and is used in production by thousands of organization
 Yes, Wagmi is very strict with [semantic versioning](https://semver.org) and we will never introduce breaking changes to the runtime API in a minor version bump.
 
 For exported types, we try our best to not introduce breaking changes in non-major verions, however, [TypeScript doesn't follow semver](https://www.learningtypescript.com/articles/why-typescript-doesnt-follow-strict-semantic-versioning) and often introduces breaking changes in minor releases that can cause Wagmi type issues. See the <a :href="`/${docsPath}/typescript#requirements`">TypeScript docs</a> for more information.
+
+## How can I contribute to Wagmi?
+
+The Wagmi team accepts all sorts of contributions. Check out the [Contributing](/dev/contributing) guide to get started. If you are interested in adding a new connector to Wagmi, check out the [Creating Connectors](/dev/creating-connectors) guide.
 
 ## Anything else you want to know?
 
