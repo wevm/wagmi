@@ -68,11 +68,11 @@ export async function sendTransaction<
 ): Promise<SendTransactionReturnType> {
   const { account, chainId, connector, gas: gas_, ...rest } = parameters
 
-  const client = await getConnectorClient(config, {
-    account,
-    chainId,
-    connector,
-  })
+  let client
+  if (typeof account === 'object' && account.type === 'local')
+    client = config.getClient({ chainId })
+  else
+    client = await getConnectorClient(config, { account, chainId, connector })
 
   const gas = await (async () => {
     // Skip gas estimation if `null` is provided.
@@ -83,6 +83,7 @@ export async function sendTransaction<
       const action = getAction(client, viem_estimateGas, 'estimateGas')
       return action({
         ...(rest as any),
+        account,
         chain: chainId ? { id: chainId } : null,
       })
     }
@@ -94,6 +95,7 @@ export async function sendTransaction<
   const action = getAction(client, viem_sendTransaction, 'sendTransaction')
   const hash = await action({
     ...(rest as any),
+    ...(account ? { account } : {}),
     gas,
     chain: chainId ? { id: chainId } : null,
   })

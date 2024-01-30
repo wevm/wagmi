@@ -95,25 +95,26 @@ export async function writeContract<
 ): Promise<WriteContractReturnType> {
   const { account, chainId, connector, __mode, ...rest } = parameters
 
-  const client = await getConnectorClient(config, {
-    account,
-    chainId,
-    connector,
-  })
+  let client
+  if (typeof account === 'object' && account.type === 'local')
+    client = config.getClient({ chainId })
+  else
+    client = await getConnectorClient(config, { account, chainId, connector })
 
   let request
   if (__mode === 'prepared') request = rest
   else {
-    const { request: simulateRequest } = await simulateContract(
-      config,
-      rest as any,
-    )
+    const { request: simulateRequest } = await simulateContract(config, {
+      ...rest,
+      account,
+    } as any)
     request = simulateRequest
   }
 
   const action = getAction(client, viem_writeContract, 'writeContract')
   const hash = await action({
     ...(request as any),
+    ...(account ? { account } : {}),
     chain: chainId ? { id: chainId } : null,
   })
 

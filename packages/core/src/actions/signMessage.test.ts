@@ -1,5 +1,6 @@
-import { accounts, config } from '@wagmi/test'
+import { accounts, config, privateKey } from '@wagmi/test'
 import { recoverMessageAddress } from 'viem'
+import { privateKeyToAccount } from 'viem/accounts'
 import { expect, test } from 'vitest'
 
 import { mock } from '../connectors/mock.js'
@@ -20,6 +21,20 @@ test('default', async () => {
     }),
   ).resolves.toEqual(getAccount(config).address)
   await disconnect(config, { connector })
+})
+
+test('behavior: local account', async () => {
+  const account = privateKeyToAccount(privateKey)
+  const signature = await signMessage(config, {
+    account,
+    message: 'foo bar baz',
+  })
+  await expect(
+    recoverMessageAddress({
+      message: 'foo bar baz',
+      signature,
+    }),
+  ).resolves.toEqual(account.address)
 })
 
 test('behavior: user rejected request', async () => {

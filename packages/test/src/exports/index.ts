@@ -4,6 +4,7 @@ export {
   abi,
   address,
   accounts,
+  privateKey,
   typedData,
   walletConnectProjectId,
 } from '../constants.js'

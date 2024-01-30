@@ -93,19 +93,22 @@ export async function prepareTransactionRequest<
   PrepareTransactionRequestReturnType<parameterType, config, chainId>
 > {
   const { account, chainId, connector, ...rest } = parameters
-  const client = await getConnectorClient(config, {
-    account,
-    chainId,
-    connector,
-  })
+
+  let client
+  if (typeof account === 'object' && account.type === 'local')
+    client = config.getClient({ chainId })
+  else
+    client = await getConnectorClient(config, { account, chainId, connector })
+
   const action = getAction(
     client,
     viem_prepareTransactionRequest,
     'prepareTransactionRequest',
   )
-  return action(
-    rest as unknown as viem_PrepareTransactionRequestParameters,
-  ) as unknown as Promise<
+  return action({
+    ...rest,
+    ...(account ? { account } : {}),
+  } as unknown as viem_PrepareTransactionRequestParameters) as unknown as Promise<
     PrepareTransactionRequestReturnType<parameterType, config, chainId>
   >
 }
