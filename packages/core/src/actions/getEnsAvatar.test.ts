@@ -3,8 +3,7 @@ import { expect, test } from 'vitest'
 
 import { getEnsAvatar } from './getEnsAvatar.js'
 
-// TODO: Enable once `euc.li` returns `'content-type'` header again
-test.skip('default', async () => {
+test('default', async () => {
   await expect(
     getEnsAvatar(config, {
       name: 'wevm.eth',
