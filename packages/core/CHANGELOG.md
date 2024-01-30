@@ -1,5 +1,13 @@
 # @wagmi/core
 
+## 2.6.3
+
+### Patch Changes
+
+- [#3533](https://github.com/wevm/wagmi/pull/3533) [`9c3b85dd`](https://github.com/wevm/wagmi/commit/9c3b85dd0a9a4a593e1d7e029345275735330e32) Thanks [@tmm](https://github.com/tmm)! - Fixed `account` property passthrough for actions.
+
+- [`2a72214a`](https://github.com/wevm/wagmi/commit/2a72214a2901d6b6ddd39f80238aa0bd4db670a7) Thanks [@tmm](https://github.com/tmm)! - Shimmed EIP-1193 `removeListener` for injected since some wallets do not follow spec.
+
 ## 2.6.2
 
 ### Patch Changes
