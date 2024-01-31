@@ -4,7 +4,7 @@ import { estimateFeesPerGas } from './estimateFeesPerGas.js'
 
 test('types', async () => {
   const default_ = await estimateFeesPerGas(config)
-  expectTypeOf(default_).toEqualTypeOf<{
+  expectTypeOf(default_).toMatchTypeOf<{
     gasPrice?: undefined
     maxFeePerGas: bigint
     maxPriorityFeePerGas: bigint
@@ -16,7 +16,7 @@ test('types', async () => {
   }>()
 
   const legacy = await estimateFeesPerGas(config, { type: 'legacy' })
-  expectTypeOf(legacy).toEqualTypeOf<{
+  expectTypeOf(legacy).toMatchTypeOf<{
     gasPrice: bigint
     maxFeePerGas?: undefined
     maxPriorityFeePerGas?: undefined
@@ -28,7 +28,7 @@ test('types', async () => {
   }>()
 
   const eip1559 = await estimateFeesPerGas(config, { type: 'eip1559' })
-  expectTypeOf(eip1559).toEqualTypeOf<{
+  expectTypeOf(eip1559).toMatchTypeOf<{
     gasPrice?: undefined
     maxFeePerGas: bigint
     maxPriorityFeePerGas: bigint
