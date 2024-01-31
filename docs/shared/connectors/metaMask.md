@@ -10,11 +10,14 @@ Connector for the [MetaMask SDK](https://github.com/MetaMask/metamask-sdk).
 
 ## Import
 
-::: warning WARNING This connector has a large file size due to the underlying [`@metamask/sdk`](https://github.com/MetaMask/metamask-sdk). 
-For mobile support, it is recommended to use <a :href="`/${docsPath}/api/connectors/walletConnect`">`walletConnect`</a>. For desktop support, you should rely on <a :href="`/${docsPath}/api/createConfig#multiinjectedproviderdiscovery`">Multi Injected Provider Discovery</a> (EIP-6963) via the Wagmi <a :href="`/${docsPath}/api/createConfig#config`">`Config`</a>.
+>[!WARNING]  
+> This connector has a large file size due to the underlying @metamask/sdk.
 
-On desktop, if you must target MetaMask, you can use <a :href="`/${docsPath}/api/connectors/injected`">`injected`</a>, e.g. <a :href="`/${docsPath}/guides/migrate-from-v1-to-v2#removed-metamaskconnector`">`injected({ target: 'metaMask' })`</a>. Please keep in mind this approach does not use EIP-6963 and other injected wallets could conflict with the connector.
-:::
+>[!WARNING]  
+> MetaMask SDK can be used for mobile and desktop support.
+
+>[!WARNING]  
+> MetaMask SDK supports EIP-6963, which prevents other injected wallets to conflict with the connector.
 
 ```ts-vue
 import { metaMask } from '{{connectorsPackageName}}'
