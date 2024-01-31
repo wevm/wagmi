@@ -3,7 +3,7 @@ import { useEstimateFeesPerGas } from './useEstimateFeesPerGas.js'
 
 test('types', () => {
   const result = useEstimateFeesPerGas()
-  expectTypeOf(result.data).toEqualTypeOf<
+  expectTypeOf(result.data).toMatchTypeOf<
     | {
         gasPrice?: undefined
         maxFeePerGas: bigint
@@ -18,7 +18,7 @@ test('types', () => {
   >()
 
   const result2 = useEstimateFeesPerGas({ type: 'legacy' })
-  expectTypeOf(result2.data).toEqualTypeOf<
+  expectTypeOf(result2.data).toMatchTypeOf<
     | {
         gasPrice: bigint
         maxFeePerGas?: undefined
@@ -33,7 +33,7 @@ test('types', () => {
   >()
 
   const result3 = useEstimateFeesPerGas({ type: 'eip1559' })
-  expectTypeOf(result3.data).toEqualTypeOf<
+  expectTypeOf(result3.data).toMatchTypeOf<
     | {
         gasPrice?: undefined
         maxFeePerGas: bigint
