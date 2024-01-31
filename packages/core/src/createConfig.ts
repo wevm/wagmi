@@ -63,7 +63,6 @@ export function createConfig<
   parameters: CreateConfigParameters<chains, transports>,
 ): Config<chains, transports> {
   const {
-    chains,
     multiInjectedProviderDiscovery = true,
     storage = createStorage({
       storage:
@@ -85,6 +84,7 @@ export function createConfig<
       ? createMipd()
       : undefined
 
+  const chains = createStore(() => rest.chains)
   const connectors = createStore(() =>
     [
       ...(rest.connectors ?? []),
@@ -97,7 +97,7 @@ export function createConfig<
     // Set up emitter with uid and add to connector so they are "linked" together.
     const emitter = createEmitter<ConnectorEventMap>(uid())
     const connector = {
-      ...connectorFn({ emitter, chains, storage }),
+      ...connectorFn({ emitter, chains: chains.getState(), storage }),
       emitter,
       uid: emitter.uid,
     }
@@ -120,7 +120,7 @@ export function createConfig<
     config: { chainId?: chainId | chains[number]['id'] | undefined } = {},
   ): Client<Transport, Extract<chains[number], { id: chainId }>> {
     const chainId = config.chainId ?? store.getState().chainId
-    const chain = chains.find((x) => x.id === chainId)
+    const chain = chains.getState().find((x) => x.id === chainId)
 
     // chainId specified and not configured
     if (config.chainId && !chain) throw new ChainNotConfiguredError()
@@ -147,7 +147,12 @@ export function createConfig<
       const properties: Partial<viem_ClientConfig> = {}
       const entries = Object.entries(rest) as [keyof typeof rest, any][]
       for (const [key, value] of entries) {
-        if (key === 'client' || key === 'connectors' || key === 'transports')
+        if (
+          key === 'chains' ||
+          key === 'client' ||
+          key === 'connectors' ||
+          key === 'transports'
+        )
           continue
         else {
           if (typeof value === 'object') properties[key] = value[chainId]
@@ -171,11 +176,13 @@ export function createConfig<
   // Create store
   /////////////////////////////////////////////////////////////////////////////////////////////////
 
-  const initialState: State = {
-    chainId: chains[0].id,
-    connections: new Map(),
-    current: undefined,
-    status: 'disconnected',
+  function getInitialState() {
+    return {
+      chainId: chains.getState()[0].id,
+      connections: new Map(),
+      current: undefined,
+      status: 'disconnected',
+    } satisfies State
   }
 
   let currentVersion: number
@@ -188,10 +195,11 @@ export function createConfig<
     subscribeWithSelector(
       // only use persist middleware if storage exists
       storage
-        ? persist(() => initialState, {
+        ? persist(getInitialState, {
             migrate(persistedState, version) {
               if (version === currentVersion) return persistedState as State
 
+              const initialState = getInitialState()
               const chainId =
                 persistedState &&
                 typeof persistedState === 'object' &&
@@ -223,7 +231,7 @@ export function createConfig<
             storage: storage as Storage<Record<string, unknown>>,
             version: currentVersion,
           })
-        : () => initialState,
+        : getInitialState,
     ),
   )
 
@@ -238,7 +246,9 @@ export function createConfig<
         current ? connections.get(current)?.chainId : undefined,
       (chainId) => {
         // If chain is not configured, then don't switch over to it.
-        const isChainConfigured = chains.some((x) => x.id === chainId)
+        const isChainConfigured = chains
+          .getState()
+          .some((x) => x.id === chainId)
         if (!isChainConfigured) return
 
         return store.setState((x) => ({
@@ -336,7 +346,7 @@ export function createConfig<
   }
 
   return {
-    chains: chains as chains,
+    chains: chains.getState() as chains,
     get connectors() {
       return connectors.getState()
     },
@@ -352,6 +362,7 @@ export function createConfig<
       else newState = value
 
       // Reset state if it got set to something not matching the base state
+      const initialState = getInitialState()
       if (typeof newState !== 'object') newState = initialState
       const isCorrupt = Object.keys(initialState).some((x) => !(x in newState))
       if (isCorrupt) newState = initialState
@@ -374,15 +385,31 @@ export function createConfig<
       ssr: Boolean(ssr),
       syncConnectedChain,
       transports: rest.transports as transports,
+      chains: {
+        setState(value) {
+          return chains.setState(
+            (typeof value === 'function'
+              ? value(chains.getState())
+              : value) as chains,
+            true,
+          )
+        },
+        subscribe(listener) {
+          return chains.subscribe(listener)
+        },
+      },
       connectors: {
         providerDetailToConnector,
         setup,
-        setState: (value) =>
-          connectors.setState(
+        setState(value) {
+          return connectors.setState(
             typeof value === 'function' ? value(connectors.getState()) : value,
             true,
-          ),
-        subscribe: (listener) => connectors.subscribe(listener),
+          )
+        },
+        subscribe(listener) {
+          return connectors.subscribe(listener)
+        },
       },
       events: { change, connect, disconnect },
     },
@@ -430,6 +457,21 @@ export type Config<
     readonly syncConnectedChain: boolean
     readonly transports: transports
 
+    chains: {
+      setState(
+        value:
+          | readonly [Chain, ...Chain[]]
+          | ((
+              state: readonly [Chain, ...Chain[]],
+            ) => readonly [Chain, ...Chain[]]),
+      ): void
+      subscribe(
+        listener: (
+          state: readonly [Chain, ...Chain[]],
+          prevState: readonly [Chain, ...Chain[]],
+        ) => void,
+      ): () => void
+    }
     connectors: {
       providerDetailToConnector(
         providerDetail: EIP6963ProviderDetail,
@@ -437,10 +479,7 @@ export type Config<
       setup(connectorFn: CreateConnectorFn): Connector
       setState(value: Connector[] | ((state: Connector[]) => Connector[])): void
       subscribe(
-        listener: (
-          state: readonly Connector[],
-          prevState: readonly Connector[],
-        ) => void,
+        listener: (state: Connector[], prevState: Connector[]) => void,
       ): () => void
     }
     events: {
