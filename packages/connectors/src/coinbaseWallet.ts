@@ -38,12 +38,19 @@ export type CoinbaseWalletParameters = Evaluate<
      * @default false
      */
     reloadOnDisconnect?: boolean | undefined
+     /**
+     * Whether to connect mobile web app via WalletLink, defaults to false
+     * @default false
+     */
+    enableMobileWalletLink?: boolean | undefined
+    
   }
 >
 
 coinbaseWallet.type = 'coinbaseWallet' as const
 export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
   const reloadOnDisconnect = false
+  const enableMobileWalletLink = true
 
   type Provider = CoinbaseWalletProvider
   type Properties = {}
@@ -113,7 +120,7 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
     },
     async getProvider() {
       if (!walletProvider) {
-        sdk = new CoinbaseWalletSDK({ reloadOnDisconnect, ...parameters })
+        sdk = new CoinbaseWalletSDK({ reloadOnDisconnect, enableMobileWalletLink, ...parameters })
 
         // Mock implementations to retrieve private `walletExtension` method from the Coinbase Wallet SDK.
         abstract class WalletProvider {
