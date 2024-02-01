@@ -19,6 +19,22 @@ Connector for the [MetaMask SDK](https://github.com/MetaMask/metamask-sdk).
 >[!WARNING]  
 > MetaMask SDK supports EIP-6963, which prevents other injected wallets to conflict with the connector.
 
+>[!WARNING]
+> Due to a limitation in iOS, Safari cancels deep link connections if they do not happen within 500ms. It's recommended to use a direct RPC method for transactions to avoid this issue. Instead of using `getSigner` and `sendTransaction`, directly invoke the `send` method with `'eth_sendTransaction'` and wait for the transaction using `waitForTransaction`. This approach avoids the deep link timeout issue on iOS Safari.
+>
+> **Implementation with potential timeout issue:**
+> ```js
+> const signer = provider.getSigner()
+> const txSubmitRes = await signer.sendTransaction(transactionData)
+> ```
+>
+> **Recommended Implementation (to avoid timeout):**
+> ```js
+> const hash = await provider.send('eth_sendTransaction', [transactionData])
+> const txReceipt = await provider.waitForTransaction(hash as string)
+> const txSubmitRes = await provider.getTransaction(txReceipt.transactionHash)
+> ```
+
 ```ts-vue
 import { metaMask } from '{{connectorsPackageName}}'
 ```
