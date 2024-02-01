@@ -58,7 +58,7 @@ const connector = injected({
 `TargetId | (TargetMap[TargetId] & { id: string }) | (() => (TargetMap[TargetId] & { id: string }) | undefined) | undefined`
 
 - [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) Ethereum Provider to target.
-- [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963) supported via `createConfig`'s <a :href="`/${docsPath}/api/connectors/injected`">`multiInjectedProviderDiscovery`</a> property.
+- [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963) supported via `createConfig`'s <a :href="`/${docsPath}/api/createConfig#multiinjectedproviderdiscovery`">`multiInjectedProviderDiscovery`</a> property.
 
 ```ts-vue
 import { injected } from '{{connectorsPackageName}}'
