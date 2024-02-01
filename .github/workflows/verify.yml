@@ -22,7 +22,7 @@ jobs:
       - name: Update package versions
         run: pnpm version:update
       
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - uses: stefanzweifel/git-auto-commit-action@v5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
