@@ -16,6 +16,7 @@ import {
   numberToHex,
 } from 'viem'
 
+// TODO(@3): Set `enableMobileWalletLink` to `true`
 export type CoinbaseWalletParameters = Evaluate<
   Mutable<
     Omit<
