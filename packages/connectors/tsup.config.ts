@@ -15,10 +15,9 @@ export default defineConfig(
       'src/safe.ts',
       'src/walletConnect.ts',
       'src/walletConnectLegacy.ts',
-      'src/xdefiWallet.ts'
+      'src/xdefiWallet.ts',
     ],
     external: [...Object.keys(dependencies), ...Object.keys(peerDependencies)],
     platform: 'browser',
   }),
 )
-
