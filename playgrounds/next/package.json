@@ -12,8 +12,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "next": "13.5.3",
-    "wagmi": "workspace:*",
-    "viem": "2.0.0"
+    "viem": "2.0.0",
+    "wagmi": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^20.7.2",
@@ -24,7 +24,6 @@
     "lokijs": "^1.5.12",
     "pino-pretty": "^10.2.0",
     "supports-color": "^9.4.0",
-    "typescript": "^5.2.2",
     "utf-8-validate": "^6.0.3"
   }
 }

@@ -393,9 +393,6 @@ importers:
       supports-color:
         specifier: ^9.4.0
         version: 9.4.0
-      typescript:
-        specifier: ^5.2.2
-        version: 5.3.2
       utf-8-validate:
         specifier: ^6.0.3
         version: 6.0.3
