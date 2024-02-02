@@ -22,7 +22,7 @@ jobs:
       - name: Update package versions
         run: pnpm version:update
       
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - uses: stefanzweifel/git-auto-commit-action@v5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -100,7 +100,7 @@ jobs:
         uses: ./.github/actions/install-dependencies
 
       - name: Run tests
-        uses: nick-fields/retry@v2
+        uses: nick-fields/retry@v3
         with:
           command: CI=true pnpm test:cov --shard=${{ matrix.shard }}/${{ matrix.total-shards }} --retry=3 --bail=1
           max_attempts: 3
@@ -112,4 +112,4 @@ jobs:
           VITE_OPTIMISM_FORK_URL: ${{ secrets.VITE_OPTIMISM_FORK_URL }}
 
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
