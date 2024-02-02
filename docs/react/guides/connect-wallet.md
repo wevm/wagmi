@@ -19,7 +19,7 @@ The above libraries are all built on top of Wagmi, handle all the edge cases aro
 
 Wagmi provides you with the Hooks to get started building your own Connect Wallet module. 
 
-It takes less than five minutes to get up and running with Browser Wallets, WalletConnect, and Coinbase Wallet.
+It takes less than five minutes to get up and running with Browser Wallets, WalletConnect, Coinbase Wallet and XDEFI Wallet.
 
 ### 1. Configure Wagmi
 
@@ -43,6 +43,7 @@ export const config = createConfig({
     walletConnect({ projectId }),
     metaMask(),
     safe(),
+    xdefiWallet(),
   ],
   transports: {
     [mainnet.id]: http(),
@@ -53,7 +54,7 @@ export const config = createConfig({
 
 :::
 
-In the above configuration, we want to set up connectors for Injected (browser), WalletConnect (browser + mobile), MetaMask, and Safe wallets. This configuration uses the **Mainnet** and **Base** chains, but you can use whatever you want.
+In the above configuration, we want to set up connectors for Injected (browser), WalletConnect (browser + mobile), MetaMask, Safe and XDEFI wallets. This configuration uses the **Mainnet** and **Base** chains, but you can use whatever you want.
 
 ::: warning
 
@@ -93,7 +94,7 @@ function App() {
 ```tsx [config.ts]
 import { http, createConfig } from 'wagmi'
 import { base, mainnet, optimism } from 'wagmi/chains'
-import { injected, metaMask, safe, walletConnect } from 'wagmi/connectors'
+import { injected, metaMask, safe, walletConnect, xdefiWallet } from 'wagmi/connectors'
 
 const projectId = '<WALLETCONNECT_PROJECT_ID>'
 
@@ -104,6 +105,7 @@ export const config = createConfig({
     walletConnect({ projectId }),
     metaMask(),
     safe(),
+    xdefiWallet(),
   ],
   transports: {
     [mainnet.id]: http(),
@@ -161,7 +163,7 @@ function App() {
 ```tsx [config.ts]
 import { http, createConfig } from 'wagmi'
 import { base, mainnet, optimism } from 'wagmi/chains'
-import { injected, metaMask, safe, walletConnect } from 'wagmi/connectors'
+import { injected, metaMask, safe, walletConnect, xdefiWallet } from 'wagmi/connectors'
 
 const projectId = '<WALLETCONNECT_PROJECT_ID>'
 
@@ -172,6 +174,7 @@ export const config = createConfig({
     walletConnect({ projectId }),
     metaMask(),
     safe(),
+    xdefiWallet(),
   ],
   transports: {
     [mainnet.id]: http(),
@@ -275,7 +278,7 @@ function App() {
 ```tsx [config.ts]
 import { http, createConfig } from 'wagmi'
 import { base, mainnet, optimism } from 'wagmi/chains'
-import { injected, metaMask, safe, walletConnect } from 'wagmi/connectors'
+import { injected, metaMask, safe, walletConnect, xdefiWallet } from 'wagmi/connectors'
 
 const projectId = '<WALLETCONNECT_PROJECT_ID>'
 
@@ -286,6 +289,7 @@ export const config = createConfig({
     walletConnect({ projectId }),
     metaMask(),
     safe(),
+    xdefiWallet(),
   ],
   transports: {
     [mainnet.id]: http(),
@@ -390,7 +394,7 @@ function WalletOption({
 ```tsx [config.ts]
 import { http, createConfig } from 'wagmi'
 import { base, mainnet, optimism } from 'wagmi/chains'
-import { injected, metaMask, safe, walletConnect } from 'wagmi/connectors'
+import { injected, metaMask, safe, walletConnect, xdefiWallet } from 'wagmi/connectors'
 
 const projectId = '<WALLETCONNECT_PROJECT_ID>'
 
@@ -401,6 +405,7 @@ export const config = createConfig({
     walletConnect({ projectId }),
     metaMask(),
     safe(),
+    xdefiWallet(),
   ],
   transports: {
     [mainnet.id]: http(),

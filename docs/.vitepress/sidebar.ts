@@ -102,6 +102,10 @@ export function getSidebar() {
                 text: 'walletConnect',
                 link: '/react/api/connectors/walletConnect',
               },
+              {
+                text: 'xdefiWallet',
+                link: '/react/api/connectors/xdefiWallet',
+              },
             ],
           },
           {
@@ -423,6 +427,10 @@ export function getSidebar() {
               {
                 text: 'walletConnect',
                 link: '/core/api/connectors/walletConnect',
+              },
+              {
+                text: 'xdefiWallet',
+                link: '/core/api/connectors/xdefiWallet',
               },
             ],
           },
