@@ -173,7 +173,13 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
     },
     async getProvider() {
       if (!walletProvider) {
-        if (!sdk || !sdk?.isInitialized()) {
+        if (!sdk || !sdk?.isInitialized()) { 
+          if (!parameters.infuraAPIKey) {
+            console.error(
+              "Wagmi isn't optimized for mobile use and relies heavily on read-only calls. To ensure proper functionality, add your own Infura API key. Check https://github.com/MetaMask/metamask-sdk/blob/main/docs/why-infura-wagmi.md for further explanations.",
+            )
+          }
+
           sdk = new MetaMaskSDK({
             enableDebug: false,
             dappMetadata: { name: 'wagmi' },
