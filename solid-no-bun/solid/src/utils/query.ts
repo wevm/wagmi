@@ -1,68 +1,70 @@
 import {
   type DefaultError,
   type QueryKey,
-  type UseInfiniteQueryOptions,
-  type UseInfiniteQueryResult,
-  type UseMutationOptions,
-  type UseMutationResult,
-  type UseQueryOptions,
-  type UseQueryResult,
+  type CreateInfiniteQueryOptions,
+  type CreateInfiniteQueryResult,
+  type CreateMutationOptions,
+  type CreateMutationResult,
+  type CreateQueryOptions,
+  type CreateQueryResult,
   replaceEqualDeep,
-  useInfiniteQuery as tanstack_useInfiniteQuery,
-  useQuery as tanstack_useQuery,
-} from '@tanstack/react-query'
+  createInfiniteQuery as tanstack_createInfiniteQuery,
+  createQuery as tanstack_createQuery,
+} from '@tanstack/solid-query'
 import {
   type Evaluate,
   type ExactPartial,
-  type Omit,
   deepEqual,
 } from '@wagmi/core/internal'
 import { hashFn } from '@wagmi/core/query'
 
-export type UseMutationParameters<
+// TODO: Wagmi's Omit breaks the types.
+// import type { Omit } from '@wagmi/core/internal'
+
+export type CreateMutationParameters<
   data = unknown,
   error = Error,
   variables = void,
   context = unknown,
 > = Evaluate<
   Omit<
-    UseMutationOptions<data, error, Evaluate<variables>, context>,
+    CreateMutationOptions<data, error, Evaluate<variables>, context>,
     'mutationFn' | 'mutationKey' | 'throwOnError'
   >
 >
 
-export type UseMutationReturnType<
+export type CreateMutationReturnType<
   data = unknown,
   error = Error,
   variables = void,
   context = unknown,
 > = Evaluate<
   Omit<
-    UseMutationResult<data, error, variables, context>,
+    CreateMutationResult<data, error, variables, context>,
     'mutate' | 'mutateAsync'
   >
 >
 
 ////////////////////////////////////////////////////////////////////////////////
 
-export type UseQueryParameters<
+export type CreateQueryParameters<
   queryFnData = unknown,
   error = DefaultError,
   data = queryFnData,
   queryKey extends QueryKey = QueryKey,
 > = Evaluate<
   ExactPartial<
-    Omit<UseQueryOptions<queryFnData, error, data, queryKey>, 'initialData'>
+    Omit<CreateQueryOptions<queryFnData, error, data, queryKey>, 'initialData'>
   > & {
     // Fix `initialData` type
     initialData?:
-      | UseQueryOptions<queryFnData, error, data, queryKey>['initialData']
+      | CreateQueryOptions<queryFnData, error, data, queryKey>['initialData']
       | undefined
   }
 >
 
-export type UseQueryReturnType<data = unknown, error = DefaultError> = Evaluate<
-  UseQueryResult<data, error> & {
+export type CreateQueryReturnType<data = unknown, error = DefaultError> = Evaluate<
+  CreateQueryResult<data, error> & {
     queryKey: QueryKey
   }
 >
@@ -70,35 +72,33 @@ export type UseQueryReturnType<data = unknown, error = DefaultError> = Evaluate<
 // Adding some basic customization.
 // Ideally we don't have this function, but `import('@tanstack/react-query').useQuery` currently has some quirks where it is super hard to
 // pass down the inferred `initialData` type because of it's discriminated overload in the on `useQuery`.
-export function useQuery<queryFnData, error, data, queryKey extends QueryKey>(
-  parameters: UseQueryParameters<queryFnData, error, data, queryKey> & {
+export function createQuery<queryFnData, error, data, queryKey extends QueryKey>(
+  parameters: CreateQueryParameters<queryFnData, error, data, queryKey> & {
     queryKey: QueryKey
   },
-): UseQueryReturnType<data, error> {
-  const result = tanstack_useQuery({
+): CreateQueryReturnType<data, error> {
+  const result = tanstack_createQuery({
     ...(parameters as any),
     queryKeyHashFn: hashFn, // for bigint support
-  }) as UseQueryReturnType<data, error>
+  }) as CreateQueryReturnType<data, error>
   result.queryKey = parameters.queryKey
   return result
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-export type UseInfiniteQueryParameters<
+export type CreateInfiniteQueryParameters<
   queryFnData = unknown,
   error = DefaultError,
   data = queryFnData,
-  queryData = queryFnData,
   queryKey extends QueryKey = QueryKey,
   pageParam = unknown,
 > = Evaluate<
   Omit<
-    UseInfiniteQueryOptions<
+    CreateInfiniteQueryOptions<
       queryFnData,
       error,
       data,
-      queryData,
       queryKey,
       pageParam
     >,
@@ -106,7 +106,7 @@ export type UseInfiniteQueryParameters<
   > & {
     // Fix `initialData` type
     initialData?:
-      | UseInfiniteQueryOptions<
+      | CreateInfiniteQueryOptions<
           queryFnData,
           error,
           data,
@@ -116,28 +116,28 @@ export type UseInfiniteQueryParameters<
   }
 >
 
-export type UseInfiniteQueryReturnType<
+export type CreateInfiniteQueryReturnType<
   data = unknown,
   error = DefaultError,
-> = UseInfiniteQueryResult<data, error> & {
+> = CreateInfiniteQueryResult<data, error> & {
   queryKey: QueryKey
 }
 
 // Adding some basic customization.
-export function useInfiniteQuery<
+export function createInfiniteQuery<
   queryFnData,
   error,
   data,
   queryKey extends QueryKey,
 >(
-  parameters: UseInfiniteQueryParameters<queryFnData, error, data, queryKey> & {
+  parameters: CreateInfiniteQueryParameters<queryFnData, error, data, queryKey> & {
     queryKey: QueryKey
   },
-): UseInfiniteQueryReturnType<data, error> {
-  const result = tanstack_useInfiniteQuery({
+): CreateInfiniteQueryReturnType<data, error> {
+  const result = tanstack_createInfiniteQuery({
     ...(parameters as any),
     queryKeyHashFn: hashFn, // for bigint support
-  }) as UseInfiniteQueryReturnType<data, error>
+  }) as CreateInfiniteQueryReturnType<data, error>
   result.queryKey = parameters.queryKey
   return result
 }

@@ -17,13 +17,13 @@ import {
 } from '@wagmi/core/query'
 import { useEffect } from 'react'
 
-import type { ConfigParameter } from '../types/properties.js'
+import type { ConfigParameter } from '../types/properties.ts'
 import type {
   UseMutationParameters,
   UseMutationReturnType,
-} from '../utils/query.js'
-import { useConfig } from './useConfig.js'
-import { useConnectors } from './useConnectors.js'
+} from '../utils/query.ts'
+import { useConfig } from './createConfig.ts'
+import { useConnectors } from './createConnectors.ts'
 
 export type UseConnectParameters<
   config extends Config = Config,

@@ -9,10 +9,11 @@ import {
   watchClient,
 } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
-import { useSyncExternalStoreWithSelector } from 'use-sync-external-store/shim/with-selector.js'
 
-import type { ConfigParameter } from '../types/properties.js'
-import { useConfig } from './useConfig.js'
+import type { ConfigParameter } from '../types/properties.ts'
+import { createConfig } from './createConfig.ts'
+import { createSignal } from 'solid-js/types/server/reactive.js'
+import { onCleanup } from 'solid-js'
 
 export type UseClientParameters<
   config extends Config = Config,
@@ -29,21 +30,25 @@ export type UseClientReturnType<
 > = GetClientReturnType<config, chainId>
 
 /** https://wagmi.sh/react/api/hooks/useClient */
-export function useClient<
+export function createClient<
   config extends Config = ResolvedRegister['config'],
   chainId extends config['chains'][number]['id'] | number | undefined =
     | config['chains'][number]['id']
     | undefined,
 >(
   parameters: UseClientParameters<config, chainId> = {},
-): UseClientReturnType<config, chainId> {
-  const config = useConfig(parameters)
+): ()=> UseClientReturnType<config, chainId> {
+  
+  const config = createConfig(parameters)
+  
+  const [client, setClient] = createSignal(getClient(config))
 
-  return useSyncExternalStoreWithSelector(
-    (onChange) => watchClient(config, { onChange }),
-    () => getClient(config, parameters),
-    () => getClient(config, parameters),
-    (x) => x,
-    (a, b) => a?.uid === b?.uid,
-  ) as any
+  const unsubscribe = watchClient(config, { onChange: function(_client){
+    if(client()?.uid === _client?.uid) return
+    setClient(_client)
+  }})
+  
+  onCleanup(unsubscribe)
+
+  return client
 }

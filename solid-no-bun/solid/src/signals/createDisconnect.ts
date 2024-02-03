@@ -11,13 +11,13 @@ import {
   disconnectMutationOptions,
 } from '@wagmi/core/query'
 
-import type { ConfigParameter } from '../types/properties.js'
+import type { ConfigParameter } from '../types/properties.ts'
 import type {
   UseMutationParameters,
   UseMutationReturnType,
-} from '../utils/query.js'
-import { useConfig } from './useConfig.js'
-import { useConnections } from './useConnections.js'
+} from '../utils/query.ts'
+import { useConfig } from './createConfig.ts'
+import { useConnections } from './createConnections.ts'
 
 export type UseDisconnectParameters<context = unknown> = Evaluate<
   ConfigParameter & {

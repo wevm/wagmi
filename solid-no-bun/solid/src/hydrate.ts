@@ -1,7 +1,7 @@
 'use client'
 
 import { type ResolvedRegister, type State, hydrate } from '@wagmi/core'
-import { type ReactElement, useEffect, useRef } from 'react'
+import { type JSX, type ParentProps, onMount } from "solid-js"
 
 export type HydrateProps = {
   config: ResolvedRegister['config']
@@ -9,28 +9,21 @@ export type HydrateProps = {
   reconnectOnMount?: boolean | undefined
 }
 
-export function Hydrate(parameters: React.PropsWithChildren<HydrateProps>) {
+export function Hydrate(parameters: ParentProps<HydrateProps>) {
   const { children, config, initialState, reconnectOnMount = true } = parameters
 
-  const { onMount } = hydrate(config, {
+  const { onMount: hydrateOnMount } = hydrate(config, {
     initialState,
     reconnectOnMount,
   })
 
   // Hydrate for non-SSR
-  if (!config._internal.ssr) onMount()
+  if (!config._internal.ssr) hydrateOnMount()
 
-  // Hydrate for SSR
-  const active = useRef(true)
-  // biome-ignore lint/nursery/useExhaustiveDependencies:
-  useEffect(() => {
-    if (!active.current) return
+  onMount(() => {
     if (!config._internal.ssr) return
-    onMount()
-    return () => {
-      active.current = false
-    }
-  }, [])
+    hydrateOnMount()
+  })
 
-  return children as ReactElement
+  return children as JSX.Element
 }

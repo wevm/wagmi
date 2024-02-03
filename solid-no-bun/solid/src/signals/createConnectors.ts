@@ -7,8 +7,8 @@ import {
 } from '@wagmi/core'
 import { useSyncExternalStore } from 'react'
 
-import type { ConfigParameter } from '../types/properties.js'
-import { useConfig } from './useConfig.js'
+import type { ConfigParameter } from '../types/properties.ts'
+import { useConfig } from './createConfig.ts'
 
 export type UseConnectorsParameters = ConfigParameter
 

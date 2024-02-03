@@ -6,7 +6,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/wevm/wagmi.git",
-    "directory": "packages/react"
+    "directory": "packages/solid"
   },
   "scripts": {
     "build": "npx tsc",
@@ -93,7 +93,8 @@
   },
   "devDependencies": {
     "@tanstack/solid-query": "5.18.1",
-    "solid-js": "1.8.12"
+    "solid-js": "1.8.12",
+    "typescript": "^5.2.2"
   },
   "contributors": [
     "awkweb.eth <t@wevm.dev>",

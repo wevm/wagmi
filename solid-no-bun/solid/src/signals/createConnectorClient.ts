@@ -16,15 +16,15 @@ import {
 } from '@wagmi/core/query'
 import { useEffect } from 'react'
 
-import type { ConfigParameter } from '../types/properties.js'
+import type { ConfigParameter } from '../types/properties.ts'
 import {
   type UseQueryParameters,
   type UseQueryReturnType,
   useQuery,
-} from '../utils/query.js'
-import { useAccount } from './useAccount.js'
-import { useChainId } from './useChainId.js'
-import { useConfig } from './useConfig.js'
+} from '../utils/query.ts'
+import { useAccount } from './createAccount.ts'
+import { useChainId } from './createChainId.ts'
+import { useConfig } from './createConfig.ts'
 
 export type UseConnectorClientParameters<
   config extends Config = Config,

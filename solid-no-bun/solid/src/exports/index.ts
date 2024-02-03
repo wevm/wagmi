@@ -4,13 +4,10 @@
 
 export {
   type WagmiProviderProps,
-  WagmiContext,
   WagmiProvider,
-  /** @deprecated Use `WagmiContext` instead */
-  WagmiContext as Context,
   /** @deprecated Use `WagmiProvider` instead */
   WagmiProvider as WagmiConfig,
-} from '../context.js'
+} from '../context.tsx'
 
 ////////////////////////////////////////////////////////////////////////////////
 // Errors
@@ -31,15 +28,15 @@ export {
   type UseAccountParameters,
   type UseAccountReturnType,
   useAccount,
-} from '../signals/useAccount.js'
+} from '../signals/createAccount.ts'
 
 export {
-  type UseAccountEffectParameters,
+  type U../signals/createAccount.tss,
   useAccountEffect,
 } from '../signals/useAccountEffect.js'
 
 // export {
-//   type UseBalanceParameters,
+//   typ../signals/createAccountEffect.ts
 //   type UseBalanceReturnType,
 //   useBalance,
 // } from '../signals/useBalance.js'
@@ -78,52 +75,52 @@ export {
   type UseChainIdParameters,
   type UseChainIdReturnType,
   useChainId,
-} from '../signals/useChainId.js'
+} from '../signals/createChainId.ts'
 
 export {
-  type UseClientParameters,
+  type U../signals/createChainId.ts
   type UseClientReturnType,
   useClient,
 } from '../signals/useClient.js'
 
 export {
-  type UseConfigParameters,
+  type U../signals/createClient.ts
   type UseConfigReturnType,
   useConfig,
-} from '../signals/useConfig.js'
+} from '../signals/createConfig.ts'
 
 export {
-  type UseConnectParameters,
+  type U../signals/createConfig.ts
   type UseConnectReturnType,
   useConnect,
 } from '../signals/useConnect.js'
 
 export {
-  type UseConnectionsParameters,
+  type U../signals/createConnect.ts
   type UseConnectionsReturnType,
   useConnections,
 } from '../signals/useConnections.js'
 
 export {
-  type UseConnectorsParameters,
+  type U../signals/createConnections.ts
   type UseConnectorsReturnType,
   useConnectors,
 } from '../signals/useConnectors.js'
 
 export {
-  type UseConnectorClientParameters,
+  type U../signals/createConnectors.ts,
   type UseConnectorClientReturnType,
   useConnectorClient,
-} from '../signals/useConnectorClient.js'
+} from '../signals/createConnectorClient.ts'
 
 export {
-  type UseDisconnectParameters,
+  type U../signals/createConnectorClient.ts
   type UseDisconnectReturnType,
   useDisconnect,
 } from '../signals/useDisconnect.js'
 
 // export {
-//   type UseEnsAddressParameters,
+//   typ../signals/createDisconnect.ts
 //   type UseEnsAddressReturnType,
 //   useEnsAddress,
 // } from '../signals/useEnsAddress.js'

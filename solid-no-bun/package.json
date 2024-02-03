@@ -1,4 +1,12 @@
 {
+  "scripts": {
+    "format": "pnpm dlx @biomejs/biome format . --write",
+    "build": "pnpm run build:solid && pnpm run build:playground",
+    "watch:solid": "pnpm --filter ./solid run watch",
+    "build:solid": "pnpm --filter ./solid run build",
+    "dev:playground": "pnpm --filter ./playground/vite-solid run dev",
+    "build:playground": "pnpm --filter ./playground/vite-solid run build"
+  },
 	"devDependencies": {
 		"@biomejs/biome": "1.5.3"
 	}
