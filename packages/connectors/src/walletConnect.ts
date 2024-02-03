@@ -4,8 +4,12 @@ import {
   createConnector,
   normalizeChainId,
 } from '@wagmi/core'
-import type { Evaluate, ExactPartial, Omit } from '@wagmi/core/internal'
-import { EthereumProvider } from '@walletconnect/ethereum-provider'
+import {
+  type Evaluate,
+  type ExactPartial,
+  type Omit,
+} from '@wagmi/core/internal'
+import { type EthereumProvider } from '@walletconnect/ethereum-provider'
 import {
   type Address,
   type ProviderConnectInfo,
@@ -197,6 +201,9 @@ export function walletConnect(parameters: WalletConnectParameters) {
       async function initProvider() {
         const optionalChains = config.chains.map((x) => x.id) as [number]
         if (!optionalChains.length) return
+        const { EthereumProvider } = await import(
+          '@walletconnect/ethereum-provider'
+        )
         return await EthereumProvider.init({
           ...parameters,
           disableProviderPing: true,

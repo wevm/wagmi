@@ -1,5 +1,5 @@
-import { SafeAppProvider } from '@safe-global/safe-apps-provider'
-import { type Opts, default as SafeAppsSDK } from '@safe-global/safe-apps-sdk'
+import { type SafeAppProvider } from '@safe-global/safe-apps-provider'
+import { type Opts } from '@safe-global/safe-apps-sdk'
 import {
   ProviderNotFoundError,
   createConnector,
@@ -31,14 +31,6 @@ export function safe(parameters: SafeParameters = {}) {
   type StorageItem = { 'safe.disconnected': true }
 
   let provider_: Provider | undefined
-  let SDK: typeof SafeAppsSDK.default
-  if (
-    typeof SafeAppsSDK !== 'function' &&
-    typeof SafeAppsSDK.default === 'function'
-  )
-    SDK = SafeAppsSDK.default
-  else SDK = SafeAppsSDK as unknown as typeof SafeAppsSDK.default
-  const sdk = new SDK(parameters)
 
   return createConnector<Provider, Properties, StorageItem>((config) => ({
     id: 'safe',
@@ -82,8 +74,23 @@ export function safe(parameters: SafeParameters = {}) {
       if (!isIframe) return
 
       if (!provider_) {
+        const { default: SafeAppsSDK } = await import(
+          '@safe-global/safe-apps-sdk'
+        )
+        let SDK: typeof SafeAppsSDK.default
+        if (
+          typeof SafeAppsSDK !== 'function' &&
+          typeof SafeAppsSDK.default === 'function'
+        )
+          SDK = SafeAppsSDK.default
+        else SDK = SafeAppsSDK as unknown as typeof SafeAppsSDK.default
+        const sdk = new SDK(parameters)
+
         const safe = await sdk.safe.getInfo()
         if (!safe) throw new Error('Could not load Safe information')
+        const { SafeAppProvider } = await import(
+          '@safe-global/safe-apps-provider'
+        )
         provider_ = new SafeAppProvider(safe, sdk)
       }
       return provider_
