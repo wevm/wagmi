@@ -1,6 +1,4 @@
-'use client'
-
-import { useQueryClient } from '@tanstack/react-query'
+import { createQueryClient } from '@tanstack/solid-query'
 import type {
   Config,
   GetConnectorClientErrorType,
@@ -14,17 +12,17 @@ import {
   type GetConnectorClientQueryKey,
   getConnectorClientQueryOptions,
 } from '@wagmi/core/query'
-import { useEffect } from 'react'
 
 import type { ConfigParameter } from '../types/properties.ts'
 import {
-  type UseQueryParameters,
-  type UseQueryReturnType,
-  useQuery,
+  type CreateQueryParameters,
+  type CreateQueryReturnType,
+  createQuery,
 } from '../utils/query.ts'
-import { useAccount } from './createAccount.ts'
-import { useChainId } from './createChainId.ts'
-import { useConfig } from './createConfig.ts'
+import { createAccount } from './createAccount.ts'
+import { createConfig } from './createConfig.ts'
+import { createChainId } from './createChainId.ts'
+import { createEffect } from 'solid-js'
 
 export type UseConnectorClientParameters<
   config extends Config = Config,
@@ -36,7 +34,7 @@ export type UseConnectorClientParameters<
       query?:
         | Evaluate<
             Omit<
-              UseQueryParameters<
+              CreateQueryParameters<
                 GetConnectorClientQueryFnData<config, chainId>,
                 GetConnectorClientErrorType,
                 selectData,
@@ -49,11 +47,11 @@ export type UseConnectorClientParameters<
     }
 >
 
-export type UseConnectorClientReturnType<
+export type CreateConnectorClientReturnType<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetConnectorClientData<config, chainId>,
-> = UseQueryReturnType<selectData, GetConnectorClientErrorType>
+> = CreateQueryReturnType<selectData, GetConnectorClientErrorType>
 
 /** https://wagmi.sh/react/api/hooks/useConnectorClient */
 export function useConnectorClient<
@@ -62,36 +60,35 @@ export function useConnectorClient<
   selectData = GetConnectorClientData<config, chainId>,
 >(
   parameters: UseConnectorClientParameters<config, chainId, selectData> = {},
-): UseConnectorClientReturnType<config, chainId, selectData> {
+): CreateConnectorClientReturnType<config, chainId, selectData> {
   const { query = {} } = parameters
 
-  const config = useConfig(parameters)
-  const queryClient = useQueryClient()
-  const { address, connector, status } = useAccount()
-  const chainId = useChainId()
+  const config = createConfig(parameters)
+  const queryClient = createQueryClient()
+  const { account } = createAccount()
+  const { chain } = createChainId()
 
   const { queryKey, ...options } = getConnectorClientQueryOptions<
     config,
     chainId
   >(config, {
     ...parameters,
-    chainId: parameters.chainId ?? chainId,
-    connector: parameters.connector ?? connector,
+    chainId: parameters.chainId ?? chain.id,
+    connector: parameters.connector ?? account?.connector,
   })
   const enabled = Boolean(status !== 'disconnected' && (query.enabled ?? true))
 
-  // biome-ignore lint/nursery/useExhaustiveDependencies: `queryKey` not required
-  useEffect(() => {
+  createEffect(() => {
     // invalidate when address changes
-    if (address) queryClient.invalidateQueries({ queryKey })
+    if (account.address) queryClient.invalidateQueries({ queryKey })
     else queryClient.removeQueries({ queryKey }) // remove when account is disconnected
-  }, [address, queryClient])
+  })
 
-  return useQuery({
+  return createQuery(()=>({
     ...query,
     ...options,
     queryKey,
     enabled,
     staleTime: Infinity,
-  })
+  }))
 }

@@ -1,5 +1,3 @@
-'use client'
-
 import { type Config, type ResolvedRegister } from '@wagmi/core'
 
 import { WagmiProviderNotFoundError } from '../errors/context.ts'

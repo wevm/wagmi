@@ -1,5 +1,3 @@
-'use client'
-
 import {
   type Config,
   type GetChainIdReturnType,
@@ -20,7 +18,7 @@ export type UseChainIdReturnType<config extends Config = Config> =
   { chain: { id: GetChainIdReturnType<config> } }
 
 /** https://wagmi.sh/react/api/hooks/useChainId */
-export function useChainId<config extends Config = ResolvedRegister['config']>(
+export function createChainId<config extends Config = ResolvedRegister['config']>(
   parameters: UseChainIdParameters<config> = {},
 ): UseChainIdReturnType<config> {
   const config = createConfig(parameters)

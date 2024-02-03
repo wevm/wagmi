@@ -1,6 +1,4 @@
-'use client'
-
-import { useMutation } from '@tanstack/react-query'
+import { CreateMutationResult, createMutation } from '@tanstack/solid-query'
 import {
   type Config,
   type ConnectErrorType,
@@ -10,28 +8,26 @@ import {
 import type { Evaluate } from '@wagmi/core/internal'
 import {
   type ConnectData,
-  type ConnectMutate,
-  type ConnectMutateAsync,
   type ConnectVariables,
   connectMutationOptions,
 } from '@wagmi/core/query'
-import { useEffect } from 'react'
 
 import type { ConfigParameter } from '../types/properties.ts'
 import type {
-  UseMutationParameters,
-  UseMutationReturnType,
+  CreateMutationParameters,
+  CreateMutationReturnType,
 } from '../utils/query.ts'
-import { useConfig } from './createConfig.ts'
 import { useConnectors } from './createConnectors.ts'
+import { createConfig } from './createConfig.ts'
+import { createEffect } from 'solid-js/types/server/reactive.js'
 
-export type UseConnectParameters<
+export type CreateConnectParameters<
   config extends Config = Config,
   context = unknown,
 > = Evaluate<
   ConfigParameter<config> & {
     mutation?:
-      | UseMutationParameters<
+      | CreateMutationParameters<
           ConnectData<config>,
           ConnectErrorType,
           ConnectVariables<config>,
@@ -41,55 +37,50 @@ export type UseConnectParameters<
   }
 >
 
-export type UseConnectReturnType<
+export type CreateConnectReturnType<
   config extends Config = Config,
   context = unknown,
-> = Evaluate<
-  UseMutationReturnType<
-    ConnectData<config>,
-    ConnectErrorType,
-    ConnectVariables<config>,
-    context
-  > & {
-    connect: ConnectMutate<config, context>
-    connectAsync: ConnectMutateAsync<config, context>
+> = {  
+    mutation: CreateMutationResult<
+      ConnectData<config>,
+      ConnectErrorType,
+      ConnectVariables<config>,
+      context>
     connectors: readonly Connector[]
   }
->
 
 /** https://wagmi.sh/react/api/hooks/useConnect */
-export function useConnect<
+export function createConnect<
   config extends Config = ResolvedRegister['config'],
   context = unknown,
 >(
-  parameters: UseConnectParameters<config, context> = {},
-): UseConnectReturnType<config, context> {
-  const { mutation } = parameters
+  parameters: CreateConnectParameters<config, context> = {},
+): CreateConnectReturnType<config, context> {
+  const { mutation: mutationParam } = parameters
 
-  const config = useConfig(parameters)
+  const config = createConfig(parameters)
   const connectors = useConnectors({ config })
 
   const mutationOptions = connectMutationOptions(config)
-  const { mutate, mutateAsync, ...result } = useMutation({
-    ...mutation,
-    ...mutationOptions,
-  })
+
+  const mutation = createMutation(()=>({
+    ...mutationParam,
+    ...mutationOptions
+  }))
 
   // Reset mutation back to an idle state when the connector disconnects.
-  useEffect(() => {
+  createEffect(() => {
     return config.subscribe(
       ({ status }) => status,
       (status, previousStatus) => {
         if (previousStatus === 'connected' && status === 'disconnected')
-          result.reset()
+        mutation.reset()
       },
     )
-  }, [config, result])
+  })
 
   return {
-    ...result,
-    connect: mutate,
-    connectAsync: mutateAsync,
+    mutation,
     connectors,
   }
 }

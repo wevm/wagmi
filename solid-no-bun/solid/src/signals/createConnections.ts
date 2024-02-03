@@ -5,10 +5,11 @@ import {
   getConnections,
   watchConnections,
 } from '@wagmi/core'
-import { useSyncExternalStore } from 'react'
 
 import type { ConfigParameter } from '../types/properties.ts'
-import { useConfig } from './createConfig.ts'
+import { createConfig } from './createConfig.ts'
+import { createStore } from 'solid-js/store'
+import { onCleanup } from 'solid-js'
 
 export type UseConnectionsParameters = ConfigParameter
 
@@ -17,12 +18,19 @@ export type UseConnectionsReturnType = GetConnectionsReturnType
 /** https://wagmi.sh/react/api/hooks/useConnections */
 export function useConnections(
   parameters: UseConnectionsParameters = {},
-): UseConnectionsReturnType {
-  const config = useConfig(parameters)
+): { connections: UseConnectionsReturnType } {
+  const config = createConfig(parameters)
 
-  return useSyncExternalStore(
-    (onChange) => watchConnections(config, { onChange }),
-    () => getConnections(config),
-    () => getConnections(config),
-  )
+  const [connections, setConnections] = createStore(getConnections(config))
+
+  function onChange(_account: GetConnectionsReturnType){
+    setConnections(_account)
+  }
+
+  const unsubscribe = watchConnections(config, { onChange })
+
+  onCleanup(unsubscribe)
+
+
+  return { connections }
 }
