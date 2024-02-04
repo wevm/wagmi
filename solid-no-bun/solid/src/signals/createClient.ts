@@ -10,7 +10,7 @@ import type { Evaluate } from '@wagmi/core/internal'
 
 import type { ConfigParameter } from '../types/properties.js'
 import { createConfig } from './createConfig.js'
-import { createSignal } from 'solid-js/types/server/reactive.js'
+import { createSignal } from 'solid-js'
 import { onCleanup } from 'solid-js'
 import type { FunctionedParams } from '@tanstack/solid-query'
 

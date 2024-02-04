@@ -27,33 +27,33 @@
   ],
   "sideEffects": false,
   "type": "module",
-  "main": "./dist/esm/exports/index.js",
+  "main": "./dist/exports/index.js",
   "types": "./dist/types/exports/index.d.ts",
   "typings": "./dist/types/exports/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/types/exports/index.d.ts",
-      "default": "./dist/esm/exports/index.js"
+      "default": "./dist/exports/index.js"
     },
     "./actions": {
       "types": "./dist/types/exports/actions.d.ts",
-      "default": "./dist/esm/exports/actions.js"
+      "default": "./dist/exports/actions.js"
     },
     "./chains": {
       "types": "./dist/types/exports/chains.d.ts",
-      "default": "./dist/esm/exports/chains.js"
+      "default": "./dist/exports/chains.js"
     },
     "./codegen": {
       "types": "./dist/types/exports/codegen.d.ts",
-      "default": "./dist/esm/exports/codegen.js"
+      "default": "./dist/exports/codegen.js"
     },
     "./connectors": {
       "types": "./dist/types/exports/connectors.d.ts",
-      "default": "./dist/esm/exports/connectors.js"
+      "default": "./dist/exports/connectors.js"
     },
     "./query": {
       "types": "./dist/types/exports/query.d.ts",
-      "default": "./dist/esm/exports/query.js"
+      "default": "./dist/exports/query.js"
     },
     "./package.json": "./package.json"
   },

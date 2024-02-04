@@ -21,7 +21,7 @@ import type {
 } from '../utils/query.js'
 import { createConnectors } from './createConnectors.js'
 import { createConfig } from './createConfig.js'
-import { createEffect } from 'solid-js/types/server/reactive.js'
+import { createEffect } from 'solid-js'
 
 export type CreateConnectParameters<
   config extends Config = Config,

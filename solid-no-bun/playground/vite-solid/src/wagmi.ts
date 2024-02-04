@@ -1,8 +1,8 @@
-import { http, createConfig } from 'solid-wagmi'
+import { http, initConfig } from 'solid-wagmi'
 import { celo, mainnet, optimism, sepolia } from 'solid-wagmi/chains'
 import { coinbaseWallet, walletConnect } from 'solid-wagmi/connectors'
 
-export const config = createConfig({
+export const config = initConfig({
   chains: [mainnet, sepolia, optimism, celo],
   connectors: [
     walletConnect({

@@ -62,27 +62,26 @@ export function createConnectorClient<
   parameters: CreateConnectorClientParameters<config, chainId, selectData> = ()=>({}),
 ): CreateConnectorClientReturnType<config, chainId, selectData> {
   const { query = {} } = parameters()
-
-  const config = createConfig(parameters)
+  const _config = createConfig(parameters)
   const queryClient = useQueryClient()
   const { account } = createAccount()
   const { chain } = createChainId()
-
+  
   const { queryKey, ...options } = getConnectorClientQueryOptions<
-    config,
-    chainId
-  >(config, {
+  config,
+  chainId
+  >(_config, {
     ...parameters(),
     chainId: parameters().chainId ?? chain.id,
     connector: parameters().connector ?? account?.connector,
   })
   const enabled = Boolean(account.status !== 'disconnected' && (query?.enabled ?? true))
-
+  
   createEffect(() => {
     // invalidate when address changes
     if (account.address) queryClient.invalidateQueries({ queryKey })
     else queryClient.removeQueries({ queryKey }) // remove when account is disconnected
-  })
+})
 
   return createQuery(()=>({
     ...query,

@@ -259,11 +259,11 @@ export {
 //   useStorageAt,
 // } from '../signals/useStorageAt.js'
 
-// export {
-//   type UseSwitchAccountParameters,
-//   type UseSwitchAccountReturnType,
-//   useSwitchAccount,
-// } from '../signals/useSwitchAccount.js'
+export {
+  type CreateSwitchAccountParameters,
+  type CreateSwitchAccountReturnType,
+  createSwitchAccount,
+} from '../signals/createSwitchAccount.js'
 
 // export {
 //   type UseSwitchChainParameters,
