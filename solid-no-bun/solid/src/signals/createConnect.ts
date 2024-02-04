@@ -1,4 +1,4 @@
-import { CreateMutationResult, FunctionedParams, createMutation } from '@tanstack/solid-query'
+import { FunctionedParams, createMutation } from '@tanstack/solid-query'
 import {
   type Config,
   type ConnectErrorType,
@@ -9,6 +9,8 @@ import type { Evaluate } from '@wagmi/core/internal'
 import {
   type ConnectData,
   type ConnectVariables,
+  type ConnectMutate,
+  type ConnectMutateAsync,
   connectMutationOptions,
 } from '@wagmi/core/query'
 
@@ -17,7 +19,7 @@ import type {
   CreateMutationParameters,
   CreateMutationReturnType,
 } from '../utils/query.ts'
-import { useConnectors } from './createConnectors.ts'
+import { createConnectors } from './createConnectors.ts'
 import { createConfig } from './createConfig.ts'
 import { createEffect } from 'solid-js/types/server/reactive.js'
 
@@ -27,12 +29,12 @@ export type CreateConnectParameters<
 > = FunctionedParams<Evaluate<
   ConfigParameter<config> & {
     mutation?:
-      | CreateMutationParameters<
+      | ReturnType<CreateMutationParameters<
           ConnectData<config>,
           ConnectErrorType,
           ConnectVariables<config>,
           context
-        >
+        >>
       | undefined
   }
 >>
@@ -41,11 +43,13 @@ export type CreateConnectReturnType<
   config extends Config = Config,
   context = unknown,
 > = {  
-    mutation: CreateMutationResult<
+    mutation: CreateMutationReturnType<
       ConnectData<config>,
       ConnectErrorType,
       ConnectVariables<config>,
       context>
+    connect: ConnectMutate<config, context>
+    connectAsync: ConnectMutateAsync<config, context>
     connectors: readonly Connector[]
   }
 
@@ -59,7 +63,7 @@ export function createConnect<
   const { mutation: mutationParam } = parameters()
 
   const config = createConfig(parameters)
-  const connectors = useConnectors({ config })
+  const { connectors } = createConnectors(parameters)
 
   const mutationOptions = connectMutationOptions(config)
 
@@ -81,6 +85,8 @@ export function createConnect<
 
   return {
     mutation,
+    connect: mutation.mutate,
+    connectAsync: mutation.mutateAsync,
     connectors,
   }
 }

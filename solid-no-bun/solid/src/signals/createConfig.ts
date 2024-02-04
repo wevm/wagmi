@@ -5,16 +5,16 @@ import type { ConfigParameter } from '../types/properties.ts'
 import { config } from '../context.tsx'
 import type { FunctionedParams } from '@tanstack/solid-query'
 
-export type UseConfigParameters<config extends Config = Config> =
+export type CreateConfigParameters<config extends Config = Config> =
 FunctionedParams<ConfigParameter<config>>
 
-export type UseConfigReturnType<config extends Config = Config> = config
+export type CreateConfigReturnType<config extends Config = Config> = config
 
 /** https://wagmi.sh/react/api/hooks/useConfig */
 export function createConfig<config extends Config = ResolvedRegister['config']>(
-  parameters: UseConfigParameters<config> = ()=>({}),
-): UseConfigReturnType<config> {
+  parameters: CreateConfigParameters<config> = ()=>({}),
+): CreateConfigReturnType<config> {
   const _config = parameters().config ?? config()
   if (!_config) throw new WagmiProviderNotFoundError()
-  return _config as UseConfigReturnType<config>
+  return _config as CreateConfigReturnType<config>
 }

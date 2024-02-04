@@ -5,24 +5,32 @@ import {
   getConnectors,
   watchConnectors,
 } from '@wagmi/core'
-import { useSyncExternalStore } from 'react'
 
 import type { ConfigParameter } from '../types/properties.ts'
-import { useConfig } from './createConfig.ts'
+import { createConfig } from './createConfig.ts'
+import type { FunctionedParams } from '@tanstack/solid-query'
+import { createStore } from 'solid-js/store'
+import { onCleanup } from 'solid-js'
 
-export type UseConnectorsParameters = ConfigParameter
+export type CreateConnectorsParameters = FunctionedParams<ConfigParameter>
 
-export type UseConnectorsReturnType = GetConnectorsReturnType
+export type CreateConnectorsReturnType = { connectors: GetConnectorsReturnType }
 
 /** https://wagmi.sh/react/api/hooks/useConnectors */
-export function useConnectors(
-  parameters: UseConnectorsParameters = {},
-): UseConnectorsReturnType {
-  const config = useConfig(parameters)
+export function createConnectors(
+  parameters: CreateConnectorsParameters = ()=>({}),
+): CreateConnectorsReturnType {
+  const config = createConfig(parameters)
 
-  return useSyncExternalStore(
-    (onChange) => watchConnectors(config, { onChange }),
-    () => getConnectors(config),
-    () => getConnectors(config),
-  )
+  const [connectors, setConnectors] = createStore(getConnectors(config))
+
+  function onChange(_connectors: GetConnectorsReturnType){
+    setConnectors(_connectors)
+  }
+
+  const unsubscribe = watchConnectors(config, { onChange })
+
+  onCleanup(unsubscribe)
+
+  return { connectors }
 }

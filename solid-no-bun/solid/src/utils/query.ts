@@ -10,11 +10,13 @@ import {
   replaceEqualDeep,
   createInfiniteQuery as tanstack_createInfiniteQuery,
   createQuery as tanstack_createQuery,
+  FunctionedParams,
 } from '@tanstack/solid-query'
 import {
   type Evaluate,
   type ExactPartial,
   deepEqual,
+  type Omit,
 } from '@wagmi/core/internal'
 import { hashFn } from '@wagmi/core/query'
 
@@ -26,12 +28,12 @@ export type CreateMutationParameters<
   error = Error,
   variables = void,
   context = unknown,
-> = Evaluate<
+> = FunctionedParams<Evaluate<
   Omit<
-    CreateMutationOptions<data, error, Evaluate<variables>, context>,
+    ReturnType<CreateMutationOptions<data, error, Evaluate<variables>, context>>,
     'mutationFn' | 'mutationKey' | 'throwOnError'
   >
->
+>>
 
 export type CreateMutationReturnType<
   data = unknown,
@@ -52,16 +54,16 @@ export type CreateQueryParameters<
   error = DefaultError,
   data = queryFnData,
   queryKey extends QueryKey = QueryKey,
-> = Evaluate<
+> = FunctionedParams<Evaluate<
   ExactPartial<
-    Omit<CreateQueryOptions<queryFnData, error, data, queryKey>, 'initialData'>
+    Omit<ReturnType<CreateQueryOptions<queryFnData, error, data, queryKey>>, 'initialData'>
   > & {
     // Fix `initialData` type
     initialData?:
-      | CreateQueryOptions<queryFnData, error, data, queryKey>['initialData']
+      | ReturnType<CreateQueryOptions<queryFnData, error, data, queryKey>>['initialData']
       | undefined
   }
->
+>>
 
 export type CreateQueryReturnType<data = unknown, error = DefaultError> = Evaluate<
   CreateQueryResult<data, error> & {
@@ -73,15 +75,15 @@ export type CreateQueryReturnType<data = unknown, error = DefaultError> = Evalua
 // Ideally we don't have this function, but `import('@tanstack/react-query').useQuery` currently has some quirks where it is super hard to
 // pass down the inferred `initialData` type because of it's discriminated overload in the on `useQuery`.
 export function createQuery<queryFnData, error, data, queryKey extends QueryKey>(
-  parameters: CreateQueryParameters<queryFnData, error, data, queryKey> & {
+  parameters: FunctionedParams<Evaluate<ReturnType<CreateQueryParameters<queryFnData, error, data, queryKey> >& {
     queryKey: QueryKey
-  },
+  }>>,
 ): CreateQueryReturnType<data, error> {
   const result = tanstack_createQuery({
-    ...(parameters as any),
+    ...(parameters() as any),
     queryKeyHashFn: hashFn, // for bigint support
   }) as CreateQueryReturnType<data, error>
-  result.queryKey = parameters.queryKey
+  result.queryKey = parameters().queryKey
   return result
 }
 
@@ -93,28 +95,28 @@ export type CreateInfiniteQueryParameters<
   data = queryFnData,
   queryKey extends QueryKey = QueryKey,
   pageParam = unknown,
-> = Evaluate<
+> = FunctionedParams<Evaluate<
   Omit<
-    CreateInfiniteQueryOptions<
+    ReturnType<CreateInfiniteQueryOptions<
       queryFnData,
       error,
       data,
       queryKey,
       pageParam
-    >,
+    >>,
     'initialData'
   > & {
     // Fix `initialData` type
     initialData?:
-      | CreateInfiniteQueryOptions<
+      | ReturnType<CreateInfiniteQueryOptions<
           queryFnData,
           error,
           data,
           queryKey
-        >['initialData']
+        >>['initialData']
       | undefined
   }
->
+>>
 
 export type CreateInfiniteQueryReturnType<
   data = unknown,

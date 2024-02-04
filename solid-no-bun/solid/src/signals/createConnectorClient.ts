@@ -4,7 +4,7 @@ import type {
   GetConnectorClientErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import { type Evaluate, type Omit } from '@wagmi/core/internal'
+import { Omit, type Evaluate } from '@wagmi/core/internal'
 import {
   type GetConnectorClientData,
   type GetConnectorClientOptions,
@@ -24,7 +24,7 @@ import { createConfig } from './createConfig.ts'
 import { createChainId } from './createChainId.ts'
 import { createEffect } from 'solid-js'
 
-export type UseConnectorClientParameters<
+export type CreateConnectorClientParameters<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetConnectorClientData<config, chainId>,
@@ -34,12 +34,12 @@ export type UseConnectorClientParameters<
       query?:
         | Evaluate<
             Omit<
-              CreateQueryParameters<
+              ReturnType<CreateQueryParameters<
                 GetConnectorClientQueryFnData<config, chainId>,
                 GetConnectorClientErrorType,
                 selectData,
                 GetConnectorClientQueryKey<config, chainId>
-              >,
+              >>,
               'gcTime' | 'staleTime'
             >
           >
@@ -54,12 +54,12 @@ export type CreateConnectorClientReturnType<
 > = CreateQueryReturnType<selectData, GetConnectorClientErrorType>
 
 /** https://wagmi.sh/react/api/hooks/useConnectorClient */
-export function useConnectorClient<
+export function createConnectorClient<
   config extends Config = ResolvedRegister['config'],
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetConnectorClientData<config, chainId>,
 >(
-  parameters: UseConnectorClientParameters<config, chainId, selectData> = ()=>({}),
+  parameters: CreateConnectorClientParameters<config, chainId, selectData> = ()=>({}),
 ): CreateConnectorClientReturnType<config, chainId, selectData> {
   const { query = {} } = parameters()
 
@@ -76,7 +76,7 @@ export function useConnectorClient<
     chainId: parameters().chainId ?? chain.id,
     connector: parameters().connector ?? account?.connector,
   })
-  const enabled = Boolean(status !== 'disconnected' && (query.enabled ?? true))
+  const enabled = Boolean(account.status !== 'disconnected' && (query?.enabled ?? true))
 
   createEffect(() => {
     // invalidate when address changes

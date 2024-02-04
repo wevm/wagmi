@@ -1,6 +1,6 @@
 'use client'
 
-import { useMutation } from '@tanstack/react-query'
+import { FunctionedParams, createMutation } from '@tanstack/solid-query'
 import type {
   Config,
   Connector,
@@ -18,65 +18,65 @@ import {
 
 import type { ConfigParameter } from '../types/properties.ts'
 import type {
-  UseMutationParameters,
-  UseMutationReturnType,
+  CreateMutationParameters,
+  CreateMutationReturnType,
 } from '../utils/query.ts'
-import { useConfig } from './createConfig.ts'
-import { useConnections } from './createConnections.ts'
+import { createConfig } from './createConfig.ts'
+import { createConnections } from './createConnections.ts'
 
-export type UseSwitchAccountParameters<
+export type CreateSwitchAccountParameters<
   config extends Config = Config,
   context = unknown,
-> = Evaluate<
+> = FunctionedParams<Evaluate<
   ConfigParameter<config> & {
     mutation?:
-      | UseMutationParameters<
+      | ReturnType<CreateMutationParameters<
           SwitchAccountData<config>,
           SwitchAccountErrorType,
           SwitchAccountVariables,
           context
-        >
+        >>
       | undefined
   }
->
+>>
 
-export type UseSwitchAccountReturnType<
+export type CreateSwitchAccountReturnType<
   config extends Config = Config,
   context = unknown,
 > = Evaluate<
-  UseMutationReturnType<
+  {mutation: CreateMutationReturnType<
     SwitchAccountData<config>,
     SwitchAccountErrorType,
     SwitchAccountVariables,
     context
-  > & {
+  >} & {
     connectors: readonly Connector[]
     switchAccount: SwitchAccountMutate<config, context>
     switchAccountAsync: SwitchAccountMutateAsync<config, context>
   }
 >
 
-/** https://wagmi.sh/react/api/hooks/useSwitchAccount */
-export function useSwitchAccount<
+/** https://wagmi.sh/react/api/hooks/CreateSwitchAccount */
+export function createSwitchAccount<
   config extends Config = ResolvedRegister['config'],
   context = unknown,
 >(
-  parameters: UseSwitchAccountParameters<config, context> = {},
-): UseSwitchAccountReturnType<config, context> {
-  const { mutation } = parameters
+  parameters: CreateSwitchAccountParameters<config, context> = ()=>({}),
+): CreateSwitchAccountReturnType<config, context> {
+  const { mutation: mutationParams } = parameters()
 
-  const config = useConfig(parameters)
+  const config = createConfig(parameters)
 
   const mutationOptions = switchAccountMutationOptions(config)
-  const { mutate, mutateAsync, ...result } = useMutation({
-    ...mutation,
+  const mutation = createMutation(()=>({
+    ...mutationParams,
     ...mutationOptions,
-  })
+  }))
 
   return {
-    ...result,
-    connectors: useConnections().map((connection) => connection.connector),
-    switchAccount: mutate,
-    switchAccountAsync: mutateAsync,
+    mutation,
+    connectors: createConnections().connections.map((connection) => connection.connector),
+    switchAccount: mutation.mutate,
+    switchAccountAsync: mutation.mutateAsync,
   }
 }

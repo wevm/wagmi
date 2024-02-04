@@ -12,16 +12,16 @@ import { createStore } from 'solid-js/store'
 import { onCleanup } from 'solid-js'
 import type { FunctionedParams } from '@tanstack/solid-query'
 
-export type UseChainIdParameters<config extends Config = Config> =
+export type CreateChainIdParameters<config extends Config = Config> =
 FunctionedParams<ConfigParameter<config>>
 
-export type UseChainIdReturnType<config extends Config = Config> =
+export type CreateChainIdReturnType<config extends Config = Config> =
   { chain: { id: GetChainIdReturnType<config> } }
 
 /** https://wagmi.sh/react/api/hooks/useChainId */
 export function createChainId<config extends Config = ResolvedRegister['config']>(
-  parameters: UseChainIdParameters<config> = ()=>({}),
-): UseChainIdReturnType<config> {
+  parameters: CreateChainIdParameters<config> = ()=>({}),
+): CreateChainIdReturnType<config> {
   const config = createConfig(parameters)
 
   const [chain, setChain] = createStore({ id: getChainId(config) })

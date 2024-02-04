@@ -25,15 +25,15 @@ export {
 ////////////////////////////////////////////////////////////////////////////////
 
 export {
-  type UseAccountParameters,
-  type UseAccountReturnType,
-  useAccount,
+  type CreateAccountParameters,
+  type CreateAccountReturnType,
+  createAccount,
 } from '../signals/createAccount.ts'
 
 export {
-  type U../signals/createAccount.tss,
-  useAccountEffect,
-} from '../signals/useAccountEffect.js'
+  type CreateAccountEffectParameters,
+  createAccountEffect,
+} from '../signals/createAccountEffect.js'
 
 // export {
 //   typ../signals/createAccountEffect.ts
@@ -72,52 +72,52 @@ export {
 // } from '../signals/useCall.js'
 
 export {
-  type UseChainIdParameters,
-  type UseChainIdReturnType,
-  useChainId,
+  type CreateChainIdParameters,
+  type CreateChainIdReturnType,
+  createChainId,
 } from '../signals/createChainId.ts'
 
 export {
-  type U../signals/createChainId.ts
-  type UseClientReturnType,
-  useClient,
-} from '../signals/useClient.js'
+  type CreateClientParameters,
+  type CreateClientReturnType,
+  createClient,
+} from '../signals/createClient.js'
 
 export {
-  type U../signals/createClient.ts
-  type UseConfigReturnType,
-  useConfig,
+  type CreateConfigParameters,
+  type CreateConfigReturnType,
+  createConfig,
 } from '../signals/createConfig.ts'
 
 export {
-  type U../signals/createConfig.ts
-  type UseConnectReturnType,
-  useConnect,
-} from '../signals/useConnect.js'
+  type CreateConnectParameters,
+  type CreateConnectReturnType,
+  createConnect
+} from '../signals/createConnect.js'
 
 export {
-  type U../signals/createConnect.ts
-  type UseConnectionsReturnType,
-  useConnections,
-} from '../signals/useConnections.js'
+  type CreateConnectionsParameters,
+  type CreateConnectionsReturnType,
+  createConnections,
+} from '../signals/createConnections.js'
 
 export {
-  type U../signals/createConnections.ts
-  type UseConnectorsReturnType,
-  useConnectors,
-} from '../signals/useConnectors.js'
+  type CreateConnectorsParameters,
+  type CreateConnectorsReturnType,
+  createConnectors,
+} from '../signals/createConnectors.js'
 
 export {
-  type U../signals/createConnectors.ts,
-  type UseConnectorClientReturnType,
-  useConnectorClient,
+  type CreateConnectorClientParameters,
+  type CreateConnectorClientReturnType,
+  createConnectorClient,
 } from '../signals/createConnectorClient.ts'
 
 export {
-  type U../signals/createConnectorClient.ts
-  type UseDisconnectReturnType,
-  useDisconnect,
-} from '../signals/useDisconnect.js'
+  type CreateDisconnectParameters,
+  type CreateDisconnectReturnType,
+  createDisconnect,
+} from '../signals/createDisconnect.js'
 
 // export {
 //   typ../signals/createDisconnect.ts
@@ -376,9 +376,9 @@ export {
   type Connection,
   type Connector,
   type Config,
-  type CreateConfigParameters,
+  type CreateConfigParameters as InitConfigParameters,
   type State,
-  createConfig,
+  createConfig as initConfig,
   // Connector
   type ConnectorEventMap,
   type CreateConnectorFn,

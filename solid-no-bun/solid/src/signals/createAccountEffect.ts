@@ -6,7 +6,7 @@ import { createConfig } from './createConfig.ts'
 import { onCleanup } from 'solid-js'
 import type { FunctionedParams } from '@tanstack/solid-query'
 
-export type UseAccountEffectParameters = FunctionedParams<Evaluate<
+export type CreateAccountEffectParameters = FunctionedParams<Evaluate<
   {
     onConnect?(
       data: Evaluate<
@@ -23,7 +23,7 @@ export type UseAccountEffectParameters = FunctionedParams<Evaluate<
 >>
 
 /** https://wagmi.sh/react/api/hooks/useAccountEffect */
-export function useAccountEffect(parameters: UseAccountEffectParameters = ()=>({})) {
+export function createAccountEffect(parameters: CreateAccountEffectParameters = ()=>({})) {
   const { onConnect, onDisconnect } = parameters()
 
   const config = createConfig(parameters)

@@ -12,14 +12,14 @@ import { createStore } from 'solid-js/store'
 import { onCleanup } from 'solid-js'
 import type { FunctionedParams } from '@tanstack/solid-query'
 
-export type UseConnectionsParameters = FunctionedParams<ConfigParameter>
+export type CreateConnectionsParameters = FunctionedParams<ConfigParameter>
 
-export type UseConnectionsReturnType = GetConnectionsReturnType
+export type CreateConnectionsReturnType = GetConnectionsReturnType
 
 /** https://wagmi.sh/react/api/hooks/useConnections */
-export function useConnections(
-  parameters: UseConnectionsParameters = ()=>({}),
-): { connections: UseConnectionsReturnType } {
+export function createConnections(
+  parameters: CreateConnectionsParameters = ()=>({}),
+): { connections: CreateConnectionsReturnType } {
   const config = createConfig(parameters)
 
   const [connections, setConnections] = createStore(getConnections(config))
