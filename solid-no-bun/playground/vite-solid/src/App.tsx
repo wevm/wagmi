@@ -21,6 +21,7 @@ function App() {
       <Connections />
       <SwitchChain />
       <SignMessage />
+      <Balance />
       {/* <ConnectorClient /> */}
     </>
   )
@@ -198,10 +199,18 @@ function Balance() {
     enabled: account.isConnected,
     queryKey: [account.address, account.chainId],
   }))
+
+  return (
+    <div>
+      <h2>Balance</h2>
+
+      <div>Balance (Default Chain): {query.data?.formatted}</div>
+    </div>
+  )
 }
 
 function BlockNumber() {
-// TODO
+// TODO this one uses a nested hook inside internally
 return null
 }
 
