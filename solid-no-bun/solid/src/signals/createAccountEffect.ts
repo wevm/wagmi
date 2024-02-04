@@ -1,8 +1,8 @@
 import { type GetAccountReturnType, watchAccount } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
 
-import type { ConfigParameter } from '../types/properties.ts'
-import { createConfig } from './createConfig.ts'
+import type { ConfigParameter } from '../types/properties.js'
+import { createConfig } from './createConfig.js'
 import { onCleanup } from 'solid-js'
 import type { FunctionedParams } from '@tanstack/solid-query'
 

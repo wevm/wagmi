@@ -1,8 +1,8 @@
 import { type Config, type ResolvedRegister } from '@wagmi/core'
 
-import { WagmiProviderNotFoundError } from '../errors/context.ts'
-import type { ConfigParameter } from '../types/properties.ts'
-import { config } from '../context.tsx'
+import { WagmiProviderNotFoundError } from '../errors/context.js'
+import type { ConfigParameter } from '../types/properties.js'
+import { config } from '../context.jsx'
 import type { FunctionedParams } from '@tanstack/solid-query'
 
 export type CreateConfigParameters<config extends Config = Config> =

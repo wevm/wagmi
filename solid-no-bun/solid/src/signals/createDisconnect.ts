@@ -11,13 +11,13 @@ import {
   disconnectMutationOptions,
 } from '@wagmi/core/query'
 
-import type { ConfigParameter } from '../types/properties.ts'
+import type { ConfigParameter } from '../types/properties.js'
 import type {
   CreateMutationParameters,
   CreateMutationReturnType,
-} from '../utils/query.ts'
-import { createConfig } from './createConfig.ts'
-import { createConnections } from './createConnections.ts'
+} from '../utils/query.js'
+import { createConfig } from './createConfig.js'
+import { createConnections } from './createConnections.js'
 import { FunctionedParams } from '@tanstack/solid-query'
 
 export type CreateDisconnectParameters<context = unknown> = FunctionedParams<Evaluate<

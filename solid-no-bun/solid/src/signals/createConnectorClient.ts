@@ -13,15 +13,15 @@ import {
   getConnectorClientQueryOptions,
 } from '@wagmi/core/query'
 
-import type { ConfigParameter } from '../types/properties.ts'
+import type { ConfigParameter } from '../types/properties.js'
 import {
   type CreateQueryParameters,
   type CreateQueryReturnType,
   createQuery,
-} from '../utils/query.ts'
-import { createAccount } from './createAccount.ts'
-import { createConfig } from './createConfig.ts'
-import { createChainId } from './createChainId.ts'
+} from '../utils/query.js'
+import { createAccount } from './createAccount.js'
+import { createConfig } from './createConfig.js'
+import { createChainId } from './createChainId.js'
 import { createEffect } from 'solid-js'
 
 export type CreateConnectorClientParameters<

@@ -14,13 +14,13 @@ import {
   connectMutationOptions,
 } from '@wagmi/core/query'
 
-import type { ConfigParameter } from '../types/properties.ts'
+import type { ConfigParameter } from '../types/properties.js'
 import type {
   CreateMutationParameters,
   CreateMutationReturnType,
-} from '../utils/query.ts'
-import { createConnectors } from './createConnectors.ts'
-import { createConfig } from './createConfig.ts'
+} from '../utils/query.js'
+import { createConnectors } from './createConnectors.js'
+import { createConfig } from './createConfig.js'
 import { createEffect } from 'solid-js/types/server/reactive.js'
 
 export type CreateConnectParameters<

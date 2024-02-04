@@ -6,10 +6,10 @@ import {
   watchAccount,
 } from '@wagmi/core'
 
-import type { ConfigParameter } from '../types/properties.ts'
+import type { ConfigParameter } from '../types/properties.js'
 import { onCleanup } from 'solid-js'
 import { createStore } from 'solid-js/store'
-import { createConfig } from './createConfig.ts'
+import { createConfig } from './createConfig.js'
 import type { FunctionedParams } from '@tanstack/solid-query'
 
 export type CreateAccountParameters<config extends Config = Config> =

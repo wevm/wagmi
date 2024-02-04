@@ -14,6 +14,12 @@ importers:
 
   playground/vite-solid:
     dependencies:
+      '@tanstack/solid-query':
+        specifier: 5.18.1
+        version: 5.18.1(solid-js@1.8.12)
+      buffer:
+        specifier: ^6.0.3
+        version: 6.0.3
       solid-js:
         specifier: ^1.8.7
         version: 1.8.12
@@ -2421,6 +2427,7 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
+      napi-wasm: 1.1.0
     dev: false
     bundledDependencies:
       - napi-wasm
@@ -3146,7 +3153,6 @@ packages:
 
   /@tanstack/query-core@5.18.1:
     resolution: {integrity: sha512-fYhrG7bHgSNbnkIJF2R4VUXb4lF7EBiQjKkDc5wOlB7usdQOIN4LxxHpDxyE3qjqIst1WBGvDtL48T0sHJGKCw==}
-    dev: true
 
   /@tanstack/solid-query@5.18.1(solid-js@1.8.12):
     resolution: {integrity: sha512-kD1uVar0uTngdTXOk6U7lQ9V44MhNCi2MIVkxEZQD39pEv0ozy36iUe8BPdoLQps53BnrO+I6pZA1t1pjxVnwQ==}
@@ -3155,7 +3161,6 @@ packages:
     dependencies:
       '@tanstack/query-core': 5.18.1
       solid-js: 1.8.12
-    dev: true
 
   /@types/babel__core@7.20.5:
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
@@ -6161,6 +6166,10 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
     dev: true
+
+  /napi-wasm@1.1.0:
+    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
+    dev: false
 
   /negotiator@0.6.3:
     resolution: {integrity: sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==}

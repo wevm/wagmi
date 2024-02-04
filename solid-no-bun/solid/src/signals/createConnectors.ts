@@ -6,8 +6,8 @@ import {
   watchConnectors,
 } from '@wagmi/core'
 
-import type { ConfigParameter } from '../types/properties.ts'
-import { createConfig } from './createConfig.ts'
+import type { ConfigParameter } from '../types/properties.js'
+import { createConfig } from './createConfig.js'
 import type { FunctionedParams } from '@tanstack/solid-query'
 import { createStore } from 'solid-js/store'
 import { onCleanup } from 'solid-js'

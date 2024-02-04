@@ -7,7 +7,7 @@ export {
   WagmiProvider,
   /** @deprecated Use `WagmiProvider` instead */
   WagmiProvider as WagmiConfig,
-} from '../context.tsx'
+} from '../context.jsx'
 
 ////////////////////////////////////////////////////////////////////////////////
 // Errors
@@ -28,7 +28,7 @@ export {
   type CreateAccountParameters,
   type CreateAccountReturnType,
   createAccount,
-} from '../signals/createAccount.ts'
+} from '../signals/createAccount.js'
 
 export {
   type CreateAccountEffectParameters,
@@ -75,7 +75,7 @@ export {
   type CreateChainIdParameters,
   type CreateChainIdReturnType,
   createChainId,
-} from '../signals/createChainId.ts'
+} from '../signals/createChainId.js'
 
 export {
   type CreateClientParameters,
@@ -87,7 +87,7 @@ export {
   type CreateConfigParameters,
   type CreateConfigReturnType,
   createConfig,
-} from '../signals/createConfig.ts'
+} from '../signals/createConfig.js'
 
 export {
   type CreateConnectParameters,
@@ -111,7 +111,7 @@ export {
   type CreateConnectorClientParameters,
   type CreateConnectorClientReturnType,
   createConnectorClient,
-} from '../signals/createConnectorClient.ts'
+} from '../signals/createConnectorClient.js'
 
 export {
   type CreateDisconnectParameters,
