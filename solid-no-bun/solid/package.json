@@ -1,5 +1,5 @@
 {
-  "name": "solid-wagmi",
+  "name": "@wagmi/solid",
   "description": "Solid Signals for Ethereum",
   "version": "2.0.0",
   "license": "MIT",

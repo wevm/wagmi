@@ -10,9 +10,9 @@ import type { Evaluate } from '@wagmi/core/internal'
 
 import type { ConfigParameter } from '../types/properties.js'
 import { createConfig } from './createConfig.js'
-import { createSignal } from 'solid-js'
 import { onCleanup } from 'solid-js'
 import type { FunctionedParams } from '@tanstack/solid-query'
+import { createStore } from 'solid-js/store'
 
 export type CreateClientParameters<
   config extends Config = Config,
@@ -26,7 +26,7 @@ export type CreateClientReturnType<
   chainId extends config['chains'][number]['id'] | number | undefined =
     | config['chains'][number]['id']
     | undefined,
-> = GetClientReturnType<config, chainId>
+> = { data: { client: GetClientReturnType<config, chainId> } }
 
 /** https://wagmi.sh/react/api/hooks/useClient */
 export function createClient<
@@ -36,19 +36,20 @@ export function createClient<
     | undefined,
 >(
   parameters: CreateClientParameters<config, chainId> = ()=>({}),
-): { client: FunctionedParams<CreateClientReturnType<config, chainId>> } {
+): CreateClientReturnType<config, chainId> {
   
   const { config: _config } = createConfig(parameters)
   
-  const [client, setClient] = createSignal<GetClientReturnType<config, chainId>>(getClient(_config))
+  const [data, setData] = createStore({ client: getClient(_config) })
 
   const unsubscribe = watchClient(_config, { onChange: function(_client){
-    if(client()?.uid === _client?.uid) return
+    if(data.client?.uid === _client?.uid) return
     //@ts-ignore TODO: fix type error
-    setClient(_client)
+    setData({ client: _client })
   }})
   
   onCleanup(unsubscribe)
 
-  return { client }
+    //@ts-ignore TODO: fix type error
+  return { data }
 }
