@@ -36,18 +36,19 @@ export function createClient<
     | undefined,
 >(
   parameters: CreateClientParameters<config, chainId> = ()=>({}),
-): ()=> CreateClientReturnType<config, chainId> {
+): { client: FunctionedParams<CreateClientReturnType<config, chainId>> } {
   
-  const config = createConfig(parameters)
+  const _config = createConfig(parameters)
   
-  const [client, setClient] = createSignal(getClient(config))
+  const [client, setClient] = createSignal<GetClientReturnType<config, chainId>>(getClient(_config))
 
-  const unsubscribe = watchClient(config, { onChange: function(_client){
+  const unsubscribe = watchClient(_config, { onChange: function(_client){
     if(client()?.uid === _client?.uid) return
+    //@ts-ignore TODO: fix type error
     setClient(_client)
   }})
   
   onCleanup(unsubscribe)
 
-  return client
+  return { client }
 }

@@ -52,9 +52,9 @@ export function createDisconnect<context = unknown>(
 ): CreateDisconnectReturnType<context> {
   const { mutation: mutationParam } = parameters()
 
-  const config = createConfig(parameters)
+  const _config = createConfig(parameters)
 
-  const mutationOptions = disconnectMutationOptions(config)
+  const mutationOptions = disconnectMutationOptions(_config)
   const mutation = createMutation(()=>({
     ...mutationParam,
     ...mutationOptions,

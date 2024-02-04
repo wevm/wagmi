@@ -20,15 +20,15 @@ export type CreateConnectionsReturnType = GetConnectionsReturnType
 export function createConnections(
   parameters: CreateConnectionsParameters = ()=>({}),
 ): { connections: CreateConnectionsReturnType } {
-  const config = createConfig(parameters)
+  const _config = createConfig(parameters)
 
-  const [connections, setConnections] = createStore(getConnections(config))
+  const [connections, setConnections] = createStore(getConnections(_config))
 
   function onChange(_account: GetConnectionsReturnType){
     setConnections(_account)
   }
 
-  const unsubscribe = watchConnections(config, { onChange })
+  const unsubscribe = watchConnections(_config, { onChange })
 
   onCleanup(unsubscribe)
 

@@ -20,15 +20,15 @@ export type CreateConnectorsReturnType = { connectors: GetConnectorsReturnType }
 export function createConnectors(
   parameters: CreateConnectorsParameters = ()=>({}),
 ): CreateConnectorsReturnType {
-  const config = createConfig(parameters)
+  const _config = createConfig(parameters)
 
-  const [connectors, setConnectors] = createStore(getConnectors(config))
+  const [connectors, setConnectors] = createStore(getConnectors(_config))
 
   function onChange(_connectors: GetConnectorsReturnType){
     setConnectors(_connectors)
   }
 
-  const unsubscribe = watchConnectors(config, { onChange })
+  const unsubscribe = watchConnectors(_config, { onChange })
 
   onCleanup(unsubscribe)
 

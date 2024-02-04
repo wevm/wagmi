@@ -22,15 +22,15 @@ export type CreateAccountReturnType<config extends Config = Config> =
 export function createAccount<config extends Config = ResolvedRegister['config']>(
   parameters: CreateAccountParameters<config> = ()=>({}),
 ): CreateAccountReturnType<config> {
-  const config = createConfig(parameters)
+  const _config = createConfig(parameters)
 
-  const [account, setAccount] = createStore(getAccount(config))
+  const [account, setAccount] = createStore(getAccount(_config))
 
   function onChange(_account: GetAccountReturnType){
     setAccount(_account)
   }
 
-  const unsubscribe = watchAccount(config, { onChange })
+  const unsubscribe = watchAccount(_config, { onChange })
 
   onCleanup(unsubscribe)
 

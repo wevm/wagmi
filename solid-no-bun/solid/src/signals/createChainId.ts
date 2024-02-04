@@ -22,15 +22,15 @@ export type CreateChainIdReturnType<config extends Config = Config> =
 export function createChainId<config extends Config = ResolvedRegister['config']>(
   parameters: CreateChainIdParameters<config> = ()=>({}),
 ): CreateChainIdReturnType<config> {
-  const config = createConfig(parameters)
+  const _config = createConfig(parameters)
 
-  const [chain, setChain] = createStore({ id: getChainId(config) })
+  const [chain, setChain] = createStore({ id: getChainId(_config) })
 
   function onChange(_id: GetChainIdReturnType<config>){
     setChain({ id: _id })
   }
 
-  const unsubscribe = watchChainId(config, { onChange })
+  const unsubscribe = watchChainId(_config, { onChange })
 
   onCleanup(unsubscribe)
 

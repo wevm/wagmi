@@ -62,10 +62,10 @@ export function createConnect<
 ): CreateConnectReturnType<config, context> {
   const { mutation: mutationParam } = parameters()
 
-  const config = createConfig(parameters)
+  const _config = createConfig(parameters)
   const { connectors } = createConnectors(parameters)
 
-  const mutationOptions = connectMutationOptions(config)
+  const mutationOptions = connectMutationOptions(_config)
 
   const mutation = createMutation(()=>({
     ...mutationParam,
@@ -74,7 +74,7 @@ export function createConnect<
 
   // Reset mutation back to an idle state when the connector disconnects.
   createEffect(() => {
-    return config.subscribe(
+    return _config.subscribe(
       ({ status }) => status,
       (status, previousStatus) => {
         if (previousStatus === 'connected' && status === 'disconnected')
