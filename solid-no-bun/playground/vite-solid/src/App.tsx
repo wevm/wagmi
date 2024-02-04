@@ -1,7 +1,9 @@
 import { createMutation, createQuery } from '@tanstack/solid-query'
 import { For, Show } from 'solid-js'
 import { type Config, createAccount, createAccountEffect, createChainId, createConfig, createConnect, createConnections, createConnectorClient, createDisconnect, createSwitchAccount } from 'solid-wagmi'
-import { type SwitchChainParameters, switchChain, signMessage, type SignMessageParameters, getBalance } from 'solid-wagmi/actions'
+import { type SwitchChainParameters, switchChain, signMessage, type SignMessageParameters, getBalance, sendTransaction, type SendTransactionParameters, waitForTransactionReceipt, GetBalanceParameters } from 'solid-wagmi/actions'
+import { BaseError, Hex, erc20Abi, parseEther } from 'viem'
+import { readContract } from 'solid-wagmi/actions'
 
 function App() {
   createAccountEffect(()=>({
@@ -22,6 +24,7 @@ function App() {
       <SwitchChain />
       <SignMessage />
       <Balance />
+      <SendTransaction />
       {/* <ConnectorClient /> */}
     </>
   )
@@ -185,19 +188,20 @@ function Connections() {
 function Balance() {
   const { config } = createConfig()
   const { account } = createAccount()
-  const { chain } = createChainId()
   
   const query = createQuery(()=>({
-    async queryFn() {
-      if (!account.address) throw new Error('address is required')
+    async queryFn({ queryKey }) {
+      const { address,...parameters } = queryKey[1]
+      if (!address) throw new Error('address is required')
+
       const balance = await getBalance(config, {
-        chainId: chain.id,
-        address: account.address,
+        ...(parameters as GetBalanceParameters<typeof config>),
+        address,
       })
       return balance ?? null
     },
     enabled: account.isConnected,
-    queryKey: [account.address, account.chainId],
+    queryKey: ['getBalance', { address: account.address, chainId: account.chainId }] as const,
   }))
 
   return (
@@ -225,14 +229,98 @@ function ConnectorClient() {
   )
 }
 
+type SendTransactionVariables<T extends Config> = SendTransactionParameters<T, T['chains'][number]['id']>
 function SendTransaction() {
-// TODO
-return null
+  const { config } = createConfig()
+
+  const mutation = createMutation(()=>({
+      mutationFn: function(variables: SendTransactionVariables<typeof config>) {
+        return sendTransaction(config, variables)
+      },
+      mutationKey: ['sendTransaction'],
+  }))
+
+  const query = createQuery(()=>({
+    queryFn: async function({ queryKey }) {
+      const { hash } = queryKey[1]
+      if (!hash) throw new Error('hash is required')
+      return waitForTransactionReceipt(config, {
+        hash,
+      })
+    },
+    enabled: Boolean(mutation.data),
+    queryKey: ['waitForTransactionReceipt', { hash: mutation.data }] as const,
+  }))
+
+  async function submit(e: Event) {
+    e.preventDefault()
+    const formData = new FormData(e.target as HTMLFormElement)
+    const to = formData.get('address') as Hex
+    const value = formData.get('value') as string
+    mutation.mutate({ to, value: parseEther(value) })
+  }
+
+  
+  return (
+    <div>
+      <h2>Send Transaction</h2>
+      <form onSubmit={submit}>
+        <input name="address" placeholder="Address" required />
+        <input
+          name="value"
+          placeholder="Amount (ETH)"
+          type="number"
+          step="0.000000001"
+          required
+        />
+        <button disabled={mutation.isPending} type="submit">
+          {mutation.isPending ? 'Confirming...' : 'Send'}
+        </button>
+      </form>
+      {mutation.data && <div>Transaction Hash: {mutation.data}</div>}
+      {query.isLoading && 'Waiting for confirmation...'}
+      {query.isSuccess && 'Transaction confirmed.'}
+      {mutation.error && (
+        <div>Error: {(mutation.error as BaseError).shortMessage || mutation.error.message}</div>
+      )}
+    </div>
+  )
 }
 
 function ReadContract() {
-// TODO
-return null
+  const { config } = createConfig()
+  const { account } = createAccount()
+
+  const abi = erc20Abi
+  const address = '0x...'
+  const functionName = 'balanceOf'
+  const args = [account.address] as const
+
+  const mutation = createQuery(()=>({
+    queryFn: async function({ queryKey }) {
+        const { address, functionName, ...parameters } = queryKey[1]
+
+        if (!address) throw new Error('address is required')
+        if (!functionName) throw new Error('functionName is required')
+
+        return readContract(config, {
+          abi,
+          address,
+          functionName,
+          args: parameters.args as [Hex]
+        })
+      },
+      enabled: account.isConnected,
+      queryKey: ['readContract', { address, functionName, args }] as const,
+    })
+  )
+
+  return (
+    <div>
+      <h2>Read Contract</h2>
+      <div>Balance: {mutation.data?.toString()}</div>
+    </div>
+  )
 }
 
 function ReadContracts() {
