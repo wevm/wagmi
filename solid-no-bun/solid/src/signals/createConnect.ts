@@ -1,4 +1,4 @@
-import { CreateMutationResult, createMutation } from '@tanstack/solid-query'
+import { CreateMutationResult, FunctionedParams, createMutation } from '@tanstack/solid-query'
 import {
   type Config,
   type ConnectErrorType,
@@ -24,7 +24,7 @@ import { createEffect } from 'solid-js/types/server/reactive.js'
 export type CreateConnectParameters<
   config extends Config = Config,
   context = unknown,
-> = Evaluate<
+> = FunctionedParams<Evaluate<
   ConfigParameter<config> & {
     mutation?:
       | CreateMutationParameters<
@@ -35,7 +35,7 @@ export type CreateConnectParameters<
         >
       | undefined
   }
->
+>>
 
 export type CreateConnectReturnType<
   config extends Config = Config,
@@ -54,9 +54,9 @@ export function createConnect<
   config extends Config = ResolvedRegister['config'],
   context = unknown,
 >(
-  parameters: CreateConnectParameters<config, context> = {},
+  parameters: CreateConnectParameters<config, context> = ()=>({}),
 ): CreateConnectReturnType<config, context> {
-  const { mutation: mutationParam } = parameters
+  const { mutation: mutationParam } = parameters()
 
   const config = createConfig(parameters)
   const connectors = useConnectors({ config })

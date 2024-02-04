@@ -12,13 +12,14 @@ import type { ConfigParameter } from '../types/properties.ts'
 import { createConfig } from './createConfig.ts'
 import { createSignal } from 'solid-js/types/server/reactive.js'
 import { onCleanup } from 'solid-js'
+import type { FunctionedParams } from '@tanstack/solid-query'
 
 export type UseClientParameters<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] | number | undefined =
     | config['chains'][number]['id']
     | undefined,
-> = Evaluate<GetClientParameters<config, chainId> & ConfigParameter<config>>
+> = FunctionedParams<Evaluate<GetClientParameters<config, chainId> & ConfigParameter<config>>>
 
 export type UseClientReturnType<
   config extends Config = Config,
@@ -34,7 +35,7 @@ export function createClient<
     | config['chains'][number]['id']
     | undefined,
 >(
-  parameters: UseClientParameters<config, chainId> = {},
+  parameters: UseClientParameters<config, chainId> = ()=>({}),
 ): ()=> UseClientReturnType<config, chainId> {
   
   const config = createConfig(parameters)

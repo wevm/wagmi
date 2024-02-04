@@ -10,16 +10,17 @@ import type { ConfigParameter } from '../types/properties.ts'
 import { onCleanup } from 'solid-js'
 import { createStore } from 'solid-js/store'
 import { createConfig } from './createConfig.ts'
+import type { FunctionedParams } from '@tanstack/solid-query'
 
 export type UseAccountParameters<config extends Config = Config> =
-  ConfigParameter<config>
+FunctionedParams<ConfigParameter<config>>
 
 export type UseAccountReturnType<config extends Config = Config> =
   { account: GetAccountReturnType<config> }
 
 /** https://wagmi.sh/react/api/hooks/useAccount */
 export function createAccount<config extends Config = ResolvedRegister['config']>(
-  parameters: UseAccountParameters<config> = {},
+  parameters: UseAccountParameters<config> = ()=>({}),
 ): UseAccountReturnType<config> {
   const config = createConfig(parameters)
 

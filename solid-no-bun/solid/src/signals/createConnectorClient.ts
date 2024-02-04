@@ -1,4 +1,4 @@
-import { createQueryClient } from '@tanstack/solid-query'
+import { useQueryClient, type FunctionedParams } from '@tanstack/solid-query'
 import type {
   Config,
   GetConnectorClientErrorType,
@@ -28,7 +28,7 @@ export type UseConnectorClientParameters<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetConnectorClientData<config, chainId>,
-> = Evaluate<
+> = FunctionedParams<Evaluate<
   GetConnectorClientOptions<config, chainId> &
     ConfigParameter<config> & {
       query?:
@@ -45,7 +45,7 @@ export type UseConnectorClientParameters<
           >
         | undefined
     }
->
+>>
 
 export type CreateConnectorClientReturnType<
   config extends Config = Config,
@@ -59,12 +59,12 @@ export function useConnectorClient<
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetConnectorClientData<config, chainId>,
 >(
-  parameters: UseConnectorClientParameters<config, chainId, selectData> = {},
+  parameters: UseConnectorClientParameters<config, chainId, selectData> = ()=>({}),
 ): CreateConnectorClientReturnType<config, chainId, selectData> {
-  const { query = {} } = parameters
+  const { query = {} } = parameters()
 
   const config = createConfig(parameters)
-  const queryClient = createQueryClient()
+  const queryClient = useQueryClient()
   const { account } = createAccount()
   const { chain } = createChainId()
 
@@ -72,9 +72,9 @@ export function useConnectorClient<
     config,
     chainId
   >(config, {
-    ...parameters,
-    chainId: parameters.chainId ?? chain.id,
-    connector: parameters.connector ?? account?.connector,
+    ...parameters(),
+    chainId: parameters().chainId ?? chain.id,
+    connector: parameters().connector ?? account?.connector,
   })
   const enabled = Boolean(status !== 'disconnected' && (query.enabled ?? true))
 
