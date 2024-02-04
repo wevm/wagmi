@@ -1,5 +1,3 @@
-'use client'
-
 import { type ResolvedRegister, type State } from '@wagmi/core'
 import { Hydrate } from './hydrate.js'
 import { createSignal, type ParentProps } from 'solid-js'

@@ -1,5 +1,3 @@
-'use client'
-
 import { type ResolvedRegister, type State, hydrate } from '@wagmi/core'
 import { type JSX, type ParentProps, onMount } from "solid-js"
 

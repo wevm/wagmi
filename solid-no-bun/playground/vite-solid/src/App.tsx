@@ -25,6 +25,7 @@ function App() {
       <SignMessage />
       <Balance />
       <SendTransaction />
+      <ReadContract/>
       {/* <ConnectorClient /> */}
     </>
   )
