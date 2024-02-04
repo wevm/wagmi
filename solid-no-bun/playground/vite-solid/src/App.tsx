@@ -100,7 +100,7 @@ function SwitchAccount() {
 
 type MutationVariables<T extends Config> = SwitchChainParameters<T, T['chains'][number]['id']>
 function SwitchChain() {
-  const config = createConfig()
+  const { config } = createConfig()
   const { chain: _chain } = createChainId()
 
   const mutation = createMutation(()=>({
@@ -132,7 +132,7 @@ function SwitchChain() {
 }
 
 function SignMessage() {
-  const config = createConfig()
+  const { config } = createConfig()
 
   const mutation = createMutation(()=>({
     mutationFn: function(variables: SignMessageParameters) {
@@ -182,7 +182,7 @@ function Connections() {
 }
 
 function Balance() {
-  const config = createConfig()
+  const { config } = createConfig()
   const { account } = createAccount()
   const { chain } = createChainId()
   
