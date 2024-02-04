@@ -265,11 +265,11 @@ export {
   createSwitchAccount,
 } from '../signals/createSwitchAccount.js'
 
-// export {
-//   type UseSwitchChainParameters,
-//   type UseSwitchChainReturnType,
-//   useSwitchChain,
-// } from '../signals/useSwitchChain.js'
+export {
+  type CreateSwitchChainParameters,
+  type CreateSwitchChainReturnType,
+  createSwitchChain,
+} from '../signals/createSwitchChain.js'
 
 // export {
 //   type UseTokenParameters,
