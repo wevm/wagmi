@@ -20,7 +20,7 @@ export type CreateConnectorsReturnType = { connectors: GetConnectorsReturnType }
 export function createConnectors(
   parameters: CreateConnectorsParameters = ()=>({}),
 ): CreateConnectorsReturnType {
-  const _config = createConfig(parameters)
+  const { config: _config } = createConfig(parameters)
 
   const [connectors, setConnectors] = createStore(getConnectors(_config))
 

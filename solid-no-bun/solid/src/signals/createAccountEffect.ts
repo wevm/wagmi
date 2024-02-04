@@ -26,9 +26,9 @@ export type CreateAccountEffectParameters = FunctionedParams<Evaluate<
 export function createAccountEffect(parameters: CreateAccountEffectParameters = ()=>({})) {
   const { onConnect, onDisconnect } = parameters()
 
-  const config = createConfig(parameters)
+  const { config: _config } = createConfig(parameters)
 
-  const unsubscribe = watchAccount(config, {
+  const unsubscribe = watchAccount(_config, {
     onChange(data, prevData) {
       if (
         (prevData.status === 'reconnecting' ||

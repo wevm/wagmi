@@ -38,7 +38,7 @@ export function createClient<
   parameters: CreateClientParameters<config, chainId> = ()=>({}),
 ): { client: FunctionedParams<CreateClientReturnType<config, chainId>> } {
   
-  const _config = createConfig(parameters)
+  const { config: _config } = createConfig(parameters)
   
   const [client, setClient] = createSignal<GetClientReturnType<config, chainId>>(getClient(_config))
 

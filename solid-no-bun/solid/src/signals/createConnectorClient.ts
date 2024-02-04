@@ -62,7 +62,7 @@ export function createConnectorClient<
   parameters: CreateConnectorClientParameters<config, chainId, selectData> = ()=>({}),
 ): CreateConnectorClientReturnType<config, chainId, selectData> {
   const { query = {} } = parameters()
-  const _config = createConfig(parameters)
+  const { config: _config } = createConfig(parameters)
   const queryClient = useQueryClient()
   const { account } = createAccount()
   const { chain } = createChainId()

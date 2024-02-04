@@ -22,7 +22,7 @@ export type CreateAccountReturnType<config extends Config = Config> =
 export function createAccount<config extends Config = ResolvedRegister['config']>(
   parameters: CreateAccountParameters<config> = ()=>({}),
 ): CreateAccountReturnType<config> {
-  const _config = createConfig(parameters)
+  const { config: _config } = createConfig(parameters)
 
   const [account, setAccount] = createStore(getAccount(_config))
 

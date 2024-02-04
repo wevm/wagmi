@@ -65,7 +65,7 @@ export function createSwitchAccount<
 ): CreateSwitchAccountReturnType<config, context> {
   const { mutation: mutationParams } = parameters()
 
-  const _config = createConfig(parameters)
+  const { config: _config } = createConfig(parameters)
 
   const mutationOptions = switchAccountMutationOptions(_config)
   const mutation = createMutation(()=>({

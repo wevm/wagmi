@@ -22,7 +22,7 @@ export type CreateChainIdReturnType<config extends Config = Config> =
 export function createChainId<config extends Config = ResolvedRegister['config']>(
   parameters: CreateChainIdParameters<config> = ()=>({}),
 ): CreateChainIdReturnType<config> {
-  const _config = createConfig(parameters)
+  const { config: _config } = createConfig(parameters)
 
   const [chain, setChain] = createStore({ id: getChainId(_config) })
 

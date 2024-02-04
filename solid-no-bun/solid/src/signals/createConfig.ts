@@ -13,8 +13,8 @@ export type CreateConfigReturnType<config extends Config = Config> = config
 /** https://wagmi.sh/react/api/hooks/useConfig */
 export function createConfig<config extends Config = ResolvedRegister['config']>(
   parameters: CreateConfigParameters<config> = ()=>({}),
-): CreateConfigReturnType<config> {
+): { config: CreateConfigReturnType<config> } {
   const _config = parameters().config ?? config()
   if (!_config) throw new WagmiProviderNotFoundError()
-  return _config as CreateConfigReturnType<config>
+  return { config: _config } as { config: CreateConfigReturnType<config> }
 }

@@ -1,7 +1,7 @@
-import { createMutation } from '@tanstack/solid-query'
+import { createMutation, createQuery } from '@tanstack/solid-query'
 import { For, Show } from 'solid-js'
 import { type Config, createAccount, createAccountEffect, createChainId, createConfig, createConnect, createConnections, createConnectorClient, createDisconnect, createSwitchAccount } from 'solid-wagmi'
-import { type SwitchChainParameters, switchChain } from 'solid-wagmi/actions'
+import { type SwitchChainParameters, switchChain, signMessage, type SignMessageParameters, getBalance } from 'solid-wagmi/actions'
 
 function App() {
   createAccountEffect(()=>({
@@ -20,6 +20,7 @@ function App() {
       <SwitchAccount />
       <Connections />
       <SwitchChain />
+      <SignMessage />
       {/* <ConnectorClient /> */}
     </>
   )
@@ -131,8 +132,33 @@ function SwitchChain() {
 }
 
 function SignMessage() {
-//TODO
-return null
+  const config = createConfig()
+
+  const mutation = createMutation(()=>({
+    mutationFn: function(variables: SignMessageParameters) {
+      return signMessage(config, variables)
+    },
+    mutationKey: ['signMessage'],
+  }))
+
+  return (
+    <div>
+      <h2>Sign Message</h2>
+
+      <form
+        onSubmit={(event) => {
+          event.preventDefault()
+          const formData = new FormData(event.target as HTMLFormElement)
+          mutation.mutate({ message: formData.get('message') as string })
+        }}
+      >
+        <input name="message" />
+        <button type="submit">Sign Message</button>
+      </form>
+
+      {mutation.data}
+    </div>
+  )
 }
 
 function Connections() {
@@ -156,8 +182,22 @@ function Connections() {
 }
 
 function Balance() {
-// TODO
-return null
+  const config = createConfig()
+  const { account } = createAccount()
+  const { chain } = createChainId()
+  
+  const query = createQuery(()=>({
+    async queryFn() {
+      if (!account.address) throw new Error('address is required')
+      const balance = await getBalance(config, {
+        chainId: chain.id,
+        address: account.address,
+      })
+      return balance ?? null
+    },
+    enabled: account.isConnected,
+    queryKey: [account.address, account.chainId],
+  }))
 }
 
 function BlockNumber() {
