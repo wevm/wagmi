@@ -1,4 +1,7 @@
-import { createAccount, createAccountEffect, createChainId, createConnect, createConnections, createConnectorClient, createDisconnect, createSwitchAccount } from 'solid-wagmi'
+import { createMutation } from '@tanstack/solid-query'
+import { For, Show } from 'solid-js'
+import { type Config, createAccount, createAccountEffect, createChainId, createConfig, createConnect, createConnections, createConnectorClient, createDisconnect, createSwitchAccount } from 'solid-wagmi'
+import { type SwitchChainParameters, switchChain } from 'solid-wagmi/actions'
 
 function App() {
   createAccountEffect(()=>({
@@ -16,6 +19,7 @@ function App() {
       <Connect />
       <SwitchAccount />
       <Connections />
+      <SwitchChain />
       {/* <ConnectorClient /> */}
     </>
   )
@@ -37,11 +41,11 @@ function Account() {
         status: {account.status}
       </div>
 
-      {account.status !== 'disconnected' && (
+      <Show when={account.status !== 'disconnected'} >
         <button type="button" onClick={() => disconnect()}>
           Disconnect
         </button>
-      )}
+      </Show>
     </div>
   )
 }
@@ -53,14 +57,17 @@ function Connect() {
   return (
     <div>
       <h2>Connect</h2>
-      {connectors.map((connector) => (
-        <button
-          onClick={() => connect({ connector, chainId: chain.id })}
-          type="button"
-        >
-          {connector.name}
-        </button>
-      ))}
+      <For each={connectors} >
+        {(connector)=>(
+          <button
+            onClick={() => connect({ connector, chainId: chain.id })}
+            type="button"
+          >
+            {connector.name}
+          </button>
+        )}
+      </For>
+      
       <div>{mutation.status}</div>
       <div>{mutation.error?.message}</div>
     </div>
@@ -75,23 +82,52 @@ function SwitchAccount() {
     <div>
       <h2>Switch Account</h2>
 
-      {connectors.map((connector) => (
-        <button
+      <For each={connectors} >
+        {(connector)=>(
+          <button
           disabled={account.connector?.uid === connector.uid}
           onClick={() => switchAccount({ connector })}
           type="button"
         >
           {connector.name}
         </button>
-      ))}
+        )}
+      </For>
     </div>
   )
 }
 
+type MutationVariables<T extends Config> = SwitchChainParameters<T, T['chains'][number]['id']>
 function SwitchChain() {
-//TODO
+  const config = createConfig()
+  const { chain: _chain } = createChainId()
 
-return null
+  const mutation = createMutation(()=>({
+    mutationFn: function(variables: MutationVariables<typeof config>) {
+      return switchChain(config, variables)
+    },
+    mutationKey: ['switchChain'],
+  }))
+  
+  return (
+    <div>
+      <h2>Switch Chain</h2>
+
+      <For each={config.chains} >
+        {(chain)=>(
+          <button
+            disabled={_chain.id === chain.id}
+            onClick={()=>mutation.mutate({ chainId: chain.id })}
+            type="button"
+          >
+            {chain.name}
+          </button>
+        )}
+      </For>
+
+      {mutation.error?.message}
+    </div>
+  )
 }
 
 function SignMessage() {
@@ -106,13 +142,15 @@ function Connections() {
     <div>
       <h2>Connections</h2>
 
-      {connections.map((connection) => (
-        <div>
-          <div>connector {connection.connector.name}</div>
-          <div>accounts: {JSON.stringify(connection.accounts)}</div>
-          <div>chainId: {connection.chainId}</div>
-        </div>
-      ))}
+      <For each={connections} >
+        {(connection)=>(
+          <div>
+            <div>connector {connection.connector.name}</div>
+            <div>accounts: {JSON.stringify(connection.accounts)}</div>
+            <div>chainId: {connection.chainId}</div>
+          </div>
+        )}
+      </For>
     </div>
   )
 }
