@@ -2,39 +2,39 @@ import { chain, config } from '@wagmi/test'
 import { type Chain } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
-import { useClient } from './useClient.js'
+import { createClient } from './createClient.js'
 
 test('default', () => {
-  const client = useClient({ config })
-  expectTypeOf(client.chain).toEqualTypeOf<typeof config['chains'][number]>()
-  expectTypeOf(client.transport.type).toEqualTypeOf<'http'>()
+  const { data } = createClient(()=>({ config }))
+  expectTypeOf(data.client.chain).toEqualTypeOf<typeof config['chains'][number]>()
+  expectTypeOf(data.client.transport.type).toEqualTypeOf<'http'>()
 })
 
 test('parameters: chainId', () => {
-  const client = useClient({
+  const { data } = createClient(()=>({
     config,
     chainId: chain.mainnet.id,
-  })
-  expectTypeOf(client.chain).toEqualTypeOf<typeof chain.mainnet>()
-  expectTypeOf(client.chain).not.toEqualTypeOf<typeof chain.mainnet2>()
-  expectTypeOf(client.transport.type).toEqualTypeOf<'http'>()
+  }))
+  expectTypeOf(data.client.chain).toEqualTypeOf<typeof chain.mainnet>()
+  expectTypeOf(data.client.chain).not.toEqualTypeOf<typeof chain.mainnet2>()
+  expectTypeOf(data.client.transport.type).toEqualTypeOf<'http'>()
 })
 
 test('behavior: unconfigured chain', () => {
   {
-    const client = useClient({ chainId: 123456 })
-    if (client) {
-      expectTypeOf(client.chain).toEqualTypeOf<Chain>()
-      expectTypeOf(client.transport.type).toEqualTypeOf<string>()
+    const { data } = createClient(()=>({ chainId: 123456 }))
+    if (data.client) {
+      expectTypeOf(data.client.chain).toEqualTypeOf<Chain>()
+      expectTypeOf(data.client.transport.type).toEqualTypeOf<string>()
     } else {
-      expectTypeOf(client).toEqualTypeOf<undefined>()
+      expectTypeOf(data.client).toEqualTypeOf<undefined>()
     }
   }
 
-  const client = useClient({
+  const { data } = createClient(()=>({
     config,
     // @ts-expect-error
     chainId: 123456,
-  })
-  expectTypeOf(client).toEqualTypeOf<undefined>()
+  }))
+  expectTypeOf(data.client).toEqualTypeOf<undefined>()
 })

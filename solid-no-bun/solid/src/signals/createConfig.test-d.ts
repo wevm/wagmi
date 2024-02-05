@@ -2,15 +2,15 @@ import type { Config } from '@wagmi/core'
 import { config } from '@wagmi/test'
 import { expectTypeOf, test } from 'vitest'
 
-import { useConfig } from './useConfig.js'
+import { createConfig } from './createConfig.js'
 
 test('default', async () => {
-  const result = useConfig()
-  expectTypeOf(result).toEqualTypeOf<Config>()
+  const { config } = createConfig()
+  expectTypeOf(config).toEqualTypeOf<Config>()
 })
 
 test('parameters: config', async () => {
-  const result = useConfig({ config })
-  expectTypeOf(result).not.toEqualTypeOf<Config>()
-  expectTypeOf(result).toEqualTypeOf<typeof config>()
+  const { config: _config } = createConfig(()=>({ config }))
+  expectTypeOf(_config).not.toEqualTypeOf<Config>()
+  expectTypeOf(_config).toEqualTypeOf<typeof config>()
 })

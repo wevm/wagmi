@@ -2,14 +2,14 @@ import { type Connector } from '@wagmi/core'
 import { type Address, type Chain } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
-import { useAccount } from './useAccount.js'
+import { createAccount } from './createAccount.js'
 
 test('states', () => {
-  const result = useAccount()
+  const { account } = createAccount()
 
-  switch (result.status) {
+  switch (account.status) {
     case 'reconnecting': {
-      expectTypeOf(result).toMatchTypeOf<{
+      expectTypeOf(account).toMatchTypeOf<{
         address: Address | undefined
         chain: Chain | undefined
         chainId: number | undefined
@@ -23,7 +23,7 @@ test('states', () => {
       break
     }
     case 'connecting': {
-      expectTypeOf(result).toMatchTypeOf<{
+      expectTypeOf(account).toMatchTypeOf<{
         address: Address | undefined
         chain: Chain | undefined
         chainId: number | undefined
@@ -37,7 +37,7 @@ test('states', () => {
       break
     }
     case 'connected': {
-      expectTypeOf(result).toMatchTypeOf<{
+      expectTypeOf(account).toMatchTypeOf<{
         address: Address
         chain: Chain | undefined
         chainId: number
@@ -51,7 +51,7 @@ test('states', () => {
       break
     }
     case 'disconnected': {
-      expectTypeOf(result).toMatchTypeOf<{
+      expectTypeOf(account).toMatchTypeOf<{
         address: undefined
         chain: undefined
         chainId: undefined

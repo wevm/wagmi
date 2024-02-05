@@ -2,22 +2,22 @@ import { type Connector, type DisconnectErrorType } from '@wagmi/core'
 import { config } from '@wagmi/test'
 import { expectTypeOf, test } from 'vitest'
 
-import { useDisconnect } from './useDisconnect.js'
+import { createDisconnect } from './createDisconnect.js'
 
 const connector = config.connectors[0]!
 const contextValue = { foo: 'bar' } as const
 
 test('parameter', () => {
-  expectTypeOf(useDisconnect().disconnect)
+  expectTypeOf(createDisconnect().disconnect)
     .parameter(0)
     .toEqualTypeOf<{ connector?: Connector | undefined } | undefined>()
-  expectTypeOf(useDisconnect().disconnect)
+  expectTypeOf(createDisconnect().disconnect)
     .parameter(0)
     .toEqualTypeOf<{ connector?: Connector | undefined } | undefined>()
 })
 
 test('context', () => {
-  const { context, data, disconnect, error, variables } = useDisconnect({
+  const { disconnect, mutation } = createDisconnect({
     mutation: {
       onMutate(variables) {
         expectTypeOf(variables).toEqualTypeOf<
@@ -50,12 +50,12 @@ test('context', () => {
     },
   })
 
-  expectTypeOf(data).toEqualTypeOf<void | undefined>()
-  expectTypeOf(error).toEqualTypeOf<DisconnectErrorType | null>()
-  expectTypeOf(variables).toEqualTypeOf<
+  expectTypeOf(mutation.data).toEqualTypeOf<void | undefined>()
+  expectTypeOf(mutation.error).toEqualTypeOf<DisconnectErrorType | null>()
+  expectTypeOf(mutation.variables).toEqualTypeOf<
     { connector?: Connector | undefined } | undefined
   >()
-  expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+  expectTypeOf(mutation.context).toEqualTypeOf<typeof contextValue | undefined>()
 
   disconnect(
     { connector },

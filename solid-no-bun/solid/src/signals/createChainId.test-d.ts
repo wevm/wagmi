@@ -1,14 +1,14 @@
 import { config } from '@wagmi/test'
 import { expectTypeOf, test } from 'vitest'
 
-import { useChainId } from './useChainId.js'
+import { createChainId } from './createChainId.js'
 
 test('default', async () => {
-  const chainId = useChainId()
-  expectTypeOf(chainId).toEqualTypeOf<number>()
+  const { chain } = createChainId()
+  expectTypeOf(chain.id).toEqualTypeOf<number>()
 })
 
 test('parameters: config', async () => {
-  const chainId = useChainId({ config })
-  expectTypeOf(chainId).toEqualTypeOf<1 | 456 | 10>()
+  const { chain } = createChainId(()=>({ config }))
+  expectTypeOf(chain.id).toEqualTypeOf<1 | 456 | 10>()
 })

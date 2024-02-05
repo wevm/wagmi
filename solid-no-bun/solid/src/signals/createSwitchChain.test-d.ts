@@ -4,13 +4,13 @@ import { type Evaluate } from '@wagmi/core/internal'
 import { chain } from '@wagmi/test'
 import { expectTypeOf, test } from 'vitest'
 
-import { useSwitchChain } from './useSwitchChain.js'
+import { createSwitchChain } from './createSwitchChain.js'
 
 const chainId = chain.mainnet.id
 const contextValue = { foo: 'bar' } as const
 
 test('context', () => {
-  const { context, data, error, switchChain, variables } = useSwitchChain({
+  const { switchChain, mutation } = createSwitchChain({
     mutation: {
       onMutate(variables) {
         expectTypeOf(variables).toEqualTypeOf<{
@@ -47,12 +47,12 @@ test('context', () => {
     },
   })
 
-  expectTypeOf(data).toEqualTypeOf<Evaluate<Chain> | undefined>()
-  expectTypeOf(error).toEqualTypeOf<SwitchChainErrorType | null>()
-  expectTypeOf(variables).toEqualTypeOf<
+  expectTypeOf(mutation.data).toEqualTypeOf<Evaluate<Chain> | undefined>()
+  expectTypeOf(mutation.error).toEqualTypeOf<SwitchChainErrorType | null>()
+  expectTypeOf(mutation.variables).toEqualTypeOf<
     { chainId: number; connector?: Connector | undefined } | undefined
   >()
-  expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+  expectTypeOf(mutation.context).toEqualTypeOf<typeof contextValue | undefined>()
 
   switchChain(
     { chainId },
