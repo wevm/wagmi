@@ -1,8 +1,8 @@
 import {
   EventType,
-  MetaMaskSDK,
+  type MetaMaskSDK,
   type MetaMaskSDKOptions,
-  SDKProvider,
+  type SDKProvider,
 } from '@metamask/sdk'
 import {
   ChainNotConfiguredError,
@@ -174,6 +174,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
     async getProvider() {
       if (!walletProvider) {
         if (!sdk || !sdk?.isInitialized()) {
+          const { MetaMaskSDK } = await import('@metamask/sdk')
           sdk = new MetaMaskSDK({
             enableDebug: false,
             dappMetadata: { name: 'wagmi' },

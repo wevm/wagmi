@@ -1,6 +1,6 @@
 import {
   type CoinbaseWalletProvider,
-  CoinbaseWalletSDK,
+  type CoinbaseWalletSDK,
 } from '@coinbase/wallet-sdk'
 import {
   ChainNotConfiguredError,
@@ -110,10 +110,12 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
     },
     async getChainId() {
       const provider = await this.getProvider()
-      return normalizeChainId(provider.chainId)
+      const chainId = await provider.request<number>({ method: 'eth_chainId' })
+      return normalizeChainId(chainId)
     },
     async getProvider() {
       if (!walletProvider) {
+        const { CoinbaseWalletSDK } = await import('@coinbase/wallet-sdk')
         sdk = new CoinbaseWalletSDK({ reloadOnDisconnect, ...parameters })
 
         // Mock implementations to retrieve private `walletExtension` method from the Coinbase Wallet SDK.
