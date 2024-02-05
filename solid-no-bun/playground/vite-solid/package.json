@@ -12,7 +12,7 @@
     "@tanstack/solid-query": "5.18.1",
     "buffer": "^6.0.3",
     "solid-js": "^1.8.7",
-    "solid-wagmi": "workspace: *",
+    "@wagmi/solid": "workspace: *",
     "viem": "^2.7.2"
   },
   "devDependencies": {
