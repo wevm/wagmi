@@ -1,4 +1,4 @@
-import { type Chain } from 'viem'
+import { type CallParameters, type Chain } from 'viem'
 import { hexToString } from 'viem'
 import {
   type WaitForTransactionReceiptErrorType as viem_WaitForTransactionReceiptErrorType,
@@ -69,10 +69,13 @@ export async function waitForTransactionReceipt<
       maxFeePerGas: txn.type === 'eip1559' ? txn.maxFeePerGas : undefined,
       maxPriorityFeePerGas:
         txn.type === 'eip1559' ? txn.maxPriorityFeePerGas : undefined,
-    })) as unknown as string
+    } as CallParameters)) as unknown as string
     const reason = hexToString(`0x${code.substring(138)}`)
     throw new Error(reason)
   }
 
-  return { ...receipt, chainId: client.chain.id }
+  return {
+    ...receipt,
+    chainId: client.chain.id,
+  } as WaitForTransactionReceiptReturnType<config, chainId>
 }

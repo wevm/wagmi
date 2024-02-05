@@ -1,4 +1,4 @@
-import { type PublicClient, publicActions } from 'viem'
+import { type Client, type PublicClient, publicActions } from 'viem'
 
 import { type Config } from '../createConfig.js'
 import { type ChainIdParameter } from '../types/properties.js'
@@ -44,7 +44,7 @@ export function getPublicClient<
   config: config,
   parameters: GetPublicClientParameters<config, chainId> = {},
 ): GetPublicClientReturnType<config, chainId> {
-  const client = getClient(config, parameters)
+  const client = getClient(config, parameters) as Client
   return client?.extend(publicActions) as GetPublicClientReturnType<
     config,
     chainId
