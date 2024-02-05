@@ -1,5 +1,18 @@
-describe('<TodoList />', () => {
-  test('it will render an text input and a button', () => {
-    expect(1).toBe(1);
-  })
+import { expect, test } from 'vitest'
+
+import * as codegen from './codegen.js'
+
+test('exports', () => {
+  expect(Object.keys(codegen)).toMatchInlineSnapshot(`
+    [
+      "createSimulateContract",
+      "createReadContract",
+      "createWatchContractEvent",
+      "createWriteContract",
+      "createUseSimulateContract",
+      "createUseReadContract",
+      "createUseWatchContractEvent",
+      "createUseWriteContract",
+    ]
+  `)
 })

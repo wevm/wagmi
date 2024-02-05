@@ -1,5 +1,12 @@
-describe('<TodoList />', () => {
-  test('it will render an text input and a button', () => {
-    expect(1).toBe(1);
-  })
+import { expect, test } from 'vitest'
+
+import { WagmiProviderNotFoundError } from './context.js'
+
+test('WagmiProviderNotFoundError', () => {
+  expect(new WagmiProviderNotFoundError()).toMatchInlineSnapshot(`
+    [WagmiProviderNotFoundError: \`useConfig\` must be used within \`WagmiProvider\`.
+
+    Docs: https://wagmi.sh/reacthttps://wagmi.sh/react/api/WagmiProvider.html
+    Version: wagmi@x.y.z]
+  `)
 })

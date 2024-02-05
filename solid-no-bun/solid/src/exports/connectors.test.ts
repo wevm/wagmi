@@ -1,5 +1,17 @@
-describe('<TodoList />', () => {
-  test('it will render an text input and a button', () => {
-    expect(1).toBe(1);
-  })
+import { expect, test } from 'vitest'
+
+import * as connectors from './connectors.js'
+
+test('exports', () => {
+  expect(Object.keys(connectors)).toMatchInlineSnapshot(`
+    [
+      "injected",
+      "mock",
+      "coinbaseWallet",
+      "metaMask",
+      "safe",
+      "walletConnect",
+      "version",
+    ]
+  `)
 })
