@@ -1,4 +1,4 @@
-import { chain, testClient } from '@wagmi/test'
+import { chain } from '@wagmi/test'
 import { renderHook, waitFor } from '@wagmi/test/react'
 import { expect, test } from 'vitest'
 
@@ -47,8 +47,6 @@ test('default', async () => {
 })
 
 test('parameters: chainId', async () => {
-  await testClient.mainnet2.mine({ blocks: 1 })
-
   const { result } = renderHook(() =>
     useBlockTransactionCount({ chainId: chain.mainnet2.id }),
   )
