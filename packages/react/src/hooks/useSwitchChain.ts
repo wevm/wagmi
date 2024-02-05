@@ -20,6 +20,7 @@ import type {
   UseMutationParameters,
   UseMutationReturnType,
 } from '../utils/query.js'
+import { useChains } from './useChains.js'
 import { useConfig } from './useConfig.js'
 
 export type UseSwitchChainParameters<
@@ -74,7 +75,7 @@ export function useSwitchChain<
   type Return = UseSwitchChainReturnType<config, context>
   return {
     ...result,
-    chains: config.chains,
+    chains: useChains({ config }),
     switchChain: mutate as Return['switchChain'],
     switchChainAsync: mutateAsync as Return['switchChainAsync'],
   }

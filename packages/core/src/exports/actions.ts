@@ -94,6 +94,11 @@ export {
 } from '../actions/getChainId.js'
 
 export {
+  type GetChainsReturnType,
+  getChains,
+} from '../actions/getChains.js'
+
+export {
   type GetClientParameters,
   type GetClientReturnType,
   getClient,
@@ -352,6 +357,12 @@ export {
   type WatchChainIdReturnType,
   watchChainId,
 } from '../actions/watchChainId.js'
+
+export {
+  type WatchChainsParameters,
+  type WatchChainsReturnType,
+  watchChains,
+} from '../actions/watchChains.js'
 
 export {
   type WatchClientParameters,

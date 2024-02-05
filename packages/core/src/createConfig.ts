@@ -346,7 +346,9 @@ export function createConfig<
   }
 
   return {
-    chains: chains.getState() as chains,
+    get chains() {
+      return chains.getState() as chains
+    },
     get connectors() {
       return connectors.getState()
     },
