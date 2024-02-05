@@ -1,4 +1,5 @@
 {
+  "extends": "./tsconfig.build.json",
   "types": ["jest", "@testing-library/jest-dom"],
   "compilerOptions": {
     "useDefineForClassFields": true,
@@ -30,5 +31,5 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true
   },
-  "exclude": ["/dist", "dist/**/*.d.ts", "src/**/*.test.ts", "src/**/*.test.tsx"]
+  "exclude": ["/dist", "dist/**/*.d.ts"]
 }

@@ -9,9 +9,9 @@
     "directory": "packages/solid"
   },
   "scripts": {
-    "build": "npx tsc",
+    "clean": "rm -rf dist",
+    "build": "pnpm run clean && npx tsc",
     "watch": "npx tsc --watch",
-    "upload": "npm run build && npm publish --public",
     "test": "jest"
   },
   "jest": {
@@ -99,15 +99,13 @@
     "@wagmi/core": "2.6.3"
   },
   "devDependencies": {
-    "@tanstack/solid-query": "5.18.1",
-    "solid-js": "1.8.12",
-    "typescript": "^5.2.2",
     "@babel/core": "^7.23.7",
     "@babel/preset-env": "^7.23.8",
     "@babel/preset-typescript": "^7.23.3",
     "@solidjs/testing-library": "^0.8.5",
+    "@tanstack/solid-query": "5.18.1",
     "@testing-library/jest-dom": "^6.2.0",
-    "@types/jest": "^29.5.11",
+    "@types/jest": "^29.5.12",
     "@types/testing-library__jest-dom": "^5.14.9",
     "babel-jest": "^29.7.0",
     "babel-preset-jest": "^29.6.3",
@@ -118,7 +116,9 @@
     "regenerator-runtime": "0.14.1",
     "solid-devtools": "^0.29.2",
     "solid-jest": "^0.2.0",
-    "solid-testing-library": "^0.5.1"
+    "solid-js": "1.8.12",
+    "solid-testing-library": "^0.5.1",
+    "typescript": "^5.2.2"
   },
   "contributors": [
     "awkweb.eth <t@wevm.dev>",
