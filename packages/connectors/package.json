@@ -32,6 +32,22 @@
       "types": "./dist/types/exports/index.d.ts",
       "default": "./dist/esm/exports/index.js"
     },
+    "./coinbaseWallet": {
+      "types": "./dist/types/coinbaseWallet.d.ts",
+      "default": "./dist/esm/coinbaseWallet.js"
+    },
+    "./metaMask": {
+      "types": "./dist/types/metaMask.d.ts",
+      "default": "./dist/esm/metaMask.js"
+    },
+    "./safe": {
+      "types": "./dist/types/safe.d.ts",
+      "default": "./dist/esm/safe.js"
+    },
+    "./walletConnect": {
+      "types": "./dist/types/walletConnect.d.ts",
+      "default": "./dist/esm/walletConnect.js"
+    },
     "./package.json": "./package.json"
   },
   "peerDependencies": {
