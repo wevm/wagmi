@@ -49,17 +49,14 @@
     "@metamask/sdk": "0.14.1",
     "@safe-global/safe-apps-provider": "0.18.1",
     "@safe-global/safe-apps-sdk": "8.1.0",
-    "@walletconnect/ethereum-provider": "2.11.0",
+    "@walletconnect/ethereum-provider": "2.11.1",
     "@walletconnect/modal": "2.6.2"
   },
   "devDependencies": {
     "@wagmi/core": "workspace:*",
     "msw": "^2.0.6"
   },
-  "contributors": [
-    "awkweb.eth <t@wevm.dev>",
-    "jxom.eth <j@wevm.dev>"
-  ],
+  "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
   "funding": "https://github.com/sponsors/wevm",
   "keywords": [
     "react",
