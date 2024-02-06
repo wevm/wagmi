@@ -215,3 +215,73 @@ test('behavior: migrate chainId', async () => {
     }
   `)
 })
+
+test('behavior: properties passed through to Viem Client via getClient', () => {
+  {
+    const properties = {
+      batch: {
+        multicall: {
+          batchSize: 102_400,
+        },
+      },
+      cacheTime: 5_000,
+      pollingInterval: 1_000,
+    }
+
+    const config = createConfig({
+      chains: [mainnet, optimism],
+      transports: {
+        [mainnet.id]: http(),
+        [optimism.id]: http(),
+      },
+      ...properties,
+    })
+
+    const {
+      account: _a,
+      chain: _c,
+      extend: _e,
+      key: _k,
+      name: _n,
+      request: _r,
+      transport: _tr,
+      uid: _u,
+      type: _ty,
+      ...rest
+    } = config.getClient()
+    expect(rest).toEqual(properties)
+  }
+
+  {
+    const config = createConfig({
+      chains: [mainnet, optimism],
+      transports: {
+        [mainnet.id]: http(),
+        [optimism.id]: http(),
+      },
+      batch: {
+        [mainnet.id]: {
+          multicall: {
+            batchSize: 1024,
+          },
+        },
+      },
+    })
+
+    const client = config.getClient()
+    expect(client.batch).toMatchInlineSnapshot(`
+      {
+        "multicall": {
+          "batchSize": 1024,
+        },
+      }
+    `)
+
+    const client2 = config.getClient({ chainId: optimism.id })
+    expect(client2.batch).toMatchInlineSnapshot(`
+      {
+        "multicall": true,
+      }
+    `)
+  }
+})
