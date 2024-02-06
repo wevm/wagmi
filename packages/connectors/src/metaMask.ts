@@ -178,7 +178,6 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           sdk = new MetaMaskSDK({
             enableDebug: false,
             dappMetadata: { name: 'wagmi' },
-            extensionOnly: true,
             modals: {
               // Disable by default since it pops up when mobile tries to reconnect
               otp() {
