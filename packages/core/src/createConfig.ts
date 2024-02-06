@@ -157,7 +157,7 @@ export function createConfig<
           else properties[key] = value
         }
       }
-      console.log('configconfig1234', rest, properties, properties.batch)
+
       client = createClient({
         ...properties,
         chain,
