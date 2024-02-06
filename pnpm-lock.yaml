@@ -199,8 +199,8 @@ importers:
         specifier: 3.9.1
         version: 3.9.1
       '@metamask/sdk':
-        specifier: 0.14.1
-        version: 0.14.1
+        specifier: 0.14.3
+        version: 0.14.3
       '@safe-global/safe-apps-provider':
         specifier: 0.18.1
         version: 0.18.1(typescript@5.3.2)
@@ -2678,8 +2678,8 @@ packages:
     engines: {node: '>=12.0.0'}
     dev: false
 
-  /@metamask/sdk-communication-layer@0.14.1:
-    resolution: {integrity: sha512-K1KhkKMdAAPi079G/bX/cIazqT6qnkRnykrs7nA1sU2BouG7BYD4qPgv7ridc3BNIewnFg9eMzzYIgOgfXzJKw==}
+  /@metamask/sdk-communication-layer@0.14.3:
+    resolution: {integrity: sha512-yjSbj8y7fFbQXv2HBzUX6D9C8BimkCYP6BDV7hdw53W8b/GlYCtXVxUFajQ9tuO1xPTRjR/xt/dkdr2aCi6WGw==}
     dependencies:
       bufferutil: 4.0.8
       cross-fetch: 3.1.5
@@ -2709,8 +2709,8 @@ packages:
       - react-native
     dev: false
 
-  /@metamask/sdk@0.14.1:
-    resolution: {integrity: sha512-52kfvnlyMXRO8/oPGoQOFMevSjgkLzpl8aGG6Ivx/6jiqSv5ScuOg6YdSWXR937Ts0zWE0V8KTUBMfnGGt0S9Q==}
+  /@metamask/sdk@0.14.3:
+    resolution: {integrity: sha512-BYLs//nY2wioVSih78gOQI6sLIYY3vWkwVqXGYUgkBV+bi49bv+9S0m+hZ2cwiRaxfMYtKs0KvhAQ8weiYwDrg==}
     peerDependencies:
       react: ^18.2.0
       react-native: '*'
@@ -2723,7 +2723,7 @@ packages:
       '@metamask/onboarding': 1.0.1
       '@metamask/post-message-stream': 6.2.0
       '@metamask/providers': 10.2.1
-      '@metamask/sdk-communication-layer': 0.14.1
+      '@metamask/sdk-communication-layer': 0.14.3
       '@metamask/sdk-install-modal-web': 0.14.1
       '@react-native-async-storage/async-storage': 1.19.3
       '@types/dom-screen-wake-lock': 1.0.1
