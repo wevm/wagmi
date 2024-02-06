@@ -146,14 +146,18 @@ export function createConfig<
       // Grab all properties off `rest` and resolve for use in `createClient`
       const properties: Partial<viem_ClientConfig> = {}
       const entries = Object.entries(rest) as [keyof typeof rest, any][]
+
       for (const [key, value] of entries) {
         if (key === 'client' || key === 'connectors' || key === 'transports')
           continue
-        else {
+        else if (key === 'batch') {
+          properties[key] = value
+        } else {
           if (typeof value === 'object') properties[key] = value[chainId]
           else properties[key] = value
         }
       }
+      console.log('configconfig1234', rest, properties, properties.batch)
       client = createClient({
         ...properties,
         chain,
