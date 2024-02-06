@@ -1,5 +1,16 @@
 # @wagmi/connectors
 
+## 4.1.13
+
+### Patch Changes
+
+- [#3569](https://github.com/wevm/wagmi/pull/3569) [`fa25b448`](https://github.com/wevm/wagmi/commit/fa25b4482504b4d9729a5687ea6d6dc959265bc0) Thanks [@svenvoskamp](https://github.com/svenvoskamp)! - Updated dependencies.
+
+- [#3558](https://github.com/wevm/wagmi/pull/3558) [`895f28e8`](https://github.com/wevm/wagmi/commit/895f28e873af7c8eda5ca85734ff67c8979fd950) Thanks [@tmm](https://github.com/tmm)! - Fixed connector warnings.
+
+- Updated dependencies [[`7c6618e6`](https://github.com/wevm/wagmi/commit/7c6618e6a0eb1ff39cf8f66b34d3ddc14be538fe), [`895f28e8`](https://github.com/wevm/wagmi/commit/895f28e873af7c8eda5ca85734ff67c8979fd950)]:
+  - @wagmi/core@2.6.4
+
 ## 4.1.12
 
 ### Patch Changes
