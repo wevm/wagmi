@@ -1,5 +1,5 @@
 ---
-'@wagmi/connectors': major
+'@wagmi/connectors': patch
 ---
 
-Update @walletconnect/ethereum-provider
+Updated dependencies.
