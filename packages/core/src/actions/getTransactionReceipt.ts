@@ -49,5 +49,7 @@ export async function getTransactionReceipt<
     viem_getTransactionReceipt,
     'getTransactionReceipt',
   )
-  return action(rest)
+  return action(rest) as unknown as Promise<
+    GetTransactionReceiptReturnType<config, chainId>
+  >
 }

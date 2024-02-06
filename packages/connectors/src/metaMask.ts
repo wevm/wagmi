@@ -176,8 +176,9 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         if (!sdk || !sdk?.isInitialized()) {
           const { MetaMaskSDK } = await import('@metamask/sdk')
           sdk = new MetaMaskSDK({
-            enableAnalytics: false,
             dappMetadata: { name: 'wagmi' },
+            enableAnalytics: false,
+            extensionOnly: true,
             modals: {
               // Disable by default since it pops up when mobile tries to reconnect
               otp() {
@@ -185,7 +186,6 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
                 return { mount: noop, unmount: noop }
               },
             },
-            extensionOnly: true,
             useDeeplink: true,
             _source: 'wagmi',
             ...parameters,
