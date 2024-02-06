@@ -44,8 +44,8 @@ export function getPublicClient<
   config: config,
   parameters: GetPublicClientParameters<config, chainId> = {},
 ): GetPublicClientReturnType<config, chainId> {
-  const client = getClient(config, parameters) as Client
-  return client?.extend(publicActions) as GetPublicClientReturnType<
+  const client = getClient(config, parameters)
+  return (client as Client)?.extend(publicActions) as GetPublicClientReturnType<
     config,
     chainId
   >

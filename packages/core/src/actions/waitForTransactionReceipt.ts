@@ -1,4 +1,4 @@
-import { type CallParameters, type Chain } from 'viem'
+import { type Chain } from 'viem'
 import { hexToString } from 'viem'
 import {
   type WaitForTransactionReceiptErrorType as viem_WaitForTransactionReceiptErrorType,
@@ -64,12 +64,12 @@ export async function waitForTransactionReceipt<
     const txn = await action_getTransaction({ hash: receipt.transactionHash })
     const action_call = getAction(client, call, 'call')
     const code = (await action_call({
-      ...txn,
+      ...(txn as any),
       gasPrice: txn.type !== 'eip1559' ? txn.gasPrice : undefined,
       maxFeePerGas: txn.type === 'eip1559' ? txn.maxFeePerGas : undefined,
       maxPriorityFeePerGas:
         txn.type === 'eip1559' ? txn.maxPriorityFeePerGas : undefined,
-    } as CallParameters)) as unknown as string
+    })) as unknown as string
     const reason = hexToString(`0x${code.substring(138)}`)
     throw new Error(reason)
   }

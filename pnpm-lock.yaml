@@ -100,7 +100,7 @@ importers:
         version: 2.0.0(bufferutil@4.0.8)(typescript@5.3.2)(utf-8-validate@6.0.3)
       vite:
         specifier: ^4.4.9
-        version: 4.4.9(@types/node@20.7.0)
+        version: 4.4.9(@types/node@20.11.5)
       vitepress:
         specifier: 1.0.0-rc.20
         version: 1.0.0-rc.20(@types/react@18.2.23)(react@18.2.0)
@@ -432,7 +432,7 @@ importers:
         version: 6.0.3
       vite:
         specifier: ^4.4.9
-        version: 4.4.9(@types/node@20.7.0)
+        version: 4.4.9(@types/node@20.11.5)
 
   playgrounds/vite-react:
     dependencies:
@@ -478,7 +478,7 @@ importers:
         version: 6.0.3
       vite:
         specifier: ^4.4.9
-        version: 4.4.9(@types/node@20.7.0)
+        version: 4.4.9(@types/node@20.11.5)
 
   playgrounds/vite-ssr-react:
     dependencies:
@@ -4463,7 +4463,7 @@ packages:
       chokidar: 3.5.3
       fast-glob: 3.3.1
       magic-string: 0.30.2
-      vite: 4.4.9(@types/node@20.7.0)
+      vite: 4.4.9(@types/node@20.11.5)
     transitivePeerDependencies:
       - rollup
     dev: true
@@ -4492,7 +4492,7 @@ packages:
       '@babel/plugin-transform-react-jsx-source': 7.22.5(@babel/core@7.23.0)
       '@types/babel__core': 7.20.2
       react-refresh: 0.14.0
-      vite: 4.4.9(@types/node@20.7.0)
+      vite: 4.4.9(@types/node@20.11.5)
     transitivePeerDependencies:
       - supports-color
 
@@ -11752,7 +11752,6 @@ packages:
       rollup: 3.28.0
     optionalDependencies:
       fsevents: 2.3.3
-    dev: true
 
   /vite@4.4.9(@types/node@20.7.0):
     resolution: {integrity: sha512-2mbUn2LlUmNASWwSCNSJ/EG2HuSRTnVNaydp6vMCm5VIqJsjMfbIWtbH2kDuwUVW5mMUKKZvGPX/rqeqVvv1XA==}
@@ -11788,6 +11787,7 @@ packages:
       rollup: 3.28.0
     optionalDependencies:
       fsevents: 2.3.3
+    dev: false
 
   /vitepress-plugin-shiki-twoslash@0.0.6(typescript@5.3.2)(vitepress@1.0.0-rc.20):
     resolution: {integrity: sha512-CjMF01Vb/zwOKKCqq6QmkJbTJnRxipv8oiPjRWTjzH2jPaQH4gGCF2fZHS7uY53J3gbU3GwtrXI02J6axLYmbg==}
@@ -11823,7 +11823,7 @@ packages:
       mark.js: 8.11.1
       minisearch: 6.1.0
       shiki: 0.14.4
-      vite: 4.4.9(@types/node@20.7.0)
+      vite: 4.4.9(@types/node@20.11.5)
       vue: 3.3.4
     transitivePeerDependencies:
       - '@algolia/client-search'
