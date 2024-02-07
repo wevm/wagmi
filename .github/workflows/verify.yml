@@ -16,6 +16,9 @@ jobs:
       - name: Install dependencies
         uses: ./.github/actions/install-dependencies
 
+      - name: Lint repo
+        run: pnpm lint:repo
+
       - name: Lint code
         run: pnpm format && pnpm lint:fix
 
