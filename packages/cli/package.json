@@ -50,16 +50,12 @@
   },
   "typesVersions": {
     "*": {
-      "config": [
-        "./dist/types/exports/config.d.ts"
-      ],
-      "plugins": [
-        "./dist/types/exports/plugins.d.ts"
-      ]
+      "config": ["./dist/types/exports/config.d.ts"],
+      "plugins": ["./dist/types/exports/plugins.d.ts"]
     }
   },
   "peerDependencies": {
-    "typescript": ">=5"
+    "typescript": ">=5.0.4"
   },
   "peerDependenciesMeta": {
     "typescript": {
@@ -76,35 +72,24 @@
     "dotenv": "^16.3.1",
     "dotenv-expand": "^10.0.0",
     "esbuild": "^0.19.0",
-    "execa": "^6.1.0",
+    "execa": "^8.0.1",
     "find-up": "^6.3.0",
-    "fs-extra": "^10.1.0",
+    "fs-extra": "^11.1.1",
     "globby": "^13.2.2",
     "ora": "^6.3.1",
     "pathe": "^1.1.1",
     "picocolors": "^1.0.0",
     "prettier": "^3.0.3",
-    "viem": "2.0.0",
+    "viem": "2.*",
     "zod": "^3.22.2"
   },
   "devDependencies": {
     "@types/dedent": "^0.7.0",
-    "@types/fs-extra": "^9.0.13",
+    "@types/fs-extra": "^11.0.2",
     "fixturez": "^1.1.0",
     "msw": "^2.0.6"
   },
-  "contributors": [
-    "awkweb.eth <t@wevm.dev>",
-    "jxom.eth <j@wevm.dev>"
-  ],
+  "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
   "funding": "https://github.com/sponsors/wevm",
-  "keywords": [
-    "wagmi",
-    "eth",
-    "ethereum",
-    "dapps",
-    "wallet",
-    "web3",
-    "cli"
-  ]
+  "keywords": ["wagmi", "eth", "ethereum", "dapps", "wallet", "web3", "cli"]
 }
