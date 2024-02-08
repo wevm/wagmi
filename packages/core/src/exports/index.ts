@@ -361,12 +361,6 @@ export {
 } from '../actions/watchChainId.js'
 
 export {
-  type WatchChainsParameters,
-  type WatchChainsReturnType,
-  watchChains,
-} from '../actions/watchChains.js'
-
-export {
   type WatchClientParameters,
   type WatchClientReturnType,
   watchClient,

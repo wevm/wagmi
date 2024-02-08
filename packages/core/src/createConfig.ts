@@ -401,12 +401,11 @@ export function createConfig<
       transports: rest.transports as transports,
       chains: {
         setState(value) {
-          return chains.setState(
-            (typeof value === 'function'
-              ? value(chains.getState())
-              : value) as chains,
-            true,
-          )
+          const nextChains = (
+            typeof value === 'function' ? value(chains.getState()) : value
+          ) as chains
+          if (nextChains.length === 0) return
+          return chains.setState(nextChains, true)
         },
         subscribe(listener) {
           return chains.subscribe(listener)
@@ -464,6 +463,10 @@ export type Config<
     chainId?: chainId | chains[number]['id'] | undefined
   }): Client<transports[chainId], Extract<chains[number], { id: chainId }>>
 
+  /**
+   * Not part of versioned API, proceed with caution.
+   * @internal
+   */
   _internal: {
     readonly mipd: MipdStore | undefined
     readonly store: Mutate<StoreApi<any>, [['zustand/persist', any]]>
