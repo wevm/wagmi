@@ -64,7 +64,7 @@ export async function waitForTransactionReceipt<
     const txn = await action_getTransaction({ hash: receipt.transactionHash })
     const action_call = getAction(client, call, 'call')
     const code = (await action_call({
-      ...txn,
+      ...(txn as any),
       gasPrice: txn.type !== 'eip1559' ? txn.gasPrice : undefined,
       maxFeePerGas: txn.type === 'eip1559' ? txn.maxFeePerGas : undefined,
       maxPriorityFeePerGas:
@@ -74,5 +74,8 @@ export async function waitForTransactionReceipt<
     throw new Error(reason)
   }
 
-  return { ...receipt, chainId: client.chain.id }
+  return {
+    ...receipt,
+    chainId: client.chain.id,
+  } as WaitForTransactionReceiptReturnType<config, chainId>
 }

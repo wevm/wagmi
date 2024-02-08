@@ -143,9 +143,11 @@ export function createConfig<
     if (rest.client) client = rest.client({ chain })
     else {
       const chainId = chain.id as chains[number]['id']
+      const chainIds = chains.map((x) => x.id)
       // Grab all properties off `rest` and resolve for use in `createClient`
       const properties: Partial<viem_ClientConfig> = {}
       const entries = Object.entries(rest) as [keyof typeof rest, any][]
+
       for (const [key, value] of entries) {
         if (
           key === 'chains' ||
@@ -155,10 +157,20 @@ export function createConfig<
         )
           continue
         else {
-          if (typeof value === 'object') properties[key] = value[chainId]
-          else properties[key] = value
+          if (typeof value === 'object') {
+            // check if value is chainId-specific since some values can be objects
+            // e.g. { batch: { multicall: { batchSize: 1024 } } }
+            if (chainId in value) properties[key] = value[chainId]
+            else {
+              // check if value is chainId-specific, but does not have value for current chainId
+              const hasChainSpecificValue = chainIds.some((x) => x in value)
+              if (hasChainSpecificValue) continue
+              properties[key] = value
+            }
+          } else properties[key] = value
         }
       }
+
       client = createClient({
         ...properties,
         chain,
