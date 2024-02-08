@@ -143,7 +143,7 @@ export function createConfig<
     if (rest.client) client = rest.client({ chain })
     else {
       const chainId = chain.id as chains[number]['id']
-      const chainIds = chains.map((x) => x.id)
+      const chainIds = chains.getState().map((x) => x.id)
       // Grab all properties off `rest` and resolve for use in `createClient`
       const properties: Partial<viem_ClientConfig> = {}
       const entries = Object.entries(rest) as [keyof typeof rest, any][]
