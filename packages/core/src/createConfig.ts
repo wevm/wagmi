@@ -293,7 +293,8 @@ export function createConfig<
 
   function change(data: EventData<ConnectorEventMap, 'change'>) {
     store.setState((x) => {
-      const connection = x.connections.get(data.uid)!
+      const connection = x.connections.get(data.uid)
+      if (!connection) return x
       return {
         ...x,
         connections: new Map(x.connections).set(data.uid, {
