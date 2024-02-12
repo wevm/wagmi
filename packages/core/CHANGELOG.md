@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.6.5
+
+### Patch Changes
+
+- [#3580](https://github.com/wevm/wagmi/pull/3580) [`c677dcd2`](https://github.com/wevm/wagmi/commit/c677dcd245dccdf69289a3d66dded237b09570a2) Thanks [@tmm](https://github.com/tmm)! - Updated internals.
+
 ## 2.6.4
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @wagmi/connectors
 
+## 4.1.14
+
+### Patch Changes
+
+- [#3591](https://github.com/wevm/wagmi/pull/3591) [`ca5decdb`](https://github.com/wevm/wagmi/commit/ca5decdb712f81e3f5dab933a94b967bca5b6af4) Thanks [@tmm](https://github.com/tmm)! - Fixed Coinbase Wallet import.
+
+- Updated dependencies [[`c677dcd2`](https://github.com/wevm/wagmi/commit/c677dcd245dccdf69289a3d66dded237b09570a2)]:
+  - @wagmi/core@2.6.5
+
 ## 4.1.13
 
 ### Patch Changes
