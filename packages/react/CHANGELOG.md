@@ -1,5 +1,15 @@
 # wagmi
 
+## 2.5.7
+
+### Patch Changes
+
+- [#3580](https://github.com/wevm/wagmi/pull/3580) [`c677dcd2`](https://github.com/wevm/wagmi/commit/c677dcd245dccdf69289a3d66dded237b09570a2) Thanks [@tmm](https://github.com/tmm)! - Made `useSwitchChain().chains` reactive.
+
+- Updated dependencies [[`ca5decdb`](https://github.com/wevm/wagmi/commit/ca5decdb712f81e3f5dab933a94b967bca5b6af4), [`c677dcd2`](https://github.com/wevm/wagmi/commit/c677dcd245dccdf69289a3d66dded237b09570a2)]:
+  - @wagmi/connectors@4.1.14
+  - @wagmi/core@2.6.5
+
 ## 2.5.6
 
 ### Patch Changes

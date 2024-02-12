@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 2.1.1
+
+### Patch Changes
+
+- [#3579](https://github.com/wevm/wagmi/pull/3579) [`a057919c`](https://github.com/wevm/wagmi/commit/a057919ca3942adeed90af2e343403dc5274e84c) Thanks [@FaisalAli19](https://github.com/FaisalAli19)! - Added Optimism Sepolia Etherscan support
+
 ## 2.1.0
 
 ### Minor Changes
