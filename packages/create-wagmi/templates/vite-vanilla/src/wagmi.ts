@@ -1,4 +1,9 @@
-import { coinbaseWallet, injected, walletConnect } from '@wagmi/connectors'
+import {
+  coinbaseWallet,
+  injected,
+  walletConnect,
+  metaMask,
+} from '@wagmi/connectors'
 import { http, createConfig } from '@wagmi/core'
 import { mainnet, sepolia } from '@wagmi/core/chains'
 
@@ -6,6 +11,12 @@ export const config = createConfig({
   chains: [mainnet, sepolia],
   connectors: [
     injected(),
+    metaMask({
+      dappMetadata: {
+        name: 'Create Wagmi',
+      },
+      infuraAPIKey: import.meta.env.VITE_INFURA_API_KEY,
+    }),
     coinbaseWallet({ appName: 'Create Wagmi' }),
     walletConnect({ projectId: import.meta.env.VITE_WC_PROJECT_ID }),
   ],

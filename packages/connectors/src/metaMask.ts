@@ -18,7 +18,6 @@ import {
   RpcError,
   SwitchChainError,
   UserRejectedRequestError,
-  type WalletPermission,
   getAddress,
   numberToHex,
 } from 'viem'
@@ -35,14 +34,11 @@ export type MetaMaskParameters = Evaluate<
   >
 >
 
+let sdk: MetaMaskSDK
+let sdkImport: Promise<typeof import('@metamask/sdk')> | undefined
+
 metaMask.type = 'metaMask' as const
-/**
- * @deprecated
- *
- * __Warning__ This connector has a large file size due to the underlying `@metamask/sdk`. For mobile
- * support, it is recommended to use {@link walletConnect}. For desktop support, you should rely on Multi Injected
- * Provider Discovery (EIP-6963) via the Wagmi {@link Config}.
- */
+
 export function metaMask(parameters: MetaMaskParameters = {}) {
   type Provider = SDKProvider
   type Properties = {
@@ -51,47 +47,40 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
   type StorageItem = { 'metaMaskSDK.disconnected': true }
   type Listener = Parameters<Provider['on']>[1]
 
-  let sdk: MetaMaskSDK
-  let walletProvider: Provider | undefined
-
   return createConnector<Provider, Properties, StorageItem>((config) => ({
     id: 'metaMaskSDK',
     name: 'MetaMask',
     type: metaMask.type,
     async setup() {
-      const provider = await this.getProvider()
-      if (provider)
-        provider.on('connect', this.onConnect.bind(this) as Listener)
+      if (!sdkImport) {
+        // Only load once
+        sdkImport = import('@metamask/sdk') as any
+      }
+
+      const sdkModule = await sdkImport
+      if (!sdkModule) {
+        throw new Error('MetaMask SDK not found')
+      }
+
+      sdk = new sdkModule.MetaMaskSDK({
+        ...parameters,
+        enableAnalytics: true,
+        dappMetadata: { name: 'wagmi' },
+        useDeeplink: false,
+        _source: 'wagmi',
+      })
+      await sdk.init()
+
+      sdk.getProvider().on('connect', this.onConnect.bind(this) as Listener)
     },
-    async connect({ chainId, isReconnecting } = {}) {
+    async connect({ chainId } = {}) {
       const provider = await this.getProvider()
 
       let accounts: readonly Address[] | null = null
-      if (!isReconnecting) {
-        accounts = await this.getAccounts().catch(() => null)
-        const isAuthorized = !!accounts?.length
-        if (isAuthorized)
-          // Attempt to show another prompt for selecting account if already connected
-          try {
-            const permissions = (await provider.request({
-              method: 'wallet_requestPermissions',
-              params: [{ eth_accounts: {} }],
-            })) as WalletPermission[]
-            accounts = (permissions[0]?.caveats?.[0]?.value as string[])?.map(
-              (x) => getAddress(x),
-            )
-          } catch (err) {
-            const error = err as RpcError
-            // Not all injected providers support `wallet_requestPermissions` (e.g. MetaMask iOS).
-            // Only bubble up error if user rejects request
-            if (error.code === UserRejectedRequestError.code)
-              throw new UserRejectedRequestError(error)
-            // Or prompt is already open
-            if (error.code === ResourceUnavailableRpcError.code) throw error
-          }
-      }
 
       try {
+        accounts = (await sdk.connect()) as Address[]
+
         if (!accounts?.length) {
           const requestedAccounts = (await sdk.connect()) as string[]
           accounts = requestedAccounts.map((x) => getAddress(x))
@@ -172,37 +161,13 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       return normalizeChainId(chainId)
     },
     async getProvider() {
-      if (!walletProvider) {
-        if (!sdk || !sdk?.isInitialized()) {
-          const { MetaMaskSDK } = await import('@metamask/sdk')
-          sdk = new MetaMaskSDK({
-            dappMetadata: { name: 'wagmi' },
-            enableAnalytics: false,
-            extensionOnly: true,
-            modals: {
-              // Disable by default since it pops up when mobile tries to reconnect
-              otp() {
-                const noop = () => {}
-                return { mount: noop, unmount: noop }
-              },
-            },
-            useDeeplink: true,
-            _source: 'wagmi',
-            ...parameters,
-            checkInstallationImmediately: false,
-            checkInstallationOnAllCalls: false,
-          })
-          await sdk.init()
-        }
-        try {
-          walletProvider = sdk.getProvider()
-        } catch (error) {
-          // TODO: SDK sometimes throws errors when MM extension or mobile provider is not detected (don't throw for those errors)
-          const regex = /^SDK state invalid -- undefined( mobile)? provider$/
-          if (!regex.test((error as Error).message)) throw error
-        }
+      if (!sdk) {
+        throw new Error(
+          'MetaMask SDK provider is not available. Ensure the MetaMask SDK is initialized and connected.',
+        )
       }
-      return walletProvider!
+
+      return sdk.getProvider()!
     },
     async isAuthorized() {
       try {
