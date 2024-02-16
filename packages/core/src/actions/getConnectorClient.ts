@@ -7,7 +7,7 @@ import {
   custom,
 } from 'viem'
 
-import { parseAccount } from 'viem/utils'
+import { getAddress, parseAccount } from 'viem/utils'
 import type { Config, Connection } from '../createConfig.js'
 import type { ErrorType } from '../errors/base.js'
 import {
@@ -88,6 +88,8 @@ export async function getConnectorClient<
   const provider = (await connection.connector.getProvider({ chainId })) as {
     request(...args: any): Promise<any>
   }
+
+  account.address = getAddress(account.address)
 
   // if account was provided, check that it exists on the connector
   if (parameters.account && !connection.accounts.includes(account.address))
