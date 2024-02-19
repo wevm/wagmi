@@ -189,7 +189,7 @@ export function clientToSigner(client: Client<Transport, Chain, Account>) {
 }
 
 /** Action to convert a Viem Client to an ethers.js Signer. */
-export async function getEthersSigner(
+export function getEthersSigner(
   config: Config,
   { chainId }: { chainId?: number } = {},
 ) {
@@ -216,7 +216,7 @@ export function clientToSigner(client: Client<Transport, Chain, Account>) {
 }
 
 /** Action to convert a viem Wallet Client to an ethers.js Signer. */
-export async function getEthersSigner(
+export function getEthersSigner(
   config: Config,
   { chainId }: { chainId?: number } = {},
 ) {
@@ -262,7 +262,7 @@ export function clientToSigner(client: Client<Transport, Chain, Account>) {
 }
 
 /** Action to convert a Viem Client to an ethers.js Signer. */
-export async function getEthersSigner(
+export function getEthersSigner(
   config: Config,
   { chainId }: { chainId?: number } = {},
 ) {
@@ -289,7 +289,7 @@ export function clientToSigner(client: Client<Transport, Chain, Account>) {
 }
 
 /** Action to convert a viem Wallet Client to an ethers.js Signer. */
-export async function getEthersSigner(
+export function getEthersSigner(
   config: Config,
   { chainId }: { chainId?: number } = {},
 ) {
