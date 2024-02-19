@@ -63,9 +63,9 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       }
 
       sdk = new sdkModule.MetaMaskSDK({
+        dappMetadata: { name: 'wagmi' }, // Must be set and overwritten via parameters
         ...parameters,
         enableAnalytics: true,
-        dappMetadata: { name: 'wagmi' },
         useDeeplink: false,
         _source: 'wagmi',
       })
