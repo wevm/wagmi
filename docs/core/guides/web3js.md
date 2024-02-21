@@ -4,8 +4,7 @@
 
 ### Reference Implementation
 
-Copy the following reference implementation into a file of your choice:
-
+This snippet will help you to convert a `Viem` client to a `web3.js` instance for signing transactions and interacting with the blockchain:
 
 ```ts
 import {Web3} from 'web3'
