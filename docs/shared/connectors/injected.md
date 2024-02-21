@@ -69,7 +69,7 @@ const connector = injected({
       id: 'windowProvider', // [!code focus]
       name: 'Window Provider', // [!code focus]
       provider: window.ethereum, // [!code focus]
-    }; // [!code focus]
+    } // [!code focus]
   }, // [!code focus]
 })
 ```
