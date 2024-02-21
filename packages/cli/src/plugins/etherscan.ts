@@ -6,6 +6,7 @@ const apiUrls = {
   // Ethereum
   [1]: 'https://api.etherscan.io/api',
   [5]: 'https://api-goerli.etherscan.io/api',
+  [17000]: 'https://api-holesky.etherscan.io/api',
   [11155111]: 'https://api-sepolia.etherscan.io/api',
   // Optimism
   [10]: 'https://api-optimistic.etherscan.io/api',
