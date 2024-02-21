@@ -45,6 +45,7 @@
     }
   },
   "dependencies": {
+    "@blocto/sdk": "^0.9.1",
     "@coinbase/wallet-sdk": "3.9.1",
     "@metamask/sdk": "0.14.3",
     "@safe-global/safe-apps-provider": "0.18.1",
