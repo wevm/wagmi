@@ -82,6 +82,10 @@ export function getSidebar() {
             link: '/react/api/connectors',
             items: [
               {
+                text: 'blocto',
+                link: '/react/api/connectors/blocto',
+              },
+              {
                 text: 'coinbaseWallet',
                 link: '/react/api/connectors/coinbaseWallet',
               },
@@ -404,6 +408,10 @@ export function getSidebar() {
             collapsed: true,
             link: '/core/api/connectors',
             items: [
+              {
+                text: 'blocto',
+                link: '/core/api/connectors/blocto',
+              },
               {
                 text: 'coinbaseWallet',
                 link: '/core/api/connectors/coinbaseWallet',
