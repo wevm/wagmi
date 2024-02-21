@@ -19,4 +19,6 @@ export {
   walletConnect,
 } from '../walletConnect.js'
 
+export { type BloctoParameters, blocto } from '../blocto.js'
+
 export { version } from '../version.js'
