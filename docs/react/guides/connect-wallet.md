@@ -32,7 +32,7 @@ Let's create a `config.ts` file and export a `config` object.
 ```tsx [config.ts]
 import { http, createConfig } from 'wagmi'
 import { base, mainnet, optimism } from 'wagmi/chains'
-import { injected, metaMask, safe, walletConnect } from 'wagmi/connectors'
+import { injected, metaMask, safe, walletConnect, blocto } from 'wagmi/connectors'
 
 const projectId = '<WALLETCONNECT_PROJECT_ID>'
 
@@ -43,6 +43,7 @@ export const config = createConfig({
     walletConnect({ projectId }),
     metaMask(),
     safe(),
+    blocto(),
   ],
   transports: {
     [mainnet.id]: http(),
@@ -93,7 +94,7 @@ function App() {
 ```tsx [config.ts]
 import { http, createConfig } from 'wagmi'
 import { base, mainnet, optimism } from 'wagmi/chains'
-import { injected, metaMask, safe, walletConnect } from 'wagmi/connectors'
+import { injected, metaMask, safe, walletConnect, blocto } from 'wagmi/connectors'
 
 const projectId = '<WALLETCONNECT_PROJECT_ID>'
 
@@ -104,6 +105,7 @@ export const config = createConfig({
     walletConnect({ projectId }),
     metaMask(),
     safe(),
+    blocto(),
   ],
   transports: {
     [mainnet.id]: http(),
@@ -161,7 +163,7 @@ function App() {
 ```tsx [config.ts]
 import { http, createConfig } from 'wagmi'
 import { base, mainnet, optimism } from 'wagmi/chains'
-import { injected, metaMask, safe, walletConnect } from 'wagmi/connectors'
+import { injected, metaMask, safe, walletConnect, blocto } from 'wagmi/connectors'
 
 const projectId = '<WALLETCONNECT_PROJECT_ID>'
 
@@ -172,6 +174,7 @@ export const config = createConfig({
     walletConnect({ projectId }),
     metaMask(),
     safe(),
+    blocto(),
   ],
   transports: {
     [mainnet.id]: http(),
@@ -275,7 +278,7 @@ function App() {
 ```tsx [config.ts]
 import { http, createConfig } from 'wagmi'
 import { base, mainnet, optimism } from 'wagmi/chains'
-import { injected, metaMask, safe, walletConnect } from 'wagmi/connectors'
+import { injected, metaMask, safe, walletConnect, blocto } from 'wagmi/connectors'
 
 const projectId = '<WALLETCONNECT_PROJECT_ID>'
 
@@ -286,6 +289,7 @@ export const config = createConfig({
     walletConnect({ projectId }),
     metaMask(),
     safe(),
+    blocto(),
   ],
   transports: {
     [mainnet.id]: http(),
@@ -390,7 +394,7 @@ function WalletOption({
 ```tsx [config.ts]
 import { http, createConfig } from 'wagmi'
 import { base, mainnet, optimism } from 'wagmi/chains'
-import { injected, metaMask, safe, walletConnect } from 'wagmi/connectors'
+import { injected, metaMask, safe, walletConnect, blocto } from 'wagmi/connectors'
 
 const projectId = '<WALLETCONNECT_PROJECT_ID>'
 
@@ -401,6 +405,7 @@ export const config = createConfig({
     walletConnect({ projectId }),
     metaMask(),
     safe(),
+    blocto(),
   ],
   transports: {
     [mainnet.id]: http(),
