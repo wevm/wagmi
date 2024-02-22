@@ -172,6 +172,9 @@ export function createUseWriteContract<
             const variables = {
               ...(args[0] as any),
               address: chainId ? config.address?.[chainId] : undefined,
+              ...(config.functionName
+                ? { functionName: config.functionName }
+                : {}),
               abi: config.abi,
             }
             result.writeContract(variables, args[1] as any)
@@ -196,6 +199,9 @@ export function createUseWriteContract<
             const variables = {
               ...(args[0] as any),
               address: chainId ? config.address?.[chainId] : undefined,
+              ...(config.functionName
+                ? { functionName: config.functionName }
+                : {}),
               abi: config.abi,
             }
             return result.writeContractAsync(variables, args[1] as any)
