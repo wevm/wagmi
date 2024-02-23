@@ -63,7 +63,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       }
 
       if (!parameters || !parameters.dappMetadata) {
-        throw new Error("dappMetadata is required and must be provided.");
+        throw new Error('dappMetadata is required and must be provided.')
       }
 
       sdk = new sdkModule.MetaMaskSDK({
