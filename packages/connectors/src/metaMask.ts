@@ -69,7 +69,6 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       sdk = new sdkModule.MetaMaskSDK({
         ...parameters,
         dappMetadata: parameters.dappMetadata,
-        enableAnalytics: true,
         useDeeplink: false,
         _source: 'wagmi',
       })
