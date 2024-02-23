@@ -62,6 +62,10 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         throw new Error('MetaMask SDK not found')
       }
 
+      if(!parameters.dappMetadata?.name) {
+        throw new Error('MetaMask SDK dappMetadata.name is required')
+      }
+
       sdk = new sdkModule.MetaMaskSDK({
         dappMetadata: { name: 'TO_OVERWRITE' }, // Must be set and overwritten via parameters
         ...parameters,
