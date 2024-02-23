@@ -5,7 +5,7 @@ Get up and running quickly with [Wagmi](https://wagmi.sh) by using the `create-w
 ## Installation
 
 ```bash
-npm init wagmi
+npm create wagmi
 # or
 pnpm create wagmi
 # or

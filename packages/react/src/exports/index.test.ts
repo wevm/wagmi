@@ -20,6 +20,7 @@ test('exports', () => {
       "useBytecode",
       "useCall",
       "useChainId",
+      "useChains",
       "useClient",
       "useConfig",
       "useConnect",

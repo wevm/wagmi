@@ -132,6 +132,7 @@ import { useQueryClient } from '@tanstack/react-query' // [!code ++]
 import { useEffect } from 'react' // [!code ++]
 import { useBlockNumber, useBalance } from 'wagmi' // [!code ++]
 
+const queryClient = useQueryClient() // [!code ++]
 const { data: blockNumber } = useBlockNumber({ watch: true }) // [!code ++]
 const { data: balance, queryKey } = useBalance({ // [!code ++]
   address: '0x4557B18E779944BFE9d78A672452331C186a9f48',

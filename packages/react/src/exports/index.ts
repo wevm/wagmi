@@ -81,6 +81,12 @@ export {
 } from '../hooks/useChainId.js'
 
 export {
+  type UseChainsParameters,
+  type UseChainsReturnType,
+  useChains,
+} from '../hooks/useChains.js'
+
+export {
   type UseClientParameters,
   type UseClientReturnType,
   useClient,

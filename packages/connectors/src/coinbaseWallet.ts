@@ -1,6 +1,6 @@
 import {
   type CoinbaseWalletProvider,
-  CoinbaseWalletSDK,
+  type CoinbaseWalletSDK,
 } from '@coinbase/wallet-sdk'
 import {
   ChainNotConfiguredError,
@@ -16,6 +16,7 @@ import {
   numberToHex,
 } from 'viem'
 
+// TODO(@3): Set `enableMobileWalletLink` to `true`
 export type CoinbaseWalletParameters = Evaluate<
   Mutable<
     Omit<
@@ -109,23 +110,29 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
     },
     async getChainId() {
       const provider = await this.getProvider()
-      return normalizeChainId(provider.chainId)
+      const chainId = await provider.request<number>({ method: 'eth_chainId' })
+      return normalizeChainId(chainId)
     },
     async getProvider() {
       if (!walletProvider) {
-        sdk = new CoinbaseWalletSDK({ reloadOnDisconnect, ...parameters })
+        const { default: CoinbaseWalletSDK } = await import(
+          '@coinbase/wallet-sdk'
+        )
+        let SDK: typeof CoinbaseWalletSDK.default
+        if (
+          typeof CoinbaseWalletSDK !== 'function' &&
+          typeof CoinbaseWalletSDK.default === 'function'
+        )
+          SDK = CoinbaseWalletSDK.default
+        else
+          SDK = CoinbaseWalletSDK as unknown as typeof CoinbaseWalletSDK.default
+        sdk = new SDK({ reloadOnDisconnect, ...parameters })
 
-        // Mock implementations to retrieve private `walletExtension` method from the Coinbase Wallet SDK.
-        abstract class WalletProvider {
-          // https://github.com/coinbase/coinbase-wallet-sdk/blob/b4cca90022ffeb46b7bbaaab9389a33133fe0844/packages/wallet-sdk/src/provider/CoinbaseWalletProvider.ts#L927-L936
-          abstract getChainId(): number
-        }
-        abstract class SDK {
-          // https://github.com/coinbase/coinbase-wallet-sdk/blob/b4cca90022ffeb46b7bbaaab9389a33133fe0844/packages/wallet-sdk/src/CoinbaseWalletSDK.ts#L233-L235
-          abstract get walletExtension(): WalletProvider | undefined
-        }
+        // Force types to retrieve private `walletExtension` method from the Coinbase Wallet SDK.
         const walletExtensionChainId = (
-          sdk as unknown as SDK
+          sdk as unknown as {
+            get walletExtension(): { getChainId(): number } | undefined
+          }
         ).walletExtension?.getChainId()
 
         const chain =

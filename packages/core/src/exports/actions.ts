@@ -94,6 +94,11 @@ export {
 } from '../actions/getChainId.js'
 
 export {
+  type GetChainsReturnType,
+  getChains,
+} from '../actions/getChains.js'
+
+export {
   type GetClientParameters,
   type GetClientReturnType,
   getClient,

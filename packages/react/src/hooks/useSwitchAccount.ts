@@ -75,7 +75,9 @@ export function useSwitchAccount<
 
   return {
     ...result,
-    connectors: useConnections().map((connection) => connection.connector),
+    connectors: useConnections({ config }).map(
+      (connection) => connection.connector,
+    ),
     switchAccount: mutate,
     switchAccountAsync: mutateAsync,
   }

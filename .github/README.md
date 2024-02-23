@@ -28,8 +28,8 @@
   </a>
   <a href="https://www.npmjs.com/package/wagmi">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/dm/wagmi?colorA=21262d&colorB=21262d">
-      <img src="https://img.shields.io/npm/dm/wagmi?colorA=f6f8fa&colorB=f6f8fa" alt="Downloads per month">
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/dm/@wagmi/core?colorA=21262d&colorB=21262d">
+      <img src="https://img.shields.io/npm/dm/@wagmi/core?colorA=f6f8fa&colorB=f6f8fa" alt="Downloads per month">
     </picture>
   </a>
   <a href="https://bestofjs.org/projects/wagmi">

@@ -20,7 +20,7 @@ pnpm create wagmi
 ```
 
 ```bash [npm]
-npm init wagmi
+npm create wagmi@latest
 ```
 
 ```bash [yarn]

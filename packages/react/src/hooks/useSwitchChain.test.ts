@@ -39,3 +39,76 @@ test('default', async () => {
 
   await disconnect(config, { connector })
 })
+
+test('behavior: chains updates', () => {
+  const { result, rerender } = renderHook(() => useSwitchChain())
+
+  const chains = result.current.chains
+  expect(
+    result.current.chains.map(({ id, name }) => ({
+      id,
+      name,
+    })),
+  ).toMatchInlineSnapshot(`
+    [
+      {
+        "id": 1,
+        "name": "Ethereum",
+      },
+      {
+        "id": 456,
+        "name": "Ethereum",
+      },
+      {
+        "id": 10,
+        "name": "OP Mainnet",
+      },
+    ]
+  `)
+
+  config._internal.chains.setState([chain.mainnet, chain.mainnet2])
+  rerender()
+
+  expect(
+    result.current.chains.map(({ id, name }) => ({
+      id,
+      name,
+    })),
+  ).toMatchInlineSnapshot(`
+    [
+      {
+        "id": 1,
+        "name": "Ethereum",
+      },
+      {
+        "id": 456,
+        "name": "Ethereum",
+      },
+    ]
+  `)
+
+  config._internal.chains.setState(chains)
+  rerender()
+
+  expect(
+    result.current.chains.map(({ id, name }) => ({
+      id,
+      name,
+    })),
+  ).toMatchInlineSnapshot(`
+    [
+      {
+        "id": 1,
+        "name": "Ethereum",
+      },
+      {
+        "id": 456,
+        "name": "Ethereum",
+      },
+      {
+        "id": 10,
+        "name": "OP Mainnet",
+      },
+    ]
+  `)
+})

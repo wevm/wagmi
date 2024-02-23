@@ -63,7 +63,6 @@ export function createConfig<
   parameters: CreateConfigParameters<chains, transports>,
 ): Config<chains, transports> {
   const {
-    chains,
     multiInjectedProviderDiscovery = true,
     storage = createStorage({
       storage:
@@ -85,6 +84,7 @@ export function createConfig<
       ? createMipd()
       : undefined
 
+  const chains = createStore(() => rest.chains)
   const connectors = createStore(() =>
     [
       ...(rest.connectors ?? []),
@@ -97,7 +97,7 @@ export function createConfig<
     // Set up emitter with uid and add to connector so they are "linked" together.
     const emitter = createEmitter<ConnectorEventMap>(uid())
     const connector = {
-      ...connectorFn({ emitter, chains, storage }),
+      ...connectorFn({ emitter, chains: chains.getState(), storage }),
       emitter,
       uid: emitter.uid,
     }
@@ -120,7 +120,7 @@ export function createConfig<
     config: { chainId?: chainId | chains[number]['id'] | undefined } = {},
   ): Client<Transport, Extract<chains[number], { id: chainId }>> {
     const chainId = config.chainId ?? store.getState().chainId
-    const chain = chains.find((x) => x.id === chainId)
+    const chain = chains.getState().find((x) => x.id === chainId)
 
     // chainId specified and not configured
     if (config.chainId && !chain) throw new ChainNotConfiguredError()
@@ -143,17 +143,34 @@ export function createConfig<
     if (rest.client) client = rest.client({ chain })
     else {
       const chainId = chain.id as chains[number]['id']
+      const chainIds = chains.getState().map((x) => x.id)
       // Grab all properties off `rest` and resolve for use in `createClient`
       const properties: Partial<viem_ClientConfig> = {}
       const entries = Object.entries(rest) as [keyof typeof rest, any][]
+
       for (const [key, value] of entries) {
-        if (key === 'client' || key === 'connectors' || key === 'transports')
+        if (
+          key === 'chains' ||
+          key === 'client' ||
+          key === 'connectors' ||
+          key === 'transports'
+        )
           continue
         else {
-          if (typeof value === 'object') properties[key] = value[chainId]
-          else properties[key] = value
+          if (typeof value === 'object') {
+            // check if value is chainId-specific since some values can be objects
+            // e.g. { batch: { multicall: { batchSize: 1024 } } }
+            if (chainId in value) properties[key] = value[chainId]
+            else {
+              // check if value is chainId-specific, but does not have value for current chainId
+              const hasChainSpecificValue = chainIds.some((x) => x in value)
+              if (hasChainSpecificValue) continue
+              properties[key] = value
+            }
+          } else properties[key] = value
         }
       }
+
       client = createClient({
         ...properties,
         chain,
@@ -171,11 +188,13 @@ export function createConfig<
   // Create store
   /////////////////////////////////////////////////////////////////////////////////////////////////
 
-  const initialState: State = {
-    chainId: chains[0].id,
-    connections: new Map(),
-    current: undefined,
-    status: 'disconnected',
+  function getInitialState() {
+    return {
+      chainId: chains.getState()[0].id,
+      connections: new Map(),
+      current: undefined,
+      status: 'disconnected',
+    } satisfies State
   }
 
   let currentVersion: number
@@ -188,10 +207,11 @@ export function createConfig<
     subscribeWithSelector(
       // only use persist middleware if storage exists
       storage
-        ? persist(() => initialState, {
+        ? persist(getInitialState, {
             migrate(persistedState, version) {
               if (version === currentVersion) return persistedState as State
 
+              const initialState = getInitialState()
               const chainId =
                 persistedState &&
                 typeof persistedState === 'object' &&
@@ -223,7 +243,7 @@ export function createConfig<
             storage: storage as Storage<Record<string, unknown>>,
             version: currentVersion,
           })
-        : () => initialState,
+        : getInitialState,
     ),
   )
 
@@ -238,7 +258,9 @@ export function createConfig<
         current ? connections.get(current)?.chainId : undefined,
       (chainId) => {
         // If chain is not configured, then don't switch over to it.
-        const isChainConfigured = chains.some((x) => x.id === chainId)
+        const isChainConfigured = chains
+          .getState()
+          .some((x) => x.id === chainId)
         if (!isChainConfigured) return
 
         return store.setState((x) => ({
@@ -271,7 +293,8 @@ export function createConfig<
 
   function change(data: EventData<ConnectorEventMap, 'change'>) {
     store.setState((x) => {
-      const connection = x.connections.get(data.uid)!
+      const connection = x.connections.get(data.uid)
+      if (!connection) return x
       return {
         ...x,
         connections: new Map(x.connections).set(data.uid, {
@@ -336,7 +359,9 @@ export function createConfig<
   }
 
   return {
-    chains: chains as chains,
+    get chains() {
+      return chains.getState() as chains
+    },
     get connectors() {
       return connectors.getState()
     },
@@ -352,6 +377,7 @@ export function createConfig<
       else newState = value
 
       // Reset state if it got set to something not matching the base state
+      const initialState = getInitialState()
       if (typeof newState !== 'object') newState = initialState
       const isCorrupt = Object.keys(initialState).some((x) => !(x in newState))
       if (isCorrupt) newState = initialState
@@ -374,15 +400,30 @@ export function createConfig<
       ssr: Boolean(ssr),
       syncConnectedChain,
       transports: rest.transports as transports,
+      chains: {
+        setState(value) {
+          const nextChains = (
+            typeof value === 'function' ? value(chains.getState()) : value
+          ) as chains
+          if (nextChains.length === 0) return
+          return chains.setState(nextChains, true)
+        },
+        subscribe(listener) {
+          return chains.subscribe(listener)
+        },
+      },
       connectors: {
         providerDetailToConnector,
         setup,
-        setState: (value) =>
-          connectors.setState(
+        setState(value) {
+          return connectors.setState(
             typeof value === 'function' ? value(connectors.getState()) : value,
             true,
-          ),
-        subscribe: (listener) => connectors.subscribe(listener),
+          )
+        },
+        subscribe(listener) {
+          return connectors.subscribe(listener)
+        },
       },
       events: { change, connect, disconnect },
     },
@@ -423,6 +464,10 @@ export type Config<
     chainId?: chainId | chains[number]['id'] | undefined
   }): Client<transports[chainId], Extract<chains[number], { id: chainId }>>
 
+  /**
+   * Not part of versioned API, proceed with caution.
+   * @internal
+   */
   _internal: {
     readonly mipd: MipdStore | undefined
     readonly store: Mutate<StoreApi<any>, [['zustand/persist', any]]>
@@ -430,6 +475,21 @@ export type Config<
     readonly syncConnectedChain: boolean
     readonly transports: transports
 
+    chains: {
+      setState(
+        value:
+          | readonly [Chain, ...Chain[]]
+          | ((
+              state: readonly [Chain, ...Chain[]],
+            ) => readonly [Chain, ...Chain[]]),
+      ): void
+      subscribe(
+        listener: (
+          state: readonly [Chain, ...Chain[]],
+          prevState: readonly [Chain, ...Chain[]],
+        ) => void,
+      ): () => void
+    }
     connectors: {
       providerDetailToConnector(
         providerDetail: EIP6963ProviderDetail,
@@ -437,10 +497,7 @@ export type Config<
       setup(connectorFn: CreateConnectorFn): Connector
       setState(value: Connector[] | ((state: Connector[]) => Connector[])): void
       subscribe(
-        listener: (
-          state: readonly Connector[],
-          prevState: readonly Connector[],
-        ) => void,
+        listener: (state: Connector[], prevState: Connector[]) => void,
       ): () => void
     }
     events: {

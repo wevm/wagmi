@@ -162,6 +162,7 @@ export function getSidebar() {
           },
           { text: 'useCall', link: '/react/api/hooks/useCall' },
           { text: 'useChainId', link: '/react/api/hooks/useChainId' },
+          { text: 'useChains', link: '/react/api/hooks/useChains' },
           { text: 'useClient', link: '/react/api/hooks/useClient' },
           { text: 'useConfig', link: '/react/api/hooks/useConfig' },
           { text: 'useConnect', link: '/react/api/hooks/useConnect' },
@@ -493,6 +494,7 @@ export function getSidebar() {
             link: '/core/api/actions/getBytecode',
           },
           { text: 'getChainId', link: '/core/api/actions/getChainId' },
+          { text: 'getChains', link: '/core/api/actions/getChains' },
           {
             text: 'getClient',
             link: '/core/api/actions/getClient',

@@ -62,7 +62,7 @@ export async function getBlock<
   const action = getAction(client, viem_getBlock, 'getBlock')
   const block = await action(rest)
   return {
-    ...(block as GetBlockReturnType<
+    ...(block as unknown as GetBlockReturnType<
       includeTransactions,
       blockTag,
       config,

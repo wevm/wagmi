@@ -82,7 +82,7 @@ The URL of the communication server to use for the SDK.
 - Metadata about the dapp using the SDK.
 - Defaults to `{ name: 'wagmi' }`.
 
-### enableDebug
+### enableAnalytics
 
 `boolean | undefined`
 

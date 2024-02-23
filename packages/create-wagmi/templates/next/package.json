@@ -18,8 +18,8 @@
   },
   "devDependencies": {
     "@types/node": "^20.7.2",
-    "@types/react": "^18.2.22",
-    "@types/react-dom": "^18.2.7",
+    "@types/react": "^18.2.23",
+    "@types/react-dom": "^18.2.8",
     "@wagmi/cli": "latest",
     "bufferutil": "^4.0.7",
     "encoding": "^0.1.13",

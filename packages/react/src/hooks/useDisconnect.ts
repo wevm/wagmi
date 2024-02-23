@@ -61,7 +61,9 @@ export function useDisconnect<context = unknown>(
 
   return {
     ...result,
-    connectors: useConnections().map((connection) => connection.connector),
+    connectors: useConnections({ config }).map(
+      (connection) => connection.connector,
+    ),
     disconnect: mutate,
     disconnectAsync: mutateAsync,
   }

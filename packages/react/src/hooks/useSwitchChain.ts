@@ -1,12 +1,13 @@
 'use client'
 
 import { useMutation } from '@tanstack/react-query'
-import type {
-  Config,
-  ResolvedRegister,
-  SwitchChainErrorType,
+import {
+  type Config,
+  type GetChainsReturnType,
+  type ResolvedRegister,
+  type SwitchChainErrorType,
 } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import { type Evaluate } from '@wagmi/core/internal'
 import {
   type SwitchChainData,
   type SwitchChainMutate,
@@ -15,11 +16,12 @@ import {
   switchChainMutationOptions,
 } from '@wagmi/core/query'
 
-import type { ConfigParameter } from '../types/properties.js'
-import type {
-  UseMutationParameters,
-  UseMutationReturnType,
+import { type ConfigParameter } from '../types/properties.js'
+import {
+  type UseMutationParameters,
+  type UseMutationReturnType,
 } from '../utils/query.js'
+import { useChains } from './useChains.js'
 import { useConfig } from './useConfig.js'
 
 export type UseSwitchChainParameters<
@@ -48,7 +50,7 @@ export type UseSwitchChainReturnType<
     SwitchChainVariables<config, config['chains'][number]['id']>,
     context
   > & {
-    chains: config['chains']
+    chains: Evaluate<GetChainsReturnType<config>>
     switchChain: SwitchChainMutate<config, context>
     switchChainAsync: SwitchChainMutateAsync<config, context>
   }
@@ -74,7 +76,7 @@ export function useSwitchChain<
   type Return = UseSwitchChainReturnType<config, context>
   return {
     ...result,
-    chains: config.chains,
+    chains: useChains({ config }),
     switchChain: mutate as Return['switchChain'],
     switchChainAsync: mutateAsync as Return['switchChainAsync'],
   }

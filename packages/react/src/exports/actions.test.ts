@@ -20,6 +20,7 @@ test('exports', () => {
       "getBlockTransactionCount",
       "getBytecode",
       "getChainId",
+      "getChains",
       "getClient",
       "getConnections",
       "getConnectors",

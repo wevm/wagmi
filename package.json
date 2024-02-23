@@ -17,6 +17,7 @@
     "format": "biome format . --write",
     "lint": "biome check .",
     "lint:fix": "pnpm lint --apply",
+    "lint:repo": "sherif",
     "lint:unused": "pnpm clean && knip --ignore-internal",
     "postinstall": "pnpm preconstruct",
     "preconstruct": "bun .scripts/preconstruct.ts",
@@ -48,6 +49,7 @@
     "knip": "^2.29.0",
     "publint": "^0.2.2",
     "rimraf": "^4.4.1",
+    "sherif": "^0.8.1",
     "simple-git-hooks": "^2.9.0",
     "typescript": "5.3.2",
     "viem": "2.0.0",
@@ -69,8 +71,15 @@
     "pre-commit": "pnpm format && pnpm lint:fix"
   },
   "knip": {
-    "ignore": ["**/*.test-d.ts", "**/templates/**", "**/hardhat.config.js"],
-    "ignoreBinaries": ["only-allow", "open"],
+    "ignore": [
+      "**/*.test-d.ts",
+      "**/templates/**",
+      "**/hardhat.config.js"
+    ],
+    "ignoreBinaries": [
+      "only-allow",
+      "open"
+    ],
     "ignoreWorkspaces": [
       "docs",
       "packages/register-tests/**",
@@ -90,11 +99,15 @@
       },
       "packages/connectors": {
         "entry": "src/exports/index.ts!",
-        "ignoreDependencies": ["@walletconnect/modal"]
+        "ignoreDependencies": [
+          "@walletconnect/modal"
+        ]
       },
       "packages/core": {
         "entry": "src/exports/{actions,chains,codegen,index,internal,query}.ts!",
-        "ignoreDependencies": ["@tanstack/query-core"]
+        "ignoreDependencies": [
+          "@tanstack/query-core"
+        ]
       },
       "packages/create-wagmi": {
         "entry": "src/cli.ts!"
