@@ -25,12 +25,15 @@ test('UseReadContractsParameters', () => {
         {
           abi?: typeof abi.erc20 | undefined
           functionName?:
+            | 'approve'
             | 'symbol'
             | 'name'
             | 'allowance'
             | 'balanceOf'
             | 'decimals'
             | 'totalSupply'
+            | 'transfer'
+            | 'transferFrom'
             | undefined
           address?: Address | undefined
           args?: readonly [Address] | undefined
