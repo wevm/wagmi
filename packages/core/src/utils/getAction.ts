@@ -27,12 +27,16 @@ export function getAction<
 >(
   client: client,
   actionFn: (_: any, parameters: parameters) => returnType,
-  // Some minifiers drop `Function.prototype.name`, meaning that `action.name`
-  // will not work. For that case, the consumer needs to pass the name explicitly.
+  // Some minifiers drop `Function.prototype.name`, or replace it with short letters,
+  // meaning that `actionFn.name` will not always work. For that case, the consumer
+  // needs to pass the name explicitly.
   name: keyof PublicActions | keyof WalletActions,
 ): (parameters: parameters) => returnType {
-  const action = client[actionFn.name ?? name]
-  if (typeof action === 'function')
-    return action as (params: parameters) => returnType
+  const fnAction = client[actionFn.name]
+  if (typeof fnAction === 'function')
+    return fnAction as (params: parameters) => returnType
+  const nameAction = client[name]
+  if (typeof nameAction === 'function')
+    return nameAction as (params: parameters) => returnType
   return (params) => actionFn(client, params)
 }
