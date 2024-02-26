@@ -35,7 +35,7 @@ const apiUrls = {
   [44787]: 'https://api-alfajores.celoscan.io/api',
   // Fraxtal
   [252]: 'https://api.fraxscan.com/api',
-  [2522]: 'https://api-holesky.fraxscan.com/api'
+  [2522]: 'https://api-holesky.fraxscan.com/api',
 }
 type ChainId = keyof typeof apiUrls
 
@@ -53,7 +53,7 @@ export type EtherscanConfig<chainId extends number> = {
    * - [__Heco Chain__](https://hecoinfo.com/myapikey)
    * - [__Optimism__](https://optimistic.etherscan.io/myapikey)
    * - [__Polygon__](https://polygonscan.com/myapikey)
-   * - [__Fraxtal__](https://frascan.com/myapikey)
+   * - [__Fraxtal__](https://fraxscan.com/myapikey)
    */
   apiKey: string
   /**
