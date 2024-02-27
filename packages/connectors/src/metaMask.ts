@@ -34,9 +34,6 @@ export type MetaMaskParameters = Evaluate<
   >
 >
 
-let sdk: MetaMaskSDK
-let sdkImport: Promise<typeof import('@metamask/sdk')> | undefined
-
 metaMask.type = 'metaMask' as const
 
 export function metaMask(parameters: MetaMaskParameters = {}) {
@@ -46,6 +43,9 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
   }
   type StorageItem = { 'metaMaskSDK.disconnected': true }
   type Listener = Parameters<Provider['on']>[1]
+
+  let sdk: MetaMaskSDK
+  let sdkImport: Promise<typeof import('@metamask/sdk')> | undefined
 
   return createConnector<Provider, Properties, StorageItem>((config) => ({
     id: 'metaMaskSDK',
@@ -74,8 +74,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           config.chains.map((chain) => [
             chain.id,
             chain.rpcUrls.default.http[0]!,
-          ]),
-        ),
+          ])),
       })
       await sdk.init()
 
