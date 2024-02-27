@@ -443,6 +443,7 @@ export {
   type CreateConfigParameters,
   type State,
   createConfig,
+  type Transport
 } from '../createConfig.js'
 
 ////////////////////////////////////////////////////////////////////////////////
