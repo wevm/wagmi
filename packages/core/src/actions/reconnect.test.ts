@@ -68,3 +68,11 @@ test("behavior: doesn't reconnect if already reconnecting", async () => {
   ).resolves.toStrictEqual([])
   config.setState((x) => ({ ...x, status: previousStatus }))
 })
+
+test("behaviour: doesn't overwrite connected status", async () => {
+  config.setState((x) => ({ ...x, status: 'connected' }))
+  await expect(
+    reconnect(config, { connectors: [connector] }),
+  ).resolves.toStrictEqual([])
+  expect(config.state.status).toEqual('connected')
+})
