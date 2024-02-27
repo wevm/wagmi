@@ -70,6 +70,12 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         ...parameters,
         dappMetadata: parameters.dappMetadata,
         _source: 'wagmi',
+        readonlyRPCMap: Object.fromEntries(
+          config.chains.map((chain) => [
+            chain.id,
+            chain.rpcUrls.default.http[0]!,
+          ]),
+        ),
       })
       await sdk.init()
 

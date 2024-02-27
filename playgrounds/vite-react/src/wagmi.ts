@@ -23,7 +23,6 @@ export const config = createConfig({
       dappMetadata: {
         name: 'Wagmi - Vite React Playground',
       },
-      infuraAPIKey: import.meta.env.VITE_INFURA_API_KEY,
     }),
     walletConnect({
       projectId: import.meta.env.VITE_WC_PROJECT_ID,

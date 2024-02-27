@@ -9,7 +9,6 @@ export const config = createConfig({
       dappMetadata: {
         name: 'Wagmi - Vite Core React Playground',
       },
-      infuraAPIKey: import.meta.env.VITE_INFURA_API_KEY,
     }),
     walletConnect({ projectId: import.meta.env.VITE_WC_PROJECT_ID }),
     coinbaseWallet({ appName: 'Vite React Playground' }),

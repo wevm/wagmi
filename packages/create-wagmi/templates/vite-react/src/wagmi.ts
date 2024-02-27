@@ -15,7 +15,6 @@ export const config = createConfig({
       dappMetadata: {
         name: 'Create Wagmi',
       },
-      infuraAPIKey: import.meta.env.VITE_INFURA_API_KEY,
     }),
     coinbaseWallet({ appName: 'Create Wagmi' }),
     walletConnect({ projectId: import.meta.env.VITE_WC_PROJECT_ID }),
