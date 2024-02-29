@@ -250,7 +250,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           try {
             const { default: blockExplorer, ...blockExplorers } =
               chain.blockExplorers ?? {}
-            let blockExplorerUrls: string[] = []
+            let blockExplorerUrls
             if (blockExplorer)
               blockExplorerUrls = [
                 blockExplorer.url,
