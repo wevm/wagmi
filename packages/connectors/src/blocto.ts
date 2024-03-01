@@ -28,7 +28,6 @@ export function blocto({ appId }: BloctoParameters = {}) {
   type Properties = {}
   type StorageItem = {
     store: any
-    'wagmi.recentConnectorId': string
   }
 
   let walletProvider: BloctoProvider | undefined
@@ -101,13 +100,12 @@ export function blocto({ appId }: BloctoParameters = {}) {
       return Promise.resolve(walletProvider)
     },
     async isAuthorized() {
-      const recentConnectorId = await config.storage?.getItem(
-        'recentConnectorId',
-      )
-      if (recentConnectorId !== this.id) return false
-
-      const accounts = await this.getAccounts()
-      return !!accounts.length
+      try {
+        const accounts = await this.getAccounts()
+        return !!accounts.length
+      } catch {
+        return false
+      }
     },
     async switchChain({ chainId }) {
       try {
