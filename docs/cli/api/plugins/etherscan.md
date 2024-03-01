@@ -34,7 +34,7 @@ The following Etherscan block explorers and their testnets are supported (e.g. E
 
 - [Ethereum](https://etherscan.io)
 - [Arbiscan](https://arbiscan.io)
-- [Snowtrace](https://snowtrace.io)
+- [SnowScan](https://snowscan.xyz)
 - [BscScan](https://bscscan.com)
 - [FTMScan](https://ftmscan.com)
 - [HecoScan](https://hecoinfo.com)
