@@ -20,6 +20,7 @@ export default withTwoslash(
             'react, ethereum, typescript, react, react hooks, open source',
         },
       ],
+      ['link', { rel: 'icon', href: '/favicon.svg' }],
       ['meta', { name: 'theme-color', content: '#646cff' }],
       // Open Graph
       ['meta', { property: 'og:type', content: 'website' }],
