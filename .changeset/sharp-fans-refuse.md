@@ -2,4 +2,4 @@
 "@wagmi/cli": patch
 ---
 
-build: fraxtal etherscan apiUrls
+Added Fraxtal to Etherscan plugin
