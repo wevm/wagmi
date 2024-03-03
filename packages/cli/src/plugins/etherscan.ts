@@ -18,6 +18,7 @@ const apiUrls = {
   // Arbitrum
   [42_161]: 'https://api.arbiscan.io/api',
   [421_613]: 'https://api-goerli.arbiscan.io/api',
+  [421_614]: 'https://api-sepolia.arbiscan.io/api',
   // BNB Smart Chain
   [56]: 'https://api.bscscan.com/api',
   [97]: 'https://api-testnet.bscscan.com/api',
