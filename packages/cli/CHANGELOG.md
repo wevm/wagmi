@@ -1,5 +1,15 @@
 # @wagmi/cli
 
+## 2.1.2
+
+### Patch Changes
+
+- [#3641](https://github.com/wevm/wagmi/pull/3641) [`0a866403`](https://github.com/wevm/wagmi/commit/0a866403182ea6b8ba7f976c45be294e48fb7de8) Thanks [@cmwhited](https://github.com/cmwhited)! - Added Arbitrum Sepolia testnet to Etherscan plugin
+
+- [#3633](https://github.com/wevm/wagmi/pull/3633) [`a1d3d1ab`](https://github.com/wevm/wagmi/commit/a1d3d1ab2b023c61c0dbb5d7bf867a9fca673630) Thanks [@pegahcarter](https://github.com/pegahcarter)! - Added Fraxtal to Etherscan plugin
+
+- [#3616](https://github.com/wevm/wagmi/pull/3616) [`2a9f4473`](https://github.com/wevm/wagmi/commit/2a9f4473adc5bcdddf388389387ed5459583769e) Thanks [@petermazzocco](https://github.com/petermazzocco)! - Added Holesky Testnet to Etherscan Plugin
+
 ## 2.1.1
 
 ### Patch Changes
