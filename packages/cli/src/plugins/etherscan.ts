@@ -18,6 +18,7 @@ const apiUrls = {
   // Arbitrum
   [42_161]: 'https://api.arbiscan.io/api',
   [421_613]: 'https://api-goerli.arbiscan.io/api',
+  [421_614]: 'https://api-sepolia.arbiscan.io/api',
   // BNB Smart Chain
   [56]: 'https://api.bscscan.com/api',
   [97]: 'https://api-testnet.bscscan.com/api',
@@ -33,6 +34,9 @@ const apiUrls = {
   // Celo
   [42220]: 'https://api.celoscan.io/api',
   [44787]: 'https://api-alfajores.celoscan.io/api',
+  // Fraxtal
+  [252]: 'https://api.fraxscan.com/api',
+  [2522]: 'https://api-holesky.fraxscan.com/api',
 }
 type ChainId = keyof typeof apiUrls
 
@@ -50,6 +54,7 @@ export type EtherscanConfig<chainId extends number> = {
    * - [__Heco Chain__](https://hecoinfo.com/myapikey)
    * - [__Optimism__](https://optimistic.etherscan.io/myapikey)
    * - [__Polygon__](https://polygonscan.com/myapikey)
+   * - [__Fraxtal__](https://fraxscan.com/myapikey)
    */
   apiKey: string
   /**
