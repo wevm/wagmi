@@ -1,5 +1,4 @@
 ---
-"docs": patch
 "@wagmi/cli": patch
 ---
 
