@@ -2,4 +2,4 @@
 "@wagmi/cli": patch
 ---
 
-Replace SnowTrace with SnowScan an Etherscan product.
+Replaced SnowTrace with SnowScan for the Etherscan plugin
