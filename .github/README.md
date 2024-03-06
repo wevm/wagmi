@@ -194,6 +194,12 @@ If you find Wagmi useful or use it for work, please consider [sponsoring Wagmi](
       <img alt="zksync logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/zksync-light.svg" width="auto" height="50">
     </picture>
   </a>
+  <a href="https://blocto.app/">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/blocto-dark.svg">
+      <img alt="blocto logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/blocto-light.svg" width="auto" height="50">
+    </picture>
+  </a>
 </p>
 
 [Sponsor Wagmi](https://github.com/sponsors/wevm?metadata_campaign=gh_readme_support_bottom)

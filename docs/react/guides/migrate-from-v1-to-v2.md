@@ -518,7 +518,8 @@ function App() {
     <WagmiConfig config={config}> // [!code --]
     <WagmiProvider config={config}> // [!code ++]
       {/** ... */}
-    </WagmiProvider>
+    </WagmiProvider> // [!code ++]
+    </WagmiConfig> // [!code --]
   )
 }
 ```

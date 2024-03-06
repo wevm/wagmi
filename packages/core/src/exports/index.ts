@@ -442,6 +442,7 @@ export {
   type Config,
   type CreateConfigParameters,
   type State,
+  type Transport,
   createConfig,
 } from '../createConfig.js'
 

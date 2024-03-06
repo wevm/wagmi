@@ -133,6 +133,11 @@ export function useSponsors() {
           url: 'https://twitter.com/supafinance',
           img: 'supa-light.svg',
         },
+        {
+          name: 'Blocto',
+          url: 'https://blocto.io',
+          img: 'blocto-light.svg',
+        },
       ],
     }
 
