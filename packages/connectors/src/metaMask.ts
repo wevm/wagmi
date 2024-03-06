@@ -74,7 +74,8 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           config.chains.map((chain) => [
             chain.id,
             chain.rpcUrls.default.http[0]!,
-          ])),
+          ]),
+        ),
       })
       await sdk.init()
 
