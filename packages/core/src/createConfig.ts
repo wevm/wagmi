@@ -358,6 +358,21 @@ export function createConfig<
     })
   }
 
+  function filterDuplicatedConnectors(values: Connector[]) {
+    const seenValue = new Set()
+
+    const filteredDuplicatedConnectors = values.filter((connector) => {
+      if (seenValue.has(connector.id)) {
+        return false
+      }
+
+      seenValue.add(connector.id)
+      return true
+    })
+
+    return filteredDuplicatedConnectors
+  }
+
   return {
     get chains() {
       return chains.getState() as chains
@@ -416,10 +431,13 @@ export function createConfig<
         providerDetailToConnector,
         setup,
         setState(value) {
-          return connectors.setState(
-            typeof value === 'function' ? value(connectors.getState()) : value,
-            true,
-          )
+          const values =
+            typeof value === 'function' ? value(connectors.getState()) : value
+
+          const filteredDuplicatedConnectors =
+            filterDuplicatedConnectors(values)
+
+          connectors.setState(filteredDuplicatedConnectors, true)
         },
         subscribe(listener) {
           return connectors.subscribe(listener)
