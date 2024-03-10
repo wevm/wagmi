@@ -394,10 +394,10 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools"; // [!code h
 import { hashFn } from "@wagmi/core/query"; // [!code hl]
 
 const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
+  defaultOptions: { // [!code hl]
+    queries: { // [!code hl]
       queryKeyHashFn: hashFn, // [!code hl]
-    },
-  },
+    }, // [!code hl]
+  }, // [!code hl]
 });
 ```
