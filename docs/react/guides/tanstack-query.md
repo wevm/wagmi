@@ -361,7 +361,7 @@ It is possible to utilize TanStack Query's SSR strategies with Wagmi Hooks & Que
 
 ## Devtools
 
-TanStack Query includes dedicated [Devtools](https://tanstack.com/query/latest/docs/framework/react/devtools) that assist in visualizing and debugging your queries, their cache states, and much more. However, by default, the Devtools code cannot correctly serialize BigInt values in queryKeys for display. To address this, you can provide a custom `queryKeyHashFn` when creating a `QueryClient` instance to serialize BigInt values. Alternatively, you can use the `hashFn` from `@wagmi/core/query`, which already handles this serialization.
+TanStack Query includes dedicated [Devtools](https://tanstack.com/query/latest/docs/framework/react/devtools) that assist in visualizing and debugging your queries, their cache states, and much more. You will have to pass a custom `queryKeyFn` to your `QueryClient` for Devtools to correctly serialize BigInt values for display. Alternatively, You can use the `hashFn` from `@wagmi/core/query`, which already handles this serialization.
 
 #### Install
 
