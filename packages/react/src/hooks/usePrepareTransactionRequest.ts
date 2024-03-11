@@ -12,8 +12,9 @@ import {
   prepareTransactionRequestQueryOptions,
 } from '@wagmi/core/query'
 import type { PrepareTransactionRequestQueryFnData } from '@wagmi/core/query'
-import { type PrepareTransactionRequestParameterType as viem_PrepareTransactionRequestParameterType } from 'viem'
+import { type PrepareTransactionRequestRequest as viem_PrepareTransactionRequestRequest } from 'viem'
 
+import type { SelectChains } from '../../../core/src/types/chain.js'
 import {
   type ConfigParameter,
   type QueryParameter,
@@ -23,43 +24,61 @@ import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
 export type UsePrepareTransactionRequestParameters<
-  parameterType extends viem_PrepareTransactionRequestParameterType = viem_PrepareTransactionRequestParameterType,
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] | undefined = undefined,
-  selectData = PrepareTransactionRequestData<parameterType, config, chainId>,
-> = PrepareTransactionRequestOptions<parameterType, config, chainId> &
+  request extends viem_PrepareTransactionRequestRequest<
+    SelectChains<config, chainId>[0],
+    SelectChains<config, chainId>[0]
+  > = viem_PrepareTransactionRequestRequest<
+    SelectChains<config, chainId>[0],
+    SelectChains<config, chainId>[0]
+  >,
+  selectData = PrepareTransactionRequestData<config, chainId, request>,
+> = PrepareTransactionRequestOptions<config, chainId, request> &
   ConfigParameter<config> &
   QueryParameter<
-    PrepareTransactionRequestQueryFnData<parameterType, config, chainId>,
+    PrepareTransactionRequestQueryFnData<config, chainId, request>,
     PrepareTransactionRequestErrorType,
     selectData,
-    PrepareTransactionRequestQueryKey<parameterType, config, chainId>
+    PrepareTransactionRequestQueryKey<config, chainId, request>
   >
 
 export type UsePrepareTransactionRequestReturnType<
-  parameterType extends viem_PrepareTransactionRequestParameterType = viem_PrepareTransactionRequestParameterType,
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] | undefined = undefined,
-  selectData = PrepareTransactionRequestData<parameterType, config, chainId>,
+  request extends viem_PrepareTransactionRequestRequest<
+    SelectChains<config, chainId>[0],
+    SelectChains<config, chainId>[0]
+  > = viem_PrepareTransactionRequestRequest<
+    SelectChains<config, chainId>[0],
+    SelectChains<config, chainId>[0]
+  >,
+  selectData = PrepareTransactionRequestData<config, chainId, request>,
 > = UseQueryReturnType<selectData, PrepareTransactionRequestErrorType>
 
 /** https://wagmi.sh/react/api/hooks/usePrepareTransactionRequest */
 export function usePrepareTransactionRequest<
-  parameterType extends viem_PrepareTransactionRequestParameterType,
   config extends Config = ResolvedRegister['config'],
   chainId extends config['chains'][number]['id'] | undefined = undefined,
-  selectData = PrepareTransactionRequestData<parameterType, config, chainId>,
+  request extends viem_PrepareTransactionRequestRequest<
+    SelectChains<config, chainId>[0],
+    SelectChains<config, chainId>[0]
+  > = viem_PrepareTransactionRequestRequest<
+    SelectChains<config, chainId>[0],
+    SelectChains<config, chainId>[0]
+  >,
+  selectData = PrepareTransactionRequestData<config, chainId, request>,
 >(
   parameters: UsePrepareTransactionRequestParameters<
-    parameterType,
     config,
     chainId,
+    request,
     selectData
   > = {} as any,
 ): UsePrepareTransactionRequestReturnType<
-  parameterType,
   config,
   chainId,
+  request,
   selectData
 > {
   const { to, query = {} } = parameters
@@ -70,7 +89,7 @@ export function usePrepareTransactionRequest<
   const options = prepareTransactionRequestQueryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
-  })
+  } as PrepareTransactionRequestOptions<config, chainId, request>)
   const enabled = Boolean(to && (query.enabled ?? true))
 
   return useQuery({
@@ -78,9 +97,9 @@ export function usePrepareTransactionRequest<
     ...options,
     enabled,
   }) as UsePrepareTransactionRequestReturnType<
-    parameterType,
     config,
     chainId,
+    request,
     selectData
   >
 }
