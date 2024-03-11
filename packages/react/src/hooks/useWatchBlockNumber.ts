@@ -39,7 +39,9 @@ export function useWatchBlockNumber<
 
   const chainId = parameters.chainId ?? configChainId
 
-  const watchBlockNumberParameters =
+  const watchBlockNumberParameters:
+    | WatchBlockNumberParameters<config, chainId>
+    | undefined =
     enabled && onBlockNumber
       ? {
           onBlockNumber,
@@ -48,7 +50,9 @@ export function useWatchBlockNumber<
         }
       : undefined
 
-  const watchBlockNumberParametersRef = useRef(watchBlockNumberParameters)
+  const watchBlockNumberParametersRef = useRef<
+    WatchBlockNumberParameters<config, chainId> | undefined
+  >()
   const subscription = useRef<WatchBlockNumberReturnType | undefined>(undefined)
 
   useEffect(() => {
@@ -58,11 +62,7 @@ export function useWatchBlockNumber<
       watchBlockNumberParameters,
     )
 
-    if (
-      (!parametersEqual || !subscription.current) &&
-      enabled &&
-      watchBlockNumberParameters
-    ) {
+    if (!parametersEqual && enabled && watchBlockNumberParameters) {
       watchBlockNumberParametersRef.current = watchBlockNumberParameters
 
       subscription.current = watchBlockNumber(
