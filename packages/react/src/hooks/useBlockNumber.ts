@@ -18,7 +18,7 @@ import {
   type GetBlockNumberQueryKey,
   getBlockNumberQueryOptions,
 } from '@wagmi/core/query'
-
+import { useRef } from 'react'
 import type { ConfigParameter, QueryParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
@@ -76,6 +76,11 @@ export function useBlockNumber<
     chainId,
   })
 
+  // memoize this function for deepEqual fn.constructor comparison to work
+  const onBlockNumber = useRef((blockNumber: bigint) => {
+    queryClient.setQueryData(options.queryKey, blockNumber)
+  })
+
   useWatchBlockNumber({
     ...({
       config: parameters.config,
@@ -86,9 +91,7 @@ export function useBlockNumber<
       (query.enabled ?? true) &&
         (typeof watch === 'object' ? watch.enabled : watch),
     ),
-    onBlockNumber(blockNumber) {
-      queryClient.setQueryData(options.queryKey, blockNumber)
-    },
+    onBlockNumber: onBlockNumber.current,
   })
 
   return useQuery({ ...query, ...options })

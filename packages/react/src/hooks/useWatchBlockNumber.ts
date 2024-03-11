@@ -4,11 +4,12 @@ import {
   type Config,
   type ResolvedRegister,
   type WatchBlockNumberParameters,
+  deepEqual,
   watchBlockNumber,
 } from '@wagmi/core'
 import { type UnionEvaluate, type UnionPartial } from '@wagmi/core/internal'
-import { useEffect } from 'react'
-
+import { useEffect, useRef } from 'react'
+import type { WatchBlockNumberReturnType } from 'viem'
 import type { ConfigParameter, EnabledParameter } from '../types/properties.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
@@ -35,15 +36,51 @@ export function useWatchBlockNumber<
 
   const config = useConfig(parameters)
   const configChainId = useChainId()
+
   const chainId = parameters.chainId ?? configChainId
 
+  const watchBlockNumberParameters =
+    enabled && onBlockNumber
+      ? {
+          onBlockNumber,
+          chainId,
+          ...(rest as any),
+        }
+      : undefined
+
+  const watchBlockNumberParametersRef = useRef(watchBlockNumberParameters)
+  const subscription = useRef<WatchBlockNumberReturnType | undefined>(undefined)
+
   useEffect(() => {
-    if (!enabled) return
-    if (!onBlockNumber) return
-    return watchBlockNumber(config, {
-      ...(rest as any),
-      chainId,
-      onBlockNumber,
-    })
-  }, [chainId, config, enabled, onBlockNumber, rest])
+    // Check for deep equality as useEffect doesn't do it by default
+    const parametersEqual = deepEqual(
+      watchBlockNumberParametersRef.current,
+      watchBlockNumberParameters,
+    )
+
+    if (
+      (!parametersEqual || !subscription.current) &&
+      enabled &&
+      watchBlockNumberParameters
+    ) {
+      watchBlockNumberParametersRef.current = watchBlockNumberParameters
+
+      subscription.current = watchBlockNumber(
+        config,
+        watchBlockNumberParametersRef.current,
+      )
+    }
+  }, [
+    enabled,
+    config,
+    watchBlockNumberParameters,
+    watchBlockNumberParametersRef,
+  ])
+
+  useEffect(() => {
+    return () => {
+      subscription.current?.()
+      subscription.current = undefined
+    }
+  }, [])
 }
