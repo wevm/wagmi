@@ -4,12 +4,13 @@ import {
   type Config,
   type ResolvedRegister,
   type WatchBlockNumberParameters,
+  type WatchBlockNumberReturnType,
   deepEqual,
   watchBlockNumber,
 } from '@wagmi/core'
 import { type UnionEvaluate, type UnionPartial } from '@wagmi/core/internal'
 import { useEffect, useRef } from 'react'
-import type { WatchBlockNumberReturnType } from 'viem'
+
 import type { ConfigParameter, EnabledParameter } from '../types/properties.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
@@ -36,51 +37,42 @@ export function useWatchBlockNumber<
 
   const config = useConfig(parameters)
   const configChainId = useChainId()
-
   const chainId = parameters.chainId ?? configChainId
 
-  const watchBlockNumberParameters:
-    | WatchBlockNumberParameters<config, chainId>
-    | undefined =
-    enabled && onBlockNumber
-      ? {
-          onBlockNumber,
-          chainId,
-          ...(rest as any),
-        }
-      : undefined
-
-  const watchBlockNumberParametersRef = useRef<
-    WatchBlockNumberParameters<config, chainId> | undefined
-  >()
   const subscription = useRef<WatchBlockNumberReturnType | undefined>(undefined)
+  const watchBlockNumberParametersRef = useRef()
+  const watchBlockNumberParameters = {
+    ...(rest as any),
+    chainId,
+    onBlockNumber,
+  } as const
+
+  // compare previous params with new params using deep equality as useEffect doesn't do it by default
+  const parametersEqual = deepEqual(
+    watchBlockNumberParametersRef.current,
+    watchBlockNumberParameters,
+  )
 
   useEffect(() => {
-    // Check for deep equality as useEffect doesn't do it by default
-    const parametersEqual = deepEqual(
-      watchBlockNumberParametersRef.current,
-      watchBlockNumberParameters,
-    )
-
-    if (!parametersEqual && enabled && watchBlockNumberParameters) {
+    if (
+      !parametersEqual &&
+      enabled &&
+      watchBlockNumberParameters.onBlockNumber
+    ) {
       watchBlockNumberParametersRef.current = watchBlockNumberParameters
-
       subscription.current = watchBlockNumber(
         config,
-        watchBlockNumberParametersRef.current,
+        watchBlockNumberParameters,
       )
     }
-  }, [
-    enabled,
-    config,
-    watchBlockNumberParameters,
-    watchBlockNumberParametersRef,
-  ])
+    return undefined
+  }, [config, enabled, parametersEqual, watchBlockNumberParameters])
 
+  // Unsubscribe when the component unmounts and reset refs
   useEffect(() => {
     return () => {
+      watchBlockNumberParametersRef.current = undefined
       subscription.current?.()
-      subscription.current = undefined
     }
   }, [])
 }
