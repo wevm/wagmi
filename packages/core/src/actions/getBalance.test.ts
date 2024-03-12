@@ -70,9 +70,9 @@ describe('getBalance', () => {
     ).resolves.toMatchInlineSnapshot(`
       {
         "decimals": 18,
-        "formatted": "3989.559062564299199392",
+        "formatted": "0.559062564299199392",
         "symbol": "DAI",
-        "value": 3989559062564299199392n,
+        "value": 559062564299199392n,
       }
     `)
   })
