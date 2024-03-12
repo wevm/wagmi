@@ -72,7 +72,7 @@ function App() {
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
-For more information on setting up TanStack Query for Wagmi, follow the [Getting Started docs](/react/getting-started#setup-tanstack-query). If you want to set up persistance for your query cache (default behavior before Wagmi v2), check out the [TanStack Query docs](https://tanstack.com/query/v5/docs/react/plugins/persistQueryClient#usage-with-react).
+For more information on setting up TanStack Query for Wagmi, follow the [Getting Started docs](/react/getting-started#setup-tanstack-query). If you want to set up persistence for your query cache (default behavior before Wagmi v2), check out the [TanStack Query docs](https://tanstack.com/query/v5/docs/react/plugins/persistQueryClient#usage-with-react).
 
 ### Dropped CommonJS support
 

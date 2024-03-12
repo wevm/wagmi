@@ -20,7 +20,7 @@ The most important thing to hook up Wagmi Core with your framework is to make su
 
 ## TanStack Query
 
-Wagmi uses [TanStack Query](https://tanstack.com/query) to enable caching, deduplication, persistance, and more in React applications. Normally, you would need to find a similar library for your framework, but the good news is TanStack Query supports other frameworks! (Vue, Svelte, and Solid at the time of writing.)
+Wagmi uses [TanStack Query](https://tanstack.com/query) to enable caching, deduplication, persistence, and more in React applications. Normally, you would need to find a similar library for your framework, but the good news is TanStack Query supports other frameworks! (Vue, Svelte, and Solid at the time of writing.)
 
 To get started with your framework, install and set up the related TanStack Query adapter. Next, import query keys/functions and mutation functions from the `'@wagmi/core/query'` entrypoint. You can plug these directly into your framework's TanStack Query adapter functions.
 
