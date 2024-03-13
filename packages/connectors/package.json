@@ -46,7 +46,7 @@
   },
   "dependencies": {
     "@coinbase/wallet-sdk": "3.9.1",
-    "@metamask/sdk": "0.16.0",
+    "@metamask/sdk": "0.17.1",
     "@safe-global/safe-apps-provider": "0.18.1",
     "@safe-global/safe-apps-sdk": "8.1.0",
     "@walletconnect/ethereum-provider": "2.11.1",
