@@ -79,7 +79,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       })
       await sdk.init()
 
-      sdk.getProvider().on('connect', this.onConnect.bind(this) as Listener)
+      sdk?.getProvider()?.on('connect', this.onConnect.bind(this) as Listener)
     },
     async connect({ chainId } = {}) {
       const provider = await this.getProvider()
@@ -165,7 +165,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
     async getChainId() {
       const provider = await this.getProvider()
       const chainId =
-        provider.chainId ?? (await provider?.request({ method: 'eth_chainId' }))
+        provider.getChainId() ?? (await provider?.request({ method: 'eth_chainId' }))
       return normalizeChainId(chainId)
     },
     async getProvider() {
