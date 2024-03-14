@@ -13,7 +13,7 @@ test('mounts', async () => {
 
   expect(result.current).toMatchInlineSnapshot(`
     {
-      "data": 18677381n,
+      "data": 19258213n,
       "dataUpdatedAt": 1675209600000,
       "error": null,
       "errorUpdateCount": 0,
@@ -54,7 +54,7 @@ test('parameters: watch', async () => {
 
   await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
   const blockNumber = result.current.data!
-  expect(result.current.data).toMatchInlineSnapshot('18677381n')
+  expect(result.current.data).toMatchInlineSnapshot('19258213n')
 
   await testClient.mainnet.mine({ blocks: 1 })
   await waitFor(() => {

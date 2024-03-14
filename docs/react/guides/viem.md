@@ -43,7 +43,7 @@ export const config = createConfig({
 
 function Example() {
   // 3. Extract a Viem Client for the current active chain. // [!code hl]
-  const publicClient = useClient(config) // [!code hl]
+  const publicClient = useClient({ config }) // [!code hl]
 
   // 4. Create a "custom" Query Hook that utilizes the Client. // [!code hl]
   const { data: logs } = useQuery({ // [!code hl]
@@ -86,7 +86,7 @@ export const config = createConfig({
 
 function Example() {
   // 3. Extract a Viem Client for the current active chain. // [!code hl]
-  const publicClient = useClient(config) // [!code hl]
+  const publicClient = useClient({ config }) // [!code hl]
 
   // 4. Create a "custom" Query Hook that utilizes the Client. // [!code hl]
   const { data: logs } = useQuery({ // [!code hl]

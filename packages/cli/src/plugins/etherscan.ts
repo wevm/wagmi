@@ -18,6 +18,7 @@ const apiUrls = {
   // Arbitrum
   [42_161]: 'https://api.arbiscan.io/api',
   [421_613]: 'https://api-goerli.arbiscan.io/api',
+  [421_614]: 'https://api-sepolia.arbiscan.io/api',
   // BNB Smart Chain
   [56]: 'https://api.bscscan.com/api',
   [97]: 'https://api-testnet.bscscan.com/api',
@@ -28,11 +29,14 @@ const apiUrls = {
   [250]: 'https://api.ftmscan.com/api',
   [4002]: 'https://api-testnet.ftmscan.com/api',
   // Avalanche
-  [43114]: 'https://api.snowtrace.io/api',
-  [43113]: 'https://api-testnet.snowtrace.io/api',
+  [43114]: 'https://api.snowscan.xyz/api',
+  [43113]: 'https://api-testnet.snowscan.xyz/api',
   // Celo
   [42220]: 'https://api.celoscan.io/api',
   [44787]: 'https://api-alfajores.celoscan.io/api',
+  // Fraxtal
+  [252]: 'https://api.fraxscan.com/api',
+  [2522]: 'https://api-holesky.fraxscan.com/api',
 }
 type ChainId = keyof typeof apiUrls
 
@@ -43,13 +47,14 @@ export type EtherscanConfig<chainId extends number> = {
    * API keys are specific per network and include testnets (e.g. Ethereum Mainnet and Goerli share same API key). Create or manage keys:
    * - [__Ethereum__](https://etherscan.io/myapikey)
    * - [__Arbitrum__](https://arbiscan.io/myapikey)
-   * - [__Avalanche__](https://snowtrace.io/myapikey)
+   * - [__Avalanche__](https://snowscan.xyz/myapikey)
    * - [__BNB Smart Chain__](https://bscscan.com/myapikey)
    * - [__Celo__](https://celoscan.io/myapikey)
    * - [__Fantom__](https://ftmscan.com/myapikey)
    * - [__Heco Chain__](https://hecoinfo.com/myapikey)
    * - [__Optimism__](https://optimistic.etherscan.io/myapikey)
    * - [__Polygon__](https://polygonscan.com/myapikey)
+   * - [__Fraxtal__](https://fraxscan.com/myapikey)
    */
   apiKey: string
   /**

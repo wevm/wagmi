@@ -442,6 +442,7 @@ export {
   type Config,
   type CreateConfigParameters,
   type State,
+  type Transport,
   createConfig,
 } from '../createConfig.js'
 
@@ -502,6 +503,8 @@ export { fallback } from '../transports/fallback.js'
 ////////////////////////////////////////////////////////////////////////////////
 // Types
 ////////////////////////////////////////////////////////////////////////////////
+
+export { type SelectChains } from '../types/chain.js'
 
 export { type Register, type ResolvedRegister } from '../types/register.js'
 

@@ -175,7 +175,7 @@ function App() {
 ERC-20 token address to get balance for.
 
 ::: warning Deprecated
-See [deprecation notices](/react/guides/migrate-from-v1-to-v2#removed-usebalance-token-parameter) for more info.
+See [deprecation notices](/react/guides/migrate-from-v1-to-v2#deprecated-usebalance-token-parameter) for more info.
 :::
 
 ::: code-group
@@ -198,6 +198,10 @@ function App() {
 
 - Units to use when formatting result.
 - Defaults to `'ether'`.
+
+::: warning Deprecated
+See [deprecation notices](/react/guides/migrate-from-v1-to-v2#deprecated-usebalance-unit-parameter-and-formatted-return-value) for more info.
+:::
 
 ::: code-group
 ```ts [index.ts]

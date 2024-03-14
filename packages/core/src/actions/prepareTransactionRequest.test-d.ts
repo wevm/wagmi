@@ -32,7 +32,7 @@ test('chain formatters', async () => {
     transports: { [celo.id]: http(), [mainnet.id]: http() },
   })
 
-  type Result = PrepareTransactionRequestParameters<'type', typeof config>
+  type Result = PrepareTransactionRequestParameters<typeof config>
   expectTypeOf<Result>().toMatchTypeOf<{
     chainId?: typeof celo.id | typeof mainnet.id | undefined
     feeCurrency?: `0x${string}` | undefined
@@ -56,7 +56,6 @@ test('chain formatters', async () => {
   }
 
   type Result2 = PrepareTransactionRequestParameters<
-    'type',
     typeof config,
     typeof celo.id
   >
@@ -81,7 +80,6 @@ test('chain formatters', async () => {
   >()
 
   type Result3 = PrepareTransactionRequestParameters<
-    'type',
     typeof config,
     typeof mainnet.id
   >

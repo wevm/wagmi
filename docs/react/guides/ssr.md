@@ -109,7 +109,7 @@ import { config } from './config'
 
 type Props = {
   children: ReactNode,
-  initialState: State, // [!code ++]
+  initialState: State | undefined, // [!code ++]
 }
 
 const queryClient = new QueryClient()

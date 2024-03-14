@@ -23,7 +23,7 @@ Using native `BigInt` with `JSON.stringify` will raise a `TypeError` as
 
 Lossless serialization means that `BigInt` will be converted to a format that can be deserialized later (e.g. `69420n` → `"#bigint.69420"`). The trade-off is that these values are not human-readable and are not intended to be displayed to the user.
 
-Lossless serialization can be achieved with wagmi's <a :href="`/${docsPath}/utilities/serialize`">`serialize`</a> and <a :href="`/${docsPath}/utilities/deserialize`">`deserialize`</a> utilities.
+Lossless serialization can be achieved with wagmi's <a :href="`/${docsPath}/api/utilities/serialize`">`serialize`</a> and <a :href="`/${docsPath}/api/utilities/deserialize`">`deserialize`</a> utilities.
 
 ```tsx
 import { serialize, deserialize } from 'wagmi'

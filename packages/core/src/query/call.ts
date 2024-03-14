@@ -24,7 +24,7 @@ export function callQueryOptions<config extends Config>(
       const { scopeKey: _, ...parameters } = queryKey[1]
       const data = await call(config, {
         ...parameters,
-      })
+      } as CallParameters)
       return data ?? null
     },
     queryKey: callQueryKey(options),

@@ -96,5 +96,5 @@ export function useWalletClient<
     queryKey,
     enabled,
     staleTime: Infinity,
-  })
+  } as any) as UseWalletClientReturnType<config, chainId, selectData>
 }
