@@ -165,7 +165,8 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
     async getChainId() {
       const provider = await this.getProvider()
       const chainId =
-        provider.getChainId() ?? (await provider?.request({ method: 'eth_chainId' }))
+        provider.getChainId() ??
+        (await provider?.request({ method: 'eth_chainId' }))
       return normalizeChainId(chainId)
     },
     async getProvider() {
