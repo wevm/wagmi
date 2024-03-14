@@ -90,7 +90,7 @@ function App() {
 
 `(() => void) | undefined`
 
-Callback that is called when no more accounts are are connected.
+Callback that is called when no more accounts are connected.
 
 ::: code-group
 ```tsx [index.tsx]
