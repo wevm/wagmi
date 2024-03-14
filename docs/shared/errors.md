@@ -17,7 +17,7 @@ import { BaseError } from '{{packageName}}'
 
 ### ChainNotConfiguredError
 
-When a chain is not configured. You likely need to add the chain to <a :href="`/${docsPath}}/createConfig#chains`">`Config['chains']`</a>.
+When a chain is not configured. You likely need to add the chain to <a :href="`/${docsPath}/api/createConfig#chains`">`Config['chains']`</a>.
 
 ```ts-vue
 import { ChainNotConfiguredError } from '{{packageName}}'

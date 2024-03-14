@@ -51,7 +51,7 @@ export function verifyTypedDataQueryOptions<
         primaryType,
         signature,
         types,
-      })
+      } as VerifyTypedDataParameters)
       return verified ?? null
     },
     queryKey: verifyTypedDataQueryKey(options),

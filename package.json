@@ -51,8 +51,8 @@
     "rimraf": "^4.4.1",
     "sherif": "^0.8.1",
     "simple-git-hooks": "^2.9.0",
-    "typescript": "5.3.2",
-    "viem": "2.0.0",
+    "typescript": "5.4.2",
+    "viem": "2.8.4",
     "vitest": "^0.34.5"
   },
   "packageManager": "pnpm@8.10.5",
@@ -71,15 +71,8 @@
     "pre-commit": "pnpm format && pnpm lint:fix"
   },
   "knip": {
-    "ignore": [
-      "**/*.test-d.ts",
-      "**/templates/**",
-      "**/hardhat.config.js"
-    ],
-    "ignoreBinaries": [
-      "only-allow",
-      "open"
-    ],
+    "ignore": ["**/*.test-d.ts", "**/templates/**", "**/hardhat.config.js"],
+    "ignoreBinaries": ["only-allow", "open"],
     "ignoreWorkspaces": [
       "docs",
       "packages/register-tests/**",
@@ -99,15 +92,11 @@
       },
       "packages/connectors": {
         "entry": "src/exports/index.ts!",
-        "ignoreDependencies": [
-          "@walletconnect/modal"
-        ]
+        "ignoreDependencies": ["@walletconnect/modal"]
       },
       "packages/core": {
         "entry": "src/exports/{actions,chains,codegen,index,internal,query}.ts!",
-        "ignoreDependencies": [
-          "@tanstack/query-core"
-        ]
+        "ignoreDependencies": ["@tanstack/query-core"]
       },
       "packages/create-wagmi": {
         "entry": "src/cli.ts!"

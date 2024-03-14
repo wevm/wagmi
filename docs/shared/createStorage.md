@@ -34,7 +34,7 @@ import { type CreateStorageParameters } from '{{packageName}}'
 `(<T>(value: string) => T) | undefined`
 
 - Function to deserialize data from storage.
-- Defaults to <a :href="`/${docsPath}/utilities/deserialize`">`deserialize`</a>.
+- Defaults to <a :href="`/${docsPath}/api/utilities/deserialize`">`deserialize`</a>.
 
 ```ts-vue
 import { createStorage, deserialize } from '{{packageName}}' // [!code focus]
@@ -70,7 +70,7 @@ const storage = createStorage({
 `(<T>(value: T) => string) | undefined`
 
 - Function to serialize data for storage.
-- Defaults to <a :href="`/${docsPath}/utilities/serialize`">`serialize`</a>.
+- Defaults to <a :href="`/${docsPath}/api/utilities/serialize`">`serialize`</a>.
 
 ```ts-vue
 import { createStorage, serialize } from '{{packageName}}' // [!code focus]
@@ -121,7 +121,7 @@ import { type Storage } from '{{packageName}}'
 
 ## Storage
 
-Object responsible for persisting Wagmi <a :href="`/${docsPath}/createConfig#state-1`">`State`</a> and other data.
+Object responsible for persisting Wagmi <a :href="`/${docsPath}/api/createConfig#state-1`">`State`</a> and other data.
 
 ```ts-vue
 import { type Storage } from '{{packageName}}'

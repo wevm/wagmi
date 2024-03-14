@@ -42,7 +42,7 @@ import { type ReconnectParameters } from '@wagmi/core'
 
 ::: code-group
 ```ts [index.ts]
-import { connect } from '@wagmi/core'
+import { reconnect } from '@wagmi/core'
 import { injected } from '@wagmi/connectors'
 import { config } from './config'
 

@@ -3,8 +3,8 @@ import {
   type Address,
   type Chain,
   type PrepareTransactionRequestErrorType as viem_PrepareTransactionRequestErrorType,
-  type PrepareTransactionRequestParameterType as viem_PrepareTransactionRequestParameterType,
   type PrepareTransactionRequestParameters as viem_PrepareTransactionRequestParameters,
+  type PrepareTransactionRequestRequest as viem_PrepareTransactionRequestRequest,
   type PrepareTransactionRequestReturnType as viem_PrepareTransactionRequestReturnType,
 } from 'viem'
 import { prepareTransactionRequest as viem_prepareTransactionRequest } from 'viem/actions'
@@ -25,11 +25,17 @@ import { getAction } from '../utils/getAction.js'
 import { getConnectorClient } from './getConnectorClient.js'
 
 export type PrepareTransactionRequestParameters<
-  parameterType extends viem_PrepareTransactionRequestParameterType = viem_PrepareTransactionRequestParameterType,
   config extends Config = Config,
   chainId extends
     | config['chains'][number]['id']
     | undefined = config['chains'][number]['id'],
+  request extends viem_PrepareTransactionRequestRequest<
+    SelectChains<config, chainId>[0],
+    SelectChains<config, chainId>[0]
+  > = viem_PrepareTransactionRequestRequest<
+    SelectChains<config, chainId>[0],
+    SelectChains<config, chainId>[0]
+  >,
   ///
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = {
@@ -40,7 +46,12 @@ export type PrepareTransactionRequestParameters<
         Account,
         chains[key],
         Account | Address,
-        parameterType
+        request extends viem_PrepareTransactionRequestRequest<
+          chains[key],
+          chains[key]
+        >
+          ? request
+          : never
       >,
       'chain'
     > &
@@ -52,11 +63,17 @@ export type PrepareTransactionRequestParameters<
 }[number]
 
 export type PrepareTransactionRequestReturnType<
-  parameterType extends viem_PrepareTransactionRequestParameterType = viem_PrepareTransactionRequestParameterType,
   config extends Config = Config,
   chainId extends
     | config['chains'][number]['id']
     | undefined = config['chains'][number]['id'],
+  request extends viem_PrepareTransactionRequestRequest<
+    SelectChains<config, chainId>[0],
+    SelectChains<config, chainId>[0]
+  > = viem_PrepareTransactionRequestRequest<
+    SelectChains<config, chainId>[0],
+    SelectChains<config, chainId>[0]
+  >,
   ///
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = {
@@ -66,7 +83,12 @@ export type PrepareTransactionRequestReturnType<
       Account,
       chains[key],
       Account,
-      parameterType
+      request extends viem_PrepareTransactionRequestRequest<
+        IsNarrowable<chains[key], Chain> extends true ? chains[key] : undefined,
+        chains[key]
+      >
+        ? request
+        : never
     >
   > &
     ConnectorParameter & {
@@ -80,18 +102,15 @@ export type PrepareTransactionRequestErrorType =
 /** https://wagmi.sh/core/api/actions/prepareTransactionRequest */
 export async function prepareTransactionRequest<
   config extends Config,
-  parameterType extends viem_PrepareTransactionRequestParameterType,
   chainId extends config['chains'][number]['id'] | undefined,
+  const request extends viem_PrepareTransactionRequestRequest<
+    SelectChains<config, chainId>['0'],
+    SelectChains<config, chainId>['0']
+  >,
 >(
   config: config,
-  parameters: PrepareTransactionRequestParameters<
-    parameterType,
-    config,
-    chainId
-  >,
-): Promise<
-  PrepareTransactionRequestReturnType<parameterType, config, chainId>
-> {
+  parameters: PrepareTransactionRequestParameters<config, chainId, request>,
+): Promise<PrepareTransactionRequestReturnType<config, chainId, request>> {
   const { account, chainId, connector, ...rest } = parameters
 
   let client
@@ -109,6 +128,6 @@ export async function prepareTransactionRequest<
     ...rest,
     ...(account ? { account } : {}),
   } as unknown as viem_PrepareTransactionRequestParameters) as unknown as Promise<
-    PrepareTransactionRequestReturnType<parameterType, config, chainId>
+    PrepareTransactionRequestReturnType<config, chainId, request>
   >
 }
