@@ -12,6 +12,7 @@ You can use a pre-built Connect Wallet module from a third-party library such as
 - [Web3Modal](https://web3modal.com/) - [Guide](https://docs.walletconnect.com/web3modal/react/about)
 - [RainbowKit](https://www.rainbowkit.com/) - [Guide](https://www.rainbowkit.com/docs/installation)
 - [Dynamic](https://www.dynamic.xyz/) - [Guide](https://docs.dynamic.xyz/quickstart)
+- [Ant Design Web3](https://web3.ant.design/) - [Guide](https://web3.ant.design/guide/ant-design-web3)
 
 The above libraries are all built on top of Wagmi, handle all the edge cases around wallet connection, and provide a seamless Connect Wallet UX that you can use in your Dapp.
 
