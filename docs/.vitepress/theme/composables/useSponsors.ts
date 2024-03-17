@@ -84,11 +84,6 @@ export function useSponsors() {
           img: 'dynamic-light.svg',
         },
         {
-          name: 'BitKeep',
-          url: 'https://bitkeep.com',
-          img: 'bitkeep-light.svg',
-        },
-        {
           name: 'Privy',
           url: 'https://privy.io',
           img: 'privy-light.svg',
@@ -132,11 +127,6 @@ export function useSponsors() {
           name: 'Supa',
           url: 'https://twitter.com/supafinance',
           img: 'supa-light.svg',
-        },
-        {
-          name: 'Blocto',
-          url: 'https://blocto.io',
-          img: 'blocto-light.svg',
         },
       ],
     }
