@@ -1,5 +1,16 @@
 # @wagmi/connectors
 
+## 4.1.16
+
+### Patch Changes
+
+- [`1c1fee6a`](https://github.com/wevm/wagmi/commit/1c1fee6ab8f01f7734ac6ce05093fa8e388beb3e) Thanks [@jxom](https://github.com/jxom)! - Updated `@walletconnect/ethereum-provider`.
+
+- [#3653](https://github.com/wevm/wagmi/pull/3653) [`88a2d744`](https://github.com/wevm/wagmi/commit/88a2d744a1315908c9e54156026df3ad2435ad44) Thanks [@tash-2s](https://github.com/tash-2s)! - Fixed error occurring when adding chains without explorers to MetaMask.
+
+- Updated dependencies [[`b479b5e8`](https://github.com/wevm/wagmi/commit/b479b5e8a5866cba792862f22e6352c4fb566137), [`f5648dd2`](https://github.com/wevm/wagmi/commit/f5648dd28b3576b628f57732b89287f55acbb1c1), [`1c1fee6a`](https://github.com/wevm/wagmi/commit/1c1fee6ab8f01f7734ac6ce05093fa8e388beb3e), [`88a2d744`](https://github.com/wevm/wagmi/commit/88a2d744a1315908c9e54156026df3ad2435ad44)]:
+  - @wagmi/core@2.6.7
+
 ## 4.1.15
 
 ### Patch Changes
