@@ -15,6 +15,7 @@ import {
   type Evaluate,
   type ExactPartial,
   type Omit,
+  type UnionOmit,
   deepEqual,
 } from '@wagmi/core/internal'
 import { hashFn } from '@wagmi/core/query'
@@ -37,7 +38,7 @@ export type UseMutationReturnType<
   variables = void,
   context = unknown,
 > = Evaluate<
-  Omit<
+  UnionOmit<
     UseMutationResult<data, error, variables, context>,
     'mutate' | 'mutateAsync'
   >
