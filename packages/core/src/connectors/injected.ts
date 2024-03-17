@@ -372,7 +372,7 @@ export function injected(parameters: InjectedParameters = {}) {
           try {
             const { default: blockExplorer, ...blockExplorers } =
               chain.blockExplorers ?? {}
-            let blockExplorerUrls: string[] = []
+            let blockExplorerUrls
             if (blockExplorer)
               blockExplorerUrls = [
                 blockExplorer.url,
