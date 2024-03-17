@@ -32,11 +32,13 @@ export function getAction<
   // needs to pass the name explicitly.
   name: keyof PublicActions | keyof WalletActions,
 ): (parameters: parameters) => returnType {
-  const fnAction = client[actionFn.name]
-  if (typeof fnAction === 'function')
-    return fnAction as (params: parameters) => returnType
-  const nameAction = client[name]
-  if (typeof nameAction === 'function')
-    return nameAction as (params: parameters) => returnType
+  const action_implicit = client[actionFn.name]
+  if (typeof action_implicit === 'function')
+    return action_implicit as (params: parameters) => returnType
+
+  const action_explicit = client[name]
+  if (typeof action_explicit === 'function')
+    return action_explicit as (params: parameters) => returnType
+
   return (params) => actionFn(client, params)
 }
