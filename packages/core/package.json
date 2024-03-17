@@ -1,7 +1,7 @@
 {
   "name": "@wagmi/core",
   "description": "VanillaJS library for Ethereum",
-  "version": "2.6.7",
+  "version": "2.6.8",
   "license": "MIT",
   "repository": {
     "type": "git",

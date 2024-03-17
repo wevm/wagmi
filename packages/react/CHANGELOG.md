@@ -1,5 +1,15 @@
 # wagmi
 
+## 2.5.10
+
+### Patch Changes
+
+- [#3643](https://github.com/wevm/wagmi/pull/3643) [`e46bcd47`](https://github.com/wevm/wagmi/commit/e46bcd4738a18da15b53f6612b614379c1985374) Thanks [@TateB](https://github.com/TateB)! - Fixed race condition arising from `reconnect`.
+
+- Updated dependencies [[`e46bcd47`](https://github.com/wevm/wagmi/commit/e46bcd4738a18da15b53f6612b614379c1985374)]:
+  - @wagmi/core@2.6.8
+  - @wagmi/connectors@4.1.17
+
 ## 2.5.9
 
 ### Patch Changes
