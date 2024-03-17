@@ -358,3 +358,46 @@ function App() {
 ## SSR
 
 It is possible to utilize TanStack Query's SSR strategies with Wagmi Hooks & Query Keys. Check out the [Server Rendering & Hydration](https://tanstack.com/query/v5/docs/react/guides/ssr) & [Advanced Server Rendering](https://tanstack.com/query/v5/docs/react/guides/advanced-ssr) guides.
+
+## Devtools
+
+TanStack Query includes dedicated [Devtools](https://tanstack.com/query/latest/docs/framework/react/devtools) that assist in visualizing and debugging your queries, their cache states, and much more. You will have to pass a custom `queryKeyFn` to your `QueryClient` for Devtools to correctly serialize BigInt values for display. Alternatively, You can use the `hashFn` from `@wagmi/core/query`, which already handles this serialization.
+
+#### Install
+
+::: code-group
+```bash [pnpm]
+pnpm i @tanstack/react-query-devtools
+```
+
+```bash [npm]
+npm i @tanstack/react-query-devtools
+```
+
+```bash [yarn]
+yarn add @tanstack/react-query-devtools
+```
+
+```bash [bun]
+bun i @tanstack/react-query-devtools
+```
+:::
+
+#### Usage
+
+```tsx
+import {
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"; // [!code hl]
+import { hashFn } from "@wagmi/core/query"; // [!code hl]
+
+const queryClient = new QueryClient({
+  defaultOptions: { // [!code hl]
+    queries: { // [!code hl]
+      queryKeyHashFn: hashFn, // [!code hl]
+    }, // [!code hl]
+  }, // [!code hl]
+});
+```
