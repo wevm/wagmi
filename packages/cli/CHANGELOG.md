@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 2.1.3
+
+### Patch Changes
+
+- [#3660](https://github.com/wevm/wagmi/pull/3660) [`11a22a23`](https://github.com/wevm/wagmi/commit/11a22a23d88c025cde9c91610e9ddf62cd4fa650) Thanks [@JazzBashara](https://github.com/JazzBashara)! - Replaced SnowTrace with SnowScan for the Etherscan plugin
+
 ## 2.1.2
 
 ### Patch Changes

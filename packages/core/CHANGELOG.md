@@ -1,5 +1,17 @@
 # @wagmi/core
 
+## 2.6.7
+
+### Patch Changes
+
+- [#3642](https://github.com/wevm/wagmi/pull/3642) [`b479b5e8`](https://github.com/wevm/wagmi/commit/b479b5e8a5866cba792862f22e6352c4fb566137) Thanks [@johanneskares](https://github.com/johanneskares)! - Fixed a bug where minification caused the wrong functions to be called on the client.
+
+- [`f5648dd2`](https://github.com/wevm/wagmi/commit/f5648dd28b3576b628f57732b89287f55acbb1c1) Thanks [@jxom](https://github.com/jxom)! - Updated `prepareTransactionRequest` types for `viem@2.8.0`.
+
+- [`1c1fee6a`](https://github.com/wevm/wagmi/commit/1c1fee6ab8f01f7734ac6ce05093fa8e388beb3e) Thanks [@jxom](https://github.com/jxom)! - Updated `@walletconnect/ethereum-provider`.
+
+- [#3653](https://github.com/wevm/wagmi/pull/3653) [`88a2d744`](https://github.com/wevm/wagmi/commit/88a2d744a1315908c9e54156026df3ad2435ad44) Thanks [@tash-2s](https://github.com/tash-2s)! - Fixed error occurring when adding chains without explorers to MetaMask.
+
 ## 2.6.6
 
 ### Patch Changes
