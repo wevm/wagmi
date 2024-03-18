@@ -9,7 +9,7 @@ type HydrateParameters = {
 export function hydrate(config: Config, parameters: HydrateParameters) {
   const { initialState, reconnectOnMount } = parameters
 
-  if (initialState)
+  if (initialState && !config._internal.store.persist.hasHydrated())
     config.setState({
       ...initialState,
       connections: reconnectOnMount ? initialState.connections : new Map(),
