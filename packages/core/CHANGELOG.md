@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.6.9
+
+### Patch Changes
+
+- [#3715](https://github.com/wevm/wagmi/pull/3715) [`d56edf4f`](https://github.com/wevm/wagmi/commit/d56edf4f27c52acc7a0f57114454b0d3e22cacd6) Thanks [@jxom](https://github.com/jxom)! - Fixed SSR hydration issues.
+
 ## 2.6.8
 
 ### Patch Changes

@@ -1,5 +1,17 @@
 # wagmi
 
+## 2.5.11
+
+### Patch Changes
+
+- [#3714](https://github.com/wevm/wagmi/pull/3714) [`f1628d65`](https://github.com/wevm/wagmi/commit/f1628d65f06e9ef18e6c4e2eb4f6e3ab2e700924) Thanks [@dalechyn](https://github.com/dalechyn)! - Replaced `Omit` with `UnionOmit` for `UseMutationReturnType`.
+
+- [#3715](https://github.com/wevm/wagmi/pull/3715) [`d56edf4f`](https://github.com/wevm/wagmi/commit/d56edf4f27c52acc7a0f57114454b0d3e22cacd6) Thanks [@jxom](https://github.com/jxom)! - Fixed SSR hydration issues.
+
+- Updated dependencies [[`d56edf4f`](https://github.com/wevm/wagmi/commit/d56edf4f27c52acc7a0f57114454b0d3e22cacd6)]:
+  - @wagmi/core@2.6.9
+  - @wagmi/connectors@4.1.18
+
 ## 2.5.10
 
 ### Patch Changes
