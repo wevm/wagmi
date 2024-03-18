@@ -202,8 +202,8 @@ importers:
         specifier: 3.9.1
         version: 3.9.1
       '@metamask/sdk':
-        specifier: 0.17.1
-        version: 0.17.1
+        specifier: 0.17.2
+        version: 0.17.2
       '@safe-global/safe-apps-provider':
         specifier: 0.18.1
         version: 0.18.1(typescript@5.4.2)
@@ -2616,8 +2616,8 @@ packages:
       qr-code-styling: 1.6.0-rc.1
     dev: false
 
-  /@metamask/sdk@0.17.1:
-    resolution: {integrity: sha512-Ltb3REkgKVXjJqoK4N7+ZVxbuP9ZYieS/H3ENcl+Un7BEg4ImIoX2XoUXIO1XdCyZHW8QN554mDb9RBR8FQ7Jw==}
+  /@metamask/sdk@0.17.2:
+    resolution: {integrity: sha512-5DkeywTJLf2BLCQ2aa2D7bIcoAc/107uFXlDA/1lpCnbWc9ZHloFomdu3d1e3dRegqCOzDGuJjOA+dPonDQZZw==}
     peerDependencies:
       '@react-native-async-storage/async-storage': ^1.19.6
       react: ^18.2.0
