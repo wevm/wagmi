@@ -198,3 +198,13 @@ If you find Wagmi useful or use it for work, please consider [sponsoring Wagmi](
 <a href="https://vercel.com/?utm_source=wevm&utm_campaign=oss">
   <img src="https://www.datocms-assets.com/31049/1618983297-powered-by-vercel.svg" alt="Powered by Vercel" height="35">
 </a>
+
+## Contributors
+
+<a href="https://github.com/wevm/wagmi/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=wevm/wagmi&max=400&columns=20" width="100%"/>
+</a>
+
+## Star History Chart
+
+[![Star History Chart](https://api.star-history.com/svg?repos=wevm/wagmi&type=Date)](https://star-history.com/#wevm/wagmi&Date)
