@@ -107,6 +107,8 @@ export type Config = {
   out: string
   /** Plugins to run */
   plugins?: Plugin[] | undefined
+  /** TypeScript switch */
+  isTypeScript?: boolean | undefined
 }
 
 export function defineConfig(

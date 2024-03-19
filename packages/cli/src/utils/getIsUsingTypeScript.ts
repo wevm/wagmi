@@ -3,7 +3,7 @@ import { findUp } from 'find-up'
 export async function getIsUsingTypeScript() {
   try {
     const cwd = process.cwd()
-    const tsconfig = await findUp('tsconfig.json', { cwd })
+    const tsconfig = await findUp(['tsconfig.json','tsconfig.base.json','tsconfig.lib.json'], { cwd })
     if (tsconfig) return true
 
     const wagmiConfig = await findUp(['wagmi.config.ts', 'wagmi.config.mts'], {
