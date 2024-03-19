@@ -63,8 +63,8 @@ importers:
         specifier: 5.4.2
         version: 5.4.2
       viem:
-        specifier: 2.8.4
-        version: 2.8.4(typescript@5.4.2)
+        specifier: 2.8.13
+        version: 2.8.13(typescript@5.4.2)
       vitest:
         specifier: ^0.34.5
         version: 0.34.5(@vitest/ui@0.34.5)(happy-dom@12.2.1)(jsdom@20.0.3)
@@ -6925,6 +6925,7 @@ packages:
       is-hex-prefixed: 1.0.0
       strip-hex-prefix: 1.0.0
     dev: true
+    bundledDependencies: false
 
   /event-target-shim@5.0.1:
     resolution: {integrity: sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==}
@@ -11711,8 +11712,8 @@ packages:
       - zod
     dev: false
 
-  /viem@2.8.4(typescript@5.4.2):
-    resolution: {integrity: sha512-zBC8+YNKzo+XeUsCyXdrFzimH9Ei/nRfUKldPmVRoR/lR56/sqkDPyfCE1yvzwwmA9AJ9m9m2HtSPgl9NiTReA==}
+  /viem@2.8.13(typescript@5.4.2):
+    resolution: {integrity: sha512-jEbRUjsiBwmoDr3fnKL1Bh1GhK5ERhmZcPLeARtEaQoBTPB6bcO2siKhNPVOF8qrYRnGHGQrZHncBWMQhTjGYg==}
     peerDependencies:
       typescript: '>=5.0.4'
     peerDependenciesMeta:

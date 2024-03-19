@@ -84,3 +84,38 @@ test('default', async () => {
 
   await disconnect(config, { connector })
 })
+
+test('unsubscribe', async () => {
+  await connect(config, { connector })
+  // start watching transfer events
+  let logs: WatchEventOnLogsParameter = []
+  const {
+    result: { current: unsubscribe },
+  } = renderHook(() =>
+    useWatchContractEvent({
+      address: address.usdc,
+      abi: abi.erc20,
+      eventName: 'Transfer',
+      onLogs(next) {
+        console.log('received log')
+        logs = logs.concat(next)
+      },
+    }),
+  )
+
+  await writeContract(config, {
+    address: address.usdc,
+    abi: abi.erc20,
+    functionName: 'transfer',
+    args: [accounts[1], parseEther('1', 'gwei')],
+  })
+
+  unsubscribe?.()
+
+  await testClient.mainnet.mine({ blocks: 1 })
+  await wait(1000) // wait for events to be emitted
+
+  expect(logs.length).toBe(0)
+
+  await disconnect(config, { connector })
+})

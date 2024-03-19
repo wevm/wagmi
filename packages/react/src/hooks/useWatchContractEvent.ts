@@ -28,7 +28,7 @@ export type UseWatchContractEventParameters<
     EnabledParameter
 >
 
-export type UseWatchContractEventReturnType = void
+export type UseWatchContractEventReturnType = undefined | (() => void)
 
 /** https://wagmi.sh/react/api/hooks/useWatchContractEvent */
 export function useWatchContractEvent<
@@ -47,6 +47,7 @@ export function useWatchContractEvent<
   > = {} as any,
 ): UseWatchContractEventReturnType {
   const { enabled = true, onLogs, config: _, ...rest } = parameters
+  let unsubscribe: UseWatchContractEventReturnType
 
   const config = useConfig(parameters)
   const configChainId = useChainId()
@@ -55,10 +56,18 @@ export function useWatchContractEvent<
   useEffect(() => {
     if (!enabled) return
     if (!onLogs) return
-    return watchContractEvent(config, {
+    unsubscribe = watchContractEvent(config, {
       ...(rest as any),
       chainId,
       onLogs,
     })
-  }, [chainId, config, enabled, rest, onLogs])
+
+    return () => {
+      unsubscribe?.()
+    }
+  }, [chainId, config, enabled, rest, onLogs, unsubscribe])
+
+  return () => {
+    unsubscribe?.()
+  }
 }
