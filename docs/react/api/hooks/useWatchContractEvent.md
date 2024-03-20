@@ -406,7 +406,7 @@ function App() {
 import { type UseWatchContractEventReturnType } from 'wagmi'
 ```
 
-Function to unsubscribe from the event listener.
+Hook returns `void`
 
 ## Action
 
