@@ -37,6 +37,8 @@ const apiUrls = {
   // Fraxtal
   [252]: 'https://api.fraxscan.com/api',
   [2522]: 'https://api-holesky.fraxscan.com/api',
+  // Gnosis
+  [100]: 'https://api.gnosisscan.io/api',
 }
 type ChainId = keyof typeof apiUrls
 
@@ -55,6 +57,7 @@ export type EtherscanConfig<chainId extends number> = {
    * - [__Optimism__](https://optimistic.etherscan.io/myapikey)
    * - [__Polygon__](https://polygonscan.com/myapikey)
    * - [__Fraxtal__](https://fraxscan.com/myapikey)
+   * - [__Gnosis__](https://gnosisscan.io/myapikey)
    */
   apiKey: string
   /**
