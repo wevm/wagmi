@@ -14,7 +14,7 @@ import {
   type GetConnectorClientQueryKey,
   getConnectorClientQueryOptions,
 } from '@wagmi/core/query'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 import type { ConfigParameter } from '../types/properties.js'
 import {
@@ -22,7 +22,7 @@ import {
   type UseQueryReturnType,
   useQuery,
 } from '../utils/query.js'
-import { useAccount } from './useAccount.js'
+import { type UseAccountReturnType, useAccount } from './useAccount.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
@@ -80,11 +80,22 @@ export function useConnectorClient<
   })
   const enabled = Boolean(status !== 'disconnected' && (query.enabled ?? true))
 
+  const addressRef = useRef<UseAccountReturnType<config>['address']>(address)
+
   // biome-ignore lint/nursery/useExhaustiveDependencies: `queryKey` not required
   useEffect(() => {
-    // invalidate when address changes
-    if (address) queryClient.invalidateQueries({ queryKey })
-    else queryClient.removeQueries({ queryKey }) // remove when account is disconnected
+    if (!address) {
+      // remove when account is disconnected
+      queryClient.removeQueries({ queryKey })
+
+      if (addressRef.current) {
+        addressRef.current = undefined
+      }
+    } else if (address !== addressRef.current) {
+      // invalidate when address changes
+      queryClient.invalidateQueries({ queryKey })
+      addressRef.current = address
+    }
   }, [address, queryClient])
 
   return useQuery({
