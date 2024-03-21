@@ -6,7 +6,7 @@ test('WagmiProviderNotFoundError', () => {
   expect(new WagmiProviderNotFoundError()).toMatchInlineSnapshot(`
     [WagmiProviderNotFoundError: \`useConfig\` must be used within \`WagmiProvider\`.
 
-    Docs: https://wagmi.sh/reacthttps://wagmi.sh/react/api/WagmiProvider.html
+    Docs: https://wagmi.sh/react/api/WagmiProvider.html
     Version: wagmi@x.y.z]
   `)
 })
