@@ -52,34 +52,9 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
     name: 'MetaMask',
     type: metaMask.type,
     async setup() {
-      if (!sdkImport) {
-        // Only load once
-        sdkImport = import('@metamask/sdk') as any
-      }
-
-      const sdkModule = await sdkImport
-      if (!sdkModule) {
-        throw new Error('MetaMask SDK not found')
-      }
-
-      if (!parameters || !parameters.dappMetadata) {
-        throw new Error('dappMetadata is required and must be provided.')
-      }
-
-      sdk = new sdkModule.MetaMaskSDK({
-        ...parameters,
-        dappMetadata: parameters.dappMetadata,
-        _source: 'wagmi',
-        readonlyRPCMap: Object.fromEntries(
-          config.chains.map((chain) => [
-            chain.id,
-            chain.rpcUrls.default.http[0]!,
-          ]),
-        ),
-      })
-      await sdk.init()
-
-      sdk?.getProvider()?.on('connect', this.onConnect.bind(this) as Listener)
+      const provider = await this.getProvider()
+      if (provider)
+        provider.on('connect', this.onConnect.bind(this) as Listener)
     },
     async connect({ chainId } = {}) {
       const provider = await this.getProvider()
@@ -87,9 +62,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       let accounts: readonly Address[] | null = null
 
       try {
-        accounts = (await sdk.connect()) as Address[]
-
-        if (!accounts?.length) {
+        if (!accounts) {
           const requestedAccounts = (await sdk.connect()) as string[]
           accounts = requestedAccounts.map((x) => getAddress(x))
         }
@@ -171,9 +144,26 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
     },
     async getProvider() {
       if (!sdk) {
-        throw new Error(
-          'MetaMask SDK provider is not available. Ensure the MetaMask SDK is initialized and connected.',
-        )
+        if (!sdkImport) sdkImport = import('@metamask/sdk') as any
+
+        const sdkModule = await sdkImport
+
+        if (!sdkModule) throw new Error('MetaMask SDK not found')
+        if (!parameters || !parameters.dappMetadata)
+          throw new Error('dappMetadata is required and must be provided.')
+
+        sdk = new sdkModule.MetaMaskSDK({
+          ...parameters,
+          dappMetadata: parameters.dappMetadata,
+          _source: 'wagmi',
+          readonlyRPCMap: Object.fromEntries(
+            config.chains.map((chain) => [
+              chain.id,
+              chain.rpcUrls.default.http[0]!,
+            ]),
+          ),
+        })
+        await sdk.init()
       }
 
       return sdk.getProvider()!
