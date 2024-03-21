@@ -202,8 +202,8 @@ importers:
         specifier: 3.9.1
         version: 3.9.1
       '@metamask/sdk':
-        specifier: 0.17.2
-        version: 0.17.2
+        specifier: 0.18.1
+        version: 0.18.1
       '@safe-global/safe-apps-provider':
         specifier: 0.18.1
         version: 0.18.1(typescript@5.4.2)
@@ -2573,8 +2573,8 @@ packages:
     engines: {node: '>=12.0.0'}
     dev: false
 
-  /@metamask/sdk-communication-layer@0.17.0(cross-fetch@4.0.0)(eciesjs@0.3.17)(eventemitter2@6.4.9)(readable-stream@3.6.2)(socket.io-client@4.7.2):
-    resolution: {integrity: sha512-au1HzkU4VxAWjIvGGhvv/yPlB+x4jEi70c/GpjhHgJ7EG8TJprYy9jAOxfzc8h7hXRzOA8PCkFMzJu5COrJCYA==}
+  /@metamask/sdk-communication-layer@0.18.1(cross-fetch@4.0.0)(eciesjs@0.3.17)(eventemitter2@6.4.9)(readable-stream@3.6.2)(socket.io-client@4.7.2):
+    resolution: {integrity: sha512-4VhGzOnaim4SPtYWiUNxcUdPVHMQE58BvgtbbBKQz+VHUqFuKJZajBxDjJOuwkl8HWtjUj7WUajO9Ztc5MprXg==}
     peerDependencies:
       cross-fetch: ^3.1.5
       eciesjs: ^0.3.16
@@ -2616,8 +2616,8 @@ packages:
       qr-code-styling: 1.6.0-rc.1
     dev: false
 
-  /@metamask/sdk@0.17.2:
-    resolution: {integrity: sha512-5DkeywTJLf2BLCQ2aa2D7bIcoAc/107uFXlDA/1lpCnbWc9ZHloFomdu3d1e3dRegqCOzDGuJjOA+dPonDQZZw==}
+  /@metamask/sdk@0.18.1:
+    resolution: {integrity: sha512-fTGE7s/TMnzKMkWx52gPaYslMNoC2mmaJz6V4AGlAopMksHuO8tkkPXMu0IROQc1NqiWa2gdV5Nrr3sRBbd75g==}
     peerDependencies:
       '@react-native-async-storage/async-storage': ^1.19.6
       react: ^18.2.0
@@ -2635,7 +2635,7 @@ packages:
     dependencies:
       '@metamask/onboarding': 1.0.1
       '@metamask/providers': 15.0.0
-      '@metamask/sdk-communication-layer': 0.17.0(cross-fetch@4.0.0)(eciesjs@0.3.17)(eventemitter2@6.4.9)(readable-stream@3.6.2)(socket.io-client@4.7.2)
+      '@metamask/sdk-communication-layer': 0.18.1(cross-fetch@4.0.0)(eciesjs@0.3.17)(eventemitter2@6.4.9)(readable-stream@3.6.2)(socket.io-client@4.7.2)
       '@metamask/sdk-install-modal-web': 0.17.0(i18next@22.5.1)
       '@types/dom-screen-wake-lock': 1.0.1
       bowser: 2.11.0
