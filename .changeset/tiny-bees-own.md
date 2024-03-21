@@ -2,4 +2,4 @@
 "wagmi": patch
 ---
 
-Add missing function name in codegen function
+Added missing `functionName` parameter to `useWriteContract` codegen helper.
