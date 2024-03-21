@@ -1,5 +1,11 @@
 # wagmi
 
+## 2.5.12
+
+### Patch Changes
+
+- [#3612](https://github.com/wevm/wagmi/pull/3612) [`97237bb0`](https://github.com/wevm/wagmi/commit/97237bb05c30860b9b12c094e82a38ce59d9bedf) Thanks [@m1heng](https://github.com/m1heng)! - Added missing `functionName` parameter to `useWriteContract` codegen helper.
+
 ## 2.5.11
 
 ### Patch Changes
