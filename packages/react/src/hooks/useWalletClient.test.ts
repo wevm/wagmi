@@ -4,9 +4,9 @@ import { renderHook, waitFor } from '@wagmi/test/react'
 import { expect, test } from 'vitest'
 
 import { useConnect } from './useConnect.js'
-import { useConnectorClient } from './useConnectorClient.js'
 import { useDisconnect } from './useDisconnect.js'
 import { useSwitchChain } from './useSwitchChain.js'
+import { useWalletClient } from './useWalletClient.js'
 
 // Almost identical implementation to `useConnectorClient` (except for return type)
 // Should update both in tandem
@@ -14,7 +14,7 @@ import { useSwitchChain } from './useSwitchChain.js'
 const connector = config.connectors[0]!
 
 test('default', async () => {
-  const { result } = renderHook(() => useConnectorClient())
+  const { result } = renderHook(() => useWalletClient())
 
   await waitFor(() => expect(result.current.isPending).toBeTruthy())
 
@@ -43,7 +43,7 @@ test('default', async () => {
       "isStale": true,
       "isSuccess": false,
       "queryKey": [
-        "connectorClient",
+        "walletClient",
         {
           "chainId": 1,
           "connectorUid": undefined,
@@ -58,7 +58,7 @@ test('default', async () => {
 test('behavior: connected on mount', async () => {
   await connect(config, { connector })
 
-  const { result } = renderHook(() => useConnectorClient())
+  const { result } = renderHook(() => useWalletClient())
 
   await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
@@ -103,61 +103,57 @@ test('behavior: connected on mount', async () => {
 test('behavior: connect and disconnect', async () => {
   const { result } = renderHook(() => ({
     useConnect: useConnect(),
-    useConnectorClient: useConnectorClient(),
+    useWalletClient: useWalletClient(),
     useDisconnect: useDisconnect(),
   }))
 
-  expect(result.current.useConnectorClient.data).not.toBeDefined()
+  expect(result.current.useWalletClient.data).not.toBeDefined()
 
   result.current.useConnect.connect({
     connector: result.current.useConnect.connectors[0]!,
   })
 
-  await waitFor(() =>
-    expect(result.current.useConnectorClient.data).toBeDefined(),
-  )
+  await waitFor(() => expect(result.current.useWalletClient.data).toBeDefined())
 
   result.current.useDisconnect.disconnect()
 
   await waitFor(() =>
-    expect(result.current.useConnectorClient.data).not.toBeDefined(),
+    expect(result.current.useWalletClient.data).not.toBeDefined(),
   )
 })
 
 test('behavior: switch chains', async () => {
   const { result } = renderHook(() => ({
     useConnect: useConnect(),
-    useConnectorClient: useConnectorClient(),
+    useWalletClient: useWalletClient(),
     useDisconnect: useDisconnect(),
     useSwitchChain: useSwitchChain(),
   }))
 
-  expect(result.current.useConnectorClient.data).not.toBeDefined()
+  expect(result.current.useWalletClient.data).not.toBeDefined()
 
   result.current.useConnect.connect({
     connector: result.current.useConnect.connectors[0]!,
   })
 
-  await waitFor(() =>
-    expect(result.current.useConnectorClient.data).toBeDefined(),
-  )
+  await waitFor(() => expect(result.current.useWalletClient.data).toBeDefined())
 
   result.current.useSwitchChain.switchChain({ chainId: 456 })
   await waitFor(() => {
     expect(result.current.useSwitchChain.isSuccess).toBeTruthy()
     result.current.useSwitchChain.reset()
   })
-  expect(result.current.useConnectorClient.data?.chain.id).toEqual(456)
+  expect(result.current.useWalletClient.data?.chain.id).toEqual(456)
 
   result.current.useSwitchChain.switchChain({ chainId: 1 })
   await waitFor(() =>
     expect(result.current.useSwitchChain.isSuccess).toBeTruthy(),
   )
-  expect(result.current.useConnectorClient.data?.chain.id).toEqual(1)
+  expect(result.current.useWalletClient.data?.chain.id).toEqual(1)
 
   result.current.useDisconnect.disconnect()
 
   await waitFor(() =>
-    expect(result.current.useConnectorClient.data).not.toBeDefined(),
+    expect(result.current.useWalletClient.data).not.toBeDefined(),
   )
 })
