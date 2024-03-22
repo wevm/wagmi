@@ -16,13 +16,14 @@ Wagmi Core is designed to be as type-safe as possible! Things to keep in mind:
 - It is highly recommended that you lock your `@wagmi/core` and `typescript` versions to specific patch releases and upgrade with the expectation that types may be fixed or upgraded between any release.
 - The non-type-related public API of Wagmi Core still follows semver very strictly.
 
-To ensure everything works correctly, make sure your `tsconfig.json` has [`strict`](https://www.typescriptlang.org/tsconfig#strict) mode set to `true`.
+To ensure everything works correctly, make sure your `tsconfig.json` has [`strict`](https://www.typescriptlang.org/tsconfig#strict) and [`strictNullChecks`](https://www.typescriptlang.org/tsconfig#strictNullChecks) modes set to `true`.
 
 ::: code-group
 ```json [tsconfig.json]
 {
   "compilerOptions": {
-    "strict": true
+    "strict": true,
+    "strictNullChecks": true
   }
 }
 ```
