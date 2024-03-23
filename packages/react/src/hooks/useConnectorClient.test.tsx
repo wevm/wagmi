@@ -206,7 +206,9 @@ test("behavior: re-render doesn't invalidate query", async () => {
           Connect
         </button>
         <div data-testid="address">{address}</div>
-        <div data-testid="parent-component-connector-uid">{data?.uid}</div>
+        <div data-testid="parent-component-connector-client-uid">
+          {data?.uid}
+        </div>
         <button
           type="button"
           data-testid="re-render-button"
@@ -227,8 +229,9 @@ test("behavior: re-render doesn't invalidate query", async () => {
     expect(getByTestId('address').innerText).toContain(
       '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',
     )
-    expect(getByTestId('parent-component-connector-uid').innerText).toBeTruthy()
-    console.log(getByTestId('parent-component-connector-uid').innerText)
+    expect(
+      getByTestId('parent-component-connector-client-uid').innerText,
+    ).toBeTruthy()
   })
 
   await waitFor(() => {
@@ -241,7 +244,6 @@ test("behavior: re-render doesn't invalidate query", async () => {
   })
 
   const firstUID = getByTestId('child-component-connector-client-uid').innerText
-  console.log('firstUID', firstUID)
 
   getByTestId('re-render-button').click()
 
