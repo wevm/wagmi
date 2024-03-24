@@ -199,7 +199,7 @@ test("behavior: re-render doesn't invalidate query", async () => {
           data-testid="connect-button"
           onClick={() => {
             connect({
-              connector: connectors[0],
+              connector: connectors[0]!,
             })
           }}
         >
