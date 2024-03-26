@@ -285,7 +285,7 @@ export function createConfig<
       newConnectors.push(connector)
     }
 
-    if (!store.persist.hasHydrated()) return
+    if (parameters.storage && !store.persist.hasHydrated()) return
     connectors.setState((x) => uniqueBy([...x, ...newConnectors], 'id'), true)
   })
 
