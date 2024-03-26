@@ -1,5 +1,15 @@
 # wagmi
 
+## 2.5.13
+
+### Patch Changes
+
+- [`dbdca8fd`](https://github.com/wevm/wagmi/commit/dbdca8fd14b90c166222a66a373c1b33c06ce019) Thanks [@jxom](https://github.com/jxom)! - Fixed issue where duplicate connectors could be instantiated if injected after page mount.
+
+- Updated dependencies [[`dbdca8fd`](https://github.com/wevm/wagmi/commit/dbdca8fd14b90c166222a66a373c1b33c06ce019)]:
+  - @wagmi/core@2.6.10
+  - @wagmi/connectors@4.1.19
+
 ## 2.5.12
 
 ### Patch Changes
