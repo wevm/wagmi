@@ -1,5 +1,14 @@
 # @wagmi/connectors
 
+## 4.1.20
+
+### Patch Changes
+
+- [`e1ca4e63`](https://github.com/wevm/wagmi/commit/e1ca4e637ae6cec7f5902b0a2c0e0efc3b751a1d) Thanks [@tmm](https://github.com/tmm)! - Deprecated `normalizeChainId`. Use `Number` instead.
+
+- Updated dependencies [[`e1ca4e63`](https://github.com/wevm/wagmi/commit/e1ca4e637ae6cec7f5902b0a2c0e0efc3b751a1d)]:
+  - @wagmi/core@2.6.11
+
 ## 4.1.19
 
 ### Patch Changes
