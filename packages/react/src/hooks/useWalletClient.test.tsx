@@ -125,18 +125,14 @@ test('behavior: connect and disconnect', async () => {
 })
 
 test('behavior: switch chains', async () => {
+  await connect(config, { connector })
+
   const { result } = renderHook(() => ({
-    useConnect: useConnect(),
     useWalletClient: useWalletClient(),
-    useDisconnect: useDisconnect(),
     useSwitchChain: useSwitchChain(),
   }))
 
   expect(result.current.useWalletClient.data).not.toBeDefined()
-
-  result.current.useConnect.connect({
-    connector: result.current.useConnect.connectors[0]!,
-  })
 
   await waitFor(() => expect(result.current.useWalletClient.data).toBeDefined())
 
@@ -153,11 +149,7 @@ test('behavior: switch chains', async () => {
   )
   expect(result.current.useWalletClient.data?.chain.id).toEqual(1)
 
-  result.current.useDisconnect.disconnect()
-
-  await waitFor(() =>
-    expect(result.current.useWalletClient.data).not.toBeDefined(),
-  )
+  await disconnect(config, { connector })
 })
 
 test('behavior: re-render does not invalidate query', async () => {

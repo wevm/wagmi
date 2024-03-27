@@ -86,11 +86,12 @@ export function useWalletClient<
   const addressRef = useRef(address)
   // biome-ignore lint/nursery/useExhaustiveDependencies: `queryKey` not required
   useEffect(() => {
-    if (!address) {
+    const previousAddress = addressRef.current
+    if (!address && previousAddress) {
       // remove when account is disconnected
       queryClient.removeQueries({ queryKey })
-      if (addressRef.current) addressRef.current = undefined
-    } else if (address !== addressRef.current) {
+      addressRef.current = undefined
+    } else if (address !== previousAddress) {
       // invalidate when address changes
       queryClient.invalidateQueries({ queryKey })
       addressRef.current = address

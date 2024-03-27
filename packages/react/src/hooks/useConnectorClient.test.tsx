@@ -124,18 +124,14 @@ test('behavior: connect and disconnect', async () => {
 })
 
 test('behavior: switch chains', async () => {
+  await connect(config, { connector })
+
   const { result } = renderHook(() => ({
-    useConnect: useConnect(),
     useConnectorClient: useConnectorClient(),
-    useDisconnect: useDisconnect(),
     useSwitchChain: useSwitchChain(),
   }))
 
   expect(result.current.useConnectorClient.data).not.toBeDefined()
-
-  result.current.useConnect.connect({
-    connector: result.current.useConnect.connectors[0]!,
-  })
 
   await waitFor(() =>
     expect(result.current.useConnectorClient.data).toBeDefined(),
@@ -154,11 +150,7 @@ test('behavior: switch chains', async () => {
   )
   expect(result.current.useConnectorClient.data?.chain.id).toEqual(1)
 
-  result.current.useDisconnect.disconnect()
-
-  await waitFor(() =>
-    expect(result.current.useConnectorClient.data).not.toBeDefined(),
-  )
+  await disconnect(config, { connector })
 })
 
 test('behavior: disabled when properties missing', async () => {
