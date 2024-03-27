@@ -1,17 +1,22 @@
 import { connect, disconnect } from '@wagmi/core'
 import { config, wait } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
+import { render, renderHook, waitFor } from '@wagmi/test/react'
+import * as React from 'react'
 import { expect, test } from 'vitest'
 
+import { useAccount } from './useAccount.js'
 import { useConnect } from './useConnect.js'
-import { useConnectorClient } from './useConnectorClient.js'
 import { useDisconnect } from './useDisconnect.js'
 import { useSwitchChain } from './useSwitchChain.js'
+import { useWalletClient } from './useWalletClient.js'
+
+// Almost identical implementation to `useConnectorClient` (except for return type)
+// Should update both in tandem
 
 const connector = config.connectors[0]!
 
 test('default', async () => {
-  const { result } = renderHook(() => useConnectorClient())
+  const { result } = renderHook(() => useWalletClient())
 
   await waitFor(() => expect(result.current.isPending).toBeTruthy())
 
@@ -40,7 +45,7 @@ test('default', async () => {
       "isStale": true,
       "isSuccess": false,
       "queryKey": [
-        "connectorClient",
+        "walletClient",
         {
           "chainId": 1,
           "connectorUid": undefined,
@@ -55,7 +60,7 @@ test('default', async () => {
 test('behavior: connected on mount', async () => {
   await connect(config, { connector })
 
-  const { result } = renderHook(() => useConnectorClient())
+  const { result } = renderHook(() => useWalletClient())
 
   await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
@@ -100,68 +105,118 @@ test('behavior: connected on mount', async () => {
 test('behavior: connect and disconnect', async () => {
   const { result } = renderHook(() => ({
     useConnect: useConnect(),
-    useConnectorClient: useConnectorClient(),
+    useWalletClient: useWalletClient(),
     useDisconnect: useDisconnect(),
   }))
 
-  expect(result.current.useConnectorClient.data).not.toBeDefined()
+  expect(result.current.useWalletClient.data).not.toBeDefined()
 
   result.current.useConnect.connect({
     connector: result.current.useConnect.connectors[0]!,
   })
 
-  await waitFor(() =>
-    expect(result.current.useConnectorClient.data).toBeDefined(),
-  )
+  await waitFor(() => expect(result.current.useWalletClient.data).toBeDefined())
 
   result.current.useDisconnect.disconnect()
 
   await waitFor(() =>
-    expect(result.current.useConnectorClient.data).not.toBeDefined(),
+    expect(result.current.useWalletClient.data).not.toBeDefined(),
   )
 })
 
 test('behavior: switch chains', async () => {
+  await connect(config, { connector })
+
   const { result } = renderHook(() => ({
-    useConnect: useConnect(),
-    useConnectorClient: useConnectorClient(),
-    useDisconnect: useDisconnect(),
+    useWalletClient: useWalletClient(),
     useSwitchChain: useSwitchChain(),
   }))
 
-  expect(result.current.useConnectorClient.data).not.toBeDefined()
+  expect(result.current.useWalletClient.data).not.toBeDefined()
 
-  result.current.useConnect.connect({
-    connector: result.current.useConnect.connectors[0]!,
-  })
-
-  await waitFor(() =>
-    expect(result.current.useConnectorClient.data).toBeDefined(),
-  )
+  await waitFor(() => expect(result.current.useWalletClient.data).toBeDefined())
 
   result.current.useSwitchChain.switchChain({ chainId: 456 })
   await waitFor(() => {
     expect(result.current.useSwitchChain.isSuccess).toBeTruthy()
     result.current.useSwitchChain.reset()
   })
-  expect(result.current.useConnectorClient.data?.chain.id).toEqual(456)
+  expect(result.current.useWalletClient.data?.chain.id).toEqual(456)
 
   result.current.useSwitchChain.switchChain({ chainId: 1 })
   await waitFor(() =>
     expect(result.current.useSwitchChain.isSuccess).toBeTruthy(),
   )
-  expect(result.current.useConnectorClient.data?.chain.id).toEqual(1)
+  expect(result.current.useWalletClient.data?.chain.id).toEqual(1)
 
-  result.current.useDisconnect.disconnect()
+  await disconnect(config, { connector })
+})
 
-  await waitFor(() =>
-    expect(result.current.useConnectorClient.data).not.toBeDefined(),
+test('behavior: re-render does not invalidate query', async () => {
+  const { getByTestId } = render(<Parent />)
+
+  getByTestId('connect').click()
+  await waitFor(() => {
+    expect(getByTestId('address').innerText).toContain(
+      '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',
+    )
+    expect(getByTestId('client').innerText).toBeTruthy()
+
+    expect(getByTestId('child-client').innerText).toBeTruthy()
+    expect(getByTestId('render-count').innerText).toEqual('1')
+  })
+
+  const initialClient = getByTestId('child-client').innerText
+
+  getByTestId('rerender').click()
+  await waitFor(() => {
+    expect(getByTestId('render-count').innerText).toEqual('2')
+  })
+  await wait(200)
+
+  expect(getByTestId('child-client').innerText).toEqual(initialClient)
+})
+
+function Parent() {
+  const [renderCount, setRenderCount] = React.useState(1)
+
+  const { connectors, connect } = useConnect()
+  const { address } = useAccount()
+  const { data } = useWalletClient()
+
+  return (
+    <>
+      <div data-testid="address">{address}</div>
+      <div data-testid="client">{data?.uid}</div>
+      <Child key={renderCount} renderCount={renderCount} />
+
+      <button
+        type="button"
+        data-testid="connect"
+        onClick={() => connect({ connector: connectors[0]! })}
+      >
+        Connect
+      </button>
+      <button
+        type="button"
+        data-testid="rerender"
+        onClick={() => setRenderCount((prev) => prev + 1)}
+      >
+        Re-render
+      </button>
+    </>
   )
-})
+}
 
-test('behavior: disabled when properties missing', async () => {
-  const { result } = renderHook(() => useConnectorClient())
-
-  await wait(100)
-  await waitFor(() => expect(result.current.isPending).toBeTruthy())
-})
+function Child(props: {
+  renderCount: number
+}) {
+  const { renderCount } = props
+  const { data } = useWalletClient()
+  return (
+    <div>
+      <span data-testid="child-client">{data?.uid}</span>
+      <span data-testid="render-count">{renderCount}</span>
+    </div>
+  )
+}
