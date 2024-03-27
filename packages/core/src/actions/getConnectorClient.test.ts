@@ -24,6 +24,17 @@ test('parameters: connector', async () => {
 
 test.todo('custom connector client')
 
+test('behavior: account address is checksummed', async () => {
+  await connect(config, { connector })
+  const account = '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266'
+  const client = await getConnectorClient(config, { account })
+  expect(client.account.address).toMatchInlineSnapshot(
+    '"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"',
+  )
+  expect(client.account.address).not.toBe(account)
+  await disconnect(config, { connector })
+})
+
 test('behavior: not connected', async () => {
   await expect(
     getConnectorClient(config),

@@ -6,8 +6,8 @@ import {
   createClient,
   custom,
 } from 'viem'
-
 import { getAddress, parseAccount } from 'viem/utils'
+
 import type { Config, Connection } from '../createConfig.js'
 import type { ErrorType } from '../errors/base.js'
 import {
@@ -84,12 +84,12 @@ export async function getConnectorClient<
 
   // Default using `custom` transport
   const account = parseAccount(parameters.account ?? connection.accounts[0]!)
+  account.address = getAddress(account.address) // TODO: Checksum address as part of `parseAccount`?
+
   const chain = config.chains.find((chain) => chain.id === chainId)
   const provider = (await connection.connector.getProvider({ chainId })) as {
     request(...args: any): Promise<any>
   }
-
-  account.address = getAddress(account.address)
 
   // if account was provided, check that it exists on the connector
   if (parameters.account && !connection.accounts.includes(account.address))
