@@ -25,7 +25,7 @@ import {
   type UseQueryReturnType,
   useQuery,
 } from '../utils/query.js'
-import { type UseAccountReturnType, useAccount } from './useAccount.js'
+import { useAccount } from './useAccount.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
@@ -83,17 +83,13 @@ export function useWalletClient<
   )
   const enabled = Boolean(status !== 'disconnected' && (query.enabled ?? true))
 
-  const addressRef = useRef<UseAccountReturnType<config>['address']>(address)
-
+  const addressRef = useRef(address)
   // biome-ignore lint/nursery/useExhaustiveDependencies: `queryKey` not required
   useEffect(() => {
     if (!address) {
       // remove when account is disconnected
       queryClient.removeQueries({ queryKey })
-
-      if (addressRef.current) {
-        addressRef.current = undefined
-      }
+      if (addressRef.current) addressRef.current = undefined
     } else if (address !== addressRef.current) {
       // invalidate when address changes
       queryClient.invalidateQueries({ queryKey })

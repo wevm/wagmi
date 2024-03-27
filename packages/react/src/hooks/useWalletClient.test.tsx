@@ -1,6 +1,7 @@
 import { connect, disconnect } from '@wagmi/core'
 import { config, wait } from '@wagmi/test'
 import { render, renderHook, waitFor } from '@wagmi/test/react'
+import * as React from 'react'
 import { expect, test } from 'vitest'
 
 import { useAccount } from './useAccount.js'
@@ -8,8 +9,6 @@ import { useConnect } from './useConnect.js'
 import { useDisconnect } from './useDisconnect.js'
 import { useSwitchChain } from './useSwitchChain.js'
 import { useWalletClient } from './useWalletClient.js'
-
-import React, { useState } from 'react'
 
 // Almost identical implementation to `useConnectorClient` (except for return type)
 // Should update both in tandem
@@ -161,88 +160,71 @@ test('behavior: switch chains', async () => {
   )
 })
 
-test("behavior: re-render doesn't invalidate query", async () => {
-  const ChildComponent = ({ renderCount }: { renderCount: number }) => {
-    const { data } = useWalletClient()
-    return (
-      <div>
-        <span data-testid="child-component-render-count">{`#${renderCount}: `}</span>
+test('behavior: re-render does not invalidate query', async () => {
+  const { getByTestId } = render(<Parent />)
 
-        <span data-testid="child-component-wallet-client-uid">{data?.uid}</span>
-      </div>
-    )
-  }
-
-  const ParentComponent = () => {
-    const { connectors, connect } = useConnect()
-    const { address } = useAccount()
-
-    const { data } = useWalletClient()
-
-    const [renderCount, setRenderCount] = useState(1)
-
-    return (
-      <>
-        <button
-          type="button"
-          data-testid="connect-button"
-          onClick={() => {
-            connect({
-              connector: connectors[0]!,
-            })
-          }}
-        >
-          Connect
-        </button>
-        <div data-testid="address">{address}</div>
-        <div data-testid="parent-component-wallet-client-uid">{data?.uid}</div>
-        <button
-          type="button"
-          data-testid="re-render-button"
-          onClick={() => setRenderCount((prev) => prev + 1)}
-        >
-          Re-render component
-        </button>
-        <ChildComponent key={renderCount} renderCount={renderCount} />
-      </>
-    )
-  }
-
-  const { getByTestId } = render(<ParentComponent />)
-
-  getByTestId('connect-button').click()
-
+  getByTestId('connect').click()
   await waitFor(() => {
     expect(getByTestId('address').innerText).toContain(
       '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',
     )
-    expect(
-      getByTestId('parent-component-wallet-client-uid').innerText,
-    ).toBeTruthy()
+    expect(getByTestId('client').innerText).toBeTruthy()
+
+    expect(getByTestId('child-client').innerText).toBeTruthy()
+    expect(getByTestId('render-count').innerText).toEqual('1')
   })
 
+  const initialClient = getByTestId('child-client').innerText
+
+  getByTestId('rerender').click()
   await waitFor(() => {
-    expect(
-      getByTestId('child-component-wallet-client-uid').innerText,
-    ).toBeTruthy()
-    expect(getByTestId('child-component-render-count').innerText).toContain(
-      '#1',
-    )
+    expect(getByTestId('render-count').innerText).toEqual('2')
   })
-
-  const firstUID = getByTestId('child-component-wallet-client-uid').innerText
-
-  getByTestId('re-render-button').click()
-
-  await waitFor(() => {
-    expect(getByTestId('child-component-render-count').innerText).toContain(
-      '#2',
-    )
-  })
-
   await wait(200)
 
-  expect(getByTestId('child-component-wallet-client-uid').innerText).toEqual(
-    firstUID,
-  )
+  expect(getByTestId('child-client').innerText).toEqual(initialClient)
 })
+
+function Parent() {
+  const [renderCount, setRenderCount] = React.useState(1)
+
+  const { connectors, connect } = useConnect()
+  const { address } = useAccount()
+  const { data } = useWalletClient()
+
+  return (
+    <>
+      <div data-testid="address">{address}</div>
+      <div data-testid="client">{data?.uid}</div>
+      <Child key={renderCount} renderCount={renderCount} />
+
+      <button
+        type="button"
+        data-testid="connect"
+        onClick={() => connect({ connector: connectors[0]! })}
+      >
+        Connect
+      </button>
+      <button
+        type="button"
+        data-testid="rerender"
+        onClick={() => setRenderCount((prev) => prev + 1)}
+      >
+        Re-render
+      </button>
+    </>
+  )
+}
+
+function Child(props: {
+  renderCount: number
+}) {
+  const { renderCount } = props
+  const { data } = useWalletClient()
+  return (
+    <div>
+      <span data-testid="child-client">{data?.uid}</span>
+      <span data-testid="render-count">{renderCount}</span>
+    </div>
+  )
+}
