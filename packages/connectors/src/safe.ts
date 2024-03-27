@@ -1,10 +1,6 @@
 import { type SafeAppProvider } from '@safe-global/safe-apps-provider'
 import { type Opts } from '@safe-global/safe-apps-sdk'
-import {
-  ProviderNotFoundError,
-  createConnector,
-  normalizeChainId,
-} from '@wagmi/core'
+import { ProviderNotFoundError, createConnector } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
 import { getAddress } from 'viem'
 
@@ -98,7 +94,7 @@ export function safe(parameters: SafeParameters = {}) {
     async getChainId() {
       const provider = await this.getProvider()
       if (!provider) throw new ProviderNotFoundError()
-      return normalizeChainId(provider.chainId)
+      return Number(provider.chainId)
     },
     async isAuthorized() {
       try {

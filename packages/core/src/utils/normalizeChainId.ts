@@ -1,3 +1,4 @@
+/** @deprecated use `Number` instead */
 export function normalizeChainId(chainId: bigint | number | string | unknown) {
   if (typeof chainId === 'string')
     return Number.parseInt(

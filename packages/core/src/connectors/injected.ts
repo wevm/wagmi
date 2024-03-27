@@ -16,7 +16,6 @@ import {
 import { ChainNotConfiguredError } from '../errors/config.js'
 import { ProviderNotFoundError } from '../errors/connector.js'
 import { type Evaluate } from '../types/utils.js'
-import { normalizeChainId } from '../utils/normalizeChainId.js'
 import { createConnector } from './createConnector.js'
 
 export type InjectedParameters = {
@@ -149,9 +148,9 @@ export function injected(parameters: InjectedParameters = {}) {
       let accounts: readonly Address[] | null = null
       if (!isReconnecting) {
         accounts = await this.getAccounts().catch(() => null)
-        const isAuthorized = !!accounts?.length
+        // Attempt to show another prompt for selecting account if already connected and `shimDisconnect` flag is enabled
+        const isAuthorized = shimDisconnect && !!accounts?.length
         if (isAuthorized)
-          // Attempt to show another prompt for selecting account if already connected
           try {
             const permissions = await provider.request({
               method: 'wallet_requestPermissions',
@@ -241,7 +240,7 @@ export function injected(parameters: InjectedParameters = {}) {
       const provider = await this.getProvider()
       if (!provider) throw new ProviderNotFoundError()
       const hexChainId = await provider.request({ method: 'eth_chainId' })
-      return normalizeChainId(hexChainId)
+      return Number(hexChainId)
     },
     async getProvider() {
       if (typeof window === 'undefined') return undefined
@@ -427,14 +426,14 @@ export function injected(parameters: InjectedParameters = {}) {
         })
     },
     onChainChanged(chain) {
-      const chainId = normalizeChainId(chain)
+      const chainId = Number(chain)
       config.emitter.emit('change', { chainId })
     },
     async onConnect(connectInfo) {
       const accounts = await this.getAccounts()
       if (accounts.length === 0) return
 
-      const chainId = normalizeChainId(connectInfo.chainId)
+      const chainId = Number(connectInfo.chainId)
       config.emitter.emit('connect', { accounts, chainId })
 
       const provider = await this.getProvider()

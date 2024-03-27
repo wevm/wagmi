@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 2.1.4
+
+### Patch Changes
+
+- [#3737](https://github.com/wevm/wagmi/pull/3737) [`11020fed`](https://github.com/wevm/wagmi/commit/11020fedfc68639eace241e328331cff43bf91af) Thanks [@oskarvu](https://github.com/oskarvu)! - Added Gnosis to Etherscan plugin.
+
 ## 2.1.3
 
 ### Patch Changes
