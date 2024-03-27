@@ -2,4 +2,4 @@
 "wagmi": patch
 ---
 
-fix `useWalletClient` and `useConnectorClient` performance issues
+Removed unnecessary re-renders from  `useConnectorClient` and `useWalletClient`.
