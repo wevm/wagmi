@@ -149,7 +149,7 @@ export function injected(parameters: InjectedParameters = {}) {
       if (!isReconnecting) {
         accounts = await this.getAccounts().catch(() => null)
         const isAuthorized = !!accounts?.length
-        if (isAuthorized)
+        if (isAuthorized && shimDisconnect)
           // Attempt to show another prompt for selecting account if already connected
           try {
             const permissions = await provider.request({
