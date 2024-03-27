@@ -2,4 +2,4 @@
 "@wagmi/core": minor
 ---
 
-Add shimDisconnect check to disable MetaMask requestPermissions if it's false
+Disabled `wallet_requestPermissions` prompt when `shimDisconnect` is `false`.
