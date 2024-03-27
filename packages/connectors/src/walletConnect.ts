@@ -2,7 +2,6 @@ import {
   ChainNotConfiguredError,
   ProviderNotFoundError,
   createConnector,
-  normalizeChainId,
 } from '@wagmi/core'
 import {
   type Evaluate,
@@ -305,11 +304,11 @@ export function walletConnect(parameters: WalletConnectParameters) {
         })
     },
     onChainChanged(chain) {
-      const chainId = normalizeChainId(chain)
+      const chainId = Number(chain)
       config.emitter.emit('change', { chainId })
     },
     async onConnect(connectInfo) {
-      const chainId = normalizeChainId(connectInfo.chainId)
+      const chainId = Number(connectInfo.chainId)
       const accounts = await this.getAccounts()
       config.emitter.emit('connect', { accounts, chainId })
     },

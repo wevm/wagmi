@@ -2,11 +2,7 @@ import {
   type CoinbaseWalletProvider,
   type CoinbaseWalletSDK,
 } from '@coinbase/wallet-sdk'
-import {
-  ChainNotConfiguredError,
-  createConnector,
-  normalizeChainId,
-} from '@wagmi/core'
+import { ChainNotConfiguredError, createConnector } from '@wagmi/core'
 import type { Evaluate, Mutable, Omit } from '@wagmi/core/internal'
 import {
   type ProviderRpcError,
@@ -111,7 +107,7 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
     async getChainId() {
       const provider = await this.getProvider()
       const chainId = await provider.request<number>({ method: 'eth_chainId' })
-      return normalizeChainId(chainId)
+      return Number(chainId)
     },
     async getProvider() {
       if (!walletProvider) {
@@ -147,6 +143,7 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
 
         walletProvider = sdk.makeWeb3Provider(jsonRpcUrl, chainId)
       }
+
       return walletProvider
     },
     async isAuthorized() {
@@ -203,7 +200,7 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
         })
     },
     onChainChanged(chain) {
-      const chainId = normalizeChainId(chain)
+      const chainId = Number(chain)
       config.emitter.emit('change', { chainId })
     },
     async onDisconnect(_error) {

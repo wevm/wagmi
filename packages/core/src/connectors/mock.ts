@@ -18,7 +18,6 @@ import {
   ChainNotConfiguredError,
   ConnectorNotConnectedError,
 } from '../errors/config.js'
-import { normalizeChainId } from '../utils/normalizeChainId.js'
 import { createConnector } from './createConnector.js'
 
 export type MockParameters = {
@@ -112,7 +111,7 @@ export function mock(parameters: MockParameters) {
         })
     },
     onChainChanged(chain) {
-      const chainId = normalizeChainId(chain)
+      const chainId = Number(chain)
       config.emitter.emit('change', { chainId })
     },
     async onDisconnect(_error) {

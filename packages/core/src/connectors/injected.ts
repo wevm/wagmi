@@ -16,7 +16,6 @@ import {
 import { ChainNotConfiguredError } from '../errors/config.js'
 import { ProviderNotFoundError } from '../errors/connector.js'
 import { type Evaluate } from '../types/utils.js'
-import { normalizeChainId } from '../utils/normalizeChainId.js'
 import { createConnector } from './createConnector.js'
 
 export type InjectedParameters = {
@@ -241,7 +240,7 @@ export function injected(parameters: InjectedParameters = {}) {
       const provider = await this.getProvider()
       if (!provider) throw new ProviderNotFoundError()
       const hexChainId = await provider.request({ method: 'eth_chainId' })
-      return normalizeChainId(hexChainId)
+      return Number(hexChainId)
     },
     async getProvider() {
       if (typeof window === 'undefined') return undefined
@@ -427,14 +426,14 @@ export function injected(parameters: InjectedParameters = {}) {
         })
     },
     onChainChanged(chain) {
-      const chainId = normalizeChainId(chain)
+      const chainId = Number(chain)
       config.emitter.emit('change', { chainId })
     },
     async onConnect(connectInfo) {
       const accounts = await this.getAccounts()
       if (accounts.length === 0) return
 
-      const chainId = normalizeChainId(connectInfo.chainId)
+      const chainId = Number(connectInfo.chainId)
       config.emitter.emit('connect', { accounts, chainId })
 
       const provider = await this.getProvider()
