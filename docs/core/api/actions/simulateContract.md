@@ -37,34 +37,6 @@ const result = await simulateContract(config, {
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
-### Pairing with `writeContract`
-
-The `simulateContract` function also pairs well with `writeContract`.
-
-In the example below, we are validating if the contract write will be successful via `simulateContract`. If no errors are thrown, then we are all good. After that, we perform a contract write to execute the transaction.
-
-::: code-group
-```ts [index.ts]
-import { simulateContract, writeContract } from '@wagmi/core'
-import { abi } from './abi'
-import { config } from './config'
-
-const { request } = await simulateContract(config, {
-  abi,
-  address: '0x6b175474e89094c44da98b954eedeac495271d0f',
-  functionName: 'transferFrom',
-  args: [
-    '0xd2135CfB216b74109775236E36d4b433F1DF507B',
-    '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-    123n,
-  ],
-})
-const hash = await writeContract(config, request)
-```
-<<< @/snippets/abi-write.ts[abi.ts]
-<<< @/snippets/core/config.ts[config.ts]
-:::
-
 ## Parameters
 
 ```ts

@@ -18,9 +18,30 @@ import { writeContract } from '@wagmi/core'
 
 ## Usage
 
-Below is a basic example of how to execute a write function on a contract.
+::: code-group
+```ts [index.ts]
+import { writeContract } from '@wagmi/core'
+import { abi } from './abi'
+import { config } from './config'
 
-While you can use `writeContract` by [itself](#standalone), it is highly recommended to pair it with [`simulateContract`](./simulateContract) to validate that the contract write will execute without errors.
+const result = await writeContract(config, {
+  abi,
+  address: '0x6b175474e89094c44da98b954eedeac495271d0f',
+  functionName: 'transferFrom',
+  args: [
+    '0xd2135CfB216b74109775236E36d4b433F1DF507B',
+    '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    123n,
+  ],
+})
+```
+<<< @/snippets/abi-write.ts[abi.ts]
+<<< @/snippets/core/config.ts[config.ts]
+:::
+
+::::tip Pairing with `simulateContract`
+
+Pairing [`simulateContract`](/core/api/actions/simulateContract) with `writeContract` allows you to validate if the transaction will succeed ahead of time. If the simulate succeeds, `writeContract` can execute the transaction.
 
 ::: code-group
 ```ts [index.ts]
@@ -43,31 +64,8 @@ const hash = await writeContract(config, request)
 <<< @/snippets/abi-write.ts[abi.ts]
 <<< @/snippets/core/config.ts[config.ts]
 :::
+::::
 
-### Standalone
-
-If you don't need to perform validation on the contract write, you can also use it by itself:
-
-::: code-group
-```ts [index.ts]
-import { writeContract } from '@wagmi/core'
-import { abi } from './abi'
-import { config } from './config'
-
-const result = await writeContract(config, {
-  abi,
-  address: '0x6b175474e89094c44da98b954eedeac495271d0f',
-  functionName: 'transferFrom',
-  args: [
-    '0xd2135CfB216b74109775236E36d4b433F1DF507B',
-    '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-    123n,
-  ],
-})
-```
-<<< @/snippets/abi-write.ts[abi.ts]
-<<< @/snippets/core/config.ts[config.ts]
-:::
 
 ## Parameters
 
