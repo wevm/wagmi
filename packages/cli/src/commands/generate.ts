@@ -55,7 +55,7 @@ export async function generate(options: Generate = {}) {
   }
 
   const resolvedConfigs = await resolveConfig({ configPath })
-  let isTypeScript = await getIsUsingTypeScript()
+  const isTypeScript = await getIsUsingTypeScript()
 
   type Watcher = FSWatcher & { config?: Watch }
   const watchers: Watcher[] = []
@@ -77,8 +77,7 @@ export async function generate(options: Generate = {}) {
     if (outNames.has(config.out))
       throw new Error(`out "${config.out}" must be unique.`)
     outNames.add(config.out)
-    // custom typescript setting
-    isTypeScript = config.isTypeScript ?? isTypeScript
+
     // Collect contracts and watch configs from plugins
     const plugins = (config.plugins ?? []).map((x, i) => ({
       ...x,
