@@ -2,4 +2,4 @@
 "@wagmi/cli": patch
 ---
 
-Add basescan to etherscan cli plugin
+Added basescan to etherscan cli plugin
