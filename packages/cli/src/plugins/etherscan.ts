@@ -12,6 +12,9 @@ const apiUrls = {
   [10]: 'https://api-optimistic.etherscan.io/api',
   [420]: 'https://api-goerli-optimistic.etherscan.io/api',
   [11_155_420]: 'https://api-sepolia-optimistic.etherscan.io/api',
+  // Base
+  [8453]: 'https://api.basescan.org/api',
+  [84532]: 'https://api-sepolia.basescan.org/api',
   // Polygon
   [137]: 'https://api.polygonscan.com/api',
   [80_001]: 'https://api-testnet.polygonscan.com/api',
@@ -47,17 +50,18 @@ export type EtherscanConfig<chainId extends number> = {
    * Etherscan API key.
    *
    * API keys are specific per network and include testnets (e.g. Ethereum Mainnet and Goerli share same API key). Create or manage keys:
-   * - [__Ethereum__](https://etherscan.io/myapikey)
    * - [__Arbitrum__](https://arbiscan.io/myapikey)
    * - [__Avalanche__](https://snowscan.xyz/myapikey)
    * - [__BNB Smart Chain__](https://bscscan.com/myapikey)
+   * - [__Base__](https://basescan.org/myapikey)
    * - [__Celo__](https://celoscan.io/myapikey)
+   * - [__Ethereum__](https://etherscan.io/myapikey)
    * - [__Fantom__](https://ftmscan.com/myapikey)
+   * - [__Fraxtal__](https://fraxscan.com/myapikey)
+   * - [__Gnosis__](https://gnosisscan.io/myapikey)
    * - [__Heco Chain__](https://hecoinfo.com/myapikey)
    * - [__Optimism__](https://optimistic.etherscan.io/myapikey)
    * - [__Polygon__](https://polygonscan.com/myapikey)
-   * - [__Fraxtal__](https://fraxscan.com/myapikey)
-   * - [__Gnosis__](https://gnosisscan.io/myapikey)
    */
   apiKey: string
   /**
