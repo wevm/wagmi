@@ -148,9 +148,9 @@ export function injected(parameters: InjectedParameters = {}) {
       let accounts: readonly Address[] | null = null
       if (!isReconnecting) {
         accounts = await this.getAccounts().catch(() => null)
-        const isAuthorized = !!accounts?.length
-        if (isAuthorized && shimDisconnect)
-          // Attempt to show another prompt for selecting account if already connected
+        // Attempt to show another prompt for selecting account if already connected and `shimDisconnect` flag is enabled
+        const isAuthorized = shimDisconnect && !!accounts?.length
+        if (isAuthorized)
           try {
             const permissions = await provider.request({
               method: 'wallet_requestPermissions',
