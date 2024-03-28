@@ -17,41 +17,12 @@ import {
   numberToHex,
 } from 'viem'
 
-// TODO(@3): Set `enableMobileWalletLink` to `true`
-export type CoinbaseWalletParameters = Evaluate<
-  Mutable<
-    Omit<
-      ConstructorParameters<typeof CoinbaseWalletSDK>[0],
-      'reloadOnDisconnect' // remove property since TSDoc says default is `true`
-    >
-  > & {
-    /**
-     * Fallback Ethereum JSON RPC URL
-     * @default ""
-     */
-    jsonRpcUrl?: string | undefined
-    /**
-     * Fallback Ethereum Chain ID
-     * @default 1
-     */
-    chainId?: number | undefined
-    /**
-     * Whether or not to reload dapp automatically after disconnect.
-     * @default false
-     */
-    reloadOnDisconnect?: boolean | undefined
-  }
->
-
 coinbaseWallet.type = 'coinbaseWallet' as const
-export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
-  const reloadOnDisconnect = false
-
-  type Provider = CoinbaseWalletProvider
+export function coinbaseWallet(parameters: CoinbaseWalletSDKOptions) {
   type Properties = {}
 
   let sdk: CoinbaseWalletSDK | undefined
-  let walletProvider: Provider | undefined
+  let walletProvider: ProviderInterface | undefined
 
   let accountsChanged: Connector['onAccountsChanged'] | undefined
   let chainChanged: Connector['onChainChanged'] | undefined
@@ -85,7 +56,7 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
         }
 
         // Switch to chain if provided
-        let currentChainId = await this.getChainId()
+        let currentChainId: number = await this.getChainId()
         if (chainId && currentChainId !== chainId) {
           const chain = await this.switchChain!({ chainId }).catch((error) => {
             if (error.code === UserRejectedRequestError.code) throw error
@@ -121,8 +92,8 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
         disconnect = undefined
       }
 
-      provider.disconnect()
-      provider.close()
+      provider?.disconnect?.() // non extension
+      sdk?.disconnect?.() // calls legacy method extension.close if necessary
     },
     async getAccounts() {
       const provider = await this.getProvider()
@@ -134,7 +105,7 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
     },
     async getChainId() {
       const provider = await this.getProvider()
-      const chainId = await provider.request<number>({ method: 'eth_chainId' })
+      const chainId = await provider.request({ method: 'eth_chainId' })
       return Number(chainId)
     },
     async getProvider() {
@@ -150,29 +121,12 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
           SDK = CoinbaseWalletSDK.default
         else
           SDK = CoinbaseWalletSDK as unknown as typeof CoinbaseWalletSDK.default
-        sdk = new SDK({ reloadOnDisconnect, ...parameters })
+        sdk = new SDK(parameters)
 
-        // Force types to retrieve private `walletExtension` method from the Coinbase Wallet SDK.
-        const walletExtensionChainId = (
-          sdk as unknown as {
-            get walletExtension(): { getChainId(): number } | undefined
-          }
-        ).walletExtension?.getChainId()
-
-        const chain =
-          config.chains.find((chain) =>
-            parameters.chainId
-              ? chain.id === parameters.chainId
-              : chain.id === walletExtensionChainId,
-          ) || config.chains[0]
-        const chainId = parameters.chainId || chain?.id
-        const jsonRpcUrl =
-          parameters.jsonRpcUrl || chain?.rpcUrls.default.http[0]
-
-        walletProvider = sdk.makeWeb3Provider(jsonRpcUrl, chainId)
+        walletProvider = sdk.makeWeb3Provider() as ProviderInterface
       }
 
-      return walletProvider
+      return walletProvider as ProviderInterface
     },
     async isAuthorized() {
       try {
