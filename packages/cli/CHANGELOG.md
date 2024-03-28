@@ -1,5 +1,13 @@
 # @wagmi/cli
 
+## 2.1.5
+
+### Patch Changes
+
+- [`e1ca4e63`](https://github.com/wevm/wagmi/commit/e1ca4e637ae6cec7f5902b0a2c0e0efc3b751a1d) Thanks [@tmm](https://github.com/tmm)! - Added title to CLI process.
+
+- [#3723](https://github.com/wevm/wagmi/pull/3723) [`d6bc98ca`](https://github.com/wevm/wagmi/commit/d6bc98ca0ce9081f192f62e0b0fcfea3cb07a2bb) Thanks [@leecobaby](https://github.com/leecobaby)! - Broadened TypeScript detection.
+
 ## 2.1.4
 
 ### Patch Changes
