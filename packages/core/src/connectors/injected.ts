@@ -146,7 +146,7 @@ export function injected(parameters: InjectedParameters = {}) {
       if (!provider) throw new ProviderNotFoundError()
 
       let accounts: readonly Address[] | null = null
-      if (!isReconnecting) {
+      if (isReconnecting) {
         accounts = await this.getAccounts().catch(() => null)
         // Attempt to show another prompt for selecting account if already connected and `shimDisconnect` flag is enabled
         const isAuthorized = shimDisconnect && !!accounts?.length
