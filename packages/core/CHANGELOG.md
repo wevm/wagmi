@@ -1,5 +1,13 @@
 # @wagmi/core
 
+## 2.6.12
+
+### Patch Changes
+
+- [#3763](https://github.com/wevm/wagmi/pull/3763) [`a59069e9`](https://github.com/wevm/wagmi/commit/a59069e9fab45dd606bb89a7f829fe94c51a5494) Thanks [@tmm](https://github.com/tmm)! - Fixed `getConnectorClient` internal address comparison.
+
+- [#3608](https://github.com/wevm/wagmi/pull/3608) [`0acd3132`](https://github.com/wevm/wagmi/commit/0acd31320f534993af566be5490c2978b6184f66) Thanks [@mqklin](https://github.com/mqklin)! - Disabled `wallet_requestPermissions` prompt when `shimDisconnect` is `false`.
+
 ## 2.6.11
 
 ### Patch Changes
