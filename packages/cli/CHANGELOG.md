@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 2.1.6
+
+### Patch Changes
+
+- [#3756](https://github.com/wevm/wagmi/pull/3756) [`c7d6f467`](https://github.com/wevm/wagmi/commit/c7d6f4679125fd2f6cca5b5ef362abf47e37f934) Thanks [@jrfrantz](https://github.com/jrfrantz)! - Added basescan to etherscan cli plugin
+
 ## 2.1.5
 
 ### Patch Changes
