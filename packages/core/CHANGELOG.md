@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.6.13
+
+### Patch Changes
+
+- [`b80236dc`](https://github.com/wevm/wagmi/commit/b80236dc623095fe8f1e1d10957d7776fb6ab48b) Thanks [@jxom](https://github.com/jxom)! - Removed unneeded `uniqueBy` check on connectors state.
+
 ## 2.6.12
 
 ### Patch Changes
