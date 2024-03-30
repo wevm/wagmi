@@ -1,5 +1,25 @@
 # wagmi
 
+## 2.5.16
+
+### Patch Changes
+
+- [`b80236dc`](https://github.com/wevm/wagmi/commit/b80236dc623095fe8f1e1d10957d7776fb6ab48b) Thanks [@jxom](https://github.com/jxom)! - Removed unneeded `uniqueBy` check on connectors state.
+
+- Updated dependencies [[`b80236dc`](https://github.com/wevm/wagmi/commit/b80236dc623095fe8f1e1d10957d7776fb6ab48b)]:
+  - @wagmi/core@2.6.13
+  - @wagmi/connectors@4.1.22
+
+## 2.5.15
+
+### Patch Changes
+
+- [#3740](https://github.com/wevm/wagmi/pull/3740) [`3373c644`](https://github.com/wevm/wagmi/commit/3373c6444c38ef16532d18cfc351b3fe2bf2d351) Thanks [@BrickheadJohnny](https://github.com/BrickheadJohnny)! - Removed unnecessary re-renders from `useConnectorClient` and `useWalletClient`.
+
+- Updated dependencies [[`a59069e9`](https://github.com/wevm/wagmi/commit/a59069e9fab45dd606bb89a7f829fe94c51a5494), [`0acd3132`](https://github.com/wevm/wagmi/commit/0acd31320f534993af566be5490c2978b6184f66)]:
+  - @wagmi/core@2.6.12
+  - @wagmi/connectors@4.1.21
+
 ## 2.5.14
 
 ### Patch Changes

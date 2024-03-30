@@ -24,7 +24,6 @@ import { type Storage, createStorage, noopStorage } from './createStorage.js'
 import { ChainNotConfiguredError } from './errors/config.js'
 import type { Evaluate, ExactPartial, LooseOmit, OneOf } from './types/utils.js'
 import { uid } from './utils/uid.js'
-import { uniqueBy } from './utils/uniqueBy.js'
 import { version } from './version.js'
 
 export type CreateConfigParameters<
@@ -286,7 +285,7 @@ export function createConfig<
     }
 
     if (parameters.storage && !store.persist.hasHydrated()) return
-    connectors.setState((x) => uniqueBy([...x, ...newConnectors], 'id'), true)
+    connectors.setState((x) => [...x, ...newConnectors], true)
   })
 
   /////////////////////////////////////////////////////////////////////////////////////////////////
