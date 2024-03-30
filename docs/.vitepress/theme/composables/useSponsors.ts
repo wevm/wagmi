@@ -128,6 +128,11 @@ export function useSponsors() {
           url: 'https://twitter.com/supafinance',
           img: 'supa-light.svg',
         },
+        {
+          name: 'Syndicate',
+          url: 'https://syndicate.io',
+          img: 'syndicate-light.svg',
+        },
       ],
     }
 
