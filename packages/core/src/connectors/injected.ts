@@ -1,5 +1,4 @@
 import {
-  type Address,
   type EIP1193Provider,
   type ProviderConnectInfo,
   ProviderRpcError,
@@ -145,9 +144,8 @@ export function injected(parameters: InjectedParameters = {}) {
       const provider = await this.getProvider()
       if (!provider) throw new ProviderNotFoundError()
 
-      let accounts: readonly Address[] | null = null
+      let accounts = await this.getAccounts().catch(() => null)
       if (!isReconnecting) {
-        accounts = await this.getAccounts().catch(() => null)
         // Attempt to show another prompt for selecting account if already connected and `shimDisconnect` flag is enabled
         const isAuthorized = shimDisconnect && !!accounts?.length
         if (isAuthorized)
