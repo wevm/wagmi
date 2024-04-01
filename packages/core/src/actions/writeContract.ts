@@ -106,6 +106,7 @@ export async function writeContract<
   else {
     const { request: simulateRequest } = await simulateContract(config, {
       ...rest,
+      chainId,
       account,
     } as any)
     request = simulateRequest
