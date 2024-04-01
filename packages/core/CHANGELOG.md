@@ -1,5 +1,15 @@
 # @wagmi/core
 
+## 2.6.14
+
+### Patch Changes
+
+- [#3777](https://github.com/wevm/wagmi/pull/3777) [`b3b54ef1`](https://github.com/wevm/wagmi/commit/b3b54ef179c5fa0d1694d38d4b808549a0550409) Thanks [@desfero](https://github.com/desfero)! - Fixed `writeContract` to forward `chainIn` when simulating contract call
+
+- [#3779](https://github.com/wevm/wagmi/pull/3779) [`3da20bb8`](https://github.com/wevm/wagmi/commit/3da20bb80e7c3efeef8227ced66ad615370fc242) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where `eth_requestAccounts` would be called upon reconnect instead of `eth_accounts`.
+
+- [`a3d1858f`](https://github.com/wevm/wagmi/commit/a3d1858fce448d2b70e36ee692ef1589b74e9d3f) Thanks [@jxom](https://github.com/jxom)! - Fixed hydration conditional in `createConfig`.
+
 ## 2.6.13
 
 ### Patch Changes
