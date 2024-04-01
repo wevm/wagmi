@@ -284,7 +284,7 @@ export function createConfig<
       newConnectors.push(connector)
     }
 
-    if (parameters.storage && !store.persist.hasHydrated()) return
+    if (storage && !store.persist.hasHydrated()) return
     connectors.setState((x) => [...x, ...newConnectors], true)
   })
 
