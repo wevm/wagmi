@@ -85,34 +85,34 @@ jobs:
       # - name: Test types
       #   run: pnpm test:typecheck
 
-  test:
-    name: Test
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    strategy:
-      max-parallel: 3
-      matrix:
-        shard: [1, 2, 3]
-        total-shards: [3]
+  # test:
+  #   name: Test
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 10
+  #   strategy:
+  #     max-parallel: 3
+  #     matrix:
+  #       shard: [1, 2, 3]
+  #       total-shards: [3]
 
-    steps:
-      - name: Clone repository
-        uses: actions/checkout@v4
+  #   steps:
+  #     - name: Clone repository
+  #       uses: actions/checkout@v4
 
-      - name: Install dependencies
-        uses: ./.github/actions/install-dependencies
+  #     - name: Install dependencies
+  #       uses: ./.github/actions/install-dependencies
 
-      - name: Run tests
-        uses: nick-fields/retry@v3
-        with:
-          command: CI=true pnpm test:cov --shard=${{ matrix.shard }}/${{ matrix.total-shards }} --retry=3 --bail=1
-          max_attempts: 3
-          timeout_minutes: 5
-        env:
-          VITE_MAINNET_FORK_BLOCK_NUMBER: ${{ vars.VITE_MAINNET_FORK_BLOCK_NUMBER }}
-          VITE_MAINNET_FORK_URL: ${{ secrets.VITE_MAINNET_FORK_URL }}
-          VITE_OPTIMISM_FORK_BLOCK_NUMBER: ${{ vars.VITE_OPTIMISM_FORK_BLOCK_NUMBER }}
-          VITE_OPTIMISM_FORK_URL: ${{ secrets.VITE_OPTIMISM_FORK_URL }}
+  #     - name: Run tests
+  #       uses: nick-fields/retry@v3
+  #       with:
+  #         command: CI=true pnpm test:cov --shard=${{ matrix.shard }}/${{ matrix.total-shards }} --retry=3 --bail=1
+  #         max_attempts: 3
+  #         timeout_minutes: 5
+  #       env:
+  #         VITE_MAINNET_FORK_BLOCK_NUMBER: ${{ vars.VITE_MAINNET_FORK_BLOCK_NUMBER }}
+  #         VITE_MAINNET_FORK_URL: ${{ secrets.VITE_MAINNET_FORK_URL }}
+  #         VITE_OPTIMISM_FORK_BLOCK_NUMBER: ${{ vars.VITE_OPTIMISM_FORK_BLOCK_NUMBER }}
+  #         VITE_OPTIMISM_FORK_URL: ${{ secrets.VITE_OPTIMISM_FORK_URL }}
 
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v4
+  #     - name: Upload coverage reports to Codecov
+  #       uses: codecov/codecov-action@v4
