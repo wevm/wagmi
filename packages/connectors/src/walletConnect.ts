@@ -14,6 +14,7 @@ import {
   type Address,
   type ProviderConnectInfo,
   type ProviderRpcError,
+  type RpcError,
   SwitchChainError,
   UserRejectedRequestError,
   getAddress,
@@ -23,41 +24,7 @@ import {
 type EthereumProviderOptions = Parameters<typeof EthereumProvider['init']>[0]
 
 export type WalletConnectParameters = Evaluate<
-  {
-    /**
-     * If a new chain is added to a previously existing configured connector `chains`, this flag
-     * will determine if that chain should be considered as stale. A stale chain is a chain that
-     * WalletConnect has yet to establish a relationship with (e.g. the user has not approved or
-     * rejected the chain).
-     *
-     * Preface: Whereas WalletConnect v1 supported dynamic chain switching, WalletConnect v2 requires
-     * the user to pre-approve a set of chains up-front. This comes with consequent UX nuances (see below) when
-     * a user tries to switch to a chain that they have not approved.
-     *
-     * This flag mainly affects the behavior when a wallet does not support dynamic chain authorization
-     * with WalletConnect v2.
-     *
-     * If `true` (default), the new chain will be treated as a stale chain. If the user
-     * has yet to establish a relationship (approved/rejected) with this chain in their WalletConnect
-     * session, the connector will disconnect upon the dapp auto-connecting, and the user will have to
-     * reconnect to the dapp (revalidate the chain) in order to approve the newly added chain.
-     * This is the default behavior to avoid an unexpected error upon switching chains which may
-     * be a confusing user experience (e.g. the user will not know they have to reconnect
-     * unless the dapp handles these types of errors).
-     *
-     * If `false`, the new chain will be treated as a validated chain. This means that if the user
-     * has yet to establish a relationship with the chain in their WalletConnect session, wagmi will successfully
-     * auto-connect the user. This comes with the trade-off that the connector will throw an error
-     * when attempting to switch to the unapproved chain. This may be useful in cases where a dapp constantly
-     * modifies their configured chains, and they do not want to disconnect the user upon
-     * auto-connecting. If the user decides to switch to the unapproved chain, it is important that the
-     * dapp handles this error and prompts the user to reconnect to the dapp in order to approve
-     * the newly added chain.
-     *
-     * @default true
-     */
-    isNewChainsStale?: boolean
-  } & Omit<
+  Omit<
     EthereumProviderOptions,
     | 'chains'
     | 'events'
@@ -73,36 +40,21 @@ export type WalletConnectParameters = Evaluate<
 
 walletConnect.type = 'walletConnect' as const
 export function walletConnect(parameters: WalletConnectParameters) {
-  const isNewChainsStale = parameters.isNewChainsStale ?? true
-
   type Provider = Awaited<ReturnType<typeof EthereumProvider['init']>>
-  type NamespaceMethods =
-    | 'wallet_addEthereumChain'
-    | 'wallet_switchEthereumChain'
   type Properties = {
     connect(parameters?: { chainId?: number; pairingTopic?: string }): Promise<{
       accounts: readonly Address[]
       chainId: number
     }>
-    getNamespaceChainsIds(): number[]
-    getNamespaceMethods(): NamespaceMethods[]
-    getRequestedChainsIds(): Promise<number[]>
-    isChainsStale(): Promise<boolean>
     onConnect(connectInfo: ProviderConnectInfo): void
     onDisplayUri(uri: string): void
     onSessionDelete(data: { topic: string }): void
-    setRequestedChainsIds(chains: number[]): void
-    requestedChainsStorageKey: `${string}.requestedChains`
-  }
-  type StorageItem = {
-    [_ in Properties['requestedChainsStorageKey']]: number[]
   }
 
   let provider_: Provider | undefined
   let providerPromise: Promise<typeof provider_>
-  const NAMESPACE = 'eip155'
 
-  return createConnector<Provider, Properties, StorageItem>((config) => ({
+  return createConnector<Provider, Properties>((config) => ({
     id: 'walletConnect',
     name: 'WalletConnect',
     type: walletConnect.type,
@@ -129,12 +81,8 @@ export function walletConnect(parameters: WalletConnectParameters) {
         }
         if (!targetChainId) throw new Error('No chains found on connector.')
 
-        const isChainsStale = await this.isChainsStale()
-        // If there is an active session with stale chains, disconnect current session.
-        if (provider.session && isChainsStale) await provider.disconnect()
-
         // If there isn't an active session or chains are stale, connect.
-        if (!provider.session || isChainsStale) {
+        if (!provider.session) {
           const optionalChains = config.chains
             .filter((chain) => chain.id !== targetChainId)
             .map((optionalChain) => optionalChain.id)
@@ -144,8 +92,6 @@ export function walletConnect(parameters: WalletConnectParameters) {
               ? { pairingTopic: rest.pairingTopic }
               : {}),
           })
-
-          this.setRequestedChainsIds(config.chains.map((x) => x.id))
         }
 
         // If session exists and chains are authorized, enable provider for required chain
@@ -189,8 +135,6 @@ export function walletConnect(parameters: WalletConnectParameters) {
           this.onSessionDelete.bind(this),
         )
         provider?.on('connect', this.onConnect.bind(this))
-
-        this.setRequestedChainsIds([])
       }
     },
     async getAccounts() {
@@ -233,83 +177,91 @@ export function walletConnect(parameters: WalletConnectParameters) {
     },
     async isAuthorized() {
       try {
-        const [accounts, provider] = await Promise.all([
-          this.getAccounts(),
-          this.getProvider(),
-        ])
-
         // If an account does not exist on the session, then the connector is unauthorized.
+        const accounts = await this.getAccounts()
         if (!accounts.length) return false
 
-        // If the chains are stale on the session, then the connector is unauthorized.
-        const isChainsStale = await this.isChainsStale()
-        if (isChainsStale && provider.session) {
-          await provider.disconnect().catch(() => {})
-          return false
-        }
         return true
       } catch {
         return false
       }
     },
     async switchChain({ addEthereumChainParameter, chainId }) {
-      const chain = config.chains.find((chain) => chain.id === chainId)
+      const provider = await this.getProvider()
+      if (!provider) throw new ProviderNotFoundError()
+
+      const chain = config.chains.find((x) => x.id === chainId)
       if (!chain) throw new SwitchChainError(new ChainNotConfiguredError())
 
       try {
-        const provider = await this.getProvider()
-        const namespaceChains = this.getNamespaceChainsIds()
-        const namespaceMethods = this.getNamespaceMethods()
-        const isChainApproved = namespaceChains.includes(chainId)
+        await Promise.all([
+          provider.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: numberToHex(chainId) }],
+          }),
+          new Promise<void>((resolve) =>
+            config.emitter.once('change', ({ chainId: currentChainId }) => {
+              if (currentChainId === chainId) resolve()
+            }),
+          ),
+        ])
+        return chain
+      } catch (err) {
+        const error = err as RpcError
 
+        // Indicates chain is not added to provider
         if (
-          !isChainApproved &&
-          namespaceMethods.includes('wallet_addEthereumChain')
+          error.code === 4902 ||
+          // Unwrapping for MetaMask Mobile
+          // https://github.com/MetaMask/metamask-mobile/issues/2944#issuecomment-976988719
+          (error as ProviderRpcError<{ originalError?: { code: number } }>)
+            ?.data?.originalError?.code === 4902
         ) {
-          let blockExplorerUrls
-          if (addEthereumChainParameter?.blockExplorerUrls)
-            blockExplorerUrls = addEthereumChainParameter.blockExplorerUrls
-          else
-            blockExplorerUrls = chain.blockExplorers?.default.url
-              ? [chain.blockExplorers?.default.url]
-              : []
+          try {
+            let blockExplorerUrls
+            if (addEthereumChainParameter?.blockExplorerUrls)
+              blockExplorerUrls = addEthereumChainParameter.blockExplorerUrls
+            else
+              blockExplorerUrls = chain.blockExplorers?.default.url
+                ? [chain.blockExplorers?.default.url]
+                : []
 
-          let rpcUrls
-          if (addEthereumChainParameter?.rpcUrls?.length)
-            rpcUrls = addEthereumChainParameter.rpcUrls
-          else rpcUrls = [...chain.rpcUrls.default.http]
+            let rpcUrls
+            if (addEthereumChainParameter?.rpcUrls?.length)
+              rpcUrls = addEthereumChainParameter.rpcUrls
+            else rpcUrls = [...chain.rpcUrls.default.http]
 
-          const addEthereumChain = {
-            blockExplorerUrls,
-            chainId: numberToHex(chainId),
-            chainName: addEthereumChainParameter?.chainName ?? chain.name,
-            iconUrls: addEthereumChainParameter?.iconUrls,
-            nativeCurrency:
-              addEthereumChainParameter?.nativeCurrency ?? chain.nativeCurrency,
-            rpcUrls,
-          } satisfies AddEthereumChainParameter
+            const addEthereumChain = {
+              blockExplorerUrls,
+              chainId: numberToHex(chainId),
+              chainName: addEthereumChainParameter?.chainName ?? chain.name,
+              iconUrls: addEthereumChainParameter?.iconUrls,
+              nativeCurrency:
+                addEthereumChainParameter?.nativeCurrency ??
+                chain.nativeCurrency,
+              rpcUrls,
+            } satisfies AddEthereumChainParameter
 
-          await provider.request({
-            method: 'wallet_addEthereumChain',
-            params: [addEthereumChain],
-          })
-          const requestedChains = await this.getRequestedChainsIds()
-          this.setRequestedChainsIds([...requestedChains, chainId])
+            await provider.request({
+              method: 'wallet_addEthereumChain',
+              params: [addEthereumChain],
+            })
+
+            const currentChainId = await this.getChainId()
+            if (currentChainId !== chainId)
+              throw new UserRejectedRequestError(
+                new Error('User rejected switch after adding network.'),
+              )
+
+            return chain
+          } catch (error) {
+            throw new UserRejectedRequestError(error as Error)
+          }
         }
 
-        await provider.request({
-          method: 'wallet_switchEthereumChain',
-          params: [{ chainId: numberToHex(chainId) }],
-        })
-        return chain
-      } catch (error) {
-        const message =
-          typeof error === 'string'
-            ? error
-            : (error as ProviderRpcError)?.message
-        if (/user rejected request/i.test(message))
-          throw new UserRejectedRequestError(error as Error)
-        throw new SwitchChainError(error as Error)
+        if (error.code === UserRejectedRequestError.code)
+          throw new UserRejectedRequestError(error)
+        throw new SwitchChainError(error)
       }
     },
     onAccountsChanged(accounts) {
@@ -329,7 +281,6 @@ export function walletConnect(parameters: WalletConnectParameters) {
       config.emitter.emit('connect', { accounts, chainId })
     },
     async onDisconnect(_error) {
-      this.setRequestedChainsIds([])
       config.emitter.emit('disconnect')
 
       const provider = await this.getProvider()
@@ -347,68 +298,6 @@ export function walletConnect(parameters: WalletConnectParameters) {
     },
     onSessionDelete() {
       this.onDisconnect()
-    },
-    getNamespaceChainsIds() {
-      if (!provider_) return []
-      const chainIds = provider_.session?.namespaces[NAMESPACE]?.chains?.map(
-        (chain) => parseInt(chain.split(':')[1] || ''),
-      )
-      return chainIds ?? []
-    },
-    getNamespaceMethods() {
-      if (!provider_) return []
-      const methods = provider_.session?.namespaces[NAMESPACE]
-        ?.methods as NamespaceMethods[]
-      return methods ?? []
-    },
-    async getRequestedChainsIds() {
-      return (
-        (await config.storage?.getItem(this.requestedChainsStorageKey)) ?? []
-      )
-    },
-    /**
-     * Checks if the target chains match the chains that were
-     * initially requested by the connector for the WalletConnect session.
-     * If there is a mismatch, this means that the chains on the connector
-     * are considered stale, and need to be revalidated at a later point (via
-     * connection).
-     *
-     * There may be a scenario where a dapp adds a chain to the
-     * connector later on, however, this chain will not have been approved or rejected
-     * by the wallet. In this case, the chain is considered stale.
-     *
-     * There are exceptions however:
-     * -  If the wallet supports dynamic chain addition via `eth_addEthereumChain`,
-     *    then the chain is not considered stale.
-     * -  If the `isNewChainsStale` flag is falsy on the connector, then the chain is
-     *    not considered stale.
-     *
-     * For the above cases, chain validation occurs dynamically when the user
-     * attempts to switch chain.
-     *
-     * Also check that dapp supports at least 1 chain from previously approved session.
-     */
-    async isChainsStale() {
-      const namespaceMethods = this.getNamespaceMethods()
-      if (namespaceMethods.includes('wallet_addEthereumChain')) return false
-      if (!isNewChainsStale) return false
-
-      const connectorChains = config.chains.map((x) => x.id)
-      const namespaceChains = this.getNamespaceChainsIds()
-      if (
-        namespaceChains.length &&
-        !namespaceChains.some((id) => connectorChains.includes(id))
-      )
-        return false
-
-      const requestedChains = await this.getRequestedChainsIds()
-      return !connectorChains.every((id) => requestedChains.includes(id))
-    },
-    async setRequestedChainsIds(chains) {
-      await config.storage?.setItem(this.requestedChainsStorageKey, chains)
-    },
-    get requestedChainsStorageKey() {
-      return `${this.id}.requestedChains` as Properties['requestedChainsStorageKey']
     },
   }))
 }
