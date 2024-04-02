@@ -145,8 +145,8 @@ export function injected(parameters: InjectedParameters = {}) {
       const provider = await this.getProvider()
       if (!provider) throw new ProviderNotFoundError()
 
-      let accounts: readonly Address[] | null = []
-      if (isReconnecting) accounts = await this.getAccounts().catch(() => null)
+      let accounts: readonly Address[] = []
+      if (isReconnecting) accounts = await this.getAccounts().catch(() => [])
       else if (shimDisconnect) {
         // Attempt to show another prompt for selecting account if `shimDisconnect` flag is enabled
         try {
@@ -169,7 +169,7 @@ export function injected(parameters: InjectedParameters = {}) {
       }
 
       try {
-        if (!accounts?.length) {
+        if (!accounts?.length && !isReconnecting) {
           const requestedAccounts = await provider.request({
             method: 'eth_requestAccounts',
           })
