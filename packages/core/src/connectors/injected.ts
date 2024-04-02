@@ -1,4 +1,5 @@
 import {
+  type Address,
   type EIP1193Provider,
   type ProviderConnectInfo,
   ProviderRpcError,
@@ -144,28 +145,27 @@ export function injected(parameters: InjectedParameters = {}) {
       const provider = await this.getProvider()
       if (!provider) throw new ProviderNotFoundError()
 
-      let accounts = await this.getAccounts().catch(() => null)
-      if (!isReconnecting) {
-        // Attempt to show another prompt for selecting account if already connected and `shimDisconnect` flag is enabled
-        const isAuthorized = shimDisconnect && !!accounts?.length
-        if (isAuthorized)
-          try {
-            const permissions = await provider.request({
-              method: 'wallet_requestPermissions',
-              params: [{ eth_accounts: {} }],
-            })
-            accounts = (permissions[0]?.caveats?.[0]?.value as string[])?.map(
-              (x) => getAddress(x),
-            )
-          } catch (err) {
-            const error = err as RpcError
-            // Not all injected providers support `wallet_requestPermissions` (e.g. MetaMask iOS).
-            // Only bubble up error if user rejects request
-            if (error.code === UserRejectedRequestError.code)
-              throw new UserRejectedRequestError(error)
-            // Or prompt is already open
-            if (error.code === ResourceUnavailableRpcError.code) throw error
-          }
+      let accounts: readonly Address[] | null = []
+      if (isReconnecting) accounts = await this.getAccounts().catch(() => null)
+      else if (shimDisconnect) {
+        // Attempt to show another prompt for selecting account if `shimDisconnect` flag is enabled
+        try {
+          const permissions = await provider.request({
+            method: 'wallet_requestPermissions',
+            params: [{ eth_accounts: {} }],
+          })
+          accounts = (permissions[0]?.caveats?.[0]?.value as string[])?.map(
+            (x) => getAddress(x),
+          )
+        } catch (err) {
+          const error = err as RpcError
+          // Not all injected providers support `wallet_requestPermissions` (e.g. MetaMask iOS).
+          // Only bubble up error if user rejects request
+          if (error.code === UserRejectedRequestError.code)
+            throw new UserRejectedRequestError(error)
+          // Or prompt is already open
+          if (error.code === ResourceUnavailableRpcError.code) throw error
+        }
       }
 
       try {
