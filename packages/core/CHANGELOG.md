@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.6.15
+
+### Patch Changes
+
+- [#3782](https://github.com/wevm/wagmi/pull/3782) [`b907d5ac`](https://github.com/wevm/wagmi/commit/b907d5ac3a746bcbccc06d1fe78c5bd8f9a7d685) Thanks [@jxom](https://github.com/jxom)! - Refactored injected connector connection logic.
+
 ## 2.6.14
 
 ### Patch Changes
