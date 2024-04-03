@@ -1,4 +1,4 @@
 ---
 "@wagmi/connectors": minor
 ---
-Removed isNewChainsStale
+Refactored isNewChainsStale, Updated @walletconnect/ethereum-provider
