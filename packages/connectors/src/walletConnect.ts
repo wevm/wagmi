@@ -8,7 +8,7 @@ import {
   type ExactPartial,
   type Omit,
 } from '@wagmi/core/internal'
-import type { EthereumProvider } from '@walletconnect/ethereum-provider'
+import { type EthereumProvider } from '@walletconnect/ethereum-provider'
 import {
   type AddEthereumChainParameter,
   type Address,
@@ -24,7 +24,41 @@ import {
 type EthereumProviderOptions = Parameters<typeof EthereumProvider['init']>[0]
 
 export type WalletConnectParameters = Evaluate<
-  Omit<
+  {
+    /**
+     * If a new chain is added to a previously existing configured connector `chains`, this flag
+     * will determine if that chain should be considered as stale. A stale chain is a chain that
+     * WalletConnect has yet to establish a relationship with (e.g. the user has not approved or
+     * rejected the chain).
+     *
+     * Preface: Whereas WalletConnect v1 supported dynamic chain switching, WalletConnect v2 requires
+     * the user to pre-approve a set of chains up-front. This comes with consequent UX nuances (see below) when
+     * a user tries to switch to a chain that they have not approved.
+     *
+     * This flag mainly affects the behavior when a wallet does not support dynamic chain authorization
+     * with WalletConnect v2.
+     *
+     * If `true` (default), the new chain will be treated as a stale chain. If the user
+     * has yet to establish a relationship (approved/rejected) with this chain in their WalletConnect
+     * session, the connector will disconnect upon the dapp auto-connecting, and the user will have to
+     * reconnect to the dapp (revalidate the chain) in order to approve the newly added chain.
+     * This is the default behavior to avoid an unexpected error upon switching chains which may
+     * be a confusing user experience (e.g. the user will not know they have to reconnect
+     * unless the dapp handles these types of errors).
+     *
+     * If `false`, the new chain will be treated as a validated chain. This means that if the user
+     * has yet to establish a relationship with the chain in their WalletConnect session, wagmi will successfully
+     * auto-connect the user. This comes with the trade-off that the connector will throw an error
+     * when attempting to switch to the unapproved chain. This may be useful in cases where a dapp constantly
+     * modifies their configured chains, and they do not want to disconnect the user upon
+     * auto-connecting. If the user decides to switch to the unapproved chain, it is important that the
+     * dapp handles this error and prompts the user to reconnect to the dapp in order to approve
+     * the newly added chain.
+     *
+     * @default true
+     */
+    isNewChainsStale?: boolean
+  } & Omit<
     EthereumProviderOptions,
     | 'chains'
     | 'events'
@@ -40,21 +74,32 @@ export type WalletConnectParameters = Evaluate<
 
 walletConnect.type = 'walletConnect' as const
 export function walletConnect(parameters: WalletConnectParameters) {
+  const isNewChainsStale = parameters.isNewChainsStale ?? true
+
   type Provider = Awaited<ReturnType<typeof EthereumProvider['init']>>
   type Properties = {
     connect(parameters?: { chainId?: number; pairingTopic?: string }): Promise<{
       accounts: readonly Address[]
       chainId: number
     }>
+    getNamespaceChainsIds(): number[]
+    getRequestedChainsIds(): Promise<number[]>
+    isChainsStale(): Promise<boolean>
     onConnect(connectInfo: ProviderConnectInfo): void
     onDisplayUri(uri: string): void
     onSessionDelete(data: { topic: string }): void
+    setRequestedChainsIds(chains: number[]): void
+    requestedChainsStorageKey: `${string}.requestedChains`
+  }
+  type StorageItem = {
+    [_ in Properties['requestedChainsStorageKey']]: number[]
   }
 
   let provider_: Provider | undefined
   let providerPromise: Promise<typeof provider_>
+  const NAMESPACE = 'eip155'
 
-  return createConnector<Provider, Properties>((config) => ({
+  return createConnector<Provider, Properties, StorageItem>((config) => ({
     id: 'walletConnect',
     name: 'WalletConnect',
     type: walletConnect.type,
@@ -81,8 +126,12 @@ export function walletConnect(parameters: WalletConnectParameters) {
         }
         if (!targetChainId) throw new Error('No chains found on connector.')
 
+        const isChainsStale = await this.isChainsStale()
+        // If there is an active session with stale chains, disconnect current session.
+        if (provider.session && isChainsStale) await provider.disconnect()
+
         // If there isn't an active session or chains are stale, connect.
-        if (!provider.session) {
+        if (!provider.session || isChainsStale) {
           const optionalChains = config.chains
             .filter((chain) => chain.id !== targetChainId)
             .map((optionalChain) => optionalChain.id)
@@ -92,6 +141,8 @@ export function walletConnect(parameters: WalletConnectParameters) {
               ? { pairingTopic: rest.pairingTopic }
               : {}),
           })
+
+          this.setRequestedChainsIds(config.chains.map((x) => x.id))
         }
 
         // If session exists and chains are authorized, enable provider for required chain
@@ -135,6 +186,8 @@ export function walletConnect(parameters: WalletConnectParameters) {
           this.onSessionDelete.bind(this),
         )
         provider?.on('connect', this.onConnect.bind(this))
+
+        this.setRequestedChainsIds([])
       }
     },
     async getAccounts() {
@@ -177,10 +230,20 @@ export function walletConnect(parameters: WalletConnectParameters) {
     },
     async isAuthorized() {
       try {
+        const [accounts, provider] = await Promise.all([
+          this.getAccounts(),
+          this.getProvider(),
+        ])
+
         // If an account does not exist on the session, then the connector is unauthorized.
-        const accounts = await this.getAccounts()
         if (!accounts.length) return false
 
+        // If the chains are stale on the session, then the connector is unauthorized.
+        const isChainsStale = await this.isChainsStale()
+        if (isChainsStale && provider.session) {
+          await provider.disconnect().catch(() => {})
+          return false
+        }
         return true
       } catch {
         return false
@@ -205,6 +268,9 @@ export function walletConnect(parameters: WalletConnectParameters) {
             }),
           ),
         ])
+        
+        const requestedChains = await this.getRequestedChainsIds()
+        this.setRequestedChainsIds([...requestedChains, chainId])
         return chain
       } catch (err) {
         const error = err as RpcError
@@ -252,7 +318,9 @@ export function walletConnect(parameters: WalletConnectParameters) {
               throw new UserRejectedRequestError(
                 new Error('User rejected switch after adding network.'),
               )
-
+                
+          const requestedChains = await this.getRequestedChainsIds()
+          this.setRequestedChainsIds([...requestedChains, chainId])
             return chain
           } catch (error) {
             throw new UserRejectedRequestError(error as Error)
@@ -281,6 +349,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
       config.emitter.emit('connect', { accounts, chainId })
     },
     async onDisconnect(_error) {
+      this.setRequestedChainsIds([])
       config.emitter.emit('disconnect')
 
       const provider = await this.getProvider()
@@ -298,6 +367,54 @@ export function walletConnect(parameters: WalletConnectParameters) {
     },
     onSessionDelete() {
       this.onDisconnect()
+    },
+    getNamespaceChainsIds() {
+      if (!provider_) return []
+      const chainIds = provider_.session?.namespaces[NAMESPACE]?.chains?.map(
+        (chain) => parseInt(chain.split(':')[1] || ''),
+      )
+      return chainIds ?? []
+    },
+    async getRequestedChainsIds() {
+      return (
+        (await config.storage?.getItem(this.requestedChainsStorageKey)) ?? []
+      )
+    },
+    /**
+     * Checks if the target chains match the chains that were
+     * initially requested by the connector for the WalletConnect session.
+     * If there is a mismatch, this means that the chains on the connector
+     * are considered stale, and need to be revalidated at a later point (via
+     * connection).
+     *
+     * There may be a scenario where a dapp adds a chain to the
+     * connector later on, however, this chain will not have been approved or rejected
+     * by the wallet. In this case, the chain is considered stale.
+     *
+     * For the above cases, chain validation occurs dynamically when the user
+     * attempts to switch chain.
+     *
+     * Also check that dapp supports at least 1 chain from previously approved session.
+     */
+    async isChainsStale() {
+      if (!isNewChainsStale) return false
+
+      const connectorChains = config.chains.map((x) => x.id)
+      const namespaceChains = this.getNamespaceChainsIds()
+      if (
+        namespaceChains.length &&
+        !namespaceChains.some((id) => connectorChains.includes(id))
+      )
+        return false
+
+      const requestedChains = await this.getRequestedChainsIds()
+      return !connectorChains.every((id) => requestedChains.includes(id))
+    },
+    async setRequestedChainsIds(chains) {
+      await config.storage?.setItem(this.requestedChainsStorageKey, chains)
+    },
+    get requestedChainsStorageKey() {
+      return `${this.id}.requestedChains` as Properties['requestedChainsStorageKey']
     },
   }))
 }
