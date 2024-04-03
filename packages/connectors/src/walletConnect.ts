@@ -268,7 +268,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
             }),
           ),
         ])
-        
+
         const requestedChains = await this.getRequestedChainsIds()
         this.setRequestedChainsIds([...requestedChains, chainId])
         return chain
@@ -318,9 +318,9 @@ export function walletConnect(parameters: WalletConnectParameters) {
               throw new UserRejectedRequestError(
                 new Error('User rejected switch after adding network.'),
               )
-                
-          const requestedChains = await this.getRequestedChainsIds()
-          this.setRequestedChainsIds([...requestedChains, chainId])
+
+            const requestedChains = await this.getRequestedChainsIds()
+            this.setRequestedChainsIds([...requestedChains, chainId])
             return chain
           } catch (error) {
             throw new UserRejectedRequestError(error as Error)
