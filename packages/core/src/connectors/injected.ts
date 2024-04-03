@@ -13,6 +13,7 @@ import {
   withTimeout,
 } from 'viem'
 
+import type { Connector } from '../createConfig.js'
 import { ChainNotConfiguredError } from '../errors/config.js'
 import { ProviderNotFoundError } from '../errors/connector.js'
 import { type Evaluate } from '../types/utils.js'
@@ -124,6 +125,11 @@ export function injected(parameters: InjectedParameters = {}) {
     [_ in 'injected.connected' | `${string}.disconnected`]: true
   }
 
+  let accountsChanged: Connector['onAccountsChanged'] | undefined
+  let chainChanged: Connector['onChainChanged'] | undefined
+  let connect: Connector['onConnect'] | undefined
+  let disconnect: Connector['onDisconnect'] | undefined
+
   return createConnector<Provider, Properties, StorageItem>((config) => ({
     get icon() {
       return getTarget().icon
@@ -138,8 +144,19 @@ export function injected(parameters: InjectedParameters = {}) {
     async setup() {
       const provider = await this.getProvider()
       // Only start listening for events if `target` is set, otherwise `injected()` will also receive events
-      if (provider && parameters.target)
-        provider.on('connect', this.onConnect.bind(this))
+      if (provider && parameters.target) {
+        if (!connect) {
+          connect = this.onConnect.bind(this)
+          provider.on('connect', connect)
+        }
+
+        // We shouldn't need to listen for `'accountsChanged'` here since the `'connect'` event should suffice (and wallet shouldn't be connected yet).
+        // Some wallets, like MetaMask, do not implement the `'connect'` event and overload `'accountsChanged'` instead.
+        if (!accountsChanged) {
+          accountsChanged = this.onAccountsChanged.bind(this)
+          provider.on('accountsChanged', accountsChanged)
+        }
+      }
     },
     async connect({ chainId, isReconnecting } = {}) {
       const provider = await this.getProvider()
@@ -176,10 +193,24 @@ export function injected(parameters: InjectedParameters = {}) {
           accounts = requestedAccounts.map((x) => getAddress(x))
         }
 
-        provider.removeListener('connect', this.onConnect.bind(this))
-        provider.on('accountsChanged', this.onAccountsChanged.bind(this))
-        provider.on('chainChanged', this.onChainChanged)
-        provider.on('disconnect', this.onDisconnect.bind(this))
+        // Manage EIP-1193 event listeners
+        // https://eips.ethereum.org/EIPS/eip-1193#events
+        if (connect) {
+          provider.removeListener('connect', connect)
+          connect = undefined
+        }
+        if (!accountsChanged) {
+          accountsChanged = this.onAccountsChanged.bind(this)
+          provider.on('accountsChanged', accountsChanged)
+        }
+        if (!chainChanged) {
+          chainChanged = this.onChainChanged.bind(this)
+          provider.on('chainChanged', chainChanged)
+        }
+        if (!disconnect) {
+          disconnect = this.onDisconnect.bind(this)
+          provider.on('disconnect', disconnect)
+        }
 
         // Switch to chain if provided
         let currentChainId = await this.getChainId()
@@ -213,13 +244,19 @@ export function injected(parameters: InjectedParameters = {}) {
       const provider = await this.getProvider()
       if (!provider) throw new ProviderNotFoundError()
 
-      provider.removeListener(
-        'accountsChanged',
-        this.onAccountsChanged.bind(this),
-      )
-      provider.removeListener('chainChanged', this.onChainChanged)
-      provider.removeListener('disconnect', this.onDisconnect.bind(this))
-      provider.on('connect', this.onConnect.bind(this))
+      // Manage EIP-1193 event listeners
+      if (chainChanged) {
+        provider.removeListener('chainChanged', chainChanged)
+        chainChanged = undefined
+      }
+      if (disconnect) {
+        provider.removeListener('disconnect', disconnect)
+        disconnect = undefined
+      }
+      if (!connect) {
+        connect = this.onConnect.bind(this)
+        provider.on('connect', connect)
+      }
 
       // Add shim signalling connector is disconnected
       if (shimDisconnect) {
@@ -434,12 +471,25 @@ export function injected(parameters: InjectedParameters = {}) {
       const chainId = Number(connectInfo.chainId)
       config.emitter.emit('connect', { accounts, chainId })
 
+      // Manage EIP-1193 event listeners
       const provider = await this.getProvider()
       if (provider) {
-        provider.removeListener('connect', this.onConnect.bind(this))
-        provider.on('accountsChanged', this.onAccountsChanged.bind(this))
-        provider.on('chainChanged', this.onChainChanged)
-        provider.on('disconnect', this.onDisconnect.bind(this))
+        if (connect) {
+          provider.removeListener('connect', connect)
+          connect = undefined
+        }
+        if (!accountsChanged) {
+          accountsChanged = this.onAccountsChanged.bind(this)
+          provider.on('accountsChanged', accountsChanged)
+        }
+        if (!chainChanged) {
+          chainChanged = this.onChainChanged.bind(this)
+          provider.on('chainChanged', chainChanged)
+        }
+        if (!disconnect) {
+          disconnect = this.onDisconnect.bind(this)
+          provider.on('disconnect', disconnect)
+        }
       }
     },
     async onDisconnect(error) {
@@ -456,14 +506,20 @@ export function injected(parameters: InjectedParameters = {}) {
       // actually disconnected and we don't need to simulate it.
       config.emitter.emit('disconnect')
 
+      // Manage EIP-1193 event listeners
       if (provider) {
-        provider.removeListener(
-          'accountsChanged',
-          this.onAccountsChanged.bind(this),
-        )
-        provider.removeListener('chainChanged', this.onChainChanged)
-        provider.removeListener('disconnect', this.onDisconnect.bind(this))
-        provider.on('connect', this.onConnect.bind(this))
+        if (chainChanged) {
+          provider.removeListener('chainChanged', chainChanged)
+          chainChanged = undefined
+        }
+        if (disconnect) {
+          provider.removeListener('disconnect', disconnect)
+          disconnect = undefined
+        }
+        if (!connect) {
+          connect = this.onConnect.bind(this)
+          provider.on('connect', connect)
+        }
       }
     },
   }))
