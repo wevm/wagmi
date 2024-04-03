@@ -8,7 +8,7 @@ import {
   type ExactPartial,
   type Omit,
 } from '@wagmi/core/internal'
-import { type EthereumProvider } from '@walletconnect/ethereum-provider'
+import type { EthereumProvider } from '@walletconnect/ethereum-provider'
 import {
   type Address,
   type ProviderConnectInfo,
@@ -22,7 +22,8 @@ import {
 
 type EthereumProviderOptions = Parameters<typeof EthereumProvider['init']>[0]
 
-export type WalletConnectParameters = Evaluate<Omit<
+export type WalletConnectParameters = Evaluate<
+  Omit<
     EthereumProviderOptions,
     | 'chains'
     | 'events'
@@ -38,8 +39,8 @@ export type WalletConnectParameters = Evaluate<Omit<
 
 walletConnect.type = 'walletConnect' as const
 export function walletConnect(parameters: WalletConnectParameters) {
-
   type Provider = Awaited<ReturnType<typeof EthereumProvider['init']>>
+  type Authenticate = Provider['authenticate']
   type Properties = {
     connect(parameters?: { chainId?: number; pairingTopic?: string }): Promise<{
       accounts: readonly Address[]
@@ -48,6 +49,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
     onConnect(connectInfo: ProviderConnectInfo): void
     onDisplayUri(uri: string): void
     onSessionDelete(data: { topic: string }): void
+    authenticate(...params: Parameters<Authenticate>): ReturnType<Authenticate>
   }
 
   let provider_: Provider | undefined
@@ -62,6 +64,11 @@ export function walletConnect(parameters: WalletConnectParameters) {
       if (!provider) return
       provider.on('connect', this.onConnect.bind(this))
       provider.on('session_delete', this.onSessionDelete.bind(this))
+    },
+    async authenticate(params){
+      const provider = await this.getProvider()
+
+      return provider.authenticate(params)
     },
     async connect({ chainId, ...rest } = {}) {
       try {
@@ -189,20 +196,20 @@ export function walletConnect(parameters: WalletConnectParameters) {
       const provider = await this.getProvider()
       if (!provider) throw new ProviderNotFoundError()
 
-      const chain = config.chains.find(x => x.id === chainId)
+      const chain = config.chains.find((x) => x.id === chainId)
       if (!chain) throw new SwitchChainError(new ChainNotConfiguredError())
 
       try {
         await Promise.all([
           provider.request({
             method: 'wallet_switchEthereumChain',
-            params: [{ chainId: numberToHex(chainId) }]
+            params: [{ chainId: numberToHex(chainId) }],
           }),
-          new Promise<void>(resolve =>
+          new Promise<void>((resolve) =>
             config.emitter.once('change', ({ chainId: currentChainId }) => {
               if (currentChainId === chainId) resolve()
-            })
-          )
+            }),
+          ),
         ])
         return chain
       } catch (err) {
@@ -213,16 +220,17 @@ export function walletConnect(parameters: WalletConnectParameters) {
           error.code === 4902 ||
           // Unwrapping for MetaMask Mobile
           // https://github.com/MetaMask/metamask-mobile/issues/2944#issuecomment-976988719
-          (error as ProviderRpcError<{ originalError?: { code: number } }>)?.data?.originalError
-            ?.code === 4902
+          (error as ProviderRpcError<{ originalError?: { code: number } }>)
+            ?.data?.originalError?.code === 4902
         ) {
           try {
-            const { default: blockExplorer, ...blockExplorers } = chain.blockExplorers ?? {}
+            const { default: blockExplorer, ...blockExplorers } =
+              chain.blockExplorers ?? {}
             let blockExplorerUrls
             if (blockExplorer)
               blockExplorerUrls = [
                 blockExplorer.url,
-                ...Object.values(blockExplorers).map(x => x.url)
+                ...Object.values(blockExplorers).map((x) => x.url),
               ]
 
             await provider.request({
@@ -233,15 +241,15 @@ export function walletConnect(parameters: WalletConnectParameters) {
                   chainName: chain.name,
                   nativeCurrency: chain.nativeCurrency,
                   rpcUrls: [chain.rpcUrls.default?.http[0] ?? ''],
-                  blockExplorerUrls
-                }
-              ]
+                  blockExplorerUrls,
+                },
+              ],
             })
 
             const currentChainId = await this.getChainId()
             if (currentChainId !== chainId)
               throw new UserRejectedRequestError(
-                new Error('User rejected switch after adding network.')
+                new Error('User rejected switch after adding network.'),
               )
 
             return chain
@@ -250,7 +258,8 @@ export function walletConnect(parameters: WalletConnectParameters) {
           }
         }
 
-        if (error.code === UserRejectedRequestError.code) throw new UserRejectedRequestError(error)
+        if (error.code === UserRejectedRequestError.code)
+          throw new UserRejectedRequestError(error)
         throw new SwitchChainError(error)
       }
     },
@@ -288,6 +297,6 @@ export function walletConnect(parameters: WalletConnectParameters) {
     },
     onSessionDelete() {
       this.onDisconnect()
-    }
+    },
   }))
 }
