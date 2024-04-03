@@ -41,6 +41,7 @@ export type WalletConnectParameters = Evaluate<
 walletConnect.type = 'walletConnect' as const
 export function walletConnect(parameters: WalletConnectParameters) {
   type Provider = Awaited<ReturnType<typeof EthereumProvider['init']>>
+  type Authenticate = Provider['authenticate']
   type Properties = {
     connect(parameters?: { chainId?: number; pairingTopic?: string }): Promise<{
       accounts: readonly Address[]
@@ -49,6 +50,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
     onConnect(connectInfo: ProviderConnectInfo): void
     onDisplayUri(uri: string): void
     onSessionDelete(data: { topic: string }): void
+    authenticate(...params: Parameters<Authenticate>): ReturnType<Authenticate>
   }
 
   let provider_: Provider | undefined
@@ -63,6 +65,11 @@ export function walletConnect(parameters: WalletConnectParameters) {
       if (!provider) return
       provider.on('connect', this.onConnect.bind(this))
       provider.on('session_delete', this.onSessionDelete.bind(this))
+    },
+    async authenticate(params) {
+      const provider = await this.getProvider()
+
+      return provider.authenticate(params)
     },
     async connect({ chainId, ...rest } = {}) {
       try {
