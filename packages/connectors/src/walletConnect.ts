@@ -65,7 +65,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
       provider.on('connect', this.onConnect.bind(this))
       provider.on('session_delete', this.onSessionDelete.bind(this))
     },
-    async authenticate(params){
+    async authenticate(params) {
       const provider = await this.getProvider()
 
       return provider.authenticate(params)
