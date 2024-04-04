@@ -27,11 +27,11 @@ import { wagmiContractConfig } from './contracts'
 
 function App() {
   useAccountEffect({
-    onConnect(data) {
-      console.log('onConnect', data)
+    onConnect(_data) {
+      // console.log('onConnect', data)
     },
     onDisconnect() {
-      console.log('onDisconnect')
+      // console.log('onDisconnect')
     },
   })
 

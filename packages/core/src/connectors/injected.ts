@@ -1,5 +1,6 @@
 import {
   type Address,
+  type EIP1193EventMap,
   type EIP1193Provider,
   type ProviderConnectInfo,
   ProviderRpcError,
@@ -385,11 +386,16 @@ export function injected(parameters: InjectedParameters = {}) {
             method: 'wallet_switchEthereumChain',
             params: [{ chainId: numberToHex(chainId) }],
           }),
-          new Promise<void>((resolve) =>
-            config.emitter.once('change', ({ chainId: currentChainId }) => {
-              if (currentChainId === chainId) resolve()
-            }),
-          ),
+          new Promise<void>((resolve) => {
+            const listener: EIP1193EventMap['chainChanged'] = (data) => {
+              console.log('[injected] switchChain.listener', { data, chainId })
+              if (Number(data) === chainId) {
+                provider.removeListener('chainChanged', listener)
+                resolve()
+              }
+            }
+            provider.on('chainChanged', listener)
+          }),
         ])
         return chain
       } catch (err) {
@@ -444,6 +450,7 @@ export function injected(parameters: InjectedParameters = {}) {
       }
     },
     async onAccountsChanged(accounts) {
+      console.log('[injected] onAccountsChanged', accounts)
       // Disconnect if there are no accounts
       if (accounts.length === 0) this.onDisconnect()
       // Connect if emitter is listening for connect event (e.g. is disconnected and connects through wallet interface)
@@ -461,6 +468,7 @@ export function injected(parameters: InjectedParameters = {}) {
         })
     },
     onChainChanged(chain) {
+      console.log('[injected] onChainChanged', chain)
       const chainId = Number(chain)
       config.emitter.emit('change', { chainId })
     },
