@@ -59,7 +59,7 @@ export function useVerifyTypedData<
   } = parameters
 
   const config = useConfig(parameters)
-  const chainId = useChainId()
+  const chainId = useChainId({ config })
 
   const options = verifyTypedDataQueryOptions<config, typedData, primaryType>(
     config,

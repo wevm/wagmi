@@ -51,7 +51,7 @@ export function useTransaction<
   const { blockHash, blockNumber, blockTag, hash, query = {} } = parameters
 
   const config = useConfig(parameters)
-  const chainId = useChainId()
+  const chainId = useChainId({ config })
 
   const options = getTransactionQueryOptions(config, {
     ...parameters,

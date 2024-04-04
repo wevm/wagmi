@@ -98,7 +98,7 @@ export function useSimulateContract<
     connector,
     query: { enabled: parameters.account === undefined },
   })
-  const chainId = useChainId()
+  const chainId = useChainId({ config })
 
   const options = simulateContractQueryOptions<
     config,

@@ -70,8 +70,8 @@ export function useWalletClient<
 
   const config = useConfig(rest)
   const queryClient = useQueryClient()
-  const { address, connector, status } = useAccount()
-  const chainId = useChainId()
+  const { address, connector, status } = useAccount({ config })
+  const chainId = useChainId({ config })
 
   const { queryKey, ...options } = getWalletClientQueryOptions<config, chainId>(
     config,

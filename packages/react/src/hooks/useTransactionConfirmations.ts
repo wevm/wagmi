@@ -53,7 +53,7 @@ export function useTransactionConfirmations<
   const { hash, transactionReceipt, query = {} } = parameters
 
   const config = useConfig(parameters)
-  const chainId = useChainId()
+  const chainId = useChainId({ config })
 
   const options = getTransactionConfirmationsQueryOptions(config, {
     ...parameters,

@@ -48,7 +48,7 @@ export function useStorageAt<
   const { address, slot, query = {} } = parameters
 
   const config = useConfig(parameters)
-  const chainId = useChainId()
+  const chainId = useChainId({ config })
 
   const options = getStorageAtQueryOptions(config, {
     ...parameters,
