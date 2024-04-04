@@ -29,7 +29,7 @@ export type WalletConnectParameters = Evaluate<
      * will determine if that chain should be considered as stale. A stale chain is a chain that
      * WalletConnect has yet to establish a relationship with (e.g. the user has not approved or
      * rejected the chain).
-     * 
+     *
      * This flag mainly affects the behavior when a wallet does not support dynamic chain authorization
      * with WalletConnect v2.
      *
