@@ -29,11 +29,7 @@ export type WalletConnectParameters = Evaluate<
      * will determine if that chain should be considered as stale. A stale chain is a chain that
      * WalletConnect has yet to establish a relationship with (e.g. the user has not approved or
      * rejected the chain).
-     *
-     * Preface: Whereas WalletConnect v1 supported dynamic chain switching, WalletConnect v2 requires
-     * the user to pre-approve a set of chains up-front. This comes with consequent UX nuances (see below) when
-     * a user tries to switch to a chain that they have not approved.
-     *
+     * 
      * This flag mainly affects the behavior when a wallet does not support dynamic chain authorization
      * with WalletConnect v2.
      *
@@ -45,10 +41,11 @@ export type WalletConnectParameters = Evaluate<
      * be a confusing user experience (e.g. the user will not know they have to reconnect
      * unless the dapp handles these types of errors).
      *
-     * If `false`, the new chain will be treated as a validated chain. This means that if the user
+     * If `false`, the new chain will be treated as a potentially valid chain. This means that if the user
      * has yet to establish a relationship with the chain in their WalletConnect session, wagmi will successfully
      * auto-connect the user. This comes with the trade-off that the connector will throw an error
-     * when attempting to switch to the unapproved chain. This may be useful in cases where a dapp constantly
+     * when attempting to switch to the unapproved chain if the wallet does not support dynamic session updates.
+     * This may be useful in cases where a dapp constantly
      * modifies their configured chains, and they do not want to disconnect the user upon
      * auto-connecting. If the user decides to switch to the unapproved chain, it is important that the
      * dapp handles this error and prompts the user to reconnect to the dapp in order to approve
@@ -382,11 +379,6 @@ export function walletConnect(parameters: WalletConnectParameters) {
      * There may be a scenario where a dapp adds a chain to the
      * connector later on, however, this chain will not have been approved or rejected
      * by the wallet. In this case, the chain is considered stale.
-     *
-     * For the above cases, chain validation occurs dynamically when the user
-     * attempts to switch chain.
-     *
-     * Also check that dapp supports at least 1 chain from previously approved session.
      */
     async isChainsStale() {
       if (!isNewChainsStale) return false
