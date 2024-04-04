@@ -85,7 +85,7 @@ export function useReadContract<
   const { abi, address, functionName, query = {} } = parameters
 
   const config = useConfig(parameters)
-  const chainId = useChainId()
+  const chainId = useChainId({ config })
 
   const options = readContractQueryOptions<config, abi, functionName, args>(
     config,

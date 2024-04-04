@@ -53,7 +53,7 @@ export function useBlockTransactionCount<
   const { query = {} } = parameters
 
   const config = useConfig(parameters)
-  const configChainId = useChainId()
+  const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
   const options = getBlockTransactionCountQueryOptions(config, {

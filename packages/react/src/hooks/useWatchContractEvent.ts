@@ -49,7 +49,7 @@ export function useWatchContractEvent<
   const { enabled = true, onLogs, config: _, ...rest } = parameters
 
   const config = useConfig(parameters)
-  const configChainId = useChainId()
+  const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
   useEffect(() => {

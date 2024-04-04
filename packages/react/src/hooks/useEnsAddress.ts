@@ -46,7 +46,7 @@ export function useEnsAddress<
   const { name, query = {} } = parameters
 
   const config = useConfig(parameters)
-  const chainId = useChainId()
+  const chainId = useChainId({ config })
 
   const options = getEnsAddressQueryOptions(config, {
     ...parameters,

@@ -48,7 +48,7 @@ export function useBytecode<
   const { address, query = {} } = parameters
 
   const config = useConfig(parameters)
-  const chainId = useChainId()
+  const chainId = useChainId({ config })
 
   const options = getBytecodeQueryOptions(config, {
     ...parameters,

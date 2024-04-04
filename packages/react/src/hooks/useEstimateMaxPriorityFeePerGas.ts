@@ -50,7 +50,7 @@ export function useEstimateMaxPriorityFeePerGas<
   const { query = {} } = parameters
 
   const config = useConfig(parameters)
-  const chainId = useChainId()
+  const chainId = useChainId({ config })
 
   const options = estimateMaxPriorityFeePerGasQueryOptions(config, {
     ...parameters,

@@ -67,7 +67,7 @@ export function useReadContracts<
   const { contracts = [], query = {} } = parameters
 
   const config = useConfig(parameters)
-  const chainId = useChainId()
+  const chainId = useChainId({ config })
 
   const options = readContractsQueryOptions<config, contracts, allowFailure>(
     config,
