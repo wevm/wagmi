@@ -1,5 +1,15 @@
 # wagmi
 
+## 2.5.19
+
+### Patch Changes
+
+- [#3793](https://github.com/wevm/wagmi/pull/3793) [`f85b83ae`](https://github.com/wevm/wagmi/commit/f85b83ae95dd0bb73ffbdb49afa174e7c68298e1) Thanks [@tmm](https://github.com/tmm)! - Wired up `config` inside hooks so you can pass it explicitly and not use the `WagmiProvider`.
+
+- Updated dependencies [[`42ad380d`](https://github.com/wevm/wagmi/commit/42ad380d9a5d8bc0f61d73612142dea9d098de5e)]:
+  - @wagmi/connectors@4.1.25
+  - @wagmi/core@2.6.16
+
 ## 2.5.18
 
 ### Patch Changes

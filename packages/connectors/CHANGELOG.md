@@ -1,5 +1,14 @@
 # @wagmi/connectors
 
+## 4.1.25
+
+### Patch Changes
+
+- [#3788](https://github.com/wevm/wagmi/pull/3788) [`42ad380d`](https://github.com/wevm/wagmi/commit/42ad380d9a5d8bc0f61d73612142dea9d098de5e) Thanks [@tmm](https://github.com/tmm)! - Refactored connectors to remove unnecessarily event listeners.
+
+- Updated dependencies [[`42ad380d`](https://github.com/wevm/wagmi/commit/42ad380d9a5d8bc0f61d73612142dea9d098de5e)]:
+  - @wagmi/core@2.6.16
+
 ## 4.1.24
 
 ### Patch Changes
