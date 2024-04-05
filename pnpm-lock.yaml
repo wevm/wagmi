@@ -30,8 +30,8 @@ importers:
         specifier: workspace:*
         version: link:packages/test
       bun:
-        specifier: 1.1.0
-        version: 1.1.0
+        specifier: 1.1.1
+        version: 1.1.1
       bun-types:
         specifier: ^1.1.0
         version: 1.1.0
@@ -211,8 +211,8 @@ importers:
         specifier: 8.1.0
         version: 8.1.0(typescript@5.4.2)
       '@walletconnect/ethereum-provider':
-        specifier: 2.12.0
-        version: 2.12.0
+        specifier: 2.12.1
+        version: 2.12.1
       '@walletconnect/modal':
         specifier: 2.6.2
         version: 2.6.2
@@ -3286,64 +3286,64 @@ packages:
     resolution: {integrity: sha512-U69T3ItWHvLwGg5eJ0n3I62nWuE6ilHlmz7zM0npLBRvPRd7e6NYmg54vvRtP5mZG7kZqZCFVdsTWo7BPtBujg==}
     dev: true
 
-  /@oven/bun-darwin-aarch64@1.1.0:
-    resolution: {integrity: sha512-8hDDBdQVHfFJ1KHXeHIB78SFs7rYG1Ff4n8SDv006ENc3uEIqynFVbHCKbqa5aE7zLkdBizoBzL50W76zAPmCQ==}
+  /@oven/bun-darwin-aarch64@1.1.1:
+    resolution: {integrity: sha512-RDs5ZMSkcurj4YqPtkcKGYUA46/LDcw7tQ0a4hBI/mtjpYySYmIIYkSeeotl9IJMNcG+ZsHpRc4b7ROFRYhxEw==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@oven/bun-darwin-x64-baseline@1.1.0:
-    resolution: {integrity: sha512-61rkVhpzU3PfoXRLrIpgKzLys4Qk9bvCI5DVM5cZgVxGq62jR+FwldCVcCoyfMdblGg07x3aUY9BXMwtSxvN0A==}
+  /@oven/bun-darwin-x64-baseline@1.1.1:
+    resolution: {integrity: sha512-sJKZqgT9JSbxTPLULHdcYiKy+F4x2gq114FxDwEqn3YVZnBqSO0X9GCqWOa1CNqUaxGvJnNgn+HDkIQlnXVLiA==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@oven/bun-darwin-x64@1.1.0:
-    resolution: {integrity: sha512-KNEtlnEok6LB9ZNMe2aSxRVO8ps22hn4qTTjJc/s0josPNlIk4PvV2xusbUEGQS4XSNGcEH/Gh7VYE/W3u1gjg==}
+  /@oven/bun-darwin-x64@1.1.1:
+    resolution: {integrity: sha512-RiRbhu9htOML4+81AfHIvjgdVU3jsn+EiyvwuUv5j91vgGrZLkNXebGZXt2eGDDutGzHqvQJqW6sxQ+UNJQi7w==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@oven/bun-linux-aarch64@1.1.0:
-    resolution: {integrity: sha512-UZhZU2mkC+OnbDB/Lq8MTJWiwhDMrnZvcW99cc+fymU5w/bOvpSuFOhpC/IeI1Dp8WGlkjDGyottSr++juWXOw==}
+  /@oven/bun-linux-aarch64@1.1.1:
+    resolution: {integrity: sha512-9twn92P90pAwyvC6PzcWv/3a2B2/01TzdCwslWNaI0LdQ3b+sJR4IvdXG1yQI3N2Ne/ticM7eww2eWma4I0LRQ==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@oven/bun-linux-x64-baseline@1.1.0:
-    resolution: {integrity: sha512-eAxK+x5dEzoVGR0f4FiiLYgtzHu8xB8uWB+Uc9h/6C46vODlOPsBT2Pwv6y5uPAX+dyKGHeMQsP+r2OFBkbkTA==}
+  /@oven/bun-linux-x64-baseline@1.1.1:
+    resolution: {integrity: sha512-2nXg32DLs0xaZH5GafJ16UqrDr4XGRXTeyZW3PNhplaFY0m3fRDXCqDsXmTvsQoGO/FEtMrEmJSWXbLa7u0B4A==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@oven/bun-linux-x64@1.1.0:
-    resolution: {integrity: sha512-o2D9LGXyJqHTQ5tTF4GSctL20ZFw0EGwrhhCLPM4cGzHrhji3EP9euz28aREM+iYUqAWC6BOGz77up5yeMbBQw==}
+  /@oven/bun-linux-x64@1.1.1:
+    resolution: {integrity: sha512-2JPkRTCSXe5w9JvMucx7fgN77yQK+XZ+fY7WlEsZnAR4PjEGImZA12nGNbnxEHM3TmOEivy2PP00nAXeu9LViA==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@oven/bun-windows-x64-baseline@1.1.0:
-    resolution: {integrity: sha512-PqQToENBnHkzdcUnkCYI86397oNvs8Z7PZT8iyQEMSr/oYTMNCSArgrpFSEG6seN5HBPkSyhbj0fuU3U5oOhtQ==}
+  /@oven/bun-windows-x64-baseline@1.1.1:
+    resolution: {integrity: sha512-3q/THmrP1yA8/YTJoS29Et5a+AxP2jGX96cYHlOZEjoTj/FBNFSuuPVvvFEpjrRkQ8Oz9iNE/C6ltna8WKSUxQ==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@oven/bun-windows-x64@1.1.0:
-    resolution: {integrity: sha512-SStu+4Zq0S/nfwaSz9QcBnk9CYjlSckzkzChoFt+vdIXfiaCT+uq0I57OXifRb67uOVtXl6N3PqmCivJPTh/kw==}
+  /@oven/bun-windows-x64@1.1.1:
+    resolution: {integrity: sha512-oolhIph8Kah6K/7kPUjcqgc2N5lS6RD4yruwrG2QYhxcYWTh7m36Ngp709l8+trhLLaUyTnvr4MvuiKPl1cRjQ==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
@@ -4733,8 +4733,8 @@ packages:
       - vue
     dev: true
 
-  /@walletconnect/core@2.12.0:
-    resolution: {integrity: sha512-CORck4dRvCpIn6hl2ZtUnjrSJ0JHt9TRteGCViwPyXNSuvXz70RvaIkvPoybYZBGCRQR4WTJ4dMdqeQpuyrL/g==}
+  /@walletconnect/core@2.12.1:
+    resolution: {integrity: sha512-CIxWNRNvmFNwn+8kPbKyBXS1JHBFJpDE8f73dXtUIElVnZhmXzEOSE5fug91EX57wTrv4/qW66H9kNB3c7Pp5g==}
     dependencies:
       '@walletconnect/heartbeat': 1.2.1
       '@walletconnect/jsonrpc-provider': 1.0.13
@@ -4747,8 +4747,8 @@ packages:
       '@walletconnect/relay-auth': 1.0.4
       '@walletconnect/safe-json': 1.0.2
       '@walletconnect/time': 1.0.2
-      '@walletconnect/types': 2.12.0
-      '@walletconnect/utils': 2.12.0
+      '@walletconnect/types': 2.12.1
+      '@walletconnect/utils': 2.12.1
       events: 3.3.0
       isomorphic-unfetch: 3.1.0
       lodash.isequal: 4.5.0
@@ -4778,18 +4778,18 @@ packages:
       tslib: 1.14.1
     dev: false
 
-  /@walletconnect/ethereum-provider@2.12.0:
-    resolution: {integrity: sha512-sX7vQHTRxByU+3/gY6eDTvt4jxQHfiX6WwqRI08UTN/Ixz+IJSBo3UnNRxNmPaC4vG8zUpsFQ4xYSsDnhfaviw==}
+  /@walletconnect/ethereum-provider@2.12.1:
+    resolution: {integrity: sha512-C57sIcKDNKx6UgnW4EVrmBGAXGddfjgC88vpkOTBrClFF8zhSfdf/fKnLLo70spr8z3u77IppD36m6DGhJ+xpw==}
     dependencies:
       '@walletconnect/jsonrpc-http-connection': 1.0.7
       '@walletconnect/jsonrpc-provider': 1.0.13
       '@walletconnect/jsonrpc-types': 1.0.3
       '@walletconnect/jsonrpc-utils': 1.0.8
       '@walletconnect/modal': 2.6.2
-      '@walletconnect/sign-client': 2.12.0
-      '@walletconnect/types': 2.12.0
-      '@walletconnect/universal-provider': 2.12.0
-      '@walletconnect/utils': 2.12.0
+      '@walletconnect/sign-client': 2.12.1
+      '@walletconnect/types': 2.12.1
+      '@walletconnect/universal-provider': 2.12.1
+      '@walletconnect/utils': 2.12.1
       events: 3.3.0
     transitivePeerDependencies:
       - '@azure/app-configuration'
@@ -4968,17 +4968,17 @@ packages:
       tslib: 1.14.1
     dev: false
 
-  /@walletconnect/sign-client@2.12.0:
-    resolution: {integrity: sha512-JUHJVZtW9iJmn3I2byLzhMRSFiQicTPU92PLuHIF2nG98CqsvlPn8Cu8Cx5CEPFrxPQWwLA+Dv/F+wuSgQiD/w==}
+  /@walletconnect/sign-client@2.12.1:
+    resolution: {integrity: sha512-6PegtNZgqmOX2G022fyrHjyN3PW6Ov2GVFvG8f+80uqikEO3IAL3dgazlnUYtuaUNYs+Hx7sSvjNVanMiJsE1Q==}
     dependencies:
-      '@walletconnect/core': 2.12.0
+      '@walletconnect/core': 2.12.1
       '@walletconnect/events': 1.0.1
       '@walletconnect/heartbeat': 1.2.1
       '@walletconnect/jsonrpc-utils': 1.0.8
       '@walletconnect/logger': 2.0.1
       '@walletconnect/time': 1.0.2
-      '@walletconnect/types': 2.12.0
-      '@walletconnect/utils': 2.12.0
+      '@walletconnect/types': 2.12.1
+      '@walletconnect/utils': 2.12.1
       events: 3.3.0
     transitivePeerDependencies:
       - '@azure/app-configuration'
@@ -5005,8 +5005,8 @@ packages:
       tslib: 1.14.1
     dev: false
 
-  /@walletconnect/types@2.12.0:
-    resolution: {integrity: sha512-uhB3waGmujQVJcPgJvGOpB8RalgYSBT+HpmVbfl4Qe0xJyqpRUo4bPjQa0UYkrHaW20xIw94OuP4+FMLYdeemg==}
+  /@walletconnect/types@2.12.1:
+    resolution: {integrity: sha512-mPzGj5ssgcOJKqwn8qsdCr+J9swsjTmDPAV10CghXIe3GGQKOb4noTUhOofb4LDbFaio1GBql8+Xfy+6bulobw==}
     dependencies:
       '@walletconnect/events': 1.0.1
       '@walletconnect/heartbeat': 1.2.1
@@ -5030,17 +5030,17 @@ packages:
       - supports-color
     dev: false
 
-  /@walletconnect/universal-provider@2.12.0:
-    resolution: {integrity: sha512-CMo10Lh6/DyCznVRMg1nHptWCTeVqMzXBcPNNyCnr3SazE0Shsne/5v/7Kr6j+Yts2hVbLp6lkI2F9ZAFpL6ug==}
+  /@walletconnect/universal-provider@2.12.1:
+    resolution: {integrity: sha512-ZLl5+wY3A7pss5UbIOKBcTwoFQmhW6ilDq33vX2Hu69yUnK+OEKlKcgAy4vjN2wAWakUctO4j7RhpionKBZfCw==}
     dependencies:
       '@walletconnect/jsonrpc-http-connection': 1.0.7
       '@walletconnect/jsonrpc-provider': 1.0.13
       '@walletconnect/jsonrpc-types': 1.0.3
       '@walletconnect/jsonrpc-utils': 1.0.8
       '@walletconnect/logger': 2.0.1
-      '@walletconnect/sign-client': 2.12.0
-      '@walletconnect/types': 2.12.0
-      '@walletconnect/utils': 2.12.0
+      '@walletconnect/sign-client': 2.12.1
+      '@walletconnect/types': 2.12.1
+      '@walletconnect/utils': 2.12.1
       events: 3.3.0
     transitivePeerDependencies:
       - '@azure/app-configuration'
@@ -5061,8 +5061,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@walletconnect/utils@2.12.0:
-    resolution: {integrity: sha512-GIpfHUe1Bjp1Tjda0SkJEizKOT2biuv7VPFnKsOLT1T+8QxEP9NruC+K2UUEvijS1Qr/LKH9P5004RYNgrch+w==}
+  /@walletconnect/utils@2.12.1:
+    resolution: {integrity: sha512-v2Oc8mTb+3y8MW94Rnj9hxVjJU3wdnE1g8eLZXmcNf7zAvsm1iJPtHl7ZxZsjpVpo1Vg79Oo1rS9gWq9z0kKKw==}
     dependencies:
       '@stablelib/chacha20poly1305': 1.0.1
       '@stablelib/hkdf': 1.0.1
@@ -5072,7 +5072,7 @@ packages:
       '@walletconnect/relay-api': 1.0.9
       '@walletconnect/safe-json': 1.0.2
       '@walletconnect/time': 1.0.2
-      '@walletconnect/types': 2.12.0
+      '@walletconnect/types': 2.12.1
       '@walletconnect/window-getters': 1.0.1
       '@walletconnect/window-metadata': 1.0.1
       detect-browser: 5.3.0
@@ -5633,21 +5633,21 @@ packages:
       '@types/ws': 8.5.10
     dev: true
 
-  /bun@1.1.0:
-    resolution: {integrity: sha512-vEfq5NXOWriLzVtA/gMC69MR/W48KE0G7SarZUbu7H89KH9u7FFozTvn8noyLKqpI1sRa2qu/laE21K+htFxCQ==}
+  /bun@1.1.1:
+    resolution: {integrity: sha512-gV90TkJgHvI50X9BoKQ3zVpPEY6YP0vqOww2uZmsOyckZSRlcFYWhXZwFj6PV8KCFINYs8VZ65m59U2RuFYfWw==}
     cpu: [arm64, x64]
     os: [darwin, linux, win32]
     hasBin: true
     requiresBuild: true
     optionalDependencies:
-      '@oven/bun-darwin-aarch64': 1.1.0
-      '@oven/bun-darwin-x64': 1.1.0
-      '@oven/bun-darwin-x64-baseline': 1.1.0
-      '@oven/bun-linux-aarch64': 1.1.0
-      '@oven/bun-linux-x64': 1.1.0
-      '@oven/bun-linux-x64-baseline': 1.1.0
-      '@oven/bun-windows-x64': 1.1.0
-      '@oven/bun-windows-x64-baseline': 1.1.0
+      '@oven/bun-darwin-aarch64': 1.1.1
+      '@oven/bun-darwin-x64': 1.1.1
+      '@oven/bun-darwin-x64-baseline': 1.1.1
+      '@oven/bun-linux-aarch64': 1.1.1
+      '@oven/bun-linux-x64': 1.1.1
+      '@oven/bun-linux-x64-baseline': 1.1.1
+      '@oven/bun-windows-x64': 1.1.1
+      '@oven/bun-windows-x64-baseline': 1.1.1
     dev: true
 
   /bundle-require@4.0.2(esbuild@0.19.11):
