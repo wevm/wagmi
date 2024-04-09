@@ -117,7 +117,6 @@ export function walletConnect(parameters: WalletConnectParameters) {
     async setup() {
       const provider = await this.getProvider().catch(() => null)
       if (!provider) return
-
       if (!connect) {
         connect = this.onConnect.bind(this)
         provider.on('connect', connect)
@@ -312,7 +311,6 @@ export function walletConnect(parameters: WalletConnectParameters) {
           }),
           new Promise<void>((resolve) => {
             const listener: EIP1193EventMap['chainChanged'] = (data) => {
-              console.log('[injected] switchChain.listener', { data, chainId })
               if (Number(data) === chainId) {
                 provider.removeListener('chainChanged', listener)
                 resolve()
