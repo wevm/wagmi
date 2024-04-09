@@ -1,5 +1,6 @@
 import {
   ChainNotConfiguredError,
+  type Connector,
   ProviderNotFoundError,
   createConnector,
 } from '@wagmi/core'
@@ -11,6 +12,7 @@ import {
 import { type EthereumProvider } from '@walletconnect/ethereum-provider'
 import {
   type Address,
+  type EIP1193EventMap,
   type ProviderConnectInfo,
   type ProviderRpcError,
   type RpcError,
@@ -19,6 +21,11 @@ import {
   getAddress,
   numberToHex,
 } from 'viem'
+
+type WalletConnectConnector = Connector & {
+  onDisplayUri(uri: string): void
+  onSessionDelete(data: { topic: string }): void
+}
 
 type EthereumProviderOptions = Parameters<typeof EthereumProvider['init']>[0]
 
@@ -95,6 +102,13 @@ export function walletConnect(parameters: WalletConnectParameters) {
   let providerPromise: Promise<typeof provider_>
   const NAMESPACE = 'eip155'
 
+  let accountsChanged: WalletConnectConnector['onAccountsChanged'] | undefined
+  let chainChanged: WalletConnectConnector['onChainChanged'] | undefined
+  let connect: WalletConnectConnector['onConnect'] | undefined
+  let displayUri: WalletConnectConnector['onDisplayUri'] | undefined
+  let sessionDelete: WalletConnectConnector['onSessionDelete'] | undefined
+  let disconnect: WalletConnectConnector['onDisconnect'] | undefined
+
   return createConnector<Provider, Properties, StorageItem>((config) => ({
     id: 'walletConnect',
     name: 'WalletConnect',
@@ -102,14 +116,24 @@ export function walletConnect(parameters: WalletConnectParameters) {
     async setup() {
       const provider = await this.getProvider().catch(() => null)
       if (!provider) return
-      provider.on('connect', this.onConnect.bind(this))
-      provider.on('session_delete', this.onSessionDelete.bind(this))
+
+      if (!connect) {
+        connect = this.onConnect.bind(this)
+        provider.on('connect', connect)
+      }
+      if (!sessionDelete) {
+        sessionDelete = this.onSessionDelete.bind(this)
+        provider.on('session_delete', sessionDelete)
+      }
     },
     async connect({ chainId, ...rest } = {}) {
       try {
         const provider = await this.getProvider()
         if (!provider) throw new ProviderNotFoundError()
-        provider.on('display_uri', this.onDisplayUri)
+        if (!displayUri) {
+          displayUri = this.onDisplayUri
+          provider.on('display_uri', displayUri)
+        }
 
         let targetChainId = chainId
         if (!targetChainId) {
@@ -145,12 +169,30 @@ export function walletConnect(parameters: WalletConnectParameters) {
         const accounts = (await provider.enable()).map((x) => getAddress(x))
         const currentChainId = await this.getChainId()
 
-        provider.removeListener('display_uri', this.onDisplayUri)
-        provider.removeListener('connect', this.onConnect.bind(this))
-        provider.on('accountsChanged', this.onAccountsChanged.bind(this))
-        provider.on('chainChanged', this.onChainChanged)
-        provider.on('disconnect', this.onDisconnect.bind(this))
-        provider.on('session_delete', this.onSessionDelete.bind(this))
+        if (displayUri) {
+          provider.removeListener('display_uri', displayUri)
+          displayUri = undefined
+        }
+        if (connect) {
+          provider.removeListener('connect', connect)
+          connect = undefined
+        }
+        if (!accountsChanged) {
+          accountsChanged = this.onAccountsChanged.bind(this)
+          provider.on('accountsChanged', accountsChanged)
+        }
+        if (!chainChanged) {
+          chainChanged = this.onChainChanged.bind(this)
+          provider.on('chainChanged', chainChanged)
+        }
+        if (!disconnect) {
+          disconnect = this.onDisconnect.bind(this)
+          provider.on('disconnect', disconnect)
+        }
+        if (!sessionDelete) {
+          sessionDelete = this.onSessionDelete.bind(this)
+          provider.on('session_delete', sessionDelete)
+        }
 
         return { accounts, chainId: currentChainId }
       } catch (error) {
@@ -171,17 +213,26 @@ export function walletConnect(parameters: WalletConnectParameters) {
       } catch (error) {
         if (!/No matching key/i.test((error as Error).message)) throw error
       } finally {
-        provider?.removeListener(
-          'accountsChanged',
-          this.onAccountsChanged.bind(this),
-        )
-        provider?.removeListener('chainChanged', this.onChainChanged)
-        provider?.removeListener('disconnect', this.onDisconnect.bind(this))
-        provider?.removeListener(
-          'session_delete',
-          this.onSessionDelete.bind(this),
-        )
-        provider?.on('connect', this.onConnect.bind(this))
+        if (chainChanged) {
+          provider?.removeListener('chainChanged', chainChanged)
+          chainChanged = undefined
+        }
+        if (disconnect) {
+          provider?.removeListener('disconnect', disconnect)
+          disconnect = undefined
+        }
+        if (!connect) {
+          connect = this.onConnect.bind(this)
+          provider?.on('connect', connect)
+        }
+        if (accountsChanged) {
+          provider?.removeListener('accountsChanged', accountsChanged)
+          accountsChanged = undefined
+        }
+        if (sessionDelete) {
+          provider?.removeListener('session_delete', sessionDelete)
+          sessionDelete = undefined
+        }
 
         this.setRequestedChainsIds([])
       }
@@ -258,11 +309,16 @@ export function walletConnect(parameters: WalletConnectParameters) {
             method: 'wallet_switchEthereumChain',
             params: [{ chainId: numberToHex(chainId) }],
           }),
-          new Promise<void>((resolve) =>
-            config.emitter.once('change', ({ chainId: currentChainId }) => {
-              if (currentChainId === chainId) resolve()
-            }),
-          ),
+          new Promise<void>((resolve) => {
+            const listener: EIP1193EventMap['chainChanged'] = (data) => {
+              console.log('[injected] switchChain.listener', { data, chainId })
+              if (Number(data) === chainId) {
+                provider.removeListener('chainChanged', listener)
+                resolve()
+              }
+            }
+            provider.on('chainChanged', listener)
+          }),
         ])
 
         const requestedChains = await this.getRequestedChainsIds()
@@ -342,14 +398,26 @@ export function walletConnect(parameters: WalletConnectParameters) {
       config.emitter.emit('disconnect')
 
       const provider = await this.getProvider()
-      provider.removeListener(
-        'accountsChanged',
-        this.onAccountsChanged.bind(this),
-      )
-      provider.removeListener('chainChanged', this.onChainChanged)
-      provider.removeListener('disconnect', this.onDisconnect.bind(this))
-      provider.removeListener('session_delete', this.onSessionDelete.bind(this))
-      provider.on('connect', this.onConnect.bind(this))
+      if (accountsChanged) {
+        provider.removeListener('accountsChanged', accountsChanged)
+        accountsChanged = undefined
+      }
+      if (chainChanged) {
+        provider.removeListener('chainChanged', chainChanged)
+        chainChanged = undefined
+      }
+      if (disconnect) {
+        provider.removeListener('disconnect', disconnect)
+        disconnect = undefined
+      }
+      if (sessionDelete) {
+        provider.removeListener('session_delete', sessionDelete)
+        sessionDelete = undefined
+      }
+      if (!connect) {
+        connect = this.onConnect.bind(this)
+        provider.on('connect', connect)
+      }
     },
     onDisplayUri(uri) {
       config.emitter.emit('message', { type: 'display_uri', data: uri })
