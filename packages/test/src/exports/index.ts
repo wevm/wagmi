@@ -11,10 +11,10 @@ export {
 } from '../constants.js'
 
 export {
-  mainnet2TestClient,
-  mainnetTestClient,
-  optimismTestClient,
   testClient,
+  mainnetTestClient,
+  mainnet2TestClient,
+  optimismTestClient,
 } from '../clients.js'
 
 export { config } from '../config.js'
