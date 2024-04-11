@@ -8,6 +8,7 @@ test('exports', () => {
       "callQueryKey",
       "callQueryOptions",
       "connectMutationOptions",
+      "deployContractMutationOptions",
       "disconnectMutationOptions",
       "estimateFeesPerGasQueryKey",
       "estimateFeesPerGasQueryOptions",

@@ -20,6 +20,14 @@ export {
 } from '../query/connect.js'
 
 export {
+  type DeployContractData,
+  type DeployContractVariables,
+  type DeployContractMutate,
+  type DeployContractMutateAsync,
+  deployContractMutationOptions,
+} from '../query/deployContract.js'
+
+export {
   type DisconnectData,
   type DisconnectVariables,
   type DisconnectMutate,

@@ -123,6 +123,12 @@ export {
 } from '../hooks/useConnectorClient.js'
 
 export {
+  type UseDeployContractParameters,
+  type UseDeployContractReturnType,
+  useDeployContract,
+} from '../hooks/useDeployContract.js'
+
+export {
   type UseDisconnectParameters,
   type UseDisconnectReturnType,
   useDisconnect,
