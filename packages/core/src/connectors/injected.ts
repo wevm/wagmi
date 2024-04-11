@@ -1,5 +1,6 @@
 import {
   type Address,
+  type EIP1193EventMap,
   type EIP1193Provider,
   type ProviderConnectInfo,
   ProviderRpcError,
@@ -13,10 +14,10 @@ import {
   withTimeout,
 } from 'viem'
 
+import type { Connector } from '../createConfig.js'
 import { ChainNotConfiguredError } from '../errors/config.js'
 import { ProviderNotFoundError } from '../errors/connector.js'
 import { type Evaluate } from '../types/utils.js'
-import { normalizeChainId } from '../utils/normalizeChainId.js'
 import { createConnector } from './createConnector.js'
 
 export type InjectedParameters = {
@@ -125,6 +126,11 @@ export function injected(parameters: InjectedParameters = {}) {
     [_ in 'injected.connected' | `${string}.disconnected`]: true
   }
 
+  let accountsChanged: Connector['onAccountsChanged'] | undefined
+  let chainChanged: Connector['onChainChanged'] | undefined
+  let connect: Connector['onConnect'] | undefined
+  let disconnect: Connector['onDisconnect'] | undefined
+
   return createConnector<Provider, Properties, StorageItem>((config) => ({
     get icon() {
       return getTarget().icon
@@ -139,50 +145,73 @@ export function injected(parameters: InjectedParameters = {}) {
     async setup() {
       const provider = await this.getProvider()
       // Only start listening for events if `target` is set, otherwise `injected()` will also receive events
-      if (provider && parameters.target)
-        provider.on('connect', this.onConnect.bind(this))
+      if (provider && parameters.target) {
+        if (!connect) {
+          connect = this.onConnect.bind(this)
+          provider.on('connect', connect)
+        }
+
+        // We shouldn't need to listen for `'accountsChanged'` here since the `'connect'` event should suffice (and wallet shouldn't be connected yet).
+        // Some wallets, like MetaMask, do not implement the `'connect'` event and overload `'accountsChanged'` instead.
+        if (!accountsChanged) {
+          accountsChanged = this.onAccountsChanged.bind(this)
+          provider.on('accountsChanged', accountsChanged)
+        }
+      }
     },
     async connect({ chainId, isReconnecting } = {}) {
       const provider = await this.getProvider()
       if (!provider) throw new ProviderNotFoundError()
 
-      let accounts: readonly Address[] | null = null
-      if (!isReconnecting) {
-        accounts = await this.getAccounts().catch(() => null)
-        const isAuthorized = !!accounts?.length
-        if (isAuthorized)
-          // Attempt to show another prompt for selecting account if already connected
-          try {
-            const permissions = await provider.request({
-              method: 'wallet_requestPermissions',
-              params: [{ eth_accounts: {} }],
-            })
-            accounts = (permissions[0]?.caveats?.[0]?.value as string[])?.map(
-              (x) => getAddress(x),
-            )
-          } catch (err) {
-            const error = err as RpcError
-            // Not all injected providers support `wallet_requestPermissions` (e.g. MetaMask iOS).
-            // Only bubble up error if user rejects request
-            if (error.code === UserRejectedRequestError.code)
-              throw new UserRejectedRequestError(error)
-            // Or prompt is already open
-            if (error.code === ResourceUnavailableRpcError.code) throw error
-          }
+      let accounts: readonly Address[] = []
+      if (isReconnecting) accounts = await this.getAccounts().catch(() => [])
+      else if (shimDisconnect) {
+        // Attempt to show another prompt for selecting account if `shimDisconnect` flag is enabled
+        try {
+          const permissions = await provider.request({
+            method: 'wallet_requestPermissions',
+            params: [{ eth_accounts: {} }],
+          })
+          accounts = (permissions[0]?.caveats?.[0]?.value as string[])?.map(
+            (x) => getAddress(x),
+          )
+        } catch (err) {
+          const error = err as RpcError
+          // Not all injected providers support `wallet_requestPermissions` (e.g. MetaMask iOS).
+          // Only bubble up error if user rejects request
+          if (error.code === UserRejectedRequestError.code)
+            throw new UserRejectedRequestError(error)
+          // Or prompt is already open
+          if (error.code === ResourceUnavailableRpcError.code) throw error
+        }
       }
 
       try {
-        if (!accounts?.length) {
+        if (!accounts?.length && !isReconnecting) {
           const requestedAccounts = await provider.request({
             method: 'eth_requestAccounts',
           })
           accounts = requestedAccounts.map((x) => getAddress(x))
         }
 
-        provider.removeListener('connect', this.onConnect.bind(this))
-        provider.on('accountsChanged', this.onAccountsChanged.bind(this))
-        provider.on('chainChanged', this.onChainChanged)
-        provider.on('disconnect', this.onDisconnect.bind(this))
+        // Manage EIP-1193 event listeners
+        // https://eips.ethereum.org/EIPS/eip-1193#events
+        if (connect) {
+          provider.removeListener('connect', connect)
+          connect = undefined
+        }
+        if (!accountsChanged) {
+          accountsChanged = this.onAccountsChanged.bind(this)
+          provider.on('accountsChanged', accountsChanged)
+        }
+        if (!chainChanged) {
+          chainChanged = this.onChainChanged.bind(this)
+          provider.on('chainChanged', chainChanged)
+        }
+        if (!disconnect) {
+          disconnect = this.onDisconnect.bind(this)
+          provider.on('disconnect', disconnect)
+        }
 
         // Switch to chain if provided
         let currentChainId = await this.getChainId()
@@ -216,13 +245,19 @@ export function injected(parameters: InjectedParameters = {}) {
       const provider = await this.getProvider()
       if (!provider) throw new ProviderNotFoundError()
 
-      provider.removeListener(
-        'accountsChanged',
-        this.onAccountsChanged.bind(this),
-      )
-      provider.removeListener('chainChanged', this.onChainChanged)
-      provider.removeListener('disconnect', this.onDisconnect.bind(this))
-      provider.on('connect', this.onConnect.bind(this))
+      // Manage EIP-1193 event listeners
+      if (chainChanged) {
+        provider.removeListener('chainChanged', chainChanged)
+        chainChanged = undefined
+      }
+      if (disconnect) {
+        provider.removeListener('disconnect', disconnect)
+        disconnect = undefined
+      }
+      if (!connect) {
+        connect = this.onConnect.bind(this)
+        provider.on('connect', connect)
+      }
 
       // Add shim signalling connector is disconnected
       if (shimDisconnect) {
@@ -241,7 +276,7 @@ export function injected(parameters: InjectedParameters = {}) {
       const provider = await this.getProvider()
       if (!provider) throw new ProviderNotFoundError()
       const hexChainId = await provider.request({ method: 'eth_chainId' })
-      return normalizeChainId(hexChainId)
+      return Number(hexChainId)
     },
     async getProvider() {
       if (typeof window === 'undefined') return undefined
@@ -351,11 +386,16 @@ export function injected(parameters: InjectedParameters = {}) {
             method: 'wallet_switchEthereumChain',
             params: [{ chainId: numberToHex(chainId) }],
           }),
-          new Promise<void>((resolve) =>
-            config.emitter.once('change', ({ chainId: currentChainId }) => {
-              if (currentChainId === chainId) resolve()
-            }),
-          ),
+          new Promise<void>((resolve) => {
+            const listener: EIP1193EventMap['chainChanged'] = (data) => {
+              console.log('[injected] switchChain.listener', { data, chainId })
+              if (Number(data) === chainId) {
+                provider.removeListener('chainChanged', listener)
+                resolve()
+              }
+            }
+            provider.on('chainChanged', listener)
+          }),
         ])
         return chain
       } catch (err) {
@@ -372,7 +412,7 @@ export function injected(parameters: InjectedParameters = {}) {
           try {
             const { default: blockExplorer, ...blockExplorers } =
               chain.blockExplorers ?? {}
-            let blockExplorerUrls: string[] = []
+            let blockExplorerUrls
             if (blockExplorer)
               blockExplorerUrls = [
                 blockExplorer.url,
@@ -410,6 +450,7 @@ export function injected(parameters: InjectedParameters = {}) {
       }
     },
     async onAccountsChanged(accounts) {
+      console.log('[injected] onAccountsChanged', accounts)
       // Disconnect if there are no accounts
       if (accounts.length === 0) this.onDisconnect()
       // Connect if emitter is listening for connect event (e.g. is disconnected and connects through wallet interface)
@@ -427,22 +468,36 @@ export function injected(parameters: InjectedParameters = {}) {
         })
     },
     onChainChanged(chain) {
-      const chainId = normalizeChainId(chain)
+      console.log('[injected] onChainChanged', chain)
+      const chainId = Number(chain)
       config.emitter.emit('change', { chainId })
     },
     async onConnect(connectInfo) {
       const accounts = await this.getAccounts()
       if (accounts.length === 0) return
 
-      const chainId = normalizeChainId(connectInfo.chainId)
+      const chainId = Number(connectInfo.chainId)
       config.emitter.emit('connect', { accounts, chainId })
 
+      // Manage EIP-1193 event listeners
       const provider = await this.getProvider()
       if (provider) {
-        provider.removeListener('connect', this.onConnect.bind(this))
-        provider.on('accountsChanged', this.onAccountsChanged.bind(this))
-        provider.on('chainChanged', this.onChainChanged)
-        provider.on('disconnect', this.onDisconnect.bind(this))
+        if (connect) {
+          provider.removeListener('connect', connect)
+          connect = undefined
+        }
+        if (!accountsChanged) {
+          accountsChanged = this.onAccountsChanged.bind(this)
+          provider.on('accountsChanged', accountsChanged)
+        }
+        if (!chainChanged) {
+          chainChanged = this.onChainChanged.bind(this)
+          provider.on('chainChanged', chainChanged)
+        }
+        if (!disconnect) {
+          disconnect = this.onDisconnect.bind(this)
+          provider.on('disconnect', disconnect)
+        }
       }
     },
     async onDisconnect(error) {
@@ -459,14 +514,20 @@ export function injected(parameters: InjectedParameters = {}) {
       // actually disconnected and we don't need to simulate it.
       config.emitter.emit('disconnect')
 
+      // Manage EIP-1193 event listeners
       if (provider) {
-        provider.removeListener(
-          'accountsChanged',
-          this.onAccountsChanged.bind(this),
-        )
-        provider.removeListener('chainChanged', this.onChainChanged)
-        provider.removeListener('disconnect', this.onDisconnect.bind(this))
-        provider.on('connect', this.onConnect.bind(this))
+        if (chainChanged) {
+          provider.removeListener('chainChanged', chainChanged)
+          chainChanged = undefined
+        }
+        if (disconnect) {
+          provider.removeListener('disconnect', disconnect)
+          disconnect = undefined
+        }
+        if (!connect) {
+          connect = this.onConnect.bind(this)
+          provider.on('connect', connect)
+        }
       }
     },
   }))

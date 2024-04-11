@@ -51,7 +51,7 @@ export function useEstimateFeesPerGas<
   const { query = {} } = parameters
 
   const config = useConfig(parameters)
-  const chainId = useChainId()
+  const chainId = useChainId({ config })
 
   const options = estimateFeesPerGasQueryOptions(config, {
     ...parameters,

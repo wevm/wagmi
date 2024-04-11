@@ -51,7 +51,7 @@ export function useProof<
   const { address, storageKeys, query = {} } = parameters
 
   const config = useConfig(parameters)
-  const chainId = useChainId()
+  const chainId = useChainId({ config })
 
   const options = getProofQueryOptions(config, {
     ...parameters,

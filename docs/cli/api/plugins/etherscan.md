@@ -40,6 +40,9 @@ The following Etherscan block explorers and their testnets are supported (e.g. E
 - [HecoScan](https://hecoinfo.com)
 - [Optimistic Etherscan](https://optimistic.etherscan.io)
 - [PolygonScan](https://polygonscan.com)
+- [CeloScan](https://celoscan.io)
+- [FraxScan](https://fraxscan.com)
+- [GnosisScan](https://gnosisscan.io)
 
 ## Configuration
 

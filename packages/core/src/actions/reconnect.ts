@@ -106,15 +106,21 @@ export async function reconnect(
     connected = true
   }
 
-  // If connecting didn't succeed, set to disconnected
-  if (!connected)
-    config.setState((x) => ({
-      ...x,
-      connections: new Map(),
-      current: undefined,
-      status: 'disconnected',
-    }))
-  else config.setState((x) => ({ ...x, status: 'connected' }))
+  // Prevent overwriting connected status from race condition
+  if (
+    config.state.status === 'reconnecting' ||
+    config.state.status === 'connecting'
+  ) {
+    // If connecting didn't succeed, set to disconnected
+    if (!connected)
+      config.setState((x) => ({
+        ...x,
+        connections: new Map(),
+        current: undefined,
+        status: 'disconnected',
+      }))
+    else config.setState((x) => ({ ...x, status: 'connected' }))
+  }
 
   isReconnecting = false
   return connections

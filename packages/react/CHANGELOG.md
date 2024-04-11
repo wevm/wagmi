@@ -1,5 +1,115 @@
 # wagmi
 
+## 2.5.19
+
+### Patch Changes
+
+- [#3793](https://github.com/wevm/wagmi/pull/3793) [`f85b83ae`](https://github.com/wevm/wagmi/commit/f85b83ae95dd0bb73ffbdb49afa174e7c68298e1) Thanks [@tmm](https://github.com/tmm)! - Wired up `config` inside hooks so you can pass it explicitly and not use the `WagmiProvider`.
+
+- Updated dependencies [[`42ad380d`](https://github.com/wevm/wagmi/commit/42ad380d9a5d8bc0f61d73612142dea9d098de5e)]:
+  - @wagmi/connectors@4.1.25
+  - @wagmi/core@2.6.16
+
+## 2.5.18
+
+### Patch Changes
+
+- Updated dependencies [[`b907d5ac`](https://github.com/wevm/wagmi/commit/b907d5ac3a746bcbccc06d1fe78c5bd8f9a7d685)]:
+  - @wagmi/core@2.6.15
+  - @wagmi/connectors@4.1.24
+
+## 2.5.17
+
+### Patch Changes
+
+- [#3779](https://github.com/wevm/wagmi/pull/3779) [`3da20bb8`](https://github.com/wevm/wagmi/commit/3da20bb80e7c3efeef8227ced66ad615370fc242) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where `eth_requestAccounts` would be called upon reconnect instead of `eth_accounts`.
+
+- [`a3d1858f`](https://github.com/wevm/wagmi/commit/a3d1858fce448d2b70e36ee692ef1589b74e9d3f) Thanks [@jxom](https://github.com/jxom)! - Fixed hydration conditional in `createConfig`.
+
+- Updated dependencies [[`b3b54ef1`](https://github.com/wevm/wagmi/commit/b3b54ef179c5fa0d1694d38d4b808549a0550409), [`3da20bb8`](https://github.com/wevm/wagmi/commit/3da20bb80e7c3efeef8227ced66ad615370fc242), [`a3d1858f`](https://github.com/wevm/wagmi/commit/a3d1858fce448d2b70e36ee692ef1589b74e9d3f)]:
+  - @wagmi/core@2.6.14
+  - @wagmi/connectors@4.1.23
+
+## 2.5.16
+
+### Patch Changes
+
+- [`b80236dc`](https://github.com/wevm/wagmi/commit/b80236dc623095fe8f1e1d10957d7776fb6ab48b) Thanks [@jxom](https://github.com/jxom)! - Removed unneeded `uniqueBy` check on connectors state.
+
+- Updated dependencies [[`b80236dc`](https://github.com/wevm/wagmi/commit/b80236dc623095fe8f1e1d10957d7776fb6ab48b)]:
+  - @wagmi/core@2.6.13
+  - @wagmi/connectors@4.1.22
+
+## 2.5.15
+
+### Patch Changes
+
+- [#3740](https://github.com/wevm/wagmi/pull/3740) [`3373c644`](https://github.com/wevm/wagmi/commit/3373c6444c38ef16532d18cfc351b3fe2bf2d351) Thanks [@BrickheadJohnny](https://github.com/BrickheadJohnny)! - Removed unnecessary re-renders from `useConnectorClient` and `useWalletClient`.
+
+- Updated dependencies [[`a59069e9`](https://github.com/wevm/wagmi/commit/a59069e9fab45dd606bb89a7f829fe94c51a5494), [`0acd3132`](https://github.com/wevm/wagmi/commit/0acd31320f534993af566be5490c2978b6184f66)]:
+  - @wagmi/core@2.6.12
+  - @wagmi/connectors@4.1.21
+
+## 2.5.14
+
+### Patch Changes
+
+- [`e1ca4e63`](https://github.com/wevm/wagmi/commit/e1ca4e637ae6cec7f5902b0a2c0e0efc3b751a1d) Thanks [@tmm](https://github.com/tmm)! - Deprecated `normalizeChainId`. Use `Number` instead.
+
+- Updated dependencies [[`e1ca4e63`](https://github.com/wevm/wagmi/commit/e1ca4e637ae6cec7f5902b0a2c0e0efc3b751a1d)]:
+  - @wagmi/connectors@4.1.20
+  - @wagmi/core@2.6.11
+
+## 2.5.13
+
+### Patch Changes
+
+- [`dbdca8fd`](https://github.com/wevm/wagmi/commit/dbdca8fd14b90c166222a66a373c1b33c06ce019) Thanks [@jxom](https://github.com/jxom)! - Fixed issue where duplicate connectors could be instantiated if injected after page mount.
+
+- Updated dependencies [[`dbdca8fd`](https://github.com/wevm/wagmi/commit/dbdca8fd14b90c166222a66a373c1b33c06ce019)]:
+  - @wagmi/core@2.6.10
+  - @wagmi/connectors@4.1.19
+
+## 2.5.12
+
+### Patch Changes
+
+- [#3612](https://github.com/wevm/wagmi/pull/3612) [`97237bb0`](https://github.com/wevm/wagmi/commit/97237bb05c30860b9b12c094e82a38ce59d9bedf) Thanks [@m1heng](https://github.com/m1heng)! - Added missing `functionName` parameter to `useWriteContract` codegen helper.
+
+## 2.5.11
+
+### Patch Changes
+
+- [#3714](https://github.com/wevm/wagmi/pull/3714) [`f1628d65`](https://github.com/wevm/wagmi/commit/f1628d65f06e9ef18e6c4e2eb4f6e3ab2e700924) Thanks [@dalechyn](https://github.com/dalechyn)! - Replaced `Omit` with `UnionOmit` for `UseMutationReturnType`.
+
+- [#3715](https://github.com/wevm/wagmi/pull/3715) [`d56edf4f`](https://github.com/wevm/wagmi/commit/d56edf4f27c52acc7a0f57114454b0d3e22cacd6) Thanks [@jxom](https://github.com/jxom)! - Fixed SSR hydration issues.
+
+- Updated dependencies [[`d56edf4f`](https://github.com/wevm/wagmi/commit/d56edf4f27c52acc7a0f57114454b0d3e22cacd6)]:
+  - @wagmi/core@2.6.9
+  - @wagmi/connectors@4.1.18
+
+## 2.5.10
+
+### Patch Changes
+
+- [#3643](https://github.com/wevm/wagmi/pull/3643) [`e46bcd47`](https://github.com/wevm/wagmi/commit/e46bcd4738a18da15b53f6612b614379c1985374) Thanks [@TateB](https://github.com/TateB)! - Fixed race condition arising from `reconnect`.
+
+- Updated dependencies [[`e46bcd47`](https://github.com/wevm/wagmi/commit/e46bcd4738a18da15b53f6612b614379c1985374)]:
+  - @wagmi/core@2.6.8
+  - @wagmi/connectors@4.1.17
+
+## 2.5.9
+
+### Patch Changes
+
+- [`f5648dd2`](https://github.com/wevm/wagmi/commit/f5648dd28b3576b628f57732b89287f55acbb1c1) Thanks [@jxom](https://github.com/jxom)! - Updated `prepareTransactionRequest` types for `viem@2.8.0`.
+
+- [`1c1fee6a`](https://github.com/wevm/wagmi/commit/1c1fee6ab8f01f7734ac6ce05093fa8e388beb3e) Thanks [@jxom](https://github.com/jxom)! - Updated `@walletconnect/ethereum-provider`.
+
+- Updated dependencies [[`b479b5e8`](https://github.com/wevm/wagmi/commit/b479b5e8a5866cba792862f22e6352c4fb566137), [`f5648dd2`](https://github.com/wevm/wagmi/commit/f5648dd28b3576b628f57732b89287f55acbb1c1), [`1c1fee6a`](https://github.com/wevm/wagmi/commit/1c1fee6ab8f01f7734ac6ce05093fa8e388beb3e), [`88a2d744`](https://github.com/wevm/wagmi/commit/88a2d744a1315908c9e54156026df3ad2435ad44)]:
+  - @wagmi/core@2.6.7
+  - @wagmi/connectors@4.1.16
+
 ## 2.5.8
 
 ### Patch Changes

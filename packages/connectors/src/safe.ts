@@ -1,9 +1,9 @@
 import { type SafeAppProvider } from '@safe-global/safe-apps-provider'
 import { type Opts } from '@safe-global/safe-apps-sdk'
 import {
+  type Connector,
   ProviderNotFoundError,
   createConnector,
-  normalizeChainId,
 } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
 import { getAddress } from 'viem'
@@ -32,6 +32,8 @@ export function safe(parameters: SafeParameters = {}) {
 
   let provider_: Provider | undefined
 
+  let disconnect: Connector['onDisconnect'] | undefined
+
   return createConnector<Provider, Properties, StorageItem>((config) => ({
     id: 'safe',
     name: 'Safe',
@@ -43,7 +45,10 @@ export function safe(parameters: SafeParameters = {}) {
       const accounts = await this.getAccounts()
       const chainId = await this.getChainId()
 
-      provider.on('disconnect', this.onDisconnect.bind(this))
+      if (!disconnect) {
+        disconnect = this.onDisconnect.bind(this)
+        provider.on('disconnect', disconnect)
+      }
 
       // Remove disconnected shim if it exists
       if (shimDisconnect) await config.storage?.removeItem('safe.disconnected')
@@ -54,7 +59,10 @@ export function safe(parameters: SafeParameters = {}) {
       const provider = await this.getProvider()
       if (!provider) throw new ProviderNotFoundError()
 
-      provider.removeListener('disconnect', this.onDisconnect.bind(this))
+      if (disconnect) {
+        provider.removeListener('disconnect', disconnect)
+        disconnect = undefined
+      }
 
       // Add shim signalling connector is disconnected
       if (shimDisconnect)
@@ -98,7 +106,7 @@ export function safe(parameters: SafeParameters = {}) {
     async getChainId() {
       const provider = await this.getProvider()
       if (!provider) throw new ProviderNotFoundError()
-      return normalizeChainId(provider.chainId)
+      return Number(provider.chainId)
     },
     async isAuthorized() {
       try {

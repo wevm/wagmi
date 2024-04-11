@@ -1,5 +1,77 @@
 # @wagmi/core
 
+## 2.6.16
+
+### Patch Changes
+
+- [#3788](https://github.com/wevm/wagmi/pull/3788) [`42ad380d`](https://github.com/wevm/wagmi/commit/42ad380d9a5d8bc0f61d73612142dea9d098de5e) Thanks [@tmm](https://github.com/tmm)! - Refactored connectors to remove unnecessarily event listeners.
+
+## 2.6.15
+
+### Patch Changes
+
+- [#3782](https://github.com/wevm/wagmi/pull/3782) [`b907d5ac`](https://github.com/wevm/wagmi/commit/b907d5ac3a746bcbccc06d1fe78c5bd8f9a7d685) Thanks [@jxom](https://github.com/jxom)! - Refactored injected connector connection logic.
+
+## 2.6.14
+
+### Patch Changes
+
+- [#3777](https://github.com/wevm/wagmi/pull/3777) [`b3b54ef1`](https://github.com/wevm/wagmi/commit/b3b54ef179c5fa0d1694d38d4b808549a0550409) Thanks [@desfero](https://github.com/desfero)! - Fixed `writeContract` to forward `chainIn` when simulating contract call
+
+- [#3779](https://github.com/wevm/wagmi/pull/3779) [`3da20bb8`](https://github.com/wevm/wagmi/commit/3da20bb80e7c3efeef8227ced66ad615370fc242) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where `eth_requestAccounts` would be called upon reconnect instead of `eth_accounts`.
+
+- [`a3d1858f`](https://github.com/wevm/wagmi/commit/a3d1858fce448d2b70e36ee692ef1589b74e9d3f) Thanks [@jxom](https://github.com/jxom)! - Fixed hydration conditional in `createConfig`.
+
+## 2.6.13
+
+### Patch Changes
+
+- [`b80236dc`](https://github.com/wevm/wagmi/commit/b80236dc623095fe8f1e1d10957d7776fb6ab48b) Thanks [@jxom](https://github.com/jxom)! - Removed unneeded `uniqueBy` check on connectors state.
+
+## 2.6.12
+
+### Patch Changes
+
+- [#3763](https://github.com/wevm/wagmi/pull/3763) [`a59069e9`](https://github.com/wevm/wagmi/commit/a59069e9fab45dd606bb89a7f829fe94c51a5494) Thanks [@tmm](https://github.com/tmm)! - Fixed `getConnectorClient` internal address comparison.
+
+- [#3608](https://github.com/wevm/wagmi/pull/3608) [`0acd3132`](https://github.com/wevm/wagmi/commit/0acd31320f534993af566be5490c2978b6184f66) Thanks [@mqklin](https://github.com/mqklin)! - Disabled `wallet_requestPermissions` prompt when `shimDisconnect` is `false`.
+
+## 2.6.11
+
+### Patch Changes
+
+- [`e1ca4e63`](https://github.com/wevm/wagmi/commit/e1ca4e637ae6cec7f5902b0a2c0e0efc3b751a1d) Thanks [@tmm](https://github.com/tmm)! - Deprecated `normalizeChainId`. Use `Number` instead.
+
+## 2.6.10
+
+### Patch Changes
+
+- [`dbdca8fd`](https://github.com/wevm/wagmi/commit/dbdca8fd14b90c166222a66a373c1b33c06ce019) Thanks [@jxom](https://github.com/jxom)! - Fixed issue where duplicate connectors could be instantiated if injected after page mount.
+
+## 2.6.9
+
+### Patch Changes
+
+- [#3715](https://github.com/wevm/wagmi/pull/3715) [`d56edf4f`](https://github.com/wevm/wagmi/commit/d56edf4f27c52acc7a0f57114454b0d3e22cacd6) Thanks [@jxom](https://github.com/jxom)! - Fixed SSR hydration issues.
+
+## 2.6.8
+
+### Patch Changes
+
+- [#3643](https://github.com/wevm/wagmi/pull/3643) [`e46bcd47`](https://github.com/wevm/wagmi/commit/e46bcd4738a18da15b53f6612b614379c1985374) Thanks [@TateB](https://github.com/TateB)! - Fixed race condition arising from `reconnect`.
+
+## 2.6.7
+
+### Patch Changes
+
+- [#3642](https://github.com/wevm/wagmi/pull/3642) [`b479b5e8`](https://github.com/wevm/wagmi/commit/b479b5e8a5866cba792862f22e6352c4fb566137) Thanks [@johanneskares](https://github.com/johanneskares)! - Fixed a bug where minification caused the wrong functions to be called on the client.
+
+- [`f5648dd2`](https://github.com/wevm/wagmi/commit/f5648dd28b3576b628f57732b89287f55acbb1c1) Thanks [@jxom](https://github.com/jxom)! - Updated `prepareTransactionRequest` types for `viem@2.8.0`.
+
+- [`1c1fee6a`](https://github.com/wevm/wagmi/commit/1c1fee6ab8f01f7734ac6ce05093fa8e388beb3e) Thanks [@jxom](https://github.com/jxom)! - Updated `@walletconnect/ethereum-provider`.
+
+- [#3653](https://github.com/wevm/wagmi/pull/3653) [`88a2d744`](https://github.com/wevm/wagmi/commit/88a2d744a1315908c9e54156026df3ad2435ad44) Thanks [@tash-2s](https://github.com/tash-2s)! - Fixed error occurring when adding chains without explorers to MetaMask.
+
 ## 2.6.6
 
 ### Patch Changes

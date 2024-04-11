@@ -12,6 +12,9 @@ const apiUrls = {
   [10]: 'https://api-optimistic.etherscan.io/api',
   [420]: 'https://api-goerli-optimistic.etherscan.io/api',
   [11_155_420]: 'https://api-sepolia-optimistic.etherscan.io/api',
+  // Base
+  [84532]: 'https://api-sepolia.basescan.org/api',
+  [8453]: 'https://api.basescan.org/api',
   // Polygon
   [137]: 'https://api.polygonscan.com/api',
   [80_001]: 'https://api-testnet.polygonscan.com/api',
@@ -37,6 +40,8 @@ const apiUrls = {
   // Fraxtal
   [252]: 'https://api.fraxscan.com/api',
   [2522]: 'https://api-holesky.fraxscan.com/api',
+  // Gnosis
+  [100]: 'https://api.gnosisscan.io/api',
 }
 type ChainId = keyof typeof apiUrls
 
@@ -53,8 +58,10 @@ export type EtherscanConfig<chainId extends number> = {
    * - [__Fantom__](https://ftmscan.com/myapikey)
    * - [__Heco Chain__](https://hecoinfo.com/myapikey)
    * - [__Optimism__](https://optimistic.etherscan.io/myapikey)
+   * - [__Base__](https://basescan.org/myapikey)
    * - [__Polygon__](https://polygonscan.com/myapikey)
    * - [__Fraxtal__](https://fraxscan.com/myapikey)
+   * - [__Gnosis__](https://gnosisscan.io/myapikey)
    */
   apiKey: string
   /**

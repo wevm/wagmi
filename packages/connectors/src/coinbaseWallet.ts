@@ -4,8 +4,8 @@ import {
 } from '@coinbase/wallet-sdk'
 import {
   ChainNotConfiguredError,
+  type Connector,
   createConnector,
-  normalizeChainId,
 } from '@wagmi/core'
 import type { Evaluate, Mutable, Omit } from '@wagmi/core/internal'
 import {
@@ -52,6 +52,10 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
   let sdk: CoinbaseWalletSDK | undefined
   let walletProvider: Provider | undefined
 
+  let accountsChanged: Connector['onAccountsChanged'] | undefined
+  let chainChanged: Connector['onChainChanged'] | undefined
+  let disconnect: Connector['onDisconnect'] | undefined
+
   return createConnector<Provider, Properties>((config) => ({
     id: 'coinbaseWalletSDK',
     name: 'Coinbase Wallet',
@@ -65,9 +69,18 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
           })) as string[]
         ).map((x) => getAddress(x))
 
-        provider.on('accountsChanged', this.onAccountsChanged)
-        provider.on('chainChanged', this.onChainChanged)
-        provider.on('disconnect', this.onDisconnect.bind(this))
+        if (!accountsChanged) {
+          accountsChanged = this.onAccountsChanged.bind(this)
+          provider.on('accountsChanged', accountsChanged)
+        }
+        if (!chainChanged) {
+          chainChanged = this.onChainChanged.bind(this)
+          provider.on('chainChanged', chainChanged)
+        }
+        if (!disconnect) {
+          disconnect = this.onDisconnect.bind(this)
+          provider.on('disconnect', disconnect)
+        }
 
         // Switch to chain if provided
         let currentChainId = await this.getChainId()
@@ -93,9 +106,18 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
     async disconnect() {
       const provider = await this.getProvider()
 
-      provider.removeListener('accountsChanged', this.onAccountsChanged)
-      provider.removeListener('chainChanged', this.onChainChanged)
-      provider.removeListener('disconnect', this.onDisconnect.bind(this))
+      if (accountsChanged) {
+        provider.removeListener('accountsChanged', accountsChanged)
+        accountsChanged = undefined
+      }
+      if (chainChanged) {
+        provider.removeListener('chainChanged', chainChanged)
+        chainChanged = undefined
+      }
+      if (disconnect) {
+        provider.removeListener('disconnect', disconnect)
+        disconnect = undefined
+      }
 
       provider.disconnect()
       provider.close()
@@ -111,7 +133,7 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
     async getChainId() {
       const provider = await this.getProvider()
       const chainId = await provider.request<number>({ method: 'eth_chainId' })
-      return normalizeChainId(chainId)
+      return Number(chainId)
     },
     async getProvider() {
       if (!walletProvider) {
@@ -147,6 +169,7 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
 
         walletProvider = sdk.makeWeb3Provider(jsonRpcUrl, chainId)
       }
+
       return walletProvider
     },
     async isAuthorized() {
@@ -196,23 +219,32 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
       }
     },
     onAccountsChanged(accounts) {
-      if (accounts.length === 0) config.emitter.emit('disconnect')
+      if (accounts.length === 0) this.onDisconnect()
       else
         config.emitter.emit('change', {
           accounts: accounts.map((x) => getAddress(x)),
         })
     },
     onChainChanged(chain) {
-      const chainId = normalizeChainId(chain)
+      const chainId = Number(chain)
       config.emitter.emit('change', { chainId })
     },
     async onDisconnect(_error) {
       config.emitter.emit('disconnect')
 
       const provider = await this.getProvider()
-      provider.removeListener('accountsChanged', this.onAccountsChanged)
-      provider.removeListener('chainChanged', this.onChainChanged)
-      provider.removeListener('disconnect', this.onDisconnect.bind(this))
+      if (accountsChanged) {
+        provider.removeListener('accountsChanged', accountsChanged)
+        accountsChanged = undefined
+      }
+      if (chainChanged) {
+        provider.removeListener('chainChanged', chainChanged)
+        chainChanged = undefined
+      }
+      if (disconnect) {
+        provider.removeListener('disconnect', disconnect)
+        disconnect = undefined
+      }
     },
   }))
 }

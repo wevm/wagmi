@@ -122,12 +122,6 @@ If you find Wagmi useful or use it for work, please consider [sponsoring Wagmi](
       <img alt="Stripe logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/stripe-light.svg" width="auto" height="50">
     </picture>
   </a>
-  <a href="https://bitkeep.com">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/bitkeep-dark.svg">
-      <img alt="BitKeep logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/bitkeep-light.svg" width="auto" height="50">
-    </picture>
-  </a>
   <a href="https://www.privy.io">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/privy-dark.svg">
@@ -188,16 +182,16 @@ If you find Wagmi useful or use it for work, please consider [sponsoring Wagmi](
       <img alt="supa logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/supa-light.svg" width="auto" height="50">
     </picture>
   </a>
-  <a href="https://zksync.io/">
+  <a href="https://zksync.io">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/zksync-dark.svg">
       <img alt="zksync logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/zksync-light.svg" width="auto" height="50">
     </picture>
   </a>
-  <a href="https://blocto.app/">
+  <a href="https://syndicate.io">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/blocto-dark.svg">
-      <img alt="blocto logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/blocto-light.svg" width="auto" height="50">
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/syndicate-dark.svg">
+      <img alt="syndicate logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/syndicate-light.svg" width="auto" height="50">
     </picture>
   </a>
 </p>

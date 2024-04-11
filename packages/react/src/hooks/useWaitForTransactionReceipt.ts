@@ -55,7 +55,7 @@ export function useWaitForTransactionReceipt<
   const { hash, query = {} } = parameters
 
   const config = useConfig(parameters)
-  const chainId = useChainId()
+  const chainId = useChainId({ config })
 
   const options = waitForTransactionReceiptQueryOptions(config, {
     ...parameters,

@@ -42,7 +42,7 @@ import { getPublicClient } from '@wagmi/core'
 import { mainnet } from '@wagmi/core/chains'
 import { config } from './config'
 
-const client = await getPublicClient(config, {
+const client = getPublicClient(config, {
   chainId: mainnet.id, // [!code focus]
 })
 ```
@@ -55,6 +55,6 @@ const client = await getPublicClient(config, {
 import { type GetPublicClientReturnType } from '@wagmi/core'
 ```
 
-`PublicClient`
+`PublicClient | undefined`
 
 Viem [`PublicClient`](https://viem.sh/docs/clients/public.html) instance.

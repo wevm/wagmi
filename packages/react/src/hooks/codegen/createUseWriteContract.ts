@@ -29,6 +29,7 @@ import { type WriteContractParameters as viem_WriteContractParameters } from 'vi
 
 import { useAccount } from '../useAccount.js'
 import { useChainId } from '../useChainId.js'
+import { useConfig } from '../useConfig.js'
 import {
   type UseWriteContractParameters,
   type UseWriteContractReturnType as wagmi_UseWriteContractReturnType,
@@ -150,13 +151,14 @@ export function createUseWriteContract<
     | ContractFunctionName<abi, stateMutability>
     | undefined = undefined,
 >(
-  config: CreateUseWriteContractParameters<abi, address, functionName>,
+  props: CreateUseWriteContractParameters<abi, address, functionName>,
 ): CreateUseWriteContractReturnType<abi, address, functionName> {
-  if (config.address !== undefined && typeof config.address === 'object')
+  if (props.address !== undefined && typeof props.address === 'object')
     return (parameters) => {
+      const config = useConfig(parameters)
       const result = useWriteContract(parameters)
-      const configChainId = useChainId()
-      const account = useAccount()
+      const configChainId = useChainId({ config })
+      const account = useAccount({ config })
       type Args = Parameters<wagmi_UseWriteContractReturnType['writeContract']>
       return {
         ...(result as any),
@@ -171,15 +173,18 @@ export function createUseWriteContract<
 
             const variables = {
               ...(args[0] as any),
-              address: chainId ? config.address?.[chainId] : undefined,
-              abi: config.abi,
+              address: chainId ? props.address?.[chainId] : undefined,
+              ...(props.functionName
+                ? { functionName: props.functionName }
+                : {}),
+              abi: props.abi,
             }
             result.writeContract(variables, args[1] as any)
           },
           [
             account.address,
             account.chainId,
-            config,
+            props,
             configChainId,
             result.writeContract,
           ],
@@ -195,15 +200,18 @@ export function createUseWriteContract<
 
             const variables = {
               ...(args[0] as any),
-              address: chainId ? config.address?.[chainId] : undefined,
-              abi: config.abi,
+              address: chainId ? props.address?.[chainId] : undefined,
+              ...(props.functionName
+                ? { functionName: props.functionName }
+                : {}),
+              abi: props.abi,
             }
             return result.writeContractAsync(variables, args[1] as any)
           },
           [
             account.address,
             account.chainId,
-            config,
+            props,
             configChainId,
             result.writeContractAsync,
           ],
@@ -220,29 +228,25 @@ export function createUseWriteContract<
         (...args: Args) => {
           const variables = {
             ...(args[0] as any),
-            ...(config.address ? { address: config.address } : {}),
-            ...(config.functionName
-              ? { functionName: config.functionName }
-              : {}),
-            abi: config.abi,
+            ...(props.address ? { address: props.address } : {}),
+            ...(props.functionName ? { functionName: props.functionName } : {}),
+            abi: props.abi,
           }
           result.writeContract(variables, args[1] as any)
         },
-        [config, result.writeContract],
+        [props, result.writeContract],
       ),
       writeContractAsync: useCallback(
         (...args: Args) => {
           const variables = {
             ...(args[0] as any),
-            ...(config.address ? { address: config.address } : {}),
-            ...(config.functionName
-              ? { functionName: config.functionName }
-              : {}),
-            abi: config.abi,
+            ...(props.address ? { address: props.address } : {}),
+            ...(props.functionName ? { functionName: props.functionName } : {}),
+            abi: props.abi,
           }
           return result.writeContractAsync(variables, args[1] as any)
         },
-        [config, result.writeContractAsync],
+        [props, result.writeContractAsync],
       ),
     }
   }

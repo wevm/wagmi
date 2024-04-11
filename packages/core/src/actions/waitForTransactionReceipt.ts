@@ -70,7 +70,9 @@ export async function waitForTransactionReceipt<
       maxPriorityFeePerGas:
         txn.type === 'eip1559' ? txn.maxPriorityFeePerGas : undefined,
     })) as unknown as string
-    const reason = hexToString(`0x${code.substring(138)}`)
+    const reason = code
+      ? hexToString(`0x${code.substring(138)}`)
+      : 'unknown reason'
     throw new Error(reason)
   }
 

@@ -50,7 +50,7 @@ export default defineWorkspace([
   {
     test: {
       name: 'wagmi',
-      include: ['./packages/react/src/**/*.test.ts'],
+      include: ['./packages/react/src/**/*.test.ts?(x)'],
       environment: 'happy-dom',
       testTimeout: 10_000,
       setupFiles: ['./packages/react/test/setup.ts'],

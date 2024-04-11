@@ -16,6 +16,16 @@ import { normalizeChainId } from '{{packageName}}'
 
 ## Usage
 
+:::warning Deprecated
+Use `Number` instead.
+
+```ts-vue
+import { normalizeChainId } from '{{packageName}}' // [!code --]
+const chainId = normalizeChainId(123n) // [!code --]
+const chainId = Number(123n) // [!code ++]
+```
+:::
+
 ```ts-vue
 import { normalizeChainId } from '{{packageName}}'
 

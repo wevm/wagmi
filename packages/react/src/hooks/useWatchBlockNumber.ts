@@ -34,7 +34,7 @@ export function useWatchBlockNumber<
   const { enabled = true, onBlockNumber, config: _, ...rest } = parameters
 
   const config = useConfig(parameters)
-  const configChainId = useChainId()
+  const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
   useEffect(() => {

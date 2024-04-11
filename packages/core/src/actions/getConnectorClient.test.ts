@@ -24,6 +24,17 @@ test('parameters: connector', async () => {
 
 test.todo('custom connector client')
 
+test('behavior: account address is checksummed', async () => {
+  await connect(config, { connector })
+  const account = '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266'
+  const client = await getConnectorClient(config, { account })
+  expect(client.account.address).toMatchInlineSnapshot(
+    '"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"',
+  )
+  expect(client.account.address).not.toBe(account)
+  await disconnect(config, { connector })
+})
+
 test('behavior: not connected', async () => {
   await expect(
     getConnectorClient(config),
@@ -39,7 +50,7 @@ test('behavior: account does not exist on connector', async () => {
   await expect(
     getConnectorClient(config, { account: address.usdcHolder }),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
-    "Account \\"0x5414d89a8bf7e99d732bc52f3e6a3ef461c0c078\\" not found for connector \\"Mock Connector\\".
+    "Account \\"0x5414d89a8bF7E99d732BC52f3e6A3Ef461c0C078\\" not found for connector \\"Mock Connector\\".
 
     Version: @wagmi/core@x.y.z"
   `)

@@ -1,5 +1,31 @@
 # @wagmi/cli
 
+## 2.1.6
+
+### Patch Changes
+
+- [#3756](https://github.com/wevm/wagmi/pull/3756) [`c7d6f467`](https://github.com/wevm/wagmi/commit/c7d6f4679125fd2f6cca5b5ef362abf47e37f934) Thanks [@jrfrantz](https://github.com/jrfrantz)! - Added basescan to etherscan cli plugin
+
+## 2.1.5
+
+### Patch Changes
+
+- [`e1ca4e63`](https://github.com/wevm/wagmi/commit/e1ca4e637ae6cec7f5902b0a2c0e0efc3b751a1d) Thanks [@tmm](https://github.com/tmm)! - Added title to CLI process.
+
+- [#3723](https://github.com/wevm/wagmi/pull/3723) [`d6bc98ca`](https://github.com/wevm/wagmi/commit/d6bc98ca0ce9081f192f62e0b0fcfea3cb07a2bb) Thanks [@leecobaby](https://github.com/leecobaby)! - Broadened TypeScript detection.
+
+## 2.1.4
+
+### Patch Changes
+
+- [#3737](https://github.com/wevm/wagmi/pull/3737) [`11020fed`](https://github.com/wevm/wagmi/commit/11020fedfc68639eace241e328331cff43bf91af) Thanks [@oskarvu](https://github.com/oskarvu)! - Added Gnosis to Etherscan plugin.
+
+## 2.1.3
+
+### Patch Changes
+
+- [#3660](https://github.com/wevm/wagmi/pull/3660) [`11a22a23`](https://github.com/wevm/wagmi/commit/11a22a23d88c025cde9c91610e9ddf62cd4fa650) Thanks [@JazzBashara](https://github.com/JazzBashara)! - Replaced SnowTrace with SnowScan for the Etherscan plugin
+
 ## 2.1.2
 
 ### Patch Changes

@@ -4,11 +4,7 @@ import {
   type MetaMaskSDKOptions,
   type SDKProvider,
 } from '@metamask/sdk'
-import {
-  ChainNotConfiguredError,
-  createConnector,
-  normalizeChainId,
-} from '@wagmi/core'
+import { ChainNotConfiguredError, createConnector } from '@wagmi/core'
 import type { Evaluate, ExactPartial, Omit } from '@wagmi/core/internal'
 import {
   type Address,
@@ -140,7 +136,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       const chainId =
         provider.getChainId() ??
         (await provider?.request({ method: 'eth_chainId' }))
-      return normalizeChainId(chainId)
+      return Number(chainId)
     },
     async getProvider() {
       if (!sdk) {
@@ -214,7 +210,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           try {
             const { default: blockExplorer, ...blockExplorers } =
               chain.blockExplorers ?? {}
-            let blockExplorerUrls: string[] = []
+            let blockExplorerUrls
             if (blockExplorer)
               blockExplorerUrls = [
                 blockExplorer.url,
@@ -267,14 +263,14 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         })
     },
     onChainChanged(chain) {
-      const chainId = normalizeChainId(chain)
+      const chainId = Number(chain)
       config.emitter.emit('change', { chainId })
     },
     async onConnect(connectInfo) {
       const accounts = await this.getAccounts()
       if (accounts.length === 0) return
 
-      const chainId = normalizeChainId(connectInfo.chainId)
+      const chainId = Number(connectInfo.chainId)
       config.emitter.emit('connect', { accounts, chainId })
 
       const provider = await this.getProvider()

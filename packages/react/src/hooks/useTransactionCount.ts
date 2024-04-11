@@ -47,7 +47,7 @@ export function useTransactionCount<
   const { address, query = {} } = parameters
 
   const config = useConfig(parameters)
-  const chainId = useChainId()
+  const chainId = useChainId({ config })
 
   const options = getTransactionCountQueryOptions(config, {
     ...parameters,

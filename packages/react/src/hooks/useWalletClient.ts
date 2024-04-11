@@ -17,7 +17,7 @@ import {
   type GetWalletClientQueryKey,
   getWalletClientQueryOptions,
 } from '@wagmi/core/query'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 import type { ConfigParameter } from '../types/properties.js'
 import {
@@ -70,8 +70,8 @@ export function useWalletClient<
 
   const config = useConfig(rest)
   const queryClient = useQueryClient()
-  const { address, connector, status } = useAccount()
-  const chainId = useChainId()
+  const { address, connector, status } = useAccount({ config })
+  const chainId = useChainId({ config })
 
   const { queryKey, ...options } = getWalletClientQueryOptions<config, chainId>(
     config,
@@ -83,11 +83,19 @@ export function useWalletClient<
   )
   const enabled = Boolean(status !== 'disconnected' && (query.enabled ?? true))
 
+  const addressRef = useRef(address)
   // biome-ignore lint/nursery/useExhaustiveDependencies: `queryKey` not required
   useEffect(() => {
-    // invalidate when address changes
-    if (address) queryClient.invalidateQueries({ queryKey })
-    else queryClient.removeQueries({ queryKey }) // remove when account is disconnected
+    const previousAddress = addressRef.current
+    if (!address && previousAddress) {
+      // remove when account is disconnected
+      queryClient.removeQueries({ queryKey })
+      addressRef.current = undefined
+    } else if (address !== previousAddress) {
+      // invalidate when address changes
+      queryClient.invalidateQueries({ queryKey })
+      addressRef.current = address
+    }
   }, [address, queryClient])
 
   return useQuery({

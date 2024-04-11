@@ -191,7 +191,7 @@ export function createConfig<
   function getInitialState() {
     return {
       chainId: chains.getState()[0].id,
-      connections: new Map(),
+      connections: new Map<string, Connection>(),
       current: undefined,
       status: 'disconnected',
     } satisfies State
@@ -284,6 +284,7 @@ export function createConfig<
       newConnectors.push(connector)
     }
 
+    if (storage && !store.persist.hasHydrated()) return
     connectors.setState((x) => [...x, ...newConnectors], true)
   })
 
@@ -318,6 +319,14 @@ export function createConfig<
     store.setState((x) => {
       const connector = connectors.getState().find((x) => x.uid === data.uid)
       if (!connector) return x
+
+      if (connector.emitter.listenerCount('connect'))
+        connector.emitter.off('connect', change)
+      if (!connector.emitter.listenerCount('change'))
+        connector.emitter.on('change', change)
+      if (!connector.emitter.listenerCount('disconnect'))
+        connector.emitter.on('disconnect', disconnect)
+
       return {
         ...x,
         connections: new Map(x.connections).set(data.uid, {
@@ -334,9 +343,13 @@ export function createConfig<
     store.setState((x) => {
       const connection = x.connections.get(data.uid)
       if (connection) {
-        connection.connector.emitter.off('change', change)
-        connection.connector.emitter.off('disconnect', disconnect)
-        connection.connector.emitter.on('connect', connect)
+        const connector = connection.connector
+        if (connector.emitter.listenerCount('change'))
+          connection.connector.emitter.off('change', change)
+        if (connector.emitter.listenerCount('disconnect'))
+          connection.connector.emitter.off('disconnect', disconnect)
+        if (!connector.emitter.listenerCount('connect'))
+          connection.connector.emitter.on('connect', connect)
       }
 
       x.connections.delete(data.uid)

@@ -23,6 +23,7 @@ import {
 } from '../../types/properties.js'
 import { useAccount } from '../useAccount.js'
 import { useChainId } from '../useChainId.js'
+import { useConfig } from '../useConfig.js'
 import {
   type UseSimulateContractReturnType,
   useSimulateContract,
@@ -92,30 +93,31 @@ export function createUseSimulateContract<
     | ContractFunctionName<abi, stateMutability>
     | undefined = undefined,
 >(
-  config: CreateUseSimulateContractParameters<abi, address, functionName>,
+  props: CreateUseSimulateContractParameters<abi, address, functionName>,
 ): CreateUseSimulateContractReturnType<abi, address, functionName> {
-  if (config.address !== undefined && typeof config.address === 'object')
+  if (props.address !== undefined && typeof props.address === 'object')
     return (parameters) => {
-      const configChainId = useChainId()
-      const account = useAccount()
+      const config = useConfig(parameters)
+      const configChainId = useChainId({ config })
+      const account = useAccount({ config })
       const chainId =
         (parameters as { chainId?: number })?.chainId ??
         account.chainId ??
         configChainId
       return useSimulateContract({
         ...(parameters as any),
-        ...(config.functionName ? { functionName: config.functionName } : {}),
-        address: config.address?.[chainId],
-        abi: config.abi,
+        ...(props.functionName ? { functionName: props.functionName } : {}),
+        address: props.address?.[chainId],
+        abi: props.abi,
       })
     }
 
   return (parameters) => {
     return useSimulateContract({
       ...(parameters as any),
-      ...(config.address ? { address: config.address } : {}),
-      ...(config.functionName ? { functionName: config.functionName } : {}),
-      abi: config.abi,
+      ...(props.address ? { address: props.address } : {}),
+      ...(props.functionName ? { functionName: props.functionName } : {}),
+      abi: props.abi,
     })
   }
 }

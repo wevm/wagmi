@@ -55,7 +55,7 @@ export function useEstimateGas(
     query: { enabled: parameters.account === undefined },
   })
   const account = parameters.account ?? connectorClient?.account
-  const chainId = useChainId()
+  const chainId = useChainId({ config })
 
   const options = estimateGasQueryOptions(config, {
     ...parameters,

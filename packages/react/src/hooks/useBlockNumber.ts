@@ -68,7 +68,7 @@ export function useBlockNumber<
 
   const config = useConfig(parameters)
   const queryClient = useQueryClient()
-  const configChainId = useChainId()
+  const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
   const options = getBlockNumberQueryOptions(config, {

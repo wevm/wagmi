@@ -45,7 +45,7 @@ export function useVerifyMessage<
   const { address, message, signature, query = {} } = parameters
 
   const config = useConfig(parameters)
-  const chainId = useChainId()
+  const chainId = useChainId({ config })
 
   const options = verifyMessageQueryOptions(config, {
     ...parameters,

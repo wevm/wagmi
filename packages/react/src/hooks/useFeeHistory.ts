@@ -48,7 +48,7 @@ export function useFeeHistory<
   const { blockCount, rewardPercentiles, query = {} } = parameters
 
   const config = useConfig(parameters)
-  const chainId = useChainId()
+  const chainId = useChainId({ config })
 
   const options = getFeeHistoryQueryOptions(config, {
     ...parameters,

@@ -28,6 +28,10 @@ cli.version(version)
 
 void (async () => {
   try {
+    process.title = 'node (wagmi)'
+  } catch {}
+
+  try {
     // Parse CLI args without running command
     cli.parse(process.argv, { run: false })
     if (!cli.matchedCommand) {

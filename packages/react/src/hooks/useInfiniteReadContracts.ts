@@ -71,7 +71,7 @@ export function useInfiniteReadContracts<
   const { contracts = [], query } = parameters
 
   const config = useConfig(parameters)
-  const chainId = useChainId()
+  const chainId = useChainId({ config })
 
   const options = infiniteReadContractsQueryOptions(config, {
     ...parameters,
