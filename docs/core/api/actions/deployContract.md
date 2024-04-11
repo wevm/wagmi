@@ -4,7 +4,7 @@ const actionName = 'deployContract'
 const typeName = 'DeployContract'
 </script>
 
-# deployContract
+# deployContract <Badge text="viem@>=2.8.18" />
 
 Action for deploying a contract to the network, given bytecode & constructor arguments.
 

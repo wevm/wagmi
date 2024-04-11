@@ -13,7 +13,7 @@ const TError = 'DeployContractErrorType'
 const TVariables = 'DeployContractVariables'
 </script>
 
-# useDeployContract
+# useDeployContract <Badge text="viem@>=2.8.18" />
 
 Hook for deploying a contract to the network, given bytecode & constructor arguments.
 
