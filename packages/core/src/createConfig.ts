@@ -192,7 +192,7 @@ export function createConfig<
     return {
       chainId: chains.getState()[0].id,
       connections: new Map<string, Connection>(),
-      current: undefined,
+      current: null,
       status: 'disconnected',
     } satisfies State
   }
@@ -358,7 +358,7 @@ export function createConfig<
         return {
           ...x,
           connections: new Map(),
-          current: undefined,
+          current: null,
           status: 'disconnected',
         }
 
@@ -526,7 +526,7 @@ export type State<
 > = {
   chainId: chains[number]['id']
   connections: Map<string, Connection>
-  current: string | undefined
+  current: string | null
   status: 'connected' | 'connecting' | 'disconnected' | 'reconnecting'
 }
 
