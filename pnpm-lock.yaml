@@ -199,8 +199,8 @@ importers:
   packages/connectors:
     dependencies:
       '@coinbase/wallet-sdk':
-        specifier: 4.0.0-beta.2
-        version: 4.0.0-beta.2
+        specifier: 4.0.0-beta.6
+        version: 4.0.0-beta.6
       '@metamask/sdk':
         specifier: 0.18.6
         version: 0.18.6
@@ -1314,8 +1314,8 @@ packages:
       prettier: 2.8.7
     dev: true
 
-  /@coinbase/wallet-sdk@4.0.0-beta.2:
-    resolution: {integrity: sha512-QI+vXwWj2rTnJZPmkZF5xEN4d4yArP06VPz6ekZo3Ikox0s2mY82QgqqpeAAVGM7QkoZm1GgLasngpqFVy6dqg==}
+  /@coinbase/wallet-sdk@4.0.0-beta.6:
+    resolution: {integrity: sha512-qIAfJ1ql1mqDe3A2W2EoToic3LaGwMtl6l5mfZk83apnUzy2XpLVF4kCXpuh8fRAhekcgB/N4WhgdeHyb/2exQ==}
     dependencies:
       buffer: 6.0.3
       clsx: 1.2.1

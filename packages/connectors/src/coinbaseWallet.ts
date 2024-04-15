@@ -17,8 +17,10 @@ import {
   numberToHex,
 } from 'viem'
 
+export type CoinbaseWalletParameters = CoinbaseWalletSDKOptions
+
 coinbaseWallet.type = 'coinbaseWallet' as const
-export function coinbaseWallet(parameters: CoinbaseWalletSDKOptions) {
+export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
   type Properties = {}
 
   let sdk: CoinbaseWalletSDK | undefined
@@ -92,8 +94,7 @@ export function coinbaseWallet(parameters: CoinbaseWalletSDKOptions) {
         disconnect = undefined
       }
 
-      provider?.disconnect?.() // non extension
-      sdk?.disconnect?.() // calls legacy method extension.close if necessary
+      provider.disconnect()
     },
     async getAccounts() {
       const provider = await this.getProvider()
