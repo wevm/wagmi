@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.6.17
+
+### Patch Changes
+
+- [#3822](https://github.com/wevm/wagmi/pull/3822) [`a97bfbae`](https://github.com/wevm/wagmi/commit/a97bfbaeb615cfef04665e5e7348d85d17f960f0) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where Wagmi would not correctly rehydrate the active chain when a persisted store was being used.
+
 ## 2.6.16
 
 ### Patch Changes
