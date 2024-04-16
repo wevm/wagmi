@@ -88,8 +88,10 @@ const targetMap = {
 } as const satisfies TargetMap
 
 injected.type = 'injected' as const
+let shimDisconnect
 export function injected(parameters: InjectedParameters = {}) {
-  const { shimDisconnect = true, unstable_shimAsyncInject } = parameters
+  const { unstable_shimAsyncInject } = parameters
+  shimDisconnect ??= parameters.shimDisconnect ?? true
 
   function getTarget(): Evaluate<Target & { id: string }> {
     const target = parameters.target
