@@ -57,9 +57,6 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         provider.on('connect', this.onConnect.bind(this) as Listener)
     },
     async connect({ chainId, isReconnecting } = {}) {
-      console.log(
-        `MetaMask SDK connect chainId=${chainId} isReconnecting=${isReconnecting}`,
-      )
       const provider = await this.getProvider()
 
       let accounts: readonly Address[] | null = null
