@@ -305,14 +305,16 @@ export function walletConnect(parameters: WalletConnectParameters) {
       try {
         await Promise.all([
           new Promise<void>((resolve) => {
-            const listener = ({ chainId: currentChainId }: { chainId?: number}) => {
+            const listener = ({
+              chainId: currentChainId,
+            }: { chainId?: number }) => {
               if (currentChainId === chainId) {
                 config.emitter.off('change', listener)
                 resolve()
               }
-            } 
-            config.emitter.on('change', listener)},
-          ),
+            }
+            config.emitter.on('change', listener)
+          }),
           provider.request({
             method: 'wallet_switchEthereumChain',
             params: [{ chainId: numberToHex(chainId) }],
