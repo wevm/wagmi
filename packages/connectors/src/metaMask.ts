@@ -162,13 +162,12 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
 
         sdk = new sdkModule.MetaMaskSDK({
           ...parameters,
-          communicationServerUrl: 'https://socket-scale.siteed.net',
           dappMetadata: parameters.dappMetadata,
           _source: 'wagmi',
-          logging: {
-            developerMode: true,
-            plaintext: true,
-          },
+          // logging: {
+          //   developerMode: true,
+          //   plaintext: true,
+          // },
           readonlyRPCMap: Object.fromEntries(
             config.chains.map((chain) => [
               chain.id,
