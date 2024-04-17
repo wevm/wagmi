@@ -301,7 +301,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
       const chain = config.chains.find((x) => x.id === chainId)
       if (!chain) throw new SwitchChainError(new ChainNotConfiguredError())
 
-        try {
+      try {
         await Promise.all([
           new Promise<void>((resolve) => {
             const listener = ({
@@ -322,14 +322,14 @@ export function walletConnect(parameters: WalletConnectParameters) {
 
         const requestedChains = await this.getRequestedChainsIds()
         this.setRequestedChainsIds([...requestedChains, chainId])
-        
+
         return chain
       } catch (err) {
         const error = err as RpcError
-        
+
         if (/(user rejected)/i.test(error.message))
           throw new UserRejectedRequestError(error)
-        
+
         // Indicates chain is not added to provider
         try {
           const { default: blockExplorer, ...blockExplorers } =
