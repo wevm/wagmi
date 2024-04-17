@@ -1,5 +1,4 @@
 import {
-  EventType,
   type MetaMaskSDK,
   type MetaMaskSDKOptions,
   type SDKProvider,
@@ -57,15 +56,14 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         provider.on('connect', this.onConnect.bind(this) as Listener)
     },
     async connect({ chainId, isReconnecting } = {}) {
-      const provider = await this.getProvider()
-
-      let accounts: readonly Address[] | null = null
-
       if (isReconnecting && isMobileBrowser) {
         // Prevent reconnection on mobile, it needs to be done manually via eth_requestAccount + deeplink
         throw new Error('MetaMask SDK not connected')
       }
 
+      const provider = await this.getProvider()
+
+      let accounts: readonly Address[] | null = null
       try {
         if (!accounts) {
           const requestedAccounts = (await sdk.connect()) as string[]
@@ -82,18 +80,6 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         )
         provider.on('chainChanged', this.onChainChanged as Listener)
         provider.on('disconnect', this.onDisconnect.bind(this) as Listener)
-
-        // Backward compatibility with older wallet (<7.3) version that return accounts before authorization
-        if (!sdk.isExtensionActive() && !sdk._getConnection()?.isAuthorized()) {
-          function waitForAuthorized() {
-            return new Promise((resolve) => {
-              const connection = sdk._getConnection()
-              const connector = connection?.getConnector()
-              connector?.once(EventType.AUTHORIZED, () => resolve(true))
-            })
-          }
-          await waitForAuthorized()
-        }
 
         // Switch to chain if provided
         let currentChainId = (await this.getChainId()) as number
