@@ -14,7 +14,6 @@ import {
   RpcError,
   SwitchChainError,
   UserRejectedRequestError,
-  type WalletPermission,
   getAddress,
   numberToHex,
 } from 'viem'
@@ -32,13 +31,11 @@ export type MetaMaskParameters = Evaluate<
 >
 
 metaMask.type = 'metaMask' as const
-/**
- * @deprecated
- *
- * __Warning__ This connector has a large file size due to the underlying `@metamask/sdk`. For mobile
- * support, it is recommended to use {@link walletConnect}. For desktop support, you should rely on Multi Injected
- * Provider Discovery (EIP-6963) via the Wagmi {@link Config}.
- */
+const isMobileBrowser =
+  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent,
+  )
+
 export function metaMask(parameters: MetaMaskParameters = {}) {
   type Provider = SDKProvider
   type Properties = {
@@ -48,7 +45,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
   type Listener = Parameters<Provider['on']>[1]
 
   let sdk: MetaMaskSDK
-  let walletProvider: Provider | undefined
+  let sdkImport: Promise<typeof import('@metamask/sdk')> | undefined
 
   return createConnector<Provider, Properties, StorageItem>((config) => ({
     id: 'metaMaskSDK',
@@ -60,35 +57,20 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         provider.on('connect', this.onConnect.bind(this) as Listener)
     },
     async connect({ chainId, isReconnecting } = {}) {
+      console.log(
+        `MetaMask SDK connect chainId=${chainId} isReconnecting=${isReconnecting}`,
+      )
       const provider = await this.getProvider()
 
       let accounts: readonly Address[] | null = null
-      if (!isReconnecting) {
-        accounts = await this.getAccounts().catch(() => null)
-        const isAuthorized = !!accounts?.length
-        if (isAuthorized)
-          // Attempt to show another prompt for selecting account if already connected
-          try {
-            const permissions = (await provider.request({
-              method: 'wallet_requestPermissions',
-              params: [{ eth_accounts: {} }],
-            })) as WalletPermission[]
-            accounts = (permissions[0]?.caveats?.[0]?.value as string[])?.map(
-              (x) => getAddress(x),
-            )
-          } catch (err) {
-            const error = err as RpcError
-            // Not all injected providers support `wallet_requestPermissions` (e.g. MetaMask iOS).
-            // Only bubble up error if user rejects request
-            if (error.code === UserRejectedRequestError.code)
-              throw new UserRejectedRequestError(error)
-            // Or prompt is already open
-            if (error.code === ResourceUnavailableRpcError.code) throw error
-          }
+
+      if (isReconnecting && isMobileBrowser) {
+        // Prevent reconnection on mobile, it needs to be done manually via eth_requestAccount + deeplink
+        throw new Error('MetaMask SDK not connected')
       }
 
       try {
-        if (!accounts?.length) {
+        if (!accounts) {
           const requestedAccounts = (await sdk.connect()) as string[]
           accounts = requestedAccounts.map((x) => getAddress(x))
         }
@@ -117,7 +99,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         }
 
         // Switch to chain if provided
-        let currentChainId = await this.getChainId()
+        let currentChainId = (await this.getChainId()) as number
         if (chainId && currentChainId !== chainId) {
           const chain = await this.switchChain!({ chainId }).catch((error) => {
             if (error.code === UserRejectedRequestError.code) throw error
@@ -164,41 +146,40 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
     async getChainId() {
       const provider = await this.getProvider()
       const chainId =
-        provider.chainId ?? (await provider?.request({ method: 'eth_chainId' }))
+        provider.getChainId() ??
+        (await provider?.request({ method: 'eth_chainId' }))
       return Number(chainId)
     },
     async getProvider() {
-      if (!walletProvider) {
-        if (!sdk || !sdk?.isInitialized()) {
-          const { MetaMaskSDK } = await import('@metamask/sdk')
-          sdk = new MetaMaskSDK({
-            dappMetadata: { name: 'wagmi' },
-            enableAnalytics: false,
-            extensionOnly: true,
-            modals: {
-              // Disable by default since it pops up when mobile tries to reconnect
-              otp() {
-                const noop = () => {}
-                return { mount: noop, unmount: noop }
-              },
-            },
-            useDeeplink: true,
-            _source: 'wagmi',
-            ...parameters,
-            checkInstallationImmediately: false,
-            checkInstallationOnAllCalls: false,
-          })
-          await sdk.init()
-        }
-        try {
-          walletProvider = sdk.getProvider()
-        } catch (error) {
-          // TODO: SDK sometimes throws errors when MM extension or mobile provider is not detected (don't throw for those errors)
-          const regex = /^SDK state invalid -- undefined( mobile)? provider$/
-          if (!regex.test((error as Error).message)) throw error
-        }
+      if (!sdk) {
+        if (!sdkImport) sdkImport = import('@metamask/sdk') as any
+
+        const sdkModule = await sdkImport
+
+        if (!sdkModule) throw new Error('MetaMask SDK not found')
+        if (!parameters || !parameters.dappMetadata)
+          throw new Error('dappMetadata is required and must be provided.')
+
+        sdk = new sdkModule.MetaMaskSDK({
+          ...parameters,
+          communicationServerUrl: 'https://socket-scale.siteed.net',
+          dappMetadata: parameters.dappMetadata,
+          _source: 'wagmi',
+          logging: {
+            developerMode: true,
+            plaintext: true,
+          },
+          readonlyRPCMap: Object.fromEntries(
+            config.chains.map((chain) => [
+              chain.id,
+              chain.rpcUrls.default.http[0]!,
+            ]),
+          ),
+        })
+        await sdk.init()
       }
-      return walletProvider!
+
+      return sdk.getProvider()!
     },
     async isAuthorized() {
       try {
@@ -325,6 +306,10 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       if (error && (error as RpcError<1013>).code === 1013) {
         if (provider && !!(await this.getAccounts()).length) return
       }
+
+      // Make sure to remove cached addresses
+      localStorage.removeItem('MMSDK_cached_address')
+      localStorage.removeItem('MMSDK_cached_chainId')
 
       // No need to remove 'metaMaskSDK.disconnected' from storage because `onDisconnect` is typically
       // only called when the wallet is disconnected through the wallet's interface, meaning the wallet
