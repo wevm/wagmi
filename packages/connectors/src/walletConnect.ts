@@ -323,65 +323,56 @@ export function walletConnect(parameters: WalletConnectParameters) {
 
         const requestedChains = await this.getRequestedChainsIds()
         this.setRequestedChainsIds([...requestedChains, chainId])
+
         return chain
       } catch (err) {
         const error = err as RpcError
 
-        // Indicates chain is not added to provider
-        if (
-          error.code === 4902 ||
-          // Unwrapping for MetaMask Mobile
-          // https://github.com/MetaMask/metamask-mobile/issues/2944#issuecomment-976988719
-          (error as ProviderRpcError<{ originalError?: { code: number } }>)
-            ?.data?.originalError?.code === 4902
-        ) {
-          try {
-            let blockExplorerUrls
-            if (addEthereumChainParameter?.blockExplorerUrls)
-              blockExplorerUrls = addEthereumChainParameter.blockExplorerUrls
-            else
-              blockExplorerUrls = chain.blockExplorers?.default.url
-                ? [chain.blockExplorers?.default.url]
-                : []
-
-            let rpcUrls
-            if (addEthereumChainParameter?.rpcUrls?.length)
-              rpcUrls = addEthereumChainParameter.rpcUrls
-            else rpcUrls = [...chain.rpcUrls.default.http]
-
-            const addEthereumChain = {
-              blockExplorerUrls,
-              chainId: numberToHex(chainId),
-              chainName: addEthereumChainParameter?.chainName ?? chain.name,
-              iconUrls: addEthereumChainParameter?.iconUrls,
-              nativeCurrency:
-                addEthereumChainParameter?.nativeCurrency ??
-                chain.nativeCurrency,
-              rpcUrls,
-            } satisfies AddEthereumChainParameter
-
-            await provider.request({
-              method: 'wallet_addEthereumChain',
-              params: [addEthereumChain],
-            })
-
-            const currentChainId = await this.getChainId()
-            if (currentChainId !== chainId)
-              throw new UserRejectedRequestError(
-                new Error('User rejected switch after adding network.'),
-              )
-
-            const requestedChains = await this.getRequestedChainsIds()
-            this.setRequestedChainsIds([...requestedChains, chainId])
-            return chain
-          } catch (error) {
-            throw new UserRejectedRequestError(error as Error)
-          }
-        }
-
-        if (error.code === UserRejectedRequestError.code)
+        if (/(user rejected)/i.test(error.message))
           throw new UserRejectedRequestError(error)
-        throw new SwitchChainError(error)
+
+        // Indicates chain is not added to provider
+        try {
+          let blockExplorerUrls
+          if (addEthereumChainParameter?.blockExplorerUrls)
+            blockExplorerUrls = addEthereumChainParameter.blockExplorerUrls
+          else
+            blockExplorerUrls = chain.blockExplorers?.default.url
+              ? [chain.blockExplorers?.default.url]
+              : []
+
+          let rpcUrls
+          if (addEthereumChainParameter?.rpcUrls?.length)
+            rpcUrls = addEthereumChainParameter.rpcUrls
+          else rpcUrls = [...chain.rpcUrls.default.http]
+
+          const addEthereumChain = {
+            blockExplorerUrls,
+            chainId: numberToHex(chainId),
+            chainName: addEthereumChainParameter?.chainName ?? chain.name,
+            iconUrls: addEthereumChainParameter?.iconUrls,
+            nativeCurrency:
+              addEthereumChainParameter?.nativeCurrency ?? chain.nativeCurrency,
+            rpcUrls,
+          } satisfies AddEthereumChainParameter
+
+          await provider.request({
+            method: 'wallet_addEthereumChain',
+            params: [addEthereumChain],
+          })
+
+          const currentChainId = await this.getChainId()
+          if (currentChainId !== chainId)
+            throw new UserRejectedRequestError(
+              new Error('User rejected switch after adding network.'),
+            )
+
+          const requestedChains = await this.getRequestedChainsIds()
+          this.setRequestedChainsIds([...requestedChains, chainId])
+          return chain
+        } catch (error) {
+          throw new UserRejectedRequestError(error as Error)
+        }
       }
     },
     onAccountsChanged(accounts) {
