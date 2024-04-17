@@ -301,7 +301,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
       const chain = config.chains.find((x) => x.id === chainId)
       if (!chain) throw new SwitchChainError(new ChainNotConfiguredError())
 
-      try {
+        try {
         await Promise.all([
           new Promise<void>((resolve) => {
             const listener = ({
@@ -322,58 +322,50 @@ export function walletConnect(parameters: WalletConnectParameters) {
 
         const requestedChains = await this.getRequestedChainsIds()
         this.setRequestedChainsIds([...requestedChains, chainId])
+        
         return chain
       } catch (err) {
         const error = err as RpcError
-
-        // Indicates chain is not added to provider
-        if (
-          error.code === 4902 ||
-          // Unwrapping for MetaMask Mobile
-          // https://github.com/MetaMask/metamask-mobile/issues/2944#issuecomment-976988719
-          (error as ProviderRpcError<{ originalError?: { code: number } }>)
-            ?.data?.originalError?.code === 4902
-        ) {
-          try {
-            const { default: blockExplorer, ...blockExplorers } =
-              chain.blockExplorers ?? {}
-            let blockExplorerUrls
-            if (blockExplorer)
-              blockExplorerUrls = [
-                blockExplorer.url,
-                ...Object.values(blockExplorers).map((x) => x.url),
-              ]
-
-            await provider.request({
-              method: 'wallet_addEthereumChain',
-              params: [
-                {
-                  chainId: numberToHex(chainId),
-                  chainName: chain.name,
-                  nativeCurrency: chain.nativeCurrency,
-                  rpcUrls: [chain.rpcUrls.default?.http[0] ?? ''],
-                  blockExplorerUrls,
-                },
-              ],
-            })
-
-            const currentChainId = await this.getChainId()
-            if (currentChainId !== chainId)
-              throw new UserRejectedRequestError(
-                new Error('User rejected switch after adding network.'),
-              )
-
-            const requestedChains = await this.getRequestedChainsIds()
-            this.setRequestedChainsIds([...requestedChains, chainId])
-            return chain
-          } catch (error) {
-            throw new UserRejectedRequestError(error as Error)
-          }
-        }
-
-        if (error.code === UserRejectedRequestError.code)
+        
+        if (/(user rejected)/i.test(error.message))
           throw new UserRejectedRequestError(error)
-        throw new SwitchChainError(error)
+        
+        // Indicates chain is not added to provider
+        try {
+          const { default: blockExplorer, ...blockExplorers } =
+            chain.blockExplorers ?? {}
+          let blockExplorerUrls
+          if (blockExplorer)
+            blockExplorerUrls = [
+              blockExplorer.url,
+              ...Object.values(blockExplorers).map((x) => x.url),
+            ]
+
+          await provider.request({
+            method: 'wallet_addEthereumChain',
+            params: [
+              {
+                chainId: numberToHex(chainId),
+                chainName: chain.name,
+                nativeCurrency: chain.nativeCurrency,
+                rpcUrls: [chain.rpcUrls.default?.http[0] ?? ''],
+                blockExplorerUrls,
+              },
+            ],
+          })
+
+          const currentChainId = await this.getChainId()
+          if (currentChainId !== chainId)
+            throw new UserRejectedRequestError(
+              new Error('User rejected switch after adding network.'),
+            )
+
+          const requestedChains = await this.getRequestedChainsIds()
+          this.setRequestedChainsIds([...requestedChains, chainId])
+          return chain
+        } catch (error) {
+          throw new UserRejectedRequestError(error as Error)
+        }
       }
     },
     onAccountsChanged(accounts) {
