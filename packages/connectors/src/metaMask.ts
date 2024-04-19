@@ -52,17 +52,19 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
     type: metaMask.type,
     async setup() {
       const provider = await this.getProvider()
-      if (provider)
+      if (provider) {
         provider.on('connect', this.onConnect.bind(this) as Listener)
+      }
     },
     async connect({ chainId, isReconnecting } = {}) {
+      // TODO: how to differentiate betwween automatic connect or user initiated connect?
+      // On automatic connect, for mobile we need to throw an error since it requires a deeplink,
       if (isReconnecting && isMobileBrowser) {
         // Prevent reconnection on mobile, it needs to be done manually via eth_requestAccount + deeplink
         throw new Error('MetaMask SDK not connected')
       }
 
       const provider = await this.getProvider()
-
       let accounts: readonly Address[] | null = null
       try {
         if (!accounts) {
@@ -129,7 +131,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
     async getChainId() {
       const provider = await this.getProvider()
       const chainId =
-        provider.getChainId() ??
+        provider.getChainId() ||
         (await provider?.request({ method: 'eth_chainId' }))
       return Number(chainId)
     },
@@ -144,13 +146,10 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           throw new Error('dappMetadata is required and must be provided.')
 
         sdk = new sdkModule.MetaMaskSDK({
-          ...parameters,
+          useDeeplink: true,
+          ...parameters, // allow users to overwrite useDeeplink
           dappMetadata: parameters.dappMetadata,
           _source: 'wagmi',
-          // logging: {
-          //   developerMode: true,
-          //   plaintext: true,
-          // },
           readonlyRPCMap: Object.fromEntries(
             config.chains.map((chain) => [
               chain.id,
