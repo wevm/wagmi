@@ -1,6 +1,12 @@
 import { http, cookieStorage, createConfig, createStorage } from 'wagmi'
 import { celo, mainnet, optimism, sepolia } from 'wagmi/chains'
-import { coinbaseWallet, injected, safe, walletConnect } from 'wagmi/connectors'
+import {
+  coinbaseWallet,
+  injected,
+  metaMask,
+  safe,
+  walletConnect,
+} from 'wagmi/connectors'
 
 export const config = createConfig({
   chains: [mainnet, sepolia, optimism, celo],
@@ -9,6 +15,11 @@ export const config = createConfig({
     walletConnect({ projectId: import.meta.env.VITE_WC_PROJECT_ID }),
     coinbaseWallet({ appName: 'Vite React Playground', darkMode: true }),
     safe({ debug: true, shimDisconnect: true }),
+    metaMask({
+      dappMetadata: {
+        name: 'Wagmi App',
+      },
+    }),
   ],
   ssr: true,
   storage: createStorage({
