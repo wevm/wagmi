@@ -223,13 +223,13 @@ export function injected(parameters: InjectedParameters = {}) {
           currentChainId = chain?.id ?? currentChainId
         }
 
-        if (shimDisconnect) {
-          // Remove disconnected shim if it exists
+        // Remove disconnected shim if it exists
+        if (shimDisconnect)
           await config.storage?.removeItem(`${this.id}.disconnected`)
-          // Add connected shim if no target exists
-          if (!parameters.target)
-            await config.storage?.setItem('injected.connected', true)
-        }
+
+        // Add connected shim if no target exists
+        if (!parameters.target)
+          await config.storage?.setItem('injected.connected', true)
 
         return { accounts, chainId: currentChainId }
       } catch (err) {
