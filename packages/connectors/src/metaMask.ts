@@ -17,7 +17,9 @@ import {
   numberToHex,
 } from 'viem'
 
-export type MetaMaskParameters = Evaluate<MetaMaskSDKOptions>
+export type MetaMaskParameters = Evaluate<
+  Omit<MetaMaskSDKOptions, '_source' | 'readonlyRPCMap'>
+>
 
 const isMobileBrowser =
   /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
