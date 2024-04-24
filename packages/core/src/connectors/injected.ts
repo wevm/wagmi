@@ -262,9 +262,10 @@ export function injected(parameters: InjectedParameters = {}) {
       // Add shim signalling connector is disconnected
       if (shimDisconnect) {
         await config.storage?.setItem(`${this.id}.disconnected`, true)
-        if (!parameters.target)
-          await config.storage?.removeItem('injected.connected')
       }
+
+      if (!parameters.target)
+        await config.storage?.removeItem('injected.connected')
     },
     async getAccounts() {
       const provider = await this.getProvider()
