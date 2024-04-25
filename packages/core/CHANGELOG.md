@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.6.18
+
+### Patch Changes
+
+- [#3848](https://github.com/wevm/wagmi/pull/3848) [`dd40a41c`](https://github.com/wevm/wagmi/commit/dd40a41c526ab60a288aff2250ed8dba92a27b16) Thanks [@jxom](https://github.com/jxom)! - Updated MetaMask SDK.
+
 ## 2.6.17
 
 ### Patch Changes
