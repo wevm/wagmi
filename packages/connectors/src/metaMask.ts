@@ -21,11 +21,6 @@ export type MetaMaskParameters = Evaluate<
   ExactPartial<Omit<MetaMaskSDKOptions, '_source' | 'readonlyRPCMap'>>
 >
 
-const isMobileBrowser =
-  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    navigator.userAgent,
-  )
-
 metaMask.type = 'metaMask' as const
 export function metaMask(parameters: MetaMaskParameters = {}) {
   type Provider = SDKProvider
@@ -149,6 +144,13 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
     },
     async isAuthorized() {
       try {
+        const isMobileBrowser =
+          typeof navigator !== 'undefined'
+            ? /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+                navigator.userAgent,
+              )
+            : false
+
         // MetaMask Mobile doesn't support persisted sessions.
         if (isMobileBrowser) return false
 
