@@ -27,7 +27,7 @@ const isMobileBrowser =
   )
 
 metaMask.type = 'metaMask' as const
-export function metaMask(parameters?: MetaMaskParameters | undefined) {
+export function metaMask(parameters: MetaMaskParameters = {}) {
   type Provider = SDKProvider
   type Properties = {
     onConnect(connectInfo: ProviderConnectInfo): void
