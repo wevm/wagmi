@@ -252,7 +252,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
         return false
       }
     },
-    async switchChain({ addEthereumChainParameters, chainId }) {
+    async switchChain({ addEthereumChainParameter, chainId }) {
       const chain = config.chains.find((chain) => chain.id === chainId)
       if (!chain) throw new SwitchChainError(new ChainNotConfiguredError())
 
@@ -267,26 +267,25 @@ export function walletConnect(parameters: WalletConnectParameters) {
           namespaceMethods.includes('wallet_addEthereumChain')
         ) {
           let blockExplorerUrls
-          if (addEthereumChainParameters?.blockExplorerUrls)
-            blockExplorerUrls = addEthereumChainParameters.blockExplorerUrls
+          if (addEthereumChainParameter?.blockExplorerUrls)
+            blockExplorerUrls = addEthereumChainParameter.blockExplorerUrls
           else
             blockExplorerUrls = chain.blockExplorers?.default.url
               ? [chain.blockExplorers?.default.url]
               : []
 
           let rpcUrls
-          if (addEthereumChainParameters?.rpcUrls?.length)
-            rpcUrls = addEthereumChainParameters.rpcUrls
+          if (addEthereumChainParameter?.rpcUrls?.length)
+            rpcUrls = addEthereumChainParameter.rpcUrls
           else rpcUrls = [...chain.rpcUrls.default.http]
 
           const addEthereumChain = {
             blockExplorerUrls,
             chainId: numberToHex(chainId),
-            chainName: addEthereumChainParameters?.chainName ?? chain.name,
-            iconUrls: addEthereumChainParameters?.iconUrls,
+            chainName: addEthereumChainParameter?.chainName ?? chain.name,
+            iconUrls: addEthereumChainParameter?.iconUrls,
             nativeCurrency:
-              addEthereumChainParameters?.nativeCurrency ??
-              chain.nativeCurrency,
+              addEthereumChainParameter?.nativeCurrency ?? chain.nativeCurrency,
             rpcUrls,
           } satisfies AddEthereumChainParameter
 

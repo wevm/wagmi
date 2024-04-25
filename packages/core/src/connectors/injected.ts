@@ -375,7 +375,7 @@ export function injected(parameters: InjectedParameters = {}) {
         return false
       }
     },
-    async switchChain({ addEthereumChainParameters, chainId }) {
+    async switchChain({ addEthereumChainParameter, chainId }) {
       const provider = await this.getProvider()
       if (!provider) throw new ProviderNotFoundError()
 
@@ -414,8 +414,8 @@ export function injected(parameters: InjectedParameters = {}) {
             const { default: blockExplorer, ...blockExplorers } =
               chain.blockExplorers ?? {}
             let blockExplorerUrls
-            if (addEthereumChainParameters?.blockExplorerUrls)
-              blockExplorerUrls = addEthereumChainParameters.blockExplorerUrls
+            if (addEthereumChainParameter?.blockExplorerUrls)
+              blockExplorerUrls = addEthereumChainParameter.blockExplorerUrls
             else if (blockExplorer)
               blockExplorerUrls = [
                 blockExplorer.url,
@@ -423,17 +423,17 @@ export function injected(parameters: InjectedParameters = {}) {
               ]
 
             let rpcUrls
-            if (addEthereumChainParameters?.rpcUrls?.length)
-              rpcUrls = addEthereumChainParameters.rpcUrls
+            if (addEthereumChainParameter?.rpcUrls?.length)
+              rpcUrls = addEthereumChainParameter.rpcUrls
             else rpcUrls = [chain.rpcUrls.default?.http[0] ?? '']
 
             const addEthereumChain = {
               blockExplorerUrls,
               chainId: numberToHex(chainId),
-              chainName: addEthereumChainParameters?.chainName ?? chain.name,
-              iconUrls: addEthereumChainParameters?.iconUrls,
+              chainName: addEthereumChainParameter?.chainName ?? chain.name,
+              iconUrls: addEthereumChainParameter?.iconUrls,
               nativeCurrency:
-                addEthereumChainParameters?.nativeCurrency ??
+                addEthereumChainParameter?.nativeCurrency ??
                 chain.nativeCurrency,
               rpcUrls,
             } satisfies AddEthereumChainParameter

@@ -23,7 +23,7 @@ The mutation function you can call with variables to trigger the mutation and op
 
   `{{TVariables}}`
 
-  The variables object to pass to the <a :href="`/core/api/actions/${mutate}`">`{{mutate}}`</a> action.
+  The variables object to pass to the <a :href="`/core/api/actions/${mutate}#parameters`">`{{mutate}}`</a> action.
 
 - #### onSuccess
 
@@ -54,6 +54,7 @@ Similar to [`{{mutate}}`](#mutate) but returns a promise which can be awaited.
 
 `{{TData}} | undefined`
 
+- <a :href="`/core/api/actions/${mutate}#return-type`">`{{mutate}}` return type</a>
 - Defaults to `undefined`
 - The last successfully resolved data for the mutation.
 

@@ -58,7 +58,7 @@ export type CreateConnectorFn<
     isAuthorized(): Promise<boolean>
     switchChain?(
       parameters: Evaluate<{
-        addEthereumChainParameters?:
+        addEthereumChainParameter?:
           | ExactPartial<Omit<AddEthereumChainParameter, 'chainId'>>
           | undefined
         chainId: number

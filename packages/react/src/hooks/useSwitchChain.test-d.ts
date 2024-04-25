@@ -15,7 +15,7 @@ test('context', () => {
     mutation: {
       onMutate(variables) {
         expectTypeOf(variables).toEqualTypeOf<{
-          addEthereumChainParameters?:
+          addEthereumChainParameter?:
             | ExactPartial<Omit<AddEthereumChainParameter, 'chainId'>>
             | undefined
           chainId: number
@@ -25,7 +25,7 @@ test('context', () => {
       },
       onError(error, variables, context) {
         expectTypeOf(variables).toEqualTypeOf<{
-          addEthereumChainParameters?:
+          addEthereumChainParameter?:
             | ExactPartial<Omit<AddEthereumChainParameter, 'chainId'>>
             | undefined
           chainId: number
@@ -36,7 +36,7 @@ test('context', () => {
       },
       onSuccess(data, variables, context) {
         expectTypeOf(variables).toEqualTypeOf<{
-          addEthereumChainParameters?:
+          addEthereumChainParameter?:
             | ExactPartial<Omit<AddEthereumChainParameter, 'chainId'>>
             | undefined
           chainId: number
@@ -49,7 +49,7 @@ test('context', () => {
         expectTypeOf(data).toEqualTypeOf<Evaluate<Chain> | undefined>()
         expectTypeOf(error).toEqualTypeOf<SwitchChainErrorType | null>()
         expectTypeOf(variables).toEqualTypeOf<{
-          addEthereumChainParameters?:
+          addEthereumChainParameter?:
             | ExactPartial<Omit<AddEthereumChainParameter, 'chainId'>>
             | undefined
           chainId: number
@@ -64,7 +64,7 @@ test('context', () => {
   expectTypeOf(error).toEqualTypeOf<SwitchChainErrorType | null>()
   expectTypeOf(variables).toEqualTypeOf<
     | {
-        addEthereumChainParameters?:
+        addEthereumChainParameter?:
           | ExactPartial<Omit<AddEthereumChainParameter, 'chainId'>>
           | undefined
         chainId: number
@@ -79,7 +79,7 @@ test('context', () => {
     {
       onError(error, variables, context) {
         expectTypeOf(variables).toEqualTypeOf<{
-          addEthereumChainParameters?:
+          addEthereumChainParameter?:
             | ExactPartial<Omit<AddEthereumChainParameter, 'chainId'>>
             | undefined
           chainId: number
@@ -90,7 +90,7 @@ test('context', () => {
       },
       onSuccess(data, variables, context) {
         expectTypeOf(variables).toEqualTypeOf<{
-          addEthereumChainParameters?:
+          addEthereumChainParameter?:
             | ExactPartial<Omit<AddEthereumChainParameter, 'chainId'>>
             | undefined
           chainId: number
@@ -103,7 +103,7 @@ test('context', () => {
         expectTypeOf(data).toEqualTypeOf<Evaluate<Chain> | undefined>()
         expectTypeOf(error).toEqualTypeOf<SwitchChainErrorType | null>()
         expectTypeOf(variables).toEqualTypeOf<{
-          addEthereumChainParameters?:
+          addEthereumChainParameter?:
             | ExactPartial<Omit<AddEthereumChainParameter, 'chainId'>>
             | undefined
           chainId: number

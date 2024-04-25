@@ -24,7 +24,7 @@ export type SwitchChainParameters<
 > = Evaluate<
   ConnectorParameter & {
     chainId: chainId | config['chains'][number]['id']
-    addEthereumChainParameters?:
+    addEthereumChainParameter?:
       | Evaluate<ExactPartial<Omit<AddEthereumChainParameter, 'chainId'>>>
       | undefined
   }
@@ -58,7 +58,7 @@ export async function switchChain<
   config: config,
   parameters: SwitchChainParameters<config, chainId>,
 ): Promise<SwitchChainReturnType<config, chainId>> {
-  const { addEthereumChainParameters, chainId } = parameters
+  const { addEthereumChainParameter, chainId } = parameters
 
   const connection = config.state.connections.get(
     parameters.connector?.uid ?? config.state.current!,
@@ -68,7 +68,7 @@ export async function switchChain<
     if (!connector.switchChain)
       throw new SwitchChainNotSupportedError({ connector })
     const chain = await connector.switchChain({
-      addEthereumChainParameters,
+      addEthereumChainParameter,
       chainId,
     })
     return chain as SwitchChainReturnType<config, chainId>
