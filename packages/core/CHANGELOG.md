@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.6.19
+
+### Patch Changes
+
+- [`e3c832a1`](https://github.com/wevm/wagmi/commit/e3c832a12c301f9b0ee129d877b3101d220ba8b2) Thanks [@jxom](https://github.com/jxom)! - Fixed undefined `navigator` issue in MetaMask connector.
+
 ## 2.6.18
 
 ### Patch Changes
