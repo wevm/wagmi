@@ -1,6 +1,5 @@
 import {
   type Address,
-  type EIP1193EventMap,
   type EIP1193Provider,
   type ProviderConnectInfo,
   ProviderRpcError,
@@ -383,19 +382,28 @@ export function injected(parameters: InjectedParameters = {}) {
 
       try {
         await Promise.all([
-          provider.request({
-            method: 'wallet_switchEthereumChain',
-            params: [{ chainId: numberToHex(chainId) }],
-          }),
-          new Promise<void>((resolve) => {
-            const listener: EIP1193EventMap['chainChanged'] = (data) => {
-              if (Number(data) === chainId) {
-                provider.removeListener('chainChanged', listener)
-                resolve()
-              }
-            }
-            provider.on('chainChanged', listener)
-          }),
+          provider
+            .request({
+              method: 'wallet_switchEthereumChain',
+              params: [{ chainId: numberToHex(chainId) }],
+            })
+            // MetaMask makes a `net_version` RPC call to the target chain during `wallet_switchEthereumChain`.
+            // If this request fails, MetaMask doesn't emit a `chainChanged` event, but will still switch the chain.
+            // See https://github.com/MetaMask/metamask-extension/issues/24247
+            //
+            // To work around this, we can ask MetaMask for the current chain ID and emit our internal `changed`
+            // event as if the chain has changed. This will allow the promise below to also resolve. We still want to
+            // wait for the `change` event in case the `eth_chainId` check fails or isn't immediately available.
+            .then(async () => {
+              const currentChainId = await this.getChainId()
+              if (currentChainId === chainId)
+                config.emitter.emit('change', { chainId })
+            }),
+          new Promise<void>((resolve) =>
+            config.emitter.once('change', ({ chainId: currentChainId }) => {
+              if (currentChainId === chainId) resolve()
+            }),
+          ),
         ])
         return chain
       } catch (err) {
