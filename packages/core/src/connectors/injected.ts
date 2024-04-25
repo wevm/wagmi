@@ -389,7 +389,6 @@ export function injected(parameters: InjectedParameters = {}) {
           }),
           new Promise<void>((resolve) => {
             const listener: EIP1193EventMap['chainChanged'] = (data) => {
-              console.log('[injected] switchChain.listener', { data, chainId })
               if (Number(data) === chainId) {
                 provider.removeListener('chainChanged', listener)
                 resolve()
