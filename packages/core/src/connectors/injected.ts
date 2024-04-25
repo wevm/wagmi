@@ -1,7 +1,6 @@
 import {
   type AddEthereumChainParameter,
   type Address,
-  type EIP1193EventMap,
   type EIP1193Provider,
   type ProviderConnectInfo,
   ProviderRpcError,
@@ -383,21 +382,10 @@ export function injected(parameters: InjectedParameters = {}) {
       if (!chain) throw new SwitchChainError(new ChainNotConfiguredError())
 
       try {
-        await Promise.all([
-          provider.request({
-            method: 'wallet_switchEthereumChain',
-            params: [{ chainId: numberToHex(chainId) }],
-          }),
-          new Promise<void>((resolve) => {
-            const listener: EIP1193EventMap['chainChanged'] = (data) => {
-              if (Number(data) === chainId) {
-                provider.removeListener('chainChanged', listener)
-                resolve()
-              }
-            }
-            provider.on('chainChanged', listener)
-          }),
-        ])
+        await provider.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: numberToHex(chainId) }],
+        })
         return chain
       } catch (err) {
         const error = err as RpcError
