@@ -1,4 +1,5 @@
 import {
+  type AddEthereumChainParameter,
   type Address,
   type EIP1193EventMap,
   type EIP1193Provider,
@@ -374,7 +375,7 @@ export function injected(parameters: InjectedParameters = {}) {
         return false
       }
     },
-    async switchChain({ chainId }) {
+    async switchChain({ addEthereumChainParameters, chainId }) {
       const provider = await this.getProvider()
       if (!provider) throw new ProviderNotFoundError()
 
@@ -413,23 +414,33 @@ export function injected(parameters: InjectedParameters = {}) {
             const { default: blockExplorer, ...blockExplorers } =
               chain.blockExplorers ?? {}
             let blockExplorerUrls
-            if (blockExplorer)
+            if (addEthereumChainParameters?.blockExplorerUrls)
+              blockExplorerUrls = addEthereumChainParameters.blockExplorerUrls
+            else if (blockExplorer)
               blockExplorerUrls = [
                 blockExplorer.url,
                 ...Object.values(blockExplorers).map((x) => x.url),
               ]
 
+            let rpcUrls
+            if (addEthereumChainParameters?.rpcUrls?.length)
+              rpcUrls = addEthereumChainParameters.rpcUrls
+            else rpcUrls = [chain.rpcUrls.default?.http[0] ?? '']
+
+            const addEthereumChain = {
+              blockExplorerUrls,
+              chainId: numberToHex(chainId),
+              chainName: addEthereumChainParameters?.chainName ?? chain.name,
+              iconUrls: addEthereumChainParameters?.iconUrls,
+              nativeCurrency:
+                addEthereumChainParameters?.nativeCurrency ??
+                chain.nativeCurrency,
+              rpcUrls,
+            } satisfies AddEthereumChainParameter
+
             await provider.request({
               method: 'wallet_addEthereumChain',
-              params: [
-                {
-                  chainId: numberToHex(chainId),
-                  chainName: chain.name,
-                  nativeCurrency: chain.nativeCurrency,
-                  rpcUrls: [chain.rpcUrls.default?.http[0] ?? ''],
-                  blockExplorerUrls,
-                },
-              ],
+              params: [addEthereumChain],
             })
 
             const currentChainId = await this.getChainId()
@@ -450,7 +461,6 @@ export function injected(parameters: InjectedParameters = {}) {
       }
     },
     async onAccountsChanged(accounts) {
-      console.log('[injected] onAccountsChanged', accounts)
       // Disconnect if there are no accounts
       if (accounts.length === 0) this.onDisconnect()
       // Connect if emitter is listening for connect event (e.g. is disconnected and connects through wallet interface)
@@ -468,7 +478,6 @@ export function injected(parameters: InjectedParameters = {}) {
         })
     },
     onChainChanged(chain) {
-      console.log('[injected] onChainChanged', chain)
       const chainId = Number(chain)
       config.emitter.emit('change', { chainId })
     },

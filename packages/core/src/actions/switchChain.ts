@@ -1,4 +1,5 @@
 import {
+  type AddEthereumChainParameter,
   type SwitchChainErrorType as viem_SwitchChainErrorType,
   type UserRejectedRequestErrorType,
 } from 'viem'
@@ -15,7 +16,7 @@ import {
   type SwitchChainNotSupportedErrorType,
 } from '../errors/connector.js'
 import type { ConnectorParameter } from '../types/properties.js'
-import { type Evaluate } from '../types/utils.js'
+import { type Evaluate, type ExactPartial } from '../types/utils.js'
 
 export type SwitchChainParameters<
   config extends Config = Config,
@@ -23,6 +24,9 @@ export type SwitchChainParameters<
 > = Evaluate<
   ConnectorParameter & {
     chainId: chainId | config['chains'][number]['id']
+    addEthereumChainParameters?:
+      | Evaluate<ExactPartial<Omit<AddEthereumChainParameter, 'chainId'>>>
+      | undefined
   }
 >
 
@@ -54,7 +58,7 @@ export async function switchChain<
   config: config,
   parameters: SwitchChainParameters<config, chainId>,
 ): Promise<SwitchChainReturnType<config, chainId>> {
-  const { chainId } = parameters
+  const { addEthereumChainParameters, chainId } = parameters
 
   const connection = config.state.connections.get(
     parameters.connector?.uid ?? config.state.current!,
@@ -63,7 +67,10 @@ export async function switchChain<
     const connector = connection.connector
     if (!connector.switchChain)
       throw new SwitchChainNotSupportedError({ connector })
-    const chain = await connector.switchChain({ chainId })
+    const chain = await connector.switchChain({
+      addEthereumChainParameters,
+      chainId,
+    })
     return chain as SwitchChainReturnType<config, chainId>
   }
 

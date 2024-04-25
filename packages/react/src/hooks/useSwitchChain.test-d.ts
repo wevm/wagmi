@@ -1,9 +1,10 @@
 import { type Connector, type SwitchChainErrorType } from '@wagmi/core'
 import { type Chain } from '@wagmi/core/chains'
-import { type Evaluate } from '@wagmi/core/internal'
+import { type Evaluate, type ExactPartial } from '@wagmi/core/internal'
 import { chain } from '@wagmi/test'
 import { expectTypeOf, test } from 'vitest'
 
+import type { AddEthereumChainParameter } from 'viem'
 import { useSwitchChain } from './useSwitchChain.js'
 
 const chainId = chain.mainnet.id
@@ -14,6 +15,9 @@ test('context', () => {
     mutation: {
       onMutate(variables) {
         expectTypeOf(variables).toEqualTypeOf<{
+          addEthereumChainParameters?:
+            | ExactPartial<Omit<AddEthereumChainParameter, 'chainId'>>
+            | undefined
           chainId: number
           connector?: Connector | undefined
         }>()
@@ -21,6 +25,9 @@ test('context', () => {
       },
       onError(error, variables, context) {
         expectTypeOf(variables).toEqualTypeOf<{
+          addEthereumChainParameters?:
+            | ExactPartial<Omit<AddEthereumChainParameter, 'chainId'>>
+            | undefined
           chainId: number
           connector?: Connector | undefined
         }>()
@@ -29,6 +36,9 @@ test('context', () => {
       },
       onSuccess(data, variables, context) {
         expectTypeOf(variables).toEqualTypeOf<{
+          addEthereumChainParameters?:
+            | ExactPartial<Omit<AddEthereumChainParameter, 'chainId'>>
+            | undefined
           chainId: number
           connector?: Connector | undefined
         }>()
@@ -39,6 +49,9 @@ test('context', () => {
         expectTypeOf(data).toEqualTypeOf<Evaluate<Chain> | undefined>()
         expectTypeOf(error).toEqualTypeOf<SwitchChainErrorType | null>()
         expectTypeOf(variables).toEqualTypeOf<{
+          addEthereumChainParameters?:
+            | ExactPartial<Omit<AddEthereumChainParameter, 'chainId'>>
+            | undefined
           chainId: number
           connector?: Connector | undefined
         }>()
@@ -50,7 +63,14 @@ test('context', () => {
   expectTypeOf(data).toEqualTypeOf<Evaluate<Chain> | undefined>()
   expectTypeOf(error).toEqualTypeOf<SwitchChainErrorType | null>()
   expectTypeOf(variables).toEqualTypeOf<
-    { chainId: number; connector?: Connector | undefined } | undefined
+    | {
+        addEthereumChainParameters?:
+          | ExactPartial<Omit<AddEthereumChainParameter, 'chainId'>>
+          | undefined
+        chainId: number
+        connector?: Connector | undefined
+      }
+    | undefined
   >()
   expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
 
@@ -59,6 +79,9 @@ test('context', () => {
     {
       onError(error, variables, context) {
         expectTypeOf(variables).toEqualTypeOf<{
+          addEthereumChainParameters?:
+            | ExactPartial<Omit<AddEthereumChainParameter, 'chainId'>>
+            | undefined
           chainId: number
           connector?: Connector | undefined
         }>()
@@ -67,6 +90,9 @@ test('context', () => {
       },
       onSuccess(data, variables, context) {
         expectTypeOf(variables).toEqualTypeOf<{
+          addEthereumChainParameters?:
+            | ExactPartial<Omit<AddEthereumChainParameter, 'chainId'>>
+            | undefined
           chainId: number
           connector?: Connector | undefined
         }>()
@@ -77,6 +103,9 @@ test('context', () => {
         expectTypeOf(data).toEqualTypeOf<Evaluate<Chain> | undefined>()
         expectTypeOf(error).toEqualTypeOf<SwitchChainErrorType | null>()
         expectTypeOf(variables).toEqualTypeOf<{
+          addEthereumChainParameters?:
+            | ExactPartial<Omit<AddEthereumChainParameter, 'chainId'>>
+            | undefined
           chainId: number
           connector?: Connector | undefined
         }>()
