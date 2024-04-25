@@ -10,11 +10,7 @@ export const config = createConfig({
       projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID!,
       showQrModal: false,
     }),
-    metaMask({
-      dappMetadata: {
-        name: 'Wagmi App',
-      },
-    }),
+    metaMask(),
   ],
   storage: createStorage({
     storage: cookieStorage,

@@ -4,7 +4,7 @@ import {
   type SDKProvider,
 } from '@metamask/sdk'
 import { ChainNotConfiguredError, createConnector } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Evaluate, ExactPartial } from '@wagmi/core/internal'
 import {
   type Address,
   type ProviderConnectInfo,
@@ -18,7 +18,7 @@ import {
 } from 'viem'
 
 export type MetaMaskParameters = Evaluate<
-  Omit<MetaMaskSDKOptions, '_source' | 'readonlyRPCMap'>
+  ExactPartial<Omit<MetaMaskSDKOptions, '_source' | 'readonlyRPCMap'>>
 >
 
 const isMobileBrowser =
@@ -27,7 +27,7 @@ const isMobileBrowser =
   )
 
 metaMask.type = 'metaMask' as const
-export function metaMask(parameters: MetaMaskParameters) {
+export function metaMask(parameters?: MetaMaskParameters | undefined) {
   type Provider = SDKProvider
   type Properties = {
     onConnect(connectInfo: ProviderConnectInfo): void
@@ -127,6 +127,7 @@ export function metaMask(parameters: MetaMaskParameters) {
       async function initProvider() {
         const { MetaMaskSDK } = await import('@metamask/sdk')
         sdk = new MetaMaskSDK({
+          dappMetadata: {},
           ...parameters,
           _source: 'wagmi',
           readonlyRPCMap: Object.fromEntries(
@@ -276,8 +277,10 @@ export function metaMask(parameters: MetaMaskParameters) {
       }
 
       // Remove cached SDK properties.
-      localStorage.removeItem('MMSDK_cached_address')
-      localStorage.removeItem('MMSDK_cached_chainId')
+      if (typeof localStorage !== 'undefined') {
+        localStorage.removeItem('MMSDK_cached_address')
+        localStorage.removeItem('MMSDK_cached_chainId')
+      }
 
       // No need to remove 'metaMaskSDK.disconnected' from storage because `onDisconnect` is typically
       // only called when the wallet is disconnected through the wallet's interface, meaning the wallet

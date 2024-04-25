@@ -23,11 +23,7 @@ export const config = createConfig({
       projectId: import.meta.env.VITE_WC_PROJECT_ID,
     }),
     coinbaseWallet({ appName: 'Vite React Playground', darkMode: true }),
-    metaMask({
-      dappMetadata: {
-        name: 'Wagmi App',
-      },
-    }),
+    metaMask(),
   ],
   transports: {
     [mainnet.id]: http(),
