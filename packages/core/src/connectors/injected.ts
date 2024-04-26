@@ -388,13 +388,11 @@ export function injected(parameters: InjectedParameters = {}) {
               method: 'wallet_switchEthereumChain',
               params: [{ chainId: numberToHex(chainId) }],
             })
-            // MetaMask makes a `net_version` RPC call to the target chain during `wallet_switchEthereumChain`.
-            // If this request fails, MetaMask doesn't emit a `chainChanged` event, but will still switch the chain.
-            // See https://github.com/MetaMask/metamask-extension/issues/24247
-            //
-            // To work around this, we can ask MetaMask for the current chain ID and emit our internal `changed`
-            // event as if the chain has changed. This will allow the promise below to also resolve. We still want to
-            // wait for the `change` event in case the `eth_chainId` check fails or isn't immediately available.
+            // During `'wallet_switchEthereumChain'`, MetaMask makes a `'net_version'` RPC call to the target chain.
+            // If this request fails, MetaMask does not emit the `'chainChanged'` event, but will still switch the chain.
+            // To counter this behavior, we request and emit the current chain ID to confirm the chain switch either via
+            // this callback or an externally emitted `'chainChanged'` event.
+            // https://github.com/MetaMask/metamask-extension/issues/24247
             .then(async () => {
               const currentChainId = await this.getChainId()
               if (currentChainId === chainId)
