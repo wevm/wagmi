@@ -1,7 +1,6 @@
 import {
   type AddEthereumChainParameter,
   type Address,
-  type EIP1193EventMap,
   type EIP1193Provider,
   type ProviderConnectInfo,
   ProviderRpcError,
@@ -384,19 +383,26 @@ export function injected(parameters: InjectedParameters = {}) {
 
       try {
         await Promise.all([
-          provider.request({
-            method: 'wallet_switchEthereumChain',
-            params: [{ chainId: numberToHex(chainId) }],
-          }),
-          new Promise<void>((resolve) => {
-            const listener: EIP1193EventMap['chainChanged'] = (data) => {
-              if (Number(data) === chainId) {
-                provider.removeListener('chainChanged', listener)
-                resolve()
-              }
-            }
-            provider.on('chainChanged', listener)
-          }),
+          provider
+            .request({
+              method: 'wallet_switchEthereumChain',
+              params: [{ chainId: numberToHex(chainId) }],
+            })
+            // During `'wallet_switchEthereumChain'`, MetaMask makes a `'net_version'` RPC call to the target chain.
+            // If this request fails, MetaMask does not emit the `'chainChanged'` event, but will still switch the chain.
+            // To counter this behavior, we request and emit the current chain ID to confirm the chain switch either via
+            // this callback or an externally emitted `'chainChanged'` event.
+            // https://github.com/MetaMask/metamask-extension/issues/24247
+            .then(async () => {
+              const currentChainId = await this.getChainId()
+              if (currentChainId === chainId)
+                config.emitter.emit('change', { chainId })
+            }),
+          new Promise<void>((resolve) =>
+            config.emitter.once('change', ({ chainId: currentChainId }) => {
+              if (currentChainId === chainId) resolve()
+            }),
+          ),
         ])
         return chain
       } catch (err) {
