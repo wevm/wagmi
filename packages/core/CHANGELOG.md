@@ -1,5 +1,17 @@
 # @wagmi/core
 
+## 2.7.0
+
+### Minor Changes
+
+- [#3857](https://github.com/wevm/wagmi/pull/3857) [`d4274c03`](https://github.com/wevm/wagmi/commit/d4274c03a6af5f2d26d31432016ebc14950a330e) Thanks [@tmm](https://github.com/tmm)! - Added `addEthereumChainParameter` to `switchChain`-related methods.
+
+### Patch Changes
+
+- [#3849](https://github.com/wevm/wagmi/pull/3849) [`4781a405`](https://github.com/wevm/wagmi/commit/4781a4056d4ffc2c74f96a75429e9b2cd2417ad8) Thanks [@tmm](https://github.com/tmm)! - Fixed `shimDisconnect: false` behavior.
+
+- [#3859](https://github.com/wevm/wagmi/pull/3859) [`400c960b`](https://github.com/wevm/wagmi/commit/400c960b30d701c134850c695ae903a382c29b5b) Thanks [@holic](https://github.com/holic)! - Added workaround to injected connector for MetaMask bug, where chain switching does not work if target chain RPC `'net_version'` request fails.
+
 ## 2.6.19
 
 ### Patch Changes
