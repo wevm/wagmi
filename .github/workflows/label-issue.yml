@@ -24,3 +24,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           close-reason: 'not_planned'
           issue-number: ${{ github.event.issue.number }}
+          labels: 'Needs Reproduction'
