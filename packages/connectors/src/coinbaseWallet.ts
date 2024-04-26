@@ -9,6 +9,7 @@ import {
 } from '@wagmi/core'
 import type { Evaluate, Mutable, Omit } from '@wagmi/core/internal'
 import {
+  type AddEthereumChainParameter,
   type ProviderRpcError,
   SwitchChainError,
   UserRejectedRequestError,
@@ -180,35 +181,51 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
         return false
       }
     },
-    async switchChain({ chainId }) {
+    async switchChain({ addEthereumChainParameter, chainId }) {
       const chain = config.chains.find((chain) => chain.id === chainId)
       if (!chain) throw new SwitchChainError(new ChainNotConfiguredError())
 
       const provider = await this.getProvider()
-      const chainId_ = numberToHex(chain.id)
 
       try {
         await provider.request({
           method: 'wallet_switchEthereumChain',
-          params: [{ chainId: chainId_ }],
+          params: [{ chainId: numberToHex(chain.id) }],
         })
         return chain
       } catch (error) {
         // Indicates chain is not added to provider
         if ((error as ProviderRpcError).code === 4902) {
           try {
+            let blockExplorerUrls
+            if (addEthereumChainParameter?.blockExplorerUrls)
+              blockExplorerUrls = addEthereumChainParameter.blockExplorerUrls
+            else
+              blockExplorerUrls = chain.blockExplorers?.default.url
+                ? [chain.blockExplorers?.default.url]
+                : []
+
+            let rpcUrls
+            if (addEthereumChainParameter?.rpcUrls?.length)
+              rpcUrls = addEthereumChainParameter.rpcUrls
+            else rpcUrls = [chain.rpcUrls.default?.http[0] ?? '']
+
+            const addEthereumChain = {
+              blockExplorerUrls,
+              chainId: numberToHex(chainId),
+              chainName: addEthereumChainParameter?.chainName ?? chain.name,
+              iconUrls: addEthereumChainParameter?.iconUrls,
+              nativeCurrency:
+                addEthereumChainParameter?.nativeCurrency ??
+                chain.nativeCurrency,
+              rpcUrls,
+            } satisfies AddEthereumChainParameter
+
             await provider.request({
               method: 'wallet_addEthereumChain',
-              params: [
-                {
-                  chainId: chainId_,
-                  chainName: chain.name,
-                  nativeCurrency: chain.nativeCurrency,
-                  rpcUrls: [chain.rpcUrls.default?.http[0] ?? ''],
-                  blockExplorerUrls: [chain.blockExplorers?.default.url],
-                },
-              ],
+              params: [addEthereumChain],
             })
+
             return chain
           } catch (error) {
             throw new UserRejectedRequestError(error as Error)

@@ -84,7 +84,6 @@ function App() {
 import { type UseSwitchChainReturnType } from 'wagmi'
 ```
 
-
 ### chains
 
 `readonly [Chain, ...Chain[]]`

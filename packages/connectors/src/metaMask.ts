@@ -6,6 +6,7 @@ import {
 import { ChainNotConfiguredError, createConnector } from '@wagmi/core'
 import type { Evaluate, ExactPartial } from '@wagmi/core/internal'
 import {
+  type AddEthereumChainParameter,
   type Address,
   type ProviderConnectInfo,
   type ProviderRpcError,
@@ -165,7 +166,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         return false
       }
     },
-    async switchChain({ chainId }) {
+    async switchChain({ addEthereumChainParameter, chainId }) {
       const provider = await this.getProvider()
 
       const chain = config.chains.find((x) => x.id === chainId)
@@ -199,23 +200,33 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
             const { default: blockExplorer, ...blockExplorers } =
               chain.blockExplorers ?? {}
             let blockExplorerUrls
-            if (blockExplorer)
+            if (addEthereumChainParameter?.blockExplorerUrls)
+              blockExplorerUrls = addEthereumChainParameter.blockExplorerUrls
+            else if (blockExplorer)
               blockExplorerUrls = [
                 blockExplorer.url,
                 ...Object.values(blockExplorers).map((x) => x.url),
               ]
 
+            let rpcUrls
+            if (addEthereumChainParameter?.rpcUrls?.length)
+              rpcUrls = addEthereumChainParameter.rpcUrls
+            else rpcUrls = [chain.rpcUrls.default?.http[0] ?? '']
+
+            const addEthereumChain = {
+              blockExplorerUrls,
+              chainId: numberToHex(chainId),
+              chainName: addEthereumChainParameter?.chainName ?? chain.name,
+              iconUrls: addEthereumChainParameter?.iconUrls,
+              nativeCurrency:
+                addEthereumChainParameter?.nativeCurrency ??
+                chain.nativeCurrency,
+              rpcUrls,
+            } satisfies AddEthereumChainParameter
+
             await provider.request({
               method: 'wallet_addEthereumChain',
-              params: [
-                {
-                  chainId: numberToHex(chainId),
-                  chainName: chain.name,
-                  nativeCurrency: chain.nativeCurrency,
-                  rpcUrls: [chain.rpcUrls.default?.http[0] ?? ''],
-                  blockExplorerUrls,
-                },
-              ],
+              params: [addEthereumChain],
             })
 
             const currentChainId = await this.getChainId()
