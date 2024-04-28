@@ -1,5 +1,6 @@
 ---
 "@wagmi/core": patch
+"wagmi": patch
 ---
 
-fixed accessing reverted reason property inside `waitForTransactionReceipt`
+Fixed accessing reverted reason property inside `waitForTransactionReceipt`.
