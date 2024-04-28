@@ -145,7 +145,6 @@ export function injected(parameters: InjectedParameters = {}) {
       return getTarget().name
     },
     get skipSimulateContract() {
-      console.log(this.id)
       return skipSimulateContractRegex.test(this.id.toLowerCase())
     },
     type: injected.type,
