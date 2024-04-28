@@ -59,6 +59,7 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
   return createConnector<Provider, Properties>((config) => ({
     id: 'coinbaseWalletSDK',
     name: 'Coinbase Wallet',
+    skipSimulateContract: false,
     type: coinbaseWallet.type,
     async connect({ chainId } = {}) {
       try {

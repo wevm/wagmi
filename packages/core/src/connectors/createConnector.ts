@@ -34,6 +34,7 @@ export type CreateConnectorFn<
     readonly icon?: string | undefined
     readonly id: string
     readonly name: string
+    readonly skipSimulateContract?: boolean | undefined
     readonly type: string
 
     setup?(): Promise<void>

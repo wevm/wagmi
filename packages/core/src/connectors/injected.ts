@@ -34,6 +34,9 @@ export type InjectedParameters = {
   target?: TargetId | Target | (() => Target | undefined) | undefined
 }
 
+// Regex of wallets/providers that can accurately simulate contract calls & display contract revert reasons.
+const skipSimulateContractRegex = /(rabby|trustwallet)/
+
 const targetMap = {
   coinbaseWallet: {
     id: 'coinbaseWallet',
@@ -140,6 +143,10 @@ export function injected(parameters: InjectedParameters = {}) {
     },
     get name() {
       return getTarget().name
+    },
+    get skipSimulateContract() {
+      console.log(this.id)
+      return skipSimulateContractRegex.test(this.id.toLowerCase())
     },
     type: injected.type,
     async setup() {
