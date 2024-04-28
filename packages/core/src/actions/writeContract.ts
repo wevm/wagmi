@@ -105,7 +105,7 @@ export async function writeContract<
   const { connector: activeConnector } = getAccount(config)
 
   let request
-  if (__mode === 'prepared' || activeConnector?.skipSimulateContract)
+  if (__mode === 'prepared' || activeConnector?.supportsSimulation)
     request = rest
   else {
     const { request: simulateRequest } = await simulateContract(config, {

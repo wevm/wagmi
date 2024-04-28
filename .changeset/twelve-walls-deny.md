@@ -4,4 +4,4 @@
 "wagmi": minor
 ---
 
-Added `skipSimulateContract` property to connectors.
+Added `supportsSimulation` property to connectors.
