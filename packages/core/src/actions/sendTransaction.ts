@@ -78,7 +78,7 @@ export async function sendTransaction<
   const { connector: activeConnector } = getAccount(config)
 
   const gas = await (async () => {
-    // Skip gas estimation if `data` doesn't exist (likely not a contract interaction).
+    // Skip gas estimation if `data` doesn't exist (not a contract interaction).
     if (!('data' in parameters) || !parameters.data) return undefined
 
     // Skip gas estimation if connector specifies.
