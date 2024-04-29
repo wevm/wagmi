@@ -1,5 +1,16 @@
 # @wagmi/connectors
 
+## 5.0.0
+
+### Minor Changes
+
+- [#3868](https://github.com/wevm/wagmi/pull/3868) [`c2af20b8`](https://github.com/wevm/wagmi/commit/c2af20b88cf16970d087faaec10b463357a5836e) Thanks [@jxom](https://github.com/jxom)! - Added `supportsSimulation` property to connectors that indicates if the connector's wallet supports contract simulation.
+
+### Patch Changes
+
+- Updated dependencies [[`0d141f17`](https://github.com/wevm/wagmi/commit/0d141f171d6ec44bcbfc9c876565b5e2fb8af6de), [`c2af20b8`](https://github.com/wevm/wagmi/commit/c2af20b88cf16970d087faaec10b463357a5836e)]:
+  - @wagmi/core@2.8.0
+
 ## 4.2.0
 
 ### Minor Changes
