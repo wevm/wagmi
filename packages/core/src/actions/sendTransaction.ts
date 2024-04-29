@@ -21,6 +21,7 @@ import type {
 } from '../types/properties.js'
 import { type Evaluate } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
+import { getAccount } from './getAccount.js'
 import {
   type GetConnectorClientErrorType,
   getConnectorClient,
@@ -74,7 +75,15 @@ export async function sendTransaction<
   else
     client = await getConnectorClient(config, { account, chainId, connector })
 
+  const { connector: activeConnector } = getAccount(config)
+
   const gas = await (async () => {
+    // Skip gas estimation if `data` doesn't exist (not a contract interaction).
+    if (!('data' in parameters) || !parameters.data) return undefined
+
+    // Skip gas estimation if connector supports simulation.
+    if (activeConnector?.supportsSimulation) return undefined
+
     // Skip gas estimation if `null` is provided.
     if (gas_ === null) return undefined
 
