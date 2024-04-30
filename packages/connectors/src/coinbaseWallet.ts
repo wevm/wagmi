@@ -1,13 +1,10 @@
-import {
-  type CoinbaseWalletProvider,
-  type CoinbaseWalletSDK,
-} from '@coinbase/wallet-sdk'
+import { CoinbaseWalletSDK, type ProviderInterface } from '@coinbase/wallet-sdk'
 import {
   ChainNotConfiguredError,
   type Connector,
   createConnector,
 } from '@wagmi/core'
-import type { Evaluate, Mutable, Omit } from '@wagmi/core/internal'
+import type { Evaluate, Mutable } from '@wagmi/core/internal'
 import {
   type AddEthereumChainParameter,
   type ProviderRpcError,
@@ -17,7 +14,13 @@ import {
   numberToHex,
 } from 'viem'
 
-export type CoinbaseWalletParameters = CoinbaseWalletSDKOptions
+export type CoinbaseWalletParameters = Evaluate<
+  Mutable<ConstructorParameters<typeof CoinbaseWalletSDK>[0]> & {
+    preference?: {
+      options: 'all' | 'smartWalletOnly' | 'eoaOnly'
+    }
+  }
+>
 
 coinbaseWallet.type = 'coinbaseWallet' as const
 export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
@@ -30,7 +33,7 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
   let chainChanged: Connector['onChainChanged'] | undefined
   let disconnect: Connector['onDisconnect'] | undefined
 
-  return createConnector<Provider, Properties>((config) => ({
+  return createConnector<ProviderInterface, Properties>((config) => ({
     id: 'coinbaseWalletSDK',
     name: 'Coinbase Wallet',
     supportsSimulation: true,
@@ -124,7 +127,9 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
           SDK = CoinbaseWalletSDK as unknown as typeof CoinbaseWalletSDK.default
         sdk = new SDK(parameters)
 
-        walletProvider = sdk.makeWeb3Provider() as ProviderInterface
+        walletProvider = sdk.makeWeb3Provider(
+          parameters.preference,
+        ) as ProviderInterface
       }
 
       return walletProvider as ProviderInterface
