@@ -46,6 +46,7 @@ const cwd = process.cwd()
 const renameFiles: Record<string, string | undefined> = {
   '_env.local': '.env.local',
   _gitignore: '.gitignore',
+  _npmrc: '.npmrc',
 }
 
 const defaultTargetDir = 'wagmi-project'
