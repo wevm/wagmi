@@ -1,5 +1,11 @@
 # create-wagmi
 
+## 2.0.11
+
+### Patch Changes
+
+- [#3871](https://github.com/wevm/wagmi/pull/3871) [`0e6bd286`](https://github.com/wevm/wagmi/commit/0e6bd286ca2572d2bfbe206db460528b7c2ebc63) Thanks [@jxom](https://github.com/jxom)! - Added `.npmrc` with `legacy-peer-deps = true` to templates.
+
 ## 2.0.10
 
 ### Patch Changes

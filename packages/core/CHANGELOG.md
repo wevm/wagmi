@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.8.1
+
+### Patch Changes
+
+- [#3869](https://github.com/wevm/wagmi/pull/3869) [`d4a78eb0`](https://github.com/wevm/wagmi/commit/d4a78eb07119d2e5617e52481ac7d6c6d1583ddc) Thanks [@jxom](https://github.com/jxom)! - Fixed issue where `prepareTransactionRequest` would internally call unsupported wallet RPC methods.
+
 ## 2.8.0
 
 ### Minor Changes
