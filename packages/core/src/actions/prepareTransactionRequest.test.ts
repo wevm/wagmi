@@ -26,6 +26,7 @@ test('default', async () => {
   } = request
   expect(rest).toMatchInlineSnapshot(`
     {
+      "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
       "chainId": 1,
       "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
       "to": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
@@ -56,35 +57,6 @@ test('parameters: account', async () => {
   expect(rest).toMatchInlineSnapshot(`
     {
       "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-      "chainId": 1,
-      "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-      "to": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
-      "type": "eip1559",
-      "value": 1000000000000000000n,
-    }
-  `)
-
-  await disconnect(config, { connector })
-})
-
-test('parameters: connector', async () => {
-  await connect(config, { connector })
-
-  const request = await prepareTransactionRequest(config, {
-    connector,
-    to: '0x70997970c51812dc3a010c7d01b50e0d17dc79c8',
-    value: parseEther('1'),
-  })
-
-  const {
-    gas: _gas,
-    maxFeePerGas: _mfpg,
-    maxPriorityFeePerGas: _mpfpg,
-    nonce: _nonce,
-    ...rest
-  } = request
-  expect(rest).toMatchInlineSnapshot(`
-    {
       "chainId": 1,
       "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
       "to": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
