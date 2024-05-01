@@ -1,5 +1,5 @@
 import { config } from '@wagmi/test'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { injected } from './injected.js'
 
@@ -22,4 +22,31 @@ test.each([
   const connectorFn = injected({ target: wallet })
   const connector = config._internal.connectors.setup(connectorFn)
   expect(connector.name).toEqual(expected)
+})
+declare global {
+  interface Window {
+    ethereum: {
+      request: () => Promise<any>
+    }
+  }
+}
+
+test('Any wallet that does not support request({ method: "eth_accounts" })', async () => {
+  Object.defineProperty(window, 'ethereum', {
+    value: {
+      request: vi
+        .fn()
+        .mockImplementation(() => Promise.reject('Mocked response')),
+    },
+    writable: true,
+  })
+
+  const wallet = undefined
+  const connectorFn = injected({ target: wallet })
+  const connector = config._internal.connectors.setup(connectorFn)
+  expect(connector.getAccounts()).resolves.toEqual([])
+
+  Object.defineProperty(window, 'ethereum', {
+    value: undefined,
+  })
 })

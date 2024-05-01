@@ -276,7 +276,9 @@ export function injected(parameters: InjectedParameters = {}) {
     async getAccounts() {
       const provider = await this.getProvider()
       if (!provider) throw new ProviderNotFoundError()
-      const accounts = await provider.request({ method: 'eth_accounts' })
+      const accounts = await provider
+        .request({ method: 'eth_accounts' })
+        .catch(() => [])
       return accounts.map((x) => getAddress(x))
     },
     async getChainId() {
