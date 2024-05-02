@@ -1,18 +1,17 @@
-import type { Account, Address } from 'viem'
 import {
   type GetCapabilitiesErrorType as viem_GetCapabilitiesErrorType,
+  type GetCapabilitiesParameters as viem_GetCapabilitiesParameters,
   type GetCapabilitiesReturnType as viem_GetCapabilitiesReturnType,
   getCapabilities as viem_getCapabilities,
 } from 'viem/experimental'
 
+import type { Account } from 'viem'
 import { getConnectorClient } from '../../actions/getConnectorClient.js'
 import { type Config } from '../../createConfig.js'
 import type { ConnectorParameter } from '../../types/properties.js'
 
-// TODO: replace
-export type GetCapabilitiesParameters = {
-  account?: Account | Address | undefined
-} & ConnectorParameter
+export type GetCapabilitiesParameters =
+  viem_GetCapabilitiesParameters<Account> & ConnectorParameter
 
 export type GetCapabilitiesReturnType = viem_GetCapabilitiesReturnType
 
@@ -25,6 +24,5 @@ export async function getCapabilities<config extends Config>(
 ): Promise<GetCapabilitiesReturnType> {
   const { account, connector } = parameters
   const client = await getConnectorClient(config, { account, connector })
-  // @ts-ignore - TODO: fix
-  return viem_getCapabilities(client, { account })
+  return viem_getCapabilities(client as any, { account: account as Account })
 }

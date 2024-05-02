@@ -63,8 +63,8 @@ importers:
         specifier: 5.4.2
         version: 5.4.2
       viem:
-        specifier: 2.9.29
-        version: 2.9.29(typescript@5.4.2)
+        specifier: 2.9.31
+        version: 2.9.31(typescript@5.4.2)
       vitest:
         specifier: ^0.34.5
         version: 0.34.5(@vitest/ui@0.34.5)(happy-dom@12.2.1)(jsdom@20.0.3)
@@ -11494,8 +11494,8 @@ packages:
       - zod
     dev: false
 
-  /viem@2.9.29(typescript@5.4.2):
-    resolution: {integrity: sha512-LWvDSyB2tftKuSMAyZTXk3pDYj3c0aaOdr2JbDZEsPJw5zVbqg3FpoPHnUkHai8KcZI8aPWRKV31TYV1cBse9A==}
+  /viem@2.9.31(typescript@5.4.2):
+    resolution: {integrity: sha512-8aJ8Dm/591Czwb/nRayo0z8Ls5KxqC4QYE33fmHwhx2tDUWC/hHcPZqjLRSTWFtAfi0aZKvP7BeB6UZ3ZkTRhQ==}
     peerDependencies:
       typescript: '>=5.0.4'
     peerDependenciesMeta:
