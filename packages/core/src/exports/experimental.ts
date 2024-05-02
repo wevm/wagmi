@@ -16,6 +16,13 @@ export {
   sendCalls,
 } from '../experimental/actions/sendCalls.js'
 
+export {
+  type WriteContractsErrorType,
+  type WriteContractsParameters,
+  type WriteContractsReturnType,
+  writeContracts,
+} from '../experimental/actions/writeContracts.js'
+
 ////////////////////////////////////////////////////////////////////////////////
 // Tanstack Query
 ////////////////////////////////////////////////////////////////////////////////
@@ -36,3 +43,11 @@ export {
   type SendCallsVariables,
   sendCallsMutationOptions,
 } from '../experimental/query/sendCalls.js'
+
+export {
+  type WriteContractsData,
+  type WriteContractsMutate,
+  type WriteContractsMutateAsync,
+  type WriteContractsVariables,
+  writeContractsMutationOptions,
+} from '../experimental/query/writeContracts.js'

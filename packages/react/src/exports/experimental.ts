@@ -13,3 +13,9 @@ export {
   type UseSendCallsReturnType,
   useSendCalls,
 } from '../experimental/hooks/useSendCalls.js'
+
+export {
+  type UseWriteContractsParameters,
+  type UseWriteContractsReturnType,
+  useWriteContracts,
+} from '../experimental/hooks/useWriteContracts.js'
