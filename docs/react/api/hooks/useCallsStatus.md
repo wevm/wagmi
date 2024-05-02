@@ -13,7 +13,7 @@ const TError = 'GetCallsStatusErrorType'
 
 # useCallsStatus
 
-Hook to fetch the status and receipts of a call batch that was sent via [`useSendCalls`](/core/api/actions/useSendCalls).
+Hook to fetch the status and receipts of a call batch that was sent via [`useSendCalls`](/react/api/hooks/useSendCalls).
 
 ::: warning
 This is an experimental action that is not supported in most wallets. It is recommended to have a fallback mechanism if using this in production.
