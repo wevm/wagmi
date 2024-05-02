@@ -359,6 +359,14 @@ export function getSidebar() {
             text: 'useSendCalls',
             link: '/react/api/hooks/useSendCalls',
           },
+          {
+            text: 'useShowCallsStatus',
+            link: '/react/api/hooks/useShowCallsStatus',
+          },
+          {
+            text: 'useWriteContracts',
+            link: '/react/api/hooks/useWriteContracts',
+          },
         ],
       },
     ],
@@ -718,6 +726,14 @@ export function getSidebar() {
           {
             text: 'sendCalls',
             link: '/core/api/actions/sendCalls',
+          },
+          {
+            text: 'showCallsStatus',
+            link: '/core/api/actions/showCallsStatus',
+          },
+          {
+            text: 'writeContracts',
+            link: '/core/api/actions/writeContracts',
           },
         ],
       },
