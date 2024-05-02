@@ -17,7 +17,6 @@ import {
 } from 'viem'
 import { rpc } from 'viem/utils'
 
-import { accounts } from '../../../test/src/constants.js'
 import {
   ChainNotConfiguredError,
   ConnectorNotConnectedError,
@@ -163,7 +162,9 @@ export function mock(parameters: MockParameters) {
           return {
             '0x2105': {
               paymasterService: {
-                supported: accounts[0] === (params as [Hex])[0],
+                supported:
+                  (params as [Hex])[0] ===
+                  '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',
               },
               sessionKeys: {
                 supported: true,
@@ -171,7 +172,9 @@ export function mock(parameters: MockParameters) {
             },
             '0x14A34': {
               paymasterService: {
-                supported: accounts[0] === (params as [Hex])[0],
+                supported:
+                  (params as [Hex])[0] ===
+                  '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',
               },
             },
           }
