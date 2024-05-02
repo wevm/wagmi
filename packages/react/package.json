@@ -11,7 +11,7 @@
   "scripts": {
     "build": "pnpm run clean && pnpm run build:esm+types",
     "build:esm+types": "tsc --project tsconfig.build.json --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
-    "clean": "rm -rf dist tsconfig.tsbuildinfo actions chains codegen connectors query",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo actions chains codegen connectors experimental query",
     "test:build": "publint --strict",
     "typecheck": "tsc --noEmit"
   },
@@ -25,6 +25,7 @@
     "/chains",
     "/codegen",
     "/connectors",
+    "/experimental",
     "/query"
   ],
   "sideEffects": false,
@@ -53,6 +54,10 @@
       "types": "./dist/types/exports/connectors.d.ts",
       "default": "./dist/esm/exports/connectors.js"
     },
+    "./experimental": {
+      "types": "./dist/types/exports/experimental.d.ts",
+      "default": "./dist/esm/exports/experimental.js"
+    },
     "./query": {
       "types": "./dist/types/exports/query.d.ts",
       "default": "./dist/esm/exports/query.js"
@@ -61,21 +66,12 @@
   },
   "typesVersions": {
     "*": {
-      "actions": [
-        "./dist/types/exports/actions.d.ts"
-      ],
-      "chains": [
-        "./dist/types/exports/chains.d.ts"
-      ],
-      "codegen": [
-        "./dist/types/exports/codegen.d.ts"
-      ],
-      "connectors": [
-        "./dist/types/exports/connectors.d.ts"
-      ],
-      "query": [
-        "./dist/types/exports/query.d.ts"
-      ]
+      "actions": ["./dist/types/exports/actions.d.ts"],
+      "chains": ["./dist/types/exports/chains.d.ts"],
+      "codegen": ["./dist/types/exports/codegen.d.ts"],
+      "connectors": ["./dist/types/exports/connectors.d.ts"],
+      "experimental": ["./dist/types/exports/experimental.d.ts"],
+      "query": ["./dist/types/exports/query.d.ts"]
     }
   },
   "peerDependencies": {
@@ -103,10 +99,7 @@
     "react": ">=18",
     "react-dom": ">=18"
   },
-  "contributors": [
-    "awkweb.eth <t@wevm.dev>",
-    "jxom.eth <j@wevm.dev>"
-  ],
+  "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
   "funding": "https://github.com/sponsors/wevm",
   "keywords": [
     "wagmi",

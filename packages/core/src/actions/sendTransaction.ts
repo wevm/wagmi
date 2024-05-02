@@ -82,7 +82,7 @@ export async function sendTransaction<
     if (!('data' in parameters) || !parameters.data) return undefined
 
     // Skip gas estimation if connector supports simulation.
-    if (activeConnector?.supportsSimulation) return undefined
+    if ((connector ?? activeConnector)?.supportsSimulation) return undefined
 
     // Skip gas estimation if `null` is provided.
     if (gas_ === null) return undefined

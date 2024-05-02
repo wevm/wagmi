@@ -344,6 +344,31 @@ export function getSidebar() {
           },
         ],
       },
+      {
+        text: 'Experimental',
+        items: [
+          {
+            text: 'useCallsStatus',
+            link: '/react/api/hooks/useCallsStatus',
+          },
+          {
+            text: 'useCapabilities',
+            link: '/react/api/hooks/useCapabilities',
+          },
+          {
+            text: 'useSendCalls',
+            link: '/react/api/hooks/useSendCalls',
+          },
+          {
+            text: 'useShowCallsStatus',
+            link: '/react/api/hooks/useShowCallsStatus',
+          },
+          {
+            text: 'useWriteContracts',
+            link: '/react/api/hooks/useWriteContracts',
+          },
+        ],
+      },
     ],
     '/core': [
       {
@@ -684,6 +709,31 @@ export function getSidebar() {
               },
               { text: 'serialize', link: '/core/api/utilities/serialize' },
             ],
+          },
+        ],
+      },
+      {
+        text: 'Experimental',
+        items: [
+          {
+            text: 'getCallsStatus',
+            link: '/core/api/actions/getCallsStatus',
+          },
+          {
+            text: 'getCapabilities',
+            link: '/core/api/actions/getCapabilities',
+          },
+          {
+            text: 'sendCalls',
+            link: '/core/api/actions/sendCalls',
+          },
+          {
+            text: 'showCallsStatus',
+            link: '/core/api/actions/showCallsStatus',
+          },
+          {
+            text: 'writeContracts',
+            link: '/core/api/actions/writeContracts',
           },
         ],
       },
