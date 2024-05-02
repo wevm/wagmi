@@ -1,5 +1,17 @@
 # wagmi
 
+## 2.8.0
+
+### Minor Changes
+
+- [#3878](https://github.com/wevm/wagmi/pull/3878) [`017828fc`](https://github.com/wevm/wagmi/commit/017828fc027c7a84b54ea9d627e9389f4d60d6c2) Thanks [@jxom](https://github.com/jxom)! - Added experimental EIP-5792 Actions & Hooks.
+
+### Patch Changes
+
+- Updated dependencies [[`017828fc`](https://github.com/wevm/wagmi/commit/017828fc027c7a84b54ea9d627e9389f4d60d6c2)]:
+  - @wagmi/core@2.9.0
+  - @wagmi/connectors@5.0.0
+
 ## 2.7.1
 
 ### Patch Changes
