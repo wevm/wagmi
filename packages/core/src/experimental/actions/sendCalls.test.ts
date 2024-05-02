@@ -53,10 +53,10 @@ test('behavior: not connected', async () => {
       ],
     }),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
-  "Connector not connected.
+    "Connector not connected.
 
-  Version: @wagmi/core@x.y.z"
-`)
+    Version: @wagmi/core@x.y.z"
+  `)
 })
 
 test('behavior: account does not exist on connector', async () => {

@@ -1,3 +1,4 @@
+import type { Account } from 'viem'
 import {
   type GetCapabilitiesErrorType as viem_GetCapabilitiesErrorType,
   type GetCapabilitiesParameters as viem_GetCapabilitiesParameters,
@@ -5,7 +6,6 @@ import {
   getCapabilities as viem_getCapabilities,
 } from 'viem/experimental'
 
-import type { Account } from 'viem'
 import { getConnectorClient } from '../../actions/getConnectorClient.js'
 import { type Config } from '../../createConfig.js'
 import type { ConnectorParameter } from '../../types/properties.js'

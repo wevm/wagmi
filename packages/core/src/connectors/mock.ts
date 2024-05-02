@@ -6,6 +6,7 @@ import {
   SwitchChainError,
   type Transport,
   UserRejectedRequestError,
+  type WalletCallReceipt,
   type WalletRpcSchema,
   custom,
   fromHex,
@@ -38,6 +39,7 @@ export type MockParameters = {
 
 mock.type = 'mock' as const
 export function mock(parameters: MockParameters) {
+  const transactionCache = new Map<Hex, Hex[]>()
   const features = parameters.features ?? {}
 
   type Provider = ReturnType<
@@ -175,9 +177,10 @@ export function mock(parameters: MockParameters) {
           }
 
         if (method === 'wallet_sendCalls') {
+          const hashes = []
           const calls = (params as any)[0].calls
           for (const call of calls) {
-            const { error } = await rpc.http(url, {
+            const { result, error } = await rpc.http(url, {
               body: {
                 method: 'eth_sendTransaction',
                 params: [call],
@@ -189,8 +192,45 @@ export function mock(parameters: MockParameters) {
                 error,
                 url,
               })
+            hashes.push(result)
           }
-          return keccak256(stringToHex(JSON.stringify(calls)))
+          const id = keccak256(stringToHex(JSON.stringify(calls)))
+          transactionCache.set(id, hashes)
+          return id
+        }
+
+        if (method === 'wallet_getCallsStatus') {
+          const hashes = transactionCache.get((params as any)[0])
+          if (!hashes) return null
+          const receipts = await Promise.all(
+            hashes.map(async (hash) => {
+              const { result, error } = await rpc.http(url, {
+                body: {
+                  method: 'eth_getTransactionReceipt',
+                  params: [hash],
+                  id: 0,
+                },
+              })
+              if (error)
+                throw new RpcRequestError({
+                  body: { method, params },
+                  error,
+                  url,
+                })
+              if (!result) return null
+              return {
+                blockHash: result.blockHash,
+                blockNumber: result.blockNumber,
+                gasUsed: result.gasUsed,
+                logs: result.logs,
+                status: result.status,
+                transactionHash: result.transactionHash,
+              } satisfies WalletCallReceipt
+            }),
+          )
+          if (receipts.some((x) => !x))
+            return { status: 'PENDING', receipts: [] }
+          return { status: 'CONFIRMED', receipts }
         }
 
         // other methods
