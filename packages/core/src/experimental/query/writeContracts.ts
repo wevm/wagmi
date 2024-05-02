@@ -15,7 +15,7 @@ export function writeContractsMutationOptions<
 >(config: config) {
   return {
     mutationFn(variables) {
-      return writeContracts(config, variables)
+      return writeContracts(config, variables) as any
     },
     mutationKey: ['writeContracts'],
   } as const satisfies MutationOptions<
