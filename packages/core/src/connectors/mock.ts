@@ -236,6 +236,8 @@ export function mock(parameters: MockParameters) {
           return { status: 'CONFIRMED', receipts }
         }
 
+        if (method === 'wallet_showCallsStatus') return
+
         // other methods
         if (method === 'personal_sign') {
           if (features.signMessageError) {
