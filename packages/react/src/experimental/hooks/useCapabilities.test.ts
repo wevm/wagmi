@@ -136,13 +136,13 @@ test('behavior: not connected', async () => {
       "dataUpdatedAt": 0,
       "error": [ConnectorNotConnectedError: Connector not connected.
 
-    Version: @wagmi/core@2.8.1],
+    Version: @wagmi/core@2.9.0],
       "errorUpdateCount": 2,
       "errorUpdatedAt": 1675209600000,
       "failureCount": 1,
       "failureReason": [ConnectorNotConnectedError: Connector not connected.
 
-    Version: @wagmi/core@2.8.1],
+    Version: @wagmi/core@2.9.0],
       "fetchStatus": "idle",
       "isError": true,
       "isFetched": true,
