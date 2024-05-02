@@ -10,10 +10,13 @@ import {
   custom,
   fromHex,
   getAddress,
+  keccak256,
   numberToHex,
+  stringToHex,
 } from 'viem'
 import { rpc } from 'viem/utils'
 
+import { accounts } from '../../../test/src/constants.js'
 import {
   ChainNotConfiguredError,
   ConnectorNotConnectedError,
@@ -70,7 +73,10 @@ export function mock(parameters: MockParameters) {
 
       connected = true
 
-      return { accounts, chainId: currentChainId }
+      return {
+        accounts: accounts.map((x) => getAddress(x)),
+        chainId: currentChainId,
+      }
     },
     async disconnect() {
       connected = false
@@ -155,7 +161,7 @@ export function mock(parameters: MockParameters) {
           return {
             '0x2105': {
               paymasterService: {
-                supported: true,
+                supported: accounts[0] === (params as [Hex])[0],
               },
               sessionKeys: {
                 supported: true,
@@ -163,10 +169,29 @@ export function mock(parameters: MockParameters) {
             },
             '0x14A34': {
               paymasterService: {
-                supported: true,
+                supported: accounts[0] === (params as [Hex])[0],
               },
             },
           }
+
+        if (method === 'wallet_sendCalls') {
+          const calls = (params as any)[0].calls
+          for (const call of calls) {
+            const { error } = await rpc.http(url, {
+              body: {
+                method: 'eth_sendTransaction',
+                params: [call],
+              },
+            })
+            if (error)
+              throw new RpcRequestError({
+                body: { method, params },
+                error,
+                url,
+              })
+          }
+          return keccak256(stringToHex(JSON.stringify(calls)))
+        }
 
         // other methods
         if (method === 'personal_sign') {

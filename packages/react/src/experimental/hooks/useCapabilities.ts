@@ -47,7 +47,7 @@ export function useCapabilities<
 
   const options = getCapabilitiesQueryOptions(config, {
     ...parameters,
-    account: address ?? account,
+    account: account ?? address,
   })
 
   return useQuery({ ...query, ...options })

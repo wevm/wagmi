@@ -9,6 +9,13 @@ export {
   getCapabilities,
 } from '../experimental/actions/getCapabilities.js'
 
+export {
+  type SendCallsErrorType,
+  type SendCallsParameters,
+  type SendCallsReturnType,
+  sendCalls,
+} from '../experimental/actions/sendCalls.js'
+
 ////////////////////////////////////////////////////////////////////////////////
 // Tanstack Query
 ////////////////////////////////////////////////////////////////////////////////
@@ -21,3 +28,11 @@ export {
   getCapabilitiesQueryOptions,
   getCapabilitiesQueryKey,
 } from '../experimental/query/getCapabilities.js'
+
+export {
+  type SendCallsData,
+  type SendCallsMutate,
+  type SendCallsMutateAsync,
+  type SendCallsVariables,
+  sendCallsMutationOptions,
+} from '../experimental/query/sendCalls.js'

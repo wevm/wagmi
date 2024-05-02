@@ -1,4 +1,4 @@
-import { config } from '@wagmi/test'
+import { accounts, config } from '@wagmi/test'
 import { expect, test } from 'vitest'
 
 import { connect } from '../../actions/connect.js'
@@ -23,6 +23,31 @@ test('default', async () => {
       "84532": {
         "paymasterService": {
           "supported": true,
+        },
+      },
+    }
+  `)
+  await disconnect(config, { connector })
+})
+
+test('args: account', async () => {
+  await connect(config, { connector })
+  const capabilities = await getCapabilities(config, {
+    account: accounts[1],
+  })
+  expect(capabilities).toMatchInlineSnapshot(`
+    {
+      "8453": {
+        "paymasterService": {
+          "supported": false,
+        },
+        "sessionKeys": {
+          "supported": true,
+        },
+      },
+      "84532": {
+        "paymasterService": {
+          "supported": false,
         },
       },
     }

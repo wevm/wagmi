@@ -1,5 +1,5 @@
 import { connect, disconnect } from '@wagmi/core'
-import { config } from '@wagmi/test'
+import { accounts, config } from '@wagmi/test'
 import { renderHook, waitFor } from '@wagmi/test/react'
 import { expect, test } from 'vitest'
 
@@ -56,6 +56,65 @@ test('mounts', async () => {
         "capabilities",
         {
           "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+        },
+      ],
+      "refetch": [Function],
+      "status": "success",
+    }
+  `)
+
+  await disconnect(config, { connector })
+})
+
+test('args: account', async () => {
+  await connect(config, { connector })
+
+  const { result } = renderHook(() => useCapabilities({ account: accounts[1] }))
+
+  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+
+  expect(result.current).toMatchInlineSnapshot(`
+    {
+      "data": {
+        "8453": {
+          "paymasterService": {
+            "supported": false,
+          },
+          "sessionKeys": {
+            "supported": true,
+          },
+        },
+        "84532": {
+          "paymasterService": {
+            "supported": false,
+          },
+        },
+      },
+      "dataUpdatedAt": 1675209600000,
+      "error": null,
+      "errorUpdateCount": 0,
+      "errorUpdatedAt": 0,
+      "failureCount": 0,
+      "failureReason": null,
+      "fetchStatus": "idle",
+      "isError": false,
+      "isFetched": true,
+      "isFetchedAfterMount": true,
+      "isFetching": false,
+      "isInitialLoading": false,
+      "isLoading": false,
+      "isLoadingError": false,
+      "isPaused": false,
+      "isPending": false,
+      "isPlaceholderData": false,
+      "isRefetchError": false,
+      "isRefetching": false,
+      "isStale": true,
+      "isSuccess": true,
+      "queryKey": [
+        "capabilities",
+        {
+          "account": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
         },
       ],
       "refetch": [Function],

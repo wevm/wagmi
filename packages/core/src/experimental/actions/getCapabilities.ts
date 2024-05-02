@@ -8,7 +8,6 @@ import {
 import { getConnectorClient } from '../../actions/getConnectorClient.js'
 import { type Config } from '../../createConfig.js'
 import type { ConnectorParameter } from '../../types/properties.js'
-import { getAction } from '../../utils/getAction.js'
 
 // TODO: replace
 export type GetCapabilitiesParameters = {
@@ -27,7 +26,5 @@ export async function getCapabilities<config extends Config>(
   const { account, connector } = parameters
   const client = await getConnectorClient(config, { account, connector })
   // @ts-ignore - TODO: fix
-  const action = getAction(client, viem_getCapabilities, 'getCapabilities')
-  // @ts-ignore - TODO: fix
-  return action({ account })
+  return viem_getCapabilities(client, { account })
 }
