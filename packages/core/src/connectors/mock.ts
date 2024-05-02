@@ -151,6 +151,23 @@ export function mock(parameters: MockParameters) {
           return
         }
 
+        if (method === 'wallet_getCapabilities')
+          return {
+            '0x2105': {
+              paymasterService: {
+                supported: true,
+              },
+              sessionKeys: {
+                supported: true,
+              },
+            },
+            '0x14A34': {
+              paymasterService: {
+                supported: true,
+              },
+            },
+          }
+
         // other methods
         if (method === 'personal_sign') {
           if (features.signMessageError) {

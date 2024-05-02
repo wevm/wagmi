@@ -52,7 +52,7 @@
     "sherif": "^0.8.1",
     "simple-git-hooks": "^2.9.0",
     "typescript": "5.4.2",
-    "viem": "2.8.4",
+    "viem": "2.9.29",
     "vitest": "^0.34.5"
   },
   "packageManager": "pnpm@8.10.5",
@@ -95,14 +95,14 @@
         "ignoreDependencies": ["@walletconnect/modal"]
       },
       "packages/core": {
-        "entry": "src/exports/{actions,chains,codegen,index,internal,query}.ts!",
+        "entry": "src/exports/{actions,chains,codegen,experimental,index,internal,query}.ts!",
         "ignoreDependencies": ["@tanstack/query-core"]
       },
       "packages/create-wagmi": {
         "entry": "src/cli.ts!"
       },
       "packages/react": {
-        "entry": "src/exports/{actions,chains,codegen,connectors,index,query}.ts!"
+        "entry": "src/exports/{actions,chains,codegen,connectors,experimental,index,query}.ts!"
       },
       "packages/test": {
         "entry": [

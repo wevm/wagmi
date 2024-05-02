@@ -1,0 +1,23 @@
+////////////////////////////////////////////////////////////////////////////////
+// Actions
+////////////////////////////////////////////////////////////////////////////////
+
+export {
+  type GetCapabilitiesErrorType,
+  type GetCapabilitiesParameters,
+  type GetCapabilitiesReturnType,
+  getCapabilities,
+} from '../experimental/actions/getCapabilities.js'
+
+////////////////////////////////////////////////////////////////////////////////
+// Tanstack Query
+////////////////////////////////////////////////////////////////////////////////
+
+export {
+  type GetCapabilitiesData,
+  type GetCapabilitiesOptions,
+  type GetCapabilitiesQueryFnData,
+  type GetCapabilitiesQueryKey,
+  getCapabilitiesQueryOptions,
+  getCapabilitiesQueryKey,
+} from '../experimental/query/getCapabilities.js'
