@@ -10,7 +10,7 @@
 
 - Updated dependencies [[`017828fc`](https://github.com/wevm/wagmi/commit/017828fc027c7a84b54ea9d627e9389f4d60d6c2)]:
   - @wagmi/core@2.9.0
-  - @wagmi/connectors@5.0.0
+  - @wagmi/connectors@4.3.2
 
 ## 2.7.1
 
