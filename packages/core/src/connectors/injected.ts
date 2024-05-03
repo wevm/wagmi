@@ -1,6 +1,6 @@
 import {
+  type AddEthereumChainParameter,
   type Address,
-  type EIP1193EventMap,
   type EIP1193Provider,
   type ProviderConnectInfo,
   ProviderRpcError,
@@ -33,6 +33,9 @@ export type InjectedParameters = {
    */
   target?: TargetId | Target | (() => Target | undefined) | undefined
 }
+
+// Regex of wallets/providers that can accurately simulate contract calls & display contract revert reasons.
+const supportsSimulationIdRegex = /(rabby|trustwallet)/
 
 const targetMap = {
   coinbaseWallet: {
@@ -141,6 +144,9 @@ export function injected(parameters: InjectedParameters = {}) {
     get name() {
       return getTarget().name
     },
+    get supportsSimulation() {
+      return supportsSimulationIdRegex.test(this.id.toLowerCase())
+    },
     type: injected.type,
     async setup() {
       const provider = await this.getProvider()
@@ -223,13 +229,13 @@ export function injected(parameters: InjectedParameters = {}) {
           currentChainId = chain?.id ?? currentChainId
         }
 
-        if (shimDisconnect) {
-          // Remove disconnected shim if it exists
+        // Remove disconnected shim if it exists
+        if (shimDisconnect)
           await config.storage?.removeItem(`${this.id}.disconnected`)
-          // Add connected shim if no target exists
-          if (!parameters.target)
-            await config.storage?.setItem('injected.connected', true)
-        }
+
+        // Add connected shim if no target exists
+        if (!parameters.target)
+          await config.storage?.setItem('injected.connected', true)
 
         return { accounts, chainId: currentChainId }
       } catch (err) {
@@ -262,9 +268,10 @@ export function injected(parameters: InjectedParameters = {}) {
       // Add shim signalling connector is disconnected
       if (shimDisconnect) {
         await config.storage?.setItem(`${this.id}.disconnected`, true)
-        if (!parameters.target)
-          await config.storage?.removeItem('injected.connected')
       }
+
+      if (!parameters.target)
+        await config.storage?.removeItem('injected.connected')
     },
     async getAccounts() {
       const provider = await this.getProvider()
@@ -373,7 +380,7 @@ export function injected(parameters: InjectedParameters = {}) {
         return false
       }
     },
-    async switchChain({ chainId }) {
+    async switchChain({ addEthereumChainParameter, chainId }) {
       const provider = await this.getProvider()
       if (!provider) throw new ProviderNotFoundError()
 
@@ -382,20 +389,26 @@ export function injected(parameters: InjectedParameters = {}) {
 
       try {
         await Promise.all([
-          provider.request({
-            method: 'wallet_switchEthereumChain',
-            params: [{ chainId: numberToHex(chainId) }],
-          }),
-          new Promise<void>((resolve) => {
-            const listener: EIP1193EventMap['chainChanged'] = (data) => {
-              console.log('[injected] switchChain.listener', { data, chainId })
-              if (Number(data) === chainId) {
-                provider.removeListener('chainChanged', listener)
-                resolve()
-              }
-            }
-            provider.on('chainChanged', listener)
-          }),
+          provider
+            .request({
+              method: 'wallet_switchEthereumChain',
+              params: [{ chainId: numberToHex(chainId) }],
+            })
+            // During `'wallet_switchEthereumChain'`, MetaMask makes a `'net_version'` RPC call to the target chain.
+            // If this request fails, MetaMask does not emit the `'chainChanged'` event, but will still switch the chain.
+            // To counter this behavior, we request and emit the current chain ID to confirm the chain switch either via
+            // this callback or an externally emitted `'chainChanged'` event.
+            // https://github.com/MetaMask/metamask-extension/issues/24247
+            .then(async () => {
+              const currentChainId = await this.getChainId()
+              if (currentChainId === chainId)
+                config.emitter.emit('change', { chainId })
+            }),
+          new Promise<void>((resolve) =>
+            config.emitter.once('change', ({ chainId: currentChainId }) => {
+              if (currentChainId === chainId) resolve()
+            }),
+          ),
         ])
         return chain
       } catch (err) {
@@ -413,23 +426,33 @@ export function injected(parameters: InjectedParameters = {}) {
             const { default: blockExplorer, ...blockExplorers } =
               chain.blockExplorers ?? {}
             let blockExplorerUrls
-            if (blockExplorer)
+            if (addEthereumChainParameter?.blockExplorerUrls)
+              blockExplorerUrls = addEthereumChainParameter.blockExplorerUrls
+            else if (blockExplorer)
               blockExplorerUrls = [
                 blockExplorer.url,
                 ...Object.values(blockExplorers).map((x) => x.url),
               ]
 
+            let rpcUrls
+            if (addEthereumChainParameter?.rpcUrls?.length)
+              rpcUrls = addEthereumChainParameter.rpcUrls
+            else rpcUrls = [chain.rpcUrls.default?.http[0] ?? '']
+
+            const addEthereumChain = {
+              blockExplorerUrls,
+              chainId: numberToHex(chainId),
+              chainName: addEthereumChainParameter?.chainName ?? chain.name,
+              iconUrls: addEthereumChainParameter?.iconUrls,
+              nativeCurrency:
+                addEthereumChainParameter?.nativeCurrency ??
+                chain.nativeCurrency,
+              rpcUrls,
+            } satisfies AddEthereumChainParameter
+
             await provider.request({
               method: 'wallet_addEthereumChain',
-              params: [
-                {
-                  chainId: numberToHex(chainId),
-                  chainName: chain.name,
-                  nativeCurrency: chain.nativeCurrency,
-                  rpcUrls: [chain.rpcUrls.default?.http[0] ?? ''],
-                  blockExplorerUrls,
-                },
-              ],
+              params: [addEthereumChain],
             })
 
             const currentChainId = await this.getChainId()
@@ -450,7 +473,6 @@ export function injected(parameters: InjectedParameters = {}) {
       }
     },
     async onAccountsChanged(accounts) {
-      console.log('[injected] onAccountsChanged', accounts)
       // Disconnect if there are no accounts
       if (accounts.length === 0) this.onDisconnect()
       // Connect if emitter is listening for connect event (e.g. is disconnected and connects through wallet interface)
@@ -468,7 +490,6 @@ export function injected(parameters: InjectedParameters = {}) {
         })
     },
     onChainChanged(chain) {
-      console.log('[injected] onChainChanged', chain)
       const chainId = Number(chain)
       config.emitter.emit('change', { chainId })
     },

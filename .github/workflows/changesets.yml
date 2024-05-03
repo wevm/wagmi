@@ -19,10 +19,6 @@ jobs:
     permissions:
       contents: write
       id-token: write
-      issues: write
-      repository-projects: write
-      deployments: write
-      packages: write
       pull-requests: write
     runs-on: ubuntu-latest
     timeout-minutes: 5

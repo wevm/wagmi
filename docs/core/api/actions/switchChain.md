@@ -37,6 +37,28 @@ When connected, `switchChain` will switch the target chain for the connector. Wh
 import { type SwitchChainParameters } from '@wagmi/core'
 ```
 
+### addEthereumChainParameter
+
+`{ chainName: string; nativeCurrency?: { name: string; symbol: string; decimals: number } | undefined; rpcUrls: readonly string[]; blockExplorerUrls?: string[] | undefined; iconUrls?: string[] | undefined } | undefined`
+
+[EIP-3085 parameters](https://eips.ethereum.org/EIPS/eip-3085) to use when adding chain to connector (when supported).
+
+::: code-group
+```ts [index.ts]
+import { switchChain } from '@wagmi/core'
+import { mainnet } from '@wagmi/core/chains'
+import { config } from './config'
+
+const result = await switchChain(config, {
+  addEthereumChainParameter: { // [!code focus]
+    iconUrls: ['https://example.com/icon.png'], // [!code focus]
+  }, // [!code focus]
+  chainId: mainnet.id,
+})
+```
+<<< @/snippets/core/config.ts[config.ts]
+:::
+
 ### chainId
 
 `config['chains'][number]['id'] | undefined`

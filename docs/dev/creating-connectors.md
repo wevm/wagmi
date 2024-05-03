@@ -54,6 +54,7 @@ The type error tells you what properties are missing from `createConnector`'s re
 - `icon`: Optional icon URL for the connector.
 - `id`: The ID for the connector. This should be camel-cased and as short as possible. Example: `fooBarBaz`.
 - `name`: Human-readable name for the connector. Example: `'Foo Bar Baz'`.
+- `supportsSimulation`: Whether the connector supports contract simulation. This should be disabled if a connector's wallet cannot accurately simulate contract writes or display contract revert messages. Defaults to `false`.
 
 #### Methods
 

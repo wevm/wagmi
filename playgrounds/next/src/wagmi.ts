@@ -1,15 +1,16 @@
 import { http, cookieStorage, createConfig, createStorage } from 'wagmi'
-import { mainnet, sepolia } from 'wagmi/chains'
-import { injected, walletConnect } from 'wagmi/connectors'
+import { mainnet, optimism, sepolia } from 'wagmi/chains'
+import { injected, metaMask, walletConnect } from 'wagmi/connectors'
 
 export const config = createConfig({
-  chains: [mainnet, sepolia],
+  chains: [mainnet, sepolia, optimism],
   connectors: [
     injected(),
     walletConnect({
       projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID!,
       showQrModal: false,
     }),
+    metaMask(),
   ],
   storage: createStorage({
     storage: cookieStorage,
@@ -18,6 +19,7 @@ export const config = createConfig({
   transports: {
     [mainnet.id]: http(),
     [sepolia.id]: http(),
+    [optimism.id]: http(),
   },
 })
 

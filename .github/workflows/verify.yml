@@ -63,7 +63,7 @@ jobs:
     strategy:
       matrix:
         typescript-version: ['5.0.4', '5.1.6', '5.2.2', 'latest']
-        viem-version: ['2.9.25', 'latest']
+        viem-version: ['2.9.31', 'latest']
 
     steps:
       - name: Clone repository

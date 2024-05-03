@@ -73,6 +73,7 @@ const templateFiles = fs
   .map((filePath) => {
     if (filePath === '_gitignore') return '.gitignore'
     if (filePath === '_env.local') return '.env.local'
+    if (filePath === '_npmrc') return '.npmrc'
     return filePath
   })
   .sort()

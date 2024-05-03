@@ -210,7 +210,7 @@ test('behavior: migrate chainId', async () => {
     {
       "chainId": 10,
       "connections": Map {},
-      "current": undefined,
+      "current": null,
       "status": "disconnected",
     }
   `)

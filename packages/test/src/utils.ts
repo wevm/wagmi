@@ -1,4 +1,4 @@
-import { pool } from './constants.js'
+const pool = Number(process.env.VITEST_POOL_ID ?? 1)
 
 export function getRpcUrls({ port }: { port: number }) {
   return {

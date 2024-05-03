@@ -116,7 +116,7 @@ export async function reconnect(
       config.setState((x) => ({
         ...x,
         connections: new Map(),
-        current: undefined,
+        current: null,
         status: 'disconnected',
       }))
     else config.setState((x) => ({ ...x, status: 'connected' }))

@@ -21,6 +21,7 @@ import {
 } from '../types/properties.js'
 import type { Evaluate, UnionEvaluate, UnionOmit } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
+import { getAccount } from './getAccount.js'
 import {
   type GetConnectorClientErrorType,
   getConnectorClient,
@@ -101,8 +102,11 @@ export async function writeContract<
   else
     client = await getConnectorClient(config, { account, chainId, connector })
 
+  const { connector: activeConnector } = getAccount(config)
+
   let request
-  if (__mode === 'prepared') request = rest
+  if (__mode === 'prepared' || activeConnector?.supportsSimulation)
+    request = rest
   else {
     const { request: simulateRequest } = await simulateContract(config, {
       ...rest,

@@ -8,13 +8,59 @@ const connectorsPackageName = 'wagmi/connectors'
 
 Connector for the [MetaMask SDK](https://github.com/MetaMask/metamask-sdk).
 
-## Import
+::: warning
+This connector has limitations on iOS as Safari cancels Universal Link connections if they do not occur within ~500ms of user interaction (ie. a button click). For a reliable iOS linking experience, it is recommended to use the <a :href="`/${docsPath}/api/connectors/walletConnect`">`walletConnect`</a> connector.
 
-::: warning WARNING This connector has a large file size due to the underlying [`@metamask/sdk`](https://github.com/MetaMask/metamask-sdk). 
-For mobile support, it is recommended to use <a :href="`/${docsPath}/api/connectors/walletConnect`">`walletConnect`</a>. For desktop support, you should rely on <a :href="`/${docsPath}/api/createConfig#multiinjectedproviderdiscovery`">Multi Injected Provider Discovery</a> (EIP-6963) via the Wagmi <a :href="`/${docsPath}/api/createConfig#config`">`Config`</a>.
+Alternatively, to prevent Universal Link issues with this connector, you can skip transaction validation by setting `gas: null` (for transactions) or `__mode: 'prepared'` (for contract writes).
 
-On desktop, if you must target MetaMask, you can use <a :href="`/${docsPath}/api/connectors/injected`">`injected`</a>, e.g. <a :href="`/${docsPath}/guides/migrate-from-v1-to-v2#removed-metamaskconnector`">`injected({ target: 'metaMask' })`</a>. Please keep in mind this approach does not use EIP-6963 and other injected wallets could conflict with the connector.
+::: code-group
+
+```tsx [Transactions]
+import { useSendTransaction, parseEther } from 'wagmi'
+
+function Example() {
+  const { sendTransaction } = useSendTransaction()
+  
+  return (
+    <button 
+      onClick={() => sendTransaction({ 
+        gas: null, // [!code ++]
+        to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
+        value: parseEther('0.01'), 
+      })}
+    >
+      Transfer
+    </button>
+  )
+}
+```
+
+```tsx [Contract Writes]
+import { useWriteContract } from 'wagmi'
+import { abi } from './abi'
+
+function Example() {
+  const { writeContract } = useWriteContract()
+  
+  return (
+    <button 
+      disabled={!isSuccess}
+      onClick={() => writeContract({
+        __mode: 'prepared', // [!code ++]
+        abi,
+        address: '0x6b175474e89094c44da98b954eedeac495271d0f',
+        functionName: 'mint',
+      })}
+    >
+      Mint
+    </button>
+  )
+}
+```
+
 :::
+
+## Import
 
 ```ts-vue
 import { metaMask } from '{{connectorsPackageName}}'

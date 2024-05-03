@@ -1,4 +1,5 @@
 import {
+  type AddEthereumChainParameter,
   type Address,
   type Chain,
   type Client,
@@ -8,7 +9,7 @@ import {
 
 import { Emitter } from '../createEmitter.js'
 import { type Storage } from '../createStorage.js'
-import { type Evaluate } from '../types/utils.js'
+import { type Evaluate, type ExactPartial, type Omit } from '../types/utils.js'
 
 export type ConnectorEventMap = {
   change: {
@@ -34,6 +35,7 @@ export type CreateConnectorFn<
     readonly icon?: string | undefined
     readonly id: string
     readonly name: string
+    readonly supportsSimulation?: boolean | undefined
     readonly type: string
 
     setup?(): Promise<void>
@@ -55,7 +57,14 @@ export type CreateConnectorFn<
       parameters?: { chainId?: number | undefined } | undefined,
     ): Promise<Client>
     isAuthorized(): Promise<boolean>
-    switchChain?(parameters: { chainId: number }): Promise<Chain>
+    switchChain?(
+      parameters: Evaluate<{
+        addEthereumChainParameter?:
+          | ExactPartial<Omit<AddEthereumChainParameter, 'chainId'>>
+          | undefined
+        chainId: number
+      }>,
+    ): Promise<Chain>
 
     onAccountsChanged(accounts: string[]): void
     onChainChanged(chainId: string): void

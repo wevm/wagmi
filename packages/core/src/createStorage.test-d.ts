@@ -21,7 +21,7 @@ test('getItem', () => {
     | {
         chainId?: number | undefined
         connections?: Map<string, Connection> | undefined
-        current?: string | undefined
+        current?: string | null | undefined
         status?:
           | 'connected'
           | 'connecting'
@@ -33,7 +33,7 @@ test('getItem', () => {
     | Promise<{
         chainId?: number | undefined
         connections?: Map<string, Connection> | undefined
-        current?: string | undefined
+        current?: string | null | undefined
         status?:
           | 'connected'
           | 'connecting'

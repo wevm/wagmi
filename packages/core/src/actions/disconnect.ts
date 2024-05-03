@@ -47,7 +47,7 @@ export async function disconnect(
       return {
         ...x,
         connections: new Map(),
-        current: undefined,
+        current: null,
         status: 'disconnected',
       }
 
