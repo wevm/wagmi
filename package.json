@@ -13,7 +13,7 @@
     "dev:next": "pnpm --filter next-app dev",
     "dev:react": "pnpm --filter vite-react dev",
     "dev:ssr-react": "pnpm --filter vite-ssr-react dev",
-    "docs:dev": "rimraf node_modules/.cache/twoslash && pnpm --filter docs dev",
+    "docs:dev": "pnpm --filter docs dev",
     "format": "biome format . --write",
     "lint": "biome check .",
     "lint:fix": "pnpm lint --apply",
@@ -35,20 +35,18 @@
   "devDependencies": {
     "@biomejs/biome": "1.1.2",
     "@changesets/changelog-github": "0.4.6",
-    "@changesets/cli": "^2.26.2",
+    "@changesets/cli": "^2.27.1",
     "@types/bun": "^1.1.1",
     "@viem/anvil": "0.0.6",
     "@vitest/coverage-v8": "^1.6.0",
     "@wagmi/test": "workspace:*",
     "bun": "^1.1.7",
-    "glob": "^10.3.10",
-    "happy-dom": "^12.2.1",
-    "jsdom": "^20.0.3",
-    "knip": "^2.29.0",
-    "publint": "^0.2.2",
-    "rimraf": "^4.4.1",
-    "sherif": "^0.8.1",
-    "simple-git-hooks": "^2.9.0",
+    "glob": "^10.3.12",
+    "happy-dom": "^12.10.3",
+    "knip": "^2.43.0",
+    "publint": "^0.2.7",
+    "sherif": "^0.8.4",
+    "simple-git-hooks": "^2.11.1",
     "typescript": "5.4.2",
     "viem": "2.9.31",
     "vitest": "^1.6.0"
@@ -69,15 +67,8 @@
     "pre-commit": "pnpm format && pnpm lint:fix"
   },
   "knip": {
-    "ignore": [
-      "**/*.test-d.ts",
-      "**/templates/**",
-      "**/hardhat.config.js"
-    ],
-    "ignoreBinaries": [
-      "only-allow",
-      "open"
-    ],
+    "ignore": ["**/*.test-d.ts", "**/templates/**", "**/hardhat.config.js"],
+    "ignoreBinaries": ["only-allow", "open"],
     "ignoreWorkspaces": [
       "docs",
       "packages/register-tests/**",
@@ -97,15 +88,11 @@
       },
       "packages/connectors": {
         "entry": "src/exports/index.ts!",
-        "ignoreDependencies": [
-          "@walletconnect/modal"
-        ]
+        "ignoreDependencies": ["@walletconnect/modal"]
       },
       "packages/core": {
         "entry": "src/exports/{actions,chains,codegen,experimental,index,internal,query}.ts!",
-        "ignoreDependencies": [
-          "@tanstack/query-core"
-        ]
+        "ignoreDependencies": ["@tanstack/query-core"]
       },
       "packages/create-wagmi": {
         "entry": "src/cli.ts!"
