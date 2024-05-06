@@ -42,8 +42,8 @@
     "@wagmi/test": "workspace:*",
     "bun": "^1.1.7",
     "glob": "^10.3.12",
-    "happy-dom": "^12.10.3",
-    "knip": "^2.43.0",
+    "happy-dom": "^14.8.3",
+    "knip": "^5.12.3",
     "publint": "^0.2.7",
     "sherif": "^0.8.4",
     "simple-git-hooks": "^2.11.1",
@@ -51,7 +51,7 @@
     "viem": "2.9.31",
     "vitest": "^1.6.0"
   },
-  "packageManager": "pnpm@8.10.5",
+  "packageManager": "pnpm@9.1.0",
   "pnpm": {
     "peerDependencyRules": {
       "ignoreMissing": [
@@ -68,7 +68,7 @@
   },
   "knip": {
     "ignore": ["**/*.test-d.ts", "**/templates/**", "**/hardhat.config.js"],
-    "ignoreBinaries": ["only-allow", "open"],
+    "ignoreBinaries": ["only-allow"],
     "ignoreWorkspaces": [
       "docs",
       "packages/register-tests/**",
@@ -84,7 +84,8 @@
           "src/cli.ts!",
           "src/exports/{config,index,plugins}.ts!",
           "types/*.d.ts!"
-        ]
+        ],
+        "ignore": ["test/{constants,setup,utils}.ts"]
       },
       "packages/connectors": {
         "entry": "src/exports/index.ts!",
@@ -92,13 +93,15 @@
       },
       "packages/core": {
         "entry": "src/exports/{actions,chains,codegen,experimental,index,internal,query}.ts!",
+        "ignore": ["test/setup.ts"],
         "ignoreDependencies": ["@tanstack/query-core"]
       },
       "packages/create-wagmi": {
         "entry": "src/cli.ts!"
       },
       "packages/react": {
-        "entry": "src/exports/{actions,chains,codegen,connectors,experimental,index,query}.ts!"
+        "entry": "src/exports/{actions,chains,codegen,connectors,experimental,index,query}.ts!",
+        "ignore": ["test/setup.ts"]
       },
       "packages/test": {
         "entry": [
