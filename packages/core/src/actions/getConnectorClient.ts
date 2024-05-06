@@ -6,7 +6,7 @@ import {
   createClient,
   custom,
 } from 'viem'
-import { getAddress, parseAccount } from 'viem/utils'
+import { getAddress, isAddressEqual, parseAccount } from 'viem/utils'
 
 import type { Config, Connection } from '../createConfig.js'
 import type { ErrorType } from '../errors/base.js'
@@ -92,7 +92,10 @@ export async function getConnectorClient<
   }
 
   // if account was provided, check that it exists on the connector
-  if (parameters.account && !connection.accounts.includes(account.address))
+  if (
+    parameters.account &&
+    !connection.accounts.find((addr) => isAddressEqual(addr, account.address))
+  )
     throw new ConnectorAccountNotFoundError({
       address: account.address,
       connector,
