@@ -53,7 +53,7 @@ test('fails to fetch for unverified contract', async () => {
       parse,
     }).contracts(),
   ).rejects.toThrowErrorMatchingInlineSnapshot(
-    '"Contract source code not verified"',
+    '[Error: Contract source code not verified]',
   )
 })
 
@@ -65,7 +65,9 @@ test('aborts request', async () => {
       parse,
       timeoutDuration: 1_000,
     }).contracts(),
-  ).rejects.toThrowErrorMatchingInlineSnapshot('"This operation was aborted"')
+  ).rejects.toThrowErrorMatchingInlineSnapshot(
+    '[AbortError: This operation was aborted]',
+  )
 })
 
 test('reads from cache', async () => {

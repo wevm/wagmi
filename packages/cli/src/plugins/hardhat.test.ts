@@ -15,7 +15,7 @@ test('validate', async () => {
   await expect(
     hardhat({ project: temp }).validate(),
   ).rejects.toThrowErrorMatchingInlineSnapshot(
-    '"hardhat must be installed to use Hardhat plugin."',
+    '[Error: hardhat must be installed to use Hardhat plugin.]',
   )
 })
 
