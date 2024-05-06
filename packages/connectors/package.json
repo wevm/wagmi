@@ -54,7 +54,7 @@
   },
   "devDependencies": {
     "@wagmi/core": "workspace:*",
-    "msw": "^2.0.6"
+    "msw": "^2.2.14"
   },
   "contributors": [
     "awkweb.eth <t@wevm.dev>",
