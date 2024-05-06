@@ -73,7 +73,7 @@ describe('stringify', () => {
       const result = serialize(simpleObject)
 
       expect(result).toMatchInlineSnapshot(
-        '"{\\"boolean\\":true,\\"nan\\":null,\\"nil\\":null,\\"number\\":123,\\"string\\":\\"foo\\"}"',
+        `"{"boolean":true,"nan":null,"nil":null,"number":123,"string":"foo"}"`,
       )
     })
 
@@ -81,7 +81,7 @@ describe('stringify', () => {
       const result = serialize(bigintObject)
 
       expect(result).toMatchInlineSnapshot(
-        '"{\\"boolean\\":true,\\"nan\\":null,\\"nil\\":null,\\"number\\":123,\\"string\\":\\"foo\\",\\"bigint\\":{\\"__type\\":\\"bigint\\",\\"value\\":\\"123\\"},\\"nested\\":{\\"bigint\\":{\\"value\\":{\\"__type\\":\\"bigint\\",\\"value\\":\\"69\\"}}}}"',
+        `"{"boolean":true,"nan":null,"nil":null,"number":123,"string":"foo","bigint":{"__type":"bigint","value":"123"},"nested":{"bigint":{"value":{"__type":"bigint","value":"69"}}}}"`,
       )
     })
 
@@ -92,7 +92,7 @@ describe('stringify', () => {
       const result = serialize(simpleObject, replacer)
 
       expect(result).toMatchInlineSnapshot(
-        '"{\\"boolean\\":\\"primitive-true\\",\\"fn\\":\\"primitive-fn() {\\\\n    return \\\\\\"foo\\\\\\";\\\\n  }\\",\\"nan\\":\\"primitive-NaN\\",\\"nil\\":\\"primitive-null\\",\\"number\\":\\"primitive-123\\",\\"string\\":\\"primitive-foo\\",\\"undef\\":\\"primitive-undefined\\"}"',
+        `"{"boolean":"primitive-true","fn":"primitive-fn() {\\n    return \\"foo\\";\\n  }","nan":"primitive-NaN","nil":"primitive-null","number":"primitive-123","string":"primitive-foo","undef":"primitive-undefined"}"`,
       )
     })
 
@@ -101,11 +101,11 @@ describe('stringify', () => {
 
       expect(result).toMatchInlineSnapshot(`
         "{
-          \\"boolean\\": true,
-          \\"nan\\": null,
-          \\"nil\\": null,
-          \\"number\\": 123,
-          \\"string\\": \\"foo\\"
+          "boolean": true,
+          "nan": null,
+          "nil": null,
+          "number": 123,
+          "string": "foo"
         }"
       `)
     })
@@ -115,20 +115,20 @@ describe('stringify', () => {
 
       expect(result).toMatchInlineSnapshot(`
         "{
-          \\"boolean\\": true,
-          \\"nan\\": null,
-          \\"nil\\": null,
-          \\"number\\": 123,
-          \\"string\\": \\"foo\\",
-          \\"bigint\\": {
-            \\"__type\\": \\"bigint\\",
-            \\"value\\": \\"123\\"
+          "boolean": true,
+          "nan": null,
+          "nil": null,
+          "number": 123,
+          "string": "foo",
+          "bigint": {
+            "__type": "bigint",
+            "value": "123"
           },
-          \\"nested\\": {
-            \\"bigint\\": {
-              \\"value\\": {
-                \\"__type\\": \\"bigint\\",
-                \\"value\\": \\"69\\"
+          "nested": {
+            "bigint": {
+              "value": {
+                "__type": "bigint",
+                "value": "69"
               }
             }
           }
@@ -140,7 +140,7 @@ describe('stringify', () => {
       const result = serialize(complexObject)
 
       expect(result).toMatchInlineSnapshot(
-        '"{\\"boolean\\":true,\\"nan\\":null,\\"nil\\":null,\\"number\\":123,\\"string\\":\\"foo\\",\\"array\\":[\\"foo\\",{\\"bar\\":\\"baz\\"}],\\"buffer\\":{\\"type\\":\\"Buffer\\",\\"data\\":[116,104,105,115,32,105,115,32,97,32,116,101,115,116,32,98,117,102,102,101,114]},\\"error\\":{},\\"foo\\":{\\"value\\":\\"value\\"},\\"map\\":{\\"__type\\":\\"Map\\",\\"value\\":[[\\"foo\\",{\\"bar\\":\\"baz\\"}]]},\\"object\\":{\\"foo\\":{\\"bar\\":\\"baz\\"}},\\"promise\\":{},\\"regexp\\":{},\\"set\\":{},\\"weakmap\\":{},\\"weakset\\":{}}"',
+        `"{"boolean":true,"nan":null,"nil":null,"number":123,"string":"foo","array":["foo",{"bar":"baz"}],"buffer":{"type":"Buffer","data":[116,104,105,115,32,105,115,32,97,32,116,101,115,116,32,98,117,102,102,101,114]},"error":{},"foo":{"value":"value"},"map":{"__type":"Map","value":[["foo",{"bar":"baz"}]]},"object":{"foo":{"bar":"baz"}},"promise":{},"regexp":{},"set":{},"weakmap":{},"weakset":{}}"`,
       )
     })
 
@@ -151,7 +151,7 @@ describe('stringify', () => {
       const result = serialize(complexObject, replacer)
 
       expect(result).toMatchInlineSnapshot(
-        '"{\\"boolean\\":\\"primitive-true\\",\\"fn\\":\\"primitive-fn() {\\\\n    return \\\\\\"foo\\\\\\";\\\\n  }\\",\\"nan\\":\\"primitive-NaN\\",\\"nil\\":\\"primitive-null\\",\\"number\\":\\"primitive-123\\",\\"string\\":\\"primitive-foo\\",\\"undef\\":\\"primitive-undefined\\",\\"array\\":[\\"primitive-foo\\",{\\"bar\\":\\"primitive-baz\\"}],\\"buffer\\":{\\"type\\":\\"primitive-Buffer\\",\\"data\\":[\\"primitive-116\\",\\"primitive-104\\",\\"primitive-105\\",\\"primitive-115\\",\\"primitive-32\\",\\"primitive-105\\",\\"primitive-115\\",\\"primitive-32\\",\\"primitive-97\\",\\"primitive-32\\",\\"primitive-116\\",\\"primitive-101\\",\\"primitive-115\\",\\"primitive-116\\",\\"primitive-32\\",\\"primitive-98\\",\\"primitive-117\\",\\"primitive-102\\",\\"primitive-102\\",\\"primitive-101\\",\\"primitive-114\\"]},\\"error\\":{},\\"foo\\":{\\"value\\":\\"primitive-value\\"},\\"map\\":{\\"__type\\":\\"primitive-Map\\",\\"value\\":[[\\"primitive-foo\\",{\\"bar\\":\\"primitive-baz\\"}]]},\\"object\\":{\\"foo\\":{\\"bar\\":\\"primitive-baz\\"}},\\"promise\\":{},\\"regexp\\":{},\\"set\\":{},\\"weakmap\\":{},\\"weakset\\":{}}"',
+        `"{"boolean":"primitive-true","fn":"primitive-fn() {\\n    return \\"foo\\";\\n  }","nan":"primitive-NaN","nil":"primitive-null","number":"primitive-123","string":"primitive-foo","undef":"primitive-undefined","array":["primitive-foo",{"bar":"primitive-baz"}],"buffer":{"type":"primitive-Buffer","data":["primitive-116","primitive-104","primitive-105","primitive-115","primitive-32","primitive-105","primitive-115","primitive-32","primitive-97","primitive-32","primitive-116","primitive-101","primitive-115","primitive-116","primitive-32","primitive-98","primitive-117","primitive-102","primitive-102","primitive-101","primitive-114"]},"error":{},"foo":{"value":"primitive-value"},"map":{"__type":"primitive-Map","value":[["primitive-foo",{"bar":"primitive-baz"}]]},"object":{"foo":{"bar":"primitive-baz"}},"promise":{},"regexp":{},"set":{},"weakmap":{},"weakset":{}}"`,
       )
     })
 
