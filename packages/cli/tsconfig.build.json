@@ -3,6 +3,7 @@
   "include": ["src/**/*.ts"],
   "exclude": ["src/**/*.test.ts"],
   "compilerOptions": {
-    "sourceMap": true
+    "sourceMap": true,
+    "types": ["@types/node"]
   }
 }
