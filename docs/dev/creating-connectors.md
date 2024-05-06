@@ -92,6 +92,10 @@ The type error tells you what properties are missing from `createConnector`'s re
 If you plan to use a third-party SDK, it should have minimal dependencies (limit bundle size, supply chain attacks, etc.) and use the most permissive license possible (ideally MIT). Any third-party packages, should also have [`"sideEffects": false`](https://webpack.js.org/guides/tree-shaking/#mark-the-file-as-side-effect-free) in their `package.json` file for maximum tree-shakability support.
 :::
 
+::: tip
+All address values returned and emitted by the connector should be checksummed using Viem's [`getAddress`](https://viem.sh/docs/utilities/getAddress).
+:::
+
 ## 5. Export the connector
 
 Export the connector from `packages/connector/src/exports/index.ts` in alphabetic order.
