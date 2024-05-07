@@ -1,28 +1,25 @@
 {
-  "name": "docs",
+  "name": "site",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "rimraf ../node_modules/.cache/twoslash && vitepress dev",
-    "build": "rm -r ../node_modules/.cache/twoslash & vitepress build",
+    "dev": "vitepress dev",
+    "build": "vitepress build",
     "preview": "vitepress preview"
   },
   "devDependencies": {
+    "@shikijs/vitepress-twoslash": "^1.4.0",
     "@tanstack/query-core": ">=5.35.1",
     "@tanstack/react-query": ">=5.35.1",
     "@types/react": ">=18.3.1",
-    "@unocss/reset": "^0.53.6",
     "@wagmi/connectors": "workspace:*",
     "@wagmi/core": "workspace:*",
     "abitype": "*",
     "react": ">=18.3.1",
-    "rimraf": "^4.4.1",
-    "unocss": "^0.53.6",
+    "unocss": "^0.59.4",
     "viem": "2.*",
-    "vite": "^5.2.11",
-    "vitepress": "1.0.0-rc.20",
-    "vitepress-plugin-shiki-twoslash": "^0.0.6",
-    "vue": "^3.3.4",
+    "vitepress": "^1.1.4",
+    "vue": "^3.4.27",
     "wagmi": "workspace:*"
   }
 }

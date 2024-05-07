@@ -32,7 +32,7 @@ await call(config, {
 
 ## Parameters
 
-```ts
+```ts twoslash
 import { type CallParameters } from '@wagmi/core'
 ```
 
@@ -319,7 +319,7 @@ await call(config, {
 
 ## Return Type
 
-```ts
+```ts twoslash
 import { type CallReturnType } from '@wagmi/core'
 ```
 
@@ -329,7 +329,7 @@ The call data.
 
 ## Error
 
-```ts
+```ts twoslash
 import { type CallErrorType } from '@wagmi/core'
 ```
 

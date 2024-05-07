@@ -310,8 +310,22 @@ const result = await signTypedData(config, {
   },
   primaryType: 'Mail',
   // ^?
+
+
   message: {
   // ^?
+
+
+
+
+
+
+
+
+
+
+
+
     from: {
       name: 'Cow',
       wallet: '0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826',
@@ -352,8 +366,22 @@ const result = await signTypedData(config, {
   types,
   primaryType: 'Mail',
   // ^?
+
+
   message: {
   // ^?
+
+
+
+
+
+
+
+
+
+
+
+
     from: {
       name: 'Cow',
       wallet: '0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826',

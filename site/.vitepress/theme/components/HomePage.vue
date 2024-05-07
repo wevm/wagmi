@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { DefaultTheme, VPButton, VPSponsors, VPTeamMembers } from 'vitepress/theme'
+import DefaultTheme, { VPButton, VPSponsors, VPTeamMembers } from 'vitepress/theme'
 import { useSponsors } from '../composables/useSponsors'
 
 const { data: sponsors } = useSponsors()
@@ -99,3 +99,4 @@ h3.vp-sponsor-tier {
   height: 0.85rem;
 }
 </style>
+

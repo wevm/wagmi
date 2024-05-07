@@ -24,3 +24,4 @@ const sponsors = computed(() => {
 <template>
   <VPDocAsideSponsors v-if="data" :data="sponsors" />
 </template>
+

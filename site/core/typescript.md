@@ -116,9 +116,13 @@ const result = await readContract(config, {
   abi: erc721Abi,
   functionName: 'balanceOf',
   // ^?
+
+
+
   args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e'],
   // ^?
 })
+
 result
 // ^?
 ```
@@ -154,9 +158,13 @@ const result = await readContract(config, {
   abi: erc721Abi,
   functionName: 'balanceOf',
   // ^?
+
+
+
   args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e'],
   // ^?
 })
+
 result
 // ^?
 ```
