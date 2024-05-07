@@ -1,10 +1,10 @@
 ---
+# https://vitepress.dev/reference/default-theme-home-page
+layout: home
+
 description: Type Safe, Extensible, and Modular by design. Build high-performance blockchain frontends.
 title: 'Wagmi | Reactivity for Ethereum apps'
 titleTemplate: false
-
-# https://vitepress.dev/reference/default-theme-home-page
-layout: home
 
 hero:
   name: Wagmi

@@ -198,9 +198,13 @@ const { data } = useReadContract({
   abi: erc721Abi,
   functionName: 'balanceOf',
   // ^?
+
+
+
   args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e'],
   // ^?
 })
+
 data
 // ^?
 ```
@@ -225,9 +229,13 @@ const { data } = useReadContract({
   abi: erc721Abi,
   functionName: 'balanceOf',
   // ^?
+
+
+
   args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e'],
   // ^?
 })
+
 data
 // ^?
 ```

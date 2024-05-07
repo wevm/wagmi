@@ -5,3 +5,4 @@ packages:
   - 'packages/cli/src/plugins/__fixtures__/hardhat'
   - 'packages/register-tests/*'
   - 'playgrounds/*'
+  - 'site'
