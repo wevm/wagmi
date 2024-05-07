@@ -2,6 +2,6 @@
   "name": "hardhat-fixture",
   "private": true,
   "devDependencies": {
-    "hardhat": "^2.17.4"
+    "hardhat": "^2.22.3"
   }
 }
