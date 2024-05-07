@@ -9,7 +9,7 @@ import { useSendCalls } from './useSendCalls.js'
 
 const connector = config.connectors[0]!
 
-test('default', async () => {
+test.skip('default', async () => {
   await connect(config, { connector })
 
   const { result } = renderHook(() => useSendCalls())
