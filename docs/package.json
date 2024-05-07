@@ -19,7 +19,7 @@
     "rimraf": "^4.4.1",
     "unocss": "^0.53.6",
     "viem": "2.*",
-    "vite": "^4.4.9",
+    "vite": "^5.2.11",
     "vitepress": "1.0.0-rc.20",
     "vitepress-plugin-shiki-twoslash": "^0.0.6",
     "vue": "^3.3.4",

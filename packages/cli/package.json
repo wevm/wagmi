@@ -50,12 +50,8 @@
   },
   "typesVersions": {
     "*": {
-      "config": [
-        "./dist/types/exports/config.d.ts"
-      ],
-      "plugins": [
-        "./dist/types/exports/plugins.d.ts"
-      ]
+      "config": ["./dist/types/exports/config.d.ts"],
+      "plugins": ["./dist/types/exports/plugins.d.ts"]
     }
   },
   "peerDependencies": {
@@ -78,34 +74,23 @@
     "esbuild": "^0.19.0",
     "execa": "^8.0.1",
     "find-up": "^6.3.0",
-    "fs-extra": "^11.1.1",
+    "fs-extra": "^11.2.0",
     "globby": "^13.2.2",
     "ora": "^6.3.1",
-    "pathe": "^1.1.1",
+    "pathe": "^1.1.2",
     "picocolors": "^1.0.0",
     "prettier": "^3.0.3",
     "viem": "2.x",
     "zod": "^3.22.2"
   },
   "devDependencies": {
-    "@types/dedent": "^0.7.0",
-    "@types/fs-extra": "^11.0.2",
-    "@types/node": "^20.7.2",
+    "@types/dedent": "^0.7.2",
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^20.12.10",
     "fixturez": "^1.1.0",
     "msw": "^2.2.14"
   },
-  "contributors": [
-    "awkweb.eth <t@wevm.dev>",
-    "jxom.eth <j@wevm.dev>"
-  ],
+  "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
   "funding": "https://github.com/sponsors/wevm",
-  "keywords": [
-    "wagmi",
-    "eth",
-    "ethereum",
-    "dapps",
-    "wallet",
-    "web3",
-    "cli"
-  ]
+  "keywords": ["wagmi", "eth", "ethereum", "dapps", "wallet", "web3", "cli"]
 }
