@@ -141,7 +141,7 @@ function App() {const connections = getConnections(config)
 
 `` `0x${string}` | undefined ``
 
-A contract hashed method call with encoded args.
+A contract hashed method call with encoded function data.
 
 ::: code-group
 ```ts [index.ts]
