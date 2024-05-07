@@ -41,7 +41,7 @@ test('context', () => {
       },
       onSuccess(data, variables, context) {
         expectTypeOf(data).toEqualTypeOf<Hash>()
-        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
 
         expectTypeOf(variables).toMatchTypeOf<{
           __mode?: 'prepared'

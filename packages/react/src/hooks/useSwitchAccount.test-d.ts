@@ -26,7 +26,7 @@ test('context', () => {
           accounts: readonly [Address, ...Address[]]
           chainId: number
         }>()
-        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
       },
       onSettled(data, error, variables, context) {
         expectTypeOf(data).toEqualTypeOf<
