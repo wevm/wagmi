@@ -1,5 +1,4 @@
 packages:
-  - 'docs'
   - 'packages/*'
   - '!packages/register-tests'
   - 'packages/cli/src/plugins/__fixtures__/hardhat'

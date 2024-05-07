@@ -69,10 +69,10 @@
     "ignore": ["**/*.test-d.ts", "**/templates/**", "**/hardhat.config.js"],
     "ignoreBinaries": ["only-allow"],
     "ignoreWorkspaces": [
-      "docs",
       "packages/register-tests/**",
       "packages/test",
-      "playgrounds/**"
+      "playgrounds/**",
+      "site"
     ],
     "workspaces": {
       ".": {
