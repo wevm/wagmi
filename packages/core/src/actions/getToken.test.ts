@@ -67,10 +67,10 @@ test('behavior: bogus token', async () => {
       address: '0xa0cf798816d4b9b9866b5330eea46a18382f251e',
     }),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
-    "The contract function \\"decimals\\" returned no data (\\"0x\\").
+    [ContractFunctionExecutionError: The contract function "decimals" returned no data ("0x").
 
     This could be due to any of the following:
-      - The contract does not have the function \\"decimals\\",
+      - The contract does not have the function "decimals",
       - The parameters passed to the contract function may be invalid, or
       - The address is not a contract.
      
@@ -79,6 +79,6 @@ test('behavior: bogus token', async () => {
       function:  decimals()
 
     Docs: https://viem.sh/docs/contract/multicall
-    Version: viem@2.9.31"
+    Version: viem@2.9.31]
   `)
 })

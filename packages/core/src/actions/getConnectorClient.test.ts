@@ -39,9 +39,9 @@ test('behavior: not connected', async () => {
   await expect(
     getConnectorClient(config),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
-    "Connector not connected.
+    [ConnectorNotConnectedError: Connector not connected.
 
-    Version: @wagmi/core@x.y.z"
+    Version: @wagmi/core@x.y.z]
   `)
 })
 
@@ -50,9 +50,9 @@ test('behavior: account does not exist on connector', async () => {
   await expect(
     getConnectorClient(config, { account: address.usdcHolder }),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
-    "Account \\"0x5414d89a8bF7E99d732BC52f3e6A3Ef461c0C078\\" not found for connector \\"Mock Connector\\".
+    [ConnectorAccountNotFoundError: Account "0x5414d89a8bF7E99d732BC52f3e6A3Ef461c0C078" not found for connector "Mock Connector".
 
-    Version: @wagmi/core@x.y.z"
+    Version: @wagmi/core@x.y.z]
   `)
   await disconnect(config, { connector })
 })

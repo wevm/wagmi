@@ -77,7 +77,7 @@ test('fails to fetch for unverified contract', async () => {
       contracts: [{ name: 'DepositContract', address }],
     }).contracts(),
   ).rejects.toThrowErrorMatchingInlineSnapshot(
-    '"Contract not found in Sourcify repository."',
+    '[Error: Contract not found in Sourcify repository.]',
   )
 })
 
@@ -89,6 +89,6 @@ test('missing address for chainId', async () => {
       contracts: [{ name: 'DepositContract', address: { 10: address } }],
     }).contracts(),
   ).rejects.toThrowErrorMatchingInlineSnapshot(
-    '"No address found for chainId \\"1\\". Make sure chainId \\"1\\" is set as an address."',
+    `[Error: No address found for chainId "1". Make sure chainId "1" is set as an address.]`,
   )
 })

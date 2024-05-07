@@ -17,8 +17,8 @@ test('behavior: not connected', async () => {
   await expect(
     getWalletClient(config),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
-    "Connector not connected.
+    [ConnectorNotConnectedError: Connector not connected.
 
-    Version: @wagmi/core@x.y.z"
+    Version: @wagmi/core@x.y.z]
   `)
 })

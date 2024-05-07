@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vitepress dev",
+    "dev": "rimraf ../node_modules/.cache/twoslash && vitepress dev",
     "build": "rm -r ../node_modules/.cache/twoslash & vitepress build",
     "preview": "vitepress preview"
   },
@@ -16,6 +16,7 @@
     "@wagmi/core": "workspace:*",
     "abitype": "*",
     "react": ">=18",
+    "rimraf": "^4.4.1",
     "unocss": "^0.53.6",
     "viem": "2.*",
     "vite": "^4.4.9",
