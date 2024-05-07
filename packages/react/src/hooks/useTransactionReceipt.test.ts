@@ -158,7 +158,7 @@ test('behavior: hash: undefined -> defined', async () => {
       "isPlaceholderData": false,
       "isRefetchError": false,
       "isRefetching": false,
-      "isStale": true,
+      "isStale": false,
       "isSuccess": false,
       "queryKey": [
         "getTransactionReceipt",
