@@ -37,7 +37,7 @@ test('context', () => {
         expectTypeOf(variables.args).toEqualTypeOf<
           readonly unknown[] | undefined
         >()
-        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
       },
     },
   })

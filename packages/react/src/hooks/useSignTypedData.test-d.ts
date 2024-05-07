@@ -25,7 +25,7 @@ test('context', () => {
       onSuccess(data, variables, context) {
         expectTypeOf(variables).toMatchTypeOf<SignTypedDataVariables>()
         expectTypeOf(data).toEqualTypeOf<SignTypedDataReturnType>()
-        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
       },
       onSettled(data, error, variables, context) {
         expectTypeOf(data).toEqualTypeOf<SignTypedDataReturnType | undefined>()

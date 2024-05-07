@@ -1,6 +1,7 @@
 import { switchChain } from '@wagmi/core'
 import { config } from '@wagmi/test'
 import { renderHook } from '@wagmi/test/react'
+import { Fragment, createElement } from 'react'
 import { expect, test } from 'vitest'
 
 import { usePublicClient } from './usePublicClient.js'
@@ -18,7 +19,7 @@ test('default', async () => {
 
 test('parameters: config', () => {
   const { result } = renderHook(() => usePublicClient({ config }), {
-    wrapper: ({ children }) => children,
+    wrapper: ({ children }) => createElement(Fragment, { children }),
   })
   expect(result.current).toBeDefined()
 })

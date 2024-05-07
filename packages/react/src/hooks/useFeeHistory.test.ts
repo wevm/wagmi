@@ -271,7 +271,7 @@ test('behavior: blockCount: undefined -> defined', async () => {
         "isPlaceholderData": false,
         "isRefetchError": false,
         "isRefetching": false,
-        "isStale": true,
+        "isStale": false,
         "isSuccess": false,
         "queryKey": [
           "feeHistory",
@@ -376,7 +376,7 @@ test('behavior: rewardPercentiles: undefined -> defined', async () => {
         "isPlaceholderData": false,
         "isRefetchError": false,
         "isRefetching": false,
-        "isStale": true,
+        "isStale": false,
         "isSuccess": false,
         "queryKey": [
           "feeHistory",

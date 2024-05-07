@@ -53,9 +53,7 @@ export function infiniteReadContractsQueryOptions<
       const { cacheKey: _, scopeKey: _s, ...parameters } = queryKey[1]
       return (await readContracts(config, {
         ...parameters,
-        contracts: contracts(
-          pageParam,
-        ) as readonly ContractFunctionParameters[],
+        contracts: contracts(pageParam as any),
       })) as ReadContractsReturnType<contracts, allowFailure>
     },
     queryKey: infiniteReadContractsQueryKey(options),
