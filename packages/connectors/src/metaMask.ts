@@ -1,7 +1,7 @@
-import {
-  type MetaMaskSDK,
-  type MetaMaskSDKOptions,
-  type SDKProvider,
+import type {
+  MetaMaskSDK,
+  MetaMaskSDKOptions,
+  SDKProvider,
 } from '@metamask/sdk'
 import { ChainNotConfiguredError, createConnector } from '@wagmi/core'
 import type { Evaluate, ExactPartial } from '@wagmi/core/internal'

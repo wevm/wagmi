@@ -1,5 +1,5 @@
-import { type SafeAppProvider } from '@safe-global/safe-apps-provider'
-import { type Opts } from '@safe-global/safe-apps-sdk'
+import type { SafeAppProvider } from '@safe-global/safe-apps-provider'
+import type { Opts } from '@safe-global/safe-apps-sdk'
 import {
   type Connector,
   ProviderNotFoundError,

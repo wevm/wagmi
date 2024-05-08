@@ -8,7 +8,7 @@ import {
   type ExactPartial,
   type Omit,
 } from '@wagmi/core/internal'
-import { type EthereumProvider } from '@walletconnect/ethereum-provider'
+import type { EthereumProvider } from '@walletconnect/ethereum-provider'
 import {
   type AddEthereumChainParameter,
   type Address,
