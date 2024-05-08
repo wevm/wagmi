@@ -32,6 +32,22 @@
       "types": "./dist/types/exports/index.d.ts",
       "default": "./dist/esm/exports/index.js"
     },
+    "./coinbaseWallet": {
+      "types": "./dist/types/exports/coinbaseWallet.d.ts",
+      "default": "./dist/esm/exports/coinbaseWallet.js"
+    },
+    "./metaMask": {
+      "types": "./dist/types/exports/metaMask.d.ts",
+      "default": "./dist/esm/exports/metaMask.js"
+    },
+    "./safe": {
+      "types": "./dist/types/exports/safe.d.ts",
+      "default": "./dist/esm/exports/safe.js"
+    },
+    "./walletConnect": {
+      "types": "./dist/types/exports/walletConnect.d.ts",
+      "default": "./dist/esm/exports/walletConnect.js"
+    },
     "./package.json": "./package.json"
   },
   "peerDependencies": {
@@ -56,10 +72,7 @@
     "@wagmi/core": "workspace:*",
     "msw": "^2.2.14"
   },
-  "contributors": [
-    "awkweb.eth <t@wevm.dev>",
-    "jxom.eth <j@wevm.dev>"
-  ],
+  "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
   "funding": "https://github.com/sponsors/wevm",
   "keywords": [
     "react",
