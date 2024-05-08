@@ -37,7 +37,7 @@ test('low-level config', () => {
   expectTypeOf(client.chain).toEqualTypeOf(mainnet)
 })
 
-test('`chains` must have at least one chain`', () => {
+test('behavior: `chains` must have at least one chain', () => {
   createConfig({
     // @ts-expect-error
     chains: [],
@@ -55,6 +55,26 @@ test('`chains` must have at least one chain`', () => {
         chain,
         transport: http(),
       }),
+  })
+})
+
+test('behavior: missing transport for chain', () => {
+  createConfig({
+    chains: [mainnet, sepolia],
+    connectors: [mock({ accounts })],
+    // @ts-expect-error
+    transports: {
+      [mainnet.id]: http(),
+    },
+  })
+  createConfig({
+    chains: [mainnet, sepolia],
+    connectors: [mock({ accounts })],
+    transports: {
+      [mainnet.id]: http(),
+      // @ts-expect-error
+      [123]: http(),
+    },
   })
 })
 
