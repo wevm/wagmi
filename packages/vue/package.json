@@ -1,0 +1,97 @@
+{
+  "name": "@wagmi/vue",
+  "description": "Vue Composables for Ethereum",
+  "version": "0.0.1",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wevm/wagmi.git",
+    "directory": "packages/vue"
+  },
+  "scripts": {
+    "build": "pnpm run clean && pnpm run build:esm+types",
+    "build:esm+types": "tsc --project tsconfig.build.json --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo actions chains connectors query",
+    "test:build": "publint --strict",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "files": [
+    "dist/**",
+    "!dist/**/*.tsbuildinfo",
+    "src/**/*.ts",
+    "!src/**/*.test.ts",
+    "!src/**/*.test-d.ts",
+    "/actions",
+    "/chains",
+    "/connectors",
+    "/query"
+  ],
+  "sideEffects": false,
+  "type": "module",
+  "main": "./dist/esm/exports/index.js",
+  "types": "./dist/types/exports/index.d.ts",
+  "typings": "./dist/types/exports/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/exports/index.d.ts",
+      "default": "./dist/esm/exports/index.js"
+    },
+    "./actions": {
+      "types": "./dist/types/exports/actions.d.ts",
+      "default": "./dist/esm/exports/actions.js"
+    },
+    "./chains": {
+      "types": "./dist/types/exports/chains.d.ts",
+      "default": "./dist/esm/exports/chains.js"
+    },
+    "./connectors": {
+      "types": "./dist/types/exports/connectors.d.ts",
+      "default": "./dist/esm/exports/connectors.js"
+    },
+    "./query": {
+      "types": "./dist/types/exports/query.d.ts",
+      "default": "./dist/esm/exports/query.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "typesVersions": {
+    "*": {
+      "actions": ["./dist/types/exports/actions.d.ts"],
+      "chains": ["./dist/types/exports/chains.d.ts"],
+      "connectors": ["./dist/types/exports/connectors.d.ts"],
+      "query": ["./dist/types/exports/query.d.ts"]
+    }
+  },
+  "peerDependencies": {
+    "@tanstack/vue-query": ">=5.0.0",
+    "vue": ">=3",
+    "typescript": ">=5.0.4",
+    "viem": "2.x"
+  },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@wagmi/connectors": "workspace:*",
+    "@wagmi/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@tanstack/vue-query": ">=5.35.1",
+    "vue": ">=3.4.21",
+    "vue-tsc": "^2.0.6"
+  },
+  "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
+  "funding": "https://github.com/sponsors/wevm",
+  "keywords": [
+    "wagmi",
+    "vue",
+    "composables",
+    "eth",
+    "ethereum",
+    "dapps",
+    "wallet",
+    "web3"
+  ]
+}
