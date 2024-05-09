@@ -25,9 +25,12 @@
     "prepare": "pnpm simple-git-hooks",
     "test": "vitest",
     "test:build": "pnpm run --r --parallel test:build",
+    "test:core": "vitest --project @wagmi/core",
     "test:cov": "vitest run --coverage",
+    "test:react": "vitest --project wagmi",
     "test:typecheck": "vitest typecheck",
     "test:update": "vitest --update",
+    "test:vue": "vitest --project @wagmi/vue",
     "typecheck": "pnpm run --r --parallel typecheck && tsc --noEmit",
     "version:update": "bun .scripts/updateVersion.ts",
     "version:update:viem": "bun .scripts/updateViemVersion.ts"

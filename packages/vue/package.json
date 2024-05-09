@@ -56,17 +56,25 @@
   },
   "typesVersions": {
     "*": {
-      "actions": ["./dist/types/exports/actions.d.ts"],
-      "chains": ["./dist/types/exports/chains.d.ts"],
-      "connectors": ["./dist/types/exports/connectors.d.ts"],
-      "query": ["./dist/types/exports/query.d.ts"]
+      "actions": [
+        "./dist/types/exports/actions.d.ts"
+      ],
+      "chains": [
+        "./dist/types/exports/chains.d.ts"
+      ],
+      "connectors": [
+        "./dist/types/exports/connectors.d.ts"
+      ],
+      "query": [
+        "./dist/types/exports/query.d.ts"
+      ]
     }
   },
   "peerDependencies": {
     "@tanstack/vue-query": ">=5.0.0",
-    "vue": ">=3",
     "typescript": ">=5.0.4",
-    "viem": "2.x"
+    "viem": "2.x",
+    "vue": ">=3"
   },
   "peerDependenciesMeta": {
     "typescript": {
@@ -79,10 +87,14 @@
   },
   "devDependencies": {
     "@tanstack/vue-query": ">=5.35.1",
+    "@vue/test-utils": "^2.4.6",
     "vue": ">=3.4.21",
     "vue-tsc": "^2.0.6"
   },
-  "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
+  "contributors": [
+    "awkweb.eth <t@wevm.dev>",
+    "jxom.eth <j@wevm.dev>"
+  ],
   "funding": "https://github.com/sponsors/wevm",
   "keywords": [
     "wagmi",

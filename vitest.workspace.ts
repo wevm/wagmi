@@ -59,6 +59,15 @@ export default defineWorkspace([
   },
   {
     test: {
+      name: '@wagmi/vue',
+      include: ['./packages/vue/src/**/*.test.ts?(x)'],
+      environment: 'happy-dom',
+      testTimeout: 10_000,
+    },
+    resolve: { alias },
+  },
+  {
+    test: {
       name: 'react-register',
       include: ['./packages/register-tests/react/src/**/*.test.ts'],
     },
