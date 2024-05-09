@@ -40,6 +40,12 @@ export {
 } from '../composables/useChainId.js'
 
 export {
+  type UseClientParameters,
+  type UseClientReturnType,
+  useClient,
+} from '../composables/useClient.js'
+
+export {
   type UseChainsParameters,
   type UseChainsReturnType,
   useChains,

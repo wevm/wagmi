@@ -11,6 +11,13 @@ export type EnabledParameter = {
   enabled?: MaybeRef<boolean> | undefined
 }
 
+export type MaybeRefBy<value extends object, key extends keyof value> = Omit<
+  value,
+  key
+> & {
+  [k in key]: MaybeRef<value[key]>
+}
+
 export type QueryParameter<
   queryFnData = unknown,
   error = DefaultError,
