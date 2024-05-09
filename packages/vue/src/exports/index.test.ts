@@ -11,6 +11,7 @@ test('exports', () => {
       "WagmiPluginNotFoundError",
       "WagmiInjectionContextError",
       "useAccount",
+      "useAccountEffect",
       "useBlockNumber",
       "useChainId",
       "useClient",

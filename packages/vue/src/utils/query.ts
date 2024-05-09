@@ -14,7 +14,8 @@ import {
   type UnionOmit,
 } from '@wagmi/core/internal'
 import { hashFn } from '@wagmi/core/query'
-import type { MaybeRef } from 'vue'
+
+import type { DeepMaybeRef, DeepUnwrapRef } from '../types/ref.js'
 
 export type UseMutationParameters<
   data = unknown,
@@ -22,9 +23,13 @@ export type UseMutationParameters<
   variables = void,
   context = unknown,
 > = Evaluate<
-  Omit<
-    MutationObserverOptions<data, error, Evaluate<variables>, context>,
-    'mutationFn' | 'mutationKey' | 'throwOnError'
+  DeepMaybeRef<
+    Omit<
+      DeepUnwrapRef<
+        MutationObserverOptions<data, error, Evaluate<variables>, context>
+      >,
+      'mutationFn' | 'mutationKey' | 'throwOnError'
+    >
   >
 >
 
@@ -48,18 +53,21 @@ export type UseQueryParameters<
   data = queryFnData,
   queryKey extends QueryKey = QueryKey,
 > = Evaluate<
-  ExactPartial<
-    Omit<
-      QueryObserverOptions<queryFnData, error, data, queryKey>,
-      'enabled' | 'initialData'
-    >
-  > & {
-    enabled?: MaybeRef<boolean> | undefined
-    // Fix `initialData` type
-    initialData?:
-      | QueryObserverOptions<queryFnData, error, data, queryKey>['initialData']
-      | undefined
-  }
+  DeepMaybeRef<
+    ExactPartial<
+      Omit<
+        DeepUnwrapRef<QueryObserverOptions<queryFnData, error, data, queryKey>>,
+        'initialData'
+      >
+    > & {
+      // Fix `initialData` type
+      initialData?:
+        | DeepUnwrapRef<
+            QueryObserverOptions<queryFnData, error, data, queryKey>
+          >['initialData']
+        | undefined
+    }
+  >
 >
 
 export type UseQueryReturnType<data = unknown, error = DefaultError> = Evaluate<
