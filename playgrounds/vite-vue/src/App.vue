@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useAccount, useBlockNumber, useChainId, useClient, useConnect, useDisconnect, useSwitchChain } from '@wagmi/vue'
+import { useAccount, useBlockNumber, useChainId, useClient, useConnect, useConnections, useDisconnect, useSwitchChain } from '@wagmi/vue'
 import { ref } from 'vue';
 
 const watchBlockNumber = ref(false)
@@ -9,6 +9,7 @@ const blockNumber = useBlockNumber({ watch: watchBlockNumber })
 const chainId = useChainId()
 const client = useClient()
 const connect = useConnect()
+const connections = useConnections()
 const disconnect = useDisconnect()
 const switchChain = useSwitchChain()
 </script>
@@ -54,6 +55,16 @@ const switchChain = useSwitchChain()
 
       <div>{{ connect.status }}</div>
       <div>{{ connect.error }}</div>
+    </div>
+
+    <div>
+      <h2>Connections</h2>
+
+      <div v-for="connection in connections" :key="connection.connector.id" type="button">
+        <div>connector {{ connection.connector.name }}</div>
+        <div>accounts: {{ JSON.stringify(connection.accounts) }}</div>
+        <div>chainId: {{ connection.chainId }}</div>
+      </div>
     </div>
 
     <div>

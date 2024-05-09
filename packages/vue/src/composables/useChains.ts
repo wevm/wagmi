@@ -7,7 +7,7 @@ import {
 import { watchChains } from '@wagmi/core/internal'
 
 import type { Chain } from 'viem'
-import { type Ref, onScopeDispose, readonly, shallowRef } from 'vue'
+import { type Ref, onScopeDispose, readonly, ref } from 'vue'
 import type { ConfigParameter } from '../types/properties.js'
 import { useConfig } from './useConfig.js'
 
@@ -26,7 +26,7 @@ export function useChains<config extends Config = ResolvedRegister['config']>(
 ): UseChainsReturnType<config> {
   const config = useConfig(parameters)
 
-  const chains = shallowRef<GetChainsReturnType>(getChains(config))
+  const chains = ref<GetChainsReturnType>(getChains(config))
 
   const unsubscribe = watchChains(config, {
     onChange(data) {
