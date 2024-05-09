@@ -13,6 +13,7 @@ test('exports', () => {
       "useAccount",
       "useBlockNumber",
       "useChainId",
+      "useClient",
       "useChains",
       "useConfig",
       "useConnect",

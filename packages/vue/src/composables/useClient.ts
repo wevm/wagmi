@@ -9,14 +9,16 @@ import {
 import type { Evaluate } from '@wagmi/core/internal'
 import {
   type Ref,
+  computed,
   onScopeDispose,
   readonly,
   ref,
-  toValue,
   watchEffect,
 } from 'vue'
 
-import type { ConfigParameter, MaybeRefBy } from '../types/properties.js'
+import type { ConfigParameter } from '../types/properties.js'
+import type { MaybeRefDeep } from '../types/ref.js'
+import { cloneDeepUnref } from '../utils/cloneDeep.js'
 import { useConfig } from './useConfig.js'
 
 export type UseClientParameters<
@@ -25,8 +27,7 @@ export type UseClientParameters<
     | config['chains'][number]['id']
     | undefined,
 > = Evaluate<
-  MaybeRefBy<GetClientParameters<config, chainId>, 'chainId'> &
-    ConfigParameter<config>
+  MaybeRefDeep<GetClientParameters<config, chainId> & ConfigParameter<config>>
 >
 
 export type UseClientReturnType<
@@ -43,23 +44,16 @@ export function useClient<
     | config['chains'][number]['id']
     | undefined,
 >(
-  parameters: UseClientParameters<config, chainId> = {},
+  parameters_: UseClientParameters<config, chainId> = {},
 ): UseClientReturnType<config, chainId> {
-  const config = useConfig(parameters)
+  const parameters = computed(() => cloneDeepUnref(parameters_))
 
-  const client = ref(
-    getClient(config, {
-      ...parameters,
-      chainId: toValue(parameters.chainId),
-    }) as GetClientReturnType,
-  )
+  const config = useConfig(parameters.value)
 
-  // Watch for changes on `parameters.chainId` ref.
+  const client = ref(getClient(config, parameters.value) as GetClientReturnType)
+
   watchEffect(() => {
-    client.value = getClient(config, {
-      ...parameters,
-      chainId: toValue(parameters.chainId),
-    })
+    client.value = getClient(config, parameters.value)
   })
 
   const unsubscribe = watchClient(config, {

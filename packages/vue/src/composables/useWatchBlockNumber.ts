@@ -5,19 +5,23 @@ import {
   watchBlockNumber,
 } from '@wagmi/core'
 import { type UnionEvaluate, type UnionPartial } from '@wagmi/core/internal'
-import { toValue, watchEffect } from 'vue'
+import { computed, watchEffect } from 'vue'
 
 import type { ConfigParameter, EnabledParameter } from '../types/properties.js'
+import type { MaybeRefDeep } from '../types/ref.js'
+import { cloneDeepUnref } from '../utils/cloneDeep.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
 export type UseWatchBlockNumberParameters<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
-> = UnionEvaluate<
-  UnionPartial<WatchBlockNumberParameters<config, chainId>> &
-    ConfigParameter<config> &
-    EnabledParameter
+> = MaybeRefDeep<
+  UnionEvaluate<
+    UnionPartial<WatchBlockNumberParameters<config, chainId>> &
+      ConfigParameter<config> &
+      EnabledParameter
+  >
 >
 
 export type UseWatchBlockNumberReturnType = void
@@ -27,16 +31,23 @@ export function useWatchBlockNumber<
   config extends Config = ResolvedRegister['config'],
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
 >(
-  parameters: UseWatchBlockNumberParameters<config, chainId> = {} as any,
+  parameters_: UseWatchBlockNumberParameters<config, chainId> = {} as any,
 ): UseWatchBlockNumberReturnType {
-  const { enabled = true, onBlockNumber, config: _, ...rest } = parameters
+  const parameters = computed(() => cloneDeepUnref(parameters_))
 
-  const config = useConfig(parameters)
+  const config = useConfig(parameters.value)
   const configChainId = useChainId({ config })
-  const chainId = parameters.chainId ?? configChainId.value
 
   watchEffect((onCleanup) => {
-    if (!toValue(enabled)) return
+    const {
+      chainId = configChainId.value,
+      enabled = true,
+      onBlockNumber,
+      config: _,
+      ...rest
+    } = parameters.value
+
+    if (!enabled) return
     if (!onBlockNumber) return
 
     const unwatch = watchBlockNumber(config, {
