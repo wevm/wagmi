@@ -40,14 +40,15 @@ export function waitFor<ref extends Ref>(
 ) {
   const { timeout = 10_000 } = options
   return new Promise<void>((resolve, reject) => {
-    const _unwatch = watch(ref, (value) => {
-      const timer = timeout
-        ? setTimeout(() => {
-            _unwatch()
-            reject(new Error(`\`waitFor\` timed out in ${timeout}ms.`))
-          }, timeout)
-        : undefined
+    const timer = timeout
+      ? setTimeout(() => {
+          _unwatch()
+          if (predicate(ref.value)) resolve()
+          else reject(new Error(`\`waitFor\` timed out in ${timeout}ms.`))
+        }, timeout)
+      : undefined
 
+    const _unwatch = watch(ref, (value) => {
       if (predicate(value)) {
         if (timer) clearTimeout(timer)
         _unwatch()

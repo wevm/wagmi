@@ -14,6 +14,7 @@ import {
   type UnionOmit,
 } from '@wagmi/core/internal'
 import { hashFn } from '@wagmi/core/query'
+import type { MaybeRef } from 'vue'
 
 export type UseMutationParameters<
   data = unknown,
@@ -50,9 +51,10 @@ export type UseQueryParameters<
   ExactPartial<
     Omit<
       QueryObserverOptions<queryFnData, error, data, queryKey>,
-      'initialData'
+      'enabled' | 'initialData'
     >
   > & {
+    enabled?: MaybeRef<boolean> | undefined
     // Fix `initialData` type
     initialData?:
       | QueryObserverOptions<queryFnData, error, data, queryKey>['initialData']
