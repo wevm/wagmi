@@ -19,7 +19,6 @@ export function useConnections(
   const config = useConfig(parameters)
 
   const connections = ref(getConnections(config))
-
   const unsubscribe = watchConnections(config, {
     onChange(data) {
       connections.value = data

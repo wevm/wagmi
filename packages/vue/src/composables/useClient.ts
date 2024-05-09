@@ -37,30 +37,23 @@ export type UseClientReturnType<
     | undefined,
 > = Ref<GetClientReturnType<config, chainId>>
 
-/** https://wagmi.sh/react/api/hooks/useClient */
+/** https://wagmi.sh/vue/api/hooks/useClient */
 export function useClient<
   config extends Config = ResolvedRegister['config'],
   chainId extends config['chains'][number]['id'] | number | undefined =
     | config['chains'][number]['id']
     | undefined,
 >(
-  parameters_: UseClientParameters<config, chainId> = {},
+  parameters: UseClientParameters<config, chainId> = {},
 ): UseClientReturnType<config, chainId> {
-  const parameters = computed(() => cloneDeepUnref(parameters_))
+  const params = computed(() => cloneDeepUnref(parameters))
 
-  const config = useConfig(parameters)
+  const config = useConfig(params)
 
-  const client = ref(
-    getClient(
-      config,
-      parameters.value as GetClientParameters,
-    ) as GetClientReturnType,
-  )
-
+  const client = ref(getClient(config, params.value))
   watchEffect(() => {
-    client.value = getClient(config, parameters.value as GetClientParameters)
+    client.value = getClient(config, params.value)
   })
-
   const unsubscribe = watchClient(config, {
     onChange(data) {
       if (client.value?.uid === data?.uid) return

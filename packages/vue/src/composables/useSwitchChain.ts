@@ -47,7 +47,7 @@ export type UseSwitchChainReturnType<
     SwitchChainVariables<config, config['chains'][number]['id']>,
     context
   > & {
-    chains: UseChainsReturnType<config>
+    chains: Evaluate<UseChainsReturnType<config>>
     switchChain: SwitchChainMutate<config, context>
     switchChainAsync: SwitchChainMutateAsync<config, context>
   }

@@ -1,12 +1,21 @@
 <script setup lang="ts">
-import { useAccount, useBlockNumber, useChainId, useClient, useConnect, useConnections, useDisconnect, useSwitchChain } from '@wagmi/vue'
-import { ref } from 'vue';
+import {
+  useAccount,
+  useBlockNumber,
+  useChainId,
+  useClient,
+  useConnect,
+  useConnections,
+  useDisconnect,
+  useSwitchChain
+} from '@wagmi/vue'
+import { ref } from 'vue'
 
 const watchBlockNumber = ref(false)
 
 const account = useAccount()
-const blockNumber = useBlockNumber({ watch: watchBlockNumber })
 const chainId = useChainId()
+const blockNumber = useBlockNumber({ watch: watchBlockNumber })
 const client = useClient()
 const connect = useConnect()
 const connections = useConnections()
@@ -16,19 +25,6 @@ const switchChain = useSwitchChain()
 
 <template>
   <div>
-    <div>
-      <h2>Switch Chain</h2>
-
-      <div>Chain ID: {{ chainId }}</div>
-
-      <button v-for="chain in switchChain.chains.value" :key="chain.id" :disabled="chain.id === chainId" type="button"
-        @click="switchChain.switchChain({ chainId: chain.id })">
-        {{ chain.name }}
-      </button>
-
-      {{ switchChain.error }}
-    </div>
-
     <div>
       <h2>Account</h2>
 
@@ -48,13 +44,19 @@ const switchChain = useSwitchChain()
     <div>
       <h2>Connect</h2>
 
-      <button v-for="connector in connect.connectors" :key="connector.id" type="button"
-        @click="connect.connect({ connector, chainId })">
+      <button
+        v-for="connector in connect.connectors"
+        :key="connector.id"
+        type="button"
+        @click="connect.connect({ connector, chainId })"
+      >
         {{ connector.name }}
       </button>
 
-      <div>{{ connect.status }}</div>
-      <div>{{ connect.error }}</div>
+      <div>
+        {{ connect.status }}
+        {{ connect.error }}
+      </div>
     </div>
 
     <div>
@@ -64,6 +66,27 @@ const switchChain = useSwitchChain()
         <div>connector {{ connection.connector.name }}</div>
         <div>accounts: {{ JSON.stringify(connection.accounts) }}</div>
         <div>chainId: {{ connection.chainId }}</div>
+      </div>
+    </div>
+
+    <div>
+      <h2>Switch Chain</h2>
+
+      <div>Chain ID: {{ chainId }}</div>
+
+      <button
+        v-for="chain in switchChain.chains.value"
+        :key="chain.id"
+        :disabled="chain.id === chainId"
+        type="button"
+        @click="switchChain.switchChain({ chainId: chain.id })"
+      >
+        {{ chain.name }}
+      </button>
+
+      <div>
+        {{ switchChain.status }}
+        {{ switchChain.error }}
       </div>
     </div>
 
@@ -79,7 +102,7 @@ const switchChain = useSwitchChain()
     <div>
       <h2>Client</h2>
 
-      <pre>{{ JSON.stringify(client, null, 2) }}</pre>
+      <pre>{{ client }}</pre>
     </div>
   </div>
 </template>

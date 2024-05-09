@@ -69,7 +69,7 @@ export type UseQueryReturnType<data = unknown, error = DefaultError> = Evaluate<
 >
 
 // Adding some basic customization.
-// Ideally we don't have this function, but `import('@tanstack/react-query').useQuery` currently has some quirks where it is super hard to
+// Ideally we don't have this function, but `import('@tanstack/vue-query').useQuery` currently has some quirks where it is super hard to
 // pass down the inferred `initialData` type because of it's discriminated overload in the on `useQuery`.
 export function useQuery<queryFnData, error, data, queryKey extends QueryKey>(
   parameters: UseQueryParameters<queryFnData, error, data, queryKey> & {

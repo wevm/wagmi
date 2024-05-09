@@ -27,7 +27,6 @@ export function useChains<config extends Config = ResolvedRegister['config']>(
   const config = useConfig(parameters)
 
   const chains = ref<GetChainsReturnType>(getChains(config))
-
   const unsubscribe = watchChains(config, {
     onChange(data) {
       chains.value = data

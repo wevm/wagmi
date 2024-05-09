@@ -20,7 +20,6 @@ test('parameters: watch', async () => {
   await waitFor(blockNumberQuery.status, (status) => status === 'success')
 
   const blockNumber = blockNumberQuery.data.value!
-
   await testClient.mainnet.mine({ blocks: 1 })
 
   await waitFor(blockNumberQuery.data, (data) => data === blockNumber + 1n)
@@ -42,35 +41,6 @@ test('parameters: watch (reactive)', async () => {
   await waitFor(blockNumberQuery.data, (data) => data === blockNumber + 2n)
 
   watch.value = false
-
-  await testClient.mainnet.mine({ blocks: 1 })
-  await waitFor(blockNumberQuery.data, (data) => data === blockNumber + 2n, {
-    timeout: 1_000,
-  })
-})
-
-test('parameters: watch (reactive)', async () => {
-  const enabled = ref(true)
-
-  const [blockNumberQuery] = renderComposable(() =>
-    useBlockNumber({
-      watch: {
-        enabled,
-      },
-    }),
-  )
-
-  await waitFor(blockNumberQuery.status, (status) => status === 'success')
-
-  const blockNumber = blockNumberQuery.data.value!
-
-  await testClient.mainnet.mine({ blocks: 1 })
-  await waitFor(blockNumberQuery.data, (data) => data === blockNumber + 1n)
-
-  await testClient.mainnet.mine({ blocks: 1 })
-  await waitFor(blockNumberQuery.data, (data) => data === blockNumber + 2n)
-
-  enabled.value = false
 
   await testClient.mainnet.mine({ blocks: 1 })
   await waitFor(blockNumberQuery.data, (data) => data === blockNumber + 2n, {

@@ -1,18 +1,30 @@
-import { type GetConnectorsReturnType, getConnectors } from '@wagmi/core'
+import {
+  type GetConnectorsReturnType,
+  getConnectors,
+  watchConnectors,
+} from '@wagmi/core'
+import { type Ref, onScopeDispose, readonly, ref } from 'vue'
 
-import { reactive } from 'vue'
 import type { ConfigParameter } from '../types/properties.js'
 import { useConfig } from './useConfig.js'
 
 export type UseConnectorsParameters = ConfigParameter
 
-export type UseConnectorsReturnType = GetConnectorsReturnType
+export type UseConnectorsReturnType = Ref<GetConnectorsReturnType>
 
 /** https://wagmi.sh/vue/api/hooks/useConnectors */
 export function useConnectors(
   parameters: UseConnectorsParameters = {},
 ): UseConnectorsReturnType {
   const config = useConfig(parameters)
-  const connectors = reactive(getConnectors(config))
-  return connectors as UseConnectorsReturnType
+
+  const connectors = ref(getConnectors(config))
+  const unsubscribe = watchConnectors(config, {
+    onChange(data) {
+      connectors.value = data
+    },
+  })
+  onScopeDispose(() => unsubscribe())
+
+  return readonly(connectors) as UseConnectorsReturnType
 }

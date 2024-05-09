@@ -4,7 +4,7 @@ import { expect, test } from 'vitest'
 
 import { useChainId } from './useChainId.js'
 
-test('default', async () => {
+test('default', () => {
   const [chainId] = renderComposable(() => useChainId())
 
   expect(chainId.value).toMatchInlineSnapshot('1')
@@ -12,4 +12,11 @@ test('default', async () => {
   config.setState((x) => ({ ...x, chainId: 456 }))
 
   expect(chainId.value).toMatchInlineSnapshot('456')
+})
+
+test('parameters: config', () => {
+  const [chainId] = renderComposable(() => useChainId({ config }), {
+    attach() {},
+  })
+  expect(chainId.value).toBeDefined()
 })

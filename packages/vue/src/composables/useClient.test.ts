@@ -16,6 +16,13 @@ test('default', async () => {
   expect(client.value?.chain?.id).toEqual(456)
 })
 
+test('parameters: config', () => {
+  const [chainId] = renderComposable(() => useClient({ config }), {
+    attach() {},
+  })
+  expect(chainId.value).toBeDefined()
+})
+
 test('behavior: controlled chainId', async () => {
   const chainId = ref(456)
 

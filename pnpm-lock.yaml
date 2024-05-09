@@ -490,6 +490,9 @@ importers:
       '@vitejs/plugin-vue':
         specifier: ^5.0.4
         version: 5.0.4(vite@5.2.11(@types/node@20.12.10))(vue@3.4.27(typescript@5.4.2))
+      buffer:
+        specifier: ^6.0.3
+        version: 6.0.3
       vite:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@20.12.10)

@@ -21,6 +21,7 @@ test('exports', () => {
       "useConnectors",
       "useDisconnect",
       "useSwitchChain",
+      "useWatchBlockNumber",
       "createConfig",
       "createConnector",
       "ChainNotConfiguredError",

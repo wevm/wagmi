@@ -11,6 +11,16 @@ export type RenderComposableReturnType<composable extends () => unknown> = [
 
 export function renderComposable<composable extends () => unknown>(
   composable: composable,
+  options: { attach?: (app: App) => void } | undefined = {
+    attach(app) {
+      app
+        .use(WagmiPlugin, {
+          config,
+          reconnectOnMount: false,
+        })
+        .use(VueQueryPlugin, {})
+    },
+  },
 ): RenderComposableReturnType<composable> {
   let result = undefined
   const app = createApp({
@@ -19,12 +29,9 @@ export function renderComposable<composable extends () => unknown>(
       return () => {}
     },
   })
-    .use(WagmiPlugin, {
-      config,
-      reconnectOnMount: false,
-    })
-    .use(VueQueryPlugin, {})
-    .mount(document.createElement('div'))
+
+  options.attach?.(app)
+  app.mount(document.createElement('div'))
 
   return [result, app] as unknown as RenderComposableReturnType<composable>
 }
