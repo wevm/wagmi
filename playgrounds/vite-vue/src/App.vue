@@ -7,6 +7,7 @@ import {
   useConnect,
   useConnections,
   useDisconnect,
+  useSwitchAccount,
   useSwitchChain
 } from '@wagmi/vue'
 import { ref } from 'vue'
@@ -20,6 +21,7 @@ const client = useClient()
 const connect = useConnect()
 const connections = useConnections()
 const disconnect = useDisconnect()
+const switchAccount = useSwitchAccount()
 const switchChain = useSwitchChain()
 </script>
 
@@ -62,6 +64,21 @@ const switchChain = useSwitchChain()
         <div>connector {{ connection.connector.name }}</div>
         <div>accounts: {{ JSON.stringify(connection.accounts) }}</div>
         <div>chainId: {{ connection.chainId }}</div>
+      </div>
+    </div>
+
+    <div>
+      <h2>Switch Account</h2>
+
+      <button v-for="connector in switchAccount.connectors.value" :key="connector.id"
+        :disabled="account.connector.value?.uid === connector.uid" type="button"
+        @click="switchAccount.switchAccount({ connector })">
+        {{ connector.name }}
+      </button>
+
+      <div>
+        {{ switchAccount.status }}
+        {{ switchAccount.error }}
       </div>
     </div>
 

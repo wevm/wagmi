@@ -93,6 +93,12 @@ export {
 } from '../composables/useReconnect.js'
 
 export {
+  type UseSwitchAccountParameters,
+  type UseSwitchAccountReturnType,
+  useSwitchAccount,
+} from '../composables/useSwitchAccount.js'
+
+export {
   type UseSwitchChainParameters,
   type UseSwitchChainReturnType,
   useSwitchChain,
