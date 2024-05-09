@@ -75,7 +75,7 @@ export function useBlockNumber<
 
   const queryOptions = computed(() => {
     const {
-      chainId = configChainId,
+      chainId = configChainId.value,
       query = {},
       watch: _,
       ...rest
@@ -114,7 +114,5 @@ export function useBlockNumber<
 
   useWatchBlockNumber(watchBlockNumberArgs)
 
-  return useQuery(
-    queryOptions.value as any,
-  ) as UseBlockNumberReturnType<selectData>
+  return useQuery(queryOptions as any) as UseBlockNumberReturnType<selectData>
 }

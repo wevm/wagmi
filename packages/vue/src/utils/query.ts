@@ -14,8 +14,10 @@ import {
   type UnionOmit,
 } from '@wagmi/core/internal'
 import { hashFn } from '@wagmi/core/query'
+import { computed, unref } from 'vue'
 
 import type { DeepMaybeRef, DeepUnwrapRef } from '../types/ref.js'
+import { deepUnref } from './cloneDeep.js'
 
 export type UseMutationParameters<
   data = unknown,
@@ -84,11 +86,12 @@ export function useQuery<queryFnData, error, data, queryKey extends QueryKey>(
     queryKey: QueryKey
   },
 ): UseQueryReturnType<data, error> {
-  const result = tanstack_useQuery({
-    ...(parameters as any),
-    queryKeyHashFn: hashFn, // for bigint support
-  }) as UseQueryReturnType<data, error>
-  result.queryKey = parameters.queryKey
+  const options = computed(() => ({
+    ...(deepUnref(parameters) as any),
+    queryKeyHashFn: hashFn,
+  }))
+  const result = tanstack_useQuery(options) as UseQueryReturnType<data, error>
+  result.queryKey = unref(options).queryKey as QueryKey
   return result
 }
 
