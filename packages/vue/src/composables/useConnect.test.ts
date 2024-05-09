@@ -17,15 +17,15 @@ test('default', async () => {
   const [account] = renderComposable(() => useAccount())
   const [connect] = renderComposable(() => useConnect())
 
-  expect(account.value.address).not.toBeDefined()
-  expect(account.value.status).toEqual('disconnected')
+  expect(account.address.value).not.toBeDefined()
+  expect(account.status.value).toEqual('disconnected')
 
   connect.connect({
     connector: connect.connectors[0]!,
   })
 
-  await waitFor(account, (account) => account.isConnected)
+  await waitFor(account.isConnected, (isConnected) => Boolean(isConnected))
 
-  expect(account.value.address).toBeDefined()
-  expect(account.value.status).toEqual('connected')
+  expect(account.address.value).toBeDefined()
+  expect(account.status.value).toEqual('connected')
 })

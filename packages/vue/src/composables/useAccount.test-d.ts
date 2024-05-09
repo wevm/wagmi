@@ -2,14 +2,15 @@ import { type Connector } from '@wagmi/core'
 import { type Address, type Chain } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
+import { deepUnref } from '../utils/cloneDeep.js'
 import { useAccount } from './useAccount.js'
 
 test('states', () => {
-  const result = useAccount()
+  const result = deepUnref(useAccount())
 
-  switch (result.value.status) {
+  switch (result.status) {
     case 'reconnecting': {
-      expectTypeOf(result.value).toMatchTypeOf<{
+      expectTypeOf(result).toMatchTypeOf<{
         address: Address | undefined
         chain: Chain | undefined
         chainId: number | undefined
@@ -23,7 +24,7 @@ test('states', () => {
       break
     }
     case 'connecting': {
-      expectTypeOf(result.value).toMatchTypeOf<{
+      expectTypeOf(result).toMatchTypeOf<{
         address: Address | undefined
         chain: Chain | undefined
         chainId: number | undefined
@@ -37,7 +38,7 @@ test('states', () => {
       break
     }
     case 'connected': {
-      expectTypeOf(result.value).toMatchTypeOf<{
+      expectTypeOf(result).toMatchTypeOf<{
         address: Address
         chain: Chain | undefined
         chainId: number
@@ -51,7 +52,7 @@ test('states', () => {
       break
     }
     case 'disconnected': {
-      expectTypeOf(result.value).toMatchTypeOf<{
+      expectTypeOf(result).toMatchTypeOf<{
         address: undefined
         chain: undefined
         chainId: undefined

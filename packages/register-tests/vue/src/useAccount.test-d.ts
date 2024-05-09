@@ -6,12 +6,12 @@ import { type ChainId } from './config.js'
 
 test('default', () => {
   const result = useAccount()
-  if (result.value.chain)
-    expectTypeOf(result.value.chain.id).toEqualTypeOf<ChainId>()
+  if (result.chain.value)
+    expectTypeOf(result.chain.value.id).toEqualTypeOf<ChainId>()
 })
 
 test('parameters: config', async () => {
   const result = useAccount({ config })
-  if (result.value.chain)
-    expectTypeOf(result.value.chain.id).toEqualTypeOf<1 | 10 | 456>()
+  if (result.chain.value)
+    expectTypeOf(result.chain.value.id).toEqualTypeOf<1 | 10 | 456>()
 })
