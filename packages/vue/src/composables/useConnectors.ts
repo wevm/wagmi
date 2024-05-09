@@ -3,7 +3,7 @@ import {
   getConnectors,
   watchConnectors,
 } from '@wagmi/core'
-import { type Ref, onScopeDispose, readonly, ref } from 'vue'
+import { type Ref, onScopeDispose, ref } from 'vue'
 
 import type { ConfigParameter } from '../types/properties.js'
 import { useConfig } from './useConfig.js'
@@ -26,5 +26,5 @@ export function useConnectors(
   })
   onScopeDispose(() => unsubscribe())
 
-  return readonly(connectors) as UseConnectorsReturnType
+  return connectors
 }
