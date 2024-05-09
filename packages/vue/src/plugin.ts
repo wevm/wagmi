@@ -1,4 +1,4 @@
-import { type ResolvedRegister, type State } from '@wagmi/core'
+import { type ResolvedRegister, type State, hydrate } from '@wagmi/core'
 import type { Plugin } from 'vue'
 
 export const configKey = Symbol()
@@ -13,7 +13,10 @@ export const WagmiPlugin = {
   install(app, options) {
     const { config } = options
     app.provide(configKey, config)
-    // TODO: reconnect on mount
-    // TODO: hydrate initial state
+    // TODO: check this works in SSR env.
+    //       - reconnect on mount.
+    //       - hydrate initial state.
+    const { onMount } = hydrate(config, options)
+    onMount()
   },
 } satisfies Plugin<WagmiPluginOptions>
