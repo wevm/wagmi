@@ -15,7 +15,7 @@ test('behavior: throws when not provided via WagmiPlugin', () => {
     renderComposable(() => useConfig(), { attach() {} })
   } catch (error) {
     expect(error).toMatchInlineSnapshot(`
-      [WagmiProviderNotFoundError: No 'config' found in Vue context, use 'WagmiPlugin' to properly initialize the library.,
+      [WagmiPluginNotFoundError: No \`config\` found in Vue context, use \`WagmiPlugin\` to properly initialize the library.
 
       Docs: https://wagmi.sh/vue/api/TODO.html
       Version: @wagmi/vue@x.y.z]

@@ -3,8 +3,8 @@ import { hasInjectionContext, inject } from 'vue'
 
 import {
   WagmiInjectionContextError,
-  WagmiProviderNotFoundError,
-} from '../errors/context.js'
+  WagmiPluginNotFoundError,
+} from '../errors/plugin.js'
 import { configKey } from '../plugin.js'
 import type { ConfigParameter } from '../types/properties.js'
 import type { DeepMaybeRef } from '../types/ref.js'
@@ -29,7 +29,7 @@ export function useConfig<config extends Config = ResolvedRegister['config']>(
   if (!hasInjectionContext()) throw new WagmiInjectionContextError()
 
   const config = inject<Config | undefined>(configKey)
-  if (!config) throw new WagmiProviderNotFoundError()
+  if (!config) throw new WagmiPluginNotFoundError()
 
   return config as UseConfigReturnType<config>
 }

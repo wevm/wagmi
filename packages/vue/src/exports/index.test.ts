@@ -8,7 +8,7 @@ test('exports', () => {
       "configKey",
       "WagmiPlugin",
       "BaseError",
-      "WagmiProviderNotFoundError",
+      "WagmiPluginNotFoundError",
       "WagmiInjectionContextError",
       "useAccount",
       "useBlockNumber",

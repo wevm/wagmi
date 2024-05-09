@@ -11,11 +11,11 @@ export { configKey, type WagmiPluginOptions, WagmiPlugin } from '../plugin.js'
 export { type BaseErrorType, BaseError } from '../errors/base.js'
 
 export {
-  type WagmiProviderNotFoundErrorType,
-  WagmiProviderNotFoundError,
+  type WagmiPluginNotFoundErrorType,
+  WagmiPluginNotFoundError,
   type WagmiInjectionContextErrorType,
   WagmiInjectionContextError,
-} from '../errors/context.js'
+} from '../errors/plugin.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // Composables

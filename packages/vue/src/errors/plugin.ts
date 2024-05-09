@@ -1,13 +1,13 @@
 import { BaseError } from './base.js'
 
-export type WagmiProviderNotFoundErrorType = WagmiProviderNotFoundError & {
-  name: 'WagmiProviderNotFoundError'
+export type WagmiPluginNotFoundErrorType = WagmiPluginNotFoundError & {
+  name: 'WagmiPluginNotFoundError'
 }
-export class WagmiProviderNotFoundError extends BaseError {
-  override name = 'WagmiProviderNotFoundError'
+export class WagmiPluginNotFoundError extends BaseError {
+  override name = 'WagmiPluginNotFoundError'
   constructor() {
     super(
-      "No 'config' found in Vue context, use 'WagmiPlugin' to properly initialize the library.,",
+      'No `config` found in Vue context, use `WagmiPlugin` to properly initialize the library.',
       {
         docsPath: '/api/TODO',
       },
