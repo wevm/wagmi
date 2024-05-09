@@ -8,13 +8,13 @@ import { useAccount } from './useAccount.js'
 test('default', async () => {
   const [account] = renderComposable(() => useAccount())
 
-  expect(account.value.address).not.toBeDefined()
-  expect(account.value.status).toEqual('disconnected')
+  expect(account.address.value).not.toBeDefined()
+  expect(account.status.value).toEqual('disconnected')
 
   await connect(config, { connector: config.connectors[0]! })
 
-  expect(account.value.address).toBeDefined()
-  expect(account.value.status).toEqual('connected')
+  expect(account.address.value).toBeDefined()
+  expect(account.status.value).toEqual('connected')
 
   await disconnect(config)
 })

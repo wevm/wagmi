@@ -5,15 +5,16 @@ import {
   getAccount,
   watchAccount,
 } from '@wagmi/core'
-import { type Ref, onScopeDispose, readonly, ref } from 'vue'
+import { type ToRefs, onScopeDispose, reactive, readonly, toRefs } from 'vue'
 
 import { type ConfigParameter } from '../types/properties.js'
+import { updateState } from '../utils/updateState.js'
 import { useConfig } from './useConfig.js'
 
 export type UseAccountParameters<config extends Config = Config> =
   ConfigParameter<config>
 
-export type UseAccountReturnType<config extends Config = Config> = Ref<
+export type UseAccountReturnType<config extends Config = Config> = ToRefs<
   GetAccountReturnType<config>
 >
 
@@ -23,14 +24,14 @@ export function useAccount<config extends Config = ResolvedRegister['config']>(
 ): UseAccountReturnType<config> {
   const config = useConfig(parameters)
 
-  const account = ref<GetAccountReturnType>(getAccount(config))
+  const account = reactive(getAccount(config))
 
   const unsubscribe = watchAccount(config, {
     onChange(data) {
-      account.value = data
+      updateState(account, data)
     },
   })
   onScopeDispose(() => unsubscribe())
 
-  return readonly(account)
+  return toRefs(readonly(account)) as UseAccountReturnType<config>
 }

@@ -14,20 +14,20 @@ test('default', async () => {
   const [account] = renderComposable(() => useAccount())
   const [switchChain] = renderComposable(() => useSwitchChain())
 
-  const chainId1 = account.value.chainId
+  const chainId1 = account.chainId.value
   expect(chainId1).toBeDefined()
 
   switchChain.switchChain({ chainId: chain.mainnet2.id })
   await waitFor(switchChain.isSuccess, (isSuccess) => Boolean(isSuccess))
 
-  const chainId2 = account.value.chainId
+  const chainId2 = account.chainId.value
   expect(chainId2).toBeDefined()
   expect(chainId1).not.toBe(chainId2)
 
   switchChain.switchChain({ chainId: chain.mainnet.id })
   await waitFor(switchChain.isSuccess, (isSuccess) => Boolean(isSuccess))
 
-  const chainId3 = account.value.chainId
+  const chainId3 = account.chainId.value
   expect(chainId3).toBeDefined()
   expect(chainId1).toBe(chainId3)
 
