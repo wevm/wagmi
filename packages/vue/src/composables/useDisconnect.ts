@@ -8,6 +8,7 @@ import {
   type DisconnectVariables,
   disconnectMutationOptions,
 } from '@wagmi/core/query'
+import { type Ref, computed } from 'vue'
 
 import type { ConfigParameter } from '../types/properties.js'
 import type {
@@ -37,7 +38,7 @@ export type UseDisconnectReturnType<context = unknown> = Evaluate<
     DisconnectVariables,
     context
   > & {
-    connectors: readonly Connector[]
+    connectors: Ref<readonly Connector[]>
     disconnect: DisconnectMutate<context>
     disconnectAsync: DisconnectMutateAsync<context>
   }
@@ -50,6 +51,7 @@ export function useDisconnect<context = unknown>(
   const { mutation } = parameters
 
   const config = useConfig(parameters)
+  const connections = useConnections(parameters)
 
   const mutationOptions = disconnectMutationOptions(config)
   const { mutate, mutateAsync, ...result } = useMutation({
@@ -59,8 +61,8 @@ export function useDisconnect<context = unknown>(
 
   return {
     ...result,
-    connectors: useConnections({ config }).value.map(
-      (connection) => connection.connector,
+    connectors: computed(() =>
+      connections.value.map((connection) => connection.connector),
     ),
     disconnect: mutate,
     disconnectAsync: mutateAsync,
