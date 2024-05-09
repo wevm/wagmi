@@ -265,6 +265,15 @@ export function injected(parameters: InjectedParameters = {}) {
         provider.on('connect', connect)
       }
 
+      // Experimental support for MetaMask
+      // https://github.com/MetaMask/metamask-improvement-proposals/blob/main/MIPs/mip-2.md
+      try {
+        await provider.request({
+          method: 'wallet_revokePermissions',
+          params: [{ eth_accounts: {} }],
+        })
+      } catch {}
+
       // Add shim signalling connector is disconnected
       if (shimDisconnect) {
         await config.storage?.setItem(`${this.id}.disconnected`, true)
