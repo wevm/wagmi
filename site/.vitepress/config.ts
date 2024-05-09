@@ -69,7 +69,7 @@ export default defineConfig({
     footer: {
       message:
         'Released under the <a href="https://github.com/wevm/wagmi/blob/main/LICENSE">MIT License</a>.',
-      copyright: 'Copyright © 2022-present weth, LLC  ',
+      copyright: 'Copyright © 2022-present Weth, LLC',
     },
     logo: {
       light: '/logo-light.svg',
@@ -80,6 +80,7 @@ export default defineConfig({
       { text: 'React', link: '/react/getting-started' },
       { text: 'Core', link: '/core/getting-started' },
       { text: 'CLI', link: '/cli/getting-started' },
+      { text: 'Vue', link: '/vue/getting-started' },
       // { text: 'Examples', link: '/examples/connect-wallet' },
       {
         text: 'More',
