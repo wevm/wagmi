@@ -108,7 +108,7 @@
     "@wagmi/vue": "workspace:*",
     "react": ">=18.3.1",
     "react-dom": ">=18.3.1",
-    "vue": ">=3.4.27",
+    "vue": ">=3.4.21",
     "wagmi": "workspace:*"
   },
   "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
