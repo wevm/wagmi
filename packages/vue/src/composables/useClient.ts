@@ -50,9 +50,9 @@ export function useClient<
 
   const config = useConfig(params)
 
-  const client = ref(getClient(config, params.value))
+  const client = ref(getClient(config, params.value as GetClientParameters))
   watchEffect(() => {
-    client.value = getClient(config, params.value)
+    client.value = getClient(config, params.value as GetClientParameters)
   })
   const unsubscribe = watchClient(config, {
     onChange(data) {
