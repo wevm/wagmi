@@ -7,7 +7,6 @@ import {
   type UseInfiniteQueryReturnType as tanstack_UseInfiniteQueryReturnType,
   type UseMutationReturnType as tanstack_UseMutationReturnType,
   type UseQueryReturnType as tanstack_UseQueryReturnType,
-  replaceEqualDeep,
   useInfiniteQuery as tanstack_useInfiniteQuery,
   useQuery as tanstack_useQuery,
 } from '@tanstack/vue-query'
@@ -16,7 +15,6 @@ import {
   type ExactPartial,
   type Omit,
   type UnionOmit,
-  deepEqual,
 } from '@wagmi/core/internal'
 import { hashFn } from '@wagmi/core/query'
 
@@ -144,14 +142,4 @@ export function useInfiniteQuery<
   }) as UseInfiniteQueryReturnType<data, error>
   result.queryKey = parameters.queryKey
   return result
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-export function structuralSharing<data>(
-  oldData: data | undefined,
-  newData: data,
-): data {
-  if (deepEqual(oldData, newData)) return oldData as data
-  return replaceEqualDeep(oldData, newData)
 }

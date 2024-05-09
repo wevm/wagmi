@@ -371,4 +371,4 @@ export {
   writeContractMutationOptions,
 } from '../query/writeContract.js'
 
-export { hashFn } from '../query/utils.js'
+export { hashFn, structuralSharing } from '../query/utils.js'

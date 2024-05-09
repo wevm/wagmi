@@ -58,6 +58,12 @@ export {
 } from '../composables/useConnect.js'
 
 export {
+  type UseConnectionsParameters,
+  type UseConnectionsReturnType,
+  useConnections,
+} from '../composables/useConnections.js'
+
+export {
   type UseConnectorsParameters,
   type UseConnectorsReturnType,
   useConnectors,
