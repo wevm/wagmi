@@ -14,6 +14,7 @@ import {
   connectMutationOptions,
 } from '@wagmi/core/query'
 
+import { onScopeDispose } from 'vue'
 import type { ConfigParameter } from '../types/properties.js'
 import type {
   UseMutationParameters,
@@ -72,17 +73,15 @@ export function useConnect<
     ...mutationOptions,
   })
 
-  // TODO: Add this back
   // Reset mutation back to an idle state when the connector disconnects.
-  // useEffect(() => {
-  // 	return config.subscribe(
-  // 		({ status }) => status,
-  // 		(status, previousStatus) => {
-  // 			if (previousStatus === "connected" && status === "disconnected")
-  // 				result.reset();
-  // 		},
-  // 	);
-  // }, [config, result]);
+  const unsubscribe = config.subscribe(
+    ({ status }) => status,
+    (status, previousStatus) => {
+      if (previousStatus === 'connected' && status === 'disconnected')
+        result.reset()
+    },
+  )
+  onScopeDispose(() => unsubscribe())
 
   return {
     ...result,

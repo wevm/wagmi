@@ -28,6 +28,18 @@ export {
 } from '../composables/useAccount.js'
 
 export {
+  type UseChainIdParameters,
+  type UseChainIdReturnType,
+  useChainId,
+} from '../composables/useChainId.js'
+
+export {
+  type UseChainsParameters,
+  type UseChainsReturnType,
+  useChains,
+} from '../composables/useChains.js'
+
+export {
   type UseConfigParameters,
   type UseConfigReturnType,
   useConfig,
@@ -50,6 +62,12 @@ export {
   type UseDisconnectReturnType,
   useDisconnect,
 } from '../composables/useDisconnect.js'
+
+export {
+  type UseSwitchChainParameters,
+  type UseSwitchChainReturnType,
+  useSwitchChain,
+} from '../composables/useSwitchChain.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // @wagmi/core

@@ -64,9 +64,9 @@
   },
   "peerDependencies": {
     "@tanstack/vue-query": ">=5.0.0",
-    "vue": ">=3",
     "typescript": ">=5.0.4",
-    "viem": "2.x"
+    "viem": "2.x",
+    "vue": ">=3"
   },
   "peerDependenciesMeta": {
     "typescript": {
@@ -79,6 +79,7 @@
   },
   "devDependencies": {
     "@tanstack/vue-query": ">=5.35.1",
+    "@vue/test-utils": "^2.4.6",
     "vue": ">=3.4.21",
     "vue-tsc": "^2.0.6"
   },

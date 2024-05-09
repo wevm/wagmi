@@ -1,0 +1,13 @@
+{
+  "name": "vue-register",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@tanstack/vue-query": ">=5.35.1",
+    "@wagmi/vue": "workspace:*",
+    "vue": ">=3.4.21"
+  }
+}
