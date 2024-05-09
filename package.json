@@ -111,6 +111,10 @@
           "src/{globalSetup,setup}.ts!",
           "src/exports/{index,react}.ts!"
         ]
+      },
+      "packages/vue": {
+        "entry": "src/exports/{actions,chains,connectors,index,query}.ts!",
+        "ignore": ["test/setup.ts"]
       }
     }
   }

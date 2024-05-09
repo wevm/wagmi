@@ -63,6 +63,7 @@ export default defineWorkspace([
       include: ['./packages/vue/src/**/*.test.ts?(x)'],
       environment: 'happy-dom',
       testTimeout: 10_000,
+      setupFiles: ['./packages/vue/test/setup.ts'],
     },
     resolve: { alias },
   },
