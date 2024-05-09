@@ -3,11 +3,8 @@ import {
   type MutationObserverOptions,
   type QueryKey,
   type QueryObserverOptions,
-  type UseInfiniteQueryOptions,
-  type UseInfiniteQueryReturnType as tanstack_UseInfiniteQueryReturnType,
   type UseMutationReturnType as tanstack_UseMutationReturnType,
   type UseQueryReturnType as tanstack_UseQueryReturnType,
-  useInfiniteQuery as tanstack_useInfiniteQuery,
   useQuery as tanstack_useQuery,
 } from '@tanstack/vue-query'
 import {
@@ -87,59 +84,59 @@ export function useQuery<queryFnData, error, data, queryKey extends QueryKey>(
 
 ////////////////////////////////////////////////////////////////////////////////
 
-export type UseInfiniteQueryParameters<
-  queryFnData = unknown,
-  error = DefaultError,
-  data = queryFnData,
-  queryData = queryFnData,
-  queryKey extends QueryKey = QueryKey,
-  pageParam = unknown,
-> = Evaluate<
-  Omit<
-    UseInfiniteQueryOptions<
-      queryFnData,
-      error,
-      data,
-      queryData,
-      queryKey,
-      pageParam
-    >,
-    'initialData'
-  > & {
-    // Fix `initialData` type
-    initialData?:
-      | UseInfiniteQueryOptions<
-          queryFnData,
-          error,
-          data,
-          queryKey
-        >['initialData']
-      | undefined
-  }
->
+// export type UseInfiniteQueryParameters<
+//   queryFnData = unknown,
+//   error = DefaultError,
+//   data = queryFnData,
+//   queryData = queryFnData,
+//   queryKey extends QueryKey = QueryKey,
+//   pageParam = unknown,
+// > = Evaluate<
+//   Omit<
+//     UseInfiniteQueryOptions<
+//       queryFnData,
+//       error,
+//       data,
+//       queryData,
+//       queryKey,
+//       pageParam
+//     >,
+//     'initialData'
+//   > & {
+//     // Fix `initialData` type
+//     initialData?:
+//       | UseInfiniteQueryOptions<
+//           queryFnData,
+//           error,
+//           data,
+//           queryKey
+//         >['initialData']
+//       | undefined
+//   }
+// >
 
-export type UseInfiniteQueryReturnType<
-  data = unknown,
-  error = DefaultError,
-> = tanstack_UseInfiniteQueryReturnType<data, error> & {
-  queryKey: QueryKey
-}
+// export type UseInfiniteQueryReturnType<
+//   data = unknown,
+//   error = DefaultError,
+// > = import('@tanstack/vue-query').UseInfiniteQueryReturnType<data, error> & {
+//   queryKey: QueryKey
+// }
 
-// Adding some basic customization.
-export function useInfiniteQuery<
-  queryFnData,
-  error,
-  data,
-  queryKey extends QueryKey,
->(
-  parameters: UseInfiniteQueryParameters<queryFnData, error, data, queryKey> & {
-    queryKey: QueryKey
-  },
-): UseInfiniteQueryReturnType<data, error> {
-  const result = tanstack_useInfiniteQuery({
-    ...(parameters as any),
-    queryKeyHashFn: hashFn, // for bigint support
-  }) as UseInfiniteQueryReturnType<data, error>
-  result.queryKey = parameters.queryKey
-  return result
-}
+// // Adding some basic customization.
+// export function useInfiniteQuery<
+//   queryFnData,
+//   error,
+//   data,
+//   queryKey extends QueryKey,
+// >(
+//   parameters: UseInfiniteQueryParameters<queryFnData, error, data, queryKey> & {
+//     queryKey: QueryKey
+//   },
+// ): UseInfiniteQueryReturnType<data, error> {
+//   const result = tanstack_useInfiniteQuery({
+//     ...(parameters as any),
+//     queryKeyHashFn: hashFn, // for bigint support
+//   }) as UseInfiniteQueryReturnType<data, error>
+//   result.queryKey = parameters.queryKey
+//   return result
+// }
