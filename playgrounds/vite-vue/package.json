@@ -11,7 +11,7 @@
     "@tanstack/vue-query": ">=5.35.1",
     "@wagmi/vue": "workspace:*",
     "viem": "2.*",
-    "vue": "^3.4.21"
+    "vue": ">=3.4.21"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",

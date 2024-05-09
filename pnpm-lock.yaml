@@ -484,7 +484,7 @@ importers:
         specifier: 2.*
         version: 2.9.31(bufferutil@4.0.8)(typescript@5.4.2)(utf-8-validate@6.0.3)(zod@3.22.4)
       vue:
-        specifier: ^3.4.21
+        specifier: '>=3.4.21'
         version: 3.4.27(typescript@5.4.2)
     devDependencies:
       '@vitejs/plugin-vue':
@@ -533,7 +533,7 @@ importers:
         specifier: ^1.1.4
         version: 1.1.4(@algolia/client-search@4.19.1)(@types/node@20.12.10)(@types/react@18.3.1)(change-case@4.1.2)(idb-keyval@6.2.1)(postcss@8.4.38)(qrcode@1.5.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.4.2)
       vue:
-        specifier: ^3.4.27
+        specifier: '>=3.4.21'
         version: 3.4.27(typescript@5.4.2)
       wagmi:
         specifier: workspace:*
