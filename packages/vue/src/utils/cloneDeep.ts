@@ -11,12 +11,8 @@ export function cloneDeep<value>(
   if (customize) {
     const result = customize(value)
     // If it's a ref of undefined, return undefined
-    if (result === undefined && isRef(value)) {
-      return result as value
-    }
-    if (result !== undefined) {
-      return result
-    }
+    if (result === undefined && isRef(value)) return result as value
+    if (result !== undefined) return result
   }
 
   if (Array.isArray(value)) {
@@ -42,10 +38,7 @@ export function cloneDeepUnref<value>(value: value): DeepUnwrapRef<value> {
 }
 
 function isPlainObject(value: unknown): value is Object {
-  if (Object.prototype.toString.call(value) !== '[object Object]') {
-    return false
-  }
-
+  if (Object.prototype.toString.call(value) !== '[object Object]') return false
   const prototype = Object.getPrototypeOf(value)
   return prototype === null || prototype === Object.prototype
 }
