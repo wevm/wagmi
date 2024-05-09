@@ -1,6 +1,6 @@
 import { VueQueryPlugin } from '@tanstack/vue-query'
 import { WagmiPlugin } from '@wagmi/vue'
-import { type App, createApp } from 'vue'
+import { type App, type Ref, createApp, watch } from 'vue'
 
 import { config } from '../config.js'
 
@@ -27,4 +27,32 @@ export function renderComposable<composable extends () => unknown>(
     .mount(document.createElement('div'))
 
   return [result, app] as unknown as RenderComposableReturnType<composable>
+}
+
+export type WaitForOptions = {
+  timeout?: number
+}
+
+export function waitFor<ref extends Ref>(
+  ref: ref,
+  predicate: (value: ref['value']) => boolean,
+  options: WaitForOptions = {},
+) {
+  const { timeout = 10_000 } = options
+  return new Promise<void>((resolve, reject) => {
+    const _unwatch = watch(ref, (value) => {
+      const timer = timeout
+        ? setTimeout(() => {
+            _unwatch()
+            reject(new Error(`\`waitFor\` timed out in ${timeout}ms.`))
+          }, timeout)
+        : undefined
+
+      if (predicate(value)) {
+        if (timer) clearTimeout(timer)
+        _unwatch()
+        resolve()
+      }
+    })
+  })
 }
