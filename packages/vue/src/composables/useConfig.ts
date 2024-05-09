@@ -1,5 +1,5 @@
 import { type Config, type ResolvedRegister } from '@wagmi/core'
-import { hasInjectionContext, inject } from 'vue'
+import { hasInjectionContext, inject, unref } from 'vue'
 
 import {
   WagmiInjectionContextError,
@@ -8,7 +8,6 @@ import {
 import { configKey } from '../plugin.js'
 import type { ConfigParameter } from '../types/properties.js'
 import type { DeepMaybeRef } from '../types/ref.js'
-import { deepUnref } from '../utils/cloneDeep.js'
 
 export type UseConfigParameters<config extends Config = Config> = DeepMaybeRef<
   ConfigParameter<config>
@@ -20,7 +19,7 @@ export type UseConfigReturnType<config extends Config = Config> = config
 export function useConfig<config extends Config = ResolvedRegister['config']>(
   parameters_: UseConfigParameters<config> = {},
 ): UseConfigReturnType<config> {
-  const parameters = deepUnref(parameters_)
+  const parameters = unref(parameters_)
 
   // passthrough config if provided
   if (parameters.config) return parameters.config as UseConfigReturnType<config>

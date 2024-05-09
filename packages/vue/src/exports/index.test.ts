@@ -21,6 +21,7 @@ test('exports', () => {
       "useConnections",
       "useConnectors",
       "useDisconnect",
+      "useSwitchAccount",
       "useSwitchChain",
       "useWatchBlockNumber",
       "createConfig",

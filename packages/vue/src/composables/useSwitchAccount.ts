@@ -65,7 +65,7 @@ export function useSwitchAccount<
   const { mutation } = parameters
 
   const config = useConfig(parameters)
-  const connections = useConnections(parameters)
+  const connections = useConnections({ config })
 
   const mutationOptions = switchAccountMutationOptions(config)
   const { mutate, mutateAsync, ...result } = useMutation({
