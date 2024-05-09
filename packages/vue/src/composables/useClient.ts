@@ -50,10 +50,15 @@ export function useClient<
 
   const config = useConfig(parameters)
 
-  const client = ref(getClient(config, parameters.value) as GetClientReturnType)
+  const client = ref(
+    getClient(
+      config,
+      parameters.value as GetClientParameters,
+    ) as GetClientReturnType,
+  )
 
   watchEffect(() => {
-    client.value = getClient(config, parameters.value)
+    client.value = getClient(config, parameters.value as GetClientParameters)
   })
 
   const unsubscribe = watchClient(config, {
