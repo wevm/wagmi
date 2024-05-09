@@ -17,7 +17,6 @@ import { hashFn } from '@wagmi/core/query'
 import { computed, unref } from 'vue'
 
 import type { DeepMaybeRef, DeepUnwrapRef } from '../types/ref.js'
-import { deepUnref } from './cloneDeep.js'
 
 export type UseMutationParameters<
   data = unknown,
@@ -87,7 +86,7 @@ export function useQuery<queryFnData, error, data, queryKey extends QueryKey>(
   },
 ): UseQueryReturnType<data, error> {
   const options = computed(() => ({
-    ...(deepUnref(parameters) as any),
+    ...(unref(parameters) as any),
     queryKeyHashFn: hashFn,
   }))
   const result = tanstack_useQuery(options) as UseQueryReturnType<data, error>
