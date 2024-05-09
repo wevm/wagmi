@@ -5,7 +5,7 @@ runs:
   using: "composite"
   steps:
     - name: Set up pnpm
-      uses: pnpm/action-setup@v2
+      uses: pnpm/action-setup@v4
 
     - name: Set up node
       uses: actions/setup-node@v4
