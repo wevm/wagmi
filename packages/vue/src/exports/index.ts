@@ -28,6 +28,12 @@ export {
 } from '../composables/useAccount.js'
 
 export {
+  type UseBlockNumberParameters,
+  type UseBlockNumberReturnType,
+  useBlockNumber,
+} from '../composables/useBlockNumber.js'
+
+export {
   type UseChainIdParameters,
   type UseChainIdReturnType,
   useChainId,

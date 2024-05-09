@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { useAccount, useChainId, useConnect, useDisconnect, useSwitchChain } from '@wagmi/vue'
+import { useAccount, useBlockNumber, useChainId, useConnect, useDisconnect, useSwitchChain } from '@wagmi/vue'
 
 const account = useAccount()
+const blockNumber = useBlockNumber()
 const connect = useConnect()
 const chainId = useChainId()
 const disconnect = useDisconnect()
@@ -49,6 +50,12 @@ const switchChain = useSwitchChain()
 
       <div>{{ connect.status }}</div>
       <div>{{ connect.error }}</div>
+    </div>
+
+    <div>
+      <h2>Block Number</h2>
+
+      <div>{{ blockNumber.data.value }}</div>
     </div>
   </div>
 </template>
