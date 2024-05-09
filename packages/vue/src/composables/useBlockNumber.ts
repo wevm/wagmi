@@ -69,7 +69,7 @@ export function useBlockNumber<
 ): UseBlockNumberReturnType<selectData> {
   const parameters = computed(() => cloneDeepUnref(parameters_))
 
-  const config = useConfig(parameters.value)
+  const config = useConfig(parameters)
   const queryClient = useQueryClient()
   const configChainId = useChainId({ config })
 

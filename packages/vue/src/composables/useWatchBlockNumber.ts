@@ -35,7 +35,7 @@ export function useWatchBlockNumber<
 ): UseWatchBlockNumberReturnType {
   const parameters = computed(() => cloneDeepUnref(parameters_))
 
-  const config = useConfig(parameters.value)
+  const config = useConfig(parameters)
   const configChainId = useChainId({ config })
 
   watchEffect((onCleanup) => {

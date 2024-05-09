@@ -48,7 +48,7 @@ export function useClient<
 ): UseClientReturnType<config, chainId> {
   const parameters = computed(() => cloneDeepUnref(parameters_))
 
-  const config = useConfig(parameters.value)
+  const config = useConfig(parameters)
 
   const client = ref(getClient(config, parameters.value) as GetClientReturnType)
 
