@@ -15,12 +15,12 @@ type UnwrapLeaf =
   | Set<any>
   | WeakSet<any>
 
-export type MaybeRefDeep<value> = MaybeRef<
+export type DeepMaybeRef<value> = MaybeRef<
   value extends Function | Config
     ? value
     : value extends object
     ? {
-        [key in keyof value]: MaybeRefDeep<value[key]>
+        [key in keyof value]: DeepMaybeRef<value[key]>
       }
     : value
 >

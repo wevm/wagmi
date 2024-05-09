@@ -8,7 +8,7 @@ import { type UnionEvaluate, type UnionPartial } from '@wagmi/core/internal'
 import { computed, watchEffect } from 'vue'
 
 import type { ConfigParameter, EnabledParameter } from '../types/properties.js'
-import type { MaybeRefDeep } from '../types/ref.js'
+import type { DeepMaybeRef } from '../types/ref.js'
 import { cloneDeepUnref } from '../utils/cloneDeep.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
@@ -16,7 +16,7 @@ import { useConfig } from './useConfig.js'
 export type UseWatchBlockNumberParameters<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
-> = MaybeRefDeep<
+> = DeepMaybeRef<
   UnionEvaluate<
     UnionPartial<WatchBlockNumberParameters<config, chainId>> &
       ConfigParameter<config> &

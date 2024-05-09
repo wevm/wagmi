@@ -19,7 +19,7 @@ import {
 import { computed } from 'vue'
 
 import type { ConfigParameter, QueryParameter } from '../types/properties.js'
-import type { DeepUnwrapRef, MaybeRefDeep } from '../types/ref.js'
+import type { DeepMaybeRef, DeepUnwrapRef } from '../types/ref.js'
 import { cloneDeepUnref } from '../utils/cloneDeep.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
@@ -34,7 +34,7 @@ export type UseBlockNumberParameters<
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetBlockNumberData,
 > = Evaluate<
-  MaybeRefDeep<
+  DeepMaybeRef<
     GetBlockNumberOptions<config, chainId> &
       ConfigParameter<config> &
       QueryParameter<

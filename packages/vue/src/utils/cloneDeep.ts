@@ -2,11 +2,11 @@
 
 import { isRef, unref } from 'vue'
 
-import type { DeepUnwrapRef, MaybeRefDeep } from '../types/ref.js'
+import type { DeepMaybeRef, DeepUnwrapRef } from '../types/ref.js'
 
 export function cloneDeep<value>(
-  value: MaybeRefDeep<value>,
-  customize?: (val: MaybeRefDeep<value>) => value | undefined,
+  value: DeepMaybeRef<value>,
+  customize?: (val: DeepMaybeRef<value>) => value | undefined,
 ): value {
   if (customize) {
     const result = customize(value)

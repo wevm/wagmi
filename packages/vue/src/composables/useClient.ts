@@ -17,7 +17,7 @@ import {
 } from 'vue'
 
 import type { ConfigParameter } from '../types/properties.js'
-import type { MaybeRefDeep } from '../types/ref.js'
+import type { DeepMaybeRef } from '../types/ref.js'
 import { cloneDeepUnref } from '../utils/cloneDeep.js'
 import { useConfig } from './useConfig.js'
 
@@ -27,7 +27,7 @@ export type UseClientParameters<
     | config['chains'][number]['id']
     | undefined,
 > = Evaluate<
-  MaybeRefDeep<GetClientParameters<config, chainId> & ConfigParameter<config>>
+  DeepMaybeRef<GetClientParameters<config, chainId> & ConfigParameter<config>>
 >
 
 export type UseClientReturnType<

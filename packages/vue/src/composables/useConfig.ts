@@ -7,10 +7,10 @@ import {
 } from '../errors/context.js'
 import { configKey } from '../plugin.js'
 import type { ConfigParameter } from '../types/properties.js'
-import type { MaybeRefDeep } from '../types/ref.js'
+import type { DeepMaybeRef } from '../types/ref.js'
 import { cloneDeepUnref } from '../utils/cloneDeep.js'
 
-export type UseConfigParameters<config extends Config = Config> = MaybeRefDeep<
+export type UseConfigParameters<config extends Config = Config> = DeepMaybeRef<
   ConfigParameter<config>
 >
 
