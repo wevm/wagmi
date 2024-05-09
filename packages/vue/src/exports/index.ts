@@ -28,6 +28,11 @@ export {
 } from '../composables/useAccount.js'
 
 export {
+  type UseAccountEffectParameters,
+  useAccountEffect,
+} from '../composables/useAccountEffect.js'
+
+export {
   type UseBlockNumberParameters,
   type UseBlockNumberReturnType,
   useBlockNumber,
