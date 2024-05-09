@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.9.4
+
+### Patch Changes
+
+- [#3910](https://github.com/wevm/wagmi/pull/3910) [`e6139a97c4b8804d734b1547b5e3921ce01fbe24`](https://github.com/wevm/wagmi/commit/e6139a97c4b8804d734b1547b5e3921ce01fbe24) Thanks [@tmm](https://github.com/tmm)! - Added experimental `wallet_revokePermissions` support to `injected`.
+
 ## 2.9.3
 
 ### Patch Changes
