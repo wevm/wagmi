@@ -75,7 +75,7 @@ export function useBlockNumber<
 
   const queryOptions = computed(() => {
     const {
-      chainId = configChainId.value,
+      chainId = configChainId,
       query = {},
       watch: _,
       ...rest
