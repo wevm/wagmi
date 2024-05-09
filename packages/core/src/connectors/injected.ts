@@ -265,7 +265,7 @@ export function injected(parameters: InjectedParameters = {}) {
         provider.on('connect', connect)
       }
 
-      // Experimental support for MetaMask
+      // Experimental support for MetaMask disconnect
       // https://github.com/MetaMask/metamask-improvement-proposals/blob/main/MIPs/mip-2.md
       try {
         // TODO: Remove explicit type for viem@3
@@ -274,6 +274,7 @@ export function injected(parameters: InjectedParameters = {}) {
           Parameters: [permissions: { eth_accounts: Record<string, any> }]
           ReturnType: null
         }>({
+          // `'wallet_revokePermissions'` added in `viem@2.10.3`
           method: 'wallet_revokePermissions',
           params: [{ eth_accounts: {} }],
         })
