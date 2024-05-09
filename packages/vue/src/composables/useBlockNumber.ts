@@ -20,7 +20,7 @@ import { computed } from 'vue'
 
 import type { ConfigParameter, QueryParameter } from '../types/properties.js'
 import type { DeepMaybeRef, DeepUnwrapRef } from '../types/ref.js'
-import { cloneDeepUnref } from '../utils/cloneDeep.js'
+import { deepUnref } from '../utils/cloneDeep.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
@@ -67,7 +67,7 @@ export function useBlockNumber<
 >(
   parameters_: UseBlockNumberParameters<config, chainId, selectData> = {},
 ): UseBlockNumberReturnType<selectData> {
-  const parameters = computed(() => cloneDeepUnref(parameters_))
+  const parameters = computed(() => deepUnref(parameters_))
 
   const config = useConfig(parameters)
   const queryClient = useQueryClient()

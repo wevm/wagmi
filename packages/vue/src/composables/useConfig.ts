@@ -8,7 +8,7 @@ import {
 import { configKey } from '../plugin.js'
 import type { ConfigParameter } from '../types/properties.js'
 import type { DeepMaybeRef } from '../types/ref.js'
-import { cloneDeepUnref } from '../utils/cloneDeep.js'
+import { deepUnref } from '../utils/cloneDeep.js'
 
 export type UseConfigParameters<config extends Config = Config> = DeepMaybeRef<
   ConfigParameter<config>
@@ -20,7 +20,7 @@ export type UseConfigReturnType<config extends Config = Config> = config
 export function useConfig<config extends Config = ResolvedRegister['config']>(
   parameters_: UseConfigParameters<config> = {},
 ): UseConfigReturnType<config> {
-  const parameters = cloneDeepUnref(parameters_)
+  const parameters = deepUnref(parameters_)
 
   // passthrough config if provided
   if (parameters.config) return parameters.config as UseConfigReturnType<config>

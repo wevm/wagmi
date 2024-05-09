@@ -18,7 +18,7 @@ import {
 
 import type { ConfigParameter } from '../types/properties.js'
 import type { DeepMaybeRef } from '../types/ref.js'
-import { cloneDeepUnref } from '../utils/cloneDeep.js'
+import { deepUnref } from '../utils/cloneDeep.js'
 import { useConfig } from './useConfig.js'
 
 export type UseClientParameters<
@@ -46,7 +46,7 @@ export function useClient<
 >(
   parameters: UseClientParameters<config, chainId> = {},
 ): UseClientReturnType<config, chainId> {
-  const params = computed(() => cloneDeepUnref(parameters))
+  const params = computed(() => deepUnref(parameters))
 
   const config = useConfig(params)
 

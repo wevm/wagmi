@@ -9,7 +9,7 @@ import { computed, watchEffect } from 'vue'
 
 import type { ConfigParameter, EnabledParameter } from '../types/properties.js'
 import type { DeepMaybeRef } from '../types/ref.js'
-import { cloneDeepUnref } from '../utils/cloneDeep.js'
+import { deepUnref } from '../utils/cloneDeep.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
@@ -33,7 +33,7 @@ export function useWatchBlockNumber<
 >(
   parameters_: UseWatchBlockNumberParameters<config, chainId> = {} as any,
 ): UseWatchBlockNumberReturnType {
-  const parameters = computed(() => cloneDeepUnref(parameters_))
+  const parameters = computed(() => deepUnref(parameters_))
 
   const config = useConfig(parameters)
   const configChainId = useChainId({ config })

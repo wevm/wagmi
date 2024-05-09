@@ -15,9 +15,8 @@ function cloneDeep<value>(
     if (result !== undefined) return result
   }
 
-  if (Array.isArray(value)) {
+  if (Array.isArray(value))
     return value.map((val) => cloneDeep(val, customize)) as unknown as value
-  }
 
   if (typeof value === 'object' && isPlainObject(value)) {
     const entries = Object.entries(value).map(([key, val]) => [
@@ -30,9 +29,9 @@ function cloneDeep<value>(
   return value as value
 }
 
-export function cloneDeepUnref<value>(value: value): DeepUnwrapRef<value> {
+export function deepUnref<value>(value: value): DeepUnwrapRef<value> {
   return cloneDeep(value as any, (val) => {
-    if (isRef(val)) return cloneDeepUnref(unref(val))
+    if (isRef(val)) return deepUnref(unref(val))
     return undefined
   })
 }
