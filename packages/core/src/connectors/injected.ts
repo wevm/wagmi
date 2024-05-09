@@ -265,6 +265,21 @@ export function injected(parameters: InjectedParameters = {}) {
         provider.on('connect', connect)
       }
 
+      // Experimental support for MetaMask disconnect
+      // https://github.com/MetaMask/metamask-improvement-proposals/blob/main/MIPs/mip-2.md
+      try {
+        // TODO: Remove explicit type for viem@3
+        await provider.request<{
+          Method: 'wallet_revokePermissions'
+          Parameters: [permissions: { eth_accounts: Record<string, any> }]
+          ReturnType: null
+        }>({
+          // `'wallet_revokePermissions'` added in `viem@2.10.3`
+          method: 'wallet_revokePermissions',
+          params: [{ eth_accounts: {} }],
+        })
+      } catch {}
+
       // Add shim signalling connector is disconnected
       if (shimDisconnect) {
         await config.storage?.setItem(`${this.id}.disconnected`, true)
