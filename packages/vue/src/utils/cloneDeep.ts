@@ -4,7 +4,7 @@ import { isRef, unref } from 'vue'
 
 import type { DeepMaybeRef, DeepUnwrapRef } from '../types/ref.js'
 
-export function cloneDeep<value>(
+function cloneDeep<value>(
   value: DeepMaybeRef<value>,
   customize?: (val: DeepMaybeRef<value>) => value | undefined,
 ): value {

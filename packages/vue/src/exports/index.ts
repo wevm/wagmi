@@ -87,6 +87,12 @@ export {
   useSwitchChain,
 } from '../composables/useSwitchChain.js'
 
+export {
+  type UseWatchBlockNumberParameters,
+  type UseWatchBlockNumberReturnType,
+  useWatchBlockNumber,
+} from '../composables/useWatchBlockNumber.js'
+
 ////////////////////////////////////////////////////////////////////////////////
 // @wagmi/core
 ////////////////////////////////////////////////////////////////////////////////
