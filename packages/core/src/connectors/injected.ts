@@ -268,7 +268,12 @@ export function injected(parameters: InjectedParameters = {}) {
       // Experimental support for MetaMask
       // https://github.com/MetaMask/metamask-improvement-proposals/blob/main/MIPs/mip-2.md
       try {
-        await provider.request({
+        // TODO: Remove explicit type for viem@3
+        await provider.request<{
+          Method: 'wallet_revokePermissions'
+          Parameters: [permissions: { eth_accounts: Record<string, any> }]
+          ReturnType: null
+        }>({
           method: 'wallet_revokePermissions',
           params: [{ eth_accounts: {} }],
         })
