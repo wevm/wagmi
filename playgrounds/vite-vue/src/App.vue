@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { useAccount, useBlockNumber, useChainId, useConnect, useDisconnect, useSwitchChain } from '@wagmi/vue'
+import { ref } from 'vue';
+
+const watchBlockNumber = ref(false)
 
 const account = useAccount()
-const blockNumber = useBlockNumber()
+const blockNumber = useBlockNumber({ watch: watchBlockNumber })
 const connect = useConnect()
 const chainId = useChainId()
 const disconnect = useDisconnect()
@@ -56,6 +59,9 @@ const switchChain = useSwitchChain()
       <h2>Block Number</h2>
 
       <div>{{ blockNumber.data.value }}</div>
+      <button type="button" @click="watchBlockNumber = !watchBlockNumber">
+        {{ watchBlockNumber ? 'Stop' : 'Start' }} watching
+      </button>
     </div>
   </div>
 </template>

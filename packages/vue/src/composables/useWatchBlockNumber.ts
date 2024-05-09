@@ -43,6 +43,7 @@ export function useWatchBlockNumber<
       ...(rest as any),
       chainId,
       onBlockNumber,
+      emitOnBegin: true,
     })
     onCleanup(unwatch)
   })
