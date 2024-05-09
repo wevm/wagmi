@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useAccount, useBlockNumber, useChainId, useClient, useConfig, useConnect, useDisconnect, useSwitchChain } from '@wagmi/vue'
+import { useAccount, useBlockNumber, useChainId, useClient, useConnect, useDisconnect, useSwitchChain } from '@wagmi/vue'
 import { ref } from 'vue';
 
 const watchBlockNumber = ref(false)
@@ -20,7 +20,7 @@ const switchChain = useSwitchChain()
 
       <div>Chain ID: {{ chainId }}</div>
 
-      <button v-for="chain in switchChain.chains" :key="chain.id" :disabled="chain.id === chainId" type="button"
+      <button v-for="chain in switchChain.chains.value" :key="chain.id" :disabled="chain.id === chainId" type="button"
         @click="switchChain.switchChain({ chainId: chain.id })">
         {{ chain.name }}
       </button>

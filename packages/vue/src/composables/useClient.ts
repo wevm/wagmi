@@ -12,7 +12,7 @@ import {
   computed,
   onScopeDispose,
   readonly,
-  ref,
+  shallowRef,
   watchEffect,
 } from 'vue'
 
@@ -50,7 +50,9 @@ export function useClient<
 
   const config = useConfig(parameters)
 
-  const client = ref(getClient(config, parameters.value) as GetClientReturnType)
+  const client = shallowRef(
+    getClient(config, parameters.value) as GetClientReturnType,
+  )
 
   watchEffect(() => {
     client.value = getClient(config, parameters.value)
