@@ -87,6 +87,12 @@ export {
 } from '../composables/useDisconnect.js'
 
 export {
+  type UseReconnectParameters,
+  type UseReconnectReturnType,
+  useReconnect,
+} from '../composables/useReconnect.js'
+
+export {
   type UseSwitchChainParameters,
   type UseSwitchChainReturnType,
   useSwitchChain,
