@@ -51,6 +51,12 @@ export {
 } from '../composables/useClient.js'
 
 export {
+  type UseConnectorClientParameters,
+  type UseConnectorClientReturnType,
+  useConnectorClient,
+} from '../composables/useConnectorClient.js'
+
+export {
   type UseChainsParameters,
   type UseChainsReturnType,
   useChains,

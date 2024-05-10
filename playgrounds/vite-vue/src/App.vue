@@ -5,6 +5,7 @@ import {
   useChainId,
   useClient,
   useConnect,
+  useConnectorClient,
   useConnections,
   useDisconnect,
   useSwitchAccount,
@@ -20,6 +21,7 @@ const blockNumber = useBlockNumber({ watch: watchBlockNumber })
 const client = useClient()
 const connect = useConnect()
 const connections = useConnections()
+const connectorClient = useConnectorClient()
 const disconnect = useDisconnect()
 const switchAccount = useSwitchAccount()
 const switchChain = useSwitchChain()
@@ -111,6 +113,12 @@ const switchChain = useSwitchChain()
       <h2>Client</h2>
 
       <pre>{{ client }}</pre>
+    </div>
+
+    <div>
+      <h2>Connector Client</h2>
+
+      <pre>{{ connectorClient }}</pre>
     </div>
   </div>
 </template>

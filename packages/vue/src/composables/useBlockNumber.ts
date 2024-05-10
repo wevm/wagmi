@@ -81,7 +81,7 @@ export function useBlockNumber<
       ...rest
     } = parameters.value
     const options = getBlockNumberQueryOptions(config, {
-      ...rest,
+      ...deepUnref(rest),
       chainId,
     })
     return {
