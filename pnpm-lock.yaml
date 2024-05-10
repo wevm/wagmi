@@ -410,7 +410,7 @@ importers:
         specifier: 2.*
         version: 2.9.31(bufferutil@4.0.8)(typescript@5.4.2)(utf-8-validate@6.0.3)(zod@3.22.4)
       vue:
-        specifier: ^3.4.27
+        specifier: '>=3.4.21'
         version: 3.4.27(typescript@5.4.2)
       vue-router:
         specifier: ^4.3.2
