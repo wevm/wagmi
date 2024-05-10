@@ -11,6 +11,7 @@
     "dev": "pnpm dev:react",
     "dev:core": "pnpm --filter vite-core dev",
     "dev:next": "pnpm --filter next-app dev",
+    "dev:nuxt": "pnpm --filter nuxt-app dev",
     "dev:react": "pnpm --filter vite-react dev",
     "dev:vue": "pnpm --filter vite-vue dev",
     "docs:dev": "pnpm --filter site dev",

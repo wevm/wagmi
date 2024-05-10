@@ -69,8 +69,9 @@ VITE_MAINNET_FORK_URL=https://cloudflare-eth.com
 VITE_OPTIMISM_FORK_BLOCK_NUMBER=107317577
 VITE_OPTIMISM_FORK_URL=https://mainnet.optimism.io
 
-VITE_WC_PROJECT_ID=3fbb6bba6f1de962d911bb5b5c9dba88
 NEXT_PUBLIC_WC_PROJECT_ID=3fbb6bba6f1de962d911bb5b5c9dba88
+NUXT_PUBLIC_WC_PROJECT_ID=3fbb6bba6f1de962d911bb5b5c9dba88
+VITE_WC_PROJECT_ID=3fbb6bba6f1de962d911bb5b5c9dba88
 ```
 
 `*_BLOCK_NUMBER` environment variables should remain set to the values above (the test suite depends on them), but you can change the others if you want. For example, you might want to change `*_FORK_URL` to a paid RPC provider for better performance.
@@ -83,6 +84,7 @@ To start the local development playgrounds, run one of the following commands. T
 pnpm dev           # `wagmi` playground
 pnpm dev:core      # `@wagmi/core` playground
 pnpm dev:react     # `wagmi` playground (same as `pnpm dev`)
+pnpm dev:vue       # `@wagmi/vue` playground
 pnpm dev:ssr-react # `wagmi` playground with SSR
 ```
 
