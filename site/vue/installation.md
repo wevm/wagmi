@@ -54,19 +54,19 @@ If you can't wait for a new release to test the latest features, you can either 
 
 ::: code-group
 ```bash [pnpm]
-pnpm add wagmi@canary
+pnpm add @wagmi/vue@canary
 ```
 
 ```bash [npm]
-npm install wagmi@canary
+npm install @wagmi/vue@canary
 ```
 
 ```bash [yarn]
-yarn add wagmi@canary
+yarn add @wagmi/vue@canary
 ```
 
 ```bash [bun]
-bun add wagmi@canary
+bun add @wagmi/vue@canary
 ```
 :::
 
@@ -81,7 +81,7 @@ cd packages/vue
 pnpm link --global
 ```
 
-Then go to the project where you are using Wagmi and run `pnpm link --global wagmi` (or the package manager that you used to link Wagmi globally). Make sure you installed the [required peer dependencies](/vue/getting-started#manual-installation) and their versions are correct.
+Then go to the project where you are using Wagmi and run `pnpm link --global @wagmi/vue` (or the package manager that you used to link Wagmi globally). Make sure you installed the [required peer dependencies](/vue/getting-started#manual-installation) and their versions are correct.
 
 ## Security
 
