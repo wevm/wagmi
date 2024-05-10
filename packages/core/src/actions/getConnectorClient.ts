@@ -92,7 +92,12 @@ export async function getConnectorClient<
   }
 
   // if account was provided, check that it exists on the connector
-  if (parameters.account && !connection.accounts.includes(account.address))
+  if (
+    parameters.account &&
+    !connection.accounts.some(
+      (x) => x.toLowerCase() === account.address.toLowerCase(),
+    )
+  )
     throw new ConnectorAccountNotFoundError({
       address: account.address,
       connector,

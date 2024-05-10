@@ -83,9 +83,10 @@ To start the local development playgrounds, run one of the following commands. T
 ```bash
 pnpm dev           # `wagmi` playground
 pnpm dev:core      # `@wagmi/core` playground
+pnpm dev:next      # `wagmi` playground with Next.js
+pnpm dev:nuxt      # `@wagmi/vue` playground with Nuxt.js
 pnpm dev:react     # `wagmi` playground (same as `pnpm dev`)
 pnpm dev:vue       # `@wagmi/vue` playground
-pnpm dev:ssr-react # `wagmi` playground with SSR
 ```
 
 Once a playground dev server is running, you can make changes to any of the package source files (e.g. `packages/react`) and it will automatically update the playground.
@@ -103,7 +104,9 @@ Next, make sure you have set up your [env variables](#_4-adding-the-env-variable
 
 - `pnpm test [package?]` — runs tests in watch mode
 - `pnpm test:cov` — runs tests and reports coverage
-- `pnpm test:ui` — runs tests in the [Vitest UI](https://vitest.dev/guide/ui.html)
+- `pnpm test:core` — runs `@wagmi/core` tests
+- `pnpm test:react` — runs `wagmi` tests
+- `pnpm test:vue` — runs `@wagmi/vue` tests
 
 When adding new features or fixing bugs, it's important to add test cases to cover the new or updated behavior. If snapshot tests fail, you can run the `test:update` command to update the snapshots.
 
