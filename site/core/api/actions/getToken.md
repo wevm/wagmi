@@ -138,4 +138,4 @@ import { type GetTokenErrorType } from '@wagmi/core'
 
 ## Viem
 
-- [`multicall`](https://viem.sh/docs/actions/public/multicall.html)
+- [`multicall`](https://viem.sh/docs/contract/multicall)
