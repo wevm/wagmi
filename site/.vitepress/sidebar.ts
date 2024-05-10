@@ -485,9 +485,9 @@ export function getSidebar() {
         text: 'Composables',
         link: '/vue/api/composables',
         items: [
-          { text: 'useAccount 🚧', link: '/vue/api/composables/useAccount' },
+          { text: 'useAccount', link: '/vue/api/composables/useAccount' },
           {
-            text: 'useAccountEffect 🚧',
+            text: 'useAccountEffect',
             link: '/vue/api/composables/useAccountEffect',
           },
           {

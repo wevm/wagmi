@@ -121,7 +121,7 @@ useBlockNumber({ chainId: 123, config: configB })
 
 This approach is more explicit, but works well for advanced use-cases, if you don't want to use a Vue Plugin or declaration merging, etc.
 
-<!-- ## Const-Assert ABIs & Typed Data
+<!-- TODO: ## Const-Assert ABIs & Typed Data
 
 Wagmi can infer types based on [ABIs](https://docs.soliditylang.org/en/latest/abi-spec.html#json) and [EIP-712](https://eips.ethereum.org/EIPS/eip-712) Typed Data definitions, powered by [Viem](https://viem.sh) and [ABIType](https://github.com/wevm/abitype). This achieves full end-to-end type-safety from your contracts to your frontend and enlightened developer experience by autocompleting ABI item names, catching misspellings, inferring argument and return types (including overloads), and more.
 
