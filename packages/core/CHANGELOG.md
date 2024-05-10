@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.9.5
+
+### Patch Changes
+
+- [`4fecbbb66d0aacd03b8c62a6455d11a33cde8f85`](https://github.com/wevm/wagmi/commit/4fecbbb66d0aacd03b8c62a6455d11a33cde8f85) Thanks [@jxom](https://github.com/jxom)! - Fixed address comparison in `getConnectorClient`.
+
 ## 2.9.4
 
 ### Patch Changes
