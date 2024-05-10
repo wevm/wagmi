@@ -15,6 +15,7 @@ test('exports', () => {
       "useBlockNumber",
       "useChainId",
       "useClient",
+      "useConnectorClient",
       "useChains",
       "useConfig",
       "useConnect",

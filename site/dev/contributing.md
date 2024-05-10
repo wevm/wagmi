@@ -72,6 +72,9 @@ VITE_OPTIMISM_FORK_URL=https://mainnet.optimism.io
 NEXT_PUBLIC_WC_PROJECT_ID=3fbb6bba6f1de962d911bb5b5c9dba88
 NUXT_PUBLIC_WC_PROJECT_ID=3fbb6bba6f1de962d911bb5b5c9dba88
 VITE_WC_PROJECT_ID=3fbb6bba6f1de962d911bb5b5c9dba88
+
+NEXT_TELEMETRY_DISABLED=1
+NUXT_TELEMETRY_DISABLED=1
 ```
 
 `*_BLOCK_NUMBER` environment variables should remain set to the values above (the test suite depends on them), but you can change the others if you want. For example, you might want to change `*_FORK_URL` to a paid RPC provider for better performance.

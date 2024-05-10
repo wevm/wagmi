@@ -7,14 +7,14 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "_postinstall": "nuxt prepare"
   },
   "dependencies": {
     "@tanstack/vue-query": ">=5.35.1",
     "@wagmi/vue": "workspace:*",
     "nuxt": "^3.11.2",
     "viem": "2.*",
-    "vue": "^3.4.27",
+    "vue": ">=3.4.21",
     "vue-router": "^4.3.2"
   }
 }

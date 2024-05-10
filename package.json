@@ -114,7 +114,7 @@
         ]
       },
       "packages/vue": {
-        "entry": "src/exports/{actions,chains,connectors,index,query}.ts!",
+        "entry": "src/exports/{actions,chains,connectors,index,nuxt,query}.ts!",
         "ignore": ["test/setup.ts"]
       }
     }
