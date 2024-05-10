@@ -79,7 +79,7 @@ Create and export a new Wagmi config using `createConfig`.
 In this example, Wagmi is configured to use the Mainnet and Sepolia chains, and `injected` connector. Check out the [`createConfig` docs](/vue/api/createConfig) for more configuration options.
 
 ::: details TypeScript Tip
-If you are using TypeScript, you can "register" the Wagmi config or use the hook `config` property to get strong type-safety across React Context in places that wouldn't normally have type info.
+If you are using TypeScript, you can "register" the Wagmi config or use the hook `config` property to get strong type-safety in places that wouldn't normally have type info.
 
 ::: code-group
 ```ts twoslash [register config]

@@ -374,11 +374,10 @@ export function getSidebar() {
       {
         text: 'Introduction',
         items: [
-          { text: 'Why Wagmi 🚧', link: '/vue/why' },
-          { text: 'Installation 🚧', link: '/vue/installation' },
+          { text: 'Why Wagmi', link: '/vue/why' },
+          { text: 'Installation', link: '/vue/installation' },
           { text: 'Getting Started', link: '/vue/getting-started' },
-          { text: 'TypeScript 🚧', link: '/vue/typescript' },
-          { text: 'Comparisons 🚧', link: '/vue/comparisons' },
+          { text: 'TypeScript', link: '/vue/typescript' },
         ],
       },
       {
