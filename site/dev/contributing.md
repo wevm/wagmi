@@ -83,7 +83,7 @@ To start the local development playgrounds, run one of the following commands. T
 pnpm dev           # `wagmi` playground
 pnpm dev:core      # `@wagmi/core` playground
 pnpm dev:react     # `wagmi` playground (same as `pnpm dev`)
-pnpm dev:ssr-react # `wagmi` playground with SSR
+pnpm dev:next      # `wagmi` playground with Next.js
 ```
 
 Once a playground dev server is running, you can make changes to any of the package source files (e.g. `packages/react`) and it will automatically update the playground.
