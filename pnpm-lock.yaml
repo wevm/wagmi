@@ -25,7 +25,10 @@ importers:
         version: 0.0.6(bufferutil@4.0.8)(utf-8-validate@6.0.3)
       '@vitest/coverage-v8':
         specifier: ^1.6.0
-        version: 1.6.0(vitest@1.6.0(@types/node@20.12.10)(happy-dom@12.2.1))
+        version: 1.6.0(vitest@1.6.0(@types/node@20.12.10)(@vitest/ui@1.6.0)(happy-dom@12.2.1))
+      '@vitest/ui':
+        specifier: ^1.6.0
+        version: 1.6.0(vitest@1.6.0)
       '@wagmi/test':
         specifier: workspace:*
         version: link:packages/test
@@ -58,7 +61,7 @@ importers:
         version: 2.9.31(bufferutil@4.0.8)(typescript@5.4.2)(utf-8-validate@6.0.3)(zod@3.22.4)
       vitest:
         specifier: ^1.6.0
-        version: 1.6.0(@types/node@20.12.10)(happy-dom@12.2.1)
+        version: 1.6.0(@types/node@20.12.10)(@vitest/ui@1.6.0)(happy-dom@12.2.1)
 
   packages/cli:
     dependencies:
@@ -1828,9 +1831,6 @@ packages:
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
 
-  '@polka/url@1.0.0-next.21':
-    resolution: {integrity: sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==}
-
   '@polka/url@1.0.0-next.25':
     resolution: {integrity: sha512-j7P6Rgr3mmtdkeDGTe0E/aYyWEWVtc5yFXtHCRHs28/jptDEWfaVOc5T7cblqy1XKPPfCxJc/8DwQ5YgLOZOVQ==}
 
@@ -2146,9 +2146,6 @@ packages:
   '@types/dom-screen-wake-lock@1.0.1':
     resolution: {integrity: sha512-WJQas3OFGcC8AeMzaa7FwzzbNNfanuV2R12kQYNp4BkUMghsRz5JxJ5RgVhJifhw7t0s6LvRSWZArmKbMDZ+5g==}
 
-  '@types/estree@1.0.1':
-    resolution: {integrity: sha512-LG4opVs2ANWZ1TJoKc937iMmNstM/d0ae1vNbnBvBhqCSezgVUOzcLCqbI5elV8Vy6WKwKjaqR+zO9VKirBBCA==}
-
   '@types/estree@1.0.5':
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
 
@@ -2364,6 +2361,11 @@ packages:
 
   '@vitest/spy@1.6.0':
     resolution: {integrity: sha512-leUTap6B/cqi/bQkXUu6bQV5TZPx7pmMBKBQiI0rJA8c3pB56ZsaTbREnF7CJfmvAS4V2cXIBAh/3rVwrrCYgw==}
+
+  '@vitest/ui@1.6.0':
+    resolution: {integrity: sha512-k3Lyo+ONLOgylctiGovRKy7V4+dIN2yxstX3eY5cWFXH6WP+ooVX79YSyi0GagdTQzLmT43BF27T0s6dOIPBXA==}
+    peerDependencies:
+      vitest: 1.6.0
 
   '@vitest/utils@1.6.0':
     resolution: {integrity: sha512-21cPiuGMoMZwiOHa2i4LXkMkMkCGzA+MVFV70jRwHo95dL4x/ts5GZhML1QWuy7yfp3WzK3lRvZi3JnXTYqrBw==}
@@ -3456,6 +3458,9 @@ packages:
 
   fastq@1.15.0:
     resolution: {integrity: sha512-wBrocU2LCXXa+lWBt8RoIRD89Fi8OdABODa/kEnyeyjS5aZO5/GNvI5sEINADqP/h8M29UHTHUb53sUu5Ihqdw==}
+
+  fflate@0.8.2:
+    resolution: {integrity: sha512-cPJU47OaAoCbg0pBvzsgpTPhmhqI5eJjh/JIu8tPj5q+T7iLvW/JAYUqmE7KOB4R1ZyEhzBaIQpQpardBF5z8A==}
 
   file-entry-cache@8.0.0:
     resolution: {integrity: sha512-XXTUwCvisa5oacNGRP9SfNtYBNAMi+RPwBFmblZEF7N7swHYQS6/Zfk7SRwx4D5j3CH211YNRco1DEMNVfZCnQ==}
@@ -7745,8 +7750,6 @@ snapshots:
   '@pkgjs/parseargs@0.11.0':
     optional: true
 
-  '@polka/url@1.0.0-next.21': {}
-
   '@polka/url@1.0.0-next.25': {}
 
   '@rollup/pluginutils@5.1.0(rollup@4.17.2)':
@@ -8140,8 +8143,6 @@ snapshots:
 
   '@types/dom-screen-wake-lock@1.0.1': {}
 
-  '@types/estree@1.0.1': {}
-
   '@types/estree@1.0.5': {}
 
   '@types/fs-extra@11.0.4':
@@ -8426,7 +8427,7 @@ snapshots:
       vite: 5.2.11(@types/node@20.12.10)
       vue: 3.4.27(typescript@5.4.2)
 
-  '@vitest/coverage-v8@1.6.0(vitest@1.6.0(@types/node@20.12.10)(happy-dom@12.2.1))':
+  '@vitest/coverage-v8@1.6.0(vitest@1.6.0(@types/node@20.12.10)(@vitest/ui@1.6.0)(happy-dom@12.2.1))':
     dependencies:
       '@ampproject/remapping': 2.2.1
       '@bcoe/v8-coverage': 0.2.3
@@ -8441,7 +8442,7 @@ snapshots:
       std-env: 3.6.0
       strip-literal: 2.1.0
       test-exclude: 6.0.0
-      vitest: 1.6.0(@types/node@20.12.10)(happy-dom@12.2.1)
+      vitest: 1.6.0(@types/node@20.12.10)(@vitest/ui@1.6.0)(happy-dom@12.2.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -8466,6 +8467,17 @@ snapshots:
   '@vitest/spy@1.6.0':
     dependencies:
       tinyspy: 2.2.1
+
+  '@vitest/ui@1.6.0(vitest@1.6.0)':
+    dependencies:
+      '@vitest/utils': 1.6.0
+      fast-glob: 3.3.2
+      fflate: 0.8.2
+      flatted: 3.3.1
+      pathe: 1.1.2
+      picocolors: 1.0.0
+      sirv: 2.0.4
+      vitest: 1.6.0(@types/node@20.12.10)(@vitest/ui@1.6.0)(happy-dom@12.2.1)
 
   '@vitest/utils@1.6.0':
     dependencies:
@@ -9784,7 +9796,7 @@ snapshots:
 
   estree-walker@3.0.3:
     dependencies:
-      '@types/estree': 1.0.1
+      '@types/estree': 1.0.5
 
   eth-block-tracker@7.1.0:
     dependencies:
@@ -9960,6 +9972,8 @@ snapshots:
   fastq@1.15.0:
     dependencies:
       reusify: 1.0.4
+
+  fflate@0.8.2: {}
 
   file-entry-cache@8.0.0:
     dependencies:
@@ -12085,7 +12099,7 @@ snapshots:
 
   sirv@2.0.3:
     dependencies:
-      '@polka/url': 1.0.0-next.21
+      '@polka/url': 1.0.0-next.25
       mrmime: 1.0.1
       totalist: 3.0.1
 
@@ -12777,7 +12791,7 @@ snapshots:
       - typescript
       - universal-cookie
 
-  vitest@1.6.0(@types/node@20.12.10)(happy-dom@12.2.1):
+  vitest@1.6.0(@types/node@20.12.10)(@vitest/ui@1.6.0)(happy-dom@12.2.1):
     dependencies:
       '@vitest/expect': 1.6.0
       '@vitest/runner': 1.6.0
@@ -12801,6 +12815,7 @@ snapshots:
       why-is-node-running: 2.2.2
     optionalDependencies:
       '@types/node': 20.12.10
+      '@vitest/ui': 1.6.0(vitest@1.6.0)
       happy-dom: 12.2.1
     transitivePeerDependencies:
       - less

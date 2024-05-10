@@ -27,6 +27,7 @@
     "test:cov": "vitest run --coverage",
     "test:typecheck": "vitest typecheck",
     "test:update": "vitest --update",
+    "test:ui": "vitest --ui",
     "typecheck": "pnpm run --r --parallel typecheck && tsc --noEmit",
     "version:update": "bun .scripts/updateVersion.ts",
     "version:update:viem": "bun .scripts/updateViemVersion.ts"
@@ -38,6 +39,7 @@
     "@types/bun": "^1.1.1",
     "@viem/anvil": "0.0.6",
     "@vitest/coverage-v8": "^1.6.0",
+    "@vitest/ui": "^1.6.0",
     "@wagmi/test": "workspace:*",
     "bun": "^1.1.7",
     "glob": "^10.3.12",
