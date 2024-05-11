@@ -5,7 +5,7 @@ import {
   watchBlockNumber,
 } from '@wagmi/core'
 import { type UnionEvaluate, type UnionPartial } from '@wagmi/core/internal'
-import { computed, watchEffect } from 'vue'
+import { computed, watchEffect } from 'vue-demi'
 
 import type { ConfigParameter, EnabledParameter } from '../types/properties.js'
 import type { DeepMaybeRef } from '../types/ref.js'

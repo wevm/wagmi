@@ -4,7 +4,7 @@ import { http, connect, createConfig, disconnect } from '@wagmi/core'
 import { accounts, chain } from '@wagmi/test'
 import { renderComposable, waitFor } from '@wagmi/test/vue'
 import { expect, test, vi } from 'vitest'
-import type { App } from 'vue'
+import type { App } from 'vue-demi'
 
 import { WagmiPlugin } from '../plugin.js'
 import { useAccount } from './useAccount.js'

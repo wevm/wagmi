@@ -14,7 +14,7 @@ import {
   readonly,
   ref,
   watchEffect,
-} from 'vue'
+} from 'vue-demi'
 
 import type { ConfigParameter } from '../types/properties.js'
 import type { DeepMaybeRef } from '../types/ref.js'

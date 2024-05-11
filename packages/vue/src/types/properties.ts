@@ -1,6 +1,6 @@
 import type { DefaultError, QueryKey } from '@tanstack/vue-query'
 import type { Config } from '@wagmi/core'
-import type { MaybeRef } from 'vue'
+import type { MaybeRef } from 'vue-demi'
 import type { UseQueryParameters } from '../utils/query.js'
 import type { DeepUnwrapRef } from './ref.js'
 

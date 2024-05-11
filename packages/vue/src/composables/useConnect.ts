@@ -13,7 +13,7 @@ import {
   type ConnectVariables,
   connectMutationOptions,
 } from '@wagmi/core/query'
-import { onScopeDispose } from 'vue'
+import { onScopeDispose } from 'vue-demi'
 
 import type { ConfigParameter } from '../types/properties.js'
 import type {

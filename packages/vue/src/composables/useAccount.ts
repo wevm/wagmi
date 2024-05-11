@@ -5,7 +5,13 @@ import {
   getAccount,
   watchAccount,
 } from '@wagmi/core'
-import { type ToRefs, onScopeDispose, reactive, readonly, toRefs } from 'vue'
+import {
+  type ToRefs,
+  onScopeDispose,
+  reactive,
+  readonly,
+  toRefs,
+} from 'vue-demi'
 
 import { type ConfigParameter } from '../types/properties.js'
 import { updateState } from '../utils/updateState.js'

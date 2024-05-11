@@ -13,7 +13,7 @@ import {
   type GetConnectorClientQueryKey,
   getConnectorClientQueryOptions,
 } from '@wagmi/core/query'
-import { computed, ref, watchEffect } from 'vue'
+import { computed, ref, watchEffect } from 'vue-demi'
 
 import type { ConfigParameter } from '../types/properties.js'
 import type { DeepMaybeRef, DeepUnwrapRef } from '../types/ref.js'

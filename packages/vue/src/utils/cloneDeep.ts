@@ -1,6 +1,6 @@
 // Credit: https://github.com/TanStack/query/blob/01ce023826b81e6c41e354f27691f65c9725af67/packages/vue-query/src/utils.ts
 
-import { isRef, unref } from 'vue'
+import { isRef, unref } from 'vue-demi'
 
 import type { DeepMaybeRef, DeepUnwrapRef } from '../types/ref.js'
 

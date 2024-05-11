@@ -1,6 +1,6 @@
 import { type GetAccountReturnType, watchAccount } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
-import { watchEffect } from 'vue'
+import { watchEffect } from 'vue-demi'
 
 import type { ConfigParameter } from '../types/properties.js'
 import type { DeepMaybeRef } from '../types/ref.js'

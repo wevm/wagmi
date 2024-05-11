@@ -11,7 +11,7 @@
   "scripts": {
     "build": "pnpm run clean && pnpm run build:esm+types",
     "build:esm+types": "tsc --project tsconfig.build.json --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
-    "clean": "rm -rf dist tsconfig.tsbuildinfo actions chains connectors nuxt query",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo actions chains connectors query",
     "test:build": "publint --strict",
     "typecheck": "vue-tsc --noEmit"
   },
@@ -24,7 +24,6 @@
     "/actions",
     "/chains",
     "/connectors",
-    "/nuxt",
     "/query"
   ],
   "sideEffects": false,
@@ -49,10 +48,6 @@
       "types": "./dist/types/exports/connectors.d.ts",
       "default": "./dist/esm/exports/connectors.js"
     },
-    "./nuxt": {
-      "types": "./dist/types/exports/nuxt.d.ts",
-      "default": "./dist/esm/exports/nuxt.js"
-    },
     "./query": {
       "types": "./dist/types/exports/query.d.ts",
       "default": "./dist/esm/exports/query.js"
@@ -64,19 +59,18 @@
       "actions": ["./dist/types/exports/actions.d.ts"],
       "chains": ["./dist/types/exports/chains.d.ts"],
       "connectors": ["./dist/types/exports/connectors.d.ts"],
-      "nuxt": ["./dist/types/exports/nuxt.d.ts"],
       "query": ["./dist/types/exports/query.d.ts"]
     }
   },
   "peerDependencies": {
     "@tanstack/vue-query": ">=5.0.0",
-    "nuxt": ">=3.0.0",
+    "@vue/composition-api": "1.x",
     "typescript": ">=5.0.4",
     "viem": "2.x",
-    "vue": ">=3"
+    "vue": "^2.0.0 || >=3.0.0"
   },
   "peerDependenciesMeta": {
-    "nuxt": {
+    "@vue/composition-api": {
       "optional": true
     },
     "typescript": {
@@ -88,11 +82,10 @@
     "@wagmi/core": "workspace:*"
   },
   "devDependencies": {
-    "@nuxt/schema": "^3.11.2",
     "@tanstack/vue-query": ">=5.35.1",
     "@vue/test-utils": "^2.4.6",
-    "nuxt": "^3.11.2",
-    "vue": ">=3.4.21",
+    "vue": "^3.4.21",
+    "vue-demi": "^0.14.7",
     "vue-tsc": "^2.0.6"
   },
   "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],

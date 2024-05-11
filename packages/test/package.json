@@ -63,7 +63,7 @@
     "react-dom": ">=18",
     "typescript": ">=5.0.4",
     "viem": "2.x",
-    "vue": ">=3",
+    "vue": "^2.0.0 || >=3.0.0",
     "wagmi": "workspace:*"
   },
   "peerDependenciesMeta": {
@@ -108,7 +108,8 @@
     "@wagmi/vue": "workspace:*",
     "react": ">=18.3.1",
     "react-dom": ">=18.3.1",
-    "vue": ">=3.4.21",
+    "vue": "^3.4.21",
+    "vue-demi": "^0.14.7",
     "wagmi": "workspace:*"
   },
   "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],

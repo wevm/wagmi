@@ -1,7 +1,7 @@
 import { config, testClient } from '@wagmi/test'
 import { renderComposable, waitFor } from '@wagmi/test/vue'
 import { expect, test } from 'vitest'
-import { ref } from 'vue'
+import { ref } from 'vue-demi'
 import { useBlockNumber } from './useBlockNumber.js'
 
 test('default', async () => {

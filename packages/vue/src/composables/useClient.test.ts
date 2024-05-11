@@ -2,7 +2,7 @@ import { switchChain } from '@wagmi/core'
 import { config } from '@wagmi/test'
 import { renderComposable, waitFor } from '@wagmi/test/vue'
 import { expect, test } from 'vitest'
-import { ref } from 'vue'
+import { ref } from 'vue-demi'
 
 import { useClient } from './useClient.js'
 

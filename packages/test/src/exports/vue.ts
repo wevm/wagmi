@@ -1,6 +1,6 @@
 import { VueQueryPlugin } from '@tanstack/vue-query'
 import { WagmiPlugin } from '@wagmi/vue'
-import { type App, type Ref, createApp, watch } from 'vue'
+import { type App, type Ref, createApp, watch } from 'vue-demi'
 
 import { config } from '../config.js'
 
