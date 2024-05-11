@@ -63,7 +63,7 @@ export default defineConfig({
   },
   themeConfig: {
     editLink: {
-      pattern: 'https://github.com/wevm/wagmi/edit/main/docs/:path',
+      pattern: 'https://github.com/wevm/wagmi/edit/main/site/:path',
       text: 'Suggest changes to this page',
     },
     footer: {
