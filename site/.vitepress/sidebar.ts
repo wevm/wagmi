@@ -491,11 +491,11 @@ export function getSidebar() {
             link: '/vue/api/composables/useAccountEffect',
           },
           {
-            text: 'useBlockNumber 🚧',
+            text: 'useBlockNumber',
             link: '/vue/api/composables/useBlockNumber',
           },
 
-          { text: 'useChainId 🚧', link: '/vue/api/composables/useChainId' },
+          { text: 'useChainId', link: '/vue/api/composables/useChainId' },
           { text: 'useChains 🚧', link: '/vue/api/composables/useChains' },
           { text: 'useClient 🚧', link: '/vue/api/composables/useClient' },
           { text: 'useConfig 🚧', link: '/vue/api/composables/useConfig' },
