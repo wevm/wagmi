@@ -420,33 +420,33 @@ export function getSidebar() {
       {
         text: 'Configuration',
         items: [
-          { text: 'createConfig 🚧', link: '/vue/api/createConfig' },
-          { text: 'createStorage 🚧', link: '/vue/api/createStorage' },
-          { text: 'Chains 🚧', link: '/vue/api/chains' },
+          { text: 'createConfig', link: '/vue/api/createConfig' },
+          { text: 'createStorage', link: '/vue/api/createStorage' },
+          { text: 'Chains', link: '/vue/api/chains' },
           {
             text: 'Connectors',
             collapsed: true,
             link: '/vue/api/connectors',
             items: [
               {
-                text: 'coinbaseWallet 🚧',
+                text: 'coinbaseWallet',
                 link: '/vue/api/connectors/coinbaseWallet',
               },
-              { text: 'injected 🚧', link: '/vue/api/connectors/injected' },
+              { text: 'injected', link: '/vue/api/connectors/injected' },
               {
-                text: 'metaMask 🚧',
+                text: 'metaMask',
                 link: '/vue/api/connectors/metaMask',
               },
               {
-                text: 'mock 🚧',
+                text: 'mock',
                 link: '/vue/api/connectors/mock',
               },
               {
-                text: 'safe 🚧',
+                text: 'safe',
                 link: '/vue/api/connectors/safe',
               },
               {
-                text: 'walletConnect 🚧',
+                text: 'walletConnect',
                 link: '/vue/api/connectors/walletConnect',
               },
             ],
@@ -457,28 +457,28 @@ export function getSidebar() {
             link: '/vue/api/transports',
             items: [
               {
-                text: 'custom (EIP-1193) 🚧',
+                text: 'custom (EIP-1193)',
                 link: '/vue/api/transports/custom',
               },
               {
-                text: 'fallback 🚧',
+                text: 'fallback',
                 link: '/vue/api/transports/fallback',
               },
               {
-                text: 'http 🚧',
+                text: 'http',
                 link: '/vue/api/transports/http',
               },
               {
-                text: 'unstable_connector 🚧',
+                text: 'unstable_connector',
                 link: '/vue/api/transports/unstable_connector',
               },
               {
-                text: 'webSocket 🚧',
+                text: 'webSocket',
                 link: '/vue/api/transports/webSocket',
               },
             ],
           },
-          { text: 'WagmiPlugin 🚧', link: '/vue/api/WagmiPlugin' },
+          { text: 'WagmiPlugin', link: '/vue/api/WagmiPlugin' },
         ],
       },
       {
@@ -533,25 +533,17 @@ export function getSidebar() {
       {
         text: 'Miscellaneous',
         items: [
-          { text: 'Actions 🚧', link: '/vue/api/actions' },
-          { text: 'Errors 🚧', link: '/vue/api/errors' },
+          { text: 'Actions', link: '/vue/api/actions' },
+          { text: 'Errors', link: '/vue/api/errors' },
           {
             text: 'Utilities',
             collapsed: true,
             items: [
               {
-                text: 'cookieToInitialState 🚧',
-                link: '/vue/api/utilities/cookieToInitialState',
-              },
-              {
-                text: 'deserialize 🚧',
+                text: 'deserialize',
                 link: '/vue/api/utilities/deserialize',
               },
-              {
-                text: 'normalizeChainId 🚧',
-                link: '/vue/api/utilities/normalizeChainId',
-              },
-              { text: 'serialize 🚧', link: '/vue/api/utilities/serialize' },
+              { text: 'serialize', link: '/vue/api/utilities/serialize' },
             ],
           },
         ],

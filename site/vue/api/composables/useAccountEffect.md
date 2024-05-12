@@ -43,7 +43,7 @@ import { type useAccountEffectParameters } from '@wagmi/vue'
 
 `Config | undefined`
 
-[`Config`](/vue/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/vue/api/WagmiProvider).
+[`Config`](/vue/api/createConfig#config) to use instead of retrieving from the [`WagmiPlugin`](/vue/api/WagmiPlugin).
 
 ::: code-group
 ```vue [index.vue]

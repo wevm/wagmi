@@ -11,12 +11,12 @@ export type WagmiPluginOptions = {
 
 export const WagmiPlugin = {
   install(app, options) {
-    const { config } = options
+    const { config, reconnectOnMount = true } = options
     app.provide(configKey, config)
     // TODO: check this works in SSR env.
     //       - reconnect on mount.
     //       - hydrate initial state.
-    const { onMount } = hydrate(config, options)
+    const { onMount } = hydrate(config, { ...options, reconnectOnMount })
     onMount()
   },
 } satisfies Plugin<WagmiPluginOptions>

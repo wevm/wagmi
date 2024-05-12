@@ -12,11 +12,6 @@ import { config } from './wagmi'
 
 const app = createApp(App)
 
-app
-  .use(WagmiPlugin, {
-    config,
-    reconnectOnMount: true,
-  })
-  .use(VueQueryPlugin, {})
+app.use(WagmiPlugin, { config }).use(VueQueryPlugin, {})
 
 app.mount('#app')
