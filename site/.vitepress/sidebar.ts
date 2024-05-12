@@ -496,36 +496,36 @@ export function getSidebar() {
           },
 
           { text: 'useChainId', link: '/vue/api/composables/useChainId' },
-          { text: 'useChains 🚧', link: '/vue/api/composables/useChains' },
-          { text: 'useClient 🚧', link: '/vue/api/composables/useClient' },
-          { text: 'useConfig 🚧', link: '/vue/api/composables/useConfig' },
-          { text: 'useConnect 🚧', link: '/vue/api/composables/useConnect' },
+          { text: 'useChains', link: '/vue/api/composables/useChains' },
+          { text: 'useClient', link: '/vue/api/composables/useClient' },
+          { text: 'useConfig', link: '/vue/api/composables/useConfig' },
+          { text: 'useConnect', link: '/vue/api/composables/useConnect' },
           {
-            text: 'useConnections 🚧',
+            text: 'useConnections',
             link: '/vue/api/composables/useConnections',
           },
           {
-            text: 'useConnectorClient 🚧',
+            text: 'useConnectorClient',
             link: '/vue/api/composables/useConnectorClient',
           },
           {
-            text: 'useConnectors 🚧',
+            text: 'useConnectors',
             link: '/vue/api/composables/useConnectors',
           },
           {
-            text: 'useDisconnect 🚧',
+            text: 'useDisconnect',
             link: '/vue/api/composables/useDisconnect',
           },
           {
-            text: 'useReconnect 🚧',
+            text: 'useReconnect',
             link: '/vue/api/composables/useReconnect',
           },
           {
-            text: 'useSwitchAccount 🚧',
+            text: 'useSwitchAccount',
             link: '/vue/api/composables/useSwitchAccount',
           },
           {
-            text: 'useSwitchChain 🚧',
+            text: 'useSwitchChain',
             link: '/vue/api/composables/useSwitchChain',
           },
         ],
