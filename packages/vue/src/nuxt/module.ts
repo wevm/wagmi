@@ -1,8 +1,6 @@
-import { fileURLToPath } from 'node:url'
 import type { NuxtModule } from '@nuxt/schema'
-import { defineNuxtModule } from 'nuxt/kit'
+import { addImports, createResolver, defineNuxtModule } from 'nuxt/kit'
 
-// TODO: createConfig parameters to options?
 export type WagmiModuleOptions = {}
 
 export const wagmiModule: NuxtModule<WagmiModuleOptions> =
@@ -15,11 +13,36 @@ export const wagmiModule: NuxtModule<WagmiModuleOptions> =
       },
     },
     setup(_options, nuxt) {
-      // Transpile runtime
-      const runtimeDir = fileURLToPath(new URL('./runtime', import.meta.url))
-      nuxt.options.build.transpile.push(runtimeDir)
+      const { resolve } = createResolver(import.meta.url)
 
-      // TODO: Add client and server plugins
-      // TODO: Auto import composables
+      // Add types
+      nuxt.hook('prepare:types', ({ references }) => {
+        references.push({ types: '@wagmi/vue/nuxt' })
+      })
+
+      // Add auto imports
+      const composables = resolve('./runtime/composables')
+      const names = [
+        'useAccount',
+        'useAccountEffect',
+        'useBlockNumber',
+        'useChainId',
+        'useChains',
+        'useClient',
+        'useConfig',
+        'useConnect',
+        'useConnections',
+        'useConnectorClient',
+        'useConnectors',
+        'useDisconnect',
+        'useReadContract',
+        'useReconnect',
+        'useSwitchAccount',
+        'useSwitchChain',
+        'useWaitForTransactionReceipt',
+        'useWatchBlockNumber',
+        'useWriteContract',
+      ]
+      addImports(names.map((name) => ({ from: composables, name })))
     },
   })
