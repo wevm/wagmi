@@ -26,6 +26,7 @@ test('exports', () => {
       "useReadContract",
       "useReconnect",
       "useSendTransaction",
+      "useSimulateContract",
       "useSwitchAccount",
       "useSwitchChain",
       "useWatchBlockNumber",
