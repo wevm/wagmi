@@ -43,7 +43,7 @@ export function useEthersProvider({
   chainId,
 }: { chainId?: number | undefined } = {}) {
   const client = useClient<Config>({ chainId })
-  return useMemo(() => clientToProvider(client), [client])
+  return useMemo(() => (client ? clientToProvider(client) : undefined), [client])
 }
 ```
 
@@ -73,7 +73,7 @@ export function clientToProvider(client: Client<Transport, Chain>) {
 /** Action to convert a viem Client to an ethers.js Provider. */
 export function useEthersProvider({ chainId }: { chainId?: number } = {}) {
   const client = useClient<Config>({ chainId })
-  return useMemo(() => clientToProvider(client), [client])
+  return useMemo(() => (client ? clientToProvider(client) : undefined), [client])
 }
 ```
 
@@ -121,7 +121,7 @@ export function useEthersProvider({
   chainId,
 }: { chainId?: number | undefined } = {}) {
   const client = useClient<Config>({ chainId })
-  return useMemo(() => clientToProvider(client), [client])
+  return useMemo(() => (client ? clientToProvider(client) : undefined), [client])
 }
 ```
 
@@ -151,7 +151,7 @@ export function clientToProvider(client: Client<Transport, Chain>) {
 /** Action to convert a viem Client to an ethers.js Provider. */
 export function useEthersProvider({ chainId }: { chainId?: number } = {}) {
   const client = useClient<Config>({ chainId })
-  return useMemo(() => clientToProvider(client), [client])
+  return useMemo(() => (client ? clientToProvider(client) : undefined), [client])
 }
 ```
 
