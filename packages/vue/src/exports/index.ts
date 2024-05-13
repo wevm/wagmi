@@ -123,6 +123,12 @@ export {
 } from '../composables/useWatchBlockNumber.js'
 
 export {
+  type UseWaitForTransactionReceiptParameters,
+  type UseWaitForTransactionReceiptReturnType,
+  useWaitForTransactionReceipt,
+} from '../composables/useWaitForTransactionReceipt.js'
+
+export {
   type UseWriteContractParameters,
   type UseWriteContractReturnType,
   useWriteContract,

@@ -529,6 +529,10 @@ export function getSidebar() {
             link: '/vue/api/composables/useSwitchChain',
           },
           {
+            text: 'useWaitForTransactionReceipt',
+            link: '/vue/api/composables/useWaitForTransactionReceipt',
+          },
+          {
             text: 'useWriteContract',
             link: '/vue/api/composables/useWriteContract',
           },
