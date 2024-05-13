@@ -43,6 +43,7 @@ export function getEthersProvider(
   { chainId }: { chainId?: number } = {},
 ) {
   const client = getClient(config, { chainId })
+  if (!client) return
   return clientToProvider(client)
 }
 ```
@@ -75,6 +76,7 @@ export function getEthersProvider(
   { chainId }: { chainId?: number } = {},
 ) {
   const client = getClient(config, { chainId })
+  if (!client) return
   return clientToProvider(client)
 }
 ```
@@ -124,6 +126,7 @@ export function getEthersProvider(
   { chainId }: { chainId?: number } = {},
 ) {
   const client = getClient(config, { chainId })
+  if (!client) return
   return clientToProvider(client)
 }
 
@@ -157,6 +160,7 @@ export function getEthersProvider(
   { chainId }: { chainId?: number } = {},
 ) {
   const client = getClient(config, { chainId })
+  if (!client) return
   return clientToProvider(client)
 }
 ```
