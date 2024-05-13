@@ -513,6 +513,10 @@ export function getSidebar() {
             link: '/vue/api/composables/useDisconnect',
           },
           {
+            text: 'useReadContract',
+            link: '/vue/api/composables/useReadContract',
+          },
+          {
             text: 'useReconnect',
             link: '/vue/api/composables/useReconnect',
           },
@@ -523,6 +527,10 @@ export function getSidebar() {
           {
             text: 'useSwitchChain',
             link: '/vue/api/composables/useSwitchChain',
+          },
+          {
+            text: 'useWriteContract',
+            link: '/vue/api/composables/useWriteContract',
           },
         ],
       },

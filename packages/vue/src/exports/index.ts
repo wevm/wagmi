@@ -93,6 +93,12 @@ export {
 } from '../composables/useDisconnect.js'
 
 export {
+  type UseReadContractParameters,
+  type UseReadContractReturnType,
+  useReadContract,
+} from '../composables/useReadContract.js'
+
+export {
   type UseReconnectParameters,
   type UseReconnectReturnType,
   useReconnect,
@@ -115,6 +121,12 @@ export {
   type UseWatchBlockNumberReturnType,
   useWatchBlockNumber,
 } from '../composables/useWatchBlockNumber.js'
+
+export {
+  type UseWriteContractParameters,
+  type UseWriteContractReturnType,
+  useWriteContract,
+} from '../composables/useWriteContract.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // @wagmi/core
