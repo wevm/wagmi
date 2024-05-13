@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.9.7
+
+### Patch Changes
+
+- [#3924](https://github.com/wevm/wagmi/pull/3924) [`1f58734f88458e0f6adb05c99f0c90f36ab286b8`](https://github.com/wevm/wagmi/commit/1f58734f88458e0f6adb05c99f0c90f36ab286b8) Thanks [@jxom](https://github.com/jxom)! - Refactored `isChainsStale` logic in `walletConnect` connector.
+
 ## 2.9.6
 
 ### Patch Changes
