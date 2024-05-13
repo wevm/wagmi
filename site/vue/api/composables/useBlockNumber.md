@@ -127,7 +127,7 @@ const { data: blockNumber } = useBlockNumber({
 `MaybeRef<boolean | UseWatchBlockNumberParameters> | undefined`
 
 - Enables/disables listening for block number changes.
-- Can pass a subset of [`UseWatchBlockNumberParameters`](/vue/api/composables/useWatchBlockNumber#parameters)directly to [`useWatchBlockNumber`](/vue/api/composables/useWatchBlockNumber).
+- Can pass a subset of [`UseWatchBlockNumberParameters`](/vue/api/composables/useWatchBlockNumber#parameters) directly to [`useWatchBlockNumber`](/vue/api/composables/useWatchBlockNumber).
 
 ::: code-group
 ```vue [index.vue]
