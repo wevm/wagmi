@@ -404,7 +404,7 @@ export function getSidebar() {
             link: '/vue/guides/ssr',
           },
           {
-            text: 'Connect Wallet 🚧',
+            text: 'Connect Wallet',
             link: '/vue/guides/connect-wallet',
           },
           {
