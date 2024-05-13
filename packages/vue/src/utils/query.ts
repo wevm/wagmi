@@ -2,8 +2,8 @@ import {
   type DefaultError,
   type MutationObserverOptions,
   type QueryKey,
-  type QueryObserverOptions,
   type UseMutationReturnType as tanstack_UseMutationReturnType,
+  type UseQueryOptions,
   type UseQueryReturnType as tanstack_UseQueryReturnType,
   useMutation,
   useQuery as tanstack_useQuery,
@@ -60,14 +60,16 @@ export type UseQueryParameters<
   DeepMaybeRef<
     ExactPartial<
       Omit<
-        DeepUnwrapRef<QueryObserverOptions<queryFnData, error, data, queryKey>>,
+        DeepUnwrapRef<
+          UseQueryOptions<queryFnData, error, data, queryFnData, queryKey>
+        >,
         'initialData'
       >
     > & {
       // Fix `initialData` type
       initialData?:
         | DeepUnwrapRef<
-            QueryObserverOptions<queryFnData, error, data, queryKey>
+            UseQueryOptions<queryFnData, error, data, queryFnData, queryKey>
           >['initialData']
         | undefined
     }

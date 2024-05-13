@@ -8,6 +8,7 @@ test('select data', () => {
   const result = useBlockNumber({
     query: {
       select(data) {
+        expectTypeOf(data).toEqualTypeOf<bigint>()
         return data?.toString()
       },
     },

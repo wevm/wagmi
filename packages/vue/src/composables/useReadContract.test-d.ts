@@ -2,6 +2,7 @@ import { abi } from '@wagmi/test'
 import { type Address } from 'viem'
 import { assertType, expectTypeOf, test } from 'vitest'
 
+import type { DeepUnwrapRef } from '../types/ref.js'
 import {
   type UseReadContractParameters,
   type UseReadContractReturnType,
@@ -21,11 +22,13 @@ test('select data', () => {
       },
     },
   })
-  expectTypeOf(result.data).toEqualTypeOf<string | undefined>()
+  expectTypeOf(result.data.value).toEqualTypeOf<string | undefined>()
 })
 
 test('UseReadContractParameters', () => {
-  type Result = UseReadContractParameters<typeof abi.erc20, 'balanceOf'>
+  type Result = DeepUnwrapRef<
+    UseReadContractParameters<typeof abi.erc20, 'balanceOf'>
+  >
   expectTypeOf<Pick<Result, 'args' | 'functionName'>>().toEqualTypeOf<{
     functionName?:
       | 'symbol'
@@ -41,7 +44,7 @@ test('UseReadContractParameters', () => {
 
 test('UseReadContractReturnType', () => {
   type Result = UseReadContractReturnType<typeof abi.erc20, 'balanceOf'>
-  expectTypeOf<Result['data']>().toEqualTypeOf<bigint | undefined>()
+  expectTypeOf<Result['data']['value']>().toEqualTypeOf<bigint | undefined>()
 })
 
 test('overloads', () => {
@@ -50,7 +53,7 @@ test('overloads', () => {
     abi: abi.viewOverloads,
     functionName: 'foo',
   })
-  assertType<number | undefined>(result1.data)
+  assertType<number | undefined>(result1.data.value)
 
   const result2 = useReadContract({
     address: '0x',
@@ -58,7 +61,7 @@ test('overloads', () => {
     functionName: 'foo',
     args: [],
   })
-  assertType<number | undefined>(result2.data)
+  assertType<number | undefined>(result2.data.value)
 
   const result3 = useReadContract({
     address: '0x',
