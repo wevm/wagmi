@@ -55,7 +55,7 @@ export type UseConnectReturnType<
   }
 >
 
-/** https://wagmi.sh/vue/api/hooks/useConnect */
+/** https://wagmi.sh/vue/api/composables/useConnect */
 export function useConnect<
   config extends Config = ResolvedRegister['config'],
   context = unknown,

@@ -12,7 +12,7 @@ export type UseConnectionsParameters = ConfigParameter
 
 export type UseConnectionsReturnType = Ref<GetConnectionsReturnType>
 
-/** https://wagmi.sh/vue/api/hooks/useConnections */
+/** https://wagmi.sh/vue/api/composables/useConnections */
 export function useConnections(
   parameters: UseConnectionsParameters = {},
 ): UseConnectionsReturnType {

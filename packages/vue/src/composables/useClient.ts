@@ -37,7 +37,7 @@ export type UseClientReturnType<
     | undefined,
 > = Ref<GetClientReturnType<config, chainId>>
 
-/** https://wagmi.sh/vue/api/hooks/useClient */
+/** https://wagmi.sh/vue/api/composables/useClient */
 export function useClient<
   config extends Config = ResolvedRegister['config'],
   chainId extends config['chains'][number]['id'] | number | undefined =

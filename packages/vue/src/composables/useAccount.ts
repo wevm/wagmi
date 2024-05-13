@@ -18,7 +18,7 @@ export type UseAccountReturnType<config extends Config = Config> = ToRefs<
   GetAccountReturnType<config>
 >
 
-/** https://wagmi.sh/vue/api/hooks/useAccount */
+/** https://wagmi.sh/vue/api/composables/useAccount */
 export function useAccount<config extends Config = ResolvedRegister['config']>(
   parameters: UseAccountParameters<config> = {},
 ): UseAccountReturnType<config> {

@@ -15,7 +15,7 @@ export type UseConfigParameters<config extends Config = Config> = DeepMaybeRef<
 
 export type UseConfigReturnType<config extends Config = Config> = config
 
-/** https://wagmi.sh/vue/api/hooks/useConfig */
+/** https://wagmi.sh/vue/api/composables/useConfig */
 export function useConfig<config extends Config = ResolvedRegister['config']>(
   parameters_: UseConfigParameters<config> = {},
 ): UseConfigReturnType<config> {

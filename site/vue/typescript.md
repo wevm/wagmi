@@ -33,7 +33,7 @@ To ensure everything works correctly, make sure your `tsconfig.json` has [`stric
 By default Vue Plugins does not work well with type inference. To support strong type-safety across the Vue Plugins boundary, there are two options available:
 
 - Declaration merging to "register" your `config` globally with TypeScript.
-- `config` property to pass your `config` directly to hooks.
+- `config` property to pass your `config` directly to composables.
 
 ### Declaration Merging
 
@@ -60,7 +60,7 @@ export const config = createConfig({
 })
 ```
 
-Since the `Register` type is global, you only need to add it once in your project. Once set up, you will get strong type-safety across your entire project. For example, query hooks will type `chainId` based on your `config`'s `chains`. 
+Since the `Register` type is global, you only need to add it once in your project. Once set up, you will get strong type-safety across your entire project. For example, query composables will type `chainId` based on your `config`'s `chains`. 
 
 ```ts twoslash
 // @errors: 2322
@@ -82,7 +82,7 @@ You just saved yourself a runtime error and you didn't even need to pass your `c
 
 ### Hook `config` Property
 
-For cases where you have more than one Wagmi `config` or don't want to use the declaration merging approach, you can pass a specific `config` directly to hooks via the `config` property.
+For cases where you have more than one Wagmi `config` or don't want to use the declaration merging approach, you can pass a specific `config` directly to composables via the `config` property.
 
 ```ts
 import { createConfig, http } from '@wagmi/vue'

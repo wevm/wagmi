@@ -44,7 +44,7 @@ export type UseDisconnectReturnType<context = unknown> = Evaluate<
   }
 >
 
-/** https://wagmi.sh/vue/api/hooks/useDisconnect */
+/** https://wagmi.sh/vue/api/composables/useDisconnect */
 export function useDisconnect<context = unknown>(
   parameters: UseDisconnectParameters<context> = {},
 ): UseDisconnectReturnType<context> {

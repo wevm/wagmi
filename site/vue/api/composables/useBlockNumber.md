@@ -107,7 +107,7 @@ const { data: blockNumber } = useBlockNumber({
 
 `MaybeRef<string> | undefined`
 
-Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+Scopes the cache to a given context. Composables that have identical context will share the same cache.
 
 ::: code-group
 ```vue [index.vue]
@@ -127,7 +127,7 @@ const { data: blockNumber } = useBlockNumber({
 `MaybeRef<boolean | UseWatchBlockNumberParameters> | undefined`
 
 - Enables/disables listening for block number changes.
-- Can pass a subset of [`UseWatchBlockNumberParameters`](/react/api/hooks/useWatchBlockNumber#parameters)directly to [`useWatchBlockNumber`](/react/api/hooks/useWatchBlockNumber).
+- Can pass a subset of [`UseWatchBlockNumberParameters`](/vue/api/composables/useWatchBlockNumber#parameters)directly to [`useWatchBlockNumber`](/vue/api/composables/useWatchBlockNumber).
 
 ::: code-group
 ```vue [index.vue]
