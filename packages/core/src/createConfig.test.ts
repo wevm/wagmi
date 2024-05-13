@@ -49,9 +49,9 @@ test('getClient', () => {
       chainId: 123456,
     }),
   ).toThrowErrorMatchingInlineSnapshot(`
-    "Chain not configured.
+    [ChainNotConfiguredError: Chain not configured.
 
-    Version: @wagmi/core@x.y.z"
+    Version: @wagmi/core@x.y.z]
   `)
 
   expect(() => {
@@ -59,9 +59,9 @@ test('getClient', () => {
     config.state.chainId = 123456
     config.getClient()
   }).toThrowErrorMatchingInlineSnapshot(`
-    "Chain not configured.
+    [ChainNotConfiguredError: Chain not configured.
 
-    Version: @wagmi/core@x.y.z"
+    Version: @wagmi/core@x.y.z]
   `)
 })
 

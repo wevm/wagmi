@@ -64,7 +64,7 @@ test('nonce too low', async () => {
       nonce: 0,
     }),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
-    "Nonce provided for the transaction is lower than the current nonce of the account.
+    [CallExecutionError: Nonce provided for the transaction is lower than the current nonce of the account.
     Try increasing the nonce or find the latest nonce with \`getTransactionCount\`.
 
     Raw Call Arguments:
@@ -74,7 +74,7 @@ test('nonce too low', async () => {
       nonce:  0
 
     Details: nonce too low
-    Version: viem@2.8.4"
+    Version: viem@2.9.31]
   `)
 })
 
@@ -86,7 +86,7 @@ test('insufficient funds', async () => {
       value: parseEther('100000'),
     }),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
-    "The total cost (gas * gas fee + value) of executing this transaction exceeds the balance of the account.
+    [CallExecutionError: The total cost (gas * gas fee + value) of executing this transaction exceeds the balance of the account.
 
     This error could arise when the account does not have enough funds to:
      - pay for the total gas fee,
@@ -103,7 +103,7 @@ test('insufficient funds', async () => {
       value:  100000 ETH
 
     Details: Insufficient funds for gas * price + value
-    Version: viem@2.8.4"
+    Version: viem@2.9.31]
   `)
 })
 
@@ -117,7 +117,7 @@ test('maxFeePerGas less than maxPriorityFeePerGas', async () => {
       maxPriorityFeePerGas: parseGwei('22'),
     }),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
-    "The provided tip (\`maxPriorityFeePerGas\` = 22 gwei) cannot be higher than the fee cap (\`maxFeePerGas\` = 20 gwei).
+    [CallExecutionError: The provided tip (\`maxPriorityFeePerGas\` = 22 gwei) cannot be higher than the fee cap (\`maxFeePerGas\` = 20 gwei).
 
     Raw Call Arguments:
       from:                  0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
@@ -126,7 +126,7 @@ test('maxFeePerGas less than maxPriorityFeePerGas', async () => {
       maxFeePerGas:          20 gwei
       maxPriorityFeePerGas:  22 gwei
 
-    Version: viem@2.8.4"
+    Version: viem@2.9.31]
   `)
 })
 
@@ -138,7 +138,7 @@ test('contract revert (contract error)', async () => {
       to: address.wagmiMintExample,
     }),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
-    "Execution reverted with reason: revert: Token ID is taken.
+    [CallExecutionError: Execution reverted with reason: revert: Token ID is taken.
 
     Raw Call Arguments:
       from:  0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
@@ -146,7 +146,7 @@ test('contract revert (contract error)', async () => {
       data:  0xa0712d6800000000000000000000000000000000000000000000000000000000000001a4
 
     Details: execution reverted: revert: Token ID is taken
-    Version: viem@2.8.4"
+    Version: viem@2.9.31]
   `)
 })
 
@@ -158,7 +158,7 @@ test('contract revert (insufficient params)', async () => {
       to: address.wagmiMintExample,
     }),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
-    "Execution reverted for an unknown reason.
+    [CallExecutionError: Execution reverted for an unknown reason.
 
     Raw Call Arguments:
       from:  0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
@@ -166,6 +166,6 @@ test('contract revert (insufficient params)', async () => {
       data:  0xa0712d68
 
     Details: execution reverted
-    Version: viem@2.8.4"
+    Version: viem@2.9.31]
   `)
 })

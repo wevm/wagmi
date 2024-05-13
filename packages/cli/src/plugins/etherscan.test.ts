@@ -49,7 +49,7 @@ test('fails to fetch for unverified contract', async () => {
       ],
     }).contracts(),
   ).rejects.toThrowErrorMatchingInlineSnapshot(
-    '"Contract source code not verified"',
+    '[Error: Contract source code not verified]',
   )
 })
 
@@ -62,7 +62,7 @@ test('missing address for chainId', async () => {
       contracts: [{ name: 'WagmiMintExample', address: { 10: address } }],
     }).contracts(),
   ).rejects.toThrowErrorMatchingInlineSnapshot(
-    '"No address found for chainId \\"1\\". Make sure chainId \\"1\\" is set as an address."',
+    `[Error: No address found for chainId "1". Make sure chainId "1" is set as an address.]`,
   )
 })
 
@@ -73,5 +73,5 @@ test('invalid api key', async () => {
       chainId: 1,
       contracts: [{ name: 'WagmiMintExample', address: timeoutAddress }],
     }).contracts(),
-  ).rejects.toThrowErrorMatchingInlineSnapshot('"Invalid API Key"')
+  ).rejects.toThrowErrorMatchingInlineSnapshot('[Error: Invalid API Key]')
 })

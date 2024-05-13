@@ -496,7 +496,11 @@ export {
 
 export { custom, http, webSocket } from 'viem'
 
-export { unstable_connector } from '../transports/connector.js'
+export {
+  type ConnectorTransportConfig,
+  type ConnectorTransport,
+  unstable_connector,
+} from '../transports/connector.js'
 
 export { fallback } from '../transports/fallback.js'
 

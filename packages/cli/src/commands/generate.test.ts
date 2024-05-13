@@ -168,9 +168,9 @@ test('behavior: invalid cli options', async () => {
       config: 1,
     }),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
-        "Invalid option
-        - Expected string, received number at \`config\`"
-      `)
+    [Error: Invalid option
+    - Expected string, received number at \`config\`]
+  `)
 })
 
 test('behavior: config not found', async () => {
@@ -179,7 +179,7 @@ test('behavior: config not found', async () => {
   spy.mockImplementation(() => dir)
 
   await expect(generate()).rejects.toThrowErrorMatchingInlineSnapshot(
-    '"Config not found"',
+    '[Error: Config not found]',
   )
 })
 
@@ -228,7 +228,7 @@ test('behavior: config out not unique', async () => {
   spy.mockImplementation(() => dir)
 
   await expect(generate()).rejects.toThrowErrorMatchingInlineSnapshot(
-    '"out \\"generated.ts\\" must be unique."',
+    `[Error: out "generated.ts" must be unique.]`,
   )
 })
 
@@ -256,7 +256,7 @@ test('behavior: config contract names not unique', async () => {
   spy.mockImplementation(() => dir)
 
   await expect(generate()).rejects.toThrowErrorMatchingInlineSnapshot(
-    '"Contract name \\"Foo\\" must be unique."',
+    `[Error: Contract name "Foo" must be unique.]`,
   )
 })
 
@@ -307,9 +307,9 @@ test('behavior: throws when abi is invalid', async () => {
   spy.mockImplementation(() => dir)
 
   await expect(generate()).rejects.toThrowErrorMatchingInlineSnapshot(`
-          "Invalid ABI for contract \\"Foo\\"
-          - Invalid input at \`[0]\`"
-        `)
+    [Error: Invalid ABI for contract "Foo"
+    - Invalid input at \`[0]\`]
+  `)
 })
 
 test('behavior: throws when address is invalid', async () => {
@@ -333,9 +333,9 @@ test('behavior: throws when address is invalid', async () => {
   spy.mockImplementation(() => dir)
 
   await expect(generate()).rejects.toThrowErrorMatchingInlineSnapshot(`
-          "Invalid address for contract \\"Foo\\"
-          - Invalid address"
-        `)
+    [Error: Invalid address for contract "Foo"
+    - Invalid address]
+  `)
 })
 
 test('behavior: throws when multichain address is invalid', async () => {
@@ -362,9 +362,9 @@ test('behavior: throws when multichain address is invalid', async () => {
   spy.mockImplementation(() => dir)
 
   await expect(generate()).rejects.toThrowErrorMatchingInlineSnapshot(`
-          "Invalid address for contract \\"Foo\\"
-          - Invalid address at \`5\`"
-        `)
+    [Error: Invalid address for contract "Foo"
+    - Invalid address at \`5\`]
+  `)
 })
 
 test('behavior: displays message if using --watch flag without watchers configured', async () => {

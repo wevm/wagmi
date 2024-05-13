@@ -1,5 +1,59 @@
 # @wagmi/core
 
+## 2.9.7
+
+### Patch Changes
+
+- [#3924](https://github.com/wevm/wagmi/pull/3924) [`1f58734f88458e0f6adb05c99f0c90f36ab286b8`](https://github.com/wevm/wagmi/commit/1f58734f88458e0f6adb05c99f0c90f36ab286b8) Thanks [@jxom](https://github.com/jxom)! - Refactored `isChainsStale` logic in `walletConnect` connector.
+
+## 2.9.6
+
+### Patch Changes
+
+- [#3917](https://github.com/wevm/wagmi/pull/3917) [`05948fdad5bb4a56b08916d45b3dec2cb1e5f55b`](https://github.com/wevm/wagmi/commit/05948fdad5bb4a56b08916d45b3dec2cb1e5f55b) Thanks [@jxom](https://github.com/jxom)! - Updated `@metamask/sdk`.
+
+## 2.9.5
+
+### Patch Changes
+
+- [`4fecbbb66d0aacd03b8c62a6455d11a33cde8f85`](https://github.com/wevm/wagmi/commit/4fecbbb66d0aacd03b8c62a6455d11a33cde8f85) Thanks [@jxom](https://github.com/jxom)! - Fixed address comparison in `getConnectorClient`.
+
+## 2.9.4
+
+### Patch Changes
+
+- [#3910](https://github.com/wevm/wagmi/pull/3910) [`e6139a97c4b8804d734b1547b5e3921ce01fbe24`](https://github.com/wevm/wagmi/commit/e6139a97c4b8804d734b1547b5e3921ce01fbe24) Thanks [@tmm](https://github.com/tmm)! - Added experimental `wallet_revokePermissions` support to `injected`.
+
+## 2.9.3
+
+### Patch Changes
+
+- [#3904](https://github.com/wevm/wagmi/pull/3904) [`addca28ebc20f1a4367c35fe9ef786decff9c87e`](https://github.com/wevm/wagmi/commit/addca28ebc20f1a4367c35fe9ef786decff9c87e) Thanks [@jxom](https://github.com/jxom)! - Updated `@walletconnect/ethereum-provider`.
+
+## 2.9.2
+
+### Patch Changes
+
+- [#3902](https://github.com/wevm/wagmi/pull/3902) [`204b7b624612405500ec098fb9e35facd3f74ca4`](https://github.com/wevm/wagmi/commit/204b7b624612405500ec098fb9e35facd3f74ca4) Thanks [@jxom](https://github.com/jxom)! - Made third-party SDK imports type-only.
+
+## 2.9.1
+
+### Patch Changes
+
+- [`cda6a5d5`](https://github.com/wevm/wagmi/commit/cda6a5d56328330fbde050b4ef40b01c58d2519a) Thanks [@jxom](https://github.com/jxom)! - Updated packages.
+
+## 2.9.0
+
+### Minor Changes
+
+- [#3878](https://github.com/wevm/wagmi/pull/3878) [`017828fc`](https://github.com/wevm/wagmi/commit/017828fc027c7a84b54ea9d627e9389f4d60d6c2) Thanks [@jxom](https://github.com/jxom)! - Added experimental EIP-5792 Actions & Hooks.
+
+## 2.8.1
+
+### Patch Changes
+
+- [#3869](https://github.com/wevm/wagmi/pull/3869) [`d4a78eb0`](https://github.com/wevm/wagmi/commit/d4a78eb07119d2e5617e52481ac7d6c6d1583ddc) Thanks [@jxom](https://github.com/jxom)! - Fixed issue where `prepareTransactionRequest` would internally call unsupported wallet RPC methods.
+
 ## 2.8.0
 
 ### Minor Changes

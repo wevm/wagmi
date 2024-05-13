@@ -22,7 +22,7 @@ test('context', () => {
       onSuccess(data, variables, context) {
         expectTypeOf(variables).toEqualTypeOf<SignMessageVariables>()
         expectTypeOf(data).toEqualTypeOf<`0x${string}`>()
-        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
       },
       onSettled(data, error, variables, context) {
         expectTypeOf(data).toEqualTypeOf<`0x${string}` | undefined>()

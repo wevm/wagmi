@@ -1,7 +1,7 @@
 {
   "name": "wagmi",
   "description": "React Hooks for Ethereum",
-  "version": "2.7.0",
+  "version": "2.8.7",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -11,7 +11,7 @@
   "scripts": {
     "build": "pnpm run clean && pnpm run build:esm+types",
     "build:esm+types": "tsc --project tsconfig.build.json --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
-    "clean": "rm -rf dist tsconfig.tsbuildinfo actions chains codegen connectors query",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo actions chains codegen connectors experimental query",
     "test:build": "publint --strict",
     "typecheck": "tsc --noEmit"
   },
@@ -25,6 +25,7 @@
     "/chains",
     "/codegen",
     "/connectors",
+    "/experimental",
     "/query"
   ],
   "sideEffects": false,
@@ -53,6 +54,10 @@
       "types": "./dist/types/exports/connectors.d.ts",
       "default": "./dist/esm/exports/connectors.js"
     },
+    "./experimental": {
+      "types": "./dist/types/exports/experimental.d.ts",
+      "default": "./dist/esm/exports/experimental.js"
+    },
     "./query": {
       "types": "./dist/types/exports/query.d.ts",
       "default": "./dist/esm/exports/query.js"
@@ -72,6 +77,9 @@
       ],
       "connectors": [
         "./dist/types/exports/connectors.d.ts"
+      ],
+      "experimental": [
+        "./dist/types/exports/experimental.d.ts"
       ],
       "query": [
         "./dist/types/exports/query.d.ts"
@@ -95,13 +103,13 @@
     "use-sync-external-store": "1.2.0"
   },
   "devDependencies": {
-    "@tanstack/react-query": ">=5.0.0",
-    "@testing-library/react": ">=14.0.0",
-    "@types/react": ">=18",
-    "@types/react-dom": ">=18",
+    "@tanstack/react-query": ">=5.35.1",
+    "@testing-library/react": ">=15.0.7",
+    "@types/react": ">=18.3.1",
+    "@types/react-dom": ">=18.3.0",
     "@types/use-sync-external-store": "^0.0.3",
-    "react": ">=18",
-    "react-dom": ">=18"
+    "react": ">=18.3.1",
+    "react-dom": ">=18.3.1"
   },
   "contributors": [
     "awkweb.eth <t@wevm.dev>",

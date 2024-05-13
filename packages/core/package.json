@@ -1,7 +1,7 @@
 {
   "name": "@wagmi/core",
   "description": "VanillaJS library for Ethereum",
-  "version": "2.8.0",
+  "version": "2.9.7",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -11,7 +11,7 @@
   "scripts": {
     "build": "pnpm run clean && pnpm run build:esm+types",
     "build:esm+types": "tsc --project tsconfig.build.json --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
-    "clean": "rm -rf dist tsconfig.tsbuildinfo actions chains codegen internal query",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo actions chains codegen experimental internal query",
     "test:build": "publint --strict",
     "typecheck": "tsc --noEmit"
   },
@@ -23,6 +23,7 @@
     "!src/**/*.test-d.ts",
     "/actions",
     "/chains",
+    "/experimental",
     "/internal",
     "/query"
   ],
@@ -48,6 +49,10 @@
       "types": "./dist/types/exports/codegen.d.ts",
       "default": "./dist/esm/exports/codegen.js"
     },
+    "./experimental": {
+      "types": "./dist/types/exports/experimental.d.ts",
+      "default": "./dist/esm/exports/experimental.js"
+    },
     "./internal": {
       "types": "./dist/types/exports/internal.d.ts",
       "default": "./dist/esm/exports/internal.js"
@@ -68,6 +73,9 @@
       ],
       "codegen": [
         "./dist/types/exports/codegen.d.ts"
+      ],
+      "experimental": [
+        "./dist/types/exports/experimental.d.ts"
       ],
       "internal": [
         "./dist/types/exports/internal.d.ts"
@@ -96,7 +104,7 @@
     "zustand": "4.4.1"
   },
   "devDependencies": {
-    "@tanstack/query-core": ">=5.0.0"
+    "@tanstack/query-core": ">=5.35.1"
   },
   "contributors": [
     "awkweb.eth <t@wevm.dev>",

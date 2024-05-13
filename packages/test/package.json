@@ -86,13 +86,13 @@
     }
   },
   "devDependencies": {
-    "@tanstack/react-query": ">=5.0.0",
-    "@testing-library/react": ">=14.0.0",
-    "@types/react": ">=18",
-    "@types/react-dom": ">=18",
+    "@tanstack/react-query": ">=5.35.1",
+    "@testing-library/react": ">=15.0.7",
+    "@types/react": ">=18.3.1",
+    "@types/react-dom": ">=18.3.0",
     "@wagmi/core": "workspace:*",
-    "react": ">=18",
-    "react-dom": ">=18",
+    "react": ">=18.3.1",
+    "react-dom": ">=18.3.1",
     "wagmi": "workspace:*"
   },
   "contributors": [

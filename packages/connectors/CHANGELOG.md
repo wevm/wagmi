@@ -1,5 +1,76 @@
 # @wagmi/connectors
 
+## 4.3.9
+
+### Patch Changes
+
+- [#3924](https://github.com/wevm/wagmi/pull/3924) [`1f58734f88458e0f6adb05c99f0c90f36ab286b8`](https://github.com/wevm/wagmi/commit/1f58734f88458e0f6adb05c99f0c90f36ab286b8) Thanks [@jxom](https://github.com/jxom)! - Refactored `isChainsStale` logic in `walletConnect` connector.
+
+- Updated dependencies [[`1f58734f88458e0f6adb05c99f0c90f36ab286b8`](https://github.com/wevm/wagmi/commit/1f58734f88458e0f6adb05c99f0c90f36ab286b8)]:
+  - @wagmi/core@2.9.7
+
+## 4.3.8
+
+### Patch Changes
+
+- [#3917](https://github.com/wevm/wagmi/pull/3917) [`05948fdad5bb4a56b08916d45b3dec2cb1e5f55b`](https://github.com/wevm/wagmi/commit/05948fdad5bb4a56b08916d45b3dec2cb1e5f55b) Thanks [@jxom](https://github.com/jxom)! - Updated `@metamask/sdk`.
+
+- Updated dependencies [[`05948fdad5bb4a56b08916d45b3dec2cb1e5f55b`](https://github.com/wevm/wagmi/commit/05948fdad5bb4a56b08916d45b3dec2cb1e5f55b)]:
+  - @wagmi/core@2.9.6
+
+## 4.3.7
+
+### Patch Changes
+
+- Updated dependencies [[`4fecbbb66d0aacd03b8c62a6455d11a33cde8f85`](https://github.com/wevm/wagmi/commit/4fecbbb66d0aacd03b8c62a6455d11a33cde8f85)]:
+  - @wagmi/core@2.9.5
+
+## 4.3.6
+
+### Patch Changes
+
+- Updated dependencies [[`e6139a97c4b8804d734b1547b5e3921ce01fbe24`](https://github.com/wevm/wagmi/commit/e6139a97c4b8804d734b1547b5e3921ce01fbe24)]:
+  - @wagmi/core@2.9.4
+
+## 4.3.5
+
+### Patch Changes
+
+- [#3904](https://github.com/wevm/wagmi/pull/3904) [`addca28ebc20f1a4367c35fe9ef786decff9c87e`](https://github.com/wevm/wagmi/commit/addca28ebc20f1a4367c35fe9ef786decff9c87e) Thanks [@jxom](https://github.com/jxom)! - Updated `@walletconnect/ethereum-provider`.
+
+- Updated dependencies [[`addca28ebc20f1a4367c35fe9ef786decff9c87e`](https://github.com/wevm/wagmi/commit/addca28ebc20f1a4367c35fe9ef786decff9c87e)]:
+  - @wagmi/core@2.9.3
+
+## 4.3.4
+
+### Patch Changes
+
+- [#3902](https://github.com/wevm/wagmi/pull/3902) [`204b7b624612405500ec098fb9e35facd3f74ca4`](https://github.com/wevm/wagmi/commit/204b7b624612405500ec098fb9e35facd3f74ca4) Thanks [@jxom](https://github.com/jxom)! - Made third-party SDK imports type-only.
+
+- Updated dependencies [[`204b7b624612405500ec098fb9e35facd3f74ca4`](https://github.com/wevm/wagmi/commit/204b7b624612405500ec098fb9e35facd3f74ca4)]:
+  - @wagmi/core@2.9.2
+
+## 4.3.3
+
+### Patch Changes
+
+- Updated dependencies [[`cda6a5d5`](https://github.com/wevm/wagmi/commit/cda6a5d56328330fbde050b4ef40b01c58d2519a)]:
+  - @wagmi/core@2.9.1
+
+## 4.3.2
+
+### Patch Changes
+
+- Updated dependencies [[`017828fc`](https://github.com/wevm/wagmi/commit/017828fc027c7a84b54ea9d627e9389f4d60d6c2)]:
+  - @wagmi/core@2.9.0
+
+## 4.3.1
+
+### Patch Changes
+
+- Updated dependencies [[`d4a78eb0`](https://github.com/wevm/wagmi/commit/d4a78eb07119d2e5617e52481ac7d6c6d1583ddc)]:
+  - @wagmi/core@2.8.1
+
 ## 4.3.0
 
 ### Minor Changes

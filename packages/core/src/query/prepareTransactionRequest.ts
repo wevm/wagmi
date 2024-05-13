@@ -86,8 +86,7 @@ export function prepareTransactionRequestQueryKey<
     SelectChains<config, chainId>[0]
   >,
 >(options: PrepareTransactionRequestOptions<config, chainId, request>) {
-  const { connector: _c, ...rest } = options
-  return ['prepareTransactionRequest', filterQueryOptions(rest)] as const
+  return ['prepareTransactionRequest', filterQueryOptions(options)] as const
 }
 
 export type PrepareTransactionRequestQueryKey<

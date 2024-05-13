@@ -6,11 +6,14 @@ import {
   SwitchChainError,
   type Transport,
   UserRejectedRequestError,
+  type WalletCallReceipt,
   type WalletRpcSchema,
   custom,
   fromHex,
   getAddress,
+  keccak256,
   numberToHex,
+  stringToHex,
 } from 'viem'
 import { rpc } from 'viem/utils'
 
@@ -35,6 +38,7 @@ export type MockParameters = {
 
 mock.type = 'mock' as const
 export function mock(parameters: MockParameters) {
+  const transactionCache = new Map<Hex, Hex[]>()
   const features = parameters.features ?? {}
 
   type Provider = ReturnType<
@@ -70,7 +74,10 @@ export function mock(parameters: MockParameters) {
 
       connected = true
 
-      return { accounts, chainId: currentChainId }
+      return {
+        accounts: accounts.map((x) => getAddress(x)),
+        chainId: currentChainId,
+      }
     },
     async disconnect() {
       connected = false
@@ -150,6 +157,86 @@ export function mock(parameters: MockParameters) {
           this.onChainChanged(connectedChainId.toString())
           return
         }
+
+        if (method === 'wallet_getCapabilities')
+          return {
+            '0x2105': {
+              paymasterService: {
+                supported:
+                  (params as [Hex])[0] ===
+                  '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',
+              },
+              sessionKeys: {
+                supported: true,
+              },
+            },
+            '0x14A34': {
+              paymasterService: {
+                supported:
+                  (params as [Hex])[0] ===
+                  '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',
+              },
+            },
+          }
+
+        if (method === 'wallet_sendCalls') {
+          const hashes = []
+          const calls = (params as any)[0].calls
+          for (const call of calls) {
+            const { result, error } = await rpc.http(url, {
+              body: {
+                method: 'eth_sendTransaction',
+                params: [call],
+              },
+            })
+            if (error)
+              throw new RpcRequestError({
+                body: { method, params },
+                error,
+                url,
+              })
+            hashes.push(result)
+          }
+          const id = keccak256(stringToHex(JSON.stringify(calls)))
+          transactionCache.set(id, hashes)
+          return id
+        }
+
+        if (method === 'wallet_getCallsStatus') {
+          const hashes = transactionCache.get((params as any)[0])
+          if (!hashes) return null
+          const receipts = await Promise.all(
+            hashes.map(async (hash) => {
+              const { result, error } = await rpc.http(url, {
+                body: {
+                  method: 'eth_getTransactionReceipt',
+                  params: [hash],
+                  id: 0,
+                },
+              })
+              if (error)
+                throw new RpcRequestError({
+                  body: { method, params },
+                  error,
+                  url,
+                })
+              if (!result) return null
+              return {
+                blockHash: result.blockHash,
+                blockNumber: result.blockNumber,
+                gasUsed: result.gasUsed,
+                logs: result.logs,
+                status: result.status,
+                transactionHash: result.transactionHash,
+              } satisfies WalletCallReceipt
+            }),
+          )
+          if (receipts.some((x) => !x))
+            return { status: 'PENDING', receipts: [] }
+          return { status: 'CONFIRMED', receipts }
+        }
+
+        if (method === 'wallet_showCallsStatus') return
 
         // other methods
         if (method === 'personal_sign') {

@@ -65,11 +65,11 @@ test('UseSimulateContractParameters', () => {
     typeof config
   >
 
-  expectTypeOf<Result>().toMatchTypeOf<{
+  expectTypeOf<{
     functionName?: 'approve' | 'transfer' | 'transferFrom' | undefined
     args?: readonly [Address, Address, bigint] | undefined
     chainId?: ChainId | undefined
-  }>()
+  }>().toMatchTypeOf<Result>()
 
   type Result2 = UseSimulateContractParameters<
     typeof abi.erc20,
