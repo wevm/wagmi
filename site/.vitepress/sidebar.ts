@@ -487,10 +487,13 @@ export function getSidebar() {
             link: '/vue/api/composables/useAccountEffect',
           },
           {
+            text: 'useBalance',
+            link: '/vue/api/composables/useBalance',
+          },
+          {
             text: 'useBlockNumber',
             link: '/vue/api/composables/useBlockNumber',
           },
-
           { text: 'useChainId', link: '/vue/api/composables/useChainId' },
           { text: 'useChains', link: '/vue/api/composables/useChains' },
           { text: 'useClient', link: '/vue/api/composables/useClient' },
@@ -519,6 +522,10 @@ export function getSidebar() {
           {
             text: 'useReconnect',
             link: '/vue/api/composables/useReconnect',
+          },
+          {
+            text: 'useSendTransaction',
+            link: '/vue/api/composables/useSendTransaction',
           },
           {
             text: 'useSwitchAccount',

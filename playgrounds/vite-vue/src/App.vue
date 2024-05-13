@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Account from './components/Account.vue';
+import Balance from './components/Balance.vue';
 import BlockNumber from './components/BlockNumber.vue';
 import Client from './components/Client.vue';
 import Connect from './components/Connect.vue';
@@ -14,6 +15,7 @@ import WriteContract from './components/WriteContract.vue';
 
 <template>
   <Account />
+  <Balance />
   <Connect />
   <Connections />
   <SwitchAccount />

@@ -1,16 +1,13 @@
 <script setup lang="ts">
 import { Hex, parseEther } from 'viem'
-import { useConfig } from '@wagmi/vue'
-import { sendTransactionMutationOptions, useMutation } from '@wagmi/vue/query'
-
-const config = useConfig()
+import { useSendTransaction } from '@wagmi/vue'
 
 const {
   data: hash,
   error,
   isPending,
-  mutate: sendTransaction
-} = useMutation(sendTransactionMutationOptions(config))
+  sendTransaction
+} = useSendTransaction()
 
 function onSubmit(event: any) {
   const form = new FormData(event.target)

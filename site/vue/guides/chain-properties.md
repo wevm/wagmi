@@ -10,7 +10,7 @@ Make sure you follow the TypeScript guide's [Config Types](/vue/typescript#confi
 <<< @/snippets/vue/config-chain-properties.ts[config.ts]
 :::
 
-<!-- TODO: ## Narrowing Parameters
+## Narrowing Parameters
 
 Once your Config is registered with TypeScript, you are ready to access chain-specifc properties! For example, Celo's `feeCurrency`, `gatewayFee`, and `gatewayFeeRecipient` are all available.
 
@@ -51,7 +51,7 @@ const result = useSimulateContract({
 })
 ```
 <<< @/snippets/vue/config-chain-properties.ts[config.ts]
-::: -->
+:::
 
 ## Narrowing Return Types
 

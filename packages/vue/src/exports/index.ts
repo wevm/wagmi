@@ -33,6 +33,12 @@ export {
 } from '../composables/useAccountEffect.js'
 
 export {
+  type UseBalanceParameters,
+  type UseBalanceReturnType,
+  useBalance,
+} from '../composables/useBalance.js'
+
+export {
   type UseBlockNumberParameters,
   type UseBlockNumberReturnType,
   useBlockNumber,
@@ -103,6 +109,18 @@ export {
   type UseReconnectReturnType,
   useReconnect,
 } from '../composables/useReconnect.js'
+
+export {
+  type UseSendTransactionParameters,
+  type UseSendTransactionReturnType,
+  useSendTransaction,
+} from '../composables/useSendTransaction.js'
+
+export {
+  type UseSimulateContractParameters,
+  type UseSimulateContractReturnType,
+  useSimulateContract,
+} from '../composables/useSimulateContract.js'
 
 export {
   type UseSwitchAccountParameters,
