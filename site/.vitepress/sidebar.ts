@@ -384,7 +384,7 @@ export function getSidebar() {
         text: 'Guides',
         items: [
           {
-            text: 'TanStack Query 🚧',
+            text: 'TanStack Query',
             link: '/vue/guides/tanstack-query',
           },
           {
@@ -392,12 +392,8 @@ export function getSidebar() {
             link: '/vue/guides/viem',
           },
           {
-            text: 'Error Handling 🚧',
+            text: 'Error Handling',
             link: '/vue/guides/error-handling',
-          },
-          {
-            text: 'Ethers.js Adapters 🚧',
-            link: '/vue/guides/ethers',
           },
           {
             text: 'Chain Properties 🚧',
@@ -412,7 +408,7 @@ export function getSidebar() {
             link: '/vue/guides/connect-wallet',
           },
           {
-            text: 'FAQ / Troubleshooting 🚧',
+            text: 'FAQ / Troubleshooting',
             link: '/vue/guides/faq',
           },
         ],
