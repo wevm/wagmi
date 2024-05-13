@@ -5,6 +5,7 @@ import {
   type QueryObserverOptions,
   type UseMutationReturnType as tanstack_UseMutationReturnType,
   type UseQueryReturnType as tanstack_UseQueryReturnType,
+  useMutation,
   useQuery as tanstack_useQuery,
 } from '@tanstack/vue-query'
 import {
@@ -14,7 +15,7 @@ import {
   type UnionOmit,
 } from '@wagmi/core/internal'
 import { hashFn } from '@wagmi/core/query'
-import { computed, unref } from 'vue'
+import { type MaybeRef, computed, unref } from 'vue'
 
 import type { DeepMaybeRef, DeepUnwrapRef } from '../types/ref.js'
 
@@ -45,6 +46,8 @@ export type UseMutationReturnType<
     'mutate' | 'mutateAsync'
   >
 >
+
+export { useMutation }
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -81,9 +84,11 @@ export type UseQueryReturnType<data = unknown, error = DefaultError> = Evaluate<
 // Ideally we don't have this function, but `import('@tanstack/vue-query').useQuery` currently has some quirks where it is super hard to
 // pass down the inferred `initialData` type because of it's discriminated overload in the on `useQuery`.
 export function useQuery<queryFnData, error, data, queryKey extends QueryKey>(
-  parameters: UseQueryParameters<queryFnData, error, data, queryKey> & {
-    queryKey: QueryKey
-  },
+  parameters: MaybeRef<
+    UseQueryParameters<queryFnData, error, data, queryKey> & {
+      queryKey: QueryKey
+    }
+  >,
 ): UseQueryReturnType<data, error> {
   const options = computed(() => ({
     ...(unref(parameters) as any),

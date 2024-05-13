@@ -12,6 +12,7 @@ import {
   useSwitchChain
 } from '@wagmi/vue'
 import { ref } from 'vue'
+import SendTransaction from './components/SendTransaction.vue'
 
 const watchBlockNumber = ref(false)
 
@@ -120,5 +121,7 @@ const switchChain = useSwitchChain()
 
       <pre>{{ connectorClient }}</pre>
     </div>
+
+    <SendTransaction />
   </div>
 </template>

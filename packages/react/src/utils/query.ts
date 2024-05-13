@@ -8,6 +8,7 @@ import {
   type UseQueryOptions,
   type UseQueryResult,
   useInfiniteQuery as tanstack_useInfiniteQuery,
+  useMutation,
   useQuery as tanstack_useQuery,
 } from '@tanstack/react-query'
 import {
@@ -41,6 +42,8 @@ export type UseMutationReturnType<
     'mutate' | 'mutateAsync'
   >
 >
+
+export { useMutation }
 
 ////////////////////////////////////////////////////////////////////////////////
 

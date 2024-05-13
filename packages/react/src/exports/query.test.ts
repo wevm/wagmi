@@ -82,6 +82,9 @@ test('exports', () => {
       "writeContractMutationOptions",
       "hashFn",
       "structuralSharing",
+      "useInfiniteQuery",
+      "useMutation",
+      "useQuery",
     ]
   `)
 })

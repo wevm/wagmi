@@ -388,7 +388,7 @@ export function getSidebar() {
             link: '/vue/guides/tanstack-query',
           },
           {
-            text: 'Viem 🚧',
+            text: 'Viem',
             link: '/vue/guides/viem',
           },
           {
