@@ -541,6 +541,9 @@ importers:
       '@tanstack/react-query':
         specifier: '>=5.35.1'
         version: 5.35.1(react@18.3.1)
+      '@tanstack/vue-query':
+        specifier: '>=5.35.1'
+        version: 5.35.2(vue@3.4.27(typescript@5.4.2))
       '@types/react':
         specifier: '>=18.3.1'
         version: 18.3.1

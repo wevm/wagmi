@@ -396,7 +396,7 @@ export function getSidebar() {
             link: '/vue/guides/error-handling',
           },
           {
-            text: 'Chain Properties 🚧',
+            text: 'Chain Properties',
             link: '/vue/guides/chain-properties',
           },
           {

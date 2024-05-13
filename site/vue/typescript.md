@@ -121,7 +121,7 @@ useBlockNumber({ chainId: 123, config: configB })
 
 This approach is more explicit, but works well for advanced use-cases, if you don't want to use a Vue Plugin or declaration merging, etc.
 
-<!-- TODO: ## Const-Assert ABIs & Typed Data
+## Const-Assert ABIs & Typed Data
 
 Wagmi can infer types based on [ABIs](https://docs.soliditylang.org/en/latest/abi-spec.html#json) and [EIP-712](https://eips.ethereum.org/EIPS/eip-712) Typed Data definitions, powered by [Viem](https://viem.sh) and [ABIType](https://github.com/wevm/abitype). This achieves full end-to-end type-safety from your contracts to your frontend and enlightened developer experience by autocompleting ABI item names, catching misspellings, inferring argument and return types (including overloads), and more.
 
@@ -141,12 +141,12 @@ const { data } = useReadContract({ abi })
 If type inference isn't working, it's likely you forgot to add a `const` assertion or define the configuration parameter inline. Also, make sure your ABIs, Typed Data definitions, and [TypeScript configuration](#requirements) are valid and set up correctly.
 
 ::: tip
-Unfortunately [TypeScript doesn't support importing JSON `as const` yet](https://github.com/microsoft/TypeScript/issues/32063). Check out the [Wagmi CLI](/cli/getting-started) to help with this! It can automatically fetch ABIs from Etherscan and other block explorers, resolve ABIs from your Foundry/Hardhat projects, generate React Hooks, and more.
+Unfortunately [TypeScript doesn't support importing JSON `as const` yet](https://github.com/microsoft/TypeScript/issues/32063). Check out the [Wagmi CLI](/cli/getting-started) to help with this! It can automatically fetch ABIs from Etherscan and other block explorers, resolve ABIs from your Foundry/Hardhat projects, generate Vue Composables, and more.
 :::
 
 Anywhere you see the `abi` or `types` configuration property, you can likely use const-asserted or inline ABIs and Typed Data to get type-safety and inference. These properties are also called out in the docs.
 
-Here's what [`useReadContract`](/react/api/hooks/useReadContract) looks like with and without a const-asserted `abi` property.
+Here's what [`useReadContract`](/vue/api/hooks/useReadContract) looks like with and without a const-asserted `abi` property.
 
 ::: code-group
 ```ts twoslash [Const-Asserted]
@@ -292,7 +292,7 @@ useReadContract({
   abi: erc721Abi,
   functionName: 'balanecOf',
 })
-``` -->
+```
 
 ## Configure Internal Types
 
