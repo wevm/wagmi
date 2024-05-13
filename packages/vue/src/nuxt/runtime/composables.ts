@@ -1,1 +1,1 @@
-export * from '@wagmi/vue'
+export * from '../../exports/index.js'
