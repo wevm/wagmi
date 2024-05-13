@@ -117,7 +117,7 @@
       },
       "packages/vue": {
         "entry": "src/exports/{actions,chains,connectors,index,nuxt,query}.ts!",
-        "ignore": ["test/setup.ts"],
+        "ignore": ["src/nuxt/runtime/*", "test/setup.ts"],
         "ignoreDependencies": ["nuxt"]
       }
     }
