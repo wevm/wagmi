@@ -1,127 +1,25 @@
 <script setup lang="ts">
-import {
-  useAccount,
-  useBlockNumber,
-  useChainId,
-  useClient,
-  useConnect,
-  useConnectorClient,
-  useConnections,
-  useDisconnect,
-  useSwitchAccount,
-  useSwitchChain
-} from '@wagmi/vue'
-import { ref } from 'vue'
+import Account from './components/Account.vue';
+import BlockNumber from './components/BlockNumber.vue';
+import Client from './components/Client.vue';
+import Connect from './components/Connect.vue';
+import ConnectorClient from './components/ConnectorClient.vue';
+import Connections from './components/Connections.vue';
 import SendTransaction from './components/SendTransaction.vue'
-
-const watchBlockNumber = ref(false)
-
-const account = useAccount()
-const chainId = useChainId()
-const blockNumber = useBlockNumber({ watch: watchBlockNumber })
-const client = useClient()
-const connect = useConnect()
-const connections = useConnections()
-const connectorClient = useConnectorClient()
-const disconnect = useDisconnect()
-const switchAccount = useSwitchAccount()
-const switchChain = useSwitchChain()
+import SwitchAccount from './components/SwitchAccount.vue';
+import SwitchChain from './components/SwitchChain.vue';
 </script>
 
 <template>
   <div>
-    <div>
-      <h2>Account</h2>
-
-      <div>
-        account: {{ account.address }}
-        <br />
-        chainId: {{ account.chainId }}
-        <br />
-        status: {{ account.status }}
-      </div>
-
-      <button v-if="account.status.value !== 'disconnected'" type="button" @click="disconnect.disconnect()">
-        Disconnect
-      </button>
-    </div>
-
-    <div>
-      <h2>Connect</h2>
-
-      <button v-for="connector in connect.connectors" :key="connector.id" type="button"
-        @click="connect.connect({ connector, chainId })">
-        {{ connector.name }}
-      </button>
-
-      <div>
-        {{ connect.status }}
-        {{ connect.error }}
-      </div>
-    </div>
-
-    <div>
-      <h2>Connections</h2>
-
-      <div v-for="connection in connections" :key="connection.connector.id" type="button">
-        <div>connector {{ connection.connector.name }}</div>
-        <div>accounts: {{ JSON.stringify(connection.accounts) }}</div>
-        <div>chainId: {{ connection.chainId }}</div>
-      </div>
-    </div>
-
-    <div>
-      <h2>Switch Account</h2>
-
-      <button v-for="connector in switchAccount.connectors.value" :key="connector.id"
-        :disabled="account.connector.value?.uid === connector.uid" type="button"
-        @click="switchAccount.switchAccount({ connector })">
-        {{ connector.name }}
-      </button>
-
-      <div>
-        {{ switchAccount.status }}
-        {{ switchAccount.error }}
-      </div>
-    </div>
-
-    <div>
-      <h2>Switch Chain</h2>
-
-      <div>Chain ID: {{ chainId }}</div>
-
-      <button v-for="chain in switchChain.chains.value" :key="chain.id" :disabled="chain.id === chainId" type="button"
-        @click="switchChain.switchChain({ chainId: chain.id })">
-        {{ chain.name }}
-      </button>
-
-      <div>
-        {{ switchChain.status }}
-        {{ switchChain.error }}
-      </div>
-    </div>
-
-    <div>
-      <h2>Block Number</h2>
-
-      <div>{{ blockNumber.data.value }}</div>
-      <button type="button" @click="watchBlockNumber = !watchBlockNumber">
-        {{ watchBlockNumber ? 'Stop' : 'Start' }} watching
-      </button>
-    </div>
-
-    <div>
-      <h2>Client</h2>
-
-      <pre>{{ client }}</pre>
-    </div>
-
-    <div>
-      <h2>Connector Client</h2>
-
-      <pre>{{ connectorClient }}</pre>
-    </div>
-
+    <Account />
+    <Connect />
+    <Connections />
+    <SwitchAccount />
+    <SwitchChain />
+    <BlockNumber />
     <SendTransaction />
+    <Client />
+    <ConnectorClient />
   </div>
 </template>
