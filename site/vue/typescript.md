@@ -146,7 +146,7 @@ Unfortunately [TypeScript doesn't support importing JSON `as const` yet](https:/
 
 Anywhere you see the `abi` or `types` configuration property, you can likely use const-asserted or inline ABIs and Typed Data to get type-safety and inference. These properties are also called out in the docs.
 
-Here's what [`useReadContract`](/vue/api/hooks/useReadContract) looks like with and without a const-asserted `abi` property.
+Here's what [`useReadContract`](/vue/api/composables/useReadContract) looks like with and without a const-asserted `abi` property.
 
 ::: code-group
 ```ts twoslash [Const-Asserted]
