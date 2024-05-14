@@ -22,7 +22,7 @@ export const config = createConfig({
     walletConnect({
       projectId: import.meta.env.VITE_WC_PROJECT_ID,
     }),
-    coinbaseWallet(),
+    coinbaseWallet({ version: '4' }),
     metaMask(),
   ],
   transports: {
