@@ -99,6 +99,18 @@ export {
 } from '../composables/useDisconnect.js'
 
 export {
+  type UseEnsAddressParameters,
+  type UseEnsAddressReturnType,
+  useEnsAddress,
+} from '../composables/useEnsAddress.js'
+
+export {
+  type UseEnsAvatarParameters,
+  type UseEnsAvatarReturnType,
+  useEnsAvatar,
+} from '../composables/useEnsAvatar.js'
+
+export {
   type UseEstimateGasParameters,
   type UseEstimateGasReturnType,
   useEstimateGas,

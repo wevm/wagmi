@@ -23,6 +23,8 @@ test('exports', () => {
       "useConnections",
       "useConnectors",
       "useDisconnect",
+      "useEnsAddress",
+      "useEnsAvatar",
       "useEstimateGas",
       "useReadContract",
       "useReconnect",
