@@ -30,7 +30,10 @@ export type CoinbaseWalletParameters<version extends Version = '3'> =
       >
     : Evaluate<
         {
-          /** Coinbase Wallet SDK version */
+          /**
+           * Coinbase Wallet SDK version
+           * @deprecated Switch to `version: '4'`
+           */
           version?: version | '4' | undefined
         } & Version3Parameters
       >
