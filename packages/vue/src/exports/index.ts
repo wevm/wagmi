@@ -135,6 +135,12 @@ export {
 } from '../composables/useSendTransaction.js'
 
 export {
+  type UseSignMessageParameters,
+  type UseSignMessageReturnType,
+  useSignMessage,
+} from '../composables/useSignMessage.js'
+
+export {
   type UseSimulateContractParameters,
   type UseSimulateContractReturnType,
   useSimulateContract,

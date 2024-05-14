@@ -516,6 +516,14 @@ export function getSidebar() {
             link: '/vue/api/composables/useDisconnect',
           },
           {
+            text: 'useEnsAddress',
+            link: '/vue/api/composables/useEnsAddress',
+          },
+          {
+            text: 'useEnsAvatar',
+            link: '/vue/api/composables/useEnsAvatar',
+          },
+          {
             text: 'useEstimateGas',
             link: '/vue/api/composables/useEstimateGas',
           },
@@ -530,6 +538,10 @@ export function getSidebar() {
           {
             text: 'useSendTransaction',
             link: '/vue/api/composables/useSendTransaction',
+          },
+          {
+            text: 'useSignMessage',
+            link: '/vue/api/composables/useSignMessage',
           },
           {
             text: 'useSimulateContract',
