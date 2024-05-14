@@ -544,6 +544,10 @@ export function getSidebar() {
             link: '/vue/api/composables/useSignMessage',
           },
           {
+            text: 'useSignTypedData',
+            link: '/vue/api/composables/useSignTypedData',
+          },
+          {
             text: 'useSimulateContract',
             link: '/vue/api/composables/useSimulateContract',
           },

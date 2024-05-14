@@ -141,6 +141,12 @@ export {
 } from '../composables/useSignMessage.js'
 
 export {
+  type UseSignTypedDataParameters,
+  type UseSignTypedDataReturnType,
+  useSignTypedData,
+} from '../composables/useSignTypedData.js'
+
+export {
   type UseSimulateContractParameters,
   type UseSimulateContractReturnType,
   useSimulateContract,
