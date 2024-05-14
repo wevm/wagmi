@@ -57,7 +57,7 @@
     "msw": "^2.2.14"
   },
   "contributors": [
-    "awkweb.eth <t@wevm.dev>", 
+    "awkweb.eth <t@wevm.dev>",
     "jxom.eth <j@wevm.dev>"
   ],
   "funding": "https://github.com/sponsors/wevm",
