@@ -15,7 +15,9 @@ import {
 } from 'viem'
 
 export type CoinbaseWalletParameters = Evaluate<
-  Mutable<ConstructorParameters<typeof CoinbaseWalletSDK>[0]> & {
+  Mutable<
+    Omit<ConstructorParameters<typeof CoinbaseWalletSDK>[0], 'appChainIds'>
+  > & {
     preference?: {
       options: 'all' | 'smartWalletOnly' | 'eoaOnly'
     }
@@ -112,7 +114,7 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
       const chainId = await provider.request({ method: 'eth_chainId' })
       return Number(chainId)
     },
-    async getProvider() {
+    async getProvider(): Promise<ProviderInterface> {
       if (!walletProvider) {
         const { default: CoinbaseWalletSDK } = await import(
           '@coinbase/wallet-sdk'
@@ -125,14 +127,15 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
           SDK = CoinbaseWalletSDK.default
         else
           SDK = CoinbaseWalletSDK as unknown as typeof CoinbaseWalletSDK.default
-        sdk = new SDK(parameters)
+        sdk = new SDK({
+          ...parameters,
+          appChainIds: config.chains.map((x) => x.id),
+        })
 
-        walletProvider = sdk.makeWeb3Provider(
-          parameters.preference,
-        ) as ProviderInterface
+        walletProvider = sdk.makeWeb3Provider(parameters.preference)
       }
 
-      return walletProvider as ProviderInterface
+      return walletProvider
     },
     async isAuthorized() {
       try {
