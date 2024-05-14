@@ -165,6 +165,12 @@ export {
 } from '../composables/useSwitchChain.js'
 
 export {
+  type UseTransactionParameters,
+  type UseTransactionReturnType,
+  useTransaction,
+} from '../composables/useTransaction.js'
+
+export {
   type UseWatchBlockNumberParameters,
   type UseWatchBlockNumberReturnType,
   useWatchBlockNumber,

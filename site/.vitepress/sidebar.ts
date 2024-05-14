@@ -560,6 +560,10 @@ export function getSidebar() {
             link: '/vue/api/composables/useSwitchChain',
           },
           {
+            text: 'useTransaction',
+            link: '/vue/api/composables/useTransaction',
+          },
+          {
             text: 'useWaitForTransactionReceipt',
             link: '/vue/api/composables/useWaitForTransactionReceipt',
           },
