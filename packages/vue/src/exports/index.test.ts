@@ -35,6 +35,7 @@ test('exports', () => {
       "useSwitchAccount",
       "useSwitchChain",
       "useTransaction",
+      "useTransactionReceipt",
       "useWatchBlockNumber",
       "useWaitForTransactionReceipt",
       "useWriteContract",
