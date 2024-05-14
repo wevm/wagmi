@@ -80,7 +80,7 @@ export function useTransaction<
     }
   })
 
-  return useQuery(queryOptions) as UseTransactionReturnType<
+  return useQuery(queryOptions as any) as UseTransactionReturnType<
     config,
     chainId,
     selectData
