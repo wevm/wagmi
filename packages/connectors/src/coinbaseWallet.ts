@@ -1,6 +1,6 @@
-import { CoinbaseWalletSDK, type ProviderInterface } from "@coinbase/wallet-sdk";
-import { ChainNotConfiguredError, type Connector, createConnector } from "@wagmi/core";
-import type { Evaluate, Mutable } from "@wagmi/core/internal";
+import { CoinbaseWalletSDK, type ProviderInterface } from '@coinbase/wallet-sdk';
+import { ChainNotConfiguredError, type Connector, createConnector } from '@wagmi/core';
+import type { Evaluate, Mutable } from '@wagmi/core/internal';
 import {
   type AddEthereumChainParameter,
   type ProviderRpcError,
@@ -8,12 +8,12 @@ import {
   UserRejectedRequestError,
   getAddress,
   numberToHex,
-} from "viem";
+} from 'viem';
 
 export type CoinbaseWalletParameters = Evaluate<
-  Mutable<Omit<ConstructorParameters<typeof CoinbaseWalletSDK>[0], "appChainIds">> & {
+  Mutable<Omit<ConstructorParameters<typeof CoinbaseWalletSDK>[0], 'appChainIds'>> & {
     preference?: {
-      options: "all" | "smartWalletOnly" | "eoaOnly";
+      options: 'all' | 'smartWalletOnly' | 'eoaOnly';
     };
   }
 >;
@@ -22,20 +22,20 @@ interface CBWProvider extends ProviderInterface {
   close?(): void; // for backwards compatibility
 }
 
-coinbaseWallet.type = "coinbaseWallet" as const;
+coinbaseWallet.type = 'coinbaseWallet' as const;
 export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
   type Properties = {};
 
   let sdk: CoinbaseWalletSDK | undefined;
   let walletProvider: CBWProvider | undefined;
 
-  let accountsChanged: Connector["onAccountsChanged"] | undefined;
-  let chainChanged: Connector["onChainChanged"] | undefined;
-  let disconnect: Connector["onDisconnect"] | undefined;
+  let accountsChanged: Connector['onAccountsChanged'] | undefined;
+  let chainChanged: Connector['onChainChanged'] | undefined;
+  let disconnect: Connector['onDisconnect'] | undefined;
 
   return createConnector<CBWProvider, Properties>((config) => ({
-    id: "coinbaseWalletSDK",
-    name: "Coinbase Wallet",
+    id: 'coinbaseWalletSDK',
+    name: 'Coinbase Wallet',
     supportsSimulation: true,
     type: coinbaseWallet.type,
     async connect({ chainId } = {}) {
@@ -43,21 +43,21 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
         const provider = await this.getProvider();
         const accounts = (
           (await provider.request({
-            method: "eth_requestAccounts",
+            method: 'eth_requestAccounts',
           })) as string[]
         ).map((x) => getAddress(x));
 
         if (!accountsChanged) {
           accountsChanged = this.onAccountsChanged.bind(this);
-          provider.on("accountsChanged", accountsChanged);
+          provider.on('accountsChanged', accountsChanged);
         }
         if (!chainChanged) {
           chainChanged = this.onChainChanged.bind(this);
-          provider.on("chainChanged", chainChanged);
+          provider.on('chainChanged', chainChanged);
         }
         if (!disconnect) {
           disconnect = this.onDisconnect.bind(this);
-          provider.on("disconnect", disconnect);
+          provider.on('disconnect', disconnect);
         }
 
         // Switch to chain if provided
@@ -85,15 +85,15 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
       const provider = await this.getProvider();
 
       if (accountsChanged) {
-        provider.removeListener("accountsChanged", accountsChanged);
+        provider.removeListener('accountsChanged', accountsChanged);
         accountsChanged = undefined;
       }
       if (chainChanged) {
-        provider.removeListener("chainChanged", chainChanged);
+        provider.removeListener('chainChanged', chainChanged);
         chainChanged = undefined;
       }
       if (disconnect) {
-        provider.removeListener("disconnect", disconnect);
+        provider.removeListener('disconnect', disconnect);
         disconnect = undefined;
       }
 
@@ -104,22 +104,22 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
       const provider = await this.getProvider();
       return (
         await provider.request<string[]>({
-          method: "eth_accounts",
+          method: 'eth_accounts',
         })
       ).map((x) => getAddress(x));
     },
     async getChainId() {
       const provider = await this.getProvider();
-      const chainId = await provider.request<number>({ method: "eth_chainId" });
+      const chainId = await provider.request<number>({ method: 'eth_chainId' });
       return Number(chainId);
     },
     async getProvider(): Promise<CBWProvider> {
       if (!walletProvider) {
-        const { default: CoinbaseWalletSDK } = await import("@coinbase/wallet-sdk");
+        const { default: CoinbaseWalletSDK } = await import('@coinbase/wallet-sdk');
         let SDK: typeof CoinbaseWalletSDK.default;
         if (
-          typeof CoinbaseWalletSDK !== "function" &&
-          typeof CoinbaseWalletSDK.default === "function"
+          typeof CoinbaseWalletSDK !== 'function' &&
+          typeof CoinbaseWalletSDK.default === 'function'
         )
           SDK = CoinbaseWalletSDK.default;
         else SDK = CoinbaseWalletSDK as unknown as typeof CoinbaseWalletSDK.default;
@@ -149,7 +149,7 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
 
       try {
         await provider.request({
-          method: "wallet_switchEthereumChain",
+          method: 'wallet_switchEthereumChain',
           params: [{ chainId: numberToHex(chain.id) }],
         });
         return chain;
@@ -168,7 +168,7 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
             let rpcUrls;
             if (addEthereumChainParameter?.rpcUrls?.length)
               rpcUrls = addEthereumChainParameter.rpcUrls;
-            else rpcUrls = [chain.rpcUrls.default?.http[0] ?? ""];
+            else rpcUrls = [chain.rpcUrls.default?.http[0] ?? ''];
 
             const addEthereumChain = {
               blockExplorerUrls,
@@ -181,7 +181,7 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
             } satisfies AddEthereumChainParameter;
 
             await provider.request({
-              method: "wallet_addEthereumChain",
+              method: 'wallet_addEthereumChain',
               params: [addEthereumChain],
             });
 
@@ -197,28 +197,28 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
     onAccountsChanged(accounts) {
       if (accounts.length === 0) this.onDisconnect();
       else
-        config.emitter.emit("change", {
+        config.emitter.emit('change', {
           accounts: accounts.map((x) => getAddress(x)),
         });
     },
     onChainChanged(chain) {
       const chainId = Number(chain);
-      config.emitter.emit("change", { chainId });
+      config.emitter.emit('change', { chainId });
     },
     async onDisconnect(_error) {
-      config.emitter.emit("disconnect");
+      config.emitter.emit('disconnect');
 
       const provider = await this.getProvider();
       if (accountsChanged) {
-        provider.removeListener("accountsChanged", accountsChanged);
+        provider.removeListener('accountsChanged', accountsChanged);
         accountsChanged = undefined;
       }
       if (chainChanged) {
-        provider.removeListener("chainChanged", chainChanged);
+        provider.removeListener('chainChanged', chainChanged);
         chainChanged = undefined;
       }
       if (disconnect) {
-        provider.removeListener("disconnect", disconnect);
+        provider.removeListener('disconnect', disconnect);
         disconnect = undefined;
       }
     },
