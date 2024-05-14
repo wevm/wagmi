@@ -4,7 +4,7 @@ import {
   type Connector,
   createConnector,
 } from '@wagmi/core'
-import type { Evaluate, Mutable } from '@wagmi/core/internal'
+import type { Evaluate, Mutable, Omit } from '@wagmi/core/internal'
 import {
   type AddEthereumChainParameter,
   type ProviderRpcError,
@@ -14,14 +14,17 @@ import {
   numberToHex,
 } from 'viem'
 
+type Preference = NonNullable<Parameters<CoinbaseWalletSDK['makeWeb3Provider']>[0]>
+
 export type CoinbaseWalletParameters = Evaluate<
   Mutable<
-    Omit<ConstructorParameters<typeof CoinbaseWalletSDK>[0], 'appChainIds'>
-  > & {
-    preference?: {
-      options: 'all' | 'smartWalletOnly' | 'eoaOnly'
+    Omit<
+      ConstructorParameters<typeof CoinbaseWalletSDK>[0],
+      'appChainIds' // set via wagmi config
+    > & {
+      preference?: Preference
     }
-  }
+  >
 >
 
 interface CBWProvider extends ProviderInterface {
