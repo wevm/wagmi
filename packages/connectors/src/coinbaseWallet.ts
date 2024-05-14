@@ -38,22 +38,15 @@ export type CoinbaseWalletParameters<version extends Version = '3'> =
         } & Version3Parameters
       >
 
-export type CoinbaseWalletReturnType<version extends Version> =
-  version extends '4'
-    ? ReturnType<typeof version4>
-    : ReturnType<typeof version3>
-
 coinbaseWallet.type = 'coinbaseWallet' as const
 export function coinbaseWallet<version extends Version>(
   parameters: CoinbaseWalletParameters<version>,
-): CoinbaseWalletReturnType<version> {
+): version extends '4'
+  ? ReturnType<typeof version4>
+  : ReturnType<typeof version3> {
   if (parameters.version === '4')
-    return version4(
-      parameters as Version4Parameters,
-    ) as CoinbaseWalletReturnType<version>
-  return version3(
-    parameters as Version3Parameters,
-  ) as CoinbaseWalletReturnType<version>
+    return version4(parameters as Version4Parameters) as any
+  return version3(parameters as Version3Parameters) as any
 }
 
 type Version4Parameters = Mutable<
