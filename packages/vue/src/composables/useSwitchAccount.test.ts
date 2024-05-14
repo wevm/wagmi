@@ -24,14 +24,14 @@ test('default', async () => {
   expect(address1).toBeDefined()
 
   switchAccount.switchAccount({ connector: connector2 })
-  await waitFor(switchAccount.isSuccess, (isSuccess) => isSuccess)
+  await waitFor(switchAccount.isSuccess)
 
   const address2 = account.address.value
   expect(address2).toBeDefined()
   expect(address1).not.toBe(address2)
 
   switchAccount.switchAccount({ connector: connector1 })
-  await waitFor(switchAccount.isSuccess, (isSuccess) => isSuccess)
+  await waitFor(switchAccount.isSuccess)
 
   const address3 = account.address.value
   expect(address3).toBeDefined()

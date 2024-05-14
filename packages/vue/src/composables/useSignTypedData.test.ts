@@ -19,7 +19,7 @@ test('default', async () => {
     primaryType: 'Mail',
     message: typedData.basic.message,
   })
-  await waitFor(result.isSuccess, (isSuccess) => isSuccess)
+  await waitFor(result.isSuccess)
 
   await expect(
     recoverTypedDataAddress({
@@ -43,7 +43,7 @@ test('behavior: local account', async () => {
     primaryType: 'Mail',
     message: typedData.basic.message,
   })
-  await waitFor(result.isSuccess, (isSuccess) => isSuccess)
+  await waitFor(result.isSuccess)
 
   await expect(
     recoverTypedDataAddress({

@@ -18,14 +18,14 @@ test('default', async () => {
   expect(chainId1).toBeDefined()
 
   switchChain.switchChain({ chainId: chain.mainnet2.id })
-  await waitFor(switchChain.isSuccess, (isSuccess) => Boolean(isSuccess))
+  await waitFor(switchChain.isSuccess)
 
   const chainId2 = account.chainId.value
   expect(chainId2).toBeDefined()
   expect(chainId1).not.toBe(chainId2)
 
   switchChain.switchChain({ chainId: chain.mainnet.id })
-  await waitFor(switchChain.isSuccess, (isSuccess) => Boolean(isSuccess))
+  await waitFor(switchChain.isSuccess)
 
   const chainId3 = account.chainId.value
   expect(chainId3).toBeDefined()

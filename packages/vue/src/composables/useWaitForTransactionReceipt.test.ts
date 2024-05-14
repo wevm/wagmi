@@ -10,7 +10,7 @@ test('default', async () => {
     }),
   )
 
-  await waitFor(result.isSuccess, (isSuccess) => Boolean(isSuccess))
+  await waitFor(result.isSuccess)
 
   expect(result.data.value).toMatchInlineSnapshot(`
     {

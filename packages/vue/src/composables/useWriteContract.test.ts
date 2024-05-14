@@ -17,7 +17,7 @@ test('default', async () => {
     address: address.wagmiMintExample,
     functionName: 'mint',
   })
-  await waitFor(result.isSuccess, (isSuccess) => Boolean(isSuccess))
+  await waitFor(result.isSuccess)
 
   expect(result.data.value).toBeDefined()
 

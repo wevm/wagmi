@@ -16,7 +16,7 @@ test('default', async () => {
     }),
   )
 
-  await waitFor(result.isSuccess, (isSuccess) => isSuccess)
+  await waitFor(result.isSuccess)
 
   expect(deepUnref(result)).toMatchInlineSnapshot(`
     {
@@ -74,7 +74,7 @@ test('behavior: address: undefined -> defined', async () => {
 
   address.value = accounts[0]
 
-  await waitFor(result.isSuccess, (isSuccess) => isSuccess)
+  await waitFor(result.isSuccess)
 
   expect(deepUnref(result)).toMatchInlineSnapshot(`
     {

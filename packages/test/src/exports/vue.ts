@@ -42,7 +42,7 @@ export type WaitForOptions = {
 
 export function waitFor<ref extends Ref>(
   ref: ref,
-  predicate: (value: ref['value']) => boolean,
+  predicate: (value: ref['value']) => boolean = (value) => value,
   options: WaitForOptions = {},
 ) {
   const { timeout = 10_000 } = options

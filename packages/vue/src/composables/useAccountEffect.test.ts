@@ -23,13 +23,13 @@ test('behavior: connect and disconnect called once', async () => {
   connect.connect({
     connector: connect.connectors[0]!,
   })
-  await waitFor(connect.isSuccess, (isSuccess) => isSuccess)
+  await waitFor(connect.isSuccess)
   connect.connect({
     connector: connect.connectors[0]!,
   })
 
   disconnect.disconnect()
-  await waitFor(disconnect.isSuccess, (isSuccess) => isSuccess)
+  await waitFor(disconnect.isSuccess)
   disconnect.disconnect()
 
   expect(onConnect).toBeCalledTimes(1)

@@ -18,7 +18,7 @@ test('default', async () => {
     }),
   )
 
-  await waitFor(result.isSuccess, (isSuccess) => isSuccess)
+  await waitFor(result.isSuccess)
 
   expect(result.data.value).toMatchInlineSnapshot(`
     {

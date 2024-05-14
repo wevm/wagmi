@@ -15,7 +15,7 @@ test('default', async () => {
   const [result] = renderComposable(() => useSignMessage())
 
   result.signMessage({ message: 'foo bar baz' })
-  await waitFor(result.isSuccess, (isSuccess) => isSuccess)
+  await waitFor(result.isSuccess)
 
   await expect(
     recoverMessageAddress({
@@ -32,7 +32,7 @@ test('behavior: local account', async () => {
 
   const account = privateKeyToAccount(privateKey)
   result.signMessage({ account, message: 'foo bar baz' })
-  await waitFor(result.isSuccess, (isSuccess) => isSuccess)
+  await waitFor(result.isSuccess)
 
   await expect(
     recoverMessageAddress({

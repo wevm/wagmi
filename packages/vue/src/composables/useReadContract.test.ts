@@ -15,7 +15,7 @@ test('default', async () => {
     }),
   )
 
-  await waitFor(result.isSuccess, (isSuccess) => Boolean(isSuccess))
+  await waitFor(result.isSuccess)
 
   expect(result.data.value).toBe(4n)
   expect(result.queryKey).toMatchInlineSnapshot(`
@@ -44,7 +44,7 @@ test('parameters: chainId', async () => {
     }),
   )
 
-  await waitFor(result.isSuccess, (isSuccess) => Boolean(isSuccess))
+  await waitFor(result.isSuccess)
 
   expect(result.data.value).toBe(4n)
   expect(result.queryKey).toMatchInlineSnapshot(`

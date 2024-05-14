@@ -171,6 +171,12 @@ export {
 } from '../composables/useTransaction.js'
 
 export {
+  type UseTransactionReceiptParameters,
+  type UseTransactionReceiptReturnType,
+  useTransactionReceipt,
+} from '../composables/useTransactionReceipt.js'
+
+export {
   type UseWatchBlockNumberParameters,
   type UseWatchBlockNumberReturnType,
   useWatchBlockNumber,
