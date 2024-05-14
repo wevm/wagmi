@@ -16,8 +16,11 @@ const indexedDBStorage = {
   },
 }
 
+const chains = [mainnet, sepolia, optimism, celo] as const
+export type ChainIds = typeof chains[number]['id']
+
 export const config = createConfig({
-  chains: [mainnet, sepolia, optimism, celo],
+  chains,
   connectors: [
     walletConnect({
       projectId: import.meta.env.VITE_WC_PROJECT_ID,

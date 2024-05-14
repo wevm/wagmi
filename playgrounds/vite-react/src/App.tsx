@@ -7,6 +7,7 @@ import {
   useBalance,
   useBlockNumber,
   useChainId,
+  useClient,
   useConnect,
   useConnections,
   useConnectorClient,
@@ -24,6 +25,7 @@ import {
 import { optimism } from 'wagmi/chains'
 
 import { wagmiContractConfig } from './contracts'
+import { ChainIds, config } from './wagmi'
 
 function App() {
   useAccountEffect({
@@ -138,7 +140,7 @@ function SwitchChain() {
         <button
           disabled={chainId === chain.id}
           key={chain.id}
-          onClick={() => switchChain({ chainId: chain.id })}
+          onClick={() => switchChain({ chainId: chain.id as ChainIds })}
           type="button"
         >
           {chain.name}
@@ -246,6 +248,8 @@ function ConnectorClient() {
 
 function SendTransaction() {
   const { data: hash, error, isPending, sendTransaction } = useSendTransaction()
+  const { data: connectorClientData } = useConnectorClient()
+  const client = useClient()
 
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -255,8 +259,15 @@ function SendTransaction() {
     sendTransaction({ to, value: parseEther(value) })
   }
 
-  const { isLoading: isConfirming, isSuccess: isConfirmed } =
+  const { isLoading: isConfirming, data: receipt } =
     useWaitForTransactionReceipt({
+      config: {
+        ...config,
+        // Additionally, we can pass a client to the config
+        // to use a different client than the one passed to the hook
+        client,
+      },
+      chainId: connectorClientData?.chain?.id,
       hash,
     })
 
@@ -278,7 +289,7 @@ function SendTransaction() {
       </form>
       {hash && <div>Transaction Hash: {hash}</div>}
       {isConfirming && 'Waiting for confirmation...'}
-      {isConfirmed && 'Transaction confirmed.'}
+      {`Transaction ${receipt?.status}`}
       {error && (
         <div>Error: {(error as BaseError).shortMessage || error.message}</div>
       )}
