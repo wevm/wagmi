@@ -29,7 +29,7 @@ test('UseReadContractParameters', () => {
   type Result = DeepUnwrapRef<
     UseReadContractParameters<typeof abi.erc20, 'balanceOf'>
   >
-  expectTypeOf<Pick<Result, 'args' | 'functionName'>>().toEqualTypeOf<{
+  expectTypeOf<{
     functionName?:
       | 'symbol'
       | 'name'
@@ -39,7 +39,7 @@ test('UseReadContractParameters', () => {
       | 'totalSupply'
       | undefined
     args?: readonly [Address] | undefined
-  }>()
+  }>().toEqualTypeOf<Pick<Result, 'args' | 'functionName'>>()
 })
 
 test('UseReadContractReturnType', () => {
