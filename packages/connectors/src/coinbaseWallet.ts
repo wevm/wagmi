@@ -14,7 +14,7 @@ import {
   numberToHex,
 } from 'viem'
 
-type Preference = NonNullable<Parameters<CoinbaseWalletSDK['makeWeb3Provider']>[0]>
+type Preference = Parameters<CoinbaseWalletSDK['makeWeb3Provider']>[0]
 
 export type CoinbaseWalletParameters = Evaluate<
   Mutable<
@@ -27,22 +27,19 @@ export type CoinbaseWalletParameters = Evaluate<
   >
 >
 
-interface CBWProvider extends ProviderInterface {
-  close?(): void // for backwards compatibility
-}
-
 coinbaseWallet.type = 'coinbaseWallet' as const
 export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
+  type Provider = ProviderInterface & { close?(): void } // for backwards compatibility
   type Properties = {}
 
   let sdk: CoinbaseWalletSDK | undefined
-  let walletProvider: CBWProvider | undefined
+  let walletProvider: Provider | undefined
 
   let accountsChanged: Connector['onAccountsChanged'] | undefined
   let chainChanged: Connector['onChainChanged'] | undefined
   let disconnect: Connector['onDisconnect'] | undefined
 
-  return createConnector<CBWProvider, Properties>((config) => ({
+  return createConnector<Provider, Properties>((config) => ({
     id: 'coinbaseWalletSDK',
     name: 'Coinbase Wallet',
     supportsSimulation: true,
@@ -122,7 +119,7 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
       const chainId = await provider.request<number>({ method: 'eth_chainId' })
       return Number(chainId)
     },
-    async getProvider(): Promise<CBWProvider> {
+    async getProvider() {
       if (!walletProvider) {
         const { default: CoinbaseWalletSDK } = await import(
           '@coinbase/wallet-sdk'
