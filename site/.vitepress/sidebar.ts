@@ -528,6 +528,10 @@ export function getSidebar() {
             link: '/vue/api/composables/useSendTransaction',
           },
           {
+            text: 'useSimulateContract',
+            link: '/vue/api/composables/useSimulateContract',
+          },
+          {
             text: 'useSwitchAccount',
             link: '/vue/api/composables/useSwitchAccount',
           },
