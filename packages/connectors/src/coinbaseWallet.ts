@@ -14,21 +14,21 @@ import {
   numberToHex,
 } from 'viem'
 
-type Preference = Parameters<CoinbaseWalletSDK['makeWeb3Provider']>[0]
-
 export type CoinbaseWalletParameters = Evaluate<
   Mutable<
     Omit<
       ConstructorParameters<typeof CoinbaseWalletSDK>[0],
       'appChainIds' // set via wagmi config
     > & {
-      preference?: Preference
+      /** Preference for the type of wallet to display. */
+      preference?: 'all' | 'smartWalletOnly' | 'eoaOnly' | undefined
+      keysUrl?: string
     }
   >
 >
 
 coinbaseWallet.type = 'coinbaseWallet' as const
-export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
+export function coinbaseWallet(parameters: CoinbaseWalletParameters = {}) {
   type Provider = ProviderInterface & { close?(): void } // for backwards compatibility
   type Properties = {}
 
@@ -137,7 +137,10 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
           appChainIds: config.chains.map((x) => x.id),
         })
 
-        walletProvider = sdk.makeWeb3Provider(parameters.preference)
+        walletProvider = sdk.makeWeb3Provider({
+          ...parameters,
+          options: parameters.preference ?? 'all',
+        })
       }
 
       return walletProvider

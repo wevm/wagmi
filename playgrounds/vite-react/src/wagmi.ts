@@ -22,7 +22,7 @@ export const config = createConfig({
     walletConnect({
       projectId: import.meta.env.VITE_WC_PROJECT_ID,
     }),
-    coinbaseWallet({ appName: 'Vite React Playground', darkMode: true }),
+    coinbaseWallet(),
     metaMask(),
   ],
   transports: {
