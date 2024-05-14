@@ -1,10 +1,6 @@
-import { CoinbaseWalletSDK, type ProviderInterface } from '@coinbase/wallet-sdk'
-import {
-  ChainNotConfiguredError,
-  type Connector,
-  createConnector,
-} from '@wagmi/core'
-import type { Evaluate, Mutable } from '@wagmi/core/internal'
+import { CoinbaseWalletSDK, type ProviderInterface } from "@coinbase/wallet-sdk";
+import { ChainNotConfiguredError, type Connector, createConnector } from "@wagmi/core";
+import type { Evaluate, Mutable } from "@wagmi/core/internal";
 import {
   type AddEthereumChainParameter,
   type ProviderRpcError,
@@ -12,167 +8,167 @@ import {
   UserRejectedRequestError,
   getAddress,
   numberToHex,
-} from 'viem'
+} from "viem";
 
 export type CoinbaseWalletParameters = Evaluate<
-  Mutable<
-    Omit<ConstructorParameters<typeof CoinbaseWalletSDK>[0], 'appChainIds'>
-  > & {
+  Mutable<Omit<ConstructorParameters<typeof CoinbaseWalletSDK>[0], "appChainIds">> & {
     preference?: {
-      options: 'all' | 'smartWalletOnly' | 'eoaOnly'
-    }
+      options: "all" | "smartWalletOnly" | "eoaOnly";
+    };
   }
->
+>;
 
-coinbaseWallet.type = 'coinbaseWallet' as const
+interface CBWProvider extends ProviderInterface {
+  close?(): void; // for backwards compatibility
+}
+
+coinbaseWallet.type = "coinbaseWallet" as const;
 export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
-  type Properties = {}
+  type Properties = {};
 
-  let sdk: CoinbaseWalletSDK | undefined
-  let walletProvider: ProviderInterface | undefined
+  let sdk: CoinbaseWalletSDK | undefined;
+  let walletProvider: CBWProvider | undefined;
 
-  let accountsChanged: Connector['onAccountsChanged'] | undefined
-  let chainChanged: Connector['onChainChanged'] | undefined
-  let disconnect: Connector['onDisconnect'] | undefined
+  let accountsChanged: Connector["onAccountsChanged"] | undefined;
+  let chainChanged: Connector["onChainChanged"] | undefined;
+  let disconnect: Connector["onDisconnect"] | undefined;
 
-  return createConnector<ProviderInterface, Properties>((config) => ({
-    id: 'coinbaseWalletSDK',
-    name: 'Coinbase Wallet',
+  return createConnector<CBWProvider, Properties>((config) => ({
+    id: "coinbaseWalletSDK",
+    name: "Coinbase Wallet",
     supportsSimulation: true,
     type: coinbaseWallet.type,
     async connect({ chainId } = {}) {
       try {
-        const provider = await this.getProvider()
+        const provider = await this.getProvider();
         const accounts = (
           (await provider.request({
-            method: 'eth_requestAccounts',
+            method: "eth_requestAccounts",
           })) as string[]
-        ).map((x) => getAddress(x))
+        ).map((x) => getAddress(x));
 
         if (!accountsChanged) {
-          accountsChanged = this.onAccountsChanged.bind(this)
-          provider.on('accountsChanged', accountsChanged)
+          accountsChanged = this.onAccountsChanged.bind(this);
+          provider.on("accountsChanged", accountsChanged);
         }
         if (!chainChanged) {
-          chainChanged = this.onChainChanged.bind(this)
-          provider.on('chainChanged', chainChanged)
+          chainChanged = this.onChainChanged.bind(this);
+          provider.on("chainChanged", chainChanged);
         }
         if (!disconnect) {
-          disconnect = this.onDisconnect.bind(this)
-          provider.on('disconnect', disconnect)
+          disconnect = this.onDisconnect.bind(this);
+          provider.on("disconnect", disconnect);
         }
 
         // Switch to chain if provided
-        let currentChainId: number = await this.getChainId()
+        let currentChainId = await this.getChainId();
         if (chainId && currentChainId !== chainId) {
           const chain = await this.switchChain!({ chainId }).catch((error) => {
-            if (error.code === UserRejectedRequestError.code) throw error
-            return { id: currentChainId }
-          })
-          currentChainId = chain?.id ?? currentChainId
+            if (error.code === UserRejectedRequestError.code) throw error;
+            return { id: currentChainId };
+          });
+          currentChainId = chain?.id ?? currentChainId;
         }
 
-        return { accounts, chainId: currentChainId }
+        return { accounts, chainId: currentChainId };
       } catch (error) {
         if (
           /(user closed modal|accounts received is empty|user denied account)/i.test(
-            (error as Error).message,
+            (error as Error).message
           )
         )
-          throw new UserRejectedRequestError(error as Error)
-        throw error
+          throw new UserRejectedRequestError(error as Error);
+        throw error;
       }
     },
     async disconnect() {
-      const provider = await this.getProvider()
+      const provider = await this.getProvider();
 
       if (accountsChanged) {
-        provider.removeListener('accountsChanged', accountsChanged)
-        accountsChanged = undefined
+        provider.removeListener("accountsChanged", accountsChanged);
+        accountsChanged = undefined;
       }
       if (chainChanged) {
-        provider.removeListener('chainChanged', chainChanged)
-        chainChanged = undefined
+        provider.removeListener("chainChanged", chainChanged);
+        chainChanged = undefined;
       }
       if (disconnect) {
-        provider.removeListener('disconnect', disconnect)
-        disconnect = undefined
+        provider.removeListener("disconnect", disconnect);
+        disconnect = undefined;
       }
 
-      provider.disconnect()
+      provider.disconnect();
+      provider.close?.();
     },
     async getAccounts() {
-      const provider = await this.getProvider()
+      const provider = await this.getProvider();
       return (
         await provider.request<string[]>({
-          method: 'eth_accounts',
+          method: "eth_accounts",
         })
-      ).map((x) => getAddress(x))
+      ).map((x) => getAddress(x));
     },
     async getChainId() {
-      const provider = await this.getProvider()
-      const chainId = await provider.request({ method: 'eth_chainId' })
-      return Number(chainId)
+      const provider = await this.getProvider();
+      const chainId = await provider.request<number>({ method: "eth_chainId" });
+      return Number(chainId);
     },
-    async getProvider(): Promise<ProviderInterface> {
+    async getProvider(): Promise<CBWProvider> {
       if (!walletProvider) {
-        const { default: CoinbaseWalletSDK } = await import(
-          '@coinbase/wallet-sdk'
-        )
-        let SDK: typeof CoinbaseWalletSDK.default
+        const { default: CoinbaseWalletSDK } = await import("@coinbase/wallet-sdk");
+        let SDK: typeof CoinbaseWalletSDK.default;
         if (
-          typeof CoinbaseWalletSDK !== 'function' &&
-          typeof CoinbaseWalletSDK.default === 'function'
+          typeof CoinbaseWalletSDK !== "function" &&
+          typeof CoinbaseWalletSDK.default === "function"
         )
-          SDK = CoinbaseWalletSDK.default
-        else
-          SDK = CoinbaseWalletSDK as unknown as typeof CoinbaseWalletSDK.default
+          SDK = CoinbaseWalletSDK.default;
+        else SDK = CoinbaseWalletSDK as unknown as typeof CoinbaseWalletSDK.default;
         sdk = new SDK({
           ...parameters,
           appChainIds: config.chains.map((x) => x.id),
-        })
+        });
 
-        walletProvider = sdk.makeWeb3Provider(parameters.preference)
+        walletProvider = sdk.makeWeb3Provider(parameters.preference);
       }
 
-      return walletProvider
+      return walletProvider;
     },
     async isAuthorized() {
       try {
-        const accounts = await this.getAccounts()
-        return !!accounts.length
+        const accounts = await this.getAccounts();
+        return !!accounts.length;
       } catch {
-        return false
+        return false;
       }
     },
     async switchChain({ addEthereumChainParameter, chainId }) {
-      const chain = config.chains.find((chain) => chain.id === chainId)
-      if (!chain) throw new SwitchChainError(new ChainNotConfiguredError())
+      const chain = config.chains.find((chain) => chain.id === chainId);
+      if (!chain) throw new SwitchChainError(new ChainNotConfiguredError());
 
-      const provider = await this.getProvider()
+      const provider = await this.getProvider();
 
       try {
         await provider.request({
-          method: 'wallet_switchEthereumChain',
+          method: "wallet_switchEthereumChain",
           params: [{ chainId: numberToHex(chain.id) }],
-        })
-        return chain
+        });
+        return chain;
       } catch (error) {
         // Indicates chain is not added to provider
         if ((error as ProviderRpcError).code === 4902) {
           try {
-            let blockExplorerUrls
+            let blockExplorerUrls;
             if (addEthereumChainParameter?.blockExplorerUrls)
-              blockExplorerUrls = addEthereumChainParameter.blockExplorerUrls
+              blockExplorerUrls = addEthereumChainParameter.blockExplorerUrls;
             else
               blockExplorerUrls = chain.blockExplorers?.default.url
                 ? [chain.blockExplorers?.default.url]
-                : []
+                : [];
 
-            let rpcUrls
+            let rpcUrls;
             if (addEthereumChainParameter?.rpcUrls?.length)
-              rpcUrls = addEthereumChainParameter.rpcUrls
-            else rpcUrls = [chain.rpcUrls.default?.http[0] ?? '']
+              rpcUrls = addEthereumChainParameter.rpcUrls;
+            else rpcUrls = [chain.rpcUrls.default?.http[0] ?? ""];
 
             const addEthereumChain = {
               blockExplorerUrls,
@@ -180,52 +176,51 @@ export function coinbaseWallet(parameters: CoinbaseWalletParameters) {
               chainName: addEthereumChainParameter?.chainName ?? chain.name,
               iconUrls: addEthereumChainParameter?.iconUrls,
               nativeCurrency:
-                addEthereumChainParameter?.nativeCurrency ??
-                chain.nativeCurrency,
+                addEthereumChainParameter?.nativeCurrency ?? chain.nativeCurrency,
               rpcUrls,
-            } satisfies AddEthereumChainParameter
+            } satisfies AddEthereumChainParameter;
 
             await provider.request({
-              method: 'wallet_addEthereumChain',
+              method: "wallet_addEthereumChain",
               params: [addEthereumChain],
-            })
+            });
 
-            return chain
+            return chain;
           } catch (error) {
-            throw new UserRejectedRequestError(error as Error)
+            throw new UserRejectedRequestError(error as Error);
           }
         }
 
-        throw new SwitchChainError(error as Error)
+        throw new SwitchChainError(error as Error);
       }
     },
     onAccountsChanged(accounts) {
-      if (accounts.length === 0) this.onDisconnect()
+      if (accounts.length === 0) this.onDisconnect();
       else
-        config.emitter.emit('change', {
+        config.emitter.emit("change", {
           accounts: accounts.map((x) => getAddress(x)),
-        })
+        });
     },
     onChainChanged(chain) {
-      const chainId = Number(chain)
-      config.emitter.emit('change', { chainId })
+      const chainId = Number(chain);
+      config.emitter.emit("change", { chainId });
     },
     async onDisconnect(_error) {
-      config.emitter.emit('disconnect')
+      config.emitter.emit("disconnect");
 
-      const provider = await this.getProvider()
+      const provider = await this.getProvider();
       if (accountsChanged) {
-        provider.removeListener('accountsChanged', accountsChanged)
-        accountsChanged = undefined
+        provider.removeListener("accountsChanged", accountsChanged);
+        accountsChanged = undefined;
       }
       if (chainChanged) {
-        provider.removeListener('chainChanged', chainChanged)
-        chainChanged = undefined
+        provider.removeListener("chainChanged", chainChanged);
+        chainChanged = undefined;
       }
       if (disconnect) {
-        provider.removeListener('disconnect', disconnect)
-        disconnect = undefined
+        provider.removeListener("disconnect", disconnect);
+        disconnect = undefined;
       }
     },
-  }))
+  }));
 }
