@@ -99,6 +99,12 @@ export {
 } from '../composables/useDisconnect.js'
 
 export {
+  type UseEstimateGasParameters,
+  type UseEstimateGasReturnType,
+  useEstimateGas,
+} from '../composables/useEstimateGas.js'
+
+export {
   type UseReadContractParameters,
   type UseReadContractReturnType,
   useReadContract,

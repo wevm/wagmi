@@ -516,6 +516,10 @@ export function getSidebar() {
             link: '/vue/api/composables/useDisconnect',
           },
           {
+            text: 'useEstimateGas',
+            link: '/vue/api/composables/useEstimateGas',
+          },
+          {
             text: 'useReadContract',
             link: '/vue/api/composables/useReadContract',
           },

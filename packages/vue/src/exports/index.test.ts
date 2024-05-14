@@ -23,6 +23,7 @@ test('exports', () => {
       "useConnections",
       "useConnectors",
       "useDisconnect",
+      "useEstimateGas",
       "useReadContract",
       "useReconnect",
       "useSendTransaction",
