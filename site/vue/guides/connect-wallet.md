@@ -384,4 +384,4 @@ Want to see the above steps all wired up together in an end-to-end example? Chec
 
 <br/>
 
-<iframe frameborder="0" width="100%" height="500px" src="https://stackblitz.com/edit/vitejs-vite-u9w1wd?embed=1&file=src%2FApp.vue&hideExplorer=1&view=preview"></iframe>
+<iframe frameborder="0" width="100%" height="500px" src="https://stackblitz.com/edit/vitejs-vite-mf6dgb?embed=1&file=src%2FApp.vue&hideExplorer=1&view=preview"></iframe>

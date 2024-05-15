@@ -408,6 +408,10 @@ export function getSidebar() {
             link: '/vue/guides/connect-wallet',
           },
           {
+            text: 'Send Transaction',
+            link: '/vue/guides/send-transaction',
+          },
+          {
             text: 'FAQ / Troubleshooting',
             link: '/vue/guides/faq',
           },
