@@ -412,6 +412,10 @@ export function getSidebar() {
             link: '/vue/guides/send-transaction',
           },
           {
+            text: 'Read from Contract',
+            link: '/vue/guides/read-from-contract',
+          },
+          {
             text: 'FAQ / Troubleshooting',
             link: '/vue/guides/faq',
           },
