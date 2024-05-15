@@ -111,6 +111,12 @@ export {
 } from '../composables/useEnsAvatar.js'
 
 export {
+  type UseEnsNameParameters,
+  type UseEnsNameReturnType,
+  useEnsName,
+} from '../composables/useEnsName.js'
+
+export {
   type UseEstimateGasParameters,
   type UseEstimateGasReturnType,
   useEstimateGas,

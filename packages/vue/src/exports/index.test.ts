@@ -25,6 +25,7 @@ test('exports', () => {
       "useDisconnect",
       "useEnsAddress",
       "useEnsAvatar",
+      "useEnsName",
       "useEstimateGas",
       "useReadContract",
       "useReconnect",
