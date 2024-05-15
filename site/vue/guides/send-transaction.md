@@ -63,9 +63,9 @@ Next, we will need to add a handler to the form that will send the transaction w
 
 :::
 
-### 4. Hook up the `useSendTransaction` Hook
+### 4. Hook up the `useSendTransaction` Composable
 
-Now that we have the form handler, we can hook up the [`useSendTransaction` Hook](/vue/api/composables/useSendTransaction) to send the transaction.
+Now that we have the form handler, we can hook up the [`useSendTransaction` Composable](/vue/api/composables/useSendTransaction) to send the transaction.
 
 ::: code-group
 
