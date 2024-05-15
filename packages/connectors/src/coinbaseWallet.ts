@@ -38,6 +38,7 @@ export type CoinbaseWalletParameters<version extends Version = '3'> =
           /**
            * Coinbase Wallet SDK version
            * @deprecated Version 3 will be removed in the next major version. Upgrade to `version: '4'`.
+           * @default '4'
            */
           version?: version | '4' | undefined
         } & Version3Parameters
@@ -59,7 +60,10 @@ type Version4Parameters = Mutable<
     ConstructorParameters<typeof CoinbaseWalletSDK>[0],
     'appChainIds' // set via wagmi config
   > & {
-    /** Preference for the type of wallet to display. */
+    /**
+     * Preference for the type of wallet to display.
+     * @default 'all'
+     */
     preference?: 'all' | 'smartWalletOnly' | 'eoaOnly' | undefined
     keysUrl?: string | undefined
   }
