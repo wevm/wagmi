@@ -1,0 +1,22 @@
+{
+  "name": "vite-vue",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@tanstack/vue-query": ">=5.35.1",
+    "@wagmi/vue": "workspace:*",
+    "viem": "2.*",
+    "vue": ">=3.4.21"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.4",
+    "buffer": "^6.0.3",
+    "vite": "^5.2.11",
+    "vue-tsc": "^2.0.6"
+  }
+}

@@ -58,13 +58,13 @@ Wagmi is an open source software project and free to use. If you enjoy using Wag
 - Send us crypto
   - Mainnet: 0x4557B18E779944BFE9d78A672452331C186a9f48
   - Multichain: 0xd2135CfB216b74109775236E36d4b433F1DF507B
-- [Become a supporter on Drip](https://www.drips.network/app/projects/github/wevm/wagmi)
+- [Become a supporter on Drips](https://www.drips.network/app/projects/github/wevm/wagmi)
 
 If you use Wagmi at work, consider asking your company to sponsor Wagmi. This may not be easy, but **business sponsorships typically make a much larger impact on the sustainability of OSS projects** than individual donations, so you will help us much more if you succeed.
 
 ## Is Wagmi production ready?
 
-Yes. Wagmi is very stable and is used in production by thousands of organizations, like [Stripe](https://stripe.com), [Shopify](https://shopify.com), [Coinbase](https://coinbase.com), [ENS](https://ens.domains), [Optimism](https://optimism.com).
+Yes. Wagmi is very stable and is used in production by thousands of organizations, like [Stripe](https://stripe.com), [Shopify](https://shopify.com), [Coinbase](https://coinbase.com), [Uniswap](https://uniswap.org), [ENS](https://ens.domains), [Optimism](https://optimism.com).
 
 ## Is Wagmi strict with semver?
 

@@ -69,8 +69,12 @@ VITE_MAINNET_FORK_URL=https://cloudflare-eth.com
 VITE_OPTIMISM_FORK_BLOCK_NUMBER=107317577
 VITE_OPTIMISM_FORK_URL=https://mainnet.optimism.io
 
-VITE_WC_PROJECT_ID=3fbb6bba6f1de962d911bb5b5c9dba88
 NEXT_PUBLIC_WC_PROJECT_ID=3fbb6bba6f1de962d911bb5b5c9dba88
+NUXT_PUBLIC_WC_PROJECT_ID=3fbb6bba6f1de962d911bb5b5c9dba88
+VITE_WC_PROJECT_ID=3fbb6bba6f1de962d911bb5b5c9dba88
+
+NEXT_TELEMETRY_DISABLED=1
+NUXT_TELEMETRY_DISABLED=1
 ```
 
 `*_BLOCK_NUMBER` environment variables should remain set to the values above (the test suite depends on them), but you can change the others if you want. For example, you might want to change `*_FORK_URL` to a paid RPC provider for better performance.
@@ -80,10 +84,14 @@ NEXT_PUBLIC_WC_PROJECT_ID=3fbb6bba6f1de962d911bb5b5c9dba88
 To start the local development playgrounds, run one of the following commands. These commands run playground apps, located at `./playgrounds`, that are set up for trying out code while making changes.
 
 ```bash
-pnpm dev           # `wagmi` playground
-pnpm dev:core      # `@wagmi/core` playground
-pnpm dev:react     # `wagmi` playground (same as `pnpm dev`)
-pnpm dev:next      # `wagmi` playground with Next.js
+pnpm dev              # `wagmi` playground
+pnpm dev:core         # `@wagmi/core` playground
+pnpm dev:create-wagmi # `create-wagmi` cli tool
+pnpm dev:cli          # `@wagmi/cli` tool
+pnpm dev:next         # `wagmi` playground with Next.js
+pnpm dev:nuxt         # `@wagmi/vue` playground with Nuxt.js
+pnpm dev:react        # `wagmi` playground (same as `pnpm dev`)
+pnpm dev:vue          # `@wagmi/vue` playground
 ```
 
 Once a playground dev server is running, you can make changes to any of the package source files (e.g. `packages/react`) and it will automatically update the playground.
@@ -102,6 +110,9 @@ Next, make sure you have set up your [env variables](#_4-adding-the-env-variable
 - `pnpm test [package?]` — runs tests in watch mode
 - `pnpm test:cov` — runs tests and reports coverage
 - `pnpm test:ui` — runs tests in the [Vitest UI](https://vitest.dev/guide/ui.html)
+- `pnpm test:core` — runs `@wagmi/core` tests
+- `pnpm test:react` — runs `wagmi` tests
+- `pnpm test:vue` — runs `@wagmi/vue` tests
 
 When adding new features or fixing bugs, it's important to add test cases to cover the new or updated behavior. If snapshot tests fail, you can run the `test:update` command to update the snapshots.
 

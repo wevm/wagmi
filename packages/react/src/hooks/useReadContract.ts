@@ -12,6 +12,7 @@ import {
   type ReadContractQueryFnData,
   type ReadContractQueryKey,
   readContractQueryOptions,
+  structuralSharing,
 } from '@wagmi/core/query'
 import {
   type Abi,
@@ -20,11 +21,7 @@ import {
 } from 'viem'
 
 import type { ConfigParameter, QueryParameter } from '../types/properties.js'
-import {
-  type UseQueryReturnType,
-  structuralSharing,
-  useQuery,
-} from '../utils/query.js'
+import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 

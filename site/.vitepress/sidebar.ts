@@ -370,6 +370,245 @@ export function getSidebar() {
         ],
       },
     ],
+    '/vue': [
+      {
+        text: 'Introduction',
+        items: [
+          { text: 'Why Wagmi', link: '/vue/why' },
+          { text: 'Installation', link: '/vue/installation' },
+          { text: 'Getting Started', link: '/vue/getting-started' },
+          { text: 'TypeScript', link: '/vue/typescript' },
+        ],
+      },
+      {
+        text: 'Guides',
+        items: [
+          {
+            text: 'TanStack Query',
+            link: '/vue/guides/tanstack-query',
+          },
+          {
+            text: 'Viem',
+            link: '/vue/guides/viem',
+          },
+          {
+            text: 'Error Handling',
+            link: '/vue/guides/error-handling',
+          },
+          {
+            text: 'Chain Properties',
+            link: '/vue/guides/chain-properties',
+          },
+          {
+            text: 'SSR',
+            link: '/vue/guides/ssr',
+          },
+          {
+            text: 'Connect Wallet',
+            link: '/vue/guides/connect-wallet',
+          },
+          {
+            text: 'Send Transaction',
+            link: '/vue/guides/send-transaction',
+          },
+          {
+            text: 'Read from Contract',
+            link: '/vue/guides/read-from-contract',
+          },
+          {
+            text: 'Write to Contract',
+            link: '/vue/guides/write-to-contract',
+          },
+          {
+            text: 'FAQ / Troubleshooting',
+            link: '/vue/guides/faq',
+          },
+        ],
+      },
+      {
+        text: 'Configuration',
+        items: [
+          { text: 'createConfig', link: '/vue/api/createConfig' },
+          { text: 'createStorage', link: '/vue/api/createStorage' },
+          { text: 'Chains', link: '/vue/api/chains' },
+          {
+            text: 'Connectors',
+            collapsed: true,
+            link: '/vue/api/connectors',
+            items: [
+              {
+                text: 'coinbaseWallet',
+                link: '/vue/api/connectors/coinbaseWallet',
+              },
+              { text: 'injected', link: '/vue/api/connectors/injected' },
+              {
+                text: 'metaMask',
+                link: '/vue/api/connectors/metaMask',
+              },
+              {
+                text: 'mock',
+                link: '/vue/api/connectors/mock',
+              },
+              {
+                text: 'safe',
+                link: '/vue/api/connectors/safe',
+              },
+              {
+                text: 'walletConnect',
+                link: '/vue/api/connectors/walletConnect',
+              },
+            ],
+          },
+          {
+            text: 'Transports',
+            collapsed: true,
+            link: '/vue/api/transports',
+            items: [
+              {
+                text: 'custom (EIP-1193)',
+                link: '/vue/api/transports/custom',
+              },
+              {
+                text: 'fallback',
+                link: '/vue/api/transports/fallback',
+              },
+              {
+                text: 'http',
+                link: '/vue/api/transports/http',
+              },
+              {
+                text: 'unstable_connector',
+                link: '/vue/api/transports/unstable_connector',
+              },
+              {
+                text: 'webSocket',
+                link: '/vue/api/transports/webSocket',
+              },
+            ],
+          },
+          { text: 'WagmiPlugin', link: '/vue/api/WagmiPlugin' },
+          { text: 'Nuxt', link: '/vue/api/Nuxt' },
+        ],
+      },
+      {
+        text: 'Composables',
+        link: '/vue/api/composables',
+        items: [
+          { text: 'useAccount', link: '/vue/api/composables/useAccount' },
+          {
+            text: 'useAccountEffect',
+            link: '/vue/api/composables/useAccountEffect',
+          },
+          {
+            text: 'useBalance',
+            link: '/vue/api/composables/useBalance',
+          },
+          {
+            text: 'useBlockNumber',
+            link: '/vue/api/composables/useBlockNumber',
+          },
+          { text: 'useChainId', link: '/vue/api/composables/useChainId' },
+          { text: 'useChains', link: '/vue/api/composables/useChains' },
+          { text: 'useClient', link: '/vue/api/composables/useClient' },
+          { text: 'useConfig', link: '/vue/api/composables/useConfig' },
+          { text: 'useConnect', link: '/vue/api/composables/useConnect' },
+          {
+            text: 'useConnections',
+            link: '/vue/api/composables/useConnections',
+          },
+          {
+            text: 'useConnectorClient',
+            link: '/vue/api/composables/useConnectorClient',
+          },
+          {
+            text: 'useConnectors',
+            link: '/vue/api/composables/useConnectors',
+          },
+          {
+            text: 'useDisconnect',
+            link: '/vue/api/composables/useDisconnect',
+          },
+          {
+            text: 'useEnsAddress',
+            link: '/vue/api/composables/useEnsAddress',
+          },
+          {
+            text: 'useEnsAvatar',
+            link: '/vue/api/composables/useEnsAvatar',
+          },
+          {
+            text: 'useEstimateGas',
+            link: '/vue/api/composables/useEstimateGas',
+          },
+          {
+            text: 'useReadContract',
+            link: '/vue/api/composables/useReadContract',
+          },
+          {
+            text: 'useReconnect',
+            link: '/vue/api/composables/useReconnect',
+          },
+          {
+            text: 'useSendTransaction',
+            link: '/vue/api/composables/useSendTransaction',
+          },
+          {
+            text: 'useSignMessage',
+            link: '/vue/api/composables/useSignMessage',
+          },
+          {
+            text: 'useSignTypedData',
+            link: '/vue/api/composables/useSignTypedData',
+          },
+          {
+            text: 'useSimulateContract',
+            link: '/vue/api/composables/useSimulateContract',
+          },
+          {
+            text: 'useSwitchAccount',
+            link: '/vue/api/composables/useSwitchAccount',
+          },
+          {
+            text: 'useSwitchChain',
+            link: '/vue/api/composables/useSwitchChain',
+          },
+          {
+            text: 'useTransaction',
+            link: '/vue/api/composables/useTransaction',
+          },
+          {
+            text: 'useTransactionReceipt',
+            link: '/vue/api/composables/useTransactionReceipt',
+          },
+          {
+            text: 'useWaitForTransactionReceipt',
+            link: '/vue/api/composables/useWaitForTransactionReceipt',
+          },
+          {
+            text: 'useWriteContract',
+            link: '/vue/api/composables/useWriteContract',
+          },
+        ],
+      },
+      {
+        text: 'Miscellaneous',
+        items: [
+          { text: 'Actions', link: '/vue/api/actions' },
+          { text: 'Errors', link: '/vue/api/errors' },
+          {
+            text: 'Utilities',
+            collapsed: true,
+            items: [
+              {
+                text: 'deserialize',
+                link: '/vue/api/utilities/deserialize',
+              },
+              { text: 'serialize', link: '/vue/api/utilities/serialize' },
+            ],
+          },
+        ],
+      },
+    ],
     '/core': [
       {
         text: 'Introduction',

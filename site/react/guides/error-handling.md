@@ -16,14 +16,23 @@ function App() {
   error?.name
   //     ^?
 
+
+
+
+
+
   if (error?.name === 'HttpRequestError') {
     const { status } = error
     //      ^?      
+
+
     return <div>A HTTP error occurred. Status: {status}</div>
   }
   if (error?.name === 'LimitExceededRpcError') {
     const { code } = error
     //      ^?
+
+    
     return <div>Rate limit exceeded. Code: {code}</div>
   }
   // ...

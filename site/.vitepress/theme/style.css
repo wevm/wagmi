@@ -137,3 +137,9 @@
   --docsearch-primary-color: var(--vp-c-brand-1) !important;
 }
 
+
+.vp-doc [class*="language-"] .has-focused-lines .line:not(.has-focus) {
+  filter: unset;
+  opacity: 0.3;
+}
+

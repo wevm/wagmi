@@ -9,9 +9,13 @@
     "clean": "pnpm run --r --parallel clean && rm -rf packages/**/*.json.tmp",
     "deps": "pnpx taze -r",
     "dev": "pnpm dev:react",
+    "dev:cli": "pnpm --filter cli dev",
     "dev:core": "pnpm --filter vite-core dev",
+    "dev:create-wagmi": "pnpm --filter create-wagmi dev",
     "dev:next": "pnpm --filter next-app dev",
+    "dev:nuxt": "pnpm --filter nuxt-app dev",
     "dev:react": "pnpm --filter vite-react dev",
+    "dev:vue": "pnpm --filter vite-vue dev",
     "docs:dev": "pnpm --filter site dev",
     "format": "biome format . --write",
     "lint": "biome check .",
@@ -24,10 +28,15 @@
     "prepare": "pnpm simple-git-hooks",
     "test": "vitest",
     "test:build": "pnpm run --r --parallel test:build",
+    "test:cli": "vitest --project @wagmi/cli",
+    "test:core": "vitest --project @wagmi/core",
+    "test:create-wagmi": "vitest --project create-wagmi",
     "test:cov": "vitest run --coverage",
+    "test:react": "vitest --project wagmi",
     "test:typecheck": "vitest typecheck",
     "test:update": "vitest --update",
     "test:ui": "vitest --ui",
+    "test:vue": "vitest --project @wagmi/vue",
     "typecheck": "pnpm run --r --parallel typecheck && tsc --noEmit",
     "version:update": "bun .scripts/updateVersion.ts",
     "version:update:viem": "bun .scripts/updateViemVersion.ts"
@@ -109,6 +118,11 @@
           "src/{globalSetup,setup}.ts!",
           "src/exports/{index,react}.ts!"
         ]
+      },
+      "packages/vue": {
+        "entry": "src/exports/{actions,chains,connectors,index,nuxt,query}.ts!",
+        "ignore": ["src/nuxt/runtime/*", "test/setup.ts"],
+        "ignoreDependencies": ["nuxt"]
       }
     }
   }
