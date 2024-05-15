@@ -1,9 +1,3 @@
-<template>
-  <Account />
-  <Connect />
-</template>
-
-<style>
 :root {
   background-color: #181818;
   color: rgba(255, 255, 255, 0.87);
@@ -25,4 +19,3 @@
     color: #181818;
   }
 }
-</style>

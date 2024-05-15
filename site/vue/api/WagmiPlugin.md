@@ -109,8 +109,13 @@ createApp(App)
 <<< @/snippets/vue/config.ts[config.ts]
 :::
 
-## Context
+## configKey
+
+Key to use to provide/inject `Config` via `WagmiPlugin`.
 
 ```ts
-import { type WagmiContext } from '@wagmi/vue'
+import { configKey, type Config } from '@wagmi/vue'
+import { inject } from 'vue'
+
+inject<Config | undefined>(configKey)
 ```

@@ -34,7 +34,7 @@ bun create wagmi
 
 Once the command runs, you'll see some prompts to complete.
 
-```
+```ansi
 Project name: wagmi-project
 Select a framework: React / Vanilla
 ...

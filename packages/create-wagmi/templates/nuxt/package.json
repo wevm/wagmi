@@ -1,0 +1,21 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@tanstack/vue-query": ">=5.35.1",
+    "@wagmi/vue": "latest",
+    "nuxt": "^3.11.2",
+    "viem": "latest",
+    "vue": ">=3.4.21",
+    "vue-router": "^4.3.2"
+  }
+}

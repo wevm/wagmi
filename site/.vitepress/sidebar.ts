@@ -400,7 +400,7 @@ export function getSidebar() {
             link: '/vue/guides/chain-properties',
           },
           {
-            text: 'SSR 🚧',
+            text: 'SSR',
             link: '/vue/guides/ssr',
           },
           {
@@ -487,6 +487,7 @@ export function getSidebar() {
             ],
           },
           { text: 'WagmiPlugin', link: '/vue/api/WagmiPlugin' },
+          { text: 'Nuxt', link: '/vue/api/Nuxt' },
         ],
       },
       {

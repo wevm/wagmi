@@ -59,5 +59,7 @@ Prints the CLI version.
 `create-wagmi` currently comes with the following templates:
 
 - `next`: A Next.js Wagmi project.
+- `nuxt`: A Nuxt Wagmi project.
 - `vite-react` (default): A Vite (React) Wagmi project.
 - `vite-vanilla`: A Vite Wagmi Core project.
+- `vite-vue`: A Vite (Vue) Wagmi project.

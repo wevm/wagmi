@@ -18,6 +18,17 @@ import { useAccount } from '@wagmi/vue'
 ::: code-group
 ```vue twoslash [index.vue]
 <script setup lang="ts">
+// ---cut-start---
+// @errors: 2322
+import { type Config } from '@wagmi/vue'
+import { mainnet, sepolia } from '@wagmi/vue/chains'
+
+declare module '@wagmi/vue' {
+  interface Register {
+    config: Config<readonly [typeof mainnet, typeof sepolia]>
+  }
+}
+// ---cut-end---
 import { useAccount } from '@wagmi/vue'
 
 const account = useAccount()
@@ -32,7 +43,7 @@ const account = useAccount()
 
 ## Parameters
 
-```ts
+```ts twoslash
 import { type UseAccountParameters } from '@wagmi/vue'
 ```
 
@@ -40,7 +51,7 @@ import { type UseAccountParameters } from '@wagmi/vue'
 
 `Config | undefined`
 
-[`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/api/WagmiProvider).
+[`Config`](/vue/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiPlugin`](/vue/api/WagmiPlugin).
 
 ::: code-group
 ```vue [index.vue]
@@ -53,12 +64,12 @@ const account = useAccount({
 })
 </script>
 ```
-<<< @/snippets/react/config.ts[config.ts]
+<<< @/snippets/vue/config.ts[config.ts]
 :::
 
 ## Return Type
 
-```ts
+```ts twoslash
 import { type UseAccountReturnType } from '@wagmi/vue'
 ```
 

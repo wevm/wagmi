@@ -10,6 +10,8 @@
     "deps": "pnpx taze -r",
     "dev": "pnpm dev:react",
     "dev:core": "pnpm --filter vite-core dev",
+    "dev:cli": "pnpm --filter cli dev",
+    "dev:create-wagmi": "pnpm --filter create-wagmi dev",
     "dev:next": "pnpm --filter next-app dev",
     "dev:nuxt": "pnpm --filter nuxt-app dev",
     "dev:react": "pnpm --filter vite-react dev",

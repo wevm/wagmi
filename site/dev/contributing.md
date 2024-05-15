@@ -84,12 +84,14 @@ NUXT_TELEMETRY_DISABLED=1
 To start the local development playgrounds, run one of the following commands. These commands run playground apps, located at `./playgrounds`, that are set up for trying out code while making changes.
 
 ```bash
-pnpm dev           # `wagmi` playground
-pnpm dev:core      # `@wagmi/core` playground
-pnpm dev:next      # `wagmi` playground with Next.js
-pnpm dev:nuxt      # `@wagmi/vue` playground with Nuxt.js
-pnpm dev:react     # `wagmi` playground (same as `pnpm dev`)
-pnpm dev:vue       # `@wagmi/vue` playground
+pnpm dev              # `wagmi` playground
+pnpm dev:core         # `@wagmi/core` playground
+pnpm dev:create-wagmi # `create-wagmi` cli tool
+pnpm dev:cli          # `@wagmi/cli` tool
+pnpm dev:next         # `wagmi` playground with Next.js
+pnpm dev:nuxt         # `@wagmi/vue` playground with Nuxt.js
+pnpm dev:react        # `wagmi` playground (same as `pnpm dev`)
+pnpm dev:vue          # `@wagmi/vue` playground
 ```
 
 Once a playground dev server is running, you can make changes to any of the package source files (e.g. `packages/react`) and it will automatically update the playground.

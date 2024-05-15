@@ -34,7 +34,7 @@ bun create wagmi
 
 Once the command runs, you'll see some prompts to complete.
 
-```
+```ansi
 Project name: wagmi-project
 Select a framework: Vue / Vanilla
 ...
@@ -117,12 +117,22 @@ By registering or using the hook `config` property, `useBlockNumber`'s `chainId`
 
 ### Add Plugin to App
 
-App the `WagmiPlugin` to your `App` instance and pass the `config` you created earlier to the plugin options.
+App the `WagmiPlugin` to your app instance and pass the `config` you created earlier to the plugin options.
 
 ::: code-group
-```tsx [app.ts]
+```tsx [main.ts]
 import { WagmiPlugin } from '@wagmi/vue' // [!code focus]
+import { createApp } from 'vue'
 import { config } from './config' // [!code focus]
+import App from './App.vue'
+
+createApp(App)
+  .use(WagmiPlugin, { config }) // [!code focus]
+  .mount('#app')
+```
+```vue [App.vue]
+<template>
+</template>
 ```
 <<< @/snippets/vue/config.ts[config.ts]
 :::
@@ -131,15 +141,26 @@ Check out the [`WagmiPlugin` docs](/vue/api/WagmiPlugin) to learn more about the
 
 ### Setup TanStack Query
 
-After the `WagmiPlugin`, attach the `VueQueryPlugin` to your app, and pass a new `QueryClient` instance to the `client` property.
+After the `WagmiPlugin`, attach the `VueQueryPlugin` to your app, and pass a new `QueryClient` instance to the `queryClient` property.
 
 ::: code-group
-```tsx [app.ts]
+```tsx [main.ts]
 import { QueryClient, VueQueryPlugin } from '@tanstack/vue-query' // [!code focus]
 import { WagmiPlugin } from '@wagmi/vue'
+import { createApp } from 'vue'
 import { config } from './config'
+import App from './App.vue'
 
 const queryClient = new QueryClient() // [!code focus]
+
+createApp(App)
+  .use(WagmiPlugin, { config })
+  .use(VueQueryPlugin, { queryClient }) // [!code focus]
+  .mount('#app')
+```
+```vue [App.vue]
+<template>
+</template>
 ```
 <<< @/snippets/vue/config.ts[config.ts]
 :::
@@ -151,26 +172,39 @@ Check out the [TanStack Query docs](https://tanstack.com/query/latest/docs/frame
 Now that everything is set up, every component inside your app can use Wagmi Vue Composables.
 
 ::: code-group
-```vue [profile.vue]
+```vue [App.vue]
 <script setup lang="ts">
-import { useAccount } from '@wagmi/vue'
+import { useAccount, useEnsName } from '@wagmi/vue'
 
 const { address } = useAccount()
+const { data, error, status } = useEnsName({ address })
 </script>
 
 <template>
+  <div v-if="status === 'pending'">Loading ENS name</div>
+  <div v-else-if="status === 'error'">
+    Error fetching ENS name: {{error.message}}
+  </div>
+  <div v-else>ENS name: {{data}}</div>
 </template>
 ```
-
-```ts [app.ts]
+```tsx [main.ts]
 import { QueryClient, VueQueryPlugin } from '@tanstack/vue-query'
 import { WagmiPlugin } from '@wagmi/vue'
+import { createApp } from 'vue'
 import { config } from './config'
+import App from './App.vue'
 
 const queryClient = new QueryClient()
+
+createApp(App)
+  .use(WagmiPlugin, { config })
+  .use(VueQueryPlugin, { queryClient })
+  .mount('#app')
 ```
 <<< @/snippets/vue/config.ts[config.ts]
 :::
+
 
 ## Next Steps
 

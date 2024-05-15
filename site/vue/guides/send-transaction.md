@@ -190,8 +190,6 @@ We can also display the transaction confirmation status to the user by using the
 
 If the user rejects the transaction, or the user does not have enough funds to cover the transaction, we can display an error message to the user.
 
-:::
-
 ::: code-group
 
 ```vue [SendTransaction.vue]
