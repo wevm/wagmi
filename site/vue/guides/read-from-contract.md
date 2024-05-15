@@ -28,7 +28,7 @@ const { data: balance } = useReadContract({
 
 ## Loading & Error States
 
-The [`useReadContract` Composable](/react/api/composables/useReadContract) also returns loading & error states, which can be used to display a loading indicator while the data is being fetched, or an error message if contract execution reverts.
+The [`useReadContract` Composable](/vue/api/composables/useReadContract) also returns loading & error states, which can be used to display a loading indicator while the data is being fetched, or an error message if contract execution reverts.
 
 :::code-group
 
