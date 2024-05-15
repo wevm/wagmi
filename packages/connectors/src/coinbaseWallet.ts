@@ -50,9 +50,9 @@ export function coinbaseWallet<version extends Version>(
 ): version extends '4'
   ? ReturnType<typeof version4>
   : ReturnType<typeof version3> {
-  if (parameters.version === '4' && !parameters.headlessMode)
-    return version4(parameters as Version4Parameters) as any
-  return version3(parameters as Version3Parameters) as any
+  if (parameters.version === '3' || parameters.headlessMode)
+    return version3(parameters as Version3Parameters) as any
+  return version4(parameters as Version4Parameters) as any
 }
 
 type Version4Parameters = Mutable<
