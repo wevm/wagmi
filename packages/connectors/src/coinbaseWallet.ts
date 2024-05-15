@@ -24,15 +24,20 @@ export type CoinbaseWalletParameters<version extends Version = '3'> =
   version extends '4'
     ? Evaluate<
         {
+          headlessMode?: false | undefined
           /** Coinbase Wallet SDK version */
-          version: version | '3'
+          version?: version | '3' | undefined
         } & Version4Parameters
       >
     : Evaluate<
         {
           /**
+           * @deprecated `headlessMode` will be removed in the next major version. Upgrade to `version: '4'`.
+           */
+          headlessMode?: true | undefined
+          /**
            * Coinbase Wallet SDK version
-           * @deprecated Switch to `version: '4'`
+           * @deprecated Version 3 will be removed in the next major version. Upgrade to `version: '4'`.
            */
           version?: version | '4' | undefined
         } & Version3Parameters
@@ -40,11 +45,11 @@ export type CoinbaseWalletParameters<version extends Version = '3'> =
 
 coinbaseWallet.type = 'coinbaseWallet' as const
 export function coinbaseWallet<version extends Version>(
-  parameters: CoinbaseWalletParameters<version>,
+  parameters: CoinbaseWalletParameters<version> = {} as any,
 ): version extends '4'
   ? ReturnType<typeof version4>
   : ReturnType<typeof version3> {
-  if (parameters.version === '4')
+  if (parameters.version === '4' && !parameters.headlessMode)
     return version4(parameters as Version4Parameters) as any
   return version3(parameters as Version3Parameters) as any
 }
