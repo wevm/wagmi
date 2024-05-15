@@ -71,11 +71,12 @@ const connector = coinbaseWallet({
 })
 ```
 
-### headlessMode
+### headlessMode <Badge type="warning" text="deprecated" />
 
 `boolean | undefined`
 
-Whether or not onboarding overlay popup should be displayed.
+- Whether or not onboarding overlay popup should be displayed.
+- `headlessMode` will be removed in the next major version. Upgrade to [`version: '4'`](#version).
 
 ```ts-vue
 import { coinbaseWallet } from '{{connectorsPackageName}}'
@@ -86,7 +87,7 @@ const connector = coinbaseWallet({
 })
 ```
 
-### preference <Badge text="viem@>=2.9.0" />
+### preference <Badge text=">=2.9.0" />
 
 `"all" | "eoaOnly" | "smartWalletOnly"`
 
@@ -105,7 +106,7 @@ const connector = coinbaseWallet({
 })
 ```
 
-### version <Badge text="wagmi@>=2.9.0" />
+### version <Badge text=">=2.9.0" />
 
 - Coinbase Wallet SDK version
 - Defaults to `'4'`. If [`headlessMode: true`](#headlessmode), defaults to `'3'`.

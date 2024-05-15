@@ -11,13 +11,9 @@ const TData = '{ address: Address; decimals: number; name: string | undefined; s
 const TError = 'GetTokenErrorType'
 </script>
 
-# useToken
+# useToken <Badge type="warning">[deprecated](/react/guides/migrate-from-v1-to-v2#deprecated-usetoken)</Badge>
 
 Hook for fetching token info. 
-
-::: warning Deprecated
-See [deprecation notices](/react/guides/migrate-from-v1-to-v2#removed-usetoken) for more info.
-:::
 
 ## Import
 

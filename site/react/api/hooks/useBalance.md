@@ -168,15 +168,11 @@ function App() {
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
-### token
+### token <Badge type="warning">[deprecated](/react/guides/migrate-from-v1-to-v2#deprecated-usebalance-token-parameter)</Badge>
 
 `Address | undefined`
 
 ERC-20 token address to get balance for.
-
-::: warning Deprecated
-See [deprecation notices](/react/guides/migrate-from-v1-to-v2#deprecated-usebalance-token-parameter) for more info.
-:::
 
 ::: code-group
 ```ts [index.ts]
@@ -192,16 +188,12 @@ function App() {
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
-### unit
+### unit <Badge type="warning">[deprecated](/react/guides/migrate-from-v1-to-v2#deprecated-usebalance-unit-parameter-and-formatted-return-value)</Badge>
 
 `'ether' | 'gwei' | 'wei' | number | undefined`
 
 - Units to use when formatting result.
 - Defaults to `'ether'`.
-
-::: warning Deprecated
-See [deprecation notices](/react/guides/migrate-from-v1-to-v2#deprecated-usebalance-unit-parameter-and-formatted-return-value) for more info.
-:::
 
 ::: code-group
 ```ts [index.ts]
