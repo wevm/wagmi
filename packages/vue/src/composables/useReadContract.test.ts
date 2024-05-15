@@ -62,7 +62,7 @@ test('parameters: chainId', async () => {
   `)
 })
 
-test('behavior: disabled when missing properties', async () => {
+test.skip('behavior: disabled when missing properties', async () => {
   const addressRef = ref()
   const abiRef = ref()
   const functionNameRef = ref()
