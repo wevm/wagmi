@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.10.0
+
+### Minor Changes
+
+- [#3928](https://github.com/wevm/wagmi/pull/3928) [`3117e71825f9c58a0d718f3d1686f1a191fa9cb1`](https://github.com/wevm/wagmi/commit/3117e71825f9c58a0d718f3d1686f1a191fa9cb1) Thanks [@tmm](https://github.com/tmm)! - Updated the default Coinbase SDK in `coinbaseWallet` Connector to v4.x.
+
 ## 2.9.8
 
 ### Patch Changes

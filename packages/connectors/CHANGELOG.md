@@ -1,5 +1,42 @@
 # @wagmi/connectors
 
+## 5.0.0
+
+### Major Changes
+
+- [#3928](https://github.com/wevm/wagmi/pull/3928) [`3117e71825f9c58a0d718f3d1686f1a191fa9cb1`](https://github.com/wevm/wagmi/commit/3117e71825f9c58a0d718f3d1686f1a191fa9cb1) Thanks [@tmm](https://github.com/tmm)! - **Breaking:** Updated default Coinbase SDK in `coinbaseWallet` Connector to v4.x.
+
+  Added a `version` property (defaults to `'4'`) to the `coinbaseWallet` Connector to target a version of the Coinbase SDK:
+
+  ```diff
+  coinbaseWallet({
+  + version: '3' | '4',
+  })
+  ```
+
+  If `headlessMode` property is set to `true`, then the Connector will target v3 of the Coinbase SDK.
+
+  The following properties are removed in v4 of the `coinbaseWallet` Connector:
+
+  - `chainId`
+  - `darkMode`
+  - `diagnosticLogger`
+  - `enableMobileDeepLink`
+  - `jsonRpcUrl`
+  - `linkApiUrl`
+  - `overrideIsCoinbaseBrowser`
+  - `overrideIsCoinbaseWallet`
+  - `overrideIsMetaMask`
+  - `reloadOnDisconnect`
+  - `uiConstructor`
+
+  Consumers can still use the above properties in v3 by passing `version: '3'` to the Connector. However, please note that v3 of the Coinbase SDK is deprecated and will be removed in a future release.
+
+### Patch Changes
+
+- Updated dependencies [[`3117e71825f9c58a0d718f3d1686f1a191fa9cb1`](https://github.com/wevm/wagmi/commit/3117e71825f9c58a0d718f3d1686f1a191fa9cb1)]:
+  - @wagmi/core@2.10.0
+
 ## 4.3.10
 
 ### Patch Changes
