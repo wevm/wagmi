@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 2.1.7
+
+### Patch Changes
+
+- [`1122678bbad0232590bd4060a73752de2c84982d`](https://github.com/wevm/wagmi/commit/1122678bbad0232590bd4060a73752de2c84982d) Thanks [@tmm](https://github.com/tmm)! - Published unpublished changes in [#3756](https://github.com/wevm/wagmi/pull/3756).
+
 ## 2.1.6
 
 ### Patch Changes
