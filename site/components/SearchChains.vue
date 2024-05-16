@@ -24,7 +24,7 @@ const filteredChains = computed(() => {
     <span absolute right-4 font-500 op-50 text-xs>{{ filteredChains.length }} {{ filteredChains.length === 1 ?
       "Chain" :
       "Chains"
-    }}</span>
+      }}</span>
   </div>
 
   <div class="Columns">
