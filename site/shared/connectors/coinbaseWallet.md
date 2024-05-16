@@ -15,24 +15,24 @@ import { coinbaseWallet } from '{{connectorsPackageName}}'
 
 ## Usage
 
-```ts-vue{3,8-10}
+```ts-vue
 import { createConfig, http } from '{{packageName}}'
 import { mainnet, sepolia } from '{{packageName}}/chains'
-import { coinbaseWallet } from '{{connectorsPackageName}}'
+import { coinbaseWallet } from '{{connectorsPackageName}}' // [!code hl]
 
 export const config = createConfig({
   chains: [mainnet, sepolia],
-  connectors: [
-    coinbaseWallet({
-      appName: 'My Wagmi App',
-    }),
-  ],
+  connectors: [coinbaseWallet()], // [!code hl]
   transports: {
     [mainnet.id]: http(),
     [sepolia.id]: http(),
   },
 })
 ```
+
+:::warning
+Before going to production, it is highly recommended to set an [`appName`](#appname) and [`appLogoUrl`](#applogourl) for your application that can be displayed upon connection to the wallet.
+:::
 
 ## Parameters
 
@@ -71,63 +71,12 @@ const connector = coinbaseWallet({
 })
 ```
 
-### chainId
-
-`number | undefined`
-
-Fallback Ethereum Chain ID. Defaults to `1` (Mainnet).
-
-```ts-vue
-import { mainnet } from '{{packageName}}/chains'
-import { coinbaseWallet } from '{{connectorsPackageName}}'
-
-const connector = coinbaseWallet({
-  appName: 'My Wagmi App',
-  chainId: mainnet.id, // [!code focus]
-})
-```
-
-### darkMode
+### headlessMode <Badge type="warning" text="deprecated" />
 
 `boolean | undefined`
 
-Use dark theme.
-
-```ts-vue
-import { coinbaseWallet } from '{{connectorsPackageName}}'
-
-const connector = coinbaseWallet({
-  appName: 'My Wagmi App',
-  darkMode: true, // [!code focus]
-})
-```
-
-### diagnosticLogger
-
-`DiagnosticLogger | undefined`
-
-A diagnostic tool for debugging; for most, leave it unspecified.
-
-### enableMobileWalletLink
-
-`boolean | undefined`
-
-Whether to connect mobile web app via WalletLink, defaults to `false`.
-
-```ts-vue
-import { coinbaseWallet } from '{{connectorsPackageName}}'
-
-const connector = coinbaseWallet({
-  appName: 'My Wagmi App',
-  enableMobileWalletLink: true, // [!code focus]
-})
-```
-
-### headlessMode
-
-`boolean | undefined`
-
-Whether or not onboarding overlay popup should be displayed.
+- Whether or not onboarding overlay popup should be displayed.
+- `headlessMode` will be removed in the next major version. Upgrade to [`version: '4'`](#version).
 
 ```ts-vue
 import { coinbaseWallet } from '{{connectorsPackageName}}'
@@ -138,61 +87,36 @@ const connector = coinbaseWallet({
 })
 ```
 
-### jsonRpcUrl
+### preference <Badge text=">=2.9.0" />
 
-`string | undefined`
+`"all" | "eoaOnly" | "smartWalletOnly"`
 
-Fallback Ethereum JSON RPC URL.
+Preference for the type of wallet to display.
 
-```ts-vue
-import { coinbaseWallet } from '{{connectorsPackageName}}'
-
-const connector = coinbaseWallet({
-  appName: 'My Wagmi App',
-  jsonRpcUrl: 'https://cloudflare-eth.com', // [!code focus]
-})
-```
-
-### linkApiUrl
-
-`string | undefined`
-
-Coinbase Wallet link server URL; for most, leave it unspecified.
-
-### overrideIsCoinbaseBrowser / overrideIsCoinbaseWallet / overrideIsMetaMask
-
-`boolean | undefined`
-
-Whether wallet link provider should override the `isCoinbaseBrowser`, `isCoinbaseWallet`, and/or `isMetaMask` property.
+- `'eoaOnly'`: Uses EOA Browser Extension or Mobile Coinbase Wallet.
+- `'smartWalletOnly'`: Displays Smart Wallet popup.
+- `'all'` (default): Supports both `'eoaOnly'` and `'smartWalletOnly'` based on context.
 
 ```ts-vue
 import { coinbaseWallet } from '{{connectorsPackageName}}'
 
 const connector = coinbaseWallet({
   appName: 'My Wagmi App',
-  isCoinbaseBrowser: true, // [!code focus]
-  isCoinbaseWallet: true, // [!code focus]
-  isMetaMask: true, // [!code focus]
+  preference: 'smartWalletOnly', // [!code focus]
 })
 ```
 
-### reloadOnDisconnect
+### version <Badge text=">=2.9.0" />
 
-`boolean | undefined`
-
-Whether or not to reload dapp automatically after disconnect, defaults to `false`.
+- Coinbase Wallet SDK version
+- Defaults to `'4'`. If [`headlessMode: true`](#headlessmode), defaults to `'3'`.
 
 ```ts-vue
 import { coinbaseWallet } from '{{connectorsPackageName}}'
 
 const connector = coinbaseWallet({
   appName: 'My Wagmi App',
-  reloadOnDisconnect: true, // [!code focus]
+  version: '4', // [!code focus]
 })
 ```
 
-### uiConstructor
-
-`((options: Readonly<WalletUIOptions>) => WalletUI) | undefined`
-
-An implementation of WalletUI; for most, leave it unspecified.
