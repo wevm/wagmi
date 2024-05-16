@@ -34,7 +34,7 @@ bun create wagmi
 
 Once the command runs, you'll see some prompts to complete.
 
-```
+```ansi
 Project name: wagmi-project
 Select a framework: React / Vanilla
 ...
@@ -163,7 +163,7 @@ function App() {
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
-Check out the [TanStack Query docs](https://tanstack.com/query/v5/docs/react) to learn about the library, APIs, and more.
+Check out the [TanStack Query docs](https://tanstack.com/query/latest/docs/framework/react) to learn about the library, APIs, and more.
 
 ### Use Wagmi
 

@@ -9,7 +9,7 @@ import {
 } from '@wagmi/test'
 import { http, createWalletClient, parseEther } from 'viem'
 import type { WatchEventOnLogsParameter } from 'viem/actions'
-import { expect, test } from 'vitest'
+import { beforeEach, expect, test } from 'vitest'
 
 import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'
@@ -18,6 +18,15 @@ import { watchContractEvent } from './watchContractEvent.js'
 import { writeContract } from './writeContract.js'
 
 const connector = config.connectors[0]!
+
+// TODO: Some test does not call disconnect after finishing. Remove once fixing it.
+beforeEach(async () => {
+  if (config.state.current) {
+    const connection = config.state.connections.get(config.state.current)!
+    const connector = connection.connector
+    await disconnect(config, { connector })
+  }
+})
 
 test('default', async () => {
   const data = await connect(config, { connector })

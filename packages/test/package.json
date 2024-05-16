@@ -21,7 +21,8 @@
     "src/**/*.ts",
     "!src/**/*.test.ts",
     "!src/**/*.test-d.ts",
-    "react/**"
+    "react/**",
+    "vue/**"
   ],
   "sideEffects": false,
   "type": "module",
@@ -37,30 +38,43 @@
       "types": "./dist/types/exports/react.d.ts",
       "default": "./dist/esm/exports/react.js"
     },
+    "./vue": {
+      "types": "./dist/types/exports/vue.d.ts",
+      "default": "./dist/esm/exports/vue.js"
+    },
     "./package.json": "./package.json"
   },
   "typesVersions": {
     "*": {
       "react": [
         "./dist/types/exports/react.d.ts"
+      ],
+      "vue": [
+        "./dist/types/exports/vue.d.ts"
       ]
     }
   },
   "peerDependencies": {
     "@tanstack/react-query": ">=5.0.0",
+    "@tanstack/vue-query": ">=5.0.0",
     "@testing-library/react": ">=14.0.0",
     "@types/react": ">=18",
     "@types/react-dom": ">=18",
     "@viem/anvil": "^0.0.6",
     "@wagmi/core": "workspace:*",
+    "@wagmi/vue": "workspace:*",
     "react": ">=18",
     "react-dom": ">=18",
     "typescript": ">=5.0.4",
     "viem": "2.x",
+    "vue": ">=3",
     "wagmi": "workspace:*"
   },
   "peerDependenciesMeta": {
     "@tanstack/react-query": {
+      "optional": true
+    },
+    "@tanstack/vue-query": {
       "optional": true
     },
     "@testing-library/react": {
@@ -81,18 +95,24 @@
     "typescript": {
       "optional": true
     },
+    "vue": {
+      "optional": true
+    },
     "wagmi": {
       "optional": true
     }
   },
   "devDependencies": {
     "@tanstack/react-query": ">=5.35.1",
+    "@tanstack/vue-query": ">=5.35.1",
     "@testing-library/react": ">=15.0.7",
     "@types/react": ">=18.3.1",
     "@types/react-dom": ">=18.3.0",
     "@wagmi/core": "workspace:*",
+    "@wagmi/vue": "workspace:*",
     "react": ">=18.3.1",
     "react-dom": ">=18.3.1",
+    "vue": ">=3.4.21",
     "wagmi": "workspace:*"
   },
   "contributors": [

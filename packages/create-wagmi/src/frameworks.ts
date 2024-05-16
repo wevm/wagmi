@@ -35,9 +35,26 @@ export const frameworks: readonly Framework[] = [
     ],
   },
   {
+    name: 'vue',
+    display: 'Vue',
+    color: pc.green,
+    variants: [
+      {
+        name: 'vite-vue',
+        display: 'Vite',
+        color: pc.blue,
+      },
+      {
+        name: 'nuxt',
+        display: 'Nuxt',
+        color: pc.yellow,
+      },
+    ],
+  },
+  {
     name: 'vanilla',
     display: 'Vanilla',
-    color: pc.yellow,
+    color: pc.magenta,
     variants: [
       {
         name: 'vite-vanilla',

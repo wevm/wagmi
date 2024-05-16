@@ -81,6 +81,10 @@ test('exports', () => {
       "waitForTransactionReceiptQueryOptions",
       "writeContractMutationOptions",
       "hashFn",
+      "structuralSharing",
+      "useInfiniteQuery",
+      "useMutation",
+      "useQuery",
     ]
   `)
 })

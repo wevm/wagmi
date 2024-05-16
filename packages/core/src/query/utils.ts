@@ -1,4 +1,13 @@
-import { type QueryKey } from '@tanstack/query-core'
+import { type QueryKey, replaceEqualDeep } from '@tanstack/query-core'
+import { deepEqual } from '../utils/deepEqual.js'
+
+export function structuralSharing<data>(
+  oldData: data | undefined,
+  newData: data,
+): data {
+  if (deepEqual(oldData, newData)) return oldData as data
+  return replaceEqualDeep(oldData, newData)
+}
 
 export function hashFn(queryKey: QueryKey): string {
   return JSON.stringify(queryKey, (_, value) => {

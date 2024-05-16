@@ -8,7 +8,6 @@ export const config = createConfig({
     injected(),
     walletConnect({
       projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID!,
-      showQrModal: false,
     }),
     metaMask(),
   ],

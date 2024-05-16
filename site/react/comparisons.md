@@ -53,7 +53,7 @@ Comparisons strive to be as accurate and as unbiased as possible. If you use any
 - Test suite running against forked Ethereum networks
 - TypeScript ready (infer types from ABIs and EIP-712 Typed Data)
 - Extensive documentation and examples
-- Used by Coinbase, Stripe, Shopify, Optimism, ENS, Sushi, and [many more](https://github.com/wagmi-dev/wagmi/discussions/201)
+- Used by Coinbase, Stripe, Shopify, Uniswap, Optimism, ENS, Sushi, and [many more](https://github.com/wagmi-dev/wagmi/discussions/201)
 - MIT License
 
 ### Cons
@@ -64,9 +64,8 @@ Comparisons strive to be as accurate and as unbiased as possible. If you use any
 
 ### Pros
 
-- Supports many different connectors (conceptually similar to wagmi's connectors)
+- Supports many different connectors (conceptually similar to Wagmi's connectors)
 - Basic hooks for managing account
-- Used by [Uniswap](https://uniswap.org) and some other popular projects
 
 ### Cons
 
