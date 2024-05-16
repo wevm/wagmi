@@ -8,20 +8,18 @@ jobs:
   reply-labeled:
     runs-on: ubuntu-latest
     steps:
-      - name: label needs reproduction
+      - name: Label needs reproduction
         if: github.event.label.name == 'needs reproduction'
-        uses: actions-cool/issues-helper@v3
+        uses: peter-evans/close-issue@v3
         with:
-          actions: 'create-comment'
-          token: ${{ secrets.GITHUB_TOKEN }}
+          close-reason: not_planned
+          comment: |
+            Hello @${{ github.event.issue.user.login }}. 
+
+            Please provide a [minimal reproduction](https://stackoverflow.com/help/minimal-reproducible-example) using [StackBlitz](https://new.wagmi.sh), [TypeScript Playground](https://www.typescriptlang.org/play) (for type issues), or a separate minimal GitHub repository.
+
+            Minimal reproductions are required as they save us a lot of time reproducing your config & environment, and trying to reproduce your issue. See [Why reproductions are required](https://antfu.me/posts/why-reproductions-are-required). 
+
+            Please reopen this issue when a reproduction is added.
           issue-number: ${{ github.event.issue.number }}
-          body: Hello @${{ github.event.issue.user.login }}. Please provide a [minimal reproduction](https://stackoverflow.com/help/minimal-reproducible-example) using [new.wagmi.sh](https://new.wagmi.sh) for runtime issues or [TypeScript Playground](https://www.typescriptlang.org/play) for type issues. Issues marked with "needs reproduction" will be closed if they have no activity within 3 days.
-      - name: close needs reproduction
-        if: github.event.label.name == 'needs reproduction'
-        uses: actions-cool/issues-helper@v3
-        with:
-          actions: 'close-issues'
           token: ${{ secrets.GITHUB_TOKEN }}
-          close-reason: 'not_planned'
-          issue-number: ${{ github.event.issue.number }}
-          labels: 'Needs Reproduction'

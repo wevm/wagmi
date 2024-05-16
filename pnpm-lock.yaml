@@ -57,8 +57,8 @@ importers:
         specifier: 5.4.2
         version: 5.4.2
       viem:
-        specifier: 2.9.31
-        version: 2.9.31(bufferutil@4.0.8)(typescript@5.4.2)(utf-8-validate@6.0.3)(zod@3.22.4)
+        specifier: 2.10.8
+        version: 2.10.8(bufferutil@4.0.8)(typescript@5.4.2)(utf-8-validate@6.0.3)(zod@3.22.4)
       vitest:
         specifier: ^1.6.0
         version: 1.6.0(@types/node@20.12.10)(@vitest/ui@1.6.0)(happy-dom@12.2.1)(terser@5.31.0)
@@ -118,7 +118,7 @@ importers:
         version: 3.0.3
       viem:
         specifier: 2.x
-        version: 2.9.31(bufferutil@4.0.8)(typescript@5.4.2)(utf-8-validate@6.0.3)(zod@3.22.2)
+        version: 2.10.8(bufferutil@4.0.8)(typescript@5.4.2)(utf-8-validate@6.0.3)(zod@3.22.2)
       zod:
         specifier: ^3.22.2
         version: 3.22.2
@@ -371,7 +371,7 @@ importers:
         version: 18.3.1(react@18.3.1)
       viem:
         specifier: 2.*
-        version: 2.0.0(bufferutil@4.0.8)(typescript@5.4.2)(utf-8-validate@6.0.3)(zod@3.22.4)
+        version: 2.10.8(bufferutil@4.0.8)(typescript@5.4.2)(utf-8-validate@6.0.3)(zod@3.22.4)
       wagmi:
         specifier: workspace:*
         version: link:../../packages/react
@@ -417,7 +417,7 @@ importers:
         version: 3.11.2(@opentelemetry/api@1.8.0)(@parcel/watcher@2.4.1)(@types/node@20.12.10)(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@4.1.2)(encoding@0.1.13)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.4.2)))(idb-keyval@6.2.1)(ioredis@5.3.2)(qrcode@1.5.3)(rollup@4.17.2)(terser@5.31.0)(typescript@5.4.2)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@6.0.3)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))(vue-tsc@2.0.16(typescript@5.4.2))
       viem:
         specifier: 2.*
-        version: 2.9.31(bufferutil@4.0.8)(typescript@5.4.2)(utf-8-validate@6.0.3)(zod@3.22.4)
+        version: 2.10.8(bufferutil@4.0.8)(typescript@5.4.2)(utf-8-validate@6.0.3)(zod@3.22.4)
       vue:
         specifier: '>=3.4.21'
         version: 3.4.27(typescript@5.4.2)
@@ -441,7 +441,7 @@ importers:
         version: 18.3.1(react@18.3.1)
       viem:
         specifier: 2.*
-        version: 2.0.0(bufferutil@4.0.8)(typescript@5.4.2)(utf-8-validate@6.0.3)(zod@3.22.4)
+        version: 2.10.8(bufferutil@4.0.8)(typescript@5.4.2)(utf-8-validate@6.0.3)(zod@3.22.4)
     devDependencies:
       '@types/react':
         specifier: '>=18.3.1'
@@ -481,7 +481,7 @@ importers:
         version: 18.3.1(react@18.3.1)
       viem:
         specifier: 2.*
-        version: 2.0.0(bufferutil@4.0.8)(typescript@5.4.2)(utf-8-validate@6.0.3)(zod@3.22.4)
+        version: 2.10.8(bufferutil@4.0.8)(typescript@5.4.2)(utf-8-validate@6.0.3)(zod@3.22.4)
       wagmi:
         specifier: workspace:*
         version: link:../../packages/react
@@ -515,7 +515,7 @@ importers:
         version: link:../../packages/vue
       viem:
         specifier: 2.*
-        version: 2.9.31(bufferutil@4.0.8)(typescript@5.4.2)(utf-8-validate@6.0.3)(zod@3.22.4)
+        version: 2.10.8(bufferutil@4.0.8)(typescript@5.4.2)(utf-8-validate@6.0.3)(zod@3.22.4)
       vue:
         specifier: '>=3.4.21'
         version: 3.4.27(typescript@5.4.2)
@@ -573,7 +573,7 @@ importers:
         version: 0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))
       viem:
         specifier: 2.*
-        version: 2.9.31(bufferutil@4.0.8)(typescript@5.4.2)(utf-8-validate@6.0.3)(zod@3.22.4)
+        version: 2.10.8(bufferutil@4.0.8)(typescript@5.4.2)(utf-8-validate@6.0.3)(zod@3.22.4)
       vitepress:
         specifier: ^1.1.4
         version: 1.1.4(@algolia/client-search@4.19.1)(@types/node@20.12.10)(@types/react@18.3.1)(change-case@4.1.2)(idb-keyval@6.2.1)(postcss@8.4.38)(qrcode@1.5.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(terser@5.31.0)(typescript@5.4.2)
@@ -588,9 +588,6 @@ packages:
 
   '@adraffy/ens-normalize@1.10.0':
     resolution: {integrity: sha512-nA9XHtlAkYfJxY7bce8DcN7eKxWWCWkU+1GR9d+U6MbNpfwQp8TI7vqOsBsMcHoT4mBu2kypKoSKnghEzOOq5Q==}
-
-  '@adraffy/ens-normalize@1.9.4':
-    resolution: {integrity: sha512-UK0bHA7hh9cR39V+4gl2/NnBBjoXIxkuWAPCaY4X7fbH4L/azIi7ilWOCjMUYfpJgraLUAqkRi2BqrjME8Rynw==}
 
   '@algolia/autocomplete-core@1.9.3':
     resolution: {integrity: sha512-009HdfugtGCdC4JdXUbVJClA0q0zh24yyePn+KUGk3rP7j8FEe/m5Yo/z65gn6nP/cM39PxpzqKrL7A6fP6PPw==}
@@ -2761,9 +2758,6 @@ packages:
   '@types/ws@8.5.10':
     resolution: {integrity: sha512-vmQSUcfalpIq0R9q7uTo2lXs6eGIpt9wtnLdMv9LVpIjCA/+ufZRozlVoVelIYixx1ugCBKDhn89vnsEGOCx9A==}
 
-  '@types/ws@8.5.5':
-    resolution: {integrity: sha512-lwhs8hktwxSjf9UaZ9tG5M03PGogvFaH8gUgLNbN9HKIg0dvv6q+gkSuJ8HN4/VbyxkuLzCjlN7GquQ0gUJfIg==}
-
   '@typescript/vfs@1.5.0':
     resolution: {integrity: sha512-AJS307bPgbsZZ9ggCT3wwpg3VbTKMFNHfaY/uF0ahSkYYrPF2dSSKDNIDIQAHm9qJqbLvCsSJH7yN4Vs/CsMMg==}
 
@@ -3181,17 +3175,6 @@ packages:
   abbrev@2.0.0:
     resolution: {integrity: sha512-6/mh1E2u2YgEsCHdY0Yx5oW+61gZU+1vXaoiHHrpKeuRNNgFvS+/jrwHiQhB5apAf5oB7UB7E19ol2R2LKH8hQ==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
-
-  abitype@0.10.0:
-    resolution: {integrity: sha512-QvMHEUzgI9nPj9TWtUGnS2scas80/qaL5PBxGdwWhhvzqXfOph+IEiiiWrzuisu3U3JgDQVruW9oLbJoQ3oZ3A==}
-    peerDependencies:
-      typescript: '>=5.0.4'
-      zod: ^3 >=3.22.0
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-      zod:
-        optional: true
 
   abitype@0.9.8:
     resolution: {integrity: sha512-puLifILdm+8sjyss4S+fsUN09obiT1g2YW6CtcQF+QDzxR0euzgEB29MZujC6zMk2a6SVmtttq1fc6+YFA7WYQ==}
@@ -5137,13 +5120,13 @@ packages:
   isomorphic-unfetch@3.1.0:
     resolution: {integrity: sha512-geDJjpoZ8N0kWexiwkX8F9NkTsXhetLPVbZFQ+JTW239QNOwvB0gniuR1Wc6f0AMTn7/mFGyXvHTifrCp/GH8Q==}
 
-  isomorphic-ws@5.0.0:
-    resolution: {integrity: sha512-muId7Zzn9ywDsyXgTIafTry2sV3nySZeUDe6YedVd1Hvuuep5AsIlqK+XefWpYTyJG5e503F2xIuT2lcU6rCSw==}
+  isows@1.0.3:
+    resolution: {integrity: sha512-2cKei4vlmg2cxEjm3wVSqn8pcoRF/LX/wpifuuNquFO4SQmPwarClT+SUCA2lt+l581tTeZIPIZuIDo2jWN1fg==}
     peerDependencies:
       ws: '*'
 
-  isows@1.0.3:
-    resolution: {integrity: sha512-2cKei4vlmg2cxEjm3wVSqn8pcoRF/LX/wpifuuNquFO4SQmPwarClT+SUCA2lt+l581tTeZIPIZuIDo2jWN1fg==}
+  isows@1.0.4:
+    resolution: {integrity: sha512-hEzjY+x9u9hPmBom9IIAqdJCwNLax+xrPb51vEPpERoFlIxgmZcHzsT5jKG06nvInKOBGvReAVz80Umed5CczQ==}
     peerDependencies:
       ws: '*'
 
@@ -7742,24 +7725,16 @@ packages:
   vfile@6.0.1:
     resolution: {integrity: sha512-1bYqc7pt6NIADBJ98UiG0Bn/CHIVOoZ/IyEkqIruLg0mE1BKzkOXY2D6CSqQIcKqgadppE5lrxgWXJmXd7zZJw==}
 
-  viem@1.10.14:
-    resolution: {integrity: sha512-GRwFXLFr+/7+7nYYkABgHom3zMIE3DdxZ/DP78QlYWUanpjUV5IebxMOm6pfKD+ZAj3vf9YPAmz+WogjiUgDWw==}
+  viem@1.21.4:
+    resolution: {integrity: sha512-BNVYdSaUjeS2zKQgPs+49e5JKocfo60Ib2yiXOWBT6LuVxY1I/6fFX3waEtpXvL1Xn4qu+BVitVtMh9lyThyhQ==}
     peerDependencies:
       typescript: '>=5.0.4'
     peerDependenciesMeta:
       typescript:
         optional: true
 
-  viem@2.0.0:
-    resolution: {integrity: sha512-WYPwVAs/wrQE1Li9mgHMZaZTnRZuyPJMauIhnpZKeZgtx7f+bWU3uvVSR5kxTf1aBFdaTuRc/umzX2ucQUurnA==}
-    peerDependencies:
-      typescript: '>=5.0.4'
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-
-  viem@2.9.31:
-    resolution: {integrity: sha512-8aJ8Dm/591Czwb/nRayo0z8Ls5KxqC4QYE33fmHwhx2tDUWC/hHcPZqjLRSTWFtAfi0aZKvP7BeB6UZ3ZkTRhQ==}
+  viem@2.10.8:
+    resolution: {integrity: sha512-ttCXlDmjjcZ8M/eJezXFzDtHj+RFOjEQ3elmXnCC7suXo/y8CuIM1LrIoyUFk7LKIE5E+bzmWUErS4u/MQBtpQ==}
     peerDependencies:
       typescript: '>=5.0.4'
     peerDependenciesMeta:
@@ -8238,8 +8213,6 @@ packages:
 snapshots:
 
   '@adraffy/ens-normalize@1.10.0': {}
-
-  '@adraffy/ens-normalize@1.9.4': {}
 
   '@algolia/autocomplete-core@1.9.3(@algolia/client-search@4.19.1)(algoliasearch@4.19.1)':
     dependencies:
@@ -10367,7 +10340,7 @@ snapshots:
   '@safe-global/safe-apps-sdk@8.1.0(bufferutil@4.0.8)(encoding@0.1.13)(typescript@5.4.2)(utf-8-validate@6.0.3)(zod@3.22.4)':
     dependencies:
       '@safe-global/safe-gateway-typescript-sdk': 3.8.0(encoding@0.1.13)
-      viem: 1.10.14(bufferutil@4.0.8)(typescript@5.4.2)(utf-8-validate@6.0.3)(zod@3.22.4)
+      viem: 1.21.4(bufferutil@4.0.8)(typescript@5.4.2)(utf-8-validate@6.0.3)(zod@3.22.4)
     transitivePeerDependencies:
       - bufferutil
       - encoding
@@ -10840,10 +10813,6 @@ snapshots:
   '@types/wrap-ansi@3.0.0': {}
 
   '@types/ws@8.5.10':
-    dependencies:
-      '@types/node': 20.12.10
-
-  '@types/ws@8.5.5':
     dependencies:
       '@types/node': 20.12.10
 
@@ -11741,11 +11710,6 @@ snapshots:
   abbrev@1.1.1: {}
 
   abbrev@2.0.0: {}
-
-  abitype@0.10.0(typescript@5.4.2)(zod@3.22.4):
-    optionalDependencies:
-      typescript: 5.4.2
-      zod: 3.22.4
 
   abitype@0.9.8(typescript@5.4.2)(zod@3.22.4):
     optionalDependencies:
@@ -13945,11 +13909,11 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  isomorphic-ws@5.0.0(ws@8.13.0(bufferutil@4.0.8)(utf-8-validate@6.0.3)):
+  isows@1.0.3(ws@8.13.0(bufferutil@4.0.8)(utf-8-validate@6.0.3)):
     dependencies:
       ws: 8.13.0(bufferutil@4.0.8)(utf-8-validate@6.0.3)
 
-  isows@1.0.3(ws@8.13.0(bufferutil@4.0.8)(utf-8-validate@6.0.3)):
+  isows@1.0.4(ws@8.13.0(bufferutil@4.0.8)(utf-8-validate@6.0.3)):
     dependencies:
       ws: 8.13.0(bufferutil@4.0.8)(utf-8-validate@6.0.3)
 
@@ -14703,7 +14667,7 @@ snapshots:
 
   mipd@0.0.5(bufferutil@4.0.8)(typescript@5.4.2)(utf-8-validate@6.0.3)(zod@3.22.4):
     dependencies:
-      viem: 1.10.14(bufferutil@4.0.8)(typescript@5.4.2)(utf-8-validate@6.0.3)(zod@3.22.4)
+      viem: 1.21.4(bufferutil@4.0.8)(typescript@5.4.2)(utf-8-validate@6.0.3)(zod@3.22.4)
     optionalDependencies:
       typescript: 5.4.2
     transitivePeerDependencies:
@@ -17011,32 +16975,14 @@ snapshots:
       unist-util-stringify-position: 4.0.0
       vfile-message: 4.0.2
 
-  viem@1.10.14(bufferutil@4.0.8)(typescript@5.4.2)(utf-8-validate@6.0.3)(zod@3.22.4):
-    dependencies:
-      '@adraffy/ens-normalize': 1.9.4
-      '@noble/curves': 1.2.0
-      '@noble/hashes': 1.3.2
-      '@scure/bip32': 1.3.2
-      '@scure/bip39': 1.2.1
-      '@types/ws': 8.5.5
-      abitype: 0.9.8(typescript@5.4.2)(zod@3.22.4)
-      isomorphic-ws: 5.0.0(ws@8.13.0(bufferutil@4.0.8)(utf-8-validate@6.0.3))
-      ws: 8.13.0(bufferutil@4.0.8)(utf-8-validate@6.0.3)
-    optionalDependencies:
-      typescript: 5.4.2
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-      - zod
-
-  viem@2.0.0(bufferutil@4.0.8)(typescript@5.4.2)(utf-8-validate@6.0.3)(zod@3.22.4):
+  viem@1.21.4(bufferutil@4.0.8)(typescript@5.4.2)(utf-8-validate@6.0.3)(zod@3.22.4):
     dependencies:
       '@adraffy/ens-normalize': 1.10.0
       '@noble/curves': 1.2.0
       '@noble/hashes': 1.3.2
       '@scure/bip32': 1.3.2
       '@scure/bip39': 1.2.1
-      abitype: 0.10.0(typescript@5.4.2)(zod@3.22.4)
+      abitype: 0.9.8(typescript@5.4.2)(zod@3.22.4)
       isows: 1.0.3(ws@8.13.0(bufferutil@4.0.8)(utf-8-validate@6.0.3))
       ws: 8.13.0(bufferutil@4.0.8)(utf-8-validate@6.0.3)
     optionalDependencies:
@@ -17046,7 +16992,7 @@ snapshots:
       - utf-8-validate
       - zod
 
-  viem@2.9.31(bufferutil@4.0.8)(typescript@5.4.2)(utf-8-validate@6.0.3)(zod@3.22.2):
+  viem@2.10.8(bufferutil@4.0.8)(typescript@5.4.2)(utf-8-validate@6.0.3)(zod@3.22.2):
     dependencies:
       '@adraffy/ens-normalize': 1.10.0
       '@noble/curves': 1.2.0
@@ -17054,7 +17000,7 @@ snapshots:
       '@scure/bip32': 1.3.2
       '@scure/bip39': 1.2.1
       abitype: 1.0.0(typescript@5.4.2)(zod@3.22.2)
-      isows: 1.0.3(ws@8.13.0(bufferutil@4.0.8)(utf-8-validate@6.0.3))
+      isows: 1.0.4(ws@8.13.0(bufferutil@4.0.8)(utf-8-validate@6.0.3))
       ws: 8.13.0(bufferutil@4.0.8)(utf-8-validate@6.0.3)
     optionalDependencies:
       typescript: 5.4.2
@@ -17063,7 +17009,7 @@ snapshots:
       - utf-8-validate
       - zod
 
-  viem@2.9.31(bufferutil@4.0.8)(typescript@5.4.2)(utf-8-validate@6.0.3)(zod@3.22.4):
+  viem@2.10.8(bufferutil@4.0.8)(typescript@5.4.2)(utf-8-validate@6.0.3)(zod@3.22.4):
     dependencies:
       '@adraffy/ens-normalize': 1.10.0
       '@noble/curves': 1.2.0
@@ -17071,7 +17017,7 @@ snapshots:
       '@scure/bip32': 1.3.2
       '@scure/bip39': 1.2.1
       abitype: 1.0.0(typescript@5.4.2)(zod@3.22.4)
-      isows: 1.0.3(ws@8.13.0(bufferutil@4.0.8)(utf-8-validate@6.0.3))
+      isows: 1.0.4(ws@8.13.0(bufferutil@4.0.8)(utf-8-validate@6.0.3))
       ws: 8.13.0(bufferutil@4.0.8)(utf-8-validate@6.0.3)
     optionalDependencies:
       typescript: 5.4.2
