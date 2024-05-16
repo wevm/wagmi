@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.10.1
+
+### Patch Changes
+
+- Bumped versions.
+
 ## 2.10.0
 
 ### Minor Changes

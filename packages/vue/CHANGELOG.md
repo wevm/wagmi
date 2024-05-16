@@ -1,5 +1,13 @@
 # @wagmi/vue
 
+## 0.0.4
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @wagmi/connectors@5.0.1
+  - @wagmi/core@2.10.1
+
 ## 0.0.3
 
 ### Patch Changes

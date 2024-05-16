@@ -1,5 +1,14 @@
 # @wagmi/connectors
 
+## 5.0.1
+
+### Patch Changes
+
+- Bumped versions.
+
+- Updated dependencies []:
+  - @wagmi/core@2.10.1
+
 ## 5.0.0
 
 ### Major Changes

@@ -1,5 +1,15 @@
 # wagmi
 
+## 2.9.1
+
+### Patch Changes
+
+- Bumped versions.
+
+- Updated dependencies []:
+  - @wagmi/connectors@5.0.1
+  - @wagmi/core@2.10.1
+
 ## 2.9.0
 
 ### Minor Changes
