@@ -1,5 +1,15 @@
 # @wagmi/vue
 
+## 0.0.5
+
+### Patch Changes
+
+- [#3940](https://github.com/wevm/wagmi/pull/3940) [`a5071f581dfdfb961718873643a2fc629101c72a`](https://github.com/wevm/wagmi/commit/a5071f581dfdfb961718873643a2fc629101c72a) Thanks [@jxom](https://github.com/jxom)! - Fixed usage of `metaMask` connector in Vite environments.
+
+- Updated dependencies [[`a5071f581dfdfb961718873643a2fc629101c72a`](https://github.com/wevm/wagmi/commit/a5071f581dfdfb961718873643a2fc629101c72a)]:
+  - @wagmi/connectors@5.0.2
+  - @wagmi/core@2.10.2
+
 ## 0.0.4
 
 ### Patch Changes
