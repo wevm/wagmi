@@ -1,5 +1,11 @@
 # @wagmi/vue
 
+## 0.0.6
+
+### Patch Changes
+
+- [`ec2f63f106fd468f28b43d3b88ab3e89aaf5e81a`](https://github.com/wevm/wagmi/commit/ec2f63f106fd468f28b43d3b88ab3e89aaf5e81a) Thanks [@tmm](https://github.com/tmm)! - Fixed `useSwitchChain` `chains` typing.
+
 ## 0.0.5
 
 ### Patch Changes
