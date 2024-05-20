@@ -1,4 +1,5 @@
 ---
+"@wagmi/vue": patch
 "wagmi": patch
 ---
 
