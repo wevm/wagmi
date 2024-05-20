@@ -12,7 +12,7 @@ Make sure you follow the TypeScript guide's [Config Types](/react/typescript#con
 
 ## Narrowing Parameters
 
-Once your Config is registered with TypeScript, you are ready to access chain-specifc properties! For example, Celo's `feeCurrency`, `gatewayFee`, and `gatewayFeeRecipient` are all available.
+Once your Config is registered with TypeScript, you are ready to access chain-specifc properties! For example, Celo's `feeCurrency` is available.
 
 ::: code-group
 ```ts [index.tsx]
@@ -23,8 +23,6 @@ const result = useSimulateContract({
   to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
   value: parseEther('0.01'),
   feeCurrency: '0x…', // [!code focus]
-  gatewayFee: 100n, // [!code focus]
-  gatewayFeeRecipient: '0x…', // [!code focus]
 })
 ```
 <<< @/snippets/react/config-chain-properties.ts[config.ts]
@@ -44,10 +42,6 @@ const result = useSimulateContract({
   chainId: celo.id, // [!code focus]
   feeCurrency: '0x…', // [!code focus]
   // ^? (property) feeCurrency?: `0x${string}` | undefined // [!code focus]
-  gatewayFee: 100n,  // [!code focus]
-  // ^? (property) gatewayFee?: bigint | undefined // [!code focus]
-  gatewayFeeRecipient: '0x…', // [!code focus]
-  // ^? (property) gatewayFeeRecipient?: `0x${string}` | undefined // [!code focus]
 })
 ```
 <<< @/snippets/react/config-chain-properties.ts[config.ts]

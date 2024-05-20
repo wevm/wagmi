@@ -58,8 +58,6 @@ test('chain formatters', async () => {
   expectTypeOf<Result>().toMatchTypeOf<{
     chainId?: typeof celo.id | typeof mainnet.id | undefined
     feeCurrency?: `0x${string}` | undefined
-    gatewayFee?: bigint | undefined
-    gatewayFeeRecipient?: `0x${string}` | undefined
   }>()
   const response = await simulateContract(config, {
     account: '0x',
@@ -68,19 +66,11 @@ test('chain formatters', async () => {
     functionName: 'transferFrom',
     args: ['0x', '0x', 123n],
     feeCurrency: '0x',
-    gatewayFee: 100n,
-    gatewayFeeRecipient: '0x',
   })
 
   if (response.chainId === celo.id) {
     expectTypeOf(response.chainId).toEqualTypeOf(celo.id)
     expectTypeOf(response.request.feeCurrency).toEqualTypeOf<
-      `0x${string}` | undefined
-    >()
-    expectTypeOf(response.request.gatewayFee).toEqualTypeOf<
-      bigint | undefined
-    >()
-    expectTypeOf(response.request.gatewayFeeRecipient).toEqualTypeOf<
       `0x${string}` | undefined
     >()
   }
@@ -96,8 +86,6 @@ test('chain formatters', async () => {
     functionName: 'approve' | 'transfer' | 'transferFrom'
     args: readonly [Address, Address, bigint]
     feeCurrency?: `0x${string}` | undefined
-    gatewayFee?: bigint | undefined
-    gatewayFeeRecipient?: `0x${string}` | undefined
   }>()
   const response2 = await simulateContract(config, {
     chainId: celo.id,
@@ -107,15 +95,9 @@ test('chain formatters', async () => {
     functionName: 'transferFrom',
     args: ['0x', '0x', 123n],
     feeCurrency: '0x',
-    gatewayFee: 100n,
-    gatewayFeeRecipient: '0x',
   })
   expectTypeOf(response2.chainId).toEqualTypeOf(celo.id)
   expectTypeOf(response2.request.feeCurrency).toEqualTypeOf<
-    `0x${string}` | undefined
-  >()
-  expectTypeOf(response2.request.gatewayFee).toEqualTypeOf<bigint | undefined>()
-  expectTypeOf(response2.request.gatewayFeeRecipient).toEqualTypeOf<
     `0x${string}` | undefined
   >()
 
@@ -132,8 +114,6 @@ test('chain formatters', async () => {
   }>()
   expectTypeOf<Result3>().not.toMatchTypeOf<{
     feeCurrency?: `0x${string}` | undefined
-    gatewayFee?: bigint | undefined
-    gatewayFeeRecipient?: `0x${string}` | undefined
   }>()
   simulateContract(config, {
     chainId: mainnet.id,
@@ -144,8 +124,6 @@ test('chain formatters', async () => {
     args: ['0x', '0x', 123n],
     // @ts-expect-error
     feeCurrency: '0x',
-    gatewayFee: 100n,
-    gatewayFeeRecipient: '0x',
   })
 })
 

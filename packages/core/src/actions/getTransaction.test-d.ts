@@ -13,10 +13,6 @@ test('chain formatters', async () => {
   const result = await getTransaction(config, { hash: '0x123' })
   if (result.chainId === celo.id) {
     expectTypeOf(result.feeCurrency).toEqualTypeOf<`0x${string}` | null>()
-    expectTypeOf(result.gatewayFee).toEqualTypeOf<bigint | null | undefined>()
-    expectTypeOf(result.gatewayFeeRecipient).toEqualTypeOf<
-      `0x${string}` | null | undefined
-    >()
   }
 })
 
@@ -30,8 +26,4 @@ test('chainId', async () => {
     chainId: celo.id,
   })
   expectTypeOf(result.feeCurrency).toEqualTypeOf<`0x${string}` | null>()
-  expectTypeOf(result.gatewayFee).toEqualTypeOf<bigint | null | undefined>()
-  expectTypeOf(result.gatewayFeeRecipient).toEqualTypeOf<
-    `0x${string}` | null | undefined
-  >()
 })

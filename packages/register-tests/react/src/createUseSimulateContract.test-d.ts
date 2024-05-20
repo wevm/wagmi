@@ -10,31 +10,23 @@ const useSimulateErc20 = createUseSimulateContract({
 test('chain formatters', () => {
   useSimulateErc20({
     feeCurrency: '0x',
-    gatewayFee: 123n,
-    gatewayFeeRecipient: '0x',
   })
 
   useSimulateErc20({
     chainId: celo.id,
     feeCurrency: '0x',
-    gatewayFee: 123n,
-    gatewayFeeRecipient: '0x',
   })
 
   useSimulateErc20({
     chainId: mainnet.id,
     // @ts-expect-error
     feeCurrency: '0x',
-    gatewayFee: 123n,
-    gatewayFeeRecipient: '0x',
   })
 
   useSimulateErc20({
     chainId: optimism.id,
     // @ts-expect-error
     feeCurrency: '0x',
-    gatewayFee: 123n,
-    gatewayFeeRecipient: '0x',
   })
 })
 

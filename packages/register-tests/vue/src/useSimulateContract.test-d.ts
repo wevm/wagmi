@@ -14,17 +14,9 @@ import { type ChainId, config } from './config.js'
 test('chain formatters', () => {
   const { data } = useSimulateContract({
     feeCurrency: '0x',
-    gatewayFee: 123n,
-    gatewayFeeRecipient: '0x',
   })
   if (data.value && data.value.chainId === celo.id) {
     expectTypeOf(data.value.request.feeCurrency).toEqualTypeOf<
-      `0x${string}` | undefined
-    >()
-    expectTypeOf(data.value.request.gatewayFee).toEqualTypeOf<
-      bigint | undefined
-    >()
-    expectTypeOf(data.value.request.gatewayFeeRecipient).toEqualTypeOf<
       `0x${string}` | undefined
     >()
   }
@@ -32,17 +24,9 @@ test('chain formatters', () => {
   const { data: data2 } = useSimulateContract({
     chainId: celo.id,
     feeCurrency: '0x',
-    gatewayFee: 123n,
-    gatewayFeeRecipient: '0x',
   })
   if (data2.value) {
     expectTypeOf(data2.value.request.feeCurrency).toEqualTypeOf<
-      `0x${string}` | undefined
-    >()
-    expectTypeOf(data2.value.request.gatewayFee).toEqualTypeOf<
-      bigint | undefined
-    >()
-    expectTypeOf(data2.value.request.gatewayFeeRecipient).toEqualTypeOf<
       `0x${string}` | undefined
     >()
   }
@@ -51,16 +35,12 @@ test('chain formatters', () => {
     chainId: mainnet.id,
     // @ts-expect-error
     feeCurrency: '0x',
-    gatewayFee: 123n,
-    gatewayFeeRecipient: '0x',
   })
 
   useSimulateContract({
     chainId: optimism.id,
     // @ts-expect-error
     feeCurrency: '0x',
-    gatewayFee: 123n,
-    gatewayFeeRecipient: '0x',
   })
 })
 

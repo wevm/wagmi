@@ -25,8 +25,6 @@ test('chain formatters', () => {
   expectTypeOf<Result>().toMatchTypeOf<{
     chainId?: typeof celo.id | typeof mainnet.id | undefined
     feeCurrency?: `0x${string}` | undefined
-    gatewayFee?: bigint | undefined
-    gatewayFeeRecipient?: `0x${string}` | undefined
   }>()
   simulateContractQueryOptions(config, {
     address: '0x',
@@ -34,8 +32,6 @@ test('chain formatters', () => {
     functionName: 'transferFrom',
     args: ['0x', '0x', 123n],
     feeCurrency: '0x',
-    gatewayFee: 100n,
-    gatewayFeeRecipient: '0x',
   })
 
   type Result2 = SimulateContractOptions<
@@ -49,8 +45,6 @@ test('chain formatters', () => {
     functionName?: 'approve' | 'transfer' | 'transferFrom' | undefined
     args?: readonly [Address, Address, bigint] | undefined
     feeCurrency?: `0x${string}` | undefined
-    gatewayFee?: bigint | undefined
-    gatewayFeeRecipient?: `0x${string}` | undefined
   }>()
   simulateContractQueryOptions(config, {
     chainId: celo.id,
@@ -59,8 +53,6 @@ test('chain formatters', () => {
     functionName: 'transferFrom',
     args: ['0x', '0x', 123n],
     feeCurrency: '0x',
-    gatewayFee: 100n,
-    gatewayFeeRecipient: '0x',
   })
 
   type Result3 = SimulateContractOptions<
@@ -76,8 +68,6 @@ test('chain formatters', () => {
   }>()
   expectTypeOf<Result3>().not.toMatchTypeOf<{
     feeCurrency?: `0x${string}` | undefined
-    gatewayFee?: bigint | undefined
-    gatewayFeeRecipient?: `0x${string}` | undefined
   }>()
   simulateContractQueryOptions(config, {
     chainId: mainnet.id,
@@ -87,7 +77,5 @@ test('chain formatters', () => {
     args: ['0x', '0x', 123n],
     // @ts-expect-error
     feeCurrency: '0x',
-    gatewayFee: 100n,
-    gatewayFeeRecipient: '0x',
   })
 })

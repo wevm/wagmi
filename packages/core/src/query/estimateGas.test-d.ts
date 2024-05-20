@@ -21,15 +21,11 @@ test('chain formatters', () => {
   expectTypeOf<Result>().toMatchTypeOf<{
     chainId?: typeof celo.id | typeof mainnet.id | undefined
     feeCurrency?: `0x${string}` | undefined
-    gatewayFee?: bigint | undefined
-    gatewayFeeRecipient?: `0x${string}` | undefined
   }>()
   estimateGasQueryOptions(config, {
     to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
     value: parseEther('0.01'),
     feeCurrency: '0x',
-    gatewayFee: 100n,
-    gatewayFeeRecipient: '0x',
   })
 
   type Result2 = EstimateGasOptions<typeof config, typeof celo.id>
@@ -37,23 +33,17 @@ test('chain formatters', () => {
     functionName?: 'approve' | 'transfer' | 'transferFrom' | undefined
     args?: readonly [Address, Address, bigint] | undefined
     feeCurrency?: `0x${string}` | undefined
-    gatewayFee?: bigint | undefined
-    gatewayFeeRecipient?: `0x${string}` | undefined
   }>()
   estimateGasQueryOptions(config, {
     chainId: celo.id,
     to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
     value: parseEther('0.01'),
     feeCurrency: '0x',
-    gatewayFee: 100n,
-    gatewayFeeRecipient: '0x',
   })
 
   type Result3 = EstimateGasOptions<typeof config, typeof mainnet.id>
   expectTypeOf<Result3>().not.toMatchTypeOf<{
     feeCurrency?: `0x${string}` | undefined
-    gatewayFee?: bigint | undefined
-    gatewayFeeRecipient?: `0x${string}` | undefined
   }>()
   estimateGasQueryOptions(config, {
     chainId: mainnet.id,
@@ -61,7 +51,5 @@ test('chain formatters', () => {
     value: parseEther('0.01'),
     // @ts-expect-error
     feeCurrency: '0x',
-    gatewayFee: 100n,
-    gatewayFeeRecipient: '0x',
   })
 })

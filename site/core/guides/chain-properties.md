@@ -4,7 +4,7 @@ Some chains support additional properties related to blocks and transactions. Th
 
 ## Narrowing Parameters
 
-When you pass your `config` to an action, you are ready to access chain-specifc properties! For example, Celo's `feeCurrency`, `gatewayFee`, and `gatewayFeeRecipient` are all available.
+When you pass your `config` to an action, you are ready to access chain-specifc properties! For example, Celo's `feeCurrency` is available.
 
 ::: code-group
 ```ts [index.ts]
@@ -16,8 +16,6 @@ const result = await simulateContract(config, {
   to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
   value: parseEther('0.01'),
   feeCurrency: '0x…', // [!code focus]
-  gatewayFee: 100n, // [!code focus]
-  gatewayFeeRecipient: '0x…', // [!code focus]
 })
 ```
 <<< @/snippets/core/config-chain-properties.ts[config.ts]
@@ -37,10 +35,6 @@ const result = await simulateContract({
   chainId: celo.id, // [!code focus]
   feeCurrency: '0x…', // [!code focus]
   // ^? (property) feeCurrency?: `0x${string}` | undefined // [!code focus]
-  gatewayFee: 100n,  // [!code focus]
-  // ^? (property) gatewayFee?: bigint | undefined // [!code focus]
-  gatewayFeeRecipient: '0x…', // [!code focus]
-  // ^? (property) gatewayFeeRecipient?: `0x${string}` | undefined // [!code focus]
 })
 ```
 <<< @/snippets/core/config-chain-properties.ts[config.ts]

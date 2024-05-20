@@ -11,8 +11,6 @@ test('chain formatters', () => {
     {
       to: '0x',
       feeCurrency: '0x',
-      gatewayFee: 123n,
-      gatewayFeeRecipient: '0x',
     },
     {
       onSuccess(_data, variables) {
@@ -25,16 +23,10 @@ test('chain formatters', () => {
   expectTypeOf<Result['feeCurrency']>().toEqualTypeOf<
     `0x${string}` | undefined
   >()
-  expectTypeOf<Result['gatewayFee']>().toEqualTypeOf<bigint | undefined>()
-  expectTypeOf<Result['gatewayFeeRecipient']>().toEqualTypeOf<
-    `0x${string}` | undefined
-  >()
   sendTransaction({
     chainId: celo.id,
     to: '0x',
     feeCurrency: '0x',
-    gatewayFee: 123n,
-    gatewayFeeRecipient: '0x',
   })
 
   sendTransaction({
@@ -42,8 +34,6 @@ test('chain formatters', () => {
     to: '0x',
     // @ts-expect-error
     feeCurrency: '0x',
-    gatewayFee: 123n,
-    gatewayFeeRecipient: '0x',
   })
 
   sendTransaction({
@@ -51,8 +41,6 @@ test('chain formatters', () => {
     to: '0x',
     // @ts-expect-error
     feeCurrency: '0x',
-    gatewayFee: 123n,
-    gatewayFeeRecipient: '0x',
   })
 })
 

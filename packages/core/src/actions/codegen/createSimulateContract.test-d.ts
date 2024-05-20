@@ -200,12 +200,6 @@ test('chain formatters', async () => {
     expectTypeOf(response.request.feeCurrency).toEqualTypeOf<
       `0x${string}` | undefined
     >()
-    expectTypeOf(response.request.gatewayFee).toEqualTypeOf<
-      bigint | undefined
-    >()
-    expectTypeOf(response.request.gatewayFeeRecipient).toEqualTypeOf<
-      `0x${string}` | undefined
-    >()
   }
 
   const response2 = await simulateErc20(config, {
@@ -214,10 +208,6 @@ test('chain formatters', async () => {
     chainId: celo.id,
   })
   expectTypeOf(response2.request.feeCurrency).toEqualTypeOf<
-    `0x${string}` | undefined
-  >()
-  expectTypeOf(response2.request.gatewayFee).toEqualTypeOf<bigint | undefined>()
-  expectTypeOf(response2.request.gatewayFeeRecipient).toEqualTypeOf<
     `0x${string}` | undefined
   >()
 })

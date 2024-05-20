@@ -9,22 +9,10 @@ test('chain formatters', () => {
     expectTypeOf(result.data.value.feeCurrency).toEqualTypeOf<
       `0x${string}` | null
     >()
-    expectTypeOf(result.data.value.gatewayFee).toEqualTypeOf<
-      bigint | null | undefined
-    >()
-    expectTypeOf(result.data.value.gatewayFeeRecipient).toEqualTypeOf<
-      `0x${string}` | null | undefined
-    >()
   }
 
   const result2 = useTransaction({ chainId: celo.id })
   expectTypeOf(result2.data?.value?.feeCurrency).toEqualTypeOf<
-    `0x${string}` | null | undefined
-  >()
-  expectTypeOf(result2.data?.value?.gatewayFee).toEqualTypeOf<
-    bigint | null | undefined
-  >()
-  expectTypeOf(result2.data?.value?.gatewayFeeRecipient).toEqualTypeOf<
     `0x${string}` | null | undefined
   >()
 })
