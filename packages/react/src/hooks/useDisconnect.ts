@@ -17,7 +17,8 @@ import type {
   UseMutationReturnType,
 } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
-import { useConnections } from './useConnections.js'
+import { useConnectors } from './useConnectors.js'
+
 
 export type UseDisconnectParameters<context = unknown> = Evaluate<
   ConfigParameter & {
@@ -61,9 +62,7 @@ export function useDisconnect<context = unknown>(
 
   return {
     ...result,
-    connectors: useConnections({ config }).map(
-      (connection) => connection.connector,
-    ),
+    connectors: useConnectors({ config }),
     disconnect: mutate,
     disconnectAsync: mutateAsync,
   }
