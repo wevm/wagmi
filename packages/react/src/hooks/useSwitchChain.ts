@@ -3,7 +3,6 @@
 import { useMutation } from '@tanstack/react-query'
 import {
   type Config,
-  type GetChainsReturnType,
   type ResolvedRegister,
   type SwitchChainErrorType,
 } from '@wagmi/core'
@@ -50,7 +49,7 @@ export type UseSwitchChainReturnType<
     SwitchChainVariables<config, config['chains'][number]['id']>,
     context
   > & {
-    chains: Evaluate<GetChainsReturnType<config>>
+    chains: config['chains']
     switchChain: SwitchChainMutate<config, context>
     switchChainAsync: SwitchChainMutateAsync<config, context>
   }
@@ -76,7 +75,7 @@ export function useSwitchChain<
   type Return = UseSwitchChainReturnType<config, context>
   return {
     ...result,
-    chains: useChains({ config }),
+    chains: useChains({ config }) as unknown as config['chains'],
     switchChain: mutate as Return['switchChain'],
     switchChainAsync: mutateAsync as Return['switchChainAsync'],
   }

@@ -2,8 +2,9 @@
   "name": "next-app",
   "private": true,
   "scripts": {
+    "analyze": "ANALYZE=true next build",
     "dev": "next dev",
-    "build": "ANALYZE=true next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },

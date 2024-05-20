@@ -12,8 +12,6 @@ test('default', () => {
   expectTypeOf(chains).toEqualTypeOf<typeof config['chains']>()
   expectTypeOf(chains[0]).toEqualTypeOf<typeof celo>()
   expectTypeOf(chains[2]).toEqualTypeOf<typeof optimism>()
-  // @ts-expect-error
-  expectTypeOf(chains[5]).toEqualTypeOf<undefined>()
 
   switchChain.switchChain(
     { chainId: 1 },

@@ -12,13 +12,14 @@ import {
   type SwitchChainVariables,
   switchChainMutationOptions,
 } from '@wagmi/core/query'
+import type { Ref } from 'vue'
 
 import { type ConfigParameter } from '../types/properties.js'
 import {
   type UseMutationParameters,
   type UseMutationReturnType,
 } from '../utils/query.js'
-import { type UseChainsReturnType, useChains } from './useChains.js'
+import { useChains } from './useChains.js'
 import { useConfig } from './useConfig.js'
 
 export type UseSwitchChainParameters<
@@ -47,7 +48,7 @@ export type UseSwitchChainReturnType<
     SwitchChainVariables<config, config['chains'][number]['id']>,
     context
   > & {
-    chains: Evaluate<UseChainsReturnType<config>>
+    chains: Ref<config['chains']>
     switchChain: SwitchChainMutate<config, context>
     switchChainAsync: SwitchChainMutateAsync<config, context>
   }
@@ -73,7 +74,7 @@ export function useSwitchChain<
   type Return = UseSwitchChainReturnType<config, context>
   return {
     ...result,
-    chains: useChains({ config }),
+    chains: useChains({ config }) as unknown as Ref<config['chains']>,
     switchChain: mutate as Return['switchChain'],
     switchChainAsync: mutateAsync as Return['switchChainAsync'],
   } as Return

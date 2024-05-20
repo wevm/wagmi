@@ -377,7 +377,7 @@ function WriteContract() {
   )
 }
 
-export function Repro() {
+function Repro() {
   const chainId = useChainId()
 
   console.log('chainId from useChainId is', chainId)

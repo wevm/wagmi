@@ -21,6 +21,9 @@ export function watchChains<config extends Config>(
 ): WatchChainsReturnType {
   const { onChange } = parameters
   return config._internal.chains.subscribe((chains, prevChains) => {
-    onChange(chains, prevChains)
+    onChange(
+      chains as unknown as GetChainsReturnType<config>,
+      prevChains as unknown as GetChainsReturnType<config>,
+    )
   })
 }
