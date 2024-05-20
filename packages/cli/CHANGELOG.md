@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 2.1.8
+
+### Patch Changes
+
+- [#3957](https://github.com/wevm/wagmi/pull/3957) [`7d00680f73b090eb34af928ae74277bec1973953`](https://github.com/wevm/wagmi/commit/7d00680f73b090eb34af928ae74277bec1973953) Thanks [@cstoneham](https://github.com/cstoneham)! - Added Blast to Etherscan plugin
+
 ## 2.1.7
 
 ### Patch Changes
