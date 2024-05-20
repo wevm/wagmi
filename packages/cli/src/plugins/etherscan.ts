@@ -6,8 +6,8 @@ const apiUrls = {
   // Ethereum
   [1]: 'https://api.etherscan.io/api',
   [5]: 'https://api-goerli.etherscan.io/api',
-  [17000]: 'https://api-holesky.etherscan.io/api',
-  [11155111]: 'https://api-sepolia.etherscan.io/api',
+  [17_000]: 'https://api-holesky.etherscan.io/api',
+  [11_155_111]: 'https://api-sepolia.etherscan.io/api',
   // Optimism
   [10]: 'https://api-optimistic.etherscan.io/api',
   [420]: 'https://api-goerli-optimistic.etherscan.io/api',
@@ -30,18 +30,20 @@ const apiUrls = {
   [256]: 'https://api-testnet.hecoinfo.com/api',
   // Fantom
   [250]: 'https://api.ftmscan.com/api',
-  [4002]: 'https://api-testnet.ftmscan.com/api',
+  [4_002]: 'https://api-testnet.ftmscan.com/api',
   // Avalanche
-  [43114]: 'https://api.snowscan.xyz/api',
-  [43113]: 'https://api-testnet.snowscan.xyz/api',
+  [43_114]: 'https://api.snowscan.xyz/api',
+  [43_113]: 'https://api-testnet.snowscan.xyz/api',
   // Celo
-  [42220]: 'https://api.celoscan.io/api',
-  [44787]: 'https://api-alfajores.celoscan.io/api',
+  [42_220]: 'https://api.celoscan.io/api',
+  [44_787]: 'https://api-alfajores.celoscan.io/api',
   // Fraxtal
   [252]: 'https://api.fraxscan.com/api',
-  [2522]: 'https://api-holesky.fraxscan.com/api',
+  [2_522]: 'https://api-holesky.fraxscan.com/api',
   // Gnosis
   [100]: 'https://api.gnosisscan.io/api',
+  // Blast
+  [81_457]: 'https://api.blastscan.io/api',
 }
 type ChainId = keyof typeof apiUrls
 
@@ -62,6 +64,7 @@ export type EtherscanConfig<chainId extends number> = {
    * - [__Polygon__](https://polygonscan.com/myapikey)
    * - [__Fraxtal__](https://fraxscan.com/myapikey)
    * - [__Gnosis__](https://gnosisscan.io/myapikey)
+   * - [__Blast__](https://blastscan.io/myapikey)
    */
   apiKey: string
   /**
