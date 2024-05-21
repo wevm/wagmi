@@ -20,8 +20,10 @@ export type SafeParameters = Evaluate<
      */
     shimDisconnect?: boolean | undefined
     /**
-     * `getInfo` (from the Safe SDK) does not resolve when not used in Safe App iFrame. This allows the connector to force a timeout.
-     * @default 100
+     * Timeout in milliseconds for `getInfo` (from the Safe SDK) to resolve.
+     *
+     * `getInfo` does not resolve when not used in Safe App iFrame. This allows the connector to force a timeout.
+     * @default 10
      */
     unstable_getInfoTimeout?: number | undefined
   }
@@ -102,7 +104,7 @@ export function safe(parameters: SafeParameters = {}) {
         // `getInfo` hangs when not used in Safe App iFrame
         // https://github.com/safe-global/safe-apps-sdk/issues/263#issuecomment-1029835840
         const safe = await withTimeout(() => sdk.safe.getInfo(), {
-          timeout: parameters.unstable_getInfoTimeout ?? 100,
+          timeout: parameters.unstable_getInfoTimeout ?? 10,
         })
         if (!safe) throw new Error('Could not load Safe information')
         const { SafeAppProvider } = await import(
