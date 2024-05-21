@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.10.3
+
+### Patch Changes
+
+- [#3962](https://github.com/wevm/wagmi/pull/3962) [`2804a8a583b1874271154898b4bae38756ef581c`](https://github.com/wevm/wagmi/commit/2804a8a583b1874271154898b4bae38756ef581c) Thanks [@tmm](https://github.com/tmm)! - Added catch to `reconnect`.
+
 ## 2.10.2
 
 ### Patch Changes

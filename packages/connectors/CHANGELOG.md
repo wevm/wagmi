@@ -1,5 +1,14 @@
 # @wagmi/connectors
 
+## 5.0.3
+
+### Patch Changes
+
+- [#3962](https://github.com/wevm/wagmi/pull/3962) [`2804a8a583b1874271154898b4bae38756ef581c`](https://github.com/wevm/wagmi/commit/2804a8a583b1874271154898b4bae38756ef581c) Thanks [@tmm](https://github.com/tmm)! - Added timeout to `getInfo` called in `safe` connector since [non-Safe App iFrames cause it to not resolve](https://github.com/safe-global/safe-apps-sdk/issues/263#issuecomment-1029835840).
+
+- Updated dependencies [[`2804a8a583b1874271154898b4bae38756ef581c`](https://github.com/wevm/wagmi/commit/2804a8a583b1874271154898b4bae38756ef581c)]:
+  - @wagmi/core@2.10.3
+
 ## 5.0.2
 
 ### Patch Changes
