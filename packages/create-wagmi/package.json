@@ -11,7 +11,7 @@
   "scripts": {
     "build": "pnpm run clean && pnpm run build:esm+types",
     "build:esm+types": "tsc --project tsconfig.build.json --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
-    "clean": "rm -rf dist tsconfig.tsbuildinfo",
+    "clean": "rm -rf .DS_Store dist tsconfig.tsbuildinfo",
     "dev": "bun src/cli.ts",
     "test:build": "publint --strict",
     "typecheck": "tsc --noEmit"
