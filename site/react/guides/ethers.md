@@ -1,6 +1,6 @@
 # Ethers.js Adapters
 
-It is recommended for projects to migrate to [Viem](https://viem.sh) when using wagmi, but there are some cases where you might still need to use [Ethers.js](https://ethers.org/) in your project:
+It is recommended for projects to migrate to [Viem](https://viem.sh) when using Wagmi, but there are some cases where you might still need to use [Ethers.js](https://ethers.org) in your project:
 
 - You may want to **incrementally migrate** Ethers.js usage to Viem
 - Some **third-party libraries & SDKs** may only support Ethers.js

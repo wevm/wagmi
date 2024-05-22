@@ -45,6 +45,7 @@ const cwd = process.cwd()
 
 const renameFiles: Record<string, string | undefined> = {
   '_env.local': '.env.local',
+  // https://github.com/npm/npm/issues/1862
   _gitignore: '.gitignore',
   _npmrc: '.npmrc',
 }
