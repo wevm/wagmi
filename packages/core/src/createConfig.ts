@@ -176,7 +176,7 @@ export function createConfig<
         chain,
         batch: properties.batch ?? { multicall: true },
         transport: (parameters) =>
-          rest.transports[chainId]({ ...parameters, connectors }),
+          rest.transports[chainId]({ ...parameters, connectors, store }),
       })
     }
 
@@ -548,6 +548,7 @@ export type Connector = ReturnType<CreateConnectorFn> & {
 export type Transport = (
   params: Parameters<viem_Transport>[0] & {
     connectors?: StoreApi<Connector[]>
+    store?: StoreApi<State>
   },
 ) => ReturnType<viem_Transport>
 
