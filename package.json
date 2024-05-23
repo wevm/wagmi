@@ -77,17 +77,16 @@
     "pre-commit": "pnpm format && pnpm lint:fix"
   },
   "knip": {
-    "ignore": ["**/*.test-d.ts", "**/templates/**", "**/hardhat.config.js"],
+    "ignore": ["**/templates/**", "**/hardhat.config.js"],
     "ignoreBinaries": ["only-allow"],
     "ignoreWorkspaces": [
       "packages/register-tests/**",
       "packages/test",
-      "playgrounds/**",
-      "site"
+      "playgrounds/**"
     ],
     "workspaces": {
       ".": {
-        "entry": ".scripts/*.ts"
+        "project": ".scripts/*.ts"
       },
       "packages/cli": {
         "entry": [
@@ -123,6 +122,9 @@
         "entry": "src/exports/{actions,chains,connectors,index,nuxt,query}.ts!",
         "ignore": ["src/nuxt/runtime/*", "test/setup.ts"],
         "ignoreDependencies": ["nuxt"]
+      },
+      "site": {
+        "project": ["**/*.ts", "**/*.tsx"]
       }
     }
   }
