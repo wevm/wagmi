@@ -420,7 +420,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
     getNamespaceChainsIds() {
       if (!provider_) return []
       const chainIds = provider_.session?.namespaces[NAMESPACE]?.accounts?.map(
-        (account) => parseInt(account.split(':')[1]?.split(':')[0] || ''),
+        (account) => parseInt(account.split(':')[1] || ''),
       )
       return chainIds ?? []
     },
