@@ -68,8 +68,8 @@ type Version4Parameters = Mutable<
      * Preference for the type of wallet to display.
      * @default 'all'
      */
-    preference?: Preference['options']
-    keysUrl?: Preference['keysUrl']
+    preference?: Preference['options'] | undefined
+    keysUrl?: Preference['keysUrl'] | undefined
   }
 >
 
