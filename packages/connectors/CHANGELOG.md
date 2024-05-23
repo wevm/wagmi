@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 5.0.5
+
+### Patch Changes
+
+- [#3979](https://github.com/wevm/wagmi/pull/3979) [`70dd28669dd8d2ce08217cd02e29a8fbba7a08d4`](https://github.com/wevm/wagmi/commit/70dd28669dd8d2ce08217cd02e29a8fbba7a08d4) Thanks [@tmm](https://github.com/tmm)! - Fixed `walletConnect` connector.
+
 ## 5.0.4
 
 ### Patch Changes

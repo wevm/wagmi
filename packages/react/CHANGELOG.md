@@ -1,5 +1,12 @@
 # wagmi
 
+## 2.9.6
+
+### Patch Changes
+
+- Updated dependencies [[`70dd28669dd8d2ce08217cd02e29a8fbba7a08d4`](https://github.com/wevm/wagmi/commit/70dd28669dd8d2ce08217cd02e29a8fbba7a08d4)]:
+  - @wagmi/connectors@5.0.5
+
 ## 2.9.5
 
 ### Patch Changes
