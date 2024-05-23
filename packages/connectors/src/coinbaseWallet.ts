@@ -69,7 +69,6 @@ type Version4Parameters = Mutable<
      * @default 'all'
      */
     preference?: Preference['options'] | undefined
-    keysUrl?: Preference['keysUrl'] | undefined
   }
 >
 
