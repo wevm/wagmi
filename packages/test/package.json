@@ -46,8 +46,12 @@
   },
   "typesVersions": {
     "*": {
-      "react": ["./dist/types/exports/react.d.ts"],
-      "vue": ["./dist/types/exports/vue.d.ts"]
+      "react": [
+        "./dist/types/exports/react.d.ts"
+      ],
+      "vue": [
+        "./dist/types/exports/vue.d.ts"
+      ]
     }
   },
   "peerDependencies": {
@@ -111,7 +115,16 @@
     "vue": ">=3.4.21",
     "wagmi": "workspace:*"
   },
-  "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
+  "contributors": [
+    "awkweb.eth <t@wevm.dev>",
+    "jxom.eth <j@wevm.dev>"
+  ],
   "funding": "https://github.com/sponsors/wevm",
-  "keywords": ["eth", "ethereum", "dapps", "wallet", "web3"]
+  "keywords": [
+    "eth",
+    "ethereum",
+    "dapps",
+    "wallet",
+    "web3"
+  ]
 }
