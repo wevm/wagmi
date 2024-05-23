@@ -1,4 +1,8 @@
-import type { CoinbaseWalletSDK, ProviderInterface } from '@coinbase/wallet-sdk'
+import type {
+  CoinbaseWalletSDK,
+  Preference,
+  ProviderInterface,
+} from '@coinbase/wallet-sdk'
 import {
   ChainNotConfiguredError,
   type Connector,
@@ -64,8 +68,8 @@ type Version4Parameters = Mutable<
      * Preference for the type of wallet to display.
      * @default 'all'
      */
-    preference?: 'all' | 'smartWalletOnly' | 'eoaOnly' | undefined
-    keysUrl?: string | undefined
+    preference?: Preference['options'] | undefined
+    keysUrl?: Preference['keysUrl'] | undefined
   }
 >
 
