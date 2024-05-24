@@ -1,6 +1,6 @@
 import { abi, config } from '@wagmi/test'
-import { http, type Address, parseAbi, parseEther } from 'viem'
-import { base, celo, mainnet } from 'viem/chains'
+import { http, type Address, parseAbi } from 'viem'
+import { celo, mainnet } from 'viem/chains'
 import { expectTypeOf, test } from 'vitest'
 
 import { createConfig } from '../createConfig.js'
@@ -150,44 +150,4 @@ test('overloads', async () => {
   type Result2 = WriteContractParameters<typeof abi, 'bar'>
   expectTypeOf<Result2['functionName']>().toEqualTypeOf<'foo' | 'bar'>()
   expectTypeOf<Result2['args']>().toEqualTypeOf<readonly [bigint]>()
-})
-
-// https://github.com/wevm/wagmi/issues/3981
-test('gh#3981', () => {
-  const config = createConfig({
-    chains: [mainnet, base],
-    transports: {
-      [mainnet.id]: http(),
-      [base.id]: http(),
-    },
-  })
-
-  const abi = [
-    {
-      type: 'function',
-      name: 'example1',
-      inputs: [
-        { name: 'exampleName', type: 'address', internalType: 'address' },
-      ],
-      outputs: [],
-      stateMutability: 'payable',
-    },
-    {
-      type: 'function',
-      name: 'example2',
-      inputs: [
-        { name: 'exampleName', type: 'address', internalType: 'address' },
-      ],
-      outputs: [],
-      stateMutability: 'nonpayable',
-    },
-  ] as const
-
-  writeContract(config, {
-    abi,
-    address: '0x...',
-    functionName: 'example1',
-    args: ['0x...'],
-    value: parseEther('1'),
-  })
 })

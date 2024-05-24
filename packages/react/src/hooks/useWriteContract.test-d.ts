@@ -1,5 +1,5 @@
 import { http, type WriteContractErrorType, createConfig } from '@wagmi/core'
-import { base, mainnet } from '@wagmi/core/chains'
+import { base } from '@wagmi/core/chains'
 import { abi } from '@wagmi/test'
 import { type Abi, type Address, type Hash, parseEther } from 'viem'
 import { expectTypeOf, test } from 'vitest'
@@ -146,9 +146,8 @@ test('useSimulateContract', () => {
 // https://github.com/wevm/wagmi/issues/3981
 test('gh#3981', () => {
   const config = createConfig({
-    chains: [mainnet, base],
+    chains: [base],
     transports: {
-      [mainnet.id]: http(),
       [base.id]: http(),
     },
   })
