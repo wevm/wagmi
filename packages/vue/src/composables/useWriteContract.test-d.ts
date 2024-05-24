@@ -1,8 +1,10 @@
-import { type WriteContractErrorType } from '@wagmi/core'
+import { http, type WriteContractErrorType, createConfig } from '@wagmi/core'
+import { base, mainnet } from '@wagmi/core/chains'
 import { abi } from '@wagmi/test'
-import { type Abi, type Address, type Hash } from 'viem'
+import { type Abi, type Address, type Hash, parseEther } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
+import { useSimulateContract } from './useSimulateContract.js'
 import { useWriteContract } from './useWriteContract.js'
 
 const contextValue = { foo: 'bar' } as const
@@ -127,17 +129,84 @@ test('context', () => {
   )
 })
 
-// TODO: Simulate response passthrough
-// test('useSimulateContract', () => {
-//   const { data } = useSimulateContract({
-//     address: '0x',
-//     abi: abi.erc20,
-//     functionName: 'transferFrom',
-//     args: ['0x', '0x', 123n],
-//     chainId: 1,
-//   })
-//   const { writeContract } = useWriteContract()
-//
-//   const request = data?.request
-//   if (request) writeContract(request)
-// })
+test('useSimulateContract', () => {
+  const { data } = useSimulateContract({
+    address: '0x',
+    abi: abi.erc20,
+    functionName: 'transferFrom',
+    args: ['0x', '0x', 123n],
+    chainId: 1,
+  })
+  const { writeContract } = useWriteContract()
+
+  const request = data?.value?.request
+  if (request) writeContract(request)
+})
+
+// https://github.com/wevm/wagmi/issues/3981
+test('gh#3981', () => {
+  const config = createConfig({
+    chains: [mainnet, base],
+    transports: {
+      [mainnet.id]: http(),
+      [base.id]: http(),
+    },
+  })
+  const { writeContract } = useWriteContract({ config })
+
+  const abi = [
+    {
+      type: 'function',
+      name: 'example1',
+      inputs: [
+        { name: 'exampleName', type: 'address', internalType: 'address' },
+      ],
+      outputs: [],
+      stateMutability: 'payable',
+    },
+    {
+      type: 'function',
+      name: 'example2',
+      inputs: [
+        { name: 'exampleName', type: 'address', internalType: 'address' },
+      ],
+      outputs: [],
+      stateMutability: 'nonpayable',
+    },
+  ] as const
+
+  writeContract({
+    abi,
+    address: '0x...',
+    functionName: 'example1',
+    args: ['0x...'],
+    value: parseEther('1'),
+  })
+
+  writeContract({
+    abi: [
+      {
+        type: 'function',
+        name: 'example1',
+        inputs: [
+          { name: 'exampleName', type: 'address', internalType: 'address' },
+        ],
+        outputs: [],
+        stateMutability: 'payable',
+      },
+      {
+        type: 'function',
+        name: 'example2',
+        inputs: [
+          { name: 'exampleName', type: 'address', internalType: 'address' },
+        ],
+        outputs: [],
+        stateMutability: 'nonpayable',
+      },
+    ],
+    address: '0x...',
+    functionName: 'example1',
+    args: ['0x...'],
+    value: parseEther('1'),
+  })
+})
