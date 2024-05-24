@@ -19,7 +19,7 @@ import {
   type ChainIdParameter,
   type ConnectorParameter,
 } from '../types/properties.js'
-import type { Evaluate, UnionEvaluate, UnionOmit } from '../types/utils.js'
+import type { Evaluate, UnionEvaluate } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 import { getAccount } from './getAccount.js'
 import {
@@ -49,17 +49,16 @@ export type WriteContractParameters<
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = UnionEvaluate<
   {
-    [key in keyof chains]: UnionOmit<
-      viem_WriteContractParameters<
-        abi,
-        functionName,
-        args,
-        chains[key],
-        Account,
-        chains[key],
-        allFunctionNames
-      >,
-      'chain'
+    // TODO: Should use `UnionOmit<..., 'chain'>` on `viem_WriteContractParameters` result instead
+    // temp workaround that doesn't affect runtime behavior for for https://github.com/wevm/wagmi/issues/3981
+    [key in keyof chains]: viem_WriteContractParameters<
+      abi,
+      functionName,
+      args,
+      chains[key],
+      Account,
+      chains[key],
+      allFunctionNames
     >
   }[number] &
     Evaluate<ChainIdParameter<config, chainId>> &

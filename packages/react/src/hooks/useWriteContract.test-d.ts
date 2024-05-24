@@ -1,7 +1,7 @@
 import { http, type WriteContractErrorType, createConfig } from '@wagmi/core'
 import { base } from '@wagmi/core/chains'
 import { abi } from '@wagmi/test'
-import { type Abi, type Address, type Hash, parseEther } from 'viem'
+import { type Abi, type Address, type Hash } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
 import { useSimulateContract } from './useSimulateContract.js'
@@ -151,7 +151,6 @@ test('gh#3981', () => {
       [base.id]: http(),
     },
   })
-  const { writeContract } = useWriteContract({ config })
 
   const abi = [
     {
@@ -174,38 +173,20 @@ test('gh#3981', () => {
     },
   ] as const
 
+  const { writeContract } = useWriteContract({ config })
   writeContract({
     abi,
     address: '0x...',
     functionName: 'example1',
     args: ['0x...'],
-    value: parseEther('1'),
+    value: 123n,
   })
-
   writeContract({
-    abi: [
-      {
-        type: 'function',
-        name: 'example1',
-        inputs: [
-          { name: 'exampleName', type: 'address', internalType: 'address' },
-        ],
-        outputs: [],
-        stateMutability: 'payable',
-      },
-      {
-        type: 'function',
-        name: 'example2',
-        inputs: [
-          { name: 'exampleName', type: 'address', internalType: 'address' },
-        ],
-        outputs: [],
-        stateMutability: 'nonpayable',
-      },
-    ],
+    abi,
     address: '0x...',
-    functionName: 'example1',
+    functionName: 'example2',
     args: ['0x...'],
-    value: parseEther('1'),
+    // @ts-expect-error
+    value: 123n,
   })
 })
