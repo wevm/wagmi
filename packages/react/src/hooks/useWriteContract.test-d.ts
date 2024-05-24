@@ -1,4 +1,5 @@
-import { type WriteContractErrorType } from '@wagmi/core'
+import { http, type WriteContractErrorType, createConfig } from '@wagmi/core'
+import { base } from '@wagmi/core/chains'
 import { abi } from '@wagmi/test'
 import { type Abi, type Address, type Hash } from 'viem'
 import { expectTypeOf, test } from 'vitest'
@@ -140,4 +141,52 @@ test('useSimulateContract', () => {
 
   const request = data?.request
   if (request) writeContract(request)
+})
+
+// https://github.com/wevm/wagmi/issues/3981
+test('gh#3981', () => {
+  const config = createConfig({
+    chains: [base],
+    transports: {
+      [base.id]: http(),
+    },
+  })
+
+  const abi = [
+    {
+      type: 'function',
+      name: 'example1',
+      inputs: [
+        { name: 'exampleName', type: 'address', internalType: 'address' },
+      ],
+      outputs: [],
+      stateMutability: 'payable',
+    },
+    {
+      type: 'function',
+      name: 'example2',
+      inputs: [
+        { name: 'exampleName', type: 'address', internalType: 'address' },
+      ],
+      outputs: [],
+      stateMutability: 'nonpayable',
+    },
+  ] as const
+
+  const { writeContract } = useWriteContract({ config })
+  writeContract({
+    abi,
+    address: '0x...',
+    functionName: 'example1',
+    args: ['0x...'],
+    value: 123n,
+  })
+  writeContract({
+    abi,
+    address: '0x...',
+    functionName: 'example2',
+    args: ['0x...'],
+    // @ts-expect-error
+    value: 123n,
+  })
 })

@@ -57,7 +57,7 @@
     "publint": "^0.2.7",
     "sherif": "^0.8.4",
     "simple-git-hooks": "^2.11.1",
-    "typescript": "5.4.2",
+    "typescript": "5.4.5",
     "viem": "2.9.31",
     "vitest": "^1.6.0"
   },
