@@ -32,8 +32,8 @@ import { useChainId } from '../useChainId.js'
 import { useConfig } from '../useConfig.js'
 import {
   type UseWriteContractParameters,
-  type UseWriteContractReturnType as wagmi_UseWriteContractReturnType,
   useWriteContract,
+  type UseWriteContractReturnType as wagmi_UseWriteContractReturnType,
 } from '../useWriteContract.js'
 
 type stateMutability = 'nonpayable' | 'payable'

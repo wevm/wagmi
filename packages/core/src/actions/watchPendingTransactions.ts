@@ -16,13 +16,15 @@ import { getAction } from '../utils/getAction.js'
 
 export type WatchPendingTransactionsParameters<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   ///
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = {
   [key in keyof chains]: UnionEvaluate<
     viem_WatchPendingTransactionsParameters<
-      config['_internal']['transports'][chains[key]['id']] extends infer transport extends Transport
+      config['_internal']['transports'][chains[key]['id']] extends infer transport extends
+        Transport
         ? Transport extends transport
           ? WebSocketTransport
           : transport

@@ -21,7 +21,8 @@ import { useConfig } from './useConfig.js'
 
 export type UseBlockTransactionCountParameters<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetBlockTransactionCountData,
 > = UnionEvaluate<
   GetBlockTransactionCountOptions<config, chainId> &
@@ -41,7 +42,8 @@ export type UseBlockTransactionCountReturnType<
 /** https://wagmi.sh/react/api/hooks/useBlockTransactionCount */
 export function useBlockTransactionCount<
   config extends Config = ResolvedRegister['config'],
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetBlockTransactionCountData,
 >(
   parameters: UseBlockTransactionCountParameters<

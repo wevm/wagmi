@@ -29,8 +29,8 @@ import {
 } from './getConnectorClient.js'
 import {
   type SimulateContractErrorType,
-  simulateContract,
   type SimulateContractReturnType,
+  simulateContract,
 } from './simulateContract.js'
 
 export type WriteContractParameters<

@@ -42,7 +42,7 @@ export type ShowCallsStatusMutate<context = unknown> = (
     | undefined,
 ) => void
 
-export type ShowCallsStatusMutateAsync<context = unknown,> = (
+export type ShowCallsStatusMutateAsync<context = unknown> = (
   variables: ShowCallsStatusVariables,
   options?:
     | Evaluate<

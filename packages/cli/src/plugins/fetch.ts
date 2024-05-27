@@ -2,9 +2,9 @@ import { homedir } from 'node:os'
 import { default as fs } from 'fs-extra'
 import { join } from 'pathe'
 
+import type { Abi } from 'abitype'
 import type { ContractConfig, Plugin } from '../config.js'
 import type { Evaluate, RequiredBy } from '../types.js'
-import type { Abi } from 'abitype'
 
 export type FetchConfig = {
   /**

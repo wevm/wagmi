@@ -2,11 +2,11 @@ import {
   type DefaultError,
   type MutationObserverOptions,
   type QueryKey,
-  type UseMutationReturnType as tanstack_UseMutationReturnType,
   type UseQueryOptions,
+  type UseMutationReturnType as tanstack_UseMutationReturnType,
   type UseQueryReturnType as tanstack_UseQueryReturnType,
-  useMutation,
   useQuery as tanstack_useQuery,
+  useMutation,
 } from '@tanstack/vue-query'
 import type {
   Evaluate,

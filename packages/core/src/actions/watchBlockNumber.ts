@@ -16,13 +16,15 @@ import { getAction } from '../utils/getAction.js'
 
 export type WatchBlockNumberParameters<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   ///
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = {
   [key in keyof chains]: UnionEvaluate<
     viem_WatchBlockNumberParameters<
-      config['_internal']['transports'][chains[key]['id']] extends infer transport extends Transport
+      config['_internal']['transports'][chains[key]['id']] extends infer transport extends
+        Transport
         ? Transport extends transport
           ? WebSocketTransport
           : transport
@@ -39,7 +41,8 @@ export type WatchBlockNumberReturnType = viem_WatchBlockNumberReturnType
 /** https://wagmi.sh/core/api/actions/watchBlockNumber */
 export function watchBlockNumber<
   config extends Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 >(
   config: config,
   parameters: WatchBlockNumberParameters<config, chainId>,

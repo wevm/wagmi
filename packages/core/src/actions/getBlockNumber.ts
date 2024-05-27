@@ -12,7 +12,8 @@ import { getAction } from '../utils/getAction.js'
 
 export type GetBlockNumberParameters<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 > = Evaluate<viem_GetBlockNumberParameters & ChainIdParameter<config, chainId>>
 
 export type GetBlockNumberReturnType = viem_GetBlockNumberReturnType
@@ -22,7 +23,8 @@ export type GetBlockNumberErrorType = viem_GetBlockNumberErrorType
 /** https://wagmi.sh/core/api/actions/getBlockNumber */
 export function getBlockNumber<
   config extends Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 >(
   config: config,
   parameters: GetBlockNumberParameters<config, chainId> = {},

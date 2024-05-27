@@ -13,10 +13,7 @@ import {
   getTransactionConfirmationsQueryOptions,
 } from '@wagmi/core/query'
 
-import type {
-  ConfigParameter,
-  QueryParameter,
-} from '../types/properties.js'
+import type { ConfigParameter, QueryParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'

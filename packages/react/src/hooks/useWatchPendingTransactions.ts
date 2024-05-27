@@ -15,7 +15,8 @@ import { useConfig } from './useConfig.js'
 
 export type UseWatchPendingTransactionsParameters<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 > = UnionEvaluate<
   UnionPartial<WatchPendingTransactionsParameters<config, chainId>> &
     ConfigParameter<config> &
@@ -27,7 +28,8 @@ export type UseWatchPendingTransactionsReturnType = void
 /** https://wagmi.sh/react/api/hooks/useWatchPendingTransactions */
 export function useWatchPendingTransactions<
   config extends Config = ResolvedRegister['config'],
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 >(
   parameters: UseWatchPendingTransactionsParameters<
     config,

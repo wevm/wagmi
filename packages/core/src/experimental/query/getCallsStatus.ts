@@ -16,7 +16,7 @@ export type GetCallsStatusOptions = Evaluate<
   GetCallsStatusParameters & ScopeKeyParameter
 >
 
-export function getCallsStatusQueryOptions<config extends Config,>(
+export function getCallsStatusQueryOptions<config extends Config>(
   config: config,
   options: GetCallsStatusOptions,
 ) {

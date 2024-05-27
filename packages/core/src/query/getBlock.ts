@@ -17,7 +17,7 @@ export type GetBlockOptions<
   blockTag extends BlockTag,
   config extends Config,
   chainId extends
-    | config['chains'][number]['id'] = config['chains'][number]['id'],
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 > = Evaluate<
   ExactPartial<
     GetBlockParameters<includeTransactions, blockTag, config, chainId>

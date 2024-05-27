@@ -18,7 +18,8 @@ export type UseWatchBlocksParameters<
   includeTransactions extends boolean = false,
   blockTag extends BlockTag = 'latest',
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 > = UnionEvaluate<
   UnionPartial<
     WatchBlocksParameters<includeTransactions, blockTag, config, chainId>
@@ -32,7 +33,8 @@ export type UseWatchBlocksReturnType = void
 /** https://wagmi.sh/react/hooks/useWatchBlocks */
 export function useWatchBlocks<
   config extends Config = ResolvedRegister['config'],
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   includeTransactions extends boolean = false,
   blockTag extends BlockTag = 'latest',
 >(

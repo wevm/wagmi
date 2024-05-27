@@ -40,7 +40,7 @@ export function estimateFeesPerGasQueryOptions<
 export type EstimateFeesPerGasQueryFnData<type extends FeeValuesType> =
   EstimateFeesPerGasReturnType<type>
 
-export type EstimateFeesPerGasData<type extends FeeValuesType,> =
+export type EstimateFeesPerGasData<type extends FeeValuesType> =
   EstimateFeesPerGasQueryFnData<type>
 
 export function estimateFeesPerGasQueryKey<

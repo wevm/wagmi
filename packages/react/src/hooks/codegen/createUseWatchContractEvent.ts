@@ -45,7 +45,8 @@ export type CreateUseWatchContractEventReturnType<
     : ContractEventName<abi>,
   strict extends boolean | undefined = undefined,
   config extends Config = ResolvedRegister['config'],
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 >(
   parameters?: UnionEvaluate<
     UnionPartial<

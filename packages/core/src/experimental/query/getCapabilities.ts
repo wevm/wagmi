@@ -16,7 +16,7 @@ export type GetCapabilitiesOptions = Evaluate<
   ExactPartial<GetCapabilitiesParameters> & ScopeKeyParameter
 >
 
-export function getCapabilitiesQueryOptions<config extends Config,>(
+export function getCapabilitiesQueryOptions<config extends Config>(
   config: config,
   options: GetCapabilitiesOptions = {},
 ) {

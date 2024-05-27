@@ -7,7 +7,7 @@ import { useClient } from './useClient.js'
 test('default', () => {
   const client = useClient({ config })
   expectTypeOf(client.value.chain).toEqualTypeOf<
-    typeof config['chains'][number]
+    (typeof config)['chains'][number]
   >()
   expectTypeOf(client.value.transport.type).toEqualTypeOf<'http'>()
 })

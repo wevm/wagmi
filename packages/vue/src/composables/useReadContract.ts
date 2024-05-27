@@ -12,11 +12,7 @@ import {
   readContractQueryOptions,
   structuralSharing,
 } from '@wagmi/core/query'
-import type {
-  Abi,
-  ContractFunctionArgs,
-  ContractFunctionName,
-} from 'viem'
+import type { Abi, ContractFunctionArgs, ContractFunctionName } from 'viem'
 
 import { computed } from 'vue'
 import type { ConfigParameter, QueryParameter } from '../types/properties.js'

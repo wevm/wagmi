@@ -37,7 +37,7 @@ export type WriteContractsMutate<
   contracts extends readonly unknown[],
   config extends Config,
   context = unknown,
-> = <chainId extends config['chains'][number]['id'],>(
+> = <chainId extends config['chains'][number]['id']>(
   variables: WriteContractsVariables<contracts, config, chainId>,
   options?:
     | Evaluate<
@@ -55,7 +55,7 @@ export type WriteContractsMutateAsync<
   contracts extends readonly unknown[],
   config extends Config,
   context = unknown,
-> = <chainId extends config['chains'][number]['id'],>(
+> = <chainId extends config['chains'][number]['id']>(
   variables: WriteContractsVariables<contracts, config, chainId>,
   options?:
     | Evaluate<

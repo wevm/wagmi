@@ -6,7 +6,7 @@ import { getWalletClient } from './getWalletClient.js'
 
 test('default', async () => {
   const client = await getWalletClient(config)
-  expectTypeOf(client.chain).toEqualTypeOf<typeof config['chains'][number]>()
+  expectTypeOf(client.chain).toEqualTypeOf<(typeof config)['chains'][number]>()
   expectTypeOf(client.transport.type).toEqualTypeOf<'http'>()
   expectTypeOf(client.account).toEqualTypeOf<Account>()
 })

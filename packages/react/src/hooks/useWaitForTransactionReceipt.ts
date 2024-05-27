@@ -21,7 +21,8 @@ import { useConfig } from './useConfig.js'
 
 export type UseWaitForTransactionReceiptParameters<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = WaitForTransactionReceiptData<config, chainId>,
 > = Evaluate<
   WaitForTransactionReceiptOptions<config, chainId> &
@@ -36,14 +37,16 @@ export type UseWaitForTransactionReceiptParameters<
 
 export type UseWaitForTransactionReceiptReturnType<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = WaitForTransactionReceiptData<config, chainId>,
 > = UseQueryReturnType<selectData, WaitForTransactionReceiptErrorType>
 
 /** https://wagmi.sh/react/api/hooks/useWaitForTransactionReceipt */
 export function useWaitForTransactionReceipt<
   config extends Config = ResolvedRegister['config'],
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = WaitForTransactionReceiptData<config, chainId>,
 >(
   parameters: UseWaitForTransactionReceiptParameters<

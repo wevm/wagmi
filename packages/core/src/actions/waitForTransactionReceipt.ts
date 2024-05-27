@@ -1,11 +1,11 @@
 import type { Chain } from 'viem'
 import { hexToString } from 'viem'
 import {
+  call,
+  getTransaction,
   type WaitForTransactionReceiptErrorType as viem_WaitForTransactionReceiptErrorType,
   type WaitForTransactionReceiptParameters as viem_WaitForTransactionReceiptParameters,
   type WaitForTransactionReceiptReturnType as viem_WaitForTransactionReceiptReturnType,
-  call,
-  getTransaction,
   waitForTransactionReceipt as viem_waitForTransactionReceipt,
 } from 'viem/actions'
 
@@ -17,14 +17,16 @@ import { getAction } from '../utils/getAction.js'
 
 export type WaitForTransactionReceiptParameters<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 > = Evaluate<
   viem_WaitForTransactionReceiptParameters & ChainIdParameter<config, chainId>
 >
 
 export type WaitForTransactionReceiptReturnType<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   ///
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = Evaluate<

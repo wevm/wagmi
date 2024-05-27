@@ -2,7 +2,7 @@
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { type ReactNode, useState } from 'react'
-import { State, WagmiProvider } from 'wagmi'
+import { type State, WagmiProvider } from 'wagmi'
 
 import { config } from '../wagmi'
 

@@ -121,11 +121,11 @@ test('context', () => {
           | undefined
         >()
         expectTypeOf(data).toEqualTypeOf<
-          | {
-              accounts: readonly [Address, ...Address[]]
-              chainId: number
-              connector: Connector
-            }[]
+          {
+            accounts: readonly [Address, ...Address[]]
+            chainId: number
+            connector: Connector
+          }[]
         >()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
       },

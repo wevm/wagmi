@@ -13,10 +13,7 @@ import {
 import type { GetTransactionReceiptQueryFnData } from '@wagmi/core/query'
 
 import { computed } from 'vue'
-import type {
-  ConfigParameter,
-  QueryParameter,
-} from '../types/properties.js'
+import type { ConfigParameter, QueryParameter } from '../types/properties.js'
 import type { DeepMaybeRef } from '../types/ref.js'
 import { deepUnref } from '../utils/cloneDeep.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
@@ -25,7 +22,8 @@ import { useConfig } from './useConfig.js'
 
 export type UseTransactionReceiptParameters<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetTransactionReceiptData<config, chainId>,
 > = Evaluate<
   DeepMaybeRef<
@@ -42,14 +40,16 @@ export type UseTransactionReceiptParameters<
 
 export type UseTransactionReceiptReturnType<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetTransactionReceiptData<config, chainId>,
 > = UseQueryReturnType<selectData, GetTransactionReceiptErrorType>
 
 /** https://wagmi.sh/vue/api/composables/useTransactionReceipt */
 export function useTransactionReceipt<
   config extends Config = ResolvedRegister['config'],
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetTransactionReceiptData<config, chainId>,
 >(
   parameters_: UseTransactionReceiptParameters<

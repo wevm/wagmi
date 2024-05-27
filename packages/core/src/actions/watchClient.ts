@@ -3,7 +3,8 @@ import { type GetClientReturnType, getClient } from './getClient.js'
 
 export type WatchClientParameters<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 > = {
   onChange(
     publicClient: GetClientReturnType<config, chainId>,

@@ -36,7 +36,8 @@ export type CreateWatchContractEventReturnType<
     ? eventName
     : ContractEventName<abi>,
   strict extends boolean | undefined = undefined,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 >(
   config: config,
   parameters: UnionEvaluate<

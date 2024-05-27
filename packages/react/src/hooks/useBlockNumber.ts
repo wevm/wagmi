@@ -6,11 +6,7 @@ import type {
   GetBlockNumberErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type {
-  Evaluate,
-  UnionEvaluate,
-  UnionOmit,
-} from '@wagmi/core/internal'
+import type { Evaluate, UnionEvaluate, UnionOmit } from '@wagmi/core/internal'
 import {
   type GetBlockNumberData,
   type GetBlockNumberOptions,
@@ -30,7 +26,8 @@ import {
 
 export type UseBlockNumberParameters<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetBlockNumberData,
 > = Evaluate<
   GetBlockNumberOptions<config, chainId> &
@@ -59,7 +56,8 @@ export type UseBlockNumberReturnType<selectData = GetBlockNumberData> =
 /** https://wagmi.sh/react/api/hooks/useBlockNumber */
 export function useBlockNumber<
   config extends Config = ResolvedRegister['config'],
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetBlockNumberData,
 >(
   parameters: UseBlockNumberParameters<config, chainId, selectData> = {},

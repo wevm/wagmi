@@ -15,7 +15,8 @@ import { useConfig } from './useConfig.js'
 
 export type UseWatchBlockNumberParameters<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 > = UnionEvaluate<
   UnionPartial<WatchBlockNumberParameters<config, chainId>> &
     ConfigParameter<config> &
@@ -27,7 +28,8 @@ export type UseWatchBlockNumberReturnType = void
 /** https://wagmi.sh/react/api/hooks/useWatchBlockNumber */
 export function useWatchBlockNumber<
   config extends Config = ResolvedRegister['config'],
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 >(
   parameters: UseWatchBlockNumberParameters<config, chainId> = {} as any,
 ): UseWatchBlockNumberReturnType {

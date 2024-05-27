@@ -1,9 +1,5 @@
 import type { QueryOptions } from '@tanstack/query-core'
-import type {
-  Abi,
-  ContractFunctionArgs,
-  ContractFunctionName,
-} from 'viem'
+import type { Abi, ContractFunctionArgs, ContractFunctionName } from 'viem'
 
 import {
   type SimulateContractErrorType,

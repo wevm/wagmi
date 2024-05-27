@@ -1,16 +1,8 @@
 'use client'
 
 import { useQueryClient } from '@tanstack/react-query'
-import type {
-  Config,
-  GetBlockErrorType,
-  ResolvedRegister,
-} from '@wagmi/core'
-import type {
-  Evaluate,
-  UnionEvaluate,
-  UnionOmit,
-} from '@wagmi/core/internal'
+import type { Config, GetBlockErrorType, ResolvedRegister } from '@wagmi/core'
+import type { Evaluate, UnionEvaluate, UnionOmit } from '@wagmi/core/internal'
 import {
   type GetBlockData,
   type GetBlockOptions,
@@ -33,7 +25,8 @@ export type UseBlockParameters<
   includeTransactions extends boolean = false,
   blockTag extends BlockTag = 'latest',
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetBlockData<includeTransactions, blockTag, config, chainId>,
 > = Evaluate<
   GetBlockOptions<includeTransactions, blockTag, config, chainId> &
@@ -65,7 +58,8 @@ export type UseBlockReturnType<
   includeTransactions extends boolean = false,
   blockTag extends BlockTag = 'latest',
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetBlockData<includeTransactions, blockTag, config, chainId>,
 > = UseQueryReturnType<selectData, GetBlockErrorType>
 
@@ -74,7 +68,8 @@ export function useBlock<
   includeTransactions extends boolean = false,
   blockTag extends BlockTag = 'latest',
   config extends Config = ResolvedRegister['config'],
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetBlockData<includeTransactions, blockTag, config, chainId>,
 >(
   parameters: UseBlockParameters<

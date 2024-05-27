@@ -6,7 +6,8 @@ import {
 
 export type WatchPublicClientParameters<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 > = {
   onChange(
     publicClient: GetPublicClientReturnType<config, chainId>,

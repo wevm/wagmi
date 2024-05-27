@@ -11,12 +11,14 @@ import {
 
 export type GetWalletClientParameters<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 > = GetConnectorClientParameters<Config, chainId>
 
 export type GetWalletClientReturnType<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 > = Evaluate<
   WalletClient<
     config['_internal']['transports'][chainId],

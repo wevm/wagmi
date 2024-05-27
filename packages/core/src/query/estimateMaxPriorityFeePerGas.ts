@@ -11,7 +11,7 @@ import type { ScopeKeyParameter } from '../types/properties.js'
 import type { Evaluate, ExactPartial } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
-export type EstimateMaxPriorityFeePerGasOptions<config extends Config,> =
+export type EstimateMaxPriorityFeePerGasOptions<config extends Config> =
   Evaluate<
     ExactPartial<EstimateMaxPriorityFeePerGasParameters<config>> &
       ScopeKeyParameter
@@ -41,11 +41,11 @@ export type EstimateMaxPriorityFeePerGasQueryFnData =
 export type EstimateMaxPriorityFeePerGasData =
   EstimateMaxPriorityFeePerGasQueryFnData
 
-export function estimateMaxPriorityFeePerGasQueryKey<config extends Config,>(
+export function estimateMaxPriorityFeePerGasQueryKey<config extends Config>(
   options: EstimateMaxPriorityFeePerGasOptions<config> = {},
 ) {
   return ['estimateMaxPriorityFeePerGas', filterQueryOptions(options)] as const
 }
 
-export type EstimateMaxPriorityFeePerGasQueryKey<config extends Config,> =
+export type EstimateMaxPriorityFeePerGasQueryKey<config extends Config> =
   ReturnType<typeof estimateMaxPriorityFeePerGasQueryKey<config>>

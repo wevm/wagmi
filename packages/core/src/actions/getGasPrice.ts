@@ -11,7 +11,8 @@ import { getAction } from '../utils/getAction.js'
 
 export type GetGasPriceParameters<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 > = Evaluate<ChainIdParameter<config, chainId>>
 
 export type GetGasPriceReturnType = viem_GetGasPriceReturnType
@@ -21,7 +22,8 @@ export type GetGasPriceErrorType = viem_GetGasPriceErrorType
 /** https://wagmi.sh/core/api/actions/getGasPrice */
 export function getGasPrice<
   config extends Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 >(
   config: config,
   parameters: GetGasPriceParameters<config, chainId> = {},

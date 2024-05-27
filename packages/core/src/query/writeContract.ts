@@ -1,9 +1,5 @@
 import type { MutateOptions, MutationOptions } from '@tanstack/query-core'
-import type {
-  Abi,
-  ContractFunctionArgs,
-  ContractFunctionName,
-} from 'viem'
+import type { Abi, ContractFunctionArgs, ContractFunctionName } from 'viem'
 
 import {
   type WriteContractErrorType,

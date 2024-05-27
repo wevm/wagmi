@@ -14,11 +14,7 @@ import type {
   ChainIdParameter,
   ConnectorParameter,
 } from '../../types/properties.js'
-import type {
-  Evaluate,
-  UnionEvaluate,
-  UnionOmit,
-} from '../../types/utils.js'
+import type { Evaluate, UnionEvaluate, UnionOmit } from '../../types/utils.js'
 import { getAccount } from '../getAccount.js'
 import { getChainId } from '../getChainId.js'
 import {

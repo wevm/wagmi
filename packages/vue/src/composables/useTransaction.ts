@@ -22,7 +22,8 @@ import { useConfig } from './useConfig.js'
 
 export type UseTransactionParameters<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetTransactionData<config, chainId>,
 > = Evaluate<
   DeepMaybeRef<
@@ -39,14 +40,16 @@ export type UseTransactionParameters<
 
 export type UseTransactionReturnType<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetTransactionData<config, chainId>,
 > = UseQueryReturnType<selectData, GetTransactionErrorType>
 
 /** https://wagmi.sh/vue/api/composables/useTransaction */
 export function useTransaction<
   config extends Config = ResolvedRegister['config'],
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetTransactionData<config, chainId>,
 >(
   parameters_: UseTransactionParameters<config, chainId, selectData> = {},

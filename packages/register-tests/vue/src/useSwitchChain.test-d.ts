@@ -9,7 +9,7 @@ test('default', () => {
 
   const chains = switchChain.chains.value
 
-  expectTypeOf(chains).toEqualTypeOf<typeof config['chains']>()
+  expectTypeOf(chains).toEqualTypeOf<(typeof config)['chains']>()
   expectTypeOf(chains[0]).toEqualTypeOf<typeof celo>()
   expectTypeOf(chains[2]).toEqualTypeOf<typeof optimism>()
 
@@ -22,6 +22,6 @@ test('default', () => {
     },
   )
 
-  type Result = Parameters<typeof switchChain['switchChain']>[0]
+  type Result = Parameters<(typeof switchChain)['switchChain']>[0]
   expectTypeOf<Result['chainId']>().toEqualTypeOf<ChainId>()
 })

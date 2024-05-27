@@ -13,7 +13,8 @@ import { getAction } from '../utils/getAction.js'
 
 export type EstimateMaxPriorityFeePerGasParameters<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 > = Evaluate<
   UnionLooseOmit<
     viem_EstimateMaxPriorityFeePerGasParameters<Chain, Chain> &
@@ -31,7 +32,8 @@ export type EstimateMaxPriorityFeePerGasErrorType =
 /** https://wagmi.sh/core/api/actions/estimateMaxPriorityFeePerGas */
 export async function estimateMaxPriorityFeePerGas<
   config extends Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 >(
   config: config,
   parameters: EstimateMaxPriorityFeePerGasParameters<config, chainId> = {},

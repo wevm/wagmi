@@ -1,7 +1,7 @@
 import type {
   AddEthereumChainParameter,
-  SwitchChainErrorType as viem_SwitchChainErrorType,
   UserRejectedRequestErrorType,
+  SwitchChainErrorType as viem_SwitchChainErrorType,
 } from 'viem'
 
 import type { Config } from '../createConfig.js'
@@ -20,7 +20,8 @@ import type { Evaluate, ExactPartial } from '../types/utils.js'
 
 export type SwitchChainParameters<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 > = Evaluate<
   ConnectorParameter & {
     chainId: chainId | config['chains'][number]['id']
@@ -32,7 +33,8 @@ export type SwitchChainParameters<
 
 export type SwitchChainReturnType<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 > = Extract<
   config['chains'][number],
   { id: Config extends config ? number : chainId }

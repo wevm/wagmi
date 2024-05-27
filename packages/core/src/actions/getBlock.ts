@@ -17,7 +17,7 @@ export type GetBlockParameters<
   blockTag extends BlockTag = 'latest',
   config extends Config = Config,
   chainId extends
-    | config['chains'][number]['id'] = config['chains'][number]['id'],
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 > = Evaluate<
   viem_GetBlockParameters<includeTransactions, blockTag> &
     ChainIdParameter<config, chainId>
@@ -27,7 +27,8 @@ export type GetBlockReturnType<
   includeTransactions extends boolean = false,
   blockTag extends BlockTag = 'latest',
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   ///
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = Evaluate<

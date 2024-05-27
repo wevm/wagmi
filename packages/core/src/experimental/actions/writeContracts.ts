@@ -22,7 +22,8 @@ import type { Evaluate } from '../../types/utils.js'
 export type WriteContractsParameters<
   contracts extends readonly unknown[] = readonly ContractFunctionParameters[],
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   ///
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = {

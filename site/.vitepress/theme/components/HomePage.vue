@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import DefaultTheme, { VPButton, VPSponsors, VPTeamMembers } from 'vitepress/theme'
+import type DefaultTheme from 'vitepress/theme'
+import { VPButton, VPSponsors, VPTeamMembers } from 'vitepress/theme'
 import { useSponsors } from '../composables/useSponsors'
 
 const { data: sponsors } = useSponsors()
@@ -10,7 +11,7 @@ const teamMembers = [
     name: 'awkweb',
     links: [
       { icon: 'github', link: 'https://github.com/tmm' },
-      { icon: 'twitter', link: 'https://twitter.com/awkweb' }
+      { icon: 'twitter', link: 'https://twitter.com/awkweb' },
     ],
   },
   {
@@ -18,7 +19,7 @@ const teamMembers = [
     name: 'jxom',
     links: [
       { icon: 'github', link: 'https://github.com/jxom' },
-      { icon: 'twitter', link: 'https://twitter.com/_jxom' }
+      { icon: 'twitter', link: 'https://twitter.com/_jxom' },
     ],
   },
 ] satisfies DefaultTheme.TeamMember[]

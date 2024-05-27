@@ -16,7 +16,7 @@ export type CallReturnType = viem_CallReturnType
 
 export type CallErrorType = viem_CallErrorType
 
-export async function call<config extends Config,>(
+export async function call<config extends Config>(
   config: config,
   parameters: CallParameters<config>,
 ): Promise<CallReturnType> {

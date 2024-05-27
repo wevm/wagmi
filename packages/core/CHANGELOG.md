@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.10.4
+
+### Patch Changes
+
+- [#3984](https://github.com/wevm/wagmi/pull/3984) [`51fde8a0433b4fff357c1a8d7e08b41b4c86c968`](https://github.com/wevm/wagmi/commit/51fde8a0433b4fff357c1a8d7e08b41b4c86c968) Thanks [@tmm](https://github.com/tmm)! - Fixed `writeContract` query types for `value` property.
+
 ## 2.10.3
 
 ### Patch Changes

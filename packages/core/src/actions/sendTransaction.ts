@@ -2,11 +2,11 @@ import type {
   Account,
   Address,
   Chain,
+  Client,
+  TransactionRequest,
   SendTransactionErrorType as viem_SendTransactionErrorType,
   SendTransactionParameters as viem_SendTransactionParameters,
   SendTransactionReturnType as viem_SendTransactionReturnType,
-  TransactionRequest,
-  Client,
 } from 'viem'
 import {
   estimateGas as viem_estimateGas,

@@ -12,7 +12,8 @@ import { getAction } from '../utils/getAction.js'
 
 export type GetBlockTransactionCountParameters<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 > = UnionEvaluate<
   viem_GetBlockTransactionCountParameters & ChainIdParameter<config, chainId>
 >
@@ -26,7 +27,8 @@ export type GetBlockTransactionCountErrorType =
 /** https://wagmi.sh/core/api/actions/getBlockTransactionCount */
 export function getBlockTransactionCount<
   config extends Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 >(
   config: config,
   parameters: GetBlockTransactionCountParameters<config, chainId> = {},

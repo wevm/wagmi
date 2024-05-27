@@ -14,7 +14,7 @@ test('default', () => {
 test('parameters: config', () => {
   const client = useClient({ config })
   expectTypeOf(client.value.chain.id).toEqualTypeOf<
-    typeof config['chains'][number]['id']
+    (typeof config)['chains'][number]['id']
   >()
   expectTypeOf(client.value.transport.type).toEqualTypeOf<'http'>()
 })

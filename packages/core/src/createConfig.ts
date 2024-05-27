@@ -7,9 +7,9 @@ import {
   type Address,
   type Chain,
   type Client,
+  createClient,
   type ClientConfig as viem_ClientConfig,
   type Transport as viem_Transport,
-  createClient,
 } from 'viem'
 import { persist, subscribeWithSelector } from 'zustand/middleware'
 import { type Mutate, type StoreApi, createStore } from 'zustand/vanilla'

@@ -1,13 +1,8 @@
 <script setup lang="ts">
-import { Hex, parseEther } from 'viem'
 import { useSendTransaction } from '@wagmi/vue'
+import { type Hex, parseEther } from 'viem'
 
-const {
-  data: hash,
-  error,
-  isPending,
-  sendTransaction
-} = useSendTransaction()
+const { data: hash, error, isPending, sendTransaction } = useSendTransaction()
 
 function onSubmit(event: any) {
   const form = new FormData(event.target)
