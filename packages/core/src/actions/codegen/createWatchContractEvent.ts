@@ -1,7 +1,7 @@
-import { type Abi, type Address, type ContractEventName } from 'viem'
+import type { Abi, Address, ContractEventName } from 'viem'
 
-import { type Config } from '../../createConfig.js'
-import { type UnionEvaluate, type UnionOmit } from '../../types/utils.js'
+import type { Config } from '../../createConfig.js'
+import type { UnionEvaluate, UnionOmit } from '../../types/utils.js'
 import { getAccount } from '../getAccount.js'
 import { getChainId } from '../getChainId.js'
 import {

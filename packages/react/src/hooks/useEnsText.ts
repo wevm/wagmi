@@ -1,7 +1,7 @@
 'use client'
 
 import type { Config, GetEnsTextErrorType, ResolvedRegister } from '@wagmi/core'
-import { type Evaluate } from '@wagmi/core/internal'
+import type { Evaluate } from '@wagmi/core/internal'
 import {
   type GetEnsTextData,
   type GetEnsTextOptions,

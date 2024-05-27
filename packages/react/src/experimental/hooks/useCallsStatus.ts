@@ -1,6 +1,6 @@
 'use client'
 
-import { type Config, type ResolvedRegister } from '@wagmi/core'
+import type { Config, ResolvedRegister } from '@wagmi/core'
 import {
   type GetCallsStatusData,
   type GetCallsStatusErrorType,
@@ -9,7 +9,7 @@ import {
   type GetCallsStatusQueryKey,
   getCallsStatusQueryOptions,
 } from '@wagmi/core/experimental'
-import { type Evaluate } from '@wagmi/core/internal'
+import type { Evaluate } from '@wagmi/core/internal'
 
 import { useConfig } from '../../hooks/useConfig.js'
 import type { ConfigParameter, QueryParameter } from '../../types/properties.js'

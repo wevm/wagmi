@@ -1,21 +1,21 @@
-import {
-  type Config,
-  type GetTransactionReceiptErrorType,
-  type ResolvedRegister,
+import type {
+  Config,
+  GetTransactionReceiptErrorType,
+  ResolvedRegister,
 } from '@wagmi/core'
-import { type Evaluate } from '@wagmi/core/internal'
+import type { Evaluate } from '@wagmi/core/internal'
 import {
   type GetTransactionReceiptData,
   type GetTransactionReceiptOptions,
   type GetTransactionReceiptQueryKey,
   getTransactionReceiptQueryOptions,
 } from '@wagmi/core/query'
-import { type GetTransactionReceiptQueryFnData } from '@wagmi/core/query'
+import type { GetTransactionReceiptQueryFnData } from '@wagmi/core/query'
 
 import { computed } from 'vue'
-import {
-  type ConfigParameter,
-  type QueryParameter,
+import type {
+  ConfigParameter,
+  QueryParameter,
 } from '../types/properties.js'
 import type { DeepMaybeRef } from '../types/ref.js'
 import { deepUnref } from '../utils/cloneDeep.js'

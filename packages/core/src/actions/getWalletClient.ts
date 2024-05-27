@@ -1,8 +1,8 @@
 import { type Account, type WalletClient, walletActions } from 'viem'
 
-import { type Config } from '../createConfig.js'
+import type { Config } from '../createConfig.js'
 import type { BaseErrorType, ErrorType } from '../errors/base.js'
-import { type Evaluate } from '../types/utils.js'
+import type { Evaluate } from '../types/utils.js'
 import {
   type GetConnectorClientErrorType,
   type GetConnectorClientParameters,

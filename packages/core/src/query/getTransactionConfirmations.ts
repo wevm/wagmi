@@ -1,4 +1,4 @@
-import { type QueryOptions } from '@tanstack/query-core'
+import type { QueryOptions } from '@tanstack/query-core'
 
 import {
   type GetTransactionConfirmationsErrorType,
@@ -6,9 +6,9 @@ import {
   type GetTransactionConfirmationsReturnType,
   getTransactionConfirmations,
 } from '../actions/getTransactionConfirmations.js'
-import { type Config } from '../createConfig.js'
-import { type ScopeKeyParameter } from '../types/properties.js'
-import { type UnionPartial } from '../types/utils.js'
+import type { Config } from '../createConfig.js'
+import type { ScopeKeyParameter } from '../types/properties.js'
+import type { UnionPartial } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
 export type GetTransactionConfirmationsOptions<

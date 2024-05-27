@@ -6,7 +6,7 @@ import {
   type WatchContractEventParameters,
   watchContractEvent,
 } from '@wagmi/core'
-import { type UnionEvaluate, type UnionPartial } from '@wagmi/core/internal'
+import type { UnionEvaluate, UnionPartial } from '@wagmi/core/internal'
 import { useEffect } from 'react'
 
 import type { Abi, ContractEventName } from 'viem'

@@ -1,9 +1,9 @@
 'use client'
 
-import {
-  type Config,
-  type GetStorageAtErrorType,
-  type ResolvedRegister,
+import type {
+  Config,
+  GetStorageAtErrorType,
+  ResolvedRegister,
 } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
 import {
@@ -12,10 +12,10 @@ import {
   type GetStorageAtQueryKey,
   getStorageAtQueryOptions,
 } from '@wagmi/core/query'
-import { type GetStorageAtQueryFnData } from '@wagmi/core/query'
-import {
-  type ConfigParameter,
-  type QueryParameter,
+import type { GetStorageAtQueryFnData } from '@wagmi/core/query'
+import type {
+  ConfigParameter,
+  QueryParameter,
 } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'

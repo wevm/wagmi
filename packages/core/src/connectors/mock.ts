@@ -42,7 +42,7 @@ export function mock(parameters: MockParameters) {
   const features = parameters.features ?? {}
 
   type Provider = ReturnType<
-    Transport<'custom', {}, EIP1193RequestFn<WalletRpcSchema>>
+    Transport<'custom', unknown, EIP1193RequestFn<WalletRpcSchema>>
   >
   let connected = false
   let connectedChainId: number

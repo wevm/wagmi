@@ -1,18 +1,18 @@
-import {
-  type Config,
-  type ResolvedRegister,
-  type WatchContractEventParameters,
+import type {
+  Config,
+  ResolvedRegister,
+  WatchContractEventParameters,
 } from '@wagmi/core'
-import {
-  type UnionEvaluate,
-  type UnionOmit,
-  type UnionPartial,
+import type {
+  UnionEvaluate,
+  UnionOmit,
+  UnionPartial,
 } from '@wagmi/core/internal'
-import { type Abi, type Address, type ContractEventName } from 'viem'
+import type { Abi, Address, ContractEventName } from 'viem'
 
-import {
-  type ConfigParameter,
-  type EnabledParameter,
+import type {
+  ConfigParameter,
+  EnabledParameter,
 } from '../../types/properties.js'
 import { useAccount } from '../useAccount.js'
 import { useChainId } from '../useChainId.js'

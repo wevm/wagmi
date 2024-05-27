@@ -1,4 +1,4 @@
-import { type Connector, type SwitchAccountErrorType } from '@wagmi/core'
+import type { Connector, SwitchAccountErrorType } from '@wagmi/core'
 import { config } from '@wagmi/test'
 import { expectTypeOf, test } from 'vitest'
 

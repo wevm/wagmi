@@ -1,25 +1,25 @@
-import {
-  type Config,
-  type ResolvedRegister,
-  type SimulateContractErrorType,
-  type SimulateContractParameters,
+import type {
+  Config,
+  ResolvedRegister,
+  SimulateContractErrorType,
+  SimulateContractParameters,
 } from '@wagmi/core'
-import { type ScopeKeyParameter, type UnionPartial } from '@wagmi/core/internal'
-import {
-  type SimulateContractData,
-  type SimulateContractQueryFnData,
-  type SimulateContractQueryKey,
+import type { ScopeKeyParameter, UnionPartial } from '@wagmi/core/internal'
+import type {
+  SimulateContractData,
+  SimulateContractQueryFnData,
+  SimulateContractQueryKey,
 } from '@wagmi/core/query'
-import {
-  type Abi,
-  type Address,
-  type ContractFunctionArgs,
-  type ContractFunctionName,
+import type {
+  Abi,
+  Address,
+  ContractFunctionArgs,
+  ContractFunctionName,
 } from 'viem'
 
-import {
-  type ConfigParameter,
-  type QueryParameter,
+import type {
+  ConfigParameter,
+  QueryParameter,
 } from '../../types/properties.js'
 import { useAccount } from '../useAccount.js'
 import { useChainId } from '../useChainId.js'

@@ -3,6 +3,7 @@ import { glob } from 'glob'
 
 // Generates package.json files to be published to NPM with only the necessary fields.
 
+// biome-ignore lint/suspicious/noConsoleLog:
 console.log('Formatting package.json files.')
 
 // Get all package.json files
@@ -23,6 +24,7 @@ for (const packagePath of packagePaths) {
   if (packageJson.private) continue
 
   count += 1
+  // biome-ignore lint/suspicious/noConsoleLog:
   console.log(`${packageJson.name} — ${path.dirname(packagePath)}`)
 
   await Bun.write(
@@ -34,4 +36,5 @@ for (const packagePath of packagePaths) {
   await Bun.write(packagePath, `${JSON.stringify(rest, undefined, 2)}\n`)
 }
 
+// biome-ignore lint/suspicious/noConsoleLog:
 console.log(`Done. Formatted ${count} ${count === 1 ? 'file' : 'files'}.`)

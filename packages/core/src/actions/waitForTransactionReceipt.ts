@@ -1,4 +1,4 @@
-import { type Chain } from 'viem'
+import type { Chain } from 'viem'
 import { hexToString } from 'viem'
 import {
   type WaitForTransactionReceiptErrorType as viem_WaitForTransactionReceiptErrorType,
@@ -9,10 +9,10 @@ import {
   waitForTransactionReceipt as viem_waitForTransactionReceipt,
 } from 'viem/actions'
 
-import { type Config } from '../createConfig.js'
-import { type SelectChains } from '../types/chain.js'
-import { type ChainIdParameter } from '../types/properties.js'
-import { type Evaluate, type IsNarrowable } from '../types/utils.js'
+import type { Config } from '../createConfig.js'
+import type { SelectChains } from '../types/chain.js'
+import type { ChainIdParameter } from '../types/properties.js'
+import type { Evaluate, IsNarrowable } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 
 export type WaitForTransactionReceiptParameters<

@@ -1,7 +1,7 @@
 'use client'
 
 import { useMutation } from '@tanstack/react-query'
-import { type Connector, type DisconnectErrorType } from '@wagmi/core'
+import type { Connector, DisconnectErrorType } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
 import {
   type DisconnectData,

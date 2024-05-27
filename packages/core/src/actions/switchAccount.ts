@@ -1,6 +1,6 @@
-import { type Address } from 'viem'
+import type { Address } from 'viem'
 
-import { type Config, type Connector } from '../createConfig.js'
+import type { Config, Connector } from '../createConfig.js'
 import type { BaseError, ErrorType } from '../errors/base.js'
 import {
   ConnectorNotConnectedError,

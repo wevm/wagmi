@@ -7,8 +7,8 @@ import {
   type SignTypedDataReturnType,
   signTypedData,
 } from '../actions/signTypedData.js'
-import { type Config } from '../createConfig.js'
-import { type Evaluate } from '../types/utils.js'
+import type { Config } from '../createConfig.js'
+import type { Evaluate } from '../types/utils.js'
 
 export function signTypedDataMutationOptions<config extends Config>(
   config: config,

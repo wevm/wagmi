@@ -1,11 +1,11 @@
 'use client'
 
-import {
-  type Config,
-  type GetBlockTransactionCountErrorType,
-  type ResolvedRegister,
+import type {
+  Config,
+  GetBlockTransactionCountErrorType,
+  ResolvedRegister,
 } from '@wagmi/core'
-import { type UnionEvaluate } from '@wagmi/core/internal'
+import type { UnionEvaluate } from '@wagmi/core/internal'
 import {
   type GetBlockTransactionCountData,
   type GetBlockTransactionCountOptions,

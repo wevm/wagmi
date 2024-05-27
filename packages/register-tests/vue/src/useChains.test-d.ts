@@ -1,5 +1,5 @@
 import { useChains } from '@wagmi/vue'
-import { type Chain, celo, optimism } from '@wagmi/vue/chains'
+import type { Chain, celo, optimism } from '@wagmi/vue/chains'
 import { expectTypeOf, test } from 'vitest'
 
 test('default', () => {

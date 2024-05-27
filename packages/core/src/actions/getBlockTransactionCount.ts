@@ -5,9 +5,9 @@ import {
   getBlockTransactionCount as viem_getBlockTransactionCount,
 } from 'viem/actions'
 
-import { type Config } from '../createConfig.js'
-import { type ChainIdParameter } from '../types/properties.js'
-import { type UnionEvaluate } from '../types/utils.js'
+import type { Config } from '../createConfig.js'
+import type { ChainIdParameter } from '../types/properties.js'
+import type { UnionEvaluate } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 
 export type GetBlockTransactionCountParameters<

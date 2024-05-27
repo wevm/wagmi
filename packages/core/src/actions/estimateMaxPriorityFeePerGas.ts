@@ -1,4 +1,4 @@
-import { type Chain } from 'viem'
+import type { Chain } from 'viem'
 import {
   type EstimateMaxPriorityFeePerGasErrorType as viem_EstimateMaxPriorityFeePerGasErrorType,
   type EstimateMaxPriorityFeePerGasParameters as viem_EstimateMaxPriorityFeePerGasParameters,
@@ -6,9 +6,9 @@ import {
   estimateMaxPriorityFeePerGas as viem_estimateMaxPriorityFeePerGas,
 } from 'viem/actions'
 
-import { type Config } from '../createConfig.js'
-import { type ChainIdParameter } from '../types/properties.js'
-import { type Evaluate, type UnionLooseOmit } from '../types/utils.js'
+import type { Config } from '../createConfig.js'
+import type { ChainIdParameter } from '../types/properties.js'
+import type { Evaluate, UnionLooseOmit } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 
 export type EstimateMaxPriorityFeePerGasParameters<

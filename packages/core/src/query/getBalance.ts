@@ -1,4 +1,4 @@
-import { type QueryOptions } from '@tanstack/query-core'
+import type { QueryOptions } from '@tanstack/query-core'
 
 import {
   type GetBalanceErrorType,
@@ -6,7 +6,7 @@ import {
   type GetBalanceReturnType,
   getBalance,
 } from '../actions/getBalance.js'
-import { type Config } from '../createConfig.js'
+import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
 import type { Evaluate, PartialBy } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'

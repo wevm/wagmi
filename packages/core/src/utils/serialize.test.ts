@@ -15,7 +15,7 @@ const simpleObject = {
   fn() {
     return 'foo'
   },
-  nan: NaN,
+  nan: Number.NaN,
   nil: null,
   number: 123,
   string: 'foo',

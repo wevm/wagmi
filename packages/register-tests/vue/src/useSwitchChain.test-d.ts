@@ -1,8 +1,8 @@
 import { useSwitchChain } from '@wagmi/vue'
-import { celo, mainnet, optimism } from '@wagmi/vue/chains'
+import { type celo, mainnet, type optimism } from '@wagmi/vue/chains'
 import { expectTypeOf, test } from 'vitest'
 
-import { type ChainId, config } from './config.js'
+import type { ChainId, config } from './config.js'
 
 test('default', () => {
   const switchChain = useSwitchChain()

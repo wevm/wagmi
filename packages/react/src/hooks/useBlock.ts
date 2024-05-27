@@ -1,15 +1,15 @@
 'use client'
 
 import { useQueryClient } from '@tanstack/react-query'
-import {
-  type Config,
-  type GetBlockErrorType,
-  type ResolvedRegister,
+import type {
+  Config,
+  GetBlockErrorType,
+  ResolvedRegister,
 } from '@wagmi/core'
-import {
-  type Evaluate,
-  type UnionEvaluate,
-  type UnionOmit,
+import type {
+  Evaluate,
+  UnionEvaluate,
+  UnionOmit,
 } from '@wagmi/core/internal'
 import {
   type GetBlockData,

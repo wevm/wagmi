@@ -1,22 +1,22 @@
-import {
-  type Account,
-  type Address,
-  type Chain,
-  type PrepareTransactionRequestErrorType as viem_PrepareTransactionRequestErrorType,
-  type PrepareTransactionRequestParameters as viem_PrepareTransactionRequestParameters,
-  type PrepareTransactionRequestRequest as viem_PrepareTransactionRequestRequest,
-  type PrepareTransactionRequestReturnType as viem_PrepareTransactionRequestReturnType,
+import type {
+  Account,
+  Address,
+  Chain,
+  PrepareTransactionRequestErrorType as viem_PrepareTransactionRequestErrorType,
+  PrepareTransactionRequestParameters as viem_PrepareTransactionRequestParameters,
+  PrepareTransactionRequestRequest as viem_PrepareTransactionRequestRequest,
+  PrepareTransactionRequestReturnType as viem_PrepareTransactionRequestReturnType,
 } from 'viem'
 import { prepareTransactionRequest as viem_prepareTransactionRequest } from 'viem/actions'
 
-import { type Config } from '../createConfig.js'
-import { type SelectChains } from '../types/chain.js'
-import { type ChainIdParameter } from '../types/properties.js'
-import {
-  type Evaluate,
-  type IsNarrowable,
-  type UnionEvaluate,
-  type UnionOmit,
+import type { Config } from '../createConfig.js'
+import type { SelectChains } from '../types/chain.js'
+import type { ChainIdParameter } from '../types/properties.js'
+import type {
+  Evaluate,
+  IsNarrowable,
+  UnionEvaluate,
+  UnionOmit,
 } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 import { getAccount } from './getAccount.js'

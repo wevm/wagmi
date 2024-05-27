@@ -4,6 +4,7 @@ import { glob } from 'glob'
 
 // Symlinks package sources to dist for local development
 
+// biome-ignore lint/suspicious/noConsoleLog:
 console.log('Setting up packages for development.')
 
 // Get all package.json files
@@ -30,6 +31,7 @@ for (const packagePath of packagePaths) {
   if (packageJson.bin) continue
 
   count += 1
+  // biome-ignore lint/suspicious/noConsoleLog:
   console.log(`${packageJson.name} — ${path.dirname(packagePath)}`)
 
   const dir = path.resolve(path.dirname(packagePath))
@@ -85,4 +87,5 @@ for (const packagePath of packagePaths) {
   }
 }
 
+// biome-ignore lint/suspicious/noConsoleLog:
 console.log(`Done. Set up ${count} ${count === 1 ? 'package' : 'packages'}.`)

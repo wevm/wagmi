@@ -6,7 +6,7 @@ import {
   type WatchBlocksParameters,
   watchBlocks,
 } from '@wagmi/core'
-import { type UnionEvaluate, type UnionPartial } from '@wagmi/core/internal'
+import type { UnionEvaluate, UnionPartial } from '@wagmi/core/internal'
 import { useEffect } from 'react'
 import type { BlockTag } from 'viem'
 

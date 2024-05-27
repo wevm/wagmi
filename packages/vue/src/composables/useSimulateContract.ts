@@ -13,9 +13,9 @@ import {
 import type { Abi, ContractFunctionArgs, ContractFunctionName } from 'viem'
 import { type MaybeRef, computed } from 'vue'
 
-import {
-  type ConfigParameter,
-  type QueryParameter,
+import type {
+  ConfigParameter,
+  QueryParameter,
 } from '../types/properties.js'
 import type { DeepMaybeRef } from '../types/ref.js'
 import { deepUnref } from '../utils/cloneDeep.js'

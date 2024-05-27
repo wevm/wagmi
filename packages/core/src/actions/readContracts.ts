@@ -5,8 +5,8 @@ import type {
 } from 'viem'
 import { ContractFunctionExecutionError } from 'viem'
 
-import { type Config } from '../createConfig.js'
-import { type ChainIdParameter } from '../types/properties.js'
+import type { Config } from '../createConfig.js'
+import type { ChainIdParameter } from '../types/properties.js'
 import { type MulticallErrorType, multicall } from './multicall.js'
 import { type ReadContractErrorType, readContract } from './readContract.js'
 
@@ -41,21 +41,17 @@ export async function readContracts<
   })[]
 
   try {
-    const contractsByChainId = contracts.reduce(
-      (contracts, contract, index) => {
-        const chainId = contract.chainId ?? config.state.chainId
-        return {
-          ...contracts,
-          [chainId]: [...(contracts[chainId] || []), { contract, index }],
-        }
-      },
-      {} as {
-        [chainId: number]: {
-          contract: ContractFunctionParameters
-          index: number
-        }[]
-      },
-    )
+    const contractsByChainId: {
+      [chainId: number]: {
+        contract: ContractFunctionParameters
+        index: number
+      }[]
+    } = {}
+    for (const [index, contract] of contracts.entries()) {
+      const chainId = contract.chainId ?? config.state.chainId
+      if (!contractsByChainId[chainId]) contractsByChainId[chainId] = []
+      contractsByChainId[chainId]?.push({ contract, index })
+    }
     const promises = () =>
       Object.entries(contractsByChainId).map(([chainId, contracts]) =>
         multicall(config, {
@@ -63,7 +59,7 @@ export async function readContracts<
           allowFailure,
           blockNumber,
           blockTag,
-          chainId: parseInt(chainId),
+          chainId: Number.parseInt(chainId),
           contracts: contracts.map(({ contract }) => contract),
         }),
       )

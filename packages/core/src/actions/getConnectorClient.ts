@@ -20,7 +20,7 @@ import type {
   ChainIdParameter,
   ConnectorParameter,
 } from '../types/properties.js'
-import { type Evaluate } from '../types/utils.js'
+import type { Evaluate } from '../types/utils.js'
 
 export type GetConnectorClientParameters<
   config extends Config = Config,

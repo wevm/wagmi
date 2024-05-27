@@ -1,11 +1,11 @@
 'use client'
 
-import {
-  type Config,
-  type ReadContractsErrorType,
-  type ResolvedRegister,
+import type {
+  Config,
+  ReadContractsErrorType,
+  ResolvedRegister,
 } from '@wagmi/core'
-import { type Evaluate } from '@wagmi/core/internal'
+import type { Evaluate } from '@wagmi/core/internal'
 import {
   type ReadContractsData,
   type ReadContractsOptions,
@@ -15,11 +15,11 @@ import {
   structuralSharing,
 } from '@wagmi/core/query'
 import { useMemo } from 'react'
-import { type ContractFunctionParameters } from 'viem'
+import type { ContractFunctionParameters } from 'viem'
 
-import {
-  type ConfigParameter,
-  type QueryParameter,
+import type {
+  ConfigParameter,
+  QueryParameter,
 } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'

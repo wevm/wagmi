@@ -5,7 +5,7 @@ import type {
   GetConnectorClientErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import { type Evaluate, type Omit } from '@wagmi/core/internal'
+import type { Evaluate, Omit } from '@wagmi/core/internal'
 import {
   type GetConnectorClientData,
   type GetConnectorClientOptions,
@@ -101,7 +101,7 @@ export function useConnectorClient<
       ...options,
       queryKey,
       enabled,
-      staleTime: Infinity,
+      staleTime: Number.POSITIVE_INFINITY,
     }
   })
 

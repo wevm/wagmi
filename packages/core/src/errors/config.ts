@@ -1,4 +1,4 @@
-import { type Address } from 'viem'
+import type { Address } from 'viem'
 
 import type { Connector } from '../createConfig.js'
 import { BaseError } from './base.js'

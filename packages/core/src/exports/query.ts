@@ -2,6 +2,7 @@
 // Tanstack Query
 ////////////////////////////////////////////////////////////////////////////////
 
+// biome-ignore lint/performance/noBarrelFile: entrypoint module
 export {
   type CallData,
   type CallOptions,

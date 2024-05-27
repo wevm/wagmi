@@ -6,8 +6,8 @@ import type {
 } from 'viem'
 import { multicall as viem_multicall } from 'viem/actions'
 
-import { type Config } from '../createConfig.js'
-import { type ChainIdParameter } from '../types/properties.js'
+import type { Config } from '../createConfig.js'
+import type { ChainIdParameter } from '../types/properties.js'
 import { getAction } from '../utils/getAction.js'
 
 export type MulticallParameters<

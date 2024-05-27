@@ -1,11 +1,11 @@
 'use client'
 
-import {
-  type Config,
-  type GetFeeHistoryErrorType,
-  type ResolvedRegister,
+import type {
+  Config,
+  GetFeeHistoryErrorType,
+  ResolvedRegister,
 } from '@wagmi/core'
-import { type Evaluate } from '@wagmi/core/internal'
+import type { Evaluate } from '@wagmi/core/internal'
 import {
   type GetFeeHistoryData,
   type GetFeeHistoryOptions,

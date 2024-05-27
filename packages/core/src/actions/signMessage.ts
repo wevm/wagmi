@@ -1,4 +1,4 @@
-import { type Account } from 'viem'
+import type { Account, Client } from 'viem'
 import {
   type SignMessageErrorType as viem_SignMessageErrorType,
   type SignMessageParameters as viem_SignMessageParameters,
@@ -6,10 +6,10 @@ import {
   signMessage as viem_signMessage,
 } from 'viem/actions'
 
-import { type Config } from '../createConfig.js'
-import { type BaseErrorType, type ErrorType } from '../errors/base.js'
-import { type ConnectorParameter } from '../types/properties.js'
-import { type Evaluate } from '../types/utils.js'
+import type { Config } from '../createConfig.js'
+import type { BaseErrorType, ErrorType } from '../errors/base.js'
+import type { ConnectorParameter } from '../types/properties.js'
+import type { Evaluate } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 import {
   type GetConnectorClientErrorType,
@@ -38,7 +38,7 @@ export async function signMessage(
 ): Promise<SignMessageReturnType> {
   const { account, connector, ...rest } = parameters
 
-  let client
+  let client: Client
   if (typeof account === 'object' && account.type === 'local')
     client = config.getClient()
   else client = await getConnectorClient(config, { account, connector })

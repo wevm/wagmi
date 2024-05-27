@@ -11,8 +11,8 @@
   "scripts": {
     "build": "pnpm run clean && pnpm run build:esm+types",
     "build:esm+types": "tsc --project tsconfig.build.json --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
-    "clean": "rm -rf .DS_Store dist tsconfig.tsbuildinfo actions chains codegen experimental internal query",
-    "test:build": "publint --strict",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo actions chains codegen experimental internal query",
+    "test:build": "publint --strict && attw --pack --ignore-rules cjs-resolves-to-esm",
     "typecheck": "tsc --noEmit"
   },
   "files": [

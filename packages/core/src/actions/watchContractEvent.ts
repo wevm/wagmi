@@ -11,13 +11,13 @@ import {
   watchContractEvent as viem_watchContractEvent,
 } from 'viem/actions'
 
-import { type Config } from '../createConfig.js'
-import { type SelectChains } from '../types/chain.js'
-import {
-  type ChainIdParameter,
-  type SyncConnectedChainParameter,
+import type { Config } from '../createConfig.js'
+import type { SelectChains } from '../types/chain.js'
+import type {
+  ChainIdParameter,
+  SyncConnectedChainParameter,
 } from '../types/properties.js'
-import { type UnionEvaluate } from '../types/utils.js'
+import type { UnionEvaluate } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 
 export type WatchContractEventParameters<

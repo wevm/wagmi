@@ -1,7 +1,7 @@
-import {
-  type Connector,
-  type CreateConnectorFn,
-  type ReconnectErrorType,
+import type {
+  Connector,
+  CreateConnectorFn,
+  ReconnectErrorType,
 } from '@wagmi/core'
 import { config } from '@wagmi/test'
 import { expectTypeOf, test } from 'vitest'

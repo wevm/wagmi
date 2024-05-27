@@ -1,6 +1,6 @@
 import { type Address, parseAbi } from 'viem'
 
-import { chain } from './chains.js'
+import type { chain } from './chains.js'
 
 /**
  * The id of the current test worker.

@@ -5,7 +5,7 @@ import {
 } from 'viem/actions'
 
 import type { BlockTag, Chain, Transport, WebSocketTransport } from 'viem'
-import { type Config } from '../createConfig.js'
+import type { Config } from '../createConfig.js'
 import type { SelectChains } from '../types/chain.js'
 import type {
   ChainIdParameter,

@@ -1,4 +1,4 @@
-import { type Config } from '../createConfig.js'
+import type { Config } from '../createConfig.js'
 import { deepEqual } from '../utils/deepEqual.js'
 import { type GetAccountReturnType, getAccount } from './getAccount.js'
 

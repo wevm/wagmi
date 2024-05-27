@@ -1,6 +1,6 @@
 'use client'
 
-import { type Config, type ResolvedRegister } from '@wagmi/core'
+import type { Config, ResolvedRegister } from '@wagmi/core'
 import { useContext } from 'react'
 
 import { WagmiContext } from '../context.js'

@@ -1,4 +1,4 @@
-import { type QueryOptions } from '@tanstack/query-core'
+import type { QueryOptions } from '@tanstack/query-core'
 import type { FeeValuesType } from 'viem'
 
 import {
@@ -7,7 +7,7 @@ import {
   type EstimateFeesPerGasReturnType,
   estimateFeesPerGas,
 } from '../actions/estimateFeesPerGas.js'
-import { type Config } from '../createConfig.js'
+import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
 import type { Evaluate, ExactPartial } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'

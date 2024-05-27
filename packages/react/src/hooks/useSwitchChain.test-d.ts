@@ -1,6 +1,6 @@
-import { type Connector, type SwitchChainErrorType } from '@wagmi/core'
-import { type Chain } from '@wagmi/core/chains'
-import { type Evaluate, type ExactPartial } from '@wagmi/core/internal'
+import type { Connector, SwitchChainErrorType } from '@wagmi/core'
+import type { Chain } from '@wagmi/core/chains'
+import type { Evaluate, ExactPartial } from '@wagmi/core/internal'
 import { chain } from '@wagmi/test'
 import { expectTypeOf, test } from 'vitest'
 

@@ -1,6 +1,6 @@
-import { type QueryOptions } from '@tanstack/query-core'
+import type { QueryOptions } from '@tanstack/query-core'
 
-import { type PrepareTransactionRequestRequest as viem_PrepareTransactionRequestRequest } from 'viem'
+import type { PrepareTransactionRequestRequest as viem_PrepareTransactionRequestRequest } from 'viem'
 
 import {
   type PrepareTransactionRequestErrorType,
@@ -8,10 +8,10 @@ import {
   type PrepareTransactionRequestReturnType,
   prepareTransactionRequest,
 } from '../actions/prepareTransactionRequest.js'
-import { type Config } from '../createConfig.js'
+import type { Config } from '../createConfig.js'
 import type { SelectChains } from '../types/chain.js'
-import { type ScopeKeyParameter } from '../types/properties.js'
-import { type UnionPartial } from '../types/utils.js'
+import type { ScopeKeyParameter } from '../types/properties.js'
+import type { UnionPartial } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
 export type PrepareTransactionRequestOptions<

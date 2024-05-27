@@ -1,8 +1,8 @@
-import { type MutateOptions } from '@tanstack/react-query'
-import {
-  type Config,
-  type ResolvedRegister,
-  type WriteContractErrorType,
+import type { MutateOptions } from '@tanstack/react-query'
+import type {
+  Config,
+  ResolvedRegister,
+  WriteContractErrorType,
 } from '@wagmi/core'
 import type {
   ChainIdParameter,
@@ -12,20 +12,20 @@ import type {
   UnionEvaluate,
   UnionOmit,
 } from '@wagmi/core/internal'
-import {
-  type WriteContractData,
-  type WriteContractVariables,
+import type {
+  WriteContractData,
+  WriteContractVariables,
 } from '@wagmi/core/query'
 import { useCallback } from 'react'
-import {
-  type Abi,
-  type Account,
-  type Address,
-  type Chain,
-  type ContractFunctionArgs,
-  type ContractFunctionName,
+import type {
+  Abi,
+  Account,
+  Address,
+  Chain,
+  ContractFunctionArgs,
+  ContractFunctionName,
 } from 'viem'
-import { type WriteContractParameters as viem_WriteContractParameters } from 'viem/actions'
+import type { WriteContractParameters as viem_WriteContractParameters } from 'viem/actions'
 
 import { useAccount } from '../useAccount.js'
 import { useChainId } from '../useChainId.js'
@@ -164,7 +164,7 @@ export function createUseWriteContract<
         ...(result as any),
         writeContract: useCallback(
           (...args: Args) => {
-            let chainId
+            let chainId: number | undefined
             if (args[0].chainId) chainId = args[0].chainId
             else if (args[0].account && args[0].account === account.address)
               chainId = account.chainId
@@ -191,7 +191,7 @@ export function createUseWriteContract<
         ),
         writeContractAsync: useCallback(
           (...args: Args) => {
-            let chainId
+            let chainId: number | undefined
             if (args[0].chainId) chainId = args[0].chainId
             else if (args[0].account && args[0].account === account.address)
               chainId = account.chainId

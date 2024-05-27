@@ -1,10 +1,10 @@
-import {
-  type AddEthereumChainParameter,
-  type SwitchChainErrorType as viem_SwitchChainErrorType,
-  type UserRejectedRequestErrorType,
+import type {
+  AddEthereumChainParameter,
+  SwitchChainErrorType as viem_SwitchChainErrorType,
+  UserRejectedRequestErrorType,
 } from 'viem'
 
-import { type Config } from '../createConfig.js'
+import type { Config } from '../createConfig.js'
 import type { BaseErrorType, ErrorType } from '../errors/base.js'
 import {
   ChainNotConfiguredError,
@@ -16,7 +16,7 @@ import {
   type SwitchChainNotSupportedErrorType,
 } from '../errors/connector.js'
 import type { ConnectorParameter } from '../types/properties.js'
-import { type Evaluate, type ExactPartial } from '../types/utils.js'
+import type { Evaluate, ExactPartial } from '../types/utils.js'
 
 export type SwitchChainParameters<
   config extends Config = Config,

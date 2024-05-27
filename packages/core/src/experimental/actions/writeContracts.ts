@@ -1,4 +1,4 @@
-import { type Account, type Chain, type ContractFunctionParameters } from 'viem'
+import type { Account, Chain, ContractFunctionParameters } from 'viem'
 import {
   type WriteContractsErrorType as viem_WriteContractsErrorType,
   type WriteContractsParameters as viem_WriteContractsParameters,
@@ -10,14 +10,14 @@ import {
   type GetConnectorClientErrorType,
   getConnectorClient,
 } from '../../actions/getConnectorClient.js'
-import { type Config } from '../../createConfig.js'
+import type { Config } from '../../createConfig.js'
 import type { BaseErrorType, ErrorType } from '../../errors/base.js'
 import type { SelectChains } from '../../types/chain.js'
 import type {
   ChainIdParameter,
   ConnectorParameter,
 } from '../../types/properties.js'
-import { type Evaluate } from '../../types/utils.js'
+import type { Evaluate } from '../../types/utils.js'
 
 export type WriteContractsParameters<
   contracts extends readonly unknown[] = readonly ContractFunctionParameters[],

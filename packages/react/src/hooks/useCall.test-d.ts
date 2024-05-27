@@ -1,4 +1,4 @@
-import { type CallReturnType } from 'viem'
+import type { CallReturnType } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 import { useCall } from './useCall.js'
 

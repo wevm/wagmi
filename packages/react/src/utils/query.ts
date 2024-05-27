@@ -11,11 +11,11 @@ import {
   useMutation,
   useQuery as tanstack_useQuery,
 } from '@tanstack/react-query'
-import {
-  type Evaluate,
-  type ExactPartial,
-  type Omit,
-  type UnionOmit,
+import type {
+  Evaluate,
+  ExactPartial,
+  Omit,
+  UnionOmit,
 } from '@wagmi/core/internal'
 import { hashFn } from '@wagmi/core/query'
 

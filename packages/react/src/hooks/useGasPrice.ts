@@ -1,11 +1,11 @@
 'use client'
 
-import {
-  type Config,
-  type GetGasPriceErrorType,
-  type ResolvedRegister,
+import type {
+  Config,
+  GetGasPriceErrorType,
+  ResolvedRegister,
 } from '@wagmi/core'
-import { type Evaluate } from '@wagmi/core/internal'
+import type { Evaluate } from '@wagmi/core/internal'
 import {
   type GetGasPriceData,
   type GetGasPriceOptions,

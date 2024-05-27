@@ -6,8 +6,8 @@ import {
   type ReconnectReturnType,
   reconnect,
 } from '../actions/reconnect.js'
-import { type Config } from '../createConfig.js'
-import { type Evaluate } from '../types/utils.js'
+import type { Config } from '../createConfig.js'
+import type { Evaluate } from '../types/utils.js'
 import type { Mutate, MutateAsync } from './types.js'
 
 export function reconnectMutationOptions(config: Config) {

@@ -1,6 +1,6 @@
-import { type WriteContractErrorType } from '@wagmi/core'
+import type { WriteContractErrorType } from '@wagmi/core'
 import { abi } from '@wagmi/test'
-import { type Abi, type Address, type Hash } from 'viem'
+import type { Abi, Address, Hash } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
 import { useSimulateContract } from './useSimulateContract.js'

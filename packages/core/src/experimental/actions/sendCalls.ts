@@ -1,4 +1,4 @@
-import { type Account, type Chain } from 'viem'
+import type { Account, Chain } from 'viem'
 import {
   type SendCallsErrorType as viem_SendCallsErrorType,
   type SendCallsParameters as viem_SendCallsParameters,
@@ -10,14 +10,14 @@ import {
   type GetConnectorClientErrorType,
   getConnectorClient,
 } from '../../actions/getConnectorClient.js'
-import { type Config } from '../../createConfig.js'
+import type { Config } from '../../createConfig.js'
 import type { BaseErrorType, ErrorType } from '../../errors/base.js'
 import type { SelectChains } from '../../types/chain.js'
 import type {
   ChainIdParameter,
   ConnectorParameter,
 } from '../../types/properties.js'
-import { type Evaluate } from '../../types/utils.js'
+import type { Evaluate } from '../../types/utils.js'
 
 export type SendCallsParameters<
   config extends Config = Config,

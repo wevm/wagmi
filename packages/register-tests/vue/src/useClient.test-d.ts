@@ -1,9 +1,9 @@
-import { chain, config } from '@wagmi/test'
+import { type chain, config } from '@wagmi/test'
 import { useClient } from '@wagmi/vue'
 import { mainnet } from '@wagmi/vue/chains'
 import { expectTypeOf, test } from 'vitest'
 
-import { type ChainId } from './config.js'
+import type { ChainId } from './config.js'
 
 test('default', () => {
   const client = useClient()

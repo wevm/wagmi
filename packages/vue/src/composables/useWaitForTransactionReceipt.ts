@@ -3,7 +3,7 @@ import type {
   ResolvedRegister,
   WaitForTransactionReceiptErrorType,
 } from '@wagmi/core'
-import { type Evaluate } from '@wagmi/core/internal'
+import type { Evaluate } from '@wagmi/core/internal'
 import {
   type WaitForTransactionReceiptData,
   type WaitForTransactionReceiptOptions,

@@ -1,4 +1,4 @@
-import { type Config } from '../createConfig.js'
+import type { Config } from '../createConfig.js'
 import { type GetClientReturnType, getClient } from './getClient.js'
 
 export type WatchClientParameters<

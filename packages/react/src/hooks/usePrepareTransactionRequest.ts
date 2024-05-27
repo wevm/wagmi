@@ -1,10 +1,10 @@
 'use client'
 
-import {
-  type Config,
-  type PrepareTransactionRequestErrorType,
-  type ResolvedRegister,
-  type SelectChains,
+import type {
+  Config,
+  PrepareTransactionRequestErrorType,
+  ResolvedRegister,
+  SelectChains,
 } from '@wagmi/core'
 import {
   type PrepareTransactionRequestData,
@@ -13,11 +13,11 @@ import {
   prepareTransactionRequestQueryOptions,
 } from '@wagmi/core/query'
 import type { PrepareTransactionRequestQueryFnData } from '@wagmi/core/query'
-import { type PrepareTransactionRequestRequest as viem_PrepareTransactionRequestRequest } from 'viem'
+import type { PrepareTransactionRequestRequest as viem_PrepareTransactionRequestRequest } from 'viem'
 
-import {
-  type ConfigParameter,
-  type QueryParameter,
+import type {
+  ConfigParameter,
+  QueryParameter,
 } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'

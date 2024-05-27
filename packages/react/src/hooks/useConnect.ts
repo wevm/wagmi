@@ -1,10 +1,10 @@
 'use client'
 
 import { useMutation } from '@tanstack/react-query'
-import {
-  type Config,
-  type ConnectErrorType,
-  type ResolvedRegister,
+import type {
+  Config,
+  ConnectErrorType,
+  ResolvedRegister,
 } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
 import {

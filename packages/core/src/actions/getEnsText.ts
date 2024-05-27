@@ -5,9 +5,9 @@ import {
   getEnsText as viem_getEnsText,
 } from 'viem/actions'
 
-import { type Config } from '../createConfig.js'
-import { type ChainIdParameter } from '../types/properties.js'
-import { type Evaluate } from '../types/utils.js'
+import type { Config } from '../createConfig.js'
+import type { ChainIdParameter } from '../types/properties.js'
+import type { Evaluate } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 
 export type GetEnsTextParameters<config extends Config = Config> = Evaluate<

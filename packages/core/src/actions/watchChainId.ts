@@ -1,4 +1,4 @@
-import { type Config } from '../createConfig.js'
+import type { Config } from '../createConfig.js'
 import type { GetChainIdReturnType } from './getChainId.js'
 
 export type WatchChainIdParameters<config extends Config = Config> = {

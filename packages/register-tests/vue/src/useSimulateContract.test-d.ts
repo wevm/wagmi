@@ -1,15 +1,15 @@
-import { abi, config as testConfig } from '@wagmi/test'
+import { type abi, config as testConfig } from '@wagmi/test'
 import {
   type UseSimulateContractParameters,
   useSimulateContract,
 } from '@wagmi/vue'
-import { type SimulateContractParameters } from '@wagmi/vue/actions'
+import type { SimulateContractParameters } from '@wagmi/vue/actions'
 import { celo, mainnet, optimism } from '@wagmi/vue/chains'
-import { type SimulateContractOptions } from '@wagmi/vue/query'
-import { type Address } from 'viem'
+import type { SimulateContractOptions } from '@wagmi/vue/query'
+import type { Address } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
-import { type ChainId, config } from './config.js'
+import type { ChainId, config } from './config.js'
 
 test('chain formatters', () => {
   const { data } = useSimulateContract({

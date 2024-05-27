@@ -3,7 +3,7 @@ import type {
   GetTransactionErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import { type Evaluate } from '@wagmi/core/internal'
+import type { Evaluate } from '@wagmi/core/internal'
 import {
   type GetTransactionData,
   type GetTransactionOptions,

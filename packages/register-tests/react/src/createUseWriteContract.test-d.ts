@@ -1,5 +1,5 @@
 import { abi, config } from '@wagmi/test'
-import { type Address } from 'viem'
+import type { Address } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 import { celo, mainnet, optimism } from 'wagmi/chains'
 import { createUseWriteContract } from 'wagmi/codegen'

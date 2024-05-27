@@ -1,9 +1,9 @@
 'use client'
 
-import {
-  type Config,
-  type GetBalanceErrorType,
-  type ResolvedRegister,
+import type {
+  Config,
+  GetBalanceErrorType,
+  ResolvedRegister,
 } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
 import {

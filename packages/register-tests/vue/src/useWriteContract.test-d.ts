@@ -1,7 +1,7 @@
 import { abi, config } from '@wagmi/test'
 import { useWriteContract } from '@wagmi/vue'
 import { celo, mainnet, optimism } from '@wagmi/vue/chains'
-import { type Address } from 'viem'
+import type { Address } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
 test('chain formatters', () => {

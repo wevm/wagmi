@@ -7,7 +7,7 @@ import {
 } from '@wagmi/core'
 import { type Ref, onScopeDispose, readonly, ref } from 'vue'
 
-import { type ConfigParameter } from '../types/properties.js'
+import type { ConfigParameter } from '../types/properties.js'
 import { useConfig } from './useConfig.js'
 
 export type UseChainIdParameters<config extends Config = Config> =
