@@ -1,10 +1,10 @@
-import { expect, test } from 'vitest'
 import { http } from 'viem'
 import { mainnet } from 'viem/chains'
+import { expect, test } from 'vitest'
 
-import { cookieStorage, cookieToInitialState, parseCookie } from './cookie.js'
 import { createConfig } from '../createConfig.js'
 import { createStorage } from '../createStorage.js'
+import { cookieStorage, cookieToInitialState, parseCookie } from './cookie.js'
 
 test('cookieStorage', () => {
   expect(cookieStorage.getItem('recentConnectorId')).toMatchInlineSnapshot(

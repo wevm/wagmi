@@ -1,12 +1,12 @@
 import { config } from '@wagmi/test'
-import { expect, test } from 'vitest'
 import { http } from 'viem'
 import { mainnet } from 'viem/chains'
+import { expect, test } from 'vitest'
 
-import { hydrate } from './hydrate.js'
-import { createStorage } from './createStorage.js'
-import { cookieStorage } from './utils/cookie.js'
 import { createConfig } from './createConfig.js'
+import { createStorage } from './createStorage.js'
+import { hydrate } from './hydrate.js'
+import { cookieStorage } from './utils/cookie.js'
 
 test('default', () => {
   const { onMount } = hydrate(config, {
