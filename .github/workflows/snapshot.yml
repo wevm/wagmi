@@ -16,10 +16,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install dependencies
-        uses: ./.github/actions/install-dependencies
+        uses: wevm/actions/.github/actions/pnpm@main
 
-      - name: Publish Prerelease
-        if: steps.changesets.outputs.published != 'true'
+      - name: Publish Snapshots
         continue-on-error: true
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

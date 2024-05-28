@@ -1,6 +1,6 @@
-import { type QueryOptions } from '@tanstack/query-core'
+import type { QueryOptions } from '@tanstack/query-core'
 
-import { type Config } from '../../createConfig.js'
+import type { Config } from '../../createConfig.js'
 import { ConnectorNotConnectedError } from '../../errors/config.js'
 import { filterQueryOptions } from '../../query/utils.js'
 import type { ScopeKeyParameter } from '../../types/properties.js'
@@ -16,7 +16,7 @@ export type GetCallsStatusOptions = Evaluate<
   GetCallsStatusParameters & ScopeKeyParameter
 >
 
-export function getCallsStatusQueryOptions<config extends Config,>(
+export function getCallsStatusQueryOptions<config extends Config>(
   config: config,
   options: GetCallsStatusOptions,
 ) {

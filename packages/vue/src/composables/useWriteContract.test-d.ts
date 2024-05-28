@@ -1,8 +1,9 @@
-import { type WriteContractErrorType } from '@wagmi/core'
+import type { WriteContractErrorType } from '@wagmi/core'
 import { abi } from '@wagmi/test'
-import { type Abi, type Address, type Hash } from 'viem'
+import type { Abi, Address, Hash } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
+import { useSimulateContract } from './useSimulateContract.js'
 import { useWriteContract } from './useWriteContract.js'
 
 const contextValue = { foo: 'bar' } as const
@@ -127,17 +128,16 @@ test('context', () => {
   )
 })
 
-// TODO: Simulate response passthrough
-// test('useSimulateContract', () => {
-//   const { data } = useSimulateContract({
-//     address: '0x',
-//     abi: abi.erc20,
-//     functionName: 'transferFrom',
-//     args: ['0x', '0x', 123n],
-//     chainId: 1,
-//   })
-//   const { writeContract } = useWriteContract()
-//
-//   const request = data?.request
-//   if (request) writeContract(request)
-// })
+test('useSimulateContract', () => {
+  const { data } = useSimulateContract({
+    address: '0x',
+    abi: abi.erc20,
+    functionName: 'transferFrom',
+    args: ['0x', '0x', 123n],
+    chainId: 1,
+  })
+  const { writeContract } = useWriteContract()
+
+  const request = data?.value?.request
+  if (request) writeContract(request)
+})

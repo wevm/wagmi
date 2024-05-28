@@ -1,5 +1,5 @@
-import { type Config, type State } from '../createConfig.js'
-import { type BaseStorage } from '../createStorage.js'
+import type { Config, State } from '../createConfig.js'
+import type { BaseStorage } from '../createStorage.js'
 import { deserialize } from './deserialize.js'
 
 export const cookieStorage = {

@@ -1,5 +1,5 @@
-import { chain, config } from '@wagmi/test'
-import { type Chain } from 'viem'
+import { type chain, config } from '@wagmi/test'
+import type { Chain } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
 import { getChains } from './getChains.js'

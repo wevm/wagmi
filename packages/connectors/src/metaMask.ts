@@ -11,7 +11,7 @@ import {
   type ProviderConnectInfo,
   type ProviderRpcError,
   ResourceUnavailableRpcError,
-  RpcError,
+  type RpcError,
   SwitchChainError,
   UserRejectedRequestError,
   getAddress,
@@ -210,7 +210,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           try {
             const { default: blockExplorer, ...blockExplorers } =
               chain.blockExplorers ?? {}
-            let blockExplorerUrls
+            let blockExplorerUrls: string[] | undefined
             if (addEthereumChainParameter?.blockExplorerUrls)
               blockExplorerUrls = addEthereumChainParameter.blockExplorerUrls
             else if (blockExplorer)
@@ -219,7 +219,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
                 ...Object.values(blockExplorers).map((x) => x.url),
               ]
 
-            let rpcUrls
+            let rpcUrls: readonly string[]
             if (addEthereumChainParameter?.rpcUrls?.length)
               rpcUrls = addEthereumChainParameter.rpcUrls
             else rpcUrls = [chain.rpcUrls.default?.http[0] ?? '']

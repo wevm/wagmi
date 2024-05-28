@@ -4,7 +4,7 @@ export function updateState(
   state: Record<string, unknown>,
   update: Record<string, any>,
 ): void {
-  Object.keys(state).forEach((key) => {
+  for (const key of Object.keys(state)) {
     state[key] = update[key]
-  })
+  }
 }

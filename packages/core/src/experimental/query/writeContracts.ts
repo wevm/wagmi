@@ -1,7 +1,7 @@
 import type { MutateOptions, MutationOptions } from '@tanstack/query-core'
 
-import { type Config } from '../../createConfig.js'
-import { type Evaluate } from '../../types/utils.js'
+import type { Config } from '../../createConfig.js'
+import type { Evaluate } from '../../types/utils.js'
 import {
   type WriteContractsErrorType,
   type WriteContractsParameters,
@@ -37,7 +37,7 @@ export type WriteContractsMutate<
   contracts extends readonly unknown[],
   config extends Config,
   context = unknown,
-> = <chainId extends config['chains'][number]['id'],>(
+> = <chainId extends config['chains'][number]['id']>(
   variables: WriteContractsVariables<contracts, config, chainId>,
   options?:
     | Evaluate<
@@ -55,7 +55,7 @@ export type WriteContractsMutateAsync<
   contracts extends readonly unknown[],
   config extends Config,
   context = unknown,
-> = <chainId extends config['chains'][number]['id'],>(
+> = <chainId extends config['chains'][number]['id']>(
   variables: WriteContractsVariables<contracts, config, chainId>,
   options?:
     | Evaluate<

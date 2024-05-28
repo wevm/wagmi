@@ -1,14 +1,14 @@
-import { type QueryOptions } from '@tanstack/query-core'
+import type { QueryOptions } from '@tanstack/query-core'
 
 import {
   type GetTransactionReceiptErrorType,
   type GetTransactionReceiptParameters,
   getTransactionReceipt,
 } from '../actions/getTransactionReceipt.js'
-import { type GetTransactionReceiptReturnType } from '../actions/getTransactionReceipt.js'
-import { type Config } from '../createConfig.js'
-import { type ScopeKeyParameter } from '../types/properties.js'
-import { type Evaluate, type ExactPartial } from '../types/utils.js'
+import type { GetTransactionReceiptReturnType } from '../actions/getTransactionReceipt.js'
+import type { Config } from '../createConfig.js'
+import type { ScopeKeyParameter } from '../types/properties.js'
+import type { Evaluate, ExactPartial } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
 export type GetTransactionReceiptOptions<

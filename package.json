@@ -42,7 +42,8 @@
     "version:update:viem": "bun .scripts/updateViemVersion.ts"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.1.2",
+    "@arethetypeswrong/cli": "^0.15.3",
+    "@biomejs/biome": "^1.7.3",
     "@changesets/changelog-github": "0.4.6",
     "@changesets/cli": "^2.27.1",
     "@types/bun": "^1.1.1",
@@ -57,7 +58,7 @@
     "publint": "^0.2.7",
     "sherif": "^0.8.4",
     "simple-git-hooks": "^2.11.1",
-    "typescript": "5.4.2",
+    "typescript": "5.4.5",
     "viem": "2.9.31",
     "vitest": "^1.6.0"
   },
@@ -77,17 +78,16 @@
     "pre-commit": "pnpm format && pnpm lint:fix"
   },
   "knip": {
-    "ignore": ["**/*.test-d.ts", "**/templates/**", "**/hardhat.config.js"],
+    "ignore": ["**/templates/**", "**/hardhat.config.js"],
     "ignoreBinaries": ["only-allow"],
     "ignoreWorkspaces": [
       "packages/register-tests/**",
       "packages/test",
-      "playgrounds/**",
-      "site"
+      "playgrounds/**"
     ],
     "workspaces": {
       ".": {
-        "entry": ".scripts/*.ts"
+        "project": ".scripts/*.ts"
       },
       "packages/cli": {
         "entry": [
@@ -123,6 +123,9 @@
         "entry": "src/exports/{actions,chains,connectors,index,nuxt,query}.ts!",
         "ignore": ["src/nuxt/runtime/*", "test/setup.ts"],
         "ignoreDependencies": ["nuxt"]
+      },
+      "site": {
+        "project": ["**/*.ts", "**/*.tsx"]
       }
     }
   }

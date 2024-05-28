@@ -5,7 +5,7 @@ import { getConnectorClient } from './getConnectorClient.js'
 
 test('default', async () => {
   const client = await getConnectorClient(config)
-  expectTypeOf(client.chain).toEqualTypeOf<typeof config['chains'][number]>()
+  expectTypeOf(client.chain).toEqualTypeOf<(typeof config)['chains'][number]>()
   expectTypeOf(client.transport.type).toEqualTypeOf<'http'>()
 })
 

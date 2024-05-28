@@ -2,7 +2,7 @@ import { address, chain, wait } from '@wagmi/test'
 import { renderHook, waitFor } from '@wagmi/test/react'
 import { expect, test } from 'vitest'
 
-import { type Address } from 'viem'
+import type { Address } from 'viem'
 import { useBytecode } from './useBytecode.js'
 
 test('default', async () => {

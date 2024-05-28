@@ -1,8 +1,8 @@
-import { type Client } from 'viem'
+import type { Client } from 'viem'
 
-import { type Config } from '../createConfig.js'
-import { type ChainIdParameter } from '../types/properties.js'
-import { type Evaluate, type IsNarrowable } from '../types/utils.js'
+import type { Config } from '../createConfig.js'
+import type { ChainIdParameter } from '../types/properties.js'
+import type { Evaluate, IsNarrowable } from '../types/utils.js'
 
 export type GetClientParameters<
   config extends Config = Config,

@@ -20,7 +20,7 @@ test('chain formatters', () => {
     'transferFrom',
     [Address, Address, bigint],
     typeof config,
-    typeof config['chains'][number]['id']
+    (typeof config)['chains'][number]['id']
   >
   expectTypeOf<Result>().toMatchTypeOf<{
     chainId?: typeof celo.id | typeof mainnet.id | undefined

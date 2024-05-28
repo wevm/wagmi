@@ -1,10 +1,10 @@
-import { abi } from '@wagmi/test'
-import { useReadContract } from '@wagmi/vue'
+import type { abi } from '@wagmi/test'
+import type { useReadContract } from '@wagmi/vue'
 import type { Address } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
 import type { DeepUnwrapRef } from '../../../vue/src/types/ref.js'
-import { type ChainId } from './config.js'
+import type { ChainId } from './config.js'
 
 test('UseReadContractParameters', () => {
   type Result = DeepUnwrapRef<

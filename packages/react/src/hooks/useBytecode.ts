@@ -1,9 +1,9 @@
 'use client'
 
-import {
-  type Config,
-  type GetBytecodeErrorType,
-  type ResolvedRegister,
+import type {
+  Config,
+  GetBytecodeErrorType,
+  ResolvedRegister,
 } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
 import {
@@ -12,11 +12,8 @@ import {
   type GetBytecodeQueryKey,
   getBytecodeQueryOptions,
 } from '@wagmi/core/query'
-import { type GetBytecodeQueryFnData } from '@wagmi/core/query'
-import {
-  type ConfigParameter,
-  type QueryParameter,
-} from '../types/properties.js'
+import type { GetBytecodeQueryFnData } from '@wagmi/core/query'
+import type { ConfigParameter, QueryParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'

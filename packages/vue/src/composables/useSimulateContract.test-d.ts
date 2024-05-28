@@ -1,4 +1,4 @@
-import { abi, config } from '@wagmi/test'
+import { abi, type config } from '@wagmi/test'
 import type { Address } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 

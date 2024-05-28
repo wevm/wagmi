@@ -6,7 +6,7 @@ import {
   type DisconnectReturnType,
   disconnect,
 } from '../actions/disconnect.js'
-import { type Config } from '../createConfig.js'
+import type { Config } from '../createConfig.js'
 import type { Mutate, MutateAsync } from './types.js'
 
 export function disconnectMutationOptions<config extends Config>(

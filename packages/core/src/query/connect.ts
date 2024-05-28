@@ -6,7 +6,7 @@ import {
   type ConnectReturnType,
   connect,
 } from '../actions/connect.js'
-import { type Config } from '../createConfig.js'
+import type { Config } from '../createConfig.js'
 
 import type { Mutate, MutateAsync } from './types.js'
 

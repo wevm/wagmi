@@ -1,12 +1,12 @@
-import {
-  type DefaultError,
-  type InfiniteQueryObserverOptions,
-  type MutateOptions,
-  type QueryFunctionContext,
-  type QueryKey,
+import type {
+  DefaultError,
+  InfiniteQueryObserverOptions,
+  MutateOptions,
+  QueryFunctionContext,
+  QueryKey,
 } from '@tanstack/query-core'
 
-import { type Evaluate, type Omit } from '../types/utils.js'
+import type { Evaluate, Omit } from '../types/utils.js'
 
 export type InfiniteQueryOptions<
   queryFnData = unknown,

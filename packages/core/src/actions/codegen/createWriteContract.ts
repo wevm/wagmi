@@ -1,24 +1,20 @@
-import {
-  type Abi,
-  type Account,
-  type Address,
-  type Chain,
-  type ContractFunctionArgs,
-  type ContractFunctionName,
-  type WriteContractParameters as viem_WriteContractParameters,
+import type {
+  Abi,
+  Account,
+  Address,
+  Chain,
+  ContractFunctionArgs,
+  ContractFunctionName,
+  WriteContractParameters as viem_WriteContractParameters,
 } from 'viem'
 
-import { type Config } from '../../createConfig.js'
-import { type SelectChains } from '../../types/chain.js'
-import {
-  type ChainIdParameter,
-  type ConnectorParameter,
+import type { Config } from '../../createConfig.js'
+import type { SelectChains } from '../../types/chain.js'
+import type {
+  ChainIdParameter,
+  ConnectorParameter,
 } from '../../types/properties.js'
-import {
-  type Evaluate,
-  type UnionEvaluate,
-  type UnionOmit,
-} from '../../types/utils.js'
+import type { Evaluate, UnionEvaluate, UnionOmit } from '../../types/utils.js'
 import { getAccount } from '../getAccount.js'
 import { getChainId } from '../getChainId.js'
 import {
@@ -107,7 +103,7 @@ export function createWriteContract<
       const configChainId = getChainId(config)
       const account = getAccount(config)
 
-      let chainId
+      let chainId: number | undefined
       if (parameters.chainId) chainId = parameters.chainId
       else if (
         (parameters as unknown as { account: Address | Account | undefined })

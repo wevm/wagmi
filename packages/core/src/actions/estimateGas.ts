@@ -6,14 +6,14 @@ import {
   estimateGas as viem_estimateGas,
 } from 'viem/actions'
 
-import { type Config } from '../createConfig.js'
+import type { Config } from '../createConfig.js'
 import type { BaseErrorType, ErrorType } from '../errors/base.js'
 import type { SelectChains } from '../types/chain.js'
 import type {
   ChainIdParameter,
   ConnectorParameter,
 } from '../types/properties.js'
-import { type UnionEvaluate, type UnionLooseOmit } from '../types/utils.js'
+import type { UnionEvaluate, UnionLooseOmit } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 import {
   type GetConnectorClientErrorType,

@@ -84,7 +84,7 @@ const { data } = useWaitForTransactionReceipt({
   hash: '0x16854fcdd0219cacf5aec5e4eb2154dac9e406578a1510a6fc48bd0b67e69ea9',
 })
 
-if (result.data?.chainId === zkSync.id) {
+if (data?.chainId === zkSync.id) {
   data?.logs
   //    ^? (property) logs: ZkSyncLog[] | undefined
 }

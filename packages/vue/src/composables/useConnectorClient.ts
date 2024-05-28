@@ -5,7 +5,7 @@ import type {
   GetConnectorClientErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import { type Evaluate, type Omit } from '@wagmi/core/internal'
+import type { Evaluate, Omit } from '@wagmi/core/internal'
 import {
   type GetConnectorClientData,
   type GetConnectorClientOptions,
@@ -29,7 +29,8 @@ import { useConfig } from './useConfig.js'
 
 export type UseConnectorClientParameters<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetConnectorClientData<config, chainId>,
 > = Evaluate<
   DeepMaybeRef<
@@ -56,14 +57,16 @@ export type UseConnectorClientParameters<
 
 export type UseConnectorClientReturnType<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetConnectorClientData<config, chainId>,
 > = UseQueryReturnType<selectData, GetConnectorClientErrorType>
 
 /** https://wagmi.sh/vue/api/composables/useConnectorClient */
 export function useConnectorClient<
   config extends Config = ResolvedRegister['config'],
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetConnectorClientData<config, chainId>,
 >(
   parameters_: UseConnectorClientParameters<config, chainId, selectData> = {},
@@ -101,7 +104,7 @@ export function useConnectorClient<
       ...options,
       queryKey,
       enabled,
-      staleTime: Infinity,
+      staleTime: Number.POSITIVE_INFINITY,
     }
   })
 

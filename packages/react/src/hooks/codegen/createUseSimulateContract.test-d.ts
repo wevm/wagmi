@@ -1,5 +1,5 @@
 import { abi, mainnet, optimism } from '@wagmi/test'
-import { type Address } from 'viem'
+import type { Address } from 'viem'
 import { assertType, expectTypeOf, test } from 'vitest'
 
 import { createUseSimulateContract } from './createUseSimulateContract.js'

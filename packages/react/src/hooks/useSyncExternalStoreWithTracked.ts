@@ -39,27 +39,25 @@ export function useSyncExternalStoreWithTracked<
 
   if (isPlainObject(result)) {
     const trackedResult = { ...result }
-    Object.defineProperties(
-      trackedResult,
-      Object.entries(trackedResult as { [key: string]: any }).reduce(
-        (res, [key, value]) => {
-          return {
-            ...res,
-            [key]: {
-              configurable: false,
-              enumerable: true,
-              get: () => {
-                if (!trackedKeys.current.includes(key)) {
-                  trackedKeys.current.push(key)
-                }
-                return value
-              },
-            },
-          }
+    let properties = {}
+    for (const [key, value] of Object.entries(
+      trackedResult as { [key: string]: any },
+    )) {
+      properties = {
+        ...properties,
+        [key]: {
+          configurable: false,
+          enumerable: true,
+          get: () => {
+            if (!trackedKeys.current.includes(key)) {
+              trackedKeys.current.push(key)
+            }
+            return value
+          },
         },
-        {},
-      ),
-    )
+      }
+    }
+    Object.defineProperties(trackedResult, properties)
     return trackedResult
   }
 

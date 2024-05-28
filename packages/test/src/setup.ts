@@ -18,6 +18,7 @@ afterEach(async (context) => {
       // If a test fails, you can fetch and print the logs of your anvil instance.
       const logs = await fetchLogs(`http://localhost:${testChain.port}`, pool)
       // Only print the 20 most recent log messages.
+      // biome-ignore lint/suspicious/noConsoleLog:
       console.log(...logs.slice(-20))
     }
   })

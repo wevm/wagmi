@@ -133,10 +133,10 @@ test('SimulateContractParameters', () => {
     'transferFrom',
     [Address, Address, bigint],
     typeof config,
-    typeof config['chains'][number]['id']
+    (typeof config)['chains'][number]['id']
   >
   expectTypeOf<Result>().toMatchTypeOf<{
-    chainId?: typeof config['chains'][number]['id'] | undefined
+    chainId?: (typeof config)['chains'][number]['id'] | undefined
     functionName: 'approve' | 'transfer' | 'transferFrom'
     args: readonly [Address, Address, bigint]
   }>()
@@ -148,14 +148,14 @@ test('SimulateContractReturnType', () => {
     'transferFrom',
     [Address, Address, bigint],
     typeof config,
-    typeof config['chains'][number]['id']
+    (typeof config)['chains'][number]['id']
   >
   expectTypeOf<Result>().toMatchTypeOf<{
     result: boolean
     request: {
       functionName: 'transferFrom'
       args: readonly [Address, Address, bigint]
-      chainId: typeof config['chains'][number]['id']
+      chainId: (typeof config)['chains'][number]['id']
     }
   }>()
 })

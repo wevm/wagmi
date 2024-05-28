@@ -1,5 +1,5 @@
-import { type SendTransactionErrorType } from '@wagmi/core'
-import { type Hash } from 'viem'
+import type { SendTransactionErrorType } from '@wagmi/core'
+import type { Hash } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
 import { useSendTransaction } from './useSendTransaction.js'

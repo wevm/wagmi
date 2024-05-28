@@ -1,4 +1,4 @@
-import { type TypedData } from 'viem'
+import type { TypedData } from 'viem'
 
 export const types = {
   Person: [

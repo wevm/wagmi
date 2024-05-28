@@ -1,6 +1,6 @@
 'use client'
 
-import { type Config, type ResolvedRegister } from '@wagmi/core'
+import type { Config, ResolvedRegister } from '@wagmi/core'
 import {
   type GetCapabilitiesData,
   type GetCapabilitiesErrorType,
@@ -9,7 +9,7 @@ import {
   type GetCapabilitiesQueryKey,
   getCapabilitiesQueryOptions,
 } from '@wagmi/core/experimental'
-import { type Evaluate } from '@wagmi/core/internal'
+import type { Evaluate } from '@wagmi/core/internal'
 
 import { useAccount } from '../../hooks/useAccount.js'
 import { useConfig } from '../../hooks/useConfig.js'

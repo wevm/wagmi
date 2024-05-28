@@ -1,5 +1,5 @@
 import { abi, config } from '@wagmi/test'
-import { type MulticallResponse } from 'viem'
+import type { MulticallResponse } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
 import { infiniteReadContractsQueryOptions } from './infiniteReadContracts.js'

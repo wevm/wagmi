@@ -2,7 +2,7 @@ import { config } from '@wagmi/test'
 import { useAccount } from '@wagmi/vue'
 import { expectTypeOf, test } from 'vitest'
 
-import { type ChainId } from './config.js'
+import type { ChainId } from './config.js'
 
 test('default', () => {
   const result = useAccount()

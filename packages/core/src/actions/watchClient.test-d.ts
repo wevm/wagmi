@@ -7,7 +7,7 @@ test('default', () => {
   watchClient(config, {
     onChange(client) {
       expectTypeOf(client.chain).toEqualTypeOf<
-        typeof config['chains'][number]
+        (typeof config)['chains'][number]
       >()
       expectTypeOf(client.transport.type).toEqualTypeOf<'http'>()
     },

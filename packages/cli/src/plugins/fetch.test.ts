@@ -1,4 +1,4 @@
-import { homedir } from 'os'
+import { homedir } from 'node:os'
 import { default as fs } from 'fs-extra'
 import { setupServer } from 'msw/node'
 import { afterAll, afterEach, beforeAll, expect, test } from 'vitest'

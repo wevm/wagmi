@@ -1,4 +1,4 @@
-import { type Chain } from 'viem'
+import type { Chain } from 'viem'
 import {
   type GetTransactionConfirmationsErrorType as viem_GetTransactionConfirmationsErrorType,
   type GetTransactionConfirmationsParameters as viem_GetTransactionConfirmationsParameters,
@@ -6,9 +6,9 @@ import {
   getTransactionConfirmations as viem_getTransactionConfirmations,
 } from 'viem/actions'
 
-import { type Config } from '../createConfig.js'
-import { type SelectChains } from '../types/chain.js'
-import { type ChainIdParameter } from '../types/properties.js'
+import type { Config } from '../createConfig.js'
+import type { SelectChains } from '../types/chain.js'
+import type { ChainIdParameter } from '../types/properties.js'
 import { getAction } from '../utils/getAction.js'
 
 export type GetTransactionConfirmationsParameters<

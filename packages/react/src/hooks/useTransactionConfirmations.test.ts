@@ -1,6 +1,6 @@
 import { config, wait } from '@wagmi/test'
 import { renderHook, waitFor } from '@wagmi/test/react'
-import { type Hash } from 'viem'
+import type { Hash } from 'viem'
 import { expect, test } from 'vitest'
 
 import { getTransactionReceipt } from '@wagmi/core'

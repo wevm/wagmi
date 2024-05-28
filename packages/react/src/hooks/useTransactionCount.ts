@@ -1,9 +1,9 @@
 'use client'
 
-import {
-  type Config,
-  type GetTransactionCountErrorType,
-  type ResolvedRegister,
+import type {
+  Config,
+  GetTransactionCountErrorType,
+  ResolvedRegister,
 } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
 import type { GetTransactionCountQueryFnData } from '@wagmi/core/query'

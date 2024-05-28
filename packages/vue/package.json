@@ -1,7 +1,7 @@
 {
   "name": "@wagmi/vue",
   "description": "Vue Composables for Ethereum",
-  "version": "0.0.7",
+  "version": "0.0.10",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -12,7 +12,7 @@
     "build": "pnpm run clean && pnpm run build:esm+types",
     "build:esm+types": "tsc --project tsconfig.build.json --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
     "clean": "rm -rf dist tsconfig.tsbuildinfo actions chains connectors nuxt query",
-    "test:build": "publint --strict",
+    "test:build": "publint --strict && attw --pack --ignore-rules cjs-resolves-to-esm",
     "typecheck": "vue-tsc --noEmit"
   },
   "files": [
@@ -61,21 +61,11 @@
   },
   "typesVersions": {
     "*": {
-      "actions": [
-        "./dist/types/exports/actions.d.ts"
-      ],
-      "chains": [
-        "./dist/types/exports/chains.d.ts"
-      ],
-      "connectors": [
-        "./dist/types/exports/connectors.d.ts"
-      ],
-      "nuxt": [
-        "./dist/types/exports/nuxt.d.ts"
-      ],
-      "query": [
-        "./dist/types/exports/query.d.ts"
-      ]
+      "actions": ["./dist/types/exports/actions.d.ts"],
+      "chains": ["./dist/types/exports/chains.d.ts"],
+      "connectors": ["./dist/types/exports/connectors.d.ts"],
+      "nuxt": ["./dist/types/exports/nuxt.d.ts"],
+      "query": ["./dist/types/exports/query.d.ts"]
     }
   },
   "peerDependencies": {
@@ -105,10 +95,7 @@
     "vue": ">=3.4.21",
     "vue-tsc": "^2.0.6"
   },
-  "contributors": [
-    "awkweb.eth <t@wevm.dev>",
-    "jxom.eth <j@wevm.dev>"
-  ],
+  "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
   "funding": "https://github.com/sponsors/wevm",
   "keywords": [
     "wagmi",

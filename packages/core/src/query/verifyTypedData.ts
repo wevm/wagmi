@@ -1,5 +1,5 @@
-import { type QueryOptions } from '@tanstack/query-core'
-import { type TypedData } from 'viem'
+import type { QueryOptions } from '@tanstack/query-core'
+import type { TypedData } from 'viem'
 
 import {
   type VerifyTypedDataErrorType,
@@ -7,9 +7,9 @@ import {
   type VerifyTypedDataReturnType,
   verifyTypedData,
 } from '../actions/verifyTypedData.js'
-import { type Config } from '../createConfig.js'
-import { type ScopeKeyParameter } from '../types/properties.js'
-import { type ExactPartial } from '../types/utils.js'
+import type { Config } from '../createConfig.js'
+import type { ScopeKeyParameter } from '../types/properties.js'
+import type { ExactPartial } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
 export type VerifyTypedDataOptions<

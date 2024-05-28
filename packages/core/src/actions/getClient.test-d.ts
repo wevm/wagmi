@@ -5,7 +5,7 @@ import { getClient } from './getClient.js'
 
 test('default', () => {
   const client = getClient(config)
-  expectTypeOf(client.chain).toEqualTypeOf<typeof config['chains'][number]>()
+  expectTypeOf(client.chain).toEqualTypeOf<(typeof config)['chains'][number]>()
   expectTypeOf(client.transport.type).toEqualTypeOf<'http'>()
 })
 

@@ -1,4 +1,5 @@
 {
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "files": {
     "ignore": ["CHANGELOG.md", "pnpm-lock.yaml", "tsconfig.base.json"]
   },
@@ -6,7 +7,7 @@
     "enabled": true,
     "formatWithErrors": false,
     "indentStyle": "space",
-    "indentSize": 2,
+    "indentWidth": 2,
     "lineWidth": 80
   },
   "linter": {
@@ -14,14 +15,16 @@
     "enabled": true,
     "rules": {
       "recommended": true,
-      "correctness": {
-        "noUnusedVariables": "error"
+      "a11y": {
+        "useButtonType": "off"
       },
-      "nursery": {
-        "useExhaustiveDependencies": "error",
-        "useGroupedTypeImport": "off"
+      "correctness": {
+        "noUnusedVariables": "error",
+        "useExhaustiveDependencies": "error"
       },
       "performance": {
+        "noBarrelFile": "error",
+        "noReExportAll": "error",
         "noDelete": "off"
       },
       "style": {
@@ -30,6 +33,8 @@
       },
       "suspicious": {
         "noArrayIndexKey": "off",
+        "noConfusingVoidType": "off",
+        "noConsoleLog": "error",
         "noExplicitAny": "off"
       }
     }
@@ -44,6 +49,38 @@
   "organizeImports": {
     "enabled": true
   },
+  "overrides": [
+    {
+      "include": ["*.vue"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noUnusedVariables": "off"
+          }
+        }
+      }
+    },
+    {
+      "include": ["./.scripts/**/*.ts"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noConsoleLog": "off"
+          }
+        }
+      }
+    },
+    {
+      "include": ["./playgrounds/**"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useNodejsImportProtocol": "off"
+          }
+        }
+      }
+    }
+  ],
   "vcs": {
     "enabled": true,
     "clientKind": "git",

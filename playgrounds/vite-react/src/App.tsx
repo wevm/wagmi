@@ -1,7 +1,7 @@
-import { FormEvent } from 'react'
-import { Hex, parseAbi, parseEther } from 'viem'
+import type { FormEvent } from 'react'
+import { type Hex, parseAbi, parseEther } from 'viem'
 import {
-  BaseError,
+  type BaseError,
   useAccount,
   useAccountEffect,
   useBalance,

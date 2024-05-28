@@ -12,8 +12,7 @@ test('getItem', () => {
   expectTypeOf(storage.getItem('recentConnectorId', 'foo')).toEqualTypeOf<
     string | Promise<string>
   >()
-  // @ts-expect-error unknown key
-  storage.getItem('foo')
+  expectTypeOf(storage.getItem('foo')).toEqualTypeOf<unknown>()
   // @ts-expect-error incorrect argument type
   storage.getItem('recentConnectorId', 1n)
 

@@ -1,4 +1,4 @@
-import { type Address } from 'viem'
+import type { Address } from 'viem'
 import { test } from 'vitest'
 import { createConnector } from './createConnector.js'
 

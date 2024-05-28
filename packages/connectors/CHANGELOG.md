@@ -1,5 +1,24 @@
 # @wagmi/connectors
 
+## 5.0.6
+
+### Patch Changes
+
+- Updated dependencies [[`51fde8a0433b4fff357c1a8d7e08b41b4c86c968`](https://github.com/wevm/wagmi/commit/51fde8a0433b4fff357c1a8d7e08b41b4c86c968)]:
+  - @wagmi/core@2.10.4
+
+## 5.0.5
+
+### Patch Changes
+
+- [#3979](https://github.com/wevm/wagmi/pull/3979) [`70dd28669dd8d2ce08217cd02e29a8fbba7a08d4`](https://github.com/wevm/wagmi/commit/70dd28669dd8d2ce08217cd02e29a8fbba7a08d4) Thanks [@tmm](https://github.com/tmm)! - Fixed `walletConnect` connector.
+
+## 5.0.4
+
+### Patch Changes
+
+- [#3972](https://github.com/wevm/wagmi/pull/3972) [`be9e1b8a9818b92eb0654a20d9471e9e39329e7e`](https://github.com/wevm/wagmi/commit/be9e1b8a9818b92eb0654a20d9471e9e39329e7e) Thanks [@nateReiners](https://github.com/nateReiners)! - Bumped Coinbase Wallet SDK.
+
 ## 5.0.3
 
 ### Patch Changes

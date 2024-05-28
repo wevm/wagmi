@@ -1,11 +1,11 @@
 'use client'
 
-import {
-  type Config,
-  type GetGasPriceErrorType,
-  type ResolvedRegister,
+import type {
+  Config,
+  GetGasPriceErrorType,
+  ResolvedRegister,
 } from '@wagmi/core'
-import { type Evaluate } from '@wagmi/core/internal'
+import type { Evaluate } from '@wagmi/core/internal'
 import {
   type GetGasPriceData,
   type GetGasPriceOptions,
@@ -21,7 +21,8 @@ import { useConfig } from './useConfig.js'
 
 export type UseGasPriceParameters<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetGasPriceData,
 > = Evaluate<
   GetGasPriceOptions<config, chainId> &
@@ -40,7 +41,8 @@ export type UseGasPriceReturnType<selectData = GetGasPriceData> =
 /** https://wagmi.sh/react/api/hooks/useGasPrice */
 export function useGasPrice<
   config extends Config = ResolvedRegister['config'],
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetGasPriceData,
 >(
   parameters: UseGasPriceParameters<config, chainId, selectData> = {},

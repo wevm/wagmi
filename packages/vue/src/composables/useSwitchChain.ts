@@ -1,10 +1,10 @@
 import { useMutation } from '@tanstack/vue-query'
-import {
-  type Config,
-  type ResolvedRegister,
-  type SwitchChainErrorType,
+import type {
+  Config,
+  ResolvedRegister,
+  SwitchChainErrorType,
 } from '@wagmi/core'
-import { type Evaluate } from '@wagmi/core/internal'
+import type { Evaluate } from '@wagmi/core/internal'
 import {
   type SwitchChainData,
   type SwitchChainMutate,
@@ -14,10 +14,10 @@ import {
 } from '@wagmi/core/query'
 import type { Ref } from 'vue'
 
-import { type ConfigParameter } from '../types/properties.js'
-import {
-  type UseMutationParameters,
-  type UseMutationReturnType,
+import type { ConfigParameter } from '../types/properties.js'
+import type {
+  UseMutationParameters,
+  UseMutationReturnType,
 } from '../utils/query.js'
 import { useChains } from './useChains.js'
 import { useConfig } from './useConfig.js'

@@ -4,12 +4,8 @@ import {
   ProviderNotFoundError,
   createConnector,
 } from '@wagmi/core'
-import {
-  type Evaluate,
-  type ExactPartial,
-  type Omit,
-} from '@wagmi/core/internal'
-import { type EthereumProvider } from '@walletconnect/ethereum-provider'
+import type { Evaluate, ExactPartial, Omit } from '@wagmi/core/internal'
+import type { EthereumProvider } from '@walletconnect/ethereum-provider'
 import {
   type AddEthereumChainParameter,
   type Address,
@@ -27,7 +23,7 @@ type WalletConnectConnector = Connector & {
   onSessionDelete(data: { topic: string }): void
 }
 
-type EthereumProviderOptions = Parameters<typeof EthereumProvider['init']>[0]
+type EthereumProviderOptions = Parameters<(typeof EthereumProvider)['init']>[0]
 
 export type WalletConnectParameters = Evaluate<
   {
@@ -79,7 +75,7 @@ walletConnect.type = 'walletConnect' as const
 export function walletConnect(parameters: WalletConnectParameters) {
   const isNewChainsStale = parameters.isNewChainsStale ?? true
 
-  type Provider = Awaited<ReturnType<typeof EthereumProvider['init']>>
+  type Provider = Awaited<ReturnType<(typeof EthereumProvider)['init']>>
   type Properties = {
     connect(parameters?: { chainId?: number; pairingTopic?: string }): Promise<{
       accounts: readonly Address[]
@@ -265,7 +261,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
       if (!provider_) {
         if (!providerPromise) providerPromise = initProvider()
         provider_ = await providerPromise
-        provider_?.events.setMaxListeners(Infinity)
+        provider_?.events.setMaxListeners(Number.POSITIVE_INFINITY)
       }
       if (chainId) await this.switchChain?.({ chainId })
       return provider_!
@@ -333,7 +329,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
 
         // Indicates chain is not added to provider
         try {
-          let blockExplorerUrls
+          let blockExplorerUrls: string[] | undefined
           if (addEthereumChainParameter?.blockExplorerUrls)
             blockExplorerUrls = addEthereumChainParameter.blockExplorerUrls
           else
@@ -341,7 +337,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
               ? [chain.blockExplorers?.default.url]
               : []
 
-          let rpcUrls
+          let rpcUrls: readonly string[]
           if (addEthereumChainParameter?.rpcUrls?.length)
             rpcUrls = addEthereumChainParameter.rpcUrls
           else rpcUrls = [...chain.rpcUrls.default.http]
@@ -419,8 +415,8 @@ export function walletConnect(parameters: WalletConnectParameters) {
     },
     getNamespaceChainsIds() {
       if (!provider_) return []
-      const chainIds = provider_.session?.namespaces[NAMESPACE]?.chains?.map(
-        (chain) => parseInt(chain.split(':')[1] || ''),
+      const chainIds = provider_.session?.namespaces[NAMESPACE]?.accounts?.map(
+        (account) => Number.parseInt(account.split(':')[1] || ''),
       )
       return chainIds ?? []
     },

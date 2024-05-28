@@ -23,7 +23,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install dependencies
-        uses: ./.github/actions/install-dependencies
+        uses: wevm/actions/.github/actions/pnpm@main
 
       - name: Report build size
         uses: preactjs/compressed-size-action@v2

@@ -1,4 +1,4 @@
-import { type QueryOptions } from '@tanstack/query-core'
+import type { QueryOptions } from '@tanstack/query-core'
 
 import {
   type GetEnsTextErrorType,
@@ -6,7 +6,7 @@ import {
   type GetEnsTextReturnType,
   getEnsText,
 } from '../actions/getEnsText.js'
-import { type Config } from '../createConfig.js'
+import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
 import type { Evaluate, ExactPartial } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'

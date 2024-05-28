@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import { VPDocAsideSponsors } from 'vitepress/theme'
+import { computed } from 'vue'
 import { useSponsors } from '../composables/useSponsors'
 
 const { data } = useSponsors()

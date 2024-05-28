@@ -1,6 +1,6 @@
 import { expectTypeOf, test } from 'vitest'
 import { useChains } from 'wagmi'
-import { type Chain, celo, optimism } from 'wagmi/chains'
+import type { Chain, celo, optimism } from 'wagmi/chains'
 
 test('default', () => {
   const chains = useChains()

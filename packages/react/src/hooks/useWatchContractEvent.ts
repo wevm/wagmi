@@ -6,7 +6,7 @@ import {
   type WatchContractEventParameters,
   watchContractEvent,
 } from '@wagmi/core'
-import { type UnionEvaluate, type UnionPartial } from '@wagmi/core/internal'
+import type { UnionEvaluate, UnionPartial } from '@wagmi/core/internal'
 import { useEffect } from 'react'
 
 import type { Abi, ContractEventName } from 'viem'
@@ -19,7 +19,8 @@ export type UseWatchContractEventParameters<
   eventName extends ContractEventName<abi> = ContractEventName<abi>,
   strict extends boolean | undefined = undefined,
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 > = UnionEvaluate<
   UnionPartial<
     WatchContractEventParameters<abi, eventName, strict, config, chainId>
@@ -36,7 +37,8 @@ export function useWatchContractEvent<
   eventName extends ContractEventName<abi>,
   strict extends boolean | undefined = undefined,
   config extends Config = ResolvedRegister['config'],
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 >(
   parameters: UseWatchContractEventParameters<
     abi,

@@ -1,11 +1,11 @@
-import {
-  type Account,
-  type Chain,
-  type Client,
-  type PublicActions,
-  type RpcSchema,
-  type Transport,
-  type WalletActions,
+import type {
+  Account,
+  Chain,
+  Client,
+  PublicActions,
+  RpcSchema,
+  Transport,
+  WalletActions,
 } from 'viem'
 
 /**

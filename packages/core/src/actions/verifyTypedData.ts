@@ -1,4 +1,4 @@
-import { type TypedData } from 'viem'
+import type { TypedData } from 'viem'
 import {
   type VerifyTypedDataErrorType as viem_VerifyTypedDataErrorType,
   type VerifyTypedDataParameters as viem_VerifyTypedDataParameters,
@@ -6,9 +6,9 @@ import {
   verifyTypedData as viem_verifyTypedData,
 } from 'viem/actions'
 
-import { type Config } from '../createConfig.js'
-import { type ChainIdParameter } from '../types/properties.js'
-import { type Evaluate } from '../types/utils.js'
+import type { Config } from '../createConfig.js'
+import type { ChainIdParameter } from '../types/properties.js'
+import type { Evaluate } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 
 export type VerifyTypedDataParameters<

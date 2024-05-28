@@ -1,11 +1,5 @@
 <script setup>
-const browsers = [
-  "chrome",
-  "edge",
-  "firefox",
-  "opera",
-  "safari",
-]
+const browsers = ['chrome', 'edge', 'firefox', 'opera', 'safari']
 </script>
 
 <template>
