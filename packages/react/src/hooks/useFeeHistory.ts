@@ -1,11 +1,11 @@
 'use client'
 
-import {
-  type Config,
-  type GetFeeHistoryErrorType,
-  type ResolvedRegister,
+import type {
+  Config,
+  GetFeeHistoryErrorType,
+  ResolvedRegister,
 } from '@wagmi/core'
-import { type Evaluate } from '@wagmi/core/internal'
+import type { Evaluate } from '@wagmi/core/internal'
 import {
   type GetFeeHistoryData,
   type GetFeeHistoryOptions,
@@ -21,7 +21,8 @@ import { useConfig } from './useConfig.js'
 
 export type UseFeeHistoryParameters<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetFeeHistoryData,
 > = Evaluate<
   GetFeeHistoryOptions<config, chainId> &
@@ -40,7 +41,8 @@ export type UseFeeHistoryReturnType<selectData = GetFeeHistoryData> =
 /** https://wagmi.sh/react/api/hooks/useFeeHistory */
 export function useFeeHistory<
   config extends Config = ResolvedRegister['config'],
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetFeeHistoryData,
 >(
   parameters: UseFeeHistoryParameters<config, chainId, selectData> = {},

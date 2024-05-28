@@ -1,6 +1,6 @@
-import {
-  type SignTypedDataErrorType,
-  type SignTypedDataReturnType,
+import type {
+  SignTypedDataErrorType,
+  SignTypedDataReturnType,
 } from '@wagmi/core'
 import type { SignTypedDataVariables } from '@wagmi/core/query'
 import { typedData } from '@wagmi/test'

@@ -35,7 +35,7 @@ export type UseShowCallsStatusParameters<
   }
 >
 
-export type UseShowCallsStatusReturnType<context = unknown,> = Evaluate<
+export type UseShowCallsStatusReturnType<context = unknown> = Evaluate<
   UseMutationReturnType<
     ShowCallsStatusData,
     ShowCallsStatusErrorType,

@@ -1,3 +1,4 @@
+// biome-ignore lint/performance/noBarrelFile: entrypoint module
 export { actions, type ActionsConfig } from '../plugins/actions.js'
 
 export {

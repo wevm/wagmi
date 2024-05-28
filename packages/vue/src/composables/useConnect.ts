@@ -1,9 +1,9 @@
 import { useMutation } from '@tanstack/vue-query'
-import {
-  type Config,
-  type ConnectErrorType,
-  type GetConnectorsReturnType,
-  type ResolvedRegister,
+import type {
+  Config,
+  ConnectErrorType,
+  GetConnectorsReturnType,
+  ResolvedRegister,
 } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
 import {

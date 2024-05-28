@@ -5,7 +5,7 @@ import { getPublicClient } from './getPublicClient.js'
 
 test('default', () => {
   const client = getPublicClient(config)
-  expectTypeOf(client.chain).toEqualTypeOf<typeof config['chains'][number]>()
+  expectTypeOf(client.chain).toEqualTypeOf<(typeof config)['chains'][number]>()
   expectTypeOf(client.transport.type).toEqualTypeOf<'http'>()
 })
 

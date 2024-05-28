@@ -1,4 +1,4 @@
-import { type SignMessageErrorType } from '@wagmi/core'
+import type { SignMessageErrorType } from '@wagmi/core'
 import type { SignMessageVariables } from '@wagmi/core/query'
 import { expectTypeOf, test } from 'vitest'
 

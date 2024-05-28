@@ -11,13 +11,13 @@ import {
   watchContractEvent as viem_watchContractEvent,
 } from 'viem/actions'
 
-import { type Config } from '../createConfig.js'
-import { type SelectChains } from '../types/chain.js'
-import {
-  type ChainIdParameter,
-  type SyncConnectedChainParameter,
+import type { Config } from '../createConfig.js'
+import type { SelectChains } from '../types/chain.js'
+import type {
+  ChainIdParameter,
+  SyncConnectedChainParameter,
 } from '../types/properties.js'
-import { type UnionEvaluate } from '../types/utils.js'
+import type { UnionEvaluate } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 
 export type WatchContractEventParameters<
@@ -25,7 +25,8 @@ export type WatchContractEventParameters<
   eventName extends ContractEventName<abi> | undefined = ContractEventName<abi>,
   strict extends boolean | undefined = undefined,
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   ///
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = {
@@ -34,7 +35,8 @@ export type WatchContractEventParameters<
       abi,
       eventName,
       strict,
-      config['_internal']['transports'][chains[key]['id']] extends infer transport extends Transport
+      config['_internal']['transports'][chains[key]['id']] extends infer transport extends
+        Transport
         ? Transport extends transport
           ? WebSocketTransport
           : transport

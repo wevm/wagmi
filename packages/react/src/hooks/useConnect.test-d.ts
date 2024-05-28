@@ -1,7 +1,7 @@
-import {
-  type ConnectErrorType,
-  type Connector,
-  type CreateConnectorFn,
+import type {
+  ConnectErrorType,
+  Connector,
+  CreateConnectorFn,
 } from '@wagmi/core'
 import { config } from '@wagmi/test'
 import type { Address } from 'viem'

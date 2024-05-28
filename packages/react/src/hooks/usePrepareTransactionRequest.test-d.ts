@@ -1,5 +1,5 @@
 import { config } from '@wagmi/test'
-import { type PrepareTransactionRequestReturnType } from 'viem'
+import type { PrepareTransactionRequestReturnType } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
 import { usePrepareTransactionRequest } from './usePrepareTransactionRequest.js'

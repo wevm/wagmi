@@ -5,8 +5,8 @@ import type {
 } from 'viem'
 import { call as viem_call } from 'viem/actions'
 
-import { type Config } from '../createConfig.js'
-import { type ChainIdParameter } from '../types/properties.js'
+import type { Config } from '../createConfig.js'
+import type { ChainIdParameter } from '../types/properties.js'
 import { getAction } from '../utils/getAction.js'
 
 export type CallParameters<config extends Config = Config> =
@@ -16,7 +16,7 @@ export type CallReturnType = viem_CallReturnType
 
 export type CallErrorType = viem_CallErrorType
 
-export async function call<config extends Config,>(
+export async function call<config extends Config>(
   config: config,
   parameters: CallParameters<config>,
 ): Promise<CallReturnType> {

@@ -1,9 +1,9 @@
-import { type Address } from 'viem'
+import type { Address } from 'viem'
 
-import { type CreateConnectorFn } from '../connectors/createConnector.js'
+import type { CreateConnectorFn } from '../connectors/createConnector.js'
 import type { Config, Connection, Connector } from '../createConfig.js'
 import type { ErrorType } from '../errors/base.js'
-import { type Evaluate } from '../types/utils.js'
+import type { Evaluate } from '../types/utils.js'
 
 export type ReconnectParameters = {
   /** Connectors to attempt reconnect with */
@@ -43,7 +43,7 @@ export async function reconnect(
   } else connectors.push(...config.connectors)
 
   // Try recently-used connectors first
-  let recentConnectorId
+  let recentConnectorId: string | null | undefined
   try {
     recentConnectorId = await config.storage?.getItem('recentConnectorId')
   } catch {}

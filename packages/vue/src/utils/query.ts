@@ -2,17 +2,17 @@ import {
   type DefaultError,
   type MutationObserverOptions,
   type QueryKey,
-  type UseMutationReturnType as tanstack_UseMutationReturnType,
   type UseQueryOptions,
+  type UseMutationReturnType as tanstack_UseMutationReturnType,
   type UseQueryReturnType as tanstack_UseQueryReturnType,
-  useMutation,
   useQuery as tanstack_useQuery,
+  useMutation,
 } from '@tanstack/vue-query'
-import {
-  type Evaluate,
-  type ExactPartial,
-  type Omit,
-  type UnionOmit,
+import type {
+  Evaluate,
+  ExactPartial,
+  Omit,
+  UnionOmit,
 } from '@wagmi/core/internal'
 import { hashFn } from '@wagmi/core/query'
 import { type MaybeRef, computed, unref } from 'vue'

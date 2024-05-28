@@ -5,13 +5,13 @@ import {
   type ReadContractsReturnType,
   readContracts,
 } from '../actions/readContracts.js'
-import { type Config } from '../createConfig.js'
-import {
-  type ChainIdParameter,
-  type ScopeKeyParameter,
+import type { Config } from '../createConfig.js'
+import type {
+  ChainIdParameter,
+  ScopeKeyParameter,
 } from '../types/properties.js'
-import { type Omit } from '../types/utils.js'
-import { type InfiniteQueryOptions } from './types.js'
+import type { Omit } from '../types/utils.js'
+import type { InfiniteQueryOptions } from './types.js'
 import { filterQueryOptions } from './utils.js'
 
 export type InfiniteReadContractsOptions<

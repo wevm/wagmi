@@ -4,7 +4,7 @@ import {
   type WatchBlockNumberParameters,
   watchBlockNumber,
 } from '@wagmi/core'
-import { type UnionEvaluate, type UnionPartial } from '@wagmi/core/internal'
+import type { UnionEvaluate, UnionPartial } from '@wagmi/core/internal'
 import { computed, watchEffect } from 'vue'
 
 import type { ConfigParameter, EnabledParameter } from '../types/properties.js'
@@ -15,7 +15,8 @@ import { useConfig } from './useConfig.js'
 
 export type UseWatchBlockNumberParameters<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 > = DeepMaybeRef<
   UnionEvaluate<
     UnionPartial<WatchBlockNumberParameters<config, chainId>> &
@@ -29,7 +30,8 @@ export type UseWatchBlockNumberReturnType = void
 /** https://wagmi.sh/vue/api/composables/useWatchBlockNumber */
 export function useWatchBlockNumber<
   config extends Config = ResolvedRegister['config'],
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 >(
   parameters_: UseWatchBlockNumberParameters<config, chainId> = {} as any,
 ): UseWatchBlockNumberReturnType {

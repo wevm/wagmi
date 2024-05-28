@@ -15,12 +15,13 @@ export type ExactPartial<type> = {
 export type IsNarrowable<type, type2> = IsUnknown<type> extends true
   ? false
   : undefined extends type
-  ? false
-  : IsNever<
-      (type extends type2 ? true : false) & (type2 extends type ? false : true)
-    > extends true
-  ? false
-  : true
+    ? false
+    : IsNever<
+          (type extends type2 ? true : false) &
+            (type2 extends type ? false : true)
+        > extends true
+      ? false
+      : true
 
 /**
  * @internal

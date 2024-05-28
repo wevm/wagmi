@@ -1,10 +1,6 @@
 'use client'
 
-import {
-  type Config,
-  type GetProofErrorType,
-  type ResolvedRegister,
-} from '@wagmi/core'
+import type { Config, GetProofErrorType, ResolvedRegister } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
 import {
   type GetProofData,
@@ -12,12 +8,9 @@ import {
   type GetProofQueryKey,
   getProofQueryOptions,
 } from '@wagmi/core/query'
-import { type GetProofQueryFnData } from '@wagmi/core/query'
+import type { GetProofQueryFnData } from '@wagmi/core/query'
 
-import {
-  type ConfigParameter,
-  type QueryParameter,
-} from '../types/properties.js'
+import type { ConfigParameter, QueryParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'

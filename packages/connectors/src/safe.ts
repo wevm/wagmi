@@ -34,7 +34,7 @@ export function safe(parameters: SafeParameters = {}) {
   const { shimDisconnect = false } = parameters
 
   type Provider = SafeAppProvider | undefined
-  type Properties = {}
+  type Properties = Record<string, unknown>
   type StorageItem = { 'safe.disconnected': true }
 
   let provider_: Provider | undefined

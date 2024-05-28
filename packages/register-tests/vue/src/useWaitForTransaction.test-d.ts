@@ -1,7 +1,7 @@
 import { config } from '@wagmi/test'
 import { useWaitForTransactionReceipt } from '@wagmi/vue'
 import { zkSync } from '@wagmi/vue/chains'
-import { type ZkSyncL2ToL1Log, type ZkSyncLog } from 'viem/zksync'
+import type { ZkSyncL2ToL1Log, ZkSyncLog } from 'viem/zksync'
 import { expectTypeOf, test } from 'vitest'
 
 test('chain formatters', () => {

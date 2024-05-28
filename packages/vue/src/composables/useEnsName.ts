@@ -1,5 +1,5 @@
 import type { Config, GetEnsNameErrorType, ResolvedRegister } from '@wagmi/core'
-import { type Evaluate } from '@wagmi/core/internal'
+import type { Evaluate } from '@wagmi/core/internal'
 import {
   type GetEnsNameData,
   type GetEnsNameOptions,

@@ -1,4 +1,4 @@
-import type { Account, TypedData } from 'viem'
+import type { Account, Client, TypedData } from 'viem'
 import {
   type SignMessageErrorType as viem_SignMessageErrorType,
   type SignTypedDataParameters as viem_SignTypedDataParameters,
@@ -6,7 +6,7 @@ import {
   signTypedData as viem_signTypedData,
 } from 'viem/actions'
 
-import { type Config } from '../createConfig.js'
+import type { Config } from '../createConfig.js'
 import type { BaseErrorType, ErrorType } from '../errors/base.js'
 import type { ConnectorParameter } from '../types/properties.js'
 import type { UnionEvaluate } from '../types/utils.js'
@@ -47,7 +47,7 @@ export async function signTypedData<
 ): Promise<SignTypedDataReturnType> {
   const { account, connector, ...rest } = parameters
 
-  let client
+  let client: Client
   if (typeof account === 'object' && account.type === 'local')
     client = config.getClient()
   else client = await getConnectorClient(config, { account, connector })

@@ -1,5 +1,5 @@
 import { Abi as AbiSchema } from 'abitype/zod'
-import { type Address } from 'viem'
+import type { Address } from 'viem'
 import type * as chain from 'viem/chains'
 import { z } from 'zod'
 

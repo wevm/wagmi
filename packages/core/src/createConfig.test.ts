@@ -126,7 +126,7 @@ test('behavior: migrate for current version', async () => {
         chainId: 1,
         current: '983b8aca245',
       },
-      version: NaN, // mocked version is `'x.y.z'`, which will get interpreted as `NaN`
+      version: Number.NaN, // mocked version is `'x.y.z'`, which will get interpreted as `NaN`
     }),
   } as Record<string, string>
   Object.defineProperty(window, 'localStorage', {

@@ -59,7 +59,8 @@ export type UseWriteContractsReturnType<
 
 /** https://wagmi.sh/react/api/hooks/useWriteContracts */
 export function useWriteContracts<
-  const contracts extends readonly unknown[] = readonly ContractFunctionParameters[],
+  const contracts extends
+    readonly unknown[] = readonly ContractFunctionParameters[],
   config extends Config = ResolvedRegister['config'],
   context = unknown,
 >(

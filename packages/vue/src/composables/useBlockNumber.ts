@@ -1,14 +1,10 @@
 import { useQueryClient } from '@tanstack/vue-query'
-import {
-  type Config,
-  type GetBlockNumberErrorType,
-  type ResolvedRegister,
+import type {
+  Config,
+  GetBlockNumberErrorType,
+  ResolvedRegister,
 } from '@wagmi/core'
-import {
-  type Evaluate,
-  type UnionEvaluate,
-  type UnionOmit,
-} from '@wagmi/core/internal'
+import type { Evaluate, UnionEvaluate, UnionOmit } from '@wagmi/core/internal'
 import {
   type GetBlockNumberData,
   type GetBlockNumberOptions,
@@ -31,7 +27,8 @@ import {
 
 export type UseBlockNumberParameters<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetBlockNumberData,
 > = Evaluate<
   DeepMaybeRef<
@@ -62,7 +59,8 @@ export type UseBlockNumberReturnType<selectData = GetBlockNumberData> =
 /** https://wagmi.sh/vue/api/composables/useBlockNumber */
 export function useBlockNumber<
   config extends Config = ResolvedRegister['config'],
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetBlockNumberData,
 >(
   parameters_: UseBlockNumberParameters<config, chainId, selectData> = {},

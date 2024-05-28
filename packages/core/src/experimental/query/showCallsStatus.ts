@@ -1,7 +1,7 @@
 import type { MutateOptions, MutationOptions } from '@tanstack/query-core'
 
-import { type Config } from '../../createConfig.js'
-import { type Evaluate } from '../../types/utils.js'
+import type { Config } from '../../createConfig.js'
+import type { Evaluate } from '../../types/utils.js'
 import {
   type ShowCallsStatusErrorType,
   type ShowCallsStatusParameters,
@@ -42,7 +42,7 @@ export type ShowCallsStatusMutate<context = unknown> = (
     | undefined,
 ) => void
 
-export type ShowCallsStatusMutateAsync<context = unknown,> = (
+export type ShowCallsStatusMutateAsync<context = unknown> = (
   variables: ShowCallsStatusVariables,
   options?:
     | Evaluate<

@@ -3,17 +3,17 @@ import * as allChains from 'viem/chains'
 import { computed, ref } from 'vue'
 
 const message = ref('')
-const chains = Object
-  .entries(allChains)
+const chains = Object.entries(allChains)
   .map(([key, value]) => ({ ...value, import: key }))
   .sort((a, b) => a.id - b.id)
 const filteredChains = computed(() => {
   const filterMessage = message.value.toLowerCase().trim()
-  return chains.filter(chain =>
-    chain.id.toString().includes(filterMessage) ||
-    chain.import.toLowerCase().includes(filterMessage) ||
-    chain.name.toLowerCase().includes(filterMessage) ||
-    chain.nativeCurrency.symbol.toLowerCase().includes(filterMessage)
+  return chains.filter(
+    (chain) =>
+      chain.id.toString().includes(filterMessage) ||
+      chain.import.toLowerCase().includes(filterMessage) ||
+      chain.name.toLowerCase().includes(filterMessage) ||
+      chain.nativeCurrency.symbol.toLowerCase().includes(filterMessage),
   )
 })
 </script>

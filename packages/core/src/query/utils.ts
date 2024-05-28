@@ -23,13 +23,14 @@ export function hashFn(queryKey: QueryKey): string {
   })
 }
 
-function isPlainObject(o: any): o is Object {
-  if (!hasObjectPrototype(o)) {
+// biome-ignore lint/complexity/noBannedTypes:
+function isPlainObject(value: any): value is Object {
+  if (!hasObjectPrototype(value)) {
     return false
   }
 
   // If has modified constructor
-  const ctor = o.constructor
+  const ctor = value.constructor
   if (typeof ctor === 'undefined') return true
 
   // If has modified prototype
@@ -55,21 +56,17 @@ export function filterQueryOptions<type extends Record<string, unknown>>(
   // biome-ignore format: no formatting
   const {
     // import('@tanstack/query-core').QueryOptions
-    // biome-ignore lint/correctness/noUnusedVariables: remove properties
     _defaulted, behavior, gcTime, initialData, initialDataUpdatedAt, maxPages, meta, networkMode, queryFn, queryHash, queryKey, queryKeyHashFn, retry, retryDelay, structuralSharing,
 
     // import('@tanstack/query-core').InfiniteQueryObserverOptions
-    // biome-ignore lint/correctness/noUnusedVariables: remove properties
     getPreviousPageParam, getNextPageParam, initialPageParam,
     
     // import('@tanstack/react-query').UseQueryOptions
-    // biome-ignore lint/correctness/noUnusedVariables: remove properties
     _optimisticResults, enabled, notifyOnChangeProps, placeholderData, refetchInterval, refetchIntervalInBackground, refetchOnMount, refetchOnReconnect, refetchOnWindowFocus, retryOnMount, select, staleTime, suspense, throwOnError,
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // wagmi
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // biome-ignore lint/correctness/noUnusedVariables: remove properties
     config, connector, query,
     ...rest
   } = options

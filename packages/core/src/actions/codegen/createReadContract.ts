@@ -1,12 +1,12 @@
-import {
-  type Abi,
-  type Address,
-  type ContractFunctionArgs,
-  type ContractFunctionName,
+import type {
+  Abi,
+  Address,
+  ContractFunctionArgs,
+  ContractFunctionName,
 } from 'viem'
 
-import { type Config } from '../../createConfig.js'
-import { type UnionEvaluate, type UnionOmit } from '../../types/utils.js'
+import type { Config } from '../../createConfig.js'
+import type { UnionEvaluate, UnionOmit } from '../../types/utils.js'
 import { getAccount } from '../getAccount.js'
 import { getChainId } from '../getChainId.js'
 import {

@@ -1,5 +1,5 @@
 import { chain, config } from '@wagmi/test'
-import { type Chain } from 'viem'
+import type { Chain } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
 import { useClient } from './useClient.js'
@@ -7,7 +7,7 @@ import { useClient } from './useClient.js'
 test('default', () => {
   const client = useClient({ config })
   expectTypeOf(client.value.chain).toEqualTypeOf<
-    typeof config['chains'][number]
+    (typeof config)['chains'][number]
   >()
   expectTypeOf(client.value.transport.type).toEqualTypeOf<'http'>()
 })

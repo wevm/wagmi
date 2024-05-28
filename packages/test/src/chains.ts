@@ -1,4 +1,4 @@
-import { type Evaluate } from '@wagmi/core/internal'
+import type { Evaluate } from '@wagmi/core/internal'
 import {
   type Chain as viem_Chain,
   mainnet as viem_mainnet,

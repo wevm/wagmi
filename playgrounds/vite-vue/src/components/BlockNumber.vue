@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useBlockNumber } from '@wagmi/vue'
-import { ref } from 'vue';
+import { ref } from 'vue'
 
 const watchBlockNumber = ref(false)
 

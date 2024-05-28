@@ -3,9 +3,9 @@ import {
   type Address,
   type EIP1193Provider,
   type ProviderConnectInfo,
-  ProviderRpcError,
+  type ProviderRpcError,
   ResourceUnavailableRpcError,
-  RpcError,
+  type RpcError,
   SwitchChainError,
   UserRejectedRequestError,
   getAddress,
@@ -17,7 +17,7 @@ import {
 import type { Connector } from '../createConfig.js'
 import { ChainNotConfiguredError } from '../errors/config.js'
 import { ProviderNotFoundError } from '../errors/connector.js'
-import { type Evaluate } from '../types/utils.js'
+import type { Evaluate } from '../types/utils.js'
 import { createConnector } from './createConnector.js'
 
 export type InjectedParameters = {
@@ -303,7 +303,7 @@ export function injected(parameters: InjectedParameters = {}) {
     async getProvider() {
       if (typeof window === 'undefined') return undefined
 
-      let provider
+      let provider: Provider
       const target = getTarget()
       if (typeof target.provider === 'function')
         provider = target.provider(window as Window | undefined)
@@ -440,7 +440,7 @@ export function injected(parameters: InjectedParameters = {}) {
           try {
             const { default: blockExplorer, ...blockExplorers } =
               chain.blockExplorers ?? {}
-            let blockExplorerUrls
+            let blockExplorerUrls: string[] | undefined
             if (addEthereumChainParameter?.blockExplorerUrls)
               blockExplorerUrls = addEthereumChainParameter.blockExplorerUrls
             else if (blockExplorer)
@@ -449,7 +449,7 @@ export function injected(parameters: InjectedParameters = {}) {
                 ...Object.values(blockExplorers).map((x) => x.url),
               ]
 
-            let rpcUrls
+            let rpcUrls: readonly string[]
             if (addEthereumChainParameter?.rpcUrls?.length)
               rpcUrls = addEthereumChainParameter.rpcUrls
             else rpcUrls = [chain.rpcUrls.default?.http[0] ?? '']

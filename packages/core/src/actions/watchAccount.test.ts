@@ -1,5 +1,5 @@
 import { config } from '@wagmi/test'
-import { type Address } from 'viem'
+import type { Address } from 'viem'
 import { expect, test } from 'vitest'
 
 import { connect } from './connect.js'

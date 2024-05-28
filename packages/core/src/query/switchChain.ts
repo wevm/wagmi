@@ -1,4 +1,4 @@
-import { type MutateOptions, type MutationOptions } from '@tanstack/query-core'
+import type { MutateOptions, MutationOptions } from '@tanstack/query-core'
 
 import {
   type SwitchChainErrorType,
@@ -6,8 +6,8 @@ import {
   type SwitchChainReturnType,
   switchChain,
 } from '../actions/switchChain.js'
-import { type Config } from '../createConfig.js'
-import { type Evaluate } from '../types/utils.js'
+import type { Config } from '../createConfig.js'
+import type { Evaluate } from '../types/utils.js'
 
 export function switchChainMutationOptions<config extends Config>(
   config: config,

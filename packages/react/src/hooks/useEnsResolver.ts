@@ -5,7 +5,7 @@ import type {
   GetEnsResolverErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import { type Evaluate } from '@wagmi/core/internal'
+import type { Evaluate } from '@wagmi/core/internal'
 import {
   type GetEnsResolverData,
   type GetEnsResolverOptions,

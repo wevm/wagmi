@@ -1,12 +1,12 @@
 import { assertType, expectTypeOf, test } from 'vitest'
 
-import {
-  type Evaluate,
-  type ExactPartial,
-  type IsNever,
-  type Mutable,
-  type OneOf,
-  type PartialBy,
+import type {
+  Evaluate,
+  ExactPartial,
+  IsNever,
+  Mutable,
+  OneOf,
+  PartialBy,
 } from './utils.js'
 
 test('ExactPartial', () => {

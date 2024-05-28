@@ -33,8 +33,8 @@ export class BaseError extends Error {
       options.cause instanceof BaseError
         ? options.cause.details
         : options.cause?.message
-        ? options.cause.message
-        : options.details!
+          ? options.cause.message
+          : options.details!
     const docsPath =
       options.cause instanceof BaseError
         ? options.cause.docsPath || options.docsPath

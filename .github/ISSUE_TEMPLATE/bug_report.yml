@@ -8,6 +8,14 @@ body:
 
         If you are a [Wagmi Sponsor](https://github.com/sponsors/wevm?metadata_campaign=gh_issue), your issues are prioritized.
 
+  - type: checkboxes
+    attributes:
+      label: Check existing issues
+      description: By submitting this issue, you checked there isn't [already an issue](https://github.com/wevm/wagmi/issues) for this bug.
+      options:
+        - label: I checked there isn't [already an issue](https://github.com/wevm/wagmi/issues) for the bug I encountered.
+          required: true
+
   - type: textarea
     attributes:
       label: Describe the bug
@@ -69,14 +77,6 @@ body:
       placeholder: x.y.z (do not write `latest`)
     validations:
       required: false
-
-  - type: checkboxes
-    attributes:
-      label: Check existing issues
-      description: By submitting this issue, you checked there isn't [already an issue](https://github.com/wevm/wagmi/issues) for this bug.
-      options:
-        - label: I checked there isn't [already an issue](https://github.com/wevm/wagmi/issues) for the bug I encountered.
-          required: true
 
   - type: textarea
     attributes:

@@ -8,14 +8,14 @@ import {
   type UseQueryOptions,
   type UseQueryResult,
   useInfiniteQuery as tanstack_useInfiniteQuery,
-  useMutation,
   useQuery as tanstack_useQuery,
+  useMutation,
 } from '@tanstack/react-query'
-import {
-  type Evaluate,
-  type ExactPartial,
-  type Omit,
-  type UnionOmit,
+import type {
+  Evaluate,
+  ExactPartial,
+  Omit,
+  UnionOmit,
 } from '@wagmi/core/internal'
 import { hashFn } from '@wagmi/core/query'
 

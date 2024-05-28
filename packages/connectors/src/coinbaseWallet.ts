@@ -77,7 +77,6 @@ function version4(parameters: Version4Parameters) {
     // for backwards compatibility
     close?(): void
   }
-  type Properties = {}
 
   let sdk: CoinbaseWalletSDK | undefined
   let walletProvider: Provider | undefined
@@ -86,7 +85,7 @@ function version4(parameters: Version4Parameters) {
   let chainChanged: Connector['onChainChanged'] | undefined
   let disconnect: Connector['onDisconnect'] | undefined
 
-  return createConnector<Provider, Properties>((config) => ({
+  return createConnector<Provider>((config) => ({
     id: 'coinbaseWalletSDK',
     name: 'Coinbase Wallet',
     supportsSimulation: true,
@@ -219,7 +218,7 @@ function version4(parameters: Version4Parameters) {
         // Indicates chain is not added to provider
         if ((error as ProviderRpcError).code === 4902) {
           try {
-            let blockExplorerUrls
+            let blockExplorerUrls: string[] | undefined
             if (addEthereumChainParameter?.blockExplorerUrls)
               blockExplorerUrls = addEthereumChainParameter.blockExplorerUrls
             else
@@ -227,7 +226,7 @@ function version4(parameters: Version4Parameters) {
                 ? [chain.blockExplorers?.default.url]
                 : []
 
-            let rpcUrls
+            let rpcUrls: readonly string[]
             if (addEthereumChainParameter?.rpcUrls?.length)
               rpcUrls = addEthereumChainParameter.rpcUrls
             else rpcUrls = [chain.rpcUrls.default?.http[0] ?? '']
@@ -315,7 +314,6 @@ function version3(parameters: Version3Parameters) {
   const reloadOnDisconnect = false
 
   type Provider = CBW_Provider
-  type Properties = {}
 
   let sdk: CBW_SDK | undefined
   let walletProvider: Provider | undefined
@@ -324,7 +322,7 @@ function version3(parameters: Version3Parameters) {
   let chainChanged: Connector['onChainChanged'] | undefined
   let disconnect: Connector['onDisconnect'] | undefined
 
-  return createConnector<Provider, Properties>((config) => ({
+  return createConnector<Provider>((config) => ({
     id: 'coinbaseWalletSDK',
     name: 'Coinbase Wallet',
     supportsSimulation: true,
@@ -459,7 +457,7 @@ function version3(parameters: Version3Parameters) {
         // Indicates chain is not added to provider
         if ((error as ProviderRpcError).code === 4902) {
           try {
-            let blockExplorerUrls
+            let blockExplorerUrls: string[] | undefined
             if (addEthereumChainParameter?.blockExplorerUrls)
               blockExplorerUrls = addEthereumChainParameter.blockExplorerUrls
             else
@@ -467,7 +465,7 @@ function version3(parameters: Version3Parameters) {
                 ? [chain.blockExplorers?.default.url]
                 : []
 
-            let rpcUrls
+            let rpcUrls: readonly string[]
             if (addEthereumChainParameter?.rpcUrls?.length)
               rpcUrls = addEthereumChainParameter.rpcUrls
             else rpcUrls = [chain.rpcUrls.default?.http[0] ?? '']

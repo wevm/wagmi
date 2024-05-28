@@ -1,6 +1,6 @@
 import { http } from 'viem'
 import { mainnet, zkSync } from 'viem/chains'
-import { type ZkSyncL2ToL1Log, type ZkSyncLog } from 'viem/zksync'
+import type { ZkSyncL2ToL1Log, ZkSyncLog } from 'viem/zksync'
 import { expectTypeOf, test } from 'vitest'
 
 import { createConfig } from '../createConfig.js'

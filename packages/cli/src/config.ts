@@ -1,7 +1,7 @@
-import { type Abi } from 'abitype'
-import { type Address } from 'viem'
+import type { Abi } from 'abitype'
+import type { Address } from 'viem'
 
-import { type Evaluate, type MaybeArray, type MaybePromise } from './types.js'
+import type { Evaluate, MaybeArray, MaybePromise } from './types.js'
 
 export type ContractConfig<
   chainId extends number = number,

@@ -1,9 +1,9 @@
 'use client'
 
-import {
-  type Config,
-  type ResolvedRegister,
-  type VerifyMessageErrorType,
+import type {
+  Config,
+  ResolvedRegister,
+  VerifyMessageErrorType,
 } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
 import {

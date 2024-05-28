@@ -1,7 +1,7 @@
-import { type QueryOptions } from '@tanstack/query-core'
-import {
-  type ContractFunctionParameters,
-  type MulticallParameters as viem_MulticallParameters,
+import type { QueryOptions } from '@tanstack/query-core'
+import type {
+  ContractFunctionParameters,
+  MulticallParameters as viem_MulticallParameters,
 } from 'viem'
 
 import {
@@ -9,8 +9,8 @@ import {
   type ReadContractsReturnType,
   readContracts,
 } from '../actions/readContracts.js'
-import { type Config } from '../createConfig.js'
-import { type ChainIdParameter } from '../types/properties.js'
+import type { Config } from '../createConfig.js'
+import type { ChainIdParameter } from '../types/properties.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
 import type { ExactPartial } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'

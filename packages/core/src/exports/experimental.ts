@@ -2,6 +2,7 @@
 // Actions
 ////////////////////////////////////////////////////////////////////////////////
 
+// biome-ignore lint/performance/noBarrelFile: entrypoint module
 export {
   type GetCallsStatusErrorType,
   type GetCallsStatusParameters,

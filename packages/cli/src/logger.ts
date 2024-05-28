@@ -1,4 +1,4 @@
-import { format as utilFormat } from 'util'
+import { format as utilFormat } from 'node:util'
 import ora from 'ora'
 import pc from 'picocolors'
 
@@ -9,6 +9,7 @@ function format(args: any[]) {
 }
 
 export function success(...args: any[]) {
+  // biome-ignore lint/suspicious/noConsoleLog: console.log is used for logging
   console.log(pc.green(format(args)))
 }
 
@@ -17,6 +18,7 @@ export function info(...args: any[]) {
 }
 
 export function log(...args: any[]) {
+  // biome-ignore lint/suspicious/noConsoleLog: console.log is used for logging
   console.log(pc.white(format(args)))
 }
 

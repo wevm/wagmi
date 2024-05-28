@@ -1,7 +1,8 @@
-import { homedir } from 'os'
+import { homedir } from 'node:os'
 import { default as fs } from 'fs-extra'
 import { join } from 'pathe'
 
+import type { Abi } from 'abitype'
 import type { ContractConfig, Plugin } from '../config.js'
 import type { Evaluate, RequiredBy } from '../types.js'
 
@@ -78,7 +79,7 @@ export function fetch(config: FetchConfig): FetchResult {
         const cacheFilePath = join(cacheDir, `${cacheKey}.json`)
         const cachedFile = await fs.readJSON(cacheFilePath).catch(() => null)
 
-        let abi
+        let abi: Abi | undefined
         if (cachedFile?.timestamp > Date.now()) abi = cachedFile.abi
         else {
           try {
@@ -106,6 +107,7 @@ export function fetch(config: FetchConfig): FetchResult {
           }
         }
 
+        if (!abi) throw Error('Failed to fetch ABI for contract.')
         contracts.push({ abi, address: contract.address, name: contract.name })
       }
       return contracts

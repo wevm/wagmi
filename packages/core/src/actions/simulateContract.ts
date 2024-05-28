@@ -13,12 +13,12 @@ import {
   simulateContract as viem_simulateContract,
 } from 'viem/actions'
 
-import { type Config } from '../createConfig.js'
-import { type BaseErrorType, type ErrorType } from '../errors/base.js'
-import { type SelectChains } from '../types/chain.js'
-import {
-  type ChainIdParameter,
-  type ConnectorParameter,
+import type { Config } from '../createConfig.js'
+import type { BaseErrorType, ErrorType } from '../errors/base.js'
+import type { SelectChains } from '../types/chain.js'
+import type {
+  ChainIdParameter,
+  ConnectorParameter,
 } from '../types/properties.js'
 import type {
   Evaluate,

@@ -2,7 +2,7 @@ import { config } from '@wagmi/test'
 import { expectTypeOf, test } from 'vitest'
 import { useSendTransaction } from 'wagmi'
 import { celo, mainnet, optimism } from 'wagmi/chains'
-import { type ChainId } from './config.js'
+import type { ChainId } from './config.js'
 
 test('chain formatters', () => {
   const { sendTransaction } = useSendTransaction()
