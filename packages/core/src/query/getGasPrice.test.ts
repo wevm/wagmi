@@ -8,7 +8,7 @@ test('default', () => {
     {
       "queryFn": [Function],
       "queryKey": [
-        "blockTransactionCount",
+        "gasPrice",
         {},
       ],
     }
@@ -19,14 +19,14 @@ test('parameters: chainId', () => {
   expect(
     getGasPriceQueryOptions(config, { chainId: chain.mainnet.id }),
   ).toMatchInlineSnapshot(`
-      {
-        "queryFn": [Function],
-        "queryKey": [
-          "blockTransactionCount",
-          {
-            "chainId": 1,
-          },
-        ],
-      }
-    `)
+    {
+      "queryFn": [Function],
+      "queryKey": [
+        "gasPrice",
+        {
+          "chainId": 1,
+        },
+      ],
+    }
+  `)
 })
