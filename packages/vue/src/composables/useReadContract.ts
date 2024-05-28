@@ -13,8 +13,8 @@ import {
   structuralSharing,
 } from '@wagmi/core/query'
 import type { Abi, ContractFunctionArgs, ContractFunctionName } from 'viem'
-
 import { computed } from 'vue'
+
 import type { ConfigParameter, QueryParameter } from '../types/properties.js'
 import type { DeepMaybeRef } from '../types/ref.js'
 import { deepUnref } from '../utils/cloneDeep.js'
@@ -78,9 +78,7 @@ export function useReadContract<
     selectData
   > = {} as any,
 ): UseReadContractReturnType<abi, functionName, args, selectData> {
-  const parameters = computed(() =>
-    deepUnref(parameters_),
-  ) as UseReadContractParameters
+  const parameters = computed(() => deepUnref(parameters_)) as any
 
   const config = useConfig(parameters)
   const configChainId = useChainId({ config })
@@ -92,10 +90,10 @@ export function useReadContract<
       chainId = configChainId.value,
       functionName,
       query = {},
-    } = parameters.value as any
+    } = parameters.value
     const options = readContractQueryOptions<config, abi, functionName, args>(
-      config as config,
-      { ...(parameters.value as any), chainId },
+      config as any,
+      { ...parameters.value, chainId },
     )
     const enabled = Boolean(
       address && abi && functionName && (query.enabled ?? true),
