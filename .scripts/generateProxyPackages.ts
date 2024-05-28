@@ -4,7 +4,6 @@ import { glob } from 'glob'
 
 // Generates proxy packages for package.json#exports.
 
-// biome-ignore lint/suspicious/noConsoleLog:
 console.log('Generating proxy packages.')
 
 // Get all package.json files
@@ -29,7 +28,6 @@ for (const packagePath of packagePaths) {
   if (!packageJson.exports) continue
 
   count += 1
-  // biome-ignore lint/suspicious/noConsoleLog:
   console.log(`${packageJson.name} — ${path.dirname(packagePath)}`)
 
   const dir = path.resolve(path.dirname(packagePath))
@@ -53,7 +51,6 @@ for (const packagePath of packagePaths) {
   }
 }
 
-// biome-ignore lint/suspicious/noConsoleLog:
 console.log(
   `Done. Generated proxy packages for ${count} ${
     count === 1 ? 'package' : 'packages'

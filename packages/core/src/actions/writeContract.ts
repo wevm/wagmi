@@ -29,7 +29,6 @@ import {
 } from './getConnectorClient.js'
 import {
   type SimulateContractErrorType,
-  type SimulateContractReturnType,
   simulateContract,
 } from './simulateContract.js'
 

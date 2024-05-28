@@ -3,7 +3,6 @@ import { glob } from 'glob'
 
 // Updates package version.ts files (so you can use the version in code without importing package.json).
 
-// biome-ignore lint/suspicious/noConsoleLog:
 console.log('Updating version files.')
 
 // Get all package.json files
@@ -25,7 +24,6 @@ for (const packagePath of packagePaths) {
   if (packageJson.private) continue
 
   count += 1
-  // biome-ignore lint/suspicious/noConsoleLog:
   console.log(`${packageJson.name} — ${packageJson.version}`)
 
   const versionFilePath = path.resolve(
@@ -39,7 +37,6 @@ for (const packagePath of packagePaths) {
   )
 }
 
-// biome-ignore lint/suspicious/noConsoleLog:
 console.log(
   `Done. Updated version file for ${count} ${
     count === 1 ? 'package' : 'packages'

@@ -4,7 +4,6 @@ import { glob } from 'glob'
 
 // Restores package.json files from package.json.tmp files.
 
-// biome-ignore lint/suspicious/noConsoleLog:
 console.log('Restoring package.json files.')
 
 // Get all package.json files
@@ -19,7 +18,6 @@ for (const packagePath of packagePaths) {
   const packageJson = (await file.json()) as Package
 
   count += 1
-  // biome-ignore lint/suspicious/noConsoleLog:
   console.log(`${packageJson.name} — ${path.dirname(packagePath)}`)
 
   await Bun.write(
@@ -29,5 +27,4 @@ for (const packagePath of packagePaths) {
   await fs.rm(packagePath)
 }
 
-// biome-ignore lint/suspicious/noConsoleLog:
 console.log(`Done. Restored ${count} ${count === 1 ? 'file' : 'files'}.`)

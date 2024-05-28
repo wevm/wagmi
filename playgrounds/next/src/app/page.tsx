@@ -380,6 +380,7 @@ function WriteContract() {
 function Repro() {
   const chainId = useChainId()
 
+  // biome-ignore lint/suspicious/noConsoleLog: <explanation>
   console.log('chainId from useChainId is', chainId)
   return (
     <main className="flex min-h-screen flex-col items-center p-24">

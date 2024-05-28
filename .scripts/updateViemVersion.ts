@@ -2,7 +2,6 @@ import { glob } from 'glob'
 
 // Updates viem version in Vitest snapshots, etc.
 
-// biome-ignore lint/suspicious/noConsoleLog:
 console.log('Updating Viem version.')
 
 const file = Bun.file('package.json')
@@ -25,7 +24,6 @@ for (const testPath of testPaths) {
   // Skip files that contain current version
   if (testFile.includes(`Version: viem@${viemVersion}`)) continue
 
-  // biome-ignore lint/suspicious/noConsoleLog:
   console.log(testPath)
   const updatedTestFile = testFile.replace(
     /Version: viem@[A-Za-z0-9\-\.]+/g,
@@ -45,5 +43,4 @@ for (const testPath of testPaths) {
 //   count += 1
 // }
 
-// biome-ignore lint/suspicious/noConsoleLog:
 console.log(`Done. Updated ${count} ${count === 1 ? 'file' : 'files'}.`)
