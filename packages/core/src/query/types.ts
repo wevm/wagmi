@@ -2,7 +2,7 @@ import type {
   DefaultError,
   InfiniteQueryObserverOptions,
   MutateOptions,
-  QueryFunctionContext,
+  QueryFunction,
   QueryKey,
 } from '@tanstack/query-core'
 
@@ -41,6 +41,12 @@ export type InfiniteQueryOptions<
       : unknown
   }
 >
+
+// `QueryFunctionContext` not exported resulting in TS2742 error so grabbing from `QueryFunction`
+type QueryFunctionContext<
+  TQueryKey extends QueryKey = QueryKey,
+  TPageParam = never,
+> = Parameters<QueryFunction<unknown, TQueryKey, TPageParam>>[0]
 
 export type Mutate<
   data = unknown,
