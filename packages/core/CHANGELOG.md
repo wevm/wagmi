@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.10.5
+
+### Patch Changes
+
+- [#3970](https://github.com/wevm/wagmi/pull/3970) [`030c7c2cb380dfd67a2182f62e2aa7a6e1601898`](https://github.com/wevm/wagmi/commit/030c7c2cb380dfd67a2182f62e2aa7a6e1601898) Thanks [@nanxiaobei](https://github.com/nanxiaobei)! - Fixed `cookieStorage` not working across paths.
+
 ## 2.10.4
 
 ### Patch Changes
