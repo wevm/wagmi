@@ -18,7 +18,6 @@ import {
   type ProviderRpcError,
   SwitchChainError,
   UserRejectedRequestError,
-  fromHex,
   getAddress,
   numberToHex,
 } from 'viem'
