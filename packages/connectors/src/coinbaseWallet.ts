@@ -15,6 +15,7 @@ import type {
 } from 'cbw-sdk'
 import {
   type AddEthereumChainParameter,
+  type Hex,
   type ProviderRpcError,
   SwitchChainError,
   UserRejectedRequestError,
@@ -163,7 +164,7 @@ function version4(parameters: Version4Parameters) {
     },
     async getChainId() {
       const provider = await this.getProvider()
-      const chainId = await provider.request<`0x${string}`>({
+      const chainId = await provider.request<Hex>({
         method: 'eth_chainId',
       })
       return Number(chainId)
@@ -401,7 +402,7 @@ function version3(parameters: Version3Parameters) {
     },
     async getChainId() {
       const provider = await this.getProvider()
-      const chainId = await provider.request<`0x${string}`>({
+      const chainId = await provider.request<Hex>({
         method: 'eth_chainId',
       })
       return Number(chainId)
