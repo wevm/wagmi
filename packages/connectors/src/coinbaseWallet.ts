@@ -167,7 +167,7 @@ function version4(parameters: Version4Parameters) {
       const chainId = await provider.request<`0x${string}`>({
         method: 'eth_chainId',
       })
-      return fromHex(chainId, 'number')
+      return Number(chainId)
     },
     async getProvider() {
       if (!walletProvider) {
