@@ -18,6 +18,7 @@ import {
   type ProviderRpcError,
   SwitchChainError,
   UserRejectedRequestError,
+  fromHex,
   getAddress,
   numberToHex,
 } from 'viem'
@@ -163,10 +164,10 @@ function version4(parameters: Version4Parameters) {
     },
     async getChainId() {
       const provider = await this.getProvider()
-      const chainId = await provider.request<number>({
+      const chainId = await provider.request<`0x${string}`>({
         method: 'eth_chainId',
       })
-      return Number(chainId)
+      return fromHex(chainId, 'number')
     },
     async getProvider() {
       if (!walletProvider) {
@@ -401,8 +402,10 @@ function version3(parameters: Version3Parameters) {
     },
     async getChainId() {
       const provider = await this.getProvider()
-      const chainId = await provider.request<number>({ method: 'eth_chainId' })
-      return Number(chainId)
+      const chainId = await provider.request<`0x${string}`>({
+        method: 'eth_chainId',
+      })
+      return fromHex(chainId, 'number')
     },
     async getProvider() {
       if (!walletProvider) {
