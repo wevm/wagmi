@@ -405,7 +405,7 @@ function version3(parameters: Version3Parameters) {
       const chainId = await provider.request<`0x${string}`>({
         method: 'eth_chainId',
       })
-      return fromHex(chainId, 'number')
+      return Number(chainId)
     },
     async getProvider() {
       if (!walletProvider) {
