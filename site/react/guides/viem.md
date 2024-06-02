@@ -95,7 +95,7 @@ function Example() {
   }) // [!code hl]
   
   // 5. Extract a Viem Client for the current active chain & account. // [!code hl]
-  const { data: walletClient } = useConnectorClient(config) // [!code hl]
+  const { data: walletClient } = useConnectorClient({ config }) // [!code hl]
 
   // 6. Create a "custom" Mutation Hook that utilizes the Client. // [!code hl]
   const { mutate } = useMutation({ // [!code hl]
