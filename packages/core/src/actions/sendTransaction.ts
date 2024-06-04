@@ -42,7 +42,7 @@ export type SendTransactionParameters<
     > &
       ChainIdParameter<config, chainId> &
       ConnectorParameter & {
-        to: Address
+        to?: Address
       }
   >
 }[number] & {
