@@ -1,5 +1,8 @@
 <script setup>
+import packageJson from '../../../package.json'
 import SearchChains from '../../components/SearchChains.vue'
+
+const viemVersion = packageJson.devDependencies.viem
 </script>
 
 # Chains
@@ -15,6 +18,8 @@ import { mainnet } from 'wagmi/chains'
 ```
 
 ## Available Chains
+
+Chain definitions as of `viem@{{viemVersion}}`. For `viem@latest`, visit the [Viem repo](https://github.com/wevm/viem/blob/main/src/chains/index.ts).
 
 <SearchChains />
 
