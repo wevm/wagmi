@@ -103,6 +103,8 @@ jobs:
 
       - name: Install dependencies
         uses: wevm/actions/.github/actions/pnpm@main
+        with:
+          node-version: 22
 
       - name: Set up foundry
         uses: foundry-rs/foundry-toolchain@v1
