@@ -94,11 +94,6 @@ export function useSponsors() {
           img: 'spruce-light.svg',
         },
         {
-          name: 'rollup.id',
-          url: 'https://rollup.id',
-          img: 'rollup.id-light.svg',
-        },
-        {
           name: 'Celo',
           url: 'https://celo.org',
           img: 'celo-light.svg',
