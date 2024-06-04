@@ -47,6 +47,10 @@ function wagmiTestMethods(
   >,
 ) {
   return {
+    /** Resets instance attached to chain. */
+    async restart() {
+      return await fetch(`${client.chain.rpcUrls.default.http[0]}/restart`)
+    },
     /** Resets fork attached to chain at starting block number. */
     resetFork() {
       return client.reset({

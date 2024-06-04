@@ -1,4 +1,5 @@
-import { startProxy } from '@viem/anvil'
+import { createServer } from 'prool'
+import { anvil } from 'prool/instances'
 
 import { chain as chainLookup } from './chains.js'
 
@@ -6,23 +7,20 @@ export default async function () {
   const promises = []
   for (const chain of Object.values(chainLookup)) {
     promises.push(
-      startProxy({
-        port: chain.port,
-        host: '::',
-        options: {
+      createServer({
+        instance: anvil({
           chainId: chain.id,
           forkUrl: chain.fork.url,
           forkBlockNumber: chain.fork.blockNumber,
           noMining: true,
-        },
-      }),
+        }),
+        port: chain.port,
+      }).start(),
     )
   }
   const results = await Promise.all(promises)
 
-  return () => {
-    for (const shutdown of results) {
-      shutdown()
-    }
+  return async () => {
+    await Promise.all(results.map((stop) => stop()))
   }
 }

@@ -38,7 +38,7 @@ test.each([
 ] as { blockTag: BlockTag; expected: number }[])(
   'parameters: blockTag $blockTag',
   async ({ blockTag }) => {
-    await testClient.mainnet.resetFork()
+    await testClient.mainnet.restart()
 
     await expect(
       getTransactionCount(config, {

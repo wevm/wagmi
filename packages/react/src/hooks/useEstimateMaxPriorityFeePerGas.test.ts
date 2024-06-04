@@ -5,7 +5,7 @@ import { expect, test } from 'vitest'
 import { useEstimateMaxPriorityFeePerGas } from './useEstimateMaxPriorityFeePerGas.js'
 
 test('default', async () => {
-  await testClient.mainnet.resetFork()
+  await testClient.mainnet.restart()
 
   const { result } = renderHook(() => useEstimateMaxPriorityFeePerGas())
 
@@ -49,7 +49,7 @@ test('default', async () => {
 })
 
 test('parameters: chainId', async () => {
-  await testClient.mainnet2.resetFork()
+  await testClient.mainnet2.restart()
   await testClient.mainnet2.mine({ blocks: 1 })
 
   const { result } = renderHook(() =>
