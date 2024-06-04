@@ -5,8 +5,6 @@ import { expect, test } from 'vitest'
 import { useBlock } from './useBlock.js'
 
 test('mounts', async () => {
-  await testClient.mainnet.resetFork()
-
   const { result } = renderHook(() => useBlock())
 
   await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
@@ -49,7 +47,7 @@ test('mounts', async () => {
 })
 
 test('parameters: watch', async () => {
-  await testClient.mainnet.resetFork()
+  await testClient.mainnet.restart()
 
   const { result } = renderHook(() => useBlock({ watch: true }))
 

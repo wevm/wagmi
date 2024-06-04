@@ -47,7 +47,6 @@
     "@changesets/changelog-github": "0.4.6",
     "@changesets/cli": "^2.27.1",
     "@types/bun": "^1.1.1",
-    "@viem/anvil": "0.0.6",
     "@vitest/coverage-v8": "^1.6.0",
     "@vitest/ui": "^1.6.0",
     "@wagmi/test": "workspace:*",
@@ -55,6 +54,7 @@
     "glob": "^10.3.12",
     "happy-dom": "^12.2.1",
     "knip": "^5.13.0",
+    "prool": "^0.0.4",
     "publint": "^0.2.7",
     "sherif": "^0.8.4",
     "simple-git-hooks": "^2.11.1",
@@ -62,7 +62,7 @@
     "viem": "2.9.31",
     "vitest": "^1.6.0"
   },
-  "packageManager": "pnpm@9.0.4",
+  "packageManager": "pnpm@9.1.0",
   "pnpm": {
     "peerDependencyRules": {
       "ignoreMissing": [

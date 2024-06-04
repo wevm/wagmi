@@ -5,6 +5,8 @@ import { ref } from 'vue'
 import { useBlockNumber } from './useBlockNumber.js'
 
 test('default', async () => {
+  await testClient.mainnet.resetFork()
+
   const [blockNumberQuery] = renderComposable(() => useBlockNumber())
 
   await waitFor(blockNumberQuery.status, (status) => status === 'success')
