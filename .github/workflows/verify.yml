@@ -114,9 +114,7 @@ jobs:
           max_attempts: 3
           timeout_minutes: 5
         env:
-          VITE_MAINNET_FORK_BLOCK_NUMBER: ${{ vars.VITE_MAINNET_FORK_BLOCK_NUMBER }}
           VITE_MAINNET_FORK_URL: ${{ secrets.VITE_MAINNET_FORK_URL }}
-          VITE_OPTIMISM_FORK_BLOCK_NUMBER: ${{ vars.VITE_OPTIMISM_FORK_BLOCK_NUMBER }}
           VITE_OPTIMISM_FORK_URL: ${{ secrets.VITE_OPTIMISM_FORK_URL }}
 
       - name: Upload coverage reports to Codecov

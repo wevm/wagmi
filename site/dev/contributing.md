@@ -63,10 +63,7 @@ After the install completes, pnpm links packages across the project for developm
 The [dev playgrounds](#_5-running-the-dev-playgrounds) and [test suite](#_6-running-the-test-suite) require enironment variables to be set. Copy over the following environment variables to `.env`, and fill them out.
 
 ```bash
-VITE_MAINNET_FORK_BLOCK_NUMBER=18677381
 VITE_MAINNET_FORK_URL=https://cloudflare-eth.com
-
-VITE_OPTIMISM_FORK_BLOCK_NUMBER=107317577
 VITE_OPTIMISM_FORK_URL=https://mainnet.optimism.io
 
 NEXT_PUBLIC_WC_PROJECT_ID=3fbb6bba6f1de962d911bb5b5c9dba88
@@ -77,7 +74,7 @@ NEXT_TELEMETRY_DISABLED=1
 NUXT_TELEMETRY_DISABLED=1
 ```
 
-`*_BLOCK_NUMBER` environment variables should remain set to the values above (the test suite depends on them), but you can change the others if you want. For example, you might want to change `*_FORK_URL` to a paid RPC provider for better performance.
+You might want to change `*_FORK_URL` to a paid RPC provider for better performance.
 
 ## 5. Running the dev playgrounds
 
@@ -98,7 +95,7 @@ Once a playground dev server is running, you can make changes to any of the pack
 
 ## 6. Running the test suite
 
-Wagmi uses [Vitest](https://vitest.dev) to run tests and [anvil.js](https://github.com/wevm/anvil.js) to execute tests against locally running chain forks. First, install [Anvil](https://github.com/foundry-rs/foundry/tree/master/anvil) via [Foundryup](https://book.getfoundry.sh/getting-started/installation).
+Wagmi uses [Vitest](https://vitest.dev) to run tests and [Prool](https://github.com/wevm/prool) to execute tests against locally running chain forks. First, install [Anvil](https://github.com/foundry-rs/foundry/tree/master/anvil) via [Foundryup](https://book.getfoundry.sh/getting-started/installation).
 
 ```bash
 curl -L https://foundry.paradigm.xyz | bash
