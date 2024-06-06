@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 5.0.9
+
+### Patch Changes
+
+- [`32cdd7b7dc5aff916c040628519562c3a99d418d`](https://github.com/wevm/wagmi/commit/32cdd7b7dc5aff916c040628519562c3a99d418d) Thanks [@tmm](https://github.com/tmm)! - Bumped `@metamask/sdk` to remove peer dependency install warning.
+
 ## 5.0.8
 
 ### Patch Changes
