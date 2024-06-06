@@ -46,7 +46,7 @@ pnpm -v
 If the versions are not correct or you don't have Node.js or pnpm installed, download and follow their setup instructions:
 
 - Install Node.js using [fnm](https://github.com/Schniz/fnm) or from the [official website](https://nodejs.org)
-- Install [pnpm](https://pnpm.io/installation)
+- Install [pnpm](https://pnpm.io/installation) using [Corepack](https://nodejs.org/api/corepack.html)
 
 ## 3. Installing dependencies
 

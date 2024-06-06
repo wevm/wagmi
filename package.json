@@ -21,7 +21,7 @@
     "lint": "biome check .",
     "lint:fix": "pnpm lint --apply",
     "lint:repo": "sherif",
-    "lint:unused": "pnpm clean && knip --ignore-internal",
+    "lint:unused": "pnpm clean && knip",
     "postinstall": "pnpm preconstruct",
     "preconstruct": "bun .scripts/preconstruct.ts",
     "preinstall": "npx only-allow pnpm",
@@ -67,7 +67,6 @@
     "peerDependencyRules": {
       "ignoreMissing": [
         "@algolia/client-search",
-        "esbuild",
         "react",
         "react-native",
         "search-insights"
