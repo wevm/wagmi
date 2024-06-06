@@ -78,7 +78,7 @@ export function useConnect<
           result.reset()
       },
     )
-  }, [config, result])
+  }, [config, result.reset])
 
   return {
     ...result,

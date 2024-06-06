@@ -39,6 +39,8 @@ export function useWatchBlockNumber<
   const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
+  // TODO(react@19): cleanup
+  // biome-ignore lint/correctness/useExhaustiveDependencies: `rest` changes every render so only including properties in dependency array
   useEffect(() => {
     if (!enabled) return
     if (!onBlockNumber) return
@@ -47,5 +49,17 @@ export function useWatchBlockNumber<
       chainId,
       onBlockNumber,
     })
-  }, [chainId, config, enabled, onBlockNumber, rest])
+  }, [
+    chainId,
+    config,
+    enabled,
+    onBlockNumber,
+    ///
+    rest.onError,
+    rest.emitMissed,
+    rest.emitOnBegin,
+    rest.poll,
+    rest.pollingInterval,
+    rest.syncConnectedChain,
+  ])
 }
