@@ -1,7 +1,7 @@
 {
   "name": "@wagmi/connectors",
   "description": "Collection of connectors for Wagmi",
-  "version": "5.0.8",
+  "version": "5.0.9",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -57,7 +57,10 @@
     "@wagmi/core": "workspace:*",
     "msw": "^2.2.14"
   },
-  "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
+  "contributors": [
+    "awkweb.eth <t@wevm.dev>",
+    "jxom.eth <j@wevm.dev>"
+  ],
   "funding": "https://github.com/sponsors/wevm",
   "keywords": [
     "react",
