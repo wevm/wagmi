@@ -70,6 +70,8 @@ function Account() {
         <br />
         chainId: {account.chainId}
         <br />
+        connector id: {account.connector?.uid}
+        <br />
         status: {account.status}
       </div>
 
@@ -158,8 +160,9 @@ function SignMessage() {
       <h2>Sign Message</h2>
 
       <form
-        onSubmit={(event) => {
+        onSubmit={async (event) => {
           event.preventDefault()
+          await new Promise((resolve) => setTimeout(resolve, 1_000))
           const formData = new FormData(event.target as HTMLFormElement)
           signMessage({ message: formData.get('message') as string })
         }}

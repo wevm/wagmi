@@ -156,16 +156,6 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
     },
     async isAuthorized() {
       try {
-        const isMobileBrowser =
-          typeof navigator !== 'undefined'
-            ? /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-                navigator.userAgent,
-              )
-            : false
-
-        // MetaMask Mobile doesn't support persisted sessions.
-        if (isMobileBrowser) return false
-
         const isDisconnected =
           // If shim exists in storage, connector is disconnected
           await config.storage?.getItem('metaMaskSDK.disconnected')
