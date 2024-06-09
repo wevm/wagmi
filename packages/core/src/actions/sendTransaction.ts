@@ -79,6 +79,18 @@ export async function sendTransaction<
 
   const { connector: activeConnector } = getAccount(config)
 
+  const chain = (() => {
+    if (chainId) return { id: chainId }
+
+    // If the account type is local, skip chain validation in Viem by explicitly
+    // passing `null`.
+    if (typeof account === 'object' && account.type === 'local') return null
+
+    // Otherwise, an `undefined` value indicates default chain validation behavior will be performed
+    // against the Client's chain.
+    return undefined
+  })()
+
   const gas = await (async () => {
     // Skip gas estimation if `data` doesn't exist (not a contract interaction).
     if (!('data' in parameters) || !parameters.data) return undefined
@@ -95,7 +107,7 @@ export async function sendTransaction<
       return action({
         ...(rest as any),
         account,
-        chain: chainId ? { id: chainId } : null,
+        chain,
       })
     }
 
@@ -107,8 +119,8 @@ export async function sendTransaction<
   const hash = await action({
     ...(rest as any),
     ...(account ? { account } : {}),
+    chain,
     gas,
-    chain: chainId ? { id: chainId } : null,
   })
 
   return hash
