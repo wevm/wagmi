@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 5.0.10
+
+### Patch Changes
+
+- [`560952acd4bfe33db6c7c07b35c613cef278677c`](https://github.com/wevm/wagmi/commit/560952acd4bfe33db6c7c07b35c613cef278677c) Thanks [@tmm](https://github.com/tmm)! - Captured Coinbase Smart Wallet error when closing window as EIP-1193 `4001` error.
+
 ## 5.0.9
 
 ### Patch Changes
