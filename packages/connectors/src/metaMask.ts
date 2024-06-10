@@ -143,6 +143,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
               chain.rpcUrls.default.http[0]!,
             ]),
           ),
+          useDeeplink: parameters.useDeeplink ?? true,
         })
         await sdk.init()
         return sdk.getProvider()!
