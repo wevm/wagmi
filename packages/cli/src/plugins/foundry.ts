@@ -25,10 +25,10 @@ const defaultExcludes = [
   'StdJson.sol/**',
   'StdStorage.sol/**',
   'StdUtils.sol/**',
+  'Test.sol/**',
   'Vm.sol/**',
   'console.sol/**',
   'console2.sol/**',
-  'Test.sol/**',
   '**.s.sol/*.json',
   '**.t.sol/*.json',
 ]
