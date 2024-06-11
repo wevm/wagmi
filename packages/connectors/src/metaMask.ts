@@ -4,7 +4,11 @@ import type {
   SDKProvider,
 } from '@metamask/sdk'
 import { ChainNotConfiguredError, createConnector } from '@wagmi/core'
-import type { Evaluate, ExactPartial } from '@wagmi/core/internal'
+import {
+  type Evaluate,
+  type ExactPartial,
+  loadDefault,
+} from '@wagmi/core/internal'
 import {
   type AddEthereumChainParameter,
   type Address,
@@ -121,17 +125,9 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
     },
     async getProvider() {
       async function initProvider() {
-        // Unwrapping import for Vite compatibility.
-        // See: https://github.com/vitejs/vite/issues/9703
-        const { default: MetaMaskSDK_ } = await import('@metamask/sdk')
-        const MetaMaskSDK = (() => {
-          if (
-            typeof MetaMaskSDK_ !== 'function' &&
-            typeof MetaMaskSDK_.default === 'function'
-          )
-            return MetaMaskSDK_.default
-          return MetaMaskSDK_ as unknown as typeof MetaMaskSDK_.default
-        })()
+        const MetaMaskSDK = await loadDefault<
+          Awaited<typeof import('@metamask/sdk')>['default']
+        >(import('@metamask/sdk'))
 
         sdk = new MetaMaskSDK({
           dappMetadata: {},
