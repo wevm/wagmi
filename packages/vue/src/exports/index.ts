@@ -226,6 +226,8 @@ export {
   ConnectorNotFoundError,
   type ConnectorAccountNotFoundErrorType,
   ConnectorAccountNotFoundError,
+  type ConnectorChainMismatchErrorType,
+  ConnectorChainMismatchError,
   type ProviderNotFoundErrorType,
   ProviderNotFoundError,
   type SwitchChainNotSupportedErrorType,

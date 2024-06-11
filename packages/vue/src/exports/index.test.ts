@@ -46,6 +46,7 @@ test('exports', () => {
       "ConnectorAlreadyConnectedError",
       "ConnectorNotFoundError",
       "ConnectorAccountNotFoundError",
+      "ConnectorChainMismatchError",
       "ProviderNotFoundError",
       "SwitchChainNotSupportedError",
       "createStorage",

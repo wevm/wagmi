@@ -23,12 +23,12 @@ When a chain is not configured. You likely need to add the chain to <a :href="`/
 import { ChainNotConfiguredError } from '{{packageName}}'
 ```
 
-### ConnectorAccountNotFound
+### ConnectorAccountNotFoundError
 
 When an account does not exist on the connector or is unable to be used.
 
 ```ts-vue
-import { ConnectorAccountNotFound } from '{{packageName}}'
+import { ConnectorAccountNotFoundError } from '{{packageName}}'
 ```
 
 ### ConnectorAlreadyConnectedError
@@ -45,6 +45,14 @@ When a connector is not connected.
 
 ```ts-vue
 import { ConnectorNotConnectedError } from '{{packageName}}'
+```
+
+### ConnectorChainMismatchError
+
+When the Wagmi Config is out-of-sync with the connector's active chain ID. This is rare and likely an upstream wallet issue.
+
+```ts-vue
+import { ConnectorChainMismatchError } from '{{packageName}}'
 ```
 
 ### ConnectorNotFoundError
