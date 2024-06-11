@@ -6,7 +6,7 @@ const typeName = 'DeployContract'
 
 # deployContract <Badge text="viem@>=2.8.18" />
 
-Action for deploying a contract to the network, given bytecode & constructor arguments.
+Action for deploying a contract to the network, given bytecode, and constructor arguments.
 
 ## Import
 

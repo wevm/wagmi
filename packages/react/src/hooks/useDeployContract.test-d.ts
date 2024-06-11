@@ -31,7 +31,7 @@ test('context', () => {
         },
         onSuccess(data, variables, context) {
           expectTypeOf(data).toEqualTypeOf<Hash>()
-          expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+          expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
 
           expectTypeOf(variables).toMatchTypeOf<{
             chainId?: number | undefined
@@ -75,8 +75,8 @@ test('context', () => {
 
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
-          abi: Abi
-          args?: readonly unknown[] | undefined
+          abi: typeof abi.bayc
+          args: readonly [string, string, bigint, bigint]
         }>()
       },
       onSuccess(data, variables, context) {
@@ -86,7 +86,7 @@ test('context', () => {
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
           abi: typeof abi.bayc
-          args?: readonly [string, string, bigint, bigint]
+          args: readonly [string, string, bigint, bigint]
         }>()
       },
       onSettled(data, error, variables, context) {
@@ -96,8 +96,8 @@ test('context', () => {
 
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
-          abi: Abi
-          args?: readonly unknown[] | undefined
+          abi: typeof abi.bayc
+          args: readonly [string, string, bigint, bigint]
         }>()
       },
     },
