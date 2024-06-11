@@ -1,5 +1,5 @@
 import { abi, config } from '@wagmi/test'
-import { type Address } from 'viem'
+import type { Address } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 import { useWriteContract } from 'wagmi'
 import { celo, mainnet, optimism } from 'wagmi/chains'
@@ -30,16 +30,10 @@ test('chain formatters', () => {
   expectTypeOf<Result['feeCurrency']>().toEqualTypeOf<
     `0x${string}` | undefined
   >()
-  expectTypeOf<Result['gatewayFee']>().toEqualTypeOf<bigint | undefined>()
-  expectTypeOf<Result['gatewayFeeRecipient']>().toEqualTypeOf<
-    `0x${string}` | undefined
-  >()
   writeContract({
     ...shared,
     chainId: celo.id,
     feeCurrency: '0x',
-    gatewayFee: 123n,
-    gatewayFeeRecipient: '0x',
   })
 
   writeContract({
@@ -47,8 +41,6 @@ test('chain formatters', () => {
     chainId: mainnet.id,
     // @ts-expect-error
     feeCurrency: '0x',
-    gatewayFee: 123n,
-    gatewayFeeRecipient: '0x',
   })
 
   writeContract({
@@ -56,8 +48,6 @@ test('chain formatters', () => {
     chainId: optimism.id,
     // @ts-expect-error
     feeCurrency: '0x',
-    gatewayFee: 123n,
-    gatewayFeeRecipient: '0x',
   })
 })
 

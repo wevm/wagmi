@@ -1,4 +1,4 @@
-import { type Connector, type DisconnectErrorType } from '@wagmi/core'
+import type { Connector, DisconnectErrorType } from '@wagmi/core'
 import { config } from '@wagmi/test'
 import { expectTypeOf, test } from 'vitest'
 
@@ -37,7 +37,7 @@ test('context', () => {
           { connector?: Connector | undefined } | undefined
         >()
         expectTypeOf(data).toEqualTypeOf<void>()
-        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
       },
       onSettled(data, error, variables, context) {
         expectTypeOf(data).toEqualTypeOf<void | undefined>()

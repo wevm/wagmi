@@ -6,7 +6,7 @@ import type {
   GetConnectorClientErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import { type Evaluate, type Omit } from '@wagmi/core/internal'
+import type { Evaluate, Omit } from '@wagmi/core/internal'
 import {
   type GetConnectorClientData,
   type GetConnectorClientOptions,
@@ -28,7 +28,8 @@ import { useConfig } from './useConfig.js'
 
 export type UseConnectorClientParameters<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetConnectorClientData<config, chainId>,
 > = Evaluate<
   GetConnectorClientOptions<config, chainId> &
@@ -51,14 +52,16 @@ export type UseConnectorClientParameters<
 
 export type UseConnectorClientReturnType<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetConnectorClientData<config, chainId>,
 > = UseQueryReturnType<selectData, GetConnectorClientErrorType>
 
 /** https://wagmi.sh/react/api/hooks/useConnectorClient */
 export function useConnectorClient<
   config extends Config = ResolvedRegister['config'],
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetConnectorClientData<config, chainId>,
 >(
   parameters: UseConnectorClientParameters<config, chainId, selectData> = {},
@@ -81,7 +84,7 @@ export function useConnectorClient<
   const enabled = Boolean(status !== 'disconnected' && (query.enabled ?? true))
 
   const addressRef = useRef(address)
-  // biome-ignore lint/nursery/useExhaustiveDependencies: `queryKey` not required
+  // biome-ignore lint/correctness/useExhaustiveDependencies: `queryKey` not required
   useEffect(() => {
     const previousAddress = addressRef.current
     if (!address && previousAddress) {
@@ -100,6 +103,6 @@ export function useConnectorClient<
     ...options,
     queryKey,
     enabled,
-    staleTime: Infinity,
+    staleTime: Number.POSITIVE_INFINITY,
   })
 }

@@ -1,8 +1,8 @@
 import { config } from '@wagmi/test'
-import { type Address } from 'viem'
+import type { Address } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
-import { type Connector } from '../createConfig.js'
+import type { Connector } from '../createConfig.js'
 import { getAccount } from './getAccount.js'
 
 test('states', () => {
@@ -12,7 +12,7 @@ test('states', () => {
     case 'reconnecting': {
       expectTypeOf(result).toMatchTypeOf<{
         address: Address | undefined
-        chain: typeof config['chains'][number] | undefined
+        chain: (typeof config)['chains'][number] | undefined
         chainId: number | undefined
         connector: Connector | undefined
         isConnected: boolean
@@ -26,7 +26,7 @@ test('states', () => {
     case 'connecting': {
       expectTypeOf(result).toMatchTypeOf<{
         address: Address | undefined
-        chain: typeof config['chains'][number] | undefined
+        chain: (typeof config)['chains'][number] | undefined
         chainId: number | undefined
         connector: Connector | undefined
         isConnected: false
@@ -40,7 +40,7 @@ test('states', () => {
     case 'connected': {
       expectTypeOf(result).toMatchTypeOf<{
         address: Address
-        chain: typeof config['chains'][number] | undefined
+        chain: (typeof config)['chains'][number] | undefined
         chainId: number
         connector: Connector
         isConnected: true

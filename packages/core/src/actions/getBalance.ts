@@ -12,10 +12,10 @@ import {
   getBalance as viem_getBalance,
 } from 'viem/actions'
 
-import { type Config } from '../createConfig.js'
-import { type ChainIdParameter } from '../types/properties.js'
-import { type Unit } from '../types/unit.js'
-import { type Evaluate } from '../types/utils.js'
+import type { Config } from '../createConfig.js'
+import type { ChainIdParameter } from '../types/properties.js'
+import type { Unit } from '../types/unit.js'
+import type { Evaluate } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 import { getUnit } from '../utils/getUnit.js'
 import { readContracts } from './readContracts.js'

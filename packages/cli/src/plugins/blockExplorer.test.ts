@@ -48,6 +48,6 @@ test('fails to fetch for unverified contract', async () => {
       ],
     }).contracts(),
   ).rejects.toThrowErrorMatchingInlineSnapshot(
-    '"Contract source code not verified"',
+    '[Error: Contract source code not verified]',
   )
 })

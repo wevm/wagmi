@@ -1,4 +1,4 @@
-import { type Connector, type SwitchAccountErrorType } from '@wagmi/core'
+import type { Connector, SwitchAccountErrorType } from '@wagmi/core'
 import { config } from '@wagmi/test'
 import { expectTypeOf, test } from 'vitest'
 
@@ -26,7 +26,7 @@ test('context', () => {
           accounts: readonly [Address, ...Address[]]
           chainId: number
         }>()
-        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
       },
       onSettled(data, error, variables, context) {
         expectTypeOf(data).toEqualTypeOf<

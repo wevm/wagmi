@@ -7,7 +7,7 @@ import {
 } from 'viem/experimental'
 
 import { getConnectorClient } from '../../actions/getConnectorClient.js'
-import { type Config } from '../../createConfig.js'
+import type { Config } from '../../createConfig.js'
 import type { ConnectorParameter } from '../../types/properties.js'
 
 export type GetCapabilitiesParameters =

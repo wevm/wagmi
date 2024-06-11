@@ -5,7 +5,7 @@ import {
 } from 'viem/actions'
 
 import type { BlockTag, Chain, Transport, WebSocketTransport } from 'viem'
-import { type Config } from '../createConfig.js'
+import type { Config } from '../createConfig.js'
 import type { SelectChains } from '../types/chain.js'
 import type {
   ChainIdParameter,
@@ -18,13 +18,15 @@ export type WatchBlocksParameters<
   includeTransactions extends boolean = false,
   blockTag extends BlockTag = 'latest',
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   ///
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = {
   [key in keyof chains]: UnionEvaluate<
     viem_WatchBlocksParameters<
-      config['_internal']['transports'][chains[key]['id']] extends infer transport extends Transport
+      config['_internal']['transports'][chains[key]['id']] extends infer transport extends
+        Transport
         ? Transport extends transport
           ? WebSocketTransport
           : transport
@@ -44,7 +46,8 @@ export type WatchBlocksReturnType = viem_WatchBlocksReturnType
 /** https://wagmi.sh/core/actions/watchBlocks */
 export function watchBlocks<
   config extends Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   includeTransactions extends boolean = false,
   blockTag extends BlockTag = 'latest',
 >(

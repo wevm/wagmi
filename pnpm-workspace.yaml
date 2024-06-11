@@ -1,7 +1,7 @@
 packages:
-  - 'docs'
   - 'packages/*'
   - '!packages/register-tests'
   - 'packages/cli/src/plugins/__fixtures__/hardhat'
   - 'packages/register-tests/*'
   - 'playgrounds/*'
+  - 'site'

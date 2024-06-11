@@ -388,7 +388,7 @@ test('throws if allowFailure=false & a contract method fails', async () => {
     }),
   ).rejects.toThrowErrorMatchingInlineSnapshot(
     `
-    "The contract function \\"tokenOfOwnerByIndex\\" reverted with the following reason:
+    [ContractFunctionExecutionError: The contract function "tokenOfOwnerByIndex" reverted with the following reason:
     ERC721Enumerable: owner index out of bounds
 
     Contract Call:
@@ -397,7 +397,7 @@ test('throws if allowFailure=false & a contract method fails', async () => {
       args:                         (0xA0Cf798816D4b9b9866b5330EEa46a18382f251e, 69420)
 
     Docs: https://viem.sh/docs/contract/readContract
-    Version: viem@2.9.31"
+    Version: viem@2.9.31]
   `,
   )
 })
@@ -489,10 +489,10 @@ test('throws if allowFailure=false & encoding contract function data fails', asy
     }),
   ).rejects.toThrowErrorMatchingInlineSnapshot(
     `
-    "The contract function \\"ownerOf\\" returned no data (\\"0x\\").
+    [ContractFunctionExecutionError: The contract function "ownerOf" returned no data ("0x").
 
     This could be due to any of the following:
-      - The contract does not have the function \\"ownerOf\\",
+      - The contract does not have the function "ownerOf",
       - The parameters passed to the contract function may be invalid, or
       - The address is not a contract.
      
@@ -502,7 +502,7 @@ test('throws if allowFailure=false & encoding contract function data fails', asy
       args:             (1e+31)
 
     Docs: https://viem.sh/docs/contract/readContract
-    Version: viem@2.9.31"
+    Version: viem@2.9.31]
   `,
   )
 })
@@ -604,10 +604,10 @@ test('should throw if allowFailure=false & a contract has no response', async ()
     }),
   ).rejects.toThrowErrorMatchingInlineSnapshot(
     `
-    "The contract function \\"love\\" returned no data (\\"0x\\").
+    [ContractFunctionExecutionError: The contract function "love" returned no data ("0x").
 
     This could be due to any of the following:
-      - The contract does not have the function \\"love\\",
+      - The contract does not have the function "love",
       - The parameters passed to the contract function may be invalid, or
       - The address is not a contract.
      
@@ -617,7 +617,7 @@ test('should throw if allowFailure=false & a contract has no response', async ()
       args:          (0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC)
 
     Docs: https://viem.sh/docs/contract/readContract
-    Version: viem@2.9.31"
+    Version: viem@2.9.31]
   `,
   )
 })

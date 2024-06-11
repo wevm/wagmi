@@ -6,7 +6,7 @@ import {
   type WatchBlockNumberParameters,
   watchBlockNumber,
 } from '@wagmi/core'
-import { type UnionEvaluate, type UnionPartial } from '@wagmi/core/internal'
+import type { UnionEvaluate, UnionPartial } from '@wagmi/core/internal'
 import { useEffect } from 'react'
 
 import type { ConfigParameter, EnabledParameter } from '../types/properties.js'
@@ -15,7 +15,8 @@ import { useConfig } from './useConfig.js'
 
 export type UseWatchBlockNumberParameters<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 > = UnionEvaluate<
   UnionPartial<WatchBlockNumberParameters<config, chainId>> &
     ConfigParameter<config> &
@@ -27,7 +28,8 @@ export type UseWatchBlockNumberReturnType = void
 /** https://wagmi.sh/react/api/hooks/useWatchBlockNumber */
 export function useWatchBlockNumber<
   config extends Config = ResolvedRegister['config'],
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 >(
   parameters: UseWatchBlockNumberParameters<config, chainId> = {} as any,
 ): UseWatchBlockNumberReturnType {
@@ -37,6 +39,8 @@ export function useWatchBlockNumber<
   const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
+  // TODO(react@19): cleanup
+  // biome-ignore lint/correctness/useExhaustiveDependencies: `rest` changes every render so only including properties in dependency array
   useEffect(() => {
     if (!enabled) return
     if (!onBlockNumber) return
@@ -45,5 +49,17 @@ export function useWatchBlockNumber<
       chainId,
       onBlockNumber,
     })
-  }, [chainId, config, enabled, onBlockNumber, rest])
+  }, [
+    chainId,
+    config,
+    enabled,
+    onBlockNumber,
+    ///
+    rest.onError,
+    rest.emitMissed,
+    rest.emitOnBegin,
+    rest.poll,
+    rest.pollingInterval,
+    rest.syncConnectedChain,
+  ])
 }

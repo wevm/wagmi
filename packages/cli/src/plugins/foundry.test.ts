@@ -20,9 +20,9 @@ test('forge not installed', async () => {
       },
     }).validate(),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
-        "forge must be installed to use Foundry plugin.
-        To install, follow the instructions at https://book.getfoundry.sh/getting-started/installation"
-      `)
+    [Error: forge must be installed to use Foundry plugin.
+    To install, follow the instructions at https://book.getfoundry.sh/getting-started/installation]
+  `)
 })
 
 test('project does not exist', async () => {

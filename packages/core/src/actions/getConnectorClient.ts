@@ -20,11 +20,12 @@ import type {
   ChainIdParameter,
   ConnectorParameter,
 } from '../types/properties.js'
-import { type Evaluate } from '../types/utils.js'
+import type { Evaluate } from '../types/utils.js'
 
 export type GetConnectorClientParameters<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 > = Evaluate<
   ChainIdParameter<config, chainId> &
     ConnectorParameter & {
@@ -34,7 +35,8 @@ export type GetConnectorClientParameters<
 
 export type GetConnectorClientReturnType<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 > = Evaluate<
   Client<
     config['_internal']['transports'][chainId],
@@ -92,7 +94,12 @@ export async function getConnectorClient<
   }
 
   // if account was provided, check that it exists on the connector
-  if (parameters.account && !connection.accounts.includes(account.address))
+  if (
+    parameters.account &&
+    !connection.accounts.some(
+      (x) => x.toLowerCase() === account.address.toLowerCase(),
+    )
+  )
     throw new ConnectorAccountNotFoundError({
       address: account.address,
       connector,

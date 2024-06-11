@@ -3,9 +3,9 @@ import {
   type Address,
   type EIP1193Provider,
   type ProviderConnectInfo,
-  ProviderRpcError,
+  type ProviderRpcError,
   ResourceUnavailableRpcError,
-  RpcError,
+  type RpcError,
   SwitchChainError,
   UserRejectedRequestError,
   getAddress,
@@ -17,7 +17,7 @@ import {
 import type { Connector } from '../createConfig.js'
 import { ChainNotConfiguredError } from '../errors/config.js'
 import { ProviderNotFoundError } from '../errors/connector.js'
-import { type Evaluate } from '../types/utils.js'
+import type { Evaluate } from '../types/utils.js'
 import { createConnector } from './createConnector.js'
 
 export type InjectedParameters = {
@@ -265,6 +265,21 @@ export function injected(parameters: InjectedParameters = {}) {
         provider.on('connect', connect)
       }
 
+      // Experimental support for MetaMask disconnect
+      // https://github.com/MetaMask/metamask-improvement-proposals/blob/main/MIPs/mip-2.md
+      try {
+        // TODO: Remove explicit type for viem@3
+        await provider.request<{
+          Method: 'wallet_revokePermissions'
+          Parameters: [permissions: { eth_accounts: Record<string, any> }]
+          ReturnType: null
+        }>({
+          // `'wallet_revokePermissions'` added in `viem@2.10.3`
+          method: 'wallet_revokePermissions',
+          params: [{ eth_accounts: {} }],
+        })
+      } catch {}
+
       // Add shim signalling connector is disconnected
       if (shimDisconnect) {
         await config.storage?.setItem(`${this.id}.disconnected`, true)
@@ -288,7 +303,7 @@ export function injected(parameters: InjectedParameters = {}) {
     async getProvider() {
       if (typeof window === 'undefined') return undefined
 
-      let provider
+      let provider: Provider
       const target = getTarget()
       if (typeof target.provider === 'function')
         provider = target.provider(window as Window | undefined)
@@ -425,7 +440,7 @@ export function injected(parameters: InjectedParameters = {}) {
           try {
             const { default: blockExplorer, ...blockExplorers } =
               chain.blockExplorers ?? {}
-            let blockExplorerUrls
+            let blockExplorerUrls: string[] | undefined
             if (addEthereumChainParameter?.blockExplorerUrls)
               blockExplorerUrls = addEthereumChainParameter.blockExplorerUrls
             else if (blockExplorer)
@@ -434,7 +449,7 @@ export function injected(parameters: InjectedParameters = {}) {
                 ...Object.values(blockExplorers).map((x) => x.url),
               ]
 
-            let rpcUrls
+            let rpcUrls: readonly string[]
             if (addEthereumChainParameter?.rpcUrls?.length)
               rpcUrls = addEthereumChainParameter.rpcUrls
             else rpcUrls = [chain.rpcUrls.default?.http[0] ?? '']

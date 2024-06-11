@@ -1,6 +1,6 @@
-import { type DeployContractErrorType } from '@wagmi/core'
+import type { DeployContractErrorType } from '@wagmi/core'
 import { abi, bytecode } from '@wagmi/test'
-import { type Abi, type Hash } from 'viem'
+import type { Abi, Hash } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
 import { useDeployContract } from './useDeployContract.js'

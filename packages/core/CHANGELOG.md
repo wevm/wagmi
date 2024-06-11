@@ -1,5 +1,89 @@
 # @wagmi/core
 
+## 2.10.5
+
+### Patch Changes
+
+- [#3970](https://github.com/wevm/wagmi/pull/3970) [`030c7c2cb380dfd67a2182f62e2aa7a6e1601898`](https://github.com/wevm/wagmi/commit/030c7c2cb380dfd67a2182f62e2aa7a6e1601898) Thanks [@nanxiaobei](https://github.com/nanxiaobei)! - Fixed `cookieStorage` not working across paths.
+
+## 2.10.4
+
+### Patch Changes
+
+- [#3984](https://github.com/wevm/wagmi/pull/3984) [`51fde8a0433b4fff357c1a8d7e08b41b4c86c968`](https://github.com/wevm/wagmi/commit/51fde8a0433b4fff357c1a8d7e08b41b4c86c968) Thanks [@tmm](https://github.com/tmm)! - Fixed `writeContract` query types for `value` property.
+
+## 2.10.3
+
+### Patch Changes
+
+- [#3962](https://github.com/wevm/wagmi/pull/3962) [`2804a8a583b1874271154898b4bae38756ef581c`](https://github.com/wevm/wagmi/commit/2804a8a583b1874271154898b4bae38756ef581c) Thanks [@tmm](https://github.com/tmm)! - Added catch to `reconnect`.
+
+## 2.10.2
+
+### Patch Changes
+
+- [#3940](https://github.com/wevm/wagmi/pull/3940) [`a5071f581dfdfb961718873643a2fc629101c72a`](https://github.com/wevm/wagmi/commit/a5071f581dfdfb961718873643a2fc629101c72a) Thanks [@jxom](https://github.com/jxom)! - Fixed usage of `metaMask` connector in Vite environments.
+
+## 2.10.1
+
+### Patch Changes
+
+- Bumped versions.
+
+## 2.10.0
+
+### Minor Changes
+
+- [#3928](https://github.com/wevm/wagmi/pull/3928) [`3117e71825f9c58a0d718f3d1686f1a191fa9cb1`](https://github.com/wevm/wagmi/commit/3117e71825f9c58a0d718f3d1686f1a191fa9cb1) Thanks [@tmm](https://github.com/tmm)! - Updated the default Coinbase SDK in `coinbaseWallet` Connector to v4.x.
+
+## 2.9.8
+
+### Patch Changes
+
+- [#3906](https://github.com/wevm/wagmi/pull/3906) [`32fcb4a31dde6b0206961d8ffe9c651f8a459c67`](https://github.com/wevm/wagmi/commit/32fcb4a31dde6b0206961d8ffe9c651f8a459c67) Thanks [@tmm](https://github.com/tmm)! - Added support for Vue.
+
+## 2.9.7
+
+### Patch Changes
+
+- [#3924](https://github.com/wevm/wagmi/pull/3924) [`1f58734f88458e0f6adb05c99f0c90f36ab286b8`](https://github.com/wevm/wagmi/commit/1f58734f88458e0f6adb05c99f0c90f36ab286b8) Thanks [@jxom](https://github.com/jxom)! - Refactored `isChainsStale` logic in `walletConnect` connector.
+
+## 2.9.6
+
+### Patch Changes
+
+- [#3917](https://github.com/wevm/wagmi/pull/3917) [`05948fdad5bb4a56b08916d45b3dec2cb1e5f55b`](https://github.com/wevm/wagmi/commit/05948fdad5bb4a56b08916d45b3dec2cb1e5f55b) Thanks [@jxom](https://github.com/jxom)! - Updated `@metamask/sdk`.
+
+## 2.9.5
+
+### Patch Changes
+
+- [`4fecbbb66d0aacd03b8c62a6455d11a33cde8f85`](https://github.com/wevm/wagmi/commit/4fecbbb66d0aacd03b8c62a6455d11a33cde8f85) Thanks [@jxom](https://github.com/jxom)! - Fixed address comparison in `getConnectorClient`.
+
+## 2.9.4
+
+### Patch Changes
+
+- [#3910](https://github.com/wevm/wagmi/pull/3910) [`e6139a97c4b8804d734b1547b5e3921ce01fbe24`](https://github.com/wevm/wagmi/commit/e6139a97c4b8804d734b1547b5e3921ce01fbe24) Thanks [@tmm](https://github.com/tmm)! - Added experimental `wallet_revokePermissions` support to `injected`.
+
+## 2.9.3
+
+### Patch Changes
+
+- [#3904](https://github.com/wevm/wagmi/pull/3904) [`addca28ebc20f1a4367c35fe9ef786decff9c87e`](https://github.com/wevm/wagmi/commit/addca28ebc20f1a4367c35fe9ef786decff9c87e) Thanks [@jxom](https://github.com/jxom)! - Updated `@walletconnect/ethereum-provider`.
+
+## 2.9.2
+
+### Patch Changes
+
+- [#3902](https://github.com/wevm/wagmi/pull/3902) [`204b7b624612405500ec098fb9e35facd3f74ca4`](https://github.com/wevm/wagmi/commit/204b7b624612405500ec098fb9e35facd3f74ca4) Thanks [@jxom](https://github.com/jxom)! - Made third-party SDK imports type-only.
+
+## 2.9.1
+
+### Patch Changes
+
+- [`cda6a5d5`](https://github.com/wevm/wagmi/commit/cda6a5d56328330fbde050b4ef40b01c58d2519a) Thanks [@jxom](https://github.com/jxom)! - Updated packages.
+
 ## 2.9.0
 
 ### Minor Changes

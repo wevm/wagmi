@@ -1,11 +1,11 @@
 'use client'
 
-import {
-  type Config,
-  type EstimateMaxPriorityFeePerGasErrorType,
-  type ResolvedRegister,
+import type {
+  Config,
+  EstimateMaxPriorityFeePerGasErrorType,
+  ResolvedRegister,
 } from '@wagmi/core'
-import { type Evaluate } from '@wagmi/core/internal'
+import type { Evaluate } from '@wagmi/core/internal'
 import {
   type EstimateMaxPriorityFeePerGasData,
   type EstimateMaxPriorityFeePerGasOptions,

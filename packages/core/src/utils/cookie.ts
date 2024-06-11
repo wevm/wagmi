@@ -1,5 +1,5 @@
-import { type Config, type State } from '../createConfig.js'
-import { type BaseStorage } from '../createStorage.js'
+import type { Config, State } from '../createConfig.js'
+import type { BaseStorage } from '../createStorage.js'
 import { deserialize } from './deserialize.js'
 
 export const cookieStorage = {
@@ -10,7 +10,7 @@ export const cookieStorage = {
   },
   setItem(key, value) {
     if (typeof window === 'undefined') return
-    document.cookie = `${key}=${value}`
+    document.cookie = `${key}=${value};path=/`
   },
   removeItem(key) {
     if (typeof window === 'undefined') return

@@ -9,6 +9,7 @@ import {
   type InfiniteReadContractsQueryFnData,
   type InfiniteReadContractsQueryKey,
   infiniteReadContractsQueryOptions,
+  structuralSharing,
 } from '@wagmi/core/query'
 import type { ContractFunctionParameters } from 'viem'
 
@@ -23,7 +24,6 @@ import type {
 import {
   type UseInfiniteQueryParameters,
   type UseInfiniteQueryReturnType,
-  structuralSharing,
   useInfiniteQuery,
 } from '../utils/query.js'
 import { useChainId } from './useChainId.js'

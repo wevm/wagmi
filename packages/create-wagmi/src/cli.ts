@@ -45,6 +45,7 @@ const cwd = process.cwd()
 
 const renameFiles: Record<string, string | undefined> = {
   '_env.local': '.env.local',
+  // https://github.com/npm/npm/issues/1862
   _gitignore: '.gitignore',
   _npmrc: '.npmrc',
 }
@@ -158,6 +159,7 @@ async function init() {
       },
     )
   } catch (error) {
+    // biome-ignore lint/suspicious/noConsoleLog:
     console.log((error as Error).message)
     return
   }
@@ -220,6 +222,7 @@ async function init() {
     process.exit(status ?? 0)
   }
 
+  // biome-ignore lint/suspicious/noConsoleLog:
   console.log(`\nScaffolding project in ${root}...`)
 
   const templateDir = path.resolve(
@@ -248,8 +251,10 @@ async function init() {
   write('package.json', `${JSON.stringify(pkg, null, 2)}\n`)
 
   const cdProjectName = path.relative(cwd, root)
+  // biome-ignore lint/suspicious/noConsoleLog:
   console.log('\nDone. Now run:\n')
   if (root !== cwd)
+    // biome-ignore lint/suspicious/noConsoleLog:
     console.log(
       `  cd ${
         cdProjectName.includes(' ') ? `"${cdProjectName}"` : cdProjectName
@@ -258,14 +263,19 @@ async function init() {
 
   switch (pkgManager) {
     case 'yarn':
+      // biome-ignore lint/suspicious/noConsoleLog:
       console.log('  yarn')
+      // biome-ignore lint/suspicious/noConsoleLog:
       console.log('  yarn dev')
       break
     default:
+      // biome-ignore lint/suspicious/noConsoleLog:
       console.log(`  ${pkgManager} install`)
+      // biome-ignore lint/suspicious/noConsoleLog:
       console.log(`  ${pkgManager} run dev`)
       break
   }
+  // biome-ignore lint/suspicious/noConsoleLog:
   console.log()
 }
 

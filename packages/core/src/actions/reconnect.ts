@@ -1,9 +1,9 @@
-import { type Address } from 'viem'
+import type { Address } from 'viem'
 
-import { type CreateConnectorFn } from '../connectors/createConnector.js'
+import type { CreateConnectorFn } from '../connectors/createConnector.js'
 import type { Config, Connection, Connector } from '../createConfig.js'
 import type { ErrorType } from '../errors/base.js'
-import { type Evaluate } from '../types/utils.js'
+import type { Evaluate } from '../types/utils.js'
 
 export type ReconnectParameters = {
   /** Connectors to attempt reconnect with */
@@ -43,7 +43,7 @@ export async function reconnect(
   } else connectors.push(...config.connectors)
 
   // Try recently-used connectors first
-  let recentConnectorId
+  let recentConnectorId: string | null | undefined
   try {
     recentConnectorId = await config.storage?.getItem('recentConnectorId')
   } catch {}
@@ -65,14 +65,14 @@ export async function reconnect(
   const connections: Connection[] = []
   const providers: unknown[] = []
   for (const connector of sorted) {
-    const provider_ = await connector.getProvider()
-    if (!provider_) continue
+    const provider = await connector.getProvider().catch(() => undefined)
+    if (!provider) continue
 
     // If we already have an instance of this connector's provider,
     // then we have already checked it (ie. injected connectors can
     // share the same `window.ethereum` instance, so we don't want to
     // connect to it again).
-    if (providers.some((provider) => provider === provider_)) continue
+    if (providers.some((x) => x === provider)) continue
 
     const isAuthorized = await connector.isAuthorized()
     if (!isAuthorized) continue
@@ -102,7 +102,7 @@ export async function reconnect(
       chainId: data.chainId,
       connector,
     })
-    providers.push(provider_)
+    providers.push(provider)
     connected = true
   }
 

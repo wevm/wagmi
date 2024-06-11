@@ -6,6 +6,8 @@ on:
 jobs:
   lint:
     name: Lint
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
@@ -14,7 +16,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install dependencies
-        uses: ./.github/actions/install-dependencies
+        uses: wevm/actions/.github/actions/pnpm@main
 
       - name: Lint repo
         run: pnpm lint:repo
@@ -44,7 +46,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install dependencies
-        uses: ./.github/actions/install-dependencies
+        uses: wevm/actions/.github/actions/pnpm@main
 
       - name: Build
         run: pnpm build
@@ -53,7 +55,7 @@ jobs:
         run: pnpm test:build
 
       - name: Check for unused files, dependencies, and exports
-        run: pnpm knip --production --ignore-internal
+        run: pnpm knip --production
 
   types:
     name: Types
@@ -62,7 +64,7 @@ jobs:
     timeout-minutes: 5
     strategy:
       matrix:
-        typescript-version: ['5.0.4', '5.1.6', '5.2.2', 'latest']
+        typescript-version: ['5.0.4', '5.1.6', '5.2.2', '5.3.3', '5.4.5']
         viem-version: ['2.9.31', 'latest']
 
     steps:
@@ -70,7 +72,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install dependencies
-        uses: ./.github/actions/install-dependencies
+        uses: wevm/actions/.github/actions/pnpm@main
 
       - run: pnpm add -D -w typescript@${{ matrix.typescript-version }} viem@${{ matrix.viem-version }}
 
@@ -100,7 +102,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install dependencies
-        uses: ./.github/actions/install-dependencies
+        uses: wevm/actions/.github/actions/pnpm@main
+
+      - name: Set up foundry
+        uses: foundry-rs/foundry-toolchain@v1
 
       - name: Run tests
         uses: nick-fields/retry@v3
@@ -109,10 +114,10 @@ jobs:
           max_attempts: 3
           timeout_minutes: 5
         env:
-          VITE_MAINNET_FORK_BLOCK_NUMBER: ${{ vars.VITE_MAINNET_FORK_BLOCK_NUMBER }}
           VITE_MAINNET_FORK_URL: ${{ secrets.VITE_MAINNET_FORK_URL }}
-          VITE_OPTIMISM_FORK_BLOCK_NUMBER: ${{ vars.VITE_OPTIMISM_FORK_BLOCK_NUMBER }}
           VITE_OPTIMISM_FORK_URL: ${{ secrets.VITE_OPTIMISM_FORK_URL }}
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}

@@ -6,7 +6,7 @@ import {
   type WatchPendingTransactionsParameters,
   watchPendingTransactions,
 } from '@wagmi/core'
-import { type UnionEvaluate, type UnionPartial } from '@wagmi/core/internal'
+import type { UnionEvaluate, UnionPartial } from '@wagmi/core/internal'
 import { useEffect } from 'react'
 
 import type { ConfigParameter, EnabledParameter } from '../types/properties.js'
@@ -15,7 +15,8 @@ import { useConfig } from './useConfig.js'
 
 export type UseWatchPendingTransactionsParameters<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 > = UnionEvaluate<
   UnionPartial<WatchPendingTransactionsParameters<config, chainId>> &
     ConfigParameter<config> &
@@ -27,7 +28,8 @@ export type UseWatchPendingTransactionsReturnType = void
 /** https://wagmi.sh/react/api/hooks/useWatchPendingTransactions */
 export function useWatchPendingTransactions<
   config extends Config = ResolvedRegister['config'],
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 >(
   parameters: UseWatchPendingTransactionsParameters<
     config,
@@ -40,6 +42,8 @@ export function useWatchPendingTransactions<
   const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
+  // TODO(react@19): cleanup
+  // biome-ignore lint/correctness/useExhaustiveDependencies: `rest` changes every render so only including properties in dependency array
   useEffect(() => {
     if (!enabled) return
     if (!onTransactions) return
@@ -48,5 +52,16 @@ export function useWatchPendingTransactions<
       chainId,
       onTransactions,
     })
-  }, [chainId, config, enabled, onTransactions, rest])
+  }, [
+    chainId,
+    config,
+    enabled,
+    onTransactions,
+    ///
+    rest.batch,
+    rest.onError,
+    rest.poll,
+    rest.pollingInterval,
+    rest.syncConnectedChain,
+  ])
 }

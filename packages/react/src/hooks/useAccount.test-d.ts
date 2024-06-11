@@ -1,5 +1,5 @@
-import { type Connector } from '@wagmi/core'
-import { type Address, type Chain } from 'viem'
+import type { Connector } from '@wagmi/core'
+import type { Address, Chain } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
 import { useAccount } from './useAccount.js'

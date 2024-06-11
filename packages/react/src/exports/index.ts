@@ -2,6 +2,7 @@
 // Context
 ////////////////////////////////////////////////////////////////////////////////
 
+// biome-ignore lint/performance/noBarrelFile: entrypoint module
 export {
   type WagmiProviderProps,
   WagmiContext,

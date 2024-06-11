@@ -1,4 +1,4 @@
-import { type QueryOptions } from '@tanstack/query-core'
+import type { QueryOptions } from '@tanstack/query-core'
 
 import {
   type GetEnsAvatarErrorType,
@@ -6,7 +6,7 @@ import {
   type GetEnsAvatarReturnType,
   getEnsAvatar,
 } from '../actions/getEnsAvatar.js'
-import { type Config } from '../createConfig.js'
+import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
 import type { Evaluate, ExactPartial } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'

@@ -1,15 +1,15 @@
-import {
-  type AddEthereumChainParameter,
-  type Address,
-  type Chain,
-  type Client,
-  type ProviderConnectInfo,
-  type ProviderMessage,
+import type {
+  AddEthereumChainParameter,
+  Address,
+  Chain,
+  Client,
+  ProviderConnectInfo,
+  ProviderMessage,
 } from 'viem'
 
-import { Emitter } from '../createEmitter.js'
-import { type Storage } from '../createStorage.js'
-import { type Evaluate, type ExactPartial, type Omit } from '../types/utils.js'
+import type { Emitter } from '../createEmitter.js'
+import type { Storage } from '../createStorage.js'
+import type { Evaluate, ExactPartial, Omit } from '../types/utils.js'
 
 export type ConnectorEventMap = {
   change: {
@@ -24,8 +24,8 @@ export type ConnectorEventMap = {
 
 export type CreateConnectorFn<
   provider = unknown,
-  properties extends Record<string, unknown> = {},
-  storageItem extends Record<string, unknown> = {},
+  properties extends Record<string, unknown> = Record<string, unknown>,
+  storageItem extends Record<string, unknown> = Record<string, unknown>,
 > = (config: {
   chains: readonly [Chain, ...Chain[]]
   emitter: Emitter<ConnectorEventMap>
@@ -76,8 +76,8 @@ export type CreateConnectorFn<
 
 export function createConnector<
   provider,
-  properties extends Record<string, unknown> = {},
-  storageItem extends Record<string, unknown> = {},
+  properties extends Record<string, unknown> = Record<string, unknown>,
+  storageItem extends Record<string, unknown> = Record<string, unknown>,
 >(createConnectorFn: CreateConnectorFn<provider, properties, storageItem>) {
   return createConnectorFn
 }

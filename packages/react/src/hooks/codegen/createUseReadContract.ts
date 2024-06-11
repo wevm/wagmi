@@ -1,31 +1,28 @@
-import {
-  type Config,
-  type ReadContractErrorType,
-  type ReadContractParameters,
-  type ResolvedRegister,
+import type {
+  Config,
+  ReadContractErrorType,
+  ReadContractParameters,
+  ResolvedRegister,
 } from '@wagmi/core'
-import {
-  type ScopeKeyParameter,
-  type UnionEvaluate,
-  type UnionOmit,
-  type UnionPartial,
+import type {
+  ScopeKeyParameter,
+  UnionEvaluate,
+  UnionOmit,
+  UnionPartial,
 } from '@wagmi/core/internal'
-import {
-  type ReadContractData,
-  type ReadContractQueryFnData,
-  type ReadContractQueryKey,
+import type {
+  ReadContractData,
+  ReadContractQueryFnData,
+  ReadContractQueryKey,
 } from '@wagmi/core/query'
-import {
-  type Abi,
-  type Address,
-  type ContractFunctionArgs,
-  type ContractFunctionName,
+import type {
+  Abi,
+  Address,
+  ContractFunctionArgs,
+  ContractFunctionName,
 } from 'viem'
 
-import {
-  type ConfigParameter,
-  type QueryParameter,
-} from '../../types/properties.js'
+import type { ConfigParameter, QueryParameter } from '../../types/properties.js'
 import { useAccount } from '../useAccount.js'
 import { useChainId } from '../useChainId.js'
 import { useConfig } from '../useConfig.js'

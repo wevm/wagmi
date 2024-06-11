@@ -1,8 +1,7 @@
 import { abi } from '@wagmi/test'
-import { type Address } from 'viem'
+import type { Address } from 'viem'
 import { assertType, expectTypeOf, test } from 'vitest'
 
-import {} from '../types/properties.js'
 import {
   type UseReadContractParameters,
   type UseReadContractReturnType,

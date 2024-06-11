@@ -1,4 +1,4 @@
-import { type QueryOptions } from '@tanstack/query-core'
+import type { QueryOptions } from '@tanstack/query-core'
 
 import {
   type GetBlockTransactionCountErrorType,
@@ -6,9 +6,9 @@ import {
   type GetBlockTransactionCountReturnType,
   getBlockTransactionCount,
 } from '../actions/getBlockTransactionCount.js'
-import { type Config } from '../createConfig.js'
-import { type ScopeKeyParameter } from '../types/properties.js'
-import { type ExactPartial, type UnionEvaluate } from '../types/utils.js'
+import type { Config } from '../createConfig.js'
+import type { ScopeKeyParameter } from '../types/properties.js'
+import type { ExactPartial, UnionEvaluate } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
 export type GetBlockTransactionCountOptions<

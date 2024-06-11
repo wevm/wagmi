@@ -1,5 +1,179 @@
 # @wagmi/connectors
 
+## 5.0.10
+
+### Patch Changes
+
+- [`560952acd4bfe33db6c7c07b35c613cef278677c`](https://github.com/wevm/wagmi/commit/560952acd4bfe33db6c7c07b35c613cef278677c) Thanks [@tmm](https://github.com/tmm)! - Captured Coinbase Smart Wallet error when closing window as EIP-1193 `4001` error.
+
+## 5.0.9
+
+### Patch Changes
+
+- [`32cdd7b7dc5aff916c040628519562c3a99d418d`](https://github.com/wevm/wagmi/commit/32cdd7b7dc5aff916c040628519562c3a99d418d) Thanks [@tmm](https://github.com/tmm)! - Bumped `@metamask/sdk` to remove peer dependency install warning.
+
+## 5.0.8
+
+### Patch Changes
+
+- [#3997](https://github.com/wevm/wagmi/pull/3997) [`c1952d1ff7f0a491dc88595a49159451b07b5621`](https://github.com/wevm/wagmi/commit/c1952d1ff7f0a491dc88595a49159451b07b5621) Thanks [@nateReiners](https://github.com/nateReiners)! - Bumped Coinbase Wallet SDK.
+
+## 5.0.7
+
+### Patch Changes
+
+- Updated dependencies [[`030c7c2cb380dfd67a2182f62e2aa7a6e1601898`](https://github.com/wevm/wagmi/commit/030c7c2cb380dfd67a2182f62e2aa7a6e1601898)]:
+  - @wagmi/core@2.10.5
+
+## 5.0.6
+
+### Patch Changes
+
+- Updated dependencies [[`51fde8a0433b4fff357c1a8d7e08b41b4c86c968`](https://github.com/wevm/wagmi/commit/51fde8a0433b4fff357c1a8d7e08b41b4c86c968)]:
+  - @wagmi/core@2.10.4
+
+## 5.0.5
+
+### Patch Changes
+
+- [#3979](https://github.com/wevm/wagmi/pull/3979) [`70dd28669dd8d2ce08217cd02e29a8fbba7a08d4`](https://github.com/wevm/wagmi/commit/70dd28669dd8d2ce08217cd02e29a8fbba7a08d4) Thanks [@tmm](https://github.com/tmm)! - Fixed `walletConnect` connector.
+
+## 5.0.4
+
+### Patch Changes
+
+- [#3972](https://github.com/wevm/wagmi/pull/3972) [`be9e1b8a9818b92eb0654a20d9471e9e39329e7e`](https://github.com/wevm/wagmi/commit/be9e1b8a9818b92eb0654a20d9471e9e39329e7e) Thanks [@nateReiners](https://github.com/nateReiners)! - Bumped Coinbase Wallet SDK.
+
+## 5.0.3
+
+### Patch Changes
+
+- [#3962](https://github.com/wevm/wagmi/pull/3962) [`2804a8a583b1874271154898b4bae38756ef581c`](https://github.com/wevm/wagmi/commit/2804a8a583b1874271154898b4bae38756ef581c) Thanks [@tmm](https://github.com/tmm)! - Added timeout to `getInfo` called in `safe` connector since [non-Safe App iFrames cause it to not resolve](https://github.com/safe-global/safe-apps-sdk/issues/263#issuecomment-1029835840).
+
+- Updated dependencies [[`2804a8a583b1874271154898b4bae38756ef581c`](https://github.com/wevm/wagmi/commit/2804a8a583b1874271154898b4bae38756ef581c)]:
+  - @wagmi/core@2.10.3
+
+## 5.0.2
+
+### Patch Changes
+
+- [#3940](https://github.com/wevm/wagmi/pull/3940) [`a5071f581dfdfb961718873643a2fc629101c72a`](https://github.com/wevm/wagmi/commit/a5071f581dfdfb961718873643a2fc629101c72a) Thanks [@jxom](https://github.com/jxom)! - Fixed usage of `metaMask` connector in Vite environments.
+
+- Updated dependencies [[`a5071f581dfdfb961718873643a2fc629101c72a`](https://github.com/wevm/wagmi/commit/a5071f581dfdfb961718873643a2fc629101c72a)]:
+  - @wagmi/core@2.10.2
+
+## 5.0.1
+
+### Patch Changes
+
+- Bumped versions.
+
+- Updated dependencies []:
+  - @wagmi/core@2.10.1
+
+## 5.0.0
+
+### Major Changes
+
+- [#3928](https://github.com/wevm/wagmi/pull/3928) [`3117e71825f9c58a0d718f3d1686f1a191fa9cb1`](https://github.com/wevm/wagmi/commit/3117e71825f9c58a0d718f3d1686f1a191fa9cb1) Thanks [@tmm](https://github.com/tmm)! - **Breaking:** Updated default Coinbase SDK in `coinbaseWallet` Connector to v4.x.
+
+  Added a `version` property (defaults to `'4'`) to the `coinbaseWallet` Connector to target a version of the Coinbase SDK:
+
+  ```diff
+  coinbaseWallet({
+  + version: '3' | '4',
+  })
+  ```
+
+  If `headlessMode` property is set to `true`, then the Connector will target v3 of the Coinbase SDK.
+
+  The following properties are removed in v4 of the `coinbaseWallet` Connector:
+
+  - `chainId`
+  - `darkMode`
+  - `diagnosticLogger`
+  - `enableMobileDeepLink`
+  - `jsonRpcUrl`
+  - `linkApiUrl`
+  - `overrideIsCoinbaseBrowser`
+  - `overrideIsCoinbaseWallet`
+  - `overrideIsMetaMask`
+  - `reloadOnDisconnect`
+  - `uiConstructor`
+
+  Consumers can still use the above properties in v3 by passing `version: '3'` to the Connector. However, please note that v3 of the Coinbase SDK is deprecated and will be removed in a future release.
+
+### Patch Changes
+
+- Updated dependencies [[`3117e71825f9c58a0d718f3d1686f1a191fa9cb1`](https://github.com/wevm/wagmi/commit/3117e71825f9c58a0d718f3d1686f1a191fa9cb1)]:
+  - @wagmi/core@2.10.0
+
+## 4.3.10
+
+### Patch Changes
+
+- [#3906](https://github.com/wevm/wagmi/pull/3906) [`32fcb4a31dde6b0206961d8ffe9c651f8a459c67`](https://github.com/wevm/wagmi/commit/32fcb4a31dde6b0206961d8ffe9c651f8a459c67) Thanks [@tmm](https://github.com/tmm)! - Added support for Vue.
+
+- Updated dependencies [[`32fcb4a31dde6b0206961d8ffe9c651f8a459c67`](https://github.com/wevm/wagmi/commit/32fcb4a31dde6b0206961d8ffe9c651f8a459c67)]:
+  - @wagmi/core@2.9.8
+
+## 4.3.9
+
+### Patch Changes
+
+- [#3924](https://github.com/wevm/wagmi/pull/3924) [`1f58734f88458e0f6adb05c99f0c90f36ab286b8`](https://github.com/wevm/wagmi/commit/1f58734f88458e0f6adb05c99f0c90f36ab286b8) Thanks [@jxom](https://github.com/jxom)! - Refactored `isChainsStale` logic in `walletConnect` connector.
+
+- Updated dependencies [[`1f58734f88458e0f6adb05c99f0c90f36ab286b8`](https://github.com/wevm/wagmi/commit/1f58734f88458e0f6adb05c99f0c90f36ab286b8)]:
+  - @wagmi/core@2.9.7
+
+## 4.3.8
+
+### Patch Changes
+
+- [#3917](https://github.com/wevm/wagmi/pull/3917) [`05948fdad5bb4a56b08916d45b3dec2cb1e5f55b`](https://github.com/wevm/wagmi/commit/05948fdad5bb4a56b08916d45b3dec2cb1e5f55b) Thanks [@jxom](https://github.com/jxom)! - Updated `@metamask/sdk`.
+
+- Updated dependencies [[`05948fdad5bb4a56b08916d45b3dec2cb1e5f55b`](https://github.com/wevm/wagmi/commit/05948fdad5bb4a56b08916d45b3dec2cb1e5f55b)]:
+  - @wagmi/core@2.9.6
+
+## 4.3.7
+
+### Patch Changes
+
+- Updated dependencies [[`4fecbbb66d0aacd03b8c62a6455d11a33cde8f85`](https://github.com/wevm/wagmi/commit/4fecbbb66d0aacd03b8c62a6455d11a33cde8f85)]:
+  - @wagmi/core@2.9.5
+
+## 4.3.6
+
+### Patch Changes
+
+- Updated dependencies [[`e6139a97c4b8804d734b1547b5e3921ce01fbe24`](https://github.com/wevm/wagmi/commit/e6139a97c4b8804d734b1547b5e3921ce01fbe24)]:
+  - @wagmi/core@2.9.4
+
+## 4.3.5
+
+### Patch Changes
+
+- [#3904](https://github.com/wevm/wagmi/pull/3904) [`addca28ebc20f1a4367c35fe9ef786decff9c87e`](https://github.com/wevm/wagmi/commit/addca28ebc20f1a4367c35fe9ef786decff9c87e) Thanks [@jxom](https://github.com/jxom)! - Updated `@walletconnect/ethereum-provider`.
+
+- Updated dependencies [[`addca28ebc20f1a4367c35fe9ef786decff9c87e`](https://github.com/wevm/wagmi/commit/addca28ebc20f1a4367c35fe9ef786decff9c87e)]:
+  - @wagmi/core@2.9.3
+
+## 4.3.4
+
+### Patch Changes
+
+- [#3902](https://github.com/wevm/wagmi/pull/3902) [`204b7b624612405500ec098fb9e35facd3f74ca4`](https://github.com/wevm/wagmi/commit/204b7b624612405500ec098fb9e35facd3f74ca4) Thanks [@jxom](https://github.com/jxom)! - Made third-party SDK imports type-only.
+
+- Updated dependencies [[`204b7b624612405500ec098fb9e35facd3f74ca4`](https://github.com/wevm/wagmi/commit/204b7b624612405500ec098fb9e35facd3f74ca4)]:
+  - @wagmi/core@2.9.2
+
+## 4.3.3
+
+### Patch Changes
+
+- Updated dependencies [[`cda6a5d5`](https://github.com/wevm/wagmi/commit/cda6a5d56328330fbde050b4ef40b01c58d2519a)]:
+  - @wagmi/core@2.9.1
+
 ## 4.3.2
 
 ### Patch Changes

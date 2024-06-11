@@ -1,6 +1,7 @@
 import { connect, disconnect } from '@wagmi/core'
 import { config } from '@wagmi/test'
 import { renderHook } from '@wagmi/test/react'
+import { Fragment, createElement } from 'react'
 import { expect, test } from 'vitest'
 
 import { useAccount } from './useAccount.js'
@@ -22,7 +23,7 @@ test('default', async () => {
 
 test('parameters: config', () => {
   const { result } = renderHook(() => useAccount({ config }), {
-    wrapper: ({ children }) => children,
+    wrapper: ({ children }) => createElement(Fragment, { children }),
   })
   expect(result.current).toBeDefined()
 })

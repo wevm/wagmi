@@ -5,13 +5,13 @@ import { afterAll, afterEach, beforeAll, expect, test } from 'vitest'
 import { depositAbi } from '../../test/constants.js'
 import { sourcify } from './sourcify.js'
 
-export const baseUrl = 'https://repo.sourcify.dev/contracts/full_match'
-export const address = '0x00000000219ab540356cbb839cbe05303d7705fa'
-export const chainId = 1
-export const multichainAddress = '0xC4c622862a8F548997699bE24EA4bc504e5cA865'
-export const multichainIdGnosis = 100
-export const multichainIdPolygon = 137
-export const successJson = {
+const baseUrl = 'https://repo.sourcify.dev/contracts/full_match'
+const address = '0x00000000219ab540356cbb839cbe05303d7705fa'
+const chainId = 1
+const multichainAddress = '0xC4c622862a8F548997699bE24EA4bc504e5cA865'
+const multichainIdGnosis = 100
+const multichainIdPolygon = 137
+const successJson = {
   compiler: { version: '0.6.11+commit.5ef660b1' },
   language: 'Solidity',
   output: {
@@ -24,7 +24,7 @@ export const successJson = {
   version: 1,
 }
 
-export const handlers = [
+const handlers = [
   http.get(`${baseUrl}/${chainId}/${address}/metadata.json`, () =>
     HttpResponse.json(successJson),
   ),
@@ -77,7 +77,7 @@ test('fails to fetch for unverified contract', async () => {
       contracts: [{ name: 'DepositContract', address }],
     }).contracts(),
   ).rejects.toThrowErrorMatchingInlineSnapshot(
-    '"Contract not found in Sourcify repository."',
+    '[Error: Contract not found in Sourcify repository.]',
   )
 })
 
@@ -89,6 +89,6 @@ test('missing address for chainId', async () => {
       contracts: [{ name: 'DepositContract', address: { 10: address } }],
     }).contracts(),
   ).rejects.toThrowErrorMatchingInlineSnapshot(
-    '"No address found for chainId \\"1\\". Make sure chainId \\"1\\" is set as an address."',
+    `[Error: No address found for chainId "1". Make sure chainId "1" is set as an address.]`,
   )
 })

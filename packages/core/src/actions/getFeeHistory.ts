@@ -5,14 +5,15 @@ import {
   getFeeHistory as viem_getFeeHistory,
 } from 'viem/actions'
 
-import { type Config } from '../createConfig.js'
-import { type ChainIdParameter } from '../types/properties.js'
-import { type Evaluate } from '../types/utils.js'
+import type { Config } from '../createConfig.js'
+import type { ChainIdParameter } from '../types/properties.js'
+import type { Evaluate } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 
 export type GetFeeHistoryParameters<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 > = Evaluate<viem_GetFeeHistoryParameters & ChainIdParameter<config, chainId>>
 
 export type GetFeeHistoryReturnType = viem_GetFeeHistoryReturnType
@@ -22,7 +23,8 @@ export type GetFeeHistoryErrorType = viem_GetFeeHistoryErrorType
 /** https://wagmi.sh/core/api/actions/getFeeHistory */
 export function getFeeHistory<
   config extends Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 >(
   config: config,
   parameters: GetFeeHistoryParameters<config, chainId>,

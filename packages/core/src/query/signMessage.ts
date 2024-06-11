@@ -6,9 +6,9 @@ import {
   type SignMessageReturnType,
   signMessage,
 } from '../actions/signMessage.js'
-import { type Config } from '../createConfig.js'
-import { type Evaluate } from '../types/utils.js'
-import { type Mutate, type MutateAsync } from './types.js'
+import type { Config } from '../createConfig.js'
+import type { Evaluate } from '../types/utils.js'
+import type { Mutate, MutateAsync } from './types.js'
 
 export function signMessageMutationOptions(config: Config) {
   return {

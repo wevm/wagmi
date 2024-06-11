@@ -7,19 +7,19 @@ import {
   type Address,
   type Chain,
   type Client,
+  createClient,
   type ClientConfig as viem_ClientConfig,
   type Transport as viem_Transport,
-  createClient,
 } from 'viem'
 import { persist, subscribeWithSelector } from 'zustand/middleware'
 import { type Mutate, type StoreApi, createStore } from 'zustand/vanilla'
 
-import {
-  type ConnectorEventMap,
-  type CreateConnectorFn,
+import type {
+  ConnectorEventMap,
+  CreateConnectorFn,
 } from './connectors/createConnector.js'
 import { injected } from './connectors/injected.js'
-import { Emitter, type EventData, createEmitter } from './createEmitter.js'
+import { type Emitter, type EventData, createEmitter } from './createEmitter.js'
 import { type Storage, createStorage, noopStorage } from './createStorage.js'
 import { ChainNotConfiguredError } from './errors/config.js'
 import type { Evaluate, ExactPartial, LooseOmit, OneOf } from './types/utils.js'
@@ -130,7 +130,7 @@ export function createConfig<
     {
       const client = clients.get(store.getState().chainId)
       if (client && !chain) return client as Return
-      else if (!chain) throw new ChainNotConfiguredError()
+      if (!chain) throw new ChainNotConfiguredError()
     }
 
     // If a memoized client exists for a chain id, use that.
@@ -139,7 +139,7 @@ export function createConfig<
       if (client) return client as Return
     }
 
-    let client
+    let client: Client<Transport, chains[number]>
     if (rest.client) client = rest.client({ chain })
     else {
       const chainId = chain.id as chains[number]['id']
@@ -156,19 +156,18 @@ export function createConfig<
           key === 'transports'
         )
           continue
-        else {
-          if (typeof value === 'object') {
-            // check if value is chainId-specific since some values can be objects
-            // e.g. { batch: { multicall: { batchSize: 1024 } } }
-            if (chainId in value) properties[key] = value[chainId]
-            else {
-              // check if value is chainId-specific, but does not have value for current chainId
-              const hasChainSpecificValue = chainIds.some((x) => x in value)
-              if (hasChainSpecificValue) continue
-              properties[key] = value
-            }
-          } else properties[key] = value
-        }
+
+        if (typeof value === 'object') {
+          // check if value is chainId-specific since some values can be objects
+          // e.g. { batch: { multicall: { batchSize: 1024 } } }
+          if (chainId in value) properties[key] = value[chainId]
+          else {
+            // check if value is chainId-specific, but does not have value for current chainId
+            const hasChainSpecificValue = chainIds.some((x) => x in value)
+            if (hasChainSpecificValue) continue
+            properties[key] = value
+          }
+        } else properties[key] = value
       }
 
       client = createClient({
@@ -200,8 +199,8 @@ export function createConfig<
   let currentVersion: number
   const prefix = '0.0.0-canary-'
   if (version.startsWith(prefix))
-    currentVersion = parseInt(version.replace(prefix, ''))
-  else currentVersion = parseInt(version.split('.')[0] ?? '0')
+    currentVersion = Number.parseInt(version.replace(prefix, ''))
+  else currentVersion = Number.parseInt(version.split('.')[0] ?? '0')
 
   const store = createStore(
     subscribeWithSelector(

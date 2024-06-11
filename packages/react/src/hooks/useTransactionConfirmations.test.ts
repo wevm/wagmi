@@ -1,6 +1,6 @@
 import { config, wait } from '@wagmi/test'
 import { renderHook, waitFor } from '@wagmi/test/react'
-import { type Hash } from 'viem'
+import type { Hash } from 'viem'
 import { expect, test } from 'vitest'
 
 import { getTransactionReceipt } from '@wagmi/core'
@@ -150,7 +150,7 @@ test('behavior: hash: undefined -> defined', async () => {
       "isPlaceholderData": false,
       "isRefetchError": false,
       "isRefetching": false,
-      "isStale": true,
+      "isStale": false,
       "isSuccess": false,
       "queryKey": [
         "transactionConfirmations",

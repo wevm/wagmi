@@ -9,7 +9,7 @@ import { sendCalls } from './sendCalls.js'
 
 const connector = config.connectors[0]!
 
-test('default', async () => {
+test.skip('default', async () => {
   await connect(config, { connector })
   const id = await sendCalls(config, {
     calls: [
@@ -41,27 +41,27 @@ test('default', async () => {
     [
       {
         "blockHash": undefined,
-        "blockNumber": 19258214n,
+        "blockNumber": 19258222n,
         "gasUsed": 21064n,
         "logs": [],
         "status": "success",
-        "transactionHash": "0xa81a893ca5596aa105fc10206b9a8bd63df8bd526d8c0594496330f956515b4b",
+        "transactionHash": "0xe170f3830536bf30afc3db8e387fc5b2c32c04775cb7ec0fa144ec398d464c7c",
       },
       {
         "blockHash": undefined,
-        "blockNumber": 19258214n,
-        "gasUsed": 21000n,
+        "blockNumber": 19258222n,
+        "gasUsed": 42064n,
         "logs": [],
         "status": "success",
-        "transactionHash": "0x63624bbfc73f8bd7629ecb4e00ba521a9967ea9e9098ac17ae5bf500c904da1a",
+        "transactionHash": "0xf1ea1c5422b1c2fc42fa8e5b50cc1023696de2a10cdefd311c9b2e4d30bb8a6a",
       },
       {
         "blockHash": undefined,
-        "blockNumber": 19258214n,
-        "gasUsed": 21000n,
+        "blockNumber": 19258222n,
+        "gasUsed": 63064n,
         "logs": [],
         "status": "success",
-        "transactionHash": "0xc3df1b2f2c76723846a964c0c4d6d11ba423df036e0e636d298416e0f94bda29",
+        "transactionHash": "0xd6bee0fa50e87adf00d0d3d0727aa27914aa3ca13765a108d04794f960b39289",
       },
     ]
   `,

@@ -49,9 +49,9 @@ test('getClient', () => {
       chainId: 123456,
     }),
   ).toThrowErrorMatchingInlineSnapshot(`
-    "Chain not configured.
+    [ChainNotConfiguredError: Chain not configured.
 
-    Version: @wagmi/core@x.y.z"
+    Version: @wagmi/core@x.y.z]
   `)
 
   expect(() => {
@@ -59,9 +59,9 @@ test('getClient', () => {
     config.state.chainId = 123456
     config.getClient()
   }).toThrowErrorMatchingInlineSnapshot(`
-    "Chain not configured.
+    [ChainNotConfiguredError: Chain not configured.
 
-    Version: @wagmi/core@x.y.z"
+    Version: @wagmi/core@x.y.z]
   `)
 })
 
@@ -126,7 +126,7 @@ test('behavior: migrate for current version', async () => {
         chainId: 1,
         current: '983b8aca245',
       },
-      version: NaN, // mocked version is `'x.y.z'`, which will get interpreted as `NaN`
+      version: Number.NaN, // mocked version is `'x.y.z'`, which will get interpreted as `NaN`
     }),
   } as Record<string, string>
   Object.defineProperty(window, 'localStorage', {

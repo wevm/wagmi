@@ -1,5 +1,6 @@
 .DS_Store
 .next
+.nuxt
 .pnpm-debug.log*
 cache
 coverage
@@ -31,3 +32,8 @@ packages/react/codegen
 packages/react/connectors
 packages/react/experimental
 packages/react/query
+packages/vue/actions
+packages/vue/chains
+packages/vue/connectors
+packages/vue/nuxt
+packages/vue/query

@@ -7,16 +7,15 @@ import {
   type UseMutationResult,
   type UseQueryOptions,
   type UseQueryResult,
-  replaceEqualDeep,
   useInfiniteQuery as tanstack_useInfiniteQuery,
   useQuery as tanstack_useQuery,
+  useMutation,
 } from '@tanstack/react-query'
-import {
-  type Evaluate,
-  type ExactPartial,
-  type Omit,
-  type UnionOmit,
-  deepEqual,
+import type {
+  Evaluate,
+  ExactPartial,
+  Omit,
+  UnionOmit,
 } from '@wagmi/core/internal'
 import { hashFn } from '@wagmi/core/query'
 
@@ -43,6 +42,8 @@ export type UseMutationReturnType<
     'mutate' | 'mutateAsync'
   >
 >
+
+export { useMutation }
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -141,14 +142,4 @@ export function useInfiniteQuery<
   }) as UseInfiniteQueryReturnType<data, error>
   result.queryKey = parameters.queryKey
   return result
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-export function structuralSharing<data>(
-  oldData: data | undefined,
-  newData: data,
-): data {
-  if (deepEqual(oldData, newData)) return oldData as data
-  return replaceEqualDeep(oldData, newData)
 }

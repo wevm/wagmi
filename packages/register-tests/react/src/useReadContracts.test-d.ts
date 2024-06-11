@@ -1,9 +1,9 @@
-import { abi } from '@wagmi/test'
+import type { abi } from '@wagmi/test'
 import type { Address } from 'viem'
 import { expectTypeOf, test } from 'vitest'
-import { useReadContracts } from 'wagmi'
+import type { useReadContracts } from 'wagmi'
 
-import { type ChainId } from './config.js'
+import type { ChainId } from './config.js'
 
 test('UseReadContractsParameters', () => {
   type Result = NonNullable<

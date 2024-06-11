@@ -1,5 +1,5 @@
 import { abi } from '@wagmi/test'
-import { type Address, type Hash } from 'viem'
+import type { Address, Hash } from 'viem'
 import { mainnet, optimism } from 'viem/chains'
 import { expectTypeOf, test } from 'vitest'
 
@@ -37,7 +37,7 @@ test('context', () => {
         expectTypeOf(variables.args).toEqualTypeOf<
           readonly unknown[] | undefined
         >()
-        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
       },
     },
   })

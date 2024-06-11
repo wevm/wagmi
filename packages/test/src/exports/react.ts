@@ -11,9 +11,11 @@ import {
 } from '@testing-library/react'
 import { type ReactElement, createElement } from 'react'
 import { WagmiProvider } from 'wagmi'
-export { act, cleanup } from '@testing-library/react'
 
 import { config } from '../config.js'
+
+// biome-ignore lint/performance/noBarrelFile: entrypoint module
+export { act, cleanup } from '@testing-library/react'
 
 export const queryClient = new QueryClient()
 

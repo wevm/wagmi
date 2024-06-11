@@ -1,7 +1,7 @@
-import {
-  type MetaMaskSDK,
-  type MetaMaskSDKOptions,
-  type SDKProvider,
+import type {
+  MetaMaskSDK,
+  MetaMaskSDKOptions,
+  SDKProvider,
 } from '@metamask/sdk'
 import { ChainNotConfiguredError, createConnector } from '@wagmi/core'
 import type { Evaluate, ExactPartial } from '@wagmi/core/internal'
@@ -11,7 +11,7 @@ import {
   type ProviderConnectInfo,
   type ProviderRpcError,
   ResourceUnavailableRpcError,
-  RpcError,
+  type RpcError,
   SwitchChainError,
   UserRejectedRequestError,
   getAddress,
@@ -121,7 +121,18 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
     },
     async getProvider() {
       async function initProvider() {
-        const { MetaMaskSDK } = await import('@metamask/sdk')
+        // Unwrapping import for Vite compatibility.
+        // See: https://github.com/vitejs/vite/issues/9703
+        const { default: MetaMaskSDK_ } = await import('@metamask/sdk')
+        const MetaMaskSDK = (() => {
+          if (
+            typeof MetaMaskSDK_ !== 'function' &&
+            typeof MetaMaskSDK_.default === 'function'
+          )
+            return MetaMaskSDK_.default
+          return MetaMaskSDK_ as unknown as typeof MetaMaskSDK_.default
+        })()
+
         sdk = new MetaMaskSDK({
           dappMetadata: {},
           ...parameters,
@@ -132,6 +143,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
               chain.rpcUrls.default.http[0]!,
             ]),
           ),
+          useDeeplink: parameters.useDeeplink ?? true,
         })
         await sdk.init()
         return sdk.getProvider()!
@@ -145,16 +157,6 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
     },
     async isAuthorized() {
       try {
-        const isMobileBrowser =
-          typeof navigator !== 'undefined'
-            ? /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-                navigator.userAgent,
-              )
-            : false
-
-        // MetaMask Mobile doesn't support persisted sessions.
-        if (isMobileBrowser) return false
-
         const isDisconnected =
           // If shim exists in storage, connector is disconnected
           await config.storage?.getItem('metaMaskSDK.disconnected')
@@ -199,7 +201,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           try {
             const { default: blockExplorer, ...blockExplorers } =
               chain.blockExplorers ?? {}
-            let blockExplorerUrls
+            let blockExplorerUrls: string[] | undefined
             if (addEthereumChainParameter?.blockExplorerUrls)
               blockExplorerUrls = addEthereumChainParameter.blockExplorerUrls
             else if (blockExplorer)
@@ -208,7 +210,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
                 ...Object.values(blockExplorers).map((x) => x.url),
               ]
 
-            let rpcUrls
+            let rpcUrls: readonly string[]
             if (addEthereumChainParameter?.rpcUrls?.length)
               rpcUrls = addEthereumChainParameter.rpcUrls
             else rpcUrls = [chain.rpcUrls.default?.http[0] ?? '']

@@ -2,6 +2,7 @@ import type {
   Abi,
   Account,
   Chain,
+  Client,
   ContractFunctionArgs,
   ContractFunctionName,
 } from 'viem'
@@ -12,14 +13,14 @@ import {
   writeContract as viem_writeContract,
 } from 'viem/actions'
 
-import { type Config } from '../createConfig.js'
-import { type BaseErrorType, type ErrorType } from '../errors/base.js'
-import { type SelectChains } from '../types/chain.js'
-import {
-  type ChainIdParameter,
-  type ConnectorParameter,
+import type { Config } from '../createConfig.js'
+import type { BaseErrorType, ErrorType } from '../errors/base.js'
+import type { SelectChains } from '../types/chain.js'
+import type {
+  ChainIdParameter,
+  ConnectorParameter,
 } from '../types/properties.js'
-import type { Evaluate, UnionEvaluate, UnionOmit } from '../types/utils.js'
+import type { Evaluate, UnionEvaluate } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 import { getAccount } from './getAccount.js'
 import {
@@ -43,23 +44,23 @@ export type WriteContractParameters<
     functionName
   > = ContractFunctionArgs<abi, 'nonpayable' | 'payable', functionName>,
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   ///
   allFunctionNames = ContractFunctionName<abi, 'nonpayable' | 'payable'>,
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = UnionEvaluate<
   {
-    [key in keyof chains]: UnionOmit<
-      viem_WriteContractParameters<
-        abi,
-        functionName,
-        args,
-        chains[key],
-        Account,
-        chains[key],
-        allFunctionNames
-      >,
-      'chain'
+    // TODO: Should use `UnionOmit<..., 'chain'>` on `viem_WriteContractParameters` result instead
+    // temp workaround that doesn't affect runtime behavior for for https://github.com/wevm/wagmi/issues/3981
+    [key in keyof chains]: viem_WriteContractParameters<
+      abi,
+      functionName,
+      args,
+      chains[key],
+      Account,
+      chains[key],
+      allFunctionNames
     >
   }[number] &
     Evaluate<ChainIdParameter<config, chainId>> &
@@ -96,7 +97,7 @@ export async function writeContract<
 ): Promise<WriteContractReturnType> {
   const { account, chainId, connector, __mode, ...rest } = parameters
 
-  let client
+  let client: Client
   if (typeof account === 'object' && account.type === 'local')
     client = config.getClient({ chainId })
   else
@@ -104,7 +105,7 @@ export async function writeContract<
 
   const { connector: activeConnector } = getAccount(config)
 
-  let request
+  let request: any
   if (__mode === 'prepared' || activeConnector?.supportsSimulation)
     request = rest
   else {
@@ -118,7 +119,7 @@ export async function writeContract<
 
   const action = getAction(client, viem_writeContract, 'writeContract')
   const hash = await action({
-    ...(request as any),
+    ...request,
     ...(account ? { account } : {}),
     chain: chainId ? { id: chainId } : null,
   })

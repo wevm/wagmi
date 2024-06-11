@@ -2,6 +2,7 @@ import { mock } from '@wagmi/connectors'
 import { http, connect, createConfig, disconnect } from '@wagmi/core'
 import { accounts, chain, config } from '@wagmi/test'
 import { createWrapper, renderHook, waitFor } from '@wagmi/test/react'
+import { Fragment, createElement } from 'react'
 import { expect, test, vi } from 'vitest'
 
 import { WagmiProvider } from '../context.js'
@@ -11,7 +12,7 @@ import { useDisconnect } from './useDisconnect.js'
 
 test('parameters: config', () => {
   const { result } = renderHook(() => useAccountEffect({ config }), {
-    wrapper: ({ children }) => children,
+    wrapper: ({ children }) => createElement(Fragment, { children }),
   })
   expect(result.current).toBeUndefined()
 })

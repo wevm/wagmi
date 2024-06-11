@@ -1,4 +1,4 @@
-import { type SignMessageErrorType } from '@wagmi/core'
+import type { SignMessageErrorType } from '@wagmi/core'
 import type { SignMessageVariables } from '@wagmi/core/query'
 import { expectTypeOf, test } from 'vitest'
 
@@ -22,7 +22,7 @@ test('context', () => {
       onSuccess(data, variables, context) {
         expectTypeOf(variables).toEqualTypeOf<SignMessageVariables>()
         expectTypeOf(data).toEqualTypeOf<`0x${string}`>()
-        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
       },
       onSettled(data, error, variables, context) {
         expectTypeOf(data).toEqualTypeOf<`0x${string}` | undefined>()

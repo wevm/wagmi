@@ -1,5 +1,3 @@
-### Description
-
 <!-- What is this PR solving? Write a clear description or reference the issues it solves (e.g. `fixes #123`). What other alternatives have you explored? Are there any parts you think require more attention from reviewers? -->
 
 <!----------------------------------------------------------------------

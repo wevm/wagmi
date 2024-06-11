@@ -1,5 +1,5 @@
 import { join } from 'node:path'
-import { type ExecaSyncReturnValue, type SyncOptions } from 'execa'
+import type { ExecaSyncReturnValue, SyncOptions } from 'execa'
 import { execaCommandSync } from 'execa'
 import fs from 'fs-extra'
 import pc from 'picocolors'
@@ -122,7 +122,7 @@ test('shows help', () => {
       $ create-wagmi <project-directory> [options]
 
     Options:
-      -t, --template [name]  Template to bootstrap with. Available: vite-react, next, vite-vanilla 
+      -t, --template [name]  Template to bootstrap with. Available: vite-react, next, vite-vue, nuxt, vite-vanilla 
       --bun                  Use bun as your package manager 
       --npm                  Use npm as your package manager 
       --pnpm                 Use pnpm as your package manager 

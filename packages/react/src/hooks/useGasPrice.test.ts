@@ -5,7 +5,7 @@ import { expect, test } from 'vitest'
 import { useGasPrice } from './useGasPrice.js'
 
 test('default', async () => {
-  await testClient.mainnet.resetFork()
+  await testClient.mainnet.restart()
 
   await testClient.mainnet.setNextBlockBaseFeePerGas({
     baseFeePerGas: 2_000_000_000n,
@@ -53,7 +53,7 @@ test('default', async () => {
 })
 
 test('parameters: chainId', async () => {
-  await testClient.mainnet2.resetFork()
+  await testClient.mainnet2.restart()
 
   await testClient.mainnet2.setNextBlockBaseFeePerGas({
     baseFeePerGas: 1_000_000_000n,

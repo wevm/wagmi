@@ -1,4 +1,4 @@
-import { homedir } from 'os'
+import { homedir } from 'node:os'
 import { default as fs } from 'fs-extra'
 import { join } from 'pathe'
 import { vi } from 'vitest'
@@ -12,11 +12,13 @@ vi.mock('ora', async () => {
       #text: string | undefined
 
       start(text: string | undefined = 'start') {
+        // biome-ignore lint/suspicious/noConsoleLog: console.log is used for logging
         console.log(`- ${text}`)
         this.#text = text
       }
 
       succeed(text: string | undefined = this.#text ?? 'succeed') {
+        // biome-ignore lint/suspicious/noConsoleLog: console.log is used for logging
         console.log(`✔ ${text}`)
         this.#text = undefined
       }

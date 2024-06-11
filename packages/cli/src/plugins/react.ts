@@ -1,7 +1,7 @@
 import { pascalCase } from 'change-case'
 
-import { type Contract, type Plugin } from '../config.js'
-import { type Evaluate, type RequiredBy } from '../types.js'
+import type { Contract, Plugin } from '../config.js'
+import type { Evaluate, RequiredBy } from '../types.js'
 import { getAddressDocString } from '../utils/getAddressDocString.js'
 
 export type ReactConfig = {
@@ -50,7 +50,7 @@ export function react(config: ReactConfig = {}): ReactResult {
           }
         }
 
-        let innerContent
+        let innerContent: string
         if (contract.meta.addressName)
           innerContent = `abi: ${contract.meta.abiName}, address: ${contract.meta.addressName}`
         else innerContent = `abi: ${contract.meta.abiName}`
@@ -275,7 +275,7 @@ function getHookName(
   const ContractName = pascalCase(contractName)
   const ItemName = itemName ? pascalCase(itemName) : undefined
 
-  let hookName
+  let hookName: string
   if (typeof config.getHookName === 'function')
     hookName = config.getHookName({
       type,

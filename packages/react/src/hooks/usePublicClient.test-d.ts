@@ -1,12 +1,12 @@
 import { chain, config } from '@wagmi/test'
-import { type Chain } from 'viem'
+import type { Chain } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
 import { usePublicClient } from './usePublicClient.js'
 
 test('default', () => {
   const client = usePublicClient({ config })
-  expectTypeOf(client.chain).toEqualTypeOf<typeof config['chains'][number]>()
+  expectTypeOf(client.chain).toEqualTypeOf<(typeof config)['chains'][number]>()
   expectTypeOf(client.transport.type).toEqualTypeOf<'http'>()
 })
 

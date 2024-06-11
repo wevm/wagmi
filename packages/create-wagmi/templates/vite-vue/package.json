@@ -1,0 +1,24 @@
+{
+  "name": "wagmi-vue-vite-starter",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "lint": "biome check .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@tanstack/vue-query": ">=5.35.1",
+    "@wagmi/vue": "latest",
+    "viem": "latest",
+    "vue": ">=3.4.21"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.4",
+    "buffer": "^6.0.3",
+    "vite": "^5.2.11",
+    "vue-tsc": "^2.0.6"
+  }
+}

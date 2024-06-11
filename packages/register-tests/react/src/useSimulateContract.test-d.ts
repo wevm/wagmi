@@ -1,25 +1,19 @@
-import { abi, config as testConfig } from '@wagmi/test'
-import { type Address } from 'viem'
+import { type abi, config as testConfig } from '@wagmi/test'
+import type { Address } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 import { type UseSimulateContractParameters, useSimulateContract } from 'wagmi'
-import { type SimulateContractParameters } from 'wagmi/actions'
+import type { SimulateContractParameters } from 'wagmi/actions'
 import { celo, mainnet, optimism } from 'wagmi/chains'
-import { type SimulateContractOptions } from 'wagmi/query'
+import type { SimulateContractOptions } from 'wagmi/query'
 
-import { type ChainId, config } from './config.js'
+import type { ChainId, config } from './config.js'
 
 test('chain formatters', () => {
   const { data } = useSimulateContract({
     feeCurrency: '0x',
-    gatewayFee: 123n,
-    gatewayFeeRecipient: '0x',
   })
   if (data && data.chainId === celo.id) {
     expectTypeOf(data.request.feeCurrency).toEqualTypeOf<
-      `0x${string}` | undefined
-    >()
-    expectTypeOf(data.request.gatewayFee).toEqualTypeOf<bigint | undefined>()
-    expectTypeOf(data.request.gatewayFeeRecipient).toEqualTypeOf<
       `0x${string}` | undefined
     >()
   }
@@ -27,15 +21,9 @@ test('chain formatters', () => {
   const { data: data2 } = useSimulateContract({
     chainId: celo.id,
     feeCurrency: '0x',
-    gatewayFee: 123n,
-    gatewayFeeRecipient: '0x',
   })
   if (data2) {
     expectTypeOf(data2.request.feeCurrency).toEqualTypeOf<
-      `0x${string}` | undefined
-    >()
-    expectTypeOf(data2.request.gatewayFee).toEqualTypeOf<bigint | undefined>()
-    expectTypeOf(data2.request.gatewayFeeRecipient).toEqualTypeOf<
       `0x${string}` | undefined
     >()
   }
@@ -44,16 +32,12 @@ test('chain formatters', () => {
     chainId: mainnet.id,
     // @ts-expect-error
     feeCurrency: '0x',
-    gatewayFee: 123n,
-    gatewayFeeRecipient: '0x',
   })
 
   useSimulateContract({
     chainId: optimism.id,
     // @ts-expect-error
     feeCurrency: '0x',
-    gatewayFee: 123n,
-    gatewayFeeRecipient: '0x',
   })
 })
 
@@ -65,11 +49,11 @@ test('UseSimulateContractParameters', () => {
     typeof config
   >
 
-  expectTypeOf<Result>().toMatchTypeOf<{
+  expectTypeOf<{
     functionName?: 'approve' | 'transfer' | 'transferFrom' | undefined
     args?: readonly [Address, Address, bigint] | undefined
     chainId?: ChainId | undefined
-  }>()
+  }>().toMatchTypeOf<Result>()
 
   type Result2 = UseSimulateContractParameters<
     typeof abi.erc20,
@@ -80,10 +64,6 @@ test('UseSimulateContractParameters', () => {
   >
   expectTypeOf<Result2['chainId']>().toEqualTypeOf<ChainId | undefined>()
   expectTypeOf<Result2['feeCurrency']>().toEqualTypeOf<
-    `0x${string}` | undefined
-  >()
-  expectTypeOf<Result2['gatewayFee']>().toEqualTypeOf<bigint | undefined>()
-  expectTypeOf<Result2['gatewayFeeRecipient']>().toEqualTypeOf<
     `0x${string}` | undefined
   >()
 

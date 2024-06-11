@@ -1,7 +1,7 @@
-import {
-  type ConnectErrorType,
-  type Connector,
-  type CreateConnectorFn,
+import type {
+  ConnectErrorType,
+  Connector,
+  CreateConnectorFn,
 } from '@wagmi/core'
 import { config } from '@wagmi/test'
 import type { Address } from 'viem'
@@ -39,7 +39,7 @@ test('context', () => {
           accounts: readonly [Address, ...Address[]]
           chainId: number
         }>()
-        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
       },
       onSettled(data, error, variables, context) {
         expectTypeOf(data).toEqualTypeOf<

@@ -1,5 +1,5 @@
-import { type SendTransactionErrorType } from '@wagmi/core'
-import { type Hash } from 'viem'
+import type { SendTransactionErrorType } from '@wagmi/core'
+import type { Hash } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
 import { useSendTransaction } from './useSendTransaction.js'
@@ -28,7 +28,7 @@ test('context', () => {
             chainId?: number | undefined
           }>()
           expectTypeOf(data).toEqualTypeOf<Hash>()
-          expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+          expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
         },
         onSettled(data, error, variables, context) {
           expectTypeOf(data).toEqualTypeOf<Hash | undefined>()

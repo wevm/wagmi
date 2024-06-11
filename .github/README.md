@@ -134,12 +134,6 @@ If you find Wagmi useful or use it for work, please consider [sponsoring Wagmi](
       <img alt="Spruce logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/spruce-light.svg" width="auto" height="50">
     </picture>
   </a>
-  <a href="https://rollup.id">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/rollup.id-dark.svg">
-      <img alt="rollup.id logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/rollup.id-light.svg" width="auto" height="50">
-    </picture>
-  </a>
   <a href="https://pancakeswap.finance/">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/pancake-dark.svg">

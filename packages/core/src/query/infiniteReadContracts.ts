@@ -5,13 +5,13 @@ import {
   type ReadContractsReturnType,
   readContracts,
 } from '../actions/readContracts.js'
-import { type Config } from '../createConfig.js'
-import {
-  type ChainIdParameter,
-  type ScopeKeyParameter,
+import type { Config } from '../createConfig.js'
+import type {
+  ChainIdParameter,
+  ScopeKeyParameter,
 } from '../types/properties.js'
-import { type Omit } from '../types/utils.js'
-import { type InfiniteQueryOptions } from './types.js'
+import type { Omit } from '../types/utils.js'
+import type { InfiniteQueryOptions } from './types.js'
 import { filterQueryOptions } from './utils.js'
 
 export type InfiniteReadContractsOptions<
@@ -53,9 +53,7 @@ export function infiniteReadContractsQueryOptions<
       const { cacheKey: _, scopeKey: _s, ...parameters } = queryKey[1]
       return (await readContracts(config, {
         ...parameters,
-        contracts: contracts(
-          pageParam,
-        ) as readonly ContractFunctionParameters[],
+        contracts: contracts(pageParam as any),
       })) as ReadContractsReturnType<contracts, allowFailure>
     },
     queryKey: infiniteReadContractsQueryKey(options),

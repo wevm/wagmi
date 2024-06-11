@@ -2,6 +2,7 @@
 // Hooks
 ////////////////////////////////////////////////////////////////////////////////
 
+// biome-ignore lint/performance/noBarrelFile: entrypoint module
 export {
   type UseCallsStatusParameters,
   type UseCallsStatusReturnType,

@@ -1,20 +1,20 @@
-import {
-  type Abi,
-  type Account,
-  type Address,
-  type Chain,
-  type ContractFunctionArgs,
-  type ContractFunctionName,
-  type SimulateContractParameters as viem_SimulateContractParameters,
+import type {
+  Abi,
+  Account,
+  Address,
+  Chain,
+  ContractFunctionArgs,
+  ContractFunctionName,
+  SimulateContractParameters as viem_SimulateContractParameters,
 } from 'viem'
 
-import { type Config } from '../../createConfig.js'
-import { type SelectChains } from '../../types/chain.js'
-import {
-  type ChainIdParameter,
-  type ConnectorParameter,
+import type { Config } from '../../createConfig.js'
+import type { SelectChains } from '../../types/chain.js'
+import type {
+  ChainIdParameter,
+  ConnectorParameter,
 } from '../../types/properties.js'
-import { type UnionEvaluate, type UnionOmit } from '../../types/utils.js'
+import type { UnionEvaluate, UnionOmit } from '../../types/utils.js'
 import { getAccount } from '../getAccount.js'
 import { getChainId } from '../getChainId.js'
 import {

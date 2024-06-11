@@ -1,9 +1,5 @@
-import { type QueryOptions } from '@tanstack/query-core'
-import {
-  type Abi,
-  type ContractFunctionArgs,
-  type ContractFunctionName,
-} from 'viem'
+import type { QueryOptions } from '@tanstack/query-core'
+import type { Abi, ContractFunctionArgs, ContractFunctionName } from 'viem'
 
 import {
   type SimulateContractErrorType,
@@ -11,7 +7,7 @@ import {
   type SimulateContractReturnType,
   simulateContract,
 } from '../actions/simulateContract.js'
-import { type Config } from '../createConfig.js'
+import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
 import type { UnionPartial } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'

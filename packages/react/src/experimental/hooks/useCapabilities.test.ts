@@ -130,19 +130,15 @@ test('behavior: not connected', async () => {
 
   await waitFor(() => expect(result.current.isError).toBeTruthy())
 
-  expect(result.current).toMatchInlineSnapshot(`
+  const { error, failureReason: _, ...rest } = result.current
+  expect(error?.message.includes('Connector not connected.')).toBeTruthy()
+  expect(rest).toMatchInlineSnapshot(`
     {
       "data": undefined,
       "dataUpdatedAt": 0,
-      "error": [ConnectorNotConnectedError: Connector not connected.
-
-    Version: @wagmi/core@2.9.0],
       "errorUpdateCount": 2,
       "errorUpdatedAt": 1675209600000,
       "failureCount": 1,
-      "failureReason": [ConnectorNotConnectedError: Connector not connected.
-
-    Version: @wagmi/core@2.9.0],
       "fetchStatus": "idle",
       "isError": true,
       "isFetched": true,

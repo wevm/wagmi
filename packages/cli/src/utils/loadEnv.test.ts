@@ -72,6 +72,6 @@ test('throws error when mode is "local"', async () => {
   expect(() => {
     loadEnv({ mode: 'local' })
   }).toThrowErrorMatchingInlineSnapshot(
-    '"\\"local\\" cannot be used as a mode name because it conflicts with the .local postfix for .env files."',
+    `[Error: "local" cannot be used as a mode name because it conflicts with the .local postfix for .env files.]`,
   )
 })

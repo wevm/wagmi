@@ -1,7 +1,7 @@
 import type { MutateOptions, MutationOptions } from '@tanstack/query-core'
 
-import { type Config } from '../../createConfig.js'
-import { type Evaluate } from '../../types/utils.js'
+import type { Config } from '../../createConfig.js'
+import type { Evaluate } from '../../types/utils.js'
 import {
   type SendCallsErrorType,
   type SendCallsParameters,

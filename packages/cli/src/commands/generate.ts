@@ -1,22 +1,16 @@
-import { type Abi } from 'abitype'
+import type { Abi } from 'abitype'
 import { Abi as AbiSchema } from 'abitype/zod'
 import { camelCase } from 'change-case'
-import { type FSWatcher, type WatchOptions } from 'chokidar'
+import type { FSWatcher, WatchOptions } from 'chokidar'
 import { watch } from 'chokidar'
 import { default as dedent } from 'dedent'
 import { default as fs } from 'fs-extra'
 import { basename, dirname, resolve } from 'pathe'
 import pc from 'picocolors'
-// biome-ignore lint/correctness/noUnusedVariables: <explanation>
 import { type Address, getAddress } from 'viem'
 import { z } from 'zod'
 
-import {
-  type Contract,
-  type ContractConfig,
-  type Plugin,
-  type Watch,
-} from '../config.js'
+import type { Contract, ContractConfig, Plugin, Watch } from '../config.js'
 import { fromZodError } from '../errors.js'
 import * as logger from '../logger.js'
 import { findConfig } from '../utils/findConfig.js'
@@ -25,7 +19,6 @@ import { getAddressDocString } from '../utils/getAddressDocString.js'
 import { getIsUsingTypeScript } from '../utils/getIsUsingTypeScript.js'
 import { resolveConfig } from '../utils/resolveConfig.js'
 
-// biome-ignore lint/correctness/noUnusedVariables: <explanation>
 const Generate = z.object({
   /** Path to config file */
   config: z.string().optional(),
@@ -322,7 +315,7 @@ async function getContract({
 
   let meta: Contract['meta'] = { abiName }
   if (address) {
-    let resolvedAddress
+    let resolvedAddress: Address | Record<number, Address>
     try {
       const Address = z
         .string()

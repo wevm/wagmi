@@ -2,24 +2,25 @@ import type {
   Account,
   Address,
   Chain,
+  Client,
+  TransactionRequest,
   SendTransactionErrorType as viem_SendTransactionErrorType,
   SendTransactionParameters as viem_SendTransactionParameters,
   SendTransactionReturnType as viem_SendTransactionReturnType,
-  TransactionRequest,
 } from 'viem'
 import {
   estimateGas as viem_estimateGas,
   sendTransaction as viem_sendTransaction,
 } from 'viem/actions'
 
-import { type Config } from '../createConfig.js'
+import type { Config } from '../createConfig.js'
 import type { BaseErrorType, ErrorType } from '../errors/base.js'
 import type { SelectChains } from '../types/chain.js'
 import type {
   ChainIdParameter,
   ConnectorParameter,
 } from '../types/properties.js'
-import { type Evaluate } from '../types/utils.js'
+import type { Evaluate } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 import { getAccount } from './getAccount.js'
 import {
@@ -29,7 +30,8 @@ import {
 
 export type SendTransactionParameters<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   ///
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = {
@@ -69,7 +71,7 @@ export async function sendTransaction<
 ): Promise<SendTransactionReturnType> {
   const { account, chainId, connector, gas: gas_, ...rest } = parameters
 
-  let client
+  let client: Client
   if (typeof account === 'object' && account.type === 'local')
     client = config.getClient({ chainId })
   else
