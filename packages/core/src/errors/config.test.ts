@@ -46,5 +46,12 @@ test('constructors', () => {
       connectionChainId: 1,
       connectorChainId: 123,
     }),
-  ).toMatchInlineSnapshot()
+  ).toMatchInlineSnapshot(`
+    [ConnectorChainMismatchError: The current chain of the connector (id: 123) does not match the connection's chain (id: 1).
+
+    Current Chain ID:  123
+    Expected Chain ID: 1
+
+    Version: @wagmi/core@x.y.z]
+  `)
 })
