@@ -482,6 +482,8 @@ export {
   ConnectorNotFoundError,
   type ConnectorAccountNotFoundErrorType,
   ConnectorAccountNotFoundError,
+  type ConnectorChainMismatchErrorType,
+  ConnectorChainMismatchError,
 } from '../errors/config.js'
 
 export {
