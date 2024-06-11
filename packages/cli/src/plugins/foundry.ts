@@ -14,6 +14,8 @@ import type { Evaluate, RequiredBy } from '../types.js'
 const defaultExcludes = [
   'Common.sol/**',
   'Components.sol/**',
+  'MockERC20.sol/**',
+  'MockERC721.sol/**',
   'Script.sol/**',
   'StdAssertions.sol/**',
   'StdInvariant.sol/**',
@@ -23,10 +25,10 @@ const defaultExcludes = [
   'StdJson.sol/**',
   'StdStorage.sol/**',
   'StdUtils.sol/**',
+  'Test.sol/**',
   'Vm.sol/**',
   'console.sol/**',
   'console2.sol/**',
-  'test.sol/**',
   '**.s.sol/*.json',
   '**.t.sol/*.json',
 ]

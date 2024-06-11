@@ -1,6 +1,5 @@
 import type {
   Account,
-  Address,
   Chain,
   Client,
   TransactionRequest,
@@ -41,9 +40,7 @@ export type SendTransactionParameters<
       'chain' | 'gas'
     > &
       ChainIdParameter<config, chainId> &
-      ConnectorParameter & {
-        to: Address
-      }
+      ConnectorParameter
   >
 }[number] & {
   /** Gas provided for transaction execution, or `null` to skip the prelude gas estimation. */
