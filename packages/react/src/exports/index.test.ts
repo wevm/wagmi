@@ -27,6 +27,7 @@ test('exports', () => {
       "useConnections",
       "useConnectors",
       "useConnectorClient",
+      "useDeployContract",
       "useDisconnect",
       "useEnsAddress",
       "useEnsAvatar",

@@ -7,6 +7,7 @@ test('exports', () => {
     [
       "call",
       "connect",
+      "deployContract",
       "disconnect",
       "estimateGas",
       "estimateFeesPerGas",

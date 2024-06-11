@@ -18,6 +18,13 @@ export {
 } from '../actions/connect.js'
 
 export {
+  type DeployContractErrorType,
+  type DeployContractParameters,
+  type DeployContractReturnType,
+  deployContract,
+} from '../actions/deployContract.js'
+
+export {
   type DisconnectErrorType,
   type DisconnectParameters,
   type DisconnectReturnType,

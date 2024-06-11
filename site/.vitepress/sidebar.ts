@@ -178,6 +178,10 @@ export function getSidebar() {
             text: 'useConnectors',
             link: '/react/api/hooks/useConnectors',
           },
+          {
+            text: 'useDeployContract',
+            link: '/react/api/hooks/useDeployContract',
+          },
           { text: 'useDisconnect', link: '/react/api/hooks/useDisconnect' },
           { text: 'useEnsAddress', link: '/react/api/hooks/useEnsAddress' },
           { text: 'useEnsAvatar', link: '/react/api/hooks/useEnsAvatar' },
@@ -729,6 +733,7 @@ export function getSidebar() {
             link: '/core/api/actions/call',
           },
           { text: 'connect', link: '/core/api/actions/connect' },
+          { text: 'deployContract', link: '/core/api/actions/deployContract' },
           { text: 'disconnect', link: '/core/api/actions/disconnect' },
           {
             text: 'estimateFeesPerGas',
