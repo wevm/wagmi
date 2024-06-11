@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 2.1.9
+
+### Patch Changes
+
+- [`f9346dbcffaf57a8949cb96e43df111a89d733b1`](https://github.com/wevm/wagmi/commit/f9346dbcffaf57a8949cb96e43df111a89d733b1) Thanks [@tmm](https://github.com/tmm)! - Updated Foundry plugin default excludes.
+
 ## 2.1.8
 
 ### Patch Changes
