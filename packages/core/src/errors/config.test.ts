@@ -1,6 +1,5 @@
 import { config } from '@wagmi/test'
 import { expect, test } from 'vitest'
-import { mainnet } from 'viem/chains'
 
 import {
   ChainNotConfiguredError,
@@ -44,15 +43,8 @@ test('constructors', () => {
   `)
   expect(
     new ConnectorChainMismatchError({
-      chain: mainnet,
-      currentChainId: 123,
+      connectionChainId: 1,
+      connectorChainId: 123,
     }),
-  ).toMatchInlineSnapshot(`
-    [ConnectorChainMismatchError: The current chain of the connector (id: 123) does not match the connection's chain (id: 1 – Ethereum).
-
-    Current Chain ID:  123
-    Expected Chain ID: 1 – Ethereum
-
-    Version: @wagmi/core@x.y.z]
-  `)
+  ).toMatchInlineSnapshot()
 })

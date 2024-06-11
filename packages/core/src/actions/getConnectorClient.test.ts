@@ -61,10 +61,10 @@ test('behavior: connector is on different chain', async () => {
   await expect(
     getConnectorClient(config, { account: address.usdcHolder }),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
-    [ConnectorChainMismatchError: The current chain of the wallet (id: 1) does not match the target chain for the transaction (id: 456 – Ethereum).
+    [ConnectorChainMismatchError: The current chain of the connector (id: 1) does not match the connection's chain (id: 456).
 
     Current Chain ID:  1
-    Expected Chain ID: 456 – Ethereum
+    Expected Chain ID: 456
 
     Version: @wagmi/core@x.y.z]
   `)
@@ -82,4 +82,3 @@ test('behavior: account does not exist on connector', async () => {
   `)
   await disconnect(config, { connector })
 })
-

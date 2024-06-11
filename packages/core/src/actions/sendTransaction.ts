@@ -107,8 +107,8 @@ export async function sendTransaction<
   const hash = await action({
     ...(rest as any),
     ...(account ? { account } : {}),
-    chain: chainId ? { id: chainId } : null,
     gas,
+    chain: chainId ? { id: chainId } : null,
   })
 
   return hash

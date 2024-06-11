@@ -1,4 +1,4 @@
-import type { Address, Chain } from 'viem'
+import type { Address } from 'viem'
 
 import type { Connector } from '../createConfig.js'
 import { BaseError } from './base.js'
@@ -67,18 +67,18 @@ export type ConnectorChainMismatchErrorType = ConnectorAccountNotFoundError & {
 export class ConnectorChainMismatchError extends BaseError {
   override name = 'ConnectorChainMismatchError'
   constructor({
-    chain,
-    currentChainId,
+    connectionChainId,
+    connectorChainId,
   }: {
-    chain: Chain
-    currentChainId: number
+    connectionChainId: number
+    connectorChainId: number
   }) {
     super(
-      `The current chain of the connector (id: ${currentChainId}) does not match the connection's chain (id: ${chain.id} – ${chain.name}).`,
+      `The current chain of the connector (id: ${connectorChainId}) does not match the connection's chain (id: ${connectionChainId}).`,
       {
         metaMessages: [
-          `Current Chain ID:  ${currentChainId}`,
-          `Expected Chain ID: ${chain.id} – ${chain.name}`,
+          `Current Chain ID:  ${connectorChainId}`,
+          `Expected Chain ID: ${connectionChainId}`,
         ],
       },
     )

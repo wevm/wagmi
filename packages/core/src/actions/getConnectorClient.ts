@@ -13,10 +13,10 @@ import type { ErrorType } from '../errors/base.js'
 import {
   ConnectorAccountNotFoundError,
   type ConnectorAccountNotFoundErrorType,
+  ConnectorChainMismatchError,
+  type ConnectorChainMismatchErrorType,
   ConnectorNotConnectedError,
   type ConnectorNotConnectedErrorType,
-  type ConnectorChainMismatchErrorType,
-  ConnectorChainMismatchError,
 } from '../errors/config.js'
 import type {
   ChainIdParameter,
@@ -81,13 +81,13 @@ export async function getConnectorClient<
 
   const chainId = parameters.chainId ?? connection.chainId
 
-  // Check connector using same chainId as provided chainId/config connection
-  const chain = config.chains.find((chain) => chain.id === chainId)
-  if (chain) {
-    const currentChainId = await connection.connector.getChainId()
-    if (currentChainId !== chainId)
-      throw new ConnectorChainMismatchError({ chain, currentChainId })
-  }
+  // Check connector using same chainId as connection
+  const connectorChainId = await connection.connector.getChainId()
+  if (connectorChainId !== connection.chainId)
+    throw new ConnectorChainMismatchError({
+      connectionChainId: connection.chainId,
+      connectorChainId,
+    })
 
   // If connector has custom `getClient` implementation
   type Return = GetConnectorClientReturnType<config, chainId>
@@ -99,6 +99,7 @@ export async function getConnectorClient<
   const account = parseAccount(parameters.account ?? connection.accounts[0]!)
   account.address = getAddress(account.address) // TODO: Checksum address as part of `parseAccount`?
 
+  const chain = config.chains.find((chain) => chain.id === chainId)
   const provider = (await connection.connector.getProvider({ chainId })) as {
     request(...args: any): Promise<any>
   }
