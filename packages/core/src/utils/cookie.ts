@@ -10,7 +10,7 @@ export const cookieStorage = {
   },
   setItem(key, value) {
     if (typeof window === 'undefined') return
-    document.cookie = `${key}=${value};path=/`
+    document.cookie = `${key}=${value};Path=/;SameSite=Lax`
   },
   removeItem(key) {
     if (typeof window === 'undefined') return
