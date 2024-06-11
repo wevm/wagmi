@@ -10,6 +10,7 @@ test('exports', () => {
       "createEmitter",
       "deepEqual",
       "uid",
+      "loadDefault",
     ]
   `)
 })

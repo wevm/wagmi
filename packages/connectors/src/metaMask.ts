@@ -125,8 +125,6 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
     },
     async getProvider() {
       async function initProvider() {
-        // Unwrapping import for Vite compatibility.
-        // See: https://github.com/vitejs/vite/issues/9703
         const MetaMaskSDK = await loadDefault<
           Awaited<typeof import('@metamask/sdk')>['default']
         >(import('@metamask/sdk'))
