@@ -26,7 +26,7 @@ const defaultExcludes = [
   'Vm.sol/**',
   'console.sol/**',
   'console2.sol/**',
-  'test.sol/**',
+  'Test.sol/**',
   '**.s.sol/*.json',
   '**.t.sol/*.json',
 ]
