@@ -8,7 +8,12 @@ import {
   type Connector,
   createConnector,
 } from '@wagmi/core'
-import type { Evaluate, Mutable, Omit } from '@wagmi/core/internal'
+import {
+  type Evaluate,
+  type Mutable,
+  type Omit,
+  loadDefault,
+} from '@wagmi/core/internal'
 import type {
   CoinbaseWalletProvider as CBW_Provider,
   CoinbaseWalletSDK as CBW_SDK,
@@ -172,15 +177,9 @@ function version4(parameters: Version4Parameters) {
       if (!walletProvider) {
         // Unwrapping import for Vite compatibility.
         // See: https://github.com/vitejs/vite/issues/9703
-        const { default: CoinbaseSDK_ } = await import('@coinbase/wallet-sdk')
-        const CoinbaseSDK = (() => {
-          if (
-            typeof CoinbaseSDK_ !== 'function' &&
-            typeof CoinbaseSDK_.default === 'function'
-          )
-            return CoinbaseSDK_.default
-          return CoinbaseSDK_ as unknown as typeof CoinbaseSDK_.default
-        })()
+        const CoinbaseSDK = await loadDefault<typeof CoinbaseWalletSDK>(
+          import('@coinbase/wallet-sdk'),
+        )
 
         sdk = new CoinbaseSDK({
           ...parameters,
