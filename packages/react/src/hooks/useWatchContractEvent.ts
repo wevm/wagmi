@@ -54,6 +54,8 @@ export function useWatchContractEvent<
   const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
+  // TODO(react@19): cleanup
+  // biome-ignore lint/correctness/useExhaustiveDependencies: `rest` changes every render so only including properties in dependency array
   useEffect(() => {
     if (!enabled) return
     if (!onLogs) return
@@ -62,5 +64,22 @@ export function useWatchContractEvent<
       chainId,
       onLogs,
     })
-  }, [chainId, config, enabled, rest, onLogs])
+  }, [
+    chainId,
+    config,
+    enabled,
+    onLogs,
+    ///
+    rest.abi,
+    rest.address,
+    rest.args,
+    rest.batch,
+    rest.eventName,
+    rest.fromBlock,
+    rest.onError,
+    rest.poll,
+    rest.pollingInterval,
+    rest.strict,
+    rest.syncConnectedChain,
+  ])
 }

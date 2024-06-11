@@ -5,6 +5,7 @@ import {
   ChainNotConfiguredError,
   ConnectorAccountNotFoundError,
   ConnectorAlreadyConnectedError,
+  ConnectorChainMismatchError,
   ConnectorNotConnectedError,
   ConnectorNotFoundError,
 } from './config.js'
@@ -37,6 +38,19 @@ test('constructors', () => {
     }),
   ).toMatchInlineSnapshot(`
     [ConnectorAccountNotFoundError: Account "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e" not found for connector "Mock Connector".
+
+    Version: @wagmi/core@x.y.z]
+  `)
+  expect(
+    new ConnectorChainMismatchError({
+      connectionChainId: 1,
+      connectorChainId: 123,
+    }),
+  ).toMatchInlineSnapshot(`
+    [ConnectorChainMismatchError: The current chain of the connector (id: 123) does not match the connection's chain (id: 1).
+
+    Current Chain ID:  123
+    Expected Chain ID: 1
 
     Version: @wagmi/core@x.y.z]
   `)

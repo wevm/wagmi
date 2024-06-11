@@ -60,3 +60,27 @@ export class ConnectorAccountNotFoundError extends BaseError {
     super(`Account "${address}" not found for connector "${connector.name}".`)
   }
 }
+
+export type ConnectorChainMismatchErrorType = ConnectorAccountNotFoundError & {
+  name: 'ConnectorChainMismatchError'
+}
+export class ConnectorChainMismatchError extends BaseError {
+  override name = 'ConnectorChainMismatchError'
+  constructor({
+    connectionChainId,
+    connectorChainId,
+  }: {
+    connectionChainId: number
+    connectorChainId: number
+  }) {
+    super(
+      `The current chain of the connector (id: ${connectorChainId}) does not match the connection's chain (id: ${connectionChainId}).`,
+      {
+        metaMessages: [
+          `Current Chain ID:  ${connectorChainId}`,
+          `Expected Chain ID: ${connectionChainId}`,
+        ],
+      },
+    )
+  }
+}

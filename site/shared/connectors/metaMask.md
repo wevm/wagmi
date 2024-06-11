@@ -8,58 +8,6 @@ const connectorsPackageName = 'wagmi/connectors'
 
 Connector for the [MetaMask SDK](https://github.com/MetaMask/metamask-sdk).
 
-::: warning
-This connector has limitations on iOS as Safari cancels Universal Link connections if they do not occur within ~500ms of user interaction (ie. a button click). For a reliable iOS linking experience, it is recommended to use the <a :href="`/${docsPath}/api/connectors/walletConnect`">`walletConnect`</a> connector.
-
-Alternatively, to prevent Universal Link issues with this connector, you can skip transaction validation by setting `gas: null` (for transactions) or `__mode: 'prepared'` (for contract writes).
-
-::: code-group
-
-```tsx [Transactions]
-import { useSendTransaction, parseEther } from 'wagmi'
-
-function Example() {
-  const { sendTransaction } = useSendTransaction()
-  
-  return (
-    <button 
-      onClick={() => sendTransaction({ 
-        gas: null, // [!code ++]
-        to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
-        value: parseEther('0.01'), 
-      })}
-    >
-      Transfer
-    </button>
-  )
-}
-```
-
-```tsx [Contract Writes]
-import { useWriteContract } from 'wagmi'
-import { abi } from './abi'
-
-function Example() {
-  const { writeContract } = useWriteContract()
-  
-  return (
-    <button 
-      disabled={!isSuccess}
-      onClick={() => writeContract({
-        __mode: 'prepared', // [!code ++]
-        abi,
-        address: '0x6b175474e89094c44da98b954eedeac495271d0f',
-        functionName: 'mint',
-      })}
-    >
-      Mint
-    </button>
-  )
-}
-```
-
-:::
-
 ## Import
 
 ```ts-vue
@@ -208,6 +156,10 @@ Options for customizing the SDK UI.
 
 - If `true`, the SDK will use deeplinks to connect with MetaMask Mobile. If `false`, the SDK will use universal links to connect with MetaMask Mobile.
 - Defaults to `true`.
+
+::: warning
+Setting `useDeeplink` to `false` can negatively impact performance on iOS Safari as Universal Link connections are canceled if they do not occur within ~500ms of an interaction (e.g. button press).
+:::
 
 ### wakeLockType
 

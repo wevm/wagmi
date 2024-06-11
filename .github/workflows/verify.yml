@@ -55,7 +55,7 @@ jobs:
         run: pnpm test:build
 
       - name: Check for unused files, dependencies, and exports
-        run: pnpm knip --production --ignore-internal
+        run: pnpm knip --production
 
   types:
     name: Types
@@ -103,8 +103,6 @@ jobs:
 
       - name: Install dependencies
         uses: wevm/actions/.github/actions/pnpm@main
-        with:
-          node-version: 22
 
       - name: Set up foundry
         uses: foundry-rs/foundry-toolchain@v1
@@ -116,9 +114,7 @@ jobs:
           max_attempts: 3
           timeout_minutes: 5
         env:
-          VITE_MAINNET_FORK_BLOCK_NUMBER: ${{ vars.VITE_MAINNET_FORK_BLOCK_NUMBER }}
           VITE_MAINNET_FORK_URL: ${{ secrets.VITE_MAINNET_FORK_URL }}
-          VITE_OPTIMISM_FORK_BLOCK_NUMBER: ${{ vars.VITE_OPTIMISM_FORK_BLOCK_NUMBER }}
           VITE_OPTIMISM_FORK_URL: ${{ secrets.VITE_OPTIMISM_FORK_URL }}
 
       - name: Upload coverage reports to Codecov

@@ -126,7 +126,7 @@ function version4(parameters: Version4Parameters) {
         return { accounts, chainId: currentChainId }
       } catch (error) {
         if (
-          /(user closed modal|accounts received is empty|user denied account)/i.test(
+          /(user closed modal|accounts received is empty|user denied account|request rejected)/i.test(
             (error as Error).message,
           )
         )

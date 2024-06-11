@@ -17,11 +17,11 @@
     "dev:react": "pnpm --filter vite-react dev",
     "dev:vue": "pnpm --filter vite-vue dev",
     "docs:dev": "pnpm --filter site dev",
-    "format": "biome format . --write",
-    "lint": "biome check .",
-    "lint:fix": "pnpm lint --apply",
+    "format": "biome format --write",
+    "lint": "biome check",
+    "lint:fix": "pnpm lint --fix",
     "lint:repo": "sherif",
-    "lint:unused": "pnpm clean && knip --ignore-internal",
+    "lint:unused": "pnpm clean && knip",
     "postinstall": "pnpm preconstruct",
     "preconstruct": "bun .scripts/preconstruct.ts",
     "preinstall": "npx only-allow pnpm",
@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.15.3",
-    "@biomejs/biome": "^1.7.3",
+    "@biomejs/biome": "^1.8.0",
     "@changesets/changelog-github": "0.4.6",
     "@changesets/cli": "^2.27.1",
     "@types/bun": "^1.1.1",
@@ -54,7 +54,7 @@
     "glob": "^10.3.12",
     "happy-dom": "^12.2.1",
     "knip": "^5.13.0",
-    "prool": "^0.0.4",
+    "prool": "^0.0.11",
     "publint": "^0.2.7",
     "sherif": "^0.8.4",
     "simple-git-hooks": "^2.11.1",
@@ -67,12 +67,14 @@
     "peerDependencyRules": {
       "ignoreMissing": [
         "@algolia/client-search",
-        "esbuild",
         "react",
         "react-native",
         "search-insights"
       ]
     }
+  },
+  "engines": {
+    "node": "22.x"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm format && pnpm lint:fix"

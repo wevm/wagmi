@@ -42,6 +42,8 @@ export function useWatchPendingTransactions<
   const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
+  // TODO(react@19): cleanup
+  // biome-ignore lint/correctness/useExhaustiveDependencies: `rest` changes every render so only including properties in dependency array
   useEffect(() => {
     if (!enabled) return
     if (!onTransactions) return
@@ -50,5 +52,16 @@ export function useWatchPendingTransactions<
       chainId,
       onTransactions,
     })
-  }, [chainId, config, enabled, onTransactions, rest])
+  }, [
+    chainId,
+    config,
+    enabled,
+    onTransactions,
+    ///
+    rest.batch,
+    rest.onError,
+    rest.poll,
+    rest.pollingInterval,
+    rest.syncConnectedChain,
+  ])
 }
