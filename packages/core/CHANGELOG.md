@@ -1,5 +1,13 @@
 # @wagmi/core
 
+## 2.10.6
+
+### Patch Changes
+
+- [#4009](https://github.com/wevm/wagmi/pull/4009) [`f2a7cefab96691ebed8b8e45ffde071c47b58dbe`](https://github.com/wevm/wagmi/commit/f2a7cefab96691ebed8b8e45ffde071c47b58dbe) Thanks [@roninjin10](https://github.com/roninjin10)! - Marked `to` as optional for `sendTransaction`.
+
+- [#4023](https://github.com/wevm/wagmi/pull/4023) [`f0ea0b2a7fe193dadfeb49a4c8031ee451c638b5`](https://github.com/wevm/wagmi/commit/f0ea0b2a7fe193dadfeb49a4c8031ee451c638b5) Thanks [@jxom](https://github.com/jxom)! - Added chain check to `getConnectorClient` since it's possible for connection state chain ID to get out of sync with the connector (e.g. [wallet bug](https://github.com/MetaMask/metamask-extension/issues/25097)).
+
 ## 2.10.5
 
 ### Patch Changes
