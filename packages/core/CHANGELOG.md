@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.11.1
+
+### Patch Changes
+
+- [`9c862d8d63e3d692a22cef2a90782b74a9103f17`](https://github.com/wevm/wagmi/commit/9c862d8d63e3d692a22cef2a90782b74a9103f17) Thanks [@tmm](https://github.com/tmm)! - Reverted internal module loading utility.
+
 ## 2.11.0
 
 ### Minor Changes
