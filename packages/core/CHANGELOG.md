@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.11.2
+
+### Patch Changes
+
+- [#4042](https://github.com/wevm/wagmi/pull/4042) [`b4d9ef79deb554ee20fed6666a474be5e7cdd522`](https://github.com/wevm/wagmi/commit/b4d9ef79deb554ee20fed6666a474be5e7cdd522) Thanks [@tmm](https://github.com/tmm)! - Removed `injected` connector `isAuthorized` timeout.
+
 ## 2.11.1
 
 ### Patch Changes
