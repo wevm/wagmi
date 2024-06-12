@@ -18,7 +18,7 @@ import type {
   ConnectorEventMap,
   CreateConnectorFn,
 } from './connectors/createConnector.js'
-import { injected } from './connectors/injected.js'
+import { type InjectedParameters, injected } from './connectors/injected.js'
 import { type Emitter, type EventData, createEmitter } from './createEmitter.js'
 import { type Storage, createStorage, noopStorage } from './createStorage.js'
 import { ChainNotConfiguredError } from './errors/config.js'
@@ -36,7 +36,17 @@ export type CreateConfigParameters<
   {
     chains: chains
     connectors?: CreateConnectorFn[] | undefined
-    multiInjectedProviderDiscovery?: boolean | undefined
+    multiInjectedProviderDiscovery?:
+      | boolean
+      | Evaluate<
+          Pick<
+            InjectedParameters,
+            | 'isAuthorizedTimeout'
+            | 'shimDisconnect'
+            | 'unstable_shimAsyncInject'
+          >
+        >
+      | undefined
     storage?: Storage | null | undefined
     ssr?: boolean | undefined
     syncConnectedChain?: boolean | undefined
@@ -112,7 +122,12 @@ export function createConfig<
   function providerDetailToConnector(providerDetail: EIP6963ProviderDetail) {
     const { info } = providerDetail
     const provider = providerDetail.provider as any
-    return injected({ target: { ...info, id: info.rdns, provider } })
+    return injected({
+      ...(typeof multiInjectedProviderDiscovery === 'object'
+        ? multiInjectedProviderDiscovery
+        : {}),
+      target: { ...info, id: info.rdns, provider },
+    })
   }
 
   const clients = new Map<number, Client<Transport, chains[number]>>()
