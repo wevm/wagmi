@@ -49,5 +49,3 @@ export {
 export { deepEqual } from '../utils/deepEqual.js'
 
 export { uid } from '../utils/uid.js'
-
-export { loadDefault } from '../utils/loadDefault.js'
