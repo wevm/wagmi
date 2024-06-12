@@ -404,7 +404,7 @@ function version3(parameters: Version3Parameters) {
     },
     async getProvider() {
       if (!walletProvider) {
-        const SDK = await loadDefault<
+        const { default : SDK } = await loadDefault<
           Awaited<typeof import('cbw-sdk')>['default']
         >(import('cbw-sdk'))
 

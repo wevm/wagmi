@@ -8,7 +8,11 @@ export async function loadDefault<type>(
 
   const moduleDefault = module.default as { default: unknown }
 
-  if (typeof module !== 'function' && (typeof moduleDefault === 'function' || typeof moduleDefault?.default === 'function'))
+  if (
+    typeof module !== 'function' &&
+    (typeof moduleDefault === 'function' ||
+      typeof moduleDefault?.default === 'function')
+  )
     return module.default as unknown as type
   return module as unknown as type
 }

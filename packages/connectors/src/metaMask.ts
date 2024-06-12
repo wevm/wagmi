@@ -125,7 +125,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
     },
     async getProvider() {
       async function initProvider() {
-        const MetaMaskSDK = await loadDefault<
+        const { default: MetaMaskSDK } = await loadDefault<
           Awaited<typeof import('@metamask/sdk')>['default']
         >(import('@metamask/sdk'))
 
