@@ -5,7 +5,10 @@ export async function loadDefault<type>(
   importPromise: Promise<{ default: unknown }>,
 ): Promise<type> {
   const module = await importPromise
-  if (typeof module !== 'function' && typeof module.default === 'function')
+
+  const moduleDefault = module.default as { default: unknown }
+
+  if (typeof module !== 'function' && (typeof moduleDefault === 'function' || typeof moduleDefault?.default === 'function'))
     return module.default as unknown as type
   return module as unknown as type
 }
