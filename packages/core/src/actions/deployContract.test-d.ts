@@ -28,16 +28,12 @@ test('chain formatters', () => {
   expectTypeOf<Result>().toMatchTypeOf<{
     chainId?: typeof celo.id | typeof mainnet.id | undefined
     feeCurrency?: `0x${string}` | undefined
-    gatewayFee?: bigint | undefined
-    gatewayFeeRecipient?: `0x${string}` | undefined
   }>()
   deployContract(config, {
     abi: abi.bayc,
     bytecode: bytecode.bayc,
     args: ['Bored Ape Wagmi Club', 'BAYC', 69420n, 0n],
     feeCurrency: '0x',
-    gatewayFee: 100n,
-    gatewayFeeRecipient: '0x',
   })
 
   type Result2 = DeployContractParameters<
@@ -47,8 +43,6 @@ test('chain formatters', () => {
   >
   expectTypeOf<Result2>().toMatchTypeOf<{
     feeCurrency?: `0x${string}` | undefined
-    gatewayFee?: bigint | undefined
-    gatewayFeeRecipient?: `0x${string}` | undefined
   }>()
   deployContract(config, {
     chainId: celo.id,
@@ -56,8 +50,6 @@ test('chain formatters', () => {
     bytecode: bytecode.bayc,
     args: ['Bored Ape Wagmi Club', 'BAYC', 69420n, 0n],
     feeCurrency: '0x',
-    gatewayFee: 100n,
-    gatewayFeeRecipient: '0x',
   })
 
   type Result3 = DeployContractParameters<
@@ -67,8 +59,6 @@ test('chain formatters', () => {
   >
   expectTypeOf<Result3>().not.toMatchTypeOf<{
     feeCurrency?: `0x${string}` | undefined
-    gatewayFee?: bigint | undefined
-    gatewayFeeRecipient?: `0x${string}` | undefined
   }>()
   deployContract(config, {
     chainId: mainnet.id,
@@ -77,7 +67,5 @@ test('chain formatters', () => {
     args: ['Bored Ape Wagmi Club', 'BAYC', 69420n, 0n],
     // @ts-expect-error
     feeCurrency: '0x',
-    gatewayFee: 100n,
-    gatewayFeeRecipient: '0x',
   })
 })
