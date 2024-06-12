@@ -21,7 +21,6 @@ import type { Evaluate } from '../types/utils.js'
 import { createConnector } from './createConnector.js'
 
 export type InjectedParameters = {
-  isAuthorizedTimeout?: boolean | number | undefined
   /**
    * Some injected providers do not support programmatic disconnect.
    * This flag simulates the disconnect behavior by keeping track of connection status in storage.
@@ -93,11 +92,7 @@ const targetMap = {
 
 injected.type = 'injected' as const
 export function injected(parameters: InjectedParameters = {}) {
-  const {
-    isAuthorizedTimeout = 2_000,
-    shimDisconnect = true,
-    unstable_shimAsyncInject,
-  } = parameters
+  const { shimDisconnect = true, unstable_shimAsyncInject } = parameters
 
   function getTarget(): Evaluate<Target & { id: string }> {
     const target = parameters.target
@@ -388,21 +383,9 @@ export function injected(parameters: InjectedParameters = {}) {
           throw new ProviderNotFoundError()
         }
 
-        // We are applying a retry & timeout strategy here as some injected wallets (e.g. MetaMask) fail to
-        // immediately resolve a JSON-RPC request on page load.
-        const accounts = await withRetry(() => {
-          if (
-            isAuthorizedTimeout !== undefined &&
-            isAuthorizedTimeout !== false
-          ) {
-            const timeout =
-              typeof isAuthorizedTimeout === 'number'
-                ? isAuthorizedTimeout
-                : 2_000
-            return withTimeout(() => this.getAccounts(), { timeout })
-          }
-          return this.getAccounts()
-        })
+        // Use retry strategy as some injected wallets (e.g. MetaMask) fail to
+        // immediately resolve JSON-RPC requests on page load.
+        const accounts = await withRetry(() => this.getAccounts())
         return !!accounts.length
       } catch {
         return false
