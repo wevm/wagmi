@@ -1,5 +1,12 @@
 # @wagmi/connectors
 
+## 5.0.12
+
+### Patch Changes
+
+- Updated dependencies [[`06bb598a7f04c7b167f5b7ff6d46bd15886a6a14`](https://github.com/wevm/wagmi/commit/06bb598a7f04c7b167f5b7ff6d46bd15886a6a14), [`24a45b269bd0214a29d6f82a84ac66ef8c3f3822`](https://github.com/wevm/wagmi/commit/24a45b269bd0214a29d6f82a84ac66ef8c3f3822)]:
+  - @wagmi/core@2.11.0
+
 ## 5.0.11
 
 ### Patch Changes
