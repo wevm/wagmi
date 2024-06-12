@@ -12,7 +12,7 @@ Make sure you follow the TypeScript guide's [Config Types](/react/typescript#con
 
 ## Narrowing Parameters
 
-Once your Config is registered with TypeScript, you are ready to access chain-specifc properties! For example, Celo's `feeCurrency` is available.
+Once your Config is registered with TypeScript, you are ready to access chain-specific properties! For example, Celo's `feeCurrency` is available.
 
 ::: code-group
 ```ts [index.tsx]
@@ -28,7 +28,7 @@ const result = useSimulateContract({
 <<< @/snippets/react/config-chain-properties.ts[config.ts]
 :::
 
-This is great, but if you have multiple chains that support additional properties, your autocomplete could be overwhelmed with all of them. By setting the `chainId` property to a specifc value (e.g. `celo.id`), you can narrow parameters to a single chain.
+This is great, but if you have multiple chains that support additional properties, your autocomplete could be overwhelmed with all of them. By setting the `chainId` property to a specific value (e.g. `celo.id`), you can narrow parameters to a single chain.
 
 ::: code-group
 ```ts [index.tsx]

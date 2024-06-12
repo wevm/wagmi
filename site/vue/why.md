@@ -38,7 +38,7 @@ Finally, Wagmi has a [CLI](/cli/getting-started) to manage ABIs as well as a rob
 
 Stability is a fundamental principle for Wagmi. Many organizations, large and small, rely heavily on Wagmi and expect it to be entirely stable for their users and applications.
 
-Wagmi's test suite runs against forked Ethereum nodes to make sure functions work across chains. The test suite also runs type tests against many different versions of peer dependencies, like TypeScript, to ensure compatbility with the latest releases of other popular software.
+Wagmi's test suite runs against forked Ethereum nodes to make sure functions work across chains. The test suite also runs type tests against many different versions of peer dependencies, like TypeScript, to ensure compatibility with the latest releases of other popular software.
 
 Wagmi follows semver so developers can upgrade between versions with confidence. Starting with Wagmi v2, new functionality will be opt-in with old functionality being deprecated alongside the new features. This means upgrading to the latest major versions will not require immediate changes.
 
