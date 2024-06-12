@@ -1,6 +1,6 @@
 # @wagmi/connectors
 
-## 6.0.0
+## 5.0.12
 
 ### Patch Changes
 
