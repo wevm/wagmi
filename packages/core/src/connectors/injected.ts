@@ -11,7 +11,6 @@ import {
   getAddress,
   numberToHex,
   withRetry,
-  withTimeout,
 } from 'viem'
 
 import type { Connector } from '../createConfig.js'
@@ -22,16 +21,16 @@ import { createConnector } from './createConnector.js'
 
 export type InjectedParameters = {
   /**
-   * MetaMask and other injected providers do not support programmatic disconnect.
-   * This flag simulates the disconnect behavior by keeping track of connection status in storage. See [GitHub issue](https://github.com/MetaMask/metamask-extension/issues/10353) for more info.
+   * Some injected providers do not support programmatic disconnect.
+   * This flag simulates the disconnect behavior by keeping track of connection status in storage.
    * @default true
    */
   shimDisconnect?: boolean | undefined
-  unstable_shimAsyncInject?: boolean | number | undefined
   /**
    * [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) Ethereum Provider to target
    */
   target?: TargetId | Target | (() => Target | undefined) | undefined
+  unstable_shimAsyncInject?: boolean | number | undefined
 }
 
 // Regex of wallets/providers that can accurately simulate contract calls & display contract revert reasons.
@@ -383,13 +382,9 @@ export function injected(parameters: InjectedParameters = {}) {
           throw new ProviderNotFoundError()
         }
 
-        // We are applying a retry & timeout strategy here as some injected wallets (e.g. MetaMask) fail to
-        // immediately resolve a JSON-RPC request on page load.
-        const accounts = await withRetry(() =>
-          withTimeout(() => this.getAccounts(), {
-            timeout: 100,
-          }),
-        )
+        // Use retry strategy as some injected wallets (e.g. MetaMask) fail to
+        // immediately resolve JSON-RPC requests on page load.
+        const accounts = await withRetry(() => this.getAccounts())
         return !!accounts.length
       } catch {
         return false
