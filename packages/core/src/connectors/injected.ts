@@ -11,7 +11,6 @@ import {
   getAddress,
   numberToHex,
   withRetry,
-  withTimeout,
 } from 'viem'
 
 import type { Connector } from '../createConfig.js'
