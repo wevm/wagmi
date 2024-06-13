@@ -77,7 +77,7 @@ export function sourcify<chainId extends ChainId>(
 
       let contractAddress: Address | undefined
       if (typeof address === 'string') contractAddress = address
-      if (typeof address === 'object') contractAddress = address[chainId]
+      else if (typeof address === 'object') contractAddress = address[chainId]
 
       if (!contractAddress)
         throw new Error(
