@@ -2,6 +2,12 @@
 
 Action for getting current chain ID.
 
+This method returns chain IDs only for chains configured in your Wagmi 
+Config (via [createConfig#chains](/core/api/createConfig#chains)). If the connector 
+uses an unsupported chain, `getChainId` will return the last configured 
+chain ID. To retrieve the currently connected chain, including those not 
+specified in the Wagmi Config, use [getAccount#chainId](/core/api/actions/getAccount#chainid) instead.
+
 ## Import
 
 ```ts

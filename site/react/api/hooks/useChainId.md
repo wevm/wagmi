@@ -7,6 +7,12 @@ description: Hook for getting current chain ID.
 
 Hook for getting current chain ID.
 
+This method returns chain IDs only for chains configured in your Wagmi 
+Config (via [createConfig#chains](/react/api/createConfig#chains)). If the connector 
+uses an unsupported chain, `useChainId` will return the last configured 
+chain ID. To retrieve the currently connected chain, including those not 
+specified in the Wagmi Config, use [useAccount#chainId](/react/api/hooks/useAccount#chainid) instead.
+
 ## Import
 
 ```ts
