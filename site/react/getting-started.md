@@ -173,7 +173,7 @@ Now that everything is set up, every component inside the Wagmi and TanStack Que
 ```tsx [profile.tsx]
 import { useAccount, useEnsName } from 'wagmi'
 
-function Profile() {
+export function Profile() {
   const { address } = useAccount()
   const { data, error, status } = useEnsName({ address })
   if (status === 'pending') return <div>Loading ENS name</div>
@@ -187,6 +187,7 @@ function Profile() {
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { WagmiProvider } from 'wagmi'
 import { config } from './config'
+import { Profile } from './profile'
 
 const queryClient = new QueryClient()
 
@@ -194,7 +195,7 @@ function App() {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        {/** ... */}
+        <Profile />
       </QueryClientProvider>
     </WagmiProvider>
   )
