@@ -197,7 +197,7 @@ function App() {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        <Profile/>
+        <Profile />
       </QueryClientProvider>
     </WagmiProvider>
   )
