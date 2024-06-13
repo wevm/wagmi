@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 2.1.10
+
+### Patch Changes
+
+- [#4051](https://github.com/wevm/wagmi/pull/4051) [`275e78b0e585f0ec9da2f9661ce9990aed18e9f4`](https://github.com/wevm/wagmi/commit/275e78b0e585f0ec9da2f9661ce9990aed18e9f4) Thanks [@tmm](https://github.com/tmm)! - Updated Sourcify plugin internals.
+
 ## 2.1.9
 
 ### Patch Changes
