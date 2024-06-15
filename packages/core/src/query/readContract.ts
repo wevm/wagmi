@@ -47,7 +47,7 @@ export function readContractQueryOptions<
         ...parameters,
       }) as Promise<ReadContractData<abi, functionName, args>>
     },
-    queryKey: readContractQueryKey(options),
+    queryKey: readContractQueryKey(options as any) as any,
   } as const satisfies QueryOptions<
     ReadContractQueryFnData<abi, functionName, args>,
     ReadContractErrorType,
