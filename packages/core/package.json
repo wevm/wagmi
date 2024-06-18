@@ -92,7 +92,7 @@
     "zustand": "4.4.1"
   },
   "devDependencies": {
-    "@tanstack/query-core": ">=5.35.1"
+    "@tanstack/query-core": ">=5.45.0"
   },
   "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
   "funding": "https://github.com/sponsors/wevm",
