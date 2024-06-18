@@ -170,19 +170,9 @@ function version4(parameters: Version4Parameters) {
     },
     async getProvider() {
       if (!walletProvider) {
-        // Unwrapping import for Vite compatibility.
-        // See: https://github.com/vitejs/vite/issues/9703
-        const { default: CoinbaseSDK_ } = await import('@coinbase/wallet-sdk')
-        const CoinbaseSDK = (() => {
-          if (
-            typeof CoinbaseSDK_ !== 'function' &&
-            typeof CoinbaseSDK_.default === 'function'
-          )
-            return CoinbaseSDK_.default
-          return CoinbaseSDK_ as unknown as typeof CoinbaseSDK_.default
-        })()
+        const { CoinbaseWalletSDK } = await import('@coinbase/wallet-sdk')
 
-        sdk = new CoinbaseSDK({
+        sdk = new CoinbaseWalletSDK({
           ...parameters,
           appChainIds: config.chains.map((x) => x.id),
         })
@@ -407,11 +397,7 @@ function version3(parameters: Version3Parameters) {
     },
     async getProvider() {
       if (!walletProvider) {
-        const { default: SDK_ } = await import('cbw-sdk')
-        let SDK: typeof SDK_.default
-        if (typeof SDK_ !== 'function' && typeof SDK_.default === 'function')
-          SDK = SDK_.default
-        else SDK = SDK_ as unknown as typeof SDK_.default
+        const { CoinbaseWalletSDK: SDK } = await import('cbw-sdk')
 
         sdk = new SDK({ reloadOnDisconnect, ...parameters })
 
