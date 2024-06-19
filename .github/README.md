@@ -194,7 +194,6 @@ If you find Wagmi useful or use it for work, please consider [sponsoring Wagmi](
       <img alt="brave logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/brave-light.svg" width="auto" height="50">
     </picture>
   </a>
-
 </p>
 
 [Sponsor Wagmi](https://github.com/sponsors/wevm?metadata_campaign=gh_readme_support_bottom)
