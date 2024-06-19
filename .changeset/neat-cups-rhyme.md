@@ -1,5 +1,5 @@
 ---
-"@wagmi/core": minor
+"@wagmi/core": patch
 ---
 
-Added withTimeout for wallet_revokePermissions request during disconnect
+Added timeout to internal call of `'wallet_revokePermissions'` request during `injected#disconnect` as some wallets that do not support this method hang.
