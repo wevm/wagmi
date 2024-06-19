@@ -11,6 +11,7 @@ import {
   getAddress,
   numberToHex,
   withRetry,
+  withTimeout,
 } from 'viem'
 
 import type { Connector } from '../createConfig.js'
@@ -268,7 +269,7 @@ export function injected(parameters: InjectedParameters = {}) {
       // https://github.com/MetaMask/metamask-improvement-proposals/blob/main/MIPs/mip-2.md
       try {
         // TODO: Remove explicit type for viem@3
-        await provider.request<{
+        await withTimeout(() => provider.request<{
           Method: 'wallet_revokePermissions'
           Parameters: [permissions: { eth_accounts: Record<string, any> }]
           ReturnType: null
@@ -276,7 +277,7 @@ export function injected(parameters: InjectedParameters = {}) {
           // `'wallet_revokePermissions'` added in `viem@2.10.3`
           method: 'wallet_revokePermissions',
           params: [{ eth_accounts: {} }],
-        })
+        }), { timeout: 10 })
       } catch {}
 
       // Add shim signalling connector is disconnected
