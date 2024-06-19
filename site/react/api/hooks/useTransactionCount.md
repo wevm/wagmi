@@ -13,7 +13,7 @@ const TError = 'GetTransactionCountErrorType'
 
 # useTransactionCount
 
-Hook for fetching the number of transactions an Account has broadcast / sent.
+Hook for fetching the number of transactions an Account has sent.
 
 ## Import
 
