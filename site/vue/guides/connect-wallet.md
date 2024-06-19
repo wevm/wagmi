@@ -8,7 +8,7 @@ Wagmi contains everything you need to get started with building a Connect Wallet
 
 You can use a pre-built Connect Wallet module from a third-party library such as:
 
-- [Web3Modal](https://web3modal.com/) - [Guide](https://docs.walletconnect.com/web3modal/vue/about)
+- [AppKit](https://walletconnect.com/appkit) - [Guide](https://docs.walletconnect.com/appkit/vue/core/installation)
 
 The above libraries are all built on top of Wagmi, handle all the edge cases around wallet connection, and provide a seamless Connect Wallet UX that you can use in your Dapp.
 
