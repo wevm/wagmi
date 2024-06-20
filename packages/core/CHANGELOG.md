@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.11.4
+
+### Patch Changes
+
+- [`9e8345cd56186b997b5e56deaa2cfc69b30d15f6`](https://github.com/wevm/wagmi/commit/9e8345cd56186b997b5e56deaa2cfc69b30d15f6) Thanks [@tmm](https://github.com/tmm)! - Switched `Register` to `interface` to fix declaration merging.
+
 ## 2.11.3
 
 ### Patch Changes
