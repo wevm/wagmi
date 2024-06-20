@@ -3,7 +3,11 @@ import type {
   MetaMaskSDKOptions,
   SDKProvider,
 } from '@metamask/sdk'
-import { ChainNotConfiguredError, createConnector } from '@wagmi/core'
+import {
+  ChainNotConfiguredError,
+  type Connector,
+  createConnector,
+} from '@wagmi/core'
 import type { Evaluate, ExactPartial } from '@wagmi/core/internal'
 import {
   type AddEthereumChainParameter,
@@ -27,6 +31,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
   type Provider = SDKProvider
   type Properties = {
     onConnect(connectInfo: ProviderConnectInfo): void
+    onDisplayUri(uri: string): void
   }
   type StorageItem = { 'metaMaskSDK.disconnected': true }
   type Listener = Parameters<Provider['on']>[1]
@@ -35,17 +40,29 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
   let provider: Provider | undefined
   let providerPromise: Promise<typeof provider>
 
+  let accountsChanged: Connector['onAccountsChanged'] | undefined
+  let chainChanged: Connector['onChainChanged'] | undefined
+  let connect: Connector['onConnect'] | undefined
+  let displayUri: ((uri: string) => void) | undefined
+  let disconnect: Connector['onDisconnect'] | undefined
+
   return createConnector<Provider, Properties, StorageItem>((config) => ({
     id: 'metaMaskSDK',
     name: 'MetaMask',
     type: metaMask.type,
     async setup() {
       const provider = await this.getProvider()
-      if (provider)
-        provider.on('connect', this.onConnect.bind(this) as Listener)
+      if (provider && !connect) {
+        connect = this.onConnect.bind(this)
+        provider.on('connect', connect as Listener)
+      }
     },
     async connect({ chainId, isReconnecting } = {}) {
       const provider = await this.getProvider()
+      if (!displayUri) {
+        displayUri = this.onDisplayUri
+        provider.on('display_uri', displayUri as Listener)
+      }
 
       let accounts: readonly Address[] = []
       if (isReconnecting) accounts = await this.getAccounts().catch(() => [])
@@ -55,17 +72,6 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           const requestedAccounts = (await sdk.connect()) as string[]
           accounts = requestedAccounts.map((x) => getAddress(x))
         }
-
-        provider.removeListener(
-          'connect',
-          this.onConnect.bind(this) as Listener,
-        )
-        provider.on(
-          'accountsChanged',
-          this.onAccountsChanged.bind(this) as Listener,
-        )
-        provider.on('chainChanged', this.onChainChanged as Listener)
-        provider.on('disconnect', this.onDisconnect.bind(this) as Listener)
 
         // Switch to chain if provided
         let currentChainId = (await this.getChainId()) as number
@@ -78,6 +84,30 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         }
 
         await config.storage?.removeItem('metaMaskSDK.disconnected')
+
+        if (displayUri) {
+          provider.removeListener('display_uri', displayUri)
+          displayUri = undefined
+        }
+
+        // Manage EIP-1193 event listeners
+        // https://eips.ethereum.org/EIPS/eip-1193#events
+        if (connect) {
+          provider.removeListener('connect', connect)
+          connect = undefined
+        }
+        if (!accountsChanged) {
+          accountsChanged = this.onAccountsChanged.bind(this)
+          provider.on('accountsChanged', accountsChanged as Listener)
+        }
+        if (!chainChanged) {
+          chainChanged = this.onChainChanged.bind(this)
+          provider.on('chainChanged', chainChanged as Listener)
+        }
+        if (!disconnect) {
+          disconnect = this.onDisconnect.bind(this)
+          provider.on('disconnect', disconnect as Listener)
+        }
 
         return { accounts, chainId: currentChainId }
       } catch (err) {
@@ -92,13 +122,23 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
     async disconnect() {
       const provider = await this.getProvider()
 
-      provider.removeListener(
-        'accountsChanged',
-        this.onAccountsChanged.bind(this),
-      )
-      provider.removeListener('chainChanged', this.onChainChanged)
-      provider.removeListener('disconnect', this.onDisconnect.bind(this))
-      provider.on('connect', this.onConnect.bind(this) as Listener)
+      // Manage EIP-1193 event listeners
+      if (accountsChanged) {
+        provider.removeListener('accountsChanged', accountsChanged)
+        accountsChanged = undefined
+      }
+      if (chainChanged) {
+        provider.removeListener('chainChanged', chainChanged)
+        chainChanged = undefined
+      }
+      if (disconnect) {
+        provider.removeListener('disconnect', disconnect)
+        disconnect = undefined
+      }
+      if (!connect) {
+        connect = this.onConnect.bind(this)
+        provider.on('connect', connect as Listener)
+      }
 
       sdk.terminate()
 
@@ -275,11 +315,21 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       config.emitter.emit('connect', { accounts, chainId })
 
       const provider = await this.getProvider()
-      if (provider) {
-        provider.removeListener('connect', this.onConnect.bind(this))
-        provider.on('accountsChanged', this.onAccountsChanged.bind(this) as any)
-        provider.on('chainChanged', this.onChainChanged as any)
-        provider.on('disconnect', this.onDisconnect.bind(this) as any)
+      if (connect) {
+        provider.removeListener('connect', connect)
+        connect = undefined
+      }
+      if (!accountsChanged) {
+        accountsChanged = this.onAccountsChanged.bind(this)
+        provider.on('accountsChanged', accountsChanged as Listener)
+      }
+      if (!chainChanged) {
+        chainChanged = this.onChainChanged.bind(this)
+        provider.on('chainChanged', chainChanged as Listener)
+      }
+      if (!disconnect) {
+        disconnect = this.onDisconnect.bind(this)
+        provider.on('disconnect', disconnect as Listener)
       }
     },
     async onDisconnect(error) {
@@ -302,13 +352,26 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       // actually disconnected and we don't need to simulate it.
       config.emitter.emit('disconnect')
 
-      provider.removeListener(
-        'accountsChanged',
-        this.onAccountsChanged.bind(this),
-      )
-      provider.removeListener('chainChanged', this.onChainChanged)
-      provider.removeListener('disconnect', this.onDisconnect.bind(this))
-      provider.on('connect', this.onConnect.bind(this) as any)
+      // Manage EIP-1193 event listeners
+      if (!accountsChanged) {
+        accountsChanged = this.onAccountsChanged.bind(this)
+        provider.on('accountsChanged', accountsChanged as Listener)
+      }
+      if (chainChanged) {
+        provider.removeListener('chainChanged', chainChanged)
+        chainChanged = undefined
+      }
+      if (disconnect) {
+        provider.removeListener('disconnect', disconnect)
+        disconnect = undefined
+      }
+      if (!connect) {
+        connect = this.onConnect.bind(this)
+        provider.on('connect', connect as Listener)
+      }
+    },
+    onDisplayUri(uri) {
+      config.emitter.emit('message', { type: 'display_uri', data: uri })
     },
   }))
 }
