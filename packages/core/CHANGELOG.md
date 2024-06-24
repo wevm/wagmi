@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.11.5
+
+### Patch Changes
+
+- [#4079](https://github.com/wevm/wagmi/pull/4079) [`04f2b846b113f3d300d82c9fa75212f1805817c5`](https://github.com/wevm/wagmi/commit/04f2b846b113f3d300d82c9fa75212f1805817c5) Thanks [@tmm](https://github.com/tmm)! - Added revalidation for config chain ID in SSR and migration.
+
 ## 2.11.4
 
 ### Patch Changes
