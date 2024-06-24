@@ -9,6 +9,7 @@ import {
   useBalance,
   useBlockNumber,
   useChainId,
+  useConfig,
   useConnect,
   useConnections,
   useConnectorClient,
@@ -26,7 +27,6 @@ import {
 import { switchChain } from 'wagmi/actions'
 import { optimism, sepolia } from 'wagmi/chains'
 
-import { config } from '../wagmi'
 import { wagmiContractConfig } from './contracts'
 
 export default function App() {
@@ -378,6 +378,7 @@ function WriteContract() {
 }
 
 function Repro() {
+  const config = useConfig()
   const chainId = useChainId()
 
   // biome-ignore lint/suspicious/noConsoleLog: <explanation>

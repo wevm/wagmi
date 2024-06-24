@@ -47,17 +47,19 @@ import {
 } from 'wagmi'
 import { mainnet, sepolia } from 'wagmi/chains'
 
-export const config = createConfig({
-  chains: [mainnet, sepolia],
-  ssr: true,
-  storage: createStorage({  // [!code ++]
-    storage: cookieStorage, // [!code ++]
-  }),  // [!code ++]
-  transports: {
-    [mainnet.id]: http(),
-    [sepolia.id]: http(),
-  },
-})
+export function getConfig() {
+  return createConfig({
+    chains: [mainnet, sepolia],
+    ssr: true,
+    storage: createStorage({  // [!code ++]
+      storage: cookieStorage, // [!code ++]
+    }),  // [!code ++]
+    transports: {
+      [mainnet.id]: http(),
+      [sepolia.id]: http(),
+    },
+  })
+}
 ```
 
 ### 2. Hydrate the cookie
@@ -76,12 +78,12 @@ import { type ReactNode } from 'react'
 import { headers } from 'next/headers' // [!code ++]
 import { cookieToInitialState } from 'wagmi' // [!code ++]
 
-import { config } from './config'
+import { getConfig } from './config'
 import { Providers } from './providers'
 
 export default function Layout({ children }: { children: ReactNode }) {
   const initialState = cookieToInitialState( // [!code ++]
-    config, // [!code ++]
+    getConfig(), // [!code ++]
     headers().get('cookie') // [!code ++]
   ) // [!code ++]
   return (
@@ -102,20 +104,21 @@ export default function Layout({ children }: { children: ReactNode }) {
 'use client'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import type { ReactNode } from 'react'
+import { type ReactNode, useState } from 'react'
 import { type State, WagmiProvider } from 'wagmi'
 
-import { config } from './config'
+import { getConfig } from './config'
 
 type Props = {
   children: ReactNode,
   initialState: State | undefined, // [!code ++]
 }
 
-const queryClient = new QueryClient()
-
 export function Providers({ children }: Props) {  // [!code --]
 export function Providers({ children, initialState }: Props) {  // [!code ++]
+  const [config] = useState(() => getConfig())
+  const [queryClient] = useState(() => new QueryClient())
+
   return (
     <WagmiProvider config={config}> // [!code --]
     <WagmiProvider config={config} initialState={initialState}> // [!code ++]
@@ -137,17 +140,19 @@ import {
 } from 'wagmi'
 import { mainnet, sepolia } from 'wagmi/chains'
 
-export const config = createConfig({
-  chains: [mainnet, sepolia],
-  ssr: true,
-  storage: createStorage({  
-    storage: cookieStorage, 
-  }),  
-  transports: {
-    [mainnet.id]: http(),
-    [sepolia.id]: http(),
-  },
-})
+export function getConfig() {
+  return createConfig({
+    chains: [mainnet, sepolia],
+    ssr: true,
+    storage: createStorage({  // [!code ++]
+      storage: cookieStorage, // [!code ++]
+    }),  // [!code ++]
+    transports: {
+      [mainnet.id]: http(),
+      [sepolia.id]: http(),
+    },
+  })
+}
 ```
 :::
 
