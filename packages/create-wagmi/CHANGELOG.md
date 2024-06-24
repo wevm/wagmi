@@ -1,5 +1,11 @@
 # create-wagmi
 
+## 2.0.12
+
+### Patch Changes
+
+- [`c00303d0c5909680b3124f92c0a2d2f31ea30405`](https://github.com/wevm/wagmi/commit/c00303d0c5909680b3124f92c0a2d2f31ea30405) Thanks [@tmm](https://github.com/tmm)! - Bumped Next.js version
+
 ## 2.0.11
 
 ### Patch Changes
