@@ -20,6 +20,7 @@ import {
   UserRejectedRequestError,
   getAddress,
   numberToHex,
+  withRetry,
 } from 'viem'
 
 export type MetaMaskParameters = Evaluate<
@@ -33,7 +34,6 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
     onConnect(connectInfo: ProviderConnectInfo): void
     onDisplayUri(uri: string): void
   }
-  type StorageItem = { 'metaMaskSDK.disconnected': true }
   type Listener = Parameters<Provider['on']>[1]
 
   let sdk: MetaMaskSDK
@@ -46,7 +46,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
   let displayUri: ((uri: string) => void) | undefined
   let disconnect: Connector['onDisconnect'] | undefined
 
-  return createConnector<Provider, Properties, StorageItem>((config) => ({
+  return createConnector<Provider, Properties>((config) => ({
     id: 'metaMaskSDK',
     name: 'MetaMask',
     type: metaMask.type,
@@ -82,8 +82,6 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           })
           currentChainId = chain?.id ?? currentChainId
         }
-
-        await config.storage?.removeItem('metaMaskSDK.disconnected')
 
         if (displayUri) {
           provider.removeListener('display_uri', displayUri)
@@ -140,10 +138,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         provider.on('connect', connect as Listener)
       }
 
-      sdk.terminate()
-
-      // Add shim signalling connector is disconnected
-      await config.storage?.setItem('metaMaskSDK.disconnected', true)
+      await sdk.terminate()
     },
     async getAccounts() {
       const provider = await this.getProvider()
@@ -197,12 +192,12 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
     },
     async isAuthorized() {
       try {
-        const isDisconnected =
-          // If shim exists in storage, connector is disconnected
-          await config.storage?.getItem('metaMaskSDK.disconnected')
-        if (isDisconnected) return false
-
-        const accounts = await this.getAccounts()
+        // MetaMask mobile provider sometimes fails to immediately resolve
+        // JSON-RPC requests on page load
+        const accounts = await withRetry(() => this.getAccounts(), {
+          delay: 200,
+          retryCount: 3,
+        })
         return !!accounts.length
       } catch {
         return false
@@ -295,7 +290,6 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       else if (config.emitter.listenerCount('connect')) {
         const chainId = (await this.getChainId()).toString()
         this.onConnect({ chainId })
-        await config.storage?.removeItem('metaMaskSDK.disconnected')
       }
       // Regular change event
       else
@@ -347,9 +341,6 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         localStorage.removeItem('MMSDK_cached_chainId')
       }
 
-      // No need to remove 'metaMaskSDK.disconnected' from storage because `onDisconnect` is typically
-      // only called when the wallet is disconnected through the wallet's interface, meaning the wallet
-      // actually disconnected and we don't need to simulate it.
       config.emitter.emit('disconnect')
 
       // Manage EIP-1193 event listeners
