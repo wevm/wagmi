@@ -47,9 +47,15 @@ test('ssr', () => {
   })
 
   const { onMount } = hydrate(config, {
-    initialState: undefined,
+    initialState: {
+      chainId: 10,
+      current: null,
+      connections: new Map(),
+      status: 'disconnected',
+    },
     reconnectOnMount: false,
   })
   onMount()
   expect(onMount).toBeDefined()
+  expect(config.chains[0].id).toBe(1)
 })

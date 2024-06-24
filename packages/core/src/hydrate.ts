@@ -12,6 +12,9 @@ export function hydrate(config: Config, parameters: HydrateParameters) {
   if (initialState && !config._internal.store.persist.hasHydrated())
     config.setState({
       ...initialState,
+      chainId: config.chains.some((x) => x.id === initialState.chainId)
+        ? initialState.chainId
+        : config.chains[0].id,
       connections: reconnectOnMount ? initialState.connections : new Map(),
       status: reconnectOnMount ? 'reconnecting' : 'disconnected',
     })
