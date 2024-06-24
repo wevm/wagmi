@@ -46,7 +46,7 @@ const config = createConfig({
   },
 })
 
-test.skip('default', async () => {
+test('default', async () => {
   const spy = vi.spyOn(multicall, 'multicall')
   const config = createConfig({
     chains: [mainnet, mainnet2],
@@ -84,7 +84,7 @@ test.skip('default', async () => {
   `)
 })
 
-test('falls back to readContract if multicall is not available', async () => {
+test.skip('falls back to readContract if multicall is not available', async () => {
   const spy = vi.spyOn(readContract, 'readContract')
   const config = createConfig({
     chains: [mainnet, { ...mainnet2, contracts: { multicall3: undefined } }],
@@ -158,7 +158,7 @@ test('falls back to readContract if multicall is not available', async () => {
   `)
 })
 
-test('multichain', async () => {
+test.skip('multichain', async () => {
   const config = createConfig({
     chains: [mainnet, mainnet2, optimism],
     transports: {

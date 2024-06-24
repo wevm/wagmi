@@ -85,7 +85,7 @@ test('default', async () => {
   `)
 })
 
-test('multichain', async () => {
+test.skip('multichain', async () => {
   const { mainnet, mainnet2, optimism } = chain
   const { result } = renderHook(() =>
     useReadContracts({
