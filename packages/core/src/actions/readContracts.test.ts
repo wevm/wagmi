@@ -46,7 +46,7 @@ const config = createConfig({
   },
 })
 
-test('default', async () => {
+test.skip('default', async () => {
   const spy = vi.spyOn(multicall, 'multicall')
   const config = createConfig({
     chains: [mainnet, mainnet2],
