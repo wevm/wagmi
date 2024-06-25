@@ -13,8 +13,8 @@ import {
 } from '@wagmi/core'
 import { useEffect, useReducer, useState } from 'react'
 
-import { config } from './wagmi'
 import { formatEther } from 'viem'
+import { config } from './wagmi'
 
 function App() {
   useEffect(() => {

@@ -1,5 +1,5 @@
 import type { FormEvent } from 'react'
-import { type Hex, parseAbi, parseEther, formatEther } from 'viem'
+import { type Hex, formatEther, parseAbi, parseEther } from 'viem'
 import {
   type BaseError,
   useAccount,
