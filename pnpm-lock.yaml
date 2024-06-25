@@ -157,8 +157,8 @@ importers:
         specifier: 4.0.3
         version: 4.0.3
       '@metamask/sdk':
-        specifier: 0.26.2
-        version: 0.26.2(bufferutil@4.0.8)(encoding@0.1.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.17.2)(utf-8-validate@5.0.10)
+        specifier: 0.26.3
+        version: 0.26.3(bufferutil@4.0.8)(encoding@0.1.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.17.2)(utf-8-validate@5.0.10)
       '@safe-global/safe-apps-provider':
         specifier: 0.18.1
         version: 0.18.1(bufferutil@4.0.8)(encoding@0.1.13)(typescript@5.5.2)(utf-8-validate@5.0.10)(zod@3.22.4)
@@ -1582,8 +1582,8 @@ packages:
       react-native:
         optional: true
 
-  '@metamask/sdk@0.26.2':
-    resolution: {integrity: sha512-B79rkc7lfRLS5EOw98ZVz+Wz4eDwoODrxF3fpePb5/BlvbQ1XpjdDaDkHO9cjsj1wHejyTDLfbFJO6VxUJb7kg==}
+  '@metamask/sdk@0.26.3':
+    resolution: {integrity: sha512-DM4BFPr1BDAIhTz7/RWb3oWQRvX79TJVZH8EL/Ljp+CRY7IjCbaVwaLdyQjVd8Doyq1V7AL4N/JjXplpo2YyYg==}
     peerDependencies:
       react: ^18.2.0
       react-dom: ^18.2.0
@@ -9522,7 +9522,7 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@metamask/sdk@0.26.2(bufferutil@4.0.8)(encoding@0.1.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.17.2)(utf-8-validate@5.0.10)':
+  '@metamask/sdk@0.26.3(bufferutil@4.0.8)(encoding@0.1.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.17.2)(utf-8-validate@5.0.10)':
     dependencies:
       '@metamask/onboarding': 1.0.1
       '@metamask/providers': 15.0.0
