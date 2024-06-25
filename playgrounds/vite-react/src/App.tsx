@@ -205,9 +205,18 @@ function Balance() {
     <div>
       <h2>Balance</h2>
 
-      <div>Balance (Default Chain): {!!default_?.value && formatEther(default_?.value)}</div>
-      <div>Balance (Account Chain): {!!account_?.value && formatEther(account_.value)}</div>
-      <div>Balance (Optimism Chain): {!!optimism_?.value && formatEther(optimism_.value)}</div>
+      <div>
+        Balance (Default Chain):{' '}
+        {!!default_?.value && formatEther(default_.value)}
+      </div>
+      <div>
+        Balance (Account Chain):{' '}
+        {!!account_?.value && formatEther(account_.value)}
+      </div>
+      <div>
+        Balance (Optimism Chain):{' '}
+        {!!optimism_?.value && formatEther(optimism_.value)}
+      </div>
     </div>
   )
 }
