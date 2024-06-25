@@ -1,7 +1,7 @@
 import dedent from 'dedent'
 import { execa, execaCommandSync } from 'execa'
+import { fdir } from 'fdir'
 import { default as fs } from 'fs-extra'
-import { globby } from 'globby'
 
 import { basename, extname, join, resolve } from 'pathe'
 import pc from 'picocolors'
@@ -126,10 +126,13 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
   }
 
   async function getArtifactPaths(artifactsDirectory: string) {
-    return await globby([
-      ...include.map((x) => `${artifactsDirectory}/**/${x}`),
-      ...exclude.map((x) => `!${artifactsDirectory}/**/${x}`),
-    ])
+    const crawler = new fdir()
+      .withBasePath()
+      .glob(
+        ...include.map((x) => `${artifactsDirectory}/**/${x}`),
+        ...exclude.map((x) => `!${artifactsDirectory}/**/${x}`),
+      )
+    return crawler.crawl(artifactsDirectory).withPromise()
   }
 
   const project = resolve(process.cwd(), config.project ?? '')
