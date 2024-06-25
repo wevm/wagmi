@@ -18,13 +18,12 @@
     "dev:vue": "pnpm --filter vite-vue dev",
     "docs:dev": "pnpm --filter site dev",
     "format": "biome format --write",
-    "lint": "biome check",
-    "lint:fix": "pnpm lint --fix",
+    "lint": "biome check --write",
     "lint:repo": "sherif",
     "lint:unused": "pnpm clean && knip",
     "postinstall": "pnpm preconstruct",
     "preconstruct": "bun .scripts/preconstruct.ts",
-    "preinstall": "npx only-allow pnpm",
+    "preinstall": "pnpx only-allow pnpm",
     "prepare": "pnpm simple-git-hooks",
     "test": "vitest",
     "test:build": "pnpm run --r --parallel test:build",
@@ -77,7 +76,7 @@
     "node": "22.x"
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpm format && pnpm lint:fix"
+    "pre-commit": "pnpm lint"
   },
   "knip": {
     "ignore": ["**/templates/**", "**/hardhat.config.js"],

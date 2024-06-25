@@ -22,7 +22,7 @@ jobs:
         run: pnpm lint:repo
 
       - name: Lint code
-        run: pnpm format && pnpm lint:fix
+        run: pnpm lint
 
       - name: Update package versions
         run: pnpm version:update
