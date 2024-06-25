@@ -69,8 +69,8 @@ importers:
   packages/cli:
     dependencies:
       abitype:
-        specifier: ^1.0.2
-        version: 1.0.2(typescript@5.5.2)(zod@3.22.2)
+        specifier: ^1.0.4
+        version: 1.0.4(typescript@5.5.2)(zod@3.22.2)
       bundle-require:
         specifier: ^4.0.2
         version: 4.0.2(esbuild@0.19.11)
@@ -78,8 +78,8 @@ importers:
         specifier: ^6.7.14
         version: 6.7.14
       change-case:
-        specifier: ^4.1.2
-        version: 4.1.2
+        specifier: ^5.4.4
+        version: 5.4.4
       chokidar:
         specifier: ^3.5.3
         version: 3.5.3
@@ -98,15 +98,15 @@ importers:
       execa:
         specifier: ^8.0.1
         version: 8.0.1
+      fdir:
+        specifier: ^6.1.1
+        version: 6.1.1(picomatch@3.0.1)
       find-up:
         specifier: ^6.3.0
         version: 6.3.0
       fs-extra:
         specifier: ^11.2.0
         version: 11.2.0
-      globby:
-        specifier: ^13.2.2
-        version: 13.2.2
       ora:
         specifier: ^6.3.1
         version: 6.3.1
@@ -116,6 +116,9 @@ importers:
       picocolors:
         specifier: ^1.0.0
         version: 1.0.0
+      picomatch:
+        specifier: ^3.0.0
+        version: 3.0.1
       prettier:
         specifier: ^3.0.3
         version: 3.0.3
@@ -347,7 +350,7 @@ importers:
         version: 2.4.6
       nuxt:
         specifier: ^3.11.2
-        version: 3.11.2(@opentelemetry/api@1.8.0)(@parcel/watcher@2.4.1)(@types/node@20.12.10)(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@4.1.2)(encoding@0.1.13)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(ioredis@5.3.2)(qrcode@1.5.3)(rollup@4.17.2)(terser@5.31.0)(typescript@5.5.2)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@6.0.3)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))(vue-tsc@2.0.16(typescript@5.5.2))
+        version: 3.11.2(@opentelemetry/api@1.8.0)(@parcel/watcher@2.4.1)(@types/node@20.12.10)(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@5.4.4)(encoding@0.1.13)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(ioredis@5.3.2)(qrcode@1.5.3)(rollup@4.17.2)(terser@5.31.0)(typescript@5.5.2)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@6.0.3)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))(vue-tsc@2.0.16(typescript@5.5.2))
       vue:
         specifier: '>=3.4.21'
         version: 3.4.27(typescript@5.5.2)
@@ -417,7 +420,7 @@ importers:
         version: link:../../packages/vue
       nuxt:
         specifier: ^3.11.2
-        version: 3.11.2(@opentelemetry/api@1.8.0)(@parcel/watcher@2.4.1)(@types/node@20.12.10)(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@4.1.2)(encoding@0.1.13)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(ioredis@5.3.2)(qrcode@1.5.3)(rollup@4.17.2)(terser@5.31.0)(typescript@5.5.2)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@6.0.3)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))
+        version: 3.11.2(@opentelemetry/api@1.8.0)(@parcel/watcher@2.4.1)(@types/node@20.12.10)(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@5.4.4)(encoding@0.1.13)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(ioredis@5.3.2)(qrcode@1.5.3)(rollup@4.17.2)(terser@5.31.0)(typescript@5.5.2)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@6.0.3)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))(vue-tsc@2.0.16(typescript@5.5.2))
       viem:
         specifier: 2.*
         version: 2.10.8(bufferutil@4.0.8)(typescript@5.5.2)(utf-8-validate@6.0.3)(zod@3.22.4)
@@ -567,7 +570,7 @@ importers:
         version: 1.0.2(typescript@5.5.2)(zod@3.22.4)
       nuxt:
         specifier: ^3.11.2
-        version: 3.11.2(@opentelemetry/api@1.8.0)(@parcel/watcher@2.4.1)(@types/node@20.12.10)(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@4.1.2)(encoding@0.1.13)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(ioredis@5.3.2)(qrcode@1.5.3)(rollup@4.17.2)(terser@5.31.0)(typescript@5.5.2)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@6.0.3)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))
+        version: 3.11.2(@opentelemetry/api@1.8.0)(@parcel/watcher@2.4.1)(@types/node@20.12.10)(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@5.4.4)(encoding@0.1.13)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(ioredis@5.3.2)(qrcode@1.5.3)(rollup@4.17.2)(terser@5.31.0)(typescript@5.5.2)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@6.0.3)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))(vue-tsc@2.0.16(typescript@5.5.2))
       react:
         specifier: '>=18.3.1'
         version: 18.3.1
@@ -579,7 +582,7 @@ importers:
         version: 2.10.8(bufferutil@4.0.8)(typescript@5.5.2)(utf-8-validate@6.0.3)(zod@3.22.4)
       vitepress:
         specifier: ^1.1.4
-        version: 1.1.4(@algolia/client-search@4.19.1)(@types/node@20.12.10)(@types/react@18.3.1)(change-case@4.1.2)(idb-keyval@6.2.1)(postcss@8.4.38)(qrcode@1.5.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(terser@5.31.0)(typescript@5.5.2)
+        version: 1.1.4(@algolia/client-search@4.19.1)(@types/node@20.12.10)(@types/react@18.3.1)(change-case@5.4.4)(idb-keyval@6.2.1)(postcss@8.4.38)(qrcode@1.5.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(terser@5.31.0)(typescript@5.5.2)
       vue:
         specifier: '>=3.4.21'
         version: 3.4.27(typescript@5.5.2)
@@ -3254,6 +3257,17 @@ packages:
       zod:
         optional: true
 
+  abitype@1.0.4:
+    resolution: {integrity: sha512-UivtYZOGJGE8rsrM/N5vdRkUpqEZVmuTumfTuolm7m/6O09wprd958rx8kUBwVAAAhQDveGAgD0GJdBuR8s6tw==}
+    peerDependencies:
+      typescript: '>=5.0.4'
+      zod: ^3 >=3.22.0
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+      zod:
+        optional: true
+
   abort-controller@3.0.0:
     resolution: {integrity: sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==}
     engines: {node: '>=6.5'}
@@ -3591,9 +3605,6 @@ packages:
   call-bind@1.0.2:
     resolution: {integrity: sha512-7O+FbCihrB5WGbFYesctwmTKae6rOiIzmz1icreWJ+0aA7LJfuqhEso2T9ncpcFtzMQtzXf2QGGueWJGTYsqrA==}
 
-  camel-case@4.1.2:
-    resolution: {integrity: sha512-gxGWBrTT1JuMx6R+o5PTXMmUnhnVzLQ9SNutD4YqKtI6ap897t3tKECYla6gCWEkplXnlNybEkZg9GEGxKFCgw==}
-
   camelcase-keys@6.2.2:
     resolution: {integrity: sha512-YrwaA0vEKazPBkn0ipTiMpSajYDSe+KjQfrjhcBMxJt/znbvlHd8Pw/Vamaz5EB4Wfhs3SUR3Z9mwRu/P3s3Yg==}
     engines: {node: '>=8'}
@@ -3611,9 +3622,6 @@ packages:
 
   caniuse-lite@1.0.30001616:
     resolution: {integrity: sha512-RHVYKov7IcdNjVHJFNY/78RdG4oGVjbayxv8u5IO74Wv7Hlq4PnJE6mo/OjFijjVFNy5ijnCt6H3IIo4t+wfEw==}
-
-  capital-case@1.0.4:
-    resolution: {integrity: sha512-ds37W8CytHgwnhGGTi88pcPyR15qoNkOpYwmMMfnWqqWgESapLqvDx6huFjQ5vqWSn2Z06173XNA7LtMOeUh1A==}
 
   cardinal@2.1.1:
     resolution: {integrity: sha512-JSr5eOgoEymtYHBjNWyjrMqet9Am2miJhlfKNdqLp6zoeAh0KN5dRAcxlecj5mAJrmQomgiOBj35xHLrFjqBpw==}
@@ -3638,8 +3646,8 @@ packages:
     resolution: {integrity: sha512-dLitG79d+GV1Nb/VYcCDFivJeK1hiukt9QjRNVOsUtTy1rR1YJsmpGGTZ3qJos+uw7WmWF4wUwBd9jxjocFC2w==}
     engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
 
-  change-case@4.1.2:
-    resolution: {integrity: sha512-bSxY2ws9OtviILG1EiY5K7NNxkqg/JnRnFxLtKQ96JaviiIxi7djMrSd0ECT9AC+lttClmYwKw53BWpOMblo7A==}
+  change-case@5.4.4:
+    resolution: {integrity: sha512-HRQyTk2/YPEkt9TnUPbOpr64Uw3KOicFWPVBb+xiHvd6eBx/qPr9xqfBFDT8P2vWsvvz4jbEkfDe71W3VyNu2w==}
 
   char-regex@1.0.2:
     resolution: {integrity: sha512-kWWXztvZ5SBQV+eRgKFeh8q5sLuZY2+8WUIzlxWVTg+oGwY14qylx1KbKzHd8P6ZYkAg0xyIDU9JMHhyJMZ1jw==}
@@ -3826,9 +3834,6 @@ packages:
 
   console-control-strings@1.1.0:
     resolution: {integrity: sha512-ty/fTekppD2fIwRvnZAVdeOiGd1c7YXEixbgJTNzqcxJWKQnjJ/V1bNEEE6hygpM3WjwHFUVK6HTjWSzV4a8sQ==}
-
-  constant-case@3.0.4:
-    resolution: {integrity: sha512-I2hSBi7Vvs7BEuJDr5dDHfzb/Ruj3FyvFyh7KLilAjNQw3Be+xgqUBA2W6scVEcL0hL1dwPRtIqEPVUCKkSsyQ==}
 
   convert-source-map@2.0.0:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
@@ -4165,9 +4170,6 @@ packages:
   domutils@3.1.0:
     resolution: {integrity: sha512-H78uMmQtI2AhgDJjWeQmHwJJ2bLPD3GMmO7Zja/ZZh84wkm+4ut+IUnUdRa8uCGX88DiVx1j6FRe1XfxEgjEZA==}
 
-  dot-case@3.0.4:
-    resolution: {integrity: sha512-Kv5nKlh6yRrdrGvxeJ2e5y2eRUpkUosIW4A2AS38zwSz27zu7ufDwQPi5Jhs3XAlGNetl3bmnGhQsMtkKJnj3w==}
-
   dot-prop@8.0.2:
     resolution: {integrity: sha512-xaBe6ZT4DHPkg0k4Ytbvn5xoxgpG0jOS1dYxSOwAHPuNLjP3/OzN0gH55SrLqpx8cBfSaVt91lXYkApjb+nYdQ==}
     engines: {node: '>=16'}
@@ -4433,10 +4435,6 @@ packages:
   fast-fifo@1.3.2:
     resolution: {integrity: sha512-/d9sfos4yxzpwkDkuN7k2SqFKtYNmCTzgfEpz82x34IM9/zc8KGxQoXg1liNC/izpRM/MBdt44Nmx41ZWqk+FQ==}
 
-  fast-glob@3.3.1:
-    resolution: {integrity: sha512-kNFPyjhh5cKjrUltxs+wFx+ZkbRaxxmZ+X0ZU31SOsxCEtP9VPgtq2teZw1DebupL5GmDaNQ6yKMMVcM41iqDg==}
-    engines: {node: '>=8.6.0'}
-
   fast-glob@3.3.2:
     resolution: {integrity: sha512-oX2ruAFQwf/Orj8m737Y5adxDQO0LAB7/S5MnxCdTNDd4p6BsyIVsv9JQsATbTSq8KHRpLwIHbVlUNatxd+1Ow==}
     engines: {node: '>=8.6.0'}
@@ -4450,6 +4448,14 @@ packages:
 
   fastq@1.15.0:
     resolution: {integrity: sha512-wBrocU2LCXXa+lWBt8RoIRD89Fi8OdABODa/kEnyeyjS5aZO5/GNvI5sEINADqP/h8M29UHTHUb53sUu5Ihqdw==}
+
+  fdir@6.1.1:
+    resolution: {integrity: sha512-QfKBVg453Dyn3mr0Q0O+Tkr1r79lOTAKSi9f/Ot4+qVEwxWhav2Z+SudrG9vQjM2aYRMQQZ2/Q1zdA8ACM1pDg==}
+    peerDependencies:
+      picomatch: 3.x
+    peerDependenciesMeta:
+      picomatch:
+        optional: true
 
   fflate@0.8.2:
     resolution: {integrity: sha512-cPJU47OaAoCbg0pBvzsgpTPhmhqI5eJjh/JIu8tPj5q+T7iLvW/JAYUqmE7KOB4R1ZyEhzBaIQpQpardBF5z8A==}
@@ -4697,10 +4703,6 @@ packages:
     resolution: {integrity: sha512-jhIXaOzy1sb8IyocaruWSn1TjmnBVs8Ayhcy83rmxNJ8q2uWKCAj3CnJY+KpGSXCueAPc0i05kVvVKtP1t9S3g==}
     engines: {node: '>=10'}
 
-  globby@13.2.2:
-    resolution: {integrity: sha512-Y1zNGV+pzQdh7H39l9zgB4PJqjRNqydvdYCDG4HFXM4XuvSaQQlEc91IU1yALL8gUTDomgBAfz3XJdmUS+oo0w==}
-    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
-
   globby@14.0.1:
     resolution: {integrity: sha512-jOMLD2Z7MAhyG8aJpNOpmziMOP4rPLcc95oQPKXBazW82z+CEgPFBQvEpRUa1KeIMUJo4Wsm+q6uzO/Q/4BksQ==}
     engines: {node: '>=18'}
@@ -4808,9 +4810,6 @@ packages:
   he@1.2.0:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
     hasBin: true
-
-  header-case@2.0.4:
-    resolution: {integrity: sha512-H/vuk5TEEVZwrR0lp2zed9OCo1uAILMlx0JEMgC26rzyJJ3N1v6XkwHHXJQdR2doSjcGPM6OKPYoJgf0plJ11Q==}
 
   headers-polyfill@4.0.2:
     resolution: {integrity: sha512-EWGTfnTqAO2L/j5HZgoM/3z82L7necsJ0pO9Tp0X1wil3PDLrkypTBRgVO2ExehEEvUycejZD3FuRaXpZZc3kw==}
@@ -5478,9 +5477,6 @@ packages:
   loupe@2.3.7:
     resolution: {integrity: sha512-zSMINGVYkdpYSOBmLi0D1Uo7JU9nVdQKrHxC8eYlV+9YKK9WePqAlL7lSlorG/U2Fw1w0hTBmaa/jrQ3UbPHtA==}
 
-  lower-case@2.0.2:
-    resolution: {integrity: sha512-7fm3l3NAF9WfN6W3JOmf5drwpVqX78JtoGJ3A6W0a6ZnldM41w2fV5D490psKFTpMds8TJse/eHLFFsNHHjHgg==}
-
   lru-cache@10.2.2:
     resolution: {integrity: sha512-9hp3Vp2/hFQUiIwKo8XCeFVnrg8Pk3TYNPIR7tJADKi5YfcF7vEaK7avFHTlSy3kOKYaJQaalfEo6YuXdceBOQ==}
     engines: {node: 14 || >=16.14}
@@ -5922,9 +5918,6 @@ packages:
       xml2js:
         optional: true
 
-  no-case@3.0.4:
-    resolution: {integrity: sha512-fgAN3jGAh+RoxUGZHTSOLJIqUc2wmoBwGR4tbpNAKmmovFoWq0OdRkb0VkldReO2a2iBT/OEulG9XSUc10r3zg==}
-
   node-addon-api@2.0.2:
     resolution: {integrity: sha512-Ntyt4AIXyaLIuMHF6IOoTakB3K+RWxwtsHNRxllEoA6vPwP9o4866g6YWDLUdnucilZhmkxiHwHr11gAENw+QA==}
 
@@ -6241,9 +6234,6 @@ packages:
     engines: {node: ^16.14.0 || >=18.0.0}
     hasBin: true
 
-  param-case@3.0.4:
-    resolution: {integrity: sha512-RXlj7zCYokReqWpOPH9oYivUzLYZ5vAPIfEmCTNViosC78F8F0H9y7T7gG2M39ymgutxF5gcFEsyZQSph9Bp3A==}
-
   parse-git-config@3.0.0:
     resolution: {integrity: sha512-wXoQGL1D+2COYWCD35/xbiKma1Z15xvZL8cI25wvxzled58V51SJM04Urt/uznS900iQor7QO04SgdfT/XlbuA==}
     engines: {node: '>=8'}
@@ -6266,14 +6256,8 @@ packages:
     resolution: {integrity: sha512-CiyeOxFT/JZyN5m0z9PfXw4SCBJ6Sygz1Dpl0wqjlhDEGGBP1GnsUVEL0p63hoG1fcj3fHynXi9NYO4nWOL+qQ==}
     engines: {node: '>= 0.8'}
 
-  pascal-case@3.1.2:
-    resolution: {integrity: sha512-uWlGT3YSnK9x3BQJaOdcZwrnV6hPpd8jFH1/ucpiLRPh/2zCVJKS19E4GvYHvaCcACn3foXZ0cLB9Wrx1KGe5g==}
-
   path-browserify@1.0.1:
     resolution: {integrity: sha512-b7uo2UCUOYZcnF/3ID0lulOJi/bafxa1xPe7ZPsammBSpjSWQkjNxlt635YGS2MiR9GjvuXCtz2emr3jbsz98g==}
-
-  path-case@3.0.4:
-    resolution: {integrity: sha512-qO4qCFjXqVTrcbPt/hQfhTQ+VhFsqNKOPtytgNKkKxSoEp3XPUQ8ObFuePylOIok5gjn69ry8XiULxCwot3Wfg==}
 
   path-exists@3.0.0:
     resolution: {integrity: sha512-bpC7GYwiDYQ4wYLe+FA8lhRjhQCMcQGuSgGGqDkg/QerRWw9CmGRT0iSOVRSZJ29NMLZgIzqaljJ63oaL4NIJQ==}
@@ -6340,6 +6324,10 @@ packages:
   picomatch@2.3.1:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
+
+  picomatch@3.0.1:
+    resolution: {integrity: sha512-I3EurrIQMlRc9IaAZnqRR044Phh2DXY+55o7uJ0V+hYZAcQYSuFWsc9q5PvyDHUSCe1Qxn/iBz+78s86zWnGag==}
+    engines: {node: '>=10'}
 
   picomatch@4.0.2:
     resolution: {integrity: sha512-M7BAV6Rlcy5u+m6oPhAPFgJTzAioX/6B0DxyvDlo9l8+T3nLKbrczg2WLUyzd45L8RqfUMyGPzekbMvX2Ldkwg==}
@@ -6953,9 +6941,6 @@ packages:
     resolution: {integrity: sha512-qqWzuOjSFOuqPjFe4NOsMLafToQQwBSOEpS+FwEt3A2V3vKubTquT3vmLTQpFgMXp8AlFWFuP1qKaJZOtPpVXg==}
     engines: {node: '>= 0.8.0'}
 
-  sentence-case@3.0.4:
-    resolution: {integrity: sha512-8LS0JInaQMCRoQ7YUytAo/xUu5W2XnQxV2HI/6uM6U7CITS1RqPElr30V6uIqyMKM9lJGRVFy5/4CuzcixNYSg==}
-
   serialize-javascript@6.0.0:
     resolution: {integrity: sha512-Qr3TosvguFt8ePWqsvRfrKyQXIiW+nGbYpy8XK24NQHE83caxWt+mIymTT19DGFbNWNLfEwsrkSmN64lVWB9ag==}
 
@@ -7114,9 +7099,6 @@ packages:
   smol-toml@1.1.4:
     resolution: {integrity: sha512-Y0OT8HezWsTNeEOSVxDnKOW/AyNXHQ4BwJNbAXlLTF5wWsBvrcHhIkE5Rf8kQMLmgf7nDX3PVOlgC6/Aiggu3Q==}
     engines: {node: '>= 18', pnpm: '>= 8'}
-
-  snake-case@3.0.4:
-    resolution: {integrity: sha512-LAOh4z89bGQvl9pFfNF8V146i7o7/CqFPbqzYgP+yYzDIDeS9HaNFtXABamRW+AQzEVODcvE79ljJ+8a9YSdMg==}
 
   socket.io-client@4.7.5:
     resolution: {integrity: sha512-sJ/tqHOCe7Z50JCBCXrsY3I2k03iOiUe+tj1OmKeD2lXPiGH/RUCdTZFoqVyN7l1MnpIzPrGtLcijffmeouNlQ==}
@@ -7787,12 +7769,6 @@ packages:
     hasBin: true
     peerDependencies:
       browserslist: '>= 4.21.0'
-
-  upper-case-first@2.0.2:
-    resolution: {integrity: sha512-514ppYHBaKwfJRK/pNC6c/OxfGa0obSnAl106u97Ed0I625Nin96KAjttZF6ZL3e1XLtphxnqrOi9iWgm+u+bg==}
-
-  upper-case@2.0.2:
-    resolution: {integrity: sha512-KgdgDGJt2TpuwBUIjgG6lzw2GWFRCW9Qkfkiv0DxqHHLYJHmtmdUIKcZd8rHgFSjopVTlw6ggzCm1b8MFQwikg==}
 
   uqr@0.1.2:
     resolution: {integrity: sha512-MJu7ypHq6QasgF5YRTjqscSzQp/W11zoUk6kvmlH+fmWEs63Y0Eib13hYFwAzagRJcVY8WVnlV+eBDUGMJ5IbA==}
@@ -9928,23 +9904,12 @@ snapshots:
 
   '@nuxt/devalue@2.0.2': {}
 
-  '@nuxt/devtools-kit@1.3.1(nuxt@3.11.2(@opentelemetry/api@1.8.0)(@parcel/watcher@2.4.1)(@types/node@20.12.10)(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@4.1.2)(encoding@0.1.13)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(ioredis@5.3.2)(qrcode@1.5.3)(rollup@4.17.2)(terser@5.31.0)(typescript@5.5.2)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@6.0.3)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))(vue-tsc@2.0.16(typescript@5.5.2)))(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))':
+  '@nuxt/devtools-kit@1.3.1(nuxt@3.11.2(@opentelemetry/api@1.8.0)(@parcel/watcher@2.4.1)(@types/node@20.12.10)(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@5.4.4)(encoding@0.1.13)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(ioredis@5.3.2)(qrcode@1.5.3)(rollup@4.17.2)(terser@5.31.0)(typescript@5.5.2)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@6.0.3)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))(vue-tsc@2.0.16(typescript@5.5.2)))(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))':
     dependencies:
       '@nuxt/kit': 3.11.2(rollup@4.17.2)
       '@nuxt/schema': 3.11.2(rollup@4.17.2)
       execa: 7.2.0
-      nuxt: 3.11.2(@opentelemetry/api@1.8.0)(@parcel/watcher@2.4.1)(@types/node@20.12.10)(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@4.1.2)(encoding@0.1.13)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(ioredis@5.3.2)(qrcode@1.5.3)(rollup@4.17.2)(terser@5.31.0)(typescript@5.5.2)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@6.0.3)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))(vue-tsc@2.0.16(typescript@5.5.2))
-      vite: 5.2.11(@types/node@20.12.10)(terser@5.31.0)
-    transitivePeerDependencies:
-      - rollup
-      - supports-color
-
-  '@nuxt/devtools-kit@1.3.1(nuxt@3.11.2(@opentelemetry/api@1.8.0)(@parcel/watcher@2.4.1)(@types/node@20.12.10)(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@4.1.2)(encoding@0.1.13)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(ioredis@5.3.2)(qrcode@1.5.3)(rollup@4.17.2)(terser@5.31.0)(typescript@5.5.2)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@6.0.3)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))':
-    dependencies:
-      '@nuxt/kit': 3.11.2(rollup@4.17.2)
-      '@nuxt/schema': 3.11.2(rollup@4.17.2)
-      execa: 7.2.0
-      nuxt: 3.11.2(@opentelemetry/api@1.8.0)(@parcel/watcher@2.4.1)(@types/node@20.12.10)(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@4.1.2)(encoding@0.1.13)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(ioredis@5.3.2)(qrcode@1.5.3)(rollup@4.17.2)(terser@5.31.0)(typescript@5.5.2)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@6.0.3)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))
+      nuxt: 3.11.2(@opentelemetry/api@1.8.0)(@parcel/watcher@2.4.1)(@types/node@20.12.10)(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@5.4.4)(encoding@0.1.13)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(ioredis@5.3.2)(qrcode@1.5.3)(rollup@4.17.2)(terser@5.31.0)(typescript@5.5.2)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@6.0.3)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))(vue-tsc@2.0.16(typescript@5.5.2))
       vite: 5.2.11(@types/node@20.12.10)(terser@5.31.0)
     transitivePeerDependencies:
       - rollup
@@ -9963,13 +9928,13 @@ snapshots:
       rc9: 2.1.2
       semver: 7.6.2
 
-  '@nuxt/devtools@1.3.1(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@4.1.2)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(nuxt@3.11.2(@opentelemetry/api@1.8.0)(@parcel/watcher@2.4.1)(@types/node@20.12.10)(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@4.1.2)(encoding@0.1.13)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(ioredis@5.3.2)(qrcode@1.5.3)(rollup@4.17.2)(terser@5.31.0)(typescript@5.5.2)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@6.0.3)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))(vue-tsc@2.0.16(typescript@5.5.2)))(qrcode@1.5.3)(rollup@4.17.2)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@6.0.3)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))(vue@3.4.27(typescript@5.5.2))':
+  '@nuxt/devtools@1.3.1(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@5.4.4)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(nuxt@3.11.2(@opentelemetry/api@1.8.0)(@parcel/watcher@2.4.1)(@types/node@20.12.10)(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@5.4.4)(encoding@0.1.13)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(ioredis@5.3.2)(qrcode@1.5.3)(rollup@4.17.2)(terser@5.31.0)(typescript@5.5.2)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@6.0.3)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))(vue-tsc@2.0.16(typescript@5.5.2)))(qrcode@1.5.3)(rollup@4.17.2)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@6.0.3)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))(vue@3.4.27(typescript@5.5.2))':
     dependencies:
       '@antfu/utils': 0.7.8
-      '@nuxt/devtools-kit': 1.3.1(nuxt@3.11.2(@opentelemetry/api@1.8.0)(@parcel/watcher@2.4.1)(@types/node@20.12.10)(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@4.1.2)(encoding@0.1.13)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(ioredis@5.3.2)(qrcode@1.5.3)(rollup@4.17.2)(terser@5.31.0)(typescript@5.5.2)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@6.0.3)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))(vue-tsc@2.0.16(typescript@5.5.2)))(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))
+      '@nuxt/devtools-kit': 1.3.1(nuxt@3.11.2(@opentelemetry/api@1.8.0)(@parcel/watcher@2.4.1)(@types/node@20.12.10)(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@5.4.4)(encoding@0.1.13)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(ioredis@5.3.2)(qrcode@1.5.3)(rollup@4.17.2)(terser@5.31.0)(typescript@5.5.2)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@6.0.3)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))(vue-tsc@2.0.16(typescript@5.5.2)))(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))
       '@nuxt/devtools-wizard': 1.3.1
       '@nuxt/kit': 3.11.2(rollup@4.17.2)
-      '@vue/devtools-applet': 7.1.3(@unocss/reset@0.59.4)(change-case@4.1.2)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(qrcode@1.5.3)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))(vue@3.4.27(typescript@5.5.2))
+      '@vue/devtools-applet': 7.1.3(@unocss/reset@0.59.4)(change-case@5.4.4)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(qrcode@1.5.3)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))(vue@3.4.27(typescript@5.5.2))
       '@vue/devtools-core': 7.1.3(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))(vue@3.4.27(typescript@5.5.2))
       '@vue/devtools-kit': 7.1.3(vue@3.4.27(typescript@5.5.2))
       birpc: 0.2.17
@@ -9987,72 +9952,7 @@ snapshots:
       launch-editor: 2.6.1
       local-pkg: 0.5.0
       magicast: 0.3.4
-      nuxt: 3.11.2(@opentelemetry/api@1.8.0)(@parcel/watcher@2.4.1)(@types/node@20.12.10)(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@4.1.2)(encoding@0.1.13)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(ioredis@5.3.2)(qrcode@1.5.3)(rollup@4.17.2)(terser@5.31.0)(typescript@5.5.2)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@6.0.3)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))(vue-tsc@2.0.16(typescript@5.5.2))
-      nypm: 0.3.8
-      ohash: 1.1.3
-      pacote: 18.0.6
-      pathe: 1.1.2
-      perfect-debounce: 1.0.0
-      pkg-types: 1.1.1
-      rc9: 2.1.2
-      scule: 1.3.0
-      semver: 7.6.2
-      simple-git: 3.24.0
-      sirv: 2.0.4
-      unimport: 3.7.1(rollup@4.17.2)
-      vite: 5.2.11(@types/node@20.12.10)(terser@5.31.0)
-      vite-plugin-inspect: 0.8.4(@nuxt/kit@3.11.2(rollup@4.17.2))(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))
-      vite-plugin-vue-inspector: 5.1.0(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))
-      which: 3.0.1
-      ws: 8.17.0(bufferutil@4.0.8)(utf-8-validate@6.0.3)
-    transitivePeerDependencies:
-      - '@unocss/reset'
-      - '@vue/composition-api'
-      - async-validator
-      - axios
-      - bluebird
-      - bufferutil
-      - change-case
-      - drauu
-      - floating-vue
-      - fuse.js
-      - idb-keyval
-      - jwt-decode
-      - nprogress
-      - qrcode
-      - rollup
-      - sortablejs
-      - supports-color
-      - universal-cookie
-      - unocss
-      - utf-8-validate
-      - vue
-
-  '@nuxt/devtools@1.3.1(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@4.1.2)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(nuxt@3.11.2(@opentelemetry/api@1.8.0)(@parcel/watcher@2.4.1)(@types/node@20.12.10)(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@4.1.2)(encoding@0.1.13)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(ioredis@5.3.2)(qrcode@1.5.3)(rollup@4.17.2)(terser@5.31.0)(typescript@5.5.2)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@6.0.3)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(qrcode@1.5.3)(rollup@4.17.2)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@6.0.3)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))(vue@3.4.27(typescript@5.5.2))':
-    dependencies:
-      '@antfu/utils': 0.7.8
-      '@nuxt/devtools-kit': 1.3.1(nuxt@3.11.2(@opentelemetry/api@1.8.0)(@parcel/watcher@2.4.1)(@types/node@20.12.10)(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@4.1.2)(encoding@0.1.13)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(ioredis@5.3.2)(qrcode@1.5.3)(rollup@4.17.2)(terser@5.31.0)(typescript@5.5.2)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@6.0.3)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))
-      '@nuxt/devtools-wizard': 1.3.1
-      '@nuxt/kit': 3.11.2(rollup@4.17.2)
-      '@vue/devtools-applet': 7.1.3(@unocss/reset@0.59.4)(change-case@4.1.2)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(qrcode@1.5.3)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))(vue@3.4.27(typescript@5.5.2))
-      '@vue/devtools-core': 7.1.3(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))(vue@3.4.27(typescript@5.5.2))
-      '@vue/devtools-kit': 7.1.3(vue@3.4.27(typescript@5.5.2))
-      birpc: 0.2.17
-      consola: 3.2.3
-      cronstrue: 2.50.0
-      destr: 2.0.3
-      error-stack-parser-es: 0.1.1
-      execa: 7.2.0
-      fast-glob: 3.3.2
-      flatted: 3.3.1
-      get-port-please: 3.1.2
-      hookable: 5.5.3
-      image-meta: 0.2.0
-      is-installed-globally: 1.0.0
-      launch-editor: 2.6.1
-      local-pkg: 0.5.0
-      magicast: 0.3.4
-      nuxt: 3.11.2(@opentelemetry/api@1.8.0)(@parcel/watcher@2.4.1)(@types/node@20.12.10)(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@4.1.2)(encoding@0.1.13)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(ioredis@5.3.2)(qrcode@1.5.3)(rollup@4.17.2)(terser@5.31.0)(typescript@5.5.2)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@6.0.3)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))
+      nuxt: 3.11.2(@opentelemetry/api@1.8.0)(@parcel/watcher@2.4.1)(@types/node@20.12.10)(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@5.4.4)(encoding@0.1.13)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(ioredis@5.3.2)(qrcode@1.5.3)(rollup@4.17.2)(terser@5.31.0)(typescript@5.5.2)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@6.0.3)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))(vue-tsc@2.0.16(typescript@5.5.2))
       nypm: 0.3.8
       ohash: 1.1.3
       pacote: 18.0.6
@@ -11461,12 +11361,12 @@ snapshots:
     transitivePeerDependencies:
       - vue
 
-  '@vue/devtools-applet@7.1.3(@unocss/reset@0.59.4)(change-case@4.1.2)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(qrcode@1.5.3)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))(vue@3.4.27(typescript@5.5.2))':
+  '@vue/devtools-applet@7.1.3(@unocss/reset@0.59.4)(change-case@5.4.4)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(qrcode@1.5.3)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))(vue@3.4.27(typescript@5.5.2))':
     dependencies:
       '@vue/devtools-core': 7.1.3(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))(vue@3.4.27(typescript@5.5.2))
       '@vue/devtools-kit': 7.1.3(vue@3.4.27(typescript@5.5.2))
       '@vue/devtools-shared': 7.1.3
-      '@vue/devtools-ui': 7.1.3(@unocss/reset@0.59.4)(change-case@4.1.2)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(qrcode@1.5.3)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(vue@3.4.27(typescript@5.5.2))
+      '@vue/devtools-ui': 7.1.3(@unocss/reset@0.59.4)(change-case@5.4.4)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(qrcode@1.5.3)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(vue@3.4.27(typescript@5.5.2))
       lodash-es: 4.17.21
       perfect-debounce: 1.0.0
       shiki: 1.3.0
@@ -11516,13 +11416,13 @@ snapshots:
     dependencies:
       rfdc: 1.3.1
 
-  '@vue/devtools-ui@7.1.3(@unocss/reset@0.59.4)(change-case@4.1.2)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(qrcode@1.5.3)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(vue@3.4.27(typescript@5.5.2))':
+  '@vue/devtools-ui@7.1.3(@unocss/reset@0.59.4)(change-case@5.4.4)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(qrcode@1.5.3)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(vue@3.4.27(typescript@5.5.2))':
     dependencies:
       '@unocss/reset': 0.59.4
       '@vue/devtools-shared': 7.1.3
       '@vueuse/components': 10.9.0(vue@3.4.27(typescript@5.5.2))
       '@vueuse/core': 10.9.0(vue@3.4.27(typescript@5.5.2))
-      '@vueuse/integrations': 10.9.0(change-case@4.1.2)(focus-trap@7.5.4)(idb-keyval@6.2.1)(qrcode@1.5.3)(vue@3.4.27(typescript@5.5.2))
+      '@vueuse/integrations': 10.9.0(change-case@5.4.4)(focus-trap@7.5.4)(idb-keyval@6.2.1)(qrcode@1.5.3)(vue@3.4.27(typescript@5.5.2))
       colord: 2.9.3
       floating-vue: 5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2))
       focus-trap: 7.5.4
@@ -11615,13 +11515,13 @@ snapshots:
       - '@vue/composition-api'
       - vue
 
-  '@vueuse/integrations@10.9.0(change-case@4.1.2)(focus-trap@7.5.4)(idb-keyval@6.2.1)(qrcode@1.5.3)(vue@3.4.27(typescript@5.5.2))':
+  '@vueuse/integrations@10.9.0(change-case@5.4.4)(focus-trap@7.5.4)(idb-keyval@6.2.1)(qrcode@1.5.3)(vue@3.4.27(typescript@5.5.2))':
     dependencies:
       '@vueuse/core': 10.9.0(vue@3.4.27(typescript@5.5.2))
       '@vueuse/shared': 10.9.0(vue@3.4.27(typescript@5.5.2))
       vue-demi: 0.14.7(vue@3.4.27(typescript@5.5.2))
     optionalDependencies:
-      change-case: 4.1.2
+      change-case: 5.4.4
       focus-trap: 7.5.4
       idb-keyval: 6.2.1
       qrcode: 1.5.3
@@ -11968,15 +11868,15 @@ snapshots:
       typescript: 5.5.2
       zod: 3.22.4
 
-  abitype@1.0.2(typescript@5.5.2)(zod@3.22.2):
-    optionalDependencies:
-      typescript: 5.5.2
-      zod: 3.22.2
-
   abitype@1.0.2(typescript@5.5.2)(zod@3.22.4):
     optionalDependencies:
       typescript: 5.5.2
       zod: 3.22.4
+
+  abitype@1.0.4(typescript@5.5.2)(zod@3.22.2):
+    optionalDependencies:
+      typescript: 5.5.2
+      zod: 3.22.2
 
   abort-controller@3.0.0:
     dependencies:
@@ -12362,11 +12262,6 @@ snapshots:
       function-bind: 1.1.1
       get-intrinsic: 1.2.0
 
-  camel-case@4.1.2:
-    dependencies:
-      pascal-case: 3.1.2
-      tslib: 2.5.0
-
   camelcase-keys@6.2.2:
     dependencies:
       camelcase: 5.3.1
@@ -12385,12 +12280,6 @@ snapshots:
       lodash.uniq: 4.5.0
 
   caniuse-lite@1.0.30001616: {}
-
-  capital-case@1.0.4:
-    dependencies:
-      no-case: 3.0.4
-      tslib: 2.5.0
-      upper-case-first: 2.0.2
 
   cardinal@2.1.1:
     dependencies:
@@ -12422,20 +12311,7 @@ snapshots:
 
   chalk@5.3.0: {}
 
-  change-case@4.1.2:
-    dependencies:
-      camel-case: 4.1.2
-      capital-case: 1.0.4
-      constant-case: 3.0.4
-      dot-case: 3.0.4
-      header-case: 2.0.4
-      no-case: 3.0.4
-      param-case: 3.0.4
-      pascal-case: 3.1.2
-      path-case: 3.0.4
-      sentence-case: 3.0.4
-      snake-case: 3.0.4
-      tslib: 2.5.0
+  change-case@5.4.4: {}
 
   char-regex@1.0.2: {}
 
@@ -12612,12 +12488,6 @@ snapshots:
   consola@3.2.3: {}
 
   console-control-strings@1.1.0: {}
-
-  constant-case@3.0.4:
-    dependencies:
-      no-case: 3.0.4
-      tslib: 2.5.0
-      upper-case: 2.0.2
 
   convert-source-map@2.0.0: {}
 
@@ -12924,11 +12794,6 @@ snapshots:
       dom-serializer: 2.0.0
       domelementtype: 2.3.0
       domhandler: 5.0.3
-
-  dot-case@3.0.4:
-    dependencies:
-      no-case: 3.0.4
-      tslib: 2.5.0
 
   dot-prop@8.0.2:
     dependencies:
@@ -13341,14 +13206,6 @@ snapshots:
 
   fast-fifo@1.3.2: {}
 
-  fast-glob@3.3.1:
-    dependencies:
-      '@nodelib/fs.stat': 2.0.5
-      '@nodelib/fs.walk': 1.2.8
-      glob-parent: 5.1.2
-      merge2: 1.4.1
-      micromatch: 4.0.5
-
   fast-glob@3.3.2:
     dependencies:
       '@nodelib/fs.stat': 2.0.5
@@ -13364,6 +13221,10 @@ snapshots:
   fastq@1.15.0:
     dependencies:
       reusify: 1.0.4
+
+  fdir@6.1.1(picomatch@3.0.1):
+    optionalDependencies:
+      picomatch: 3.0.1
 
   fflate@0.8.2: {}
 
@@ -13644,17 +13505,9 @@ snapshots:
       array-union: 2.1.0
       dir-glob: 3.0.1
       fast-glob: 3.3.2
-      ignore: 5.2.4
+      ignore: 5.3.1
       merge2: 1.4.1
       slash: 3.0.0
-
-  globby@13.2.2:
-    dependencies:
-      dir-glob: 3.0.1
-      fast-glob: 3.3.1
-      ignore: 5.2.4
-      merge2: 1.4.1
-      slash: 4.0.0
 
   globby@14.0.1:
     dependencies:
@@ -13826,11 +13679,6 @@ snapshots:
       function-bind: 1.1.2
 
   he@1.2.0: {}
-
-  header-case@2.0.4:
-    dependencies:
-      capital-case: 1.0.4
-      tslib: 2.5.0
 
   headers-polyfill@4.0.2: {}
 
@@ -14498,10 +14346,6 @@ snapshots:
   loupe@2.3.7:
     dependencies:
       get-func-name: 2.0.2
-
-  lower-case@2.0.2:
-    dependencies:
-      tslib: 2.5.0
 
   lru-cache@10.2.2: {}
 
@@ -15197,11 +15041,6 @@ snapshots:
       - supports-color
       - uWebSockets.js
 
-  no-case@3.0.4:
-    dependencies:
-      lower-case: 2.0.2
-      tslib: 2.5.0
-
   node-addon-api@2.0.2: {}
 
   node-addon-api@5.1.0: {}
@@ -15363,127 +15202,10 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
-  nuxt@3.11.2(@opentelemetry/api@1.8.0)(@parcel/watcher@2.4.1)(@types/node@20.12.10)(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@4.1.2)(encoding@0.1.13)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(ioredis@5.3.2)(qrcode@1.5.3)(rollup@4.17.2)(terser@5.31.0)(typescript@5.5.2)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@6.0.3)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)):
+  nuxt@3.11.2(@opentelemetry/api@1.8.0)(@parcel/watcher@2.4.1)(@types/node@20.12.10)(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@5.4.4)(encoding@0.1.13)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(ioredis@5.3.2)(qrcode@1.5.3)(rollup@4.17.2)(terser@5.31.0)(typescript@5.5.2)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@6.0.3)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))(vue-tsc@2.0.16(typescript@5.5.2)):
     dependencies:
       '@nuxt/devalue': 2.0.2
-      '@nuxt/devtools': 1.3.1(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@4.1.2)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(nuxt@3.11.2(@opentelemetry/api@1.8.0)(@parcel/watcher@2.4.1)(@types/node@20.12.10)(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@4.1.2)(encoding@0.1.13)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(ioredis@5.3.2)(qrcode@1.5.3)(rollup@4.17.2)(terser@5.31.0)(typescript@5.5.2)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@6.0.3)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(qrcode@1.5.3)(rollup@4.17.2)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@6.0.3)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))(vue@3.4.27(typescript@5.5.2))
-      '@nuxt/kit': 3.11.2(rollup@4.17.2)
-      '@nuxt/schema': 3.11.2(rollup@4.17.2)
-      '@nuxt/telemetry': 2.5.4(rollup@4.17.2)
-      '@nuxt/ui-templates': 1.3.3
-      '@nuxt/vite-builder': 3.11.2(@types/node@20.12.10)(rollup@4.17.2)(terser@5.31.0)(typescript@5.5.2)(vue-tsc@2.0.16(typescript@5.5.2))(vue@3.4.27(typescript@5.5.2))
-      '@unhead/dom': 1.9.10
-      '@unhead/ssr': 1.9.10
-      '@unhead/vue': 1.9.10(vue@3.4.27(typescript@5.5.2))
-      '@vue/shared': 3.4.27
-      acorn: 8.11.3
-      c12: 1.10.0
-      chokidar: 3.6.0
-      cookie-es: 1.1.0
-      defu: 6.1.4
-      destr: 2.0.3
-      devalue: 4.3.3
-      esbuild: 0.20.2
-      escape-string-regexp: 5.0.0
-      estree-walker: 3.0.3
-      fs-extra: 11.2.0
-      globby: 14.0.1
-      h3: 1.11.1
-      hookable: 5.5.3
-      jiti: 1.21.0
-      klona: 2.0.6
-      knitwork: 1.1.0
-      magic-string: 0.30.10
-      mlly: 1.7.0
-      nitropack: 2.9.6(@opentelemetry/api@1.8.0)(encoding@0.1.13)(idb-keyval@6.2.1)
-      nuxi: 3.11.1
-      nypm: 0.3.8
-      ofetch: 1.3.4
-      ohash: 1.1.3
-      pathe: 1.1.2
-      perfect-debounce: 1.0.0
-      pkg-types: 1.1.1
-      radix3: 1.1.2
-      scule: 1.3.0
-      std-env: 3.7.0
-      strip-literal: 2.1.0
-      ufo: 1.5.3
-      ultrahtml: 1.5.3
-      uncrypto: 0.1.3
-      unctx: 2.3.1
-      unenv: 1.9.0
-      unimport: 3.7.1(rollup@4.17.2)
-      unplugin: 1.10.1
-      unplugin-vue-router: 0.7.0(rollup@4.17.2)(vue-router@4.3.2(vue@3.4.27(typescript@5.5.2)))(vue@3.4.27(typescript@5.5.2))
-      unstorage: 1.10.2(idb-keyval@6.2.1)(ioredis@5.3.2)
-      untyped: 1.4.2
-      vue: 3.4.27(typescript@5.5.2)
-      vue-bundle-renderer: 2.1.0
-      vue-devtools-stub: 0.1.0
-      vue-router: 4.3.2(vue@3.4.27(typescript@5.5.2))
-    optionalDependencies:
-      '@parcel/watcher': 2.4.1
-      '@types/node': 20.12.10
-    transitivePeerDependencies:
-      - '@azure/app-configuration'
-      - '@azure/cosmos'
-      - '@azure/data-tables'
-      - '@azure/identity'
-      - '@azure/keyvault-secrets'
-      - '@azure/storage-blob'
-      - '@capacitor/preferences'
-      - '@libsql/client'
-      - '@netlify/blobs'
-      - '@opentelemetry/api'
-      - '@planetscale/database'
-      - '@unocss/reset'
-      - '@upstash/redis'
-      - '@vercel/kv'
-      - '@vue/composition-api'
-      - async-validator
-      - axios
-      - better-sqlite3
-      - bluebird
-      - bufferutil
-      - change-case
-      - drauu
-      - drizzle-orm
-      - encoding
-      - eslint
-      - floating-vue
-      - fuse.js
-      - idb-keyval
-      - ioredis
-      - jwt-decode
-      - less
-      - lightningcss
-      - meow
-      - nprogress
-      - optionator
-      - qrcode
-      - rollup
-      - sass
-      - sortablejs
-      - stylelint
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-      - typescript
-      - uWebSockets.js
-      - universal-cookie
-      - unocss
-      - utf-8-validate
-      - vite
-      - vls
-      - vti
-      - vue-tsc
-      - xml2js
-
-  nuxt@3.11.2(@opentelemetry/api@1.8.0)(@parcel/watcher@2.4.1)(@types/node@20.12.10)(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@4.1.2)(encoding@0.1.13)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(ioredis@5.3.2)(qrcode@1.5.3)(rollup@4.17.2)(terser@5.31.0)(typescript@5.5.2)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@6.0.3)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))(vue-tsc@2.0.16(typescript@5.5.2)):
-    dependencies:
-      '@nuxt/devalue': 2.0.2
-      '@nuxt/devtools': 1.3.1(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@4.1.2)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(nuxt@3.11.2(@opentelemetry/api@1.8.0)(@parcel/watcher@2.4.1)(@types/node@20.12.10)(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@4.1.2)(encoding@0.1.13)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(ioredis@5.3.2)(qrcode@1.5.3)(rollup@4.17.2)(terser@5.31.0)(typescript@5.5.2)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@6.0.3)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))(vue-tsc@2.0.16(typescript@5.5.2)))(qrcode@1.5.3)(rollup@4.17.2)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@6.0.3)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))(vue@3.4.27(typescript@5.5.2))
+      '@nuxt/devtools': 1.3.1(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@5.4.4)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(nuxt@3.11.2(@opentelemetry/api@1.8.0)(@parcel/watcher@2.4.1)(@types/node@20.12.10)(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@5.4.4)(encoding@0.1.13)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.17.2))(vue@3.4.27(typescript@5.5.2)))(idb-keyval@6.2.1)(ioredis@5.3.2)(qrcode@1.5.3)(rollup@4.17.2)(terser@5.31.0)(typescript@5.5.2)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@6.0.3)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))(vue-tsc@2.0.16(typescript@5.5.2)))(qrcode@1.5.3)(rollup@4.17.2)(unocss@0.59.4(rollup@4.17.2)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@6.0.3)(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))(vue@3.4.27(typescript@5.5.2))
       '@nuxt/kit': 3.11.2(rollup@4.17.2)
       '@nuxt/schema': 3.11.2(rollup@4.17.2)
       '@nuxt/telemetry': 2.5.4(rollup@4.17.2)
@@ -15775,11 +15497,6 @@ snapshots:
       - bluebird
       - supports-color
 
-  param-case@3.0.4:
-    dependencies:
-      dot-case: 3.0.4
-      tslib: 2.5.0
-
   parse-git-config@3.0.0:
     dependencies:
       git-config-path: 2.0.0
@@ -15804,17 +15521,7 @@ snapshots:
 
   parseurl@1.3.3: {}
 
-  pascal-case@3.1.2:
-    dependencies:
-      no-case: 3.0.4
-      tslib: 2.5.0
-
   path-browserify@1.0.1: {}
-
-  path-case@3.0.4:
-    dependencies:
-      dot-case: 3.0.4
-      tslib: 2.5.0
 
   path-exists@3.0.0: {}
 
@@ -15862,6 +15569,8 @@ snapshots:
   picocolors@1.0.0: {}
 
   picomatch@2.3.1: {}
+
+  picomatch@3.0.1: {}
 
   picomatch@4.0.2: {}
 
@@ -16503,12 +16212,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  sentence-case@3.0.4:
-    dependencies:
-      no-case: 3.0.4
-      tslib: 2.5.0
-      upper-case-first: 2.0.2
-
   serialize-javascript@6.0.0:
     dependencies:
       randombytes: 2.1.0
@@ -16665,11 +16368,6 @@ snapshots:
   smob@1.5.0: {}
 
   smol-toml@1.1.4: {}
-
-  snake-case@3.0.4:
-    dependencies:
-      dot-case: 3.0.4
-      tslib: 2.5.0
 
   socket.io-client@4.7.5(bufferutil@4.0.8)(utf-8-validate@5.0.10):
     dependencies:
@@ -17358,14 +17056,6 @@ snapshots:
       escalade: 3.1.2
       picocolors: 1.0.0
 
-  upper-case-first@2.0.2:
-    dependencies:
-      tslib: 2.5.0
-
-  upper-case@2.0.2:
-    dependencies:
-      tslib: 2.5.0
-
   uqr@0.1.2: {}
 
   urlpattern-polyfill@8.0.2: {}
@@ -17610,7 +17300,7 @@ snapshots:
       fsevents: 2.3.3
       terser: 5.31.0
 
-  vitepress@1.1.4(@algolia/client-search@4.19.1)(@types/node@20.12.10)(@types/react@18.3.1)(change-case@4.1.2)(idb-keyval@6.2.1)(postcss@8.4.38)(qrcode@1.5.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(terser@5.31.0)(typescript@5.5.2):
+  vitepress@1.1.4(@algolia/client-search@4.19.1)(@types/node@20.12.10)(@types/react@18.3.1)(change-case@5.4.4)(idb-keyval@6.2.1)(postcss@8.4.38)(qrcode@1.5.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(terser@5.31.0)(typescript@5.5.2):
     dependencies:
       '@docsearch/css': 3.6.0
       '@docsearch/js': 3.6.0(@algolia/client-search@4.19.1)(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -17620,7 +17310,7 @@ snapshots:
       '@vitejs/plugin-vue': 5.0.4(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))(vue@3.4.27(typescript@5.5.2))
       '@vue/devtools-api': 7.1.3(vue@3.4.27(typescript@5.5.2))
       '@vueuse/core': 10.9.0(vue@3.4.27(typescript@5.5.2))
-      '@vueuse/integrations': 10.9.0(change-case@4.1.2)(focus-trap@7.5.4)(idb-keyval@6.2.1)(qrcode@1.5.3)(vue@3.4.27(typescript@5.5.2))
+      '@vueuse/integrations': 10.9.0(change-case@5.4.4)(focus-trap@7.5.4)(idb-keyval@6.2.1)(qrcode@1.5.3)(vue@3.4.27(typescript@5.5.2))
       focus-trap: 7.5.4
       mark.js: 8.11.1
       minisearch: 6.3.0

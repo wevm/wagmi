@@ -33,7 +33,7 @@ test('project does not exist', async () => {
   }
 })
 
-test.skip('contracts', async () => {
+test('contracts', async () => {
   await expect(
     hardhat({
       project: resolve(__dirname, '__fixtures__/hardhat/'),
@@ -81,4 +81,4 @@ test.skip('contracts', async () => {
         },
       ]
     `)
-})
+}, 10_000)
