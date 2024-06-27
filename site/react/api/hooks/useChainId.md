@@ -62,6 +62,12 @@ import { type UseChainIdReturnType } from 'wagmi'
 
 Current chain ID from [`config.state.chainId`](/react/api/createConfig#chainid).
 
+::: info
+Only returns chain IDs for chains configured via `createConfig`'s [`chains`](/react/api/createConfig#chains) parameter.
+
+If the active [connection](/react/api/createConfig#connection) [`chainId`](/react/api/createConfig#chainid-1) is not from a chain included in your Wagmi `Config`, `useChainId` will return the last configured chain ID.
+:::
+
 ## Action
 
 - [`getChainId`](/core/api/actions/getChainId)
