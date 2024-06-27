@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 5.0.20
+
+### Patch Changes
+
+- [`43fa971d34cac57fa5a2898ad4d839b95d7af37c`](https://github.com/wevm/wagmi/commit/43fa971d34cac57fa5a2898ad4d839b95d7af37c) Thanks [@tmm](https://github.com/tmm)! - Bumped Coinbase Wallet SDK and fixed `metaMask` connector hang on mobile.
+
 ## 5.0.19
 
 ### Patch Changes
