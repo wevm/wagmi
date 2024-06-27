@@ -21,6 +21,7 @@ import {
   getAddress,
   numberToHex,
   withRetry,
+  withTimeout,
 } from 'viem'
 
 export type MetaMaskParameters = Evaluate<
@@ -194,10 +195,14 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       try {
         // MetaMask mobile provider sometimes fails to immediately resolve
         // JSON-RPC requests on page load
-        const accounts = await withRetry(() => this.getAccounts(), {
-          delay: 200,
-          retryCount: 3,
-        })
+        const timeout = 200
+        const accounts = await withRetry(
+          () => withTimeout(() => this.getAccounts(), { timeout }),
+          {
+            delay: timeout + 1,
+            retryCount: 3,
+          },
+        )
         return !!accounts.length
       } catch {
         return false
