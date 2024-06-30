@@ -735,7 +735,7 @@
 
 - **Breaking:** Renamed `createClient` to `createConfig`
 - **Breaking:** Renamed `getClient` to `getConfig`
-- **Breaking:** Removed `request` as an argument to `prepareSendTransaction` & `sendTransation`. Arguments now belong on the root level of the Action.
+- **Breaking:** Removed `request` as an argument to `prepareSendTransaction` & `sendTransaction`. Arguments now belong on the root level of the Action.
 
 ### Patch Changes
 
