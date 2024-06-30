@@ -290,7 +290,7 @@ import { useReadContract } from 'wagmi'
 
 useReadContract({
   abi: erc721Abi,
-  functionName: 'balanecOf',
+  functionName: 'balanceOf',
 })
 ```
 
