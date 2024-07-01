@@ -170,7 +170,15 @@ function version4(parameters: Version4Parameters) {
     },
     async getProvider() {
       if (!walletProvider) {
-        const { CoinbaseWalletSDK } = await import('@coinbase/wallet-sdk')
+        // Unwrapping import for Vite compatibility.
+        // See: https://github.com/vitejs/vite/issues/9703
+        const CoinbaseWalletSDK = await (async () => {
+          const { default: SDK } = await import('@coinbase/wallet-sdk')
+          if (typeof SDK !== 'function' && typeof SDK.default === 'function')
+            return SDK.default
+          return SDK as unknown as typeof SDK.default
+        })()
+
         sdk = new CoinbaseWalletSDK({
           ...parameters,
           appChainIds: config.chains.map((x) => x.id),
@@ -396,7 +404,15 @@ function version3(parameters: Version3Parameters) {
     },
     async getProvider() {
       if (!walletProvider) {
-        const { CoinbaseWalletSDK } = await import('cbw-sdk')
+        // Unwrapping import for Vite compatibility.
+        // See: https://github.com/vitejs/vite/issues/9703
+        const CoinbaseWalletSDK = await (async () => {
+          const { default: SDK } = await import('cbw-sdk')
+          if (typeof SDK !== 'function' && typeof SDK.default === 'function')
+            return SDK.default
+          return SDK as unknown as typeof SDK.default
+        })()
+
         sdk = new CoinbaseWalletSDK({ reloadOnDisconnect, ...parameters })
 
         // Force types to retrieve private `walletExtension` method from the Coinbase Wallet SDK.
