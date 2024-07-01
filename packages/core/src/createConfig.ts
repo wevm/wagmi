@@ -447,6 +447,8 @@ export function createConfig<
 // Types
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
+export declare const internal: unique symbol
+
 export type Config<
   chains extends readonly [Chain, ...Chain[]] = readonly [Chain, ...Chain[]],
   transports extends Record<chains[number]['id'], Transport> = Record<
@@ -481,43 +483,51 @@ export type Config<
    * Not part of versioned API, proceed with caution.
    * @internal
    */
-  _internal: {
-    readonly mipd: MipdStore | undefined
-    readonly store: Mutate<StoreApi<any>, [['zustand/persist', any]]>
-    readonly ssr: boolean
-    readonly syncConnectedChain: boolean
-    readonly transports: transports
+  _internal: Internal<chains, transports>
+}
 
-    chains: {
-      setState(
-        value:
-          | readonly [Chain, ...Chain[]]
-          | ((
-              state: readonly [Chain, ...Chain[]],
-            ) => readonly [Chain, ...Chain[]]),
-      ): void
-      subscribe(
-        listener: (
-          state: readonly [Chain, ...Chain[]],
-          prevState: readonly [Chain, ...Chain[]],
-        ) => void,
-      ): () => void
-    }
-    connectors: {
-      providerDetailToConnector(
-        providerDetail: EIP6963ProviderDetail,
-      ): CreateConnectorFn
-      setup(connectorFn: CreateConnectorFn): Connector
-      setState(value: Connector[] | ((state: Connector[]) => Connector[])): void
-      subscribe(
-        listener: (state: Connector[], prevState: Connector[]) => void,
-      ): () => void
-    }
-    events: {
-      change(data: EventData<ConnectorEventMap, 'change'>): void
-      connect(data: EventData<ConnectorEventMap, 'connect'>): void
-      disconnect(data: EventData<ConnectorEventMap, 'disconnect'>): void
-    }
+type Internal<
+  chains extends readonly [Chain, ...Chain[]] = readonly [Chain, ...Chain[]],
+  transports extends Record<chains[number]['id'], Transport> = Record<
+    chains[number]['id'],
+    Transport
+  >,
+> = {
+  readonly mipd: MipdStore | undefined
+  readonly store: Mutate<StoreApi<any>, [['zustand/persist', any]]>
+  readonly ssr: boolean
+  readonly syncConnectedChain: boolean
+  readonly transports: transports
+
+  chains: {
+    setState(
+      value:
+        | readonly [Chain, ...Chain[]]
+        | ((
+            state: readonly [Chain, ...Chain[]],
+          ) => readonly [Chain, ...Chain[]]),
+    ): void
+    subscribe(
+      listener: (
+        state: readonly [Chain, ...Chain[]],
+        prevState: readonly [Chain, ...Chain[]],
+      ) => void,
+    ): () => void
+  }
+  connectors: {
+    providerDetailToConnector(
+      providerDetail: EIP6963ProviderDetail,
+    ): CreateConnectorFn
+    setup(connectorFn: CreateConnectorFn): Connector
+    setState(value: Connector[] | ((state: Connector[]) => Connector[])): void
+    subscribe(
+      listener: (state: Connector[], prevState: Connector[]) => void,
+    ): () => void
+  }
+  events: {
+    change(data: EventData<ConnectorEventMap, 'change'>): void
+    connect(data: EventData<ConnectorEventMap, 'connect'>): void
+    disconnect(data: EventData<ConnectorEventMap, 'disconnect'>): void
   }
 }
 
