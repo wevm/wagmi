@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 2.1.13
+
+### Patch Changes
+
+- [`7264d1f450727f6ba0cbea8aa1c7a83e22a5bf20`](https://github.com/wevm/wagmi/commit/7264d1f450727f6ba0cbea8aa1c7a83e22a5bf20) Thanks [@tmm](https://github.com/tmm)! - Fixed generate not exiting for long-running processes.
+
 ## 2.1.12
 
 ### Patch Changes
