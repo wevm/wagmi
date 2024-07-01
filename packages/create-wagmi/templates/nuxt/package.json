@@ -11,7 +11,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@tanstack/vue-query": ">=5.35.1",
+    "@tanstack/vue-query": ">=5.45.0",
     "@wagmi/vue": "latest",
     "nuxt": "^3.11.2",
     "viem": "latest",

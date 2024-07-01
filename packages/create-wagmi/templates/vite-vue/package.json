@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@tanstack/vue-query": ">=5.35.1",
+    "@tanstack/vue-query": ">=5.45.0",
     "@wagmi/vue": "latest",
     "viem": "latest",
     "vue": ">=3.4.21"

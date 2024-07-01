@@ -447,8 +447,6 @@ export function createConfig<
 // Types
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-export declare const internal: unique symbol
-
 export type Config<
   chains extends readonly [Chain, ...Chain[]] = readonly [Chain, ...Chain[]],
   transports extends Record<chains[number]['id'], Transport> = Record<

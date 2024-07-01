@@ -89,7 +89,7 @@
   },
   "devDependencies": {
     "@nuxt/schema": "^3.11.2",
-    "@tanstack/vue-query": ">=5.35.1",
+    "@tanstack/vue-query": ">=5.45.0",
     "@vue/test-utils": "^2.4.6",
     "nuxt": "^3.11.2",
     "vue": ">=3.4.21",
