@@ -231,7 +231,7 @@ import { readContract } from '@wagmi/core'
 readContract(config, {
   address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
   abi: erc721Abi,
-  functionName: 'balanceOf',
+  functionName: 'balanecOf',
   args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e'],
 })
 ```
