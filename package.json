@@ -3,7 +3,7 @@
   "type": "module",
   "scripts": {
     "build": "pnpm run --r --filter \"./packages/**\" build",
-    "changeset:prepublish": "pnpm version:update && pnpm build && bun .scripts/formatPackageJson.ts && bun .scripts/generateProxyPackages.ts",
+    "changeset:prepublish": "pnpm version:update && pnpm build && bun scripts/formatPackageJson.ts && bun .scripts/generateProxyPackages.ts",
     "changeset:publish": "pnpm changeset:prepublish && changeset publish",
     "changeset:version": "changeset version && pnpm version:update && pnpm format",
     "clean": "pnpm run --r --parallel clean && rm -rf packages/**/*.json.tmp",
@@ -22,7 +22,7 @@
     "lint:repo": "sherif",
     "lint:unused": "pnpm clean && knip",
     "postinstall": "pnpm preconstruct",
-    "preconstruct": "bun .scripts/preconstruct.ts",
+    "preconstruct": "bun scripts/preconstruct.ts",
     "preinstall": "pnpx only-allow pnpm",
     "prepare": "pnpm simple-git-hooks",
     "test": "vitest",
@@ -37,8 +37,8 @@
     "test:ui": "vitest --ui",
     "test:vue": "vitest --project @wagmi/vue",
     "typecheck": "pnpm run --r --parallel typecheck && tsc --noEmit",
-    "version:update": "bun .scripts/updateVersion.ts",
-    "version:update:viem": "bun .scripts/updateViemVersion.ts"
+    "version:update": "bun scripts/updateVersion.ts",
+    "version:update:viem": "bun scripts/updateViemVersion.ts"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.15.3",
@@ -61,7 +61,7 @@
     "viem": "2.9.31",
     "vitest": "^1.6.0"
   },
-  "packageManager": "pnpm@9.1.0",
+  "packageManager": "pnpm@9.4.0",
   "pnpm": {
     "peerDependencyRules": {
       "ignoreMissing": [
@@ -88,7 +88,7 @@
     ],
     "workspaces": {
       ".": {
-        "project": ".scripts/*.ts"
+        "project": "scripts/*.ts"
       },
       "packages/cli": {
         "entry": [
