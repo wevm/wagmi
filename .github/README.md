@@ -128,12 +128,6 @@ If you find Wagmi useful or use it for work, please consider [sponsoring Wagmi](
       <img alt="Privy logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/privy-light.svg" width="auto" height="50">
     </picture>
   </a>
-  <a href="https://www.spruceid.com">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/spruce-dark.svg">
-      <img alt="Spruce logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/spruce-light.svg" width="auto" height="50">
-    </picture>
-  </a>
   <a href="https://pancakeswap.finance/">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/pancake-dark.svg">
@@ -188,13 +182,21 @@ If you find Wagmi useful or use it for work, please consider [sponsoring Wagmi](
       <img alt="syndicate logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/syndicate-light.svg" width="auto" height="50">
     </picture>
   </a>
+  <a href="https://reservoir.tools">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/reservoir-dark.svg">
+      <img alt="reservoir logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/reservoir-light.svg" width="auto" height="50">
+    </picture>
+  </a>
+  <a href="https://brave.com">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/brave-dark.svg">
+      <img alt="brave logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/brave-light.svg" width="auto" height="50">
+    </picture>
+  </a>
 </p>
 
 [Sponsor Wagmi](https://github.com/sponsors/wevm?metadata_campaign=gh_readme_support_bottom)
 
 <br />
 <br />
-
-<a href="https://vercel.com/?utm_source=wevm&utm_campaign=oss">
-  <img src="https://www.datocms-assets.com/31049/1618983297-powered-by-vercel.svg" alt="Powered by Vercel" height="35">
-</a>

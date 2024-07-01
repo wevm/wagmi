@@ -13,6 +13,7 @@ import {
 } from '@wagmi/core'
 import { useEffect, useReducer, useState } from 'react'
 
+import { formatEther } from 'viem'
 import { config } from './wagmi'
 
 function App() {
@@ -155,7 +156,7 @@ function Balance() {
     <div>
       <h2>Balance</h2>
 
-      <div>Balance: {balance?.formatted}</div>
+      <div>Balance: {!!balance?.value && formatEther(balance.value)}</div>
     </div>
   )
 }

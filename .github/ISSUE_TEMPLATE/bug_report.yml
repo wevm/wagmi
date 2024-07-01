@@ -56,8 +56,8 @@ body:
 
   - type: input
     attributes:
-      label: Wagmi Version
-      description: What version of Wagmi are you using? If using multiple, separate with comma (e.g. `wagmi@x.y.z, @wagmi/cli@x.y.z`).
+      label: Wagmi Package(s) Version(s)
+      description: What version of the Wagmi packages you selected above are you using? If using multiple, separate with comma (e.g. `wagmi@x.y.z, @wagmi/cli@x.y.z`).
       placeholder: x.y.z (do not write `latest`)
     validations:
       required: true

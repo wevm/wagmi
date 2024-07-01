@@ -5,7 +5,7 @@
     "build": "pnpm run --r --filter \"./packages/**\" build",
     "changeset:prepublish": "pnpm version:update && pnpm build && bun .scripts/formatPackageJson.ts && bun .scripts/generateProxyPackages.ts",
     "changeset:publish": "pnpm changeset:prepublish && changeset publish",
-    "changeset:version": "changeset version && pnpm version:update",
+    "changeset:version": "changeset version && pnpm version:update && pnpm format",
     "clean": "pnpm run --r --parallel clean && rm -rf packages/**/*.json.tmp",
     "deps": "pnpx taze -r",
     "dev": "pnpm dev:react",
@@ -18,13 +18,12 @@
     "dev:vue": "pnpm --filter vite-vue dev",
     "docs:dev": "pnpm --filter site dev",
     "format": "biome format --write",
-    "lint": "biome check",
-    "lint:fix": "pnpm lint --fix",
+    "lint": "biome check --write",
     "lint:repo": "sherif",
     "lint:unused": "pnpm clean && knip",
     "postinstall": "pnpm preconstruct",
     "preconstruct": "bun .scripts/preconstruct.ts",
-    "preinstall": "npx only-allow pnpm",
+    "preinstall": "pnpx only-allow pnpm",
     "prepare": "pnpm simple-git-hooks",
     "test": "vitest",
     "test:build": "pnpm run --r --parallel test:build",
@@ -58,7 +57,7 @@
     "publint": "^0.2.7",
     "sherif": "^0.8.4",
     "simple-git-hooks": "^2.11.1",
-    "typescript": "5.4.5",
+    "typescript": "5.5.2",
     "viem": "2.9.31",
     "vitest": "^1.6.0"
   },
@@ -77,7 +76,7 @@
     "node": "22.x"
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpm format && pnpm lint:fix"
+    "pre-commit": "pnpm lint"
   },
   "knip": {
     "ignore": ["**/templates/**", "**/hardhat.config.js"],

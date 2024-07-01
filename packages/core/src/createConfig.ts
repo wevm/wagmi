@@ -215,7 +215,8 @@ export function createConfig<
                 persistedState &&
                 typeof persistedState === 'object' &&
                 'chainId' in persistedState &&
-                typeof persistedState.chainId === 'number'
+                typeof persistedState.chainId === 'number' &&
+                chains.getState().some((x) => x.id === persistedState.chainId)
                   ? persistedState.chainId
                   : initialState.chainId
               return { ...initialState, chainId }

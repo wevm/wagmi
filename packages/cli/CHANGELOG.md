@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 2.1.11
+
+### Patch Changes
+
+- [#4084](https://github.com/wevm/wagmi/pull/4084) [`b54203bf8fa911e6f14b9675980cf38fb95d7d3e`](https://github.com/wevm/wagmi/commit/b54203bf8fa911e6f14b9675980cf38fb95d7d3e) Thanks [@tmm](https://github.com/tmm)! - Reduced internal dependencies.
+
 ## 2.1.10
 
 ### Patch Changes

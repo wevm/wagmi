@@ -6,7 +6,7 @@ const typeName = 'GetTransactionCount'
 
 # getTransactionCount
 
-Action for fetching the number of transactions an Account has broadcast / sent.
+Action for fetching the number of transactions an Account has sent.
 
 ## Import
 
