@@ -349,6 +349,12 @@ export {
 } from '../actions/watchAccount.js'
 
 export {
+  type WatchAssetParameters,
+  type WatchAssetReturnType,
+  watchAsset,
+} from '../actions/watchAsset.js'
+
+export {
   type WatchBlocksParameters,
   type WatchBlocksReturnType,
   watchBlocks,

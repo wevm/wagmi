@@ -343,6 +343,12 @@ export {
 } from '../hooks/useWaitForTransactionReceipt.js'
 
 export {
+  type UseWatchAssetParameters,
+  type UseWatchAssetReturnType,
+  useWatchAsset,
+} from '../hooks/useWatchAsset.js'
+
+export {
   type UseWatchBlocksParameters,
   type UseWatchBlocksReturnType,
   useWatchBlocks,

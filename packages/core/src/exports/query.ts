@@ -373,6 +373,14 @@ export {
 } from '../query/waitForTransactionReceipt.js'
 
 export {
+  type WatchAssetData,
+  type WatchAssetVariables,
+  type WatchAssetMutate,
+  type WatchAssetMutateAsync,
+  watchAssetMutationOptions,
+} from '../query/watchAsset.js'
+
+export {
   type WriteContractData,
   type WriteContractVariables,
   type WriteContractMutate,
