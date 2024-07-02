@@ -58,7 +58,7 @@
     "sherif": "^0.8.4",
     "simple-git-hooks": "^2.11.1",
     "typescript": "5.5.2",
-    "viem": "2.9.31",
+    "viem": "2.17.0",
     "vitest": "^1.6.0"
   },
   "packageManager": "pnpm@9.4.0",

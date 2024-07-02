@@ -12,15 +12,18 @@ test('chain formatters', async () => {
   })
   const result = await getBlock(config)
   if (result.chainId === celo.id) {
-    expectTypeOf(result.difficulty).toEqualTypeOf<never>()
-    expectTypeOf(result.gasLimit).toEqualTypeOf<never>()
-    expectTypeOf(result.mixHash).toEqualTypeOf<never>()
-    expectTypeOf(result.nonce).toEqualTypeOf<never>()
-    expectTypeOf(result.uncles).toEqualTypeOf<never>()
-    expectTypeOf(result.randomness).toEqualTypeOf<{
-      committed: `0x${string}`
-      revealed: `0x${string}`
-    }>()
+    expectTypeOf(result.difficulty).toEqualTypeOf<bigint | undefined>()
+    expectTypeOf(result.gasLimit).toEqualTypeOf<bigint | undefined>()
+    expectTypeOf(result.mixHash).toEqualTypeOf<undefined>()
+    expectTypeOf(result.nonce).toEqualTypeOf<`0x${string}`>()
+    expectTypeOf(result.uncles).toEqualTypeOf<undefined>()
+    expectTypeOf(result.randomness).toEqualTypeOf<
+      | {
+          committed: `0x${string}`
+          revealed: `0x${string}`
+        }
+      | undefined
+    >()
   }
 })
 
@@ -32,13 +35,16 @@ test('chainId', async () => {
   const result = await getBlock(config, {
     chainId: celo.id,
   })
-  expectTypeOf(result.difficulty).toEqualTypeOf<never>()
-  expectTypeOf(result.gasLimit).toEqualTypeOf<never>()
-  expectTypeOf(result.mixHash).toEqualTypeOf<never>()
-  expectTypeOf(result.nonce).toEqualTypeOf<never>()
-  expectTypeOf(result.uncles).toEqualTypeOf<never>()
-  expectTypeOf(result.randomness).toEqualTypeOf<{
-    committed: `0x${string}`
-    revealed: `0x${string}`
-  }>()
+  expectTypeOf(result.difficulty).toEqualTypeOf<bigint | undefined>()
+  expectTypeOf(result.gasLimit).toEqualTypeOf<bigint | undefined>()
+  expectTypeOf(result.mixHash).toEqualTypeOf<undefined>()
+  expectTypeOf(result.nonce).toEqualTypeOf<`0x${string}`>()
+  expectTypeOf(result.uncles).toEqualTypeOf<undefined>()
+  expectTypeOf(result.randomness).toEqualTypeOf<
+    | {
+        committed: `0x${string}`
+        revealed: `0x${string}`
+      }
+    | undefined
+  >()
 })
