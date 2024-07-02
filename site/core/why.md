@@ -28,7 +28,7 @@ Data layer performance is also critical. Slow, unnecessary, and manual data fetc
 
 ## Feature Coverage
 
-Wagmi Core supports the most popular and commonly-used Ethereum features out of the box with 40+ VanillaJS Actions for accounts, wallets, contracts, transactions, signing, ENS, and more. Wagmi Core also supports just about any wallet out there through it's official [connectors](/core/api/connectors), [EIP-6963 support](/core/api/createConfig#multiinjectedproviderdiscovery), and [extensable API](/dev/creating-connectors).
+Wagmi Core supports the most popular and commonly-used Ethereum features out of the box with 40+ VanillaJS Actions for accounts, wallets, contracts, transactions, signing, ENS, and more. Wagmi Core also supports just about any wallet out there through it's official [connectors](/core/api/connectors), [EIP-6963 support](/core/api/createConfig#multiinjectedproviderdiscovery), and [extensible API](/dev/creating-connectors).
 
 If you need lower-level control, you can always drop down to [Viem](https://viem.sh), which Wagmi Core uses internally to perform blockchain operations. Wagmi Core also manages multi-chain support automatically so developers can focus on their applications instead of adding custom code.
 

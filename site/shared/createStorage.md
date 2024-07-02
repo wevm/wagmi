@@ -54,7 +54,7 @@ If you use a custom `deserialize` function, make sure it can handle `bigint` and
 `string | undefined`
 
 - Key prefix to use when persisting data.
-- Detaults to `'wagmi'`.
+- Defaults to `'wagmi'`.
 
 ```ts-vue
 import { createStorage } from '{{packageName}}'

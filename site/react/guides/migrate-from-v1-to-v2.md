@@ -434,7 +434,7 @@ const result = useEnsAddress({
 })
 ```
 
-By inverting control, Wagmi let's you choose how much normalization to do. For example, maybe your project only allows ENS names that are rcnumeric so no normalization is not needed. Check out the [ENS documentation](https://docs.ens.domains/contract-api-reference/name-processing#normalising-names) for more information on normalizing names.
+By inverting control, Wagmi let's you choose how much normalization to do. For example, maybe your project only allows ENS names that are numeric so no normalization is not needed. Check out the [ENS documentation](https://docs.ens.domains/contract-api-reference/name-processing#normalising-names) for more information on normalizing names.
 
 ### Removed `configureChains`
 

@@ -185,7 +185,7 @@ import { type VerifyMessageReturnType } from '@wagmi/core'
 
 `boolean`
 
-Wheather the signed message is valid for the given address.
+Whether the signed message is valid for the given address.
 
 ## Error
 

@@ -61,7 +61,7 @@ After the install completes, pnpm links packages across the project for developm
 
 ## 4. Adding the env variables
 
-The [dev playgrounds](#_5-running-the-dev-playgrounds) and [test suite](#_6-running-the-test-suite) require enironment variables to be set. Copy over the following environment variables to `.env`, and fill them out.
+The [dev playgrounds](#_5-running-the-dev-playgrounds) and [test suite](#_6-running-the-test-suite) require environment variables to be set. Copy over the following environment variables to `.env`, and fill them out.
 
 ```bash
 VITE_MAINNET_FORK_URL=https://cloudflare-eth.com
