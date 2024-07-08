@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 2.1.14
+
+### Patch Changes
+
+- [#4120](https://github.com/wevm/wagmi/pull/4120) [`59407bf1276a46e6f1f22a370dde71c92524cd0f`](https://github.com/wevm/wagmi/commit/59407bf1276a46e6f1f22a370dde71c92524cd0f) Thanks [@tmm](https://github.com/tmm)! - Fixed an issue where the Foundry and Hardhat plugins' `exclude` option was ignored.
+
 ## 2.1.13
 
 ### Patch Changes
