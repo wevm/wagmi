@@ -135,13 +135,14 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
     }
   }
 
-  async function getArtifactPaths(artifactsDirectory: string) {
-    const crawler = new fdir()
-      .withBasePath()
-      .glob(
-        ...include.map((x) => `${artifactsDirectory}/**/${x}`),
-        ...exclude.map((x) => `!${artifactsDirectory}/**/${x}`),
-      )
+  function getArtifactPaths(artifactsDirectory: string) {
+    const crawler = new fdir().withBasePath().globWithOptions(
+      include.map((x) => `${artifactsDirectory}/**/${x}`),
+      {
+        dot: true,
+        ignore: exclude.map((x) => `${artifactsDirectory}/**/${x}`),
+      },
+    )
     return crawler.crawl(artifactsDirectory).withPromise()
   }
 
