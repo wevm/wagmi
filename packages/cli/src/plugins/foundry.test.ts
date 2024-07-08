@@ -12,7 +12,7 @@ afterEach(() => {
 
 test('forge not installed', async () => {
   const dir = f.temp()
-  await expect(
+  expect(
     foundry({
       project: dir,
       forge: {
@@ -44,13 +44,14 @@ test('validates without project', async () => {
   const spy = vi.spyOn(process, 'cwd')
   spy.mockImplementation(() => dir)
 
-  await expect(foundry().validate()).resolves.toBeUndefined()
+  expect(foundry().validate()).resolves.toBeUndefined()
 })
 
-test('contracts', async () => {
-  await expect(
+test('contracts', () => {
+  expect(
     foundry({
       project: resolve(__dirname, '__fixtures__/foundry/'),
+      exclude: ['Foo.sol/**'],
     }).contracts(),
   ).resolves.toMatchInlineSnapshot(`
       [
@@ -102,7 +103,11 @@ test('contracts without project', async () => {
   const spy = vi.spyOn(process, 'cwd')
   spy.mockImplementation(() => dir)
 
-  await expect(foundry().contracts()).resolves.toMatchInlineSnapshot(`
+  expect(
+    foundry({
+      exclude: ['Foo.sol/**'],
+    }).contracts(),
+  ).resolves.toMatchInlineSnapshot(`
       [
         {
           "abi": [
