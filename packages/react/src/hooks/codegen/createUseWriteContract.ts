@@ -6,8 +6,8 @@ import type {
 } from '@wagmi/core'
 import type {
   ChainIdParameter,
-  ConnectorParameter,
   Compute,
+  ConnectorParameter,
   SelectChains,
   UnionCompute,
   UnionStrictOmit,

@@ -7,8 +7,8 @@ import type {
 import type {
   ScopeKeyParameter,
   UnionCompute,
-  UnionStrictOmit,
   UnionExactPartial,
+  UnionStrictOmit,
 } from '@wagmi/core/internal'
 import type {
   ReadContractData,

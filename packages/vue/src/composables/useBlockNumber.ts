@@ -4,7 +4,11 @@ import type {
   GetBlockNumberErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { Compute, UnionCompute, UnionStrictOmit } from '@wagmi/core/internal'
+import type {
+  Compute,
+  UnionCompute,
+  UnionStrictOmit,
+} from '@wagmi/core/internal'
 import {
   type GetBlockNumberData,
   type GetBlockNumberOptions,

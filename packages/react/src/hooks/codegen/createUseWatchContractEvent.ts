@@ -5,8 +5,8 @@ import type {
 } from '@wagmi/core'
 import type {
   UnionCompute,
-  UnionStrictOmit,
   UnionExactPartial,
+  UnionStrictOmit,
 } from '@wagmi/core/internal'
 import type { Abi, Address, ContractEventName } from 'viem'
 

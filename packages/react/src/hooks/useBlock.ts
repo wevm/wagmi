@@ -2,7 +2,11 @@
 
 import { useQueryClient } from '@tanstack/react-query'
 import type { Config, GetBlockErrorType, ResolvedRegister } from '@wagmi/core'
-import type { Compute, UnionCompute, UnionStrictOmit } from '@wagmi/core/internal'
+import type {
+  Compute,
+  UnionCompute,
+  UnionStrictOmit,
+} from '@wagmi/core/internal'
 import {
   type GetBlockData,
   type GetBlockOptions,
