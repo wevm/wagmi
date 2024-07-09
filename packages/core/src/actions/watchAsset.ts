@@ -10,6 +10,10 @@ import type { BaseErrorType, ErrorType } from '../errors/base.js'
 import type { ConnectorParameter } from '../types/properties.js'
 import type { Evaluate } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
+import {
+  type GetConnectorClientErrorType,
+  getConnectorClient,
+} from './getConnectorClient.js'
 
 export type WatchAssetParameters = Evaluate<
   viem_WatchAssetParameters & ConnectorParameter
@@ -18,6 +22,8 @@ export type WatchAssetParameters = Evaluate<
 export type WatchAssetReturnType = viem_WatchAssetReturnType
 
 export type WatchAssetErrorType =
+  // getConnectorClient()
+  | GetConnectorClientErrorType
   // base
   | BaseErrorType
   | ErrorType
@@ -31,7 +37,7 @@ export async function watchAsset(
 ): Promise<WatchAssetReturnType> {
   const { connector, ...rest } = parameters
 
-  const client = config.getClient()
+  const client = await getConnectorClient(config, { connector })
 
   const action = getAction(client, viem_watchAsset, 'watchAsset')
   return action(rest as viem_WatchAssetParameters)
