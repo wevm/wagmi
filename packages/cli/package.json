@@ -1,7 +1,7 @@
 {
   "name": "@wagmi/cli",
   "description": "Manage and generate code from Ethereum ABIs",
-  "version": "2.1.14",
+  "version": "2.1.15",
   "license": "MIT",
   "repository": {
     "type": "git",
