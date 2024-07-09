@@ -8,7 +8,7 @@ import {
   writeContract,
 } from '../actions/writeContract.js'
 import type { Config } from '../createConfig.js'
-import type { Evaluate } from '../types/utils.js'
+import type { Compute } from '../types/utils.js'
 
 export function writeContractMutationOptions<config extends Config>(
   config: config,
@@ -31,7 +31,7 @@ export function writeContractMutationOptions<config extends Config>(
   >
 }
 
-export type WriteContractData = Evaluate<WriteContractReturnType>
+export type WriteContractData = Compute<WriteContractReturnType>
 
 export type WriteContractVariables<
   abi extends Abi | readonly unknown[],

@@ -5,7 +5,7 @@ import type {
   GetFeeHistoryErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import {
   type GetFeeHistoryData,
   type GetFeeHistoryOptions,
@@ -24,7 +24,7 @@ export type UseFeeHistoryParameters<
   chainId extends
     config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetFeeHistoryData,
-> = Evaluate<
+> = Compute<
   GetFeeHistoryOptions<config, chainId> &
     ConfigParameter<config> &
     QueryParameter<

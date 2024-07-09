@@ -5,7 +5,7 @@ import type {
   GetTransactionCountErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import type { GetTransactionCountQueryFnData } from '@wagmi/core/query'
 import {
   type GetTransactionCountData,
@@ -22,7 +22,7 @@ import { useConfig } from './useConfig.js'
 export type UseTransactionCountParameters<
   config extends Config = Config,
   selectData = GetTransactionCountData,
-> = Evaluate<
+> = Compute<
   GetTransactionCountOptions<config> &
     ConfigParameter<config> &
     QueryParameter<

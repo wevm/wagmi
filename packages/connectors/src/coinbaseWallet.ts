@@ -8,7 +8,7 @@ import {
   type Connector,
   createConnector,
 } from '@wagmi/core'
-import type { Evaluate, Mutable, Omit } from '@wagmi/core/internal'
+import type { Compute, Mutable, Omit } from '@wagmi/core/internal'
 import type {
   CoinbaseWalletProvider as CBW_Provider,
   CoinbaseWalletSDK as CBW_SDK,
@@ -27,14 +27,14 @@ type Version = '3' | '4'
 
 export type CoinbaseWalletParameters<version extends Version = '3'> =
   version extends '4'
-    ? Evaluate<
+    ? Compute<
         {
           headlessMode?: false | undefined
           /** Coinbase Wallet SDK version */
           version?: version | '3' | undefined
         } & Version4Parameters
       >
-    : Evaluate<
+    : Compute<
         {
           /**
            * @deprecated `headlessMode` will be removed in the next major version. Upgrade to `version: '4'`.

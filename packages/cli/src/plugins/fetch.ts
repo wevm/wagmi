@@ -4,7 +4,7 @@ import { join } from 'pathe'
 
 import type { Abi } from 'abitype'
 import type { ContractConfig, Plugin } from '../config.js'
-import type { Evaluate, RequiredBy } from '../types.js'
+import type { Compute, RequiredBy } from '../types.js'
 
 export type FetchConfig = {
   /**
@@ -16,12 +16,12 @@ export type FetchConfig = {
   /**
    * Contracts to fetch ABIs for.
    */
-  contracts: Evaluate<Omit<ContractConfig, 'abi'>>[]
+  contracts: Compute<Omit<ContractConfig, 'abi'>>[]
   /**
    * Function for creating a cache key for contract.
    */
   getCacheKey?:
-    | ((config: { contract: Evaluate<Omit<ContractConfig, 'abi'>> }) => string)
+    | ((config: { contract: Compute<Omit<ContractConfig, 'abi'>> }) => string)
     | undefined
   /**
    * Name of source.
@@ -53,7 +53,7 @@ export type FetchConfig = {
   timeoutDuration?: number | undefined
 }
 
-type FetchResult = Evaluate<RequiredBy<Plugin, 'contracts'>>
+type FetchResult = Compute<RequiredBy<Plugin, 'contracts'>>
 
 /** Fetches and parses contract ABIs from network resource with `fetch`. */
 export function fetch(config: FetchConfig): FetchResult {

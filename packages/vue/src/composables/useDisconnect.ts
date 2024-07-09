@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/vue-query'
 import type { Connector, DisconnectErrorType } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import {
   type DisconnectData,
   type DisconnectMutate,
@@ -18,7 +18,7 @@ import type {
 import { useConfig } from './useConfig.js'
 import { useConnections } from './useConnections.js'
 
-export type UseDisconnectParameters<context = unknown> = Evaluate<
+export type UseDisconnectParameters<context = unknown> = Compute<
   ConfigParameter & {
     mutation?:
       | UseMutationParameters<
@@ -31,7 +31,7 @@ export type UseDisconnectParameters<context = unknown> = Evaluate<
   }
 >
 
-export type UseDisconnectReturnType<context = unknown> = Evaluate<
+export type UseDisconnectReturnType<context = unknown> = Compute<
   UseMutationReturnType<
     DisconnectData,
     DisconnectErrorType,

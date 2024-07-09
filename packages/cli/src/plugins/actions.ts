@@ -1,7 +1,7 @@
 import { pascalCase } from 'change-case'
 
 import type { Contract, Plugin } from '../config.js'
-import type { Evaluate, RequiredBy } from '../types.js'
+import type { Compute, RequiredBy } from '../types.js'
 import { getAddressDocString } from '../utils/getAddressDocString.js'
 import { getIsPackageInstalled } from '../utils/packages.js'
 
@@ -16,7 +16,7 @@ export type ActionsConfig = {
   overridePackageName?: '@wagmi/core' | 'wagmi' | undefined
 }
 
-type ActionsResult = Evaluate<RequiredBy<Plugin, 'run'>>
+type ActionsResult = Compute<RequiredBy<Plugin, 'run'>>
 
 export function actions(config: ActionsConfig = {}): ActionsResult {
   return {

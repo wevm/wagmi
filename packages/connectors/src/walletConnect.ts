@@ -4,7 +4,7 @@ import {
   ProviderNotFoundError,
   createConnector,
 } from '@wagmi/core'
-import type { Evaluate, ExactPartial, Omit } from '@wagmi/core/internal'
+import type { Compute, ExactPartial, Omit } from '@wagmi/core/internal'
 import type { EthereumProvider } from '@walletconnect/ethereum-provider'
 import {
   type AddEthereumChainParameter,
@@ -25,7 +25,7 @@ type WalletConnectConnector = Connector & {
 
 type EthereumProviderOptions = Parameters<(typeof EthereumProvider)['init']>[0]
 
-export type WalletConnectParameters = Evaluate<
+export type WalletConnectParameters = Compute<
   {
     /**
      * If a new chain is added to a previously existing configured connector `chains`, this flag

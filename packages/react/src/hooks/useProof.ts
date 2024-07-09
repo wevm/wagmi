@@ -1,7 +1,7 @@
 'use client'
 
 import type { Config, GetProofErrorType, ResolvedRegister } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import {
   type GetProofData,
   type GetProofOptions,
@@ -18,7 +18,7 @@ import { useConfig } from './useConfig.js'
 export type UseProofParameters<
   config extends Config = Config,
   selectData = GetProofData,
-> = Evaluate<
+> = Compute<
   GetProofOptions<config> &
     ConfigParameter<config> &
     QueryParameter<

@@ -5,7 +5,7 @@ import type {
   GetGasPriceErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import {
   type GetGasPriceData,
   type GetGasPriceOptions,
@@ -24,7 +24,7 @@ export type UseGasPriceParameters<
   chainId extends
     config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetGasPriceData,
-> = Evaluate<
+> = Compute<
   GetGasPriceOptions<config, chainId> &
     ConfigParameter<config> &
     QueryParameter<

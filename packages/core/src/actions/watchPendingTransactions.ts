@@ -11,7 +11,7 @@ import type {
   ChainIdParameter,
   SyncConnectedChainParameter,
 } from '../types/properties.js'
-import type { UnionEvaluate } from '../types/utils.js'
+import type { UnionCompute } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 
 export type WatchPendingTransactionsParameters<
@@ -21,7 +21,7 @@ export type WatchPendingTransactionsParameters<
   ///
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = {
-  [key in keyof chains]: UnionEvaluate<
+  [key in keyof chains]: UnionCompute<
     viem_WatchPendingTransactionsParameters<
       config['_internal']['transports'][chains[key]['id']] extends infer transport extends
         Transport

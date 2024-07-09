@@ -6,7 +6,7 @@ import pc from 'picocolors'
 
 import type { ContractConfig, Plugin } from '../config.js'
 import * as logger from '../logger.js'
-import type { Evaluate, RequiredBy } from '../types.js'
+import type { Compute, RequiredBy } from '../types.js'
 import { getIsPackageInstalled, getPackageManager } from '../utils/packages.js'
 
 const defaultExcludes = ['build-info/**', '*.dbg.json']
@@ -63,7 +63,7 @@ export type HardhatConfig = {
   sources?: string | undefined
 }
 
-type HardhatResult = Evaluate<
+type HardhatResult = Compute<
   RequiredBy<Plugin, 'contracts' | 'validate' | 'watch'>
 >
 

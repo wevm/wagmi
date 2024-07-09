@@ -5,7 +5,7 @@ import type {
   ResolvedRegister,
   WaitForTransactionReceiptErrorType,
 } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import {
   type WaitForTransactionReceiptData,
   type WaitForTransactionReceiptOptions,
@@ -24,7 +24,7 @@ export type UseWaitForTransactionReceiptParameters<
   chainId extends
     config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = WaitForTransactionReceiptData<config, chainId>,
-> = Evaluate<
+> = Compute<
   WaitForTransactionReceiptOptions<config, chainId> &
     ConfigParameter<config> &
     QueryParameter<

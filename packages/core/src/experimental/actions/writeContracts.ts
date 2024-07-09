@@ -17,7 +17,7 @@ import type {
   ChainIdParameter,
   ConnectorParameter,
 } from '../../types/properties.js'
-import type { Evaluate } from '../../types/utils.js'
+import type { Compute } from '../../types/utils.js'
 
 export type WriteContractsParameters<
   contracts extends readonly unknown[] = readonly ContractFunctionParameters[],
@@ -27,7 +27,7 @@ export type WriteContractsParameters<
   ///
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = {
-  [key in keyof chains]: Evaluate<
+  [key in keyof chains]: Compute<
     Omit<
       viem_WriteContractsParameters<
         contracts,

@@ -3,7 +3,7 @@ import type {
   GetEnsAvatarErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import {
   type GetEnsAvatarData,
   type GetEnsAvatarOptions,
@@ -23,7 +23,7 @@ import { useConfig } from './useConfig.js'
 export type UseEnsAvatarParameters<
   config extends Config = Config,
   selectData = GetEnsAvatarData,
-> = Evaluate<
+> = Compute<
   DeepMaybeRef<
     GetEnsAvatarOptions<config> &
       ConfigParameter<config> &

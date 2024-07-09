@@ -5,7 +5,7 @@ import type {
   EstimateMaxPriorityFeePerGasErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import {
   type EstimateMaxPriorityFeePerGasData,
   type EstimateMaxPriorityFeePerGasOptions,
@@ -22,7 +22,7 @@ import { useConfig } from './useConfig.js'
 export type UseEstimateMaxPriorityFeePerGasParameters<
   config extends Config = Config,
   selectData = EstimateMaxPriorityFeePerGasData,
-> = Evaluate<
+> = Compute<
   EstimateMaxPriorityFeePerGasOptions<config> &
     ConfigParameter<config> &
     QueryParameter<

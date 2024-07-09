@@ -1,7 +1,7 @@
 import { pascalCase } from 'change-case'
 
 import type { Contract, Plugin } from '../config.js'
-import type { Evaluate, RequiredBy } from '../types.js'
+import type { Compute, RequiredBy } from '../types.js'
 import { getAddressDocString } from '../utils/getAddressDocString.js'
 
 export type ReactConfig = {
@@ -14,7 +14,7 @@ export type ReactConfig = {
       }) => `use${string}`)
 }
 
-type ReactResult = Evaluate<RequiredBy<Plugin, 'run'>>
+type ReactResult = Compute<RequiredBy<Plugin, 'run'>>
 
 export function react(config: ReactConfig = {}): ReactResult {
   return {

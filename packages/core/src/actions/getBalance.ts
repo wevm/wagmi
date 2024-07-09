@@ -15,12 +15,12 @@ import {
 import type { Config } from '../createConfig.js'
 import type { ChainIdParameter } from '../types/properties.js'
 import type { Unit } from '../types/unit.js'
-import type { Evaluate } from '../types/utils.js'
+import type { Compute } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 import { getUnit } from '../utils/getUnit.js'
 import { readContracts } from './readContracts.js'
 
-export type GetBalanceParameters<config extends Config = Config> = Evaluate<
+export type GetBalanceParameters<config extends Config = Config> = Compute<
   ChainIdParameter<config> &
     viem_GetBalanceParameters & {
       /** @deprecated */

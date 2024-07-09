@@ -6,7 +6,7 @@ import type {
   GetBlockNumberErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { Evaluate, UnionEvaluate, UnionOmit } from '@wagmi/core/internal'
+import type { Compute, UnionCompute, UnionStrictOmit } from '@wagmi/core/internal'
 import {
   type GetBlockNumberData,
   type GetBlockNumberOptions,
@@ -29,7 +29,7 @@ export type UseBlockNumberParameters<
   chainId extends
     config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetBlockNumberData,
-> = Evaluate<
+> = Compute<
   GetBlockNumberOptions<config, chainId> &
     ConfigParameter<config> &
     QueryParameter<
@@ -40,8 +40,8 @@ export type UseBlockNumberParameters<
     > & {
       watch?:
         | boolean
-        | UnionEvaluate<
-            UnionOmit<
+        | UnionCompute<
+            UnionStrictOmit<
               UseWatchBlockNumberParameters<config, chainId>,
               'chainId' | 'config' | 'onBlockNumber' | 'onError'
             >

@@ -8,14 +8,14 @@ import {
 
 import type { Config } from '../createConfig.js'
 import type { ChainIdParameter } from '../types/properties.js'
-import type { Evaluate, UnionLooseOmit } from '../types/utils.js'
+import type { Compute, UnionLooseOmit } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 
 export type EstimateMaxPriorityFeePerGasParameters<
   config extends Config = Config,
   chainId extends
     config['chains'][number]['id'] = config['chains'][number]['id'],
-> = Evaluate<
+> = Compute<
   UnionLooseOmit<
     viem_EstimateMaxPriorityFeePerGasParameters<Chain, Chain> &
       ChainIdParameter<config, chainId>,

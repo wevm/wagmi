@@ -2,7 +2,7 @@ import { type Account, type WalletClient, walletActions } from 'viem'
 
 import type { Config } from '../createConfig.js'
 import type { BaseErrorType, ErrorType } from '../errors/base.js'
-import type { Evaluate } from '../types/utils.js'
+import type { Compute } from '../types/utils.js'
 import {
   type GetConnectorClientErrorType,
   type GetConnectorClientParameters,
@@ -19,7 +19,7 @@ export type GetWalletClientReturnType<
   config extends Config = Config,
   chainId extends
     config['chains'][number]['id'] = config['chains'][number]['id'],
-> = Evaluate<
+> = Compute<
   WalletClient<
     config['_internal']['transports'][chainId],
     Extract<config['chains'][number], { id: chainId }>,

@@ -1,7 +1,7 @@
 'use client'
 
 import type { CallErrorType, Config, ResolvedRegister } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import {
   type CallData,
   type CallOptions,
@@ -18,7 +18,7 @@ import { useConfig } from './useConfig.js'
 export type UseCallParameters<
   config extends Config = Config,
   selectData = CallData,
-> = Evaluate<
+> = Compute<
   CallOptions<config> &
     ConfigParameter<config> &
     QueryParameter<

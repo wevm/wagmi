@@ -5,7 +5,7 @@ import type {
   ResolvedRegister,
   SwitchAccountErrorType,
 } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import {
   type SwitchAccountData,
   type SwitchAccountMutate,
@@ -26,7 +26,7 @@ import { useConnections } from './useConnections.js'
 export type UseSwitchAccountParameters<
   config extends Config = Config,
   context = unknown,
-> = Evaluate<
+> = Compute<
   ConfigParameter<config> & {
     mutation?:
       | UseMutationParameters<
@@ -42,7 +42,7 @@ export type UseSwitchAccountParameters<
 export type UseSwitchAccountReturnType<
   config extends Config = Config,
   context = unknown,
-> = Evaluate<
+> = Compute<
   UseMutationReturnType<
     SwitchAccountData<config>,
     SwitchAccountErrorType,

@@ -6,7 +6,7 @@ import {
   type WatchBlocksParameters,
   watchBlocks,
 } from '@wagmi/core'
-import type { UnionEvaluate, UnionPartial } from '@wagmi/core/internal'
+import type { UnionCompute, UnionExactPartial } from '@wagmi/core/internal'
 import { useEffect } from 'react'
 import type { BlockTag } from 'viem'
 
@@ -20,8 +20,8 @@ export type UseWatchBlocksParameters<
   config extends Config = Config,
   chainId extends
     config['chains'][number]['id'] = config['chains'][number]['id'],
-> = UnionEvaluate<
-  UnionPartial<
+> = UnionCompute<
+  UnionExactPartial<
     WatchBlocksParameters<includeTransactions, blockTag, config, chainId>
   > &
     ConfigParameter<config> &

@@ -1,5 +1,5 @@
 import type { PartializedState } from './createConfig.js'
-import type { Evaluate } from './types/utils.js'
+import type { Compute } from './types/utils.js'
 import { deserialize as deserialize_ } from './utils/deserialize.js'
 import { serialize as serialize_ } from './utils/serialize.js'
 
@@ -44,13 +44,13 @@ export type CreateStorageParameters = {
   deserialize?: (<T>(value: string) => T) | undefined
   key?: string | undefined
   serialize?: (<T>(value: T) => string) | undefined
-  storage?: Evaluate<BaseStorage> | undefined
+  storage?: Compute<BaseStorage> | undefined
 }
 
 export function createStorage<
   itemMap extends Record<string, unknown> = Record<string, unknown>,
   storageItemMap extends StorageItemMap = StorageItemMap & itemMap,
->(parameters: CreateStorageParameters): Evaluate<Storage<storageItemMap>> {
+>(parameters: CreateStorageParameters): Compute<Storage<storageItemMap>> {
   const {
     deserialize = deserialize_,
     key: prefix = 'wagmi',

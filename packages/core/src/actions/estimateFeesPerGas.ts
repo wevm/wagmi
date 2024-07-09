@@ -15,15 +15,15 @@ import {
 import type { Config } from '../createConfig.js'
 import type { ChainIdParameter } from '../types/properties.js'
 import type { Unit } from '../types/unit.js'
-import type { Evaluate } from '../types/utils.js'
-import type { UnionEvaluate, UnionLooseOmit } from '../types/utils.js'
+import type { Compute } from '../types/utils.js'
+import type { UnionCompute, UnionLooseOmit } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 import { getUnit } from '../utils/getUnit.js'
 
 export type EstimateFeesPerGasParameters<
   type extends FeeValuesType = FeeValuesType,
   config extends Config = Config,
-> = UnionEvaluate<
+> = UnionCompute<
   UnionLooseOmit<
     viem_EstimateFeesPerGasParameters<Chain, Chain, type>,
     'chain'
@@ -36,10 +36,10 @@ export type EstimateFeesPerGasParameters<
 
 export type EstimateFeesPerGasReturnType<
   type extends FeeValuesType = FeeValuesType,
-> = Evaluate<
+> = Compute<
   viem_EstimateFeesPerGasReturnType<type> & {
     /** @deprecated */
-    formatted: UnionEvaluate<
+    formatted: UnionCompute<
       | (type extends 'legacy' ? FeeValuesLegacy<string> : never)
       | (type extends 'eip1559' ? FeeValuesEIP1559<string> : never)
     >

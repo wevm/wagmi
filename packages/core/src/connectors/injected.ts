@@ -17,7 +17,7 @@ import {
 import type { Connector } from '../createConfig.js'
 import { ChainNotConfiguredError } from '../errors/config.js'
 import { ProviderNotFoundError } from '../errors/connector.js'
-import type { Evaluate } from '../types/utils.js'
+import type { Compute } from '../types/utils.js'
 import { createConnector } from './createConnector.js'
 
 export type InjectedParameters = {
@@ -94,7 +94,7 @@ injected.type = 'injected' as const
 export function injected(parameters: InjectedParameters = {}) {
   const { shimDisconnect = true, unstable_shimAsyncInject } = parameters
 
-  function getTarget(): Evaluate<Target & { id: string }> {
+  function getTarget(): Compute<Target & { id: string }> {
     const target = parameters.target
     if (typeof target === 'function') {
       const result = target()
@@ -582,7 +582,7 @@ type Target = {
 }
 
 /** @deprecated */
-type TargetId = Evaluate<WalletProviderFlags> extends `is${infer name}`
+type TargetId = Compute<WalletProviderFlags> extends `is${infer name}`
   ? name extends `${infer char}${infer rest}`
     ? `${Lowercase<char>}${rest}`
     : never
@@ -630,7 +630,7 @@ type WalletProviderFlags =
   | 'isXDEFI'
   | 'isZerion'
 
-type WalletProvider = Evaluate<
+type WalletProvider = Compute<
   EIP1193Provider & {
     [key in WalletProviderFlags]?: true | undefined
   } & {

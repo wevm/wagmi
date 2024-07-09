@@ -17,7 +17,7 @@ import type {
   ChainIdParameter,
   ConnectorParameter,
 } from '../../types/properties.js'
-import type { Evaluate } from '../../types/utils.js'
+import type { Compute } from '../../types/utils.js'
 
 export type SendCallsParameters<
   config extends Config = Config,
@@ -26,7 +26,7 @@ export type SendCallsParameters<
   ///
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = {
-  [key in keyof chains]: Evaluate<
+  [key in keyof chains]: Compute<
     Omit<viem_SendCallsParameters<chains[key], Account, chains[key]>, 'chain'> &
       ChainIdParameter<config, chainId> &
       ConnectorParameter

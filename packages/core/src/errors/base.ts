@@ -1,9 +1,9 @@
-import type { Evaluate, OneOf } from '../types/utils.js'
+import type { Compute, OneOf } from '../types/utils.js'
 import { getVersion } from '../utils/getVersion.js'
 
 export type ErrorType<name extends string = 'Error'> = Error & { name: name }
 
-type BaseErrorOptions = Evaluate<
+type BaseErrorOptions = Compute<
   OneOf<{ details?: string | undefined } | { cause: BaseError | Error }> & {
     docsPath?: string | undefined
     docsSlug?: string | undefined

@@ -22,13 +22,13 @@ import type {
   ChainIdParameter,
   ConnectorParameter,
 } from '../types/properties.js'
-import type { Evaluate } from '../types/utils.js'
+import type { Compute } from '../types/utils.js'
 
 export type GetConnectorClientParameters<
   config extends Config = Config,
   chainId extends
     config['chains'][number]['id'] = config['chains'][number]['id'],
-> = Evaluate<
+> = Compute<
   ChainIdParameter<config, chainId> &
     ConnectorParameter & {
       account?: Address | Account | undefined
@@ -39,7 +39,7 @@ export type GetConnectorClientReturnType<
   config extends Config = Config,
   chainId extends
     config['chains'][number]['id'] = config['chains'][number]['id'],
-> = Evaluate<
+> = Compute<
   Client<
     config['_internal']['transports'][chainId],
     Extract<config['chains'][number], { id: chainId }>,

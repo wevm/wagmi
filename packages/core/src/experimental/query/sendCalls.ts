@@ -1,7 +1,7 @@
 import type { MutateOptions, MutationOptions } from '@tanstack/query-core'
 
 import type { Config } from '../../createConfig.js'
-import type { Evaluate } from '../../types/utils.js'
+import type { Compute } from '../../types/utils.js'
 import {
   type SendCallsErrorType,
   type SendCallsParameters,
@@ -24,7 +24,7 @@ export function sendCallsMutationOptions<config extends Config>(
   >
 }
 
-export type SendCallsData = Evaluate<SendCallsReturnType>
+export type SendCallsData = Compute<SendCallsReturnType>
 
 export type SendCallsVariables<
   config extends Config,
@@ -36,11 +36,11 @@ export type SendCallsMutate<config extends Config, context = unknown> = <
 >(
   variables: SendCallsVariables<config, chainId>,
   options?:
-    | Evaluate<
+    | Compute<
         MutateOptions<
           SendCallsData,
           SendCallsErrorType,
-          Evaluate<SendCallsVariables<config, chainId>>,
+          Compute<SendCallsVariables<config, chainId>>,
           context
         >
       >
@@ -52,11 +52,11 @@ export type SendCallsMutateAsync<config extends Config, context = unknown> = <
 >(
   variables: SendCallsVariables<config, chainId>,
   options?:
-    | Evaluate<
+    | Compute<
         MutateOptions<
           SendCallsData,
           SendCallsErrorType,
-          Evaluate<SendCallsVariables<config, chainId>>,
+          Compute<SendCallsVariables<config, chainId>>,
           context
         >
       >

@@ -8,7 +8,7 @@ import {
   deployContract,
 } from '../actions/deployContract.js'
 import type { Config } from '../createConfig.js'
-import type { Evaluate } from '../types/utils.js'
+import type { Compute } from '../types/utils.js'
 
 export function deployContractMutationOptions<config extends Config>(
   config: config,
@@ -25,7 +25,7 @@ export function deployContractMutationOptions<config extends Config>(
   >
 }
 
-export type DeployContractData = Evaluate<DeployContractReturnType>
+export type DeployContractData = Compute<DeployContractReturnType>
 
 export type DeployContractVariables<
   abi extends Abi | readonly unknown[],
@@ -41,11 +41,11 @@ export type DeployContractMutate<config extends Config, context = unknown> = <
 >(
   variables: DeployContractVariables<abi, config, chainId>,
   options?:
-    | Evaluate<
+    | Compute<
         MutateOptions<
           DeployContractData,
           DeployContractErrorType,
-          Evaluate<DeployContractVariables<abi, config, chainId>>,
+          Compute<DeployContractVariables<abi, config, chainId>>,
           context
         >
       >
@@ -61,11 +61,11 @@ export type DeployContractMutateAsync<
 >(
   variables: DeployContractVariables<abi, config, chainId>,
   options?:
-    | Evaluate<
+    | Compute<
         MutateOptions<
           DeployContractData,
           DeployContractErrorType,
-          Evaluate<DeployContractVariables<abi, config, chainId>>,
+          Compute<DeployContractVariables<abi, config, chainId>>,
           context
         >
       >

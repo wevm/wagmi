@@ -9,7 +9,7 @@ import {
   createConnector,
 } from '@wagmi/core'
 import type {
-  Evaluate,
+  Compute,
   ExactPartial,
   RemoveUndefined,
 } from '@wagmi/core/internal'
@@ -28,7 +28,7 @@ import {
   withTimeout,
 } from 'viem'
 
-export type MetaMaskParameters = Evaluate<
+export type MetaMaskParameters = Compute<
   ExactPartial<Omit<MetaMaskSDKOptions, '_source' | 'readonlyRPCMap'>>
 >
 

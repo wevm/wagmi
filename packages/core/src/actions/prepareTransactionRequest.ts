@@ -13,10 +13,10 @@ import type { Config } from '../createConfig.js'
 import type { SelectChains } from '../types/chain.js'
 import type { ChainIdParameter } from '../types/properties.js'
 import type {
-  Evaluate,
+  Compute,
   IsNarrowable,
-  UnionEvaluate,
-  UnionOmit,
+  UnionCompute,
+  UnionStrictOmit,
 } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 import { getAccount } from './getAccount.js'
@@ -36,8 +36,8 @@ export type PrepareTransactionRequestParameters<
   ///
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = {
-  [key in keyof chains]: UnionEvaluate<
-    UnionOmit<
+  [key in keyof chains]: UnionCompute<
+    UnionStrictOmit<
       viem_PrepareTransactionRequestParameters<
         chains[key],
         Account,
@@ -73,7 +73,7 @@ export type PrepareTransactionRequestReturnType<
   ///
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = {
-  [key in keyof chains]: Evaluate<
+  [key in keyof chains]: Compute<
     viem_PrepareTransactionRequestReturnType<
       IsNarrowable<chains[key], Chain> extends true ? chains[key] : undefined,
       Account,

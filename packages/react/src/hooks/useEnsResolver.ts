@@ -5,7 +5,7 @@ import type {
   GetEnsResolverErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import {
   type GetEnsResolverData,
   type GetEnsResolverOptions,
@@ -22,7 +22,7 @@ import { useConfig } from './useConfig.js'
 export type UseEnsResolverParameters<
   config extends Config = Config,
   selectData = GetEnsResolverData,
-> = Evaluate<
+> = Compute<
   GetEnsResolverOptions<config> &
     ConfigParameter<config> &
     QueryParameter<

@@ -11,7 +11,7 @@ import {
 import type { Config } from '../createConfig.js'
 import type { SelectChains } from '../types/chain.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
-import type { UnionPartial } from '../types/utils.js'
+import type { UnionExactPartial } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
 export type PrepareTransactionRequestOptions<
@@ -21,7 +21,7 @@ export type PrepareTransactionRequestOptions<
     SelectChains<config, chainId>[0],
     SelectChains<config, chainId>[0]
   >,
-> = UnionPartial<
+> = UnionExactPartial<
   PrepareTransactionRequestParameters<config, chainId, request>
 > &
   ScopeKeyParameter

@@ -10,7 +10,7 @@ import {
   type ShowCallsStatusVariables,
   showCallsStatusMutationOptions,
 } from '@wagmi/core/experimental'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 
 import { useConfig } from '../../hooks/useConfig.js'
 import type { ConfigParameter } from '../../types/properties.js'
@@ -22,7 +22,7 @@ import type {
 export type UseShowCallsStatusParameters<
   config extends Config = Config,
   context = unknown,
-> = Evaluate<
+> = Compute<
   ConfigParameter<config> & {
     mutation?:
       | UseMutationParameters<
@@ -35,7 +35,7 @@ export type UseShowCallsStatusParameters<
   }
 >
 
-export type UseShowCallsStatusReturnType<context = unknown> = Evaluate<
+export type UseShowCallsStatusReturnType<context = unknown> = Compute<
   UseMutationReturnType<
     ShowCallsStatusData,
     ShowCallsStatusErrorType,

@@ -5,7 +5,7 @@ import type {
   GetTransactionReceiptErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import {
   type GetTransactionReceiptData,
   type GetTransactionReceiptOptions,
@@ -23,7 +23,7 @@ export type UseTransactionReceiptParameters<
   chainId extends
     config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetTransactionReceiptData<config, chainId>,
-> = Evaluate<
+> = Compute<
   GetTransactionReceiptOptions<config, chainId> &
     ConfigParameter<config> &
     QueryParameter<

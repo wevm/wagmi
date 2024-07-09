@@ -3,7 +3,7 @@ import type {
   ReadContractErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { UnionEvaluate } from '@wagmi/core/internal'
+import type { UnionCompute } from '@wagmi/core/internal'
 import {
   type ReadContractData,
   type ReadContractOptions,
@@ -35,7 +35,7 @@ export type UseReadContractParameters<
   > = ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
   config extends Config = Config,
   selectData = ReadContractData<abi, functionName, args>,
-> = UnionEvaluate<
+> = UnionCompute<
   DeepMaybeRef<
     ReadContractOptions<abi, functionName, args, config> &
       ConfigParameter<config> &

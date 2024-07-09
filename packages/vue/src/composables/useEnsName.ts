@@ -1,5 +1,5 @@
 import type { Config, GetEnsNameErrorType, ResolvedRegister } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import {
   type GetEnsNameData,
   type GetEnsNameOptions,
@@ -19,7 +19,7 @@ import { useConfig } from './useConfig.js'
 export type UseEnsNameParameters<
   config extends Config = Config,
   selectData = GetEnsNameData,
-> = Evaluate<
+> = Compute<
   DeepMaybeRef<
     GetEnsNameOptions<config> &
       ConfigParameter<config> &

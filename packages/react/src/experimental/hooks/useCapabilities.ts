@@ -9,7 +9,7 @@ import {
   type GetCapabilitiesQueryKey,
   getCapabilitiesQueryOptions,
 } from '@wagmi/core/experimental'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 
 import { useAccount } from '../../hooks/useAccount.js'
 import { useConfig } from '../../hooks/useConfig.js'
@@ -19,7 +19,7 @@ import { type UseQueryReturnType, useQuery } from '../../utils/query.js'
 export type UseCapabilitiesParameters<
   config extends Config = Config,
   selectData = GetCapabilitiesData,
-> = Evaluate<
+> = Compute<
   GetCapabilitiesOptions &
     ConfigParameter<config> &
     QueryParameter<

@@ -8,13 +8,13 @@ import {
 } from '../actions/getBlockTransactionCount.js'
 import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
-import type { ExactPartial, UnionEvaluate } from '../types/utils.js'
+import type { ExactPartial, UnionCompute } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
 export type GetBlockTransactionCountOptions<
   config extends Config,
   chainId extends config['chains'][number]['id'],
-> = UnionEvaluate<
+> = UnionCompute<
   ExactPartial<GetBlockTransactionCountParameters<config, chainId>> &
     ScopeKeyParameter
 >

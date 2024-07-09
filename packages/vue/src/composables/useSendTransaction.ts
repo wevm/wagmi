@@ -4,7 +4,7 @@ import type {
   ResolvedRegister,
   SendTransactionErrorType,
 } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import {
   type SendTransactionData,
   type SendTransactionMutate,
@@ -23,7 +23,7 @@ import { useConfig } from './useConfig.js'
 export type UseSendTransactionParameters<
   config extends Config = Config,
   context = unknown,
-> = Evaluate<
+> = Compute<
   ConfigParameter<config> & {
     mutation?:
       | UseMutationParameters<
@@ -39,7 +39,7 @@ export type UseSendTransactionParameters<
 export type UseSendTransactionReturnType<
   config extends Config = Config,
   context = unknown,
-> = Evaluate<
+> = Compute<
   UseMutationReturnType<
     SendTransactionData,
     SendTransactionErrorType,

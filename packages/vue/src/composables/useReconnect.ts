@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/vue-query'
 import type { Connector, ReconnectErrorType } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import {
   type ReconnectData,
   type ReconnectMutate,
@@ -16,7 +16,7 @@ import type {
 } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 
-export type UseReconnectParameters<context = unknown> = Evaluate<
+export type UseReconnectParameters<context = unknown> = Compute<
   ConfigParameter & {
     mutation?:
       | UseMutationParameters<
@@ -29,7 +29,7 @@ export type UseReconnectParameters<context = unknown> = Evaluate<
   }
 >
 
-export type UseReconnectReturnType<context = unknown> = Evaluate<
+export type UseReconnectReturnType<context = unknown> = Compute<
   UseMutationReturnType<
     ReconnectData,
     ReconnectErrorType,

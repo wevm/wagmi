@@ -2,7 +2,7 @@
 
 import { useMutation } from '@tanstack/react-query'
 import type { SignMessageErrorType } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import {
   type SignMessageData,
   type SignMessageMutate,
@@ -18,7 +18,7 @@ import type {
 } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 
-export type UseSignMessageParameters<context = unknown> = Evaluate<
+export type UseSignMessageParameters<context = unknown> = Compute<
   ConfigParameter & {
     mutation?:
       | UseMutationParameters<
@@ -31,7 +31,7 @@ export type UseSignMessageParameters<context = unknown> = Evaluate<
   }
 >
 
-export type UseSignMessageReturnType<context = unknown> = Evaluate<
+export type UseSignMessageReturnType<context = unknown> = Compute<
   UseMutationReturnType<
     SignMessageData,
     SignMessageErrorType,

@@ -8,10 +8,10 @@ import {
 } from '../actions/getTransactionCount.js'
 import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
-import type { Evaluate, PartialBy } from '../types/utils.js'
+import type { Compute, PartialBy } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
-export type GetTransactionCountOptions<config extends Config> = Evaluate<
+export type GetTransactionCountOptions<config extends Config> = Compute<
   PartialBy<GetTransactionCountParameters<config>, 'address'> &
     ScopeKeyParameter
 >
@@ -40,7 +40,7 @@ export function getTransactionCountQueryOptions<config extends Config>(
 }
 
 export type GetTransactionCountQueryFnData =
-  Evaluate<GetTransactionCountReturnType>
+  Compute<GetTransactionCountReturnType>
 
 export type GetTransactionCountData = GetTransactionCountQueryFnData
 

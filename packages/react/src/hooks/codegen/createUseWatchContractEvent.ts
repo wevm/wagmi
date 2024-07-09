@@ -4,9 +4,9 @@ import type {
   WatchContractEventParameters,
 } from '@wagmi/core'
 import type {
-  UnionEvaluate,
-  UnionOmit,
-  UnionPartial,
+  UnionCompute,
+  UnionStrictOmit,
+  UnionExactPartial,
 } from '@wagmi/core/internal'
 import type { Abi, Address, ContractEventName } from 'viem'
 
@@ -48,9 +48,9 @@ export type CreateUseWatchContractEventReturnType<
   chainId extends
     config['chains'][number]['id'] = config['chains'][number]['id'],
 >(
-  parameters?: UnionEvaluate<
-    UnionPartial<
-      UnionOmit<
+  parameters?: UnionCompute<
+    UnionExactPartial<
+      UnionStrictOmit<
         WatchContractEventParameters<abi, name, strict, config, chainId>,
         omittedProperties
       >

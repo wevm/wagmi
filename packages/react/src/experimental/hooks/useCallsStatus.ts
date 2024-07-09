@@ -9,7 +9,7 @@ import {
   type GetCallsStatusQueryKey,
   getCallsStatusQueryOptions,
 } from '@wagmi/core/experimental'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 
 import { useConfig } from '../../hooks/useConfig.js'
 import type { ConfigParameter, QueryParameter } from '../../types/properties.js'
@@ -18,7 +18,7 @@ import { type UseQueryReturnType, useQuery } from '../../utils/query.js'
 export type UseCallsStatusParameters<
   config extends Config = Config,
   selectData = GetCallsStatusData,
-> = Evaluate<
+> = Compute<
   GetCallsStatusOptions &
     ConfigParameter<config> &
     QueryParameter<

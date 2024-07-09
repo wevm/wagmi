@@ -1,7 +1,7 @@
 import type { Abi, Address, ContractEventName } from 'viem'
 
 import type { Config } from '../../createConfig.js'
-import type { UnionEvaluate, UnionOmit } from '../../types/utils.js'
+import type { UnionCompute, UnionStrictOmit } from '../../types/utils.js'
 import { getAccount } from '../getAccount.js'
 import { getChainId } from '../getChainId.js'
 import {
@@ -40,8 +40,8 @@ export type CreateWatchContractEventReturnType<
     config['chains'][number]['id'] = config['chains'][number]['id'],
 >(
   config: config,
-  parameters: UnionEvaluate<
-    UnionOmit<
+  parameters: UnionCompute<
+    UnionStrictOmit<
       WatchContractEventParameters<abi, name, strict, config, chainId>,
       omittedProperties
     >

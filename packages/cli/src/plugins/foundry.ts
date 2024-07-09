@@ -9,7 +9,7 @@ import { z } from 'zod'
 
 import type { ContractConfig, Plugin } from '../config.js'
 import * as logger from '../logger.js'
-import type { Evaluate, RequiredBy } from '../types.js'
+import type { Compute, RequiredBy } from '../types.js'
 
 const defaultExcludes = [
   'Base.sol/**',
@@ -93,7 +93,7 @@ export type FoundryConfig = {
   project?: string | undefined
 }
 
-type FoundryResult = Evaluate<
+type FoundryResult = Compute<
   RequiredBy<Plugin, 'contracts' | 'validate' | 'watch'>
 >
 

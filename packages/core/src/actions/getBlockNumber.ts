@@ -7,14 +7,14 @@ import {
 
 import type { Config } from '../createConfig.js'
 import type { ChainIdParameter } from '../types/properties.js'
-import type { Evaluate } from '../types/utils.js'
+import type { Compute } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 
 export type GetBlockNumberParameters<
   config extends Config = Config,
   chainId extends
     config['chains'][number]['id'] = config['chains'][number]['id'],
-> = Evaluate<viem_GetBlockNumberParameters & ChainIdParameter<config, chainId>>
+> = Compute<viem_GetBlockNumberParameters & ChainIdParameter<config, chainId>>
 
 export type GetBlockNumberReturnType = viem_GetBlockNumberReturnType
 

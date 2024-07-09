@@ -6,7 +6,7 @@ import {
   type WatchBlockNumberParameters,
   watchBlockNumber,
 } from '@wagmi/core'
-import type { UnionEvaluate, UnionPartial } from '@wagmi/core/internal'
+import type { UnionCompute, UnionExactPartial } from '@wagmi/core/internal'
 import { useEffect } from 'react'
 
 import type { ConfigParameter, EnabledParameter } from '../types/properties.js'
@@ -17,8 +17,8 @@ export type UseWatchBlockNumberParameters<
   config extends Config = Config,
   chainId extends
     config['chains'][number]['id'] = config['chains'][number]['id'],
-> = UnionEvaluate<
-  UnionPartial<WatchBlockNumberParameters<config, chainId>> &
+> = UnionCompute<
+  UnionExactPartial<WatchBlockNumberParameters<config, chainId>> &
     ConfigParameter<config> &
     EnabledParameter
 >

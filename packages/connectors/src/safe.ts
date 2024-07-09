@@ -5,10 +5,10 @@ import {
   ProviderNotFoundError,
   createConnector,
 } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import { getAddress, withTimeout } from 'viem'
 
-export type SafeParameters = Evaluate<
+export type SafeParameters = Compute<
   Opts & {
     /**
      * Connector automatically connects when used as Safe App.

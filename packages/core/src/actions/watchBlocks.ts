@@ -11,7 +11,7 @@ import type {
   ChainIdParameter,
   SyncConnectedChainParameter,
 } from '../types/properties.js'
-import type { IsNarrowable, UnionEvaluate } from '../types/utils.js'
+import type { IsNarrowable, UnionCompute } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 
 export type WatchBlocksParameters<
@@ -23,7 +23,7 @@ export type WatchBlocksParameters<
   ///
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = {
-  [key in keyof chains]: UnionEvaluate<
+  [key in keyof chains]: UnionCompute<
     viem_WatchBlocksParameters<
       config['_internal']['transports'][chains[key]['id']] extends infer transport extends
         Transport

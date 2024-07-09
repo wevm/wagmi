@@ -16,17 +16,17 @@ import {
   type SwitchChainNotSupportedErrorType,
 } from '../errors/connector.js'
 import type { ConnectorParameter } from '../types/properties.js'
-import type { Evaluate, ExactPartial } from '../types/utils.js'
+import type { Compute, ExactPartial } from '../types/utils.js'
 
 export type SwitchChainParameters<
   config extends Config = Config,
   chainId extends
     config['chains'][number]['id'] = config['chains'][number]['id'],
-> = Evaluate<
+> = Compute<
   ConnectorParameter & {
     chainId: chainId | config['chains'][number]['id']
     addEthereumChainParameter?:
-      | Evaluate<ExactPartial<Omit<AddEthereumChainParameter, 'chainId'>>>
+      | Compute<ExactPartial<Omit<AddEthereumChainParameter, 'chainId'>>>
       | undefined
   }
 >

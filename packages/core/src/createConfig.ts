@@ -23,7 +23,7 @@ import { type Emitter, type EventData, createEmitter } from './createEmitter.js'
 import { type Storage, createStorage, noopStorage } from './createStorage.js'
 import { ChainNotConfiguredError } from './errors/config.js'
 import type {
-  Evaluate,
+  Compute,
   ExactPartial,
   LooseOmit,
   OneOf,
@@ -38,7 +38,7 @@ export type CreateConfigParameters<
     chains[number]['id'],
     Transport
   >,
-> = Evaluate<
+> = Compute<
   {
     chains: chains
     connectors?: CreateConnectorFn[] | undefined
@@ -549,7 +549,7 @@ export type State<
   status: 'connected' | 'connecting' | 'disconnected' | 'reconnecting'
 }
 
-export type PartializedState = Evaluate<
+export type PartializedState = Compute<
   ExactPartial<Pick<State, 'chainId' | 'connections' | 'current' | 'status'>>
 >
 

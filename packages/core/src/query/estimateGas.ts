@@ -8,13 +8,14 @@ import {
 } from '../actions/estimateGas.js'
 import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
-import type { UnionPartial } from '../types/utils.js'
+import type { UnionExactPartial } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
 export type EstimateGasOptions<
   config extends Config,
   chainId extends config['chains'][number]['id'] | undefined,
-> = UnionPartial<EstimateGasParameters<config, chainId>> & ScopeKeyParameter
+> = UnionExactPartial<EstimateGasParameters<config, chainId>> &
+  ScopeKeyParameter
 
 export function estimateGasQueryOptions<
   config extends Config,

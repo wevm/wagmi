@@ -6,9 +6,9 @@ import type {
 } from '@wagmi/core'
 import type {
   ScopeKeyParameter,
-  UnionEvaluate,
-  UnionOmit,
-  UnionPartial,
+  UnionCompute,
+  UnionStrictOmit,
+  UnionExactPartial,
 } from '@wagmi/core/internal'
 import type {
   ReadContractData,
@@ -66,9 +66,9 @@ export type CreateUseReadContractReturnType<
   config extends Config = ResolvedRegister['config'],
   selectData = ReadContractData<abi, name, args>,
 >(
-  parameters?: UnionEvaluate<
-    UnionPartial<
-      UnionOmit<
+  parameters?: UnionCompute<
+    UnionExactPartial<
+      UnionStrictOmit<
         ReadContractParameters<abi, name, args, config>,
         omittedProperties
       >

@@ -7,7 +7,7 @@ import {
   sendTransaction,
 } from '../actions/sendTransaction.js'
 import type { Config } from '../createConfig.js'
-import type { Evaluate } from '../types/utils.js'
+import type { Compute } from '../types/utils.js'
 
 export function sendTransactionMutationOptions<config extends Config>(
   config: config,
@@ -24,7 +24,7 @@ export function sendTransactionMutationOptions<config extends Config>(
   >
 }
 
-export type SendTransactionData = Evaluate<SendTransactionReturnType>
+export type SendTransactionData = Compute<SendTransactionReturnType>
 
 export type SendTransactionVariables<
   config extends Config,
@@ -36,11 +36,11 @@ export type SendTransactionMutate<config extends Config, context = unknown> = <
 >(
   variables: SendTransactionVariables<config, chainId>,
   options?:
-    | Evaluate<
+    | Compute<
         MutateOptions<
           SendTransactionData,
           SendTransactionErrorType,
-          Evaluate<SendTransactionVariables<config, chainId>>,
+          Compute<SendTransactionVariables<config, chainId>>,
           context
         >
       >
@@ -53,11 +53,11 @@ export type SendTransactionMutateAsync<
 > = <chainId extends config['chains'][number]['id']>(
   variables: SendTransactionVariables<config, chainId>,
   options?:
-    | Evaluate<
+    | Compute<
         MutateOptions<
           SendTransactionData,
           SendTransactionErrorType,
-          Evaluate<SendTransactionVariables<config, chainId>>,
+          Compute<SendTransactionVariables<config, chainId>>,
           context
         >
       >

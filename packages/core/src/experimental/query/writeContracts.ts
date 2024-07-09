@@ -1,7 +1,7 @@
 import type { MutateOptions, MutationOptions } from '@tanstack/query-core'
 
 import type { Config } from '../../createConfig.js'
-import type { Evaluate } from '../../types/utils.js'
+import type { Compute } from '../../types/utils.js'
 import {
   type WriteContractsErrorType,
   type WriteContractsParameters,
@@ -25,7 +25,7 @@ export function writeContractsMutationOptions<
   >
 }
 
-export type WriteContractsData = Evaluate<WriteContractsReturnType>
+export type WriteContractsData = Compute<WriteContractsReturnType>
 
 export type WriteContractsVariables<
   contracts extends readonly unknown[],
@@ -40,11 +40,11 @@ export type WriteContractsMutate<
 > = <chainId extends config['chains'][number]['id']>(
   variables: WriteContractsVariables<contracts, config, chainId>,
   options?:
-    | Evaluate<
+    | Compute<
         MutateOptions<
           WriteContractsData,
           WriteContractsErrorType,
-          Evaluate<WriteContractsVariables<contracts, config, chainId>>,
+          Compute<WriteContractsVariables<contracts, config, chainId>>,
           context
         >
       >
@@ -58,11 +58,11 @@ export type WriteContractsMutateAsync<
 > = <chainId extends config['chains'][number]['id']>(
   variables: WriteContractsVariables<contracts, config, chainId>,
   options?:
-    | Evaluate<
+    | Compute<
         MutateOptions<
           WriteContractsData,
           WriteContractsErrorType,
-          Evaluate<WriteContractsVariables<contracts, config, chainId>>,
+          Compute<WriteContractsVariables<contracts, config, chainId>>,
           context
         >
       >
