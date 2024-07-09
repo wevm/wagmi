@@ -413,7 +413,7 @@ function version3(parameters: Version3Parameters) {
           return SDK as unknown as typeof SDK.default
         })()
 
-        sdk = new CoinbaseWalletSDK({ reloadOnDisconnect, ...parameters })
+        sdk = new CoinbaseWalletSDK({ ...parameters, reloadOnDisconnect })
 
         // Force types to retrieve private `walletExtension` method from the Coinbase Wallet SDK.
         const walletExtensionChainId = (

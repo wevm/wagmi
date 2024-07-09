@@ -303,7 +303,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
           new Promise<void>((resolve) => {
             const listener = ({
               chainId: currentChainId,
-            }: { chainId?: number }) => {
+            }: { chainId?: number | undefined }) => {
               if (currentChainId === chainId) {
                 config.emitter.off('change', listener)
                 resolve()

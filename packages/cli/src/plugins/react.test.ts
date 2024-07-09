@@ -4,7 +4,7 @@ import { expect, test } from 'vitest'
 import { react } from './react.js'
 
 test('default', async () => {
-  const result = await react().run({
+  const result = await react().run?.({
     contracts: [
       {
         name: 'erc20',
@@ -19,11 +19,11 @@ test('default', async () => {
     outputs: [],
   })
 
-  expect(result.imports).toMatchInlineSnapshot(`
+  expect(result?.imports).toMatchInlineSnapshot(`
     "import { createUseReadContract, createUseWriteContract, createUseSimulateContract, createUseWatchContractEvent } from 'wagmi/codegen'
     "
   `)
-  expect(result.content).toMatchInlineSnapshot(`
+  expect(result?.content).toMatchInlineSnapshot(`
     "/**
      * Wraps __{@link useReadContract}__ with \`abi\` set to __{@link erc20Abi}__
      */
@@ -117,7 +117,7 @@ test('default', async () => {
 })
 
 test('address', async () => {
-  const result = await react().run({
+  const result = await react().run?.({
     contracts: [
       {
         name: 'erc20',
@@ -133,7 +133,7 @@ test('address', async () => {
     outputs: [],
   })
 
-  expect(result.content).toMatchInlineSnapshot(`
+  expect(result?.content).toMatchInlineSnapshot(`
     "/**
      * Wraps __{@link useReadContract}__ with \`abi\` set to __{@link erc20Abi}__
      */
@@ -227,7 +227,7 @@ test('address', async () => {
 })
 
 test('legacy hook names', async () => {
-  const result = await react({ getHookName: 'legacy' }).run({
+  const result = await react({ getHookName: 'legacy' }).run?.({
     contracts: [
       {
         name: 'erc20',
@@ -243,7 +243,7 @@ test('legacy hook names', async () => {
     outputs: [],
   })
 
-  expect(result.content).toMatchInlineSnapshot(`
+  expect(result?.content).toMatchInlineSnapshot(`
     "/**
      * Wraps __{@link useReadContract}__ with \`abi\` set to __{@link erc20Abi}__
      */

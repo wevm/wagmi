@@ -22,7 +22,13 @@ import { injected } from './connectors/injected.js'
 import { type Emitter, type EventData, createEmitter } from './createEmitter.js'
 import { type Storage, createStorage, noopStorage } from './createStorage.js'
 import { ChainNotConfiguredError } from './errors/config.js'
-import type { Evaluate, ExactPartial, LooseOmit, OneOf } from './types/utils.js'
+import type {
+  Evaluate,
+  ExactPartial,
+  LooseOmit,
+  OneOf,
+  RemoveUndefined,
+} from './types/utils.js'
 import { uid } from './utils/uid.js'
 import { version } from './version.js'
 
@@ -71,7 +77,7 @@ export function createConfig<
           : noopStorage,
     }),
     syncConnectedChain = true,
-    ssr,
+    ssr = false,
     ...rest
   } = parameters
 
@@ -187,13 +193,13 @@ export function createConfig<
   // Create store
   /////////////////////////////////////////////////////////////////////////////////////////////////
 
-  function getInitialState() {
+  function getInitialState(): State {
     return {
       chainId: chains.getState()[0].id,
       connections: new Map<string, Connection>(),
       current: null,
       status: 'disconnected',
-    } satisfies State
+    }
   }
 
   let currentVersion: number
@@ -237,6 +243,7 @@ export function createConfig<
                 } as unknown as PartializedState['connections'],
                 chainId: state.chainId,
                 current: state.current,
+                status: state.status,
               } satisfies PartializedState
             },
             skipHydration: ssr,
@@ -402,7 +409,11 @@ export function createConfig<
         selector as unknown as (state: State) => any,
         listener,
         options
-          ? { ...options, fireImmediately: options.emitImmediately }
+          ? ({
+              ...options,
+              fireImmediately: options.emitImmediately,
+              // Workaround cast since Zustand does not support `'exactOptionalPropertyTypes'`
+            } as RemoveUndefined<typeof options>)
           : undefined,
       )
     },
@@ -555,7 +566,7 @@ export type Connector = ReturnType<CreateConnectorFn> & {
 
 export type Transport = (
   params: Parameters<viem_Transport>[0] & {
-    connectors?: StoreApi<Connector[]>
+    connectors?: StoreApi<Connector[]> | undefined
   },
 ) => ReturnType<viem_Transport>
 

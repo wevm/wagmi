@@ -37,6 +37,7 @@ export {
   type Mutable,
   type Omit,
   type OneOf,
+  type RemoveUndefined,
   type UnionEvaluate,
   type UnionOmit,
   type UnionPartial,

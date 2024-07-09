@@ -47,17 +47,17 @@ beforeAll(() => server.listen())
 afterEach(() => server.resetHandlers())
 afterAll(() => server.close())
 
-test('fetches ABI', async () => {
-  await expect(
+test('fetches ABI', () => {
+  expect(
     sourcify({
       chainId: chainId,
       contracts: [{ name: 'DepositContract', address }],
-    }).contracts(),
+    }).contracts?.(),
   ).resolves.toMatchSnapshot()
 })
 
-test('fetches ABI with multichain deployment', async () => {
-  await expect(
+test('fetches ABI with multichain deployment', () => {
+  expect(
     sourcify({
       chainId: 100,
       contracts: [
@@ -66,28 +66,28 @@ test('fetches ABI with multichain deployment', async () => {
           address: { 100: multichainAddress, 137: multichainAddress },
         },
       ],
-    }).contracts(),
+    }).contracts?.(),
   ).resolves.toMatchSnapshot()
 })
 
-test('fails to fetch for unverified contract', async () => {
-  await expect(
+test('fails to fetch for unverified contract', () => {
+  expect(
     sourcify({
       chainId: 100,
       contracts: [{ name: 'DepositContract', address }],
-    }).contracts(),
+    }).contracts?.(),
   ).rejects.toThrowErrorMatchingInlineSnapshot(
     '[Error: Contract not found in Sourcify repository.]',
   )
 })
 
-test('missing address for chainId', async () => {
-  await expect(
+test('missing address for chainId', () => {
+  expect(
     sourcify({
       chainId: 1,
       // @ts-expect-error `chainId` and `keyof typeof contracts[number].address` mismatch
       contracts: [{ name: 'DepositContract', address: { 10: address } }],
-    }).contracts(),
+    }).contracts?.(),
   ).rejects.toThrowErrorMatchingInlineSnapshot(
     `[Error: No address found for chainId "1". Make sure chainId "1" is set as an address.]`,
   )

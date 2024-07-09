@@ -69,6 +69,11 @@ export type PartialBy<type, key extends keyof type> = ExactPartial<
 > &
   Omit<type, key>
 
+/* Removes `undefined` from object property */
+export type RemoveUndefined<type> = {
+  [key in keyof type]: NonNullable<type[key]>
+}
+
 ///////////////////////////////////////////////////////////////////////////
 // Loose types
 

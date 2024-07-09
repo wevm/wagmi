@@ -8,7 +8,11 @@ import {
   type Connector,
   createConnector,
 } from '@wagmi/core'
-import type { Evaluate, ExactPartial } from '@wagmi/core/internal'
+import type {
+  Evaluate,
+  ExactPartial,
+  RemoveUndefined,
+} from '@wagmi/core/internal'
 import {
   type AddEthereumChainParameter,
   type Address,
@@ -167,15 +171,16 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         })()
 
         sdk = new MetaMaskSDK({
-          dappMetadata: {},
-          ...parameters,
           _source: 'wagmi',
+          // Workaround cast since MetaMask SDK does not support `'exactOptionalPropertyTypes'`
+          ...(parameters as RemoveUndefined<typeof parameters>),
           readonlyRPCMap: Object.fromEntries(
             config.chains.map((chain) => [
               chain.id,
               chain.rpcUrls.default.http[0]!,
             ]),
           ),
+          dappMetadata: parameters.dappMetadata ?? {},
           useDeeplink: parameters.useDeeplink ?? true,
         })
         await sdk.init()
