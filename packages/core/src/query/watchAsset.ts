@@ -7,7 +7,7 @@ import {
   watchAsset,
 } from '../actions/watchAsset.js'
 import type { Config } from '../createConfig.js'
-import type { Evaluate } from '../types/utils.js'
+import type { Compute } from '../types/utils.js'
 import type { Mutate, MutateAsync } from './types.js'
 
 export function watchAssetMutationOptions(config: Config) {
@@ -25,7 +25,7 @@ export function watchAssetMutationOptions(config: Config) {
 
 export type WatchAssetData = WatchAssetReturnType
 
-export type WatchAssetVariables = Evaluate<WatchAssetParameters>
+export type WatchAssetVariables = Compute<WatchAssetParameters>
 
 export type WatchAssetMutate<context = unknown> = Mutate<
   WatchAssetData,

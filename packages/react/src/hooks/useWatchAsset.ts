@@ -2,7 +2,7 @@
 
 import { useMutation } from '@tanstack/react-query'
 import type { WatchAssetErrorType } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import {
   type WatchAssetData,
   type WatchAssetMutate,
@@ -18,7 +18,7 @@ import type {
 } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 
-export type UseWatchAssetParameters<context = unknown> = Evaluate<
+export type UseWatchAssetParameters<context = unknown> = Compute<
   ConfigParameter & {
     mutation?:
       | UseMutationParameters<
@@ -31,7 +31,7 @@ export type UseWatchAssetParameters<context = unknown> = Evaluate<
   }
 >
 
-export type UseWatchAssetReturnType<context = unknown> = Evaluate<
+export type UseWatchAssetReturnType<context = unknown> = Compute<
   UseMutationReturnType<
     WatchAssetData,
     WatchAssetErrorType,

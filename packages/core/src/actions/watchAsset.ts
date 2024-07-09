@@ -8,14 +8,14 @@ import {
 import type { Config } from '../createConfig.js'
 import type { BaseErrorType, ErrorType } from '../errors/base.js'
 import type { ConnectorParameter } from '../types/properties.js'
-import type { Evaluate } from '../types/utils.js'
+import type { Compute } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 import {
   type GetConnectorClientErrorType,
   getConnectorClient,
 } from './getConnectorClient.js'
 
-export type WatchAssetParameters = Evaluate<
+export type WatchAssetParameters = Compute<
   viem_WatchAssetParameters & ConnectorParameter
 >
 
