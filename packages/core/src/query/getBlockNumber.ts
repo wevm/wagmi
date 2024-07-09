@@ -8,13 +8,13 @@ import {
 } from '../actions/getBlockNumber.js'
 import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
-import type { Evaluate, ExactPartial } from '../types/utils.js'
+import type { Compute, ExactPartial } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
 export type GetBlockNumberOptions<
   config extends Config,
   chainId extends config['chains'][number]['id'],
-> = Evaluate<
+> = Compute<
   ExactPartial<GetBlockNumberParameters<config, chainId>> & ScopeKeyParameter
 >
 

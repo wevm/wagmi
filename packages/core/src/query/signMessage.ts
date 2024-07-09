@@ -7,7 +7,7 @@ import {
   signMessage,
 } from '../actions/signMessage.js'
 import type { Config } from '../createConfig.js'
-import type { Evaluate } from '../types/utils.js'
+import type { Compute } from '../types/utils.js'
 import type { Mutate, MutateAsync } from './types.js'
 
 export function signMessageMutationOptions(config: Config) {
@@ -25,7 +25,7 @@ export function signMessageMutationOptions(config: Config) {
 
 export type SignMessageData = SignMessageReturnType
 
-export type SignMessageVariables = Evaluate<SignMessageParameters>
+export type SignMessageVariables = Compute<SignMessageParameters>
 
 export type SignMessageMutate<context = unknown> = Mutate<
   SignMessageData,

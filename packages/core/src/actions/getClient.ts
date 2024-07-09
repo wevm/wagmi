@@ -2,7 +2,7 @@ import type { Client } from 'viem'
 
 import type { Config } from '../createConfig.js'
 import type { ChainIdParameter } from '../types/properties.js'
-import type { Evaluate, IsNarrowable } from '../types/utils.js'
+import type { Compute, IsNarrowable } from '../types/utils.js'
 
 export type GetClientParameters<
   config extends Config = Config,
@@ -29,7 +29,7 @@ export type GetClientReturnType<
       : config['chains'][number]['id']
     : config['chains'][number]['id'] | undefined,
 > = resolvedChainId extends config['chains'][number]['id']
-  ? Evaluate<
+  ? Compute<
       Client<
         config['_internal']['transports'][resolvedChainId],
         Extract<config['chains'][number], { id: resolvedChainId }>

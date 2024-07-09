@@ -5,7 +5,7 @@ import type {
   ReadContractsErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import {
   type ReadContractsData,
   type ReadContractsOptions,
@@ -27,7 +27,7 @@ export type UseReadContractsParameters<
   allowFailure extends boolean = true,
   config extends Config = Config,
   selectData = ReadContractsData<contracts, allowFailure>,
-> = Evaluate<
+> = Compute<
   ReadContractsOptions<contracts, allowFailure, config> &
     ConfigParameter<config> &
     QueryParameter<

@@ -1,8 +1,8 @@
 import type { Config, Connection } from '../createConfig.js'
-import type { Evaluate } from '../types/utils.js'
+import type { Compute } from '../types/utils.js'
 import { deepEqual } from '../utils/deepEqual.js'
 
-export type GetConnectionsReturnType = Evaluate<Connection>[]
+export type GetConnectionsReturnType = Compute<Connection>[]
 
 let previousConnections: Connection[] = []
 

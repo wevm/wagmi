@@ -5,7 +5,7 @@ import type {
   EstimateFeesPerGasErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import {
   type EstimateFeesPerGasData,
   type EstimateFeesPerGasOptions,
@@ -24,7 +24,7 @@ export type UseEstimateFeesPerGasParameters<
   type extends FeeValuesType = FeeValuesType,
   config extends Config = Config,
   selectData = EstimateFeesPerGasData<type>,
-> = Evaluate<
+> = Compute<
   EstimateFeesPerGasOptions<type, config> &
     ConfigParameter<config> &
     QueryParameter<

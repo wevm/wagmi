@@ -9,11 +9,11 @@ import {
 import type { Config } from '../createConfig.js'
 import type { ChainIdParameter } from '../types/properties.js'
 import type { Unit } from '../types/unit.js'
-import type { Evaluate } from '../types/utils.js'
+import type { Compute } from '../types/utils.js'
 import { getUnit } from '../utils/getUnit.js'
 import { type ReadContractsErrorType, readContracts } from './readContracts.js'
 
-export type GetTokenParameters<config extends Config = Config> = Evaluate<
+export type GetTokenParameters<config extends Config = Config> = Compute<
   ChainIdParameter<config> & {
     address: Address
     formatUnits?: Unit | undefined

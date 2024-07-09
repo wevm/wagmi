@@ -6,11 +6,11 @@ import type {
 } from '@wagmi/core'
 import type {
   ChainIdParameter,
+  Compute,
   ConnectorParameter,
-  Evaluate,
   SelectChains,
-  UnionEvaluate,
-  UnionOmit,
+  UnionCompute,
+  UnionStrictOmit,
 } from '@wagmi/core/internal'
 import type {
   WriteContractData,
@@ -59,7 +59,7 @@ export type CreateUseWriteContractReturnType<
   functionName extends ContractFunctionName<abi, stateMutability> | undefined,
 > = <config extends Config = ResolvedRegister['config'], context = unknown>(
   parameters?: UseWriteContractParameters<config, context>,
-) => Evaluate<
+) => Compute<
   Omit<
     wagmi_UseWriteContractReturnType<config, context>,
     'writeContract' | 'writeContractAsync'
@@ -267,9 +267,9 @@ type Variables<
     | 'abi'
     | (address extends undefined ? never : 'address')
     | (functionName extends undefined ? never : 'functionName'),
-> = UnionEvaluate<
+> = UnionCompute<
   {
-    [key in keyof chains]: UnionOmit<
+    [key in keyof chains]: UnionStrictOmit<
       viem_WriteContractParameters<
         abi,
         name,
@@ -289,6 +289,6 @@ type Variables<
             | (chainId extends keyof address ? chainId : never)
             | undefined
         }
-      : Evaluate<ChainIdParameter<config, chainId>>) &
+      : Compute<ChainIdParameter<config, chainId>>) &
     ConnectorParameter & { __mode?: 'prepared' }
 >

@@ -14,7 +14,7 @@ import type {
   ChainIdParameter,
   ConnectorParameter,
 } from '../../types/properties.js'
-import type { UnionEvaluate, UnionOmit } from '../../types/utils.js'
+import type { UnionCompute, UnionStrictOmit } from '../../types/utils.js'
 import { getAccount } from '../getAccount.js'
 import { getChainId } from '../getChainId.js'
 import {
@@ -55,8 +55,8 @@ export type CreateSimulateContractReturnType<
 >(
   config: config,
   parameters: {
-    [key in keyof chains]: UnionEvaluate<
-      UnionOmit<
+    [key in keyof chains]: UnionCompute<
+      UnionStrictOmit<
         viem_SimulateContractParameters<
           abi,
           name,

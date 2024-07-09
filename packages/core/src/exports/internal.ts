@@ -32,14 +32,15 @@ export {
 } from '../types/properties.js'
 
 export {
-  type Evaluate,
+  type Compute,
   type ExactPartial,
   type Mutable,
-  type Omit,
+  type StrictOmit as Omit,
   type OneOf,
-  type UnionEvaluate,
-  type UnionOmit,
-  type UnionPartial,
+  type RemoveUndefined,
+  type UnionCompute,
+  type UnionStrictOmit,
+  type UnionExactPartial,
 } from '../types/utils.js'
 
 ////////////////////////////////////////////////////////////////////////////////

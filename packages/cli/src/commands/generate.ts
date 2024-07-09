@@ -125,7 +125,7 @@ export async function generate(options: Generate = {}) {
     const content = []
     type Output = {
       plugin: Pick<Plugin, 'name'>
-    } & Awaited<ReturnType<Required<Plugin>['run']>>
+    } & Awaited<ReturnType<NonNullable<Plugin['run']>>>
     const outputs: Output[] = []
     spinner.start('Running plugins')
     for (const plugin of plugins) {

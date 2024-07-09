@@ -9,7 +9,7 @@ import {
 } from '../actions/simulateContract.js'
 import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
-import type { UnionPartial } from '../types/utils.js'
+import type { UnionExactPartial } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
 export type SimulateContractOptions<
@@ -22,7 +22,7 @@ export type SimulateContractOptions<
   >,
   config extends Config,
   chainId extends config['chains'][number]['id'] | undefined,
-> = UnionPartial<
+> = UnionExactPartial<
   SimulateContractParameters<abi, functionName, args, config, chainId>
 > &
   ScopeKeyParameter

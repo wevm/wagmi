@@ -12,13 +12,13 @@ afterEach(() => {
 
 test('forge not installed', async () => {
   const dir = f.temp()
-  await expect(
+  expect(
     foundry({
       project: dir,
       forge: {
         path: '/path/to/forge',
       },
-    }).validate(),
+    }).validate?.(),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
     [Error: forge must be installed to use Foundry plugin.
     To install, follow the instructions at https://book.getfoundry.sh/getting-started/installation]
@@ -31,7 +31,7 @@ test('project does not exist', async () => {
   spy.mockImplementation(() => dir)
 
   try {
-    await foundry({ project: '../path/to/project' }).validate()
+    await foundry({ project: '../path/to/project' }).validate?.()
   } catch (error) {
     expect(
       (error as Error).message.replace(dirname(dir), '..'),
@@ -44,14 +44,15 @@ test('validates without project', async () => {
   const spy = vi.spyOn(process, 'cwd')
   spy.mockImplementation(() => dir)
 
-  await expect(foundry().validate()).resolves.toBeUndefined()
+  expect(foundry().validate?.()).resolves.toBeUndefined()
 })
 
-test('contracts', async () => {
-  await expect(
+test('contracts', () => {
+  expect(
     foundry({
       project: resolve(__dirname, '__fixtures__/foundry/'),
-    }).contracts(),
+      exclude: ['Foo.sol/**'],
+    }).contracts?.(),
   ).resolves.toMatchInlineSnapshot(`
       [
         {
@@ -102,7 +103,11 @@ test('contracts without project', async () => {
   const spy = vi.spyOn(process, 'cwd')
   spy.mockImplementation(() => dir)
 
-  await expect(foundry().contracts()).resolves.toMatchInlineSnapshot(`
+  expect(
+    foundry({
+      exclude: ['Foo.sol/**'],
+    }).contracts?.(),
+  ).resolves.toMatchInlineSnapshot(`
       [
         {
           "abi": [

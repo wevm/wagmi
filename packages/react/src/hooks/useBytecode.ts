@@ -5,7 +5,7 @@ import type {
   GetBytecodeErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import {
   type GetBytecodeData,
   type GetBytecodeOptions,
@@ -21,7 +21,7 @@ import { useConfig } from './useConfig.js'
 export type UseBytecodeParameters<
   config extends Config = Config,
   selectData = GetBytecodeData,
-> = Evaluate<
+> = Compute<
   GetBytecodeOptions<config> &
     ConfigParameter<config> &
     QueryParameter<

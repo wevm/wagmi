@@ -40,6 +40,7 @@ void (async () => {
       } else throw new Error(`Unknown command: ${cli.args.join(' ')}`)
     }
     await cli.runMatchedCommand()
+    process.exit(0)
   } catch (error) {
     logger.error(`\n${(error as Error).message}`)
     process.exit(1)

@@ -1,5 +1,35 @@
 # @wagmi/core
 
+## 2.11.7
+
+### Patch Changes
+
+- [`0bb8b562ae04ecfeb2d6b2f1b980ebae31dc127e`](https://github.com/wevm/wagmi/commit/0bb8b562ae04ecfeb2d6b2f1b980ebae31dc127e) Thanks [@tmm](https://github.com/tmm)! - Improved TypeScript `'exactOptionalPropertyTypes'` support.
+
+## 2.11.6
+
+### Patch Changes
+
+- [#4060](https://github.com/wevm/wagmi/pull/4060) [`95965c1f19d480b97f2b297a077a9e607dee32ad`](https://github.com/wevm/wagmi/commit/95965c1f19d480b97f2b297a077a9e607dee32ad) Thanks [@dalechyn](https://github.com/dalechyn)! - Bumped Tanstack Query dependencies to fix typing issues between exported Wagmi query options and TanStack Query suspense query methods (due to [`direction` property in `QueryFunctionContext` being deprecated](https://github.com/TanStack/query/pull/7410)).
+
+## 2.11.5
+
+### Patch Changes
+
+- [#4079](https://github.com/wevm/wagmi/pull/4079) [`04f2b846b113f3d300d82c9fa75212f1805817c5`](https://github.com/wevm/wagmi/commit/04f2b846b113f3d300d82c9fa75212f1805817c5) Thanks [@tmm](https://github.com/tmm)! - Added revalidation for config chain ID in SSR and migration.
+
+## 2.11.4
+
+### Patch Changes
+
+- [`9e8345cd56186b997b5e56deaa2cfc69b30d15f6`](https://github.com/wevm/wagmi/commit/9e8345cd56186b997b5e56deaa2cfc69b30d15f6) Thanks [@tmm](https://github.com/tmm)! - Switched `Register` to `interface` to fix declaration merging.
+
+## 2.11.3
+
+### Patch Changes
+
+- [#4065](https://github.com/wevm/wagmi/pull/4065) [`8974e6269bb5d7bfaa90db0246bc7d13e8bff798`](https://github.com/wevm/wagmi/commit/8974e6269bb5d7bfaa90db0246bc7d13e8bff798) Thanks [@alx-khramov](https://github.com/alx-khramov)! - Added timeout to internal call of `'wallet_revokePermissions'` request during `injected#disconnect` as some wallets that do not support this method hang.
+
 ## 2.11.2
 
 ### Patch Changes
@@ -717,7 +747,7 @@
 
 - **Breaking:** Renamed `createClient` to `createConfig`
 - **Breaking:** Renamed `getClient` to `getConfig`
-- **Breaking:** Removed `request` as an argument to `prepareSendTransaction` & `sendTransation`. Arguments now belong on the root level of the Action.
+- **Breaking:** Removed `request` as an argument to `prepareSendTransaction` & `sendTransaction`. Arguments now belong on the root level of the Action.
 
 ### Patch Changes
 

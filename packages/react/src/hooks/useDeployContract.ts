@@ -6,7 +6,7 @@ import type {
   DeployContractErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import {
   type DeployContractData,
   type DeployContractMutate,
@@ -26,7 +26,7 @@ import { useConfig } from './useConfig.js'
 export type UseDeployContractParameters<
   config extends Config = Config,
   context = unknown,
-> = Evaluate<
+> = Compute<
   ConfigParameter<config> & {
     mutation?:
       | UseMutationParameters<

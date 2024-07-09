@@ -9,7 +9,7 @@ import {
 } from '../actions/readContract.js'
 import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
-import type { UnionPartial } from '../types/utils.js'
+import type { UnionExactPartial } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
 export type ReadContractOptions<
@@ -17,7 +17,7 @@ export type ReadContractOptions<
   functionName extends ContractFunctionName<abi, 'pure' | 'view'>,
   args extends ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
   config extends Config,
-> = UnionPartial<ReadContractParameters<abi, functionName, args, config>> &
+> = UnionExactPartial<ReadContractParameters<abi, functionName, args, config>> &
   ScopeKeyParameter
 
 export function readContractQueryOptions<
@@ -47,7 +47,7 @@ export function readContractQueryOptions<
         ...parameters,
       }) as Promise<ReadContractData<abi, functionName, args>>
     },
-    queryKey: readContractQueryKey(options),
+    queryKey: readContractQueryKey(options as any) as any,
   } as const satisfies QueryOptions<
     ReadContractQueryFnData<abi, functionName, args>,
     ReadContractErrorType,

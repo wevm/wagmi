@@ -14,7 +14,11 @@ import type {
   ChainIdParameter,
   ConnectorParameter,
 } from '../../types/properties.js'
-import type { Evaluate, UnionEvaluate, UnionOmit } from '../../types/utils.js'
+import type {
+  Compute,
+  UnionCompute,
+  UnionStrictOmit,
+} from '../../types/utils.js'
 import { getAccount } from '../getAccount.js'
 import { getChainId } from '../getChainId.js'
 import {
@@ -59,9 +63,9 @@ export type CreateWriteContractReturnType<
     | (functionName extends undefined ? never : 'functionName'),
 >(
   config: config,
-  parameters: UnionEvaluate<
+  parameters: UnionCompute<
     {
-      [key in keyof chains]: UnionOmit<
+      [key in keyof chains]: UnionStrictOmit<
         viem_WriteContractParameters<
           abi,
           name,
@@ -81,7 +85,7 @@ export type CreateWriteContractReturnType<
               | (chainId extends keyof address ? chainId : never)
               | undefined
           }
-        : Evaluate<ChainIdParameter<config, chainId>>) &
+        : Compute<ChainIdParameter<config, chainId>>) &
       ConnectorParameter & { __mode?: 'prepared' }
   >,
 ) => Promise<WriteContractReturnType>

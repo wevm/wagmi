@@ -2,7 +2,7 @@ import { type Client, type PublicClient, publicActions } from 'viem'
 
 import type { Config } from '../createConfig.js'
 import type { ChainIdParameter } from '../types/properties.js'
-import type { Evaluate, IsNarrowable } from '../types/utils.js'
+import type { Compute, IsNarrowable } from '../types/utils.js'
 import { getClient } from './getClient.js'
 
 export type GetPublicClientParameters<
@@ -29,7 +29,7 @@ export type GetPublicClientReturnType<
       : config['chains'][number]['id']
     : config['chains'][number]['id'] | undefined,
 > = resolvedChainId extends config['chains'][number]['id']
-  ? Evaluate<
+  ? Compute<
       PublicClient<
         config['_internal']['transports'][resolvedChainId],
         Extract<config['chains'][number], { id: resolvedChainId }>

@@ -5,7 +5,7 @@ import type {
   GetBlockTransactionCountErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { UnionEvaluate } from '@wagmi/core/internal'
+import type { UnionCompute } from '@wagmi/core/internal'
 import {
   type GetBlockTransactionCountData,
   type GetBlockTransactionCountOptions,
@@ -24,7 +24,7 @@ export type UseBlockTransactionCountParameters<
   chainId extends
     config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetBlockTransactionCountData,
-> = UnionEvaluate<
+> = UnionCompute<
   GetBlockTransactionCountOptions<config, chainId> &
     ConfigParameter<config> &
     QueryParameter<

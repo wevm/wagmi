@@ -1,7 +1,7 @@
 'use client'
 
 import type { Config, GetTokenErrorType, ResolvedRegister } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import {
   type GetTokenData,
   type GetTokenOptions,
@@ -18,7 +18,7 @@ import { useConfig } from './useConfig.js'
 export type UseTokenParameters<
   config extends Config = Config,
   selectData = GetTokenData,
-> = Evaluate<
+> = Compute<
   GetTokenOptions<config> &
     ConfigParameter<config> &
     QueryParameter<

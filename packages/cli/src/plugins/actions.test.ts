@@ -4,7 +4,7 @@ import { expect, test } from 'vitest'
 import { actions } from './actions.js'
 
 test('default', async () => {
-  const result = await actions().run({
+  const result = await actions().run?.({
     contracts: [
       {
         name: 'erc20',
@@ -19,11 +19,11 @@ test('default', async () => {
     outputs: [],
   })
 
-  expect(result.imports).toMatchInlineSnapshot(`
+  expect(result?.imports).toMatchInlineSnapshot(`
     "import { createReadContract, createWriteContract, createSimulateContract, createWatchContractEvent } from '@wagmi/core/codegen'
     "
   `)
-  expect(result.content).toMatchInlineSnapshot(`
+  expect(result?.content).toMatchInlineSnapshot(`
     "/**
      * Wraps __{@link readContract}__ with \`abi\` set to __{@link erc20Abi}__
      */
@@ -117,7 +117,7 @@ test('default', async () => {
 })
 
 test('address', async () => {
-  const result = await actions().run({
+  const result = await actions().run?.({
     contracts: [
       {
         name: 'erc20',
@@ -133,7 +133,7 @@ test('address', async () => {
     outputs: [],
   })
 
-  expect(result.content).toMatchInlineSnapshot(`
+  expect(result?.content).toMatchInlineSnapshot(`
     "/**
      * Wraps __{@link readContract}__ with \`abi\` set to __{@link erc20Abi}__
      */
@@ -227,7 +227,7 @@ test('address', async () => {
 })
 
 test('legacy hook names', async () => {
-  const result = await actions({ getActionName: 'legacy' }).run({
+  const result = await actions({ getActionName: 'legacy' }).run?.({
     contracts: [
       {
         name: 'erc20',
@@ -243,7 +243,7 @@ test('legacy hook names', async () => {
     outputs: [],
   })
 
-  expect(result.content).toMatchInlineSnapshot(`
+  expect(result?.content).toMatchInlineSnapshot(`
     "/**
      * Wraps __{@link readContract}__ with \`abi\` set to __{@link erc20Abi}__
      */
@@ -337,7 +337,7 @@ test('legacy hook names', async () => {
 })
 
 test('override package name', async () => {
-  const result = await actions({ overridePackageName: 'wagmi' }).run({
+  const result = await actions({ overridePackageName: 'wagmi' }).run?.({
     contracts: [
       {
         name: 'erc20',
@@ -352,7 +352,7 @@ test('override package name', async () => {
     outputs: [],
   })
 
-  expect(result.imports).toMatchInlineSnapshot(`
+  expect(result?.imports).toMatchInlineSnapshot(`
     "import { createReadContract, createWriteContract, createSimulateContract, createWatchContractEvent } from 'wagmi/codegen'
     "
   `)

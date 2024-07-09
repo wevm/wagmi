@@ -1,7 +1,7 @@
 'use client'
 
 import type { FormEvent } from 'react'
-import { type Hex, parseAbi, parseEther } from 'viem'
+import { type Hex, formatEther, parseAbi, parseEther } from 'viem'
 import {
   type BaseError,
   useAccount,
@@ -9,6 +9,7 @@ import {
   useBalance,
   useBlockNumber,
   useChainId,
+  useConfig,
   useConnect,
   useConnections,
   useConnectorClient,
@@ -26,7 +27,6 @@ import {
 import { switchChain } from 'wagmi/actions'
 import { optimism, sepolia } from 'wagmi/chains'
 
-import { config } from '../wagmi'
 import { wagmiContractConfig } from './contracts'
 
 export default function App() {
@@ -210,9 +210,18 @@ function Balance() {
     <div>
       <h2>Balance</h2>
 
-      <div>Balance (Default Chain): {default_?.formatted}</div>
-      <div>Balance (Account Chain): {account_?.formatted}</div>
-      <div>Balance (Optimism Chain): {optimism_?.formatted}</div>
+      <div>
+        Balance (Default Chain):{' '}
+        {!!default_?.value && formatEther(default_.value)}
+      </div>
+      <div>
+        Balance (Account Chain):{' '}
+        {!!account_?.value && formatEther(account_.value)}
+      </div>
+      <div>
+        Balance (Optimism Chain):{' '}
+        {!!optimism_?.value && formatEther(optimism_.value)}
+      </div>
     </div>
   )
 }
@@ -378,6 +387,7 @@ function WriteContract() {
 }
 
 function Repro() {
+  const config = useConfig()
   const chainId = useChainId()
 
   // biome-ignore lint/suspicious/noConsoleLog: <explanation>

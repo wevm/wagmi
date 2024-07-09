@@ -2,7 +2,11 @@
 
 import { useQueryClient } from '@tanstack/react-query'
 import type { Config, GetBlockErrorType, ResolvedRegister } from '@wagmi/core'
-import type { Evaluate, UnionEvaluate, UnionOmit } from '@wagmi/core/internal'
+import type {
+  Compute,
+  UnionCompute,
+  UnionStrictOmit,
+} from '@wagmi/core/internal'
 import {
   type GetBlockData,
   type GetBlockOptions,
@@ -28,7 +32,7 @@ export type UseBlockParameters<
   chainId extends
     config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetBlockData<includeTransactions, blockTag, config, chainId>,
-> = Evaluate<
+> = Compute<
   GetBlockOptions<includeTransactions, blockTag, config, chainId> &
     ConfigParameter<config> &
     QueryParameter<
@@ -39,8 +43,8 @@ export type UseBlockParameters<
     > & {
       watch?:
         | boolean
-        | UnionEvaluate<
-            UnionOmit<
+        | UnionCompute<
+            UnionStrictOmit<
               UseWatchBlocksParameters<
                 includeTransactions,
                 blockTag,

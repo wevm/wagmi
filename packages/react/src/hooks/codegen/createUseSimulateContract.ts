@@ -4,7 +4,7 @@ import type {
   SimulateContractErrorType,
   SimulateContractParameters,
 } from '@wagmi/core'
-import type { ScopeKeyParameter, UnionPartial } from '@wagmi/core/internal'
+import type { ScopeKeyParameter, UnionExactPartial } from '@wagmi/core/internal'
 import type {
   SimulateContractData,
   SimulateContractQueryFnData,
@@ -66,7 +66,7 @@ export type CreateUseSimulateContractReturnType<
           | (chainId extends keyof address ? chainId : never)
           | undefined
       : chainId | number | undefined
-  } & UnionPartial<
+  } & UnionExactPartial<
     // TODO: Take `abi` and `address` from above and omit from below (currently breaks inference)
     SimulateContractParameters<abi, name, args, config, chainId>
   > &

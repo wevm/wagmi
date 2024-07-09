@@ -6,7 +6,7 @@ import type {
   ResolvedRegister,
   SwitchChainErrorType,
 } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import {
   type SwitchChainData,
   type SwitchChainMutate,
@@ -26,7 +26,7 @@ import { useConfig } from './useConfig.js'
 export type UseSwitchChainParameters<
   config extends Config = Config,
   context = unknown,
-> = Evaluate<
+> = Compute<
   ConfigParameter<config> & {
     mutation?:
       | UseMutationParameters<
@@ -42,7 +42,7 @@ export type UseSwitchChainParameters<
 export type UseSwitchChainReturnType<
   config extends Config = Config,
   context = unknown,
-> = Evaluate<
+> = Compute<
   UseMutationReturnType<
     SwitchChainData<config, config['chains'][number]['id']>,
     SwitchChainErrorType,

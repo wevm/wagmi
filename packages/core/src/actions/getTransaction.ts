@@ -9,14 +9,14 @@ import {
 import type { Config } from '../createConfig.js'
 import type { SelectChains } from '../types/chain.js'
 import type { ChainIdParameter } from '../types/properties.js'
-import type { Evaluate, IsNarrowable } from '../types/utils.js'
+import type { Compute, IsNarrowable } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 
 export type GetTransactionParameters<
   config extends Config = Config,
   chainId extends
     config['chains'][number]['id'] = config['chains'][number]['id'],
-> = Evaluate<viem_GetTransactionParameters & ChainIdParameter<config, chainId>>
+> = Compute<viem_GetTransactionParameters & ChainIdParameter<config, chainId>>
 
 export type GetTransactionReturnType<
   config extends Config = Config,
@@ -24,7 +24,7 @@ export type GetTransactionReturnType<
     config['chains'][number]['id'] = config['chains'][number]['id'],
   ///
   chains extends readonly Chain[] = SelectChains<config, chainId>,
-> = Evaluate<
+> = Compute<
   {
     [key in keyof chains]: viem_GetTransactionReturnType<
       IsNarrowable<chains[key], Chain> extends true ? chains[key] : undefined

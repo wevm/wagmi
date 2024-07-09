@@ -6,14 +6,14 @@ import {
 
 import type { Config } from '../createConfig.js'
 import type { ChainIdParameter } from '../types/properties.js'
-import type { Evaluate } from '../types/utils.js'
+import type { Compute } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 
 export type GetGasPriceParameters<
   config extends Config = Config,
   chainId extends
     config['chains'][number]['id'] = config['chains'][number]['id'],
-> = Evaluate<ChainIdParameter<config, chainId>>
+> = Compute<ChainIdParameter<config, chainId>>
 
 export type GetGasPriceReturnType = viem_GetGasPriceReturnType
 

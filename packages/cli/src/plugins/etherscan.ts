@@ -1,5 +1,5 @@
 import type { ContractConfig } from '../config.js'
-import type { Evaluate } from '../types.js'
+import type { Compute } from '../types.js'
 import { blockExplorer } from './blockExplorer.js'
 
 const apiUrls = {
@@ -82,7 +82,7 @@ export type EtherscanConfig<chainId extends number> = {
   /**
    * Contracts to fetch ABIs for.
    */
-  contracts: Evaluate<Omit<ContractConfig<ChainId, chainId>, 'abi'>>[]
+  contracts: Compute<Omit<ContractConfig<ChainId, chainId>, 'abi'>>[]
 }
 
 /**

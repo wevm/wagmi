@@ -5,7 +5,7 @@ import type {
   GetEnsAddressErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import {
   type GetEnsAddressData,
   type GetEnsAddressOptions,
@@ -22,7 +22,7 @@ import { useConfig } from './useConfig.js'
 export type UseEnsAddressParameters<
   config extends Config = Config,
   selectData = GetEnsAddressData,
-> = Evaluate<
+> = Compute<
   GetEnsAddressOptions<config> &
     ConfigParameter<config> &
     QueryParameter<

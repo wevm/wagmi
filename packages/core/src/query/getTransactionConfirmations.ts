@@ -8,7 +8,7 @@ import {
 } from '../actions/getTransactionConfirmations.js'
 import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
-import type { UnionPartial } from '../types/utils.js'
+import type { UnionExactPartial } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
 export type GetTransactionConfirmationsOptions<
@@ -16,7 +16,7 @@ export type GetTransactionConfirmationsOptions<
   chainId extends
     | config['chains'][number]['id']
     | undefined = config['chains'][number]['id'],
-> = UnionPartial<GetTransactionConfirmationsParameters<config, chainId>> &
+> = UnionExactPartial<GetTransactionConfirmationsParameters<config, chainId>> &
   ScopeKeyParameter
 
 export function getTransactionConfirmationsQueryOptions<

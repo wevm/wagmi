@@ -22,7 +22,13 @@ import { injected } from './connectors/injected.js'
 import { type Emitter, type EventData, createEmitter } from './createEmitter.js'
 import { type Storage, createStorage, noopStorage } from './createStorage.js'
 import { ChainNotConfiguredError } from './errors/config.js'
-import type { Evaluate, ExactPartial, LooseOmit, OneOf } from './types/utils.js'
+import type {
+  Compute,
+  ExactPartial,
+  LooseOmit,
+  OneOf,
+  RemoveUndefined,
+} from './types/utils.js'
 import { uid } from './utils/uid.js'
 import { version } from './version.js'
 
@@ -32,7 +38,7 @@ export type CreateConfigParameters<
     chains[number]['id'],
     Transport
   >,
-> = Evaluate<
+> = Compute<
   {
     chains: chains
     connectors?: CreateConnectorFn[] | undefined
@@ -71,7 +77,7 @@ export function createConfig<
           : noopStorage,
     }),
     syncConnectedChain = true,
-    ssr,
+    ssr = false,
     ...rest
   } = parameters
 
@@ -187,13 +193,13 @@ export function createConfig<
   // Create store
   /////////////////////////////////////////////////////////////////////////////////////////////////
 
-  function getInitialState() {
+  function getInitialState(): State {
     return {
       chainId: chains.getState()[0].id,
       connections: new Map<string, Connection>(),
       current: null,
       status: 'disconnected',
-    } satisfies State
+    }
   }
 
   let currentVersion: number
@@ -215,7 +221,8 @@ export function createConfig<
                 persistedState &&
                 typeof persistedState === 'object' &&
                 'chainId' in persistedState &&
-                typeof persistedState.chainId === 'number'
+                typeof persistedState.chainId === 'number' &&
+                chains.getState().some((x) => x.id === persistedState.chainId)
                   ? persistedState.chainId
                   : initialState.chainId
               return { ...initialState, chainId }
@@ -236,6 +243,7 @@ export function createConfig<
                 } as unknown as PartializedState['connections'],
                 chainId: state.chainId,
                 current: state.current,
+                status: state.status,
               } satisfies PartializedState
             },
             skipHydration: ssr,
@@ -401,7 +409,11 @@ export function createConfig<
         selector as unknown as (state: State) => any,
         listener,
         options
-          ? { ...options, fireImmediately: options.emitImmediately }
+          ? ({
+              ...options,
+              fireImmediately: options.emitImmediately,
+              // Workaround cast since Zustand does not support `'exactOptionalPropertyTypes'`
+            } as RemoveUndefined<typeof options>)
           : undefined,
       )
     },
@@ -480,43 +492,51 @@ export type Config<
    * Not part of versioned API, proceed with caution.
    * @internal
    */
-  _internal: {
-    readonly mipd: MipdStore | undefined
-    readonly store: Mutate<StoreApi<any>, [['zustand/persist', any]]>
-    readonly ssr: boolean
-    readonly syncConnectedChain: boolean
-    readonly transports: transports
+  _internal: Internal<chains, transports>
+}
 
-    chains: {
-      setState(
-        value:
-          | readonly [Chain, ...Chain[]]
-          | ((
-              state: readonly [Chain, ...Chain[]],
-            ) => readonly [Chain, ...Chain[]]),
-      ): void
-      subscribe(
-        listener: (
-          state: readonly [Chain, ...Chain[]],
-          prevState: readonly [Chain, ...Chain[]],
-        ) => void,
-      ): () => void
-    }
-    connectors: {
-      providerDetailToConnector(
-        providerDetail: EIP6963ProviderDetail,
-      ): CreateConnectorFn
-      setup(connectorFn: CreateConnectorFn): Connector
-      setState(value: Connector[] | ((state: Connector[]) => Connector[])): void
-      subscribe(
-        listener: (state: Connector[], prevState: Connector[]) => void,
-      ): () => void
-    }
-    events: {
-      change(data: EventData<ConnectorEventMap, 'change'>): void
-      connect(data: EventData<ConnectorEventMap, 'connect'>): void
-      disconnect(data: EventData<ConnectorEventMap, 'disconnect'>): void
-    }
+type Internal<
+  chains extends readonly [Chain, ...Chain[]] = readonly [Chain, ...Chain[]],
+  transports extends Record<chains[number]['id'], Transport> = Record<
+    chains[number]['id'],
+    Transport
+  >,
+> = {
+  readonly mipd: MipdStore | undefined
+  readonly store: Mutate<StoreApi<any>, [['zustand/persist', any]]>
+  readonly ssr: boolean
+  readonly syncConnectedChain: boolean
+  readonly transports: transports
+
+  chains: {
+    setState(
+      value:
+        | readonly [Chain, ...Chain[]]
+        | ((
+            state: readonly [Chain, ...Chain[]],
+          ) => readonly [Chain, ...Chain[]]),
+    ): void
+    subscribe(
+      listener: (
+        state: readonly [Chain, ...Chain[]],
+        prevState: readonly [Chain, ...Chain[]],
+      ) => void,
+    ): () => void
+  }
+  connectors: {
+    providerDetailToConnector(
+      providerDetail: EIP6963ProviderDetail,
+    ): CreateConnectorFn
+    setup(connectorFn: CreateConnectorFn): Connector
+    setState(value: Connector[] | ((state: Connector[]) => Connector[])): void
+    subscribe(
+      listener: (state: Connector[], prevState: Connector[]) => void,
+    ): () => void
+  }
+  events: {
+    change(data: EventData<ConnectorEventMap, 'change'>): void
+    connect(data: EventData<ConnectorEventMap, 'connect'>): void
+    disconnect(data: EventData<ConnectorEventMap, 'disconnect'>): void
   }
 }
 
@@ -529,7 +549,7 @@ export type State<
   status: 'connected' | 'connecting' | 'disconnected' | 'reconnecting'
 }
 
-export type PartializedState = Evaluate<
+export type PartializedState = Compute<
   ExactPartial<Pick<State, 'chainId' | 'connections' | 'current' | 'status'>>
 >
 
@@ -546,7 +566,7 @@ export type Connector = ReturnType<CreateConnectorFn> & {
 
 export type Transport = (
   params: Parameters<viem_Transport>[0] & {
-    connectors?: StoreApi<Connector[]>
+    connectors?: StoreApi<Connector[]> | undefined
   },
 ) => ReturnType<viem_Transport>
 

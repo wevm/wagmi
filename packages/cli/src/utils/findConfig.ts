@@ -13,9 +13,9 @@ const configFiles = [
 
 type FindConfigParameters = {
   /** Config file name */
-  config?: string
+  config?: string | undefined
   /** Config file directory */
-  root?: string
+  root?: string | undefined
 }
 
 /**

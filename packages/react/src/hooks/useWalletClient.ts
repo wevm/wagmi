@@ -9,7 +9,7 @@ import type {
   GetWalletClientErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { Evaluate, Omit } from '@wagmi/core/internal'
+import type { Compute, Omit } from '@wagmi/core/internal'
 import {
   type GetWalletClientData,
   type GetWalletClientOptions,
@@ -34,11 +34,11 @@ export type UseWalletClientParameters<
   chainId extends
     config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetWalletClientData<config, chainId>,
-> = Evaluate<
+> = Compute<
   GetWalletClientOptions<config, chainId> &
     ConfigParameter<config> & {
       query?:
-        | Evaluate<
+        | Compute<
             Omit<
               UseQueryParameters<
                 GetWalletClientQueryFnData<config, chainId>,

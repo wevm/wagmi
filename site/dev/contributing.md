@@ -1,6 +1,7 @@
 <script setup>
 import packageJson from '../../package.json'
 
+const nodeVersion = packageJson.engines.node
 const packageManager = packageJson.packageManager
 </script>
 
@@ -34,23 +35,23 @@ gh repo clone wevm/wagmi
 
 ## 2. Installing Node.js and pnpm
 
-Wagmi uses [pnpm workspaces](https://pnpm.io/workspaces) to manage multiple projects. You need to install **Node.js v18 or higher** and **{{packageManager}}**.
-
-You can run the following commands in your terminal to check your local Node.js and pnpm versions:
+Wagmi uses Node.js with [pnpm workspaces](https://pnpm.io/workspaces) to manage multiple projects. You can run the following command in your terminal to check your local Node.js version.
 
 ```bash
 node -v
-pnpm -v
 ```
 
-If the versions are not correct or you don't have Node.js or pnpm installed, download and follow their setup instructions:
+If **`node@{{nodeVersion}}`** is not installed, you can install via [fnm](https://github.com/Schniz/fnm) or from the [official website](https://nodejs.org).
 
-- Install Node.js using [fnm](https://github.com/Schniz/fnm) or from the [official website](https://nodejs.org)
-- Install [pnpm](https://pnpm.io/installation) using [Corepack](https://nodejs.org/api/corepack.html)
+Once Node.js is installed, run the following to install [Corepack](https://nodejs.org/api/corepack.html). Corepack automatically installs and manages **`{{packageManager}}`**.
+
+```bash
+corepack enable
+```
 
 ## 3. Installing dependencies
 
-Once in the project's root directory, run the following command to install the project's dependencies:
+Once in the project's root directory, run the following command to install pnpm (via Corepack) and the project's dependencies:
 
 ```bash
 pnpm install
@@ -60,7 +61,7 @@ After the install completes, pnpm links packages across the project for developm
 
 ## 4. Adding the env variables
 
-The [dev playgrounds](#_5-running-the-dev-playgrounds) and [test suite](#_6-running-the-test-suite) require enironment variables to be set. Copy over the following environment variables to `.env`, and fill them out.
+The [dev playgrounds](#_5-running-the-dev-playgrounds) and [test suite](#_6-running-the-test-suite) require environment variables to be set. Copy over the following environment variables to `.env`, and fill them out.
 
 ```bash
 VITE_MAINNET_FORK_URL=https://cloudflare-eth.com
@@ -163,8 +164,9 @@ If a PR has changesets, you can create a [snapshot release](https://github.com/c
 Use [Taze](https://github.com/antfu/taze) by running:
 
 ```bash
-pnpm deps    # prints outdated deps
-pnpm deps -w # updates deps (best done with clean working tree)
+pnpm deps       # prints outdated deps
+pnpm deps patch # print outdated deps with new patch versions
+pnpm deps -w    # updates deps (best done with clean working tree)
 ```
 
 [Socket](https://socket.dev) checks pull requests for vulnerabilities when new dependencies and versions are added, but you should also be vigilant! When updating dependencies, you should check release notes and source code as well as lock versions when possible.

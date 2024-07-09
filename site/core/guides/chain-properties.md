@@ -4,7 +4,7 @@ Some chains support additional properties related to blocks and transactions. Th
 
 ## Narrowing Parameters
 
-When you pass your `config` to an action, you are ready to access chain-specifc properties! For example, Celo's `feeCurrency` is available.
+When you pass your `config` to an action, you are ready to access chain-specific properties! For example, Celo's `feeCurrency` is available.
 
 ::: code-group
 ```ts [index.ts]
@@ -21,7 +21,7 @@ const result = await simulateContract(config, {
 <<< @/snippets/core/config-chain-properties.ts[config.ts]
 :::
 
-This is great, but if you have multiple chains that support additional properties, your autocomplete could be overwhelmed with all of them. By setting the `chainId` property to a specifc value (e.g. `celo.id`), you can narrow parameters to a single chain.
+This is great, but if you have multiple chains that support additional properties, your autocomplete could be overwhelmed with all of them. By setting the `chainId` property to a specific value (e.g. `celo.id`), you can narrow parameters to a single chain.
 
 ::: code-group
 ```ts [index.ts]

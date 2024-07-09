@@ -5,7 +5,7 @@ import type {
   ResolvedRegister,
   VerifyMessageErrorType,
 } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import {
   type VerifyMessageData,
   type VerifyMessageOptions,
@@ -21,7 +21,7 @@ import { useConfig } from './useConfig.js'
 export type UseVerifyMessageParameters<
   config extends Config = Config,
   selectData = VerifyMessageData,
-> = Evaluate<
+> = Compute<
   VerifyMessageOptions<config> &
     ConfigParameter<config> &
     QueryParameter<

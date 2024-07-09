@@ -4,7 +4,7 @@ import { z } from 'zod'
 
 import type { ContractConfig } from '../config.js'
 import { fromZodError } from '../errors.js'
-import type { Evaluate } from '../types.js'
+import type { Compute } from '../types.js'
 import { fetch } from './fetch.js'
 
 export type BlockExplorerConfig = {
@@ -25,7 +25,7 @@ export type BlockExplorerConfig = {
   /**
    * Contracts to fetch ABIs for.
    */
-  contracts: Evaluate<Omit<ContractConfig, 'abi'>>[]
+  contracts: Compute<Omit<ContractConfig, 'abi'>>[]
   /**
    * Function to get address from contract config.
    */

@@ -4,7 +4,7 @@ import type { Config } from '../../createConfig.js'
 import { ConnectorNotConnectedError } from '../../errors/config.js'
 import { filterQueryOptions } from '../../query/utils.js'
 import type { ScopeKeyParameter } from '../../types/properties.js'
-import type { Evaluate, ExactPartial } from '../../types/utils.js'
+import type { Compute, ExactPartial } from '../../types/utils.js'
 import {
   type GetCapabilitiesErrorType,
   type GetCapabilitiesParameters,
@@ -12,7 +12,7 @@ import {
   getCapabilities,
 } from '../actions/getCapabilities.js'
 
-export type GetCapabilitiesOptions = Evaluate<
+export type GetCapabilitiesOptions = Compute<
   ExactPartial<GetCapabilitiesParameters> & ScopeKeyParameter
 >
 

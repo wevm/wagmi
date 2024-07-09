@@ -29,7 +29,7 @@ import { useConnect } from '@wagmi/vue'
 ```vue [index.vue]
 <script setup lang="ts">
 import { useConnect } from '@wagmi/vue'
-import { injected } from 'wagmi/connectors'
+import { injected } from '@wagmi/connectors'
 
 const { connect } = useConnect()
 </script>

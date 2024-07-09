@@ -28,17 +28,17 @@ Data layer performance is also critical. Slow, unnecessary, and manual data fetc
 
 ## Feature Coverage
 
-Wagmi supports the most popular and commonly-used Ethereum features out of the box with 40+ React Hooks for accounts, wallets, contracts, transactions, signing, ENS, and more. Wagmi also supports just about any wallet out there through it's official [connectors](/react/api/connectors), [EIP-6963 support](/react/api/createConfig#multiinjectedproviderdiscovery), and [extensable API](/dev/creating-connectors).
+Wagmi supports the most popular and commonly-used Ethereum features out of the box with 40+ React Hooks for accounts, wallets, contracts, transactions, signing, ENS, and more. Wagmi also supports just about any wallet out there through it's official [connectors](/react/api/connectors), [EIP-6963 support](/react/api/createConfig#multiinjectedproviderdiscovery), and [extensible API](/dev/creating-connectors).
 
 If you need lower-level control, you can always drop down to [Wagmi Core](/core/getting-started) or [Viem](https://viem.sh), which Wagmi uses internally to perform blockchain operations. Wagmi also manages multi-chain support automatically so developers can focus on their applications instead of adding custom code.
 
-Finally, Wagmi has a [CLI](/cli/getting-started) to manage ABIs as well as a robust ecosystem of third-party libraries, like [ConnectKit](https://docs.family.co/connectkit), [RainbowKit](https://www.rainbowkit.com), [Web3Modal](https://web3modal.com), [Dynamic](https://www.dynamic.xyz), and many more, so you can get started quickly without needing to build everything from scratch.
+Finally, Wagmi has a [CLI](/cli/getting-started) to manage ABIs as well as a robust ecosystem of third-party libraries, like [ConnectKit](https://docs.family.co/connectkit), [RainbowKit](https://www.rainbowkit.com), [AppKit](https://walletconnect.com/appkit), [Dynamic](https://www.dynamic.xyz), [Privy](https://privy.io), and many more, so you can get started quickly without needing to build everything from scratch.
 
 ## Stability
 
 Stability is a fundamental principle for Wagmi. Many organizations, large and small, rely heavily on Wagmi and expect it to be entirely stable for their users and applications.
 
-Wagmi's test suite runs against forked Ethereum nodes to make sure functions work across chains. The test suite also runs type tests against many different versions of peer dependencies, like TypeScript, to ensure compatbility with the latest releases of other popular software.
+Wagmi's test suite runs against forked Ethereum nodes to make sure functions work across chains. The test suite also runs type tests against many different versions of peer dependencies, like TypeScript, to ensure compatibility with the latest releases of other popular software.
 
 Wagmi follows semver so developers can upgrade between versions with confidence. Starting with Wagmi v2, new functionality will be opt-in with old functionality being deprecated alongside the new features. This means upgrading to the latest major versions will not require immediate changes.
 

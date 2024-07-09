@@ -33,38 +33,38 @@ const parse: Fetch['parse'] = async ({ response }) => {
   return JSON.parse(data.result)
 }
 
-test('fetches ABI', async () => {
-  await expect(
+test('fetches ABI', () => {
+  expect(
     fetch({
       contracts: [{ name: 'WagmiMintExample', address }],
       request,
       parse,
-    }).contracts(),
+    }).contracts?.(),
   ).resolves.toMatchSnapshot()
 })
 
-test('fails to fetch for unverified contract', async () => {
-  await expect(
+test('fails to fetch for unverified contract', () => {
+  expect(
     fetch({
       contracts: [
         { name: 'WagmiMintExample', address: unverifiedContractAddress },
       ],
       request,
       parse,
-    }).contracts(),
+    }).contracts?.(),
   ).rejects.toThrowErrorMatchingInlineSnapshot(
     '[Error: Contract source code not verified]',
   )
 })
 
-test('aborts request', async () => {
-  await expect(
+test('aborts request', () => {
+  expect(
     fetch({
       contracts: [{ name: 'WagmiMintExample', address: timeoutAddress }],
       request,
       parse,
       timeoutDuration: 1_000,
-    }).contracts(),
+    }).contracts?.(),
   ).rejects.toThrowErrorMatchingInlineSnapshot(
     '[AbortError: This operation was aborted]',
   )
@@ -98,7 +98,7 @@ test('reads from cache', async () => {
       contracts: [contract],
       request,
       parse,
-    }).contracts(),
+    }).contracts?.(),
   ).resolves.toMatchInlineSnapshot(`
       [
         {
@@ -149,7 +149,7 @@ test('fails and reads from cache', async () => {
       request,
       parse,
       timeoutDuration: 1,
-    }).contracts(),
+    }).contracts?.(),
   ).resolves.toMatchInlineSnapshot(`
       [
         {

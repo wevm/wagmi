@@ -5,7 +5,7 @@ import type {
   GetConnectorsReturnType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import {
   type ConnectData,
   type ConnectMutate,
@@ -26,7 +26,7 @@ import { useConnectors } from './useConnectors.js'
 export type UseConnectParameters<
   config extends Config = Config,
   context = unknown,
-> = Evaluate<
+> = Compute<
   ConfigParameter<config> & {
     mutation?:
       | UseMutationParameters<
@@ -42,7 +42,7 @@ export type UseConnectParameters<
 export type UseConnectReturnType<
   config extends Config = Config,
   context = unknown,
-> = Evaluate<
+> = Compute<
   UseMutationReturnType<
     ConnectData<config>,
     ConnectErrorType,
@@ -51,7 +51,7 @@ export type UseConnectReturnType<
   > & {
     connect: ConnectMutate<config, context>
     connectAsync: ConnectMutateAsync<config, context>
-    connectors: Evaluate<GetConnectorsReturnType>
+    connectors: Compute<GetConnectorsReturnType>
   }
 >
 

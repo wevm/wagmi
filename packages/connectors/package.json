@@ -1,7 +1,7 @@
 {
   "name": "@wagmi/connectors",
   "description": "Collection of connectors for Wagmi",
-  "version": "5.0.14",
+  "version": "5.0.22",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -45,8 +45,8 @@
     }
   },
   "dependencies": {
-    "@coinbase/wallet-sdk": "4.0.3",
-    "@metamask/sdk": "0.20.5",
+    "@coinbase/wallet-sdk": "4.0.4",
+    "@metamask/sdk": "0.26.4",
     "@safe-global/safe-apps-provider": "0.18.1",
     "@safe-global/safe-apps-sdk": "8.1.0",
     "@walletconnect/ethereum-provider": "2.13.0",

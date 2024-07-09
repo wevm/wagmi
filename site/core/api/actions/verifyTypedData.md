@@ -576,7 +576,7 @@ import { type VerifyTypedDataReturnType } from '@wagmi/core'
 
 `boolean`
 
-Wheather the signed message is valid for the given address.
+Whether the signed message is valid for the given address.
 
 ## Type Inference
 

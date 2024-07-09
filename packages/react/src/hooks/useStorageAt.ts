@@ -5,7 +5,7 @@ import type {
   GetStorageAtErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import {
   type GetStorageAtData,
   type GetStorageAtOptions,
@@ -21,7 +21,7 @@ import { useConfig } from './useConfig.js'
 export type UseStorageAtParameters<
   config extends Config = Config,
   selectData = GetStorageAtData,
-> = Evaluate<
+> = Compute<
   GetStorageAtOptions<config> &
     ConfigParameter<config> &
     QueryParameter<

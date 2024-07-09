@@ -28,7 +28,7 @@ const result = deserialize('{"foo":"wagmi","bar":{"__type":"bigint","value":"123
 
 `string`
 
-The string to deserialze.
+The string to deserialize.
 
 
 ### reviver

@@ -1,4 +1,4 @@
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import {
   type Chain as viem_Chain,
   mainnet as viem_mainnet,
@@ -9,7 +9,7 @@ import { getRpcUrls } from './utils.js'
 
 type Fork = { blockNumber: bigint; url: string }
 
-export type Chain = Evaluate<
+export type Chain = Compute<
   viem_Chain & {
     fork: Fork
     port: number

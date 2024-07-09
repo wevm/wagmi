@@ -199,9 +199,12 @@ test('behavior: migrate chainId', async () => {
   })
 
   const config = createConfig({
-    chains: [mainnet],
+    chains: [mainnet, optimism],
     storage,
-    transports: { [mainnet.id]: http() },
+    transports: {
+      [mainnet.id]: http(),
+      [optimism.id]: http(),
+    },
   })
 
   await wait(100)

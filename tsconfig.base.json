@@ -8,7 +8,7 @@
 
     // Type checking
     "strict": true,
-    // "exactOptionalPropertyTypes": true, // Enabled once supported in viem
+    // "exactOptionalPropertyTypes": true, // Enabled once supported in tanstack query https://github.com/TanStack/query/issues/7641
     "noFallthroughCasesInSwitch": true, // Not enabled by default in `strict` mode.
     "noImplicitOverride": true, // Not enabled by default in `strict` mode.
     "noImplicitReturns": true, // Not enabled by default in `strict` mode.

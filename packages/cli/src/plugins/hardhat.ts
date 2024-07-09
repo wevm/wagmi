@@ -1,12 +1,12 @@
 import { execa } from 'execa'
+import { fdir } from 'fdir'
 import { default as fs } from 'fs-extra'
-import { globby } from 'globby'
 import { basename, extname, join, resolve } from 'pathe'
 import pc from 'picocolors'
 
 import type { ContractConfig, Plugin } from '../config.js'
 import * as logger from '../logger.js'
-import type { Evaluate, RequiredBy } from '../types.js'
+import type { Compute, RequiredBy } from '../types.js'
 import { getIsPackageInstalled, getPackageManager } from '../utils/packages.js'
 
 const defaultExcludes = ['build-info/**', '*.dbg.json']
@@ -63,7 +63,7 @@ export type HardhatConfig = {
   sources?: string | undefined
 }
 
-type HardhatResult = Evaluate<
+type HardhatResult = Compute<
   RequiredBy<Plugin, 'contracts' | 'validate' | 'watch'>
 >
 
@@ -92,11 +92,15 @@ export function hardhat(config: HardhatConfig): HardhatResult {
     }
   }
 
-  async function getArtifactPaths(artifactsDirectory: string) {
-    return await globby([
-      ...include.map((x) => `${artifactsDirectory}/**/${x}`),
-      ...exclude.map((x) => `!${artifactsDirectory}/**/${x}`),
-    ])
+  function getArtifactPaths(artifactsDirectory: string) {
+    const crawler = new fdir().withBasePath().globWithOptions(
+      include.map((x) => `${artifactsDirectory}/**/${x}`),
+      {
+        dot: true,
+        ignore: exclude.map((x) => `${artifactsDirectory}/**/${x}`),
+      },
+    )
+    return crawler.crawl(artifactsDirectory).withPromise()
   }
 
   const project = resolve(process.cwd(), config.project)

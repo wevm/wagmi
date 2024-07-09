@@ -8,7 +8,7 @@ const viemVersion = packageJson.peerDependencies.viem
 
 ## Overview
 
-Wagmi is a collection of Vue composition utilties for Ethereum. You can learn more about the rationale behind the project in the [Why Wagmi](/vue/why) section.
+Wagmi is a collection of Vue composition utilities for Ethereum. You can learn more about the rationale behind the project in the [Why Wagmi](/vue/why) section.
 
 ## Automatic Installation
 

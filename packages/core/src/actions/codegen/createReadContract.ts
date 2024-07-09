@@ -6,7 +6,7 @@ import type {
 } from 'viem'
 
 import type { Config } from '../../createConfig.js'
-import type { UnionEvaluate, UnionOmit } from '../../types/utils.js'
+import type { UnionCompute, UnionStrictOmit } from '../../types/utils.js'
 import { getAccount } from '../getAccount.js'
 import { getChainId } from '../getChainId.js'
 import {
@@ -50,8 +50,8 @@ export type CreateReadContractReturnType<
   args extends ContractFunctionArgs<abi, stateMutability, name>,
 >(
   config: config,
-  parameters: UnionEvaluate<
-    UnionOmit<
+  parameters: UnionCompute<
+    UnionStrictOmit<
       ReadContractParameters<abi, name, args, config>,
       omittedProperties
     >

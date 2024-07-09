@@ -7,10 +7,10 @@ import {
 
 import type { Config } from '../createConfig.js'
 import type { ChainIdParameter } from '../types/properties.js'
-import type { Evaluate } from '../types/utils.js'
+import type { Compute } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 
-export type VerifyMessageParameters<config extends Config = Config> = Evaluate<
+export type VerifyMessageParameters<config extends Config = Config> = Compute<
   viem_VerifyMessageParameters & ChainIdParameter<config>
 >
 

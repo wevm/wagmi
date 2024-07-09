@@ -10,7 +10,7 @@ import {
   type WriteContractsVariables,
   writeContractsMutationOptions,
 } from '@wagmi/core/experimental'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import type { ContractFunctionParameters } from 'viem'
 
 import { useConfig } from '../../hooks/useConfig.js'
@@ -24,7 +24,7 @@ export type UseWriteContractsParameters<
   contracts extends readonly unknown[] = readonly ContractFunctionParameters[],
   config extends Config = Config,
   context = unknown,
-> = Evaluate<
+> = Compute<
   ConfigParameter<config> & {
     mutation?:
       | UseMutationParameters<
@@ -45,7 +45,7 @@ export type UseWriteContractsReturnType<
   contracts extends readonly unknown[] = readonly ContractFunctionParameters[],
   config extends Config = Config,
   context = unknown,
-> = Evaluate<
+> = Compute<
   UseMutationReturnType<
     WriteContractsData,
     WriteContractsErrorType,

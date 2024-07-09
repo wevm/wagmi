@@ -9,7 +9,7 @@ import {
 import type { Config } from '../createConfig.js'
 import type { BaseErrorType, ErrorType } from '../errors/base.js'
 import type { ConnectorParameter } from '../types/properties.js'
-import type { UnionEvaluate } from '../types/utils.js'
+import type { UnionCompute } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 import {
   type GetConnectorClientErrorType,
@@ -21,7 +21,7 @@ export type SignTypedDataParameters<
   primaryType extends keyof typedData | 'EIP712Domain' = keyof typedData,
   ///
   primaryTypes = typedData extends TypedData ? keyof typedData : string,
-> = UnionEvaluate<
+> = UnionCompute<
   viem_SignTypedDataParameters<typedData, primaryType, Account, primaryTypes> &
     ConnectorParameter
 >

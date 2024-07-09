@@ -70,7 +70,7 @@ Yes. Wagmi is very stable and is used in production by thousands of organization
 
 Yes, Wagmi is very strict with [semantic versioning](https://semver.org) and we will never introduce breaking changes to the runtime API in a minor version bump.
 
-For exported types, we try our best to not introduce breaking changes in non-major verions, however, [TypeScript doesn't follow semver](https://www.learningtypescript.com/articles/why-typescript-doesnt-follow-strict-semantic-versioning) and often introduces breaking changes in minor releases that can cause Wagmi type issues. See the <a :href="`/${docsPath}/typescript#requirements`">TypeScript docs</a> for more information.
+For exported types, we try our best to not introduce breaking changes in non-major versions, however, [TypeScript doesn't follow semver](https://www.learningtypescript.com/articles/why-typescript-doesnt-follow-strict-semantic-versioning) and often introduces breaking changes in minor releases that can cause Wagmi type issues. See the <a :href="`/${docsPath}/typescript#requirements`">TypeScript docs</a> for more information.
 
 ## How can I contribute to Wagmi?
 

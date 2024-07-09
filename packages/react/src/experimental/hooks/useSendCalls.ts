@@ -10,7 +10,7 @@ import {
   type SendCallsVariables,
   sendCallsMutationOptions,
 } from '@wagmi/core/experimental'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 
 import { useConfig } from '../../hooks/useConfig.js'
 import type { ConfigParameter } from '../../types/properties.js'
@@ -22,7 +22,7 @@ import type {
 export type UseSendCallsParameters<
   config extends Config = Config,
   context = unknown,
-> = Evaluate<
+> = Compute<
   ConfigParameter<config> & {
     mutation?:
       | UseMutationParameters<
@@ -38,7 +38,7 @@ export type UseSendCallsParameters<
 export type UseSendCallsReturnType<
   config extends Config = Config,
   context = unknown,
-> = Evaluate<
+> = Compute<
   UseMutationReturnType<
     SendCallsData,
     SendCallsErrorType,

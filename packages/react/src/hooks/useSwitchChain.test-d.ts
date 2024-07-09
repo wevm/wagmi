@@ -1,6 +1,6 @@
 import type { Connector, SwitchChainErrorType } from '@wagmi/core'
 import type { Chain } from '@wagmi/core/chains'
-import type { Evaluate, ExactPartial } from '@wagmi/core/internal'
+import type { Compute, ExactPartial } from '@wagmi/core/internal'
 import { chain } from '@wagmi/test'
 import { expectTypeOf, test } from 'vitest'
 
@@ -43,11 +43,11 @@ test('context', () => {
             chainId: number
             connector?: Connector | undefined
           }>()
-          expectTypeOf(data).toEqualTypeOf<Evaluate<Chain>>()
+          expectTypeOf(data).toEqualTypeOf<Compute<Chain>>()
           expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
         },
         onSettled(data, error, variables, context) {
-          expectTypeOf(data).toEqualTypeOf<Evaluate<Chain> | undefined>()
+          expectTypeOf(data).toEqualTypeOf<Compute<Chain> | undefined>()
           expectTypeOf(error).toEqualTypeOf<SwitchChainErrorType | null>()
           expectTypeOf(variables).toEqualTypeOf<{
             addEthereumChainParameter?:
@@ -62,7 +62,7 @@ test('context', () => {
     })
 
   expectTypeOf(chains).toEqualTypeOf<readonly [Chain, ...Chain[]]>()
-  expectTypeOf(data).toEqualTypeOf<Evaluate<Chain> | undefined>()
+  expectTypeOf(data).toEqualTypeOf<Compute<Chain> | undefined>()
   expectTypeOf(error).toEqualTypeOf<SwitchChainErrorType | null>()
   expectTypeOf(variables).toEqualTypeOf<
     | {
@@ -98,11 +98,11 @@ test('context', () => {
           chainId: number
           connector?: Connector | undefined
         }>()
-        expectTypeOf(data).toEqualTypeOf<Evaluate<Chain>>()
+        expectTypeOf(data).toEqualTypeOf<Compute<Chain>>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
       },
       onSettled(data, error, variables, context) {
-        expectTypeOf(data).toEqualTypeOf<Evaluate<Chain> | undefined>()
+        expectTypeOf(data).toEqualTypeOf<Compute<Chain> | undefined>()
         expectTypeOf(error).toEqualTypeOf<SwitchChainErrorType | null>()
         expectTypeOf(variables).toEqualTypeOf<{
           addEthereumChainParameter?:

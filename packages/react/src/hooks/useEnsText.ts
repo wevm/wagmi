@@ -1,7 +1,7 @@
 'use client'
 
 import type { Config, GetEnsTextErrorType, ResolvedRegister } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import {
   type GetEnsTextData,
   type GetEnsTextOptions,
@@ -18,7 +18,7 @@ import { useConfig } from './useConfig.js'
 export type UseEnsTextParameters<
   config extends Config = Config,
   selectData = GetEnsTextData,
-> = Evaluate<
+> = Compute<
   GetEnsTextOptions<config> &
     ConfigParameter<config> &
     QueryParameter<

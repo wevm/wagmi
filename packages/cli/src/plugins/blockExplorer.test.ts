@@ -16,8 +16,8 @@ beforeAll(() => server.listen())
 afterEach(() => server.resetHandlers())
 afterAll(() => server.close())
 
-test('fetches ABI', async () => {
-  await expect(
+test('fetches ABI', () => {
+  expect(
     blockExplorer({
       apiKey,
       baseUrl,
@@ -26,27 +26,27 @@ test('fetches ABI', async () => {
   ).resolves.toMatchSnapshot()
 })
 
-test('fetches ABI with multichain deployment', async () => {
-  await expect(
+test('fetches ABI with multichain deployment', () => {
+  expect(
     blockExplorer({
       apiKey,
       baseUrl,
       contracts: [
         { name: 'WagmiMintExample', address: { 1: address, 10: address } },
       ],
-    }).contracts(),
+    }).contracts?.(),
   ).resolves.toMatchSnapshot()
 })
 
-test('fails to fetch for unverified contract', async () => {
-  await expect(
+test('fails to fetch for unverified contract', () => {
+  expect(
     blockExplorer({
       apiKey,
       baseUrl,
       contracts: [
         { name: 'WagmiMintExample', address: unverifiedContractAddress },
       ],
-    }).contracts(),
+    }).contracts?.(),
   ).rejects.toThrowErrorMatchingInlineSnapshot(
     '[Error: Contract source code not verified]',
   )

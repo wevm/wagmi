@@ -17,7 +17,7 @@ import type {
   ChainIdParameter,
   SyncConnectedChainParameter,
 } from '../types/properties.js'
-import type { UnionEvaluate } from '../types/utils.js'
+import type { UnionCompute } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 
 export type WatchContractEventParameters<
@@ -30,7 +30,7 @@ export type WatchContractEventParameters<
   ///
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = {
-  [key in keyof chains]: UnionEvaluate<
+  [key in keyof chains]: UnionCompute<
     viem_WatchContractEventParameters<
       abi,
       eventName,

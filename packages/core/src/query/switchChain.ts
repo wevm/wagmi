@@ -7,7 +7,7 @@ import {
   switchChain,
 } from '../actions/switchChain.js'
 import type { Config } from '../createConfig.js'
-import type { Evaluate } from '../types/utils.js'
+import type { Compute } from '../types/utils.js'
 
 export function switchChainMutationOptions<config extends Config>(
   config: config,
@@ -27,23 +27,23 @@ export function switchChainMutationOptions<config extends Config>(
 export type SwitchChainData<
   config extends Config,
   chainId extends config['chains'][number]['id'],
-> = Evaluate<SwitchChainReturnType<config, chainId>>
+> = Compute<SwitchChainReturnType<config, chainId>>
 
 export type SwitchChainVariables<
   config extends Config,
   chainId extends config['chains'][number]['id'],
-> = Evaluate<SwitchChainParameters<config, chainId>>
+> = Compute<SwitchChainParameters<config, chainId>>
 
 export type SwitchChainMutate<config extends Config, context = unknown> = <
   chainId extends config['chains'][number]['id'],
 >(
   variables: SwitchChainVariables<config, chainId>,
   options?:
-    | Evaluate<
+    | Compute<
         MutateOptions<
           SwitchChainData<config, chainId>,
           SwitchChainErrorType,
-          Evaluate<SwitchChainVariables<config, chainId>>,
+          Compute<SwitchChainVariables<config, chainId>>,
           context
         >
       >
@@ -55,11 +55,11 @@ export type SwitchChainMutateAsync<config extends Config, context = unknown> = <
 >(
   variables: SwitchChainVariables<config, chainId>,
   options?:
-    | Evaluate<
+    | Compute<
         MutateOptions<
           SwitchChainData<config, chainId>,
           SwitchChainErrorType,
-          Evaluate<SwitchChainVariables<config, chainId>>,
+          Compute<SwitchChainVariables<config, chainId>>,
           context
         >
       >

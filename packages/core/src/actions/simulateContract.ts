@@ -21,10 +21,10 @@ import type {
   ConnectorParameter,
 } from '../types/properties.js'
 import type {
-  Evaluate,
+  Compute,
   PartialBy,
-  UnionEvaluate,
-  UnionOmit,
+  UnionCompute,
+  UnionStrictOmit,
 } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 import {
@@ -50,8 +50,8 @@ export type SimulateContractParameters<
   ///
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = {
-  [key in keyof chains]: UnionEvaluate<
-    UnionOmit<
+  [key in keyof chains]: UnionCompute<
+    UnionStrictOmit<
       viem_SimulateContractParameters<
         abi,
         functionName,
@@ -94,7 +94,7 @@ export type SimulateContractReturnType<
     chains[key]
   > & {
     chainId: chains[key]['id']
-    request: Evaluate<
+    request: Compute<
       PartialBy<
         { __mode: 'prepared'; chainId: chainId; chain: chains[key] },
         chainId extends config['chains'][number]['id'] ? never : 'chainId'

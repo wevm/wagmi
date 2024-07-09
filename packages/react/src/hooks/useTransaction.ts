@@ -5,7 +5,7 @@ import type {
   GetTransactionErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import {
   type GetTransactionData,
   type GetTransactionOptions,
@@ -24,7 +24,7 @@ export type UseTransactionParameters<
   chainId extends
     config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetTransactionData<config, chainId>,
-> = Evaluate<
+> = Compute<
   GetTransactionOptions<config, chainId> &
     ConfigParameter<config> &
     QueryParameter<

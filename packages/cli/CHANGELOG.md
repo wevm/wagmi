@@ -1,5 +1,35 @@
 # @wagmi/cli
 
+## 2.1.15
+
+### Patch Changes
+
+- [`0bb8b562ae04ecfeb2d6b2f1b980ebae31dc127e`](https://github.com/wevm/wagmi/commit/0bb8b562ae04ecfeb2d6b2f1b980ebae31dc127e) Thanks [@tmm](https://github.com/tmm)! - Improved TypeScript `'exactOptionalPropertyTypes'` support.
+
+## 2.1.14
+
+### Patch Changes
+
+- [#4120](https://github.com/wevm/wagmi/pull/4120) [`59407bf1276a46e6f1f22a370dde71c92524cd0f`](https://github.com/wevm/wagmi/commit/59407bf1276a46e6f1f22a370dde71c92524cd0f) Thanks [@tmm](https://github.com/tmm)! - Fixed an issue where the Foundry and Hardhat plugins' `exclude` option was ignored.
+
+## 2.1.13
+
+### Patch Changes
+
+- [`7264d1f450727f6ba0cbea8aa1c7a83e22a5bf20`](https://github.com/wevm/wagmi/commit/7264d1f450727f6ba0cbea8aa1c7a83e22a5bf20) Thanks [@tmm](https://github.com/tmm)! - Fixed generate not exiting for long-running processes.
+
+## 2.1.12
+
+### Patch Changes
+
+- [`ac038b29623ccb0d2fee40d9f943c8df28138dac`](https://github.com/wevm/wagmi/commit/ac038b29623ccb0d2fee40d9f943c8df28138dac) Thanks [@tmm](https://github.com/tmm)! - Updated Foundry default excludes.
+
+## 2.1.11
+
+### Patch Changes
+
+- [#4084](https://github.com/wevm/wagmi/pull/4084) [`b54203bf8fa911e6f14b9675980cf38fb95d7d3e`](https://github.com/wevm/wagmi/commit/b54203bf8fa911e6f14b9675980cf38fb95d7d3e) Thanks [@tmm](https://github.com/tmm)! - Reduced internal dependencies.
+
 ## 2.1.10
 
 ### Patch Changes

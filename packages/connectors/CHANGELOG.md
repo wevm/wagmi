@@ -1,5 +1,64 @@
 # @wagmi/connectors
 
+## 5.0.22
+
+### Patch Changes
+
+- [`0bb8b562ae04ecfeb2d6b2f1b980ebae31dc127e`](https://github.com/wevm/wagmi/commit/0bb8b562ae04ecfeb2d6b2f1b980ebae31dc127e) Thanks [@tmm](https://github.com/tmm)! - Improved TypeScript `'exactOptionalPropertyTypes'` support.
+
+- Updated dependencies [[`0bb8b562ae04ecfeb2d6b2f1b980ebae31dc127e`](https://github.com/wevm/wagmi/commit/0bb8b562ae04ecfeb2d6b2f1b980ebae31dc127e)]:
+  - @wagmi/core@2.11.7
+
+## 5.0.21
+
+### Patch Changes
+
+- [#4094](https://github.com/wevm/wagmi/pull/4094) [`ff0760b5900114bcfdf420a9fba3cc278ac95afe`](https://github.com/wevm/wagmi/commit/ff0760b5900114bcfdf420a9fba3cc278ac95afe) Thanks [@omridan159](https://github.com/omridan159)! - Bumped MetaMask SDK to fix `metaMask` connector error bubbling.
+
+- Updated dependencies [[`95965c1f19d480b97f2b297a077a9e607dee32ad`](https://github.com/wevm/wagmi/commit/95965c1f19d480b97f2b297a077a9e607dee32ad)]:
+  - @wagmi/core@2.11.6
+
+## 5.0.20
+
+### Patch Changes
+
+- [`43fa971d34cac57fa5a2898ad4d839b95d7af37c`](https://github.com/wevm/wagmi/commit/43fa971d34cac57fa5a2898ad4d839b95d7af37c) Thanks [@tmm](https://github.com/tmm)! - Bumped Coinbase Wallet SDK and fixed `metaMask` connector hang on mobile.
+
+## 5.0.19
+
+### Patch Changes
+
+- [#4083](https://github.com/wevm/wagmi/pull/4083) [`b7ad208030d9f2e3f89912ff76b16cdbd848feda`](https://github.com/wevm/wagmi/commit/b7ad208030d9f2e3f89912ff76b16cdbd848feda) Thanks [@omridan159](https://github.com/omridan159)! - Bumped MetaMask SDK
+
+## 5.0.18
+
+### Patch Changes
+
+- [#4081](https://github.com/wevm/wagmi/pull/4081) [`44d24620c9e3957f3245d14d6a042736371df70b`](https://github.com/wevm/wagmi/commit/44d24620c9e3957f3245d14d6a042736371df70b) Thanks [@tmm](https://github.com/tmm)! - Bumped MetaMask SDK
+
+## 5.0.17
+
+### Patch Changes
+
+- Updated dependencies [[`04f2b846b113f3d300d82c9fa75212f1805817c5`](https://github.com/wevm/wagmi/commit/04f2b846b113f3d300d82c9fa75212f1805817c5)]:
+  - @wagmi/core@2.11.5
+
+## 5.0.16
+
+### Patch Changes
+
+- [#4071](https://github.com/wevm/wagmi/pull/4071) [`02c38c28d1aa0ad7a61c33775de603ed974c5c1b`](https://github.com/wevm/wagmi/commit/02c38c28d1aa0ad7a61c33775de603ed974c5c1b) Thanks [@omridan159](https://github.com/omridan159)! - Bumped MetaMask SDK
+
+- Updated dependencies [[`9e8345cd56186b997b5e56deaa2cfc69b30d15f6`](https://github.com/wevm/wagmi/commit/9e8345cd56186b997b5e56deaa2cfc69b30d15f6)]:
+  - @wagmi/core@2.11.4
+
+## 5.0.15
+
+### Patch Changes
+
+- Updated dependencies [[`8974e6269bb5d7bfaa90db0246bc7d13e8bff798`](https://github.com/wevm/wagmi/commit/8974e6269bb5d7bfaa90db0246bc7d13e8bff798)]:
+  - @wagmi/core@2.11.3
+
 ## 5.0.14
 
 ### Patch Changes

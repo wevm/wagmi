@@ -9,10 +9,10 @@ import {
   useMutation,
 } from '@tanstack/vue-query'
 import type {
-  Evaluate,
+  Compute,
   ExactPartial,
   Omit,
-  UnionOmit,
+  UnionStrictOmit,
 } from '@wagmi/core/internal'
 import { hashFn } from '@wagmi/core/query'
 import { type MaybeRef, computed, unref } from 'vue'
@@ -24,11 +24,11 @@ export type UseMutationParameters<
   error = Error,
   variables = void,
   context = unknown,
-> = Evaluate<
+> = Compute<
   DeepMaybeRef<
     Omit<
       DeepUnwrapRef<
-        MutationObserverOptions<data, error, Evaluate<variables>, context>
+        MutationObserverOptions<data, error, Compute<variables>, context>
       >,
       'mutationFn' | 'mutationKey' | 'throwOnError'
     >
@@ -40,8 +40,8 @@ export type UseMutationReturnType<
   error = Error,
   variables = void,
   context = unknown,
-> = Evaluate<
-  UnionOmit<
+> = Compute<
+  UnionStrictOmit<
     tanstack_UseMutationReturnType<data, error, variables, context>,
     'mutate' | 'mutateAsync'
   >
@@ -56,7 +56,7 @@ export type UseQueryParameters<
   error = DefaultError,
   data = queryFnData,
   queryKey extends QueryKey = QueryKey,
-> = Evaluate<
+> = Compute<
   DeepMaybeRef<
     ExactPartial<
       Omit<
@@ -76,7 +76,7 @@ export type UseQueryParameters<
   >
 >
 
-export type UseQueryReturnType<data = unknown, error = DefaultError> = Evaluate<
+export type UseQueryReturnType<data = unknown, error = DefaultError> = Compute<
   tanstack_UseQueryReturnType<data, error> & {
     queryKey: QueryKey
   }
@@ -110,7 +110,7 @@ export function useQuery<queryFnData, error, data, queryKey extends QueryKey>(
 //   queryData = queryFnData,
 //   queryKey extends QueryKey = QueryKey,
 //   pageParam = unknown,
-// > = Evaluate<
+// > = Compute<
 //   Omit<
 //     UseInfiniteQueryOptions<
 //       queryFnData,

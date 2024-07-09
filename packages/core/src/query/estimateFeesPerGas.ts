@@ -9,13 +9,13 @@ import {
 } from '../actions/estimateFeesPerGas.js'
 import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
-import type { Evaluate, ExactPartial } from '../types/utils.js'
+import type { Compute, ExactPartial } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
 export type EstimateFeesPerGasOptions<
   type extends FeeValuesType,
   config extends Config,
-> = Evaluate<
+> = Compute<
   ExactPartial<EstimateFeesPerGasParameters<type, config>> & ScopeKeyParameter
 >
 

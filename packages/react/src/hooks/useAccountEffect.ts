@@ -1,16 +1,16 @@
 'use client'
 
 import { type GetAccountReturnType, watchAccount } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import { useEffect } from 'react'
 
 import type { ConfigParameter } from '../types/properties.js'
 import { useConfig } from './useConfig.js'
 
-export type UseAccountEffectParameters = Evaluate<
+export type UseAccountEffectParameters = Compute<
   {
     onConnect?(
-      data: Evaluate<
+      data: Compute<
         Pick<
           Extract<GetAccountReturnType, { status: 'connected' }>,
           'address' | 'addresses' | 'chain' | 'chainId' | 'connector'

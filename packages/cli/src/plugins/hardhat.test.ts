@@ -12,8 +12,8 @@ afterEach(() => {
 
 test('validate', async () => {
   const temp = f.temp()
-  await expect(
-    hardhat({ project: temp }).validate(),
+  expect(
+    hardhat({ project: temp }).validate?.(),
   ).rejects.toThrowErrorMatchingInlineSnapshot(
     '[Error: hardhat must be installed to use Hardhat plugin.]',
   )
@@ -25,7 +25,7 @@ test('project does not exist', async () => {
   spy.mockImplementation(() => dir)
 
   try {
-    await hardhat({ project: '../path/to/project' }).validate()
+    await hardhat({ project: '../path/to/project' }).validate?.()
   } catch (error) {
     expect(
       (error as Error).message.replace(dirname(dir), '..'),
@@ -33,11 +33,12 @@ test('project does not exist', async () => {
   }
 })
 
-test.skip('contracts', async () => {
-  await expect(
+test('contracts', async () => {
+  expect(
     hardhat({
       project: resolve(__dirname, '__fixtures__/hardhat/'),
-    }).contracts(),
+      exclude: ['Foo.sol/**'],
+    }).contracts?.(),
   ).resolves.toMatchInlineSnapshot(`
       [
         {
@@ -81,4 +82,4 @@ test.skip('contracts', async () => {
         },
       ]
     `)
-})
+}, 10_000)

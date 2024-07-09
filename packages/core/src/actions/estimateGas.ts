@@ -13,7 +13,7 @@ import type {
   ChainIdParameter,
   ConnectorParameter,
 } from '../types/properties.js'
-import type { UnionEvaluate, UnionLooseOmit } from '../types/utils.js'
+import type { UnionCompute, UnionLooseOmit } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 import {
   type GetConnectorClientErrorType,
@@ -28,7 +28,7 @@ export type EstimateGasParameters<
   ///
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = {
-  [key in keyof chains]: UnionEvaluate<
+  [key in keyof chains]: UnionCompute<
     UnionLooseOmit<viem_EstimateGasParameters<chains[key]>, 'chain'> &
       ChainIdParameter<config, chainId> &
       ConnectorParameter

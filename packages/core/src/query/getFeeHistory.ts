@@ -8,13 +8,13 @@ import {
 } from '../actions/getFeeHistory.js'
 import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
-import type { Evaluate, PartialBy } from '../types/utils.js'
+import type { Compute, PartialBy } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
 export type GetFeeHistoryOptions<
   config extends Config,
   chainId extends config['chains'][number]['id'],
-> = Evaluate<
+> = Compute<
   PartialBy<
     GetFeeHistoryParameters<config, chainId>,
     'blockCount' | 'rewardPercentiles'

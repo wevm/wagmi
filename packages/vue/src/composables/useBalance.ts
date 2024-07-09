@@ -1,5 +1,5 @@
 import type { Config, GetBalanceErrorType, ResolvedRegister } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import {
   type GetBalanceData,
   type GetBalanceOptions,
@@ -19,7 +19,7 @@ import { useConfig } from './useConfig.js'
 export type UseBalanceParameters<
   config extends Config = Config,
   selectData = GetBalanceData,
-> = Evaluate<
+> = Compute<
   DeepMaybeRef<
     GetBalanceOptions<config> &
       ConfigParameter<config> &

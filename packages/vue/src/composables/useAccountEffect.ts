@@ -1,5 +1,5 @@
 import { type GetAccountReturnType, watchAccount } from '@wagmi/core'
-import type { Evaluate } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import { watchEffect } from 'vue'
 
 import type { ConfigParameter } from '../types/properties.js'
@@ -7,11 +7,11 @@ import type { DeepMaybeRef } from '../types/ref.js'
 import { deepUnref } from '../utils/cloneDeep.js'
 import { useConfig } from './useConfig.js'
 
-export type UseAccountEffectParameters = Evaluate<
+export type UseAccountEffectParameters = Compute<
   DeepMaybeRef<
     {
       onConnect?(
-        data: Evaluate<
+        data: Compute<
           Pick<
             Extract<GetAccountReturnType, { status: 'connected' }>,
             'address' | 'addresses' | 'chain' | 'chainId' | 'connector'

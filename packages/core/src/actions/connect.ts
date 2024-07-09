@@ -12,9 +12,9 @@ import {
   type ConnectorAlreadyConnectedErrorType,
 } from '../errors/config.js'
 import type { ChainIdParameter } from '../types/properties.js'
-import type { Evaluate } from '../types/utils.js'
+import type { Compute } from '../types/utils.js'
 
-export type ConnectParameters<config extends Config = Config> = Evaluate<
+export type ConnectParameters<config extends Config = Config> = Compute<
   ChainIdParameter<config> & {
     connector: Connector | CreateConnectorFn
   }
