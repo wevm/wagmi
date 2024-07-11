@@ -80,6 +80,7 @@ test('exports', () => {
       "verifyTypedDataQueryOptions",
       "waitForTransactionReceiptQueryKey",
       "waitForTransactionReceiptQueryOptions",
+      "watchAssetMutationOptions",
       "writeContractMutationOptions",
       "hashFn",
       "structuralSharing",
