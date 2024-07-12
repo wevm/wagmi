@@ -11,8 +11,7 @@ import { WagmiPlugin } from '@wagmi/vue'
 ## Usage
 
 ::: code-group
-```vue [app.vue]
-<script setup lang="ts">
+```ts [main.ts]
 import { createApp } from 'vue'
 import { WagmiPlugin } from '@wagmi/vue'
 
@@ -22,7 +21,6 @@ import { config } from './config'
 createApp(App)
   .use(WagmiPlugin, { config })
   .mount('#app')
-</script>
 ```
 <<< @/snippets/vue/config.ts[config.ts]
 :::
@@ -38,8 +36,7 @@ import { type WagmiPluginProps } from '@wagmi/vue'
 [`Config`](/vue/api/createConfig#config) object to inject with context.
 
 ::: code-group
-```vue [app.vue]
-<script setup lang="ts">
+```ts [main.ts]
 import { createApp } from 'vue'
 import { WagmiPlugin } from '@wagmi/vue'
 
@@ -51,7 +48,6 @@ createApp(App)
     config // [!code focus]
   })
   .mount('#app')
-</script>
 ```
 <<< @/snippets/vue/config.ts[config.ts]
 :::
@@ -63,8 +59,7 @@ createApp(App)
 - Initial state to hydrate into the [Wagmi Config](/vue/api/createConfig). Useful for SSR.
 
 ::: code-group
-```vue [app.vue]
-<script setup lang="ts">
+```ts [main.ts]
 import { createApp } from 'vue'
 import { WagmiPlugin } from '@wagmi/vue'
 
@@ -77,7 +72,6 @@ createApp(App)
     initialState: /* ... */ // [!code focus]
   })
   .mount('#app')
-</script>
 ```
 <<< @/snippets/vue/config.ts[config.ts]
 :::
@@ -90,8 +84,7 @@ createApp(App)
 - Defaults to `true`.
 
 ::: code-group
-```vue [app.vue]
-<script setup lang="ts">
+```ts [main.ts]
 import { createApp } from 'vue'
 import { WagmiPlugin } from '@wagmi/vue'
 
@@ -104,7 +97,6 @@ createApp(App)
     reconnectOnMount: false // [!code focus]
   })
   .mount('#app')
-</script>
 ```
 <<< @/snippets/vue/config.ts[config.ts]
 :::
