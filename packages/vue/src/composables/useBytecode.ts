@@ -16,7 +16,7 @@ import type { ConfigParameter, QueryParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 
 import { computed } from 'vue'
-import type { DeepUnwrapRef } from '../types/ref.js'
+import type { DeepMaybeRef } from '../types/ref.js'
 import { deepUnref } from '../utils/cloneDeep.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
@@ -25,14 +25,16 @@ export type UseBytecodeParameters<
   config extends Config = Config,
   selectData = GetBytecodeData,
 > = Compute<
-  GetBytecodeOptions<config> &
-    ConfigParameter<config> &
-    QueryParameter<
-      GetBytecodeQueryFnData,
-      GetBytecodeErrorType,
-      selectData,
-      GetBytecodeQueryKey<config>
-    >
+  DeepMaybeRef<
+    GetBytecodeOptions<config> &
+      ConfigParameter<config> &
+      QueryParameter<
+        GetBytecodeQueryFnData,
+        GetBytecodeErrorType,
+        selectData,
+        GetBytecodeQueryKey<config>
+      >
+  >
 >
 
 export type UseBytecodeReturnType<selectData = GetBytecodeData> =
@@ -46,26 +48,24 @@ export function useBytecode<
   parameters_: UseBytecodeParameters<config, selectData> = {},
 ): UseBytecodeReturnType<selectData> {
   const parameters = computed(() => deepUnref(parameters_))
-  const config = useConfig(parameters_)
+
+  const config = useConfig(parameters)
   const chainId = useChainId({ config })
 
   const queryOptions = computed(() => {
-    const _parameters = deepUnref<
-      DeepUnwrapRef<UseBytecodeParameters<config, selectData>>
-    >(parameters.value)
+    const {
+      address: contractAddress,
+      chainId: parametersChainId,
+      query = {},
+    } = parameters.value
 
-    const { address, query = {} } = _parameters
     const options = getBytecodeQueryOptions(config, {
       ...parameters.value,
-      chainId: _parameters.chainId ?? chainId.value,
+      address: contractAddress,
+      chainId: parametersChainId ?? chainId.value,
     })
-    const enabled = Boolean(address && (query.enabled ?? true))
-
-    return {
-      ...query,
-      ...options,
-      enabled,
-    }
+    const enabled = Boolean(contractAddress && (query.enabled ?? true))
+    return { ...query, ...options, enabled }
   })
 
   return useQuery(queryOptions as any) as UseBytecodeReturnType<selectData>
