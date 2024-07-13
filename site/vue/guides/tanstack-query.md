@@ -39,9 +39,9 @@ Each Composable returns a `queryKey` value. You would use this approach when you
 
 ```vue [index.vue]
 <script setup lang="ts">
-import { useBalance } from '@wagmi/vue'
+import { useBalance } from '@wagmi/vue' // [!code hl]
 
-const { data: balance } = useBalance()
+const { data: balance } = useBalance() // [!code hl]
 </script>
 
 <template>
