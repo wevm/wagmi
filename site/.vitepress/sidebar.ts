@@ -511,6 +511,10 @@ export function getSidebar() {
             text: 'useBlockNumber',
             link: '/vue/api/composables/useBlockNumber',
           },
+          {
+            text: 'useBytecode',
+            link: '/vue/api/composables/useBytecode',
+          },
           { text: 'useChainId', link: '/vue/api/composables/useChainId' },
           { text: 'useChains', link: '/vue/api/composables/useChains' },
           { text: 'useClient', link: '/vue/api/composables/useClient' },

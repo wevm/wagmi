@@ -14,6 +14,7 @@ test('exports', () => {
       "useAccountEffect",
       "useBalance",
       "useBlockNumber",
+      "useBytecode",
       "useChainId",
       "useClient",
       "useConnectorClient",
