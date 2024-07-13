@@ -37,12 +37,16 @@ Read more about **Query Keys** on the [TanStack Query docs.](https://tanstack.co
 
 Each Composable returns a `queryKey` value. You would use this approach when you want to utilize the query key in a Vue component as it handles reactivity for you, unlike the [Import](#import-vanilla-js) method below.
 
-```ts 
-import { useBalance } from '@wagmi/vue' // [!code hl]
+```vue [index.vue]
+<script setup lang="ts">
+import { useBalance } from '@wagmi/vue'
 
-function App() {
-  const { queryKey } = useBalance() // [!code hl]
-}
+const { data: balance } = useBalance()
+</script>
+
+<template>
+  <div>{{ balance }}</div>
+</template>
 ```
 
 ### Import (Vanilla JS)
