@@ -1,5 +1,15 @@
 # @wagmi/vue
 
+## 0.0.28
+
+### Patch Changes
+
+- [`b6cb1477e3e87984917b172a909f1968e0d77dc9`](https://github.com/wevm/wagmi/commit/b6cb1477e3e87984917b172a909f1968e0d77dc9) Thanks [@tmm](https://github.com/tmm)! - Added `useBytecode` composable.
+
+- Updated dependencies [[`5581a810ef70308e99c6f8b630cd4bca59f64afc`](https://github.com/wevm/wagmi/commit/5581a810ef70308e99c6f8b630cd4bca59f64afc)]:
+  - @wagmi/core@2.12.0
+  - @wagmi/connectors@6.0.0
+
 ## 0.0.27
 
 ### Patch Changes
