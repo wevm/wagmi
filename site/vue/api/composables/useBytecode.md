@@ -1,10 +1,10 @@
 ---
 title: useBytecode
-description: Hook for retrieving the bytecode at an address.
+description: Composable for retrieving the bytecode at an address.
 ---
 
 <script setup>
-const packageName = 'wagmi'
+const packageName = '@wagmi/vue'
 const actionName = 'getBytecode'
 const typeName = 'GetBytecode'
 const TData = 'GetBytecodeData'
@@ -13,7 +13,7 @@ const TError = 'GetBytecodeErrorType'
 
 # useBytecode
 
-Hook for retrieving the bytecode at an address.
+Composable for retrieving the bytecode at an address.
 
 ## Import
 
@@ -29,12 +29,12 @@ import { useBytecode } from '@wagmi/vue'
 import { useBytecode } from '@wagmi/vue'
 
 const { data: byteCode } = useBytecode({
-    address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2'
+  address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
 })
 </script>
 
 <template>
-  Byte code: {{ byteCode }}
+  Byte Code: {{ byteCode }}
 </template>
 ```
 <<< @/snippets/react/config.ts[config.ts]
@@ -58,12 +58,12 @@ The contract address.
 import { useBytecode } from '@wagmi/vue'
 
 const { data: byteCode } = useBytecode({
-    address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2' // [!code focus]
+  address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2', // [!code focus]
 })
 </script>
 
 <template>
-  Byte code: {{ byteCode }}
+  Byte Code: {{ byteCode }}
 </template>
 ```
 <<< @/snippets/react/config.ts[config.ts]
@@ -81,13 +81,13 @@ The block number to check the bytecode at.
 import { useBytecode } from '@wagmi/vue'
 
 const { data: byteCode } = useBytecode({
-    address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-    blockNumber: 16280770n // [!code focus]
+  address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+  blockNumber: 16280770n, // [!code focus]
 })
 </script>
 
 <template>
-  Byte code: {{ byteCode }}
+  Byte Code: {{ byteCode }}
 </template>
 ```
 <<< @/snippets/react/config.ts[config.ts]
@@ -105,13 +105,13 @@ The block tag to check the bytecode at.
 import { useBytecode } from '@wagmi/vue'
 
 const { data: byteCode } = useBytecode({
-    address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-    blockTag: 'safe', // [!code focus]
+  address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+  blockTag: 'safe', // [!code focus]
 })
 </script>
 
 <template>
-  Byte code: {{ byteCode }}
+  Byte Code: {{ byteCode }}
 </template>
 ```
 <<< @/snippets/react/config.ts[config.ts]
@@ -130,13 +130,13 @@ import { useBytecode } from '@wagmi/vue'
 import { mainnet } from '@wagmi/vue/chains'
 
 const { data: byteCode } = useBytecode({
-    chainId: mainnet.id, // [!code focus]
-    address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+  address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+  chainId: mainnet.id, // [!code focus]
 })
 </script>
 
 <template>
-  Byte code: {{ byteCode }}
+  Byte Code: {{ byteCode }}
 </template>
 ```
 <<< @/snippets/react/config.ts[config.ts]
@@ -155,13 +155,13 @@ import { useBytecode } from '@wagmi/vue'
 import { config } from './config' // [!code focus]
 
 const { data: byteCode } = useBytecode({
-    config, // [!code focus]
-    address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+  address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+  config, // [!code focus]
 })
 </script>
 
 <template>
-  Byte code: {{ byteCode }}
+  Byte Code: {{ byteCode }}
 </template>
 ```
 <<< @/snippets/react/config.ts[config.ts]
@@ -180,13 +180,13 @@ import { useBytecode } from '@wagmi/vue'
 import { config } from './config' // [!code focus]
 
 const { data: byteCode } = useBytecode({
-    scopeKey: 'foo', // [!code focus]
-    address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+  address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+  scopeKey: 'foo', // [!code focus]
 })
 </script>
 
 <template>
-  Byte code: {{ byteCode }}
+  Byte Code: {{ byteCode }}
 </template>
 ```
 <<< @/snippets/react/config.ts[config.ts]
@@ -197,7 +197,7 @@ const { data: byteCode } = useBytecode({
 ## Return Type
 
 ```ts
-import { type UseBytecodeReturnType } from 'wagmi'
+import { type UseBytecodeReturnType } from '@wagmi/vue'
 ```
 
 <!--@include: @shared/query-result.md-->
