@@ -63,6 +63,7 @@ test('exports', () => {
       "verifyMessage",
       "verifyTypedData",
       "watchAccount",
+      "watchAsset",
       "watchBlocks",
       "watchBlockNumber",
       "watchChainId",

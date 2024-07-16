@@ -32,6 +32,7 @@ export type MockParameters = {
         signMessageError?: boolean | Error | undefined
         signTypedDataError?: boolean | Error | undefined
         reconnect?: boolean | undefined
+        watchAssetError?: boolean | Error | undefined
       }
     | undefined
 }
@@ -156,6 +157,17 @@ export function mock(parameters: MockParameters) {
           connectedChainId = fromHex((params as Params)[0].chainId, 'number')
           this.onChainChanged(connectedChainId.toString())
           return
+        }
+
+        if (method === 'wallet_watchAsset') {
+          if (features.watchAssetError) {
+            if (typeof features.watchAssetError === 'boolean')
+              throw new UserRejectedRequestError(
+                new Error('Failed to switch chain.'),
+              )
+            throw features.watchAssetError
+          }
+          return connected
         }
 
         if (method === 'wallet_getCapabilities')
