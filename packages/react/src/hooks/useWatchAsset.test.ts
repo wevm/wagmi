@@ -21,7 +21,7 @@ test('default', async () => {
   result.current.watchAsset({ type: 'ERC20', options: tokenInfo })
   await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-  await expect(result.current.data!).resolves.toEqual(true)
+  expect(result.current.data).toEqual(true)
 
   await disconnect(config, { connector })
 })

@@ -1,6 +1,6 @@
 ---
 title: useWatchAsset
-description: Hook for watching tokens in a wallet.
+description: Hook for requesting user tracks the token in their wallet. Returns a boolean indicating if the token was successfully added.
 ---
 
 <script setup>
@@ -15,7 +15,7 @@ const TVariables = 'WatchAssetVariables'
 
 # useWatchAsset
 
-Hook for watching tokens in a wallet.
+Hook for requesting user tracks the token in their wallet. Returns a boolean indicating if the token was successfully added.
 
 ## Import
 
@@ -38,12 +38,12 @@ function App() {
         type: 'ERC20',
         options: {
           address: '0x0000000000000000000000000000000000000000',
-          symbol: 'TOKEN',
-          decimals: 18
-        }
+          symbol: 'WAGMI',
+          decimals: 18,
+        },
       })}
     >
-      Sign message
+      Watch asset
     </button>
   )
 }

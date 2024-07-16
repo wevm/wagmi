@@ -1,7 +1,7 @@
 <script setup>
 const packageName = '@wagmi/core'
 const actionName = 'verifyMessage'
-const typeName = 'verifyMessage'
+const typeName = 'VerifyMessage'
 </script>
 
 # verifyMessage
