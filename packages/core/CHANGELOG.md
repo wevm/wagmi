@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.12.0
+
+### Minor Changes
+
+- [#4128](https://github.com/wevm/wagmi/pull/4128) [`5581a810ef70308e99c6f8b630cd4bca59f64afc`](https://github.com/wevm/wagmi/commit/5581a810ef70308e99c6f8b630cd4bca59f64afc) Thanks [@dalechyn](https://github.com/dalechyn)! - Added `watchAsset` action.
+
 ## 2.11.8
 
 ### Patch Changes
