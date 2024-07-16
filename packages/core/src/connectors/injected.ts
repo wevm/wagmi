@@ -181,6 +181,13 @@ export function injected(parameters: InjectedParameters = {}) {
           accounts = (permissions[0]?.caveats?.[0]?.value as string[])?.map(
             (x) => getAddress(x),
           )
+          // `'wallet_requestPermissions'` can return a different order of accounts than `'eth_accounts'`
+          // switch to `'eth_accounts'` ordering if more than one account is connected
+          // https://github.com/wevm/wagmi/issues/4140
+          if (accounts.length > 0) {
+            const sortedAccounts = await this.getAccounts()
+            accounts = sortedAccounts
+          }
         } catch (err) {
           const error = err as RpcError
           // Not all injected providers support `wallet_requestPermissions` (e.g. MetaMask iOS).

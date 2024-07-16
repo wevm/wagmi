@@ -1,7 +1,7 @@
 {
   "name": "@wagmi/core",
   "description": "VanillaJS library for Ethereum",
-  "version": "2.11.7",
+  "version": "2.11.8",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -88,7 +88,7 @@
   },
   "dependencies": {
     "eventemitter3": "5.0.1",
-    "mipd": "0.0.5",
+    "mipd": "0.0.7",
     "zustand": "4.4.1"
   },
   "devDependencies": {

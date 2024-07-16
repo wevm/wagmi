@@ -1,5 +1,13 @@
 # @wagmi/core
 
+## 2.11.8
+
+### Patch Changes
+
+- [`b08013eaa9ce97c02f8a7128ea400e3da7ef74bb`](https://github.com/wevm/wagmi/commit/b08013eaa9ce97c02f8a7128ea400e3da7ef74bb) Thanks [@tmm](https://github.com/tmm)! - Fixed injected accounts ordering for `'wallet_requestPermissions'`.
+
+- [`d3814ab4b88f9f0e052b53bc3d458df87b43f01d`](https://github.com/wevm/wagmi/commit/d3814ab4b88f9f0e052b53bc3d458df87b43f01d) Thanks [@jxom](https://github.com/jxom)! - Updated `mipd` dependency.
+
 ## 2.11.7
 
 ### Patch Changes

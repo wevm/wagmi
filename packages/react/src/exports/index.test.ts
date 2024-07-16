@@ -66,6 +66,7 @@ test('exports', () => {
       "useVerifyTypedData",
       "useWalletClient",
       "useWaitForTransactionReceipt",
+      "useWatchAsset",
       "useWatchBlocks",
       "useWatchBlockNumber",
       "useWatchContractEvent",
