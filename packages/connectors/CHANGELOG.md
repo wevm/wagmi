@@ -1,5 +1,14 @@
 # @wagmi/connectors
 
+## 5.0.26
+
+### Patch Changes
+
+- [`8d81df5cc884d0a210dedd3c1ea0e2e9e52b83c5`](https://github.com/wevm/wagmi/commit/8d81df5cc884d0a210dedd3c1ea0e2e9e52b83c5) Thanks [@tmm](https://github.com/tmm)! - Fixed `metaMask` connector switch chain issue.
+
+- Updated dependencies [[`5bc8c8877810b2eec24a829df87dce40a51e6f20`](https://github.com/wevm/wagmi/commit/5bc8c8877810b2eec24a829df87dce40a51e6f20)]:
+  - @wagmi/core@2.12.2
+
 ## 5.0.25
 
 ### Patch Changes
