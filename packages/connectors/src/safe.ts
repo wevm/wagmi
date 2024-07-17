@@ -89,16 +89,7 @@ export function safe(parameters: SafeParameters = {}) {
       if (!isIframe) return
 
       if (!provider_) {
-        const { default: SafeAppsSDK } = await import(
-          '@safe-global/safe-apps-sdk'
-        )
-        let SDK: typeof SafeAppsSDK.default
-        if (
-          typeof SafeAppsSDK !== 'function' &&
-          typeof SafeAppsSDK.default === 'function'
-        )
-          SDK = SafeAppsSDK.default
-        else SDK = SafeAppsSDK as unknown as typeof SafeAppsSDK.default
+        const { default: SDK } = await import('@safe-global/safe-apps-sdk')
         const sdk = new SDK(parameters)
 
         // `getInfo` hangs when not used in Safe App iFrame
