@@ -1,13 +1,13 @@
 import { accounts, config, mainnet } from '@wagmi/test'
-import { afterEach, expect, test, vi } from 'vitest'
 import { http } from 'viem'
+import { afterEach, expect, test, vi } from 'vitest'
 
 import { mock } from '../connectors/mock.js'
+import { createConfig } from '../createConfig.js'
+import { createStorage } from '../createStorage.js'
 import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'
 import { reconnect } from './reconnect.js'
-import { createStorage } from '../createStorage.js'
-import { createConfig } from '../createConfig.js'
 
 const connector = config._internal.connectors.setup(
   mock({
