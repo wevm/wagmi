@@ -563,7 +563,7 @@ export type State<
 }
 
 export type PartializedState = Compute<
-  ExactPartial<Pick<State, 'chainId' | 'connections' | 'current'>>
+  ExactPartial<Pick<State, 'chainId' | 'connections' | 'current' | 'status'>>
 >
 
 export type Connection = {
