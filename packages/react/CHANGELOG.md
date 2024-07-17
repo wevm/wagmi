@@ -1,5 +1,15 @@
 # wagmi
 
+## 2.11.1
+
+### Patch Changes
+
+- [#4146](https://github.com/wevm/wagmi/pull/4146) [`cc996e08e930c9e88cf753a1e874652059e81a3b`](https://github.com/wevm/wagmi/commit/cc996e08e930c9e88cf753a1e874652059e81a3b) Thanks [@jxom](https://github.com/jxom)! - Updated `@safe-global/safe-apps-sdk` + `@safe-global/safe-apps-provider` dependencies.
+
+- Updated dependencies [[`cc996e08e930c9e88cf753a1e874652059e81a3b`](https://github.com/wevm/wagmi/commit/cc996e08e930c9e88cf753a1e874652059e81a3b)]:
+  - @wagmi/connectors@5.0.25
+  - @wagmi/core@2.12.1
+
 ## 2.11.0
 
 ### Minor Changes
