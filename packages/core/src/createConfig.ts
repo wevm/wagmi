@@ -206,6 +206,7 @@ export function createConfig<
   const prefix = '0.0.0-canary-'
   if (version.startsWith(prefix))
     currentVersion = Number.parseInt(version.replace(prefix, ''))
+  // use package major version to version store
   else currentVersion = Number.parseInt(version.split('.')[0] ?? '0')
 
   const store = createStore(
@@ -243,8 +244,20 @@ export function createConfig<
                 } as unknown as PartializedState['connections'],
                 chainId: state.chainId,
                 current: state.current,
-                status: state.status,
               } satisfies PartializedState
+            },
+            merge(persistedState, currentState) {
+              // `status` should not be persisted as it messes with reconnection
+              if (
+                typeof persistedState === 'object' &&
+                persistedState &&
+                'status' in persistedState
+              )
+                delete persistedState.status
+              return {
+                ...currentState,
+                ...(persistedState as object),
+              }
             },
             skipHydration: ssr,
             storage: storage as Storage<Record<string, unknown>>,
@@ -550,7 +563,7 @@ export type State<
 }
 
 export type PartializedState = Compute<
-  ExactPartial<Pick<State, 'chainId' | 'connections' | 'current' | 'status'>>
+  ExactPartial<Pick<State, 'chainId' | 'connections' | 'current'>>
 >
 
 export type Connection = {
