@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.12.2
+
+### Patch Changes
+
+- [`5bc8c8877810b2eec24a829df87dce40a51e6f20`](https://github.com/wevm/wagmi/commit/5bc8c8877810b2eec24a829df87dce40a51e6f20) Thanks [@tmm](https://github.com/tmm)! - Fixed reconnection when `status` is defined.
+
 ## 2.12.1
 
 ### Patch Changes
