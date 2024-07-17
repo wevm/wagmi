@@ -10,9 +10,17 @@ export { etherscan, type EtherscanConfig } from '../plugins/etherscan.js'
 
 export { fetch, type FetchConfig } from '../plugins/fetch.js'
 
-export { foundry, type FoundryConfig } from '../plugins/foundry.js'
+export {
+  foundry,
+  foundryDefaultExcludes,
+  type FoundryConfig,
+} from '../plugins/foundry.js'
 
-export { hardhat, type HardhatConfig } from '../plugins/hardhat.js'
+export {
+  hardhat,
+  hardhatDefaultExcludes,
+  type HardhatConfig,
+} from '../plugins/hardhat.js'
 
 export { react, type ReactConfig } from '../plugins/react.js'
 
