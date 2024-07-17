@@ -95,8 +95,7 @@ export function MintNFT() {
 
   return (
     <form onSubmit={submit}>
-      <input name="address" placeholder="0xA0Cf…251e" required />
-      <input name="value" placeholder="0.05" required />
+      <input name="tokenId" placeholder="69420" required />
       <button type="submit">Mint</button>
       {hash && <div>Transaction Hash: {hash}</div>} // [!code ++]
     </form>
@@ -150,8 +149,7 @@ export function MintNFT() {
 
   return (
     <form onSubmit={submit}>
-      <input name="address" placeholder="0xA0Cf…251e" required />
-      <input name="value" placeholder="0.05" required />
+      <input name="tokenId" placeholder="69420" required />
       <button 
         disabled={isPending} // [!code ++]
         type="submit"
