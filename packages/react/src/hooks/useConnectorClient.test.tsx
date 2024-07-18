@@ -161,15 +161,12 @@ test('behavior: disabled when properties missing', async () => {
 })
 
 test('behavior: disabled when connecting', async () => {
-  const { result } = renderHook(() => ({
-    useConnectorClient: useConnectorClient(),
-    useAccount: useAccount(),
-  }))
+  const { result } = renderHook(() => useConnectorClient())
 
   config.setState((x) => ({ ...x, status: 'connecting' }))
 
   await wait(100)
-  expect(result.current.useConnectorClient.isLoading).not.toBeTruthy()
+  expect(result.current.isLoading).not.toBeTruthy()
 })
 
 test('behavior: re-render does not invalidate query', async () => {
