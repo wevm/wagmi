@@ -145,3 +145,12 @@ test('behavior: disabled when properties missing', async () => {
   await wait(100)
   expect(connectorClient.isPending.value).toBe(true)
 })
+
+test('behavior: disabled when connecting', async () => {
+  const [connectorClient] = renderComposable(() => useConnectorClient())
+
+  config.setState((x) => ({ ...x, status: 'connecting' }))
+
+  await wait(100)
+  expect(connectorClient.isLoading.value).not.toBeTruthy()
+})

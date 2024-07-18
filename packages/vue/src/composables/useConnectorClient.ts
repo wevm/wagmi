@@ -97,7 +97,8 @@ export function useConnectorClient<
       connector: connector as Connector,
     })
     const enabled = Boolean(
-      status.value !== 'disconnected' && (query.enabled ?? true),
+      (status.value === 'connected' || status.value === 'reconnecting') &&
+        (query.enabled ?? true),
     )
     return {
       ...query,

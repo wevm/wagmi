@@ -81,7 +81,10 @@ export function useConnectorClient<
     chainId: parameters.chainId ?? chainId,
     connector: parameters.connector ?? connector,
   })
-  const enabled = Boolean(status !== 'disconnected' && (query.enabled ?? true))
+  const enabled = Boolean(
+    (status === 'connected' || status === 'reconnecting') &&
+      (query.enabled ?? true),
+  )
 
   const addressRef = useRef(address)
   // biome-ignore lint/correctness/useExhaustiveDependencies: `queryKey` not required
