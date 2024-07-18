@@ -1,5 +1,11 @@
 # @wagmi/vue
 
+## 0.0.31
+
+### Patch Changes
+
+- [#4124](https://github.com/wevm/wagmi/pull/4124) [`26616462db2e0140025f22c505c4541cfecb9308`](https://github.com/wevm/wagmi/commit/26616462db2e0140025f22c505c4541cfecb9308) Thanks [@t0rbik](https://github.com/t0rbik)! - Updated `useConnectorClient` to be enabled when status is `'reconnecting'` or `'connected'` (previously was also enabled when status was `'connecting'`).
+
 ## 0.0.30
 
 ### Patch Changes
