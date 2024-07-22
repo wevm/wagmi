@@ -102,6 +102,7 @@ test('exports', () => {
       "parseCookie",
       "deepEqual",
       "deserialize",
+      "extractRpcUrls",
       "normalizeChainId",
       "serialize",
       "version",
