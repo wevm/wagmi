@@ -3,6 +3,7 @@ import {
   type Connector,
   ProviderNotFoundError,
   createConnector,
+  extractRpcUrls,
 } from '@wagmi/core'
 import type { Compute, ExactPartial, Omit } from '@wagmi/core/internal'
 import type { EthereumProvider } from '@walletconnect/ethereum-provider'
@@ -249,10 +250,13 @@ export function walletConnect(parameters: WalletConnectParameters) {
           optionalChains,
           projectId: parameters.projectId,
           rpcMap: Object.fromEntries(
-            config.chains.map((chain) => [
-              chain.id,
-              chain.rpcUrls.default.http[0]!,
-            ]),
+            config.chains.map((chain) => {
+              const [url] = extractRpcUrls({
+                chain,
+                transports: config.transports,
+              })
+              return [chain.id, url]
+            }),
           ),
           showQrModal: parameters.showQrModal ?? true,
         })
