@@ -51,6 +51,11 @@ export function useSponsors() {
           url: 'https://brave.com',
           img: 'brave-light.svg',
         },
+        {
+          name: 'Linea',
+          url: 'https://linea.build',
+          img: 'linea-light.svg',
+        },
       ],
       silver: [
         {
