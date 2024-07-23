@@ -7,6 +7,7 @@ import {
   ChainNotConfiguredError,
   type Connector,
   createConnector,
+  extractRpcUrls,
 } from '@wagmi/core'
 import type {
   Compute,
@@ -175,10 +176,13 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           // Workaround cast since MetaMask SDK does not support `'exactOptionalPropertyTypes'`
           ...(parameters as RemoveUndefined<typeof parameters>),
           readonlyRPCMap: Object.fromEntries(
-            config.chains.map((chain) => [
-              chain.id,
-              chain.rpcUrls.default.http[0]!,
-            ]),
+            config.chains.map((chain) => {
+              const [url] = extractRpcUrls({
+                chain,
+                transports: config.transports,
+              })
+              return [chain.id, url]
+            }),
           ),
           dappMetadata: parameters.dappMetadata ?? {},
           useDeeplink: parameters.useDeeplink ?? true,

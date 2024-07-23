@@ -103,7 +103,12 @@ export function createConfig<
     // Set up emitter with uid and add to connector so they are "linked" together.
     const emitter = createEmitter<ConnectorEventMap>(uid())
     const connector = {
-      ...connectorFn({ emitter, chains: chains.getState(), storage }),
+      ...connectorFn({
+        emitter,
+        chains: chains.getState(),
+        storage,
+        transports: rest.transports,
+      }),
       emitter,
       uid: emitter.uid,
     }

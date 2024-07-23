@@ -543,6 +543,8 @@ export { deepEqual } from '../utils/deepEqual.js'
 
 export { deserialize } from '../utils/deserialize.js'
 
+export { extractRpcUrls } from '../utils/extractRpcUrls.js'
+
 export { normalizeChainId } from '../utils/normalizeChainId.js'
 
 export { serialize } from '../utils/serialize.js'
