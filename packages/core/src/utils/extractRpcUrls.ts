@@ -12,8 +12,8 @@ export function extractRpcUrls(parameters: ExtractRpcUrlsParameters) {
   if (!parameters.transports) return [fallbackUrl]
 
   const transport = parameters.transports?.[chain.id]?.({ chain })
-  const transports = transport?.value?.transports || [transport]
-  return transports.map(
-    ({ value }: { value: { url: string } }) => value.url || fallbackUrl,
-  )
+  const transports = (transport?.value?.transports as NonNullable<
+    typeof transport
+  >[]) || [transport]
+  return transports.map(({ value }) => value?.url || fallbackUrl)
 }

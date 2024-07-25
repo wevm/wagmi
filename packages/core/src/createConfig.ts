@@ -8,6 +8,7 @@ import {
   type Chain,
   type Client,
   createClient,
+  type EIP1193RequestFn,
   type ClientConfig as viem_ClientConfig,
   type Transport as viem_Transport,
 } from 'viem'
@@ -582,11 +583,17 @@ export type Connector = ReturnType<CreateConnectorFn> & {
   uid: string
 }
 
-export type Transport = (
-  params: Parameters<viem_Transport>[0] & {
+export type Transport<
+  type extends string = string,
+  rpcAttributes = Record<string, any>,
+  eip1193RequestFn extends EIP1193RequestFn = EIP1193RequestFn,
+> = (
+  params: Parameters<
+    viem_Transport<type, rpcAttributes, eip1193RequestFn>
+  >[0] & {
     connectors?: StoreApi<Connector[]> | undefined
   },
-) => ReturnType<viem_Transport>
+) => ReturnType<viem_Transport<type, rpcAttributes, eip1193RequestFn>>
 
 type ClientConfig = LooseOmit<
   viem_ClientConfig,
