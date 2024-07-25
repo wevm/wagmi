@@ -2,10 +2,10 @@ import { http } from 'viem'
 import { mainnet, optimism, sepolia } from 'viem/chains'
 import { expect, test } from 'vitest'
 
+import { injected } from '../connectors/injected.js'
+import { unstable_connector } from '../transports/connector.js'
 import { fallback } from '../transports/fallback.js'
 import { extractRpcUrls } from './extractRpcUrls.js'
-import { unstable_connector } from '../transports/connector.js'
-import { injected } from '../connectors/injected.js'
 
 test('default', () => {
   expect(
@@ -90,4 +90,3 @@ test('default', () => {
     ]
   `)
 })
-
