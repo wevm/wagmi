@@ -4,6 +4,8 @@ import { expect, test } from 'vitest'
 
 import { fallback } from '../transports/fallback.js'
 import { extractRpcUrls } from './extractRpcUrls.js'
+import { unstable_connector } from '../transports/connector.js'
+import { injected } from '../connectors/injected.js'
 
 test('default', () => {
   expect(
@@ -70,4 +72,22 @@ test('default', () => {
       "https://cloudflare-eth.com",
     ]
   `)
+
+  expect(
+    extractRpcUrls({
+      chain: mainnet,
+      transports: {
+        [mainnet.id]: fallback([
+          unstable_connector(injected),
+          http('https://lol.com'),
+        ]),
+      },
+    }),
+  ).toMatchInlineSnapshot(`
+    [
+      "https://cloudflare-eth.com",
+      "https://lol.com",
+    ]
+  `)
 })
+
