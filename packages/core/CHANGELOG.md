@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.13.1
+
+### Patch Changes
+
+- [`07c1227f306d0efb9421d4bb77a774f92f5fcf45`](https://github.com/wevm/wagmi/commit/07c1227f306d0efb9421d4bb77a774f92f5fcf45) Thanks [@tmm](https://github.com/tmm)! - Fixed internal `extractRpcUrls` usage with `unstable_connector`.
+
 ## 2.13.0
 
 ### Minor Changes
