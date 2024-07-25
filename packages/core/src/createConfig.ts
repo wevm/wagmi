@@ -7,8 +7,8 @@ import {
   type Address,
   type Chain,
   type Client,
-  createClient,
   type EIP1193RequestFn,
+  createClient,
   type ClientConfig as viem_ClientConfig,
   type Transport as viem_Transport,
 } from 'viem'
