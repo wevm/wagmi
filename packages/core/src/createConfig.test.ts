@@ -288,3 +288,46 @@ test('behavior: properties passed through to Viem Client via getClient', () => {
     `)
   }
 })
+
+test('behavior: restore unconfigured chainId', () => {
+  const state = {
+    'wagmi.store': JSON.stringify({
+      state: { chainId: 10 },
+      version: 1,
+    }),
+  } as Record<string, string>
+  Object.defineProperty(window, 'localStorage', {
+    value: {
+      getItem: vi.fn((key) => state[key] ?? null),
+      removeItem: vi.fn((key) => state.delete?.[key]),
+      setItem: vi.fn((key, value) => {
+        state[key] = value
+      }),
+    },
+    writable: true,
+  })
+
+  const storage = createStorage<{ store: object }>({
+    storage: window.localStorage,
+  })
+
+  const config = createConfig({
+    chains: [mainnet],
+    storage,
+    transports: {
+      [mainnet.id]: http(),
+    },
+  })
+
+  expect(config.state).toMatchInlineSnapshot(`
+    {
+      "chainId": 1,
+      "connections": Map {},
+      "current": null,
+      "status": "disconnected",
+    }
+  `)
+
+  const client = config.getClient()
+  expect(client.chain.id).toBe(mainnet.id)
+})
