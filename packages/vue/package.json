@@ -1,7 +1,7 @@
 {
   "name": "@wagmi/vue",
   "description": "Vue Composables for Ethereum",
-  "version": "0.0.33",
+  "version": "0.0.34",
   "license": "MIT",
   "repository": {
     "type": "git",

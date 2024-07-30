@@ -1,5 +1,13 @@
 # @wagmi/connectors
 
+## 5.1.2
+
+### Patch Changes
+
+- [`abb490dac4f0f02f46cb0878e7ca9a0db6aada56`](https://github.com/wevm/wagmi/commit/abb490dac4f0f02f46cb0878e7ca9a0db6aada56) Thanks [@tmm](https://github.com/tmm)! - Bumped MetaMask SDK version.
+
+- [`28e0e5c9a4f856583f9d36a807502bd51a0c6ec2`](https://github.com/wevm/wagmi/commit/28e0e5c9a4f856583f9d36a807502bd51a0c6ec2) Thanks [@tmm](https://github.com/tmm)! - Bumped WalletConnect Ethereum Provider version.
+
 ## 5.1.1
 
 ### Patch Changes
