@@ -28,6 +28,7 @@ import {
   withRetry,
   withTimeout,
 } from 'viem'
+import { linea, lineaSepolia, mainnet, sepolia } from 'viem/chains'
 
 export type MetaMaskParameters = Compute<
   ExactPartial<Omit<MetaMaskSDKOptions, '_source' | 'readonlyRPCMap'>>
@@ -74,20 +75,66 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       if (isReconnecting) accounts = await this.getAccounts().catch(() => [])
 
       try {
-        if (!accounts?.length) {
-          const requestedAccounts = (await sdk.connect()) as string[]
-          accounts = requestedAccounts.map((x) => getAddress(x))
+        if (!accounts?.length && chainId) {
+          const currentChain = config.chains.find((x) => x.id === chainId)
+
+          if (!currentChain)
+            throw new SwitchChainError(new ChainNotConfiguredError())
+
+          const { default: blockExplorer, ...blockExplorers } =
+            currentChain.blockExplorers ?? {}
+
+          let blockExplorerUrls: string[] | undefined
+
+          if (blockExplorer) {
+            blockExplorerUrls = [
+              blockExplorer.url,
+              ...Object.values(blockExplorers).map((x) => x.url),
+            ]
+          }
+
+          let rpcUrls: readonly string[]
+          rpcUrls = [currentChain.rpcUrls.default?.http[0] ?? '']
+
+          const addEthereumChain = {
+            blockExplorerUrls,
+            chainId: numberToHex(chainId),
+            chainName: currentChain.name,
+            iconUrls: undefined,
+            nativeCurrency: currentChain.nativeCurrency,
+            rpcUrls,
+          } satisfies AddEthereumChainParameter
+
+          const defaultMetaMaskNetworks: number[] = [
+            mainnet.id,
+            sepolia.id,
+            linea.id,
+            lineaSepolia.id,
+          ]
+
+          const isDefaultChain = defaultMetaMaskNetworks.includes(chainId)
+
+          const connectWithParams = isDefaultChain
+            ? {
+                method: 'wallet_switchEthereumChain',
+                params: [{ chainId: numberToHex(chainId) }],
+              }
+            : {
+                method: 'wallet_addEthereumChain',
+                params: [addEthereumChain],
+              }
+
+          ;(await sdk.connectWith(connectWithParams)) as string[]
+
+          const connectedAccounts = (await provider.request({
+            method: 'eth_accounts',
+            params: [],
+          })) as string[]
+
+          accounts = connectedAccounts.map((x) => getAddress(x))
         }
 
-        // Switch to chain if provided
-        let currentChainId = (await this.getChainId()) as number
-        if (chainId && currentChainId !== chainId) {
-          const chain = await this.switchChain!({ chainId }).catch((error) => {
-            if (error.code === UserRejectedRequestError.code) throw error
-            return { id: currentChainId }
-          })
-          currentChainId = chain?.id ?? currentChainId
-        }
+        const currentChainId = (await this.getChainId()) as number
 
         if (displayUri) {
           provider.removeListener('display_uri', displayUri)
@@ -185,7 +232,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
             }),
           ),
           dappMetadata: parameters.dappMetadata ?? {},
-          useDeeplink: parameters.useDeeplink ?? true,
+          useDeeplink: parameters.useDeeplink ?? false,
         })
         await sdk.init()
         return sdk.getProvider()!
