@@ -185,7 +185,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
             }),
           ),
           dappMetadata: parameters.dappMetadata ?? {},
-          useDeeplink: parameters.useDeeplink ?? true,
+          useDeeplink: parameters.useDeeplink ?? false,
         })
         await sdk.init()
         return sdk.getProvider()!
