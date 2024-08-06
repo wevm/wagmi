@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.13.3
+
+### Patch Changes
+
+- [`871dbdbfe59ac8ad01d1ec6150ea7b091b7b7de4`](https://github.com/wevm/wagmi/commit/871dbdbfe59ac8ad01d1ec6150ea7b091b7b7de4) Thanks [@tmm](https://github.com/tmm)! - Added validation to internal state for persisted `chainId`.
+
 ## 2.13.2
 
 ### Patch Changes
