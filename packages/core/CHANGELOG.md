@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.13.2
+
+### Patch Changes
+
+- [`1b9b523fa9b9dfe839aecdf4b40caa9547d7e594`](https://github.com/wevm/wagmi/commit/1b9b523fa9b9dfe839aecdf4b40caa9547d7e594) Thanks [@tmm](https://github.com/tmm)! - Fixed built-in cookie storage `removeItem` working for all paths.
+
 ## 2.13.1
 
 ### Patch Changes
