@@ -224,14 +224,10 @@ export function createConfig<
               if (version === currentVersion) return persistedState as State
 
               const initialState = getInitialState()
-              const chainId =
-                persistedState &&
-                typeof persistedState === 'object' &&
-                'chainId' in persistedState &&
-                typeof persistedState.chainId === 'number' &&
-                chains.getState().some((x) => x.id === persistedState.chainId)
-                  ? persistedState.chainId
-                  : initialState.chainId
+              const chainId = validatePersistedChainId(
+                persistedState,
+                initialState.chainId,
+              )
               return { ...initialState, chainId }
             },
             name: 'store',
@@ -260,9 +256,15 @@ export function createConfig<
                 'status' in persistedState
               )
                 delete persistedState.status
+              // Make sure persisted `chainId` is valid
+              const chainId = validatePersistedChainId(
+                persistedState,
+                currentState.chainId,
+              )
               return {
                 ...currentState,
                 ...(persistedState as object),
+                chainId,
               }
             },
             skipHydration: ssr,
@@ -272,6 +274,19 @@ export function createConfig<
         : getInitialState,
     ),
   )
+
+  function validatePersistedChainId(
+    persistedState: unknown,
+    defaultChainId: number,
+  ) {
+    return persistedState &&
+      typeof persistedState === 'object' &&
+      'chainId' in persistedState &&
+      typeof persistedState.chainId === 'number' &&
+      chains.getState().some((x) => x.id === persistedState.chainId)
+      ? persistedState.chainId
+      : defaultChainId
+  }
 
   /////////////////////////////////////////////////////////////////////////////////////////////////
   // Subscribe to changes
