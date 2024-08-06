@@ -1,5 +1,13 @@
 # @wagmi/vue
 
+## 0.0.36
+
+### Patch Changes
+
+- Updated dependencies [[`871dbdbfe59ac8ad01d1ec6150ea7b091b7b7de4`](https://github.com/wevm/wagmi/commit/871dbdbfe59ac8ad01d1ec6150ea7b091b7b7de4)]:
+  - @wagmi/core@2.13.3
+  - @wagmi/connectors@5.1.4
+
 ## 0.0.35
 
 ### Patch Changes
