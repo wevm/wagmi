@@ -10,8 +10,7 @@
 
 <style scoped>
 .banner {
-  background: var(--vp-c-bg-soft);
-  color: var(--vp-button-brand-text);
+  background: var(--vp-c-indigo-soft);
   text-wrap: balance;
 }
 </style>
