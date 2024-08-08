@@ -138,6 +138,11 @@ export function useSponsors() {
           url: 'https://reservoir.tools',
           img: 'reservoir-light.svg',
         },
+        {
+          name: 'Uniswap',
+          url: 'https://uniswap.org',
+          img: 'uniswap-light.svg',
+        },
       ],
     }
 
