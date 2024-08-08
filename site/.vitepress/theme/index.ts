@@ -9,8 +9,8 @@ import 'uno.css'
 import './style.css'
 
 import AsideSponsors from './components/AsideSponsors.vue'
-import HomeBanner from './components/HomeBanner.vue'
 import Banner from './components/Banner.vue'
+import HomeBanner from './components/HomeBanner.vue'
 import HomePage from './components/HomePage.vue'
 
 export default {
