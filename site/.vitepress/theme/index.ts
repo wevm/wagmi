@@ -10,6 +10,7 @@ import './style.css'
 
 import AsideSponsors from './components/AsideSponsors.vue'
 import HomeBanner from './components/HomeBanner.vue'
+import Banner from './components/Banner.vue'
 import HomePage from './components/HomePage.vue'
 
 export default {
@@ -18,6 +19,7 @@ export default {
     return h(DefaultTheme.Layout, null, {
       // https://vitepress.dev/guide/extending-default-theme#layout-slots
       'aside-ads-before': () => h(AsideSponsors),
+      'doc-before': () => h(Banner),
       'home-features-after': () => h(HomePage),
       'home-hero-before': () => h(HomeBanner),
     })
