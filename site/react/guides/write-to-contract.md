@@ -217,8 +217,7 @@ export function MintNFT() {
 
   return (
     <form onSubmit={submit}>
-      <input name="address" placeholder="0xA0Cf…251e" required />
-      <input name="value" placeholder="0.05" required />
+      <input name="tokenId" placeholder="69420" required />
       <button 
         disabled={isPending} 
         type="submit"
@@ -289,8 +288,7 @@ export function MintNFT() {
 
   return (
     <form onSubmit={submit}>
-      <input name="address" placeholder="0xA0Cf…251e" required />
-      <input name="value" placeholder="0.05" required />
+      <input name="tokenId" placeholder="69420" required />
       <button 
         disabled={isPending} 
         type="submit"
@@ -383,8 +381,7 @@ export function MintNFT() {
 
   return (
     <form onSubmit={submit}>
-      <input name="address" placeholder="0xA0Cf…251e" required />
-      <input name="value" placeholder="0.05" required />
+      <input name="tokenId" placeholder="69420" required />
       <button 
         disabled={isPending} 
         type="submit"
