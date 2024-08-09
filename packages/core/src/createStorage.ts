@@ -41,9 +41,9 @@ export type BaseStorage = {
 }
 
 export type CreateStorageParameters = {
-  deserialize?: (<T>(value: string) => T) | undefined
+  deserialize?: (<type>(value: string) => type | unknown) | undefined
   key?: string | undefined
-  serialize?: (<T>(value: T) => string) | undefined
+  serialize?: (<type>(value: type | any) => string) | undefined
   storage?: Compute<BaseStorage> | undefined
 }
 
