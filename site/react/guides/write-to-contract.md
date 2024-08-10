@@ -87,7 +87,7 @@ export function MintNFT() {
     const tokenId = formData.get('tokenId') as string 
     writeContract({ // [!code ++]
       address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2', // [!code ++]
-      abi, // [!code ++]
+      abi: abi, // [!code ++]
       functionName: 'mint', // [!code ++]
       args: [BigInt(tokenId)], // [!code ++]
     }) // [!code ++]
@@ -141,7 +141,7 @@ export function MintNFT() {
     const tokenId = formData.get('tokenId') as string 
     writeContract({
       address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-      abi,
+      abi: abi,
       functionName: 'mint',
       args: [BigInt(tokenId)],
     })
@@ -204,7 +204,7 @@ export function MintNFT() {
     const tokenId = formData.get('tokenId') as string 
     writeContract({
       address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-      abi,
+      abi: abi,
       functionName: 'mint',
       args: [BigInt(tokenId)],
     })
@@ -275,7 +275,7 @@ export function MintNFT() {
     const tokenId = formData.get('tokenId') as string 
     writeContract({
       address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-      abi,
+      abi: abi,
       functionName: 'mint',
       args: [BigInt(tokenId)],
     })
@@ -368,7 +368,7 @@ export function MintNFT() {
     const tokenId = formData.get('tokenId') as string 
     writeContract({
       address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-      abi,
+      abi: abi,
       functionName: 'mint',
       args: [BigInt(tokenId)],
     })
