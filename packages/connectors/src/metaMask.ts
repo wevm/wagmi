@@ -184,7 +184,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
               return [chain.id, url]
             }),
           ),
-          dappMetadata: parameters.dappMetadata ?? {},
+          dappMetadata: parameters.dappMetadata ?? { name: 'wagmi' },
           useDeeplink: parameters.useDeeplink ?? true,
         })
         await sdk.init()
