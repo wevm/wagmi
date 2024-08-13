@@ -143,3 +143,7 @@
   opacity: 0.3;
 }
 
+.twoslash-error-line {
+  max-width: min-content;
+  white-space:wrap;
+}

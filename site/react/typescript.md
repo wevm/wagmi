@@ -241,6 +241,9 @@ data
 ```
 :::
 
+<br/>
+<br/>
+
 You can prevent runtime errors and be more productive by making sure your ABIs and Typed Data definitions are set up appropriately. 🎉
 
 ```ts twoslash
