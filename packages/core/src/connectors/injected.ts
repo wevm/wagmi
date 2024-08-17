@@ -429,7 +429,7 @@ export function injected(parameters: InjectedParameters = {}) {
                 config.emitter.emit('change', { chainId })
             }),
           new Promise<void>((resolve) =>
-            config.emitter.once('change', ({ chainId: currentChainId }) => {
+            config.emitter.on('change', ({ chainId: currentChainId }) => {
               if (currentChainId === chainId) resolve()
             }),
           ),
