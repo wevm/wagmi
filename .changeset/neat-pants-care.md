@@ -2,4 +2,4 @@
 "@wagmi/connectors": patch
 ---
 
-Updated Ethereum Provider to version 2.15.0
+Updated WalletConnect Ethereum Provider version from `2.14.0` to `2.15.0`.
