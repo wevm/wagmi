@@ -166,8 +166,8 @@ importers:
         specifier: 9.1.0
         version: 9.1.0(bufferutil@4.0.8)(encoding@0.1.13)(typescript@5.5.2)(utf-8-validate@5.0.10)(zod@3.22.4)
       '@walletconnect/ethereum-provider':
-        specifier: 2.15.0
-        version: 2.15.0(@types/react@18.3.1)(bufferutil@4.0.8)(encoding@0.1.13)(ioredis@5.3.2)(react@18.3.1)(utf-8-validate@5.0.10)
+        specifier: 2.15.1
+        version: 2.15.1(@types/react@18.3.1)(bufferutil@4.0.8)(encoding@0.1.13)(ioredis@5.3.2)(react@18.3.1)(utf-8-validate@5.0.10)
       '@walletconnect/modal':
         specifier: 2.6.2
         version: 2.6.2(@types/react@18.3.1)(react@18.3.1)
@@ -3078,15 +3078,15 @@ packages:
   '@vueuse/shared@10.9.0':
     resolution: {integrity: sha512-Uud2IWncmAfJvRaFYzv5OHDli+FbOzxiVEQdLCKQKLyhz94PIyFC3CHcH7EDMwIn8NPtD06+PNbC/PiO0LGLtw==}
 
-  '@walletconnect/core@2.15.0':
-    resolution: {integrity: sha512-QekYQlpxyn2bcQXMkMxo0+v7nUOQKyu3j5ZKzTg/HGU1eSgTRLIvYIEkC8VVflIgOw7meOAb5pFChX51wShksQ==}
+  '@walletconnect/core@2.15.1':
+    resolution: {integrity: sha512-9MWVt33MFrLiAeK9nqY/B30/y0M4uiq8v9EXenIBQdlgkmXM++RTcOnn7u7EAbthGgzx3WLPRm4ViwIb+rI/Cg==}
     engines: {node: '>=18'}
 
   '@walletconnect/environment@1.0.1':
     resolution: {integrity: sha512-T426LLZtHj8e8rYnKfzsw1aG6+M0BT1ZxayMdv/p8yM0MU+eJDISqNY3/bccxRr4LrF9csq02Rhqt08Ibl0VRg==}
 
-  '@walletconnect/ethereum-provider@2.15.0':
-    resolution: {integrity: sha512-qQyHVwJtPo7RZJIIn7KAp20t2pthhr9P2Nnhv196+49dTMJ5Es962cgouA410XA7DSQkom+4esiXR2AR5SsrAA==}
+  '@walletconnect/ethereum-provider@2.15.1':
+    resolution: {integrity: sha512-3ssEAKc/rLYshwyE2ZIaoTxzi/p9Ws+kj/FIsd1Ed/CC37Rl5l/KYHaRJtevWeni9s4dGqyqKsYkJ0VwwUcnfQ==}
 
   '@walletconnect/events@1.0.1':
     resolution: {integrity: sha512-NPTqaoi0oPBVNuLv7qPaJazmGHs5JGyO8eEAk5VGKmJzDR7AHzD4k6ilox5kxk1iwiOnFopBOOMLs86Oa76HpQ==}
@@ -3138,20 +3138,20 @@ packages:
   '@walletconnect/safe-json@1.0.2':
     resolution: {integrity: sha512-Ogb7I27kZ3LPC3ibn8ldyUr5544t3/STow9+lzz7Sfo808YD7SBWk7SAsdBFlYgP2zDRy2hS3sKRcuSRM0OTmA==}
 
-  '@walletconnect/sign-client@2.15.0':
-    resolution: {integrity: sha512-efwrPfIwKWKeku44TGBCnQqPZGCILI1wBKK9bTF0F0/qrLR/zRe6RWpM3/L4+jOMr/BktxPZ5lRozBh+c2U7Pg==}
+  '@walletconnect/sign-client@2.15.1':
+    resolution: {integrity: sha512-YnLNEmCHgZ8yBpE3hwZnHD/bVznVMguSAlwLBNOoWUH2f4d9mR8bqa6KeVXqZ3e8mVHcxKTJTjTJ3oQMLyKIjw==}
 
   '@walletconnect/time@1.0.2':
     resolution: {integrity: sha512-uzdd9woDcJ1AaBZRhqy5rNC9laqWGErfc4dxA9a87mPdKOgWMD85mcFo9dIYIts/Jwocfwn07EC6EzclKubk/g==}
 
-  '@walletconnect/types@2.15.0':
-    resolution: {integrity: sha512-hLffDKKe70jIrK+YcLkAnzi6vqNki1SDBWjV+M/72mKcU2KzXxk0G2STFsWsQDx8DoqxMiuGehd0DlD1jwQmBg==}
+  '@walletconnect/types@2.15.1':
+    resolution: {integrity: sha512-4WkMsHD8ioZI5GmxNT0qMlz6msI7ZajBcTyDxfRncaNZVau0C+Btw1U4jWO+gxwJVDJY+Ue/cb1QKJ5BanZsyw==}
 
-  '@walletconnect/universal-provider@2.15.0':
-    resolution: {integrity: sha512-+jIuYyLfud1XRYPWt/3wYiD7DYUOSZk26qbtvZFMj1m947NRnZGzp+0gt1ORi7NInEtX3R0fUhMOYKnPwadp6g==}
+  '@walletconnect/universal-provider@2.15.1':
+    resolution: {integrity: sha512-JvKwHoE/ugWSKOmrEr03go1V79N0bbYV6w24Lqlzz4VAoReZZo8TDKsya7UkJ1L5HUCgKVP+AVktuJv8khzJ6w==}
 
-  '@walletconnect/utils@2.15.0':
-    resolution: {integrity: sha512-xaazgCMyr5fUPm2QuZ76G+W8beDfKMILqJ3INL6wyuaLil2YQNdsCSvWMNhSP+EZeKD3SUqqBmQaM/maP0YHTg==}
+  '@walletconnect/utils@2.15.1':
+    resolution: {integrity: sha512-i5AR8XpZdcX8ghaCjYV13Er/KAGe56c1mLaG9c2cv9kmnZMZijeMdInjX/flnSM1RFDUiZXvKPMUNwlCL4NsWw==}
 
   '@walletconnect/window-getters@1.0.1':
     resolution: {integrity: sha512-vHp+HqzGxORPAN8gY03qnbTMnhqIwjeRJNOMOAzePRg4xVEEE2WvYsI9G2NMjOknA8hnuYbU3/hwLcKbjhc8+Q==}
@@ -4147,9 +4147,6 @@ packages:
 
   elliptic@6.5.4:
     resolution: {integrity: sha512-iLhC6ULemrljPZb+QutR5TQGB+pdW6KGD5RSegS+8sorOZT+rdQFbsQFJgvN3eRqNALqJer4oQ16YvJHlU8hzQ==}
-
-  elliptic@6.5.7:
-    resolution: {integrity: sha512-ESVCtTwiA+XhY3wyh24QqRGBoP3rEdDUl3EDUUo9tft074fi19IrdpH7hLCMMP3CIj7jb3W96rn8lt/BqIlt5Q==}
 
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -11421,7 +11418,7 @@ snapshots:
       - '@vue/composition-api'
       - vue
 
-  '@walletconnect/core@2.15.0(bufferutil@4.0.8)(ioredis@5.3.2)(utf-8-validate@5.0.10)':
+  '@walletconnect/core@2.15.1(bufferutil@4.0.8)(ioredis@5.3.2)(utf-8-validate@5.0.10)':
     dependencies:
       '@walletconnect/heartbeat': 1.2.2
       '@walletconnect/jsonrpc-provider': 1.0.14
@@ -11434,8 +11431,8 @@ snapshots:
       '@walletconnect/relay-auth': 1.0.4
       '@walletconnect/safe-json': 1.0.2
       '@walletconnect/time': 1.0.2
-      '@walletconnect/types': 2.15.0(ioredis@5.3.2)
-      '@walletconnect/utils': 2.15.0(ioredis@5.3.2)
+      '@walletconnect/types': 2.15.1(ioredis@5.3.2)
+      '@walletconnect/utils': 2.15.1(ioredis@5.3.2)
       events: 3.3.0
       lodash.isequal: 4.5.0
       uint8arrays: 3.1.0
@@ -11461,17 +11458,17 @@ snapshots:
     dependencies:
       tslib: 1.14.1
 
-  '@walletconnect/ethereum-provider@2.15.0(@types/react@18.3.1)(bufferutil@4.0.8)(encoding@0.1.13)(ioredis@5.3.2)(react@18.3.1)(utf-8-validate@5.0.10)':
+  '@walletconnect/ethereum-provider@2.15.1(@types/react@18.3.1)(bufferutil@4.0.8)(encoding@0.1.13)(ioredis@5.3.2)(react@18.3.1)(utf-8-validate@5.0.10)':
     dependencies:
       '@walletconnect/jsonrpc-http-connection': 1.0.8(encoding@0.1.13)
       '@walletconnect/jsonrpc-provider': 1.0.14
       '@walletconnect/jsonrpc-types': 1.0.4
       '@walletconnect/jsonrpc-utils': 1.0.8
       '@walletconnect/modal': 2.6.2(@types/react@18.3.1)(react@18.3.1)
-      '@walletconnect/sign-client': 2.15.0(bufferutil@4.0.8)(ioredis@5.3.2)(utf-8-validate@5.0.10)
-      '@walletconnect/types': 2.15.0(ioredis@5.3.2)
-      '@walletconnect/universal-provider': 2.15.0(bufferutil@4.0.8)(encoding@0.1.13)(ioredis@5.3.2)(utf-8-validate@5.0.10)
-      '@walletconnect/utils': 2.15.0(ioredis@5.3.2)
+      '@walletconnect/sign-client': 2.15.1(bufferutil@4.0.8)(ioredis@5.3.2)(utf-8-validate@5.0.10)
+      '@walletconnect/types': 2.15.1(ioredis@5.3.2)
+      '@walletconnect/universal-provider': 2.15.1(bufferutil@4.0.8)(encoding@0.1.13)(ioredis@5.3.2)(utf-8-validate@5.0.10)
+      '@walletconnect/utils': 2.15.1(ioredis@5.3.2)
       events: 3.3.0
     transitivePeerDependencies:
       - '@azure/app-configuration'
@@ -11608,16 +11605,16 @@ snapshots:
     dependencies:
       tslib: 1.14.1
 
-  '@walletconnect/sign-client@2.15.0(bufferutil@4.0.8)(ioredis@5.3.2)(utf-8-validate@5.0.10)':
+  '@walletconnect/sign-client@2.15.1(bufferutil@4.0.8)(ioredis@5.3.2)(utf-8-validate@5.0.10)':
     dependencies:
-      '@walletconnect/core': 2.15.0(bufferutil@4.0.8)(ioredis@5.3.2)(utf-8-validate@5.0.10)
+      '@walletconnect/core': 2.15.1(bufferutil@4.0.8)(ioredis@5.3.2)(utf-8-validate@5.0.10)
       '@walletconnect/events': 1.0.1
       '@walletconnect/heartbeat': 1.2.2
       '@walletconnect/jsonrpc-utils': 1.0.8
       '@walletconnect/logger': 2.1.2
       '@walletconnect/time': 1.0.2
-      '@walletconnect/types': 2.15.0(ioredis@5.3.2)
-      '@walletconnect/utils': 2.15.0(ioredis@5.3.2)
+      '@walletconnect/types': 2.15.1(ioredis@5.3.2)
+      '@walletconnect/utils': 2.15.1(ioredis@5.3.2)
       events: 3.3.0
     transitivePeerDependencies:
       - '@azure/app-configuration'
@@ -11641,7 +11638,7 @@ snapshots:
     dependencies:
       tslib: 1.14.1
 
-  '@walletconnect/types@2.15.0(ioredis@5.3.2)':
+  '@walletconnect/types@2.15.1(ioredis@5.3.2)':
     dependencies:
       '@walletconnect/events': 1.0.1
       '@walletconnect/heartbeat': 1.2.2
@@ -11665,16 +11662,16 @@ snapshots:
       - ioredis
       - uWebSockets.js
 
-  '@walletconnect/universal-provider@2.15.0(bufferutil@4.0.8)(encoding@0.1.13)(ioredis@5.3.2)(utf-8-validate@5.0.10)':
+  '@walletconnect/universal-provider@2.15.1(bufferutil@4.0.8)(encoding@0.1.13)(ioredis@5.3.2)(utf-8-validate@5.0.10)':
     dependencies:
       '@walletconnect/jsonrpc-http-connection': 1.0.8(encoding@0.1.13)
       '@walletconnect/jsonrpc-provider': 1.0.14
       '@walletconnect/jsonrpc-types': 1.0.4
       '@walletconnect/jsonrpc-utils': 1.0.8
       '@walletconnect/logger': 2.1.2
-      '@walletconnect/sign-client': 2.15.0(bufferutil@4.0.8)(ioredis@5.3.2)(utf-8-validate@5.0.10)
-      '@walletconnect/types': 2.15.0(ioredis@5.3.2)
-      '@walletconnect/utils': 2.15.0(ioredis@5.3.2)
+      '@walletconnect/sign-client': 2.15.1(bufferutil@4.0.8)(ioredis@5.3.2)(utf-8-validate@5.0.10)
+      '@walletconnect/types': 2.15.1(ioredis@5.3.2)
+      '@walletconnect/utils': 2.15.1(ioredis@5.3.2)
       events: 3.3.0
     transitivePeerDependencies:
       - '@azure/app-configuration'
@@ -11695,7 +11692,7 @@ snapshots:
       - uWebSockets.js
       - utf-8-validate
 
-  '@walletconnect/utils@2.15.0(ioredis@5.3.2)':
+  '@walletconnect/utils@2.15.1(ioredis@5.3.2)':
     dependencies:
       '@stablelib/chacha20poly1305': 1.0.1
       '@stablelib/hkdf': 1.0.1
@@ -11705,11 +11702,10 @@ snapshots:
       '@walletconnect/relay-api': 1.0.11
       '@walletconnect/safe-json': 1.0.2
       '@walletconnect/time': 1.0.2
-      '@walletconnect/types': 2.15.0(ioredis@5.3.2)
+      '@walletconnect/types': 2.15.1(ioredis@5.3.2)
       '@walletconnect/window-getters': 1.0.1
       '@walletconnect/window-metadata': 1.0.1
       detect-browser: 5.3.0
-      elliptic: 6.5.7
       query-string: 7.1.3
       uint8arrays: 3.1.0
     transitivePeerDependencies:
@@ -12716,16 +12712,6 @@ snapshots:
   electron-to-chromium@1.4.757: {}
 
   elliptic@6.5.4:
-    dependencies:
-      bn.js: 4.12.0
-      brorand: 1.1.0
-      hash.js: 1.1.7
-      hmac-drbg: 1.0.1
-      inherits: 2.0.4
-      minimalistic-assert: 1.0.1
-      minimalistic-crypto-utils: 1.0.1
-
-  elliptic@6.5.7:
     dependencies:
       bn.js: 4.12.0
       brorand: 1.1.0
