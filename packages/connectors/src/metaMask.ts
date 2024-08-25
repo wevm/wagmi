@@ -283,11 +283,17 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
               rpcUrls,
             } satisfies AddEthereumChainParameter
 
-            await provider.request({
-              method: 'wallet_addEthereumChain',
-              params: [addEthereumChain],
-            })
-
+            await Promise.all([
+              provider.request({
+                method: 'wallet_addEthereumChain',
+                params: [addEthereumChain],
+              }),
+              new Promise<void>((resolve) =>
+                config.emitter.once('change', ({ chainId: currentChainId }) => {
+                  if (currentChainId === chainId) resolve()
+                }),
+              ),
+            ])
             const currentChainId = await this.getChainId()
             if (currentChainId !== chainId)
               throw new UserRejectedRequestError(
