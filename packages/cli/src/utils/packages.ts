@@ -8,12 +8,27 @@ export async function getIsPackageInstalled(parameters: {
 }) {
   const { packageName, cwd = process.cwd() } = parameters
   try {
-    const packageManager = await getPackageManager()
-    const command =
-      packageManager === 'yarn' ? ['why', packageName] : ['ls', packageName]
+    let command: string[]
+
+    switch (packageManager) {
+      case 'yarn':
+        command = ['why', packageName]
+        break
+      case 'bun':
+        command = ['pm', 'ls', '--all']
+        break
+      default:
+        command = ['ls', packageName]
+    }
+
     const { stdout } = await execa(packageManager, command, { cwd })
-    if (stdout !== '') return true
-    return false
+
+    if (packageManager === 'bun') {
+      // For Bun, we need to check if the package name is in the output
+      return stdout.includes(packageName)
+    }
+
+    return stdout !== ''
   } catch (_error) {
     return false
   }
@@ -26,6 +41,7 @@ export async function getPackageManager(executable?: boolean | undefined) {
     // The yarn@^3 user agent includes npm, so yarn must be checked first.
     if (userAgent.includes('yarn')) return 'yarn'
     if (userAgent.includes('npm')) return executable ? 'npx' : 'npm'
+    if (userAgent.includes('bun')) return executable ? 'bunx' : 'bun'
   }
 
   const packageManager = await detect()
