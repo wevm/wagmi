@@ -148,6 +148,11 @@ export function useSponsors() {
           url: 'https://biconomy.io',
           img: 'biconomy-light.svg',
         },
+        {
+          name: 'Thirdweb',
+          url: 'https://thirdweb.com',
+          img: 'thirdweb-light.svg',
+        },
       ],
     }
 
