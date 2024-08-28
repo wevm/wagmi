@@ -209,6 +209,12 @@ If you find Wagmi useful or use it for work, please consider [sponsoring Wagmi](
       <img alt="uniswap logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/uniswap-light.svg" width="auto" height="50">
     </picture>
   </a>
+  <a href="https://biconomy.io">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/b0276d897be98a4c94ad1d1c72ce99a1020eeb58/content/sponsors/biconomy-dark.svg">
+      <img alt="biconomy logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/biconomy-light.svg" width="auto" height="50">
+    </picture>
+  </a>
 </p>
 
 [Sponsor Wagmi](https://github.com/sponsors/wevm?metadata_campaign=gh_readme_support_bottom)

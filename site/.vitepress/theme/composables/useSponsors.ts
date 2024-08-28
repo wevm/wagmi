@@ -143,6 +143,11 @@ export function useSponsors() {
           url: 'https://uniswap.org',
           img: 'uniswap-light.svg',
         },
+        {
+          name: 'Biconomy',
+          url: 'https://biconomy.io',
+          img: 'biconomy-light.svg',
+        },
       ],
     }
 
