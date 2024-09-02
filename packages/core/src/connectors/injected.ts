@@ -398,7 +398,11 @@ export function injected(parameters: InjectedParameters = {}) {
 
         // Use retry strategy as some injected wallets (e.g. MetaMask) fail to
         // immediately resolve JSON-RPC requests on page load.
-        const accounts = await withRetry(() => this.getAccounts())
+        const accounts = await withRetry(() => 
+          withTimeout(() =>this.getAccounts(), {
+            timeout: 1_000,
+          }).catch(() => []))
+
         return !!accounts.length
       } catch {
         return false
