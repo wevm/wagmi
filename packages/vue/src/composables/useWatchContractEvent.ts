@@ -5,13 +5,6 @@ import type {
   WatchContractEventParameters,
   WatchContractEventReturnType,
 } from '@wagmi/core'
-// import {
-//   type WriteContractData,
-//   type WriteContractMutate,
-//   type WriteContractMutateAsync,
-//   type WriteContractVariables,
-//   writeContractMutationOptions,
-// } from '@wagmi/core/query'
 import type { Abi, Address, ContractEventName, Log } from 'viem'
 
 import type { UnionCompute, UnionExactPartial } from '@wagmi/core/internal'
