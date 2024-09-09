@@ -1,5 +1,25 @@
 # @wagmi/connectors
 
+## 5.1.8
+
+### Patch Changes
+
+- [`b580ad4edff1721e0b9d138cf5ae2ec74d2374c7`](https://github.com/wevm/wagmi/commit/b580ad4edff1721e0b9d138cf5ae2ec74d2374c7) Thanks [@tmm](https://github.com/tmm)! - Bumped WalletConnect Provider.
+
+## 5.1.7
+
+### Patch Changes
+
+- [#4213](https://github.com/wevm/wagmi/pull/4213) [`91fd81a068789c5020e891f539bcad8f54a7a52f`](https://github.com/wevm/wagmi/commit/91fd81a068789c5020e891f539bcad8f54a7a52f) Thanks [@tomiir](https://github.com/tomiir)! - Updated `@walletconnect/ethereum-provider` from version `2.15.0` to version `2.15.1`.
+
+## 5.1.6
+
+### Patch Changes
+
+- [#4208](https://github.com/wevm/wagmi/pull/4208) [`3168616298cbb6135d0ffda771cba4126e83eba8`](https://github.com/wevm/wagmi/commit/3168616298cbb6135d0ffda771cba4126e83eba8) Thanks [@tomiir](https://github.com/tomiir)! - Updated WalletConnect Ethereum Provider version from `2.14.0` to `2.15.0`.
+
+- [#4211](https://github.com/wevm/wagmi/pull/4211) [`d7608ef9a79459465dc8c06a2ab740465c881907`](https://github.com/wevm/wagmi/commit/d7608ef9a79459465dc8c06a2ab740465c881907) Thanks [@tmm](https://github.com/tmm)! - Added default name for MetaMask Connector.
+
 ## 5.1.5
 
 ### Patch Changes
