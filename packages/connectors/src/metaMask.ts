@@ -75,7 +75,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
 
       try {
         if (!accounts?.length) {
-          const requestedAccounts = (await sdk.connect()) as string[]
+          const requestedAccounts = await sdk.connect() as string[];
           accounts = requestedAccounts.map((x) => getAddress(x))
         }
 
@@ -166,9 +166,10 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         // See: https://github.com/vitejs/vite/issues/9703
         const MetaMaskSDK = await (async () => {
           const { default: SDK } = await import('@metamask/sdk')
-          if (typeof SDK !== 'function' && typeof SDK.default === 'function')
-            return SDK.default
-          return SDK as unknown as typeof SDK.default
+          // @ts-ignore 
+          if (typeof SDK !== 'function' && typeof SDK.default === 'function') // @ts-ignore 
+            return SDK.default // @ts-ignore 
+          return SDK as unknown as typeof SDK.default // @ts-ignore 
         })()
 
         sdk = new MetaMaskSDK({
@@ -355,12 +356,6 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       // https://github.com/MetaMask/providers/pull/120
       if (error && (error as RpcError<1013>).code === 1013) {
         if (provider && !!(await this.getAccounts()).length) return
-      }
-
-      // Remove cached SDK properties.
-      if (typeof localStorage !== 'undefined') {
-        localStorage.removeItem('MMSDK_cached_address')
-        localStorage.removeItem('MMSDK_cached_chainId')
       }
 
       config.emitter.emit('disconnect')
