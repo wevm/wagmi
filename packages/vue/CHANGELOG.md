@@ -1,5 +1,11 @@
 # @wagmi/vue
 
+## 0.0.42
+
+### Patch Changes
+
+- [#4252](https://github.com/wevm/wagmi/pull/4252) [`67defb516bbd9b2c7b03e376ecd3aca8a001d065`](https://github.com/wevm/wagmi/commit/67defb516bbd9b2c7b03e376ecd3aca8a001d065) Thanks [@tmm](https://github.com/tmm)! - Added `useWatchContractEvent`.
+
 ## 0.0.41
 
 ### Patch Changes
