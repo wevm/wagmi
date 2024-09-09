@@ -14,6 +14,7 @@ import type { WatchEventOnLogsParameter } from 'viem/actions'
 import { expect, test } from 'vitest'
 
 import { useWatchContractEvent } from './useWatchContractEvent.js'
+import { ref } from 'vue'
 
 const connector = config.connectors[0]!
 
@@ -84,4 +85,22 @@ test('default', async () => {
   expect(logs[0]?.transactionHash).toMatch(transactionHashRegex)
 
   await disconnect(config, { connector })
+})
+
+test('parameters: enabled', async () => {
+  const enabled = ref(true)
+
+  renderComposable(() =>
+    useWatchContractEvent({
+      address: address.usdc,
+      abi: abi.erc20,
+      eventName: 'Transfer',
+    }),
+  )
+
+  renderComposable(() =>
+    useWatchContractEvent({
+      enabled,
+    }),
+  )
 })
