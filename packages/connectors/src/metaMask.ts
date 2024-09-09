@@ -75,7 +75,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
 
       try {
         if (!accounts?.length) {
-          const requestedAccounts = await sdk.connect() as string[];
+          const requestedAccounts = (await sdk.connect()) as string[]
           accounts = requestedAccounts.map((x) => getAddress(x))
         }
 
@@ -166,10 +166,11 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         // See: https://github.com/vitejs/vite/issues/9703
         const MetaMaskSDK = await (async () => {
           const { default: SDK } = await import('@metamask/sdk')
-          // @ts-ignore 
-          if (typeof SDK !== 'function' && typeof SDK.default === 'function') // @ts-ignore 
-            return SDK.default // @ts-ignore 
-          return SDK as unknown as typeof SDK.default // @ts-ignore 
+          // @ts-ignore
+          if (typeof SDK !== 'function' && typeof SDK.default === 'function')
+            // @ts-ignore
+            return SDK.default // @ts-ignore
+          return SDK as unknown as typeof SDK.default // @ts-ignore
         })()
 
         sdk = new MetaMaskSDK({
