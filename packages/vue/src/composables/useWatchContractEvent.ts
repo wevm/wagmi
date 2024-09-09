@@ -8,48 +8,31 @@ import type {
 import type { Abi, Address, ContractEventName, Log } from 'viem'
 
 import type { UnionCompute, UnionExactPartial } from '@wagmi/core/internal'
+import { computed, watchEffect } from 'vue'
 import type { ConfigParameter, EnabledParameter } from '../types/properties.js'
+import type { DeepMaybeRef } from '../types/ref.js'
+import { deepUnref } from '../utils/cloneDeep.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
 export type UseWatchContractEventParameters<
-  // main
-  abi extends Abi | readonly unknown[] = Abi,
+  abi extends Abi | readonly unknown[] = unknown[],
   eventName extends ContractEventName<abi> = ContractEventName<abi>,
   strict extends boolean | undefined = undefined,
   config extends Config = Config,
   chainId extends
     config['chains'][number]['id'] = config['chains'][number]['id'],
-  // extra, i guess?
-  address extends Address | Record<number, Address> | undefined = undefined,
-  args extends unknown[] = unknown[],
-  batch extends boolean = true,
-  poll extends boolean | undefined = undefined,
-  pollingInterval extends number | undefined = undefined,
-  syncConnectedChain extends boolean | undefined = undefined,
-  onError extends (error: Error) => void = (error: Error) => void,
-  onLogs extends (logs: Log[], prevLogs: Log[] | undefined) => void = (
-    logs: Log[],
-    prevLogs: Log[] | undefined,
-  ) => void,
-> = UnionCompute<
-  UnionExactPartial<
-    WatchContractEventParameters<abi, eventName, strict, config, chainId>
-  > &
-    ConfigParameter<config> &
-    EnabledParameter & {
-      address?: address
-      args?: args
-      batch?: batch
-      poll?: poll
-      pollingInterval?: pollingInterval
-      syncConnectedChain?: syncConnectedChain
-      onError?: onError
-      onLogs?: onLogs
-    }
+> = DeepMaybeRef<
+  UnionCompute<
+    UnionExactPartial<
+      WatchContractEventParameters<abi, eventName, strict, config, chainId>
+    > &
+      ConfigParameter<config> &
+      EnabledParameter
+  >
 >
 
-export type UseWatchContractEventReturnType = WatchContractEventReturnType
+export type UseWatchContractEventReturnType = void
 
 /** To eventually be added to https://wagmi.sh/vue/api/composables/useWatchContractEvent */
 export function useWatchContractEvent<
@@ -57,44 +40,37 @@ export function useWatchContractEvent<
   eventName extends ContractEventName<abi>,
   strict extends boolean | undefined = undefined,
   config extends Config = ResolvedRegister['config'],
-  chainId extends
-    config['chains'][number]['id'] = config['chains'][number]['id'],
-  address extends Address | Record<number, Address> | undefined = undefined,
-  args extends unknown[] = unknown[],
-  batch extends boolean = true,
-  poll extends boolean | undefined = undefined,
-  pollingInterval extends number | undefined = undefined,
-  syncConnectedChain extends boolean | undefined = undefined,
-  onError extends (error: Error) => void = (error: Error) => void,
-  onLogs extends (logs: Log[], prevLogs: Log[] | undefined) => void = (
-    logs: Log[],
-    prevLogs: Log[] | undefined,
-  ) => void,
+  chainId extends config['chains'][number]['id'] = 1,
 >(
-  parameters: UseWatchContractEventParameters<
+  parameters_: UseWatchContractEventParameters<
     abi,
     eventName,
     strict,
     config,
-    chainId,
-    address,
-    args,
-    batch,
-    poll,
-    pollingInterval,
-    syncConnectedChain,
-    onError,
-    onLogs
-  > = {} as any,
+    chainId
+  >,
 ): UseWatchContractEventReturnType {
-  const { config: _, ...rest } = parameters
+  const parameters = computed(() => deepUnref(parameters_))
 
   const config = useConfig(parameters)
   const configChainId = useChainId({ config })
-  const chainId = parameters.chainId ?? configChainId
 
-  return watchContractEvent(config, {
-    ...(rest as any),
-    chainId: chainId,
+  watchEffect((onCleanup) => {
+    // console.log('Watching', JSON.stringify(parameters.value))
+    const {
+      chainId = configChainId.value,
+      enabled = true,
+      config: _,
+      ...rest
+    } = parameters.value
+
+    if (!enabled) return
+
+    const unwatch = watchContractEvent(config, {
+      ...rest,
+      chainId,
+      emitOnBegin: true,
+    })
+    onCleanup(unwatch)
   })
 }

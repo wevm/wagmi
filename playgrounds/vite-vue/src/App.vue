@@ -10,6 +10,7 @@ import ReadContract from './components/ReadContract.vue'
 import SendTransaction from './components/SendTransaction.vue'
 import SwitchAccount from './components/SwitchAccount.vue'
 import SwitchChain from './components/SwitchChain.vue'
+import WatchEvent from './components/WatchEvent.vue'
 import WriteContract from './components/WriteContract.vue'
 </script>
 
@@ -23,6 +24,7 @@ import WriteContract from './components/WriteContract.vue'
   <BlockNumber />
   <ReadContract />
   <SendTransaction />
+  <WatchEvent />
   <WriteContract />
   <Client />
   <ConnectorClient />

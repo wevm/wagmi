@@ -1,12 +1,15 @@
 :root {
   background-color: #181818;
   color: rgba(255, 255, 255, 0.87);
+  --pre-color: #fefefe;
+  --pre-background-color: #222;
   color-scheme: light dark;
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-synthesis: none;
   font-weight: 400;
   line-height: 1.5;
   text-rendering: optimizeLegibility;
+  color-scheme: light dark;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -17,5 +20,18 @@
   :root {
     background-color: #f8f8f8;
     color: #181818;
+    --pre-color: #222;
+    --pre-background-color: #e8e8e8;
   }
+}
+
+pre {
+  background-color: var(--pre-background-color);
+  color: var(--pre-color);
+  min-height: 1rem;
+  min-width: 15rem;
+  width: fit-content;
+  max-width: 70%;
+  padding: 0.1rem 0.5rem;
+  border-radius: 0.5rem;
 }
