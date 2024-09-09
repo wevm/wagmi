@@ -666,7 +666,7 @@ useWatchContractEvent({
   },
   onLogs(next) {
     // console.log(logs.value)
-    logs.value = logs.value.concat(next)
+    logs.value = logs.value.concat(JSON.stringify(next))
   },
 })
 </script>
