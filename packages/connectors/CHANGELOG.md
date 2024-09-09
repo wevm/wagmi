@@ -1,5 +1,13 @@
 # @wagmi/connectors
 
+## 5.1.9
+
+### Patch Changes
+
+- [#4243](https://github.com/wevm/wagmi/pull/4243) [`21bd0e473d374cbbd7a01bececa6022d529026ba`](https://github.com/wevm/wagmi/commit/21bd0e473d374cbbd7a01bececa6022d529026ba) Thanks [@tomiir](https://github.com/tomiir)! - Bumped `@walletconnect/ethereum-provider` from version `2.15.2` to version `2.15.3`
+
+- [#4251](https://github.com/wevm/wagmi/pull/4251) [`5c89c6853e616437a3be2b019db895451fecfb3c`](https://github.com/wevm/wagmi/commit/5c89c6853e616437a3be2b019db895451fecfb3c) Thanks [@tmm](https://github.com/tmm)! - Bumped MM SDK.
+
 ## 5.1.8
 
 ### Patch Changes
