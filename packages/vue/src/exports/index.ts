@@ -196,6 +196,12 @@ export {
 } from '../composables/useWatchBlockNumber.js'
 
 export {
+  type UseWatchContractEventParameters,
+  type UseWatchContractEventReturnType,
+  useWatchContractEvent,
+} from '../composables/useWatchContractEvent.js'
+
+export {
   type UseWaitForTransactionReceiptParameters,
   type UseWaitForTransactionReceiptReturnType,
   useWaitForTransactionReceipt,
