@@ -1,5 +1,17 @@
 # @wagmi/vue
 
+## 0.0.43
+
+### Patch Changes
+
+- [#4260](https://github.com/wevm/wagmi/pull/4260) [`969a208a110b760a13fd7263360320f52440a9b6`](https://github.com/wevm/wagmi/commit/969a208a110b760a13fd7263360320f52440a9b6) Thanks [@tmm](https://github.com/tmm)! - Fixed `useReadContract` deployless reads support.
+
+- [#4259](https://github.com/wevm/wagmi/pull/4259) [`f47ce8f6d263e49fdff90b8edb3190142d2657bb`](https://github.com/wevm/wagmi/commit/f47ce8f6d263e49fdff90b8edb3190142d2657bb) Thanks [@tmm](https://github.com/tmm)! - Disabled `useConnectorClient` during reconnection if connector is not fully restored.
+
+- Updated dependencies [[`81de006e66121a18c61945c1f9b8426c83a5713c`](https://github.com/wevm/wagmi/commit/81de006e66121a18c61945c1f9b8426c83a5713c), [`f47ce8f6d263e49fdff90b8edb3190142d2657bb`](https://github.com/wevm/wagmi/commit/f47ce8f6d263e49fdff90b8edb3190142d2657bb)]:
+  - @wagmi/connectors@5.1.10
+  - @wagmi/core@2.13.5
+
 ## 0.0.42
 
 ### Patch Changes

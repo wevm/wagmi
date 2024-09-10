@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.13.5
+
+### Patch Changes
+
+- [#4259](https://github.com/wevm/wagmi/pull/4259) [`f47ce8f6d263e49fdff90b8edb3190142d2657bb`](https://github.com/wevm/wagmi/commit/f47ce8f6d263e49fdff90b8edb3190142d2657bb) Thanks [@tmm](https://github.com/tmm)! - Added guard to `getConnectorClient` when reconnecting to check if connector is fully restored.
+
 ## 2.13.4
 
 ### Patch Changes
