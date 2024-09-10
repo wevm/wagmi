@@ -1,10 +1,10 @@
 import { address, config } from '@wagmi/test'
 import { expect, test } from 'vitest'
 
+import type { Connector } from '../createConfig.js'
 import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'
 import { getConnectorClient } from './getConnectorClient.js'
-import type { Connector } from '../createConfig.js'
 
 const connector = config.connectors[0]!
 
