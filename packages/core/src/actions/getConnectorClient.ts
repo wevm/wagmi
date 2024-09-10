@@ -17,6 +17,8 @@ import {
   type ConnectorChainMismatchErrorType,
   ConnectorNotConnectedError,
   type ConnectorNotConnectedErrorType,
+  ConnectorUnavailableReconnectingError,
+  type ConnectorUnavailableReconnectingErrorType,
 } from '../errors/config.js'
 import type {
   ChainIdParameter,
@@ -51,6 +53,7 @@ export type GetConnectorClientErrorType =
   | ConnectorAccountNotFoundErrorType
   | ConnectorChainMismatchErrorType
   | ConnectorNotConnectedErrorType
+  | ConnectorUnavailableReconnectingErrorType
   // base
   | BaseErrorType
   | ErrorType
@@ -67,6 +70,13 @@ export async function getConnectorClient<
   let connection: Connection | undefined
   if (parameters.connector) {
     const { connector } = parameters
+    if (
+      config.state.status === 'reconnecting' &&
+      !connector.getAccounts &&
+      !connector.getChainId
+    )
+      throw new ConnectorUnavailableReconnectingError({ connector })
+
     const [accounts, chainId] = await Promise.all([
       connector.getAccounts(),
       connector.getChainId(),
@@ -99,11 +109,6 @@ export async function getConnectorClient<
   const account = parseAccount(parameters.account ?? connection.accounts[0]!)
   account.address = getAddress(account.address) // TODO: Checksum address as part of `parseAccount`?
 
-  const chain = config.chains.find((chain) => chain.id === chainId)
-  const provider = (await connection.connector.getProvider({ chainId })) as {
-    request(...args: any): Promise<any>
-  }
-
   // If account was provided, check that it exists on the connector
   if (
     parameters.account &&
@@ -115,6 +120,11 @@ export async function getConnectorClient<
       address: account.address,
       connector,
     })
+
+  const chain = config.chains.find((chain) => chain.id === chainId)
+  const provider = (await connection.connector.getProvider({ chainId })) as {
+    request(...args: any): Promise<any>
+  }
 
   return createClient({
     account,

@@ -8,6 +8,7 @@ import {
   ConnectorChainMismatchError,
   ConnectorNotConnectedError,
   ConnectorNotFoundError,
+  ConnectorUnavailableReconnectingError,
 } from './config.js'
 
 test('constructors', () => {
@@ -52,6 +53,16 @@ test('constructors', () => {
     Current Chain ID:  123
     Expected Chain ID: 1
 
+    Version: @wagmi/core@x.y.z]
+  `)
+  expect(
+    new ConnectorUnavailableReconnectingError({
+      connector: { name: 'Rabby Wallet' },
+    }),
+  ).toMatchInlineSnapshot(`
+    [ConnectorUnavailableReconnectingError: Connector "Rabby Wallet" unavailable while reconnecting.
+
+    Details: During the reconnection step, the only connector methods guaranteed to be available are: \`id\`, \`name\`, \`type\`, \`uuid\`. All other methods are not guaranteed to be available until reconnection completes and connectors are fully restored. This error commonly occurs for connectors that asynchronously inject after reconnection has already started.
     Version: @wagmi/core@x.y.z]
   `)
 })
