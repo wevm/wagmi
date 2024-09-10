@@ -14,7 +14,7 @@ import {
   readContractQueryOptions,
   structuralSharing,
 } from '@wagmi/core/query'
-import type { Abi, ContractFunctionArgs, ContractFunctionName } from 'viem'
+import type { Abi, ContractFunctionArgs, ContractFunctionName, Hex } from 'viem'
 
 import type { ConfigParameter, QueryParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
@@ -76,6 +76,8 @@ export function useReadContract<
   > = {} as any,
 ): UseReadContractReturnType<abi, functionName, args, selectData> {
   const { abi, address, functionName, query = {} } = parameters
+  // @ts-ignore
+  const code = parameters.code as Hex | undefined
 
   const config = useConfig(parameters)
   const chainId = useChainId({ config })
@@ -85,7 +87,7 @@ export function useReadContract<
     { ...(parameters as any), chainId: parameters.chainId ?? chainId },
   )
   const enabled = Boolean(
-    address && abi && functionName && (query.enabled ?? true),
+    (address || code) && abi && functionName && (query.enabled ?? true),
   )
 
   return useQuery({

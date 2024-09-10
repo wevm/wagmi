@@ -1,4 +1,4 @@
-import { abi, address, chain, wait } from '@wagmi/test'
+import { abi, address, bytecode, chain, wait } from '@wagmi/test'
 import { renderComposable, waitFor } from '@wagmi/test/vue'
 import { expect, test } from 'vitest'
 import { ref } from 'vue'
@@ -60,6 +60,20 @@ test('parameters: chainId', async () => {
       },
     ]
   `)
+})
+
+test('parameters: deployless read (bytecode)', async () => {
+  const [result] = renderComposable(() =>
+    useReadContract({
+      abi: abi.wagmiMintExample,
+      functionName: 'name',
+      code: bytecode.wagmiMintExample,
+    }),
+  )
+
+  await waitFor(result.isSuccess)
+
+  expect(result.data.value).toMatchInlineSnapshot(`"wagmi"`)
 })
 
 test.skip('behavior: disabled when missing properties', async () => {
