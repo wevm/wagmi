@@ -80,6 +80,8 @@ test('exports', () => {
       "ConnectorAlreadyConnectedError",
       "ConnectorNotFoundError",
       "ConnectorAccountNotFoundError",
+      "ConnectorChainMismatchError",
+      "ConnectorUnavailableReconnectingError",
       "ProviderNotFoundError",
       "SwitchChainNotSupportedError",
       "createStorage",
