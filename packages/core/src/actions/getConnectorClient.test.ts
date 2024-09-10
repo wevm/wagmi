@@ -4,6 +4,7 @@ import { expect, test } from 'vitest'
 import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'
 import { getConnectorClient } from './getConnectorClient.js'
+import type { Connector } from '../createConfig.js'
 
 const connector = config.connectors[0]!
 
@@ -81,4 +82,25 @@ test('behavior: account does not exist on connector', async () => {
     Version: @wagmi/core@x.y.z]
   `)
   await disconnect(config, { connector })
+})
+
+test('behavior: reconnecting', async () => {
+  config.setState((state) => ({ ...state, status: 'reconnecting' }))
+  const { id, name, type, uuid } = connector
+  await expect(
+    getConnectorClient(config, {
+      connector: {
+        id,
+        name,
+        type,
+        uuid,
+      } as unknown as Connector,
+    }),
+  ).rejects.toThrowErrorMatchingInlineSnapshot(`
+    [ConnectorUnavailableReconnectingError: Connector "Mock Connector" unavailable while reconnecting.
+
+    Details: During the reconnection step, the only connector methods guaranteed to be available are: \`id\`, \`name\`, \`type\`, \`uuid\`. All other methods are not guaranteed to be available until reconnection completes and connectors are fully restored. This error commonly occurs for connectors that asynchronously inject after reconnection has already started.
+    Version: @wagmi/core@x.y.z]
+  `)
+  config.setState((state) => ({ ...state, status: 'disconnected' }))
 })
