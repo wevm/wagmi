@@ -88,6 +88,7 @@ export function useReadContract<
       abi,
       address,
       chainId = configChainId.value,
+      code,
       functionName,
       query = {},
     } = parameters.value
@@ -96,7 +97,7 @@ export function useReadContract<
       { ...parameters.value, chainId },
     )
     const enabled = Boolean(
-      address && abi && functionName && (query.enabled ?? true),
+      (address || code) && abi && functionName && (query.enabled ?? true),
     )
     return {
       ...query,

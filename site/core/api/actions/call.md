@@ -58,7 +58,7 @@ await call(config, {
 
 ### data
 
-`0x${string} | undefined`
+`` `0x${string}` | undefined ``
 
 A contract hashed method call with encoded args.
 
