@@ -1,5 +1,11 @@
 # wagmi
 
+## 2.12.11
+
+### Patch Changes
+
+- [#4262](https://github.com/wevm/wagmi/pull/4262) [`8531f83db3a1fbb8202c3e426b7f85679f587a52`](https://github.com/wevm/wagmi/commit/8531f83db3a1fbb8202c3e426b7f85679f587a52) Thanks [@nezouse](https://github.com/nezouse)! - Added experimental actions entrypoint.
+
 ## 2.12.10
 
 ### Patch Changes
