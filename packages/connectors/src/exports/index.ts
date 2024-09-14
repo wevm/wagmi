@@ -13,6 +13,8 @@ export {
 
 export { type MetaMaskParameters, metaMask } from '../metaMask.js'
 
+export { uxuyWallet } from '../uxuyWallet.js'
+
 export { type SafeParameters, safe } from '../safe.js'
 
 export {
