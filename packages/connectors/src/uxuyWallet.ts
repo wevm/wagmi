@@ -9,7 +9,7 @@ import type { WalletTgSdk } from '@uxuycom/web3-tg-sdk'
 import type { EventEmitter } from 'eventemitter3'
 
 export type UxuyWalletParameters = {
-  appLogoUrl: string | null | undefined
+  appLogoUrl?: string | null | undefined
   appName: string | null | undefined
 }
 
