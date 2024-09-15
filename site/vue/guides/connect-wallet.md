@@ -16,7 +16,7 @@ The above libraries are all built on top of Wagmi, handle all the edge cases aro
 
 Wagmi provides you with the Composables to get started building your own Connect Wallet module. 
 
-It takes less than five minutes to get up and running with Browser Wallets, WalletConnect, and Coinbase Wallet.
+It takes less than five minutes to get up and running with Browser Wallets, WalletConnect, Uxuy Wallet and Coinbase Wallet.
 
 ### 1. Configure Wagmi
 

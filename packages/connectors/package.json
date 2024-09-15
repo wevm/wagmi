@@ -51,7 +51,9 @@
     "@safe-global/safe-apps-sdk": "9.1.0",
     "@walletconnect/ethereum-provider": "2.16.1",
     "@walletconnect/modal": "2.6.2",
-    "cbw-sdk": "npm:@coinbase/wallet-sdk@3.9.3"
+    "cbw-sdk": "npm:@coinbase/wallet-sdk@3.9.3",
+    "@uxuycom/web3-tg-sdk": "^0.0.5",
+    "eventemitter3": "5.0.1"
   },
   "devDependencies": {
     "@wagmi/core": "workspace:*",
