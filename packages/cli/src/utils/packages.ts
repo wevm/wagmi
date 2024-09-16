@@ -8,25 +8,22 @@ export async function getIsPackageInstalled(parameters: {
 }) {
   const { packageName, cwd = process.cwd() } = parameters
   try {
-    let command: string[]
-
-    switch (packageManager) {
-      case 'yarn':
-        command = ['why', packageName]
-        break
-      case 'bun':
-        command = ['pm', 'ls', '--all']
-        break
-      default:
-        command = ['ls', packageName]
-    }
+    const packageManager = await getPackageManager()
+    const command = (() => {
+      switch (packageManager) {
+        case 'yarn':
+          return ['why', packageName]
+        case 'bun':
+          return ['pm', 'ls', '--all']
+        default:
+          return ['ls', packageName]
+      }
+    })()
 
     const { stdout } = await execa(packageManager, command, { cwd })
 
-    if (packageManager === 'bun') {
-      // For Bun, we need to check if the package name is in the output
-      return stdout.includes(packageName)
-    }
+    // For Bun, we need to check if the package name is in the output
+    if (packageManager === 'bun') return stdout.includes(packageName)
 
     return stdout !== ''
   } catch (_error) {
