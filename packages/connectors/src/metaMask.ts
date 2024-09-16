@@ -17,6 +17,7 @@ import type {
 import {
   type AddEthereumChainParameter,
   type Address,
+  type Hex,
   type ProviderConnectInfo,
   type ProviderRpcError,
   ResourceUnavailableRpcError,
@@ -24,6 +25,7 @@ import {
   SwitchChainError,
   UserRejectedRequestError,
   getAddress,
+  hexToNumber,
   numberToHex,
   withRetry,
   withTimeout,
@@ -288,7 +290,10 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
               params: [addEthereumChain],
             })
 
-            const currentChainId = await this.getChainId()
+            const currentChainId = hexToNumber(
+              // Call `'eth_chainId'` directly to guard against `this.state.chainId` (via `provider.getChainId`) being stale.
+              (await provider.request({ method: 'eth_chainId' })) as Hex,
+            )
             if (currentChainId !== chainId)
               throw new UserRejectedRequestError(
                 new Error('User rejected switch after adding network.'),
