@@ -1,7 +1,7 @@
 {
   "name": "wagmi",
   "description": "React Hooks for Ethereum",
-  "version": "2.12.7",
+  "version": "2.12.11",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -41,6 +41,10 @@
     "./actions": {
       "types": "./dist/types/exports/actions.d.ts",
       "default": "./dist/esm/exports/actions.js"
+    },
+    "./actions/experimental": {
+      "types": "./dist/types/exports/actions/experimental.d.ts",
+      "default": "./dist/esm/exports/actions/experimental.js"
     },
     "./chains": {
       "types": "./dist/types/exports/chains.d.ts",

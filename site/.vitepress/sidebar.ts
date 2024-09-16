@@ -597,6 +597,14 @@ export function getSidebar() {
             link: '/vue/api/composables/useWaitForTransactionReceipt',
           },
           {
+            text: 'useWatchBlockNumber',
+            link: '/vue/api/composables/useWatchBlockNumber',
+          },
+          {
+            text: 'useWatchContractEvent',
+            link: '/vue/api/composables/useWatchContractEvent',
+          },
+          {
             text: 'useWriteContract',
             link: '/vue/api/composables/useWriteContract',
           },

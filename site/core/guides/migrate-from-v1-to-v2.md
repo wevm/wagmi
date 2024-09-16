@@ -289,7 +289,7 @@ In order to maximize type-safety and ease of creating connectors, the connector 
 
 ### Removed individual entrypoints
 
-Previously, each connector had it's own entrypoint to optimize tree-shaking. Since all connectors now have [`package.json#sideEffects`](https://webpack.js.org/guides/tree-shaking/#mark-the-file-as-side-effect-free) enabled, this is no longer necessary and the entrypoint is unified. Use the `'@wagmi/connectors'` package instead.
+Previously, each connector had its own entrypoint to optimize tree-shaking. Since all connectors now have [`package.json#sideEffects`](https://webpack.js.org/guides/tree-shaking/#mark-the-file-as-side-effect-free) enabled, this is no longer necessary and the entrypoint is unified. Use the `'@wagmi/connectors'` package instead.
 
 ```ts
 import { InjectedConnector } from '@wagmi/core/connectors/injected' // [!code --]
@@ -384,7 +384,7 @@ const result = await getEnsAddress(config, {
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
-By inverting control, Wagmi let's you choose how much normalization to do. For example, maybe your project only allows ENS names that are numeric so no normalization is not needed. Check out the [ENS documentation](https://docs.ens.domains/contract-api-reference/name-processing#normalising-names) for more information on normalizing names.
+By inverting control, Wagmi lets you choose how much normalization to do. For example, maybe your project only allows ENS names that are numeric so no normalization is not needed. Check out the [ENS documentation](https://docs.ens.domains/contract-api-reference/name-processing#normalising-names) for more information on normalizing names.
 
 ### Removed `configureChains`
 

@@ -363,12 +363,6 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         if (provider && !!(await this.getAccounts()).length) return
       }
 
-      // Remove cached SDK properties.
-      if (typeof localStorage !== 'undefined') {
-        localStorage.removeItem('MMSDK_cached_address')
-        localStorage.removeItem('MMSDK_cached_chainId')
-      }
-
       config.emitter.emit('disconnect')
 
       // Manage EIP-1193 event listeners

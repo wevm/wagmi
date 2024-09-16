@@ -1,5 +1,3 @@
-'use client'
-
 import {
   type Config,
   type ResolvedRegister,
@@ -7,10 +5,12 @@ import {
   watchContractEvent,
 } from '@wagmi/core'
 import type { UnionCompute, UnionExactPartial } from '@wagmi/core/internal'
-import { useEffect } from 'react'
 import type { Abi, ContractEventName } from 'viem'
+import { computed, watchEffect } from 'vue'
 
 import type { ConfigParameter, EnabledParameter } from '../types/properties.js'
+import type { DeepMaybeRef } from '../types/ref.js'
+import { deepUnref } from '../utils/cloneDeep.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
@@ -21,17 +21,19 @@ export type UseWatchContractEventParameters<
   config extends Config = Config,
   chainId extends
     config['chains'][number]['id'] = config['chains'][number]['id'],
-> = UnionCompute<
-  UnionExactPartial<
-    WatchContractEventParameters<abi, eventName, strict, config, chainId>
-  > &
-    ConfigParameter<config> &
-    EnabledParameter
+> = DeepMaybeRef<
+  UnionCompute<
+    UnionExactPartial<
+      WatchContractEventParameters<abi, eventName, strict, config, chainId>
+    > &
+      ConfigParameter<config> &
+      EnabledParameter
+  >
 >
 
 export type UseWatchContractEventReturnType = void
 
-/** https://wagmi.sh/react/api/hooks/useWatchContractEvent */
+/** https://wagmi.sh/vue/api/composables/useWatchContractEvent */
 export function useWatchContractEvent<
   const abi extends Abi | readonly unknown[],
   eventName extends ContractEventName<abi>,
@@ -48,38 +50,28 @@ export function useWatchContractEvent<
     chainId
   > = {} as any,
 ): UseWatchContractEventReturnType {
-  const { enabled = true, onLogs, config: _, ...rest } = parameters
+  const parameters_ = computed(() => deepUnref(parameters))
 
-  const config = useConfig(parameters)
+  const config = useConfig(parameters_)
   const configChainId = useChainId({ config })
-  const chainId = parameters.chainId ?? configChainId
 
-  // TODO(react@19): cleanup
-  // biome-ignore lint/correctness/useExhaustiveDependencies: `rest` changes every render so only including properties in dependency array
-  useEffect(() => {
+  watchEffect((onCleanup) => {
+    const {
+      chainId = configChainId.value,
+      enabled = true,
+      onLogs,
+      config: _,
+      ...rest
+    } = parameters_.value
+
     if (!enabled) return
     if (!onLogs) return
-    return watchContractEvent(config, {
+
+    const unwatch = watchContractEvent(config, {
       ...(rest as any),
       chainId,
       onLogs,
     })
-  }, [
-    chainId,
-    config,
-    enabled,
-    onLogs,
-    ///
-    rest.abi,
-    rest.address,
-    rest.args,
-    rest.batch,
-    rest.eventName,
-    rest.fromBlock,
-    rest.onError,
-    rest.poll,
-    rest.pollingInterval,
-    rest.strict,
-    rest.syncConnectedChain,
-  ])
+    onCleanup(unwatch)
+  })
 }

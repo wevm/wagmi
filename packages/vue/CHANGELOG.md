@@ -1,5 +1,43 @@
 # @wagmi/vue
 
+## 0.0.44
+
+### Patch Changes
+
+- [#4262](https://github.com/wevm/wagmi/pull/4262) [`8531f83db3a1fbb8202c3e426b7f85679f587a52`](https://github.com/wevm/wagmi/commit/8531f83db3a1fbb8202c3e426b7f85679f587a52) Thanks [@nezouse](https://github.com/nezouse)! - Added experimental actions entrypoint.
+
+## 0.0.43
+
+### Patch Changes
+
+- [#4260](https://github.com/wevm/wagmi/pull/4260) [`969a208a110b760a13fd7263360320f52440a9b6`](https://github.com/wevm/wagmi/commit/969a208a110b760a13fd7263360320f52440a9b6) Thanks [@tmm](https://github.com/tmm)! - Fixed `useReadContract` deployless reads support.
+
+- [#4259](https://github.com/wevm/wagmi/pull/4259) [`f47ce8f6d263e49fdff90b8edb3190142d2657bb`](https://github.com/wevm/wagmi/commit/f47ce8f6d263e49fdff90b8edb3190142d2657bb) Thanks [@tmm](https://github.com/tmm)! - Disabled `useConnectorClient` during reconnection if connector is not fully restored.
+
+- Updated dependencies [[`81de006e66121a18c61945c1f9b8426c83a5713c`](https://github.com/wevm/wagmi/commit/81de006e66121a18c61945c1f9b8426c83a5713c), [`f47ce8f6d263e49fdff90b8edb3190142d2657bb`](https://github.com/wevm/wagmi/commit/f47ce8f6d263e49fdff90b8edb3190142d2657bb)]:
+  - @wagmi/connectors@5.1.10
+  - @wagmi/core@2.13.5
+
+## 0.0.42
+
+### Patch Changes
+
+- [#4252](https://github.com/wevm/wagmi/pull/4252) [`67defb516bbd9b2c7b03e376ecd3aca8a001d065`](https://github.com/wevm/wagmi/commit/67defb516bbd9b2c7b03e376ecd3aca8a001d065) Thanks [@tmm](https://github.com/tmm)! - Added `useWatchContractEvent`.
+
+## 0.0.41
+
+### Patch Changes
+
+- Updated dependencies [[`21bd0e473d374cbbd7a01bececa6022d529026ba`](https://github.com/wevm/wagmi/commit/21bd0e473d374cbbd7a01bececa6022d529026ba), [`5c89c6853e616437a3be2b019db895451fecfb3c`](https://github.com/wevm/wagmi/commit/5c89c6853e616437a3be2b019db895451fecfb3c)]:
+  - @wagmi/connectors@5.1.9
+
+## 0.0.40
+
+### Patch Changes
+
+- Updated dependencies [[`b580ad4edff1721e0b9d138cf5ae2ec74d2374c7`](https://github.com/wevm/wagmi/commit/b580ad4edff1721e0b9d138cf5ae2ec74d2374c7)]:
+  - @wagmi/connectors@5.1.8
+
 ## 0.0.39
 
 ### Patch Changes

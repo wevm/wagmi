@@ -72,6 +72,7 @@ export function useConnectorClient<
   const queryClient = useQueryClient()
   const { address, connector, status } = useAccount({ config })
   const chainId = useChainId({ config })
+  const activeConnector = parameters.connector ?? connector
 
   const { queryKey, ...options } = getConnectorClientQueryOptions<
     config,
@@ -79,10 +80,11 @@ export function useConnectorClient<
   >(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
-    connector: parameters.connector ?? connector,
+    connector: activeConnector,
   })
   const enabled = Boolean(
-    (status === 'connected' || status === 'reconnecting') &&
+    (status === 'connected' ||
+      (status === 'reconnecting' && activeConnector?.getProvider)) &&
       (query.enabled ?? true),
   )
 

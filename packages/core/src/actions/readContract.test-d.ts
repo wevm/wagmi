@@ -50,3 +50,25 @@ test('overloads', async () => {
     // @ts-ignore – TODO: Fix https://github.com/wevm/viem/issues/1916
   }>(result4)
 })
+
+test('deployless read (bytecode)', async () => {
+  const result = await readContract(config, {
+    code: '0x',
+    abi: abi.erc20,
+    functionName: 'balanceOf',
+    args: ['0x'],
+  })
+  expectTypeOf(result).toEqualTypeOf<bigint>()
+})
+
+test('deployless read (factory)', async () => {
+  const result = await readContract(config, {
+    address: '0x',
+    abi: abi.erc20,
+    functionName: 'balanceOf',
+    args: ['0x'],
+    factory: '0x',
+    factoryData: '0x',
+  })
+  expectTypeOf(result).toEqualTypeOf<bigint>()
+})

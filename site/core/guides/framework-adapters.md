@@ -6,11 +6,11 @@ The short answer is — you already can! Wagmi Core is pure VanillaJS that you c
 
 Someday, we would love to support additional frameworks, but unfortunately the core team doesn't have time to build and support them in a high-quality way at the moment. This could change in the future with additional [sponsors](https://github.com/sponsors/wevm), reshuffling of the roadmap, or if someone from the community wants to lead the effort.
 
-In the meantime, here are a some tips on how to create tighter bonds between Wagmi Core and other frameworks.
+In the meantime, here are some tips on how to create tighter bonds between Wagmi Core and other frameworks.
 
 ## Dependency Injection
 
-Once you create a Wagmi Config, you'll need to make sure your framework has access to it inside your higher-level functions (e.g. hooks for React, composables for Vue). For example, Wagmi uses [React Context](https://react.dev/learn/passing-data-deeply-with-context) to inject the Config into React Hooks and update it if it changes. This makes it so you users don't need to pass a Config object to every time they use a hook.
+Once you create a Wagmi Config, you'll need to make sure your framework has access to it inside your higher-level functions (e.g. hooks for React, composables for Vue). For example, Wagmi uses [React Context](https://react.dev/learn/passing-data-deeply-with-context) to inject the Config into React Hooks and update it if it changes. This makes it so your users don't need to pass a Config object every time they use a hook.
 
 ## Reactivity Layer
 
@@ -24,11 +24,11 @@ Wagmi uses [TanStack Query](https://tanstack.com/query) to enable caching, dedup
 
 To get started with your framework, install and set up the related TanStack Query adapter. Next, import query keys/functions and mutation functions from the `'@wagmi/core/query'` entrypoint. You can plug these directly into your framework's TanStack Query adapter functions.
 
-If you are building a library, you'll also want to make sure you that you wire up generics correctly so type-inference and safety works correctly. The best way to make sure you are doing this correctly, is to see how we do this for React with Wagmi by checking out the [source code](https://github.com/wevm/wagmi/tree/main/packages/react/src/hooks).
+If you are building a library, you'll also want to make sure that you wire up generics correctly so type-inference and safety work correctly. The best way to make sure you are doing this correctly, is to see how we do this for React with Wagmi by checking out the [source code](https://github.com/wevm/wagmi/tree/main/packages/react/src/hooks).
 
 ## Testing
 
-If you are building a library, you'll want to write tests. Wagmi uses [React Testing Library](https://testing-library.com/docs/react-testing-library/intro) to test hooks. [Testing Library](https://testing-library.com) also supports other frameworks, like Svelte, Solid, and more. You can take a look on how the React tests work and do something similar for your code.
+If you are building a library, you'll want to write tests. Wagmi uses [React Testing Library](https://testing-library.com/docs/react-testing-library/intro) to test hooks. [Testing Library](https://testing-library.com) also supports other frameworks, like Svelte, Solid, and more. You can take a look at how the React tests work and do something similar for your code.
 
 ## Proxy Exports
 
