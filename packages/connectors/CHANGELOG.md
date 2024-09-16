@@ -1,5 +1,13 @@
 # @wagmi/connectors
 
+## 5.1.11
+
+### Patch Changes
+
+- [#4271](https://github.com/wevm/wagmi/pull/4271) [`82404c960e04c83e0bae6e1e12459ef9debf9554`](https://github.com/wevm/wagmi/commit/82404c960e04c83e0bae6e1e12459ef9debf9554) Thanks [@omridan159](https://github.com/omridan159)! - Bumped MetaMask SDK.
+
+- [#4227](https://github.com/wevm/wagmi/pull/4227) [`d07ad7f63a018256908a673d078aaf79e47ac703`](https://github.com/wevm/wagmi/commit/d07ad7f63a018256908a673d078aaf79e47ac703) Thanks [@xianchenxc](https://github.com/xianchenxc)! - Fixed MetaMask Connector throwing error after switching to a chain that was just added via `'wallet_addEthereumChain'`.
+
 ## 5.1.10
 
 ### Patch Changes
