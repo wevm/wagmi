@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 2.1.16
+
+### Patch Changes
+
+- [#4224](https://github.com/wevm/wagmi/pull/4224) [`b0eb89c2a0781bb3434996fa53ee7ceb3bb44db9`](https://github.com/wevm/wagmi/commit/b0eb89c2a0781bb3434996fa53ee7ceb3bb44db9) Thanks [@roderik](https://github.com/roderik)! - Fixed package detection for Bun.
+
 ## 2.1.15
 
 ### Patch Changes
