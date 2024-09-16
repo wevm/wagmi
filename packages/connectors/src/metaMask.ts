@@ -17,6 +17,7 @@ import type {
 import {
   type AddEthereumChainParameter,
   type Address,
+  type Hex,
   type ProviderConnectInfo,
   type ProviderRpcError,
   ResourceUnavailableRpcError,
@@ -24,6 +25,7 @@ import {
   SwitchChainError,
   UserRejectedRequestError,
   getAddress,
+  hexToNumber,
   numberToHex,
   withRetry,
   withTimeout,
@@ -283,18 +285,15 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
               rpcUrls,
             } satisfies AddEthereumChainParameter
 
-            await Promise.all([
-              provider.request({
-                method: 'wallet_addEthereumChain',
-                params: [addEthereumChain],
-              }),
-              new Promise<void>((resolve) =>
-                config.emitter.once('change', ({ chainId: currentChainId }) => {
-                  if (currentChainId === chainId) resolve()
-                }),
-              ),
-            ])
-            const currentChainId = await this.getChainId()
+            await provider.request({
+              method: 'wallet_addEthereumChain',
+              params: [addEthereumChain],
+            })
+
+            const currentChainId = hexToNumber(
+              // Call `'eth_chainId'` directly to guard against `this.state.chainId` (via `provider.getChainId`) being stale.
+              (await provider.request({ method: 'eth_chainId' })) as Hex,
+            )
             if (currentChainId !== chainId)
               throw new UserRejectedRequestError(
                 new Error('User rejected switch after adding network.'),
