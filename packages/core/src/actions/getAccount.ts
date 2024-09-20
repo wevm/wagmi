@@ -1,6 +1,7 @@
 import type { Address, Chain } from 'viem'
 
 import type { Config, Connector } from '../createConfig.js'
+import { sliceAddress } from './sliceAddress.js'
 
 export type GetAccountReturnType<
   config extends Config = Config,
@@ -18,6 +19,7 @@ export type GetAccountReturnType<
       isDisconnected: false
       isReconnecting: false
       status: 'connected'
+      slicedAddress: string
     }
   | {
       address: Address | undefined
@@ -30,6 +32,7 @@ export type GetAccountReturnType<
       isDisconnected: false
       isReconnecting: true
       status: 'reconnecting'
+      slicedAddress: string | null
     }
   | {
       address: Address | undefined
@@ -42,6 +45,7 @@ export type GetAccountReturnType<
       isConnecting: true
       isDisconnected: false
       status: 'connecting'
+      slicedAddress: string | null
     }
   | {
       address: undefined
@@ -54,6 +58,7 @@ export type GetAccountReturnType<
       isConnecting: false
       isDisconnected: true
       status: 'disconnected'
+      slicedAddress: null
     }
 
 /** https://wagmi.sh/core/api/actions/getAccount */
@@ -68,6 +73,7 @@ export function getAccount<config extends Config>(
     (chain) => chain.id === connection?.chainId,
   ) as GetAccountReturnType<config>['chain']
   const status = config.state.status
+  const slicedAddress = sliceAddress(address)
 
   switch (status) {
     case 'connected':
@@ -82,6 +88,7 @@ export function getAccount<config extends Config>(
         isDisconnected: false,
         isReconnecting: false,
         status,
+        slicedAddress: slicedAddress!,
       }
     case 'reconnecting':
       return {
@@ -95,6 +102,7 @@ export function getAccount<config extends Config>(
         isDisconnected: false,
         isReconnecting: true,
         status,
+        slicedAddress,
       }
     case 'connecting':
       return {
@@ -108,6 +116,7 @@ export function getAccount<config extends Config>(
         isDisconnected: false,
         isReconnecting: false,
         status,
+        slicedAddress,
       }
     case 'disconnected':
       return {
@@ -121,6 +130,7 @@ export function getAccount<config extends Config>(
         isDisconnected: true,
         isReconnecting: false,
         status,
+        slicedAddress: null,
       }
   }
 }
