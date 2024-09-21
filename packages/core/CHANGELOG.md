@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.13.6
+
+### Patch Changes
+
+- [#4286](https://github.com/wevm/wagmi/pull/4286) [`edcbf5d6fbe92f639bead800502edda9e0aa39f1`](https://github.com/wevm/wagmi/commit/edcbf5d6fbe92f639bead800502edda9e0aa39f1) Thanks [@holic](https://github.com/holic)! - Removed duplicate code.
+
 ## 2.13.5
 
 ### Patch Changes
