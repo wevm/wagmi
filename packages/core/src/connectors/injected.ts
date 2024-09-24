@@ -151,7 +151,7 @@ export function injected(parameters: InjectedParameters = {}) {
     async setup() {
       const provider = await this.getProvider()
       // Only start listening for events if `target` is set, otherwise `injected()` will also receive events
-      if (provider && parameters.target) {
+      if (provider?.on && parameters.target) {
         if (!connect) {
           connect = this.onConnect.bind(this)
           provider.on('connect', connect)
