@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.13.7
+
+### Patch Changes
+
+- [`be75c2d4ef636d7362420ab0a106bfdf63f5d1e6`](https://github.com/wevm/wagmi/commit/be75c2d4ef636d7362420ab0a106bfdf63f5d1e6) Thanks [@tmm](https://github.com/tmm)! - Added guard for missing `provider.on` for `injected` connector.
+
 ## 2.13.6
 
 ### Patch Changes
