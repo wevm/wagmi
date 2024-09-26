@@ -8,10 +8,10 @@ import type { WalletTgSdk } from '@uxuycom/web3-tg-sdk'
 
 import type { EventEmitter } from 'eventemitter3'
 
-export type UxuyWalletParameters = {
+/*export type UxuyWalletParameters = {
   appLogoUrl?: string | null | undefined
-  appName: string | null | undefined
-}
+  appName?: string | null | undefined
+}*/
 
 import {
   type AddEthereumChainParameter,
@@ -50,6 +50,23 @@ declare const mapping: {
   readonly deprecated: readonly ['eth_sign', 'eth_signTypedData_v2']
   readonly unsupported: readonly ['eth_subscribe', 'eth_unsubscribe']
   readonly fetch: readonly []
+}
+
+export interface UxuyWalletParameters {
+  debug?: boolean
+  bridge?: string
+  connect?: string
+  connect_direct_link?: string
+  injected?: boolean
+  request_timeout?: number
+  metaData?: {
+    hostname: string
+    icon?: string
+    name?: string
+    url?: string //
+    description?: string
+    direct_link?: string
+  }
 }
 
 type MethodCategory = keyof typeof mapping
@@ -195,9 +212,7 @@ export function uxuyWallet(parameters: UxuyWalletParameters = {}) {
 
           return SDK as unknown as typeof SDK.default
         })()
-        sdk = new WalletTgSdk({
-          ...parameters,
-        })
+        sdk = new WalletTgSdk({ ...parameters })
 
         walletProvider = sdk.ethereum
         return sdk.ethereum
