@@ -239,11 +239,15 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
               if (currentChainId === chainId)
                 config.emitter.emit('change', { chainId })
             }),
-          new Promise<void>((resolve) =>
-            config.emitter.once('change', ({ chainId: currentChainId }) => {
-              if (currentChainId === chainId) resolve()
-            }),
-          ),
+          new Promise<void>((resolve) => {
+            const listener = ((data) => {
+              if ('chainId' in data && data.chainId === chainId) {
+                config.emitter.off('change', listener)
+                resolve()
+              }
+            }) satisfies Parameters<typeof config.emitter.on>[1]
+            config.emitter.on('change', listener)
+          }),
         ])
         return chain
       } catch (err) {
