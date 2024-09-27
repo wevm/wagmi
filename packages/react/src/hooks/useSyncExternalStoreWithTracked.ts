@@ -1,7 +1,7 @@
 'use client'
 
 import { deepEqual } from '@wagmi/core/internal'
-import { useRef } from 'react'
+import { useMemo, useRef } from 'react'
 import { useSyncExternalStoreWithSelector } from 'use-sync-external-store/shim/with-selector.js'
 
 const isPlainObject = (obj: unknown) =>
@@ -37,29 +37,31 @@ export function useSyncExternalStoreWithTracked<
     },
   )
 
-  if (isPlainObject(result)) {
-    const trackedResult = { ...result }
-    let properties = {}
-    for (const [key, value] of Object.entries(
-      trackedResult as { [key: string]: any },
-    )) {
-      properties = {
-        ...properties,
-        [key]: {
-          configurable: false,
-          enumerable: true,
-          get: () => {
-            if (!trackedKeys.current.includes(key)) {
-              trackedKeys.current.push(key)
-            }
-            return value
+  return useMemo(() => {
+    if (isPlainObject(result)) {
+      const trackedResult = { ...result }
+      let properties = {}
+      for (const [key, value] of Object.entries(
+        trackedResult as { [key: string]: any },
+      )) {
+        properties = {
+          ...properties,
+          [key]: {
+            configurable: false,
+            enumerable: true,
+            get: () => {
+              if (!trackedKeys.current.includes(key)) {
+                trackedKeys.current.push(key)
+              }
+              return value
+            },
           },
-        },
+        }
       }
+      Object.defineProperties(trackedResult, properties)
+      return trackedResult
     }
-    Object.defineProperties(trackedResult, properties)
-    return trackedResult
-  }
 
-  return result
+    return result
+  }, [result])
 }
