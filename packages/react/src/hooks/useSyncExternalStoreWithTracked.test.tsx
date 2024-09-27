@@ -1,8 +1,8 @@
 import { fireEvent, screen } from '@testing-library/react'
 import { act, cleanup, render, renderHook } from '@wagmi/test/react'
-import React, { memo, useState } from 'react'
+import React from 'react'
 import * as ReactDOM from 'react-dom'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, expect, test } from 'vitest'
 
 import { useSyncExternalStoreWithTracked } from './useSyncExternalStoreWithTracked.js'
 
@@ -41,33 +41,32 @@ function useExternalStore(
   return state as any
 }
 
-describe('useSyncExternalStoreWithTracked', () => {
-  afterEach(() => {
-    cleanup()
+afterEach(() => {
+  cleanup()
+})
+
+test('rerenders only when the tracked value changes', async () => {
+  const externalStore = createExternalStore({
+    foo: 'bar',
+    gm: 'wagmi',
+    isGonnaMakeIt: false,
   })
 
-  it('rerenders only when the tracked value changes', async () => {
-    const externalStore = createExternalStore({
-      foo: 'bar',
-      gm: 'wagmi',
-      isGonnaMakeIt: false,
+  const renders: any[] = []
+
+  renderHook(() => {
+    const { gm } = useExternalStore(externalStore, (state) => {
+      renders.push(state)
     })
 
-    const renders: any[] = []
+    return gm
+  })
 
-    renderHook(() => {
-      const { gm } = useExternalStore(externalStore, (state) => {
-        renders.push(state)
-      })
+  act(() => {
+    externalStore.set((x) => ({ ...x, foo: 'baz', isGonnaMakeIt: true }))
+  })
 
-      return gm
-    })
-
-    act(() => {
-      externalStore.set((x) => ({ ...x, foo: 'baz', isGonnaMakeIt: true }))
-    })
-
-    expect(renders).toMatchInlineSnapshot(`
+  expect(renders).toMatchInlineSnapshot(`
       [
         {
           "foo": "bar",
@@ -77,11 +76,11 @@ describe('useSyncExternalStoreWithTracked', () => {
       ]
     `)
 
-    act(() => {
-      externalStore.set((x) => ({ ...x, gm: 'ngmi' }))
-    })
+  act(() => {
+    externalStore.set((x) => ({ ...x, gm: 'ngmi' }))
+  })
 
-    expect(renders).toMatchInlineSnapshot(`
+  expect(renders).toMatchInlineSnapshot(`
       [
         {
           "foo": "bar",
@@ -95,72 +94,37 @@ describe('useSyncExternalStoreWithTracked', () => {
         },
       ]
     `)
+})
+
+test('rerenders when all values are being tracked', async () => {
+  const externalStore = createExternalStore({
+    foo: 'bar',
+    gm: 'wagmi',
+    isGonnaMakeIt: false,
   })
 
-  it('rerenders when all values are being tracked', async () => {
-    const externalStore = createExternalStore({
-      foo: 'bar',
-      gm: 'wagmi',
-      isGonnaMakeIt: false,
-    })
+  const renders: any[] = []
 
-    const renders: any[] = []
-
-    renderHook(() => {
-      const { foo, gm, isGonnaMakeIt } = useExternalStore(
-        externalStore,
-        (state) => {
-          renders.push(state)
-        },
-      )
-
-      return {
-        foo,
-        gm,
-        isGonnaMakeIt,
-      }
-    })
-
-    act(() => {
-      externalStore.set((x) => ({ ...x, isGonnaMakeIt: true }))
-    })
-
-    expect(renders).toMatchInlineSnapshot(`
-      [
-        {
-          "foo": "bar",
-          "gm": "wagmi",
-          "isGonnaMakeIt": false,
-        },
-        {
-          "foo": "bar",
-          "gm": "wagmi",
-          "isGonnaMakeIt": true,
-        },
-      ]
-    `)
-  })
-
-  it('rerenders when no values are being tracked', async () => {
-    const externalStore = createExternalStore({
-      foo: 'bar',
-      gm: 'wagmi',
-      isGonnaMakeIt: false,
-    })
-
-    const renders: any[] = []
-
-    renderHook(() => {
-      useExternalStore(externalStore, (state) => {
+  renderHook(() => {
+    const { foo, gm, isGonnaMakeIt } = useExternalStore(
+      externalStore,
+      (state) => {
         renders.push(state)
-      })
-    })
+      },
+    )
 
-    act(() => {
-      externalStore.set((x) => ({ ...x, isGonnaMakeIt: true }))
-    })
+    return {
+      foo,
+      gm,
+      isGonnaMakeIt,
+    }
+  })
 
-    expect(renders).toMatchInlineSnapshot(`
+  act(() => {
+    externalStore.set((x) => ({ ...x, isGonnaMakeIt: true }))
+  })
+
+  expect(renders).toMatchInlineSnapshot(`
       [
         {
           "foo": "bar",
@@ -174,51 +138,87 @@ describe('useSyncExternalStoreWithTracked', () => {
         },
       ]
     `)
+})
+
+test('rerenders when no values are being tracked', async () => {
+  const externalStore = createExternalStore({
+    foo: 'bar',
+    gm: 'wagmi',
+    isGonnaMakeIt: false,
   })
 
-  it("create store's new object reference when only values changed", async () => {
-    const externalStore = createExternalStore({
-      foo: 'bar',
-      gm: 'wagmi',
-      isGonnaMakeIt: false,
+  const renders: any[] = []
+
+  renderHook(() => {
+    useExternalStore(externalStore, (state) => {
+      renders.push(state)
     })
-
-    let rerenders = -1
-
-    const TRIGGER_BTN_TEXT = 'Trigger re-render'
-
-    const MemoComponent = memo((props: { store: any }) => {
-      rerenders++
-      return <div>{props.store.isGonnaMakeIt}</div>
-    })
-
-    const Test = () => {
-      const store = useExternalStore(externalStore, () => {})
-      const [, forceTestRerender] = useState<number>(0)
-
-      return (
-        <>
-          <MemoComponent store={store} />
-          <button onClick={() => forceTestRerender((prev) => prev + 1)}>
-            {TRIGGER_BTN_TEXT}
-          </button>
-        </>
-      )
-    }
-
-    render(<Test />)
-    const forceRerenderBtn = screen.getByText(TRIGGER_BTN_TEXT)
-
-    expect(rerenders).toBe(0)
-
-    fireEvent.click(forceRerenderBtn) // updating other state won't make the store be a new object
-
-    expect(rerenders).toBe(0)
-
-    act(() => {
-      externalStore.set((x) => ({ ...x, isGonnaMakeIt: true })) // trigger rerendering when the used value changes
-    })
-
-    expect(rerenders).toBe(1)
   })
+
+  act(() => {
+    externalStore.set((x) => ({ ...x, isGonnaMakeIt: true }))
+  })
+
+  expect(renders).toMatchInlineSnapshot(`
+      [
+        {
+          "foo": "bar",
+          "gm": "wagmi",
+          "isGonnaMakeIt": false,
+        },
+        {
+          "foo": "bar",
+          "gm": "wagmi",
+          "isGonnaMakeIt": true,
+        },
+      ]
+    `)
+})
+
+test('store object reference is stable across rerenders', async () => {
+  const externalStore = createExternalStore({
+    foo: 'bar',
+    gm: 'wagmi',
+    isGonnaMakeIt: false,
+  })
+
+  let childRenderCount = 0
+  const MemoComponent = React.memo((props: { store: any }) => {
+    childRenderCount++
+    return <div>{props.store.isGonnaMakeIt}</div>
+  })
+
+  const renders: any[] = []
+
+  function Test() {
+    const store = useExternalStore(externalStore, (state) => {
+      renders.push(state)
+    })
+    const [, rerender] = React.useState(0)
+
+    return (
+      <>
+        <MemoComponent store={store} />
+        <button onClick={() => rerender((prev) => prev + 1)}>rerender</button>
+      </>
+    )
+  }
+
+  render(<Test />)
+
+  const forceRerenderBtn = screen.getByRole('button')
+  expect(childRenderCount).toBe(1)
+  expect(renders.length).toBe(1)
+
+  // updating parent state, child should not rerender
+  fireEvent.click(forceRerenderBtn)
+  expect(childRenderCount).toBe(1)
+  expect(renders.length).toBe(2)
+
+  // child and parent both rerender when store changes
+  act(() => {
+    externalStore.set((x) => ({ ...x, isGonnaMakeIt: true }))
+  })
+  expect(childRenderCount).toBe(2)
+  expect(renders.length).toBe(3)
 })
