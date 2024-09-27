@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  lint:
-    name: Lint
+  check:
+    name: Check
     permissions:
       contents: write
     runs-on: ubuntu-latest
@@ -18,11 +18,11 @@ jobs:
       - name: Install dependencies
         uses: wevm/actions/.github/actions/pnpm@main
 
-      - name: Lint repo
-        run: pnpm lint:repo
+      - name: Check repo
+        run: pnpm check:repo
 
-      - name: Lint code
-        run: pnpm lint
+      - name: Check code
+        run: pnpm check
 
       - name: Update package versions
         run: pnpm version:update
@@ -37,7 +37,7 @@ jobs:
 
   build:
     name: Build
-    needs: lint
+    needs: check
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
@@ -59,7 +59,7 @@ jobs:
 
   types:
     name: Types
-    needs: lint
+    needs: check
     runs-on: ubuntu-latest
     timeout-minutes: 5
     strategy:
@@ -80,9 +80,9 @@ jobs:
         run: pnpm preconstruct
 
       - name: Check types
-        run: pnpm typecheck
+        run: pnpm check:types
 
-      # Redundant with `pnpm typecheck`
+        # Redundant with `pnpm check:types`
       # If Vitest adds special features in the future, e.g. type coverage, can add this back!
       # - name: Test types
       #   run: pnpm test:typecheck
