@@ -96,7 +96,7 @@ export function createConfig<
     [
       ...(rest.connectors ?? []),
       ...(!ssr
-        ? mipd?.getProviders().map(providerDetailToConnector) ?? []
+        ? (mipd?.getProviders().map(providerDetailToConnector) ?? [])
         : []),
     ].map(setup),
   )

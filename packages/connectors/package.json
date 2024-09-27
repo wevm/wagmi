@@ -11,9 +11,9 @@
   "scripts": {
     "build": "pnpm run clean && pnpm run build:esm+types",
     "build:esm+types": "tsc --project tsconfig.build.json --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
+    "check:types": "tsc --noEmit",
     "clean": "rm -rf dist tsconfig.tsbuildinfo",
-    "test:build": "publint --strict && attw --pack --ignore-rules cjs-resolves-to-esm",
-    "typecheck": "tsc --noEmit"
+    "test:build": "publint --strict && attw --pack --ignore-rules cjs-resolves-to-esm"
   },
   "files": [
     "dist/**",
@@ -55,7 +55,7 @@
   },
   "devDependencies": {
     "@wagmi/core": "workspace:*",
-    "msw": "^2.2.14"
+    "msw": "^2.4.9"
   },
   "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
   "funding": "https://github.com/sponsors/wevm",

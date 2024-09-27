@@ -11,9 +11,9 @@
   "scripts": {
     "build": "pnpm run clean && pnpm run build:esm+types",
     "build:esm+types": "tsc --project tsconfig.build.json --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
+    "check:types": "tsc --noEmit",
     "clean": "rm -rf dist tsconfig.tsbuildinfo actions chains codegen connectors experimental query",
-    "test:build": "publint --strict && attw --pack --ignore-rules cjs-resolves-to-esm",
-    "typecheck": "tsc --noEmit"
+    "test:build": "publint --strict && attw --pack --ignore-rules cjs-resolves-to-esm"
   },
   "files": [
     "dist/**",
@@ -96,10 +96,11 @@
   },
   "devDependencies": {
     "@tanstack/react-query": ">=5.45.1",
-    "@testing-library/react": ">=15.0.7",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": ">=16.0.1",
     "@types/react": ">=18.3.1",
     "@types/react-dom": ">=18.3.0",
-    "@types/use-sync-external-store": "^0.0.3",
+    "@types/use-sync-external-store": "^0.0.6",
     "react": ">=18.3.1",
     "react-dom": ">=18.3.1"
   },

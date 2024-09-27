@@ -17,10 +17,11 @@
     "dev:react": "pnpm --filter vite-react dev",
     "dev:vue": "pnpm --filter vite-vue dev",
     "docs:dev": "pnpm --filter site dev",
+    "check": "biome check --write",
+    "check:repo": "sherif -i viem",
+    "check:types": "pnpm run --r --parallel typecheck && tsc --noEmit",
+    "check:unused": "pnpm clean && knip",
     "format": "biome format --write",
-    "lint": "biome check --write",
-    "lint:repo": "sherif",
-    "lint:unused": "pnpm clean && knip",
     "postinstall": "pnpm preconstruct",
     "preconstruct": "bun scripts/preconstruct.ts",
     "preinstall": "pnpx only-allow pnpm",
@@ -36,32 +37,31 @@
     "test:update": "vitest --update",
     "test:ui": "vitest --ui",
     "test:vue": "vitest --project @wagmi/vue",
-    "typecheck": "pnpm run --r --parallel typecheck && tsc --noEmit",
     "version:update": "bun scripts/updateVersion.ts",
     "version:update:viem": "bun scripts/updateViemVersion.ts"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "^0.15.3",
-    "@biomejs/biome": "^1.8.3",
+    "@arethetypeswrong/cli": "^0.16.4",
+    "@biomejs/biome": "^1.9.2",
     "@changesets/changelog-github": "0.4.6",
-    "@changesets/cli": "^2.27.1",
-    "@types/bun": "^1.1.1",
-    "@vitest/coverage-v8": "^1.6.0",
-    "@vitest/ui": "^1.6.0",
+    "@changesets/cli": "^2.27.8",
+    "@types/bun": "^1.1.10",
+    "@vitest/coverage-v8": "^2.1.1",
+    "@vitest/ui": "^2.1.1",
     "@wagmi/test": "workspace:*",
-    "bun": "^1.1.7",
-    "glob": "^10.3.12",
-    "happy-dom": "^12.2.1",
-    "knip": "^5.13.0",
-    "prool": "^0.0.11",
-    "publint": "^0.2.7",
-    "sherif": "^0.8.4",
+    "bun": "^1.1.29",
+    "glob": "^10.4.5",
+    "happy-dom": "^15.7.4",
+    "knip": "^5.30.6",
+    "prool": "^0.0.16",
+    "publint": "^0.2.11",
+    "sherif": "^1.0.0",
     "simple-git-hooks": "^2.11.1",
     "typescript": "5.5.2",
     "viem": "2.17.0",
-    "vitest": "^1.6.0"
+    "vitest": "^2.1.1"
   },
-  "packageManager": "pnpm@9.4.0",
+  "packageManager": "pnpm@9.11.0",
   "pnpm": {
     "peerDependencyRules": {
       "ignoreMissing": [
@@ -76,7 +76,7 @@
     "node": "22.x"
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpm lint"
+    "pre-commit": "pnpm check"
   },
   "knip": {
     "ignore": ["**/templates/**", "**/hardhat.config.js"],
