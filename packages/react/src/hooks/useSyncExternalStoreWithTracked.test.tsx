@@ -1,4 +1,6 @@
-import { act, cleanup, renderHook } from '@wagmi/test/react'
+import { fireEvent, screen } from '@testing-library/react'
+import { act, cleanup, render, renderHook } from '@wagmi/test/react'
+import React, { memo, useState } from 'react'
 import * as ReactDOM from 'react-dom'
 import { afterEach, describe, expect, it } from 'vitest'
 
@@ -172,5 +174,51 @@ describe('useSyncExternalStoreWithTracked', () => {
         },
       ]
     `)
+  })
+
+  it("create store's new object reference when only values changed", async () => {
+    const externalStore = createExternalStore({
+      foo: 'bar',
+      gm: 'wagmi',
+      isGonnaMakeIt: false,
+    })
+
+    let rerenders = -1
+
+    const TRIGGER_BTN_TEXT = 'Trigger re-render'
+
+    const MemoComponent = memo((props: { store: any }) => {
+      rerenders++
+      return <div>{props.store.isGonnaMakeIt}</div>
+    })
+
+    const Test = () => {
+      const store = useExternalStore(externalStore, () => {})
+      const [, forceTestRerender] = useState<number>(0)
+
+      return (
+        <>
+          <MemoComponent store={store} />
+          <button onClick={() => forceTestRerender((prev) => prev + 1)}>
+            {TRIGGER_BTN_TEXT}
+          </button>
+        </>
+      )
+    }
+
+    render(<Test />)
+    const forceRerenderBtn = screen.getByText(TRIGGER_BTN_TEXT)
+
+    expect(rerenders).toBe(0)
+
+    fireEvent.click(forceRerenderBtn) // updating other state won't make the store be a new object
+
+    expect(rerenders).toBe(0)
+
+    act(() => {
+      externalStore.set((x) => ({ ...x, isGonnaMakeIt: true })) // trigger rerendering when the used value changes
+    })
+
+    expect(rerenders).toBe(1)
   })
 })
