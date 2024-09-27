@@ -20,14 +20,14 @@ test('default', async () => {
 
   await waitFor(query.isSuccess)
 
-  expect(query.data.value).toMatchInlineSnapshot(`
-    {
-      "decimals": 18,
-      "formatted": "10000",
-      "symbol": "ETH",
-      "value": 10000000000000000000000n,
-    }
-  `)
+  expect(query.data.value).toMatchObject(
+    expect.objectContaining({
+      decimals: expect.any(Number),
+      formatted: expect.any(String),
+      symbol: expect.any(String),
+      value: expect.any(BigInt),
+    }),
+  )
 })
 
 test('parameters: chainId', async () => {

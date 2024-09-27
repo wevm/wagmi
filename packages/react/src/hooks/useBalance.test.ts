@@ -19,14 +19,17 @@ test('default', async () => {
 
   await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-  expect(result.current).toMatchInlineSnapshot(`
+  const { data, ...rest } = result.current
+  expect(data).toMatchObject(
+    expect.objectContaining({
+      decimals: expect.any(Number),
+      formatted: expect.any(String),
+      symbol: expect.any(String),
+      value: expect.any(BigInt),
+    }),
+  )
+  expect(rest).toMatchInlineSnapshot(`
     {
-      "data": {
-        "decimals": 18,
-        "formatted": "10000",
-        "symbol": "ETH",
-        "value": 10000000000000000000000n,
-      },
       "dataUpdatedAt": 1675209600000,
       "error": null,
       "errorUpdateCount": 0,

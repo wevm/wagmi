@@ -1,6 +1,6 @@
 import { config, privateKey, transactionHashRegex } from '@wagmi/test'
 import { parseEther } from 'viem'
-import { expect, test } from 'vitest'
+import { beforeEach, expect, test } from 'vitest'
 
 import { privateKeyToAccount } from 'viem/accounts'
 import { connect } from './connect.js'
@@ -8,6 +8,11 @@ import { disconnect } from './disconnect.js'
 import { sendTransaction } from './sendTransaction.js'
 
 const connector = config.connectors[0]!
+
+beforeEach(async () => {
+  if (config.state.current === connector.uid)
+    await disconnect(config, { connector })
+})
 
 test('default', async () => {
   await connect(config, { connector })

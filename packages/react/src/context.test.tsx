@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { render, screen } from '@testing-library/react'
-import { config } from '@wagmi/test'
+import { http, createConfig } from '@wagmi/core'
+import { config, mainnet } from '@wagmi/test'
 import React from 'react'
 import { expect, test } from 'vitest'
 
@@ -30,4 +31,34 @@ test('default', () => {
     </WagmiProvider>,
   )
   expect(screen.getByRole('heading').innerText).toMatchInlineSnapshot(`"wevm"`)
+})
+
+test('fake ssr config', () => {
+  const config = createConfig({
+    chains: [mainnet],
+    pollingInterval: 100,
+    ssr: true,
+    transports: {
+      [mainnet.id]: http(),
+    },
+  })
+  const queryClient = new QueryClient()
+
+  render(
+    <WagmiProvider config={config} reconnectOnMount>
+      <QueryClientProvider client={queryClient}>
+        <h1>wevm</h1>
+      </QueryClientProvider>
+    </WagmiProvider>,
+  )
+  expect(screen.getAllByRole('heading')).toMatchInlineSnapshot(`
+    [
+      <h1>
+        wevm
+      </h1>,
+      <h1>
+        wevm
+      </h1>,
+    ]
+  `)
 })
