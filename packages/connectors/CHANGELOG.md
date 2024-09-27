@@ -1,5 +1,14 @@
 # @wagmi/connectors
 
+## 5.1.14
+
+### Patch Changes
+
+- [#4207](https://github.com/wevm/wagmi/pull/4207) [`56f2482508f2ba71bd6b0295c70c6abca7101e57`](https://github.com/wevm/wagmi/commit/56f2482508f2ba71bd6b0295c70c6abca7101e57) Thanks [@Smert](https://github.com/Smert)! - Updated chain switch listener for `injected` and `metaMask` to be more robust.
+
+- Updated dependencies [[`56f2482508f2ba71bd6b0295c70c6abca7101e57`](https://github.com/wevm/wagmi/commit/56f2482508f2ba71bd6b0295c70c6abca7101e57)]:
+  - @wagmi/core@2.13.8
+
 ## 5.1.13
 
 ### Patch Changes
