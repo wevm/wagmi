@@ -89,7 +89,7 @@
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^20.12.10",
     "fixturez": "^1.1.0",
-    "msw": "^2.2.14"
+    "msw": "^2.4.9"
   },
   "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
   "funding": "https://github.com/sponsors/wevm",
