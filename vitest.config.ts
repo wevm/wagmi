@@ -1,6 +1,11 @@
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
+  server: {
+    watch: {
+      ignored: ['**/templates/**'],
+    },
+  },
   test: {
     coverage: {
       all: false,
@@ -18,6 +23,5 @@ export default defineConfig({
     },
     globalSetup: ['./packages/test/src/globalSetup.ts'],
     setupFiles: ['./packages/test/src/setup.ts'],
-    watchExclude: ['**/templates/**'],
   },
 })
