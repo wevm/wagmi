@@ -1,5 +1,11 @@
 # wagmi
 
+## 2.12.15
+
+### Patch Changes
+
+- [#4229](https://github.com/wevm/wagmi/pull/4229) [`c6b8efd26254c8e692b2b67286ed538fc183b992`](https://github.com/wevm/wagmi/commit/c6b8efd26254c8e692b2b67286ed538fc183b992) Thanks [@weilliao05621](https://github.com/weilliao05621)! - Stabilized `useAccount` return type object reference.
+
 ## 2.12.14
 
 ### Patch Changes
