@@ -75,6 +75,7 @@ export function useWalletClient<
   const queryClient = useQueryClient()
   const { address, connector, status } = useAccount({ config })
   const chainId = useChainId({ config })
+  const activeConnector = parameters.connector ?? connector
 
   const { queryKey, ...options } = getWalletClientQueryOptions<config, chainId>(
     config,
@@ -84,7 +85,11 @@ export function useWalletClient<
       connector: parameters.connector ?? connector,
     },
   )
-  const enabled = Boolean(status !== 'disconnected' && (query.enabled ?? true))
+  const enabled = Boolean(
+    (status === 'connected' ||
+      (status === 'reconnecting' && activeConnector?.getProvider)) &&
+      (query.enabled ?? true),
+  )
 
   const addressRef = useRef(address)
   // biome-ignore lint/correctness/useExhaustiveDependencies: `queryKey` not required

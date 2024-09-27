@@ -1,5 +1,23 @@
 # @wagmi/core
 
+## 2.13.7
+
+### Patch Changes
+
+- [`be75c2d4ef636d7362420ab0a106bfdf63f5d1e6`](https://github.com/wevm/wagmi/commit/be75c2d4ef636d7362420ab0a106bfdf63f5d1e6) Thanks [@tmm](https://github.com/tmm)! - Added guard for missing `provider.on` for `injected` connector.
+
+## 2.13.6
+
+### Patch Changes
+
+- [#4286](https://github.com/wevm/wagmi/pull/4286) [`edcbf5d6fbe92f639bead800502edda9e0aa39f1`](https://github.com/wevm/wagmi/commit/edcbf5d6fbe92f639bead800502edda9e0aa39f1) Thanks [@holic](https://github.com/holic)! - Removed duplicate code.
+
+## 2.13.5
+
+### Patch Changes
+
+- [#4259](https://github.com/wevm/wagmi/pull/4259) [`f47ce8f6d263e49fdff90b8edb3190142d2657bb`](https://github.com/wevm/wagmi/commit/f47ce8f6d263e49fdff90b8edb3190142d2657bb) Thanks [@tmm](https://github.com/tmm)! - Added guard to `getConnectorClient` when reconnecting to check if connector is fully restored.
+
 ## 2.13.4
 
 ### Patch Changes

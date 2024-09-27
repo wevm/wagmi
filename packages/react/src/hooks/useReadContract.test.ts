@@ -1,5 +1,5 @@
 import { QueryClientProvider } from '@tanstack/react-query'
-import { abi, address, chain, config, wait } from '@wagmi/test'
+import { abi, address, bytecode, chain, config, wait } from '@wagmi/test'
 import { queryClient, renderHook, waitFor } from '@wagmi/test/react'
 import { createElement } from 'react'
 import { expect, test } from 'vitest'
@@ -170,6 +170,20 @@ test('parameters: config', async () => {
       "status": "success",
     }
   `)
+})
+
+test('parameters: deployless read (bytecode)', async () => {
+  const { result } = renderHook(() =>
+    useReadContract({
+      abi: abi.wagmiMintExample,
+      functionName: 'name',
+      code: bytecode.wagmiMintExample,
+    }),
+  )
+
+  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+
+  expect(result.current.data).toMatchInlineSnapshot(`"wagmi"`)
 })
 
 test('behavior: disabled when properties missing', async () => {

@@ -331,3 +331,25 @@ test('behavior: restore unconfigured chainId', () => {
   const client = config.getClient()
   expect(client.chain.id).toBe(mainnet.id)
 })
+
+test('behavior: setup connector', async () => {
+  const config = createConfig({
+    chains: [mainnet],
+    transports: {
+      [mainnet.id]: http(),
+    },
+  })
+
+  const connectorFn = mock({ accounts })
+  const connector = config._internal.connectors.setup(connectorFn)
+  config._internal.connectors.setState((x) => [...x, connector])
+
+  await connect(config, {
+    chainId: mainnet.id,
+    connector: config.connectors[0]!,
+  })
+
+  expect(config.state.current).toBe(connector.uid)
+
+  await disconnect(config)
+})

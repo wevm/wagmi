@@ -196,6 +196,12 @@ export {
 } from '../composables/useWatchBlockNumber.js'
 
 export {
+  type UseWatchContractEventParameters,
+  type UseWatchContractEventReturnType,
+  useWatchContractEvent,
+} from '../composables/useWatchContractEvent.js'
+
+export {
   type UseWaitForTransactionReceiptParameters,
   type UseWaitForTransactionReceiptReturnType,
   useWaitForTransactionReceipt,
@@ -217,6 +223,7 @@ export {
   type Connector,
   type Config,
   type CreateConfigParameters,
+  type PartializedState,
   type State,
   createConfig,
   // Connector
@@ -234,6 +241,8 @@ export {
   ConnectorAccountNotFoundError,
   type ConnectorChainMismatchErrorType,
   ConnectorChainMismatchError,
+  type ConnectorUnavailableReconnectingErrorType,
+  ConnectorUnavailableReconnectingError,
   type ProviderNotFoundErrorType,
   ProviderNotFoundError,
   type SwitchChainNotSupportedErrorType,

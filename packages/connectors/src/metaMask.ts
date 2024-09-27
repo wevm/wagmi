@@ -17,6 +17,7 @@ import type {
 import {
   type AddEthereumChainParameter,
   type Address,
+  type Hex,
   type ProviderConnectInfo,
   type ProviderRpcError,
   ResourceUnavailableRpcError,
@@ -24,6 +25,7 @@ import {
   SwitchChainError,
   UserRejectedRequestError,
   getAddress,
+  hexToNumber,
   numberToHex,
   withRetry,
   withTimeout,
@@ -288,7 +290,10 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
               params: [addEthereumChain],
             })
 
-            const currentChainId = await this.getChainId()
+            const currentChainId = hexToNumber(
+              // Call `'eth_chainId'` directly to guard against `this.state.chainId` (via `provider.getChainId`) being stale.
+              (await provider.request({ method: 'eth_chainId' })) as Hex,
+            )
             if (currentChainId !== chainId)
               throw new UserRejectedRequestError(
                 new Error('User rejected switch after adding network.'),
@@ -355,12 +360,6 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       // https://github.com/MetaMask/providers/pull/120
       if (error && (error as RpcError<1013>).code === 1013) {
         if (provider && !!(await this.getAccounts()).length) return
-      }
-
-      // Remove cached SDK properties.
-      if (typeof localStorage !== 'undefined') {
-        localStorage.removeItem('MMSDK_cached_address')
-        localStorage.removeItem('MMSDK_cached_chainId')
       }
 
       config.emitter.emit('disconnect')

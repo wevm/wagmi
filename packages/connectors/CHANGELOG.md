@@ -1,5 +1,50 @@
 # @wagmi/connectors
 
+## 5.1.13
+
+### Patch Changes
+
+- Updated dependencies [[`be75c2d4ef636d7362420ab0a106bfdf63f5d1e6`](https://github.com/wevm/wagmi/commit/be75c2d4ef636d7362420ab0a106bfdf63f5d1e6)]:
+  - @wagmi/core@2.13.7
+
+## 5.1.12
+
+### Patch Changes
+
+- Updated dependencies [[`edcbf5d6fbe92f639bead800502edda9e0aa39f1`](https://github.com/wevm/wagmi/commit/edcbf5d6fbe92f639bead800502edda9e0aa39f1)]:
+  - @wagmi/core@2.13.6
+
+## 5.1.11
+
+### Patch Changes
+
+- [#4271](https://github.com/wevm/wagmi/pull/4271) [`82404c960e04c83e0bae6e1e12459ef9debf9554`](https://github.com/wevm/wagmi/commit/82404c960e04c83e0bae6e1e12459ef9debf9554) Thanks [@omridan159](https://github.com/omridan159)! - Bumped MetaMask SDK.
+
+- [#4227](https://github.com/wevm/wagmi/pull/4227) [`d07ad7f63a018256908a673d078aaf79e47ac703`](https://github.com/wevm/wagmi/commit/d07ad7f63a018256908a673d078aaf79e47ac703) Thanks [@xianchenxc](https://github.com/xianchenxc)! - Fixed MetaMask Connector throwing error after switching to a chain that was just added via `'wallet_addEthereumChain'`.
+
+## 5.1.10
+
+### Patch Changes
+
+- [#4255](https://github.com/wevm/wagmi/pull/4255) [`81de006e66121a18c61945c1f9b8426c83a5713c`](https://github.com/wevm/wagmi/commit/81de006e66121a18c61945c1f9b8426c83a5713c) Thanks [@tomiir](https://github.com/tomiir)! - Bumped `@walletconnect/ethereum-provider` from version `2.15.3` to version `2.16.1`.
+
+- Updated dependencies [[`f47ce8f6d263e49fdff90b8edb3190142d2657bb`](https://github.com/wevm/wagmi/commit/f47ce8f6d263e49fdff90b8edb3190142d2657bb)]:
+  - @wagmi/core@2.13.5
+
+## 5.1.9
+
+### Patch Changes
+
+- [#4243](https://github.com/wevm/wagmi/pull/4243) [`21bd0e473d374cbbd7a01bececa6022d529026ba`](https://github.com/wevm/wagmi/commit/21bd0e473d374cbbd7a01bececa6022d529026ba) Thanks [@tomiir](https://github.com/tomiir)! - Bumped `@walletconnect/ethereum-provider` from version `2.15.2` to version `2.15.3`
+
+- [#4251](https://github.com/wevm/wagmi/pull/4251) [`5c89c6853e616437a3be2b019db895451fecfb3c`](https://github.com/wevm/wagmi/commit/5c89c6853e616437a3be2b019db895451fecfb3c) Thanks [@tmm](https://github.com/tmm)! - Bumped MM SDK.
+
+## 5.1.8
+
+### Patch Changes
+
+- [`b580ad4edff1721e0b9d138cf5ae2ec74d2374c7`](https://github.com/wevm/wagmi/commit/b580ad4edff1721e0b9d138cf5ae2ec74d2374c7) Thanks [@tmm](https://github.com/tmm)! - Bumped WalletConnect Provider.
+
 ## 5.1.7
 
 ### Patch Changes

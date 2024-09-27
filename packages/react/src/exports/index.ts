@@ -399,6 +399,7 @@ export {
   type Connector,
   type Config,
   type CreateConfigParameters,
+  type PartializedState,
   type State,
   createConfig,
   // Connector
@@ -414,6 +415,10 @@ export {
   ConnectorNotFoundError,
   type ConnectorAccountNotFoundErrorType,
   ConnectorAccountNotFoundError,
+  type ConnectorChainMismatchErrorType,
+  ConnectorChainMismatchError,
+  type ConnectorUnavailableReconnectingErrorType,
+  ConnectorUnavailableReconnectingError,
   type ProviderNotFoundErrorType,
   ProviderNotFoundError,
   type SwitchChainNotSupportedErrorType,

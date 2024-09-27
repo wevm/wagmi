@@ -456,6 +456,7 @@ export {
   type Connector,
   type Config,
   type CreateConfigParameters,
+  type PartializedState,
   type State,
   type Transport,
   createConfig,
@@ -498,6 +499,8 @@ export {
   ConnectorAccountNotFoundError,
   type ConnectorChainMismatchErrorType,
   ConnectorChainMismatchError,
+  type ConnectorUnavailableReconnectingErrorType,
+  ConnectorUnavailableReconnectingError,
 } from '../errors/config.js'
 
 export {

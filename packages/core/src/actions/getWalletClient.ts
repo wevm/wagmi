@@ -42,8 +42,6 @@ export async function getWalletClient<
   parameters: GetWalletClientParameters<config, chainId> = {},
 ): Promise<GetWalletClientReturnType<config, chainId>> {
   const client = await getConnectorClient(config, parameters)
-  client.extend(walletActions)
-
   // @ts-ignore
   return client.extend(walletActions) as unknown as GetWalletClientReturnType<
     config,
