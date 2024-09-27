@@ -6,11 +6,11 @@ import { afterEach, expect, test } from 'vitest'
 
 import { useSyncExternalStoreWithTracked } from './useSyncExternalStoreWithTracked.js'
 
-function createExternalStore<State>(initialState: State) {
+function createExternalStore<state>(initialState: state) {
   const listeners = new Set<() => void>()
   let currentState = initialState
   return {
-    set(updater: (state: State) => State) {
+    set(updater: (state: state) => state) {
       currentState = updater(currentState)
       ReactDOM.unstable_batchedUpdates(() => {
         for (const listener of listeners) {
@@ -221,4 +221,55 @@ test('store object reference is stable across rerenders', async () => {
   })
   expect(childRenderCount).toBe(2)
   expect(renders.length).toBe(3)
+})
+
+test('array', async () => {
+  const externalStore = createExternalStore(['foo'])
+
+  const renders: any[] = []
+
+  renderHook(() => {
+    const array = useExternalStore(externalStore, (state) => {
+      renders.push(state)
+    })
+
+    return array
+  })
+
+  act(() => {
+    externalStore.set((x) => [...x, 'bar'])
+  })
+
+  expect(renders).toMatchInlineSnapshot(`
+    [
+      [
+        "foo",
+      ],
+      [
+        "foo",
+        "bar",
+      ],
+    ]
+  `)
+
+  act(() => {
+    externalStore.set((x) => [...x, 'baz'])
+  })
+
+  expect(renders).toMatchInlineSnapshot(`
+    [
+      [
+        "foo",
+      ],
+      [
+        "foo",
+        "bar",
+      ],
+      [
+        "foo",
+        "bar",
+        "baz",
+      ],
+    ]
+  `)
 })
