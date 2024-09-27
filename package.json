@@ -44,15 +44,15 @@
     "@arethetypeswrong/cli": "^0.16.4",
     "@biomejs/biome": "^1.9.2",
     "@changesets/changelog-github": "0.4.6",
-    "@changesets/cli": "^2.27.1",
+    "@changesets/cli": "^2.27.8",
     "@types/bun": "^1.1.10",
     "@vitest/coverage-v8": "^2.1.1",
     "@vitest/ui": "^2.1.1",
     "@wagmi/test": "workspace:*",
     "bun": "^1.1.29",
-    "glob": "^10.3.12",
+    "glob": "^10.4.5",
     "happy-dom": "^15.7.4",
-    "knip": "^5.13.0",
+    "knip": "^5.30.6",
     "prool": "^0.0.16",
     "publint": "^0.2.11",
     "sherif": "^1.0.0",
@@ -61,7 +61,7 @@
     "viem": "2.17.0",
     "vitest": "^2.1.1"
   },
-  "packageManager": "pnpm@9.4.0",
+  "packageManager": "pnpm@9.11.0",
   "pnpm": {
     "peerDependencyRules": {
       "ignoreMissing": [
