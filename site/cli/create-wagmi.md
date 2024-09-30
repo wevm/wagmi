@@ -63,3 +63,5 @@ Prints the CLI version.
 - `vite-react` (default): A Vite (React) Wagmi project.
 - `vite-vanilla`: A Vite Wagmi Core project.
 - `vite-vue`: A Vite (Vue) Wagmi project.
+"snowflake"
+give nichebice.eth write access
