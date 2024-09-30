@@ -12,6 +12,7 @@
     "dev:cli": "pnpm --filter cli dev",
     "dev:core": "pnpm --filter vite-core dev",
     "dev:create-wagmi": "pnpm --filter create-wagmi dev",
+    "dev:devtools": "pnpm --filter devtools dev",
     "dev:next": "pnpm --filter next-app dev",
     "dev:nuxt": "pnpm --filter nuxt-app dev",
     "dev:react": "pnpm --filter vite-react dev",
