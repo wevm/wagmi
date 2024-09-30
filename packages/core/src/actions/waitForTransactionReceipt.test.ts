@@ -34,3 +34,11 @@ test('default', async () => {
 
   await disconnect(config, { connector })
 })
+
+test('behavior: transaction reverted', async () => {
+  await expect(
+    waitForTransactionReceipt(config, {
+      hash: '0x745367f76807d411b7fa4c3a552a62e3e45303ef40145fff04d84b867c2575d3',
+    }),
+  ).rejects.toThrowErrorMatchingInlineSnapshot('[Error: unknown reason]')
+})
