@@ -123,6 +123,6 @@ test('behavior: rewardPercentiles is required', async () => {
       meta: undefined,
     }),
   ).rejects.toThrowErrorMatchingInlineSnapshot(
-    '[Error: rewardPercentiles is required]'
+    '[Error: rewardPercentiles is required]',
   )
 })
