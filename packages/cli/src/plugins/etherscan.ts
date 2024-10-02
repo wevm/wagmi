@@ -115,5 +115,6 @@ export function etherscan<chainId extends ChainId>(
       return contractAddress
     },
     name: 'Etherscan',
+    chainId,
   })
 }
