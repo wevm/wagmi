@@ -478,16 +478,32 @@ export function injected(parameters: InjectedParameters = {}) {
               rpcUrls,
             } satisfies AddEthereumChainParameter
 
-            await provider.request({
-              method: 'wallet_addEthereumChain',
-              params: [addEthereumChain],
-            })
-
-            const currentChainId = await this.getChainId()
-            if (currentChainId !== chainId)
-              throw new UserRejectedRequestError(
-                new Error('User rejected switch after adding network.'),
-              )
+            await Promise.all([
+              provider
+                .request({
+                  method: 'wallet_addEthereumChain',
+                  params: [addEthereumChain],
+                })
+                .then(async () => {
+                  const currentChainId = await this.getChainId()
+                  if (currentChainId === chainId) {
+                    config.emitter.emit('change', { chainId })
+                  } else {
+                    throw new UserRejectedRequestError(
+                      new Error('User rejected switch after adding network.'),
+                    )
+                  }
+                }),
+              new Promise<void>((resolve) => {
+                const listener = ((data) => {
+                  if ('chainId' in data && data.chainId === chainId) {
+                    config.emitter.off('change', listener)
+                    resolve()
+                  }
+                }) satisfies Parameters<typeof config.emitter.on>[1]
+                config.emitter.on('change', listener)
+              }),
+            ])
 
             return chain
           } catch (error) {
