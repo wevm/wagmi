@@ -39,10 +39,6 @@
     "@wagmi/core": "workspace:*",
     "solid-js": "^1.9.1"
   },
-  "devDependencies": {
-    "vite": "^5.2.11",
-    "vite-plugin-solid": "^2.10.2"
-  },
   "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
   "funding": "https://github.com/sponsors/wevm",
   "keywords": [

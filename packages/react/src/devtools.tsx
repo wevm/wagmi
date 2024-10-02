@@ -1,17 +1,16 @@
 'use client'
 
 import type { Config } from '@wagmi/core'
-import { Devtools, type DevtoolsProps } from '@wagmi/devtools'
+import { Devtools, version } from '@wagmi/devtools'
 import * as React from 'react'
 
 import { useConfig } from './hooks/useConfig.js'
-import { getVersion } from './utils/getVersion.js'
 
 export type WagmiDevtoolsProps = {
-  buttonPosition?: DevtoolsProps['buttonPosition'] | undefined
+  buttonPosition?: Devtools.Props['buttonPosition'] | undefined
   config?: Config | undefined
   initialIsOpen?: boolean | undefined
-  position?: DevtoolsProps['position']
+  position?: Devtools.Props['position']
   shadowDOMTarget?: ShadowRoot | undefined
   styleNonce?: string | undefined
 }
@@ -37,7 +36,7 @@ export function WagmiDevtools(
       position,
       shadowDOMTarget,
       styleNonce,
-      version: getVersion(),
+      version,
     }),
   )
 

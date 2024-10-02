@@ -1,9 +1,9 @@
 import type { Config } from '@wagmi/core'
 import { createContext, useContext } from 'solid-js'
 
-import type { DevtoolsProps } from './devtools.js'
+import type { Devtools } from './main.js'
 
-export const DevtoolsContext = createContext<DevtoolsProps>({
+export const DevtoolsContext = createContext<Devtools.Props>({
   config: undefined as unknown as Config,
   framework: '',
   shadowDOMTarget: undefined,
