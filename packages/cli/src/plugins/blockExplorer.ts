@@ -18,59 +18,32 @@ import { fetch } from './fetch.js'
 
 export const rpcUrls = {
   [1]: 'https://cloudflare-eth.com',
-
   [5]: 'https://rpc.ankr.com/eth_goerli',
-
   [10]: 'https://mainnet.optimism.io',
-
   [56]: 'https://rpc.ankr.com/bsc',
-
   [97]: 'https://data-seed-prebsc-1-s1.bnbchain.org:8545',
-
   [100]: 'https://rpc.gnosischain.com',
-
   [128]: 'undefined',
-
   [137]: 'https://polygon-rpc.com',
-
   [250]: 'https://rpc.ankr.com/fantom',
-
   [252]: 'https://rpc.frax.com',
-
   [256]: 'undefined',
-
   [420]: 'https://goerli.optimism.io',
-
   [2522]: 'https://rpc.testnet.frax.com',
-
   [4002]: 'https://rpc.testnet.fantom.network',
-
   [8453]: 'https://mainnet.base.org',
-
   [17000]: 'https://ethereum-holesky-rpc.publicnode.com',
-
   [42161]: 'https://arb1.arbitrum.io/rpc',
-
   [42220]: 'https://forno.celo.org',
-
   [43113]: 'https://api.avax-test.network/ext/bc/C/rpc',
-
   [43114]: 'https://api.avax.network/ext/bc/C/rpc',
-
   [44787]: 'https://alfajores-forno.celo-testnet.org',
-
   [80001]: 'https://rpc.ankr.com/polygon_mumbai',
-
   [81457]: 'https://rpc.blast.io',
-
   [84532]: 'https://sepolia.base.org',
-
   [421613]: 'https://goerli-rollup.arbitrum.io/rpc',
-
   [421614]: 'https://sepolia-rollup.arbitrum.io/rpc',
-
   [11155111]: 'https://rpc.sepolia.org',
-
   [11155420]: 'https://sepolia.optimism.io',
 }
 
