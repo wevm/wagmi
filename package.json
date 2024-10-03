@@ -21,7 +21,7 @@
     "docs:dev": "pnpm --filter site dev",
     "check": "biome check --write",
     "check:repo": "sherif -i viem",
-    "check:types": "pnpm run --r --parallel typecheck && tsc --noEmit",
+    "check:types": "pnpm run --r --parallel check:types && tsc --noEmit",
     "check:unused": "pnpm clean && knip",
     "format": "biome format --write",
     "postinstall": "pnpm preconstruct",
