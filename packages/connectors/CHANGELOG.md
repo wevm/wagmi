@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 5.1.15
+
+### Patch Changes
+
+- [`3b2123664b7ac66848390739e855c3b9702ab60c`](https://github.com/wevm/wagmi/commit/3b2123664b7ac66848390739e855c3b9702ab60c) Thanks [@tmm](https://github.com/tmm)! - Bumped WalletConnect Provider.
+
 ## 5.1.14
 
 ### Patch Changes
