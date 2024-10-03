@@ -9,7 +9,7 @@ test('default', () => {
 })
 
 test('behavior: throws when not provided via WagmiPlugin', () => {
-  vi.spyOn(console, 'error').mockImplementation(() => {})
+  vi.spyOn(console, 'warn').mockImplementation(() => {})
 
   try {
     renderComposable(() => useConfig(), { attach() {} })

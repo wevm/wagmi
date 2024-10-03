@@ -34,6 +34,7 @@
     "test:create-wagmi": "vitest --project create-wagmi",
     "test:cov": "vitest run --coverage",
     "test:react": "vitest --project wagmi",
+    "test:solid": "vitest --project @wagmi/solid",
     "test:typecheck": "vitest typecheck",
     "test:update": "vitest --update",
     "test:ui": "vitest --ui",
@@ -58,8 +59,10 @@
     "publint": "^0.2.11",
     "sherif": "^1.0.0",
     "simple-git-hooks": "^2.11.1",
+    "solid-js": "^1.8.20",
     "typescript": "5.5.2",
     "viem": "2.17.0",
+    "vite-plugin-solid": "^2.10.2",
     "vitest": "^2.1.1"
   },
   "packageManager": "pnpm@9.11.0",

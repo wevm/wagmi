@@ -24,7 +24,7 @@ export type WagmiDevtoolsProps = {
   styleNonce?: string | undefined
 }
 
-export function WagmiDevtools(props: WagmiDevtoolsProps) {
+export function WagmiDevtools(props: WagmiDevtoolsProps): JSX.Element {
   const wagmiConfig = useConfig()
   const config = createMemo(() => props.config || wagmiConfig)
   let ref!: HTMLDivElement

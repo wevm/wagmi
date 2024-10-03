@@ -49,8 +49,8 @@
     "@metamask/sdk": "0.28.4",
     "@safe-global/safe-apps-provider": "0.18.3",
     "@safe-global/safe-apps-sdk": "9.1.0",
-    "@walletconnect/ethereum-provider": "2.16.1",
-    "@walletconnect/modal": "2.6.2",
+    "@walletconnect/ethereum-provider": "2.17.0",
+    "@walletconnect/modal": "2.7.0",
     "cbw-sdk": "npm:@coinbase/wallet-sdk@3.9.3"
   },
   "devDependencies": {

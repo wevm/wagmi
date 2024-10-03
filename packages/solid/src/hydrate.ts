@@ -1,5 +1,12 @@
 import { type ResolvedRegister, type State, hydrate } from '@wagmi/core'
-import { type ParentProps, createEffect, mergeProps, onCleanup } from 'solid-js'
+import {
+  type JSX,
+  type ParentProps,
+  children,
+  createEffect,
+  mergeProps,
+  onCleanup,
+} from 'solid-js'
 
 export type HydrateProps = {
   config: ResolvedRegister['config']
@@ -7,8 +14,9 @@ export type HydrateProps = {
   reconnectOnMount?: boolean | undefined
 }
 
-export function Hydrate(props: ParentProps<HydrateProps>) {
+export function Hydrate(props: ParentProps<HydrateProps>): JSX.Element {
   const finalProps = mergeProps({ reconnectOnMount: true }, props)
+  const safeChildren = children(() => finalProps.children)
 
   const { onMount } = hydrate(finalProps.config, {
     initialState: finalProps.initialState,
@@ -29,5 +37,5 @@ export function Hydrate(props: ParentProps<HydrateProps>) {
     })
   })
 
-  return <>{finalProps.children}</>
+  return safeChildren()
 }

@@ -19,12 +19,11 @@ export { act, cleanup } from '@testing-library/react'
 
 export const queryClient = new QueryClient()
 
-export function createWrapper<TComponent extends React.FunctionComponent<any>>(
-  Wrapper: TComponent,
-  props: Parameters<TComponent>[0],
+export function createWrapper<component extends React.FunctionComponent<any>>(
+  Wrapper: component,
+  props: Parameters<component>[0],
 ) {
-  type Props = { children?: React.ReactNode | undefined }
-  return function CreatedWrapper({ children }: Props) {
+  return function CreatedWrapper({ children }: React.PropsWithChildren) {
     return createElement(
       Wrapper,
       props,
@@ -33,10 +32,10 @@ export function createWrapper<TComponent extends React.FunctionComponent<any>>(
   }
 }
 
-export function renderHook<Result, Props>(
-  render: (props: Props) => Result,
-  options?: RenderHookOptions<Props> | undefined,
-): RenderHookResult<Result, Props> {
+export function renderHook<result, props>(
+  render: (props: props) => result,
+  options?: RenderHookOptions<props> | undefined,
+): RenderHookResult<result, props> {
   queryClient.clear()
   return rtl_renderHook(render, {
     wrapper: createWrapper(WagmiProvider, { config, reconnectOnMount: false }),
@@ -55,9 +54,9 @@ export function render(
   })
 }
 
-export function waitFor<T>(
-  callback: () => Promise<T> | T,
+export function waitFor<t>(
+  callback: () => Promise<t> | t,
   options?: waitForOptions | undefined,
-): Promise<T> {
+): Promise<t> {
   return rtl_waitFor(callback, { timeout: 10_000, ...options })
 }

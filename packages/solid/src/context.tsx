@@ -1,24 +1,32 @@
-import type { ResolvedRegister } from '@wagmi/core'
-import { type ParentProps, createContext } from 'solid-js'
+import type { ResolvedRegister, State } from '@wagmi/core'
+import { type JSX, type ParentProps, createContext, splitProps } from 'solid-js'
 
-import { Hydrate } from './hydrate.jsx'
+import { Hydrate } from './hydrate.js'
 
 export const WagmiContext = createContext<
   ResolvedRegister['config'] | undefined
->(undefined)
+>()
 
 export type WagmiProviderProps = {
   config: ResolvedRegister['config']
-  // initialState?: State | undefined
+  initialState?: State | undefined
   reconnectOnMount?: boolean | undefined
 }
 
-export function WagmiProvider(props: ParentProps<WagmiProviderProps>) {
+export function WagmiProvider(
+  props: ParentProps<WagmiProviderProps>,
+): JSX.Element {
+  const [hydrateProps, providerProps, restProps] = splitProps(
+    props,
+    ['config', 'initialState', 'reconnectOnMount'],
+    ['config'],
+  )
   return (
-    <Hydrate {...props}>
-      <WagmiContext.Provider value={props.config}>
-        {props.children}
-      </WagmiContext.Provider>
+    <Hydrate {...hydrateProps}>
+      <WagmiContext.Provider
+        value={providerProps.config}
+        {...(restProps as { children: JSX.Element })}
+      />
     </Hydrate>
   )
 }

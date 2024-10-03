@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "@wagmi/core": "workspace:*",
+    "@wagmi/solid": "workspace:*",
     "solid-js": "^1.9.1"
   },
   "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],

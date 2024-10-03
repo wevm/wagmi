@@ -68,9 +68,13 @@ for (const packagePath of packagePaths) {
           .dirname(value)
           .replace(`dist/${type === 'default' ? 'esm' : type}`, 'src'),
       )
-      let srcFileName: string
-      if (key === '.') srcFileName = 'index.ts'
-      else srcFileName = path.basename(`${key}.ts`)
+      const srcFileName = (() => {
+        if (key === '.') return 'index.ts'
+        // special case for .tsx exports
+        if (packageJson.name === '@wagmi/test' && key === './solid')
+          return path.basename(`${key}.tsx`)
+        return path.basename(`${key}.ts`)
+      })()
       const srcFilePath = path.resolve(srcDir, srcFileName)
 
       const distDir = path.resolve(dir, path.dirname(value))

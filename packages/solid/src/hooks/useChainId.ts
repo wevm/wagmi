@@ -6,15 +6,16 @@ import {
   watchChainId,
 } from '@wagmi/core'
 
-import { createSignal, onCleanup } from 'solid-js'
+import { type Accessor, createSignal, onCleanup } from 'solid-js'
 import type { ConfigParameter } from '../types/properties.js'
 import { useConfig } from './useConfig.js'
 
 export type UseChainIdParameters<config extends Config = Config> =
   ConfigParameter<config>
 
-export type UseChainIdReturnType<config extends Config = Config> =
+export type UseChainIdReturnType<config extends Config = Config> = Accessor<
   GetChainIdReturnType<config>
+>
 
 export function useChainId<config extends Config = ResolvedRegister['config']>(
   parameters: UseChainIdParameters<config> = {},
@@ -33,5 +34,5 @@ export function useChainId<config extends Config = ResolvedRegister['config']>(
     unsubscribe()
   })
 
-  return chainId()
+  return chainId
 }

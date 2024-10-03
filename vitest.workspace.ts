@@ -1,4 +1,5 @@
 import path from 'node:path'
+import solid from 'vite-plugin-solid'
 import { defineWorkspace } from 'vitest/config'
 
 const alias = {
@@ -8,6 +9,7 @@ const alias = {
   ),
   '@wagmi/core': path.resolve(__dirname, './packages/core/src/exports'),
   '@wagmi/devtools': path.resolve(__dirname, './packages/devtools/src/exports'),
+  '@wagmi/solid': path.resolve(__dirname, './packages/solid/src/exports'),
   '@wagmi/test': path.resolve(__dirname, './packages/test/src/exports'),
   '@wagmi/vue': path.resolve(__dirname, './packages/vue/src/exports'),
   wagmi: path.resolve(__dirname, './packages/react/src/exports'),
@@ -57,6 +59,24 @@ export default defineWorkspace([
       testTimeout: 10_000,
       setupFiles: ['./packages/react/test/setup.ts'],
     },
+    resolve: { alias },
+  },
+  {
+    test: {
+      name: '@wagmi/solid',
+      include: ['./packages/solid/src/**/*.test.ts?(x)'],
+      environment: 'happy-dom',
+      testTimeout: 10_000,
+      server: {
+        // inline to prevent `computations created outside a `createRoot` or `render` will never be disposed`
+        // https://github.com/solidjs/solid-testing-library/issues/47#issuecomment-1899076287
+        deps: {
+          inline: [/solid-js/],
+        },
+      },
+      setupFiles: ['./packages/solid/test/setup.ts'],
+    },
+    plugins: [solid()],
     resolve: { alias },
   },
   {

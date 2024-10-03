@@ -41,10 +41,8 @@ export function useDisconnect<context = unknown>(
   const config = useConfig(parameters)
 
   const mutationOptions = disconnectMutationOptions(config)
-  const mutation = createMutation(() => ({
+  return createMutation(() => ({
     ...parameters.mutation,
     ...mutationOptions,
   }))
-
-  return mutation
 }

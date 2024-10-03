@@ -1,20 +1,19 @@
 import { connect, disconnect } from '@wagmi/core'
 import { config } from '@wagmi/test'
-import { renderHook } from '@wagmi/test/react'
+import { renderHook } from '@wagmi/test/solid'
 import { expect, test } from 'vitest'
 
 import { useConnections } from './useConnections.js'
 
 test('default', async () => {
-  const { result, rerender } = renderHook(() => useConnections())
+  const { result } = renderHook(useConnections)
 
-  expect(result.current).toEqual([])
+  expect(result).toEqual([])
 
   const connector = config.connectors[0]!
   await connect(config, { connector })
-  rerender()
 
-  expect(result.current.length).toBe(1)
+  expect(result.length).toBe(1)
   await disconnect(config, { connector })
 })
 
@@ -22,5 +21,5 @@ test('parameters: config', () => {
   const { result } = renderHook(() => useConnections({ config }), {
     wrapper: undefined,
   })
-  expect(result.current).toBeDefined()
+  expect(result).toBeDefined()
 })

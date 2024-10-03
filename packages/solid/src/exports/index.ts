@@ -7,7 +7,7 @@ export {
   type WagmiProviderProps,
   WagmiContext,
   WagmiProvider,
-} from '../context.js'
+} from '../context.jsx'
 
 ////////////////////////////////////////////////////////////////////////////////
 // Errors
