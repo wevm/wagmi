@@ -3,6 +3,7 @@
   "include": ["src/**/*.ts"],
   "exclude": ["src/**/*.test.ts", "src/**/*.test-d.ts"],
   "compilerOptions": {
+    "incremental": false,
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
     "sourceMap": true

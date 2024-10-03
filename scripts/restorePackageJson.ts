@@ -13,9 +13,9 @@ const packagePaths = await glob('packages/**/package.json.tmp', {
 
 let count = 0
 for (const packagePath of packagePaths) {
-  type Package = { name?: string | undefined } & Record<string, unknown>
   const file = Bun.file(packagePath)
   const packageJson = (await file.json()) as Package
+  type Package = { name?: string | undefined } & Record<string, unknown>
 
   count += 1
   console.log(`${packageJson.name} — ${path.dirname(packagePath)}`)

@@ -13,6 +13,8 @@ const packagePaths = await glob('**/package.json', {
 
 let count = 0
 for (const packagePath of packagePaths) {
+  const file = Bun.file(packagePath)
+  const packageJson = (await file.json()) as Package
   type Package = {
     bin?: Record<string, string> | undefined
     exports?:
@@ -21,8 +23,6 @@ for (const packagePath of packagePaths) {
     name?: string | undefined
     private?: boolean | undefined
   }
-  const file = Bun.file(packagePath)
-  const packageJson = (await file.json()) as Package
 
   // Skip private packages
   if (packageJson.private && packageJson.name !== '@wagmi/test') continue

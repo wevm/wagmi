@@ -1,3 +1,4 @@
+import { type QueryClient, useQueryClient } from '@tanstack/solid-query'
 import type { Config } from '@wagmi/core'
 import { Devtools, version } from '@wagmi/devtools'
 import {
@@ -20,13 +21,20 @@ export type WagmiDevtoolsProps = {
   config?: Config | undefined
   initialIsOpen?: boolean | undefined
   position?: Devtools.Props['position']
+  queryClient?: QueryClient | undefined
   shadowDOMTarget?: ShadowRoot | undefined
   styleNonce?: string | undefined
 }
 
 export function WagmiDevtools(props: WagmiDevtoolsProps): JSX.Element {
-  const wagmiConfig = useConfig()
-  const config = createMemo(() => props.config || wagmiConfig)
+  const wagmi_config = useConfig()
+  const config = createMemo(() => props.config || wagmi_config)
+
+  const tanstack_queryClient = useQueryClient()
+  const queryClient = createMemo(
+    () => props.queryClient || tanstack_queryClient,
+  )
+
   let ref!: HTMLDivElement
   const devtools = new Devtools({
     buttonPosition: props.buttonPosition,
@@ -34,6 +42,7 @@ export function WagmiDevtools(props: WagmiDevtoolsProps): JSX.Element {
     framework: 'solid',
     initialIsOpen: props.initialIsOpen,
     position: props.position,
+    queryClient: queryClient(),
     shadowDOMTarget: props.shadowDOMTarget,
     styleNonce: props.styleNonce,
     version,
@@ -41,6 +50,10 @@ export function WagmiDevtools(props: WagmiDevtoolsProps): JSX.Element {
 
   createEffect(() => {
     devtools.setConfig(config())
+  })
+
+  createEffect(() => {
+    devtools.setQueryClient(queryClient())
   })
 
   createEffect(() => {

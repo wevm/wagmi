@@ -13,6 +13,8 @@ const packagePaths = await glob('packages/**/package.json', {
 
 let count = 0
 for (const packagePath of packagePaths) {
+  const file = Bun.file(packagePath)
+  const packageJson = (await file.json()) as Package
   type Package = Record<string, unknown> & {
     name?: string | undefined
     private?: boolean | undefined
@@ -20,8 +22,6 @@ for (const packagePath of packagePaths) {
       | Record<string, { types: string; default: string } | string>
       | undefined
   }
-  const file = Bun.file(packagePath)
-  const packageJson = (await file.json()) as Package
 
   // Skip private packages
   if (packageJson.private) continue

@@ -1,5 +1,6 @@
 'use client'
 
+import { type QueryClient, useQueryClient } from '@tanstack/react-query'
 import type { Config } from '@wagmi/core'
 import { Devtools, version } from '@wagmi/devtools'
 import * as React from 'react'
@@ -11,6 +12,7 @@ export type WagmiDevtoolsProps = {
   config?: Config | undefined
   initialIsOpen?: boolean | undefined
   position?: Devtools.Props['position']
+  queryClient?: QueryClient | undefined
   shadowDOMTarget?: ShadowRoot | undefined
   styleNonce?: string | undefined
 }
@@ -19,6 +21,11 @@ export function WagmiDevtools(
   props: WagmiDevtoolsProps,
 ): React.ReactElement | null {
   const config = useConfig(props)
+
+  const tanstack_queryClient = useQueryClient()
+  const queryClient = (props.queryClient ||
+    tanstack_queryClient) as unknown as Devtools.Props['queryClient']
+
   const ref = React.useRef<HTMLDivElement>(null)
   const {
     buttonPosition,
@@ -34,6 +41,7 @@ export function WagmiDevtools(
       framework: 'react',
       initialIsOpen,
       position,
+      queryClient,
       shadowDOMTarget,
       styleNonce,
       version,
@@ -43,6 +51,12 @@ export function WagmiDevtools(
   React.useEffect(() => {
     devtools.setConfig(config)
   }, [config, devtools])
+
+  React.useEffect(() => {
+    devtools.setQueryClient(
+      tanstack_queryClient as unknown as Devtools.Props['queryClient'],
+    )
+  }, [tanstack_queryClient, devtools])
 
   React.useEffect(() => {
     if (buttonPosition) devtools.setButtonPosition(buttonPosition)

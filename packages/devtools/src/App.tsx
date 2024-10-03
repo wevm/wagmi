@@ -1,15 +1,20 @@
-import type { Component } from 'solid-js'
+import { QueryClientProvider } from '@tanstack/solid-query'
+import { WagmiProvider } from '@wagmi/solid'
 
 import { ConnectionsPanel } from './components/ConnectionsPanel.jsx'
 import { useDevtoolsContext } from './context.js'
 
-const App: Component = () => {
+function App() {
   const value = useDevtoolsContext()
   return (
-    <div>
-      {value.framework} devtools {value.version}
-      <ConnectionsPanel />
-    </div>
+    <WagmiProvider config={value.config}>
+      <QueryClientProvider client={value.queryClient}>
+        <div style={{ border: '1px solid gray' }}>
+          {value.framework} devtools {value.version}
+          <ConnectionsPanel />
+        </div>
+      </QueryClientProvider>
+    </WagmiProvider>
   )
 }
 
