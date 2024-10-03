@@ -4,6 +4,12 @@
 
 // biome-ignore lint/performance/noBarrelFile: entrypoint module
 export {
+  type AddChainErrorType,
+  type AddChainParameters,
+  addChain,
+} from '../actions/addChain.js'
+
+export {
   type CallErrorType,
   type CallParameters,
   type CallReturnType,
