@@ -1,6 +1,6 @@
 import { config } from '@wagmi/test'
-import { test } from 'vitest'
 import { avalanche } from 'viem/chains'
+import { test } from 'vitest'
 
 import { addChain } from './addChain.js'
 import { connect } from './connect.js'
