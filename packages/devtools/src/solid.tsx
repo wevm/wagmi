@@ -1,6 +1,7 @@
+/** @jsxImportSource solid-js */
 import { type QueryClient, useQueryClient } from '@tanstack/solid-query'
-import type { Config } from '@wagmi/core'
-import { Devtools, version } from '@wagmi/devtools'
+import { Devtools, version } from '@wagmi/devtools-ui'
+import { type Config, useConfig } from '@wagmi/solid'
 import {
   createEffect,
   createMemo,
@@ -14,17 +15,7 @@ import {
 import type { Component, ComponentProps, JSX } from 'solid-js'
 import { isServer } from 'solid-js/web'
 
-import { useConfig } from './hooks/useConfig.js'
-
-export type WagmiDevtoolsProps = {
-  buttonPosition?: Devtools.Props['buttonPosition'] | undefined
-  config?: Config | undefined
-  initialIsOpen?: boolean | undefined
-  position?: Devtools.Props['position']
-  queryClient?: QueryClient | undefined
-}
-
-export function WagmiDevtools(props: WagmiDevtoolsProps): JSX.Element {
+export function WagmiDevtools(props: WagmiDevtools.Props): JSX.Element {
   const wagmi_config = useConfig()
   const config = createMemo(() => props.config || wagmi_config)
 
@@ -72,6 +63,16 @@ export function WagmiDevtools(props: WagmiDevtoolsProps): JSX.Element {
   })
 
   return <div class="wd-parent-container" ref={ref} />
+}
+
+export declare namespace WagmiDevtools {
+  type Props = {
+    buttonPosition?: Devtools.Props['buttonPosition'] | undefined
+    config?: Config | undefined
+    initialIsOpen?: boolean | undefined
+    position?: Devtools.Props['position']
+    queryClient?: QueryClient | undefined
+  }
 }
 
 /*

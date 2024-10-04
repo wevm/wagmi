@@ -25,7 +25,6 @@
     "/chains",
     "/codegen",
     "/connectors",
-    "/devtools",
     "/experimental",
     "/query"
   ],
@@ -59,10 +58,6 @@
       "types": "./dist/types/exports/connectors.d.ts",
       "default": "./dist/esm/exports/connectors.js"
     },
-    "./devtools": {
-      "types": "./dist/types/exports/devtools.d.ts",
-      "default": "./dist/esm/exports/devtools.js"
-    },
     "./experimental": {
       "types": "./dist/types/exports/experimental.d.ts",
       "default": "./dist/esm/exports/experimental.js"
@@ -79,7 +74,6 @@
       "chains": ["./dist/types/exports/chains.d.ts"],
       "codegen": ["./dist/types/exports/codegen.d.ts"],
       "connectors": ["./dist/types/exports/connectors.d.ts"],
-      "devtools": ["./dist/types/exports/devtools.d.ts"],
       "experimental": ["./dist/types/exports/experimental.d.ts"],
       "query": ["./dist/types/exports/query.d.ts"]
     }
@@ -98,7 +92,6 @@
   "dependencies": {
     "@wagmi/connectors": "workspace:*",
     "@wagmi/core": "workspace:*",
-    "@wagmi/devtools": "workspace:*",
     "use-sync-external-store": "1.2.0"
   },
   "devDependencies": {

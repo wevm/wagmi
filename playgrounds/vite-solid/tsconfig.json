@@ -22,6 +22,8 @@
     "noFallthroughCasesInSwitch": true,
 
     "paths": {
+      "@wagmi/devtools": ["../../packages/devtools/src/exports"],
+      "@wagmi/devtools/*": ["../../packages/devtools/src/exports/*"],
       "@wagmi/solid": ["../../packages/solid/src/exports"]
     }
   },

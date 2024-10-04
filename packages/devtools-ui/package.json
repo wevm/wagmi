@@ -1,0 +1,47 @@
+{
+  "name": "@wagmi/devtools-ui",
+  "version": "0.0.1",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wevm/wagmi.git",
+    "directory": "packages/devtools-ui"
+  },
+  "scripts": {
+    "bundle": "pnpm clean && tsup",
+    "check:types": "tsc --noEmit",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo",
+    "test:build": "publint --strict && attw --pack --ignore-rules cjs-resolves-to-esm"
+  },
+  "files": [
+    "dist/**",
+    "!dist/**/*.tsbuildinfo",
+    "src/**/*.ts",
+    "!src/**/*.test.ts",
+    "!src/**/*.test-d.ts"
+  ],
+  "sideEffects": false,
+  "type": "module",
+  "main": "./dist/esm/exports/index.js",
+  "types": "./dist/types/exports/index.d.ts",
+  "typings": "./dist/types/exports/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/exports/index.d.ts",
+      "default": "./dist/esm/exports/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "peerDependencies": {
+    "viem": "2.x"
+  },
+  "devDependencies": {
+    "@css-hooks/core": "^3.0.0",
+    "@tanstack/solid-query": ">=5.59.0",
+    "@wagmi/solid": "workspace:*",
+    "remeda": "^2.14.0",
+    "solid-js": "^1.9.1",
+    "tsup": "^8.3.0",
+    "tsup-preset-solid": "^2.2.0"
+  }
+}

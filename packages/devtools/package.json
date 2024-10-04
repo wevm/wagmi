@@ -9,9 +9,10 @@
     "directory": "packages/devtools"
   },
   "scripts": {
-    "build": "pnpm clean && tsup",
+    "build": "pnpm clean && pnpm build:esm+types",
+    "build:esm+types": "tsc --project tsconfig.build.json --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
     "check:types": "tsc --noEmit",
-    "clean": "rm -rf dist tsconfig.tsbuildinfo",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo react solid",
     "test:build": "publint --strict && attw --pack --ignore-rules cjs-resolves-to-esm"
   },
   "files": [
@@ -19,7 +20,9 @@
     "!dist/**/*.tsbuildinfo",
     "src/**/*.ts",
     "!src/**/*.test.ts",
-    "!src/**/*.test-d.ts"
+    "!src/**/*.test-d.ts",
+    "react/**",
+    "solid/**"
   ],
   "sideEffects": false,
   "type": "module",
@@ -31,19 +34,63 @@
       "types": "./dist/types/exports/index.d.ts",
       "default": "./dist/esm/exports/index.js"
     },
+    "./react": {
+      "types": "./dist/types/exports/react.d.ts",
+      "default": "./dist/esm/exports/react.js"
+    },
+    "./solid": {
+      "types": "./dist/types/exports/solid.d.ts",
+      "default": "./dist/esm/exports/solid.js"
+    },
     "./package.json": "./package.json"
   },
-  "peerDependencies": {
-    "viem": "2.x"
+  "typesVersions": {
+    "*": {
+      "react": ["./dist/types/exports/react.d.ts"],
+      "solid": ["./dist/types/exports/solid.d.ts"]
+    }
   },
-  "devDependencies": {
-    "@css-hooks/core": "^3.0.0",
+  "peerDependencies": {
+    "@tanstack/react-query": ">=5.0.0",
     "@tanstack/solid-query": ">=5.59.0",
     "@wagmi/solid": "workspace:*",
-    "remeda": "^2.14.0",
-    "solid-js": "^1.9.1",
-    "tsup": "^8.3.0",
-    "tsup-preset-solid": "^2.2.0"
+    "react": ">=18",
+    "solid-js": ">=1.8.20",
+    "typescript": ">=5.0.4",
+    "viem": "2.x",
+    "wagmi": "workspace:*"
+  },
+  "peerDependenciesMeta": {
+    "@tanstack/react-query": {
+      "optional": true
+    },
+    "@tanstack/solid-query": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    },
+    "solid-js": {
+      "optional": true
+    },
+    "typescript": {
+      "optional": true
+    },
+    "wagmi": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@wagmi/devtools-ui": "workspace:*"
+  },
+  "devDependencies": {
+    "@tanstack/react-query": ">=5.45.1",
+    "@tanstack/solid-query": ">=5.59.0",
+    "@types/react": ">=18.3.1",
+    "@wagmi/solid": "workspace:*",
+    "react": ">=18.3.1",
+    "solid-js": ">=1.8.20",
+    "wagmi": "workspace:*"
   },
   "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
   "funding": "https://github.com/sponsors/wevm",

@@ -1,22 +1,12 @@
 'use client'
 
 import { type QueryClient, useQueryClient } from '@tanstack/react-query'
-import type { Config } from '@wagmi/core'
-import { Devtools, version } from '@wagmi/devtools'
-import * as React from 'react'
-
-import { useConfig } from './hooks/useConfig.js'
-
-export type WagmiDevtoolsProps = {
-  buttonPosition?: Devtools.Props['buttonPosition'] | undefined
-  config?: Config | undefined
-  initialIsOpen?: boolean | undefined
-  position?: Devtools.Props['position']
-  queryClient?: QueryClient | undefined
-}
+import { Devtools, version } from '@wagmi/devtools-ui'
+import React from 'react'
+import { type Config, useConfig } from 'wagmi'
 
 export function WagmiDevtools(
-  props: WagmiDevtoolsProps,
+  props: WagmiDevtools.Props,
 ): React.ReactElement | null {
   const config = useConfig(props)
 
@@ -68,4 +58,14 @@ export function WagmiDevtools(
   }, [devtools])
 
   return React.createElement('div', { className: 'wd-parent-container', ref })
+}
+
+export declare namespace WagmiDevtools {
+  type Props = {
+    buttonPosition?: Devtools.Props['buttonPosition'] | undefined
+    config?: Config | undefined
+    initialIsOpen?: boolean | undefined
+    position?: Devtools.Props['position']
+    queryClient?: QueryClient | undefined
+  }
 }

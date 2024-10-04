@@ -239,6 +239,34 @@ importers:
         version: 11.2.0
 
   packages/devtools:
+    dependencies:
+      '@wagmi/devtools-ui':
+        specifier: workspace:*
+        version: link:../devtools-ui
+    devDependencies:
+      '@tanstack/react-query':
+        specifier: '>=5.45.1'
+        version: 5.49.2(react@18.3.1)
+      '@tanstack/solid-query':
+        specifier: '>=5.59.0'
+        version: 5.59.0(solid-js@1.9.1)
+      '@types/react':
+        specifier: '>=18.3.1'
+        version: 18.3.1
+      '@wagmi/solid':
+        specifier: workspace:*
+        version: link:../solid
+      react:
+        specifier: '>=18.3.1'
+        version: 18.3.1
+      solid-js:
+        specifier: '>=1.8.20'
+        version: 1.9.1
+      wagmi:
+        specifier: workspace:*
+        version: link:../react
+
+  packages/devtools-ui:
     devDependencies:
       '@css-hooks/core':
         specifier: ^3.0.0
@@ -257,10 +285,10 @@ importers:
         version: 1.9.1
       tsup:
         specifier: ^8.3.0
-        version: 8.3.0
+        version: 8.3.0(jiti@1.21.6)(postcss@8.4.47)(typescript@5.6.2)(yaml@2.4.2)
       tsup-preset-solid:
         specifier: ^2.2.0
-        version: 2.2.0(esbuild@0.23.1)(solid-js@1.9.1)(tsup@8.3.0)
+        version: 2.2.0(bufferutil@4.0.8)(esbuild@0.23.1)(solid-js@1.9.1)(tsup@8.3.0(jiti@1.21.6)(postcss@8.4.47)(typescript@5.6.2)(yaml@2.4.2))(utf-8-validate@5.0.10)
 
   packages/react:
     dependencies:
@@ -270,9 +298,6 @@ importers:
       '@wagmi/core':
         specifier: workspace:*
         version: link:../core
-      '@wagmi/devtools':
-        specifier: workspace:*
-        version: link:../devtools
       use-sync-external-store:
         specifier: 1.2.0
         version: 1.2.0(react@18.3.1)
@@ -338,9 +363,6 @@ importers:
       '@wagmi/core':
         specifier: workspace:*
         version: link:../core
-      '@wagmi/devtools':
-        specifier: workspace:*
-        version: link:../devtools
     devDependencies:
       '@solidjs/testing-library':
         specifier: '>=0.8.10'
@@ -434,28 +456,6 @@ importers:
         specifier: ^2.0.6
         version: 2.0.16(typescript@5.6.2)
 
-  playgrounds/devtools:
-    dependencies:
-      '@tanstack/solid-query':
-        specifier: '>=5.59.0'
-        version: 5.59.0(solid-js@1.9.1)
-      '@wagmi/solid':
-        specifier: workspace:*
-        version: link:../../packages/solid
-      solid-js:
-        specifier: ^1.8.20
-        version: 1.9.1
-    devDependencies:
-      typescript:
-        specifier: ^5.5.3
-        version: 5.6.2
-      vite:
-        specifier: ^5.4.1
-        version: 5.4.8(@types/node@20.12.10)(terser@5.31.0)
-      vite-plugin-solid:
-        specifier: ^2.10.2
-        version: 2.10.2(bufferutil@4.0.8)(solid-js@1.9.1)(utf-8-validate@5.0.10)(vite@5.4.8(@types/node@20.12.10)(terser@5.31.0))
-
   playgrounds/next:
     dependencies:
       '@next/bundle-analyzer':
@@ -466,7 +466,7 @@ importers:
         version: 5.49.2(react@18.3.1)
       next:
         specifier: 14.2.4
-        version: 14.2.4(@opentelemetry/api@1.8.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 14.2.4(@babel/core@7.24.5)(@opentelemetry/api@1.8.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react:
         specifier: '>=18.3.1'
         version: 18.3.1
@@ -574,6 +574,9 @@ importers:
       '@tanstack/react-query-persist-client':
         specifier: 5.0.5
         version: 5.0.5(@tanstack/react-query@5.49.2(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@wagmi/devtools':
+        specifier: workspace:*
+        version: link:../../packages/devtools
       idb-keyval:
         specifier: ^6.2.1
         version: 6.2.1
@@ -608,6 +611,31 @@ importers:
       vite:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@20.12.10)(terser@5.31.0)
+
+  playgrounds/vite-solid:
+    dependencies:
+      '@tanstack/solid-query':
+        specifier: '>=5.59.0'
+        version: 5.59.0(solid-js@1.9.1)
+      '@wagmi/devtools':
+        specifier: workspace:*
+        version: link:../../packages/devtools
+      '@wagmi/solid':
+        specifier: workspace:*
+        version: link:../../packages/solid
+      solid-js:
+        specifier: ^1.8.20
+        version: 1.9.1
+    devDependencies:
+      typescript:
+        specifier: ^5.5.3
+        version: 5.6.2
+      vite:
+        specifier: ^5.4.1
+        version: 5.4.8(@types/node@20.12.10)(terser@5.31.0)
+      vite-plugin-solid:
+        specifier: ^2.10.2
+        version: 2.10.2(bufferutil@4.0.8)(solid-js@1.9.1)(utf-8-validate@5.0.10)(vite@5.4.8(@types/node@20.12.10)(terser@5.31.0))
 
   playgrounds/vite-vue:
     dependencies:
@@ -706,18 +734,12 @@ packages:
     peerDependencies:
       '@algolia/client-search': '>= 4.9.1 < 6'
       algoliasearch: '>= 4.9.1 < 6'
-    peerDependenciesMeta:
-      '@algolia/client-search':
-        optional: true
 
   '@algolia/autocomplete-shared@1.9.3':
     resolution: {integrity: sha512-Wnm9E4Ye6Rl6sTTqjoymD+l8DjSTHsHboVRYrKgEt8Q7UHm9nYbqhN/i0fhUYA3OAEH7WA8x3jfpnmJm3rKvaQ==}
     peerDependencies:
       '@algolia/client-search': '>= 4.9.1 < 6'
       algoliasearch: '>= 4.9.1 < 6'
-    peerDependenciesMeta:
-      '@algolia/client-search':
-        optional: true
 
   '@algolia/cache-browser-local-storage@4.19.1':
     resolution: {integrity: sha512-FYAZWcGsFTTaSAwj9Std8UML3Bu8dyWDncM7Ls8g+58UOe4XYdlgzXWbrIgjaguP63pCCbMoExKr61B+ztK3tw==}
@@ -2586,7 +2608,7 @@ packages:
     resolution: {integrity: sha512-j/lym8nf5E21LwBT4Df1VD6hRO2L2iwUeUmP7litikRsVp1H6NWx20NEp0Y7su+7XGc476GnXXc4kFeZNGmaSQ==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
-      rollup: ^4.18.0
+      rollup: ^2.78.0||^3.0.0||^4.0.0
     peerDependenciesMeta:
       rollup:
         optional: true
@@ -3972,7 +3994,6 @@ packages:
 
   bun@1.1.29:
     resolution: {integrity: sha512-SKhpyKNZtgxrVel9ec9xon3LDv8mgpiuFhARgcJo1YIbggY2PBrKHRNiwQ6Qlb+x3ivmRurfuwWgwGexjpgBRg==}
-    cpu: [arm64, x64]
     os: [darwin, linux, win32]
     hasBin: true
 
@@ -8698,15 +8719,13 @@ snapshots:
   '@algolia/autocomplete-preset-algolia@1.9.3(@algolia/client-search@4.19.1)(algoliasearch@4.19.1)':
     dependencies:
       '@algolia/autocomplete-shared': 1.9.3(@algolia/client-search@4.19.1)(algoliasearch@4.19.1)
-      algoliasearch: 4.19.1
-    optionalDependencies:
       '@algolia/client-search': 4.19.1
+      algoliasearch: 4.19.1
 
   '@algolia/autocomplete-shared@1.9.3(@algolia/client-search@4.19.1)(algoliasearch@4.19.1)':
     dependencies:
-      algoliasearch: 4.19.1
-    optionalDependencies:
       '@algolia/client-search': 4.19.1
+      algoliasearch: 4.19.1
 
   '@algolia/cache-browser-local-storage@4.19.1':
     dependencies:
@@ -12646,22 +12665,6 @@ snapshots:
 
   b4a@1.6.6: {}
 
-  babel-plugin-jsx-dom-expressions@0.39.0(@babel/core@7.24.5):
-    dependencies:
-      '@babel/core': 7.24.5
-      '@babel/helper-module-imports': 7.18.6
-      '@babel/plugin-syntax-jsx': 7.24.1(@babel/core@7.24.5)
-      '@babel/types': 7.24.5
-      html-entities: 2.3.3
-      jest-diff: 29.7.0
-      jsdom: 25.0.1
-      validate-html-nesting: 1.2.2
-    transitivePeerDependencies:
-      - bufferutil
-      - canvas
-      - supports-color
-      - utf-8-validate
-
   babel-plugin-jsx-dom-expressions@0.39.0(@babel/core@7.24.5)(bufferutil@4.0.8)(utf-8-validate@5.0.10):
     dependencies:
       '@babel/core': 7.24.5
@@ -12672,16 +12675,6 @@ snapshots:
       jest-diff: 29.7.0
       jsdom: 25.0.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       validate-html-nesting: 1.2.2
-    transitivePeerDependencies:
-      - bufferutil
-      - canvas
-      - supports-color
-      - utf-8-validate
-
-  babel-preset-solid@1.9.0(@babel/core@7.24.5):
-    dependencies:
-      '@babel/core': 7.24.5
-      babel-plugin-jsx-dom-expressions: 0.39.0(@babel/core@7.24.5)
     transitivePeerDependencies:
       - bufferutil
       - canvas
@@ -13179,12 +13172,12 @@ snapshots:
   css-tree@2.2.1:
     dependencies:
       mdn-data: 2.0.28
-      source-map-js: 1.2.0
+      source-map-js: 1.2.1
 
   css-tree@2.3.1:
     dependencies:
       mdn-data: 2.0.30
-      source-map-js: 1.2.0
+      source-map-js: 1.2.1
 
   css-what@6.1.0: {}
 
@@ -13498,11 +13491,11 @@ snapshots:
 
   error-stack-parser-es@0.1.1: {}
 
-  esbuild-plugin-solid@0.5.0(esbuild@0.23.1)(solid-js@1.9.1):
+  esbuild-plugin-solid@0.5.0(bufferutil@4.0.8)(esbuild@0.23.1)(solid-js@1.9.1)(utf-8-validate@5.0.10):
     dependencies:
       '@babel/core': 7.24.5
       '@babel/preset-typescript': 7.24.1(@babel/core@7.24.5)
-      babel-preset-solid: 1.9.0(@babel/core@7.24.5)
+      babel-preset-solid: 1.9.0(@babel/core@7.24.5)(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       esbuild: 0.23.1
       solid-js: 1.9.1
     transitivePeerDependencies:
@@ -14591,34 +14584,6 @@ snapshots:
 
   jsbn@1.1.0: {}
 
-  jsdom@25.0.1:
-    dependencies:
-      cssstyle: 4.1.0
-      data-urls: 5.0.0
-      decimal.js: 10.4.3
-      form-data: 4.0.0
-      html-encoding-sniffer: 4.0.0
-      http-proxy-agent: 7.0.2
-      https-proxy-agent: 7.0.5
-      is-potential-custom-element-name: 1.0.1
-      nwsapi: 2.2.13
-      parse5: 7.1.2
-      rrweb-cssom: 0.7.1
-      saxes: 6.0.0
-      symbol-tree: 3.2.4
-      tough-cookie: 5.0.0
-      w3c-xmlserializer: 5.0.0
-      webidl-conversions: 7.0.0
-      whatwg-encoding: 3.1.1
-      whatwg-mimetype: 4.0.0
-      whatwg-url: 14.0.0
-      ws: 8.18.0
-      xml-name-validator: 5.0.0
-    transitivePeerDependencies:
-      - bufferutil
-      - supports-color
-      - utf-8-validate
-
   jsdom@25.0.1(bufferutil@4.0.8)(utf-8-validate@5.0.10):
     dependencies:
       cssstyle: 4.1.0
@@ -15431,7 +15396,7 @@ snapshots:
 
   negotiator@0.6.3: {}
 
-  next@14.2.4(@opentelemetry/api@1.8.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  next@14.2.4(@babel/core@7.24.5)(@opentelemetry/api@1.8.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@next/env': 14.2.4
       '@swc/helpers': 0.5.5
@@ -15441,7 +15406,7 @@ snapshots:
       postcss: 8.4.31
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-      styled-jsx: 5.1.1(react@18.3.1)
+      styled-jsx: 5.1.1(@babel/core@7.24.5)(react@18.3.1)
     optionalDependencies:
       '@next/swc-darwin-arm64': 14.2.4
       '@next/swc-darwin-x64': 14.2.4
@@ -16295,9 +16260,13 @@ snapshots:
     dependencies:
       postcss: 8.4.38
 
-  postcss-load-config@6.0.1:
+  postcss-load-config@6.0.1(jiti@1.21.6)(postcss@8.4.47)(yaml@2.4.2):
     dependencies:
       lilconfig: 3.1.1
+    optionalDependencies:
+      jiti: 1.21.6
+      postcss: 8.4.47
+      yaml: 2.4.2
 
   postcss-merge-longhand@6.0.5(postcss@8.4.38):
     dependencies:
@@ -17177,10 +17146,12 @@ snapshots:
     dependencies:
       js-tokens: 9.0.0
 
-  styled-jsx@5.1.1(react@18.3.1):
+  styled-jsx@5.1.1(@babel/core@7.24.5)(react@18.3.1):
     dependencies:
       client-only: 0.0.1
       react: 18.3.1
+    optionalDependencies:
+      '@babel/core': 7.24.5
 
   stylehacks@6.1.1(postcss@8.4.38):
     dependencies:
@@ -17371,10 +17342,10 @@ snapshots:
 
   tsort@0.0.1: {}
 
-  tsup-preset-solid@2.2.0(esbuild@0.23.1)(solid-js@1.9.1)(tsup@8.3.0):
+  tsup-preset-solid@2.2.0(bufferutil@4.0.8)(esbuild@0.23.1)(solid-js@1.9.1)(tsup@8.3.0(jiti@1.21.6)(postcss@8.4.47)(typescript@5.6.2)(yaml@2.4.2))(utf-8-validate@5.0.10):
     dependencies:
-      esbuild-plugin-solid: 0.5.0(esbuild@0.23.1)(solid-js@1.9.1)
-      tsup: 8.3.0
+      esbuild-plugin-solid: 0.5.0(bufferutil@4.0.8)(esbuild@0.23.1)(solid-js@1.9.1)(utf-8-validate@5.0.10)
+      tsup: 8.3.0(jiti@1.21.6)(postcss@8.4.47)(typescript@5.6.2)(yaml@2.4.2)
     transitivePeerDependencies:
       - bufferutil
       - canvas
@@ -17383,7 +17354,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  tsup@8.3.0:
+  tsup@8.3.0(jiti@1.21.6)(postcss@8.4.47)(typescript@5.6.2)(yaml@2.4.2):
     dependencies:
       bundle-require: 5.0.0(esbuild@0.23.1)
       cac: 6.7.14
@@ -17394,13 +17365,16 @@ snapshots:
       execa: 5.1.1
       joycon: 3.1.1
       picocolors: 1.1.0
-      postcss-load-config: 6.0.1
+      postcss-load-config: 6.0.1(jiti@1.21.6)(postcss@8.4.47)(yaml@2.4.2)
       resolve-from: 5.0.0
       rollup: 4.24.0
       source-map: 0.8.0-beta.0
       sucrase: 3.35.0
       tinyglobby: 0.2.6
       tree-kill: 1.2.2
+    optionalDependencies:
+      postcss: 8.4.47
+      typescript: 5.6.2
     transitivePeerDependencies:
       - jiti
       - supports-color
@@ -18261,8 +18235,6 @@ snapshots:
     optionalDependencies:
       bufferutil: 4.0.8
       utf-8-validate: 5.0.10
-
-  ws@8.18.0: {}
 
   ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10):
     optionalDependencies:

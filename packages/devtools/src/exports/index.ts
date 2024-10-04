@@ -1,4 +1,3 @@
-// biome-ignore lint/performance/noBarrelFile: <explanation>
-export { Devtools } from '../main.jsx'
-
-export { version } from '../version.js'
+// biome-ignore lint/performance/noBarrelFile: entrypoint module
+// biome-ignore lint/performance/noReExportAll: entrypoint module
+export * from '@wagmi/devtools-ui'

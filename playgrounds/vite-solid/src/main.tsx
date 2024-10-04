@@ -1,7 +1,7 @@
 /* @refresh reload */
 import { QueryClient, QueryClientProvider } from '@tanstack/solid-query'
+import { WagmiDevtools } from '@wagmi/devtools/solid'
 import { WagmiProvider } from '@wagmi/solid'
-import { WagmiDevtools } from '@wagmi/solid/devtools'
 import { render } from 'solid-js/web'
 
 import { App } from './App'
