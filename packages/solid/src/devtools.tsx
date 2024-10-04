@@ -22,8 +22,6 @@ export type WagmiDevtoolsProps = {
   initialIsOpen?: boolean | undefined
   position?: Devtools.Props['position']
   queryClient?: QueryClient | undefined
-  shadowDOMTarget?: ShadowRoot | undefined
-  styleNonce?: string | undefined
 }
 
 export function WagmiDevtools(props: WagmiDevtoolsProps): JSX.Element {
@@ -43,8 +41,6 @@ export function WagmiDevtools(props: WagmiDevtoolsProps): JSX.Element {
     initialIsOpen: props.initialIsOpen,
     position: props.position,
     queryClient: queryClient(),
-    shadowDOMTarget: props.shadowDOMTarget,
-    styleNonce: props.styleNonce,
     version,
   })
 
@@ -104,14 +100,14 @@ export function clientOnly<T extends Component<any>>(
     onMount(() => setMounted(true))
     return createMemo(
       () =>
-        (
-          // biome-ignore lint/suspicious/noAssignInExpressions:
-          (Comp = comp()),
-          // biome-ignore lint/suspicious/noAssignInExpressions:
-          // biome-ignore lint/style/noCommaOperator:
-          (m = mounted()),
-          untrack(() => (Comp && m ? Comp(rest) : props.fallback))
-        ),
+      (
+        // biome-ignore lint/suspicious/noAssignInExpressions:
+        (Comp = comp()),
+        // biome-ignore lint/suspicious/noAssignInExpressions:
+        // biome-ignore lint/style/noCommaOperator:
+        (m = mounted()),
+        untrack(() => (Comp && m ? Comp(rest) : props.fallback))
+      ),
     )
   }
 }

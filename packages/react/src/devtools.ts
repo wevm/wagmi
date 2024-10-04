@@ -13,8 +13,6 @@ export type WagmiDevtoolsProps = {
   initialIsOpen?: boolean | undefined
   position?: Devtools.Props['position']
   queryClient?: QueryClient | undefined
-  shadowDOMTarget?: ShadowRoot | undefined
-  styleNonce?: string | undefined
 }
 
 export function WagmiDevtools(
@@ -27,13 +25,7 @@ export function WagmiDevtools(
     tanstack_queryClient) as unknown as Devtools.Props['queryClient']
 
   const ref = React.useRef<HTMLDivElement>(null)
-  const {
-    buttonPosition,
-    position,
-    initialIsOpen,
-    styleNonce,
-    shadowDOMTarget,
-  } = props
+  const { buttonPosition, initialIsOpen, position } = props
   const [devtools] = React.useState(
     new Devtools({
       buttonPosition,
@@ -42,8 +34,6 @@ export function WagmiDevtools(
       initialIsOpen,
       position,
       queryClient,
-      shadowDOMTarget,
-      styleNonce,
       version,
     }),
   )
@@ -77,5 +67,5 @@ export function WagmiDevtools(
     }
   }, [devtools])
 
-  return <div className="wd-parent-container" ref={ref} />
+  return React.createElement('div', { className: 'wd-parent-container', ref })
 }

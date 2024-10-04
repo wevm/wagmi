@@ -8,10 +8,14 @@ export const DevtoolsContext = createContext<Devtools.Props>({
   config: undefined as unknown as Config,
   framework: '',
   queryClient: undefined as unknown as QueryClient,
-  shadowDOMTarget: undefined,
   version: '',
 })
 
 export function useDevtoolsContext() {
-  return useContext(DevtoolsContext)
+  const value = useContext(DevtoolsContext)
+  if (!value)
+    throw new Error(
+      'useDevtoolsContext must be used within a DevtoolsContext.Provider',
+    )
+  return value
 }

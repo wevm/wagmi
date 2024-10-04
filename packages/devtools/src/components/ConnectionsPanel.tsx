@@ -6,11 +6,33 @@ import {
   useConnectors,
   useDisconnect,
 } from '@wagmi/solid'
-import { For } from 'solid-js'
+import { createSignal, For } from 'solid-js'
+import { pipe } from 'remeda'
+
+import { and, hover, not, on } from '../css.js'
 
 export function ConnectionsPanel() {
+  const [count, setCount] = createSignal(0)
+
   return (
     <>
+      <button
+        onClick={() => setCount((count) => count + 1)}
+        style={pipe(
+          {
+            transition: 'transform 75ms',
+          },
+          on('&:active', {
+            transform: 'scale(0.9)',
+          }),
+          on(and(hover, not('&:active')), {
+            transform: 'scale(0.8)',
+          }),
+        )}
+      >
+        count is {count()}
+      </button>
+
       <Account />
       <Connect />
       <Connections />

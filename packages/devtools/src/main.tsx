@@ -5,7 +5,7 @@ import { createSignal, lazy } from 'solid-js'
 import { render } from 'solid-js/web'
 
 import { DevtoolsContext } from './context.js'
-import { setupStyleSheet } from './utils.js'
+import { styleSheet } from './css.js'
 
 export class Devtools {
   #Component: Component | undefined
@@ -17,11 +17,9 @@ export class Devtools {
   #isMounted = false
   #position: Signal<Devtools.Props['position']>
   #queryClient: Signal<QueryClient>
-  #shadowDOMTarget?: ShadowRoot | undefined
-  #styleNonce?: string | undefined
   #version: string
 
-  constructor(parameters: Devtools.Parameters) {
+  constructor(parameters: Devtools.Props) {
     const {
       buttonPosition,
       config,
@@ -29,8 +27,6 @@ export class Devtools {
       initialIsOpen,
       position,
       queryClient,
-      shadowDOMTarget,
-      styleNonce,
       version,
     } = parameters
     this.#buttonPosition = createSignal(buttonPosition)
@@ -39,8 +35,6 @@ export class Devtools {
     this.#initialIsOpen = createSignal(initialIsOpen)
     this.#position = createSignal(position)
     this.#queryClient = createSignal(queryClient)
-    this.#shadowDOMTarget = shadowDOMTarget
-    this.#styleNonce = styleNonce
     this.#version = version
   }
 
@@ -80,10 +74,8 @@ export class Devtools {
         return this.#Component
       })()
 
-      setupStyleSheet(this.#styleNonce, this.#shadowDOMTarget)
       const value = {
         framework: this.#framework,
-        shadowDOMTarget: this.#shadowDOMTarget,
         version: this.#version,
         get config() {
           return config()
@@ -102,9 +94,12 @@ export class Devtools {
         },
       }
       return (
-        <DevtoolsContext.Provider value={value}>
-          <App />
-        </DevtoolsContext.Provider>
+        <>
+          <style innerHTML={styleSheet()} />
+          <DevtoolsContext.Provider value={value}>
+            <App />
+          </DevtoolsContext.Provider>
+        </>
       )
     }, el)
 
@@ -130,12 +125,6 @@ export declare namespace Devtools {
     initialIsOpen?: boolean | undefined
     onClose?: (() => unknown) | undefined
     position?: XPosition | YPosition | undefined
-    shadowDOMTarget?: ShadowRoot | undefined
-  }
-
-  interface Parameters extends Devtools.Props {
-    styleNonce?: string
-    shadowDOMTarget?: ShadowRoot
   }
 }
 

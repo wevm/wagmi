@@ -240,21 +240,27 @@ importers:
 
   packages/devtools:
     devDependencies:
+      '@css-hooks/core':
+        specifier: ^3.0.0
+        version: 3.0.0
       '@tanstack/solid-query':
         specifier: '>=5.59.0'
         version: 5.59.0(solid-js@1.9.1)
       '@wagmi/solid':
         specifier: workspace:*
         version: link:../solid
+      remeda:
+        specifier: ^2.14.0
+        version: 2.14.0
       solid-js:
         specifier: ^1.9.1
         version: 1.9.1
       tsup:
         specifier: ^8.3.0
-        version: 8.3.0(jiti@1.21.6)(postcss@8.4.47)(typescript@5.6.2)(yaml@2.4.2)
+        version: 8.3.0
       tsup-preset-solid:
         specifier: ^2.2.0
-        version: 2.2.0(bufferutil@4.0.8)(esbuild@0.23.1)(solid-js@1.9.1)(tsup@8.3.0(jiti@1.21.6)(postcss@8.4.47)(typescript@5.6.2)(yaml@2.4.2))(utf-8-validate@5.0.10)
+        version: 2.2.0(esbuild@0.23.1)(solid-js@1.9.1)(tsup@8.3.0)
 
   packages/react:
     dependencies:
@@ -700,12 +706,18 @@ packages:
     peerDependencies:
       '@algolia/client-search': '>= 4.9.1 < 6'
       algoliasearch: '>= 4.9.1 < 6'
+    peerDependenciesMeta:
+      '@algolia/client-search':
+        optional: true
 
   '@algolia/autocomplete-shared@1.9.3':
     resolution: {integrity: sha512-Wnm9E4Ye6Rl6sTTqjoymD+l8DjSTHsHboVRYrKgEt8Q7UHm9nYbqhN/i0fhUYA3OAEH7WA8x3jfpnmJm3rKvaQ==}
     peerDependencies:
       '@algolia/client-search': '>= 4.9.1 < 6'
       algoliasearch: '>= 4.9.1 < 6'
+    peerDependenciesMeta:
+      '@algolia/client-search':
+        optional: true
 
   '@algolia/cache-browser-local-storage@4.19.1':
     resolution: {integrity: sha512-FYAZWcGsFTTaSAwj9Std8UML3Bu8dyWDncM7Ls8g+58UOe4XYdlgzXWbrIgjaguP63pCCbMoExKr61B+ztK3tw==}
@@ -1116,6 +1128,9 @@ packages:
   '@colors/colors@1.5.0':
     resolution: {integrity: sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==}
     engines: {node: '>=0.1.90'}
+
+  '@css-hooks/core@3.0.0':
+    resolution: {integrity: sha512-RyBuSo/uUxHhjm2RX8AwisR/kPNlx76lzCqvJCx8EBOEeG67dflVMJFsXnViNVcKN1CbHD6bJ9ey4qHFQU+H6g==}
 
   '@discoveryjs/json-ext@0.5.7':
     resolution: {integrity: sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==}
@@ -2571,7 +2586,7 @@ packages:
     resolution: {integrity: sha512-j/lym8nf5E21LwBT4Df1VD6hRO2L2iwUeUmP7litikRsVp1H6NWx20NEp0Y7su+7XGc476GnXXc4kFeZNGmaSQ==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
-      rollup: ^2.78.0||^3.0.0||^4.0.0
+      rollup: ^4.18.0
     peerDependenciesMeta:
       rollup:
         optional: true
@@ -3957,6 +3972,7 @@ packages:
 
   bun@1.1.29:
     resolution: {integrity: sha512-SKhpyKNZtgxrVel9ec9xon3LDv8mgpiuFhARgcJo1YIbggY2PBrKHRNiwQ6Qlb+x3ivmRurfuwWgwGexjpgBRg==}
+    cpu: [arm64, x64]
     os: [darwin, linux, win32]
     hasBin: true
 
@@ -7060,6 +7076,9 @@ packages:
   regenerator-runtime@0.14.0:
     resolution: {integrity: sha512-srw17NI0TUWHuGa5CFGGmhfNIeja30WMBfbslPNhf6JrqQlLN5gcrvig1oqPxiVaXb0oW0XRKtH6Nngs5lKCIA==}
 
+  remeda@2.14.0:
+    resolution: {integrity: sha512-OSOhr9gGcb3AshMxlu9YnnUtKSkeYhj+AxWiWGfVh3HolYtJP5IF9vC1j1tq15uI7lxCPVd9qnnp43dOvZ840A==}
+
   remove-accents@0.5.0:
     resolution: {integrity: sha512-8g3/Otx1eJaVD12e31UbJj1YzdtVvzH85HV7t+9MJYk/u3XmkOUJ5Ys9wQrf9PCPK8+xn4ymzqYCiZl6QWKn+A==}
 
@@ -7840,6 +7859,10 @@ packages:
 
   type-fest@4.18.2:
     resolution: {integrity: sha512-+suCYpfJLAe4OXS6+PPXjW3urOS4IoP9waSiLuXfLgqZODKw/aWwASvzqE886wA0kQgGy0mIWyhd87VpqIy6Xg==}
+    engines: {node: '>=16'}
+
+  type-fest@4.26.1:
+    resolution: {integrity: sha512-yOGpmOAL7CkKe/91I5O3gPICmJNLJ1G4zFYVAsRHg7M64biSnPtRj0WNQt++bRkjYOqjWXrhnUw1utzmVErAdg==}
     engines: {node: '>=16'}
 
   typescript@5.5.2:
@@ -8675,13 +8698,15 @@ snapshots:
   '@algolia/autocomplete-preset-algolia@1.9.3(@algolia/client-search@4.19.1)(algoliasearch@4.19.1)':
     dependencies:
       '@algolia/autocomplete-shared': 1.9.3(@algolia/client-search@4.19.1)(algoliasearch@4.19.1)
-      '@algolia/client-search': 4.19.1
       algoliasearch: 4.19.1
+    optionalDependencies:
+      '@algolia/client-search': 4.19.1
 
   '@algolia/autocomplete-shared@1.9.3(@algolia/client-search@4.19.1)(algoliasearch@4.19.1)':
     dependencies:
-      '@algolia/client-search': 4.19.1
       algoliasearch: 4.19.1
+    optionalDependencies:
+      '@algolia/client-search': 4.19.1
 
   '@algolia/cache-browser-local-storage@4.19.1':
     dependencies:
@@ -9265,6 +9290,8 @@ snapshots:
 
   '@colors/colors@1.5.0':
     optional: true
+
+  '@css-hooks/core@3.0.0': {}
 
   '@discoveryjs/json-ext@0.5.7': {}
 
@@ -12619,6 +12646,22 @@ snapshots:
 
   b4a@1.6.6: {}
 
+  babel-plugin-jsx-dom-expressions@0.39.0(@babel/core@7.24.5):
+    dependencies:
+      '@babel/core': 7.24.5
+      '@babel/helper-module-imports': 7.18.6
+      '@babel/plugin-syntax-jsx': 7.24.1(@babel/core@7.24.5)
+      '@babel/types': 7.24.5
+      html-entities: 2.3.3
+      jest-diff: 29.7.0
+      jsdom: 25.0.1
+      validate-html-nesting: 1.2.2
+    transitivePeerDependencies:
+      - bufferutil
+      - canvas
+      - supports-color
+      - utf-8-validate
+
   babel-plugin-jsx-dom-expressions@0.39.0(@babel/core@7.24.5)(bufferutil@4.0.8)(utf-8-validate@5.0.10):
     dependencies:
       '@babel/core': 7.24.5
@@ -12629,6 +12672,16 @@ snapshots:
       jest-diff: 29.7.0
       jsdom: 25.0.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       validate-html-nesting: 1.2.2
+    transitivePeerDependencies:
+      - bufferutil
+      - canvas
+      - supports-color
+      - utf-8-validate
+
+  babel-preset-solid@1.9.0(@babel/core@7.24.5):
+    dependencies:
+      '@babel/core': 7.24.5
+      babel-plugin-jsx-dom-expressions: 0.39.0(@babel/core@7.24.5)
     transitivePeerDependencies:
       - bufferutil
       - canvas
@@ -13445,11 +13498,11 @@ snapshots:
 
   error-stack-parser-es@0.1.1: {}
 
-  esbuild-plugin-solid@0.5.0(bufferutil@4.0.8)(esbuild@0.23.1)(solid-js@1.9.1)(utf-8-validate@5.0.10):
+  esbuild-plugin-solid@0.5.0(esbuild@0.23.1)(solid-js@1.9.1):
     dependencies:
       '@babel/core': 7.24.5
       '@babel/preset-typescript': 7.24.1(@babel/core@7.24.5)
-      babel-preset-solid: 1.9.0(@babel/core@7.24.5)(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      babel-preset-solid: 1.9.0(@babel/core@7.24.5)
       esbuild: 0.23.1
       solid-js: 1.9.1
     transitivePeerDependencies:
@@ -14537,6 +14590,34 @@ snapshots:
       argparse: 2.0.1
 
   jsbn@1.1.0: {}
+
+  jsdom@25.0.1:
+    dependencies:
+      cssstyle: 4.1.0
+      data-urls: 5.0.0
+      decimal.js: 10.4.3
+      form-data: 4.0.0
+      html-encoding-sniffer: 4.0.0
+      http-proxy-agent: 7.0.2
+      https-proxy-agent: 7.0.5
+      is-potential-custom-element-name: 1.0.1
+      nwsapi: 2.2.13
+      parse5: 7.1.2
+      rrweb-cssom: 0.7.1
+      saxes: 6.0.0
+      symbol-tree: 3.2.4
+      tough-cookie: 5.0.0
+      w3c-xmlserializer: 5.0.0
+      webidl-conversions: 7.0.0
+      whatwg-encoding: 3.1.1
+      whatwg-mimetype: 4.0.0
+      whatwg-url: 14.0.0
+      ws: 8.18.0
+      xml-name-validator: 5.0.0
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
 
   jsdom@25.0.1(bufferutil@4.0.8)(utf-8-validate@5.0.10):
     dependencies:
@@ -16214,13 +16295,9 @@ snapshots:
     dependencies:
       postcss: 8.4.38
 
-  postcss-load-config@6.0.1(jiti@1.21.6)(postcss@8.4.47)(yaml@2.4.2):
+  postcss-load-config@6.0.1:
     dependencies:
       lilconfig: 3.1.1
-    optionalDependencies:
-      jiti: 1.21.6
-      postcss: 8.4.47
-      yaml: 2.4.2
 
   postcss-merge-longhand@6.0.5(postcss@8.4.38):
     dependencies:
@@ -16558,6 +16635,10 @@ snapshots:
       redis-errors: 1.2.0
 
   regenerator-runtime@0.14.0: {}
+
+  remeda@2.14.0:
+    dependencies:
+      type-fest: 4.26.1
 
   remove-accents@0.5.0: {}
 
@@ -17290,10 +17371,10 @@ snapshots:
 
   tsort@0.0.1: {}
 
-  tsup-preset-solid@2.2.0(bufferutil@4.0.8)(esbuild@0.23.1)(solid-js@1.9.1)(tsup@8.3.0(jiti@1.21.6)(postcss@8.4.47)(typescript@5.6.2)(yaml@2.4.2))(utf-8-validate@5.0.10):
+  tsup-preset-solid@2.2.0(esbuild@0.23.1)(solid-js@1.9.1)(tsup@8.3.0):
     dependencies:
-      esbuild-plugin-solid: 0.5.0(bufferutil@4.0.8)(esbuild@0.23.1)(solid-js@1.9.1)(utf-8-validate@5.0.10)
-      tsup: 8.3.0(jiti@1.21.6)(postcss@8.4.47)(typescript@5.6.2)(yaml@2.4.2)
+      esbuild-plugin-solid: 0.5.0(esbuild@0.23.1)(solid-js@1.9.1)
+      tsup: 8.3.0
     transitivePeerDependencies:
       - bufferutil
       - canvas
@@ -17302,7 +17383,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  tsup@8.3.0(jiti@1.21.6)(postcss@8.4.47)(typescript@5.6.2)(yaml@2.4.2):
+  tsup@8.3.0:
     dependencies:
       bundle-require: 5.0.0(esbuild@0.23.1)
       cac: 6.7.14
@@ -17313,16 +17394,13 @@ snapshots:
       execa: 5.1.1
       joycon: 3.1.1
       picocolors: 1.1.0
-      postcss-load-config: 6.0.1(jiti@1.21.6)(postcss@8.4.47)(yaml@2.4.2)
+      postcss-load-config: 6.0.1
       resolve-from: 5.0.0
       rollup: 4.24.0
       source-map: 0.8.0-beta.0
       sucrase: 3.35.0
       tinyglobby: 0.2.6
       tree-kill: 1.2.2
-    optionalDependencies:
-      postcss: 8.4.47
-      typescript: 5.6.2
     transitivePeerDependencies:
       - jiti
       - supports-color
@@ -17369,6 +17447,8 @@ snapshots:
   type-fest@3.13.1: {}
 
   type-fest@4.18.2: {}
+
+  type-fest@4.26.1: {}
 
   typescript@5.5.2: {}
 
@@ -18181,6 +18261,8 @@ snapshots:
     optionalDependencies:
       bufferutil: 4.0.8
       utf-8-validate: 5.0.10
+
+  ws@8.18.0: {}
 
   ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10):
     optionalDependencies:
