@@ -45,10 +45,7 @@
     "tsup": "^8.3.0",
     "tsup-preset-solid": "^2.2.0"
   },
-  "contributors": [
-    "awkweb.eth <t@wevm.dev>",
-    "jxom.eth <j@wevm.dev>"
-  ],
+  "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
   "funding": "https://github.com/sponsors/wevm",
   "keywords": [
     "wagmi",

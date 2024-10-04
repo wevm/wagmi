@@ -1,3 +1,4 @@
+/** @jsxImportSource solid-js */
 import {
   useAccount,
   useChainId,
@@ -6,8 +7,8 @@ import {
   useConnectors,
   useDisconnect,
 } from '@wagmi/solid'
-import { createSignal, For } from 'solid-js'
 import { pipe } from 'remeda'
+import { For, createSignal } from 'solid-js'
 
 import { and, hover, not, on } from '../css.js'
 

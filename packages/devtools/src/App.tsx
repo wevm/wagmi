@@ -1,3 +1,4 @@
+/** @jsxImportSource solid-js */
 import { QueryClientProvider } from '@tanstack/solid-query'
 import { WagmiProvider } from '@wagmi/solid'
 

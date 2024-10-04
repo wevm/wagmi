@@ -100,14 +100,14 @@ export function clientOnly<T extends Component<any>>(
     onMount(() => setMounted(true))
     return createMemo(
       () =>
-      (
-        // biome-ignore lint/suspicious/noAssignInExpressions:
-        (Comp = comp()),
-        // biome-ignore lint/suspicious/noAssignInExpressions:
-        // biome-ignore lint/style/noCommaOperator:
-        (m = mounted()),
-        untrack(() => (Comp && m ? Comp(rest) : props.fallback))
-      ),
+        (
+          // biome-ignore lint/suspicious/noAssignInExpressions:
+          (Comp = comp()),
+          // biome-ignore lint/suspicious/noAssignInExpressions:
+          // biome-ignore lint/style/noCommaOperator:
+          (m = mounted()),
+          untrack(() => (Comp && m ? Comp(rest) : props.fallback))
+        ),
     )
   }
 }

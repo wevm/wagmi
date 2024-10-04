@@ -1,3 +1,4 @@
+/** @jsxImportSource solid-js */
 import type { QueryClient } from '@tanstack/solid-query'
 import type { Config } from '@wagmi/solid'
 import type { Component, Signal } from 'solid-js'
