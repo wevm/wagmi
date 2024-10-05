@@ -284,7 +284,7 @@ function App() {
 
 `bigint | undefined`
 
-The transaction recipient or contract address.
+The amount of ether (in wei) to send with the transaction.
 
 ::: code-group
 ```tsx [index.tsx]
