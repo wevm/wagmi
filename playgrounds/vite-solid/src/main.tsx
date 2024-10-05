@@ -26,8 +26,8 @@ render(
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
         <App />
-        <WagmiDevtools />
       </QueryClientProvider>
+      <WagmiDevtools queryClient={queryClient} />
     </WagmiProvider>
   ),
   document.getElementById('root')!,

@@ -18,20 +18,13 @@ import { isServer } from 'solid-js/web'
 export function WagmiDevtools(props: WagmiDevtools.Props): JSX.Element {
   const wagmi_config = useConfig()
   const config = createMemo(() => props.config || wagmi_config)
-
-  const tanstack_queryClient = useQueryClient()
-  const queryClient = createMemo(
-    () => props.queryClient || tanstack_queryClient,
-  )
+  const queryClient = useQueryClient(props.queryClient)
 
   let ref!: HTMLDivElement
   const devtools = new Devtools({
-    buttonPosition: props.buttonPosition,
     config: config(),
     framework: 'solid',
-    initialIsOpen: props.initialIsOpen,
-    position: props.position,
-    queryClient: queryClient(),
+    queryClient,
     version,
   })
 
@@ -40,21 +33,7 @@ export function WagmiDevtools(props: WagmiDevtools.Props): JSX.Element {
   })
 
   createEffect(() => {
-    devtools.setQueryClient(queryClient())
-  })
-
-  createEffect(() => {
-    const buttonPos = props.buttonPosition
-    if (buttonPos) devtools.setButtonPosition(buttonPos)
-  })
-
-  createEffect(() => {
-    const pos = props.position
-    if (pos) devtools.setPosition(pos)
-  })
-
-  createEffect(() => {
-    devtools.setInitialIsOpen(props.initialIsOpen || false)
+    devtools.setQueryClient(queryClient)
   })
 
   onMount(() => {
@@ -62,15 +41,12 @@ export function WagmiDevtools(props: WagmiDevtools.Props): JSX.Element {
     onCleanup(() => devtools.unmount())
   })
 
-  return <div class="wd-parent-container" ref={ref} />
+  return <div id="wagmi-devtools-root" ref={ref} />
 }
 
 export declare namespace WagmiDevtools {
   type Props = {
-    buttonPosition?: Devtools.Props['buttonPosition'] | undefined
     config?: Config | undefined
-    initialIsOpen?: boolean | undefined
-    position?: Devtools.Props['position']
     queryClient?: QueryClient | undefined
   }
 }

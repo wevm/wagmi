@@ -1,4 +1,3 @@
-/** @jsxImportSource solid-js */
 import type { ResolvedRegister, State } from '@wagmi/core'
 import { type JSX, type ParentProps, createContext, splitProps } from 'solid-js'
 

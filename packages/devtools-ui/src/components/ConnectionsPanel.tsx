@@ -1,4 +1,4 @@
-/** @jsxImportSource solid-js */
+import { Icon } from '@iconify-icon/solid'
 import {
   useAccount,
   useChainId,
@@ -7,105 +7,91 @@ import {
   useConnectors,
   useDisconnect,
 } from '@wagmi/solid'
-import { pipe } from 'remeda'
-import { For, createSignal } from 'solid-js'
+import * as R from 'remeda'
+import { For, createMemo } from 'solid-js'
 
-import { and, hover, not, on } from '../css.js'
+import { useDevtoolsContext } from '../context.js'
 
 export function ConnectionsPanel() {
-  const [count, setCount] = createSignal(0)
+  const value = useDevtoolsContext()
 
-  return (
-    <>
-      <button
-        onClick={() => setCount((count) => count + 1)}
-        style={pipe(
-          {
-            transition: 'transform 75ms',
-          },
-          on('&:active', {
-            transform: 'scale(0.9)',
-          }),
-          on(and(hover, not('&:active')), {
-            transform: 'scale(0.8)',
-          }),
-        )}
-      >
-        count is {count()}
-      </button>
-
-      <Account />
-      <Connect />
-      <Connections />
-    </>
-  )
-}
-
-function Account() {
   const account = useAccount()
-  const disconnect = useDisconnect()
-
-  return (
-    <div>
-      <h2>Account</h2>
-
-      <div>
-        account: {account.address}
-        <br />
-        chainId: {account.chainId}
-        <br />
-        status: {account.status}
-      </div>
-
-      {account.status !== 'disconnected' && (
-        <button type="button" onClick={() => disconnect.mutate({})}>
-          Disconnect
-        </button>
-      )}
-    </div>
-  )
-}
-
-function Connect() {
   const chainId = useChainId()
   const connect = useConnect()
-  const connectors = useConnectors()
-
-  return (
-    <div>
-      <h2>Connect</h2>
-      <For each={connectors}>
-        {(connector) => (
-          <button
-            onClick={() => connect.mutate({ connector, chainId: chainId() })}
-            type="button"
-          >
-            {connector.name}
-          </button>
-        )}
-      </For>
-      <div>{connect.status}</div>
-      <div>{connect.error?.message}</div>
-    </div>
-  )
-}
-
-function Connections() {
   const connections = useConnections()
+  const connectors = useConnectors()
+  const disconnect = useDisconnect()
+
+  const inactiveConnectors = createMemo(() => {
+    const activeConnectorUids = new Set<string>([])
+    for (const connection of connections) {
+      activeConnectorUids.add(connection.connector.uid)
+    }
+    return R.filter(
+      connectors,
+      (connector) => !activeConnectorUids.has(connector.uid),
+    )
+  })
 
   return (
     <div>
-      <h2>Connections</h2>
+      <div>
+        Connections ({value.framework} devtools {value.version})
+        <Icon icon="lucide:minimize-2" />
+      </div>
 
-      <For each={connections}>
-        {(connection) => (
+      <div style={{ display: 'flex' }}>
+        <div style={{ flex: 1 }}>
+          <For each={connections}>
+            {(connection) => (
+              <div>
+                <span>{connection.connector.name}</span>
+                <button
+                  onClick={() =>
+                    disconnect.mutate({ connector: connection.connector })
+                  }
+                  type="button"
+                >
+                  Disconnect
+                </button>
+              </div>
+            )}
+          </For>
+          <For each={inactiveConnectors()}>
+            {(connector) => (
+              <div>
+                <span>{connector.name}</span>
+                <button
+                  onClick={() =>
+                    connect.mutate({ connector, chainId: chainId() })
+                  }
+                  type="button"
+                >
+                  Connect
+                </button>
+              </div>
+            )}
+          </For>
+        </div>
+
+        <div style={{ flex: 1 }}>
           <div>
-            <div>connector {connection.connector.name}</div>
-            <div>accounts: {JSON.stringify(connection.accounts)}</div>
-            <div>chainId: {connection.chainId}</div>
+            account: {account.address}
+            <br />
+            chainId: {account.chainId}
+            <br />
+            status: {account.status}
           </div>
-        )}
-      </For>
+
+          <div style={{ display: 'flex' }}>
+            {account.status !== 'disconnected' && (
+              <button type="button" onClick={() => disconnect.mutate({})}>
+                Disconnect
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

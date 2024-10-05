@@ -1,3 +1,4 @@
+/** @jsxImportSource react */
 'use client'
 
 import { type QueryClient, useQueryClient } from '@tanstack/react-query'
@@ -15,14 +16,10 @@ export function WagmiDevtools(
     tanstack_queryClient) as unknown as Devtools.Props['queryClient']
 
   const ref = React.useRef<HTMLDivElement>(null)
-  const { buttonPosition, initialIsOpen, position } = props
   const [devtools] = React.useState(
     new Devtools({
-      buttonPosition,
       config,
       framework: 'react',
-      initialIsOpen,
-      position,
       queryClient,
       version,
     }),
@@ -39,33 +36,18 @@ export function WagmiDevtools(
   }, [tanstack_queryClient, devtools])
 
   React.useEffect(() => {
-    if (buttonPosition) devtools.setButtonPosition(buttonPosition)
-  }, [buttonPosition, devtools])
-
-  React.useEffect(() => {
-    if (position) devtools.setPosition(position)
-  }, [position, devtools])
-
-  React.useEffect(() => {
-    devtools.setInitialIsOpen(initialIsOpen || false)
-  }, [initialIsOpen, devtools])
-
-  React.useEffect(() => {
     if (ref.current) devtools.mount(ref.current)
     return () => {
       devtools.unmount()
     }
   }, [devtools])
 
-  return React.createElement('div', { className: 'wd-parent-container', ref })
+  return React.createElement('div', { id: 'wagmi-devtools-root', ref })
 }
 
 export declare namespace WagmiDevtools {
   type Props = {
-    buttonPosition?: Devtools.Props['buttonPosition'] | undefined
     config?: Config | undefined
-    initialIsOpen?: boolean | undefined
-    position?: Devtools.Props['position']
     queryClient?: QueryClient | undefined
   }
 }

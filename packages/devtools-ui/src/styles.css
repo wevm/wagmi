@@ -1,0 +1,5 @@
+.wagmi-devtools-content {
+  @tailwind base;
+}
+@tailwind components;
+@tailwind utilities;
