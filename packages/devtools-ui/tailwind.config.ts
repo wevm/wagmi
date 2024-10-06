@@ -1,6 +1,6 @@
+import containerQueriesPlugin from '@tailwindcss/container-queries'
 import type { Config } from 'tailwindcss'
 import defaultTheme from 'tailwindcss/defaultTheme'
-import containerQueriesPlugin from '@tailwindcss/container-queries'
 
 export default {
   darkMode: ['selector', '[data-theme="dark"]'],

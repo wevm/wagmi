@@ -4,7 +4,7 @@ import type { Component, Signal } from 'solid-js'
 import { createSignal, lazy } from 'solid-js'
 import { Portal, render } from 'solid-js/web'
 
-import { DevtoolsContext } from './context.js'
+import { DevtoolsContext } from './contexts/devtools.js'
 
 import './style.css'
 
@@ -40,9 +40,9 @@ export class Devtools {
       const [config] = this.#config
       const [queryClient] = this.#queryClient
 
-      const App = (() => {
+      const Routes = (() => {
         if (this.#Component) return this.#Component
-        this.#Component = lazy(() => import('./App.js'))
+        this.#Component = lazy(() => import('./Routes.jsx'))
         return this.#Component
       })()
 
@@ -61,7 +61,7 @@ export class Devtools {
           <div class="wagmi-devtools-content">
             <style innerHTML={styles} />
             <DevtoolsContext.Provider value={value}>
-              <App />
+              <Routes />
             </DevtoolsContext.Provider>
           </div>
         </Portal>

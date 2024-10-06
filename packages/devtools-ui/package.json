@@ -40,6 +40,7 @@
     "@css-hooks/core": "^3.0.0",
     "@iconify-icon/solid": "^2.1.1",
     "@solid-primitives/storage": "^4.2.1",
+    "@solidjs/router": "^0.14.7",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tanstack/solid-query": ">=5.59.0",
     "@wagmi/solid": "workspace:*",

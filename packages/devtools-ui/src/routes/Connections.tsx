@@ -10,9 +10,9 @@ import {
 import * as R from 'remeda'
 import { For, createMemo } from 'solid-js'
 
-import { useDevtoolsContext } from '../context.js'
+import { useDevtoolsContext } from '../contexts/devtools.js'
 
-export function ConnectionsPanel() {
+export function Connections() {
   const value = useDevtoolsContext()
 
   const account = useAccount()

@@ -1,36 +1,48 @@
-import { ConnectionsPanel } from './components/ConnectionsPanel.jsx'
-import { Providers } from './components/Providers.jsx'
-import { useTheme } from './primitives/useTheme.js'
+import { createMemo, createSignal, type ParentProps } from 'solid-js'
+import { QueryClientProvider } from '@tanstack/solid-query'
+import { WagmiProvider } from '@wagmi/solid'
+import { A } from '@solidjs/router'
 
-// TODO:
-// - Contracts panel
-// - Add your own panel
+import { useDevtoolsContext } from './contexts/devtools.js'
+import { makePersisted } from '@solid-primitives/storage'
+import { usePrefersColorScheme } from './primitives/usePrefersColorScheme.js'
+import { ThemeContext, type Theme } from './contexts/theme.js'
 
-function App() {
-  const { resolvedTheme, setTheme } = useTheme()
+export function App(props: App.Props) {
+  const value = useDevtoolsContext()
+
+  const [theme, setTheme] = makePersisted(createSignal<Theme>('auto'), {
+    name: 'devtools.theme',
+    storage: value.config.storage as unknown as Storage,
+  })
+  const colorScheme = usePrefersColorScheme()
+  const resolvedTheme = createMemo(() => {
+    if (theme() !== 'auto') return theme() as Extract<Theme, 'dark' | 'light'>
+    return colorScheme()
+  })
 
   return (
-    <Providers>
-      <div
-        data-theme={resolvedTheme()}
-        class="antialiased border bg-background-100 border-gray-200 font-sans text-gray-900"
-      >
-        <ConnectionsPanel />
+    <WagmiProvider config={value.config}>
+      <QueryClientProvider client={value.queryClient}>
+        <ThemeContext.Provider value={{ resolvedTheme, theme, setTheme }}>
+          <div
+            data-theme={resolvedTheme()}
+            class="antialiased border bg-background-100 border-gray-200 font-sans text-gray-900"
+          >
+            <nav>
+              <A href="/">Connections</A>
+              <A href="/contracts">Contracts</A>
+              <A href="/settings">Settings</A>
+            </nav>
 
-        <div>
-          <button type="button" onClick={() => setTheme('dark')}>
-            dark
-          </button>
-          <button type="button" onClick={() => setTheme('auto')}>
-            auto
-          </button>
-          <button type="button" onClick={() => setTheme('light')}>
-            light
-          </button>
-        </div>
-      </div>
-    </Providers>
+            {props.children}
+          </div>
+        </ThemeContext.Provider>
+      </QueryClientProvider>
+    </WagmiProvider>
   )
 }
 
-export default App
+export declare namespace App {
+  type Props = ParentProps
+}
