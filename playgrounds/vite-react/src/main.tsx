@@ -3,7 +3,6 @@ import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persist
 import { QueryClient } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
-import { WagmiDevtools } from '@wagmi/devtools/react'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { WagmiProvider, deserialize, serialize } from 'wagmi'
@@ -44,7 +43,6 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       >
         <App />
         <ReactQueryDevtools initialIsOpen={false} />
-        <WagmiDevtools />
       </PersistQueryClientProvider>
     </WagmiProvider>
   </React.StrictMode>,

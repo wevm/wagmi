@@ -1,4 +1,3 @@
-import { Icon } from '@iconify-icon/solid'
 import {
   useAccount,
   useChainId,
@@ -10,11 +9,7 @@ import {
 import * as R from 'remeda'
 import { For, createMemo } from 'solid-js'
 
-import { useDevtoolsContext } from '../contexts/devtools.js'
-
 export function Connections() {
-  const value = useDevtoolsContext()
-
   const account = useAccount()
   const chainId = useChainId()
   const connect = useConnect()
@@ -34,12 +29,7 @@ export function Connections() {
   })
 
   return (
-    <div>
-      <div>
-        Connections ({value.framework} devtools {value.version})
-        <Icon icon="lucide:minimize-2" />
-      </div>
-
+    <div class="p-4">
       <div style={{ display: 'flex' }}>
         <div style={{ flex: 1 }}>
           <For each={connections}>

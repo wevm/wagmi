@@ -1,12 +1,13 @@
-import { createMemo, createSignal, type ParentProps } from 'solid-js'
+import { A } from '@solidjs/router'
 import { QueryClientProvider } from '@tanstack/solid-query'
 import { WagmiProvider } from '@wagmi/solid'
-import { A } from '@solidjs/router'
+import { type ParentProps, createMemo, createSignal } from 'solid-js'
 
-import { useDevtoolsContext } from './contexts/devtools.js'
+import { Icon } from '@iconify-icon/solid'
 import { makePersisted } from '@solid-primitives/storage'
+import { useDevtoolsContext } from './contexts/devtools.js'
+import { type Theme, ThemeContext } from './contexts/theme.js'
 import { usePrefersColorScheme } from './primitives/usePrefersColorScheme.js'
-import { ThemeContext, type Theme } from './contexts/theme.js'
 
 export function App(props: App.Props) {
   const value = useDevtoolsContext()
@@ -27,15 +28,26 @@ export function App(props: App.Props) {
         <ThemeContext.Provider value={{ resolvedTheme, theme, setTheme }}>
           <div
             data-theme={resolvedTheme()}
-            class="antialiased border bg-background-100 border-gray-200 font-sans text-gray-900"
+            class="antialiased font-sans text-gray-900"
           >
-            <nav>
-              <A href="/">Connections</A>
-              <A href="/contracts">Contracts</A>
-              <A href="/settings">Settings</A>
-            </nav>
+            <aside
+              classList={{
+                'border bg-background-100 border-gray-200': true,
+              }}
+            >
+              <nav class="bg-background-200 border-b border-gray-200 font-medium px-3 py-1 flex gap-3 text-sm w-full">
+                <A href="/" class="flex items-center gap-1">
+                  <Icon icon="lucide:link-2" />
+                  <span>Connections</span>
+                </A>
+                <A href="/settings" class="flex items-center gap-1">
+                  <Icon icon="lucide:settings-2" />
+                  <span>Settings</span>
+                </A>
+              </nav>
 
-            {props.children}
+              {props.children}
+            </aside>
           </div>
         </ThemeContext.Provider>
       </QueryClientProvider>

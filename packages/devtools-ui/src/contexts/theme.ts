@@ -10,7 +10,7 @@ export const ThemeContext = createContext<{
 }>({
   resolvedTheme: () => 'dark' as const,
   theme: () => 'auto' as const,
-  setTheme: () => { },
+  setTheme: () => {},
 })
 
 export function useTheme() {

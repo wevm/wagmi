@@ -1,11 +1,16 @@
+import { useDevtoolsContext } from '../contexts/devtools.js'
 import { useTheme } from '../contexts/theme.js'
 
 export function Settings() {
+  const value = useDevtoolsContext()
   const { theme, setTheme } = useTheme()
 
   return (
-    <div>
+    <div class="p-4">
       <div>Settings</div>
+      <div>
+        {value.framework} devtools {value.version}
+      </div>
       <div>
         <div>Theme: {theme()}</div>
         <button type="button" onClick={() => setTheme('dark')}>
