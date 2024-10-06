@@ -6,7 +6,7 @@ import { Portal, render } from 'solid-js/web'
 
 import { DevtoolsContext } from './context.js'
 
-import './styles.css'
+import './style.css'
 
 export class Devtools {
   #Component: Component | undefined
