@@ -224,7 +224,6 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
 
         const dappMetadata: MetaMaskSDKOptions['dappMetadata'] = {
           url: `${window.location.protocol}//${window.location.host}`,
-          name: document.title,
         }
 
         sdk = new MetaMaskSDK({
