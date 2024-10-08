@@ -258,6 +258,12 @@ export {
 } from '../hooks/useSignMessage.js'
 
 export {
+  type UseSignTransactionParameters,
+  type UseSignTransactionReturnType,
+  useSignTransaction,
+} from '../hooks/useSignTransaction.js'
+
+export {
   type UseSignTypedDataParameters,
   type UseSignTypedDataReturnType,
   useSignTypedData,

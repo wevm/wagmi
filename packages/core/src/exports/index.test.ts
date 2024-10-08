@@ -55,6 +55,7 @@ test('exports', () => {
       "reconnect",
       "sendTransaction",
       "signMessage",
+      "signTransaction",
       "signTypedData",
       "simulateContract",
       "switchAccount",

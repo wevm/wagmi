@@ -313,6 +313,14 @@ export {
 } from '../query/signMessage.js'
 
 export {
+  type SignTransactionData,
+  type SignTransactionVariables,
+  type SignTransactionMutate,
+  type SignTransactionMutateAsync,
+  signTransactionMutationOptions,
+} from '../query/signTransaction.js'
+
+export {
   type SignTypedDataData,
   type SignTypedDataVariables,
   type SignTypedDataMutate,

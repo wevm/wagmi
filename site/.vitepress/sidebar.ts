@@ -248,6 +248,10 @@ export function getSidebar() {
             link: '/react/api/hooks/useSignMessage',
           },
           {
+            text: 'useSignTransaction',
+            link: '/react/api/hooks/useSignTransaction',
+          },
+          {
             text: 'useSignTypedData',
             link: '/react/api/hooks/useSignTypedData',
           },
@@ -875,6 +879,10 @@ export function getSidebar() {
           {
             text: 'signMessage',
             link: '/core/api/actions/signMessage',
+          },
+          {
+            text: 'signTransaction',
+            link: '/core/api/actions/signTransaction',
           },
           {
             text: 'signTypedData',
