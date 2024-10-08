@@ -31,9 +31,26 @@ import {
   withTimeout,
 } from 'viem'
 
-export type MetaMaskParameters = Compute<
-  ExactPartial<Omit<MetaMaskSDKOptions, '_source' | 'readonlyRPCMap'>>
+type WagmiMetaMaskSDKOptions = Compute<
+  ExactPartial<
+    Omit<
+      MetaMaskSDKOptions,
+      | '_source'
+      | 'readonlyRPCMap'
+      | 'useDeeplink'
+      | 'injectProvider'
+      | 'forceInjectProvider'
+      | 'forceDeleteProvider'
+    >
+  >
 >
+
+export type MetaMaskParameters = WagmiMetaMaskSDKOptions & {
+  // Shortcut to connect and sign a message
+  connectAndSign?: string
+  // Allow connectWith any rpc method
+  connectWith?: { method: string; params: unknown[] }
+}
 
 metaMask.type = 'metaMask' as const
 export function metaMask(parameters: MetaMaskParameters = {}) {
@@ -76,11 +93,26 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       if (isReconnecting) accounts = await this.getAccounts().catch(() => [])
 
       try {
+        let signResponse: string | undefined
+        let connectWithResponse: unknown | undefined
         if (!accounts?.length) {
-          const requestedAccounts = (await sdk.connect()) as string[]
-          accounts = requestedAccounts.map((x) => getAddress(x))
+          let requestedAccounts: Address[]
+          if (parameters.connectAndSign) {
+            signResponse = await sdk.connectAndSign({
+              msg: parameters.connectAndSign,
+            })
+            accounts = await this.getAccounts()
+          } else if (parameters.connectWith) {
+            connectWithResponse = await sdk.connectWith({
+              method: parameters.connectWith.method,
+              params: parameters.connectWith.params,
+            })
+            accounts = await this.getAccounts()
+          } else {
+            requestedAccounts = await sdk.connect()
+            accounts = requestedAccounts.map((x) => getAddress(x))
+          }
         }
-
         // Switch to chain if provided
         let currentChainId = (await this.getChainId()) as number
         if (chainId && currentChainId !== chainId) {
@@ -94,6 +126,20 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         if (displayUri) {
           provider.removeListener('display_uri', displayUri)
           displayUri = undefined
+        }
+
+        if (signResponse) {
+          provider.emit('connectAndSign', {
+            accounts,
+            signResponse,
+            chainId: currentChainId,
+          })
+        } else if (connectWithResponse) {
+          provider.emit('connectWith', {
+            accounts,
+            connectWithResponse,
+            chainId: currentChainId,
+          })
         }
 
         // Manage EIP-1193 event listeners
@@ -168,8 +214,11 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         // See: https://github.com/vitejs/vite/issues/9703
         const MetaMaskSDK = await (async () => {
           const { default: SDK } = await import('@metamask/sdk')
+          // @ts-ignore
           if (typeof SDK !== 'function' && typeof SDK.default === 'function')
+            // @ts-ignore
             return SDK.default
+          // @ts-ignore
           return SDK as unknown as typeof SDK.default
         })()
 
@@ -186,8 +235,13 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
               return [chain.id, url]
             }),
           ),
-          dappMetadata: parameters.dappMetadata ?? { name: 'wagmi' },
-          useDeeplink: parameters.useDeeplink ?? true,
+          dappMetadata: parameters.dappMetadata ?? {
+            url: `${window.location.protocol}//${window.location.host}`,
+          },
+          useDeeplink: true,
+          injectProvider: false,
+          forceInjectProvider: false,
+          forceDeleteProvider: false,
         })
         await sdk.init()
         return sdk.getProvider()!
