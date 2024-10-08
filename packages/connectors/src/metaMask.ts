@@ -96,7 +96,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         let signResponse: string | undefined
         let connectWithResponse: unknown | undefined
         if (!accounts?.length) {
-          let requestedAccounts: `0x${string}`[]
+          let requestedAccounts: Address[]
           if (parameters.connectAndSign) {
             signResponse = await sdk.connectAndSign({
               msg: parameters.connectAndSign,
@@ -222,10 +222,6 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           return SDK as unknown as typeof SDK.default
         })()
 
-        const dappMetadata: MetaMaskSDKOptions['dappMetadata'] = {
-          url: `${window.location.protocol}//${window.location.host}`,
-        }
-
         sdk = new MetaMaskSDK({
           _source: 'wagmi',
           // Workaround cast since MetaMask SDK does not support `'exactOptionalPropertyTypes'`
@@ -239,7 +235,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
               return [chain.id, url]
             }),
           ),
-          dappMetadata,
+          dappMetadata: parameters.dappMetadata ?? { url: `${window.location.protocol}//${window.location.host}` },
           useDeeplink: true,
           injectProvider: false,
           forceInjectProvider: false,
