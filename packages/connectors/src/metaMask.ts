@@ -235,7 +235,9 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
               return [chain.id, url]
             }),
           ),
-          dappMetadata: parameters.dappMetadata ?? { url: `${window.location.protocol}//${window.location.host}` },
+          dappMetadata: parameters.dappMetadata ?? {
+            url: `${window.location.protocol}//${window.location.host}`,
+          },
           useDeeplink: true,
           injectProvider: false,
           forceInjectProvider: false,
