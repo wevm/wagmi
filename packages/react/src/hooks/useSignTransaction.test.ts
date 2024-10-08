@@ -1,7 +1,7 @@
 import { connect, disconnect } from '@wagmi/core'
 import { config } from '@wagmi/test'
 import { renderHook, waitFor } from '@wagmi/test/react'
-import { parseEther, type TransactionRequestBase } from 'viem'
+import { type TransactionRequestBase, parseEther } from 'viem'
 import { expect, test } from 'vitest'
 
 import { useSignTransaction } from './useSignTransaction.js'

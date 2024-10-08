@@ -1,5 +1,5 @@
 import { config, privateKey } from '@wagmi/test'
-import { parseEther, type TransactionRequestBase } from 'viem'
+import { type TransactionRequestBase, parseEther } from 'viem'
 import { beforeEach, expect, test } from 'vitest'
 
 import { privateKeyToAccount } from 'viem/accounts'
