@@ -64,7 +64,6 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
   let sdk: MetaMaskSDK
   let provider: Provider | undefined
   let providerPromise: Promise<typeof provider>
-  let cachedDisplayUri: string | undefined
 
   let accountsChanged: Connector['onAccountsChanged'] | undefined
   let chainChanged: Connector['onChainChanged'] | undefined
@@ -97,10 +96,6 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         let signResponse: string | undefined
         let connectWithResponse: unknown | undefined
         if (!accounts?.length) {
-          if (cachedDisplayUri) {
-            provider.emit('display_uri', cachedDisplayUri)
-          }
-
           let requestedAccounts: `0x${string}`[]
           if (parameters.connectAndSign) {
             signResponse = await sdk.connectAndSign({
@@ -430,9 +425,6 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
 
       config.emitter.emit('disconnect')
 
-      // Remove cached display URI
-      cachedDisplayUri = undefined
-
       // Manage EIP-1193 event listeners
       if (!accountsChanged) {
         accountsChanged = this.onAccountsChanged.bind(this)
@@ -452,13 +444,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       }
     },
     onDisplayUri(uri) {
-      // Cache display uri
-      cachedDisplayUri = uri
-
-      config.emitter.emit('message', {
-        type: 'display_uri',
-        data: uri,
-      })
+      config.emitter.emit('message', { type: 'display_uri', data: uri })
     },
   }))
 }
