@@ -85,6 +85,10 @@ export function getSidebar() {
                 text: 'coinbaseWallet',
                 link: '/react/api/connectors/coinbaseWallet',
               },
+              {
+                text: 'uxuyWallet',
+                link: '/react/api/connectors/uxuyWallet',
+              },
               { text: 'injected', link: '/react/api/connectors/injected' },
               {
                 text: 'metaMask',
@@ -447,6 +451,10 @@ export function getSidebar() {
               {
                 text: 'coinbaseWallet',
                 link: '/vue/api/connectors/coinbaseWallet',
+              },
+              {
+                text: 'uxuyWallet',
+                link: '/vue/api/connectors/uxuyWallet',
               },
               { text: 'injected', link: '/vue/api/connectors/injected' },
               {

@@ -37,7 +37,7 @@ features:
     linkText: Learn about TypeScript support
   - icon: 💼
     title: Connect Wallet
-    details: Official connectors for MetaMask, EIP-6963, WalletConnect, Coinbase Wallet, and more.
+    details: Official connectors for MetaMask, EIP-6963, WalletConnect, Coinbase Wallet, Uxuy Wallet and more.
     link: /react/api/connectors
     linkText: See all connectors
   - icon: 👟
