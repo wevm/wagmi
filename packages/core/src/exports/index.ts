@@ -287,6 +287,13 @@ export {
 } from '../actions/reconnect.js'
 
 export {
+  type SendRawTransactionErrorType,
+  type SendRawTransactionParameters,
+  type SendRawTransactionReturnType,
+  sendRawTransaction,
+} from '../actions/sendRawTransaction.js'
+
+export {
   type SendTransactionErrorType,
   type SendTransactionParameters,
   type SendTransactionReturnType,

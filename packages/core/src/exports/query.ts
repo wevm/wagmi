@@ -297,6 +297,14 @@ export {
 } from '../query/reconnect.js'
 
 export {
+  type SendRawTransactionData,
+  type SendRawTransactionVariables,
+  type SendRawTransactionMutate,
+  type SendRawTransactionMutateAsync,
+  sendRawTransactionMutationOptions,
+} from '../query/sendRawTransaction.js'
+
+export {
   type SendTransactionData,
   type SendTransactionVariables,
   type SendTransactionMutate,

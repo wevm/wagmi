@@ -50,6 +50,7 @@ test('exports', () => {
       "useReadContracts",
       "useContractReads",
       "useReconnect",
+      "useSendRawTransaction",
       "useSendTransaction",
       "useSignMessage",
       "useSignTransaction",

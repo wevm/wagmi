@@ -240,6 +240,10 @@ export function getSidebar() {
           },
           { text: 'useReconnect', link: '/react/api/hooks/useReconnect' },
           {
+            text: 'useSendRawTransaction',
+            link: '/react/api/hooks/useSendRawTransaction',
+          },
+          {
             text: 'useSendTransaction',
             link: '/react/api/hooks/useSendTransaction',
           },
@@ -871,6 +875,10 @@ export function getSidebar() {
           {
             text: 'readContracts',
             link: '/core/api/actions/readContracts',
+          },
+          {
+            text: 'sendRawTransaction',
+            link: '/core/api/actions/sendRawTransaction',
           },
           {
             text: 'sendTransaction',

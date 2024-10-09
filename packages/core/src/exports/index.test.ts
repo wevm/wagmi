@@ -53,6 +53,7 @@ test('exports', () => {
       "readContract",
       "readContracts",
       "reconnect",
+      "sendRawTransaction",
       "sendTransaction",
       "signMessage",
       "signTransaction",
