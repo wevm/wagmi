@@ -46,7 +46,7 @@ Comparisons strive to be as accurate and as unbiased as possible. If you use any
 ### Pros
 
 - 20+ hooks for working with wallets, ENS, contracts, transactions, signing, etc.
-- Built-in wallet connectors for injected providers (EIP-6963 support), WalletConnect, MetaMask, Coinbase Wallet
+- Built-in wallet connectors for injected providers (EIP-6963 support), WalletConnect, MetaMask, Coinbase Wallet, Uxuy Wallet
 - Caching, request deduplication, and persistence powered by TanStack Query
 - Auto-refresh data on wallet, block, and network changes
 - Multicall support
