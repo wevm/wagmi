@@ -44,6 +44,7 @@ export type CreateConfigParameters<
     chains: chains
     connectors?: CreateConnectorFn[] | undefined
     multiInjectedProviderDiscovery?: boolean | undefined
+    preferSpecificConnectorOverInjected?: boolean | undefined
     storage?: Storage | null | undefined
     ssr?: boolean | undefined
     syncConnectedChain?: boolean | undefined
@@ -71,6 +72,7 @@ export function createConfig<
 ): Config<chains, transports> {
   const {
     multiInjectedProviderDiscovery = true,
+    preferSpecificConnectorOverInjected = true,
     storage = createStorage({
       storage:
         typeof window !== 'undefined' && window.localStorage
@@ -92,14 +94,41 @@ export function createConfig<
       : undefined
 
   const chains = createStore(() => rest.chains)
-  const connectors = createStore(() =>
-    [
-      ...(rest.connectors ?? []),
-      ...(!ssr
-        ? (mipd?.getProviders().map(providerDetailToConnector) ?? [])
-        : []),
-    ].map(setup),
-  )
+
+  // Get connectors provided by the user
+  const providedConnectors = (rest.connectors ?? []).map(setup)
+
+  // check if a mipd provider has a specific connector provided by the user
+  const hasAlreadyASpecificConnector = (provider: EIP6963ProviderDetail) => {
+    if (!preferSpecificConnectorOverInjected) return false
+
+    const providedConnectorsIds = new Set(providedConnectors.map((x) => x.id))
+    const rdnsToConnectorId = new Map<string, string>([
+      // ['com.coinbase.wallet', 'coinbaseWalletSDK'], // Suggestion
+      ['io.metamask', 'metaMaskSDK'],
+      ['io.metamask.mobile', 'metaMaskSDK'],
+    ])
+
+    const id = rdnsToConnectorId.get(provider.info.rdns)
+    if (id && providedConnectorsIds.has(id)) return true
+
+    return false
+  }
+
+  // Get connectors from MIPD
+  const mipdConnectors = (
+    !ssr
+      ? (mipd
+          ?.getProviders()
+          .filter((target) => !hasAlreadyASpecificConnector(target))
+          .map(providerDetailToConnector) ?? [])
+      : []
+  ).map(setup)
+
+  const connectors = createStore(() => [
+    ...providedConnectors,
+    ...mipdConnectors,
+  ])
   function setup(connectorFn: CreateConnectorFn): Connector {
     // Set up emitter with uid and add to connector so they are "linked" together.
     const emitter = createEmitter<ConnectorEventMap>(uid())
@@ -320,6 +349,7 @@ export function createConfig<
 
     const newConnectors: Connector[] = []
     for (const providerDetail of providerDetails) {
+      if (hasAlreadyASpecificConnector(providerDetail)) continue
       const connector = setup(providerDetailToConnector(providerDetail))
       if (currentConnectorIds.has(connector.id)) continue
       newConnectors.push(connector)

@@ -18,6 +18,7 @@ const indexedDBStorage = {
 
 export const config = createConfig({
   chains: [mainnet, sepolia, optimism, celo],
+  preferSpecificConnectorOverInjected: true,
   connectors: [
     walletConnect({
       projectId: import.meta.env.VITE_WC_PROJECT_ID,
