@@ -240,12 +240,20 @@ export function getSidebar() {
           },
           { text: 'useReconnect', link: '/react/api/hooks/useReconnect' },
           {
+            text: 'useSendRawTransaction',
+            link: '/react/api/hooks/useSendRawTransaction',
+          },
+          {
             text: 'useSendTransaction',
             link: '/react/api/hooks/useSendTransaction',
           },
           {
             text: 'useSignMessage',
             link: '/react/api/hooks/useSignMessage',
+          },
+          {
+            text: 'useSignTransaction',
+            link: '/react/api/hooks/useSignTransaction',
           },
           {
             text: 'useSignTypedData',
@@ -869,12 +877,20 @@ export function getSidebar() {
             link: '/core/api/actions/readContracts',
           },
           {
+            text: 'sendRawTransaction',
+            link: '/core/api/actions/sendRawTransaction',
+          },
+          {
             text: 'sendTransaction',
             link: '/core/api/actions/sendTransaction',
           },
           {
             text: 'signMessage',
             link: '/core/api/actions/signMessage',
+          },
+          {
+            text: 'signTransaction',
+            link: '/core/api/actions/signTransaction',
           },
           {
             text: 'signTypedData',
