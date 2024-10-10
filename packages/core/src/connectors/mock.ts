@@ -28,6 +28,7 @@ export type MockParameters = {
   features?:
     | {
         connectError?: boolean | Error | undefined
+        getPermissionsError?: boolean | Error | undefined
         switchChainError?: boolean | Error | undefined
         signMessageError?: boolean | Error | undefined
         signTypedDataError?: boolean | Error | undefined
@@ -145,6 +146,27 @@ export function mock(parameters: MockParameters) {
           }
 
         // wallet methods
+        if (method === 'wallet_getPermissions') {
+          if (features.getPermissionsError) {
+            if (typeof features.getPermissionsError === 'boolean')
+              throw new UserRejectedRequestError(
+                new Error('Failed get permissions.'),
+              )
+            throw features.getPermissionsError
+          }
+          return [
+            {
+              invoker: 'https://example.com',
+              parentCapability: 'eth_accounts',
+              caveats: [
+                {
+                  type: 'filterResponse',
+                  value: ['0x0c54fccd2e384b4bb6f2e405bf5cbc15a017aafb'],
+                },
+              ],
+            },
+          ]
+        }
         if (method === 'wallet_switchEthereumChain') {
           if (features.switchChainError) {
             if (typeof features.switchChainError === 'boolean')
