@@ -12,7 +12,9 @@ import {
 import type {
   Compute,
   ExactPartial,
+  OneOf,
   RemoveUndefined,
+  UnionCompute,
 } from '@wagmi/core/internal'
 import {
   type AddEthereumChainParameter,
@@ -31,16 +33,33 @@ import {
   withTimeout,
 } from 'viem'
 
-type WagmiMetaMaskSDKOptions = Compute<
-  ExactPartial<Omit<MetaMaskSDKOptions, '_source' | 'readonlyRPCMap'>>
+export type MetaMaskParameters = UnionCompute<
+  WagmiMetaMaskSDKOptions &
+    OneOf<
+      | {
+          // Shortcut to connect and sign a message
+          connectAndSign?: string | undefined
+        }
+      | {
+          // TODO: Strongly type `method` and `params`
+          // Allow connectWith any rpc method
+          connectWith?: { method: string; params: unknown[] } | undefined
+        }
+    >
 >
 
-export type MetaMaskParameters = WagmiMetaMaskSDKOptions & {
-  // Shortcut to connect and sign a message
-  connectAndSign?: string | undefined
-  // Allow connectWith any rpc method
-  connectWith?: { method: string; params: unknown[] } | undefined
-}
+type WagmiMetaMaskSDKOptions = Compute<
+  ExactPartial<Omit<MetaMaskSDKOptions, '_source' | 'readonlyRPCMap'>> & {
+    /** @deprecated */
+    forceDeleteProvider?: MetaMaskSDKOptions['useDeeplink']
+    /** @deprecated */
+    forceInjectProvider?: MetaMaskSDKOptions['useDeeplink']
+    /** @deprecated */
+    injectProvider?: MetaMaskSDKOptions['useDeeplink']
+    /** @deprecated */
+    useDeeplink?: MetaMaskSDKOptions['useDeeplink']
+  }
+>
 
 metaMask.type = 'metaMask' as const
 export function metaMask(parameters: MetaMaskParameters = {}) {
@@ -86,20 +105,20 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         let signResponse: string | undefined
         let connectWithResponse: unknown | undefined
         if (!accounts?.length) {
-          let requestedAccounts: Address[]
-          if (parameters.connectAndSign) {
-            signResponse = await sdk.connectAndSign({
-              msg: parameters.connectAndSign,
-            })
-            accounts = await this.getAccounts()
-          } else if (parameters.connectWith) {
-            connectWithResponse = await sdk.connectWith({
-              method: parameters.connectWith.method,
-              params: parameters.connectWith.params,
-            })
+          if (parameters.connectAndSign || parameters.connectWith) {
+            if (parameters.connectAndSign)
+              signResponse = await sdk.connectAndSign({
+                msg: parameters.connectAndSign,
+              })
+            else if (parameters.connectWith)
+              connectWithResponse = await sdk.connectWith({
+                method: parameters.connectWith.method,
+                params: parameters.connectWith.params,
+              })
+
             accounts = await this.getAccounts()
           } else {
-            requestedAccounts = await sdk.connect()
+            const requestedAccounts = (await sdk.connect()) as string[]
             accounts = requestedAccounts.map((x) => getAddress(x))
           }
         }
@@ -118,19 +137,18 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           displayUri = undefined
         }
 
-        if (signResponse) {
+        if (signResponse)
           provider.emit('connectAndSign', {
             accounts,
-            signResponse,
             chainId: currentChainId,
+            signResponse,
           })
-        } else if (connectWithResponse) {
+        else if (connectWithResponse)
           provider.emit('connectWith', {
             accounts,
-            connectWithResponse,
             chainId: currentChainId,
+            connectWithResponse,
           })
-        }
 
         // Manage EIP-1193 event listeners
         // https://eips.ethereum.org/EIPS/eip-1193#events
