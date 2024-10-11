@@ -45,13 +45,14 @@ export function mock(parameters: MockParameters) {
   type Provider = ReturnType<
     Transport<'custom', unknown, EIP1193RequestFn<WalletRpcSchema>>
   >
+  type Properties = Record<string, unknown>
   type StorageItem = {
     [_ in 'mock.connected']: true
   }
   let connected = false
   let connectedChainId: number
 
-  return createConnector<Provider, {}, StorageItem>((config) => ({
+  return createConnector<Provider, Properties, StorageItem>((config) => ({
     id: 'mock',
     name: 'Mock Connector',
     type: mock.type,

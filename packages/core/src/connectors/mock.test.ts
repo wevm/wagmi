@@ -1,6 +1,6 @@
+import { connect, getWalletClient } from '@wagmi/core'
 import { accounts, config } from '@wagmi/test'
 import { expect, test } from 'vitest'
-import { connect, getWalletClient } from '@wagmi/core'
 import { mock } from './mock.js'
 
 test('setup', () => {
