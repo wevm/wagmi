@@ -45,17 +45,25 @@ export function mock(parameters: MockParameters) {
   type Provider = ReturnType<
     Transport<'custom', unknown, EIP1193RequestFn<WalletRpcSchema>>
   >
+  type StorageItem = {
+    [_ in 'mock.connected']: true
+  }
   let connected = false
   let connectedChainId: number
 
-  return createConnector<Provider>((config) => ({
+  return createConnector<Provider, {}, StorageItem>((config) => ({
     id: 'mock',
     name: 'Mock Connector',
     type: mock.type,
     async setup() {
       connectedChainId = config.chains[0].id
+
+      const isConnected = await config.storage?.getItem('mock.connected')
+      if (isConnected && features.reconnect) {
+        this.connect()
+      }
     },
-    async connect({ chainId, isReconnecting } = {}) {
+    async connect({ chainId } = {}) {
       if (features.connectError) {
         if (typeof features.connectError === 'boolean')
           throw new UserRejectedRequestError(new Error('Failed to connect.'))
@@ -63,14 +71,9 @@ export function mock(parameters: MockParameters) {
       }
 
       const provider = await this.getProvider()
-      let accounts: readonly Address[] = []
-      if (isReconnecting) accounts = await this.getAccounts().catch(() => [])
-
-      if (!accounts?.length) {
-        accounts = await provider.request({
-          method: 'eth_requestAccounts',
-        })
-      }
+      const accounts = await provider.request({
+        method: 'eth_requestAccounts',
+      })
 
       let currentChainId = await this.getChainId()
       if (chainId && currentChainId !== chainId) {
@@ -79,21 +82,24 @@ export function mock(parameters: MockParameters) {
       }
 
       connected = true
+      await config.storage?.setItem('mock.connected', true)
 
       return {
-        accounts: accounts.map((x) => getAddress(x)),
+        accounts,
         chainId: currentChainId,
       }
     },
     async disconnect() {
       connected = false
+      await config.storage?.removeItem('mock.connected')
     },
     async getAccounts() {
       if (!connected) throw new ConnectorNotConnectedError()
       const provider = await this.getProvider()
-      return provider.request({
-        method: 'eth_requestAccounts',
-      })
+      const accounts = await provider
+        .request({ method: 'eth_accounts' })
+        .catch(() => [])
+      return accounts.map((x) => getAddress(x))
     },
     async getChainId() {
       const provider = await this.getProvider()
@@ -131,6 +137,7 @@ export function mock(parameters: MockParameters) {
     async onDisconnect(_error) {
       config.emitter.emit('disconnect')
       connected = false
+      await config.storage?.removeItem('mock.connected')
     },
     async getProvider({ chainId } = {}) {
       const chain =

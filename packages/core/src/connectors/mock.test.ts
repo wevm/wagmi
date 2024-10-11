@@ -1,12 +1,20 @@
 import { accounts, config } from '@wagmi/test'
 import { expect, test } from 'vitest'
-
+import { connect, getWalletClient } from '@wagmi/core'
 import { mock } from './mock.js'
 
 test('setup', () => {
   const connectorFn = mock({ accounts })
   const connector = config._internal.connectors.setup(connectorFn)
   expect(connector.name).toEqual('Mock Connector')
+})
+
+test('connector client is defined', async () => {
+  const connectorFn = mock({ accounts })
+  const connector = config._internal.connectors.setup(connectorFn)
+
+  await connect(config, { connector })
+  await expect(getWalletClient(config)).resolves.toBeDefined()
 })
 
 test('behavior: features.connectError', () => {
