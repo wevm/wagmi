@@ -32,13 +32,7 @@ import {
 } from 'viem'
 
 type WagmiMetaMaskSDKOptions = Compute<
-  ExactPartial<
-    Omit<
-      MetaMaskSDKOptions,
-      | '_source'
-      | 'readonlyRPCMap'
-    >
-  >
+  ExactPartial<Omit<MetaMaskSDKOptions, '_source' | 'readonlyRPCMap'>>
 >
 
 export type MetaMaskParameters = WagmiMetaMaskSDKOptions & {
@@ -218,9 +212,10 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           return SDK as unknown as typeof SDK.default
         })()
 
-        const defaultUrl = typeof window !== 'undefined'
-          ? `${window.location.protocol}//${window.location.host}`
-          : ''
+        const defaultUrl =
+          typeof window !== 'undefined'
+            ? `${window.location.protocol}//${window.location.host}`
+            : ''
 
         sdk = new MetaMaskSDK({
           _source: 'wagmi',
