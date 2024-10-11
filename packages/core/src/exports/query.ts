@@ -181,6 +181,15 @@ export {
 } from '../query/getGasPrice.js'
 
 export {
+  type GetPermissionsData,
+  type GetPermissionsOptions,
+  type GetPermissionsQueryFnData,
+  type GetPermissionsQueryKey,
+  getPermissionsQueryKey,
+  getPermissionsQueryOptions,
+} from '../query/getPermissions.js'
+
+export {
   type GetProofData,
   type GetProofOptions,
   type GetProofQueryFnData,
