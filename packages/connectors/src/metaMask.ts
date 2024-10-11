@@ -37,19 +37,15 @@ type WagmiMetaMaskSDKOptions = Compute<
       MetaMaskSDKOptions,
       | '_source'
       | 'readonlyRPCMap'
-      | 'useDeeplink'
-      | 'injectProvider'
-      | 'forceInjectProvider'
-      | 'forceDeleteProvider'
     >
   >
 >
 
 export type MetaMaskParameters = WagmiMetaMaskSDKOptions & {
   // Shortcut to connect and sign a message
-  connectAndSign?: string
+  connectAndSign?: string | undefined
   // Allow connectWith any rpc method
-  connectWith?: { method: string; params: unknown[] }
+  connectWith?: { method: string; params: unknown[] } | undefined
 }
 
 metaMask.type = 'metaMask' as const
@@ -222,6 +218,10 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           return SDK as unknown as typeof SDK.default
         })()
 
+        const defaultUrl = typeof window !== 'undefined'
+          ? `${window.location.protocol}//${window.location.host}`
+          : ''
+
         sdk = new MetaMaskSDK({
           _source: 'wagmi',
           // Workaround cast since MetaMask SDK does not support `'exactOptionalPropertyTypes'`
@@ -236,7 +236,8 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
             }),
           ),
           dappMetadata: parameters.dappMetadata ?? {
-            url: `${window.location.protocol}//${window.location.host}`,
+            url: defaultUrl,
+            name: defaultUrl !== '' ? undefined : 'wagmi',
           },
           useDeeplink: true,
           injectProvider: false,
