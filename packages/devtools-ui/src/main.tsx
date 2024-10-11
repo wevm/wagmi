@@ -2,7 +2,7 @@ import type { QueryClient } from '@tanstack/solid-query'
 import type { Config } from '@wagmi/solid'
 import type { Component, Signal } from 'solid-js'
 import { createSignal, lazy } from 'solid-js'
-import { Portal, render } from 'solid-js/web'
+import { render } from 'solid-js/web'
 
 import { DevtoolsContext } from './contexts/devtools.js'
 
@@ -57,14 +57,12 @@ export class Devtools {
         },
       }
       return (
-        <Portal>
-          <div class="wagmi-devtools-content">
-            <style innerHTML={styles} />
-            <DevtoolsContext.Provider value={value}>
-              <Routes />
-            </DevtoolsContext.Provider>
-          </div>
-        </Portal>
+        <div class="wagmi-devtools-content">
+          <style innerHTML={styles} />
+          <DevtoolsContext.Provider value={value}>
+            <Routes />
+          </DevtoolsContext.Provider>
+        </div>
       )
     }, el)
 

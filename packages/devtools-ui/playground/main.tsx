@@ -49,6 +49,7 @@ function App() {
       chainId: {account.chainId}
       <br />
       status: {account.status}
+      <div style={{ 'margin-top': '20rem' }}>foo bar baz</div>
     </div>
   )
 }

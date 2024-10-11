@@ -1,57 +1,121 @@
-import { A } from '@solidjs/router'
-import { QueryClientProvider } from '@tanstack/solid-query'
-import { WagmiProvider } from '@wagmi/solid'
-import { type ParentProps, createMemo, createSignal } from 'solid-js'
-
 import { Icon } from '@iconify-icon/solid'
-import { makePersisted } from '@solid-primitives/storage'
-import { useDevtoolsContext } from './contexts/devtools.js'
-import { type Theme, ThemeContext } from './contexts/theme.js'
-import { usePrefersColorScheme } from './primitives/usePrefersColorScheme.js'
+import { createShortcut } from '@solid-primitives/keyboard'
+import { A } from '@solidjs/router'
+import { type ParentProps, Show } from 'solid-js'
+
+import { Resizable } from './components/Resizable.jsx'
+import { ResizablePanel } from './components/ResizablePanel.jsx'
+import { usePreferences } from './contexts/preferences.js'
+import { useTheme } from './contexts/theme.js'
 
 export function App(props: App.Props) {
-  const value = useDevtoolsContext()
+  const { resolvedTheme } = useTheme()
+  const { preferences, setPreferences } = usePreferences()
 
-  const [theme, setTheme] = makePersisted(createSignal<Theme>('auto'), {
-    name: 'devtools.theme',
-    storage: value.config.storage as unknown as Storage,
-  })
-  const colorScheme = usePrefersColorScheme()
-  const resolvedTheme = createMemo(() => {
-    if (theme() !== 'auto') return theme() as Extract<Theme, 'dark' | 'light'>
-    return colorScheme()
-  })
+  createShortcut(
+    ['Control', 'Shift', 'D'],
+    () => {
+      setPreferences((x) => ({ ...x, open: !x.open }))
+    },
+    { preventDefault: false, requireReset: false },
+  )
 
   return (
-    <WagmiProvider config={value.config}>
-      <QueryClientProvider client={value.queryClient}>
-        <ThemeContext.Provider value={{ resolvedTheme, theme, setTheme }}>
-          <div
-            data-theme={resolvedTheme()}
-            class="antialiased font-sans text-gray-900"
-          >
-            <aside
-              classList={{
-                'border bg-background-100 border-gray-200': true,
-              }}
-            >
-              <nav class="bg-background-200 border-b border-gray-200 font-medium px-3 py-1 flex gap-3 text-sm w-full">
-                <A href="/" class="flex items-center gap-1">
-                  <Icon icon="lucide:link-2" />
-                  <span>Connections</span>
-                </A>
-                <A href="/settings" class="flex items-center gap-1">
-                  <Icon icon="lucide:settings-2" />
-                  <span>Settings</span>
-                </A>
-              </nav>
+    <div
+      data-theme={resolvedTheme()}
+      class="antialiased font-sans text-gray-900"
+    >
+      <Show when={!preferences.open}>
+        <button
+          type="button"
+          onClick={() => setPreferences((x) => ({ ...x, open: true }))}
+        >
+          Open Devtools
+        </button>
+      </Show>
 
-              {props.children}
-            </aside>
+      <Show when={preferences.open}>
+        <Resizable position={preferences.position}>
+          <button
+            type="button"
+            classList={{
+              'absolute cursor-pointer z-[5]': true,
+              'bottom-0 right-4': preferences.position === 'top',
+              'top-0 right-4': preferences.position === 'bottom',
+              'right-0 bottom-4': preferences.position === 'left',
+              'left-0 bottom-4': preferences.position === 'right',
+            }}
+            onClick={() => setPreferences((x) => ({ ...x, open: false }))}
+          >
+            Close Devtools
+          </button>
+
+          <nav class="bg-background-200 border-b border-gray-200 font-medium px-3 py-1 flex gap-3 text-sm w-full">
+            <A
+              href="/"
+              class="flex items-center gap-1"
+              activeClass="text-gray-1000"
+              end
+            >
+              <Icon icon="lucide:link-2" />
+              <span>Connections</span>
+            </A>
+            <A
+              href="/settings"
+              class="flex items-center gap-1"
+              activeClass="text-gray-1000"
+            >
+              <Icon icon="lucide:settings-2" />
+              <span>Settings</span>
+            </A>
+          </nav>
+
+          <div class="font-medium px-3 py-1 flex gap-3 text-sm w-full">
+            <button
+              type="button"
+              onClick={() => setPreferences((x) => ({ ...x, position: 'top' }))}
+              class="flex items-center gap-1"
+            >
+              <Icon icon="mdi:dock-top" />
+              <span>Top</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() =>
+                setPreferences((x) => ({ ...x, position: 'left' }))
+              }
+              class="flex items-center gap-1"
+            >
+              <Icon icon="mdi:dock-left" />
+              <span>Left</span>
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                setPreferences((x) => ({ ...x, position: 'right' }))
+              }
+              class="flex items-center gap-1"
+            >
+              <Icon icon="mdi:dock-right" />
+              <span>Right</span>
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                setPreferences((x) => ({ ...x, position: 'bottom' }))
+              }
+              class="flex items-center gap-1"
+            >
+              <Icon icon="mdi:dock-bottom" />
+              <span>Bottom</span>
+            </button>
           </div>
-        </ThemeContext.Provider>
-      </QueryClientProvider>
-    </WagmiProvider>
+
+          {props.children}
+        </Resizable>
+      </Show>
+    </div>
   )
 }
 

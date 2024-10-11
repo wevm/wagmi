@@ -37,8 +37,9 @@
     "viem": "2.x"
   },
   "devDependencies": {
-    "@css-hooks/core": "^3.0.0",
     "@iconify-icon/solid": "^2.1.1",
+    "@solid-primitives/keyboard": "^1.2.8",
+    "@solid-primitives/resize-observer": "^2.0.26",
     "@solid-primitives/storage": "^4.2.1",
     "@solidjs/router": "^0.14.7",
     "@tailwindcss/container-queries": "^0.1.1",

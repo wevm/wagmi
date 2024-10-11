@@ -268,12 +268,15 @@ importers:
 
   packages/devtools-ui:
     devDependencies:
-      '@css-hooks/core':
-        specifier: ^3.0.0
-        version: 3.0.0
       '@iconify-icon/solid':
         specifier: ^2.1.1
         version: 2.1.1(solid-js@1.9.1)
+      '@solid-primitives/keyboard':
+        specifier: ^1.2.8
+        version: 1.2.8(solid-js@1.9.1)
+      '@solid-primitives/resize-observer':
+        specifier: ^2.0.26
+        version: 2.0.26(solid-js@1.9.1)
       '@solid-primitives/storage':
         specifier: ^4.2.1
         version: 4.2.1(solid-js@1.9.1)
@@ -1187,9 +1190,6 @@ packages:
   '@colors/colors@1.5.0':
     resolution: {integrity: sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==}
     engines: {node: '>=0.1.90'}
-
-  '@css-hooks/core@3.0.0':
-    resolution: {integrity: sha512-RyBuSo/uUxHhjm2RX8AwisR/kPNlx76lzCqvJCx8EBOEeG67dflVMJFsXnViNVcKN1CbHD6bJ9ey4qHFQU+H6g==}
 
   '@discoveryjs/json-ext@0.5.7':
     resolution: {integrity: sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==}
@@ -2974,6 +2974,31 @@ packages:
 
   '@socket.io/component-emitter@3.1.2':
     resolution: {integrity: sha512-9BCxFwvbGg/RsZK9tjXd8s4UcwR0MWeFQ1XEKIQVVvAGJyINdrqKMcTRyLoK8Rse1GjzLV9cwjWV1olXRWEXVA==}
+
+  '@solid-primitives/event-listener@2.3.3':
+    resolution: {integrity: sha512-DAJbl+F0wrFW2xmcV8dKMBhk9QLVLuBSW+TR4JmIfTaObxd13PuL7nqaXnaYKDWOYa6otB00qcCUIGbuIhSUgQ==}
+    peerDependencies:
+      solid-js: ^1.6.12
+
+  '@solid-primitives/keyboard@1.2.8':
+    resolution: {integrity: sha512-pJtcbkjozS6L1xvTht9rPpyPpX55nAkfBzbFWdf3y0Suwh6qClTibvvObzKOf7uzQ+8aZRDH4LsoGmbTKXtJjQ==}
+    peerDependencies:
+      solid-js: ^1.6.12
+
+  '@solid-primitives/resize-observer@2.0.26':
+    resolution: {integrity: sha512-KbPhwal6ML9OHeUTZszBbt6PYSMj89d4wVCLxlvDYL4U0+p+xlCEaqz6v9dkCwm/0Lb+Wed7W5T1dQZCP3JUUw==}
+    peerDependencies:
+      solid-js: ^1.6.12
+
+  '@solid-primitives/rootless@1.4.5':
+    resolution: {integrity: sha512-GFJE9GC3ojx0aUKqAUZmQPyU8fOVMtnVNrkdk2yS4kd17WqVSpXpoTmo9CnOwA+PG7FTzdIkogvfLQSLs4lrww==}
+    peerDependencies:
+      solid-js: ^1.6.12
+
+  '@solid-primitives/static-store@0.0.8':
+    resolution: {integrity: sha512-ZecE4BqY0oBk0YG00nzaAWO5Mjcny8Fc06CdbXadH9T9lzq/9GefqcSe/5AtdXqjvY/DtJ5C6CkcjPZO0o/eqg==}
+    peerDependencies:
+      solid-js: ^1.6.12
 
   '@solid-primitives/storage@4.2.1':
     resolution: {integrity: sha512-1XUJeaSlizH9Eam/+IbIpslHEnggJMNZXzfsr06AlbG6tJtQENMu0+94ZIvooxt4Cyw46wPzcnHYbSK7LzoQAA==}
@@ -9485,8 +9510,6 @@ snapshots:
   '@colors/colors@1.5.0':
     optional: true
 
-  '@css-hooks/core@3.0.0': {}
-
   '@discoveryjs/json-ext@0.5.7': {}
 
   '@docsearch/css@3.6.0': {}
@@ -11402,6 +11425,36 @@ snapshots:
       p-map: 4.0.0
 
   '@socket.io/component-emitter@3.1.2': {}
+
+  '@solid-primitives/event-listener@2.3.3(solid-js@1.9.1)':
+    dependencies:
+      '@solid-primitives/utils': 6.2.3(solid-js@1.9.1)
+      solid-js: 1.9.1
+
+  '@solid-primitives/keyboard@1.2.8(solid-js@1.9.1)':
+    dependencies:
+      '@solid-primitives/event-listener': 2.3.3(solid-js@1.9.1)
+      '@solid-primitives/rootless': 1.4.5(solid-js@1.9.1)
+      '@solid-primitives/utils': 6.2.3(solid-js@1.9.1)
+      solid-js: 1.9.1
+
+  '@solid-primitives/resize-observer@2.0.26(solid-js@1.9.1)':
+    dependencies:
+      '@solid-primitives/event-listener': 2.3.3(solid-js@1.9.1)
+      '@solid-primitives/rootless': 1.4.5(solid-js@1.9.1)
+      '@solid-primitives/static-store': 0.0.8(solid-js@1.9.1)
+      '@solid-primitives/utils': 6.2.3(solid-js@1.9.1)
+      solid-js: 1.9.1
+
+  '@solid-primitives/rootless@1.4.5(solid-js@1.9.1)':
+    dependencies:
+      '@solid-primitives/utils': 6.2.3(solid-js@1.9.1)
+      solid-js: 1.9.1
+
+  '@solid-primitives/static-store@0.0.8(solid-js@1.9.1)':
+    dependencies:
+      '@solid-primitives/utils': 6.2.3(solid-js@1.9.1)
+      solid-js: 1.9.1
 
   '@solid-primitives/storage@4.2.1(solid-js@1.9.1)':
     dependencies:
