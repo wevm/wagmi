@@ -55,7 +55,7 @@ export function mock(parameters: MockParameters) {
     async setup() {
       connectedChainId = config.chains[0].id
     },
-    async connect({ chainId } = {}) {
+    async connect({ chainId, isReconnecting } = {}) {
       if (features.connectError) {
         if (typeof features.connectError === 'boolean')
           throw new UserRejectedRequestError(new Error('Failed to connect.'))
@@ -63,9 +63,14 @@ export function mock(parameters: MockParameters) {
       }
 
       const provider = await this.getProvider()
-      const accounts = await provider.request({
-        method: 'eth_requestAccounts',
-      })
+      let accounts: readonly Address[] = []
+      if (isReconnecting) accounts = await this.getAccounts().catch(() => [])
+
+      if (!accounts?.length) {
+        accounts = await provider.request({
+          method: 'eth_requestAccounts',
+        })
+      }
 
       let currentChainId = await this.getChainId()
       if (chainId && currentChainId !== chainId) {
