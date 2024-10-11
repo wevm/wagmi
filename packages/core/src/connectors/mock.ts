@@ -86,8 +86,9 @@ export function mock(parameters: MockParameters) {
     async getAccounts() {
       if (!connected) throw new ConnectorNotConnectedError()
       const provider = await this.getProvider()
-      const accounts = await provider.request({ method: 'eth_accounts' })
-      return accounts.map((x) => getAddress(x))
+      return provider.request({
+        method: 'eth_requestAccounts',
+      })
     },
     async getChainId() {
       const provider = await this.getProvider()
