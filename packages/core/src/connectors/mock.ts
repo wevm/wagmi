@@ -86,7 +86,7 @@ export function mock(parameters: MockParameters) {
       await config.storage?.setItem('mock.connected', true)
 
       return {
-        accounts,
+        accounts: accounts.map((x) => getAddress(x)),
         chainId: currentChainId,
       }
     },
