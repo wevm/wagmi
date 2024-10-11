@@ -97,9 +97,7 @@ export function mock(parameters: MockParameters) {
     async getAccounts() {
       if (!connected) throw new ConnectorNotConnectedError()
       const provider = await this.getProvider()
-      const accounts = await provider
-        .request({ method: 'eth_accounts' })
-        .catch(() => [])
+      const accounts = await provider.request({ method: 'eth_accounts' })
       return accounts.map((x) => getAddress(x))
     },
     async getChainId() {
@@ -148,7 +146,8 @@ export function mock(parameters: MockParameters) {
       const request: EIP1193RequestFn = async ({ method, params }) => {
         // eth methods
         if (method === 'eth_chainId') return numberToHex(connectedChainId)
-        if (method === 'eth_requestAccounts') return parameters.accounts
+        if (method === 'eth_accounts' || method === 'eth_requestAccounts')
+          return parameters.accounts
         if (method === 'eth_signTypedData_v4')
           if (features.signTypedDataError) {
             if (typeof features.signTypedDataError === 'boolean')
