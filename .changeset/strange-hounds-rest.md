@@ -2,4 +2,4 @@
 "@wagmi/core": patch
 ---
 
-Fixed the getAccounts method and reconnecting logic for the mock client.
+Fixed getting wallet client and reconnecting logic for the mock client.
