@@ -59,8 +59,10 @@ export function mock(parameters: MockParameters) {
     async setup() {
       connectedChainId = config.chains[0].id
 
-      const isConnected = await config.storage?.getItem('mock.connected')
-      if (isConnected && features.reconnect) {
+      const isConnected = Boolean(features.reconnect
+        ? await config.storage?.getItem('mock.connected')
+        : false)
+      if (isConnected) {
         this.connect()
       }
     },
@@ -83,7 +85,9 @@ export function mock(parameters: MockParameters) {
       }
 
       connected = true
-      await config.storage?.setItem('mock.connected', true)
+      if (features.reconnect) {
+        await config.storage?.setItem('mock.connected', true)
+      }
 
       return {
         accounts: accounts.map((x) => getAddress(x)),
@@ -92,7 +96,9 @@ export function mock(parameters: MockParameters) {
     },
     async disconnect() {
       connected = false
-      await config.storage?.removeItem('mock.connected')
+      if (features.reconnect) {
+        await config.storage?.removeItem('mock.connected')
+      }
     },
     async getAccounts() {
       if (!connected) throw new ConnectorNotConnectedError()
@@ -136,7 +142,9 @@ export function mock(parameters: MockParameters) {
     async onDisconnect(_error) {
       config.emitter.emit('disconnect')
       connected = false
-      await config.storage?.removeItem('mock.connected')
+      if (features.reconnect) {
+        await config.storage?.removeItem('mock.connected')
+      }
     },
     async getProvider({ chainId } = {}) {
       const chain =
