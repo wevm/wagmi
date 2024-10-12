@@ -73,6 +73,7 @@ const targetMap = {
           'isRabby',
           'isTokenPocket',
           'isTokenary',
+          'isUniswapWallet',
           'isZerion',
         ]
         for (const flag of flags) if (provider[flag]) return false
@@ -638,6 +639,7 @@ type WalletProviderFlags =
   | 'isTokenary'
   | 'isTrust'
   | 'isTrustWallet'
+  | 'isUniswapWallet'
   | 'isXDEFI'
   | 'isZerion'
 
