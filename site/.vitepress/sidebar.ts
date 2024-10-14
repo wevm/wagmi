@@ -239,7 +239,10 @@ export function getSidebar() {
             link: '/react/api/hooks/useReadContracts',
           },
           { text: 'useReconnect', link: '/react/api/hooks/useReconnect' },
-           { text: 'useRequestPermissions', link: '/react/api/hooks/useRequestPermissions' },
+          {
+            text: 'useRequestPermissions',
+            link: '/react/api/hooks/useRequestPermissions',
+          },
           {
             text: 'useSendTransaction',
             link: '/react/api/hooks/useSendTransaction',
@@ -869,7 +872,10 @@ export function getSidebar() {
             text: 'readContracts',
             link: '/core/api/actions/readContracts',
           },
-          { text: 'requestPermissions', link: '/core/api/actions/requestPermissions' },
+          {
+            text: 'requestPermissions',
+            link: '/core/api/actions/requestPermissions',
+          },
           {
             text: 'sendTransaction',
             link: '/core/api/actions/sendTransaction',
