@@ -246,6 +246,12 @@ export {
 } from '../hooks/useReconnect.js'
 
 export {
+  type UseRequestPermissionsParameters,
+  type UseRequestPermissionsReturnType,
+  useRequestPermissions,
+} from '../hooks/useRequestPermissions.js'
+
+export {
   type UseSendTransactionParameters,
   type UseSendTransactionReturnType,
   useSendTransaction,
