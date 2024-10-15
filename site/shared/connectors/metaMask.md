@@ -71,14 +71,14 @@ The URL of the communication server to use for the SDK.
 - If MetaMask browser extension is detected, directly use it.
 - Defaults to `true`.
 
-### forceDeleteProvider
+### forceDeleteProvider <Badge type="warning">deprecated</Badge>
 
 `boolean | undefined`
 
 If true, the SDK will force delete the provider from the global `window` object.
 
 
-### forceInjectProvider
+### forceInjectProvider <Badge type="warning">deprecated</Badge>
 
 `boolean | undefined`
 
@@ -90,7 +90,7 @@ If true, the SDK will force inject the provider into the global `window` object.
 
 The Infura API key to use for RPC requests.
 
-### injectProvider
+### injectProvider <Badge type="warning">deprecated</Badge>
 
 `boolean | undefined`
 
@@ -150,7 +150,7 @@ An array of transport protocols to use for communication with the MetaMask walle
 
 Options for customizing the SDK UI.
 
-### useDeeplink
+### useDeeplink <Badge type="warning">deprecated</Badge>
 
 `boolean | undefined`
 

@@ -12,7 +12,9 @@ import {
 import type {
   Compute,
   ExactPartial,
+  OneOf,
   RemoveUndefined,
+  UnionCompute,
 } from '@wagmi/core/internal'
 import {
   type AddEthereumChainParameter,
@@ -31,8 +33,42 @@ import {
   withTimeout,
 } from 'viem'
 
-export type MetaMaskParameters = Compute<
-  ExactPartial<Omit<MetaMaskSDKOptions, '_source' | 'readonlyRPCMap'>>
+export type MetaMaskParameters = UnionCompute<
+  WagmiMetaMaskSDKOptions &
+    OneOf<
+      | {
+          /* Shortcut to connect and sign a message */
+          connectAndSign?: string | undefined
+        }
+      | {
+          // TODO: Strongly type `method` and `params`
+          /* Allow `connectWith` any rpc method */
+          connectWith?: { method: string; params: unknown[] } | undefined
+        }
+    >
+>
+
+type WagmiMetaMaskSDKOptions = Compute<
+  ExactPartial<
+    Omit<
+      MetaMaskSDKOptions,
+      | '_source'
+      | 'forceDeleteProvider'
+      | 'forceInjectProvider'
+      | 'injectProvider'
+      | 'useDeeplink'
+      | 'readonlyRPCMap'
+    >
+  > & {
+    /** @deprecated */
+    forceDeleteProvider?: MetaMaskSDKOptions['forceDeleteProvider']
+    /** @deprecated */
+    forceInjectProvider?: MetaMaskSDKOptions['forceInjectProvider']
+    /** @deprecated */
+    injectProvider?: MetaMaskSDKOptions['injectProvider']
+    /** @deprecated */
+    useDeeplink?: MetaMaskSDKOptions['useDeeplink']
+  }
 >
 
 metaMask.type = 'metaMask' as const
@@ -76,11 +112,26 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       if (isReconnecting) accounts = await this.getAccounts().catch(() => [])
 
       try {
+        let signResponse: string | undefined
+        let connectWithResponse: unknown | undefined
         if (!accounts?.length) {
-          const requestedAccounts = (await sdk.connect()) as string[]
-          accounts = requestedAccounts.map((x) => getAddress(x))
-        }
+          if (parameters.connectAndSign || parameters.connectWith) {
+            if (parameters.connectAndSign)
+              signResponse = await sdk.connectAndSign({
+                msg: parameters.connectAndSign,
+              })
+            else if (parameters.connectWith)
+              connectWithResponse = await sdk.connectWith({
+                method: parameters.connectWith.method,
+                params: parameters.connectWith.params,
+              })
 
+            accounts = await this.getAccounts()
+          } else {
+            const requestedAccounts = (await sdk.connect()) as string[]
+            accounts = requestedAccounts.map((x) => getAddress(x))
+          }
+        }
         // Switch to chain if provided
         let currentChainId = (await this.getChainId()) as number
         if (chainId && currentChainId !== chainId) {
@@ -95,6 +146,19 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           provider.removeListener('display_uri', displayUri)
           displayUri = undefined
         }
+
+        if (signResponse)
+          provider.emit('connectAndSign', {
+            accounts,
+            chainId: currentChainId,
+            signResponse,
+          })
+        else if (connectWithResponse)
+          provider.emit('connectWith', {
+            accounts,
+            chainId: currentChainId,
+            connectWithResponse,
+          })
 
         // Manage EIP-1193 event listeners
         // https://eips.ethereum.org/EIPS/eip-1193#events
@@ -175,6 +239,9 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
 
         sdk = new MetaMaskSDK({
           _source: 'wagmi',
+          forceDeleteProvider: false,
+          forceInjectProvider: false,
+          injectProvider: false,
           // Workaround cast since MetaMask SDK does not support `'exactOptionalPropertyTypes'`
           ...(parameters as RemoveUndefined<typeof parameters>),
           readonlyRPCMap: Object.fromEntries(
@@ -186,7 +253,11 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
               return [chain.id, url]
             }),
           ),
-          dappMetadata: parameters.dappMetadata ?? { name: 'wagmi' },
+          dappMetadata:
+            parameters.dappMetadata ??
+            (typeof window !== 'undefined'
+              ? { url: window.location.origin }
+              : { name: 'wagmi' }),
           useDeeplink: parameters.useDeeplink ?? true,
         })
         await sdk.init()
