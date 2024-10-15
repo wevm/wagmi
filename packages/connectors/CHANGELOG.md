@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 5.2.0
+
+### Minor Changes
+
+- [#4337](https://github.com/wevm/wagmi/pull/4337) [`34a0c3b7eea778aee7c27f7ace5e4b2be4e8a0a4`](https://github.com/wevm/wagmi/commit/34a0c3b7eea778aee7c27f7ace5e4b2be4e8a0a4) Thanks [@tmm](https://github.com/tmm)! - Added "Connect and Sign" behavior to MetaMask Connector.
+
 ## 5.1.15
 
 ### Patch Changes
