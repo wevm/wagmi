@@ -35,27 +35,37 @@ import {
 
 export type MetaMaskParameters = UnionCompute<
   WagmiMetaMaskSDKOptions &
-    OneOf<
-      | {
-          // Shortcut to connect and sign a message
-          connectAndSign?: string | undefined
-        }
-      | {
-          // TODO: Strongly type `method` and `params`
-          // Allow connectWith any rpc method
-          connectWith?: { method: string; params: unknown[] } | undefined
-        }
-    >
+  OneOf<
+    | {
+      /* Shortcut to connect and sign a message */
+      connectAndSign?: string | undefined
+    }
+    | {
+      // TODO: Strongly type `method` and `params`
+      /* Allow `connectWith` any rpc method */
+      connectWith?: { method: string; params: unknown[] } | undefined
+    }
+  >
 >
 
 type WagmiMetaMaskSDKOptions = Compute<
-  ExactPartial<Omit<MetaMaskSDKOptions, '_source' | 'readonlyRPCMap'>> & {
+  ExactPartial<
+    Omit<
+      MetaMaskSDKOptions,
+      | '_source'
+      | 'forceDeleteProvider'
+      | 'forceInjectProvider'
+      | 'injectProvider'
+      | 'useDeeplink'
+      | 'readonlyRPCMap'
+    >
+  > & {
     /** @deprecated */
-    forceDeleteProvider?: MetaMaskSDKOptions['useDeeplink']
+    forceDeleteProvider?: MetaMaskSDKOptions['forceDeleteProvider']
     /** @deprecated */
-    forceInjectProvider?: MetaMaskSDKOptions['useDeeplink']
+    forceInjectProvider?: MetaMaskSDKOptions['forceInjectProvider']
     /** @deprecated */
-    injectProvider?: MetaMaskSDKOptions['useDeeplink']
+    injectProvider?: MetaMaskSDKOptions['injectProvider']
     /** @deprecated */
     useDeeplink?: MetaMaskSDKOptions['useDeeplink']
   }
@@ -222,21 +232,16 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         // See: https://github.com/vitejs/vite/issues/9703
         const MetaMaskSDK = await (async () => {
           const { default: SDK } = await import('@metamask/sdk')
-          // @ts-ignore
           if (typeof SDK !== 'function' && typeof SDK.default === 'function')
-            // @ts-ignore
             return SDK.default
-          // @ts-ignore
           return SDK as unknown as typeof SDK.default
         })()
 
-        const defaultUrl =
-          typeof window !== 'undefined'
-            ? `${window.location.protocol}//${window.location.host}`
-            : ''
-
         sdk = new MetaMaskSDK({
           _source: 'wagmi',
+          forceDeleteProvider: false,
+          forceInjectProvider: false,
+          injectProvider: false,
           // Workaround cast since MetaMask SDK does not support `'exactOptionalPropertyTypes'`
           ...(parameters as RemoveUndefined<typeof parameters>),
           readonlyRPCMap: Object.fromEntries(
@@ -248,14 +253,12 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
               return [chain.id, url]
             }),
           ),
-          dappMetadata: parameters.dappMetadata ?? {
-            url: defaultUrl,
-            name: defaultUrl !== '' ? undefined : 'wagmi',
-          },
-          useDeeplink: true,
-          injectProvider: false,
-          forceInjectProvider: false,
-          forceDeleteProvider: false,
+          dappMetadata:
+            parameters.dappMetadata ??
+            (typeof window !== 'undefined'
+              ? { url: window.location.origin }
+              : { name: 'wagmi' }),
+          useDeeplink: parameters.useDeeplink ?? true,
         })
         await sdk.init()
         return sdk.getProvider()!
