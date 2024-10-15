@@ -35,17 +35,17 @@ import {
 
 export type MetaMaskParameters = UnionCompute<
   WagmiMetaMaskSDKOptions &
-  OneOf<
-    | {
-      /* Shortcut to connect and sign a message */
-      connectAndSign?: string | undefined
-    }
-    | {
-      // TODO: Strongly type `method` and `params`
-      /* Allow `connectWith` any rpc method */
-      connectWith?: { method: string; params: unknown[] } | undefined
-    }
-  >
+    OneOf<
+      | {
+          /* Shortcut to connect and sign a message */
+          connectAndSign?: string | undefined
+        }
+      | {
+          // TODO: Strongly type `method` and `params`
+          /* Allow `connectWith` any rpc method */
+          connectWith?: { method: string; params: unknown[] } | undefined
+        }
+    >
 >
 
 type WagmiMetaMaskSDKOptions = Compute<
