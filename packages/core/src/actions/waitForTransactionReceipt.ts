@@ -71,7 +71,9 @@ export async function waitForTransactionReceipt<
       maxFeePerGas: txn.type === 'eip1559' ? txn.maxFeePerGas : undefined,
       maxPriorityFeePerGas:
         txn.type === 'eip1559' ? txn.maxPriorityFeePerGas : undefined,
+      data: txn.input ? txn.input : undefined,
     })
+
     const reason = code?.data
       ? hexToString(`0x${code.data.substring(138)}`)
       : 'unknown reason'
