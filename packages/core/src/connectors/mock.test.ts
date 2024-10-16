@@ -2,6 +2,7 @@ import { accounts, config } from '@wagmi/test'
 import { expect, test } from 'vitest'
 
 import { mock } from './mock.js'
+import { connect } from '../actions/connect.js'
 
 test('setup', () => {
   const connectorFn = mock({ accounts })
@@ -82,4 +83,12 @@ test('behavior: connector.getProvider request errors', async () => {
     Details: Failed to sign message.
     Version: viem@2.17.0]
   `)
+})
+
+test('behavior: reconnect', async () => {
+  const connectorFn = mock({ accounts, features: { reconnect: true } })
+  const connector = config._internal.connectors.setup(connectorFn)
+  await connect(config, { connector })
+
+  await expect(connector.isAuthorized()).resolves.toBeTruthy()
 })
