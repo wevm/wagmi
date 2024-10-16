@@ -37,60 +37,6 @@ export type InjectedParameters = {
 // Regex of wallets/providers that can accurately simulate contract calls & display contract revert reasons.
 const supportsSimulationIdRegex = /(rabby|trustwallet)/
 
-const targetMap = {
-  coinbaseWallet: {
-    id: 'coinbaseWallet',
-    name: 'Coinbase Wallet',
-    provider(window) {
-      if (window?.coinbaseWalletExtension) return window.coinbaseWalletExtension
-      return findProvider(window, 'isCoinbaseWallet')
-    },
-  },
-  metaMask: {
-    id: 'metaMask',
-    name: 'MetaMask',
-    provider(window) {
-      return findProvider(window, (provider) => {
-        if (!provider.isMetaMask) return false
-        // Brave tries to make itself look like MetaMask
-        // Could also try RPC `web3_clientVersion` if following is unreliable
-        if (provider.isBraveWallet && !provider._events && !provider._state)
-          return false
-        // Other wallets that try to look like MetaMask
-        const flags: WalletProviderFlags[] = [
-          'isApexWallet',
-          'isAvalanche',
-          'isBitKeep',
-          'isBlockWallet',
-          'isKuCoinWallet',
-          'isMathWallet',
-          'isOkxWallet',
-          'isOKExWallet',
-          'isOneInchIOSWallet',
-          'isOneInchAndroidWallet',
-          'isOpera',
-          'isPortal',
-          'isRabby',
-          'isTokenPocket',
-          'isTokenary',
-          'isUniswapWallet',
-          'isZerion',
-        ]
-        for (const flag of flags) if (provider[flag]) return false
-        return true
-      })
-    },
-  },
-  phantom: {
-    id: 'phantom',
-    name: 'Phantom',
-    provider(window) {
-      if (window?.phantom?.ethereum) return window.phantom?.ethereum
-      return findProvider(window, 'isPhantom')
-    },
-  },
-} as const satisfies TargetMap
-
 injected.type = 'injected' as const
 export function injected(parameters: InjectedParameters = {}) {
   const { shimDisconnect = true, unstable_shimAsyncInject } = parameters
@@ -583,6 +529,62 @@ export function injected(parameters: InjectedParameters = {}) {
   }))
 }
 
+const targetMap = {
+  coinbaseWallet: {
+    id: 'coinbaseWallet',
+    name: 'Coinbase Wallet',
+    provider(window) {
+      if (window?.coinbaseWalletExtension) return window.coinbaseWalletExtension
+      return findProvider(window, 'isCoinbaseWallet')
+    },
+  },
+  metaMask: {
+    id: 'metaMask',
+    name: 'MetaMask',
+    provider(window) {
+      return findProvider(window, (provider) => {
+        if (!provider.isMetaMask) return false
+        // Brave tries to make itself look like MetaMask
+        // Could also try RPC `web3_clientVersion` if following is unreliable
+        if (provider.isBraveWallet && !provider._events && !provider._state)
+          return false
+        // Other wallets that try to look like MetaMask
+        const flags = [
+          'isApexWallet',
+          'isAvalanche',
+          'isBitKeep',
+          'isBlockWallet',
+          'isKuCoinWallet',
+          'isMathWallet',
+          'isOkxWallet',
+          'isOKExWallet',
+          'isOneInchIOSWallet',
+          'isOneInchAndroidWallet',
+          'isOpera',
+          'isPortal',
+          'isRabby',
+          'isTokenPocket',
+          'isTokenary',
+          'isUniswapWallet',
+          'isZerion',
+        ] satisfies WalletProviderFlags[]
+        for (const flag of flags) if (provider[flag]) return false
+        return true
+      })
+    },
+  },
+  phantom: {
+    id: 'phantom',
+    name: 'Phantom',
+    provider(window) {
+      if (window?.phantom?.ethereum) return window.phantom?.ethereum
+      return findProvider(window, 'isPhantom')
+    },
+  },
+} as const satisfies TargetMap
+
+type TargetMap = { [_ in TargetId]?: Target | undefined }
+
 type Target = {
   icon?: string | undefined
   id: string
@@ -600,9 +602,9 @@ type TargetId = Compute<WalletProviderFlags> extends `is${infer name}`
     : never
   : never
 
-type TargetMap = { [_ in TargetId]?: Target | undefined }
-
-/** @deprecated */
+/**
+ * @deprecated As of 2024/10/16, we are no longer accepting new provider flags as EIP-6963 should be used instead.
+ */
 type WalletProviderFlags =
   | 'isApexWallet'
   | 'isAvalanche'
