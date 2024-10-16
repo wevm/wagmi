@@ -287,6 +287,13 @@ export {
 } from '../actions/reconnect.js'
 
 export {
+  type RequestPermissionsErrorType,
+  type RequestPermissionsParameters,
+  type RequestPermissionsReturnType,
+  requestPermissions,
+} from '../actions/requestPermissions.js'
+
+export {
   type SendTransactionErrorType,
   type SendTransactionParameters,
   type SendTransactionReturnType,
