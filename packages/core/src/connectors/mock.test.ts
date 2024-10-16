@@ -1,8 +1,8 @@
 import { accounts, config } from '@wagmi/test'
 import { expect, test } from 'vitest'
 
-import { mock } from './mock.js'
 import { connect } from '../actions/connect.js'
+import { mock } from './mock.js'
 
 test('setup', () => {
   const connectorFn = mock({ accounts })
