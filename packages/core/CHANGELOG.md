@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.13.9
+
+### Patch Changes
+
+- [#4336](https://github.com/wevm/wagmi/pull/4336) [`c05caabc20c3ced9682cfc7ba1f3f7dcfece0703`](https://github.com/wevm/wagmi/commit/c05caabc20c3ced9682cfc7ba1f3f7dcfece0703) Thanks [@EdouardBougon](https://github.com/EdouardBougon)! - Added deprecation notice to `injected` target flags.
+
 ## 2.13.8
 
 ### Patch Changes
