@@ -97,9 +97,18 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
     type: metaMask.type,
     async setup() {
       const provider = await this.getProvider()
-      if (provider && !connect) {
-        connect = this.onConnect.bind(this)
-        provider.on('connect', connect as Listener)
+      if (provider?.on) {
+        if (!connect) {
+          connect = this.onConnect.bind(this)
+          provider.on('connect', connect as Listener)
+        }
+
+        // We shouldn't need to listen for `'accountsChanged'` here since the `'connect'` event should suffice (and wallet shouldn't be connected yet).
+        // Some wallets, like MetaMask, do not implement the `'connect'` event and overload `'accountsChanged'` instead.
+        if (!accountsChanged) {
+          accountsChanged = this.onAccountsChanged.bind(this)
+          provider.on('accountsChanged', accountsChanged as Listener)
+        }
       }
     },
     async connect({ chainId, isReconnecting } = {}) {
@@ -194,10 +203,6 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       const provider = await this.getProvider()
 
       // Manage EIP-1193 event listeners
-      if (accountsChanged) {
-        provider.removeListener('accountsChanged', accountsChanged)
-        accountsChanged = undefined
-      }
       if (chainChanged) {
         provider.removeListener('chainChanged', chainChanged)
         chainChanged = undefined
@@ -441,10 +446,6 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       config.emitter.emit('disconnect')
 
       // Manage EIP-1193 event listeners
-      if (!accountsChanged) {
-        accountsChanged = this.onAccountsChanged.bind(this)
-        provider.on('accountsChanged', accountsChanged as Listener)
-      }
       if (chainChanged) {
         provider.removeListener('chainChanged', chainChanged)
         chainChanged = undefined
