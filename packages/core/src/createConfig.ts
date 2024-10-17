@@ -92,14 +92,23 @@ export function createConfig<
       : undefined
 
   const chains = createStore(() => rest.chains)
-  const connectors = createStore(() =>
-    [
-      ...(rest.connectors ?? []),
-      ...(!ssr
-        ? (mipd?.getProviders().map(providerDetailToConnector) ?? [])
-        : []),
-    ].map(setup),
-  )
+  const connectors = createStore(() => {
+    const collection = []
+    const rdnsSet = new Set<string>()
+    for (const connectorFns of rest.connectors ?? []) {
+      const connector = setup(connectorFns)
+      collection.push(connector)
+      if (!ssr && connector.rdns) rdnsSet.add(connector.rdns)
+    }
+    if (!ssr) {
+      const providers = mipd?.getProviders() ?? []
+      for (const provider of providers) {
+        if (rdnsSet.has(provider.info.rdns)) continue
+        collection.push(setup(providerDetailToConnector(provider)))
+      }
+    }
+    return collection
+  })
   function setup(connectorFn: CreateConnectorFn): Connector {
     // Set up emitter with uid and add to connector so they are "linked" together.
     const emitter = createEmitter<ConnectorEventMap>(uid())
@@ -313,13 +322,16 @@ export function createConfig<
 
   // EIP-6963 subscribe for new wallet providers
   mipd?.subscribe((providerDetails) => {
-    const currentConnectorIds = new Map()
+    const currentConnectorIds = new Set()
+    const currentConnectorRdns = new Set()
     for (const connector of connectors.getState()) {
-      currentConnectorIds.set(connector.id, true)
+      currentConnectorIds.add(connector.id)
+      if (connector.rdns) currentConnectorRdns.add(connector.rdns)
     }
 
     const newConnectors: Connector[] = []
     for (const providerDetail of providerDetails) {
+      if (currentConnectorRdns.has(providerDetail.info.rdns)) continue
       const connector = setup(providerDetailToConnector(providerDetail))
       if (currentConnectorIds.has(connector.id)) continue
       newConnectors.push(connector)
