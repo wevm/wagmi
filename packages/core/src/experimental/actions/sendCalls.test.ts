@@ -29,7 +29,7 @@ test('default', async () => {
       ],
     }),
   ).resolves.toMatchInlineSnapshot(
-    '"0x5dedb5a4ff8968db37459b52b83cbdc92b01c9c709c9cff26e345ef5cf27f92e"',
+    `"0x943e879b78e26f9e960a0c682e53d153a75487ef24624a44dbf22ae439b3d370"`,
   )
   await disconnect(config, { connector })
 })
