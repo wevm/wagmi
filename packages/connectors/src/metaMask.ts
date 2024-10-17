@@ -390,7 +390,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       if (accounts.length === 0) {
         // ... and using browser extension
         if (sdk.isExtensionActive()) this.onDisconnect()
-        // mobile app sometimes emits invalid `accountsChanged` event with empty accounts array
+        // FIXME(upstream): Mobile app sometimes emits invalid `accountsChanged` event with empty accounts array
         else return
       }
       // Connect if emitter is listening for connect event (e.g. is disconnected and connects through wallet interface)
