@@ -386,8 +386,11 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       }
     },
     async onAccountsChanged(accounts) {
-      // Do nothing if there are no accounts
-      if (accounts.length === 0) return
+      // Empty account list is the signal to disconnect from extension
+      if (accounts.length === 0) {
+        if (sdk.isExtensionActive()) this.onDisconnect()
+        return
+      }
       // Connect if emitter is listening for connect event (e.g. is disconnected and connects through wallet interface)
       if (config.emitter.listenerCount('connect')) {
         const chainId = (await this.getChainId()).toString()
