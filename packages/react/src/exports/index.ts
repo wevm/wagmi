@@ -40,6 +40,12 @@ export {
 } from '../hooks/useAccountEffect.js'
 
 export {
+  type UseAddChainParameters,
+  type UseAddChainReturnType,
+  useAddChain,
+} from '../hooks/useAddChain.js'
+
+export {
   type UseBalanceParameters,
   type UseBalanceReturnType,
   useBalance,
