@@ -98,10 +98,14 @@ export async function writeContract<
   const { account, chainId, connector, __mode, ...rest } = parameters
 
   let client: Client
-  if (typeof account === 'object' && account.type === 'local')
+  if (typeof account === 'object' && account?.type === 'local')
     client = config.getClient({ chainId })
   else
-    client = await getConnectorClient(config, { account, chainId, connector })
+    client = await getConnectorClient(config, {
+      account: account ?? undefined,
+      chainId,
+      connector,
+    })
 
   const { connector: activeConnector } = getAccount(config)
 

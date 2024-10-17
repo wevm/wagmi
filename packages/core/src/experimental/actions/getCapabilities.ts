@@ -10,8 +10,8 @@ import { getConnectorClient } from '../../actions/getConnectorClient.js'
 import type { Config } from '../../createConfig.js'
 import type { ConnectorParameter } from '../../types/properties.js'
 
-export type GetCapabilitiesParameters =
-  viem_GetCapabilitiesParameters<Account> & ConnectorParameter
+export type GetCapabilitiesParameters = viem_GetCapabilitiesParameters &
+  ConnectorParameter
 
 export type GetCapabilitiesReturnType = viem_GetCapabilitiesReturnType
 
