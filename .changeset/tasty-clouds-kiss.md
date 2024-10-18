@@ -1,5 +1,5 @@
 ---
-"@wagmi/connectors": major
+"@wagmi/connectors": patch
 ---
 
 Updated MetaMask SDK.
