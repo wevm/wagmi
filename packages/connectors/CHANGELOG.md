@@ -1,5 +1,16 @@
 # @wagmi/connectors
 
+## 5.2.2
+
+### Patch Changes
+
+- [#4347](https://github.com/wevm/wagmi/pull/4347) [`5ae49af590ff168426c9c283d54c34ae5148fcd9`](https://github.com/wevm/wagmi/commit/5ae49af590ff168426c9c283d54c34ae5148fcd9) Thanks [@EdouardBougon](https://github.com/EdouardBougon)! - Added workaround for MetaMask mobile sometimes disconnecting.
+
+- [#4350](https://github.com/wevm/wagmi/pull/4350) [`f3182b22e6e454d9bd74f1b940ef34431fd9555d`](https://github.com/wevm/wagmi/commit/f3182b22e6e454d9bd74f1b940ef34431fd9555d) Thanks [@abretonc7s](https://github.com/abretonc7s)! - Updated MetaMask SDK.
+
+- Updated dependencies [[`c05caabc20c3ced9682cfc7ba1f3f7dcfece0703`](https://github.com/wevm/wagmi/commit/c05caabc20c3ced9682cfc7ba1f3f7dcfece0703)]:
+  - @wagmi/core@2.13.9
+
 ## 5.2.1
 
 ### Patch Changes

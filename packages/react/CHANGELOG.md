@@ -1,5 +1,13 @@
 # wagmi
 
+## 2.12.20
+
+### Patch Changes
+
+- Updated dependencies [[`c05caabc20c3ced9682cfc7ba1f3f7dcfece0703`](https://github.com/wevm/wagmi/commit/c05caabc20c3ced9682cfc7ba1f3f7dcfece0703), [`5ae49af590ff168426c9c283d54c34ae5148fcd9`](https://github.com/wevm/wagmi/commit/5ae49af590ff168426c9c283d54c34ae5148fcd9), [`f3182b22e6e454d9bd74f1b940ef34431fd9555d`](https://github.com/wevm/wagmi/commit/f3182b22e6e454d9bd74f1b940ef34431fd9555d)]:
+  - @wagmi/core@2.13.9
+  - @wagmi/connectors@5.2.2
+
 ## 2.12.19
 
 ### Patch Changes
