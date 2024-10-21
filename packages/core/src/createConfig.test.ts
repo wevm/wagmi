@@ -351,7 +351,7 @@ test('behavior: setup connector', async () => {
 
   await connect(config, {
     chainId: mainnet.id,
-    connector: config.connectors[0]!,
+    connector: config.connectors.find((x) => x.uid === connector.uid)!,
   })
 
   expect(config.state.current).toBe(connector.uid)
@@ -360,23 +360,57 @@ test('behavior: setup connector', async () => {
 })
 
 test('behavior: eip 6963 providers', async () => {
+  vi.mock(import('mipd'), async (importOriginal) => {
+    const mod = await importOriginal()
+
+    let _cache: typeof mod | undefined
+    if (!_cache)
+      _cache = {
+        ...mod,
+        createStore() {
+          const store = mod.createStore()
+          return {
+            ...store,
+            getProviders() {
+              return [
+                {
+                  info: {
+                    icon: 'data:image/svg+xml,<svg width="32px" height="32px" viewBox="0 0 32 32"/>',
+                    name: 'Example Wallet',
+                    rdns: 'com.example',
+                    uuid: '1f94d0b3-9435-4b5c-b3c2-b4f9ea180012',
+                  },
+                  provider:
+                    '<EIP1193Provider_Example>' as unknown as EIP1193Provider,
+                },
+              ]
+            },
+          }
+        },
+      }
+
+    // now every time that createStore() is called it will
+    // return the same object reference
+    return _cache
+  })
+
   const detail_1 = {
     info: {
       icon: 'data:image/svg+xml,<svg width="32px" height="32px" viewBox="0 0 32 32"/>',
-      name: 'Example Wallet',
-      rdns: 'org.example',
+      name: 'Foo Wallet',
+      rdns: 'com.foo',
       uuid: '350670db-19fa-4704-a166-e52e178b59d2',
     },
-    provider: '<EIP1193Provider_1>' as unknown as EIP1193Provider,
+    provider: '<EIP1193Provider_Foo>' as unknown as EIP1193Provider,
   } as const satisfies EIP6963ProviderDetail
   const detail_2 = {
     info: {
       icon: 'data:image/svg+xml,<svg width="32px" height="32px" viewBox="0 0 32 32"/>',
-      name: 'Foo Wallet',
-      rdns: 'org.foo',
+      name: 'Bar Wallet',
+      rdns: 'com.bar',
       uuid: '12345555-19fa-4704-a166-e52e178b59d2',
     },
-    provider: '<EIP1193Provider_2>' as unknown as EIP1193Provider,
+    provider: '<EIP1193Provider_Bar>' as unknown as EIP1193Provider,
   } as const satisfies EIP6963ProviderDetail
 
   const config = createConfig({
@@ -394,5 +428,11 @@ test('behavior: eip 6963 providers', async () => {
   announceProvider(detail_2)()
   await wait(100)
 
-  expect(config.connectors.length).toBe(2)
+  expect(config.connectors.map((x) => x.rdns ?? x.id)).toMatchInlineSnapshot(`
+    [
+      "com.example",
+      "com.foo",
+      "com.bar",
+    ]
+  `)
 })
