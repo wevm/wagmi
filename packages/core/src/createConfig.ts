@@ -283,6 +283,7 @@ export function createConfig<
         : getInitialState,
     ),
   )
+  store.setState(getInitialState())
 
   function validatePersistedChainId(
     persistedState: unknown,
