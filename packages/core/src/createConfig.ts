@@ -100,8 +100,8 @@ export function createConfig<
       collection.push(connector)
       if (!ssr && connector.rdns) rdnsSet.add(connector.rdns)
     }
-    if (!ssr) {
-      const providers = mipd?.getProviders() ?? []
+    if (!ssr && mipd) {
+      const providers = mipd.getProviders()
       for (const provider of providers) {
         if (rdnsSet.has(provider.info.rdns)) continue
         collection.push(setup(providerDetailToConnector(provider)))
