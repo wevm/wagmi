@@ -10,10 +10,10 @@ import { expect, test, vi } from 'vitest'
 import { connect } from './actions/connect.js'
 import { disconnect } from './actions/disconnect.js'
 import { switchChain } from './actions/switchChain.js'
+import { createConnector } from './connectors/createConnector.js'
 import { mock } from './connectors/mock.js'
 import { createConfig } from './createConfig.js'
 import { createStorage } from './createStorage.js'
-import { createConnector } from './connectors/createConnector.js'
 
 const { mainnet, optimism } = chain
 
