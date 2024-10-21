@@ -1,10 +1,16 @@
 import { accounts, chain, wait } from '@wagmi/test'
+import {
+  type EIP1193Provider,
+  type EIP6963ProviderDetail,
+  announceProvider,
+} from 'mipd'
 import { http } from 'viem'
 import { expect, test, vi } from 'vitest'
 
 import { connect } from './actions/connect.js'
 import { disconnect } from './actions/disconnect.js'
 import { switchChain } from './actions/switchChain.js'
+import { createConnector } from './connectors/createConnector.js'
 import { mock } from './connectors/mock.js'
 import { createConfig } from './createConfig.js'
 import { createStorage } from './createStorage.js'
@@ -346,10 +352,86 @@ test('behavior: setup connector', async () => {
 
   await connect(config, {
     chainId: mainnet.id,
-    connector: config.connectors[0]!,
+    connector: config.connectors.find((x) => x.uid === connector.uid)!,
   })
 
   expect(config.state.current).toBe(connector.uid)
 
   await disconnect(config)
+})
+
+test('behavior: eip 6963 providers', async () => {
+  const detail_1 = getProviderDetail({ name: 'Foo Wallet', rdns: 'com.foo' })
+  const detail_2 = getProviderDetail({ name: 'Bar Wallet', rdns: 'com.bar' })
+  const detail_3 = getProviderDetail({ name: 'Mock', rdns: 'com.mock' })
+
+  const config = createConfig({
+    chains: [mainnet],
+    connectors: [
+      createConnector((c) => {
+        return {
+          ...mock({ accounts })(c),
+          rdns: 'com.mock',
+        }
+      }),
+    ],
+    transports: {
+      [mainnet.id]: http(),
+    },
+  })
+
+  await wait(100)
+  announceProvider(detail_1)()
+  await wait(100)
+  announceProvider(detail_1)()
+  await wait(100)
+  announceProvider(detail_2)()
+  await wait(100)
+  announceProvider(detail_3)()
+  await wait(100)
+
+  expect(config.connectors.map((x) => x.rdns ?? x.id)).toMatchInlineSnapshot(`
+    [
+      "com.mock",
+      "com.example",
+      "com.foo",
+      "com.bar",
+    ]
+  `)
+})
+
+function getProviderDetail(
+  info: Pick<EIP6963ProviderDetail['info'], 'name' | 'rdns'>,
+): EIP6963ProviderDetail {
+  return {
+    info: {
+      icon: 'data:image/svg+xml,<svg width="32px" height="32px" viewBox="0 0 32 32"/>',
+      uuid: crypto.randomUUID(),
+      ...info,
+    },
+    provider: `<EIP1193Provider_${info.rdns}>` as unknown as EIP1193Provider,
+  }
+}
+
+vi.mock(import('mipd'), async (importOriginal) => {
+  const mod = await importOriginal()
+
+  let _cache: typeof mod | undefined
+  if (!_cache)
+    _cache = {
+      ...mod,
+      createStore() {
+        const store = mod.createStore()
+        return {
+          ...store,
+          getProviders() {
+            return [
+              getProviderDetail({ name: 'Example', rdns: 'com.example' }),
+              getProviderDetail({ name: 'Mock', rdns: 'com.mock' }),
+            ]
+          },
+        }
+      },
+    }
+  return _cache
 })
