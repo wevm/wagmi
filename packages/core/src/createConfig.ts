@@ -322,18 +322,18 @@ export function createConfig<
 
   // EIP-6963 subscribe for new wallet providers
   mipd?.subscribe((providerDetails) => {
-    const currentConnectorIds = new Set()
-    const currentConnectorRdns = new Set()
+    const connectorIdSet = new Set()
+    const connectorRdnsSet = new Set()
     for (const connector of connectors.getState()) {
-      currentConnectorIds.add(connector.id)
-      if (connector.rdns) currentConnectorRdns.add(connector.rdns)
+      connectorIdSet.add(connector.id)
+      if (connector.rdns) connectorRdnsSet.add(connector.rdns)
     }
 
     const newConnectors: Connector[] = []
     for (const providerDetail of providerDetails) {
-      if (currentConnectorRdns.has(providerDetail.info.rdns)) continue
+      if (connectorRdnsSet.has(providerDetail.info.rdns)) continue
       const connector = setup(providerDetailToConnector(providerDetail))
-      if (currentConnectorIds.has(connector.id)) continue
+      if (connectorIdSet.has(connector.id)) continue
       newConnectors.push(connector)
     }
 
