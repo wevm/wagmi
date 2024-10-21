@@ -1,6 +1,6 @@
 # @wagmi/connectors
 
-## 5.3.2
+## 5.3.0
 
 ### Minor Changes
 
