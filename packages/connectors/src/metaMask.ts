@@ -263,7 +263,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
             parameters.dappMetadata ??
             (typeof window !== 'undefined'
               ? { url: window.location.origin }
-              : { name: 'wagmi' }),
+              : { name: 'wagmi', url: 'https://wagmi.sh' }),
           useDeeplink: parameters.useDeeplink ?? true,
         })
         await sdk.init()
