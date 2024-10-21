@@ -13,6 +13,7 @@ import { switchChain } from './actions/switchChain.js'
 import { mock } from './connectors/mock.js'
 import { createConfig } from './createConfig.js'
 import { createStorage } from './createStorage.js'
+import { createConnector } from './connectors/createConnector.js'
 
 const { mainnet, optimism } = chain
 
@@ -373,48 +374,30 @@ test('behavior: eip 6963 providers', async () => {
             ...store,
             getProviders() {
               return [
-                {
-                  info: {
-                    icon: 'data:image/svg+xml,<svg width="32px" height="32px" viewBox="0 0 32 32"/>',
-                    name: 'Example Wallet',
-                    rdns: 'com.example',
-                    uuid: '1f94d0b3-9435-4b5c-b3c2-b4f9ea180012',
-                  },
-                  provider:
-                    '<EIP1193Provider_Example>' as unknown as EIP1193Provider,
-                },
+                getProviderDetail({ name: 'Example', rdns: 'com.example' }),
+                getProviderDetail({ name: 'Mock', rdns: 'com.mock' }),
               ]
             },
           }
         },
       }
-
-    // now every time that createStore() is called it will
-    // return the same object reference
     return _cache
   })
 
-  const detail_1 = {
-    info: {
-      icon: 'data:image/svg+xml,<svg width="32px" height="32px" viewBox="0 0 32 32"/>',
-      name: 'Foo Wallet',
-      rdns: 'com.foo',
-      uuid: '350670db-19fa-4704-a166-e52e178b59d2',
-    },
-    provider: '<EIP1193Provider_Foo>' as unknown as EIP1193Provider,
-  } as const satisfies EIP6963ProviderDetail
-  const detail_2 = {
-    info: {
-      icon: 'data:image/svg+xml,<svg width="32px" height="32px" viewBox="0 0 32 32"/>',
-      name: 'Bar Wallet',
-      rdns: 'com.bar',
-      uuid: '12345555-19fa-4704-a166-e52e178b59d2',
-    },
-    provider: '<EIP1193Provider_Bar>' as unknown as EIP1193Provider,
-  } as const satisfies EIP6963ProviderDetail
+  const detail_1 = getProviderDetail({ name: 'Foo Wallet', rdns: 'com.foo' })
+  const detail_2 = getProviderDetail({ name: 'Bar Wallet', rdns: 'com.bar' })
+  const detail_3 = getProviderDetail({ name: 'Mock', rdns: 'com.mock' })
 
   const config = createConfig({
     chains: [mainnet],
+    connectors: [
+      createConnector((c) => {
+        return {
+          ...mock({ accounts })(c),
+          rdns: 'com.mock',
+        }
+      }),
+    ],
     transports: {
       [mainnet.id]: http(),
     },
@@ -427,12 +410,28 @@ test('behavior: eip 6963 providers', async () => {
   await wait(100)
   announceProvider(detail_2)()
   await wait(100)
+  announceProvider(detail_3)()
+  await wait(100)
 
   expect(config.connectors.map((x) => x.rdns ?? x.id)).toMatchInlineSnapshot(`
     [
+      "com.mock",
       "com.example",
       "com.foo",
       "com.bar",
     ]
   `)
 })
+
+function getProviderDetail(
+  info: Pick<EIP6963ProviderDetail['info'], 'name' | 'rdns'>,
+): EIP6963ProviderDetail {
+  return {
+    info: {
+      icon: 'data:image/svg+xml,<svg width="32px" height="32px" viewBox="0 0 32 32"/>',
+      uuid: crypto.randomUUID(),
+      ...info,
+    },
+    provider: `<EIP1193Provider_${info.rdns}>` as unknown as EIP1193Provider,
+  }
+}
