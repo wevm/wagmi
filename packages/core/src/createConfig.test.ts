@@ -361,29 +361,6 @@ test('behavior: setup connector', async () => {
 })
 
 test('behavior: eip 6963 providers', async () => {
-  vi.mock(import('mipd'), async (importOriginal) => {
-    const mod = await importOriginal()
-
-    let _cache: typeof mod | undefined
-    if (!_cache)
-      _cache = {
-        ...mod,
-        createStore() {
-          const store = mod.createStore()
-          return {
-            ...store,
-            getProviders() {
-              return [
-                getProviderDetail({ name: 'Example', rdns: 'com.example' }),
-                getProviderDetail({ name: 'Mock', rdns: 'com.mock' }),
-              ]
-            },
-          }
-        },
-      }
-    return _cache
-  })
-
   const detail_1 = getProviderDetail({ name: 'Foo Wallet', rdns: 'com.foo' })
   const detail_2 = getProviderDetail({ name: 'Bar Wallet', rdns: 'com.bar' })
   const detail_3 = getProviderDetail({ name: 'Mock', rdns: 'com.mock' })
@@ -435,3 +412,26 @@ function getProviderDetail(
     provider: `<EIP1193Provider_${info.rdns}>` as unknown as EIP1193Provider,
   }
 }
+
+vi.mock(import('mipd'), async (importOriginal) => {
+  const mod = await importOriginal()
+
+  let _cache: typeof mod | undefined
+  if (!_cache)
+    _cache = {
+      ...mod,
+      createStore() {
+        const store = mod.createStore()
+        return {
+          ...store,
+          getProviders() {
+            return [
+              getProviderDetail({ name: 'Example', rdns: 'com.example' }),
+              getProviderDetail({ name: 'Mock', rdns: 'com.mock' }),
+            ]
+          },
+        }
+      },
+    }
+  return _cache
+})
