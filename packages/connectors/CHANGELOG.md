@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 5.3.2
+
+### Patch Changes
+
+- [#4357](https://github.com/wevm/wagmi/pull/4357) [`8970cc51398e1ac713435533096215c6d31ffdf9`](https://github.com/wevm/wagmi/commit/8970cc51398e1ac713435533096215c6d31ffdf9) Thanks [@tmm](https://github.com/tmm)! - Bumped dependencies.
+
 ## 5.3.1
 
 ### Patch Changes
