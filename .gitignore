@@ -37,3 +37,4 @@ packages/vue/chains
 packages/vue/connectors
 packages/vue/nuxt
 packages/vue/query
+packages/svelte/.svelte-kit
