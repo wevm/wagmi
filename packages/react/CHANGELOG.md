@@ -1,5 +1,11 @@
 # wagmi
 
+## 2.12.24
+
+### Patch Changes
+
+- [`a4c5389c1a299bd7acf9df4a0d607e2ced709280`](https://github.com/wevm/wagmi/commit/a4c5389c1a299bd7acf9df4a0d607e2ced709280) Thanks [@jxom](https://github.com/jxom)! - Exported `Transport` type (for inference).
+
 ## 2.12.23
 
 ### Patch Changes
