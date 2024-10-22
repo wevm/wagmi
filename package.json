@@ -99,8 +99,7 @@
         "ignore": ["test/{constants,setup,utils}.ts"]
       },
       "packages/connectors": {
-        "entry": "src/exports/index.ts!",
-        "ignoreDependencies": ["@walletconnect/modal"]
+        "entry": "src/exports/index.ts!"
       },
       "packages/core": {
         "entry": "src/exports/{actions,chains,codegen,experimental,index,internal,query}.ts!",
