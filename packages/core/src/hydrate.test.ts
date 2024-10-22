@@ -1,15 +1,15 @@
 import { accounts, config, wait } from '@wagmi/test'
+import type { EIP1193Provider } from 'mipd'
 import { http } from 'viem'
 import { mainnet } from 'viem/chains'
 import { expect, test, vi } from 'vitest'
-import type { EIP1193Provider } from 'mipd'
 
+import { createConnector } from './connectors/createConnector.js'
+import { mock } from './connectors/mock.js'
 import { createConfig } from './createConfig.js'
 import { createStorage } from './createStorage.js'
 import { hydrate } from './hydrate.js'
 import { cookieStorage } from './utils/cookie.js'
-import { createConnector } from './connectors/createConnector.js'
-import { mock } from './connectors/mock.js'
 
 vi.mock(import('mipd'), async (importOriginal) => {
   const mod = await importOriginal()
