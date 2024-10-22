@@ -9,6 +9,7 @@ const alias = {
   '@wagmi/core': path.resolve(__dirname, './packages/core/src/exports'),
   '@wagmi/test': path.resolve(__dirname, './packages/test/src/exports'),
   '@wagmi/vue': path.resolve(__dirname, './packages/vue/src/exports'),
+  '@wagmi/svelte': path.resolve(__dirname, './packages/svelte/src/exports'),
   wagmi: path.resolve(__dirname, './packages/react/src/exports'),
 }
 
@@ -67,6 +68,15 @@ export default defineWorkspace([
       setupFiles: ['./packages/vue/test/setup.ts'],
     },
     resolve: { alias },
+  },
+  {
+    test: {
+      name: '@wagmi/svelte',
+      include: ['./packages/svelte/src/**/*.test.ts'],
+      environment: 'happy-dom',
+      testTimeout: 10_000,
+      setupFiles: ['./packages/svelte/test/setup.ts'],
+    },
   },
   {
     test: {
