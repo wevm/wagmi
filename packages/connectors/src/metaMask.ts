@@ -1,6 +1,7 @@
 import type {
   MetaMaskSDK,
   MetaMaskSDKOptions,
+  RPC_URLS_MAP,
   SDKProvider,
 } from '@metamask/sdk'
 import {
@@ -250,15 +251,15 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           injectProvider: false,
           // Workaround cast since MetaMask SDK does not support `'exactOptionalPropertyTypes'`
           ...(parameters as RemoveUndefined<typeof parameters>),
-          readonlyRPCMap: Object.fromEntries(
-            config.chains.map((chain) => {
-              const [url] = extractRpcUrls({
-                chain,
-                transports: config.transports,
-              })
-              return [chain.id, url]
-            }),
-          ),
+          readonlyRPCMap: config.chains.reduce<RPC_URLS_MAP>((map, chain) => {
+            const [url] = extractRpcUrls({
+              chain,
+              transports: config.transports,
+            })
+            map[`0x${chain.id.toString(16)}`] = url
+
+            return map
+          }, {}),
           dappMetadata:
             parameters.dappMetadata ??
             (typeof window !== 'undefined'
