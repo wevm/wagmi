@@ -11,7 +11,10 @@
     "lineWidth": 80
   },
   "linter": {
-    "ignore": ["packages/create-wagmi/templates/*"],
+    "ignore": [
+      "packages/create-wagmi/templates/*",
+      "packages/svelte/**/*.svelte"
+    ],
     "enabled": true,
     "rules": {
       "recommended": true,
