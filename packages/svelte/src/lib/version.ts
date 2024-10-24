@@ -1,1 +1,1 @@
-export const getVersion = () => __VERSION__
+export const getVersion = () => `@wagmi/svelte@${__VERSION__}`
