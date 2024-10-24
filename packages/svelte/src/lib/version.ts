@@ -1,3 +1,1 @@
-import { version } from '../../package.json'
-
-export const getVersion = () => `@wagmi/svelte@${version}`
+export const getVersion = () => __VERSION__

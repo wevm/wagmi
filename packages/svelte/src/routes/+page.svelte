@@ -1,3 +1,7 @@
-<h1>Welcome to your library project</h1>
-<p>Create your package using @sveltejs/package and preview/showcase your work with SvelteKit</p>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<script lang="ts">
+import { useConfig } from '$lib/hooks/useConfig.svelte.js'
+
+const config = $derived.by(useConfig())
+</script>
+
+<pre>{JSON.stringify(config, null, 2)}</pre>

@@ -8,6 +8,8 @@ declare global {
     // interface PageState {}
     // interface Platform {}
   }
+
+  const __VERSION__: string
 }
 
 export {}

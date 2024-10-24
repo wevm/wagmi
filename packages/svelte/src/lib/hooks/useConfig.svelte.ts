@@ -7,7 +7,7 @@ import type { ConfigParameter } from '$lib/types.js'
 export type UseConfigParameters<config extends Config = Config> =
   ConfigParameter<config>
 
-export type UseConfigReturnType<config extends Config = Config> = config
+export type UseConfigReturnType<config extends Config = Config> = () => config
 
 /** https://wagmi.sh/react/api/hooks/useConfig */
 export function useConfig<config extends Config = ResolvedRegister['config']>(
@@ -16,5 +16,5 @@ export function useConfig<config extends Config = ResolvedRegister['config']>(
   const config = parameters.config ?? getWagmiConfig()
   if (!config) throw new WagmiProviderNotFoundError()
 
-  return config as UseConfigReturnType<config>
+  return (() => config) as UseConfigReturnType<config>
 }
