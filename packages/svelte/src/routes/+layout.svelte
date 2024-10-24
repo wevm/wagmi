@@ -16,5 +16,5 @@ const { children }: { children: Snippet } = $props()
 </script>
 
 <WagmiProvider {config}>
-    {@render children()}
+	{@render children()}
 </WagmiProvider>

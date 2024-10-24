@@ -71,15 +71,6 @@ export default defineWorkspace([
   },
   {
     test: {
-      name: '@wagmi/svelte',
-      include: ['./packages/svelte/src/**/*.test.ts'],
-      environment: 'happy-dom',
-      testTimeout: 10_000,
-      setupFiles: ['./packages/svelte/test/setup.ts'],
-    },
-  },
-  {
-    test: {
       name: 'react-register',
       include: ['./packages/register-tests/react/src/**/*.test.ts'],
     },
