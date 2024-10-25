@@ -1,3 +1,4 @@
+import { QueryClient } from '@tanstack/svelte-query'
 import { config } from '@wagmi/test'
 import { onTestFinished, vi } from 'vitest'
 
@@ -8,12 +9,19 @@ type TestHookOptions = {
 export const testHook =
   (fn: () => void, options: TestHookOptions = {}) =>
   async () => {
-    if (options.shouldMockConfig ?? true) {
-      const svelte = await import('svelte')
-      svelte.getContext = vi.fn().mockReturnValue(config)
-    }
+    const svelte = await import('svelte')
+    svelte.getContext = vi.fn((key: any) => {
+      if (key === '$$_queryClient') return new QueryClient()
+      if (key === '$$_isRestoring') return () => false
 
-    const cleanup = $effect.root(fn)
+      if (options.shouldMockConfig ?? true) {
+        return config
+      }
+
+      return undefined
+    })
+
+    const cleanup = $effect.root(await fn)
 
     onTestFinished(() => cleanup())
   }

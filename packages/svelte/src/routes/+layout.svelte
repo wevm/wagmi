@@ -1,5 +1,6 @@
 <script lang="ts">
 import WagmiProvider from '$lib/WagmiProvider.svelte'
+import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query'
 import { http, createConfig } from '@wagmi/core'
 import { mainnet, sepolia } from '@wagmi/core/chains'
 import type { Snippet } from 'svelte'
@@ -7,14 +8,18 @@ import type { Snippet } from 'svelte'
 const config = createConfig({
   chains: [mainnet, sepolia],
   transports: {
-    [mainnet.id]: http(),
+    [mainnet.id]: http('https://rpc.ankr.com/eth'),
     [sepolia.id]: http(),
   },
 })
 
 const { children }: { children: Snippet } = $props()
+
+const queryClient = new QueryClient()
 </script>
 
 <WagmiProvider {config}>
-	{@render children()}
+  <QueryClientProvider client={queryClient}>
+	  {@render children()}
+  </QueryClientProvider>
 </WagmiProvider>

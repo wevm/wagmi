@@ -26,6 +26,7 @@
     }
   },
   "peerDependencies": {
+    "@tanstack/svelte-query": "https://pkg.pr.new/@tanstack/svelte-query@ccce0b8",
     "svelte": "^5.0.0"
   },
   "devDependencies": {
@@ -33,6 +34,7 @@
     "@sveltejs/kit": "^2.0.0",
     "@sveltejs/package": "^2.0.0",
     "@sveltejs/vite-plugin-svelte": "^4.0.0",
+    "@tanstack/svelte-query": "https://pkg.pr.new/@tanstack/svelte-query@ccce0b8",
     "@types/eslint": "^9.6.0",
     "@wagmi/test": "workspace:^",
     "eslint": "^9.7.0",
