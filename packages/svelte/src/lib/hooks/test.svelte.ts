@@ -1,5 +1,5 @@
 import { config } from '@wagmi/test'
-import {onTestFinished, vi} from 'vitest'
+import { onTestFinished, vi } from 'vitest'
 
 type TestHookOptions = {
   shouldMockConfig?: boolean
