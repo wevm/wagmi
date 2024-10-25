@@ -1,5 +1,5 @@
 import { config } from '@wagmi/test'
-import { vi } from 'vitest'
+import {onTestFinished, vi} from 'vitest'
 
 type TestHookOptions = {
   shouldMockConfig?: boolean
@@ -15,5 +15,5 @@ export const testHook =
 
     const cleanup = $effect.root(fn)
 
-    cleanup()
+    onTestFinished(() => cleanup())
   }
