@@ -9,3 +9,7 @@ export const readParameters = <T>(parameter: RuneParameters<T>): T =>
 export type ConfigParameter<config extends Config = Config> = {
   config?: Config | config | undefined
 }
+
+export type EnabledParameter = {
+  enabled?: boolean | undefined
+}
