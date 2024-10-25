@@ -7,11 +7,11 @@ test(
   'default',
   testHook(async () => {
     const blockNumbers: bigint[] = []
-    useWatchBlockNumber({
+    useWatchBlockNumber(() => ({
       onBlockNumber(blockNumber) {
         blockNumbers.push(blockNumber)
       },
-    })
+    }))
 
     await testClient.mainnet.mine({ blocks: 1 })
     await wait(100)

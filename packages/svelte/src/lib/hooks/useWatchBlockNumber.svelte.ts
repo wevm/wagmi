@@ -8,17 +8,16 @@ import type { UnionCompute, UnionExactPartial } from '@wagmi/core/internal'
 
 import { useChainId } from '$lib/hooks/useChainId.svelte.js'
 import { useConfig } from '$lib/hooks/useConfig.svelte.js'
-import {
-  type ConfigParameter,
-  type EnabledParameter,
-  type RuneParameters,
-  readParameters,
+import type {
+  ConfigParameter,
+  EnabledParameter,
+  RuneParameters,
 } from '$lib/types.js'
 
 export type UseWatchBlockNumberParameters<
   config extends Config = Config,
   chainId extends
-    tconfig['chains'][number]['id'] = config['chains'][number]['id'],
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 > = RuneParameters<
   UnionCompute<
     UnionExactPartial<WatchBlockNumberParameters<config, chainId>> &
@@ -35,14 +34,15 @@ export function useWatchBlockNumber<
   chainId extends
     config['chains'][number]['id'] = config['chains'][number]['id'],
 >(
-  parameters: UseWatchBlockNumberParameters<config, chainId> = {} as any,
+  parameters: UseWatchBlockNumberParameters<config, chainId> = () =>
+    ({}) as any,
 ): UseWatchBlockNumberReturnType {
   const {
     enabled = true,
     onBlockNumber,
     config: _,
     ...rest
-  } = $derived(readParameters(parameters))
+  } = $derived(parameters())
 
   const config = $derived.by(useConfig(parameters))
   const configChainId = $derived.by(useChainId(parameters))

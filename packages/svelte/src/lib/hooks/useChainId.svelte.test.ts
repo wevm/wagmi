@@ -22,7 +22,7 @@ test(
   'parameters: config',
   testHook(
     () => {
-      const chainId = $derived.by(useChainId({ config }))
+      const chainId = $derived.by(useChainId(() => ({ config })))
       expect(chainId).toBeDefined()
     },
     { shouldMockConfig: false },
