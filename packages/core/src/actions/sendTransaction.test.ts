@@ -15,7 +15,13 @@ beforeEach(async () => {
 })
 
 test('default', async () => {
-  await connect(config, { connector })
+  const result = await connect(config, { connector })
+  config.state.connections.set(connector.uid, {
+    ...result,
+    // Switch up the current account because the default one is running out of funds somewhere
+    accounts: result.accounts.slice(1) as unknown as typeof result.accounts,
+    connector,
+  })
   await expect(
     sendTransaction(config, {
       to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',

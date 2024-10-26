@@ -434,6 +434,7 @@ export {
   http,
   webSocket,
   unstable_connector,
+  type Transport,
   // Types
   type Register,
   type ResolvedRegister,

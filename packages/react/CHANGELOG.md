@@ -1,5 +1,18 @@
 # wagmi
 
+## 2.12.25
+
+### Patch Changes
+
+- Updated dependencies [[`83c6d16b7d6dddfa6bda036e04f00ec313c6248c`](https://github.com/wevm/wagmi/commit/83c6d16b7d6dddfa6bda036e04f00ec313c6248c)]:
+  - @wagmi/connectors@5.3.3
+
+## 2.12.24
+
+### Patch Changes
+
+- [`a4c5389c1a299bd7acf9df4a0d607e2ced709280`](https://github.com/wevm/wagmi/commit/a4c5389c1a299bd7acf9df4a0d607e2ced709280) Thanks [@jxom](https://github.com/jxom)! - Exported `Transport` type (for inference).
+
 ## 2.12.23
 
 ### Patch Changes

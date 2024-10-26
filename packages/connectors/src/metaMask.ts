@@ -1,6 +1,7 @@
 import type {
   MetaMaskSDK,
   MetaMaskSDKOptions,
+  RPC_URLS_MAP,
   SDKProvider,
 } from '@metamask/sdk'
 import {
@@ -243,6 +244,13 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           return SDK as unknown as typeof SDK.default
         })()
 
+        const readonlyRPCMap: RPC_URLS_MAP = {}
+        for (const chain of config.chains)
+          readonlyRPCMap[numberToHex(chain.id)] = extractRpcUrls({
+            chain,
+            transports: config.transports,
+          })?.[0]
+
         sdk = new MetaMaskSDK({
           _source: 'wagmi',
           forceDeleteProvider: false,
@@ -250,15 +258,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           injectProvider: false,
           // Workaround cast since MetaMask SDK does not support `'exactOptionalPropertyTypes'`
           ...(parameters as RemoveUndefined<typeof parameters>),
-          readonlyRPCMap: Object.fromEntries(
-            config.chains.map((chain) => {
-              const [url] = extractRpcUrls({
-                chain,
-                transports: config.transports,
-              })
-              return [chain.id, url]
-            }),
-          ),
+          readonlyRPCMap,
           dappMetadata:
             parameters.dappMetadata ??
             (typeof window !== 'undefined'

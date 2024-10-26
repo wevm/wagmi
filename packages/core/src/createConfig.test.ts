@@ -17,6 +17,29 @@ import { createStorage } from './createStorage.js'
 
 const { mainnet, optimism } = chain
 
+vi.mock(import('mipd'), async (importOriginal) => {
+  const mod = await importOriginal()
+
+  let cache: typeof mod | undefined
+  if (!cache)
+    cache = {
+      ...mod,
+      createStore() {
+        const store = mod.createStore()
+        return {
+          ...store,
+          getProviders() {
+            return [
+              getProviderDetail({ name: 'Example', rdns: 'com.example' }),
+              getProviderDetail({ name: 'Mock', rdns: 'com.mock' }),
+            ]
+          },
+        }
+      },
+    }
+  return cache
+})
+
 test('default', () => {
   const config = createConfig({
     chains: [mainnet],
@@ -412,26 +435,3 @@ function getProviderDetail(
     provider: `<EIP1193Provider_${info.rdns}>` as unknown as EIP1193Provider,
   }
 }
-
-vi.mock(import('mipd'), async (importOriginal) => {
-  const mod = await importOriginal()
-
-  let _cache: typeof mod | undefined
-  if (!_cache)
-    _cache = {
-      ...mod,
-      createStore() {
-        const store = mod.createStore()
-        return {
-          ...store,
-          getProviders() {
-            return [
-              getProviderDetail({ name: 'Example', rdns: 'com.example' }),
-              getProviderDetail({ name: 'Mock', rdns: 'com.mock' }),
-            ]
-          },
-        }
-      },
-    }
-  return _cache
-})

@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 5.3.3
+
+### Patch Changes
+
+- [#4362](https://github.com/wevm/wagmi/pull/4362) [`83c6d16b7d6dddfa6bda036e04f00ec313c6248c`](https://github.com/wevm/wagmi/commit/83c6d16b7d6dddfa6bda036e04f00ec313c6248c) Thanks [@EdouardBougon](https://github.com/EdouardBougon)! - Fixed MetaMask connector internal logic.
+
 ## 5.3.2
 
 ### Patch Changes
