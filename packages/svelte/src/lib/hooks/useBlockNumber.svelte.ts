@@ -1,8 +1,4 @@
-import {
-  type CreateQueryResult,
-  createQuery,
-  useQueryClient,
-} from '@tanstack/svelte-query'
+import { useQueryClient } from '@tanstack/svelte-query'
 import type {
   Config,
   GetBlockNumberErrorType,
@@ -27,6 +23,7 @@ import {
   type UseWatchBlockNumberParameters,
   useWatchBlockNumber,
 } from '$lib/hooks/useWatchBlockNumber.svelte.js'
+import { type CreateQueryReturnType, createQuery } from '$lib/query.svelte.js'
 import type {
   ConfigParameter,
   QueryParameter,
@@ -63,7 +60,7 @@ export type UseBlockNumberParameters<
 >
 
 export type UseBlockNumberReturnType<selectData = GetBlockNumberData> =
-  RuneReturnType<CreateQueryResult<selectData, GetBlockNumberErrorType>>
+  RuneReturnType<CreateQueryReturnType<selectData, GetBlockNumberErrorType>>
 
 /** https://wagmi.sh/react/api/hooks/useBlockNumber */
 export function useBlockNumber<
@@ -107,7 +104,5 @@ export function useBlockNumber<
     },
   }))
 
-  const queryFn = createQuery(() => ({ ...query, ...options }))
-
-  return () => queryFn
+  return createQuery(() => ({ ...query, ...options }))
 }
