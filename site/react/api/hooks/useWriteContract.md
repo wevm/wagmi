@@ -104,6 +104,7 @@ import { type UseWriteContractReturnType } from 'wagmi'
 The return type's [`data`](#data) property is inferrable via the combination of [`abi`](#abi), [`functionName`](#functionname), and [`args`](#args). Check out the [TypeScript docs](/react/typescript#const-assert-abis-typed-data) for more info.
 
 <!--@include: @shared/mutation-result.md-->
+<!--@include: @shared/mutation-result-example.md-->
 
 ## Type Inference
 

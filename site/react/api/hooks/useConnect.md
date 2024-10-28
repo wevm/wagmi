@@ -105,6 +105,7 @@ function App() {
 :::
 
 <!--@include: @shared/mutation-result.md-->
+<!--@include: @shared/mutation-result-example.md-->
 
 ::: tip
 Not all connectors support connecting directly to a `chainId` (e.g. they don't support programmatic chain switching). In those cases, the connector will connect to whatever chain the connector's provider (e.g. wallet) is connected to.
