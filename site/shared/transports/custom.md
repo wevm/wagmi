@@ -14,7 +14,8 @@ import { custom } from '{{packageName}}'
 
 ## Usage
 
-```ts-vue
+:::code-group
+```ts-vue [config.ts]
 import { 
   createConfig, 
   custom // [!code hl]
@@ -35,6 +36,37 @@ export const config = createConfig({
   },
 })
 ```
+:::
+### Example: Conditional RPCs
+:::code-group
+```ts-vue [customRpc.ts]
+import { http, custom } from "viem";
+const rpc1 = http(`https://rpc1.url`)({});
+const rpc2 = http(`https://rpc2.url`)({});
+
+export const combinedTransport = custom({
+	request: (request) => {
+		return request.method === "eth_sendRawTransaction"
+			? rpc1(request)
+			: rpc2(request);
+	},
+});
+```
+```ts-vue [config.ts]
+import { createConfig } from "@wagmi/core";
+import { mainnet } from "@wagmi/core/chains";
+import { combinedTransport } from "./customRpc.ts";
+import { injected } from "@wagmi/connectors";
+
+export const config = createConfig({
+	chains: [mainnet],
+	connectors: [injected()],
+	transports: {
+		[mainnet.id]: combinedTransport,
+	},
+});
+```
+:::
 
 ## Parameters
 
