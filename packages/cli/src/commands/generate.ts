@@ -1,7 +1,7 @@
 import type { Abi } from 'abitype'
 import { Abi as AbiSchema } from 'abitype/zod'
 import { camelCase } from 'change-case'
-import type { FSWatcher, ChokidarOptions } from 'chokidar'
+import type { ChokidarOptions, FSWatcher } from 'chokidar'
 import { watch } from 'chokidar'
 import { default as dedent } from 'dedent'
 import { default as fs } from 'fs-extra'
