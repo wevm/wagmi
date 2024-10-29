@@ -1,4 +1,5 @@
 <script lang="ts">
+import './index.css'
 import WagmiProvider from '$lib/WagmiProvider.svelte'
 import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query'
 import { http, createConfig } from '@wagmi/core'
@@ -19,7 +20,7 @@ const queryClient = new QueryClient()
 </script>
 
 <WagmiProvider {config}>
-  <QueryClientProvider client={queryClient}>
-	  {@render children()}
-  </QueryClientProvider>
+	<QueryClientProvider client={queryClient}>
+		{@render children()}
+	</QueryClientProvider>
 </WagmiProvider>

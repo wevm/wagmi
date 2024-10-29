@@ -52,6 +52,7 @@
     "vitest": "^2.0.4"
   },
   "dependencies": {
+    "@wagmi/connectors": "workspace:^",
     "@wagmi/core": "workspace:^"
   }
 }

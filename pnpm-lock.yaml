@@ -296,6 +296,9 @@ importers:
 
   packages/svelte:
     dependencies:
+      '@wagmi/connectors':
+        specifier: workspace:^
+        version: link:../connectors
       '@wagmi/core':
         specifier: workspace:^
         version: link:../core

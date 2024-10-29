@@ -12,6 +12,6 @@ const { data: balance, isLoading } = $derived.by(
 </script>
 
 <div>
-    <h2>Read Contract</h2>
-    <div>Balance: {balance?.toString()} (isLoading: {isLoading})</div>
+	<h2>Read Contract</h2>
+	<div>Balance: {balance?.toString()} (isLoading: {isLoading})</div>
 </div>

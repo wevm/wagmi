@@ -1,12 +1,19 @@
 import type { RuneParameters, RuneReturnType } from '$lib/types.js'
 import {
+  type CreateMutationOptions,
+  type CreateMutationResult,
   type CreateQueryOptions,
   type CreateQueryResult,
   type DefaultError,
   type QueryKey,
+  createMutation,
   createQuery as tanstack_createQuery,
 } from '@tanstack/svelte-query'
-import type { Compute, ExactPartial } from '@wagmi/core/internal'
+import type {
+  Compute,
+  ExactPartial,
+  UnionStrictOmit,
+} from '@wagmi/core/internal'
 import { hashFn } from '@wagmi/core/query'
 
 export type CreateQueryParameters<
@@ -56,3 +63,29 @@ export function createQuery<
   })
   return () => resultWithQueryKey
 }
+
+export type CreateMutationParameters<
+  data = unknown,
+  error = Error,
+  variables = void,
+  context = unknown,
+> = Compute<
+  Omit<
+    CreateMutationOptions<data, error, Compute<variables>, context>,
+    'mutationFn' | 'mutationKey' | 'throwOnError'
+  >
+>
+
+export type CreateMutationReturnType<
+  data = unknown,
+  error = Error,
+  variables = void,
+  context = unknown,
+> = Compute<
+  UnionStrictOmit<
+    CreateMutationResult<data, error, variables, context>,
+    'mutate' | 'mutateAsync'
+  >
+>
+
+export { createMutation }
