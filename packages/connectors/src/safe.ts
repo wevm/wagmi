@@ -101,11 +101,14 @@ export function safe(parameters: SafeParameters = {}) {
         // Unwrapping import for Vite compatibility.
         // See: https://github.com/vitejs/vite/issues/9703
         const SafeAppProvider = await (async () => {
-          const providerImport = await import('@safe-global/safe-apps-provider');
-          if (typeof providerImport.SafeAppProvider !== 'function' && typeof providerImport.default.SafeAppProvider === 'function')
+          const providerImport = await import('@safe-global/safe-apps-provider')
+          if (
+            typeof providerImport.SafeAppProvider !== 'function' &&
+            typeof providerImport.default.SafeAppProvider === 'function'
+          )
             return providerImport.default.SafeAppProvider
           return providerImport.SafeAppProvider
-        })();
+        })()
         provider_ = new SafeAppProvider(safe, sdk)
       }
       return provider_
