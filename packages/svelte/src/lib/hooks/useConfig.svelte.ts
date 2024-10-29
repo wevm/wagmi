@@ -1,9 +1,4 @@
-import {
-  http,
-  type Config,
-  type ResolvedRegister,
-  createConfig,
-} from '@wagmi/core'
+import type { Config, ResolvedRegister } from '@wagmi/core'
 
 import { getWagmiConfig } from '$lib/context.js'
 import { WagmiProviderNotFoundError } from '$lib/errors.js'
@@ -12,7 +7,6 @@ import type {
   RuneParameters,
   RuneReturnType,
 } from '$lib/types.js'
-import { mainnet, sepolia } from 'viem/chains'
 
 export type UseConfigParameters<config extends Config = Config> =
   RuneParameters<ConfigParameter<config>>
