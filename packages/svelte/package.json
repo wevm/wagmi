@@ -27,6 +27,7 @@
   },
   "peerDependencies": {
     "@tanstack/svelte-query": "https://pkg.pr.new/@tanstack/svelte-query@ccce0b8",
+    "viem": "2.x",
     "svelte": "^5.0.0"
   },
   "devDependencies": {
