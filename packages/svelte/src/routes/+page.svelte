@@ -5,11 +5,13 @@ import BlockNumber from './_components/BlockNumber.svelte'
 import Connect from './_components/Connect.svelte'
 import Connections from './_components/Connections.svelte'
 import ReadContract from './_components/ReadContract.svelte'
+import SwitchAccount from './_components/SwitchAccount.svelte'
 </script>
 
 <Account />
 <Balance />
 <BlockNumber />
 <Connect />
+<SwitchAccount />
 <Connections />
 <ReadContract />
