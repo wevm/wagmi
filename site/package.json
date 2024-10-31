@@ -15,6 +15,7 @@
     "@types/react": ">=18.3.1",
     "@wagmi/connectors": "workspace:*",
     "@wagmi/core": "workspace:*",
+    "@wagmi/svelte": "workspace:*",
     "@wagmi/vue": "workspace:*",
     "abitype": "*",
     "nuxt": "^3.11.2",

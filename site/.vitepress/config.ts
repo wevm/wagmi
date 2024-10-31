@@ -79,6 +79,7 @@ export default defineConfig({
     nav: [
       { text: 'React', link: '/react/getting-started' },
       { text: 'Vue', link: '/vue/getting-started' },
+      { text: 'Svelte', link: '/svelte/getting-started' },
       { text: 'Core', link: '/core/getting-started' },
       { text: 'CLI', link: '/cli/getting-started' },
       // { text: 'Examples', link: '/examples/connect-wallet' },
