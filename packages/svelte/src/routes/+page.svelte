@@ -8,6 +8,7 @@ import ReadContract from './_components/ReadContract.svelte'
 import SignMessage from './_components/SignMessage.svelte'
 import SwitchAccount from './_components/SwitchAccount.svelte'
 import SwitchChain from './_components/SwitchChain.svelte'
+import WriteContract from './_components/WriteContract.svelte'
 </script>
 
 <Account />
@@ -19,3 +20,4 @@ import SwitchChain from './_components/SwitchChain.svelte'
 <Connections />
 <ReadContract />
 <SignMessage />
+<WriteContract />
