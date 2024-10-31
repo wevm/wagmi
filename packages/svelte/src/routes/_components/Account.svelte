@@ -1,20 +1,22 @@
 <script lang="ts">
 import { useAccount } from '$lib/hooks/useAccount.svelte.js'
 import { useDisconnect } from '$lib/hooks/useDisconnect.svelte.js'
+import { useEnsName } from '$lib/hooks/useEnsName.svelte.js'
 
 const account = $derived.by(useAccount())
 const { disconnect } = $derived.by(useDisconnect())
-// const { data: ensName } = $derived.by(useEnsName({
-//   address: account.address,
-// }))
+const { data: ensName } = $derived.by(
+  useEnsName(() => ({
+    address: account.address,
+  })),
+)
 </script>
 
   <div>
     <h2>Account</h2>
 
     <div>
-      account: {account.address}
-      <!-- {ensName} -->
+      account: {account.address} {ensName}
       <br />
       chainId: {account.chainId}
       <br />
