@@ -14,10 +14,10 @@ function handleSubmit(event: SubmitEvent) {
 <h2>Sign Message</h2>
 
 <form onsubmit={handleSubmit}>
-    <input name="message" />
-    <button type="submit">Sign Message</button>
+	<input name="message" />
+	<button type="submit">Sign Message</button>
 </form>
 
 {#if data}
-    {data}
+	{data}
 {/if}

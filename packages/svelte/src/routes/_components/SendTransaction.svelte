@@ -25,32 +25,26 @@ const { isLoading: isConfirming, isSuccess: isConfirmed } = $derived.by(
   })),
 )
 </script>
-  
+
 <div>
-<h2>Send Transaction</h2>
-<form onsubmit={submit}>
-    <input name="address" placeholder="Address" required />
-    <input
-    name="value"
-    placeholder="Amount (ETH)"
-    type="number"
-    step="0.000000001"
-    required
-    />
-    <button disabled={isPending} type="submit">
-    {isPending ? 'Confirming...' : 'Send'}
-    </button>
-</form>
-{#if hash}
-    <div>Transaction Hash: {hash}</div>
-{/if}
-{#if isConfirming}
-    Waiting for confirmation...
-{/if}
-{#if isConfirmed}
-    Transaction confirmed.
-{/if}
-{#if error}
-    <div>Error: {(error as BaseError).shortMessage || error.message}</div>
-{/if}
+	<h2>Send Transaction</h2>
+	<form onsubmit={submit}>
+		<input name="address" placeholder="Address" required />
+		<input name="value" placeholder="Amount (ETH)" type="number" step="0.000000001" required />
+		<button disabled={isPending} type="submit">
+			{isPending ? 'Confirming...' : 'Send'}
+		</button>
+	</form>
+	{#if hash}
+		<div>Transaction Hash: {hash}</div>
+	{/if}
+	{#if isConfirming}
+		Waiting for confirmation...
+	{/if}
+	{#if isConfirmed}
+		Transaction confirmed.
+	{/if}
+	{#if error}
+		<div>Error: {(error as BaseError).shortMessage || error.message}</div>
+	{/if}
 </div>

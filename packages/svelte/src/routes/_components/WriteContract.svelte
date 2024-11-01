@@ -31,25 +31,25 @@ const { isLoading: isConfirming, isSuccess: isConfirmed } = $derived.by(
 
 <h2>Write Contract</h2>
 <form onsubmit={submit}>
-    <input name="tokenId" placeholder="Token ID" required />
-    <button disabled={isPending} type="submit">
-        {#if isPending}
-            Confirming...
-        {:else}
-            Mint
-        {/if}
-    </button>
+	<input name="tokenId" placeholder="Token ID" required />
+	<button disabled={isPending} type="submit">
+		{#if isPending}
+			Confirming...
+		{:else}
+			Mint
+		{/if}
+	</button>
 </form>
 
 {#if hash}
-    <div>Transaction Hash: {hash}</div>
+	<div>Transaction Hash: {hash}</div>
 {/if}
 {#if isConfirming}
-    Waiting for confirmation...
+	Waiting for confirmation...
 {/if}
 {#if isConfirmed}
-    Transaction confirmed.
+	Transaction confirmed.
 {/if}
 {#if error}
-    <div>Error: {error.shortMessage || error.message}</div>
+	<div>Error: {error.shortMessage || error.message}</div>
 {/if}

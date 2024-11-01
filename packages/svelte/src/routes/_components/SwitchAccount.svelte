@@ -9,11 +9,11 @@ const { connectors, switchAccount } = $derived.by(useSwitchAccount())
 <h2>Switch Account</h2>
 
 {#each connectors as connector}
-    <button
-        disabled={account.connector?.uid === connector.uid}
-        onclick={() => switchAccount({ connector })}
-        type="button"
-    >
-        {connector.name}
-    </button>
+	<button
+		disabled={account.connector?.uid === connector.uid}
+		onclick={() => switchAccount({ connector })}
+		type="button"
+	>
+		{connector.name}
+	</button>
 {/each}

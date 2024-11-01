@@ -17,18 +17,18 @@ const { data: optimism_ } = $derived.by(
 </script>
 
 <div>
-    <h2>Balance</h2>
+	<h2>Balance</h2>
 
-    <div>
-        Balance (Default Chain):
-        {#if !!default_?.value}{formatEther(default_.value)}{/if}
-    </div>
-    <div>
-        Balance (Account Chain):
-        {#if !!account_?.value}{formatEther(account_.value)}{/if}
-    </div>
-    <div>
-        Balance (Optimism Chain):
-        {#if !!optimism_?.value}{formatEther(optimism_.value)}{/if}
-    </div>
+	<div>
+		Balance (Default Chain):
+		{#if !!default_?.value}{formatEther(default_.value)}{/if}
+	</div>
+	<div>
+		Balance (Account Chain):
+		{#if !!account_?.value}{formatEther(account_.value)}{/if}
+	</div>
+	<div>
+		Balance (Optimism Chain):
+		{#if !!optimism_?.value}{formatEther(optimism_.value)}{/if}
+	</div>
 </div>

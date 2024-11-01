@@ -12,20 +12,19 @@ const { data: ensName } = $derived.by(
 )
 </script>
 
-  <div>
-    <h2>Account</h2>
+<div>
+	<h2>Account</h2>
 
-    <div>
-      account: {account.address} {ensName}
-      <br />
-      chainId: {account.chainId}
-      <br />
-      status: {account.status}
-    </div>
+	<div>
+		account: {account.address}
+		{ensName}
+		<br />
+		chainId: {account.chainId}
+		<br />
+		status: {account.status}
+	</div>
 
-    {#if account.status !== 'disconnected'}
-      <button type="button" onclick={() => disconnect()}>
-        Disconnect
-      </button>
-    {/if}
-  </div>
+	{#if account.status !== 'disconnected'}
+		<button type="button" onclick={() => disconnect()}> Disconnect </button>
+	{/if}
+</div>

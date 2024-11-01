@@ -9,15 +9,15 @@ const { chains, switchChain, error } = $derived.by(useSwitchChain())
 <h2>Switch Chain</h2>
 
 {#each chains as chain}
-    <button
-        disabled={chainId === chain.id}
-        onclick={() => switchChain({ chainId: chain.id })}
-        type="button"
-    >
-        {chain.name}
-    </button>
+	<button
+		disabled={chainId === chain.id}
+		onclick={() => switchChain({ chainId: chain.id })}
+		type="button"
+	>
+		{chain.name}
+	</button>
 {/each}
 
 {#if error}
-    {error.message}
+	{error.message}
 {/if}
