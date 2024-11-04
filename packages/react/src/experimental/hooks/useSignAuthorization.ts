@@ -20,7 +20,7 @@ import type {
 } from '../../utils/query.js'
 
 export type UseSignAuthorizationParameters<
-config extends Config = Config,
+  config extends Config = Config,
   context = unknown,
 > = Compute<
   ConfigParameter<config> & {
@@ -33,11 +33,9 @@ config extends Config = Config,
         >
       | undefined
   }
-  >
+>
 
-export type UseSignAuthorizationReturnType<
-  context = unknown,
-> = Compute<
+export type UseSignAuthorizationReturnType<context = unknown> = Compute<
   UseMutationReturnType<
     SignAuthorizationData,
     SignAuthorizationErrorType,
@@ -47,21 +45,21 @@ export type UseSignAuthorizationReturnType<
     signAuthorization: SignAuthorizationMutate<context>
     signAuthorizationAsync: SignAuthorizationMutateAsync<context>
   }
-  >
+>
 
-  /** https://wagmi.sh/react/api/hooks/useSignAuthorization */
-  export function useSignAuthorization<
+/** https://wagmi.sh/react/api/hooks/useSignAuthorization */
+export function useSignAuthorization<
   config extends Config = ResolvedRegister['config'],
   context = unknown,
 >(
   parameters: UseSignAuthorizationParameters<config, context> = {},
 ): UseSignAuthorizationReturnType<context> {
-  const {mutation} = parameters
+  const { mutation } = parameters
 
   const config = useConfig(parameters)
 
   const mutationOptions = signAuthorizationMutationOptions(config)
-  const {mutate,mutateAsync, ...result} = useMutation({
+  const { mutate, mutateAsync, ...result } = useMutation({
     ...mutation,
     ...mutationOptions,
   })

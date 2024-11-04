@@ -6,12 +6,12 @@ import {
   signAuthorization as viem_signAuthorization,
 } from 'viem/experimental'
 
-import type { Config } from '../../createConfig.js'
-import type { BaseErrorType, ErrorType } from '../../errors/base.js'
 import {
   type GetConnectorClientErrorType,
   getConnectorClient,
 } from '../../actions/getConnectorClient.js'
+import type { Config } from '../../createConfig.js'
+import type { BaseErrorType, ErrorType } from '../../errors/base.js'
 import type { ConnectorParameter } from '../../types/properties.js'
 import type { Compute } from '../../types/utils.js'
 

@@ -995,7 +995,7 @@ export function getSidebar() {
             text: 'sendCalls',
             link: '/core/api/actions/sendCalls',
           },
-           {
+          {
             text: 'signAuthorization',
             link: '/core/api/actions/signAuthorization',
           },

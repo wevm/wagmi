@@ -1,10 +1,10 @@
-import { address, config,privateKey } from '@wagmi/test'
+import { address, config, privateKey } from '@wagmi/test'
 import { expect, test } from 'vitest'
 
+import { privateKeyToAccount } from 'viem/accounts'
 import { connect } from '../../actions/connect.js'
 import { disconnect } from '../../actions/disconnect.js'
 import { signAuthorization } from './signAuthorization.js'
-import { privateKeyToAccount } from 'viem/accounts'
 
 const account = privateKeyToAccount(privateKey)
 const connector = config.connectors[0]!
@@ -28,8 +28,9 @@ test('default', async () => {
   "s": "0x17318a10ff56f0000a350a210fdb312ba22260a64f38dddc135912a6c4795c1d",
   "v": 27n,
   "yParity": 0,
-}`)
-await disconnect(config, { connector })
+}`,
+  )
+  await disconnect(config, { connector })
 })
 
 test('behavior: not connected', async () => {
@@ -63,5 +64,5 @@ test('behavior: unsupported account type', async () => {
     Docs: https://viem.sh/experimental/eip7702/signAuthorization
     Version: viem@2.21.40]
   `)
-await disconnect(config, { connector })
+  await disconnect(config, { connector })
 })

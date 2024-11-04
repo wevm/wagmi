@@ -1,8 +1,8 @@
 import { connect, disconnect } from '@wagmi/core'
-import { address, config,privateKey } from '@wagmi/test'
+import { address, config, privateKey } from '@wagmi/test'
 import { renderHook, waitFor } from '@wagmi/test/react'
-import { expect, test } from 'vitest'
 import { privateKeyToAccount } from 'viem/accounts'
+import { expect, test } from 'vitest'
 
 import { useSignAuthorization } from './useSignAuthorization.js'
 
@@ -15,10 +15,10 @@ test('default', async () => {
   const { result } = renderHook(() => useSignAuthorization())
 
   result.current.signAuthorization({
-      account,
-      contractAddress: address.wagmiMintExample,
-      chainId: config.chains[0].id,
-      nonce: 0,
+    account,
+    contractAddress: address.wagmiMintExample,
+    chainId: config.chains[0].id,
+    nonce: 0,
   })
   await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
@@ -32,7 +32,8 @@ test('default', async () => {
   "s": "0x17318a10ff56f0000a350a210fdb312ba22260a64f38dddc135912a6c4795c1d",
   "v": 27n,
   "yParity": 0,
-}`)
+}`,
+  )
 
   await disconnect(config, { connector })
 })

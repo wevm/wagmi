@@ -9,9 +9,7 @@ import {
   signAuthorization,
 } from '../actions/signAuthorization.js'
 
-export function signAuthorizationMutationOptions(
-  config: Config,
-){
+export function signAuthorizationMutationOptions(config: Config) {
   return {
     mutationFn(variables) {
       return signAuthorization(config, variables)
@@ -28,7 +26,7 @@ export type SignAuthorizationData = SignAuthorizationReturnType
 
 export type SignAuthorizationVariables = SignAuthorizationParameters
 
-export type SignAuthorizationMutate<context = unknown> =(
+export type SignAuthorizationMutate<context = unknown> = (
   variables: SignAuthorizationVariables,
   options?:
     | Compute<
@@ -42,7 +40,7 @@ export type SignAuthorizationMutate<context = unknown> =(
     | undefined,
 ) => void
 
-export type SignAuthorizationMutateAsync<context = unknown> =(
+export type SignAuthorizationMutateAsync<context = unknown> = (
   variables: SignAuthorizationVariables,
   options?:
     | Compute<
