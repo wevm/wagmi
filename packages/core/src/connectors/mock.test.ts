@@ -16,7 +16,7 @@ test('behavior: features.connectError', () => {
     [UserRejectedRequestError: User rejected the request.
 
     Details: Failed to connect.
-    Version: 2.21.28]
+    Version: 2.21.40]
   `)
 })
 
@@ -44,7 +44,7 @@ test('behavior: connector.getProvider request errors', async () => {
     [UserRejectedRequestError: User rejected the request.
 
     Details: Failed to sign typed data.
-    Version: 2.21.28]
+    Version: 2.21.40]
   `)
 
   expect(
@@ -56,7 +56,7 @@ test('behavior: connector.getProvider request errors', async () => {
     [UserRejectedRequestError: User rejected the request.
 
     Details: Failed to switch chain.
-    Version: 2.21.28]
+    Version: 2.21.40]
   `)
 
   expect(
@@ -68,7 +68,7 @@ test('behavior: connector.getProvider request errors', async () => {
     [UserRejectedRequestError: User rejected the request.
 
     Details: Failed to switch chain.
-    Version: 2.21.28]
+    Version: 2.21.40]
   `)
 
   expect(
@@ -80,7 +80,7 @@ test('behavior: connector.getProvider request errors', async () => {
     [UserRejectedRequestError: User rejected the request.
 
     Details: Failed to sign message.
-    Version: 2.21.28]
+    Version: 2.21.40]
   `)
 })
 
