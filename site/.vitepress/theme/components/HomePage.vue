@@ -11,7 +11,8 @@ const teamMembers = [
     name: 'awkweb',
     links: [
       { icon: 'github', link: 'https://github.com/tmm' },
-      { icon: 'twitter', link: 'https://twitter.com/awkweb' },
+      { icon: 'bluesky', link: 'https://bsky.app/profile/awkweb.com' },
+      { icon: 'x', link: 'https://twitter.com/awkweb' },
     ],
   },
   {
@@ -19,7 +20,8 @@ const teamMembers = [
     name: 'jxom',
     links: [
       { icon: 'github', link: 'https://github.com/jxom' },
-      { icon: 'twitter', link: 'https://twitter.com/_jxom' },
+      { icon: 'bluesky', link: 'https://bsky.app/profile/jxom.dev' },
+      { icon: 'x', link: 'https://twitter.com/_jxom' },
     ],
   },
 ] satisfies DefaultTheme.TeamMember[]
