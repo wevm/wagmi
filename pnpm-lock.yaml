@@ -81,7 +81,7 @@ importers:
         specifier: ^5.4.4
         version: 5.4.4
       chokidar:
-        specifier: ^4.0.1
+        specifier: 4.0.1
         version: 4.0.1
       dedent:
         specifier: ^0.7.0
@@ -3511,7 +3511,6 @@ packages:
 
   bun@1.1.29:
     resolution: {integrity: sha512-SKhpyKNZtgxrVel9ec9xon3LDv8mgpiuFhARgcJo1YIbggY2PBrKHRNiwQ6Qlb+x3ivmRurfuwWgwGexjpgBRg==}
-    cpu: [arm64, x64]
     os: [darwin, linux, win32]
     hasBin: true
 

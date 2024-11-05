@@ -67,7 +67,7 @@
     "bundle-require": "^4.0.2",
     "cac": "^6.7.14",
     "change-case": "^5.4.4",
-    "chokidar": "^4.0.1",
+    "chokidar": "4.0.1",
     "dedent": "^0.7.0",
     "dotenv": "^16.3.1",
     "dotenv-expand": "^10.0.0",
