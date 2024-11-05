@@ -16,7 +16,7 @@ test('behavior: features.connectError', () => {
     [UserRejectedRequestError: User rejected the request.
 
     Details: Failed to connect.
-    Version: viem@2.17.0]
+    Version: 2.21.28]
   `)
 })
 
@@ -44,7 +44,7 @@ test('behavior: connector.getProvider request errors', async () => {
     [UserRejectedRequestError: User rejected the request.
 
     Details: Failed to sign typed data.
-    Version: viem@2.17.0]
+    Version: 2.21.28]
   `)
 
   expect(
@@ -56,7 +56,7 @@ test('behavior: connector.getProvider request errors', async () => {
     [UserRejectedRequestError: User rejected the request.
 
     Details: Failed to switch chain.
-    Version: viem@2.17.0]
+    Version: 2.21.28]
   `)
 
   expect(
@@ -68,7 +68,7 @@ test('behavior: connector.getProvider request errors', async () => {
     [UserRejectedRequestError: User rejected the request.
 
     Details: Failed to switch chain.
-    Version: viem@2.17.0]
+    Version: 2.21.28]
   `)
 
   expect(
@@ -80,6 +80,19 @@ test('behavior: connector.getProvider request errors', async () => {
     [UserRejectedRequestError: User rejected the request.
 
     Details: Failed to sign message.
-    Version: viem@2.17.0]
+    Version: 2.21.28]
   `)
+})
+
+test('behavior: reconnect', async () => {
+  const connectorFn = mock({
+    accounts,
+    features: {
+      defaultConnected: true,
+      reconnect: true,
+    },
+  })
+  const connector = config._internal.connectors.setup(connectorFn)
+
+  await expect(connector.isAuthorized()).resolves.toBeTruthy()
 })

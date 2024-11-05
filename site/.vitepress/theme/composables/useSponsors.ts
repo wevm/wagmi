@@ -34,6 +34,11 @@ export function useSponsors() {
           url: 'https://paradigm.xyz',
           img: 'paradigm-light.svg',
         },
+        {
+          name: 'Ithaca',
+          url: 'https://ithaca.xyz',
+          img: 'ithaca-light.svg',
+        },
       ],
       gold: [
         {

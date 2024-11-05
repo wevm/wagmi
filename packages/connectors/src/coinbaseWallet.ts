@@ -89,6 +89,7 @@ function version4(parameters: Version4Parameters) {
   return createConnector<Provider>((config) => ({
     id: 'coinbaseWalletSDK',
     name: 'Coinbase Wallet',
+    rdns: 'com.coinbase.wallet',
     supportsSimulation: true,
     type: coinbaseWallet.type,
     async connect({ chainId } = {}) {
@@ -156,16 +157,16 @@ function version4(parameters: Version4Parameters) {
     async getAccounts() {
       const provider = await this.getProvider()
       return (
-        await provider.request<string[]>({
+        (await provider.request({
           method: 'eth_accounts',
-        })
+        })) as string[]
       ).map((x) => getAddress(x))
     },
     async getChainId() {
       const provider = await this.getProvider()
-      const chainId = await provider.request<Hex>({
+      const chainId = (await provider.request({
         method: 'eth_chainId',
-      })
+      })) as Hex
       return Number(chainId)
     },
     async getProvider() {

@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.16.4",
-    "@biomejs/biome": "^1.9.2",
+    "@biomejs/biome": "^1.9.4",
     "@changesets/changelog-github": "0.4.6",
     "@changesets/cli": "^2.27.8",
     "@types/bun": "^1.1.10",
@@ -62,9 +62,9 @@
     "sherif": "^1.0.0",
     "simple-git-hooks": "^2.11.1",
     "solid-js": "^1.8.20",
-    "typescript": "5.5.2",
-    "viem": "2.17.0",
+    "typescript": "5.5.4",
     "vite-plugin-solid": "^2.10.2",
+    "viem": "2.21.28",
     "vitest": "^2.1.1"
   },
   "packageManager": "pnpm@9.11.0",
@@ -105,8 +105,7 @@
         "ignore": ["test/{constants,setup,utils}.ts"]
       },
       "packages/connectors": {
-        "entry": "src/exports/index.ts!",
-        "ignoreDependencies": ["@walletconnect/modal"]
+        "entry": "src/exports/index.ts!"
       },
       "packages/core": {
         "entry": "src/exports/{actions,chains,codegen,experimental,index,internal,query}.ts!",

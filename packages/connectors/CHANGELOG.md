@@ -1,5 +1,64 @@
 # @wagmi/connectors
 
+## 5.3.3
+
+### Patch Changes
+
+- [#4362](https://github.com/wevm/wagmi/pull/4362) [`83c6d16b7d6dddfa6bda036e04f00ec313c6248c`](https://github.com/wevm/wagmi/commit/83c6d16b7d6dddfa6bda036e04f00ec313c6248c) Thanks [@EdouardBougon](https://github.com/EdouardBougon)! - Fixed MetaMask connector internal logic.
+
+## 5.3.2
+
+### Patch Changes
+
+- [#4357](https://github.com/wevm/wagmi/pull/4357) [`8970cc51398e1ac713435533096215c6d31ffdf9`](https://github.com/wevm/wagmi/commit/8970cc51398e1ac713435533096215c6d31ffdf9) Thanks [@tmm](https://github.com/tmm)! - Bumped dependencies.
+
+## 5.3.1
+
+### Patch Changes
+
+- Updated dependencies [[`052e72e1f8c1c14fcbdce04a9f8fa7ec28d83702`](https://github.com/wevm/wagmi/commit/052e72e1f8c1c14fcbdce04a9f8fa7ec28d83702), [`b250fc21ee577b2a75c5a34ff684f62fb4ad771a`](https://github.com/wevm/wagmi/commit/b250fc21ee577b2a75c5a34ff684f62fb4ad771a)]:
+  - @wagmi/core@2.14.1
+
+## 5.3.0
+
+### Minor Changes
+
+- [#4343](https://github.com/wevm/wagmi/pull/4343) [`f43e074f473820b208a6295d7c97f847332f1a1d`](https://github.com/wevm/wagmi/commit/f43e074f473820b208a6295d7c97f847332f1a1d) Thanks [@tmm](https://github.com/tmm)! - Added `rdns` property to connector interface. This is used to filter out duplicate [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963) injected providers when [`createConfig#multiInjectedProviderDiscovery`](https://wagmi.sh/core/api/createConfig#multiinjectedproviderdiscovery) is enabled and `createConfig#connectors` already matches EIP-6963 providers' `rdns` property.
+
+### Patch Changes
+
+- Updated dependencies [[`f43e074f473820b208a6295d7c97f847332f1a1d`](https://github.com/wevm/wagmi/commit/f43e074f473820b208a6295d7c97f847332f1a1d)]:
+  - @wagmi/core@2.14.0
+
+## 5.2.2
+
+### Patch Changes
+
+- [#4347](https://github.com/wevm/wagmi/pull/4347) [`5ae49af590ff168426c9c283d54c34ae5148fcd9`](https://github.com/wevm/wagmi/commit/5ae49af590ff168426c9c283d54c34ae5148fcd9) Thanks [@EdouardBougon](https://github.com/EdouardBougon)! - Added workaround for MetaMask mobile sometimes disconnecting.
+
+- [#4350](https://github.com/wevm/wagmi/pull/4350) [`f3182b22e6e454d9bd74f1b940ef34431fd9555d`](https://github.com/wevm/wagmi/commit/f3182b22e6e454d9bd74f1b940ef34431fd9555d) Thanks [@abretonc7s](https://github.com/abretonc7s)! - Updated MetaMask SDK.
+
+- Updated dependencies [[`c05caabc20c3ced9682cfc7ba1f3f7dcfece0703`](https://github.com/wevm/wagmi/commit/c05caabc20c3ced9682cfc7ba1f3f7dcfece0703)]:
+  - @wagmi/core@2.13.9
+
+## 5.2.1
+
+### Patch Changes
+
+- [#4345](https://github.com/wevm/wagmi/pull/4345) [`91a40f2db08e3a91db421b8732a5511a1e6c88fd`](https://github.com/wevm/wagmi/commit/91a40f2db08e3a91db421b8732a5511a1e6c88fd) Thanks [@tmm](https://github.com/tmm)! - Bumped MetaMask SDK.
+
+## 5.2.0
+
+### Minor Changes
+
+- [#4337](https://github.com/wevm/wagmi/pull/4337) [`34a0c3b7eea778aee7c27f7ace5e4b2be4e8a0a4`](https://github.com/wevm/wagmi/commit/34a0c3b7eea778aee7c27f7ace5e4b2be4e8a0a4) Thanks [@tmm](https://github.com/tmm)! - Added "Connect and Sign" behavior to MetaMask Connector.
+
+## 5.1.15
+
+### Patch Changes
+
+- [`3b2123664b7ac66848390739e855c3b9702ab60c`](https://github.com/wevm/wagmi/commit/3b2123664b7ac66848390739e855c3b9702ab60c) Thanks [@tmm](https://github.com/tmm)! - Bumped WalletConnect Provider.
+
 ## 5.1.14
 
 ### Patch Changes

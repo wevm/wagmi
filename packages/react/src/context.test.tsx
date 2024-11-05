@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { render, screen } from '@testing-library/react'
-import { http, createConfig } from '@wagmi/core'
-import { config, mainnet } from '@wagmi/test'
+import { render, waitFor } from '@testing-library/react'
+import { http, connect, createConfig, mock } from '@wagmi/core'
+import { accounts, addressRegex, config, mainnet } from '@wagmi/test'
 import React from 'react'
 import { expect, test } from 'vitest'
 
@@ -23,14 +23,15 @@ test('default', () => {
   }
 
   const queryClient = new QueryClient()
-  render(
+  const result = render(
     <WagmiProvider config={config} reconnectOnMount>
       <QueryClientProvider client={queryClient}>
         <Component />
       </QueryClientProvider>
     </WagmiProvider>,
   )
-  expect(screen.getByRole('heading').innerText).toMatchInlineSnapshot(`"wevm"`)
+  expect(result.getByRole('heading').innerText).toMatchInlineSnapshot(`"wevm"`)
+  result.unmount()
 })
 
 test('fake ssr config', () => {
@@ -44,21 +45,57 @@ test('fake ssr config', () => {
   })
   const queryClient = new QueryClient()
 
-  render(
+  const result = render(
     <WagmiProvider config={config} reconnectOnMount>
       <QueryClientProvider client={queryClient}>
         <h1>wevm</h1>
       </QueryClientProvider>
     </WagmiProvider>,
   )
-  expect(screen.getAllByRole('heading')).toMatchInlineSnapshot(`
+  expect(result.getAllByRole('heading')).toMatchInlineSnapshot(`
     [
-      <h1>
-        wevm
-      </h1>,
       <h1>
         wevm
       </h1>,
     ]
   `)
+  result.unmount()
+})
+
+test('mock reconnect', async () => {
+  function Component() {
+    const { address } = useAccount()
+    return (
+      <div>
+        <h1>{address}</h1>
+      </div>
+    )
+  }
+
+  const connector = mock({
+    accounts,
+    features: { reconnect: true },
+  })
+  const config = createConfig({
+    chains: [mainnet],
+    connectors: [connector],
+    storage: null,
+    transports: {
+      [mainnet.id]: http(),
+    },
+  })
+  await connect(config, { connector })
+
+  const queryClient = new QueryClient()
+  const result = render(
+    <WagmiProvider config={config} reconnectOnMount>
+      <QueryClientProvider client={queryClient}>
+        <Component />
+      </QueryClientProvider>
+    </WagmiProvider>,
+  )
+  await waitFor(() =>
+    expect(result.getByRole('heading').innerText).toMatch(addressRegex),
+  )
+  result.unmount()
 })

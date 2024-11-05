@@ -1,5 +1,25 @@
 # @wagmi/core
 
+## 2.14.1
+
+### Patch Changes
+
+- [`052e72e1f8c1c14fcbdce04a9f8fa7ec28d83702`](https://github.com/wevm/wagmi/commit/052e72e1f8c1c14fcbdce04a9f8fa7ec28d83702) Thanks [@tmm](https://github.com/tmm)! - Added `defaultConnected` feature to `mock` connector.
+
+- [#4349](https://github.com/wevm/wagmi/pull/4349) [`b250fc21ee577b2a75c5a34ff684f62fb4ad771a`](https://github.com/wevm/wagmi/commit/b250fc21ee577b2a75c5a34ff684f62fb4ad771a) Thanks [@tmm](https://github.com/tmm)! - Bumped internal deps.
+
+## 2.14.0
+
+### Minor Changes
+
+- [#4343](https://github.com/wevm/wagmi/pull/4343) [`f43e074f473820b208a6295d7c97f847332f1a1d`](https://github.com/wevm/wagmi/commit/f43e074f473820b208a6295d7c97f847332f1a1d) Thanks [@tmm](https://github.com/tmm)! - Added `rdns` property to connector interface. This is used to filter out duplicate [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963) injected providers when [`createConfig#multiInjectedProviderDiscovery`](https://wagmi.sh/core/api/createConfig#multiinjectedproviderdiscovery) is enabled and `createConfig#connectors` already matches EIP-6963 providers' `rdns` property.
+
+## 2.13.9
+
+### Patch Changes
+
+- [#4336](https://github.com/wevm/wagmi/pull/4336) [`c05caabc20c3ced9682cfc7ba1f3f7dcfece0703`](https://github.com/wevm/wagmi/commit/c05caabc20c3ced9682cfc7ba1f3f7dcfece0703) Thanks [@EdouardBougon](https://github.com/EdouardBougon)! - Added deprecation notice to `injected` target flags.
+
 ## 2.13.8
 
 ### Patch Changes
