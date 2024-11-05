@@ -158,6 +158,11 @@ export function useSponsors() {
           url: 'https://thirdweb.com',
           img: 'thirdweb-light.svg',
         },
+        {
+          name: 'Uxuy',
+          url: 'https://uxuy.com',
+          img: 'uxuy-light.svg',
+        },
       ],
     }
 
