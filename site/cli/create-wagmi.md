@@ -64,7 +64,7 @@ Prints the CLI version.
 - `vite-vanilla`: A Vite Wagmi Core project.
 - `vite-vue`: A Vite (Vue) Wagmi project.
 
-If you do not specify the template on the command line, select a framework and a variant.
+If you do not specify the template on the command line, you will be prompted to select a framework and variant.
 
 - **React** : A React project.
   - **Vite** : A React + Vite Wagmi project (`vite-react`).
