@@ -1,4 +1,3 @@
-// useEnsAvatar.svelte.test.ts
 import { expect, test } from 'vitest'
 import { testHook } from './test.svelte.js'
 import { useEnsAvatar } from './useEnsAvatar.svelte'
