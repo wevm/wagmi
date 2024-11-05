@@ -67,13 +67,12 @@ export async function waitForTransactionReceipt<
     const action_call = getAction(client, call, 'call')
     const code = await action_call({
       ...(txn as any),
+      data: txn.input,
       gasPrice: txn.type !== 'eip1559' ? txn.gasPrice : undefined,
       maxFeePerGas: txn.type === 'eip1559' ? txn.maxFeePerGas : undefined,
       maxPriorityFeePerGas:
         txn.type === 'eip1559' ? txn.maxPriorityFeePerGas : undefined,
-      data: txn.input ? txn.input : undefined,
     })
-
     const reason = code?.data
       ? hexToString(`0x${code.data.substring(138)}`)
       : 'unknown reason'
