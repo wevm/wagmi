@@ -5,7 +5,6 @@ The [`useReadContract` Hook](/react/api/hooks/useReadContract) allows you to rea
 The component below shows how to retrieve the token balance of an address from the [Wagmi Example](https://etherscan.io/token/0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2) contract
 
 :::code-group
-
 ```tsx [read-contract.tsx]
 import { useReadContract } from 'wagmi'
 
@@ -21,8 +20,20 @@ function ReadContract() {
   )
 }
 ```
-
 :::
+
+If `useReadContract` depends on another value (`address` in the example below), you can use the [`query.enabled`](http://localhost:5173/react/api/hooks/useReadContract#enabled) option to prevent the query from running until the dependency is ready.
+
+```tsx
+const { data: balance } = useReadContract({
+  ...wagmiContractConfig,
+  functionName: 'balanceOf',
+  args: [address],
+  query: { // [!code focus]
+    enabled: !!address, // [!code focus]
+  }, // [!code focus]
+})
+```
 
 ## Loading & Error States
 
