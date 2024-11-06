@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.14.3
+
+### Patch Changes
+
+- [`cb7dd2ebb871d0be8f1a11a8cd8ce592cd74b7c7`](https://github.com/wevm/wagmi/commit/cb7dd2ebb871d0be8f1a11a8cd8ce592cd74b7c7) Thanks [@tmm](https://github.com/tmm)! - Removed unnecessary internal deep equal check in `structuralSharing`.
+
 ## 2.14.2
 
 ### Patch Changes

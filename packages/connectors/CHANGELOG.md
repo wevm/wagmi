@@ -1,5 +1,14 @@
 # @wagmi/connectors
 
+## 5.3.5
+
+### Patch Changes
+
+- [`7fe78f2d09778fc01fd0cffe85ba198e64999275`](https://github.com/wevm/wagmi/commit/7fe78f2d09778fc01fd0cffe85ba198e64999275) Thanks [@tmm](https://github.com/tmm)! - Fixed MetaMask connector not returning provider in some cases.
+
+- Updated dependencies [[`cb7dd2ebb871d0be8f1a11a8cd8ce592cd74b7c7`](https://github.com/wevm/wagmi/commit/cb7dd2ebb871d0be8f1a11a8cd8ce592cd74b7c7)]:
+  - @wagmi/core@2.14.3
+
 ## 5.3.4
 
 ### Patch Changes
