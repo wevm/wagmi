@@ -6,8 +6,8 @@
     "check:types": "tsc --noEmit"
   },
   "dependencies": {
-    "@tanstack/vue-query": ">=5.45.0",
+    "@tanstack/vue-query": "catalog:vue",
     "@wagmi/vue": "workspace:*",
-    "vue": ">=3.4.21"
+    "vue": "catalog:vue"
   }
 }
