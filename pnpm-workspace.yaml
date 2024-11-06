@@ -1,7 +1,21 @@
 packages:
-  - 'packages/*'
-  - '!packages/register-tests'
-  - 'packages/cli/src/plugins/__fixtures__/hardhat'
-  - 'packages/register-tests/*'
-  - 'playgrounds/*'
-  - 'site'
+  - packages/*
+  - "!packages/register-tests"
+  - packages/cli/src/plugins/__fixtures__/hardhat
+  - packages/register-tests/*
+  - playgrounds/*
+  - site
+
+catalogs:
+  core:
+    "@tanstack/query-core": ">=5.45.0"
+  react:
+    "@tanstack/react-query": ">=5.45.1"
+    "@testing-library/react": ">=16.0.1"
+    "@types/react": ">=18.3.1"
+    "@types/react-dom": ">=18.3.0"
+    react: ">=18.3.1"
+    react-dom: ">=18.3.1"
+  vue:
+    "@tanstack/vue-query": ">=5.45.0"
+    vue: ">=3.4.21"

@@ -93,10 +93,10 @@
   },
   "devDependencies": {
     "@nuxt/schema": "^3.11.2",
-    "@tanstack/vue-query": ">=5.45.0",
+    "@tanstack/vue-query": "catalog:vue",
     "@vue/test-utils": "^2.4.6",
     "nuxt": "^3.11.2",
-    "vue": ">=3.4.21",
+    "vue": "catalog:vue",
     "vue-tsc": "^2.0.6"
   },
   "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],

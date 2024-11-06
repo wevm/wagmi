@@ -92,7 +92,7 @@
     "zustand": "5.0.0"
   },
   "devDependencies": {
-    "@tanstack/query-core": ">=5.45.0"
+    "@tanstack/query-core": "catalog:core"
   },
   "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
   "funding": "https://github.com/sponsors/wevm",
