@@ -7,6 +7,7 @@ import type {
 import {
   ChainNotConfiguredError,
   type Connector,
+  ProviderNotFoundError,
   createConnector,
   extractRpcUrls,
 } from '@wagmi/core'
@@ -266,8 +267,16 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
               : { name: 'wagmi', url: 'https://wagmi.sh' }),
           useDeeplink: parameters.useDeeplink ?? true,
         })
-        await sdk.init()
-        return sdk.getProvider()!
+        const result = await sdk.init()
+        // On initial load, sometimes `sdk.getProvider` does not return provider.
+        // https://github.com/wevm/wagmi/issues/4367
+        // Use result of `init` call if available.
+        const provider = (() => {
+          if (result?.activeProvider) return result.activeProvider
+          return sdk.getProvider()
+        })()
+        if (!provider) throw new ProviderNotFoundError()
+        return provider
       }
 
       if (!provider) {
