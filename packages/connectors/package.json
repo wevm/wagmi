@@ -45,7 +45,7 @@
     }
   },
   "dependencies": {
-    "@coinbase/wallet-sdk": "4.1.0",
+    "@coinbase/wallet-sdk": "4.2.1",
     "@metamask/sdk": "0.30.1",
     "@safe-global/safe-apps-provider": "0.18.3",
     "@safe-global/safe-apps-sdk": "9.1.0",
