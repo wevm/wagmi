@@ -1,5 +1,13 @@
 # @wagmi/core
 
+## 2.14.2
+
+### Patch Changes
+
+- [#4339](https://github.com/wevm/wagmi/pull/4339) [`d0d0963bb5904a15cf0355862d62dd141ce0c31c`](https://github.com/wevm/wagmi/commit/d0d0963bb5904a15cf0355862d62dd141ce0c31c) Thanks [@AndriyAntonenko](https://github.com/AndriyAntonenko)! - Fixed bug in `waitForTransactionReceipt`, where transaction data wasn't passed to `'eth_call'` method as part of getting the revert reason.
+
+- [`ecac0ba36243d94c9199d0bd21937104c835d9a0`](https://github.com/wevm/wagmi/commit/ecac0ba36243d94c9199d0bd21937104c835d9a0) Thanks [@tmm](https://github.com/tmm)! - Fixed `getBalance` symbol error handling.
+
 ## 2.14.1
 
 ### Patch Changes
