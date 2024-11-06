@@ -2,4 +2,4 @@
 "@wagmi/connectors": patch
 ---
 
-bump @coinbase/wallet-sdk version
+Bumped Coinbase Wallet SDK version.
