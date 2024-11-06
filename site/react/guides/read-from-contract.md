@@ -22,7 +22,7 @@ function ReadContract() {
 ```
 :::
 
-If `useReadContract` depends on another value (`address` in the example below), you can use the [`query.enabled`](http://localhost:5173/react/api/hooks/useReadContract#enabled) option to prevent the query from running until the dependency is ready.
+If `useReadContract` depends on another value (`address` in the example below), you can use the [`query.enabled`](/react/api/hooks/useReadContract#enabled) option to prevent the query from running until the dependency is ready.
 
 ```tsx
 const { data: balance } = useReadContract({

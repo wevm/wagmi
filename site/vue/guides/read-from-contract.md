@@ -27,7 +27,7 @@ const { data: balance } = useReadContract({
 :::
 
 
-If `useReadContract` depends on another value (`address` in the example below), you can use the [`query.enabled`](http://localhost:5173/vue/api/composables/useReadContract#enabled) option to prevent the query from running until the dependency is ready.
+If `useReadContract` depends on another value (`address` in the example below), you can use the [`query.enabled`](/vue/api/composables/useReadContract#enabled) option to prevent the query from running until the dependency is ready.
 
 ```tsx
 const { data: balance } = useReadContract({
