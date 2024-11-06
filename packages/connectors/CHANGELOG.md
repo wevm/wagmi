@@ -1,5 +1,14 @@
 # @wagmi/connectors
 
+## 5.3.4
+
+### Patch Changes
+
+- [#4371](https://github.com/wevm/wagmi/pull/4371) [`b6861a4c378dab78d8751ae0ac2aa425f3c24b8f`](https://github.com/wevm/wagmi/commit/b6861a4c378dab78d8751ae0ac2aa425f3c24b8f) Thanks [@iceanddust](https://github.com/iceanddust)! - Fixed Safe connector not working in some Vite apps
+
+- Updated dependencies [[`d0d0963bb5904a15cf0355862d62dd141ce0c31c`](https://github.com/wevm/wagmi/commit/d0d0963bb5904a15cf0355862d62dd141ce0c31c), [`ecac0ba36243d94c9199d0bd21937104c835d9a0`](https://github.com/wevm/wagmi/commit/ecac0ba36243d94c9199d0bd21937104c835d9a0)]:
+  - @wagmi/core@2.14.2
+
 ## 5.3.3
 
 ### Patch Changes
