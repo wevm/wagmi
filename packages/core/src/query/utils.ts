@@ -1,11 +1,9 @@
 import { type QueryKey, replaceEqualDeep } from '@tanstack/query-core'
-import { deepEqual } from '../utils/deepEqual.js'
 
 export function structuralSharing<data>(
   oldData: data | undefined,
   newData: data,
 ): data {
-  if (deepEqual(oldData, newData)) return oldData as data
   return replaceEqualDeep(oldData, newData)
 }
 
@@ -60,7 +58,7 @@ export function filterQueryOptions<type extends Record<string, unknown>>(
 
     // import('@tanstack/query-core').InfiniteQueryObserverOptions
     getPreviousPageParam, getNextPageParam, initialPageParam,
-    
+
     // import('@tanstack/react-query').UseQueryOptions
     _optimisticResults, enabled, notifyOnChangeProps, placeholderData, refetchInterval, refetchIntervalInBackground, refetchOnMount, refetchOnReconnect, refetchOnWindowFocus, retryOnMount, select, staleTime, suspense, throwOnError,
 
