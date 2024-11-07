@@ -36,7 +36,7 @@ test('args: blockNumber', async () => {
       "size": 158252n,
       "stateRoot": "0x6e27207d219b0251dbc2fde71f3cde8e33703261f032056453c27275500dddbc",
       "timestamp": 1708302299n,
-      "totalDifficulty": 58750003716598352816469n,
+      "totalDifficulty": null,
       "transactionsRoot": "0x897dba26a3a940b62f86da6e5fec5f71312ad7c871a4031db79dee67442c9d1e",
       "uncles": [],
       "withdrawals": [
