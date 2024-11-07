@@ -411,6 +411,16 @@ export function injected(parameters: InjectedParameters = {}) {
       const chain = config.chains.find((x) => x.id === chainId)
       if (!chain) throw new SwitchChainError(new ChainNotConfiguredError())
 
+      const promise = new Promise<void>((resolve) => {
+        const listener = ((data) => {
+          if ('chainId' in data && data.chainId === chainId) {
+            config.emitter.off('change', listener)
+            resolve()
+          }
+        }) satisfies Parameters<typeof config.emitter.on>[1]
+        config.emitter.on('change', listener)
+      })
+
       try {
         await Promise.all([
           provider
@@ -428,15 +438,7 @@ export function injected(parameters: InjectedParameters = {}) {
               if (currentChainId === chainId)
                 config.emitter.emit('change', { chainId })
             }),
-          new Promise<void>((resolve) => {
-            const listener = ((data) => {
-              if ('chainId' in data && data.chainId === chainId) {
-                config.emitter.off('change', listener)
-                resolve()
-              }
-            }) satisfies Parameters<typeof config.emitter.on>[1]
-            config.emitter.on('change', listener)
-          }),
+          promise,
         ])
         return chain
       } catch (err) {
@@ -486,23 +488,14 @@ export function injected(parameters: InjectedParameters = {}) {
                 })
                 .then(async () => {
                   const currentChainId = await this.getChainId()
-                  if (currentChainId === chainId) {
+                  if (currentChainId === chainId)
                     config.emitter.emit('change', { chainId })
-                  } else {
+                  else
                     throw new UserRejectedRequestError(
                       new Error('User rejected switch after adding network.'),
                     )
-                  }
                 }),
-              new Promise<void>((resolve) => {
-                const listener = ((data) => {
-                  if ('chainId' in data && data.chainId === chainId) {
-                    config.emitter.off('change', listener)
-                    resolve()
-                  }
-                }) satisfies Parameters<typeof config.emitter.on>[1]
-                config.emitter.on('change', listener)
-              }),
+              promise,
             ])
 
             return chain
