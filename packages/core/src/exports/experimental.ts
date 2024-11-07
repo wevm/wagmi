@@ -25,6 +25,13 @@ export {
 } from '../experimental/actions/sendCalls.js'
 
 export {
+  type SignAuthorizationErrorType,
+  type SignAuthorizationParameters,
+  type SignAuthorizationReturnType,
+  signAuthorization,
+} from '../experimental/actions/signAuthorization.js'
+
+export {
   type ShowCallsStatusErrorType,
   type ShowCallsStatusParameters,
   type ShowCallsStatusReturnType,
@@ -67,6 +74,14 @@ export {
   type SendCallsVariables,
   sendCallsMutationOptions,
 } from '../experimental/query/sendCalls.js'
+
+export {
+  type SignAuthorizationData,
+  type SignAuthorizationMutate,
+  type SignAuthorizationMutateAsync,
+  type SignAuthorizationVariables,
+  signAuthorizationMutationOptions,
+} from '../experimental/query/signAuthorization.js'
 
 export {
   type ShowCallsStatusData,

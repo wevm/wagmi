@@ -22,6 +22,12 @@ export {
 } from '../experimental/hooks/useSendCalls.js'
 
 export {
+  type UseSignAuthorizationParameters,
+  type UseSignAuthorizationReturnType,
+  useSignAuthorization,
+} from '../experimental/hooks/useSignAuthorization.js'
+
+export {
   type UseShowCallsStatusParameters,
   type UseShowCallsStatusReturnType,
   useShowCallsStatus,
