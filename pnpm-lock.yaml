@@ -5,35 +5,36 @@ settings:
   excludeLinksFromLockfile: false
 
 catalogs:
-  core:
+  default:
     '@tanstack/query-core':
-      specifier: '>=5.45.0'
+      specifier: 5.49.1
       version: 5.49.1
-  react:
     '@tanstack/react-query':
-      specifier: '>=5.45.1'
+      specifier: 5.49.2
       version: 5.49.2
+    '@tanstack/vue-query':
+      specifier: 5.49.1
+      version: 5.49.1
+    '@testing-library/dom':
+      specifier: 10.4.0
+      version: 10.4.0
     '@testing-library/react':
-      specifier: '>=16.0.1'
+      specifier: 16.0.1
       version: 16.0.1
     '@types/react':
-      specifier: '>=18.3.1'
+      specifier: 18.3.1
       version: 18.3.1
     '@types/react-dom':
-      specifier: '>=18.3.0'
+      specifier: 18.3.0
       version: 18.3.0
     react:
-      specifier: '>=18.3.1'
+      specifier: 18.3.1
       version: 18.3.1
     react-dom:
-      specifier: '>=18.3.1'
+      specifier: 18.3.1
       version: 18.3.1
-  vue:
-    '@tanstack/vue-query':
-      specifier: '>=5.45.0'
-      version: 5.49.1
     vue:
-      specifier: '>=3.4.21'
+      specifier: 3.5.12
       version: 3.5.12
 
 importers:
@@ -224,7 +225,7 @@ importers:
         version: 5.0.0(@types/react@18.3.1)(react@18.3.1)(use-sync-external-store@1.2.0(react@18.3.1))
     devDependencies:
       '@tanstack/query-core':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 5.49.1
 
   packages/create-wagmi:
@@ -274,77 +275,77 @@ importers:
         version: 1.2.0(react@18.3.1)
     devDependencies:
       '@tanstack/react-query':
-        specifier: catalog:react
+        specifier: 'catalog:'
         version: 5.49.2(react@18.3.1)
       '@testing-library/dom':
-        specifier: ^10.4.0
+        specifier: 'catalog:'
         version: 10.4.0
       '@testing-library/react':
-        specifier: catalog:react
+        specifier: 'catalog:'
         version: 16.0.1(@testing-library/dom@10.4.0)(@types/react-dom@18.3.0)(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@types/react':
-        specifier: catalog:react
+        specifier: 'catalog:'
         version: 18.3.1
       '@types/react-dom':
-        specifier: catalog:react
+        specifier: 'catalog:'
         version: 18.3.0
       '@types/use-sync-external-store':
         specifier: ^0.0.6
         version: 0.0.6
       react:
-        specifier: catalog:react
+        specifier: 'catalog:'
         version: 18.3.1
       react-dom:
-        specifier: catalog:react
+        specifier: 'catalog:'
         version: 18.3.1(react@18.3.1)
 
   packages/register-tests/react:
     dependencies:
       '@tanstack/react-query':
-        specifier: catalog:react
+        specifier: 'catalog:'
         version: 5.49.2(react@18.3.1)
       react:
-        specifier: catalog:react
+        specifier: 'catalog:'
         version: 18.3.1
       wagmi:
         specifier: workspace:*
         version: link:../../react
     devDependencies:
       '@types/react':
-        specifier: catalog:react
+        specifier: 'catalog:'
         version: 18.3.1
 
   packages/register-tests/vue:
     dependencies:
       '@tanstack/vue-query':
-        specifier: catalog:vue
+        specifier: 'catalog:'
         version: 5.49.1(vue@3.5.12(typescript@5.5.4))
       '@wagmi/vue':
         specifier: workspace:*
         version: link:../../vue
       vue:
-        specifier: catalog:vue
+        specifier: 'catalog:'
         version: 3.5.12(typescript@5.5.4)
 
   packages/test:
     devDependencies:
       '@tanstack/react-query':
-        specifier: catalog:react
+        specifier: 'catalog:'
         version: 5.49.2(react@18.3.1)
       '@tanstack/vue-query':
-        specifier: catalog:vue
+        specifier: 'catalog:'
         version: 5.49.1(vue@3.5.12(typescript@5.5.4))
       '@testing-library/dom':
-        specifier: ^10.4.0
+        specifier: 'catalog:'
         version: 10.4.0
       '@testing-library/react':
-        specifier: catalog:react
+        specifier: 'catalog:'
         version: 16.0.1(@testing-library/dom@10.4.0)(@types/react-dom@18.3.0)(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@types/react':
-        specifier: catalog:react
+        specifier: 'catalog:'
         version: 18.3.1
       '@types/react-dom':
-        specifier: catalog:react
+        specifier: 'catalog:'
         version: 18.3.0
       '@wagmi/core':
         specifier: workspace:*
@@ -353,13 +354,13 @@ importers:
         specifier: workspace:*
         version: link:../vue
       react:
-        specifier: catalog:react
+        specifier: 'catalog:'
         version: 18.3.1
       react-dom:
-        specifier: catalog:react
+        specifier: 'catalog:'
         version: 18.3.1(react@18.3.1)
       vue:
-        specifier: catalog:vue
+        specifier: 'catalog:'
         version: 3.5.12(typescript@5.5.4)
       wagmi:
         specifier: workspace:*
@@ -378,7 +379,7 @@ importers:
         specifier: ^3.11.2
         version: 3.11.2(rollup@4.24.4)
       '@tanstack/vue-query':
-        specifier: catalog:vue
+        specifier: 'catalog:'
         version: 5.49.1(vue@3.5.12(typescript@5.6.1-rc))
       '@vue/test-utils':
         specifier: ^2.4.6
@@ -387,7 +388,7 @@ importers:
         specifier: ^3.11.2
         version: 3.11.2(@opentelemetry/api@1.8.0)(@parcel/watcher@2.4.1)(@types/node@20.12.10)(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@5.4.4)(encoding@0.1.13)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.24.4))(vue@3.5.12(typescript@5.6.1-rc)))(idb-keyval@6.2.1)(ioredis@5.3.2)(qrcode@1.5.3)(rollup@4.24.4)(terser@5.31.0)(typescript@5.6.1-rc)(unocss@0.59.4(rollup@4.24.4)(vite@5.4.10(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@5.0.10)(vite@5.4.10(@types/node@20.12.10)(terser@5.31.0))(vue-tsc@2.0.16(typescript@5.6.1-rc))
       vue:
-        specifier: catalog:vue
+        specifier: 'catalog:'
         version: 3.5.12(typescript@5.6.1-rc)
       vue-tsc:
         specifier: ^2.0.6
@@ -580,16 +581,16 @@ importers:
         specifier: 1.22.2
         version: 1.22.2(@nuxt/kit@3.11.2(rollup@4.24.4))(typescript@5.6.1-rc)
       '@tanstack/query-core':
-        specifier: catalog:core
+        specifier: 'catalog:'
         version: 5.49.1
       '@tanstack/react-query':
-        specifier: catalog:react
+        specifier: 'catalog:'
         version: 5.49.2(react@18.3.1)
       '@tanstack/vue-query':
-        specifier: catalog:vue
+        specifier: 'catalog:'
         version: 5.49.1(vue@3.5.12(typescript@5.6.1-rc))
       '@types/react':
-        specifier: catalog:react
+        specifier: 'catalog:'
         version: 18.3.1
       '@wagmi/connectors':
         specifier: workspace:*
@@ -607,7 +608,7 @@ importers:
         specifier: ^3.11.2
         version: 3.11.2(@opentelemetry/api@1.8.0)(@parcel/watcher@2.4.1)(@types/node@20.12.10)(@unocss/reset@0.59.4)(bufferutil@4.0.8)(change-case@5.4.4)(encoding@0.1.13)(floating-vue@5.2.2(@nuxt/kit@3.11.2(rollup@4.24.4))(vue@3.5.12(typescript@5.6.1-rc)))(idb-keyval@6.2.1)(ioredis@5.3.2)(qrcode@1.5.3)(rollup@4.24.4)(terser@5.31.0)(typescript@5.6.1-rc)(unocss@0.59.4(rollup@4.24.4)(vite@5.4.10(@types/node@20.12.10)(terser@5.31.0)))(utf-8-validate@5.0.10)(vite@5.4.10(@types/node@20.12.10)(terser@5.31.0))
       react:
-        specifier: catalog:react
+        specifier: 'catalog:'
         version: 18.3.1
       unocss:
         specifier: ^0.59.4
@@ -619,7 +620,7 @@ importers:
         specifier: 1.5.0
         version: 1.5.0(@algolia/client-search@5.12.0)(@types/node@20.12.10)(@types/react@18.3.1)(change-case@5.4.4)(idb-keyval@6.2.1)(postcss@8.4.47)(qrcode@1.5.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(terser@5.31.0)(typescript@5.6.1-rc)
       vue:
-        specifier: catalog:vue
+        specifier: 'catalog:'
         version: 3.5.12(typescript@5.6.1-rc)
       wagmi:
         specifier: workspace:*
@@ -8663,7 +8664,7 @@ snapshots:
   '@babel/code-frame@7.24.2':
     dependencies:
       '@babel/highlight': 7.24.5
-      picocolors: 1.0.0
+      picocolors: 1.1.0
 
   '@babel/compat-data@7.24.4': {}
 
@@ -8689,7 +8690,7 @@ snapshots:
 
   '@babel/generator@7.24.5':
     dependencies:
-      '@babel/types': 7.26.0
+      '@babel/types': 7.24.5
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
       jsesc: 2.5.2
@@ -8790,16 +8791,16 @@ snapshots:
     dependencies:
       '@babel/template': 7.24.0
       '@babel/traverse': 7.24.5
-      '@babel/types': 7.26.0
+      '@babel/types': 7.24.5
     transitivePeerDependencies:
       - supports-color
 
   '@babel/highlight@7.24.5':
     dependencies:
-      '@babel/helper-validator-identifier': 7.24.5
+      '@babel/helper-validator-identifier': 7.25.9
       chalk: 2.4.2
       js-tokens: 4.0.0
-      picocolors: 1.0.0
+      picocolors: 1.1.0
 
   '@babel/parser@7.24.5':
     dependencies:
@@ -8885,7 +8886,7 @@ snapshots:
     dependencies:
       '@babel/code-frame': 7.24.2
       '@babel/parser': 7.26.2
-      '@babel/types': 7.26.0
+      '@babel/types': 7.24.5
 
   '@babel/traverse@7.24.5':
     dependencies:
@@ -8896,7 +8897,7 @@ snapshots:
       '@babel/helper-hoist-variables': 7.22.5
       '@babel/helper-split-export-declaration': 7.24.5
       '@babel/parser': 7.26.2
-      '@babel/types': 7.26.0
+      '@babel/types': 7.24.5
       debug: 4.3.7
       globals: 11.12.0
     transitivePeerDependencies:
@@ -9626,13 +9627,13 @@ snapshots:
   '@jridgewell/gen-mapping@0.3.3':
     dependencies:
       '@jridgewell/set-array': 1.1.2
-      '@jridgewell/sourcemap-codec': 1.5.0
+      '@jridgewell/sourcemap-codec': 1.4.15
       '@jridgewell/trace-mapping': 0.3.17
 
   '@jridgewell/gen-mapping@0.3.5':
     dependencies:
       '@jridgewell/set-array': 1.2.1
-      '@jridgewell/sourcemap-codec': 1.5.0
+      '@jridgewell/sourcemap-codec': 1.4.15
       '@jridgewell/trace-mapping': 0.3.25
 
   '@jridgewell/resolve-uri@3.1.0': {}
@@ -9660,7 +9661,7 @@ snapshots:
   '@jridgewell/trace-mapping@0.3.25':
     dependencies:
       '@jridgewell/resolve-uri': 3.1.0
-      '@jridgewell/sourcemap-codec': 1.5.0
+      '@jridgewell/sourcemap-codec': 1.4.15
 
   '@kwsites/file-exists@1.1.1':
     dependencies:
@@ -11462,16 +11463,16 @@ snapshots:
 
   '@types/babel__generator@7.6.5':
     dependencies:
-      '@babel/types': 7.26.0
+      '@babel/types': 7.24.5
 
   '@types/babel__template@7.4.2':
     dependencies:
       '@babel/parser': 7.26.2
-      '@babel/types': 7.26.0
+      '@babel/types': 7.24.5
 
   '@types/babel__traverse@7.20.2':
     dependencies:
-      '@babel/types': 7.26.0
+      '@babel/types': 7.24.5
 
   '@types/bn.js@4.11.6':
     dependencies:
@@ -12070,15 +12071,15 @@ snapshots:
 
   '@vue/compiler-sfc@3.4.27':
     dependencies:
-      '@babel/parser': 7.24.5
+      '@babel/parser': 7.26.2
       '@vue/compiler-core': 3.4.27
       '@vue/compiler-dom': 3.4.27
       '@vue/compiler-ssr': 3.4.27
       '@vue/shared': 3.4.27
       estree-walker: 2.0.2
-      magic-string: 0.30.10
-      postcss: 8.4.38
-      source-map-js: 1.2.0
+      magic-string: 0.30.11
+      postcss: 8.4.47
+      source-map-js: 1.2.1
 
   '@vue/compiler-sfc@3.5.12':
     dependencies:
