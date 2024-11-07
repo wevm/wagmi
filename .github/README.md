@@ -54,6 +54,7 @@
 ## Documentation
 
 For documentation and guides, visit [wagmi.sh](https://wagmi.sh).
+You can also [Ask wagmi Guru](https://gurubase.io/g/wagmi), it is a wagmi-focused AI to answer your questions.
 
 ## Community
 
