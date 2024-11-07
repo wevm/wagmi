@@ -95,14 +95,14 @@
     "use-sync-external-store": "1.2.0"
   },
   "devDependencies": {
-    "@tanstack/react-query": "catalog:react",
-    "@testing-library/dom": "^10.4.0",
-    "@testing-library/react": "catalog:react",
-    "@types/react": "catalog:react",
-    "@types/react-dom": "catalog:react",
+    "@tanstack/react-query": "catalog:",
+    "@testing-library/dom": "catalog:",
+    "@testing-library/react": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
     "@types/use-sync-external-store": "^0.0.6",
-    "react": "catalog:react",
-    "react-dom": "catalog:react"
+    "react": "catalog:",
+    "react-dom": "catalog:"
   },
   "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
   "funding": "https://github.com/sponsors/wevm",

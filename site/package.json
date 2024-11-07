@@ -9,20 +9,20 @@
   },
   "devDependencies": {
     "@shikijs/vitepress-twoslash": "1.22.2",
-    "@tanstack/query-core": "catalog:core",
-    "@tanstack/react-query": "catalog:react",
-    "@tanstack/vue-query": "catalog:vue",
-    "@types/react": "catalog:react",
+    "@tanstack/query-core": "catalog:",
+    "@tanstack/react-query": "catalog:",
+    "@tanstack/vue-query": "catalog:",
+    "@types/react": "catalog:",
     "@wagmi/connectors": "workspace:*",
     "@wagmi/core": "workspace:*",
     "@wagmi/vue": "workspace:*",
     "abitype": "*",
     "nuxt": "^3.11.2",
-    "react": "catalog:react",
+    "react": "catalog:",
     "unocss": "^0.59.4",
     "viem": "2.*",
     "vitepress": "1.5.0",
-    "vue": "catalog:vue",
+    "vue": "catalog:",
     "wagmi": "workspace:*"
   }
 }

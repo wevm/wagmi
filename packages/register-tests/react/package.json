@@ -6,11 +6,11 @@
     "check:types": "tsc --noEmit"
   },
   "dependencies": {
-    "@tanstack/react-query": "catalog:react",
-    "react": "catalog:react",
+    "@tanstack/react-query": "catalog:",
+    "react": "catalog:",
     "wagmi": "workspace:*"
   },
   "devDependencies": {
-    "@types/react": "catalog:react"
+    "@types/react": "catalog:"
   }
 }
