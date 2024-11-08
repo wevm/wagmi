@@ -1,5 +1,5 @@
 name: Pull Request
-on:
+on: @nichebiche
   pull_request:
     types: [opened, reopened, synchronize, ready_for_review]
 
