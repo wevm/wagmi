@@ -1,3 +1,6 @@
+<!-- > [!IMPORTANT] -->
+<!-- > Wagmi is participating in Gitcoin Grants round 21. Consider <a href="https://explorer.gitcoin.co/#/round/42161/389/74">supporting the project</a>. Thank you. 🙏 -->
+
 <br>
 
 <p align="center">
@@ -70,14 +73,20 @@ Contributions to Wagmi are greatly appreciated! If you're interested in contribu
 
 If you find Wagmi useful or use it for work, please consider [sponsoring Wagmi](https://github.com/sponsors/wevm?metadata_campaign=gh_readme_support). Thank you 🙏
 
-<a href="https://paradigm.xyz">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/paradigm-dark.svg">
-    <img alt="paradigm logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/paradigm-light.svg" width="auto" height="70">
-  </picture>
-</a>
-
-<br>
+<p>
+  <a href="https://paradigm.xyz">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/paradigm-dark.svg">
+      <img alt="paradigm logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/paradigm-light.svg" width="auto" height="70">
+    </picture>
+  </a>
+  <a href="https://ithaca.xyz">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/ithaca-dark.svg">
+      <img alt="ithaca logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/ithaca-light.svg" width="auto" height="70">
+    </picture>
+  </a>
+</p>
 
 <p>
   <a href="https://twitter.com/family">
@@ -192,6 +201,36 @@ If you find Wagmi useful or use it for work, please consider [sponsoring Wagmi](
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/brave-dark.svg">
       <img alt="brave logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/brave-light.svg" width="auto" height="50">
+    </picture>
+  </a>
+  <a href="https://linea.build">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/linea-dark.svg">
+      <img alt="linea logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/linea-light.svg" width="auto" height="50">
+    </picture>
+  </a>
+  <a href="https://uniswap.org">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/uniswap-dark.svg">
+      <img alt="uniswap logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/uniswap-light.svg" width="auto" height="50">
+    </picture>
+  </a>
+  <a href="https://biconomy.io">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/b0276d897be98a4c94ad1d1c72ce99a1020eeb58/content/sponsors/biconomy-dark.svg">
+      <img alt="biconomy logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/biconomy-light.svg" width="auto" height="50">
+    </picture>
+  </a>
+  <a href="https://thirdweb.com">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/thirdweb-dark.svg">
+      <img alt="thirdweb logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/thirdweb-light.svg" width="auto" height="50">
+    </picture>
+  </a>
+  <a href="https://uxuy.com">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/uxuy-dark.svg">
+      <img alt="uxuy logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/uxuy-light.svg" width="auto" height="50">
     </picture>
   </a>
 </p>

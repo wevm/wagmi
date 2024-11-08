@@ -37,59 +37,6 @@ export type InjectedParameters = {
 // Regex of wallets/providers that can accurately simulate contract calls & display contract revert reasons.
 const supportsSimulationIdRegex = /(rabby|trustwallet)/
 
-const targetMap = {
-  coinbaseWallet: {
-    id: 'coinbaseWallet',
-    name: 'Coinbase Wallet',
-    provider(window) {
-      if (window?.coinbaseWalletExtension) return window.coinbaseWalletExtension
-      return findProvider(window, 'isCoinbaseWallet')
-    },
-  },
-  metaMask: {
-    id: 'metaMask',
-    name: 'MetaMask',
-    provider(window) {
-      return findProvider(window, (provider) => {
-        if (!provider.isMetaMask) return false
-        // Brave tries to make itself look like MetaMask
-        // Could also try RPC `web3_clientVersion` if following is unreliable
-        if (provider.isBraveWallet && !provider._events && !provider._state)
-          return false
-        // Other wallets that try to look like MetaMask
-        const flags: WalletProviderFlags[] = [
-          'isApexWallet',
-          'isAvalanche',
-          'isBitKeep',
-          'isBlockWallet',
-          'isKuCoinWallet',
-          'isMathWallet',
-          'isOkxWallet',
-          'isOKExWallet',
-          'isOneInchIOSWallet',
-          'isOneInchAndroidWallet',
-          'isOpera',
-          'isPortal',
-          'isRabby',
-          'isTokenPocket',
-          'isTokenary',
-          'isZerion',
-        ]
-        for (const flag of flags) if (provider[flag]) return false
-        return true
-      })
-    },
-  },
-  phantom: {
-    id: 'phantom',
-    name: 'Phantom',
-    provider(window) {
-      if (window?.phantom?.ethereum) return window.phantom?.ethereum
-      return findProvider(window, 'isPhantom')
-    },
-  },
-} as const satisfies TargetMap
-
 injected.type = 'injected' as const
 export function injected(parameters: InjectedParameters = {}) {
   const { shimDisconnect = true, unstable_shimAsyncInject } = parameters
@@ -151,7 +98,7 @@ export function injected(parameters: InjectedParameters = {}) {
     async setup() {
       const provider = await this.getProvider()
       // Only start listening for events if `target` is set, otherwise `injected()` will also receive events
-      if (provider && parameters.target) {
+      if (provider?.on && parameters.target) {
         if (!connect) {
           connect = this.onConnect.bind(this)
           provider.on('connect', connect)
@@ -181,6 +128,13 @@ export function injected(parameters: InjectedParameters = {}) {
           accounts = (permissions[0]?.caveats?.[0]?.value as string[])?.map(
             (x) => getAddress(x),
           )
+          // `'wallet_requestPermissions'` can return a different order of accounts than `'eth_accounts'`
+          // switch to `'eth_accounts'` ordering if more than one account is connected
+          // https://github.com/wevm/wagmi/issues/4140
+          if (accounts.length > 0) {
+            const sortedAccounts = await this.getAccounts()
+            accounts = sortedAccounts
+          }
         } catch (err) {
           const error = err as RpcError
           // Not all injected providers support `wallet_requestPermissions` (e.g. MetaMask iOS).
@@ -404,6 +358,16 @@ export function injected(parameters: InjectedParameters = {}) {
       const chain = config.chains.find((x) => x.id === chainId)
       if (!chain) throw new SwitchChainError(new ChainNotConfiguredError())
 
+      const promise = new Promise<void>((resolve) => {
+        const listener = ((data) => {
+          if ('chainId' in data && data.chainId === chainId) {
+            config.emitter.off('change', listener)
+            resolve()
+          }
+        }) satisfies Parameters<typeof config.emitter.on>[1]
+        config.emitter.on('change', listener)
+      })
+
       try {
         await Promise.all([
           provider
@@ -421,11 +385,7 @@ export function injected(parameters: InjectedParameters = {}) {
               if (currentChainId === chainId)
                 config.emitter.emit('change', { chainId })
             }),
-          new Promise<void>((resolve) =>
-            config.emitter.once('change', ({ chainId: currentChainId }) => {
-              if (currentChainId === chainId) resolve()
-            }),
-          ),
+          promise,
         ])
         return chain
       } catch (err) {
@@ -467,16 +427,23 @@ export function injected(parameters: InjectedParameters = {}) {
               rpcUrls,
             } satisfies AddEthereumChainParameter
 
-            await provider.request({
-              method: 'wallet_addEthereumChain',
-              params: [addEthereumChain],
-            })
-
-            const currentChainId = await this.getChainId()
-            if (currentChainId !== chainId)
-              throw new UserRejectedRequestError(
-                new Error('User rejected switch after adding network.'),
-              )
+            await Promise.all([
+              provider
+                .request({
+                  method: 'wallet_addEthereumChain',
+                  params: [addEthereumChain],
+                })
+                .then(async () => {
+                  const currentChainId = await this.getChainId()
+                  if (currentChainId === chainId)
+                    config.emitter.emit('change', { chainId })
+                  else
+                    throw new UserRejectedRequestError(
+                      new Error('User rejected switch after adding network.'),
+                    )
+                }),
+              promise,
+            ])
 
             return chain
           } catch (error) {
@@ -571,6 +538,62 @@ export function injected(parameters: InjectedParameters = {}) {
   }))
 }
 
+const targetMap = {
+  coinbaseWallet: {
+    id: 'coinbaseWallet',
+    name: 'Coinbase Wallet',
+    provider(window) {
+      if (window?.coinbaseWalletExtension) return window.coinbaseWalletExtension
+      return findProvider(window, 'isCoinbaseWallet')
+    },
+  },
+  metaMask: {
+    id: 'metaMask',
+    name: 'MetaMask',
+    provider(window) {
+      return findProvider(window, (provider) => {
+        if (!provider.isMetaMask) return false
+        // Brave tries to make itself look like MetaMask
+        // Could also try RPC `web3_clientVersion` if following is unreliable
+        if (provider.isBraveWallet && !provider._events && !provider._state)
+          return false
+        // Other wallets that try to look like MetaMask
+        const flags = [
+          'isApexWallet',
+          'isAvalanche',
+          'isBitKeep',
+          'isBlockWallet',
+          'isKuCoinWallet',
+          'isMathWallet',
+          'isOkxWallet',
+          'isOKExWallet',
+          'isOneInchIOSWallet',
+          'isOneInchAndroidWallet',
+          'isOpera',
+          'isPortal',
+          'isRabby',
+          'isTokenPocket',
+          'isTokenary',
+          'isUniswapWallet',
+          'isZerion',
+        ] satisfies WalletProviderFlags[]
+        for (const flag of flags) if (provider[flag]) return false
+        return true
+      })
+    },
+  },
+  phantom: {
+    id: 'phantom',
+    name: 'Phantom',
+    provider(window) {
+      if (window?.phantom?.ethereum) return window.phantom?.ethereum
+      return findProvider(window, 'isPhantom')
+    },
+  },
+} as const satisfies TargetMap
+
+type TargetMap = { [_ in TargetId]?: Target | undefined }
+
 type Target = {
   icon?: string | undefined
   id: string
@@ -588,9 +611,9 @@ type TargetId = Compute<WalletProviderFlags> extends `is${infer name}`
     : never
   : never
 
-type TargetMap = { [_ in TargetId]?: Target | undefined }
-
-/** @deprecated */
+/**
+ * @deprecated As of 2024/10/16, we are no longer accepting new provider flags as EIP-6963 should be used instead.
+ */
 type WalletProviderFlags =
   | 'isApexWallet'
   | 'isAvalanche'
@@ -627,6 +650,7 @@ type WalletProviderFlags =
   | 'isTokenary'
   | 'isTrust'
   | 'isTrustWallet'
+  | 'isUniswapWallet'
   | 'isXDEFI'
   | 'isZerion'
 

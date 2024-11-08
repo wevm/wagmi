@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  lint:
-    name: Lint
+  check:
+    name: Check
     permissions:
       contents: write
     runs-on: ubuntu-latest
@@ -14,15 +14,17 @@ jobs:
     steps:
       - name: Clone repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_PTOKEN }}
 
       - name: Install dependencies
         uses: wevm/actions/.github/actions/pnpm@main
 
-      - name: Lint repo
-        run: pnpm lint:repo
+      - name: Check repo
+        run: pnpm check:repo
 
-      - name: Lint code
-        run: pnpm lint
+      - name: Check code
+        run: pnpm check
 
       - name: Update package versions
         run: pnpm version:update
@@ -37,7 +39,7 @@ jobs:
 
   build:
     name: Build
-    needs: lint
+    needs: check
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
@@ -59,13 +61,13 @@ jobs:
 
   types:
     name: Types
-    needs: lint
+    needs: check
     runs-on: ubuntu-latest
     timeout-minutes: 5
     strategy:
       matrix:
         typescript-version: ['5.0.4', '5.1.6', '5.2.2', '5.3.3', '5.4.5', '5.5.2']
-        viem-version: ['2.17.0', 'latest']
+        viem-version: ['2.21.28', 'latest']
 
     steps:
       - name: Clone repository
@@ -80,9 +82,9 @@ jobs:
         run: pnpm preconstruct
 
       - name: Check types
-        run: pnpm typecheck
+        run: pnpm check:types
 
-      # Redundant with `pnpm typecheck`
+        # Redundant with `pnpm check:types`
       # If Vitest adds special features in the future, e.g. type coverage, can add this back!
       # - name: Test types
       #   run: pnpm test:typecheck

@@ -34,6 +34,11 @@ export function useSponsors() {
           url: 'https://paradigm.xyz',
           img: 'paradigm-light.svg',
         },
+        {
+          name: 'Ithaca',
+          url: 'https://ithaca.xyz',
+          img: 'ithaca-light.svg',
+        },
       ],
       gold: [
         {
@@ -50,6 +55,11 @@ export function useSponsors() {
           name: 'Brave',
           url: 'https://brave.com',
           img: 'brave-light.svg',
+        },
+        {
+          name: 'Linea',
+          url: 'https://linea.build',
+          img: 'linea-light.svg',
         },
       ],
       silver: [
@@ -132,6 +142,26 @@ export function useSponsors() {
           name: 'Reservoir',
           url: 'https://reservoir.tools',
           img: 'reservoir-light.svg',
+        },
+        {
+          name: 'Uniswap',
+          url: 'https://uniswap.org',
+          img: 'uniswap-light.svg',
+        },
+        {
+          name: 'Biconomy',
+          url: 'https://biconomy.io',
+          img: 'biconomy-light.svg',
+        },
+        {
+          name: 'Thirdweb',
+          url: 'https://thirdweb.com',
+          img: 'thirdweb-light.svg',
+        },
+        {
+          name: 'Uxuy',
+          url: 'https://uxuy.com',
+          img: 'uxuy-light.svg',
         },
       ],
     }

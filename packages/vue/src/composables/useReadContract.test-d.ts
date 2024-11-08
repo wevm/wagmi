@@ -87,3 +87,13 @@ test('overloads', () => {
     // @ts-ignore – TODO: Fix https://github.com/wevm/viem/issues/1916
   >(result4.data)
 })
+
+test('deployless read (bytecode)', () => {
+  const result = useReadContract({
+    code: '0x',
+    abi: abi.erc20,
+    functionName: 'balanceOf',
+    args: ['0x'],
+  })
+  expectTypeOf(result.data.value).toEqualTypeOf<bigint | undefined>()
+})

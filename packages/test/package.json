@@ -11,9 +11,9 @@
   "scripts": {
     "build": "pnpm run clean && pnpm run build:esm+types",
     "build:esm+types": "tsc --project tsconfig.build.json --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
+    "check:types": "tsc --noEmit",
     "clean": "rm -rf dist tsconfig.tsbuildinfo",
-    "test:build": "publint --strict",
-    "typecheck": "tsc --noEmit"
+    "test:build": "publint --strict"
   },
   "files": [
     "dist/**",
@@ -99,16 +99,17 @@
     }
   },
   "devDependencies": {
-    "@tanstack/react-query": ">=5.45.1",
-    "@tanstack/vue-query": ">=5.45.0",
-    "@testing-library/react": ">=15.0.7",
-    "@types/react": ">=18.3.1",
-    "@types/react-dom": ">=18.3.0",
+    "@tanstack/react-query": "catalog:",
+    "@tanstack/vue-query": "catalog:",
+    "@testing-library/dom": "catalog:",
+    "@testing-library/react": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
     "@wagmi/core": "workspace:*",
     "@wagmi/vue": "workspace:*",
-    "react": ">=18.3.1",
-    "react-dom": ">=18.3.1",
-    "vue": ">=3.4.21",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "vue": "catalog:",
     "wagmi": "workspace:*"
   },
   "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],

@@ -1,6 +1,6 @@
 import { config, testClient, wait } from '@wagmi/test'
 import { parseEther } from 'viem'
-import { expect, test } from 'vitest'
+import { beforeEach, expect, test } from 'vitest'
 
 import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'
@@ -8,6 +8,11 @@ import { sendTransaction } from './sendTransaction.js'
 import { waitForTransactionReceipt } from './waitForTransactionReceipt.js'
 
 const connector = config.connectors[0]!
+
+beforeEach(async () => {
+  if (config.state.current === connector.uid)
+    await disconnect(config, { connector })
+})
 
 test('default', async () => {
   await connect(config, { connector })
@@ -28,4 +33,26 @@ test('default', async () => {
   })
 
   await disconnect(config, { connector })
+})
+
+test('behavior: transaction reverted', async () => {
+  await expect(
+    waitForTransactionReceipt(config, {
+      hash: '0x745367f76807d411b7fa4c3a552a62e3e45303ef40145fff04d84b867c2575d3',
+    }),
+  ).rejects.toThrowErrorMatchingInlineSnapshot(`
+    [CallExecutionError: Execution reverted with reason: PartyBid::claim: contribution already claimed.
+
+    Raw Call Arguments:
+      to:                    0xf1332f21487e74612ed3a0fb36da729b73f1ae19
+      value:                 0 ETH
+      data:                  0x1e83409a000000000000000000000000a0cf798816d4b9b9866b5330eea46a18382f251e
+      gas:                   128730
+      maxFeePerGas:          43.307900987 gwei
+      maxPriorityFeePerGas:  1.5 gwei
+      nonce:                 43
+
+    Details: execution reverted: PartyBid::claim: contribution already claimed
+    Version: 2.21.28]
+  `)
 })

@@ -1,7 +1,7 @@
 <script setup>
 const packageName = '@wagmi/core'
 const actionName = 'signMessage'
-const typeName = 'signMessage'
+const typeName = 'SignMessage'
 </script>
 
 # signMessage

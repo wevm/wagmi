@@ -351,6 +351,13 @@ export {
 } from '../actions/watchAccount.js'
 
 export {
+  type WatchAssetParameters,
+  type WatchAssetErrorType,
+  type WatchAssetReturnType,
+  watchAsset,
+} from '../actions/watchAsset.js'
+
+export {
   type WatchBlocksParameters,
   type WatchBlocksReturnType,
   watchBlocks,
@@ -449,6 +456,7 @@ export {
   type Connector,
   type Config,
   type CreateConfigParameters,
+  type PartializedState,
   type State,
   type Transport,
   createConfig,
@@ -491,6 +499,8 @@ export {
   ConnectorAccountNotFoundError,
   type ConnectorChainMismatchErrorType,
   ConnectorChainMismatchError,
+  type ConnectorUnavailableReconnectingErrorType,
+  ConnectorUnavailableReconnectingError,
 } from '../errors/config.js'
 
 export {
@@ -518,9 +528,9 @@ export { fallback } from '../transports/fallback.js'
 // Types
 ////////////////////////////////////////////////////////////////////////////////
 
-export { type SelectChains } from '../types/chain.js'
+export type { SelectChains } from '../types/chain.js'
 
-export { type Register, type ResolvedRegister } from '../types/register.js'
+export type { Register, ResolvedRegister } from '../types/register.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // Utilities
@@ -535,6 +545,8 @@ export {
 export { deepEqual } from '../utils/deepEqual.js'
 
 export { deserialize } from '../utils/deserialize.js'
+
+export { extractRpcUrls } from '../utils/extractRpcUrls.js'
 
 export { normalizeChainId } from '../utils/normalizeChainId.js'
 

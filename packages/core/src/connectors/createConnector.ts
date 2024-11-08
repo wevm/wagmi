@@ -7,6 +7,7 @@ import type {
   ProviderMessage,
 } from 'viem'
 
+import type { Transport } from '../createConfig.js'
 import type { Emitter } from '../createEmitter.js'
 import type { Storage } from '../createStorage.js'
 import type { Compute, ExactPartial, StrictOmit } from '../types/utils.js'
@@ -30,11 +31,13 @@ export type CreateConnectorFn<
   chains: readonly [Chain, ...Chain[]]
   emitter: Emitter<ConnectorEventMap>
   storage?: Compute<Storage<storageItem>> | null | undefined
+  transports?: Record<number, Transport> | undefined
 }) => Compute<
   {
     readonly icon?: string | undefined
     readonly id: string
     readonly name: string
+    readonly rdns?: string | undefined
     readonly supportsSimulation?: boolean | undefined
     readonly type: string
 

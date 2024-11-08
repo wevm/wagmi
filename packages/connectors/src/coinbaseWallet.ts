@@ -89,6 +89,7 @@ function version4(parameters: Version4Parameters) {
   return createConnector<Provider>((config) => ({
     id: 'coinbaseWalletSDK',
     name: 'Coinbase Wallet',
+    rdns: 'com.coinbase.wallet',
     supportsSimulation: true,
     type: coinbaseWallet.type,
     async connect({ chainId } = {}) {
@@ -156,16 +157,16 @@ function version4(parameters: Version4Parameters) {
     async getAccounts() {
       const provider = await this.getProvider()
       return (
-        await provider.request<string[]>({
+        (await provider.request({
           method: 'eth_accounts',
-        })
+        })) as string[]
       ).map((x) => getAddress(x))
     },
     async getChainId() {
       const provider = await this.getProvider()
-      const chainId = await provider.request<Hex>({
+      const chainId = (await provider.request({
         method: 'eth_chainId',
-      })
+      })) as Hex
       return Number(chainId)
     },
     async getProvider() {
@@ -173,10 +174,13 @@ function version4(parameters: Version4Parameters) {
         // Unwrapping import for Vite compatibility.
         // See: https://github.com/vitejs/vite/issues/9703
         const CoinbaseWalletSDK = await (async () => {
-          const { default: SDK } = await import('@coinbase/wallet-sdk')
-          if (typeof SDK !== 'function' && typeof SDK.default === 'function')
+          const SDK = await import('@coinbase/wallet-sdk')
+          if (
+            typeof SDK.CoinbaseWalletSDK !== 'function' &&
+            typeof SDK.default === 'function'
+          )
             return SDK.default
-          return SDK as unknown as typeof SDK.default
+          return SDK.CoinbaseWalletSDK
         })()
 
         sdk = new CoinbaseWalletSDK({

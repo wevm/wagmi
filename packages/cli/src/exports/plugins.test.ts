@@ -10,7 +10,9 @@ test('exports', () => {
       "etherscan",
       "fetch",
       "foundry",
+      "foundryDefaultExcludes",
       "hardhat",
+      "hardhatDefaultExcludes",
       "react",
       "sourcify",
     ]

@@ -1,21 +1,27 @@
 import type {
   MetaMaskSDK,
   MetaMaskSDKOptions,
+  RPC_URLS_MAP,
   SDKProvider,
 } from '@metamask/sdk'
 import {
   ChainNotConfiguredError,
   type Connector,
+  ProviderNotFoundError,
   createConnector,
+  extractRpcUrls,
 } from '@wagmi/core'
 import type {
   Compute,
   ExactPartial,
+  OneOf,
   RemoveUndefined,
+  UnionCompute,
 } from '@wagmi/core/internal'
 import {
   type AddEthereumChainParameter,
   type Address,
+  type Hex,
   type ProviderConnectInfo,
   type ProviderRpcError,
   ResourceUnavailableRpcError,
@@ -23,13 +29,48 @@ import {
   SwitchChainError,
   UserRejectedRequestError,
   getAddress,
+  hexToNumber,
   numberToHex,
   withRetry,
   withTimeout,
 } from 'viem'
 
-export type MetaMaskParameters = Compute<
-  ExactPartial<Omit<MetaMaskSDKOptions, '_source' | 'readonlyRPCMap'>>
+export type MetaMaskParameters = UnionCompute<
+  WagmiMetaMaskSDKOptions &
+    OneOf<
+      | {
+          /* Shortcut to connect and sign a message */
+          connectAndSign?: string | undefined
+        }
+      | {
+          // TODO: Strongly type `method` and `params`
+          /* Allow `connectWith` any rpc method */
+          connectWith?: { method: string; params: unknown[] } | undefined
+        }
+    >
+>
+
+type WagmiMetaMaskSDKOptions = Compute<
+  ExactPartial<
+    Omit<
+      MetaMaskSDKOptions,
+      | '_source'
+      | 'forceDeleteProvider'
+      | 'forceInjectProvider'
+      | 'injectProvider'
+      | 'useDeeplink'
+      | 'readonlyRPCMap'
+    >
+  > & {
+    /** @deprecated */
+    forceDeleteProvider?: MetaMaskSDKOptions['forceDeleteProvider']
+    /** @deprecated */
+    forceInjectProvider?: MetaMaskSDKOptions['forceInjectProvider']
+    /** @deprecated */
+    injectProvider?: MetaMaskSDKOptions['injectProvider']
+    /** @deprecated */
+    useDeeplink?: MetaMaskSDKOptions['useDeeplink']
+  }
 >
 
 metaMask.type = 'metaMask' as const
@@ -54,12 +95,22 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
   return createConnector<Provider, Properties>((config) => ({
     id: 'metaMaskSDK',
     name: 'MetaMask',
+    rdns: 'io.metamask',
     type: metaMask.type,
     async setup() {
       const provider = await this.getProvider()
-      if (provider && !connect) {
-        connect = this.onConnect.bind(this)
-        provider.on('connect', connect as Listener)
+      if (provider?.on) {
+        if (!connect) {
+          connect = this.onConnect.bind(this)
+          provider.on('connect', connect as Listener)
+        }
+
+        // We shouldn't need to listen for `'accountsChanged'` here since the `'connect'` event should suffice (and wallet shouldn't be connected yet).
+        // Some wallets, like MetaMask, do not implement the `'connect'` event and overload `'accountsChanged'` instead.
+        if (!accountsChanged) {
+          accountsChanged = this.onAccountsChanged.bind(this)
+          provider.on('accountsChanged', accountsChanged as Listener)
+        }
       }
     },
     async connect({ chainId, isReconnecting } = {}) {
@@ -73,11 +124,26 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       if (isReconnecting) accounts = await this.getAccounts().catch(() => [])
 
       try {
+        let signResponse: string | undefined
+        let connectWithResponse: unknown | undefined
         if (!accounts?.length) {
-          const requestedAccounts = (await sdk.connect()) as string[]
-          accounts = requestedAccounts.map((x) => getAddress(x))
-        }
+          if (parameters.connectAndSign || parameters.connectWith) {
+            if (parameters.connectAndSign)
+              signResponse = await sdk.connectAndSign({
+                msg: parameters.connectAndSign,
+              })
+            else if (parameters.connectWith)
+              connectWithResponse = await sdk.connectWith({
+                method: parameters.connectWith.method,
+                params: parameters.connectWith.params,
+              })
 
+            accounts = await this.getAccounts()
+          } else {
+            const requestedAccounts = (await sdk.connect()) as string[]
+            accounts = requestedAccounts.map((x) => getAddress(x))
+          }
+        }
         // Switch to chain if provided
         let currentChainId = (await this.getChainId()) as number
         if (chainId && currentChainId !== chainId) {
@@ -92,6 +158,19 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           provider.removeListener('display_uri', displayUri)
           displayUri = undefined
         }
+
+        if (signResponse)
+          provider.emit('connectAndSign', {
+            accounts,
+            chainId: currentChainId,
+            signResponse,
+          })
+        else if (connectWithResponse)
+          provider.emit('connectWith', {
+            accounts,
+            chainId: currentChainId,
+            connectWithResponse,
+          })
 
         // Manage EIP-1193 event listeners
         // https://eips.ethereum.org/EIPS/eip-1193#events
@@ -126,10 +205,6 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       const provider = await this.getProvider()
 
       // Manage EIP-1193 event listeners
-      if (accountsChanged) {
-        provider.removeListener('accountsChanged', accountsChanged)
-        accountsChanged = undefined
-      }
       if (chainChanged) {
         provider.removeListener('chainChanged', chainChanged)
         chainChanged = undefined
@@ -170,21 +245,38 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           return SDK as unknown as typeof SDK.default
         })()
 
+        const readonlyRPCMap: RPC_URLS_MAP = {}
+        for (const chain of config.chains)
+          readonlyRPCMap[numberToHex(chain.id)] = extractRpcUrls({
+            chain,
+            transports: config.transports,
+          })?.[0]
+
         sdk = new MetaMaskSDK({
           _source: 'wagmi',
+          forceDeleteProvider: false,
+          forceInjectProvider: false,
+          injectProvider: false,
           // Workaround cast since MetaMask SDK does not support `'exactOptionalPropertyTypes'`
           ...(parameters as RemoveUndefined<typeof parameters>),
-          readonlyRPCMap: Object.fromEntries(
-            config.chains.map((chain) => [
-              chain.id,
-              chain.rpcUrls.default.http[0]!,
-            ]),
-          ),
-          dappMetadata: parameters.dappMetadata ?? {},
+          readonlyRPCMap,
+          dappMetadata:
+            parameters.dappMetadata ??
+            (typeof window !== 'undefined'
+              ? { url: window.location.origin }
+              : { name: 'wagmi', url: 'https://wagmi.sh' }),
           useDeeplink: parameters.useDeeplink ?? true,
         })
-        await sdk.init()
-        return sdk.getProvider()!
+        const result = await sdk.init()
+        // On initial load, sometimes `sdk.getProvider` does not return provider.
+        // https://github.com/wevm/wagmi/issues/4367
+        // Use result of `init` call if available.
+        const provider = (() => {
+          if (result?.activeProvider) return result.activeProvider
+          return sdk.getProvider()
+        })()
+        if (!provider) throw new ProviderNotFoundError()
+        return provider
       }
 
       if (!provider) {
@@ -218,15 +310,30 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
 
       try {
         await Promise.all([
-          provider.request({
-            method: 'wallet_switchEthereumChain',
-            params: [{ chainId: numberToHex(chainId) }],
-          }),
-          new Promise<void>((resolve) =>
-            config.emitter.once('change', ({ chainId: currentChainId }) => {
-              if (currentChainId === chainId) resolve()
+          provider
+            .request({
+              method: 'wallet_switchEthereumChain',
+              params: [{ chainId: numberToHex(chainId) }],
+            })
+            // During `'wallet_switchEthereumChain'`, MetaMask makes a `'net_version'` RPC call to the target chain.
+            // If this request fails, MetaMask does not emit the `'chainChanged'` event, but will still switch the chain.
+            // To counter this behavior, we request and emit the current chain ID to confirm the chain switch either via
+            // this callback or an externally emitted `'chainChanged'` event.
+            // https://github.com/MetaMask/metamask-extension/issues/24247
+            .then(async () => {
+              const currentChainId = await this.getChainId()
+              if (currentChainId === chainId)
+                config.emitter.emit('change', { chainId })
             }),
-          ),
+          new Promise<void>((resolve) => {
+            const listener = ((data) => {
+              if ('chainId' in data && data.chainId === chainId) {
+                config.emitter.off('change', listener)
+                resolve()
+              }
+            }) satisfies Parameters<typeof config.emitter.on>[1]
+            config.emitter.on('change', listener)
+          }),
         ])
         return chain
       } catch (err) {
@@ -273,7 +380,10 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
               params: [addEthereumChain],
             })
 
-            const currentChainId = await this.getChainId()
+            const currentChainId = hexToNumber(
+              // Call `'eth_chainId'` directly to guard against `this.state.chainId` (via `provider.getChainId`) being stale.
+              (await provider.request({ method: 'eth_chainId' })) as Hex,
+            )
             if (currentChainId !== chainId)
               throw new UserRejectedRequestError(
                 new Error('User rejected switch after adding network.'),
@@ -292,7 +402,12 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
     },
     async onAccountsChanged(accounts) {
       // Disconnect if there are no accounts
-      if (accounts.length === 0) this.onDisconnect()
+      if (accounts.length === 0) {
+        // ... and using browser extension
+        if (sdk.isExtensionActive()) this.onDisconnect()
+        // FIXME(upstream): Mobile app sometimes emits invalid `accountsChanged` event with empty accounts array
+        else return
+      }
       // Connect if emitter is listening for connect event (e.g. is disconnected and connects through wallet interface)
       else if (config.emitter.listenerCount('connect')) {
         const chainId = (await this.getChainId()).toString()
@@ -342,19 +457,9 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         if (provider && !!(await this.getAccounts()).length) return
       }
 
-      // Remove cached SDK properties.
-      if (typeof localStorage !== 'undefined') {
-        localStorage.removeItem('MMSDK_cached_address')
-        localStorage.removeItem('MMSDK_cached_chainId')
-      }
-
       config.emitter.emit('disconnect')
 
       // Manage EIP-1193 event listeners
-      if (!accountsChanged) {
-        accountsChanged = this.onAccountsChanged.bind(this)
-        provider.on('accountsChanged', accountsChanged as Listener)
-      }
       if (chainChanged) {
         provider.removeListener('chainChanged', chainChanged)
         chainChanged = undefined

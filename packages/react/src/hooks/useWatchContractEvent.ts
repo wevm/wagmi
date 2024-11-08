@@ -8,8 +8,8 @@ import {
 } from '@wagmi/core'
 import type { UnionCompute, UnionExactPartial } from '@wagmi/core/internal'
 import { useEffect } from 'react'
-
 import type { Abi, ContractEventName } from 'viem'
+
 import type { ConfigParameter, EnabledParameter } from '../types/properties.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'

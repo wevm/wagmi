@@ -11,7 +11,7 @@ import type { ContractConfig, Plugin } from '../config.js'
 import * as logger from '../logger.js'
 import type { Compute, RequiredBy } from '../types.js'
 
-const defaultExcludes = [
+export const foundryDefaultExcludes = [
   'Base.sol/**',
   'Common.sol/**',
   'Components.sol/**',
@@ -107,7 +107,7 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
   const {
     artifacts,
     deployments = {},
-    exclude = defaultExcludes,
+    exclude = foundryDefaultExcludes,
     forge: {
       clean = false,
       build = true,

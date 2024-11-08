@@ -89,16 +89,7 @@ export function safe(parameters: SafeParameters = {}) {
       if (!isIframe) return
 
       if (!provider_) {
-        const { default: SafeAppsSDK } = await import(
-          '@safe-global/safe-apps-sdk'
-        )
-        let SDK: typeof SafeAppsSDK.default
-        if (
-          typeof SafeAppsSDK !== 'function' &&
-          typeof SafeAppsSDK.default === 'function'
-        )
-          SDK = SafeAppsSDK.default
-        else SDK = SafeAppsSDK as unknown as typeof SafeAppsSDK.default
+        const { default: SDK } = await import('@safe-global/safe-apps-sdk')
         const sdk = new SDK(parameters)
 
         // `getInfo` hangs when not used in Safe App iFrame
@@ -107,9 +98,17 @@ export function safe(parameters: SafeParameters = {}) {
           timeout: parameters.unstable_getInfoTimeout ?? 10,
         })
         if (!safe) throw new Error('Could not load Safe information')
-        const { SafeAppProvider } = await import(
-          '@safe-global/safe-apps-provider'
-        )
+        // Unwrapping import for Vite compatibility.
+        // See: https://github.com/vitejs/vite/issues/9703
+        const SafeAppProvider = await (async () => {
+          const Provider = await import('@safe-global/safe-apps-provider')
+          if (
+            typeof Provider.SafeAppProvider !== 'function' &&
+            typeof Provider.default.SafeAppProvider === 'function'
+          )
+            return Provider.default.SafeAppProvider
+          return Provider.SafeAppProvider
+        })()
         provider_ = new SafeAppProvider(safe, sdk)
       }
       return provider_

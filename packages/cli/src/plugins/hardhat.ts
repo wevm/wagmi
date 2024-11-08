@@ -9,7 +9,7 @@ import * as logger from '../logger.js'
 import type { Compute, RequiredBy } from '../types.js'
 import { getIsPackageInstalled, getPackageManager } from '../utils/packages.js'
 
-const defaultExcludes = ['build-info/**', '*.dbg.json']
+export const hardhatDefaultExcludes = ['build-info/**', '*.dbg.json']
 
 export type HardhatConfig = {
   /**
@@ -72,7 +72,7 @@ export function hardhat(config: HardhatConfig): HardhatResult {
   const {
     artifacts = 'artifacts',
     deployments = {},
-    exclude = defaultExcludes,
+    exclude = hardhatDefaultExcludes,
     commands = {},
     include = ['*.json'],
     namePrefix = '',

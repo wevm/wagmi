@@ -227,12 +227,12 @@ export function getSidebar() {
             link: '/react/api/hooks/useInfiniteReadContracts',
           },
           {
-            text: 'useReadContract',
-            link: '/react/api/hooks/useReadContract',
-          },
-          {
             text: 'usePrepareTransactionRequest',
             link: '/react/api/hooks/usePrepareTransactionRequest',
+          },
+          {
+            text: 'useReadContract',
+            link: '/react/api/hooks/useReadContract',
           },
           {
             text: 'useReadContracts',
@@ -302,6 +302,10 @@ export function getSidebar() {
           {
             text: 'useWalletClient',
             link: '/react/api/hooks/useWalletClient',
+          },
+          {
+            text: 'useWatchAsset',
+            link: '/react/api/hooks/useWatchAsset',
           },
           {
             text: 'useWatchBlocks',
@@ -511,6 +515,10 @@ export function getSidebar() {
             text: 'useBlockNumber',
             link: '/vue/api/composables/useBlockNumber',
           },
+          {
+            text: 'useBytecode',
+            link: '/vue/api/composables/useBytecode',
+          },
           { text: 'useChainId', link: '/vue/api/composables/useChainId' },
           { text: 'useChains', link: '/vue/api/composables/useChains' },
           { text: 'useClient', link: '/vue/api/composables/useClient' },
@@ -587,6 +595,14 @@ export function getSidebar() {
           {
             text: 'useWaitForTransactionReceipt',
             link: '/vue/api/composables/useWaitForTransactionReceipt',
+          },
+          {
+            text: 'useWatchBlockNumber',
+            link: '/vue/api/composables/useWatchBlockNumber',
+          },
+          {
+            text: 'useWatchContractEvent',
+            link: '/vue/api/composables/useWatchContractEvent',
           },
           {
             text: 'useWriteContract',
@@ -891,6 +907,10 @@ export function getSidebar() {
           {
             text: 'watchAccount',
             link: '/core/api/actions/watchAccount',
+          },
+          {
+            text: 'watchAsset',
+            link: '/core/api/actions/watchAsset',
           },
           {
             text: 'watchBlocks',

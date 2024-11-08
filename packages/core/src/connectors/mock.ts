@@ -27,11 +27,13 @@ export type MockParameters = {
   accounts: readonly [Address, ...Address[]]
   features?:
     | {
+        defaultConnected?: boolean | undefined
         connectError?: boolean | Error | undefined
         switchChainError?: boolean | Error | undefined
         signMessageError?: boolean | Error | undefined
         signTypedDataError?: boolean | Error | undefined
         reconnect?: boolean | undefined
+        watchAssetError?: boolean | Error | undefined
       }
     | undefined
 }
@@ -39,12 +41,14 @@ export type MockParameters = {
 mock.type = 'mock' as const
 export function mock(parameters: MockParameters) {
   const transactionCache = new Map<Hex, Hex[]>()
-  const features = parameters.features ?? {}
+  const features =
+    parameters.features ??
+    ({ defaultConnected: false } satisfies MockParameters['features'])
 
   type Provider = ReturnType<
     Transport<'custom', unknown, EIP1193RequestFn<WalletRpcSchema>>
   >
-  let connected = false
+  let connected = features.defaultConnected
   let connectedChainId: number
 
   return createConnector<Provider>((config) => ({
@@ -156,6 +160,17 @@ export function mock(parameters: MockParameters) {
           connectedChainId = fromHex((params as Params)[0].chainId, 'number')
           this.onChainChanged(connectedChainId.toString())
           return
+        }
+
+        if (method === 'wallet_watchAsset') {
+          if (features.watchAssetError) {
+            if (typeof features.watchAssetError === 'boolean')
+              throw new UserRejectedRequestError(
+                new Error('Failed to switch chain.'),
+              )
+            throw features.watchAssetError
+          }
+          return connected
         }
 
         if (method === 'wallet_getCapabilities')

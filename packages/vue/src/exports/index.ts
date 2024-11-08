@@ -46,6 +46,12 @@ export {
 } from '../composables/useBlockNumber.js'
 
 export {
+  type UseBytecodeParameters,
+  type UseBytecodeReturnType,
+  useBytecode,
+} from '../composables/useBytecode.js'
+
+export {
   type UseChainIdParameters,
   type UseChainIdReturnType,
   useChainId,
@@ -190,6 +196,12 @@ export {
 } from '../composables/useWatchBlockNumber.js'
 
 export {
+  type UseWatchContractEventParameters,
+  type UseWatchContractEventReturnType,
+  useWatchContractEvent,
+} from '../composables/useWatchContractEvent.js'
+
+export {
   type UseWaitForTransactionReceiptParameters,
   type UseWaitForTransactionReceiptReturnType,
   useWaitForTransactionReceipt,
@@ -211,6 +223,7 @@ export {
   type Connector,
   type Config,
   type CreateConfigParameters,
+  type PartializedState,
   type State,
   createConfig,
   // Connector
@@ -228,6 +241,8 @@ export {
   ConnectorAccountNotFoundError,
   type ConnectorChainMismatchErrorType,
   ConnectorChainMismatchError,
+  type ConnectorUnavailableReconnectingErrorType,
+  ConnectorUnavailableReconnectingError,
   type ProviderNotFoundErrorType,
   ProviderNotFoundError,
   type SwitchChainNotSupportedErrorType,

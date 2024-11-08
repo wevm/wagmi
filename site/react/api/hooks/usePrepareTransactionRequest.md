@@ -284,7 +284,7 @@ function App() {
 
 `bigint | undefined`
 
-The transaction recipient or contract address.
+Value in wei sent with this transaction.
 
 ::: code-group
 ```tsx [index.tsx]
@@ -307,7 +307,7 @@ function App() {
 
 `Config | undefined`
 
-[`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/api/WagmiProvider).
+[`Config`](/react/api/createConfig#config) to use instead of retrieving from the nearest [`WagmiProvider`](/react/api/WagmiProvider).
 
 ::: code-group
 ```tsx [index.tsx]

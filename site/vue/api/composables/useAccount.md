@@ -51,7 +51,7 @@ import { type UseAccountParameters } from '@wagmi/vue'
 
 `Config | undefined`
 
-[`Config`](/vue/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiPlugin`](/vue/api/WagmiPlugin).
+[`Config`](/vue/api/createConfig#config) to use instead of retrieving from the nearest [`WagmiPlugin`](/vue/api/WagmiPlugin).
 
 ::: code-group
 ```vue [index.vue]

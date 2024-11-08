@@ -30,7 +30,7 @@ export type ConnectorTransport = Transport
 export function unstable_connector(
   connector: Pick<Connector, 'type'>,
   config: ConnectorTransportConfig = {},
-): Transport {
+): Transport<'connector'> {
   const { type } = connector
   const { key = 'connector', name = 'Connector', retryDelay } = config
 

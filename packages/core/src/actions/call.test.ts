@@ -56,29 +56,6 @@ test.skip('parameters: blockNumber', async () => {
   `)
 })
 
-test('nonce too low', async () => {
-  await expect(
-    call(config, {
-      account,
-      data: name4bytes,
-      to: address.wagmiMintExample,
-      nonce: 0,
-    }),
-  ).rejects.toThrowErrorMatchingInlineSnapshot(`
-    [CallExecutionError: Nonce provided for the transaction is lower than the current nonce of the account.
-    Try increasing the nonce or find the latest nonce with \`getTransactionCount\`.
-
-    Raw Call Arguments:
-      from:   0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
-      to:     0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2
-      data:   0x06fdde03
-      nonce:  0
-
-    Details: nonce too low
-    Version: viem@2.17.0]
-  `)
-})
-
 test('insufficient funds', async () => {
   await expect(
     call(config, {
@@ -104,7 +81,7 @@ test('insufficient funds', async () => {
       value:  100000 ETH
 
     Details: Insufficient funds for gas * price + value
-    Version: viem@2.17.0]
+    Version: 2.21.28]
   `)
 })
 
@@ -127,7 +104,7 @@ test('maxFeePerGas less than maxPriorityFeePerGas', async () => {
       maxFeePerGas:          20 gwei
       maxPriorityFeePerGas:  22 gwei
 
-    Version: viem@2.17.0]
+    Version: 2.21.28]
   `)
 })
 
@@ -147,7 +124,7 @@ test('contract revert (contract error)', async () => {
       data:  0xa0712d6800000000000000000000000000000000000000000000000000000000000001a4
 
     Details: execution reverted: revert: Token ID is taken
-    Version: viem@2.17.0]
+    Version: 2.21.28]
   `)
 })
 
@@ -167,6 +144,6 @@ test('contract revert (insufficient params)', async () => {
       data:  0xa0712d68
 
     Details: execution reverted
-    Version: viem@2.17.0]
+    Version: 2.21.28]
   `)
 })

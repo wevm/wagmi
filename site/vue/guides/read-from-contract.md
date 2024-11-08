@@ -26,6 +26,21 @@ const { data: balance } = useReadContract({
 
 :::
 
+
+If `useReadContract` depends on another value (`address` in the example below), you can use the [`query.enabled`](/vue/api/composables/useReadContract#enabled) option to prevent the query from running until the dependency is ready.
+
+```tsx
+const { data: balance } = useReadContract({
+  ...wagmiContractConfig,
+  functionName: 'balanceOf',
+  args: [address],
+  query: { // [!code focus]
+    enabled: !!address, // [!code focus]
+  }, // [!code focus]
+})
+```
+
+
 ## Loading & Error States
 
 The [`useReadContract` Composable](/vue/api/composables/useReadContract) also returns loading & error states, which can be used to display a loading indicator while the data is being fetched, or an error message if contract execution reverts.

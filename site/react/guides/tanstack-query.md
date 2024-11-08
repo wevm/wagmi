@@ -187,7 +187,7 @@ function App() {
 Each Hook has a corresponding `get<X>QueryOptions` function that returns a query key. You would use this method when you want to utilize the query key outside of a React component in a Vanilla JS context, like in a utility function. 
 
 ```ts 
-import { getBlockQueryOptions } from 'wagmi' // [!code hl]
+import { getBlockQueryOptions } from 'wagmi/query' // [!code hl]
 import { config } from './config'
 
 function perform() {

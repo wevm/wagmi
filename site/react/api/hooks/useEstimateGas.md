@@ -30,7 +30,6 @@ import { useEstimateGas } from 'wagmi'
 function App() {
   const result = useEstimateGas()
 }
-}
 ```
 <<< @/snippets/react/config.ts[config.ts]
 :::

@@ -1,7 +1,10 @@
-import { accounts, config } from '@wagmi/test'
-import { afterEach, expect, test } from 'vitest'
+import { accounts, config, mainnet } from '@wagmi/test'
+import { http } from 'viem'
+import { afterEach, expect, test, vi } from 'vitest'
 
 import { mock } from '../connectors/mock.js'
+import { createConfig } from '../createConfig.js'
+import { createStorage } from '../createStorage.js'
 import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'
 import { reconnect } from './reconnect.js'
@@ -67,4 +70,50 @@ test("behavior: doesn't reconnect if already reconnecting", async () => {
     reconnect(config, { connectors: [connector] }),
   ).resolves.toStrictEqual([])
   config.setState((x) => ({ ...x, status: previousStatus }))
+})
+
+test('behavior: recovers from invalid state', async () => {
+  const state = {
+    'wagmi.store': JSON.stringify({
+      state: {
+        status: 'connected', // <-- invalid - `status` should not be kept in storage
+        chainId: 1,
+        current: '983b8aca245',
+      },
+      version: Number.NaN, // mocked version is `'x.y.z'`, which will get interpreted as `NaN`
+    }),
+  } as Record<string, string>
+  Object.defineProperty(window, 'localStorage', {
+    value: {
+      getItem: vi.fn((key) => state[key] ?? null),
+      removeItem: vi.fn((key) => state.delete?.[key]),
+      setItem: vi.fn((key, value) => {
+        state[key] = value
+      }),
+    },
+    writable: true,
+  })
+
+  const storage = createStorage<{ store: object }>({
+    storage: window.localStorage,
+  })
+
+  const config = createConfig({
+    chains: [mainnet],
+    storage,
+    transports: {
+      [mainnet.id]: http(),
+    },
+  })
+
+  await reconnect(config, { connectors: [connector] })
+
+  expect(config.state).toMatchInlineSnapshot(`
+    {
+      "chainId": 1,
+      "connections": Map {},
+      "current": null,
+      "status": "disconnected",
+    }
+  `)
 })

@@ -10,11 +10,11 @@ export const cookieStorage = {
   },
   setItem(key, value) {
     if (typeof window === 'undefined') return
-    document.cookie = `${key}=${value};Path=/;SameSite=Lax`
+    document.cookie = `${key}=${value};path=/;samesite=Lax`
   },
   removeItem(key) {
     if (typeof window === 'undefined') return
-    document.cookie = `${key}=;max-age=-1`
+    document.cookie = `${key}=;max-age=-1;path=/`
   },
 } satisfies BaseStorage
 

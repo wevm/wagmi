@@ -60,3 +60,15 @@ test('setItem', () => {
   // @ts-expect-error incorrect argument type
   storage.setItem('recentConnectorId', 1n)
 })
+
+test('serialize/deserialize types', () => {
+  createStorage({
+    deserialize(value) {
+      return value
+    },
+    serialize(value) {
+      return value
+    },
+    storage: localStorage,
+  })
+})

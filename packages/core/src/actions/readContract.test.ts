@@ -1,4 +1,4 @@
-import { abi, address, chain, config } from '@wagmi/test'
+import { abi, address, bytecode, chain, config } from '@wagmi/test'
 import { expect, test } from 'vitest'
 
 import { readContract } from './readContract.js'
@@ -24,4 +24,14 @@ test('parameters: chainId', async () => {
       chainId: chain.mainnet2.id,
     }),
   ).resolves.toMatchInlineSnapshot('4n')
+})
+
+test('parameters: deployless read (bytecode)', async () => {
+  await expect(
+    readContract(config, {
+      abi: abi.wagmiMintExample,
+      functionName: 'name',
+      code: bytecode.wagmiMintExample,
+    }),
+  ).resolves.toMatchInlineSnapshot(`"wagmi"`)
 })

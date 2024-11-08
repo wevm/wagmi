@@ -343,6 +343,12 @@ export {
 } from '../hooks/useWaitForTransactionReceipt.js'
 
 export {
+  type UseWatchAssetParameters,
+  type UseWatchAssetReturnType,
+  useWatchAsset,
+} from '../hooks/useWatchAsset.js'
+
+export {
   type UseWatchBlocksParameters,
   type UseWatchBlocksReturnType,
   useWatchBlocks,
@@ -393,6 +399,7 @@ export {
   type Connector,
   type Config,
   type CreateConfigParameters,
+  type PartializedState,
   type State,
   createConfig,
   // Connector
@@ -408,6 +415,10 @@ export {
   ConnectorNotFoundError,
   type ConnectorAccountNotFoundErrorType,
   ConnectorAccountNotFoundError,
+  type ConnectorChainMismatchErrorType,
+  ConnectorChainMismatchError,
+  type ConnectorUnavailableReconnectingErrorType,
+  ConnectorUnavailableReconnectingError,
   type ProviderNotFoundErrorType,
   ProviderNotFoundError,
   type SwitchChainNotSupportedErrorType,
@@ -423,6 +434,7 @@ export {
   http,
   webSocket,
   unstable_connector,
+  type Transport,
   // Types
   type Register,
   type ResolvedRegister,
