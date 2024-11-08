@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.14.4
+
+### Patch Changes
+
+- [#4311](https://github.com/wevm/wagmi/pull/4311) [`e08681c81fbdf475213e2d0f4c5517d0abf4e743`](https://github.com/wevm/wagmi/commit/e08681c81fbdf475213e2d0f4c5517d0abf4e743) Thanks [@chybisov](https://github.com/chybisov)! - Fixed `injected` connector race condition after calling `'wallet_addEthereumChain'` in `switchChain`.
+
 ## 2.14.3
 
 ### Patch Changes
