@@ -233,6 +233,12 @@ If you find Wagmi useful or use it for work, please consider [sponsoring Wagmi](
       <img alt="uxuy logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/uxuy-light.svg" width="auto" height="50">
     </picture>
   </a>
+  <a href="https://polymarket.com">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/polymarket-dark.svg">
+      <img alt="polymarket logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/polymarket-light.svg" width="auto" height="50">
+    </picture>
+  </a>
 </p>
 
 [Sponsor Wagmi](https://github.com/sponsors/wevm?metadata_campaign=gh_readme_support_bottom)

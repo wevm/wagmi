@@ -163,6 +163,11 @@ export function useSponsors() {
           url: 'https://uxuy.com',
           img: 'uxuy-light.svg',
         },
+        {
+          name: 'Polymarket',
+          url: 'https://polymarket.com',
+          img: 'polymarket-light.svg',
+        },
       ],
     }
 
