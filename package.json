@@ -61,7 +61,7 @@
     "publint": "^0.2.11",
     "sherif": "^1.0.0",
     "simple-git-hooks": "^2.11.1",
-    "solid-js": "^1.8.20",
+    "solid-js": "catalog:",
     "typescript": "5.5.4",
     "vite-plugin-solid": "^2.10.2",
     "viem": "2.21.28",

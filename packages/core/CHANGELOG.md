@@ -1,5 +1,25 @@
 # @wagmi/core
 
+## 2.14.4
+
+### Patch Changes
+
+- [#4311](https://github.com/wevm/wagmi/pull/4311) [`e08681c81fbdf475213e2d0f4c5517d0abf4e743`](https://github.com/wevm/wagmi/commit/e08681c81fbdf475213e2d0f4c5517d0abf4e743) Thanks [@chybisov](https://github.com/chybisov)! - Fixed `injected` connector race condition after calling `'wallet_addEthereumChain'` in `switchChain`.
+
+## 2.14.3
+
+### Patch Changes
+
+- [`cb7dd2ebb871d0be8f1a11a8cd8ce592cd74b7c7`](https://github.com/wevm/wagmi/commit/cb7dd2ebb871d0be8f1a11a8cd8ce592cd74b7c7) Thanks [@tmm](https://github.com/tmm)! - Removed unnecessary internal deep equal check in `structuralSharing`.
+
+## 2.14.2
+
+### Patch Changes
+
+- [#4339](https://github.com/wevm/wagmi/pull/4339) [`d0d0963bb5904a15cf0355862d62dd141ce0c31c`](https://github.com/wevm/wagmi/commit/d0d0963bb5904a15cf0355862d62dd141ce0c31c) Thanks [@AndriyAntonenko](https://github.com/AndriyAntonenko)! - Fixed bug in `waitForTransactionReceipt`, where transaction data wasn't passed to `'eth_call'` method as part of getting the revert reason.
+
+- [`ecac0ba36243d94c9199d0bd21937104c835d9a0`](https://github.com/wevm/wagmi/commit/ecac0ba36243d94c9199d0bd21937104c835d9a0) Thanks [@tmm](https://github.com/tmm)! - Fixed `getBalance` symbol error handling.
+
 ## 2.14.1
 
 ### Patch Changes

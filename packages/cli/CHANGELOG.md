@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 2.1.17
+
+### Patch Changes
+
+- [#4370](https://github.com/wevm/wagmi/pull/4370) [`cb58b1ea3ad40e77210f24eb598f9d2306db998c`](https://github.com/wevm/wagmi/commit/cb58b1ea3ad40e77210f24eb598f9d2306db998c) Thanks [@talentlessguy](https://github.com/talentlessguy)! - Bumped internal dependencies.
+
 ## 2.1.16
 
 ### Patch Changes

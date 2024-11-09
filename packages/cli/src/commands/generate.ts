@@ -1,7 +1,7 @@
 import type { Abi } from 'abitype'
 import { Abi as AbiSchema } from 'abitype/zod'
 import { camelCase } from 'change-case'
-import type { FSWatcher, WatchOptions } from 'chokidar'
+import type { ChokidarOptions, FSWatcher } from 'chokidar'
 import { watch } from 'chokidar'
 import { default as dedent } from 'dedent'
 import { default as fs } from 'fs-extra'
@@ -53,7 +53,7 @@ export async function generate(options: Generate = {}) {
   type Watcher = FSWatcher & { config?: Watch }
   const watchers: Watcher[] = []
   const watchWriteDelay = 100
-  const watchOptions: WatchOptions = {
+  const watchOptions: ChokidarOptions = {
     atomic: true,
     // awaitWriteFinish: true,
     ignoreInitial: true,

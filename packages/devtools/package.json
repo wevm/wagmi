@@ -84,12 +84,12 @@
     "@wagmi/devtools-ui": "workspace:*"
   },
   "devDependencies": {
-    "@tanstack/react-query": ">=5.45.1",
-    "@tanstack/solid-query": ">=5.59.0",
-    "@types/react": ">=18.3.1",
+    "@tanstack/react-query": "catalog:",
+    "@tanstack/solid-query": "catalog:",
+    "@types/react": "catalog:",
     "@wagmi/solid": "workspace:*",
-    "react": ">=18.3.1",
-    "solid-js": ">=1.8.20",
+    "react": "catalog:",
+    "solid-js": "catalog:",
     "wagmi": "workspace:*"
   },
   "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],

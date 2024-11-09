@@ -1,6 +1,5 @@
 /* @refresh reload */
 import { QueryClient, QueryClientProvider } from '@tanstack/solid-query'
-import { WagmiDevtools } from '@wagmi/devtools/solid'
 import { WagmiProvider } from '@wagmi/solid'
 import { render } from 'solid-js/web'
 
@@ -27,7 +26,6 @@ render(
       <QueryClientProvider client={queryClient}>
         <App />
       </QueryClientProvider>
-      <WagmiDevtools queryClient={queryClient} />
     </WagmiProvider>
   ),
   document.getElementById('root')!,

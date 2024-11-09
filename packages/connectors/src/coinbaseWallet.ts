@@ -174,10 +174,13 @@ function version4(parameters: Version4Parameters) {
         // Unwrapping import for Vite compatibility.
         // See: https://github.com/vitejs/vite/issues/9703
         const CoinbaseWalletSDK = await (async () => {
-          const { default: SDK } = await import('@coinbase/wallet-sdk')
-          if (typeof SDK !== 'function' && typeof SDK.default === 'function')
+          const SDK = await import('@coinbase/wallet-sdk')
+          if (
+            typeof SDK.CoinbaseWalletSDK !== 'function' &&
+            typeof SDK.default === 'function'
+          )
             return SDK.default
-          return SDK as unknown as typeof SDK.default
+          return SDK.CoinbaseWalletSDK
         })()
 
         sdk = new CoinbaseWalletSDK({

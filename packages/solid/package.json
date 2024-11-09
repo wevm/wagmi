@@ -82,10 +82,9 @@
     "@wagmi/core": "workspace:*"
   },
   "devDependencies": {
-    "@solidjs/testing-library": ">=0.8.10",
-    "@tanstack/solid-query": ">=5.59.0",
-    "@vue/test-utils": "^2.4.6",
-    "solid-js": ">=1.8.20"
+    "@solidjs/testing-library": "catalog:",
+    "@tanstack/solid-query": "catalog:",
+    "solid-js": "catalog:"
   },
   "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
   "funding": "https://github.com/sponsors/wevm",

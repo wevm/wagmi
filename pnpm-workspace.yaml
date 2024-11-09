@@ -1,7 +1,22 @@
 packages:
-  - 'packages/*'
-  - '!packages/register-tests'
-  - 'packages/cli/src/plugins/__fixtures__/hardhat'
-  - 'packages/register-tests/*'
-  - 'playgrounds/*'
-  - 'site'
+  - packages/*
+  - "!packages/register-tests"
+  - packages/cli/src/plugins/__fixtures__/hardhat
+  - packages/register-tests/*
+  - playgrounds/*
+  - site
+
+catalog:
+  "@solidjs/testing-library": "0.8.10"
+  "@tanstack/query-core": "5.49.1"
+  "@tanstack/react-query": "5.49.2"
+  "@tanstack/solid-query": "5.59.17"
+  "@tanstack/vue-query": "5.49.1"
+  "@testing-library/dom": "10.4.0"
+  "@testing-library/react": "16.0.1"
+  "@types/react": "18.3.1"
+  "@types/react-dom": "18.3.0"
+  react-dom: "18.3.1"
+  react: "18.3.1"
+  solid-js: "1.9.3"
+  vue: "3.4.27"

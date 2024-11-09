@@ -1,11 +1,4 @@
-import {
-  type Address,
-  ContractFunctionExecutionError,
-  type Hex,
-  formatUnits,
-  hexToString,
-  trim,
-} from 'viem'
+import { type Address, type Hex, formatUnits, hexToString, trim } from 'viem'
 import {
   type GetBalanceErrorType as viem_GetBalanceErrorType,
   type GetBalanceParameters as viem_GetBalanceParameters,
@@ -18,7 +11,7 @@ import type { Unit } from '../types/unit.js'
 import type { Compute } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 import { getUnit } from '../utils/getUnit.js'
-import { readContracts } from './readContracts.js'
+import { type ReadContractsErrorType, readContracts } from './readContracts.js'
 
 export type GetBalanceParameters<config extends Config = Config> = Compute<
   ChainIdParameter<config> &
@@ -56,7 +49,7 @@ export async function getBalance<config extends Config>(
 
   if (tokenAddress) {
     try {
-      return getTokenBalance(config, {
+      return await getTokenBalance(config, {
         balanceAddress: address,
         chainId,
         symbolType: 'string',
@@ -66,7 +59,10 @@ export async function getBalance<config extends Config>(
       // In the chance that there is an error upon decoding the contract result,
       // it could be likely that the contract data is represented as bytes32 instead
       // of a string.
-      if (error instanceof ContractFunctionExecutionError) {
+      if (
+        (error as ReadContractsErrorType).name ===
+        'ContractFunctionExecutionError'
+      ) {
         const balance = await getTokenBalance(config, {
           balanceAddress: address,
           chainId,

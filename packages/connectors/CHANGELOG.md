@@ -1,5 +1,36 @@
 # @wagmi/connectors
 
+## 5.3.7
+
+### Patch Changes
+
+- Updated dependencies [[`e08681c81fbdf475213e2d0f4c5517d0abf4e743`](https://github.com/wevm/wagmi/commit/e08681c81fbdf475213e2d0f4c5517d0abf4e743)]:
+  - @wagmi/core@2.14.4
+
+## 5.3.6
+
+### Patch Changes
+
+- [#4385](https://github.com/wevm/wagmi/pull/4385) [`7558ff3133c11bc4c49473d08ee9a47eaa12df5b`](https://github.com/wevm/wagmi/commit/7558ff3133c11bc4c49473d08ee9a47eaa12df5b) Thanks [@cb-jake](https://github.com/cb-jake)! - Bumped Coinbase Wallet SDK version.
+
+## 5.3.5
+
+### Patch Changes
+
+- [`7fe78f2d09778fc01fd0cffe85ba198e64999275`](https://github.com/wevm/wagmi/commit/7fe78f2d09778fc01fd0cffe85ba198e64999275) Thanks [@tmm](https://github.com/tmm)! - Fixed MetaMask connector not returning provider in some cases.
+
+- Updated dependencies [[`cb7dd2ebb871d0be8f1a11a8cd8ce592cd74b7c7`](https://github.com/wevm/wagmi/commit/cb7dd2ebb871d0be8f1a11a8cd8ce592cd74b7c7)]:
+  - @wagmi/core@2.14.3
+
+## 5.3.4
+
+### Patch Changes
+
+- [#4371](https://github.com/wevm/wagmi/pull/4371) [`b6861a4c378dab78d8751ae0ac2aa425f3c24b8f`](https://github.com/wevm/wagmi/commit/b6861a4c378dab78d8751ae0ac2aa425f3c24b8f) Thanks [@iceanddust](https://github.com/iceanddust)! - Fixed Safe connector not working in some Vite apps
+
+- Updated dependencies [[`d0d0963bb5904a15cf0355862d62dd141ce0c31c`](https://github.com/wevm/wagmi/commit/d0d0963bb5904a15cf0355862d62dd141ce0c31c), [`ecac0ba36243d94c9199d0bd21937104c835d9a0`](https://github.com/wevm/wagmi/commit/ecac0ba36243d94c9199d0bd21937104c835d9a0)]:
+  - @wagmi/core@2.14.2
+
 ## 5.3.3
 
 ### Patch Changes

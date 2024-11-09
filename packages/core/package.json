@@ -1,7 +1,7 @@
 {
   "name": "@wagmi/core",
   "description": "VanillaJS library for Ethereum",
-  "version": "2.14.1",
+  "version": "2.14.4",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -92,7 +92,7 @@
     "zustand": "5.0.0"
   },
   "devDependencies": {
-    "@tanstack/query-core": ">=5.45.0"
+    "@tanstack/query-core": "catalog:"
   },
   "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
   "funding": "https://github.com/sponsors/wevm",

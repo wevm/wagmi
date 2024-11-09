@@ -4,7 +4,6 @@ import { A } from '@solidjs/router'
 import { type ParentProps, Show } from 'solid-js'
 
 import { Resizable } from './components/Resizable.jsx'
-import { ResizablePanel } from './components/ResizablePanel.jsx'
 import { usePreferences } from './contexts/preferences.js'
 import { useTheme } from './contexts/theme.js'
 

@@ -27,7 +27,7 @@ export const config = createConfig({
   connectors: [injected()],
   transports: {
     [mainnet.id]: fallback([ // [!code hl]
-      http('https://eth-mainnet.g.alchemy.com/v2/...'), // [!code hl]
+      http('https://foo-bar-baz.quiknode.pro/...'), // [!code hl]
       http('https://mainnet.infura.io/v3/...'), // [!code hl]
     ]) // [!code hl]
   },
