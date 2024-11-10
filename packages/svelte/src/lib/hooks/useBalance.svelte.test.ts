@@ -53,6 +53,10 @@ test(
         "isRefetching": false,
         "isStale": true,
         "isSuccess": true,
+        "promise": Promise {
+          "reason": [Error: experimental_prefetchInRender feature flag is not enabled],
+          "status": "rejected",
+        },
         "queryKey": [
           "balance",
           {
@@ -80,9 +84,9 @@ test(
       {
         "data": {
           "decimals": 18,
-          "formatted": "69",
+          "formatted": "10000",
           "symbol": "WAG",
-          "value": 69000000000000000000n,
+          "value": 10000000000000000000000n,
         },
         "dataUpdatedAt": 1675209600000,
         "error": null,
@@ -105,6 +109,10 @@ test(
         "isRefetching": false,
         "isStale": true,
         "isSuccess": true,
+        "promise": Promise {
+          "reason": [Error: experimental_prefetchInRender feature flag is not enabled],
+          "status": "rejected",
+        },
         "queryKey": [
           "balance",
           {
@@ -160,6 +168,10 @@ test(
         "isRefetching": false,
         "isStale": true,
         "isSuccess": true,
+        "promise": Promise {
+          "reason": [Error: experimental_prefetchInRender feature flag is not enabled],
+          "status": "rejected",
+        },
         "queryKey": [
           "balance",
           {
@@ -192,9 +204,9 @@ test(
       {
         "data": {
           "decimals": 18,
-          "formatted": "69000000000000000000",
+          "formatted": "10000000000000000000000",
           "symbol": "WAG",
-          "value": 69000000000000000000n,
+          "value": 10000000000000000000000n,
         },
         "dataUpdatedAt": 1675209600000,
         "error": null,
@@ -217,6 +229,10 @@ test(
         "isRefetching": false,
         "isStale": true,
         "isSuccess": true,
+        "promise": Promise {
+          "reason": [Error: experimental_prefetchInRender feature flag is not enabled],
+          "status": "rejected",
+        },
         "queryKey": [
           "balance",
           {
@@ -262,6 +278,10 @@ test(
         "isRefetching": false,
         "isStale": false,
         "isSuccess": false,
+        "promise": Promise {
+          "reason": [Error: experimental_prefetchInRender feature flag is not enabled],
+          "status": "rejected",
+        },
         "queryKey": [
           "balance",
           {

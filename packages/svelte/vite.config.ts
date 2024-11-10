@@ -10,8 +10,13 @@ export default defineConfig({
     name: '@wagmi/svelte',
     include: ['./src/**/*.test.ts'],
     environment: 'happy-dom',
-    testTimeout: 10_000,
+    testTimeout: 20_000,
     setupFiles: ['./test/setup.ts', '../test/src/setup.ts'],
     globalSetup: ['../test/src/globalSetup.ts'],
+    expect: {
+      poll: {
+        timeout: 10_000,
+      },
+    },
   },
 })

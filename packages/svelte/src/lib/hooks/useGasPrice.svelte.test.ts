@@ -5,104 +5,120 @@ import { useGasPrice } from './useGasPrice.svelte'
 
 test(
   'default',
-  testHook(async () => {
-    await testClient.mainnet.restart()
+  testHook(
+    async () => {
+      const result = $derived.by(useGasPrice())
 
-    await testClient.mainnet.setNextBlockBaseFeePerGas({
-      baseFeePerGas: 2_000_000_000n,
-    })
-    await testClient.mainnet.mine({ blocks: 1 })
+      await expect.poll(() => result.isSuccess).toBeTruthy()
 
-    const result = $derived.by(useGasPrice())
-
-    await expect.poll(() => result.isSuccess).toBeTruthy()
-
-    expect(result).toMatchInlineSnapshot(`
-      {
-        "data": 2750000000n,
-        "dataUpdatedAt": 1675209600000,
-        "error": null,
-        "errorUpdateCount": 0,
-        "errorUpdatedAt": 0,
-        "failureCount": 0,
-        "failureReason": null,
-        "fetchStatus": "idle",
-        "isError": false,
-        "isFetched": true,
-        "isFetchedAfterMount": true,
-        "isFetching": false,
-        "isInitialLoading": false,
-        "isLoading": false,
-        "isLoadingError": false,
-        "isPaused": false,
-        "isPending": false,
-        "isPlaceholderData": false,
-        "isRefetchError": false,
-        "isRefetching": false,
-        "isStale": true,
-        "isSuccess": true,
-        "queryKey": [
-          "gasPrice",
-          {
-            "chainId": 1,
+      expect(result).toMatchInlineSnapshot(`
+        {
+          "data": 2750000000n,
+          "dataUpdatedAt": 1675209600000,
+          "error": null,
+          "errorUpdateCount": 0,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "failureReason": null,
+          "fetchStatus": "idle",
+          "isError": false,
+          "isFetched": true,
+          "isFetchedAfterMount": true,
+          "isFetching": false,
+          "isInitialLoading": false,
+          "isLoading": false,
+          "isLoadingError": false,
+          "isPaused": false,
+          "isPending": false,
+          "isPlaceholderData": false,
+          "isRefetchError": false,
+          "isRefetching": false,
+          "isStale": true,
+          "isSuccess": true,
+          "promise": Promise {
+            "reason": [Error: experimental_prefetchInRender feature flag is not enabled],
+            "status": "rejected",
           },
-        ],
-        "refetch": [Function],
-        "status": "success",
-      }
-    `)
-  }),
+          "queryKey": [
+            "gasPrice",
+            {
+              "chainId": 1,
+            },
+          ],
+          "refetch": [Function],
+          "status": "success",
+        }
+      `)
+    },
+    {},
+    async () => {
+      await testClient.mainnet.restart()
+
+      await testClient.mainnet.setNextBlockBaseFeePerGas({
+        baseFeePerGas: 2_000_000_000n,
+      })
+      await testClient.mainnet.mine({ blocks: 1 })
+    },
+  ),
 )
 
 test(
   'parameters: chainId',
-  testHook(async () => {
-    await testClient.mainnet2.restart()
+  testHook(
+    async () => {
+      const result = $derived.by(
+        useGasPrice(() => ({ chainId: chain.mainnet2.id })),
+      )
 
-    await testClient.mainnet2.setNextBlockBaseFeePerGas({
-      baseFeePerGas: 1_000_000_000n,
-    })
-    await testClient.mainnet2.mine({ blocks: 1 })
+      await expect.poll(() => result.isSuccess).toBeTruthy()
 
-    const result = $derived.by(
-      useGasPrice(() => ({ chainId: chain.mainnet2.id })),
-    )
-
-    await expect.poll(() => result.isSuccess).toBeTruthy()
-
-    expect(result).toMatchInlineSnapshot(`
-      {
-        "data": 1875000000n,
-        "dataUpdatedAt": 1675209600000,
-        "error": null,
-        "errorUpdateCount": 0,
-        "errorUpdatedAt": 0,
-        "failureCount": 0,
-        "failureReason": null,
-        "fetchStatus": "idle",
-        "isError": false,
-        "isFetched": true,
-        "isFetchedAfterMount": true,
-        "isFetching": false,
-        "isInitialLoading": false,
-        "isLoading": false,
-        "isLoadingError": false,
-        "isPaused": false,
-        "isPending": false,
-        "isPlaceholderData": false,
-        "isRefetchError": false,
-        "isRefetching": false,
-        "isStale": true,
-        "isSuccess": true,
-        "queryKey": [
-          "gasPrice",
-          {
-            "chainId": 456,
+      expect(result).toMatchInlineSnapshot(`
+        {
+          "data": 1875000000n,
+          "dataUpdatedAt": 1675209600000,
+          "error": null,
+          "errorUpdateCount": 0,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "failureReason": null,
+          "fetchStatus": "idle",
+          "isError": false,
+          "isFetched": true,
+          "isFetchedAfterMount": true,
+          "isFetching": false,
+          "isInitialLoading": false,
+          "isLoading": false,
+          "isLoadingError": false,
+          "isPaused": false,
+          "isPending": false,
+          "isPlaceholderData": false,
+          "isRefetchError": false,
+          "isRefetching": false,
+          "isStale": true,
+          "isSuccess": true,
+          "promise": Promise {
+            "reason": [Error: experimental_prefetchInRender feature flag is not enabled],
+            "status": "rejected",
           },
-        ],
-        "refetch": [Function],
-        "status": "success",
-      }
-    `)
-  }),
+          "queryKey": [
+            "gasPrice",
+            {
+              "chainId": 456,
+            },
+          ],
+          "refetch": [Function],
+          "status": "success",
+        }
+      `)
+    },
+    {},
+    async () => {
+      await testClient.mainnet2.restart()
+
+      await testClient.mainnet2.setNextBlockBaseFeePerGas({
+        baseFeePerGas: 1_000_000_000n,
+      })
+      await testClient.mainnet2.mine({ blocks: 1 })
+    },
+  ),
 )

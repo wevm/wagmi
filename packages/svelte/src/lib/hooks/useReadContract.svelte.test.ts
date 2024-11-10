@@ -18,44 +18,48 @@ test(
     await expect.poll(() => result.isSuccess).toBeTruthy()
 
     expect(result).toMatchInlineSnapshot(`
-    {
-      "data": 4n,
-      "dataUpdatedAt": 1675209600000,
-      "error": null,
-      "errorUpdateCount": 0,
-      "errorUpdatedAt": 0,
-      "failureCount": 0,
-      "failureReason": null,
-      "fetchStatus": "idle",
-      "isError": false,
-      "isFetched": true,
-      "isFetchedAfterMount": true,
-      "isFetching": false,
-      "isInitialLoading": false,
-      "isLoading": false,
-      "isLoadingError": false,
-      "isPaused": false,
-      "isPending": false,
-      "isPlaceholderData": false,
-      "isRefetchError": false,
-      "isRefetching": false,
-      "isStale": true,
-      "isSuccess": true,
-      "queryKey": [
-        "readContract",
-        {
-          "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
-          "args": [
-            "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
-          ],
-          "chainId": 1,
-          "functionName": "balanceOf",
+      {
+        "data": 4n,
+        "dataUpdatedAt": 1675209600000,
+        "error": null,
+        "errorUpdateCount": 0,
+        "errorUpdatedAt": 0,
+        "failureCount": 0,
+        "failureReason": null,
+        "fetchStatus": "idle",
+        "isError": false,
+        "isFetched": true,
+        "isFetchedAfterMount": true,
+        "isFetching": false,
+        "isInitialLoading": false,
+        "isLoading": false,
+        "isLoadingError": false,
+        "isPaused": false,
+        "isPending": false,
+        "isPlaceholderData": false,
+        "isRefetchError": false,
+        "isRefetching": false,
+        "isStale": true,
+        "isSuccess": true,
+        "promise": Promise {
+          "reason": [Error: experimental_prefetchInRender feature flag is not enabled],
+          "status": "rejected",
         },
-      ],
-      "refetch": [Function],
-      "status": "success",
-    }
-  `)
+        "queryKey": [
+          "readContract",
+          {
+            "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
+            "args": [
+              "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
+            ],
+            "chainId": 1,
+            "functionName": "balanceOf",
+          },
+        ],
+        "refetch": [Function],
+        "status": "success",
+      }
+    `)
   }),
 )
 
@@ -75,44 +79,48 @@ test(
     await expect.poll(() => result.isSuccess).toBeTruthy()
 
     expect(result).toMatchInlineSnapshot(`
-    {
-      "data": 4n,
-      "dataUpdatedAt": 1675209600000,
-      "error": null,
-      "errorUpdateCount": 0,
-      "errorUpdatedAt": 0,
-      "failureCount": 0,
-      "failureReason": null,
-      "fetchStatus": "idle",
-      "isError": false,
-      "isFetched": true,
-      "isFetchedAfterMount": true,
-      "isFetching": false,
-      "isInitialLoading": false,
-      "isLoading": false,
-      "isLoadingError": false,
-      "isPaused": false,
-      "isPending": false,
-      "isPlaceholderData": false,
-      "isRefetchError": false,
-      "isRefetching": false,
-      "isStale": true,
-      "isSuccess": true,
-      "queryKey": [
-        "readContract",
-        {
-          "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
-          "args": [
-            "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
-          ],
-          "chainId": 456,
-          "functionName": "balanceOf",
+      {
+        "data": 4n,
+        "dataUpdatedAt": 1675209600000,
+        "error": null,
+        "errorUpdateCount": 0,
+        "errorUpdatedAt": 0,
+        "failureCount": 0,
+        "failureReason": null,
+        "fetchStatus": "idle",
+        "isError": false,
+        "isFetched": true,
+        "isFetchedAfterMount": true,
+        "isFetching": false,
+        "isInitialLoading": false,
+        "isLoading": false,
+        "isLoadingError": false,
+        "isPaused": false,
+        "isPending": false,
+        "isPlaceholderData": false,
+        "isRefetchError": false,
+        "isRefetching": false,
+        "isStale": true,
+        "isSuccess": true,
+        "promise": Promise {
+          "reason": [Error: experimental_prefetchInRender feature flag is not enabled],
+          "status": "rejected",
         },
-      ],
-      "refetch": [Function],
-      "status": "success",
-    }
-  `)
+        "queryKey": [
+          "readContract",
+          {
+            "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
+            "args": [
+              "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
+            ],
+            "chainId": 456,
+            "functionName": "balanceOf",
+          },
+        ],
+        "refetch": [Function],
+        "status": "success",
+      }
+    `)
   }),
 )
 
@@ -133,44 +141,48 @@ test(
       await expect.poll(() => result.isSuccess).toBeTruthy()
 
       expect(result).toMatchInlineSnapshot(`
-    {
-      "data": 4n,
-      "dataUpdatedAt": 1675209600000,
-      "error": null,
-      "errorUpdateCount": 0,
-      "errorUpdatedAt": 0,
-      "failureCount": 0,
-      "failureReason": null,
-      "fetchStatus": "idle",
-      "isError": false,
-      "isFetched": true,
-      "isFetchedAfterMount": true,
-      "isFetching": false,
-      "isInitialLoading": false,
-      "isLoading": false,
-      "isLoadingError": false,
-      "isPaused": false,
-      "isPending": false,
-      "isPlaceholderData": false,
-      "isRefetchError": false,
-      "isRefetching": false,
-      "isStale": true,
-      "isSuccess": true,
-      "queryKey": [
-        "readContract",
         {
-          "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
-          "args": [
-            "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
+          "data": 4n,
+          "dataUpdatedAt": 1675209600000,
+          "error": null,
+          "errorUpdateCount": 0,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "failureReason": null,
+          "fetchStatus": "idle",
+          "isError": false,
+          "isFetched": true,
+          "isFetchedAfterMount": true,
+          "isFetching": false,
+          "isInitialLoading": false,
+          "isLoading": false,
+          "isLoadingError": false,
+          "isPaused": false,
+          "isPending": false,
+          "isPlaceholderData": false,
+          "isRefetchError": false,
+          "isRefetching": false,
+          "isStale": true,
+          "isSuccess": true,
+          "promise": Promise {
+            "reason": [Error: experimental_prefetchInRender feature flag is not enabled],
+            "status": "rejected",
+          },
+          "queryKey": [
+            "readContract",
+            {
+              "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
+              "args": [
+                "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
+              ],
+              "chainId": 1,
+              "functionName": "balanceOf",
+            },
           ],
-          "chainId": 1,
-          "functionName": "balanceOf",
-        },
-      ],
-      "refetch": [Function],
-      "status": "success",
-    }
-  `)
+          "refetch": [Function],
+          "status": "success",
+        }
+      `)
     },
     { shouldMockConfig: false },
   ),

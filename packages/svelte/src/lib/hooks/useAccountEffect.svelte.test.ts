@@ -48,35 +48,36 @@ test(
   }),
 )
 
+const mockConnector = mock({
+  accounts,
+  features: { reconnect: true },
+})
+const newConfig = createConfig({
+  chains: [chain.mainnet],
+  connectors: [mockConnector],
+  transports: { [chain.mainnet.id]: http() },
+})
+
 test(
   'behavior: connect called on reconnect',
-  testHook(async () => {
-    const mockConnector = mock({
-      accounts,
-      features: { reconnect: true },
-    })
-    const newConfig = createConfig({
-      chains: [chain.mainnet],
-      connectors: [mockConnector],
-      transports: { [chain.mainnet.id]: http() },
-    })
+  testHook(
+    async () => {
+      const onConnect = vi.fn((data) => {
+        expect(data.isReconnected).toBeTruthy()
+      })
 
-    await connect(newConfig, { connector: mockConnector })
+      useAccountEffect(() => ({ onConnect }))
 
-    const onConnect = vi.fn((data) => {
-      expect(data.isReconnected).toBeTruthy()
-    })
-
-    // Set the config in the Svelte context for this test
-    const svelte = await import('svelte')
-    svelte.getContext = vi.fn().mockReturnValue(newConfig)
-
-    useAccountEffect(() => ({ onConnect }))
-
-    await vi.waitFor(() => {
-      expect(onConnect).toBeCalledTimes(1)
-    })
-
-    await disconnect(newConfig)
-  }),
+      await vi.waitFor(() => {
+        expect(onConnect).toBeCalledTimes(1)
+      })
+    },
+    { mockConfigOverride: newConfig },
+    async () => {
+      await connect(newConfig, { connector: mockConnector })
+    },
+    async () => {
+      await disconnect(newConfig)
+    },
+  ),
 )
