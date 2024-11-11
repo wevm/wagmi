@@ -297,10 +297,10 @@ importers:
   packages/svelte:
     dependencies:
       '@wagmi/connectors':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../connectors
       '@wagmi/core':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../core
     devDependencies:
       '@sveltejs/adapter-auto':
@@ -319,7 +319,7 @@ importers:
         specifier: https://pkg.pr.new/@tanstack/svelte-query@ccce0b8
         version: https://pkg.pr.new/@tanstack/svelte-query@ccce0b8(svelte@5.0.5)
       '@wagmi/test':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../test
       globals:
         specifier: ^15.0.0
@@ -489,7 +489,7 @@ importers:
         specifier: https://pkg.pr.new/@tanstack/svelte-query@ccce0b8
         version: https://pkg.pr.new/@tanstack/svelte-query@ccce0b8(svelte@5.0.5)
       '@wagmi/svelte':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../../packages/svelte
       viem:
         specifier: ^2.21.44

@@ -35,7 +35,7 @@
     "@sveltejs/package": "^2.0.0",
     "@sveltejs/vite-plugin-svelte": "^4.0.0",
     "@tanstack/svelte-query": "https://pkg.pr.new/@tanstack/svelte-query@ccce0b8",
-    "@wagmi/test": "workspace:^",
+    "@wagmi/test": "workspace:*",
     "globals": "^15.0.0",
     "publint": "^0.2.0",
     "svelte": "^5.0.0",
@@ -45,7 +45,7 @@
     "vitest": "^2.0.4"
   },
   "dependencies": {
-    "@wagmi/connectors": "workspace:^",
-    "@wagmi/core": "workspace:^"
+    "@wagmi/connectors": "workspace:*",
+    "@wagmi/core": "workspace:*"
   }
 }

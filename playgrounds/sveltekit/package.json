@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@tanstack/svelte-query": "https://pkg.pr.new/@tanstack/svelte-query@ccce0b8",
-    "@wagmi/svelte": "workspace:^",
+    "@wagmi/svelte": "workspace:*",
     "viem": "^2.21.44"
   }
 }
