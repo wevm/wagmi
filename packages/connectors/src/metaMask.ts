@@ -19,11 +19,16 @@ import type {
   UnionCompute,
 } from '@wagmi/core/internal'
 import {
+  mainnet,
+  sepolia,
+  linea,
+  lineaSepolia
+} from '@wagmi/core/chains'
+import {
   type AddEthereumChainParameter,
   type Address,
   type Hex,
   type ProviderConnectInfo,
-  type ProviderRpcError,
   ResourceUnavailableRpcError,
   type RpcError,
   SwitchChainError,
@@ -308,6 +313,66 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       const chain = config.chains.find((x) => x.id === chainId)
       if (!chain) throw new SwitchChainError(new ChainNotConfiguredError())
 
+      // MetaMask default chains
+      // This avoids the need to react to the "unrecognized chain" error
+      // and consequent back and forth between MetaMask and Wagmi.
+      const metaMaskDefaultChains = [
+        mainnet.id, 
+        sepolia.id, 
+        linea.id, 
+        lineaSepolia.id
+      ];
+      const isDefaultChain = metaMaskDefaultChains.find((x) => x === chainId)
+
+      if (!isDefaultChain) {
+          try {
+              const { default: blockExplorer, ...blockExplorers } =
+                chain.blockExplorers ?? {}
+              let blockExplorerUrls: string[] | undefined
+              if (addEthereumChainParameter?.blockExplorerUrls)
+                blockExplorerUrls = addEthereumChainParameter.blockExplorerUrls
+              else if (blockExplorer)
+                blockExplorerUrls = [
+                  blockExplorer.url,
+                  ...Object.values(blockExplorers).map((x) => x.url),
+                ]
+  
+              let rpcUrls: readonly string[]
+              if (addEthereumChainParameter?.rpcUrls?.length)
+                rpcUrls = addEthereumChainParameter.rpcUrls
+              else rpcUrls = [chain.rpcUrls.default?.http[0] ?? '']
+  
+              const addEthereumChain = {
+                blockExplorerUrls,
+                chainId: numberToHex(chainId),
+                chainName: addEthereumChainParameter?.chainName ?? chain.name,
+                iconUrls: addEthereumChainParameter?.iconUrls,
+                nativeCurrency:
+                  addEthereumChainParameter?.nativeCurrency ??
+                  chain.nativeCurrency,
+                rpcUrls,
+              } satisfies AddEthereumChainParameter
+  
+              await provider.request({
+                method: 'wallet_addEthereumChain',
+                params: [addEthereumChain],
+              })
+
+              const currentChainId = hexToNumber(
+                  // Call `'eth_chainId'` directly to guard against `this.state.chainId` (via `provider.getChainId`) being stale.
+                  (await provider.request({ method: 'eth_chainId' })) as Hex,
+                )
+                if (currentChainId !== chainId)
+                  throw new UserRejectedRequestError(
+                    new Error('User rejected switch after adding network.'),
+                  )
+    
+                return chain
+          } catch (error) {
+              throw new UserRejectedRequestError(error as Error)
+          }
+      }
+
       try {
         await Promise.all([
           provider
@@ -338,62 +403,6 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         return chain
       } catch (err) {
         const error = err as RpcError
-
-        // Indicates chain is not added to provider
-        if (
-          error.code === 4902 ||
-          // Unwrapping for MetaMask Mobile
-          // https://github.com/MetaMask/metamask-mobile/issues/2944#issuecomment-976988719
-          (error as ProviderRpcError<{ originalError?: { code: number } }>)
-            ?.data?.originalError?.code === 4902
-        ) {
-          try {
-            const { default: blockExplorer, ...blockExplorers } =
-              chain.blockExplorers ?? {}
-            let blockExplorerUrls: string[] | undefined
-            if (addEthereumChainParameter?.blockExplorerUrls)
-              blockExplorerUrls = addEthereumChainParameter.blockExplorerUrls
-            else if (blockExplorer)
-              blockExplorerUrls = [
-                blockExplorer.url,
-                ...Object.values(blockExplorers).map((x) => x.url),
-              ]
-
-            let rpcUrls: readonly string[]
-            if (addEthereumChainParameter?.rpcUrls?.length)
-              rpcUrls = addEthereumChainParameter.rpcUrls
-            else rpcUrls = [chain.rpcUrls.default?.http[0] ?? '']
-
-            const addEthereumChain = {
-              blockExplorerUrls,
-              chainId: numberToHex(chainId),
-              chainName: addEthereumChainParameter?.chainName ?? chain.name,
-              iconUrls: addEthereumChainParameter?.iconUrls,
-              nativeCurrency:
-                addEthereumChainParameter?.nativeCurrency ??
-                chain.nativeCurrency,
-              rpcUrls,
-            } satisfies AddEthereumChainParameter
-
-            await provider.request({
-              method: 'wallet_addEthereumChain',
-              params: [addEthereumChain],
-            })
-
-            const currentChainId = hexToNumber(
-              // Call `'eth_chainId'` directly to guard against `this.state.chainId` (via `provider.getChainId`) being stale.
-              (await provider.request({ method: 'eth_chainId' })) as Hex,
-            )
-            if (currentChainId !== chainId)
-              throw new UserRejectedRequestError(
-                new Error('User rejected switch after adding network.'),
-              )
-
-            return chain
-          } catch (error) {
-            throw new UserRejectedRequestError(error as Error)
-          }
-        }
 
         if (error.code === UserRejectedRequestError.code)
           throw new UserRejectedRequestError(error)
