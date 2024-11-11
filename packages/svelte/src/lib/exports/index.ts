@@ -14,11 +14,18 @@ export {
 // Hooks
 ////////////////////////////////////////////////////////////////////////////////
 
+export { default as WagmiProvider } from '../WagmiProvider.svelte'
+
 export {
   type UseAccountParameters,
   type UseAccountReturnType,
   useAccount,
 } from '../hooks/useAccount.svelte.js'
+
+export {
+  type UseAccountEffectParameters,
+  useAccountEffect,
+} from '../hooks/useAccountEffect.svelte.js'
 
 export {
   type UseBalanceParameters,
@@ -75,6 +82,24 @@ export {
 } from '../hooks/useDisconnect.svelte.js'
 
 export {
+  type UseEnsAvatarParameters,
+  type UseEnsAvatarReturnType,
+  useEnsAvatar,
+} from '../hooks/useEnsAvatar.svelte.js'
+
+export {
+  type UseEnsNameParameters,
+  type UseEnsNameReturnType,
+  useEnsName,
+} from '../hooks/useEnsName.svelte.js'
+
+export {
+  type UseGasPriceParameters,
+  type UseGasPriceReturnType,
+  useGasPrice,
+} from '../hooks/useGasPrice.svelte.js'
+
+export {
   type UseReadContractParameters,
   type UseReadContractReturnType,
   useReadContract,
@@ -83,10 +108,56 @@ export {
 } from '../hooks/useReadContract.svelte.js'
 
 export {
+  type UseReadContractsParameters,
+  type UseReadContractsReturnType,
+  useReadContracts,
+  /** @deprecated Use `useWriteContract` instead */
+  useReadContracts as useContractReads,
+} from '../hooks/useReadContracts.svelte.js'
+
+export {
+  type UseSendTransactionParameters,
+  type UseSendTransactionReturnType,
+  useSendTransaction,
+} from '../hooks/useSendTransaction.svelte.js'
+
+export {
+  type UseSignMessageParameters,
+  type UseSignMessageReturnType,
+  useSignMessage,
+} from '../hooks/useSignMessage.svelte.js'
+
+export {
+  type UseSwitchAccountParameters,
+  type UseSwitchAccountReturnType,
+  useSwitchAccount,
+} from '../hooks/useSwitchAccount.svelte.js'
+
+export {
+  type UseSwitchChainParameters,
+  type UseSwitchChainReturnType,
+  useSwitchChain,
+} from '../hooks/useSwitchChain.svelte.js'
+
+export {
+  type UseWaitForTransactionReceiptParameters,
+  type UseWaitForTransactionReceiptReturnType,
+  useWaitForTransactionReceipt,
+} from '../hooks/useWaitForTransactionReceipt.svelte.js'
+
+export {
   type UseWatchBlockNumberParameters,
   type UseWatchBlockNumberReturnType,
   useWatchBlockNumber,
 } from '../hooks/useWatchBlockNumber.svelte.js'
+
+export {
+  type UseWriteContractParameters,
+  type UseWriteContractReturnType,
+  useWriteContract,
+  /** @deprecated Use `useWriteContract` instead */
+  useWriteContract as useContractWrite,
+} from '../hooks/useWriteContract.svelte.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // @wagmi/core

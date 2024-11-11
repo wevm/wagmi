@@ -13,7 +13,9 @@
   "linter": {
     "ignore": [
       "packages/create-wagmi/templates/*",
-      "packages/svelte/**/*.svelte"
+      "packages/svelte/**/*.svelte",
+      "playgrounds/sveltekit/.svelte-kit/**",
+      "playgrounds/sveltekit/**/*.svelte"
     ],
     "enabled": true,
     "rules": {
