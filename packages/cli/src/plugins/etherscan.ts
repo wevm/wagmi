@@ -18,6 +18,7 @@ const apiUrls = {
   // Polygon
   [137]: 'https://api.polygonscan.com/api',
   [80_001]: 'https://api-testnet.polygonscan.com/api',
+  [80_002]: 'https://api-amoy.polygonscan.com/api',
   // Arbitrum
   [42_161]: 'https://api.arbiscan.io/api',
   [421_613]: 'https://api-goerli.arbiscan.io/api',
