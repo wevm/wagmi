@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.14.5
+
+### Patch Changes
+
+- [#4400](https://github.com/wevm/wagmi/pull/4400) [`6b9bbacdc7bffd44fc2165362a5e65fd434e7646`](https://github.com/wevm/wagmi/commit/6b9bbacdc7bffd44fc2165362a5e65fd434e7646) Thanks [@AzzouQ](https://github.com/AzzouQ)! - Fixed `createWatchContractEvent` internal wiring, where `eventName` was incorrectly `functionName`.
+
 ## 2.14.4
 
 ### Patch Changes

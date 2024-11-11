@@ -1,5 +1,14 @@
 # @wagmi/connectors
 
+## 5.3.8
+
+### Patch Changes
+
+- [#4390](https://github.com/wevm/wagmi/pull/4390) [`dac62dc99a0679fa632a0fae49873d6053d06b35`](https://github.com/wevm/wagmi/commit/dac62dc99a0679fa632a0fae49873d6053d06b35) Thanks [@chybisov](https://github.com/chybisov)! - Bumped Safe Apps Provider version.
+
+- Updated dependencies [[`6b9bbacdc7bffd44fc2165362a5e65fd434e7646`](https://github.com/wevm/wagmi/commit/6b9bbacdc7bffd44fc2165362a5e65fd434e7646)]:
+  - @wagmi/core@2.14.5
+
 ## 5.3.7
 
 ### Patch Changes
