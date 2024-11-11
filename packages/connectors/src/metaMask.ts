@@ -11,12 +11,7 @@ import {
   createConnector,
   extractRpcUrls,
 } from '@wagmi/core'
-import { 
-  linea,
-  lineaSepolia, 
-  mainnet, 
-  sepolia 
-} from '@wagmi/core/chains'
+import { linea, lineaSepolia, mainnet, sepolia } from '@wagmi/core/chains'
 import type {
   Compute,
   ExactPartial,
