@@ -1,0 +1,13 @@
+{
+  "name": "solid-register",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check:types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@tanstack/solid-query": "catalog:",
+    "@wagmi/solid": "workspace:*",
+    "solid-js": "catalog:"
+  }
+}

@@ -412,6 +412,18 @@ importers:
         specifier: 'catalog:'
         version: 18.3.1
 
+  packages/register-tests/solid:
+    dependencies:
+      '@tanstack/solid-query':
+        specifier: 'catalog:'
+        version: 5.59.17(solid-js@1.9.3)
+      '@wagmi/solid':
+        specifier: workspace:*
+        version: link:../../solid
+      solid-js:
+        specifier: 'catalog:'
+        version: 1.9.3
+
   packages/register-tests/vue:
     dependencies:
       '@tanstack/vue-query':

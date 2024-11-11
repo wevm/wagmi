@@ -9,6 +9,10 @@ const alias = {
   ),
   '@wagmi/core': path.resolve(__dirname, './packages/core/src/exports'),
   '@wagmi/devtools': path.resolve(__dirname, './packages/devtools/src/exports'),
+  '@wagmi/devtools-ui': path.resolve(
+    __dirname,
+    './packages/devtools-ui/src/exports',
+  ),
   '@wagmi/solid': path.resolve(__dirname, './packages/solid/src/exports'),
   '@wagmi/test': path.resolve(__dirname, './packages/test/src/exports'),
   '@wagmi/vue': path.resolve(__dirname, './packages/vue/src/exports'),
@@ -45,19 +49,17 @@ export default defineWorkspace([
   },
   {
     test: {
-      name: 'create-wagmi',
-      include: ['./packages/create-wagmi/src/**/*.test.ts'],
-      environment: 'node',
-      testTimeout: 10_000,
+      name: '@wagmi/devtools',
+      include: ['./packages/devtools/src/**/*.test.ts'],
+      environment: 'happy-dom',
     },
+    resolve: { alias },
   },
   {
     test: {
-      name: 'wagmi',
-      include: ['./packages/react/src/**/*.test.ts?(x)'],
+      name: '@wagmi/devtools-ui',
+      include: ['./packages/devtools-ui/src/**/*.test.ts'],
       environment: 'happy-dom',
-      testTimeout: 10_000,
-      setupFiles: ['./packages/react/test/setup.ts'],
     },
     resolve: { alias },
   },
@@ -81,6 +83,13 @@ export default defineWorkspace([
   },
   {
     test: {
+      name: '@wagmi/test',
+      include: ['./packages/test/src/**/*.test.ts'],
+    },
+    resolve: { alias },
+  },
+  {
+    test: {
       name: '@wagmi/vue',
       include: ['./packages/vue/src/**/*.test.ts?(x)'],
       environment: 'happy-dom',
@@ -91,6 +100,14 @@ export default defineWorkspace([
   },
   {
     test: {
+      name: 'create-wagmi',
+      include: ['./packages/create-wagmi/src/**/*.test.ts'],
+      environment: 'node',
+      testTimeout: 10_000,
+    },
+  },
+  {
+    test: {
       name: 'react-register',
       include: ['./packages/register-tests/react/src/**/*.test.ts'],
     },
@@ -98,8 +115,18 @@ export default defineWorkspace([
   },
   {
     test: {
-      name: '@wagmi/test',
-      include: ['./packages/test/src/**/*.test.ts'],
+      name: 'vue-register',
+      include: ['./packages/register-tests/vue/src/**/*.test.ts'],
+    },
+    resolve: { alias },
+  },
+  {
+    test: {
+      name: 'wagmi',
+      include: ['./packages/react/src/**/*.test.ts?(x)'],
+      environment: 'happy-dom',
+      testTimeout: 10_000,
+      setupFiles: ['./packages/react/test/setup.ts'],
     },
     resolve: { alias },
   },

@@ -35,6 +35,8 @@
     "test:core": "vitest --project @wagmi/core",
     "test:create-wagmi": "vitest --project create-wagmi",
     "test:cov": "vitest run --coverage",
+    "test:devtools": "vitest --project @wagmi/devtools",
+    "test:devtools-ui": "vitest --project @wagmi/devtools-ui",
     "test:react": "vitest --project wagmi",
     "test:solid": "vitest --project @wagmi/solid",
     "test:typecheck": "vitest typecheck",

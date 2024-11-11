@@ -1,4 +1,5 @@
 /** @jsxImportSource solid-js */
+
 import { type QueryClient, useQueryClient } from '@tanstack/solid-query'
 import { Devtools, version } from '@wagmi/devtools-ui'
 import { type Config, useConfig } from '@wagmi/solid'
