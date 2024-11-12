@@ -1,6 +1,6 @@
 import { chain, testClient } from '@wagmi/test'
+import { testHook } from '@wagmi/test/svelte'
 import { expect, test } from 'vitest'
-import { testHook } from './test.svelte.js'
 import { useGasPrice } from './useGasPrice.svelte'
 
 test(

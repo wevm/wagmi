@@ -1,5 +1,5 @@
+import { testHook } from '@wagmi/test/svelte'
 import { expect, test } from 'vitest'
-import { testHook } from './test.svelte.js'
 import { useConfig } from './useConfig.svelte.js'
 
 test(

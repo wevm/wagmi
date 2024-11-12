@@ -1,8 +1,15 @@
 import { mock } from '@wagmi/connectors'
-import { http, connect, createConfig, disconnect } from '@wagmi/core'
+import {
+  http,
+  connect,
+  createConfig,
+  disconnect,
+  getAccount,
+  reconnect,
+} from '@wagmi/core'
 import { accounts, chain, config, wait } from '@wagmi/test'
+import { testHook } from '@wagmi/test/svelte'
 import { expect, test, vi } from 'vitest'
-import { testHook } from './test.svelte.js'
 import { useAccountEffect } from './useAccountEffect.svelte'
 import { useConnect } from './useConnect.svelte'
 import { useDisconnect } from './useDisconnect.svelte'
@@ -68,11 +75,13 @@ test(
 
       useAccountEffect(() => ({ onConnect }))
 
-      await vi.waitFor(() => {
-        expect(onConnect).toBeCalledTimes(1)
-      })
+      await reconnect(newConfig)
+
+      await connect(newConfig, { connector: mockConnector })
+
+      await expect.poll(() => onConnect).toHaveBeenCalledOnce()
     },
-    { mockConfigOverride: newConfig },
+    { mockConfigOverride: newConfig, reconnectOnMount: true },
     async () => {
       await connect(newConfig, { connector: mockConnector })
     },

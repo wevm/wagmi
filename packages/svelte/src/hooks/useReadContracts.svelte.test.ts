@@ -1,6 +1,6 @@
 import { abi, address, chain } from '@wagmi/test'
+import { testHook } from '@wagmi/test/svelte'
 import { expect, test } from 'vitest'
-import { testHook } from './test.svelte.js'
 import { useReadContracts } from './useReadContracts.svelte.js'
 
 test(

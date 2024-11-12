@@ -1,11 +1,12 @@
 import { QueryClient } from '@tanstack/svelte-query'
-import { type Config, connect, disconnect } from '@wagmi/core'
-import { config } from '@wagmi/test'
-import { onTestFinished, vi } from 'vitest'
+import { type Config, connect, disconnect, hydrate } from '@wagmi/core'
+import { vi } from 'vitest'
+import { config } from '../config.js'
 
 type TestHookOptions = {
   shouldMockConfig?: boolean
   mockConfigOverride?: Config
+  reconnectOnMount?: boolean
 }
 
 const noop = () => {}
@@ -32,9 +33,10 @@ export const testHook =
     teardown: () => void = noop,
   ) =>
   async () => {
+    const queryClient = new QueryClient()
     const svelte = await import('svelte')
     svelte.getContext = vi.fn((key: any) => {
-      if (key === '$$_queryClient') return new QueryClient()
+      if (key === '$$_queryClient') return queryClient
       if (key === '$$_isRestoring') return () => false
 
       if (options.shouldMockConfig ?? true) {
@@ -42,7 +44,13 @@ export const testHook =
       }
 
       return undefined
+    }) as <T>(key: any) => T // match type signature of svelte.getContext
+
+    const { onMount } = hydrate(config, {
+      reconnectOnMount: options.reconnectOnMount ?? false,
     })
+
+    await onMount()
 
     await Promise.resolve(setup())
 

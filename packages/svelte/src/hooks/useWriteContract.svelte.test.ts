@@ -1,7 +1,7 @@
 import { abi, address, config } from '@wagmi/test'
 import { expect, test } from 'vitest'
 
-import { setups, teardowns, testHook } from './test.svelte.js'
+import { setups, teardowns, testHook } from '@wagmi/test/svelte'
 import { useWriteContract } from './useWriteContract.svelte'
 
 test(

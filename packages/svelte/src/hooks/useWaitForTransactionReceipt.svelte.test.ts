@@ -1,6 +1,6 @@
 import { wait } from '@wagmi/test'
+import { testHook } from '@wagmi/test/svelte'
 import { expect, test, vi } from 'vitest'
-import { testHook } from './test.svelte.js'
 import { useWaitForTransactionReceipt } from './useWaitForTransactionReceipt.svelte'
 
 test(

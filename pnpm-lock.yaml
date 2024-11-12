@@ -348,6 +348,9 @@ importers:
       '@tanstack/react-query':
         specifier: '>=5.45.1'
         version: 5.49.2(react@18.3.1)
+      '@tanstack/svelte-query':
+        specifier: ^5.59.20
+        version: 5.59.20(svelte@5.0.5)
       '@tanstack/vue-query':
         specifier: '>=5.45.0'
         version: 5.49.1(vue@3.4.27(typescript@5.5.4))
@@ -2658,6 +2661,9 @@ packages:
   '@tanstack/query-core@5.49.1':
     resolution: {integrity: sha512-JnC9ndmD1KKS01Rt/ovRUB1tmwO7zkyXAyIxN9mznuJrcNtOrkmOnQqdJF2ib9oHzc2VxHomnEG7xyfo54Npkw==}
 
+  '@tanstack/query-core@5.59.20':
+    resolution: {integrity: sha512-e8vw0lf7KwfGe1if4uPFhvZRWULqHjFcz3K8AebtieXvnMOz5FSzlZe3mTLlPuUBcydCnBRqYs2YJ5ys68wwLg==}
+
   '@tanstack/query-core@https://pkg.pr.new/TanStack/query/@tanstack/query-core@ccce0b8':
     resolution: {tarball: https://pkg.pr.new/TanStack/query/@tanstack/query-core@ccce0b8}
     version: 5.56.2
@@ -2689,6 +2695,11 @@ packages:
     resolution: {integrity: sha512-6rfwXDK9BvmHISbNFuGd+wY3P44lyW7lWiA9vIFGT/T0P9aHD1VkjTvcM4SDAIbAQ9ygEZZoLt7dlU1o3NjMVA==}
     peerDependencies:
       react: ^18.0.0
+
+  '@tanstack/svelte-query@5.59.20':
+    resolution: {integrity: sha512-DFRTz9i6OXIF+o4GFDRF4g3Q6BSBKWxoahZPcPbCAdXAS4NRhTnVFR4HgEtzlhfoQx8yMJsLXMhDiGUw365HsA==}
+    peerDependencies:
+      svelte: ^3.54.0 || ^4.0.0 || ^5.0.0-next.0
 
   '@tanstack/svelte-query@https://pkg.pr.new/@tanstack/svelte-query@ccce0b8':
     resolution: {tarball: https://pkg.pr.new/@tanstack/svelte-query@ccce0b8}
@@ -3634,6 +3645,7 @@ packages:
 
   bun@1.1.29:
     resolution: {integrity: sha512-SKhpyKNZtgxrVel9ec9xon3LDv8mgpiuFhARgcJo1YIbggY2PBrKHRNiwQ6Qlb+x3ivmRurfuwWgwGexjpgBRg==}
+    cpu: [arm64, x64]
     os: [darwin, linux, win32]
     hasBin: true
 
@@ -10795,6 +10807,8 @@ snapshots:
 
   '@tanstack/query-core@5.49.1': {}
 
+  '@tanstack/query-core@5.59.20': {}
+
   '@tanstack/query-core@https://pkg.pr.new/TanStack/query/@tanstack/query-core@ccce0b8': {}
 
   '@tanstack/query-devtools@5.0.5': {}
@@ -10826,6 +10840,11 @@ snapshots:
     dependencies:
       '@tanstack/query-core': 5.49.1
       react: 18.3.1
+
+  '@tanstack/svelte-query@5.59.20(svelte@5.0.5)':
+    dependencies:
+      '@tanstack/query-core': 5.59.20
+      svelte: 5.0.5
 
   '@tanstack/svelte-query@https://pkg.pr.new/@tanstack/svelte-query@ccce0b8(svelte@5.0.5)':
     dependencies:

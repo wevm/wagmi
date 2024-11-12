@@ -3,7 +3,7 @@ import { config, transactionHashRegex } from '@wagmi/test'
 import { parseEther } from 'viem'
 import { expect, test } from 'vitest'
 
-import { setups, teardowns, testHook } from './test.svelte.js'
+import { setups, teardowns, testHook } from '@wagmi/test/svelte'
 import { useSendTransaction } from './useSendTransaction.svelte'
 
 test(

@@ -38,7 +38,7 @@
     "test:update": "vitest --update",
     "test:ui": "vitest --ui",
     "test:vue": "vitest --project @wagmi/vue",
-    "test:svelte": "pnpm --filter svelte test",
+    "test:svelte": "vitest --project @wagmi/svelte",
     "version:update": "bun scripts/updateVersion.ts",
     "version:update:viem": "bun scripts/updateViemVersion.ts"
   },

@@ -1,7 +1,7 @@
 import { config } from '@wagmi/test'
+import { testHook } from '@wagmi/test/svelte'
 import { flushSync } from 'svelte'
 import { expect, test, vi } from 'vitest'
-import { testHook } from './test.svelte.js'
 import { useChainId } from './useChainId.svelte.js'
 
 test(

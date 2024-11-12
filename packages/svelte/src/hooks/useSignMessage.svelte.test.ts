@@ -3,8 +3,8 @@ import { config, privateKey, wait } from '@wagmi/test'
 import { recoverMessageAddress } from 'viem'
 import { expect, test, vi } from 'vitest'
 
+import { setups, teardowns, testHook } from '@wagmi/test/svelte'
 import { privateKeyToAccount } from 'viem/accounts'
-import { setups, teardowns, testHook } from './test.svelte.js'
 import { useSignMessage } from './useSignMessage.svelte'
 
 test(

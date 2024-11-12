@@ -1,8 +1,8 @@
 import { connect } from '@wagmi/core'
 import { config, wait } from '@wagmi/test'
+import { testHook } from '@wagmi/test/svelte'
 import { flushSync } from 'svelte'
 import { expect, test } from 'vitest'
-import { testHook } from './test.svelte.js'
 import { useConnections } from './useConnections.svelte.js'
 
 test(

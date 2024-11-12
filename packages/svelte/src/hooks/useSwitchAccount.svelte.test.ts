@@ -1,7 +1,7 @@
 import { connect, disconnect } from '@wagmi/core'
 import { config } from '@wagmi/test'
+import { testHook } from '@wagmi/test/svelte'
 import { expect, test } from 'vitest'
-import { testHook } from './test.svelte.js'
 import { useAccount } from './useAccount.svelte.js'
 import { useSwitchAccount } from './useSwitchAccount.svelte.js'
 

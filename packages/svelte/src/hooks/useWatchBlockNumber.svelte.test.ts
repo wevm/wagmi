@@ -1,6 +1,6 @@
 import { testClient, wait } from '@wagmi/test'
+import { testHook } from '@wagmi/test/svelte'
 import { expect, test } from 'vitest'
-import { testHook } from './test.svelte.js'
 import { useWatchBlockNumber } from './useWatchBlockNumber.svelte.js'
 
 test(

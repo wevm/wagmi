@@ -1,7 +1,8 @@
-import { testClient } from '@wagmi/test'
+import { getBlockNumber } from '@wagmi/core'
+import { config, testClient, wait } from '@wagmi/test'
+import { testHook } from '@wagmi/test/svelte'
 import { flushSync } from 'svelte'
 import { expect, test } from 'vitest'
-import { testHook } from './test.svelte.js'
 import { useBlockNumber } from './useBlockNumber.svelte.js'
 
 test(
@@ -65,18 +66,10 @@ test(
       expect(result.data).toMatchInlineSnapshot('19258213n')
 
       await testClient.mainnet.mine({ blocks: 1 })
-      await expect
-        .poll(() => {
-          result.data
-        })
-        .toEqual(blockNumber + 1n)
+      await expect.poll(() => result.data).toEqual(blockNumber + 1n)
 
       await testClient.mainnet.mine({ blocks: 1 })
-      await expect
-        .poll(() => {
-          result.data
-        })
-        .toEqual(blockNumber + 2n)
+      await expect.poll(() => result.data).toEqual(blockNumber + 2n)
     },
     {},
     async () => {

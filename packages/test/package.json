@@ -22,7 +22,8 @@
     "!src/**/*.test.ts",
     "!src/**/*.test-d.ts",
     "react/**",
-    "vue/**"
+    "vue/**",
+    "svelte/**"
   ],
   "sideEffects": false,
   "type": "module",
@@ -42,16 +43,22 @@
       "types": "./dist/types/exports/vue.d.ts",
       "default": "./dist/esm/exports/vue.js"
     },
+    "./svelte": {
+      "types": "./dist/types/exports/svelte.svelte.d.ts",
+      "default": "./dist/esm/exports/svelte.svelte.js"
+    },
     "./package.json": "./package.json"
   },
   "typesVersions": {
     "*": {
       "react": ["./dist/types/exports/react.d.ts"],
-      "vue": ["./dist/types/exports/vue.d.ts"]
+      "vue": ["./dist/types/exports/vue.d.ts"],
+      "svelte": ["./dist/types/exports/svelte.svelte.d.ts"]
     }
   },
   "peerDependencies": {
     "@tanstack/react-query": ">=5.0.0",
+    "@tanstack/svelte-query": "^5.59.20",
     "@tanstack/vue-query": ">=5.0.0",
     "@testing-library/react": ">=14.0.0",
     "@types/react": ">=18",
@@ -71,6 +78,9 @@
       "optional": true
     },
     "@tanstack/vue-query": {
+      "optional": true
+    },
+    "@tanstack/svelte-query": {
       "optional": true
     },
     "@testing-library/react": {
@@ -100,6 +110,7 @@
   },
   "devDependencies": {
     "@tanstack/react-query": ">=5.45.1",
+    "@tanstack/svelte-query": "^5.59.20",
     "@tanstack/vue-query": ">=5.45.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": ">=16.0.1",

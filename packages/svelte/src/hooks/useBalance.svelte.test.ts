@@ -1,8 +1,8 @@
 import { accounts, chain, testClient, wait } from '@wagmi/test'
+import { testHook } from '@wagmi/test/svelte'
 import { flushSync } from 'svelte'
 import { type Address, parseEther } from 'viem'
 import { beforeEach, expect, test } from 'vitest'
-import { testHook } from './test.svelte.js'
 import { useBalance } from './useBalance.svelte.js'
 
 const address = accounts[0]
@@ -235,7 +235,7 @@ test(
 test(
   'behavior: address: undefined -> defined',
   testHook(async () => {
-    let address: Address | undefined = undefined
+    let address: Address | undefined = $state(undefined)
     const result = $derived.by(useBalance(() => ({ address })))
 
     expect(result).toMatchInlineSnapshot(`

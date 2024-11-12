@@ -1,6 +1,6 @@
 import { chain, config, wait } from '@wagmi/test'
+import { setups, teardowns, testHook } from '@wagmi/test/svelte'
 import { expect, test, vi } from 'vitest'
-import { setups, teardowns, testHook } from './test.svelte.js'
 import { useAccount } from './useAccount.svelte.js'
 import { useSwitchChain } from './useSwitchChain.svelte.js'
 
