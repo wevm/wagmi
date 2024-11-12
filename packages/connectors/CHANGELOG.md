@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 5.3.9
+
+### Patch Changes
+
+- [`b12a04eeec985c48d2feac94b011d41fb29ca23e`](https://github.com/wevm/wagmi/commit/b12a04eeec985c48d2feac94b011d41fb29ca23e) Thanks [@tmm](https://github.com/tmm)! - Bumped Coinbase Wallet SDK version.
+
 ## 5.3.8
 
 ### Patch Changes
