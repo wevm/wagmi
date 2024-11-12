@@ -12,7 +12,7 @@ export default defineConfig({
     environment: 'happy-dom',
     testTimeout: 20_000,
     setupFiles: ['./test/setup.ts', '../test/src/setup.ts'],
-    globalSetup: ['../test/src/globalSetup.ts'],
+    // globalSetup: ['../test/src/globalSetup.ts'],
     expect: {
       poll: {
         timeout: 10_000,

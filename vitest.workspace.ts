@@ -69,6 +69,7 @@ export default defineWorkspace([
     },
     resolve: { alias },
   },
+  './packages/svelte',
   {
     test: {
       name: 'react-register',

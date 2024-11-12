@@ -13,43 +13,39 @@ test(
       await expect.poll(() => result.isSuccess).toBeTruthy()
 
       expect(result).toMatchInlineSnapshot(`
-      {
-        "data": 19258213n,
-        "dataUpdatedAt": 1675209600000,
-        "error": null,
-        "errorUpdateCount": 0,
-        "errorUpdatedAt": 0,
-        "failureCount": 0,
-        "failureReason": null,
-        "fetchStatus": "idle",
-        "isError": false,
-        "isFetched": true,
-        "isFetchedAfterMount": true,
-        "isFetching": false,
-        "isInitialLoading": false,
-        "isLoading": false,
-        "isLoadingError": false,
-        "isPaused": false,
-        "isPending": false,
-        "isPlaceholderData": false,
-        "isRefetchError": false,
-        "isRefetching": false,
-        "isStale": true,
-        "isSuccess": true,
-        "promise": Promise {
-          "reason": [Error: experimental_prefetchInRender feature flag is not enabled],
-          "status": "rejected",
-        },
-        "queryKey": [
-          "blockNumber",
-          {
-            "chainId": 1,
-          },
-        ],
-        "refetch": [Function],
-        "status": "success",
-      }
-    `)
+        {
+          "data": 19258213n,
+          "dataUpdatedAt": 1675209600000,
+          "error": null,
+          "errorUpdateCount": 0,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "failureReason": null,
+          "fetchStatus": "idle",
+          "isError": false,
+          "isFetched": true,
+          "isFetchedAfterMount": true,
+          "isFetching": false,
+          "isInitialLoading": false,
+          "isLoading": false,
+          "isLoadingError": false,
+          "isPaused": false,
+          "isPending": false,
+          "isPlaceholderData": false,
+          "isRefetchError": false,
+          "isRefetching": false,
+          "isStale": true,
+          "isSuccess": true,
+          "queryKey": [
+            "blockNumber",
+            {
+              "chainId": 1,
+            },
+          ],
+          "refetch": [Function],
+          "status": "success",
+        }
+      `)
     },
     {},
     async () => {

@@ -53,10 +53,6 @@ test(
         "isRefetching": false,
         "isStale": true,
         "isSuccess": true,
-        "promise": Promise {
-          "reason": [Error: experimental_prefetchInRender feature flag is not enabled],
-          "status": "rejected",
-        },
         "queryKey": [
           "balance",
           {
@@ -109,10 +105,6 @@ test(
         "isRefetching": false,
         "isStale": true,
         "isSuccess": true,
-        "promise": Promise {
-          "reason": [Error: experimental_prefetchInRender feature flag is not enabled],
-          "status": "rejected",
-        },
         "queryKey": [
           "balance",
           {
@@ -168,10 +160,6 @@ test(
         "isRefetching": false,
         "isStale": true,
         "isSuccess": true,
-        "promise": Promise {
-          "reason": [Error: experimental_prefetchInRender feature flag is not enabled],
-          "status": "rejected",
-        },
         "queryKey": [
           "balance",
           {
@@ -229,10 +217,6 @@ test(
         "isRefetching": false,
         "isStale": true,
         "isSuccess": true,
-        "promise": Promise {
-          "reason": [Error: experimental_prefetchInRender feature flag is not enabled],
-          "status": "rejected",
-        },
         "queryKey": [
           "balance",
           {
@@ -278,10 +262,6 @@ test(
         "isRefetching": false,
         "isStale": false,
         "isSuccess": false,
-        "promise": Promise {
-          "reason": [Error: experimental_prefetchInRender feature flag is not enabled],
-          "status": "rejected",
-        },
         "queryKey": [
           "balance",
           {

@@ -41,10 +41,6 @@ test(
         "isRefetching": false,
         "isStale": true,
         "isSuccess": true,
-        "promise": Promise {
-          "reason": [Error: experimental_prefetchInRender feature flag is not enabled],
-          "status": "rejected",
-        },
         "queryKey": [
           "readContract",
           {
@@ -102,10 +98,6 @@ test(
         "isRefetching": false,
         "isStale": true,
         "isSuccess": true,
-        "promise": Promise {
-          "reason": [Error: experimental_prefetchInRender feature flag is not enabled],
-          "status": "rejected",
-        },
         "queryKey": [
           "readContract",
           {
@@ -164,10 +156,6 @@ test(
           "isRefetching": false,
           "isStale": true,
           "isSuccess": true,
-          "promise": Promise {
-            "reason": [Error: experimental_prefetchInRender feature flag is not enabled],
-            "status": "rejected",
-          },
           "queryKey": [
             "readContract",
             {
