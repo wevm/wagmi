@@ -11,8 +11,7 @@ export default defineConfig({
     include: ['./src/**/*.test.ts'],
     environment: 'happy-dom',
     testTimeout: 20_000,
-    setupFiles: ['./test/setup.ts', '../test/src/setup.ts'],
-    // globalSetup: ['../test/src/globalSetup.ts'],
+    setupFiles: ['./test/setup.ts'],
     expect: {
       poll: {
         timeout: 10_000,
