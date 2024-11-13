@@ -1,6 +1,5 @@
 import type {
-  CoinbaseWalletSDK,
-  Preference,
+  createCoinbaseWalletSDK,
   ProviderInterface,
 } from '@coinbase/wallet-sdk'
 import {
@@ -62,15 +61,9 @@ export function coinbaseWallet<version extends Version>(
 
 type Version4Parameters = Mutable<
   Omit<
-    ConstructorParameters<typeof CoinbaseWalletSDK>[0],
+    Parameters<typeof createCoinbaseWalletSDK>[0],
     'appChainIds' // set via wagmi config
-  > & {
-    /**
-     * Preference for the type of wallet to display.
-     * @default 'all'
-     */
-    preference?: Preference['options'] | undefined
-  }
+  >
 >
 
 function version4(parameters: Version4Parameters) {
@@ -79,7 +72,6 @@ function version4(parameters: Version4Parameters) {
     close?(): void
   }
 
-  let sdk: CoinbaseWalletSDK | undefined
   let walletProvider: Provider | undefined
 
   let accountsChanged: Connector['onAccountsChanged'] | undefined
@@ -173,25 +165,17 @@ function version4(parameters: Version4Parameters) {
       if (!walletProvider) {
         // Unwrapping import for Vite compatibility.
         // See: https://github.com/vitejs/vite/issues/9703
-        const CoinbaseWalletSDK = await (async () => {
+        const createCoinbaseWalletSDK = await (async () => {
           const SDK = await import('@coinbase/wallet-sdk')
-          if (
-            typeof SDK.CoinbaseWalletSDK !== 'function' &&
-            typeof SDK.default === 'function'
-          )
-            return SDK.default
-          return SDK.CoinbaseWalletSDK
+          return SDK.createCoinbaseWalletSDK
         })()
 
-        sdk = new CoinbaseWalletSDK({
+        const sdk = createCoinbaseWalletSDK({
           ...parameters,
           appChainIds: config.chains.map((x) => x.id),
         })
 
-        walletProvider = sdk.makeWeb3Provider({
-          ...parameters,
-          options: parameters.preference ?? 'all',
-        })
+        walletProvider = sdk.getProvider()
       }
 
       return walletProvider
