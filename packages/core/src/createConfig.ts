@@ -99,9 +99,8 @@ export function createConfig<
       const connector = setup(connectorFns)
       collection.push(connector)
       if (!ssr && connector.rdns) {
-        const rdnsValues = Array.isArray(connector.rdns)
-          ? connector.rdns
-          : [connector.rdns]
+        const rdnsValues =
+          typeof connector.rdns === 'string' ? [connector.rdns] : connector.rdns
         for (const rdns of rdnsValues) {
           rdnsSet.add(rdns)
         }
@@ -330,11 +329,17 @@ export function createConfig<
 
   // EIP-6963 subscribe for new wallet providers
   mipd?.subscribe((providerDetails) => {
-    const connectorIdSet = new Set()
-    const connectorRdnsSet = new Set()
+    const connectorIdSet = new Set<string>()
+    const connectorRdnsSet = new Set<string>()
     for (const connector of connectors.getState()) {
       connectorIdSet.add(connector.id)
-      if (connector.rdns) connectorRdnsSet.add(connector.rdns)
+      if (connector.rdns) {
+        const rdnsValues =
+          typeof connector.rdns === 'string' ? [connector.rdns] : connector.rdns
+        for (const rdns of rdnsValues) {
+          connectorRdnsSet.add(rdns)
+        }
+      }
     }
 
     const newConnectors: Connector[] = []
