@@ -37,10 +37,14 @@
   "peerDependencies": {
     "@wagmi/core": "workspace:*",
     "typescript": ">=5.0.4",
+    "thirdweb": "^5.68.0",
     "viem": "2.x"
   },
   "peerDependenciesMeta": {
     "typescript": {
+      "optional": true
+    },
+    "thirdweb": {
       "optional": true
     }
   },
@@ -54,7 +58,8 @@
   },
   "devDependencies": {
     "@wagmi/core": "workspace:*",
-    "msw": "^2.4.9"
+    "msw": "^2.4.9",
+    "thirdweb": "5.68.0"
   },
   "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
   "funding": "https://github.com/sponsors/wevm",
