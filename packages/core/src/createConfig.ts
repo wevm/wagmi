@@ -98,7 +98,14 @@ export function createConfig<
     for (const connectorFns of rest.connectors ?? []) {
       const connector = setup(connectorFns)
       collection.push(connector)
-      if (!ssr && connector.rdns) rdnsSet.add(connector.rdns)
+      if (!ssr && connector.rdns) {
+        const rdnsValues = Array.isArray(connector.rdns)
+          ? connector.rdns
+          : [connector.rdns]
+        for (const rdns of rdnsValues) {
+          rdnsSet.add(rdns)
+        }
+      }
     }
     if (!ssr && mipd) {
       const providers = mipd.getProviders()
