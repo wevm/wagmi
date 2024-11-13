@@ -17,19 +17,19 @@ To manually add Wagmi to your project, install the required packages.
 
 ::: code-group
 ```bash-vue [pnpm]
-pnpm add wagmi viem@{{viemVersion}} {{tanstackQuery}}
+pnpm add @wagmi/svelte viem@{{viemVersion}} {{tanstackQuery}}
 ```
 
 ```bash-vue [npm]
-npm install wagmi viem@{{viemVersion}} {{tanstackQuery}}
+npm install @wagmi/svelte viem@{{viemVersion}} {{tanstackQuery}}
 ```
 
 ```bash-vue [yarn]
-yarn add wagmi viem@{{viemVersion}} {{tanstackQuery}}
+yarn add @wagmi/svelte viem@{{viemVersion}} {{tanstackQuery}}
 ```
 
 ```bash-vue [bun]
-bun add wagmi viem@{{viemVersion}} {{tanstackQuery}}
+bun add @wagmi/svelte viem@{{viemVersion}} {{tanstackQuery}}
 ```
 :::
 
