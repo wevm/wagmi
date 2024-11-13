@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.14.6
+
+### Patch Changes
+
+- [#4406](https://github.com/wevm/wagmi/pull/4406) [`a13aa8d7c38eb3cc8171a02d6302e6d12cf6bcb3`](https://github.com/wevm/wagmi/commit/a13aa8d7c38eb3cc8171a02d6302e6d12cf6bcb3) Thanks [@tmm](https://github.com/tmm)! - Added support for multiple connector `rdns` entries.
+
 ## 2.14.5
 
 ### Patch Changes
