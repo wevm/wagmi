@@ -1,6 +1,6 @@
 import type {
-  createCoinbaseWalletSDK,
   ProviderInterface,
+  createCoinbaseWalletSDK,
 } from '@coinbase/wallet-sdk'
 import {
   ChainNotConfiguredError,
