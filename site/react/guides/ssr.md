@@ -4,7 +4,7 @@ outline: deep
 
 # SSR
 
-Wagmi uses client-only external stores (such as `localStorage` and `mipd`) to show the user the most relevant data as quickly as possible on first render.
+Wagmi uses client-only external stores (such as `localStorage` and `midp`) to show the user the most relevant data as quickly as possible on first render.
 
 However, the caveat of using these external client stores is that frameworks which incorporate SSR (such as Next.js) will throw hydration warnings on the client when it identifies mismatches between the server-rendered HTML and the client-rendered HTML.
 
