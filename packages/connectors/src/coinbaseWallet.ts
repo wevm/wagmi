@@ -66,6 +66,7 @@ type Version4Parameters = Mutable<
     | 'appChainIds' // set via wagmi config
     | 'preference'
   > & {
+    // TODO(v3): Remove `Preference['options']`
     /**
      * Preference for the type of wallet to display.
      * @default 'all'
