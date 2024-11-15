@@ -63,23 +63,14 @@ export function coinbaseWallet<version extends Version>(
 type Version4Parameters = Mutable<
   Omit<
     Parameters<typeof createCoinbaseWalletSDK>[0],
-    'appChainIds' // set via wagmi config
+    | 'appChainIds' // set via wagmi config
+    | 'preference'
   > & {
     /**
      * Preference for the type of wallet to display.
      * @default 'all'
      */
-    preference?: Preference['options'] | undefined
-    /**
-     * Attribution for smart wallet onchain analytics.
-     * @default undefined
-     */
-    attribution?: Preference['attribution'] | undefined
-    /**
-     * Keys URL of Coinbase smart wallet.
-     * @default 'https://keys.coinbase.com/connect'
-     */
-    keysUrl?: Preference['keysUrl'] | undefined
+    preference?: Preference['options'] | Compute<Preference> | undefined
   }
 >
 
@@ -180,21 +171,20 @@ function version4(parameters: Version4Parameters) {
     },
     async getProvider() {
       if (!walletProvider) {
-        // Unwrapping import for Vite compatibility.
-        // See: https://github.com/vitejs/vite/issues/9703
-        const createCoinbaseWalletSDK = await (async () => {
-          const SDK = await import('@coinbase/wallet-sdk')
-          return SDK.createCoinbaseWalletSDK
+        const preference = (() => {
+          if (typeof parameters.preference === 'string')
+            return { options: parameters.preference }
+          return {
+            ...parameters.preference,
+            options: parameters.preference?.options ?? 'all',
+          }
         })()
 
+        const { createCoinbaseWalletSDK } = await import('@coinbase/wallet-sdk')
         const sdk = createCoinbaseWalletSDK({
           ...parameters,
           appChainIds: config.chains.map((x) => x.id),
-          preference: {
-            options: parameters.preference ?? 'all',
-            attribution: parameters.attribution,
-            keysUrl: parameters.keysUrl,
-          },
+          preference,
         })
 
         walletProvider = sdk.getProvider()
