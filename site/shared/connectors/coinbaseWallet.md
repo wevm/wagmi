@@ -106,7 +106,45 @@ const connector = coinbaseWallet({
 })
 ```
 
-### version <Badge text=">=2.9.0" />
+::: warning
+Passing `preference` as a string is deprecated and will be removed in the next major version. Instead you should use [`preference#options`](#options).
+:::
+
+```ts-vue
+import { coinbaseWallet } from '{{connectorsPackageName}}'
+
+const connector = coinbaseWallet({
+  appName: 'My Wagmi App',
+  preference: { // [!code focus]
+    options: 'smartWalletOnly' // [!code focus]
+  }, // [!code focus]
+})
+```
+
+#### attribution <Badge text=">=2.13.0" />
+
+`` { auto?: boolean | undefined; dataSuffix?: `0x${string}` | undefined } ``
+
+This option only applies to Coinbase Smart Wallet. When a valid data suffix is supplied, it is appended to the `initCode` and `executeBatch` calldata. Coinbase Smart Wallet expects a 16 byte hex string. If the data suffix is not a 16 byte hex string, the Smart Wallet will ignore the property. If auto is true, the Smart Wallet will generate a 16 byte hex string from the apps origin.
+
+#### keysUrl <Badge text=">=2.13.0" />
+
+`string`
+
+- The URL for the keys popup.
+- By default, `https://keys.coinbase.com/connect` is used for production. Use `https://keys-dev.coinbase.com/connect` for development environments.
+
+#### options <Badge text=">=2.13.0" />
+
+`"all" | "eoaOnly" | "smartWalletOnly"`
+
+Preference for the type of wallet to display.
+
+- `'eoaOnly'`: Uses EOA Browser Extension or Mobile Coinbase Wallet.
+- `'smartWalletOnly'`: Displays Smart Wallet popup.
+- `'all'` (default): Supports both `'eoaOnly'` and `'smartWalletOnly'` based on context.
+
+### version <Badge text=">=2.13.0" />
 
 - Coinbase Wallet SDK version
 - Defaults to `'4'`. If [`headlessMode: true`](#headlessmode), defaults to `'3'`.
