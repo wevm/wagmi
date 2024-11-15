@@ -15,17 +15,16 @@ import { inAppWallet } from '{{connectorsPackageName}}'
 
 ## Usage
 
-```ts-vue{3,10}
+You will need a free clientId from [thirdweb](https://thirdweb.com) to use this connector.
+
+```ts-vue{3,7}
 import { createConfig, http } from '{{packageName}}'
 import { mainnet, sepolia } from '{{packageName}}/chains'
 import { inAppWallet } from '{{connectorsPackageName}}'
-import { createThirdwebClient } from 'thirdweb'
-
-const client = createThirdwebClient({ clientId: "..." })
 
 export const config = createConfig({
   chains: [mainnet, sepolia],
-  connectors: [inAppWallet({ client, strategy: "google" })],
+  connectors: [inAppWallet({ clientId: "...", strategy: "google" })],
   transports: {
     [mainnet.id]: http(),
     [sepolia.id]: http(),
@@ -43,14 +42,13 @@ Check out the [thirdweb developer portal](https://portal.thirdweb.com/typescript
 
 ### client
 
-The `ThirdwebClient` instance to use for authentication.
+The `clientId` to use for authentication. Obtain one from [thirdweb](https://thirdweb.com).
 
 ```ts-vue
 import { inAppWallet } from '{{connectorsPackageName}}'
-import { createThirdwebClient } from 'thirdweb'
 
 const connector = inAppWallet({
-  client: createThirdwebClient({ clientId: "..." }), // [!code focus]
+  clientId: "...", // [!code focus]
   strategy: "google",
 })
 ```
@@ -63,7 +61,7 @@ The strategy to use for authentication, options include `"email"`, `"phone"`, `"
 import { inAppWallet } from '{{connectorsPackageName}}'
 
 const connector = inAppWallet({
-  client,
+  clientId: "...",
   strategy: "google", // [!code focus]
 })
 ```

@@ -204,6 +204,9 @@ importers:
       cbw-sdk:
         specifier: npm:@coinbase/wallet-sdk@3.9.3
         version: '@coinbase/wallet-sdk@3.9.3'
+      thirdweb:
+        specifier: 5.68.0
+        version: 5.68.0(@types/node@20.12.10)(@types/react-dom@18.3.0)(@types/react@18.3.1)(@vitest/ui@2.1.1(vitest@2.1.1))(bufferutil@4.0.8)(encoding@0.1.13)(happy-dom@15.7.4)(ioredis@5.3.2)(msw@2.4.9(typescript@5.5.4))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(terser@5.31.0)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.22.4)
     devDependencies:
       '@wagmi/core':
         specifier: workspace:*
@@ -211,9 +214,6 @@ importers:
       msw:
         specifier: ^2.4.9
         version: 2.4.9(typescript@5.5.4)
-      thirdweb:
-        specifier: 5.68.0
-        version: 5.68.0(@types/node@20.12.10)(@types/react-dom@18.3.0)(@types/react@18.3.1)(@vitest/ui@2.1.1(vitest@2.1.1))(bufferutil@4.0.8)(encoding@0.1.13)(happy-dom@15.7.4)(ioredis@5.3.2)(msw@2.4.9(typescript@5.5.4))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(terser@5.31.0)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.22.4)
 
   packages/core:
     dependencies:
@@ -14203,7 +14203,7 @@ snapshots:
       assertion-error: 2.0.1
       check-error: 2.1.1
       deep-eql: 5.0.2
-      loupe: 3.1.1
+      loupe: 3.1.2
       pathval: 2.0.0
 
   chalk@2.4.2:

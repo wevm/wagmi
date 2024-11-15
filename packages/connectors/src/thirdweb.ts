@@ -1,5 +1,5 @@
 import { type CreateConnectorFn, createConnector } from '@wagmi/core'
-import { defineChain } from 'thirdweb'
+import { createThirdwebClient, defineChain } from 'thirdweb'
 import {
   EIP1193,
   type InAppWalletConnectionOptions,
@@ -7,7 +7,16 @@ import {
   inAppWallet as thirdwebInAppWallet,
 } from 'thirdweb/wallets'
 import type { InAppWalletCreationOptions } from 'thirdweb/wallets/in-app'
+import type { Prettify } from 'viem'
 import type { Address } from 'viem/accounts'
+
+export type InAppWalletParameters = Prettify<
+  Omit<InAppWalletConnectionOptions, 'client'> &
+    InAppWalletCreationOptions & {
+      clientId: string
+      ecosystemId?: `ecosystem.${string}`
+    }
+>
 
 /**
  * Connect to an in-app wallet using the auth strategy of your choice.
@@ -15,19 +24,14 @@ import type { Address } from 'viem/accounts'
  * @returns A wagmi connector.
  * @example
  * ```ts
- * import { createThirdwebClient } from "thirdweb";
  * import { http, createConfig } from "wagmi";
  * import { inAppWallet } from "@wagmi/connectors";
- *
- * const client = createThirdwebClient({
- *   clientId: "...",
- * })
  *
  * export const config = createConfig({
  *  chains: [sepolia],
  *  connectors: [
  *    inAppWallet({
- *      client,
+ *      clientId: "...",
  *      strategy: "google",
  *   }),
  *  ],
@@ -37,13 +41,10 @@ import type { Address } from 'viem/accounts'
  * });
  * ```
  */
-export function inAppWallet(
-  args: InAppWalletConnectionOptions &
-    InAppWalletCreationOptions & { ecosystemId?: `ecosystem.${string}` },
-): CreateConnectorFn {
-  const { client, ecosystemId } = args
-  const wallet = ecosystemId
-    ? ecosystemWallet(ecosystemId, { partnerId: args.partnerId })
+export function inAppWallet(args: InAppWalletParameters): CreateConnectorFn {
+  const client = createThirdwebClient({ clientId: args.clientId })
+  const wallet = args.ecosystemId
+    ? ecosystemWallet(args.ecosystemId, { partnerId: args.partnerId })
     : thirdwebInAppWallet(args)
   return createConnector((config) => ({
     id: 'in-app-wallet',

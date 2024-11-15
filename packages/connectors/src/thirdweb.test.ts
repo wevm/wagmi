@@ -1,7 +1,6 @@
 import { config } from '@wagmi/test'
 import { expect, test } from 'vitest'
 
-import { createThirdwebClient } from 'thirdweb'
 import { inAppWallet } from './thirdweb.js'
 
 /**
@@ -11,7 +10,7 @@ import { inAppWallet } from './thirdweb.js'
  */
 test('setup', () => {
   const connectorFn = inAppWallet({
-    client: createThirdwebClient({ clientId: 'testClientId' }),
+    clientId: 'testClientId',
     strategy: 'google',
   })
   const connector = config._internal.connectors.setup(connectorFn)
