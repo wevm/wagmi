@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 5.4.0
+
+### Minor Changes
+
+- [#4409](https://github.com/wevm/wagmi/pull/4409) [`7ca62b44cd997d48f92c2b81343726a5908aa00b`](https://github.com/wevm/wagmi/commit/7ca62b44cd997d48f92c2b81343726a5908aa00b) Thanks [@fan-zhang-sv](https://github.com/fan-zhang-sv)! - Added `preference` object for Coinbase Wallet connector.
+
 ## 5.3.10
 
 ### Patch Changes
