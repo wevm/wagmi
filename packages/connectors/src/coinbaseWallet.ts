@@ -1,4 +1,5 @@
 import type {
+  Preference,
   ProviderInterface,
   createCoinbaseWalletSDK,
 } from '@coinbase/wallet-sdk'
@@ -63,7 +64,23 @@ type Version4Parameters = Mutable<
   Omit<
     Parameters<typeof createCoinbaseWalletSDK>[0],
     'appChainIds' // set via wagmi config
-  >
+  > & {
+    /**
+     * Preference for the type of wallet to display.
+     * @default 'all'
+     */
+    preference?: Preference['options'] | undefined
+    /**
+     * Attribution for smart wallet onchain analytics.
+     * @default undefined
+     */
+    attribution?: Preference['attribution'] | undefined
+    /**
+     * Keys URL of Coinbase smart wallet.
+     * @default 'https://keys.coinbase.com/connect'
+     */
+    keysUrl?: Preference['keysUrl'] | undefined
+  }
 >
 
 function version4(parameters: Version4Parameters) {
@@ -173,6 +190,11 @@ function version4(parameters: Version4Parameters) {
         const sdk = createCoinbaseWalletSDK({
           ...parameters,
           appChainIds: config.chains.map((x) => x.id),
+          preference: {
+            options: parameters.preference ?? 'all',
+            attribution: parameters.attribution,
+            keysUrl: parameters.keysUrl,
+          },
         })
 
         walletProvider = sdk.getProvider()
