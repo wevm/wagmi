@@ -44,7 +44,7 @@ test('validates without project', async () => {
   const spy = vi.spyOn(process, 'cwd')
   spy.mockImplementation(() => dir)
 
-  expect(foundry().validate?.()).resolves.toBeUndefined()
+  await expect(foundry().validate?.()).resolves.toBeUndefined()
 })
 
 test('contracts', () => {

@@ -1,5 +1,66 @@
 # @wagmi/connectors
 
+## 5.4.0
+
+### Minor Changes
+
+- [#4409](https://github.com/wevm/wagmi/pull/4409) [`7ca62b44cd997d48f92c2b81343726a5908aa00b`](https://github.com/wevm/wagmi/commit/7ca62b44cd997d48f92c2b81343726a5908aa00b) Thanks [@fan-zhang-sv](https://github.com/fan-zhang-sv)! - Added `preference` object for Coinbase Wallet connector.
+
+## 5.3.10
+
+### Patch Changes
+
+- [#4406](https://github.com/wevm/wagmi/pull/4406) [`a13aa8d7c38eb3cc8171a02d6302e6d12cf6bcb3`](https://github.com/wevm/wagmi/commit/a13aa8d7c38eb3cc8171a02d6302e6d12cf6bcb3) Thanks [@tmm](https://github.com/tmm)! - Added additional RDNS to MetaMask Connector.
+
+- Updated dependencies [[`a13aa8d7c38eb3cc8171a02d6302e6d12cf6bcb3`](https://github.com/wevm/wagmi/commit/a13aa8d7c38eb3cc8171a02d6302e6d12cf6bcb3)]:
+  - @wagmi/core@2.14.6
+
+## 5.3.9
+
+### Patch Changes
+
+- [`b12a04eeec985c48d2feac94b011d41fb29ca23e`](https://github.com/wevm/wagmi/commit/b12a04eeec985c48d2feac94b011d41fb29ca23e) Thanks [@tmm](https://github.com/tmm)! - Bumped Coinbase Wallet SDK version.
+
+## 5.3.8
+
+### Patch Changes
+
+- [#4390](https://github.com/wevm/wagmi/pull/4390) [`dac62dc99a0679fa632a0fae49873d6053d06b35`](https://github.com/wevm/wagmi/commit/dac62dc99a0679fa632a0fae49873d6053d06b35) Thanks [@chybisov](https://github.com/chybisov)! - Bumped Safe Apps Provider version.
+
+- Updated dependencies [[`6b9bbacdc7bffd44fc2165362a5e65fd434e7646`](https://github.com/wevm/wagmi/commit/6b9bbacdc7bffd44fc2165362a5e65fd434e7646)]:
+  - @wagmi/core@2.14.5
+
+## 5.3.7
+
+### Patch Changes
+
+- Updated dependencies [[`e08681c81fbdf475213e2d0f4c5517d0abf4e743`](https://github.com/wevm/wagmi/commit/e08681c81fbdf475213e2d0f4c5517d0abf4e743)]:
+  - @wagmi/core@2.14.4
+
+## 5.3.6
+
+### Patch Changes
+
+- [#4385](https://github.com/wevm/wagmi/pull/4385) [`7558ff3133c11bc4c49473d08ee9a47eaa12df5b`](https://github.com/wevm/wagmi/commit/7558ff3133c11bc4c49473d08ee9a47eaa12df5b) Thanks [@cb-jake](https://github.com/cb-jake)! - Bumped Coinbase Wallet SDK version.
+
+## 5.3.5
+
+### Patch Changes
+
+- [`7fe78f2d09778fc01fd0cffe85ba198e64999275`](https://github.com/wevm/wagmi/commit/7fe78f2d09778fc01fd0cffe85ba198e64999275) Thanks [@tmm](https://github.com/tmm)! - Fixed MetaMask connector not returning provider in some cases.
+
+- Updated dependencies [[`cb7dd2ebb871d0be8f1a11a8cd8ce592cd74b7c7`](https://github.com/wevm/wagmi/commit/cb7dd2ebb871d0be8f1a11a8cd8ce592cd74b7c7)]:
+  - @wagmi/core@2.14.3
+
+## 5.3.4
+
+### Patch Changes
+
+- [#4371](https://github.com/wevm/wagmi/pull/4371) [`b6861a4c378dab78d8751ae0ac2aa425f3c24b8f`](https://github.com/wevm/wagmi/commit/b6861a4c378dab78d8751ae0ac2aa425f3c24b8f) Thanks [@iceanddust](https://github.com/iceanddust)! - Fixed Safe connector not working in some Vite apps
+
+- Updated dependencies [[`d0d0963bb5904a15cf0355862d62dd141ce0c31c`](https://github.com/wevm/wagmi/commit/d0d0963bb5904a15cf0355862d62dd141ce0c31c), [`ecac0ba36243d94c9199d0bd21937104c835d9a0`](https://github.com/wevm/wagmi/commit/ecac0ba36243d94c9199d0bd21937104c835d9a0)]:
+  - @wagmi/core@2.14.2
+
 ## 5.3.3
 
 ### Patch Changes

@@ -8,10 +8,11 @@ const { data: sponsors } = useSponsors()
 const teamMembers = [
   {
     avatar: 'https://www.github.com/tmm.png',
-    name: 'awkweb',
+    name: 'tmm',
     links: [
       { icon: 'github', link: 'https://github.com/tmm' },
-      { icon: 'twitter', link: 'https://twitter.com/awkweb' },
+      { icon: 'bluesky', link: 'https://bsky.app/profile/tmm.dev' },
+      { icon: 'x', link: 'https://twitter.com/awkweb' },
     ],
   },
   {
@@ -19,7 +20,8 @@ const teamMembers = [
     name: 'jxom',
     links: [
       { icon: 'github', link: 'https://github.com/jxom' },
-      { icon: 'twitter', link: 'https://twitter.com/_jxom' },
+      { icon: 'bluesky', link: 'https://bsky.app/profile/jxom.dev' },
+      { icon: 'x', link: 'https://twitter.com/_jxom' },
     ],
   },
 ] satisfies DefaultTheme.TeamMember[]

@@ -1,7 +1,7 @@
 {
   "name": "@wagmi/vue",
   "description": "Vue Composables for Ethereum",
-  "version": "0.0.56",
+  "version": "0.0.64",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -93,11 +93,10 @@
   },
   "devDependencies": {
     "@nuxt/schema": "^3.11.2",
-    "@tanstack/vue-query": ">=5.45.0",
+    "@tanstack/vue-query": "catalog:",
     "@vue/test-utils": "^2.4.6",
     "nuxt": "^3.11.2",
-    "vue": ">=3.4.21",
-    "vue-tsc": "^2.0.6"
+    "vue": "catalog:"
   },
   "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
   "funding": "https://github.com/sponsors/wevm",

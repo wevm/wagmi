@@ -1,7 +1,7 @@
 {
   "name": "wagmi",
   "description": "React Hooks for Ethereum",
-  "version": "2.12.25",
+  "version": "2.12.33",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -95,14 +95,14 @@
     "use-sync-external-store": "1.2.0"
   },
   "devDependencies": {
-    "@tanstack/react-query": ">=5.45.1",
-    "@testing-library/dom": "^10.4.0",
-    "@testing-library/react": ">=16.0.1",
-    "@types/react": ">=18.3.1",
-    "@types/react-dom": ">=18.3.0",
+    "@tanstack/react-query": "catalog:",
+    "@testing-library/dom": "catalog:",
+    "@testing-library/react": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
     "@types/use-sync-external-store": "^0.0.6",
-    "react": ">=18.3.1",
-    "react-dom": ">=18.3.1"
+    "react": "catalog:",
+    "react-dom": "catalog:"
   },
   "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
   "funding": "https://github.com/sponsors/wevm",

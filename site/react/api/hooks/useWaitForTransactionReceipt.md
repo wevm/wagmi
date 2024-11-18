@@ -42,12 +42,6 @@ function App() {
 import { type UseWaitForTransactionReceiptParameters } from 'wagmi'
 ```
 
-## Parameters
-
-```ts
-import { type WaitForTransactionReceiptParameters } from '@wagmi/core'
-```
-
 ### chainId
 
 `config['chains'][number]['id'] | undefined`

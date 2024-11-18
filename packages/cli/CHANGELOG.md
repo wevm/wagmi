@@ -1,5 +1,17 @@
 # @wagmi/cli
 
+## 2.1.18
+
+### Patch Changes
+
+- [#4399](https://github.com/wevm/wagmi/pull/4399) [`bc18673e4c272e3b60a1b6016934fe3fbeb6d93a`](https://github.com/wevm/wagmi/commit/bc18673e4c272e3b60a1b6016934fe3fbeb6d93a) Thanks [@tmm](https://github.com/tmm)! - Added Polygon Amoy to Sourcify and Etherscan plugins.
+
+## 2.1.17
+
+### Patch Changes
+
+- [#4370](https://github.com/wevm/wagmi/pull/4370) [`cb58b1ea3ad40e77210f24eb598f9d2306db998c`](https://github.com/wevm/wagmi/commit/cb58b1ea3ad40e77210f24eb598f9d2306db998c) Thanks [@talentlessguy](https://github.com/talentlessguy)! - Bumped internal dependencies.
+
 ## 2.1.16
 
 ### Patch Changes

@@ -43,6 +43,7 @@ test('default', () => {
 })
 
 test('select data', () => {
+  // @ts-ignore TODO: Type instantiation is excessively deep and possibly infinite.
   const result = useSimulateContract({
     address: '0x',
     abi: abi.erc20,

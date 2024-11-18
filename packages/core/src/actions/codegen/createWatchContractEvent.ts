@@ -71,7 +71,7 @@ export function createWatchContractEvent<
         configChainId
       return watchContractEvent(config, {
         ...(parameters as any),
-        ...(c.eventName ? { functionName: c.eventName } : {}),
+        ...(c.eventName ? { eventName: c.eventName } : {}),
         address: c.address?.[chainId],
         abi: c.abi,
       })
@@ -81,7 +81,7 @@ export function createWatchContractEvent<
     return watchContractEvent(config, {
       ...(parameters as any),
       ...(c.address ? { address: c.address } : {}),
-      ...(c.eventName ? { functionName: c.eventName } : {}),
+      ...(c.eventName ? { eventName: c.eventName } : {}),
       abi: c.abi,
     })
   }

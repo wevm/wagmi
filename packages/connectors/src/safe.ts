@@ -98,9 +98,17 @@ export function safe(parameters: SafeParameters = {}) {
           timeout: parameters.unstable_getInfoTimeout ?? 10,
         })
         if (!safe) throw new Error('Could not load Safe information')
-        const { SafeAppProvider } = await import(
-          '@safe-global/safe-apps-provider'
-        )
+        // Unwrapping import for Vite compatibility.
+        // See: https://github.com/vitejs/vite/issues/9703
+        const SafeAppProvider = await (async () => {
+          const Provider = await import('@safe-global/safe-apps-provider')
+          if (
+            typeof Provider.SafeAppProvider !== 'function' &&
+            typeof Provider.default.SafeAppProvider === 'function'
+          )
+            return Provider.default.SafeAppProvider
+          return Provider.SafeAppProvider
+        })()
         provider_ = new SafeAppProvider(safe, sdk)
       }
       return provider_

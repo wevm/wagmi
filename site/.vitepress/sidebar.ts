@@ -227,12 +227,12 @@ export function getSidebar() {
             link: '/react/api/hooks/useInfiniteReadContracts',
           },
           {
-            text: 'useReadContract',
-            link: '/react/api/hooks/useReadContract',
-          },
-          {
             text: 'usePrepareTransactionRequest',
             link: '/react/api/hooks/usePrepareTransactionRequest',
+          },
+          {
+            text: 'useReadContract',
+            link: '/react/api/hooks/useReadContract',
           },
           {
             text: 'useReadContracts',
