@@ -1,5 +1,20 @@
 # @wagmi/connectors
 
+## 5.4.0
+
+### Minor Changes
+
+- [#4409](https://github.com/wevm/wagmi/pull/4409) [`7ca62b44cd997d48f92c2b81343726a5908aa00b`](https://github.com/wevm/wagmi/commit/7ca62b44cd997d48f92c2b81343726a5908aa00b) Thanks [@fan-zhang-sv](https://github.com/fan-zhang-sv)! - Added `preference` object for Coinbase Wallet connector.
+
+## 5.3.10
+
+### Patch Changes
+
+- [#4406](https://github.com/wevm/wagmi/pull/4406) [`a13aa8d7c38eb3cc8171a02d6302e6d12cf6bcb3`](https://github.com/wevm/wagmi/commit/a13aa8d7c38eb3cc8171a02d6302e6d12cf6bcb3) Thanks [@tmm](https://github.com/tmm)! - Added additional RDNS to MetaMask Connector.
+
+- Updated dependencies [[`a13aa8d7c38eb3cc8171a02d6302e6d12cf6bcb3`](https://github.com/wevm/wagmi/commit/a13aa8d7c38eb3cc8171a02d6302e6d12cf6bcb3)]:
+  - @wagmi/core@2.14.6
+
 ## 5.3.9
 
 ### Patch Changes
