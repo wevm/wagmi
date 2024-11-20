@@ -59,7 +59,10 @@ export type WriteContractParameters<
     >
   }[number] &
     Compute<ChainIdParameter<config, chainId>> &
-    ConnectorParameter
+    ConnectorParameter & {
+      /** @deprecated */
+      __mode?: 'prepared'
+    }
 >
 
 export type WriteContractReturnType = viem_WriteContractReturnType
