@@ -37,7 +37,7 @@ export type CreateConnectorFn<
     readonly icon?: string | undefined
     readonly id: string
     readonly name: string
-    readonly rdns?: string | undefined
+    readonly rdns?: string | readonly string[] | undefined
     /** @deprecated */
     readonly supportsSimulation?: boolean | undefined
     readonly type: string

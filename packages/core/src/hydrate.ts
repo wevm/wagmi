@@ -27,7 +27,14 @@ export function hydrate(config: Config, parameters: HydrateParameters) {
           config._internal.connectors.setState((connectors) => {
             const rdnsSet = new Set<string>()
             for (const connector of connectors ?? []) {
-              if (connector.rdns) rdnsSet.add(connector.rdns)
+              if (connector.rdns) {
+                const rdnsValues = Array.isArray(connector.rdns)
+                  ? connector.rdns
+                  : [connector.rdns]
+                for (const rdns of rdnsValues) {
+                  rdnsSet.add(rdns)
+                }
+              }
             }
             const mipdConnectors = []
             const providers = config._internal.mipd?.getProviders() ?? []
