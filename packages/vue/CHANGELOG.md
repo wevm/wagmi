@@ -1,6 +1,6 @@
 # @wagmi/vue
 
-## 0.1.0
+## 0.0.65
 
 ### Minor Changes
 
