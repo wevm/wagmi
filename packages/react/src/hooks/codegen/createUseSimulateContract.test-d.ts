@@ -19,7 +19,6 @@ test('default', () => {
     | {
         result: boolean
         request: {
-          __mode: 'prepared'
           chainId: 123
           abi: readonly [
             {
@@ -144,7 +143,6 @@ test('functionName', () => {
     | {
         result: boolean
         request: {
-          __mode: 'prepared'
           chainId: 123
           abi: readonly [
             {

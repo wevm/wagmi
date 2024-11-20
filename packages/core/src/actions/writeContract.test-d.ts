@@ -28,7 +28,6 @@ test('simulateContract', async () => {
   })
   await writeContract(config, request)
   await writeContract(config, {
-    __mode: 'prepared',
     address: '0x',
     abi: abi.erc20,
     functionName: 'transferFrom',

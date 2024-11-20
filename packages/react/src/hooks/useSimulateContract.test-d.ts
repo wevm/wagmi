@@ -20,7 +20,6 @@ test('default', () => {
     | {
         result: boolean
         request: {
-          __mode: 'prepared'
           chainId?: undefined
           abi: readonly [
             {
@@ -82,7 +81,6 @@ test('UseSimulateContractReturnType', () => {
     | {
         result: boolean
         request: {
-          __mode: 'prepared'
           chainId: number
           abi: readonly [
             {

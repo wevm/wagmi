@@ -25,7 +25,6 @@ test('default', async () => {
       "data": {
         "chainId": 1,
         "request": {
-          "__mode": "prepared",
           "abi": [
             {
               "inputs": [],
