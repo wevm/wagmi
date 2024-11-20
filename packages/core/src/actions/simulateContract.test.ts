@@ -19,7 +19,6 @@ test('parameters: account', async () => {
     {
       "chainId": 1,
       "request": {
-        "__mode": "prepared",
         "abi": [
           {
             "inputs": [],
@@ -58,7 +57,6 @@ test('parameters: connector', async () => {
     {
       "chainId": 1,
       "request": {
-        "__mode": "prepared",
         "abi": [
           {
             "inputs": [],
