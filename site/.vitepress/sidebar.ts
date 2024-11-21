@@ -99,6 +99,10 @@ export function getSidebar() {
                 link: '/react/api/connectors/safe',
               },
               {
+                text: 'thirdweb',
+                link: '/react/api/connectors/thirdweb',
+              },
+              {
                 text: 'walletConnect',
                 link: '/react/api/connectors/walletConnect',
               },
@@ -462,6 +466,10 @@ export function getSidebar() {
                 link: '/vue/api/connectors/safe',
               },
               {
+                text: 'thirdweb',
+                link: '/vue/api/connectors/thirdweb',
+              },
+              {
                 text: 'walletConnect',
                 link: '/vue/api/connectors/walletConnect',
               },
@@ -704,6 +712,10 @@ export function getSidebar() {
               {
                 text: 'safe',
                 link: '/core/api/connectors/safe',
+              },
+              {
+                text: 'thirdweb',
+                link: '/core/api/connectors/thirdweb',
               },
               {
                 text: 'walletConnect',

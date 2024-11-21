@@ -20,4 +20,6 @@ export {
   walletConnect,
 } from '../walletConnect.js'
 
+export { type InAppWalletParameters, inAppWallet } from '../thirdweb.js'
+
 export { version } from '../version.js'
