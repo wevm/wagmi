@@ -19,7 +19,6 @@ test('context', () => {
     mutation: {
       onMutate(variables) {
         expectTypeOf(variables).toMatchTypeOf<{
-          __mode?: 'prepared'
           chainId?: number | undefined
           abi: Abi
           functionName: string
@@ -32,7 +31,6 @@ test('context', () => {
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
 
         expectTypeOf(variables).toMatchTypeOf<{
-          __mode?: 'prepared'
           chainId?: number | undefined
           abi: Abi
           functionName: string
@@ -44,7 +42,6 @@ test('context', () => {
         expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
 
         expectTypeOf(variables).toMatchTypeOf<{
-          __mode?: 'prepared'
           chainId?: number | undefined
           abi: Abi
           functionName: string
@@ -57,7 +54,6 @@ test('context', () => {
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
 
         expectTypeOf(variables).toMatchTypeOf<{
-          __mode?: 'prepared'
           chainId?: number | undefined
           abi: Abi
           functionName: string
@@ -88,7 +84,6 @@ test('context', () => {
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
 
         expectTypeOf(variables).toMatchTypeOf<{
-          __mode?: 'prepared'
           chainId?: number | undefined
           abi: typeof abi.erc20
           functionName: 'transferFrom'
@@ -104,7 +99,6 @@ test('context', () => {
           readonly [Address, Address, bigint]
         >()
         expectTypeOf(variables).toMatchTypeOf<{
-          __mode?: 'prepared'
           chainId?: number | undefined
           abi: typeof abi.erc20
           functionName: 'transferFrom'
@@ -117,7 +111,6 @@ test('context', () => {
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
 
         expectTypeOf(variables).toMatchTypeOf<{
-          __mode?: 'prepared'
           chainId?: number | undefined
           abi: typeof abi.erc20
           functionName: 'transferFrom'

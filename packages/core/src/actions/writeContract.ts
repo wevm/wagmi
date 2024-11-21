@@ -22,15 +22,10 @@ import type {
 } from '../types/properties.js'
 import type { Compute, UnionCompute } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
-import { getAccount } from './getAccount.js'
 import {
   type GetConnectorClientErrorType,
   getConnectorClient,
 } from './getConnectorClient.js'
-import {
-  type SimulateContractErrorType,
-  simulateContract,
-} from './simulateContract.js'
 
 export type WriteContractParameters<
   abi extends Abi | readonly unknown[] = Abi,
@@ -64,7 +59,10 @@ export type WriteContractParameters<
     >
   }[number] &
     Compute<ChainIdParameter<config, chainId>> &
-    ConnectorParameter & { __mode?: 'prepared' }
+    ConnectorParameter & {
+      /** @deprecated */
+      __mode?: 'prepared'
+    }
 >
 
 export type WriteContractReturnType = viem_WriteContractReturnType
@@ -72,8 +70,6 @@ export type WriteContractReturnType = viem_WriteContractReturnType
 export type WriteContractErrorType =
   // getConnectorClient()
   | GetConnectorClientErrorType
-  // simulateContract()
-  | SimulateContractErrorType
   // base
   | BaseErrorType
   | ErrorType
@@ -95,7 +91,7 @@ export async function writeContract<
   config: config,
   parameters: WriteContractParameters<abi, functionName, args, config, chainId>,
 ): Promise<WriteContractReturnType> {
-  const { account, chainId, connector, __mode, ...rest } = parameters
+  const { account, chainId, connector, ...request } = parameters
 
   let client: Client
   if (typeof account === 'object' && account?.type === 'local')
@@ -107,23 +103,9 @@ export async function writeContract<
       connector,
     })
 
-  const { connector: activeConnector } = getAccount(config)
-
-  let request: any
-  if (__mode === 'prepared' || activeConnector?.supportsSimulation)
-    request = rest
-  else {
-    const { request: simulateRequest } = await simulateContract(config, {
-      ...rest,
-      account,
-      chainId,
-    } as any)
-    request = simulateRequest
-  }
-
   const action = getAction(client, viem_writeContract, 'writeContract')
   const hash = await action({
-    ...request,
+    ...(request as any),
     ...(account ? { account } : {}),
     chain: chainId ? { id: chainId } : null,
   })

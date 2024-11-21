@@ -1,5 +1,17 @@
 # wagmi
 
+## 2.13.0
+
+### Minor Changes
+
+- [#4417](https://github.com/wevm/wagmi/pull/4417) [`42e65ea4fea99c639817088bba915e0933d17141`](https://github.com/wevm/wagmi/commit/42e65ea4fea99c639817088bba915e0933d17141) Thanks [@jxom](https://github.com/jxom)! - Removed simulation in `writeContract` & `sendTransaction`.
+
+### Patch Changes
+
+- Updated dependencies [[`42e65ea4fea99c639817088bba915e0933d17141`](https://github.com/wevm/wagmi/commit/42e65ea4fea99c639817088bba915e0933d17141)]:
+  - @wagmi/connectors@6.0.0
+  - @wagmi/core@2.15.0
+
 ## 2.12.33
 
 ### Patch Changes

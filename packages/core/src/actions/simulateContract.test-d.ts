@@ -22,7 +22,6 @@ test('default', async () => {
   expectTypeOf(response).toMatchTypeOf<{
     result: boolean
     request: {
-      __mode: 'prepared'
       chainId: 1
       abi: readonly [
         {
