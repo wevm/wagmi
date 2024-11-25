@@ -11,6 +11,7 @@ import {
   createConnector,
   extractRpcUrls,
 } from '@wagmi/core'
+import { linea, lineaSepolia, mainnet, sepolia } from '@wagmi/core/chains'
 import type {
   Compute,
   ExactPartial,
@@ -23,7 +24,6 @@ import {
   type Address,
   type Hex,
   type ProviderConnectInfo,
-  type ProviderRpcError,
   ResourceUnavailableRpcError,
   type RpcError,
   SwitchChainError,
@@ -95,7 +95,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
   return createConnector<Provider, Properties>((config) => ({
     id: 'metaMaskSDK',
     name: 'MetaMask',
-    rdns: ['io.metamask', 'io.metamask.mobile'],
+    rdns: 'io.metamask',
     type: metaMask.type,
     async setup() {
       const provider = await this.getProvider()
@@ -308,7 +308,93 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       const chain = config.chains.find((x) => x.id === chainId)
       if (!chain) throw new SwitchChainError(new ChainNotConfiguredError())
 
+      // MetaMask default chains
+      // This avoids the need to react to the "unrecognized chain" error
+      // and consequent back and forth between MetaMask and Wagmi.
+      // Default chains can't be added or removed from the user's wallet so
+      // when trying to switch to a default chain we default to
+      // wallet_switchEthereumChain
+      const metaMaskDefaultChains = [
+        mainnet.id,
+        sepolia.id,
+        linea.id,
+        lineaSepolia.id,
+      ]
+      const isDefaultChain = metaMaskDefaultChains.find((x) => x === chainId)
+
+      if (!isDefaultChain) {
+        try {
+          const { default: blockExplorer, ...blockExplorers } =
+            chain.blockExplorers ?? {}
+          let blockExplorerUrls: string[] | undefined
+          if (addEthereumChainParameter?.blockExplorerUrls)
+            blockExplorerUrls = addEthereumChainParameter.blockExplorerUrls
+          else if (blockExplorer)
+            blockExplorerUrls = [
+              blockExplorer.url,
+              ...Object.values(blockExplorers).map((x) => x.url),
+            ]
+
+          let rpcUrls: readonly string[]
+          if (addEthereumChainParameter?.rpcUrls?.length)
+            rpcUrls = addEthereumChainParameter.rpcUrls
+          else rpcUrls = [chain.rpcUrls.default?.http[0] ?? '']
+
+          const addEthereumChain = {
+            blockExplorerUrls,
+            chainId: numberToHex(chainId),
+            chainName: addEthereumChainParameter?.chainName ?? chain.name,
+            iconUrls: addEthereumChainParameter?.iconUrls,
+            nativeCurrency:
+              addEthereumChainParameter?.nativeCurrency ?? chain.nativeCurrency,
+            rpcUrls,
+          } satisfies AddEthereumChainParameter
+
+          await provider.request({
+            method: 'wallet_addEthereumChain',
+            params: [addEthereumChain],
+          })
+
+          // eth_chainId is cached on the MetaMask SDK side to avoid an
+          // unnecessary deeplink for the RPC call. Because the current cached
+          // chainId comes from the MetaMask relay server on mobile, this
+          // causes a race condition between the result of
+          // `wallet_addEthereumChain` and the cached `eth_chainId`
+          // To avoid this, we wait for the `eth_chainId` RPC call to return
+          // the expected chainId with a retry loop. If the chainId mismatch, we
+          // throw an error to trigger the retry.
+          const currentChainId = await withRetry(
+            async () => {
+              const chainIdHex = (await provider.request({
+                method: 'eth_chainId',
+              })) as Hex
+              const receivedChainId = hexToNumber(chainIdHex)
+              // If receivedChainId doesn't match expected chainId, throw to trigger retry
+              if (receivedChainId !== chainId) {
+                throw new Error('Chain ID mismatch')
+              }
+              return receivedChainId
+            },
+            {
+              delay: 100,
+              // retries 5 times because encryption on android devices is slower
+              retryCount: 5,
+            },
+          )
+
+          if (currentChainId !== chainId)
+            throw new UserRejectedRequestError(
+              new Error('User rejected switch after adding network.'),
+            )
+
+          return chain
+        } catch (error) {
+          throw new UserRejectedRequestError(error as Error)
+        }
+      }
+
       try {
+        // Defaulting to wallet_switchEthereumChain for default chains
         await Promise.all([
           provider
             .request({
@@ -338,62 +424,6 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         return chain
       } catch (err) {
         const error = err as RpcError
-
-        // Indicates chain is not added to provider
-        if (
-          error.code === 4902 ||
-          // Unwrapping for MetaMask Mobile
-          // https://github.com/MetaMask/metamask-mobile/issues/2944#issuecomment-976988719
-          (error as ProviderRpcError<{ originalError?: { code: number } }>)
-            ?.data?.originalError?.code === 4902
-        ) {
-          try {
-            const { default: blockExplorer, ...blockExplorers } =
-              chain.blockExplorers ?? {}
-            let blockExplorerUrls: string[] | undefined
-            if (addEthereumChainParameter?.blockExplorerUrls)
-              blockExplorerUrls = addEthereumChainParameter.blockExplorerUrls
-            else if (blockExplorer)
-              blockExplorerUrls = [
-                blockExplorer.url,
-                ...Object.values(blockExplorers).map((x) => x.url),
-              ]
-
-            let rpcUrls: readonly string[]
-            if (addEthereumChainParameter?.rpcUrls?.length)
-              rpcUrls = addEthereumChainParameter.rpcUrls
-            else rpcUrls = [chain.rpcUrls.default?.http[0] ?? '']
-
-            const addEthereumChain = {
-              blockExplorerUrls,
-              chainId: numberToHex(chainId),
-              chainName: addEthereumChainParameter?.chainName ?? chain.name,
-              iconUrls: addEthereumChainParameter?.iconUrls,
-              nativeCurrency:
-                addEthereumChainParameter?.nativeCurrency ??
-                chain.nativeCurrency,
-              rpcUrls,
-            } satisfies AddEthereumChainParameter
-
-            await provider.request({
-              method: 'wallet_addEthereumChain',
-              params: [addEthereumChain],
-            })
-
-            const currentChainId = hexToNumber(
-              // Call `'eth_chainId'` directly to guard against `this.state.chainId` (via `provider.getChainId`) being stale.
-              (await provider.request({ method: 'eth_chainId' })) as Hex,
-            )
-            if (currentChainId !== chainId)
-              throw new UserRejectedRequestError(
-                new Error('User rejected switch after adding network.'),
-              )
-
-            return chain
-          } catch (error) {
-            throw new UserRejectedRequestError(error as Error)
-          }
-        }
 
         if (error.code === UserRejectedRequestError.code)
           throw new UserRejectedRequestError(error)
