@@ -190,8 +190,8 @@ importers:
         specifier: 4.2.3
         version: 4.2.3
       '@metamask/sdk':
-        specifier: 0.30.1
-        version: 0.30.1(bufferutil@4.0.8)(encoding@0.1.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(utf-8-validate@5.0.10)
+        specifier: 0.30.3
+        version: 0.30.3(bufferutil@4.0.8)(encoding@0.1.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(utf-8-validate@5.0.10)
       '@safe-global/safe-apps-provider':
         specifier: 0.18.4
         version: 0.18.4(bufferutil@4.0.8)(encoding@0.1.13)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.22.4)
@@ -1121,8 +1121,8 @@ packages:
       search-insights:
         optional: true
 
-  '@ecies/ciphers@0.2.0':
-    resolution: {integrity: sha512-dqQk3HbyuXSdflgRMrXjEcCohKeBZQl2rm0lOcYnEC4Oue90irVMwVJ0GiM/nhjP0zzGimH8mVFF/pOzQcv+Lg==}
+  '@ecies/ciphers@0.2.1':
+    resolution: {integrity: sha512-ezMihhjW24VNK/2qQR7lH8xCQY24nk0XHF/kwJ1OuiiY5iEwQXOcKVSy47fSoHPRG8gVGXcK5SgtONDk5xMwtQ==}
     engines: {bun: '>=1', deno: '>=2', node: '>=16'}
     peerDependencies:
       '@noble/ciphers': ^1.0.0
@@ -1770,17 +1770,17 @@ packages:
     resolution: {integrity: sha512-ihb3B0T/wJm1eUuArYP4lCTSEoZsClHhuWyfo/kMX3m/odpqNcPfsz5O2A3NT7dXCAgWPGDQGPqygCpgeniKMw==}
     engines: {node: '>=12.0.0'}
 
-  '@metamask/sdk-communication-layer@0.30.0':
-    resolution: {integrity: sha512-q5nbdYkAf76MsZxi1l5MJEAyd8sY9jLRapC8a7x1Q1BNV4rzQeFeux/d0mJ/jTR2LAwbnLZs2rL226AM75oK4w==}
+  '@metamask/sdk-communication-layer@0.30.2':
+    resolution: {integrity: sha512-fTKz7LsreZV9AUz9VQ3FijWyAzg62mZnLoABoGxWPCHmRdMepaa8mS5pTBGIyR0lEi7F+l8cOwr8TfEpX3IiQw==}
     peerDependencies:
       cross-fetch: ^4.0.0
-      eciesjs: ^0.3.16
+      eciesjs: '*'
       eventemitter2: ^6.4.7
       readable-stream: ^3.6.2
       socket.io-client: ^4.5.1
 
-  '@metamask/sdk-install-modal-web@0.30.0':
-    resolution: {integrity: sha512-1gT533Huja9tK3cmttvcpZirRAtWJ7vnYH+lnNRKEj2xIP335Df2cOwS+zqNC4GlRCZw7A3IsTjIzlKoxBY1uQ==}
+  '@metamask/sdk-install-modal-web@0.30.2':
+    resolution: {integrity: sha512-T/j+tDwXx+Dzo+VGM/0HqnHaWfzaKEbGCsZSbXQVWcC1LMP7i5HBD6M7Xk2HkCwZNMB/l4bSeuCoo33R6y08ag==}
     peerDependencies:
       i18next: 23.11.5
       react: ^18.2.0
@@ -1794,8 +1794,8 @@ packages:
       react-native:
         optional: true
 
-  '@metamask/sdk@0.30.1':
-    resolution: {integrity: sha512-NelEjJZsF5wVpSQELpmvXtnS9+C6HdxGQ4GB9jMRzeejphmPyKqmrIGM6XtaPrJtlpX+40AcJ2dtBQcjJVzpbQ==}
+  '@metamask/sdk@0.30.3':
+    resolution: {integrity: sha512-f+H7adG/sQdRymTwf5jr23BadguZkQtQNo9vCVCR6xnVqEhofVhOiMpzEef+uimVKakIqrhSkBQhHbN9UZeIBg==}
     peerDependencies:
       react: ^18.2.0
       react-dom: ^18.2.0
@@ -4535,10 +4535,9 @@ packages:
   easy-table@1.2.0:
     resolution: {integrity: sha512-OFzVOv03YpvtcWGe5AayU5G2hgybsg3iqA6drU8UaoZyB9jLGMTrz9+asnLp/E+6qPh88yEI1gvyZFZ41dmgww==}
 
-  eciesjs@0.4.9:
-    resolution: {integrity: sha512-PYbXFMOKtzJMlQ+IXinjsM6p2jnQCf7/lyBKu8/ZqzJ/jyRrb+O/E64iv0ZApl/64oBDZEUIwyYp/2I3wHbAZQ==}
-    engines: {node: '>=16.0.0'}
-    deprecated: Common js require is broken. Fixed in 0.4.10
+  eciesjs@0.4.12:
+    resolution: {integrity: sha512-DGejvMCihsRAmKRFQiL6KZDE34vWVd0gvXlykFq1aEzJy/rD65AVyAIUZKZOvgvaP9ATQRcHGEZV5DfgrgjA4w==}
+    engines: {bun: '>=1', deno: '>=2', node: '>=16'}
 
   editorconfig@1.0.4:
     resolution: {integrity: sha512-L9Qe08KWTlqYMVvMcTIvMAdl1cDUubzRNYL+WfA4bLDMHe4nemKkpmYzkznE1FwLKu0EEmy6obgQKzMJrg4x9Q==}
@@ -4698,6 +4697,7 @@ packages:
 
   ethereumjs-abi@0.6.8:
     resolution: {integrity: sha512-Tx0r/iXI6r+lRsdvkFDlut0N08jWMnKRZ6Gkq+Nmw75lZe4e6o3EkSnkaBP5NF6+m5PTGAr9JP43N3LyeoglsA==}
+    deprecated: This library has been deprecated and usage is discouraged.
 
   ethereumjs-util@6.2.1:
     resolution: {integrity: sha512-W2Ktez4L01Vexijrm5EB6w7dg4n/TgpoYU4avuT5T3Vmnw/eCRtiBrJfQYS/DCSvDIOLn2k57GcHdeBcgVxAqw==}
@@ -9105,7 +9105,7 @@ snapshots:
     transitivePeerDependencies:
       - '@algolia/client-search'
 
-  '@ecies/ciphers@0.2.0(@noble/ciphers@1.0.0)':
+  '@ecies/ciphers@0.2.1(@noble/ciphers@1.0.0)':
     dependencies:
       '@noble/ciphers': 1.0.0
 
@@ -9695,13 +9695,13 @@ snapshots:
 
   '@metamask/safe-event-emitter@3.1.1': {}
 
-  '@metamask/sdk-communication-layer@0.30.0(cross-fetch@4.0.0(encoding@0.1.13))(eciesjs@0.4.9)(eventemitter2@6.4.9)(readable-stream@3.6.2)(socket.io-client@4.7.5(bufferutil@4.0.8)(utf-8-validate@5.0.10))':
+  '@metamask/sdk-communication-layer@0.30.2(cross-fetch@4.0.0(encoding@0.1.13))(eciesjs@0.4.12)(eventemitter2@6.4.9)(readable-stream@3.6.2)(socket.io-client@4.7.5(bufferutil@4.0.8)(utf-8-validate@5.0.10))':
     dependencies:
       bufferutil: 4.0.8
       cross-fetch: 4.0.0(encoding@0.1.13)
       date-fns: 2.30.0
       debug: 4.3.7
-      eciesjs: 0.4.9
+      eciesjs: 0.4.12
       eventemitter2: 6.4.9
       readable-stream: 3.6.2
       socket.io-client: 4.7.5(bufferutil@4.0.8)(utf-8-validate@5.0.10)
@@ -9710,7 +9710,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@metamask/sdk-install-modal-web@0.30.0(i18next@23.11.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@metamask/sdk-install-modal-web@0.30.2(i18next@23.11.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       i18next: 23.11.5
       qr-code-styling: 1.6.0-rc.1
@@ -9718,16 +9718,16 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@metamask/sdk@0.30.1(bufferutil@4.0.8)(encoding@0.1.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(utf-8-validate@5.0.10)':
+  '@metamask/sdk@0.30.3(bufferutil@4.0.8)(encoding@0.1.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(utf-8-validate@5.0.10)':
     dependencies:
       '@metamask/onboarding': 1.0.1
       '@metamask/providers': 16.1.0
-      '@metamask/sdk-communication-layer': 0.30.0(cross-fetch@4.0.0(encoding@0.1.13))(eciesjs@0.4.9)(eventemitter2@6.4.9)(readable-stream@3.6.2)(socket.io-client@4.7.5(bufferutil@4.0.8)(utf-8-validate@5.0.10))
-      '@metamask/sdk-install-modal-web': 0.30.0(i18next@23.11.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@metamask/sdk-communication-layer': 0.30.2(cross-fetch@4.0.0(encoding@0.1.13))(eciesjs@0.4.12)(eventemitter2@6.4.9)(readable-stream@3.6.2)(socket.io-client@4.7.5(bufferutil@4.0.8)(utf-8-validate@5.0.10))
+      '@metamask/sdk-install-modal-web': 0.30.2(i18next@23.11.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       bowser: 2.11.0
       cross-fetch: 4.0.0(encoding@0.1.13)
       debug: 4.3.7
-      eciesjs: 0.4.9
+      eciesjs: 0.4.12
       eth-rpc-errors: 4.0.3
       eventemitter2: 6.4.9
       i18next: 23.11.5
@@ -13456,9 +13456,9 @@ snapshots:
     optionalDependencies:
       wcwidth: 1.0.1
 
-  eciesjs@0.4.9:
+  eciesjs@0.4.12:
     dependencies:
-      '@ecies/ciphers': 0.2.0(@noble/ciphers@1.0.0)
+      '@ecies/ciphers': 0.2.1(@noble/ciphers@1.0.0)
       '@noble/ciphers': 1.0.0
       '@noble/curves': 1.6.0
       '@noble/hashes': 1.5.0
