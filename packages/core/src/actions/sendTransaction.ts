@@ -39,7 +39,7 @@ export type SendTransactionParameters<
       ConnectorParameter
   >
 }[number] & {
-  /** Gas provided for transaction execution, or `null` to skip the prelude gas estimation. */
+  /** Gas provided for transaction execution. */
   gas?: TransactionRequest['gas'] | null
 }
 
@@ -79,6 +79,7 @@ export async function sendTransaction<
     ...(rest as any),
     ...(account ? { account } : {}),
     chain: chainId ? { id: chainId } : null,
+    gas: rest.gas ?? undefined,
   })
 
   return hash

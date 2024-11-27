@@ -151,7 +151,7 @@ const result = await sendTransaction(config, {
 
 `bigint | undefined | null`
 
-Gas provided for transaction execution, or `null` to skip the prelude gas estimation.
+Gas provided for transaction execution.
 
 ::: code-group
 ```ts [index.ts]
