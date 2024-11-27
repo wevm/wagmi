@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 5.5.2
+
+### Patch Changes
+
+- [#4422](https://github.com/wevm/wagmi/pull/4422) [`e563ef69130a511fd6f3f72ed4cd4fbe1390541f`](https://github.com/wevm/wagmi/commit/e563ef69130a511fd6f3f72ed4cd4fbe1390541f) Thanks [@abretonc7s](https://github.com/abretonc7s)! - Bumped MetaMask SDK.
+
 ## 5.5.1
 
 ### Patch Changes
