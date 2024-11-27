@@ -89,5 +89,5 @@ const connector = metaMask({
 
 ## Advanced
 
-By default, this connector will replace the EIP-6963 MetaMask injected provider if it is detected.
-See the [`rdns` property](../../dev/creating-connectors.md#properties) for more information.
+By default, if the EIP-6963 MetaMask injected provider is detected, this connector will replace it.
+See the [`rdns` property](https://wagmi.sh/dev/creating-connectors#properties) for more information.
