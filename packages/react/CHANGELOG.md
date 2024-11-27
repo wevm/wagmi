@@ -1,5 +1,15 @@
 # wagmi
 
+## 2.13.1
+
+### Patch Changes
+
+- [`b8bbb409f4934538e3dd6cac5aaf7346292d0693`](https://github.com/wevm/wagmi/commit/b8bbb409f4934538e3dd6cac5aaf7346292d0693) Thanks [@jxom](https://github.com/jxom)! - Fixed issue where `null` gas would accidently pass through.
+
+- Updated dependencies [[`b8bbb409f4934538e3dd6cac5aaf7346292d0693`](https://github.com/wevm/wagmi/commit/b8bbb409f4934538e3dd6cac5aaf7346292d0693)]:
+  - @wagmi/core@2.15.1
+  - @wagmi/connectors@5.5.1
+
 ## 2.13.0
 
 ### Minor Changes
