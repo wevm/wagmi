@@ -43,13 +43,8 @@ Check out the [MetaMask SDK docs](https://docs.metamask.io/wallet/connect/3rd-pa
 
 `DappMetadata | undefined`
 
-Metadata about the dapp using the SDK, including:
-
-- `name` - The name of the dapp.
-  The default is `'wagmi'`.
-- `url` - The URL of the dapp.
-  The default is `'window.location.origin'`.
-- `iconUrl` - The URL of the dapp's icon.
+Metadata about the dapp using the SDK, including, `name`, `url`, and `iconUrl`.
+By default, `url` gets its value from `window.location.origin`.
 
 ```ts-vue
 import { metaMask } from '{{connectorsPackageName}}'
