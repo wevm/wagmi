@@ -11,7 +11,7 @@ import {
   createConnector,
   extractRpcUrls,
 } from '@wagmi/core'
-import { linea, lineaSepolia, mainnet, sepolia } from '@wagmi/core/chains'
+import type { linea, lineaSepolia, mainnet, sepolia } from '@wagmi/core/chains'
 import type {
   Compute,
   ExactPartial,
@@ -239,9 +239,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         // Unwrapping import for Vite compatibility.
         // See: https://github.com/vitejs/vite/issues/9703
         const MetaMaskSDK = await (async () => {
-          // @ts-ignore
           const { default: SDK } = await import('@metamask/sdk')
-          // @ts-ignore
           if (typeof SDK !== 'function' && typeof SDK.default === 'function')
             return SDK.default
           return SDK as unknown as typeof SDK.default
@@ -310,93 +308,94 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       const chain = config.chains.find((x) => x.id === chainId)
       if (!chain) throw new SwitchChainError(new ChainNotConfiguredError())
 
-      // MetaMask default chains
-      // This avoids the need to react to the "unrecognized chain" error
-      // and consequent back and forth between MetaMask and Wagmi.
-      // Default chains can't be added or removed from the user's wallet so
-      // when trying to switch to a default chain we default to
-      // wallet_switchEthereumChain
-      const metaMaskDefaultChains = [
-        mainnet.id,
-        sepolia.id,
-        linea.id,
-        lineaSepolia.id,
-      ]
-      const isDefaultChain = metaMaskDefaultChains.find((x) => x === chainId)
+      // Default chains cannot be added or removed
+      const isDefaultChain = (() => {
+        const metaMaskDefaultChains = [
+          1, 11_155_111, 59_144, 59_141,
+        ] satisfies [
+          typeof mainnet.id,
+          typeof sepolia.id,
+          typeof linea.id,
+          typeof lineaSepolia.id,
+        ]
+        return metaMaskDefaultChains.find((x) => x === chainId)
+      })()
 
-      if (!isDefaultChain) {
+      // Avoid back and forth on mobile by using `'wallet_addEthereumChain'` for non-default chains
+      if (!isDefaultChain)
         try {
-          const { default: blockExplorer, ...blockExplorers } =
-            chain.blockExplorers ?? {}
-          let blockExplorerUrls: string[] | undefined
-          if (addEthereumChainParameter?.blockExplorerUrls)
-            blockExplorerUrls = addEthereumChainParameter.blockExplorerUrls
-          else if (blockExplorer)
-            blockExplorerUrls = [
-              blockExplorer.url,
-              ...Object.values(blockExplorers).map((x) => x.url),
-            ]
+          const blockExplorerUrls = (() => {
+            const { default: blockExplorer, ...blockExplorers } =
+              chain.blockExplorers ?? {}
+            if (addEthereumChainParameter?.blockExplorerUrls)
+              return addEthereumChainParameter.blockExplorerUrls
+            if (blockExplorer)
+              return [
+                blockExplorer.url,
+                ...Object.values(blockExplorers).map((x) => x.url),
+              ]
+            return
+          })()
 
-          let rpcUrls: readonly string[]
-          if (addEthereumChainParameter?.rpcUrls?.length)
-            rpcUrls = addEthereumChainParameter.rpcUrls
-          else rpcUrls = [chain.rpcUrls.default?.http[0] ?? '']
-
-          const addEthereumChain = {
-            blockExplorerUrls,
-            chainId: numberToHex(chainId),
-            chainName: addEthereumChainParameter?.chainName ?? chain.name,
-            iconUrls: addEthereumChainParameter?.iconUrls,
-            nativeCurrency:
-              addEthereumChainParameter?.nativeCurrency ?? chain.nativeCurrency,
-            rpcUrls,
-          } satisfies AddEthereumChainParameter
+          const rpcUrls = (() => {
+            if (addEthereumChainParameter?.rpcUrls?.length)
+              return addEthereumChainParameter.rpcUrls
+            return [chain.rpcUrls.default?.http[0] ?? '']
+          })()
 
           await provider.request({
             method: 'wallet_addEthereumChain',
-            params: [addEthereumChain],
+            params: [
+              {
+                blockExplorerUrls,
+                chainId: numberToHex(chainId),
+                chainName: addEthereumChainParameter?.chainName ?? chain.name,
+                iconUrls: addEthereumChainParameter?.iconUrls,
+                nativeCurrency:
+                  addEthereumChainParameter?.nativeCurrency ??
+                  chain.nativeCurrency,
+                rpcUrls,
+              } satisfies AddEthereumChainParameter,
+            ],
           })
 
-          // eth_chainId is cached on the MetaMask SDK side to avoid an
-          // unnecessary deeplink for the RPC call. Because the current cached
-          // chainId comes from the MetaMask relay server on mobile, this
-          // causes a race condition between the result of
-          // `wallet_addEthereumChain` and the cached `eth_chainId`
-          // To avoid this, we wait for the `eth_chainId` RPC call to return
-          // the expected chainId with a retry loop. If the chainId mismatch, we
-          // throw an error to trigger the retry.
+          // On mobile, there is a race condition between the result of `'wallet_addEthereumChain'` and `'eth_chainId'`.
+          // (`'eth_chainId'` from the MetaMask relay server).
+          // To avoid this, we wait for `'eth_chainId'` to return the expected chain ID with a retry loop.
+          let retryCount = 0
           const currentChainId = await withRetry(
             async () => {
-              const chainIdHex = (await provider.request({
-                method: 'eth_chainId',
-              })) as Hex
-              const receivedChainId = hexToNumber(chainIdHex)
-              // If receivedChainId doesn't match expected chainId, throw to trigger retry
-              if (receivedChainId !== chainId) {
+              retryCount += 1
+              const value = hexToNumber(
+                // `'eth_chainId'` is cached by the MetaMask SDK side to avoid unnecessary deeplinks
+                (await provider.request({ method: 'eth_chainId' })) as Hex,
+              )
+              if (value !== chainId) {
+                if (retryCount === 5) return -1
+                // `value` doesn't match expected `chainId`, throw to trigger retry
                 throw new Error('Chain ID mismatch')
               }
-              return receivedChainId
+              return value
             },
             {
               delay: 100,
-              // retries 5 times because encryption on android devices is slower
-              retryCount: 5,
+              retryCount: 5, // android device encryption is slower
             },
           )
 
           if (currentChainId !== chainId)
-            throw new UserRejectedRequestError(
-              new Error('User rejected switch after adding network.'),
-            )
+            throw new Error('User rejected switch after adding network.')
 
           return chain
-        } catch (error) {
-          throw new UserRejectedRequestError(error as Error)
+        } catch (err) {
+          const error = err as RpcError
+          if (error.code === UserRejectedRequestError.code)
+            throw new UserRejectedRequestError(error)
+          throw new SwitchChainError(error)
         }
-      }
 
+      // Use to `'wallet_switchEthereumChain'` for default chains
       try {
-        // Defaulting to wallet_switchEthereumChain for default chains
         await Promise.all([
           provider
             .request({
@@ -426,7 +425,6 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         return chain
       } catch (err) {
         const error = err as RpcError
-
         if (error.code === UserRejectedRequestError.code)
           throw new UserRejectedRequestError(error)
         throw new SwitchChainError(error)
