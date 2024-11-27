@@ -95,7 +95,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
   return createConnector<Provider, Properties>((config) => ({
     id: 'metaMaskSDK',
     name: 'MetaMask',
-    rdns: 'io.metamask',
+    rdns: ['io.metamask', 'io.metamask.mobile'],
     type: metaMask.type,
     async setup() {
       const provider = await this.getProvider()
@@ -239,7 +239,9 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         // Unwrapping import for Vite compatibility.
         // See: https://github.com/vitejs/vite/issues/9703
         const MetaMaskSDK = await (async () => {
+          // @ts-ignore
           const { default: SDK } = await import('@metamask/sdk')
+          // @ts-ignore
           if (typeof SDK !== 'function' && typeof SDK.default === 'function')
             return SDK.default
           return SDK as unknown as typeof SDK.default
