@@ -43,8 +43,13 @@ Check out the [MetaMask SDK docs](https://docs.metamask.io/wallet/connect/3rd-pa
 
 `DappMetadata | undefined`
 
-Metadata about the dapp using the SDK, including `name`, `url`, and `iconUrl`.
-By default, `name` is set to `'wagmi'`.
+Metadata about the dapp using the SDK, including:
+
+- `name` - The name of the dapp.
+  The default is `'wagmi'`.
+- `url` - The URL of the dapp.
+  The default is `'window.location.origin'`.
+- `iconUrl` - The URL of the dapp's icon.
 
 ```ts-vue
 import { metaMask } from '{{connectorsPackageName}}'
@@ -69,7 +74,9 @@ Options for customizing the logging behavior of the SDK.
 `boolean | undefined`
 
 Enables or disables headless mode.
-Setting this to `true` allows you to [display custom modals](https://docs.metamask.io/wallet/how-to/display/custom-modals/).
+Setting this to `true` disables the MetaMask modal, allowing you to create your own UI.
+To get the deeplink to display in the QR code, listen to the `display_uri` event.
+
 The default is `false`.
 
 ```ts-vue
@@ -79,3 +86,8 @@ const connector = metaMask({
   headless: true // [!code focus]
 })
 ```
+
+## Advanced
+
+By default, this connector will replace the EIP-6963 MetaMask injected provider if it is detected.
+See the [`rdns` property](../../dev/creating-connectors.md#properties) for more information.
