@@ -246,6 +246,12 @@ export {
 } from '../hooks/useReconnect.js'
 
 export {
+  type UseSendRawTransactionParameters,
+  type UseSendRawTransactionReturnType,
+  useSendRawTransaction,
+} from '../hooks/useSendRawTransaction.js'
+
+export {
   type UseSendTransactionParameters,
   type UseSendTransactionReturnType,
   useSendTransaction,
@@ -256,6 +262,12 @@ export {
   type UseSignMessageReturnType,
   useSignMessage,
 } from '../hooks/useSignMessage.js'
+
+export {
+  type UseSignTransactionParameters,
+  type UseSignTransactionReturnType,
+  useSignTransaction,
+} from '../hooks/useSignTransaction.js'
 
 export {
   type UseSignTypedDataParameters,
