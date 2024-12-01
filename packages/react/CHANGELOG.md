@@ -1,5 +1,15 @@
 # wagmi
 
+## 2.13.3
+
+### Patch Changes
+
+- [#4433](https://github.com/wevm/wagmi/pull/4433) [`06e186cd679b27fe195309110e766fcf46d4efbc`](https://github.com/wevm/wagmi/commit/06e186cd679b27fe195309110e766fcf46d4efbc) Thanks [@Aerilym](https://github.com/Aerilym)! - Bumped Metamask SDK version to `0.31.1`.
+
+- Updated dependencies [[`06e186cd679b27fe195309110e766fcf46d4efbc`](https://github.com/wevm/wagmi/commit/06e186cd679b27fe195309110e766fcf46d4efbc)]:
+  - @wagmi/connectors@5.5.3
+  - @wagmi/core@2.15.2
+
 ## 2.13.2
 
 ### Patch Changes
