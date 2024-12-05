@@ -6,6 +6,7 @@ import { presetAttributify, presetIcons, presetUno } from 'unocss'
 import Unocss from 'unocss/vite'
 import { defineConfig } from 'vitepress'
 
+import { farcasterIcon } from './constants'
 import { getSidebar } from './sidebar'
 
 // https://vitepress.dev/reference/site-config
@@ -121,6 +122,7 @@ export default defineConfig({
       },
       { icon: 'bluesky', link: 'https://bsky.app/profile/wevm.dev' },
       { icon: 'x', link: 'https://twitter.com/wevm_dev' },
+      { icon: { svg: farcasterIcon }, link: 'https://warpcast.com/wevm' },
       { icon: 'discord', link: 'https://discord.gg/9zHPXuBpqy' },
     ],
   },

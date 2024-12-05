@@ -2,6 +2,7 @@
 import type DefaultTheme from 'vitepress/theme'
 import { VPButton, VPSponsors, VPTeamMembers } from 'vitepress/theme'
 import { useSponsors } from '../composables/useSponsors'
+import { farcasterIcon } from '../../constants'
 
 const { data: sponsors } = useSponsors()
 
@@ -13,6 +14,12 @@ const teamMembers = [
       { icon: 'github', link: 'https://github.com/tmm' },
       { icon: 'bluesky', link: 'https://bsky.app/profile/tmm.dev' },
       { icon: 'x', link: 'https://twitter.com/awkweb' },
+      {
+        icon: {
+          svg: farcasterIcon,
+        },
+        link: 'https://warpcast.com/awkweb',
+      },
     ],
   },
   {
@@ -22,6 +29,12 @@ const teamMembers = [
       { icon: 'github', link: 'https://github.com/jxom' },
       { icon: 'bluesky', link: 'https://bsky.app/profile/jxom.dev' },
       { icon: 'x', link: 'https://twitter.com/_jxom' },
+      {
+        icon: {
+          svg: farcasterIcon,
+        },
+        link: 'https://warpcast.com/jxom',
+      },
     ],
   },
 ] satisfies DefaultTheme.TeamMember[]
