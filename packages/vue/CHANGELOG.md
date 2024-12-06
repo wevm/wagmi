@@ -1,5 +1,11 @@
 # @wagmi/vue
 
+## 0.0.69
+
+### Patch Changes
+
+- [`2f79a3da4872d6158569017b1927a07a1ff5e7ba`](https://github.com/wevm/wagmi/commit/2f79a3da4872d6158569017b1927a07a1ff5e7ba) Thanks [@tmm](https://github.com/tmm)! - Exported `injected` and `mock`.
+
 ## 0.0.68
 
 ### Patch Changes
