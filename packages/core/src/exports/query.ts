@@ -297,6 +297,14 @@ export {
 } from '../query/reconnect.js'
 
 export {
+  type RequestPermissionsData,
+  type RequestPermissionsVariables,
+  type RequestPermissionsMutate,
+  type RequestPermissionsMutateAsync,
+  requestPermissionsMutationOptions,
+} from '../query/requestPermissions.js'
+
+export {
   type SendTransactionData,
   type SendTransactionVariables,
   type SendTransactionMutate,
