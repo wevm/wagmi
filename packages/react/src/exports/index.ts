@@ -406,6 +406,8 @@ export {
   type ConnectorEventMap,
   type CreateConnectorFn,
   createConnector,
+  injected,
+  mock,
   // Errors
   type ChainNotConfiguredErrorType,
   ChainNotConfiguredError,
