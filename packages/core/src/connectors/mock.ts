@@ -29,6 +29,7 @@ export type MockParameters = {
     | {
         defaultConnected?: boolean | undefined
         connectError?: boolean | Error | undefined
+        addChainError?: boolean | Error | undefined
         switchChainError?: boolean | Error | undefined
         signMessageError?: boolean | Error | undefined
         signTypedDataError?: boolean | Error | undefined
@@ -148,6 +149,17 @@ export function mock(parameters: MockParameters) {
           }
 
         // wallet methods
+        if (method === 'wallet_addEthereumChain') {
+          if (features.addChainError) {
+            if (typeof features.addChainError === 'boolean')
+              throw new UserRejectedRequestError(
+                new Error('Failed to add chain.'),
+              )
+            throw features.addChainError
+          }
+          return
+        }
+
         if (method === 'wallet_switchEthereumChain') {
           if (features.switchChainError) {
             if (typeof features.switchChainError === 'boolean')

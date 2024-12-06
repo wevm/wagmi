@@ -13,6 +13,7 @@ test('exports', () => {
       "WagmiProviderNotFoundError",
       "useAccount",
       "useAccountEffect",
+      "useAddChain",
       "useBalance",
       "useBlock",
       "useBlockNumber",
