@@ -20,6 +20,7 @@
     "dev:nuxt": "pnpm --filter nuxt-app dev",
     "dev:react": "pnpm --filter vite-react dev",
     "dev:vue": "pnpm --filter vite-vue dev",
+    "dev:svelte": "pnpm --filter sveltekit dev",
     "docs:dev": "pnpm --filter site dev",
     "format": "biome format --write",
     "postinstall": "pnpm preconstruct",
@@ -37,6 +38,7 @@
     "test:update": "vitest --update",
     "test:ui": "vitest --ui",
     "test:vue": "vitest --project @wagmi/vue",
+    "test:svelte": "vitest --project @wagmi/svelte",
     "version:update": "bun scripts/updateVersion.ts",
     "version:update:viem": "bun scripts/updateViemVersion.ts"
   },

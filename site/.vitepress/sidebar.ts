@@ -629,6 +629,15 @@ export function getSidebar() {
         ],
       },
     ],
+    '/svelte': [
+      {
+        text: 'Introduction',
+        items: [
+          { text: 'Getting Started', link: '/svelte/getting-started' },
+          { text: 'Reactivity', link: '/svelte/reactivity' },
+        ],
+      },
+    ],
     '/core': [
       {
         text: 'Introduction',
