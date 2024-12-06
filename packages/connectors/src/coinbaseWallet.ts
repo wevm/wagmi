@@ -87,6 +87,8 @@ function version4(parameters: Version4Parameters) {
   let chainChanged: Connector['onChainChanged'] | undefined
   let disconnect: Connector['onDisconnect'] | undefined
 
+  let instantOnboarding = false;
+
   return createConnector<Provider>((config) => ({
     id: 'coinbaseWalletSDK',
     name: 'Coinbase Wallet',
@@ -98,6 +100,7 @@ function version4(parameters: Version4Parameters) {
         const accounts = (
           (await provider.request({
             method: 'eth_requestAccounts',
+            params: instantOnboarding ? [{ onboarding: "instant" }] : [],
           })) as string[]
         ).map((x) => getAddress(x))
 
@@ -281,6 +284,9 @@ function version4(parameters: Version4Parameters) {
         provider.removeListener('disconnect', disconnect)
         disconnect = undefined
       }
+    },
+    setInstantOnboarding(value: boolean) {
+      instantOnboarding = value;
     },
   }))
 }
