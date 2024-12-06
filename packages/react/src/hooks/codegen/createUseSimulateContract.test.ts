@@ -28,7 +28,6 @@ test('default', async () => {
       "data": {
         "chainId": 1,
         "request": {
-          "__mode": "prepared",
           "abi": [
             {
               "inputs": [],
@@ -116,7 +115,6 @@ test('multichain', async () => {
       "data": {
         "chainId": 456,
         "request": {
-          "__mode": "prepared",
           "abi": [
             {
               "inputs": [],
@@ -197,7 +195,6 @@ test('functionName', async () => {
       "data": {
         "chainId": 1,
         "request": {
-          "__mode": "prepared",
           "abi": [
             {
               "inputs": [],

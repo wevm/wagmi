@@ -21,7 +21,6 @@ test('default', async () => {
   expectTypeOf(result).toMatchTypeOf<{
     result: boolean
     request: {
-      __mode: 'prepared'
       chainId: 1
       abi: readonly [
         {
@@ -126,7 +125,6 @@ test('functionName', async () => {
   expectTypeOf(result).toMatchTypeOf<{
     result: boolean
     request: {
-      __mode: 'prepared'
       chainId: 1
       abi: readonly [
         {

@@ -96,7 +96,7 @@ export type SimulateContractReturnType<
     chainId: chains[key]['id']
     request: Compute<
       PartialBy<
-        { __mode: 'prepared'; chainId: chainId; chain: chains[key] },
+        { chainId: chainId; chain: chains[key] },
         chainId extends config['chains'][number]['id'] ? never : 'chainId'
       >
     >
@@ -155,7 +155,7 @@ export async function simulateContract<
   return {
     chainId: client.chain.id,
     result,
-    request: { __mode: 'prepared', ...request, chainId },
+    request: { ...request, chainId },
   } as unknown as SimulateContractReturnType<
     abi,
     functionName,
