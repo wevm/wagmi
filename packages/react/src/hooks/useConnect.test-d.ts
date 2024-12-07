@@ -77,7 +77,10 @@ test('context', () => {
   expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
 
   connect(
-    { connector },
+    {
+      connector,
+      foo: 'bar',
+    },
     {
       onError(error, variables, context) {
         expectTypeOf(variables).toEqualTypeOf<{
