@@ -1,6 +1,6 @@
 import { existsSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
-import { execa } from 'execa'
+import exec  from 'nanoexec'
 import { fdir } from 'fdir'
 import { basename, extname, join, resolve } from 'pathe'
 import pc from 'picocolors'
@@ -116,7 +116,7 @@ export function hardhat(config: HardhatConfig): HardhatResult {
         const [command, ...options] = (
           typeof clean === 'boolean' ? `${packageManager} hardhat clean` : clean
         ).split(' ')
-        await execa(command!, options, { cwd: project })
+        await exec(command!, options, { cwd: project })
       }
       if (build) {
         const packageManager = await getPackageManager(true)
@@ -125,7 +125,7 @@ export function hardhat(config: HardhatConfig): HardhatResult {
             ? `${packageManager} hardhat compile`
             : build
         ).split(' ')
-        await execa(command!, options, { cwd: project })
+        await exec(command!, options, { cwd: project })
       }
       if (!existsSync(artifactsDirectory))
         throw new Error('Artifacts not found.')
@@ -180,10 +180,10 @@ export function hardhat(config: HardhatConfig): HardhatResult {
               logger.log(
                 `${pc.blue('Hardhat')} Detected ${event} at ${basename(path)}`,
               )
-              const subprocess = execa(command!, options, {
+              const subprocess = exec(command!, options, {
                 cwd: project,
               })
-              subprocess.stdout?.on('data', (data) => {
+              subprocess.stdout?.on('data', (data: Uint8Array) => {
                 process.stdout.write(`${pc.blue('Hardhat')} ${data}`)
               })
             })

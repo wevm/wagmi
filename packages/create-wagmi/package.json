@@ -42,7 +42,7 @@
     "@types/cross-spawn": "^6.0.6",
     "@types/node": "^20.12.10",
     "@types/prompts": "^2.4.9",
-    "execa": "^8.0.1"
+    "nanoexec": "^1.1.0"
   },
   "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
   "funding": "https://github.com/sponsors/wevm",

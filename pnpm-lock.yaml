@@ -58,7 +58,7 @@ importers:
         version: 1.1.10
       '@vitest/coverage-v8':
         specifier: ^2.1.1
-        version: 2.1.1(vitest@2.1.1(@types/node@20.12.10)(@vitest/ui@2.1.1)(happy-dom@15.7.4)(msw@2.4.9(typescript@5.5.4))(terser@5.31.0))
+        version: 2.1.1(vitest@2.1.1)
       '@vitest/ui':
         specifier: ^2.1.1
         version: 2.1.1(vitest@2.1.1)
@@ -131,12 +131,12 @@ importers:
       escalade:
         specifier: 3.2.0
         version: 3.2.0
-      execa:
-        specifier: ^8.0.1
-        version: 8.0.1
       fdir:
         specifier: ^6.1.1
         version: 6.1.1(picomatch@3.0.1)
+      nanoexec:
+        specifier: ^1.1.0
+        version: 1.1.0(@types/node@20.12.10)
       nanospinner:
         specifier: 1.2.2
         version: 1.2.2
@@ -246,9 +246,9 @@ importers:
       '@types/prompts':
         specifier: ^2.4.9
         version: 2.4.9
-      execa:
-        specifier: ^8.0.1
-        version: 8.0.1
+      nanoexec:
+        specifier: ^1.1.0
+        version: 1.1.0(@types/node@20.12.10)
 
   packages/react:
     dependencies:
@@ -5973,6 +5973,11 @@ packages:
   mz@2.7.0:
     resolution: {integrity: sha512-z81GNO7nnYMEhrGh9LeymoE4+Yr0Wn5McHIZMK5cfQCl+NDX08sCZgUc9/6MHni9IWuFLm1Z3HTCXu2z9fN62Q==}
 
+  nanoexec@1.1.0:
+    resolution: {integrity: sha512-AFEBFWI+4vgstL3Czpbn8yCKBgN+b2d0qPdBCjmrOf9OOUUpLqBr+JocLJCfA5OYxKSmoOdEm6OWO5QraTNtDg==}
+    peerDependencies:
+      '@types/node': '*'
+
   nanoid@3.3.3:
     resolution: {integrity: sha512-p1sjXuopFs0xg+fPASzQ28agW1oHD7xDsd9Xkf3T15H3c/cifrFHVwrh74PdoklAPi+i7MdRsE47vm2r6JoB+w==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
@@ -6696,6 +6701,9 @@ packages:
     peerDependenciesMeta:
       bluebird:
         optional: true
+
+  promise-make-naked@3.0.0:
+    resolution: {integrity: sha512-h71wwAMB2udFnlPmcxQMqKl6CckNLVKdk/ROtFivE6/VmW+rQKV0DWlGJ6VphRIoq22Tkonvdi3F+jlm5XDlow==}
 
   promise-retry@2.0.1:
     resolution: {integrity: sha512-y+WKFlBR8BGXnsNlIHFGPZmyDf3DFMoLhaflAnyZgV6rG6xu+JwesTo2Q9R6XwYmtmwAFCkAk3e35jEdoeh/3g==}
@@ -11490,7 +11498,7 @@ snapshots:
       vite: 5.4.10(@types/node@20.12.10)(terser@5.31.0)
       vue: 3.5.12(typescript@5.6.1-rc)
 
-  '@vitest/coverage-v8@2.1.1(vitest@2.1.1(@types/node@20.12.10)(@vitest/ui@2.1.1)(happy-dom@15.7.4)(msw@2.4.9(typescript@5.5.4))(terser@5.31.0))':
+  '@vitest/coverage-v8@2.1.1(vitest@2.1.1)':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@bcoe/v8-coverage': 0.2.3
@@ -15198,6 +15206,11 @@ snapshots:
       object-assign: 4.1.1
       thenify-all: 1.6.0
 
+  nanoexec@1.1.0(@types/node@20.12.10):
+    dependencies:
+      '@types/node': 20.12.10
+      promise-make-naked: 3.0.0
+
   nanoid@3.3.3: {}
 
   nanoid@3.3.7: {}
@@ -16213,6 +16226,8 @@ snapshots:
   process@0.11.10: {}
 
   promise-inflight@1.0.1: {}
+
+  promise-make-naked@3.0.0: {}
 
   promise-retry@2.0.1:
     dependencies:
