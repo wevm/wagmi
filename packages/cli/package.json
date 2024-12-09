@@ -76,7 +76,7 @@
     "fdir": "^6.1.1",
     "find-up": "^6.3.0",
     "fs-extra": "^11.2.0",
-    "ora": "^6.3.1",
+    "nanospinner": "1.2.2",
     "pathe": "^1.1.2",
     "picocolors": "^1.0.0",
     "picomatch": "^3.0.0",

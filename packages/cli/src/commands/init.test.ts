@@ -38,10 +38,10 @@ test('creates config file', async () => {
   expect(
     console.formatted.replaceAll(dir, 'path/to/project'),
   ).toMatchInlineSnapshot(`
-        "- Creating config
-        ✔ Creating config
-        Config created at wagmi.config.js"
-      `)
+    "- Creating config
+    √ Creating config
+    Config created at wagmi.config.js"
+  `)
 })
 
 test('parameters: config', async () => {
@@ -68,10 +68,10 @@ test('parameters: config', async () => {
   expect(
     console.formatted.replaceAll(dir, 'path/to/project'),
   ).toMatchInlineSnapshot(`
-          "- Creating config
-          ✔ Creating config
-          Config created at foo.config.ts"
-        `)
+    "- Creating config
+    √ Creating config
+    Config created at foo.config.ts"
+  `)
 })
 
 test('parameters: content', async () => {
@@ -104,10 +104,10 @@ test('parameters: content', async () => {
   expect(
     console.formatted.replaceAll(dir, 'path/to/project'),
   ).toMatchInlineSnapshot(`
-          "- Creating config
-          ✔ Creating config
-          Config created at wagmi.config.ts"
-        `)
+    "- Creating config
+    √ Creating config
+    Config created at wagmi.config.ts"
+  `)
 })
 
 test('parameters: root', async () => {
@@ -135,10 +135,10 @@ test('parameters: root', async () => {
   expect(
     console.formatted.replaceAll(dir, 'path/to/project'),
   ).toMatchInlineSnapshot(`
-          "- Creating config
-          ✔ Creating config
-          Config created at foo/wagmi.config.js"
-        `)
+    "- Creating config
+    √ Creating config
+    Config created at foo/wagmi.config.js"
+  `)
 })
 
 test('behavior: creates config file in TypeScript format', async () => {
@@ -166,10 +166,10 @@ test('behavior: creates config file in TypeScript format', async () => {
   expect(
     console.formatted.replaceAll(dir, 'path/to/project'),
   ).toMatchInlineSnapshot(`
-          "- Creating config
-          ✔ Creating config
-          Config created at wagmi.config.ts"
-        `)
+    "- Creating config
+    √ Creating config
+    Config created at wagmi.config.ts"
+  `)
 })
 
 test('behavior: displays config file location when config exists', async () => {
