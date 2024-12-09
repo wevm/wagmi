@@ -1,10 +1,10 @@
+import { mkdir, writeFile } from 'node:fs/promises'
 import type { Abi } from 'abitype'
 import { Abi as AbiSchema } from 'abitype/zod'
 import { camelCase } from 'change-case'
 import type { ChokidarOptions, FSWatcher } from 'chokidar'
 import { watch } from 'chokidar'
 import { default as dedent } from 'dedent'
-import { default as fs } from 'fs-extra'
 import { basename, dirname, resolve } from 'pathe'
 import pc from 'picocolors'
 import { type Address, getAddress } from 'viem'
@@ -396,9 +396,9 @@ async function writeContracts({
   // Format and write output
   const cwd = process.cwd()
   const outPath = resolve(cwd, filename)
-  await fs.ensureDir(dirname(outPath))
+  await mkdir(dirname(outPath), { recursive: true })
   const formatted = await format(code)
-  await fs.writeFile(outPath, formatted)
+  await writeFile(outPath, formatted)
 }
 
 function getBannerContent({ name }: { name: string }) {

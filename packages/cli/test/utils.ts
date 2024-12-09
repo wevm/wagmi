@@ -1,6 +1,6 @@
+import { cp, mkdir, symlink, writeFile } from 'node:fs/promises'
 import { execa } from 'execa'
 import fixtures from 'fixturez'
-import { default as fs } from 'fs-extra'
 import { http, HttpResponse } from 'msw'
 import * as path from 'pathe'
 import { vi } from 'vitest'
@@ -27,7 +27,7 @@ export async function createFixture<
   } = {},
 ) {
   const dir = config.dir ?? f.temp()
-  await fs.ensureDir(dir)
+  await mkdir(dir, { recursive: true })
 
   // Create test files
   const paths: { [_ in keyof TFiles]: string } = {} as any
@@ -42,9 +42,9 @@ export async function createFixture<
         } else file = config.files![filename]
 
         const filePath = path.join(dir, filename.toString())
-        await fs.ensureDir(path.dirname(filePath))
+        await mkdir(path.dirname(filePath), { recursive: true })
 
-        await fs.writeFile(
+        await writeFile(
           filePath,
           typeof file === 'string' ? file : JSON.stringify(file, null, 2),
         )
@@ -54,12 +54,12 @@ export async function createFixture<
   )
 
   if (config.copyNodeModules) {
-    await fs.symlink(
+    await symlink(
       path.join(__dirname, '../node_modules'),
       path.join(dir, 'node_modules'),
       'dir',
     )
-    await fs.copy(
+    await cp(
       path.join(__dirname, '../package.json'),
       path.join(dir, 'package.json'),
     )
