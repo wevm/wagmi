@@ -17,6 +17,10 @@ tsconfig.tsbuildinfo
 .env.production.local
 .envrc
 
+# Vite
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
 # proxy packages
 packages/cli/config
 packages/cli/plugins
@@ -37,3 +41,6 @@ packages/vue/chains
 packages/vue/connectors
 packages/vue/nuxt
 packages/vue/query
+packages/svelte/.svelte-kit
+packages/svelte/.output
+
