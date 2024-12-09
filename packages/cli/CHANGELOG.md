@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 2.1.20
+
+### Patch Changes
+
+- [#4450](https://github.com/wevm/wagmi/pull/4450) [`7b9a6bb35881b657a00bdd7ccd7edea32660f5bf`](https://github.com/wevm/wagmi/commit/7b9a6bb35881b657a00bdd7ccd7edea32660f5bf) Thanks [@tmm](https://github.com/tmm)! - Removed internal usage of `fs-extra`.
+
 ## 2.1.19
 
 ### Patch Changes
