@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 2.1.19
+
+### Patch Changes
+
+- [#4449](https://github.com/wevm/wagmi/pull/4449) [`3fa5c238baa13d948e89974b0bb8530f8fa264fd`](https://github.com/wevm/wagmi/commit/3fa5c238baa13d948e89974b0bb8530f8fa264fd) Thanks [@tmm](https://github.com/tmm)! - Removed `ora` for `nanospinner`.
+
 ## 2.1.18
 
 ### Patch Changes
