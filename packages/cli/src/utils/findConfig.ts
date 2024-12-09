@@ -33,6 +33,7 @@ export async function findConfig(parameters: FindConfigParameters = {}) {
     for (const name of names) {
       if (configFiles.includes(name)) return name
     }
+    return undefined
   })
   return configPath
 }

@@ -13,6 +13,7 @@ export async function getIsUsingTypeScript() {
       for (const name of names) {
         if (files.includes(name)) return name
       }
+      return undefined
     })
     if (tsconfig) return true
 
@@ -21,6 +22,7 @@ export async function getIsUsingTypeScript() {
       for (const name of names) {
         if (files.includes(name)) return name
       }
+      return undefined
     })
     if (wagmiConfig) return true
 
