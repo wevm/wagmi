@@ -1,5 +1,11 @@
 # create-wagmi
 
+## 2.0.14
+
+### Patch Changes
+
+- [#4450](https://github.com/wevm/wagmi/pull/4450) [`7b9a6bb35881b657a00bdd7ccd7edea32660f5bf`](https://github.com/wevm/wagmi/commit/7b9a6bb35881b657a00bdd7ccd7edea32660f5bf) Thanks [@tmm](https://github.com/tmm)! - Removed internal usage of `fs-extra`.
+
 ## 2.0.13
 
 ### Patch Changes
