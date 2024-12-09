@@ -47,8 +47,8 @@ export async function init(options: Init = {}) {
     return configPath
   }
 
-  const spinner = logger.spinner()
-  spinner.start('Creating config')
+  const spinner = logger.spinner('Creating config')
+  spinner.start()
   // Check if project is using TypeScript
   const isUsingTypeScript = await getIsUsingTypeScript()
   const rootDir = resolve(options.root || process.cwd())
@@ -86,7 +86,7 @@ export async function init(options: Init = {}) {
 
   const formatted = await format(content)
   await fs.writeFile(outPath, formatted)
-  spinner.succeed()
+  spinner.success()
   logger.success(
     `Config created at ${pc.gray(relative(process.cwd(), outPath))}`,
   )
