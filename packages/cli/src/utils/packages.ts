@@ -1,6 +1,6 @@
 import { promises as fs } from 'node:fs'
 import { resolve } from 'node:path'
-import { execa } from 'execa'
+import exec from 'nanoexec'
 
 export async function getIsPackageInstalled(parameters: {
   packageName: string
@@ -20,12 +20,12 @@ export async function getIsPackageInstalled(parameters: {
       }
     })()
 
-    const { stdout } = await execa(packageManager, command, { cwd })
+    const { stdout } = await exec(packageManager, command, { cwd })
 
     // For Bun, we need to check if the package name is in the output
     if (packageManager === 'bun') return stdout.includes(packageName)
 
-    return stdout !== ''
+    return stdout.toString() !== ''
   } catch (_error) {
     return false
   }
@@ -75,11 +75,11 @@ function hasGlobalInstallation(pm: PackageManager): Promise<boolean> {
     return Promise.resolve(cache.get(key))
   }
 
-  return execa(pm, ['--version'])
-    .then((res) => {
+  return exec(pm, ['--version'])
+    .then((res: { stdout: string }) => {
       return /^\d+.\d+.\d+$/.test(res.stdout)
     })
-    .then((value) => {
+    .then((value: boolean) => {
       cache.set(key, value)
       return value
     })

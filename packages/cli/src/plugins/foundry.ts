@@ -1,7 +1,7 @@
 import { existsSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
 import dedent from 'dedent'
-import { execa, execaCommandSync } from 'execa'
+import exec from 'nanoexec'
 import { fdir } from 'fdir'
 import { basename, extname, join, resolve } from 'pathe'
 import pc from 'picocolors'
@@ -155,7 +155,7 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
   try {
     foundryConfig = FoundryConfigSchema.parse(
       JSON.parse(
-        execaCommandSync(`${forgeExecutable} config --json --root ${project}`)
+        exec(`${forgeExecutable} config --json --root ${project}`)
           .stdout,
       ),
     )
@@ -171,8 +171,8 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
 
   return {
     async contracts() {
-      if (clean) await execa(forgeExecutable, ['clean', '--root', project])
-      if (build) await execa(forgeExecutable, ['build', '--root', project])
+      if (clean) await exec(forgeExecutable, ['clean', '--root', project])
+      if (build) await exec(forgeExecutable, ['build', '--root', project])
       if (!existsSync(artifactsDirectory))
         throw new Error('Artifacts not found.')
 
@@ -194,7 +194,7 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
       // Ensure forge is installed
       if (clean || build || rebuild)
         try {
-          await execa(forgeExecutable, ['--version'])
+          await exec(forgeExecutable, ['--version'])
         } catch (_error) {
           throw new Error(dedent`
             forge must be installed to use Foundry plugin.
@@ -210,15 +210,16 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
                 project,
               )}`,
             )
-            const subprocess = execa(forgeExecutable, [
+            const subprocess = (await exec(forgeExecutable, [
               'build',
               '--watch',
               '--root',
               project,
-            ])
-            subprocess.stdout?.on('data', (data) => {
-              process.stdout.write(`${pc.magenta('Foundry')} ${data}`)
-            })
+            ])).process;
+
+            subprocess.stdout?.on('data', (data: Uint8Array) => {
+              process.stdout.write(`${pc.magenta('Foundry')} ${data.toString()}`);
+            });
 
             process.once('SIGINT', shutdown)
             process.once('SIGTERM', shutdown)

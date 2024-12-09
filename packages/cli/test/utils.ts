@@ -1,5 +1,5 @@
 import { cp, mkdir, symlink, writeFile } from 'node:fs/promises'
-import { execa } from 'execa'
+import exec from "nanoexec";
 import fixtures from 'fixturez'
 import { http, HttpResponse } from 'msw'
 import * as path from 'pathe'
@@ -144,7 +144,7 @@ export function watchConsole() {
 
 export async function typecheck(project: string) {
   try {
-    const res = await execa('tsc', [
+    const res = await exec('tsc', [
       '--noEmit',
       '--target',
       'es2021',
@@ -153,7 +153,7 @@ export async function typecheck(project: string) {
       '-p',
       project,
     ])
-    return res.stdout
+    return res.stdout.toString()
   } catch (error) {
     throw new Error(
       (error as Error).message.replaceAll(
