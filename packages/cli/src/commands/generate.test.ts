@@ -1,8 +1,8 @@
 import dedent from 'dedent'
-import { readFile } from 'fs-extra'
 import { resolve } from 'pathe'
 import { afterEach, beforeEach, expect, test, vi } from 'vitest'
 
+import { readFile } from 'node:fs/promises'
 import { createFixture, typecheck, watchConsole } from '../../test/utils.js'
 import { generate } from './generate.js'
 

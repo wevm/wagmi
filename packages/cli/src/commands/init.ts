@@ -1,5 +1,5 @@
+import { writeFile } from 'node:fs/promises'
 import dedent from 'dedent'
-import { default as fs } from 'fs-extra'
 import { relative, resolve } from 'pathe'
 import pc from 'picocolors'
 import { z } from 'zod'
@@ -85,7 +85,7 @@ export async function init(options: Init = {}) {
   }
 
   const formatted = await format(content)
-  await fs.writeFile(outPath, formatted)
+  await writeFile(outPath, formatted)
   spinner.success()
   logger.success(
     `Config created at ${pc.gray(relative(process.cwd(), outPath))}`,

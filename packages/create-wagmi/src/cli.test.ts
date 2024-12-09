@@ -1,7 +1,8 @@
+import { mkdirSync, readdirSync, writeFileSync } from 'node:fs'
+import { rm } from 'node:fs/promises'
 import { join } from 'node:path'
 import type { ExecaSyncReturnValue, SyncOptions } from 'execa'
 import { execaCommandSync } from 'execa'
-import fs from 'fs-extra'
 import pc from 'picocolors'
 import { afterEach, beforeAll, expect, test } from 'vitest'
 
@@ -17,16 +18,18 @@ function run(args: string[], options: SyncOptions = {}): ExecaSyncReturnValue {
 }
 
 function createNonEmptyDir() {
-  fs.mkdirpSync(genPath)
+  mkdirSync(genPath, { recursive: true })
   const file = join(genPath, 'foo')
-  fs.writeFileSync(file, 'bar')
+  writeFileSync(file, 'bar')
 }
 
-beforeAll(() => {
+beforeAll(async () => {
   execaCommandSync('pnpm --filter create-wagmi build')
-  fs.remove(genPath)
+  await rm(genPath, { recursive: true, force: true })
 })
-afterEach(() => fs.remove(genPath))
+afterEach(async () => {
+  await rm(genPath, { recursive: true, force: true })
+})
 
 test('prompts for the project name if none supplied', () => {
   const { stdout } = run([])
@@ -34,7 +37,7 @@ test('prompts for the project name if none supplied', () => {
 })
 
 test('prompts for the framework if none supplied when target dir is current directory', () => {
-  fs.mkdirpSync(genPath)
+  mkdirSync(genPath)
   const { stdout } = run(['.'], { cwd: genPath })
   expect(stdout).toContain('Select a framework:')
 })
@@ -68,8 +71,9 @@ test('asks to overwrite non-empty current directory', () => {
   expect(stdout).toContain('Current directory is not empty.')
 })
 
-const templateFiles = fs
-  .readdirSync(join(cliPath, '../../../templates/vite-react'))
+const templateFiles = readdirSync(
+  join(cliPath, '../../../templates/vite-react'),
+)
   .map((filePath) => {
     if (filePath === '_gitignore') return '.gitignore'
     if (filePath === '_env.local') return '.env.local'
@@ -79,29 +83,29 @@ const templateFiles = fs
   .sort()
 
 test('successfully scaffolds a project based on vite-react starter template', () => {
-  fs.ensureDirSync(genPath)
+  mkdirSync(genPath, { recursive: true })
   const { stdout } = run([projectName, '--template', 'vite-react'], {
     cwd: __dirname,
   })
-  const generatedFiles = fs.readdirSync(genPath).sort()
+  const generatedFiles = readdirSync(genPath).sort()
 
   expect(stdout).toContain(`Scaffolding project in ${genPath}`)
   expect(templateFiles).toEqual(generatedFiles)
 })
 
 test('works with the -t alias', () => {
-  fs.ensureDirSync(genPath)
+  mkdirSync(genPath, { recursive: true })
   const { stdout } = run([projectName, '-t', 'vite-react'], {
     cwd: __dirname,
   })
-  const generatedFiles = fs.readdirSync(genPath).sort()
+  const generatedFiles = readdirSync(genPath).sort()
 
   expect(stdout).toContain(`Scaffolding project in ${genPath}`)
   expect(templateFiles).toEqual(generatedFiles)
 })
 
 test('uses different package manager', () => {
-  fs.ensureDirSync(genPath)
+  mkdirSync(genPath, { recursive: true })
   const { stdout } = run([projectName, '--bun', '-t', 'vite-react'], {
     cwd: __dirname,
   })

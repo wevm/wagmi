@@ -1,11 +1,11 @@
+import { mkdir } from 'node:fs/promises'
 import { homedir } from 'node:os'
-import { default as fs } from 'fs-extra'
 import type { createSpinner as nanospinner_createSpinner } from 'nanospinner'
 import { join } from 'pathe'
 import { vi } from 'vitest'
 
 const cacheDir = join(homedir(), '.wagmi-cli/plugins/fetch/cache')
-await fs.ensureDir(cacheDir)
+await mkdir(cacheDir, { recursive: true })
 
 vi.mock('nanospinner', async (importOriginal) => {
   const mod = await importOriginal<{

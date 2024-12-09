@@ -72,10 +72,9 @@
     "dotenv": "^16.3.1",
     "dotenv-expand": "^10.0.0",
     "esbuild": "^0.19.0",
+    "escalade": "3.2.0",
     "execa": "^8.0.1",
     "fdir": "^6.1.1",
-    "find-up": "^6.3.0",
-    "fs-extra": "^11.2.0",
     "nanospinner": "1.2.2",
     "pathe": "^1.1.2",
     "picocolors": "^1.0.0",
@@ -86,7 +85,6 @@
   },
   "devDependencies": {
     "@types/dedent": "^0.7.2",
-    "@types/fs-extra": "^11.0.4",
     "@types/node": "^20.12.10",
     "fixturez": "^1.1.0",
     "msw": "^2.4.9"
