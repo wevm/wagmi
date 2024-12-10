@@ -23,16 +23,19 @@ export type ConnectParameters<
   parameters extends unknown | undefined =
     | (connector extends CreateConnectorFn
         ? Omit<
-            Parameters<ReturnType<connector>['connect']>[0],
+            NonNullable<Parameters<ReturnType<connector>['connect']>[0]>,
             'isReconnecting'
           >
         : never)
     | (connector extends Connector
-        ? Omit<Parameters<connector['connect']>[0], 'isReconnecting'>
+        ? Omit<
+            NonNullable<Parameters<connector['connect']>[0]>,
+            'isReconnecting'
+          >
         : never),
 > = Compute<
   ChainIdParameter<config> & {
-    connector: connector | Connector | CreateConnectorFn
+    connector: connector
   }
 > &
   parameters

@@ -532,7 +532,7 @@ export type Config<
     readonly CreateConnectorFn[] = readonly CreateConnectorFn[],
 > = {
   readonly chains: chains
-  readonly connectors: Connector<connectorFns[number]>[]
+  readonly connectors: readonly Connector<connectorFns[number]>[]
   readonly storage: Storage | null
 
   readonly state: State<chains>

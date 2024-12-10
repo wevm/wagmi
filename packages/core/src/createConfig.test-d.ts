@@ -87,7 +87,7 @@ test('behavior: parameters should not include certain client config properties',
   >().toEqualTypeOf<false>()
 })
 
-test('narrow connectors', () => {
+test('infer connectors', () => {
   const connectorFn = mock({ accounts })
   const config = createConfig({
     chains: [mainnet, sepolia],

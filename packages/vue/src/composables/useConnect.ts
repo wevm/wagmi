@@ -2,6 +2,8 @@ import { useMutation } from '@tanstack/vue-query'
 import type {
   Config,
   ConnectErrorType,
+  Connector,
+  CreateConnectorFn,
   GetConnectorsReturnType,
   ResolvedRegister,
 } from '@wagmi/core'
@@ -32,7 +34,7 @@ export type UseConnectParameters<
       | UseMutationParameters<
           ConnectData<config>,
           ConnectErrorType,
-          ConnectVariables<config>,
+          ConnectVariables<config, Connector | CreateConnectorFn>,
           context
         >
       | undefined
@@ -46,7 +48,7 @@ export type UseConnectReturnType<
   UseMutationReturnType<
     ConnectData<config>,
     ConnectErrorType,
-    ConnectVariables<config>,
+    ConnectVariables<config, Connector | CreateConnectorFn>,
     context
   > & {
     connect: ConnectMutate<config, context>
@@ -82,10 +84,11 @@ export function useConnect<
   )
   onScopeDispose(() => unsubscribe())
 
+  type Return = UseConnectReturnType<config, context>
   return {
     ...result,
-    connect: mutate,
-    connectAsync: mutateAsync,
+    connect: mutate as Return['connect'],
+    connectAsync: mutateAsync as Return['connectAsync'],
     connectors: useConnectors({ config }).value,
   }
 }

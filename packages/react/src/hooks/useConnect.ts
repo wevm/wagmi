@@ -86,10 +86,11 @@ export function useConnect<
     )
   }, [config, result.reset])
 
+  type Return = UseConnectReturnType<config, context>
   return {
     ...result,
-    connect: mutate,
-    connectAsync: mutateAsync,
+    connect: mutate as Return['connect'],
+    connectAsync: mutateAsync as Return['connectAsync'],
     connectors: useConnectors({ config }),
   }
 }
