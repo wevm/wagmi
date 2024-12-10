@@ -1,9 +1,10 @@
-import { createConfig } from '@wagmi/vue'
+import { createConfig, mock } from '@wagmi/vue'
 import { celo, mainnet, optimism, zkSync } from '@wagmi/vue/chains'
 import { http } from 'viem'
 
 export const config = createConfig({
   chains: [celo, mainnet, optimism, zkSync],
+  connectors: [mock({ accounts: ['0x'] })],
   transports: {
     [celo.id]: http(),
     [mainnet.id]: http(),

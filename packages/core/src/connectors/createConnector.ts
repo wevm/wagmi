@@ -82,6 +82,12 @@ export function createConnector<
   provider,
   properties extends Record<string, unknown> = Record<string, unknown>,
   storageItem extends Record<string, unknown> = Record<string, unknown>,
->(createConnectorFn: CreateConnectorFn<provider, properties, storageItem>) {
+  ///
+  createConnectorFn extends CreateConnectorFn<
+    provider,
+    properties,
+    storageItem
+  > = CreateConnectorFn<provider, properties, storageItem>,
+>(createConnectorFn: createConnectorFn) {
   return createConnectorFn
 }
