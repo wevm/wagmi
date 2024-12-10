@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.16.0
+
+### Minor Changes
+
+- [#4453](https://github.com/wevm/wagmi/pull/4453) [`070e48480194c8d7f45bda1d7dd1346e6f5d7227`](https://github.com/wevm/wagmi/commit/070e48480194c8d7f45bda1d7dd1346e6f5d7227) Thanks [@tmm](https://github.com/tmm)! - Added narrowing to `config.connectors`.
+
 ## 2.15.2
 
 ### Patch Changes
