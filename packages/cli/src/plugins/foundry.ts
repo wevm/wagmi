@@ -1,8 +1,8 @@
+import { existsSync } from 'node:fs'
+import { readFile } from 'node:fs/promises'
 import dedent from 'dedent'
 import { execa, execaCommandSync } from 'execa'
 import { fdir } from 'fdir'
-import { default as fs } from 'fs-extra'
-
 import { basename, extname, join, resolve } from 'pathe'
 import pc from 'picocolors'
 import { z } from 'zod'
@@ -125,7 +125,7 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
   }
 
   async function getContract(artifactPath: string) {
-    const artifact = await fs.readJSON(artifactPath)
+    const artifact = await JSON.parse(await readFile(artifactPath, 'utf8'))
     return {
       abi: artifact.abi,
       address: (deployments as Record<string, ContractConfig['address']>)[
@@ -173,7 +173,7 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
     async contracts() {
       if (clean) await execa(forgeExecutable, ['clean', '--root', project])
       if (build) await execa(forgeExecutable, ['build', '--root', project])
-      if (!fs.pathExistsSync(artifactsDirectory))
+      if (!existsSync(artifactsDirectory))
         throw new Error('Artifacts not found.')
 
       const artifactPaths = await getArtifactPaths(artifactsDirectory)
@@ -188,7 +188,7 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
     name: 'Foundry',
     async validate() {
       // Check that project directory exists
-      if (!(await fs.pathExists(project)))
+      if (!existsSync(project))
         throw new Error(`Foundry project ${pc.gray(config.project)} not found.`)
 
       // Ensure forge is installed

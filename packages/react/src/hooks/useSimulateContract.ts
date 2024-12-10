@@ -92,6 +92,7 @@ export function useSimulateContract<
 
   const config = useConfig(parameters)
   const { data: connectorClient } = useConnectorClient({
+    config,
     connector,
     query: { enabled: parameters.account === undefined },
   })

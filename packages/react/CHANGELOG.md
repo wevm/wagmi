@@ -1,5 +1,11 @@
 # wagmi
 
+## 2.13.5
+
+### Patch Changes
+
+- [#4447](https://github.com/wevm/wagmi/pull/4447) [`244f7777d9d227b3134d4cb9b9dda64f50cbddd3`](https://github.com/wevm/wagmi/commit/244f7777d9d227b3134d4cb9b9dda64f50cbddd3) Thanks [@Aerilym](https://github.com/Aerilym)! - Fixed config parameter passing in useSimulateContract and useEstimateGas
+
 ## 2.13.4
 
 ### Patch Changes

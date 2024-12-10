@@ -1,10 +1,10 @@
+import { mkdir, writeFile } from 'node:fs/promises'
 import type { Abi } from 'abitype'
 import { Abi as AbiSchema } from 'abitype/zod'
 import { camelCase } from 'change-case'
 import type { ChokidarOptions, FSWatcher } from 'chokidar'
 import { watch } from 'chokidar'
 import { default as dedent } from 'dedent'
-import { default as fs } from 'fs-extra'
 import { basename, dirname, resolve } from 'pathe'
 import pc from 'picocolors'
 import { type Address, getAddress } from 'viem'
@@ -76,12 +76,12 @@ export async function generate(options: Generate = {}) {
       ...x,
       id: `${x.name}-${i}`,
     }))
-    const spinner = logger.spinner()
-    spinner.start('Validating plugins')
+    const spinner = logger.spinner('Validating plugins')
+    spinner.start()
     for (const plugin of plugins) {
       await plugin.validate?.()
     }
-    spinner.succeed()
+    spinner.success()
 
     // Add plugin contracts to config contracts
     const contractConfigs = config.contracts ?? []
@@ -113,11 +113,11 @@ export async function generate(options: Generate = {}) {
     const sortedAscContractMap = new Map([...contractMap].sort())
     const contracts = [...sortedAscContractMap.values()]
     if (!contracts.length && !options.watch) {
-      spinner.fail()
+      spinner.error()
       logger.warn('No contracts found.')
       return
     }
-    spinner.succeed()
+    spinner.success()
 
     // Run plugins
     const imports = []
@@ -144,7 +144,7 @@ export async function generate(options: Generate = {}) {
       result.imports && imports.push(result.imports)
       result.prepend && prepend.push(result.prepend)
     }
-    spinner.succeed()
+    spinner.success()
 
     // Write output to file
     spinner.start(`Writing to ${pc.gray(config.out)}`)
@@ -155,7 +155,7 @@ export async function generate(options: Generate = {}) {
       prepend,
       filename: config.out,
     })
-    spinner.succeed()
+    spinner.success()
 
     if (options.watch) {
       if (!watchConfigs.length) {
@@ -227,8 +227,10 @@ export async function generate(options: Generate = {}) {
                 result.prepend && prepend.push(result.prepend)
               }
 
-              const spinner = logger.spinner()
-              spinner.start(`Writing to ${pc.gray(config.out)}`)
+              const spinner = logger.spinner(
+                `Writing to ${pc.gray(config.out)}`,
+              )
+              spinner.start()
               await writeContracts({
                 content,
                 contracts,
@@ -236,7 +238,7 @@ export async function generate(options: Generate = {}) {
                 prepend,
                 filename: config.out,
               })
-              spinner.succeed()
+              spinner.success()
             }, watchWriteDelay)
             needsWrite = false
           }
@@ -394,9 +396,9 @@ async function writeContracts({
   // Format and write output
   const cwd = process.cwd()
   const outPath = resolve(cwd, filename)
-  await fs.ensureDir(dirname(outPath))
+  await mkdir(dirname(outPath), { recursive: true })
   const formatted = await format(code)
-  await fs.writeFile(outPath, formatted)
+  await writeFile(outPath, formatted)
 }
 
 function getBannerContent({ name }: { name: string }) {
