@@ -32,7 +32,10 @@ export type ConnectVariables<
 > = ConnectParameters<config, connector>
 
 export type ConnectMutate<config extends Config, context = unknown> = <
-  connector extends Connector | CreateConnectorFn,
+  connector extends
+    | config['connectors'][number]
+    | Connector
+    | CreateConnectorFn,
 >(
   variables: ConnectVariables<config, connector>,
   options?:
@@ -48,7 +51,10 @@ export type ConnectMutate<config extends Config, context = unknown> = <
 ) => void
 
 export type ConnectMutateAsync<config extends Config, context = unknown> = <
-  connector extends Connector | CreateConnectorFn,
+  connector extends
+    | config['connectors'][number]
+    | Connector
+    | CreateConnectorFn,
 >(
   variables: ConnectVariables<config, connector>,
   options?:

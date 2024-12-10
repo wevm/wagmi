@@ -1,13 +1,7 @@
 'use client'
 
 import { useMutation } from '@tanstack/react-query'
-import type {
-  Config,
-  ConnectErrorType,
-  Connector,
-  CreateConnectorFn,
-  ResolvedRegister,
-} from '@wagmi/core'
+import type { Config, ConnectErrorType, ResolvedRegister } from '@wagmi/core'
 import type { Compute } from '@wagmi/core/internal'
 import {
   type ConnectData,
@@ -35,7 +29,7 @@ export type UseConnectParameters<
       | UseMutationParameters<
           ConnectData<config>,
           ConnectErrorType,
-          ConnectVariables<config, Connector | CreateConnectorFn>,
+          ConnectVariables<config, config['connectors'][number]>,
           context
         >
       | undefined
@@ -49,12 +43,12 @@ export type UseConnectReturnType<
   UseMutationReturnType<
     ConnectData<config>,
     ConnectErrorType,
-    ConnectVariables<config, Connector | CreateConnectorFn>,
+    ConnectVariables<config, config['connectors'][number]>,
     context
   > & {
     connect: ConnectMutate<config, context>
     connectAsync: ConnectMutateAsync<config, context>
-    connectors: Compute<UseConnectorsReturnType>
+    connectors: Compute<UseConnectorsReturnType> | config['connectors']
   }
 >
 
@@ -88,7 +82,7 @@ export function useConnect<
 
   type Return = UseConnectReturnType<config, context>
   return {
-    ...result,
+    ...(result as Return),
     connect: mutate as Return['connect'],
     connectAsync: mutateAsync as Return['connectAsync'],
     connectors: useConnectors({ config }),

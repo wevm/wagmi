@@ -35,7 +35,7 @@ export type ConnectParameters<
         : never),
 > = Compute<
   ChainIdParameter<config> & {
-    connector: connector
+    connector: connector | CreateConnectorFn
   }
 > &
   parameters
