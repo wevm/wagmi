@@ -9,6 +9,7 @@ const alias = {
   '@wagmi/core': path.resolve(__dirname, './packages/core/src/exports'),
   '@wagmi/test': path.resolve(__dirname, './packages/test/src/exports'),
   '@wagmi/vue': path.resolve(__dirname, './packages/vue/src/exports'),
+  '@wagmi/svelte': path.resolve(__dirname, './packages/svelte/src/exports'),
   wagmi: path.resolve(__dirname, './packages/react/src/exports'),
 }
 
@@ -68,6 +69,7 @@ export default defineWorkspace([
     },
     resolve: { alias },
   },
+  './packages/svelte',
   {
     test: {
       name: 'react-register',
