@@ -62,7 +62,7 @@ test('constructors', () => {
   ).toMatchInlineSnapshot(`
     [ConnectorUnavailableReconnectingError: Connector "Rabby Wallet" unavailable while reconnecting.
 
-    Details: During the reconnection step, the only connector methods guaranteed to be available are: \`id\`, \`name\`, \`type\`, \`uuid\`. All other methods are not guaranteed to be available until reconnection completes and connectors are fully restored. This error commonly occurs for connectors that asynchronously inject after reconnection has already started.
+    Details: During the reconnection step, the only connector methods guaranteed to be available are: \`id\`, \`name\`, \`type\`, \`uid\`. All other methods are not guaranteed to be available until reconnection completes and connectors are fully restored. This error commonly occurs for connectors that asynchronously inject after reconnection has already started.
     Version: @wagmi/core@x.y.z]
   `)
 })
