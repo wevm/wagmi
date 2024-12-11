@@ -4,39 +4,6 @@ settings:
   autoInstallPeers: false
   excludeLinksFromLockfile: false
 
-catalogs:
-  default:
-    '@tanstack/query-core':
-      specifier: 5.49.1
-      version: 5.49.1
-    '@tanstack/react-query':
-      specifier: 5.49.2
-      version: 5.49.2
-    '@tanstack/vue-query':
-      specifier: 5.49.1
-      version: 5.49.1
-    '@testing-library/dom':
-      specifier: 10.4.0
-      version: 10.4.0
-    '@testing-library/react':
-      specifier: 16.0.1
-      version: 16.0.1
-    '@types/react':
-      specifier: 18.3.1
-      version: 18.3.1
-    '@types/react-dom':
-      specifier: 18.3.0
-      version: 18.3.0
-    react:
-      specifier: 18.3.1
-      version: 18.3.1
-    react-dom:
-      specifier: 18.3.1
-      version: 18.3.1
-    vue:
-      specifier: 3.4.27
-      version: 3.4.27
-
 importers:
 
   .:
@@ -103,7 +70,7 @@ importers:
     dependencies:
       abitype:
         specifier: ^1.0.4
-        version: 1.0.4(typescript@5.5.4)(zod@3.22.2)
+        version: 1.0.4(zod@3.22.2)
       bundle-require:
         specifier: ^4.0.2
         version: 4.0.2(esbuild@0.19.11)
@@ -131,9 +98,6 @@ importers:
       escalade:
         specifier: 3.2.0
         version: 3.2.0
-      execa:
-        specifier: ^8.0.1
-        version: 8.0.1
       fdir:
         specifier: ^6.1.1
         version: 6.1.1(picomatch@3.0.1)
@@ -152,12 +116,9 @@ importers:
       prettier:
         specifier: ^3.0.3
         version: 3.0.3
-      tinyexec:
-        specifier: ^0.3.1
-        version: 0.3.1
       viem:
         specifier: 2.x
-        version: 2.10.8(bufferutil@4.0.8)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.22.2)
+        version: 2.10.8(zod@3.22.2)
       zod:
         specifier: ^3.22.2
         version: 3.22.2
@@ -173,7 +134,7 @@ importers:
         version: 1.1.0
       msw:
         specifier: ^2.4.9
-        version: 2.4.9(typescript@5.5.4)
+        version: 2.4.9
 
   packages/cli/src/plugins/__fixtures__/hardhat:
     devDependencies:
@@ -7445,9 +7406,6 @@ packages:
   tinyexec@0.3.0:
     resolution: {integrity: sha512-tVGE0mVJPGb0chKhqmsoosjsS+qUnJVGJpZgsHYQcGoPlG3B51R3PouqTgEGH2Dc9jjFyOqOpix6ZHNMXp1FZg==}
 
-  tinyexec@0.3.1:
-    resolution: {integrity: sha512-WiCJLEECkO18gwqIp6+hJg0//p23HXp4S+gGtAKu3mI2F2/sXC4FvHvXvB0zJVVaTPhx1/tOwdbRsa1sOBIKqQ==}
-
   tinyglobby@0.2.6:
     resolution: {integrity: sha512-NbBoFBpqfcgd1tCiO8Lkfdk+xrA7mlLR9zgvZcZWQQwU63XAfUePyd6wZBaU93Hqw347lHnwFzttAkemHzzz4g==}
     engines: {node: '>=12.0.0'}
@@ -12422,11 +12380,6 @@ snapshots:
 
   abbrev@2.0.0: {}
 
-  abitype@1.0.0(typescript@5.5.4)(zod@3.22.2):
-    optionalDependencies:
-      typescript: 5.5.4
-      zod: 3.22.2
-
   abitype@1.0.0(typescript@5.5.4)(zod@3.22.4):
     optionalDependencies:
       typescript: 5.5.4
@@ -12437,14 +12390,17 @@ snapshots:
       typescript: 5.6.1-rc
       zod: 3.22.4
 
+  abitype@1.0.0(zod@3.22.2):
+    optionalDependencies:
+      zod: 3.22.2
+
   abitype@1.0.2(typescript@5.6.1-rc)(zod@3.22.4):
     optionalDependencies:
       typescript: 5.6.1-rc
       zod: 3.22.4
 
-  abitype@1.0.4(typescript@5.5.4)(zod@3.22.2):
+  abitype@1.0.4(zod@3.22.2):
     optionalDependencies:
-      typescript: 5.5.4
       zod: 3.22.2
 
   abitype@1.0.5(typescript@5.5.4)(zod@3.22.4):
@@ -14393,6 +14349,10 @@ snapshots:
     dependencies:
       ws: 8.13.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
 
+  isows@1.0.4(ws@8.13.0):
+    dependencies:
+      ws: 8.13.0
+
   isows@1.0.4(ws@8.17.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)):
     dependencies:
       ws: 8.17.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)
@@ -15170,6 +15130,26 @@ snapshots:
   ms@2.1.2: {}
 
   ms@2.1.3: {}
+
+  msw@2.4.9:
+    dependencies:
+      '@bundled-es-modules/cookie': 2.0.0
+      '@bundled-es-modules/statuses': 1.0.1
+      '@bundled-es-modules/tough-cookie': 0.1.6
+      '@inquirer/confirm': 3.1.6
+      '@mswjs/interceptors': 0.35.9
+      '@open-draft/until': 2.1.0
+      '@types/cookie': 0.6.0
+      '@types/statuses': 2.0.4
+      chalk: 4.1.2
+      graphql: 16.8.1
+      headers-polyfill: 4.0.2
+      is-node-process: 1.2.0
+      outvariant: 1.4.2
+      path-to-regexp: 6.3.0
+      strict-event-emitter: 0.5.1
+      type-fest: 4.18.2
+      yargs: 17.7.2
 
   msw@2.4.9(typescript@5.5.4):
     dependencies:
@@ -17007,8 +16987,6 @@ snapshots:
 
   tinyexec@0.3.0: {}
 
-  tinyexec@0.3.1: {}
-
   tinyglobby@0.2.6:
     dependencies:
       fdir: 6.3.0(picomatch@4.0.2)
@@ -17416,23 +17394,6 @@ snapshots:
       unist-util-stringify-position: 4.0.0
       vfile-message: 4.0.2
 
-  viem@2.10.8(bufferutil@4.0.8)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.22.2):
-    dependencies:
-      '@adraffy/ens-normalize': 1.10.0
-      '@noble/curves': 1.2.0
-      '@noble/hashes': 1.3.2
-      '@scure/bip32': 1.3.2
-      '@scure/bip39': 1.2.1
-      abitype: 1.0.0(typescript@5.5.4)(zod@3.22.2)
-      isows: 1.0.4(ws@8.13.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
-      ws: 8.13.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
-    optionalDependencies:
-      typescript: 5.5.4
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-      - zod
-
   viem@2.10.8(bufferutil@4.0.8)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.22.4):
     dependencies:
       '@adraffy/ens-normalize': 1.10.0
@@ -17462,6 +17423,21 @@ snapshots:
       ws: 8.13.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
     optionalDependencies:
       typescript: 5.6.1-rc
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+      - zod
+
+  viem@2.10.8(zod@3.22.2):
+    dependencies:
+      '@adraffy/ens-normalize': 1.10.0
+      '@noble/curves': 1.2.0
+      '@noble/hashes': 1.3.2
+      '@scure/bip32': 1.3.2
+      '@scure/bip39': 1.2.1
+      abitype: 1.0.0(zod@3.22.2)
+      isows: 1.0.4(ws@8.13.0)
+      ws: 8.13.0
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -17997,6 +17973,8 @@ snapshots:
     optionalDependencies:
       bufferutil: 4.0.8
       utf-8-validate: 5.0.10
+
+  ws@8.13.0: {}
 
   ws@8.13.0(bufferutil@4.0.8)(utf-8-validate@5.0.10):
     optionalDependencies:

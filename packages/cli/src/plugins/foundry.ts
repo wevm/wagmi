@@ -1,4 +1,4 @@
-import { spawnSync } from 'node:child_process'
+import { execSync, spawn, spawnSync } from 'node:child_process'
 import { existsSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
 import dedent from 'dedent'
@@ -7,7 +7,6 @@ import { basename, extname, join, resolve } from 'pathe'
 import pc from 'picocolors'
 import { z } from 'zod'
 
-import { exec } from 'tinyexec'
 import type { ContractConfig, Plugin } from '../config.js'
 import * as logger from '../logger.js'
 import type { Compute, RequiredBy } from '../types.js'
@@ -179,8 +178,8 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
 
   return {
     async contracts() {
-      if (clean) await exec(forgeExecutable, ['clean', '--root', project])
-      if (build) await exec(forgeExecutable, ['build', '--root', project])
+      if (clean) execSync(`${forgeExecutable} clean --root ${project}`)
+      if (build) execSync(`${forgeExecutable} build --root ${project}`)
       if (!existsSync(artifactsDirectory))
         throw new Error('Artifacts not found.')
 
@@ -202,7 +201,7 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
       // Ensure forge is installed
       if (clean || build || rebuild)
         try {
-          await exec(forgeExecutable, ['--version'])
+          execSync(`${forgeExecutable} --version`)
         } catch (_error) {
           throw new Error(dedent`
             forge must be installed to use Foundry plugin.
@@ -218,7 +217,7 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
                 project,
               )}`,
             )
-            const subprocess = execa(forgeExecutable, [
+            const subprocess = spawn(forgeExecutable, [
               'build',
               '--watch',
               '--root',
@@ -231,7 +230,7 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
             process.once('SIGINT', shutdown)
             process.once('SIGTERM', shutdown)
             function shutdown() {
-              subprocess?.cancel()
+              subprocess?.kill()
             }
           }
         : undefined,
