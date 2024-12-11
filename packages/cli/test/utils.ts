@@ -1,8 +1,8 @@
 import { cp, mkdir, symlink, writeFile } from 'node:fs/promises'
-import { execa } from 'execa'
 import fixtures from 'fixturez'
 import { http, HttpResponse } from 'msw'
 import * as path from 'pathe'
+import { exec } from 'tinyexec'
 import { vi } from 'vitest'
 
 const f = fixtures(__dirname)
@@ -144,7 +144,7 @@ export function watchConsole() {
 
 export async function typecheck(project: string) {
   try {
-    const res = await execa('tsc', [
+    const res = await exec('tsc', [
       '--noEmit',
       '--target',
       'es2021',

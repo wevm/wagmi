@@ -1,12 +1,13 @@
+import { spawnSync } from 'node:child_process'
 import { existsSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
 import dedent from 'dedent'
-import { execa, execaCommandSync } from 'execa'
 import { fdir } from 'fdir'
 import { basename, extname, join, resolve } from 'pathe'
 import pc from 'picocolors'
 import { z } from 'zod'
 
+import { exec } from 'tinyexec'
 import type { ContractConfig, Plugin } from '../config.js'
 import * as logger from '../logger.js'
 import type { Compute, RequiredBy } from '../types.js'
@@ -153,12 +154,19 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
     src: 'src',
   }
   try {
-    foundryConfig = FoundryConfigSchema.parse(
-      JSON.parse(
-        execaCommandSync(`${forgeExecutable} config --json --root ${project}`)
-          .stdout,
-      ),
+    const result = spawnSync(
+      forgeExecutable,
+      ['config', '--json', '--root', project],
+      {
+        encoding: 'utf-8',
+        shell: true,
+      },
     )
+    if (result.error) throw result.error
+    if (result.status !== 0)
+      throw new Error(`Failed with code ${result.status}`)
+    if (result.signal) throw new Error('Process terminated by signal')
+    foundryConfig = FoundryConfigSchema.parse(JSON.parse(result.stdout))
   } catch {
   } finally {
     foundryConfig = {
@@ -171,8 +179,8 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
 
   return {
     async contracts() {
-      if (clean) await execa(forgeExecutable, ['clean', '--root', project])
-      if (build) await execa(forgeExecutable, ['build', '--root', project])
+      if (clean) await exec(forgeExecutable, ['clean', '--root', project])
+      if (build) await exec(forgeExecutable, ['build', '--root', project])
       if (!existsSync(artifactsDirectory))
         throw new Error('Artifacts not found.')
 
@@ -194,7 +202,7 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
       // Ensure forge is installed
       if (clean || build || rebuild)
         try {
-          await execa(forgeExecutable, ['--version'])
+          await exec(forgeExecutable, ['--version'])
         } catch (_error) {
           throw new Error(dedent`
             forge must be installed to use Foundry plugin.

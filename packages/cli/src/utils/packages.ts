@@ -1,6 +1,6 @@
 import { promises as fs } from 'node:fs'
 import { resolve } from 'node:path'
-import { execa } from 'execa'
+import { exec } from 'tinyexec'
 
 export async function getIsPackageInstalled(parameters: {
   packageName: string
@@ -20,7 +20,9 @@ export async function getIsPackageInstalled(parameters: {
       }
     })()
 
-    const { stdout } = await execa(packageManager, command, { cwd })
+    const { stdout } = await exec(packageManager, command, {
+      nodeOptions: { cwd },
+    })
 
     // For Bun, we need to check if the package name is in the output
     if (packageManager === 'bun') return stdout.includes(packageName)

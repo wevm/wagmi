@@ -47,8 +47,8 @@ test('validates without project', async () => {
   await expect(foundry().validate?.()).resolves.toBeUndefined()
 })
 
-test('contracts', () => {
-  expect(
+test('contracts', async () => {
+  await expect(
     foundry({
       project: resolve(__dirname, '__fixtures__/foundry/'),
       exclude: ['Foo.sol/**'],
@@ -103,7 +103,7 @@ test('contracts without project', async () => {
   const spy = vi.spyOn(process, 'cwd')
   spy.mockImplementation(() => dir)
 
-  expect(
+  await expect(
     foundry({
       exclude: ['Foo.sol/**'],
     }).contracts?.(),
