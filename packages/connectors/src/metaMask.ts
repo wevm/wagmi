@@ -260,11 +260,15 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           // Workaround cast since MetaMask SDK does not support `'exactOptionalPropertyTypes'`
           ...(parameters as RemoveUndefined<typeof parameters>),
           readonlyRPCMap,
-          dappMetadata:
-            parameters.dappMetadata ??
-            (typeof window !== 'undefined'
-              ? { url: window.location.origin }
-              : { name: 'wagmi', url: 'https://wagmi.sh' }),
+          dappMetadata: {
+            ...parameters.dappMetadata,
+            name: parameters.dappMetadata?.name ?? 'wagmi',
+            url:
+              parameters.dappMetadata?.url ??
+              (typeof window !== 'undefined'
+                ? window.location.origin
+                : 'https://wagmi.sh'),
+          },
           useDeeplink: parameters.useDeeplink ?? true,
         })
         const result = await sdk.init()
