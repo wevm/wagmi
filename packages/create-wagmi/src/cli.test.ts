@@ -1,8 +1,10 @@
+import {
+  type ExecSyncOptionsWithStringEncoding,
+  execSync,
+} from 'node:child_process'
 import { mkdirSync, readdirSync, writeFileSync } from 'node:fs'
 import { rm } from 'node:fs/promises'
 import { join } from 'node:path'
-import type { ExecaSyncReturnValue, SyncOptions } from 'execa'
-import { execaCommandSync } from 'execa'
 import pc from 'picocolors'
 import { afterEach, beforeAll, expect, test } from 'vitest'
 
@@ -13,8 +15,11 @@ const cliPath = join(__dirname, '../dist/esm/cli.js')
 const projectName = 'test-app'
 const genPath = join(__dirname, projectName)
 
-function run(args: string[], options: SyncOptions = {}): ExecaSyncReturnValue {
-  return execaCommandSync(`node ${cliPath} ${args.join(' ')}`, options)
+function run(
+  args: string[],
+  options: ExecSyncOptionsWithStringEncoding = { encoding: 'utf8' },
+): string {
+  return execSync(`node ${cliPath} ${args.join(' ')}`, options)
 }
 
 function createNonEmptyDir() {
@@ -24,7 +29,7 @@ function createNonEmptyDir() {
 }
 
 beforeAll(async () => {
-  execaCommandSync('pnpm --filter create-wagmi build')
+  execSync('pnpm --filter create-wagmi build')
   await rm(genPath, { recursive: true, force: true })
 })
 afterEach(async () => {
@@ -32,28 +37,28 @@ afterEach(async () => {
 })
 
 test('prompts for the project name if none supplied', () => {
-  const { stdout } = run([])
+  const stdout = run([])
   expect(stdout).toContain('Project name:')
 })
 
 test('prompts for the framework if none supplied when target dir is current directory', () => {
   mkdirSync(genPath)
-  const { stdout } = run(['.'], { cwd: genPath })
+  const stdout = run(['.'], { cwd: genPath, encoding: 'utf8' })
   expect(stdout).toContain('Select a framework:')
 })
 
 test('prompts for the framework if none supplied', () => {
-  const { stdout } = run([projectName])
+  const stdout = run([projectName])
   expect(stdout).toContain('Select a framework:')
 })
 
 test('prompts for the framework on not supplying a value for --template', () => {
-  const { stdout } = run([projectName, '--template'])
+  const stdout = run([projectName, '--template'])
   expect(stdout).toContain('Select a framework:')
 })
 
 test('prompts for the framework on supplying an invalid template', () => {
-  const { stdout } = run([projectName, '--template', 'unknown'])
+  const stdout = run([projectName, '--template', 'unknown'])
   expect(stdout).toContain(
     `"unknown" isn't a valid template. Please choose from below:`,
   )
@@ -61,13 +66,13 @@ test('prompts for the framework on supplying an invalid template', () => {
 
 test('asks to overwrite non-empty target directory', () => {
   createNonEmptyDir()
-  const { stdout } = run([projectName], { cwd: __dirname })
+  const stdout = run([projectName], { cwd: __dirname, encoding: 'utf8' })
   expect(stdout).toContain(`Target directory "${projectName}" is not empty.`)
 })
 
 test('asks to overwrite non-empty current directory', () => {
   createNonEmptyDir()
-  const { stdout } = run(['.'], { cwd: genPath })
+  const stdout = run(['.'], { cwd: genPath, encoding: 'utf8' })
   expect(stdout).toContain('Current directory is not empty.')
 })
 
@@ -84,8 +89,9 @@ const templateFiles = readdirSync(
 
 test('successfully scaffolds a project based on vite-react starter template', () => {
   mkdirSync(genPath, { recursive: true })
-  const { stdout } = run([projectName, '--template', 'vite-react'], {
+  const stdout = run([projectName, '--template', 'vite-react'], {
     cwd: __dirname,
+    encoding: 'utf8',
   })
   const generatedFiles = readdirSync(genPath).sort()
 
@@ -95,8 +101,9 @@ test('successfully scaffolds a project based on vite-react starter template', ()
 
 test('works with the -t alias', () => {
   mkdirSync(genPath, { recursive: true })
-  const { stdout } = run([projectName, '-t', 'vite-react'], {
+  const stdout = run([projectName, '-t', 'vite-react'], {
     cwd: __dirname,
+    encoding: 'utf8',
   })
   const generatedFiles = readdirSync(genPath).sort()
 
@@ -106,15 +113,16 @@ test('works with the -t alias', () => {
 
 test('uses different package manager', () => {
   mkdirSync(genPath, { recursive: true })
-  const { stdout } = run([projectName, '--bun', '-t', 'vite-react'], {
+  const stdout = run([projectName, '--bun', '-t', 'vite-react'], {
     cwd: __dirname,
+    encoding: 'utf8',
   })
 
   expect(stdout).toContain('bun install')
 })
 
 test('shows help', () => {
-  const { stdout } = run(['--help'])
+  const stdout = run(['--help'])
   expect(
     stdout
       .replace(version, 'x.y.z')
@@ -132,11 +140,12 @@ test('shows help', () => {
       --pnpm                 Use pnpm as your package manager 
       --yarn                 Use yarn as your package manager 
       -h, --help             Display this message 
-      -v, --version          Display version number "
+      -v, --version          Display version number 
+    "
   `)
 })
 
 test('shows version', () => {
-  const { stdout } = run(['--version'])
+  const stdout = run(['--version'])
   expect(stdout).toContain(`create-wagmi/${version} `)
 })

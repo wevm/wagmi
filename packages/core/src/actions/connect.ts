@@ -78,7 +78,8 @@ export async function connect<
     config.setState((x) => ({ ...x, status: 'connecting' }))
     connector.emitter.emit('message', { type: 'connecting' })
 
-    const data = await connector.connect({ chainId: parameters.chainId })
+    const { connector: _, ...rest } = parameters
+    const data = await connector.connect(rest)
     const accounts = data.accounts as readonly [Address, ...Address[]]
 
     connector.emitter.off('connect', config._internal.events.connect)
