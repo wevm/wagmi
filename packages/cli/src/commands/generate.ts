@@ -53,12 +53,12 @@ export async function generate(options: Generate = {}) {
   type Watcher = FSWatcher & { config?: Watch }
   const watchers: Watcher[] = []
   const watchWriteDelay = 100
-  const watchOptions: ChokidarOptions = {
+  const watchOptions = {
     atomic: true,
     // awaitWriteFinish: true,
     ignoreInitial: true,
     persistent: true,
-  }
+  } satisfies ChokidarOptions
 
   const outNames = new Set<string>()
   const isArrayConfig = Array.isArray(resolvedConfigs)

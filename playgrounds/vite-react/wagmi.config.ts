@@ -7,13 +7,11 @@ export default defineConfig({
   plugins: [
     foundry({
       namePrefix: 'foundry',
-      project:
-        '/Users/tmm/Developer/wagmi/packages/cli/src/plugins/__fixtures__/foundry',
+      project: '../../packages/cli/src/plugins/__fixtures__/foundry',
     }),
     hardhat({
       namePrefix: 'hardhat',
-      project:
-        '/Users/tmm/Developer/wagmi/packages/cli/src/plugins/__fixtures__/hardhat',
+      project: '../../packages/cli/src/plugins/__fixtures__/hardhat',
     }),
   ],
 })
