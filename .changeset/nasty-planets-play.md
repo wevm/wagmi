@@ -2,4 +2,4 @@
 "@wagmi/connectors": patch
 ---
 
-Fixed metamask internal metadata handling.
+Fixed MetaMask internal metadata handling.
