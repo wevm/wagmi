@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 5.6.1
+
+### Patch Changes
+
+- [#4458](https://github.com/wevm/wagmi/pull/4458) [`987404f590c1d29ebb3cb68928f5e54aa032793d`](https://github.com/wevm/wagmi/commit/987404f590c1d29ebb3cb68928f5e54aa032793d) Thanks [@EdouardBougon](https://github.com/EdouardBougon)! - Fixed MetaMask internal metadata handling.
+
 ## 5.6.0
 
 ### Minor Changes
