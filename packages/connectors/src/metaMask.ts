@@ -262,12 +262,15 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           readonlyRPCMap,
           dappMetadata: {
             ...parameters.dappMetadata,
-            name: parameters.dappMetadata?.name ?? 'wagmi',
-            url:
-              parameters.dappMetadata?.url ??
-              (typeof window !== 'undefined'
+            // Test if name and url are set AND not empty
+            name: parameters.dappMetadata?.name
+              ? parameters.dappMetadata?.name
+              : 'wagmi',
+            url: parameters.dappMetadata?.url
+              ? parameters.dappMetadata?.url
+              : typeof window !== 'undefined'
                 ? window.location.origin
-                : 'https://wagmi.sh'),
+                : 'https://wagmi.sh',
           },
           useDeeplink: parameters.useDeeplink ?? true,
         })
