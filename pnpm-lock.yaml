@@ -243,9 +243,6 @@ importers:
       '@types/prompts':
         specifier: ^2.4.9
         version: 2.4.9
-      execa:
-        specifier: ^8.0.1
-        version: 8.0.1
 
   packages/react:
     dependencies:
