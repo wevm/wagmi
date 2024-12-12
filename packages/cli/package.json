@@ -73,7 +73,6 @@
     "dotenv-expand": "^10.0.0",
     "esbuild": "^0.19.0",
     "escalade": "3.2.0",
-    "execa": "^8.0.1",
     "fdir": "^6.1.1",
     "nanospinner": "1.2.2",
     "pathe": "^1.1.2",

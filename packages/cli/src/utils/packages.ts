@@ -1,6 +1,6 @@
+import { execSync } from 'node:child_process'
 import { promises as fs } from 'node:fs'
 import { resolve } from 'node:path'
-import { execa } from 'execa'
 
 export async function getIsPackageInstalled(parameters: {
   packageName: string
@@ -20,12 +20,16 @@ export async function getIsPackageInstalled(parameters: {
       }
     })()
 
-    const { stdout } = await execa(packageManager, command, { cwd })
+    const result = execSync(`${packageManager} ${command.join(' ')}`, {
+      cwd,
+      encoding: 'utf-8',
+      stdio: 'pipe',
+    })
 
     // For Bun, we need to check if the package name is in the output
-    if (packageManager === 'bun') return stdout.includes(packageName)
+    if (packageManager === 'bun') return result.includes(packageName)
 
-    return stdout !== ''
+    return result !== ''
   } catch (_error) {
     return false
   }
@@ -69,21 +73,21 @@ async function detect(
 
 const cache = new Map()
 
-function hasGlobalInstallation(pm: PackageManager): Promise<boolean> {
+function hasGlobalInstallation(pm: PackageManager): boolean {
   const key = `has_global_${pm}`
-  if (cache.has(key)) {
-    return Promise.resolve(cache.get(key))
-  }
+  if (cache.has(key)) return cache.get(key)
 
-  return execa(pm, ['--version'])
-    .then((res) => {
-      return /^\d+.\d+.\d+$/.test(res.stdout)
+  try {
+    const result = execSync(`${pm} --version`, {
+      encoding: 'utf-8',
+      stdio: 'pipe',
     })
-    .then((value) => {
-      cache.set(key, value)
-      return value
-    })
-    .catch(() => false)
+    const isGlobal = /^\d+.\d+.\d+$/.test(result)
+    cache.set(key, isGlobal)
+    return isGlobal
+  } catch {
+    return false
+  }
 }
 
 function getTypeofLockFile(cwd = '.'): Promise<PackageManager | null> {

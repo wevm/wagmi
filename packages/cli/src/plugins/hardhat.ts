@@ -1,6 +1,6 @@
+import { execSync, spawn } from 'node:child_process'
 import { existsSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
-import { execa } from 'execa'
 import { fdir } from 'fdir'
 import { basename, extname, join, resolve } from 'pathe'
 import pc from 'picocolors'
@@ -116,7 +116,11 @@ export function hardhat(config: HardhatConfig): HardhatResult {
         const [command, ...options] = (
           typeof clean === 'boolean' ? `${packageManager} hardhat clean` : clean
         ).split(' ')
-        await execa(command!, options, { cwd: project })
+        execSync(`${command!} ${options.join(' ')}`, {
+          cwd: project,
+          encoding: 'utf-8',
+          stdio: 'pipe',
+        })
       }
       if (build) {
         const packageManager = await getPackageManager(true)
@@ -125,7 +129,11 @@ export function hardhat(config: HardhatConfig): HardhatResult {
             ? `${packageManager} hardhat compile`
             : build
         ).split(' ')
-        await execa(command!, options, { cwd: project })
+        execSync(`${command!} ${options.join(' ')}`, {
+          cwd: project,
+          encoding: 'utf-8',
+          stdio: 'pipe',
+        })
       }
       if (!existsSync(artifactsDirectory))
         throw new Error('Artifacts not found.')
@@ -180,7 +188,7 @@ export function hardhat(config: HardhatConfig): HardhatResult {
               logger.log(
                 `${pc.blue('Hardhat')} Detected ${event} at ${basename(path)}`,
               )
-              const subprocess = execa(command!, options, {
+              const subprocess = spawn(command!, options, {
                 cwd: project,
               })
               subprocess.stdout?.on('data', (data) => {

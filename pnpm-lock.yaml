@@ -98,9 +98,6 @@ importers:
       escalade:
         specifier: 3.2.0
         version: 3.2.0
-      execa:
-        specifier: ^8.0.1
-        version: 8.0.1
       fdir:
         specifier: ^6.1.1
         version: 6.1.1(picomatch@3.0.1)
@@ -213,9 +210,6 @@ importers:
       '@types/prompts':
         specifier: ^2.4.9
         version: 2.4.9
-      execa:
-        specifier: ^8.0.1
-        version: 8.0.1
 
   packages/react:
     dependencies:
@@ -492,6 +486,9 @@ importers:
       '@vitejs/plugin-react':
         specifier: ^4.2.1
         version: 4.2.1(vite@5.2.11(@types/node@20.12.10)(terser@5.31.0))
+      '@wagmi/cli':
+        specifier: workspace:*
+        version: link:../../packages/cli
       buffer:
         specifier: ^6.0.3
         version: 6.0.3

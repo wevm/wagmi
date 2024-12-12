@@ -1,5 +1,5 @@
+import { spawnSync } from 'node:child_process'
 import { cp, mkdir, symlink, writeFile } from 'node:fs/promises'
-import { execa } from 'execa'
 import fixtures from 'fixturez'
 import { http, HttpResponse } from 'msw'
 import * as path from 'pathe'
@@ -144,16 +144,19 @@ export function watchConsole() {
 
 export async function typecheck(project: string) {
   try {
-    const res = await execa('tsc', [
-      '--noEmit',
-      '--target',
-      'es2021',
-      '--pretty',
-      'false',
-      '-p',
-      project,
-    ])
-    return res.stdout
+    const result = spawnSync(
+      'tsc',
+      ['--noEmit', '--target', 'es2021', '--pretty', 'false', '-p', project],
+      {
+        encoding: 'utf-8',
+        stdio: 'pipe',
+      },
+    )
+    if (result.error) throw result.error
+    if (result.status !== 0)
+      throw new Error(`Failed with code ${result.status}`)
+    if (result.signal) throw new Error('Process terminated by signal')
+    return result.stdout
   } catch (error) {
     throw new Error(
       (error as Error).message.replaceAll(
