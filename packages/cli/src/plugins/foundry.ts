@@ -178,8 +178,16 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
 
   return {
     async contracts() {
-      if (clean) execSync(`${forgeExecutable} clean --root ${project}`)
-      if (build) execSync(`${forgeExecutable} build --root ${project}`)
+      if (clean)
+        execSync(`${forgeExecutable} clean --root ${project}`, {
+          encoding: 'utf-8',
+          stdio: 'pipe',
+        })
+      if (build)
+        execSync(`${forgeExecutable} build --root ${project}`, {
+          encoding: 'utf-8',
+          stdio: 'pipe',
+        })
       if (!existsSync(artifactsDirectory))
         throw new Error('Artifacts not found.')
 
@@ -201,7 +209,10 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
       // Ensure forge is installed
       if (clean || build || rebuild)
         try {
-          execSync(`${forgeExecutable} --version`)
+          execSync(`${forgeExecutable} --version`, {
+            encoding: 'utf-8',
+            stdio: 'pipe',
+          })
         } catch (_error) {
           throw new Error(dedent`
             forge must be installed to use Foundry plugin.

@@ -116,7 +116,11 @@ export function hardhat(config: HardhatConfig): HardhatResult {
         const [command, ...options] = (
           typeof clean === 'boolean' ? `${packageManager} hardhat clean` : clean
         ).split(' ')
-        execSync(`${command!} ${options.join(' ')}`, { cwd: project })
+        execSync(`${command!} ${options.join(' ')}`, {
+          cwd: project,
+          encoding: 'utf-8',
+          stdio: 'pipe',
+        })
       }
       if (build) {
         const packageManager = await getPackageManager(true)
@@ -125,7 +129,11 @@ export function hardhat(config: HardhatConfig): HardhatResult {
             ? `${packageManager} hardhat compile`
             : build
         ).split(' ')
-        execSync(`${command!} ${options.join(' ')}`, { cwd: project })
+        execSync(`${command!} ${options.join(' ')}`, {
+          cwd: project,
+          encoding: 'utf-8',
+          stdio: 'pipe',
+        })
       }
       if (!existsSync(artifactsDirectory))
         throw new Error('Artifacts not found.')
