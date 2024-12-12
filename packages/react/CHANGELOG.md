@@ -1,5 +1,17 @@
 # wagmi
 
+## 2.14.0
+
+### Minor Changes
+
+- [#4453](https://github.com/wevm/wagmi/pull/4453) [`070e48480194c8d7f45bda1d7dd1346e6f5d7227`](https://github.com/wevm/wagmi/commit/070e48480194c8d7f45bda1d7dd1346e6f5d7227) Thanks [@tmm](https://github.com/tmm)! - Added support to `useConnect` for custom `connector.connect` parameters.
+
+### Patch Changes
+
+- Updated dependencies [[`afea6b67822a7a2b96901ec851441d27ee0f7a52`](https://github.com/wevm/wagmi/commit/afea6b67822a7a2b96901ec851441d27ee0f7a52), [`070e48480194c8d7f45bda1d7dd1346e6f5d7227`](https://github.com/wevm/wagmi/commit/070e48480194c8d7f45bda1d7dd1346e6f5d7227), [`8b0726c1106fce88b782e676498eabf0718b2619`](https://github.com/wevm/wagmi/commit/8b0726c1106fce88b782e676498eabf0718b2619)]:
+  - @wagmi/connectors@5.6.0
+  - @wagmi/core@2.16.0
+
 ## 2.13.5
 
 ### Patch Changes
