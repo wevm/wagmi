@@ -14,11 +14,31 @@ import {
 import type { ChainIdParameter } from '../types/properties.js'
 import type { Compute } from '../types/utils.js'
 
-export type ConnectParameters<config extends Config = Config> = Compute<
+export type ConnectParameters<
+  config extends Config = Config,
+  connector extends Connector | CreateConnectorFn =
+    | Connector
+    | CreateConnectorFn,
+  ///
+  parameters extends unknown | undefined =
+    | (connector extends CreateConnectorFn
+        ? Omit<
+            NonNullable<Parameters<ReturnType<connector>['connect']>[0]>,
+            'isReconnecting'
+          >
+        : never)
+    | (connector extends Connector
+        ? Omit<
+            NonNullable<Parameters<connector['connect']>[0]>,
+            'isReconnecting'
+          >
+        : never),
+> = Compute<
   ChainIdParameter<config> & {
-    connector: Connector | CreateConnectorFn
+    connector: connector | CreateConnectorFn
   }
->
+> &
+  parameters
 
 export type ConnectReturnType<config extends Config = Config> = {
   accounts: readonly [Address, ...Address[]]
@@ -37,9 +57,12 @@ export type ConnectErrorType =
   | ErrorType
 
 /** https://wagmi.sh/core/api/actions/connect */
-export async function connect<config extends Config>(
+export async function connect<
+  config extends Config,
+  connector extends Connector | CreateConnectorFn,
+>(
   config: config,
-  parameters: ConnectParameters<config>,
+  parameters: ConnectParameters<config, connector>,
 ): Promise<ConnectReturnType<config>> {
   // "Register" connector if not already created
   let connector: Connector
@@ -55,7 +78,8 @@ export async function connect<config extends Config>(
     config.setState((x) => ({ ...x, status: 'connecting' }))
     connector.emitter.emit('message', { type: 'connecting' })
 
-    const data = await connector.connect({ chainId: parameters.chainId })
+    const { connector: _, ...rest } = parameters
+    const data = await connector.connect(rest)
     const accounts = data.accounts as readonly [Address, ...Address[]]
 
     connector.emitter.off('connect', config._internal.events.connect)

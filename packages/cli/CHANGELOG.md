@@ -1,5 +1,23 @@
 # @wagmi/cli
 
+## 2.1.21
+
+### Patch Changes
+
+- [#4457](https://github.com/wevm/wagmi/pull/4457) [`21ec74da7f93fc13e253d7b35ddeddc23422a6c1`](https://github.com/wevm/wagmi/commit/21ec74da7f93fc13e253d7b35ddeddc23422a6c1) Thanks [@tmm](https://github.com/tmm)! - Removed internal dependency.
+
+## 2.1.20
+
+### Patch Changes
+
+- [#4450](https://github.com/wevm/wagmi/pull/4450) [`7b9a6bb35881b657a00bdd7ccd7edea32660f5bf`](https://github.com/wevm/wagmi/commit/7b9a6bb35881b657a00bdd7ccd7edea32660f5bf) Thanks [@tmm](https://github.com/tmm)! - Removed internal usage of `fs-extra`.
+
+## 2.1.19
+
+### Patch Changes
+
+- [#4449](https://github.com/wevm/wagmi/pull/4449) [`3fa5c238baa13d948e89974b0bb8530f8fa264fd`](https://github.com/wevm/wagmi/commit/3fa5c238baa13d948e89974b0bb8530f8fa264fd) Thanks [@tmm](https://github.com/tmm)! - Removed `ora` for `nanospinner`.
+
 ## 2.1.18
 
 ### Patch Changes

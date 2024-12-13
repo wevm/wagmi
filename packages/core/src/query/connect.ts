@@ -1,4 +1,4 @@
-import type { MutationOptions } from '@tanstack/query-core'
+import type { MutateOptions, MutationOptions } from '@tanstack/query-core'
 
 import {
   type ConnectErrorType,
@@ -6,9 +6,10 @@ import {
   type ConnectReturnType,
   connect,
 } from '../actions/connect.js'
-import type { Config } from '../createConfig.js'
+import type { Config, Connector } from '../createConfig.js'
 
-import type { Mutate, MutateAsync } from './types.js'
+import type { CreateConnectorFn } from '../connectors/createConnector.js'
+import type { Compute } from '../types/utils.js'
 
 export function connectMutationOptions<config extends Config>(config: config) {
   return {
@@ -19,27 +20,51 @@ export function connectMutationOptions<config extends Config>(config: config) {
   } as const satisfies MutationOptions<
     ConnectData<config>,
     ConnectErrorType,
-    ConnectVariables<config>
+    ConnectVariables<config, Connector | CreateConnectorFn>
   >
 }
 
 export type ConnectData<config extends Config> = ConnectReturnType<config>
 
-export type ConnectVariables<config extends Config> = ConnectParameters<config>
-
-export type ConnectMutate<config extends Config, context = unknown> = Mutate<
-  ConnectData<config>,
-  ConnectErrorType,
-  ConnectVariables<config>,
-  context
->
-
-export type ConnectMutateAsync<
+export type ConnectVariables<
   config extends Config,
-  context = unknown,
-> = MutateAsync<
-  ConnectData<config>,
-  ConnectErrorType,
-  ConnectVariables<config>,
-  context
->
+  connector extends Connector | CreateConnectorFn,
+> = ConnectParameters<config, connector>
+
+export type ConnectMutate<config extends Config, context = unknown> = <
+  connector extends
+    | config['connectors'][number]
+    | Connector
+    | CreateConnectorFn,
+>(
+  variables: ConnectVariables<config, connector>,
+  options?:
+    | Compute<
+        MutateOptions<
+          ConnectData<config>,
+          ConnectErrorType,
+          Compute<ConnectVariables<config, connector>>,
+          context
+        >
+      >
+    | undefined,
+) => void
+
+export type ConnectMutateAsync<config extends Config, context = unknown> = <
+  connector extends
+    | config['connectors'][number]
+    | Connector
+    | CreateConnectorFn,
+>(
+  variables: ConnectVariables<config, connector>,
+  options?:
+    | Compute<
+        MutateOptions<
+          ConnectData<config>,
+          ConnectErrorType,
+          Compute<ConnectVariables<config, connector>>,
+          context
+        >
+      >
+    | undefined,
+) => Promise<ConnectData<config>>

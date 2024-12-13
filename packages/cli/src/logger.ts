@@ -1,5 +1,5 @@
 import { format as utilFormat } from 'node:util'
-import ora from 'ora'
+import { createSpinner } from 'nanospinner'
 import pc from 'picocolors'
 
 function format(args: any[]) {
@@ -30,9 +30,8 @@ export function error(...args: any[]) {
   console.error(pc.red(format(args)))
 }
 
-export function spinner() {
-  return ora({
+export function spinner(text: string) {
+  return createSpinner(text, {
     color: 'yellow',
-    spinner: 'dots',
   })
 }

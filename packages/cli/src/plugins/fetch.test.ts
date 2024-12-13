@@ -1,5 +1,5 @@
+import { mkdir, rm, writeFile } from 'node:fs/promises'
 import { homedir } from 'node:os'
-import { default as fs } from 'fs-extra'
 import { setupServer } from 'msw/node'
 import { afterAll, afterEach, beforeAll, expect, test } from 'vitest'
 
@@ -72,7 +72,7 @@ test('aborts request', () => {
 
 test('reads from cache', async () => {
   const cacheDir = `${homedir}/.wagmi-cli/plugins/fetch/cache`
-  await fs.ensureDir(cacheDir)
+  await mkdir(cacheDir, { recursive: true })
 
   const contract = {
     name: 'WagmiMintExample',
@@ -80,18 +80,25 @@ test('reads from cache', async () => {
   } as const
   const cacheKey = JSON.stringify(contract)
   const cacheFilePath = `${cacheDir}/${cacheKey}.json`
-  await fs.writeJSON(cacheFilePath, {
-    abi: [
+  await writeFile(
+    cacheFilePath,
+    JSON.stringify(
       {
-        inputs: [],
-        name: 'mint',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
+        abi: [
+          {
+            inputs: [],
+            name: 'mint',
+            outputs: [],
+            stateMutability: 'nonpayable',
+            type: 'function',
+          },
+        ],
+        timestamp: Date.now() + 30_000,
       },
-    ],
-    timestamp: Date.now() + 30_000,
-  })
+      null,
+      2,
+    ),
+  )
 
   await expect(
     fetch({
@@ -117,12 +124,12 @@ test('reads from cache', async () => {
       ]
     `)
 
-  await fs.rm(cacheDir, { recursive: true })
+  await rm(cacheDir, { recursive: true })
 })
 
 test('fails and reads from cache', async () => {
   const cacheDir = `${homedir}/.wagmi-cli/plugins/fetch/cache`
-  await fs.ensureDir(cacheDir)
+  await mkdir(cacheDir, { recursive: true })
 
   const contract = {
     name: 'WagmiMintExample',
@@ -130,18 +137,25 @@ test('fails and reads from cache', async () => {
   } as const
   const cacheKey = JSON.stringify(contract)
   const cacheFilePath = `${cacheDir}/${cacheKey}.json`
-  await fs.writeJSON(cacheFilePath, {
-    abi: [
+  await writeFile(
+    cacheFilePath,
+    JSON.stringify(
       {
-        inputs: [],
-        name: 'mint',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
+        abi: [
+          {
+            inputs: [],
+            name: 'mint',
+            outputs: [],
+            stateMutability: 'nonpayable',
+            type: 'function',
+          },
+        ],
+        timestamp: Date.now() - 30_000,
       },
-    ],
-    timestamp: Date.now() - 30_000,
-  })
+      null,
+      2,
+    ),
+  )
 
   await expect(
     fetch({
@@ -168,5 +182,5 @@ test('fails and reads from cache', async () => {
       ]
     `)
 
-  await fs.rm(cacheDir, { recursive: true })
+  await rm(cacheDir, { recursive: true })
 })

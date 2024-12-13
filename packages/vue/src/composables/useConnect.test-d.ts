@@ -67,7 +67,7 @@ test('context', () => {
     | undefined
   >()
   expectTypeOf(error.value).toEqualTypeOf<ConnectErrorType | null>()
-  expectTypeOf(variables.value).toEqualTypeOf<
+  expectTypeOf(variables.value).toMatchTypeOf<
     | {
         chainId?: number | undefined
         connector: Connector | CreateConnectorFn
@@ -82,7 +82,8 @@ test('context', () => {
       onError(error, variables, context) {
         expectTypeOf(variables).toEqualTypeOf<{
           chainId?: number | undefined
-          connector: Connector | CreateConnectorFn
+          connector: typeof connector | CreateConnectorFn
+          foo?: string | undefined
         }>()
         expectTypeOf(error).toEqualTypeOf<ConnectErrorType>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
@@ -90,7 +91,8 @@ test('context', () => {
       onSuccess(data, variables, context) {
         expectTypeOf(variables).toEqualTypeOf<{
           chainId?: number | undefined
-          connector: Connector | CreateConnectorFn
+          connector: typeof connector | CreateConnectorFn
+          foo?: string | undefined
         }>()
         expectTypeOf(data).toEqualTypeOf<{
           accounts: readonly [Address, ...Address[]]
@@ -109,7 +111,8 @@ test('context', () => {
         expectTypeOf(error).toEqualTypeOf<ConnectErrorType | null>()
         expectTypeOf(variables).toEqualTypeOf<{
           chainId?: number | undefined
-          connector: Connector | CreateConnectorFn
+          connector: typeof connector | CreateConnectorFn
+          foo?: string | undefined
         }>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
       },

@@ -14,14 +14,20 @@ cli
   .option('-r, --root <path>', '[string] root path to resolve config from')
   .option('-w, --watch', '[boolean] watch for changes')
   .example((name) => `${name} generate`)
-  .action(async (options: Generate) => await generate(options))
+  .action(async (options: Generate) => {
+    await generate(options)
+    if (!options.watch) process.exit(0)
+  })
 
 cli
   .command('init', 'create configuration file')
   .option('-c, --config <path>', '[string] path to config file')
   .option('-r, --root <path>', '[string] root path to resolve config from')
   .example((name) => `${name} init`)
-  .action(async (options: Init) => await init(options))
+  .action(async (options: Init) => {
+    await init(options)
+    process.exit(0)
+  })
 
 cli.help()
 cli.version(version)
@@ -40,7 +46,6 @@ void (async () => {
       } else throw new Error(`Unknown command: ${cli.args.join(' ')}`)
     }
     await cli.runMatchedCommand()
-    process.exit(0)
   } catch (error) {
     logger.error(`\n${(error as Error).message}`)
     process.exit(1)
