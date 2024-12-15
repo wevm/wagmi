@@ -32,7 +32,7 @@ export async function disconnect(
 
   const connections = config.state.connections
 
-  if (connector) {
+  if (connector?.disconnect) {
     await connector.disconnect()
     connector.emitter.off('change', config._internal.events.change)
     connector.emitter.off('disconnect', config._internal.events.disconnect)
