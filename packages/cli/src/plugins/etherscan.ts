@@ -45,6 +45,8 @@ const apiUrls = {
   [100]: 'https://api.gnosisscan.io/api',
   // Blast
   [81_457]: 'https://api.blastscan.io/api',
+  // Sonic
+  [146]: 'https://api.sonicscan.org/api',
 }
 type ChainId = keyof typeof apiUrls
 
