@@ -29,6 +29,8 @@ const apiUrls = {
   // Heco Chain
   [128]: 'https://api.hecoinfo.com/api',
   [256]: 'https://api-testnet.hecoinfo.com/api',
+  // Sonic
+  [146]: 'https://api.sonicscan.org/api',
   // Fantom
   [250]: 'https://api.ftmscan.com/api',
   [4_002]: 'https://api-testnet.ftmscan.com/api',
@@ -45,8 +47,6 @@ const apiUrls = {
   [100]: 'https://api.gnosisscan.io/api',
   // Blast
   [81_457]: 'https://api.blastscan.io/api',
-  // Sonic
-  [146]: 'https://api.sonicscan.org/api',
 }
 type ChainId = keyof typeof apiUrls
 
@@ -59,15 +59,16 @@ export type EtherscanConfig<chainId extends number> = {
    * - [__Arbitrum__](https://arbiscan.io/myapikey)
    * - [__Avalanche__](https://snowscan.xyz/myapikey)
    * - [__BNB Smart Chain__](https://bscscan.com/myapikey)
+   * - [__Base__](https://basescan.org/myapikey)
+   * - [__Blast__](https://blastscan.io/myapikey)
    * - [__Celo__](https://celoscan.io/myapikey)
    * - [__Fantom__](https://ftmscan.com/myapikey)
-   * - [__Heco Chain__](https://hecoinfo.com/myapikey)
-   * - [__Optimism__](https://optimistic.etherscan.io/myapikey)
-   * - [__Base__](https://basescan.org/myapikey)
-   * - [__Polygon__](https://polygonscan.com/myapikey)
    * - [__Fraxtal__](https://fraxscan.com/myapikey)
    * - [__Gnosis__](https://gnosisscan.io/myapikey)
-   * - [__Blast__](https://blastscan.io/myapikey)
+   * - [__Heco Chain__](https://hecoinfo.com/myapikey)
+   * - [__Optimism__](https://optimistic.etherscan.io/myapikey)
+   * - [__Polygon__](https://polygonscan.com/myapikey)
+   * - [__Sonic__](https://sonicscan.org/myapikey)
    */
   apiKey: string
   /**
