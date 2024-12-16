@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 2.1.22
+
+### Patch Changes
+
+- [#4462](https://github.com/wevm/wagmi/pull/4462) [`0b2238d27cecbcd33aee64fb0e30ddc18b6ddf74`](https://github.com/wevm/wagmi/commit/0b2238d27cecbcd33aee64fb0e30ddc18b6ddf74) Thanks [@groninge01](https://github.com/groninge01)! - Added Sonic to Etherscan plugin.
+
 ## 2.1.21
 
 ### Patch Changes
