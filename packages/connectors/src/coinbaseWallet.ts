@@ -15,6 +15,7 @@ import type {
 } from 'cbw-sdk'
 import {
   type AddEthereumChainParameter,
+  type Address,
   type Hex,
   type ProviderRpcError,
   SwitchChainError,
@@ -80,6 +81,16 @@ function version4(parameters: Version4Parameters) {
     // for backwards compatibility
     close?(): void
   }
+  type Properties = {
+    connect(parameters?: {
+      chainId?: number | undefined
+      instantOnboarding?: boolean | undefined
+      isReconnecting?: boolean | undefined
+    }): Promise<{
+      accounts: readonly Address[]
+      chainId: number
+    }>
+  }
 
   let walletProvider: Provider | undefined
 
@@ -87,17 +98,21 @@ function version4(parameters: Version4Parameters) {
   let chainChanged: Connector['onChainChanged'] | undefined
   let disconnect: Connector['onDisconnect'] | undefined
 
-  return createConnector<Provider>((config) => ({
+  return createConnector<Provider, Properties>((config) => ({
     id: 'coinbaseWalletSDK',
     name: 'Coinbase Wallet',
     rdns: 'com.coinbase.wallet',
     type: coinbaseWallet.type,
-    async connect({ chainId } = {}) {
+    async connect({ chainId, ...rest } = {}) {
       try {
         const provider = await this.getProvider()
         const accounts = (
           (await provider.request({
             method: 'eth_requestAccounts',
+            params:
+              'instantOnboarding' in rest && rest.instantOnboarding
+                ? [{ onboarding: 'instant' }]
+                : [],
           })) as string[]
         ).map((x) => getAddress(x))
 

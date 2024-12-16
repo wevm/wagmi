@@ -29,6 +29,7 @@
     "test": "vitest",
     "test:build": "bun scripts/generateProxyPackages.ts && pnpm run --r --parallel test:build",
     "test:cli": "vitest --project @wagmi/cli",
+    "test:connectors": "vitest --project @wagmi/connectors",
     "test:core": "vitest --project @wagmi/core",
     "test:create-wagmi": "vitest --project create-wagmi",
     "test:cov": "vitest run --coverage",
