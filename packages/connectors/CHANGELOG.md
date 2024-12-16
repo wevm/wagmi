@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 5.7.0
+
+### Minor Changes
+
+- [#4440](https://github.com/wevm/wagmi/pull/4440) [`e3f63a02c1f7d80481804584f262bc98dab0400d`](https://github.com/wevm/wagmi/commit/e3f63a02c1f7d80481804584f262bc98dab0400d) Thanks [@johanneskares](https://github.com/johanneskares)! - Added Coinbase Smart Wallet "Instant Onboarding" mode to `coinbaseWallet`.
+
 ## 5.6.2
 
 ### Patch Changes
