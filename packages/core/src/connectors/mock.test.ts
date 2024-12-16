@@ -1,12 +1,26 @@
 import { accounts, config } from '@wagmi/test'
-import { expect, test } from 'vitest'
+import { expect, expectTypeOf, test } from 'vitest'
 
+import type { Connector } from '../createConfig.js'
+import type { CreateConnectorFn } from './createConnector.js'
 import { mock } from './mock.js'
 
 test('setup', () => {
   const connectorFn = mock({ accounts })
   const connector = config._internal.connectors.setup(connectorFn)
   expect(connector.name).toEqual('Mock Connector')
+
+  expectTypeOf<
+    typeof connectorFn extends CreateConnectorFn ? true : false
+  >().toEqualTypeOf<true>()
+  expectTypeOf<
+    typeof connector extends Connector ? true : false
+  >().toEqualTypeOf<true>()
+
+  type ConnectFnParameters = NonNullable<
+    Parameters<(typeof connector)['connect']>[0]
+  >
+  expectTypeOf<ConnectFnParameters['foo']>().toMatchTypeOf<string | undefined>()
 })
 
 test('behavior: features.connectError', () => {

@@ -76,6 +76,8 @@ test('exports', () => {
       "Hydrate",
       "createConfig",
       "createConnector",
+      "injected",
+      "mock",
       "ChainNotConfiguredError",
       "ConnectorAlreadyConnectedError",
       "ConnectorNotFoundError",

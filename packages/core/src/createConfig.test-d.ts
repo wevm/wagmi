@@ -86,3 +86,25 @@ test('behavior: parameters should not include certain client config properties',
     'transport' extends Result ? true : false
   >().toEqualTypeOf<false>()
 })
+
+test('infer connectors', () => {
+  const connectorFn = mock({ accounts })
+  const config = createConfig({
+    chains: [mainnet, sepolia],
+    connectors: [connectorFn],
+    transports: {
+      [mainnet.id]: webSocket(),
+      [sepolia.id]: http(),
+    },
+  })
+
+  const connector = config.connectors[0]!
+  expectTypeOf(connector).toEqualTypeOf(
+    config._internal.connectors.setup(connectorFn),
+  )
+
+  type ConnectFnParameters = NonNullable<
+    Parameters<(typeof connector)['connect']>[0]
+  >
+  expectTypeOf<ConnectFnParameters['foo']>().toMatchTypeOf<string | undefined>()
+})

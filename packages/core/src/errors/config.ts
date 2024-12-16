@@ -94,7 +94,7 @@ export class ConnectorUnavailableReconnectingError extends BaseError {
   constructor({ connector }: { connector: { name: string } }) {
     super(`Connector "${connector.name}" unavailable while reconnecting.`, {
       details: [
-        'During the reconnection step, the only connector methods guaranteed to be available are: `id`, `name`, `type`, `uuid`.',
+        'During the reconnection step, the only connector methods guaranteed to be available are: `id`, `name`, `type`, `uid`.',
         'All other methods are not guaranteed to be available until reconnection completes and connectors are fully restored.',
         'This error commonly occurs for connectors that asynchronously inject after reconnection has already started.',
       ].join(' '),

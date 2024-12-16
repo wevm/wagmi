@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type DefaultTheme from 'vitepress/theme'
 import { VPButton, VPSponsors, VPTeamMembers } from 'vitepress/theme'
-import { useSponsors } from '../composables/useSponsors'
 import { farcasterIcon } from '../../constants'
+import { useSponsors } from '../composables/useSponsors'
 
 const { data: sponsors } = useSponsors()
 

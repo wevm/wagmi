@@ -1,8 +1,8 @@
+import { execSync, spawn, spawnSync } from 'node:child_process'
+import { existsSync } from 'node:fs'
+import { readFile } from 'node:fs/promises'
 import dedent from 'dedent'
-import { execa, execaCommandSync } from 'execa'
 import { fdir } from 'fdir'
-import { default as fs } from 'fs-extra'
-
 import { basename, extname, join, resolve } from 'pathe'
 import pc from 'picocolors'
 import { z } from 'zod'
@@ -125,7 +125,7 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
   }
 
   async function getContract(artifactPath: string) {
-    const artifact = await fs.readJSON(artifactPath)
+    const artifact = await JSON.parse(await readFile(artifactPath, 'utf8'))
     return {
       abi: artifact.abi,
       address: (deployments as Record<string, ContractConfig['address']>)[
@@ -153,12 +153,19 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
     src: 'src',
   }
   try {
-    foundryConfig = FoundryConfigSchema.parse(
-      JSON.parse(
-        execaCommandSync(`${forgeExecutable} config --json --root ${project}`)
-          .stdout,
-      ),
+    const result = spawnSync(
+      forgeExecutable,
+      ['config', '--json', '--root', project],
+      {
+        encoding: 'utf-8',
+        shell: true,
+      },
     )
+    if (result.error) throw result.error
+    if (result.status !== 0)
+      throw new Error(`Failed with code ${result.status}`)
+    if (result.signal) throw new Error('Process terminated by signal')
+    foundryConfig = FoundryConfigSchema.parse(JSON.parse(result.stdout))
   } catch {
   } finally {
     foundryConfig = {
@@ -171,9 +178,17 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
 
   return {
     async contracts() {
-      if (clean) await execa(forgeExecutable, ['clean', '--root', project])
-      if (build) await execa(forgeExecutable, ['build', '--root', project])
-      if (!fs.pathExistsSync(artifactsDirectory))
+      if (clean)
+        execSync(`${forgeExecutable} clean --root ${project}`, {
+          encoding: 'utf-8',
+          stdio: 'pipe',
+        })
+      if (build)
+        execSync(`${forgeExecutable} build --root ${project}`, {
+          encoding: 'utf-8',
+          stdio: 'pipe',
+        })
+      if (!existsSync(artifactsDirectory))
         throw new Error('Artifacts not found.')
 
       const artifactPaths = await getArtifactPaths(artifactsDirectory)
@@ -188,13 +203,16 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
     name: 'Foundry',
     async validate() {
       // Check that project directory exists
-      if (!(await fs.pathExists(project)))
+      if (!existsSync(project))
         throw new Error(`Foundry project ${pc.gray(config.project)} not found.`)
 
       // Ensure forge is installed
       if (clean || build || rebuild)
         try {
-          await execa(forgeExecutable, ['--version'])
+          execSync(`${forgeExecutable} --version`, {
+            encoding: 'utf-8',
+            stdio: 'pipe',
+          })
         } catch (_error) {
           throw new Error(dedent`
             forge must be installed to use Foundry plugin.
@@ -210,7 +228,7 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
                 project,
               )}`,
             )
-            const subprocess = execa(forgeExecutable, [
+            const subprocess = spawn(forgeExecutable, [
               'build',
               '--watch',
               '--root',
@@ -223,7 +241,7 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
             process.once('SIGINT', shutdown)
             process.once('SIGTERM', shutdown)
             function shutdown() {
-              subprocess?.cancel()
+              subprocess?.kill()
             }
           }
         : undefined,

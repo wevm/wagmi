@@ -20,14 +20,13 @@ test.each(['success', 'info', 'log', 'warn', 'error'])('%s()', (level) => {
 
 test('spinner', () => {
   const console = watchConsole()
-  const spinner = logger.spinner()
-
-  spinner.start('Foo bar baz')
-  spinner.succeed('Foo bar baz')
-  spinner.fail('Foo bar baz')
+  const spinner = logger.spinner('start')
+  spinner.start()
+  spinner.success('success')
+  spinner.error('error')
   expect(console.formatted).toMatchInlineSnapshot(`
-      "- Foo bar baz
-      ✔ Foo bar baz
-      ✖ Foo bar baz"
-    `)
+    "- start
+    √ success
+    × error"
+  `)
 })

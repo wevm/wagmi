@@ -44,6 +44,8 @@ test('exports', () => {
       "useWriteContract",
       "createConfig",
       "createConnector",
+      "injected",
+      "mock",
       "ChainNotConfiguredError",
       "ConnectorAlreadyConnectedError",
       "ConnectorNotFoundError",

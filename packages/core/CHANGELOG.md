@@ -1,5 +1,15 @@
 # @wagmi/core
 
+## 2.16.0
+
+### Minor Changes
+
+- [#4453](https://github.com/wevm/wagmi/pull/4453) [`070e48480194c8d7f45bda1d7dd1346e6f5d7227`](https://github.com/wevm/wagmi/commit/070e48480194c8d7f45bda1d7dd1346e6f5d7227) Thanks [@tmm](https://github.com/tmm)! - Added narrowing to `config.connectors`.
+
+### Patch Changes
+
+- [`afea6b67822a7a2b96901ec851441d27ee0f7a52`](https://github.com/wevm/wagmi/commit/afea6b67822a7a2b96901ec851441d27ee0f7a52) Thanks [@tmm](https://github.com/tmm)! - Passed through parameters to `connector.connect` in `connect` action.
+
 ## 2.15.2
 
 ### Patch Changes
@@ -10,7 +20,7 @@
 
 ### Patch Changes
 
-- [`b8bbb409f4934538e3dd6cac5aaf7346292d0693`](https://github.com/wevm/wagmi/commit/b8bbb409f4934538e3dd6cac5aaf7346292d0693) Thanks [@jxom](https://github.com/jxom)! - Fixed issue where `null` gas would accidently pass through.
+- [`b8bbb409f4934538e3dd6cac5aaf7346292d0693`](https://github.com/wevm/wagmi/commit/b8bbb409f4934538e3dd6cac5aaf7346292d0693) Thanks [@jxom](https://github.com/jxom)! - Fixed issue where `null` gas would accidentally pass through.
 
 ## 2.15.0
 

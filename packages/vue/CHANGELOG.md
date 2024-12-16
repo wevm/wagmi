@@ -1,5 +1,30 @@
 # @wagmi/vue
 
+## 0.1.1
+
+### Patch Changes
+
+- Updated dependencies [[`987404f590c1d29ebb3cb68928f5e54aa032793d`](https://github.com/wevm/wagmi/commit/987404f590c1d29ebb3cb68928f5e54aa032793d)]:
+  - @wagmi/connectors@5.6.1
+
+## 0.1.0
+
+### Minor Changes
+
+- [#4453](https://github.com/wevm/wagmi/pull/4453) [`070e48480194c8d7f45bda1d7dd1346e6f5d7227`](https://github.com/wevm/wagmi/commit/070e48480194c8d7f45bda1d7dd1346e6f5d7227) Thanks [@tmm](https://github.com/tmm)! - Added support to `useConnect` for custom `connector.connect` parameters.
+
+### Patch Changes
+
+- Updated dependencies [[`afea6b67822a7a2b96901ec851441d27ee0f7a52`](https://github.com/wevm/wagmi/commit/afea6b67822a7a2b96901ec851441d27ee0f7a52), [`070e48480194c8d7f45bda1d7dd1346e6f5d7227`](https://github.com/wevm/wagmi/commit/070e48480194c8d7f45bda1d7dd1346e6f5d7227), [`8b0726c1106fce88b782e676498eabf0718b2619`](https://github.com/wevm/wagmi/commit/8b0726c1106fce88b782e676498eabf0718b2619)]:
+  - @wagmi/core@2.16.0
+  - @wagmi/connectors@5.6.0
+
+## 0.0.69
+
+### Patch Changes
+
+- [`2f79a3da4872d6158569017b1927a07a1ff5e7ba`](https://github.com/wevm/wagmi/commit/2f79a3da4872d6158569017b1927a07a1ff5e7ba) Thanks [@tmm](https://github.com/tmm)! - Exported `injected` and `mock`.
+
 ## 0.0.68
 
 ### Patch Changes
@@ -21,7 +46,7 @@
 
 ### Patch Changes
 
-- [`b8bbb409f4934538e3dd6cac5aaf7346292d0693`](https://github.com/wevm/wagmi/commit/b8bbb409f4934538e3dd6cac5aaf7346292d0693) Thanks [@jxom](https://github.com/jxom)! - Fixed issue where `null` gas would accidently pass through.
+- [`b8bbb409f4934538e3dd6cac5aaf7346292d0693`](https://github.com/wevm/wagmi/commit/b8bbb409f4934538e3dd6cac5aaf7346292d0693) Thanks [@jxom](https://github.com/jxom)! - Fixed issue where `null` gas would accidentally pass through.
 
 - Updated dependencies [[`b8bbb409f4934538e3dd6cac5aaf7346292d0693`](https://github.com/wevm/wagmi/commit/b8bbb409f4934538e3dd6cac5aaf7346292d0693)]:
   - @wagmi/core@2.15.1

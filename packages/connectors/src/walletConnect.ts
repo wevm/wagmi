@@ -80,6 +80,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
   type Properties = {
     connect(parameters?: {
       chainId?: number | undefined
+      isReconnecting?: boolean | undefined
       pairingTopic?: string | undefined
     }): Promise<{
       accounts: readonly Address[]

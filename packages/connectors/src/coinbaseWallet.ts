@@ -85,6 +85,7 @@ function version4(parameters: Version4Parameters) {
     connect(parameters?: {
       chainId?: number | undefined
       instantOnboarding?: boolean | undefined
+      isReconnecting?: boolean | undefined
     }): Promise<{
       accounts: readonly Address[]
       chainId: number
