@@ -1,5 +1,5 @@
 ---
-"@wagmi/connectors": patch
+"@wagmi/connectors": minor
 ---
 
-Supports Instant Onboarding mode of Coinbase Smart Wallet
+Added Coinbase Smart Wallet "Instant Onboarding" mode to `coinbaseWallet`.
