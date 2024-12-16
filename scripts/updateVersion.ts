@@ -1,14 +1,13 @@
 import path from 'node:path'
-import { glob } from 'glob'
 
 // Updates package version.ts files (so you can use the version in code without importing package.json).
 
 console.log('Updating version files.')
 
 // Get all package.json files
-const packagePaths = await glob('**/package.json', {
-  ignore: ['**/dist/**', '**/node_modules/**'],
-})
+const packagePaths = await Array.fromAsync(
+  new Bun.Glob('**/package.json').scan(),
+)
 
 let count = 0
 for (const packagePath of packagePaths) {

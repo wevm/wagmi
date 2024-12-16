@@ -1,15 +1,14 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
-import { glob } from 'glob'
 
 // Restores package.json files from package.json.tmp files.
 
 console.log('Restoring package.json files.')
 
 // Get all package.json files
-const packagePaths = await glob('packages/**/package.json.tmp', {
-  ignore: ['**/dist/**', '**/node_modules/**'],
-})
+const packagePaths = await Array.fromAsync(
+  new Bun.Glob('packages/**/package.json.tmp').scan(),
+)
 
 let count = 0
 for (const packagePath of packagePaths) {

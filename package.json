@@ -36,7 +36,6 @@
     "test:react": "vitest --project wagmi",
     "test:typecheck": "vitest typecheck",
     "test:update": "vitest --update",
-    "test:ui": "vitest --ui",
     "test:vue": "vitest --project @wagmi/vue",
     "version:update": "bun scripts/updateVersion.ts",
     "version:update:viem": "bun scripts/updateViemVersion.ts"
@@ -48,10 +47,8 @@
     "@changesets/cli": "^2.27.8",
     "@types/bun": "^1.1.10",
     "@vitest/coverage-v8": "^2.1.1",
-    "@vitest/ui": "^2.1.1",
     "@wagmi/test": "workspace:*",
     "bun": "^1.1.29",
-    "glob": "^10.4.5",
     "happy-dom": "^15.7.4",
     "knip": "^5.30.6",
     "prool": "^0.0.16",

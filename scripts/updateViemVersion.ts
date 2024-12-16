@@ -1,5 +1,3 @@
-import { glob } from 'glob'
-
 // Updates viem version in Vitest snapshots, etc.
 
 console.log('Updating Viem version.')
@@ -10,9 +8,9 @@ const viemVersion = packageJson.devDependencies.viem
 
 // Update Vitest snapshots
 // Get all *.test.ts files
-const testPaths = await glob('packages/**/*.test.ts', {
-  ignore: ['**/dist/**', '**/node_modules/**'],
-})
+const testPaths = await Array.fromAsync(
+  new Bun.Glob('packages/**/*.test.ts').scan(),
+)
 
 let count = 0
 for (const testPath of testPaths) {

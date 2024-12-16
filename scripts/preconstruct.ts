@@ -1,15 +1,14 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
-import { glob } from 'glob'
 
 // Symlinks package sources to dist for local development
 
 console.log('Setting up packages for development.')
 
 // Get all package.json files
-const packagePaths = await glob('**/package.json', {
-  ignore: ['**/dist/**', '**/node_modules/**'],
-})
+const packagePaths = await Array.fromAsync(
+  new Bun.Glob('**/package.json').scan(),
+)
 
 let count = 0
 for (const packagePath of packagePaths) {

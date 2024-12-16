@@ -107,7 +107,6 @@ Next, make sure you have set up your [env variables](#_4-adding-the-env-variable
 
 - `pnpm test [package?]` — runs tests in watch mode
 - `pnpm test:cov` — runs tests and reports coverage
-- `pnpm test:ui` — runs tests in the [Vitest UI](https://vitest.dev/guide/ui.html)
 - `pnpm test:core` — runs `@wagmi/core` tests
 - `pnpm test:react` — runs `wagmi` tests
 - `pnpm test:vue` — runs `@wagmi/vue` tests
