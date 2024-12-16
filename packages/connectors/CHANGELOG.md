@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 5.6.2
+
+### Patch Changes
+
+- [#4437](https://github.com/wevm/wagmi/pull/4437) [`adf2253b10c6d4fc583e4bc9f01a8ef5ca267c85`](https://github.com/wevm/wagmi/commit/adf2253b10c6d4fc583e4bc9f01a8ef5ca267c85) Thanks [@chybisov](https://github.com/chybisov)! - Bumped `@safe-global/safe-apps-provider` version to `0.18.5`.
+
 ## 5.6.1
 
 ### Patch Changes
