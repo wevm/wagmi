@@ -63,8 +63,6 @@ const connector = metaMask({
 
 ### logging
 
-`SDKLoggingOptions | undefined`
-
 Enables SDK-side logging to provide visibility into:
 
 - RPC methods being called.
