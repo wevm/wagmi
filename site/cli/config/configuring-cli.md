@@ -69,7 +69,7 @@ export default defineConfig(() => {
 
 ## Async Config
 
-If the config needs to call async function, it can export a async function instead:
+If the config needs to call async function, it can export an async function instead:
 
 ::: code-group
 ```js [wagmi.config.js]
