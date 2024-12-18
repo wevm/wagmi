@@ -88,8 +88,6 @@ const connector = metaMask({
 
 ### headless
 
-`boolean | undefined`
-
 - Enables headless mode, disabling MetaMask's built-in modal.
 - Allows developers to create their own modal, such as for displaying a QR code.
 
