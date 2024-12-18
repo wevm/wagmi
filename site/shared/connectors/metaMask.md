@@ -41,8 +41,6 @@ Check out the [MetaMask SDK docs](https://docs.metamask.io/wallet/connect/3rd-pa
 
 ### dappMetadata
 
-`DappMetadata | undefined`
-
 Metadata is used to fill details for the UX on confirmation screens in MetaMask, including the following fields:
 
 - `name`: `string` - The name of the dapp.
