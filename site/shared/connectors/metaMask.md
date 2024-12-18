@@ -115,8 +115,8 @@ const connector = metaMask({
 
 By default, if the EIP-6963 MetaMask injected provider is detected, this connector will replace it.
 
-EIP-6963 defines a standard way for dApps to interact with multiple wallets simultaneously by injecting providers into the browser. Wallets that implement this standard can make their presence known to dApps in a consistent and predictable manner.
+EIP-6963 defines a standard way for dapps to interact with multiple wallets simultaneously by injecting providers into the browser. Wallets that implement this standard can make their presence known to dapps in a consistent and predictable manner.
 
-When the MetaMask SDK detects an EIP-6963-compliant provider (such as MetaMask itself), the connector will automatically replace the default injected provider (like `window.ethereum`) with the one provided by the MetaMask SDK.
+When MetaMask SDK detects an EIP-6963-compliant provider (such as MetaMask itself), the connector will automatically replace the default injected provider (like `window.ethereum`) with the one provided by MetaMask SDK.
 
 See the [`rdns` property](https://wagmi.sh/dev/creating-connectors#properties) for more information.
