@@ -87,7 +87,7 @@ The more properties you add, the better the chain will be to use with Wagmi. Mos
 - `blockExplorers`: A set of block explorers for the chain. Found from [`ethereum-lists/chains`](https://github.com/ethereum-lists/chains/blob/3fbd4eeac7ce116579634bd042b84e2b1d89886a/_data/chains/eip155-56.json#L30-L36).
 - `contracts`: A set of deployed contracts for the chain. If you are deploying one of the following contracts yourself, make sure it is verified.
   - `multicall3` is optional, but it's address is most likely `0xca11bde05977b3631167028862be2a173976ca11` – you can find the deployed block number on the block explorer. Check out [`mds1/multicall`](https://github.com/mds1/multicall#multicall3-contract-addresses) for more info.
-  - `ensRegistry` is optional – not all Chains have a ENS Registry. See [ENS Deployments](https://docs.ens.domains/ens-deployments) for more info.
-  - `ensUniversalResolver` is optional – not all Chains have a ENS Universal Resolver.
+  - `ensRegistry` is optional – not all Chains have an ENS Registry. See [ENS Deployments](https://docs.ens.domains/ens-deployments) for more info.
+  - `ensUniversalResolver` is optional – not all Chains have an ENS Universal Resolver.
 - `sourceId`: Source Chain ID (e.g. the L1 chain).
 - `testnet`: Whether or not the chain is a testnet.
