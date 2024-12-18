@@ -45,9 +45,9 @@ Check out the [MetaMask SDK docs](https://docs.metamask.io/wallet/connect/3rd-pa
 
 Metadata is used to fill details for the UX on confirmation screens in MetaMask, including the following fields:
 
-- `name`: The name of the dapp.
-- `url`: URL of the dApp (defaults to window.location.origin).
-- `iconUrl`: URL to the dApp's favicon or icon.
+- `name`: `string` - The name of the dapp.
+- `url`: `string` - URL of the dapp (defaults to `window.location.origin`).
+- `iconUrl`: `string` - URL to the dapp's favicon or icon.
 
 ```ts-vue
 import { metaMask } from '{{connectorsPackageName}}'
