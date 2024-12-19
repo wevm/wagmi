@@ -315,6 +315,41 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       const chain = config.chains.find((x) => x.id === chainId)
       if (!chain) throw new SwitchChainError(new ChainNotConfiguredError())
 
+      const sendAndWaitForChangeEvent = async (chainId: number) => {
+        await new Promise<void>((resolve) => {
+          const listener = ((data) => {
+            if ('chainId' in data && data.chainId === chainId) {
+              config.emitter.off('change', listener)
+              resolve()
+            }
+          }) satisfies Parameters<typeof config.emitter.on>[1]
+          config.emitter.on('change', listener)
+          config.emitter.emit('change', { chainId })
+        })
+      }
+
+      // On mobile, there is a race condition between the result of `'wallet_addEthereumChain'` and `'eth_chainId'`.
+      // To avoid this, we wait for `'eth_chainId'` to return the expected chain ID with a retry loop.
+      const waitForChainIdToSync = async () => {
+        await withRetry(
+          async () => {
+            const value = hexToNumber(
+              // `'eth_chainId'` is cached by the MetaMask SDK side to avoid unnecessary deeplinks
+              (await provider.request({ method: 'eth_chainId' })) as Hex,
+            )
+            if (value !== chainId) {
+              // `value` doesn't match expected `chainId`, throw to trigger retry
+              throw new Error('User rejected switch after adding network.')
+            }
+            return value
+          },
+          {
+            delay: 50,
+            retryCount: 20, // android device encryption is slower
+          },
+        )
+      }
+
       // Default chains cannot be added or removed
       const isDefaultChain = (() => {
         const metaMaskDefaultChains = [
@@ -329,8 +364,8 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       })()
 
       // Avoid back and forth on mobile by using `'wallet_addEthereumChain'` for non-default chains
-      if (!isDefaultChain)
-        try {
+      try {
+        if (!isDefaultChain) {
           const blockExplorerUrls = (() => {
             const { default: blockExplorer, ...blockExplorers } =
               chain.blockExplorers ?? {}
@@ -365,70 +400,20 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
               } satisfies AddEthereumChainParameter,
             ],
           })
-
-          // On mobile, there is a race condition between the result of `'wallet_addEthereumChain'` and `'eth_chainId'`.
-          // (`'eth_chainId'` from the MetaMask relay server).
-          // To avoid this, we wait for `'eth_chainId'` to return the expected chain ID with a retry loop.
-          let retryCount = 0
-          const currentChainId = await withRetry(
-            async () => {
-              retryCount += 1
-              const value = hexToNumber(
-                // `'eth_chainId'` is cached by the MetaMask SDK side to avoid unnecessary deeplinks
-                (await provider.request({ method: 'eth_chainId' })) as Hex,
-              )
-              if (value !== chainId) {
-                if (retryCount === 5) return -1
-                // `value` doesn't match expected `chainId`, throw to trigger retry
-                throw new Error('Chain ID mismatch')
-              }
-              return value
-            },
-            {
-              delay: 100,
-              retryCount: 5, // android device encryption is slower
-            },
-          )
-
-          if (currentChainId !== chainId)
-            throw new Error('User rejected switch after adding network.')
-
-          return chain
-        } catch (err) {
-          const error = err as RpcError
-          if (error.code === UserRejectedRequestError.code)
-            throw new UserRejectedRequestError(error)
-          throw new SwitchChainError(error)
+        } else {
+          await provider.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: numberToHex(chainId) }],
+          })
         }
+        // During `'wallet_switchEthereumChain'`, MetaMask makes a `'net_version'` RPC call to the target chain.
+        // If this request fails, MetaMask does not emit the `'chainChanged'` event, but will still switch the chain.
+        // To counter this behavior, we request and emit the current chain ID to confirm the chain switch either via
+        // this callback or an externally emitted `'chainChanged'` event.
+        // https://github.com/MetaMask/metamask-extension/issues/24247
+        await waitForChainIdToSync()
+        await sendAndWaitForChangeEvent(chainId)
 
-      // Use to `'wallet_switchEthereumChain'` for default chains
-      try {
-        await Promise.all([
-          provider
-            .request({
-              method: 'wallet_switchEthereumChain',
-              params: [{ chainId: numberToHex(chainId) }],
-            })
-            // During `'wallet_switchEthereumChain'`, MetaMask makes a `'net_version'` RPC call to the target chain.
-            // If this request fails, MetaMask does not emit the `'chainChanged'` event, but will still switch the chain.
-            // To counter this behavior, we request and emit the current chain ID to confirm the chain switch either via
-            // this callback or an externally emitted `'chainChanged'` event.
-            // https://github.com/MetaMask/metamask-extension/issues/24247
-            .then(async () => {
-              const currentChainId = await this.getChainId()
-              if (currentChainId === chainId)
-                config.emitter.emit('change', { chainId })
-            }),
-          new Promise<void>((resolve) => {
-            const listener = ((data) => {
-              if ('chainId' in data && data.chainId === chainId) {
-                config.emitter.off('change', listener)
-                resolve()
-              }
-            }) satisfies Parameters<typeof config.emitter.on>[1]
-            config.emitter.on('change', listener)
-          }),
-        ])
         return chain
       } catch (err) {
         const error = err as RpcError
