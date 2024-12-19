@@ -364,8 +364,8 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       })()
 
       // Avoid back and forth on mobile by using `'wallet_addEthereumChain'` for non-default chains
-      if (!isDefaultChain)
-        try {
+      try {
+        if (!isDefaultChain) {
           const blockExplorerUrls = (() => {
             const { default: blockExplorer, ...blockExplorers } =
               chain.blockExplorers ?? {}
@@ -400,25 +400,12 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
               } satisfies AddEthereumChainParameter,
             ],
           })
-
-          await waitForChainIdToSync()
-
-          await sendAndWaitForChangeEvent(chainId)
-
-          return chain
-        } catch (err) {
-          const error = err as RpcError
-          if (error.code === UserRejectedRequestError.code)
-            throw new UserRejectedRequestError(error)
-          throw new SwitchChainError(error)
+        } else {
+          await provider.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: numberToHex(chainId) }],
+          })
         }
-
-      // Use to `'wallet_switchEthereumChain'` for default chains
-      try {
-        await provider.request({
-          method: 'wallet_switchEthereumChain',
-          params: [{ chainId: numberToHex(chainId) }],
-        })
         // During `'wallet_switchEthereumChain'`, MetaMask makes a `'net_version'` RPC call to the target chain.
         // If this request fails, MetaMask does not emit the `'chainChanged'` event, but will still switch the chain.
         // To counter this behavior, we request and emit the current chain ID to confirm the chain switch either via
