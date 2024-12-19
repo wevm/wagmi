@@ -143,6 +143,7 @@ export function getSidebar() {
             text: 'useAccountEffect',
             link: '/react/api/hooks/useAccountEffect',
           },
+          { text: 'useAddChain', link: '/react/api/hooks/useAddChain' },
           { text: 'useBalance', link: '/react/api/hooks/useBalance' },
           {
             text: 'useBlockNumber',
@@ -744,6 +745,7 @@ export function getSidebar() {
         text: 'Actions',
         link: '/core/api/actions',
         items: [
+          { text: 'addChain', link: '/core/api/actions/addChain' },
           {
             text: 'call',
             link: '/core/api/actions/call',
