@@ -7,6 +7,7 @@ The component below shows how to retrieve the token balance of an address from t
 :::code-group
 ```tsx [read-contract.tsx]
 import { useReadContract } from 'wagmi'
+import { wagmiContractConfig } from './contracts'
 
 function ReadContract() {
   const { data: balance } = useReadContract({
@@ -19,6 +20,27 @@ function ReadContract() {
     <div>Balance: {balance?.toString()}</div>
   )
 }
+```
+```ts [contracts.ts]
+export const wagmiContractConfig = {
+  address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+  abi: [
+    {
+      type: 'function',
+      name: 'balanceOf',
+      stateMutability: 'view',
+      inputs: [{ name: 'account', type: 'address' }],
+      outputs: [{ type: 'uint256' }],
+    },
+    {
+      type: 'function',
+      name: 'totalSupply',
+      stateMutability: 'view',
+      inputs: [],
+      outputs: [{ name: 'supply', type: 'uint256' }],
+    },
+  ],
+} as const
 ```
 :::
 
