@@ -21,7 +21,11 @@ import type {
 } from './connectors/createConnector.js'
 import { injected } from './connectors/injected.js'
 import { type Emitter, type EventData, createEmitter } from './createEmitter.js'
-import { type Storage, createStorage, noopStorage } from './createStorage.js'
+import {
+  type Storage,
+  createStorage,
+  getDefaultStorage,
+} from './createStorage.js'
 import { ChainNotConfiguredError } from './errors/config.js'
 import type {
   Compute,
@@ -43,10 +47,7 @@ export function createConfig<
   const {
     multiInjectedProviderDiscovery = true,
     storage = createStorage({
-      storage:
-        typeof window !== 'undefined' && window.localStorage
-          ? window.localStorage
-          : noopStorage,
+      storage: getDefaultStorage(),
     }),
     syncConnectedChain = true,
     ssr = false,
