@@ -41,6 +41,8 @@ Check out the [MetaMask SDK docs](https://docs.metamask.io/wallet/connect/3rd-pa
 
 ### dappMetadata
 
+`DappMetadata | undefined`
+
 Metadata is used to fill details for the UX on confirmation screens in MetaMask, including the following fields:
 
 - `name`: `string` - The name of the dapp.
@@ -60,6 +62,8 @@ const connector = metaMask({
 ```
 
 ### logging
+
+`SDKLoggingOptions | undefined`
 
 Enables SDK-side logging to provide visibility into:
 
@@ -87,6 +91,8 @@ const connector = metaMask({
 ```
 
 ### headless
+
+`boolean | undefined`
 
 - Enables headless mode, disabling MetaMask's built-in modal.
 - Allows developers to create their own modal, such as for displaying a QR code.
