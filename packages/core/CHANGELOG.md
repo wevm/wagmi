@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.16.1
+
+### Patch Changes
+
+- [#4472](https://github.com/wevm/wagmi/pull/4472) [`3892ebd21c06beef4b28ece4e70d2a38807bce6f`](https://github.com/wevm/wagmi/commit/3892ebd21c06beef4b28ece4e70d2a38807bce6f) Thanks [@tmm](https://github.com/tmm)! - Added handling to default storage for `setItem` errors, like `QuotaExceededError`, `SecurityError`, etc.
+
 ## 2.16.0
 
 ### Minor Changes

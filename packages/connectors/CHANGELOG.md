@@ -1,5 +1,14 @@
 # @wagmi/connectors
 
+## 5.7.1
+
+### Patch Changes
+
+- [#4471](https://github.com/wevm/wagmi/pull/4471) [`9c8c35a3b829f2c58edcd3a29e2dcd99974d7470`](https://github.com/wevm/wagmi/commit/9c8c35a3b829f2c58edcd3a29e2dcd99974d7470) Thanks [@EdouardBougon](https://github.com/EdouardBougon)! - Improved MetaMask chain switching behavior.
+
+- Updated dependencies [[`3892ebd21c06beef4b28ece4e70d2a38807bce6f`](https://github.com/wevm/wagmi/commit/3892ebd21c06beef4b28ece4e70d2a38807bce6f)]:
+  - @wagmi/core@2.16.1
+
 ## 5.7.0
 
 ### Minor Changes
