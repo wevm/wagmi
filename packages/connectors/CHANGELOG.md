@@ -1,5 +1,14 @@
 # @wagmi/connectors
 
+## 5.7.2
+
+### Patch Changes
+
+- [`012907032b532a438fce48f407470250cbc8f0c6`](https://github.com/wevm/wagmi/commit/012907032b532a438fce48f407470250cbc8f0c6) Thanks [@jxom](https://github.com/jxom)! - Fixed assignment in `getDefaultStorage`.
+
+- Updated dependencies [[`012907032b532a438fce48f407470250cbc8f0c6`](https://github.com/wevm/wagmi/commit/012907032b532a438fce48f407470250cbc8f0c6)]:
+  - @wagmi/core@2.16.2
+
 ## 5.7.1
 
 ### Patch Changes

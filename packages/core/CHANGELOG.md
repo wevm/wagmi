@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.16.2
+
+### Patch Changes
+
+- [`012907032b532a438fce48f407470250cbc8f0c6`](https://github.com/wevm/wagmi/commit/012907032b532a438fce48f407470250cbc8f0c6) Thanks [@jxom](https://github.com/jxom)! - Fixed assignment in `getDefaultStorage`.
+
 ## 2.16.1
 
 ### Patch Changes
