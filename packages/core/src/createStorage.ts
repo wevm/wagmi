@@ -96,7 +96,8 @@ export function getDefaultStorage() {
     return noopStorage
   })()
   return {
-    ...storage,
+    getItem: storage.getItem,
+    removeItem: storage.removeItem,
     setItem(key, value) {
       try {
         storage.setItem(key, value)
