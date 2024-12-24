@@ -97,7 +97,12 @@ export function getDefaultStorage() {
   })()
   return {
     getItem: storage.getItem,
-    removeItem: storage.removeItem,
+    removeItem(key) {
+      try {
+        storage.removeItem(key);
+        // silence errors by default (QuotaExceededError, SecurityError, etc.)
+      } catch {}
+    },
     setItem(key, value) {
       try {
         storage.setItem(key, value)
