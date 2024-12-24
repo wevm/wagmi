@@ -96,12 +96,11 @@ export function getDefaultStorage() {
     return noopStorage
   })()
   return {
-    getItem: storage.getItem,
+    getItem(key) {
+      return storage.getItem(key)
+    },
     removeItem(key) {
-      try {
-        storage.removeItem(key);
-        // silence errors by default (QuotaExceededError, SecurityError, etc.)
-      } catch {}
+      storage.removeItem(key)
     },
     setItem(key, value) {
       try {
