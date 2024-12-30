@@ -84,9 +84,9 @@ export type EtherscanConfig<chainId extends number> = {
    */
   contracts: Compute<Omit<ContractConfig<ChainId, chainId>, 'abi'>>[]
   /**
-   * Whether to try fetching the implementation address of the contract
+   * Whether to try fetching proxy implementation address of the contract
    */
-  tryFetchImplementation?: boolean | undefined
+  tryFetchProxyImplementation?: boolean | undefined
 }
 
 /**
@@ -95,7 +95,7 @@ export type EtherscanConfig<chainId extends number> = {
 export function etherscan<chainId extends ChainId>(
   config: EtherscanConfig<chainId>,
 ) {
-  const { apiKey, cacheDuration, chainId, tryFetchImplementation } = config
+  const { apiKey, cacheDuration, chainId, tryFetchProxyImplementation } = config
 
   const contracts = config.contracts.map((x) => ({
     ...x,
@@ -120,6 +120,6 @@ export function etherscan<chainId extends ChainId>(
     },
     name: 'Etherscan',
     chainId,
-    tryFetchImplementation,
+    tryFetchProxyImplementation,
   })
 }

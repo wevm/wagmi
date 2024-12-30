@@ -87,10 +87,10 @@ export type BlockExplorerConfig = {
       /**
        *  Whether to try fetching the implementation address of the contract
        */
-      tryFetchImplementation: true
+      tryFetchProxyImplementation: true
     }
   | {
-      tryFetchImplementation?: false
+      tryFetchProxyImplementation?: false
     }
 )
 
@@ -148,7 +148,10 @@ export function blockExplorer(config: BlockExplorerConfig) {
       const makeUrl = (address: Address) =>
         `${baseUrl}?module=contract&action=getabi&address=${address}${apiKey ? `&apikey=${apiKey}` : ''}`
 
-      if ('tryFetchImplementation' in config && config.tryFetchImplementation) {
+      if (
+        'tryFetchProxyImplementation' in config &&
+        config.tryFetchProxyImplementation
+      ) {
         const implementationAddress = await getImplementationAddress({
           address: normalizedAddress,
           chainId: config.chainId,
