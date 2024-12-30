@@ -83,6 +83,10 @@ export type EtherscanConfig<chainId extends number> = {
    * Contracts to fetch ABIs for.
    */
   contracts: Compute<Omit<ContractConfig<ChainId, chainId>, 'abi'>>[]
+  /**
+   * Whether to try fetching the implementation address of the contract
+   */
+  tryFetchImplementation?: boolean | undefined
 }
 
 /**
@@ -91,7 +95,7 @@ export type EtherscanConfig<chainId extends number> = {
 export function etherscan<chainId extends ChainId>(
   config: EtherscanConfig<chainId>,
 ) {
-  const { apiKey, cacheDuration, chainId } = config
+  const { apiKey, cacheDuration, chainId, tryFetchImplementation } = config
 
   const contracts = config.contracts.map((x) => ({
     ...x,
@@ -116,5 +120,6 @@ export function etherscan<chainId extends ChainId>(
     },
     name: 'Etherscan',
     chainId,
+    tryFetchImplementation,
   })
 }

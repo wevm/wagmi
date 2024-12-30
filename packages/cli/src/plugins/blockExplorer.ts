@@ -78,11 +78,21 @@ export type BlockExplorerConfig = {
    * Name of source.
    */
   name?: ContractConfig['name'] | undefined
-  /**
-   *  Chain id to use for fetching on-chain info of contract (e.g. implementation address)
-   */
-  chainId?: number | undefined
-}
+} & (
+  | {
+      /**
+       *  Chain id to use for fetching on-chain info of contract (e.g. implementation address)
+       */
+      chainId: number
+      /**
+       *  Whether to try fetching the implementation address of the contract
+       */
+      tryFetchImplementation: true
+    }
+  | {
+      tryFetchImplementation?: false
+    }
+)
 
 const BlockExplorerResponse = z.discriminatedUnion('status', [
   z.object({
@@ -113,7 +123,6 @@ export function blockExplorer(config: BlockExplorerConfig) {
       return Object.values(address)[0]!
     },
     name = 'Block Explorer',
-    chainId,
   } = config
 
   return fetch({
@@ -139,13 +148,15 @@ export function blockExplorer(config: BlockExplorerConfig) {
       const makeUrl = (address: Address) =>
         `${baseUrl}?module=contract&action=getabi&address=${address}${apiKey ? `&apikey=${apiKey}` : ''}`
 
-      const implementationAddress = await getImplementationAddress({
-        address: normalizedAddress,
-        chainId,
-      })
-      if (implementationAddress) {
-        return {
-          url: makeUrl(implementationAddress),
+      if ('tryFetchImplementation' in config && config.tryFetchImplementation) {
+        const implementationAddress = await getImplementationAddress({
+          address: normalizedAddress,
+          chainId: config.chainId,
+        })
+        if (implementationAddress) {
+          return {
+            url: makeUrl(implementationAddress),
+          }
         }
       }
 
