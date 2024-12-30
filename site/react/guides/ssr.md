@@ -81,10 +81,10 @@ import { cookieToInitialState } from 'wagmi' // [!code ++]
 import { getConfig } from './config'
 import { Providers } from './providers'
 
-export default function Layout({ children }: { children: ReactNode }) {
+export default async function Layout({ children }: { children: ReactNode }) {
   const initialState = cookieToInitialState( // [!code ++]
     getConfig(), // [!code ++]
-    headers().get('cookie') // [!code ++]
+    (await headers()).get('cookie') // [!code ++]
   ) // [!code ++]
   return (
     <html lang="en">
