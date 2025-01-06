@@ -8,7 +8,7 @@ export type SelectChains<
   config extends Config,
   chainId extends config['chains'][number]['id'] | undefined = undefined,
 > = Config extends config
-  ? readonly [Chain] // chains not inferrable, return default
+  ? readonly [Chain] // chains not inferable, return default
   : IsNarrowable<chainId, config['chains'][number]['id']> extends true
     ? readonly [Extract<config['chains'][number], { id: chainId }>] // select specific chain
     : HasFormatter<config['chains']> extends true

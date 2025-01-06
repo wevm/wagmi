@@ -304,7 +304,7 @@ const result = useReadContract({
 import { type UseReadContractReturnType } from '@wagmi/vue'
 ```
 
-The return type's [`data`](#data) property is inferrable via the combination of [`abi`](#abi), [`functionName`](#functionname), and [`args`](#args). Check out the [TypeScript docs](/vue/typescript#const-assert-abis-typed-data) for more info.
+The return type's [`data`](#data) property is inferable via the combination of [`abi`](#abi), [`functionName`](#functionname), and [`args`](#args). Check out the [TypeScript docs](/vue/typescript#const-assert-abis-typed-data) for more info.
 
 <!--@include: @shared/query-result.md-->
 
