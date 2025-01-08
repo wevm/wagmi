@@ -4,6 +4,39 @@ settings:
   autoInstallPeers: false
   excludeLinksFromLockfile: false
 
+catalogs:
+  default:
+    '@tanstack/query-core':
+      specifier: 5.49.1
+      version: 5.49.1
+    '@tanstack/react-query':
+      specifier: 5.49.2
+      version: 5.49.2
+    '@tanstack/vue-query':
+      specifier: 5.49.1
+      version: 5.49.1
+    '@testing-library/dom':
+      specifier: 10.4.0
+      version: 10.4.0
+    '@testing-library/react':
+      specifier: 16.0.1
+      version: 16.0.1
+    '@types/react':
+      specifier: 18.3.1
+      version: 18.3.1
+    '@types/react-dom':
+      specifier: 18.3.0
+      version: 18.3.0
+    react:
+      specifier: 18.3.1
+      version: 18.3.1
+    react-dom:
+      specifier: 18.3.1
+      version: 18.3.1
+    vue:
+      specifier: 3.4.27
+      version: 3.4.27
+
 importers:
 
   .:
@@ -174,7 +207,7 @@ importers:
         version: 0.0.7(typescript@5.5.4)
       zustand:
         specifier: 5.0.0
-        version: 5.0.0(@types/react@18.3.1)(react@18.3.1)(use-sync-external-store@1.2.0(react@18.3.1))
+        version: 5.0.0(@types/react@18.3.1)(react@18.3.1)(use-sync-external-store@1.4.0(react@18.3.1))
     devDependencies:
       '@tanstack/query-core':
         specifier: 'catalog:'
@@ -214,8 +247,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       use-sync-external-store:
-        specifier: 1.2.0
-        version: 1.2.0(react@18.3.1)
+        specifier: 1.4.0
+        version: 1.4.0(react@18.3.1)
     devDependencies:
       '@tanstack/react-query':
         specifier: 'catalog:'
@@ -7672,6 +7705,11 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
 
+  use-sync-external-store@1.4.0:
+    resolution: {integrity: sha512-9WXSPC5fMv61vaupRkCKCxsPxBocVnwakBEkMIHHpkTTg6icbJtg6jzgtLDm4bl3cSHAca52rYWih0k4K3PfHw==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
   utf-8-validate@5.0.10:
     resolution: {integrity: sha512-Z6czzLq4u8fPOyx7TU6X3dvUZVvoJmxSQ+IcrlmagKhilxlhZgxPK6C5Jqbkw1IDUmFTM+cz9QDnnLTwDz/2gQ==}
     engines: {node: '>=6.14.2'}
@@ -8244,39 +8282,6 @@ packages:
 
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
-
-catalogs:
-  default:
-    '@tanstack/query-core':
-      specifier: 5.49.1
-      version: 5.49.1
-    '@tanstack/react-query':
-      specifier: 5.49.2
-      version: 5.49.2
-    '@tanstack/vue-query':
-      specifier: 5.49.1
-      version: 5.49.1
-    '@testing-library/dom':
-      specifier: 10.4.0
-      version: 10.4.0
-    '@testing-library/react':
-      specifier: 16.0.1
-      version: 16.0.1
-    '@types/react':
-      specifier: 18.3.1
-      version: 18.3.1
-    '@types/react-dom':
-      specifier: 18.3.0
-      version: 18.3.0
-    react:
-      specifier: 18.3.1
-      version: 18.3.1
-    react-dom:
-      specifier: 18.3.1
-      version: 18.3.1
-    vue:
-      specifier: 3.4.27
-      version: 3.4.27
 
 snapshots:
 
@@ -17296,6 +17301,10 @@ snapshots:
     dependencies:
       react: 18.3.1
 
+  use-sync-external-store@1.4.0(react@18.3.1):
+    dependencies:
+      react: 18.3.1
+
   utf-8-validate@5.0.10:
     dependencies:
       node-gyp-build: 4.6.0
@@ -18024,10 +18033,10 @@ snapshots:
 
   zod@3.22.4: {}
 
-  zustand@5.0.0(@types/react@18.3.1)(react@18.3.1)(use-sync-external-store@1.2.0(react@18.3.1)):
+  zustand@5.0.0(@types/react@18.3.1)(react@18.3.1)(use-sync-external-store@1.4.0(react@18.3.1)):
     optionalDependencies:
       '@types/react': 18.3.1
       react: 18.3.1
-      use-sync-external-store: 1.2.0(react@18.3.1)
+      use-sync-external-store: 1.4.0(react@18.3.1)
 
   zwitch@2.0.4: {}
