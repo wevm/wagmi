@@ -1,5 +1,11 @@
 # wagmi
 
+## 2.14.7
+
+### Patch Changes
+
+- [#4497](https://github.com/wevm/wagmi/pull/4497) [`00c144b21bac3f0797b683d8a4a81f7399c6e042`](https://github.com/wevm/wagmi/commit/00c144b21bac3f0797b683d8a4a81f7399c6e042) Thanks [@tmm](https://github.com/tmm)! - Bumped `use-sync-external-store` version for React 19.
+
 ## 2.14.6
 
 ### Patch Changes
