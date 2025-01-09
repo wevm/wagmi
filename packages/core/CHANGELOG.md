@@ -1,5 +1,63 @@
 # @wagmi/core
 
+## 2.16.3
+
+### Patch Changes
+
+- [#4480](https://github.com/wevm/wagmi/pull/4480) [`384a1d91597622eb59e1c05dc13ce25017c5b6d8`](https://github.com/wevm/wagmi/commit/384a1d91597622eb59e1c05dc13ce25017c5b6d8) Thanks [@RodeRickIsWatching](https://github.com/RodeRickIsWatching)! - Fixed invocation of default storage.
+
+## 2.16.2
+
+### Patch Changes
+
+- [`012907032b532a438fce48f407470250cbc8f0c6`](https://github.com/wevm/wagmi/commit/012907032b532a438fce48f407470250cbc8f0c6) Thanks [@jxom](https://github.com/jxom)! - Fixed assignment in `getDefaultStorage`.
+
+## 2.16.1
+
+### Patch Changes
+
+- [#4472](https://github.com/wevm/wagmi/pull/4472) [`3892ebd21c06beef4b28ece4e70d2a38807bce6f`](https://github.com/wevm/wagmi/commit/3892ebd21c06beef4b28ece4e70d2a38807bce6f) Thanks [@tmm](https://github.com/tmm)! - Added handling to default storage for `setItem` errors, like `QuotaExceededError`, `SecurityError`, etc.
+
+## 2.16.0
+
+### Minor Changes
+
+- [#4453](https://github.com/wevm/wagmi/pull/4453) [`070e48480194c8d7f45bda1d7dd1346e6f5d7227`](https://github.com/wevm/wagmi/commit/070e48480194c8d7f45bda1d7dd1346e6f5d7227) Thanks [@tmm](https://github.com/tmm)! - Added narrowing to `config.connectors`.
+
+### Patch Changes
+
+- [`afea6b67822a7a2b96901ec851441d27ee0f7a52`](https://github.com/wevm/wagmi/commit/afea6b67822a7a2b96901ec851441d27ee0f7a52) Thanks [@tmm](https://github.com/tmm)! - Passed through parameters to `connector.connect` in `connect` action.
+
+## 2.15.2
+
+### Patch Changes
+
+- [#4433](https://github.com/wevm/wagmi/pull/4433) [`06e186cd679b27fe195309110e766fcf46d4efbc`](https://github.com/wevm/wagmi/commit/06e186cd679b27fe195309110e766fcf46d4efbc) Thanks [@Aerilym](https://github.com/Aerilym)! - Bumped Metamask SDK version to `0.31.1`.
+
+## 2.15.1
+
+### Patch Changes
+
+- [`b8bbb409f4934538e3dd6cac5aaf7346292d0693`](https://github.com/wevm/wagmi/commit/b8bbb409f4934538e3dd6cac5aaf7346292d0693) Thanks [@jxom](https://github.com/jxom)! - Fixed issue where `null` gas would accidentally pass through.
+
+## 2.15.0
+
+### Minor Changes
+
+- [#4417](https://github.com/wevm/wagmi/pull/4417) [`42e65ea4fea99c639817088bba915e0933d17141`](https://github.com/wevm/wagmi/commit/42e65ea4fea99c639817088bba915e0933d17141) Thanks [@jxom](https://github.com/jxom)! - Removed simulation in `writeContract` & `sendTransaction`.
+
+## 2.14.6
+
+### Patch Changes
+
+- [#4406](https://github.com/wevm/wagmi/pull/4406) [`a13aa8d7c38eb3cc8171a02d6302e6d12cf6bcb3`](https://github.com/wevm/wagmi/commit/a13aa8d7c38eb3cc8171a02d6302e6d12cf6bcb3) Thanks [@tmm](https://github.com/tmm)! - Added support for multiple connector `rdns` entries.
+
+## 2.14.5
+
+### Patch Changes
+
+- [#4400](https://github.com/wevm/wagmi/pull/4400) [`6b9bbacdc7bffd44fc2165362a5e65fd434e7646`](https://github.com/wevm/wagmi/commit/6b9bbacdc7bffd44fc2165362a5e65fd434e7646) Thanks [@AzzouQ](https://github.com/AzzouQ)! - Fixed `createWatchContractEvent` internal wiring, where `eventName` was incorrectly `functionName`.
+
 ## 2.14.4
 
 ### Patch Changes

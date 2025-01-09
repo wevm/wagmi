@@ -32,7 +32,7 @@ export type UseConnectParameters<
       | UseMutationParameters<
           ConnectData<config>,
           ConnectErrorType,
-          ConnectVariables<config>,
+          ConnectVariables<config, config['connectors'][number]>,
           context
         >
       | undefined
@@ -46,12 +46,12 @@ export type UseConnectReturnType<
   UseMutationReturnType<
     ConnectData<config>,
     ConnectErrorType,
-    ConnectVariables<config>,
+    ConnectVariables<config, config['connectors'][number]>,
     context
   > & {
     connect: ConnectMutate<config, context>
     connectAsync: ConnectMutateAsync<config, context>
-    connectors: Compute<GetConnectorsReturnType>
+    connectors: Compute<GetConnectorsReturnType> | config['connectors']
   }
 >
 
@@ -82,10 +82,11 @@ export function useConnect<
   )
   onScopeDispose(() => unsubscribe())
 
+  type Return = UseConnectReturnType<config, context>
   return {
-    ...result,
-    connect: mutate,
-    connectAsync: mutateAsync,
+    ...(result as Return),
+    connect: mutate as Return['connect'],
+    connectAsync: mutateAsync as Return['connectAsync'],
     connectors: useConnectors({ config }).value,
   }
 }

@@ -1,5 +1,35 @@
 # @wagmi/cli
 
+## 2.1.22
+
+### Patch Changes
+
+- [#4462](https://github.com/wevm/wagmi/pull/4462) [`0b2238d27cecbcd33aee64fb0e30ddc18b6ddf74`](https://github.com/wevm/wagmi/commit/0b2238d27cecbcd33aee64fb0e30ddc18b6ddf74) Thanks [@groninge01](https://github.com/groninge01)! - Added Sonic to Etherscan plugin.
+
+## 2.1.21
+
+### Patch Changes
+
+- [#4457](https://github.com/wevm/wagmi/pull/4457) [`21ec74da7f93fc13e253d7b35ddeddc23422a6c1`](https://github.com/wevm/wagmi/commit/21ec74da7f93fc13e253d7b35ddeddc23422a6c1) Thanks [@tmm](https://github.com/tmm)! - Removed internal dependency.
+
+## 2.1.20
+
+### Patch Changes
+
+- [#4450](https://github.com/wevm/wagmi/pull/4450) [`7b9a6bb35881b657a00bdd7ccd7edea32660f5bf`](https://github.com/wevm/wagmi/commit/7b9a6bb35881b657a00bdd7ccd7edea32660f5bf) Thanks [@tmm](https://github.com/tmm)! - Removed internal usage of `fs-extra`.
+
+## 2.1.19
+
+### Patch Changes
+
+- [#4449](https://github.com/wevm/wagmi/pull/4449) [`3fa5c238baa13d948e89974b0bb8530f8fa264fd`](https://github.com/wevm/wagmi/commit/3fa5c238baa13d948e89974b0bb8530f8fa264fd) Thanks [@tmm](https://github.com/tmm)! - Removed `ora` for `nanospinner`.
+
+## 2.1.18
+
+### Patch Changes
+
+- [#4399](https://github.com/wevm/wagmi/pull/4399) [`bc18673e4c272e3b60a1b6016934fe3fbeb6d93a`](https://github.com/wevm/wagmi/commit/bc18673e4c272e3b60a1b6016934fe3fbeb6d93a) Thanks [@tmm](https://github.com/tmm)! - Added Polygon Amoy to Sourcify and Etherscan plugins.
+
 ## 2.1.17
 
 ### Patch Changes

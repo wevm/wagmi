@@ -394,7 +394,7 @@ test('behavior: eip 6963 providers', async () => {
       createConnector((c) => {
         return {
           ...mock({ accounts })(c),
-          rdns: 'com.mock',
+          rdns: ['com.mock', 'com.baz'],
         }
       }),
     ],
@@ -413,9 +413,12 @@ test('behavior: eip 6963 providers', async () => {
   announceProvider(detail_3)()
   await wait(100)
 
-  expect(config.connectors.map((x) => x.rdns ?? x.id)).toMatchInlineSnapshot(`
+  expect(
+    config.connectors.flatMap((x) => x.rdns ?? x.id),
+  ).toMatchInlineSnapshot(`
     [
       "com.mock",
+      "com.baz",
       "com.example",
       "com.foo",
       "com.bar",

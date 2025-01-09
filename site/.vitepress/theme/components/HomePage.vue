@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type DefaultTheme from 'vitepress/theme'
 import { VPButton, VPSponsors, VPTeamMembers } from 'vitepress/theme'
+import { farcasterIcon } from '../../constants'
 import { useSponsors } from '../composables/useSponsors'
 
 const { data: sponsors } = useSponsors()
@@ -8,11 +9,17 @@ const { data: sponsors } = useSponsors()
 const teamMembers = [
   {
     avatar: 'https://www.github.com/tmm.png',
-    name: 'awkweb',
+    name: 'tmm',
     links: [
       { icon: 'github', link: 'https://github.com/tmm' },
-      { icon: 'bluesky', link: 'https://bsky.app/profile/awkweb.com' },
+      { icon: 'bluesky', link: 'https://bsky.app/profile/tmm.dev' },
       { icon: 'x', link: 'https://twitter.com/awkweb' },
+      {
+        icon: {
+          svg: farcasterIcon,
+        },
+        link: 'https://warpcast.com/awkweb',
+      },
     ],
   },
   {
@@ -22,6 +29,12 @@ const teamMembers = [
       { icon: 'github', link: 'https://github.com/jxom' },
       { icon: 'bluesky', link: 'https://bsky.app/profile/jxom.dev' },
       { icon: 'x', link: 'https://twitter.com/_jxom' },
+      {
+        icon: {
+          svg: farcasterIcon,
+        },
+        link: 'https://warpcast.com/jxom',
+      },
     ],
   },
 ] satisfies DefaultTheme.TeamMember[]
@@ -47,7 +60,20 @@ const teamMembers = [
             <VPSponsors v-if="sponsors" :data="sponsors" />
 
             <div pt-10 text-center>
-              <VPButton theme="sponsor" text="Become a sponsor" href="https://github.com/sponsors/wevm" />
+              <VPButton theme="alt" text="Become a sponsor" href="https://github.com/sponsors/wevm" />
+            </div>
+          </div>
+
+          <div flex flex-col gap-2 items-center pt-10>
+            <div>
+              <a href="https://vercel.com/?utm_source=wevm&utm_campaign=oss">
+                <img src="https://www.datocms-assets.com/31049/1618983297-powered-by-vercel.svg" alt="Powered by Vercel" h8>
+              </a>
+            </div>
+            <div>
+              <a href="https://quicknode.com/?utm_source=wevm&utm_campaign=oss">
+                <img src="https://raw.githubusercontent.com/wevm/.github/refs/heads/main/content/quicknode-badge.svg" alt="Powered by QuickNode" h8>
+              </a>
             </div>
           </div>
         </div>
@@ -69,5 +95,24 @@ const teamMembers = [
 h3.vp-sponsor-tier {
   margin: 0;
   margin-bottom: 4px;
+}
+
+.VercelBadge {
+  align-items: center;
+  color: var(--vp-c-text-2) !important;
+  display: flex;
+  font-size: 0.85rem;
+  font-weight: 500;
+  gap: 0.35rem;
+  justify-content: center;
+}
+
+.VercelBadge:hover {
+  text-decoration: none !important;
+}
+
+.VercelBadge svg {
+  color: var(--vp-c-text-2);
+  height: 0.85rem;
 }
 </style>

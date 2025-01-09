@@ -61,6 +61,11 @@ export function useSponsors() {
           url: 'https://linea.build',
           img: 'linea-light.svg',
         },
+        {
+          name: 'Routescan',
+          url: 'https://routescan.io',
+          img: 'routescan-light.svg',
+        },
       ],
       silver: [
         {

@@ -66,7 +66,7 @@ jobs:
     timeout-minutes: 5
     strategy:
       matrix:
-        typescript-version: ['5.0.4', '5.1.6', '5.2.2', '5.3.3', '5.4.5', '5.5.2']
+        typescript-version: ['5.2.2', '5.3.3', '5.4.5', '5.5.2']
         viem-version: ['2.21.28', 'latest']
 
     steps:
@@ -84,7 +84,7 @@ jobs:
       - name: Check types
         run: pnpm check:types
 
-        # Redundant with `pnpm check:types`
+      # Redundant with `pnpm check:types`
       # If Vitest adds special features in the future, e.g. type coverage, can add this back!
       # - name: Test types
       #   run: pnpm test:typecheck
@@ -120,6 +120,6 @@ jobs:
           VITE_OPTIMISM_FORK_URL: ${{ secrets.VITE_OPTIMISM_FORK_URL }}
 
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}

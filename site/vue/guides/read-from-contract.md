@@ -11,6 +11,7 @@ The component below shows how to retrieve the token balance of an address from t
 ```vue [ReadContract.vue]
 <script setup lang="ts">
 import { useReadContract } from 'wagmi'
+import { wagmiContractConfig } from './contracts'
 
 const { data: balance } = useReadContract({
   ...wagmiContractConfig,
@@ -23,7 +24,27 @@ const { data: balance } = useReadContract({
   <div>Balance: {{ balance?.toString() }}</div>
 </template>
 ```
-
+```ts [contracts.ts]
+export const wagmiContractConfig = {
+  address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+  abi: [
+    {
+      type: 'function',
+      name: 'balanceOf',
+      stateMutability: 'view',
+      inputs: [{ name: 'account', type: 'address' }],
+      outputs: [{ type: 'uint256' }],
+    },
+    {
+      type: 'function',
+      name: 'totalSupply',
+      stateMutability: 'view',
+      inputs: [],
+      outputs: [{ name: 'supply', type: 'uint256' }],
+    },
+  ],
+} as const
+```
 :::
 
 
@@ -74,6 +95,62 @@ const {
 ```
 
 :::
+
+<!-- TODO: ## Refetching On Blocks
+
+The [`useBlockNumber` Hook](/react/api/hooks/useBlockNumber) can be utilized to refetch or [invalidate](https://tanstack.com/query/latest/docs/framework/react/guides/query-invalidation) the contract data on a specific block interval.
+
+:::code-group
+```tsx [read-contract.tsx (refetch)]
+import { useEffect } from 'react'
+import { useBlockNumber, useReadContract } from 'wagmi'
+
+function ReadContract() {
+  const { data: balance, refetch } = useReadContract({
+    ...wagmiContractConfig,
+    functionName: 'balanceOf',
+    args: ['0x03A71968491d55603FFe1b11A9e23eF013f75bCF'],
+  })
+  const { data: blockNumber } = useBlockNumber({ watch: true })
+
+  useEffect(() => {
+    // want to refetch every `n` block instead? use the modulo operator!
+    // if (blockNumber % 5 === 0) refetch() // refetch every 5 blocks
+    refetch()
+  }, [blockNumber])
+
+  return (
+    <div>Balance: {balance?.toString()}</div>
+  )
+}
+```
+```tsx [read-contract.tsx (invalidate)]
+import { useQueryClient } from '@tanstack/react-query'
+import { useEffect } from 'react'
+import { useBlockNumber, useReadContract } from 'wagmi'
+
+function ReadContract() {
+  const queryClient = useQueryClient()
+  const { data: balance, refetch } = useReadContract({
+    ...wagmiContractConfig,
+    functionName: 'balanceOf',
+    args: ['0x03A71968491d55603FFe1b11A9e23eF013f75bCF'],
+  })
+  const { data: blockNumber } = useBlockNumber({ watch: true })
+
+  useEffect(() => {
+    // if `useReadContract` is in a different hook/component,
+    // you can import `readContractQueryKey` from `'wagmi/query'` and
+    // construct a one-off query key to use for invalidation
+    queryClient.invalidateQueries({ queryKey })
+  }, [blockNumber, queryClient])
+
+  return (
+    <div>Balance: {balance?.toString()}</div>
+  )
+}
+```
+::: -->
 
 <!-- TODO: ## Calling Multiple Functions
 

@@ -1,15 +1,14 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
-import { glob } from 'glob'
 
 // Generates proxy packages for package.json#exports.
 
 console.log('Generating proxy packages.')
 
 // Get all package.json files
-const packagePaths = await glob('packages/**/package.json', {
-  ignore: ['**/dist/**', '**/node_modules/**'],
-})
+const packagePaths = await Array.fromAsync(
+  new Bun.Glob('packages/**/package.json').scan(),
+)
 
 let count = 0
 for (const packagePath of packagePaths) {

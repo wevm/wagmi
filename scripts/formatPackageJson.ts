@@ -1,14 +1,13 @@
 import path from 'node:path'
-import { glob } from 'glob'
 
 // Generates package.json files to be published to NPM with only the necessary fields.
 
 console.log('Formatting package.json files.')
 
 // Get all package.json files
-const packagePaths = await glob('packages/**/package.json', {
-  ignore: ['**/dist/**', '**/node_modules/**'],
-})
+const packagePaths = await Array.fromAsync(
+  new Bun.Glob('packages/**/package.json').scan(),
+)
 
 let count = 0
 for (const packagePath of packagePaths) {

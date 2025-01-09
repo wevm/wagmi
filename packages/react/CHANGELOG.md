@@ -1,5 +1,153 @@
 # wagmi
 
+## 2.14.7
+
+### Patch Changes
+
+- [#4497](https://github.com/wevm/wagmi/pull/4497) [`00c144b21bac3f0797b683d8a4a81f7399c6e042`](https://github.com/wevm/wagmi/commit/00c144b21bac3f0797b683d8a4a81f7399c6e042) Thanks [@tmm](https://github.com/tmm)! - Bumped `use-sync-external-store` version for React 19.
+
+## 2.14.6
+
+### Patch Changes
+
+- [#4480](https://github.com/wevm/wagmi/pull/4480) [`384a1d91597622eb59e1c05dc13ce25017c5b6d8`](https://github.com/wevm/wagmi/commit/384a1d91597622eb59e1c05dc13ce25017c5b6d8) Thanks [@RodeRickIsWatching](https://github.com/RodeRickIsWatching)! - Fixed invocation of default storage.
+
+- Updated dependencies [[`384a1d91597622eb59e1c05dc13ce25017c5b6d8`](https://github.com/wevm/wagmi/commit/384a1d91597622eb59e1c05dc13ce25017c5b6d8)]:
+  - @wagmi/core@2.16.3
+  - @wagmi/connectors@5.7.3
+
+## 2.14.5
+
+### Patch Changes
+
+- [`012907032b532a438fce48f407470250cbc8f0c6`](https://github.com/wevm/wagmi/commit/012907032b532a438fce48f407470250cbc8f0c6) Thanks [@jxom](https://github.com/jxom)! - Fixed assignment in `getDefaultStorage`.
+
+- Updated dependencies [[`012907032b532a438fce48f407470250cbc8f0c6`](https://github.com/wevm/wagmi/commit/012907032b532a438fce48f407470250cbc8f0c6)]:
+  - @wagmi/core@2.16.2
+  - @wagmi/connectors@5.7.2
+
+## 2.14.4
+
+### Patch Changes
+
+- Updated dependencies [[`9c8c35a3b829f2c58edcd3a29e2dcd99974d7470`](https://github.com/wevm/wagmi/commit/9c8c35a3b829f2c58edcd3a29e2dcd99974d7470), [`3892ebd21c06beef4b28ece4e70d2a38807bce6f`](https://github.com/wevm/wagmi/commit/3892ebd21c06beef4b28ece4e70d2a38807bce6f)]:
+  - @wagmi/connectors@5.7.1
+  - @wagmi/core@2.16.1
+
+## 2.14.3
+
+### Patch Changes
+
+- Updated dependencies [[`e3f63a02c1f7d80481804584f262bc98dab0400d`](https://github.com/wevm/wagmi/commit/e3f63a02c1f7d80481804584f262bc98dab0400d)]:
+  - @wagmi/connectors@5.7.0
+
+## 2.14.2
+
+### Patch Changes
+
+- Updated dependencies [[`adf2253b10c6d4fc583e4bc9f01a8ef5ca267c85`](https://github.com/wevm/wagmi/commit/adf2253b10c6d4fc583e4bc9f01a8ef5ca267c85)]:
+  - @wagmi/connectors@5.6.2
+
+## 2.14.1
+
+### Patch Changes
+
+- Updated dependencies [[`987404f590c1d29ebb3cb68928f5e54aa032793d`](https://github.com/wevm/wagmi/commit/987404f590c1d29ebb3cb68928f5e54aa032793d)]:
+  - @wagmi/connectors@5.6.1
+
+## 2.14.0
+
+### Minor Changes
+
+- [#4453](https://github.com/wevm/wagmi/pull/4453) [`070e48480194c8d7f45bda1d7dd1346e6f5d7227`](https://github.com/wevm/wagmi/commit/070e48480194c8d7f45bda1d7dd1346e6f5d7227) Thanks [@tmm](https://github.com/tmm)! - Added support to `useConnect` for custom `connector.connect` parameters.
+
+### Patch Changes
+
+- Updated dependencies [[`afea6b67822a7a2b96901ec851441d27ee0f7a52`](https://github.com/wevm/wagmi/commit/afea6b67822a7a2b96901ec851441d27ee0f7a52), [`070e48480194c8d7f45bda1d7dd1346e6f5d7227`](https://github.com/wevm/wagmi/commit/070e48480194c8d7f45bda1d7dd1346e6f5d7227), [`8b0726c1106fce88b782e676498eabf0718b2619`](https://github.com/wevm/wagmi/commit/8b0726c1106fce88b782e676498eabf0718b2619)]:
+  - @wagmi/connectors@5.6.0
+  - @wagmi/core@2.16.0
+
+## 2.13.5
+
+### Patch Changes
+
+- [#4447](https://github.com/wevm/wagmi/pull/4447) [`244f7777d9d227b3134d4cb9b9dda64f50cbddd3`](https://github.com/wevm/wagmi/commit/244f7777d9d227b3134d4cb9b9dda64f50cbddd3) Thanks [@Aerilym](https://github.com/Aerilym)! - Fixed config parameter passing in useSimulateContract and useEstimateGas
+
+## 2.13.4
+
+### Patch Changes
+
+- [`2f79a3da4872d6158569017b1927a07a1ff5e7ba`](https://github.com/wevm/wagmi/commit/2f79a3da4872d6158569017b1927a07a1ff5e7ba) Thanks [@tmm](https://github.com/tmm)! - Exported `injected` and `mock`.
+
+## 2.13.3
+
+### Patch Changes
+
+- [#4433](https://github.com/wevm/wagmi/pull/4433) [`06e186cd679b27fe195309110e766fcf46d4efbc`](https://github.com/wevm/wagmi/commit/06e186cd679b27fe195309110e766fcf46d4efbc) Thanks [@Aerilym](https://github.com/Aerilym)! - Bumped Metamask SDK version to `0.31.1`.
+
+- Updated dependencies [[`06e186cd679b27fe195309110e766fcf46d4efbc`](https://github.com/wevm/wagmi/commit/06e186cd679b27fe195309110e766fcf46d4efbc)]:
+  - @wagmi/connectors@5.5.3
+  - @wagmi/core@2.15.2
+
+## 2.13.2
+
+### Patch Changes
+
+- Updated dependencies [[`e563ef69130a511fd6f3f72ed4cd4fbe1390541f`](https://github.com/wevm/wagmi/commit/e563ef69130a511fd6f3f72ed4cd4fbe1390541f)]:
+  - @wagmi/connectors@5.5.2
+
+## 2.13.1
+
+### Patch Changes
+
+- [`b8bbb409f4934538e3dd6cac5aaf7346292d0693`](https://github.com/wevm/wagmi/commit/b8bbb409f4934538e3dd6cac5aaf7346292d0693) Thanks [@jxom](https://github.com/jxom)! - Fixed issue where `null` gas would accidentally pass through.
+
+- Updated dependencies [[`b8bbb409f4934538e3dd6cac5aaf7346292d0693`](https://github.com/wevm/wagmi/commit/b8bbb409f4934538e3dd6cac5aaf7346292d0693)]:
+  - @wagmi/core@2.15.1
+  - @wagmi/connectors@5.5.1
+
+## 2.13.0
+
+### Minor Changes
+
+- [#4417](https://github.com/wevm/wagmi/pull/4417) [`42e65ea4fea99c639817088bba915e0933d17141`](https://github.com/wevm/wagmi/commit/42e65ea4fea99c639817088bba915e0933d17141) Thanks [@jxom](https://github.com/jxom)! - Removed simulation in `writeContract` & `sendTransaction`.
+
+### Patch Changes
+
+- Updated dependencies [[`42e65ea4fea99c639817088bba915e0933d17141`](https://github.com/wevm/wagmi/commit/42e65ea4fea99c639817088bba915e0933d17141)]:
+  - @wagmi/connectors@6.0.0
+  - @wagmi/core@2.15.0
+
+## 2.12.33
+
+### Patch Changes
+
+- Updated dependencies [[`7ca62b44cd997d48f92c2b81343726a5908aa00b`](https://github.com/wevm/wagmi/commit/7ca62b44cd997d48f92c2b81343726a5908aa00b)]:
+  - @wagmi/connectors@5.4.0
+
+## 2.12.32
+
+### Patch Changes
+
+- Updated dependencies [[`a13aa8d7c38eb3cc8171a02d6302e6d12cf6bcb3`](https://github.com/wevm/wagmi/commit/a13aa8d7c38eb3cc8171a02d6302e6d12cf6bcb3), [`a13aa8d7c38eb3cc8171a02d6302e6d12cf6bcb3`](https://github.com/wevm/wagmi/commit/a13aa8d7c38eb3cc8171a02d6302e6d12cf6bcb3)]:
+  - @wagmi/core@2.14.6
+  - @wagmi/connectors@5.3.10
+
+## 2.12.31
+
+### Patch Changes
+
+- Updated dependencies [[`b12a04eeec985c48d2feac94b011d41fb29ca23e`](https://github.com/wevm/wagmi/commit/b12a04eeec985c48d2feac94b011d41fb29ca23e)]:
+  - @wagmi/connectors@5.3.9
+
+## 2.12.30
+
+### Patch Changes
+
+- Updated dependencies [[`6b9bbacdc7bffd44fc2165362a5e65fd434e7646`](https://github.com/wevm/wagmi/commit/6b9bbacdc7bffd44fc2165362a5e65fd434e7646), [`dac62dc99a0679fa632a0fae49873d6053d06b35`](https://github.com/wevm/wagmi/commit/dac62dc99a0679fa632a0fae49873d6053d06b35)]:
+  - @wagmi/core@2.14.5
+  - @wagmi/connectors@5.3.8
+
 ## 2.12.29
 
 ### Patch Changes

@@ -34,9 +34,6 @@ export type InjectedParameters = {
   unstable_shimAsyncInject?: boolean | number | undefined
 }
 
-// Regex of wallets/providers that can accurately simulate contract calls & display contract revert reasons.
-const supportsSimulationIdRegex = /(rabby|trustwallet)/
-
 injected.type = 'injected' as const
 export function injected(parameters: InjectedParameters = {}) {
   const { shimDisconnect = true, unstable_shimAsyncInject } = parameters
@@ -91,8 +88,9 @@ export function injected(parameters: InjectedParameters = {}) {
     get name() {
       return getTarget().name
     },
+    /** @deprecated */
     get supportsSimulation() {
-      return supportsSimulationIdRegex.test(this.id.toLowerCase())
+      return true
     },
     type: injected.type,
     async setup() {

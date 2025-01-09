@@ -88,3 +88,25 @@ export const noopStorage = {
   setItem: () => {},
   removeItem: () => {},
 } satisfies BaseStorage
+
+export function getDefaultStorage() {
+  const storage = (() => {
+    if (typeof window !== 'undefined' && window.localStorage)
+      return window.localStorage
+    return noopStorage
+  })()
+  return {
+    getItem(key) {
+      return storage.getItem(key)
+    },
+    removeItem(key) {
+      storage.removeItem(key)
+    },
+    setItem(key, value) {
+      try {
+        storage.setItem(key, value)
+        // silence errors by default (QuotaExceededError, SecurityError, etc.)
+      } catch {}
+    },
+  } satisfies BaseStorage
+}

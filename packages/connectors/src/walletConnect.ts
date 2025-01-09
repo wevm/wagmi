@@ -78,7 +78,11 @@ export function walletConnect(parameters: WalletConnectParameters) {
 
   type Provider = Awaited<ReturnType<(typeof EthereumProvider)['init']>>
   type Properties = {
-    connect(parameters?: { chainId?: number; pairingTopic?: string }): Promise<{
+    connect(parameters?: {
+      chainId?: number | undefined
+      isReconnecting?: boolean | undefined
+      pairingTopic?: string | undefined
+    }): Promise<{
       accounts: readonly Address[]
       chainId: number
     }>

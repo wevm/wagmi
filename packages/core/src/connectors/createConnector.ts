@@ -37,7 +37,8 @@ export type CreateConnectorFn<
     readonly icon?: string | undefined
     readonly id: string
     readonly name: string
-    readonly rdns?: string | undefined
+    readonly rdns?: string | readonly string[] | undefined
+    /** @deprecated */
     readonly supportsSimulation?: boolean | undefined
     readonly type: string
 
@@ -81,6 +82,12 @@ export function createConnector<
   provider,
   properties extends Record<string, unknown> = Record<string, unknown>,
   storageItem extends Record<string, unknown> = Record<string, unknown>,
->(createConnectorFn: CreateConnectorFn<provider, properties, storageItem>) {
+  ///
+  createConnectorFn extends CreateConnectorFn<
+    provider,
+    properties,
+    storageItem
+  > = CreateConnectorFn<provider, properties, storageItem>,
+>(createConnectorFn: createConnectorFn) {
   return createConnectorFn
 }

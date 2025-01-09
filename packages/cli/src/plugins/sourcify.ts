@@ -157,6 +157,7 @@ type ChainId =
   | 11297108099
   | typeof chain.polygon.id
   | typeof chain.polygonMumbai.id
+  | typeof chain.polygonAmoy.id
   | 336
   | 57
   | 5700

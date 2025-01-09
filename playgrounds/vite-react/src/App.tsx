@@ -92,7 +92,12 @@ function Connect() {
       {connectors.map((connector) => (
         <button
           key={connector.uid}
-          onClick={() => connect({ connector, chainId })}
+          onClick={() =>
+            connect({
+              connector,
+              chainId,
+            })
+          }
           type="button"
         >
           {connector.name}
