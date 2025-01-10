@@ -51,3 +51,15 @@ test('fails to fetch for unverified contract', () => {
     '[Error: Contract source code not verified]',
   )
 })
+
+test('fetches implementation ABI when tryFetchProxyImplementation is true', async () => {
+  expect(
+    blockExplorer({
+      apiKey,
+      baseUrl,
+      chainId: 1,
+      contracts: [{ name: 'WagmiMintExample', address: { 1: address } }],
+      tryFetchProxyImplementation: true,
+    }).contracts?.(),
+  ).resolves.toMatchSnapshot()
+})

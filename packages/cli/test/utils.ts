@@ -3,6 +3,7 @@ import fixtures from 'fixturez'
 import { default as fs } from 'fs-extra'
 import { http, HttpResponse } from 'msw'
 import * as path from 'pathe'
+import { pad } from 'viem'
 import { vi } from 'vitest'
 
 const f = fixtures(__dirname)
@@ -168,6 +169,8 @@ export const baseUrl = 'https://api.etherscan.io/api'
 export const apiKey = 'abc'
 export const invalidApiKey = 'xyz'
 export const address = '0xaf0326d92b97df1221759476b072abfd8084f9be'
+export const implementationAddress =
+  '0x43506849d7c04f9138d1a2050bbf3a0c054402dd'
 export const unverifiedContractAddress =
   '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e'
 export const timeoutAddress = '0xecb504d39723b0be0e3a9aa33d646642d1051ee1'
@@ -209,6 +212,17 @@ export const handlers = [
 
     if (
       url.search ===
+      `?module=contract&action=getabi&address=${implementationAddress}&apikey=${apiKey}`
+    )
+      return HttpResponse.json({
+        status: '1',
+        message: 'OK',
+        result:
+          '[{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"guy","type":"address"},{"name":"wad","type":"uint256"}],"name":"approve","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"src","type":"address"},{"name":"dst","type":"address"},{"name":"wad","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"wad","type":"uint256"}],"name":"withdraw","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"dst","type":"address"},{"name":"wad","type":"uint256"}],"name":"transfer","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"deposit","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"payable":true,"stateMutability":"payable","type":"fallback"},{"anonymous":false,"inputs":[{"indexed":true,"name":"src","type":"address"},{"indexed":true,"name":"guy","type":"address"},{"indexed":false,"name":"wad","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"src","type":"address"},{"indexed":true,"name":"dst","type":"address"},{"indexed":false,"name":"wad","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"dst","type":"address"},{"indexed":false,"name":"wad","type":"uint256"}],"name":"Deposit","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"src","type":"address"},{"indexed":false,"name":"wad","type":"uint256"}],"name":"Withdrawal","type":"event"}]',
+      })
+
+    if (
+      url.search ===
       `?module=contract&action=getabi&address=${timeoutAddress}&apikey=${apiKey}`
     ) {
       await new Promise((resolve) => setTimeout(resolve, 10_000))
@@ -216,5 +230,23 @@ export const handlers = [
     }
 
     throw new Error(`Unhandled request: ${url.search}`)
+  }),
+  http.post('https://cloudflare-eth.com', async ({ request }) => {
+    const body = (await request.json()) as any
+
+    if (
+      body.method === 'eth_getStorageAt' &&
+      body.params[0] === address &&
+      body.params[1] ===
+        '0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc' // ERC-1967 Implementation Slot
+    ) {
+      return HttpResponse.json({
+        status: '1',
+        message: 'OK',
+        result: pad(implementationAddress),
+      })
+    }
+
+    throw new Error(`Unhandled RPC request: ${JSON.stringify(body)}`)
   }),
 ]

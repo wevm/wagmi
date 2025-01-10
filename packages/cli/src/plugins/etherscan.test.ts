@@ -75,3 +75,14 @@ test('invalid api key', () => {
     }).contracts?.(),
   ).rejects.toThrowErrorMatchingInlineSnapshot('[Error: Invalid API Key]')
 })
+
+test('fetches implementation ABI when tryFetchProxyImplementation is true', async () => {
+  expect(
+    etherscan({
+      apiKey,
+      chainId: 1,
+      contracts: [{ name: 'WagmiMintExample', address: { 1: address } }],
+      tryFetchProxyImplementation: true,
+    }).contracts?.(),
+  ).resolves.toMatchSnapshot()
+})
