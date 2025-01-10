@@ -3,7 +3,7 @@ import fixtures from 'fixturez'
 import { default as fs } from 'fs-extra'
 import { http, HttpResponse } from 'msw'
 import * as path from 'pathe'
-import { pad } from 'viem'
+import { pad, zeroHash } from 'viem'
 import { vi } from 'vitest'
 
 const f = fixtures(__dirname)
@@ -169,6 +169,7 @@ export const baseUrl = 'https://api.etherscan.io/api'
 export const apiKey = 'abc'
 export const invalidApiKey = 'xyz'
 export const address = '0xaf0326d92b97df1221759476b072abfd8084f9be'
+export const proxyAddress = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
 export const implementationAddress =
   '0x43506849d7c04f9138d1a2050bbf3a0c054402dd'
 export const unverifiedContractAddress =
@@ -236,15 +237,22 @@ export const handlers = [
 
     if (
       body.method === 'eth_getStorageAt' &&
-      body.params[0] === address &&
       body.params[1] ===
         '0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc' // ERC-1967 Implementation Slot
     ) {
-      return HttpResponse.json({
-        status: '1',
-        message: 'OK',
-        result: pad(implementationAddress),
-      })
+      if (body.params[0] === proxyAddress)
+        return HttpResponse.json({
+          status: '1',
+          message: 'OK',
+          result: pad(implementationAddress),
+        })
+
+      if (body.params[0] === address)
+        return HttpResponse.json({
+          status: '1',
+          message: 'OK',
+          result: zeroHash,
+        })
     }
 
     throw new Error(`Unhandled RPC request: ${JSON.stringify(body)}`)

@@ -6,6 +6,7 @@ import {
   apiKey,
   handlers,
   invalidApiKey,
+  proxyAddress,
   timeoutAddress,
   unverifiedContractAddress,
 } from '../../test/utils.js'
@@ -77,6 +78,17 @@ test('invalid api key', () => {
 })
 
 test('fetches implementation ABI when tryFetchProxyImplementation is true', async () => {
+  expect(
+    etherscan({
+      apiKey,
+      chainId: 1,
+      contracts: [{ name: 'ProxyExample', address: { 1: proxyAddress } }],
+      tryFetchProxyImplementation: true,
+    }).contracts?.(),
+  ).resolves.toMatchSnapshot()
+})
+
+test('fetches ABI when tryFetchProxyImplementation is true but contract is not a proxy', async () => {
   expect(
     etherscan({
       apiKey,

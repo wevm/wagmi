@@ -6,6 +6,7 @@ import {
   apiKey,
   baseUrl,
   handlers,
+  proxyAddress,
   unverifiedContractAddress,
 } from '../../test/utils.js'
 import { blockExplorer } from './blockExplorer.js'
@@ -53,6 +54,18 @@ test('fails to fetch for unverified contract', () => {
 })
 
 test('fetches implementation ABI when tryFetchProxyImplementation is true', async () => {
+  expect(
+    blockExplorer({
+      apiKey,
+      baseUrl,
+      chainId: 1,
+      contracts: [{ name: 'ProxyExample', address: { 1: proxyAddress } }],
+      tryFetchProxyImplementation: true,
+    }).contracts?.(),
+  ).resolves.toMatchSnapshot()
+})
+
+test('fetches ABI when tryFetchProxyImplementation is true but contract is not a proxy', async () => {
   expect(
     blockExplorer({
       apiKey,
