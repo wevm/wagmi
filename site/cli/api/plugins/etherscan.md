@@ -30,20 +30,6 @@ export default defineConfig({
 })
 ```
 
-The following Etherscan block explorers and their testnets are supported (e.g. Ethereum Mainnet and Sepolia):
-
-- [Ethereum](https://etherscan.io)
-- [Arbiscan](https://arbiscan.io)
-- [SnowScan](https://snowscan.xyz)
-- [BscScan](https://bscscan.com)
-- [FTMScan](https://ftmscan.com)
-- [HecoScan](https://hecoinfo.com)
-- [Optimistic Etherscan](https://optimistic.etherscan.io)
-- [PolygonScan](https://polygonscan.com)
-- [CeloScan](https://celoscan.io)
-- [FraxScan](https://fraxscan.com)
-- [GnosisScan](https://gnosisscan.io)
-
 ## Configuration
 
 ```ts
@@ -109,6 +95,8 @@ export default defineConfig({
 `number`
 
 Chain ID to use for fetching ABI. If [`address`](/cli/config/options#address) is an object, `chainId` is used to select the address.
+
+View supported chains on the [Etherscan docs](https://docs.etherscan.io/etherscan-v2/getting-started/supported-chains).
 
 ```ts
 import { defineConfig } from '@wagmi/cli'
