@@ -63,6 +63,8 @@ export function etherscan<chainId extends ChainId>(
   })
 }
 
+// Supported chains
+// https://docs.etherscan.io/etherscan-v2/getting-started/supported-chains
 type ChainId =
   | 1 // Ethereum Mainnet
   | 11155111 // Sepolia Testnet
