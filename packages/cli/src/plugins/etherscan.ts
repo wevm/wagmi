@@ -1,6 +1,15 @@
+import { mkdir, writeFile } from 'node:fs/promises'
+import type { Abi } from 'abitype'
+import { Address as AddressSchema } from 'abitype/zod'
+import { camelCase } from 'change-case'
+import { join } from 'pathe'
+import type { Address } from 'viem'
+import { z } from 'zod'
+
 import type { ContractConfig } from '../config.js'
+import { fromZodError } from '../errors.js'
 import type { Compute } from '../types.js'
-import { blockExplorer } from './blockExplorer.js'
+import { fetch, getCacheDir } from './fetch.js'
 
 export type EtherscanConfig<chainId extends number> = {
   /**
@@ -27,6 +36,12 @@ export type EtherscanConfig<chainId extends number> = {
    * Contracts to fetch ABIs for.
    */
   contracts: Compute<Omit<ContractConfig<ChainId, chainId>, 'abi'>>[]
+  /**
+   * Whether to try fetching proxy implementation address of the contract
+   *
+   * @default false
+   */
+  tryFetchProxyImplementation?: boolean | undefined
 }
 
 /**
@@ -35,7 +50,12 @@ export type EtherscanConfig<chainId extends number> = {
 export function etherscan<chainId extends ChainId>(
   config: EtherscanConfig<chainId>,
 ) {
-  const { apiKey, cacheDuration, chainId } = config
+  const {
+    apiKey,
+    cacheDuration = 1_800_000,
+    chainId,
+    tryFetchProxyImplementation = false,
+  } = config
 
   const contracts = config.contracts.map((x) => ({
     ...x,
@@ -43,25 +63,135 @@ export function etherscan<chainId extends ChainId>(
       typeof x.address === 'string' ? { [chainId]: x.address } : x.address,
   })) as Omit<ContractConfig, 'abi'>[]
 
-  return blockExplorer({
-    apiKey,
-    baseUrl: 'https://api.etherscan.io/v2/api',
+  const name = 'Etherscan'
+
+  const getCacheKey: Parameters<typeof fetch>[0]['getCacheKey'] = ({
+    contract,
+  }) => {
+    if (typeof contract.address === 'string')
+      return `${camelCase(name)}:${contract.address}`
+    return `${camelCase(name)}:${JSON.stringify(contract.address)}`
+  }
+
+  return fetch({
     cacheDuration,
-    chainId,
     contracts,
-    getAddress({ address }) {
-      if (!address) throw new Error('address is required')
-      if (typeof address === 'string') return address
-      const contractAddress = address[chainId]
-      if (!contractAddress)
-        throw new Error(
-          `No address found for chainId "${chainId}". Make sure chainId "${chainId}" is set as an address.`,
-        )
-      return contractAddress
+    name,
+    getCacheKey,
+    async parse({ response }) {
+      const json = await response.json()
+      const parsed = await GetAbiResponse.safeParseAsync(json)
+      if (!parsed.success)
+        throw fromZodError(parsed.error, { prefix: 'Invalid response' })
+      if (parsed.data.status === '0') throw new Error(parsed.data.result)
+      return parsed.data.result
     },
-    name: 'Etherscan',
+    async request(contract) {
+      if (!contract.address) throw new Error('address is required')
+
+      const resolvedAddress = (() => {
+        if (!contract.address) throw new Error('address is required')
+        if (typeof contract.address === 'string') return contract.address
+        const contractAddress = contract.address[chainId]
+        if (!contractAddress)
+          throw new Error(
+            `No address found for chainId "${chainId}". Make sure chainId "${chainId}" is set as an address.`,
+          )
+        return contractAddress
+      })()
+
+      const options = {
+        address: resolvedAddress,
+        apiKey,
+        chainId,
+      }
+
+      let abi: Abi | undefined
+      const implementationAddress = await (async () => {
+        if (!tryFetchProxyImplementation) return
+        const json = await globalThis
+          .fetch(buildUrl({ ...options, action: 'getsourcecode' }))
+          .then((res) => res.json())
+        const parsed = await GetSourceCodeResponse.safeParseAsync(json)
+        if (!parsed.success)
+          throw fromZodError(parsed.error, { prefix: 'Invalid response' })
+        if (parsed.data.status === '0') throw new Error(parsed.data.result)
+        if (!parsed.data.result[0]) return
+        abi = parsed.data.result[0].ABI
+        return parsed.data.result[0].Implementation as Address
+      })()
+
+      if (abi) {
+        const cacheDir = getCacheDir()
+        await mkdir(cacheDir, { recursive: true })
+        const cacheKey = getCacheKey({ contract })
+        const cacheFilePath = join(cacheDir, `${cacheKey}.json`)
+        await writeFile(
+          cacheFilePath,
+          `${JSON.stringify({ abi, timestamp: Date.now() + cacheDuration }, undefined, 2)}\n`,
+        )
+      }
+
+      return {
+        url: buildUrl({
+          ...options,
+          action: 'getabi',
+          address: implementationAddress || resolvedAddress,
+        }),
+      }
+    },
   })
 }
+
+function buildUrl(options: {
+  action: 'getabi' | 'getsourcecode'
+  address: Address
+  apiKey: string
+  chainId: ChainId | undefined
+}) {
+  const baseUrl = 'https://api.etherscan.io/v2/api'
+  const { action, address, apiKey, chainId } = options
+  return `${baseUrl}?${chainId ? `chainId=${chainId}&` : ''}module=contract&action=${action}&address=${address}${apiKey ? `&apikey=${apiKey}` : ''}`
+}
+
+const GetAbiResponse = z.discriminatedUnion('status', [
+  z.object({
+    status: z.literal('1'),
+    message: z.literal('OK'),
+    result: z.string().transform((val) => JSON.parse(val) as Abi),
+  }),
+  z.object({
+    status: z.literal('0'),
+    message: z.literal('NOTOK'),
+    result: z.string(),
+  }),
+])
+
+const GetSourceCodeResponse = z.discriminatedUnion('status', [
+  z.object({
+    status: z.literal('1'),
+    message: z.literal('OK'),
+    result: z.array(
+      z.discriminatedUnion('Proxy', [
+        z.object({
+          ABI: z.string().transform((val) => JSON.parse(val) as Abi),
+          Implementation: AddressSchema,
+          Proxy: z.literal('1'),
+        }),
+        z.object({
+          ABI: z.string().transform((val) => JSON.parse(val) as Abi),
+          Implementation: z.string(),
+          Proxy: z.literal('0'),
+        }),
+      ]),
+    ),
+  }),
+  z.object({
+    status: z.literal('0'),
+    message: z.literal('NOTOK'),
+    result: z.string(),
+  }),
+])
 
 // Supported chains
 // https://docs.etherscan.io/etherscan-v2/getting-started/supported-chains
