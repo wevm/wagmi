@@ -52,11 +52,6 @@ export function useSponsors() {
           img: 'zksync-light.svg',
         },
         {
-          name: 'Brave',
-          url: 'https://brave.com',
-          img: 'brave-light.svg',
-        },
-        {
           name: 'Linea',
           url: 'https://linea.build',
           img: 'linea-light.svg',
@@ -162,11 +157,6 @@ export function useSponsors() {
           name: 'Thirdweb',
           url: 'https://thirdweb.com',
           img: 'thirdweb-light.svg',
-        },
-        {
-          name: 'Uxuy',
-          url: 'https://uxuy.com',
-          img: 'uxuy-light.svg',
         },
         {
           name: 'Polymarket',
