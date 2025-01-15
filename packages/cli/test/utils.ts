@@ -167,7 +167,7 @@ export async function typecheck(project: string) {
   }
 }
 
-export const baseUrl = 'https://api.etherscan.io/api'
+export const baseUrl = 'https://api.etherscan.io/v2/api'
 export const apiKey = 'abc'
 export const invalidApiKey = 'xyz'
 export const address = '0xaf0326d92b97df1221759476b072abfd8084f9be'
@@ -178,9 +178,10 @@ export const timeoutAddress = '0xecb504d39723b0be0e3a9aa33d646642d1051ee1'
 export const handlers = [
   http.get(baseUrl, async ({ request }) => {
     const url = new URL(request.url)
+    const search = url.search.replace(/^\?chainId=\d&/, '?')
 
     if (
-      url.search ===
+      search ===
       `?module=contract&action=getabi&address=${unverifiedContractAddress}&apikey=${apiKey}`
     )
       return HttpResponse.json({
@@ -190,7 +191,7 @@ export const handlers = [
       })
 
     if (
-      url.search ===
+      search ===
       `?module=contract&action=getabi&address=${timeoutAddress}&apikey=${invalidApiKey}`
     )
       return HttpResponse.json({
@@ -200,7 +201,7 @@ export const handlers = [
       })
 
     if (
-      url.search ===
+      search ===
       `?module=contract&action=getabi&address=${address}&apikey=${apiKey}`
     )
       return HttpResponse.json({
@@ -211,13 +212,13 @@ export const handlers = [
       })
 
     if (
-      url.search ===
+      search ===
       `?module=contract&action=getabi&address=${timeoutAddress}&apikey=${apiKey}`
     ) {
       await new Promise((resolve) => setTimeout(resolve, 10_000))
       return HttpResponse.json({})
     }
 
-    throw new Error(`Unhandled request: ${url.search}`)
+    throw new Error(`Unhandled request: ${search}`)
   }),
 ]
