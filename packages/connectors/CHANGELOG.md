@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 5.7.4
+
+### Patch Changes
+
+- [#4505](https://github.com/wevm/wagmi/pull/4505) [`c8a257e0f6d2ece013b873895c35769a8a804fdc`](https://github.com/wevm/wagmi/commit/c8a257e0f6d2ece013b873895c35769a8a804fdc) Thanks [@chakra-guy](https://github.com/chakra-guy)! - Bumped Metamask SDK Version (changes include [bug fixes and minor changes](https://github.com/MetaMask/metamask-sdk/pull/1194)).
+
 ## 5.7.3
 
 ### Patch Changes
