@@ -42,6 +42,7 @@ export type FetchConfig = {
    */
   request: (config: {
     address?: ContractConfig['address'] | undefined
+    name: ContractConfig['name']
   }) =>
     | { url: RequestInfo; init?: RequestInit | undefined }
     | Promise<{ url: RequestInfo; init?: RequestInit | undefined }>
@@ -69,7 +70,7 @@ export function fetch(config: FetchConfig): FetchResult {
 
   return {
     async contracts() {
-      const cacheDir = join(homedir(), '.wagmi-cli/plugins/fetch/cache')
+      const cacheDir = getCacheDir()
       await mkdir(cacheDir, { recursive: true })
 
       const timestamp = Date.now() + cacheDuration
@@ -119,4 +120,8 @@ export function fetch(config: FetchConfig): FetchResult {
     },
     name,
   }
+}
+
+export function getCacheDir() {
+  return join(homedir(), '.wagmi-cli/plugins/fetch/cache')
 }
