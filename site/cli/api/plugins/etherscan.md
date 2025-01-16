@@ -150,3 +150,33 @@ export default defineConfig({
   ],
 })
 ```
+
+### tryFetchProxyImplementation
+
+`boolean | undefined`
+
+- Whether to try fetching proxy implementation address of the contract.
+- Defaults to `false`.
+
+```ts
+import { defineConfig } from '@wagmi/cli'
+import { blockExplorer } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    etherscan({
+      apiKey: process.env.ETHERSCAN_API_KEY,
+      chainId: 1, 
+      contracts: [
+        {
+          name: 'FiatToken',
+          address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+        },
+      ],
+      tryFetchProxyImplementation: true, // [!code focus]
+    }),
+  ],
+})
+```
+
+
