@@ -246,6 +246,12 @@ export {
 } from '../hooks/useReconnect.js'
 
 export {
+  type UseSendEip712TransactionParameters,
+  type UseSendEip712TransactionReturnType,
+  useSendEip712Transaction,
+} from '../hooks/useSendEip712Transaction.js'
+
+export {
   type UseSendTransactionParameters,
   type UseSendTransactionReturnType,
   useSendTransaction,

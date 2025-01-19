@@ -8,7 +8,7 @@ import {
   createTestClient,
 } from 'viem'
 
-import { type Chain, mainnet, mainnet2, optimism } from './chains.js'
+import { type Chain, mainnet, mainnet2, optimism, zksync } from './chains.js'
 
 export const mainnetTestClient = createTestClient({
   mode: 'anvil',
