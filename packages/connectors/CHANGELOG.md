@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 5.7.5
+
+### Patch Changes
+
+- [#4512](https://github.com/wevm/wagmi/pull/4512) [`a257e8d4f97431a4af872cda1817b4ae17c7bbed`](https://github.com/wevm/wagmi/commit/a257e8d4f97431a4af872cda1817b4ae17c7bbed) Thanks [@EdouardBougon](https://github.com/EdouardBougon)! - Fixed MetaMask switchChain/addChain handling.
+
 ## 5.7.4
 
 ### Patch Changes
