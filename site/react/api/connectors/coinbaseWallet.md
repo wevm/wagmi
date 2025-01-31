@@ -1,5 +1,5 @@
 <script setup>
-const packageName = 'wagmi'
+const packageName = 'wagmi niche'
 const connectorsPackageName = 'wagmi/connectors'
 </script>
 
