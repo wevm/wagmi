@@ -1,5 +1,13 @@
 # @wagmi/connectors
 
+## 5.7.6
+
+### Patch Changes
+
+- [#4524](https://github.com/wevm/wagmi/pull/4524) [`639952c97f0fe3927106f42d3c9f7f366cdf7f7a`](https://github.com/wevm/wagmi/commit/639952c97f0fe3927106f42d3c9f7f366cdf7f7a) Thanks [@chakra-guy](https://github.com/chakra-guy)! - Updated MetaMask SDK.
+
+- [#4525](https://github.com/wevm/wagmi/pull/4525) [`5aa2c095f7bfb6dfcf91c6945c3e1f9c9dd05766`](https://github.com/wevm/wagmi/commit/5aa2c095f7bfb6dfcf91c6945c3e1f9c9dd05766) Thanks [@EdouardBougon](https://github.com/EdouardBougon)! - Added Phantom flag to Injected Connector.
+
 ## 5.7.5
 
 ### Patch Changes
