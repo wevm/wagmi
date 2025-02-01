@@ -2,4 +2,4 @@
 "@wagmi/connectors": patch
 ---
 
-Fixed phantom wallet trying to make itself look like MetaMask
+Added Phantom flag to Injected Connector.
