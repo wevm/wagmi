@@ -568,6 +568,7 @@ const targetMap = {
           'isOneInchIOSWallet',
           'isOneInchAndroidWallet',
           'isOpera',
+          'isPhantom',
           'isPortal',
           'isRabby',
           'isTokenPocket',
