@@ -3,9 +3,9 @@ import { homedir } from 'node:os'
 import { join } from 'pathe'
 
 import type { Abi } from 'abitype'
+import { withRetry } from 'viem'
 import type { ContractConfig, Plugin } from '../config.js'
 import type { Compute, RequiredBy } from '../types.js'
-import { withRetry } from 'viem'
 
 export type FetchConfig = {
   /**
@@ -89,25 +89,25 @@ export function fetch(config: FetchConfig): FetchResult {
           try {
             let aborted = false
             const controller = new globalThis.AbortController()
-            const timeout = setTimeout(
-              () => {
-                aborted = true
-                controller.abort()
-              },
-              timeoutDuration,
-            )
+            const timeout = setTimeout(() => {
+              aborted = true
+              controller.abort()
+            }, timeoutDuration)
 
             const { url, init } = await request(contract)
-            await withRetry(async () => {
-              if (aborted) return
-              const response = await globalThis.fetch(url, {
-                ...init,
-                signal: controller.signal,
-              })
-              clearTimeout(timeout)
-  
-              abi = await parse({ response })
-            }, { delay: 1000, retryCount: 2 })
+            await withRetry(
+              async () => {
+                if (aborted) return
+                const response = await globalThis.fetch(url, {
+                  ...init,
+                  signal: controller.signal,
+                })
+                clearTimeout(timeout)
+
+                abi = await parse({ response })
+              },
+              { delay: 1000, retryCount: 2 },
+            )
             await writeFile(
               cacheFilePath,
               `${JSON.stringify({ abi, timestamp }, undefined, 2)}\n`,
