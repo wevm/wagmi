@@ -3,7 +3,7 @@ import type { Abi } from 'abitype'
 import { Address as AddressSchema } from 'abitype/zod'
 import { camelCase } from 'change-case'
 import { join } from 'pathe'
-import type { Address } from 'viem'
+import { withRetry, type Address } from 'viem'
 import { z } from 'zod'
 
 import type { ContractConfig } from '../config.js'
@@ -107,7 +107,7 @@ export function etherscan<chainId extends ChainId>(
       }
 
       let abi: Abi | undefined
-      const implementationAddress = await (async () => {
+      const implementationAddress = await withRetry(async () => {
         if (!tryFetchProxyImplementation) return
         const json = await globalThis
           .fetch(buildUrl({ ...options, action: 'getsourcecode' }))
@@ -119,7 +119,7 @@ export function etherscan<chainId extends ChainId>(
         if (!parsed.data.result[0]) return
         abi = parsed.data.result[0].ABI
         return parsed.data.result[0].Implementation as Address
-      })()
+      }, { delay: 1000, retryCount: 2 })
 
       if (abi) {
         const cacheDir = getCacheDir()
