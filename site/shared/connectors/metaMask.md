@@ -8,7 +8,7 @@ const connectorsPackageName = 'wagmi/connectors'
 
 Connector for [MetaMask SDK](https://github.com/MetaMask/metamask-sdk).
 
-The MetaMask Connector helps you manage wallet connections in your React applications. It supports essential features like connecting, disconnecting, and handling multiple chains, while maintaining compatibility with browser and mobile environments. You can choose between the MetaMask Connector and the Injected Connector—but keep in mind that using the Injected Connector limits your app to the MetaMask browser extension only.
+Check out the [MetaMask SDK docs](https://docs.metamask.io/wallet/connect/metamask-sdk/javascript) for more information.
 
 ## Import
 
