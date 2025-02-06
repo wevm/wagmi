@@ -116,7 +116,3 @@ EIP-6963 defines a standard way for dapps to interact with multiple wallets simu
 When MetaMask SDK detects an EIP-6963-compliant provider (such as MetaMask itself), the connector will automatically replace the default injected provider (like `window.ethereum`) with the one provided by MetaMask SDK.
 
 See the [`rdns` property](https://wagmi.sh/dev/creating-connectors#properties) for more information.
-
-## MetaMask SDK Docs
-
-Check out the [MetaMask SDK docs](https://docs.metamask.io/wallet/connect/metamask-sdk/javascript/react/) for more information.
