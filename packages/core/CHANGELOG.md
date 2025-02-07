@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.16.4
+
+### Patch Changes
+
+- [`507f864d91238bfd423d0e36d3619eb9f6e52eec`](https://github.com/wevm/wagmi/commit/507f864d91238bfd423d0e36d3619eb9f6e52eec) Thanks [@jxom](https://github.com/jxom)! - Updated `@coinbase/wallet-sdk`.
+
 ## 2.16.3
 
 ### Patch Changes
