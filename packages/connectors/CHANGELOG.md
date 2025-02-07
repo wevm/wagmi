@@ -1,5 +1,14 @@
 # @wagmi/connectors
 
+## 5.7.7
+
+### Patch Changes
+
+- [`507f864d91238bfd423d0e36d3619eb9f6e52eec`](https://github.com/wevm/wagmi/commit/507f864d91238bfd423d0e36d3619eb9f6e52eec) Thanks [@jxom](https://github.com/jxom)! - Updated `@coinbase/wallet-sdk`.
+
+- Updated dependencies [[`507f864d91238bfd423d0e36d3619eb9f6e52eec`](https://github.com/wevm/wagmi/commit/507f864d91238bfd423d0e36d3619eb9f6e52eec)]:
+  - @wagmi/core@2.16.4
+
 ## 5.7.6
 
 ### Patch Changes
