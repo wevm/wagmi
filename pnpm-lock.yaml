@@ -172,8 +172,8 @@ importers:
   packages/connectors:
     dependencies:
       '@coinbase/wallet-sdk':
-        specifier: 4.2.3
-        version: 4.2.3
+        specifier: 4.3.0
+        version: 4.3.0
       '@metamask/sdk':
         specifier: 0.32.0
         version: 0.32.0(bufferutil@4.0.8)(encoding@0.1.13)(utf-8-validate@5.0.10)
@@ -1066,8 +1066,8 @@ packages:
   '@coinbase/wallet-sdk@3.9.3':
     resolution: {integrity: sha512-N/A2DRIf0Y3PHc1XAMvbBUu4zisna6qAdqABMZwBMNEfWrXpAwx16pZGkYCLGE+Rvv1edbcB2LYDRnACNcmCiw==}
 
-  '@coinbase/wallet-sdk@4.2.3':
-    resolution: {integrity: sha512-BcyHZ/Ec84z0emORzqdXDv4P0oV+tV3a0OirfA8Ko1JGBIAVvB+hzLvZzCDvnuZx7MTK+Dd8Y9Tjlo446BpCIg==}
+  '@coinbase/wallet-sdk@4.3.0':
+    resolution: {integrity: sha512-T3+SNmiCw4HzDm4we9wCHCxlP0pqCiwKe4sOwPH3YAK2KSKjxPRydKu6UQJrdONFVLG7ujXvbd/6ZqmvJb8rkw==}
 
   '@colors/colors@1.5.0':
     resolution: {integrity: sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==}
@@ -8921,7 +8921,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@coinbase/wallet-sdk@4.2.3':
+  '@coinbase/wallet-sdk@4.3.0':
     dependencies:
       '@noble/hashes': 1.5.0
       clsx: 1.2.1
