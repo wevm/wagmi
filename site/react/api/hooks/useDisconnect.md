@@ -110,4 +110,4 @@ function App() {
 
 ## Action
 
-- [`disconnect`](/core/api/actions/connect)
+- [`disconnect`](/core/api/actions/disconnect)
