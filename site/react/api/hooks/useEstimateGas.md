@@ -125,7 +125,8 @@ import { getConnections, estimateGas } from '@wagmi/core'
 import { parseEther } from 'viem'
 import { config } from './config'
 
-function App() {const connections = getConnections(config)
+function App() {
+  const connections = getConnections(config)
   const result = useEstimateGas({
     connector: connections[0]?.connector, // [!code focus]
     to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
