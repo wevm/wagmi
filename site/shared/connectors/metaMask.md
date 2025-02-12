@@ -8,6 +8,8 @@ const connectorsPackageName = 'wagmi/connectors'
 
 Connector for [MetaMask SDK](https://github.com/MetaMask/metamask-sdk).
 
+Check out the [MetaMask SDK docs](https://docs.metamask.io/wallet/connect/metamask-sdk/javascript) for more information.
+
 ## Import
 
 ```ts-vue
