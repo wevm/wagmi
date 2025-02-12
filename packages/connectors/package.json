@@ -49,14 +49,17 @@
     "@metamask/sdk": "0.32.0",
     "@safe-global/safe-apps-provider": "0.18.5",
     "@safe-global/safe-apps-sdk": "9.1.0",
-    "@walletconnect/ethereum-provider": "2.17.0",
+    "@walletconnect/ethereum-provider": "2.18.0-canary-ak-8",
     "cbw-sdk": "npm:@coinbase/wallet-sdk@3.9.3"
   },
   "devDependencies": {
     "@wagmi/core": "workspace:*",
     "msw": "^2.4.9"
   },
-  "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
+  "contributors": [
+    "awkweb.eth <t@wevm.dev>",
+    "jxom.eth <j@wevm.dev>"
+  ],
   "funding": "https://github.com/sponsors/wevm",
   "keywords": [
     "react",
