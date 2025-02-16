@@ -32,7 +32,7 @@ let count = 0
     res.json(),
   )) as {
     name: string
-    chainId: string
+    chainId: number
   }[]
 
   let content = 'type ChainId =\n'
