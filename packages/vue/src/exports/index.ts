@@ -142,6 +142,12 @@ export {
 } from '../composables/useReconnect.js'
 
 export {
+  type UseSendEip712TransactionParameters,
+  type UseSendEip712TransactionReturnType,
+  useSendEip712Transaction,
+} from '../composables/useSendEip712Transaction.js'
+
+export {
   type UseSendTransactionParameters,
   type UseSendTransactionReturnType,
   useSendTransaction,
