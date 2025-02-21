@@ -64,6 +64,7 @@ For help, discussion about best practices, or any other conversation that would 
 For casual chit-chat with others using the framework:
 
 [Join the Wagmi Discord](https://discord.gg/SghfWBKexF)
+[Join the Wagmi X](https://x.com/wevm_dev)
 
 ## Contributing
 
