@@ -52,9 +52,11 @@ import { type SendCallsParameters } from '@wagmi/core/experimental'
 
 ### account
 
-`Account | Address | undefined`
+`Account | Address | null | undefined`
 
-Account to execute the calls.
+Account to execute the calls. 
+
+If set to `null`, it is assumed that the wallet will handle filling the sender of the calls.
 
 ::: code-group
 ```ts [index.ts]
