@@ -59,7 +59,7 @@ test('behavior: not connected', async () => {
   `)
 })
 
-test('behavior: nullish account & connector passed (infer account from connector)', async () => {
+test('behavior: nullish account (account filled by wallet)', async () => {
   await expect(
     sendCalls(config, {
       account: null,
