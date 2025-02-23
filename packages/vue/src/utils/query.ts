@@ -52,16 +52,16 @@ export { useMutation }
 ////////////////////////////////////////////////////////////////////////////////
 
 export type UseQueryParameters<
-  queryFnData = unknown,
-  error = DefaultError,
-  data = queryFnData,
-  queryKey extends QueryKey = QueryKey,
+  QueryFnData = unknown,
+  Error = DefaultError,
+  Data = QueryFnData,
+  QueryKey extends QueryKey = QueryKey,
 > = Compute<
   DeepMaybeRef<
     ExactPartial<
       Omit<
         DeepUnwrapRef<
-          UseQueryOptions<queryFnData, error, data, queryFnData, queryKey>
+          UseQueryOptions<QueryFnData, Error, Data, QueryFnData, QueryKey>
         >,
         'initialData'
       >
@@ -69,15 +69,15 @@ export type UseQueryParameters<
       // Fix `initialData` type
       initialData?:
         | DeepUnwrapRef<
-            UseQueryOptions<queryFnData, error, data, queryFnData, queryKey>
+            UseQueryOptions<QueryFnData, Error, Data, QueryFnData, QueryKey>
           >['initialData']
         | undefined
     }
   >
 >
 
-export type UseQueryReturnType<data = unknown, error = DefaultError> = Compute<
-  tanstack_UseQueryReturnType<data, error> & {
+export type UseQueryReturnType<Data = unknown, Error = DefaultError> = Compute<
+  tanstack_UseQueryReturnType<Data, Error> & {
     queryKey: QueryKey
   }
 >
@@ -85,18 +85,18 @@ export type UseQueryReturnType<data = unknown, error = DefaultError> = Compute<
 // Adding some basic customization.
 // Ideally we don't have this function, but `import('@tanstack/vue-query').useQuery` currently has some quirks where it is super hard to
 // pass down the inferred `initialData` type because of it's discriminated overload in the on `useQuery`.
-export function useQuery<queryFnData, error, data, queryKey extends QueryKey>(
+export function useQuery<QueryFnData, Error, Data, QueryKey extends QueryKey>(
   parameters: MaybeRef<
-    UseQueryParameters<queryFnData, error, data, queryKey> & {
+    UseQueryParameters<QueryFnData, Error, Data, QueryKey> & {
       queryKey: QueryKey
     }
   >,
-): UseQueryReturnType<data, error> {
+): UseQueryReturnType<Data, Error> {
   const options = computed(() => ({
     ...(unref(parameters) as any),
     queryKeyHashFn: hashFn,
   }))
-  const result = tanstack_useQuery(options) as UseQueryReturnType<data, error>
+  const result = tanstack_useQuery(options) as UseQueryReturnType<Data, Error>
   result.queryKey = unref(options).queryKey as QueryKey
   return result
 }
