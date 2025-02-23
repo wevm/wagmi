@@ -72,8 +72,8 @@ importers:
         specifier: ^5.30.6
         version: 5.30.6(@types/node@20.12.10)(typescript@5.5.4)
       prool:
-        specifier: ^0.0.18
-        version: 0.0.18
+        specifier: ^0.0.23
+        version: 0.0.23
       publint:
         specifier: ^0.2.11
         version: 0.2.11
@@ -6690,8 +6690,8 @@ packages:
     resolution: {integrity: sha512-NxNv/kLguCA7p3jE8oL2aEBsrJWgAakBpgmgK6lpPWV+WuOmY6r2/zbAVnP+T8bQlA0nzHXSJSJW0Hq7ylaD2Q==}
     engines: {node: '>= 6'}
 
-  prool@0.0.18:
-    resolution: {integrity: sha512-pMszBzVUtRs1PgfolsSTbWVaZJy6gq1EGUjKGpO8ERMTwjolFOcdN96TdHybGW5Vcdp2lgcaPitu9FpAY0qliA==}
+  prool@0.0.23:
+    resolution: {integrity: sha512-r1d0DIiVsp7aXqGiNGKmgrqJZa8GjMGEjsgjQO22DEClYYvK+HMPZTQ9diBqleGuwfiRk3lnsWRMbFTRmFbk9g==}
     engines: {node: '>=22'}
     peerDependencies:
       '@pimlico/alto': '*'
@@ -16201,7 +16201,7 @@ snapshots:
       kleur: 3.0.3
       sisteransi: 1.0.5
 
-  prool@0.0.18:
+  prool@0.0.23:
     dependencies:
       change-case: 5.4.4
       eventemitter3: 5.0.1
