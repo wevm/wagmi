@@ -36,8 +36,8 @@ export type GetConnectorClientParameters<
       /**
        * Account to use for the client.
        *
-       * - When not `null`: Account MUST exist on the connector.
-       * - When `null`: Account MAY NOT exist on the connector. This is useful for
+       * - `Account | Address`: An Account MUST exist on the connector.
+       * - `null`: Account MAY NOT exist on the connector. This is useful for
        *   actions that can infer the account from the connector (e.g. sending a
        *   call without a connected account – the user will be prompted to select
        *   an account within the wallet).
