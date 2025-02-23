@@ -64,7 +64,7 @@ After the install completes, pnpm links packages across the project for developm
 The [dev playgrounds](#_5-running-the-dev-playgrounds) and [test suite](#_6-running-the-test-suite) require environment variables to be set. Copy over the following environment variables to `.env`, and fill them out.
 
 ```bash
-VITE_MAINNET_FORK_URL=https://cloudflare-eth.com
+VITE_MAINNET_FORK_URL=https://eth.merkle.io
 VITE_OPTIMISM_FORK_URL=https://mainnet.optimism.io
 
 NEXT_PUBLIC_WC_PROJECT_ID=3fbb6bba6f1de962d911bb5b5c9dba88

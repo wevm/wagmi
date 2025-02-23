@@ -79,6 +79,6 @@ test('behavior: bogus token', async () => {
       function:  decimals()
 
     Docs: https://viem.sh/docs/contract/multicall
-    Version: 2.21.28]
+    Version: viem@2.23.5]
   `)
 })

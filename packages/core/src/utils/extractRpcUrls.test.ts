@@ -69,7 +69,7 @@ test('default', () => {
     }),
   ).toMatchInlineSnapshot(`
     [
-      "https://cloudflare-eth.com",
+      "https://eth.merkle.io",
     ]
   `)
 
@@ -85,7 +85,7 @@ test('default', () => {
     }),
   ).toMatchInlineSnapshot(`
     [
-      "https://cloudflare-eth.com",
+      "https://eth.merkle.io",
       "https://lol.com",
     ]
   `)

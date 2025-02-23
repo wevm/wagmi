@@ -9,14 +9,12 @@ test('exports', () => {
       "getCapabilities",
       "sendCalls",
       "showCallsStatus",
-      "writeContracts",
       "getCallsStatusQueryOptions",
       "getCallsStatusQueryKey",
       "getCapabilitiesQueryOptions",
       "getCapabilitiesQueryKey",
       "sendCallsMutationOptions",
       "showCallsStatusMutationOptions",
-      "writeContractsMutationOptions",
     ]
   `)
 })

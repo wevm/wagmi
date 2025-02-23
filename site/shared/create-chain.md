@@ -28,7 +28,7 @@ export const mainnet = {
   name: 'Ethereum',
   nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
   rpcUrls: {
-    default: { http: ['https://cloudflare-eth.com'] },
+    default: { http: ['https://eth.merkle.io'] },
   },
   blockExplorers: {
     default: { name: 'Etherscan', url: 'https://etherscan.io' },
@@ -56,7 +56,7 @@ export const mainnet = defineChain({
   name: 'Ethereum',
   nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
   rpcUrls: {
-    default: { http: ['https://cloudflare-eth.com'] },
+    default: { http: ['https://eth.merkle.io'] },
   },
   blockExplorers: {
     default: { name: 'Etherscan', url: 'https://etherscan.io' },
