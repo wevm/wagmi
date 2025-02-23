@@ -78,7 +78,7 @@ Use this to use a custom `QueryClient`. Otherwise, the one from the nearest cont
 - Defaults to `0`.
 - If `false`, failed mutations will not retry.
 - If `true`, failed mutations will retry infinitely.
-- If set to an `number`, e.g. `3`, failed mutations will retry until the failed mutations count meets that number.
+- If set to a `number`, e.g. `3`, failed mutations will retry until the failed mutations count meets that number.
 
 #### retryDelay
 
