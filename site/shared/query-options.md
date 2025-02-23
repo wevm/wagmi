@@ -64,15 +64,15 @@ The initial page parameter to be passed to the query function.
 
 #### getPreviousPageParam
 
-This function can be set to automatically get the previous cursor for infinite queries.
+This function can be set to automatically get the previous cursor for infinite queries.  
 The result will also be used to determine the value of `hasPreviousPage`.
 
 `(firstPage: {{TData}}, allPages: {{TData}}[], firstPageParam: {{TPageParam}}, allPageParams: {{TPageParam}}[]) => {{TPageParam}} | undefined | null`
 
 #### getNextPageParam
 
-This function can be set to automatically get the previous cursor for infinite queries.
-The result will also be used to determine the value of `hasPreviousPage`.
+This function can be set to automatically get the next cursor for infinite queries.  
+The result will also be used to determine the value of `hasNextPage`.
 
 `(lastPage: {{TData}}, allPages: {{TData}}[], lastPageParam: {{TPageParam}}, allPageParams: {{TPageParam}}[]) => {{TPageParam}} | undefined | null`
 
