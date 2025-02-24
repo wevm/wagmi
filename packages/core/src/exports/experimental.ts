@@ -31,13 +31,6 @@ export {
   showCallsStatus,
 } from '../experimental/actions/showCallsStatus.js'
 
-export {
-  type WriteContractsErrorType,
-  type WriteContractsParameters,
-  type WriteContractsReturnType,
-  writeContracts,
-} from '../experimental/actions/writeContracts.js'
-
 ////////////////////////////////////////////////////////////////////////////////
 // Tanstack Query
 ////////////////////////////////////////////////////////////////////////////////
@@ -75,11 +68,3 @@ export {
   type ShowCallsStatusVariables,
   showCallsStatusMutationOptions,
 } from '../experimental/query/showCallsStatus.js'
-
-export {
-  type WriteContractsData,
-  type WriteContractsMutate,
-  type WriteContractsMutateAsync,
-  type WriteContractsVariables,
-  writeContractsMutationOptions,
-} from '../experimental/query/writeContracts.js'

@@ -13,6 +13,7 @@ test('setup', () => {
     {
       "config": {
         "key": "fallback",
+        "methods": undefined,
         "name": "Fallback",
         "request": [Function],
         "retryCount": 3,
@@ -27,6 +28,7 @@ test('setup', () => {
           {
             "config": {
               "key": "connector",
+              "methods": undefined,
               "name": "Connector",
               "request": [Function],
               "retryCount": 0,
@@ -40,6 +42,7 @@ test('setup', () => {
           {
             "config": {
               "key": "http",
+              "methods": undefined,
               "name": "HTTP JSON-RPC",
               "request": [Function],
               "retryCount": 0,

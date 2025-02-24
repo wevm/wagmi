@@ -26,9 +26,3 @@ export {
   type UseShowCallsStatusReturnType,
   useShowCallsStatus,
 } from '../experimental/hooks/useShowCallsStatus.js'
-
-export {
-  type UseWriteContractsParameters,
-  type UseWriteContractsReturnType,
-  useWriteContracts,
-} from '../experimental/hooks/useWriteContracts.js'
