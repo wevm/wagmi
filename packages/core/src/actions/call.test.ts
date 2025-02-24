@@ -81,7 +81,7 @@ test('insufficient funds', async () => {
       value:  100000 ETH
 
     Details: Insufficient funds for gas * price + value
-    Version: 2.21.28]
+    Version: viem@2.23.5]
   `)
 })
 
@@ -104,7 +104,7 @@ test('maxFeePerGas less than maxPriorityFeePerGas', async () => {
       maxFeePerGas:          20 gwei
       maxPriorityFeePerGas:  22 gwei
 
-    Version: 2.21.28]
+    Version: viem@2.23.5]
   `)
 })
 
@@ -124,7 +124,7 @@ test('contract revert (contract error)', async () => {
       data:  0xa0712d6800000000000000000000000000000000000000000000000000000000000001a4
 
     Details: execution reverted: revert: Token ID is taken
-    Version: 2.21.28]
+    Version: viem@2.23.5]
   `)
 })
 
@@ -144,6 +144,6 @@ test('contract revert (insufficient params)', async () => {
       data:  0xa0712d68
 
     Details: execution reverted
-    Version: 2.21.28]
+    Version: viem@2.23.5]
   `)
 })

@@ -33,7 +33,16 @@ export type GetConnectorClientParameters<
 > = Compute<
   ChainIdParameter<config, chainId> &
     ConnectorParameter & {
-      account?: Address | Account | undefined
+      /**
+       * Account to use for the client.
+       *
+       * - `Account | Address`: An Account MUST exist on the connector.
+       * - `null`: Account MAY NOT exist on the connector. This is useful for
+       *   actions that can infer the account from the connector (e.g. sending a
+       *   call without a connected account – the user will be prompted to select
+       *   an account within the wallet).
+       */
+      account?: Address | Account | null | undefined
     }
 >
 
@@ -78,7 +87,10 @@ export async function getConnectorClient<
       throw new ConnectorUnavailableReconnectingError({ connector })
 
     const [accounts, chainId] = await Promise.all([
-      connector.getAccounts(),
+      connector.getAccounts().catch((e) => {
+        if (parameters.account === null) return []
+        throw e
+      }),
       connector.getChainId(),
     ])
     connection = {
@@ -107,7 +119,7 @@ export async function getConnectorClient<
 
   // Default using `custom` transport
   const account = parseAccount(parameters.account ?? connection.accounts[0]!)
-  account.address = getAddress(account.address) // TODO: Checksum address as part of `parseAccount`?
+  if (account) account.address = getAddress(account.address) // TODO: Checksum address as part of `parseAccount`?
 
   // If account was provided, check that it exists on the connector
   if (
