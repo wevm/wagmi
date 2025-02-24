@@ -1,5 +1,18 @@
 # wagmi
 
+## 2.14.12
+
+### Patch Changes
+
+- [#4557](https://github.com/wevm/wagmi/pull/4557) [`364ea2b3b0aeb7396b0f38492d1e98856fef1b6c`](https://github.com/wevm/wagmi/commit/364ea2b3b0aeb7396b0f38492d1e98856fef1b6c) Thanks [@jxom](https://github.com/jxom)! - **Experimental (ERC-5792)**:
+
+  - Removed `writeContracts` Action and Hook – use `sendCalls` instead.
+  - Added support for `account: null` in `sendCalls` to cater for sending calls without a connected account (account will be filled by the wallet).
+
+- Updated dependencies [[`364ea2b3b0aeb7396b0f38492d1e98856fef1b6c`](https://github.com/wevm/wagmi/commit/364ea2b3b0aeb7396b0f38492d1e98856fef1b6c)]:
+  - @wagmi/core@2.16.5
+  - @wagmi/connectors@5.7.8
+
 ## 2.14.11
 
 ### Patch Changes
