@@ -233,6 +233,12 @@ If you find Wagmi useful or use it for work, please consider [sponsoring Wagmi](
       <img alt="routescan logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/routescan-light.svg" width="auto" height="50">
     </picture>
   </a>
+  <a href="https://sequence.xyz">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/sequence-dark.svg">
+      <img alt="sequence logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/sequence-light.svg" width="auto" height="50">
+    </picture>
+  </a>
 </p>
 
 [Sponsor Wagmi](https://github.com/sponsors/wevm?metadata_campaign=gh_readme_support_bottom)

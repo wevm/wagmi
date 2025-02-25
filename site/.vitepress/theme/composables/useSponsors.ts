@@ -163,6 +163,11 @@ export function useSponsors() {
           url: 'https://polymarket.com',
           img: 'polymarket-light.svg',
         },
+        {
+          name: 'Sequence',
+          url: 'https://sequence.xyz',
+          img: 'sequence-light.svg',
+        },
       ],
     }
 
