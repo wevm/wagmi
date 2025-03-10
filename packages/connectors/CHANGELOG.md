@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 5.7.9
+
+### Patch Changes
+
+- [#4571](https://github.com/wevm/wagmi/pull/4571) [`5b7101fddb61df56e34b2e02b46bc409e496eaf9`](https://github.com/wevm/wagmi/commit/5b7101fddb61df56e34b2e02b46bc409e496eaf9) Thanks [@ganchoradkov](https://github.com/ganchoradkov)! - Updated `@walletconnect/ethereum-provider` to `2.19.0`
+
 ## 5.7.8
 
 ### Patch Changes
