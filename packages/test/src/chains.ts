@@ -3,6 +3,7 @@ import {
   type Chain as viem_Chain,
   mainnet as viem_mainnet,
   optimism as viem_optimism,
+  zksync as viem_zksync,
 } from 'viem/chains'
 
 import { getRpcUrls } from './utils.js'
@@ -44,8 +45,18 @@ export const optimism = {
   },
 } as const satisfies Chain
 
+export const zksync = {
+  ...getRpcUrls({ port: 8548 }),
+  ...viem_zksync,
+  fork: {
+    blockNumber: 25_734n,
+    url: process.env.VITE_ZKSYNC_FORK_URL ?? 'https://mainnet.era.zksync.io',
+  },
+} as const satisfies Chain
+
 export const chain = {
   mainnet,
   mainnet2,
   optimism,
+  zksync,
 }

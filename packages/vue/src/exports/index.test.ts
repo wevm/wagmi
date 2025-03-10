@@ -30,6 +30,7 @@ test('exports', () => {
       "useEstimateGas",
       "useReadContract",
       "useReconnect",
+      "useSendEip712Transaction",
       "useSendTransaction",
       "useSignMessage",
       "useSignTypedData",

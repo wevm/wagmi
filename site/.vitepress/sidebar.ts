@@ -240,6 +240,10 @@ export function getSidebar() {
           },
           { text: 'useReconnect', link: '/react/api/hooks/useReconnect' },
           {
+            text: 'useSendEip712Transaction',
+            link: '/react/api/hooks/useSendEip712Transaction',
+          },
+          {
             text: 'useSendTransaction',
             link: '/react/api/hooks/useSendTransaction',
           },
@@ -561,6 +565,10 @@ export function getSidebar() {
             link: '/vue/api/composables/useReconnect',
           },
           {
+            text: 'useSendEip712Transaction',
+            link: '/vue/api/composables/useSendEip712Transaction',
+          },
+          {
             text: 'useSendTransaction',
             link: '/vue/api/composables/useSendTransaction',
           },
@@ -867,6 +875,10 @@ export function getSidebar() {
           {
             text: 'readContracts',
             link: '/core/api/actions/readContracts',
+          },
+          {
+            text: 'sendEip712Transaction',
+            link: '/core/api/actions/sendEip712Transaction',
           },
           {
             text: 'sendTransaction',

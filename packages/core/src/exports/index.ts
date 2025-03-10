@@ -287,6 +287,13 @@ export {
 } from '../actions/reconnect.js'
 
 export {
+  type SendEip712TransactionErrorType,
+  type SendEip712TransactionParameters,
+  type SendEip712TransactionReturnType,
+  sendEip712Transaction,
+} from '../actions/sendEip712Transaction.js'
+
+export {
   type SendTransactionErrorType,
   type SendTransactionParameters,
   type SendTransactionReturnType,
