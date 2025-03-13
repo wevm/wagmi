@@ -62,7 +62,7 @@ export async function sendCalls<
 
   return viem_sendCalls(client, {
     ...(rest as any),
-    ...(account ? { account } : {}),
+    ...(typeof account !== 'undefined' ? { account } : {}),
     calls,
     chain: chainId ? { id: chainId } : undefined,
   })

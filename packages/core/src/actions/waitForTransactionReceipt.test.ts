@@ -53,6 +53,6 @@ test('behavior: transaction reverted', async () => {
       nonce:                 43
 
     Details: execution reverted: PartyBid::claim: contribution already claimed
-    Version: 2.21.28]
+    Version: viem@2.23.5]
   `)
 })

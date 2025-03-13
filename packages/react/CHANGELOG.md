@@ -1,5 +1,53 @@
 # wagmi
 
+## 2.14.13
+
+### Patch Changes
+
+- Updated dependencies [[`5b7101fddb61df56e34b2e02b46bc409e496eaf9`](https://github.com/wevm/wagmi/commit/5b7101fddb61df56e34b2e02b46bc409e496eaf9)]:
+  - @wagmi/connectors@5.7.9
+
+## 2.14.12
+
+### Patch Changes
+
+- [`d0c9a86921a4e939373cc6e763284e53f2a2e93c`](https://github.com/wevm/wagmi/commit/d0c9a86921a4e939373cc6e763284e53f2a2e93c) Thanks [@jxom](https://github.com/jxom)! - **Experimental (ERC-5792)**: Added support for `account: null` in `sendCalls` to cater for sending calls without a connected account (account will be filled by the wallet).
+
+- Updated dependencies [[`d0c9a86921a4e939373cc6e763284e53f2a2e93c`](https://github.com/wevm/wagmi/commit/d0c9a86921a4e939373cc6e763284e53f2a2e93c)]:
+  - @wagmi/core@2.16.5
+  - @wagmi/connectors@5.7.8
+
+## 2.14.11
+
+### Patch Changes
+
+- [`507f864d91238bfd423d0e36d3619eb9f6e52eec`](https://github.com/wevm/wagmi/commit/507f864d91238bfd423d0e36d3619eb9f6e52eec) Thanks [@jxom](https://github.com/jxom)! - Updated `@coinbase/wallet-sdk`.
+
+- Updated dependencies [[`507f864d91238bfd423d0e36d3619eb9f6e52eec`](https://github.com/wevm/wagmi/commit/507f864d91238bfd423d0e36d3619eb9f6e52eec)]:
+  - @wagmi/connectors@5.7.7
+  - @wagmi/core@2.16.4
+
+## 2.14.10
+
+### Patch Changes
+
+- Updated dependencies [[`639952c97f0fe3927106f42d3c9f7f366cdf7f7a`](https://github.com/wevm/wagmi/commit/639952c97f0fe3927106f42d3c9f7f366cdf7f7a), [`5aa2c095f7bfb6dfcf91c6945c3e1f9c9dd05766`](https://github.com/wevm/wagmi/commit/5aa2c095f7bfb6dfcf91c6945c3e1f9c9dd05766)]:
+  - @wagmi/connectors@5.7.6
+
+## 2.14.9
+
+### Patch Changes
+
+- Updated dependencies [[`a257e8d4f97431a4af872cda1817b4ae17c7bbed`](https://github.com/wevm/wagmi/commit/a257e8d4f97431a4af872cda1817b4ae17c7bbed)]:
+  - @wagmi/connectors@5.7.5
+
+## 2.14.8
+
+### Patch Changes
+
+- Updated dependencies [[`c8a257e0f6d2ece013b873895c35769a8a804fdc`](https://github.com/wevm/wagmi/commit/c8a257e0f6d2ece013b873895c35769a8a804fdc)]:
+  - @wagmi/connectors@5.7.4
+
 ## 2.14.7
 
 ### Patch Changes

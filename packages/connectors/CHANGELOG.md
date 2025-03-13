@@ -1,5 +1,47 @@
 # @wagmi/connectors
 
+## 5.7.9
+
+### Patch Changes
+
+- [#4571](https://github.com/wevm/wagmi/pull/4571) [`5b7101fddb61df56e34b2e02b46bc409e496eaf9`](https://github.com/wevm/wagmi/commit/5b7101fddb61df56e34b2e02b46bc409e496eaf9) Thanks [@ganchoradkov](https://github.com/ganchoradkov)! - Updated `@walletconnect/ethereum-provider` to `2.19.0`
+
+## 5.7.8
+
+### Patch Changes
+
+- Updated dependencies [[`d0c9a86921a4e939373cc6e763284e53f2a2e93c`](https://github.com/wevm/wagmi/commit/d0c9a86921a4e939373cc6e763284e53f2a2e93c)]:
+  - @wagmi/core@2.16.5
+
+## 5.7.7
+
+### Patch Changes
+
+- [`507f864d91238bfd423d0e36d3619eb9f6e52eec`](https://github.com/wevm/wagmi/commit/507f864d91238bfd423d0e36d3619eb9f6e52eec) Thanks [@jxom](https://github.com/jxom)! - Updated `@coinbase/wallet-sdk`.
+
+- Updated dependencies [[`507f864d91238bfd423d0e36d3619eb9f6e52eec`](https://github.com/wevm/wagmi/commit/507f864d91238bfd423d0e36d3619eb9f6e52eec)]:
+  - @wagmi/core@2.16.4
+
+## 5.7.6
+
+### Patch Changes
+
+- [#4524](https://github.com/wevm/wagmi/pull/4524) [`639952c97f0fe3927106f42d3c9f7f366cdf7f7a`](https://github.com/wevm/wagmi/commit/639952c97f0fe3927106f42d3c9f7f366cdf7f7a) Thanks [@chakra-guy](https://github.com/chakra-guy)! - Updated MetaMask SDK.
+
+- [#4525](https://github.com/wevm/wagmi/pull/4525) [`5aa2c095f7bfb6dfcf91c6945c3e1f9c9dd05766`](https://github.com/wevm/wagmi/commit/5aa2c095f7bfb6dfcf91c6945c3e1f9c9dd05766) Thanks [@EdouardBougon](https://github.com/EdouardBougon)! - Added Phantom flag to Injected Connector.
+
+## 5.7.5
+
+### Patch Changes
+
+- [#4512](https://github.com/wevm/wagmi/pull/4512) [`a257e8d4f97431a4af872cda1817b4ae17c7bbed`](https://github.com/wevm/wagmi/commit/a257e8d4f97431a4af872cda1817b4ae17c7bbed) Thanks [@EdouardBougon](https://github.com/EdouardBougon)! - Fixed MetaMask switchChain/addChain handling.
+
+## 5.7.4
+
+### Patch Changes
+
+- [#4505](https://github.com/wevm/wagmi/pull/4505) [`c8a257e0f6d2ece013b873895c35769a8a804fdc`](https://github.com/wevm/wagmi/commit/c8a257e0f6d2ece013b873895c35769a8a804fdc) Thanks [@chakra-guy](https://github.com/chakra-guy)! - Bumped Metamask SDK Version (changes include [bug fixes and minor changes](https://github.com/MetaMask/metamask-sdk/pull/1194)).
+
 ## 5.7.3
 
 ### Patch Changes

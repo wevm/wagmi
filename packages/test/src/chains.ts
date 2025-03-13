@@ -18,7 +18,7 @@ export type Chain = Compute<
 
 const mainnetFork = {
   blockNumber: 19_258_213n,
-  url: process.env.VITE_MAINNET_FORK_URL ?? 'https://cloudflare-eth.com',
+  url: process.env.VITE_MAINNET_FORK_URL ?? 'https://eth.merkle.io',
 } as const satisfies Fork
 
 export const mainnet = {
