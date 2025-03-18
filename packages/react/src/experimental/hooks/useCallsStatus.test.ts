@@ -9,7 +9,7 @@ import { useSendCalls } from './useSendCalls.js'
 
 const connector = config.connectors[0]!
 
-test.skip('default', async () => {
+test('default', async () => {
   await connect(config, { connector })
 
   const { result } = renderHook(() => useSendCalls())
@@ -54,37 +54,40 @@ test.skip('default', async () => {
   )
   await waitFor(() => expect(result_3.current.isSuccess).toBeTruthy())
 
-  expect(result_3.current.data).toMatchInlineSnapshot(
+  expect(result_3.current.data?.status).toBe('CONFIRMED')
+  expect(
+    result_3.current.data?.receipts?.map((x) => ({
+      ...x,
+      blockHash: undefined,
+    })),
+  ).toMatchInlineSnapshot(
     `
-    {
-      "receipts": [
-        {
-          "blockHash": "0x759f30616acde00a66d2bd83cc0bd011662ff0ca945d599554818fa0f9fdd0d2",
-          "blockNumber": 19258214n,
-          "gasUsed": 21064n,
-          "logs": [],
-          "status": "success",
-          "transactionHash": "0xa81a893ca5596aa105fc10206b9a8bd63df8bd526d8c0594496330f956515b4b",
-        },
-        {
-          "blockHash": "0x759f30616acde00a66d2bd83cc0bd011662ff0ca945d599554818fa0f9fdd0d2",
-          "blockNumber": 19258214n,
-          "gasUsed": 21000n,
-          "logs": [],
-          "status": "success",
-          "transactionHash": "0x63624bbfc73f8bd7629ecb4e00ba521a9967ea9e9098ac17ae5bf500c904da1a",
-        },
-        {
-          "blockHash": "0x759f30616acde00a66d2bd83cc0bd011662ff0ca945d599554818fa0f9fdd0d2",
-          "blockNumber": 19258214n,
-          "gasUsed": 21000n,
-          "logs": [],
-          "status": "success",
-          "transactionHash": "0xc3df1b2f2c76723846a964c0c4d6d11ba423df036e0e636d298416e0f94bda29",
-        },
-      ],
-      "status": "CONFIRMED",
-    }
+    [
+      {
+        "blockHash": undefined,
+        "blockNumber": 19258214n,
+        "gasUsed": 21064n,
+        "logs": [],
+        "status": "success",
+        "transactionHash": "0x13c53b2d4d9da424835525349cd66e553330f323d6fb19458b801ae1f7989a41",
+      },
+      {
+        "blockHash": undefined,
+        "blockNumber": 19258214n,
+        "gasUsed": 21000n,
+        "logs": [],
+        "status": "success",
+        "transactionHash": "0xd8397b3e82b061c26a0c2093f1ceca0c3662a512614f7d6370349e89d0eea007",
+      },
+      {
+        "blockHash": undefined,
+        "blockNumber": 19258214n,
+        "gasUsed": 21000n,
+        "logs": [],
+        "status": "success",
+        "transactionHash": "0x4d26e346593d9ea265bb164b115e89aa92df43b0b8778ac75d4ad28e2a22b101",
+      },
+    ]
   `,
   )
 
