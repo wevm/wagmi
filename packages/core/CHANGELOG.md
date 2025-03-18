@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.16.7
+
+### Patch Changes
+
+- [`a4bd0623eed28e3761a27295831a60ad835f0ee0`](https://github.com/wevm/wagmi/commit/a4bd0623eed28e3761a27295831a60ad835f0ee0) Thanks [@jxom](https://github.com/jxom)! - **Experimental (EIP-5792):** Updated `id` parameter to be optional on `useWaitForCallsStatus`.
+
 ## 2.16.6
 
 ### Patch Changes
