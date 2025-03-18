@@ -32,6 +32,13 @@ export {
 } from '../experimental/actions/showCallsStatus.js'
 
 export {
+  type WaitForCallsStatusErrorType,
+  type WaitForCallsStatusParameters,
+  type WaitForCallsStatusReturnType,
+  waitForCallsStatus,
+} from '../experimental/actions/waitForCallsStatus.js'
+
+export {
   type WriteContractsErrorType,
   type WriteContractsParameters,
   type WriteContractsReturnType,
@@ -75,6 +82,15 @@ export {
   type ShowCallsStatusVariables,
   showCallsStatusMutationOptions,
 } from '../experimental/query/showCallsStatus.js'
+
+export {
+  type WaitForCallsStatusData,
+  type WaitForCallsStatusOptions,
+  type WaitForCallsStatusQueryFnData,
+  type WaitForCallsStatusQueryKey,
+  waitForCallsStatusQueryKey,
+  waitForCallsStatusQueryOptions,
+} from '../experimental/query/waitForCallsStatus.js'
 
 export {
   type WriteContractsData,

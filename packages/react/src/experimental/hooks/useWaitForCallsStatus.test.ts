@@ -1,17 +1,20 @@
-import { accounts, config, testClient } from '@wagmi/test'
+import { connect, disconnect } from '@wagmi/core'
+import { accounts, config, testClient, wait } from '@wagmi/test'
+import { renderHook, waitFor } from '@wagmi/test/react'
 import { parseEther } from 'viem'
 import { expect, test } from 'vitest'
 
-import { connect } from '../../actions/connect.js'
-import { disconnect } from '../../actions/disconnect.js'
-import { getCallsStatus } from './getCallsStatus.js'
-import { sendCalls } from './sendCalls.js'
+import { useSendCalls } from './useSendCalls.js'
+import { useWaitForCallsStatus } from './useWaitForCallsStatus.js'
 
 const connector = config.connectors[0]!
 
 test('default', async () => {
   await connect(config, { connector })
-  const id = await sendCalls(config, {
+
+  const { result } = renderHook(() => useSendCalls())
+
+  result.current.sendCalls({
     calls: [
       {
         data: '0xdeadbeef',
@@ -28,14 +31,25 @@ test('default', async () => {
       },
     ],
   })
-  await testClient.mainnet.mine({ blocks: 1 })
-  const { receipts, status } = await getCallsStatus(config, {
-    id,
-  })
+  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-  expect(status).toBe('CONFIRMED')
+  const { result: result_2 } = renderHook(() =>
+    useWaitForCallsStatus({ id: result.current.data! }),
+  )
+  await Promise.all([
+    waitFor(() => expect(result_2.current.isSuccess).toBeTruthy()),
+    (async () => {
+      await wait(100)
+      await testClient.mainnet.mine({ blocks: 1 })
+    })(),
+  ])
+
+  expect(result_2.current.data?.status).toBe('CONFIRMED')
   expect(
-    receipts?.map((x) => ({ ...x, blockHash: undefined })),
+    result_2.current.data?.receipts?.map((x) => ({
+      ...x,
+      blockHash: undefined,
+    })),
   ).toMatchInlineSnapshot(
     `
     [
@@ -66,5 +80,8 @@ test('default', async () => {
     ]
   `,
   )
+
+  await testClient.mainnet.mine({ blocks: 1 })
+
   await disconnect(config, { connector })
 })

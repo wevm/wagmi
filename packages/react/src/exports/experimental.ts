@@ -28,6 +28,12 @@ export {
 } from '../experimental/hooks/useShowCallsStatus.js'
 
 export {
+  type UseWaitForCallsStatusParameters,
+  type UseWaitForCallsStatusReturnType,
+  useWaitForCallsStatus,
+} from '../experimental/hooks/useWaitForCallsStatus.js'
+
+export {
   type UseWriteContractsParameters,
   type UseWriteContractsReturnType,
   useWriteContracts,
