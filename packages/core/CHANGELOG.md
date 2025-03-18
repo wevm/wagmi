@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.16.6
+
+### Patch Changes
+
+- [#4586](https://github.com/wevm/wagmi/pull/4586) [`edf47477b2f6385a1c3ae01d36a8498c47f30a0b`](https://github.com/wevm/wagmi/commit/edf47477b2f6385a1c3ae01d36a8498c47f30a0b) Thanks [@jxom](https://github.com/jxom)! - **Experimental (EIP-5792):** Added `waitForCallsStatus` + `useWaitForCallsStatus`.
+
 ## 2.16.5
 
 ### Patch Changes
