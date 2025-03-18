@@ -4,7 +4,7 @@ import type { Config } from '../../createConfig.js'
 import { ConnectorNotConnectedError } from '../../errors/config.js'
 import { filterQueryOptions } from '../../query/utils.js'
 import type { ScopeKeyParameter } from '../../types/properties.js'
-import type { Compute } from '../../types/utils.js'
+import type { Compute, PartialBy } from '../../types/utils.js'
 import {
   type WaitForCallsStatusErrorType,
   type WaitForCallsStatusParameters,
@@ -13,7 +13,7 @@ import {
 } from '../actions/waitForCallsStatus.js'
 
 export type WaitForCallsStatusOptions = Compute<
-  WaitForCallsStatusParameters & ScopeKeyParameter
+  PartialBy<WaitForCallsStatusParameters, 'id'> & ScopeKeyParameter
 >
 
 export function waitForCallsStatusQueryOptions<config extends Config>(
@@ -22,8 +22,9 @@ export function waitForCallsStatusQueryOptions<config extends Config>(
 ) {
   return {
     async queryFn({ queryKey }) {
-      const { scopeKey: _, ...parameters } = queryKey[1]
-      const status = await waitForCallsStatus(config, parameters)
+      const { scopeKey: _, id, ...parameters } = queryKey[1]
+      if (!id) throw new Error('id is required')
+      const status = await waitForCallsStatus(config, { ...parameters, id })
       return status
     },
     queryKey: waitForCallsStatusQueryKey(options),

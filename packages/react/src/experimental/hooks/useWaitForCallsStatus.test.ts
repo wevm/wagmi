@@ -12,9 +12,12 @@ const connector = config.connectors[0]!
 test('default', async () => {
   await connect(config, { connector })
 
-  const { result } = renderHook(() => useSendCalls())
+  const useSendCalls_render = renderHook(() => useSendCalls())
+  const useWaitForCallsStatus_render = renderHook(() =>
+    useWaitForCallsStatus({ id: useSendCalls_render.result.current.data }),
+  )
 
-  result.current.sendCalls({
+  useSendCalls_render.result.current.sendCalls({
     calls: [
       {
         data: '0xdeadbeef',
@@ -31,22 +34,33 @@ test('default', async () => {
       },
     ],
   })
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
-
-  const { result: result_2 } = renderHook(() =>
-    useWaitForCallsStatus({ id: result.current.data! }),
+  await waitFor(() =>
+    expect(useSendCalls_render.result.current.isSuccess).toBeTruthy(),
   )
+
+  expect(useWaitForCallsStatus_render.result.current.fetchStatus).toBe('idle')
+  useWaitForCallsStatus_render.rerender()
+  expect(useWaitForCallsStatus_render.result.current.fetchStatus).toBe(
+    'fetching',
+  )
+
   await Promise.all([
-    waitFor(() => expect(result_2.current.isSuccess).toBeTruthy()),
+    waitFor(() =>
+      expect(
+        useWaitForCallsStatus_render.result.current.isSuccess,
+      ).toBeTruthy(),
+    ),
     (async () => {
       await wait(100)
       await testClient.mainnet.mine({ blocks: 1 })
     })(),
   ])
 
-  expect(result_2.current.data?.status).toBe('CONFIRMED')
+  expect(useWaitForCallsStatus_render.result.current.data?.status).toBe(
+    'CONFIRMED',
+  )
   expect(
-    result_2.current.data?.receipts?.map((x) => ({
+    useWaitForCallsStatus_render.result.current.data?.receipts?.map((x) => ({
       ...x,
       blockHash: undefined,
     })),

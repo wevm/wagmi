@@ -40,11 +40,12 @@ export function useWaitForCallsStatus<
 >(
   parameters: UseWaitForCallsStatusParameters<config, selectData>,
 ): UseWaitForCallsStatusReturnType<selectData> {
-  const { query = {} } = parameters
+  const { id, query = {} } = parameters
 
   const config = useConfig(parameters)
 
   const options = waitForCallsStatusQueryOptions(config, parameters)
+  const enabled = Boolean(id && (query.enabled ?? true))
 
-  return useQuery({ ...query, ...options })
+  return useQuery({ ...query, ...options, enabled })
 }
