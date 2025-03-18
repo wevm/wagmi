@@ -4,7 +4,6 @@ import { expect, test } from 'vitest'
 
 import { connect } from '../../actions/connect.js'
 import { disconnect } from '../../actions/disconnect.js'
-import { getCallsStatus } from './getCallsStatus.js'
 import { sendCalls } from './sendCalls.js'
 import { waitForCallsStatus } from './waitForCallsStatus.js'
 
