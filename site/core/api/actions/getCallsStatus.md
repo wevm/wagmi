@@ -84,9 +84,9 @@ const status = await getCallsStatus(config, {
 import { type GetCallsStatusReturnType } from '@wagmi/core/experimental'
 ```
 
-`bigint`
+`{ status: 'PENDING' | 'CONFIRMED', receipts: TransactionReceipt[] }`
 
-Most recent block number seen.
+The status and receipts of the call batch.
 
 ## Error
 

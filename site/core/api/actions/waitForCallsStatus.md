@@ -1,0 +1,145 @@
+<script setup>
+const packageName = '@wagmi/core/experimental'
+const actionName = 'waitForCallsStatus'
+const typeName = 'WaitForCallsStatus'
+</script>
+
+# waitForCallsStatus
+
+Waits for a call bundle to be confirmed & included on a block before returning the status & receipts.
+
+::: warning
+This is an experimental action that is not supported in most wallets. It is recommended to have a fallback mechanism if using this in production.
+:::
+
+## Import
+
+```ts
+import { waitForCallsStatus } from '@wagmi/core/experimental'
+```
+
+## Usage
+
+::: code-group
+```ts [index.ts]
+import { parseEther } from 'viem'
+import { sendCalls, waitForCallsStatus } from '@wagmi/core/experimental'
+import { config } from './config'
+
+const id = await sendCalls(config, {
+  calls: [{
+    to: '0x70997970c51812dc3a010c7d01b50e0d17dc79c8',
+    value: parseEther('1')
+  }]
+})
+
+const { status, receipts } = await waitForCallsStatus(config, { // [!code focus]
+  id, // [!code focus]
+}) // [!code focus]
+```
+<<< @/snippets/core/config.ts[config.ts]
+:::
+
+## Parameters
+
+```ts
+import { type WaitForCallsStatusParameters } from '@wagmi/core/experimental'
+```
+
+### connector
+
+`Connector | undefined`
+
+Connector to get call statuses with.
+
+::: code-group
+```ts [index.ts]
+import { getConnections, waitForCallsStatus } from '@wagmi/core/experimental'
+import { config } from './config'
+
+const connections = getConnections(config)
+const status = await waitForCallsStatus(config, {
+  connector: connections[0]?.connector, // [!code focus]
+  id: '0x1234567890abcdef',
+})
+```
+<<< @/snippets/core/config.ts[config.ts]
+:::
+
+### id
+
+`string`
+
+Identifier of the call batch.
+
+::: code-group
+```ts [index.ts]
+import { waitForCallsStatus } from '@wagmi/core/experimental'
+import { config } from './config'
+
+const status = await waitForCallsStatus(config, {
+  id: '0x1234567890abcdef', // [!code focus]
+})
+```
+<<< @/snippets/core/config.ts[config.ts]
+:::
+
+### pollingInterval
+
+`number`
+
+Polling interval in milliseconds.
+
+::: code-group
+```ts [index.ts]
+import { waitForCallsStatus } from '@wagmi/core/experimental'
+import { config } from './config'
+
+const status = await waitForCallsStatus(config, {
+  id: '0x1234567890abcdef',
+  pollingInterval: 1_000, // [!code focus]
+})
+```
+<<< @/snippets/core/config.ts[config.ts]
+:::
+
+### timeout
+
+`number`
+
+Timeout in milliseconds before `waitForCallsStatus` stops polling.
+
+::: code-group
+```ts [index.ts]
+import { waitForCallsStatus } from '@wagmi/core/experimental'
+import { config } from './config'
+
+const status = await waitForCallsStatus(config, {
+  id: '0x1234567890abcdef',
+  timeout: 10_000, // [!code focus]
+})
+```
+<<< @/snippets/core/config.ts[config.ts]
+:::
+
+## Return Type
+
+```ts
+import { type WaitForCallsStatusReturnType } from '@wagmi/core/experimental'
+```
+
+`{ status: 'PENDING' | 'CONFIRMED', receipts: TransactionReceipt[] }`
+
+The status and receipts of the call batch.
+
+## Error
+
+```ts
+import { type WaitForCallsStatusErrorType } from '@wagmi/core/experimental'
+```
+
+<!--@include: @shared/query-imports.md-->
+
+## Viem
+
+- [`waitForCallsStatus`](https://viem.sh/experimental/eip5792/waitForCallsStatus)
