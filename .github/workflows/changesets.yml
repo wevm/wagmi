@@ -25,7 +25,7 @@ jobs:
 
     steps:
       - name: Clone repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
           fetch-depth: 0
@@ -34,7 +34,7 @@ jobs:
         uses: wevm/actions/.github/actions/pnpm@main
 
       - name: PR or publish
-        uses: changesets/action@v1
+        uses: changesets/action@06245a4e0a36c064a573d4150030f5ec548e4fcc
         with:
           title: 'chore: version packages'
           commit: 'chore: version packages'
