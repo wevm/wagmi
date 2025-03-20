@@ -40,7 +40,7 @@ export type UseBytecodeParameters<
 export type UseBytecodeReturnType<selectData = GetBytecodeData> =
   UseQueryReturnType<selectData, GetBytecodeErrorType>
 
-/** https://wagmi.sh/vue/api/hooks/useBytecode */
+/** https://wagmi.sh/vue/api/composables/useBytecode */
 export function useBytecode<
   config extends Config = ResolvedRegister['config'],
   selectData = GetBytecodeData,
