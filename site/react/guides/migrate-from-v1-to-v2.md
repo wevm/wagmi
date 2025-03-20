@@ -306,7 +306,7 @@ useAccountEffect({ // [!code ++]
 
 ### Removed `useWebSocketPublicClient`
 
-The Wagmi [`Config`](/react/api/createConfig) does not separate transport types anymore. Simply use Viem's [`webSocket`](https://viem.sh/docs/clients/transports/websocket.html) transport instead when setting up your Wagmi `Config`. You can get Viem `Client` instance with this transport attached by using [`useClient`](/react/api/hooks/useClient) or [`usePublicClient`](/react/api/hooks/usePublicClient).
+The Wagmi [`Config`](/react/api/createConfig) does not separate transport types anymore. Simply use Viem's [`webSocket`](https://viem.sh/docs/clients/transports/websocket) transport instead when setting up your Wagmi `Config`. You can get Viem `Client` instance with this transport attached by using [`useClient`](/react/api/hooks/useClient) or [`usePublicClient`](/react/api/hooks/usePublicClient).
 
 ### Removed `useInfiniteReadContracts` `paginatedIndexesConfig`
 
