@@ -62,7 +62,7 @@ export type UseReadContractReturnType<
   selectData = ReadContractData<abi, functionName, args>,
 > = UseQueryReturnType<selectData, ReadContractErrorType>
 
-/** https://wagmi.sh/vue/api/hooks/useReadContract */
+/** https://wagmi.sh/vue/api/composables/useReadContract */
 export function useReadContract<
   const abi extends Abi | readonly unknown[],
   functionName extends ContractFunctionName<abi, 'pure' | 'view'>,
