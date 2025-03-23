@@ -1,20 +1,23 @@
 import { connect, disconnect } from '@wagmi/core'
-import { accounts, config, testClient } from '@wagmi/test'
+import { accounts, config, testClient, wait } from '@wagmi/test'
 import { renderHook, waitFor } from '@wagmi/test/react'
 import { parseEther } from 'viem'
 import { expect, test } from 'vitest'
 
-import { useCallsStatus } from './useCallsStatus.js'
 import { useSendCalls } from './useSendCalls.js'
+import { useWaitForCallsStatus } from './useWaitForCallsStatus.js'
 
 const connector = config.connectors[0]!
 
 test('default', async () => {
   await connect(config, { connector })
 
-  const { result } = renderHook(() => useSendCalls())
+  const useSendCalls_render = renderHook(() => useSendCalls())
+  const useWaitForCallsStatus_render = renderHook(() =>
+    useWaitForCallsStatus({ id: useSendCalls_render.result.current.data }),
+  )
 
-  result.current.sendCalls({
+  useSendCalls_render.result.current.sendCalls({
     calls: [
       {
         data: '0xdeadbeef',
@@ -31,32 +34,33 @@ test('default', async () => {
       },
     ],
   })
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
-
-  const { result: result_2 } = renderHook(() =>
-    useCallsStatus({ id: result.current.data! }),
-  )
-  await waitFor(() => expect(result_2.current.isSuccess).toBeTruthy())
-
-  expect(result_2.current.data).toMatchInlineSnapshot(
-    `
-    {
-      "receipts": [],
-      "status": "PENDING",
-    }
-  `,
+  await waitFor(() =>
+    expect(useSendCalls_render.result.current.isSuccess).toBeTruthy(),
   )
 
-  await testClient.mainnet.mine({ blocks: 1 })
-
-  const { result: result_3 } = renderHook(() =>
-    useCallsStatus({ id: result.current.data! }),
+  expect(useWaitForCallsStatus_render.result.current.fetchStatus).toBe('idle')
+  useWaitForCallsStatus_render.rerender()
+  expect(useWaitForCallsStatus_render.result.current.fetchStatus).toBe(
+    'fetching',
   )
-  await waitFor(() => expect(result_3.current.isSuccess).toBeTruthy())
 
-  expect(result_3.current.data?.status).toBe('CONFIRMED')
+  await Promise.all([
+    waitFor(() =>
+      expect(
+        useWaitForCallsStatus_render.result.current.isSuccess,
+      ).toBeTruthy(),
+    ),
+    (async () => {
+      await wait(100)
+      await testClient.mainnet.mine({ blocks: 1 })
+    })(),
+  ])
+
+  expect(useWaitForCallsStatus_render.result.current.data?.status).toBe(
+    'CONFIRMED',
+  )
   expect(
-    result_3.current.data?.receipts?.map((x) => ({
+    useWaitForCallsStatus_render.result.current.data?.receipts?.map((x) => ({
       ...x,
       blockHash: undefined,
     })),
@@ -90,6 +94,8 @@ test('default', async () => {
     ]
   `,
   )
+
+  await testClient.mainnet.mine({ blocks: 1 })
 
   await disconnect(config, { connector })
 })

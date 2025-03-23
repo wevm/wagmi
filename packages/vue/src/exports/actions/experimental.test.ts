@@ -9,6 +9,7 @@ test('exports', () => {
       "getCapabilities",
       "sendCalls",
       "showCallsStatus",
+      "waitForCallsStatus",
       "writeContracts",
       "getCallsStatusQueryOptions",
       "getCallsStatusQueryKey",
@@ -16,6 +17,8 @@ test('exports', () => {
       "getCapabilitiesQueryKey",
       "sendCallsMutationOptions",
       "showCallsStatusMutationOptions",
+      "waitForCallsStatusQueryKey",
+      "waitForCallsStatusQueryOptions",
       "writeContractsMutationOptions",
     ]
   `)
