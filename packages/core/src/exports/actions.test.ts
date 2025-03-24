@@ -53,6 +53,7 @@ test('exports', () => {
       "readContract",
       "readContracts",
       "reconnect",
+      "sendEip712Transaction",
       "sendTransaction",
       "signMessage",
       "signTypedData",
