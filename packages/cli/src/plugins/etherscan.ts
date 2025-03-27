@@ -207,6 +207,7 @@ type ChainId =
   | 2442 // Polygon zkEVM Cardona Testnet
   | 8453 // Base Mainnet
   | 84532 // Base Sepolia Testnet
+  | 80094 // Berachain Mainnet
   | 42161 // Arbitrum One Mainnet
   | 42170 // Arbitrum Nova Mainnet
   | 421614 // Arbitrum Sepolia Testnet
