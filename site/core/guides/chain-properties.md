@@ -87,5 +87,5 @@ if (result.chainId === zkSync.id) {
 
 ## Troubleshooting
 
-If chain properties aren't working, make sure [TypeScript](/core/guides/faq#type-inference-doesn-t-work) is configured correctly. Not all chains have additional properties, to check which ones do, see the [Viem repo](https://github.com/wevm/viem/tree/main/src/chains) (chains that have a top-level directory under [`src/chains`](https://github.com/wevm/viem/tree/main/src/chains) support additional properties).
+If chain properties aren't working, make sure [TypeScript](https://wagmi.sh/core/guides/faq#type-inference-doesn-t-work) is configured correctly. Not all chains have additional properties, to check which ones do, see the [Viem repo](https://github.com/wevm/viem/tree/main/src/chains) (chains that have a top-level directory under [`src/chains`](https://github.com/wevm/viem/tree/main/src/chains) support additional properties).
 
