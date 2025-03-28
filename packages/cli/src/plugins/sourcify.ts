@@ -117,6 +117,7 @@ type ChainId =
   | 1101 // Polygon zkEVM
   | 111000 // Siberium Test Network
   | 11111 // WAGMI
+  | 1114 // Core Blockchain Testnet2
   | 1115 // Core Blockchain Testnet
   | 11155420 // OP Sepolia Testnet
   | 1116 // Core Blockchain Mainnet
@@ -145,6 +146,7 @@ type ChainId =
   | 167005 // Taiko Grimsvotn L2
   | 167006 // Taiko Eldfell L3
   | 17069 // Garnet Holesky
+  | 180 // AME Chain Mainnet
   | 1890 // Lightlink Phoenix Mainnet
   | 1891 // Lightlink Pegasus Testnet
   | 19 // Songbird Canary-Network
@@ -154,6 +156,7 @@ type ChainId =
   | 200810 // Bitlayer Testnet
   | 200901 // Bitlayer Mainnet
   | 2017 // Adiri
+  | 2020 // Ronin Mainnet
   | 2021 // Edgeware EdgeEVM Mainnet
   | 202401 // YMTECH-BESU Testnet
   | 2037 // Kiwi Subnet
@@ -179,7 +182,7 @@ type ChainId =
   | 252 // Fraxtal
   | 2522 // Fraxtal Testnet
   | 255 // Kroma
-  | 25925 // Bitkub Chain Testnet
+  | 25925 // KUB Testnet
   | 26100 // Ferrum Quantum Portal Network
   | 28 // Boba Network Rinkeby Testnet
   | 28528 // Optimism Bedrock (Goerli Alpha Testnet)
@@ -191,7 +194,9 @@ type ChainId =
   | 314 // Filecoin - Mainnet
   | 314159 // Filecoin - Calibration testnet
   | 32769 // Zilliqa EVM
+  | 32770 // Zilliqa 2 EVM proto-mainnet
   | 33101 // Zilliqa EVM Testnet
+  | 33103 // Zilliqa 2 EVM proto-testnet
   | 33111 // Curtis
   | 333000333 // Meld
   | 335 // DFK Chain Test
@@ -236,15 +241,18 @@ type ChainId =
   | 48899 // Zircuit Testnet
   | 48900 // Zircuit Mainnet
   | 49797 // Energi Testnet
+  | 50 // XDC Network
   | 5000 // Mantle
   | 5003 // Mantle Sepolia Testnet
   | 51 // XDC Apothem Network
+  | 5115 // Citrea Testnet
   | 534 // Candle
   | 534351 // Scroll Sepolia Testnet
   | 534352 // Scroll
   | 53935 // DFK Chain
   | 54211 // Haqq Chain Testnet
   | 56 // BNB Smart Chain Mainnet
+  | 560048 // Hoodi testnet
   | 57 // Syscoin Mainnet
   | 570 // Rollux Mainnet
   | 5700 // Syscoin Tanenbaum Testnet
@@ -274,6 +282,7 @@ type ChainId =
   | 71401 // Godwoken Testnet v1
   | 71402 // Godwoken Mainnet
   | 7171 // Bitrock Mainnet
+  | 7200 // exSat Mainnet
   | 723107 // TixChain Testnet
   | 73799 // Energy Web Volta Testnet
   | 764984 // Lamina1 Testnet
@@ -294,6 +303,7 @@ type ChainId =
   | 82 // Meter Mainnet
   | 8217 // Kaia Mainnet
   | 83 // Meter Testnet
+  | 839999 // exSat Testnet
   | 841 // Taraxa Mainnet
   | 842 // Taraxa Testnet
   | 8453 // Base
@@ -304,7 +314,7 @@ type ChainId =
   | 9001 // Evmos
   | 919 // Mode Testnet
   | 957 // Lyra Chain
-  | 96 // Bitkub Chain
+  | 96 // KUB Mainnet
   | 97 // BNB Smart Chain Testnet
   | 970 // Oort Mainnet
   | 99 // POA Network Core
