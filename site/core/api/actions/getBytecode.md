@@ -130,4 +130,4 @@ import { type GetBytecodeErrorType } from '@wagmi/core'
 
 ## Viem
 
-- [`getBytecode`](https://viem.sh/docs/contract/getBytecode)
+- [`getCode`](https://viem.sh/docs/contract/getCode)
