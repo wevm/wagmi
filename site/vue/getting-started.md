@@ -117,7 +117,7 @@ By registering or using the hook `config` property, `useBlockNumber`'s `chainId`
 
 ### Add Plugin to App
 
-App the `WagmiPlugin` to your app instance and pass the `config` you created earlier to the plugin options.
+Add the `WagmiPlugin` to your app instance and pass the `config` you created earlier to the plugin options.
 
 ::: code-group
 ```tsx [main.ts]
