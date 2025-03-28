@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 2.2.1
+
+### Patch Changes
+
+- [`7b0dbe3886c1a7c6dbbdab945d7436ec20ad8f93`](https://github.com/wevm/wagmi/commit/7b0dbe3886c1a7c6dbbdab945d7436ec20ad8f93) Thanks [@tmm](https://github.com/tmm)! - Updated block explorer chains.
+
 ## 2.2.0
 
 ### Minor Changes
