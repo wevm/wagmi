@@ -257,3 +257,8 @@ type ChainId =
   | 531050104 // Sophon Sepolia Testnet
   | 146 // Sonic Mainnet
   | 57054 // Sonic Blaze Testnet
+  | 130 // Unichain Mainnet
+  | 1301 // Unichain Sepolia Testnet
+  | 2741 // Abstract Mainnet
+  | 11124 // Abstract Sepolia Testnet
+  | 80094 // Berachain Mainnet
