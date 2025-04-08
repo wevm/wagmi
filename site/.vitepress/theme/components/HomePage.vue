@@ -13,7 +13,7 @@ const teamMembers = [
     links: [
       { icon: 'github', link: 'https://github.com/tmm' },
       { icon: 'bluesky', link: 'https://bsky.app/profile/tmm.dev' },
-      { icon: 'x', link: 'https://twitter.com/awkweb' },
+      { icon: 'x', link: 'https://x.com/awkweb' },
       {
         icon: {
           svg: farcasterIcon,
@@ -28,7 +28,7 @@ const teamMembers = [
     links: [
       { icon: 'github', link: 'https://github.com/jxom' },
       { icon: 'bluesky', link: 'https://bsky.app/profile/jxom.dev' },
-      { icon: 'x', link: 'https://twitter.com/_jxom' },
+      { icon: 'x', link: 'https://x.com/_jxom' },
       {
         icon: {
           svg: farcasterIcon,
@@ -67,12 +67,14 @@ const teamMembers = [
           <div flex flex-col gap-2 items-center pt-10>
             <div>
               <a href="https://vercel.com/?utm_source=wevm&utm_campaign=oss">
-                <img src="https://www.datocms-assets.com/31049/1618983297-powered-by-vercel.svg" alt="Powered by Vercel" h8>
+                <img src="https://www.datocms-assets.com/31049/1618983297-powered-by-vercel.svg" alt="Powered by Vercel"
+                  h8>
               </a>
             </div>
             <div>
               <a href="https://quicknode.com/?utm_source=wevm&utm_campaign=oss">
-                <img src="https://raw.githubusercontent.com/wevm/.github/refs/heads/main/content/quicknode-badge.svg" alt="Powered by QuickNode" h8>
+                <img src="https://raw.githubusercontent.com/wevm/.github/refs/heads/main/content/quicknode-badge.svg"
+                  alt="Powered by QuickNode" h8>
               </a>
             </div>
           </div>

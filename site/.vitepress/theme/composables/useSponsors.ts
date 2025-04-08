@@ -65,12 +65,12 @@ export function useSponsors() {
       silver: [
         {
           name: 'Family',
-          url: 'https://twitter.com/family',
+          url: 'https://x.com/family',
           img: 'family-light.svg',
         },
         {
           name: 'Context',
-          url: 'https://twitter.com/context',
+          url: 'https://x.com/context',
           img: 'context-light.svg',
         },
         {
@@ -80,7 +80,7 @@ export function useSponsors() {
         },
         {
           name: 'PartyDAO',
-          url: 'https://twitter.com/prtyDAO',
+          url: 'https://x.com/prtyDAO',
           img: 'partydao-light.svg',
         },
         {
@@ -130,7 +130,7 @@ export function useSponsors() {
         },
         {
           name: 'Supa',
-          url: 'https://twitter.com/supafinance',
+          url: 'https://x.com/supafinance',
           img: 'supa-light.svg',
         },
         {

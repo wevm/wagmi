@@ -27,7 +27,7 @@ export default defineConfig({
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:image', content: 'https://wagmi.sh/og.png' }],
     ['meta', { property: 'og:url', content: 'https://wagmi.sh' }],
-    // Twitter
+    // X.com
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
     ['meta', { name: 'twitter:creator', content: '@wevm_dev' }],
     ['meta', { name: 'twitter:image', content: 'https://wagmi.sh/og.png' }],
@@ -121,7 +121,7 @@ export default defineConfig({
         link: 'https://github.com/wevm/wagmi',
       },
       { icon: 'bluesky', link: 'https://bsky.app/profile/wevm.dev' },
-      { icon: 'x', link: 'https://twitter.com/wevm_dev' },
+      { icon: 'x', link: 'https://x.com/wevm_dev' },
       { icon: { svg: farcasterIcon }, link: 'https://warpcast.com/wevm' },
       { icon: 'discord', link: 'https://discord.gg/9zHPXuBpqy' },
     ],

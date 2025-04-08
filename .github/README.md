@@ -89,13 +89,13 @@ If you find Wagmi useful or use it for work, please consider [sponsoring Wagmi](
 </p>
 
 <p>
-  <a href="https://twitter.com/family">
+  <a href="https://x.com/family">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/family-dark.svg">
       <img alt="family logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/family-light.svg" width="auto" height="50">
     </picture>
   </a>
-  <a href="https://twitter.com/context">
+  <a href="https://x.com/context">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/context-dark.svg">
       <img alt="context logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/context-light.svg" width="auto" height="50">
@@ -107,7 +107,7 @@ If you find Wagmi useful or use it for work, please consider [sponsoring Wagmi](
       <img alt="WalletConnect logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/walletconnect-light.svg" width="auto" height="50">
     </picture>
   </a>
-  <a href="https://twitter.com/prtyDAO">
+  <a href="https://x.com/prtyDAO">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/partydao-dark.svg">
       <img alt="PartyDAO logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/partydao-light.svg" width="auto" height="50">
@@ -173,7 +173,7 @@ If you find Wagmi useful or use it for work, please consider [sponsoring Wagmi](
       <img alt="lattice logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/lattice-light.svg" width="auto" height="50">
     </picture>
   </a>
-  <a href="https://twitter.com/supafinance">
+  <a href="https://x.com/supafinance">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/supa-dark.svg">
       <img alt="supa logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/supa-light.svg" width="auto" height="50">
