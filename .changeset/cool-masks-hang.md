@@ -2,4 +2,4 @@
 "@wagmi/connectors": patch
 ---
 
-Add rdns filter for Coinbase v3 connector
+Added `rdns` property to Coinbase Wallet v3 connector
