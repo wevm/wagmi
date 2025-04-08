@@ -59,3 +59,4 @@ Ethereum-related projects are often targeted in attacks to steal users' assets. 
 - Pin package versions, upgrade mindfully, and inspect lockfile changes to minimize the risk of [supply-chain attacks](https://nodejs.org/en/guides/security/#supply-chain-attacks).
 - Install the [Socket Security](https://socket.dev) [GitHub App](https://github.com/apps/socket-security) to help detect and block supply-chain attacks.
 - Add a [Content Security Policy](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html) to defend against external scripts running in your app.
+- Pin [GitHub Action](https://x.com/paulmillr/status/1900948425325031448) versions to commits instead of tags.
