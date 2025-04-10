@@ -4,7 +4,7 @@ const packageName = 'wagmi'
 
 # webSocket
 
-The `webSocket` Transport connects to a JSON-RPC API via a WebSocket. Wraps Viem's [`webSocket` Transport](https://viem.sh/docs/clients/transports/webSocket.html).
+The `webSocket` Transport connects to a JSON-RPC API via a WebSocket. Wraps Viem's [`webSocket` Transport](https://viem.sh/docs/clients/transports/websocket).
 
 ## Import
 
@@ -26,7 +26,7 @@ export const config = createConfig({
   connectors: [injected()],
   transports: {
     [mainnet.id]: webSocket('wss://foo-bar-baz.quiknode.pro/...'), // [!code hl]
-    [sepolia.id]: webSocket('wss://foo-bar-sep.quicknode.pro/...'), // [!code hl]
+    [sepolia.id]: webSocket('wss://foo-bar-sep.quiknode.pro/...'), // [!code hl]
   },
 })
 ```
