@@ -29,18 +29,20 @@ export type SourcifyConfig<chainId extends number> = {
 }
 
 const SourcifyResponse = z.object({
-  compiler: z.object({
-    version: z.string(),
-  }),
-  language: z.string(),
-  output: z.object({
-    abi: AbiSchema,
-    devdoc: z.any(),
-    userdoc: z.any(),
-  }),
-  settings: z.any(),
-  sources: z.any(),
-  version: z.number(),
+  metadata: z.object({
+    compiler: z.object({
+      version: z.string(),
+    }),
+    language: z.string(),
+    output: z.object({
+      abi: AbiSchema,
+      devdoc: z.any(),
+      userdoc: z.any(),
+    }),
+    settings: z.any(),
+    sources: z.any(),
+    version: z.number(),
+  })
 })
 
 /** Fetches contract ABIs from Sourcify. */
@@ -67,8 +69,8 @@ export function sourcify<chainId extends ChainId>(
       if (!parsed.success)
         throw fromZodError(parsed.error, { prefix: 'Invalid response' })
 
-      if (parsed.data.output.abi)
-        return parsed.data.output.abi as ContractConfig['abi']
+      if (parsed.data.metadata.output.abi)
+        return parsed.data.metadata.output.abi as ContractConfig['abi']
       throw new Error('contract not found')
     },
     request({ address }) {
@@ -84,7 +86,7 @@ export function sourcify<chainId extends ChainId>(
         )
 
       return {
-        url: `https://repo.sourcify.dev/contracts/full_match/${chainId}/${contractAddress}/metadata.json`,
+        url: `https://sourcify.dev/server/v2/contract/${chainId}/${contractAddress}/?fields=metadata`,
       }
     },
   })
