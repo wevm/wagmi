@@ -2,4 +2,4 @@
 "@wagmi/cli": minor
 ---
 
-Use Sourcify v2 API in `sourcify` plugin
+Upgraded to Sourcify v2 API in `sourcify` plugin
