@@ -297,6 +297,14 @@ export {
 } from '../query/reconnect.js'
 
 export {
+  type SendEip712TransactionData,
+  type SendEip712TransactionVariables,
+  type SendEip712TransactionMutate,
+  type SendEip712TransactionMutateAsync,
+  sendEip712TransactionMutationOptions,
+} from '../query/sendEip712Transaction.js'
+
+export {
   type SendTransactionData,
   type SendTransactionVariables,
   type SendTransactionMutate,
