@@ -116,14 +116,14 @@ test('contract revert (contract error)', async () => {
       to: address.wagmiMintExample,
     }),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
-    [CallExecutionError: Execution reverted with reason: revert: Token ID is taken.
+    [CallExecutionError: Execution reverted with reason: Token ID is taken.
 
     Raw Call Arguments:
       from:  0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
       to:    0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2
       data:  0xa0712d6800000000000000000000000000000000000000000000000000000000000001a4
 
-    Details: execution reverted: revert: Token ID is taken
+    Details: execution reverted: Token ID is taken
     Version: viem@2.23.12]
   `)
 })
