@@ -2246,7 +2246,7 @@
 
   > Why?
   >
-  > - Eagerly prompting to switch chain in these actions created a long-running async task that that makes [iOS App Links](https://wagmi.sh/docs/prepare-hooks#ios-app-link-constraints) vulnerable.
+  > - Eagerly prompting to switch chain in these actions created a long-running async task that makes [iOS App Links](https://wagmi.sh/docs/prepare-hooks#ios-app-link-constraints) vulnerable.
   > - Not all wallets support programmatic chain switching.
 
 ### Patch Changes
