@@ -1,5 +1,16 @@
 # @wagmi/connectors
 
+## 5.7.13
+
+### Patch Changes
+
+- [#4622](https://github.com/wevm/wagmi/pull/4622) [`88427b2bcd13ec375ef519e9ad1ccffef9f02a7b`](https://github.com/wevm/wagmi/commit/88427b2bcd13ec375ef519e9ad1ccffef9f02a7b) Thanks [@dan1kov](https://github.com/dan1kov)! - Added `rdns` property to Coinbase Wallet v3 connector
+
+- [#4605](https://github.com/wevm/wagmi/pull/4605) [`3f8b2edc4f237cccff1009bcef03d51ca27a7324`](https://github.com/wevm/wagmi/commit/3f8b2edc4f237cccff1009bcef03d51ca27a7324) Thanks [@chybisov](https://github.com/chybisov)! - Bumped `@safe-global/safe-apps-provider` version to `0.18.6`.
+
+- Updated dependencies [[`799ee4d4b23c2ecd64e3f3668e67634e81939719`](https://github.com/wevm/wagmi/commit/799ee4d4b23c2ecd64e3f3668e67634e81939719)]:
+  - @wagmi/core@2.17.0
+
 ## 5.7.12
 
 ### Patch Changes

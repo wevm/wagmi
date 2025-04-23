@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.17.0
+
+### Minor Changes
+
+- [#4638](https://github.com/wevm/wagmi/pull/4638) [`799ee4d4b23c2ecd64e3f3668e67634e81939719`](https://github.com/wevm/wagmi/commit/799ee4d4b23c2ecd64e3f3668e67634e81939719) Thanks [@jxom](https://github.com/jxom)! - Stabilized EIP-5792 Actions & Hooks.
+
 ## 2.16.7
 
 ### Patch Changes
