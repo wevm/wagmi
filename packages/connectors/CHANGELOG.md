@@ -1,6 +1,6 @@
 # @wagmi/connectors
 
-## 5.7.14
+## 5.7.13
 
 ### Patch Changes
 
