@@ -19,10 +19,6 @@ Hook that requests for the wallet to sign and broadcast a batch of write contrac
 
 [Read more.](https://github.com/ethereum/EIPs/blob/815028dc634463e1716fc5ce44c019a6040f0bef/EIPS/eip-5792.md#wallet_sendcalls)
 
-::: warning
-This is an experimental Hook that is not supported in most wallets. It is recommended to have a fallback mechanism if using this in production.
-:::
-
 ## Import
 
 ```ts
