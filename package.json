@@ -77,13 +77,8 @@
     "pre-commit": "pnpm check"
   },
   "knip": {
-    "ignore": [
-      "**/templates/**",
-      "**/hardhat.config.js"
-    ],
-    "ignoreBinaries": [
-      "only-allow"
-    ],
+    "ignore": ["**/templates/**", "**/hardhat.config.js"],
+    "ignoreBinaries": ["only-allow"],
     "ignoreWorkspaces": [
       "packages/register-tests/**",
       "packages/test",
@@ -99,21 +94,15 @@
           "src/exports/{config,index,plugins}.ts!",
           "types/*.d.ts!"
         ],
-        "ignore": [
-          "test/{constants,setup,utils}.ts"
-        ]
+        "ignore": ["test/{constants,setup,utils}.ts"]
       },
       "packages/connectors": {
         "entry": "src/exports/index.ts!"
       },
       "packages/core": {
         "entry": "src/exports/{actions,chains,codegen,experimental,index,internal,query}.ts!",
-        "ignore": [
-          "test/setup.ts"
-        ],
-        "ignoreDependencies": [
-          "@tanstack/query-core"
-        ]
+        "ignore": ["test/setup.ts"],
+        "ignoreDependencies": ["@tanstack/query-core"]
       },
       "packages/create-wagmi": {
         "entry": "src/cli.ts!"
@@ -123,9 +112,7 @@
           "src/exports/{actions,chains,codegen,connectors,experimental,index,query}.ts!",
           "src/exports/actions/experimental.ts!"
         ],
-        "ignore": [
-          "test/setup.ts"
-        ]
+        "ignore": ["test/setup.ts"]
       },
       "packages/test": {
         "entry": [
@@ -138,19 +125,11 @@
           "src/exports/{actions,chains,connectors,index,nuxt,query}.ts!",
           "src/exports/actions/experimental.ts!"
         ],
-        "ignore": [
-          "src/nuxt/runtime/*",
-          "test/setup.ts"
-        ],
-        "ignoreDependencies": [
-          "nuxt"
-        ]
+        "ignore": ["src/nuxt/runtime/*", "test/setup.ts"],
+        "ignoreDependencies": ["nuxt"]
       },
       "site": {
-        "project": [
-          "**/*.ts",
-          "**/*.tsx"
-        ]
+        "project": ["**/*.ts", "**/*.tsx"]
       }
     }
   }

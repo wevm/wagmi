@@ -1,7 +1,7 @@
 'use client'
 
 import { useMutation } from '@tanstack/react-query'
-import type { Config, ResolvedRegister } from '@wagmi/core'
+import type { Config, ResolvedRegister, SendCallsErrorType } from '@wagmi/core'
 import type { Compute } from '@wagmi/core/internal'
 import {
   type SendCallsData,
@@ -11,7 +11,6 @@ import {
   sendCallsMutationOptions,
 } from '@wagmi/core/query'
 
-import type { SendCallsErrorType } from 'viem'
 import type { ConfigParameter } from '../types/properties.js'
 import type {
   UseMutationParameters,
