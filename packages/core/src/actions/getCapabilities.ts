@@ -4,11 +4,11 @@ import {
   type GetCapabilitiesParameters as viem_GetCapabilitiesParameters,
   type GetCapabilitiesReturnType as viem_GetCapabilitiesReturnType,
   getCapabilities as viem_getCapabilities,
-} from 'viem/experimental'
+} from 'viem/actions'
 
-import { getConnectorClient } from '../../actions/getConnectorClient.js'
-import type { Config } from '../../createConfig.js'
-import type { ConnectorParameter } from '../../types/properties.js'
+import type { Config } from '../createConfig.js'
+import type { ConnectorParameter } from '../types/properties.js'
+import { getConnectorClient } from './getConnectorClient.js'
 
 export type GetCapabilitiesParameters = viem_GetCapabilitiesParameters &
   ConnectorParameter

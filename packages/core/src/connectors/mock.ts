@@ -7,6 +7,7 @@ import {
   type Transport,
   UserRejectedRequestError,
   type WalletCallReceipt,
+  type WalletGetCallsStatusReturnType,
   type WalletRpcSchema,
   custom,
   fromHex,
@@ -224,12 +225,21 @@ export function mock(parameters: MockParameters) {
           }
           const id = keccak256(stringToHex(JSON.stringify(calls)))
           transactionCache.set(id, hashes)
-          return id
+          return { id }
         }
 
         if (method === 'wallet_getCallsStatus') {
           const hashes = transactionCache.get((params as any)[0])
-          if (!hashes) return null
+          if (!hashes)
+            return {
+              atomic: false,
+              chainId: '0x1',
+              id: (params as any)[0],
+              status: 100,
+              receipts: [],
+              version: '2.0.0',
+            } satisfies WalletGetCallsStatusReturnType
+
           const receipts = await Promise.all(
             hashes.map(async (hash) => {
               const { result, error } = await rpc.http(url, {
@@ -256,9 +266,24 @@ export function mock(parameters: MockParameters) {
               } satisfies WalletCallReceipt
             }),
           )
-          if (receipts.some((x) => !x))
-            return { status: 'PENDING', receipts: [] }
-          return { status: 'CONFIRMED', receipts }
+          const receipts_ = receipts.filter((x) => x !== null)
+          if (receipts_.length === 0)
+            return {
+              atomic: false,
+              chainId: '0x1',
+              id: (params as any)[0],
+              status: 100,
+              receipts: [],
+              version: '2.0.0',
+            } satisfies WalletGetCallsStatusReturnType
+          return {
+            atomic: false,
+            chainId: '0x1',
+            id: (params as any)[0],
+            status: 200,
+            receipts: receipts_,
+            version: '2.0.0',
+          } satisfies WalletGetCallsStatusReturnType
         }
 
         if (method === 'wallet_showCallsStatus') return

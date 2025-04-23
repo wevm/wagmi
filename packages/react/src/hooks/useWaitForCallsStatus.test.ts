@@ -14,7 +14,7 @@ test('default', async () => {
 
   const useSendCalls_render = renderHook(() => useSendCalls())
   const useWaitForCallsStatus_render = renderHook(() =>
-    useWaitForCallsStatus({ id: useSendCalls_render.result.current.data }),
+    useWaitForCallsStatus({ id: useSendCalls_render.result.current.data?.id }),
   )
 
   useSendCalls_render.result.current.sendCalls({
@@ -57,7 +57,7 @@ test('default', async () => {
   ])
 
   expect(useWaitForCallsStatus_render.result.current.data?.status).toBe(
-    'CONFIRMED',
+    'success',
   )
   expect(
     useWaitForCallsStatus_render.result.current.data?.receipts?.map((x) => ({

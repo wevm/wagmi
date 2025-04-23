@@ -161,6 +161,14 @@ export function getSidebar() {
             link: '/react/api/hooks/useBytecode',
           },
           { text: 'useCall', link: '/react/api/hooks/useCall' },
+          {
+            text: 'useCallsStatus',
+            link: '/react/api/hooks/useCallsStatus',
+          },
+          {
+            text: 'useCapabilities',
+            link: '/react/api/hooks/useCapabilities',
+          },
           { text: 'useChainId', link: '/react/api/hooks/useChainId' },
           { text: 'useChains', link: '/react/api/hooks/useChains' },
           { text: 'useClient', link: '/react/api/hooks/useClient' },
@@ -240,8 +248,16 @@ export function getSidebar() {
           },
           { text: 'useReconnect', link: '/react/api/hooks/useReconnect' },
           {
+            text: 'useSendCalls',
+            link: '/react/api/hooks/useSendCalls',
+          },
+          {
             text: 'useSendTransaction',
             link: '/react/api/hooks/useSendTransaction',
+          },
+          {
+            text: 'useShowCallsStatus',
+            link: '/react/api/hooks/useShowCallsStatus',
           },
           {
             text: 'useSignMessage',
@@ -286,6 +302,10 @@ export function getSidebar() {
           {
             text: 'useToken',
             link: '/react/api/hooks/useToken',
+          },
+          {
+            text: 'useWaitForCallsStatus',
+            link: '/react/api/hooks/useWaitForCallsStatus',
           },
           {
             text: 'useWaitForTransactionReceipt',
@@ -349,31 +369,6 @@ export function getSidebar() {
               },
               { text: 'serialize', link: '/react/api/utilities/serialize' },
             ],
-          },
-        ],
-      },
-      {
-        text: 'Experimental',
-        items: [
-          {
-            text: 'useCallsStatus',
-            link: '/react/api/hooks/useCallsStatus',
-          },
-          {
-            text: 'useCapabilities',
-            link: '/react/api/hooks/useCapabilities',
-          },
-          {
-            text: 'useSendCalls',
-            link: '/react/api/hooks/useSendCalls',
-          },
-          {
-            text: 'useShowCallsStatus',
-            link: '/react/api/hooks/useShowCallsStatus',
-          },
-          {
-            text: 'useWaitForCallsStatus',
-            link: '/react/api/hooks/useWaitForCallsStatus',
           },
         ],
       },
@@ -778,6 +773,14 @@ export function getSidebar() {
             text: 'getBytecode',
             link: '/core/api/actions/getBytecode',
           },
+          {
+            text: 'getCallsStatus',
+            link: '/core/api/actions/getCallsStatus',
+          },
+          {
+            text: 'getCapabilities',
+            link: '/core/api/actions/getCapabilities',
+          },
           { text: 'getChainId', link: '/core/api/actions/getChainId' },
           { text: 'getChains', link: '/core/api/actions/getChains' },
           {
@@ -869,8 +872,16 @@ export function getSidebar() {
             link: '/core/api/actions/readContracts',
           },
           {
+            text: 'sendCalls',
+            link: '/core/api/actions/sendCalls',
+          },
+          {
             text: 'sendTransaction',
             link: '/core/api/actions/sendTransaction',
+          },
+          {
+            text: 'showCallsStatus',
+            link: '/core/api/actions/showCallsStatus',
           },
           {
             text: 'signMessage',
@@ -899,6 +910,10 @@ export function getSidebar() {
           {
             text: 'verifyTypedData',
             link: '/core/api/actions/verifyTypedData',
+          },
+          {
+            text: 'waitForCallsStatus',
+            link: '/core/api/actions/waitForCallsStatus',
           },
           {
             text: 'waitForTransactionReceipt',
@@ -973,31 +988,6 @@ export function getSidebar() {
               },
               { text: 'serialize', link: '/core/api/utilities/serialize' },
             ],
-          },
-        ],
-      },
-      {
-        text: 'Experimental',
-        items: [
-          {
-            text: 'getCallsStatus',
-            link: '/core/api/actions/getCallsStatus',
-          },
-          {
-            text: 'getCapabilities',
-            link: '/core/api/actions/getCapabilities',
-          },
-          {
-            text: 'sendCalls',
-            link: '/core/api/actions/sendCalls',
-          },
-          {
-            text: 'showCallsStatus',
-            link: '/core/api/actions/showCallsStatus',
-          },
-          {
-            text: 'waitForCallsStatus',
-            link: '/core/api/actions/waitForCallsStatus',
           },
         ],
       },

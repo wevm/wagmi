@@ -2,22 +2,22 @@
 
 import { useMutation } from '@tanstack/react-query'
 import type { Config, ResolvedRegister } from '@wagmi/core'
+import type { Compute } from '@wagmi/core/internal'
 import {
   type SendCallsData,
-  type SendCallsErrorType,
   type SendCallsMutate,
   type SendCallsMutateAsync,
   type SendCallsVariables,
   sendCallsMutationOptions,
-} from '@wagmi/core/experimental'
-import type { Compute } from '@wagmi/core/internal'
+} from '@wagmi/core/query'
 
-import { useConfig } from '../../hooks/useConfig.js'
-import type { ConfigParameter } from '../../types/properties.js'
+import type { SendCallsErrorType } from 'viem'
+import type { ConfigParameter } from '../types/properties.js'
 import type {
   UseMutationParameters,
   UseMutationReturnType,
-} from '../../utils/query.js'
+} from '../utils/query.js'
+import { useConfig } from './useConfig.js'
 
 export type UseSendCallsParameters<
   config extends Config = Config,

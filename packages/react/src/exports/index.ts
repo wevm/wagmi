@@ -70,6 +70,18 @@ export {
 } from '../hooks/useBytecode.js'
 
 export {
+  type UseCallsStatusParameters,
+  type UseCallsStatusReturnType,
+  useCallsStatus,
+} from '../hooks/useCallsStatus.js'
+
+export {
+  type UseCapabilitiesParameters,
+  type UseCapabilitiesReturnType,
+  useCapabilities,
+} from '../hooks/useCapabilities.js'
+
+export {
   type UseCallParameters,
   type UseCallReturnType,
   useCall,
@@ -246,10 +258,22 @@ export {
 } from '../hooks/useReconnect.js'
 
 export {
+  type UseSendCallsParameters,
+  type UseSendCallsReturnType,
+  useSendCalls,
+} from '../hooks/useSendCalls.js'
+
+export {
   type UseSendTransactionParameters,
   type UseSendTransactionReturnType,
   useSendTransaction,
 } from '../hooks/useSendTransaction.js'
+
+export {
+  type UseShowCallsStatusParameters,
+  type UseShowCallsStatusReturnType,
+  useShowCallsStatus,
+} from '../hooks/useShowCallsStatus.js'
 
 export {
   type UseSignMessageParameters,
@@ -335,6 +359,12 @@ export {
   type UseWalletClientReturnType,
   useWalletClient,
 } from '../hooks/useWalletClient.js'
+
+export {
+  type UseWaitForCallsStatusParameters,
+  type UseWaitForCallsStatusReturnType,
+  useWaitForCallsStatus,
+} from '../hooks/useWaitForCallsStatus.js'
 
 export {
   type UseWaitForTransactionReceiptParameters,

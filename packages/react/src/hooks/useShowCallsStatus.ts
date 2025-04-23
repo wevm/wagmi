@@ -1,23 +1,26 @@
 'use client'
 
 import { useMutation } from '@tanstack/react-query'
-import type { Config, ResolvedRegister } from '@wagmi/core'
+import type {
+  Config,
+  ResolvedRegister,
+  ShowCallsStatusErrorType,
+} from '@wagmi/core'
+import type { Compute } from '@wagmi/core/internal'
 import {
   type ShowCallsStatusData,
-  type ShowCallsStatusErrorType,
   type ShowCallsStatusMutate,
   type ShowCallsStatusMutateAsync,
   type ShowCallsStatusVariables,
   showCallsStatusMutationOptions,
-} from '@wagmi/core/experimental'
-import type { Compute } from '@wagmi/core/internal'
+} from '@wagmi/core/query'
 
-import { useConfig } from '../../hooks/useConfig.js'
-import type { ConfigParameter } from '../../types/properties.js'
+import type { ConfigParameter } from '../types/properties.js'
 import type {
   UseMutationParameters,
   UseMutationReturnType,
-} from '../../utils/query.js'
+} from '../utils/query.js'
+import { useConfig } from './useConfig.js'
 
 export type UseShowCallsStatusParameters<
   config extends Config = Config,

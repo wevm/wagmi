@@ -30,7 +30,11 @@ test('default', async () => {
       ],
     }),
   ).resolves.toMatchInlineSnapshot(
-    `"0x8913636bd97cf4bcc0a6343c730905a27ead0f7480ff82190072e916439eb212"`,
+    `
+    {
+      "id": "0x8913636bd97cf4bcc0a6343c730905a27ead0f7480ff82190072e916439eb212",
+    }
+  `,
   )
   await disconnect(config, { connector })
 })

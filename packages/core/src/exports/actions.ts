@@ -97,6 +97,20 @@ export {
 } from '../actions/getBytecode.js'
 
 export {
+  type GetCallsStatusErrorType,
+  type GetCallsStatusParameters,
+  type GetCallsStatusReturnType,
+  getCallsStatus,
+} from '../actions/getCallsStatus.js'
+
+export {
+  type GetCapabilitiesErrorType,
+  type GetCapabilitiesParameters,
+  type GetCapabilitiesReturnType,
+  getCapabilities,
+} from '../actions/getCapabilities.js'
+
+export {
   type GetChainIdReturnType,
   getChainId,
 } from '../actions/getChainId.js'
@@ -287,11 +301,25 @@ export {
 } from '../actions/reconnect.js'
 
 export {
+  type SendCallsErrorType,
+  type SendCallsParameters,
+  type SendCallsReturnType,
+  sendCalls,
+} from '../actions/sendCalls.js'
+
+export {
   type SendTransactionErrorType,
   type SendTransactionParameters,
   type SendTransactionReturnType,
   sendTransaction,
 } from '../actions/sendTransaction.js'
+
+export {
+  type ShowCallsStatusErrorType,
+  type ShowCallsStatusParameters,
+  type ShowCallsStatusReturnType,
+  showCallsStatus,
+} from '../actions/showCallsStatus.js'
 
 export {
   type SignMessageErrorType,
@@ -341,6 +369,13 @@ export {
   type VerifyTypedDataReturnType,
   verifyTypedData,
 } from '../actions/verifyTypedData.js'
+
+export {
+  type WaitForCallsStatusErrorType,
+  type WaitForCallsStatusParameters,
+  type WaitForCallsStatusReturnType,
+  waitForCallsStatus,
+} from '../actions/waitForCallsStatus.js'
 
 export {
   type WatchAccountParameters,

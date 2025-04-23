@@ -1,16 +1,16 @@
 import type { QueryOptions } from '@tanstack/query-core'
 
-import type { Config } from '../../createConfig.js'
-import { ConnectorNotConnectedError } from '../../errors/config.js'
-import { filterQueryOptions } from '../../query/utils.js'
-import type { ScopeKeyParameter } from '../../types/properties.js'
-import type { Compute } from '../../types/utils.js'
 import {
   type GetCallsStatusErrorType,
   type GetCallsStatusParameters,
   type GetCallsStatusReturnType,
   getCallsStatus,
 } from '../actions/getCallsStatus.js'
+import type { Config } from '../createConfig.js'
+import { ConnectorNotConnectedError } from '../errors/config.js'
+import { filterQueryOptions } from '../query/utils.js'
+import type { ScopeKeyParameter } from '../types/properties.js'
+import type { Compute } from '../types/utils.js'
 
 export type GetCallsStatusOptions = Compute<
   GetCallsStatusParameters & ScopeKeyParameter

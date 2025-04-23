@@ -1,8 +1,8 @@
 import { accounts, config } from '@wagmi/test'
 import { expect, test } from 'vitest'
 
-import { connect } from '../../actions/connect.js'
-import { disconnect } from '../../actions/disconnect.js'
+import { connect } from './connect.js'
+import { disconnect } from './disconnect.js'
 import { getCapabilities } from './getCapabilities.js'
 
 const connector = config.connectors[0]!

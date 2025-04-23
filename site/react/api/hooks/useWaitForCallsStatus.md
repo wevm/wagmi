@@ -4,7 +4,7 @@ description: Waits for a call bundle to be confirmed & included on a block.
 ---
 
 <script setup>
-const packageName = 'wagmi/experimental'
+const packageName = 'wagmi'
 const actionName = 'waitForCallsStatus'
 const typeName = 'WaitForCallsStatus'
 const TData = 'WaitForCallsStatusReturnType'
@@ -15,21 +15,19 @@ const TError = 'WaitForCallsStatusErrorType'
 
 Waits for a call bundle to be confirmed & included on a block before returning the status & receipts.
 
-::: warning
-This is an experimental action that is not supported in most wallets. It is recommended to have a fallback mechanism if using this in production.
-:::
+ 
 
 ## Import
 
 ```ts
-import { useWaitForCallsStatus } from 'wagmi/experimental'
+import { useWaitForCallsStatus } from 'wagmi'
 ```
 
 ## Usage
 
 ::: code-group
 ```tsx [index.tsx]
-import { useWaitForCallsStatus } from 'wagmi/experimental'
+import { useWaitForCallsStatus } from 'wagmi'
 
 function App() {
   const result = useWaitForCallsStatus({
@@ -43,7 +41,7 @@ function App() {
 ## Parameters
 
 ```ts
-import { type UseWaitForCallsStatusParameters } from 'wagmi/experimental'
+import { type UseWaitForCallsStatusParameters } from 'wagmi'
 ```
 
 ### config
@@ -54,7 +52,7 @@ import { type UseWaitForCallsStatusParameters } from 'wagmi/experimental'
 
 ::: code-group
 ```tsx [index.tsx]
-import { useWaitForCallsStatus } from 'wagmi/experimental'
+import { useWaitForCallsStatus } from 'wagmi'
 import { config } from './config' // [!code focus]
 
 function App() {
@@ -75,7 +73,7 @@ Connector to get call statuses with.
 
 ::: code-group
 ```tsx [index.tsx]
-import { useWaitForCallsStatus, useConnections } from 'wagmi/experimental'
+import { useWaitForCallsStatus, useConnections } from 'wagmi'
 import { config } from './config' // [!code focus]
 
 function App() {
@@ -134,7 +132,7 @@ Scopes the cache to a given context. Hooks that have identical context will shar
 
 ::: code-group
 ```tsx [index.tsx]
-import { useWaitForCallsStatus } from 'wagmi/experimental'
+import { useWaitForCallsStatus } from 'wagmi'
 import { config } from './config' // [!code focus]
 
 function App() {
@@ -171,7 +169,7 @@ const status = await useWaitForCallsStatus({
 ## Return Type
 
 ```ts
-import { type UseWaitForCallsStatusReturnType } from 'wagmi/experimental'
+import { type UseWaitForCallsStatusReturnType } from 'wagmi'
 ```
 
 <!--@include: @shared/query-result.md-->
