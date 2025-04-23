@@ -338,6 +338,7 @@ function version3(parameters: Version3Parameters) {
   return createConnector<Provider>((config) => ({
     id: 'coinbaseWalletSDK',
     name: 'Coinbase Wallet',
+    rdns: 'com.coinbase.wallet',
     type: coinbaseWallet.type,
     async connect({ chainId } = {}) {
       try {

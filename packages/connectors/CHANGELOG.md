@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 5.7.12
+
+### Patch Changes
+
+- [#4608](https://github.com/wevm/wagmi/pull/4608) [`b59c024b23c69f5459b17390531207cfdf126ce4`](https://github.com/wevm/wagmi/commit/b59c024b23c69f5459b17390531207cfdf126ce4) Thanks [@jxom](https://github.com/jxom)! - Updated `@walletconnect/ethereum-provider`.
+
 ## 5.7.11
 
 ### Patch Changes
