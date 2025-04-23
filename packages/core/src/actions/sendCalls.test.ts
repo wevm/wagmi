@@ -2,8 +2,8 @@ import { accounts, config } from '@wagmi/test'
 import { parseEther } from 'viem'
 import { expect, test } from 'vitest'
 
-import { connect } from '../../actions/connect.js'
-import { disconnect } from '../../actions/disconnect.js'
+import { connect } from './connect.js'
+import { disconnect } from './disconnect.js'
 import { sendCalls } from './sendCalls.js'
 
 const connector = config.connectors[0]!
@@ -29,7 +29,11 @@ test('default', async () => {
       ],
     }),
   ).resolves.toMatchInlineSnapshot(
-    `"0x5dedb5a4ff8968db37459b52b83cbdc92b01c9c709c9cff26e345ef5cf27f92e"`,
+    `
+    {
+      "id": "0x5dedb5a4ff8968db37459b52b83cbdc92b01c9c709c9cff26e345ef5cf27f92e",
+    }
+  `,
   )
   await disconnect(config, { connector })
 })
@@ -80,7 +84,11 @@ test('behavior: nullish account (account filled by wallet)', async () => {
       ],
     }),
   ).resolves.toMatchInlineSnapshot(
-    `"0x035b56a56a5b2fea10e194bae4c846b415de48a8288c7eb704ba7880edcc29a0"`,
+    `
+    {
+      "id": "0x035b56a56a5b2fea10e194bae4c846b415de48a8288c7eb704ba7880edcc29a0",
+    }
+  `,
   )
 })
 

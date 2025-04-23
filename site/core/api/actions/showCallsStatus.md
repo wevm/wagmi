@@ -1,5 +1,5 @@
 <script setup>
-const packageName = '@wagmi/core/experimental'
+const packageName = '@wagmi/core'
 const actionName = 'showCallsStatus'
 const typeName = 'ShowCallsStatus'
 </script>
@@ -10,21 +10,19 @@ Action to request for the wallet to show information about a call batch that was
 
 [Read more.](https://github.com/ethereum/EIPs/blob/1663ea2e7a683285f977eda51c32cec86553f585/EIPS/eip-5792.md#wallet_showcallsstatus)
 
-::: warning
-This is an experimental action that is not supported in most wallets. It is recommended to have a fallback mechanism if using this in production.
-:::
+ 
 
 ## Import
 
 ```ts
-import { showCallsStatus } from '@wagmi/core/experimental'
+import { showCallsStatus } from '@wagmi/core'
 ```
 
 ## Usage
 
 ::: code-group
 ```ts [index.ts]
-import { showCallsStatus } from '@wagmi/core/experimental'
+import { showCallsStatus } from '@wagmi/core'
 import { config } from './config'
 
 await showCallsStatus(config, {
@@ -37,7 +35,7 @@ await showCallsStatus(config, {
 ## Parameters
 
 ```ts
-import { type ShowCallsStatusParameters } from '@wagmi/core/experimental'
+import { type ShowCallsStatusParameters } from '@wagmi/core'
 ```
 
 ### connector
@@ -48,7 +46,7 @@ Connector to show call statuses with.
 
 ::: code-group
 ```ts [index.ts]
-import { getConnections, showCallsStatus } from '@wagmi/core/experimental'
+import { getConnections, showCallsStatus } from '@wagmi/core'
 import { config } from './config'
 
 const connections = getConnections(config)
@@ -68,7 +66,7 @@ Identifier of the call batch.
 
 ::: code-group
 ```ts [index.ts]
-import { showCallsStatus } from '@wagmi/core/experimental'
+import { showCallsStatus } from '@wagmi/core'
 import { config } from './config'
 
 await showCallsStatus(config, {
@@ -81,7 +79,7 @@ await showCallsStatus(config, {
 ## Return Type
 
 ```ts
-import { type ShowCallsStatusReturnType } from '@wagmi/core/experimental'
+import { type ShowCallsStatusReturnType } from '@wagmi/core'
 ```
 
 `bigint`
@@ -91,7 +89,7 @@ Most recent block number seen.
 ## Error
 
 ```ts
-import { type ShowCallsStatusErrorType } from '@wagmi/core/experimental'
+import { type ShowCallsStatusErrorType } from '@wagmi/core'
 ```
 
 <!--@include: @shared/query-imports.md-->

@@ -1,5 +1,5 @@
 <script setup>
-const packageName = '@wagmi/core/experimental'
+const packageName = '@wagmi/core'
 const actionName = 'waitForCallsStatus'
 const typeName = 'WaitForCallsStatus'
 </script>
@@ -8,14 +8,12 @@ const typeName = 'WaitForCallsStatus'
 
 Waits for a call bundle to be confirmed & included on a block before returning the status & receipts.
 
-::: warning
-This is an experimental action that is not supported in most wallets. It is recommended to have a fallback mechanism if using this in production.
-:::
+ 
 
 ## Import
 
 ```ts
-import { waitForCallsStatus } from '@wagmi/core/experimental'
+import { waitForCallsStatus } from '@wagmi/core'
 ```
 
 ## Usage
@@ -23,7 +21,7 @@ import { waitForCallsStatus } from '@wagmi/core/experimental'
 ::: code-group
 ```ts [index.ts]
 import { parseEther } from 'viem'
-import { sendCalls, waitForCallsStatus } from '@wagmi/core/experimental'
+import { sendCalls, waitForCallsStatus } from '@wagmi/core'
 import { config } from './config'
 
 const id = await sendCalls(config, {
@@ -43,7 +41,7 @@ const { status, receipts } = await waitForCallsStatus(config, { // [!code focus]
 ## Parameters
 
 ```ts
-import { type WaitForCallsStatusParameters } from '@wagmi/core/experimental'
+import { type WaitForCallsStatusParameters } from '@wagmi/core'
 ```
 
 ### connector
@@ -54,7 +52,7 @@ Connector to get call statuses with.
 
 ::: code-group
 ```ts [index.ts]
-import { getConnections, waitForCallsStatus } from '@wagmi/core/experimental'
+import { getConnections, waitForCallsStatus } from '@wagmi/core'
 import { config } from './config'
 
 const connections = getConnections(config)
@@ -74,7 +72,7 @@ Identifier of the call batch.
 
 ::: code-group
 ```ts [index.ts]
-import { waitForCallsStatus } from '@wagmi/core/experimental'
+import { waitForCallsStatus } from '@wagmi/core'
 import { config } from './config'
 
 const status = await waitForCallsStatus(config, {
@@ -92,7 +90,7 @@ Polling interval in milliseconds.
 
 ::: code-group
 ```ts [index.ts]
-import { waitForCallsStatus } from '@wagmi/core/experimental'
+import { waitForCallsStatus } from '@wagmi/core'
 import { config } from './config'
 
 const status = await waitForCallsStatus(config, {
@@ -111,7 +109,7 @@ Timeout in milliseconds before `waitForCallsStatus` stops polling.
 
 ::: code-group
 ```ts [index.ts]
-import { waitForCallsStatus } from '@wagmi/core/experimental'
+import { waitForCallsStatus } from '@wagmi/core'
 import { config } from './config'
 
 const status = await waitForCallsStatus(config, {
@@ -125,7 +123,7 @@ const status = await waitForCallsStatus(config, {
 ## Return Type
 
 ```ts
-import { type WaitForCallsStatusReturnType } from '@wagmi/core/experimental'
+import { type WaitForCallsStatusReturnType } from '@wagmi/core'
 ```
 
 `{ status: 'PENDING' | 'CONFIRMED', receipts: TransactionReceipt[] }`
@@ -135,7 +133,7 @@ The status and receipts of the call batch.
 ## Error
 
 ```ts
-import { type WaitForCallsStatusErrorType } from '@wagmi/core/experimental'
+import { type WaitForCallsStatusErrorType } from '@wagmi/core'
 ```
 
 <!--@include: @shared/query-imports.md-->

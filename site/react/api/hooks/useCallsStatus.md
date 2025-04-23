@@ -4,7 +4,7 @@ description: Hook for fetching the number of the most recent block seen.
 ---
 
 <script setup>
-const packageName = 'wagmi/experimental'
+const packageName = 'wagmi'
 const actionName = 'getCallsStatus'
 const typeName = 'GetCallsStatus'
 const TData = 'GetCallsStatusReturnType'
@@ -15,21 +15,19 @@ const TError = 'GetCallsStatusErrorType'
 
 Hook to fetch the status and receipts of a call batch that was sent via [`useSendCalls`](/react/api/hooks/useSendCalls).
 
-::: warning
-This is an experimental action that is not supported in most wallets. It is recommended to have a fallback mechanism if using this in production.
-:::
+ 
 
 ## Import
 
 ```ts
-import { useCallsStatus } from 'wagmi/experimental'
+import { useCallsStatus } from 'wagmi'
 ```
 
 ## Usage
 
 ::: code-group
 ```tsx [index.tsx]
-import { useCallsStatus } from 'wagmi/experimental'
+import { useCallsStatus } from 'wagmi'
 
 function App() {
   const result = useCallsStatus({
@@ -43,7 +41,7 @@ function App() {
 ## Parameters
 
 ```ts
-import { type UseCallsStatusParameters } from 'wagmi/experimental'
+import { type UseCallsStatusParameters } from 'wagmi'
 ```
 
 ### config
@@ -54,7 +52,7 @@ import { type UseCallsStatusParameters } from 'wagmi/experimental'
 
 ::: code-group
 ```tsx [index.tsx]
-import { useCallsStatus } from 'wagmi/experimental'
+import { useCallsStatus } from 'wagmi'
 import { config } from './config' // [!code focus]
 
 function App() {
@@ -75,7 +73,7 @@ Connector to get call statuses with.
 
 ::: code-group
 ```tsx [index.tsx]
-import { useCallsStatus, useConnections } from 'wagmi/experimental'
+import { useCallsStatus, useConnections } from 'wagmi'
 import { config } from './config' // [!code focus]
 
 function App() {
@@ -115,7 +113,7 @@ Scopes the cache to a given context. Hooks that have identical context will shar
 
 ::: code-group
 ```tsx [index.tsx]
-import { useCallsStatus } from 'wagmi/experimental'
+import { useCallsStatus } from 'wagmi'
 import { config } from './config' // [!code focus]
 
 function App() {
@@ -133,7 +131,7 @@ function App() {
 ## Return Type
 
 ```ts
-import { type UseCallsStatusReturnType } from 'wagmi/experimental'
+import { type UseCallsStatusReturnType } from 'wagmi'
 ```
 
 <!--@include: @shared/query-result.md-->

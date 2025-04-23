@@ -1,16 +1,16 @@
 import type { QueryOptions } from '@tanstack/query-core'
 
-import type { Config } from '../../createConfig.js'
-import { ConnectorNotConnectedError } from '../../errors/config.js'
-import { filterQueryOptions } from '../../query/utils.js'
-import type { ScopeKeyParameter } from '../../types/properties.js'
-import type { Compute, ExactPartial } from '../../types/utils.js'
 import {
   type GetCapabilitiesErrorType,
   type GetCapabilitiesParameters,
   type GetCapabilitiesReturnType,
   getCapabilities,
 } from '../actions/getCapabilities.js'
+import type { Config } from '../createConfig.js'
+import { ConnectorNotConnectedError } from '../errors/config.js'
+import { filterQueryOptions } from '../query/utils.js'
+import type { ScopeKeyParameter } from '../types/properties.js'
+import type { Compute, ExactPartial } from '../types/utils.js'
 
 export type GetCapabilitiesOptions = Compute<
   ExactPartial<GetCapabilitiesParameters> & ScopeKeyParameter

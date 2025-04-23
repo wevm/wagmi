@@ -34,15 +34,20 @@ test('default', async () => {
   await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
   const { result: result_2 } = renderHook(() =>
-    useCallsStatus({ id: result.current.data! }),
+    useCallsStatus({ id: result.current.data?.id! }),
   )
   await waitFor(() => expect(result_2.current.isSuccess).toBeTruthy())
 
   expect(result_2.current.data).toMatchInlineSnapshot(
     `
     {
+      "atomic": false,
+      "chainId": 1,
+      "id": "0x5dedb5a4ff8968db37459b52b83cbdc92b01c9c709c9cff26e345ef5cf27f92e",
       "receipts": [],
-      "status": "PENDING",
+      "status": "pending",
+      "statusCode": 100,
+      "version": "2.0.0",
     }
   `,
   )
@@ -50,11 +55,12 @@ test('default', async () => {
   await testClient.mainnet.mine({ blocks: 1 })
 
   const { result: result_3 } = renderHook(() =>
-    useCallsStatus({ id: result.current.data! }),
+    useCallsStatus({ id: result.current.data?.id! }),
   )
   await waitFor(() => expect(result_3.current.isSuccess).toBeTruthy())
 
-  expect(result_3.current.data?.status).toBe('CONFIRMED')
+  expect(result_3.current.data?.status).toBe('success')
+  expect(result_3.current.data?.statusCode).toBe(200)
   expect(
     result_3.current.data?.receipts?.map((x) => ({
       ...x,

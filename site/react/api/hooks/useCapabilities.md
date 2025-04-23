@@ -4,7 +4,7 @@ description: Hook for fetching the number of the most recent block seen.
 ---
 
 <script setup>
-const packageName = 'wagmi/experimental'
+const packageName = 'wagmi'
 const actionName = 'getCapabilities'
 const typeName = 'GetCapabilities'
 const TData = 'GetCapabilitiesReturnType'
@@ -24,14 +24,14 @@ This is an experimental Hook that is not supported in most wallets. It is recomm
 ## Import
 
 ```ts
-import { useCapabilities } from 'wagmi/experimental'
+import { useCapabilities } from 'wagmi'
 ```
 
 ## Usage
 
 ::: code-group
 ```tsx [index.tsx]
-import { useCapabilities } from 'wagmi/experimental'
+import { useCapabilities } from 'wagmi'
 
 function App() {
   const result = useCapabilities()
@@ -43,7 +43,7 @@ function App() {
 ## Parameters
 
 ```ts
-import { type UseCapabilitiesParameters } from 'wagmi/experimental'
+import { type UseCapabilitiesParameters } from 'wagmi'
 ```
 
 ### account
@@ -72,7 +72,7 @@ const status = await useCapabilities({
 
 ::: code-group
 ```tsx [index.tsx]
-import { useCapabilities } from 'wagmi/experimental'
+import { useCapabilities } from 'wagmi'
 import { config } from './config' // [!code focus]
 
 function App() {
@@ -92,7 +92,7 @@ Connector to get call statuses with.
 
 ::: code-group
 ```tsx [index.tsx]
-import { useCapabilities, useConnections } from 'wagmi/experimental'
+import { useCapabilities, useConnections } from 'wagmi'
 import { config } from './config' // [!code focus]
 
 function App() {
@@ -113,7 +113,7 @@ Scopes the cache to a given context. Hooks that have identical context will shar
 
 ::: code-group
 ```tsx [index.tsx]
-import { useCapabilities } from 'wagmi/experimental'
+import { useCapabilities } from 'wagmi'
 import { config } from './config' // [!code focus]
 
 function App() {
@@ -130,7 +130,7 @@ function App() {
 ## Return Type
 
 ```ts
-import { type UseCapabilitiesReturnType } from 'wagmi/experimental'
+import { type UseCapabilitiesReturnType } from 'wagmi'
 ```
 
 <!--@include: @shared/query-result.md-->

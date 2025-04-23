@@ -1,20 +1,23 @@
 'use client'
 
-import type { Config, ResolvedRegister } from '@wagmi/core'
+import type {
+  Config,
+  GetCapabilitiesErrorType,
+  ResolvedRegister,
+} from '@wagmi/core'
+import type { Compute } from '@wagmi/core/internal'
 import {
   type GetCapabilitiesData,
-  type GetCapabilitiesErrorType,
   type GetCapabilitiesOptions,
   type GetCapabilitiesQueryFnData,
   type GetCapabilitiesQueryKey,
   getCapabilitiesQueryOptions,
-} from '@wagmi/core/experimental'
-import type { Compute } from '@wagmi/core/internal'
+} from '@wagmi/core/query'
 
-import { useAccount } from '../../hooks/useAccount.js'
-import { useConfig } from '../../hooks/useConfig.js'
-import type { ConfigParameter, QueryParameter } from '../../types/properties.js'
-import { type UseQueryReturnType, useQuery } from '../../utils/query.js'
+import type { ConfigParameter, QueryParameter } from '../types/properties.js'
+import { type UseQueryReturnType, useQuery } from '../utils/query.js'
+import { useAccount } from './useAccount.js'
+import { useConfig } from './useConfig.js'
 
 export type UseCapabilitiesParameters<
   config extends Config = Config,

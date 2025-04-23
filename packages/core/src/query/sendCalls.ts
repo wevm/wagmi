@@ -1,13 +1,13 @@
 import type { MutateOptions, MutationOptions } from '@tanstack/query-core'
 
-import type { Config } from '../../createConfig.js'
-import type { Compute } from '../../types/utils.js'
 import {
   type SendCallsErrorType,
   type SendCallsParameters,
   type SendCallsReturnType,
   sendCalls,
 } from '../actions/sendCalls.js'
+import type { Config } from '../createConfig.js'
+import type { Compute } from '../types/utils.js'
 
 export function sendCallsMutationOptions<config extends Config>(
   config: config,

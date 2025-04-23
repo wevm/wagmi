@@ -66,8 +66,8 @@ jobs:
     timeout-minutes: 5
     strategy:
       matrix:
-        typescript-version: ['5.2.2', '5.3.3', '5.4.5', '5.5.2']
-        viem-version: ['2.23.12', 'latest']
+        typescript-version: ['5.5.2', '5.6.2', '5.7.2', '5.8.2', 'latest']
+        viem-version: ['2.28.0', 'latest']
 
     steps:
       - name: Clone repository

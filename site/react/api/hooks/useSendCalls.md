@@ -4,7 +4,7 @@ description: Hook that requests for the wallet to sign and broadcast a batch of 
 ---
 
 <script setup>
-const packageName = 'wagmi/experimental'
+const packageName = 'wagmi'
 const actionName = 'sendCalls'
 const typeName = 'SendCalls'
 const mutate = 'sendCalls'
@@ -26,14 +26,14 @@ This is an experimental Hook that is not supported in most wallets. It is recomm
 ## Import
 
 ```ts
-import { useSendCalls } from 'wagmi/experimental'
+import { useSendCalls } from 'wagmi'
 ```
 
 ## Usage
 
 ::: code-group
 ```tsx [index.tsx]
-import { useSendCalls } from 'wagmi/experimental'
+import { useSendCalls } from 'wagmi'
 import { parseEther } from 'viem'
 
 function App() {
@@ -67,7 +67,7 @@ function App() {
 ## Parameters
 
 ```ts
-import { type UseSendCallsParameters } from 'wagmi/experimental'
+import { type UseSendCallsParameters } from 'wagmi'
 ```
 
 ### config
@@ -78,7 +78,7 @@ import { type UseSendCallsParameters } from 'wagmi/experimental'
 
 ::: code-group
 ```tsx [index.tsx]
-import { useSendCalls } from 'wagmi/experimental'
+import { useSendCalls } from 'wagmi'
 import { config } from './config' // [!code focus]
 
 function App() {
@@ -95,7 +95,7 @@ function App() {
 ## Return Type
 
 ```ts
-import { type UseSendCallsReturnType } from 'wagmi/experimental'
+import { type UseSendCallsReturnType } from 'wagmi'
 ```
 
 <!--@include: @shared/mutation-result.md-->

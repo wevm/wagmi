@@ -44,10 +44,10 @@ test('parameters: account', () => {
         {
           "account": {
             "address": "0x14791697260E4c9A71f18484C9f997B308e59325",
-            "experimental_signAuthorization": [Function],
             "nonceManager": undefined,
             "publicKey": "0x046655feed4d214c261e0a6b554395596f1f1476a77d999560e5a8df9b8a1a3515217e88dd05e938efdd71b2cce322bf01da96cd42087b236e8f5043157a9c068e",
             "sign": [Function],
+            "signAuthorization": [Function],
             "signMessage": [Function],
             "signTransaction": [Function],
             "signTypedData": [Function],

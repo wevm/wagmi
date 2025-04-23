@@ -109,6 +109,24 @@ export {
 } from '../query/getBytecode.js'
 
 export {
+  type GetCallsStatusData,
+  type GetCallsStatusOptions,
+  type GetCallsStatusQueryFnData,
+  type GetCallsStatusQueryKey,
+  getCallsStatusQueryKey,
+  getCallsStatusQueryOptions,
+} from '../query/getCallsStatus.js'
+
+export {
+  type GetCapabilitiesData,
+  type GetCapabilitiesOptions,
+  type GetCapabilitiesQueryFnData,
+  type GetCapabilitiesQueryKey,
+  getCapabilitiesQueryKey,
+  getCapabilitiesQueryOptions,
+} from '../query/getCapabilities.js'
+
+export {
   type GetConnectorClientData,
   type GetConnectorClientOptions,
   type GetConnectorClientQueryFnData,
@@ -297,6 +315,22 @@ export {
 } from '../query/reconnect.js'
 
 export {
+  type SendCallsData,
+  type SendCallsVariables,
+  type SendCallsMutate,
+  type SendCallsMutateAsync,
+  sendCallsMutationOptions,
+} from '../query/sendCalls.js'
+
+export {
+  type ShowCallsStatusData,
+  type ShowCallsStatusVariables,
+  type ShowCallsStatusMutate,
+  type ShowCallsStatusMutateAsync,
+  showCallsStatusMutationOptions,
+} from '../query/showCallsStatus.js'
+
+export {
   type SendTransactionData,
   type SendTransactionVariables,
   type SendTransactionMutate,
@@ -362,6 +396,15 @@ export {
   verifyTypedDataQueryKey,
   verifyTypedDataQueryOptions,
 } from '../query/verifyTypedData.js'
+
+export {
+  type WaitForCallsStatusData,
+  type WaitForCallsStatusOptions,
+  type WaitForCallsStatusQueryFnData,
+  type WaitForCallsStatusQueryKey,
+  waitForCallsStatusQueryKey,
+  waitForCallsStatusQueryOptions,
+} from '../query/waitForCallsStatus.js'
 
 export {
   type WaitForTransactionReceiptData,

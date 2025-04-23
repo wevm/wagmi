@@ -4,7 +4,7 @@ description: Action to request for the wallet to show information about a call b
 ---
 
 <script setup>
-const packageName = 'wagmi/experimental'
+const packageName = 'wagmi'
 const actionName = 'showCallsStatus'
 const typeName = 'ShowCallsStatus'
 const mutate = 'showCallsStatus'
@@ -19,21 +19,19 @@ Action to request for the wallet to show information about a call batch that was
 
 [Read more.](https://github.com/ethereum/EIPs/blob/1663ea2e7a683285f977eda51c32cec86553f585/EIPS/eip-5792.md#wallet_showcallsstatus)
 
-::: warning
-This is an experimental action that is not supported in most wallets. It is recommended to have a fallback mechanism if using this in production.
-:::
+ 
 
 ## Import
 
 ```ts
-import { useShowCallsStatus } from 'wagmi/experimental'
+import { useShowCallsStatus } from 'wagmi'
 ```
 
 ## Usage
 
 ::: code-group
 ```tsx [index.tsx]
-import { useShowCallsStatus } from 'wagmi/experimental'
+import { useShowCallsStatus } from 'wagmi'
 import { parseEther } from 'viem'
 
 function App() {
@@ -58,7 +56,7 @@ function App() {
 ## Parameters
 
 ```ts
-import { type UseShowCallsStatusParameters } from 'wagmi/experimental'
+import { type UseShowCallsStatusParameters } from 'wagmi'
 ```
 
 ### config
@@ -69,7 +67,7 @@ import { type UseShowCallsStatusParameters } from 'wagmi/experimental'
 
 ::: code-group
 ```tsx [index.tsx]
-import { useShowCallsStatus } from 'wagmi/experimental'
+import { useShowCallsStatus } from 'wagmi'
 import { config } from './config' // [!code focus]
 
 function App() {
@@ -86,7 +84,7 @@ function App() {
 ## Return Type
 
 ```ts
-import { type UseShowCallsStatusReturnType } from 'wagmi/experimental'
+import { type UseShowCallsStatusReturnType } from 'wagmi'
 ```
 
 <!--@include: @shared/mutation-result.md-->

@@ -1,5 +1,5 @@
 <script setup>
-const packageName = '@wagmi/core/experimental'
+const packageName = '@wagmi/core'
 const actionName = 'sendCalls'
 const typeName = 'SendCalls'
 </script>
@@ -10,14 +10,12 @@ Action that requests for the wallet to sign and broadcast a batch of calls (tran
 
 [Read more.](https://github.com/ethereum/EIPs/blob/815028dc634463e1716fc5ce44c019a6040f0bef/EIPS/eip-5792.md#wallet_sendcalls)
 
-::: warning
-This is an experimental action that is not supported in most wallets. It is recommended to have a fallback mechanism if using this in production.
-:::
+ 
 
 ## Import
 
 ```ts
-import { sendCalls } from '@wagmi/core/experimental'
+import { sendCalls } from '@wagmi/core'
 ```
 
 ## Usage
@@ -25,7 +23,7 @@ import { sendCalls } from '@wagmi/core/experimental'
 ::: code-group
 ```ts [index.ts]
 import { parseEther } from 'viem'
-import { sendCalls } from '@wagmi/core/experimental'
+import { sendCalls } from '@wagmi/core'
 import { config } from './config'
 
 const id = await sendCalls(config, {
@@ -47,7 +45,7 @@ const id = await sendCalls(config, {
 ## Parameters
 
 ```ts
-import { type SendCallsParameters } from '@wagmi/core/experimental'
+import { type SendCallsParameters } from '@wagmi/core'
 ```
 
 ### account
@@ -61,7 +59,7 @@ If set to `null`, it is assumed that the wallet will handle filling the sender o
 ::: code-group
 ```ts [index.ts]
 import { parseEther } from 'viem'
-import { sendCalls } from '@wagmi/core/experimental'
+import { sendCalls } from '@wagmi/core'
 import { config } from './config'
 
 const id = await sendCalls(config, {
@@ -90,7 +88,7 @@ Calls to execute.
 ::: code-group
 ```ts [index.ts]
 import { parseEther } from 'viem'
-import { sendCalls } from '@wagmi/core/experimental'
+import { sendCalls } from '@wagmi/core'
 import { config } from './config'
 
 const id = await sendCalls(config, {
@@ -118,7 +116,7 @@ Capability metadata for the calls (e.g. specifying a paymaster).
 ::: code-group
 ```ts [index.ts]
 import { parseEther } from 'viem'
-import { sendCalls } from '@wagmi/core/experimental'
+import { sendCalls } from '@wagmi/core'
 import { config } from './config'
 
 const id = await sendCalls(config, {
@@ -151,7 +149,7 @@ The target chain ID to broadcast the calls.
 ::: code-group
 ```ts [index.ts]
 import { parseEther } from 'viem'
-import { sendCalls } from '@wagmi/core/experimental'
+import { sendCalls } from '@wagmi/core'
 import { config } from './config'
 
 const id = await sendCalls(config, {
@@ -181,7 +179,7 @@ Connector to get send the calls with.
 ```ts [index.ts]
 import { parseEther } from 'viem'
 import { getConnections } from '@wagmi/core'
-import { sendCalls } from '@wagmi/core/experimental'
+import { sendCalls } from '@wagmi/core'
 import { config } from './config'
 
 const connections = getConnections(config)
@@ -205,7 +203,7 @@ const id = await sendCalls(config, {
 ## Return Type
 
 ```ts
-import { type SendCallsReturnType } from '@wagmi/core/experimental'
+import { type SendCallsReturnType } from '@wagmi/core'
 ```
 
 `bigint`
@@ -215,7 +213,7 @@ Most recent block number seen.
 ## Error
 
 ```ts
-import { type SendCallsErrorType } from '@wagmi/core/experimental'
+import { type SendCallsErrorType } from '@wagmi/core'
 ```
 
 <!--@include: @shared/query-imports.md-->

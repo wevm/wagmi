@@ -2,8 +2,8 @@ import { accounts, config, testClient } from '@wagmi/test'
 import { parseEther } from 'viem'
 import { expect, test } from 'vitest'
 
-import { connect } from '../../actions/connect.js'
-import { disconnect } from '../../actions/disconnect.js'
+import { connect } from './connect.js'
+import { disconnect } from './disconnect.js'
 import { getCallsStatus } from './getCallsStatus.js'
 import { sendCalls } from './sendCalls.js'
 
@@ -11,7 +11,7 @@ const connector = config.connectors[0]!
 
 test('default', async () => {
   await connect(config, { connector })
-  const id = await sendCalls(config, {
+  const { id } = await sendCalls(config, {
     calls: [
       {
         data: '0xdeadbeef',
@@ -33,7 +33,7 @@ test('default', async () => {
     id,
   })
 
-  expect(status).toBe('CONFIRMED')
+  expect(status).toBe('success')
   expect(
     receipts?.map((x) => ({ ...x, blockHash: undefined })),
   ).toMatchInlineSnapshot(

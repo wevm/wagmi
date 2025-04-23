@@ -2,8 +2,8 @@ import { accounts, config, testClient } from '@wagmi/test'
 import { parseEther } from 'viem'
 import { test } from 'vitest'
 
-import { connect } from '../../actions/connect.js'
-import { disconnect } from '../../actions/disconnect.js'
+import { connect } from './connect.js'
+import { disconnect } from './disconnect.js'
 import { sendCalls } from './sendCalls.js'
 import { showCallsStatus } from './showCallsStatus.js'
 
@@ -11,7 +11,7 @@ const connector = config.connectors[0]!
 
 test('default', async () => {
   await connect(config, { connector })
-  const id = await sendCalls(config, {
+  const { id } = await sendCalls(config, {
     calls: [
       {
         data: '0xdeadbeef',
