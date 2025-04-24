@@ -10,24 +10,35 @@ exports[`fetches ABI 1`] = `
         "type": "constructor",
       },
       {
+        "anonymous": false,
         "inputs": [
           {
+            "indexed": false,
+            "internalType": "bytes",
             "name": "pubkey",
             "type": "bytes",
           },
           {
+            "indexed": false,
+            "internalType": "bytes",
             "name": "withdrawal_credentials",
             "type": "bytes",
           },
           {
+            "indexed": false,
+            "internalType": "bytes",
             "name": "amount",
             "type": "bytes",
           },
           {
+            "indexed": false,
+            "internalType": "bytes",
             "name": "signature",
             "type": "bytes",
           },
           {
+            "indexed": false,
+            "internalType": "bytes",
             "name": "index",
             "type": "bytes",
           },
@@ -38,18 +49,22 @@ exports[`fetches ABI 1`] = `
       {
         "inputs": [
           {
+            "internalType": "bytes",
             "name": "pubkey",
             "type": "bytes",
           },
           {
+            "internalType": "bytes",
             "name": "withdrawal_credentials",
             "type": "bytes",
           },
           {
+            "internalType": "bytes",
             "name": "signature",
             "type": "bytes",
           },
           {
+            "internalType": "bytes32",
             "name": "deposit_data_root",
             "type": "bytes32",
           },
@@ -64,6 +79,8 @@ exports[`fetches ABI 1`] = `
         "name": "get_deposit_count",
         "outputs": [
           {
+            "internalType": "bytes",
+            "name": "",
             "type": "bytes",
           },
         ],
@@ -75,6 +92,8 @@ exports[`fetches ABI 1`] = `
         "name": "get_deposit_root",
         "outputs": [
           {
+            "internalType": "bytes32",
+            "name": "",
             "type": "bytes32",
           },
         ],
@@ -84,6 +103,7 @@ exports[`fetches ABI 1`] = `
       {
         "inputs": [
           {
+            "internalType": "bytes4",
             "name": "interfaceId",
             "type": "bytes4",
           },
@@ -91,6 +111,8 @@ exports[`fetches ABI 1`] = `
         "name": "supportsInterface",
         "outputs": [
           {
+            "internalType": "bool",
+            "name": "",
             "type": "bool",
           },
         ],
@@ -111,77 +133,213 @@ exports[`fetches ABI with multichain deployment 1`] = `
   {
     "abi": [
       {
-        "inputs": [],
+        "inputs": [
+          {
+            "internalType": "bytes",
+            "name": "_data",
+            "type": "bytes",
+          },
+          {
+            "internalType": "bytes",
+            "name": "_signature",
+            "type": "bytes",
+          },
+        ],
+        "name": "addMember",
+        "outputs": [],
         "stateMutability": "nonpayable",
-        "type": "constructor",
+        "type": "function",
+      },
+      {
+        "inputs": [],
+        "name": "adminLock",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool",
+          },
+        ],
+        "stateMutability": "view",
+        "type": "function",
       },
       {
         "inputs": [
           {
-            "name": "pubkey",
-            "type": "bytes",
-          },
-          {
-            "name": "withdrawal_credentials",
-            "type": "bytes",
-          },
-          {
-            "name": "amount",
-            "type": "bytes",
-          },
-          {
-            "name": "signature",
-            "type": "bytes",
-          },
-          {
-            "name": "index",
-            "type": "bytes",
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256",
           },
         ],
-        "name": "DepositEvent",
-        "type": "event",
+        "name": "communities",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "owner",
+            "type": "address",
+          },
+          {
+            "internalType": "contract IToken20",
+            "name": "currency",
+            "type": "address",
+          },
+          {
+            "internalType": "uint256",
+            "name": "memberCount",
+            "type": "uint256",
+          },
+          {
+            "internalType": "uint256",
+            "name": "projectCount",
+            "type": "uint256",
+          },
+        ],
+        "stateMutability": "view",
+        "type": "function",
+      },
+      {
+        "inputs": [],
+        "name": "communityCount",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256",
+          },
+        ],
+        "stateMutability": "view",
+        "type": "function",
       },
       {
         "inputs": [
           {
-            "name": "pubkey",
-            "type": "bytes",
-          },
-          {
-            "name": "withdrawal_credentials",
-            "type": "bytes",
-          },
-          {
-            "name": "signature",
-            "type": "bytes",
-          },
-          {
-            "name": "deposit_data_root",
-            "type": "bytes32",
+            "internalType": "uint256",
+            "name": "_communityID",
+            "type": "uint256",
           },
         ],
-        "name": "deposit",
+        "name": "communityDetails",
+        "outputs": [
+          {
+            "internalType": "address[]",
+            "name": "",
+            "type": "address[]",
+          },
+          {
+            "internalType": "address[]",
+            "name": "",
+            "type": "address[]",
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "",
+            "type": "uint256[]",
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "",
+            "type": "uint256[]",
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "",
+            "type": "uint256[]",
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "",
+            "type": "uint256[]",
+          },
+        ],
+        "stateMutability": "view",
+        "type": "function",
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes",
+            "name": "_hash",
+            "type": "bytes",
+          },
+          {
+            "internalType": "address",
+            "name": "_currency",
+            "type": "address",
+          },
+        ],
+        "name": "createCommunity",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function",
+      },
+      {
+        "inputs": [],
+        "name": "homeFiInstance",
+        "outputs": [
+          {
+            "internalType": "contract IHomeFi",
+            "name": "",
+            "type": "address",
+          },
+        ],
+        "stateMutability": "view",
+        "type": "function",
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "_homeFi",
+            "type": "address",
+          },
+          {
+            "internalType": "address",
+            "name": "_eventsContract",
+            "type": "address",
+          },
+        ],
+        "name": "initialize",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function",
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "_communityID",
+            "type": "uint256",
+          },
+          {
+            "internalType": "address",
+            "name": "_project",
+            "type": "address",
+          },
+          {
+            "internalType": "uint256",
+            "name": "_investment",
+            "type": "uint256",
+          },
+        ],
+        "name": "investInProject",
         "outputs": [],
         "stateMutability": "payable",
         "type": "function",
       },
       {
-        "inputs": [],
-        "name": "get_deposit_count",
-        "outputs": [
+        "inputs": [
           {
-            "type": "bytes",
+            "internalType": "address",
+            "name": "_forwarder",
+            "type": "address",
           },
         ],
-        "stateMutability": "view",
-        "type": "function",
-      },
-      {
-        "inputs": [],
-        "name": "get_deposit_root",
+        "name": "isTrustedForwarder",
         "outputs": [
           {
-            "type": "bytes32",
+            "internalType": "bool",
+            "name": "",
+            "type": "bool",
           },
         ],
         "stateMutability": "view",
@@ -190,17 +348,179 @@ exports[`fetches ABI with multichain deployment 1`] = `
       {
         "inputs": [
           {
-            "name": "interfaceId",
-            "type": "bytes4",
+            "internalType": "uint256",
+            "name": "_communityID",
+            "type": "uint256",
+          },
+          {
+            "internalType": "address",
+            "name": "_project",
+            "type": "address",
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "_projectDetails",
+            "type": "uint256[]",
           },
         ],
-        "name": "supportsInterface",
+        "name": "publishProject",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function",
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "_communityID",
+            "type": "uint256",
+          },
+          {
+            "internalType": "address",
+            "name": "_project",
+            "type": "address",
+          },
+          {
+            "internalType": "uint256",
+            "name": "_repayAmount",
+            "type": "uint256",
+          },
+          {
+            "internalType": "bytes",
+            "name": "_details",
+            "type": "bytes",
+          },
+        ],
+        "name": "reduceDebt",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function",
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "_communityID",
+            "type": "uint256",
+          },
+          {
+            "internalType": "address",
+            "name": "_project",
+            "type": "address",
+          },
+          {
+            "internalType": "address",
+            "name": "_investor",
+            "type": "address",
+          },
+          {
+            "internalType": "uint256",
+            "name": "_repayAmount",
+            "type": "uint256",
+          },
+        ],
+        "name": "repayInvestor",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function",
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "_communityID",
+            "type": "uint256",
+          },
+          {
+            "internalType": "address",
+            "name": "_project",
+            "type": "address",
+          },
+          {
+            "internalType": "address",
+            "name": "_investor",
+            "type": "address",
+          },
+        ],
+        "name": "returnToInvestor",
         "outputs": [
           {
+            "internalType": "uint256",
+            "name": "_return",
+            "type": "uint256",
+          },
+          {
+            "internalType": "uint256",
+            "name": "_invested",
+            "type": "uint256",
+          },
+        ],
+        "stateMutability": "view",
+        "type": "function",
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bool",
+            "name": "_locked",
             "type": "bool",
           },
         ],
-        "stateMutability": "pure",
+        "name": "setAdminLock",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function",
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "_communityID",
+            "type": "uint256",
+          },
+          {
+            "internalType": "address",
+            "name": "_project",
+            "type": "address",
+          },
+          {
+            "internalType": "address",
+            "name": "_to",
+            "type": "address",
+          },
+          {
+            "internalType": "uint256",
+            "name": "_amount",
+            "type": "uint256",
+          },
+        ],
+        "name": "transferFraction",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool",
+          },
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function",
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "_communityID",
+            "type": "uint256",
+          },
+          {
+            "internalType": "bytes",
+            "name": "_hash",
+            "type": "bytes",
+          },
+        ],
+        "name": "updateCommunityHash",
+        "outputs": [],
+        "stateMutability": "nonpayable",
         "type": "function",
       },
     ],
