@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 2.3.0
+
+### Minor Changes
+
+- [#4629](https://github.com/wevm/wagmi/pull/4629) [`66dec7d75d580b3121ebc7e8162c1f9ae37cfd41`](https://github.com/wevm/wagmi/commit/66dec7d75d580b3121ebc7e8162c1f9ae37cfd41) Thanks [@allezxandre](https://github.com/allezxandre)! - Upgraded to Sourcify v2 API in `sourcify` plugin
+
 ## 2.2.1
 
 ### Patch Changes
