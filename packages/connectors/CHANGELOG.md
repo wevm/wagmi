@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 5.8.0
+
+### Minor Changes
+
+- [#4644](https://github.com/wevm/wagmi/pull/4644) [`cc5517ff6880bb630f1b201930acc20dd1a0b451`](https://github.com/wevm/wagmi/commit/cc5517ff6880bb630f1b201930acc20dd1a0b451) Thanks [@lukaisailovic](https://github.com/lukaisailovic)! - Updated `@walletconnect/etherereum-provider` to `2.20.0`.
+
 ## 5.7.13
 
 ### Patch Changes
