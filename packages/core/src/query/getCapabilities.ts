@@ -13,7 +13,7 @@ import type { ScopeKeyParameter } from '../types/properties.js'
 import type { Compute, ExactPartial } from '../types/utils.js'
 
 export type GetCapabilitiesOptions<
-  config extends Config,
+  config extends Config = Config,
   chainId extends config['chains'][number]['id'] | undefined = undefined,
 > = Compute<
   ExactPartial<GetCapabilitiesParameters<config, chainId>> & ScopeKeyParameter

@@ -16,7 +16,7 @@ export type GetCapabilitiesParameters<
 > = viem_GetCapabilitiesParameters<chainId> & ConnectorParameter
 
 export type GetCapabilitiesReturnType<
-  config extends Config,
+  config extends Config = Config,
   chainId extends config['chains'][number]['id'] | undefined = undefined,
 > = viem_GetCapabilitiesReturnType<chainId>
 
