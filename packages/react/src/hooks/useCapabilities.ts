@@ -21,28 +21,33 @@ import { useConfig } from './useConfig.js'
 
 export type UseCapabilitiesParameters<
   config extends Config = Config,
-  selectData = GetCapabilitiesData,
+  chainId extends config['chains'][number]['id'] | undefined = undefined,
+  selectData = GetCapabilitiesData<config, chainId>,
 > = Compute<
-  GetCapabilitiesOptions &
+  GetCapabilitiesOptions<config, chainId> &
     ConfigParameter<config> &
     QueryParameter<
-      GetCapabilitiesQueryFnData,
+      GetCapabilitiesQueryFnData<config, chainId>,
       GetCapabilitiesErrorType,
       selectData,
-      GetCapabilitiesQueryKey
+      GetCapabilitiesQueryKey<config, chainId>
     >
 >
 
-export type UseCapabilitiesReturnType<selectData = GetCapabilitiesData> =
-  UseQueryReturnType<selectData, GetCapabilitiesErrorType>
+export type UseCapabilitiesReturnType<
+  config extends Config = Config,
+  chainId extends config['chains'][number]['id'] | undefined = undefined,
+  selectData = GetCapabilitiesData<config, chainId>,
+> = UseQueryReturnType<selectData, GetCapabilitiesErrorType>
 
 /** https://wagmi.sh/react/api/hooks/useCapabilities */
 export function useCapabilities<
   config extends Config = ResolvedRegister['config'],
-  selectData = GetCapabilitiesData,
+  chainId extends config['chains'][number]['id'] | undefined = undefined,
+  selectData = GetCapabilitiesData<config, chainId>,
 >(
-  parameters: UseCapabilitiesParameters<config, selectData> = {},
-): UseCapabilitiesReturnType<selectData> {
+  parameters: UseCapabilitiesParameters<config, chainId, selectData> = {},
+): UseCapabilitiesReturnType<config, chainId, selectData> {
   const { account, query = {} } = parameters
 
   const { address } = useAccount()
