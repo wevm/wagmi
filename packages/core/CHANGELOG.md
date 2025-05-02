@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.17.1
+
+### Patch Changes
+
+- [#4649](https://github.com/wevm/wagmi/pull/4649) [`01f64e64fa4f85cdd30023903f972f4f9023681f`](https://github.com/wevm/wagmi/commit/01f64e64fa4f85cdd30023903f972f4f9023681f) Thanks [@jxom](https://github.com/jxom)! - Added `chainId` parameter to `getCapabilities`/`useCapabilities`.
+
 ## 2.17.0
 
 ### Minor Changes
