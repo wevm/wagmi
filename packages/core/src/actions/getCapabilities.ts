@@ -10,19 +10,30 @@ import type { Config } from '../createConfig.js'
 import type { ConnectorParameter } from '../types/properties.js'
 import { getConnectorClient } from './getConnectorClient.js'
 
-export type GetCapabilitiesParameters = viem_GetCapabilitiesParameters &
-  ConnectorParameter
+export type GetCapabilitiesParameters<
+  config extends Config = Config,
+  chainId extends config['chains'][number]['id'] | undefined = undefined,
+> = viem_GetCapabilitiesParameters<chainId> & ConnectorParameter
 
-export type GetCapabilitiesReturnType = viem_GetCapabilitiesReturnType
+export type GetCapabilitiesReturnType<
+  config extends Config = Config,
+  chainId extends config['chains'][number]['id'] | undefined = undefined,
+> = viem_GetCapabilitiesReturnType<chainId>
 
 export type GetCapabilitiesErrorType = viem_GetCapabilitiesErrorType
 
 /** https://wagmi.sh/core/api/actions/getCapabilities */
-export async function getCapabilities<config extends Config>(
+export async function getCapabilities<
+  config extends Config,
+  chainId extends config['chains'][number]['id'] | undefined = undefined,
+>(
   config: config,
-  parameters: GetCapabilitiesParameters = {},
-): Promise<GetCapabilitiesReturnType> {
-  const { account, connector } = parameters
+  parameters: GetCapabilitiesParameters<config, chainId> = {},
+): Promise<GetCapabilitiesReturnType<config, chainId>> {
+  const { account, chainId, connector } = parameters
   const client = await getConnectorClient(config, { account, connector })
-  return viem_getCapabilities(client as any, { account: account as Account })
+  return viem_getCapabilities(client as any, {
+    account: account as Account,
+    chainId,
+  })
 }

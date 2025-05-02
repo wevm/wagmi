@@ -12,14 +12,17 @@ import { filterQueryOptions } from '../query/utils.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
 import type { Compute, ExactPartial } from '../types/utils.js'
 
-export type GetCapabilitiesOptions = Compute<
-  ExactPartial<GetCapabilitiesParameters> & ScopeKeyParameter
+export type GetCapabilitiesOptions<
+  config extends Config = Config,
+  chainId extends config['chains'][number]['id'] | undefined = undefined,
+> = Compute<
+  ExactPartial<GetCapabilitiesParameters<config, chainId>> & ScopeKeyParameter
 >
 
-export function getCapabilitiesQueryOptions<config extends Config>(
-  config: config,
-  options: GetCapabilitiesOptions = {},
-) {
+export function getCapabilitiesQueryOptions<
+  config extends Config,
+  chainId extends config['chains'][number]['id'] | undefined = undefined,
+>(config: config, options: GetCapabilitiesOptions<config, chainId> = {}) {
   return {
     async queryFn({ queryKey }) {
       const { scopeKey: _, ...parameters } = queryKey[1]
@@ -32,19 +35,31 @@ export function getCapabilitiesQueryOptions<config extends Config>(
       return failureCount < 3
     },
   } as const satisfies QueryOptions<
-    GetCapabilitiesQueryFnData,
+    GetCapabilitiesQueryFnData<config, chainId>,
     GetCapabilitiesErrorType,
-    GetCapabilitiesData,
-    GetCapabilitiesQueryKey
+    GetCapabilitiesData<config, chainId>,
+    GetCapabilitiesQueryKey<config, chainId>
   >
 }
 
-export type GetCapabilitiesQueryFnData = GetCapabilitiesReturnType
+export type GetCapabilitiesQueryFnData<
+  config extends Config = Config,
+  chainId extends config['chains'][number]['id'] | undefined = undefined,
+> = GetCapabilitiesReturnType<config, chainId>
 
-export type GetCapabilitiesData = GetCapabilitiesQueryFnData
+export type GetCapabilitiesData<
+  config extends Config = Config,
+  chainId extends config['chains'][number]['id'] | undefined = undefined,
+> = GetCapabilitiesQueryFnData<config, chainId>
 
-export function getCapabilitiesQueryKey(options: GetCapabilitiesOptions = {}) {
+export function getCapabilitiesQueryKey<
+  config extends Config,
+  chainId extends config['chains'][number]['id'] | undefined = undefined,
+>(options: GetCapabilitiesOptions<config, chainId> = {}) {
   return ['capabilities', filterQueryOptions(options)] as const
 }
 
-export type GetCapabilitiesQueryKey = ReturnType<typeof getCapabilitiesQueryKey>
+export type GetCapabilitiesQueryKey<
+  config extends Config,
+  chainId extends config['chains'][number]['id'] | undefined = undefined,
+> = ReturnType<typeof getCapabilitiesQueryKey<config, chainId>>
