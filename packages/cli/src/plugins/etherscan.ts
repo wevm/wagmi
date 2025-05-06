@@ -1,9 +1,8 @@
 import { mkdir, writeFile } from 'node:fs/promises'
-import type { Abi } from 'abitype'
 import { Address as AddressSchema } from 'abitype/zod'
 import { camelCase } from 'change-case'
 import { join } from 'pathe'
-import type { Address } from 'viem'
+import type { Abi, Address } from 'viem'
 import { z } from 'zod'
 
 import type { ContractConfig } from '../config.js'

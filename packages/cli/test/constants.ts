@@ -1,4 +1,4 @@
-import { parseAbi } from 'abitype'
+import { parseAbi } from 'viem'
 
 export const wagmiAbi = parseAbi([
   'constructor()',

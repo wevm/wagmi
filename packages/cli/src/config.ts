@@ -1,5 +1,4 @@
-import type { Abi } from 'abitype'
-import type { Address } from 'viem'
+import type { Abi, Address } from 'viem'
 
 import type { Compute, MaybeArray, MaybePromise } from './types.js'
 
