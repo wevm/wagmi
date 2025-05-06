@@ -2,7 +2,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { homedir } from 'node:os'
 import { join } from 'pathe'
 
-import type { Abi } from 'abitype'
+import type { Abi } from 'viem'
 import type { ContractConfig, Plugin } from '../config.js'
 import type { Compute, RequiredBy } from '../types.js'
 
