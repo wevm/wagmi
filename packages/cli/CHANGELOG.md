@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 2.3.1
+
+### Patch Changes
+
+- [#4655](https://github.com/wevm/wagmi/pull/4655) [`43241c8417f3c342036bb46ec8e507d052ae2691`](https://github.com/wevm/wagmi/commit/43241c8417f3c342036bb46ec8e507d052ae2691) Thanks [@tmm](https://github.com/tmm)! - Bumped internal deps.
+
 ## 2.3.0
 
 ### Minor Changes
