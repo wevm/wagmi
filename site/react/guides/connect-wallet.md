@@ -9,7 +9,7 @@ Wagmi contains everything you need to get started with building a Connect Wallet
 You can use a pre-built Connect Wallet module from a third-party library such as:
 
 - [ConnectKit](https://docs.family.co/connectkit) - [Guide](https://docs.family.co/connectkit/getting-started)
-- [AppKit](https://walletconnect.com/appkit) - [Guide](https://docs.walletconnect.com/appkit/next/core/installation)
+- [AppKit](https://reown.com/appkit) - [Guide](https://docs.reown.com/appkit/next/core/installation)
 - [RainbowKit](https://www.rainbowkit.com/) - [Guide](https://www.rainbowkit.com/docs/installation)
 - [Dynamic](https://www.dynamic.xyz/) - [Guide](https://docs.dynamic.xyz/quickstart)
 - [Privy](https://privy.io) - [Guide](https://docs.privy.io/guide/react/wallets/usage/wagmi)
@@ -60,7 +60,7 @@ In the above configuration, we want to set up connectors for Injected (browser),
 
 Make sure to replace the `projectId` with your own WalletConnect Project ID, if you wish to use WalletConnect! 
 
-[Get your Project ID](https://cloud.walletconnect.com/)
+[Get your Project ID](https://cloud.reown.com/)
 
 :::
 
