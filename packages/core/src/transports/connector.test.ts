@@ -36,7 +36,7 @@ test('behavior: connector type not found', () => {
     [ProviderDisconnectedError: The Provider is disconnected from all chains.
 
     Details: Could not find connector of type "foo" in \`connectors\` passed to \`createConfig\`.
-    Version: viem@2.28.0]
+    Version: viem@2.29.2]
   `)
 })
 
@@ -58,7 +58,7 @@ test('behavior: provider is disconnected', () => {
     [ProviderDisconnectedError: The Provider is disconnected from all chains.
 
     Details: Provider is disconnected.
-    Version: viem@2.28.0]
+    Version: viem@2.29.2]
   `)
 })
 
@@ -82,7 +82,7 @@ test('behavior: chainId mismatch', () => {
     [ChainDisconnectedError: The Provider is not connected to the requested chain.
 
     Details: The current chain of the connector (id: 1) does not match the target chain for the request (id: 10 – OP Mainnet).
-    Version: viem@2.28.0]
+    Version: viem@2.29.2]
   `)
 })
 
