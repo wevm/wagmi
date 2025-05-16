@@ -79,6 +79,35 @@ export async function connect<
     connector.emitter.emit('message', { type: 'connecting' })
 
     const { connector: _, ...rest } = parameters
+
+    const [connectedAccounts, connectedChainId] = await Promise.all([
+      connector.getAccounts().catch(() => undefined),
+      connector.getChainId().catch(() => undefined),
+    ])
+
+    // If the connector is already connected override the existing connection
+    if (
+      connectedAccounts &&
+      connectedAccounts.length > 0 &&
+      typeof connectedChainId === 'number'
+    ) {
+      config.setState((x) => ({
+        ...x,
+        connections: new Map(x.connections).set(connector.uid, {
+          accounts: connectedAccounts as readonly [Address, ...Address[]],
+          chainId: connectedChainId,
+          connector,
+        }),
+        current: connector.uid,
+        status: 'connected',
+      }))
+
+      return {
+        accounts: connectedAccounts as readonly [Address, ...Address[]],
+        chainId: connectedChainId,
+      }
+    }
+
     const data = await connector.connect(rest)
     const accounts = data.accounts as readonly [Address, ...Address[]]
 
