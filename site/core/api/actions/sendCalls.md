@@ -206,9 +206,9 @@ const id = await sendCalls(config, {
 import { type SendCallsReturnType } from '@wagmi/core'
 ```
 
-`bigint`
+`string`
 
-Most recent block number seen.
+Identifier of the call batch.
 
 ## Error
 
