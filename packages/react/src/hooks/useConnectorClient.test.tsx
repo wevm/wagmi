@@ -108,7 +108,7 @@ test('behavior: connect and disconnect', async () => {
 
   expect(result.current.useConnectorClient.data).not.toBeDefined()
 
-  result.current.useConnect.connect({
+  result.current.useConnect.mutate({
     connector: result.current.useConnect.connectors[0]!,
   })
 
