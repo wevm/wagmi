@@ -7,7 +7,7 @@ description: Hook for connecting accounts with connectors.
 const packageName = 'wagmi'
 const actionName = 'connect'
 const typeName = 'Connect'
-const mutate = 'connect'
+const mutate = 'mutate'
 const TData = '{ accounts: readonly [Address, ...Address[]]; chainId: number; }'
 const TError = 'ConnectErrorType'
 const TVariables = '{ chainId?: number | undefined; connector?: CreateConnectorFn | Connector | undefined; }'
@@ -31,10 +31,10 @@ import { useConnect } from 'wagmi'
 import { injected } from 'wagmi/connectors'
 
 function App() {
-  const { connect } = useConnect()
+  const { mutate } = useConnect()
 
   return (
-    <button onClick={() => connect({ connector: injected() })}>
+    <button onClick={() => mutate({ connector: injected() })}>
       Connect
     </button>
   )
@@ -88,12 +88,12 @@ Globally configured connectors via [`createConfig`](/react/api/createConfig#conn
 import { useConnect } from 'wagmi'
 
 function App() {
-  const { connect, connectors } = useConnect()
+  const { mutate, connectors } = useConnect()
 
   return (
     <div>
       {connectors.map((connector) => (
-        <button key={connector.id} onClick={() => connect({ connector })}>
+        <button key={connector.id} onClick={() => mutate({ connector })}>
           {connector.name}
         </button>
       ))}
