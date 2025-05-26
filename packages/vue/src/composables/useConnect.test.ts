@@ -20,7 +20,7 @@ test('default', async () => {
   expect(account.address.value).not.toBeDefined()
   expect(account.status.value).toEqual('disconnected')
 
-  connect.connect({
+  connect.mutate({
     connector: connect.connectors[0]!,
   })
 
