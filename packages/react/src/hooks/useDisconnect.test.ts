@@ -21,7 +21,7 @@ test('default', async () => {
   expect(result.current.useAccount.address).toBeDefined()
   expect(result.current.useAccount.status).toEqual('connected')
 
-  result.current.useDisconnect.disconnect()
+  result.current.useDisconnect.mutate()
 
   await waitFor(() =>
     expect(result.current.useAccount.isDisconnected).toBeTruthy(),
