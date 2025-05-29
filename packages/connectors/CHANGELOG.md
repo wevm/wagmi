@@ -1064,7 +1064,7 @@
 
 ### Patch Changes
 
-- [#3220](https://github.com/wagmi-dev/wagmi/pull/3220) [`a1950449`](https://github.com/wagmi-dev/wagmi/commit/a1950449127ddf72fff8ecd1fc34c3690befbb05) Thanks [@rkalis](https://github.com/rkalis)! - Fixed a bug where injected walets with an empty providers array could not connect
+- [#3220](https://github.com/wagmi-dev/wagmi/pull/3220) [`a1950449`](https://github.com/wagmi-dev/wagmi/commit/a1950449127ddf72fff8ecd1fc34c3690befbb05) Thanks [@rkalis](https://github.com/rkalis)! - Fixed a bug where injected wallets with an empty providers array could not connect
 
 ## 3.1.4
 
