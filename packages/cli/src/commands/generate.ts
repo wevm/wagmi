@@ -6,7 +6,7 @@ import { watch } from 'chokidar'
 import { default as dedent } from 'dedent'
 import { basename, dirname, resolve } from 'pathe'
 import pc from 'picocolors'
-import { type Abi, type Address, getAddress } from 'viem'
+import { type Abi, type Address, getAddress, keccak256 } from 'viem'
 import { z } from 'zod'
 
 import type { Contract, ContractConfig, Plugin, Watch } from '../config.js'
@@ -98,10 +98,19 @@ export async function generate(options: Generate = {}) {
     const contractNames = new Set<string>()
     const contractMap = new Map<string, Contract>()
     for (const contractConfig of contractConfigs) {
-      if (contractNames.has(contractConfig.name))
+      const previouslySeenContract = contractMap.get(contractConfig.name)
+      if (previouslySeenContract) {
+        if (
+          hashAbi(previouslySeenContract.abi) === hashAbi(contractConfig.abi)
+        ) {
+          // If the contract name and ABI match, skip adding it again, but allow it since this can occur when generating
+          // from sources that mutually import each other, such as peer Foundry projects.
+          continue
+        }
         throw new Error(
-          `Contract name "${contractConfig.name}" must be unique.`,
+          `Duplicate contract name "${contractConfig.name}" found with different ABI. Contract names must be unique up to ABI.`,
         )
+      }
       const contract = await getContract({ ...contractConfig, isTypeScript })
       contractMap.set(contract.name, contract)
 
@@ -406,4 +415,10 @@ function getBannerContent({ name }: { name: string }) {
   // ${name}
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   `
+}
+
+function hashAbi(abi: Abi): string {
+  // Could use something faster, e.g. non-cryptographic hash or CRC32, but only called in the case
+  // we hit duplicate contract names, so probably not worth it.
+  return keccak256(Buffer.from(JSON.stringify(abi)))
 }
