@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 5.8.4
+
+### Patch Changes
+
+- [#4696](https://github.com/wevm/wagmi/pull/4696) [`3a90f358820444a85bb727742b0a16eb943fc361`](https://github.com/wevm/wagmi/commit/3a90f358820444a85bb727742b0a16eb943fc361) Thanks [@tomiir](https://github.com/tomiir)! - Updated @walletconnect/etereum-provider to version 2.21.1
+
 ## 5.8.3
 
 ### Patch Changes
