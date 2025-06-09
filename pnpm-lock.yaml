@@ -375,6 +375,9 @@ importers:
       '@tanstack/react-query':
         specifier: '>=5.45.1'
         version: 5.49.2(react@18.3.1)
+      '@wagmi/connectors':
+        specifier: workspace:*
+        version: link:../../packages/connectors
       next:
         specifier: 14.2.4
         version: 14.2.4(@opentelemetry/api@1.8.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -485,6 +488,9 @@ importers:
       '@tanstack/react-query-persist-client':
         specifier: 5.0.5
         version: 5.0.5(@tanstack/react-query@5.49.2(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@wagmi/connectors':
+        specifier: workspace:*
+        version: link:../../packages/connectors
       idb-keyval:
         specifier: ^6.2.1
         version: 6.2.1
