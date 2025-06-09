@@ -8,6 +8,7 @@ dist
 node_modules
 tsconfig.tsbuildinfo
 *.vitest-temp.json
+_
 
 # local env files
 .env

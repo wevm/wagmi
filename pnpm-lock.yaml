@@ -240,9 +240,6 @@ importers:
 
   packages/react:
     dependencies:
-      '@wagmi/connectors':
-        specifier: workspace:*
-        version: link:../connectors
       '@wagmi/core':
         specifier: workspace:*
         version: link:../core
@@ -268,6 +265,9 @@ importers:
       '@types/use-sync-external-store':
         specifier: ^0.0.6
         version: 0.0.6
+      '@wagmi/connectors':
+        specifier: workspace:*
+        version: link:../connectors
       react:
         specifier: 'catalog:'
         version: 18.3.1
