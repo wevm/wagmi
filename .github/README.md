@@ -29,7 +29,7 @@
       <img src="https://img.shields.io/npm/l/wagmi?colorA=f6f8fa&colorB=f6f8fa" alt="MIT License">
     </picture>
   </a>
-  <a href="https://www.npmjs.com/package/wagmi">
+  <a href="https://bundlephobia.com/package/wagmi@2.15.6">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/dm/@wagmi/core?colorA=21262d&colorB=21262d">
       <img src="https://img.shields.io/npm/dm/@wagmi/core?colorA=f6f8fa&colorB=f6f8fa" alt="Downloads per month">
