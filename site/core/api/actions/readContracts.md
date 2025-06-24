@@ -359,5 +359,5 @@ import { type ReadContractsErrorType } from '@wagmi/core'
 
 ## Viem
 
-- [`multicall`](https://viem.sh/docs/actions/public/multicall.html) when supported by current chain.
+- [`multicall`](https://viem.sh/docs/contract/multicall.html) when supported by current chain.
 - [`readContract`](https://viem.sh/docs/contract/readContract.html) when multicall is not supported.
