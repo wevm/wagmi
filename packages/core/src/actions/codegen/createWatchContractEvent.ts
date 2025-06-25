@@ -67,8 +67,9 @@ export function createWatchContractEvent<
       const account = getAccount(config)
       const chainId =
         (parameters as { chainId?: number })?.chainId ??
-        account.chainId ??
-        configChainId
+        (config._internal.syncConnectedChain
+          ? (account.chainId ?? configChainId)
+          : configChainId)
       return watchContractEvent(config, {
         ...(parameters as any),
         ...(c.eventName ? { eventName: c.eventName } : {}),

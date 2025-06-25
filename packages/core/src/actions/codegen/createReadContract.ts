@@ -79,8 +79,9 @@ export function createReadContract<
       const account = getAccount(config)
       const chainId =
         (parameters as { chainId?: number })?.chainId ??
-        account.chainId ??
-        configChainId
+        (config._internal.syncConnectedChain
+          ? (account.chainId ?? configChainId)
+          : configChainId)
       return readContract(config, {
         ...(parameters as any),
         ...(c.functionName ? { functionName: c.functionName } : {}),
