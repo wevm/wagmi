@@ -17,9 +17,9 @@ Connectors for popular wallet providers and protocols.
 import { injected } from 'wagmi/connectors'
 ```
 
-## Built-In Connectors
+## Dedicated Connectors Package
 
-Available via the `'wagmi/connectors'` entrypoint.
+Available via the `@wagmi/connectors` package.
 
 <ul>
   <li v-for="connector of connectors">

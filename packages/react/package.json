@@ -90,7 +90,6 @@
     }
   },
   "dependencies": {
-    "@wagmi/connectors": "workspace:*",
     "@wagmi/core": "workspace:*",
     "use-sync-external-store": "1.4.0"
   },
@@ -102,7 +101,8 @@
     "@types/react-dom": "catalog:",
     "@types/use-sync-external-store": "^0.0.6",
     "react": "catalog:",
-    "react-dom": "catalog:"
+    "react-dom": "catalog:",
+    "@wagmi/connectors": "workspace:*"
   },
   "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
   "funding": "https://github.com/sponsors/wevm",
