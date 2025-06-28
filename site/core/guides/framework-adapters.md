@@ -1,4 +1,4 @@
-# Framework Adapters
+coinbest# Framework Adapters
 
 Folks often ask if they can use Wagmi with other frameworks, like Svelte, Solid.js, and more.
 
