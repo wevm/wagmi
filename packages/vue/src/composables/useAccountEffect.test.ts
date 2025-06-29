@@ -20,17 +20,17 @@ test('behavior: connect and disconnect called once', async () => {
   const [connect] = renderComposable(() => useConnect())
   const [disconnect] = renderComposable(() => useDisconnect())
 
-  connect.connect({
+  connect.mutate({
     connector: connect.connectors[0]!,
   })
   await waitFor(connect.isSuccess)
-  connect.connect({
+  connect.mutate({
     connector: connect.connectors[0]!,
   })
 
-  disconnect.disconnect()
+  disconnect.mutate()
   await waitFor(disconnect.isSuccess)
-  disconnect.disconnect()
+  disconnect.mutate()
 
   expect(onConnect).toBeCalledTimes(1)
   expect(onDisconnect).toBeCalledTimes(1)

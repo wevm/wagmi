@@ -46,9 +46,13 @@ export type UseConnectReturnType<
     ConnectVariables<config, config['connectors'][number]>,
     context
   > & {
+    /** @deprecated use mutate */
     connect: ConnectMutate<config, context>
+    /** @deprecated use mutateAsync */
     connectAsync: ConnectMutateAsync<config, context>
     connectors: Compute<UseConnectorsReturnType> | config['connectors']
+    mutate: ConnectMutate<config, context>
+    mutateAsync: ConnectMutateAsync<config, context>
   }
 >
 
