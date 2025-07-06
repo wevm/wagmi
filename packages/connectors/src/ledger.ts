@@ -168,7 +168,7 @@ export function ledger(parameters: LedgerParameters = {}) {
       )
 
       if (parameters.debug) {
-        console.log('Signing personal message:', {
+        console.info('Signing personal message:', {
           message,
           address,
           messageBytes,
@@ -185,15 +185,15 @@ export function ledger(parameters: LedgerParameters = {}) {
       )
 
       // Convert Ledger signature format to standard format
-      const r = '0x' + signature.r
-      const s = '0x' + signature.s
+      const r = `0x${signature.r}`
+      const s = `0x${signature.s}`
       const v = signature.v
 
       // Combine into standard signature format
       const fullSignature = r + s.slice(2) + v.toString(16).padStart(2, '0')
 
       if (parameters.debug) {
-        console.log('Message signed successfully:', {
+        console.info('Message signed successfully:', {
           signature,
           fullSignature,
         })
@@ -228,7 +228,7 @@ export function ledger(parameters: LedgerParameters = {}) {
 
     try {
       if (parameters.debug) {
-        console.log('Signing typed data:', { address, typedData })
+        console.info('Signing typed data:', { address, typedData })
       }
 
       const derivationPath = parameters.derivationPath || "44'/60'/0'/0/0"
@@ -252,15 +252,15 @@ export function ledger(parameters: LedgerParameters = {}) {
       )
 
       // Convert Ledger signature format to standard format
-      const r = '0x' + signature.r
-      const s = '0x' + signature.s
+      const r = `0x${signature.r}`
+      const s = `0x${signature.s}`
       const v = signature.v
 
       // Combine into standard signature format
       const fullSignature = r + s.slice(2) + v.toString(16).padStart(2, '0')
 
       if (parameters.debug) {
-        console.log('Typed data signed successfully:', {
+        console.info('Typed data signed successfully:', {
           signature,
           fullSignature,
         })
@@ -295,7 +295,7 @@ export function ledger(parameters: LedgerParameters = {}) {
 
     try {
       if (parameters.debug) {
-        console.log('Signing transaction:', transaction)
+        console.info('Signing transaction:', transaction)
       }
 
       // Convert transaction to proper format for Ledger
@@ -313,15 +313,15 @@ export function ledger(parameters: LedgerParameters = {}) {
       // Convert Ledger signature format to standard format
       // Check if signature components already have 0x prefix
       const r = (
-        signature.r.startsWith('0x') ? signature.r : '0x' + signature.r
+        signature.r.startsWith('0x') ? signature.r : `0x${signature.r}`
       ) as Hex
       const s = (
-        signature.s.startsWith('0x') ? signature.s : '0x' + signature.s
+        signature.s.startsWith('0x') ? signature.s : `0x${signature.s}`
       ) as Hex
       const v = BigInt(signature.v) // Ensure v is a bigint
 
       if (parameters.debug) {
-        console.log('Ledger signature received:', {
+        console.info('Ledger signature received:', {
           rawR: signature.r,
           rawS: signature.s,
           rawV: signature.v,
@@ -398,7 +398,7 @@ export function ledger(parameters: LedgerParameters = {}) {
       }
 
       if (parameters.debug) {
-        console.log('Complete signed transaction:', signedTx)
+        console.info('Complete signed transaction:', signedTx)
       }
 
       return signedTx
@@ -421,7 +421,7 @@ export function ledger(parameters: LedgerParameters = {}) {
   ): Promise<string> => {
     const getRpcUrl = () => rpcUrl || getDefaultRpcUrl()
     if (parameters.debug) {
-      console.log(
+      console.info(
         'Ledger sendTransaction called with transaction:',
         transaction,
       )
@@ -444,7 +444,7 @@ export function ledger(parameters: LedgerParameters = {}) {
     // Get the current nonce if not provided
     if (!transaction.nonce) {
       if (parameters.debug) {
-        console.log('Fetching current nonce for address:', transaction.from)
+        console.info('Fetching current nonce for address:', transaction.from)
       }
 
       try {
@@ -474,7 +474,7 @@ export function ledger(parameters: LedgerParameters = {}) {
         transaction.nonce = nonceResult.result
 
         if (parameters.debug) {
-          console.log(
+          console.info(
             'Current nonce for address:',
             transaction.from,
             '=',
@@ -499,7 +499,7 @@ export function ledger(parameters: LedgerParameters = {}) {
           allKeys: Object.keys(transaction),
           fullTransaction: transaction,
         })
-        console.log('Adding default gas limit of 21000 for basic transaction')
+        console.info('Adding default gas limit of 21000 for basic transaction')
       }
 
       // Add default gas limit for basic transactions
@@ -515,7 +515,9 @@ export function ledger(parameters: LedgerParameters = {}) {
           maxFeePerGas: transaction.maxFeePerGas,
           maxPriorityFeePerGas: transaction.maxPriorityFeePerGas,
         })
-        console.log('Adding default gas price of 20 gwei for basic transaction')
+        console.info(
+          'Adding default gas price of 20 gwei for basic transaction',
+        )
       }
 
       // Add default gas price for basic transactions (20 gwei)
@@ -527,8 +529,8 @@ export function ledger(parameters: LedgerParameters = {}) {
       const signedTransaction = await signTransaction(transaction)
 
       if (parameters.debug) {
-        console.log('Transaction signed by Ledger:', signedTransaction)
-        console.log('Broadcasting transaction to network...')
+        console.info('Transaction signed by Ledger:', signedTransaction)
+        console.info('Broadcasting transaction to network...')
       }
 
       // Broadcast the signed transaction to the network
@@ -562,7 +564,7 @@ export function ledger(parameters: LedgerParameters = {}) {
       const txHash = result.result
 
       if (parameters.debug) {
-        console.log('Transaction broadcasted successfully:', txHash)
+        console.info('Transaction broadcasted successfully:', txHash)
       }
 
       return txHash
@@ -580,22 +582,25 @@ export function ledger(parameters: LedgerParameters = {}) {
     if (currentChainId === 11155111) {
       // Sepolia
       return 'https://sepolia.drpc.org/'
-    } else if (currentChainId === 1) {
+    }
+    if (currentChainId === 1) {
       // Mainnet
       return 'https://eth.drpc.org/'
-    } else if (currentChainId === 137) {
+    }
+    if (currentChainId === 137) {
       // Polygon
       return 'https://polygon.drpc.org/'
-    } else if (currentChainId === 42161) {
+    }
+    if (currentChainId === 42161) {
       // Arbitrum
       return 'https://arbitrum.drpc.org/'
-    } else if (currentChainId === 10) {
+    }
+    if (currentChainId === 10) {
       // Optimism
       return 'https://optimism.drpc.org/'
-    } else {
-      // Default to mainnet
-      return 'https://eth.drpc.org/'
     }
+    // Default to mainnet
+    return 'https://eth.drpc.org/'
   }
 
   const serializeTransactionForLedger = async (
@@ -692,17 +697,17 @@ export function ledger(parameters: LedgerParameters = {}) {
       }
 
       if (parameters.debug) {
-        console.log('Original transaction:', transaction)
-        console.log('Parsed transaction for Ledger:', tx)
-        console.log('Gas limit:', tx.gas?.toString())
+        console.info('Original transaction:', transaction)
+        console.info('Parsed transaction for Ledger:', tx)
+        console.info('Gas limit:', tx.gas?.toString())
         if (tx.type === 'eip1559') {
-          console.log('Max fee per gas:', tx.maxFeePerGas?.toString())
-          console.log(
+          console.info('Max fee per gas:', tx.maxFeePerGas?.toString())
+          console.info(
             'Max priority fee per gas:',
             tx.maxPriorityFeePerGas?.toString(),
           )
         } else {
-          console.log('Gas price:', tx.gasPrice?.toString())
+          console.info('Gas price:', tx.gasPrice?.toString())
         }
       }
 
@@ -713,7 +718,7 @@ export function ledger(parameters: LedgerParameters = {}) {
       const bytes = hexToBytes(serialized)
 
       if (parameters.debug) {
-        console.log('Transaction serialized:', { serialized, bytes })
+        console.info('Transaction serialized:', { serialized, bytes })
       }
 
       return bytes
@@ -851,7 +856,7 @@ export function ledger(parameters: LedgerParameters = {}) {
       async disconnect() {
         try {
           if (parameters.debug) {
-            console.log('Disconnecting from Ledger device...')
+            console.info('Disconnecting from Ledger device...')
           }
 
           // Disconnect from device session first
@@ -859,7 +864,7 @@ export function ledger(parameters: LedgerParameters = {}) {
             try {
               await dmk.disconnect({ sessionId })
               if (parameters.debug) {
-                console.log('Device session disconnected')
+                console.info('Device session disconnected')
               }
             } catch (error) {
               if (parameters.debug) {
@@ -873,7 +878,7 @@ export function ledger(parameters: LedgerParameters = {}) {
             try {
               dmk.close()
               if (parameters.debug) {
-                console.log('Device Management Kit closed')
+                console.info('Device Management Kit closed')
               }
             } catch (error) {
               if (parameters.debug) {
@@ -896,7 +901,7 @@ export function ledger(parameters: LedgerParameters = {}) {
           config.emitter.emit('disconnect')
 
           if (parameters.debug) {
-            console.log('Successfully disconnected from Ledger device')
+            console.info('Successfully disconnected from Ledger device')
           }
         } catch (error) {
           if (parameters.debug) {
@@ -920,7 +925,7 @@ export function ledger(parameters: LedgerParameters = {}) {
         // If not connected, return empty array
         if (!signer || !sessionId) {
           if (parameters.debug) {
-            console.log(
+            console.info(
               'Not connected to Ledger device, returning empty accounts',
             )
           }
@@ -930,7 +935,7 @@ export function ledger(parameters: LedgerParameters = {}) {
         // Try to refresh accounts from device
         try {
           if (parameters.debug) {
-            console.log('Refreshing accounts from Ledger device...')
+            console.info('Refreshing accounts from Ledger device...')
           }
 
           const derivationPath = parameters.derivationPath || "44'/60'/0'/0/0"
@@ -949,7 +954,7 @@ export function ledger(parameters: LedgerParameters = {}) {
           currentAccounts = accounts
 
           if (parameters.debug) {
-            console.log('Refreshed accounts from device:', accounts)
+            console.info('Refreshed accounts from device:', accounts)
           }
 
           return accounts
@@ -964,7 +969,7 @@ export function ledger(parameters: LedgerParameters = {}) {
 
       async getChainId() {
         if (parameters.debug) {
-          console.log('Getting chain ID:', currentChainId)
+          console.info('Getting chain ID:', currentChainId)
         }
         return currentChainId
       },
