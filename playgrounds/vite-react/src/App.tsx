@@ -28,10 +28,10 @@ import { wagmiContractConfig } from './contracts'
 function App() {
   useAccountEffect({
     onConnect(_data) {
-      // console.log('onConnect', data)
+      // console.info('onConnect', data)
     },
     onDisconnect() {
-      // console.log('onDisconnect')
+      // console.info('onDisconnect')
     },
   })
 
@@ -409,7 +409,7 @@ function LedgerDevices() {
     try {
       if ('getDevices' in ledgerConnector) {
         const devices = await (ledgerConnector as any).getDevices()
-        console.log('Available Ledger devices:', devices)
+        console.info('Available Ledger devices:', devices)
         alert(
           `Found ${devices.length} Ledger device(s). Check console for details.`,
         )
@@ -431,7 +431,7 @@ function LedgerDevices() {
         const devices = await (ledgerConnector as any).getDevices()
         if (devices.length > 0) {
           await (ledgerConnector as any).selectDevice(devices[0].id)
-          console.log('Selected device:', devices[0])
+          console.info('Selected device:', devices[0])
           alert(`Selected device: ${devices[0].name}`)
         } else {
           alert('No devices found')
@@ -449,7 +449,7 @@ function LedgerDevices() {
     try {
       if ('getSelectedDevice' in ledgerConnector) {
         const device = await (ledgerConnector as any).getSelectedDevice()
-        console.log('Selected device:', device)
+        console.info('Selected device:', device)
         if (device) {
           alert(`Selected device: ${device.name} (${device.id})`)
         } else {
