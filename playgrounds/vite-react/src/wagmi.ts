@@ -1,7 +1,12 @@
 import { del, get, set } from 'idb-keyval'
 import { http, createConfig } from 'wagmi'
 import { celo, mainnet, optimism, sepolia } from 'wagmi/chains'
-import { coinbaseWallet, metaMask, walletConnect } from 'wagmi/connectors'
+import {
+  coinbaseWallet,
+  ledger,
+  metaMask,
+  walletConnect,
+} from 'wagmi/connectors'
 
 // biome-ignore lint/correctness/noUnusedVariables: <explanation>
 const indexedDBStorage = {
@@ -24,6 +29,10 @@ export const config = createConfig({
     }),
     coinbaseWallet(),
     metaMask(),
+    ledger({
+      projectId: 'wagmi-playground',
+      debug: true,
+    }),
   ],
   transports: {
     [mainnet.id]: http(),

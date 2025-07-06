@@ -39,6 +39,7 @@ function App() {
     <>
       <Account />
       <Connect />
+      <LedgerDevices />
       <SwitchAccount />
       <SwitchChain />
       <SignMessage />
@@ -382,6 +383,128 @@ function WriteContract() {
       {error && (
         <div>Error: {(error as BaseError).shortMessage || error.message}</div>
       )}
+    </div>
+  )
+}
+
+function LedgerDevices() {
+  const { connectors } = useConnect()
+  const { connector: activeConnector } = useAccount()
+
+  // Find the Ledger connector
+  const ledgerConnector = connectors.find((c) => c.type === 'ledger')
+
+  if (!ledgerConnector) {
+    return (
+      <div>
+        <h2>Ledger Devices</h2>
+        <div>Ledger connector not available</div>
+      </div>
+    )
+  }
+
+  const isLedgerActive = activeConnector?.type === 'ledger'
+
+  const handleGetDevices = async () => {
+    try {
+      if ('getDevices' in ledgerConnector) {
+        const devices = await (ledgerConnector as any).getDevices()
+        console.log('Available Ledger devices:', devices)
+        alert(
+          `Found ${devices.length} Ledger device(s). Check console for details.`,
+        )
+      }
+    } catch (error) {
+      console.error('Error getting Ledger devices:', error)
+      alert(
+        `Error: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      )
+    }
+  }
+
+  const handleSelectDevice = async () => {
+    try {
+      if (
+        'getDevices' in ledgerConnector &&
+        'selectDevice' in ledgerConnector
+      ) {
+        const devices = await (ledgerConnector as any).getDevices()
+        if (devices.length > 0) {
+          await (ledgerConnector as any).selectDevice(devices[0].id)
+          console.log('Selected device:', devices[0])
+          alert(`Selected device: ${devices[0].name}`)
+        } else {
+          alert('No devices found')
+        }
+      }
+    } catch (error) {
+      console.error('Error selecting Ledger device:', error)
+      alert(
+        `Error: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      )
+    }
+  }
+
+  const handleGetSelectedDevice = async () => {
+    try {
+      if ('getSelectedDevice' in ledgerConnector) {
+        const device = await (ledgerConnector as any).getSelectedDevice()
+        console.log('Selected device:', device)
+        if (device) {
+          alert(`Selected device: ${device.name} (${device.id})`)
+        } else {
+          alert('No device selected')
+        }
+      }
+    } catch (error) {
+      console.error('Error getting selected device:', error)
+      alert(
+        `Error: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      )
+    }
+  }
+
+  return (
+    <div>
+      <h2>Ledger Devices</h2>
+      <div>
+        <p>
+          Status:{' '}
+          {isLedgerActive ? 'Connected to Ledger' : 'Not connected to Ledger'}
+        </p>
+
+        <div
+          style={{
+            display: 'flex',
+            gap: '10px',
+            flexWrap: 'wrap',
+            marginTop: '10px',
+          }}
+        >
+          <button onClick={handleGetDevices} type="button">
+            Get Devices
+          </button>
+
+          <button onClick={handleSelectDevice} type="button">
+            Select First Device
+          </button>
+
+          <button onClick={handleGetSelectedDevice} type="button">
+            Get Selected Device
+          </button>
+        </div>
+
+        <div style={{ marginTop: '10px', fontSize: '12px', color: '#666' }}>
+          <p>
+            Note: Make sure your Ledger device is connected via USB and the
+            Ethereum app is open.
+          </p>
+          <p>
+            You may need to enable "Contract data" and "Debug data" in the
+            Ethereum app settings.
+          </p>
+        </div>
+      </div>
     </div>
   )
 }

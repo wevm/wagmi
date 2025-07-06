@@ -8,12 +8,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ledgerhq/device-management-kit": "0.7.0",
+    "@ledgerhq/device-signer-kit-ethereum": "1.5.0",
+    "@ledgerhq/device-transport-kit-web-hid": "1.1.0",
+    "@ledgerhq/context-module": "1.4.0",
     "@tanstack/query-sync-storage-persister": "5.0.5",
     "@tanstack/react-query": ">=5.45.1",
     "@tanstack/react-query-persist-client": "5.0.5",
     "idb-keyval": "^6.2.1",
     "react": ">=18.3.1",
     "react-dom": ">=18.3.1",
+    "rxjs": "^7.8.1",
     "viem": "2.*",
     "wagmi": "workspace:*"
   },
