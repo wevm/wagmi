@@ -105,6 +105,7 @@ export function fetch(config: FetchConfig): FetchResult {
               `${JSON.stringify({ abi, timestamp }, undefined, 2)}\n`,
             )
           } catch (error) {
+            clearTimeout(timeout) // Clean up timeout on error
             try {
               // Attempt to read from cache if fetch fails.
               abi = JSON.parse(await readFile(cacheFilePath, 'utf8')).abi
