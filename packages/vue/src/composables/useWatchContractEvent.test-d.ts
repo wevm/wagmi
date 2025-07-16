@@ -39,8 +39,6 @@ test('behavior: no eventName', () => {
     onLogs(logs) {
       expectTypeOf(logs[0]!.eventName).toEqualTypeOf<'Transfer' | 'Approval'>()
       expectTypeOf(logs[0]!.args).toEqualTypeOf<
-        | Record<string, unknown>
-        | readonly unknown[]
         | {
             from?: `0x${string}` | undefined
             to?: `0x${string}` | undefined
