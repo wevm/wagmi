@@ -105,9 +105,9 @@ export async function getConnectorClient<
 
   // Check connector using same chainId as connection
   const connectorChainId = await connection.connector.getChainId()
-  if (connectorChainId !== connection.chainId)
+  if (connectorChainId !== chainId)
     throw new ConnectorChainMismatchError({
-      connectionChainId: connection.chainId,
+      connectionChainId: chainId,
       connectorChainId,
     })
 
