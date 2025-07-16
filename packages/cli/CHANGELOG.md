@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 2.3.2
+
+### Patch Changes
+
+- [#4727](https://github.com/wevm/wagmi/pull/4727) [`910e6c6180bd632e65bad348bd0814de5a8cfa4b`](https://github.com/wevm/wagmi/commit/910e6c6180bd632e65bad348bd0814de5a8cfa4b) Thanks [@reallesee](https://github.com/reallesee)! - `fetch` plugin: cleared timeout on fetch error
+
 ## 2.3.1
 
 ### Patch Changes
