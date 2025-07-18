@@ -1,4 +1,4 @@
-import { coinbaseWallet, injected, walletConnect } from '@wagmi/connectors'
+import { baseAccount, injected, walletConnect } from '@wagmi/connectors'
 import { http, createConfig } from '@wagmi/core'
 import { mainnet, sepolia } from '@wagmi/core/chains'
 
@@ -6,7 +6,7 @@ export const config = createConfig({
   chains: [mainnet, sepolia],
   connectors: [
     injected(),
-    coinbaseWallet(),
+    baseAccount(),
     walletConnect({ projectId: import.meta.env.VITE_WC_PROJECT_ID }),
   ],
   transports: {

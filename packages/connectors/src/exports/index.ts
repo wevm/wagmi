@@ -6,6 +6,8 @@ export {
   mock,
 } from '@wagmi/core'
 
+export { type BaseAccountParameters, baseAccount } from '../baseAccount.js'
+
 export {
   type CoinbaseWalletParameters,
   coinbaseWallet,
