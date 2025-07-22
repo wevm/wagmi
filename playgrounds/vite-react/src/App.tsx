@@ -1,4 +1,4 @@
-import type { FormEvent } from 'react'
+import { type FormEvent, useState } from 'react'
 import { type Hex, formatEther, parseAbi, parseEther } from 'viem'
 import {
   type BaseError,
@@ -84,11 +84,24 @@ function Account() {
 
 function Connect() {
   const chainId = useChainId()
-  const { connectors, connect, status, error } = useConnect()
+  const { connectors, connect, status, error, data } = useConnect()
+  const [enableSiwe, setEnableSiwe] = useState(false)
 
   return (
     <div>
       <h2>Connect</h2>
+
+      <div style={{ marginBottom: '10px' }}>
+        <label>
+          <input
+            type="checkbox"
+            checked={enableSiwe}
+            onChange={(e) => setEnableSiwe(e.target.checked)}
+          />
+          Enable Sign-In with Ethereum (SIWE)
+        </label>
+      </div>
+
       {connectors.map((connector) => (
         <button
           key={connector.uid}
@@ -96,6 +109,20 @@ function Connect() {
             connect({
               connector,
               chainId,
+              ...(enableSiwe
+                ? {
+                    capabilities: {
+                      signInWithEthereum: {
+                        nonce: crypto.randomUUID(),
+                        chainId,
+                        domain: window.location.host,
+                        uri: window.location.href,
+                        statement: 'Sign in to the app',
+                        version: '1',
+                      },
+                    },
+                  }
+                : {}),
             })
           }
           type="button"
@@ -105,6 +132,24 @@ function Connect() {
       ))}
       <div>{status}</div>
       <div>{error?.message}</div>
+
+      {data?.capabilities?.signInWithEthereum && (
+        <div style={{ marginTop: '20px' }}>
+          <h3>SIWE Authentication Data</h3>
+          <div>
+            <strong>Signature:</strong>
+            <div style={{ wordBreak: 'break-all', fontSize: '12px' }}>
+              {data.capabilities.signInWithEthereum.signature}
+            </div>
+          </div>
+          <div style={{ marginTop: '10px' }}>
+            <strong>Message:</strong>
+            <pre style={{ fontSize: '12px', whiteSpace: 'pre-wrap' }}>
+              {data.capabilities.signInWithEthereum.message}
+            </pre>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

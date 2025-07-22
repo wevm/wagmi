@@ -14,6 +14,7 @@ export {
   type ConnectErrorType,
   type ConnectParameters,
   type ConnectReturnType,
+  type ConnectCapabilities,
   connect,
 } from '../actions/connect.js'
 
@@ -115,10 +116,7 @@ export {
   getChainId,
 } from '../actions/getChainId.js'
 
-export {
-  type GetChainsReturnType,
-  getChains,
-} from '../actions/getChains.js'
+export { type GetChainsReturnType, getChains } from '../actions/getChains.js'
 
 export {
   type GetClientParameters,

@@ -69,3 +69,75 @@ test('behavior: already connected', async () => {
     Version: @wagmi/core@x.y.z]
   `)
 })
+
+test('behavior: connect already connected', async () => {
+  await connect(config, { connector })
+  await expect(connect(config, { connector })).rejects.toMatchInlineSnapshot(`
+    [ConnectorAlreadyConnectedError: Connector already connected.
+
+    Version: @wagmi/core@x.y.z]
+  `)
+  await disconnect(config, { connector })
+})
+
+test('parameters: siwe nonce', async () => {
+  const nonce = 'test-nonce-123'
+  const result = await connect(config, {
+    connector,
+    chainId: chain.mainnet.id,
+    capabilities: {
+      signInWithEthereum: {
+        nonce,
+        chainId: 1, // mainnet
+      },
+    },
+  })
+
+  expect(result).toMatchObject({
+    accounts: expect.any(Array),
+    chainId: expect.any(Number),
+  })
+
+  // If the connector supports SIWE, capabilities should be present
+  if (result.capabilities?.signInWithEthereum) {
+    expect(result.capabilities.signInWithEthereum).toMatchObject({
+      signature: expect.any(String),
+      message: expect.any(String),
+    })
+    expect(result.capabilities.signInWithEthereum.message).toContain(nonce)
+  }
+
+  await disconnect(config, { connector })
+})
+
+test('parameters: siwe with custom domain and uri', async () => {
+  const nonce = 'test-nonce-456'
+  const domain = 'example.com'
+  const uri = 'https://example.com/auth'
+
+  const result = await connect(config, {
+    connector,
+    chainId: chain.mainnet.id,
+    capabilities: {
+      signInWithEthereum: {
+        nonce,
+        chainId: 1, // mainnet
+        domain,
+        uri,
+      },
+    },
+  })
+
+  expect(result).toMatchObject({
+    accounts: expect.any(Array),
+    chainId: expect.any(Number),
+  })
+
+  // If the connector supports SIWE, capabilities should be present
+  if (result.capabilities?.signInWithEthereum) {
+    expect(result.capabilities.signInWithEthereum.message).toContain(domain)
+    expect(result.capabilities.signInWithEthereum.message).toContain(uri)
+  }
+
+  await disconnect(config, { connector })
+})
