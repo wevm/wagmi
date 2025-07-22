@@ -113,7 +113,7 @@ function Connect() {
                 ? {
                     capabilities: {
                       signInWithEthereum: {
-                        nonce: crypto.randomUUID(),
+                        nonce: crypto.randomUUID().replace(/-/g, ''),
                         chainId,
                         domain: window.location.host,
                         uri: window.location.href,
