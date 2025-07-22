@@ -10,7 +10,7 @@ export const wagmiModule: NuxtModule<WagmiModuleOptions> =
       name: '@wagmi/vue',
       configKey: 'wagmi',
       compatibility: {
-        nuxt: '^3.0.0',
+        nuxt: '^3.0.0 || ^4.0.0',
       },
     },
     setup(_options, nuxt) {
