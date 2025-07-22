@@ -1,6 +1,6 @@
 import { chain, testClient } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
-import { expect, test } from 'vitest'
+import { renderHook } from '@wagmi/test/react'
+import { expect, test, vi } from 'vitest'
 
 import { useEstimateMaxPriorityFeePerGas } from './useEstimateMaxPriorityFeePerGas.js'
 
@@ -9,7 +9,7 @@ test('default', async () => {
 
   const { result } = renderHook(() => useEstimateMaxPriorityFeePerGas())
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
   const { data, ...rest } = result.current
   expect(data).toBeTypeOf('bigint')
@@ -56,7 +56,7 @@ test('parameters: chainId', async () => {
     useEstimateMaxPriorityFeePerGas({ chainId: chain.mainnet2.id }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
   const { data, ...rest } = result.current
   expect(data).toBeTypeOf('bigint')

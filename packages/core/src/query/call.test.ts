@@ -1,5 +1,5 @@
 import { accounts, address, chain, config } from '@wagmi/test'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { parseEther, parseGwei } from 'viem'
 import { callQueryOptions } from './call.js'

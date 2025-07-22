@@ -1,13 +1,13 @@
 import { chain } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
-import { expect, test } from 'vitest'
+import { renderHook } from '@wagmi/test/react'
+import { expect, test, vi } from 'vitest'
 
 import { useBlockTransactionCount } from './useBlockTransactionCount.js'
 
 test('default', async () => {
   const { result } = renderHook(() => useBlockTransactionCount({}))
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
   const { data, ...rest } = result.current
   expect(data).toBeTypeOf('number')
@@ -51,7 +51,7 @@ test('parameters: chainId', async () => {
     useBlockTransactionCount({ chainId: chain.mainnet2.id }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
   const { data, ...rest } = result.current
   expect(data).toBeTypeOf('number')
@@ -95,7 +95,7 @@ test('parameters: blockNumber', async () => {
     useBlockTransactionCount({ blockNumber: 13677382n }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
   const { data, ...rest } = result.current
   expect(data).toBeTypeOf('number')
@@ -143,7 +143,7 @@ test('parameters: blockHash', async () => {
     }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
   const { data, ...rest } = result.current
   expect(data).toBeTypeOf('number')
@@ -190,7 +190,7 @@ test('parameters: blockTag', async () => {
     }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
   const { data, ...rest } = result.current
   expect(data).toBeTypeOf('number')

@@ -1,5 +1,5 @@
 import { abi, address, config } from '@wagmi/test'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { connect } from '../../actions/connect.js'
 import { disconnect } from '../../actions/disconnect.js'

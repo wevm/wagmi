@@ -1,6 +1,6 @@
 import { accounts, address, config } from '@wagmi/test'
 import { parseEther, parseGwei } from 'viem'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { call } from './call.js'
 

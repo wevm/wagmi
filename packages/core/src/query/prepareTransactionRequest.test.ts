@@ -1,7 +1,7 @@
 import { accounts, chain, config } from '@wagmi/test'
 import { parseEther, parseGwei } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { prepareTransactionRequestQueryOptions } from './prepareTransactionRequest.js'
 

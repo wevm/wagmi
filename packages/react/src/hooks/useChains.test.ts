@@ -1,7 +1,7 @@
 import { config } from '@wagmi/test'
 import { renderHook } from '@wagmi/test/react'
 import { Fragment, createElement } from 'react'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { useChains } from './useChains.js'
 

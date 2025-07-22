@@ -1,5 +1,5 @@
 import { address, config } from '@wagmi/test'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import type { Connector } from '../createConfig.js'
 import { connect } from './connect.js'

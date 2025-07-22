@@ -1,5 +1,5 @@
 import { config } from '@wagmi/test'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { writeContractMutationOptions } from './writeContract.js'
 

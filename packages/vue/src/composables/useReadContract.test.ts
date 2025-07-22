@@ -1,6 +1,6 @@
 import { abi, address, bytecode, chain, wait } from '@wagmi/test'
 import { renderComposable, waitFor } from '@wagmi/test/vue'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 import { ref } from 'vue'
 
 import { useReadContract } from './useReadContract.js'
@@ -15,7 +15,7 @@ test('default', async () => {
     }),
   )
 
-  await waitFor(result.isSuccess)
+  await vi.waitFor(result.isSuccess)
 
   expect(result.data.value).toBe(4n)
   expect(result.queryKey).toMatchInlineSnapshot(`
@@ -44,7 +44,7 @@ test('parameters: chainId', async () => {
     }),
   )
 
-  await waitFor(result.isSuccess)
+  await vi.waitFor(result.isSuccess)
 
   expect(result.data.value).toBe(4n)
   expect(result.queryKey).toMatchInlineSnapshot(`
@@ -71,7 +71,7 @@ test('parameters: deployless read (bytecode)', async () => {
     }),
   )
 
-  await waitFor(result.isSuccess)
+  await vi.waitFor(result.isSuccess)
 
   expect(result.data.value).toMatchInlineSnapshot(`"wagmi"`)
 })

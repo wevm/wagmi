@@ -1,6 +1,6 @@
 import { http } from 'viem'
 import { mainnet, optimism, sepolia } from 'viem/chains'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { injected } from '../connectors/injected.js'
 import { unstable_connector } from '../transports/connector.js'

@@ -2,7 +2,7 @@ import { connect, disconnect, getAccount } from '@wagmi/core'
 import { config, privateKey } from '@wagmi/test'
 import { renderComposable, waitFor } from '@wagmi/test/vue'
 import { recoverMessageAddress } from 'viem'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { privateKeyToAccount } from 'viem/accounts'
 import { useSignMessage } from './useSignMessage.js'
@@ -15,7 +15,7 @@ test('default', async () => {
   const [result] = renderComposable(() => useSignMessage())
 
   result.signMessage({ message: 'foo bar baz' })
-  await waitFor(result.isSuccess)
+  await vi.waitFor(result.isSuccess)
 
   await expect(
     recoverMessageAddress({
@@ -32,7 +32,7 @@ test('behavior: local account', async () => {
 
   const account = privateKeyToAccount(privateKey)
   result.signMessage({ account, message: 'foo bar baz' })
-  await waitFor(result.isSuccess)
+  await vi.waitFor(result.isSuccess)
 
   await expect(
     recoverMessageAddress({

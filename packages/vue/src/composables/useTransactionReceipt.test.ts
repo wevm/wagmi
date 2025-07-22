@@ -1,6 +1,6 @@
 import { chain, wait } from '@wagmi/test'
 import { renderComposable, waitFor } from '@wagmi/test/vue'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 import { ref } from 'vue'
 import { deepUnref } from '../utils/cloneDeep.js'
 import { useTransactionReceipt } from './useTransactionReceipt.js'
@@ -12,7 +12,7 @@ test('default', async () => {
     }),
   )
 
-  await waitFor(result.isSuccess)
+  await vi.waitFor(result.isSuccess)
 
   expect(deepUnref(result)).toMatchInlineSnapshot(`
     {
@@ -75,7 +75,7 @@ test('parameters: chainId', async () => {
     }),
   )
 
-  await waitFor(result.isSuccess)
+  await vi.waitFor(result.isSuccess)
 
   expect(deepUnref(result)).toMatchInlineSnapshot(`
     {
@@ -145,7 +145,7 @@ test('behavior: hash: undefined -> defined', async () => {
   hash.value =
     '0xbf7d27700d053765c9638d3b9d39eb3c56bfc48377583e8be483d61f9f18a871'
 
-  await waitFor(result.isSuccess)
+  await vi.waitFor(result.isSuccess)
 
   expect(deepUnref(result)).toMatchInlineSnapshot(`
     {

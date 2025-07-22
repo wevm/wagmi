@@ -2,7 +2,7 @@ import { connect, disconnect, getAccount } from '@wagmi/core'
 import { config, privateKey, typedData } from '@wagmi/test'
 import { renderComposable, waitFor } from '@wagmi/test/vue'
 import { recoverTypedDataAddress } from 'viem'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { privateKeyToAccount } from 'viem/accounts'
 import { useSignTypedData } from './useSignTypedData.js'
@@ -19,7 +19,7 @@ test('default', async () => {
     primaryType: 'Mail',
     message: typedData.basic.message,
   })
-  await waitFor(result.isSuccess)
+  await vi.waitFor(result.isSuccess)
 
   await expect(
     recoverTypedDataAddress({
@@ -43,7 +43,7 @@ test('behavior: local account', async () => {
     primaryType: 'Mail',
     message: typedData.basic.message,
   })
-  await waitFor(result.isSuccess)
+  await vi.waitFor(result.isSuccess)
 
   await expect(
     recoverTypedDataAddress({

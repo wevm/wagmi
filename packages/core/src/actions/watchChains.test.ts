@@ -1,6 +1,6 @@
 import { chain, config } from '@wagmi/test'
 import type { Chain } from 'viem'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { watchChains } from './watchChains.js'
 

@@ -1,8 +1,8 @@
 import { connect, disconnect } from '@wagmi/core'
 import { accounts, config } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
+import { renderHook } from '@wagmi/test/react'
 import { parseEther } from 'viem'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { useSendCalls } from './useSendCalls.js'
 
@@ -30,7 +30,7 @@ test('default', async () => {
       },
     ],
   })
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
   expect(result.current.data).toMatchInlineSnapshot(
     `

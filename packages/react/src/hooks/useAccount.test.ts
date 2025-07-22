@@ -1,8 +1,8 @@
 import { connect, disconnect } from '@wagmi/core'
 import { config } from '@wagmi/test'
 import { renderHook } from '@wagmi/test/react'
-import { Fragment, createElement } from 'react'
-import { expect, test } from 'vitest'
+import * as React from 'react'
+import { expect, test, vi } from 'vitest'
 
 import { useAccount } from './useAccount.js'
 
@@ -23,7 +23,8 @@ test('default', async () => {
 
 test('parameters: config', () => {
   const { result } = renderHook(() => useAccount({ config }), {
-    wrapper: ({ children }) => createElement(Fragment, { children }),
+    wrapper: ({ children }) =>
+      React.createElement(React.Fragment, { children }),
   })
   expect(result.current).toBeDefined()
 })

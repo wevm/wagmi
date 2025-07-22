@@ -1,7 +1,7 @@
 import { connect, disconnect } from '@wagmi/core'
 import { abi, address, config } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
-import { expect, test } from 'vitest'
+import { renderHook } from '@wagmi/test/react'
+import { expect, test, vi } from 'vitest'
 
 import { useWriteContract } from './useWriteContract.js'
 
@@ -17,7 +17,7 @@ test('default', async () => {
     address: address.wagmiMintExample,
     functionName: 'mint',
   })
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
   expect(result.current.data).toBeDefined()
 

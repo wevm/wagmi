@@ -1,7 +1,7 @@
 import { mock } from '@wagmi/connectors'
 import { http, connect, createConfig, disconnect } from '@wagmi/core'
 import { accounts, chain, config } from '@wagmi/test'
-import { createWrapper, renderHook, waitFor } from '@wagmi/test/react'
+import { createWrapper, renderHook } from '@wagmi/test/react'
 import { Fragment, createElement } from 'react'
 import { expect, test, vi } from 'vitest'
 
@@ -30,19 +30,23 @@ test('behavior: connect and disconnect called once', async () => {
   result.current.useConnect.connect({
     connector: result.current.useConnect.connectors[0]!,
   })
-  await waitFor(() => expect(result.current.useConnect.isSuccess).toBeTruthy())
+  await vi.waitFor(() =>
+    expect(result.current.useConnect.isSuccess).toBeTruthy(),
+  )
 
   result.current.useConnect.connect({
     connector: result.current.useConnect.connectors[0]!,
   })
-  await waitFor(() => expect(result.current.useConnect.isSuccess).toBeTruthy())
+  await vi.waitFor(() =>
+    expect(result.current.useConnect.isSuccess).toBeTruthy(),
+  )
 
   result.current.useDisconnect.disconnect()
-  await waitFor(() =>
+  await vi.waitFor(() =>
     expect(result.current.useDisconnect.isSuccess).toBeTruthy(),
   )
   result.current.useDisconnect.disconnect()
-  await waitFor(() =>
+  await vi.waitFor(() =>
     expect(result.current.useDisconnect.isSuccess).toBeTruthy(),
   )
 
@@ -71,7 +75,7 @@ test('behavior: connect called on reconnect', async () => {
     wrapper: createWrapper(WagmiProvider, { config, reconnectOnMount: true }),
   })
 
-  await waitFor(() => expect(onConnect).toBeCalledTimes(1))
+  await vi.waitFor(() => expect(onConnect).toBeCalledTimes(1))
 
   await disconnect(config)
 })

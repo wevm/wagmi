@@ -1,13 +1,13 @@
 import { testClient } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
-import { expect, test } from 'vitest'
+import { renderHook } from '@wagmi/test/react'
+import { expect, test, vi } from 'vitest'
 
 import { useBlock } from './useBlock.js'
 
 test('mounts', async () => {
   const { result } = renderHook(() => useBlock())
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
   const { data, ...rest } = result.current
   expect(data).toBeDefined()
@@ -51,17 +51,17 @@ test('parameters: watch', async () => {
 
   const { result } = renderHook(() => useBlock({ watch: true }))
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
   const block = result.current.data!
   expect(block).toBeDefined()
 
   await testClient.mainnet.mine({ blocks: 1 })
-  await waitFor(() => {
+  await vi.waitFor(() => {
     expect(result.current.data?.number).toEqual(block.number + 1n)
   })
 
   await testClient.mainnet.mine({ blocks: 1 })
-  await waitFor(() => {
+  await vi.waitFor(() => {
     expect(result.current.data?.number).toEqual(block.number + 2n)
   })
 })

@@ -1,7 +1,7 @@
 import { connect, disconnect } from '@wagmi/core'
 import { abi, address, config, wait } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
-import { expect, test } from 'vitest'
+import { renderHook } from '@wagmi/test/react'
+import { expect, test, vi } from 'vitest'
 
 import { useSimulateContract } from './useSimulateContract.js'
 
@@ -18,7 +18,7 @@ test('default', async () => {
     }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -91,5 +91,5 @@ test('behavior: disabled when properties missing', async () => {
   const { result } = renderHook(() => useSimulateContract())
 
   await wait(100)
-  await waitFor(() => expect(result.current.isPending).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isPending).toBeTruthy())
 })

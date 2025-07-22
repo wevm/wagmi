@@ -1,7 +1,7 @@
 import { accounts, chain, wait } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
+import { renderHook } from '@wagmi/test/react'
 import type { Address } from 'viem'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { useTransactionCount } from './useTransactionCount.js'
 
@@ -10,7 +10,7 @@ const address = accounts[0]
 test('default', async () => {
   const { result } = renderHook(() => useTransactionCount({ address }))
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
   const { data, ...rest } = result.current
   expect(data).toBeTypeOf('number')
@@ -55,7 +55,7 @@ test('parameters: chainId', async () => {
     useTransactionCount({ address, chainId: chain.mainnet2.id }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
   const { data, ...rest } = result.current
   expect(data).toBeTypeOf('number')
@@ -100,7 +100,7 @@ test('parameters: blockNumber', async () => {
     useTransactionCount({ address, blockNumber: 13677382n }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
   const { data, ...rest } = result.current
   expect(data).toBeTypeOf('number')
@@ -190,7 +190,7 @@ test('behavior: address: undefined -> defined', async () => {
   address = accounts[0]
   rerender()
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
   const { data, ...rest } = result.current
   expect(data).toBeTypeOf('number')
@@ -234,5 +234,5 @@ test('behavior: disabled when properties missing', async () => {
   const { result } = renderHook(() => useTransactionCount())
 
   await wait(100)
-  await waitFor(() => expect(result.current.isPending).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isPending).toBeTruthy())
 })

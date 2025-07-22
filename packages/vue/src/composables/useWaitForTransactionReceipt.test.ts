@@ -1,5 +1,5 @@
 import { renderComposable, waitFor } from '@wagmi/test/vue'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 import { wait } from '../../../test/src/utils.js'
 import { useWaitForTransactionReceipt } from './useWaitForTransactionReceipt.js'
 
@@ -10,7 +10,7 @@ test('default', async () => {
     }),
   )
 
-  await waitFor(result.isSuccess)
+  await vi.waitFor(result.isSuccess)
 
   expect(result.data.value).toMatchInlineSnapshot(`
     {

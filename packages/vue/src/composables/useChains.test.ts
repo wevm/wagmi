@@ -1,7 +1,7 @@
 import { config } from '@wagmi/test'
 import { renderComposable } from '@wagmi/test/vue'
 import { celo } from 'viem/chains'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { useChains } from './useChains.js'
 

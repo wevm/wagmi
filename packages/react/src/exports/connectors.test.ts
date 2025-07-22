@@ -1,18 +1,18 @@
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import * as connectors from './connectors.js'
 
 test('exports', () => {
   expect(Object.keys(connectors)).toMatchInlineSnapshot(`
     [
-      "injected",
-      "mock",
       "baseAccount",
       "coinbaseWallet",
+      "injected",
       "metaMask",
+      "mock",
       "safe",
-      "walletConnect",
       "version",
+      "walletConnect",
     ]
   `)
 })

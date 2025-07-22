@@ -1,7 +1,7 @@
 import { config, wait } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
+import { renderHook } from '@wagmi/test/react'
 import type { Hash } from 'viem'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { getTransactionReceipt } from '@wagmi/core'
 import { useTransactionConfirmations } from './useTransactionConfirmations.js'
@@ -13,7 +13,7 @@ test('default', async () => {
     }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
   const { data, ...rest } = result.current
   expect(data).toBeTypeOf('bigint')
@@ -64,7 +64,7 @@ test('parameters: transactionReceipt', async () => {
     }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
   const { data, ...rest } = result.current
   expect(data).toBeTypeOf('bigint')
@@ -167,7 +167,7 @@ test('behavior: hash: undefined -> defined', async () => {
   hash = '0x60668ed8c2dc110d61d945a936fcd45b8f13654e5c78481c8c825d1148c7ef30'
   rerender()
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
   const { data, ...rest } = result.current
   expect(data).toBeTypeOf('bigint')
@@ -211,5 +211,5 @@ test('behavior: disabled when properties missing', async () => {
   const { result } = renderHook(() => useTransactionConfirmations())
 
   await wait(100)
-  await waitFor(() => expect(result.current.isPending).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isPending).toBeTruthy())
 })

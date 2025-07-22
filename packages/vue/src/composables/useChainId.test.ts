@@ -1,6 +1,6 @@
 import { config } from '@wagmi/test'
 import { renderComposable } from '@wagmi/test/vue'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { useChainId } from './useChainId.js'
 

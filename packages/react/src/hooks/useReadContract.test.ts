@@ -1,8 +1,8 @@
 import { QueryClientProvider } from '@tanstack/react-query'
 import { abi, address, bytecode, chain, config, wait } from '@wagmi/test'
-import { queryClient, renderHook, waitFor } from '@wagmi/test/react'
+import { queryClient, renderHook } from '@wagmi/test/react'
 import { createElement } from 'react'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { useReadContract } from './useReadContract.js'
 
@@ -16,7 +16,7 @@ test('default', async () => {
     }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -70,7 +70,7 @@ test('parameters: chainId', async () => {
     }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -129,7 +129,7 @@ test('parameters: config', async () => {
     },
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -181,7 +181,7 @@ test('parameters: deployless read (bytecode)', async () => {
     }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
   expect(result.current.data).toMatchInlineSnapshot(`"wagmi"`)
 })
@@ -190,5 +190,5 @@ test('behavior: disabled when properties missing', async () => {
   const { result } = renderHook(() => useReadContract())
 
   await wait(100)
-  await waitFor(() => expect(result.current.isPending).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isPending).toBeTruthy())
 })

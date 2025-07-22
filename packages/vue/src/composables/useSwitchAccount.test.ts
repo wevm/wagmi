@@ -1,7 +1,7 @@
 import { connect, disconnect } from '@wagmi/core'
 import { config } from '@wagmi/test'
 import { renderComposable, waitFor } from '@wagmi/test/vue'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { useAccount } from './useAccount.js'
 import { useSwitchAccount } from './useSwitchAccount.js'
@@ -24,14 +24,14 @@ test('default', async () => {
   expect(address1).toBeDefined()
 
   switchAccount.switchAccount({ connector: connector2 })
-  await waitFor(switchAccount.isSuccess)
+  await vi.waitFor(switchAccount.isSuccess)
 
   const address2 = account.address.value
   expect(address2).toBeDefined()
   expect(address1).not.toBe(address2)
 
   switchAccount.switchAccount({ connector: connector1 })
-  await waitFor(switchAccount.isSuccess)
+  await vi.waitFor(switchAccount.isSuccess)
 
   const address3 = account.address.value
   expect(address3).toBeDefined()

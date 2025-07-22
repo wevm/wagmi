@@ -1,5 +1,5 @@
 import { chain, config } from '@wagmi/test'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { getEnsAddressQueryOptions } from './getEnsAddress.js'
 

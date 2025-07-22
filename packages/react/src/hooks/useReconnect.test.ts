@@ -1,8 +1,8 @@
 import { mock } from '@wagmi/connectors'
 import { connect, disconnect } from '@wagmi/core'
 import { accounts, config } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
-import { afterEach, expect, test } from 'vitest'
+import { renderHook } from '@wagmi/test/react'
+import { afterEach, expect, test, vi } from 'vitest'
 
 import { useReconnect } from './useReconnect.js'
 
@@ -23,7 +23,7 @@ test('default', async () => {
   expect(result.current.connectors).toBeDefined()
 
   result.current.reconnect()
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
   expect(result.current.data).toStrictEqual([])
 })
@@ -36,7 +36,7 @@ test('parameters: connectors (Connector)', async () => {
   expect(result.current.connectors).toBeDefined()
 
   result.current.reconnect({ connectors: [connector] })
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
   expect(result.current.data).toMatchObject(
     expect.arrayContaining([
@@ -60,7 +60,7 @@ test('parameters: connectors (CreateConnectorFn)', async () => {
   expect(result.current.connectors).toBeDefined()
 
   result.current.reconnect({ connectors: [connector] })
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
   expect(result.current.data).toMatchObject(
     expect.arrayContaining([

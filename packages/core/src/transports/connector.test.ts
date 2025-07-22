@@ -1,6 +1,6 @@
 import { config } from '@wagmi/test'
 import { optimism } from 'viem/chains'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 import { createStore } from 'zustand'
 
 import { injected } from '../connectors/injected.js'

@@ -21,7 +21,7 @@ test('default', async () => {
 
   disconnect.disconnect()
 
-  await waitFor(account.isDisconnected, (isDisconnected) =>
+  await vi.waitFor(account.isDisconnected, (isDisconnected) =>
     Boolean(isDisconnected),
   )
 

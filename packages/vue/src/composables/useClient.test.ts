@@ -1,7 +1,7 @@
 import { switchChain } from '@wagmi/core'
 import { config } from '@wagmi/test'
 import { renderComposable, waitFor } from '@wagmi/test/vue'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 import { ref } from 'vue'
 
 import { useClient } from './useClient.js'
@@ -32,7 +32,7 @@ test('behavior: controlled chainId', async () => {
 
   chainId.value = 1
 
-  await waitFor(client, (client) => client?.chain.id === 1)
+  await vi.waitFor(client, (client) => client?.chain.id === 1)
 })
 
 test('behavior: unconfigured chain', () => {

@@ -1,5 +1,5 @@
 import { abi, address, bytecode, chain, config } from '@wagmi/test'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { readContract } from './readContract.js'
 

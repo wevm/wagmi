@@ -1,7 +1,7 @@
 import { connect, disconnect } from '@wagmi/core'
-import { chain, config } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
-import { expect, test } from 'vitest'
+import { chain, config, wait } from '@wagmi/test'
+import { renderHook } from '@wagmi/test/react'
+import { expect, test, vi } from 'vitest'
 
 import { useAccount } from './useAccount.js'
 import { useSwitchChain } from './useSwitchChain.js'
@@ -20,18 +20,20 @@ test('default', async () => {
   expect(chainId1).toBeDefined()
 
   result.current.useSwitchChain.switchChain({ chainId: chain.mainnet2.id })
-  await waitFor(() =>
+  await vi.waitFor(() =>
     expect(result.current.useSwitchChain.isSuccess).toBeTruthy(),
   )
+  await wait(0)
 
   const chainId2 = result.current.useAccount.chainId
   expect(chainId2).toBeDefined()
   expect(chainId1).not.toBe(chainId2)
 
   result.current.useSwitchChain.switchChain({ chainId: chain.mainnet.id })
-  await waitFor(() =>
+  await vi.waitFor(() =>
     expect(result.current.useSwitchChain.isSuccess).toBeTruthy(),
   )
+  await wait(0)
 
   const chainId3 = result.current.useAccount.chainId
   expect(chainId3).toBeDefined()

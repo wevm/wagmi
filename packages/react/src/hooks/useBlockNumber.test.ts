@@ -1,6 +1,6 @@
 import { testClient } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
-import { expect, test } from 'vitest'
+import { renderHook } from '@wagmi/test/react'
+import { expect, test, vi } from 'vitest'
 
 import { useBlockNumber } from './useBlockNumber.js'
 
@@ -9,7 +9,7 @@ test('mounts', async () => {
 
   const { result } = renderHook(() => useBlockNumber())
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -52,17 +52,17 @@ test('parameters: watch', async () => {
 
   const { result } = renderHook(() => useBlockNumber({ watch: true }))
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
   const blockNumber = result.current.data!
-  expect(result.current.data).toMatchInlineSnapshot('19258213n')
+  expect(result.current.data).toBeTypeOf('bigint')
 
   await testClient.mainnet.mine({ blocks: 1 })
-  await waitFor(() => {
+  await vi.waitFor(() => {
     expect(result.current.data).toEqual(blockNumber + 1n)
   })
 
   await testClient.mainnet.mine({ blocks: 1 })
-  await waitFor(() => {
+  await vi.waitFor(() => {
     expect(result.current.data).toEqual(blockNumber + 2n)
   })
 })

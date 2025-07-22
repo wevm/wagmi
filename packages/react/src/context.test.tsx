@@ -1,15 +1,15 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { render, waitFor } from '@testing-library/react'
 import { http, connect, createConfig, mock } from '@wagmi/core'
 import { accounts, addressRegex, config, mainnet } from '@wagmi/test'
+import { render } from '@wagmi/test/react'
 import React from 'react'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { WagmiProvider } from './context.js'
 import { useAccount } from './hooks/useAccount.js'
 import { useConnectorClient } from './hooks/useConnectorClient.js'
 
-test('default', () => {
+test('default', async () => {
   function Component() {
     const { address } = useAccount()
     const { data } = useConnectorClient()
@@ -23,18 +23,18 @@ test('default', () => {
   }
 
   const queryClient = new QueryClient()
-  const result = render(
+  const screen = render(
     <WagmiProvider config={config} reconnectOnMount>
       <QueryClientProvider client={queryClient}>
         <Component />
       </QueryClientProvider>
     </WagmiProvider>,
   )
-  expect(result.getByRole('heading').innerText).toMatchInlineSnapshot(`"wevm"`)
-  result.unmount()
+  await expect.element(screen.getByRole('heading')).toHaveTextContent('wevm')
+  screen.unmount()
 })
 
-test('fake ssr config', () => {
+test('fake ssr config', async () => {
   const config = createConfig({
     chains: [mainnet],
     pollingInterval: 100,
@@ -45,21 +45,15 @@ test('fake ssr config', () => {
   })
   const queryClient = new QueryClient()
 
-  const result = render(
+  const screen = render(
     <WagmiProvider config={config} reconnectOnMount>
       <QueryClientProvider client={queryClient}>
         <h1>wevm</h1>
       </QueryClientProvider>
     </WagmiProvider>,
   )
-  expect(result.getAllByRole('heading')).toMatchInlineSnapshot(`
-    [
-      <h1>
-        wevm
-      </h1>,
-    ]
-  `)
-  result.unmount()
+  await expect.element(screen.getByRole('heading')).toHaveTextContent('wevm')
+  screen.unmount()
 })
 
 test('mock reconnect', async () => {
@@ -87,15 +81,15 @@ test('mock reconnect', async () => {
   await connect(config, { connector })
 
   const queryClient = new QueryClient()
-  const result = render(
+  const screen = render(
     <WagmiProvider config={config} reconnectOnMount>
       <QueryClientProvider client={queryClient}>
         <Component />
       </QueryClientProvider>
     </WagmiProvider>,
   )
-  await waitFor(() =>
-    expect(result.getByRole('heading').innerText).toMatch(addressRegex),
-  )
-  result.unmount()
+  await expect
+    .element(screen.getByRole('heading'))
+    .toHaveTextContent(addressRegex)
+  screen.unmount()
 })

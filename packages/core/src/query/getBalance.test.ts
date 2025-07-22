@@ -1,5 +1,5 @@
 import { accounts, chain, config } from '@wagmi/test'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { getBalanceQueryOptions } from './getBalance.js'
 

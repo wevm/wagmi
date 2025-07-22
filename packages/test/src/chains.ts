@@ -7,19 +7,21 @@ import {
 
 import { getRpcUrls } from './utils.js'
 
-type Fork = { blockNumber: bigint; url: string }
-
 export type Chain = Compute<
   viem_Chain & {
-    fork: Fork
+    fork: { blockNumber: bigint; url: string }
     port: number
   }
 >
 
 const mainnetFork = {
   blockNumber: 19_258_213n,
-  url: process.env.VITE_MAINNET_FORK_URL ?? 'https://eth.merkle.io',
-} as const satisfies Fork
+  url:
+    (typeof process !== 'undefined' && process.env.VITE_MAINNET_FORK_URL) ||
+    (typeof import.meta !== 'undefined' &&
+      import.meta.env.VITE_MAINNET_FORK_URL) ||
+    'https://eth.merkle.io',
+} as const satisfies Chain['fork']
 
 export const mainnet = {
   ...viem_mainnet,
@@ -40,7 +42,11 @@ export const optimism = {
   ...viem_optimism,
   fork: {
     blockNumber: 107_317_577n,
-    url: process.env.VITE_OPTIMISM_FORK_URL ?? 'https://mainnet.optimism.io',
+    url:
+      (typeof process !== 'undefined' && process.env.VITE_OPTIMISM_FORK_URL) ||
+      (typeof import.meta !== 'undefined' &&
+        import.meta.env.VITE_OPTIMISM_FORK_URL) ||
+      'https://mainnet.optimism.io',
   },
 } as const satisfies Chain
 

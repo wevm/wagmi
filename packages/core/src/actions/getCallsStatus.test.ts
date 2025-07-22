@@ -1,6 +1,6 @@
 import { accounts, config, testClient } from '@wagmi/test'
 import { parseEther } from 'viem'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'

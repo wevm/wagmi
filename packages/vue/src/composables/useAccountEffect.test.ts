@@ -23,13 +23,13 @@ test('behavior: connect and disconnect called once', async () => {
   connect.connect({
     connector: connect.connectors[0]!,
   })
-  await waitFor(connect.isSuccess)
+  await vi.waitFor(connect.isSuccess)
   connect.connect({
     connector: connect.connectors[0]!,
   })
 
   disconnect.disconnect()
-  await waitFor(disconnect.isSuccess)
+  await vi.waitFor(disconnect.isSuccess)
   disconnect.disconnect()
 
   expect(onConnect).toBeCalledTimes(1)
@@ -67,7 +67,7 @@ test('behavior: connect called on reconnect', async () => {
   })
   const [account] = renderComposable(() => useAccount(), { attach })
 
-  await waitFor(account.status, (status) => status === 'connected')
+  await vi.waitFor(account.status, (status) => status === 'connected')
 
   expect(onConnect).toBeCalledTimes(1)
 

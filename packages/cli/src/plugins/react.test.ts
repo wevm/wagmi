@@ -1,5 +1,5 @@
 import { erc20Abi } from 'viem'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { react } from './react.js'
 

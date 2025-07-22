@@ -1,5 +1,5 @@
 import { http } from 'viem'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 import { unstable_connector } from './connector.js'
 import { fallback } from './fallback.js'
 

@@ -1,7 +1,7 @@
 import { mock } from '@wagmi/connectors'
 import { accounts, config } from '@wagmi/test'
 import { renderComposable } from '@wagmi/test/vue'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { useConnectors } from './useConnectors.js'
 

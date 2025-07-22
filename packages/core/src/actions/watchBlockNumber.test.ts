@@ -1,5 +1,5 @@
 import { config, testClient, wait } from '@wagmi/test'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { watchBlockNumber } from './watchBlockNumber.js'
 

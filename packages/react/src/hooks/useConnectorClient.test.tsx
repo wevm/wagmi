@@ -1,8 +1,8 @@
 import { connect, disconnect } from '@wagmi/core'
 import { config, wait } from '@wagmi/test'
-import { render, renderHook, waitFor } from '@wagmi/test/react'
+import { render, renderHook } from '@wagmi/test/react'
 import * as React from 'react'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { useAccount } from './useAccount.js'
 import { useConnect } from './useConnect.js'
@@ -15,7 +15,7 @@ const connector = config.connectors[0]!
 test('default', async () => {
   const { result } = renderHook(() => useConnectorClient())
 
-  await waitFor(() => expect(result.current.isPending).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isPending).toBeTruthy())
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -59,7 +59,7 @@ test('behavior: connected on mount', async () => {
 
   const { result } = renderHook(() => useConnectorClient())
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
   const { data, queryKey: _, ...rest } = result.current
   expect(data).toMatchObject(
@@ -112,13 +112,13 @@ test('behavior: connect and disconnect', async () => {
     connector: result.current.useConnect.connectors[0]!,
   })
 
-  await waitFor(() =>
+  await vi.waitFor(() =>
     expect(result.current.useConnectorClient.data).toBeDefined(),
   )
 
   result.current.useDisconnect.disconnect()
 
-  await waitFor(() =>
+  await vi.waitFor(() =>
     expect(result.current.useConnectorClient.data).not.toBeDefined(),
   )
 })
@@ -133,19 +133,20 @@ test('behavior: switch chains', async () => {
 
   expect(result.current.useConnectorClient.data).not.toBeDefined()
 
-  await waitFor(() =>
+  await vi.waitFor(() =>
     expect(result.current.useConnectorClient.data).toBeDefined(),
   )
 
   result.current.useSwitchChain.switchChain({ chainId: 456 })
-  await waitFor(() => {
+  await vi.waitFor(() => {
     expect(result.current.useSwitchChain.isSuccess).toBeTruthy()
     result.current.useSwitchChain.reset()
   })
+  await wait(0)
   expect(result.current.useConnectorClient.data?.chain.id).toEqual(456)
 
   result.current.useSwitchChain.switchChain({ chainId: 1 })
-  await waitFor(() =>
+  await vi.waitFor(() =>
     expect(result.current.useSwitchChain.isSuccess).toBeTruthy(),
   )
   expect(result.current.useConnectorClient.data?.chain.id).toEqual(1)
@@ -154,10 +155,12 @@ test('behavior: switch chains', async () => {
 })
 
 test('behavior: disabled when properties missing', async () => {
+  await disconnect(config, { connector })
+
   const { result } = renderHook(() => useConnectorClient())
 
-  await wait(100)
-  await waitFor(() => expect(result.current.isPending).toBeTruthy())
+  await wait(0)
+  await vi.waitFor(() => expect(result.current.isPending).toBeTruthy())
 })
 
 test('behavior: disabled when connecting', async () => {
@@ -165,33 +168,38 @@ test('behavior: disabled when connecting', async () => {
 
   config.setState((x) => ({ ...x, status: 'connecting' }))
 
-  await wait(100)
+  await wait(0)
   expect(result.current.isLoading).not.toBeTruthy()
 })
 
 test('behavior: re-render does not invalidate query', async () => {
-  const { getByTestId } = render(<Parent />)
+  await disconnect(config, { connector })
 
-  getByTestId('connect').click()
-  await waitFor(() => {
-    expect(getByTestId('address').innerText).toContain(
-      '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',
-    )
-    expect(getByTestId('client').innerText).toBeTruthy()
+  const screen = render(<Parent />)
 
-    expect(getByTestId('child-client').innerText).toBeTruthy()
-    expect(getByTestId('render-count').innerText).toEqual('1')
+  await screen.getByTestId('connect').click()
+  await vi.waitFor(async () => {
+    await expect
+      .element(screen.getByTestId('address'))
+      .toHaveTextContent('0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266')
+    await expect.element(screen.getByTestId('client')).toBeVisible()
+
+    await expect.element(screen.getByTestId('child-client')).toBeVisible()
+    await expect
+      .element(screen.getByTestId('render-count'))
+      .toHaveTextContent('1')
   })
 
-  const initialClient = getByTestId('child-client').innerText
+  const initialClient = screen.getByTestId('child-client')
 
-  getByTestId('rerender').click()
-  await waitFor(() => {
-    expect(getByTestId('render-count').innerText).toEqual('2')
-  })
-  await wait(200)
+  await screen.getByTestId('rerender').click()
+  await vi.waitFor(() =>
+    expect.element(screen.getByTestId('render-count')).toHaveTextContent('2'),
+  )
 
-  expect(getByTestId('child-client').innerText).toEqual(initialClient)
+  await expect
+    .element(screen.getByTestId('child-client').element())
+    .toEqual(initialClient.element())
 })
 
 function Parent() {

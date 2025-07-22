@@ -23,7 +23,7 @@ test('default', async () => {
   const [reconnect] = renderComposable(() => useReconnect())
 
   reconnect.reconnect()
-  await waitFor(reconnect.isSuccess)
+  await vi.waitFor(reconnect.isSuccess)
 
   expect(reconnect.data.value).toStrictEqual([])
 })
@@ -34,7 +34,7 @@ test('parameters: connectors (Connector)', async () => {
   const [reconnect] = renderComposable(() => useReconnect())
 
   reconnect.reconnect({ connectors: [connector] })
-  await waitFor(reconnect.isSuccess)
+  await vi.waitFor(reconnect.isSuccess)
 
   expect(reconnect.data.value).toMatchObject(
     expect.arrayContaining([
@@ -56,7 +56,7 @@ test('parameters: connectors (CreateConnectorFn)', async () => {
   const [reconnect] = renderComposable(() => useReconnect())
 
   reconnect.reconnect({ connectors: [connector] })
-  await waitFor(reconnect.isSuccess)
+  await vi.waitFor(reconnect.isSuccess)
 
   expect(reconnect.data.value).toMatchObject(
     expect.arrayContaining([

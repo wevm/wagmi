@@ -1,7 +1,7 @@
 import { connect, disconnect } from '@wagmi/core'
-import { accounts, config } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
-import { expect, test } from 'vitest'
+import { accounts, config, wait } from '@wagmi/test'
+import { renderHook } from '@wagmi/test/react'
+import { expect, test, vi } from 'vitest'
 
 import { useCapabilities } from './useCapabilities.js'
 
@@ -12,7 +12,7 @@ test('mounts', async () => {
 
   const { result } = renderHook(() => useCapabilities())
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -71,7 +71,7 @@ test('args: account', async () => {
 
   const { result } = renderHook(() => useCapabilities({ account: accounts[1] }))
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -128,7 +128,7 @@ test('args: account', async () => {
 test('behavior: not connected', async () => {
   const { result } = renderHook(() => useCapabilities())
 
-  await waitFor(() => expect(result.current.isError).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isError).toBeTruthy())
 
   const { error, failureReason: _, ...rest } = result.current
   expect(error?.message.includes('Connector not connected.')).toBeTruthy()
@@ -136,7 +136,7 @@ test('behavior: not connected', async () => {
     {
       "data": undefined,
       "dataUpdatedAt": 0,
-      "errorUpdateCount": 2,
+      "errorUpdateCount": 1,
       "errorUpdatedAt": 1675209600000,
       "failureCount": 1,
       "fetchStatus": "idle",

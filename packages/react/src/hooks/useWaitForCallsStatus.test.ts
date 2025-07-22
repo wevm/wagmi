@@ -1,8 +1,8 @@
 import { connect, disconnect } from '@wagmi/core'
 import { accounts, config, testClient, wait } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
+import { renderHook } from '@wagmi/test/react'
 import { parseEther } from 'viem'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { useSendCalls } from './useSendCalls.js'
 import { useWaitForCallsStatus } from './useWaitForCallsStatus.js'
@@ -34,7 +34,7 @@ test('default', async () => {
       },
     ],
   })
-  await waitFor(() =>
+  await vi.waitFor(() =>
     expect(useSendCalls_render.result.current.isSuccess).toBeTruthy(),
   )
 
@@ -45,7 +45,7 @@ test('default', async () => {
   )
 
   await Promise.all([
-    waitFor(() =>
+    vi.waitFor(() =>
       expect(
         useWaitForCallsStatus_render.result.current.isSuccess,
       ).toBeTruthy(),

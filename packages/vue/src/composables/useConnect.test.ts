@@ -24,7 +24,7 @@ test('default', async () => {
     connector: connect.connectors[0]!,
   })
 
-  await waitFor(account.isConnected, (isConnected) => Boolean(isConnected))
+  await vi.waitFor(account.isConnected, (isConnected) => Boolean(isConnected))
 
   expect(account.address.value).toBeDefined()
   expect(account.status.value).toEqual('connected')

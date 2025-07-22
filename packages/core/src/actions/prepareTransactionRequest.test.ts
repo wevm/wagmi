@@ -1,5 +1,5 @@
 import { accounts, config, privateKey } from '@wagmi/test'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { parseEther } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
