@@ -189,7 +189,14 @@ export async function connect<
           }
         }
       } catch (walletConnectError) {
-        // wallet_connect failed, continue with fallback
+        // If user rejected the request, throw the error instead of continuing
+        if (
+          (walletConnectError as any)?.code === 4001 || // Standard user rejection code
+          (walletConnectError as any)?.name === 'UserRejectedRequestError'
+        ) {
+          throw walletConnectError
+        }
+        // For other errors, continue with fallback
         void walletConnectError // Acknowledge error for linter
       }
     }

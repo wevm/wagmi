@@ -141,3 +141,58 @@ test('parameters: siwe with custom domain and uri', async () => {
 
   await disconnect(config, { connector })
 })
+
+test('behavior: wallet_connect user rejection with SIWE capabilities', async () => {
+  const connector_ = config._internal.connectors.setup(
+    mock({
+      accounts,
+      features: { walletConnectError: true },
+    }),
+  )
+
+  await expect(
+    connect(config, {
+      connector: connector_,
+      capabilities: {
+        signInWithEthereum: {
+          nonce: 'test-nonce-rejection',
+          chainId: 1,
+        },
+      },
+    }),
+  ).rejects.toMatchInlineSnapshot(`
+    [UserRejectedRequestError: User rejected the request.
+
+    Details: User rejected wallet_connect request.
+    Version: viem@2.31.7]
+  `)
+})
+
+test('behavior: wallet_connect error with code 4001', async () => {
+  const customError = new Error('User rejected') as any
+  customError.code = 4001
+
+  const connector_ = config._internal.connectors.setup(
+    mock({
+      accounts,
+      features: { walletConnectError: customError },
+    }),
+  )
+
+  await expect(
+    connect(config, {
+      connector: connector_,
+      capabilities: {
+        signInWithEthereum: {
+          nonce: 'test-nonce-rejection-4001',
+          chainId: 1,
+        },
+      },
+    }),
+  ).rejects.toMatchInlineSnapshot(`
+    [UserRejectedRequestError: User rejected the request.
+
+    Details: User rejected
+    Version: viem@2.31.7]
+  `)
+})
