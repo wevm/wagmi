@@ -1,6 +1,6 @@
 import { VueQueryPlugin } from '@tanstack/vue-query'
 import { WagmiPlugin } from '@wagmi/vue'
-import { type App, type Ref, createApp, watch } from 'vue'
+import { type App, createApp, type Ref, watch } from 'vue'
 
 import { config } from '../config.js'
 
@@ -22,7 +22,7 @@ export function renderComposable<composable extends () => unknown>(
     },
   },
 ): RenderComposableReturnType<composable> {
-  let result = undefined
+  let result: unknown
   const app = createApp({
     setup() {
       result = composable()

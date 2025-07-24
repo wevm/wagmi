@@ -16,6 +16,7 @@ export type UseConfigReturnType<config extends Config = Config> = config
 export function useConfig<config extends Config = ResolvedRegister['config']>(
   parameters: UseConfigParameters<config> = {},
 ): UseConfigReturnType<config> {
+  // biome-ignore lint/correctness/useHookAtTopLevel: false alarm
   const config = parameters.config ?? useContext(WagmiContext)
   if (!config) throw new WagmiProviderNotFoundError()
   return config as UseConfigReturnType<config>

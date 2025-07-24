@@ -1,7 +1,6 @@
 import { accounts, address, chain, config } from '@wagmi/test'
-import { expect, test } from 'vitest'
-
 import { parseEther, parseGwei } from 'viem'
+import { expect, test } from 'vitest'
 import { callQueryOptions } from './call.js'
 
 const name4bytes = '0x06fdde03'

@@ -1,12 +1,12 @@
-import { renderHook, waitFor } from '@wagmi/test/react'
-import { expect, test } from 'vitest'
+import { renderHook } from '@wagmi/test/react'
+import { expect, test, vi } from 'vitest'
 
 import { useEstimateFeesPerGas } from './useEstimateFeesPerGas.js'
 
 test('default', async () => {
-  const { result } = renderHook(() => useEstimateFeesPerGas())
+  const { result } = await renderHook(() => useEstimateFeesPerGas())
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(Object.keys(result.current.data!)).toMatchInlineSnapshot(`
     [

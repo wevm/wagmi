@@ -11,15 +11,15 @@ test('exports', () => {
       "showCallsStatus",
       "waitForCallsStatus",
       "writeContracts",
-      "getCallsStatusQueryOptions",
+      "writeContractsMutationOptions",
       "getCallsStatusQueryKey",
-      "getCapabilitiesQueryOptions",
+      "getCallsStatusQueryOptions",
       "getCapabilitiesQueryKey",
+      "getCapabilitiesQueryOptions",
       "sendCallsMutationOptions",
       "showCallsStatusMutationOptions",
       "waitForCallsStatusQueryKey",
       "waitForCallsStatusQueryOptions",
-      "writeContractsMutationOptions",
     ]
   `)
 })

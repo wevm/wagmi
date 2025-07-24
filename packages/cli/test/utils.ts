@@ -1,7 +1,7 @@
 import { spawnSync } from 'node:child_process'
 import { cp, mkdir, symlink, writeFile } from 'node:fs/promises'
 import fixtures from 'fixturez'
-import { http, HttpResponse } from 'msw'
+import { HttpResponse, http } from 'msw'
 import * as path from 'pathe'
 import { vi } from 'vitest'
 
@@ -19,13 +19,7 @@ export async function createFixture<
   TFiles extends { [filename: string]: string | Json } & {
     tsconfig?: true
   },
->(
-  config: {
-    copyNodeModules?: boolean
-    dir?: string
-    files?: TFiles
-  } = {},
-) {
+>(config: { copyNodeModules?: boolean; dir?: string; files?: TFiles } = {}) {
   const dir = config.dir ?? f.temp()
   await mkdir(dir, { recursive: true })
 
@@ -130,6 +124,7 @@ export function watchConsole() {
     }
   }
   return {
+    // biome-ignore lint/suspicious/noConsole: logging
     debug: console.debug,
     info: vi.spyOn(console, 'info').mockImplementation(handleOutput('info')),
     log: vi.spyOn(console, 'log').mockImplementation(handleOutput('log')),

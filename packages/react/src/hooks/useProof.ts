@@ -2,13 +2,13 @@
 
 import type { Config, GetProofErrorType, ResolvedRegister } from '@wagmi/core'
 import type { Compute } from '@wagmi/core/internal'
+import type { GetProofQueryFnData } from '@wagmi/core/query'
 import {
   type GetProofData,
   type GetProofOptions,
   type GetProofQueryKey,
   getProofQueryOptions,
 } from '@wagmi/core/query'
-import type { GetProofQueryFnData } from '@wagmi/core/query'
 
 import type { ConfigParameter, QueryParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'

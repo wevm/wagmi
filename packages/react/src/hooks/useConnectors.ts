@@ -3,8 +3,8 @@
 import {
   type Config,
   type GetConnectorsReturnType,
-  type ResolvedRegister,
   getConnectors,
+  type ResolvedRegister,
   watchConnectors,
 } from '@wagmi/core'
 import { useSyncExternalStore } from 'react'

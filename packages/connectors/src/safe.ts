@@ -2,8 +2,8 @@ import type { SafeAppProvider } from '@safe-global/safe-apps-provider'
 import type { Opts } from '@safe-global/safe-apps-sdk'
 import {
   type Connector,
-  ProviderNotFoundError,
   createConnector,
+  ProviderNotFoundError,
 } from '@wagmi/core'
 import type { Compute } from '@wagmi/core/internal'
 import { getAddress, withTimeout } from 'viem'

@@ -1,8 +1,8 @@
 import { connect, disconnect } from '@wagmi/core'
 import { accounts, config, testClient } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
+import { renderHook } from '@wagmi/test/react'
 import { parseEther } from 'viem'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { useCallsStatus } from './useCallsStatus.js'
 import { useSendCalls } from './useSendCalls.js'
@@ -12,7 +12,7 @@ const connector = config.connectors[0]!
 test('default', async () => {
   await connect(config, { connector })
 
-  const { result } = renderHook(() => useSendCalls())
+  const { result } = await renderHook(() => useSendCalls())
 
   result.current.sendCalls({
     calls: [
@@ -31,12 +31,12 @@ test('default', async () => {
       },
     ],
   })
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
-  const { result: result_2 } = renderHook(() =>
+  const { result: result_2 } = await renderHook(() =>
     useCallsStatus({ id: result.current.data?.id! }),
   )
-  await waitFor(() => expect(result_2.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result_2.current.isSuccess).toBeTruthy())
 
   expect(result_2.current.data).toMatchInlineSnapshot(
     `
@@ -54,10 +54,10 @@ test('default', async () => {
 
   await testClient.mainnet.mine({ blocks: 1 })
 
-  const { result: result_3 } = renderHook(() =>
+  const { result: result_3 } = await renderHook(() =>
     useCallsStatus({ id: result.current.data?.id! }),
   )
-  await waitFor(() => expect(result_3.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result_3.current.isSuccess).toBeTruthy())
 
   expect(result_3.current.data?.status).toBe('success')
   expect(result_3.current.data?.statusCode).toBe(200)

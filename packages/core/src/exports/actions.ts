@@ -30,20 +30,18 @@ export {
   type DisconnectReturnType,
   disconnect,
 } from '../actions/disconnect.js'
-
-export {
-  type EstimateGasErrorType,
-  type EstimateGasParameters,
-  type EstimateGasReturnType,
-  estimateGas,
-} from '../actions/estimateGas.js'
-
 export {
   type EstimateFeesPerGasErrorType,
   type EstimateFeesPerGasParameters,
   type EstimateFeesPerGasReturnType,
   estimateFeesPerGas,
 } from '../actions/estimateFeesPerGas.js'
+export {
+  type EstimateGasErrorType,
+  type EstimateGasParameters,
+  type EstimateGasReturnType,
+  estimateGas,
+} from '../actions/estimateGas.js'
 
 export {
   type EstimateMaxPriorityFeePerGasErrorType,
@@ -58,9 +56,9 @@ export {
 } from '../actions/getAccount.js'
 
 export {
+  type GetBalanceErrorType,
   type GetBalanceParameters,
   type GetBalanceReturnType,
-  type GetBalanceErrorType,
   getBalance,
   /** @deprecated use `getBalance` instead */
   getBalance as fetchBalance,
@@ -130,18 +128,16 @@ export {
   type GetConnectionsReturnType,
   getConnections,
 } from '../actions/getConnections.js'
-
-export {
-  type GetConnectorsReturnType,
-  getConnectors,
-} from '../actions/getConnectors.js'
-
 export {
   type GetConnectorClientErrorType,
   type GetConnectorClientParameters,
   type GetConnectorClientReturnType,
   getConnectorClient,
 } from '../actions/getConnectorClient.js'
+export {
+  type GetConnectorsReturnType,
+  getConnectors,
+} from '../actions/getConnectors.js'
 
 export {
   type GetEnsAddressErrorType,
@@ -273,23 +269,23 @@ export {
 } from '../actions/multicall.js'
 
 export {
+  type PrepareTransactionRequestErrorType,
   type PrepareTransactionRequestParameters,
   type PrepareTransactionRequestReturnType,
-  type PrepareTransactionRequestErrorType,
   prepareTransactionRequest,
 } from '../actions/prepareTransactionRequest.js'
 
 export {
+  type ReadContractErrorType,
   type ReadContractParameters,
   type ReadContractReturnType,
-  type ReadContractErrorType,
   readContract,
 } from '../actions/readContract.js'
 
 export {
+  type ReadContractsErrorType,
   type ReadContractsParameters,
   type ReadContractsReturnType,
-  type ReadContractsErrorType,
   readContracts,
 } from '../actions/readContracts.js'
 
@@ -376,73 +372,6 @@ export {
   type WaitForCallsStatusReturnType,
   waitForCallsStatus,
 } from '../actions/waitForCallsStatus.js'
-
-export {
-  type WatchAccountParameters,
-  type WatchAccountReturnType,
-  watchAccount,
-} from '../actions/watchAccount.js'
-
-export {
-  type WatchAssetParameters,
-  type WatchAssetReturnType,
-  watchAsset,
-} from '../actions/watchAsset.js'
-
-export {
-  type WatchBlocksParameters,
-  type WatchBlocksReturnType,
-  watchBlocks,
-} from '../actions/watchBlocks.js'
-
-export {
-  type WatchBlockNumberParameters,
-  type WatchBlockNumberReturnType,
-  watchBlockNumber,
-} from '../actions/watchBlockNumber.js'
-
-export {
-  type WatchChainIdParameters,
-  type WatchChainIdReturnType,
-  watchChainId,
-} from '../actions/watchChainId.js'
-
-export {
-  type WatchClientParameters,
-  type WatchClientReturnType,
-  watchClient,
-} from '../actions/watchClient.js'
-
-export {
-  type WatchConnectionsParameters,
-  type WatchConnectionsReturnType,
-  watchConnections,
-} from '../actions/watchConnections.js'
-
-export {
-  type WatchConnectorsParameters,
-  type WatchConnectorsReturnType,
-  watchConnectors,
-} from '../actions/watchConnectors.js'
-
-export {
-  type WatchContractEventParameters,
-  type WatchContractEventReturnType,
-  watchContractEvent,
-} from '../actions/watchContractEvent.js'
-
-export {
-  type WatchPendingTransactionsParameters,
-  type WatchPendingTransactionsReturnType,
-  watchPendingTransactions,
-} from '../actions/watchPendingTransactions.js'
-
-export {
-  type WatchPublicClientParameters,
-  type WatchPublicClientReturnType,
-  watchPublicClient,
-} from '../actions/watchPublicClient.js'
-
 export {
   type WaitForTransactionReceiptErrorType,
   type WaitForTransactionReceiptParameters,
@@ -451,6 +380,62 @@ export {
   /** @deprecated use `waitForTransactionReceipt` instead */
   waitForTransactionReceipt as waitForTransaction,
 } from '../actions/waitForTransactionReceipt.js'
+export {
+  type WatchAccountParameters,
+  type WatchAccountReturnType,
+  watchAccount,
+} from '../actions/watchAccount.js'
+export {
+  type WatchAssetParameters,
+  type WatchAssetReturnType,
+  watchAsset,
+} from '../actions/watchAsset.js'
+
+export {
+  type WatchBlockNumberParameters,
+  type WatchBlockNumberReturnType,
+  watchBlockNumber,
+} from '../actions/watchBlockNumber.js'
+export {
+  type WatchBlocksParameters,
+  type WatchBlocksReturnType,
+  watchBlocks,
+} from '../actions/watchBlocks.js'
+export {
+  type WatchChainIdParameters,
+  type WatchChainIdReturnType,
+  watchChainId,
+} from '../actions/watchChainId.js'
+export {
+  type WatchClientParameters,
+  type WatchClientReturnType,
+  watchClient,
+} from '../actions/watchClient.js'
+export {
+  type WatchConnectionsParameters,
+  type WatchConnectionsReturnType,
+  watchConnections,
+} from '../actions/watchConnections.js'
+export {
+  type WatchConnectorsParameters,
+  type WatchConnectorsReturnType,
+  watchConnectors,
+} from '../actions/watchConnectors.js'
+export {
+  type WatchContractEventParameters,
+  type WatchContractEventReturnType,
+  watchContractEvent,
+} from '../actions/watchContractEvent.js'
+export {
+  type WatchPendingTransactionsParameters,
+  type WatchPendingTransactionsReturnType,
+  watchPendingTransactions,
+} from '../actions/watchPendingTransactions.js'
+export {
+  type WatchPublicClientParameters,
+  type WatchPublicClientReturnType,
+  watchPublicClient,
+} from '../actions/watchPublicClient.js'
 
 export {
   type WriteContractErrorType,

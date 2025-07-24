@@ -1,7 +1,6 @@
 import { chain, config } from '@wagmi/test'
-import { expectTypeOf, test } from 'vitest'
-
 import type { Account } from 'viem'
+import { expectTypeOf, test } from 'vitest'
 import { getWalletClient } from './getWalletClient.js'
 
 test('default', async () => {

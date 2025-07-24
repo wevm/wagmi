@@ -1,30 +1,30 @@
 import {
+  createStore as createMipd,
   type EIP6963ProviderDetail,
   type Store as MipdStore,
-  createStore as createMipd,
 } from 'mipd'
 import {
   type Address,
   type Chain,
   type Client,
-  type EIP1193RequestFn,
   createClient,
+  type EIP1193RequestFn,
   type ClientConfig as viem_ClientConfig,
   type Transport as viem_Transport,
 } from 'viem'
 import { persist, subscribeWithSelector } from 'zustand/middleware'
-import { type Mutate, type StoreApi, createStore } from 'zustand/vanilla'
+import { createStore, type Mutate, type StoreApi } from 'zustand/vanilla'
 
 import type {
   ConnectorEventMap,
   CreateConnectorFn,
 } from './connectors/createConnector.js'
 import { injected } from './connectors/injected.js'
-import { type Emitter, type EventData, createEmitter } from './createEmitter.js'
+import { createEmitter, type Emitter, type EventData } from './createEmitter.js'
 import {
-  type Storage,
   createStorage,
   getDefaultStorage,
+  type Storage,
 } from './createStorage.js'
 import { ChainNotConfiguredError } from './errors/config.js'
 import type {
@@ -515,10 +515,9 @@ export type CreateConfigParameters<
           | undefined
       })
     | {
-        client(parameters: { chain: chains[number] }): Client<
-          transports[chains[number]['id']],
-          chains[number]
-        >
+        client(parameters: {
+          chain: chains[number]
+        }): Client<transports[chains[number]['id']], chains[number]>
       }
   >
 >

@@ -2,9 +2,8 @@ import { connect, disconnect, getAccount } from '@wagmi/core'
 import { config, privateKey, typedData } from '@wagmi/test'
 import { renderComposable, waitFor } from '@wagmi/test/vue'
 import { recoverTypedDataAddress } from 'viem'
-import { expect, test } from 'vitest'
-
 import { privateKeyToAccount } from 'viem/accounts'
+import { expect, test } from 'vitest'
 import { useSignTypedData } from './useSignTypedData.js'
 
 const connector = config.connectors[0]!

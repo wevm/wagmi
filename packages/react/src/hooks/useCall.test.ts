@@ -1,6 +1,6 @@
 import { accounts, address, chain } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
-import { expect, test } from 'vitest'
+import { renderHook } from '@wagmi/test/react'
+import { expect, test, vi } from 'vitest'
 
 import { useCall } from './useCall.js'
 
@@ -9,7 +9,7 @@ const name4bytes = '0x06fdde03'
 const account = accounts[0]
 
 test('default', async () => {
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useCall({
       account,
       data: name4bytes,
@@ -17,7 +17,7 @@ test('default', async () => {
     }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -62,7 +62,7 @@ test('default', async () => {
 
 // TODO: Re-enable
 test.skip('parameters: blockTag', async () => {
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useCall({
       account,
       data: name4bytes,
@@ -71,7 +71,7 @@ test.skip('parameters: blockTag', async () => {
     }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -117,7 +117,7 @@ test.skip('parameters: blockTag', async () => {
 
 // TODO: Re-enable
 test.skip('parameters: blockNumber', async () => {
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useCall({
       account,
       data: name4bytes,
@@ -126,7 +126,7 @@ test.skip('parameters: blockNumber', async () => {
     }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -171,7 +171,7 @@ test.skip('parameters: blockNumber', async () => {
 })
 
 test('parameters: chainId', async () => {
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useCall({
       account,
       data: name4bytes,
@@ -180,7 +180,7 @@ test('parameters: chainId', async () => {
     }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current).toMatchInlineSnapshot(`
     {

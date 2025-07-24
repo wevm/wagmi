@@ -1,12 +1,12 @@
 import { accounts } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
+import { renderHook } from '@wagmi/test/react'
 import { type Address, parseEther } from 'viem'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { useEstimateGas } from './useEstimateGas.js'
 
 test('default', async () => {
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useEstimateGas({
       account: accounts[0],
       to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
@@ -14,7 +14,7 @@ test('default', async () => {
     }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -56,9 +56,10 @@ test('default', async () => {
 })
 
 test('behavior: address: undefined -> defined', async () => {
-  let account: Address | undefined = undefined
-
-  const { result, rerender } = renderHook(() => useEstimateGas({ account }))
+  const { result, rerender } = await renderHook(
+    (props) => useEstimateGas({ account: props?.account }),
+    { initialProps: { account: undefined as Address | undefined } },
+  )
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -96,10 +97,9 @@ test('behavior: address: undefined -> defined', async () => {
     }
   `)
 
-  account = accounts[0]
-  rerender()
+  rerender({ account: accounts[0] })
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current).toMatchInlineSnapshot(`
     {

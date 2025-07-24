@@ -28,9 +28,9 @@ test('setup', () => {
   `)
 })
 
-test('behavior: connector type not found', () => {
+test('behavior: connector type not found', async () => {
   const transport = unstable_connector({ type: 'foo' })({})
-  expect(() =>
+  await expect(() =>
     transport.request({ method: 'eth_chainId' }),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
     [ProviderDisconnectedError: The Provider is disconnected from all chains.
@@ -40,7 +40,7 @@ test('behavior: connector type not found', () => {
   `)
 })
 
-test('behavior: provider is disconnected', () => {
+test('behavior: provider is disconnected', async () => {
   const transport = unstable_connector(mock)({
     connectors: createStore(() => [
       {
@@ -52,7 +52,7 @@ test('behavior: provider is disconnected', () => {
     ]),
   })
 
-  expect(() =>
+  await expect(() =>
     transport.request({ method: 'eth_chainId' }),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
     [ProviderDisconnectedError: The Provider is disconnected from all chains.
@@ -62,7 +62,7 @@ test('behavior: provider is disconnected', () => {
   `)
 })
 
-test('behavior: chainId mismatch', () => {
+test('behavior: chainId mismatch', async () => {
   const transport = unstable_connector(mock)({
     chain: optimism,
     connectors: createStore(() => [
@@ -76,7 +76,7 @@ test('behavior: chainId mismatch', () => {
     ]),
   })
 
-  expect(() =>
+  await expect(() =>
     transport.request({ method: 'eth_chainId' }),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
     [ChainDisconnectedError: The Provider is not connected to the requested chain.
@@ -86,12 +86,12 @@ test('behavior: chainId mismatch', () => {
   `)
 })
 
-test('behavior: request', () => {
+test('behavior: request', async () => {
   const transport = unstable_connector(mock)({
     connectors: createStore(() => [connector]),
   })
 
-  expect(
+  await expect(
     transport.request({ method: 'eth_chainId' }),
   ).resolves.toThrowErrorMatchingInlineSnapshot(`"0x1"`)
 })

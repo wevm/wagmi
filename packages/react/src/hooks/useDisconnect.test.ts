@@ -1,7 +1,7 @@
 import { connect } from '@wagmi/core'
 import { config } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
-import { beforeEach, expect, test } from 'vitest'
+import { renderHook } from '@wagmi/test/react'
+import { beforeEach, expect, test, vi } from 'vitest'
 
 import { useAccount } from './useAccount.js'
 import { useDisconnect } from './useDisconnect.js'
@@ -13,7 +13,7 @@ beforeEach(async () => {
 })
 
 test('default', async () => {
-  const { result } = renderHook(() => ({
+  const { result } = await renderHook(() => ({
     useAccount: useAccount(),
     useDisconnect: useDisconnect(),
   }))
@@ -23,7 +23,7 @@ test('default', async () => {
 
   result.current.useDisconnect.disconnect()
 
-  await waitFor(() =>
+  await vi.waitFor(() =>
     expect(result.current.useAccount.isDisconnected).toBeTruthy(),
   )
 

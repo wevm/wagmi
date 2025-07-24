@@ -1,5 +1,5 @@
 import { baseAccount, metaMask, walletConnect } from '@wagmi/connectors'
-import { http, createConfig, createStorage } from '@wagmi/core'
+import { createConfig, createStorage, http } from '@wagmi/core'
 import { mainnet, optimism, sepolia } from '@wagmi/core/chains'
 
 export const config = createConfig({

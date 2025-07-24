@@ -1,5 +1,4 @@
-import type { Abi } from 'viem'
-import type { ContractFunctionArgs, ContractFunctionName } from 'viem'
+import type { Abi, ContractFunctionArgs, ContractFunctionName } from 'viem'
 import {
   type ReadContractErrorType as viem_ReadContractErrorType,
   type ReadContractParameters as viem_ReadContractParameters,

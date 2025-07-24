@@ -1,8 +1,8 @@
 import { connect, disconnect } from '@wagmi/core'
 import { accounts, config, testClient, wait } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
+import { renderHook } from '@wagmi/test/react'
 import { parseEther } from 'viem'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { useSendCalls } from './useSendCalls.js'
 import { useWaitForCallsStatus } from './useWaitForCallsStatus.js'
@@ -12,8 +12,8 @@ const connector = config.connectors[0]!
 test('default', async () => {
   await connect(config, { connector })
 
-  const useSendCalls_render = renderHook(() => useSendCalls())
-  const useWaitForCallsStatus_render = renderHook(() =>
+  const useSendCalls_render = await renderHook(() => useSendCalls())
+  const useWaitForCallsStatus_render = await renderHook(() =>
     useWaitForCallsStatus({ id: useSendCalls_render.result.current.data?.id }),
   )
 
@@ -34,9 +34,10 @@ test('default', async () => {
       },
     ],
   })
-  await waitFor(() =>
-    expect(useSendCalls_render.result.current.isSuccess).toBeTruthy(),
-  )
+
+  await vi.waitUntil(() => useSendCalls_render.result.current.isSuccess, {
+    timeout: 5_000,
+  })
 
   expect(useWaitForCallsStatus_render.result.current.fetchStatus).toBe('idle')
   useWaitForCallsStatus_render.rerender()
@@ -44,17 +45,13 @@ test('default', async () => {
     'fetching',
   )
 
-  await Promise.all([
-    waitFor(() =>
-      expect(
-        useWaitForCallsStatus_render.result.current.isSuccess,
-      ).toBeTruthy(),
-    ),
-    (async () => {
-      await wait(100)
-      await testClient.mainnet.mine({ blocks: 1 })
-    })(),
-  ])
+  await wait(0)
+  await testClient.mainnet.mine({ blocks: 1 })
+
+  await vi.waitUntil(
+    () => useWaitForCallsStatus_render.result.current.isSuccess,
+    { timeout: 5_000 },
+  )
 
   expect(useWaitForCallsStatus_render.result.current.data?.status).toBe(
     'success',

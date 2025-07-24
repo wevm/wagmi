@@ -1,7 +1,7 @@
 import type { NuxtModule } from '@nuxt/schema'
 import { addImports, createResolver, defineNuxtModule } from 'nuxt/kit'
 
-// biome-ignore lint/complexity/noBannedTypes:
+// biome-ignore lint/complexity/noBannedTypes: allowed
 export type WagmiModuleOptions = {}
 
 export const wagmiModule: NuxtModule<WagmiModuleOptions> =

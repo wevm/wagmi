@@ -12,7 +12,7 @@ afterEach(() => {
 
 test('forge not installed', async () => {
   const dir = f.temp()
-  expect(
+  await expect(
     foundry({
       project: dir,
       forge: {

@@ -1,14 +1,13 @@
 import { accounts, chain, wait } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
-import { expect, test } from 'vitest'
-
+import { renderHook } from '@wagmi/test/react'
 import type { Hex } from 'viem'
+import { expect, test, vi } from 'vitest'
 import { useVerifyMessage } from './useVerifyMessage.js'
 
 const address = accounts[0]
 
 test('default', async () => {
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useVerifyMessage({
       address,
       message: 'This is a test message for viem!',
@@ -17,7 +16,7 @@ test('default', async () => {
     }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -59,7 +58,7 @@ test('default', async () => {
 })
 
 test('parameters: chainId', async () => {
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useVerifyMessage({
       chainId: chain.mainnet2.id,
       address,
@@ -69,7 +68,7 @@ test('parameters: chainId', async () => {
     }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -111,7 +110,7 @@ test('parameters: chainId', async () => {
 })
 
 test('parameters: blockNumber', async () => {
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useVerifyMessage({
       blockNumber: 12345678n,
       address,
@@ -121,7 +120,7 @@ test('parameters: blockNumber', async () => {
     }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -164,7 +163,7 @@ test('parameters: blockNumber', async () => {
 })
 
 test('parameters: blockTag', async () => {
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useVerifyMessage({
       blockTag: 'pending',
       address,
@@ -174,7 +173,7 @@ test('parameters: blockTag', async () => {
     }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -217,14 +216,14 @@ test('parameters: blockTag', async () => {
 })
 
 test('behavior: signature: undefined -> defined', async () => {
-  let signature: Hex | undefined = undefined
-
-  const { result, rerender } = renderHook(() =>
-    useVerifyMessage({
-      address,
-      message: 'This is a test message for viem!',
-      signature,
-    }),
+  const { result, rerender } = await renderHook(
+    (props) =>
+      useVerifyMessage({
+        address,
+        message: 'This is a test message for viem!',
+        signature: props?.signature,
+      }),
+    { initialProps: { signature: undefined as Hex | undefined } },
   )
 
   expect(result.current).toMatchInlineSnapshot(`
@@ -265,11 +264,12 @@ test('behavior: signature: undefined -> defined', async () => {
     }
   `)
 
-  signature =
-    '0xc4c7f2820177020d66d5fd00d084cdd3f575a868c059c29a2d7f23398d04819709a14f83d98b446dda539ca5dcb87d75aa3340eb15e66d67606850622a3420f61b'
-  rerender()
+  rerender({
+    signature:
+      '0xc4c7f2820177020d66d5fd00d084cdd3f575a868c059c29a2d7f23398d04819709a14f83d98b446dda539ca5dcb87d75aa3340eb15e66d67606850622a3420f61b',
+  })
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -311,8 +311,8 @@ test('behavior: signature: undefined -> defined', async () => {
 })
 
 test('behavior: disabled when properties missing', async () => {
-  const { result } = renderHook(() => useVerifyMessage())
+  const { result } = await renderHook(() => useVerifyMessage())
 
   await wait(100)
-  await waitFor(() => expect(result.current.isPending).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isPending).toBeTruthy())
 })

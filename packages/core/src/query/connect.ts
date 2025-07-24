@@ -6,9 +6,8 @@ import {
   type ConnectReturnType,
   connect,
 } from '../actions/connect.js'
-import type { Config, Connector } from '../createConfig.js'
-
 import type { CreateConnectorFn } from '../connectors/createConnector.js'
+import type { Config, Connector } from '../createConfig.js'
 import type { Compute } from '../types/utils.js'
 
 export function connectMutationOptions<config extends Config>(config: config) {

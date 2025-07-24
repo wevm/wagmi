@@ -15,8 +15,7 @@ import {
 import type { Config } from '../createConfig.js'
 import type { ChainIdParameter } from '../types/properties.js'
 import type { Unit } from '../types/unit.js'
-import type { Compute } from '../types/utils.js'
-import type { UnionCompute, UnionLooseOmit } from '../types/utils.js'
+import type { Compute, UnionCompute, UnionLooseOmit } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 import { getUnit } from '../utils/getUnit.js'
 

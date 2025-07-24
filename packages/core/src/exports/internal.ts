@@ -14,9 +14,9 @@ export {
 ////////////////////////////////////////////////////////////////////////////////
 
 export {
-  type EventData,
-  Emitter,
   createEmitter,
+  Emitter,
+  type EventData,
 } from '../createEmitter.js'
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -35,12 +35,12 @@ export type {
   Compute,
   ExactPartial,
   Mutable,
-  StrictOmit as Omit,
   OneOf,
   RemoveUndefined,
+  StrictOmit as Omit,
   UnionCompute,
-  UnionStrictOmit,
   UnionExactPartial,
+  UnionStrictOmit,
 } from '../types/utils.js'
 
 ////////////////////////////////////////////////////////////////////////////////

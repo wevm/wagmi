@@ -1,7 +1,7 @@
 import { connect, disconnect } from '@wagmi/core'
 import { abi, address, chain, config } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
-import { expect, test } from 'vitest'
+import { renderHook } from '@wagmi/test/react'
+import { expect, test, vi } from 'vitest'
 
 import { createUseSimulateContract } from './createUseSimulateContract.js'
 
@@ -15,13 +15,13 @@ test('default', async () => {
     abi: abi.wagmiMintExample,
   })
 
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useSimulateWagmiMintExample({
       functionName: 'mint',
     }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -101,14 +101,14 @@ test('multichain', async () => {
     abi: abi.wagmiMintExample,
   })
 
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useReadWagmiMintExample({
       functionName: 'mint',
       chainId: chain.mainnet2.id,
     }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -186,9 +186,9 @@ test('functionName', async () => {
     functionName: 'mint',
   })
 
-  const { result } = renderHook(() => useSimulateWagmiMintExample({}))
+  const { result } = await renderHook(() => useSimulateWagmiMintExample({}))
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current).toMatchInlineSnapshot(`
     {

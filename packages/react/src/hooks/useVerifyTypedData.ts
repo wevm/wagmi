@@ -5,13 +5,13 @@ import type {
   ResolvedRegister,
   VerifyTypedDataErrorType,
 } from '@wagmi/core'
+import type { VerifyTypedDataQueryFnData } from '@wagmi/core/query'
 import {
   type VerifyTypedDataData,
   type VerifyTypedDataOptions,
   type VerifyTypedDataQueryKey,
   verifyTypedDataQueryOptions,
 } from '@wagmi/core/query'
-import type { VerifyTypedDataQueryFnData } from '@wagmi/core/query'
 import type { TypedData } from 'viem'
 import type { ConfigParameter, QueryParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'

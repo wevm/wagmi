@@ -36,7 +36,7 @@ export function deepUnref<value>(value: value): DeepUnwrapRef<value> {
   })
 }
 
-// biome-ignore lint/complexity/noBannedTypes:
+// biome-ignore lint/complexity/noBannedTypes: allowed
 function isPlainObject(value: unknown): value is Object {
   if (Object.prototype.toString.call(value) !== '[object Object]') return false
   const prototype = Object.getPrototypeOf(value)

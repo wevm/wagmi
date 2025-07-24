@@ -1,6 +1,5 @@
-import { expectTypeOf, test } from 'vitest'
-
 import type { Hex } from 'viem'
+import { expectTypeOf, test } from 'vitest'
 import { useStorageAt } from './useStorageAt.js'
 
 test('select data', () => {

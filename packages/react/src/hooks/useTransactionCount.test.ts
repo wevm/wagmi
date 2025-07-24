@@ -1,16 +1,16 @@
 import { accounts, chain, wait } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
+import { renderHook } from '@wagmi/test/react'
 import type { Address } from 'viem'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { useTransactionCount } from './useTransactionCount.js'
 
 const address = accounts[0]
 
 test('default', async () => {
-  const { result } = renderHook(() => useTransactionCount({ address }))
+  const { result } = await renderHook(() => useTransactionCount({ address }))
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   const { data, ...rest } = result.current
   expect(data).toBeTypeOf('number')
@@ -51,11 +51,11 @@ test('default', async () => {
 })
 
 test('parameters: chainId', async () => {
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useTransactionCount({ address, chainId: chain.mainnet2.id }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   const { data, ...rest } = result.current
   expect(data).toBeTypeOf('number')
@@ -96,11 +96,11 @@ test('parameters: chainId', async () => {
 })
 
 test('parameters: blockNumber', async () => {
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useTransactionCount({ address, blockNumber: 13677382n }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   const { data, ...rest } = result.current
   expect(data).toBeTypeOf('number')
@@ -142,9 +142,9 @@ test('parameters: blockNumber', async () => {
 })
 
 test('behavior: address: undefined -> defined', async () => {
-  let address: Address | undefined = undefined
+  let address: Address | undefined
 
-  const { result, rerender } = renderHook(() =>
+  const { result, rerender } = await renderHook(() =>
     useTransactionCount({ address }),
   )
 
@@ -190,7 +190,7 @@ test('behavior: address: undefined -> defined', async () => {
   address = accounts[0]
   rerender()
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   const { data, ...rest } = result.current
   expect(data).toBeTypeOf('number')
@@ -231,8 +231,8 @@ test('behavior: address: undefined -> defined', async () => {
 })
 
 test('behavior: disabled when properties missing', async () => {
-  const { result } = renderHook(() => useTransactionCount())
+  const { result } = await renderHook(() => useTransactionCount())
 
   await wait(100)
-  await waitFor(() => expect(result.current.isPending).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isPending).toBeTruthy())
 })

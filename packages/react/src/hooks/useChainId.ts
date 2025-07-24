@@ -3,8 +3,8 @@
 import {
   type Config,
   type GetChainIdReturnType,
-  type ResolvedRegister,
   getChainId,
+  type ResolvedRegister,
   watchChainId,
 } from '@wagmi/core'
 import { useSyncExternalStore } from 'react'

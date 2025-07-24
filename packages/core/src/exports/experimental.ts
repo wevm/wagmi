@@ -74,6 +74,18 @@ export {
 ////////////////////////////////////////////////////////////////////////////////
 
 export {
+  /** @deprecated Use `SendCallsData` instead. */
+  type WriteContractsData,
+  /** @deprecated Use `SendCallsMutate` instead. */
+  type WriteContractsMutate,
+  /** @deprecated Use `SendCallsMutateAsync` instead. */
+  type WriteContractsMutateAsync,
+  /** @deprecated Use `SendCallsVariables` instead. */
+  type WriteContractsVariables,
+  /** @deprecated Use `sendCallsMutationOptions` instead. */
+  writeContractsMutationOptions,
+} from '../experimental/query/writeContracts.js'
+export {
   /** @deprecated This is no longer experimental – use `import type { GetCallsStatusData } from '@wagmi/core/query'` instead. */
   type GetCallsStatusData,
   /** @deprecated This is no longer experimental – use `import type { GetCallsStatusOptions } from '@wagmi/core/query'` instead. */
@@ -82,12 +94,11 @@ export {
   type GetCallsStatusQueryFnData,
   /** @deprecated This is no longer experimental – use `import type { GetCallsStatusQueryKey } from '@wagmi/core/query'` instead. */
   type GetCallsStatusQueryKey,
-  /** @deprecated This is no longer experimental – use `import { getCallsStatusQueryOptions } from '@wagmi/core/query'` instead. */
-  getCallsStatusQueryOptions,
   /** @deprecated This is no longer experimental – use `import { getCallsStatusQueryKey } from '@wagmi/core/query'` instead. */
   getCallsStatusQueryKey,
+  /** @deprecated This is no longer experimental – use `import { getCallsStatusQueryOptions } from '@wagmi/core/query'` instead. */
+  getCallsStatusQueryOptions,
 } from '../query/getCallsStatus.js'
-
 export {
   /** @deprecated This is no longer experimental – use `import type { GetCapabilitiesData } from '@wagmi/core/query'` instead. */
   type GetCapabilitiesData,
@@ -97,12 +108,11 @@ export {
   type GetCapabilitiesQueryFnData,
   /** @deprecated This is no longer experimental – use `import type { GetCapabilitiesQueryKey } from '@wagmi/core/query'` instead. */
   type GetCapabilitiesQueryKey,
-  /** @deprecated This is no longer experimental – use `import { getCapabilitiesQueryOptions } from '@wagmi/core/query'` instead. */
-  getCapabilitiesQueryOptions,
   /** @deprecated This is no longer experimental – use `import { getCapabilitiesQueryKey } from '@wagmi/core/query'` instead. */
   getCapabilitiesQueryKey,
+  /** @deprecated This is no longer experimental – use `import { getCapabilitiesQueryOptions } from '@wagmi/core/query'` instead. */
+  getCapabilitiesQueryOptions,
 } from '../query/getCapabilities.js'
-
 export {
   /** @deprecated This is no longer experimental – use `import type { SendCallsData } from '@wagmi/core/query'` instead. */
   type SendCallsData,
@@ -115,7 +125,6 @@ export {
   /** @deprecated This is no longer experimental – use `import { sendCallsMutationOptions } from '@wagmi/core/query'` instead. */
   sendCallsMutationOptions,
 } from '../query/sendCalls.js'
-
 export {
   /** @deprecated This is no longer experimental – use `import type { ShowCallsStatusData } from '@wagmi/core/query'` instead. */
   type ShowCallsStatusData,
@@ -128,7 +137,6 @@ export {
   /** @deprecated This is no longer experimental – use `import { showCallsStatusMutationOptions } from '@wagmi/core/query'` instead. */
   showCallsStatusMutationOptions,
 } from '../query/showCallsStatus.js'
-
 export {
   /** @deprecated This is no longer experimental – use `import type { WaitForCallsStatusData } from '@wagmi/core/query'` instead. */
   type WaitForCallsStatusData,
@@ -143,16 +151,3 @@ export {
   /** @deprecated This is no longer experimental – use `import { waitForCallsStatusQueryOptions } from '@wagmi/core/query'` instead. */
   waitForCallsStatusQueryOptions,
 } from '../query/waitForCallsStatus.js'
-
-export {
-  /** @deprecated Use `SendCallsData` instead. */
-  type WriteContractsData,
-  /** @deprecated Use `SendCallsMutate` instead. */
-  type WriteContractsMutate,
-  /** @deprecated Use `SendCallsMutateAsync` instead. */
-  type WriteContractsMutateAsync,
-  /** @deprecated Use `SendCallsVariables` instead. */
-  type WriteContractsVariables,
-  /** @deprecated Use `sendCallsMutationOptions` instead. */
-  writeContractsMutationOptions,
-} from '../experimental/query/writeContracts.js'

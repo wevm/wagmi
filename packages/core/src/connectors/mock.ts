@@ -1,20 +1,20 @@
 import {
   type Address,
+  custom,
   type EIP1193RequestFn,
+  fromHex,
+  getAddress,
   type Hex,
+  keccak256,
+  numberToHex,
   RpcRequestError,
   SwitchChainError,
+  stringToHex,
   type Transport,
   UserRejectedRequestError,
   type WalletCallReceipt,
   type WalletGetCallsStatusReturnType,
   type WalletRpcSchema,
-  custom,
-  fromHex,
-  getAddress,
-  keccak256,
-  numberToHex,
-  stringToHex,
 } from 'viem'
 import { rpc } from 'viem/utils'
 

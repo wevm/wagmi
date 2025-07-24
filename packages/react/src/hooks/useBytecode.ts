@@ -6,13 +6,13 @@ import type {
   ResolvedRegister,
 } from '@wagmi/core'
 import type { Compute } from '@wagmi/core/internal'
+import type { GetBytecodeQueryFnData } from '@wagmi/core/query'
 import {
   type GetBytecodeData,
   type GetBytecodeOptions,
   type GetBytecodeQueryKey,
   getBytecodeQueryOptions,
 } from '@wagmi/core/query'
-import type { GetBytecodeQueryFnData } from '@wagmi/core/query'
 import type { ConfigParameter, QueryParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'

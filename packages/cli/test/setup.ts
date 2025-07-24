@@ -21,17 +21,16 @@ vi.mock('nanospinner', async (importOriginal) => {
     return {
       ...spinner,
       start(text = initialText) {
-        // biome-ignore lint/suspicious/noConsoleLog: console.log is used for logging
         console.log(`- ${text}`)
         spinner.start(text)
         currentText = text
       },
       success(text = currentText) {
-        // biome-ignore lint/suspicious/noConsoleLog: console.log is used for logging
         console.log(`√ ${text}`)
         spinner.success(text)
       },
       error(text = currentText) {
+        // biome-ignore lint/suspicious/noConsole: logging error
         console.error(`× ${text}`)
         spinner.error(text)
       },

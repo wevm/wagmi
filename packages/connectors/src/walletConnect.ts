@@ -1,22 +1,22 @@
 import {
   ChainNotConfiguredError,
   type Connector,
-  ProviderNotFoundError,
   createConnector,
   extractRpcUrls,
+  ProviderNotFoundError,
 } from '@wagmi/core'
 import type { Compute, ExactPartial, Omit } from '@wagmi/core/internal'
 import type { EthereumProvider } from '@walletconnect/ethereum-provider'
 import {
   type AddEthereumChainParameter,
   type Address,
+  getAddress,
+  numberToHex,
   type ProviderConnectInfo,
   type ProviderRpcError,
   type RpcError,
   SwitchChainError,
   UserRejectedRequestError,
-  getAddress,
-  numberToHex,
 } from 'viem'
 
 type WalletConnectConnector = Connector & {
@@ -311,7 +311,9 @@ export function walletConnect(parameters: WalletConnectParameters) {
           new Promise<void>((resolve) => {
             const listener = ({
               chainId: currentChainId,
-            }: { chainId?: number | undefined }) => {
+            }: {
+              chainId?: number | undefined
+            }) => {
               if (currentChainId === chainId) {
                 config.emitter.off('change', listener)
                 resolve()

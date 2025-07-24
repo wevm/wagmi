@@ -1,8 +1,8 @@
 import { mock } from '@wagmi/connectors'
 import { connect, disconnect } from '@wagmi/core'
 import { accounts, config } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
-import { afterEach, expect, test } from 'vitest'
+import { renderHook } from '@wagmi/test/react'
+import { afterEach, expect, test, vi } from 'vitest'
 
 import { useReconnect } from './useReconnect.js'
 
@@ -18,12 +18,12 @@ afterEach(async () => {
 })
 
 test('default', async () => {
-  const { result } = renderHook(() => useReconnect())
+  const { result } = await renderHook(() => useReconnect())
 
   expect(result.current.connectors).toBeDefined()
 
   result.current.reconnect()
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current.data).toStrictEqual([])
 })
@@ -31,12 +31,12 @@ test('default', async () => {
 test('parameters: connectors (Connector)', async () => {
   await connect(config, { connector })
 
-  const { result } = renderHook(() => useReconnect())
+  const { result } = await renderHook(() => useReconnect())
 
   expect(result.current.connectors).toBeDefined()
 
   result.current.reconnect({ connectors: [connector] })
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current.data).toMatchObject(
     expect.arrayContaining([
@@ -55,12 +55,12 @@ test('parameters: connectors (CreateConnectorFn)', async () => {
   })
   await connect(config, { connector })
 
-  const { result } = renderHook(() => useReconnect())
+  const { result } = await renderHook(() => useReconnect())
 
   expect(result.current.connectors).toBeDefined()
 
   result.current.reconnect({ connectors: [connector] })
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current.data).toMatchObject(
     expect.arrayContaining([
@@ -75,7 +75,7 @@ test('parameters: connectors (CreateConnectorFn)', async () => {
 test("behavior: doesn't reconnect if already reconnecting", async () => {
   const previousStatus = config.state.status
   config.setState((x) => ({ ...x, status: 'reconnecting' }))
-  const { result } = renderHook(() => useReconnect())
+  const { result } = await renderHook(() => useReconnect())
   await expect(
     result.current.reconnectAsync({ connectors: [connector] }),
   ).resolves.toStrictEqual([])
