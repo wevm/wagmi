@@ -13,7 +13,7 @@ beforeEach(async () => {
 })
 
 test('default', async () => {
-  const { result } = renderHook(() => ({
+  const { result } = await renderHook(() => ({
     useAccount: useAccount(),
     useDisconnect: useDisconnect(),
   }))

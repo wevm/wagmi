@@ -1,4 +1,4 @@
-import { http, createConfig, createStorage } from '@wagmi/vue'
+import { createConfig, createStorage, http } from '@wagmi/vue'
 import { mainnet, optimism, sepolia } from '@wagmi/vue/chains'
 import { baseAccount, metaMask, walletConnect } from '@wagmi/vue/connectors'
 

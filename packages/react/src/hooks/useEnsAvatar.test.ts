@@ -4,13 +4,13 @@ import { expect, test, vi } from 'vitest'
 import { useEnsAvatar } from './useEnsAvatar.js'
 
 test('default', async () => {
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useEnsAvatar({
       name: 'wevm.eth',
     }),
   )
 
-  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {

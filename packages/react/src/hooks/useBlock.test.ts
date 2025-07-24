@@ -5,9 +5,9 @@ import { expect, test, vi } from 'vitest'
 import { useBlock } from './useBlock.js'
 
 test('mounts', async () => {
-  const { result } = renderHook(() => useBlock())
+  const { result } = await renderHook(() => useBlock())
 
-  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   const { data, ...rest } = result.current
   expect(data).toBeDefined()
@@ -49,9 +49,9 @@ test('mounts', async () => {
 test('parameters: watch', async () => {
   await testClient.mainnet.restart()
 
-  const { result } = renderHook(() => useBlock({ watch: true }))
+  const { result } = await renderHook(() => useBlock({ watch: true }))
 
-  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
   const block = result.current.data!
   expect(block).toBeDefined()
 

@@ -1,4 +1,4 @@
-import { expect, test, vi } from 'vitest'
+import { expect, test } from 'vitest'
 
 import * as query from './query.js'
 
@@ -72,14 +72,16 @@ test('exports', () => {
       "readContractsQueryOptions",
       "reconnectMutationOptions",
       "sendCallsMutationOptions",
-      "showCallsStatusMutationOptions",
       "sendTransactionMutationOptions",
+      "showCallsStatusMutationOptions",
       "signMessageMutationOptions",
       "signTypedDataMutationOptions",
-      "switchAccountMutationOptions",
       "simulateContractQueryKey",
       "simulateContractQueryOptions",
+      "switchAccountMutationOptions",
       "switchChainMutationOptions",
+      "hashFn",
+      "structuralSharing",
       "verifyMessageQueryKey",
       "verifyMessageQueryOptions",
       "verifyTypedDataQueryKey",
@@ -90,8 +92,6 @@ test('exports', () => {
       "waitForTransactionReceiptQueryOptions",
       "watchAssetMutationOptions",
       "writeContractMutationOptions",
-      "hashFn",
-      "structuralSharing",
     ]
   `)
 })

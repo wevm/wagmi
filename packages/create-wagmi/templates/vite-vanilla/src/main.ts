@@ -1,5 +1,5 @@
-import { Buffer } from 'buffer'
 import { connect, disconnect, reconnect, watchAccount } from '@wagmi/core'
+import { Buffer } from 'buffer'
 
 import './style.css'
 import { config } from './wagmi'

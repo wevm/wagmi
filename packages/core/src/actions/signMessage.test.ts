@@ -1,7 +1,7 @@
 import { accounts, config, privateKey } from '@wagmi/test'
 import { recoverMessageAddress } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
-import { expect, test, vi } from 'vitest'
+import { expect, test } from 'vitest'
 
 import { mock } from '../connectors/mock.js'
 import { connect } from './connect.js'

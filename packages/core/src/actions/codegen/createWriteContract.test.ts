@@ -1,5 +1,5 @@
 import { abi } from '@wagmi/test'
-import { expect, test, vi } from 'vitest'
+import { expect, test } from 'vitest'
 
 import { createWriteContract } from './createWriteContract.js'
 

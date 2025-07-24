@@ -12,7 +12,7 @@ const connector = config.connectors[0]!
 test('default', async () => {
   await connect(config, { connector })
 
-  const { result } = renderHook(() => useSendCalls())
+  const { result } = await renderHook(() => useSendCalls())
 
   result.current.sendCalls({
     calls: [
@@ -31,9 +31,9 @@ test('default', async () => {
       },
     ],
   })
-  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
-  const { result: result_2 } = renderHook(() =>
+  const { result: result_2 } = await renderHook(() =>
     useCallsStatus({ id: result.current.data?.id! }),
   )
   await vi.waitFor(() => expect(result_2.current.isSuccess).toBeTruthy())
@@ -54,7 +54,7 @@ test('default', async () => {
 
   await testClient.mainnet.mine({ blocks: 1 })
 
-  const { result: result_3 } = renderHook(() =>
+  const { result: result_3 } = await renderHook(() =>
     useCallsStatus({ id: result.current.data?.id! }),
   )
   await vi.waitFor(() => expect(result_3.current.isSuccess).toBeTruthy())

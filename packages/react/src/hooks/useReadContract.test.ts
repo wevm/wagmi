@@ -7,7 +7,7 @@ import { expect, test, vi } from 'vitest'
 import { useReadContract } from './useReadContract.js'
 
 test('default', async () => {
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useReadContract({
       address: address.wagmiMintExample,
       abi: abi.wagmiMintExample,
@@ -16,7 +16,7 @@ test('default', async () => {
     }),
   )
 
-  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -60,7 +60,7 @@ test('default', async () => {
 })
 
 test('parameters: chainId', async () => {
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useReadContract({
       address: address.wagmiMintExample,
       abi: abi.wagmiMintExample,
@@ -70,7 +70,7 @@ test('parameters: chainId', async () => {
     }),
   )
 
-  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -114,7 +114,7 @@ test('parameters: chainId', async () => {
 })
 
 test('parameters: config', async () => {
-  const { result } = renderHook(
+  const { result } = await renderHook(
     () =>
       useReadContract({
         address: address.wagmiMintExample,
@@ -129,7 +129,7 @@ test('parameters: config', async () => {
     },
   )
 
-  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -173,7 +173,7 @@ test('parameters: config', async () => {
 })
 
 test('parameters: deployless read (bytecode)', async () => {
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useReadContract({
       abi: abi.wagmiMintExample,
       functionName: 'name',
@@ -181,13 +181,13 @@ test('parameters: deployless read (bytecode)', async () => {
     }),
   )
 
-  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current.data).toMatchInlineSnapshot(`"wagmi"`)
 })
 
 test('behavior: disabled when properties missing', async () => {
-  const { result } = renderHook(() => useReadContract())
+  const { result } = await renderHook(() => useReadContract())
 
   await wait(100)
   await vi.waitFor(() => expect(result.current.isPending).toBeTruthy())

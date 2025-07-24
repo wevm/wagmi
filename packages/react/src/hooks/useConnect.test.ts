@@ -14,7 +14,7 @@ afterEach(async () => {
 })
 
 test('default', async () => {
-  const { result } = renderHook(() => ({
+  const { result } = await renderHook(() => ({
     useAccount: useAccount(),
     useConnect: useConnect(),
   }))

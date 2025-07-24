@@ -12,9 +12,9 @@ test('default', async () => {
   })
   await testClient.mainnet.mine({ blocks: 1 })
 
-  const { result } = renderHook(() => useGasPrice())
+  const { result } = await renderHook(() => useGasPrice())
 
-  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -60,11 +60,11 @@ test.skip('parameters: chainId', async () => {
   })
   await testClient.mainnet2.mine({ blocks: 1 })
 
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useGasPrice({ chainId: chain.mainnet2.id }),
   )
 
-  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current).toMatchInlineSnapshot(`
     {

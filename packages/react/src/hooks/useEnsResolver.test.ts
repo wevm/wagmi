@@ -4,13 +4,13 @@ import { expect, test, vi } from 'vitest'
 import { useEnsResolver } from './useEnsResolver.js'
 
 test('default', async () => {
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useEnsResolver({
       name: 'wevm.eth',
     }),
   )
 
-  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current).toMatchInlineSnapshot(`
     {

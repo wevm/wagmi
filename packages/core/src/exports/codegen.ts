@@ -1,15 +1,14 @@
 // biome-ignore lint/performance/noBarrelFile: entrypoint module
 export {
-  type CreateSimulateContractParameters,
-  type CreateSimulateContractReturnType,
-  createSimulateContract,
-} from '../actions/codegen/createSimulateContract.js'
-
-export {
   type CreateReadContractParameters,
   type CreateReadContractReturnType,
   createReadContract,
 } from '../actions/codegen/createReadContract.js'
+export {
+  type CreateSimulateContractParameters,
+  type CreateSimulateContractReturnType,
+  createSimulateContract,
+} from '../actions/codegen/createSimulateContract.js'
 
 export {
   type CreateWatchContractEventParameters,

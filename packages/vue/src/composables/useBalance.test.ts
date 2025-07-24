@@ -18,7 +18,7 @@ beforeEach(async () => {
 test('default', async () => {
   const [query] = renderComposable(() => useBalance({ address }))
 
-  await vi.waitFor(query.isSuccess)
+  await waitFor(query.isSuccess)
 
   expect(query.data.value).toMatchObject(
     expect.objectContaining({
@@ -35,7 +35,7 @@ test('parameters: chainId', async () => {
     useBalance({ address, chainId: chain.mainnet2.id }),
   )
 
-  await vi.waitFor(query.isSuccess)
+  await waitFor(query.isSuccess)
 
   expect(query.data.value).toMatchInlineSnapshot(`
     {
@@ -55,7 +55,7 @@ test('parameters: token', async () => {
     }),
   )
 
-  await vi.waitFor(query.isSuccess)
+  await waitFor(query.isSuccess)
 
   expect(query.data.value).toMatchInlineSnapshot(`
     {
@@ -76,7 +76,7 @@ test('parameters: unit', async () => {
     }),
   )
 
-  await vi.waitFor(query.isSuccess)
+  await waitFor(query.isSuccess)
 
   expect(query.data.value).toMatchInlineSnapshot(`
     {
@@ -98,7 +98,7 @@ test('behavior: address: undefined -> defined', async () => {
 
   address.value = accounts[0]
 
-  await vi.waitFor(query.isSuccess)
+  await waitFor(query.isSuccess)
 
   expect(query.data.value).toMatchInlineSnapshot(`
     {

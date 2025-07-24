@@ -1,6 +1,8 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import * as React from 'react'
 import {
+  type RenderHookOptions,
+  type RenderHookResult,
   type RenderResult,
   render as vbr_render,
   renderHook as vbr_renderHook,
@@ -8,9 +10,6 @@ import {
 import { WagmiProvider } from 'wagmi'
 
 import { config } from '../config.js'
-
-// biome-ignore lint/performance/noBarrelFile: entrypoint module
-export { act, cleanup } from '@testing-library/react'
 
 export const queryClient = new QueryClient()
 
@@ -33,16 +32,19 @@ export function createWrapper<component extends React.FunctionComponent<any>>(
 }
 
 export function renderHook<result, props>(
-  ...args: Parameters<typeof vbr_renderHook<props, result>>
-): ReturnType<typeof vbr_renderHook<props, result>> {
+  renderCallback: (initialProps?: props) => result,
+  options?: RenderHookOptions<props>,
+): Promise<RenderHookResult<result, props>> {
   queryClient.clear()
-  return vbr_renderHook(args[0], {
+  return vbr_renderHook(renderCallback, {
     wrapper: createWrapper(WagmiProvider, { config, reconnectOnMount: false }),
-    ...args[1],
+    ...options,
   })
 }
 
-export function render(...args: Parameters<typeof vbr_render>): RenderResult {
+export function render(
+  ...args: Parameters<typeof vbr_render>
+): Promise<RenderResult> {
   queryClient.clear()
   return vbr_render(args[0], {
     ...args[1],

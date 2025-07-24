@@ -1,19 +1,19 @@
-import { Buffer } from 'buffer'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { WagmiProvider } from 'wagmi'
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Buffer } from "buffer";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { WagmiProvider } from "wagmi";
 
-import App from './App.tsx'
-import { config } from './wagmi.ts'
+import App from "./App.tsx";
+import { config } from "./wagmi.ts";
 
-import './index.css'
+import "./index.css";
 
-globalThis.Buffer = Buffer
+globalThis.Buffer = Buffer;
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
@@ -21,4 +21,4 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       </QueryClientProvider>
     </WagmiProvider>
   </React.StrictMode>,
-)
+);

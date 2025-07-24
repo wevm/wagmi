@@ -1,5 +1,5 @@
 import { renderComposable, waitFor } from '@wagmi/test/vue'
-import { expect, test, vi } from 'vitest'
+import { expect, test } from 'vitest'
 
 import { deepUnref } from '../utils/cloneDeep.js'
 import { useTransaction } from './useTransaction.js'
@@ -11,7 +11,7 @@ test('default', async () => {
     }),
   )
 
-  await vi.waitFor(result.isSuccess)
+  await waitFor(result.isSuccess)
 
   expect(deepUnref(result)).toMatchInlineSnapshot(`
     {

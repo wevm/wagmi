@@ -1,7 +1,7 @@
 import { accounts, wait } from '@wagmi/test'
 import { renderComposable, waitFor } from '@wagmi/test/vue'
 import { parseEther } from 'viem'
-import { expect, test, vi } from 'vitest'
+import { expect, test } from 'vitest'
 
 import { ref } from 'vue'
 import { deepUnref } from '../utils/cloneDeep.js'
@@ -16,7 +16,7 @@ test('default', async () => {
     }),
   )
 
-  await vi.waitFor(result.isSuccess)
+  await waitFor(result.isSuccess)
 
   expect(deepUnref(result)).toMatchInlineSnapshot(`
     {
@@ -74,7 +74,7 @@ test('behavior: address: undefined -> defined', async () => {
 
   address.value = accounts[0]
 
-  await vi.waitFor(result.isSuccess)
+  await waitFor(result.isSuccess)
 
   expect(deepUnref(result)).toMatchInlineSnapshot(`
     {

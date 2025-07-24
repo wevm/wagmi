@@ -1,4 +1,4 @@
-import { expect, test, vi } from 'vitest'
+import { expect, test } from 'vitest'
 
 import { deserialize } from './deserialize.js'
 import { serialize } from './serialize.js'

@@ -1,4 +1,4 @@
-import { expect, test, vi } from 'vitest'
+import { expect, test } from 'vitest'
 
 import * as connectors from './connectors.js'
 
@@ -11,8 +11,8 @@ test('exports', () => {
       "coinbaseWallet",
       "metaMask",
       "safe",
-      "walletConnect",
       "version",
+      "walletConnect",
     ]
   `)
 })

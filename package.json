@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.16.4",
-    "@biomejs/biome": "^1.9.4",
+    "@biomejs/biome": "^2.0.6",
     "@changesets/changelog-github": "0.4.6",
     "@changesets/cli": "^2.27.8",
     "@types/bun": "^1.1.10",
@@ -63,7 +63,7 @@
     "typescript": "5.8.3",
     "viem": "2.31.7",
     "vitest": "^3.2.4",
-    "vitest-browser-react": "^1.0.0"
+    "vitest-browser-react": "^2.0.0-beta.1"
   },
   "packageManager": "pnpm@9.11.0",
   "pnpm": {
@@ -88,20 +88,16 @@
   "knip": {
     "ignore": [
       "**/templates/**",
-      "**/hardhat.config.js"
-    ],
-    "ignoreBinaries": [
-      "only-allow"
+      "**/hardhat.config.js",
+      "scripts/**"
     ],
     "ignoreWorkspaces": [
       "packages/register-tests/**",
       "packages/test",
-      "playgrounds/**"
+      "playgrounds/**",
+      "site/**"
     ],
     "workspaces": {
-      ".": {
-        "project": "scripts/*.ts"
-      },
       "packages/cli": {
         "entry": [
           "src/cli.ts!",
@@ -153,12 +149,6 @@
         ],
         "ignoreDependencies": [
           "nuxt"
-        ]
-      },
-      "site": {
-        "project": [
-          "**/*.ts",
-          "**/*.tsx"
         ]
       }
     }

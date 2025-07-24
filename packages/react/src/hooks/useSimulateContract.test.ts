@@ -10,7 +10,7 @@ const connector = config.connectors[0]!
 test('default', async () => {
   await connect(config, { connector })
 
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useSimulateContract({
       address: address.wagmiMintExample,
       abi: abi.wagmiMintExample,
@@ -18,7 +18,7 @@ test('default', async () => {
     }),
   )
 
-  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -88,7 +88,7 @@ test('default', async () => {
 })
 
 test('behavior: disabled when properties missing', async () => {
-  const { result } = renderHook(() => useSimulateContract())
+  const { result } = await renderHook(() => useSimulateContract())
 
   await wait(100)
   await vi.waitFor(() => expect(result.current.isPending).toBeTruthy())

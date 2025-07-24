@@ -1,5 +1,5 @@
 import { accounts, config } from '@wagmi/test'
-import { expect, test, vi } from 'vitest'
+import { expect, test } from 'vitest'
 
 import { verifyMessage } from './verifyMessage.js'
 

@@ -1,6 +1,6 @@
 import { config } from '@wagmi/test'
 import type { Address } from 'viem'
-import { expect, test, vi } from 'vitest'
+import { expect, test } from 'vitest'
 
 import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'

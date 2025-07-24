@@ -16,10 +16,10 @@ const tokenInfo = {
 test('default', async () => {
   await connect(config, { connector })
 
-  const { result } = renderHook(() => useWatchAsset())
+  const { result } = await renderHook(() => useWatchAsset())
 
   result.current.watchAsset({ type: 'ERC20', options: tokenInfo })
-  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current.data).toEqual(true)
 

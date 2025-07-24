@@ -1,7 +1,7 @@
 import { connect, disconnect } from '@wagmi/core'
 import { abi, address, config } from '@wagmi/test'
 import { renderComposable, waitFor } from '@wagmi/test/vue'
-import { expect, test, vi } from 'vitest'
+import { expect, test } from 'vitest'
 
 import { useWriteContract } from './useWriteContract.js'
 
@@ -17,7 +17,7 @@ test('default', async () => {
     address: address.wagmiMintExample,
     functionName: 'mint',
   })
-  await vi.waitFor(result.isSuccess)
+  await waitFor(result.isSuccess)
 
   expect(result.data.value).toBeDefined()
 

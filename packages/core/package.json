@@ -65,12 +65,24 @@
   },
   "typesVersions": {
     "*": {
-      "actions": ["./dist/types/exports/actions.d.ts"],
-      "chains": ["./dist/types/exports/chains.d.ts"],
-      "codegen": ["./dist/types/exports/codegen.d.ts"],
-      "experimental": ["./dist/types/exports/experimental.d.ts"],
-      "internal": ["./dist/types/exports/internal.d.ts"],
-      "query": ["./dist/types/exports/query.d.ts"]
+      "actions": [
+        "./dist/types/exports/actions.d.ts"
+      ],
+      "chains": [
+        "./dist/types/exports/chains.d.ts"
+      ],
+      "codegen": [
+        "./dist/types/exports/codegen.d.ts"
+      ],
+      "experimental": [
+        "./dist/types/exports/experimental.d.ts"
+      ],
+      "internal": [
+        "./dist/types/exports/internal.d.ts"
+      ],
+      "query": [
+        "./dist/types/exports/query.d.ts"
+      ]
     }
   },
   "peerDependencies": {
@@ -94,7 +106,17 @@
   "devDependencies": {
     "@tanstack/query-core": "catalog:"
   },
-  "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
+  "contributors": [
+    "awkweb.eth <t@wevm.dev>",
+    "jxom.eth <j@wevm.dev>"
+  ],
   "funding": "https://github.com/sponsors/wevm",
-  "keywords": ["wagmi", "eth", "ethereum", "dapps", "wallet", "web3"]
+  "keywords": [
+    "wagmi",
+    "eth",
+    "ethereum",
+    "dapps",
+    "wallet",
+    "web3"
+  ]
 }

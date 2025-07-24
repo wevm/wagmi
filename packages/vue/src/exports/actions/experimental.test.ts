@@ -1,4 +1,4 @@
-import { expect, test, vi } from 'vitest'
+import { expect, test } from 'vitest'
 
 import * as experimentalActions from './experimental.js'
 
@@ -11,15 +11,15 @@ test('exports', () => {
       "showCallsStatus",
       "waitForCallsStatus",
       "writeContracts",
-      "getCallsStatusQueryOptions",
+      "writeContractsMutationOptions",
       "getCallsStatusQueryKey",
-      "getCapabilitiesQueryOptions",
+      "getCallsStatusQueryOptions",
       "getCapabilitiesQueryKey",
+      "getCapabilitiesQueryOptions",
       "sendCallsMutationOptions",
       "showCallsStatusMutationOptions",
       "waitForCallsStatusQueryKey",
       "waitForCallsStatusQueryOptions",
-      "writeContractsMutationOptions",
     ]
   `)
 })

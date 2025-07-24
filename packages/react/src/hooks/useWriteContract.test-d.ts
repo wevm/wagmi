@@ -1,4 +1,4 @@
-import { http, type WriteContractErrorType, createConfig } from '@wagmi/core'
+import { createConfig, http, type WriteContractErrorType } from '@wagmi/core'
 import { base } from '@wagmi/core/chains'
 import { abi } from '@wagmi/test'
 import type { Abi, Address, Hash } from 'viem'

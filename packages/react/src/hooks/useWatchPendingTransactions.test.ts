@@ -9,7 +9,7 @@ import {
 import { renderHook } from '@wagmi/test/react'
 import { parseEther } from 'viem'
 import type { OnTransactionsParameter } from 'viem/actions'
-import { expect, test, vi } from 'vitest'
+import { expect, test } from 'vitest'
 
 import { useWatchPendingTransactions } from './useWatchPendingTransactions.js'
 

@@ -1,7 +1,7 @@
 import { connect } from '@wagmi/core'
 import { config } from '@wagmi/test'
 import { renderComposable } from '@wagmi/test/vue'
-import { expect, test, vi } from 'vitest'
+import { expect, test } from 'vitest'
 
 import { useConnections } from './useConnections.js'
 

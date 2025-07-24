@@ -11,16 +11,15 @@ export * from '@wagmi/core/codegen'
 ////////////////////////////////////////////////////////////////////////////////
 
 export {
-  type CreateUseSimulateContractParameters,
-  type CreateUseSimulateContractReturnType,
-  createUseSimulateContract,
-} from '../hooks/codegen/createUseSimulateContract.js'
-
-export {
   type CreateUseReadContractParameters,
   type CreateUseReadContractReturnType,
   createUseReadContract,
 } from '../hooks/codegen/createUseReadContract.js'
+export {
+  type CreateUseSimulateContractParameters,
+  type CreateUseSimulateContractReturnType,
+  createUseSimulateContract,
+} from '../hooks/codegen/createUseSimulateContract.js'
 
 export {
   type CreateUseWatchContractEventParameters,

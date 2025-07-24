@@ -7,9 +7,9 @@ import { useBlockNumber } from './useBlockNumber.js'
 test('mounts', async () => {
   await testClient.mainnet.resetFork()
 
-  const { result } = renderHook(() => useBlockNumber())
+  const { result } = await renderHook(() => useBlockNumber())
 
-  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -50,9 +50,9 @@ test('mounts', async () => {
 test('parameters: watch', async () => {
   await testClient.mainnet.restart()
 
-  const { result } = renderHook(() => useBlockNumber({ watch: true }))
+  const { result } = await renderHook(() => useBlockNumber({ watch: true }))
 
-  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
   const blockNumber = result.current.data!
   expect(result.current.data).toBeTypeOf('bigint')
 

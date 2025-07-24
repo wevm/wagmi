@@ -1,4 +1,4 @@
-import { expect, test, vi } from 'vitest'
+import { expect, test } from 'vitest'
 
 import * as react from './index.js'
 
@@ -9,6 +9,11 @@ test('exports', () => {
       "mainnet",
       "mainnet2",
       "optimism",
+      "mainnet2TestClient",
+      "mainnetTestClient",
+      "optimismTestClient",
+      "testClient",
+      "config",
       "abi",
       "accounts",
       "address",
@@ -16,11 +21,6 @@ test('exports', () => {
       "privateKey",
       "typedData",
       "walletConnectProjectId",
-      "testClient",
-      "mainnetTestClient",
-      "mainnet2TestClient",
-      "optimismTestClient",
-      "config",
       "addressRegex",
       "transactionHashRegex",
       "wait",

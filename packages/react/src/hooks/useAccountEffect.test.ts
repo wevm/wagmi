@@ -1,8 +1,8 @@
 import { mock } from '@wagmi/connectors'
-import { http, connect, createConfig, disconnect } from '@wagmi/core'
+import { connect, createConfig, disconnect, http } from '@wagmi/core'
 import { accounts, chain, config } from '@wagmi/test'
 import { createWrapper, renderHook } from '@wagmi/test/react'
-import { Fragment, createElement } from 'react'
+import { createElement, Fragment } from 'react'
 import { expect, test, vi } from 'vitest'
 
 import { WagmiProvider } from '../context.js'
@@ -10,8 +10,8 @@ import { useAccountEffect } from './useAccountEffect.js'
 import { useConnect } from './useConnect.js'
 import { useDisconnect } from './useDisconnect.js'
 
-test('parameters: config', () => {
-  const { result } = renderHook(() => useAccountEffect({ config }), {
+test('parameters: config', async () => {
+  const { result } = await renderHook(() => useAccountEffect({ config }), {
     wrapper: ({ children }) => createElement(Fragment, { children }),
   })
   expect(result.current).toBeUndefined()
@@ -21,7 +21,7 @@ test('behavior: connect and disconnect called once', async () => {
   const onConnect = vi.fn()
   const onDisconnect = vi.fn()
 
-  const { result } = renderHook(() => ({
+  const { result } = await renderHook(() => ({
     useAccountEffect: useAccountEffect({ onConnect, onDisconnect }),
     useConnect: useConnect(),
     useDisconnect: useDisconnect(),

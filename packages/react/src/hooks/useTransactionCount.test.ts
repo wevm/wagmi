@@ -8,9 +8,9 @@ import { useTransactionCount } from './useTransactionCount.js'
 const address = accounts[0]
 
 test('default', async () => {
-  const { result } = renderHook(() => useTransactionCount({ address }))
+  const { result } = await renderHook(() => useTransactionCount({ address }))
 
-  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   const { data, ...rest } = result.current
   expect(data).toBeTypeOf('number')
@@ -51,11 +51,11 @@ test('default', async () => {
 })
 
 test('parameters: chainId', async () => {
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useTransactionCount({ address, chainId: chain.mainnet2.id }),
   )
 
-  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   const { data, ...rest } = result.current
   expect(data).toBeTypeOf('number')
@@ -96,11 +96,11 @@ test('parameters: chainId', async () => {
 })
 
 test('parameters: blockNumber', async () => {
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useTransactionCount({ address, blockNumber: 13677382n }),
   )
 
-  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   const { data, ...rest } = result.current
   expect(data).toBeTypeOf('number')
@@ -142,9 +142,9 @@ test('parameters: blockNumber', async () => {
 })
 
 test('behavior: address: undefined -> defined', async () => {
-  let address: Address | undefined = undefined
+  let address: Address | undefined
 
-  const { result, rerender } = renderHook(() =>
+  const { result, rerender } = await renderHook(() =>
     useTransactionCount({ address }),
   )
 
@@ -190,7 +190,7 @@ test('behavior: address: undefined -> defined', async () => {
   address = accounts[0]
   rerender()
 
-  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   const { data, ...rest } = result.current
   expect(data).toBeTypeOf('number')
@@ -231,7 +231,7 @@ test('behavior: address: undefined -> defined', async () => {
 })
 
 test('behavior: disabled when properties missing', async () => {
-  const { result } = renderHook(() => useTransactionCount())
+  const { result } = await renderHook(() => useTransactionCount())
 
   await wait(100)
   await vi.waitFor(() => expect(result.current.isPending).toBeTruthy())

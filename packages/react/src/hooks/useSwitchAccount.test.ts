@@ -13,7 +13,7 @@ test('default', async () => {
   await connect(config, { connector: connector2 })
   await connect(config, { connector: connector1 })
 
-  const { result } = renderHook(() => ({
+  const { result } = await renderHook(() => ({
     useAccount: useAccount(),
     useSwitchAccount: useSwitchAccount(),
   }))

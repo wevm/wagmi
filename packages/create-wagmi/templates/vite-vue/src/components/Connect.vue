@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useChainId, useConnect } from '@wagmi/vue'
+import { useChainId, useConnect } from "@wagmi/vue";
 
-const chainId = useChainId()
-const { connect, connectors, error, status } = useConnect()
+const chainId = useChainId();
+const { connect, connectors, error, status } = useConnect();
 </script>
 
 <template>

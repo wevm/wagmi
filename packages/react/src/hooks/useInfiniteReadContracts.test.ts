@@ -7,7 +7,7 @@ import { useInfiniteReadContracts } from './useInfiniteReadContracts.js'
 test('default', async () => {
   const limit = 3
 
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useInfiniteReadContracts({
       cacheKey: 'foo',
       contracts(pageParam) {
@@ -46,7 +46,7 @@ test('default', async () => {
   )
   await wait(0)
 
-  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
   expect(result.current.data).toMatchInlineSnapshot(`
     [
       "Three Shields on Pink Perfect",

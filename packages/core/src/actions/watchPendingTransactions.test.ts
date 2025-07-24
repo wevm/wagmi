@@ -7,7 +7,7 @@ import {
 } from '@wagmi/test'
 import { parseEther } from 'viem'
 import type { OnTransactionsParameter } from 'viem/actions'
-import { expect, test, vi } from 'vitest'
+import { expect, test } from 'vitest'
 
 import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'

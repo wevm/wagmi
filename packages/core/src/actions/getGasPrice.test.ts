@@ -1,5 +1,5 @@
 import { chain, config, testClient } from '@wagmi/test'
-import { expect, test, vi } from 'vitest'
+import { expect, test } from 'vitest'
 
 import { getGasPrice } from './getGasPrice.js'
 

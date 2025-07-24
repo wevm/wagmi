@@ -13,7 +13,7 @@ import { useSwitchChain } from './useSwitchChain.js'
 const connector = config.connectors[0]!
 
 test('default', async () => {
-  const { result } = renderHook(() => useConnectorClient())
+  const { result } = await renderHook(() => useConnectorClient())
 
   await vi.waitFor(() => expect(result.current.isPending).toBeTruthy())
 
@@ -57,9 +57,9 @@ test('default', async () => {
 test('behavior: connected on mount', async () => {
   await connect(config, { connector })
 
-  const { result } = renderHook(() => useConnectorClient())
+  const { result } = await renderHook(() => useConnectorClient())
 
-  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   const { data, queryKey: _, ...rest } = result.current
   expect(data).toMatchObject(
@@ -100,7 +100,7 @@ test('behavior: connected on mount', async () => {
 })
 
 test('behavior: connect and disconnect', async () => {
-  const { result } = renderHook(() => ({
+  const { result } = await renderHook(() => ({
     useConnect: useConnect(),
     useConnectorClient: useConnectorClient(),
     useDisconnect: useDisconnect(),
@@ -126,29 +126,33 @@ test('behavior: connect and disconnect', async () => {
 test('behavior: switch chains', async () => {
   await connect(config, { connector })
 
-  const { result } = renderHook(() => ({
+  const { act, result } = await renderHook(() => ({
     useConnectorClient: useConnectorClient(),
     useSwitchChain: useSwitchChain(),
   }))
 
   expect(result.current.useConnectorClient.data).not.toBeDefined()
-
   await vi.waitFor(() =>
     expect(result.current.useConnectorClient.data).toBeDefined(),
   )
 
-  result.current.useSwitchChain.switchChain({ chainId: 456 })
-  await vi.waitFor(() => {
-    expect(result.current.useSwitchChain.isSuccess).toBeTruthy()
-    result.current.useSwitchChain.reset()
+  await act(() => result.current.useSwitchChain.switchChain({ chainId: 456 }))
+  await vi.waitUntil(() => result.current.useSwitchChain.isSuccess, {
+    timeout: 5_000,
   })
-  await wait(0)
+  await act(() => result.current.useSwitchChain.reset())
+  await vi.waitUntil(() => result.current.useConnectorClient.isSuccess, {
+    timeout: 5_000,
+  })
   expect(result.current.useConnectorClient.data?.chain.id).toEqual(456)
 
-  result.current.useSwitchChain.switchChain({ chainId: 1 })
-  await vi.waitFor(() =>
-    expect(result.current.useSwitchChain.isSuccess).toBeTruthy(),
-  )
+  await act(() => result.current.useSwitchChain.switchChain({ chainId: 1 }))
+  await vi.waitUntil(() => result.current.useSwitchChain.isSuccess, {
+    timeout: 5_000,
+  })
+  await vi.waitUntil(() => result.current.useConnectorClient.isSuccess, {
+    timeout: 5_000,
+  })
   expect(result.current.useConnectorClient.data?.chain.id).toEqual(1)
 
   await disconnect(config, { connector })
@@ -157,14 +161,14 @@ test('behavior: switch chains', async () => {
 test('behavior: disabled when properties missing', async () => {
   await disconnect(config, { connector })
 
-  const { result } = renderHook(() => useConnectorClient())
+  const { result } = await renderHook(() => useConnectorClient())
 
   await wait(0)
   await vi.waitFor(() => expect(result.current.isPending).toBeTruthy())
 })
 
 test('behavior: disabled when connecting', async () => {
-  const { result } = renderHook(() => useConnectorClient())
+  const { result } = await renderHook(() => useConnectorClient())
 
   config.setState((x) => ({ ...x, status: 'connecting' }))
 
@@ -175,7 +179,7 @@ test('behavior: disabled when connecting', async () => {
 test('behavior: re-render does not invalidate query', async () => {
   await disconnect(config, { connector })
 
-  const screen = render(<Parent />)
+  const screen = await render(<Parent />)
 
   await screen.getByTestId('connect').click()
   await vi.waitFor(async () => {
@@ -233,9 +237,7 @@ function Parent() {
   )
 }
 
-function Child(props: {
-  renderCount: number
-}) {
+function Child(props: { renderCount: number }) {
   const { renderCount } = props
   const { data } = useConnectorClient()
   return (

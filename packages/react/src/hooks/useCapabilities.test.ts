@@ -1,5 +1,5 @@
 import { connect, disconnect } from '@wagmi/core'
-import { accounts, config, wait } from '@wagmi/test'
+import { accounts, config } from '@wagmi/test'
 import { renderHook } from '@wagmi/test/react'
 import { expect, test, vi } from 'vitest'
 
@@ -10,9 +10,9 @@ const connector = config.connectors[0]!
 test('mounts', async () => {
   await connect(config, { connector })
 
-  const { result } = renderHook(() => useCapabilities())
+  const { result } = await renderHook(() => useCapabilities())
 
-  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -69,9 +69,11 @@ test('mounts', async () => {
 test('args: account', async () => {
   await connect(config, { connector })
 
-  const { result } = renderHook(() => useCapabilities({ account: accounts[1] }))
+  const { result } = await renderHook(() =>
+    useCapabilities({ account: accounts[1] }),
+  )
 
-  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -126,7 +128,7 @@ test('args: account', async () => {
 })
 
 test('behavior: not connected', async () => {
-  const { result } = renderHook(() => useCapabilities())
+  const { result } = await renderHook(() => useCapabilities())
 
   await vi.waitFor(() => expect(result.current.isError).toBeTruthy())
 

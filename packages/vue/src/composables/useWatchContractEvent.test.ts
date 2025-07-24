@@ -9,9 +9,9 @@ import {
   wait,
 } from '@wagmi/test'
 import { renderComposable } from '@wagmi/test/vue'
-import { http, createWalletClient, parseEther } from 'viem'
+import { createWalletClient, http, parseEther } from 'viem'
 import type { WatchEventOnLogsParameter } from 'viem/actions'
-import { expect, test, vi } from 'vitest'
+import { expect, test } from 'vitest'
 
 import { ref } from 'vue'
 import { useWatchContractEvent } from './useWatchContractEvent.js'

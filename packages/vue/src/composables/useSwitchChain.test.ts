@@ -1,7 +1,7 @@
 import { connect, disconnect } from '@wagmi/core'
 import { chain, config } from '@wagmi/test'
 import { renderComposable, waitFor } from '@wagmi/test/vue'
-import { expect, test, vi } from 'vitest'
+import { expect, test } from 'vitest'
 
 import { useAccount } from './useAccount.js'
 import { useSwitchChain } from './useSwitchChain.js'
@@ -18,14 +18,14 @@ test('default', async () => {
   expect(chainId1).toBeDefined()
 
   switchChain.switchChain({ chainId: chain.mainnet2.id })
-  await vi.waitFor(switchChain.isSuccess)
+  await waitFor(switchChain.isSuccess)
 
   const chainId2 = account.chainId.value
   expect(chainId2).toBeDefined()
   expect(chainId1).not.toBe(chainId2)
 
   switchChain.switchChain({ chainId: chain.mainnet.id })
-  await vi.waitFor(switchChain.isSuccess)
+  await waitFor(switchChain.isSuccess)
 
   const chainId3 = account.chainId.value
   expect(chainId3).toBeDefined()

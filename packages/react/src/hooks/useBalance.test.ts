@@ -15,9 +15,9 @@ beforeEach(async () => {
 })
 
 test('default', async () => {
-  const { result } = renderHook(() => useBalance({ address }))
+  const { result } = await renderHook(() => useBalance({ address }))
 
-  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   const { data, ...rest } = result.current
   expect(data).toMatchObject(
@@ -65,11 +65,11 @@ test('default', async () => {
 })
 
 test('parameters: chainId', async () => {
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useBalance({ address, chainId: chain.mainnet2.id }),
   )
 
-  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -114,14 +114,14 @@ test('parameters: chainId', async () => {
 })
 
 test('parameters: token', async () => {
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useBalance({
       address: '0x4557B18E779944BFE9d78A672452331C186a9f48',
       token: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
     }),
   )
 
-  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -167,11 +167,11 @@ test('parameters: token', async () => {
 })
 
 test('parameters: unit', async () => {
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useBalance({ address, chainId: chain.mainnet2.id, unit: 'wei' }),
   )
 
-  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -217,9 +217,9 @@ test('parameters: unit', async () => {
 })
 
 test('behavior: address: undefined -> defined', async () => {
-  let address: Address | undefined = undefined
+  let address: Address | undefined
 
-  const { result, rerender } = renderHook(() => useBalance({ address }))
+  const { result, rerender } = await renderHook(() => useBalance({ address }))
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -260,7 +260,7 @@ test('behavior: address: undefined -> defined', async () => {
   address = accounts[0]
   rerender()
 
-  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -305,7 +305,7 @@ test('behavior: address: undefined -> defined', async () => {
 })
 
 test('behavior: disabled when properties missing', async () => {
-  const { result } = renderHook(() => useBalance())
+  const { result } = await renderHook(() => useBalance())
 
   await wait(100)
   await vi.waitFor(() => expect(result.current.isPending).toBeTruthy())

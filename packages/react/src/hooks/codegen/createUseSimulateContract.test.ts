@@ -15,13 +15,13 @@ test('default', async () => {
     abi: abi.wagmiMintExample,
   })
 
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useSimulateWagmiMintExample({
       functionName: 'mint',
     }),
   )
 
-  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -101,14 +101,14 @@ test('multichain', async () => {
     abi: abi.wagmiMintExample,
   })
 
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useReadWagmiMintExample({
       functionName: 'mint',
       chainId: chain.mainnet2.id,
     }),
   )
 
-  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -186,9 +186,9 @@ test('functionName', async () => {
     functionName: 'mint',
   })
 
-  const { result } = renderHook(() => useSimulateWagmiMintExample({}))
+  const { result } = await renderHook(() => useSimulateWagmiMintExample({}))
 
-  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current).toMatchInlineSnapshot(`
     {

@@ -6,7 +6,7 @@ import {
   transactionHashRegex,
 } from '@wagmi/test'
 import { parseEther } from 'viem'
-import { expect, test, vi } from 'vitest'
+import { expect, test } from 'vitest'
 
 import { connect } from './connect.js'
 import { deployContract } from './deployContract.js'

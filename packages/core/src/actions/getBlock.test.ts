@@ -1,5 +1,5 @@
 import { config, mainnet } from '@wagmi/test'
-import { expect, test, vi } from 'vitest'
+import { expect, test } from 'vitest'
 
 import { getBlock } from './getBlock.js'
 

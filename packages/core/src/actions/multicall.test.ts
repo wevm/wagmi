@@ -1,5 +1,5 @@
 import { abi, address, config } from '@wagmi/test'
-import { expect, test, vi } from 'vitest'
+import { expect, test } from 'vitest'
 
 import { multicall } from './multicall.js'
 

@@ -1,5 +1,5 @@
 import { connect, disconnect } from '@wagmi/core'
-import { chain, config, wait } from '@wagmi/test'
+import { chain, config } from '@wagmi/test'
 import { renderHook } from '@wagmi/test/react'
 import { expect, test, vi } from 'vitest'
 
@@ -11,7 +11,7 @@ const connector = config.connectors[0]!
 test('default', async () => {
   await connect(config, { connector })
 
-  const { result } = renderHook(() => ({
+  const { result, act } = await renderHook(() => ({
     useAccount: useAccount(),
     useSwitchChain: useSwitchChain(),
   }))
@@ -19,21 +19,23 @@ test('default', async () => {
   const chainId1 = result.current.useAccount.chainId
   expect(chainId1).toBeDefined()
 
-  result.current.useSwitchChain.switchChain({ chainId: chain.mainnet2.id })
+  await act(() =>
+    result.current.useSwitchChain.switchChain({ chainId: chain.mainnet2.id }),
+  )
   await vi.waitFor(() =>
     expect(result.current.useSwitchChain.isSuccess).toBeTruthy(),
   )
-  await wait(0)
 
   const chainId2 = result.current.useAccount.chainId
   expect(chainId2).toBeDefined()
   expect(chainId1).not.toBe(chainId2)
 
-  result.current.useSwitchChain.switchChain({ chainId: chain.mainnet.id })
+  await act(() =>
+    result.current.useSwitchChain.switchChain({ chainId: chain.mainnet.id }),
+  )
   await vi.waitFor(() =>
     expect(result.current.useSwitchChain.isSuccess).toBeTruthy(),
   )
-  await wait(0)
 
   const chainId3 = result.current.useAccount.chainId
   expect(chainId3).toBeDefined()
@@ -42,8 +44,8 @@ test('default', async () => {
   await disconnect(config, { connector })
 })
 
-test('behavior: chains updates', () => {
-  const { result, rerender } = renderHook(() => useSwitchChain())
+test('behavior: chains updates', async () => {
+  const { act, result } = await renderHook(() => useSwitchChain())
 
   const chains = result.current.chains
   expect(
@@ -68,8 +70,9 @@ test('behavior: chains updates', () => {
     ]
   `)
 
-  config._internal.chains.setState([chain.mainnet, chain.mainnet2])
-  rerender()
+  await act(() =>
+    config._internal.chains.setState([chain.mainnet, chain.mainnet2]),
+  )
 
   expect(
     result.current.chains.map(({ id, name }) => ({
@@ -89,8 +92,7 @@ test('behavior: chains updates', () => {
     ]
   `)
 
-  config._internal.chains.setState(chains)
-  rerender()
+  await act(() => config._internal.chains.setState(chains))
 
   expect(
     result.current.chains.map(({ id, name }) => ({

@@ -10,7 +10,7 @@ const connector = config.connectors[0]!
 test('default', async () => {
   await connect(config, { connector })
 
-  const { result } = renderHook(() => useWriteContracts())
+  const { result } = await renderHook(() => useWriteContracts())
 
   result.current.writeContracts({
     contracts: [
@@ -31,7 +31,7 @@ test('default', async () => {
       },
     ],
   })
-  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current.data).toMatchInlineSnapshot(
     `

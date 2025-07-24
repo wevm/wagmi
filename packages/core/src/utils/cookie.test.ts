@@ -1,6 +1,6 @@
 import { http } from 'viem'
 import { mainnet } from 'viem/chains'
-import { expect, test, vi } from 'vitest'
+import { expect, test } from 'vitest'
 
 import { createConfig } from '../createConfig.js'
 import { createStorage } from '../createStorage.js'

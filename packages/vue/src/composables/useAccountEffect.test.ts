@@ -1,6 +1,6 @@
 import { VueQueryPlugin } from '@tanstack/vue-query'
 import { mock } from '@wagmi/connectors'
-import { http, connect, createConfig, disconnect } from '@wagmi/core'
+import { connect, createConfig, disconnect, http } from '@wagmi/core'
 import { accounts, chain } from '@wagmi/test'
 import { renderComposable, waitFor } from '@wagmi/test/vue'
 import { expect, test, vi } from 'vitest'
@@ -23,13 +23,13 @@ test('behavior: connect and disconnect called once', async () => {
   connect.connect({
     connector: connect.connectors[0]!,
   })
-  await vi.waitFor(connect.isSuccess)
+  await waitFor(connect.isSuccess)
   connect.connect({
     connector: connect.connectors[0]!,
   })
 
   disconnect.disconnect()
-  await vi.waitFor(disconnect.isSuccess)
+  await waitFor(disconnect.isSuccess)
   disconnect.disconnect()
 
   expect(onConnect).toBeCalledTimes(1)
@@ -67,7 +67,7 @@ test('behavior: connect called on reconnect', async () => {
   })
   const [account] = renderComposable(() => useAccount(), { attach })
 
-  await vi.waitFor(account.status, (status) => status === 'connected')
+  await waitFor(account.status, (status) => status === 'connected')
 
   expect(onConnect).toBeCalledTimes(1)
 

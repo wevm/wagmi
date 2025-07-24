@@ -1,7 +1,7 @@
 import { connect, disconnect } from '@wagmi/core'
 import { config, wait } from '@wagmi/test'
 import { renderComposable, waitFor } from '@wagmi/test/vue'
-import { expect, test, vi } from 'vitest'
+import { expect, test } from 'vitest'
 
 import { deepUnref } from '../utils/cloneDeep.js'
 import { useConnect } from './useConnect.js'
@@ -57,7 +57,7 @@ test('behavior: connected on mount', async () => {
 
   const [client] = renderComposable(() => useConnectorClient())
 
-  await vi.waitFor(client.isSuccess, (isSuccess) => isSuccess === true)
+  await waitFor(client.isSuccess, (isSuccess) => isSuccess === true)
 
   const { data, queryKey: _, ...rest } = deepUnref(client)
   expect(data).toMatchObject(
@@ -109,11 +109,11 @@ test('behavior: connect and disconnect', async () => {
     connector: connect.connectors[0]!,
   })
 
-  await vi.waitFor(client.data, (data) => data !== undefined)
+  await waitFor(client.data, (data) => data !== undefined)
 
   disconnect.disconnect()
 
-  await vi.waitFor(client.data, (data) => data === undefined)
+  await waitFor(client.data, (data) => data === undefined)
 })
 
 test('behavior: switch chains', async () => {
@@ -124,16 +124,16 @@ test('behavior: switch chains', async () => {
 
   expect(connectorClient.data.value).not.toBeDefined()
 
-  await vi.waitFor(connectorClient.data, (data) => data !== undefined)
+  await waitFor(connectorClient.data, (data) => data !== undefined)
 
   switchChain.switchChain({ chainId: 456 })
-  await vi.waitFor(switchChain.isSuccess, (isSuccess) => isSuccess === true)
-  await vi.waitFor(connectorClient.data, (data) => data !== undefined)
+  await waitFor(switchChain.isSuccess, (isSuccess) => isSuccess === true)
+  await waitFor(connectorClient.data, (data) => data !== undefined)
   expect(connectorClient.data?.value?.chain.id).toEqual(456)
 
   switchChain.switchChain({ chainId: 1 })
-  await vi.waitFor(switchChain.isSuccess, (isSuccess) => isSuccess === true)
-  await vi.waitFor(connectorClient.data, (data) => data !== undefined)
+  await waitFor(switchChain.isSuccess, (isSuccess) => isSuccess === true)
+  await waitFor(connectorClient.data, (data) => data !== undefined)
   expect(connectorClient.data?.value?.chain.id).toEqual(1)
 
   await disconnect(config, { connector })

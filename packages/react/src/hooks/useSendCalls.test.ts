@@ -11,7 +11,7 @@ const connector = config.connectors[0]!
 test('default', async () => {
   await connect(config, { connector })
 
-  const { result } = renderHook(() => useSendCalls())
+  const { result } = await renderHook(() => useSendCalls())
 
   result.current.sendCalls({
     calls: [
@@ -30,7 +30,7 @@ test('default', async () => {
       },
     ],
   })
-  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current.data).toMatchInlineSnapshot(
     `

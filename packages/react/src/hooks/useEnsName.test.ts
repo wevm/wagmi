@@ -4,13 +4,13 @@ import { expect, test, vi } from 'vitest'
 import { useEnsName } from './useEnsName.js'
 
 test('default', async () => {
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useEnsName({
       address: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
     }),
   )
 
-  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {

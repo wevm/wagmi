@@ -1,9 +1,8 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { http, connect, createConfig, mock } from '@wagmi/core'
+import { connect, createConfig, http, mock } from '@wagmi/core'
 import { accounts, addressRegex, config, mainnet } from '@wagmi/test'
 import { render } from '@wagmi/test/react'
-import React from 'react'
-import { expect, test, vi } from 'vitest'
+import { expect, test } from 'vitest'
 
 import { WagmiProvider } from './context.js'
 import { useAccount } from './hooks/useAccount.js'
@@ -23,7 +22,7 @@ test('default', async () => {
   }
 
   const queryClient = new QueryClient()
-  const screen = render(
+  const screen = await render(
     <WagmiProvider config={config} reconnectOnMount>
       <QueryClientProvider client={queryClient}>
         <Component />
@@ -45,7 +44,7 @@ test('fake ssr config', async () => {
   })
   const queryClient = new QueryClient()
 
-  const screen = render(
+  const screen = await render(
     <WagmiProvider config={config} reconnectOnMount>
       <QueryClientProvider client={queryClient}>
         <h1>wevm</h1>
@@ -81,7 +80,7 @@ test('mock reconnect', async () => {
   await connect(config, { connector })
 
   const queryClient = new QueryClient()
-  const screen = render(
+  const screen = await render(
     <WagmiProvider config={config} reconnectOnMount>
       <QueryClientProvider client={queryClient}>
         <Component />

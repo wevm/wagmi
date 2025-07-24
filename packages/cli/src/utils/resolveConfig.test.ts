@@ -1,4 +1,4 @@
-import { expect, test, vi } from 'vitest'
+import { expect, test } from 'vitest'
 
 import { createFixture } from '../../test/utils.js'
 import { defaultConfig } from '../config.js'
