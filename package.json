@@ -53,7 +53,7 @@
     "bun": "^1.1.29",
     "happy-dom": "^18.0.1",
     "knip": "^5.30.6",
-    "playwright": "^1.54.1",
+    "playwright": "1.54.1",
     "prool": "^0.0.24",
     "publint": "^0.2.11",
     "react": "catalog:",
