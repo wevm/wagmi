@@ -1,4 +1,4 @@
-import type { ProviderInterface, createBaseAccountSDK } from '@base-org/account'
+import type { createBaseAccountSDK, ProviderInterface } from '@base-org/account'
 import {
   ChainNotConfiguredError,
   type Connector,
@@ -8,12 +8,12 @@ import type { Mutable, Omit } from '@wagmi/core/internal'
 import {
   type AddEthereumChainParameter,
   type Address,
+  getAddress,
   type Hex,
+  numberToHex,
   type ProviderRpcError,
   SwitchChainError,
   UserRejectedRequestError,
-  getAddress,
-  numberToHex,
 } from 'viem'
 
 export type BaseAccountParameters = Mutable<

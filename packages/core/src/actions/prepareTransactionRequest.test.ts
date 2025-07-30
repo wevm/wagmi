@@ -1,8 +1,7 @@
 import { accounts, config, privateKey } from '@wagmi/test'
-import { expect, test } from 'vitest'
-
 import { parseEther } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
+import { expect, test } from 'vitest'
 import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'
 import { prepareTransactionRequest } from './prepareTransactionRequest.js'

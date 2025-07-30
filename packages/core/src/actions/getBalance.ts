@@ -1,4 +1,4 @@
-import { type Address, type Hex, formatUnits, hexToString, trim } from 'viem'
+import { type Address, formatUnits, type Hex, hexToString, trim } from 'viem'
 import {
   type GetBalanceErrorType as viem_GetBalanceErrorType,
   type GetBalanceParameters as viem_GetBalanceParameters,

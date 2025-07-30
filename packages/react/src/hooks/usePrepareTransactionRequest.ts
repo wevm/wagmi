@@ -6,13 +6,13 @@ import type {
   ResolvedRegister,
   SelectChains,
 } from '@wagmi/core'
+import type { PrepareTransactionRequestQueryFnData } from '@wagmi/core/query'
 import {
   type PrepareTransactionRequestData,
   type PrepareTransactionRequestOptions,
   type PrepareTransactionRequestQueryKey,
   prepareTransactionRequestQueryOptions,
 } from '@wagmi/core/query'
-import type { PrepareTransactionRequestQueryFnData } from '@wagmi/core/query'
 import type { PrepareTransactionRequestRequest as viem_PrepareTransactionRequestRequest } from 'viem'
 
 import type { ConfigParameter, QueryParameter } from '../types/properties.js'

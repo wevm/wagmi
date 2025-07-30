@@ -1,8 +1,7 @@
 import { accounts, config, privateKey, typedData } from '@wagmi/test'
 import { recoverTypedDataAddress } from 'viem'
-import { expect, test } from 'vitest'
-
 import { privateKeyToAccount } from 'viem/accounts'
+import { expect, test } from 'vitest'
 import { mock } from '../connectors/mock.js'
 import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'

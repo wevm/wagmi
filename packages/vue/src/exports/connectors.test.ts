@@ -11,8 +11,8 @@ test('exports', () => {
       "coinbaseWallet",
       "metaMask",
       "safe",
-      "walletConnect",
       "version",
+      "walletConnect",
     ]
   `)
 })

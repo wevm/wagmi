@@ -1,8 +1,7 @@
 import { config, privateKey, transactionHashRegex } from '@wagmi/test'
 import { parseEther } from 'viem'
-import { beforeEach, expect, test } from 'vitest'
-
 import { privateKeyToAccount } from 'viem/accounts'
+import { beforeEach, expect, test } from 'vitest'
 import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'
 import { sendTransaction } from './sendTransaction.js'

@@ -1,5 +1,5 @@
 import { baseAccount, injected, walletConnect } from '@wagmi/connectors'
-import { http, createConfig } from '@wagmi/core'
+import { createConfig, http } from '@wagmi/core'
 import { mainnet, sepolia } from '@wagmi/core/chains'
 
 export const config = createConfig({

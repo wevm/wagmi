@@ -1,13 +1,13 @@
 import {
   ChainDisconnectedError,
+  createTransport,
   type EIP1193Parameters,
   type EIP1193Provider,
   type EIP1193RequestFn,
+  hexToNumber,
   ProviderDisconnectedError,
   type TransportConfig,
   type WalletRpcSchema,
-  createTransport,
-  hexToNumber,
   withRetry,
   withTimeout,
 } from 'viem'
