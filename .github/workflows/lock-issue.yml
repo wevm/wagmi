@@ -1,4 +1,6 @@
 name: Lock Issue
+permissions:
+  issues: write
 
 on:
   schedule:
