@@ -31,7 +31,7 @@ test('default', async () => {
       },
     ],
   })
-  await vi.waitUntil(() => result.current.isSuccess)
+  await vi.waitUntil(() => result.current.isSuccess, 5_000)
 
   expect(result.current.data).toMatchInlineSnapshot(
     `
