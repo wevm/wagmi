@@ -35,6 +35,7 @@ export type MockParameters = {
         signTypedDataError?: boolean | Error | undefined
         reconnect?: boolean | undefined
         watchAssetError?: boolean | Error | undefined
+        walletConnectError?: boolean | Error | undefined
       }
     | undefined
 }
@@ -159,6 +160,38 @@ export function mock(parameters: MockParameters) {
           }
 
         // wallet methods
+        if (method === 'wallet_connect') {
+          if (features.walletConnectError) {
+            if (typeof features.walletConnectError === 'boolean')
+              throw new UserRejectedRequestError(
+                new Error('User rejected wallet_connect request.'),
+              )
+            throw features.walletConnectError
+          }
+          // Simulate successful wallet_connect response with SIWE
+          const connectParams = (params as any[])[0]
+          if (connectParams?.capabilities?.signInWithEthereum) {
+            const siweParams = connectParams.capabilities.signInWithEthereum
+            const domain = siweParams.domain || 'example.com'
+            const uri = siweParams.uri || 'https://example.com'
+            const nonce = siweParams.nonce || 'nonce'
+            const message = `${domain} wants you to sign in with your Ethereum account:\n${parameters.accounts[0]}\n\n\nURI: ${uri}\nVersion: 1\nChain ID: ${siweParams.chainId || '1'}\nNonce: ${nonce}\nIssued At: ${new Date().toISOString()}`
+
+            return {
+              accounts: parameters.accounts.map((address) => ({
+                address,
+                capabilities: {
+                  signInWithEthereum: {
+                    signature: '0xmocksignature',
+                    message,
+                  },
+                },
+              })),
+            }
+          }
+          return { accounts: parameters.accounts }
+        }
+
         if (method === 'wallet_switchEthereumChain') {
           if (features.switchChainError) {
             if (typeof features.switchChainError === 'boolean')

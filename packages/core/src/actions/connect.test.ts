@@ -69,3 +69,130 @@ test('behavior: already connected', async () => {
     Version: @wagmi/core@x.y.z]
   `)
 })
+
+test('behavior: connect already connected', async () => {
+  await connect(config, { connector })
+  await expect(connect(config, { connector })).rejects.toMatchInlineSnapshot(`
+    [ConnectorAlreadyConnectedError: Connector already connected.
+
+    Version: @wagmi/core@x.y.z]
+  `)
+  await disconnect(config, { connector })
+})
+
+test('parameters: siwe nonce', async () => {
+  const nonce = 'test-nonce-123'
+  const result = await connect(config, {
+    connector,
+    chainId: chain.mainnet.id,
+    capabilities: {
+      signInWithEthereum: {
+        nonce,
+        chainId: 1, // mainnet
+      },
+    },
+  })
+
+  expect(result).toMatchObject({
+    accounts: expect.any(Array),
+    chainId: expect.any(Number),
+  })
+
+  // If the connector supports SIWE, capabilities should be present
+  if (result.capabilities?.signInWithEthereum) {
+    expect(result.capabilities.signInWithEthereum).toMatchObject({
+      signature: expect.any(String),
+      message: expect.any(String),
+    })
+    expect(result.capabilities.signInWithEthereum.message).toContain(nonce)
+  }
+
+  await disconnect(config, { connector })
+})
+
+test('parameters: siwe with custom domain and uri', async () => {
+  const nonce = 'test-nonce-456'
+  const domain = 'example.com'
+  const uri = 'https://example.com/auth'
+
+  const result = await connect(config, {
+    connector,
+    chainId: chain.mainnet.id,
+    capabilities: {
+      signInWithEthereum: {
+        nonce,
+        chainId: 1, // mainnet
+        domain,
+        uri,
+      },
+    },
+  })
+
+  expect(result).toMatchObject({
+    accounts: expect.any(Array),
+    chainId: expect.any(Number),
+  })
+
+  // If the connector supports SIWE, capabilities should be present
+  if (result.capabilities?.signInWithEthereum) {
+    expect(result.capabilities.signInWithEthereum.message).toContain(domain)
+    expect(result.capabilities.signInWithEthereum.message).toContain(uri)
+  }
+
+  await disconnect(config, { connector })
+})
+
+test('behavior: wallet_connect user rejection with SIWE capabilities', async () => {
+  const connector_ = config._internal.connectors.setup(
+    mock({
+      accounts,
+      features: { walletConnectError: true },
+    }),
+  )
+
+  await expect(
+    connect(config, {
+      connector: connector_,
+      capabilities: {
+        signInWithEthereum: {
+          nonce: 'test-nonce-rejection',
+          chainId: 1,
+        },
+      },
+    }),
+  ).rejects.toMatchInlineSnapshot(`
+    [UserRejectedRequestError: User rejected the request.
+
+    Details: User rejected wallet_connect request.
+    Version: viem@2.31.7]
+  `)
+})
+
+test('behavior: wallet_connect error with code 4001', async () => {
+  const customError = new Error('User rejected') as any
+  customError.code = 4001
+
+  const connector_ = config._internal.connectors.setup(
+    mock({
+      accounts,
+      features: { walletConnectError: customError },
+    }),
+  )
+
+  await expect(
+    connect(config, {
+      connector: connector_,
+      capabilities: {
+        signInWithEthereum: {
+          nonce: 'test-nonce-rejection-4001',
+          chainId: 1,
+        },
+      },
+    }),
+  ).rejects.toMatchInlineSnapshot(`
+    [UserRejectedRequestError: User rejected the request.
+
+    Details: User rejected
+    Version: viem@2.31.7]
+  `)
+})
