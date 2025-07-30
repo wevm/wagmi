@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useAccount, useDisconnect } from "@wagmi/vue";
+import { useAccount, useDisconnect } from '@wagmi/vue'
 
-const { address, chainId, status } = useAccount();
-const { disconnect } = useDisconnect();
+const { address, chainId, status } = useAccount()
+const { disconnect } = useDisconnect()
 </script>
 
 <template>
