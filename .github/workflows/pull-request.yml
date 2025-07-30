@@ -10,11 +10,16 @@ concurrency:
 jobs:
   verify:
     name: Verify
+    permissions:
+      contents: read
     uses: ./.github/workflows/verify.yml
     secrets: inherit
 
   size:
     name: Size
+    permissions:
+      contents: read
+      pull-requests: write
     runs-on: ubuntu-latest
     timeout-minutes: 5
 

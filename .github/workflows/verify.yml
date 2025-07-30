@@ -39,6 +39,8 @@ jobs:
 
   build:
     name: Build
+    permissions:
+      contents: read
     needs: check
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -61,6 +63,8 @@ jobs:
 
   types:
     name: Types
+    permissions:
+      contents: read
     needs: check
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -91,6 +95,8 @@ jobs:
 
   test:
     name: Test
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     timeout-minutes: 10
     strategy:
