@@ -1,16 +1,16 @@
-import { renderHook, waitFor } from '@wagmi/test/react'
-import { expect, test } from 'vitest'
+import { renderHook } from '@wagmi/test/react'
+import { expect, test, vi } from 'vitest'
 
 import { useToken } from './useToken.js'
 
 test('default', async () => {
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useToken({
       address: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
     }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current).toMatchInlineSnapshot(`
     {

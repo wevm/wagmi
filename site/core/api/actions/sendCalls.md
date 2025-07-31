@@ -220,4 +220,4 @@ import { type SendCallsErrorType } from '@wagmi/core'
 
 ## Viem
 
-- [`sendCalls`](https://viem.sh/experimental/eip5792/sendCalls)
+- [`sendCalls`](https://viem.sh/docs/actions/wallet/sendCalls)

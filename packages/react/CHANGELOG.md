@@ -1,5 +1,46 @@
 # wagmi
 
+## 2.16.0
+
+### Minor Changes
+
+- [#4734](https://github.com/wevm/wagmi/pull/4734) [`eac550ae5b49f96a7e3404a6d88adc62d3889013`](https://github.com/wevm/wagmi/commit/eac550ae5b49f96a7e3404a6d88adc62d3889013) Thanks [@jxom](https://github.com/jxom)! - Added `baseAccount` connector.
+
+### Patch Changes
+
+- Updated dependencies [[`eac550ae5b49f96a7e3404a6d88adc62d3889013`](https://github.com/wevm/wagmi/commit/eac550ae5b49f96a7e3404a6d88adc62d3889013)]:
+  - @wagmi/connectors@6.0.0
+  - @wagmi/core@2.18.0
+
+## 2.15.7
+
+### Patch Changes
+
+- Updated dependencies [[`e75bd89406e9b6ff5b7d3a7148ab34140fe6352a`](https://github.com/wevm/wagmi/commit/e75bd89406e9b6ff5b7d3a7148ab34140fe6352a)]:
+  - @wagmi/connectors@5.8.6
+
+## 2.15.6
+
+### Patch Changes
+
+- Updated dependencies [[`7ce242b549d8cc78e6c319d9ee419693da36704c`](https://github.com/wevm/wagmi/commit/7ce242b549d8cc78e6c319d9ee419693da36704c)]:
+  - @wagmi/core@2.17.3
+  - @wagmi/connectors@5.8.5
+
+## 2.15.5
+
+### Patch Changes
+
+- Updated dependencies [[`3a90f358820444a85bb727742b0a16eb943fc361`](https://github.com/wevm/wagmi/commit/3a90f358820444a85bb727742b0a16eb943fc361)]:
+  - @wagmi/connectors@5.8.4
+
+## 2.15.4
+
+### Patch Changes
+
+- Updated dependencies [[`42b1fed58e9ac09da0f8ebf3e9271f98a707aaac`](https://github.com/wevm/wagmi/commit/42b1fed58e9ac09da0f8ebf3e9271f98a707aaac)]:
+  - @wagmi/connectors@5.8.3
+
 ## 2.15.3
 
 ### Patch Changes

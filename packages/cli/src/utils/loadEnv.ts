@@ -1,15 +1,11 @@
+import { existsSync, readFileSync, statSync } from 'node:fs'
+import { dirname, join } from 'node:path'
 import { parse } from 'dotenv'
 import { expand } from 'dotenv-expand'
 
-import { existsSync, readFileSync, statSync } from 'node:fs'
-import { dirname, join } from 'node:path'
-
 // https://github.com/vitejs/vite/blob/main/packages/vite/src/node/env.ts#L7
 export function loadEnv(
-  config: {
-    mode?: string
-    envDir?: string
-  } = {},
+  config: { mode?: string; envDir?: string } = {},
 ): Record<string, string> {
   const mode = config.mode
   if (mode === 'local') {

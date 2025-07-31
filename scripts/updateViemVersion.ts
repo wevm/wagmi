@@ -24,7 +24,7 @@ for (const testPath of testPaths) {
 
   console.log(testPath)
   const updatedTestFile = testFile.replace(
-    /Version: viem@[A-Za-z0-9\-\.]+/g,
+    /Version: viem@[A-Za-z0-9\-.]+/g,
     `Version: viem@${viemVersion}`,
   )
   await Bun.write(testPath, updatedTestFile)

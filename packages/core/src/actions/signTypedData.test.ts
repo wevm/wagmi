@@ -1,8 +1,7 @@
 import { accounts, config, privateKey, typedData } from '@wagmi/test'
 import { recoverTypedDataAddress } from 'viem'
-import { expect, test } from 'vitest'
-
 import { privateKeyToAccount } from 'viem/accounts'
+import { expect, test } from 'vitest'
 import { mock } from '../connectors/mock.js'
 import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'
@@ -47,7 +46,7 @@ test('behavior: user rejected request', async () => {
     [UserRejectedRequestError: User rejected the request.
 
     Details: Failed to sign typed data.
-    Version: viem@2.29.2]
+    Version: viem@2.31.7]
   `)
   await disconnect(config, { connector: connector_ })
 })

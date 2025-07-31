@@ -72,14 +72,16 @@ test('exports', () => {
       "readContractsQueryOptions",
       "reconnectMutationOptions",
       "sendCallsMutationOptions",
-      "showCallsStatusMutationOptions",
       "sendTransactionMutationOptions",
+      "showCallsStatusMutationOptions",
       "signMessageMutationOptions",
       "signTypedDataMutationOptions",
-      "switchAccountMutationOptions",
       "simulateContractQueryKey",
       "simulateContractQueryOptions",
+      "switchAccountMutationOptions",
       "switchChainMutationOptions",
+      "hashFn",
+      "structuralSharing",
       "verifyMessageQueryKey",
       "verifyMessageQueryOptions",
       "verifyTypedDataQueryKey",
@@ -90,8 +92,6 @@ test('exports', () => {
       "waitForTransactionReceiptQueryOptions",
       "watchAssetMutationOptions",
       "writeContractMutationOptions",
-      "hashFn",
-      "structuralSharing",
     ]
   `)
 })

@@ -1,5 +1,41 @@
 # @wagmi/connectors
 
+## 5.9.0
+
+### Minor Changes
+
+- [#4734](https://github.com/wevm/wagmi/pull/4734) [`eac550ae5b49f96a7e3404a6d88adc62d3889013`](https://github.com/wevm/wagmi/commit/eac550ae5b49f96a7e3404a6d88adc62d3889013) Thanks [@jxom](https://github.com/jxom)! - Added `baseAccount` connector.
+
+### Patch Changes
+
+- Updated dependencies [[`eac550ae5b49f96a7e3404a6d88adc62d3889013`](https://github.com/wevm/wagmi/commit/eac550ae5b49f96a7e3404a6d88adc62d3889013)]:
+  - @wagmi/core@2.18.0
+
+## 5.8.6
+
+### Patch Changes
+
+- [#4731](https://github.com/wevm/wagmi/pull/4731) [`e75bd89406e9b6ff5b7d3a7148ab34140fe6352a`](https://github.com/wevm/wagmi/commit/e75bd89406e9b6ff5b7d3a7148ab34140fe6352a) Thanks [@tomiir](https://github.com/tomiir)! - Updated `@coinbase/wallet-sdk` to version 4.3.6
+
+## 5.8.5
+
+### Patch Changes
+
+- Updated dependencies [[`7ce242b549d8cc78e6c319d9ee419693da36704c`](https://github.com/wevm/wagmi/commit/7ce242b549d8cc78e6c319d9ee419693da36704c)]:
+  - @wagmi/core@2.17.3
+
+## 5.8.4
+
+### Patch Changes
+
+- [#4696](https://github.com/wevm/wagmi/pull/4696) [`3a90f358820444a85bb727742b0a16eb943fc361`](https://github.com/wevm/wagmi/commit/3a90f358820444a85bb727742b0a16eb943fc361) Thanks [@tomiir](https://github.com/tomiir)! - Updated @walletconnect/etereum-provider to version 2.21.1
+
+## 5.8.3
+
+### Patch Changes
+
+- [#4660](https://github.com/wevm/wagmi/pull/4660) [`42b1fed58e9ac09da0f8ebf3e9271f98a707aaac`](https://github.com/wevm/wagmi/commit/42b1fed58e9ac09da0f8ebf3e9271f98a707aaac) Thanks [@ganchoradkov](https://github.com/ganchoradkov)! - Updated `@walletconnect/ethereum-provider` version to `2.20.2`
+
 ## 5.8.2
 
 ### Patch Changes

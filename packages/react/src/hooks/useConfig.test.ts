@@ -3,8 +3,8 @@ import { expect, test, vi } from 'vitest'
 
 import { useConfig } from './useConfig.js'
 
-test('mounts', () => {
-  const { result } = renderHook(() => useConfig())
+test('mounts', async () => {
+  const { result } = await renderHook(() => useConfig())
   expect(result.current).toBeDefined()
 })
 

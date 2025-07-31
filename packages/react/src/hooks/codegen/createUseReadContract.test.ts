@@ -1,6 +1,6 @@
 import { abi, address, chain } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
-import { expect, test } from 'vitest'
+import { renderHook } from '@wagmi/test/react'
+import { expect, test, vi } from 'vitest'
 
 import { createUseReadContract } from './createUseReadContract.js'
 
@@ -10,14 +10,14 @@ test('default', async () => {
     abi: abi.wagmiMintExample,
   })
 
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useReadWagmiMintExample({
       functionName: 'balanceOf',
       args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
     }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -69,7 +69,7 @@ test('multichain', async () => {
     abi: abi.wagmiMintExample,
   })
 
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useReadWagmiMintExample({
       functionName: 'balanceOf',
       args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
@@ -77,7 +77,7 @@ test('multichain', async () => {
     }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -127,13 +127,13 @@ test('functionName', async () => {
     functionName: 'balanceOf',
   })
 
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useReadWagmiMintExampleBalanceOf({
       args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
     }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current).toMatchInlineSnapshot(`
     {
