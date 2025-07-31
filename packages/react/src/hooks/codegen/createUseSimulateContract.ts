@@ -99,8 +99,9 @@ export function createUseSimulateContract<
       const account = useAccount({ config })
       const chainId =
         (parameters as { chainId?: number })?.chainId ??
-        account.chainId ??
-        configChainId
+        (config._internal.syncConnectedChain
+          ? (account.chainId ?? configChainId)
+          : configChainId)
       return useSimulateContract({
         ...(parameters as any),
         ...(props.functionName ? { functionName: props.functionName } : {}),

@@ -166,9 +166,17 @@ export function createUseWriteContract<
           (...args: Args) => {
             let chainId: number | undefined
             if (args[0].chainId) chainId = args[0].chainId
-            else if (args[0].account && args[0].account === account.address)
+            else if (
+              args[0].account &&
+              args[0].account === account.address &&
+              config._internal.syncConnectedChain
+            )
               chainId = account.chainId
-            else if (args[0].account === undefined) chainId = account.chainId
+            else if (
+              args[0].account === undefined &&
+              config._internal.syncConnectedChain
+            )
+              chainId = account.chainId
             else chainId = configChainId
 
             const variables = {
@@ -187,15 +195,24 @@ export function createUseWriteContract<
             props,
             configChainId,
             result.writeContract,
+            config._internal.syncConnectedChain,
           ],
         ),
         writeContractAsync: useCallback(
           (...args: Args) => {
             let chainId: number | undefined
             if (args[0].chainId) chainId = args[0].chainId
-            else if (args[0].account && args[0].account === account.address)
+            else if (
+              args[0].account &&
+              args[0].account === account.address &&
+              config._internal.syncConnectedChain
+            )
               chainId = account.chainId
-            else if (args[0].account === undefined) chainId = account.chainId
+            else if (
+              args[0].account === undefined &&
+              config._internal.syncConnectedChain
+            )
+              chainId = account.chainId
             else chainId = configChainId
 
             const variables = {
@@ -214,6 +231,7 @@ export function createUseWriteContract<
             props,
             configChainId,
             result.writeContractAsync,
+            config._internal.syncConnectedChain,
           ],
         ),
       }
