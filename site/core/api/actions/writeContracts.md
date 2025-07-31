@@ -300,7 +300,7 @@ const id = await writeContracts(config, {
 import { type WriteContractsReturnType } from '@wagmi/core/experimental'
 ```
 
-`string`
+`{ id: string; capabilities?: WalletCapabilities | undefined }`
 
 Identifier of the call batch.
 

@@ -206,7 +206,7 @@ const id = await sendCalls(config, {
 import { type SendCallsReturnType } from '@wagmi/core'
 ```
 
-`string`
+`{ id: string; capabilities?: WalletCapabilities | undefined }`
 
 Identifier of the call batch.
 
