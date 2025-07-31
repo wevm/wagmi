@@ -2,4 +2,4 @@
 "create-wagmi": patch
 ---
 
-fixed wc/reown project id type error
+Fixed Next.js template type error
