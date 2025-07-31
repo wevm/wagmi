@@ -78,7 +78,7 @@ const success = await walletClient.watchAsset(walletClient, /* ... */) // [!code
 
 ## Multi-chain Viem Client
 
-The [Viem Client](https://viem.sh/docs/client) provides an interface to interact with an JSON-RPC Provider. By nature, JSON-RPC Providers are single-chain, so the Viem Client is designed to be instantiated with a single `chain`. As a result, setting up Viem to be multi-chain aware can get a bit verbose.
+The [Viem Client](https://viem.sh/docs/clients/intro) provides an interface to interact with an JSON-RPC Provider. By nature, JSON-RPC Providers are single-chain, so the Viem Client is designed to be instantiated with a single `chain`. As a result, setting up Viem to be multi-chain aware can get a bit verbose.
 
 The good news is that you can create a **"multi-chain Viem Client"** with **Wagmi** by utilizing [`createConfig`](/core/api/createConfig) and [`getClient`](/core/api/actions/getClient).
 
@@ -163,7 +163,7 @@ const hash = await walletClient.mainnet.sendTransaction(/* ... */)
 
 ## Private Key & Mnemonic Accounts
 
-It is possible to utilize Viem's [Private Key & Mnemonic Accounts](https://viem.sh/docs/accounts/local.html) with Wagmi by explicitly passing through the account via the `account` argument on Wagmi Actions.
+It is possible to utilize Viem's [Private Key & Mnemonic Accounts](https://viem.sh/docs/accounts/local) with Wagmi by explicitly passing through the account via the `account` argument on Wagmi Actions.
 
 ```tsx
 import { http, createConfig, sendTransaction } from '@wagmi/core' 
