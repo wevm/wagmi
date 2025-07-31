@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.18.1
+
+### Patch Changes
+
+- [#4704](https://github.com/wevm/wagmi/pull/4704) [`6514ba29a5acb918773235fed0238d7d679d06d5`](https://github.com/wevm/wagmi/commit/6514ba29a5acb918773235fed0238d7d679d06d5) Thanks [@iceanddust](https://github.com/iceanddust)! - Added missing `from` address to the `wallet_sendCalls` handler in the `mock` connector
+
 ## 2.18.0
 
 ### Minor Changes
