@@ -78,7 +78,7 @@ const success = await walletClient.watchAsset(walletClient, /* ... */) // [!code
 
 ## Multi-chain Viem Client
 
-The [Viem Client](https://viem.sh/docs/client) provides an interface to interact with an JSON-RPC Provider. By nature, JSON-RPC Providers are single-chain, so the Viem Client is designed to be instantiated with a single `chain`. As a result, setting up Viem to be multi-chain aware can get a bit verbose.
+The [Viem Client](https://viem.sh/docs/clients/intro) provides an interface to interact with an JSON-RPC Provider. By nature, JSON-RPC Providers are single-chain, so the Viem Client is designed to be instantiated with a single `chain`. As a result, setting up Viem to be multi-chain aware can get a bit verbose.
 
 The good news is that you can create a **"multi-chain Viem Client"** with **Wagmi** by utilizing [`createConfig`](/core/api/createConfig) and [`getClient`](/core/api/actions/getClient).
 
