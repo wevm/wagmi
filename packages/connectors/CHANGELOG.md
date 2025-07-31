@@ -1,5 +1,14 @@
 # @wagmi/connectors
 
+## 5.9.1
+
+### Patch Changes
+
+- [`6fbafd425e488dbeee8404162dbeb3c737eeb8cf`](https://github.com/wevm/wagmi/commit/6fbafd425e488dbeee8404162dbeb3c737eeb8cf) Thanks [@jxom](https://github.com/jxom)! - Updated `@base-org/account`
+
+- Updated dependencies [[`6514ba29a5acb918773235fed0238d7d679d06d5`](https://github.com/wevm/wagmi/commit/6514ba29a5acb918773235fed0238d7d679d06d5)]:
+  - @wagmi/core@2.18.1
+
 ## 5.9.0
 
 ### Minor Changes
