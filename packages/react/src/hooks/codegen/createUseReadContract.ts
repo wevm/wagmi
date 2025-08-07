@@ -106,8 +106,9 @@ export function createUseReadContract<
       const account = useAccount({ config })
       const chainId =
         (parameters as { chainId?: number })?.chainId ??
-        account.chainId ??
-        configChainId
+        (config._internal.syncConnectedChain
+          ? (account.chainId ?? configChainId)
+          : configChainId)
       return useReadContract({
         ...(parameters as any),
         ...(props.functionName ? { functionName: props.functionName } : {}),

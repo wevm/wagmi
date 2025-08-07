@@ -80,8 +80,9 @@ export function createUseWatchContractEvent<
       const account = useAccount({ config })
       const chainId =
         (parameters as { chainId?: number })?.chainId ??
-        account.chainId ??
-        configChainId
+        (config._internal.syncConnectedChain
+          ? (account.chainId ?? configChainId)
+          : configChainId)
       return useWatchContractEvent({
         ...(parameters as any),
         ...(props.eventName ? { eventName: props.eventName } : {}),
