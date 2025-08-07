@@ -21,7 +21,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "@wagmi/cli": "latest",
     "buffer": "^6.0.3",
-    "typescript": "^5.8.3",
+    "typescript": "^5.9.2",
     "vite": "^5.2.11"
   }
 }

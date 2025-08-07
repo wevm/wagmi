@@ -60,7 +60,7 @@
     "react-dom": "catalog:",
     "sherif": "^1.0.0",
     "simple-git-hooks": "^2.11.1",
-    "typescript": "5.8.3",
+    "typescript": "5.9.2",
     "viem": "2.31.7",
     "vitest": "^3.2.4",
     "vitest-browser-react": "^2.0.0-beta.1"
