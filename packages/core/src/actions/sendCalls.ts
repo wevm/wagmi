@@ -14,6 +14,7 @@ import type {
   ConnectorParameter,
 } from '../types/properties.js'
 import type { Compute } from '../types/utils.js'
+import { getAction } from '../utils/getAction.js'
 import {
   type GetConnectorClientErrorType,
   getConnectorClient,
@@ -65,7 +66,8 @@ export async function sendCalls<
     connector,
   })
 
-  return viem_sendCalls(client, {
+  const action = getAction(client, viem_sendCalls, 'sendCalls')
+  return action({
     ...(rest as any),
     ...(typeof account !== 'undefined' ? { account } : {}),
     calls,
