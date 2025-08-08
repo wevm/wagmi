@@ -14,7 +14,11 @@ import {
 import { getCacheDir } from './fetch.js'
 import { routescan } from './routescan.js'
 
-const server = setupServer(...getHandlers('https://api.routescan.io/v2/api'))
+const server = setupServer(
+  ...getHandlers(
+    'https://api.routescan.io/v2/network/mainnet/evm/1/etherscan/api',
+  ),
+)
 
 beforeAll(() => server.listen())
 afterEach(() => server.resetHandlers())
