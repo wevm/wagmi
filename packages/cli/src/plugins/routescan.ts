@@ -144,9 +144,9 @@ function buildUrl(options: {
   apiKey: string
   chainId: ChainId | undefined
 }) {
-  const baseUrl = 'https://api.routescan.io/v2/api'
   const { action, address, apiKey, chainId } = options
-  return `${baseUrl}?${chainId ? `chainId=${chainId}&` : ''}module=contract&action=${action}&address=${address}${apiKey ? `&apikey=${apiKey}` : ''}`
+  const baseUrl = `https://api.routescan.io/v2/network/mainnet/evm/${chainId}/etherscan/api`
+  return `${baseUrl}?module=contract&action=${action}&address=${address}${apiKey ? `&apikey=${apiKey}` : ''}`
 }
 
 const GetAbiResponse = z.discriminatedUnion('status', [
