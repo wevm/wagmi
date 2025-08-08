@@ -13,6 +13,7 @@ test('exports', () => {
       "safe",
       "version",
       "walletConnect",
+      "gemini",
     ]
   `)
 })
