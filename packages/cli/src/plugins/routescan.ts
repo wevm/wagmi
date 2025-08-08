@@ -10,11 +10,9 @@ import { fromZodError } from '../errors.js'
 import type { Compute } from '../types.js'
 import { fetch, getCacheDir } from './fetch.js'
 
-export type EtherscanConfig<chainId extends number> = {
+export type RoutescanConfig<chainId extends number> = {
   /**
-   * Etherscan API key.
-   *
-   * Create or manage keys at https://etherscan.io/myapikey
+   * Routescan API key.
    */
   apiKey: string
   /**
@@ -27,8 +25,6 @@ export type EtherscanConfig<chainId extends number> = {
    * Chain ID to use for fetching ABI.
    *
    * If `address` is an object, `chainId` is used to select the address.
-   *
-   * View supported chains on the [Etherscan docs](https://docs.etherscan.io/etherscan-v2/getting-started/supported-chains).
    */
   chainId: (chainId extends ChainId ? chainId : never) | (ChainId & {})
   /**
@@ -44,10 +40,10 @@ export type EtherscanConfig<chainId extends number> = {
 }
 
 /**
- * Fetches contract ABIs from Etherscan.
+ * Fetches contract ABIs from Routescan.
  */
-export function etherscan<chainId extends ChainId>(
-  config: EtherscanConfig<chainId>,
+export function routescan<chainId extends ChainId>(
+  config: RoutescanConfig<chainId>,
 ) {
   const {
     apiKey,
@@ -62,7 +58,7 @@ export function etherscan<chainId extends ChainId>(
       typeof x.address === 'string' ? { [chainId]: x.address } : x.address,
   })) as Omit<ContractConfig, 'abi'>[]
 
-  const name = 'Etherscan'
+  const name = 'Routescan'
 
   const getCacheKey: Parameters<typeof fetch>[0]['getCacheKey'] = ({
     contract,
@@ -148,9 +144,9 @@ function buildUrl(options: {
   apiKey: string
   chainId: ChainId | undefined
 }) {
-  const baseUrl = 'https://api.etherscan.io/v2/api'
   const { action, address, apiKey, chainId } = options
-  return `${baseUrl}?${chainId ? `chainId=${chainId}&` : ''}module=contract&action=${action}&address=${address}${apiKey ? `&apikey=${apiKey}` : ''}`
+  const baseUrl = `https://api.routescan.io/v2/network/mainnet/evm/${chainId}/etherscan/api`
+  return `${baseUrl}?module=contract&action=${action}&address=${address}${apiKey ? `&apikey=${apiKey}` : ''}`
 }
 
 const GetAbiResponse = z.discriminatedUnion('status', [
@@ -193,77 +189,92 @@ const GetSourceCodeResponse = z.discriminatedUnion('status', [
 ])
 
 // Supported chains
-// https://docs.etherscan.io/etherscan-v2/getting-started/supported-chains
 type ChainId =
-  | 1 // Ethereum Mainnet
-  | 11155111 // Sepolia Testnet
-  | 17000 // Holesky Testnet
-  | 560048 // Hoodi Testnet
-  | 56 // BNB Smart Chain Mainnet
-  | 97 // BNB Smart Chain Testnet
-  | 137 // Polygon Mainnet
-  | 80002 // Polygon Amoy Testnet
-  | 1101 // Polygon zkEVM Mainnet
-  | 2442 // Polygon zkEVM Cardona Testnet
-  | 8453 // Base Mainnet
-  | 84532 // Base Sepolia Testnet
-  | 42161 // Arbitrum One Mainnet
-  | 42170 // Arbitrum Nova Mainnet
-  | 421614 // Arbitrum Sepolia Testnet
-  | 59144 // Linea Mainnet
-  | 59141 // Linea Sepolia Testnet
-  | 81457 // Blast Mainnet
-  | 168587773 // Blast Sepolia Testnet
+  | 1 // Ethereum
   | 10 // OP Mainnet
-  | 11155420 // OP Sepolia Testnet
-  | 43114 // Avalanche C-Chain
-  | 43113 // Avalanche Fuji Testnet
-  | 199 // BitTorrent Chain Mainnet
-  | 1029 // BitTorrent Chain Testnet
-  | 42220 // Celo Mainnet
-  | 44787 // Celo Alfajores Testnet
-  | 25 // Cronos Mainnet
-  | 252 // Fraxtal Mainnet
-  | 2522 // Fraxtal Testnet
-  | 100 // Gnosis
-  | 5000 // Mantle Mainnet
-  | 5003 // Mantle Sepolia Testnet
-  | 43521 // Memecore Testnet
-  | 1284 // Moonbeam Mainnet
-  | 1285 // Moonriver Mainnet
-  | 1287 // Moonbase Alpha Testnet
-  | 204 // opBNB Mainnet
-  | 5611 // opBNB Testnet
-  | 534352 // Scroll Mainnet
-  | 534351 // Scroll Sepolia Testnet
-  | 167000 // Taiko Mainnet
-  | 167009 // Taiko Hekla L2 Testnet
-  | 1111 // WEMIX3.0 Mainnet
-  | 1112 // WEMIX3.0 Testnet
-  | 324 // zkSync Mainnet
-  | 300 // zkSync Sepolia Testnet
-  | 660279 // Xai Mainnet
-  | 37714555429 // Xai Sepolia Testnet
-  | 50 // XDC Mainnet
-  | 51 // XDC Apothem Testnet
-  | 33139 // ApeChain Mainnet
-  | 33111 // ApeChain Curtis Testnet
-  | 480 // World Mainnet
-  | 4801 // World Sepolia Testnet
-  | 50104 // Sophon Mainnet
-  | 531050104 // Sophon Sepolia Testnet
-  | 146 // Sonic Mainnet
-  | 57054 // Sonic Blaze Testnet
-  | 130 // Unichain Mainnet
-  | 1301 // Unichain Sepolia Testnet
-  | 2741 // Abstract Mainnet
-  | 11124 // Abstract Sepolia Testnet
-  | 80094 // Berachain Mainnet
-  | 80069 // Berachain Bepolia Testnet
-  | 1923 // Swellchain Mainnet
-  | 1924 // Swellchain Testnet
-  | 10143 // Monad Testnet
-  | 999 // HyperEVM Mainnet
-  | 747474 // Katana Mainnet
-  | 1329 // Sei Mainnet
-  | 1328 // Sei Testnet
+  | 14 // Flare Mainnet
+  | 19 // Songbird Canary
+  | 130 // Unichain
+  | 151 // Redbelly
+  | 166 // Omni
+  | 183 // ERN Scan
+  | 185 // Mint
+  | 252 // Fraxtal
+  | 254 // Swan chain
+  | 255 // Kroma
+  | 288 // Boba Ethereum
+  | 291 // Orderly
+  | 303 // WYZth
+  | 324 // zkSync Era
+  | 357 // Pulsar
+  | 369 // Pulse Chain
+  | 379 // KOROSHI
+  | 480 // World Chain
+  | 999 // Hyperliquid EVM
+  | 1088 // Metis
+  | 1135 // Lisk
+  | 1216 // Intersect
+  | 1234 // StepNetwork
+  | 1344 // Blitz
+  | 1853 // HighOctane
+  | 1888 // Memoria
+  | 1923 // Swell
+  | 2044 // Shrapnel
+  | 2786 // Apertum
+  | 2818 // Morph
+  | 3011 // PLAYA3ULL Games
+  | 3637 // Botanix
+  | 4313 // Artery
+  | 4337 // Beam
+  | 5000 // Mantle
+  | 5040 // Onigiri
+  | 5330 // Superseed
+  | 5566 // StraitsX
+  | 6119 // UPTN
+  | 6533 // Kalichain
+  | 6900 // Nibiru
+  | 7171 // Bitrock
+  | 7887 // Kinto
+  | 7979 // DOS
+  | 8008 // Polynomial
+  | 8021 // Numine
+  | 8227 // Space
+  | 8453 // Base
+  | 8787 // Animalia
+  | 8888 // XANA-CHAIN
+  | 10036 // Innovo
+  | 10507 // Numbers
+  | 10849 // Lamina1
+  | 10850 // Lamina1 Identity
+  | 12150 // QChain
+  | 13322 // Fifa Blockchain
+  | 16180 // Plyr
+  | 21024 // Tradex
+  | 27827 // Zeroone
+  | 28530 // Blockticity
+  | 33311 // Feature
+  | 34443 // Mode
+  | 42069 // Coqnet
+  | 42161 // Arbitrum One
+  | 43114 // C-Chain
+  | 43419 // GUNZ
+  | 53935 // DFK
+  | 56288 // Boba BNB
+  | 57073 // Ink
+  | 61587 // Growth
+  | 62521 // Lucid
+  | 62707 // Teleporter 1
+  | 68414 // Henesys
+  | 70953 // Teleporter 2
+  | 80094 // Berachain
+  | 81457 // Blast
+  | 84358 // Titan
+  | 88888 // Chiliz
+  | 96786 // Delaunch
+  | 167000 // Taiko
+  | 432204 // Dexalot
+  | 504441 // Playdapp
+  | 710420 // Tiltyard
+  | 7777777 // Zora
+  | 21000000 // Corn
+  | 333000333 // Meld

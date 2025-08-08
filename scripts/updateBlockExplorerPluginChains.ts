@@ -42,6 +42,28 @@ let count = 0
   count += 1
 }
 
+{
+  console.log(
+    'routescan - https://api.routescan.io/v2/network/mainnet/evm/all/blockchains',
+  )
+  const res = (await fetch(
+    'https://api.routescan.io/v2/network/mainnet/evm/all/blockchains',
+  ).then((res) => res.json())) as {
+    items: {
+      name: string
+      chainId: number
+    }[]
+  }
+
+  let content = 'type ChainId =\n'
+  const chains = res.items.sort((a, b) => a.chainId - b.chainId)
+  for (const chain of chains)
+    content += `  | ${chain.chainId} // ${chain.name}\n`
+
+  await writeContent('./packages/cli/src/plugins/routescan.ts', content)
+  count += 1
+}
+
 console.log(`Done. Updated chains for ${count} plugins.`)
 
 async function writeContent(pluginPath: string, content: string) {

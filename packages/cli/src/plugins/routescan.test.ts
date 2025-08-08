@@ -11,10 +11,10 @@ import {
   timeoutAddress,
   unverifiedContractAddress,
 } from '../../test/utils.js'
-import { etherscan } from './etherscan.js'
 import { getCacheDir } from './fetch.js'
+import { routescan } from './routescan.js'
 
-const server = setupServer(...getHandlers())
+const server = setupServer(...getHandlers('https://api.routescan.io/v2/api'))
 
 beforeAll(() => server.listen())
 afterEach(() => server.resetHandlers())
@@ -22,7 +22,7 @@ afterAll(() => server.close())
 
 test('fetches ABI', async () => {
   await expect(
-    etherscan({
+    routescan({
       apiKey,
       chainId: 1,
       contracts: [{ name: 'WagmiMintExample', address }],
@@ -32,7 +32,7 @@ test('fetches ABI', async () => {
 
 test('fetches ABI with multichain deployment', async () => {
   await expect(
-    etherscan({
+    routescan({
       apiKey,
       chainId: 1,
       contracts: [
@@ -44,7 +44,7 @@ test('fetches ABI with multichain deployment', async () => {
 
 test('fails to fetch for unverified contract', async () => {
   await expect(
-    etherscan({
+    routescan({
       apiKey,
       chainId: 1,
       contracts: [
@@ -58,7 +58,7 @@ test('fails to fetch for unverified contract', async () => {
 
 test('missing address for chainId', async () => {
   await expect(
-    etherscan({
+    routescan({
       apiKey,
       chainId: 1,
       // @ts-expect-error `chainId` and `keyof typeof contracts[number].address` mismatch
@@ -71,7 +71,7 @@ test('missing address for chainId', async () => {
 
 test('invalid api key', async () => {
   await expect(
-    etherscan({
+    routescan({
       apiKey: invalidApiKey,
       chainId: 1,
       contracts: [{ name: 'WagmiMintExample', address: timeoutAddress }],
@@ -84,7 +84,7 @@ test('tryFetchProxyImplementation: fetches ABI', async () => {
   await mkdir(cacheDir, { recursive: true })
 
   await expect(
-    etherscan({
+    routescan({
       apiKey,
       chainId: 1,
       contracts: [{ name: 'WagmiMintExample', address }],
@@ -100,7 +100,7 @@ test('tryFetchProxyImplementation: fetches implementation ABI', async () => {
   await mkdir(cacheDir, { recursive: true })
 
   await expect(
-    etherscan({
+    routescan({
       apiKey,
       chainId: 1,
       contracts: [{ name: 'FiatToken', address: proxyAddress }],
