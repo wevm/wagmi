@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.19.0
+
+### Minor Changes
+
+- [#4756](https://github.com/wevm/wagmi/pull/4756) [`b5f017dbc707729eb0b36d617352be224d1139d4`](https://github.com/wevm/wagmi/commit/b5f017dbc707729eb0b36d617352be224d1139d4) Thanks [@plusminushalf](https://github.com/plusminushalf)! - Added `getAction` to `sendCalls` and `getCallsStatus`
+
 ## 2.18.1
 
 ### Patch Changes

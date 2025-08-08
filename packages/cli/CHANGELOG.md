@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 2.4.0
+
+### Minor Changes
+
+- [#4757](https://github.com/wevm/wagmi/pull/4757) [`aec8a61ef0dfe02421d514bd130505ec13f8d3a0`](https://github.com/wevm/wagmi/commit/aec8a61ef0dfe02421d514bd130505ec13f8d3a0) Thanks [@tmm](https://github.com/tmm)! - Added Routescan plugin.
+
 ## 2.3.2
 
 ### Patch Changes
