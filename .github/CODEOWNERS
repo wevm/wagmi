@@ -1,5 +1,6 @@
 @tmm @jxom
 
+/packages/connectors/src/gemini @mikelxc
 /packages/connectors/src/metaMask @ecp4224 @omridan159 @abretonc7s @elefantel @BjornGunnarsson @EdouardBougon
 /packages/connectors/src/safe @DaniSomoza @dasanra @mikhailxyz @yagopv
 /packages/connectors/src/walletConnect @ganchoradkov @glitch-txs @ignaciosantise @tomiir
