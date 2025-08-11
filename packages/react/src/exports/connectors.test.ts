@@ -7,6 +7,7 @@ test('exports', () => {
     [
       "baseAccount",
       "coinbaseWallet",
+      "gemini",
       "injected",
       "metaMask",
       "mock",
