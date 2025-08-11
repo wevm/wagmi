@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 5.9.3
+
+### Patch Changes
+
+- [#4759](https://github.com/wevm/wagmi/pull/4759) [`909324d28c81e15c9df312b277dcff1983fbae4d`](https://github.com/wevm/wagmi/commit/909324d28c81e15c9df312b277dcff1983fbae4d) Thanks [@mikelxc](https://github.com/mikelxc)! - Added Gemini
+
 ## 5.9.2
 
 ### Patch Changes
