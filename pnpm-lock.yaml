@@ -198,8 +198,8 @@ importers:
         specifier: 4.3.6
         version: 4.3.6(@types/react@18.3.1)(bufferutil@4.0.8)(react@18.3.1)(typescript@5.9.2)(use-sync-external-store@1.4.0(react@18.3.1))(utf-8-validate@5.0.10)(zod@3.22.4)
       '@gemini-wallet/core':
-        specifier: 0.1.1
-        version: 0.1.1(viem@2.31.7(bufferutil@4.0.8)(typescript@5.9.2)(utf-8-validate@5.0.10)(zod@3.22.4))
+        specifier: 0.2.0
+        version: 0.2.0(viem@2.31.7(bufferutil@4.0.8)(typescript@5.9.2)(utf-8-validate@5.0.10)(zod@3.22.4))
       '@metamask/sdk':
         specifier: 0.32.0
         version: 0.32.0(bufferutil@4.0.8)(encoding@0.1.13)(utf-8-validate@5.0.10)
@@ -1624,8 +1624,8 @@ packages:
   '@floating-ui/utils@0.2.2':
     resolution: {integrity: sha512-J4yDIIthosAsRZ5CPYP/jQvUAQtlZTTD/4suA08/FEnlxqW3sKS9iAhgsa9VYLZ6vDHn/ixJgIqRQPotoBjxIw==}
 
-  '@gemini-wallet/core@0.1.1':
-    resolution: {integrity: sha512-97Ktv+vZszADHdu6hS/B5tRfOqebwGNyD2Pfvmo1kK8d54UsNZtC22D8LJEueXqgVbq5PeSn0jv88uav3t1fHg==}
+  '@gemini-wallet/core@0.2.0':
+    resolution: {integrity: sha512-vv9aozWnKrrPWQ3vIFcWk7yta4hQW1Ie0fsNNPeXnjAxkbXr2hqMagEptLuMxpEP2W3mnRu05VDNKzcvAuuZDw==}
     peerDependencies:
       viem: '>=2.0.0'
 
@@ -3918,7 +3918,6 @@ packages:
 
   bun@1.1.29:
     resolution: {integrity: sha512-SKhpyKNZtgxrVel9ec9xon3LDv8mgpiuFhARgcJo1YIbggY2PBrKHRNiwQ6Qlb+x3ivmRurfuwWgwGexjpgBRg==}
-    cpu: [arm64, x64]
     os: [darwin, linux, win32]
     hasBin: true
 
@@ -9622,7 +9621,7 @@ snapshots:
 
   '@floating-ui/utils@0.2.2': {}
 
-  '@gemini-wallet/core@0.1.1(viem@2.31.7(bufferutil@4.0.8)(typescript@5.9.2)(utf-8-validate@5.0.10)(zod@3.22.4))':
+  '@gemini-wallet/core@0.2.0(viem@2.31.7(bufferutil@4.0.8)(typescript@5.9.2)(utf-8-validate@5.0.10)(zod@3.22.4))':
     dependencies:
       '@metamask/rpc-errors': 7.0.2
       eventemitter3: 5.0.1
@@ -11087,7 +11086,7 @@ snapshots:
     dependencies:
       '@noble/curves': 1.8.2
       '@noble/hashes': 1.7.2
-      '@scure/base': 1.2.4
+      '@scure/base': 1.2.6
 
   '@scure/bip32@1.7.0':
     dependencies:
@@ -11113,7 +11112,7 @@ snapshots:
   '@scure/bip39@1.5.4':
     dependencies:
       '@noble/hashes': 1.7.2
-      '@scure/base': 1.2.4
+      '@scure/base': 1.2.6
 
   '@scure/bip39@1.6.0':
     dependencies:
