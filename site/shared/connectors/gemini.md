@@ -51,6 +51,6 @@ const connector = gemini({
     name: 'My Wagmi App', // [!code focus]
     url: 'https://example.com', // [!code focus]
     icon: 'https://example.com/favicon.ico', // [!code focus]
-  }
+  }, // [!code focus]
 })
 ```
