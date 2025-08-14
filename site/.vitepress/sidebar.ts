@@ -85,6 +85,10 @@ export function getSidebar() {
                 text: 'baseAccount',
                 link: '/react/api/connectors/baseAccount',
               },
+              {
+                text: 'gemini',
+                link: '/react/api/connectors/gemini',
+              },
               { text: 'injected', link: '/react/api/connectors/injected' },
               {
                 text: 'metaMask',
@@ -443,6 +447,10 @@ export function getSidebar() {
                 text: 'baseAccount',
                 link: '/vue/api/connectors/baseAccount',
               },
+              {
+                text: 'gemini',
+                link: '/vue/api/connectors/gemini',
+              },
               { text: 'injected', link: '/vue/api/connectors/injected' },
               {
                 text: 'metaMask',
@@ -686,6 +694,10 @@ export function getSidebar() {
               {
                 text: 'baseAccount',
                 link: '/core/api/connectors/baseAccount',
+              },
+              {
+                text: 'gemini',
+                link: '/core/api/connectors/gemini',
               },
               { text: 'injected', link: '/core/api/connectors/injected' },
               {
