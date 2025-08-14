@@ -47,7 +47,7 @@
   "dependencies": {
     "@base-org/account": "1.1.1",
     "@coinbase/wallet-sdk": "4.3.6",
-    "@gemini-wallet/core": "0.1.1",
+    "@gemini-wallet/core": "0.2.0",
     "@metamask/sdk": "0.32.0",
     "@safe-global/safe-apps-provider": "0.18.6",
     "@safe-global/safe-apps-sdk": "9.1.0",

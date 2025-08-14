@@ -1,6 +1,6 @@
 import { cookieStorage, createConfig, createStorage, http } from 'wagmi'
 import { mainnet, optimism, sepolia } from 'wagmi/chains'
-import { injected, metaMask, walletConnect } from 'wagmi/connectors'
+import { gemini, injected, metaMask, walletConnect } from 'wagmi/connectors'
 
 export function getConfig() {
   return createConfig({
@@ -11,6 +11,7 @@ export function getConfig() {
         projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID!,
       }),
       metaMask(),
+      gemini(),
     ],
     storage: createStorage({
       storage: cookieStorage,
