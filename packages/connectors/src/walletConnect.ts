@@ -167,7 +167,16 @@ export function walletConnect(parameters: WalletConnectParameters) {
 
         // If session exists and chains are authorized, enable provider for required chain
         const accounts = (await provider.enable()).map((x) => getAddress(x))
-        const currentChainId = await this.getChainId()
+
+        // Switch to chain if provided
+        let currentChainId = await this.getChainId()
+        if (chainId && currentChainId !== chainId) {
+          const chain = await this.switchChain!({ chainId }).catch((error) => {
+            if (error.code === UserRejectedRequestError.code) throw error
+            return { id: currentChainId }
+          })
+          currentChainId = chain?.id ?? currentChainId
+        }
 
         if (displayUri) {
           provider.removeListener('display_uri', displayUri)
@@ -271,7 +280,6 @@ export function walletConnect(parameters: WalletConnectParameters) {
         provider_ = await providerPromise
         provider_?.events.setMaxListeners(Number.POSITIVE_INFINITY)
       }
-      if (chainId) await this.switchChain?.({ chainId })
       return provider_!
     },
     async getChainId() {
