@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 2.5.0
+
+### Minor Changes
+
+- [`1edb09f7b69da3d7819d0e070e875e2c6fe8015d`](https://github.com/wevm/wagmi/commit/1edb09f7b69da3d7819d0e070e875e2c6fe8015d) Thanks [@tmm](https://github.com/tmm)! - Added testnets to `routescan` plugin
+
 ## 2.4.0
 
 ### Minor Changes
