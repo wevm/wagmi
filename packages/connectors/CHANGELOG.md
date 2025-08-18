@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 5.9.4
+
+### Patch Changes
+
+- [#4764](https://github.com/wevm/wagmi/pull/4764) [`f4039419b83b52b2984de149db85c11f503ffe39`](https://github.com/wevm/wagmi/commit/f4039419b83b52b2984de149db85c11f503ffe39) Thanks [@mikelxc](https://github.com/mikelxc)! - Updated gemini connector
+
 ## 5.9.3
 
 ### Patch Changes
