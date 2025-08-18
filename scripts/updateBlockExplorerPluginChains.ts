@@ -44,19 +44,20 @@ let count = 0
 
 {
   console.log(
-    'routescan - https://api.routescan.io/v2/network/mainnet/evm/all/blockchains',
+    'routescan - https://api.routescan.io/v2/network/(mainnet|testnet)/evm/all/blockchains',
   )
-  const res = (await fetch(
-    'https://api.routescan.io/v2/network/mainnet/evm/all/blockchains',
-  ).then((res) => res.json())) as {
-    items: {
-      name: string
-      chainId: number
-    }[]
-  }
+  const [res1, res2] = await Promise.all([
+    fetch('https://api.routescan.io/v2/network/mainnet/evm/all/blockchains'),
+    fetch('https://api.routescan.io/v2/network/testnet/evm/all/blockchains'),
+  ]).then(
+    async ([res1, res2]) =>
+      [await res1.json(), await res2.json()] as [mainnet: Res, testnet: Res],
+  )
+  type Res = { items: { name: string; chainId: number }[] }
+  const res = [...res1.items, ...res2.items]
 
   let content = 'type ChainId =\n'
-  const chains = res.items.sort((a, b) => a.chainId - b.chainId)
+  const chains = res.sort((a, b) => a.chainId - b.chainId)
   for (const chain of chains)
     content += `  | ${chain.chainId} // ${chain.name}\n`
 
