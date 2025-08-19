@@ -1,5 +1,11 @@
 # @wagmi/vue
 
+## 0.2.0
+
+### Minor Changes
+
+- [#4737](https://github.com/wevm/wagmi/pull/4737) [`23bad767c5055f54d2a5a5179830e078282fa00f`](https://github.com/wevm/wagmi/commit/23bad767c5055f54d2a5a5179830e078282fa00f) Thanks [@microHoffman](https://github.com/microHoffman)! - Added support for Nuxt 4.
+
 ## 0.1.28
 
 ### Patch Changes
