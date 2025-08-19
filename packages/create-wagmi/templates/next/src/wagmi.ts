@@ -1,4 +1,4 @@
-import { http, cookieStorage, createConfig, createStorage } from 'wagmi'
+import { cookieStorage, createConfig, createStorage, http } from 'wagmi'
 import { mainnet, sepolia } from 'wagmi/chains'
 import { baseAccount, injected, walletConnect } from 'wagmi/connectors'
 
@@ -8,7 +8,7 @@ export function getConfig() {
     connectors: [
       injected(),
       baseAccount(),
-      walletConnect({ projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID }),
+      walletConnect({ projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID! }),
     ],
     storage: createStorage({
       storage: cookieStorage,

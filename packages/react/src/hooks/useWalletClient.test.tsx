@@ -1,8 +1,8 @@
 import { connect, disconnect } from '@wagmi/core'
-import { config, wait } from '@wagmi/test'
-import { render, renderHook, waitFor } from '@wagmi/test/react'
+import { config } from '@wagmi/test'
+import { render, renderHook } from '@wagmi/test/react'
 import * as React from 'react'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { useAccount } from './useAccount.js'
 import { useConnect } from './useConnect.js'
@@ -16,9 +16,9 @@ import { useWalletClient } from './useWalletClient.js'
 const connector = config.connectors[0]!
 
 test('default', async () => {
-  const { result } = renderHook(() => useWalletClient())
+  const { result } = await renderHook(() => useWalletClient())
 
-  await waitFor(() => expect(result.current.isPending).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isPending).toBeTruthy())
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -60,9 +60,9 @@ test('default', async () => {
 test('behavior: connected on mount', async () => {
   await connect(config, { connector })
 
-  const { result } = renderHook(() => useWalletClient())
+  const { result } = await renderHook(() => useWalletClient())
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   const { data, queryKey: _, ...rest } = result.current
   expect(data).toMatchObject(
@@ -103,7 +103,7 @@ test('behavior: connected on mount', async () => {
 })
 
 test('behavior: connect and disconnect', async () => {
-  const { result } = renderHook(() => ({
+  const { result } = await renderHook(() => ({
     useConnect: useConnect(),
     useWalletClient: useWalletClient(),
     useDisconnect: useDisconnect(),
@@ -115,11 +115,13 @@ test('behavior: connect and disconnect', async () => {
     connector: result.current.useConnect.connectors[0]!,
   })
 
-  await waitFor(() => expect(result.current.useWalletClient.data).toBeDefined())
+  await vi.waitFor(() =>
+    expect(result.current.useWalletClient.data).toBeDefined(),
+  )
 
   result.current.useDisconnect.disconnect()
 
-  await waitFor(() =>
+  await vi.waitFor(() =>
     expect(result.current.useWalletClient.data).not.toBeDefined(),
   )
 })
@@ -127,54 +129,66 @@ test('behavior: connect and disconnect', async () => {
 test('behavior: switch chains', async () => {
   await connect(config, { connector })
 
-  const { result } = renderHook(() => ({
+  const { act, result } = await renderHook(() => ({
     useWalletClient: useWalletClient(),
     useSwitchChain: useSwitchChain(),
   }))
 
   expect(result.current.useWalletClient.data).not.toBeDefined()
+  await vi.waitFor(() =>
+    expect(result.current.useWalletClient.data).toBeDefined(),
+  )
 
-  await waitFor(() => expect(result.current.useWalletClient.data).toBeDefined())
-
-  result.current.useSwitchChain.switchChain({ chainId: 456 })
-  await waitFor(() => {
-    expect(result.current.useSwitchChain.isSuccess).toBeTruthy()
-    result.current.useSwitchChain.reset()
+  await act(() => result.current.useSwitchChain.switchChain({ chainId: 456 }))
+  await vi.waitUntil(() => result.current.useSwitchChain.isSuccess, {
+    timeout: 5_000,
+  })
+  await act(() => result.current.useSwitchChain.reset())
+  await vi.waitUntil(() => result.current.useWalletClient.isSuccess, {
+    timeout: 5_000,
   })
   expect(result.current.useWalletClient.data?.chain.id).toEqual(456)
 
-  result.current.useSwitchChain.switchChain({ chainId: 1 })
-  await waitFor(() =>
-    expect(result.current.useSwitchChain.isSuccess).toBeTruthy(),
-  )
+  await act(() => result.current.useSwitchChain.switchChain({ chainId: 1 }))
+  await vi.waitUntil(() => result.current.useSwitchChain.isSuccess, {
+    timeout: 5_000,
+  })
+  await vi.waitUntil(() => result.current.useWalletClient.isSuccess, {
+    timeout: 5_000,
+  })
   expect(result.current.useWalletClient.data?.chain.id).toEqual(1)
 
   await disconnect(config, { connector })
 })
 
 test('behavior: re-render does not invalidate query', async () => {
-  const { getByTestId } = render(<Parent />)
+  await disconnect(config, { connector })
 
-  getByTestId('connect').click()
-  await waitFor(() => {
-    expect(getByTestId('address').innerText).toContain(
-      '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',
-    )
-    expect(getByTestId('client').innerText).toBeTruthy()
+  const screen = await render(<Parent />)
 
-    expect(getByTestId('child-client').innerText).toBeTruthy()
-    expect(getByTestId('render-count').innerText).toEqual('1')
+  await screen.getByTestId('connect').click()
+  await vi.waitFor(async () => {
+    await expect
+      .element(screen.getByTestId('address'))
+      .toHaveTextContent('0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266')
+    await expect.element(screen.getByTestId('client')).toBeVisible()
+
+    await expect.element(screen.getByTestId('child-client')).toBeVisible()
+    await expect
+      .element(screen.getByTestId('render-count'))
+      .toHaveTextContent('1')
   })
 
-  const initialClient = getByTestId('child-client').innerText
+  const initialClient = screen.getByTestId('child-client')
 
-  getByTestId('rerender').click()
-  await waitFor(() => {
-    expect(getByTestId('render-count').innerText).toEqual('2')
-  })
-  await wait(200)
+  await screen.getByTestId('rerender').click()
+  await vi.waitFor(() =>
+    expect.element(screen.getByTestId('render-count')).toHaveTextContent('2'),
+  )
 
-  expect(getByTestId('child-client').innerText).toEqual(initialClient)
+  await expect
+    .element(screen.getByTestId('child-client').element())
+    .toEqual(initialClient.element())
 })
 
 function Parent() {
@@ -208,9 +222,7 @@ function Parent() {
   )
 }
 
-function Child(props: {
-  renderCount: number
-}) {
+function Child(props: { renderCount: number }) {
   const { renderCount } = props
   const { data } = useWalletClient()
   return (

@@ -1,9 +1,9 @@
 import { del, get, set } from 'idb-keyval'
-import { http, createConfig } from 'wagmi'
+import { createConfig, http } from 'wagmi'
 import { celo, mainnet, optimism, sepolia } from 'wagmi/chains'
-import { baseAccount, metaMask, walletConnect } from 'wagmi/connectors'
+import { baseAccount, gemini, metaMask, walletConnect } from 'wagmi/connectors'
 
-// biome-ignore lint/correctness/noUnusedVariables: <explanation>
+// biome-ignore lint/correctness/noUnusedVariables: allowed
 const indexedDBStorage = {
   async getItem(name: string) {
     return get(name)
@@ -24,6 +24,7 @@ export const config = createConfig({
     }),
     baseAccount(),
     metaMask(),
+    gemini(),
   ],
   transports: {
     [mainnet.id]: http(),

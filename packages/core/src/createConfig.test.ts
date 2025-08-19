@@ -1,8 +1,8 @@
 import { accounts, chain, wait } from '@wagmi/test'
 import {
+  announceProvider,
   type EIP1193Provider,
   type EIP6963ProviderDetail,
-  announceProvider,
 } from 'mipd'
 import { http } from 'viem'
 import { expect, test, vi } from 'vitest'

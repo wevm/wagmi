@@ -1,7 +1,7 @@
 'use client'
 
 import type { FormEvent } from 'react'
-import { type Hex, formatEther, parseAbi, parseEther } from 'viem'
+import { formatEther, type Hex, parseAbi, parseEther } from 'viem'
 import {
   type BaseError,
   useAccount,
@@ -390,7 +390,6 @@ function Repro() {
   const config = useConfig()
   const chainId = useChainId()
 
-  // biome-ignore lint/suspicious/noConsoleLog: <explanation>
   console.log('chainId from useChainId is', chainId)
   return (
     <main className="flex min-h-screen flex-col items-center p-24">

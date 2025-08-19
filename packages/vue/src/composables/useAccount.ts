@@ -1,11 +1,11 @@
 import {
   type Config,
   type GetAccountReturnType,
-  type ResolvedRegister,
   getAccount,
+  type ResolvedRegister,
   watchAccount,
 } from '@wagmi/core'
-import { type ToRefs, onScopeDispose, reactive, readonly, toRefs } from 'vue'
+import { onScopeDispose, reactive, readonly, type ToRefs, toRefs } from 'vue'
 
 import type { ConfigParameter } from '../types/properties.js'
 import { updateState } from '../utils/updateState.js'

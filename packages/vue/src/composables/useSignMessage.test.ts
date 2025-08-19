@@ -2,9 +2,8 @@ import { connect, disconnect, getAccount } from '@wagmi/core'
 import { config, privateKey } from '@wagmi/test'
 import { renderComposable, waitFor } from '@wagmi/test/vue'
 import { recoverMessageAddress } from 'viem'
-import { expect, test } from 'vitest'
-
 import { privateKeyToAccount } from 'viem/accounts'
+import { expect, test } from 'vitest'
 import { useSignMessage } from './useSignMessage.js'
 
 const connector = config.connectors[0]!

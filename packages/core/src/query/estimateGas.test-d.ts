@@ -1,4 +1,4 @@
-import { http, type Address, parseEther } from 'viem'
+import { type Address, http, parseEther } from 'viem'
 import { celo, mainnet } from 'viem/chains'
 import { expectTypeOf, test } from 'vitest'
 

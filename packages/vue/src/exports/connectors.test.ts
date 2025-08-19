@@ -9,10 +9,11 @@ test('exports', () => {
       "mock",
       "baseAccount",
       "coinbaseWallet",
+      "gemini",
       "metaMask",
       "safe",
-      "walletConnect",
       "version",
+      "walletConnect",
     ]
   `)
 })

@@ -7,6 +7,7 @@ import {
 
 import type { Config } from '../createConfig.js'
 import type { ConnectorParameter } from '../types/properties.js'
+import { getAction } from '../utils/getAction.js'
 import { getConnectorClient } from './getConnectorClient.js'
 
 export type GetCallsStatusParameters = viem_GetCallsStatusParameters &
@@ -23,5 +24,6 @@ export async function getCallsStatus<config extends Config>(
 ): Promise<GetCallsStatusReturnType> {
   const { connector, id } = parameters
   const client = await getConnectorClient(config, { connector })
-  return viem_getCallsStatus(client, { id })
+  const action = getAction(client, viem_getCallsStatus, 'getCallsStatus')
+  return action({ id })
 }

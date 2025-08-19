@@ -1,8 +1,8 @@
 {
   "extends": "./tsconfig.base.json",
-  "include": ["scripts/**/*.ts", "vitest.workspace.ts", "vitest.config.ts"],
+  "include": ["scripts/**/*.ts", "vitest.config.ts"],
   "exclude": [],
   "compilerOptions": {
-    "types": ["@types/bun"]
+    "types": ["@types/bun", "@vitest/browser/providers/playwright"]
   }
 }

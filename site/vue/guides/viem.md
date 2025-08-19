@@ -64,7 +64,7 @@ const { mutate } = useMutation({
 
 ## Private Key & Mnemonic Accounts
 
-It is possible to utilize Viem's [Private Key & Mnemonic Accounts](https://viem.sh/docs/accounts/local.html) with Wagmi by explicitly passing through the account via the `account` argument on Wagmi Actions.
+It is possible to utilize Viem's [Private Key & Mnemonic Accounts](https://viem.sh/docs/accounts/local) with Wagmi by explicitly passing through the account via the `account` argument on Wagmi Actions.
 
 ```vue
 <script setup lang="ts">

@@ -1,4 +1,6 @@
 name: Issue Labeled
+permissions:
+  issues: write
 
 on:
   issues:

@@ -4,13 +4,13 @@ import { afterAll, afterEach, beforeAll, expect, test } from 'vitest'
 import {
   address,
   apiKey,
-  baseUrl,
-  handlers,
+  getHandlers,
   unverifiedContractAddress,
 } from '../../test/utils.js'
 import { blockExplorer } from './blockExplorer.js'
 
-const server = setupServer(...handlers)
+const baseUrl = 'https://api.etherscan.io/v2/api'
+const server = setupServer(...getHandlers(baseUrl))
 
 beforeAll(() => server.listen())
 afterEach(() => server.resetHandlers())

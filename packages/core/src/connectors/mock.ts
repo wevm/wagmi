@@ -1,20 +1,20 @@
 import {
   type Address,
+  custom,
   type EIP1193RequestFn,
+  fromHex,
+  getAddress,
   type Hex,
+  keccak256,
+  numberToHex,
   RpcRequestError,
   SwitchChainError,
+  stringToHex,
   type Transport,
   UserRejectedRequestError,
   type WalletCallReceipt,
   type WalletGetCallsStatusReturnType,
   type WalletRpcSchema,
-  custom,
-  fromHex,
-  getAddress,
-  keccak256,
-  numberToHex,
-  stringToHex,
 } from 'viem'
 import { rpc } from 'viem/utils'
 
@@ -208,11 +208,17 @@ export function mock(parameters: MockParameters) {
         if (method === 'wallet_sendCalls') {
           const hashes = []
           const calls = (params as any)[0].calls
+          const from = (params as any)[0].from
           for (const call of calls) {
             const { result, error } = await rpc.http(url, {
               body: {
                 method: 'eth_sendTransaction',
-                params: [call],
+                params: [
+                  {
+                    ...call,
+                    ...(typeof from !== 'undefined' ? { from } : {}),
+                  },
+                ],
               },
             })
             if (error)

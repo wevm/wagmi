@@ -2,9 +2,8 @@ import type { Connector, SwitchChainErrorType } from '@wagmi/core'
 import type { Chain } from '@wagmi/core/chains'
 import type { Compute, ExactPartial } from '@wagmi/core/internal'
 import { chain } from '@wagmi/test'
-import { expectTypeOf, test } from 'vitest'
-
 import type { AddEthereumChainParameter } from 'viem'
+import { expectTypeOf, test } from 'vitest'
 import { useSwitchChain } from './useSwitchChain.js'
 
 const chainId = chain.mainnet.id

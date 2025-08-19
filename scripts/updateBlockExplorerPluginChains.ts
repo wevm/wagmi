@@ -42,6 +42,29 @@ let count = 0
   count += 1
 }
 
+{
+  console.log(
+    'routescan - https://api.routescan.io/v2/network/(mainnet|testnet)/evm/all/blockchains',
+  )
+  const [res1, res2] = await Promise.all([
+    fetch('https://api.routescan.io/v2/network/mainnet/evm/all/blockchains'),
+    fetch('https://api.routescan.io/v2/network/testnet/evm/all/blockchains'),
+  ]).then(
+    async ([res1, res2]) =>
+      [await res1.json(), await res2.json()] as [mainnet: Res, testnet: Res],
+  )
+  type Res = { items: { name: string; chainId: number }[] }
+  const res = [...res1.items, ...res2.items]
+
+  let content = 'type ChainId =\n'
+  const chains = res.sort((a, b) => a.chainId - b.chainId)
+  for (const chain of chains)
+    content += `  | ${chain.chainId} // ${chain.name}\n`
+
+  await writeContent('./packages/cli/src/plugins/routescan.ts', content)
+  count += 1
+}
+
 console.log(`Done. Updated chains for ${count} plugins.`)
 
 async function writeContent(pluginPath: string, content: string) {

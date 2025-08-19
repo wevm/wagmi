@@ -1,5 +1,33 @@
 # @wagmi/connectors
 
+## 5.9.4
+
+### Patch Changes
+
+- [#4764](https://github.com/wevm/wagmi/pull/4764) [`f4039419b83b52b2984de149db85c11f503ffe39`](https://github.com/wevm/wagmi/commit/f4039419b83b52b2984de149db85c11f503ffe39) Thanks [@mikelxc](https://github.com/mikelxc)! - Updated gemini connector
+
+## 5.9.3
+
+### Patch Changes
+
+- [#4759](https://github.com/wevm/wagmi/pull/4759) [`909324d28c81e15c9df312b277dcff1983fbae4d`](https://github.com/wevm/wagmi/commit/909324d28c81e15c9df312b277dcff1983fbae4d) Thanks [@mikelxc](https://github.com/mikelxc)! - Added Gemini
+
+## 5.9.2
+
+### Patch Changes
+
+- Updated dependencies [[`b5f017dbc707729eb0b36d617352be224d1139d4`](https://github.com/wevm/wagmi/commit/b5f017dbc707729eb0b36d617352be224d1139d4)]:
+  - @wagmi/core@2.19.0
+
+## 5.9.1
+
+### Patch Changes
+
+- [`6fbafd425e488dbeee8404162dbeb3c737eeb8cf`](https://github.com/wevm/wagmi/commit/6fbafd425e488dbeee8404162dbeb3c737eeb8cf) Thanks [@jxom](https://github.com/jxom)! - Updated `@base-org/account`
+
+- Updated dependencies [[`6514ba29a5acb918773235fed0238d7d679d06d5`](https://github.com/wevm/wagmi/commit/6514ba29a5acb918773235fed0238d7d679d06d5)]:
+  - @wagmi/core@2.18.1
+
 ## 5.9.0
 
 ### Minor Changes
