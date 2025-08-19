@@ -239,6 +239,12 @@ If you find Wagmi useful or use it for work, please consider [sponsoring Wagmi](
       <img alt="sequence logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/sequence-light.svg" width="auto" height="50">
     </picture>
   </a>
+  <a href="https://gemini.com">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/gemini-dark.svg">
+      <img alt="gemini logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/gemini-light.svg" width="auto" height="50">
+    </picture>
+  </a>
 </p>
 
 [Sponsor Wagmi](https://github.com/sponsors/wevm?metadata_campaign=gh_readme_support_bottom)
