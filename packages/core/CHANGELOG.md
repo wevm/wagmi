@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.20.0
+
+### Minor Changes
+
+- [#4770](https://github.com/wevm/wagmi/pull/4770) [`a13aa2b68890f180f6ac3f741cbb9817494cb66c`](https://github.com/wevm/wagmi/commit/a13aa2b68890f180f6ac3f741cbb9817494cb66c) Thanks [@tmm](https://github.com/tmm)! - Added internal `revalidate` function.
+
 ## 2.19.0
 
 ### Minor Changes
