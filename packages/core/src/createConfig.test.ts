@@ -12,8 +12,9 @@ import { disconnect } from './actions/disconnect.js'
 import { switchChain } from './actions/switchChain.js'
 import { createConnector } from './connectors/createConnector.js'
 import { mock } from './connectors/mock.js'
-import { createConfig } from './createConfig.js'
+import { type Connection, createConfig } from './createConfig.js'
 import { createStorage } from './createStorage.js'
+import { serialize } from './utils/serialize.js'
 
 const { mainnet, optimism } = chain
 
@@ -424,6 +425,62 @@ test('behavior: eip 6963 providers', async () => {
       "com.bar",
     ]
   `)
+})
+
+test('behavior: revalidate connections', async () => {
+  const state = {
+    'wagmi.store': serialize({
+      state: { chainId: 1 },
+      version: 1,
+    }),
+  } as Record<string, string>
+  Object.defineProperty(window, 'localStorage', {
+    value: {
+      getItem: vi.fn((key) => state[key] ?? null),
+      removeItem: vi.fn((key) => state.delete?.[key]),
+      setItem: vi.fn((key, value) => {
+        state[key] = value
+      }),
+    },
+    writable: true,
+  })
+
+  const config = createConfig({
+    chains: [mainnet],
+    connectors: [
+      mock({ accounts }),
+      mock({ accounts, features: { defaultConnected: true, reconnect: true } }),
+      mock({ accounts }),
+    ],
+    storage: createStorage<{ store: object }>({
+      storage: window.localStorage,
+    }),
+    transports: {
+      [mainnet.id]: http(),
+    },
+  })
+
+  const connections = new Map<string, Connection>()
+  const c1 = config.connectors.at(0)!
+  const c2 = config.connectors.at(1)!
+  const c3 = config.connectors.at(2)!
+  connections.set(c1.uid, { accounts: ['0x'], chainId: 1, connector: c1 })
+  connections.set(c2.uid, { accounts: ['0x'], chainId: 1, connector: c2 })
+  connections.set(c3.uid, { accounts: ['0x'], chainId: 1, connector: c3 })
+  connections.set('foo', {
+    accounts: ['0x'],
+    chainId: 1,
+    connector: {
+      id: 'foo',
+      name: 'foo',
+      type: 'foo',
+      uid: 'foo',
+    } as Connection['connector'],
+  })
+  config.setState((state) => ({ ...state, connections }))
+  await config._internal.revalidate()
+
+  expect([...config.state.connections.keys()]).toEqual([c2.uid])
 })
 
 function getProviderDetail(

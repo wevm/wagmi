@@ -451,6 +451,26 @@ export function createConfig<
 
     _internal: {
       mipd,
+      async revalidate() {
+        // Check connections to see if they are still active
+        const state = store.getState()
+        const connections = state.connections
+        let current = state.current
+        for (const [, connection] of connections) {
+          const connector = connection.connector
+          // check if `connect.isAuthorized` exists
+          // partial connectors in storage do not have it
+          const isAuthorized = connector.isAuthorized
+            ? await connector.isAuthorized()
+            : false
+          if (isAuthorized) continue
+          // Remove stale connection
+          connections.delete(connector.uid)
+          if (current === connector.uid) current = null
+        }
+        // set connections
+        store.setState((x) => ({ ...x, connections, current }))
+      },
       store,
       ssr: Boolean(ssr),
       syncConnectedChain,
@@ -569,6 +589,7 @@ type Internal<
   >,
 > = {
   readonly mipd: MipdStore | undefined
+  revalidate: () => Promise<void>
   readonly store: Mutate<StoreApi<any>, [['zustand/persist', any]]>
   readonly ssr: boolean
   readonly syncConnectedChain: boolean
