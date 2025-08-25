@@ -1,11 +1,11 @@
 import { abi, address, chain } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
-import { expect, test } from 'vitest'
+import { renderHook } from '@wagmi/test/react'
+import { expect, test, vi } from 'vitest'
 
 import { useReadContracts } from './useReadContracts.js'
 
 test('default', async () => {
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useReadContracts({
       contracts: [
         {
@@ -23,7 +23,7 @@ test('default', async () => {
     }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -87,7 +87,7 @@ test('default', async () => {
 
 test.skip('multichain', async () => {
   const { mainnet, mainnet2, optimism } = chain
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useReadContracts({
       contracts: [
         {
@@ -141,7 +141,7 @@ test.skip('multichain', async () => {
     }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current).toMatchInlineSnapshot(`
     {

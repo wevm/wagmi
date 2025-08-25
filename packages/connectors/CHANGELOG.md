@@ -1,5 +1,57 @@
 # @wagmi/connectors
 
+## 5.9.5
+
+### Patch Changes
+
+- Updated dependencies [[`a13aa2b68890f180f6ac3f741cbb9817494cb66c`](https://github.com/wevm/wagmi/commit/a13aa2b68890f180f6ac3f741cbb9817494cb66c)]:
+  - @wagmi/core@2.20.0
+
+## 5.9.4
+
+### Patch Changes
+
+- [#4764](https://github.com/wevm/wagmi/pull/4764) [`f4039419b83b52b2984de149db85c11f503ffe39`](https://github.com/wevm/wagmi/commit/f4039419b83b52b2984de149db85c11f503ffe39) Thanks [@mikelxc](https://github.com/mikelxc)! - Updated gemini connector
+
+## 5.9.3
+
+### Patch Changes
+
+- [#4759](https://github.com/wevm/wagmi/pull/4759) [`909324d28c81e15c9df312b277dcff1983fbae4d`](https://github.com/wevm/wagmi/commit/909324d28c81e15c9df312b277dcff1983fbae4d) Thanks [@mikelxc](https://github.com/mikelxc)! - Added Gemini
+
+## 5.9.2
+
+### Patch Changes
+
+- Updated dependencies [[`b5f017dbc707729eb0b36d617352be224d1139d4`](https://github.com/wevm/wagmi/commit/b5f017dbc707729eb0b36d617352be224d1139d4)]:
+  - @wagmi/core@2.19.0
+
+## 5.9.1
+
+### Patch Changes
+
+- [`6fbafd425e488dbeee8404162dbeb3c737eeb8cf`](https://github.com/wevm/wagmi/commit/6fbafd425e488dbeee8404162dbeb3c737eeb8cf) Thanks [@jxom](https://github.com/jxom)! - Updated `@base-org/account`
+
+- Updated dependencies [[`6514ba29a5acb918773235fed0238d7d679d06d5`](https://github.com/wevm/wagmi/commit/6514ba29a5acb918773235fed0238d7d679d06d5)]:
+  - @wagmi/core@2.18.1
+
+## 5.9.0
+
+### Minor Changes
+
+- [#4734](https://github.com/wevm/wagmi/pull/4734) [`eac550ae5b49f96a7e3404a6d88adc62d3889013`](https://github.com/wevm/wagmi/commit/eac550ae5b49f96a7e3404a6d88adc62d3889013) Thanks [@jxom](https://github.com/jxom)! - Added `baseAccount` connector.
+
+### Patch Changes
+
+- Updated dependencies [[`eac550ae5b49f96a7e3404a6d88adc62d3889013`](https://github.com/wevm/wagmi/commit/eac550ae5b49f96a7e3404a6d88adc62d3889013)]:
+  - @wagmi/core@2.18.0
+
+## 5.8.6
+
+### Patch Changes
+
+- [#4731](https://github.com/wevm/wagmi/pull/4731) [`e75bd89406e9b6ff5b7d3a7148ab34140fe6352a`](https://github.com/wevm/wagmi/commit/e75bd89406e9b6ff5b7d3a7148ab34140fe6352a) Thanks [@tomiir](https://github.com/tomiir)! - Updated `@coinbase/wallet-sdk` to version 4.3.6
+
 ## 5.8.5
 
 ### Patch Changes

@@ -206,9 +206,9 @@ const id = await sendCalls(config, {
 import { type SendCallsReturnType } from '@wagmi/core'
 ```
 
-`bigint`
+`{ id: string; capabilities?: WalletCapabilities | undefined }`
 
-Most recent block number seen.
+Identifier of the call batch.
 
 ## Error
 
@@ -220,4 +220,4 @@ import { type SendCallsErrorType } from '@wagmi/core'
 
 ## Viem
 
-- [`sendCalls`](https://viem.sh/experimental/eip5792/sendCalls)
+- [`sendCalls`](https://viem.sh/docs/actions/wallet/sendCalls)

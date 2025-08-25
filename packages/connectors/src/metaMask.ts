@@ -7,9 +7,9 @@ import type {
 import {
   ChainNotConfiguredError,
   type Connector,
-  ProviderNotFoundError,
   createConnector,
   extractRpcUrls,
+  ProviderNotFoundError,
 } from '@wagmi/core'
 import type {
   Compute,
@@ -21,16 +21,16 @@ import type {
 import {
   type AddEthereumChainParameter,
   type Address,
+  getAddress,
   type Hex,
+  hexToNumber,
+  numberToHex,
   type ProviderConnectInfo,
   type ProviderRpcError,
   ResourceUnavailableRpcError,
   type RpcError,
   SwitchChainError,
   UserRejectedRequestError,
-  getAddress,
-  hexToNumber,
-  numberToHex,
   withRetry,
   withTimeout,
 } from 'viem'

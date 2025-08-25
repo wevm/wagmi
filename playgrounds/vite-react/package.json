@@ -21,7 +21,7 @@
     "@tanstack/react-query-devtools": "5.0.5",
     "@types/react": ">=18.3.1",
     "@types/react-dom": ">=18.3.0",
-    "@vitejs/plugin-react": "^4.2.1",
+    "@vitejs/plugin-react": "catalog:",
     "@wagmi/cli": "workspace:*",
     "buffer": "^6.0.3",
     "vite": "^5.2.11"

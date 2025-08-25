@@ -1,8 +1,8 @@
 import {
-  type GetBalanceReturnType,
-  type GetBlockNumberReturnType,
   connect,
   disconnect,
+  type GetBalanceReturnType,
+  type GetBlockNumberReturnType,
   getAccount,
   getBalance,
   getBlockNumber,
@@ -146,6 +146,7 @@ function Balance() {
           })
           setBalance(balance)
         } catch (error) {
+          // biome-ignore lint/suspicious/noConsole: logging
           console.error('Error fetching balance', error)
         }
       },

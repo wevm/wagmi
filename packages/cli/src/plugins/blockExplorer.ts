@@ -34,9 +34,7 @@ export type BlockExplorerConfig = {
    * Function to get address from contract config.
    */
   getAddress?:
-    | ((config: {
-        address: NonNullable<ContractConfig['address']>
-      }) => Address)
+    | ((config: { address: NonNullable<ContractConfig['address']> }) => Address)
     | undefined
   /**
    * Name of source.

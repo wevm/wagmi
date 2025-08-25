@@ -1,5 +1,23 @@
 # @wagmi/cli
 
+## 2.5.0
+
+### Minor Changes
+
+- [`1edb09f7b69da3d7819d0e070e875e2c6fe8015d`](https://github.com/wevm/wagmi/commit/1edb09f7b69da3d7819d0e070e875e2c6fe8015d) Thanks [@tmm](https://github.com/tmm)! - Added testnets to `routescan` plugin
+
+## 2.4.0
+
+### Minor Changes
+
+- [#4757](https://github.com/wevm/wagmi/pull/4757) [`aec8a61ef0dfe02421d514bd130505ec13f8d3a0`](https://github.com/wevm/wagmi/commit/aec8a61ef0dfe02421d514bd130505ec13f8d3a0) Thanks [@tmm](https://github.com/tmm)! - Added Routescan plugin.
+
+## 2.3.2
+
+### Patch Changes
+
+- [#4727](https://github.com/wevm/wagmi/pull/4727) [`910e6c6180bd632e65bad348bd0814de5a8cfa4b`](https://github.com/wevm/wagmi/commit/910e6c6180bd632e65bad348bd0814de5a8cfa4b) Thanks [@reallesee](https://github.com/reallesee)! - `fetch` plugin: cleared timeout on fetch error
+
 ## 2.3.1
 
 ### Patch Changes

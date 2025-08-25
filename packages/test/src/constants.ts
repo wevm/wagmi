@@ -2,13 +2,6 @@ import { type Address, parseAbi } from 'viem'
 
 import type { chain } from './chains.js'
 
-/**
- * The id of the current test worker.
- *
- * This is used by the anvil proxy to route requests to the correct anvil instance.
- */
-export const pool = Number(process.env.VITEST_POOL_ID ?? 1)
-
 // Test accounts
 export const accounts = [
   '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',
@@ -28,8 +21,10 @@ export const privateKey =
   '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80'
 
 export let walletConnectProjectId: string
-if (process.env.VITE_WC_PROJECT_ID)
+if (typeof process !== 'undefined' && process.env.VITE_WC_PROJECT_ID)
   walletConnectProjectId = process.env.VITE_WC_PROJECT_ID
+if (typeof import.meta !== 'undefined' && import.meta.env.VITE_WC_PROJECT_ID)
+  walletConnectProjectId = import.meta.env.VITE_WC_PROJECT_ID
 else walletConnectProjectId = 'foobarbaz'
 
 export const typedData = {

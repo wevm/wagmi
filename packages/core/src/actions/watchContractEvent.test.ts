@@ -7,7 +7,7 @@ import {
   transactionHashRegex,
   wait,
 } from '@wagmi/test'
-import { http, createWalletClient, parseEther } from 'viem'
+import { createWalletClient, http, parseEther } from 'viem'
 import type { WatchEventOnLogsParameter } from 'viem/actions'
 import { beforeEach, expect, test } from 'vitest'
 

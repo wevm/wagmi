@@ -1,17 +1,17 @@
 import { chain, wait } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
+import { renderHook } from '@wagmi/test/react'
 import type { Hash } from 'viem'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 import { useTransactionReceipt } from './useTransactionReceipt.js'
 
 test('default', async () => {
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useTransactionReceipt({
       hash: '0xbf7d27700d053765c9638d3b9d39eb3c56bfc48377583e8be483d61f9f18a871',
     }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -66,14 +66,14 @@ test('default', async () => {
 })
 
 test('parameters: chainId', async () => {
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useTransactionReceipt({
       chainId: chain.mainnet2.id,
       hash: '0xbf7d27700d053765c9638d3b9d39eb3c56bfc48377583e8be483d61f9f18a871',
     }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -128,12 +128,12 @@ test('parameters: chainId', async () => {
 })
 
 test('behavior: hash: undefined -> defined', async () => {
-  let hash: Hash | undefined = undefined
-
-  const { result, rerender } = renderHook(() =>
-    useTransactionReceipt({
-      hash,
-    }),
+  const { result, rerender } = await renderHook(
+    (props) =>
+      useTransactionReceipt({
+        hash: props?.hash,
+      }),
+    { initialProps: { hash: undefined as Hash | undefined } },
   )
 
   expect(result.current).toMatchInlineSnapshot(`
@@ -172,10 +172,11 @@ test('behavior: hash: undefined -> defined', async () => {
     }
   `)
 
-  hash = '0xbf7d27700d053765c9638d3b9d39eb3c56bfc48377583e8be483d61f9f18a871'
-  rerender()
+  rerender({
+    hash: '0xbf7d27700d053765c9638d3b9d39eb3c56bfc48377583e8be483d61f9f18a871',
+  })
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess)
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -230,8 +231,8 @@ test('behavior: hash: undefined -> defined', async () => {
 })
 
 test('behavior: disabled when properties missing', async () => {
-  const { result } = renderHook(() => useTransactionReceipt())
+  const { result } = await renderHook(() => useTransactionReceipt())
 
   await wait(100)
-  await waitFor(() => expect(result.current.isPending).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isPending).toBeTruthy())
 })
