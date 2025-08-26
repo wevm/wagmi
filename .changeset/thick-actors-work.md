@@ -1,5 +1,5 @@
 ---
-"@wagmi/core": minor
+"@wagmi/core": patch
 ---
 
-fix: update chainId check in getConnectorClient to prevent internal state race conditions
+Fixed `getConnectorClient` chain ID race condition.
