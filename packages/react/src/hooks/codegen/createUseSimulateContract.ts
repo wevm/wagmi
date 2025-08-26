@@ -18,7 +18,6 @@ import type {
 } from 'viem'
 
 import type { ConfigParameter, QueryParameter } from '../../types/properties.js'
-import { useAccount } from '../useAccount.js'
 import { useChainId } from '../useChainId.js'
 import { useConfig } from '../useConfig.js'
 import {
@@ -96,11 +95,8 @@ export function createUseSimulateContract<
     return (parameters) => {
       const config = useConfig(parameters)
       const configChainId = useChainId({ config })
-      const account = useAccount({ config })
       const chainId =
-        (parameters as { chainId?: number })?.chainId ??
-        account.chainId ??
-        configChainId
+        (parameters as { chainId?: number })?.chainId ?? configChainId
       return useSimulateContract({
         ...(parameters as any),
         ...(props.functionName ? { functionName: props.functionName } : {}),
