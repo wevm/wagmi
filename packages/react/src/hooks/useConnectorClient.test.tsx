@@ -206,6 +206,67 @@ test('behavior: re-render does not invalidate query', async () => {
     .toEqual(initialClient.element())
 })
 
+test('behavior: connector is on a different chain', async () => {
+  await disconnect(config, { connector })
+  await connect(config, { connector })
+  config.setState((state) => {
+    const uid = state.current!
+    const connection = state.connections.get(uid)!
+    return {
+      ...state,
+      connections: new Map(state.connections).set(uid, {
+        ...connection,
+        chainId: 456,
+      }),
+    }
+  })
+
+  const { result } = await renderHook(() => useConnectorClient())
+
+  await vi.waitUntil(() => result.current.isError, 10_000)
+
+  const { data: _d, queryKey: _qk, ...rest } = result.current
+  expect(rest).toMatchInlineSnapshot(`
+    {
+      "dataUpdatedAt": 0,
+      "error": [ConnectorChainMismatchError: The current chain of the connector (id: 1) does not match the connection's chain (id: 456).
+
+    Current Chain ID:  1
+    Expected Chain ID: 456
+
+    Version: @wagmi/core@2.20.1],
+      "errorUpdateCount": 1,
+      "errorUpdatedAt": 1675209600000,
+      "failureCount": 4,
+      "failureReason": [ConnectorChainMismatchError: The current chain of the connector (id: 1) does not match the connection's chain (id: 456).
+
+    Current Chain ID:  1
+    Expected Chain ID: 456
+
+    Version: @wagmi/core@2.20.1],
+      "fetchStatus": "idle",
+      "isError": true,
+      "isFetched": true,
+      "isFetchedAfterMount": true,
+      "isFetching": false,
+      "isInitialLoading": false,
+      "isLoading": false,
+      "isLoadingError": true,
+      "isPaused": false,
+      "isPending": false,
+      "isPlaceholderData": false,
+      "isRefetchError": false,
+      "isRefetching": false,
+      "isStale": true,
+      "isSuccess": false,
+      "refetch": [Function],
+      "status": "error",
+    }
+  `)
+
+  await disconnect(config, { connector })
+})
+
 function Parent() {
   const [renderCount, setRenderCount] = React.useState(1)
 
