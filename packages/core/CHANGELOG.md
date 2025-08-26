@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.20.2
+
+### Patch Changes
+
+- [#4733](https://github.com/wevm/wagmi/pull/4733) [`986b96427a4bb743d2673dfbc7e8cb5041316db3`](https://github.com/wevm/wagmi/commit/986b96427a4bb743d2673dfbc7e8cb5041316db3) Thanks [@effie-ms](https://github.com/effie-ms)! - Fixed `getConnectorClient` chain ID race condition.
+
 ## 2.20.1
 
 ### Patch Changes
