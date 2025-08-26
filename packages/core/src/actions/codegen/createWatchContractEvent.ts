@@ -2,7 +2,6 @@ import type { Abi, Address, ContractEventName } from 'viem'
 
 import type { Config } from '../../createConfig.js'
 import type { UnionCompute, UnionStrictOmit } from '../../types/utils.js'
-import { getAccount } from '../getAccount.js'
 import { getChainId } from '../getChainId.js'
 import {
   type WatchContractEventParameters,
@@ -64,12 +63,8 @@ export function createWatchContractEvent<
   if (c.address !== undefined && typeof c.address === 'object')
     return (config, parameters) => {
       const configChainId = getChainId(config)
-      const account = getAccount(config)
       const chainId =
-        (parameters as { chainId?: number })?.chainId ??
-        (config._internal.syncConnectedChain
-          ? (account.chainId ?? configChainId)
-          : configChainId)
+        (parameters as { chainId?: number })?.chainId ?? configChainId
       return watchContractEvent(config, {
         ...(parameters as any),
         ...(c.eventName ? { eventName: c.eventName } : {}),
