@@ -45,9 +45,13 @@ export type CreateConnectorFn<
     setup?(): Promise<void>
     connect(
       parameters?:
-        | { chainId?: number | undefined; isReconnecting?: boolean | undefined }
+        | {
+            chainId?: number | undefined
+            isReconnecting?: boolean | undefined
+          }
         | undefined,
     ): Promise<{
+      // TODO(v3): Add `capabilities` (e.g. `readonly { address: Address; capabilities: Record<string, unknown> | undefined }`)
       accounts: readonly Address[]
       chainId: number
     }>

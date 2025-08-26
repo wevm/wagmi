@@ -1,5 +1,76 @@
 # @wagmi/vue
 
+## 0.2.2
+
+### Patch Changes
+
+- Updated dependencies [[`d4c367ca46c508598c997cf229a31593a1e2b8b8`](https://github.com/wevm/wagmi/commit/d4c367ca46c508598c997cf229a31593a1e2b8b8)]:
+  - @wagmi/core@2.20.1
+  - @wagmi/connectors@5.9.6
+
+## 0.2.1
+
+### Patch Changes
+
+- Updated dependencies [[`a13aa2b68890f180f6ac3f741cbb9817494cb66c`](https://github.com/wevm/wagmi/commit/a13aa2b68890f180f6ac3f741cbb9817494cb66c)]:
+  - @wagmi/core@2.20.0
+  - @wagmi/connectors@5.9.5
+
+## 0.2.0
+
+### Minor Changes
+
+- [#4737](https://github.com/wevm/wagmi/pull/4737) [`23bad767c5055f54d2a5a5179830e078282fa00f`](https://github.com/wevm/wagmi/commit/23bad767c5055f54d2a5a5179830e078282fa00f) Thanks [@microHoffman](https://github.com/microHoffman)! - Added support for Nuxt 4.
+
+## 0.1.28
+
+### Patch Changes
+
+- Updated dependencies [[`f4039419b83b52b2984de149db85c11f503ffe39`](https://github.com/wevm/wagmi/commit/f4039419b83b52b2984de149db85c11f503ffe39)]:
+  - @wagmi/connectors@5.9.4
+
+## 0.1.27
+
+### Patch Changes
+
+- Updated dependencies [[`909324d28c81e15c9df312b277dcff1983fbae4d`](https://github.com/wevm/wagmi/commit/909324d28c81e15c9df312b277dcff1983fbae4d)]:
+  - @wagmi/connectors@5.9.3
+
+## 0.1.26
+
+### Patch Changes
+
+- Updated dependencies [[`b5f017dbc707729eb0b36d617352be224d1139d4`](https://github.com/wevm/wagmi/commit/b5f017dbc707729eb0b36d617352be224d1139d4)]:
+  - @wagmi/core@2.19.0
+  - @wagmi/connectors@5.9.2
+
+## 0.1.25
+
+### Patch Changes
+
+- Updated dependencies [[`6fbafd425e488dbeee8404162dbeb3c737eeb8cf`](https://github.com/wevm/wagmi/commit/6fbafd425e488dbeee8404162dbeb3c737eeb8cf), [`6514ba29a5acb918773235fed0238d7d679d06d5`](https://github.com/wevm/wagmi/commit/6514ba29a5acb918773235fed0238d7d679d06d5)]:
+  - @wagmi/connectors@5.9.1
+  - @wagmi/core@2.18.1
+
+## 0.1.24
+
+### Minor Changes
+
+- [#4734](https://github.com/wevm/wagmi/pull/4734) [`eac550ae5b49f96a7e3404a6d88adc62d3889013`](https://github.com/wevm/wagmi/commit/eac550ae5b49f96a7e3404a6d88adc62d3889013) Thanks [@jxom](https://github.com/jxom)! - Added `baseAccount` connector.
+
+### Patch Changes
+
+- Updated dependencies [[`eac550ae5b49f96a7e3404a6d88adc62d3889013`](https://github.com/wevm/wagmi/commit/eac550ae5b49f96a7e3404a6d88adc62d3889013)]:
+  - @wagmi/connectors@6.0.0
+  - @wagmi/core@2.18.0
+
+## 0.1.23
+
+### Patch Changes
+
+- Updated dependencies [[`e75bd89406e9b6ff5b7d3a7148ab34140fe6352a`](https://github.com/wevm/wagmi/commit/e75bd89406e9b6ff5b7d3a7148ab34140fe6352a)]:
+  - @wagmi/connectors@5.8.6
+
 ## 0.1.22
 
 ### Patch Changes

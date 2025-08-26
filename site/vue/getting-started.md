@@ -165,7 +165,7 @@ createApp(App)
 <<< @/snippets/vue/config.ts[config.ts]
 :::
 
-Check out the [TanStack Query docs](https://tanstack.com/query/latest/docs/framework/vue) to learn about the library, APIs, and more.
+Check out the [TanStack Query docs](https://tanstack.com/query/latest/docs/framework/vue/overview) to learn about the library, APIs, and more.
 
 ### Use Wagmi
 

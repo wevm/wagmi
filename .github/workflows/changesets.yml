@@ -10,6 +10,8 @@ concurrency:
 jobs:
   verify:
     name: Verify
+    permissions:
+      contents: write
     uses: ./.github/workflows/verify.yml
     secrets: inherit
 

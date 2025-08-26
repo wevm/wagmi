@@ -39,6 +39,8 @@ jobs:
 
   build:
     name: Build
+    permissions:
+      contents: read
     needs: check
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -61,12 +63,14 @@ jobs:
 
   types:
     name: Types
+    permissions:
+      contents: read
     needs: check
     runs-on: ubuntu-latest
     timeout-minutes: 5
     strategy:
       matrix:
-        typescript-version: ['5.7.3', '5.8.3', 'latest']
+        typescript-version: ['5.7.3', '5.8.3', '5.9.2', 'latest']
         viem-version: ['2.31.7', 'latest']
 
     steps:
@@ -91,6 +95,8 @@ jobs:
 
   test:
     name: Test
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     timeout-minutes: 10
     strategy:
@@ -110,6 +116,9 @@ jobs:
         uses: foundry-rs/foundry-toolchain@v1
         with:
           version: nightly
+
+      - name: Install Playwright
+        run: pnpx playwright@1.54.1 install --with-deps
 
       - name: Run tests
         uses: nick-fields/retry@v3

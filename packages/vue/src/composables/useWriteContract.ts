@@ -76,10 +76,9 @@ export function useWriteContract<
     ...mutationOptions,
   })
 
-  type Return = UseWriteContractReturnType<config, context>
   return {
     ...result,
-    writeContract: mutate as Return['writeContract'],
-    writeContractAsync: mutateAsync as Return['writeContractAsync'],
-  }
+    writeContract: mutate,
+    writeContractAsync: mutateAsync,
+  } as UseWriteContractReturnType<config, context>
 }

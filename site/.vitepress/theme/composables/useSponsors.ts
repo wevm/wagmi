@@ -61,6 +61,11 @@ export function useSponsors() {
           url: 'https://routescan.io',
           img: 'routescan-light.svg',
         },
+        {
+          name: 'Gemini',
+          url: 'https://gemini.com',
+          img: 'gemini-light.svg',
+        },
       ],
       silver: [
         {

@@ -300,9 +300,9 @@ const id = await writeContracts(config, {
 import { type WriteContractsReturnType } from '@wagmi/core/experimental'
 ```
 
-`bigint`
+`{ id: string; capabilities?: WalletCapabilities | undefined }`
 
-Most recent block number seen.
+Identifier of the call batch.
 
 ## Error
 

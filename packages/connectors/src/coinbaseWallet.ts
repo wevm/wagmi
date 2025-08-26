@@ -1,7 +1,7 @@
 import type {
+  createCoinbaseWalletSDK,
   Preference,
   ProviderInterface,
-  createCoinbaseWalletSDK,
 } from '@coinbase/wallet-sdk'
 import {
   ChainNotConfiguredError,
@@ -16,12 +16,12 @@ import type {
 import {
   type AddEthereumChainParameter,
   type Address,
+  getAddress,
   type Hex,
+  numberToHex,
   type ProviderRpcError,
   SwitchChainError,
   UserRejectedRequestError,
-  getAddress,
-  numberToHex,
 } from 'viem'
 
 type Version = '3' | '4'

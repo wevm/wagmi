@@ -1,8 +1,8 @@
 import { connect, disconnect } from '@wagmi/core'
 import { config } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
+import { renderHook } from '@wagmi/test/react'
 import { parseEther } from 'viem'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { usePrepareTransactionRequest } from './usePrepareTransactionRequest.js'
 
@@ -11,14 +11,14 @@ const connector = config.connectors[0]!
 test('default', async () => {
   await connect(config, { connector })
 
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     usePrepareTransactionRequest({
       to: '0x70997970c51812dc3a010c7d01b50e0d17dc79c8',
       value: parseEther('1'),
     }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   const {
     data: {

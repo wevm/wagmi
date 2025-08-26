@@ -3,19 +3,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 // biome-ignore lint/performance/noBarrelFile: entrypoint module
-export { configKey, type WagmiPluginOptions, WagmiPlugin } from '../plugin.js'
+export { configKey, WagmiPlugin, type WagmiPluginOptions } from '../plugin.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // Errors
 ////////////////////////////////////////////////////////////////////////////////
 
-export { type BaseErrorType, BaseError } from '../errors/base.js'
+export { BaseError, type BaseErrorType } from '../errors/base.js'
 
 export {
-  type WagmiPluginNotFoundErrorType,
-  WagmiPluginNotFoundError,
-  type WagmiInjectionContextErrorType,
   WagmiInjectionContextError,
+  type WagmiInjectionContextErrorType,
+  WagmiPluginNotFoundError,
+  type WagmiPluginNotFoundErrorType,
 } from '../errors/plugin.js'
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -56,42 +56,36 @@ export {
   type UseChainIdReturnType,
   useChainId,
 } from '../composables/useChainId.js'
-
-export {
-  type UseClientParameters,
-  type UseClientReturnType,
-  useClient,
-} from '../composables/useClient.js'
-
-export {
-  type UseConnectorClientParameters,
-  type UseConnectorClientReturnType,
-  useConnectorClient,
-} from '../composables/useConnectorClient.js'
-
 export {
   type UseChainsParameters,
   type UseChainsReturnType,
   useChains,
 } from '../composables/useChains.js'
-
+export {
+  type UseClientParameters,
+  type UseClientReturnType,
+  useClient,
+} from '../composables/useClient.js'
 export {
   type UseConfigParameters,
   type UseConfigReturnType,
   useConfig,
 } from '../composables/useConfig.js'
-
 export {
   type UseConnectParameters,
   type UseConnectReturnType,
   useConnect,
 } from '../composables/useConnect.js'
-
 export {
   type UseConnectionsParameters,
   type UseConnectionsReturnType,
   useConnections,
 } from '../composables/useConnections.js'
+export {
+  type UseConnectorClientParameters,
+  type UseConnectorClientReturnType,
+  useConnectorClient,
+} from '../composables/useConnectorClient.js'
 
 export {
   type UseConnectorsParameters,
@@ -188,24 +182,21 @@ export {
   type UseTransactionReceiptReturnType,
   useTransactionReceipt,
 } from '../composables/useTransactionReceipt.js'
-
-export {
-  type UseWatchBlockNumberParameters,
-  type UseWatchBlockNumberReturnType,
-  useWatchBlockNumber,
-} from '../composables/useWatchBlockNumber.js'
-
-export {
-  type UseWatchContractEventParameters,
-  type UseWatchContractEventReturnType,
-  useWatchContractEvent,
-} from '../composables/useWatchContractEvent.js'
-
 export {
   type UseWaitForTransactionReceiptParameters,
   type UseWaitForTransactionReceiptReturnType,
   useWaitForTransactionReceipt,
 } from '../composables/useWaitForTransactionReceipt.js'
+export {
+  type UseWatchBlockNumberParameters,
+  type UseWatchBlockNumberReturnType,
+  useWatchBlockNumber,
+} from '../composables/useWatchBlockNumber.js'
+export {
+  type UseWatchContractEventParameters,
+  type UseWatchContractEventReturnType,
+  useWatchContractEvent,
+} from '../composables/useWatchContractEvent.js'
 
 export {
   type UseWriteContractParameters,
@@ -218,59 +209,59 @@ export {
 ////////////////////////////////////////////////////////////////////////////////
 
 export {
+  ChainNotConfiguredError,
+  // Errors
+  type ChainNotConfiguredErrorType,
+  type Config,
   // Config
   type Connection,
   type Connector,
-  type Config,
-  type CreateConfigParameters,
-  type PartializedState,
-  type State,
-  createConfig,
+  ConnectorAccountNotFoundError,
+  type ConnectorAccountNotFoundErrorType,
+  ConnectorAlreadyConnectedError,
+  type ConnectorAlreadyConnectedErrorType,
+  ConnectorChainMismatchError,
+  type ConnectorChainMismatchErrorType,
   // Connector
   type ConnectorEventMap,
-  type CreateConnectorFn,
-  createConnector,
-  injected,
-  mock,
-  // Errors
-  type ChainNotConfiguredErrorType,
-  ChainNotConfiguredError,
-  type ConnectorAlreadyConnectedErrorType,
-  ConnectorAlreadyConnectedError,
-  type ConnectorNotFoundErrorType,
   ConnectorNotFoundError,
-  type ConnectorAccountNotFoundErrorType,
-  ConnectorAccountNotFoundError,
-  type ConnectorChainMismatchErrorType,
-  ConnectorChainMismatchError,
-  type ConnectorUnavailableReconnectingErrorType,
+  type ConnectorNotFoundErrorType,
   ConnectorUnavailableReconnectingError,
-  type ProviderNotFoundErrorType,
-  ProviderNotFoundError,
-  type SwitchChainNotSupportedErrorType,
-  SwitchChainNotSupportedError,
+  type ConnectorUnavailableReconnectingErrorType,
+  type CreateConfigParameters,
+  type CreateConnectorFn,
   // Storage
   type CreateStorageParameters,
-  type Storage,
-  createStorage,
-  noopStorage,
-  // Transports
-  custom,
-  fallback,
-  http,
-  webSocket,
-  unstable_connector,
-  // Types
-  type Register,
-  type ResolvedRegister,
   // Utilities
   cookieStorage,
   cookieToInitialState,
+  createConfig,
+  createConnector,
+  createStorage,
+  // Transports
+  custom,
   deepEqual,
   deserialize,
+  fallback,
+  http,
+  injected,
+  mock,
+  noopStorage,
   normalizeChainId,
+  type PartializedState,
+  ProviderNotFoundError,
+  type ProviderNotFoundErrorType,
   parseCookie,
+  // Types
+  type Register,
+  type ResolvedRegister,
+  type State,
+  type Storage,
+  SwitchChainNotSupportedError,
+  type SwitchChainNotSupportedErrorType,
   serialize,
+  unstable_connector,
+  webSocket,
 } from '@wagmi/core'
 
 ////////////////////////////////////////////////////////////////////////////////
