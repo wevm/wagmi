@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 5.9.8
+
+### Patch Changes
+
+- [#4691](https://github.com/wevm/wagmi/pull/4691) [`a03da817a388646c9b4885792101a67eef3616e7`](https://github.com/wevm/wagmi/commit/a03da817a388646c9b4885792101a67eef3616e7) Thanks [@frolic](https://github.com/frolic)! - Fixed `walletConnect#connect` by moving chain switch directly inside instead of relying on `getProvider`.
+
 ## 5.9.7
 
 ### Patch Changes
