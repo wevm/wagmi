@@ -1,7 +1,7 @@
 {
   "name": "@wagmi/connectors",
   "description": "Collection of connectors for Wagmi",
-  "version": "5.9.6",
+  "version": "5.9.7",
   "license": "MIT",
   "repository": {
     "type": "git",
