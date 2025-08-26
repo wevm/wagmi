@@ -3,6 +3,7 @@ import { expect, test } from 'vitest'
 
 import { connect } from '../connect.js'
 import { disconnect } from '../disconnect.js'
+import { switchChain } from '../switchChain.js'
 import { createSimulateContract } from './createSimulateContract.js'
 
 const connector = config.connectors[0]!
@@ -63,6 +64,15 @@ test('multichain', async () => {
   await expect(
     simulateWagmiMintExample(config, {
       functionName: 'mint',
+    }),
+  ).resolves.toMatchObject({
+    chainId: 1,
+  })
+
+  await switchChain(config, { chainId: chain.mainnet2.id })
+  await expect(
+    simulateWagmiMintExample(config, {
+      functionName: 'mint',
       chainId: chain.mainnet2.id,
     }),
   ).resolves.toMatchInlineSnapshot(`
@@ -92,6 +102,7 @@ test('multichain', async () => {
     }
   `)
 
+  await switchChain(config, { chainId: chain.mainnet.id })
   await disconnect(config, { connector })
 })
 
