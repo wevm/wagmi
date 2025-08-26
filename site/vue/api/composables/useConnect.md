@@ -7,7 +7,7 @@ description: Composable for connecting accounts with connectors.
 const packageName = '@wagmi/vue'
 const actionName = 'connect'
 const typeName = 'Connect'
-const mutate = 'connect'
+const mutate = 'mutate'
 const TData = '{ accounts: readonly [Address, ...Address[]]; chainId: number; }'
 const TError = 'ConnectErrorType'
 const TVariables = '{ chainId?: number | undefined; connector?: CreateConnectorFn | Connector | undefined; }'
