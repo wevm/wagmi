@@ -19,7 +19,6 @@ import type {
   UnionCompute,
   UnionStrictOmit,
 } from '../../types/utils.js'
-import { getAccount } from '../getAccount.js'
 import { getChainId } from '../getChainId.js'
 import {
   type WriteContractReturnType,
@@ -107,25 +106,10 @@ export function createWriteContract<
 ): CreateWriteContractReturnType<abi, address, functionName> {
   if (c.address !== undefined && typeof c.address === 'object')
     return (config, parameters) => {
-      const configChainId = getChainId(config)
-      const account = getAccount(config)
-
-      let chainId: number | undefined
-      if (parameters.chainId) chainId = parameters.chainId
-      else if (
-        (parameters as unknown as { account: Address | Account | undefined })
-          .account &&
-        (parameters as unknown as { account: Address | Account | undefined })
-          .account === account.address
-      )
-        chainId = account.chainId
-      else if (
-        (parameters as unknown as { account: Address | Account | undefined })
-          .account === undefined
-      )
-        chainId = account.chainId
-      else chainId = configChainId
-
+      const chainId = (() => {
+        if (parameters.chainId) return parameters.chainId
+        return getChainId(config)
+      })()
       return writeContract(config, {
         ...(parameters as any),
         ...(c.functionName ? { functionName: c.functionName } : {}),

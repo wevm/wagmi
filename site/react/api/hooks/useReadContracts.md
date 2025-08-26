@@ -3,6 +3,14 @@ title: useReadContracts
 description: Hook for calling multiple read methods on a contract.
 ---
 
+<script setup>
+const packageName = 'wagmi'
+const actionName = 'readContracts'
+const typeName = 'ReadContracts'
+const TData = 'ReadContractsReturnType'
+const TError = 'ReadContractsErrorType'
+</script>
+
 # useReadContracts
 
 Hook for calling multiple read methods on a contract.
@@ -388,6 +396,8 @@ import { type UseReadContractsReturnType } from 'wagmi'
 ```
 
 <!--@include: @shared/query-result.md-->
+
+<!--@include: @shared/query-imports.md-->
 
 ## Action
 

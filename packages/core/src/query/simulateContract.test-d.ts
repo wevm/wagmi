@@ -1,5 +1,5 @@
 import { abi } from '@wagmi/test'
-import { http, type Address } from 'viem'
+import { type Address, http } from 'viem'
 import { celo, mainnet } from 'viem/chains'
 import { expectTypeOf, test } from 'vitest'
 

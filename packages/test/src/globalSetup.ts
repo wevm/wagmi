@@ -18,8 +18,8 @@ export default async function () {
       }).start(),
     )
   }
-  const results = await Promise.all(promises)
 
+  const results = await Promise.all(promises)
   return async () => {
     await Promise.all(results.map((stop) => stop()))
   }

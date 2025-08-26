@@ -2,15 +2,15 @@ import {
   type Config,
   type GetClientParameters,
   type GetClientReturnType,
-  type ResolvedRegister,
   getClient,
+  type ResolvedRegister,
   watchClient,
 } from '@wagmi/core'
 import type { Compute } from '@wagmi/core/internal'
 import {
-  type Ref,
   computed,
   onScopeDispose,
+  type Ref,
   readonly,
   ref,
   watchEffect,

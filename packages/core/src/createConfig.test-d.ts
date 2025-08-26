@@ -1,5 +1,5 @@
 import { accounts } from '@wagmi/test'
-import { http, createClient, webSocket } from 'viem'
+import { createClient, http, webSocket } from 'viem'
 import { mainnet, sepolia } from 'viem/chains'
 import { expectTypeOf, test } from 'vitest'
 
@@ -73,7 +73,7 @@ test('behavior: missing transport for chain', () => {
     transports: {
       [mainnet.id]: http(),
       // @ts-expect-error
-      [123]: http(),
+      123: http(),
     },
   })
 })

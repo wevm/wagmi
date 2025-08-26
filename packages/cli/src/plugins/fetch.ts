@@ -85,13 +85,9 @@ export function fetch(config: FetchConfig): FetchResult {
         let abi: Abi | undefined
         if (cachedFile?.timestamp > Date.now()) abi = cachedFile.abi
         else {
+          const controller = new globalThis.AbortController()
+          const timeout = setTimeout(() => controller.abort(), timeoutDuration)
           try {
-            const controller = new globalThis.AbortController()
-            const timeout = setTimeout(
-              () => controller.abort(),
-              timeoutDuration,
-            )
-
             const { url, init } = await request(contract)
             const response = await globalThis.fetch(url, {
               ...init,
@@ -105,6 +101,7 @@ export function fetch(config: FetchConfig): FetchResult {
               `${JSON.stringify({ abi, timestamp }, undefined, 2)}\n`,
             )
           } catch (error) {
+            clearTimeout(timeout)
             try {
               // Attempt to read from cache if fetch fails.
               abi = JSON.parse(await readFile(cacheFilePath, 'utf8')).abi

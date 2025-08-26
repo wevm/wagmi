@@ -3,8 +3,8 @@
 import {
   type Config,
   type GetAccountReturnType,
-  type ResolvedRegister,
   getAccount,
+  type ResolvedRegister,
   watchAccount,
 } from '@wagmi/core'
 

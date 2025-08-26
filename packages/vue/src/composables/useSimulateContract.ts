@@ -11,7 +11,7 @@ import {
   simulateContractQueryOptions,
 } from '@wagmi/core/query'
 import type { Abi, ContractFunctionArgs, ContractFunctionName } from 'viem'
-import { type MaybeRef, computed } from 'vue'
+import { computed, type MaybeRef } from 'vue'
 
 import type { ConfigParameter, QueryParameter } from '../types/properties.js'
 import type { DeepMaybeRef } from '../types/ref.js'

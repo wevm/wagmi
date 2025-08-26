@@ -1,5 +1,11 @@
 # create-wagmi
 
+## 2.0.15
+
+### Patch Changes
+
+- [#4673](https://github.com/wevm/wagmi/pull/4673) [`c49866724e182920e369193201d1308259c3968e`](https://github.com/wevm/wagmi/commit/c49866724e182920e369193201d1308259c3968e) Thanks [@imaksp](https://github.com/imaksp)! - Fixed Next.js template type error
+
 ## 2.0.14
 
 ### Patch Changes

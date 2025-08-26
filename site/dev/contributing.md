@@ -103,6 +103,12 @@ curl -L https://foundry.paradigm.xyz | bash
 foundryup
 ```
 
+You'll also need to install [Playwright](https://playwright.dev/) browser binaries:
+
+```bash
+pnpm exec playwright install
+```
+
 Next, make sure you have set up your [env variables](#_4-adding-the-env-variables). Now you are ready to run the tests! You have the following options for running tests:
 
 - `pnpm test [package?]` — runs tests in watch mode

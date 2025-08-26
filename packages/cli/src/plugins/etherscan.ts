@@ -212,8 +212,6 @@ type ChainId =
   | 421614 // Arbitrum Sepolia Testnet
   | 59144 // Linea Mainnet
   | 59141 // Linea Sepolia Testnet
-  | 250 // Fantom Opera Mainnet
-  | 4002 // Fantom Testnet
   | 81457 // Blast Mainnet
   | 168587773 // Blast Sepolia Testnet
   | 10 // OP Mainnet
@@ -221,17 +219,16 @@ type ChainId =
   | 43114 // Avalanche C-Chain
   | 43113 // Avalanche Fuji Testnet
   | 199 // BitTorrent Chain Mainnet
-  | 1028 // BitTorrent Chain Testnet
+  | 1029 // BitTorrent Chain Testnet
   | 42220 // Celo Mainnet
   | 44787 // Celo Alfajores Testnet
   | 25 // Cronos Mainnet
   | 252 // Fraxtal Mainnet
   | 2522 // Fraxtal Testnet
   | 100 // Gnosis
-  | 255 // Kroma Mainnet
-  | 2358 // Kroma Sepolia Testnet
   | 5000 // Mantle Mainnet
   | 5003 // Mantle Sepolia Testnet
+  | 43521 // Memecore Testnet
   | 1284 // Moonbeam Mainnet
   | 1285 // Moonriver Mainnet
   | 1287 // Moonbase Alpha Testnet
@@ -266,3 +263,7 @@ type ChainId =
   | 1923 // Swellchain Mainnet
   | 1924 // Swellchain Testnet
   | 10143 // Monad Testnet
+  | 999 // HyperEVM Mainnet
+  | 747474 // Katana Mainnet
+  | 1329 // Sei Mainnet
+  | 1328 // Sei Testnet
