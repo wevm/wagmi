@@ -171,10 +171,17 @@ export function walletConnect(parameters: WalletConnectParameters) {
         // Switch to chain if provided
         let currentChainId = await this.getChainId()
         if (chainId && currentChainId !== chainId) {
-          const chain = await this.switchChain!({ chainId }).catch((error) => {
-            if (error.code === UserRejectedRequestError.code) throw error
-            return { id: currentChainId }
-          })
+          const chain = await this.switchChain!({ chainId }).catch(
+            (error: RpcError) => {
+              if (
+                error.code === UserRejectedRequestError.code &&
+                (error.cause as RpcError | undefined)?.message !==
+                  'Missing or invalid. request() method: wallet_addEthereumChain'
+              )
+                throw error
+              return { id: currentChainId }
+            },
+          )
           currentChainId = chain?.id ?? currentChainId
         }
 
@@ -250,7 +257,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
       const provider = await this.getProvider()
       return provider.accounts.map((x) => getAddress(x))
     },
-    async getProvider({ chainId } = {}) {
+    async getProvider() {
       async function initProvider() {
         const optionalChains = config.chains.map((x) => x.id) as [number]
         if (!optionalChains.length) return
