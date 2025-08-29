@@ -2,4 +2,4 @@
 "@wagmi/core": patch
 ---
 
-Fix deepEqual crashing for objects with no prototype
+Fixed `deepEqual` crashing for objects with no prototype
