@@ -16,9 +16,15 @@ export function deepEqual(a: any, b: any) {
       return true
     }
 
-    if (a.valueOf !== Object.prototype.valueOf)
+    if (
+      typeof a.valueOf === 'function' &&
+      a.valueOf !== Object.prototype.valueOf
+    )
       return a.valueOf() === b.valueOf()
-    if (a.toString !== Object.prototype.toString)
+    if (
+      typeof a.toString === 'function' &&
+      a.toString !== Object.prototype.toString
+    )
       return a.toString() === b.toString()
 
     const keys = Object.keys(a)
