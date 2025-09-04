@@ -10,18 +10,24 @@ import type { ChainIdParameter } from '../types/properties.js'
 import type { Compute } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 
-export type GetStorageAtParameters<config extends Config = Config> = Compute<
-  viem_GetStorageAtParameters & ChainIdParameter<config>
->
+export type GetStorageAtParameters<
+  config extends Config = Config,
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
+> = Compute<viem_GetStorageAtParameters & ChainIdParameter<config, chainId>>
 
 export type GetStorageAtReturnType = viem_GetStorageAtReturnType
 
 export type GetStorageAtErrorType = viem_GetStorageAtErrorType
 
 /** https://wagmi.sh/core/api/actions/getStorageAt */
-export async function getStorageAt<config extends Config>(
+export function getStorageAt<
+  config extends Config,
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
+>(
   config: config,
-  parameters: GetStorageAtParameters<config>,
+  parameters: GetStorageAtParameters<config, chainId>,
 ): Promise<GetStorageAtReturnType> {
   const { chainId, ...rest } = parameters
   const client = config.getClient({ chainId })
