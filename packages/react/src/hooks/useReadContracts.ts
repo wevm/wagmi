@@ -5,7 +5,7 @@ import type {
   ReadContractsErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { Compute } from '@wagmi/core/internal'
+import type { ChainIdParameter, Compute } from '@wagmi/core/internal'
 import {
   type ReadContractsData,
   type ReadContractsOptions,
@@ -62,10 +62,24 @@ export function useReadContracts<
 
   const config = useConfig(parameters)
   const chainId = useChainId({ config })
+  const contractsChainId: number | undefined = useMemo(() => {
+    if (contracts.length === 0) return undefined
+
+    // Get the chainId of the first contract (if any)
+    const firstChainId = (contracts[0] as ChainIdParameter<config>).chainId
+
+    // If all contracts have the same chainId as the first, return it
+    const allSameChainId = contracts.every(
+      (contract: ChainIdParameter<config>) =>
+        (contract as ChainIdParameter<config>).chainId === firstChainId,
+    )
+
+    return allSameChainId ? firstChainId : undefined
+  }, [contracts])
 
   const options = readContractsQueryOptions<config, contracts, allowFailure>(
     config,
-    { ...parameters, chainId },
+    { ...parameters, chainId: contractsChainId ?? chainId },
   )
 
   const enabled = useMemo(() => {
