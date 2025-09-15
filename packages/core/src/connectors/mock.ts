@@ -50,12 +50,23 @@ export function mock(parameters: MockParameters) {
     Transport<'custom', unknown, EIP1193RequestFn<WalletRpcSchema>>
   >
   type Properties = {
-    connect(parameters?: {
+    // TODO(v3): Make `withCapabilities: true` default behavior
+    connect<withCapabilities extends boolean = false>(parameters?: {
       chainId?: number | undefined
       isReconnecting?: boolean | undefined
       foo?: string | undefined
+      withCapabilities?: withCapabilities | boolean | undefined
     }): Promise<{
-      accounts: readonly Address[]
+      accounts: withCapabilities extends true
+        ? readonly {
+            address: Address
+            capabilities: {
+              foo: {
+                bar: Hex
+              }
+            }
+          }[]
+        : readonly Address[]
       chainId: number
     }>
   }
@@ -69,7 +80,7 @@ export function mock(parameters: MockParameters) {
     async setup() {
       connectedChainId = config.chains[0].id
     },
-    async connect({ chainId } = {}) {
+    async connect({ chainId, withCapabilities } = {}) {
       if (features.connectError) {
         if (typeof features.connectError === 'boolean')
           throw new UserRejectedRequestError(new Error('Failed to connect.'))
@@ -90,7 +101,12 @@ export function mock(parameters: MockParameters) {
       connected = true
 
       return {
-        accounts: accounts.map((x) => getAddress(x)),
+        accounts: (withCapabilities
+          ? accounts.map((x) => ({
+              address: getAddress(x),
+              capabilities: { foo: { bar: x } },
+            }))
+          : accounts.map((x) => getAddress(x))) as never,
         chainId: currentChainId,
       }
     },

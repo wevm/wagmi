@@ -5,7 +5,6 @@ import {
   type Connector,
   createConnector,
 } from '@wagmi/core'
-import type { Address } from 'viem'
 import {
   getAddress,
   numberToHex,
@@ -20,27 +19,18 @@ export type GeminiParameters = {
 gemini.type = 'gemini' as const
 export function gemini(parameters: GeminiParameters = {}) {
   type Provider = ProviderInterface
-  type Properties = {
-    connect(parameters?: {
-      chainId?: number | undefined
-      isReconnecting?: boolean | undefined
-    }): Promise<{
-      accounts: readonly Address[]
-      chainId: number
-    }>
-  }
 
   let walletProvider: Provider | undefined
   let onAccountsChanged: Connector['onAccountsChanged'] | undefined
   let onChainChanged: Connector['onChainChanged'] | undefined
   let onDisconnect: Connector['onDisconnect'] | undefined
 
-  return createConnector<Provider, Properties>((config) => ({
+  return createConnector<Provider>((config) => ({
     id: 'gemini',
     name: 'Gemini Wallet',
     type: gemini.type,
     icon: 'https://keys.gemini.com/images/gemini-wallet-logo.svg',
-    async connect({ chainId } = {}) {
+    async connect({ chainId, withCapabilities } = {}) {
       try {
         const provider = await this.getProvider()
         const accounts = (await provider.request({
@@ -70,7 +60,10 @@ export function gemini(parameters: GeminiParameters = {}) {
         }
 
         return {
-          accounts: accounts.map((x) => getAddress(x)),
+          // TODO(v3): Make `withCapabilities: true` default behavior
+          accounts: (withCapabilities
+            ? accounts.map((address) => ({ address, capabilities: {} }))
+            : accounts) as never,
           chainId: currentChainId,
         }
       } catch (error) {

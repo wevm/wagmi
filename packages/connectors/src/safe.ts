@@ -45,7 +45,7 @@ export function safe(parameters: SafeParameters = {}) {
     id: 'safe',
     name: 'Safe',
     type: safe.type,
-    async connect() {
+    async connect({ withCapabilities } = {}) {
       const provider = await this.getProvider()
       if (!provider) throw new ProviderNotFoundError()
 
@@ -60,7 +60,13 @@ export function safe(parameters: SafeParameters = {}) {
       // Remove disconnected shim if it exists
       if (shimDisconnect) await config.storage?.removeItem('safe.disconnected')
 
-      return { accounts, chainId }
+      return {
+        // TODO(v3): Make `withCapabilities: true` default behavior
+        accounts: (withCapabilities
+          ? accounts.map((address) => ({ address, capabilities: {} }))
+          : accounts) as never,
+        chainId,
+      }
     },
     async disconnect() {
       const provider = await this.getProvider()

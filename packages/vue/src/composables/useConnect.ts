@@ -30,9 +30,9 @@ export type UseConnectParameters<
   ConfigParameter<config> & {
     mutation?:
       | UseMutationParameters<
-          ConnectData<config>,
+          ConnectData<config, config['connectors'][number], boolean>,
           ConnectErrorType,
-          ConnectVariables<config, config['connectors'][number]>,
+          ConnectVariables<config, config['connectors'][number], boolean>,
           context
         >
       | undefined
@@ -44,9 +44,9 @@ export type UseConnectReturnType<
   context = unknown,
 > = Compute<
   UseMutationReturnType<
-    ConnectData<config>,
+    ConnectData<config, config['connectors'][number], boolean>,
     ConnectErrorType,
-    ConnectVariables<config, config['connectors'][number]>,
+    ConnectVariables<config, config['connectors'][number], boolean>,
     context
   > & {
     connect: ConnectMutate<config, context>
@@ -68,7 +68,7 @@ export function useConnect<
 
   const mutationOptions = connectMutationOptions(config)
   const { mutate, mutateAsync, ...result } = useMutation({
-    ...mutation,
+    ...(mutation as typeof mutationOptions),
     ...mutationOptions,
   })
 
