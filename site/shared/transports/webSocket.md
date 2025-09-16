@@ -4,7 +4,7 @@ const packageName = 'wagmi'
 
 # webSocket
 
-The `webSocket` Transport connects to a JSON-RPC API via a WebSocket. Wraps Viem's [`webSocket` Transport](https://viem.sh/docs/clients/transports/webSocket.html).
+The `webSocket` Transport connects to a JSON-RPC API via a WebSocket. Wraps Viem's [`webSocket` Transport](https://viem.sh/docs/clients/transports/webSocket).
 
 ## Import
 

@@ -4,7 +4,7 @@ const packageName = 'wagmi'
 
 # fallback
 
-The `fallback` Transport consumes **multiple** Transports. If a Transport request fails, it will fall back to the next one in the list. Wraps Viem's [`fallback` Transport](https://viem.sh/docs/clients/transports/fallback.html).
+The `fallback` Transport consumes **multiple** Transports. If a Transport request fails, it will fall back to the next one in the list. Wraps Viem's [`fallback` Transport](https://viem.sh/docs/clients/transports/fallback).
 
 ## Import
 

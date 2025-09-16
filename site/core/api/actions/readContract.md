@@ -255,4 +255,4 @@ import { type ReadContractErrorType } from '@wagmi/core'
 
 ## Viem
 
-- [`readContract`](https://viem.sh/docs/contract/readContract.html)
+- [`readContract`](https://viem.sh/docs/contract/readContract)

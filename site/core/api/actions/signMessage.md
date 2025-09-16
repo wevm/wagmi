@@ -108,7 +108,7 @@ const result = await signMessage(config, {
 import { type SignMessageReturnType } from '@wagmi/core'
 ```
 
-[`Hex`](https://viem.sh/docs/glossary/types.html#hex)
+[`Hex`](https://viem.sh/docs/glossary/types#hex)
 
 The signed message.
 
@@ -122,4 +122,4 @@ import { type SignMessageErrorType } from '@wagmi/core'
 
 ## Viem
 
-- [`signMessage`](https://viem.sh/docs/actions/wallet/signMessage.html)
+- [`signMessage`](https://viem.sh/docs/actions/wallet/signMessage)

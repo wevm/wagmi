@@ -95,7 +95,7 @@ const result = estimateFeesPerGas(config, {
 import { type EstimateFeesPerGasReturnType } from '@wagmi/core'
 ```
 
-[`FeeValues`](https://viem.sh/docs/glossary/types.html#feevalues)
+[`FeeValues`](https://viem.sh/docs/glossary/types#feevalues)
 
 An estimate (in wei) for the fees per gas.
 
@@ -136,4 +136,4 @@ import { type EstimateFeesPerGasErrorType } from '@wagmi/core'
 
 ## Viem
 
-- [`estimateFeesPerGas`](https://viem.sh/docs/actions/public/estimateFeesPerGas.html)
+- [`estimateFeesPerGas`](https://viem.sh/docs/actions/public/estimateFeesPerGas)

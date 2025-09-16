@@ -6,7 +6,7 @@
 
 ## Leveraging Viem Actions
 
-All of the core [Wagmi Actions](/core/api/actions) are friendly wrappers around [Viem Actions](https://viem.sh/docs/actions/public/introduction.html) that inject a multi-chain and connector aware [Wagmi Config](/core/api/createConfig).
+All of the core [Wagmi Actions](/core/api/actions) are friendly wrappers around [Viem Actions](https://viem.sh/docs/actions/public/introduction) that inject a multi-chain and connector aware [Wagmi Config](/core/api/createConfig).
 
 There may be cases where you might want to dig deeper and utilize Viem Actions directly (maybe an Action doesn't exist in Wagmi yet). In these cases, you can import Viem Actions directly via `viem/actions` and plug in a Viem Client returned by the [`getClient` Action](/core/api/actions/getClient).
 
