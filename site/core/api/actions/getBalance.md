@@ -193,5 +193,5 @@ import { type GetBalanceErrorType } from '@wagmi/core'
 
 ## Viem
 
-- [`getBalance`](https://viem.sh/docs/actions/public/getBalance.html) for native currency balances
-- [`multicall`](https://viem.sh/docs/actions/public/multicall.html) for token balances
+- [`getBalance`](https://viem.sh/docs/actions/public/getBalance) for native currency balances
+- [`multicall`](https://viem.sh/docs/actions/public/multicall) for token balances

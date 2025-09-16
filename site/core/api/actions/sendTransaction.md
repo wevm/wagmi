@@ -174,7 +174,7 @@ const result = await sendTransaction(config, {
 
 `bigint | undefined`
 
-The price in wei to pay per gas. Only applies to [Legacy Transactions](https://viem.sh/docs/glossary/terms.html#legacy-transaction).
+The price in wei to pay per gas. Only applies to [Legacy Transactions](https://viem.sh/docs/glossary/terms#legacy-transaction).
 
 ::: code-group
 ```ts [index.ts]
@@ -195,7 +195,7 @@ const result = await sendTransaction(config, {
 
 `bigint | undefined`
 
-Total fee per gas in wei, inclusive of [`maxPriorityFeePerGas`](#maxPriorityFeePerGas). Only applies to [EIP-1559 Transactions](https://viem.sh/docs/glossary/terms.html#eip-1559-transaction).
+Total fee per gas in wei, inclusive of [`maxPriorityFeePerGas`](#maxPriorityFeePerGas). Only applies to [EIP-1559 Transactions](https://viem.sh/docs/glossary/terms#eip-1559-transaction).
 
 ::: code-group
 ```ts [index.ts]
@@ -216,7 +216,7 @@ const result = await sendTransaction(config, {
 
 `bigint | undefined`
 
-Max priority fee per gas in wei. Only applies to [EIP-1559 Transactions](https://viem.sh/docs/glossary/terms.html#eip-1559-transaction).
+Max priority fee per gas in wei. Only applies to [EIP-1559 Transactions](https://viem.sh/docs/glossary/terms#eip-1559-transaction).
 
 ::: code-group
 ```ts [index.ts]
@@ -324,7 +324,7 @@ const result = await sendTransaction(config, {
 import { type SendTransactionReturnType } from '@wagmi/core'
 ```
 
-[`Hash`](https://viem.sh/docs/glossary/types.html#hash)
+[`Hash`](https://viem.sh/docs/glossary/types#hash)
 
 Transaction hash.
 
@@ -338,4 +338,4 @@ import { type SendTransactionErrorType } from '@wagmi/core'
 
 ## Viem
 
-- [`sendTransaction`](https://viem.sh/docs/actions/wallet/sendTransaction.html)
+- [`sendTransaction`](https://viem.sh/docs/actions/wallet/sendTransaction)

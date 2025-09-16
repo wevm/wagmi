@@ -247,7 +247,7 @@ export const wagmiAbi = [
 import { type DeployContractReturnType } from '@wagmi/core'
 ```
 
-[`Hash`](https://viem.sh/docs/glossary/types.html#hash)
+[`Hash`](https://viem.sh/docs/glossary/types#hash)
 
 Transaction hash.
 

@@ -306,7 +306,7 @@ useAccountEffect({ // [!code ++]
 
 ### Removed `useWebSocketPublicClient`
 
-The Wagmi [`Config`](/react/api/createConfig) does not separate transport types anymore. Simply use Viem's [`webSocket`](https://viem.sh/docs/clients/transports/websocket.html) transport instead when setting up your Wagmi `Config`. You can get Viem `Client` instance with this transport attached by using [`useClient`](/react/api/hooks/useClient) or [`usePublicClient`](/react/api/hooks/usePublicClient).
+The Wagmi [`Config`](/react/api/createConfig) does not separate transport types anymore. Simply use Viem's [`webSocket`](https://viem.sh/docs/clients/transports/websocket) transport instead when setting up your Wagmi `Config`. You can get Viem `Client` instance with this transport attached by using [`useClient`](/react/api/hooks/useClient) or [`usePublicClient`](/react/api/hooks/usePublicClient).
 
 ### Removed `useInfiniteReadContracts` `paginatedIndexesConfig`
 
@@ -422,7 +422,7 @@ A number of errors were renamed to better reflect their functionality or replace
 
 ### Removed internal ENS name normalization
 
-Before v2, Wagmi handled ENS name normalization internally for `useEnsAddress`, `useEnsAvatar`, and `useEnsResolver`, using Viem's [`normalize`](https://viem.sh/docs/ens/utilities/normalize.html) function. This added extra bundle size as full normalization is quite heavy. For v2, you must normalize ENS names yourself before passing them to these hooks. You can use Viem's `normalize` function or any other function that performs [UTS-46 normalization](https://unicode.org/reports/tr46).
+Before v2, Wagmi handled ENS name normalization internally for `useEnsAddress`, `useEnsAvatar`, and `useEnsResolver`, using Viem's [`normalize`](https://viem.sh/docs/ens/utilities/normalize) function. This added extra bundle size as full normalization is quite heavy. For v2, you must normalize ENS names yourself before passing them to these hooks. You can use Viem's `normalize` function or any other function that performs [UTS-46 normalization](https://unicode.org/reports/tr46).
 
 ```ts
 import { useEnsAddress } from 'wagmi'
@@ -471,7 +471,7 @@ import { erc20Abi } from 'viem' // [!code ++]
 
 ### Removed `'wagmi/providers/*` entrypoints
 
-It never made sense that we would have provider URLs hardcoded in the Wagmi codebase. Use [Viem transports](https://viem.sh/docs/clients/intro.html#transports) along with RPC provider URLs instead.
+It never made sense that we would have provider URLs hardcoded in the Wagmi codebase. Use [Viem transports](https://viem.sh/docs/clients/intro#transports) along with RPC provider URLs instead.
 
 ```ts
 import { alchemyProvider } from 'wagmi/providers/alchemy' // [!code --]

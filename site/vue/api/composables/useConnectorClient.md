@@ -14,7 +14,7 @@ const hideQueryOptions = ['gcTime', 'staleTime']
 
 # useConnectorClient
 
-Composable for getting a Viem [`Client`](https://viem.sh/docs/clients/custom.html) object for the current or provided connector.
+Composable for getting a Viem [`Client`](https://viem.sh/docs/clients/custom) object for the current or provided connector.
 
 ## Import
 

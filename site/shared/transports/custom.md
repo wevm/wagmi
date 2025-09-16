@@ -4,7 +4,7 @@ const packageName = 'wagmi'
 
 # custom
 
-The `custom` Transport connects to a JSON-RPC API via custom. Wraps Viem's [`custom` Transport](https://viem.sh/docs/clients/transports/custom.html).
+The `custom` Transport connects to a JSON-RPC API via custom. Wraps Viem's [`custom` Transport](https://viem.sh/docs/clients/transports/custom).
 
 ## Import
 

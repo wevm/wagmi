@@ -275,7 +275,7 @@ const result = await signTypedData(config, {
 import { type SignTypedDataReturnType } from '@wagmi/core'
 ```
 
-[`Hex`](https://viem.sh/docs/glossary/types.html#hex)
+[`Hex`](https://viem.sh/docs/glossary/types#hex)
 
 The signed data.
 
@@ -406,4 +406,4 @@ import { type SignTypedDataErrorType } from '@wagmi/core'
 
 ## Viem
 
-- [`signTypedData`](https://viem.sh/docs/actions/wallet/signTypedData.html)
+- [`signTypedData`](https://viem.sh/docs/actions/wallet/signTypedData)

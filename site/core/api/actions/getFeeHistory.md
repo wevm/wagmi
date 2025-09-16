@@ -140,7 +140,7 @@ const feeHistory = await getFeeHistory(config, {
 import { type GetFeeHistoryReturnType } from '@wagmi/core'
 ```
 
-[`FeeHistory`](https://viem.sh/docs/glossary/types.html#feehistory)
+[`FeeHistory`](https://viem.sh/docs/glossary/types#feehistory)
 
 The fee history.
 
@@ -154,4 +154,4 @@ import { type GetFeeHistoryErrorType } from '@wagmi/core'
 
 ## Viem
 
-- [`getFeeHistory`](https://viem.sh/docs/actions/public/getFeeHistory.html)
+- [`getFeeHistory`](https://viem.sh/docs/actions/public/getFeeHistory)

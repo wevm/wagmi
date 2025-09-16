@@ -373,4 +373,4 @@ import { type WatchContractEventError } from '@wagmi/core'
 
 ## Viem
 
-- [`watchContractEvent`](https://viem.sh/docs/contract/watchContractEvent.html)
+- [`watchContractEvent`](https://viem.sh/docs/contract/watchContractEvent)

@@ -14,7 +14,7 @@ const hideQueryOptions = ['gcTime', 'staleTime']
 
 # useWalletClient
 
-Hook for getting a Viem [`WalletClient`](https://viem.sh/docs/clients/wallet.html) object for the current or provided connector.
+Hook for getting a Viem [`WalletClient`](https://viem.sh/docs/clients/wallet) object for the current or provided connector.
 
 ## Import
 
@@ -36,7 +36,7 @@ function App() {
 :::
 
 ::: warning
-If you want to optimize bundle size, you should use [`useConnectorClient`](/react/api/hooks/useConnectorClient) along with Viem's [tree-shakable actions](https://viem.sh/docs/clients/custom.html#tree-shaking) instead. Since Wallet Client has all wallet actions attached directly to it.
+If you want to optimize bundle size, you should use [`useConnectorClient`](/react/api/hooks/useConnectorClient) along with Viem's [tree-shakable actions](https://viem.sh/docs/clients/custom#tree-shaking) instead. Since Wallet Client has all wallet actions attached directly to it.
 :::
 
 ## Parameters

@@ -6,7 +6,7 @@
 
 ## Leveraging Viem Actions
 
-All of the core [Wagmi Composables](/vue/api/composables) are friendly wrappers around [Viem Actions](https://viem.sh/docs/actions/public/introduction.html) that inject a multi-chain and connector aware [Wagmi Config](/vue/api/createConfig).
+All of the core [Wagmi Composables](/vue/api/composables) are friendly wrappers around [Viem Actions](https://viem.sh/docs/actions/public/introduction) that inject a multi-chain and connector aware [Wagmi Config](/vue/api/createConfig).
 
 There may be cases where you might want to dig deeper and utilize Viem Actions directly (maybe a Composable doesn't exist in Wagmi yet). In these cases, you can create your own custom Wagmi Composable by importing Viem Actions directly via `viem/actions` and plugging in a Viem Client returned by the [`useClient` Composable](/vue/api/composables/useClient).
 
