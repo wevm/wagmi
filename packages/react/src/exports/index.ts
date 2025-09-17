@@ -234,7 +234,7 @@ export {
   type UseReadContractParameters,
   type UseReadContractReturnType,
   useReadContract,
-  /** @deprecated Use `useWriteContract` instead */
+  /** @deprecated Use `useReadContract` instead */
   useReadContract as useContractRead,
 } from '../hooks/useReadContract.js'
 

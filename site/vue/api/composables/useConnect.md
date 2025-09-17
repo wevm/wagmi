@@ -10,7 +10,7 @@ const typeName = 'Connect'
 const mutate = 'connect'
 const TData = '{ accounts: readonly [Address, ...Address[]]; chainId: number; }'
 const TError = 'ConnectErrorType'
-const TVariables = '{ chainId?: number | undefined; connector?: CreateConnectorFn | Connector | undefined; }'
+const TVariables = '{ chainId?: number | undefined; connector?: CreateConnectorFn | Connector | undefined; withCapabilities?: boolean | undefined }'
 </script>
 
 # useConnect

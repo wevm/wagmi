@@ -7,7 +7,6 @@ import {
 import type { Mutable, Omit } from '@wagmi/core/internal'
 import {
   type AddEthereumChainParameter,
-  type Address,
   getAddress,
   type Hex,
   numberToHex,
@@ -25,15 +24,6 @@ export type BaseAccountParameters = Mutable<
 
 export function baseAccount(parameters: BaseAccountParameters = {}) {
   type Provider = ProviderInterface
-  type Properties = {
-    connect(parameters?: {
-      chainId?: number | undefined
-      isReconnecting?: boolean | undefined
-    }): Promise<{
-      accounts: readonly Address[]
-      chainId: number
-    }>
-  }
 
   let walletProvider: Provider | undefined
 
@@ -41,12 +31,12 @@ export function baseAccount(parameters: BaseAccountParameters = {}) {
   let chainChanged: Connector['onChainChanged'] | undefined
   let disconnect: Connector['onDisconnect'] | undefined
 
-  return createConnector<Provider, Properties>((config) => ({
+  return createConnector<Provider>((config) => ({
     id: 'baseAccount',
     name: 'Base Account',
     rdns: 'app.base.account',
     type: 'baseAccount',
-    async connect({ chainId } = {}) {
+    async connect({ chainId, withCapabilities } = {}) {
       try {
         const provider = await this.getProvider()
         const accounts = (
@@ -79,7 +69,13 @@ export function baseAccount(parameters: BaseAccountParameters = {}) {
           currentChainId = chain?.id ?? currentChainId
         }
 
-        return { accounts, chainId: currentChainId }
+        return {
+          // TODO(v3): Make `withCapabilities: true` default behavior
+          accounts: (withCapabilities
+            ? accounts.map((address) => ({ address, capabilities: {} }))
+            : accounts) as never,
+          chainId: currentChainId,
+        }
       } catch (error) {
         if (
           /(user closed modal|accounts received is empty|user denied account|request rejected)/i.test(

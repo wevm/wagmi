@@ -1,4 +1,3 @@
-import type { Address } from 'viem'
 import { test } from 'vitest'
 import { createConnector } from './createConnector.js'
 
@@ -10,7 +9,7 @@ test('default', () => {
       type: 'test',
       async setup() {},
       async connect() {
-        return { accounts: [] as Address[], chainId: 123 }
+        return { accounts: [] as never, chainId: 123 }
       },
       async disconnect() {},
       async getAccounts() {

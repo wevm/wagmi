@@ -78,12 +78,16 @@ export function walletConnect(parameters: WalletConnectParameters) {
 
   type Provider = Awaited<ReturnType<(typeof EthereumProvider)['init']>>
   type Properties = {
-    connect(parameters?: {
+    // TODO(v3): Make `withCapabilities: true` default behavior
+    connect<withCapabilities extends boolean = false>(parameters?: {
       chainId?: number | undefined
       isReconnecting?: boolean | undefined
       pairingTopic?: string | undefined
+      withCapabilities?: withCapabilities | boolean | undefined
     }): Promise<{
-      accounts: readonly Address[]
+      accounts: withCapabilities extends true
+        ? readonly { address: Address }[]
+        : readonly Address[]
       chainId: number
     }>
     getNamespaceChainsIds(): number[]
@@ -126,7 +130,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
         provider.on('session_delete', sessionDelete)
       }
     },
-    async connect({ chainId, ...rest } = {}) {
+    async connect({ chainId, withCapabilities, ...rest } = {}) {
       try {
         const provider = await this.getProvider()
         if (!provider) throw new ProviderNotFoundError()
@@ -210,7 +214,12 @@ export function walletConnect(parameters: WalletConnectParameters) {
           provider.on('session_delete', sessionDelete)
         }
 
-        return { accounts, chainId: currentChainId }
+        return {
+          accounts: (withCapabilities
+            ? accounts.map((address) => ({ address, capabilities: {} }))
+            : accounts) as never,
+          chainId: currentChainId,
+        }
       } catch (error) {
         if (
           /(user rejected|connection request reset)/i.test(
