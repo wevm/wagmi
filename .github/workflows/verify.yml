@@ -19,6 +19,8 @@ jobs:
 
       - name: Install dependencies
         uses: wevm/actions/.github/actions/pnpm@main
+        with:
+          node-version: 24.5
 
       - name: Check repo
         run: pnpm check:repo
@@ -51,6 +53,8 @@ jobs:
 
       - name: Install dependencies
         uses: wevm/actions/.github/actions/pnpm@main
+        with:
+          node-version: 24.5
 
       - name: Build
         run: pnpm build
@@ -79,6 +83,8 @@ jobs:
 
       - name: Install dependencies
         uses: wevm/actions/.github/actions/pnpm@main
+        with:
+          node-version: 24.5
 
       - run: pnpm add -D -w typescript@${{ matrix.typescript-version }} viem@${{ matrix.viem-version }}
 
@@ -111,6 +117,8 @@ jobs:
 
       - name: Install dependencies
         uses: wevm/actions/.github/actions/pnpm@main
+        with:
+          node-version: 24.5
 
       - name: Set up foundry
         uses: foundry-rs/foundry-toolchain@v1

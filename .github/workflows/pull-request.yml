@@ -29,6 +29,8 @@ jobs:
 
       - name: Install dependencies
         uses: wevm/actions/.github/actions/pnpm@main
+        with:
+          node-version: 24.5
 
       - name: Report build size
         uses: preactjs/compressed-size-action@v2

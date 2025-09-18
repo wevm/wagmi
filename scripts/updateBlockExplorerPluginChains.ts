@@ -1,3 +1,5 @@
+import fs from 'node:fs/promises'
+
 // Fetches supported chains for Etherscan and Sourcify
 
 console.log('Updating block explorer plugins chains.')
@@ -68,9 +70,8 @@ let count = 0
 console.log(`Done. Updated chains for ${count} plugins.`)
 
 async function writeContent(pluginPath: string, content: string) {
-  const file = Bun.file(pluginPath)
-  const text = await file
-    .text()
+  const text = await fs
+    .readFile(pluginPath, 'utf8')
     .then((text) => text.replace(/type ChainId =[\s\S]*$/, content))
-  await Bun.write(pluginPath, text)
+  await fs.writeFile(pluginPath, text, 'utf8')
 }

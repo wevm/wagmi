@@ -1,3 +1,5 @@
+/// <reference types="./vite-env.d.ts" />
+
 import { type Address, parseAbi } from 'viem'
 
 import type { chain } from './chains.js'

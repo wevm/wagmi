@@ -1,3 +1,5 @@
+/// <reference types="./vite-env.d.ts" />
+
 import type { Compute } from '@wagmi/core/internal'
 import {
   type Chain as viem_Chain,
