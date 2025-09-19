@@ -3,7 +3,7 @@ import { mainnet, optimism } from '@wagmi/core/chains'
 import { abi } from '@wagmi/test'
 import { expectTypeOf, test } from 'vitest'
 
-import { useWatchContractEvent } from './useWatchContractEvent.js'
+import { useWatchContractEvent, type UseWatchContractEventParameters } from './useWatchContractEvent.js'
 
 test('default', () => {
   useWatchContractEvent({
@@ -31,8 +31,6 @@ test('behavior: no eventName', () => {
     address: '0x',
     abi: abi.erc20,
     args: {
-      // TODO: Figure out why this is not working
-      // @ts-ignore
       from: '0x',
       to: '0x',
     },
@@ -63,15 +61,14 @@ test('differing transports', () => {
     },
   })
 
-  // TODO: Fix inference for `poll` (`DeepMaybeRef` wrapping `UseWatchContractEventParameters` not working as expected)
-  // type Result = UseWatchContractEventParameters<
-  //   typeof abi.erc20,
-  //   'Transfer' | 'Approval',
-  //   true,
-  //   typeof config,
-  //   typeof mainnet.id | typeof optimism.id
-  // >
-  // expectTypeOf<Result['poll']>().toEqualTypeOf<boolean | undefined>()
+  type Result = UseWatchContractEventParameters<
+    typeof abi.erc20,
+    'Transfer' | 'Approval',
+    true,
+    typeof config,
+    typeof mainnet.id | typeof optimism.id
+  >
+  expectTypeOf<Result['poll']>().toEqualTypeOf<boolean | undefined>()
   useWatchContractEvent({
     config,
     poll: false,
@@ -80,14 +77,14 @@ test('differing transports', () => {
     onLogs() {},
   })
 
-  // type Result2 = UseWatchContractEventParameters<
-  //   typeof abi.erc20,
-  //   'Transfer' | 'Approval',
-  //   true,
-  //   typeof config,
-  //   typeof mainnet.id
-  // >
-  // expectTypeOf<Result2['poll']>().toEqualTypeOf<true | undefined>()
+  type Result2 = UseWatchContractEventParameters<
+    typeof abi.erc20,
+    'Transfer' | 'Approval',
+    true,
+    typeof config,
+    typeof mainnet.id
+  >
+  expectTypeOf<Result2['poll']>().toEqualTypeOf<true | undefined>()
   useWatchContractEvent({
     config,
     chainId: mainnet.id,
@@ -97,14 +94,14 @@ test('differing transports', () => {
     onLogs() {},
   })
 
-  // type Result3 = UseWatchContractEventParameters<
-  //   typeof abi.erc20,
-  //   'Transfer' | 'Approval',
-  //   true,
-  //   typeof config,
-  //   typeof optimism.id
-  // >
-  // expectTypeOf<Result3['poll']>().toEqualTypeOf<boolean | undefined>()
+  type Result3 = UseWatchContractEventParameters<
+    typeof abi.erc20,
+    'Transfer' | 'Approval',
+    true,
+    typeof config,
+    typeof optimism.id
+  >
+  expectTypeOf<Result3['poll']>().toEqualTypeOf<boolean | undefined>()
   useWatchContractEvent({
     config,
     chainId: optimism.id,
