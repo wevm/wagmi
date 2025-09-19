@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 5.10.1
+
+### Patch Changes
+
+- Bumped MetaMask SDK version in accordance with [security advisory](https://github.com/advisories/GHSA-qj3p-xc97-xw74). ([`5937456`](https://github.com/wevm/wagmi/commit/59374562f2c3a41245687eb1c29ee8023737c7cc))
+
 ## 5.10.0
 
 ### Minor Changes
