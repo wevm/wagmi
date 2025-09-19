@@ -16,7 +16,7 @@ import { useConfig } from './useConfig.js'
 
 export type UseWatchContractEventParameters<
   abi extends Abi | readonly unknown[] = Abi,
-  eventName extends ContractEventName<abi> = ContractEventName<abi>,
+  eventName extends ContractEventName<abi> | undefined = ContractEventName<abi>,
   strict extends boolean | undefined = undefined,
   config extends Config = Config,
   chainId extends
@@ -36,7 +36,7 @@ export type UseWatchContractEventReturnType = void
 /** https://wagmi.sh/vue/api/composables/useWatchContractEvent */
 export function useWatchContractEvent<
   const abi extends Abi | readonly unknown[],
-  eventName extends ContractEventName<abi>,
+  eventName extends ContractEventName<abi> | undefined,
   strict extends boolean | undefined = undefined,
   config extends Config = ResolvedRegister['config'],
   chainId extends
