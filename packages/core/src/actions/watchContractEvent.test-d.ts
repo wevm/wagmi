@@ -52,8 +52,6 @@ test('behavior: no eventName', () => {
     address: '0x',
     abi: abi.erc20,
     args: {
-      // TODO: Figure out why this is not working
-      // @ts-ignore
       from: '0x',
       to: '0x',
     },
