@@ -12,7 +12,9 @@ export function getConnectors<config extends Config>(
   const connectors = config.connectors
   if (
     previousConnectors.length === connectors.length &&
-    previousConnectors.every((connector, index) => connector === connectors[index])
+    previousConnectors.every(
+      (connector, index) => connector === connectors[index],
+    )
   )
     return previousConnectors
   previousConnectors = connectors
