@@ -10,7 +10,12 @@ export function getConnectors<config extends Config>(
   config: config,
 ): GetConnectorsReturnType<config> {
   const connectors = config.connectors
-  if (previousConnectors.map((c) => c.uid) === connectors.map((c) => c.uid))
+  if (
+    previousConnectors.length === connectors.length &&
+    previousConnectors.every(
+      (connector, index) => connector === connectors[index],
+    )
+  )
     return previousConnectors
   previousConnectors = connectors
   return connectors
