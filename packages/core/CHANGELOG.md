@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.21.1
+
+### Patch Changes
+
+- Fixed `getConnectors` comparison ([#4792](https://github.com/wevm/wagmi/pull/4792))
+
 ## 2.21.0
 
 ### Minor Changes
