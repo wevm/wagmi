@@ -11,6 +11,7 @@ test('exports', () => {
       "coinbaseWallet",
       "gemini",
       "metaMask",
+      "porto",
       "safe",
       "version",
       "walletConnect",
