@@ -3,6 +3,7 @@ import {
   type Connector,
   createConnector,
 } from '@wagmi/core'
+import type { ExactPartial } from '@wagmi/core/internal'
 import { type Porto, RpcSchema } from 'porto'
 import { z } from 'porto/internal'
 import {
@@ -16,7 +17,6 @@ import {
   withRetry,
 } from 'viem'
 import type { Chain } from 'viem/chains'
-import type { ExactPartial } from '../../core/src/types/utils.js'
 
 export type PortoParameters<
   chains extends readonly [Chain, ...Chain[]] = readonly [Chain, ...Chain[]],
