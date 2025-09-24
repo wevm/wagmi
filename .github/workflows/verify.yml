@@ -128,6 +128,9 @@ jobs:
       - name: Install Playwright
         run: pnpx playwright@1.54.1 install --with-deps
 
+      - name: Build
+        run: pnpm build
+
       - name: Run tests
         uses: nick-fields/retry@v3
         with:
