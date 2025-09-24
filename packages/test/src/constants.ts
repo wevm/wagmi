@@ -23,7 +23,8 @@ export const privateKey =
   '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80'
 
 export let walletConnectProjectId: string
-if (process?.env.VITE_WC_PROJECT_ID)
+// biome-ignore lint/complexity/useOptionalChain: _
+if (typeof process !== 'undefined' && process.env.VITE_WC_PROJECT_ID)
   walletConnectProjectId = process.env.VITE_WC_PROJECT_ID
 if (typeof import.meta !== 'undefined' && import.meta.env.VITE_WC_PROJECT_ID)
   walletConnectProjectId = import.meta.env.VITE_WC_PROJECT_ID

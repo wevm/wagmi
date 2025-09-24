@@ -91,7 +91,9 @@ export const noopStorage = {
 
 export function getDefaultStorage() {
   const storage = (() => {
-    if (window?.localStorage) return window.localStorage
+    // biome-ignore lint/complexity/useOptionalChain: _
+    if (typeof window !== 'undefined' && window.localStorage)
+      return window.localStorage
     return noopStorage
   })()
   return {
