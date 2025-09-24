@@ -53,7 +53,7 @@
     "@safe-global/safe-apps-sdk": "9.1.0",
     "@walletconnect/ethereum-provider": "2.21.1",
     "cbw-sdk": "npm:@coinbase/wallet-sdk@3.9.3",
-    "porto": "0.2.15"
+    "porto": "0.2.16"
   },
   "devDependencies": {
     "@wagmi/core": "workspace:*",
