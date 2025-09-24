@@ -58,5 +58,8 @@ export function useCapabilities<
     account: account ?? address,
   })
 
-  return useQuery({ ...query, ...options })
+  return useQuery({
+    ...query,
+    ...options,
+  } as never) as UseCapabilitiesReturnType<config, chainId, selectData>
 }
