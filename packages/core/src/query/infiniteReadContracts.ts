@@ -11,6 +11,7 @@ import type {
   ScopeKeyParameter,
 } from '../types/properties.js'
 import type { StrictOmit } from '../types/utils.js'
+import { serialize } from '../utils/serialize.js'
 import type { InfiniteQueryOptions } from './types.js'
 import { filterQueryOptions } from './utils.js'
 
@@ -109,7 +110,8 @@ export function infiniteReadContractsQueryKey<
     RequiredPageParamsParameters<contracts, allowFailure, pageParam>,
 ) {
   const { contracts: _, query: _q, ...parameters } = options
-  return ['infiniteReadContracts', filterQueryOptions(parameters)] as const
+  const serialized = JSON.parse(serialize(parameters))
+  return ['infiniteReadContracts', filterQueryOptions(serialized)] as const
 }
 
 export type InfiniteReadContractsQueryKey<
