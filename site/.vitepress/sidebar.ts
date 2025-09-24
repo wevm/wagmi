@@ -99,6 +99,10 @@ export function getSidebar() {
                 link: '/react/api/connectors/mock',
               },
               {
+                text: 'porto',
+                link: '/react/api/connectors/porto',
+              },
+              {
                 text: 'safe',
                 link: '/react/api/connectors/safe',
               },
@@ -461,6 +465,10 @@ export function getSidebar() {
                 link: '/vue/api/connectors/mock',
               },
               {
+                text: 'porto',
+                link: '/vue/api/connectors/porto',
+              },
+              {
                 text: 'safe',
                 link: '/vue/api/connectors/safe',
               },
@@ -707,6 +715,10 @@ export function getSidebar() {
               {
                 text: 'mock',
                 link: '/core/api/connectors/mock',
+              },
+              {
+                text: 'porto',
+                link: '/core/api/connectors/porto',
               },
               {
                 text: 'safe',
