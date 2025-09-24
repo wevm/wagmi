@@ -15,6 +15,7 @@ minimumReleaseAgeExclude:
   - "@wagmi/core"
   - "@wagmi/test"
   - "@wagmi/vue"
+  - porto
   - wagmi
 packages:
   - packages/*
