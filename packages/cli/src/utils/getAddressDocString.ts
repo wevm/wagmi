@@ -19,23 +19,23 @@ export function getAddressDocString(parameters: {
 
   if (Object.keys(address).length === 1)
     return `* ${getLink({
-      address: address[Number.parseInt(Object.keys(address)[0]!)]!,
-      chainId: Number.parseInt(Object.keys(address)[0]!),
+      address: address[Number.parseInt(Object.keys(address)[0]!, 10)]!,
+      chainId: Number.parseInt(Object.keys(address)[0]!, 10),
     })}`
 
   const addresses = Object.entries(address).filter(
-    (x) => chainMap[Number.parseInt(x[0])],
+    (x) => chainMap[Number.parseInt(x[0], 10)],
   )
   if (addresses.length === 0) return ''
   if (addresses.length === 1 && addresses[0])
     return `* ${getLink({
       address: addresses[0][1],
-      chainId: Number.parseInt(addresses[0][0])!,
+      chainId: Number.parseInt(addresses[0][0], 10)!,
     })}`
 
   return dedent`
     ${addresses.reduce((prev, curr) => {
-      const chainId = Number.parseInt(curr[0])
+      const chainId = Number.parseInt(curr[0], 10)
       const address = curr[1]
       return `${prev}\n* - ${getLink({ address, chainId })}`
     }, '')}

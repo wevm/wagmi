@@ -23,6 +23,9 @@
       "a11y": {
         "useButtonType": "off"
       },
+      "complexity": {
+        "noImportantStyles": "off"
+      },
       "correctness": {
         "noUnusedVariables": "error",
         "useExhaustiveDependencies": "error"
@@ -46,14 +49,22 @@
         "noUselessElse": "error",
         "useConsistentArrayType": {
           "level": "error",
-          "options": { "syntax": "shorthand" }
+          "options": {
+            "syntax": "shorthand"
+          }
         }
       },
       "suspicious": {
         "noArrayIndexKey": "off",
         "noConfusingVoidType": "off",
         "noExplicitAny": "off",
-        "noConsole": { "level": "error", "options": { "allow": ["log"] } }
+        "noConsole": {
+          "level": "error",
+          "options": {
+            "allow": ["log"]
+          }
+        },
+        "noTsIgnore": "off"
       }
     }
   },
@@ -64,7 +75,13 @@
       "semicolons": "asNeeded"
     }
   },
-  "assist": { "actions": { "source": { "organizeImports": "on" } } },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  },
   "overrides": [
     {
       "includes": ["**/*.vue"],
@@ -92,7 +109,12 @@
       "linter": {
         "rules": {
           "suspicious": {
-            "noConsole": { "level": "off", "options": { "allow": ["log"] } }
+            "noConsole": {
+              "level": "off",
+              "options": {
+                "allow": ["log"]
+              }
+            }
           }
         }
       }

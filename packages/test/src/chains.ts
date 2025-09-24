@@ -19,7 +19,7 @@ export type Chain = Compute<
 const mainnetFork = {
   blockNumber: 19_258_213n,
   url:
-    (typeof process !== 'undefined' && process.env.VITE_MAINNET_FORK_URL) ||
+    process?.env.VITE_MAINNET_FORK_URL ||
     (typeof import.meta !== 'undefined' &&
       import.meta.env.VITE_MAINNET_FORK_URL) ||
     'https://eth.merkle.io',
@@ -45,7 +45,7 @@ export const optimism = {
   fork: {
     blockNumber: 107_317_577n,
     url:
-      (typeof process !== 'undefined' && process.env.VITE_OPTIMISM_FORK_URL) ||
+      process?.env.VITE_OPTIMISM_FORK_URL ||
       (typeof import.meta !== 'undefined' &&
         import.meta.env.VITE_OPTIMISM_FORK_URL) ||
       'https://mainnet.optimism.io',

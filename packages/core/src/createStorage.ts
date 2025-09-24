@@ -91,8 +91,7 @@ export const noopStorage = {
 
 export function getDefaultStorage() {
   const storage = (() => {
-    if (typeof window !== 'undefined' && window.localStorage)
-      return window.localStorage
+    if (window?.localStorage) return window.localStorage
     return noopStorage
   })()
   return {

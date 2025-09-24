@@ -198,9 +198,9 @@ export function createConfig<
   let currentVersion: number
   const prefix = '0.0.0-canary-'
   if (version.startsWith(prefix))
-    currentVersion = Number.parseInt(version.replace(prefix, ''))
+    currentVersion = Number.parseInt(version.replace(prefix, ''), 10)
   // use package major version to version store
-  else currentVersion = Number.parseInt(version.split('.')[0] ?? '0')
+  else currentVersion = Number.parseInt(version.split('.')[0] ?? '0', 10)
 
   const store = createStore(
     subscribeWithSelector(

@@ -450,7 +450,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
     getNamespaceChainsIds() {
       if (!provider_) return []
       const chainIds = provider_.session?.namespaces[NAMESPACE]?.accounts?.map(
-        (account) => Number.parseInt(account.split(':')[1] || ''),
+        (account) => Number.parseInt(account.split(':')[1] || '', 10),
       )
       return chainIds ?? []
     },
