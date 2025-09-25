@@ -22,6 +22,9 @@ jobs:
         with:
           node-version: 24.5
 
+      - name: Audit dependencies
+        run: pnpm audit
+
       - name: Check repo
         run: pnpm check:repo
 
