@@ -99,6 +99,7 @@ export async function writeContract<
   else
     client = await getConnectorClient(config, {
       account: account ?? undefined,
+      assertChainId: false,
       chainId,
       connector,
     })

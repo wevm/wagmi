@@ -142,6 +142,7 @@ export async function simulateContract<
   if (parameters.account) account = parameters.account
   else {
     const connectorClient = await getConnectorClient(config, {
+      assertChainId: false,
       chainId,
       connector,
     })

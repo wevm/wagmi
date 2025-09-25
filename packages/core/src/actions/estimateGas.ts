@@ -61,6 +61,7 @@ export async function estimateGas<
   else {
     const connectorClient = await getConnectorClient(config, {
       account: parameters.account,
+      assertChainId: false,
       chainId,
       connector,
     })
