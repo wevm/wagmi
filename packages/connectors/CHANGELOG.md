@@ -1,5 +1,14 @@
 # @wagmi/connectors
 
+## 5.11.2
+
+### Patch Changes
+
+- Added `chainId` parameter on `walletConnect#getProvider` ([#4806](https://github.com/wevm/wagmi/pull/4806))
+
+- Updated dependencies [[`866aeb0`](https://github.com/wevm/wagmi/commit/866aeb0e6361ef9114246e50149c1077bc05bf10)]:
+  - @wagmi/core@2.21.2
+
 ## 5.11.1
 
 ### Patch Changes

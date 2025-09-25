@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 2.21.2
+
+### Patch Changes
+
+- Added `assertChainId` parameter to `getConnectorClient`. ([`866aeb0`](https://github.com/wevm/wagmi/commit/866aeb0e6361ef9114246e50149c1077bc05bf10))
+
 ## 2.21.1
 
 ### Patch Changes
