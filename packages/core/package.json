@@ -34,30 +34,37 @@
   "typings": "./dist/types/exports/index.d.ts",
   "exports": {
     ".": {
+      "src": "./src/exports/index.ts",
       "types": "./dist/types/exports/index.d.ts",
       "default": "./dist/esm/exports/index.js"
     },
     "./actions": {
+      "src": "./src/exports/actions.ts",
       "types": "./dist/types/exports/actions.d.ts",
       "default": "./dist/esm/exports/actions.js"
     },
     "./chains": {
+      "src": "./src/exports/chains.ts",
       "types": "./dist/types/exports/chains.d.ts",
       "default": "./dist/esm/exports/chains.js"
     },
     "./codegen": {
+      "src": "./src/exports/codegen.ts",
       "types": "./dist/types/exports/codegen.d.ts",
       "default": "./dist/esm/exports/codegen.js"
     },
     "./experimental": {
+      "src": "./src/exports/experimental.ts",
       "types": "./dist/types/exports/experimental.d.ts",
       "default": "./dist/esm/exports/experimental.js"
     },
     "./internal": {
+      "src": "./src/exports/internal.ts",
       "types": "./dist/types/exports/internal.d.ts",
       "default": "./dist/esm/exports/internal.js"
     },
     "./query": {
+      "src": "./src/exports/query.ts",
       "types": "./dist/types/exports/query.d.ts",
       "default": "./dist/esm/exports/query.js"
     },

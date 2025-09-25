@@ -60,9 +60,10 @@ for (const packagePath of packagePaths) {
 
     // Link exports to dist locations
     for (const [type, value] of Object.entries(exports) as [
-      type: 'types' | 'default',
+      type: 'src' | 'types' | 'default',
       value: string,
     ][]) {
+      if (type === 'src') continue
       const srcDir = path.resolve(
         dir,
         path

@@ -34,30 +34,37 @@
   "typings": "./dist/types/exports/index.d.ts",
   "exports": {
     ".": {
+      "src": "./src/exports/index.ts",
       "types": "./dist/types/exports/index.d.ts",
       "default": "./dist/esm/exports/index.js"
     },
     "./actions": {
+      "src": "./src/exports/actions.ts",
       "types": "./dist/types/exports/actions.d.ts",
       "default": "./dist/esm/exports/actions.js"
     },
     "./actions/experimental": {
+      "src": "./src/exports/actions/experimental.ts",
       "types": "./dist/types/exports/actions/experimental.d.ts",
       "default": "./dist/esm/exports/actions/experimental.js"
     },
     "./chains": {
+      "src": "./src/exports/chains.ts",
       "types": "./dist/types/exports/chains.d.ts",
       "default": "./dist/esm/exports/chains.js"
     },
     "./connectors": {
+      "src": "./src/exports/connectors.ts",
       "types": "./dist/types/exports/connectors.d.ts",
       "default": "./dist/esm/exports/connectors.js"
     },
     "./nuxt": {
+      "src": "./src/exports/nuxt.ts",
       "types": "./dist/types/exports/nuxt.d.ts",
       "default": "./dist/esm/exports/nuxt.js"
     },
     "./query": {
+      "src": "./src/exports/query.ts",
       "types": "./dist/types/exports/query.d.ts",
       "default": "./dist/esm/exports/query.js"
     },

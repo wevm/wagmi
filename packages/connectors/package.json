@@ -29,6 +29,7 @@
   "typings": "./dist/types/exports/index.d.ts",
   "exports": {
     ".": {
+      "src": "./src/exports/index.ts",
       "types": "./dist/types/exports/index.d.ts",
       "default": "./dist/esm/exports/index.js"
     },

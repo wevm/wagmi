@@ -31,14 +31,17 @@
   "typings": "./dist/types/exports/index.d.ts",
   "exports": {
     ".": {
+      "src": "./src/exports/index.ts",
       "types": "./dist/types/exports/index.d.ts",
       "default": "./dist/esm/exports/index.js"
     },
     "./react": {
+      "src": "./src/exports/react.ts",
       "types": "./dist/types/exports/react.d.ts",
       "default": "./dist/esm/exports/react.js"
     },
     "./vue": {
+      "src": "./src/exports/vue.ts",
       "types": "./dist/types/exports/vue.d.ts",
       "default": "./dist/esm/exports/vue.js"
     },
