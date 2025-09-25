@@ -51,7 +51,7 @@ export function porto(parameters: PortoParameters = {}) {
       return parameters.transports
     })()
 
-    let porto_promise: Promise<Porto.Porto<never>> | undefined
+    let porto_promise: Promise<any> | undefined
 
     let accountsChanged: Connector['onAccountsChanged'] | undefined
     let chainChanged: Connector['onChainChanged'] | undefined
@@ -192,7 +192,7 @@ export function porto(parameters: PortoParameters = {}) {
             ...parameters,
             announceProvider: false,
             chains: chains as never,
-            transports,
+            transports: transports as never,
           })
         })()
         return (await porto_promise).provider
