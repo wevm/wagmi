@@ -1,3 +1,7 @@
+auditConfig:
+  ignoreGhsas:
+    - GHSA-g3ch-rx76-35fx 
+    - GHSA-vjh7-7g9h-fjfh 
 catalog:
   "@vitejs/plugin-react": "^4.3.3"
   "@tanstack/query-core": "5.49.1"

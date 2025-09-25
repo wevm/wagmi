@@ -102,10 +102,10 @@
     "@wagmi/core": "workspace:*"
   },
   "devDependencies": {
-    "@nuxt/schema": "^3.11.2 || ^4.0.0",
+    "@nuxt/schema": "^3.19.2 || ^4.0.0",
     "@tanstack/vue-query": "catalog:",
     "@vue/test-utils": "^2.4.6",
-    "nuxt": "^3.11.2 || ^4.0.0",
+    "nuxt": "^3.19.2 || ^4.0.0",
     "vue": "catalog:"
   },
   "contributors": [
