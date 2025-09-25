@@ -8,7 +8,6 @@ import { type Porto, RpcSchema } from 'porto'
 import { z } from 'porto/internal'
 import {
   type Address,
-  type Chain,
   getAddress,
   numberToHex,
   type ProviderConnectInfo,
@@ -18,13 +17,9 @@ import {
   withRetry,
 } from 'viem'
 
-export type PortoParameters<
-  chains extends readonly [Chain, ...Chain[]] = readonly [Chain, ...Chain[]],
-> = ExactPartial<Porto.Config<chains>>
+export type PortoParameters = ExactPartial<Porto.Config>
 
-export function porto<const chains extends readonly [Chain, ...Chain[]]>(
-  parameters: PortoParameters<chains> = {},
-) {
+export function porto(parameters: PortoParameters = {}) {
   type Provider = ReturnType<typeof Porto.create>['provider']
   type Properties = {
     connect<withCapabilities extends boolean = false>(parameters?: {
@@ -56,7 +51,7 @@ export function porto<const chains extends readonly [Chain, ...Chain[]]>(
       return parameters.transports
     })()
 
-    let porto_promise: Promise<Porto.Porto<chains>> | undefined
+    let porto_promise: Promise<Porto.Porto<never>> | undefined
 
     let accountsChanged: Connector['onAccountsChanged'] | undefined
     let chainChanged: Connector['onChainChanged'] | undefined
