@@ -23,6 +23,18 @@
       <img src="https://img.shields.io/npm/v/wagmi?colorA=f6f8fa&colorB=f6f8fa" alt="Version">
     </picture>
   </a>
+  <a href="https://scorecard.dev/viewer/?uri=github.com/ossf/scorecard">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/ossf-scorecard/github.com/wevm/wagmi?label=openssf+scorecard&style=flat&color=21262d&labelColor=21262d">
+      <img src="https://img.shields.io/ossf-scorecard/github.com/wevm/wagmi?label=openssf+scorecard&style=flat&color=f6f8fa&labelColor=f6f8fa" alt="OpenSSF Best Practices">
+    </picture>
+  </a>
+  <a href="https://www.bestpractices.dev/en/projects/11233">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/openssf_best_practices-passing-21262d?labelColor=21262d">
+      <img src="https://img.shields.io/badge/openssf_best_practices-passing-f6f8fa?labelColor=f6f8fa" alt="OpenSSF Best Practices">
+    </picture>
+  </a>
   <a href="https://github.com/wevm/wagmi/blob/main/LICENSE">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/l/wagmi?colorA=21262d&colorB=21262d">
