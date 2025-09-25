@@ -1,5 +1,13 @@
 # @wagmi/connectors
 
+## 5.11.1
+
+### Patch Changes
+
+- Updated `porto`. ([`41eb70e`](https://github.com/wevm/wagmi/commit/41eb70e072774b282053a5e98669a7d01c0e2438))
+
+- Pulled `porto` connector implementation. ([#4801](https://github.com/wevm/wagmi/pull/4801))
+
 ## 5.11.0
 
 ### Minor Changes
