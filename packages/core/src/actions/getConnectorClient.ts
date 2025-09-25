@@ -43,6 +43,10 @@ export type GetConnectorClientParameters<
        *   an account within the wallet).
        */
       account?: Address | Account | null | undefined
+      /**
+       * Assert that the current chain ID matches the connector's chain ID.
+       */
+      assertChainId?: boolean | undefined
     }
 >
 
@@ -105,7 +109,7 @@ export async function getConnectorClient<
 
   // Check connector using same chainId as connection
   const connectorChainId = await connection.connector.getChainId()
-  if (connectorChainId !== chainId)
+  if (parameters.assertChainId && connectorChainId !== chainId)
     throw new ConnectorChainMismatchError({
       connectionChainId: chainId,
       connectorChainId,

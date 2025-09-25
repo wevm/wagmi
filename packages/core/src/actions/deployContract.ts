@@ -72,6 +72,7 @@ export async function deployContract<
   else
     client = await getConnectorClient(config, {
       account: account ?? undefined,
+      assertChainId: false,
       chainId,
       connector,
     })

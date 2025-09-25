@@ -62,6 +62,7 @@ export async function sendCalls<
 
   const client = await getConnectorClient(config, {
     account,
+    assertChainId: false,
     chainId,
     connector,
   })
