@@ -24,6 +24,6 @@
     "@vitejs/plugin-react": "catalog:",
     "@wagmi/cli": "workspace:*",
     "buffer": "^6.0.3",
-    "vite": "^5.2.11"
+    "vite": "^5.4.20"
   }
 }
