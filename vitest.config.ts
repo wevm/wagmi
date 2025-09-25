@@ -72,7 +72,7 @@ export default defineConfig({
         },
       },
       {
-        plugins: [react()],
+        plugins: [react() as never],
         resolve: { alias },
         test: {
           name: 'wagmi',
