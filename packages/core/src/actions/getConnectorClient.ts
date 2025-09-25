@@ -79,6 +79,8 @@ export async function getConnectorClient<
   config: config,
   parameters: GetConnectorClientParameters<config, chainId> = {},
 ): Promise<GetConnectorClientReturnType<config, chainId>> {
+  const { assertChainId = true } = parameters
+
   // Get connection
   let connection: Connection | undefined
   if (parameters.connector) {
@@ -109,7 +111,7 @@ export async function getConnectorClient<
 
   // Check connector using same chainId as connection
   const connectorChainId = await connection.connector.getChainId()
-  if (parameters.assertChainId && connectorChainId !== chainId)
+  if (assertChainId && connectorChainId !== chainId)
     throw new ConnectorChainMismatchError({
       connectionChainId: chainId,
       connectorChainId,
