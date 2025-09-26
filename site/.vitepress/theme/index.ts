@@ -1,6 +1,7 @@
 import TwoslashFloatingVue from '@shikijs/vitepress-twoslash/client'
 import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
+import CopyOrDownloadAsMarkdownButtons from 'vitepress-plugin-llms/vitepress-components/CopyOrDownloadAsMarkdownButtons.vue'
 // https://vitepress.dev/guide/custom-theme
 import { h } from 'vue'
 
@@ -26,5 +27,9 @@ export default {
   },
   enhanceApp({ app }) {
     app.use(TwoslashFloatingVue)
+    app.component(
+      'CopyOrDownloadAsMarkdownButtons',
+      CopyOrDownloadAsMarkdownButtons,
+    )
   },
 } satisfies Theme
