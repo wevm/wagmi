@@ -15,7 +15,7 @@ const TVariables = 'ShowCallsStatusVariables'
 
 # useShowCallsStatus
 
-Action to request for the wallet to show information about a call batch that was sent via `useShowCalls`.
+Action to request for the wallet to show information about a call batch that was sent via `useSendCalls`.
 
 [Read more.](https://github.com/ethereum/EIPs/blob/1663ea2e7a683285f977eda51c32cec86553f585/EIPS/eip-5792.md#wallet_showcallsstatus)
 
