@@ -178,4 +178,4 @@ import { type UseWaitForCallsStatusReturnType } from 'wagmi'
 
 ## Action
 
-- [`waitForCallsStatus`](https://viem.sh/experimental/eip5792/waitForCallsStatus)
+- [`waitForCallsStatus`](https://viem.sh/docs/actions/wallet/waitForCallsStatus)
