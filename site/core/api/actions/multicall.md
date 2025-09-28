@@ -352,4 +352,4 @@ import { type MulticallErrorType } from '@wagmi/core'
 
 ## Viem
 
-- [`multicall`](https://viem.sh/docs/actions/public/multicall)
+- [`multicall`](https://viem.sh/docs/contract/multicall)
