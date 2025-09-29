@@ -1,6 +1,5 @@
 ---
 title: baseAccount
-description: "Connector for the Base Account SDK."
 ---
 
 <script setup>

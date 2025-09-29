@@ -134,7 +134,7 @@ export default defineConfig({
   vite: {
     plugins: [
       llmstxt({
-        ignoreFiles: ['shared/*'],
+        ignoreFiles: ['shared/'],
       }),
       unocss({
         shortcuts: [
