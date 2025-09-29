@@ -1,3 +1,7 @@
+---
+title: gemini
+---
+
 <script setup>
 const packageName = '@wagmi/vue'
 const connectorsPackageName = '@wagmi/connectors'

@@ -1,3 +1,7 @@
+---
+title: normalizeChainId
+---
+
 <script setup>
 const packageName = 'wagmi'
 </script>

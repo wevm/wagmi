@@ -1,3 +1,7 @@
+---
+title: gemini
+---
+
 <script setup>
 const docsPath = 'core'
 const packageName = '@wagmi/core'

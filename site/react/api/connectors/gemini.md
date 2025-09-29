@@ -1,3 +1,7 @@
+---
+title: gemini
+---
+
 <script setup>
 const docsPath = 'react'
 const packageName = 'wagmi'

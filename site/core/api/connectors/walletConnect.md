@@ -1,3 +1,7 @@
+---
+title: walletConnect
+---
+
 <script setup>
 const packageName = '@wagmi/core'
 const connectorsPackageName = '@wagmi/connectors'

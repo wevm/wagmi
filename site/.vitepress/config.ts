@@ -133,7 +133,9 @@ export default defineConfig({
   title: 'Wagmi',
   vite: {
     plugins: [
-      llmstxt(),
+      llmstxt({
+        ignoreFiles: ['shared/*'],
+      }),
       unocss({
         shortcuts: [
           [
