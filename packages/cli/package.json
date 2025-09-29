@@ -84,7 +84,7 @@
     "picomatch": "^3.0.0",
     "prettier": "^3.0.3",
     "viem": "2.x",
-    "zod": "^3.22.2"
+    "zod": "^4.1.11"
   },
   "devDependencies": {
     "@types/dedent": "^0.7.2",
