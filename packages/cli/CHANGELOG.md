@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 2.6.0
+
+### Minor Changes
+
+- Bumped internal deps. ([#4808](https://github.com/wevm/wagmi/pull/4808))
+
 ## 2.5.1
 
 ### Patch Changes
