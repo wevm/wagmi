@@ -23,8 +23,12 @@ export function writeContractMutationOptions<config extends Config>(
     WriteContractErrorType,
     WriteContractVariables<
       Abi,
-      string,
-      readonly unknown[],
+      ContractFunctionName<Abi, 'nonpayable' | 'payable'>,
+      ContractFunctionArgs<
+        Abi,
+        'nonpayable' | 'payable',
+        ContractFunctionName<Abi, 'nonpayable' | 'payable'>
+      >,
       config,
       config['chains'][number]['id']
     >
