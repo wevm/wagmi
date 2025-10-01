@@ -2,6 +2,8 @@ name: Verify
 on:
   workflow_call:
   workflow_dispatch:
+permissions:
+  contents: read
 
 jobs:
   check:
@@ -18,7 +20,7 @@ jobs:
           token: ${{ secrets.GH_PTOKEN }}
 
       - name: Install dependencies
-        uses: wevm/actions/.github/actions/pnpm@main
+        uses: wevm/actions/.github/actions/pnpm@f7ad7f00e16e73322562922c241f21f0c7ffbbec
         with:
           node-version: 24.5
 
@@ -55,7 +57,7 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Install dependencies
-        uses: wevm/actions/.github/actions/pnpm@main
+        uses: wevm/actions/.github/actions/pnpm@f7ad7f00e16e73322562922c241f21f0c7ffbbec
         with:
           node-version: 24.5
 
@@ -85,7 +87,7 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Install dependencies
-        uses: wevm/actions/.github/actions/pnpm@main
+        uses: wevm/actions/.github/actions/pnpm@f7ad7f00e16e73322562922c241f21f0c7ffbbec
         with:
           node-version: 24.5
 
@@ -119,7 +121,7 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Install dependencies
-        uses: wevm/actions/.github/actions/pnpm@main
+        uses: wevm/actions/.github/actions/pnpm@f7ad7f00e16e73322562922c241f21f0c7ffbbec
         with:
           node-version: 24.5
 

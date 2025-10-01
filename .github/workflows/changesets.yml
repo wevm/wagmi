@@ -2,6 +2,8 @@ name: Changesets
 on:
   push:
     branches: [main]
+permissions:
+  contents: read
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -35,7 +37,7 @@ jobs:
           fetch-depth: 0
 
       - name: Install dependencies
-        uses: wevm/actions/.github/actions/pnpm@main
+        uses: wevm/actions/.github/actions/pnpm@f7ad7f00e16e73322562922c241f21f0c7ffbbec
         with:
           node-version: 24.5
 
