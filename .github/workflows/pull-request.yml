@@ -25,7 +25,7 @@ jobs:
 
     steps:
       - name: Clone repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v5.0.0
 
       - name: Install dependencies
         uses: wevm/actions/.github/actions/pnpm@main
