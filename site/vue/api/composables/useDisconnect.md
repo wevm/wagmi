@@ -7,7 +7,7 @@ description: Composable for disconnecting connections.
 const packageName = '@wagmi/vue'
 const actionName = 'disconnect'
 const typeName = 'Disconnect'
-const mutate = 'disconnect'
+const mutate = 'mutate'
 const TData = 'void'
 const TError = 'DisconnectErrorType'
 const TVariables = '{ connector?: Connector | undefined; }'
