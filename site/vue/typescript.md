@@ -293,7 +293,7 @@ import { useReadContract } from '@wagmi/vue'
 
 useReadContract({
   abi: erc721Abi,
-  functionName: 'balanecOf',
+  functionName: 'balanceOf',
 })
 ```
 
