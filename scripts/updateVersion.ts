@@ -1,18 +1,17 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
-import { glob } from 'glob'
 
 // Updates package version.ts files (so you can use the version in code without importing package.json).
 
 console.log('Updating version files.')
 
 // Get all package.json files
-const packagePaths = await glob('packages/**/package.json', {
-  ignore: ['**/dist/**', '**/node_modules/**'],
+const packagePaths = fs.glob('packages/**/package.json', {
+  exclude: ['**/dist/**', '**/node_modules/**'],
 })
 
 let count = 0
-for (const packagePath of packagePaths) {
+for await (const packagePath of packagePaths) {
   type Package = {
     name?: string | undefined
     private?: boolean | undefined

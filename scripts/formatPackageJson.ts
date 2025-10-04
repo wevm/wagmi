@@ -1,18 +1,17 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
-import { glob } from 'glob'
 
 // Generates package.json files to be published to NPM with only the necessary fields.
 
 console.log('Formatting package.json files.')
 
 // Get all package.json files
-const packagePaths = await glob('packages/**/package.json', {
-  ignore: ['**/dist/**', '**/node_modules/**'],
+const packagePaths = fs.glob('packages/**/package.json', {
+  exclude: ['**/dist/**', '**/node_modules/**'],
 })
 
 let count = 0
-for (const packagePath of packagePaths) {
+for await (const packagePath of packagePaths) {
   type Package = Record<string, unknown> & {
     name?: string | undefined
     private?: boolean | undefined

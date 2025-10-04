@@ -1,5 +1,4 @@
 import fs from 'node:fs/promises'
-import { glob } from 'glob'
 
 // Updates viem version in Vitest snapshots, etc.
 
@@ -10,10 +9,10 @@ const viemVersion = packageJson.devDependencies.viem
 
 // Update Vitest snapshots
 // Get all *.test.ts files
-const testPaths = await glob('packages/**/*.test.ts')
+const testPaths = fs.glob('packages/**/*.test.ts')
 
 let count = 0
-for (const testPath of testPaths) {
+for await (const testPath of testPaths) {
   const testFile = await fs.readFile(testPath, 'utf-8')
 
   // Skip files that don't contain viem version
@@ -21,7 +20,6 @@ for (const testPath of testPaths) {
   // Skip files that contain current version
   if (testFile.includes(`Version: viem@${viemVersion}`)) continue
 
-  console.log(testPath)
   const updatedTestFile = testFile.replace(
     /Version: viem@[A-Za-z0-9\-.]+/g,
     `Version: viem@${viemVersion}`,
