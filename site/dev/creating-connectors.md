@@ -18,7 +18,7 @@ Check out the [Contributing Guide](/dev/contributing) to get your local developm
 
 ## 2. Create a new file for the connector
 
-Create a new file in `packages/connector/src` named after the connector you want to add.
+Create a new file in `packages/connectors/src` named after the connector you want to add.
 
 For example, if you want to add Foo, you would create a file named `foo.ts`. File names should be camel-cased and as short as possible.
 
@@ -98,7 +98,7 @@ All address values returned and emitted by the connector should be checksummed u
 
 ## 5. Export the connector
 
-Export the connector from `packages/connector/src/exports/index.ts` in alphabetic order.
+Export the connector from `packages/connectors/src/exports/index.ts` in alphabetic order.
 
 ```ts
 export { fooBarBaz } from './fooBarBaz.js'
