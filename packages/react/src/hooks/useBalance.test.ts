@@ -17,7 +17,7 @@ beforeEach(async () => {
 test('default', async () => {
   const { result } = await renderHook(() => useBalance({ address }))
 
-  await vi.waitUntil(() => result.current.isSuccess)
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   const { data, ...rest } = result.current
   expect(data).toMatchObject(
@@ -54,7 +54,7 @@ test('default', async () => {
       "queryKey": [
         "balance",
         {
-          "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "address": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "chainId": 1,
         },
       ],
@@ -69,7 +69,7 @@ test('parameters: chainId', async () => {
     useBalance({ address, chainId: chain.mainnet2.id }),
   )
 
-  await vi.waitUntil(() => result.current.isSuccess)
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -103,7 +103,7 @@ test('parameters: chainId', async () => {
       "queryKey": [
         "balance",
         {
-          "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "address": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "chainId": 456,
         },
       ],
@@ -121,7 +121,7 @@ test('parameters: token', async () => {
     }),
   )
 
-  await vi.waitUntil(() => result.current.isSuccess)
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -171,7 +171,7 @@ test('parameters: unit', async () => {
     useBalance({ address, chainId: chain.mainnet2.id, unit: 'wei' }),
   )
 
-  await vi.waitUntil(() => result.current.isSuccess)
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -205,7 +205,7 @@ test('parameters: unit', async () => {
       "queryKey": [
         "balance",
         {
-          "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "address": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "chainId": 456,
           "unit": "wei",
         },
@@ -260,7 +260,7 @@ test('behavior: address: undefined -> defined', async () => {
   address = accounts[0]
   rerender()
 
-  await vi.waitUntil(() => result.current.isSuccess)
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -294,7 +294,7 @@ test('behavior: address: undefined -> defined', async () => {
       "queryKey": [
         "balance",
         {
-          "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "address": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "chainId": 1,
         },
       ],

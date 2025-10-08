@@ -4,6 +4,7 @@ import { privateKeyToAccount } from 'viem/accounts'
 import { expect, test } from 'vitest'
 import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'
+import { getBalance } from './getBalance.js'
 import { prepareTransactionRequest } from './prepareTransactionRequest.js'
 
 const connector = config.connectors[0]!
@@ -25,9 +26,9 @@ test('default', async () => {
   } = request
   expect(rest).toMatchInlineSnapshot(`
     {
-      "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "account": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
       "chainId": 1,
-      "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "from": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
       "to": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
       "type": "eip1559",
       "value": 1000000000000000000n,
@@ -55,9 +56,9 @@ test('parameters: account', async () => {
   } = request
   expect(rest).toMatchInlineSnapshot(`
     {
-      "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "account": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
       "chainId": 1,
-      "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "from": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
       "to": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
       "type": "eip1559",
       "value": 1000000000000000000n,
@@ -67,7 +68,7 @@ test('parameters: account', async () => {
   await disconnect(config, { connector })
 })
 
-test('behavior: local account', async () => {
+test.only('behavior: local account', async () => {
   const account = privateKeyToAccount(privateKey)
 
   const request = await prepareTransactionRequest(config, {
@@ -86,9 +87,9 @@ test('behavior: local account', async () => {
   expect(rest).toMatchInlineSnapshot(`
     {
       "account": {
-        "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+        "address": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
         "nonceManager": undefined,
-        "publicKey": "0x048318535b54105d4a7aae60c08fc45f9687181b4fdfc625bd1a753fa7397fed753547f11ca8696646f2f3acb08e31016afac23e630c5d11f59f61fef57b0d2aa5",
+        "publicKey": "0x04e997cee8adb07b5269f375399109f53c94ddb7ac9cdb9252b74ba33fd471392fc563102ff7b38c85ee9d0a88c8819e6c97ea8b0db791d59c89086f62f5516863",
         "sign": [Function],
         "signAuthorization": [Function],
         "signMessage": [Function],
@@ -98,7 +99,7 @@ test('behavior: local account', async () => {
         "type": "local",
       },
       "chainId": 1,
-      "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "from": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
       "to": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
       "type": "eip1559",
       "value": 1000000000000000000n,

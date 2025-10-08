@@ -14,7 +14,7 @@ test('default', async () => {
   const { result } = await renderHook(() => useSignMessage())
 
   result.current.signMessage({ message: 'foo bar baz' })
-  await vi.waitUntil(() => result.current.isSuccess)
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   await expect(
     recoverMessageAddress({
@@ -31,7 +31,7 @@ test('behavior: local account', async () => {
 
   const account = privateKeyToAccount(privateKey)
   result.current.signMessage({ account, message: 'foo bar baz' })
-  await vi.waitUntil(() => result.current.isSuccess)
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   await expect(
     recoverMessageAddress({

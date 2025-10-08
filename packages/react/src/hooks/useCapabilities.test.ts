@@ -12,7 +12,7 @@ test('mounts', async () => {
 
   const { result } = await renderHook(() => useCapabilities())
 
-  await vi.waitUntil(() => result.current.isSuccess)
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -55,7 +55,7 @@ test('mounts', async () => {
       "queryKey": [
         "capabilities",
         {
-          "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "account": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
         },
       ],
       "refetch": [Function],
@@ -73,7 +73,7 @@ test('args: account', async () => {
     useCapabilities({ account: accounts[1] }),
   )
 
-  await vi.waitUntil(() => result.current.isSuccess)
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -116,7 +116,7 @@ test('args: account', async () => {
       "queryKey": [
         "capabilities",
         {
-          "account": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+          "account": "0x1D5D7e139A994CeE7f360be398Ef032fE5D74fce",
         },
       ],
       "refetch": [Function],

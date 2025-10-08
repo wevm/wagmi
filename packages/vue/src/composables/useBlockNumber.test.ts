@@ -11,7 +11,7 @@ test('default', async () => {
 
   await waitFor(blockNumberQuery.status, (status) => status === 'success')
 
-  expect(blockNumberQuery.data.value).toMatchInlineSnapshot('19258213n')
+  expect(blockNumberQuery.data.value).toMatchInlineSnapshot('23535880n')
 })
 
 test('parameters: chainId', async () => {

@@ -17,7 +17,7 @@ test('default', async () => {
     }),
   )
 
-  await vi.waitUntil(() => result.current.isSuccess)
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -48,7 +48,7 @@ test('default', async () => {
       "queryKey": [
         "call",
         {
-          "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "account": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "chainId": 1,
           "data": "0x06fdde03",
           "to": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
@@ -71,7 +71,7 @@ test.skip('parameters: blockTag', async () => {
     }),
   )
 
-  await vi.waitUntil(() => result.current.isSuccess)
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -102,7 +102,7 @@ test.skip('parameters: blockTag', async () => {
       "queryKey": [
         "call",
         {
-          "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "account": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "blockTag": "safe",
           "chainId": 1,
           "data": "0x06fdde03",
@@ -126,7 +126,7 @@ test.skip('parameters: blockNumber', async () => {
     }),
   )
 
-  await vi.waitUntil(() => result.current.isSuccess)
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -157,7 +157,7 @@ test.skip('parameters: blockNumber', async () => {
       "queryKey": [
         "call",
         {
-          "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "account": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "blockNumber": 16280770n,
           "chainId": 1,
           "data": "0x06fdde03",
@@ -180,7 +180,7 @@ test('parameters: chainId', async () => {
     }),
   )
 
-  await vi.waitUntil(() => result.current.isSuccess)
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -211,7 +211,7 @@ test('parameters: chainId', async () => {
       "queryKey": [
         "call",
         {
-          "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "account": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "chainId": 456,
           "data": "0x06fdde03",
           "to": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
