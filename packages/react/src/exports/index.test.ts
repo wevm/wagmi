@@ -81,6 +81,7 @@ test('exports', () => {
       "useReconnect",
       "useSendCalls",
       "useSendTransaction",
+      "useSendTransactionSync",
       "useShowCallsStatus",
       "useSignMessage",
       "useSignTypedData",
