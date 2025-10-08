@@ -322,12 +322,26 @@ export {
   sendCallsMutationOptions,
 } from '../query/sendCalls.js'
 export {
+  type SendCallsSyncData,
+  type SendCallsSyncMutate,
+  type SendCallsSyncMutateAsync,
+  type SendCallsSyncVariables,
+  sendCallsSyncMutationOptions,
+} from '../query/sendCallsSync.js'
+export {
   type SendTransactionData,
   type SendTransactionMutate,
   type SendTransactionMutateAsync,
   type SendTransactionVariables,
   sendTransactionMutationOptions,
 } from '../query/sendTransaction.js'
+export {
+  type SendTransactionSyncData,
+  type SendTransactionSyncMutate,
+  type SendTransactionSyncMutateAsync,
+  type SendTransactionSyncVariables,
+  sendTransactionSyncMutationOptions,
+} from '../query/sendTransactionSync.js'
 export {
   type ShowCallsStatusData,
   type ShowCallsStatusMutate,

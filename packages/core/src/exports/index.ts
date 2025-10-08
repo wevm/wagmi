@@ -304,11 +304,25 @@ export {
 } from '../actions/sendCalls.js'
 
 export {
+  type SendCallsSyncErrorType,
+  type SendCallsSyncParameters,
+  type SendCallsSyncReturnType,
+  sendCallsSync,
+} from '../actions/sendCallsSync.js'
+
+export {
   type SendTransactionErrorType,
   type SendTransactionParameters,
   type SendTransactionReturnType,
   sendTransaction,
 } from '../actions/sendTransaction.js'
+
+export {
+  type SendTransactionSyncErrorType,
+  type SendTransactionSyncParameters,
+  type SendTransactionSyncReturnType,
+  sendTransactionSync,
+} from '../actions/sendTransactionSync.js'
 
 export {
   type ShowCallsStatusErrorType,
