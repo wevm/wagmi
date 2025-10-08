@@ -105,13 +105,13 @@ test('behavior: connect and disconnect', async () => {
 
   expect(client.data.value).not.toBeDefined()
 
-  connect.connect({
+  connect.mutate({
     connector: connect.connectors[0]!,
   })
 
   await waitFor(client.data, (data) => data !== undefined)
 
-  disconnect.disconnect()
+  disconnect.mutate()
 
   await waitFor(client.data, (data) => data === undefined)
 })
