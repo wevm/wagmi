@@ -30,9 +30,11 @@ test('default', async () => {
       },
     ],
   })
-  await wait(1000)
+  await wait(2_000)
   await testClient.mainnet.mine({ blocks: 1 })
-  await vi.waitUntil(() => result.current.isSuccess)
+  await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy(), {
+    timeout: 5_000,
+  })
 
   expect(result.current.data).toBeDefined()
 

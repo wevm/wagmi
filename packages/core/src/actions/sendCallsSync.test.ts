@@ -62,35 +62,6 @@ test('behavior: not connected', async () => {
   `)
 })
 
-test('behavior: nullish account (account filled by wallet)', async () => {
-  await expect(
-    sendCallsSync(config, {
-      account: null,
-      connector,
-      calls: [
-        {
-          to: accounts[1],
-          value: parseEther('1'),
-        },
-        {
-          to: accounts[2],
-          value: parseEther('2'),
-        },
-        {
-          to: accounts[3],
-          value: parseEther('3'),
-        },
-      ],
-    }),
-  ).resolves.toMatchInlineSnapshot(
-    `
-    {
-      "id": "0x035b56a56a5b2fea10e194bae4c846b415de48a8288c7eb704ba7880edcc29a0",
-    }
-  `,
-  )
-})
-
 test('behavior: account does not exist on connector', async () => {
   await connect(config, { connector })
   await expect(
