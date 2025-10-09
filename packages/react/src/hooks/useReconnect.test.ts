@@ -23,7 +23,7 @@ test('default', async () => {
   expect(result.current.connectors).toBeDefined()
 
   result.current.reconnect()
-  await vi.waitUntil(() => result.current.isSuccess)
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current.data).toStrictEqual([])
 })
@@ -36,7 +36,7 @@ test('parameters: connectors (Connector)', async () => {
   expect(result.current.connectors).toBeDefined()
 
   result.current.reconnect({ connectors: [connector] })
-  await vi.waitUntil(() => result.current.isSuccess)
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current.data).toMatchObject(
     expect.arrayContaining([
@@ -60,7 +60,7 @@ test('parameters: connectors (CreateConnectorFn)', async () => {
   expect(result.current.connectors).toBeDefined()
 
   result.current.reconnect({ connectors: [connector] })
-  await vi.waitUntil(() => result.current.isSuccess)
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current.data).toMatchObject(
     expect.arrayContaining([

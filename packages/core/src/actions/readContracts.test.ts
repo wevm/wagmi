@@ -365,7 +365,7 @@ test('multi-chain: falls back to readContract if multicall is not available', as
         "status": "success",
       },
       {
-        "result": 0n,
+        "result": 10959340n,
         "status": "success",
       },
     ]

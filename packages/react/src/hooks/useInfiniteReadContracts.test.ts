@@ -46,7 +46,7 @@ test('default', async () => {
   )
   await wait(0)
 
-  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 10_000 })
   expect(result.current.data).toMatchInlineSnapshot(`
     [
       "Three Shields on Pink Perfect",

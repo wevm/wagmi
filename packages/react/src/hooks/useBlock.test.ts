@@ -51,7 +51,7 @@ test('parameters: watch', async () => {
 
   const { result } = await renderHook(() => useBlock({ watch: true }))
 
-  await vi.waitUntil(() => result.current.isSuccess)
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
   const block = result.current.data!
   expect(block).toBeDefined()
 

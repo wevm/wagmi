@@ -59,7 +59,7 @@ test('behavior: connected on mount', async () => {
 
   const { result } = await renderHook(() => useConnectorClient())
 
-  await vi.waitUntil(() => result.current.isSuccess)
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   const { data, queryKey: _, ...rest } = result.current
   expect(data).toMatchObject(
@@ -185,7 +185,7 @@ test('behavior: re-render does not invalidate query', async () => {
   await vi.waitFor(async () => {
     await expect
       .element(screen.getByTestId('address'))
-      .toHaveTextContent('0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266')
+      .toHaveTextContent('0x95132632579b073D12a6673e18Ab05777a6B86f8')
     await expect.element(screen.getByTestId('client')).toBeVisible()
 
     await expect.element(screen.getByTestId('child-client')).toBeVisible()

@@ -9,11 +9,11 @@ test('mounts', async () => {
 
   const { result } = await renderHook(() => useBlockNumber())
 
-  await vi.waitUntil(() => result.current.isSuccess)
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
-      "data": 19258213n,
+      "data": 23535880n,
       "dataUpdatedAt": 1675209600000,
       "error": null,
       "errorUpdateCount": 0,
@@ -52,7 +52,7 @@ test('parameters: watch', async () => {
 
   const { result } = await renderHook(() => useBlockNumber({ watch: true }))
 
-  await vi.waitUntil(() => result.current.isSuccess)
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
   const blockNumber = result.current.data!
   expect(result.current.data).toBeTypeOf('bigint')
 

@@ -13,6 +13,8 @@ export default async function () {
           forkUrl: chain.fork.url,
           forkBlockNumber: chain.fork.blockNumber,
           noMining: true,
+          // @ts-expect-error
+          mnemonicSeedUnsafe: 1,
         }),
         port: chain.port,
       }).start(),
@@ -20,6 +22,7 @@ export default async function () {
   }
 
   const results = await Promise.all(promises)
+
   return async () => {
     await Promise.all(results.map((stop) => stop()))
   }

@@ -206,7 +206,7 @@ export function mock(parameters: MockParameters) {
               paymasterService: {
                 supported:
                   (params as [Hex])[0] ===
-                  '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',
+                  '0x95132632579b073D12a6673e18Ab05777a6B86f8',
               },
               sessionKeys: {
                 supported: true,
@@ -216,7 +216,7 @@ export function mock(parameters: MockParameters) {
               paymasterService: {
                 supported:
                   (params as [Hex])[0] ===
-                  '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',
+                  '0x95132632579b073D12a6673e18Ab05777a6B86f8',
               },
             },
           }

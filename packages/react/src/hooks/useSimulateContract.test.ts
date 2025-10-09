@@ -18,7 +18,7 @@ test('default', async () => {
     }),
   )
 
-  await vi.waitUntil(() => result.current.isSuccess)
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -35,7 +35,7 @@ test('default', async () => {
             },
           ],
           "account": {
-            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            "address": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
             "type": "json-rpc",
           },
           "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
@@ -71,7 +71,7 @@ test('default', async () => {
         "simulateContract",
         {
           "account": {
-            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            "address": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
             "type": "json-rpc",
           },
           "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",

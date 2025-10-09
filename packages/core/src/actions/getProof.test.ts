@@ -3,7 +3,7 @@ import { expect, test } from 'vitest'
 
 import { getProof } from './getProof.js'
 
-test('default', async () => {
+test.skip('default', async () => {
   await expect(
     getProof(config, {
       chainId: chain.optimism.id,

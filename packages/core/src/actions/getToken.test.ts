@@ -54,8 +54,8 @@ test('behavior: bytes32 token', async () => {
       "name": "Maker",
       "symbol": "MKR",
       "totalSupply": {
-        "formatted": "977631.036950888222010062",
-        "value": 977631036950888222010062n,
+        "formatted": "162835.296901475737319804",
+        "value": 162835296901475737319804n,
       },
     }
   `)

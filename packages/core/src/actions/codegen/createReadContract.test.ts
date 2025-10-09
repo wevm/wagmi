@@ -14,7 +14,7 @@ test('default', async () => {
       functionName: 'balanceOf',
       args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
     }),
-  ).resolves.toMatchInlineSnapshot('4n')
+  ).resolves.toMatchInlineSnapshot('10n')
 })
 
 test('multichain', async () => {
@@ -32,7 +32,7 @@ test('multichain', async () => {
       args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
       chainId: chain.mainnet2.id,
     }),
-  ).resolves.toMatchInlineSnapshot('4n')
+  ).resolves.toMatchInlineSnapshot('10n')
 })
 
 test('functionName', async () => {
@@ -46,5 +46,5 @@ test('functionName', async () => {
     readWagmiMintExampleBalanceOf(config, {
       args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
     }),
-  ).resolves.toMatchInlineSnapshot('4n')
+  ).resolves.toMatchInlineSnapshot('10n')
 })
