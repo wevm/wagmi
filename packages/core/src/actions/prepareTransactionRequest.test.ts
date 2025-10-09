@@ -4,7 +4,6 @@ import { privateKeyToAccount } from 'viem/accounts'
 import { expect, test } from 'vitest'
 import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'
-import { getBalance } from './getBalance.js'
 import { prepareTransactionRequest } from './prepareTransactionRequest.js'
 
 const connector = config.connectors[0]!

@@ -27,7 +27,7 @@ export function getWalletClientQueryOptions<
     async queryFn({ queryKey }) {
       const { connector } = options
       const { connectorUid: _, scopeKey: _s, ...parameters } = queryKey[1]
-      return getWalletClient(config, { ...parameters, connector })
+      return getWalletClient(config, { ...parameters, connector }) as never
     },
     queryKey: getWalletClientQueryKey(options),
   } as const satisfies QueryOptions<
