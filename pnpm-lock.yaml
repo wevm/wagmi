@@ -184,8 +184,8 @@ importers:
         specifier: ^0.7.2
         version: 0.7.2
       '@types/node':
-        specifier: ^20.12.10
-        version: 20.12.10
+        specifier: ^24.5.1
+        version: 24.6.2
       fixturez:
         specifier: ^1.1.0
         version: 1.1.0
@@ -271,8 +271,8 @@ importers:
         specifier: ^6.0.6
         version: 6.0.6
       '@types/node':
-        specifier: ^20.12.10
-        version: 20.12.10
+        specifier: ^24.5.1
+        version: 24.6.2
       '@types/prompts':
         specifier: ^2.4.9
         version: 2.4.9
@@ -419,8 +419,8 @@ importers:
         version: link:../../packages/react
     devDependencies:
       '@types/node':
-        specifier: ^20.12.10
-        version: 20.12.10
+        specifier: ^24.5.1
+        version: 24.6.2
       '@types/react':
         specifier: '>=18.3.1'
         version: 18.3.1
@@ -12019,11 +12019,11 @@ snapshots:
 
   '@types/bn.js@4.11.6':
     dependencies:
-      '@types/node': 20.12.10
+      '@types/node': 24.6.2
 
   '@types/bn.js@5.1.5':
     dependencies:
-      '@types/node': 20.12.10
+      '@types/node': 24.6.2
 
   '@types/chai@5.2.2':
     dependencies:
@@ -12033,7 +12033,7 @@ snapshots:
 
   '@types/cross-spawn@6.0.6':
     dependencies:
-      '@types/node': 20.12.10
+      '@types/node': 24.6.2
 
   '@types/debug@4.1.7':
     dependencies:
@@ -12070,7 +12070,7 @@ snapshots:
 
   '@types/mute-stream@0.0.4':
     dependencies:
-      '@types/node': 20.12.10
+      '@types/node': 24.6.2
 
   '@types/node@12.20.55': {}
 
@@ -12088,11 +12088,11 @@ snapshots:
 
   '@types/pbkdf2@3.1.2':
     dependencies:
-      '@types/node': 20.12.10
+      '@types/node': 24.6.2
 
   '@types/prompts@2.4.9':
     dependencies:
-      '@types/node': 20.12.10
+      '@types/node': 24.6.2
       kleur: 3.0.3
 
   '@types/prop-types@15.7.5': {}
@@ -12110,7 +12110,7 @@ snapshots:
 
   '@types/secp256k1@4.0.3':
     dependencies:
-      '@types/node': 20.12.10
+      '@types/node': 24.6.2
 
   '@types/statuses@2.0.4': {}
 
