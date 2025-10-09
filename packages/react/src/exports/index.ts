@@ -259,10 +259,22 @@ export {
 } from '../hooks/useSendCalls.js'
 
 export {
+  type UseSendCallsSyncParameters,
+  type UseSendCallsSyncReturnType,
+  useSendCallsSync,
+} from '../hooks/useSendCallsSync.js'
+
+export {
   type UseSendTransactionParameters,
   type UseSendTransactionReturnType,
   useSendTransaction,
 } from '../hooks/useSendTransaction.js'
+
+export {
+  type UseSendTransactionSyncParameters,
+  type UseSendTransactionSyncReturnType,
+  useSendTransactionSync,
+} from '../hooks/useSendTransactionSync.js'
 
 export {
   type UseShowCallsStatusParameters,
