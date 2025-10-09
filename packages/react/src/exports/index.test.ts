@@ -80,6 +80,7 @@ test('exports', () => {
       "useReadContracts",
       "useReconnect",
       "useSendCalls",
+      "useSendCallsSync",
       "useSendTransaction",
       "useSendTransactionSync",
       "useShowCallsStatus",
