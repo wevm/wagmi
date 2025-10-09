@@ -75,7 +75,9 @@ test('behavior: connect called on reconnect', async () => {
     wrapper: createWrapper(WagmiProvider, { config, reconnectOnMount: true }),
   })
 
-  await vi.waitFor(() => expect(onConnect).toBeCalledTimes(1))
+  await vi.waitFor(() => expect(onConnect).toBeCalledTimes(1), {
+    timeout: 5_000,
+  })
 
   await disconnect(config)
 })

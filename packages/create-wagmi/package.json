@@ -40,7 +40,7 @@
   },
   "devDependencies": {
     "@types/cross-spawn": "^6.0.6",
-    "@types/node": "^20.12.10",
+    "@types/node": "^24.5.1",
     "@types/prompts": "^2.4.9"
   },
   "contributors": [

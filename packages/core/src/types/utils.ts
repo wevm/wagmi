@@ -11,6 +11,23 @@ export type ExactPartial<type> = {
   [key in keyof type]?: type[key] | undefined
 }
 
+/**
+ * Creates a fixed array of `count` elements of type `type`.
+ *
+ * @example
+ * ```ts
+ * type Result = FixedArray<string, 3>
+ * //   ^? type Result = readonly [string, string, string]
+ * ```
+ */
+export type FixedArray<
+  type,
+  count extends number,
+  result extends readonly type[] = [],
+> = result['length'] extends count
+  ? result
+  : FixedArray<type, count, readonly [...result, type]>
+
 /** Checks if {@link type} can be narrowed further than {@link type2} */
 export type IsNarrowable<type, type2> = IsUnknown<type> extends true
   ? false

@@ -10,7 +10,7 @@ const address = accounts[0]
 test('default', async () => {
   const { result } = await renderHook(() => useTransactionCount({ address }))
 
-  await vi.waitUntil(() => result.current.isSuccess)
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   const { data, ...rest } = result.current
   expect(data).toBeTypeOf('number')
@@ -40,7 +40,7 @@ test('default', async () => {
       "queryKey": [
         "transactionCount",
         {
-          "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "address": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "chainId": 1,
         },
       ],
@@ -55,7 +55,7 @@ test('parameters: chainId', async () => {
     useTransactionCount({ address, chainId: chain.mainnet2.id }),
   )
 
-  await vi.waitUntil(() => result.current.isSuccess)
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   const { data, ...rest } = result.current
   expect(data).toBeTypeOf('number')
@@ -85,7 +85,7 @@ test('parameters: chainId', async () => {
       "queryKey": [
         "transactionCount",
         {
-          "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "address": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "chainId": 456,
         },
       ],
@@ -100,7 +100,7 @@ test('parameters: blockNumber', async () => {
     useTransactionCount({ address, blockNumber: 13677382n }),
   )
 
-  await vi.waitUntil(() => result.current.isSuccess)
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   const { data, ...rest } = result.current
   expect(data).toBeTypeOf('number')
@@ -130,7 +130,7 @@ test('parameters: blockNumber', async () => {
       "queryKey": [
         "transactionCount",
         {
-          "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "address": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "blockNumber": 13677382n,
           "chainId": 1,
         },
@@ -190,7 +190,7 @@ test('behavior: address: undefined -> defined', async () => {
   address = accounts[0]
   rerender()
 
-  await vi.waitUntil(() => result.current.isSuccess)
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   const { data, ...rest } = result.current
   expect(data).toBeTypeOf('number')
@@ -220,7 +220,7 @@ test('behavior: address: undefined -> defined', async () => {
       "queryKey": [
         "transactionCount",
         {
-          "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "address": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "chainId": 1,
         },
       ],

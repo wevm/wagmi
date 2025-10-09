@@ -14,7 +14,7 @@ test('default', () => {
       "queryKey": [
         "transactionCount",
         {
-          "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "address": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
         },
       ],
     }
@@ -33,7 +33,7 @@ test('parameters: chainId', () => {
         "queryKey": [
           "transactionCount",
           {
-            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            "address": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
             "chainId": 1,
           },
         ],
@@ -53,7 +53,7 @@ test('parameters: blockNumber', () => {
         "queryKey": [
           "transactionCount",
           {
-            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            "address": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
             "blockNumber": 13677382n,
           },
         ],
@@ -73,7 +73,7 @@ test('parameters: blockTag', () => {
         "queryKey": [
           "transactionCount",
           {
-            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            "address": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
             "blockTag": "earliest",
           },
         ],

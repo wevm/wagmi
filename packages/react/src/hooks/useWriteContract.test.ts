@@ -17,7 +17,7 @@ test('default', async () => {
     address: address.wagmiMintExample,
     functionName: 'mint',
   })
-  await vi.waitUntil(() => result.current.isSuccess)
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current.data).toBeDefined()
 

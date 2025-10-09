@@ -34,6 +34,7 @@ export type {
 export type {
   Compute,
   ExactPartial,
+  FixedArray,
   Mutable,
   OneOf,
   RemoveUndefined,

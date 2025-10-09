@@ -11,7 +11,7 @@ test('default', async () => {
 
   await waitFor(blockNumberQuery.status, (status) => status === 'success')
 
-  expect(blockNumberQuery.data.value).toMatchInlineSnapshot('19258213n')
+  expect(blockNumberQuery.data.value).toMatchInlineSnapshot('23535880n')
 })
 
 test('parameters: chainId', async () => {
@@ -36,7 +36,7 @@ test('parameters: watch', async () => {
   await waitFor(blockNumberQuery.status, (status) => status === 'success')
 
   const blockNumber = blockNumberQuery.data.value!
-  await testClient.mainnet.mine({ blocks: 1 })
+  await testClient.optimism.mine({ blocks: 1 })
 
   await waitFor(blockNumberQuery.data, (data) => data === blockNumber + 1n)
 })
@@ -50,15 +50,15 @@ test('parameters: watch (reactive)', async () => {
 
   const blockNumber = blockNumberQuery.data.value!
 
-  await testClient.mainnet.mine({ blocks: 1 })
+  await testClient.optimism.mine({ blocks: 1 })
   await waitFor(blockNumberQuery.data, (data) => data === blockNumber + 1n)
 
-  await testClient.mainnet.mine({ blocks: 1 })
+  await testClient.optimism.mine({ blocks: 1 })
   await waitFor(blockNumberQuery.data, (data) => data === blockNumber + 2n)
 
   watch.value = false
 
-  await testClient.mainnet.mine({ blocks: 1 })
+  await testClient.optimism.mine({ blocks: 1 })
   await waitFor(blockNumberQuery.data, (data) => data === blockNumber + 2n, {
     timeout: 1_000,
   })

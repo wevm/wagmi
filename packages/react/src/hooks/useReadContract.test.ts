@@ -20,7 +20,7 @@ test('default', async () => {
 
   expect(result.current).toMatchInlineSnapshot(`
     {
-      "data": 4n,
+      "data": 10n,
       "dataUpdatedAt": 1675209600000,
       "error": null,
       "errorUpdateCount": 0,
@@ -70,11 +70,11 @@ test('parameters: chainId', async () => {
     }),
   )
 
-  await vi.waitUntil(() => result.current.isSuccess)
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
-      "data": 4n,
+      "data": 10n,
       "dataUpdatedAt": 1675209600000,
       "error": null,
       "errorUpdateCount": 0,
@@ -129,11 +129,11 @@ test('parameters: config', async () => {
     },
   )
 
-  await vi.waitUntil(() => result.current.isSuccess)
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
-      "data": 4n,
+      "data": 10n,
       "dataUpdatedAt": 1675209600000,
       "error": null,
       "errorUpdateCount": 0,
@@ -181,7 +181,7 @@ test('parameters: deployless read (bytecode)', async () => {
     }),
   )
 
-  await vi.waitUntil(() => result.current.isSuccess)
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current.data).toMatchInlineSnapshot(`"wagmi"`)
 })

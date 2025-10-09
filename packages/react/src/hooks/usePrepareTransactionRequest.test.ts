@@ -33,9 +33,9 @@ test('default', async () => {
 
   expect(data).toMatchInlineSnapshot(`
     {
-      "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "account": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
       "chainId": 1,
-      "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "from": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
       "to": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
       "type": "eip1559",
       "value": 1000000000000000000n,

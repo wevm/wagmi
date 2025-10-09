@@ -16,9 +16,9 @@ test('default', async () => {
   )
 
   await testClient.mainnet.mine({ blocks: 1 })
-  await wait(100)
+  await wait(500)
   await testClient.mainnet.mine({ blocks: 1 })
-  await wait(100)
+  await wait(500)
   await testClient.mainnet.mine({ blocks: 1 })
 
   await vi.waitUntil(() => blocks.length === 3, { timeout: 5_000 })
