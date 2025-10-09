@@ -1,5 +1,17 @@
 # wagmi
 
+## 2.18.0
+
+### Minor Changes
+
+- Added `useSendTransactionSync` and `useSendCallsSync` Hooks. ([#4823](https://github.com/wevm/wagmi/pull/4823))
+
+### Patch Changes
+
+- Updated dependencies [[`ebb2352`](https://github.com/wevm/wagmi/commit/ebb2352375e05e52d0bcf6ae1a60ac4e798bf29f)]:
+  - @wagmi/core@2.22.0
+  - @wagmi/connectors@6.0.0
+
 ## 2.17.5
 
 ### Patch Changes
