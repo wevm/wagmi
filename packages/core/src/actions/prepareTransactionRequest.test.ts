@@ -68,7 +68,7 @@ test('parameters: account', async () => {
   await disconnect(config, { connector })
 })
 
-test.only('behavior: local account', async () => {
+test('behavior: local account', async () => {
   const account = privateKeyToAccount(privateKey)
 
   const request = await prepareTransactionRequest(config, {
