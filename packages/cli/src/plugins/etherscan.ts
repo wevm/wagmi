@@ -221,7 +221,7 @@ type ChainId =
   | 199 // BitTorrent Chain Mainnet
   | 1029 // BitTorrent Chain Testnet
   | 42220 // Celo Mainnet
-  | 44787 // Celo Alfajores Testnet
+  | 11142220 // Celo Sepolia Testnet
   | 25 // Cronos Mainnet
   | 252 // Fraxtal Mainnet
   | 2522 // Fraxtal Testnet
