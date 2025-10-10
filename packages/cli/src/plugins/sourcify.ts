@@ -123,8 +123,7 @@ type ChainId =
   | 534 // Candle
   | 7700 // Canto
   | 7701 // Canto Tesnet
-  | 44787 // Celo Alfajores Testnet
-  | 62320 // Celo Baklava Testnet
+  | 11142220 // Celo Sepolia Testnet
   | 42220 // Celo Mainnet
   | 5115 // Citrea Testnet
   | 78432 // Conduit Subnet
