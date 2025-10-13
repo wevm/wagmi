@@ -203,8 +203,6 @@ type ChainId =
   | 97 // BNB Smart Chain Testnet
   | 137 // Polygon Mainnet
   | 80002 // Polygon Amoy Testnet
-  | 1101 // Polygon zkEVM Mainnet
-  | 2442 // Polygon zkEVM Cardona Testnet
   | 8453 // Base Mainnet
   | 84532 // Base Sepolia Testnet
   | 42161 // Arbitrum One Mainnet
@@ -221,7 +219,7 @@ type ChainId =
   | 199 // BitTorrent Chain Mainnet
   | 1029 // BitTorrent Chain Testnet
   | 42220 // Celo Mainnet
-  | 44787 // Celo Alfajores Testnet
+  | 11142220 // Celo Sepolia Testnet
   | 25 // Cronos Mainnet
   | 252 // Fraxtal Mainnet
   | 2522 // Fraxtal Testnet
@@ -237,13 +235,9 @@ type ChainId =
   | 534352 // Scroll Mainnet
   | 534351 // Scroll Sepolia Testnet
   | 167000 // Taiko Mainnet
-  | 167009 // Taiko Hekla L2 Testnet
-  | 1111 // WEMIX3.0 Mainnet
-  | 1112 // WEMIX3.0 Testnet
+  | 167012 // Taiko Hoodi
   | 324 // zkSync Mainnet
   | 300 // zkSync Sepolia Testnet
-  | 660279 // Xai Mainnet
-  | 37714555429 // Xai Sepolia Testnet
   | 50 // XDC Mainnet
   | 51 // XDC Apothem Testnet
   | 33139 // ApeChain Mainnet
@@ -253,7 +247,7 @@ type ChainId =
   | 50104 // Sophon Mainnet
   | 531050104 // Sophon Sepolia Testnet
   | 146 // Sonic Mainnet
-  | 57054 // Sonic Blaze Testnet
+  | 14601 // Sonic Testnet
   | 130 // Unichain Mainnet
   | 1301 // Unichain Sepolia Testnet
   | 2741 // Abstract Mainnet
@@ -265,5 +259,6 @@ type ChainId =
   | 10143 // Monad Testnet
   | 999 // HyperEVM Mainnet
   | 747474 // Katana Mainnet
+  | 737373 // Katana Bokuto
   | 1329 // Sei Mainnet
   | 1328 // Sei Testnet
