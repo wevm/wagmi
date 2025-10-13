@@ -67,6 +67,8 @@ export async function waitForTransactionReceipt<
     const action_call = getAction(client, call, 'call')
     const code = await action_call({
       ...(txn as any),
+      nonce: undefined,
+      account: txn.from,
       data: txn.input,
       gasPrice: txn.type !== 'eip1559' ? txn.gasPrice : undefined,
       maxFeePerGas: txn.type === 'eip1559' ? txn.maxFeePerGas : undefined,
