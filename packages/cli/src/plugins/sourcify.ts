@@ -87,6 +87,7 @@ type ChainId =
   | 5 // Ethereum Testnet Goerli
   | 3 // Ethereum Testnet Ropsten
   | 4 // Ethereum Testnet Rinkeby
+  | 96969696 //  Privix Chain Testnet
   | 180 // AME Chain Mainnet
   | 78430 // Amplify Subnet
   | 1339 // Elysium Mainnet
@@ -123,7 +124,8 @@ type ChainId =
   | 534 // Candle
   | 7700 // Canto
   | 7701 // Canto Tesnet
-  | 11142220 // Celo Sepolia Testnet
+  | 44787 // Celo Alfajores Testnet
+  | 62320 // Celo Baklava Testnet
   | 42220 // Celo Mainnet
   | 5115 // Citrea Testnet
   | 78432 // Conduit Subnet
@@ -248,6 +250,7 @@ type ChainId =
   | 80001 // Mumbai
   | 1101 // Polygon zkEVM
   | 2442 // Polygon zkEVM Cardona Testnet
+  | 16969696 // Privix Chain Mainnet
   | 369 // PulseChain
   | 35441 // Q Mainnet
   | 35443 // Q Testnet
