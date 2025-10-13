@@ -2,4 +2,4 @@
 "@wagmi/core": patch
 ---
 
-fix nonce and account when eth_call in waitForTransactionReceipt
+Fixed passing `account` in `waitForTransactionReceipt` for reverted transaction.
