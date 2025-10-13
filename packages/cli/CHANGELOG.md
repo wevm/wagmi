@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 2.7.0
+
+### Minor Changes
+
+- Updated block explorer plugins supported chains. ([#4830](https://github.com/wevm/wagmi/pull/4830))
+
 ## 2.6.0
 
 ### Minor Changes
