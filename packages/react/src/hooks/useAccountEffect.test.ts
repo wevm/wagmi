@@ -27,14 +27,14 @@ test('behavior: connect and disconnect called once', async () => {
     useDisconnect: useDisconnect(),
   }))
 
-  result.current.useConnect.connect({
+  result.current.useConnect.mutate({
     connector: result.current.useConnect.connectors[0]!,
   })
   await vi.waitFor(() =>
     expect(result.current.useConnect.isSuccess).toBeTruthy(),
   )
 
-  result.current.useConnect.connect({
+  result.current.useConnect.mutate({
     connector: result.current.useConnect.connectors[0]!,
   })
   await vi.waitFor(() =>
