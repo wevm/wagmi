@@ -27,7 +27,8 @@
     "/plugins"
   ],
   "bin": {
-    "wagmi": "./dist/cli.js"
+    "wagmi": "./dist/cli.js",
+    "wagmi.src": "./src/cli.ts"
   },
   "sideEffects": false,
   "type": "module",

@@ -123,8 +123,8 @@ importers:
         specifier: ^2.0.0-beta.1
         version: 2.0.0-beta.1(@types/react-dom@18.3.0)(@types/react@18.3.1)(@vitest/browser@3.2.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vitest@3.2.4)
       zile:
-        specifier: https://pkg.pr.new/wevm/zile@fb447f9
-        version: https://pkg.pr.new/wevm/zile@fb447f9(typescript@5.9.2)
+        specifier: https://pkg.pr.new/wevm/zile@46b010d
+        version: https://pkg.pr.new/wevm/zile@46b010d(typescript@5.9.2)
 
   packages/cli:
     dependencies:
@@ -8964,8 +8964,8 @@ packages:
   youch@4.1.0-beta.11:
     resolution: {integrity: sha512-sQi6PERyO/mT8w564ojOVeAlYTtVQmC2GaktQAf+IdI75/GKIggosBuvyVXvEV+FATAT6RbLdIjFoiIId4ozoQ==}
 
-  zile@https://pkg.pr.new/wevm/zile@fb447f9:
-    resolution: {tarball: https://pkg.pr.new/wevm/zile@fb447f9}
+  zile@https://pkg.pr.new/wevm/zile@46b010d:
+    resolution: {tarball: https://pkg.pr.new/wevm/zile@46b010d}
     version: 0.0.0
     hasBin: true
     peerDependencies:
@@ -18860,7 +18860,7 @@ snapshots:
       cookie: 1.0.2
       youch-core: 0.3.3
 
-  zile@https://pkg.pr.new/wevm/zile@fb447f9(typescript@5.9.2):
+  zile@https://pkg.pr.new/wevm/zile@46b010d(typescript@5.9.2):
     dependencies:
       cac: 6.7.14
       tsconfck: 3.1.6(typescript@5.9.2)

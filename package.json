@@ -64,7 +64,7 @@
     "viem": "2.38.0",
     "vitest": "^3.2.4",
     "vitest-browser-react": "^2.0.0-beta.1",
-    "zile": "https://pkg.pr.new/wevm/zile@fb447f9"
+    "zile": "https://pkg.pr.new/wevm/zile@46b010d"
   },
   "packageManager": "pnpm@10.16.1",
   "devEngines": {
