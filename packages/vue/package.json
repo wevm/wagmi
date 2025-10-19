@@ -10,9 +10,10 @@
   },
   "scripts": {
     "build": "pnpm run clean && pnpm run build:esm+types",
-    "build:esm+types": "tsc --project tsconfig.build.json --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
+    "build:esm+types": "zile --project tsconfig.build.json",
     "check:types": "tsc --noEmit",
     "clean": "rm -rf dist tsconfig.tsbuildinfo actions chains connectors nuxt query",
+    "preconstruct": "zile dev --project tsconfig.build.json",
     "test:build": "publint --strict && attw --pack --ignore-rules cjs-resolves-to-esm"
   },
   "files": [
@@ -29,58 +30,46 @@
   ],
   "sideEffects": false,
   "type": "module",
-  "main": "./dist/esm/exports/index.js",
-  "types": "./dist/types/exports/index.d.ts",
+  "main": "./dist/exports/index.js",
+  "types": "./dist/exports/index.d.ts",
   "typings": "./dist/types/exports/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/types/exports/index.d.ts",
-      "default": "./dist/esm/exports/index.js"
+      "src": "./src/exports/index.ts",
+      "types": "./dist/exports/index.d.ts",
+      "default": "./dist/exports/index.js"
     },
     "./actions": {
-      "types": "./dist/types/exports/actions.d.ts",
-      "default": "./dist/esm/exports/actions.js"
+      "src": "./src/exports/actions.ts",
+      "types": "./dist/exports/actions.d.ts",
+      "default": "./dist/exports/actions.js"
     },
     "./actions/experimental": {
-      "types": "./dist/types/exports/actions/experimental.d.ts",
-      "default": "./dist/esm/exports/actions/experimental.js"
+      "src": "./src/exports/actions/experimental.ts",
+      "types": "./dist/exports/actions/experimental.d.ts",
+      "default": "./dist/exports/actions/experimental.js"
     },
     "./chains": {
-      "types": "./dist/types/exports/chains.d.ts",
-      "default": "./dist/esm/exports/chains.js"
+      "src": "./src/exports/chains.ts",
+      "types": "./dist/exports/chains.d.ts",
+      "default": "./dist/exports/chains.js"
     },
     "./connectors": {
-      "types": "./dist/types/exports/connectors.d.ts",
-      "default": "./dist/esm/exports/connectors.js"
+      "src": "./src/exports/connectors.ts",
+      "types": "./dist/exports/connectors.d.ts",
+      "default": "./dist/exports/connectors.js"
     },
     "./nuxt": {
-      "types": "./dist/types/exports/nuxt.d.ts",
-      "default": "./dist/esm/exports/nuxt.js"
+      "src": "./src/exports/nuxt.ts",
+      "types": "./dist/exports/nuxt.d.ts",
+      "default": "./dist/exports/nuxt.js"
     },
     "./query": {
-      "types": "./dist/types/exports/query.d.ts",
-      "default": "./dist/esm/exports/query.js"
+      "src": "./src/exports/query.ts",
+      "types": "./dist/exports/query.d.ts",
+      "default": "./dist/exports/query.js"
     },
     "./package.json": "./package.json"
-  },
-  "typesVersions": {
-    "*": {
-      "actions": [
-        "./dist/types/exports/actions.d.ts"
-      ],
-      "chains": [
-        "./dist/types/exports/chains.d.ts"
-      ],
-      "connectors": [
-        "./dist/types/exports/connectors.d.ts"
-      ],
-      "nuxt": [
-        "./dist/types/exports/nuxt.d.ts"
-      ],
-      "query": [
-        "./dist/types/exports/query.d.ts"
-      ]
-    }
   },
   "peerDependencies": {
     "@tanstack/vue-query": ">=5.0.0",
@@ -122,5 +111,6 @@
     "dapps",
     "wallet",
     "web3"
-  ]
+  ],
+  "module": "./dist/exports/index.js"
 }

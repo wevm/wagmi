@@ -10,10 +10,11 @@
   },
   "scripts": {
     "build": "pnpm run clean && pnpm run build:esm+types",
-    "build:esm+types": "tsc --project tsconfig.build.json --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
+    "build:esm+types": "zile --project tsconfig.build.json",
     "check:types": "tsc --noEmit",
     "clean": "rm -rf dist tsconfig.tsbuildinfo config plugins",
     "dev": "bun src/cli.ts",
+    "preconstruct": "zile dev --project tsconfig.build.json",
     "test:build": "publint --strict && attw --pack --ignore-rules cjs-resolves-to-esm"
   },
   "files": [
@@ -25,26 +26,24 @@
     "/config",
     "/plugins"
   ],
-  "bin": {
-    "wagmi": "./dist/esm/cli.js"
-  },
   "sideEffects": false,
   "type": "module",
-  "main": "./dist/esm/exports/index.js",
-  "types": "./dist/types/exports/index.d.ts",
   "typings": "./dist/types/exports/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/types/exports/index.d.ts",
-      "default": "./dist/esm/exports/index.js"
+      "src": "./src/exports/index.ts",
+      "types": "./dist/exports/index.d.ts",
+      "default": "./dist/exports/index.js"
     },
     "./config": {
-      "types": "./dist/types/exports/config.d.ts",
-      "default": "./dist/esm/exports/config.js"
+      "src": "./src/exports/config.ts",
+      "types": "./dist/exports/config.d.ts",
+      "default": "./dist/exports/config.js"
     },
     "./plugins": {
-      "types": "./dist/types/exports/plugins.d.ts",
-      "default": "./dist/esm/exports/plugins.js"
+      "src": "./src/exports/plugins.ts",
+      "types": "./dist/exports/plugins.d.ts",
+      "default": "./dist/exports/plugins.js"
     },
     "./package.json": "./package.json"
   },
@@ -105,5 +104,8 @@
     "wallet",
     "web3",
     "cli"
-  ]
+  ],
+  "module": "./dist/exports/index.js",
+  "main": "./dist/exports/index.js",
+  "types": "./dist/exports/index.d.ts"
 }

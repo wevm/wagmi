@@ -23,8 +23,7 @@
     "dev:vue": "pnpm --filter vite-vue dev",
     "docs:dev": "pnpm --filter site dev",
     "format": "biome format --write",
-    "postinstall": "pnpm preconstruct",
-    "preconstruct": "node scripts/preconstruct.ts",
+    "preconstruct": "pnpm run --r --filter \"./packages/**\" preconstruct",
     "preinstall": "pnpx only-allow pnpm",
     "prepare": "pnpm simple-git-hooks",
     "test": "vitest",
@@ -63,7 +62,8 @@
     "typescript": "5.9.2",
     "viem": "2.38.0",
     "vitest": "^3.2.4",
-    "vitest-browser-react": "^2.0.0-beta.1"
+    "vitest-browser-react": "^2.0.0-beta.1",
+    "zile": "https://pkg.pr.new/wevm/zile@fb447f9"
   },
   "packageManager": "pnpm@10.16.1",
   "devEngines": {

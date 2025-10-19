@@ -10,10 +10,11 @@
   },
   "scripts": {
     "build": "pnpm run clean && pnpm run build:esm+types",
-    "build:esm+types": "tsc --project tsconfig.build.json --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
+    "build:esm+types": "zile --project tsconfig.build.json",
     "check:types": "tsc --noEmit",
     "clean": "rm -rf dist tsconfig.tsbuildinfo",
     "dev": "bun src/cli.ts",
+    "preconstruct": "zile dev --project tsconfig.build.json",
     "test:build": "publint --strict"
   },
   "files": [
@@ -25,7 +26,7 @@
     "templates/**"
   ],
   "bin": {
-    "wagmi": "./dist/esm/cli.js"
+    "wagmi": "./dist/cli.js"
   },
   "sideEffects": false,
   "type": "module",

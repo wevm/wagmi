@@ -10,9 +10,10 @@
   },
   "scripts": {
     "build": "pnpm run clean && pnpm run build:esm+types",
-    "build:esm+types": "tsc --project tsconfig.build.json --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
+    "build:esm+types": "zile --project tsconfig.build.json",
     "check:types": "tsc --noEmit",
     "clean": "rm -rf dist tsconfig.tsbuildinfo",
+    "preconstruct": "zile dev --project tsconfig.build.json",
     "test:build": "publint --strict"
   },
   "files": [
@@ -26,21 +27,24 @@
   ],
   "sideEffects": false,
   "type": "module",
-  "main": "./dist/esm/exports/index.js",
-  "types": "./dist/types/exports/index.d.ts",
+  "main": "./dist/exports/index.js",
+  "types": "./dist/exports/index.d.ts",
   "typings": "./dist/types/exports/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/types/exports/index.d.ts",
-      "default": "./dist/esm/exports/index.js"
+      "src": "./src/exports/index.ts",
+      "types": "./dist/exports/index.d.ts",
+      "default": "./dist/exports/index.js"
     },
     "./react": {
-      "types": "./dist/types/exports/react.d.ts",
-      "default": "./dist/esm/exports/react.js"
+      "src": "./src/exports/react.ts",
+      "types": "./dist/exports/react.d.ts",
+      "default": "./dist/exports/react.js"
     },
     "./vue": {
-      "types": "./dist/types/exports/vue.d.ts",
-      "default": "./dist/esm/exports/vue.js"
+      "src": "./src/exports/vue.ts",
+      "types": "./dist/exports/vue.d.ts",
+      "default": "./dist/exports/vue.js"
     },
     "./package.json": "./package.json"
   },
@@ -121,5 +125,6 @@
     "dapps",
     "wallet",
     "web3"
-  ]
+  ],
+  "module": "./dist/exports/index.js"
 }
