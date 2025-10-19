@@ -26,6 +26,9 @@
     "/config",
     "/plugins"
   ],
+  "bin": {
+    "wagmi": "./dist/cli.js"
+  },
   "sideEffects": false,
   "type": "module",
   "typings": "./dist/types/exports/index.d.ts",
