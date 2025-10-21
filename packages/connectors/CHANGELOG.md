@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 6.1.0
+
+### Minor Changes
+
+- Added `getPortoInstance` method to `porto`. ([#4837](https://github.com/wevm/wagmi/pull/4837))
+
 ## 6.0.1
 
 ### Patch Changes
