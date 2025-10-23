@@ -1,7 +1,7 @@
 <script setup>
 import packageJson from '../../package.json'
 
-const nodeVersion = packageJson.engines.node
+const nodeVersion = packageJson.devEngines.runtime.version
 const packageManager = packageJson.packageManager
 </script>
 
@@ -177,7 +177,7 @@ pnpm deps -w    # updates deps (best done with clean working tree)
 Update GitHub Actions via [Actions Up!](https://github.com/azat-io/actions-up) by running:
 
 ```bash
-pnpm deps:cli
+pnpm deps:ci
 ```
 
 [Socket](https://socket.dev) checks pull requests for vulnerabilities when new dependencies and versions are added, but you should also be vigilant! When updating dependencies, you should check release notes and source code as well as lock versions when possible.

@@ -87,6 +87,7 @@ type ChainId =
   | 5 // Ethereum Testnet Goerli
   | 3 // Ethereum Testnet Ropsten
   | 4 // Ethereum Testnet Rinkeby
+  | 96969696 //  Privix Chain Testnet
   | 180 // AME Chain Mainnet
   | 78430 // Amplify Subnet
   | 1339 // Elysium Mainnet
@@ -248,6 +249,7 @@ type ChainId =
   | 80001 // Mumbai
   | 1101 // Polygon zkEVM
   | 2442 // Polygon zkEVM Cardona Testnet
+  | 16969696 // Privix Chain Mainnet
   | 369 // PulseChain
   | 35441 // Q Mainnet
   | 35443 // Q Testnet
