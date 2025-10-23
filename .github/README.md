@@ -274,3 +274,4 @@ If you find Wagmi useful or use it for work, please consider [sponsoring Wagmi](
 </a>
 
 _Note: forked for study and integration testing (Base/Farcaster)._
+https://github.com/Igorehadem/base-counter-hardhat
