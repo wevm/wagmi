@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 2.7.1
+
+### Patch Changes
+
+- Bumped chains for block explorer plugins. ([`ed2d473`](https://github.com/wevm/wagmi/commit/ed2d473172e8d063f29400b8edcec33e5d21a659))
+
 ## 2.7.0
 
 ### Minor Changes
