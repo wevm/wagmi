@@ -38,6 +38,7 @@ overrides:
   cookie@<0.7.0: 0.7.0
   elliptic@<=6.6.0: '>=6.6.1'
   esbuild@<=0.24.2: 0.25.0
+  hono@>=1.1.0 <4.10.2: '>=4.10.2'
   nanoid@<3.3.8: 3.3.8
   playwright@<1.55.1: 1.55.1
   semver@<5.7.2: '>=5.7.2'
@@ -5483,8 +5484,8 @@ packages:
   hmac-drbg@1.0.1:
     resolution: {integrity: sha512-Tti3gMqLdZfhOQY1Mzf/AanLiqh1WTiJgEj26ZuYQ9fbkLomzGchCws4FyrSd4VkpBfiNhaE1On+lOz894jvXg==}
 
-  hono@4.9.8:
-    resolution: {integrity: sha512-JW8Bb4RFWD9iOKxg5PbUarBYGM99IcxFl2FPBo2gSJO11jjUDqlP1Bmfyqt8Z/dGhIQ63PMA9LdcLefXyIasyg==}
+  hono@4.10.2:
+    resolution: {integrity: sha512-p6fyzl+mQo6uhESLxbF5WlBOAJMDh36PljwlKtP5V1v09NxlqGru3ShK+4wKhSuhuYf8qxMmrivHOa/M7q0sMg==}
     engines: {node: '>=16.9.0'}
 
   hookable@5.5.3:
@@ -14826,7 +14827,7 @@ snapshots:
       minimalistic-assert: 1.0.1
       minimalistic-crypto-utils: 1.0.1
 
-  hono@4.9.8: {}
+  hono@4.10.2: {}
 
   hookable@5.5.3: {}
 
@@ -16624,7 +16625,7 @@ snapshots:
   porto@0.2.19(@types/react@18.3.1)(@wagmi/core@packages+core)(react@18.3.1)(typescript@5.9.2)(use-sync-external-store@1.4.0(react@18.3.1))(viem@2.38.0(bufferutil@4.0.8)(typescript@5.9.2)(utf-8-validate@5.0.10)(zod@3.22.4))(wagmi@packages+react):
     dependencies:
       '@wagmi/core': link:packages/core
-      hono: 4.9.8
+      hono: 4.10.2
       idb-keyval: 6.2.1
       mipd: 0.0.7(typescript@5.9.2)
       ox: 0.9.6(typescript@5.9.2)(zod@4.1.11)
