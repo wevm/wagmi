@@ -45,7 +45,7 @@
     }
   },
   "dependencies": {
-    "@base-org/account": "1.1.1",
+    "@base-org/account": "2.4.0",
     "@coinbase/wallet-sdk": "4.3.6",
     "@gemini-wallet/core": "0.2.0",
     "@metamask/sdk": "0.33.1",
