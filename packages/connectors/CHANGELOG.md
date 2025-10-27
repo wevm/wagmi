@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 6.1.1
+
+### Patch Changes
+
+- Bumped Porto version ([`990dd23`](https://github.com/wevm/wagmi/commit/990dd2339e96b302931056e0fb898bd2dd42a04d))
+
 ## 6.1.0
 
 ### Minor Changes
