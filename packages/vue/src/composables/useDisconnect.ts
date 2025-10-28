@@ -39,8 +39,12 @@ export type UseDisconnectReturnType<context = unknown> = Compute<
     context
   > & {
     connectors: Ref<readonly Connector[]>
+    /** @deprecated use `mutate` instead */
     disconnect: DisconnectMutate<context>
+    /** @deprecated use `mutateAsync` instead */
     disconnectAsync: DisconnectMutateAsync<context>
+    mutate: DisconnectMutate<context>
+    mutateAsync: DisconnectMutateAsync<context>
   }
 >
 
@@ -66,5 +70,7 @@ export function useDisconnect<context = unknown>(
     ),
     disconnect: mutate,
     disconnectAsync: mutateAsync,
+    mutate,
+    mutateAsync,
   }
 }
