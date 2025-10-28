@@ -1,5 +1,12 @@
 # wagmi
 
+## 2.19.1
+
+### Patch Changes
+
+- Updated dependencies [[`faf3eed`](https://github.com/wevm/wagmi/commit/faf3eeddb97c300f971083f8ee9b02a29ad23cbb)]:
+  - @wagmi/connectors@6.1.2
+
 ## 2.19.0
 
 ### Minor Changes
