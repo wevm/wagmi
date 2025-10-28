@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 6.1.2
+
+### Patch Changes
+
+- Bumped connector deps ([#4843](https://github.com/wevm/wagmi/pull/4843))
+
 ## 6.1.1
 
 ### Patch Changes
