@@ -89,7 +89,9 @@
       "cookie@<0.7.0": "0.7.0",
       "elliptic@<=6.6.0": ">=6.6.1",
       "esbuild@<=0.24.2": "0.25.0",
+      "hono@>=1.1.0 <4.10.2": ">=4.10.2",
       "nanoid@<3.3.8": "3.3.8",
+      "playwright@<1.55.1": "1.55.1",
       "semver@<5.7.2": ">=5.7.2",
       "serialize-javascript@>=6.0.0 <6.0.2": "6.0.2",
       "tmp@<=0.2.3": "0.2.4",
@@ -139,7 +141,7 @@
       },
       "packages/react": {
         "entry": [
-          "src/exports/{actions,chains,codegen,connectors,experimental,index,query}.ts!",
+          "src/exports/{actions,chains,codegen,connectors,experimental,index,internal,query}.ts!",
           "src/exports/actions/experimental.ts!"
         ],
         "ignore": [
@@ -154,7 +156,7 @@
       },
       "packages/vue": {
         "entry": [
-          "src/exports/{actions,chains,connectors,index,nuxt,query}.ts!",
+          "src/exports/{actions,chains,connectors,index,internal,nuxt,query}.ts!",
           "src/exports/actions/experimental.ts!"
         ],
         "ignore": [

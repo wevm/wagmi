@@ -1,5 +1,23 @@
 # @wagmi/vue
 
+## 0.3.0
+
+### Minor Changes
+
+- Exported internal types ([`3e634b7`](https://github.com/wevm/wagmi/commit/3e634b7bcf0bd0e67e59fcb74ad89dfb56e4eae9))
+
+### Patch Changes
+
+- Updated dependencies [[`990dd23`](https://github.com/wevm/wagmi/commit/990dd2339e96b302931056e0fb898bd2dd42a04d)]:
+  - @wagmi/connectors@6.1.1
+
+## 0.2.14
+
+### Patch Changes
+
+- Updated dependencies [[`ae31a8d`](https://github.com/wevm/wagmi/commit/ae31a8d3d0b436841d6546ab2565dee624204aca)]:
+  - @wagmi/connectors@6.1.0
+
 ## 0.2.13
 
 ### Patch Changes

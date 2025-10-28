@@ -199,7 +199,7 @@ type ChainId =
   | 114 // Coston2
   | 130 // Unichain
   | 151 // Redbelly
-  | 166 // Omni
+  | 166 // Nomina
   | 185 // Mint
   | 252 // Fraxtal
   | 254 // Swan chain
@@ -244,7 +244,7 @@ type ChainId =
   | 21000001 // Corn
   | 168587773 // Blast Sepolia
   | 999999999 // Zora Sepolia
-  | 164_4 // Omni Omega
+  | 164_4 // Nomina
   | 153_2 // Redbelly
   | 70805_2 // Cloud
   | 378 // Koroshi
@@ -261,8 +261,6 @@ type ChainId =
   | 1923 // Swell
   | 2038 // Shrapnel
   | 2044 // Shrapnel
-  | 2365 // Kite AI
-  | 2368 // Kite AI
   | 2786 // Apertum
   | 2818 // Morph
   | 3011 // PLAYA3ULL Games
@@ -282,7 +280,6 @@ type ChainId =
   | 6533 // Kalichain
   | 6900 // Nibiru
   | 6911 // Nibiru Testnet-2
-  | 7171 // Bitrock
   | 7894 // Mintus
   | 7979 // DOS
   | 8008 // Polynomial
@@ -309,7 +306,6 @@ type ChainId =
   | 28530 // Blockticity
   | 33311 // Feature
   | 34443 // Mode
-  | 42069 // Coqnet
   | 42161 // Arbitrum One
   | 43113 // C-Chain Fuji
   | 43114 // C-Chain
