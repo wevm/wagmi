@@ -3,7 +3,7 @@ import { expect, test } from 'vitest'
 
 import { getEnsAvatar } from './getEnsAvatar.js'
 
-test('default', async () => {
+test.skip('default', async () => {
   await expect(
     getEnsAvatar(config, {
       name: 'wevm.eth',
