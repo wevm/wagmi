@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 6.1.3
+
+### Patch Changes
+
+- Added warning to `walletConnect` about vulnerability and relicensing. ([`65cf154`](https://github.com/wevm/wagmi/commit/65cf1544d65bfb1fb830c405a371e8cd3c3fb73e))
+
 ## 6.1.2
 
 ### Patch Changes
