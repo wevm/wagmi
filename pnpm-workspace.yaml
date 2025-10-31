@@ -5,6 +5,7 @@ auditConfig:
     - GHSA-ffrw-9mx8-89p8 
     - GHSA-qpm2-6cq5-7pq5
     - GHSA-93m4-6634-74q7
+    - GHSA-29xp-372q-xqph
 catalog:
   "@vitejs/plugin-react": "^4.3.3"
   "@tanstack/query-core": "5.49.1"
