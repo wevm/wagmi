@@ -168,7 +168,7 @@ const { data: balance, queryKey } = useBalance({
 })
 
 useEffect(() => {
-  if (blockNumber % 5 === 0) // [!code focus]
+  if (blockNumber && blockNumber % 5n === 0n) // [!code focus]
     queryClient.invalidateQueries({ queryKey }) // [!code focus]
 }, [blockNumber, queryClient])
 ```
