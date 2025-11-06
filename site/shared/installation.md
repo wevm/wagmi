@@ -56,7 +56,7 @@ Then go to the project where you are using Wagmi and run `pnpm link --global {{p
 
 Ethereum-related projects are often targeted in attacks to steal users' assets. Make sure you follow security best-practices for your project. Some quick things to get started.
 
-- Pin package versions, upgrade mindfully, and inspect lockfile changes to minimize the risk of [supply-chain attacks](https://nodejs.org/en/guides/security/#supply-chain-attacks).
+- Pin package versions, upgrade mindfully (pnpm's [`minimumReleaseAge`](https://pnpm.io/settings#minimumreleaseage) is strongly recommended), and inspect lockfile changes to minimize the risk of [supply-chain attacks](https://nodejs.org/en/guides/security/#supply-chain-attacks).
 - Install the [Socket Security](https://socket.dev) [GitHub App](https://github.com/apps/socket-security) to help detect and block supply-chain attacks.
 - Add a [Content Security Policy](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html) to defend against external scripts running in your app.
 - Pin [GitHub Action](https://x.com/paulmillr/status/1900948425325031448) versions to commits instead of tags.

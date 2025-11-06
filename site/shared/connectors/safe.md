@@ -31,19 +31,19 @@ import { safe } from '{{connectorsPackageName}}'
 
 ::: code-group
 ```bash-vue [pnpm]
-pnpm add @safe-global/safe-apps-provider@{{connectorDependencyVersions[0]}} @safe-global/safe-apps-sdk@{{connectorDependencyVersions[1]}}
+pnpm add @safe-global/safe-apps-provider@{{connectorDependencyVersions?.[0]}} @safe-global/safe-apps-sdk@{{connectorDependencyVersions?.[1]}}
 ```
 
 ```bash-vue [npm]
-npm install @safe-global/safe-apps-provider@{{connectorDependencyVersions[0]}} @safe-global/safe-apps-sdk@{{connectorDependencyVersions[1]}}
+npm install @safe-global/safe-apps-provider@{{connectorDependencyVersions?.[0]}} @safe-global/safe-apps-sdk@{{connectorDependencyVersions?.[1]}}
 ```
 
 ```bash-vue [yarn]
-yarn add @safe-global/safe-apps-provider@{{connectorDependencyVersions[0]}} @safe-global/safe-apps-sdk@{{connectorDependencyVersions[1]}}
+yarn add @safe-global/safe-apps-provider@{{connectorDependencyVersions?.[0]}} @safe-global/safe-apps-sdk@{{connectorDependencyVersions?.[1]}}
 ```
 
 ```bash-vue [bun]
-bun add @safe-global/safe-apps-provider@{{connectorDependencyVersions[0]}} @safe-global/safe-apps-sdk@{{connectorDependencyVersions[1]}}
+bun add @safe-global/safe-apps-provider@{{connectorDependencyVersions?.[0]}} @safe-global/safe-apps-sdk@{{connectorDependencyVersions?.[1]}}
 ```
 :::
 
