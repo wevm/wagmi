@@ -65,6 +65,10 @@ export function getSidebar() {
             link: '/react/guides/faq',
           },
           {
+            text: 'Migrate from v2 to v3',
+            link: '/react/guides/migrate-from-v2-to-v3',
+          },
+          {
             text: 'Migrate from v1 to v2',
             link: '/react/guides/migrate-from-v1-to-v2',
           },
@@ -688,6 +692,10 @@ export function getSidebar() {
           {
             text: 'FAQ / Troubleshooting',
             link: '/core/guides/faq',
+          },
+          {
+            text: 'Migrate from v2 to v3',
+            link: '/core/guides/migrate-from-v2-to-v3',
           },
           {
             text: 'Migrate from v1 to v2',
