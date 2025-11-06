@@ -140,4 +140,4 @@ import { type WaitForCallsStatusErrorType } from '@wagmi/core'
 
 ## Viem
 
-- [`waitForCallsStatus`](https://viem.sh/experimental/eip5792/waitForCallsStatus)
+- [`waitForCallsStatus`](https://viem.sh/docs/actions/wallet/waitForCallsStatus)
