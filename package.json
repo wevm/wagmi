@@ -86,7 +86,6 @@
       "prool": "patches/prool.patch"
     },
     "overrides": {
-      "@walletconnect/logger>pino": "10.0.0",
       "cookie@<0.7.0": "0.7.0",
       "elliptic@<=6.6.0": ">=6.6.1",
       "esbuild@<=0.24.2": "0.25.0",
@@ -126,7 +125,18 @@
         ]
       },
       "packages/connectors": {
-        "entry": "src/exports/index.ts!"
+        "entry": "src/exports/index.ts!",
+        "ignoreDependencies": [
+          "@base-org/account",
+          "@coinbase/wallet-sdk",
+          "@gemini-wallet/core",
+          "@metamask/sdk",
+          "@safe-global/safe-apps-provider",
+          "@safe-global/safe-apps-sdk",
+          "@wagmi/core",
+          "@walletconnect/ethereum-provider",
+          "porto"
+        ]
       },
       "packages/core": {
         "entry": "src/exports/{actions,chains,codegen,experimental,index,internal,query}.ts!",

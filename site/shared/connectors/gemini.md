@@ -1,3 +1,9 @@
+<!-- <script setup>
+const packageName = 'wagmi'
+const connectorsPackageName = 'wagmi/connectors'
+const connectorDependencyVersion = 'x.y.z'
+</script> -->
+
 # gemini
 
 Connector for [Gemini Wallet](https://www.gemini.com/wallet).
@@ -7,6 +13,34 @@ Connector for [Gemini Wallet](https://www.gemini.com/wallet).
 ```ts-vue
 import { gemini } from '{{connectorsPackageName}}'
 ```
+
+## Install
+
+<PackageMetadata
+  package="@gemini-wallet/core"
+  repo="gemini/gemini-wallet-core"
+  osiLicense="mit"
+/>
+
+
+
+::: code-group
+```bash-vue [pnpm]
+pnpm add @gemini-wallet/core@{{connectorDependencyVersion}}
+```
+
+```bash-vue [npm]
+npm install @gemini-wallet/core@{{connectorDependencyVersion}}
+```
+
+```bash-vue [yarn]
+yarn add @gemini-wallet/core@{{connectorDependencyVersion}}
+```
+
+```bash-vue [bun]
+bun add @gemini-wallet/core@{{connectorDependencyVersion}}
+```
+:::
 
 ## Usage
 

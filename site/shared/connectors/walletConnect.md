@@ -1,6 +1,7 @@
 <!-- <script setup>
 const packageName = 'wagmi'
 const connectorsPackageName = 'wagmi/connectors'
+const connectorDependencyVersion = 'x.y.z'
 </script> -->
 
 # walletConnect
@@ -13,46 +14,29 @@ Connector for [WalletConnect](https://walletconnect.com).
 import { walletConnect } from '{{connectorsPackageName}}'
 ```
 
-::: warning
-**This connector uses a vulnerable dependency downstream** (`@walletconnect/ethereum-provider@2.21.1` > `@reown/appkit@1.8.9` > `@reown/appkit-utils@1.8.9` > `@walletconnect/logger@2.1.2` > `pino@7.11.0`). You should override `pino` to a secure version via your package manager:
- 
+## Install
+
+<PackageMetadata
+  package="@walletconnect/ethereum-provider"
+  repo="WalletConnect/walletconnect-monorepo"
+/>
+
 ::: code-group
-```json [npm]
-{
-  "overrides": {
-    "@walletconnect/logger": {
-      "pino": "10.0.0"
-    }
-  }
-}
-```
-```json [pnpm]
-{
-  "pnpm": {
-    "overrides": {
-      "@walletconnect/logger>pino": "10.0.0"
-    }
-  }
-}
-```
-```json [yarn]
-{
-  "resolutions": {
-    "@walletconnect/logger/pino": "10.0.0"
-  }
-}
-```
-```json [bun]
-{
-  "overrides": {
-    "@walletconnect/logger": {
-      "pino": "10.0.0"
-    }
-  }
-}
+```bash-vue [pnpm]
+pnpm add @walletconnect/ethereum-provider@{{connectorDependencyVersion}}
 ```
 
-Normally the Wagmi team would upgrade `@walletconnect/ethereum-provider` to a fixed version for you, but `@walletconnect/ethereum-provider` was relicensed recently from Apache to a [non-permissive license](https://github.com/reown-com/appkit/blob/main/LICENSE.md). We are trying to get the WalletConnect team to release a version that closes the vulnerability under the old Apache license.
+```bash-vue [npm]
+npm install @walletconnect/ethereum-provider@{{connectorDependencyVersion}}
+```
+
+```bash-vue [yarn]
+yarn add @walletconnect/ethereum-provider@{{connectorDependencyVersion}}
+```
+
+```bash-vue [bun]
+bun add @walletconnect/ethereum-provider@{{connectorDependencyVersion}}
+```
 :::
 
 ## Usage

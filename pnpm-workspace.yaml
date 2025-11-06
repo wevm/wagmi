@@ -7,12 +7,20 @@ auditConfig:
     - GHSA-93m4-6634-74q7
     - GHSA-29xp-372q-xqph
 catalog:
-  "@vitejs/plugin-react": "^4.3.3"
+  "@base-org/account": "2.4.0"
+  "@coinbase/wallet-sdk": "4.3.6"
+  "@gemini-wallet/core": "0.3.1"
+  "@metamask/sdk": "0.33.1"
+  "@safe-global/safe-apps-provider": "0.18.6"
+  "@safe-global/safe-apps-sdk": "9.1.0"
   "@tanstack/query-core": "5.49.1"
   "@tanstack/react-query": "5.49.2"
   "@tanstack/vue-query": "5.49.1"
   "@types/react": "18.3.1"
   "@types/react-dom": "18.3.0"
+  "@vitejs/plugin-react": "^4.3.3"
+  "@walletconnect/ethereum-provider": "2.21.1"
+  "porto": "0.2.35"
   react-dom: "18.3.1"
   react: "18.3.1"
   vue: "3.4.27"

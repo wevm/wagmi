@@ -13,6 +13,32 @@ Connector for the [Coinbase Wallet SDK](https://github.com/coinbase/coinbase-wal
 import { coinbaseWallet } from '{{connectorsPackageName}}'
 ```
 
+## Install
+
+<PackageMetadata
+  package="@coinbase/wallet-sdk"
+  repo="coinbase/coinbase-wallet-sdk"
+  osiLicense="apache-2-0"
+/>
+
+::: code-group
+```bash-vue [pnpm]
+pnpm add @coinbase/wallet-sdk@{{connectorDependencyVersion}}
+```
+
+```bash-vue [npm]
+npm install @coinbase/wallet-sdk@{{connectorDependencyVersion}}
+```
+
+```bash-vue [yarn]
+yarn add @coinbase/wallet-sdk@{{connectorDependencyVersion}}
+```
+
+```bash-vue [bun]
+bun add @coinbase/wallet-sdk@{{connectorDependencyVersion}}
+```
+:::
+
 ## Usage
 
 ```ts-vue

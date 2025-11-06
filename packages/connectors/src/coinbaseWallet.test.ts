@@ -4,7 +4,7 @@ import { expect, expectTypeOf, test } from 'vitest'
 import { coinbaseWallet } from './coinbaseWallet.js'
 
 test('setup', () => {
-  const connectorFn = coinbaseWallet({ appName: 'wagmi', version: '4' })
+  const connectorFn = coinbaseWallet({ appName: 'wagmi' })
   const connector = config._internal.connectors.setup(connectorFn)
   expect(connector.name).toEqual('Coinbase Wallet')
 
