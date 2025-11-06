@@ -12,7 +12,7 @@
     "build": "pnpm run clean && pnpm run build:esm+types",
     "build:esm+types": "tsc --project tsconfig.build.json --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
     "check:types": "tsc --noEmit",
-    "clean": "rm -rf dist tsconfig.tsbuildinfo actions chains codegen experimental internal query",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo actions chains codegen internal query",
     "test:build": "publint --strict && attw --pack --ignore-rules cjs-resolves-to-esm"
   },
   "files": [
@@ -23,7 +23,6 @@
     "!src/**/*.test-d.ts",
     "/actions",
     "/chains",
-    "/experimental",
     "/internal",
     "/query"
   ],
@@ -49,10 +48,6 @@
       "types": "./dist/types/exports/codegen.d.ts",
       "default": "./dist/esm/exports/codegen.js"
     },
-    "./experimental": {
-      "types": "./dist/types/exports/experimental.d.ts",
-      "default": "./dist/esm/exports/experimental.js"
-    },
     "./internal": {
       "types": "./dist/types/exports/internal.d.ts",
       "default": "./dist/esm/exports/internal.js"
@@ -73,9 +68,6 @@
       ],
       "codegen": [
         "./dist/types/exports/codegen.d.ts"
-      ],
-      "experimental": [
-        "./dist/types/exports/experimental.d.ts"
       ],
       "internal": [
         "./dist/types/exports/internal.d.ts"

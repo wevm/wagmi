@@ -12,7 +12,7 @@
     "build": "pnpm run clean && pnpm run build:esm+types",
     "build:esm+types": "tsc --project tsconfig.build.json --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
     "check:types": "tsc --noEmit",
-    "clean": "rm -rf dist tsconfig.tsbuildinfo actions chains codegen connectors experimental query",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo actions chains codegen connectors query",
     "test:build": "publint --strict && attw --pack --ignore-rules cjs-resolves-to-esm"
   },
   "files": [
@@ -25,7 +25,6 @@
     "/chains",
     "/codegen",
     "/connectors",
-    "/experimental",
     "/internal",
     "/query"
   ],
@@ -43,10 +42,6 @@
       "types": "./dist/types/exports/actions.d.ts",
       "default": "./dist/esm/exports/actions.js"
     },
-    "./actions/experimental": {
-      "types": "./dist/types/exports/actions/experimental.d.ts",
-      "default": "./dist/esm/exports/actions/experimental.js"
-    },
     "./chains": {
       "types": "./dist/types/exports/chains.d.ts",
       "default": "./dist/esm/exports/chains.js"
@@ -58,10 +53,6 @@
     "./connectors": {
       "types": "./dist/types/exports/connectors.d.ts",
       "default": "./dist/esm/exports/connectors.js"
-    },
-    "./experimental": {
-      "types": "./dist/types/exports/experimental.d.ts",
-      "default": "./dist/esm/exports/experimental.js"
     },
     "./internal": {
       "types": "./dist/types/exports/internal.d.ts",
@@ -86,9 +77,6 @@
       ],
       "connectors": [
         "./dist/types/exports/connectors.d.ts"
-      ],
-      "experimental": [
-        "./dist/types/exports/experimental.d.ts"
       ],
       "internal": [
         "./dist/types/exports/internal.d.ts"

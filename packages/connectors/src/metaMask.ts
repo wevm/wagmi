@@ -61,16 +61,7 @@ type WagmiMetaMaskSDKOptions = Compute<
       | 'useDeeplink'
       | 'readonlyRPCMap'
     >
-  > & {
-    /** @deprecated */
-    forceDeleteProvider?: MetaMaskSDKOptions['forceDeleteProvider']
-    /** @deprecated */
-    forceInjectProvider?: MetaMaskSDKOptions['forceInjectProvider']
-    /** @deprecated */
-    injectProvider?: MetaMaskSDKOptions['injectProvider']
-    /** @deprecated */
-    useDeeplink?: MetaMaskSDKOptions['useDeeplink']
-  }
+  >
 >
 
 metaMask.type = 'metaMask' as const
@@ -259,12 +250,12 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           })?.[0]
 
         sdk = new MetaMaskSDK({
+          // Workaround cast since MetaMask SDK does not support `'exactOptionalPropertyTypes'`
+          ...(parameters as RemoveUndefined<typeof parameters>),
           _source: 'wagmi',
           forceDeleteProvider: false,
           forceInjectProvider: false,
           injectProvider: false,
-          // Workaround cast since MetaMask SDK does not support `'exactOptionalPropertyTypes'`
-          ...(parameters as RemoveUndefined<typeof parameters>),
           readonlyRPCMap,
           dappMetadata: {
             ...parameters.dappMetadata,
@@ -278,7 +269,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
                 ? window.location.origin
                 : 'https://wagmi.sh',
           },
-          useDeeplink: parameters.useDeeplink ?? true,
+          useDeeplink: true,
         })
         const result = await sdk.init()
         // On initial load, sometimes `sdk.getProvider` does not return provider.

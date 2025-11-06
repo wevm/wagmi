@@ -61,7 +61,6 @@ test('exports', () => {
       "injected",
       "mock",
       "noopStorage",
-      "normalizeChainId",
       "ProviderNotFoundError",
       "parseCookie",
       "SwitchChainNotSupportedError",

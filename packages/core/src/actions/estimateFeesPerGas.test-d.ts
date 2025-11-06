@@ -8,11 +8,6 @@ test('types', async () => {
     gasPrice?: undefined
     maxFeePerGas: bigint
     maxPriorityFeePerGas: bigint
-    formatted: {
-      gasPrice?: undefined
-      maxFeePerGas: string
-      maxPriorityFeePerGas: string
-    }
   }>()
 
   const legacy = await estimateFeesPerGas(config, { type: 'legacy' })
@@ -20,11 +15,6 @@ test('types', async () => {
     gasPrice: bigint
     maxFeePerGas?: undefined
     maxPriorityFeePerGas?: undefined
-    formatted: {
-      gasPrice: string
-      maxFeePerGas?: undefined
-      maxPriorityFeePerGas?: undefined
-    }
   }>()
 
   const eip1559 = await estimateFeesPerGas(config, { type: 'eip1559' })
@@ -32,10 +22,5 @@ test('types', async () => {
     gasPrice?: undefined
     maxFeePerGas: bigint
     maxPriorityFeePerGas: bigint
-    formatted: {
-      gasPrice?: undefined
-      maxFeePerGas: string
-      maxPriorityFeePerGas: string
-    }
   }>()
 })

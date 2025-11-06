@@ -247,7 +247,6 @@ export {
   injected,
   mock,
   noopStorage,
-  normalizeChainId,
   type PartializedState,
   ProviderNotFoundError,
   type ProviderNotFoundErrorType,
