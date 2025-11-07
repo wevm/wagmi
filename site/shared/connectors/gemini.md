@@ -16,13 +16,7 @@ import { gemini } from '{{connectorsPackageName}}'
 
 ## Install
 
-<PackageMetadata
-  package="@gemini-wallet/core"
-  repo="gemini/gemini-wallet-core"
-  osiLicense="mit"
-/>
-
-
+<PackageMetadata package="@gemini-wallet/core" repo="gemini/gemini-wallet-core" isOsiLicense licenseUrl="https://github.com/gemini/gemini-wallet-core/blob/main/LICENSE" />
 
 ::: code-group
 ```bash-vue [pnpm]

@@ -16,10 +16,7 @@ import { walletConnect } from '{{connectorsPackageName}}'
 
 ## Install
 
-<PackageMetadata
-  package="@walletconnect/ethereum-provider"
-  repo="WalletConnect/walletconnect-monorepo"
-/>
+<PackageMetadata package="@walletconnect/ethereum-provider" repo="WalletConnect/walletconnect-monorepo" licenseUrl="https://github.com/WalletConnect/walletconnect-monorepo/blob/v2.0/providers/ethereum-provider/LICENSE.md" />
 
 ::: code-group
 ```bash-vue [pnpm]

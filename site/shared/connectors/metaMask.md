@@ -16,11 +16,7 @@ import { metaMask } from '{{connectorsPackageName}}'
 
 ## Install
 
-<PackageMetadata
-  package="@metamask/sdk"
-  repo="MetaMask/metamask-sdk"
-/>
-<!-- TODO: osiLicense="mit" -->
+<PackageMetadata package="@metamask/sdk" repo="MetaMask/metamask-sdk" licenseUrl="https://github.com/MetaMask/metamask-sdk/blob/main/packages/sdk/LICENSE" />
 
 ::: code-group
 ```bash-vue [pnpm]

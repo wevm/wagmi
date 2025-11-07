@@ -16,18 +16,8 @@ import { safe } from '{{connectorsPackageName}}'
 
 ## Install
 
-<PackageMetadata
-  package="@safe-global/safe-apps-provider"
-  repo="safe-global/safe-apps-sdk/tree/main/packages/safe-apps-provider"
-  osiLicense="mit"
-  showName
-/>
-<PackageMetadata
-  package="@safe-global/safe-apps-sdk"
-  repo="safe-global/safe-apps-sdk/tree/main/packages/safe-apps-sdk"
-  osiLicense="mit"
-  showName
-/>
+<PackageMetadata package="@safe-global/safe-apps-provider" repo="safe-global/safe-apps-sdk/tree/main/packages/safe-apps-provider" isOsiLicense showName licenseUrl="https://github.com/safe-global/safe-apps-sdk/blob/main/LICENSE.md" />
+<PackageMetadata package="@safe-global/safe-apps-sdk" repo="safe-global/safe-apps-sdk/tree/main/packages/safe-apps-sdk" isOsiLicense showName licenseUrl="https://github.com/safe-global/safe-apps-sdk/blob/main/LICENSE.md" />
 
 ::: code-group
 ```bash-vue [pnpm]
