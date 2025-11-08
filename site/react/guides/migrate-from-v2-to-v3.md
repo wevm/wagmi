@@ -148,7 +148,7 @@ bun add @metamask/sdk@{{packageJson.peerDependencies['@metamask/sdk']}}
 
 [`porto`](/react/api/connectors/porto) requires `porto` be installed.
 
-<PackageMetadata package="porto" repo="ithacaxyz/porto" isOsiLicense licenseUrl="TODO" />
+<PackageMetadata package="porto" repo="ithacaxyz/porto" isOsiLicense licenseUrl="https://github.com/ithacaxyz/porto/blob/main/LICENSE-MIT" />
 
 ::: code-group
 ```bash-vue [pnpm]
