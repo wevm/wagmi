@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 6.1.4
+
+### Patch Changes
+
+- Bumped Gemini package version ([`2ddb506`](https://github.com/wevm/wagmi/commit/2ddb506b67fcb2abb464765d2af88df2eb58de60))
+
 ## 6.1.3
 
 ### Patch Changes
