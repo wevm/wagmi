@@ -18,6 +18,7 @@ catalog:
   vue: "3.4.27"
 minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
+  - "@gemini-wallet/core"
   - "@wagmi/cli"
   - "@wagmi/connectors"
   - "@wagmi/core"
