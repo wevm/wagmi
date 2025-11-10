@@ -10,7 +10,7 @@ autoInstallPeers: false
 catalog:
   "@base-org/account": "2.4.0"
   "@coinbase/wallet-sdk": "4.3.6"
-  "@gemini-wallet/core": "0.3.1"
+  "@gemini-wallet/core": "0.3.2"
   "@metamask/sdk": "0.33.1"
   "@safe-global/safe-apps-provider": "0.18.6"
   "@safe-global/safe-apps-sdk": "9.1.0"
@@ -28,6 +28,7 @@ catalog:
 linkWorkspacePackages: deep
 minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
+  - "@gemini-wallet/core"
   - "@wagmi/cli"
   - "@wagmi/connectors"
   - "@wagmi/core"
@@ -61,4 +62,7 @@ peerDependencyRules:
     - "react"
     - "react-native"
     - "search-insights"
-trustPolicy: no-downgrade
+# TODO: Enable https://github.com/pnpm/pnpm/pull/10168
+trustPolicy: off # no-downgrade
+trustPolicyExclude:
+  - "@coinbase/cdp-sdk@1.38.4"

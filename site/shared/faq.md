@@ -4,6 +4,18 @@ const docsPath = 'react'
 </script>
 -->
 
+## How do I support the project?
+
+Wagmi is an open source software project and free to use. If you enjoy using Wagmi or would like to support Wagmi development, you can:
+
+- [Become a sponsor on GitHub](https://github.com/sponsors/wevm)
+- Send us crypto
+  - Mainnet: 0x4557B18E779944BFE9d78A672452331C186a9f48
+  - Multichain: 0xd2135CfB216b74109775236E36d4b433F1DF507B
+- [Become a supporter on Drips](https://www.drips.network/app/projects/github/wevm/wagmi)
+
+If you use Wagmi at work, **consider asking your company to sponsor Wagmi**. This may not be easy, but **business sponsorships typically make a much larger impact on the sustainability of OSS projects** than individual donations, so you will help us much more if you succeed.
+
 ## Type inference doesn't work
 
 - Check that you set up TypeScript correctly with `"strict": true` in your `tsconfig.json` (<a :href="`/${docsPath}/typescript#requirements`">TypeScript docs</a>)
@@ -49,18 +61,6 @@ const replacer = (key, value) =>
 JSON.stringify({ value: 69420n }, replacer)
 // '{"value":"69420"}'
 ```
-
-## How do I support the project?
-
-Wagmi is an open source software project and free to use. If you enjoy using Wagmi or would like to support Wagmi development, you can:
-
-- [Become a sponsor on GitHub](https://github.com/sponsors/wevm)
-- Send us crypto
-  - Mainnet: 0x4557B18E779944BFE9d78A672452331C186a9f48
-  - Multichain: 0xd2135CfB216b74109775236E36d4b433F1DF507B
-- [Become a supporter on Drips](https://www.drips.network/app/projects/github/wevm/wagmi)
-
-If you use Wagmi at work, consider asking your company to sponsor Wagmi. This may not be easy, but **business sponsorships typically make a much larger impact on the sustainability of OSS projects** than individual donations, so you will help us much more if you succeed.
 
 ## Is Wagmi production ready?
 

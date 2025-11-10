@@ -27,19 +27,19 @@ If you are developing a library with Wagmi, you should decide if you want to ins
 
 ::: code-group
 ```bash-vue [pnpm]
-pnpm add @base-org/account@{{packageJson.peerDependencies['@base-org/account']}}
+pnpm add @base-org/account@{{packageJson?.peerDependencies?.['@base-org/account']}}
 ```
 
 ```bash-vue [npm]
-npm install @base-org/account@{{packageJson.peerDependencies['@base-org/account']}}
+npm install @base-org/account@{{packageJson?.peerDependencies?.['@base-org/account']}}
 ```
 
 ```bash-vue [yarn]
-yarn add @base-org/account@{{packageJson.peerDependencies['@base-org/account']}}
+yarn add @base-org/account@{{packageJson?.peerDependencies?.['@base-org/account']}}
 ```
 
 ```bash-vue [bun]
-bun add @base-org/account@{{packageJson.peerDependencies['@base-org/account']}}
+bun add @base-org/account@{{packageJson?.peerDependencies?.['@base-org/account']}}
 ```
 :::
 
@@ -51,19 +51,19 @@ bun add @base-org/account@{{packageJson.peerDependencies['@base-org/account']}}
 
 ::: code-group
 ```bash-vue [pnpm]
-pnpm add @coinbase/wallet-sdk@{{packageJson.peerDependencies['@coinbase/wallet-sdk']}}
+pnpm add @coinbase/wallet-sdk@{{packageJson?.peerDependencies?.['@coinbase/wallet-sdk']}}
 ```
 
 ```bash-vue [npm]
-npm install @coinbase/wallet-sdk@{{packageJson.peerDependencies['@coinbase/wallet-sdk']}}
+npm install @coinbase/wallet-sdk@{{packageJson?.peerDependencies?.['@coinbase/wallet-sdk']}}
 ```
 
 ```bash-vue [yarn]
-yarn add @coinbase/wallet-sdk@{{packageJson.peerDependencies['@coinbase/wallet-sdk']}}
+yarn add @coinbase/wallet-sdk@{{packageJson?.peerDependencies?.['@coinbase/wallet-sdk']}}
 ```
 
 ```bash-vue [bun]
-bun add @coinbase/wallet-sdk@{{packageJson.peerDependencies['@coinbase/wallet-sdk']}}
+bun add @coinbase/wallet-sdk@{{packageJson?.peerDependencies?.['@coinbase/wallet-sdk']}}
 ```
 :::
 
@@ -75,19 +75,19 @@ bun add @coinbase/wallet-sdk@{{packageJson.peerDependencies['@coinbase/wallet-sd
 
 ::: code-group
 ```bash-vue [pnpm]
-pnpm add @gemini-wallet/core@{{packageJson.peerDependencies['@gemini-wallet/core']}}
+pnpm add @gemini-wallet/core@{{packageJson?.peerDependencies?.['@gemini-wallet/core']}}
 ```
 
 ```bash-vue [npm]
-npm install @gemini-wallet/core@{{packageJson.peerDependencies['@gemini-wallet/core']}}
+npm install @gemini-wallet/core@{{packageJson?.peerDependencies?.['@gemini-wallet/core']}}
 ```
 
 ```bash-vue [yarn]
-yarn add @gemini-wallet/core@{{packageJson.peerDependencies['@gemini-wallet/core']}}
+yarn add @gemini-wallet/core@{{packageJson?.peerDependencies?.['@gemini-wallet/core']}}
 ```
 
 ```bash-vue [bun]
-bun add @gemini-wallet/core@{{packageJson.peerDependencies['@gemini-wallet/core']}}
+bun add @gemini-wallet/core@{{packageJson?.peerDependencies?.['@gemini-wallet/core']}}
 ```
 :::
 
@@ -99,19 +99,19 @@ bun add @gemini-wallet/core@{{packageJson.peerDependencies['@gemini-wallet/core'
 
 ::: code-group
 ```bash-vue [pnpm]
-pnpm add @metamask/sdk@{{packageJson.peerDependencies['@metamask/sdk']}}
+pnpm add @metamask/sdk@{{packageJson?.peerDependencies?.['@metamask/sdk']}}
 ```
 
 ```bash-vue [npm]
-npm install @metamask/sdk@{{packageJson.peerDependencies['@metamask/sdk']}}
+npm install @metamask/sdk@{{packageJson?.peerDependencies?.['@metamask/sdk']}}
 ```
 
 ```bash-vue [yarn]
-yarn add @metamask/sdk@{{packageJson.peerDependencies['@metamask/sdk']}}
+yarn add @metamask/sdk@{{packageJson?.peerDependencies?.['@metamask/sdk']}}
 ```
 
 ```bash-vue [bun]
-bun add @metamask/sdk@{{packageJson.peerDependencies['@metamask/sdk']}}
+bun add @metamask/sdk@{{packageJson?.peerDependencies?.['@metamask/sdk']}}
 ```
 :::
 
@@ -123,19 +123,19 @@ bun add @metamask/sdk@{{packageJson.peerDependencies['@metamask/sdk']}}
 
 ::: code-group
 ```bash-vue [pnpm]
-pnpm add porto@{{packageJson.peerDependencies['porto']}}
+pnpm add porto@{{packageJson?.peerDependencies?.['porto']}}
 ```
 
 ```bash-vue [npm]
-npm install porto@{{packageJson.peerDependencies['porto']}}
+npm install porto@{{packageJson?.peerDependencies?.['porto']}}
 ```
 
 ```bash-vue [yarn]
-yarn add porto@{{packageJson.peerDependencies['porto']}}
+yarn add porto@{{packageJson?.peerDependencies?.['porto']}}
 ```
 
 ```bash-vue [bun]
-bun add porto@{{packageJson.peerDependencies['porto']}}
+bun add porto@{{packageJson?.peerDependencies?.['porto']}}
 ```
 :::
 
@@ -148,19 +148,19 @@ bun add porto@{{packageJson.peerDependencies['porto']}}
 
 ::: code-group
 ```bash-vue [pnpm]
-pnpm add @safe-global/safe-apps-provider@{{packageJson.peerDependencies['@safe-global/safe-apps-provider']}} @safe-global/safe-apps-sdk@{{packageJson.peerDependencies['@safe-global/safe-apps-sdk']}} 
+pnpm add @safe-global/safe-apps-provider@{{packageJson?.peerDependencies?.['@safe-global/safe-apps-provider']}} @safe-global/safe-apps-sdk@{{packageJson?.peerDependencies?.['@safe-global/safe-apps-sdk']}} 
 ```
 
 ```bash-vue [npm]
-npm install @safe-global/safe-apps-provider@{{packageJson.peerDependencies['@safe-global/safe-apps-provider']}} @safe-global/safe-apps-sdk@{{packageJson.peerDependencies['@safe-global/safe-apps-sdk']}} 
+npm install @safe-global/safe-apps-provider@{{packageJson?.peerDependencies?.['@safe-global/safe-apps-provider']}} @safe-global/safe-apps-sdk@{{packageJson?.peerDependencies?.['@safe-global/safe-apps-sdk']}} 
 ```
 
 ```bash-vue [yarn]
-yarn add @safe-global/safe-apps-provider@{{packageJson.peerDependencies['@safe-global/safe-apps-provider']}} @safe-global/safe-apps-sdk@{{packageJson.peerDependencies['@safe-global/safe-apps-sdk']}} 
+yarn add @safe-global/safe-apps-provider@{{packageJson?.peerDependencies?.['@safe-global/safe-apps-provider']}} @safe-global/safe-apps-sdk@{{packageJson?.peerDependencies?.['@safe-global/safe-apps-sdk']}} 
 ```
 
 ```bash-vue [bun]
-bun add @safe-global/safe-apps-provider@{{packageJson.peerDependencies['@safe-global/safe-apps-provider']}} @safe-global/safe-apps-sdk@{{packageJson.peerDependencies['@safe-global/safe-apps-sdk']}} 
+bun add @safe-global/safe-apps-provider@{{packageJson?.peerDependencies?.['@safe-global/safe-apps-provider']}} @safe-global/safe-apps-sdk@{{packageJson?.peerDependencies?.['@safe-global/safe-apps-sdk']}} 
 ```
 :::
 
@@ -172,18 +172,18 @@ bun add @safe-global/safe-apps-provider@{{packageJson.peerDependencies['@safe-gl
 
 ::: code-group
 ```bash-vue [pnpm]
-pnpm add @walletconnect/ethereum-provider@{{packageJson.peerDependencies['@walletconnect/ethereum-provider']}}
+pnpm add @walletconnect/ethereum-provider@{{packageJson?.peerDependencies?.['@walletconnect/ethereum-provider']}}
 ```
 
 ```bash-vue [npm]
-npm install @walletconnect/ethereum-provider@{{packageJson.peerDependencies['@walletconnect/ethereum-provider']}}
+npm install @walletconnect/ethereum-provider@{{packageJson?.peerDependencies?.['@walletconnect/ethereum-provider']}}
 ```
 
 ```bash-vue [yarn]
-yarn add @walletconnect/ethereum-provider@{{packageJson.peerDependencies['@walletconnect/ethereum-provider']}}
+yarn add @walletconnect/ethereum-provider@{{packageJson?.peerDependencies?.['@walletconnect/ethereum-provider']}}
 ```
 
 ```bash-vue [bun]
-bun add @walletconnect/ethereum-provider@{{packageJson.peerDependencies['@walletconnect/ethereum-provider']}}
+bun add @walletconnect/ethereum-provider@{{packageJson?.peerDependencies?.['@walletconnect/ethereum-provider']}}
 ```
 :::
