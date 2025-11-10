@@ -4,14 +4,18 @@ description: Guide for migrating from Wagmi v2 to v3.
 ---
 
 <script setup>
-import packageJson from '../../../packages/react/package.json'
-
-const viemVersion = packageJson.peerDependencies.viem
+import PackageMetadata from '../../components/PackageMetadata.vue'
+import packageJson from '../../../packages/connectors/package.json'
+const docsPath = 'core'
 </script>
 
 # Migrate from v2 to v3
 
 ## Overview
+
+Wagmi v3 gives you total control over connector dependencies. Since Wagmi's initial release, Wagmi included required connector dependencies as part of its package to eliminate the need to manage multiple third-party dependencies.
+
+This worked worked well in the early years as a "batteries-included" approach, but didn't allow for more fine-grained control over your dependency tree. By giving you control over connector dependencies, you can decide to only install what you need, manage version bumps at your own pace, and have total control over what third-party code and licenses you bring into your project
 
 To get started, install the latest version of Wagmi.
 
@@ -34,7 +38,17 @@ bun add @wagmi/core@3
 :::
 
 ::: info Not ready to migrate yet?
-The Wagmi v2 docs are still available at [2.x.wagmi.sh/react](https://2.x.wagmi.sh/react).
+The Wagmi v2 docs are still available at [2.x.wagmi.sh/core](https://2.x.wagmi.sh/core).
 :::
 
+## Install Connector Dependencies
 
+<!-- @include: @shared/migrate-from-v2-to-v3.md -->
+
+## Migrate v2 Deprecations
+
+[v2 deprecations](/core/guides/migrate-from-v1-to-v2#deprecations) are now removed. Review the [v2 migration guide](/core/guides/migrate-from-v1-to-v2#deprecations) for more information.
+
+## Deprecations
+
+TODO

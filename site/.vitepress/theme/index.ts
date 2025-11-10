@@ -1,10 +1,11 @@
 import TwoslashFloatingVue from '@shikijs/vitepress-twoslash/client'
-import type { Theme } from 'vitepress'
+import type { EnhanceAppContext, Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 // https://vitepress.dev/guide/custom-theme
 import { h } from 'vue'
 
 import '@shikijs/vitepress-twoslash/style.css'
+import 'virtual:group-icons.css'
 import 'uno.css'
 import './style.css'
 
@@ -24,7 +25,7 @@ export default {
       'home-hero-before': () => h(HomeBanner),
     })
   },
-  enhanceApp({ app }) {
+  enhanceApp({ app }: EnhanceAppContext) {
     app.use(TwoslashFloatingVue)
   },
 } satisfies Theme

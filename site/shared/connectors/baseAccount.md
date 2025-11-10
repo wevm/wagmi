@@ -16,11 +16,7 @@ import { baseAccount } from '{{connectorsPackageName}}'
 
 ## Install
 
-<PackageMetadata
-  package="@base-org/account"
-  repo="base/account-sdk"
-  osiLicense="apache-2-0"
-/>
+<PackageMetadata package="@base-org/account" repo="base/account-sdk" isOsiLicense licenseUrl="https://github.com/base/account-sdk/blob/master/packages/account-sdk/LICENSE" />
 
 ::: code-group
 ```bash-vue [pnpm]

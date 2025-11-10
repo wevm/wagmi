@@ -1,6 +1,7 @@
 <!-- <script setup>
 const packageName = 'wagmi'
 const connectorsPackageName = 'wagmi/connectors'
+const connectorDependencyVersion = 'x.y.z'
 </script> -->
 
 # coinbaseWallet
@@ -15,11 +16,7 @@ import { coinbaseWallet } from '{{connectorsPackageName}}'
 
 ## Install
 
-<PackageMetadata
-  package="@coinbase/wallet-sdk"
-  repo="coinbase/coinbase-wallet-sdk"
-  osiLicense="apache-2-0"
-/>
+<PackageMetadata package="@coinbase/wallet-sdk" repo="coinbase/coinbase-wallet-sdk" isOsiLicense licenseUrl="https://github.com/coinbase/coinbase-wallet-sdk/blob/master/packages/wallet-sdk/LICENSE" />
 
 ::: code-group
 ```bash-vue [pnpm]

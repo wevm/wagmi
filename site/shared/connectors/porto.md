@@ -16,11 +16,7 @@ import { porto } from '{{connectorsPackageName}}'
 
 ## Install
 
-<PackageMetadata
-  package="porto"
-  repo="ithacaxyz/porto"
-  osiLicense="mit"
-/>
+<PackageMetadata package="porto" repo="ithacaxyz/porto" isOsiLicense licenseUrl="https://github.com/ithacaxyz/porto/blob/main/LICENSE-MIT" />
 
 ::: code-group
 ```bash-vue [pnpm]
