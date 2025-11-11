@@ -150,11 +150,6 @@ export function getSidebar() {
         text: 'Hooks',
         link: '/react/api/hooks',
         items: [
-          { text: 'useAccount', link: '/react/api/hooks/useAccount' },
-          {
-            text: 'useAccountEffect',
-            link: '/react/api/hooks/useAccountEffect',
-          },
           { text: 'useBalance', link: '/react/api/hooks/useBalance' },
           {
             text: 'useBlockNumber',
@@ -186,6 +181,11 @@ export function getSidebar() {
           { text: 'useClient', link: '/react/api/hooks/useClient' },
           { text: 'useConfig', link: '/react/api/hooks/useConfig' },
           { text: 'useConnect', link: '/react/api/hooks/useConnect' },
+          { text: 'useConnection', link: '/react/api/hooks/useConnection' },
+          {
+            text: 'useConnectionEffect',
+            link: '/react/api/hooks/useConnectionEffect',
+          },
           {
             text: 'useConnections',
             link: '/react/api/hooks/useConnections',
@@ -296,12 +296,12 @@ export function getSidebar() {
             link: '/react/api/hooks/useStorageAt',
           },
           {
-            text: 'useSwitchAccount',
-            link: '/react/api/hooks/useSwitchAccount',
-          },
-          {
             text: 'useSwitchChain',
             link: '/react/api/hooks/useSwitchChain',
+          },
+          {
+            text: 'useSwitchConnection',
+            link: '/react/api/hooks/useSwitchConnection',
           },
           {
             text: 'useTransaction',
@@ -525,11 +525,6 @@ export function getSidebar() {
         text: 'Composables',
         link: '/vue/api/composables',
         items: [
-          { text: 'useAccount', link: '/vue/api/composables/useAccount' },
-          {
-            text: 'useAccountEffect',
-            link: '/vue/api/composables/useAccountEffect',
-          },
           {
             text: 'useBalance',
             link: '/vue/api/composables/useBalance',
@@ -547,6 +542,11 @@ export function getSidebar() {
           { text: 'useClient', link: '/vue/api/composables/useClient' },
           { text: 'useConfig', link: '/vue/api/composables/useConfig' },
           { text: 'useConnect', link: '/vue/api/composables/useConnect' },
+          { text: 'useConnection', link: '/vue/api/composables/useConnection' },
+          {
+            text: 'useConnectionEffect',
+            link: '/vue/api/composables/useConnectionEffect',
+          },
           {
             text: 'useConnections',
             link: '/vue/api/composables/useConnections',
@@ -600,12 +600,12 @@ export function getSidebar() {
             link: '/vue/api/composables/useSimulateContract',
           },
           {
-            text: 'useSwitchAccount',
-            link: '/vue/api/composables/useSwitchAccount',
-          },
-          {
             text: 'useSwitchChain',
             link: '/vue/api/composables/useSwitchChain',
+          },
+          {
+            text: 'useSwitchConnection',
+            link: '/vue/api/composables/useSwitchConnection',
           },
           {
             text: 'useTransaction',
@@ -795,7 +795,6 @@ export function getSidebar() {
             text: 'estimateMaxPriorityFeePerGas',
             link: '/core/api/actions/estimateMaxPriorityFeePerGas',
           },
-          { text: 'getAccount', link: '/core/api/actions/getAccount' },
           { text: 'getBalance', link: '/core/api/actions/getBalance' },
           {
             text: 'getBlock',
@@ -827,6 +826,7 @@ export function getSidebar() {
             text: 'getClient',
             link: '/core/api/actions/getClient',
           },
+          { text: 'getConnection', link: '/core/api/actions/getConnection' },
           {
             text: 'getConnections',
             link: '/core/api/actions/getConnections',
@@ -944,12 +944,12 @@ export function getSidebar() {
             link: '/core/api/actions/simulateContract',
           },
           {
-            text: 'switchAccount',
-            link: '/core/api/actions/switchAccount',
-          },
-          {
             text: 'switchChain',
             link: '/core/api/actions/switchChain',
+          },
+          {
+            text: 'switchConnection',
+            link: '/core/api/actions/switchConnection',
           },
           {
             text: 'verifyMessage',
@@ -966,10 +966,6 @@ export function getSidebar() {
           {
             text: 'waitForTransactionReceipt',
             link: '/core/api/actions/waitForTransactionReceipt',
-          },
-          {
-            text: 'watchAccount',
-            link: '/core/api/actions/watchAccount',
           },
           {
             text: 'watchAsset',
@@ -990,6 +986,10 @@ export function getSidebar() {
           {
             text: 'watchClient',
             link: '/core/api/actions/watchClient',
+          },
+          {
+            text: 'watchConnection',
+            link: '/core/api/actions/watchConnection',
           },
           {
             text: 'watchConnections',

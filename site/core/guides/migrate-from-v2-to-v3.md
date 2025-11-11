@@ -63,5 +63,15 @@ import {
   switchConnection, // [!code ++]
   watchAccount, // [!code --]
   watchConnection, // [!code ++]
-} from 'wagmi'
+} from '@wagmi/core'
+```
+
+`switchAccountMutationOptions` is also updated to `switchConnectionMutationOptions`.
+
+```ts
+import {
+  switchAccountMutationOptions, // [!code --]
+  switchConnectionMutationOptions, // [!code ++]
+} from '@wagmi/core/query'
+
 ```
