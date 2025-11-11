@@ -1,4 +1,4 @@
-import { connect, disconnect, getBalance, writeContract } from '@wagmi/core'
+import { connect, disconnect, readContract, writeContract } from '@wagmi/core'
 import {
   abi,
   accounts,
@@ -9,7 +9,7 @@ import {
   wait,
 } from '@wagmi/test'
 import { renderHook } from '@wagmi/test/react'
-import { createWalletClient, http, parseEther } from 'viem'
+import { createWalletClient, erc20Abi, http, parseEther } from 'viem'
 import type { WatchEventOnLogsParameter } from 'viem/actions'
 import { expect, test } from 'vitest'
 
@@ -42,11 +42,13 @@ test('default', async () => {
     address: address.usdcHolder,
   })
 
-  const balance = await getBalance(config, {
-    address: connectedAddress,
-    token: address.usdc,
+  const balance = await readContract(config, {
+    address: address.usdc,
+    abi: erc20Abi,
+    functionName: 'balanceOf',
+    args: [connectedAddress],
   })
-  expect(balance.value).toBeGreaterThan(0n)
+  expect(balance).toBeGreaterThan(0n)
 
   // start watching transfer events
   let logs: WatchEventOnLogsParameter = []

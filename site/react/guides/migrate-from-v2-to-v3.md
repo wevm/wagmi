@@ -51,4 +51,61 @@ The Wagmi v2 docs are still available at [2.x.wagmi.sh/react](https://2.x.wagmi.
 
 ## Deprecations
 
-TODO
+### Renamed Account Hooks
+
+At the core of Wagmi are connections between apps and Ethereum providers (e.g. EIP-1193), `useAccount`, `useAccountEffect`, and `useSwitchAccount` are renamed to `useConnection`, `useConnectionEffect`, and `useSwitchConnection` to more accurately representation to how Wagmi works.
+
+```ts
+import {
+  useAccount, // [!code --]
+  useConnection, // [!code ++]
+  useAccountEffect, // [!code --]
+  useConnectionEffect, // [!code ++]
+  useSwitchAccount, // [!code --]
+  useSwitchConnection, // [!code ++]
+} from 'wagmi'
+```
+
+### Removed `useConnect().connectors`, `useDisconnect().connectors`, & `useReconnect().connectors`
+
+Moving forward, `useConnect().connectors`, `useDisconnect().connectors`, and `useReconnect().connectors` are no longer supported. Use [`useConnectors`](/react/api/hooks/useConnectors) instead.
+
+```ts
+import { useConnect, useDisconnect, useReconnect } from 'wagmi' // [!code --]
+import { useConnectors } from 'wagmi' // [!code ++]
+
+const { connectors } = useConnect() // [!code --]
+const { connectors } = useDisconnect() // [!code --]
+const { connectors } = useReconnect() // [!code --]
+const connectors = useConnectors() // [!code ++]
+```
+
+### Removed `useSwitchChain().chains`
+
+Moving forward, `useSwitchChain().chains` is no longer supported. Use [`useChains`](/react/api/hooks/useChains) instead.
+
+```ts
+import { useSwitchChain } from 'wagmi' // [!code --]
+import { useChains } from 'wagmi' // [!code ++]
+
+const { chains } = useSwitchChain() // [!code --]
+const chains = useChains() // [!code ++]
+```
+
+### Renamed Mutation Hooks' Methods
+
+Previously, mutation hooks (e.g. `useConnect`, `useSendTransaction`, `useWriteContract`) had contextual method names (e.g. `connect` and `connectAsync`, `sendTransaction` and `sendTransactionAsync`, `writeContract` and `writeContractAsync`). Moving forward, these contextual method names are renamed `mutate` and `mutateAsync`. This better aligns with the TanStack Query API and improves ergonomics when using multiple mutation hooks in the same function body.
+
+```ts
+const connect = useConnect()
+connect.connect({ ... }) // [!code --]
+connect.mutate({ ... }) // [!code ++]
+
+const sendTransaction = useSendTransaction()
+sendTransaction.sendTransaction({ ... }) // [!code --]
+sendTransaction.mutate({ ... }) // [!code ++]
+
+const writeContract = useWriteContract()
+writeContract.writeContract({ ... }) // [!code --]
+writeContract.mutate({ ... }) // [!code ++]
+```

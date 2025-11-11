@@ -270,8 +270,5 @@ type Variables<
             | undefined
         }
       : Compute<ChainIdParameter<config, chainId>>) &
-    ConnectorParameter & {
-      /** @deprecated */
-      __mode?: 'prepared'
-    }
+    ConnectorParameter
 >

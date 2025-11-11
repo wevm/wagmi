@@ -50,8 +50,6 @@ test('exports', () => {
       "getProofQueryOptions",
       "getStorageAtQueryKey",
       "getStorageAtQueryOptions",
-      "getTokenQueryKey",
-      "getTokenQueryOptions",
       "getTransactionQueryKey",
       "getTransactionQueryOptions",
       "getTransactionConfirmationsQueryKey",

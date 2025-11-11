@@ -622,7 +622,7 @@ const result = useReadContracts({ // [!code ++]
 The `formatUnits` parameter and related return values (e.g. `result.formatted`) are deprecated for the following hooks:
 
 - [`useEstimateFeesPerGas`](/react/api/hooks/useEstimateFeesPerGas)
-- [`useToken`](/react/api/hooks/useToken)
+- `useToken`
 
 Instead you can call `formatUnits` from Viem directly or use another number formatting library, like [dnum](https://github.com/bpierre/dnum) instead.
 

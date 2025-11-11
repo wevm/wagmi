@@ -217,15 +217,6 @@ export {
 } from '../query/getStorageAt.js'
 
 export {
-  type GetTokenData,
-  type GetTokenOptions,
-  type GetTokenQueryFnData,
-  type GetTokenQueryKey,
-  getTokenQueryKey,
-  getTokenQueryOptions,
-} from '../query/getToken.js'
-
-export {
   type GetTransactionData,
   type GetTransactionOptions,
   type GetTransactionQueryFnData,

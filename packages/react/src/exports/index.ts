@@ -5,11 +5,7 @@
 // biome-ignore lint/performance/noBarrelFile: entrypoint module
 export {
   WagmiContext,
-  /** @deprecated Use `WagmiContext` instead */
-  WagmiContext as Context,
   WagmiProvider,
-  /** @deprecated Use `WagmiProvider` instead */
-  WagmiProvider as WagmiConfig,
   type WagmiProviderProps,
 } from '../context.js'
 
@@ -176,8 +172,6 @@ export {
   type UseEstimateFeesPerGasParameters,
   type UseEstimateFeesPerGasReturnType,
   useEstimateFeesPerGas,
-  /** @deprecated Use `useEstimateFeesPerGas` instead */
-  useEstimateFeesPerGas as useFeeData,
 } from '../hooks/useEstimateFeesPerGas.js'
 
 export {
@@ -208,8 +202,6 @@ export {
   type UseInfiniteContractReadsParameters,
   type UseInfiniteContractReadsReturnType,
   useInfiniteReadContracts,
-  /** @deprecated Use `useInfiniteReadContracts` instead */
-  useInfiniteReadContracts as useContractInfiniteReads,
 } from '../hooks/useInfiniteReadContracts.js'
 
 export {
@@ -234,16 +226,12 @@ export {
   type UseReadContractParameters,
   type UseReadContractReturnType,
   useReadContract,
-  /** @deprecated Use `useReadContract` instead */
-  useReadContract as useContractRead,
 } from '../hooks/useReadContract.js'
 
 export {
   type UseReadContractsParameters,
   type UseReadContractsReturnType,
   useReadContracts,
-  /** @deprecated Use `useWriteContract` instead */
-  useReadContracts as useContractReads,
 } from '../hooks/useReadContracts.js'
 
 export {
@@ -317,13 +305,6 @@ export {
   type UseSwitchChainReturnType,
   useSwitchChain,
 } from '../hooks/useSwitchChain.js'
-
-export {
-  type UseTokenParameters,
-  type UseTokenReturnType,
-  /** @deprecated Use `useReadContracts` instead */
-  useToken,
-} from '../hooks/useToken.js'
 
 export {
   type UseTransactionParameters,
@@ -408,8 +389,6 @@ export {
   type UseWriteContractParameters,
   type UseWriteContractReturnType,
   useWriteContract,
-  /** @deprecated Use `useWriteContract` instead */
-  useWriteContract as useContractWrite,
 } from '../hooks/useWriteContract.js'
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -464,7 +443,6 @@ export {
   injected,
   mock,
   noopStorage,
-  normalizeChainId,
   type PartializedState,
   ProviderNotFoundError,
   type ProviderNotFoundErrorType,
