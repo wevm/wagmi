@@ -27,14 +27,14 @@ export default defineConfig({
 import { type ReactConfig } from '@wagmi/cli/plugins'
 ```
 
-### functionHooks
+### abiItemHooks
 
-- Boolean flag to generate function hooks.
+- Boolean flag to generate abi item hooks (e.g. hooks for each abi function and events).
 - Defaults to `true`.
 
 ```ts
 plugins: [
-  react({ functionHooks: false }), // [!code focus]
+  react({ abiItemHooks: false }), // [!code focus]
 ],
 ```
 

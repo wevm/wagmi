@@ -5,7 +5,7 @@ import type { Compute, RequiredBy } from '../types.js'
 import { getAddressDocString } from '../utils/getAddressDocString.js'
 
 export type ReactConfig = {
-  functionHooks?: boolean
+  abiItemHooks?: boolean | undefined
   getHookName?:
     | 'legacy' // TODO: Deprecate `'legacy'` option
     | ((options: {
@@ -26,7 +26,7 @@ export function react(config: ReactConfig = {}): ReactResult {
       const pure = '/*#__PURE__*/'
 
       const hookNames = new Set<string>()
-      const isFunctionHooksEnabled = config.functionHooks ?? true
+      const isAbiItemHooksEnabled = config.abiItemHooks ?? true
 
       for (const contract of contracts) {
         let hasReadFunction = false
@@ -68,7 +68,7 @@ export function react(config: ReactConfig = {}): ReactResult {
 export const ${hookName} = ${pure} ${functionName}({ ${innerContent} })`,
           )
 
-          if (isFunctionHooksEnabled) {
+          if (isAbiItemHooksEnabled) {
             const names = new Set<string>()
             for (const item of readItems) {
               if (item.type !== 'function') continue
@@ -117,7 +117,7 @@ export const ${hookName} = ${pure} ${functionName}({ ${innerContent}, functionNa
 export const ${hookName} = ${pure} ${functionName}({ ${innerContent} })`,
             )
 
-            if (isFunctionHooksEnabled) {
+            if (isAbiItemHooksEnabled) {
               const names = new Set<string>()
               for (const item of writeItems) {
                 if (item.type !== 'function') continue
@@ -165,7 +165,7 @@ export const ${hookName} = ${pure} ${functionName}({ ${innerContent}, functionNa
 export const ${hookName} = ${pure} ${functionName}({ ${innerContent} })`,
             )
 
-            if (isFunctionHooksEnabled) {
+            if (isAbiItemHooksEnabled) {
               const names = new Set<string>()
               for (const item of writeItems) {
                 if (item.type !== 'function') continue
@@ -218,7 +218,7 @@ export const ${hookName} = ${pure} ${functionName}({ ${innerContent}, functionNa
 export const ${hookName} = ${pure} ${functionName}({ ${innerContent} })`,
           )
 
-          if (isFunctionHooksEnabled) {
+          if (isAbiItemHooksEnabled) {
             const names = new Set<string>()
             for (const item of eventItems) {
               if (item.type !== 'event') continue

@@ -336,8 +336,8 @@ test('legacy hook names', async () => {
   `)
 })
 
-test('function hooks disabled', async () => {
-  const result = await react({ functionHooks: false }).run?.({
+test('abi item hooks disabled', async () => {
+  const result = await react({ abiItemHooks: false }).run?.({
     contracts: [
       {
         name: 'erc20',
