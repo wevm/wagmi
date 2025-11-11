@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## Unreleased
+
+### Minor Changes
+
+- Added `functionHooks` option to `react` plugin to control per-function hook generation.
+
 ## 2.7.1
 
 ### Patch Changes
