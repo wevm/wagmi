@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-### Minor Changes
+### 2.8.0
 
 - Added `functionHooks` option to `react` plugin to control per-function hook generation.
 

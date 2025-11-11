@@ -27,6 +27,17 @@ export default defineConfig({
 import { type ReactConfig } from '@wagmi/cli/plugins'
 ```
 
+### functionHooks
+
+- Boolean flag to generate function hooks.
+- Defaults to `true`.
+
+```ts
+plugins: [
+  react({ functionHooks: false }), // [!code focus]
+],
+```
+
 ### getHookName
 
 `` 'legacy' | ((options: { contractName: string; type: 'read' | 'simulate' | 'watch' | 'write' }) => `use${string}`) ``
