@@ -4,6 +4,7 @@ import { renderComposable, waitFor } from '@wagmi/test/vue'
 import { expect, test } from 'vitest'
 
 import { useConnection } from './useConnection.js'
+import { useConnections } from './useConnections.js'
 import { useSwitchConnection } from './useSwitchConnection.js'
 
 const connector1 = config.connectors[0]!
@@ -12,13 +13,14 @@ const connector2 = config.connectors[1]!
 test('default', async () => {
   const [connection] = renderComposable(() => useConnection())
   const [switchConnection] = renderComposable(() => useSwitchConnection())
+  const [connections] = renderComposable(() => useConnections())
 
-  expect(switchConnection.connectors.value).toEqual([])
+  expect(connections.value).toEqual([])
 
   await connect(config, { connector: connector2 })
   await connect(config, { connector: connector1 })
 
-  expect(switchConnection.connectors.value.length).toEqual(2)
+  expect(connections.value.length).toEqual(2)
 
   const address1 = connection.address.value
   expect(address1).toBeDefined()

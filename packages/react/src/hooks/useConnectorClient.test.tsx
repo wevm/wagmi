@@ -6,6 +6,7 @@ import { expect, test, vi } from 'vitest'
 import { useConnect } from './useConnect.js'
 import { useConnection } from './useConnection.js'
 import { useConnectorClient } from './useConnectorClient.js'
+import { useConnectors } from './useConnectors.js'
 import { useDisconnect } from './useDisconnect.js'
 import { useSwitchChain } from './useSwitchChain.js'
 
@@ -101,6 +102,7 @@ test('behavior: connected on mount', async () => {
 test('behavior: connect and disconnect', async () => {
   const { result } = await renderHook(() => ({
     useConnect: useConnect(),
+    useConnectors: useConnectors(),
     useConnectorClient: useConnectorClient(),
     useDisconnect: useDisconnect(),
   }))
@@ -108,7 +110,7 @@ test('behavior: connect and disconnect', async () => {
   expect(result.current.useConnectorClient.data).not.toBeDefined()
 
   result.current.useConnect.connect({
-    connector: result.current.useConnect.connectors[0]!,
+    connector: result.current.useConnectors[0]!,
   })
 
   await vi.waitFor(() =>
@@ -240,7 +242,8 @@ test('behavior: connector is on a different chain', async () => {
 function Parent() {
   const [renderCount, setRenderCount] = React.useState(1)
 
-  const { connectors, connect } = useConnect()
+  const { connect } = useConnect()
+  const connectors = useConnectors()
   const { address } = useConnection()
   const { data } = useConnectorClient()
 

@@ -8,6 +8,7 @@ import { expect, test, vi } from 'vitest'
 import { WagmiProvider } from '../context.js'
 import { useConnect } from './useConnect.js'
 import { useConnectionEffect } from './useConnectionEffect.js'
+import { useConnectors } from './useConnectors.js'
 import { useDisconnect } from './useDisconnect.js'
 
 test('parameters: config', async () => {
@@ -24,18 +25,19 @@ test('behavior: connect and disconnect called once', async () => {
   const { result } = await renderHook(() => ({
     useConnectionEffect: useConnectionEffect({ onConnect, onDisconnect }),
     useConnect: useConnect(),
+    useConnectors: useConnectors(),
     useDisconnect: useDisconnect(),
   }))
 
   result.current.useConnect.connect({
-    connector: result.current.useConnect.connectors[0]!,
+    connector: result.current.useConnectors[0]!,
   })
   await vi.waitFor(() =>
     expect(result.current.useConnect.isSuccess).toBeTruthy(),
   )
 
   result.current.useConnect.connect({
-    connector: result.current.useConnect.connectors[0]!,
+    connector: result.current.useConnectors[0]!,
   })
   await vi.waitFor(() =>
     expect(result.current.useConnect.isSuccess).toBeTruthy(),

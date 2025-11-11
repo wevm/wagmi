@@ -118,10 +118,10 @@ export {
 } from '../actions/getClient.js'
 
 export {
-  /* @deprecated use `GetConnectionReturnType` instead */
+  /** @deprecated use `GetConnectionReturnType` instead */
   type GetConnectionReturnType as GetAccountReturnType,
   type GetConnectionReturnType,
-  /* @deprecated use `getConnection` instead */
+  /** @deprecated use `getConnection` instead */
   getConnection as getAccount,
   getConnection,
 } from '../actions/getConnection.js'
@@ -345,16 +345,16 @@ export {
 } from '../actions/switchChain.js'
 
 export {
-  /* @deprecated use `SwitchConnectionErrorType` instead */
+  /** @deprecated use `SwitchConnectionErrorType` instead */
   type SwitchConnectionErrorType as SwitchAccountErrorType,
   type SwitchConnectionErrorType,
-  /* @deprecated use `SwitchConnectionParameters` instead */
+  /** @deprecated use `SwitchConnectionParameters` instead */
   type SwitchConnectionParameters as SwitchAccountParameters,
   type SwitchConnectionParameters,
-  /* @deprecated use `SwitchConnectionReturnType` instead */
+  /** @deprecated use `SwitchConnectionReturnType` instead */
   type SwitchConnectionReturnType as SwitchAccountReturnType,
   type SwitchConnectionReturnType,
-  /* @deprecated use `switchConnection` instead */
+  /** @deprecated use `switchConnection` instead */
   switchConnection as switchAccount,
   switchConnection,
 } from '../actions/switchConnection.js'
@@ -419,13 +419,13 @@ export {
 } from '../actions/watchClient.js'
 
 export {
-  /* @deprecated use `WatchConnectionParameters` instead */
+  /** @deprecated use `WatchConnectionParameters` instead */
   type WatchConnectionParameters as WatchAccountParameters,
   type WatchConnectionParameters,
-  /* @deprecated use `WatchConnectionReturnType` instead */
+  /** @deprecated use `WatchConnectionReturnType` instead */
   type WatchConnectionReturnType as WatchAccountReturnType,
   type WatchConnectionReturnType,
-  /* @deprecated use `watchConnection` instead */
+  /** @deprecated use `watchConnection` instead */
   watchConnection as watchAccount,
   watchConnection,
 } from '../actions/watchConnection.js'

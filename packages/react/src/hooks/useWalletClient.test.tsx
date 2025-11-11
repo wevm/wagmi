@@ -5,6 +5,7 @@ import * as React from 'react'
 import { expect, test, vi } from 'vitest'
 import { useConnect } from './useConnect.js'
 import { useConnection } from './useConnection.js'
+import { useConnectors } from './useConnectors.js'
 import { useDisconnect } from './useDisconnect.js'
 import { useSwitchChain } from './useSwitchChain.js'
 import { useWalletClient } from './useWalletClient.js'
@@ -104,6 +105,7 @@ test('behavior: connected on mount', async () => {
 test('behavior: connect and disconnect', async () => {
   const { result } = await renderHook(() => ({
     useConnect: useConnect(),
+    useConnectors: useConnectors(),
     useWalletClient: useWalletClient(),
     useDisconnect: useDisconnect(),
   }))
@@ -111,7 +113,7 @@ test('behavior: connect and disconnect', async () => {
   expect(result.current.useWalletClient.data).not.toBeDefined()
 
   result.current.useConnect.connect({
-    connector: result.current.useConnect.connectors[0]!,
+    connector: result.current.useConnectors[0]!,
   })
 
   await vi.waitFor(() =>
@@ -193,7 +195,8 @@ test('behavior: re-render does not invalidate query', async () => {
 function Parent() {
   const [renderCount, setRenderCount] = React.useState(1)
 
-  const { connectors, connect } = useConnect()
+  const { connect } = useConnect()
+  const connectors = useConnectors()
   const { address } = useConnection()
   const { data } = useWalletClient()
 

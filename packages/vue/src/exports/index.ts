@@ -71,22 +71,22 @@ export {
 } from '../composables/useConnect.js'
 
 export {
-  /* @deprecated use `UseConnectionParameters` instead */
+  /** @deprecated use `UseConnectionParameters` instead */
   type UseConnectionParameters as UseAccountParameters,
   type UseConnectionParameters,
-  /* @deprecated use `UseConnectionReturnType` instead */
+  /** @deprecated use `UseConnectionReturnType` instead */
   type UseConnectionReturnType as UseAccountReturnType,
   type UseConnectionReturnType,
-  /* @deprecated use `useConnection` instead */
+  /** @deprecated use `useConnection` instead */
   useConnection as useAccount,
   useConnection,
 } from '../composables/useConnection.js'
 
 export {
-  /* @deprecated use `UseConnectionEffectParameters` instead */
+  /** @deprecated use `UseConnectionEffectParameters` instead */
   type UseConnectionEffectParameters as UseAccountEffectParameters,
   type UseConnectionEffectParameters,
-  /* @deprecated use `useConnectionEffect` instead */
+  /** @deprecated use `useConnectionEffect` instead */
   useConnectionEffect as useAccountEffect,
   useConnectionEffect,
 } from '../composables/useConnectionEffect.js'
@@ -182,13 +182,13 @@ export {
 } from '../composables/useSwitchChain.js'
 
 export {
-  /* @deprecated use `UseSwitchConnectionParameters` instead */
+  /** @deprecated use `UseSwitchConnectionParameters` instead */
   type UseSwitchConnectionParameters as UseSwitchAccountParameters,
   type UseSwitchConnectionParameters,
-  /* @deprecated use `UseSwitchConnectionReturnType` instead */
+  /** @deprecated use `UseSwitchConnectionReturnType` instead */
   type UseSwitchConnectionReturnType as UseSwitchAccountReturnType,
   type UseSwitchConnectionReturnType,
-  /* @deprecated use `useSwitchConnection` instead */
+  /** @deprecated use `useSwitchConnection` instead */
   useSwitchConnection as useSwitchAccount,
   useSwitchConnection,
 } from '../composables/useSwitchConnection.js'

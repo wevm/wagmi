@@ -10,6 +10,7 @@ import { WagmiPlugin } from '../plugin.js'
 import { useConnect } from './useConnect.js'
 import { useConnection } from './useConnection.js'
 import { useConnectionEffect } from './useConnectionEffect.js'
+import { useConnectors } from './useConnectors.js'
 import { useDisconnect } from './useDisconnect.js'
 
 test('behavior: connect and disconnect called once', async () => {
@@ -18,14 +19,15 @@ test('behavior: connect and disconnect called once', async () => {
 
   renderComposable(() => useConnectionEffect({ onConnect, onDisconnect }))
   const [connect] = renderComposable(() => useConnect())
+  const [connectors] = renderComposable(() => useConnectors())
   const [disconnect] = renderComposable(() => useDisconnect())
 
   connect.connect({
-    connector: connect.connectors[0]!,
+    connector: connectors.value[0]!,
   })
   await waitFor(connect.isSuccess)
   connect.connect({
-    connector: connect.connectors[0]!,
+    connector: connectors.value[0]!,
   })
 
   disconnect.disconnect()

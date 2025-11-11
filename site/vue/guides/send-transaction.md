@@ -247,12 +247,12 @@ Finally, we can wire up our Send Transaction component to our application's entr
 :::code-group
 ```vue [App.vue]
 <script setup lang="ts">
-import { useConnection } from '@wagmi/vue';
-import Connection from './Connection.vue';
-import Connect from './Connect.vue';
-import SendTransaction from './SendTransaction.vue'; // [!code ++]
+import { useConnection } from '@wagmi/vue'
+import Connection from './Connection.vue'
+import Connect from './Connect.vue'
+import SendTransaction from './SendTransaction.vue' // [!code ++]
 
-const { isConnected } = useConnection();
+const { isConnected } = useConnection()
 </script>
 
 <template>

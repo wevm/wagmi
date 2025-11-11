@@ -5,11 +5,13 @@ import {
   useBalance,
   useBlockNumber,
   useChainId,
+  useChains,
   useConnect,
   useConnection,
   useConnectionEffect,
   useConnections,
   useConnectorClient,
+  useConnectors,
   useDisconnect,
   useEnsName,
   useReadContract,
@@ -84,7 +86,8 @@ function Connection() {
 
 function Connect() {
   const chainId = useChainId()
-  const { connectors, connectAsync, status, error } = useConnect()
+  const { connectAsync, status, error } = useConnect()
+  const connectors = useConnectors()
 
   return (
     <div>
@@ -115,13 +118,14 @@ function Connect() {
 
 function SwitchConnection() {
   const connection = useConnection()
-  const { connectors, switchConnection } = useSwitchConnection()
+  const { switchConnection } = useSwitchConnection()
+  const connections = useConnections()
 
   return (
     <div>
       <h2>Switch Connection</h2>
 
-      {connectors.map((connector) => (
+      {connections.map(({ connector }) => (
         <button
           disabled={connection.connector?.uid === connector.uid}
           key={connector.uid}
@@ -137,7 +141,8 @@ function SwitchConnection() {
 
 function SwitchChain() {
   const chainId = useChainId()
-  const { chains, switchChain, error } = useSwitchChain()
+  const { switchChain, error } = useSwitchChain()
+  const chains = useChains()
 
   return (
     <div>

@@ -379,19 +379,19 @@ export {
 } from '../query/switchChain.js'
 
 export {
-  /* @deprecated use `SwitchConnectionData` instead */
+  /** @deprecated use `SwitchConnectionData` instead */
   type SwitchConnectionData as SwitchAccountData,
   type SwitchConnectionData,
-  /* @deprecated use `SwitchConnectionMutate` instead */
+  /** @deprecated use `SwitchConnectionMutate` instead */
   type SwitchConnectionMutate as SwitchAccountMutate,
   type SwitchConnectionMutate,
-  /* @deprecated use `SwitchConnectionMutateAsync` instead */
+  /** @deprecated use `SwitchConnectionMutateAsync` instead */
   type SwitchConnectionMutateAsync as SwitchAccountMutateAsync,
   type SwitchConnectionMutateAsync,
-  /* @deprecated use `SwitchConnectionVariables` instead */
+  /** @deprecated use `SwitchConnectionVariables` instead */
   type SwitchConnectionVariables as SwitchAccountVariables,
   type SwitchConnectionVariables,
-  /* @deprecated use `switchConnectionMutationOptions` instead */
+  /** @deprecated use `switchConnectionMutationOptions` instead */
   switchConnectionMutationOptions as switchAccountMutationOptions,
   switchConnectionMutationOptions,
 } from '../query/switchConnection.js'

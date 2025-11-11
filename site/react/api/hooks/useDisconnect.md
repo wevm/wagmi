@@ -76,7 +76,7 @@ function App() {
 import { type UseDisconnectReturnType } from 'wagmi'
 ```
 
-### connectors
+### connectors <Badge type="warning">[deprecated](/react/guides/migrate-from-v2-to-v3#removed-usedisconnect-connectors-useswitchconnection-connectors)</Badge>
 
 `readonly Connector[]`
 
@@ -84,11 +84,12 @@ Connectors that are currently connected. Useful for rendering a list of connecto
 
 ::: code-group
 ```tsx [index.tsx]
-import { useDisconnect } from 'wagmi'
+import { useConnectors, useDisconnect } from 'wagmi'
 import { mainnet } from 'wagmi/chains'
 
 function App() {
-  const { connectors, disconnect } = useDisconnect()
+  const { disconnect } = useDisconnect()
+  const connectors = useConnectors()
 
   return (
     <div>

@@ -77,31 +77,6 @@ const result = useConnect({
 import { type UseConnectReturnType } from '@wagmi/vue'
 ```
 
-### connectors
-
-`readonly Connector[]`
-
-Globally configured connectors via [`createConfig`](/vue/api/createConfig#connectors). Useful for rendering a list of available connectors.
-
-::: code-group
-```vue [index.vue]
-<script setup lang="ts">
-import { useConnect } from '@wagmi/vue'
-
-const { connect, connectors } = useConnect()
-</script>
-
-<template>
-  <div>
-    <button v-for="connector in connectors" :key="connector.id" @click="connect({ connector })">
-      {{ connector.name }}
-    </button>
-  </div>
-</template>
-```
-<<< @/snippets/vue/config.ts[config.ts]
-:::
-
 <!--@include: @shared/mutation-result.md-->
 
 ::: tip

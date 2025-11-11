@@ -19,11 +19,13 @@ import {
   UserRejectedRequestError,
 } from 'viem'
 
-export type CoinbaseWalletParameters = Mutable<
+export type CoinbaseWalletParameters<
+  /** @deprecated remove */
+  _ = unknown,
+> = Mutable<
   Omit<
     Parameters<typeof createCoinbaseWalletSDK>[0],
-    | 'appChainIds' // set via wagmi config
-    | 'preference'
+    'appChainIds' // set via wagmi config
   >
 >
 
@@ -153,7 +155,10 @@ export function coinbaseWallet(
         const sdk = createCoinbaseWalletSDK({
           ...parameters,
           appChainIds: config.chains.map((x) => x.id),
-          preference: { options: 'all' },
+          preference: {
+            options: 'all',
+            ...(parameters.preference ?? {}),
+          },
         })
 
         walletProvider = sdk.getProvider()

@@ -125,10 +125,11 @@ Below, we are rendering a list of `connectors` retrieved from `useConnect`. When
 
 ```tsx [wallet-options.tsx]
 import * as React from 'react'
-import { Connector, useConnect } from 'wagmi'
+import { Connector, useConnect, useConnectors } from 'wagmi'
 
 export function WalletOptions() {
-  const { connectors, connect } = useConnect()
+  const { connect } = useConnect()
+  const connectors = useConnectors()
 
   return connectors.map((connector) => (
     <button key={connector.uid} onClick={() => connect({ connector })}>
@@ -214,10 +215,11 @@ export function Connection() {
 
 ```tsx [wallet-options.tsx]
 import * as React from 'react'
-import { Connector, useConnect } from 'wagmi'
+import { Connector, useConnect, useConnectors } from 'wagmi'
 
 export function WalletOptions() {
-  const { connectors, connect } = useConnect()
+  const { connect } = useConnect()
+  const connectors = useConnectors()
 
   return connectors.map((connector) => (
     <WalletOption
@@ -350,10 +352,11 @@ export function Connection() {
 
 ```tsx [wallet-options.tsx]
 import * as React from 'react'
-import { Connector, useConnect } from 'wagmi'
+import { Connector, useConnect, useConnectors } from 'wagmi'
 
 export function WalletOptions() {
-  const { connectors, connect } = useConnect()
+  const { connect } = useConnect()
+  const connectors = useConnectors()
 
   return connectors.map((connector) => (
     <WalletOption

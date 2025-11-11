@@ -94,44 +94,9 @@ const connector = coinbaseWallet({
 })
 ```
 
-### headlessMode <Badge type="warning" text="deprecated" />
-
-`boolean | undefined`
-
-- Whether or not onboarding overlay popup should be displayed.
-- `headlessMode` will be removed in the next major version. Upgrade to [`version: '4'`](#version).
-
-```ts-vue
-import { coinbaseWallet } from '{{connectorsPackageName}}'
-
-const connector = coinbaseWallet({
-  appName: 'My Wagmi App',
-  headlessMode: false, // [!code focus]
-})
-```
-
 ### preference <Badge text=">=2.9.0" />
 
-`"all" | "eoaOnly" | "smartWalletOnly"`
-
 Preference for the type of wallet to display.
-
-- `'eoaOnly'`: Uses EOA Browser Extension or Mobile Coinbase Wallet.
-- `'smartWalletOnly'`: Displays Smart Wallet popup.
-- `'all'` (default): Supports both `'eoaOnly'` and `'smartWalletOnly'` based on context.
-
-```ts-vue
-import { coinbaseWallet } from '{{connectorsPackageName}}'
-
-const connector = coinbaseWallet({
-  appName: 'My Wagmi App',
-  preference: 'smartWalletOnly', // [!code focus]
-})
-```
-
-::: warning
-Passing `preference` as a string is deprecated and will be removed in the next major version. Instead you should use [`preference#options`](#options).
-:::
 
 ```ts-vue
 import { coinbaseWallet } from '{{connectorsPackageName}}'
@@ -166,18 +131,4 @@ Preference for the type of wallet to display.
 - `'eoaOnly'`: Uses EOA Browser Extension or Mobile Coinbase Wallet.
 - `'smartWalletOnly'`: Displays Smart Wallet popup.
 - `'all'` (default): Supports both `'eoaOnly'` and `'smartWalletOnly'` based on context.
-
-### version <Badge text=">=2.13.0" />
-
-- Coinbase Wallet SDK version
-- Defaults to `'4'`. If [`headlessMode: true`](#headlessmode), defaults to `'3'`.
-
-```ts-vue
-import { coinbaseWallet } from '{{connectorsPackageName}}'
-
-const connector = coinbaseWallet({
-  appName: 'My Wagmi App',
-  version: '4', // [!code focus]
-})
-```
 

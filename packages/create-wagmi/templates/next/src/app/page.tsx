@@ -1,10 +1,11 @@
 'use client'
 
-import { useConnect, useConnection, useDisconnect } from 'wagmi'
+import { useConnect, useConnection, useConnectors, useDisconnect } from 'wagmi'
 
 function App() {
   const connection = useConnection()
   const { connectors, connect, status, error } = useConnect()
+  const connectors = useConnectors()
   const { disconnect } = useDisconnect()
 
   return (

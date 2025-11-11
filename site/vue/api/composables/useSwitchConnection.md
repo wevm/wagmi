@@ -28,19 +28,20 @@ import { useSwitchConnection } from 'wagmi'
 ::: code-group
 ```vue [index.vue]
 <script setup lang="ts">
-import { useSwitchConnection } from 'wagmi'
+import { useConnections, useSwitchConnection } from 'wagmi'
 
-const { connectors, switchConnection } = useSwitchConnection()
+const { switchConnection } = useSwitchConnection()
+const connections = useConnections()
 </script>
 
 <template>
   <div>
     <button 
-      v-for="connector in connectors" 
-      :key="connector.id" 
-      @click="switchConnection({ connector })"
+      v-for="connection in connections" 
+      :key="connection.id" 
+      @click="switchConnection({ connector: connection.connector })"
     >
-      {{ connector.name }}
+      {{ connection.connector.name }}
     </button>
   </div>
 </template>
@@ -81,35 +82,6 @@ const result = useSwitchConnection({
 ```ts
 import { type UseSwitchConnectionReturnType } from 'wagmi'
 ```
-
-### connectors
-
-`readonly Connector[]`
-
-Globally configured and actively connected connectors. Useful for rendering a list of available connectors to switch to.
-
-::: code-group
-```vue [index.vue]
-<script setup lang="ts">
-import { useSwitchConnection } from 'wagmi'
-
-const { connectors, switchConnection } = useSwitchConnection()
-</script>
-
-<template>
-  <div>
-    <button 
-      v-for="connector in connectors" 
-      :key="connector.id" 
-      @click="switchConnection({ connector })"
-    >
-      {{ connector.name }}
-    </button>
-  </div>
-</template>
-```
-<<< @/snippets/vue/config.ts[config.ts]
-:::
 
 <!--@include: @shared/mutation-result.md-->
 

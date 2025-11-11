@@ -66,18 +66,31 @@ import {
 } from 'wagmi'
 ```
 
-### Removed `useConnect().connectors`, `useDisconnect().connectors`, & `useReconnect().connectors`
+### Removed `useConnect().connectors` & `useReconnect().connectors`
 
-Moving forward, `useConnect().connectors`, `useDisconnect().connectors`, and `useReconnect().connectors` are no longer supported. Use [`useConnectors`](/react/api/hooks/useConnectors) instead.
+Moving forward, `useConnect().connectors` and `useReconnect().connectors` are no longer supported. Use [`useConnectors`](/react/api/hooks/useConnectors) instead.
 
 ```ts
-import { useConnect, useDisconnect, useReconnect } from 'wagmi' // [!code --]
+import { useConnect, useReconnect } from 'wagmi' // [!code --]
 import { useConnectors } from 'wagmi' // [!code ++]
 
 const { connectors } = useConnect() // [!code --]
-const { connectors } = useDisconnect() // [!code --]
 const { connectors } = useReconnect() // [!code --]
 const connectors = useConnectors() // [!code ++]
+```
+
+### Removed `useDisconnect().connectors` & `useSwitchConnection().connectors`
+
+Moving forward, `useDisconnect().connectors` and `useSwitchConnection().connectors` are no longer supported. Use [`useConnections`](/react/api/hooks/useConnections) instead.
+
+```ts
+import { useDisconnect, useSwitchConnection } from 'wagmi' // [!code --]
+import { useConnections } from 'wagmi' // [!code ++]
+
+const { connectors } = useDisconnect() // [!code --]
+const { connectors } = useSwitchConnection() // [!code --]
+const connections = useConnections() // [!code ++]
+const connectors = connections.map((connection) => connection.connector) // [!code ++]
 ```
 
 ### Removed `useSwitchChain().chains`

@@ -50,10 +50,11 @@ export type UseSwitchConnectionReturnType<
     SwitchConnectionVariables,
     context
   > & {
+    /** @deprecated use `useConnections` instead */
     connectors: readonly Connector[]
-    /* @deprecated use `switchConnection` instead */
+    /** @deprecated use `switchConnection` instead */
     switchAccount: SwitchConnectionMutate<config, context>
-    /* @deprecated use `switchConnectionAsync` instead */
+    /** @deprecated use `switchConnectionAsync` instead */
     switchAccountAsync: SwitchConnectionMutateAsync<config, context>
     switchConnection: SwitchConnectionMutate<config, context>
     switchConnectionAsync: SwitchConnectionMutateAsync<config, context>

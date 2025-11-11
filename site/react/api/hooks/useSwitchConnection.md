@@ -27,16 +27,17 @@ import { useSwitchConnection } from 'wagmi'
 
 ::: code-group
 ```tsx [index.tsx]
-import { useSwitchConnection } from 'wagmi'
+import { useConnections, useSwitchConnection } from 'wagmi'
 
 function App() {
-  const { connectors, switchConnection } = useSwitchConnection()
+  const { switchConnection } = useSwitchConnection()
+  const connections = useConnections()
 
   return (
     <div>
-      {connectors.map((connector) => (
-        <button key={connector.id} onClick={() => switchConnection({ connector })}>
-          {connector.name}
+      {connections.map((connection) => (
+        <button key={connection.id} onClick={() => switchConnection({ connector: connection.connector })}>
+          {connection.connector.name}
         </button>
       ))}
     </div>
@@ -80,7 +81,7 @@ function App() {
 import { type UseSwitchConnectionReturnType } from 'wagmi'
 ```
 
-### connectors
+### connectors <Badge type="warning">[deprecated](/react/guides/migrate-from-v2-to-v3#removed-usedisconnect-connectors-useswitchconnection-connectors)</Badge>
 
 `readonly Connector[]`
 

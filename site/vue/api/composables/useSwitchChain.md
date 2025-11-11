@@ -28,9 +28,10 @@ import { useSwitchChain } from '@wagmi/vue'
 ::: code-group
 ```vue [index.vue]
 <script setup lang="ts">
-import { useSwitchChain } from '@wagmi/vue'
+import { useChains, useSwitchChain } from '@wagmi/vue'
 
-const { chains, switchChain } = useSwitchChain()
+const { switchChain } = useSwitchChain()
+const chains = useSwitchChains()
 </script>
 
 <template>
@@ -85,35 +86,6 @@ const result = useSwitchChain({
 ```ts
 import { type UseSwitchChainReturnType } from '@wagmi/vue'
 ```
-
-### chains
-
-`readonly [Chain, ...Chain[]]`
-
-Globally configured chains. Useful for rendering a list of available chains to switch to.
-
-::: code-group
-```vue [index.vue]
-<script setup lang="ts">
-import { useSwitchChain } from '@wagmi/vue'
-
-const { chains, switchChain } = useSwitchChain()
-</script>
-
-<template>
-  <div>
-    <button 
-      v-for="chain in chains" 
-      :key="chain.id" 
-      @click="switchChain({ chainId: chain.id })"
-    >
-      {{ chain.name }}
-    </button>
-  </div>
-</template>
-```
-<<< @/snippets/vue/config.ts[config.ts]
-:::
 
 <!--@include: @shared/mutation-result.md-->
 
