@@ -105,20 +105,20 @@ const { chains } = useSwitchChain() // [!code --]
 const chains = useChains() // [!code ++]
 ```
 
-### Renamed Mutation Hooks' Methods
-
-Previously, mutation hooks (e.g. `useConnect`, `useSendTransaction`, `useWriteContract`) had contextual method names (e.g. `connect` and `connectAsync`, `sendTransaction` and `sendTransactionAsync`, `writeContract` and `writeContractAsync`). Moving forward, these contextual method names are renamed `mutate` and `mutateAsync`. This better aligns with the TanStack Query API and improves ergonomics when using multiple mutation hooks in the same function body.
-
-```ts
-const connect = useConnect()
-connect.connect({ ... }) // [!code --]
-connect.mutate({ ... }) // [!code ++]
-
-const sendTransaction = useSendTransaction()
-sendTransaction.sendTransaction({ ... }) // [!code --]
-sendTransaction.mutate({ ... }) // [!code ++]
-
-const writeContract = useWriteContract()
-writeContract.writeContract({ ... }) // [!code --]
-writeContract.mutate({ ... }) // [!code ++]
-```
+<!-- ### Renamed Mutation Hooks' Methods -->
+<!---->
+<!-- Previously, mutation hooks (e.g. `useConnect`, `useSendTransaction`, `useWriteContract`) had contextual method names (e.g. `connect` and `connectAsync`, `sendTransaction` and `sendTransactionAsync`, `writeContract` and `writeContractAsync`). Moving forward, these contextual method names are renamed `mutate` and `mutateAsync`. This better aligns with the TanStack Query API and improves ergonomics when using multiple mutation hooks in the same function body. -->
+<!---->
+<!-- ```ts -->
+<!-- const connect = useConnect() -->
+<!-- connect.connect({ ... }) // [!code --] -->
+<!-- connect.mutate({ ... }) // [!code ++] -->
+<!---->
+<!-- const sendTransaction = useSendTransaction() -->
+<!-- sendTransaction.sendTransaction({ ... }) // [!code --] -->
+<!-- sendTransaction.mutate({ ... }) // [!code ++] -->
+<!---->
+<!-- const writeContract = useWriteContract() -->
+<!-- writeContract.writeContract({ ... }) // [!code --] -->
+<!-- writeContract.mutate({ ... }) // [!code ++] -->
+<!-- ``` -->
