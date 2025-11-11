@@ -335,3 +335,46 @@ test('legacy hook names', async () => {
     export const useErc20TransferEvent = /*#__PURE__*/ createUseWatchContractEvent({ abi: erc20Abi, address: erc20Address, eventName: 'Transfer' })"
   `)
 })
+
+test('abi item hooks disabled', async () => {
+  const result = await react({ abiItemHooks: false }).run?.({
+    contracts: [
+      {
+        name: 'erc20',
+        abi: erc20Abi,
+        content: '',
+        meta: {
+          abiName: 'erc20Abi',
+        },
+      },
+    ],
+    isTypeScript: true,
+    outputs: [],
+  })
+
+  expect(result?.imports).toMatchInlineSnapshot(`
+    "import { createUseReadContract, createUseWriteContract, createUseSimulateContract, createUseWatchContractEvent } from 'wagmi/codegen'
+    "
+  `)
+  expect(result?.content).toMatchInlineSnapshot(`
+    "/**
+     * Wraps __{@link useReadContract}__ with \`abi\` set to __{@link erc20Abi}__
+     */
+    export const useReadErc20 = /*#__PURE__*/ createUseReadContract({ abi: erc20Abi })
+
+    /**
+     * Wraps __{@link useWriteContract}__ with \`abi\` set to __{@link erc20Abi}__
+     */
+    export const useWriteErc20 = /*#__PURE__*/ createUseWriteContract({ abi: erc20Abi })
+
+    /**
+     * Wraps __{@link useSimulateContract}__ with \`abi\` set to __{@link erc20Abi}__
+     */
+    export const useSimulateErc20 = /*#__PURE__*/ createUseSimulateContract({ abi: erc20Abi })
+
+    /**
+     * Wraps __{@link useWatchContractEvent}__ with \`abi\` set to __{@link erc20Abi}__
+     */
+    export const useWatchErc20Event = /*#__PURE__*/ createUseWatchContractEvent({ abi: erc20Abi })"
+  `)
+})
