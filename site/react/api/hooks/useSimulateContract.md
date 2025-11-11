@@ -45,6 +45,11 @@ function App() {
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
+
+::: details Composing with `useWriteContract`
+
+`useSimulateContract` can be combined with [`useWriteContract`](/react/api/hooks/useWriteContract) to reduce the amount of validation required by wallets.
+
 ::: code-group
 ```tsx [index.tsx]
 import { useSimulateContract, useWriteContract } from 'wagmi'
@@ -62,7 +67,6 @@ function App() {
     ],
   })
   const { writeContract } = useWriteContract()
-
   return (
     <button
       disabled={!data?.request}
