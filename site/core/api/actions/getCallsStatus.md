@@ -94,4 +94,4 @@ import { type GetCallsStatusErrorType } from '@wagmi/core'
 
 ## Viem
 
-- [`getCallsStatus`](https://viem.sh/experimental/eip5792/getCallsStatus)
+- [`getCallsStatus`](https://viem.sh/docs/actions/wallet/getCallsStatus)

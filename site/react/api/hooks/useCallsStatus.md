@@ -140,4 +140,4 @@ import { type UseCallsStatusReturnType } from 'wagmi'
 
 ## Action
 
-- [`getCallsStatus`](https://viem.sh/experimental/eip5792/getCallsStatus)
+- [`getCallsStatus`](https://viem.sh/docs/actions/wallet/getCallsStatus)
