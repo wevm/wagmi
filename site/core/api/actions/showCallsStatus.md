@@ -6,7 +6,7 @@ const typeName = 'ShowCallsStatus'
 
 # showCallsStatus
 
-Action to request for the wallet to show information about a call batch that was sent via `showCalls`.
+Action to request for the wallet to show information about a call batch that was sent via `sendCalls`.
 
 [Read more.](https://github.com/ethereum/EIPs/blob/1663ea2e7a683285f977eda51c32cec86553f585/EIPS/eip-5792.md#wallet_showcallsstatus)
 
@@ -96,4 +96,4 @@ import { type ShowCallsStatusErrorType } from '@wagmi/core'
 
 ## Viem
 
-- [`showCallsStatus`](https://viem.sh/experimental/eip5792/showCallsStatus)
+- [`showCallsStatus`](https://viem.sh/docs/actions/wallet/showCallsStatus)

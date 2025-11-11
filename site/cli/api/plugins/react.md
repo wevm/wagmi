@@ -27,6 +27,17 @@ export default defineConfig({
 import { type ReactConfig } from '@wagmi/cli/plugins'
 ```
 
+### abiItemHooks
+
+- Boolean flag to generate abi item hooks (e.g. hooks for each abi function and events).
+- Defaults to `true`.
+
+```ts
+plugins: [
+  react({ abiItemHooks: false }), // [!code focus]
+],
+```
+
 ### getHookName
 
 `` 'legacy' | ((options: { contractName: string; type: 'read' | 'simulate' | 'watch' | 'write' }) => `use${string}`) ``
