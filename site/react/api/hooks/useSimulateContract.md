@@ -45,7 +45,41 @@ function App() {
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
-<!-- TODO: Usage for combining with useWriteContract -->
+
+::: details Composing with `useWriteContract`
+
+`useSimulateContract` can be combined with [`useWriteContract`](/react/api/hooks/useWriteContract) to reduce the amount of validation required by wallets.
+
+::: code-group
+```tsx [index.tsx]
+import { useSimulateContract, useWriteContract } from 'wagmi'
+import { abi } from './abi'
+
+function App() {
+  const { data } = useSimulateContract({
+    abi,
+    address: '0x6b175474e89094c44da98b954eedeac495271d0f',
+    functionName: 'transferFrom',
+    args: [
+      '0xd2135CfB216b74109775236E36d4b433F1DF507B',
+      '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+      123n,
+    ],
+  })
+  const { writeContract } = useWriteContract()
+  return (
+    <button
+      disabled={!data?.request}
+      onClick={() => writeContract(data!.request)}
+    >
+      Transfer
+    </button>
+  )
+}
+```
+<<< @/snippets/abi-write.ts[abi.ts]
+<<< @/snippets/react/config.ts[config.ts]
+:::
 
 ## Parameters
 
