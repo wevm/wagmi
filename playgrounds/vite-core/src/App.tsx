@@ -3,13 +3,13 @@ import {
   disconnect,
   type GetBalanceReturnType,
   type GetBlockNumberReturnType,
-  getAccount,
   getBalance,
   getBlockNumber,
+  getConnection,
   reconnect,
-  switchAccount,
-  watchAccount,
+  switchConnection,
   watchBlockNumber,
+  watchConnection,
 } from '@wagmi/core'
 import { useEffect, useReducer, useState } from 'react'
 
@@ -23,39 +23,39 @@ function App() {
 
   return (
     <>
-      <Account />
+      <Connection />
       <Connect />
-      <SwitchAccount />
+      <SwitchConnection />
       <Balance />
       <BlockNumber />
     </>
   )
 }
 
-function Account() {
-  const [account, setAccount] = useState(getAccount(config))
+function Connection() {
+  const [connection, setConnection] = useState(getConnection(config))
 
   useEffect(() => {
-    return watchAccount(config, {
+    return watchConnection(config, {
       onChange(data) {
-        setAccount(data)
+        setConnection(data)
       },
     })
   }, [])
 
   return (
     <div>
-      <h2>Account</h2>
+      <h2>Connection</h2>
 
       <div>
-        account: {account.address}
+        address: {connection.address}
         <br />
-        chainId: {account.chainId}
+        chainId: {connection.chainId}
         <br />
-        status: {account.status}
+        status: {connection.status}
       </div>
 
-      {account.status === 'connected' && (
+      {connection.status === 'connected' && (
         <button type="button" onClick={() => disconnect(config)}>
           Disconnect
         </button>
@@ -90,7 +90,7 @@ function Connect() {
   )
 }
 
-function SwitchAccount() {
+function SwitchConnection() {
   const [, rerender] = useReducer((count) => count + 1, 0)
 
   useEffect(() => {
@@ -102,7 +102,7 @@ function SwitchAccount() {
 
   return (
     <div>
-      <h2>SwitchAccount</h2>
+      <h2>Switch Connection</h2>
 
       {config.connectors
         .filter((connector) => config.state.connections.has(connector.uid))
@@ -111,7 +111,7 @@ function SwitchAccount() {
             disabled={config.state.current === connector.uid}
             id={connector.uid}
             key={connector.uid}
-            onClick={async () => await switchAccount(config, { connector })}
+            onClick={async () => await switchConnection(config, { connector })}
             type="button"
           >
             {connector.name}
@@ -122,12 +122,12 @@ function SwitchAccount() {
 }
 
 function Balance() {
-  const [account, setAccount] = useState(getAccount(config))
+  const [connection, setConnection] = useState(getConnection(config))
 
   useEffect(() => {
-    return watchAccount(config, {
+    return watchConnection(config, {
       onChange(data) {
-        setAccount(data)
+        setConnection(data)
       },
     })
   }, [])
@@ -137,12 +137,12 @@ function Balance() {
   const [balance, setBalance] = useState<GetBalanceReturnType | undefined>()
 
   useEffect(() => {
-    if (!account.address) return
+    if (!connection.address) return
     return watchBlockNumber(config, {
       async onBlockNumber() {
         try {
           const balance = await getBalance(config, {
-            address: account.address!,
+            address: connection.address!,
           })
           setBalance(balance)
         } catch (error) {
@@ -151,7 +151,7 @@ function Balance() {
         }
       },
     })
-  }, [account.address])
+  }, [connection.address])
 
   return (
     <div>

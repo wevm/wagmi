@@ -183,21 +183,21 @@ export const config = createConfig({
 
 :::
 
-### 4. Display Connected Account
+### 4. Display Connection
 
-Lastly, if an account is connected, we want to show some basic information, like the connected address and ENS name and avatar.
+Lastly, if an connection is made, we want to show some basic information, like the connected address and ENS name and avatar.
 
-Below, we are using hooks like `useAccount`, `useEnsAvatar` and `useEnsName` to extract this information.
+Below, we are using hooks like `useConnection`, `useEnsAvatar` and `useEnsName` to extract this information.
 
 We are also utilizing `useDisconnect` to show a "Disconnect" button so a user can disconnect their wallet.
 
 ::: code-group
 
-```tsx [account.tsx]
-import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from 'wagmi'
+```tsx [connection.tsx]
+import { useConnection, useDisconnect, useEnsAvatar, useEnsName } from 'wagmi'
 
-export function Account() {
-  const { address } = useAccount()
+export function Connection() {
+  const { address } = useConnection()
   const { disconnect } = useDisconnect()
   const { data: ensName } = useEnsName({ address })
   const { data: ensAvatar } = useEnsAvatar({ name: ensName! })
@@ -299,22 +299,22 @@ export const config = createConfig({
 
 ### 5. Wire it up!
 
-Finally, we can wire up our Wallet Options and Account components to our application's entrypoint.
+Finally, we can wire up our Wallet Options and Connection components to our application's entrypoint.
 
 ::: code-group
 
 ```tsx [app.tsx]
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { WagmiProvider, useAccount } from 'wagmi'
+import { WagmiProvider, useConnection } from 'wagmi'
 import { config } from './config'
-import { Account } from './account' // [!code ++]
+import { Connection } from './connection' // [!code ++]
 import { WalletOptions } from './wallet-options' // [!code ++]
 
 const queryClient = new QueryClient()
 
 function ConnectWallet() { // [!code ++]
-  const { isConnected } = useAccount() // [!code ++]
-  if (isConnected) return <Account /> // [!code ++]
+  const { isConnected } = useConnection() // [!code ++]
+  if (isConnected) return <Connection /> // [!code ++]
   return <WalletOptions /> // [!code ++]
 } // [!code ++]
 
@@ -329,11 +329,11 @@ function App() {
 }
 ```
 
-```tsx [account.tsx]
-import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from 'wagmi'
+```tsx [connection.tsx]
+import { useConnection, useDisconnect, useEnsAvatar, useEnsName } from 'wagmi'
 
-export function Account() {
-  const { address } = useAccount()
+export function Connection() {
+  const { address } = useConnection()
   const { disconnect } = useDisconnect()
   const { data: ensName } = useEnsName({ address })
   const { data: ensAvatar } = useEnsAvatar({ name: ensName! })

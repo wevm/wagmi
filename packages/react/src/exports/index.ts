@@ -25,17 +25,6 @@ export {
 ////////////////////////////////////////////////////////////////////////////////
 
 export {
-  type UseAccountParameters,
-  type UseAccountReturnType,
-  useAccount,
-} from '../hooks/useAccount.js'
-
-export {
-  type UseAccountEffectParameters,
-  useAccountEffect,
-} from '../hooks/useAccountEffect.js'
-
-export {
   type UseBalanceParameters,
   type UseBalanceReturnType,
   useBalance,
@@ -64,16 +53,19 @@ export {
   type UseBytecodeReturnType,
   useBytecode,
 } from '../hooks/useBytecode.js'
+
 export {
   type UseCallParameters,
   type UseCallReturnType,
   useCall,
 } from '../hooks/useCall.js'
+
 export {
   type UseCallsStatusParameters,
   type UseCallsStatusReturnType,
   useCallsStatus,
 } from '../hooks/useCallsStatus.js'
+
 export {
   type UseCapabilitiesParameters,
   type UseCapabilitiesReturnType,
@@ -111,15 +103,38 @@ export {
 } from '../hooks/useConnect.js'
 
 export {
+  /* @deprecated use `UseConnectionParameters` instead */
+  type UseConnectionParameters as UseAccountParameters,
+  type UseConnectionParameters,
+  /* @deprecated use `UseConnectionsReturnType` instead */
+  type UseConnectionReturnType as UseAccountReturnType,
+  type UseConnectionReturnType,
+  /* @deprecated use `useConnection` instead */
+  useConnection as useAccount,
+  useConnection,
+} from '../hooks/useConnection.js'
+
+export {
+  /* @deprecated use `UseConnectionEffectParameters` instead */
+  type UseConnectionEffectParameters as UseAccountEffectParameters,
+  type UseConnectionEffectParameters,
+  /* @deprecated use `useConnectionEffect` instead */
+  useConnectionEffect as useAccountEffect,
+  useConnectionEffect,
+} from '../hooks/useConnectionEffect.js'
+
+export {
   type UseConnectionsParameters,
   type UseConnectionsReturnType,
   useConnections,
 } from '../hooks/useConnections.js'
+
 export {
   type UseConnectorClientParameters,
   type UseConnectorClientReturnType,
   useConnectorClient,
 } from '../hooks/useConnectorClient.js'
+
 export {
   type UseConnectorsParameters,
   type UseConnectorsReturnType,
@@ -295,16 +310,22 @@ export {
 } from '../hooks/useStorageAt.js'
 
 export {
-  type UseSwitchAccountParameters,
-  type UseSwitchAccountReturnType,
-  useSwitchAccount,
-} from '../hooks/useSwitchAccount.js'
-
-export {
   type UseSwitchChainParameters,
   type UseSwitchChainReturnType,
   useSwitchChain,
 } from '../hooks/useSwitchChain.js'
+
+export {
+  /* @deprecated use `UseSwitchConnectionParameters` instead */
+  type UseSwitchConnectionParameters as UseSwitchAccountParameters,
+  type UseSwitchConnectionParameters,
+  /* @deprecated use `UseSwitchConnectionReturnType` instead */
+  type UseSwitchConnectionReturnType as UseSwitchAccountReturnType,
+  type UseSwitchConnectionReturnType,
+  /* @deprecated use `useSwitchConnection` instead */
+  useSwitchConnection as useSwitchAccount,
+  useSwitchConnection,
+} from '../hooks/useSwitchConnection.js'
 
 export {
   type UseTransactionParameters,

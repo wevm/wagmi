@@ -252,11 +252,11 @@ const result = await writeContract(config, {
 
 ::: code-group
 ```ts [index.ts]
-import { getAccount, writeContract } from '@wagmi/core'
+import { getConnection, writeContract } from '@wagmi/core'
 import { abi } from './abi'
 import { config } from './config'
 
-const { connector } = getAccount(config)
+const { connector } = getConnection(config)
 const result = await writeContract(config, {
   abi,
   address: '0x6b175474e89094c44da98b954eedeac495271d0f',

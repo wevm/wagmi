@@ -82,6 +82,7 @@ test('exports', () => {
       "structuralSharing",
       "switchAccountMutationOptions",
       "switchChainMutationOptions",
+      "switchConnectionMutationOptions",
       "useInfiniteQuery",
       "useMutation",
       "useQuery",

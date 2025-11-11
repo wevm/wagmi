@@ -3,9 +3,8 @@ import { config } from '@wagmi/test'
 import { render, renderHook } from '@wagmi/test/react'
 import * as React from 'react'
 import { expect, test, vi } from 'vitest'
-
-import { useAccount } from './useAccount.js'
 import { useConnect } from './useConnect.js'
+import { useConnection } from './useConnection.js'
 import { useDisconnect } from './useDisconnect.js'
 import { useSwitchChain } from './useSwitchChain.js'
 import { useWalletClient } from './useWalletClient.js'
@@ -195,7 +194,7 @@ function Parent() {
   const [renderCount, setRenderCount] = React.useState(1)
 
   const { connectors, connect } = useConnect()
-  const { address } = useAccount()
+  const { address } = useConnection()
   const { data } = useWalletClient()
 
   return (

@@ -53,7 +53,7 @@ The Wagmi v2 docs are still available at [2.x.wagmi.sh/core](https://2.x.wagmi.s
 
 ### Renamed Account Actions
 
-At the core of Wagmi are connections between apps and Ethereum providers (e.g. EIP-1193), `getAccount` and `switchAccount` are renamed to `getConnection` and `switchConnection` to more accurately represent to how Wagmi works.
+At the core of Wagmi are connections between apps and Ethereum providers (e.g. EIP-1193), `getAccount`, `switchAccount`, and `watchAccount` are renamed to `getConnection`, `switchConnection`, and `watchConnection` to more accurately represent to how Wagmi works.
 
 ```ts
 import {
@@ -61,5 +61,7 @@ import {
   getConnection, // [!code ++]
   switchAccount, // [!code --]
   switchConnection, // [!code ++]
+  watchAccount, // [!code --]
+  watchConnection, // [!code ++]
 } from 'wagmi'
 ```

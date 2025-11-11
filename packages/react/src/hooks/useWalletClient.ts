@@ -25,9 +25,9 @@ import {
   type UseQueryReturnType,
   useQuery,
 } from '../utils/query.js'
-import { useAccount } from './useAccount.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
+import { useConnection } from './useConnection.js'
 
 export type UseWalletClientParameters<
   config extends Config = Config,
@@ -73,7 +73,7 @@ export function useWalletClient<
 
   const config = useConfig(rest)
   const queryClient = useQueryClient()
-  const { address, connector, status } = useAccount({ config })
+  const { address, connector, status } = useConnection({ config })
   const chainId = useChainId({ config })
   const activeConnector = parameters.connector ?? connector
 

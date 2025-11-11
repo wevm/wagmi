@@ -66,7 +66,7 @@ By default, wagmi verifies the UTF-8 representation of the message.
 
 ::: code-group
 ```ts [index.ts]
-import { getAccount, verifyMessage } from '@wagmi/core'
+import { verifyMessage } from '@wagmi/core'
 import { config } from './config'
 
 await verifyMessage(config, {

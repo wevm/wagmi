@@ -4,7 +4,7 @@ import { expect, test } from 'vitest'
 import { mock } from '../connectors/mock.js'
 import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'
-import { getAccount } from './getAccount.js'
+import { getConnection } from './getConnection.js'
 import { switchChain } from './switchChain.js'
 
 const connector = config.connectors[0]!
@@ -12,17 +12,17 @@ const connector = config.connectors[0]!
 test('default', async () => {
   await connect(config, { connector })
 
-  const chainId1 = getAccount(config).chainId
+  const chainId1 = getConnection(config).chainId
 
   await switchChain(config, { chainId: chain.mainnet2.id })
 
-  const chainId2 = getAccount(config).chainId
+  const chainId2 = getConnection(config).chainId
   expect(chainId2).toBeDefined()
   expect(chainId1).not.toBe(chainId2)
 
   await switchChain(config, { chainId: chain.mainnet.id })
 
-  const chainId3 = getAccount(config).chainId
+  const chainId3 = getConnection(config).chainId
   expect(chainId3).toBeDefined()
   expect(chainId1).toBe(chainId3)
 

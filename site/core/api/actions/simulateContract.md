@@ -282,11 +282,11 @@ const result = await simulateContract(config, {
 
 ::: code-group
 ```ts [index.ts]
-import { getAccount, simulateContract } from '@wagmi/core'
+import { getConnection, simulateContract } from '@wagmi/core'
 import { abi } from './abi'
 import { config } from './config'
 
-const { connector } = getAccount(config)
+const { connector } = getConnection(config)
 const result = await simulateContract(config, {
   abi,
   address: '0x6b175474e89094c44da98b954eedeac495271d0f',

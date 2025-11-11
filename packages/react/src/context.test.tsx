@@ -5,17 +5,17 @@ import { render } from '@wagmi/test/react'
 import { expect, test } from 'vitest'
 
 import { WagmiProvider } from './context.js'
-import { useAccount } from './hooks/useAccount.js'
+import { useConnection } from './hooks/useConnection.js'
 import { useConnectorClient } from './hooks/useConnectorClient.js'
 
 test('default', async () => {
   function Component() {
-    const { address } = useAccount()
+    const { address } = useConnection()
     const { data } = useConnectorClient()
     return (
       <div>
         <h1>wevm</h1>
-        <div>useAccount: {address}</div>
+        <div>useConnection: {address}</div>
         <div>useConnectorClient: {data?.account?.address}</div>
       </div>
     )
@@ -57,7 +57,7 @@ test('fake ssr config', async () => {
 
 test('mock reconnect', async () => {
   function Component() {
-    const { address } = useAccount()
+    const { address } = useConnection()
     return (
       <div>
         <h1>{address}</h1>

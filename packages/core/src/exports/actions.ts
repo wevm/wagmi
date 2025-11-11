@@ -30,12 +30,14 @@ export {
   type DisconnectReturnType,
   disconnect,
 } from '../actions/disconnect.js'
+
 export {
   type EstimateFeesPerGasErrorType,
   type EstimateFeesPerGasParameters,
   type EstimateFeesPerGasReturnType,
   estimateFeesPerGas,
 } from '../actions/estimateFeesPerGas.js'
+
 export {
   type EstimateGasErrorType,
   type EstimateGasParameters,
@@ -49,11 +51,6 @@ export {
   type EstimateMaxPriorityFeePerGasReturnType,
   estimateMaxPriorityFeePerGas,
 } from '../actions/estimateMaxPriorityFeePerGas.js'
-
-export {
-  type GetAccountReturnType,
-  getAccount,
-} from '../actions/getAccount.js'
 
 export {
   type GetBalanceErrorType,
@@ -119,6 +116,15 @@ export {
   type GetClientReturnType,
   getClient,
 } from '../actions/getClient.js'
+
+export {
+  /* @deprecated use `GetConnectionReturnType` instead */
+  type GetConnectionReturnType as GetAccountReturnType,
+  type GetConnectionReturnType,
+  /* @deprecated use `getConnection` instead */
+  getConnection as getAccount,
+  getConnection,
+} from '../actions/getConnection.js'
 
 export {
   type GetConnectionsReturnType,
@@ -316,18 +322,26 @@ export {
 } from '../actions/simulateContract.js'
 
 export {
-  type SwitchAccountErrorType,
-  type SwitchAccountParameters,
-  type SwitchAccountReturnType,
-  switchAccount,
-} from '../actions/switchAccount.js'
-
-export {
   type SwitchChainErrorType,
   type SwitchChainParameters,
   type SwitchChainReturnType,
   switchChain,
 } from '../actions/switchChain.js'
+
+export {
+  /* @deprecated use `SwitchConnectionErrorType` instead */
+  type SwitchConnectionErrorType as SwitchAccountErrorType,
+  type SwitchConnectionErrorType,
+  /* @deprecated use `SwitchConnectionParameters` instead */
+  type SwitchConnectionParameters as SwitchAccountParameters,
+  type SwitchConnectionParameters,
+  /* @deprecated use `SwitchConnectionReturnType` instead */
+  type SwitchConnectionReturnType as SwitchAccountReturnType,
+  type SwitchConnectionReturnType,
+  /* @deprecated use `switchConnection` instead */
+  switchConnection as switchAccount,
+  switchConnection,
+} from '../actions/switchConnection.js'
 
 export {
   type VerifyMessageParameters,
@@ -347,17 +361,14 @@ export {
   type WaitForCallsStatusReturnType,
   waitForCallsStatus,
 } from '../actions/waitForCallsStatus.js'
+
 export {
   type WaitForTransactionReceiptErrorType,
   type WaitForTransactionReceiptParameters,
   type WaitForTransactionReceiptReturnType,
   waitForTransactionReceipt,
 } from '../actions/waitForTransactionReceipt.js'
-export {
-  type WatchAccountParameters,
-  type WatchAccountReturnType,
-  watchAccount,
-} from '../actions/watchAccount.js'
+
 export {
   type WatchAssetParameters,
   type WatchAssetReturnType,
@@ -369,41 +380,61 @@ export {
   type WatchBlockNumberReturnType,
   watchBlockNumber,
 } from '../actions/watchBlockNumber.js'
+
 export {
   type WatchBlocksParameters,
   type WatchBlocksReturnType,
   watchBlocks,
 } from '../actions/watchBlocks.js'
+
 export {
   type WatchChainIdParameters,
   type WatchChainIdReturnType,
   watchChainId,
 } from '../actions/watchChainId.js'
+
 export {
   type WatchClientParameters,
   type WatchClientReturnType,
   watchClient,
 } from '../actions/watchClient.js'
+
+export {
+  /* @deprecated use `WatchConnectionParameters` instead */
+  type WatchConnectionParameters as WatchAccountParameters,
+  type WatchConnectionParameters,
+  /* @deprecated use `WatchConnectionReturnType` instead */
+  type WatchConnectionReturnType as WatchAccountReturnType,
+  type WatchConnectionReturnType,
+  /* @deprecated use `watchConnection` instead */
+  watchConnection as watchAccount,
+  watchConnection,
+} from '../actions/watchConnection.js'
+
 export {
   type WatchConnectionsParameters,
   type WatchConnectionsReturnType,
   watchConnections,
 } from '../actions/watchConnections.js'
+
 export {
   type WatchConnectorsParameters,
   type WatchConnectorsReturnType,
   watchConnectors,
 } from '../actions/watchConnectors.js'
+
 export {
   type WatchContractEventParameters,
   type WatchContractEventReturnType,
   watchContractEvent,
 } from '../actions/watchContractEvent.js'
+
 export {
   type WatchPendingTransactionsParameters,
   type WatchPendingTransactionsReturnType,
   watchPendingTransactions,
 } from '../actions/watchPendingTransactions.js'
+
 export {
   type WatchPublicClientParameters,
   type WatchPublicClientReturnType,
