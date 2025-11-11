@@ -53,7 +53,7 @@ The Wagmi v2 docs are still available at [2.x.wagmi.sh/react](https://2.x.wagmi.
 
 ### Renamed Account Hooks
 
-At the core of Wagmi are connections between apps and Ethereum providers (e.g. EIP-1193), `useAccount`, `useAccountEffect`, and `useSwitchAccount` are renamed to `useConnection`, `useConnectionEffect`, and `useSwitchConnection` to more accurately representation to how Wagmi works.
+At the core of Wagmi are connections between apps and Ethereum providers (e.g. EIP-1193), `useAccount`, `useAccountEffect`, and `useSwitchAccount` are renamed to `useConnection`, `useConnectionEffect`, and `useSwitchConnection` to more accurately represent to how Wagmi works.
 
 ```ts
 import {
