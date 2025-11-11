@@ -104,7 +104,7 @@ The `getNetwork` and `watchNetwork` actions were removed since the connected cha
   <<< @/snippets/core/config.ts[config.ts]
   :::
 
-- Use [`getAccount`](/core/api/actions/getAccount) and `config.chains` instead to get `chain`.
+- Use [`getAccount`](/core/api/actions/getConnection) and `config.chains` instead to get `chain`.
 
   ::: code-group
   ```ts [index.ts]
