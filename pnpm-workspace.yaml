@@ -1,11 +1,10 @@
 auditConfig:
   ignoreGhsas:
-    - GHSA-g3ch-rx76-35fx 
-    - GHSA-vjh7-7g9h-fjfh 
-    - GHSA-ffrw-9mx8-89p8 
-    - GHSA-qpm2-6cq5-7pq5
-    - GHSA-93m4-6634-74q7
-    - GHSA-29xp-372q-xqph
+    - GHSA-g3ch-rx76-35fx # vue-template-compiler@>=2.0.0 <3.0.0
+    - GHSA-ffrw-9mx8-89p8 # fast-redact@<=3.5.0
+    - GHSA-qpm2-6cq5-7pq5 # happy-dom@<20.0.2
+    - GHSA-93m4-6634-74q7 # vite@>=7.1.0 <=7.1.10
+    - GHSA-29xp-372q-xqph # tar@=7.5.1
 autoInstallPeers: false
 catalog:
   "@base-org/account": "2.4.0"
@@ -21,7 +20,7 @@ catalog:
   "@types/react-dom": "18.3.0"
   "@vitejs/plugin-react": "^4.3.3"
   "@walletconnect/ethereum-provider": "2.21.1"
-  "porto": "0.2.35"
+  porto: "0.2.35"
   react-dom: "18.3.1"
   react: "18.3.1"
   vue: "3.4.27"
@@ -40,9 +39,7 @@ overrides:
   "cookie@<0.7.0": "0.7.0"
   "elliptic@<=6.6.0": ">=6.6.1"
   "esbuild@<=0.24.2": "0.25.0"
-  "hono@>=1.1.0 <4.10.2": ">=4.10.2"
   "nanoid@<3.3.8": "3.3.8"
-  "playwright@<1.55.1": "1.55.1"
   "semver@<5.7.2": ">=5.7.2"
   "serialize-javascript@>=6.0.0 <6.0.2": "6.0.2"
   "tmp@<=0.2.3": "0.2.4"
@@ -59,10 +56,9 @@ patchedDependencies:
 peerDependencyRules:
   ignoreMissing:
     - "@algolia/client-search"
-    - "react"
-    - "react-native"
-    - "search-insights"
-# TODO: Enable https://github.com/pnpm/pnpm/pull/10168
-trustPolicy: off # no-downgrade
+    - react
+    - react-native
+    - search-insights
+trustPolicy: no-downgrade
 trustPolicyExclude:
   - "@coinbase/cdp-sdk@1.38.4"
