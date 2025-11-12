@@ -16,6 +16,7 @@ import {
   type EIP1193Provider,
   getAddress,
   type ProviderConnectInfo,
+  type ProviderRpcError,
   ResourceUnavailableRpcError,
   type RpcError,
   SwitchChainError,
@@ -173,9 +174,18 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         iconUrls: addEthereumChainParameter?.iconUrls,
       }
 
-      metamask.switchChain({ chainId, chainConfiguration })
+      try {
+        await metamask.switchChain({ chainId, chainConfiguration })
+        return chain
+      } catch (err) {
+        const error = err as RpcError
 
-      return chain
+        if (error.code === UserRejectedRequestError.code) {
+          throw new UserRejectedRequestError(error)
+        }
+
+        throw new SwitchChainError(error)
+      }
     },
 
     async onAccountsChanged(accounts) {
