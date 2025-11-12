@@ -213,11 +213,10 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
 
     async onConnect(connectInfo) {
       const accounts = await this.getAccounts()
+      if (accounts.length === 0) return
 
-      config.emitter.emit('connect', {
-        accounts,
-        chainId: Number(connectInfo.chainId),
-      })
+      const chainId = Number(connectInfo.chainId)
+      config.emitter.emit('connect', { accounts, chainId })
     },
 
     async onDisconnect(error?: RpcError) {
