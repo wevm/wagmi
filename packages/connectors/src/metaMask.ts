@@ -122,8 +122,13 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       if (chainId) {
         return Number(chainId)
       }
-      // TODO: Handle case where chainId is not found
-      return 1
+      // Fallback to requesting chainId from provider if SDK doesn't return it
+      const provider = await this.getProvider()
+      if (!provider) {
+        throw new ProviderNotFoundError()
+      }
+      const hexChainId = await provider.request({ method: 'eth_chainId' })
+      return Number(hexChainId)
     },
 
     async getProvider() {
@@ -193,17 +198,11 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         this.onDisconnect()
         return
       }
-      // Connect if emitter is listening for connect event (e.g. is disconnected and connects through wallet interface)
-      if (config.emitter.listenerCount('connect')) {
-        const chainId = (await this.getChainId()).toString()
-        this.onConnect({ chainId })
-      }
       // Regular change event
-      else {
-        config.emitter.emit('change', {
-          accounts: accounts.map((account) => getAddress(account)),
-        })
-      }
+
+      config.emitter.emit('change', {
+        accounts: accounts.map((account) => getAddress(account)),
+      })
     },
 
     async onChainChanged(chain) {
