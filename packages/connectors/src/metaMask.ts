@@ -188,9 +188,22 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
     },
 
     async onAccountsChanged(accounts) {
-      config.emitter.emit('change', {
-        accounts: accounts.map((account) => getAddress(account)),
-      })
+      // Disconnect if there are no accounts
+      if (accounts.length === 0) {
+        this.onDisconnect()
+        return
+      }
+      // Connect if emitter is listening for connect event (e.g. is disconnected and connects through wallet interface)
+      if (config.emitter.listenerCount('connect')) {
+        const chainId = (await this.getChainId()).toString()
+        this.onConnect({ chainId })
+      }
+      // Regular change event
+      else {
+        config.emitter.emit('change', {
+          accounts: accounts.map((account) => getAddress(account)),
+        })
+      }
     },
 
     async onChainChanged(chain) {
