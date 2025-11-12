@@ -48,8 +48,9 @@
     "@svitejs/changesets-changelog-github-compact": "^1.2.0",
     "@types/node": "^24.5.1",
     "@vitejs/plugin-react": "catalog:",
-    "@vitest/browser": "^3.2.4",
-    "@vitest/coverage-v8": "^3.2.4",
+    "@vitest/browser": "^4.0.8",
+    "@vitest/browser-playwright": "^4.0.8",
+    "@vitest/coverage-v8": "^4.0.8",
     "@wagmi/test": "workspace:*",
     "happy-dom": "^20.0.0",
     "knip": "^5.30.6",
@@ -62,8 +63,8 @@
     "simple-git-hooks": "^2.11.1",
     "typescript": "5.9.2",
     "viem": "2.38.0",
-    "vitest": "^3.2.4",
-    "vitest-browser-react": "^2.0.0-beta.1"
+    "vitest": "^4.0.8",
+    "vitest-browser-react": "^2.0.2"
   },
   "packageManager": "pnpm@10.22.0",
   "devEngines": {
