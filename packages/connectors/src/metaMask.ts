@@ -16,7 +16,10 @@ import {
   type EIP1193Provider,
   getAddress,
   type ProviderConnectInfo,
+  ResourceUnavailableRpcError,
+  type RpcError,
   SwitchChainError,
+  UserRejectedRequestError,
 } from 'viem'
 
 type CreateMetamaskConnectEVMParameters = Parameters<
@@ -80,21 +83,29 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
 
       // TODO: Bind display_uri event?
       // TODO: Add connectAndSign and connectWith support, including events
-      // TODO: Match error codes to wagmi errors
 
-      const result = await metamask.connect({
-        chainId: chainId,
-        account: undefined,
-      })
+      try {
+        const result = await metamask.connect({
+          chainId: chainId,
+          account: undefined,
+        })
 
-      return {
-        accounts: (withCapabilities
-          ? result.accounts.map((account) => ({
-              address: account,
-              capabilities: {},
-            }))
-          : result.accounts) as never,
-        chainId: result.chainId ?? chainId,
+        return {
+          accounts: (withCapabilities
+            ? result.accounts.map((account) => ({
+                address: account,
+                capabilities: {},
+              }))
+            : result.accounts) as never,
+          chainId: result.chainId ?? chainId,
+        }
+      } catch (err) {
+        const error = err as RpcError
+        if (error.code === UserRejectedRequestError.code)
+          throw new UserRejectedRequestError(error)
+        if (error.code === ResourceUnavailableRpcError.code)
+          throw new ResourceUnavailableRpcError(error)
+        throw error
       }
     },
 
