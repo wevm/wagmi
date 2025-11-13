@@ -82,8 +82,12 @@ export function getSidebar() {
             link: '/react/api/connectors',
             items: [
               {
-                text: 'coinbaseWallet',
-                link: '/react/api/connectors/coinbaseWallet',
+                text: 'baseAccount',
+                link: '/react/api/connectors/baseAccount',
+              },
+              {
+                text: 'gemini',
+                link: '/react/api/connectors/gemini',
               },
               { text: 'injected', link: '/react/api/connectors/injected' },
               {
@@ -93,6 +97,10 @@ export function getSidebar() {
               {
                 text: 'mock',
                 link: '/react/api/connectors/mock',
+              },
+              {
+                text: 'porto',
+                link: '/react/api/connectors/porto',
               },
               {
                 text: 'safe',
@@ -252,8 +260,16 @@ export function getSidebar() {
             link: '/react/api/hooks/useSendCalls',
           },
           {
+            text: 'useSendCallsSync',
+            link: '/react/api/hooks/useSendCallsSync',
+          },
+          {
             text: 'useSendTransaction',
             link: '/react/api/hooks/useSendTransaction',
+          },
+          {
+            text: 'useSendTransactionSync',
+            link: '/react/api/hooks/useSendTransactionSync',
           },
           {
             text: 'useShowCallsStatus',
@@ -440,8 +456,12 @@ export function getSidebar() {
             link: '/vue/api/connectors',
             items: [
               {
-                text: 'coinbaseWallet',
-                link: '/vue/api/connectors/coinbaseWallet',
+                text: 'baseAccount',
+                link: '/vue/api/connectors/baseAccount',
+              },
+              {
+                text: 'gemini',
+                link: '/vue/api/connectors/gemini',
               },
               { text: 'injected', link: '/vue/api/connectors/injected' },
               {
@@ -451,6 +471,10 @@ export function getSidebar() {
               {
                 text: 'mock',
                 link: '/vue/api/connectors/mock',
+              },
+              {
+                text: 'porto',
+                link: '/vue/api/connectors/porto',
               },
               {
                 text: 'safe',
@@ -684,8 +708,12 @@ export function getSidebar() {
             link: '/core/api/connectors',
             items: [
               {
-                text: 'coinbaseWallet',
-                link: '/core/api/connectors/coinbaseWallet',
+                text: 'baseAccount',
+                link: '/core/api/connectors/baseAccount',
+              },
+              {
+                text: 'gemini',
+                link: '/core/api/connectors/gemini',
               },
               { text: 'injected', link: '/core/api/connectors/injected' },
               {
@@ -695,6 +723,10 @@ export function getSidebar() {
               {
                 text: 'mock',
                 link: '/core/api/connectors/mock',
+              },
+              {
+                text: 'porto',
+                link: '/core/api/connectors/porto',
               },
               {
                 text: 'safe',
@@ -876,8 +908,16 @@ export function getSidebar() {
             link: '/core/api/actions/sendCalls',
           },
           {
+            text: 'sendCallsSync',
+            link: '/core/api/actions/sendCallsSync',
+          },
+          {
             text: 'sendTransaction',
             link: '/core/api/actions/sendTransaction',
+          },
+          {
+            text: 'sendTransactionSync',
+            link: '/core/api/actions/sendTransactionSync',
           },
           {
             text: 'showCallsStatus',

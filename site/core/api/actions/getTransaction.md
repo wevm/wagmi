@@ -158,7 +158,7 @@ const transaction = getTransaction(config, {
 import { type GetTransactionReturnType } from '@wagmi/core'
 ```
 
-[`Transaction`](https://viem.sh/docs/glossary/types.html#transaction)
+[`Transaction`](https://viem.sh/docs/glossary/types#transaction)
 
 ## Error
 
@@ -170,4 +170,4 @@ import { type GetTransactionErrorType } from '@wagmi/core'
 
 ## Viem
 
-- [`getTransaction`](https://viem.sh/docs/actions/public/getTransaction.html)
+- [`getTransaction`](https://viem.sh/docs/actions/public/getTransaction)

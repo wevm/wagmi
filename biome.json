@@ -1,7 +1,12 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "files": {
-    "ignore": ["CHANGELOG.md", "pnpm-lock.yaml", "tsconfig.base.json"]
+    "includes": [
+      "**",
+      "!**/CHANGELOG.md",
+      "!**/pnpm-lock.yaml",
+      "!**/tsconfig.base.json"
+    ]
   },
   "formatter": {
     "enabled": true,
@@ -11,12 +16,15 @@
     "lineWidth": 80
   },
   "linter": {
-    "ignore": ["packages/create-wagmi/templates/*"],
+    "includes": ["**", "!**/packages/create-wagmi/templates/**/*"],
     "enabled": true,
     "rules": {
       "recommended": true,
       "a11y": {
         "useButtonType": "off"
+      },
+      "complexity": {
+        "noImportantStyles": "off"
       },
       "correctness": {
         "noUnusedVariables": "error",
@@ -29,13 +37,34 @@
       },
       "style": {
         "noNonNullAssertion": "off",
-        "useShorthandArrayType": "error"
+        "noParameterAssign": "error",
+        "useAsConstAssertion": "error",
+        "useDefaultParameterLast": "error",
+        "useEnumInitializers": "error",
+        "useSelfClosingElements": "error",
+        "useSingleVarDeclarator": "error",
+        "noUnusedTemplateLiteral": "error",
+        "useNumberNamespace": "error",
+        "noInferrableTypes": "error",
+        "noUselessElse": "error",
+        "useConsistentArrayType": {
+          "level": "error",
+          "options": {
+            "syntax": "shorthand"
+          }
+        }
       },
       "suspicious": {
         "noArrayIndexKey": "off",
         "noConfusingVoidType": "off",
-        "noConsoleLog": "error",
-        "noExplicitAny": "off"
+        "noExplicitAny": "off",
+        "noConsole": {
+          "level": "error",
+          "options": {
+            "allow": ["log"]
+          }
+        },
+        "noTsIgnore": "off"
       }
     }
   },
@@ -46,32 +75,52 @@
       "semicolons": "asNeeded"
     }
   },
-  "organizeImports": {
-    "enabled": true
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
   },
   "overrides": [
     {
-      "include": ["*.vue"],
+      "includes": ["**/*.vue"],
       "linter": {
         "rules": {
           "correctness": {
+            "noUnusedImports": "off",
             "noUnusedVariables": "off"
           }
         }
       }
     },
     {
-      "include": ["./scripts/**/*.ts"],
+      "includes": ["site/snippets/**"],
       "linter": {
         "rules": {
-          "suspicious": {
-            "noConsoleLog": "off"
+          "correctness": {
+            "noUnusedImports": "off"
           }
         }
       }
     },
     {
-      "include": ["./playgrounds/**"],
+      "includes": ["scripts/**/*.ts"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noConsole": {
+              "level": "off",
+              "options": {
+                "allow": ["log"]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": ["playgrounds/**"],
       "linter": {
         "rules": {
           "style": {

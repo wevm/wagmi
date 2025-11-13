@@ -1,5 +1,53 @@
 # @wagmi/cli
 
+## 2.8.0
+
+### Minor Changes
+
+- Added option to React plugin to disable generating hooks for each function/event in ABI. ([#4866](https://github.com/wevm/wagmi/pull/4866))
+
+## 2.7.1
+
+### Patch Changes
+
+- Bumped chains for block explorer plugins. ([`ed2d473`](https://github.com/wevm/wagmi/commit/ed2d473172e8d063f29400b8edcec33e5d21a659))
+
+## 2.7.0
+
+### Minor Changes
+
+- Updated block explorer plugins supported chains. ([#4830](https://github.com/wevm/wagmi/pull/4830))
+
+## 2.6.0
+
+### Minor Changes
+
+- Bumped internal deps. ([#4808](https://github.com/wevm/wagmi/pull/4808))
+
+## 2.5.1
+
+### Patch Changes
+
+- [#4773](https://github.com/wevm/wagmi/pull/4773) [`d4c367ca46c508598c997cf229a31593a1e2b8b8`](https://github.com/wevm/wagmi/commit/d4c367ca46c508598c997cf229a31593a1e2b8b8) Thanks [@tmm](https://github.com/tmm)! - Fixed issue with codegen actions/hooks, where `syncConnectedChain: false` did not work as intended.
+
+## 2.5.0
+
+### Minor Changes
+
+- [`1edb09f7b69da3d7819d0e070e875e2c6fe8015d`](https://github.com/wevm/wagmi/commit/1edb09f7b69da3d7819d0e070e875e2c6fe8015d) Thanks [@tmm](https://github.com/tmm)! - Added testnets to `routescan` plugin
+
+## 2.4.0
+
+### Minor Changes
+
+- [#4757](https://github.com/wevm/wagmi/pull/4757) [`aec8a61ef0dfe02421d514bd130505ec13f8d3a0`](https://github.com/wevm/wagmi/commit/aec8a61ef0dfe02421d514bd130505ec13f8d3a0) Thanks [@tmm](https://github.com/tmm)! - Added Routescan plugin.
+
+## 2.3.2
+
+### Patch Changes
+
+- [#4727](https://github.com/wevm/wagmi/pull/4727) [`910e6c6180bd632e65bad348bd0814de5a8cfa4b`](https://github.com/wevm/wagmi/commit/910e6c6180bd632e65bad348bd0814de5a8cfa4b) Thanks [@reallesee](https://github.com/reallesee)! - `fetch` plugin: cleared timeout on fetch error
+
 ## 2.3.1
 
 ### Patch Changes

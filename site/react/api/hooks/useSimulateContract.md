@@ -45,7 +45,41 @@ function App() {
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
-<!-- TODO: Usage for combining with useWriteContract -->
+
+::: details Composing with `useWriteContract`
+
+`useSimulateContract` can be combined with [`useWriteContract`](/react/api/hooks/useWriteContract) to reduce the amount of validation required by wallets.
+
+::: code-group
+```tsx [index.tsx]
+import { useSimulateContract, useWriteContract } from 'wagmi'
+import { abi } from './abi'
+
+function App() {
+  const { data } = useSimulateContract({
+    abi,
+    address: '0x6b175474e89094c44da98b954eedeac495271d0f',
+    functionName: 'transferFrom',
+    args: [
+      '0xd2135CfB216b74109775236E36d4b433F1DF507B',
+      '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+      123n,
+    ],
+  })
+  const { writeContract } = useWriteContract()
+  return (
+    <button
+      disabled={!data?.request}
+      onClick={() => writeContract(data!.request)}
+    >
+      Transfer
+    </button>
+  )
+}
+```
+<<< @/snippets/abi-write.ts[abi.ts]
+<<< @/snippets/react/config.ts[config.ts]
+:::
 
 ## Parameters
 
@@ -450,7 +484,7 @@ function App() {
 
 `bigint | undefined`
 
-The price in wei to pay per gas. Only applies to [Legacy Transactions](https://viem.sh/docs/glossary/terms.html#legacy-transaction).
+The price in wei to pay per gas. Only applies to [Legacy Transactions](https://viem.sh/docs/glossary/terms#legacy-transaction).
 
 ::: code-group
 ```tsx [index.ts]
@@ -481,7 +515,7 @@ function App() {
 
 `bigint | undefined`
 
-Total fee per gas in wei, inclusive of [`maxPriorityFeePerGas`](#maxPriorityFeePerGas). Only applies to [EIP-1559 Transactions](https://viem.sh/docs/glossary/terms.html#eip-1559-transaction).
+Total fee per gas in wei, inclusive of [`maxPriorityFeePerGas`](#maxPriorityFeePerGas). Only applies to [EIP-1559 Transactions](https://viem.sh/docs/glossary/terms#eip-1559-transaction).
 
 ::: code-group
 ```tsx [index.ts]
@@ -512,7 +546,7 @@ function App() {
 
 `bigint | undefined`
 
-Max priority fee per gas in wei. Only applies to [EIP-1559 Transactions](https://viem.sh/docs/glossary/terms.html#eip-1559-transaction).
+Max priority fee per gas in wei. Only applies to [EIP-1559 Transactions](https://viem.sh/docs/glossary/terms#eip-1559-transaction).
 
 ::: code-group
 ```tsx [index.ts]

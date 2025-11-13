@@ -1,7 +1,7 @@
 {
   "name": "create-wagmi",
   "description": "Create Wagmi apps with one command",
-  "version": "2.0.14",
+  "version": "2.0.15",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -40,10 +40,21 @@
   },
   "devDependencies": {
     "@types/cross-spawn": "^6.0.6",
-    "@types/node": "^20.12.10",
+    "@types/node": "^24.5.1",
     "@types/prompts": "^2.4.9"
   },
-  "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
+  "contributors": [
+    "awkweb.eth <t@wevm.dev>",
+    "jxom.eth <j@wevm.dev>"
+  ],
   "funding": "https://github.com/sponsors/wevm",
-  "keywords": ["wagmi", "eth", "ethereum", "dapps", "wallet", "web3", "cli"]
+  "keywords": [
+    "wagmi",
+    "eth",
+    "ethereum",
+    "dapps",
+    "wallet",
+    "web3",
+    "cli"
+  ]
 }

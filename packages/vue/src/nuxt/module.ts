@@ -1,7 +1,7 @@
 import type { NuxtModule } from '@nuxt/schema'
 import { addImports, createResolver, defineNuxtModule } from 'nuxt/kit'
 
-// biome-ignore lint/complexity/noBannedTypes:
+// biome-ignore lint/complexity/noBannedTypes: allowed
 export type WagmiModuleOptions = {}
 
 export const wagmiModule: NuxtModule<WagmiModuleOptions> =
@@ -10,7 +10,7 @@ export const wagmiModule: NuxtModule<WagmiModuleOptions> =
       name: '@wagmi/vue',
       configKey: 'wagmi',
       compatibility: {
-        nuxt: '^3.0.0',
+        nuxt: '^3.0.0 || ^4.0.0',
       },
     },
     setup(_options, nuxt) {

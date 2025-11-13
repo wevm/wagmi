@@ -1,9 +1,15 @@
 {
-  "$schema": "https://unpkg.com/@changesets/config@2.3.1/schema.json",
-  "access": "public",
-  "baseBranch": "main",
-  "changelog": ["@changesets/changelog-github", { "repo": "wevm/wagmi" }],
+  "$schema": "https://unpkg.com/@changesets/config@3.0.5/schema.json",
+  "changelog": [
+    "@svitejs/changesets-changelog-github-compact",
+    { "repo": "wevm/wagmi" }
+  ],
   "commit": false,
+  "access": "public",
+  "fixed": [],
+  "linked": [],
+  "baseBranch": "main",
+  "updateInternalDependencies": "minor",
   "ignore": [
     "*-register",
     "@wagmi/test",
@@ -11,9 +17,5 @@
     "next-app",
     "nuxt-app",
     "vite-*"
-  ],
-  "updateInternalDependencies": "patch",
-  "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
-    "onlyUpdatePeerDependentsWhenOutOfRange": true
-  }
+  ]
 }

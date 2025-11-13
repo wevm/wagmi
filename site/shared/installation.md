@@ -14,7 +14,7 @@ Wagmi is optimized for modern browsers. It is compatible with the latest version
 <Browsers />
 
 ::: tip
-Depending on your environment, you might need to add polyfills. See [Viem Platform Compatibility](https://viem.sh/docs/compatibility.html) for more info.
+Depending on your environment, you might need to add polyfills. See [Viem Platform Compatibility](https://viem.sh/docs/compatibility) for more info.
 :::
 
 ## Using Unreleased Commits

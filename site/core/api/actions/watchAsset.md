@@ -130,5 +130,5 @@ import { type WatchAssetErrorType } from '@wagmi/core'
 
 ## Viem
 
-- [`watchAsset`](https://viem.sh/docs/actions/wallet/watchAsset.html)
+- [`watchAsset`](https://viem.sh/docs/actions/wallet/watchAsset)
 

@@ -21,7 +21,7 @@ export async function waitForCallsStatus<config extends Config>(
   config: config,
   parameters: WaitForCallsStatusParameters,
 ): Promise<WaitForCallsStatusReturnType> {
-  const { connector, id } = parameters
+  const { connector } = parameters
   const client = await getConnectorClient(config, { connector })
-  return viem_waitForCallsStatus(client, { id })
+  return viem_waitForCallsStatus(client, parameters)
 }

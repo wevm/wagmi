@@ -1,3 +1,4 @@
+import fs from 'node:fs/promises'
 import path from 'node:path'
 
 // Updates package version.ts files (so you can use the version in code without importing package.json).
@@ -5,19 +6,20 @@ import path from 'node:path'
 console.log('Updating version files.')
 
 // Get all package.json files
-const packagePaths = await Array.fromAsync(
-  new Bun.Glob('**/package.json').scan(),
-)
+const packagePaths = fs.glob('packages/**/package.json', {
+  exclude: ['**/dist/**', '**/node_modules/**'],
+})
 
 let count = 0
-for (const packagePath of packagePaths) {
+for await (const packagePath of packagePaths) {
   type Package = {
     name?: string | undefined
     private?: boolean | undefined
     version?: string | undefined
   }
-  const file = Bun.file(packagePath)
-  const packageJson = (await file.json()) as Package
+  const packageJson = JSON.parse(
+    await fs.readFile(packagePath, 'utf-8'),
+  ) as Package
 
   // Skip private packages
   if (packageJson.private) continue
@@ -30,9 +32,10 @@ for (const packagePath of packagePaths) {
     'src',
     'version.ts',
   )
-  await Bun.write(
+  await fs.writeFile(
     versionFilePath,
     `export const version = '${packageJson.version}'\n`,
+    'utf-8',
   )
 }
 

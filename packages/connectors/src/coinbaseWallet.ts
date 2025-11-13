@@ -1,7 +1,7 @@
 import type {
+  createCoinbaseWalletSDK,
   Preference,
   ProviderInterface,
-  createCoinbaseWalletSDK,
 } from '@coinbase/wallet-sdk'
 import {
   ChainNotConfiguredError,
@@ -16,12 +16,12 @@ import type {
 import {
   type AddEthereumChainParameter,
   type Address,
+  getAddress,
   type Hex,
+  numberToHex,
   type ProviderRpcError,
   SwitchChainError,
   UserRejectedRequestError,
-  getAddress,
-  numberToHex,
 } from 'viem'
 
 type Version = '3' | '4'
@@ -82,12 +82,16 @@ function version4(parameters: Version4Parameters) {
     close?(): void
   }
   type Properties = {
-    connect(parameters?: {
+    // TODO(v3): Make `withCapabilities: true` default behavior
+    connect<withCapabilities extends boolean = false>(parameters?: {
       chainId?: number | undefined
       instantOnboarding?: boolean | undefined
       isReconnecting?: boolean | undefined
+      withCapabilities?: withCapabilities | boolean | undefined
     }): Promise<{
-      accounts: readonly Address[]
+      accounts: withCapabilities extends true
+        ? readonly { address: Address }[]
+        : readonly Address[]
       chainId: number
     }>
   }
@@ -103,7 +107,7 @@ function version4(parameters: Version4Parameters) {
     name: 'Coinbase Wallet',
     rdns: 'com.coinbase.wallet',
     type: coinbaseWallet.type,
-    async connect({ chainId, ...rest } = {}) {
+    async connect({ chainId, withCapabilities, ...rest } = {}) {
       try {
         const provider = await this.getProvider()
         const accounts = (
@@ -139,7 +143,12 @@ function version4(parameters: Version4Parameters) {
           currentChainId = chain?.id ?? currentChainId
         }
 
-        return { accounts, chainId: currentChainId }
+        return {
+          accounts: (withCapabilities
+            ? accounts.map((address) => ({ address, capabilities: {} }))
+            : accounts) as never,
+          chainId: currentChainId,
+        }
       } catch (error) {
         if (
           /(user closed modal|accounts received is empty|user denied account|request rejected)/i.test(
@@ -340,7 +349,7 @@ function version3(parameters: Version3Parameters) {
     name: 'Coinbase Wallet',
     rdns: 'com.coinbase.wallet',
     type: coinbaseWallet.type,
-    async connect({ chainId } = {}) {
+    async connect({ chainId, withCapabilities } = {}) {
       try {
         const provider = await this.getProvider()
         const accounts = (
@@ -372,7 +381,12 @@ function version3(parameters: Version3Parameters) {
           currentChainId = chain?.id ?? currentChainId
         }
 
-        return { accounts, chainId: currentChainId }
+        return {
+          accounts: (withCapabilities
+            ? accounts.map((address) => ({ address, capabilities: {} }))
+            : accounts) as never,
+          chainId: currentChainId,
+        }
       } catch (error) {
         if (
           /(user closed modal|accounts received is empty|user denied account)/i.test(

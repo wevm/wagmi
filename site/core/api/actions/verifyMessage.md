@@ -197,4 +197,4 @@ import { type VerifyMessageErrorType } from '@wagmi/core'
 
 ## Viem
 
-- [`verifyMessage`](https://viem.sh/docs/actions/public/verifyMessage.html)
+- [`verifyMessage`](https://viem.sh/docs/actions/public/verifyMessage)

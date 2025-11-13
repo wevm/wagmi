@@ -30,20 +30,18 @@ export {
   type DisconnectReturnType,
   disconnect,
 } from '../actions/disconnect.js'
-
-export {
-  type EstimateGasErrorType,
-  type EstimateGasParameters,
-  type EstimateGasReturnType,
-  estimateGas,
-} from '../actions/estimateGas.js'
-
 export {
   type EstimateFeesPerGasErrorType,
   type EstimateFeesPerGasParameters,
   type EstimateFeesPerGasReturnType,
   estimateFeesPerGas,
 } from '../actions/estimateFeesPerGas.js'
+export {
+  type EstimateGasErrorType,
+  type EstimateGasParameters,
+  type EstimateGasReturnType,
+  estimateGas,
+} from '../actions/estimateGas.js'
 
 export {
   type EstimateMaxPriorityFeePerGasErrorType,
@@ -58,9 +56,9 @@ export {
 } from '../actions/getAccount.js'
 
 export {
+  type GetBalanceErrorType,
   type GetBalanceParameters,
   type GetBalanceReturnType,
-  type GetBalanceErrorType,
   getBalance,
   /** @deprecated use `getBalance` instead */
   getBalance as fetchBalance,
@@ -130,18 +128,16 @@ export {
   type GetConnectionsReturnType,
   getConnections,
 } from '../actions/getConnections.js'
-
-export {
-  type GetConnectorsReturnType,
-  getConnectors,
-} from '../actions/getConnectors.js'
-
 export {
   type GetConnectorClientErrorType,
   type GetConnectorClientParameters,
   type GetConnectorClientReturnType,
   getConnectorClient,
 } from '../actions/getConnectorClient.js'
+export {
+  type GetConnectorsReturnType,
+  getConnectors,
+} from '../actions/getConnectors.js'
 
 export {
   type GetEnsAddressErrorType,
@@ -280,16 +276,16 @@ export {
 } from '../actions/prepareTransactionRequest.js'
 
 export {
+  type ReadContractErrorType,
   type ReadContractParameters,
   type ReadContractReturnType,
-  type ReadContractErrorType,
   readContract,
 } from '../actions/readContract.js'
 
 export {
+  type ReadContractsErrorType,
   type ReadContractsParameters,
   type ReadContractsReturnType,
-  type ReadContractsErrorType,
   readContracts,
 } from '../actions/readContracts.js'
 
@@ -308,11 +304,25 @@ export {
 } from '../actions/sendCalls.js'
 
 export {
+  type SendCallsSyncErrorType,
+  type SendCallsSyncParameters,
+  type SendCallsSyncReturnType,
+  sendCallsSync,
+} from '../actions/sendCallsSync.js'
+
+export {
   type SendTransactionErrorType,
   type SendTransactionParameters,
   type SendTransactionReturnType,
   sendTransaction,
 } from '../actions/sendTransaction.js'
+
+export {
+  type SendTransactionSyncErrorType,
+  type SendTransactionSyncParameters,
+  type SendTransactionSyncReturnType,
+  sendTransactionSync,
+} from '../actions/sendTransactionSync.js'
 
 export {
   type ShowCallsStatusErrorType,
@@ -378,74 +388,6 @@ export {
   type WaitForCallsStatusReturnType,
   waitForCallsStatus,
 } from '../actions/waitForCallsStatus.js'
-
-export {
-  type WatchAccountParameters,
-  type WatchAccountReturnType,
-  watchAccount,
-} from '../actions/watchAccount.js'
-
-export {
-  type WatchAssetParameters,
-  type WatchAssetErrorType,
-  type WatchAssetReturnType,
-  watchAsset,
-} from '../actions/watchAsset.js'
-
-export {
-  type WatchBlocksParameters,
-  type WatchBlocksReturnType,
-  watchBlocks,
-} from '../actions/watchBlocks.js'
-
-export {
-  type WatchBlockNumberParameters,
-  type WatchBlockNumberReturnType,
-  watchBlockNumber,
-} from '../actions/watchBlockNumber.js'
-
-export {
-  type WatchChainIdParameters,
-  type WatchChainIdReturnType,
-  watchChainId,
-} from '../actions/watchChainId.js'
-
-export {
-  type WatchClientParameters,
-  type WatchClientReturnType,
-  watchClient,
-} from '../actions/watchClient.js'
-
-export {
-  type WatchConnectionsParameters,
-  type WatchConnectionsReturnType,
-  watchConnections,
-} from '../actions/watchConnections.js'
-
-export {
-  type WatchConnectorsParameters,
-  type WatchConnectorsReturnType,
-  watchConnectors,
-} from '../actions/watchConnectors.js'
-
-export {
-  type WatchContractEventParameters,
-  type WatchContractEventReturnType,
-  watchContractEvent,
-} from '../actions/watchContractEvent.js'
-
-export {
-  type WatchPendingTransactionsParameters,
-  type WatchPendingTransactionsReturnType,
-  watchPendingTransactions,
-} from '../actions/watchPendingTransactions.js'
-
-export {
-  type WatchPublicClientParameters,
-  type WatchPublicClientReturnType,
-  watchPublicClient,
-} from '../actions/watchPublicClient.js'
-
 export {
   type WaitForTransactionReceiptErrorType,
   type WaitForTransactionReceiptParameters,
@@ -454,6 +396,63 @@ export {
   /** @deprecated use `waitForTransactionReceipt` instead */
   waitForTransactionReceipt as waitForTransaction,
 } from '../actions/waitForTransactionReceipt.js'
+export {
+  type WatchAccountParameters,
+  type WatchAccountReturnType,
+  watchAccount,
+} from '../actions/watchAccount.js'
+export {
+  type WatchAssetErrorType,
+  type WatchAssetParameters,
+  type WatchAssetReturnType,
+  watchAsset,
+} from '../actions/watchAsset.js'
+
+export {
+  type WatchBlockNumberParameters,
+  type WatchBlockNumberReturnType,
+  watchBlockNumber,
+} from '../actions/watchBlockNumber.js'
+export {
+  type WatchBlocksParameters,
+  type WatchBlocksReturnType,
+  watchBlocks,
+} from '../actions/watchBlocks.js'
+export {
+  type WatchChainIdParameters,
+  type WatchChainIdReturnType,
+  watchChainId,
+} from '../actions/watchChainId.js'
+export {
+  type WatchClientParameters,
+  type WatchClientReturnType,
+  watchClient,
+} from '../actions/watchClient.js'
+export {
+  type WatchConnectionsParameters,
+  type WatchConnectionsReturnType,
+  watchConnections,
+} from '../actions/watchConnections.js'
+export {
+  type WatchConnectorsParameters,
+  type WatchConnectorsReturnType,
+  watchConnectors,
+} from '../actions/watchConnectors.js'
+export {
+  type WatchContractEventParameters,
+  type WatchContractEventReturnType,
+  watchContractEvent,
+} from '../actions/watchContractEvent.js'
+export {
+  type WatchPendingTransactionsParameters,
+  type WatchPendingTransactionsReturnType,
+  watchPendingTransactions,
+} from '../actions/watchPendingTransactions.js'
+export {
+  type WatchPublicClientParameters,
+  type WatchPublicClientReturnType,
+  watchPublicClient,
+} from '../actions/watchPublicClient.js'
 
 export {
   type WriteContractErrorType,
@@ -487,14 +486,14 @@ export {
 ////////////////////////////////////////////////////////////////////////////////
 
 export {
+  type Config,
   type Connection,
   type Connector,
-  type Config,
   type CreateConfigParameters,
+  createConfig,
   type PartializedState,
   type State,
   type Transport,
-  createConfig,
 } from '../createConfig.js'
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -503,10 +502,10 @@ export {
 
 export {
   type CreateStorageParameters,
-  type Storage,
-  type StorageItemMap,
   createStorage,
   noopStorage,
+  type Storage,
+  type StorageItemMap,
 } from '../createStorage.js'
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -522,27 +521,27 @@ export { hydrate } from '../hydrate.js'
 export { BaseError } from '../errors/base.js'
 
 export {
-  type ChainNotConfiguredErrorType,
   ChainNotConfiguredError,
-  type ConnectorNotConnectedErrorType,
-  ConnectorNotConnectedError,
-  type ConnectorAlreadyConnectedErrorType,
-  ConnectorAlreadyConnectedError,
-  type ConnectorNotFoundErrorType,
-  ConnectorNotFoundError,
-  type ConnectorAccountNotFoundErrorType,
+  type ChainNotConfiguredErrorType,
   ConnectorAccountNotFoundError,
-  type ConnectorChainMismatchErrorType,
+  type ConnectorAccountNotFoundErrorType,
+  ConnectorAlreadyConnectedError,
+  type ConnectorAlreadyConnectedErrorType,
   ConnectorChainMismatchError,
-  type ConnectorUnavailableReconnectingErrorType,
+  type ConnectorChainMismatchErrorType,
+  ConnectorNotConnectedError,
+  type ConnectorNotConnectedErrorType,
+  ConnectorNotFoundError,
+  type ConnectorNotFoundErrorType,
   ConnectorUnavailableReconnectingError,
+  type ConnectorUnavailableReconnectingErrorType,
 } from '../errors/config.js'
 
 export {
-  type ProviderNotFoundErrorType,
   ProviderNotFoundError,
-  type SwitchChainNotSupportedErrorType,
+  type ProviderNotFoundErrorType,
   SwitchChainNotSupportedError,
+  type SwitchChainNotSupportedErrorType,
 } from '../errors/connector.js'
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -552,8 +551,8 @@ export {
 export { custom, http, webSocket } from 'viem'
 
 export {
-  type ConnectorTransportConfig,
   type ConnectorTransport,
+  type ConnectorTransportConfig,
   unstable_connector,
 } from '../transports/connector.js'
 

@@ -1,5 +1,231 @@
 # @wagmi/vue
 
+## 0.3.3
+
+### Patch Changes
+
+- Updated dependencies [[`2ddb506`](https://github.com/wevm/wagmi/commit/2ddb506b67fcb2abb464765d2af88df2eb58de60)]:
+  - @wagmi/connectors@6.1.4
+
+## 0.3.2
+
+### Patch Changes
+
+- Updated dependencies [[`65cf154`](https://github.com/wevm/wagmi/commit/65cf1544d65bfb1fb830c405a371e8cd3c3fb73e)]:
+  - @wagmi/connectors@6.1.3
+
+## 0.3.1
+
+### Patch Changes
+
+- Updated dependencies [[`faf3eed`](https://github.com/wevm/wagmi/commit/faf3eeddb97c300f971083f8ee9b02a29ad23cbb)]:
+  - @wagmi/connectors@6.1.2
+
+## 0.3.0
+
+### Minor Changes
+
+- Exported internal types ([`3e634b7`](https://github.com/wevm/wagmi/commit/3e634b7bcf0bd0e67e59fcb74ad89dfb56e4eae9))
+
+### Patch Changes
+
+- Updated dependencies [[`990dd23`](https://github.com/wevm/wagmi/commit/990dd2339e96b302931056e0fb898bd2dd42a04d)]:
+  - @wagmi/connectors@6.1.1
+
+## 0.2.14
+
+### Patch Changes
+
+- Updated dependencies [[`ae31a8d`](https://github.com/wevm/wagmi/commit/ae31a8d3d0b436841d6546ab2565dee624204aca)]:
+  - @wagmi/connectors@6.1.0
+
+## 0.2.13
+
+### Patch Changes
+
+- Updated dependencies [[`74100b0`](https://github.com/wevm/wagmi/commit/74100b0dea2dfe7b057fdbe1660596554c70642e)]:
+  - @wagmi/core@2.22.1
+  - @wagmi/connectors@6.0.1
+
+## 0.2.12
+
+### Patch Changes
+
+- Updated dependencies [[`ebb2352`](https://github.com/wevm/wagmi/commit/ebb2352375e05e52d0bcf6ae1a60ac4e798bf29f)]:
+  - @wagmi/core@2.22.0
+  - @wagmi/connectors@6.0.0
+
+## 0.2.11
+
+### Patch Changes
+
+- Updated dependencies [[`2f0db95`](https://github.com/wevm/wagmi/commit/2f0db9553d30dd95b3245c44dafec4fa1a758397), [`866aeb0`](https://github.com/wevm/wagmi/commit/866aeb0e6361ef9114246e50149c1077bc05bf10)]:
+  - @wagmi/connectors@5.11.2
+  - @wagmi/core@2.21.2
+
+## 0.2.10
+
+### Patch Changes
+
+- Updated dependencies [[`41eb70e`](https://github.com/wevm/wagmi/commit/41eb70e072774b282053a5e98669a7d01c0e2438), [`9a00e42`](https://github.com/wevm/wagmi/commit/9a00e423d52df9478681df743f00429717ffc584)]:
+  - @wagmi/connectors@5.11.1
+
+## 0.2.9
+
+### Patch Changes
+
+- Updated dependencies [[`f05c075`](https://github.com/wevm/wagmi/commit/f05c075365a737d870a657f2db9220eb93ad0ac1)]:
+  - @wagmi/connectors@5.11.0
+
+## 0.2.8
+
+### Patch Changes
+
+- Updated dependencies [[`72b703a`](https://github.com/wevm/wagmi/commit/72b703ab379c74ecf88f637cf47f31786c823a48)]:
+  - @wagmi/core@2.21.1
+  - @wagmi/connectors@5.10.2
+
+## 0.2.7
+
+### Patch Changes
+
+- Updated dependencies [[`5937456`](https://github.com/wevm/wagmi/commit/59374562f2c3a41245687eb1c29ee8023737c7cc)]:
+  - @wagmi/connectors@5.10.1
+
+## 0.2.6
+
+### Patch Changes
+
+- [#4784](https://github.com/wevm/wagmi/pull/4784) [`8736133a13eb82099e20468b735525a266fdfd6c`](https://github.com/wevm/wagmi/commit/8736133a13eb82099e20468b735525a266fdfd6c) Thanks [@tmm](https://github.com/tmm)! - Added `withCapabilities` option to `connect` for exposing response capabilities.
+
+- Updated dependencies [[`8736133a13eb82099e20468b735525a266fdfd6c`](https://github.com/wevm/wagmi/commit/8736133a13eb82099e20468b735525a266fdfd6c)]:
+  - @wagmi/connectors@5.10.0
+  - @wagmi/core@2.21.0
+
+## 0.2.5
+
+### Patch Changes
+
+- Updated dependencies [[`ce06e137e7bfaf000464b1cecd6c86e19a66ebcf`](https://github.com/wevm/wagmi/commit/ce06e137e7bfaf000464b1cecd6c86e19a66ebcf)]:
+  - @wagmi/core@2.20.3
+  - @wagmi/connectors@5.9.9
+
+## 0.2.4
+
+### Patch Changes
+
+- Updated dependencies [[`a03da817a388646c9b4885792101a67eef3616e7`](https://github.com/wevm/wagmi/commit/a03da817a388646c9b4885792101a67eef3616e7)]:
+  - @wagmi/connectors@5.9.8
+
+## 0.2.3
+
+### Patch Changes
+
+- Updated dependencies [[`986b96427a4bb743d2673dfbc7e8cb5041316db3`](https://github.com/wevm/wagmi/commit/986b96427a4bb743d2673dfbc7e8cb5041316db3)]:
+  - @wagmi/core@2.20.2
+  - @wagmi/connectors@5.9.7
+
+## 0.2.2
+
+### Patch Changes
+
+- Updated dependencies [[`d4c367ca46c508598c997cf229a31593a1e2b8b8`](https://github.com/wevm/wagmi/commit/d4c367ca46c508598c997cf229a31593a1e2b8b8)]:
+  - @wagmi/core@2.20.1
+  - @wagmi/connectors@5.9.6
+
+## 0.2.1
+
+### Patch Changes
+
+- Updated dependencies [[`a13aa2b68890f180f6ac3f741cbb9817494cb66c`](https://github.com/wevm/wagmi/commit/a13aa2b68890f180f6ac3f741cbb9817494cb66c)]:
+  - @wagmi/core@2.20.0
+  - @wagmi/connectors@5.9.5
+
+## 0.2.0
+
+### Minor Changes
+
+- [#4737](https://github.com/wevm/wagmi/pull/4737) [`23bad767c5055f54d2a5a5179830e078282fa00f`](https://github.com/wevm/wagmi/commit/23bad767c5055f54d2a5a5179830e078282fa00f) Thanks [@microHoffman](https://github.com/microHoffman)! - Added support for Nuxt 4.
+
+## 0.1.28
+
+### Patch Changes
+
+- Updated dependencies [[`f4039419b83b52b2984de149db85c11f503ffe39`](https://github.com/wevm/wagmi/commit/f4039419b83b52b2984de149db85c11f503ffe39)]:
+  - @wagmi/connectors@5.9.4
+
+## 0.1.27
+
+### Patch Changes
+
+- Updated dependencies [[`909324d28c81e15c9df312b277dcff1983fbae4d`](https://github.com/wevm/wagmi/commit/909324d28c81e15c9df312b277dcff1983fbae4d)]:
+  - @wagmi/connectors@5.9.3
+
+## 0.1.26
+
+### Patch Changes
+
+- Updated dependencies [[`b5f017dbc707729eb0b36d617352be224d1139d4`](https://github.com/wevm/wagmi/commit/b5f017dbc707729eb0b36d617352be224d1139d4)]:
+  - @wagmi/core@2.19.0
+  - @wagmi/connectors@5.9.2
+
+## 0.1.25
+
+### Patch Changes
+
+- Updated dependencies [[`6fbafd425e488dbeee8404162dbeb3c737eeb8cf`](https://github.com/wevm/wagmi/commit/6fbafd425e488dbeee8404162dbeb3c737eeb8cf), [`6514ba29a5acb918773235fed0238d7d679d06d5`](https://github.com/wevm/wagmi/commit/6514ba29a5acb918773235fed0238d7d679d06d5)]:
+  - @wagmi/connectors@5.9.1
+  - @wagmi/core@2.18.1
+
+## 0.1.24
+
+### Minor Changes
+
+- [#4734](https://github.com/wevm/wagmi/pull/4734) [`eac550ae5b49f96a7e3404a6d88adc62d3889013`](https://github.com/wevm/wagmi/commit/eac550ae5b49f96a7e3404a6d88adc62d3889013) Thanks [@jxom](https://github.com/jxom)! - Added `baseAccount` connector.
+
+### Patch Changes
+
+- Updated dependencies [[`eac550ae5b49f96a7e3404a6d88adc62d3889013`](https://github.com/wevm/wagmi/commit/eac550ae5b49f96a7e3404a6d88adc62d3889013)]:
+  - @wagmi/connectors@6.0.0
+  - @wagmi/core@2.18.0
+
+## 0.1.23
+
+### Patch Changes
+
+- Updated dependencies [[`e75bd89406e9b6ff5b7d3a7148ab34140fe6352a`](https://github.com/wevm/wagmi/commit/e75bd89406e9b6ff5b7d3a7148ab34140fe6352a)]:
+  - @wagmi/connectors@5.8.6
+
+## 0.1.22
+
+### Patch Changes
+
+- Updated dependencies [[`7ce242b549d8cc78e6c319d9ee419693da36704c`](https://github.com/wevm/wagmi/commit/7ce242b549d8cc78e6c319d9ee419693da36704c)]:
+  - @wagmi/core@2.17.3
+  - @wagmi/connectors@5.8.5
+
+## 0.1.21
+
+### Patch Changes
+
+- Updated dependencies [[`3a90f358820444a85bb727742b0a16eb943fc361`](https://github.com/wevm/wagmi/commit/3a90f358820444a85bb727742b0a16eb943fc361)]:
+  - @wagmi/connectors@5.8.4
+
+## 0.1.20
+
+### Patch Changes
+
+- Updated dependencies [[`42b1fed58e9ac09da0f8ebf3e9271f98a707aaac`](https://github.com/wevm/wagmi/commit/42b1fed58e9ac09da0f8ebf3e9271f98a707aaac)]:
+  - @wagmi/connectors@5.8.3
+
+## 0.1.19
+
+### Patch Changes
+
+- Updated dependencies [[`29297a48af72b537173d948ccd2fe37d39914c66`](https://github.com/wevm/wagmi/commit/29297a48af72b537173d948ccd2fe37d39914c66), [`07370106d5fb6b8fe300992d93abf25b3d0eaf57`](https://github.com/wevm/wagmi/commit/07370106d5fb6b8fe300992d93abf25b3d0eaf57)]:
+  - @wagmi/core@2.17.2
+  - @wagmi/connectors@5.8.2
+
 ## 0.1.18
 
 ### Patch Changes

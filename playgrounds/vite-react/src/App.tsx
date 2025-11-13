@@ -1,5 +1,5 @@
 import type { FormEvent } from 'react'
-import { type Hex, formatEther, parseAbi, parseEther } from 'viem'
+import { formatEther, type Hex, parseAbi, parseEther } from 'viem'
 import {
   type BaseError,
   useAccount,
@@ -84,7 +84,7 @@ function Account() {
 
 function Connect() {
   const chainId = useChainId()
-  const { connectors, connect, status, error } = useConnect()
+  const { connectors, connectAsync, status, error } = useConnect()
 
   return (
     <div>
@@ -92,12 +92,16 @@ function Connect() {
       {connectors.map((connector) => (
         <button
           key={connector.uid}
-          onClick={() =>
-            connect({
+          onClick={async () => {
+            connectAsync({
               connector,
               chainId,
+              withCapabilities: true,
             })
-          }
+              .then(console.log)
+              // biome-ignore lint/suspicious/noConsole: allow
+              .catch(console.error)
+          }}
           type="button"
         >
           {connector.name}

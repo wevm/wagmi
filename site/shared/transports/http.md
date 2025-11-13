@@ -4,7 +4,7 @@ const packageName = 'wagmi'
 
 # http
 
-The `http` Transport connects to a JSON-RPC API via HTTP. Wraps Viem's [`http` Transport](https://viem.sh/docs/clients/transports/http.html).
+The `http` Transport connects to a JSON-RPC API via HTTP. Wraps Viem's [`http` Transport](https://viem.sh/docs/clients/transports/http).
 
 ## Import
 

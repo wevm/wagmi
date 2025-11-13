@@ -138,7 +138,7 @@ const transactionReceipt = await waitForTransactionReceipt(config, {
 import { type WaitForTransactionReceiptReturnType } from '@wagmi/core'
 ```
 
-[`TransactionReceipt`](https://viem.sh/docs/glossary/types.html#transactionreceipt)
+[`TransactionReceipt`](https://viem.sh/docs/glossary/types#transactionreceipt)
 
 The transaction receipt.
 
@@ -152,4 +152,4 @@ import { type WaitForTransactionReceiptErrorType } from '@wagmi/core'
 
 ## Viem
 
-- [`waitForTransactionReceipt`](https://viem.sh/docs/actions/public/waitForTransactionReceipt.html)
+- [`waitForTransactionReceipt`](https://viem.sh/docs/actions/public/waitForTransactionReceipt)

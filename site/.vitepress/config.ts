@@ -3,8 +3,9 @@ import {
   transformerTwoslash,
 } from '@shikijs/vitepress-twoslash'
 import { presetAttributify, presetIcons, presetUno } from 'unocss'
-import Unocss from 'unocss/vite'
+import unocss from 'unocss/vite'
 import { defineConfig } from 'vitepress'
+import llmstxt, { copyOrDownloadAsMarkdownButtons } from 'vitepress-plugin-llms'
 
 import { farcasterIcon } from './constants'
 import { getSidebar } from './sidebar'
@@ -57,6 +58,9 @@ export default defineConfig({
         },
       }),
     ],
+    config(md) {
+      md.use(copyOrDownloadAsMarkdownButtons)
+    },
     theme: {
       light: 'vitesse-light',
       dark: 'vitesse-dark',
@@ -129,7 +133,10 @@ export default defineConfig({
   title: 'Wagmi',
   vite: {
     plugins: [
-      Unocss({
+      llmstxt({
+        ignoreFiles: ['shared/'],
+      }),
+      unocss({
         shortcuts: [
           [
             'btn',

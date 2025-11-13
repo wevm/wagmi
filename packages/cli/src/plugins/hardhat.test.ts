@@ -12,7 +12,7 @@ afterEach(() => {
 
 test('validate', async () => {
   const temp = f.temp()
-  expect(
+  await expect(
     hardhat({ project: temp }).validate?.(),
   ).rejects.toThrowErrorMatchingInlineSnapshot(
     '[Error: hardhat must be installed to use Hardhat plugin.]',
@@ -34,7 +34,7 @@ test('project does not exist', async () => {
 })
 
 test('contracts', async () => {
-  expect(
+  await expect(
     hardhat({
       project: resolve(__dirname, '__fixtures__/hardhat/'),
       exclude: ['Foo.sol/**'],

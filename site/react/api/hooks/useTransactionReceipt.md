@@ -13,7 +13,7 @@ const TError = 'GetTransactionReceiptErrorType'
 
 # useTransactionReceipt
 
-Hook for return the [Transaction Receipt](https://viem.sh/docs/glossary/terms.html#transaction-receipt) given a [Transaction](https://viem.sh/docs/glossary/terms.html#transaction) hash.
+Hook for return the [Transaction Receipt](https://viem.sh/docs/glossary/terms#transaction-receipt) given a [Transaction](https://viem.sh/docs/glossary/terms#transaction) hash.
 
 ## Import
 

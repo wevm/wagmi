@@ -1,5 +1,91 @@
 # @wagmi/core
 
+## 2.22.1
+
+### Patch Changes
+
+- Fixed passing `account` in `waitForTransactionReceipt` for reverted transaction. ([#4832](https://github.com/wevm/wagmi/pull/4832))
+
+## 2.22.0
+
+### Minor Changes
+
+- Added `sendTransactionSync` and `sendCallsSync` Actions. ([#4823](https://github.com/wevm/wagmi/pull/4823))
+
+## 2.21.2
+
+### Patch Changes
+
+- Added `assertChainId` parameter to `getConnectorClient`. ([`866aeb0`](https://github.com/wevm/wagmi/commit/866aeb0e6361ef9114246e50149c1077bc05bf10))
+
+## 2.21.1
+
+### Patch Changes
+
+- Fixed `getConnectors` comparison ([#4792](https://github.com/wevm/wagmi/pull/4792))
+
+## 2.21.0
+
+### Minor Changes
+
+- [#4784](https://github.com/wevm/wagmi/pull/4784) [`8736133a13eb82099e20468b735525a266fdfd6c`](https://github.com/wevm/wagmi/commit/8736133a13eb82099e20468b735525a266fdfd6c) Thanks [@tmm](https://github.com/tmm)! - Added `withCapabilities` option to `connect` for exposing response capabilities.
+
+## 2.20.3
+
+### Patch Changes
+
+- [#4752](https://github.com/wevm/wagmi/pull/4752) [`ce06e137e7bfaf000464b1cecd6c86e19a66ebcf`](https://github.com/wevm/wagmi/commit/ce06e137e7bfaf000464b1cecd6c86e19a66ebcf) Thanks [@iamakulov](https://github.com/iamakulov)! - Fixed `deepEqual` crashing for objects with no prototype
+
+## 2.20.2
+
+### Patch Changes
+
+- [#4733](https://github.com/wevm/wagmi/pull/4733) [`986b96427a4bb743d2673dfbc7e8cb5041316db3`](https://github.com/wevm/wagmi/commit/986b96427a4bb743d2673dfbc7e8cb5041316db3) Thanks [@effie-ms](https://github.com/effie-ms)! - Fixed `getConnectorClient` chain ID race condition.
+
+## 2.20.1
+
+### Patch Changes
+
+- [#4773](https://github.com/wevm/wagmi/pull/4773) [`d4c367ca46c508598c997cf229a31593a1e2b8b8`](https://github.com/wevm/wagmi/commit/d4c367ca46c508598c997cf229a31593a1e2b8b8) Thanks [@tmm](https://github.com/tmm)! - Fixed issue with codegen actions/hooks, where `syncConnectedChain: false` did not work as intended.
+
+## 2.20.0
+
+### Minor Changes
+
+- [#4770](https://github.com/wevm/wagmi/pull/4770) [`a13aa2b68890f180f6ac3f741cbb9817494cb66c`](https://github.com/wevm/wagmi/commit/a13aa2b68890f180f6ac3f741cbb9817494cb66c) Thanks [@tmm](https://github.com/tmm)! - Added internal `revalidate` function.
+
+## 2.19.0
+
+### Minor Changes
+
+- [#4756](https://github.com/wevm/wagmi/pull/4756) [`b5f017dbc707729eb0b36d617352be224d1139d4`](https://github.com/wevm/wagmi/commit/b5f017dbc707729eb0b36d617352be224d1139d4) Thanks [@plusminushalf](https://github.com/plusminushalf)! - Added `getAction` to `sendCalls` and `getCallsStatus`
+
+## 2.18.1
+
+### Patch Changes
+
+- [#4704](https://github.com/wevm/wagmi/pull/4704) [`6514ba29a5acb918773235fed0238d7d679d06d5`](https://github.com/wevm/wagmi/commit/6514ba29a5acb918773235fed0238d7d679d06d5) Thanks [@iceanddust](https://github.com/iceanddust)! - Added missing `from` address to the `wallet_sendCalls` handler in the `mock` connector
+
+## 2.18.0
+
+### Minor Changes
+
+- [#4734](https://github.com/wevm/wagmi/pull/4734) [`eac550ae5b49f96a7e3404a6d88adc62d3889013`](https://github.com/wevm/wagmi/commit/eac550ae5b49f96a7e3404a6d88adc62d3889013) Thanks [@jxom](https://github.com/jxom)! - Added `baseAccount` connector.
+
+## 2.17.3
+
+### Patch Changes
+
+- [#4700](https://github.com/wevm/wagmi/pull/4700) [`7ce242b549d8cc78e6c319d9ee419693da36704c`](https://github.com/wevm/wagmi/commit/7ce242b549d8cc78e6c319d9ee419693da36704c) Thanks [@jade-u410](https://github.com/jade-u410)! - Updated `@coinbase/wallet-sdk` to 4.3.3
+
+## 2.17.2
+
+### Patch Changes
+
+- [`29297a48af72b537173d948ccd2fe37d39914c66`](https://github.com/wevm/wagmi/commit/29297a48af72b537173d948ccd2fe37d39914c66) Thanks [@jxom](https://github.com/jxom)! - Fixed `sendCalls` generics.
+
+- [`07370106d5fb6b8fe300992d93abf25b3d0eaf57`](https://github.com/wevm/wagmi/commit/07370106d5fb6b8fe300992d93abf25b3d0eaf57) Thanks [@jxom](https://github.com/jxom)! - Fixed propagation of `waitForCallsStatus` parameters.
+
 ## 2.17.1
 
 ### Patch Changes

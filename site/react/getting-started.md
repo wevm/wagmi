@@ -118,7 +118,7 @@ By registering or using the hook `config` property, `useBlockNumber`'s `chainId`
 
 ### Wrap App in Context Provider
 
-Wrap your app in the `WagmiProvider` React Context Provider and pass the `config` you created earlier to the `value` property.
+Wrap your app in the `WagmiProvider` React Context Provider and pass the `config` you created earlier to the `config` property.
 
 ::: code-group
 ```tsx [app.tsx]
@@ -163,7 +163,7 @@ function App() {
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
-Check out the [TanStack Query docs](https://tanstack.com/query/latest/docs/framework/react) to learn about the library, APIs, and more.
+Check out the [TanStack Query docs](https://tanstack.com/query/latest/docs/framework/react/overview) to learn about the library, APIs, and more.
 
 ### Use Wagmi
 

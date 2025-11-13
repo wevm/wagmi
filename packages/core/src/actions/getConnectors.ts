@@ -1,5 +1,4 @@
 import type { Config, Connector } from '../createConfig.js'
-import { deepEqual } from '../utils/deepEqual.js'
 
 export type GetConnectorsReturnType<config extends Config = Config> =
   config['connectors']
@@ -11,7 +10,13 @@ export function getConnectors<config extends Config>(
   config: config,
 ): GetConnectorsReturnType<config> {
   const connectors = config.connectors
-  if (deepEqual(previousConnectors, connectors)) return previousConnectors
+  if (
+    previousConnectors.length === connectors.length &&
+    previousConnectors.every(
+      (connector, index) => connector === connectors[index],
+    )
+  )
+    return previousConnectors
   previousConnectors = connectors
   return connectors
 }

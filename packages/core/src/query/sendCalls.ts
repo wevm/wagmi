@@ -29,18 +29,20 @@ export type SendCallsData = Compute<SendCallsReturnType>
 export type SendCallsVariables<
   config extends Config,
   chainId extends config['chains'][number]['id'],
-> = SendCallsParameters<config, chainId>
+  calls extends readonly unknown[] = readonly unknown[],
+> = SendCallsParameters<config, chainId, calls>
 
 export type SendCallsMutate<config extends Config, context = unknown> = <
+  const calls extends readonly unknown[],
   chainId extends config['chains'][number]['id'],
 >(
-  variables: SendCallsVariables<config, chainId>,
+  variables: SendCallsVariables<config, chainId, calls>,
   options?:
     | Compute<
         MutateOptions<
           SendCallsData,
           SendCallsErrorType,
-          Compute<SendCallsVariables<config, chainId>>,
+          Compute<SendCallsVariables<config, chainId, calls>>,
           context
         >
       >
@@ -48,15 +50,16 @@ export type SendCallsMutate<config extends Config, context = unknown> = <
 ) => void
 
 export type SendCallsMutateAsync<config extends Config, context = unknown> = <
+  const calls extends readonly unknown[],
   chainId extends config['chains'][number]['id'],
 >(
-  variables: SendCallsVariables<config, chainId>,
+  variables: SendCallsVariables<config, chainId, calls>,
   options?:
     | Compute<
         MutateOptions<
           SendCallsData,
           SendCallsErrorType,
-          Compute<SendCallsVariables<config, chainId>>,
+          Compute<SendCallsVariables<config, chainId, calls>>,
           context
         >
       >

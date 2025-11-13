@@ -3,7 +3,7 @@
   "type": "module",
   "scripts": {
     "build": "pnpm run --r --filter \"./packages/**\" build",
-    "changeset:prepublish": "pnpm version:update && pnpm build && bun scripts/formatPackageJson.ts && bun scripts/generateProxyPackages.ts",
+    "changeset:prepublish": "pnpm version:update && pnpm build && node scripts/formatPackageJson.ts && node scripts/generateProxyPackages.ts",
     "changeset:publish": "pnpm changeset:prepublish && changeset publish",
     "changeset:version": "changeset version && pnpm version:update && pnpm format",
     "check": "biome check --write",
@@ -12,6 +12,7 @@
     "check:unused": "pnpm clean && knip",
     "clean": "pnpm run --r --parallel clean && rm -rf packages/**/*.json.tmp",
     "deps": "pnpx taze -r",
+    "deps:ci": "pnpx actions-up",
     "dev": "pnpm dev:react",
     "dev:cli": "pnpm --filter cli dev",
     "dev:core": "pnpm --filter vite-core dev",
@@ -23,11 +24,11 @@
     "docs:dev": "pnpm --filter site dev",
     "format": "biome format --write",
     "postinstall": "pnpm preconstruct",
-    "preconstruct": "bun scripts/preconstruct.ts",
+    "preconstruct": "node scripts/preconstruct.ts",
     "preinstall": "pnpx only-allow pnpm",
     "prepare": "pnpm simple-git-hooks",
     "test": "vitest",
-    "test:build": "bun scripts/generateProxyPackages.ts && pnpm run --r --parallel test:build",
+    "test:build": "node scripts/generateProxyPackages.ts && pnpm run --r --parallel test:build",
     "test:cli": "vitest --project @wagmi/cli",
     "test:connectors": "vitest --project @wagmi/connectors",
     "test:core": "vitest --project @wagmi/core",
@@ -37,29 +38,41 @@
     "test:typecheck": "vitest typecheck",
     "test:update": "vitest --update",
     "test:vue": "vitest --project @wagmi/vue",
-    "version:update": "bun scripts/updateVersion.ts",
-    "version:update:viem": "bun scripts/updateViemVersion.ts"
+    "version:update": "node scripts/updateVersion.ts",
+    "version:update:viem": "node scripts/updateViemVersion.ts"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.16.4",
-    "@biomejs/biome": "^1.9.4",
-    "@changesets/changelog-github": "0.4.6",
-    "@changesets/cli": "^2.27.8",
-    "@types/bun": "^1.1.10",
-    "@vitest/coverage-v8": "^2.1.1",
+    "@biomejs/biome": "^2.2.4",
+    "@changesets/cli": "^3.0.0-next.0",
+    "@svitejs/changesets-changelog-github-compact": "^1.2.0",
+    "@types/node": "^24.5.1",
+    "@vitejs/plugin-react": "catalog:",
+    "@vitest/browser": "^3.2.4",
+    "@vitest/coverage-v8": "^3.2.4",
     "@wagmi/test": "workspace:*",
-    "bun": "^1.1.29",
-    "happy-dom": "^15.7.4",
+    "happy-dom": "^20.0.0",
     "knip": "^5.30.6",
-    "prool": "^0.0.23",
+    "playwright": "1.54.1",
+    "prool": "^0.0.24",
     "publint": "^0.2.11",
+    "react": "catalog:",
+    "react-dom": "catalog:",
     "sherif": "^1.0.0",
     "simple-git-hooks": "^2.11.1",
-    "typescript": "5.8.3",
-    "viem": "2.28.0",
-    "vitest": "^2.1.1"
+    "typescript": "5.9.2",
+    "viem": "2.38.0",
+    "vitest": "^3.2.4",
+    "vitest-browser-react": "^2.0.0-beta.1"
   },
-  "packageManager": "pnpm@9.11.0",
+  "packageManager": "pnpm@10.16.1",
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "^24.5.1",
+      "onFail": "download"
+    }
+  },
   "pnpm": {
     "peerDependencyRules": {
       "ignoreMissing": [
@@ -68,51 +81,73 @@
         "react-native",
         "search-insights"
       ]
+    },
+    "patchedDependencies": {
+      "prool": "patches/prool.patch"
+    },
+    "overrides": {
+      "@walletconnect/logger>pino": "10.0.0",
+      "cookie@<0.7.0": "0.7.0",
+      "elliptic@<=6.6.0": ">=6.6.1",
+      "esbuild@<=0.24.2": "0.25.0",
+      "hono@>=1.1.0 <4.10.2": ">=4.10.2",
+      "nanoid@<3.3.8": "3.3.8",
+      "playwright@<1.55.1": "1.55.1",
+      "semver@<5.7.2": ">=5.7.2",
+      "serialize-javascript@>=6.0.0 <6.0.2": "6.0.2",
+      "tmp@<=0.2.3": "0.2.4",
+      "ws@>=8.0.0 <8.17.1": "8.17.1"
     }
-  },
-  "engines": {
-    "node": "22.x"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm check"
   },
   "knip": {
-    "ignore": ["**/templates/**", "**/hardhat.config.js"],
-    "ignoreBinaries": ["only-allow"],
+    "ignore": [
+      "**/templates/**",
+      "**/hardhat.config.js",
+      "scripts/**"
+    ],
     "ignoreWorkspaces": [
       "packages/register-tests/**",
       "packages/test",
-      "playgrounds/**"
+      "playgrounds/**",
+      "site/**"
     ],
     "workspaces": {
-      ".": {
-        "project": "scripts/*.ts"
-      },
       "packages/cli": {
         "entry": [
           "src/cli.ts!",
           "src/exports/{config,index,plugins}.ts!",
           "types/*.d.ts!"
         ],
-        "ignore": ["test/{constants,setup,utils}.ts"]
+        "ignore": [
+          "test/{constants,setup,utils}.ts"
+        ]
       },
       "packages/connectors": {
         "entry": "src/exports/index.ts!"
       },
       "packages/core": {
         "entry": "src/exports/{actions,chains,codegen,experimental,index,internal,query}.ts!",
-        "ignore": ["test/setup.ts"],
-        "ignoreDependencies": ["@tanstack/query-core"]
+        "ignore": [
+          "test/setup.ts"
+        ],
+        "ignoreDependencies": [
+          "@tanstack/query-core"
+        ]
       },
       "packages/create-wagmi": {
         "entry": "src/cli.ts!"
       },
       "packages/react": {
         "entry": [
-          "src/exports/{actions,chains,codegen,connectors,experimental,index,query}.ts!",
+          "src/exports/{actions,chains,codegen,connectors,experimental,index,internal,query}.ts!",
           "src/exports/actions/experimental.ts!"
         ],
-        "ignore": ["test/setup.ts"]
+        "ignore": [
+          "test/setup.ts"
+        ]
       },
       "packages/test": {
         "entry": [
@@ -122,14 +157,16 @@
       },
       "packages/vue": {
         "entry": [
-          "src/exports/{actions,chains,connectors,index,nuxt,query}.ts!",
+          "src/exports/{actions,chains,connectors,index,internal,nuxt,query}.ts!",
           "src/exports/actions/experimental.ts!"
         ],
-        "ignore": ["src/nuxt/runtime/*", "test/setup.ts"],
-        "ignoreDependencies": ["nuxt"]
-      },
-      "site": {
-        "project": ["**/*.ts", "**/*.tsx"]
+        "ignore": [
+          "src/nuxt/runtime/*",
+          "test/setup.ts"
+        ],
+        "ignoreDependencies": [
+          "nuxt"
+        ]
       }
     }
   }

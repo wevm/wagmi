@@ -31,7 +31,7 @@ test('default', async () => {
   ).resolves.toMatchInlineSnapshot(
     `
     {
-      "id": "0x5dedb5a4ff8968db37459b52b83cbdc92b01c9c709c9cff26e345ef5cf27f92e",
+      "id": "0xb24b52a86aa2b0bae6f1e44868c3a13d2572e766a1f6364afd93d1757839b8a1",
     }
   `,
   )
@@ -86,7 +86,7 @@ test('behavior: nullish account (account filled by wallet)', async () => {
   ).resolves.toMatchInlineSnapshot(
     `
     {
-      "id": "0x035b56a56a5b2fea10e194bae4c846b415de48a8288c7eb704ba7880edcc29a0",
+      "id": "0x0a8b20024fae14dd9e854accfc8496b9d18c291206647c842a96a954133401f3",
     }
   `,
   )

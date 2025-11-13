@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
-    "lint": "biome check .",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -18,7 +17,7 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",
     "buffer": "^6.0.3",
-    "vite": "^5.2.11",
+    "vite": "^5.4.21",
     "vue-tsc": "^2.0.6"
   }
 }

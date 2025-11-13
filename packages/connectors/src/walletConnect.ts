@@ -1,22 +1,22 @@
 import {
   ChainNotConfiguredError,
   type Connector,
-  ProviderNotFoundError,
   createConnector,
   extractRpcUrls,
+  ProviderNotFoundError,
 } from '@wagmi/core'
 import type { Compute, ExactPartial, Omit } from '@wagmi/core/internal'
 import type { EthereumProvider } from '@walletconnect/ethereum-provider'
 import {
   type AddEthereumChainParameter,
   type Address,
+  getAddress,
+  numberToHex,
   type ProviderConnectInfo,
   type ProviderRpcError,
   type RpcError,
   SwitchChainError,
   UserRejectedRequestError,
-  getAddress,
-  numberToHex,
 } from 'viem'
 
 type WalletConnectConnector = Connector & {
@@ -73,17 +73,68 @@ export type WalletConnectParameters = Compute<
 >
 
 walletConnect.type = 'walletConnect' as const
+/**
+ * @deprecated **NOTE: This connector uses a vulnerable dependency downstream** (`@walletconnect/ethereum-provider@2.21.1` > `@reown/appkit@1.8.9` > `@reown/appkit-utils@1.8.9` > `@walletconnect/logger@2.1.2` > `pino@7.11.0`). You should override `pino` to a secure version via your package manager:
+ *
+ * ### npm
+ * ```json
+ * {
+ *   "overrides": {
+ *     "@walletconnect/logger": {
+ *       "pino": "10.0.0"
+ *     }
+ *   }
+ * }
+ * ```
+ *
+ * ### pnpm
+ * ```json
+ * {
+ *   "pnpm": {
+ *     "overrides": {
+ *       "@walletconnect/logger>pino": "10.0.0"
+ *     }
+ *   }
+ * }
+ * ```
+ *
+ * ### yarn
+ * ```json
+ * {
+ *   "resolutions": {
+ *     "@walletconnect/logger/pino": "10.0.0"
+ *   }
+ * }
+ * ```
+ *
+ * ### bun
+ * ```json
+ * {
+ *   "overrides": {
+ *     "@walletconnect/logger": {
+ *       "pino": "10.0.0"
+ *     }
+ *   }
+ * }
+ * ```
+ *
+ * Normally the Wagmi team would upgrade `@walletconnect/ethereum-provider` to a fixed version for you, but `@walletconnect/ethereum-provider` was relicensed recently from Apache to a [non-permissive license](https://github.com/reown-com/appkit/blob/main/LICENSE.md). We are trying to get the WalletConnect team to release a version that closes the vulnerability under the old Apache license.
+ */
 export function walletConnect(parameters: WalletConnectParameters) {
   const isNewChainsStale = parameters.isNewChainsStale ?? true
 
   type Provider = Awaited<ReturnType<(typeof EthereumProvider)['init']>>
   type Properties = {
-    connect(parameters?: {
+    // TODO(v3): Make `withCapabilities: true` default behavior
+    connect<withCapabilities extends boolean = false>(parameters?: {
       chainId?: number | undefined
       isReconnecting?: boolean | undefined
       pairingTopic?: string | undefined
+      withCapabilities?: withCapabilities | boolean | undefined
     }): Promise<{
-      accounts: readonly Address[]
+      accounts: withCapabilities extends true
+        ? readonly { address: Address }[]
+        : readonly Address[]
       chainId: number
     }>
     getNamespaceChainsIds(): number[]
@@ -126,7 +177,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
         provider.on('session_delete', sessionDelete)
       }
     },
-    async connect({ chainId, ...rest } = {}) {
+    async connect({ chainId, withCapabilities, ...rest } = {}) {
       try {
         const provider = await this.getProvider()
         if (!provider) throw new ProviderNotFoundError()
@@ -167,7 +218,23 @@ export function walletConnect(parameters: WalletConnectParameters) {
 
         // If session exists and chains are authorized, enable provider for required chain
         const accounts = (await provider.enable()).map((x) => getAddress(x))
-        const currentChainId = await this.getChainId()
+
+        // Switch to chain if provided
+        let currentChainId = await this.getChainId()
+        if (chainId && currentChainId !== chainId) {
+          const chain = await this.switchChain!({ chainId }).catch(
+            (error: RpcError) => {
+              if (
+                error.code === UserRejectedRequestError.code &&
+                (error.cause as RpcError | undefined)?.message !==
+                  'Missing or invalid. request() method: wallet_addEthereumChain'
+              )
+                throw error
+              return { id: currentChainId }
+            },
+          )
+          currentChainId = chain?.id ?? currentChainId
+        }
 
         if (displayUri) {
           provider.removeListener('display_uri', displayUri)
@@ -194,7 +261,12 @@ export function walletConnect(parameters: WalletConnectParameters) {
           provider.on('session_delete', sessionDelete)
         }
 
-        return { accounts, chainId: currentChainId }
+        return {
+          accounts: (withCapabilities
+            ? accounts.map((address) => ({ address, capabilities: {} }))
+            : accounts) as never,
+          chainId: currentChainId,
+        }
       } catch (error) {
         if (
           /(user rejected|connection request reset)/i.test(
@@ -311,7 +383,9 @@ export function walletConnect(parameters: WalletConnectParameters) {
           new Promise<void>((resolve) => {
             const listener = ({
               chainId: currentChainId,
-            }: { chainId?: number | undefined }) => {
+            }: {
+              chainId?: number | undefined
+            }) => {
               if (currentChainId === chainId) {
                 config.emitter.off('change', listener)
                 resolve()
@@ -424,7 +498,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
     getNamespaceChainsIds() {
       if (!provider_) return []
       const chainIds = provider_.session?.namespaces[NAMESPACE]?.accounts?.map(
-        (account) => Number.parseInt(account.split(':')[1] || ''),
+        (account) => Number.parseInt(account.split(':')[1] || '', 10),
       )
       return chainIds ?? []
     },

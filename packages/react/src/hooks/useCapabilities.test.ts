@@ -1,7 +1,7 @@
 import { connect, disconnect } from '@wagmi/core'
 import { accounts, config } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
-import { expect, test } from 'vitest'
+import { renderHook } from '@wagmi/test/react'
+import { expect, test, vi } from 'vitest'
 
 import { useCapabilities } from './useCapabilities.js'
 
@@ -10,9 +10,9 @@ const connector = config.connectors[0]!
 test('mounts', async () => {
   await connect(config, { connector })
 
-  const { result } = renderHook(() => useCapabilities())
+  const { result } = await renderHook(() => useCapabilities())
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -55,7 +55,7 @@ test('mounts', async () => {
       "queryKey": [
         "capabilities",
         {
-          "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "account": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
         },
       ],
       "refetch": [Function],
@@ -69,9 +69,11 @@ test('mounts', async () => {
 test('args: account', async () => {
   await connect(config, { connector })
 
-  const { result } = renderHook(() => useCapabilities({ account: accounts[1] }))
+  const { result } = await renderHook(() =>
+    useCapabilities({ account: accounts[1] }),
+  )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -114,7 +116,7 @@ test('args: account', async () => {
       "queryKey": [
         "capabilities",
         {
-          "account": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+          "account": "0x1D5D7e139A994CeE7f360be398Ef032fE5D74fce",
         },
       ],
       "refetch": [Function],
@@ -126,9 +128,9 @@ test('args: account', async () => {
 })
 
 test('behavior: not connected', async () => {
-  const { result } = renderHook(() => useCapabilities())
+  const { result } = await renderHook(() => useCapabilities())
 
-  await waitFor(() => expect(result.current.isError).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isError).toBeTruthy())
 
   const { error, failureReason: _, ...rest } = result.current
   expect(error?.message.includes('Connector not connected.')).toBeTruthy()
@@ -136,7 +138,7 @@ test('behavior: not connected', async () => {
     {
       "data": undefined,
       "dataUpdatedAt": 0,
-      "errorUpdateCount": 2,
+      "errorUpdateCount": 1,
       "errorUpdatedAt": 1675209600000,
       "failureCount": 1,
       "fetchStatus": "idle",

@@ -1,8 +1,8 @@
 // biome-ignore lint/performance/noBarrelFile: entrypoint module
 export {
-  defineConfig,
   type Config,
   type ContractConfig,
+  defineConfig,
   type Plugin,
 } from '../config.js'
 

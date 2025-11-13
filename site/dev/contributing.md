@@ -1,7 +1,7 @@
 <script setup>
 import packageJson from '../../package.json'
 
-const nodeVersion = packageJson.engines.node
+const nodeVersion = packageJson.devEngines.runtime.version
 const packageManager = packageJson.packageManager
 </script>
 
@@ -103,6 +103,12 @@ curl -L https://foundry.paradigm.xyz | bash
 foundryup
 ```
 
+You'll also need to install [Playwright](https://playwright.dev/) browser binaries:
+
+```bash
+pnpm exec playwright install
+```
+
 Next, make sure you have set up your [env variables](#_4-adding-the-env-variables). Now you are ready to run the tests! You have the following options for running tests:
 
 - `pnpm test [package?]` — runs tests in watch mode
@@ -166,6 +172,12 @@ Use [Taze](https://github.com/antfu/taze) by running:
 pnpm deps       # prints outdated deps
 pnpm deps patch # print outdated deps with new patch versions
 pnpm deps -w    # updates deps (best done with clean working tree)
+```
+
+Update GitHub Actions via [Actions Up!](https://github.com/azat-io/actions-up) by running:
+
+```bash
+pnpm deps:ci
 ```
 
 [Socket](https://socket.dev) checks pull requests for vulnerabilities when new dependencies and versions are added, but you should also be vigilant! When updating dependencies, you should check release notes and source code as well as lock versions when possible.

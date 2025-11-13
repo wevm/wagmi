@@ -9,24 +9,25 @@ function format(args: any[]) {
 }
 
 export function success(...args: any[]) {
-  // biome-ignore lint/suspicious/noConsoleLog: console.log is used for logging
   console.log(pc.green(format(args)))
 }
 
 export function info(...args: any[]) {
+  // biome-ignore lint/suspicious/noConsole: logger
   console.info(pc.blue(format(args)))
 }
 
 export function log(...args: any[]) {
-  // biome-ignore lint/suspicious/noConsoleLog: console.log is used for logging
   console.log(pc.white(format(args)))
 }
 
 export function warn(...args: any[]) {
+  // biome-ignore lint/suspicious/noConsole: logger
   console.warn(pc.yellow(format(args)))
 }
 
 export function error(...args: any[]) {
+  // biome-ignore lint/suspicious/noConsole: logger
   console.error(pc.red(format(args)))
 }
 

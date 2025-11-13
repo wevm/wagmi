@@ -19,7 +19,7 @@ test('default', () => {
       "queryKey": [
         "prepareTransactionRequest",
         {
-          "to": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "to": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "value": 1000000000000000000n,
         },
       ],
@@ -54,7 +54,7 @@ test('parameters: account', () => {
             "source": "privateKey",
             "type": "local",
           },
-          "to": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "to": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "value": 1000000000000000000n,
         },
       ],
@@ -76,7 +76,7 @@ test('parameters: data', () => {
         "prepareTransactionRequest",
         {
           "data": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-          "to": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "to": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "value": 1000000000000000000n,
         },
       ],
@@ -98,7 +98,7 @@ test('parameters: chainId', () => {
         "prepareTransactionRequest",
         {
           "chainId": 456,
-          "to": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "to": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "value": 1000000000000000000n,
         },
       ],
@@ -120,7 +120,7 @@ test('parameters: nonce', () => {
         "prepareTransactionRequest",
         {
           "nonce": 5,
-          "to": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "to": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "value": 1000000000000000000n,
         },
       ],
@@ -142,7 +142,7 @@ test('parameters: gasPrice', () => {
         "prepareTransactionRequest",
         {
           "gasPrice": 10000000000n,
-          "to": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "to": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "value": 1000000000000000000n,
         },
       ],
@@ -164,7 +164,7 @@ test('parameters: maxFeePerGas', () => {
         "prepareTransactionRequest",
         {
           "maxFeePerGas": 100000000000n,
-          "to": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "to": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "value": 1000000000000000000n,
         },
       ],
@@ -186,7 +186,7 @@ test('parameters: maxPriorityFeePerGas', () => {
         "prepareTransactionRequest",
         {
           "maxPriorityFeePerGas": 5000000000n,
-          "to": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "to": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "value": 1000000000000000000n,
         },
       ],
@@ -207,7 +207,7 @@ test('parameters: type', () => {
       "queryKey": [
         "prepareTransactionRequest",
         {
-          "to": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "to": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "type": "eip1559",
           "value": 1000000000000000000n,
         },
@@ -232,7 +232,7 @@ test('parameters: parameters', () => {
           "parameters": [
             "gas",
           ],
-          "to": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "to": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "value": 1000000000000000000n,
         },
       ],

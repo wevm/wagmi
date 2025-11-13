@@ -27,7 +27,6 @@ import type {
 } from 'viem'
 import type { WriteContractParameters as viem_WriteContractParameters } from 'viem/actions'
 
-import { useAccount } from '../useAccount.js'
 import { useChainId } from '../useChainId.js'
 import { useConfig } from '../useConfig.js'
 import {
@@ -158,19 +157,15 @@ export function createUseWriteContract<
       const config = useConfig(parameters)
       const result = useWriteContract(parameters)
       const configChainId = useChainId({ config })
-      const account = useAccount({ config })
       type Args = Parameters<wagmi_UseWriteContractReturnType['writeContract']>
       return {
         ...(result as any),
         writeContract: useCallback(
           (...args: Args) => {
-            let chainId: number | undefined
-            if (args[0].chainId) chainId = args[0].chainId
-            else if (args[0].account && args[0].account === account.address)
-              chainId = account.chainId
-            else if (args[0].account === undefined) chainId = account.chainId
-            else chainId = configChainId
-
+            const chainId = (() => {
+              if (args[0].chainId) return args[0].chainId
+              return configChainId
+            })()
             const variables = {
               ...(args[0] as any),
               address: chainId ? props.address?.[chainId] : undefined,
@@ -181,23 +176,14 @@ export function createUseWriteContract<
             }
             result.writeContract(variables, args[1] as any)
           },
-          [
-            account.address,
-            account.chainId,
-            props,
-            configChainId,
-            result.writeContract,
-          ],
+          [props, configChainId, result.writeContract],
         ),
         writeContractAsync: useCallback(
           (...args: Args) => {
-            let chainId: number | undefined
-            if (args[0].chainId) chainId = args[0].chainId
-            else if (args[0].account && args[0].account === account.address)
-              chainId = account.chainId
-            else if (args[0].account === undefined) chainId = account.chainId
-            else chainId = configChainId
-
+            const chainId = (() => {
+              if (args[0].chainId) return args[0].chainId
+              return configChainId
+            })()
             const variables = {
               ...(args[0] as any),
               address: chainId ? props.address?.[chainId] : undefined,
@@ -208,13 +194,7 @@ export function createUseWriteContract<
             }
             return result.writeContractAsync(variables, args[1] as any)
           },
-          [
-            account.address,
-            account.chainId,
-            props,
-            configChainId,
-            result.writeContractAsync,
-          ],
+          [props, configChainId, result.writeContractAsync],
         ),
       }
     }

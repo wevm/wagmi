@@ -1,7 +1,7 @@
 {
   "name": "@wagmi/vue",
   "description": "Vue Composables for Ethereum",
-  "version": "0.1.18",
+  "version": "0.3.3",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -24,6 +24,7 @@
     "/actions",
     "/chains",
     "/connectors",
+    "/internal",
     "/nuxt",
     "/query"
   ],
@@ -53,6 +54,10 @@
       "types": "./dist/types/exports/connectors.d.ts",
       "default": "./dist/esm/exports/connectors.js"
     },
+    "./internal": {
+      "types": "./dist/types/exports/internal.d.ts",
+      "default": "./dist/esm/exports/internal.js"
+    },
     "./nuxt": {
       "types": "./dist/types/exports/nuxt.d.ts",
       "default": "./dist/esm/exports/nuxt.js"
@@ -65,16 +70,29 @@
   },
   "typesVersions": {
     "*": {
-      "actions": ["./dist/types/exports/actions.d.ts"],
-      "chains": ["./dist/types/exports/chains.d.ts"],
-      "connectors": ["./dist/types/exports/connectors.d.ts"],
-      "nuxt": ["./dist/types/exports/nuxt.d.ts"],
-      "query": ["./dist/types/exports/query.d.ts"]
+      "actions": [
+        "./dist/types/exports/actions.d.ts"
+      ],
+      "chains": [
+        "./dist/types/exports/chains.d.ts"
+      ],
+      "connectors": [
+        "./dist/types/exports/connectors.d.ts"
+      ],
+      "internal": [
+        "./dist/types/exports/internal.d.ts"
+      ],
+      "nuxt": [
+        "./dist/types/exports/nuxt.d.ts"
+      ],
+      "query": [
+        "./dist/types/exports/query.d.ts"
+      ]
     }
   },
   "peerDependencies": {
     "@tanstack/vue-query": ">=5.0.0",
-    "nuxt": ">=3.0.0",
+    "nuxt": ">=3.0.0 || >=4.0.0",
     "typescript": ">=5.0.4",
     "viem": "2.x",
     "vue": ">=3"
@@ -92,13 +110,16 @@
     "@wagmi/core": "workspace:*"
   },
   "devDependencies": {
-    "@nuxt/schema": "^3.11.2",
+    "@nuxt/schema": "^3.19.2 || ^4.0.0",
     "@tanstack/vue-query": "catalog:",
     "@vue/test-utils": "^2.4.6",
-    "nuxt": "^3.11.2",
+    "nuxt": "^3.19.2 || ^4.0.0",
     "vue": "catalog:"
   },
-  "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
+  "contributors": [
+    "awkweb.eth <t@wevm.dev>",
+    "jxom.eth <j@wevm.dev>"
+  ],
   "funding": "https://github.com/sponsors/wevm",
   "keywords": [
     "wagmi",

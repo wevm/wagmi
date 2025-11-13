@@ -5,8 +5,7 @@
   "typescript.preferences.importModuleSpecifier": "shortest",
   "typescript.tsdk": "node_modules/typescript/lib",
   "editor.codeActionsOnSave": {
-    "quickfix.biome": "explicit",
-    "source.organizeImports.biome": "explicit"
+    "source.fixAll.biome": "explicit"
   },
   "[javascript][javascriptreact][json][typescript][typescriptreact]": {
     "editor.defaultFormatter": "biomejs.biome"

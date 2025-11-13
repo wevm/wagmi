@@ -19,7 +19,7 @@ test('default', () => {
       "queryKey": [
         "verifyMessage",
         {
-          "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "address": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "message": "This is a test message for viem!",
           "signature": "0xefd5fb29a274ea6682673d8b3caa9263e936d48d486e5df68893003e0a76496439594d12245008c6fba1c8e3ef28241cffe1bef27ff6bca487b167f261f329251c",
         },
@@ -43,7 +43,7 @@ test('parameters: chainId', () => {
       "queryKey": [
         "verifyMessage",
         {
-          "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "address": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "chainId": 456,
           "message": "This is a test message for viem!",
           "signature": "0xefd5fb29a274ea6682673d8b3caa9263e936d48d486e5df68893003e0a76496439594d12245008c6fba1c8e3ef28241cffe1bef27ff6bca487b167f261f329251c",
@@ -68,7 +68,7 @@ test('parameters: blockNumber', () => {
       "queryKey": [
         "verifyMessage",
         {
-          "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "address": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "blockNumber": 1234567890n,
           "message": "This is a test message for viem!",
           "signature": "0xefd5fb29a274ea6682673d8b3caa9263e936d48d486e5df68893003e0a76496439594d12245008c6fba1c8e3ef28241cffe1bef27ff6bca487b167f261f329251c",
@@ -93,7 +93,7 @@ test('parameters: blockTag', () => {
       "queryKey": [
         "verifyMessage",
         {
-          "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "address": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "blockTag": "safe",
           "message": "This is a test message for viem!",
           "signature": "0xefd5fb29a274ea6682673d8b3caa9263e936d48d486e5df68893003e0a76496439594d12245008c6fba1c8e3ef28241cffe1bef27ff6bca487b167f261f329251c",

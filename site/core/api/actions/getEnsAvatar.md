@@ -207,4 +207,4 @@ import { type getEnsAvatarError } from '@wagmi/core'
 
 ## Viem
 
-- [`getEnsAvatar`](https://viem.sh/docs/ens/actions/getEnsAvatar.html)
+- [`getEnsAvatar`](https://viem.sh/docs/ens/actions/getEnsAvatar)

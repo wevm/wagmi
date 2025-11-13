@@ -7,9 +7,9 @@ import type {
 import {
   ChainNotConfiguredError,
   type Connector,
-  ProviderNotFoundError,
   createConnector,
   extractRpcUrls,
+  ProviderNotFoundError,
 } from '@wagmi/core'
 import type {
   Compute,
@@ -21,16 +21,16 @@ import type {
 import {
   type AddEthereumChainParameter,
   type Address,
+  getAddress,
   type Hex,
+  hexToNumber,
+  numberToHex,
   type ProviderConnectInfo,
   type ProviderRpcError,
   ResourceUnavailableRpcError,
   type RpcError,
   SwitchChainError,
   UserRejectedRequestError,
-  getAddress,
-  hexToNumber,
-  numberToHex,
   withRetry,
   withTimeout,
 } from 'viem'
@@ -113,7 +113,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         }
       }
     },
-    async connect({ chainId, isReconnecting } = {}) {
+    async connect({ chainId, isReconnecting, withCapabilities } = {}) {
       const provider = await this.getProvider()
       if (!displayUri) {
         displayUri = this.onDisplayUri
@@ -191,7 +191,13 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           provider.on('disconnect', disconnect as Listener)
         }
 
-        return { accounts, chainId: currentChainId }
+        return {
+          // TODO(v3): Make `withCapabilities: true` default behavior
+          accounts: (withCapabilities
+            ? accounts.map((address) => ({ address, capabilities: {} }))
+            : accounts) as never,
+          chainId: currentChainId,
+        }
       } catch (err) {
         const error = err as RpcError
         if (error.code === UserRejectedRequestError.code)

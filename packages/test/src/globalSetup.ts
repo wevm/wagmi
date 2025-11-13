@@ -13,11 +13,14 @@ export default async function () {
           forkUrl: chain.fork.url,
           forkBlockNumber: chain.fork.blockNumber,
           noMining: true,
+          // @ts-expect-error
+          mnemonicSeedUnsafe: 1,
         }),
         port: chain.port,
       }).start(),
     )
   }
+
   const results = await Promise.all(promises)
 
   return async () => {

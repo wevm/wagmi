@@ -6,22 +6,24 @@ import path from 'node:path'
 console.log('Restoring package.json files.')
 
 // Get all package.json files
-const packagePaths = await Array.fromAsync(
-  new Bun.Glob('packages/**/package.json.tmp').scan(),
-)
+const packagePaths = fs.glob('packages/**/package.json.tmp', {
+  exclude: ['**/dist/**', '**/node_modules/**'],
+})
 
 let count = 0
-for (const packagePath of packagePaths) {
+for await (const packagePath of packagePaths) {
   type Package = { name?: string | undefined } & Record<string, unknown>
-  const file = Bun.file(packagePath)
-  const packageJson = (await file.json()) as Package
+  const packageJson = JSON.parse(
+    await fs.readFile(packagePath, 'utf-8'),
+  ) as Package
 
   count += 1
   console.log(`${packageJson.name} — ${path.dirname(packagePath)}`)
 
-  await Bun.write(
+  await fs.writeFile(
     packagePath.replace('.tmp', ''),
     `${JSON.stringify(packageJson, undefined, 2)}\n`,
+    'utf-8',
   )
   await fs.rm(packagePath)
 }

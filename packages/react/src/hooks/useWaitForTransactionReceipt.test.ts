@@ -1,16 +1,16 @@
 import { wait } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
-import { expect, test } from 'vitest'
+import { renderHook } from '@wagmi/test/react'
+import { expect, test, vi } from 'vitest'
 import { useWaitForTransactionReceipt } from './useWaitForTransactionReceipt.js'
 
 test('default', async () => {
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useWaitForTransactionReceipt({
       hash: '0x60668ed8c2dc110d61d945a936fcd45b8f13654e5c78481c8c825d1148c7ef30',
     }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result).toMatchInlineSnapshot(`
     {
@@ -68,10 +68,10 @@ test('default', async () => {
 })
 
 test('disabled when hash is undefined', async () => {
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useWaitForTransactionReceipt({ hash: undefined }),
   )
 
   await wait(100)
-  await waitFor(() => expect(result.current.isPending).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isPending).toBeTruthy())
 })

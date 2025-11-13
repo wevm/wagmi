@@ -66,6 +66,7 @@ export async function writeContracts<
 
   const client = await getConnectorClient(config, {
     account,
+    assertChainId: false,
     chainId,
     connector,
   })

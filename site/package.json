@@ -17,11 +17,12 @@
     "@wagmi/core": "workspace:*",
     "@wagmi/vue": "workspace:*",
     "abitype": "*",
-    "nuxt": "^3.11.2",
+    "nuxt": "^3.19.2",
     "react": "catalog:",
     "unocss": "^0.59.4",
     "viem": "2.*",
     "vitepress": "1.5.0",
+    "vitepress-plugin-llms": "^1.7.5",
     "vue": "catalog:",
     "wagmi": "workspace:*"
   }

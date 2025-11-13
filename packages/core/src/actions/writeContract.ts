@@ -47,7 +47,7 @@ export type WriteContractParameters<
 > = UnionCompute<
   {
     // TODO: Should use `UnionStrictOmit<..., 'chain'>` on `viem_WriteContractParameters` result instead
-    // temp workaround that doesn't affect runtime behavior for for https://github.com/wevm/wagmi/issues/3981
+    // temp workaround that doesn't affect runtime behavior for https://github.com/wevm/wagmi/issues/3981
     [key in keyof chains]: viem_WriteContractParameters<
       abi,
       functionName,
@@ -99,6 +99,7 @@ export async function writeContract<
   else
     client = await getConnectorClient(config, {
       account: account ?? undefined,
+      assertChainId: false,
       chainId,
       connector,
     })

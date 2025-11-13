@@ -1,8 +1,8 @@
 import { connect, disconnect } from '@wagmi/core'
 import { accounts, config, testClient, wait } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
+import { renderHook } from '@wagmi/test/react'
 import { parseEther } from 'viem'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 
 import { useSendCalls } from './useSendCalls.js'
 import { useWaitForCallsStatus } from './useWaitForCallsStatus.js'
@@ -12,8 +12,8 @@ const connector = config.connectors[0]!
 test('default', async () => {
   await connect(config, { connector })
 
-  const useSendCalls_render = renderHook(() => useSendCalls())
-  const useWaitForCallsStatus_render = renderHook(() =>
+  const useSendCalls_render = await renderHook(() => useSendCalls())
+  const useWaitForCallsStatus_render = await renderHook(() =>
     useWaitForCallsStatus({ id: useSendCalls_render.result.current.data?.id }),
   )
 
@@ -34,9 +34,10 @@ test('default', async () => {
       },
     ],
   })
-  await waitFor(() =>
-    expect(useSendCalls_render.result.current.isSuccess).toBeTruthy(),
-  )
+
+  await vi.waitUntil(() => useSendCalls_render.result.current.isSuccess, {
+    timeout: 5_000,
+  })
 
   expect(useWaitForCallsStatus_render.result.current.fetchStatus).toBe('idle')
   useWaitForCallsStatus_render.rerender()
@@ -44,17 +45,13 @@ test('default', async () => {
     'fetching',
   )
 
-  await Promise.all([
-    waitFor(() =>
-      expect(
-        useWaitForCallsStatus_render.result.current.isSuccess,
-      ).toBeTruthy(),
-    ),
-    (async () => {
-      await wait(100)
-      await testClient.mainnet.mine({ blocks: 1 })
-    })(),
-  ])
+  await wait(0)
+  await testClient.mainnet.mine({ blocks: 1 })
+
+  await vi.waitUntil(
+    () => useWaitForCallsStatus_render.result.current.isSuccess,
+    { timeout: 5_000 },
+  )
 
   expect(useWaitForCallsStatus_render.result.current.data?.status).toBe(
     'success',
@@ -69,27 +66,27 @@ test('default', async () => {
     [
       {
         "blockHash": undefined,
-        "blockNumber": 19258214n,
-        "gasUsed": 21064n,
+        "blockNumber": 23535881n,
+        "gasUsed": 21160n,
         "logs": [],
         "status": "success",
-        "transactionHash": "0x13c53b2d4d9da424835525349cd66e553330f323d6fb19458b801ae1f7989a41",
+        "transactionHash": "0x7add018cb41f4b86d793758248d20cb8394364d9379d201cb7747db29c4aac18",
       },
       {
         "blockHash": undefined,
-        "blockNumber": 19258214n,
+        "blockNumber": 23535881n,
         "gasUsed": 21000n,
         "logs": [],
         "status": "success",
-        "transactionHash": "0xd8397b3e82b061c26a0c2093f1ceca0c3662a512614f7d6370349e89d0eea007",
+        "transactionHash": "0x5019ef03b9ee83c6398d1a68490b56878300c1f83697c3b3eeaf666baf63abff",
       },
       {
         "blockHash": undefined,
-        "blockNumber": 19258214n,
+        "blockNumber": 23535881n,
         "gasUsed": 21000n,
         "logs": [],
         "status": "success",
-        "transactionHash": "0x4d26e346593d9ea265bb164b115e89aa92df43b0b8778ac75d4ad28e2a22b101",
+        "transactionHash": "0xe61204827da836e4bc51fbfe15f04e5b1307c50f160d1add15675c8654663f20",
       },
     ]
   `,

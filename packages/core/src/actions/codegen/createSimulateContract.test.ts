@@ -3,6 +3,7 @@ import { expect, test } from 'vitest'
 
 import { connect } from '../connect.js'
 import { disconnect } from '../disconnect.js'
+import { switchChain } from '../switchChain.js'
 import { createSimulateContract } from './createSimulateContract.js'
 
 const connector = config.connectors[0]!
@@ -33,7 +34,7 @@ test('default', async () => {
           },
         ],
         "account": {
-          "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "address": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "type": "json-rpc",
         },
         "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
@@ -63,6 +64,15 @@ test('multichain', async () => {
   await expect(
     simulateWagmiMintExample(config, {
       functionName: 'mint',
+    }),
+  ).resolves.toMatchObject({
+    chainId: 1,
+  })
+
+  await switchChain(config, { chainId: chain.mainnet2.id })
+  await expect(
+    simulateWagmiMintExample(config, {
+      functionName: 'mint',
       chainId: chain.mainnet2.id,
     }),
   ).resolves.toMatchInlineSnapshot(`
@@ -79,7 +89,7 @@ test('multichain', async () => {
           },
         ],
         "account": {
-          "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "address": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "type": "json-rpc",
         },
         "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
@@ -92,6 +102,7 @@ test('multichain', async () => {
     }
   `)
 
+  await switchChain(config, { chainId: chain.mainnet.id })
   await disconnect(config, { connector })
 })
 
@@ -120,7 +131,7 @@ test('functionName', async () => {
           },
         ],
         "account": {
-          "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "address": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "type": "json-rpc",
         },
         "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",

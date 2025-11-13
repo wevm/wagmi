@@ -13,7 +13,7 @@
   "dependencies": {
     "@tanstack/vue-query": ">=5.45.0",
     "@wagmi/vue": "latest",
-    "nuxt": "^3.11.2",
+    "nuxt": "^3.19.2",
     "viem": "latest",
     "vue": ">=3.4.21",
     "vue-router": "^4.3.2"

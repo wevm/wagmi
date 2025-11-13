@@ -23,6 +23,19 @@
       <img src="https://img.shields.io/npm/v/wagmi?colorA=f6f8fa&colorB=f6f8fa" alt="Version">
     </picture>
   </a>
+  <a href="https://scorecard.dev/viewer/?uri=github.com/ossf/scorecard">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/ossf-scorecard/github.com/wevm/wagmi?label=openssf+scorecard&style=flat&color=21262d&labelColor=21262d">
+      <img src="https://img.shields.io/ossf-scorecard/github.com/wevm/wagmi?label=openssf+scorecard&style=flat&color=f6f8fa&labelColor=f6f8fa" alt="OpenSSF Best Practices">
+    </picture>
+  </a>
+  <a href="https://www.bestpractices.dev/en/projects/11233">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/openssf_best_practices-passing-21262d?labelColor=21262d">
+      <img src="https://img.shields.io/badge/openssf_best_practices-passing-f6f8fa?labelColor=f6f8fa" alt="OpenSSF Best Practices">
+    </picture>
+  </a>
+  <br />
   <a href="https://github.com/wevm/wagmi/blob/main/LICENSE">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/l/wagmi?colorA=21262d&colorB=21262d">
@@ -237,6 +250,12 @@ If you find Wagmi useful or use it for work, please consider [sponsoring Wagmi](
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/sequence-dark.svg">
       <img alt="sequence logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/sequence-light.svg" width="auto" height="50">
+    </picture>
+  </a>
+  <a href="https://gemini.com">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/gemini-dark.svg">
+      <img alt="gemini logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/gemini-light.svg" width="auto" height="50">
     </picture>
   </a>
 </p>

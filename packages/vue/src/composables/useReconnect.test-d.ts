@@ -4,9 +4,8 @@ import type {
   ReconnectErrorType,
 } from '@wagmi/core'
 import { config } from '@wagmi/test'
-import { expectTypeOf, test } from 'vitest'
-
 import type { Address } from 'viem'
+import { expectTypeOf, test } from 'vitest'
 import { useReconnect } from './useReconnect.js'
 
 const connectors = [config.connectors[0]!]

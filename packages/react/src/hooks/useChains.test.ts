@@ -1,12 +1,12 @@
 import { config } from '@wagmi/test'
 import { renderHook } from '@wagmi/test/react'
-import { Fragment, createElement } from 'react'
+import { createElement, Fragment } from 'react'
 import { expect, test } from 'vitest'
 
 import { useChains } from './useChains.js'
 
 test('default', async () => {
-  const { result } = renderHook(() => useChains())
+  const { result } = await renderHook(() => useChains())
 
   expect(result.current.map((x) => x.id)).toMatchInlineSnapshot(`
     [
@@ -17,8 +17,8 @@ test('default', async () => {
   `)
 })
 
-test('parameters: config', () => {
-  const { result } = renderHook(() => useChains({ config }), {
+test('parameters: config', async () => {
+  const { result } = await renderHook(() => useChains({ config }), {
     wrapper: ({ children }) => createElement(Fragment, { children }),
   })
   expect(result.current.map((x) => x.id)).toMatchInlineSnapshot(`
