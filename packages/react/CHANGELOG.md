@@ -1,5 +1,11 @@
 # wagmi
 
+## 2.19.4
+
+### Patch Changes
+
+- Optimized internal `chainId` computation for `useReadContracts` to reduce unnecessary query invalidations. ([#4872](https://github.com/wevm/wagmi/pull/4872))
+
 ## 2.19.3
 
 ### Patch Changes
