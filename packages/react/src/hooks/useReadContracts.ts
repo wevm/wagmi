@@ -62,10 +62,21 @@ export function useReadContracts<
 
   const config = useConfig(parameters)
   const chainId = useChainId({ config })
+  const contractsChainId = useMemo(() => {
+    if (contracts.length === 0) return undefined
+    const firstChainId = (contracts[0] as { chainId?: number }).chainId
+    if (
+      (contracts as { chainId?: number }[]).every(
+        (contract) => contract.chainId === firstChainId,
+      )
+    )
+      return firstChainId
+    return undefined
+  }, [contracts])
 
   const options = readContractsQueryOptions<config, contracts, allowFailure>(
     config,
-    { ...parameters, chainId },
+    { ...parameters, chainId: contractsChainId ?? chainId },
   )
 
   const enabled = useMemo(() => {

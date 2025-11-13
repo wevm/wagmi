@@ -1,7 +1,7 @@
-import { abi, address, chain } from '@wagmi/test'
+import { switchChain } from '@wagmi/core'
+import { abi, address, chain, config } from '@wagmi/test'
 import { renderHook } from '@wagmi/test/react'
 import { expect, test, vi } from 'vitest'
-
 import { useReadContracts } from './useReadContracts.js'
 
 test('default', async () => {
@@ -85,7 +85,7 @@ test('default', async () => {
   `)
 })
 
-test.skip('multichain', async () => {
+test('multichain', async () => {
   const { mainnet, mainnet2, optimism } = chain
   const { result } = await renderHook(() =>
     useReadContracts({
@@ -141,7 +141,7 @@ test.skip('multichain', async () => {
     }),
   )
 
-  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 10_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -251,6 +251,114 @@ test.skip('multichain', async () => {
               ],
               "chainId": 10,
               "functionName": "balanceOf",
+            },
+          ],
+        },
+      ],
+      "refetch": [Function],
+      "status": "success",
+    }
+  `)
+})
+
+test('behavior: all same chainId', async () => {
+  const { mainnet, mainnet2 } = chain
+  await switchChain(config, { chainId: mainnet2.id })
+  const { result } = await renderHook(() =>
+    useReadContracts({
+      contracts: [
+        {
+          abi: abi.wagmigotchi,
+          address: address.wagmigotchi,
+          chainId: mainnet.id,
+          functionName: 'love',
+          args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
+        },
+        {
+          abi: abi.wagmigotchi,
+          address: address.wagmigotchi,
+          chainId: mainnet.id,
+          functionName: 'love',
+          args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
+        },
+        {
+          abi: abi.wagmigotchi,
+          address: address.wagmigotchi,
+          chainId: mainnet.id,
+          functionName: 'love',
+          args: ['0xd2135CfB216b74109775236E36d4b433F1DF507B'],
+        },
+      ],
+    }),
+  )
+
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 10_000 })
+
+  expect(result.current).toMatchInlineSnapshot(`
+    {
+      "data": [
+        {
+          "result": 2n,
+          "status": "success",
+        },
+        {
+          "result": 1n,
+          "status": "success",
+        },
+        {
+          "result": 0n,
+          "status": "success",
+        },
+      ],
+      "dataUpdatedAt": 1675209600000,
+      "error": null,
+      "errorUpdateCount": 0,
+      "errorUpdatedAt": 0,
+      "failureCount": 0,
+      "failureReason": null,
+      "fetchStatus": "idle",
+      "isError": false,
+      "isFetched": true,
+      "isFetchedAfterMount": true,
+      "isFetching": false,
+      "isInitialLoading": false,
+      "isLoading": false,
+      "isLoadingError": false,
+      "isPaused": false,
+      "isPending": false,
+      "isPlaceholderData": false,
+      "isRefetchError": false,
+      "isRefetching": false,
+      "isStale": true,
+      "isSuccess": true,
+      "queryKey": [
+        "readContracts",
+        {
+          "chainId": 1,
+          "contracts": [
+            {
+              "address": "0xecb504d39723b0be0e3a9aa33d646642d1051ee1",
+              "args": [
+                "0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c",
+              ],
+              "chainId": 1,
+              "functionName": "love",
+            },
+            {
+              "address": "0xecb504d39723b0be0e3a9aa33d646642d1051ee1",
+              "args": [
+                "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
+              ],
+              "chainId": 1,
+              "functionName": "love",
+            },
+            {
+              "address": "0xecb504d39723b0be0e3a9aa33d646642d1051ee1",
+              "args": [
+                "0xd2135CfB216b74109775236E36d4b433F1DF507B",
+              ],
+              "chainId": 1,
+              "functionName": "love",
             },
           ],
         },
