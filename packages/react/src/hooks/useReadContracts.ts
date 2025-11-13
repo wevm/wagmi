@@ -63,8 +63,8 @@ export function useReadContracts<
   const config = useConfig(parameters)
   const chainId = useChainId({ config })
   const contractsChainId = useMemo(() => {
-    if (contracts.length === 0) return undefined
-    const firstChainId = (contracts[0] as { chainId?: number }).chainId
+    const firstChainId = (contracts[0] as { chainId?: number } | undefined)
+      ?.chainId
     if (
       (contracts as { chainId?: number }[]).every(
         (contract) => contract.chainId === firstChainId,

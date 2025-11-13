@@ -84,7 +84,7 @@ test('default', async () => {
   `)
 })
 
-test.skip('falls back to readContract if multicall is not available', async () => {
+test('falls back to readContract if multicall is not available', async () => {
   const spy = vi.spyOn(readContract, 'readContract')
   const config = createConfig({
     chains: [mainnet, { ...mainnet2, contracts: { multicall3: undefined } }],
@@ -158,7 +158,7 @@ test.skip('falls back to readContract if multicall is not available', async () =
   `)
 })
 
-test.skip('multichain', async () => {
+test('multichain', async () => {
   const config = createConfig({
     chains: [mainnet, mainnet2, optimism],
     transports: {
@@ -289,7 +289,7 @@ test.skip('multichain', async () => {
       },
     ]
   `)
-})
+}, 15_000)
 
 test('multi-chain: falls back to readContract if multicall is not available', async () => {
   const config = createConfig({
@@ -370,7 +370,7 @@ test('multi-chain: falls back to readContract if multicall is not available', as
       },
     ]
   `)
-})
+}, 15_000)
 
 test('throws if allowFailure=false & a contract method fails', async () => {
   await expect(

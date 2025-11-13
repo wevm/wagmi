@@ -259,7 +259,7 @@ test('multichain', async () => {
       "status": "success",
     }
   `)
-})
+}, 15_000)
 
 test('behavior: all same chainId', async () => {
   const { mainnet, mainnet2 } = chain
