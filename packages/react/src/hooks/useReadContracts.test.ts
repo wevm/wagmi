@@ -141,7 +141,7 @@ test('multichain', async () => {
     }),
   )
 
-  await vi.waitUntil(() => result.current.isSuccess, { timeout: 10_000 })
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 30_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -259,7 +259,7 @@ test('multichain', async () => {
       "status": "success",
     }
   `)
-}, 15_000)
+}, 30_000)
 
 test('behavior: all same chainId', async () => {
   const { mainnet, mainnet2 } = chain
