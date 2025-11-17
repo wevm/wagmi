@@ -41,13 +41,7 @@ bun add @wagmi/core@3
 The Wagmi v2 docs are still available at [2.x.wagmi.sh/core](https://2.x.wagmi.sh/core).
 :::
 
-## Install Connector Dependencies
-
 <!-- @include: @shared/migrate-from-v2-to-v3.md -->
-
-## Migrate v2 Deprecations
-
-[v2 deprecations](/core/guides/migrate-from-v1-to-v2#deprecations) are now removed. Review the [v2 migration guide](/core/guides/migrate-from-v1-to-v2#deprecations) for more information.
 
 ## Deprecations
 

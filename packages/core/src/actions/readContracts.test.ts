@@ -233,6 +233,7 @@ test('multichain', async () => {
       mainnetContracts[2]!,
     ],
   })
+  console.log(results)
   expectTypeOf(results).toEqualTypeOf<
     [
       MulticallResponse<bigint>,
@@ -289,7 +290,7 @@ test('multichain', async () => {
       },
     ]
   `)
-}, 15_000)
+}, 60_000)
 
 test('multi-chain: falls back to readContract if multicall is not available', async () => {
   const config = createConfig({

@@ -44,7 +44,7 @@
     "@wagmi/core": "workspace:*",
     "@walletconnect/ethereum-provider": "~2.21.1",
     "porto": "~0.2.35",
-    "typescript": ">=5.0.4",
+    "typescript": ">=5.7.3",
     "viem": "2.x"
   },
   "peerDependenciesMeta": {

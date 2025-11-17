@@ -6,6 +6,7 @@ const docsPath = 'react'
 </script>
 -->
 
+## Install Connector Dependencies
 
 All connector dependencies are now optional peer dependencies. This means that if you want to use a specific connector, you need to install its required dependencies. 
 
@@ -187,3 +188,12 @@ yarn add @walletconnect/ethereum-provider@{{packageJson?.peerDependencies?.['@wa
 bun add @walletconnect/ethereum-provider@{{packageJson?.peerDependencies?.['@walletconnect/ethereum-provider']}}
 ```
 :::
+
+
+## Bumped Minimum TypeScript Version
+
+The minimum supported TypeScript version is now `5.7.3` instead of `5.0.4`. Older versions of TypeScript should continue to work, but since [TypeScript doesn't follow semver](https://www.learningtypescript.com/articles/why-typescript-doesnt-follow-strict-semantic-versioning) we recommend you update to at least `5.7.3`. This should be relatively simple as there haven't been any breaking changes since `5.0.4`.
+
+## Migrate v2 Deprecations
+
+<a :href="`/${docsPath}/guides/migrate-from-v1-to-v2#deprecations`">v2 deprecations</a> Review the <a :href="`/${docsPath}/guides/migrate-from-v1-to-v2#deprecations`">v2 migration guide</a> for more information.

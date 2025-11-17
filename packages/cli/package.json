@@ -59,7 +59,7 @@
     }
   },
   "peerDependencies": {
-    "typescript": ">=5.0.4"
+    "typescript": ">=5.7.3"
   },
   "peerDependenciesMeta": {
     "typescript": {
