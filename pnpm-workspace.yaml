@@ -5,67 +5,73 @@ auditConfig:
     - GHSA-qpm2-6cq5-7pq5 # happy-dom@<20.0.2
     - GHSA-93m4-6634-74q7 # vite@>=7.1.0 <=7.1.10
     - GHSA-29xp-372q-xqph # tar@=7.5.1
+    - GHSA-mh29-5h37-fv8m # js-yaml@>=4.1.1
 autoInstallPeers: false
 catalog:
-  "@base-org/account": "2.4.0"
-  "@coinbase/wallet-sdk": "4.3.6"
-  "@gemini-wallet/core": "0.3.2"
-  "@metamask/sdk": "0.33.1"
-  "@safe-global/safe-apps-provider": "0.18.6"
-  "@safe-global/safe-apps-sdk": "9.1.0"
-  "@tanstack/query-core": "5.49.1"
-  "@tanstack/react-query": "5.49.2"
-  "@tanstack/vue-query": "5.49.1"
-  "@types/react": "^19.2.0"
-  "@types/react-dom": "^19.2.0"
-  "@vitejs/plugin-react": "^4.3.3"
-  "@vitejs/plugin-vue": "6.0.1"
-  "@walletconnect/ethereum-provider": "2.21.1"
-  porto: "0.2.35"
-  react-dom: "19.2.0"
-  react: "19.2.0"
-  vite: "7.2.2"
-  vue: "3.4.27"
+  '@base-org/account': 2.4.0
+  '@coinbase/wallet-sdk': 4.3.6
+  '@gemini-wallet/core': 0.3.2
+  '@metamask/sdk': 0.33.1
+  '@safe-global/safe-apps-provider': 0.18.6
+  '@safe-global/safe-apps-sdk': 9.1.0
+  '@tanstack/query-core': 5.49.1
+  '@tanstack/react-query': 5.49.2
+  '@tanstack/vue-query': 5.49.1
+  '@types/react': ^19.2.0
+  '@types/react-dom': ^19.2.0
+  '@vitejs/plugin-react': ^4.3.3
+  '@vitejs/plugin-vue': 6.0.1
+  '@walletconnect/ethereum-provider': 2.21.1
+  porto: 0.2.35
+  react: 19.2.0
+  react-dom: 19.2.0
+  vite: 7.2.2
+  vue: 3.4.27
 linkWorkspacePackages: deep
 minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
-  - "@gemini-wallet/core"
-  - "@wagmi/cli"
-  - "@wagmi/connectors"
-  - "@wagmi/core"
-  - "@wagmi/test"
-  - "@wagmi/vue"
+  - '@gemini-wallet/core'
+  - '@wagmi/cli'
+  - '@wagmi/connectors'
+  - '@wagmi/core'
+  - '@wagmi/test'
+  - '@wagmi/vue'
   - porto
   - wagmi
-overrides: 
-  "cookie@<0.7.0": "0.7.0"
-  "elliptic@<=6.6.0": ">=6.6.1"
-  "esbuild@<=0.24.2": "0.25.0"
-  "nanoid@<3.3.8": "3.3.8"
-  "semver@<5.7.2": ">=5.7.2"
-  "serialize-javascript@>=6.0.0 <6.0.2": "6.0.2"
-  "tmp@<=0.2.3": "0.2.4"
-  "ws@>=8.0.0 <8.17.1": "8.17.1"
+overrides:
+  cookie@<0.7.0: 0.7.0
+  elliptic@<=6.6.0: '>=6.6.1'
+  esbuild@<=0.24.2: 0.25.0
+  happy-dom@<20.0.2: '>=20.0.2'
+  js-yaml@<3.14.2: '>=3.14.2'
+  js-yaml@>=4.0.0 <4.1.1: '>=4.1.1'
+  nanoid@<3.3.8: 3.3.8
+  semver@<5.7.2: '>=5.7.2'
+  serialize-javascript@>=6.0.0 <6.0.2: 6.0.2
+  tar@=7.5.1: '>=7.5.2'
+  tmp@<=0.2.3: 0.2.4
+  vite@>=7.1.0 <=7.1.10: '>=7.1.11'
+  ws@>=8.0.0 <8.17.1: 8.17.1
 packages:
   - packages/*
-  - "!packages/register-tests"
+  - '!packages/register-tests'
   - packages/cli/src/plugins/__fixtures__/hardhat
   - packages/register-tests/*
   - playgrounds/*
   - site
 patchedDependencies:
-  prool: "patches/prool.patch" 
+  prool: patches/prool.patch
 peerDependencyRules:
   ignoreMissing:
-    - "@algolia/client-search"
+    - '@algolia/client-search'
     - react
     - react-native
     - search-insights
 trustPolicy: no-downgrade
 trustPolicyExclude:
-  - "@coinbase/cdp-sdk@1.38.4"
-  - "@noble/curves@1.8.0"
-  - "@noble/hashes@1.7.0"
+  - '@coinbase/cdp-sdk@1.38.4'
+  - '@noble/curves@1.8.0'
+  - '@noble/hashes@1.7.0'
   - chokidar@4.0.3
   - semver@6.3.1
   - undici@6.22.0
