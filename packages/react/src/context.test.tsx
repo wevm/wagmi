@@ -2,11 +2,14 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { connect, createConfig, http, mock } from '@wagmi/core'
 import { accounts, addressRegex, config, mainnet } from '@wagmi/test'
 import { render } from '@wagmi/test/react'
+import * as React from 'react'
 import { expect, test } from 'vitest'
 
 import { WagmiProvider } from './context.js'
 import { useConnection } from './hooks/useConnection.js'
 import { useConnectorClient } from './hooks/useConnectorClient.js'
+
+React
 
 test('default', async () => {
   function Component() {

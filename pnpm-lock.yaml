@@ -149,6 +149,9 @@ importers:
       viem:
         specifier: 2.38.0
         version: 2.38.0(bufferutil@4.0.8)(typescript@5.9.2)(utf-8-validate@5.0.10)(zod@4.1.11)
+      vite-plugin-react-fallback-throttle:
+        specifier: ^0.1.1
+        version: 0.1.1(react-dom@19.2.0(react@19.2.0))(vite@7.2.2(@types/node@24.6.2)(jiti@2.6.0)(terser@5.31.0)(tsx@4.20.6)(yaml@2.8.1))
       vitest:
         specifier: ^4.0.8
         version: 4.0.8(@types/node@24.6.2)(@vitest/browser-playwright@4.0.8)(happy-dom@20.0.0)(jiti@2.6.0)(msw@2.4.9(typescript@5.9.2))(terser@5.31.0)(tsx@4.20.6)(yaml@2.8.1)
@@ -8241,6 +8244,12 @@ packages:
     peerDependenciesMeta:
       '@nuxt/kit':
         optional: true
+
+  vite-plugin-react-fallback-throttle@0.1.1:
+    resolution: {integrity: sha512-3PegJQi4YIMJpY+LoZy1HRsKhqeRfxm3xexeEEZsIXKl6iFxykw1bNQyJYhnnr9POlrILHztScmQguuiehcLkw==}
+    peerDependencies:
+      react-dom: ^19.0.0
+      vite: '>=2.3.0 <8.0.0'
 
   vite-plugin-vue-tracer@1.0.1:
     resolution: {integrity: sha512-L5/vAhT6oYbH4RSQYGLN9VfHexWe7SGzca1pJ7oPkL6KtxWA1jbGeb3Ri1JptKzqtd42HinOq4uEYqzhVWrzig==}
@@ -17864,6 +17873,11 @@ snapshots:
       '@nuxt/kit': 3.19.2(magicast@0.3.5)
     transitivePeerDependencies:
       - supports-color
+
+  vite-plugin-react-fallback-throttle@0.1.1(react-dom@19.2.0(react@19.2.0))(vite@7.2.2(@types/node@24.6.2)(jiti@2.6.0)(terser@5.31.0)(tsx@4.20.6)(yaml@2.8.1)):
+    dependencies:
+      react-dom: 19.2.0(react@19.2.0)
+      vite: 7.2.2(@types/node@24.6.2)(jiti@2.6.0)(terser@5.31.0)(tsx@4.20.6)(yaml@2.8.1)
 
   vite-plugin-vue-tracer@1.0.1(vite@7.2.2(@types/node@24.6.2)(jiti@2.6.0)(terser@5.31.0)(tsx@4.20.6)(yaml@2.8.1))(vue@3.5.22(typescript@5.9.2)):
     dependencies:
