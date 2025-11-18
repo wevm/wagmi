@@ -19,6 +19,9 @@ jobs:
 
   publish:
     name: Publish preview release
+    needs: verify
+    # prevents this action from running on forks
+    if: github.repository == 'wevm/wagmi'
     permissions:
       contents: read
     runs-on: ubuntu-latest

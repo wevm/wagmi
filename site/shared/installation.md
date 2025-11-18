@@ -52,6 +52,26 @@ pnpm link --global
 
 Then go to the project where you are using Wagmi and run `pnpm link --global {{packageName}}` (or the package manager that you used to link Wagmi globally). Make sure you installed any [required peer dependencies](#package-manager) and their versions are correct.
 
+Finally, pull requests are continuously released via [pkg.pr.new](https://pkg.pr.new) and can be installed using the pull request number.
+
+::: code-group
+```bash-vue [pnpm]
+pnpm add https://pkg.pr.new/{{packageName}}@123
+```
+
+```bash-vue [npm]
+npm install https://pkg.pr.new/{{packageName}}@123
+```
+
+```bash-vue [yarn]
+yarn add https://pkg.pr.new/{{packageName}}@123
+```
+
+```bash-vue [bun]
+bun add https://pkg.pr.new/{{packageName}}@123
+```
+:::
+
 ## Security
 
 Ethereum-related projects are often targeted in attacks to steal users' assets. Make sure you follow security best-practices for your project. Some quick things to get started.
