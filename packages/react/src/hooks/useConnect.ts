@@ -46,7 +46,11 @@ export type UseConnectReturnType<
     ConnectVariables<config, config['connectors'][number], boolean>,
     context
   > & {
+    mutate: ConnectMutate<config, context>
+    mutateAsync: ConnectMutateAsync<config, context>
+    /** @deprecated use `mutate` instead */
     connect: ConnectMutate<config, context>
+    /** @deprecated use `mutateAsync` instead */
     connectAsync: ConnectMutateAsync<config, context>
     /** @deprecated use `useConnectors` instead */
     connectors: Compute<UseConnectorsReturnType> | config['connectors']
@@ -84,6 +88,8 @@ export function useConnect<
   type Return = UseConnectReturnType<config, context>
   return {
     ...(result as Return),
+    mutate: mutate as Return['mutate'],
+    mutateAsync: mutateAsync as Return['mutateAsync'],
     connect: mutate as Return['connect'],
     connectAsync: mutateAsync as Return['connectAsync'],
     connectors: useConnectors({ config }),
