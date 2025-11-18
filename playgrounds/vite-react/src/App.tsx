@@ -84,7 +84,7 @@ function Account() {
 
 function Connect() {
   const chainId = useChainId()
-  const { connectors, connectAsync, status, error } = useConnect()
+  const { connectors, connectAsync, status, error, data } = useConnect()
 
   return (
     <div>
@@ -109,6 +109,7 @@ function Connect() {
       ))}
       <div>{status}</div>
       <div>{error?.message}</div>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
     </div>
   )
 }
