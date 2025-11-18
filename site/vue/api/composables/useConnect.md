@@ -31,11 +31,11 @@ import { useConnect } from '@wagmi/vue'
 import { useConnect } from '@wagmi/vue'
 import { injected } from '@wagmi/connectors'
 
-const { connect } = useConnect()
+const connect = useConnect()
 </script>
 
 <template>
-  <button @click="connect({ connector: injected() })">
+  <button @click="connect.mutate({ connector: injected() })">
     Connect
   </button>
 </template>
@@ -61,7 +61,7 @@ import { type UseConnectParameters } from '@wagmi/vue'
 import { useConnect } from '@wagmi/vue'
 import { config } from './config' // [!code focus]
 
-const result = useConnect({
+const connect = useConnect({
   config, // [!code focus]
 })
 </script>

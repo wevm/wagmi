@@ -30,11 +30,11 @@ import { useSignMessage } from '@wagmi/vue'
 <script setup lang="ts">
 import { useSignMessage } from '@wagmi/vue'
 
-const { signMessage } = useSignMessage()
+const signMessage = useSignMessage()
 </script>
 
 <template>
-  <button @click="signMessage({ message: 'hello world' })">
+  <button @click="signMessage.mutate({ message: 'hello world' })">
     Sign message
   </button>
 </template>
@@ -60,7 +60,7 @@ import { type UseSignMessageParameters } from '@wagmi/vue'
 import { useSignMessage } from '@wagmi/vue'
 import { config } from './config' // [!code focus]
 
-const { signMessage } = useSignMessage({
+const signMessage = useSignMessage({
   config // [!code focus]
 })
 </script>
