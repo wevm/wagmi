@@ -59,7 +59,7 @@ pnpm link --global
 
 Then go to the project where you are using the Wagmi CLI and run `pnpm link --global @wagmi/cli` (or the package manager that you used to link Wagmi CLI globally).
 
-Finally, pull requests are continuously released via [pkg.pr.new](https://pkg.pr.new) and can be installed using the pull request number.
+Finally, pull requests are continuously released via [pkg.pr.new](https://pkg.pr.new) and can be installed using the pull request number or short commit ID.
 
 ::: code-group
 ```bash [pnpm]

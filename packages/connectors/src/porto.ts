@@ -5,7 +5,6 @@ import {
 } from '@wagmi/core'
 import type { ExactPartial } from '@wagmi/core/internal'
 import type { Porto, RpcSchema } from 'porto'
-import { z } from 'porto/internal'
 import {
   type Address,
   getAddress,
@@ -90,6 +89,7 @@ export function porto(parameters: PortoParameters = {}) {
         try {
           if (!accounts?.length && !isReconnecting) {
             const { RpcSchema } = await import('porto')
+            const { z } = await import('porto/internal')
             const res = await provider.request({
               method: 'wallet_connect',
               params: [
