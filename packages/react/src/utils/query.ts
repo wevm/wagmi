@@ -11,12 +11,7 @@ import {
   type UseQueryResult,
   useMutation,
 } from '@tanstack/react-query'
-import type {
-  Compute,
-  ExactPartial,
-  Omit,
-  UnionStrictOmit,
-} from '@wagmi/core/internal'
+import type { Compute, ExactPartial, Omit } from '@wagmi/core/internal'
 import { hashFn } from '@wagmi/core/query'
 
 export type UseMutationParameters<
@@ -36,12 +31,7 @@ export type UseMutationReturnType<
   error = Error,
   variables = void,
   context = unknown,
-> = Compute<
-  UnionStrictOmit<
-    UseMutationResult<data, error, variables, context>,
-    'mutate' | 'mutateAsync'
-  >
->
+> = Compute<UseMutationResult<data, error, variables, context>>
 
 export { useMutation }
 

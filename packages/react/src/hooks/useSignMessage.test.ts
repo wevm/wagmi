@@ -13,7 +13,7 @@ test('default', async () => {
 
   const { result } = await renderHook(() => useSignMessage())
 
-  result.current.signMessage({ message: 'foo bar baz' })
+  result.current.mutate({ message: 'foo bar baz' })
   await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   await expect(
@@ -30,7 +30,7 @@ test('behavior: local account', async () => {
   const { result } = await renderHook(() => useSignMessage())
 
   const account = privateKeyToAccount(privateKey)
-  result.current.signMessage({ account, message: 'foo bar baz' })
+  result.current.mutate({ account, message: 'foo bar baz' })
   await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   await expect(

@@ -3,17 +3,17 @@ import type { Address, Hex } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
 test('infers connect parameters', () => {
-  const { connect, connectAsync, variables } = useConnect()
+  const connect = useConnect()
   const connectors = useConnectors()
   const connector = connectors.value[0]!
 
-  expectTypeOf(variables.value?.foo).toEqualTypeOf<string | undefined>()
-  connect({
+  expectTypeOf(connect.variables.value?.foo).toEqualTypeOf<string | undefined>()
+  connect.mutate({
     connector,
     foo: 'bar',
   })
 
-  connect(
+  connect.mutate(
     {
       connector,
       foo: 'bar',
@@ -61,7 +61,7 @@ test('infers connect parameters', () => {
   )
 
   ;(async () => {
-    const res = await connectAsync({
+    const res = await connect.mutateAsync({
       connector,
       foo: 'bar',
       withCapabilities: true,

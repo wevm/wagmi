@@ -13,7 +13,7 @@ test('default', async () => {
 
   const [result] = renderComposable(() => useSignMessage())
 
-  result.signMessage({ message: 'foo bar baz' })
+  result.mutate({ message: 'foo bar baz' })
   await waitFor(result.isSuccess)
 
   await expect(
@@ -30,7 +30,7 @@ test('behavior: local account', async () => {
   const [result] = renderComposable(() => useSignMessage())
 
   const account = privateKeyToAccount(privateKey)
-  result.signMessage({ account, message: 'foo bar baz' })
+  result.mutate({ account, message: 'foo bar baz' })
   await waitFor(result.isSuccess)
 
   await expect(
