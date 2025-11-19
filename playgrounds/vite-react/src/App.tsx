@@ -68,7 +68,7 @@ function Connection() {
       <h2>Connection</h2>
 
       <div>
-        account: {connection.address} {ensName}
+        accounts: {stringify(connection.addresses)} {ensName}
         <br />
         chainId: {connection.chainId}
         <br />
