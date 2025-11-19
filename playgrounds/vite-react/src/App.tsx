@@ -1,5 +1,5 @@
 import type { FormEvent } from 'react'
-import { formatEther, type Hex, parseAbi, parseEther } from 'viem'
+import { formatEther, type Hex, parseAbi, parseEther, stringify } from 'viem'
 import {
   type BaseError,
   useAccount,
@@ -84,7 +84,7 @@ function Account() {
 
 function Connect() {
   const chainId = useChainId()
-  const { connectors, connectAsync, status, error } = useConnect()
+  const { connectors, connectAsync, status, error, data } = useConnect()
 
   return (
     <div>
@@ -109,6 +109,7 @@ function Connect() {
       ))}
       <div>{status}</div>
       <div>{error?.message}</div>
+      <pre>{stringify(data, null, 2)}</pre>
     </div>
   )
 }
@@ -192,7 +193,7 @@ function Connections() {
       {connections.map((connection) => (
         <div key={connection.connector.uid}>
           <div>connector {connection.connector.name}</div>
-          <div>accounts: {JSON.stringify(connection.accounts)}</div>
+          <div>accounts: {stringify(connection.accounts)}</div>
           <div>chainId: {connection.chainId}</div>
         </div>
       ))}

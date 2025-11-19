@@ -7,6 +7,7 @@ import {
 import type { Mutable, Omit } from '@wagmi/core/internal'
 import {
   type AddEthereumChainParameter,
+  type Address,
   getAddress,
   type Hex,
   numberToHex,
@@ -24,6 +25,43 @@ export type BaseAccountParameters = Mutable<
 
 export function baseAccount(parameters: BaseAccountParameters = {}) {
   type Provider = ProviderInterface
+  type Properties = {
+    connect<withCapabilities extends boolean = false>(parameters?: {
+      chainId?: number | undefined
+      capabilities?:
+        | {
+            signInWithEthereum?: {
+              chainId?: string | undefined
+              domain?: string | undefined
+              expirationTime?: string | undefined
+              issuedAt?: string | undefined
+              nonce: string
+              notBefore?: string | undefined
+              requestId?: string | undefined
+              resources?: string[] | undefined
+              scheme?: string | undefined
+              statement?: string | undefined
+              uri?: string | undefined
+              version?: string | undefined
+            }
+            [capability: string]: any
+          }
+        | undefined
+      withCapabilities?: withCapabilities | boolean | undefined
+    }): Promise<{
+      accounts: withCapabilities extends true
+        ? readonly {
+            address: Address
+            capabilities: WalletConnectResponseCapabilities
+          }[]
+        : readonly Address[]
+      chainId: number
+    }>
+  }
+  type WalletConnectResponseCapabilities = {
+    signInWithEthereum?: { message: string; signature: Hex } | undefined
+    [capability: string]: any
+  }
 
   let walletProvider: Provider | undefined
 
@@ -31,20 +69,47 @@ export function baseAccount(parameters: BaseAccountParameters = {}) {
   let chainChanged: Connector['onChainChanged'] | undefined
   let disconnect: Connector['onDisconnect'] | undefined
 
-  return createConnector<Provider>((config) => ({
+  return createConnector<Provider, Properties>((config) => ({
     id: 'baseAccount',
     name: 'Base Account',
     rdns: 'app.base.account',
     type: 'baseAccount',
-    async connect({ chainId, withCapabilities } = {}) {
+    async connect({ chainId, withCapabilities, ...rest } = {}) {
       try {
         const provider = await this.getProvider()
-        const accounts = (
-          (await provider.request({
-            method: 'eth_requestAccounts',
-            params: [],
-          })) as string[]
-        ).map((x) => getAddress(x))
+
+        const targetChainId = chainId ?? config.chains[0]?.id
+        if (!targetChainId) throw new ChainNotConfiguredError()
+
+        const response = (await provider.request({
+          method: 'wallet_connect',
+          params: [
+            {
+              capabilities:
+                'capabilities' in rest && rest.capabilities
+                  ? rest.capabilities
+                  : {},
+              chainIds: [
+                numberToHex(targetChainId),
+                ...config.chains
+                  .filter((x) => x.id !== targetChainId)
+                  .map((x) => numberToHex(x.id)),
+              ],
+            },
+          ],
+        })) as {
+          accounts: {
+            address: Address
+            capabilities?: WalletConnectResponseCapabilities | undefined
+          }[]
+          chainIds: Hex[]
+        }
+
+        const accounts = response.accounts.map((account) => ({
+          address: getAddress(account.address),
+          capabilities: account.capabilities ?? {},
+        }))
+        let currentChainId = Number(response.chainIds[0])
 
         if (!accountsChanged) {
           accountsChanged = this.onAccountsChanged.bind(this)
@@ -60,7 +125,6 @@ export function baseAccount(parameters: BaseAccountParameters = {}) {
         }
 
         // Switch to chain if provided
-        let currentChainId = await this.getChainId()
         if (chainId && currentChainId !== chainId) {
           const chain = await this.switchChain!({ chainId }).catch((error) => {
             if (error.code === UserRejectedRequestError.code) throw error
@@ -72,8 +136,8 @@ export function baseAccount(parameters: BaseAccountParameters = {}) {
         return {
           // TODO(v3): Make `withCapabilities: true` default behavior
           accounts: (withCapabilities
-            ? accounts.map((address) => ({ address, capabilities: {} }))
-            : accounts) as never,
+            ? accounts
+            : accounts.map((account) => account.address)) as never,
           chainId: currentChainId,
         }
       } catch (error) {
