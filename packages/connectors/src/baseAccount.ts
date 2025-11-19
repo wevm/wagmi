@@ -47,6 +47,7 @@ export function baseAccount(parameters: BaseAccountParameters = {}) {
             [capability: string]: any
           }
         | undefined
+      isReconnecting?: boolean | undefined
       withCapabilities?: withCapabilities | boolean | undefined
     }): Promise<{
       accounts: withCapabilities extends true
@@ -81,35 +82,48 @@ export function baseAccount(parameters: BaseAccountParameters = {}) {
         const targetChainId = chainId ?? config.chains[0]?.id
         if (!targetChainId) throw new ChainNotConfiguredError()
 
-        const response = (await provider.request({
-          method: 'wallet_connect',
-          params: [
-            {
-              capabilities:
-                'capabilities' in rest && rest.capabilities
-                  ? rest.capabilities
-                  : {},
-              chainIds: [
-                numberToHex(targetChainId),
-                ...config.chains
-                  .filter((x) => x.id !== targetChainId)
-                  .map((x) => numberToHex(x.id)),
-              ],
-            },
-          ],
-        })) as {
-          accounts: {
-            address: Address
-            capabilities?: WalletConnectResponseCapabilities | undefined
-          }[]
-          chainIds: Hex[]
-        }
-
-        const accounts = response.accounts.map((account) => ({
-          address: getAddress(account.address),
-          capabilities: account.capabilities ?? {},
-        }))
-        let currentChainId = Number(response.chainIds[0])
+        let { accounts, currentChainId } = await (async () => {
+          if (rest.isReconnecting)
+            return {
+              accounts: (
+                (await provider.request({
+                  method: 'eth_accounts',
+                  params: [],
+                })) as string[]
+              ).map((x) => ({ address: getAddress(x) })),
+              currentChainId: await this.getChainId(),
+            }
+          const response = (await provider.request({
+            method: 'wallet_connect',
+            params: [
+              {
+                capabilities:
+                  'capabilities' in rest && rest.capabilities
+                    ? rest.capabilities
+                    : {},
+                chainIds: [
+                  numberToHex(targetChainId),
+                  ...config.chains
+                    .filter((x) => x.id !== targetChainId)
+                    .map((x) => numberToHex(x.id)),
+                ],
+              },
+            ],
+          })) as {
+            accounts: {
+              address: Address
+              capabilities?: WalletConnectResponseCapabilities | undefined
+            }[]
+            chainIds: Hex[]
+          }
+          return {
+            accounts: response.accounts.map((account) => ({
+              address: getAddress(account.address),
+              capabilities: account.capabilities ?? {},
+            })),
+            currentChainId: Number(response.chainIds[0]),
+          }
+        })()
 
         if (!accountsChanged) {
           accountsChanged = this.onAccountsChanged.bind(this)
