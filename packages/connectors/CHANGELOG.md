@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 6.2.0
+
+### Minor Changes
+
+- Added support for `'wallet_connect'` capabilities to `baseAccount` connector ([#4877](https://github.com/wevm/wagmi/pull/4877))
+
 ## 6.1.4
 
 ### Patch Changes
