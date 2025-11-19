@@ -1,5 +1,11 @@
 # create-wagmi
 
+## 2.0.16
+
+### Patch Changes
+
+- Bumped Wagmi version ([`0112d33`](https://github.com/wevm/wagmi/commit/0112d33a20340f37b3b19538f55e1f32cb24c5f1))
+
 ## 2.0.15
 
 ### Patch Changes
