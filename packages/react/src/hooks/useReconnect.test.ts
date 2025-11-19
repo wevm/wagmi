@@ -20,8 +20,6 @@ afterEach(async () => {
 test('default', async () => {
   const { result } = await renderHook(() => useReconnect())
 
-  expect(result.current.connectors).toBeDefined()
-
   result.current.reconnect()
   await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
@@ -32,8 +30,6 @@ test('parameters: connectors (Connector)', async () => {
   await connect(config, { connector })
 
   const { result } = await renderHook(() => useReconnect())
-
-  expect(result.current.connectors).toBeDefined()
 
   result.current.reconnect({ connectors: [connector] })
   await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
@@ -56,8 +52,6 @@ test('parameters: connectors (CreateConnectorFn)', async () => {
   await connect(config, { connector })
 
   const { result } = await renderHook(() => useReconnect())
-
-  expect(result.current.connectors).toBeDefined()
 
   result.current.reconnect({ connectors: [connector] })
   await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })

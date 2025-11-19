@@ -6,6 +6,7 @@ import { expect, test } from 'vitest'
 import { deepUnref } from '../utils/cloneDeep.js'
 import { useConnect } from './useConnect.js'
 import { useConnectorClient } from './useConnectorClient.js'
+import { useConnectors } from './useConnectors.js'
 import { useDisconnect } from './useDisconnect.js'
 import { useSwitchChain } from './useSwitchChain.js'
 
@@ -100,13 +101,14 @@ test('behavior: connected on mount', async () => {
 
 test('behavior: connect and disconnect', async () => {
   const [connect] = renderComposable(() => useConnect())
+  const [connectors] = renderComposable(() => useConnectors())
   const [client] = renderComposable(() => useConnectorClient())
   const [disconnect] = renderComposable(() => useDisconnect())
 
   expect(client.data.value).not.toBeDefined()
 
   connect.connect({
-    connector: connect.connectors[0]!,
+    connector: connectors.value[0]!,
   })
 
   await waitFor(client.data, (data) => data !== undefined)

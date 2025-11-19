@@ -23,7 +23,6 @@ test('default', async () => {
   expect(query.data.value).toMatchObject(
     expect.objectContaining({
       decimals: expect.any(Number),
-      formatted: expect.any(String),
       symbol: expect.any(String),
       value: expect.any(BigInt),
     }),
@@ -40,48 +39,6 @@ test('parameters: chainId', async () => {
   expect(query.data.value).toMatchInlineSnapshot(`
     {
       "decimals": 18,
-      "formatted": "69",
-      "symbol": "WAG",
-      "value": 69000000000000000000n,
-    }
-  `)
-})
-
-test('parameters: token', async () => {
-  const [query] = renderComposable(() =>
-    useBalance({
-      address: '0x4557B18E779944BFE9d78A672452331C186a9f48',
-      token: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
-    }),
-  )
-
-  await waitFor(query.isSuccess)
-
-  expect(query.data.value).toMatchInlineSnapshot(`
-    {
-      "decimals": 18,
-      "formatted": "0.559062564299199392",
-      "symbol": "DAI",
-      "value": 559062564299199392n,
-    }
-  `)
-})
-
-test('parameters: unit', async () => {
-  const [query] = renderComposable(() =>
-    useBalance({
-      address,
-      chainId: chain.mainnet2.id,
-      unit: 'wei',
-    }),
-  )
-
-  await waitFor(query.isSuccess)
-
-  expect(query.data.value).toMatchInlineSnapshot(`
-    {
-      "decimals": 18,
-      "formatted": "69000000000000000000",
       "symbol": "WAG",
       "value": 69000000000000000000n,
     }
@@ -103,7 +60,6 @@ test('behavior: address: undefined -> defined', async () => {
   expect(query.data.value).toMatchInlineSnapshot(`
     {
       "decimals": 18,
-      "formatted": "10000",
       "symbol": "ETH",
       "value": 10000000000000000000000n,
     }

@@ -27,10 +27,11 @@ import { useSwitchChain } from 'wagmi'
 
 ::: code-group
 ```tsx [index.tsx]
-import { useSwitchChain } from 'wagmi'
+import { useChains, useSwitchChain } from 'wagmi'
 
 function App() {
-  const { chains, switchChain } = useSwitchChain()
+  const { switchChain } = useSwitchChain()
+  const chains = useChains()
 
   return (
     <div>
@@ -84,7 +85,7 @@ function App() {
 import { type UseSwitchChainReturnType } from 'wagmi'
 ```
 
-### chains
+### chains <Badge type="warning">[deprecated](/react/guides/migrate-from-v2-to-v3#removed-useswitchchain-chains)</Badge>
 
 `readonly [Chain, ...Chain[]]`
 

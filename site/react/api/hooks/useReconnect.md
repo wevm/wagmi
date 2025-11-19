@@ -79,7 +79,7 @@ function App() {
 import { type UseReconnectReturnType } from 'wagmi'
 ```
 
-### connectors
+### connectors <Badge type="warning">[deprecated](/react/guides/migrate-from-v2-to-v3#removed-useconnect-connectors-usereconnect-connectors)</Badge>
 
 `readonly Connector[]`
 

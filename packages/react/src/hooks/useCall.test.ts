@@ -60,8 +60,7 @@ test('default', async () => {
   `)
 })
 
-// TODO: Re-enable
-test.skip('parameters: blockTag', async () => {
+test('parameters: blockTag', async () => {
   const { result } = await renderHook(() =>
     useCall({
       account,
@@ -115,8 +114,7 @@ test.skip('parameters: blockTag', async () => {
   `)
 })
 
-// TODO: Re-enable
-test.skip('parameters: blockNumber', async () => {
+test('parameters: blockNumber', async () => {
   const { result } = await renderHook(() =>
     useCall({
       account,

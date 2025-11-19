@@ -77,26 +77,6 @@ const result = useReconnect({
 import { type UseReconnectReturnType } from '@wagmi/vue'
 ```
 
-### connectors
-
-`readonly Connector[]`
-
-Globally configured connectors via [`createConfig`](/vue/api/createConfig#connectors).
-
-::: code-group
-```vue [index.vue]
-<script setup lang="ts">
-import { useReconnect } from '@wagmi/vue'
-import { mainnet } from '@wagmi/vue/chains'
-
-const { reconnect, connectors } = useReconnect()
-
-reconnect({ connectors })
-</script>
-```
-<<< @/snippets/vue/config.ts[config.ts]
-:::
-
 <!--@include: @shared/mutation-result.md-->
 
 <!--@include: @shared/mutation-imports.md-->

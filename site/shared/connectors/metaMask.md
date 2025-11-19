@@ -1,20 +1,40 @@
 <!-- <script setup>
-const docsPath = 'react'
 const packageName = 'wagmi'
 const connectorsPackageName = 'wagmi/connectors'
+const connectorDependencyVersion = 'x.y.z'
 </script> -->
 
 # metaMask
 
 Connector for [MetaMask SDK](https://github.com/MetaMask/metamask-sdk).
 
-Check out the [MetaMask SDK docs](https://docs.metamask.io/wallet/connect/metamask-sdk/javascript) for more information.
-
 ## Import
 
 ```ts-vue
 import { metaMask } from '{{connectorsPackageName}}'
 ```
+
+## Install
+
+<PackageMetadata package="@metamask/sdk" repo="MetaMask/metamask-sdk" licenseUrl="https://github.com/MetaMask/metamask-sdk/blob/main/packages/sdk/LICENSE" />
+
+::: code-group
+```bash-vue [pnpm]
+pnpm add @metamask/sdk@{{connectorDependencyVersion}}
+```
+
+```bash-vue [npm]
+npm install @metamask/sdk@{{connectorDependencyVersion}}
+```
+
+```bash-vue [yarn]
+yarn add @metamask/sdk@{{connectorDependencyVersion}}
+```
+
+```bash-vue [bun]
+bun add @metamask/sdk@{{connectorDependencyVersion}}
+```
+:::
 
 ## Usage
 

@@ -4,16 +4,23 @@ import type { Contract, Plugin } from '../config.js'
 import type { Compute, RequiredBy } from '../types.js'
 import { getAddressDocString } from '../utils/getAddressDocString.js'
 
-export type ReactConfig = {
-  abiItemHooks?: boolean | undefined
-  getHookName?:
-    | 'legacy' // TODO: Deprecate `'legacy'` option
-    | ((options: {
-        contractName: string
-        itemName?: string | undefined
-        type: 'read' | 'simulate' | 'watch' | 'write'
-      }) => `use${string}`)
-}
+export type ReactConfig = Compute<
+  {
+    abiItemHooks?: boolean | undefined
+  } & (
+    | {
+        /** @deprecated */
+        getHookName: 'legacy'
+      }
+    | {
+        getHookName?: (options: {
+          contractName: string
+          itemName?: string | undefined
+          type: 'read' | 'simulate' | 'watch' | 'write'
+        }) => `use${string}`
+      }
+  )
+>
 
 type ReactResult = Compute<RequiredBy<Plugin, 'run'>>
 

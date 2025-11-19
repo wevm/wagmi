@@ -1,6 +1,7 @@
 <!-- <script setup>
 const packageName = 'wagmi'
 const connectorsPackageName = 'wagmi/connectors'
+const connectorDependencyVersion = 'x.y.z'
 </script> -->
 
 # coinbaseWallet
@@ -12,6 +13,28 @@ Connector for the [Coinbase Wallet SDK](https://github.com/coinbase/coinbase-wal
 ```ts-vue
 import { coinbaseWallet } from '{{connectorsPackageName}}'
 ```
+
+## Install
+
+<PackageMetadata package="@coinbase/wallet-sdk" repo="coinbase/coinbase-wallet-sdk" isOsiLicense licenseUrl="https://github.com/coinbase/coinbase-wallet-sdk/blob/master/packages/wallet-sdk/LICENSE" />
+
+::: code-group
+```bash-vue [pnpm]
+pnpm add @coinbase/wallet-sdk@{{connectorDependencyVersion}}
+```
+
+```bash-vue [npm]
+npm install @coinbase/wallet-sdk@{{connectorDependencyVersion}}
+```
+
+```bash-vue [yarn]
+yarn add @coinbase/wallet-sdk@{{connectorDependencyVersion}}
+```
+
+```bash-vue [bun]
+bun add @coinbase/wallet-sdk@{{connectorDependencyVersion}}
+```
+:::
 
 ## Usage
 
@@ -71,44 +94,9 @@ const connector = coinbaseWallet({
 })
 ```
 
-### headlessMode <Badge type="warning" text="deprecated" />
-
-`boolean | undefined`
-
-- Whether or not onboarding overlay popup should be displayed.
-- `headlessMode` will be removed in the next major version. Upgrade to [`version: '4'`](#version).
-
-```ts-vue
-import { coinbaseWallet } from '{{connectorsPackageName}}'
-
-const connector = coinbaseWallet({
-  appName: 'My Wagmi App',
-  headlessMode: false, // [!code focus]
-})
-```
-
 ### preference <Badge text=">=2.9.0" />
 
-`"all" | "eoaOnly" | "smartWalletOnly"`
-
 Preference for the type of wallet to display.
-
-- `'eoaOnly'`: Uses EOA Browser Extension or Mobile Coinbase Wallet.
-- `'smartWalletOnly'`: Displays Smart Wallet popup.
-- `'all'` (default): Supports both `'eoaOnly'` and `'smartWalletOnly'` based on context.
-
-```ts-vue
-import { coinbaseWallet } from '{{connectorsPackageName}}'
-
-const connector = coinbaseWallet({
-  appName: 'My Wagmi App',
-  preference: 'smartWalletOnly', // [!code focus]
-})
-```
-
-::: warning
-Passing `preference` as a string is deprecated and will be removed in the next major version. Instead you should use [`preference#options`](#options).
-:::
 
 ```ts-vue
 import { coinbaseWallet } from '{{connectorsPackageName}}'
@@ -143,18 +131,4 @@ Preference for the type of wallet to display.
 - `'eoaOnly'`: Uses EOA Browser Extension or Mobile Coinbase Wallet.
 - `'smartWalletOnly'`: Displays Smart Wallet popup.
 - `'all'` (default): Supports both `'eoaOnly'` and `'smartWalletOnly'` based on context.
-
-### version <Badge text=">=2.13.0" />
-
-- Coinbase Wallet SDK version
-- Defaults to `'4'`. If [`headlessMode: true`](#headlessmode), defaults to `'3'`.
-
-```ts-vue
-import { coinbaseWallet } from '{{connectorsPackageName}}'
-
-const connector = coinbaseWallet({
-  appName: 'My Wagmi App',
-  version: '4', // [!code focus]
-})
-```
 

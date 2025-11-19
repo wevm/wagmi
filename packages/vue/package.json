@@ -42,10 +42,6 @@
       "types": "./dist/types/exports/actions.d.ts",
       "default": "./dist/esm/exports/actions.js"
     },
-    "./actions/experimental": {
-      "types": "./dist/types/exports/actions/experimental.d.ts",
-      "default": "./dist/esm/exports/actions/experimental.js"
-    },
     "./chains": {
       "types": "./dist/types/exports/chains.d.ts",
       "default": "./dist/esm/exports/chains.js"
@@ -93,7 +89,7 @@
   "peerDependencies": {
     "@tanstack/vue-query": ">=5.0.0",
     "nuxt": ">=3.0.0 || >=4.0.0",
-    "typescript": ">=5.0.4",
+    "typescript": ">=5.7.3",
     "viem": "2.x",
     "vue": ">=3"
   },

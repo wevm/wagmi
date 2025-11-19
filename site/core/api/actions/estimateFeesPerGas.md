@@ -51,25 +51,6 @@ const result = await estimateFeesPerGas(config, {
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
-### formatUnits
-
-`'ether' | 'gwei' | 'wei' | number | undefined`
-
-- Units to use when formatting result.
-- Defaults to `'ether'`.
-
-::: code-group
-```ts [index.ts]
-import { estimateFeesPerGas } from '@wagmi/core'
-import { config } from './config'
-
-const feesPerGas = estimateFeesPerGas(config, {
-  formatUnits: 'ether', // [!code focus]
-})
-```
-<<< @/snippets/core/config.ts[config.ts]
-:::
-
 ### type
 
 `'legacy' | 'eip1559'`
@@ -98,12 +79,6 @@ import { type EstimateFeesPerGasReturnType } from '@wagmi/core'
 [`FeeValues`](https://viem.sh/docs/glossary/types#feevalues)
 
 An estimate (in wei) for the fees per gas.
-
-### formatted
- 
-`{ gasPrice: string | undefined; maxFeePerGas: string | undefined; maxPriorityFeePerGas: string | undefined; }`
-
-Object of formatted values using [`formatUnits`](#formatunits).
 
 ### gasPrice
 

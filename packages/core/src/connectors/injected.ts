@@ -88,10 +88,6 @@ export function injected(parameters: InjectedParameters = {}) {
     get name() {
       return getTarget().name
     },
-    /** @deprecated */
-    get supportsSimulation() {
-      return true
-    },
     type: injected.type,
     async setup() {
       const provider = await this.getProvider()

@@ -104,7 +104,7 @@ The `getNetwork` and `watchNetwork` actions were removed since the connected cha
   <<< @/snippets/core/config.ts[config.ts]
   :::
 
-- Use [`getAccount`](/core/api/actions/getAccount) and `config.chains` instead to get `chain`.
+- Use [`getAccount`](/core/api/actions/getConnection) and `config.chains` instead to get `chain`.
 
   ::: code-group
   ```ts [index.ts]
@@ -551,7 +551,7 @@ const result = await readContracts(config, { // [!code ++]
 The `formatUnits` parameter and related return values (e.g. `result.formatted`) are deprecated for the following actions:
 
 - [`estimateFeesPerGas`](/core/api/actions/estimateFeesPerGas)
-- [`getToken`](/core/api/actions/getToken)
+- `getToken`
 
 Instead you can call `formatUnits` from Viem directly or use another number formatting library, like [dnum](https://github.com/bpierre/dnum) instead.
 
@@ -579,7 +579,7 @@ The following actions were renamed to better reflect their functionality and und
 - `fetchEnsAvatar` is now [`getEnsAvatar`](/core/api/actions/getEnsAvatar)
 - `fetchEnsName` is now [`getEnsName`](/core/api/actions/getEnsName)
 - `fetchEnsResolver` is now [`getEnsResolver`](/core/api/actions/getEnsResolver)
-- `fetchToken` is now [`getToken`](/core/api/actions/getToken)
+- `fetchToken` is now `getToken`
 - `fetchTransaction` is now [`getTransaction`](/core/api/actions/getTransaction)
 - `switchNetwork` is now [`switchChain`](/core/api/actions/switchChain)
 - `waitForTransaction` is now [`waitForTransactionReceipt`](/core/api/actions/waitForTransactionReceipt)

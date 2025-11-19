@@ -59,10 +59,10 @@ const result = await signMessage(config, {
 
 ::: code-group
 ```ts [index.ts]
-import { getAccount, signMessage } from '@wagmi/core'
+import { getConnection, signMessage } from '@wagmi/core'
 import { config } from './config'
 
-const { connector } = getAccount(config)
+const { connector } = getConnection(config)
 const result = await signMessage(config, {
   connector, // [!code focus]
   message: 'hello world',

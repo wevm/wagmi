@@ -1,6 +1,7 @@
 <!-- <script setup>
 const packageName = 'wagmi'
 const connectorsPackageName = 'wagmi/connectors'
+const connectorDependencyVersion = 'x.y.z'
 </script> -->
 
 # baseAccount
@@ -12,6 +13,28 @@ Connector for the [Base Account SDK](https://github.com/base/account-sdk).
 ```ts-vue
 import { baseAccount } from '{{connectorsPackageName}}'
 ```
+
+## Install
+
+<PackageMetadata package="@base-org/account" repo="base/account-sdk" isOsiLicense licenseUrl="https://github.com/base/account-sdk/blob/master/packages/account-sdk/LICENSE" />
+
+::: code-group
+```bash-vue [pnpm]
+pnpm add @base-org/account@{{connectorDependencyVersion}}
+```
+
+```bash-vue [npm]
+npm install @base-org/account@{{connectorDependencyVersion}}
+```
+
+```bash-vue [yarn]
+yarn add @base-org/account@{{connectorDependencyVersion}}
+```
+
+```bash-vue [bun]
+bun add @base-org/account@{{connectorDependencyVersion}}
+```
+:::
 
 ## Usage
 

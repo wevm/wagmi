@@ -14,12 +14,12 @@ export default defineNuxtConfig({
 ```
 ```vue [index.vue]
 <script setup lang="ts">
-// No need to import `useAccount`! // [!code focus]
-const account = useAccount() // [!code focus]
+// No need to import `useConnection`! // [!code focus]
+const connection = useConnection() // [!code focus]
 </script>
 
 <template>
-  Address: {{ account.address }}
+  Address: {{ connection.address }}
 </template>
 ```
 <<< @/snippets/vue/config.ts[config.ts]

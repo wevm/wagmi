@@ -171,10 +171,10 @@ Now that everything is set up, every component inside the Wagmi and TanStack Que
 
 ::: code-group
 ```tsx [profile.tsx]
-import { useAccount, useEnsName } from 'wagmi'
+import { useConnection, useEnsName } from 'wagmi'
 
 export function Profile() {
-  const { address } = useAccount()
+  const { address } = useConnection()
   const { data, error, status } = useEnsName({ address })
   if (status === 'pending') return <div>Loading ENS name</div>
   if (status === 'error')

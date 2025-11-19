@@ -42,6 +42,21 @@
       "destination": "/core/api/createConfig",
       "permanent": true
     },
+    {
+      "source": "/core/api/actions/getAccount",
+      "destination": "/core/api/actions/getConnection",
+      "permanent": true
+    },
+    {
+      "source": "/core/api/actions/switchAccount",
+      "destination": "/core/api/actions/switchConnection",
+      "permanent": true
+    },
+    {
+      "source": "/core/api/actions/watchAccount",
+      "destination": "/core/api/actions/watchConnection",
+      "permanent": true
+    },
 
     {
       "source": "/react",
@@ -96,6 +111,37 @@
     {
       "source": "/react/prepare-hooks/usePrepareSendTransaction",
       "destination": "/react/api/hooks/useEstimateFeesPerGas",
+      "permanent": true
+    },
+    {
+      "source": "/react/api/actions/useAccount",
+      "destination": "/react/api/actions/useConnection",
+      "permanent": true
+    },
+    {
+      "source": "/react/api/actions/useAccountEffect",
+      "destination": "/react/api/actions/useConnectionEffect",
+      "permanent": true
+    },
+    {
+      "source": "/react/api/actions/useSwitchAccount",
+      "destination": "/react/api/actions/useSwitchConnection",
+      "permanent": true
+    },
+
+    {
+      "source": "/vue/api/actions/useAccount",
+      "destination": "/vue/api/actions/useConnection",
+      "permanent": true
+    },
+    {
+      "source": "/vue/api/actions/useAccountEffect",
+      "destination": "/vue/api/actions/useConnectionEffect",
+      "permanent": true
+    },
+    {
+      "source": "/vue/api/actions/useSwitchAccount",
+      "destination": "/vue/api/actions/useSwitchConnection",
       "permanent": true
     },
 

@@ -76,32 +76,6 @@ const result = useDisconnect({
 import { type UseDisconnectReturnType } from '@wagmi/vue'
 ```
 
-### connectors
-
-`readonly Connector[]`
-
-Connectors that are currently connected. Useful for rendering a list of connectors to disconnect.
-
-::: code-group
-```vue [index.vue]
-<script setup lang="ts">
-import { useDisconnect } from '@wagmi/vue'
-import { mainnet } from 'wagmi/chains'
-
-const { connectors, disconnect } = useDisconnect()
-</script>
-
-<template>
-  <div>
-    <button v-for="connector in connectors" :key="connector.id" @click="disconnect({ connector })">
-      {{ connector.name }}
-    </button>
-  </div>
-</template>
-```
-<<< @/snippets/vue/config.ts[config.ts]
-:::
-
 <!--@include: @shared/mutation-result.md-->
 
 <!--@include: @shared/mutation-imports.md-->

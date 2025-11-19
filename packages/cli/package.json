@@ -59,7 +59,7 @@
     }
   },
   "peerDependencies": {
-    "typescript": ">=5.0.4"
+    "typescript": ">=5.7.3"
   },
   "peerDependenciesMeta": {
     "typescript": {
@@ -67,7 +67,7 @@
     }
   },
   "dependencies": {
-    "abitype": "^1.0.4",
+    "abitype": "^1.1.1",
     "bundle-require": "^5.1.0",
     "cac": "^6.7.14",
     "change-case": "^5.4.4",

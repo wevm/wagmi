@@ -79,7 +79,7 @@ jobs:
     timeout-minutes: 5
     strategy:
       matrix:
-        typescript-version: ['5.7.3', '5.8.3', '5.9.2', 'latest']
+        typescript-version: ['5.7.3', '5.8.3', '5.9.3', 'latest']
         viem-version: ['2.38.0', 'latest']
 
     steps:
@@ -131,7 +131,7 @@ jobs:
           version: nightly
 
       - name: Install Playwright
-        run: pnpx playwright@1.55.1 install --with-deps
+        run: pnpm exec playwright install chromium --with-deps
 
       - name: Run tests
         uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08

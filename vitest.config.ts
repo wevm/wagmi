@@ -1,5 +1,6 @@
 import path from 'node:path'
-import react from '@vitejs/plugin-react'
+import { playwright } from '@vitest/browser-playwright'
+import reactFallbackThrottlePlugin from 'vite-plugin-react-fallback-throttle'
 import { defineConfig } from 'vitest/config'
 
 const alias = {
@@ -21,7 +22,6 @@ export default defineConfig({
   },
   test: {
     coverage: {
-      all: false,
       reporter: process.env.CI ? ['lcov'] : ['text', 'json', 'html'],
       exclude: [
         '**/dist/**',
@@ -72,7 +72,7 @@ export default defineConfig({
         },
       },
       {
-        plugins: [react() as never],
+        plugins: [reactFallbackThrottlePlugin()],
         resolve: { alias },
         test: {
           name: 'wagmi',
@@ -80,7 +80,7 @@ export default defineConfig({
             enabled: true,
             headless: true,
             instances: [{ browser: 'chromium' }],
-            provider: 'playwright',
+            provider: playwright(),
             screenshotFailures: false,
           },
           include: ['./packages/react/src/**/*.test.ts?(x)'],

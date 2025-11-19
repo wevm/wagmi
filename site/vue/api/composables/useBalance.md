@@ -1,19 +1,19 @@
 ---
 title: useBalance
-description: Composable for fetching native currency or token balance.
+description: Composable for fetching native currency balance.
 ---
 
 <script setup>
 const packageName = '@wagmi/vue'
 const actionName = 'getBalance'
 const typeName = 'GetBalance'
-const TData = '{ decimals: number; formatted: string; symbol: string; value: bigint; }'
+const TData = '{ decimals: number; symbol: string; value: bigint; }'
 const TError = 'GetBalanceErrorType'
 </script>
 
 # useBalance
 
-Composable for fetching native currency or token balance.
+Composable for fetching native currency balance.
 
 ## Import
 
@@ -162,47 +162,6 @@ import { useBalance } from '@wagmi/vue'
 const result = useBalance({
   address: '0x4557B18E779944BFE9d78A672452331C186a9f48',
   scopeKey: 'foo', // [!code focus]
-})
-</script>
-```
-<<< @/snippets/vue/config.ts[config.ts]
-:::
-
-### token
-
-`Address | undefined`
-
-ERC-20 token address to get balance for.
-
-::: code-group
-```vue [index.vue]
-<script setup lang="ts">
-import { useBalance } from '@wagmi/vue'
-
-const result = useBalance({
-  address: '0x4557B18E779944BFE9d78A672452331C186a9f48',
-  token: '0x6B175474E89094C44Da98b954EedeAC495271d0F', // [!code focus]
-})
-</script>
-```
-<<< @/snippets/vue/config.ts[config.ts]
-:::
-
-### unit
-
-`'ether' | 'gwei' | 'wei' | number | undefined`
-
-- Units to use when formatting result.
-- Defaults to `'ether'`.
-
-::: code-group
-```vue [index.vue]
-<script setup lang="ts">
-import { useBalance } from '@wagmi/vue'
-
-const result = useBalance({
-  address: '0x4557B18E779944BFE9d78A672452331C186a9f48',
-  unit: 'ether', // [!code focus]
 })
 </script>
 ```

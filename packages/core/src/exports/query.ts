@@ -217,15 +217,6 @@ export {
 } from '../query/getStorageAt.js'
 
 export {
-  type GetTokenData,
-  type GetTokenOptions,
-  type GetTokenQueryFnData,
-  type GetTokenQueryKey,
-  getTokenQueryKey,
-  getTokenQueryOptions,
-} from '../query/getToken.js'
-
-export {
   type GetTransactionData,
   type GetTransactionOptions,
   type GetTransactionQueryFnData,
@@ -321,6 +312,7 @@ export {
   type SendCallsVariables,
   sendCallsMutationOptions,
 } from '../query/sendCalls.js'
+
 export {
   type SendCallsSyncData,
   type SendCallsSyncMutate,
@@ -328,6 +320,7 @@ export {
   type SendCallsSyncVariables,
   sendCallsSyncMutationOptions,
 } from '../query/sendCallsSync.js'
+
 export {
   type SendTransactionData,
   type SendTransactionMutate,
@@ -335,6 +328,7 @@ export {
   type SendTransactionVariables,
   sendTransactionMutationOptions,
 } from '../query/sendTransaction.js'
+
 export {
   type SendTransactionSyncData,
   type SendTransactionSyncMutate,
@@ -342,6 +336,7 @@ export {
   type SendTransactionSyncVariables,
   sendTransactionSyncMutationOptions,
 } from '../query/sendTransactionSync.js'
+
 export {
   type ShowCallsStatusData,
   type ShowCallsStatusMutate,
@@ -365,6 +360,7 @@ export {
   type SignTypedDataVariables,
   signTypedDataMutationOptions,
 } from '../query/signTypedData.js'
+
 export {
   type SimulateContractData,
   type SimulateContractOptions,
@@ -373,13 +369,6 @@ export {
   simulateContractQueryKey,
   simulateContractQueryOptions,
 } from '../query/simulateContract.js'
-export {
-  type SwitchAccountData,
-  type SwitchAccountMutate,
-  type SwitchAccountMutateAsync,
-  type SwitchAccountVariables,
-  switchAccountMutationOptions,
-} from '../query/switchAccount.js'
 
 export {
   type SwitchChainData,
@@ -388,7 +377,27 @@ export {
   type SwitchChainVariables,
   switchChainMutationOptions,
 } from '../query/switchChain.js'
+
+export {
+  /** @deprecated use `SwitchConnectionData` instead */
+  type SwitchConnectionData as SwitchAccountData,
+  type SwitchConnectionData,
+  /** @deprecated use `SwitchConnectionMutate` instead */
+  type SwitchConnectionMutate as SwitchAccountMutate,
+  type SwitchConnectionMutate,
+  /** @deprecated use `SwitchConnectionMutateAsync` instead */
+  type SwitchConnectionMutateAsync as SwitchAccountMutateAsync,
+  type SwitchConnectionMutateAsync,
+  /** @deprecated use `SwitchConnectionVariables` instead */
+  type SwitchConnectionVariables as SwitchAccountVariables,
+  type SwitchConnectionVariables,
+  /** @deprecated use `switchConnectionMutationOptions` instead */
+  switchConnectionMutationOptions as switchAccountMutationOptions,
+  switchConnectionMutationOptions,
+} from '../query/switchConnection.js'
+
 export { hashFn, structuralSharing } from '../query/utils.js'
+
 export {
   type VerifyMessageData,
   type VerifyMessageOptions,
@@ -397,6 +406,7 @@ export {
   verifyMessageQueryKey,
   verifyMessageQueryOptions,
 } from '../query/verifyMessage.js'
+
 export {
   type VerifyTypedDataData,
   type VerifyTypedDataOptions,
@@ -405,6 +415,7 @@ export {
   verifyTypedDataQueryKey,
   verifyTypedDataQueryOptions,
 } from '../query/verifyTypedData.js'
+
 export {
   type WaitForCallsStatusData,
   type WaitForCallsStatusOptions,
@@ -413,6 +424,7 @@ export {
   waitForCallsStatusQueryKey,
   waitForCallsStatusQueryOptions,
 } from '../query/waitForCallsStatus.js'
+
 export {
   type WaitForTransactionReceiptData,
   type WaitForTransactionReceiptOptions,
@@ -421,6 +433,7 @@ export {
   waitForTransactionReceiptQueryKey,
   waitForTransactionReceiptQueryOptions,
 } from '../query/waitForTransactionReceipt.js'
+
 export {
   type WatchAssetData,
   type WatchAssetMutate,
@@ -428,6 +441,7 @@ export {
   type WatchAssetVariables,
   watchAssetMutationOptions,
 } from '../query/watchAsset.js'
+
 export {
   type WriteContractData,
   type WriteContractMutate,

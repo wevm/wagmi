@@ -31,9 +31,11 @@ packages/react/chains
 packages/react/codegen
 packages/react/connectors
 packages/react/experimental
+packages/react/internal
 packages/react/query
 packages/vue/actions
 packages/vue/chains
 packages/vue/connectors
+packages/vue/internal
 packages/vue/nuxt
 packages/vue/query

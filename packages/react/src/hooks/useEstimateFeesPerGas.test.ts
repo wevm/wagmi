@@ -10,7 +10,6 @@ test('default', async () => {
 
   expect(Object.keys(result.current.data!)).toMatchInlineSnapshot(`
     [
-      "formatted",
       "gasPrice",
       "maxFeePerGas",
       "maxPriorityFeePerGas",

@@ -307,16 +307,16 @@ Finally, we can wire up our Send Transaction component to our application's entr
 :::code-group
 ```vue [App.vue]
 <script setup lang="ts">
-import { useAccount } from '@wagmi/vue';
-import Account from './Account.vue';
-import Connect from './Connect.vue';
-import MintNft from './MintNft.vue'; // [!code ++]
+import { useConnection } from '@wagmi/vue'
+import Connection from './Connection.vue'
+import Connect from './Connect.vue'
+import MintNft from './MintNft.vue' // [!code ++]
 
-const { isConnected } = useAccount();
+const { isConnected } = useConnection()
 </script>
 
 <template>
-  <Account v-if="isConnected" />
+  <Connection v-if="isConnected" />
   <Connect v-else />
   <MintNft v-if="isConnected" /> // [!code ++]
 </template>

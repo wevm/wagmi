@@ -1,6 +1,6 @@
 <template>
-  <Account />
   <Connect />
+  <Connection />
 </template>
 
 <style>

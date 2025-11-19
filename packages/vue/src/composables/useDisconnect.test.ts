@@ -3,7 +3,7 @@ import { config } from '@wagmi/test'
 import { renderComposable, waitFor } from '@wagmi/test/vue'
 import { beforeEach, expect, test } from 'vitest'
 
-import { useAccount } from './useAccount.js'
+import { useConnection } from './useConnection.js'
 import { useDisconnect } from './useDisconnect.js'
 
 const connector = config.connectors[0]!
@@ -13,18 +13,18 @@ beforeEach(async () => {
 })
 
 test('default', async () => {
-  const [account] = renderComposable(() => useAccount())
+  const [connection] = renderComposable(() => useConnection())
   const [disconnect] = renderComposable(() => useDisconnect())
 
-  expect(account.address.value).toBeDefined()
-  expect(account.status.value).toEqual('connected')
+  expect(connection.address.value).toBeDefined()
+  expect(connection.status.value).toEqual('connected')
 
   disconnect.disconnect()
 
-  await waitFor(account.isDisconnected, (isDisconnected) =>
+  await waitFor(connection.isDisconnected, (isDisconnected) =>
     Boolean(isDisconnected),
   )
 
-  expect(account.address.value).not.toBeDefined()
-  expect(account.status.value).toEqual('disconnected')
+  expect(connection.address.value).not.toBeDefined()
+  expect(connection.status.value).toEqual('disconnected')
 })
