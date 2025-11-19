@@ -1,5 +1,5 @@
 ---
-"@wagmi/connectors": patch
+"@wagmi/connectors": minor
 ---
 
-feat: add support for wallet_connect capabilities in baseAccount connector
+Added support for `'wallet_connect'` capabilities to `baseAccount` connector

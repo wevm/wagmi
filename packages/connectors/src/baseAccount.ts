@@ -16,44 +16,6 @@ import {
   UserRejectedRequestError,
 } from 'viem'
 
-export type SignInWithEthereumCapability = {
-  nonce: string
-  chainId?: string
-  version?: string
-  scheme?: string
-  domain?: string
-  uri?: string
-  statement?: string
-  issuedAt?: string
-  expirationTime?: string
-  notBefore?: string
-  requestId?: string
-  resources?: string[]
-}
-
-export type SignInWithEthereumResponse = {
-  message: string
-  signature: Hex
-}
-
-export type WalletConnectCapabilities = {
-  signInWithEthereum?: SignInWithEthereumCapability
-  [capability: string]: any
-}
-
-export type WalletConnectResponseCapabilities = {
-  signInWithEthereum?: SignInWithEthereumResponse
-  [capability: string]: any
-}
-
-type WalletConnectResponse = {
-  accounts: Array<{
-    address: Address
-    capabilities?: WalletConnectResponseCapabilities
-  }>
-  chainIds: Hex[]
-}
-
 export type BaseAccountParameters = Mutable<
   Omit<
     Parameters<typeof createBaseAccountSDK>[0],
@@ -66,7 +28,25 @@ export function baseAccount(parameters: BaseAccountParameters = {}) {
   type Properties = {
     connect<withCapabilities extends boolean = false>(parameters?: {
       chainId?: number | undefined
-      capabilities?: WalletConnectCapabilities | undefined
+      capabilities?:
+        | {
+            signInWithEthereum?: {
+              chainId?: string | undefined
+              domain?: string | undefined
+              expirationTime?: string | undefined
+              issuedAt?: string | undefined
+              nonce: string
+              notBefore?: string | undefined
+              requestId?: string | undefined
+              resources?: string[] | undefined
+              scheme?: string | undefined
+              statement?: string | undefined
+              uri?: string | undefined
+              version?: string | undefined
+            }
+            [capability: string]: any
+          }
+        | undefined
       withCapabilities?: withCapabilities | boolean | undefined
     }): Promise<{
       accounts: withCapabilities extends true
@@ -77,6 +57,10 @@ export function baseAccount(parameters: BaseAccountParameters = {}) {
         : readonly Address[]
       chainId: number
     }>
+  }
+  type WalletConnectResponseCapabilities = {
+    signInWithEthereum?: { message: string; signature: Hex } | undefined
+    [capability: string]: any
   }
 
   let walletProvider: Provider | undefined
@@ -94,19 +78,17 @@ export function baseAccount(parameters: BaseAccountParameters = {}) {
       try {
         const provider = await this.getProvider()
 
-        let currentChainId: number | undefined
-
         const targetChainId = chainId ?? config.chains[0]?.id
         if (!targetChainId) throw new ChainNotConfiguredError()
-
-        const capabilities =
-          'capabilities' in rest && rest.capabilities ? rest.capabilities : {}
 
         const response = (await provider.request({
           method: 'wallet_connect',
           params: [
             {
-              capabilities: capabilities,
+              capabilities:
+                'capabilities' in rest && rest.capabilities
+                  ? rest.capabilities
+                  : {},
               chainIds: [
                 numberToHex(targetChainId),
                 ...config.chains
@@ -115,13 +97,19 @@ export function baseAccount(parameters: BaseAccountParameters = {}) {
               ],
             },
           ],
-        })) as WalletConnectResponse
+        })) as {
+          accounts: {
+            address: Address
+            capabilities?: WalletConnectResponseCapabilities | undefined
+          }[]
+          chainIds: Hex[]
+        }
 
         const accounts = response.accounts.map((account) => ({
           address: getAddress(account.address),
           capabilities: account.capabilities ?? {},
         }))
-        currentChainId = Number(response.chainIds[0])
+        let currentChainId = Number(response.chainIds[0])
 
         if (!accountsChanged) {
           accountsChanged = this.onAccountsChanged.bind(this)
