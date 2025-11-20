@@ -1,3 +1,4 @@
+import child_process from 'node:child_process'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 
@@ -24,8 +25,24 @@ for await (const packagePath of packagePaths) {
   // Skip private packages
   if (packageJson.private) continue
 
+  const version = (() => {
+    if (process.env.PKG_PR_NEW) {
+      const gitHash = child_process
+        .execSync('git rev-parse --short HEAD')
+        .toString()
+        .trim()
+      const branch = child_process
+        .execSync('git branch --show-current')
+        .toString()
+        .trim()
+        .replace(/[^a-zA-Z0-9]/g, '_')
+      return `0.0.0-${branch}.${gitHash}`
+    }
+    return packageJson.version
+  })()
+
   count += 1
-  console.log(`${packageJson.name} — ${packageJson.version}`)
+  console.log(`${packageJson.name} — ${version}`)
 
   const versionFilePath = path.resolve(
     path.dirname(packagePath),
@@ -34,9 +51,18 @@ for await (const packagePath of packagePaths) {
   )
   await fs.writeFile(
     versionFilePath,
-    `export const version = '${packageJson.version}'\n`,
+    `export const version = '${version}'\n`,
     'utf-8',
   )
+
+  if (process.env.PKG_PR_NEW) {
+    packageJson.version = version
+    await fs.writeFile(
+      packagePath,
+      `${JSON.stringify(packageJson, null, 2)}\n`,
+      'utf-8',
+    )
+  }
 }
 
 console.log(
