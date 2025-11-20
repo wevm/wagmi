@@ -106,10 +106,10 @@
     "@wagmi/core": "workspace:*"
   },
   "devDependencies": {
-    "@nuxt/schema": "^3.19.2 || ^4.0.0",
+    "@nuxt/schema": "catalog:",
     "@tanstack/vue-query": "catalog:",
     "@vue/test-utils": "^2.4.6",
-    "nuxt": "^3.19.2 || ^4.0.0",
+    "nuxt": "catalog:",
     "vue": "catalog:"
   },
   "contributors": [
