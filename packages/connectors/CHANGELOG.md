@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 7.0.1
+
+### Patch Changes
+
+- Fixed `baseAccount` reconnect behavior ([#4884](https://github.com/wevm/wagmi/pull/4884))
+
 ## 7.0.0
 
 ### Major Changes
