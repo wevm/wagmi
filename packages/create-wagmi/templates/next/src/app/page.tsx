@@ -4,7 +4,7 @@ import { useConnect, useConnection, useConnectors, useDisconnect } from 'wagmi'
 
 function App() {
   const connection = useConnection()
-  const { connectors, connect, status, error } = useConnect()
+  const { connect, status, error } = useConnect()
   const connectors = useConnectors()
   const { disconnect } = useDisconnect()
 
