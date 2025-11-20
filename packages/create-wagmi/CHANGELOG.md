@@ -1,5 +1,11 @@
 # create-wagmi
 
+## 2.0.18
+
+### Patch Changes
+
+- Bumped next.js template dependencies ([`d717d86`](https://github.com/wevm/wagmi/commit/d717d86962a6335d9c23e7fe530f17bae16f4e10))
+
 ## 2.0.17
 
 ### Patch Changes
