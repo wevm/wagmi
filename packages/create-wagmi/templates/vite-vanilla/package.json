@@ -16,7 +16,6 @@
   },
   "devDependencies": {
     "@wagmi/cli": "latest",
-    "buffer": "latest",
     "typescript": "latest",
     "vite": "latest"
   }

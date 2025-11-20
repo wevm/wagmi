@@ -15,7 +15,6 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "latest",
-    "buffer": "latest",
     "vite": "latest",
     "vue-tsc": "latest"
   }

@@ -19,7 +19,6 @@
     "@types/react-dom": "latest",
     "@vitejs/plugin-react": "latest",
     "@wagmi/cli": "latest",
-    "buffer": "latest",
     "typescript": "latest",
     "vite": "latest"
   }
