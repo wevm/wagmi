@@ -56,6 +56,13 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
     rdns: ['io.metamask', 'io.metamask.mobile'],
     type: metaMask.type,
     async setup() {
+      const supportedNetworks = Object.fromEntries(
+        config.chains.map((chain) => [
+          `eip155:${chain.id}`,
+          chain.rpcUrls.default?.http[0],
+        ]),
+      )
+
       // TODO: check if we need to support other parameters
       metamask = await createMetamaskConnectEVM({
         dapp: parameters.dapp ?? {},
@@ -64,6 +71,9 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           chainChanged: this.onChainChanged.bind(this),
           connect: this.onConnect.bind(this),
           disconnect: this.onDisconnect.bind(this),
+        },
+        api: {
+          supportedNetworks,
         },
       })
     },
