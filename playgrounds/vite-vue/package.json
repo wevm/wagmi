@@ -15,6 +15,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "catalog:",
+    "buffer": "catalog:",
     "vite": "catalog:",
     "vue-tsc": "3.1.3"
   }

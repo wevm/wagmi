@@ -116,8 +116,17 @@ export function baseAccount(parameters: BaseAccountParameters = {}) {
             }[]
             chainIds: Hex[]
           }
+          const orderedAccounts = (await provider.request({
+            method: 'eth_accounts',
+          })) as Address[]
+          const accounts = orderedAccounts.map(
+            (account1) =>
+              response.accounts.find(
+                (account2) => account2.address === account1,
+              ) ?? { address: account1 },
+          )
           return {
-            accounts: response.accounts.map((account) => ({
+            accounts: accounts.map((account) => ({
               address: getAddress(account.address),
               capabilities: account.capabilities ?? {},
             })),
