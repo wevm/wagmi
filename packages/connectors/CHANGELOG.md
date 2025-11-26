@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 7.0.2
+
+### Patch Changes
+
+- Fixed account ordering in `baseAccount` connection response ([#4882](https://github.com/wevm/wagmi/pull/4882))
+
 ## 7.0.1
 
 ### Patch Changes
