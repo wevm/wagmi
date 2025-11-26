@@ -23,6 +23,7 @@
     "@types/react-dom": "catalog:",
     "@vitejs/plugin-react": "catalog:",
     "@wagmi/cli": "workspace:*",
+    "buffer": "catalog:",
     "vite": "catalog:"
   }
 }

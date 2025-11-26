@@ -2,4 +2,4 @@
 "@wagmi/connectors": patch
 ---
 
-fix: account ordering in `baseAccount` connection response
+Fixed account ordering in `baseAccount` connection response

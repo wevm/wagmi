@@ -93,7 +93,6 @@ export function baseAccount(parameters: BaseAccountParameters = {}) {
               ).map((x) => ({ address: getAddress(x) })),
               currentChainId: await this.getChainId(),
             }
-
           const response = (await provider.request({
             method: 'wallet_connect',
             params: [
@@ -117,18 +116,15 @@ export function baseAccount(parameters: BaseAccountParameters = {}) {
             }[]
             chainIds: Hex[]
           }
-
-          // Get all accounts including sub accounts in the expected ordering after connection
-          const allAccountsOrdered = (await provider.request({
+          const orderedAccounts = (await provider.request({
             method: 'eth_accounts',
           })) as Address[]
-          const accounts = allAccountsOrdered.map(
-            (address) =>
+          const accounts = orderedAccounts.map(
+            (account1) =>
               response.accounts.find(
-                (account) => account.address === address,
-              ) ?? { address },
+                (account2) => account2.address === account1,
+              ) ?? { address: account1 },
           )
-
           return {
             accounts: accounts.map((account) => ({
               address: getAddress(account.address),

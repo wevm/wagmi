@@ -24,6 +24,7 @@ catalog:
   '@vitejs/plugin-react': ^4.3.3
   '@vitejs/plugin-vue': 6.0.1
   '@walletconnect/ethereum-provider': 2.21.1
+  buffer: 6.0.3
   nuxt: 4.2.1
   porto: 0.2.35
   react: 19.2.0
