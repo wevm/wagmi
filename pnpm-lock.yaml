@@ -37,6 +37,8 @@ catalogs:
 overrides:
   '@metamask/connect-evm': file:../connect-monorepo/packages/connect-evm
   '@metamask/connect-multichain': file:../connect-monorepo/packages/connect-multichain
+  '@metamask/multichain-ui': file:../connect-monorepo/packages/multichain-ui
+  '@metamask/analytics': file:../connect-monorepo/packages/analytics
   '@walletconnect/logger>pino': 10.0.0
   cookie@<0.7.0: 0.7.0
   elliptic@<=6.6.0: '>=6.6.1'
@@ -1979,8 +1981,8 @@ packages:
     resolution: {integrity: sha512-a/l0DiSIr7+CBYVpHygUa3ztSlYLFCQMsklLna+t6qmNY9+eIO5TedNxhyIyvaJ+4cN7TLy0NQFbp9FV3X2ktg==}
     engines: {node: ^18.18 || ^20.14 || >=22}
 
-  '@metamask/analytics@0.1.0':
-    resolution: {integrity: sha512-VR82k19A16TOXJyO1avuCABeOKWou6EkNUz2k2jGh/GdTRyRbUzEYrB+tOoVEY8futUqlUxlhytrZ5hqqhHt4A==}
+  '@metamask/analytics@file:../connect-monorepo/packages/analytics':
+    resolution: {directory: ../connect-monorepo/packages/analytics, type: directory}
     engines: {node: ^18.18 || >=20}
 
   '@metamask/api-specs@0.14.0':
@@ -2067,12 +2069,12 @@ packages:
   '@metamask/mobile-wallet-protocol-dapp-client@0.2.2':
     resolution: {integrity: sha512-+tKa8va/5DUJLzK0LmnSCXXUGcyzMJkDGOAiFgIqWOo8V02WQNRatahO2eWQKv/A7fUL/JbflrXF6alHVmumXA==}
 
-  '@metamask/multichain-api-client@0.8.0':
-    resolution: {integrity: sha512-/se1vs+ULUIkdXCoU5E7OoQQ0aU7zUwiLxbJi7IIfAWKWB8klpUs/p8BcL0qNgkDL/lmqQyqTumFD48t/Wq9/Q==}
+  '@metamask/multichain-api-client@0.8.1':
+    resolution: {integrity: sha512-O/QYjYVA2P8vGex6Y1FR3fADJf0hSVb2CnamyuMc3hyXjARyAiLm0n8EQd508u0DYUuazoW3pE6KSkB7mlSnSg==}
     engines: {node: ^18.20 || ^20.17 || >=22}
 
-  '@metamask/multichain-ui@0.1.0':
-    resolution: {integrity: sha512-NPE7uJEM4tR+P5u+0vwMGBv/wFcIyfumw1cOjar9dyrtszQ+KlVe47xiTVVflX9z0xM7vWptUK679xHG3CZiuQ==}
+  '@metamask/multichain-ui@file:../connect-monorepo/packages/multichain-ui':
+    resolution: {directory: ../connect-monorepo/packages/multichain-ui, type: directory}
     engines: {node: ^18.18 || >=20}
 
   '@metamask/network-controller@25.0.0':
@@ -10861,7 +10863,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@metamask/analytics@0.1.0':
+  '@metamask/analytics@file:../connect-monorepo/packages/analytics':
     dependencies:
       openapi-fetch: 0.13.8
 
@@ -10907,11 +10909,11 @@ snapshots:
 
   '@metamask/connect-multichain@file:../connect-monorepo/packages/connect-multichain(bufferutil@4.0.8)(encoding@0.1.13)(utf-8-validate@5.0.10)':
     dependencies:
-      '@metamask/analytics': 0.1.0
+      '@metamask/analytics': file:../connect-monorepo/packages/analytics
       '@metamask/mobile-wallet-protocol-core': 0.3.1
       '@metamask/mobile-wallet-protocol-dapp-client': 0.2.2
-      '@metamask/multichain-api-client': 0.8.0
-      '@metamask/multichain-ui': 0.1.0
+      '@metamask/multichain-api-client': 0.8.1
+      '@metamask/multichain-ui': file:../connect-monorepo/packages/multichain-ui
       '@metamask/onboarding': 1.0.1
       '@metamask/utils': 11.8.1
       '@paulmillr/qr': 0.2.1
@@ -11059,9 +11061,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@metamask/multichain-api-client@0.8.0': {}
+  '@metamask/multichain-api-client@0.8.1': {}
 
-  '@metamask/multichain-ui@0.1.0':
+  '@metamask/multichain-ui@file:../connect-monorepo/packages/multichain-ui':
     dependencies:
       '@paulmillr/qr': 0.2.1
       qr-code-styling: 1.9.2

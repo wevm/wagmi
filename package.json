@@ -88,6 +88,8 @@
     "overrides": {
       "@metamask/connect-evm": "file:../connect-monorepo/packages/connect-evm",
       "@metamask/connect-multichain": "file:../connect-monorepo/packages/connect-multichain",
+      "@metamask/multichain-ui": "file:../connect-monorepo/packages/multichain-ui",
+      "@metamask/analytics": "file:../connect-monorepo/packages/analytics",
       "@walletconnect/logger>pino": "10.0.0",
       "cookie@<0.7.0": "0.7.0",
       "elliptic@<=6.6.0": ">=6.6.1",
