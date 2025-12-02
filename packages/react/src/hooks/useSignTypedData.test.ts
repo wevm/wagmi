@@ -13,7 +13,7 @@ test('default', async () => {
 
   const { result } = await renderHook(() => useSignTypedData())
 
-  result.current.signTypedData({
+  result.current.mutate({
     types: typedData.basic.types,
     primaryType: 'Mail',
     message: typedData.basic.message,
@@ -36,7 +36,7 @@ test('behavior: local account', async () => {
   const { result } = await renderHook(() => useSignTypedData())
 
   const account = privateKeyToAccount(privateKey)
-  result.current.signTypedData({
+  result.current.mutate({
     account,
     types: typedData.basic.types,
     primaryType: 'Mail',

@@ -52,11 +52,15 @@ export type UseSwitchConnectionReturnType<
   > & {
     /** @deprecated use `useConnections` instead */
     connectors: readonly Connector[]
-    /** @deprecated use `switchConnection` instead */
+    mutate: SwitchConnectionMutate<config, context>
+    mutateAsync: SwitchConnectionMutateAsync<config, context>
+    /** @deprecated use `mutate` instead */
     switchAccount: SwitchConnectionMutate<config, context>
-    /** @deprecated use `switchConnectionAsync` instead */
+    /** @deprecated use `mutateAsync` instead */
     switchAccountAsync: SwitchConnectionMutateAsync<config, context>
+    /** @deprecated use `mutate` instead */
     switchConnection: SwitchConnectionMutate<config, context>
+    /** @deprecated use `mutateAsync` instead */
     switchConnectionAsync: SwitchConnectionMutateAsync<config, context>
   }
 >
@@ -78,14 +82,17 @@ export function useSwitchConnection<
     ...mutationOptions,
   })
 
+  type Return = UseSwitchConnectionReturnType<config, context>
   return {
     ...result,
     connectors: useConnections({ config }).map(
       (connection) => connection.connector,
     ),
-    switchAccount: mutate,
-    switchAccountAsync: mutateAsync,
-    switchConnection: mutate,
-    switchConnectionAsync: mutateAsync,
+    mutate: mutate as Return['mutate'],
+    mutateAsync: mutateAsync as Return['mutateAsync'],
+    switchAccount: mutate as Return['switchAccount'],
+    switchAccountAsync: mutateAsync as Return['switchAccountAsync'],
+    switchConnection: mutate as Return['switchConnection'],
+    switchConnectionAsync: mutateAsync as Return['switchConnectionAsync'],
   }
 }

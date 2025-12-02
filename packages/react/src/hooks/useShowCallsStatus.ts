@@ -45,7 +45,11 @@ export type UseShowCallsStatusReturnType<context = unknown> = Compute<
     ShowCallsStatusVariables,
     context
   > & {
+    mutate: ShowCallsStatusMutate
+    mutateAsync: ShowCallsStatusMutateAsync
+    /** @deprecated use `mutate` instead */
     showCallsStatus: ShowCallsStatusMutate
+    /** @deprecated use `mutateAsync` instead */
     showCallsStatusAsync: ShowCallsStatusMutateAsync
   }
 >
@@ -67,10 +71,12 @@ export function useShowCallsStatus<
     ...mutationOptions,
   })
 
-  type Return = UseShowCallsStatusReturnType
+  type Return = UseShowCallsStatusReturnType<context>
   return {
-    ...result,
+    mutate: mutate as Return['mutate'],
+    mutateAsync: mutateAsync as Return['mutateAsync'],
     showCallsStatus: mutate as Return['showCallsStatus'],
     showCallsStatusAsync: mutateAsync as Return['showCallsStatusAsync'],
-  }
+    ...result,
+  } as Return
 }

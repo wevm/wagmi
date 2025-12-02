@@ -57,7 +57,11 @@ export type UseWriteContractReturnType<
   >,
   context
 > & {
+  mutate: WriteContractMutate<config, context>
+  mutateAsync: WriteContractMutateAsync<config, context>
+  /** @deprecated use `mutate` instead */
   writeContract: WriteContractMutate<config, context>
+  /** @deprecated use `mutateAsync` instead */
   writeContractAsync: WriteContractMutateAsync<config, context>
 }
 
@@ -80,7 +84,9 @@ export function useWriteContract<
 
   type Return = UseWriteContractReturnType<config, context>
   return {
-    ...result,
+    ...(result as Return),
+    mutate: mutate as Return['mutate'],
+    mutateAsync: mutateAsync as Return['mutateAsync'],
     writeContract: mutate as Return['writeContract'],
     writeContractAsync: mutateAsync as Return['writeContractAsync'],
   }

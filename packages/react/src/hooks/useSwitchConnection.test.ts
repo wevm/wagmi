@@ -21,7 +21,7 @@ test('default', async () => {
   const address1 = result.current.useConnection.address
   expect(address1).toBeDefined()
 
-  result.current.useSwitchConnection.switchConnection({ connector: connector2 })
+  result.current.useSwitchConnection.mutate({ connector: connector2 })
   await vi.waitFor(() =>
     expect(result.current.useSwitchConnection.isSuccess).toBeTruthy(),
   )
@@ -31,7 +31,7 @@ test('default', async () => {
   expect(address2).toBeDefined()
   expect(address1).not.toBe(address2)
 
-  result.current.useSwitchConnection.switchConnection({ connector: connector1 })
+  result.current.useSwitchConnection.mutate({ connector: connector1 })
   await vi.waitFor(() =>
     expect(result.current.useSwitchConnection.isSuccess).toBeTruthy(),
   )

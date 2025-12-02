@@ -44,7 +44,11 @@ export type UseSendCallsReturnType<
     SendCallsVariables<config, config['chains'][number]['id']>,
     context
   > & {
+    mutate: SendCallsMutate<config, context>
+    mutateAsync: SendCallsMutateAsync<config, context>
+    /** @deprecated use `mutate` instead */
     sendCalls: SendCallsMutate<config, context>
+    /** @deprecated use `mutateAsync` instead */
     sendCallsAsync: SendCallsMutateAsync<config, context>
   }
 >
@@ -69,6 +73,8 @@ export function useSendCalls<
   type Return = UseSendCallsReturnType<config, context>
   return {
     ...result,
+    mutate: mutate as Return['mutate'],
+    mutateAsync: mutateAsync as Return['mutateAsync'],
     sendCalls: mutate as Return['sendCalls'],
     sendCallsAsync: mutateAsync as Return['sendCallsAsync'],
   }

@@ -48,7 +48,11 @@ export type UseSendCallsSyncReturnType<
     SendCallsSyncVariables<config, config['chains'][number]['id']>,
     context
   > & {
+    mutate: SendCallsSyncMutate<config, context>
+    mutateAsync: SendCallsSyncMutateAsync<config, context>
+    /** @deprecated use `mutate` instead */
     sendCallsSync: SendCallsSyncMutate<config, context>
+    /** @deprecated use `mutateAsync` instead */
     sendCallsSyncAsync: SendCallsSyncMutateAsync<config, context>
   }
 >
@@ -73,6 +77,8 @@ export function useSendCallsSync<
   type Return = UseSendCallsSyncReturnType<config, context>
   return {
     ...result,
+    mutate: mutate as Return['mutate'],
+    mutateAsync: mutateAsync as Return['mutateAsync'],
     sendCallsSync: mutate as Return['sendCallsSync'],
     sendCallsSyncAsync: mutateAsync as Return['sendCallsSyncAsync'],
   }
