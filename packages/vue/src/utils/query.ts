@@ -8,7 +8,12 @@ import {
   type UseQueryOptions,
   useMutation,
 } from '@tanstack/vue-query'
-import type { Compute, ExactPartial, Omit } from '@wagmi/core/internal'
+import type {
+  Compute,
+  ExactPartial,
+  Omit,
+  UnionStrictOmit,
+} from '@wagmi/core/internal'
 import { hashFn } from '@wagmi/core/query'
 import { computed, type MaybeRef, unref } from 'vue'
 
@@ -35,7 +40,12 @@ export type UseMutationReturnType<
   error = Error,
   variables = void,
   context = unknown,
-> = Compute<tanstack_UseMutationReturnType<data, error, variables, context>>
+> = Compute<
+  UnionStrictOmit<
+    tanstack_UseMutationReturnType<data, error, variables, context>,
+    'mutate' | 'mutateAsync'
+  >
+>
 
 export { useMutation }
 

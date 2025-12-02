@@ -48,7 +48,11 @@ export type UseDeployContractReturnType<
   DeployContractVariables<Abi, config, config['chains'][number]['id']>,
   context
 > & {
+  mutate: DeployContractMutate<config, context>
+  mutateAsync: DeployContractMutateAsync<config, context>
+  /** @deprecated use `mutate` instead */
   deployContract: DeployContractMutate<config, context>
+  /** @deprecated use `mutateAsync` instead */
   deployContractAsync: DeployContractMutateAsync<config, context>
 }
 
@@ -72,6 +76,8 @@ export function useDeployContract<
   type Return = UseDeployContractReturnType<config, context>
   return {
     ...result,
+    mutate: mutate as Return['mutate'],
+    mutateAsync: mutateAsync as Return['mutateAsync'],
     deployContract: mutate as Return['deployContract'],
     deployContractAsync: mutateAsync as Return['deployContractAsync'],
   }

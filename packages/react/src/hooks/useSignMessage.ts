@@ -38,6 +38,8 @@ export type UseSignMessageReturnType<context = unknown> = Compute<
     SignMessageVariables,
     context
   > & {
+    mutate: SignMessageMutate<context>
+    mutateAsync: SignMessageMutateAsync<context>
     /** @deprecated use `mutate` instead */
     signMessage: SignMessageMutate<context>
     /** @deprecated use `mutateAsync` instead */
