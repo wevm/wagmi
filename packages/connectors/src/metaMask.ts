@@ -26,6 +26,8 @@ import {
   SwitchChainError,
   UserRejectedRequestError,
   type AddEthereumChainParameter as ViemAddEthereumChainParameter,
+  withRetry,
+  withTimeout,
 } from 'viem'
 
 type CreateMetamaskConnectEVMParameters = Parameters<
@@ -232,8 +234,21 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       },
 
       async isAuthorized() {
-        const accounts = await this.getAccounts()
-        return accounts.length > 0
+        try {
+          // MetaMask mobile provider sometimes fails to immediately resolve
+          // JSON-RPC requests on page load
+          const timeout = 200
+          const accounts = await withRetry(
+            () => withTimeout(() => this.getAccounts(), { timeout }),
+            {
+              delay: timeout + 1,
+              retryCount: 3,
+            },
+          )
+          return !!accounts.length
+        } catch {
+          return false
+        }
       },
 
       async switchChain(

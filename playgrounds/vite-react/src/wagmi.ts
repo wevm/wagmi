@@ -2,10 +2,10 @@ import { del, get, set } from 'idb-keyval'
 import { createConfig, http } from 'wagmi'
 import { celo, mainnet, optimism, sepolia } from 'wagmi/chains'
 import {
-  baseAccount,
+  //baseAccount,
   gemini,
   metaMask,
-  porto,
+  //porto,
   walletConnect,
 } from 'wagmi/connectors'
 
@@ -28,8 +28,9 @@ export const config = createConfig({
     walletConnect({
       projectId: import.meta.env.VITE_WC_PROJECT_ID,
     }),
-    porto(),
-    baseAccount(),
+    // TODO: Re-enable these -- they were breaking mobile native browser testing
+    //porto(),
+    //baseAccount(),
     metaMask({
       dapp: {
         name: 'My DApp',
