@@ -71,27 +71,20 @@ export function useSwitchConnection<
 >(
   parameters: UseSwitchConnectionParameters<config, context> = {},
 ): UseSwitchConnectionReturnType<config, context> {
-  const { mutation } = parameters
-
   const config = useConfig(parameters)
   const connections = useConnections({ config })
-
   const mutationOptions = switchConnectionMutationOptions(config)
-  const { mutate, mutateAsync, ...result } = useMutation({
-    ...mutation,
-    ...mutationOptions,
-  })
-
+  const mutation = useMutation({ ...parameters.mutation, ...mutationOptions })
   return {
-    ...result,
+    ...mutation,
     connectors: computed(() =>
       connections.value.map((connection) => connection.connector),
     ),
-    mutate,
-    mutateAsync,
-    switchAccount: mutate,
-    switchAccountAsync: mutateAsync,
-    switchConnection: mutate,
-    switchConnectionAsync: mutateAsync,
+    mutate: mutation.mutate,
+    mutateAsync: mutation.mutateAsync,
+    switchAccount: mutation.mutate,
+    switchAccountAsync: mutation.mutateAsync,
+    switchConnection: mutation.mutate,
+    switchConnectionAsync: mutation.mutateAsync,
   }
 }

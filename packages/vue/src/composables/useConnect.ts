@@ -67,13 +67,11 @@ export function useConnect<
 >(
   parameters: UseConnectParameters<config, context> = {},
 ): UseConnectReturnType<config, context> {
-  const { mutation } = parameters
-
   const config = useConfig(parameters)
 
   const mutationOptions = connectMutationOptions(config)
   const { mutate, mutateAsync, ...result } = useMutation({
-    ...(mutation as typeof mutationOptions),
+    ...(parameters.mutation as typeof mutationOptions),
     ...mutationOptions,
   })
 
@@ -90,8 +88,8 @@ export function useConnect<
   type Return = UseConnectReturnType<config, context>
   return {
     ...(result as Return),
-    connect: mutate as Return['connect'],
-    connectAsync: mutateAsync as Return['connectAsync'],
+    connect: mutate as Return['mutate'],
+    connectAsync: mutateAsync as Return['mutateAsync'],
     connectors: useConnectors({ config }).value,
     mutate: mutate as Return['mutate'],
     mutateAsync: mutateAsync as Return['mutateAsync'],

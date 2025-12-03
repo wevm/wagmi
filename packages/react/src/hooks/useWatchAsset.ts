@@ -52,13 +52,8 @@ export function useWatchAsset<context = unknown>(
   parameters: UseWatchAssetParameters<context> = {},
 ): UseWatchAssetReturnType<context> {
   const config = useConfig(parameters)
-
   const mutationOptions = watchAssetMutationOptions(config)
-  const mutation = useMutation({
-    ...parameters.mutation,
-    ...mutationOptions,
-  })
-
+  const mutation = useMutation({ ...parameters.mutation, ...mutationOptions })
   return {
     ...mutation,
     watchAsset: mutation.mutate,

@@ -61,22 +61,13 @@ export function useShowCallsStatus<
 >(
   parameters: UseShowCallsStatusParameters<config, context> = {},
 ): UseShowCallsStatusReturnType<context> {
-  const { mutation } = parameters
-
   const config = useConfig(parameters)
-
   const mutationOptions = showCallsStatusMutationOptions(config)
-  const { mutate, mutateAsync, ...result } = useMutation({
-    ...mutation,
-    ...mutationOptions,
-  })
-
+  const mutation = useMutation({ ...parameters.mutation, ...mutationOptions })
   type Return = UseShowCallsStatusReturnType<context>
   return {
-    mutate: mutate as Return['mutate'],
-    mutateAsync: mutateAsync as Return['mutateAsync'],
-    showCallsStatus: mutate as Return['showCallsStatus'],
-    showCallsStatusAsync: mutateAsync as Return['showCallsStatusAsync'],
-    ...result,
-  } as Return
+    ...mutation,
+    showCallsStatus: mutation.mutate as Return['mutate'],
+    showCallsStatusAsync: mutation.mutateAsync as Return['mutateAsync'],
+  }
 }

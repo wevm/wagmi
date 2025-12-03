@@ -55,13 +55,8 @@ export function useDisconnect<context = unknown>(
   parameters: UseDisconnectParameters<context> = {},
 ): UseDisconnectReturnType<context> {
   const config = useConfig(parameters)
-
   const mutationOptions = disconnectMutationOptions(config)
-  const mutation = useMutation({
-    ...parameters.mutation,
-    ...mutationOptions,
-  })
-
+  const mutation = useMutation({ ...parameters.mutation, ...mutationOptions })
   return {
     ...mutation,
     connectors: useConnections({ config }).map(

@@ -53,13 +53,8 @@ export function useReconnect<context = unknown>(
   parameters: UseReconnectParameters<context> = {},
 ): UseReconnectReturnType<context> {
   const config = useConfig(parameters)
-
   const mutationOptions = reconnectMutationOptions(config)
-  const mutation = useMutation({
-    ...parameters.mutation,
-    ...mutationOptions,
-  })
-
+  const mutation = useMutation({ ...parameters.mutation, ...mutationOptions })
   return {
     ...mutation,
     connectors: config.connectors,
