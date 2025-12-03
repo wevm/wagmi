@@ -30,11 +30,11 @@ import { useDisconnect } from '@wagmi/vue'
 <script setup lang="ts">
 import { useDisconnect } from '@wagmi/vue'
 
-const { disconnect } = useDisconnect()
+const disconnect = useDisconnect()
 </script>
 
 <template>
-  <button @click="disconnect()">
+  <button @click="disconnect.mutate()">
     Disconnect
   </button>
 </template>
@@ -60,7 +60,7 @@ import { type UseDisconnectParameters } from '@wagmi/vue'
 import { useDisconnect } from '@wagmi/vue'
 import { config } from './config' // [!code focus]
 
-const result = useDisconnect({
+const disconnect = useDisconnect({
   config, // [!code focus]
 })
 </script>

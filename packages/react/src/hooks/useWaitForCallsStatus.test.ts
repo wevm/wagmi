@@ -17,7 +17,7 @@ test('default', async () => {
     useWaitForCallsStatus({ id: useSendCalls_render.result.current.data?.id }),
   )
 
-  useSendCalls_render.result.current.sendCalls({
+  useSendCalls_render.result.current.mutate({
     calls: [
       {
         data: '0xdeadbeef',

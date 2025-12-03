@@ -3,15 +3,15 @@ import { expectTypeOf, test } from 'vitest'
 import { useConnect, useConnectors } from 'wagmi'
 
 test('infers connect parameters', () => {
-  const { connect, connectAsync, variables } = useConnect()
+  const connect = useConnect()
   const connectors = useConnectors()
   const connector = connectors[0]!
 
-  connect({
+  connect.mutate({
     connector,
     foo: 'bar',
   })
-  connect({
+  connect.mutate({
     connector,
     capabilities: {
       signInWithEthereum: {
@@ -20,14 +20,14 @@ test('infers connect parameters', () => {
     },
   })
 
-  if (variables && 'foo' in variables)
-    expectTypeOf(variables?.foo).toEqualTypeOf<string | undefined>()
-  if (variables && 'capabilities' in variables)
-    expectTypeOf(variables?.capabilities?.signInWithEthereum).toEqualTypeOf<
-      { nonce: string } | undefined
-    >()
+  if (connect.variables && 'foo' in connect.variables)
+    expectTypeOf(connect.variables?.foo).toEqualTypeOf<string | undefined>()
+  if (connect.variables && 'capabilities' in connect.variables)
+    expectTypeOf(
+      connect.variables?.capabilities?.signInWithEthereum,
+    ).toEqualTypeOf<{ nonce: string } | undefined>()
 
-  connect(
+  connect.mutate(
     {
       connector,
       foo: 'bar',
@@ -103,12 +103,12 @@ test('infers connect parameters', () => {
   )
 
   ;(async () => {
-    await connectAsync({
+    await connect.mutateAsync({
       connector,
       foo: 'bar',
       withCapabilities: true,
     })
-    const res = await connectAsync({
+    const res = await connect.mutateAsync({
       connector,
       capabilities: {
         signInWithEthereum: {

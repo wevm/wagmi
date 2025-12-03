@@ -48,8 +48,12 @@ export type UseDeployContractReturnType<
   DeployContractVariables<Abi, config, config['chains'][number]['id']>,
   context
 > & {
+  /** @deprecated use `mutate` instead */
   deployContract: DeployContractMutate<config, context>
+  /** @deprecated use `mutateAsync` instead */
   deployContractAsync: DeployContractMutateAsync<config, context>
+  mutate: DeployContractMutate<config, context>
+  mutateAsync: DeployContractMutateAsync<config, context>
 }
 
 /** https://wagmi.sh/react/api/hooks/useDeployContract */
@@ -59,20 +63,15 @@ export function useDeployContract<
 >(
   parameters: UseDeployContractParameters<config, context> = {},
 ): UseDeployContractReturnType<config, context> {
-  const { mutation } = parameters
-
   const config = useConfig(parameters)
-
   const mutationOptions = deployContractMutationOptions(config)
-  const { mutate, mutateAsync, ...result } = useMutation({
-    ...mutation,
-    ...mutationOptions,
-  })
-
+  const mutation = useMutation({ ...parameters.mutation, ...mutationOptions })
   type Return = UseDeployContractReturnType<config, context>
   return {
-    ...result,
-    deployContract: mutate as Return['deployContract'],
-    deployContractAsync: mutateAsync as Return['deployContractAsync'],
+    ...mutation,
+    deployContract: mutation.mutate as Return['mutate'],
+    deployContractAsync: mutation.mutateAsync as Return['mutateAsync'],
+    mutate: mutation.mutate as Return['mutate'],
+    mutateAsync: mutation.mutateAsync as Return['mutateAsync'],
   }
 }

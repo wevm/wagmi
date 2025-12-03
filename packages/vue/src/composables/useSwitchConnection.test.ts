@@ -25,14 +25,14 @@ test('default', async () => {
   const address1 = connection.address.value
   expect(address1).toBeDefined()
 
-  switchConnection.switchConnection({ connector: connector2 })
+  switchConnection.mutate({ connector: connector2 })
   await waitFor(switchConnection.isSuccess)
 
   const address2 = connection.address.value
   expect(address2).toBeDefined()
   expect(address1).not.toBe(address2)
 
-  switchConnection.switchConnection({ connector: connector1 })
+  switchConnection.mutate({ connector: connector1 })
   await waitFor(switchConnection.isSuccess)
 
   const address3 = connection.address.value

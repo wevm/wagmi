@@ -10,7 +10,7 @@ const chainId = chain.mainnet.id
 const contextValue = { foo: 'bar' } as const
 
 test('context', () => {
-  const { context, data, error, switchChain, variables } = useSwitchChain({
+  const switchChain = useSwitchChain({
     mutation: {
       onMutate(variables) {
         expectTypeOf(variables).toEqualTypeOf<{
@@ -59,9 +59,13 @@ test('context', () => {
     },
   })
 
-  expectTypeOf(data.value).toEqualTypeOf<Compute<Chain> | undefined>()
-  expectTypeOf(error.value).toEqualTypeOf<SwitchChainErrorType | null>()
-  expectTypeOf(variables.value).toEqualTypeOf<
+  expectTypeOf(switchChain.data.value).toEqualTypeOf<
+    Compute<Chain> | undefined
+  >()
+  expectTypeOf(
+    switchChain.error.value,
+  ).toEqualTypeOf<SwitchChainErrorType | null>()
+  expectTypeOf(switchChain.variables.value).toEqualTypeOf<
     | {
         addEthereumChainParameter?:
           | ExactPartial<Omit<AddEthereumChainParameter, 'chainId'>>
@@ -71,9 +75,11 @@ test('context', () => {
       }
     | undefined
   >()
-  expectTypeOf(context.value).toEqualTypeOf<typeof contextValue | undefined>()
+  expectTypeOf(switchChain.context.value).toEqualTypeOf<
+    typeof contextValue | undefined
+  >()
 
-  switchChain(
+  switchChain.mutate(
     { chainId },
     {
       onError(error, variables, context) {

@@ -31,10 +31,9 @@ import { useConnect } from 'wagmi'
 import { injected } from 'wagmi/connectors'
 
 function App() {
-  const { connect } = useConnect()
-
+  const connect = useConnect()
   return (
-    <button onClick={() => connect({ connector: injected() })}>
+    <button onClick={() => connect.mutate({ connector: injected() })}>
       Connect
     </button>
   )
@@ -61,7 +60,7 @@ import { useConnect } from 'wagmi'
 import { config } from './config' // [!code focus]
 
 function App() {
-  const result = useConnect({
+  const connect = useConnect({
     config, // [!code focus]
   })
 }
@@ -88,12 +87,12 @@ Globally configured connectors via [`createConfig`](/react/api/createConfig#conn
 import { useConnect } from 'wagmi'
 
 function App() {
-  const { connect, connectors } = useConnect()
+  const connect = useConnect()
 
   return (
     <div>
-      {connectors.map((connector) => (
-        <button key={connector.id} onClick={() => connect({ connector })}>
+      {connect.connectors.map((connector) => (
+        <button key={connector.id} onClick={() => connect.mutate({ connector })}>
           {connector.name}
         </button>
       ))}

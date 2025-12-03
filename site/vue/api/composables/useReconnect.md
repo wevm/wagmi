@@ -31,9 +31,9 @@ import { useReconnect } from '@wagmi/vue'
 import { useReconnect } from '@wagmi/vue'
 import { useEffect } from 'react'
 
-const { reconnect } = useReconnect()
+const reconnect = useReconnect()
 
-reconnect()
+reconnect.mutate()
 </script>
 ```
 
@@ -61,7 +61,7 @@ import { type UseReconnectParameters } from '@wagmi/vue'
 import { useReconnect } from '@wagmi/vue'
 import { config } from './config' // [!code focus]
 
-const result = useReconnect({
+const reconnect = useReconnect({
   config, // [!code focus]
 })
 </script>

@@ -13,7 +13,7 @@ test('default', async () => {
 
   const [result] = renderComposable(() => useSignTypedData())
 
-  result.signTypedData({
+  result.mutate({
     types: typedData.basic.types,
     primaryType: 'Mail',
     message: typedData.basic.message,
@@ -36,7 +36,7 @@ test('behavior: local account', async () => {
   const [result] = renderComposable(() => useSignTypedData())
 
   const account = privateKeyToAccount(privateKey)
-  result.signTypedData({
+  result.mutate({
     account,
     types: typedData.basic.types,
     primaryType: 'Mail',

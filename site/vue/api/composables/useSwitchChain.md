@@ -30,7 +30,7 @@ import { useSwitchChain } from '@wagmi/vue'
 <script setup lang="ts">
 import { useChains, useSwitchChain } from '@wagmi/vue'
 
-const { switchChain } = useSwitchChain()
+const switchChain = useSwitchChain()
 const chains = useSwitchChains()
 </script>
 
@@ -39,7 +39,7 @@ const chains = useSwitchChains()
     <button 
       v-for="chain in chains" 
       :key="chain.id" 
-      @click="switchChain({ chainId: chain.id })"
+      @click="switchChain.mutate({ chainId: chain.id })"
     >
       {{ chain.name }}
     </button>
@@ -71,7 +71,7 @@ import { type UseSwitchChainParameters } from '@wagmi/vue'
 import { useSwitchChain } from '@wagmi/vue'
 import { config } from './config' // [!code focus]
 
-const result = useSwitchChain({
+const switchChain = useSwitchChain({
   config, // [!code focus]
 })
 </script>

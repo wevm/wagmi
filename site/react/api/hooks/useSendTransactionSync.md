@@ -32,12 +32,11 @@ import { useSendTransactionSync } from 'wagmi'
 import { parseEther } from 'viem'
 
 function App() {
-  const { sendTransactionSync } = useSendTransactionSync()
-
+  const sendTransactionSync = useSendTransactionSync()
   return (
     <button
       onClick={() =>
-        sendTransactionSync({
+        sendTransactionSync.mutate({
           to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
           value: parseEther('0.01'),
         })
@@ -69,7 +68,7 @@ import { useSendTransactionSync } from 'wagmi'
 import { config } from './config' // [!code focus]
 
 function App() {
-  const result = useSendTransactionSync({
+  const sendTransactionSync = useSendTransactionSync({
     config, // [!code focus]
   })
 }

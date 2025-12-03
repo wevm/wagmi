@@ -21,7 +21,7 @@ test('default', async () => {
   expect(result.current.useConnection.address).toBeDefined()
   expect(result.current.useConnection.status).toEqual('connected')
 
-  result.current.useDisconnect.disconnect()
+  result.current.useDisconnect.mutate()
 
   await vi.waitFor(() =>
     expect(result.current.useConnection.isDisconnected).toBeTruthy(),

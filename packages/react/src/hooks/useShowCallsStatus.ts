@@ -45,7 +45,11 @@ export type UseShowCallsStatusReturnType<context = unknown> = Compute<
     ShowCallsStatusVariables,
     context
   > & {
+    mutate: ShowCallsStatusMutate
+    mutateAsync: ShowCallsStatusMutateAsync
+    /** @deprecated use `mutate` instead */
     showCallsStatus: ShowCallsStatusMutate
+    /** @deprecated use `mutateAsync` instead */
     showCallsStatusAsync: ShowCallsStatusMutateAsync
   }
 >
@@ -57,20 +61,13 @@ export function useShowCallsStatus<
 >(
   parameters: UseShowCallsStatusParameters<config, context> = {},
 ): UseShowCallsStatusReturnType<context> {
-  const { mutation } = parameters
-
   const config = useConfig(parameters)
-
   const mutationOptions = showCallsStatusMutationOptions(config)
-  const { mutate, mutateAsync, ...result } = useMutation({
-    ...mutation,
-    ...mutationOptions,
-  })
-
-  type Return = UseShowCallsStatusReturnType
+  const mutation = useMutation({ ...parameters.mutation, ...mutationOptions })
+  type Return = UseShowCallsStatusReturnType<context>
   return {
-    ...result,
-    showCallsStatus: mutate as Return['showCallsStatus'],
-    showCallsStatusAsync: mutateAsync as Return['showCallsStatusAsync'],
+    ...mutation,
+    showCallsStatus: mutation.mutate as Return['mutate'],
+    showCallsStatusAsync: mutation.mutateAsync as Return['mutateAsync'],
   }
 }
