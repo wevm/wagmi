@@ -65,8 +65,7 @@
     "viem": "https://pkg.pr.new/viem@4107",
     "vite-plugin-react-fallback-throttle": "^0.1.1",
     "vitest": "^4.0.8",
-    "vitest-browser-react": "^2.0.2",
-    "zile": "^0.0.7"
+    "vitest-browser-react": "^2.0.2"
   },
   "packageManager": "pnpm@10.22.0",
   "devEngines": {
