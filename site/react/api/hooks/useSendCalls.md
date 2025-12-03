@@ -33,12 +33,11 @@ import { useSendCalls } from 'wagmi'
 import { parseEther } from 'viem'
 
 function App() {
-  const { sendCalls } = useSendCalls()
-
+  const sendCalls = useSendCalls()
   return (
     <button
       onClick={() =>
-        sendCalls({
+        sendCalls.mutate({
           calls: [
             {
               to: '0x70997970c51812dc3a010c7d01b50e0d17dc79c8',
@@ -78,7 +77,7 @@ import { useSendCalls } from 'wagmi'
 import { config } from './config' // [!code focus]
 
 function App() {
-  const result = useSendCalls({
+  const sendCalls = useSendCalls({
     config, // [!code focus]
   })
 }

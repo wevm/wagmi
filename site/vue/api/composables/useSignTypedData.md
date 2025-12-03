@@ -30,12 +30,12 @@ import { useSignTypedData } from '@wagmi/vue'
 <script setup lang="ts">
 import { useSignTypedData } from '@wagmi/vue'
 
-const { signTypedData } = useSignTypedData()
+const signTypedData = useSignTypedData()
 </script>
 
 <template>
   <button
-    @click="signTypedData({
+    @click="signTypedData.mutate({
       types: {
         Person: [
           { name: 'name', type: 'string' },
@@ -86,7 +86,7 @@ import { type UseSignTypedDataParameters } from '@wagmi/vue'
 import { useSignTypedData } from '@wagmi/vue'
 import { config } from './config' // [!code focus]
 
-const result = useSignTypedData({
+const signTypedData = useSignTypedData({
   config, // [!code focus]
 })
 </script>
@@ -112,9 +112,9 @@ With [`types`](/core/api/actions/signTypedData#types) setup correctly, TypeScrip
 ```ts twoslash [Inline]
 import { useSignTypedData } from '@wagmi/vue'
 // ---cut---
-const { signTypedData } = useSignTypedData()
+const signTypedData = useSignTypedData()
 
-signTypedData({
+signTypedData.mutate({
   types: {
     Person: [
       { name: 'name', type: 'string' },
@@ -171,9 +171,9 @@ const types = {
   ],
 } as const
 
-const { signTypedData } = useSignTypedData()
+const signTypedData = useSignTypedData()
 
-signTypedData({
+signTypedData.mutate({
   types,
   primaryType: 'Mail',
   // ^?

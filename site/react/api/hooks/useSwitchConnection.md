@@ -30,13 +30,12 @@ import { useSwitchConnection } from 'wagmi'
 import { useConnections, useSwitchConnection } from 'wagmi'
 
 function App() {
-  const { switchConnection } = useSwitchConnection()
+  const switchConnection = useSwitchConnection()
   const connections = useConnections()
-
   return (
     <div>
       {connections.map((connection) => (
-        <button key={connection.id} onClick={() => switchConnection({ connector: connection.connector })}>
+        <button key={connection.id} onClick={() => switchConnection.mutate({ connector: connection.connector })}>
           {connection.connector.name}
         </button>
       ))}
@@ -92,12 +91,12 @@ Globally configured and actively connected connectors. Useful for rendering a li
 import { useSwitchConnection } from 'wagmi'
 
 function App() {
-  const { connectors, switchConnection } = useSwitchConnection()
+  const switchConnection = useSwitchConnection()
 
   return (
     <div>
-      {connectors.map((connector) => (
-        <button key={connector.id} onClick={() => switchConnection({ connector })}>
+      {switchConnection.connectors.map((connector) => (
+        <button key={connector.id} onClick={() => switchConnection.mutate({ connector })}>
           {connector.name}
         </button>
       ))}

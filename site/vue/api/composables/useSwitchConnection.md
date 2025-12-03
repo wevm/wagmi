@@ -30,7 +30,7 @@ import { useSwitchConnection } from 'wagmi'
 <script setup lang="ts">
 import { useConnections, useSwitchConnection } from 'wagmi'
 
-const { switchConnection } = useSwitchConnection()
+const switchConnection = useSwitchConnection()
 const connections = useConnections()
 </script>
 
@@ -39,7 +39,7 @@ const connections = useConnections()
     <button 
       v-for="connection in connections" 
       :key="connection.id" 
-      @click="switchConnection({ connector: connection.connector })"
+      @click="switchConnection.mutate({ connector: connection.connector })"
     >
       {{ connection.connector.name }}
     </button>
@@ -67,7 +67,7 @@ import { type UseSwitchConnectionParameters } from 'wagmi'
 import { useSwitchConnection } from 'wagmi'
 import { config } from './config' // [!code focus]
 
-const result = useSwitchConnection({
+const switchConnection = useSwitchConnection({
   config, // [!code focus]
 })
 </script>

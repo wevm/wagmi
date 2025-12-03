@@ -31,7 +31,6 @@ import { useSignMessage } from 'wagmi'
 
 function App() {
   const signMessage = useSignMessage()
-
   return (
     <button onClick={() => signMessage.mutate({ message: 'hello world' })}>
       Sign message

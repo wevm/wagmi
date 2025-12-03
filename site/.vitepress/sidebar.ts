@@ -320,10 +320,6 @@ export function getSidebar() {
             link: '/react/api/hooks/useTransactionReceipt',
           },
           {
-            text: 'useToken',
-            link: '/react/api/hooks/useToken',
-          },
-          {
             text: 'useWaitForCallsStatus',
             link: '/react/api/hooks/useWaitForCallsStatus',
           },
@@ -869,7 +865,6 @@ export function getSidebar() {
             text: 'getStorageAt',
             link: '/core/api/actions/getStorageAt',
           },
-          { text: 'getToken', link: '/core/api/actions/getToken' },
           {
             text: 'getTransaction',
             link: '/core/api/actions/getTransaction',

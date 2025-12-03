@@ -32,7 +32,6 @@ import { injected } from 'wagmi/connectors'
 
 function App() {
   const connect = useConnect()
-
   return (
     <button onClick={() => connect.mutate({ connector: injected() })}>
       Connect
