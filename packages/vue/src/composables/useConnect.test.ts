@@ -21,7 +21,7 @@ test('default', async () => {
   expect(connection.address.value).not.toBeDefined()
   expect(connection.status.value).toEqual('disconnected')
 
-  connect.connect({
+  connect.mutate({
     connector: connectors.value[0]!,
   })
 

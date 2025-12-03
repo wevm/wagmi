@@ -7,7 +7,7 @@ description: Hook for deploying a contract to the network, given bytecode & cons
 const packageName = 'wagmi'
 const actionName = 'deployContract'
 const typeName = 'DeployContract'
-const mutate = 'deployContract'
+const mutate = 'mutate'
 const TData = 'DeployContractData'
 const TError = 'DeployContractErrorType'
 const TVariables = 'DeployContractVariables'
@@ -32,12 +32,12 @@ import { parseEther } from 'viem'
 import { wagmiAbi } from './abi'
 
 function App() {
-  const { deployContract } = useDeployContract()
+  const deployContract = useDeployContract()
 
   return (
     <button
       onClick={() =>
-        deployContract({
+        deployContract.mutate({
           abi: wagmiAbi,
           bytecode: '0x608060405260405161083e38038061083e833981016040819052610...',
         })
@@ -71,12 +71,12 @@ import { parseEther } from 'viem'
 import { wagmiAbi } from './abi'
 
 function App() {
-  const { deployContract } = useDeployContract()
+  const deployContract = useDeployContract()
 
   return (
     <button
       onClick={() =>
-        deployContract({
+        deployContract.mutate({
           abi: wagmiAbi,
           args: [69420],
           bytecode: '0x608060405260405161083e38038061083e833981016040819052610...',
@@ -120,7 +120,7 @@ import { useDeployContract } from 'wagmi'
 import { config } from './config' // [!code focus]
 
 function App() {
-  const result = useDeployContract({
+  const deployContract = useDeployContract({
     config, // [!code focus]
   })
 }

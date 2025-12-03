@@ -2,20 +2,20 @@
 import { useConnection, useConnections, useSwitchConnection } from '@wagmi/vue'
 
 const { connector: currentConnector } = useConnection()
-const { error, status, switchConnection } = useSwitchConnection()
+const switchConnection = useSwitchConnection()
 const connections = useConnections()
 </script>
 
 <template>
   <h2>Switch Connection</h2>
 
-  <button v-for="connection in connections" :key="connection.id" :disabled="currentConnector?.uid === connection.connector.uid"
-    type="button" @click="switchConnection({ connector: connection.connector })">
+  <button v-for="connection in connections" :key="connection.connector.id" :disabled="currentConnector?.uid === connection.connector.uid"
+    type="button" @click="switchConnection.mutate({ connector: connection.connector })">
     {{ connection.connector.name }}
   </button>
 
   <div>
-    {{ status }}
-    {{ error }}
+    {{ switchConnection.status }}
+    {{ switchConnection.error }}
   </div>
 </template>

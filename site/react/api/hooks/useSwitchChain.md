@@ -30,13 +30,12 @@ import { useSwitchChain } from 'wagmi'
 import { useChains, useSwitchChain } from 'wagmi'
 
 function App() {
-  const { switchChain } = useSwitchChain()
+  const switchChain = useSwitchChain()
   const chains = useChains()
-
   return (
     <div>
       {chains.map((chain) => (
-        <button key={chain.id} onClick={() => switchChain({ chainId: chain.id })}>
+        <button key={chain.id} onClick={() => switchChain.mutate({ chainId: chain.id })}>
           {chain.name}
         </button>
       ))}
@@ -69,7 +68,7 @@ import { useSwitchChain } from 'wagmi'
 import { config } from './config' // [!code focus]
 
 function App() {
-  const result = useSwitchChain({
+  const switchChain = useSwitchChain({
     config, // [!code focus]
   })
 }
@@ -96,11 +95,10 @@ Globally configured chains. Useful for rendering a list of available chains to s
 import { useSwitchChain } from 'wagmi'
 
 function App() {
-  const { chains, switchChain } = useSwitchChain()
-
+  const switchChain = useSwitchChain()
   return (
     <div>
-      {chains.map((chain) => (
+      {switchChain.chains.map((chain) => (
         <button key={chain.id} onClick={() => switchChain({ chainId: chain.id })}>
           {chain.name}
         </button>

@@ -86,7 +86,7 @@ function Connection() {
 
 function Connect() {
   const chainId = useChainId()
-  const { connectAsync, data, status, error } = useConnect()
+  const connect = useConnect()
   const connectors = useConnectors()
 
   return (
@@ -96,11 +96,12 @@ function Connect() {
         <button
           key={connector.uid}
           onClick={async () => {
-            connectAsync({
-              connector,
-              chainId,
-              withCapabilities: true,
-            })
+            connect
+              .mutateAsync({
+                connector,
+                chainId,
+                withCapabilities: true,
+              })
               .then(console.log)
               // biome-ignore lint/suspicious/noConsole: allow
               .catch(console.error)
@@ -110,9 +111,8 @@ function Connect() {
           {connector.name}
         </button>
       ))}
-      <div>{status}</div>
-      <div>{error?.message}</div>
-      <pre>{stringify(data, null, 2)}</pre>
+      <div>{connect.status}</div>
+      <div>{connect.error?.message}</div>
     </div>
   )
 }
@@ -166,7 +166,7 @@ function SwitchChain() {
 }
 
 function SignMessage() {
-  const { data, signMessage } = useSignMessage()
+  const signMessage = useSignMessage()
 
   return (
     <div>
@@ -176,14 +176,14 @@ function SignMessage() {
         onSubmit={(event) => {
           event.preventDefault()
           const formData = new FormData(event.target as HTMLFormElement)
-          signMessage({ message: formData.get('message') as string })
+          signMessage.mutate({ message: formData.get('message') as string })
         }}
       >
         <input name="message" />
         <button type="submit">Sign Message</button>
       </form>
 
-      {data}
+      {signMessage.data}
     </div>
   )
 }

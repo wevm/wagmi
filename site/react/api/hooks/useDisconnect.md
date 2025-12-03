@@ -30,10 +30,9 @@ import { useDisconnect } from 'wagmi'
 import { useDisconnect } from 'wagmi'
 
 function App() {
-  const { disconnect } = useDisconnect()
-
+  const disconnect = useDisconnect()
   return (
-    <button onClick={() => disconnect()}>
+    <button onClick={() => disconnect.mutate()}>
       Disconnect
     </button>
   )
@@ -88,13 +87,13 @@ import { useConnectors, useDisconnect } from 'wagmi'
 import { mainnet } from 'wagmi/chains'
 
 function App() {
-  const { disconnect } = useDisconnect()
+  const disconnect = useDisconnect()
   const connectors = useConnectors()
 
   return (
     <div>
       {connectors.map((connector) => (
-        <button key={connector.id} onClick={() => disconnect({ connector })}>
+        <button key={connector.id} onClick={() => disconnect.mutate({ connector })}>
           {connector.name}
         </button>
       ))}

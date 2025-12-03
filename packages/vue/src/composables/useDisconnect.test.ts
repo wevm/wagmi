@@ -19,7 +19,7 @@ test('default', async () => {
   expect(connection.address.value).toBeDefined()
   expect(connection.status.value).toEqual('connected')
 
-  disconnect.disconnect()
+  disconnect.mutate()
 
   await waitFor(connection.isDisconnected, (isDisconnected) =>
     Boolean(isDisconnected),

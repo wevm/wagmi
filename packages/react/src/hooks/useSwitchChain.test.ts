@@ -20,7 +20,7 @@ test('default', async () => {
   expect(chainId1).toBeDefined()
 
   await act(() =>
-    result.current.useSwitchChain.switchChain({ chainId: chain.mainnet2.id }),
+    result.current.useSwitchChain.mutate({ chainId: chain.mainnet2.id }),
   )
   await vi.waitFor(() =>
     expect(result.current.useSwitchChain.isSuccess).toBeTruthy(),
@@ -31,7 +31,7 @@ test('default', async () => {
   expect(chainId1).not.toBe(chainId2)
 
   await act(() =>
-    result.current.useSwitchChain.switchChain({ chainId: chain.mainnet.id }),
+    result.current.useSwitchChain.mutate({ chainId: chain.mainnet.id }),
   )
   await vi.waitFor(() =>
     expect(result.current.useSwitchChain.isSuccess).toBeTruthy(),

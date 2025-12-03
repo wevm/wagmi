@@ -51,11 +51,15 @@ export type UseSwitchConnectionReturnType<
   > & {
     /** @deprecated use `useConnections` instead */
     connectors: Ref<readonly Connector[]>
+    mutate: SwitchConnectionMutate<config, context>
+    mutateAsync: SwitchConnectionMutateAsync<config, context>
     /** @deprecated use `switchConnection` instead */
     switchAccount: SwitchConnectionMutate<config, context>
     /** @deprecated use `switchConnectionAsync` instead */
     switchAccountAsync: SwitchConnectionMutateAsync<config, context>
+    /** @deprecated use `mutate` instead */
     switchConnection: SwitchConnectionMutate<config, context>
+    /** @deprecated use `mutateAsync` instead */
     switchConnectionAsync: SwitchConnectionMutateAsync<config, context>
   }
 >
@@ -67,25 +71,20 @@ export function useSwitchConnection<
 >(
   parameters: UseSwitchConnectionParameters<config, context> = {},
 ): UseSwitchConnectionReturnType<config, context> {
-  const { mutation } = parameters
-
   const config = useConfig(parameters)
   const connections = useConnections({ config })
-
   const mutationOptions = switchConnectionMutationOptions(config)
-  const { mutate, mutateAsync, ...result } = useMutation({
-    ...mutation,
-    ...mutationOptions,
-  })
-
+  const mutation = useMutation({ ...parameters.mutation, ...mutationOptions })
   return {
-    ...result,
+    ...mutation,
     connectors: computed(() =>
       connections.value.map((connection) => connection.connector),
     ),
-    switchAccount: mutate,
-    switchAccountAsync: mutateAsync,
-    switchConnection: mutate,
-    switchConnectionAsync: mutateAsync,
+    mutate: mutation.mutate,
+    mutateAsync: mutation.mutateAsync,
+    switchAccount: mutation.mutate,
+    switchAccountAsync: mutation.mutateAsync,
+    switchConnection: mutation.mutate,
+    switchConnectionAsync: mutation.mutateAsync,
   }
 }

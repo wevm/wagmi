@@ -52,11 +52,15 @@ export type UseSwitchConnectionReturnType<
   > & {
     /** @deprecated use `useConnections` instead */
     connectors: readonly Connector[]
-    /** @deprecated use `switchConnection` instead */
+    mutate: SwitchConnectionMutate<config, context>
+    mutateAsync: SwitchConnectionMutateAsync<config, context>
+    /** @deprecated use `mutate` instead */
     switchAccount: SwitchConnectionMutate<config, context>
-    /** @deprecated use `switchConnectionAsync` instead */
+    /** @deprecated use `mutateAsync` instead */
     switchAccountAsync: SwitchConnectionMutateAsync<config, context>
+    /** @deprecated use `mutate` instead */
     switchConnection: SwitchConnectionMutate<config, context>
+    /** @deprecated use `mutateAsync` instead */
     switchConnectionAsync: SwitchConnectionMutateAsync<config, context>
   }
 >
@@ -68,24 +72,20 @@ export function useSwitchConnection<
 >(
   parameters: UseSwitchConnectionParameters<config, context> = {},
 ): UseSwitchConnectionReturnType<config, context> {
-  const { mutation } = parameters
-
   const config = useConfig(parameters)
-
   const mutationOptions = switchConnectionMutationOptions(config)
-  const { mutate, mutateAsync, ...result } = useMutation({
-    ...mutation,
-    ...mutationOptions,
-  })
-
+  const mutation = useMutation({ ...parameters.mutation, ...mutationOptions })
+  type Return = UseSwitchConnectionReturnType<config, context>
   return {
-    ...result,
+    ...mutation,
     connectors: useConnections({ config }).map(
       (connection) => connection.connector,
     ),
-    switchAccount: mutate,
-    switchAccountAsync: mutateAsync,
-    switchConnection: mutate,
-    switchConnectionAsync: mutateAsync,
+    mutate: mutation.mutate as Return['mutate'],
+    mutateAsync: mutation.mutateAsync as Return['mutateAsync'],
+    switchAccount: mutation.mutate as Return['mutate'],
+    switchAccountAsync: mutation.mutateAsync as Return['mutateAsync'],
+    switchConnection: mutation.mutate as Return['mutate'],
+    switchConnectionAsync: mutation.mutateAsync as Return['mutateAsync'],
   }
 }

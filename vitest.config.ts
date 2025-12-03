@@ -38,7 +38,7 @@ export default defineConfig({
     projects: [
       {
         test: {
-          name: '@wagmi/cli',
+          name: 'cli',
           environment: 'node',
           include: ['./packages/cli/src/**/*.test.ts'],
           testTimeout: 10_000,
@@ -55,7 +55,7 @@ export default defineConfig({
       },
       {
         test: {
-          name: '@wagmi/core',
+          name: 'core',
           include: ['./packages/core/src/**/*.test.ts'],
           environment: 'happy-dom',
           testTimeout: 10_000,
@@ -75,7 +75,7 @@ export default defineConfig({
         plugins: [reactFallbackThrottlePlugin()],
         resolve: { alias },
         test: {
-          name: 'wagmi',
+          name: 'react',
           browser: {
             enabled: true,
             headless: true,
@@ -90,7 +90,7 @@ export default defineConfig({
       },
       {
         test: {
-          name: '@wagmi/vue',
+          name: 'vue',
           include: ['./packages/vue/src/**/*.test.ts?(x)'],
           environment: 'happy-dom',
           testTimeout: 10_000,
@@ -107,7 +107,7 @@ export default defineConfig({
       },
       {
         test: {
-          name: '@wagmi/test',
+          name: 'test',
           include: ['./packages/test/src/**/*.test.ts'],
         },
         resolve: { alias },

@@ -30,7 +30,7 @@ test('default', async () => {
 
   const { result } = await renderHook(() => useShowCallsStatus())
 
-  result.current.showCallsStatus({ id })
+  result.current.mutate({ id })
   await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   await disconnect(config, { connector })

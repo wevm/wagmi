@@ -41,8 +41,12 @@ export type UseDisconnectReturnType<context = unknown> = Compute<
   > & {
     /** @deprecated use `useConnections` instead */
     connectors: readonly Connector[]
+    /** @deprecated use `mutate` instead */
     disconnect: DisconnectMutate<context>
+    /** @deprecated use `mutateAsync` instead */
     disconnectAsync: DisconnectMutateAsync<context>
+    mutate: DisconnectMutate<context>
+    mutateAsync: DisconnectMutateAsync<context>
   }
 >
 
@@ -50,22 +54,15 @@ export type UseDisconnectReturnType<context = unknown> = Compute<
 export function useDisconnect<context = unknown>(
   parameters: UseDisconnectParameters<context> = {},
 ): UseDisconnectReturnType<context> {
-  const { mutation } = parameters
-
   const config = useConfig(parameters)
-
   const mutationOptions = disconnectMutationOptions(config)
-  const { mutate, mutateAsync, ...result } = useMutation({
-    ...mutation,
-    ...mutationOptions,
-  })
-
+  const mutation = useMutation({ ...parameters.mutation, ...mutationOptions })
   return {
-    ...result,
+    ...mutation,
     connectors: useConnections({ config }).map(
       (connection) => connection.connector,
     ),
-    disconnect: mutate,
-    disconnectAsync: mutateAsync,
+    disconnect: mutation.mutate,
+    disconnectAsync: mutation.mutateAsync,
   }
 }

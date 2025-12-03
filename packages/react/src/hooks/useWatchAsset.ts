@@ -38,7 +38,11 @@ export type UseWatchAssetReturnType<context = unknown> = Compute<
     WatchAssetVariables,
     context
   > & {
+    mutate: WatchAssetMutate<context>
+    mutateAsync: WatchAssetMutateAsync<context>
+    /** @deprecated use `mutate` instead */
     watchAsset: WatchAssetMutate<context>
+    /** @deprecated use `mutateAsync` instead */
     watchAssetAsync: WatchAssetMutateAsync<context>
   }
 >
@@ -47,19 +51,12 @@ export type UseWatchAssetReturnType<context = unknown> = Compute<
 export function useWatchAsset<context = unknown>(
   parameters: UseWatchAssetParameters<context> = {},
 ): UseWatchAssetReturnType<context> {
-  const { mutation } = parameters
-
   const config = useConfig(parameters)
-
   const mutationOptions = watchAssetMutationOptions(config)
-  const { mutate, mutateAsync, ...result } = useMutation({
-    ...mutation,
-    ...mutationOptions,
-  })
-
+  const mutation = useMutation({ ...parameters.mutation, ...mutationOptions })
   return {
-    ...result,
-    watchAsset: mutate,
-    watchAssetAsync: mutateAsync,
+    ...mutation,
+    watchAsset: mutation.mutate,
+    watchAssetAsync: mutation.mutateAsync,
   }
 }

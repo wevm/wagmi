@@ -35,12 +35,11 @@ import { useShowCallsStatus } from 'wagmi'
 import { parseEther } from 'viem'
 
 function App() {
-  const { showCallsStatus } = useShowCallsStatus()
-
+  const showCallsStatus = useShowCallsStatus()
   return (
     <button
       onClick={() =>
-        showCallsStatus({
+        showCallsStatus.mutate({
           id: '0x1234567890abcdef',
         })
       }
@@ -71,7 +70,7 @@ import { useShowCallsStatus } from 'wagmi'
 import { config } from './config' // [!code focus]
 
 function App() {
-  const result = useShowCallsStatus({
+  const showCallsStatus = useShowCallsStatus({
     config, // [!code focus]
   })
 }
