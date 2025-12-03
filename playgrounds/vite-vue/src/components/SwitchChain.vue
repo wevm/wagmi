@@ -2,7 +2,7 @@
 import { useChainId, useChains, useSwitchChain } from '@wagmi/vue'
 
 const chainId = useChainId()
-const { error, status, switchChain } = useSwitchChain()
+const switchChain = useSwitchChain()
 const chains = useChains()
 </script>
 
@@ -12,12 +12,12 @@ const chains = useChains()
   <div>Chain ID: {{ chainId }}</div>
 
   <button v-for="chain in chains" :key="chain.id" :disabled="chain.id === chainId" type="button"
-    @click="switchChain({ chainId: chain.id })">
+    @click="switchChain.mutate({ chainId: chain.id })">
     {{ chain.name }}
   </button>
 
   <div>
-    {{ status }}
-    {{ error }}
+    {{ switchChain.status }}
+    {{ switchChain.error }}
   </div>
 </template>

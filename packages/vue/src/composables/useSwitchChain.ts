@@ -50,7 +50,11 @@ export type UseSwitchChainReturnType<
   > & {
     /** @deprecated use `useChains` instead */
     chains: Ref<config['chains']>
+    mutate: SwitchChainMutate<config, context>
+    mutateAsync: SwitchChainMutateAsync<config, context>
+    /** @deprecated use `mutate` instead */
     switchChain: SwitchChainMutate<config, context>
+    /** @deprecated use `mutateAsync` instead */
     switchChainAsync: SwitchChainMutateAsync<config, context>
   }
 >
@@ -76,6 +80,8 @@ export function useSwitchChain<
   return {
     ...result,
     chains: useChains({ config }) as unknown as Ref<config['chains']>,
+    mutate: mutate as Return['mutate'],
+    mutateAsync: mutateAsync as Return['mutateAsync'],
     switchChain: mutate as Return['switchChain'],
     switchChainAsync: mutateAsync as Return['switchChainAsync'],
   } as Return

@@ -2,7 +2,7 @@
 import { useConnection, useDisconnect } from '@wagmi/vue'
 
 const { address, chainId, status } = useConnection()
-const { disconnect } = useDisconnect()
+const disconnect = useDisconnect()
 </script>
 
 <template>
@@ -16,7 +16,7 @@ const { disconnect } = useDisconnect()
     status: {{ status }}
   </div>
 
-  <button v-if="status !== 'disconnected'" type="button" @click="disconnect()">
+  <button v-if="status !== 'disconnected'" type="button" @click="disconnect.mutate()">
     Disconnect
   </button>
 </template>

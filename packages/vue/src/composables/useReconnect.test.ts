@@ -22,7 +22,7 @@ test('default', async () => {
 
   const [reconnect] = renderComposable(() => useReconnect())
 
-  reconnect.reconnect()
+  reconnect.mutate()
   await waitFor(reconnect.isSuccess)
 
   expect(reconnect.data.value).toStrictEqual([])
@@ -33,7 +33,7 @@ test('parameters: connectors (Connector)', async () => {
 
   const [reconnect] = renderComposable(() => useReconnect())
 
-  reconnect.reconnect({ connectors: [connector] })
+  reconnect.mutate({ connectors: [connector] })
   await waitFor(reconnect.isSuccess)
 
   expect(reconnect.data.value).toMatchObject(
@@ -55,7 +55,7 @@ test('parameters: connectors (CreateConnectorFn)', async () => {
 
   const [reconnect] = renderComposable(() => useReconnect())
 
-  reconnect.reconnect({ connectors: [connector] })
+  reconnect.mutate({ connectors: [connector] })
   await waitFor(reconnect.isSuccess)
 
   expect(reconnect.data.value).toMatchObject(
@@ -75,7 +75,7 @@ test("behavior: doesn't reconnect if already reconnecting", async () => {
   const [reconnect] = renderComposable(() => useReconnect())
 
   await expect(
-    reconnect.reconnectAsync({ connectors: [connector] }),
+    reconnect.mutateAsync({ connectors: [connector] }),
   ).resolves.toStrictEqual([])
   config.setState((x) => ({ ...x, status: previousStatus }))
 })

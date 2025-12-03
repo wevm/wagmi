@@ -51,11 +51,15 @@ export type UseSwitchConnectionReturnType<
   > & {
     /** @deprecated use `useConnections` instead */
     connectors: Ref<readonly Connector[]>
+    mutate: SwitchConnectionMutate<config, context>
+    mutateAsync: SwitchConnectionMutateAsync<config, context>
     /** @deprecated use `switchConnection` instead */
     switchAccount: SwitchConnectionMutate<config, context>
     /** @deprecated use `switchConnectionAsync` instead */
     switchAccountAsync: SwitchConnectionMutateAsync<config, context>
+    /** @deprecated use `mutate` instead */
     switchConnection: SwitchConnectionMutate<config, context>
+    /** @deprecated use `mutateAsync` instead */
     switchConnectionAsync: SwitchConnectionMutateAsync<config, context>
   }
 >
@@ -83,6 +87,8 @@ export function useSwitchConnection<
     connectors: computed(() =>
       connections.value.map((connection) => connection.connector),
     ),
+    mutate,
+    mutateAsync,
     switchAccount: mutate,
     switchAccountAsync: mutateAsync,
     switchConnection: mutate,

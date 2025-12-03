@@ -4,9 +4,9 @@ import { mainnet } from 'wagmi/chains'
 import type { ChainId } from './config.js'
 
 test('default', () => {
-  const { switchChain } = useSwitchChain()
+  const { mutate } = useSwitchChain()
 
-  switchChain(
+  mutate(
     { chainId: 1 },
     {
       onSuccess(data) {
@@ -15,6 +15,6 @@ test('default', () => {
     },
   )
 
-  type Result = Parameters<typeof switchChain>[0]
+  type Result = Parameters<typeof mutate>[0]
   expectTypeOf<Result['chainId']>().toEqualTypeOf<ChainId>()
 })
