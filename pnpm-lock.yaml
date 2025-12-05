@@ -35,10 +35,6 @@ catalogs:
       version: 3.4.27
 
 overrides:
-  '@metamask/connect-evm': file:../connect-monorepo/packages/connect-evm
-  '@metamask/connect-multichain': file:../connect-monorepo/packages/connect-multichain
-  '@metamask/multichain-ui': file:../connect-monorepo/packages/multichain-ui
-  '@metamask/analytics': file:../connect-monorepo/packages/analytics
   '@walletconnect/logger>pino': 10.0.0
   cookie@<0.7.0: 0.7.0
   elliptic@<=6.6.0: '>=6.6.1'
@@ -218,8 +214,8 @@ importers:
         specifier: 0.3.2
         version: 0.3.2(viem@2.38.0(bufferutil@4.0.8)(typescript@5.9.2)(utf-8-validate@5.0.10)(zod@3.25.76))
       '@metamask/connect-evm':
-        specifier: file:../../../connect-monorepo/packages/connect-evm
-        version: file:../connect-monorepo/packages/connect-evm(@babel/runtime@7.28.4)(bufferutil@4.0.8)(encoding@0.1.13)(utf-8-validate@5.0.10)
+        specifier: ^0.1.0
+        version: 0.1.0(@babel/runtime@7.28.4)(bufferutil@4.0.8)(encoding@0.1.13)(utf-8-validate@5.0.10)
       '@safe-global/safe-apps-provider':
         specifier: 0.18.6
         version: 0.18.6(bufferutil@4.0.8)(encoding@0.1.13)(typescript@5.9.2)(utf-8-validate@5.0.10)(zod@3.25.76)
@@ -1981,8 +1977,8 @@ packages:
     resolution: {integrity: sha512-a/l0DiSIr7+CBYVpHygUa3ztSlYLFCQMsklLna+t6qmNY9+eIO5TedNxhyIyvaJ+4cN7TLy0NQFbp9FV3X2ktg==}
     engines: {node: ^18.18 || ^20.14 || >=22}
 
-  '@metamask/analytics@file:../connect-monorepo/packages/analytics':
-    resolution: {directory: ../connect-monorepo/packages/analytics, type: directory}
+  '@metamask/analytics@0.2.0':
+    resolution: {integrity: sha512-MDq9nv9WsYzUNnXgvmHRLl3noCYBZh1zAVlMpjwiBHqZs/2jMtVC7eErGagqUoVQAVTXK/sHoqE36DiQDzt17g==}
     engines: {node: ^18.18 || >=20}
 
   '@metamask/api-specs@0.14.0':
@@ -1997,12 +1993,12 @@ packages:
     resolution: {integrity: sha512-eyL+M6pLE6HLGgERrnH2yQ4xrQzqwQh7xct+by2wdHTjVvEUwg36SXsgrVOk+rCX8uKBEZOAykewvrSB9TZVrw==}
     engines: {node: ^18.18 || >=20}
 
-  '@metamask/connect-evm@file:../connect-monorepo/packages/connect-evm':
-    resolution: {directory: ../connect-monorepo/packages/connect-evm, type: directory}
+  '@metamask/connect-evm@0.1.0':
+    resolution: {integrity: sha512-LbGZtsX8aTzyUPpWN0ASRUH4heVlBouuz8b6UUiI6ZTIN1LBo0QIlrmPCzTVs7S77qYFD6hdlUXNNDSAWDmXgg==}
     engines: {node: ^18.18 || >=20}
 
-  '@metamask/connect-multichain@file:../connect-monorepo/packages/connect-multichain':
-    resolution: {directory: ../connect-monorepo/packages/connect-multichain, type: directory}
+  '@metamask/connect-multichain@0.3.0':
+    resolution: {integrity: sha512-Yo5bfuHLHKEqL5aHma7iRCZ/lNHnVbZW1/GoCTBV9aIb/0AcI+FEa+vDlISN9rTYGVmBLY4BfPBYzTaTVCZGrg==}
     engines: {node: ^18.18 || >=20}
     peerDependencies:
       '@react-native-async-storage/async-storage': ^1.23
@@ -2073,8 +2069,8 @@ packages:
     resolution: {integrity: sha512-O/QYjYVA2P8vGex6Y1FR3fADJf0hSVb2CnamyuMc3hyXjARyAiLm0n8EQd508u0DYUuazoW3pE6KSkB7mlSnSg==}
     engines: {node: ^18.20 || ^20.17 || >=22}
 
-  '@metamask/multichain-ui@file:../connect-monorepo/packages/multichain-ui':
-    resolution: {directory: ../connect-monorepo/packages/multichain-ui, type: directory}
+  '@metamask/multichain-ui@0.2.0':
+    resolution: {integrity: sha512-R3bVRs1D0M3aAMj+V854XduibA6Hp/vXHjbK772Yy3VPScuOLgb/tXS+ZeU9Ga1LGDulzPpXNU9jnCKSF87xHg==}
     engines: {node: ^18.18 || >=20}
 
   '@metamask/network-controller@25.0.0':
@@ -10863,7 +10859,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@metamask/analytics@file:../connect-monorepo/packages/analytics':
+  '@metamask/analytics@0.2.0':
     dependencies:
       openapi-fetch: 0.13.8
 
@@ -10892,11 +10888,11 @@ snapshots:
       - '@metamask/error-reporting-service'
       - supports-color
 
-  '@metamask/connect-evm@file:../connect-monorepo/packages/connect-evm(@babel/runtime@7.28.4)(bufferutil@4.0.8)(encoding@0.1.13)(utf-8-validate@5.0.10)':
+  '@metamask/connect-evm@0.1.0(@babel/runtime@7.28.4)(bufferutil@4.0.8)(encoding@0.1.13)(utf-8-validate@5.0.10)':
     dependencies:
-      '@metamask/analytics': file:../connect-monorepo/packages/analytics
+      '@metamask/analytics': 0.2.0
       '@metamask/chain-agnostic-permission': 1.2.2(@babel/runtime@7.28.4)
-      '@metamask/connect-multichain': file:../connect-monorepo/packages/connect-multichain(bufferutil@4.0.8)(encoding@0.1.13)(utf-8-validate@5.0.10)
+      '@metamask/connect-multichain': 0.3.0(bufferutil@4.0.8)(encoding@0.1.13)(utf-8-validate@5.0.10)
       '@metamask/utils': 11.8.1
     transitivePeerDependencies:
       - '@babel/runtime'
@@ -10908,13 +10904,13 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@metamask/connect-multichain@file:../connect-monorepo/packages/connect-multichain(bufferutil@4.0.8)(encoding@0.1.13)(utf-8-validate@5.0.10)':
+  '@metamask/connect-multichain@0.3.0(bufferutil@4.0.8)(encoding@0.1.13)(utf-8-validate@5.0.10)':
     dependencies:
-      '@metamask/analytics': file:../connect-monorepo/packages/analytics
+      '@metamask/analytics': 0.2.0
       '@metamask/mobile-wallet-protocol-core': 0.3.1
       '@metamask/mobile-wallet-protocol-dapp-client': 0.2.2
       '@metamask/multichain-api-client': 0.8.1
-      '@metamask/multichain-ui': file:../connect-monorepo/packages/multichain-ui
+      '@metamask/multichain-ui': 0.2.0
       '@metamask/onboarding': 1.0.1
       '@metamask/utils': 11.8.1
       '@paulmillr/qr': 0.2.1
@@ -11064,7 +11060,7 @@ snapshots:
 
   '@metamask/multichain-api-client@0.8.1': {}
 
-  '@metamask/multichain-ui@file:../connect-monorepo/packages/multichain-ui':
+  '@metamask/multichain-ui@0.2.0':
     dependencies:
       '@paulmillr/qr': 0.2.1
       qr-code-styling: 1.9.2
