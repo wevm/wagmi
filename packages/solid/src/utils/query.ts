@@ -1,0 +1,178 @@
+import {
+  type DefaultError,
+  type QueryKey,
+  type SolidInfiniteQueryOptions,
+  type SolidMutationOptions,
+  type SolidQueryOptions,
+  useInfiniteQuery as tanstack_useInfiniteQuery,
+  useQuery as tanstack_useQuery,
+  type UseInfiniteQueryResult,
+  type UseMutationResult,
+  type UseQueryResult,
+  useMutation,
+} from '@tanstack/solid-query'
+import type {
+  Compute,
+  ExactPartial,
+  Omit,
+  UnionStrictOmit,
+} from '@wagmi/core/internal'
+import { hashFn } from '@wagmi/core/query'
+import { type Accessor, mergeProps } from 'solid-js'
+
+export type SolidMutationParameters<
+  data = unknown,
+  error = Error,
+  variables = void,
+  context = unknown,
+> = Compute<
+  Omit<
+    SolidMutationOptions<data, error, Compute<variables>, context>,
+    'mutationFn' | 'mutationKey' | 'throwOnError'
+  >
+>
+
+export type UseMutationParameters<
+  data = unknown,
+  error = Error,
+  variables = void,
+  context = unknown,
+> = Accessor<SolidMutationParameters<data, error, variables, context>>
+
+export type UseMutationReturnType<
+  data = unknown,
+  error = Error,
+  variables = void,
+  context = unknown,
+> = Compute<
+  UnionStrictOmit<
+    UseMutationResult<data, error, variables, context>,
+    'mutate' | 'mutateAsync'
+  >
+>
+
+export { useMutation }
+
+////////////////////////////////////////////////////////////////////////////////
+
+export type SolidQueryParameters<
+  queryFnData = unknown,
+  error = DefaultError,
+  data = queryFnData,
+  queryKey extends QueryKey = QueryKey,
+> = Compute<
+  ExactPartial<
+    Omit<SolidQueryOptions<queryFnData, error, data, queryKey>, 'initialData'>
+  > & {
+    // Fix `initialData` type
+    initialData?:
+      | SolidQueryOptions<queryFnData, error, data, queryKey>['initialData']
+      | undefined
+  }
+>
+
+export type UseQueryParameters<
+  queryFnData = unknown,
+  error = DefaultError,
+  data = queryFnData,
+  queryKey extends QueryKey = QueryKey,
+> = Accessor<SolidQueryParameters<queryFnData, error, data, queryKey>>
+
+export type UseQueryReturnType<data = unknown, error = DefaultError> = Compute<
+  UseQueryResult<data, error> & {
+    queryKey: QueryKey
+  }
+>
+
+// Adding some basic customization.
+// Ideally we don't have this function, but `import('@tanstack/react-query').useQuery` currently has some quirks where it is super hard to
+// pass down the inferred `initialData` type because of it's discriminated overload in the on `useQuery`.
+export function useQuery<queryFnData, error, data, queryKey extends QueryKey>(
+  parameters: Accessor<
+    SolidQueryParameters<queryFnData, error, data, queryKey> & {
+      queryKey: QueryKey
+    }
+  >,
+): UseQueryReturnType<data, error> {
+  const result = tanstack_useQuery(() => ({
+    ...(parameters() as any),
+    queryKeyHashFn: hashFn, // for bigint support
+  }))
+  return mergeProps(result, {
+    get queryKey() {
+      return parameters().queryKey
+    },
+  }) as UseQueryReturnType<data, error>
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+export type SolidInfiniteQueryParameters<
+  queryFnData = unknown,
+  error = DefaultError,
+  data = queryFnData,
+  queryKey extends QueryKey = QueryKey,
+  pageParam = unknown,
+> = Compute<
+  Omit<
+    SolidInfiniteQueryOptions<queryFnData, error, data, queryKey, pageParam>,
+    'initialData'
+  > & {
+    // Fix `initialData` type
+    initialData?:
+      | SolidInfiniteQueryOptions<
+          queryFnData,
+          error,
+          data,
+          queryKey
+        >['initialData']
+      | undefined
+  }
+>
+
+export type UseInfiniteQueryParameters<
+  queryFnData = unknown,
+  error = DefaultError,
+  data = queryFnData,
+  queryKey extends QueryKey = QueryKey,
+  pageParam = unknown,
+> = Accessor<
+  SolidInfiniteQueryParameters<queryFnData, error, data, queryKey, pageParam>
+>
+
+export type UseInfiniteQueryReturnType<
+  data = unknown,
+  error = DefaultError,
+> = UseInfiniteQueryResult<data, error> & {
+  queryKey: QueryKey
+}
+
+// Adding some basic customization.
+export function useInfiniteQuery<
+  queryFnData,
+  error,
+  data,
+  queryKey extends QueryKey,
+  pageParam = unknown,
+>(
+  parameters: Accessor<
+    SolidInfiniteQueryParameters<
+      queryFnData,
+      error,
+      data,
+      queryKey,
+      pageParam
+    > & {
+      queryKey: QueryKey
+    }
+  >,
+): UseInfiniteQueryReturnType<data, error> {
+  const result = tanstack_useInfiniteQuery(() => ({
+    ...(parameters() as any),
+    queryKeyHashFn: hashFn, // for bigint support
+  }))
+  return mergeProps(
+    result,
+    parameters().queryKey,
+  ) as unknown as UseInfiniteQueryReturnType<data, error>
+}

@@ -152,6 +152,10 @@
         "ignoreDependencies": [
           "nuxt"
         ]
+      },
+      "packages/solid": {
+        "entry": [],
+        "ignore": []
       }
     }
   }

@@ -11,6 +11,7 @@ const alias = {
   '@wagmi/core': path.resolve(__dirname, './packages/core/src/exports'),
   '@wagmi/test': path.resolve(__dirname, './packages/test/src/exports'),
   '@wagmi/vue': path.resolve(__dirname, './packages/vue/src/exports'),
+  '@wagmi/solid': path.resolve(__dirname, './packages/solid/src/exports'),
   wagmi: path.resolve(__dirname, './packages/react/src/exports'),
 }
 
@@ -100,6 +101,15 @@ export default defineConfig({
           environment: 'happy-dom',
           testTimeout: 10_000,
           setupFiles: ['./packages/vue/test/setup.ts'],
+        },
+        resolve: { alias },
+      },{
+        test: {
+          name: '@wagmi/solid',
+          include: ['./packages/solid/src/**/*.test.ts?(x)'],
+          environment: 'happy-dom',
+          testTimeout: 10_000,
+          setupFiles: ['./packages/solid/test/setup.ts'],
         },
         resolve: { alias },
       },
