@@ -74,7 +74,10 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           )
 
           metamaskPromise = createMetamaskConnectEVM({
-            dapp: parameters.dapp ?? {},
+            dapp: parameters.dapp ?? {
+              name: 'wagmi',
+              url: 'https://wagmi.com',
+            },
             eventHandlers: {
               accountsChanged: connector.onAccountsChanged.bind(connector),
               chainChanged: connector.onChainChanged.bind(connector),

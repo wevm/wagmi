@@ -10894,6 +10894,7 @@ snapshots:
 
   '@metamask/connect-evm@file:../connect-monorepo/packages/connect-evm(@babel/runtime@7.28.4)(bufferutil@4.0.8)(encoding@0.1.13)(utf-8-validate@5.0.10)':
     dependencies:
+      '@metamask/analytics': file:../connect-monorepo/packages/analytics
       '@metamask/chain-agnostic-permission': 1.2.2(@babel/runtime@7.28.4)
       '@metamask/connect-multichain': file:../connect-monorepo/packages/connect-multichain(bufferutil@4.0.8)(encoding@0.1.13)(utf-8-validate@5.0.10)
       '@metamask/utils': 11.8.1
