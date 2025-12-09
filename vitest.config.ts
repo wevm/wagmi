@@ -103,7 +103,8 @@ export default defineConfig({
           setupFiles: ['./packages/vue/test/setup.ts'],
         },
         resolve: { alias },
-      },{
+      },
+      {
         test: {
           name: '@wagmi/solid',
           include: ['./packages/solid/src/**/*.test.ts?(x)'],
