@@ -65,6 +65,20 @@ const connector = metaMask({
 })
 ```
 
+### debug
+
+`boolean | undefined`
+
+Enables debug mode for the MetaMask SDK. When enabled, provides additional logging and debugging information.
+
+```ts-vue
+import { metaMask } from '{{connectorsPackageName}}'
+
+const connector = metaMask({
+  debug: true // [!code focus]
+})
+```
+
 ### connectAndSign
 
 `string | undefined`

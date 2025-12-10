@@ -36,19 +36,20 @@ type CreateMetamaskConnectEVMParameters = Parameters<
 
 const DEFAULT_CHAIN_ID = 1
 
-export type MetaMaskParameters = {
-  dapp?: CreateMetamaskConnectEVMParameters['dapp'] | undefined
-} & OneOf<
-  | {
-      /* Shortcut to connect and sign a message */
-      connectAndSign?: string | undefined
-    }
-  | {
-      // TODO: Strongly type `method` and `params`
-      /* Allow `connectWith` any rpc method */
-      connectWith?: { method: string; params: unknown[] } | undefined
-    }
->
+export type MetaMaskParameters = Partial<
+  Pick<CreateMetamaskConnectEVMParameters, 'dapp' | 'debug'>
+> &
+  OneOf<
+    | {
+        /* Shortcut to connect and sign a message */
+        connectAndSign?: string | undefined
+      }
+    | {
+        // TODO: Strongly type `method` and `params`
+        /* Allow `connectWith` any rpc method */
+        connectWith?: { method: string; params: unknown[] } | undefined
+      }
+  >
 
 metaMask.type = 'metaMask' as const
 export function metaMask(parameters: MetaMaskParameters = {}) {
@@ -84,6 +85,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
             api: {
               supportedNetworks,
             },
+            debug: parameters.debug,
           })
         }
         metamask = await metamaskPromise
