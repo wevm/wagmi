@@ -22,6 +22,7 @@
     "dev:next": "pnpm --filter next-app dev",
     "dev:nuxt": "pnpm --filter nuxt-app dev",
     "dev:react": "pnpm --filter vite-react dev",
+    "dev:solid": "pnpm --filter vite-solid dev",
     "dev:vue": "pnpm --filter vite-vue dev",
     "docs:dev": "pnpm --filter site dev",
     "format": "biome format --write",
