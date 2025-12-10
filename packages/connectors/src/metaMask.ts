@@ -111,6 +111,8 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         const chainId = connectParams?.chainId ?? DEFAULT_CHAIN_ID
         const withCapabilities = connectParams?.withCapabilities
 
+        const availableChainIds = config.chains.map((chain) => chain.id)
+
         const instance = await ensureMetamask()
 
         let accounts: readonly Address[] = []
@@ -127,13 +129,17 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           if (!accounts?.length) {
             if (parameters.connectAndSign || parameters.connectWith) {
               if (parameters.connectAndSign) {
-                signResponse = await instance.connectAndSign(
-                  parameters.connectAndSign,
-                )
+                signResponse = await instance.connectAndSign({
+                  message: parameters.connectAndSign,
+                  chainId,
+                  availableChainIds,
+                })
               } else if (parameters.connectWith) {
                 connectWithResponse = await instance.connectWith({
                   method: parameters.connectWith.method,
                   params: parameters.connectWith.params,
+                  chainId,
+                  availableChainIds,
                 })
               }
 
@@ -144,6 +150,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
               const result = await instance.connect({
                 chainId,
                 account: undefined,
+                availableChainIds,
               })
               accounts = result.accounts.map((account) => getAddress(account))
             }
@@ -152,9 +159,22 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           // Switch to chain if provided
           let currentChainId = (await this.getChainId()) as number
           if (chainId && currentChainId !== chainId) {
+            const chainConfig = config.chains.find(
+              (chain) => chain.id === chainId,
+            )
+
             const chain = await this.switchChain!({
               chainId,
-              addEthereumChainParameter: undefined,
+              addEthereumChainParameter: chainConfig
+                ? {
+                    chainName: chainConfig.name,
+                    nativeCurrency: chainConfig.nativeCurrency,
+                    rpcUrls: chainConfig.rpcUrls.default?.http,
+                    blockExplorerUrls: chainConfig.blockExplorers?.default.url
+                      ? [chainConfig.blockExplorers?.default.url]
+                      : undefined,
+                  }
+                : undefined,
             }).catch((error) => {
               if (error.code === UserRejectedRequestError.code) throw error
               return { id: currentChainId }
