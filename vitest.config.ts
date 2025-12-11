@@ -1,6 +1,7 @@
 import path from 'node:path'
 import { playwright } from '@vitest/browser-playwright'
 import reactFallbackThrottlePlugin from 'vite-plugin-react-fallback-throttle'
+import solid from 'vite-plugin-solid'
 import { defineConfig } from 'vitest/config'
 
 const alias = {
@@ -105,14 +106,21 @@ export default defineConfig({
         resolve: { alias },
       },
       {
+        plugins: [solid()],
+        resolve: { alias },
         test: {
           name: '@wagmi/solid',
+          browser: {
+            enabled: true,
+            headless: true,
+            instances: [{ browser: 'chromium' }],
+            provider: playwright(),
+            screenshotFailures: false,
+          },
           include: ['./packages/solid/src/**/*.test.ts?(x)'],
-          environment: 'happy-dom',
           testTimeout: 10_000,
           setupFiles: ['./packages/solid/test/setup.ts'],
         },
-        resolve: { alias },
       },
       {
         test: {
