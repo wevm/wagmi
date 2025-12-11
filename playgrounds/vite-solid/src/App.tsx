@@ -1,17 +1,10 @@
-import { createSignal } from 'solid-js'
+import { BlockNumber } from './components/BlockNumber'
 
 function App() {
-  const [count, setCount] = createSignal(0)
-
   return (
     <>
-      <h1>Vite + Solid</h1>
-
-      <div class="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count()}
-        </button>
-      </div>
+      vite - solid
+      <BlockNumber />
     </>
   )
 }
