@@ -1,9 +1,9 @@
 import type { QueryOptions } from '@tanstack/query-core'
 import {
-  getBlobBaseFee,
   type GetBlobBaseFeeErrorType,
   type GetBlobBaseFeeParameters,
   type GetBlobBaseFeeReturnType,
+  getBlobBaseFee,
 } from '../actions/getBlobBaseFee.js'
 import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'

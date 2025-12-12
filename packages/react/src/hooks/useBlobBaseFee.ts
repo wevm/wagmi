@@ -7,16 +7,16 @@ import type {
 } from '@wagmi/core'
 import type { Compute } from '@wagmi/core/internal'
 import {
-  getBlobBaseFeeQueryOptions,
   type GetBlobBaseFeeData,
   type GetBlobBaseFeeOptions,
   type GetBlobBaseFeeQueryFnData,
   type GetBlobBaseFeeQueryKey,
+  getBlobBaseFeeQueryOptions,
 } from '@wagmi/core/query'
 import type { ConfigParameter, QueryParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
-import { useConfig } from './useConfig.js'
 import { useChainId } from './useChainId.js'
+import { useConfig } from './useConfig.js'
 
 export type UseBlobBaseFeeParameters<
   config extends Config = Config,
