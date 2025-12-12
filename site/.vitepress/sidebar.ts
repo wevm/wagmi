@@ -151,6 +151,7 @@ export function getSidebar() {
         link: '/react/api/hooks',
         items: [
           { text: 'useBalance', link: '/react/api/hooks/useBalance' },
+          { text: 'useBlobBaseFee', link: '/react/api/hooks/useBlobBaseFee' },
           {
             text: 'useBlockNumber',
             link: '/react/api/hooks/useBlockNumber',
@@ -788,6 +789,7 @@ export function getSidebar() {
             link: '/core/api/actions/estimateMaxPriorityFeePerGas',
           },
           { text: 'getBalance', link: '/core/api/actions/getBalance' },
+          { text: 'getBlobBaseFee', link: '/core/api/actions/getBlobBaseFee' },
           {
             text: 'getBlock',
             link: '/core/api/actions/getBlock',

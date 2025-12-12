@@ -73,6 +73,15 @@ export {
 } from '../query/getBalance.js'
 
 export {
+  type GetBlobBaseFeeData,
+  type GetBlobBaseFeeOptions,
+  type GetBlobBaseFeeQueryFnData,
+  type GetBlobBaseFeeQueryKey,
+  getBlobBaseFeeQueryKey,
+  getBlobBaseFeeQueryOptions,
+} from '../query/getBlobBaseFee.js'
+
+export {
   type GetBlockData,
   type GetBlockOptions,
   type GetBlockQueryFnData,

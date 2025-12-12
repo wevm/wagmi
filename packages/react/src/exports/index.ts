@@ -31,6 +31,12 @@ export {
 } from '../hooks/useBalance.js'
 
 export {
+  type UseBlobBaseFeeParameters,
+  type UseBlobBaseFeeReturnType,
+  useBlobBaseFee,
+} from '../hooks/useBlobBaseFee.js'
+
+export {
   type UseBlockParameters,
   type UseBlockReturnType,
   useBlock,
