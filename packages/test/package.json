@@ -116,6 +116,7 @@
     }
   },
   "devDependencies": {
+    "@solidjs/testing-library": "^0.8.10",
     "@tanstack/react-query": "catalog:",
     "@tanstack/solid-query": "catalog:",
     "@tanstack/vue-query": "catalog:",
