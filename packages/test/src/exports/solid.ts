@@ -37,6 +37,8 @@ export function renderPrimitive<primitive extends () => unknown>(
     wrapper?: Component<{ children: JSX.Element }>
   },
 ): RenderPrimitiveReturnType<primitive> {
+  queryClient.clear()
+
   const wrapper =
     options?.wrapper ??
     createWrapper(WagmiProvider, {
