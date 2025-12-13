@@ -5,12 +5,12 @@ import { expectTypeOf, test } from 'vitest'
 import { useConnection } from './useConnection.js'
 
 test('states', () => {
-  const connection = useConnection(() => ({}))
-  const result = connection()
+  const result = useConnection(() => ({}))
+  const connection = result()
 
-  switch (result.status) {
+  switch (connection.status) {
     case 'reconnecting': {
-      expectTypeOf(result).toMatchTypeOf<{
+      expectTypeOf(connection).toMatchTypeOf<{
         address: Address | undefined
         chain: Chain | undefined
         chainId: number | undefined
@@ -24,7 +24,7 @@ test('states', () => {
       break
     }
     case 'connecting': {
-      expectTypeOf(result).toMatchTypeOf<{
+      expectTypeOf(connection).toMatchTypeOf<{
         address: Address | undefined
         chain: Chain | undefined
         chainId: number | undefined
@@ -38,7 +38,7 @@ test('states', () => {
       break
     }
     case 'connected': {
-      expectTypeOf(result).toMatchTypeOf<{
+      expectTypeOf(connection).toMatchTypeOf<{
         address: Address
         chain: Chain | undefined
         chainId: number
@@ -52,7 +52,7 @@ test('states', () => {
       break
     }
     case 'disconnected': {
-      expectTypeOf(result).toMatchTypeOf<{
+      expectTypeOf(connection).toMatchTypeOf<{
         address: undefined
         chain: undefined
         chainId: undefined
