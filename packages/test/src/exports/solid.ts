@@ -1,7 +1,7 @@
 import { renderHook } from '@solidjs/testing-library'
 import { QueryClient, QueryClientProvider } from '@tanstack/solid-query'
 import { WagmiProvider } from '@wagmi/solid'
-import { type Component, createComponent, type JSX } from 'solid-js'
+import { type Component, createComponent, type ParentProps } from 'solid-js'
 
 import { config } from '../config.js'
 
@@ -9,9 +9,9 @@ export const queryClient = new QueryClient()
 
 export function createWrapper<component extends Component<any>>(
   Wrapper: component,
-  props: any,
+  props: Parameters<component>[0],
 ) {
-  return function CreatedWrapper(wrapperProps: { children: JSX.Element }) {
+  return function CreatedWrapper(wrapperProps: ParentProps) {
     return createComponent(Wrapper, {
       ...props,
       get children() {
@@ -34,7 +34,7 @@ export type RenderPrimitiveReturnType<primitive extends () => unknown> = {
 export function renderPrimitive<primitive extends () => unknown>(
   primitive: primitive,
   options?: {
-    wrapper?: Component<{ children: JSX.Element }>
+    wrapper?: Component<ParentProps>
   },
 ): RenderPrimitiveReturnType<primitive> {
   queryClient.clear()
