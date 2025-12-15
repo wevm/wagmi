@@ -75,6 +75,7 @@ test('exports', () => {
       "watchPendingTransactions",
       "watchPublicClient",
       "writeContract",
+      "writeContractSync",
       "createConnector",
       "injected",
       "mock",
