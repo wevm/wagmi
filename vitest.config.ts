@@ -34,7 +34,9 @@ export default defineConfig({
         'packages/core/src/connectors/injected.ts',
       ],
     },
-    globalSetup: ['./packages/test/src/globalSetup.ts'],
+    globalSetup: process.env.TYPES
+      ? ['./packages/test/src/benchTypesGlobalSetup.ts']
+      : ['./packages/test/src/globalSetup.ts'],
     projects: [
       {
         test: {
@@ -47,7 +49,7 @@ export default defineConfig({
       },
       {
         test: {
-          name: '@wagmi/connectors',
+          name: 'connectors',
           include: ['./packages/connectors/src/**/*.test.ts'],
           environment: 'happy-dom',
         },
@@ -56,7 +58,10 @@ export default defineConfig({
       {
         test: {
           name: 'core',
-          include: ['./packages/core/src/**/*.test.ts'],
+          include: [
+            ...(process.env.TYPES ? ['**/*.bench-d.ts'] : []),
+            './packages/core/src/**/*.test.ts',
+          ],
           environment: 'happy-dom',
           testTimeout: 10_000,
           setupFiles: ['./packages/core/test/setup.ts'],
@@ -95,13 +100,6 @@ export default defineConfig({
           environment: 'happy-dom',
           testTimeout: 10_000,
           setupFiles: ['./packages/vue/test/setup.ts'],
-        },
-        resolve: { alias },
-      },
-      {
-        test: {
-          name: 'react-register',
-          include: ['./packages/register-tests/react/src/**/*.test.ts'],
         },
         resolve: { alias },
       },
