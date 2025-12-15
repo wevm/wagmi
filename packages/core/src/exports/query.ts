@@ -449,3 +449,11 @@ export {
   type WriteContractVariables,
   writeContractMutationOptions,
 } from '../query/writeContract.js'
+
+export {
+  type WriteContractSyncData,
+  type WriteContractSyncMutate,
+  type WriteContractSyncMutateAsync,
+  type WriteContractSyncVariables,
+  writeContractSyncMutationOptions,
+} from '../query/writeContractSync.js'
