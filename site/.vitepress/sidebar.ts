@@ -363,6 +363,10 @@ export function getSidebar() {
             text: 'useWriteContract',
             link: '/react/api/hooks/useWriteContract',
           },
+          {
+            text: 'useWriteContractSync',
+            link: '/react/api/hooks/useWriteContractSync',
+          },
         ],
       },
       {
@@ -1005,6 +1009,10 @@ export function getSidebar() {
           {
             text: 'writeContract',
             link: '/core/api/actions/writeContract',
+          },
+          {
+            text: 'writeContractSync',
+            link: '/core/api/actions/writeContractSync',
           },
         ],
       },

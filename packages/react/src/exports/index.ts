@@ -412,6 +412,12 @@ export {
   useWriteContract,
 } from '../hooks/useWriteContract.js'
 
+export {
+  type UseWriteContractSyncParameters,
+  type UseWriteContractSyncReturnType,
+  useWriteContractSync,
+} from '../hooks/useWriteContractSync.js'
+
 ////////////////////////////////////////////////////////////////////////////////
 // Hydrate
 ////////////////////////////////////////////////////////////////////////////////

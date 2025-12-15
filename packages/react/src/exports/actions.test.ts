@@ -73,6 +73,7 @@ test('exports', () => {
       "watchPendingTransactions",
       "watchPublicClient",
       "writeContract",
+      "writeContractSync",
     ]
   `)
 })
