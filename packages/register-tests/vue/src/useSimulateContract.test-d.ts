@@ -54,7 +54,7 @@ test('UseSimulateContractParameters', () => {
     'approve' | 'transfer' | 'transferFrom' | undefined
   >()
   expectTypeOf(res.value?.args).toEqualTypeOf<
-    [Address, Address, bigint] | undefined
+    readonly [Address, Address, bigint] | undefined
   >()
 
   type Result2 = UseSimulateContractParameters<

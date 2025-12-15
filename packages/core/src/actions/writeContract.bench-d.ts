@@ -8,7 +8,7 @@ import type { WriteContractParameters } from './writeContract.js'
 test('default', () => {
   type Result = WriteContractParameters<(typeof abi)['erc20'], 'approve'>
   const res = {} as Result
-  attest.instantiations([95284, 'instantiations'])
+  attest.instantiations([143162, 'instantiations'])
   attest<readonly [spender: `0x${string}`, amount: bigint]>(res.args)
   if (viemPackageJson.version.startsWith('2.43'))
     attest(res.args).type.toString.snap(

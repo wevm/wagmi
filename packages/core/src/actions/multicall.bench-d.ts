@@ -72,5 +72,5 @@ test('default', () => {
       },
     ],
   })
-  attest.instantiations([344587, 'instantiations'])
+  attest.instantiations([523679, 'instantiations'])
 })

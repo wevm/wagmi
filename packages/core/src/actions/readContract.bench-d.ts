@@ -8,7 +8,7 @@ import type { ReadContractParameters } from './readContract.js'
 test('default', () => {
   type Result = ReadContractParameters<(typeof abi)['erc20'], 'balanceOf'>
   const res = {} as Result
-  attest.instantiations([95284, 'instantiations'])
+  attest.instantiations([132033, 'instantiations'])
   attest<readonly [account: `0x${string}`]>(res.args)
   if (viemPackageJson.version.startsWith('2.43'))
     attest(res.args).type.toString.snap(

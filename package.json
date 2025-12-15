@@ -79,6 +79,7 @@
     "ignore": [
       "**/templates/**",
       "**/hardhat.config.js",
+      "packages/**/*.bench-d.ts",
       "scripts/**"
     ],
     "ignoreWorkspaces": [
