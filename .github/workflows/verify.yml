@@ -99,6 +99,9 @@ jobs:
       - name: Check types
         run: pnpm check:types
 
+      - name: Bench types
+        run: pnpm bench:types
+
       # Redundant with `pnpm check:types`
       # If Vitest adds special features in the future, e.g. type coverage, can add this back!
       # - name: Test types

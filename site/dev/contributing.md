@@ -113,9 +113,6 @@ Next, make sure you have set up your [env variables](#_4-adding-the-env-variable
 
 - `pnpm test [package?]` — runs tests in watch mode
 - `pnpm test:cov` — runs tests and reports coverage
-- `pnpm test:core` — runs `@wagmi/core` tests
-- `pnpm test:react` — runs `wagmi` tests
-- `pnpm test:vue` — runs `@wagmi/vue` tests
 
 When adding new features or fixing bugs, it's important to add test cases to cover the new or updated behavior. If snapshot tests fail, you can run the `test:update` command to update the snapshots.
 

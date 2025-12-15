@@ -11,7 +11,7 @@
   "dependencies": {
     "@next/bundle-analyzer": "^14.2.3",
     "@tanstack/react-query": "catalog:",
-    "next": "^16.0.3",
+    "next": "^16.0.7",
     "react": "catalog:",
     "react-dom": "catalog:",
     "viem": "2.*",

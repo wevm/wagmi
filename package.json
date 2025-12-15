@@ -1,8 +1,10 @@
 {
+  "name": "workspace",
   "private": true,
   "type": "module",
   "scripts": {
     "build": "pnpm run --r --filter \"./packages/**\" build",
+    "bench:types": "TYPES=true vitest bench-d.ts",
     "changeset:prepublish": "pnpm version:update && pnpm build && node scripts/formatPackageJson.ts && node scripts/generateProxyPackages.ts",
     "changeset:publish": "pnpm changeset:prepublish && changeset publish",
     "changeset:version": "changeset version && pnpm version:update && pnpm format",
@@ -29,20 +31,15 @@
     "prepare": "pnpm simple-git-hooks",
     "test": "vitest",
     "test:build": "node scripts/generateProxyPackages.ts && pnpm run --r --parallel test:build",
-    "test:cli": "vitest --project @wagmi/cli",
-    "test:connectors": "vitest --project @wagmi/connectors",
-    "test:core": "vitest --project @wagmi/core",
-    "test:create-wagmi": "vitest --project create-wagmi",
     "test:cov": "vitest run --coverage",
-    "test:react": "vitest --project wagmi",
     "test:typecheck": "vitest typecheck",
     "test:update": "vitest --update",
-    "test:vue": "vitest --project @wagmi/vue",
     "version:update": "node scripts/updateVersion.ts",
     "version:update:viem": "node scripts/updateViemVersion.ts"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.16.4",
+    "@ark/attest": "^0.56.0",
     "@biomejs/biome": "^2.2.4",
     "@changesets/cli": "^3.0.0-next.0",
     "@svitejs/changesets-changelog-github-compact": "^1.2.0",
