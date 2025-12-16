@@ -158,8 +158,13 @@
         ]
       },
       "packages/solid": {
-        "entry": [],
-        "ignore": []
+        "entry": [
+          "src/exports/{actions,chains,connectors,index,internal,query}.ts!",
+          "src/exports/actions/experimental.ts!"
+        ],
+        "ignore": [
+          "test/setup.ts"
+        ]
       }
     }
   }

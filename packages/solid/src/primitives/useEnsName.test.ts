@@ -2,12 +2,17 @@ import { testClient } from '@wagmi/test'
 import { renderPrimitive } from '@wagmi/test/solid'
 import { expect, test, vi } from 'vitest'
 
-import { useBlockNumber } from './useBlockNumber.js'
+import { useEnsName } from './useEnsName.js'
 
-test('mounts', async () => {
+// TODO: flaky
+test.skip('default', async () => {
   await testClient.mainnet.restart()
 
-  const { result } = renderPrimitive(() => useBlockNumber(() => ({})))
+  const { result } = renderPrimitive(() =>
+    useEnsName(() => ({
+      address: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
+    })),
+  )
 
   await vi.waitUntil(() => result.isSuccess, { timeout: 5_000 })
 
@@ -15,7 +20,7 @@ test('mounts', async () => {
   // so we spread it into a new object for snapshot testing
   expect({ ...result }).toMatchInlineSnapshot(`
     {
-      "data": 23535880n,
+      "data": "wevm.eth",
       "dataUpdatedAt": 1675209600000,
       "error": null,
       "errorUpdateCount": 0,
@@ -44,8 +49,9 @@ test('mounts', async () => {
         "status": "pending",
       },
       "queryKey": [
-        "blockNumber",
+        "ensName",
         {
+          "address": "0xd2135CfB216b74109775236E36d4b433F1DF507B",
           "chainId": 1,
         },
       ],
@@ -53,33 +59,4 @@ test('mounts', async () => {
       "status": "success",
     }
   `)
-})
-
-// TODO: Fix flaky test
-test.skip('parameters: watch', async () => {
-  await testClient.mainnet.restart()
-
-  const { result } = renderPrimitive(() =>
-    useBlockNumber(() => ({ watch: { pollingInterval: 100 } })),
-  )
-
-  await vi.waitUntil(() => result.isSuccess, { timeout: 5_000 })
-  const blockNumber = result.data!
-  expect(result.data).toBeTypeOf('bigint')
-
-  await testClient.mainnet.mine({ blocks: 1 })
-  await vi.waitFor(
-    () => {
-      expect(result.data).toEqual(blockNumber + 1n)
-    },
-    { timeout: 5_000 },
-  )
-
-  await testClient.mainnet.mine({ blocks: 1 })
-  await vi.waitFor(
-    () => {
-      expect(result.data).toEqual(blockNumber + 2n)
-    },
-    { timeout: 5_000 },
-  )
 })

@@ -96,23 +96,23 @@ export {
   useConfig,
 } from '../primitives/useConfig.js'
 
-// export {
-//   type UseConnectParameters,
-//   type UseConnectReturnType,
-//   useConnect,
-// } from '../hooks/useConnect.js'
+export {
+  type UseConnectParameters,
+  type UseConnectReturnType,
+  useConnect,
+} from '../primitives/useConnect.js'
 
-// export {
-//   /** @deprecated use `UseConnectionParameters` instead */
-//   type UseConnectionParameters as UseAccountParameters,
-//   type UseConnectionParameters,
-//   /** @deprecated use `UseConnectionsReturnType` instead */
-//   type UseConnectionReturnType as UseAccountReturnType,
-//   type UseConnectionReturnType,
-//   /** @deprecated use `useConnection` instead */
-//   useConnection as useAccount,
-//   useConnection,
-// } from '../hooks/useConnection.js'
+export {
+  /** @deprecated use `UseConnectionParameters` instead */
+  type UseConnectionParameters as UseAccountParameters,
+  type UseConnectionParameters,
+  /** @deprecated use `UseConnectionsReturnType` instead */
+  type UseConnectionReturnType as UseAccountReturnType,
+  type UseConnectionReturnType,
+  /** @deprecated use `useConnection` instead */
+  useConnection as useAccount,
+  useConnection,
+} from '../primitives/useConnection.js'
 
 // export {
 //   /** @deprecated use `UseConnectionEffectParameters` instead */
@@ -123,11 +123,11 @@ export {
 //   useConnectionEffect,
 // } from '../hooks/useConnectionEffect.js'
 
-// export {
-//   type UseConnectionsParameters,
-//   type UseConnectionsReturnType,
-//   useConnections,
-// } from '../hooks/useConnections.js'
+export {
+  type UseConnectionsParameters,
+  type UseConnectionsReturnType,
+  useConnections,
+} from '../primitives/useConnections.js'
 
 // export {
 //   type UseConnectorClientParameters,
@@ -135,11 +135,11 @@ export {
 //   useConnectorClient,
 // } from '../hooks/useConnectorClient.js'
 
-// export {
-//   type UseConnectorsParameters,
-//   type UseConnectorsReturnType,
-//   useConnectors,
-// } from '../hooks/useConnectors.js'
+export {
+  type UseConnectorsParameters,
+  type UseConnectorsReturnType,
+  useConnectors,
+} from '../primitives/useConnectors.js'
 
 // export {
 //   type UseDeployContractParameters,
@@ -147,11 +147,11 @@ export {
 //   useDeployContract,
 // } from '../hooks/useDeployContract.js'
 
-// export {
-//   type UseDisconnectParameters,
-//   type UseDisconnectReturnType,
-//   useDisconnect,
-// } from '../hooks/useDisconnect.js'
+export {
+  type UseDisconnectParameters,
+  type UseDisconnectReturnType,
+  useDisconnect,
+} from '../primitives/useDisconnect.js'
 
 // export {
 //   type UseEnsAddressParameters,
@@ -165,11 +165,11 @@ export {
 //   useEnsAvatar,
 // } from '../hooks/useEnsAvatar.js'
 
-// export {
-//   type UseEnsNameParameters,
-//   type UseEnsNameReturnType,
-//   useEnsName,
-// } from '../hooks/useEnsName.js'
+export {
+  type UseEnsNameParameters,
+  type UseEnsNameReturnType,
+  useEnsName,
+} from '../primitives/useEnsName.js'
 
 // export {
 //   type UseEnsResolverParameters,
