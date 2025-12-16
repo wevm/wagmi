@@ -4,9 +4,9 @@ import {
   useSimulateContract,
 } from '@wagmi/vue'
 import { celo, mainnet, optimism } from '@wagmi/vue/chains'
+import type { SimulateContractOptions } from '@wagmi/vue/query'
 import type { Address } from 'viem'
 import { expectTypeOf, test } from 'vitest'
-
 import type { ChainId, config } from './config.js'
 
 test('chain formatters', () => {
@@ -53,9 +53,11 @@ test('UseSimulateContractParameters', () => {
   expectTypeOf(res.value?.functionName).toEqualTypeOf<
     'approve' | 'transfer' | 'transferFrom' | undefined
   >()
-  expectTypeOf(res.value?.args).toEqualTypeOf<
-    [Address, Address, bigint] | undefined
-  >()
+  if (res.value?.args) {
+    expectTypeOf(res.value.args[0]).toEqualTypeOf<Address>()
+    expectTypeOf(res.value.args[1]).toEqualTypeOf<Address>()
+    expectTypeOf(res.value.args[2]).toEqualTypeOf<bigint>()
+  }
   expectTypeOf(res.value?.chainId).toEqualTypeOf<ChainId | undefined>()
 
   type Result2 = UseSimulateContractParameters<
@@ -79,6 +81,15 @@ test('UseSimulateContractParameters', () => {
   expectTypeOf(({} as Result3).value?.chainId).toEqualTypeOf<
     ChainId | undefined
   >()
+
+  type Result4 = SimulateContractOptions<
+    typeof abi.erc20,
+    'transferFrom',
+    [Address, Address, bigint],
+    typeof config,
+    typeof celo.id
+  >
+  expectTypeOf<Result4['chainId']>().toEqualTypeOf<ChainId | undefined>()
 })
 
 test('parameters: config', async () => {

@@ -1,4 +1,5 @@
 .DS_Store
+.attest
 .next
 .nuxt
 .pnpm-debug.log*
