@@ -44,7 +44,6 @@
     "@biomejs/biome": "^2.2.4",
     "@changesets/cli": "^3.0.0-next.0",
     "@svitejs/changesets-changelog-github-compact": "^1.2.0",
-    "@tanstack/solid-query": "catalog:",
     "@types/node": "^24.5.1",
     "@vitejs/plugin-react": "catalog:",
     "@vitest/browser": "^4.0.8",
