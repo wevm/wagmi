@@ -6,7 +6,7 @@ import { expect, test } from 'vitest'
 import { useConnection } from './useConnection.js'
 
 test('default', async () => {
-  const { result } = renderPrimitive(() => useConnection(() => ({})))
+  const { result } = renderPrimitive(() => useConnection())
 
   expect(result().address).not.toBeDefined()
   expect(result().status).toEqual('disconnected')

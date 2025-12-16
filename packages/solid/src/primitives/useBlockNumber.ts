@@ -70,7 +70,11 @@ export function useBlockNumber<
     config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetBlockNumberData,
 >(
-  parameters: UseBlockNumberParameters<config, chainId, selectData>,
+  parameters: UseBlockNumberParameters<
+    config,
+    chainId,
+    selectData
+  > = () => ({}),
 ): UseBlockNumberReturnType<selectData> {
   const config = useConfig(parameters)
   const queryClient = useQueryClient()

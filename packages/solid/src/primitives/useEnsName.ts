@@ -42,7 +42,7 @@ export function useEnsName<
   config extends Config = ResolvedRegister['config'],
   selectData = GetEnsNameData,
 >(
-  parameters: UseEnsNameParameters<config, selectData>,
+  parameters: UseEnsNameParameters<config, selectData> = () => ({}),
 ): UseEnsNameReturnType<selectData> {
   const config = useConfig(parameters)
   const configChainId = useChainId(() => ({ config: config() }))

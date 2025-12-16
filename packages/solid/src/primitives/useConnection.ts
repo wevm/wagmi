@@ -25,7 +25,7 @@ export type UseConnectionReturnType<config extends Config = Config> = Accessor<
 export function useConnection<
   config extends Config = ResolvedRegister['config'],
 >(
-  parameters: UseConnectionParameters<config>,
+  parameters: UseConnectionParameters<config> = () => ({}),
 ): UseConnectionReturnType<config> {
   const config = useConfig(parameters)
 

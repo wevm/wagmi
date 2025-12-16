@@ -1,8 +1,7 @@
 import { config } from '@wagmi/test'
-import { createWrapper, renderPrimitive } from '@wagmi/test/solid'
-import { createComponent } from 'solid-js'
-import { template } from 'solid-js/web'
+import { renderPrimitive } from '@wagmi/test/solid'
 import { expect, test, vi } from 'vitest'
+
 import { useConfig } from './useConfig.js'
 
 test('default', () => {
@@ -14,15 +13,9 @@ test('behavior: throws when not inside Provider', async () => {
   vi.spyOn(console, 'error').mockImplementation(() => {})
 
   try {
-    renderPrimitive(
-      useConfig(() => ({})),
-      {
-        wrapper: createWrapper(
-          (props) => createComponent(() => template('div')(), props),
-          undefined,
-        ),
-      },
-    )
+    renderPrimitive(useConfig(), {
+      wrapper: (props) => props.children,
+    })
   } catch (error) {
     expect(error).toMatchInlineSnapshot(`
       [WagmiProviderNotFoundError: \`useConfig\` must be used within \`WagmiProvider\`.

@@ -1,9 +1,9 @@
 import { useChainId, useConnect, useConnectors } from '@wagmi/solid'
 
 export function Connect() {
-  const chainId = useChainId(() => ({}))
-  const connect = useConnect(() => ({}))
-  const connectors = useConnectors(() => ({}))
+  const chainId = useChainId()
+  const connect = useConnect()
+  const connectors = useConnectors()
 
   return (
     <div>

@@ -23,7 +23,7 @@ export type UseChainIdReturnType<config extends Config = Config> = Accessor<
 
 /** https://wagmi.sh/solid/api/hooks/useChainId */
 export function useChainId<config extends Config = ResolvedRegister['config']>(
-  parameters: UseChainIdParameters<config>,
+  parameters: UseChainIdParameters<config> = () => ({}),
 ): UseChainIdReturnType<config> {
   const config = useConfig(parameters)
 

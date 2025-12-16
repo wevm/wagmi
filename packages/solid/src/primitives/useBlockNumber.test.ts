@@ -7,7 +7,7 @@ import { useBlockNumber } from './useBlockNumber.js'
 test('mounts', async () => {
   await testClient.mainnet.restart()
 
-  const { result } = renderPrimitive(() => useBlockNumber(() => ({})))
+  const { result } = renderPrimitive(() => useBlockNumber())
 
   await vi.waitUntil(() => result.isSuccess, { timeout: 5_000 })
 

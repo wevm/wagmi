@@ -25,7 +25,7 @@ export type UseConnectorsReturnType<config extends Config = Config> = Accessor<
 export function useConnectors<
   config extends Config = ResolvedRegister['config'],
 >(
-  parameters: UseConnectorsParameters<config> = () => ({}) as never,
+  parameters: UseConnectorsParameters<config> = () => ({}),
 ): UseConnectorsReturnType<config> {
   const config = useConfig(parameters)
 

@@ -15,7 +15,7 @@ export type UseConfigReturnType<config extends Config = Config> =
   Accessor<config>
 
 export function useConfig<config extends Config = ResolvedRegister['config']>(
-  parameters: UseConfigParameters<config>,
+  parameters: UseConfigParameters<config> = () => ({}),
 ): UseConfigReturnType<config> {
   return createMemo(() => {
     const config = parameters().config ?? useContext(WagmiContext)

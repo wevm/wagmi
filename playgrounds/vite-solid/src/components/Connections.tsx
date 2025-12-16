@@ -2,7 +2,7 @@ import { useConnections } from '@wagmi/solid'
 import { stringify } from 'viem'
 
 export function Connections() {
-  const connections = useConnections(() => ({}))
+  const connections = useConnections()
 
   return (
     <div>

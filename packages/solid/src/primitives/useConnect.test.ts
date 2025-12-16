@@ -15,9 +15,9 @@ afterEach(async () => {
 
 test('default', async () => {
   const { result } = renderPrimitive(() => ({
-    useConnection: useConnection(() => ({})),
-    useConnect: useConnect(() => ({})),
-    useConnectors: useConnectors(() => ({})),
+    useConnection: useConnection(),
+    useConnect: useConnect(),
+    useConnectors: useConnectors(),
   }))
 
   expect(result.useConnection().address).not.toBeDefined()

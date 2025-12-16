@@ -14,7 +14,7 @@ beforeEach(async () => {
 
 test('default', async () => {
   const { result } = renderPrimitive(() => ({
-    useConnection: useConnection(() => ({})),
+    useConnection: useConnection(),
     useDisconnect: useDisconnect(),
   }))
 

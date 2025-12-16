@@ -62,7 +62,7 @@ export type UseConnectReturnType<
 
 /** https://wagmi.sh/solid/api/hooks/useConnect */
 export function useConnect<config extends Config = Config, context = unknown>(
-  parameters: UseConnectParameters<config, context>,
+  parameters: UseConnectParameters<config, context> = () => ({}),
 ): UseConnectReturnType<config, context> {
   const config = useConfig(parameters)
   const connectors = useConnectors(parameters)

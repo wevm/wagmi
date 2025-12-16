@@ -5,7 +5,7 @@ import { expect, test } from 'vitest'
 import { useChainId } from './useChainId.js'
 
 test('default', async () => {
-  const { result } = renderPrimitive(() => useChainId(() => ({})))
+  const { result } = renderPrimitive(() => useChainId())
 
   expect(result()).toMatchInlineSnapshot('1')
 

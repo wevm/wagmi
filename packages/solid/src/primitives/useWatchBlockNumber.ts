@@ -35,7 +35,8 @@ export function useWatchBlockNumber<
   chainId extends
     config['chains'][number]['id'] = config['chains'][number]['id'],
 >(
-  parameters: UseWatchBlockNumberParameters<config, chainId>,
+  parameters: UseWatchBlockNumberParameters<config, chainId> = () =>
+    ({}) as any,
 ): UseWatchBlockNumberReturnType {
   const config = useConfig(parameters)
   const configChainId = useChainId(() => ({ config: config() }))

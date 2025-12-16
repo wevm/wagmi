@@ -4,7 +4,7 @@ import { expectTypeOf, test } from 'vitest'
 import { useChainId } from './useChainId.js'
 
 test('default', () => {
-  const chainId = useChainId(() => ({}))
+  const chainId = useChainId()
   expectTypeOf(chainId()).toEqualTypeOf<number>()
 })
 

@@ -39,11 +39,11 @@ test('differing transports', () => {
       poll: true,
     },
   }))
+  // @ts-expect-error
   useBlockNumber(() => ({
     config,
     chainId: mainnet.id,
     watch: {
-      // @ts-expect-error
       poll: false,
     },
   }))

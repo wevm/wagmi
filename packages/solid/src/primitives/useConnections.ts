@@ -16,7 +16,7 @@ export type UseConnectionsReturnType = Accessor<GetConnectionsReturnType>
 
 /** https://wagmi.sh/solid/api/primitives/useConnections */
 export function useConnections(
-  parameters: UseConnectionsParameters,
+  parameters: UseConnectionsParameters = () => ({}),
 ): UseConnectionsReturnType {
   const config = useConfig(parameters)
 

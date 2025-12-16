@@ -1,7 +1,7 @@
 import { useConnection, useDisconnect, useEnsName } from '@wagmi/solid'
 
 export function Connection() {
-  const connection = useConnection(() => ({}))
+  const connection = useConnection()
   const disconnect = useDisconnect()
   const ensName = useEnsName(() => ({
     address: connection().address,

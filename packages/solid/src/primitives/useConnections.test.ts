@@ -6,7 +6,7 @@ import { expect, test } from 'vitest'
 import { useConnections } from './useConnections.js'
 
 test('default', async () => {
-  const { result } = renderPrimitive(() => useConnections(() => ({})))
+  const { result } = renderPrimitive(() => useConnections())
 
   expect(result()).toEqual([])
 

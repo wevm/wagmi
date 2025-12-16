@@ -5,7 +5,7 @@ import { expectTypeOf, test } from 'vitest'
 import { useConnection } from './useConnection.js'
 
 test('states', () => {
-  const result = useConnection(() => ({}))
+  const result = useConnection()
   const connection = result()
 
   switch (connection.status) {

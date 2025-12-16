@@ -5,7 +5,7 @@ import { expectTypeOf, test } from 'vitest'
 import { useConfig } from './useConfig.js'
 
 test('default', async () => {
-  const result = useConfig(() => ({}))
+  const result = useConfig()
   expectTypeOf(result()).toEqualTypeOf<Config>()
 })
 
