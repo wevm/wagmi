@@ -136,7 +136,9 @@
       },
       "packages/test": {
         "entry": [
-          "src/{globalSetup,setup}.ts!",
+          "src/setup.ts!",
+          "src/setup.global.ts!",
+          "src/setup.global.types.ts!",
           "src/exports/{index,react}.ts!"
         ]
       },

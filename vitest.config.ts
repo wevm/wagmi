@@ -35,8 +35,8 @@ export default defineConfig({
       ],
     },
     globalSetup: process.env.TYPES
-      ? ['./packages/test/src/benchTypesGlobalSetup.ts']
-      : ['./packages/test/src/globalSetup.ts'],
+      ? ['./packages/test/src/setup.global.types.ts']
+      : ['./packages/test/src/setup.global.ts'],
     projects: [
       {
         test: {
