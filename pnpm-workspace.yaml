@@ -40,6 +40,7 @@ minimumReleaseAgeExclude:
   - '@wagmi/core'
   - '@wagmi/test'
   - '@wagmi/vue'
+  - abitype
   - porto
   - wagmi
   - viem
