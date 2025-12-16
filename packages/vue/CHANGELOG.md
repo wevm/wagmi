@@ -1,5 +1,11 @@
 # @wagmi/vue
 
+## 0.4.4
+
+### Patch Changes
+
+- Updated internal types. ([#4896](https://github.com/wevm/wagmi/pull/4896))
+
 ## 0.4.3
 
 ### Patch Changes
