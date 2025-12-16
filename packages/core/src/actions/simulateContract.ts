@@ -20,12 +20,7 @@ import type {
   ChainIdParameter,
   ConnectorParameter,
 } from '../types/properties.js'
-import type {
-  Compute,
-  PartialBy,
-  UnionCompute,
-  UnionStrictOmit,
-} from '../types/utils.js'
+import type { Compute, PartialBy, UnionStrictOmit } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 import {
   type GetConnectorClientErrorType,
@@ -50,18 +45,16 @@ export type SimulateContractParameters<
   ///
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = {
-  [key in keyof chains]: UnionCompute<
-    UnionStrictOmit<
-      viem_SimulateContractParameters<
-        abi,
-        functionName,
-        args,
-        chains[key],
-        chains[key],
-        Account | Address
-      >,
-      'chain'
-    >
+  [key in keyof chains]: UnionStrictOmit<
+    viem_SimulateContractParameters<
+      abi,
+      functionName,
+      args,
+      chains[key],
+      chains[key],
+      Account | Address
+    >,
+    'chain'
   > &
     ChainIdParameter<config, chainId> &
     ConnectorParameter

@@ -53,9 +53,12 @@ test('UseSimulateContractParameters', () => {
   expectTypeOf(res.value?.functionName).toEqualTypeOf<
     'approve' | 'transfer' | 'transferFrom' | undefined
   >()
-  expectTypeOf(res.value?.args).toEqualTypeOf<
-    readonly [Address, Address, bigint] | undefined
-  >()
+  if (res.value?.args) {
+    expectTypeOf(res.value.args[0]).toEqualTypeOf<Address>()
+    expectTypeOf(res.value.args[1]).toEqualTypeOf<Address>()
+    expectTypeOf(res.value.args[2]).toEqualTypeOf<bigint>()
+  }
+  expectTypeOf(res.value?.chainId).toEqualTypeOf<ChainId | undefined>()
 
   type Result2 = UseSimulateContractParameters<
     typeof abi.erc20,
