@@ -24,11 +24,11 @@ export {
 // Primitives
 ////////////////////////////////////////////////////////////////////////////////
 
-// export {
-//   type UseBalanceParameters,
-//   type UseBalanceReturnType,
-//   useBalance,
-// } from '../hooks/useBalance.js'
+export {
+  type UseBalanceParameters,
+  type UseBalanceReturnType,
+  useBalance,
+} from '../primitives/useBalance.js'
 
 // export {
 //   type UseBlockParameters,

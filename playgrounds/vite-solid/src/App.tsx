@@ -1,3 +1,4 @@
+import { Balance } from './components/Balance'
 import { BlockNumber } from './components/BlockNumber'
 import { Connect } from './components/Connect'
 import { Connection } from './components/Connection'
@@ -16,7 +17,7 @@ function App() {
       {/* <SignMessage /> */}
       <Connections />
       <BlockNumber />
-      {/* <Balance /> */}
+      <Balance />
       <ConnectorClient />
       {/* <SendTransaction /> */}
       {/* <ReadContract /> */}
