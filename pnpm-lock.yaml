@@ -34,8 +34,8 @@ catalogs:
       specifier: 5.49.2
       version: 5.49.2
     '@tanstack/solid-query':
-      specifier: 5.90.15
-      version: 5.90.15
+      specifier: 5.49.1
+      version: 5.49.1
     '@tanstack/vue-query':
       specifier: 5.49.1
       version: 5.49.1
@@ -411,7 +411,7 @@ importers:
     devDependencies:
       '@tanstack/solid-query':
         specifier: 'catalog:'
-        version: 5.90.15(solid-js@1.9.10)
+        version: 5.49.1(solid-js@1.9.10)
       solid-js:
         specifier: 'catalog:'
         version: 1.9.10
@@ -426,7 +426,7 @@ importers:
         version: 5.49.2(react@19.2.0)
       '@tanstack/solid-query':
         specifier: 'catalog:'
-        version: 5.90.15(solid-js@1.9.10)
+        version: 5.49.1(solid-js@1.9.10)
       '@tanstack/vue-query':
         specifier: 'catalog:'
         version: 5.49.1(vue@3.4.27(typescript@5.9.2))
@@ -628,7 +628,7 @@ importers:
     dependencies:
       '@tanstack/solid-query':
         specifier: 'catalog:'
-        version: 5.90.15(solid-js@1.9.10)
+        version: 5.49.1(solid-js@1.9.10)
       '@wagmi/solid':
         specifier: workspace:*
         version: link:../../packages/solid
@@ -4104,9 +4104,6 @@ packages:
   '@tanstack/query-core@5.90.10':
     resolution: {integrity: sha512-EhZVFu9rl7GfRNuJLJ3Y7wtbTnENsvzp+YpcAV7kCYiXni1v8qZh++lpw4ch4rrwC0u/EZRnBHIehzCGzwXDSQ==}
 
-  '@tanstack/query-core@5.90.12':
-    resolution: {integrity: sha512-T1/8t5DhV/SisWjDnaiU2drl6ySvsHj1bHBCWNXd+/T+Hh1cf6JodyEYMd5sgwm+b/mETT4EV3H+zCVczCU5hg==}
-
   '@tanstack/query-devtools@5.0.5':
     resolution: {integrity: sha512-xjuOhOrrO50sPoJ4WG9yPe3imQ0Ds/nutnmwdTqjM2ZTIkflh//p7q2iB6IxFBY9sB106h+PULlma8sgTuOKAQ==}
 
@@ -4134,8 +4131,8 @@ packages:
     peerDependencies:
       react: ^18.0.0
 
-  '@tanstack/solid-query@5.90.15':
-    resolution: {integrity: sha512-5bCMbGJHMGSTK4sA3OKs3p8w21+k4tp+KwVin8IwkMnmzVfGzEkuZnDM8WexO2fMqfr7nBpCGxZHSiUVcniCRQ==}
+  '@tanstack/solid-query@5.49.1':
+    resolution: {integrity: sha512-bEOphgQ2ohBBauxQmBUnmYFJe4rqOFX/AmtHgypeF7cbYH9F05TVn8zbXmpZnvyV2ASU0BDbxCrztRdg2JpKaA==}
     peerDependencies:
       solid-js: ^1.6.0
 
@@ -13539,8 +13536,6 @@ snapshots:
 
   '@tanstack/query-core@5.90.10': {}
 
-  '@tanstack/query-core@5.90.12': {}
-
   '@tanstack/query-devtools@5.0.5': {}
 
   '@tanstack/query-persist-client-core@5.91.9':
@@ -13570,9 +13565,9 @@ snapshots:
       '@tanstack/query-core': 5.49.1
       react: 19.2.0
 
-  '@tanstack/solid-query@5.90.15(solid-js@1.9.10)':
+  '@tanstack/solid-query@5.49.1(solid-js@1.9.10)':
     dependencies:
-      '@tanstack/query-core': 5.90.12
+      '@tanstack/query-core': 5.49.1
       solid-js: 1.9.10
 
   '@tanstack/vue-query@5.49.1(vue@3.4.27(typescript@5.9.2))':

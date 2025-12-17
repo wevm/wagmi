@@ -4,12 +4,13 @@ import {
   type SolidInfiniteQueryOptions,
   type SolidMutationOptions,
   type SolidQueryOptions,
-  useInfiniteQuery as tanstack_useInfiniteQuery,
-  useQuery as tanstack_useQuery,
-  type UseInfiniteQueryResult,
-  type UseMutationResult,
-  type UseQueryResult,
-  useMutation,
+  // TODO: import use___ once solid-query version is updated
+  createInfiniteQuery as tanstack_useInfiniteQuery,
+  createQuery as tanstack_useQuery,
+  type CreateInfiniteQueryResult as UseInfiniteQueryResult,
+  type CreateMutationResult as UseMutationResult,
+  type CreateQueryResult as UseQueryResult,
+  createMutation as useMutation,
 } from '@tanstack/solid-query'
 import type {
   Compute,
@@ -111,11 +112,19 @@ export type SolidInfiniteQueryParameters<
   queryFnData = unknown,
   error = DefaultError,
   data = queryFnData,
+  queryData = queryFnData,
   queryKey extends QueryKey = QueryKey,
   pageParam = unknown,
 > = Compute<
   Omit<
-    SolidInfiniteQueryOptions<queryFnData, error, data, queryKey, pageParam>,
+    SolidInfiniteQueryOptions<
+      queryFnData,
+      error,
+      data,
+      queryData,
+      queryKey,
+      pageParam
+    >,
     'initialData'
   > & {
     // Fix `initialData` type
@@ -134,10 +143,18 @@ export type UseInfiniteQueryParameters<
   queryFnData = unknown,
   error = DefaultError,
   data = queryFnData,
+  queryData = queryFnData,
   queryKey extends QueryKey = QueryKey,
   pageParam = unknown,
 > = Accessor<
-  SolidInfiniteQueryParameters<queryFnData, error, data, queryKey, pageParam>
+  SolidInfiniteQueryParameters<
+    queryFnData,
+    error,
+    data,
+    queryData,
+    queryKey,
+    pageParam
+  >
 >
 
 export type UseInfiniteQueryReturnType<
@@ -152,6 +169,7 @@ export function useInfiniteQuery<
   queryFnData,
   error,
   data,
+  queryData,
   queryKey extends QueryKey,
   pageParam = unknown,
 >(
@@ -160,6 +178,7 @@ export function useInfiniteQuery<
       queryFnData,
       error,
       data,
+      queryData,
       queryKey,
       pageParam
     > & {

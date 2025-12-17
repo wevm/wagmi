@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/solid-query'
+import { createMutation as useMutation } from '@tanstack/solid-query'
 import type { Connector, ReconnectErrorType } from '@wagmi/core'
 import type { Compute } from '@wagmi/core/internal'
 import {
@@ -67,5 +67,5 @@ export function useReconnect<context = unknown>(
     connectors: config().connectors,
     reconnect: mutation.mutate,
     reconnectAsync: mutation.mutateAsync,
-  }) as UseReconnectReturnType<context>
+  })
 }

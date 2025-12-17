@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/solid-query'
+import { createMutation as useMutation } from '@tanstack/solid-query'
 import type {
   Config,
   ResolvedRegister,
