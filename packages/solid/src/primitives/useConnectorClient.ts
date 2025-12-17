@@ -13,7 +13,7 @@ import {
   getConnectorClientQueryOptions,
 } from '@wagmi/core/query'
 import type { Accessor } from 'solid-js'
-import { createEffect, createMemo, onCleanup } from 'solid-js'
+import { createEffect, createMemo, on } from 'solid-js'
 
 import type { ConfigParameter } from '../types/properties.js'
 import {
@@ -108,19 +108,21 @@ export function useConnectorClient<
     }
   })
 
-  let previousAddress = connection().address
-  createEffect(() => {
-    const currentAddress = connection().address
-    if (!currentAddress && previousAddress) {
-      // remove when account is disconnected
-      queryClient.removeQueries({ queryKey: queryOptions().queryKey })
-      previousAddress = undefined
-    } else if (currentAddress !== previousAddress) {
-      // invalidate when address changes
-      queryClient.invalidateQueries({ queryKey: queryOptions().queryKey })
-      previousAddress = currentAddress
-    }
-  })
+  createEffect(
+    on(
+      () => connection().address,
+      (currentAddress, previousAddress) => {
+        if (!currentAddress && previousAddress) {
+          // remove when account is disconnected
+          queryClient.removeQueries({ queryKey: queryOptions().queryKey })
+        } else if (currentAddress !== previousAddress) {
+          // invalidate when address changes
+          queryClient.invalidateQueries({ queryKey: queryOptions().queryKey })
+        }
+      },
+      { defer: true },
+    ),
+  )
 
   return useQuery(queryOptions)
 }
