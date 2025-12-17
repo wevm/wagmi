@@ -1,4 +1,5 @@
 import { useConnection, useDisconnect, useEnsName } from '@wagmi/solid'
+import { Show } from 'solid-js'
 
 export function Connection() {
   const connection = useConnection()
@@ -19,7 +20,7 @@ export function Connection() {
         status: {connection().status}
       </div>
 
-      {connection().status !== 'disconnected' && (
+      <Show when={connection().status !== 'disconnected'}>
         <button
           type="button"
           onClick={() => {
@@ -29,7 +30,7 @@ export function Connection() {
         >
           Disconnect
         </button>
-      )}
+      </Show>
     </div>
   )
 }

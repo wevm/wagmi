@@ -78,17 +78,17 @@ export {
   useChainId,
 } from '../primitives/useChainId.js'
 
-// export {
-//   type UseChainsParameters,
-//   type UseChainsReturnType,
-//   useChains,
-// } from '../hooks/useChains.js'
+export {
+  type UseChainsParameters,
+  type UseChainsReturnType,
+  useChains,
+} from '../primitives/useChains.js'
 
-// export {
-//   type UseClientParameters,
-//   type UseClientReturnType,
-//   useClient,
-// } from '../hooks/useClient.js'
+export {
+  type UseClientParameters,
+  type UseClientReturnType,
+  useClient,
+} from '../primitives/useClient.js'
 
 export {
   type UseConfigParameters,
@@ -114,14 +114,14 @@ export {
   useConnection,
 } from '../primitives/useConnection.js'
 
-// export {
-//   /** @deprecated use `UseConnectionEffectParameters` instead */
-//   type UseConnectionEffectParameters as UseAccountEffectParameters,
-//   type UseConnectionEffectParameters,
-//   /** @deprecated use `useConnectionEffect` instead */
-//   useConnectionEffect as useAccountEffect,
-//   useConnectionEffect,
-// } from '../hooks/useConnectionEffect.js'
+export {
+  /** @deprecated use `UseConnectionEffectParameters` instead */
+  type UseConnectionEffectParameters as UseAccountEffectParameters,
+  type UseConnectionEffectParameters,
+  /** @deprecated use `useConnectionEffect` instead */
+  useConnectionEffect as useAccountEffect,
+  useConnectionEffect,
+} from '../primitives/useConnectionEffect.js'
 
 export {
   type UseConnectionsParameters,
@@ -129,11 +129,11 @@ export {
   useConnections,
 } from '../primitives/useConnections.js'
 
-// export {
-//   type UseConnectorClientParameters,
-//   type UseConnectorClientReturnType,
-//   useConnectorClient,
-// } from '../hooks/useConnectorClient.js'
+export {
+  type UseConnectorClientParameters,
+  type UseConnectorClientReturnType,
+  useConnectorClient,
+} from '../primitives/useConnectorClient.js'
 
 export {
   type UseConnectorsParameters,
@@ -309,23 +309,23 @@ export {
 //   useStorageAt,
 // } from '../hooks/useStorageAt.js'
 
-// export {
-//   type UseSwitchChainParameters,
-//   type UseSwitchChainReturnType,
-//   useSwitchChain,
-// } from '../hooks/useSwitchChain.js'
+export {
+  type UseSwitchChainParameters,
+  type UseSwitchChainReturnType,
+  useSwitchChain,
+} from '../primitives/useSwitchChain.js'
 
-// export {
-//   /** @deprecated use `UseSwitchConnectionParameters` instead */
-//   type UseSwitchConnectionParameters as UseSwitchAccountParameters,
-//   type UseSwitchConnectionParameters,
-//   /** @deprecated use `UseSwitchConnectionReturnType` instead */
-//   type UseSwitchConnectionReturnType as UseSwitchAccountReturnType,
-//   type UseSwitchConnectionReturnType,
-//   /** @deprecated use `useSwitchConnection` instead */
-//   useSwitchConnection as useSwitchAccount,
-//   useSwitchConnection,
-// } from '../hooks/useSwitchConnection.js'
+export {
+  /** @deprecated use `UseSwitchConnectionParameters` instead */
+  type UseSwitchConnectionParameters as UseSwitchAccountParameters,
+  type UseSwitchConnectionParameters,
+  /** @deprecated use `UseSwitchConnectionReturnType` instead */
+  type UseSwitchConnectionReturnType as UseSwitchAccountReturnType,
+  type UseSwitchConnectionReturnType,
+  /** @deprecated use `useSwitchConnection` instead */
+  useSwitchConnection as useSwitchAccount,
+  useSwitchConnection,
+} from '../primitives/useSwitchConnection.js'
 
 // export {
 //   type UseTransactionParameters,
