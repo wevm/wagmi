@@ -136,6 +136,15 @@ export {
 } from '../query/getConnectorClient.js'
 
 export {
+  type GetContractEventsData,
+  type GetContractEventsOptions,
+  type GetContractEventsQueryFnData,
+  type GetContractEventsQueryKey,
+  getContractEventsQueryKey,
+  getContractEventsQueryOptions,
+} from '../query/getContractEvents.js'
+
+export {
   type GetEnsAddressData,
   type GetEnsAddressOptions,
   type GetEnsAddressQueryFnData,

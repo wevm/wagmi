@@ -144,6 +144,13 @@ export {
 } from '../actions/getConnectors.js'
 
 export {
+  type GetContractEventsErrorType,
+  type GetContractEventsParameters,
+  type GetContractEventsReturnType,
+  getContractEvents,
+} from '../actions/getContractEvents.js'
+
+export {
   type GetEnsAddressErrorType,
   type GetEnsAddressParameters,
   type GetEnsAddressReturnType,
