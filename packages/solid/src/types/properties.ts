@@ -33,11 +33,19 @@ export type InfiniteQueryParameter<
   queryFnData = unknown,
   error = DefaultError,
   data = queryFnData,
+  queryData = queryFnData,
   queryKey extends QueryKey = QueryKey,
   pageParam = unknown,
 > = {
   query: Omit<
-    SolidInfiniteQueryParameters<queryFnData, error, data, queryKey, pageParam>,
+    SolidInfiniteQueryParameters<
+      queryFnData,
+      error,
+      data,
+      queryData,
+      queryKey,
+      pageParam
+    >,
     'queryFn' | 'queryHash' | 'queryKey' | 'queryKeyHashFn' | 'throwOnError'
   >
 }
