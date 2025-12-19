@@ -1,19 +1,19 @@
 import { testClient } from '@wagmi/test'
 import { renderPrimitive } from '@wagmi/test/solid'
-import { expect, test, vi } from 'vitest'
-
+import { describe, expect, test, vi } from 'vitest'
 import { useBlockNumber } from './useBlockNumber.js'
 
-test('mounts', async () => {
-  await testClient.mainnet.restart()
+describe.sequential('useBlockNumber', () => {
+  test('mounts', async () => {
+    await testClient.mainnet.restart()
 
-  const { result } = renderPrimitive(() => useBlockNumber())
+    const { result, cleanup } = renderPrimitive(() => useBlockNumber())
 
-  await vi.waitUntil(() => result.isSuccess, { timeout: 5_000 })
+    await vi.waitUntil(() => result.isSuccess, { timeout: 5_000 })
 
-  // result is a proxy object (store in Solid)
-  // so we spread it into a new object for snapshot testing
-  expect({ ...result }).toMatchInlineSnapshot(`
+    // result is a proxy object (store in Solid)
+    // so we spread it into a new object for snapshot testing
+    expect({ ...result }).toMatchInlineSnapshot(`
     {
       "data": 23535880n,
       "dataUpdatedAt": 1675209600000,
@@ -47,33 +47,35 @@ test('mounts', async () => {
       "status": "success",
     }
   `)
-})
+    cleanup()
+  })
 
-// TODO: Fix flaky test
-test.skip('parameters: watch', async () => {
-  await testClient.mainnet.restart()
+  test('parameters: watch', async () => {
+    await testClient.mainnet.restart()
 
-  const { result } = renderPrimitive(() =>
-    useBlockNumber(() => ({ watch: { pollingInterval: 100 } })),
-  )
+    const { result, cleanup } = renderPrimitive(() =>
+      useBlockNumber(() => ({ watch: { pollingInterval: 100 } })),
+    )
 
-  await vi.waitUntil(() => result.isSuccess, { timeout: 5_000 })
-  const blockNumber = result.data!
-  expect(result.data).toBeTypeOf('bigint')
+    await vi.waitUntil(() => result.isSuccess, { timeout: 5_000 })
+    const blockNumber = result.data!
+    expect(result.data).toBeTypeOf('bigint')
 
-  await testClient.mainnet.mine({ blocks: 1 })
-  await vi.waitFor(
-    () => {
-      expect(result.data).toEqual(blockNumber + 1n)
-    },
-    { timeout: 5_000 },
-  )
+    await testClient.mainnet.mine({ blocks: 1 })
+    await vi.waitFor(
+      () => {
+        expect(result.data).toEqual(blockNumber + 1n)
+      },
+      { timeout: 5_000 },
+    )
 
-  await testClient.mainnet.mine({ blocks: 1 })
-  await vi.waitFor(
-    () => {
-      expect(result.data).toEqual(blockNumber + 2n)
-    },
-    { timeout: 5_000 },
-  )
+    await testClient.mainnet.mine({ blocks: 1 })
+    await vi.waitFor(
+      () => {
+        expect(result.data).toEqual(blockNumber + 2n)
+      },
+      { timeout: 5_000 },
+    )
+    cleanup()
+  })
 })
