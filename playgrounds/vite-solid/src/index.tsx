@@ -5,7 +5,7 @@ import { WagmiProvider } from '@wagmi/solid'
 import { Buffer } from 'buffer'
 import { render } from 'solid-js/web'
 
-// import './index.css'
+import './index.css'
 
 // `@coinbase-wallet/sdk` uses `Buffer`
 globalThis.Buffer = Buffer
