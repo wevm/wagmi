@@ -17,8 +17,11 @@ export type UseConnectorsParameters<config extends Config = Config> = Accessor<
   SolidConnectorsParameters<config>
 >
 
-export type UseConnectorsReturnType<config extends Config = Config> = Accessor<
+export type SolidConnectorsReturnType<config extends Config = Config> =
   GetConnectorsReturnType<config>
+
+export type UseConnectorsReturnType<config extends Config = Config> = Accessor<
+  SolidConnectorsReturnType<config>
 >
 
 /** https://wagmi.sh/solid/api/primitives/useConnectors */

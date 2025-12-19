@@ -11,8 +11,11 @@ export type UseConfigParameters<config extends Config = Config> = Accessor<
   SolidConfigParameters<config>
 >
 
-export type UseConfigReturnType<config extends Config = Config> =
-  Accessor<config>
+export type SolidConfigReturnType<config extends Config = Config> = config
+
+export type UseConfigReturnType<config extends Config = Config> = Accessor<
+  SolidConfigReturnType<config>
+>
 
 export function useConfig<config extends Config = ResolvedRegister['config']>(
   parameters: UseConfigParameters<config> = () => ({}),

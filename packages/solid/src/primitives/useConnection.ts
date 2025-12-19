@@ -17,8 +17,11 @@ export type UseConnectionParameters<config extends Config = Config> = Accessor<
   SolidConnectionParameters<config>
 >
 
-export type UseConnectionReturnType<config extends Config = Config> = Accessor<
+export type SolidConnectionReturnType<config extends Config = Config> =
   GetConnectionReturnType<config>
+
+export type UseConnectionReturnType<config extends Config = Config> = Accessor<
+  SolidConnectionReturnType<config>
 >
 
 /** https://wagmi.sh/solid/api/primitives/useConnection */

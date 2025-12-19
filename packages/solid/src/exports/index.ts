@@ -25,6 +25,7 @@ export {
 ////////////////////////////////////////////////////////////////////////////////
 
 export {
+  type SolidBalanceParameters,
   type UseBalanceParameters,
   type UseBalanceReturnType,
   useBalance,
@@ -37,6 +38,7 @@ export {
 // } from '../hooks/useBlock.js'
 
 export {
+  type SolidBlockNumberParameters,
   type UseBlockNumberParameters,
   type UseBlockNumberReturnType,
   useBlockNumber,
@@ -73,36 +75,47 @@ export {
 // } from '../hooks/useCapabilities.js'
 
 export {
+  type SolidChainIdParameters,
+  type SolidChainIdReturnType,
   type UseChainIdParameters,
   type UseChainIdReturnType,
   useChainId,
 } from '../primitives/useChainId.js'
 
 export {
+  type SolidChainsParameters,
+  type SolidChainsReturnType,
   type UseChainsParameters,
   type UseChainsReturnType,
   useChains,
 } from '../primitives/useChains.js'
 
 export {
+  type SolidClientParameters,
+  type SolidClientReturnType,
   type UseClientParameters,
   type UseClientReturnType,
   useClient,
 } from '../primitives/useClient.js'
 
 export {
+  type SolidConfigParameters,
+  type SolidConfigReturnType,
   type UseConfigParameters,
   type UseConfigReturnType,
   useConfig,
 } from '../primitives/useConfig.js'
 
 export {
+  type SolidConnectParameters,
   type UseConnectParameters,
   type UseConnectReturnType,
   useConnect,
 } from '../primitives/useConnect.js'
 
 export {
+  type SolidConnectionParameters,
+  type SolidConnectionReturnType,
   /** @deprecated use `UseConnectionParameters` instead */
   type UseConnectionParameters as UseAccountParameters,
   type UseConnectionParameters,
@@ -115,6 +128,7 @@ export {
 } from '../primitives/useConnection.js'
 
 export {
+  type SolidConnectionEffectParameters,
   /** @deprecated use `UseConnectionEffectParameters` instead */
   type UseConnectionEffectParameters as UseAccountEffectParameters,
   type UseConnectionEffectParameters,
@@ -124,18 +138,23 @@ export {
 } from '../primitives/useConnectionEffect.js'
 
 export {
+  type SolidConnectionsParameters,
+  type SolidConnectionsReturnType,
   type UseConnectionsParameters,
   type UseConnectionsReturnType,
   useConnections,
 } from '../primitives/useConnections.js'
 
 export {
+  type SolidConnectorClientParameters,
   type UseConnectorClientParameters,
   type UseConnectorClientReturnType,
   useConnectorClient,
 } from '../primitives/useConnectorClient.js'
 
 export {
+  type SolidConnectorsParameters,
+  type SolidConnectorsReturnType,
   type UseConnectorsParameters,
   type UseConnectorsReturnType,
   useConnectors,
@@ -148,6 +167,7 @@ export {
 // } from '../hooks/useDeployContract.js'
 
 export {
+  type SolidDisconnectParameters,
   type UseDisconnectParameters,
   type UseDisconnectReturnType,
   useDisconnect,
@@ -166,6 +186,7 @@ export {
 // } from '../hooks/useEnsAvatar.js'
 
 export {
+  type SolidEnsNameParameters,
   type UseEnsNameParameters,
   type UseEnsNameReturnType,
   useEnsName,
@@ -310,12 +331,14 @@ export {
 // } from '../hooks/useStorageAt.js'
 
 export {
+  type SolidSwitchChainParameters,
   type UseSwitchChainParameters,
   type UseSwitchChainReturnType,
   useSwitchChain,
 } from '../primitives/useSwitchChain.js'
 
 export {
+  type SolidSwitchConnectionParameters,
   /** @deprecated use `UseSwitchConnectionParameters` instead */
   type UseSwitchConnectionParameters as UseSwitchAccountParameters,
   type UseSwitchConnectionParameters,
@@ -384,6 +407,7 @@ export {
 //   useWatchAsset,
 // } from '../hooks/useWatchAsset.js'
 export {
+  type SolidWatchBlockNumberParameters,
   type UseWatchBlockNumberParameters,
   type UseWatchBlockNumberReturnType,
   useWatchBlockNumber,

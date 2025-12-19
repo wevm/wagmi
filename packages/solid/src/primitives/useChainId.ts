@@ -17,8 +17,11 @@ export type UseChainIdParameters<config extends Config = Config> = Accessor<
   SolidChainIdParameters<config>
 >
 
-export type UseChainIdReturnType<config extends Config = Config> = Accessor<
+export type SolidChainIdReturnType<config extends Config = Config> =
   GetChainIdReturnType<config>
+
+export type UseChainIdReturnType<config extends Config = Config> = Accessor<
+  SolidChainIdReturnType<config>
 >
 
 /** https://wagmi.sh/solid/api/hooks/useChainId */

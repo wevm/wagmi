@@ -25,7 +25,7 @@ import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 import { useConnection } from './useConnection.js'
 
-export type SolidUseConnectorClientParameters<
+export type SolidConnectorClientParameters<
   config extends Config = Config,
   chainId extends
     config['chains'][number]['id'] = config['chains'][number]['id'],
@@ -54,7 +54,7 @@ export type UseConnectorClientParameters<
   chainId extends
     config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetConnectorClientData<config, chainId>,
-> = Accessor<SolidUseConnectorClientParameters<config, chainId, selectData>>
+> = Accessor<SolidConnectorClientParameters<config, chainId, selectData>>
 
 export type UseConnectorClientReturnType<
   config extends Config = Config,
