@@ -4,8 +4,7 @@ import { expect, test, vi } from 'vitest'
 
 import { useEnsName } from './useEnsName.js'
 
-// TODO: flaky
-test.skip('default', async () => {
+test('default', async () => {
   await testClient.mainnet.restart()
 
   const { result } = renderPrimitive(() =>
@@ -14,7 +13,7 @@ test.skip('default', async () => {
     })),
   )
 
-  await vi.waitUntil(() => result.isSuccess, { timeout: 5_000 })
+  await vi.waitUntil(() => result.isSuccess, { timeout: 15_000 })
 
   // result is a proxy object (store in Solid)
   // so we spread it into a new object for snapshot testing
@@ -28,7 +27,6 @@ test.skip('default', async () => {
       "failureCount": 0,
       "failureReason": null,
       "fetchStatus": "idle",
-      "isEnabled": true,
       "isError": false,
       "isFetched": true,
       "isFetchedAfterMount": true,
@@ -43,11 +41,6 @@ test.skip('default', async () => {
       "isRefetching": false,
       "isStale": true,
       "isSuccess": true,
-      "promise": Promise {
-        "reject": [Function],
-        "resolve": [Function],
-        "status": "pending",
-      },
       "queryKey": [
         "ensName",
         {
