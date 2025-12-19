@@ -1,5 +1,8 @@
 {
   "extends": "./tsconfig.base.json",
   "include": ["scripts/**/*.ts", "vitest.config.ts"],
-  "exclude": []
+  "exclude": [],
+  "compilerOptions": {
+    "allowImportingTsExtensions": true
+  }
 }

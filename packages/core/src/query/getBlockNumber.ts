@@ -1,5 +1,4 @@
 import type { QueryOptions } from '@tanstack/query-core'
-
 import {
   type GetBlockNumberErrorType,
   type GetBlockNumberParameters,
@@ -8,28 +7,31 @@ import {
 } from '../actions/getBlockNumber.js'
 import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
-import type { Compute, ExactPartial } from '../types/utils.js'
+import type * as t from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
 export type GetBlockNumberOptions<
   config extends Config,
   chainId extends config['chains'][number]['id'],
-> = Compute<
-  ExactPartial<GetBlockNumberParameters<config, chainId>> & ScopeKeyParameter
+> = t.Compute<
+  t.ExactPartial<GetBlockNumberParameters<config, chainId>> & ScopeKeyParameter
 >
 
 export function getBlockNumberQueryOptions<
-  config extends Config,
-  chainId extends config['chains'][number]['id'],
->(config: config, options: GetBlockNumberOptions<config, chainId> = {}) {
+  config extends Config = Config,
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
+>(
+  config: config,
+  options: GetBlockNumberOptions<config, chainId> = {} as never,
+) {
   return {
-    gcTime: 0,
     async queryFn({ queryKey }) {
       const { scopeKey: _, ...parameters } = queryKey[1]
-      const blockNumber = await getBlockNumber(config, parameters)
-      return blockNumber ?? null
+      const result = await getBlockNumber(config, parameters as never)
+      return (result ?? null) as never
     },
-    queryKey: getBlockNumberQueryKey(options),
+    queryKey: getBlockNumberQueryKey(options as never),
   } as const satisfies QueryOptions<
     GetBlockNumberQueryFnData,
     GetBlockNumberErrorType,
@@ -38,15 +40,16 @@ export function getBlockNumberQueryOptions<
   >
 }
 
-export type GetBlockNumberQueryFnData = GetBlockNumberReturnType
+export type GetBlockNumberQueryFnData = t.Compute<GetBlockNumberReturnType>
 
 export type GetBlockNumberData = GetBlockNumberQueryFnData
 
 export function getBlockNumberQueryKey<
-  config extends Config,
-  chainId extends config['chains'][number]['id'],
->(options: GetBlockNumberOptions<config, chainId> = {}) {
-  return ['blockNumber', filterQueryOptions(options)] as const
+  config extends Config = Config,
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
+>(options: GetBlockNumberOptions<config, chainId> = {} as never) {
+  return ['getBlockNumber', filterQueryOptions(options)] as const
 }
 
 export type GetBlockNumberQueryKey<

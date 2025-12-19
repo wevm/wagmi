@@ -1,6 +1,5 @@
 import type { QueryOptions } from '@tanstack/query-core'
 import type { Abi, ContractFunctionArgs, ContractFunctionName } from 'viem'
-
 import {
   type SimulateContractErrorType,
   type SimulateContractParameters,
@@ -9,7 +8,7 @@ import {
 } from '../actions/simulateContract.js'
 import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
-import type { UnionExactPartial } from '../types/utils.js'
+import type * as t from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
 export type SimulateContractOptions<
@@ -21,22 +20,23 @@ export type SimulateContractOptions<
     functionName
   >,
   config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
-> = UnionExactPartial<
+  chainId extends config['chains'][number]['id'],
+> = t.UnionExactPartial<
   SimulateContractParameters<abi, functionName, args, config, chainId>
 > &
   ScopeKeyParameter
 
 export function simulateContractQueryOptions<
-  config extends Config,
   const abi extends Abi | readonly unknown[],
   functionName extends ContractFunctionName<abi, 'nonpayable' | 'payable'>,
-  args extends ContractFunctionArgs<
+  const args extends ContractFunctionArgs<
     abi,
     'nonpayable' | 'payable',
     functionName
   >,
-  chainId extends config['chains'][number]['id'] | undefined,
+  config extends Config = Config,
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 >(
   config: config,
   options: SimulateContractOptions<
@@ -45,23 +45,18 @@ export function simulateContractQueryOptions<
     args,
     config,
     chainId
-  > = {} as any,
+  > = {} as never,
 ) {
   return {
     async queryFn({ queryKey }) {
-      const { abi, connector } = options
-      if (!abi) throw new Error('abi is required')
       const { scopeKey: _, ...parameters } = queryKey[1]
-      const { address, functionName } = parameters
-      if (!address) throw new Error('address is required')
-      if (!functionName) throw new Error('functionName is required')
-      return simulateContract(config, {
-        abi,
-        connector,
-        ...(parameters as any),
-      })
+      if (!parameters.abi) throw new Error('abi is required')
+      if (!parameters.address) throw new Error('address is required')
+      if (!parameters.functionName) throw new Error('functionName is required')
+      const result = await simulateContract(config, parameters as never)
+      return (result ?? null) as never
     },
-    queryKey: simulateContractQueryKey(options),
+    queryKey: simulateContractQueryKey(options as never),
   } as const satisfies QueryOptions<
     SimulateContractQueryFnData<abi, functionName, args, config, chainId>,
     SimulateContractErrorType,
@@ -79,8 +74,10 @@ export type SimulateContractQueryFnData<
     functionName
   >,
   config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
-> = SimulateContractReturnType<abi, functionName, args, config, chainId>
+  chainId extends config['chains'][number]['id'],
+> = t.Compute<
+  SimulateContractReturnType<abi, functionName, args, config, chainId>
+>
 
 export type SimulateContractData<
   abi extends Abi | readonly unknown[],
@@ -91,19 +88,20 @@ export type SimulateContractData<
     functionName
   >,
   config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
+  chainId extends config['chains'][number]['id'],
 > = SimulateContractQueryFnData<abi, functionName, args, config, chainId>
 
 export function simulateContractQueryKey<
-  config extends Config,
-  abi extends Abi | readonly unknown[],
+  const abi extends Abi | readonly unknown[],
   functionName extends ContractFunctionName<abi, 'nonpayable' | 'payable'>,
-  args extends ContractFunctionArgs<
+  const args extends ContractFunctionArgs<
     abi,
     'nonpayable' | 'payable',
     functionName
   >,
-  chainId extends config['chains'][number]['id'] | undefined,
+  config extends Config = Config,
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 >(
   options: SimulateContractOptions<
     abi,
@@ -111,10 +109,9 @@ export function simulateContractQueryKey<
     args,
     config,
     chainId
-  > = {} as any,
+  > = {} as never,
 ) {
-  const { abi: _, connector: _c, ...rest } = options
-  return ['simulateContract', filterQueryOptions(rest)] as const
+  return ['simulateContract', filterQueryOptions(options)] as const
 }
 
 export type SimulateContractQueryKey<
@@ -126,7 +123,7 @@ export type SimulateContractQueryKey<
     functionName
   >,
   config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
+  chainId extends config['chains'][number]['id'],
 > = ReturnType<
-  typeof simulateContractQueryKey<config, abi, functionName, args, chainId>
+  typeof simulateContractQueryKey<abi, functionName, args, config, chainId>
 >

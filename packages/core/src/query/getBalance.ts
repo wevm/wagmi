@@ -1,5 +1,4 @@
 import type { QueryOptions } from '@tanstack/query-core'
-
 import {
   type GetBalanceErrorType,
   type GetBalanceParameters,
@@ -8,28 +7,25 @@ import {
 } from '../actions/getBalance.js'
 import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
-import type { Compute, PartialBy } from '../types/utils.js'
+import type * as t from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
-export type GetBalanceOptions<config extends Config> = Compute<
-  PartialBy<GetBalanceParameters<config>, 'address'> & ScopeKeyParameter
+export type GetBalanceOptions<config extends Config> = t.Compute<
+  t.PartialBy<GetBalanceParameters<config>, 'address'> & ScopeKeyParameter
 >
 
-export function getBalanceQueryOptions<config extends Config>(
+export function getBalanceQueryOptions<config extends Config = Config>(
   config: config,
-  options: GetBalanceOptions<config> = {},
+  options: GetBalanceOptions<config> = {} as never,
 ) {
   return {
     async queryFn({ queryKey }) {
-      const { address, scopeKey: _, ...parameters } = queryKey[1]
-      if (!address) throw new Error('address is required')
-      const balance = await getBalance(config, {
-        ...(parameters as GetBalanceParameters),
-        address,
-      })
-      return balance ?? null
+      const { scopeKey: _, ...parameters } = queryKey[1]
+      if (!parameters.address) throw new Error('address is required')
+      const result = await getBalance(config, parameters as never)
+      return (result ?? null) as never
     },
-    queryKey: getBalanceQueryKey(options),
+    queryKey: getBalanceQueryKey(options as never),
   } as const satisfies QueryOptions<
     GetBalanceQueryFnData,
     GetBalanceErrorType,
@@ -38,14 +34,14 @@ export function getBalanceQueryOptions<config extends Config>(
   >
 }
 
-export type GetBalanceQueryFnData = Compute<GetBalanceReturnType>
+export type GetBalanceQueryFnData = t.Compute<GetBalanceReturnType>
 
 export type GetBalanceData = GetBalanceQueryFnData
 
-export function getBalanceQueryKey<config extends Config>(
-  options: GetBalanceOptions<config> = {},
+export function getBalanceQueryKey<config extends Config = Config>(
+  options: GetBalanceOptions<config> = {} as never,
 ) {
-  return ['balance', filterQueryOptions(options)] as const
+  return ['getBalance', filterQueryOptions(options)] as const
 }
 
 export type GetBalanceQueryKey<config extends Config> = ReturnType<

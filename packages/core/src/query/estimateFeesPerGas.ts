@@ -1,6 +1,5 @@
 import type { QueryOptions } from '@tanstack/query-core'
 import type { FeeValuesType } from 'viem'
-
 import {
   type EstimateFeesPerGasErrorType,
   type EstimateFeesPerGasParameters,
@@ -9,48 +8,52 @@ import {
 } from '../actions/estimateFeesPerGas.js'
 import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
-import type { Compute, ExactPartial } from '../types/utils.js'
+import type * as t from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
 export type EstimateFeesPerGasOptions<
   type extends FeeValuesType,
   config extends Config,
-> = Compute<
-  ExactPartial<EstimateFeesPerGasParameters<type, config>> & ScopeKeyParameter
+> = t.Compute<
+  t.ExactPartial<EstimateFeesPerGasParameters<type, config>> & ScopeKeyParameter
 >
 
 export function estimateFeesPerGasQueryOptions<
-  config extends Config,
   type extends FeeValuesType = 'eip1559',
->(config: config, options: EstimateFeesPerGasOptions<type, config> = {}) {
+  config extends Config = Config,
+>(
+  config: config,
+  options: EstimateFeesPerGasOptions<type, config> = {} as never,
+) {
   return {
     async queryFn({ queryKey }) {
       const { scopeKey: _, ...parameters } = queryKey[1]
-      return estimateFeesPerGas(config, parameters)
+      const result = await estimateFeesPerGas(config, parameters as never)
+      return (result ?? null) as never
     },
-    queryKey: estimateFeesPerGasQueryKey(options),
+    queryKey: estimateFeesPerGasQueryKey(options as never),
   } as const satisfies QueryOptions<
     EstimateFeesPerGasQueryFnData<type>,
     EstimateFeesPerGasErrorType,
     EstimateFeesPerGasData<type>,
-    EstimateFeesPerGasQueryKey<config, type>
+    EstimateFeesPerGasQueryKey<type, config>
   >
 }
 
 export type EstimateFeesPerGasQueryFnData<type extends FeeValuesType> =
-  EstimateFeesPerGasReturnType<type>
+  t.Compute<EstimateFeesPerGasReturnType<type>>
 
 export type EstimateFeesPerGasData<type extends FeeValuesType> =
   EstimateFeesPerGasQueryFnData<type>
 
 export function estimateFeesPerGasQueryKey<
-  config extends Config,
   type extends FeeValuesType = 'eip1559',
->(options: EstimateFeesPerGasOptions<type, config> = {}) {
+  config extends Config = Config,
+>(options: EstimateFeesPerGasOptions<type, config> = {} as never) {
   return ['estimateFeesPerGas', filterQueryOptions(options)] as const
 }
 
 export type EstimateFeesPerGasQueryKey<
-  config extends Config,
   type extends FeeValuesType,
-> = ReturnType<typeof estimateFeesPerGasQueryKey<config, type>>
+  config extends Config,
+> = ReturnType<typeof estimateFeesPerGasQueryKey<type, config>>

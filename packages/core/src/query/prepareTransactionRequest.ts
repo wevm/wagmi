@@ -1,7 +1,5 @@
 import type { QueryOptions } from '@tanstack/query-core'
-
-import type { PrepareTransactionRequestRequest as viem_PrepareTransactionRequestRequest } from 'viem'
-
+import type { PrepareTransactionRequestRequest } from 'viem'
 import {
   type PrepareTransactionRequestErrorType,
   type PrepareTransactionRequestParameters,
@@ -9,9 +7,8 @@ import {
   prepareTransactionRequest,
 } from '../actions/prepareTransactionRequest.js'
 import type { Config } from '../createConfig.js'
-import type { SelectChains } from '../types/chain.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
-import type { UnionExactPartial } from '../types/utils.js'
+import type * as t from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
 export type PrepareTransactionRequestOptions<
@@ -27,9 +24,12 @@ export type PrepareTransactionRequestOptions<
   ScopeKeyParameter
 
 export function prepareTransactionRequestQueryOptions<
-  config extends Config,
+  config extends Config = Config,
   chainId extends config['chains'][number]['id'] | undefined,
   request extends viem_PrepareTransactionRequestRequest<
+    SelectChains<config, chainId>[0],
+    SelectChains<config, chainId>[0]
+  > = viem_PrepareTransactionRequestRequest<
     SelectChains<config, chainId>[0],
     SelectChains<config, chainId>[0]
   >,
@@ -39,20 +39,19 @@ export function prepareTransactionRequestQueryOptions<
     config,
     chainId,
     request
-  > = {} as any,
+  > = {} as never,
 ) {
   return {
-    queryFn({ queryKey }) {
-      const { scopeKey: _, to, ...parameters } = queryKey[1]
-      if (!to) throw new Error('to is required')
-      return prepareTransactionRequest(config, {
-        to,
-        ...(parameters as any),
-      }) as unknown as Promise<
-        PrepareTransactionRequestQueryFnData<config, chainId, request>
-      >
+    async queryFn({ queryKey }) {
+      const { scopeKey: _, ...parameters } = queryKey[1]
+      if (!parameters.to) throw new Error('to is required')
+      const result = await prepareTransactionRequest(
+        config,
+        parameters as never,
+      )
+      return (result ?? null) as never
     },
-    queryKey: prepareTransactionRequestQueryKey(options),
+    queryKey: prepareTransactionRequestQueryKey(options as never),
   } as const satisfies QueryOptions<
     PrepareTransactionRequestQueryFnData<config, chainId, request>,
     PrepareTransactionRequestErrorType,
@@ -60,32 +59,42 @@ export function prepareTransactionRequestQueryOptions<
     PrepareTransactionRequestQueryKey<config, chainId, request>
   >
 }
+
 export type PrepareTransactionRequestQueryFnData<
   config extends Config,
   chainId extends config['chains'][number]['id'] | undefined,
-  request extends viem_PrepareTransactionRequestRequest<
+  request extends PrepareTransactionRequestRequest<
     SelectChains<config, chainId>[0],
     SelectChains<config, chainId>[0]
   >,
-> = PrepareTransactionRequestReturnType<config, chainId, request>
+> = t.Compute<PrepareTransactionRequestReturnType<config, chainId, request>>
 
 export type PrepareTransactionRequestData<
   config extends Config,
   chainId extends config['chains'][number]['id'] | undefined,
-  request extends viem_PrepareTransactionRequestRequest<
+  request extends PrepareTransactionRequestRequest<
     SelectChains<config, chainId>[0],
     SelectChains<config, chainId>[0]
   >,
 > = PrepareTransactionRequestQueryFnData<config, chainId, request>
 
 export function prepareTransactionRequestQueryKey<
-  config extends Config,
+  config extends Config = Config,
   chainId extends config['chains'][number]['id'] | undefined,
   request extends viem_PrepareTransactionRequestRequest<
     SelectChains<config, chainId>[0],
     SelectChains<config, chainId>[0]
+  > = viem_PrepareTransactionRequestRequest<
+    SelectChains<config, chainId>[0],
+    SelectChains<config, chainId>[0]
   >,
->(options: PrepareTransactionRequestOptions<config, chainId, request>) {
+>(
+  options: PrepareTransactionRequestOptions<
+    config,
+    chainId,
+    request
+  > = {} as never,
+) {
   return ['prepareTransactionRequest', filterQueryOptions(options)] as const
 }
 
