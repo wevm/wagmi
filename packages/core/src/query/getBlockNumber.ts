@@ -1,4 +1,4 @@
-import type { QueryOptions } from '@tanstack/query-core'
+import type { QueryObserverOptions } from '@tanstack/query-core'
 import {
   type GetBlockNumberErrorType,
   type GetBlockNumberParameters,
@@ -21,21 +21,19 @@ export function getBlockNumberQueryOptions<
   config extends Config = Config,
   chainId extends
     config['chains'][number]['id'] = config['chains'][number]['id'],
->(
-  config: config,
-  options: GetBlockNumberOptions<config, chainId> = {} as never,
-) {
+>(config: config, options: GetBlockNumberOptions<config, chainId> = {}) {
   return {
-    async queryFn({ queryKey }) {
-      const { scopeKey: _, ...parameters } = queryKey[1]
-      const result = await getBlockNumber(config, parameters as never)
-      return (result ?? null) as never
+    queryFn: async (context) => {
+      const { scopeKey: _, ...parameters } = context.queryKey[1]
+      const result = await getBlockNumber(config, parameters)
+      return result ?? null
     },
-    queryKey: getBlockNumberQueryKey(options as never),
-  } as const satisfies QueryOptions<
+    queryKey: getBlockNumberQueryKey(options),
+  } as const satisfies QueryObserverOptions<
     GetBlockNumberQueryFnData,
     GetBlockNumberErrorType,
     GetBlockNumberData,
+    GetBlockNumberQueryFnData,
     GetBlockNumberQueryKey<config, chainId>
   >
 }
@@ -48,7 +46,7 @@ export function getBlockNumberQueryKey<
   config extends Config = Config,
   chainId extends
     config['chains'][number]['id'] = config['chains'][number]['id'],
->(options: GetBlockNumberOptions<config, chainId> = {} as never) {
+>(options: GetBlockNumberOptions<config, chainId> = {}) {
   return ['getBlockNumber', filterQueryOptions(options)] as const
 }
 

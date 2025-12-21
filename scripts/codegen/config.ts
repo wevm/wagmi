@@ -18,8 +18,9 @@ export const items = [
       imports: [],
       data: [],
       options: ['config'],
-      optionsType:
-        "t.Compute<t.PartialBy<GetBalanceParameters<config>, 'address'> & ScopeKeyParameter>",
+      cast: {
+        parameters: true,
+      },
     },
   },
   {
@@ -39,8 +40,8 @@ export const items = [
         'config',
         'chainId',
       ],
-      optionsType:
-        'Compute<ExactPartial<GetBlockParameters<includeTransactions, blockTag, config, chainId>> & ScopeKeyParameter>',
+      optionsType: (t, typePrefix, slots) =>
+        `${t}.Compute<${t}.ExactPartial<${typePrefix}Parameters<${slots}>> & ScopeKeyParameter>`,
     },
   },
   {
@@ -65,7 +66,10 @@ export const items = [
     name: 'prepareTransactionRequest',
     required: ['to'],
     query: {
-      imports: ['PrepareTransactionRequestRequest'],
+      imports: [
+        'PrepareTransactionRequestRequest',
+        { names: ['SelectChains'], path: '../types/chain.js' },
+      ],
       data: [
         'config',
         { name: 'chainId', type: "config['chains'][number]['id'] | undefined" },
@@ -75,23 +79,37 @@ export const items = [
         },
       ],
       options: [
-        'config',
+        { name: 'config', type: 'Config' },
         { name: 'chainId', type: "config['chains'][number]['id'] | undefined" },
         {
           name: 'request',
-          type: 'viem_PrepareTransactionRequestRequest<SelectChains<config, chainId>[0], SelectChains<config, chainId>[0]>',
-          default:
-            'viem_PrepareTransactionRequestRequest<SelectChains<config, chainId>[0], SelectChains<config, chainId>[0]>',
+          type: 'PrepareTransactionRequestRequest<SelectChains<config, chainId>[0], SelectChains<config, chainId>[0]>',
         },
       ],
-      optionsType:
-        'UnionExactPartial<PrepareTransactionRequestParameters<config, chainId, request>> & ScopeKeyParameter',
+      optionsType: (t, typePrefix, slots) =>
+        `${t}.UnionExactPartial<${typePrefix}Parameters<${slots}>> & ScopeKeyParameter`,
+      cast: {
+        options: true,
+        parameters: true,
+        queryKey: true,
+        return: true,
+      },
     },
   },
   {
     name: 'readContract',
-    // TODO: (address && abi) || code
-    required: [['address', 'code'], 'functionName'],
+    required: [
+      [
+        'address',
+        {
+          name: 'code',
+          cond: (options, name) =>
+            `('${name}' in ${options} && ${options}.${name})`,
+        },
+      ],
+      { name: 'abi', cond: (options, name) => `${options}.${name}` },
+      'functionName',
+    ],
     query: {
       imports: ['Abi', 'ContractFunctionArgs', 'ContractFunctionName'],
       // biome-ignore format: no formatting
@@ -107,14 +125,19 @@ export const items = [
         { name: "args", type: "ContractFunctionArgs<abi, 'pure' | 'view', functionName>", const: true },
         'config',
       ],
-      optionsType:
-        't.UnionExactPartial<ReadContractParameters<abi, functionName, args, config>> & ScopeKeyParameter',
+      optionsType: (t, typePrefix, slots) =>
+        `${t}.UnionExactPartial<${typePrefix}Parameters<${slots}>> & ScopeKeyParameter`,
+      cast: {
+        options: true,
+        parameters: true,
+        queryKey: true,
+        return: true,
+      },
     },
   },
   {
     name: 'simulateContract',
-    // TODO: abi + connector skip query key
-    required: ['abi', 'address', 'functionName'],
+    required: ['abi', 'address', 'connector', 'functionName'],
     query: {
       imports: ['Abi', 'ContractFunctionArgs', 'ContractFunctionName'],
       // biome-ignore format: no formatting
@@ -133,13 +156,26 @@ export const items = [
         'config',
         'chainId',
       ],
-      optionsType:
-        't.UnionExactPartial<SimulateContractParameters<abi, functionName, args, config, chainId>> & ScopeKeyParameter',
+      optionsType: (t, typePrefix, slots) =>
+        `${t}.UnionExactPartial<${typePrefix}Parameters<${slots}>> & ScopeKeyParameter`,
+      cast: {
+        options: true,
+        parameters: true,
+        queryKey: true,
+        return: true,
+      },
     },
   },
 ] satisfies {
   name: string
-  required: (string | string[])[]
+  required: (
+    | string
+    | { name: string; cond: (options: string, name: string) => string }
+    | (
+        | string
+        | { name: string; cond: (options: string, name: string) => string }
+      )[]
+  )[]
   query: {
     imports: (
       | 'Abi'
@@ -148,13 +184,20 @@ export const items = [
       | 'ContractFunctionName'
       | 'FeeValuesType'
       | 'PrepareTransactionRequestRequest'
+      | { names: string[]; path: string }
     )[]
     options: (
       | 'chainId'
       | 'config'
       | { name: string; type: string; const?: true; default?: string }
     )[]
-    optionsType?: string
+    optionsType?: (t: string, typePrefix: string, slots: string) => string
     data: ('chainId' | 'config' | { name: string; type: string })[]
+    cast?: {
+      options?: true
+      parameters?: true
+      queryKey?: true
+      return?: true
+    }
   }
 }[]

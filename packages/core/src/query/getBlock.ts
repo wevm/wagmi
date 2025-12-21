@@ -1,4 +1,4 @@
-import type { QueryOptions } from '@tanstack/query-core'
+import type { QueryObserverOptions } from '@tanstack/query-core'
 import type { BlockTag } from 'viem'
 import {
   type GetBlockErrorType,
@@ -16,8 +16,8 @@ export type GetBlockOptions<
   blockTag extends BlockTag,
   config extends Config,
   chainId extends config['chains'][number]['id'],
-> = Compute<
-  ExactPartial<
+> = t.Compute<
+  t.ExactPartial<
     GetBlockParameters<includeTransactions, blockTag, config, chainId>
   > &
     ScopeKeyParameter
@@ -31,24 +31,20 @@ export function getBlockQueryOptions<
     config['chains'][number]['id'] = config['chains'][number]['id'],
 >(
   config: config,
-  options: GetBlockOptions<
-    includeTransactions,
-    blockTag,
-    config,
-    chainId
-  > = {} as never,
+  options: GetBlockOptions<includeTransactions, blockTag, config, chainId> = {},
 ) {
   return {
-    async queryFn({ queryKey }) {
-      const { scopeKey: _, ...parameters } = queryKey[1]
-      const result = await getBlock(config, parameters as never)
-      return (result ?? null) as never
+    queryFn: async (context) => {
+      const { scopeKey: _, ...parameters } = context.queryKey[1]
+      const result = await getBlock(config, parameters)
+      return result ?? null
     },
-    queryKey: getBlockQueryKey(options as never),
-  } as const satisfies QueryOptions<
+    queryKey: getBlockQueryKey(options),
+  } as const satisfies QueryObserverOptions<
     GetBlockQueryFnData<includeTransactions, blockTag, config, chainId>,
     GetBlockErrorType,
     GetBlockData<includeTransactions, blockTag, config, chainId>,
+    GetBlockQueryFnData<includeTransactions, blockTag, config, chainId>,
     GetBlockQueryKey<includeTransactions, blockTag, config, chainId>
   >
 }
@@ -76,12 +72,7 @@ export function getBlockQueryKey<
   chainId extends
     config['chains'][number]['id'] = config['chains'][number]['id'],
 >(
-  options: GetBlockOptions<
-    includeTransactions,
-    blockTag,
-    config,
-    chainId
-  > = {} as never,
+  options: GetBlockOptions<includeTransactions, blockTag, config, chainId> = {},
 ) {
   return ['getBlock', filterQueryOptions(options)] as const
 }

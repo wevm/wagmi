@@ -1,4 +1,4 @@
-import type { QueryOptions } from '@tanstack/query-core'
+import type { QueryObserverOptions } from '@tanstack/query-core'
 import type { Abi, ContractFunctionArgs, ContractFunctionName } from 'viem'
 import {
   type ReadContractErrorType,
@@ -31,19 +31,29 @@ export function readContractQueryOptions<
   options: ReadContractOptions<abi, functionName, args, config> = {} as never,
 ) {
   return {
-    async queryFn({ queryKey }) {
-      const { scopeKey: _, ...parameters } = queryKey[1]
-      if (!parameters.address && !parameters.code)
+    enabled: Boolean(
+      Boolean(options.address || ('code' in options && options.code)) &&
+        options.abi &&
+        options.functionName,
+    ),
+    queryFn: async (context) => {
+      const { scopeKey: _, ...parameters } = context.queryKey[1]
+      if (!parameters.address && !('code' in parameters && parameters.code))
         throw new Error('address or code is required')
+      if (!options.abi) throw new Error('abi is required')
       if (!parameters.functionName) throw new Error('functionName is required')
-      const result = await readContract(config, parameters as never)
-      return (result ?? null) as never
+      const result = await readContract(config, {
+        ...(parameters as any),
+        abi: options.abi,
+      })
+      return (result ?? null) as ReadContractData<abi, functionName, args>
     },
     queryKey: readContractQueryKey(options as never),
-  } as const satisfies QueryOptions<
+  } as const satisfies QueryObserverOptions<
     ReadContractQueryFnData<abi, functionName, args>,
     ReadContractErrorType,
     ReadContractData<abi, functionName, args>,
+    ReadContractQueryFnData<abi, functionName, args>,
     ReadContractQueryKey<abi, functionName, args, config>
   >
 }

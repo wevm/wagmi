@@ -1,4 +1,4 @@
-import type { QueryOptions } from '@tanstack/query-core'
+import type { QueryObserverOptions } from '@tanstack/query-core'
 import type { Abi, ContractFunctionArgs, ContractFunctionName } from 'viem'
 import {
   type SimulateContractErrorType,
@@ -48,19 +48,37 @@ export function simulateContractQueryOptions<
   > = {} as never,
 ) {
   return {
-    async queryFn({ queryKey }) {
-      const { scopeKey: _, ...parameters } = queryKey[1]
-      if (!parameters.abi) throw new Error('abi is required')
+    enabled: Boolean(
+      options.abi &&
+        options.address &&
+        options.connector &&
+        options.functionName,
+    ),
+    queryFn: async (context) => {
+      const { scopeKey: _, ...parameters } = context.queryKey[1]
+      if (!options.abi) throw new Error('abi is required')
       if (!parameters.address) throw new Error('address is required')
+      if (!options.connector) throw new Error('connector is required')
       if (!parameters.functionName) throw new Error('functionName is required')
-      const result = await simulateContract(config, parameters as never)
-      return (result ?? null) as never
+      const result = await simulateContract(config, {
+        ...(parameters as any),
+        abi: options.abi,
+        connector: options.connector,
+      })
+      return (result ?? null) as SimulateContractData<
+        abi,
+        functionName,
+        args,
+        config,
+        chainId
+      >
     },
     queryKey: simulateContractQueryKey(options as never),
-  } as const satisfies QueryOptions<
+  } as const satisfies QueryObserverOptions<
     SimulateContractQueryFnData<abi, functionName, args, config, chainId>,
     SimulateContractErrorType,
     SimulateContractData<abi, functionName, args, config, chainId>,
+    SimulateContractQueryFnData<abi, functionName, args, config, chainId>,
     SimulateContractQueryKey<abi, functionName, args, config, chainId>
   >
 }
@@ -111,7 +129,10 @@ export function simulateContractQueryKey<
     chainId
   > = {} as never,
 ) {
-  return ['simulateContract', filterQueryOptions(options)] as const
+  return [
+    'simulateContract',
+    filterQueryOptions({ ...options, connectorUid: options.connector?.uid }),
+  ] as const
 }
 
 export type SimulateContractQueryKey<

@@ -1,4 +1,4 @@
-import type { QueryOptions } from '@tanstack/query-core'
+import type { QueryObserverOptions } from '@tanstack/query-core'
 import type { FeeValuesType } from 'viem'
 import {
   type EstimateFeesPerGasErrorType,
@@ -21,21 +21,19 @@ export type EstimateFeesPerGasOptions<
 export function estimateFeesPerGasQueryOptions<
   type extends FeeValuesType = 'eip1559',
   config extends Config = Config,
->(
-  config: config,
-  options: EstimateFeesPerGasOptions<type, config> = {} as never,
-) {
+>(config: config, options: EstimateFeesPerGasOptions<type, config> = {}) {
   return {
-    async queryFn({ queryKey }) {
-      const { scopeKey: _, ...parameters } = queryKey[1]
-      const result = await estimateFeesPerGas(config, parameters as never)
-      return (result ?? null) as never
+    queryFn: async (context) => {
+      const { scopeKey: _, ...parameters } = context.queryKey[1]
+      const result = await estimateFeesPerGas(config, parameters)
+      return result ?? null
     },
-    queryKey: estimateFeesPerGasQueryKey(options as never),
-  } as const satisfies QueryOptions<
+    queryKey: estimateFeesPerGasQueryKey(options),
+  } as const satisfies QueryObserverOptions<
     EstimateFeesPerGasQueryFnData<type>,
     EstimateFeesPerGasErrorType,
     EstimateFeesPerGasData<type>,
+    EstimateFeesPerGasQueryFnData<type>,
     EstimateFeesPerGasQueryKey<type, config>
   >
 }
@@ -49,7 +47,7 @@ export type EstimateFeesPerGasData<type extends FeeValuesType> =
 export function estimateFeesPerGasQueryKey<
   type extends FeeValuesType = 'eip1559',
   config extends Config = Config,
->(options: EstimateFeesPerGasOptions<type, config> = {} as never) {
+>(options: EstimateFeesPerGasOptions<type, config> = {}) {
   return ['estimateFeesPerGas', filterQueryOptions(options)] as const
 }
 
