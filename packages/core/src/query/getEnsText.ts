@@ -1,5 +1,4 @@
-import type { QueryOptions } from '@tanstack/query-core'
-
+import type { QueryObserverOptions } from '@tanstack/query-core'
 import {
   type GetEnsTextErrorType,
   type GetEnsTextParameters,
@@ -8,40 +7,46 @@ import {
 } from '../actions/getEnsText.js'
 import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
-import type { Compute, ExactPartial } from '../types/utils.js'
+import type * as t from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
-export type GetEnsTextOptions<config extends Config> = Compute<
-  ExactPartial<GetEnsTextParameters<config>> & ScopeKeyParameter
+export type GetEnsTextOptions<config extends Config> = t.Compute<
+  t.ExactPartial<GetEnsTextParameters<config>> & ScopeKeyParameter
 >
 
-export function getEnsTextQueryOptions<config extends Config>(
+export function getEnsTextQueryOptions<config extends Config = Config>(
   config: config,
   options: GetEnsTextOptions<config> = {},
 ) {
   return {
-    async queryFn({ queryKey }) {
-      const { key, name, scopeKey: _, ...parameters } = queryKey[1]
-      if (!key || !name) throw new Error('key and name are required')
-      return getEnsText(config, { ...parameters, key, name })
+    enabled: Boolean(options.name),
+    queryFn: async (context) => {
+      const { scopeKey: _, ...parameters } = context.queryKey[1]
+      if (!parameters.name) throw new Error('name is required')
+      const result = await getEnsText(config, {
+        ...parameters,
+        name: parameters.name,
+      })
+      return result ?? null
     },
     queryKey: getEnsTextQueryKey(options),
-  } as const satisfies QueryOptions<
+  } as const satisfies QueryObserverOptions<
     GetEnsTextQueryFnData,
     GetEnsTextErrorType,
     GetEnsTextData,
+    GetEnsTextQueryFnData,
     GetEnsTextQueryKey<config>
   >
 }
 
-export type GetEnsTextQueryFnData = GetEnsTextReturnType
+export type GetEnsTextQueryFnData = t.Compute<GetEnsTextReturnType>
 
 export type GetEnsTextData = GetEnsTextQueryFnData
 
-export function getEnsTextQueryKey<config extends Config>(
+export function getEnsTextQueryKey<config extends Config = Config>(
   options: GetEnsTextOptions<config> = {},
 ) {
-  return ['ensText', filterQueryOptions(options)] as const
+  return ['getEnsText', filterQueryOptions(options)] as const
 }
 
 export type GetEnsTextQueryKey<config extends Config> = ReturnType<

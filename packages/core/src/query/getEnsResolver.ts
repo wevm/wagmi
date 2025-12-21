@@ -1,5 +1,4 @@
-import type { QueryOptions } from '@tanstack/query-core'
-
+import type { QueryObserverOptions } from '@tanstack/query-core'
 import {
   type GetEnsResolverErrorType,
   type GetEnsResolverParameters,
@@ -8,40 +7,46 @@ import {
 } from '../actions/getEnsResolver.js'
 import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
-import type { Compute, ExactPartial } from '../types/utils.js'
+import type * as t from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
-export type GetEnsResolverOptions<config extends Config> = Compute<
-  ExactPartial<GetEnsResolverParameters<config>> & ScopeKeyParameter
+export type GetEnsResolverOptions<config extends Config> = t.Compute<
+  t.ExactPartial<GetEnsResolverParameters<config>> & ScopeKeyParameter
 >
 
-export function getEnsResolverQueryOptions<config extends Config>(
+export function getEnsResolverQueryOptions<config extends Config = Config>(
   config: config,
   options: GetEnsResolverOptions<config> = {},
 ) {
   return {
-    async queryFn({ queryKey }) {
-      const { name, scopeKey: _, ...parameters } = queryKey[1]
-      if (!name) throw new Error('name is required')
-      return getEnsResolver(config, { ...parameters, name })
+    enabled: Boolean(options.name),
+    queryFn: async (context) => {
+      const { scopeKey: _, ...parameters } = context.queryKey[1]
+      if (!parameters.name) throw new Error('name is required')
+      const result = await getEnsResolver(config, {
+        ...parameters,
+        name: parameters.name,
+      })
+      return result ?? null
     },
     queryKey: getEnsResolverQueryKey(options),
-  } as const satisfies QueryOptions<
+  } as const satisfies QueryObserverOptions<
     GetEnsResolverQueryFnData,
     GetEnsResolverErrorType,
     GetEnsResolverData,
+    GetEnsResolverQueryFnData,
     GetEnsResolverQueryKey<config>
   >
 }
 
-export type GetEnsResolverQueryFnData = GetEnsResolverReturnType
+export type GetEnsResolverQueryFnData = t.Compute<GetEnsResolverReturnType>
 
 export type GetEnsResolverData = GetEnsResolverQueryFnData
 
-export function getEnsResolverQueryKey<config extends Config>(
+export function getEnsResolverQueryKey<config extends Config = Config>(
   options: GetEnsResolverOptions<config> = {},
 ) {
-  return ['ensResolver', filterQueryOptions(options)] as const
+  return ['getEnsResolver', filterQueryOptions(options)] as const
 }
 
 export type GetEnsResolverQueryKey<config extends Config> = ReturnType<

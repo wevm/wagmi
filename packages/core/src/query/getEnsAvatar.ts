@@ -1,5 +1,4 @@
-import type { QueryOptions } from '@tanstack/query-core'
-
+import type { QueryObserverOptions } from '@tanstack/query-core'
 import {
   type GetEnsAvatarErrorType,
   type GetEnsAvatarParameters,
@@ -8,40 +7,46 @@ import {
 } from '../actions/getEnsAvatar.js'
 import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
-import type { Compute, ExactPartial } from '../types/utils.js'
+import type * as t from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
-export type GetEnsAvatarOptions<config extends Config> = Compute<
-  ExactPartial<GetEnsAvatarParameters<config>> & ScopeKeyParameter
+export type GetEnsAvatarOptions<config extends Config> = t.Compute<
+  t.ExactPartial<GetEnsAvatarParameters<config>> & ScopeKeyParameter
 >
 
-export function getEnsAvatarQueryOptions<config extends Config>(
+export function getEnsAvatarQueryOptions<config extends Config = Config>(
   config: config,
   options: GetEnsAvatarOptions<config> = {},
 ) {
   return {
-    async queryFn({ queryKey }) {
-      const { name, scopeKey: _, ...parameters } = queryKey[1]
-      if (!name) throw new Error('name is required')
-      return getEnsAvatar(config, { ...parameters, name })
+    enabled: Boolean(options.name),
+    queryFn: async (context) => {
+      const { scopeKey: _, ...parameters } = context.queryKey[1]
+      if (!parameters.name) throw new Error('name is required')
+      const result = await getEnsAvatar(config, {
+        ...parameters,
+        name: parameters.name,
+      })
+      return result ?? null
     },
     queryKey: getEnsAvatarQueryKey(options),
-  } as const satisfies QueryOptions<
+  } as const satisfies QueryObserverOptions<
     GetEnsAvatarQueryFnData,
     GetEnsAvatarErrorType,
     GetEnsAvatarData,
+    GetEnsAvatarQueryFnData,
     GetEnsAvatarQueryKey<config>
   >
 }
 
-export type GetEnsAvatarQueryFnData = GetEnsAvatarReturnType
+export type GetEnsAvatarQueryFnData = t.Compute<GetEnsAvatarReturnType>
 
 export type GetEnsAvatarData = GetEnsAvatarQueryFnData
 
-export function getEnsAvatarQueryKey<config extends Config>(
+export function getEnsAvatarQueryKey<config extends Config = Config>(
   options: GetEnsAvatarOptions<config> = {},
 ) {
-  return ['ensAvatar', filterQueryOptions(options)] as const
+  return ['getEnsAvatar', filterQueryOptions(options)] as const
 }
 
 export type GetEnsAvatarQueryKey<config extends Config> = ReturnType<

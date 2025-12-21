@@ -69,7 +69,7 @@ export function filterQueryOptions<type extends Record<string, unknown>>(
     // wagmi
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // biome-ignore lint/correctness/noUnusedVariables: tossing
-    abi, config, connector, query, onReplaced,
+    abi, config, connector, query,
     ...rest
   } = options
 

@@ -1,35 +1,40 @@
 import { exec } from 'node:child_process'
 import fs from 'node:fs/promises'
-import path from 'node:path'
 import { promisify } from 'node:util'
-import { items } from './config.ts'
+import { type Item, items } from './config.ts'
+
+// TODO:
+// - default coupling
+// - mutationOptions
+// - react hooks/vue composables
 
 console.log('Generating query options.')
 
 const generated = new Map<string, string>()
 for (const item of items) {
-  const code = genQueryOptions(item) // TODO: mutationOptions
-  console.log(`- ${item.name}Options`)
-  generated.set(`${item.name}.ts`, code)
+  const code = genQueryOptions(item)
+  console.log(`- ${item.name}QueryOptions`)
+  generated.set(`packages/core/src/query/${item.name}.ts`, code)
 }
-const dir = 'packages/core/src/query'
+// write files
 await Promise.all(
   Array.from(generated.entries()).map(([filename, code]) =>
-    fs.writeFile(path.join(dir, filename), code),
+    fs.writeFile(filename, code),
   ),
 )
+
+// format output
+const execAsync = promisify(exec)
+const { stderr } = await execAsync('pnpm biome check --write')
+if (stderr) console.error(stderr)
 
 console.log(
   `Generated ${generated.size} query option${generated.size === 1 ? '' : 's'}.`,
 )
 
-// TODO: react hooks, vue composables
+///
 
-const execAsync = promisify(exec)
-const { stderr } = await execAsync('pnpm biome check --write')
-if (stderr) console.error(stderr)
-
-function genQueryOptions(item: (typeof items)[number]) {
+function genQueryOptions(item: Item) {
   const typePrefix = item.name.charAt(0).toUpperCase() + item.name.slice(1)
 
   const viemImports = item.query.imports.filter((x) => typeof x === 'string')
@@ -41,7 +46,7 @@ function genQueryOptions(item: (typeof items)[number]) {
       ? [`import type { ${viemImports.join(', ')} } from 'viem'`]
       : []),
     ...(customImports.length ? customImports : []),
-  ]
+  ].join('\n')
 
   const optionsTypeParameters = item.query.options
     .map((x) => getTypeParameter(x))
@@ -53,12 +58,8 @@ function genQueryOptions(item: (typeof items)[number]) {
     .map((x) => getTypeParameter(x))
     .join('')
 
-  const optionsSlots = item.query.options
-    .map((x) => (typeof x === 'string' ? x : x.name))
-    .join(', ')
-  const dataSlots = item.query.data
-    .map((x) => (typeof x === 'string' ? x : x.name))
-    .join(', ')
+  const optionsSlots = item.query.options.map(unwrapName).join(', ')
+  const dataSlots = item.query.data.map(unwrapName).join(', ')
 
   const enabled = item.required
     .flatMap((x) => {
@@ -72,34 +73,43 @@ function genQueryOptions(item: (typeof items)[number]) {
     })
     .join(' && ')
   const queryKeySkippedParameters = ['abi', 'connector']
+  const getParameterPrefix = (
+    y: Extract<(typeof item)['required'][number], string | { name: string }>,
+  ) =>
+    queryKeySkippedParameters.includes(unwrapName(y)) ? 'options' : 'parameters'
   const filteredProperties = [
     ...new Set(
       item.required
-        .flatMap((x) =>
-          (Array.isArray(x) ? x : [x]).map((y) =>
-            typeof y === 'string' ? y : y.name,
-          ),
-        )
+        .flatMap((x) => (Array.isArray(x) ? x : [x]).map(unwrapName))
         .filter((x) => queryKeySkippedParameters.includes(x)),
     ).values(),
   ]
   const hasConnectorUid = filteredProperties.includes('connector')
+
   const requiredChecks = item.required
     .map((x) => {
-      const name = (y: Extract<typeof x, string | { name: string }>) =>
-        typeof y === 'string' ? y : y.name
       const get = (y: Extract<typeof x, string | { name: string }>) => {
-        const o = queryKeySkippedParameters.includes(name(y))
-          ? 'options'
-          : 'parameters'
+        const o = getParameterPrefix(y)
         if (typeof y === 'string') return `${o}.${y}`
         return y.cond(o, y.name)
       }
       if (Array.isArray(x))
-        return `if (${x.map((y) => `!${get(y)}`).join(' && ')}) throw new Error('${x.length > 2 ? x.map((y, i) => `${i === x.length - 1 ? 'or ' : ''}${name(y)}`).join(', ') : x.map(name).join(' or ')} is required')`
-      return `if (!${get(x)}) throw new Error('${name(x)} is required')`
+        return `if (${x.map((y) => `!${get(y)}`).join(' && ')}) throw new Error('${x.length > 2 ? x.map((y, i) => `${i === x.length - 1 ? 'or ' : ''}${unwrapName(y)}`).join(', ') : x.map(unwrapName).join(' or ')} is required')`
+      return `if (!${get(x)}) throw new Error('${unwrapName(x)} is required')`
     })
     .join('\n')
+  const requiredParameters = [
+    ...item.required.flatMap((x) => {
+      const get = (y: Extract<typeof x, string | { name: string }>) => {
+        const o = getParameterPrefix(y)
+        if (typeof y === 'string') return `${o}.${y}`
+        return `${y.cond(o, y.name)} ? ${o}.${y.name} : undefined`
+      }
+      if (Array.isArray(x)) return x.map((y) => `${unwrapName(y)}: ${get(y)}`)
+      return `${unwrapName(x)}: ${get(x)}`
+    }),
+    ...(item.query.skipped?.map((x) => `${unwrapName(x)}: options.${x}`) ?? []),
+  ].join(', ')
 
   const t = 't'
   const optionsType =
@@ -114,7 +124,7 @@ import {
   type ${typePrefix}Parameters,
   type ${typePrefix}ReturnType,
   ${item.name},
-} from '../actions/${item.name}.js'${imports.length ? `\n${imports.join('\n')}` : ''}
+} from '../actions/${item.name}.js'${imports ? `\n${imports}` : ''}
 import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
 import type * as ${t} from '../types/utils.js'
@@ -129,8 +139,8 @@ export function ${item.name}QueryOptions<${functionTypeParameters}>(
   return {${enabled ? `\nenabled: Boolean(${enabled}),` : ''}
     queryFn: async (context) => {
       const { scopeKey: _, ...parameters } = context.queryKey[1]${requiredChecks ? `\n${requiredChecks}` : ''}
-      const result = await ${item.name}(config, ${filteredProperties.length ? `{ ...(parameters${item.query.cast?.parameters ? ' as any' : ''}), ${filteredProperties.map((x) => `${x}: options.${x}`).join(',')}}` : `parameters${item.query.cast?.parameters ? ' as never' : ''}`})
-      return (result ?? null)${item.query.cast?.return ? ` as ${typePrefix}Data${dataSlots ? `<${dataSlots}>` : ''}` : ''}
+      const result = await ${item.name}(config, ${requiredParameters ? `{ ...(parameters${item.query.cast?.parameters ? ' as any' : ''}), ${requiredParameters}}` : `parameters${item.query.cast?.parameters ? ' as never' : ''}`})
+      return (result ?? null)${item.query.cast?.return ? ` as unknown as ${typePrefix}Data${dataSlots ? `<${dataSlots}>` : ''}` : ''}
     },
     queryKey: ${item.name}QueryKey(options${item.query.cast?.queryKey ? ' as never' : ''}),
   } as const satisfies QueryObserverOptions<
@@ -147,7 +157,7 @@ export type ${typePrefix}QueryFnData${dataTypeParameters ? `<${dataTypeParameter
 export type ${typePrefix}Data${dataTypeParameters ? `<${dataTypeParameters}>` : ''} = ${typePrefix}QueryFnData${dataSlots ? `<${dataSlots}>` : ''}
 
 export function ${item.name}QueryKey<${functionTypeParameters}>(
-  options: ${typePrefix}Options<${optionsSlots}> = {}${item.query.cast?.options ? ' as never' : ''},
+  ${item.query.skipped ? `{ ${item.query.skipped.map((x, i) => `${x}: ${'_'.repeat(i + 1)}`).join(', ')}, ...options }` : 'options'}: ${typePrefix}Options<${optionsSlots}> = {}${item.query.cast?.options ? ' as never' : ''},
 ) {
   return ['${item.name}', filterQueryOptions(${hasConnectorUid ? '{ ...options, connectorUid: options.connector?.uid }' : 'options'})] as const
 }
@@ -156,6 +166,11 @@ export type ${typePrefix}QueryKey<${optionsTypeParameters}> = ReturnType<
   typeof ${item.name}QueryKey<${optionsSlots}>
 >
 `
+}
+
+function unwrapName(value: string | { name: string }) {
+  if (typeof value === 'string') return value
+  return value.name
 }
 
 function getTypeParameter(

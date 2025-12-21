@@ -1,5 +1,4 @@
-import type { QueryOptions } from '@tanstack/query-core'
-
+import type { QueryObserverOptions } from '@tanstack/query-core'
 import {
   type GetGasPriceErrorType,
   type GetGasPriceParameters,
@@ -8,44 +7,47 @@ import {
 } from '../actions/getGasPrice.js'
 import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
-import type { Compute, ExactPartial } from '../types/utils.js'
+import type * as t from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
 export type GetGasPriceOptions<
   config extends Config,
   chainId extends config['chains'][number]['id'],
-> = Compute<
-  ExactPartial<GetGasPriceParameters<config, chainId>> & ScopeKeyParameter
+> = t.Compute<
+  t.ExactPartial<GetGasPriceParameters<config, chainId>> & ScopeKeyParameter
 >
 
 export function getGasPriceQueryOptions<
-  config extends Config,
-  chainId extends config['chains'][number]['id'],
+  config extends Config = Config,
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 >(config: config, options: GetGasPriceOptions<config, chainId> = {}) {
   return {
-    async queryFn({ queryKey }) {
-      const { scopeKey: _, ...parameters } = queryKey[1]
-      const gasPrice = await getGasPrice(config, parameters)
-      return gasPrice ?? null
+    queryFn: async (context) => {
+      const { scopeKey: _, ...parameters } = context.queryKey[1]
+      const result = await getGasPrice(config, parameters)
+      return result ?? null
     },
     queryKey: getGasPriceQueryKey(options),
-  } as const satisfies QueryOptions<
+  } as const satisfies QueryObserverOptions<
     GetGasPriceQueryFnData,
     GetGasPriceErrorType,
     GetGasPriceData,
+    GetGasPriceQueryFnData,
     GetGasPriceQueryKey<config, chainId>
   >
 }
 
-export type GetGasPriceQueryFnData = GetGasPriceReturnType
+export type GetGasPriceQueryFnData = t.Compute<GetGasPriceReturnType>
 
 export type GetGasPriceData = GetGasPriceQueryFnData
 
 export function getGasPriceQueryKey<
-  config extends Config,
-  chainId extends config['chains'][number]['id'],
+  config extends Config = Config,
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
 >(options: GetGasPriceOptions<config, chainId> = {}) {
-  return ['gasPrice', filterQueryOptions(options)] as const
+  return ['getGasPrice', filterQueryOptions(options)] as const
 }
 
 export type GetGasPriceQueryKey<

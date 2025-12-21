@@ -44,11 +44,11 @@ export function prepareTransactionRequestQueryOptions<
     queryFn: async (context) => {
       const { scopeKey: _, ...parameters } = context.queryKey[1]
       if (!parameters.to) throw new Error('to is required')
-      const result = await prepareTransactionRequest(
-        config,
-        parameters as never,
-      )
-      return (result ?? null) as PrepareTransactionRequestData<
+      const result = await prepareTransactionRequest(config, {
+        ...(parameters as any),
+        to: parameters.to,
+      })
+      return (result ?? null) as unknown as PrepareTransactionRequestData<
         config,
         chainId,
         request

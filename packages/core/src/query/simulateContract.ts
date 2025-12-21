@@ -63,9 +63,11 @@ export function simulateContractQueryOptions<
       const result = await simulateContract(config, {
         ...(parameters as any),
         abi: options.abi,
+        address: parameters.address,
         connector: options.connector,
+        functionName: parameters.functionName,
       })
-      return (result ?? null) as SimulateContractData<
+      return (result ?? null) as unknown as SimulateContractData<
         abi,
         functionName,
         args,

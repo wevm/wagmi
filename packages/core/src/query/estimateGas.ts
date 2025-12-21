@@ -1,5 +1,4 @@
-import type { QueryOptions } from '@tanstack/query-core'
-
+import type { QueryObserverOptions } from '@tanstack/query-core'
 import {
   type EstimateGasErrorType,
   type EstimateGasParameters,
@@ -8,46 +7,54 @@ import {
 } from '../actions/estimateGas.js'
 import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
-import type { UnionExactPartial } from '../types/utils.js'
+import type * as t from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
 export type EstimateGasOptions<
   config extends Config,
   chainId extends config['chains'][number]['id'] | undefined,
-> = UnionExactPartial<EstimateGasParameters<config, chainId>> &
+> = t.UnionExactPartial<EstimateGasParameters<config, chainId>> &
   ScopeKeyParameter
 
 export function estimateGasQueryOptions<
   config extends Config,
-  chainId extends config['chains'][number]['id'],
->(config: config, options: EstimateGasOptions<config, chainId> = {} as any) {
+  chainId extends config['chains'][number]['id'] | undefined,
+>(config: config, options: EstimateGasOptions<config, chainId> = {} as never) {
   return {
-    async queryFn({ queryKey }) {
-      const { connector } = options
-      const { account, scopeKey: _, ...parameters } = queryKey[1]
-      if (!account && !connector)
+    enabled: Boolean(Boolean(options.account || options.connector)),
+    queryFn: async (context) => {
+      const { scopeKey: _, ...parameters } = context.queryKey[1]
+      if (!parameters.account && !options.connector)
         throw new Error('account or connector is required')
-      return estimateGas(config, { account, connector, ...(parameters as any) })
+      const result = await estimateGas(config, {
+        ...(parameters as any),
+        account: parameters.account,
+        connector: options.connector,
+      })
+      return result ?? null
     },
     queryKey: estimateGasQueryKey(options),
-  } as const satisfies QueryOptions<
+  } as const satisfies QueryObserverOptions<
     EstimateGasQueryFnData,
     EstimateGasErrorType,
     EstimateGasData,
+    EstimateGasQueryFnData,
     EstimateGasQueryKey<config, chainId>
   >
 }
 
-export type EstimateGasQueryFnData = EstimateGasReturnType
+export type EstimateGasQueryFnData = t.Compute<EstimateGasReturnType>
 
 export type EstimateGasData = EstimateGasQueryFnData
 
 export function estimateGasQueryKey<
   config extends Config,
   chainId extends config['chains'][number]['id'] | undefined,
->(options: EstimateGasOptions<config, chainId> = {} as any) {
-  const { connector: _, ...rest } = options
-  return ['estimateGas', filterQueryOptions(rest)] as const
+>(options: EstimateGasOptions<config, chainId> = {} as never) {
+  return [
+    'estimateGas',
+    filterQueryOptions({ ...options, connectorUid: options.connector?.uid }),
+  ] as const
 }
 
 export type EstimateGasQueryKey<

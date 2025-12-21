@@ -1,5 +1,4 @@
-import type { QueryOptions } from '@tanstack/query-core'
-
+import type { QueryObserverOptions } from '@tanstack/query-core'
 import {
   type GetTransactionCountErrorType,
   type GetTransactionCountParameters,
@@ -8,46 +7,47 @@ import {
 } from '../actions/getTransactionCount.js'
 import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
-import type { Compute, PartialBy } from '../types/utils.js'
+import type * as t from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
-export type GetTransactionCountOptions<config extends Config> = Compute<
-  PartialBy<GetTransactionCountParameters<config>, 'address'> &
-    ScopeKeyParameter
+export type GetTransactionCountOptions<config extends Config> = t.Compute<
+  t.ExactPartial<GetTransactionCountParameters<config>> & ScopeKeyParameter
 >
 
-export function getTransactionCountQueryOptions<config extends Config>(
+export function getTransactionCountQueryOptions<config extends Config = Config>(
   config: config,
   options: GetTransactionCountOptions<config> = {},
 ) {
   return {
-    async queryFn({ queryKey }) {
-      const { address, scopeKey: _, ...parameters } = queryKey[1]
-      if (!address) throw new Error('address is required')
-      const transactionCount = await getTransactionCount(config, {
-        ...(parameters as GetTransactionCountParameters),
-        address,
+    enabled: Boolean(options.address),
+    queryFn: async (context) => {
+      const { scopeKey: _, ...parameters } = context.queryKey[1]
+      if (!parameters.address) throw new Error('address is required')
+      const result = await getTransactionCount(config, {
+        ...parameters,
+        address: parameters.address,
       })
-      return transactionCount ?? null
+      return result ?? null
     },
     queryKey: getTransactionCountQueryKey(options),
-  } as const satisfies QueryOptions<
+  } as const satisfies QueryObserverOptions<
     GetTransactionCountQueryFnData,
     GetTransactionCountErrorType,
     GetTransactionCountData,
+    GetTransactionCountQueryFnData,
     GetTransactionCountQueryKey<config>
   >
 }
 
 export type GetTransactionCountQueryFnData =
-  Compute<GetTransactionCountReturnType>
+  t.Compute<GetTransactionCountReturnType>
 
 export type GetTransactionCountData = GetTransactionCountQueryFnData
 
-export function getTransactionCountQueryKey<config extends Config>(
+export function getTransactionCountQueryKey<config extends Config = Config>(
   options: GetTransactionCountOptions<config> = {},
 ) {
-  return ['transactionCount', filterQueryOptions(options)] as const
+  return ['getTransactionCount', filterQueryOptions(options)] as const
 }
 
 export type GetTransactionCountQueryKey<config extends Config> = ReturnType<

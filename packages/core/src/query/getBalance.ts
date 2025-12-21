@@ -23,7 +23,10 @@ export function getBalanceQueryOptions<config extends Config = Config>(
     queryFn: async (context) => {
       const { scopeKey: _, ...parameters } = context.queryKey[1]
       if (!parameters.address) throw new Error('address is required')
-      const result = await getBalance(config, parameters as never)
+      const result = await getBalance(config, {
+        ...parameters,
+        address: parameters.address,
+      })
       return result ?? null
     },
     queryKey: getBalanceQueryKey(options),

@@ -1,5 +1,17 @@
 export const items = [
   {
+    name: 'call',
+    required: [],
+    query: {
+      imports: [],
+      data: [],
+      options: ['config'],
+      cast: {
+        parameters: true,
+      },
+    },
+  },
+  {
     name: 'estimateFeesPerGas',
     required: [],
     query: {
@@ -12,15 +24,39 @@ export const items = [
     },
   },
   {
+    name: 'estimateGas',
+    required: [['account', 'connector']],
+    query: {
+      imports: [],
+      data: [],
+      options: [
+        { name: 'config', type: 'Config' },
+        { name: 'chainId', type: "config['chains'][number]['id'] | undefined" },
+      ],
+      optionsType: (t, typePrefix, slots) =>
+        `${t}.UnionExactPartial<${typePrefix}Parameters<${slots}>> & ScopeKeyParameter`,
+      cast: {
+        parameters: true,
+        options: true,
+      },
+    },
+  },
+  {
+    name: 'estimateMaxPriorityFeePerGas',
+    required: [],
+    query: {
+      imports: [],
+      data: [],
+      options: ['config', 'chainId'],
+    },
+  },
+  {
     name: 'getBalance',
     required: ['address'],
     query: {
       imports: [],
       data: [],
       options: ['config'],
-      cast: {
-        parameters: true,
-      },
     },
   },
   {
@@ -54,7 +90,37 @@ export const items = [
     },
   },
   {
-    name: 'getCode',
+    name: 'getBlockTransactionCount',
+    required: [],
+    query: {
+      imports: [],
+      data: [],
+      options: ['config', 'chainId'],
+    },
+  },
+  // TODO: getBytecode -> getCode
+  // TODO: getCallsStatus
+  // TODO: getCapabilities
+  {
+    name: 'getEnsAddress',
+    required: ['name'],
+    query: {
+      imports: [],
+      data: [],
+      options: ['config'],
+    },
+  },
+  {
+    name: 'getEnsAvatar',
+    required: ['name'],
+    query: {
+      imports: [],
+      data: [],
+      options: ['config'],
+    },
+  },
+  {
+    name: 'getEnsName',
     required: ['address'],
     query: {
       imports: [],
@@ -62,6 +128,65 @@ export const items = [
       options: ['config'],
     },
   },
+  {
+    name: 'getEnsResolver',
+    required: ['name'],
+    query: {
+      imports: [],
+      data: [],
+      options: ['config'],
+    },
+  },
+  {
+    name: 'getEnsText',
+    required: ['name'],
+    query: {
+      imports: [],
+      data: [],
+      options: ['config'],
+    },
+  },
+  // TODO: getFeeHistory
+  {
+    name: 'getGasPrice',
+    required: [],
+    query: {
+      imports: [],
+      data: [],
+      options: ['config', 'chainId'],
+    },
+  },
+  {
+    name: 'getProof',
+    required: ['address', 'storageKeys'],
+    query: {
+      imports: [],
+      data: [],
+      options: ['config'],
+    },
+  },
+  {
+    // TODO: null to return data
+    name: 'getStorageAt',
+    required: ['address', 'slot'],
+    query: {
+      imports: [],
+      data: [],
+      options: ['config'],
+    },
+  },
+  // TODO: getTransaction
+  // TODO: getTransactionConfirmations
+  {
+    name: 'getTransactionCount',
+    required: ['address'],
+    query: {
+      imports: [],
+      data: [],
+      options: ['config'],
+    },
+  },
+  // TODO: getTransactionReceipt
   {
     name: 'prepareTransactionRequest',
     required: ['to'],
@@ -107,7 +232,7 @@ export const items = [
             `('${name}' in ${options} && ${options}.${name})`,
         },
       ],
-      { name: 'abi', cond: (options, name) => `${options}.${name}` },
+      'abi',
       'functionName',
     ],
     query: {
@@ -135,6 +260,7 @@ export const items = [
       },
     },
   },
+  // TODO: readContracts
   {
     name: 'simulateContract',
     required: ['abi', 'address', 'connector', 'functionName'],
@@ -166,7 +292,66 @@ export const items = [
       },
     },
   },
-] satisfies {
+  {
+    name: 'verifyMessage',
+    required: ['address', 'message', 'signature'],
+    query: {
+      imports: [],
+      data: [],
+      options: ['config'],
+    },
+  },
+  {
+    name: 'verifyTypedData',
+    required: ['address', 'message', 'primaryType', 'signature', 'types'],
+    query: {
+      imports: ['TypedData'],
+      data: [],
+      options: [
+        {
+          name: 'typedData',
+          type: 'TypedData | Record<string, unknown>',
+          const: true,
+        },
+        { name: 'primaryType', type: "keyof typedData | 'EIP712Domain'" },
+        'config',
+      ],
+      optionsType: (t, typePrefix, slots) =>
+        `${t}.ExactPartial<${typePrefix}Parameters<${slots}>> & ScopeKeyParameter`,
+      cast: {
+        parameters: true,
+      },
+    },
+  },
+  // {
+  //   // TODO: retry
+  //   name: 'waitForCallsStatus',
+  //   required: ['id'],
+  //   query: {
+  //     imports: [],
+  //     data: [],
+  //     options: [],
+  //     cast: {
+  //       return: true,
+  //     },
+  //   },
+  // },
+  {
+    name: 'waitForTransactionReceipt',
+    required: ['hash'],
+    query: {
+      imports: [],
+      data: ['config', 'chainId'],
+      options: ['config', 'chainId'],
+      cast: {
+        return: true,
+      },
+      skipped: ['onReplaced'],
+    },
+  },
+] satisfies Item[]
+
+export type Item = {
   name: string
   required: (
     | string
@@ -184,6 +369,7 @@ export const items = [
       | 'ContractFunctionName'
       | 'FeeValuesType'
       | 'PrepareTransactionRequestRequest'
+      | 'TypedData'
       | { names: string[]; path: string }
     )[]
     options: (
@@ -199,5 +385,6 @@ export const items = [
       queryKey?: true
       return?: true
     }
+    skipped?: string[]
   }
-}[]
+}

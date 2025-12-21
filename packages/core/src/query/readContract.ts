@@ -44,9 +44,17 @@ export function readContractQueryOptions<
       if (!parameters.functionName) throw new Error('functionName is required')
       const result = await readContract(config, {
         ...(parameters as any),
+        address: parameters.address,
+        code:
+          'code' in parameters && parameters.code ? parameters.code : undefined,
         abi: options.abi,
+        functionName: parameters.functionName,
       })
-      return (result ?? null) as ReadContractData<abi, functionName, args>
+      return (result ?? null) as unknown as ReadContractData<
+        abi,
+        functionName,
+        args
+      >
     },
     queryKey: readContractQueryKey(options as never),
   } as const satisfies QueryObserverOptions<
