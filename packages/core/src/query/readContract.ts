@@ -10,7 +10,7 @@ import {
 import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
 import type * as t from '../types/utils.js'
-import { filterQueryOptions } from './utils.js'
+import { filterQueryOptions, structuralSharing } from './utils.js'
 
 export type ReadContractOptions<
   abi extends Abi | readonly unknown[],
@@ -58,6 +58,7 @@ export function readContractQueryOptions<
       >
     },
     queryKey: readContractQueryKey(options as never),
+    structuralSharing: structuralSharing,
   } as const satisfies QueryObserverOptions<
     ReadContractQueryFnData<abi, functionName, args>,
     ReadContractErrorType,

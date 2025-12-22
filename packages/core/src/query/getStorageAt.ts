@@ -30,7 +30,7 @@ export function getStorageAtQueryOptions<config extends Config>(
         address: parameters.address,
         slot: parameters.slot,
       })
-      return result ?? null
+      return (result ?? null) as unknown as GetStorageAtData
     },
     queryKey: getStorageAtQueryKey(options),
   } as const satisfies QueryObserverOptions<

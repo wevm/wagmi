@@ -4,8 +4,6 @@ import { promisify } from 'node:util'
 import { type Item, items, type requiredItem } from './config.ts'
 
 // TODO:
-// - default coupling (estimateFeesPerGasQueryOptions, getBlock)
-// - options `null` return/Data type (getStorageAt)
 // - mutationOptions
 // - react hooks/vue composables
 
@@ -53,7 +51,14 @@ function genQueryOptions(item: Item) {
     .map((x) => getTypeParameter(x))
     .join('')
   const functionTypeParameters = item.query.options
-    .map((x) => getTypeParameter(x, { const: true, default: true }))
+    .map((x) =>
+      getTypeParameter(x, {
+        const: true,
+        default: item.query.options.some((x) =>
+          Boolean(typeof x === 'object' && x.default),
+        ),
+      }),
+    )
     .join('')
   const dataTypeParameters = item.query.data
     .map((x) => getTypeParameter(x))
@@ -106,6 +111,7 @@ function genQueryOptions(item: Item) {
         const get = (prop: requiredItem) => {
           const o = getParameterPrefix(prop)
           if (typeof prop === 'string') return `${o}.${prop}`
+          if (queryKeySkipped.includes(prop.name)) return `${o}.${prop.name}`
           return `${prop.cond(o, prop.name)} ? ${o}.${prop.name} : undefined`
         }
         if (Array.isArray(x)) return x.map((y) => `${unwrapName(y)}: ${get(y)}`)
@@ -118,8 +124,8 @@ function genQueryOptions(item: Item) {
   const t = 't'
   const optionsType =
     item.query.optionsType ??
-    ((t: string, typePrefix: string, slots: string) =>
-      `${t}.Compute<${t}.ExactPartial<${typePrefix}Parameters<${slots}>> & ScopeKeyParameter>`)
+    ((t: string, typePrefix: string, slots: string, extras: string) =>
+      `${t}.Compute<${t}.ExactPartial<${typePrefix}Parameters<${slots}>> & ${extras}>`)
 
   const hasConnectorUid = (() => {
     if (typeof item.required === 'function')
@@ -147,7 +153,7 @@ import type { ScopeKeyParameter } from '../types/properties.js'
 import type * as ${t} from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
-export type ${typePrefix}Options<${optionsTypeParameters}> = ${optionsType(t, typePrefix, optionsSlots)}
+export type ${typePrefix}Options<${optionsTypeParameters}> = ${optionsType(t, typePrefix, optionsSlots, 'ScopeKeyParameter')}
 
 export function ${item.name}QueryOptions<${functionTypeParameters}>(
   config: config,
@@ -159,7 +165,7 @@ export function ${item.name}QueryOptions<${functionTypeParameters}>(
       const result = await ${item.name}(config, ${requiredParameters ? `{ ...(parameters${item.query.cast?.parameters ? ' as any' : ''}), ${requiredParameters}}` : `parameters${item.query.cast?.parameters ? ' as never' : ''}`})
       return (result ?? null)${item.query.cast?.return ? ` as unknown as ${typePrefix}Data${dataSlots ? `<${dataSlots}>` : ''}` : ''}
     },
-    queryKey: ${item.name}QueryKey(options${item.query.cast?.queryKey ? ' as never' : ''}),
+    queryKey: ${item.name}QueryKey(options${item.query.cast?.queryKey ? ' as never' : ''}),${item.query.extraOptions?.length ? item.query.extraOptions.map((x) => `${x.name}: ${x.default}`).join(',\n') : ''}
   } as const satisfies QueryObserverOptions<
     ${typePrefix}QueryFnData${dataSlots ? `<${dataSlots}>` : ''},
     ${typePrefix}ErrorType,
@@ -192,7 +198,7 @@ function unwrapName(value: string | { name: string }) {
 
 function getTypeParameter(
   item: 'chainId' | 'config' | { name: string; type: string },
-  opts: { const?: true; default?: true } = {},
+  opts: { const?: true; default?: boolean } = {},
 ) {
   const unwrapped =
     typeof item === 'object'
@@ -201,8 +207,8 @@ function getTypeParameter(
           name: item,
           type:
             item === 'chainId' ? "config['chains'][number]['id']" : 'Config',
-          // default:
-          // item === 'chainId' ? "config['chains'][number]['id']" : 'Config',
+          default:
+            item === 'chainId' ? "config['chains'][number]['id']" : 'Config',
           const: false,
         }
   return `\n${opts.const && 'const' in unwrapped && unwrapped.const ? 'const ' : ''}${unwrapped.name}${unwrapped.type ? ` extends ${unwrapped.type}` : ''}${opts.default && 'default' in unwrapped && unwrapped.default ? `= ${unwrapped.default}` : ''},`

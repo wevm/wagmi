@@ -1,3 +1,6 @@
+// TODO (query): infiniteReadContracts, readContracts
+// TODO (mutation): connect, deployContract, disconnect, reconnect, sendCalls, sendCallsSync, sendTransaction, sendTransactionSync, showCallsStatus, signMessage, signTypedData, switchChain, switchConnection, watchAsset, writeContract
+
 export const items = [
   {
     name: 'call',
@@ -30,11 +33,11 @@ export const items = [
       imports: [],
       data: [],
       options: [
-        { name: 'config', type: 'Config' },
+        'config',
         { name: 'chainId', type: "config['chains'][number]['id'] | undefined" },
       ],
-      optionsType: (t, typePrefix, slots) =>
-        `${t}.UnionExactPartial<${typePrefix}Parameters<${slots}>> & ScopeKeyParameter`,
+      optionsType: (t, typePrefix, slots, extras) =>
+        `${t}.UnionExactPartial<${typePrefix}Parameters<${slots}>> & ${extras}`,
       cast: {
         parameters: true,
         options: true,
@@ -76,8 +79,8 @@ export const items = [
         'config',
         'chainId',
       ],
-      optionsType: (t, typePrefix, slots) =>
-        `${t}.Compute<${t}.ExactPartial<${typePrefix}Parameters<${slots}>> & ScopeKeyParameter>`,
+      optionsType: (t, typePrefix, slots, extras) =>
+        `${t}.Compute<${t}.ExactPartial<${typePrefix}Parameters<${slots}>> & ${extras}>`,
     },
   },
   {
@@ -98,9 +101,70 @@ export const items = [
       options: ['config', 'chainId'],
     },
   },
-  // TODO: getBytecode -> getCode
-  // TODO: getCallsStatus
-  // TODO: getCapabilities
+  {
+    name: 'getBytecode',
+    required: ['address'],
+    query: {
+      imports: [],
+      data: [],
+      options: ['config'],
+      cast: {
+        return: true,
+      },
+    },
+  },
+  {
+    name: 'getCallsStatus',
+    required: ['id', 'connector'],
+    query: {
+      imports: [],
+      data: [],
+      options: ['config'],
+    },
+  },
+  {
+    name: 'getCapabilities',
+    required: ['connector'],
+    query: {
+      imports: [],
+      data: [
+        'config',
+        {
+          name: 'chainId',
+          type: "config['chains'][number]['id'] | undefined",
+        },
+      ],
+      options: [
+        'config',
+        {
+          name: 'chainId',
+          type: "config['chains'][number]['id'] | undefined",
+          default: 'undefined',
+        },
+      ],
+    },
+  },
+  {
+    name: 'getConnectorClient',
+    required: [
+      {
+        name: 'connector',
+        cond: (options, name) => `${options}.${name}?.getProvider`,
+      },
+    ],
+    query: {
+      imports: [],
+      data: ['config', 'chainId'],
+      options: ['config', 'chainId'],
+      cast: {
+        return: true,
+      },
+      extraOptions: [
+        { name: 'gcTime', default: '0' },
+        { name: 'staleTime', default: 'Number.POSITIVE_INFINITY' },
+      ],
+    },
+  },
   {
     name: 'getEnsAddress',
     required: ['name'],
@@ -174,13 +238,15 @@ export const items = [
     },
   },
   {
-    // TODO: null to return data
     name: 'getStorageAt',
     required: ['address', 'slot'],
     query: {
       imports: [],
       data: [],
       options: ['config'],
+      cast: {
+        return: true,
+      },
     },
   },
   {
@@ -206,8 +272,8 @@ export const items = [
       imports: [],
       data: [],
       options: ['config', 'chainId'],
-      optionsType: (t, typePrefix, slots) =>
-        `${t}.UnionExactPartial<${typePrefix}Parameters<${slots}>> & ScopeKeyParameter`,
+      optionsType: (t, typePrefix, slots, extras) =>
+        `${t}.UnionExactPartial<${typePrefix}Parameters<${slots}>> & ${extras}`,
       cast: {
         options: true,
         parameters: true,
@@ -233,6 +299,27 @@ export const items = [
     },
   },
   {
+    name: 'getWalletClient',
+    required: [
+      {
+        name: 'connector',
+        cond: (options, name) => `${options}.${name}?.getProvider`,
+      },
+    ],
+    query: {
+      imports: [],
+      data: ['config', 'chainId'],
+      options: ['config', 'chainId'],
+      cast: {
+        return: true,
+      },
+      extraOptions: [
+        { name: 'gcTime', default: '0' },
+        { name: 'staleTime', default: 'Number.POSITIVE_INFINITY' },
+      ],
+    },
+  },
+  {
     name: 'prepareTransactionRequest',
     required: ['to'],
     query: {
@@ -249,15 +336,15 @@ export const items = [
         },
       ],
       options: [
-        { name: 'config', type: 'Config' },
+        'config',
         { name: 'chainId', type: "config['chains'][number]['id'] | undefined" },
         {
           name: 'request',
           type: 'PrepareTransactionRequestRequest<SelectChains<config, chainId>[0], SelectChains<config, chainId>[0]>',
         },
       ],
-      optionsType: (t, typePrefix, slots) =>
-        `${t}.UnionExactPartial<${typePrefix}Parameters<${slots}>> & ScopeKeyParameter`,
+      optionsType: (t, typePrefix, slots, extras) =>
+        `${t}.UnionExactPartial<${typePrefix}Parameters<${slots}>> & ${extras}`,
       cast: {
         options: true,
         parameters: true,
@@ -281,7 +368,12 @@ export const items = [
       'functionName',
     ],
     query: {
-      imports: ['Abi', 'ContractFunctionArgs', 'ContractFunctionName'],
+      imports: [
+        'Abi',
+        'ContractFunctionArgs',
+        'ContractFunctionName',
+        { names: ['structuralSharing'], path: './utils.js' },
+      ],
       // biome-ignore format: no formatting
       data: [
         { name: "abi", type: "Abi | readonly unknown[]" },
@@ -295,17 +387,22 @@ export const items = [
         { name: "args", type: "ContractFunctionArgs<abi, 'pure' | 'view', functionName>", const: true },
         'config',
       ],
-      optionsType: (t, typePrefix, slots) =>
-        `${t}.UnionExactPartial<${typePrefix}Parameters<${slots}>> & ScopeKeyParameter`,
+      optionsType: (t, typePrefix, slots, extras) =>
+        `${t}.UnionExactPartial<${typePrefix}Parameters<${slots}>> & ${extras}`,
       cast: {
         options: true,
         parameters: true,
         queryKey: true,
         return: true,
       },
+      extraOptions: [
+        {
+          name: 'structuralSharing',
+          default: 'structuralSharing',
+        },
+      ],
     },
   },
-  // TODO: readContracts
   {
     name: 'simulateContract',
     required: ['abi', 'address', 'connector', 'functionName'],
@@ -327,8 +424,8 @@ export const items = [
         'config',
         'chainId',
       ],
-      optionsType: (t, typePrefix, slots) =>
-        `${t}.UnionExactPartial<${typePrefix}Parameters<${slots}>> & ScopeKeyParameter`,
+      optionsType: (t, typePrefix, slots, extras) =>
+        `${t}.UnionExactPartial<${typePrefix}Parameters<${slots}>> & ${extras}`,
       cast: {
         options: true,
         parameters: true,
@@ -361,26 +458,25 @@ export const items = [
         { name: 'primaryType', type: "keyof typedData | 'EIP712Domain'" },
         'config',
       ],
-      optionsType: (t, typePrefix, slots) =>
-        `${t}.ExactPartial<${typePrefix}Parameters<${slots}>> & ScopeKeyParameter`,
+      optionsType: (t, typePrefix, slots, extras) =>
+        `${t}.ExactPartial<${typePrefix}Parameters<${slots}>> & ${extras}`,
       cast: {
         parameters: true,
       },
     },
   },
-  // {
-  //   // TODO: retry
-  //   name: 'waitForCallsStatus',
-  //   required: ['id'],
-  //   query: {
-  //     imports: [],
-  //     data: [],
-  //     options: [],
-  //     cast: {
-  //       return: true,
-  //     },
-  //   },
-  // },
+  {
+    name: 'waitForCallsStatus',
+    required: ['id', 'connector'],
+    query: {
+      imports: [],
+      data: [],
+      options: ['config'],
+      cast: {
+        return: true,
+      },
+    },
+  },
   {
     name: 'waitForTransactionReceipt',
     required: ['hash'],
@@ -395,13 +491,6 @@ export const items = [
     },
   },
 ] satisfies Item[]
-
-export type requiredItem =
-  | string
-  | {
-      name: string
-      cond: (options: string, name: string) => string
-    }
 
 export type Item = {
   name: string
@@ -425,10 +514,15 @@ export type Item = {
     options: (
       | 'chainId'
       | 'config'
-      | { name: string; type: string; const?: true; default?: string }
+      | (typeParameter & { const?: true; default?: string })
     )[]
-    optionsType?: (t: string, typePrefix: string, slots: string) => string
-    data: ('chainId' | 'config' | { name: string; type: string })[]
+    optionsType?: (
+      t: string,
+      typePrefix: string,
+      slots: string,
+      extras: string,
+    ) => string
+    data: ('chainId' | 'config' | typeParameter)[]
     cast?: {
       options?: true
       parameters?: true
@@ -436,5 +530,15 @@ export type Item = {
       return?: true
     }
     skipped?: string[]
+    extraOptions?: { name: string; default: string }[]
   }
 }
+
+export type typeParameter = { name: string; type: string }
+
+export type requiredItem =
+  | string
+  | {
+      name: string
+      cond: (options: string, name: string) => string
+    }
