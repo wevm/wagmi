@@ -58,7 +58,7 @@
     "react-dom": "catalog:",
     "sherif": "^1.0.0",
     "simple-git-hooks": "^2.11.1",
-    "typescript": "5.9.2",
+    "typescript": "5.9.3",
     "viem": "2.38.0",
     "vite-plugin-react-fallback-throttle": "^0.1.1",
     "vitest": "^4.0.8",

@@ -45,7 +45,7 @@ export function readContract<
   config extends Config,
   const abi extends Abi | readonly unknown[],
   functionName extends ContractFunctionName<abi, 'pure' | 'view'>,
-  args extends ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
+  const args extends ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
 >(
   config: config,
   parameters: ReadContractParameters<abi, functionName, args, config>,

@@ -35,7 +35,6 @@ test('overloads', async () => {
     functionName: 'foo',
     args: ['0x'],
   })
-  // @ts-ignore – TODO: Fix https://github.com/wevm/viem/issues/1916
   assertType<string>(result3)
 
   const result4 = await readContract(config, {
@@ -47,7 +46,6 @@ test('overloads', async () => {
   assertType<{
     foo: `0x${string}`
     bar: `0x${string}`
-    // @ts-ignore – TODO: Fix https://github.com/wevm/viem/issues/1916
   }>(result4)
 })
 
