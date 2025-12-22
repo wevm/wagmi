@@ -151,6 +151,7 @@ export function coinbaseWallet(
     },
     async getProvider() {
       if (!walletProvider) {
+        /* webpackIgnore */
         const { createCoinbaseWalletSDK } = await import('@coinbase/wallet-sdk')
         const sdk = createCoinbaseWalletSDK({
           ...parameters,

@@ -217,6 +217,7 @@ export function baseAccount(parameters: BaseAccountParameters = {}) {
           }
         })()
 
+        /* webpackIgnore */
         const { createBaseAccountSDK } = await import('@base-org/account')
         const sdk = createBaseAccountSDK({
           ...parameters,

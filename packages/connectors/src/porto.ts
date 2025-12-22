@@ -88,7 +88,9 @@ export function porto(parameters: PortoParameters = {}) {
 
         try {
           if (!accounts?.length && !isReconnecting) {
+            /* webpackIgnore */
             const { RpcSchema } = await import('porto')
+            /* webpackIgnore */
             const { z } = await import('porto/internal')
             const res = await provider.request({
               method: 'wallet_connect',
@@ -189,6 +191,7 @@ export function porto(parameters: PortoParameters = {}) {
       },
       async getPortoInstance() {
         porto_promise ??= (async () => {
+          /* webpackIgnore */
           const { Porto } = await import('porto')
           return Porto.create({
             ...parameters,

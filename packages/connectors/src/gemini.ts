@@ -109,6 +109,7 @@ export function gemini(parameters: GeminiParameters = {}) {
     },
     async getProvider() {
       if (!walletProvider) {
+        /* webpackIgnore */
         const { GeminiWalletProvider } = await import('@gemini-wallet/core')
         walletProvider = new GeminiWalletProvider({
           appMetadata: parameters.appMetadata ?? {},

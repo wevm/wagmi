@@ -270,6 +270,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
       async function initProvider() {
         const optionalChains = config.chains.map((x) => x.id) as [number]
         if (!optionalChains.length) return
+        /* webpackIgnore */
         const { EthereumProvider } = await import(
           '@walletconnect/ethereum-provider'
         )

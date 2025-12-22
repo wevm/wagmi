@@ -95,6 +95,7 @@ export function safe(parameters: SafeParameters = {}) {
       if (!isIframe) return
 
       if (!provider_) {
+        /* webpackIgnore */
         const { default: SDK } = await import('@safe-global/safe-apps-sdk')
         const sdk = new SDK(parameters)
 
@@ -107,6 +108,7 @@ export function safe(parameters: SafeParameters = {}) {
         // Unwrapping import for Vite compatibility.
         // See: https://github.com/vitejs/vite/issues/9703
         const SafeAppProvider = await (async () => {
+          /* webpackIgnore */
           const Provider = await import('@safe-global/safe-apps-provider')
           if (
             typeof Provider.SafeAppProvider !== 'function' &&
