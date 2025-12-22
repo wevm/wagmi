@@ -52,6 +52,14 @@ export type FoundryConfig = {
    * @default foundry.config#out | 'out'
    */
   artifacts?: string | undefined
+  /**
+   * Set contracts in `run-latest.json` files in the `broadcast/` directory as deployments.
+   *
+   * @dev broadcast deployments can be overridden by including the contract in the deployments mapping.
+   *
+   * @default false
+   */
+  includeBroadcasts?: boolean | undefined
   /** Mapping of addresses to attach to artifacts. */
   deployments?: { [key: string]: ContractConfig['address'] } | undefined
   /** Artifact files to exclude. */
@@ -106,6 +114,7 @@ const FoundryConfigSchema = z.object({
 export function foundry(config: FoundryConfig = {}): FoundryResult {
   const {
     artifacts,
+    includeBroadcasts = false,
     deployments = {},
     exclude = foundryDefaultExcludes,
     forge: {
@@ -124,13 +133,16 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
     return `${usePrefix ? namePrefix : ''}${filename.replace(extension, '')}`
   }
 
-  async function getContract(artifactPath: string) {
+  async function getContract(
+    artifactPath: string,
+    contractDeployments: {
+      [key: string]: ContractConfig['address']
+    } = deployments,
+  ) {
     const artifact = await JSON.parse(await readFile(artifactPath, 'utf8'))
     return {
       abi: artifact.abi,
-      address: (deployments as Record<string, ContractConfig['address']>)[
-        getContractName(artifactPath, false)
-      ],
+      address: contractDeployments[getContractName(artifactPath, false)],
       name: getContractName(artifactPath),
     }
   }
@@ -144,6 +156,58 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
       },
     )
     return crawler.crawl(artifactsDirectory).withPromise()
+  }
+
+  async function getBroadcastDeployments(broadcastDirectory: string) {
+    const deployments: { [key: string]: Record<number, string> } = {}
+
+    const crawler = new fdir()
+      .withBasePath()
+      .glob('**/run-latest.json')
+      .filter((path) => path.includes('/broadcast/'))
+    const broadcastFiles = await crawler.crawl(broadcastDirectory).withPromise()
+    for (const broadcastFile of broadcastFiles) {
+      try {
+        const broadcast = JSON.parse(await readFile(broadcastFile, 'utf8'))
+
+        // Extract chainId from path: broadcast/.../[chainId]/run-latest.json
+        const pathParts = broadcastFile.split('/')
+        const chainIdPart = pathParts[pathParts.length - 2]
+        if (!chainIdPart) continue
+        const chainId = parseInt(chainIdPart)
+        if (isNaN(chainId)) continue
+
+        const transactions = broadcast.transactions || []
+        for (const tx of transactions) {
+          if (tx.contractName && tx.contractAddress) {
+            const contractName = tx.contractName
+            const contractAddress = tx.contractAddress
+            if (!deployments[contractName]) {
+              deployments[contractName] = {}
+            }
+            deployments[contractName][chainId] = contractAddress
+          }
+          const additionalContracts = tx.additionalContracts || []
+          for (const additional of additionalContracts) {
+            if (additional.contractName && additional.contractAddress) {
+              const contractName = additional.contractName
+              const contractAddress = additional.contractAddress
+              if (!deployments[contractName]) {
+                deployments[contractName] = {}
+              }
+              deployments[contractName][chainId] = contractAddress
+            }
+          }
+        }
+      } catch (error) {
+        logger.warn(
+          `Failed to parse broadcast file ${broadcastFile}: ${(error as Error).message}`,
+        )
+        continue
+      }
+    }
+
+    return deployments
   }
 
   const project = resolve(process.cwd(), config.project ?? '')
@@ -191,10 +255,22 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
       if (!existsSync(artifactsDirectory))
         throw new Error('Artifacts not found.')
 
+      const broadcastDeployments: { [key: string]: ContractConfig['address'] } =
+        includeBroadcasts
+          ? Object.fromEntries(
+              Object.entries(await getBroadcastDeployments(project)).map(
+                ([contractName, chainAddresses]) => [
+                  contractName,
+                  chainAddresses as ContractConfig['address'],
+                ],
+              ),
+            )
+          : {}
+      const mergedDeployments = { ...broadcastDeployments, ...deployments }
       const artifactPaths = await getArtifactPaths(artifactsDirectory)
       const contracts = []
       for (const artifactPath of artifactPaths) {
-        const contract = await getContract(artifactPath)
+        const contract = await getContract(artifactPath, mergedDeployments)
         if (!contract.abi?.length) continue
         contracts.push(contract)
       }

@@ -1,5 +1,6 @@
 import fixtures from 'fixturez'
 import { dirname, resolve } from 'pathe'
+import { promises as fs } from 'fs'
 import { afterEach, expect, test, vi } from 'vitest'
 
 import { foundry } from './foundry.js'
@@ -147,6 +148,107 @@ test('contracts without project', async () => {
           ],
           "address": undefined,
           "name": "Counter",
+        },
+      ]
+    `)
+})
+
+test('broadcast deployments', async () => {
+  const dir = f.temp()
+  const spy = vi.spyOn(process, 'cwd')
+  spy.mockImplementation(() => dir)
+
+  const broadcastDir = resolve(dir, 'broadcast')
+  const scriptDir = resolve(broadcastDir, 'Deploy.s.sol')
+  const chainDir = resolve(scriptDir, '1')
+  await fs.mkdir(chainDir, { recursive: true })
+  const broadcastContent = {
+    transactions: [
+      {
+        contractName: 'Counter',
+        contractAddress: '0x1234567890123456789012345678901234567890',
+        additionalContracts: [
+          {
+            contractName: 'Library',
+            contractAddress: '0x0987654321098765432109876543210987654321',
+          },
+        ],
+      },
+    ],
+  }
+  await fs.writeFile(
+    resolve(chainDir, 'run-latest.json'),
+    JSON.stringify(broadcastContent, null, 2),
+  )
+
+  const artifactsDir = resolve(dir, 'out')
+  await fs.mkdir(artifactsDir, { recursive: true })
+  const counterArtifact = {
+    abi: [
+      {
+        inputs: [],
+        name: 'increment',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+    ],
+  }
+  const libraryArtifact = {
+    abi: [
+      {
+        inputs: [],
+        name: 'helper',
+        outputs: [],
+        stateMutability: 'pure',
+        type: 'function',
+      },
+    ],
+  }
+  await fs.writeFile(
+    resolve(artifactsDir, 'Counter.json'),
+    JSON.stringify(counterArtifact, null, 2),
+  )
+  await fs.writeFile(
+    resolve(artifactsDir, 'Library.json'),
+    JSON.stringify(libraryArtifact, null, 2),
+  )
+
+  await expect(
+    foundry({
+      includeBroadcasts: true,
+    }).contracts?.(),
+  ).resolves.toMatchInlineSnapshot(`
+      [
+        {
+          "abi": [
+            {
+              "inputs": [],
+              "name": "increment",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function",
+            },
+          ],
+          "address": {
+            "1": "0x1234567890123456789012345678901234567890",
+          },
+          "name": "Counter",
+        },
+        {
+          "abi": [
+            {
+              "inputs": [],
+              "name": "helper",
+              "outputs": [],
+              "stateMutability": "pure",
+              "type": "function",
+            },
+          ],
+          "address": {
+            "1": "0x0987654321098765432109876543210987654321",
+          },
+          "name": "Library",
         },
       ]
     `)
