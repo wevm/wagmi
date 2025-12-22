@@ -3,24 +3,36 @@ import { expectTypeOf, test } from 'vitest'
 import { estimateFeesPerGas } from './estimateFeesPerGas.js'
 
 test('types', async () => {
-  const default_ = await estimateFeesPerGas(config)
-  expectTypeOf(default_).toMatchTypeOf<{
-    gasPrice?: undefined
-    maxFeePerGas: bigint
-    maxPriorityFeePerGas: bigint
-  }>()
+  // default
+  {
+    const result = await estimateFeesPerGas(config, {})
+    expectTypeOf(result).toEqualTypeOf<{
+      gasPrice?: undefined
+      maxFeePerBlobGas?: undefined
+      maxFeePerGas: bigint
+      maxPriorityFeePerGas: bigint
+    }>()
+  }
 
-  const legacy = await estimateFeesPerGas(config, { type: 'legacy' })
-  expectTypeOf(legacy).toMatchTypeOf<{
-    gasPrice: bigint
-    maxFeePerGas?: undefined
-    maxPriorityFeePerGas?: undefined
-  }>()
+  // legacy
+  {
+    const result = await estimateFeesPerGas(config, { type: 'legacy' })
+    expectTypeOf(result).toEqualTypeOf<{
+      gasPrice: bigint
+      maxFeePerBlobGas?: undefined
+      maxFeePerGas?: undefined
+      maxPriorityFeePerGas?: undefined
+    }>()
+  }
 
-  const eip1559 = await estimateFeesPerGas(config, { type: 'eip1559' })
-  expectTypeOf(eip1559).toMatchTypeOf<{
-    gasPrice?: undefined
-    maxFeePerGas: bigint
-    maxPriorityFeePerGas: bigint
-  }>()
+  // eip1559
+  {
+    const result = await estimateFeesPerGas(config, { type: 'eip1559' })
+    expectTypeOf(result).toEqualTypeOf<{
+      gasPrice?: undefined
+      maxFeePerBlobGas?: undefined
+      maxFeePerGas: bigint
+      maxPriorityFeePerGas: bigint
+    }>()
+  }
 })
