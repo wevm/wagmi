@@ -83,9 +83,10 @@ export function useSwitchConnection<
     switchConnectionMutationOptions(config()),
   )
   const mutation = useMutation(() => ({
-    ...parameters().mutation,
+    ...(parameters().mutation ?? {}),
     ...mutationOptions(),
   }))
+
   return mergeProps(mutation, {
     connectors: connections().map((connection) => connection.connector),
     mutate: mutation.mutate,

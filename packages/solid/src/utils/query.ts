@@ -38,7 +38,7 @@ export type UseMutationParameters<
   error = Error,
   variables = void,
   context = unknown,
-> = Accessor<SolidMutationParameters<data, error, variables, context>>
+> = SolidMutationParameters<data, error, variables, context>
 
 export type UseMutationReturnType<
   data = unknown,
