@@ -1,11 +1,14 @@
 import { config } from '@wagmi/test'
 import { expectTypeOf, test } from 'vitest'
-import { estimateFeesPerGas } from './estimateFeesPerGas.js'
+import { estimateFeesPerGasQueryOptions } from './estimateFeesPerGas.js'
+
+const context = {} as any
 
 test('types', async () => {
   // default
   {
-    const result = await estimateFeesPerGas(config, {})
+    const options = estimateFeesPerGasQueryOptions(config, {})
+    const result = await options.queryFn(context)
     expectTypeOf(result).toEqualTypeOf<{
       gasPrice?: undefined
       maxFeePerBlobGas?: undefined
@@ -16,7 +19,8 @@ test('types', async () => {
 
   // legacy
   {
-    const result = await estimateFeesPerGas(config, { type: 'legacy' })
+    const options = estimateFeesPerGasQueryOptions(config, { type: 'legacy' })
+    const result = await options.queryFn(context)
     expectTypeOf(result).toEqualTypeOf<{
       gasPrice: bigint
       maxFeePerBlobGas?: undefined
@@ -27,7 +31,8 @@ test('types', async () => {
 
   // eip1559
   {
-    const result = await estimateFeesPerGas(config, { type: 'eip1559' })
+    const options = estimateFeesPerGasQueryOptions(config, { type: 'eip1559' })
+    const result = await options.queryFn(context)
     expectTypeOf(result).toEqualTypeOf<{
       gasPrice?: undefined
       maxFeePerBlobGas?: undefined

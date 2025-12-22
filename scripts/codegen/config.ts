@@ -139,7 +139,7 @@ export const items = [
   },
   {
     name: 'getEnsText',
-    required: ['name'],
+    required: ['name', 'key'],
     query: {
       imports: [],
       data: [],
