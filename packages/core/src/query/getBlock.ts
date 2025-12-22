@@ -26,9 +26,8 @@ export type GetBlockOptions<
 export function getBlockQueryOptions<
   includeTransactions extends boolean = false,
   blockTag extends BlockTag = 'latest',
-  config extends Config = Config,
-  chainId extends
-    config['chains'][number]['id'] = config['chains'][number]['id'],
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
 >(
   config: config,
   options: GetBlockOptions<includeTransactions, blockTag, config, chainId> = {},
@@ -68,9 +67,8 @@ export type GetBlockData<
 export function getBlockQueryKey<
   includeTransactions extends boolean = false,
   blockTag extends BlockTag = 'latest',
-  config extends Config = Config,
-  chainId extends
-    config['chains'][number]['id'] = config['chains'][number]['id'],
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
 >(
   options: GetBlockOptions<includeTransactions, blockTag, config, chainId> = {},
 ) {

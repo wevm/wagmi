@@ -34,9 +34,8 @@ export function simulateContractQueryOptions<
     'nonpayable' | 'payable',
     functionName
   >,
-  config extends Config = Config,
-  chainId extends
-    config['chains'][number]['id'] = config['chains'][number]['id'],
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
 >(
   config: config,
   options: SimulateContractOptions<
@@ -119,9 +118,8 @@ export function simulateContractQueryKey<
     'nonpayable' | 'payable',
     functionName
   >,
-  config extends Config = Config,
-  chainId extends
-    config['chains'][number]['id'] = config['chains'][number]['id'],
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
 >(
   options: SimulateContractOptions<
     abi,

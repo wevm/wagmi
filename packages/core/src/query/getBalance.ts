@@ -14,7 +14,7 @@ export type GetBalanceOptions<config extends Config> = t.Compute<
   t.ExactPartial<GetBalanceParameters<config>> & ScopeKeyParameter
 >
 
-export function getBalanceQueryOptions<config extends Config = Config>(
+export function getBalanceQueryOptions<config extends Config>(
   config: config,
   options: GetBalanceOptions<config> = {},
 ) {
@@ -43,7 +43,7 @@ export type GetBalanceQueryFnData = t.Compute<GetBalanceReturnType>
 
 export type GetBalanceData = GetBalanceQueryFnData
 
-export function getBalanceQueryKey<config extends Config = Config>(
+export function getBalanceQueryKey<config extends Config>(
   options: GetBalanceOptions<config> = {},
 ) {
   return ['getBalance', filterQueryOptions(options)] as const

@@ -14,7 +14,7 @@ export type GetStorageAtOptions<config extends Config> = t.Compute<
   t.ExactPartial<GetStorageAtParameters<config>> & ScopeKeyParameter
 >
 
-export function getStorageAtQueryOptions<config extends Config = Config>(
+export function getStorageAtQueryOptions<config extends Config>(
   config: config,
   options: GetStorageAtOptions<config> = {},
 ) {
@@ -45,7 +45,7 @@ export type GetStorageAtQueryFnData = t.Compute<GetStorageAtReturnType>
 
 export type GetStorageAtData = GetStorageAtQueryFnData
 
-export function getStorageAtQueryKey<config extends Config = Config>(
+export function getStorageAtQueryKey<config extends Config>(
   options: GetStorageAtOptions<config> = {},
 ) {
   return ['getStorageAt', filterQueryOptions(options)] as const

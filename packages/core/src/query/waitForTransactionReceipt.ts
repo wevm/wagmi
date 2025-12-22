@@ -19,9 +19,8 @@ export type WaitForTransactionReceiptOptions<
 >
 
 export function waitForTransactionReceiptQueryOptions<
-  config extends Config = Config,
-  chainId extends
-    config['chains'][number]['id'] = config['chains'][number]['id'],
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
 >(
   config: config,
   options: WaitForTransactionReceiptOptions<config, chainId> = {},
@@ -62,9 +61,8 @@ export type WaitForTransactionReceiptData<
 > = WaitForTransactionReceiptQueryFnData<config, chainId>
 
 export function waitForTransactionReceiptQueryKey<
-  config extends Config = Config,
-  chainId extends
-    config['chains'][number]['id'] = config['chains'][number]['id'],
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
 >({
   onReplaced: _,
   ...options

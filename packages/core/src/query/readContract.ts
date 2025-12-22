@@ -25,7 +25,7 @@ export function readContractQueryOptions<
   const abi extends Abi | readonly unknown[],
   functionName extends ContractFunctionName<abi, 'pure' | 'view'>,
   const args extends ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
-  config extends Config = Config,
+  config extends Config,
 >(
   config: config,
   options: ReadContractOptions<abi, functionName, args, config> = {} as never,
@@ -82,7 +82,7 @@ export function readContractQueryKey<
   const abi extends Abi | readonly unknown[],
   functionName extends ContractFunctionName<abi, 'pure' | 'view'>,
   const args extends ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
-  config extends Config = Config,
+  config extends Config,
 >(options: ReadContractOptions<abi, functionName, args, config> = {} as never) {
   return ['readContract', filterQueryOptions(options)] as const
 }

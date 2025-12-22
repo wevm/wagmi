@@ -21,7 +21,7 @@ export type VerifyTypedDataOptions<
 export function verifyTypedDataQueryOptions<
   const typedData extends TypedData | Record<string, unknown>,
   primaryType extends keyof typedData | 'EIP712Domain',
-  config extends Config = Config,
+  config extends Config,
 >(
   config: config,
   options: VerifyTypedDataOptions<typedData, primaryType, config> = {},
@@ -68,7 +68,7 @@ export type VerifyTypedDataData = VerifyTypedDataQueryFnData
 export function verifyTypedDataQueryKey<
   const typedData extends TypedData | Record<string, unknown>,
   primaryType extends keyof typedData | 'EIP712Domain',
-  config extends Config = Config,
+  config extends Config,
 >(options: VerifyTypedDataOptions<typedData, primaryType, config> = {}) {
   return ['verifyTypedData', filterQueryOptions(options)] as const
 }

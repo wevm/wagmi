@@ -14,7 +14,7 @@ export type CallOptions<config extends Config> = t.Compute<
   t.ExactPartial<CallParameters<config>> & ScopeKeyParameter
 >
 
-export function callQueryOptions<config extends Config = Config>(
+export function callQueryOptions<config extends Config>(
   config: config,
   options: CallOptions<config> = {},
 ) {
@@ -38,7 +38,7 @@ export type CallQueryFnData = t.Compute<CallReturnType>
 
 export type CallData = CallQueryFnData
 
-export function callQueryKey<config extends Config = Config>(
+export function callQueryKey<config extends Config>(
   options: CallOptions<config> = {},
 ) {
   return ['call', filterQueryOptions(options)] as const

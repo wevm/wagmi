@@ -19,9 +19,8 @@ export type GetBlockTransactionCountOptions<
 >
 
 export function getBlockTransactionCountQueryOptions<
-  config extends Config = Config,
-  chainId extends
-    config['chains'][number]['id'] = config['chains'][number]['id'],
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
 >(
   config: config,
   options: GetBlockTransactionCountOptions<config, chainId> = {},
@@ -48,9 +47,8 @@ export type GetBlockTransactionCountQueryFnData =
 export type GetBlockTransactionCountData = GetBlockTransactionCountQueryFnData
 
 export function getBlockTransactionCountQueryKey<
-  config extends Config = Config,
-  chainId extends
-    config['chains'][number]['id'] = config['chains'][number]['id'],
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
 >(options: GetBlockTransactionCountOptions<config, chainId> = {}) {
   return ['getBlockTransactionCount', filterQueryOptions(options)] as const
 }

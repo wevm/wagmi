@@ -18,9 +18,8 @@ export type GetBlockNumberOptions<
 >
 
 export function getBlockNumberQueryOptions<
-  config extends Config = Config,
-  chainId extends
-    config['chains'][number]['id'] = config['chains'][number]['id'],
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
 >(config: config, options: GetBlockNumberOptions<config, chainId> = {}) {
   return {
     queryFn: async (context) => {
@@ -43,9 +42,8 @@ export type GetBlockNumberQueryFnData = t.Compute<GetBlockNumberReturnType>
 export type GetBlockNumberData = GetBlockNumberQueryFnData
 
 export function getBlockNumberQueryKey<
-  config extends Config = Config,
-  chainId extends
-    config['chains'][number]['id'] = config['chains'][number]['id'],
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
 >(options: GetBlockNumberOptions<config, chainId> = {}) {
   return ['getBlockNumber', filterQueryOptions(options)] as const
 }

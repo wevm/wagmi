@@ -19,9 +19,8 @@ export type EstimateMaxPriorityFeePerGasOptions<
 >
 
 export function estimateMaxPriorityFeePerGasQueryOptions<
-  config extends Config = Config,
-  chainId extends
-    config['chains'][number]['id'] = config['chains'][number]['id'],
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
 >(
   config: config,
   options: EstimateMaxPriorityFeePerGasOptions<config, chainId> = {},
@@ -49,9 +48,8 @@ export type EstimateMaxPriorityFeePerGasData =
   EstimateMaxPriorityFeePerGasQueryFnData
 
 export function estimateMaxPriorityFeePerGasQueryKey<
-  config extends Config = Config,
-  chainId extends
-    config['chains'][number]['id'] = config['chains'][number]['id'],
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
 >(options: EstimateMaxPriorityFeePerGasOptions<config, chainId> = {}) {
   return ['estimateMaxPriorityFeePerGas', filterQueryOptions(options)] as const
 }

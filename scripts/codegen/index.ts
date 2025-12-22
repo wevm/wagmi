@@ -1,7 +1,7 @@
 import { exec } from 'node:child_process'
 import fs from 'node:fs/promises'
 import { promisify } from 'node:util'
-import { type Item, items } from './config.ts'
+import { type Item, items, type requiredItem } from './config.ts'
 
 // TODO:
 // - default coupling
@@ -61,53 +61,56 @@ function genQueryOptions(item: Item) {
   const optionsSlots = item.query.options.map(unwrapName).join(', ')
   const dataSlots = item.query.data.map(unwrapName).join(', ')
 
-  const enabled = item.required
-    .flatMap((x) => {
-      const get = (y: Extract<typeof x, string | { name: string }>) => {
-        const o = 'options'
-        if (typeof y === 'string') return `${o}.${y}`
-        return y.cond(o, y.name)
-      }
-      if (Array.isArray(x)) return `Boolean(${x.map(get).join(' || ')})`
-      return get(x)
-    })
-    .join(' && ')
-  const queryKeySkippedParameters = ['abi', 'connector']
-  const getParameterPrefix = (
-    y: Extract<(typeof item)['required'][number], string | { name: string }>,
-  ) =>
-    queryKeySkippedParameters.includes(unwrapName(y)) ? 'options' : 'parameters'
-  const filteredProperties = [
-    ...new Set(
-      item.required
-        .flatMap((x) => (Array.isArray(x) ? x : [x]).map(unwrapName))
-        .filter((x) => queryKeySkippedParameters.includes(x)),
-    ).values(),
-  ]
-  const hasConnectorUid = filteredProperties.includes('connector')
+  const queryKeySkipped = ['abi', 'connector']
+  const getParameterPrefix = (prop: requiredItem) =>
+    queryKeySkipped.includes(unwrapName(prop)) ? 'options' : 'parameters'
 
-  const requiredChecks = item.required
-    .map((x) => {
-      const get = (y: Extract<typeof x, string | { name: string }>) => {
-        const o = getParameterPrefix(y)
-        if (typeof y === 'string') return `${o}.${y}`
-        return y.cond(o, y.name)
-      }
-      if (Array.isArray(x))
-        return `if (${x.map((y) => `!${get(y)}`).join(' && ')}) throw new Error('${x.length > 2 ? x.map((y, i) => `${i === x.length - 1 ? 'or ' : ''}${unwrapName(y)}`).join(', ') : x.map(unwrapName).join(' or ')} is required')`
-      return `if (!${get(x)}) throw new Error('${unwrapName(x)} is required')`
-    })
-    .join('\n')
+  const enabled = (() => {
+    const o = 'options'
+    if (typeof item.required === 'function') return item.required(o).cond
+    const get = (
+      prop: string | { name: string; cond: (o: string, n: string) => string },
+    ) => {
+      if (typeof prop === 'string') return `${o}.${prop}`
+      return prop.cond(o, prop.name)
+    }
+    return item.required
+      .flatMap((x) => {
+        if (Array.isArray(x)) return `Boolean(${x.map(get).join(' || ')})`
+        return get(x)
+      })
+      .join(' && ')
+  })()
+  const requiredChecks = (() => {
+    if (typeof item.required === 'function') {
+      const res = item.required('options', 'parameters')
+      return `if (!(${res.cond})) throw new Error('${res.message}')`
+    }
+    const get = (prop: requiredItem) => {
+      const o = getParameterPrefix(prop)
+      if (typeof prop === 'string') return `${o}.${prop}`
+      return prop.cond(o, prop.name)
+    }
+    return item.required
+      .map((x) => {
+        if (Array.isArray(x))
+          return `if (${x.map((y) => `!${get(y)}`).join(' && ')}) throw new Error('${x.length > 2 ? x.map((y, i) => `${i === x.length - 1 ? 'or ' : ''}${unwrapName(y)}`).join(', ') : x.map(unwrapName).join(' or ')} is required')`
+        return `if (!${get(x)}) throw new Error('${unwrapName(x)} is required')`
+      })
+      .join('\n')
+  })()
   const requiredParameters = [
-    ...item.required.flatMap((x) => {
-      const get = (y: Extract<typeof x, string | { name: string }>) => {
-        const o = getParameterPrefix(y)
-        if (typeof y === 'string') return `${o}.${y}`
-        return `${y.cond(o, y.name)} ? ${o}.${y.name} : undefined`
-      }
-      if (Array.isArray(x)) return x.map((y) => `${unwrapName(y)}: ${get(y)}`)
-      return `${unwrapName(x)}: ${get(x)}`
-    }),
+    ...(typeof item.required === 'function' ? [] : item.required).flatMap(
+      (x) => {
+        const get = (prop: requiredItem) => {
+          const o = getParameterPrefix(prop)
+          if (typeof prop === 'string') return `${o}.${prop}`
+          return `${prop.cond(o, prop.name)} ? ${o}.${prop.name} : undefined`
+        }
+        if (Array.isArray(x)) return x.map((y) => `${unwrapName(y)}: ${get(y)}`)
+        return `${unwrapName(x)}: ${get(x)}`
+      },
+    ),
     ...(item.query.skipped?.map((x) => `${unwrapName(x)}: options.${x}`) ?? []),
   ].join(', ')
 
@@ -116,6 +119,19 @@ function genQueryOptions(item: Item) {
     item.query.optionsType ??
     ((t: string, typePrefix: string, slots: string) =>
       `${t}.Compute<${t}.ExactPartial<${typePrefix}Parameters<${slots}>> & ScopeKeyParameter>`)
+
+  const hasConnectorUid = (() => {
+    if (typeof item.required === 'function')
+      return /options\.connector(?:\s|$)/.test(item.required('options').cond)
+    const filteredProperties = [
+      ...new Set(
+        item.required
+          .flatMap((x) => (Array.isArray(x) ? x : [x]).map(unwrapName))
+          .filter((x) => queryKeySkipped.includes(x)),
+      ).values(),
+    ]
+    return filteredProperties.includes('connector')
+  })()
 
   return `
 import { type QueryObserverOptions } from '@tanstack/query-core'
@@ -184,8 +200,8 @@ function getTypeParameter(
           name: item,
           type:
             item === 'chainId' ? "config['chains'][number]['id']" : 'Config',
-          default:
-            item === 'chainId' ? "config['chains'][number]['id']" : 'Config',
+          // default:
+          // item === 'chainId' ? "config['chains'][number]['id']" : 'Config',
           const: false,
         }
   return `\n${opts.const && 'const' in unwrapped && unwrapped.const ? 'const ' : ''}${unwrapped.name}${unwrapped.type ? ` extends ${unwrapped.type}` : ''}${opts.default && 'default' in unwrapped && unwrapped.default ? `= ${unwrapped.default}` : ''},`

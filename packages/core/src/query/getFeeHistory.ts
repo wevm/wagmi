@@ -1,5 +1,4 @@
-import type { QueryOptions } from '@tanstack/query-core'
-
+import type { QueryObserverOptions } from '@tanstack/query-core'
 import {
   type GetFeeHistoryErrorType,
   type GetFeeHistoryParameters,
@@ -8,18 +7,14 @@ import {
 } from '../actions/getFeeHistory.js'
 import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
-import type { Compute, PartialBy } from '../types/utils.js'
+import type * as t from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
 export type GetFeeHistoryOptions<
   config extends Config,
   chainId extends config['chains'][number]['id'],
-> = Compute<
-  PartialBy<
-    GetFeeHistoryParameters<config, chainId>,
-    'blockCount' | 'rewardPercentiles'
-  > &
-    ScopeKeyParameter
+> = t.Compute<
+  t.ExactPartial<GetFeeHistoryParameters<config, chainId>> & ScopeKeyParameter
 >
 
 export function getFeeHistoryQueryOptions<
@@ -27,32 +22,30 @@ export function getFeeHistoryQueryOptions<
   chainId extends config['chains'][number]['id'],
 >(config: config, options: GetFeeHistoryOptions<config, chainId> = {}) {
   return {
-    async queryFn({ queryKey }) {
-      const {
-        blockCount,
-        rewardPercentiles,
-        scopeKey: _,
-        ...parameters
-      } = queryKey[1]
-      if (!blockCount) throw new Error('blockCount is required')
-      if (!rewardPercentiles) throw new Error('rewardPercentiles is required')
-      const feeHistory = await getFeeHistory(config, {
-        ...(parameters as GetFeeHistoryParameters),
-        blockCount,
-        rewardPercentiles,
+    enabled: Boolean(options.blockCount && options.rewardPercentiles),
+    queryFn: async (context) => {
+      const { scopeKey: _, ...parameters } = context.queryKey[1]
+      if (!parameters.blockCount) throw new Error('blockCount is required')
+      if (!parameters.rewardPercentiles)
+        throw new Error('rewardPercentiles is required')
+      const result = await getFeeHistory(config, {
+        ...parameters,
+        blockCount: parameters.blockCount,
+        rewardPercentiles: parameters.rewardPercentiles,
       })
-      return feeHistory ?? null
+      return result ?? null
     },
     queryKey: getFeeHistoryQueryKey(options),
-  } as const satisfies QueryOptions<
+  } as const satisfies QueryObserverOptions<
     GetFeeHistoryQueryFnData,
     GetFeeHistoryErrorType,
     GetFeeHistoryData,
+    GetFeeHistoryQueryFnData,
     GetFeeHistoryQueryKey<config, chainId>
   >
 }
 
-export type GetFeeHistoryQueryFnData = GetFeeHistoryReturnType
+export type GetFeeHistoryQueryFnData = t.Compute<GetFeeHistoryReturnType>
 
 export type GetFeeHistoryData = GetFeeHistoryQueryFnData
 
@@ -60,7 +53,7 @@ export function getFeeHistoryQueryKey<
   config extends Config,
   chainId extends config['chains'][number]['id'],
 >(options: GetFeeHistoryOptions<config, chainId> = {}) {
-  return ['feeHistory', filterQueryOptions(options)] as const
+  return ['getFeeHistory', filterQueryOptions(options)] as const
 }
 
 export type GetFeeHistoryQueryKey<

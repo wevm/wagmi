@@ -20,7 +20,7 @@ export type EstimateFeesPerGasOptions<
 
 export function estimateFeesPerGasQueryOptions<
   type extends FeeValuesType = 'eip1559',
-  config extends Config = Config,
+  config extends Config,
 >(config: config, options: EstimateFeesPerGasOptions<type, config> = {}) {
   return {
     queryFn: async (context) => {
@@ -46,7 +46,7 @@ export type EstimateFeesPerGasData<type extends FeeValuesType> =
 
 export function estimateFeesPerGasQueryKey<
   type extends FeeValuesType = 'eip1559',
-  config extends Config = Config,
+  config extends Config,
 >(options: EstimateFeesPerGasOptions<type, config> = {}) {
   return ['estimateFeesPerGas', filterQueryOptions(options)] as const
 }

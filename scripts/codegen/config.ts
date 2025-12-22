@@ -146,7 +146,15 @@ export const items = [
       options: ['config'],
     },
   },
-  // TODO: getFeeHistory
+  {
+    name: 'getFeeHistory',
+    required: ['blockCount', 'rewardPercentiles'],
+    query: {
+      imports: [],
+      data: [],
+      options: ['config', 'chainId'],
+    },
+  },
   {
     name: 'getGasPrice',
     required: [],
@@ -175,8 +183,37 @@ export const items = [
       options: ['config'],
     },
   },
-  // TODO: getTransaction
-  // TODO: getTransactionConfirmations
+  {
+    name: 'getTransaction',
+    required: (o, p = o) => ({
+      cond: `${p}.hash || (${p}.index && (${p}.blockHash || ${p}.blockNumber || ${p}.blockTag))`,
+      message: 'hash OR index AND blockHash, blockNumber, blockTag is required',
+    }),
+    query: {
+      imports: [],
+      data: ['config', 'chainId'],
+      options: ['config', 'chainId'],
+      cast: {
+        parameters: true,
+        return: true,
+      },
+    },
+  },
+  {
+    name: 'getTransactionConfirmations',
+    required: ['hash', 'transactionReceipt'],
+    query: {
+      imports: [],
+      data: [],
+      options: ['config', 'chainId'],
+      optionsType: (t, typePrefix, slots) =>
+        `${t}.UnionExactPartial<${typePrefix}Parameters<${slots}>> & ScopeKeyParameter`,
+      cast: {
+        options: true,
+        parameters: true,
+      },
+    },
+  },
   {
     name: 'getTransactionCount',
     required: ['address'],
@@ -186,7 +223,15 @@ export const items = [
       options: ['config'],
     },
   },
-  // TODO: getTransactionReceipt
+  {
+    name: 'getTransactionReceipt',
+    required: ['hash'],
+    query: {
+      imports: [],
+      data: ['config', 'chainId'],
+      options: ['config', 'chainId'],
+    },
+  },
   {
     name: 'prepareTransactionRequest',
     required: ['to'],
@@ -351,16 +396,21 @@ export const items = [
   },
 ] satisfies Item[]
 
+export type requiredItem =
+  | string
+  | {
+      name: string
+      cond: (options: string, name: string) => string
+    }
+
 export type Item = {
   name: string
-  required: (
-    | string
-    | { name: string; cond: (options: string, name: string) => string }
-    | (
-        | string
-        | { name: string; cond: (options: string, name: string) => string }
-      )[]
-  )[]
+  required:
+    | ((
+        options: string,
+        parameters?: string,
+      ) => { cond: string; message: string })
+    | (requiredItem | requiredItem[])[]
   query: {
     imports: (
       | 'Abi'

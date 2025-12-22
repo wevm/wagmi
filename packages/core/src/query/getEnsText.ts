@@ -14,7 +14,7 @@ export type GetEnsTextOptions<config extends Config> = t.Compute<
   t.ExactPartial<GetEnsTextParameters<config>> & ScopeKeyParameter
 >
 
-export function getEnsTextQueryOptions<config extends Config = Config>(
+export function getEnsTextQueryOptions<config extends Config>(
   config: config,
   options: GetEnsTextOptions<config> = {},
 ) {
@@ -43,7 +43,7 @@ export type GetEnsTextQueryFnData = t.Compute<GetEnsTextReturnType>
 
 export type GetEnsTextData = GetEnsTextQueryFnData
 
-export function getEnsTextQueryKey<config extends Config = Config>(
+export function getEnsTextQueryKey<config extends Config>(
   options: GetEnsTextOptions<config> = {},
 ) {
   return ['getEnsText', filterQueryOptions(options)] as const

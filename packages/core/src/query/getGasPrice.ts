@@ -18,9 +18,8 @@ export type GetGasPriceOptions<
 >
 
 export function getGasPriceQueryOptions<
-  config extends Config = Config,
-  chainId extends
-    config['chains'][number]['id'] = config['chains'][number]['id'],
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
 >(config: config, options: GetGasPriceOptions<config, chainId> = {}) {
   return {
     queryFn: async (context) => {
@@ -43,9 +42,8 @@ export type GetGasPriceQueryFnData = t.Compute<GetGasPriceReturnType>
 export type GetGasPriceData = GetGasPriceQueryFnData
 
 export function getGasPriceQueryKey<
-  config extends Config = Config,
-  chainId extends
-    config['chains'][number]['id'] = config['chains'][number]['id'],
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
 >(options: GetGasPriceOptions<config, chainId> = {}) {
   return ['getGasPrice', filterQueryOptions(options)] as const
 }

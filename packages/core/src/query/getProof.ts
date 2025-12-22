@@ -14,7 +14,7 @@ export type GetProofOptions<config extends Config> = t.Compute<
   t.ExactPartial<GetProofParameters<config>> & ScopeKeyParameter
 >
 
-export function getProofQueryOptions<config extends Config = Config>(
+export function getProofQueryOptions<config extends Config>(
   config: config,
   options: GetProofOptions<config> = {},
 ) {
@@ -45,7 +45,7 @@ export type GetProofQueryFnData = t.Compute<GetProofReturnType>
 
 export type GetProofData = GetProofQueryFnData
 
-export function getProofQueryKey<config extends Config = Config>(
+export function getProofQueryKey<config extends Config>(
   options: GetProofOptions<config> = {},
 ) {
   return ['getProof', filterQueryOptions(options)] as const

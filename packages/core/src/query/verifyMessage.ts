@@ -14,7 +14,7 @@ export type VerifyMessageOptions<config extends Config> = t.Compute<
   t.ExactPartial<VerifyMessageParameters<config>> & ScopeKeyParameter
 >
 
-export function verifyMessageQueryOptions<config extends Config = Config>(
+export function verifyMessageQueryOptions<config extends Config>(
   config: config,
   options: VerifyMessageOptions<config> = {},
 ) {
@@ -47,7 +47,7 @@ export type VerifyMessageQueryFnData = t.Compute<VerifyMessageReturnType>
 
 export type VerifyMessageData = VerifyMessageQueryFnData
 
-export function verifyMessageQueryKey<config extends Config = Config>(
+export function verifyMessageQueryKey<config extends Config>(
   options: VerifyMessageOptions<config> = {},
 ) {
   return ['verifyMessage', filterQueryOptions(options)] as const

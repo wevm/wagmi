@@ -14,7 +14,7 @@ export type GetEnsAddressOptions<config extends Config> = t.Compute<
   t.ExactPartial<GetEnsAddressParameters<config>> & ScopeKeyParameter
 >
 
-export function getEnsAddressQueryOptions<config extends Config = Config>(
+export function getEnsAddressQueryOptions<config extends Config>(
   config: config,
   options: GetEnsAddressOptions<config> = {},
 ) {
@@ -43,7 +43,7 @@ export type GetEnsAddressQueryFnData = t.Compute<GetEnsAddressReturnType>
 
 export type GetEnsAddressData = GetEnsAddressQueryFnData
 
-export function getEnsAddressQueryKey<config extends Config = Config>(
+export function getEnsAddressQueryKey<config extends Config>(
   options: GetEnsAddressOptions<config> = {},
 ) {
   return ['getEnsAddress', filterQueryOptions(options)] as const

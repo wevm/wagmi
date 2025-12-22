@@ -14,7 +14,7 @@ export type GetEnsResolverOptions<config extends Config> = t.Compute<
   t.ExactPartial<GetEnsResolverParameters<config>> & ScopeKeyParameter
 >
 
-export function getEnsResolverQueryOptions<config extends Config = Config>(
+export function getEnsResolverQueryOptions<config extends Config>(
   config: config,
   options: GetEnsResolverOptions<config> = {},
 ) {
@@ -43,7 +43,7 @@ export type GetEnsResolverQueryFnData = t.Compute<GetEnsResolverReturnType>
 
 export type GetEnsResolverData = GetEnsResolverQueryFnData
 
-export function getEnsResolverQueryKey<config extends Config = Config>(
+export function getEnsResolverQueryKey<config extends Config>(
   options: GetEnsResolverOptions<config> = {},
 ) {
   return ['getEnsResolver', filterQueryOptions(options)] as const

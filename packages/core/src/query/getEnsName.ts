@@ -14,7 +14,7 @@ export type GetEnsNameOptions<config extends Config> = t.Compute<
   t.ExactPartial<GetEnsNameParameters<config>> & ScopeKeyParameter
 >
 
-export function getEnsNameQueryOptions<config extends Config = Config>(
+export function getEnsNameQueryOptions<config extends Config>(
   config: config,
   options: GetEnsNameOptions<config> = {},
 ) {
@@ -43,7 +43,7 @@ export type GetEnsNameQueryFnData = t.Compute<GetEnsNameReturnType>
 
 export type GetEnsNameData = GetEnsNameQueryFnData
 
-export function getEnsNameQueryKey<config extends Config = Config>(
+export function getEnsNameQueryKey<config extends Config>(
   options: GetEnsNameOptions<config> = {},
 ) {
   return ['getEnsName', filterQueryOptions(options)] as const

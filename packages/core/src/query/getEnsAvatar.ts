@@ -14,7 +14,7 @@ export type GetEnsAvatarOptions<config extends Config> = t.Compute<
   t.ExactPartial<GetEnsAvatarParameters<config>> & ScopeKeyParameter
 >
 
-export function getEnsAvatarQueryOptions<config extends Config = Config>(
+export function getEnsAvatarQueryOptions<config extends Config>(
   config: config,
   options: GetEnsAvatarOptions<config> = {},
 ) {
@@ -43,7 +43,7 @@ export type GetEnsAvatarQueryFnData = t.Compute<GetEnsAvatarReturnType>
 
 export type GetEnsAvatarData = GetEnsAvatarQueryFnData
 
-export function getEnsAvatarQueryKey<config extends Config = Config>(
+export function getEnsAvatarQueryKey<config extends Config>(
   options: GetEnsAvatarOptions<config> = {},
 ) {
   return ['getEnsAvatar', filterQueryOptions(options)] as const

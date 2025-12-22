@@ -14,7 +14,7 @@ export type GetTransactionCountOptions<config extends Config> = t.Compute<
   t.ExactPartial<GetTransactionCountParameters<config>> & ScopeKeyParameter
 >
 
-export function getTransactionCountQueryOptions<config extends Config = Config>(
+export function getTransactionCountQueryOptions<config extends Config>(
   config: config,
   options: GetTransactionCountOptions<config> = {},
 ) {
@@ -44,7 +44,7 @@ export type GetTransactionCountQueryFnData =
 
 export type GetTransactionCountData = GetTransactionCountQueryFnData
 
-export function getTransactionCountQueryKey<config extends Config = Config>(
+export function getTransactionCountQueryKey<config extends Config>(
   options: GetTransactionCountOptions<config> = {},
 ) {
   return ['getTransactionCount', filterQueryOptions(options)] as const
