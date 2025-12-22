@@ -1,4 +1,4 @@
-import { abi } from '@wagmi/test'
+import { abi, config } from '@wagmi/test'
 import { type Address, http } from 'viem'
 import { celo, mainnet } from 'viem/chains'
 import { expectTypeOf, test } from 'vitest'
@@ -8,6 +8,39 @@ import {
   type SimulateContractOptions,
   simulateContractQueryOptions,
 } from './simulateContract.js'
+
+test('default', async () => {
+  const options = simulateContractQueryOptions(config, {
+    address: '0x',
+    abi: abi.erc20,
+    functionName: 'transferFrom',
+    args: ['0x', '0x', 123n],
+    chainId: 1,
+  })
+  const response = await options.queryFn({} as any)
+
+  expectTypeOf(response).toMatchTypeOf<{
+    result: boolean
+    request: {
+      chainId: 1
+      abi: readonly [
+        {
+          readonly name: 'transferFrom'
+          readonly type: 'function'
+          readonly stateMutability: 'nonpayable'
+          readonly inputs: readonly [
+            { readonly type: 'address'; readonly name: 'sender' },
+            { readonly type: 'address'; readonly name: 'recipient' },
+            { readonly type: 'uint256'; readonly name: 'amount' },
+          ]
+          readonly outputs: readonly [{ type: 'bool' }]
+        },
+      ]
+      functionName: 'transferFrom'
+      args: readonly [Address, Address, bigint]
+    }
+  }>()
+})
 
 test('chain formatters', () => {
   const config = createConfig({

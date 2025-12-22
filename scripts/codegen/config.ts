@@ -1,8 +1,9 @@
 // TODO (query): infiniteReadContracts, readContracts
-// TODO (mutation): connect, deployContract, disconnect, reconnect, sendCalls, sendCallsSync, sendTransaction, sendTransactionSync, showCallsStatus, signMessage, signTypedData, switchChain, switchConnection, watchAsset, writeContract
+// TODO (mutation): deployContract, sendCalls, sendCallsSync, sendTransaction, sendTransactionSync, showCallsStatus, signTypedData, switchChain, switchConnection, writeContract
 
 export const items = [
   {
+    type: 'query',
     name: 'call',
     required: [],
     query: {
@@ -15,6 +16,43 @@ export const items = [
     },
   },
   {
+    type: 'mutation',
+    name: 'connect',
+    query: {
+      imports: [
+        { names: ['Connector'], path: '../createConfig.js' },
+        {
+          names: ['CreateConnectorFn'],
+          path: '../connectors/createConnector.js',
+        },
+      ],
+      data: [
+        { name: 'config', type: 'Config' },
+        { name: 'connector', type: 'Connector | CreateConnectorFn' },
+        { name: 'withCapabilities', type: 'boolean' },
+      ],
+      variables: [
+        { name: 'config', type: 'Config' },
+        {
+          name: 'connector',
+          type: "config['connectors'][number] | Connector | CreateConnectorFn",
+        },
+        { name: 'withCapabilities', type: 'boolean', default: 'false' },
+      ],
+    },
+  },
+  {
+    type: 'mutation',
+    name: 'disconnect',
+    query: {
+      imports: [],
+      data: [],
+      variables: [],
+      optionalParameters: true,
+    },
+  },
+  {
+    type: 'query',
     name: 'estimateFeesPerGas',
     required: [],
     query: {
@@ -27,6 +65,7 @@ export const items = [
     },
   },
   {
+    type: 'query',
     name: 'estimateGas',
     required: [['account', 'connector']],
     query: {
@@ -45,6 +84,7 @@ export const items = [
     },
   },
   {
+    type: 'query',
     name: 'estimateMaxPriorityFeePerGas',
     required: [],
     query: {
@@ -54,6 +94,7 @@ export const items = [
     },
   },
   {
+    type: 'query',
     name: 'getBalance',
     required: ['address'],
     query: {
@@ -63,6 +104,7 @@ export const items = [
     },
   },
   {
+    type: 'query',
     name: 'getBlock',
     required: [],
     query: {
@@ -84,6 +126,7 @@ export const items = [
     },
   },
   {
+    type: 'query',
     name: 'getBlockNumber',
     required: [],
     query: {
@@ -93,6 +136,7 @@ export const items = [
     },
   },
   {
+    type: 'query',
     name: 'getBlockTransactionCount',
     required: [],
     query: {
@@ -102,6 +146,7 @@ export const items = [
     },
   },
   {
+    type: 'query',
     name: 'getBytecode',
     required: ['address'],
     query: {
@@ -114,6 +159,7 @@ export const items = [
     },
   },
   {
+    type: 'query',
     name: 'getCallsStatus',
     required: ['id', 'connector'],
     query: {
@@ -123,6 +169,7 @@ export const items = [
     },
   },
   {
+    type: 'query',
     name: 'getCapabilities',
     required: ['connector'],
     query: {
@@ -145,6 +192,7 @@ export const items = [
     },
   },
   {
+    type: 'query',
     name: 'getConnectorClient',
     required: [
       {
@@ -166,6 +214,7 @@ export const items = [
     },
   },
   {
+    type: 'query',
     name: 'getEnsAddress',
     required: ['name'],
     query: {
@@ -175,6 +224,7 @@ export const items = [
     },
   },
   {
+    type: 'query',
     name: 'getEnsAvatar',
     required: ['name'],
     query: {
@@ -184,6 +234,7 @@ export const items = [
     },
   },
   {
+    type: 'query',
     name: 'getEnsName',
     required: ['address'],
     query: {
@@ -193,6 +244,7 @@ export const items = [
     },
   },
   {
+    type: 'query',
     name: 'getEnsResolver',
     required: ['name'],
     query: {
@@ -202,6 +254,7 @@ export const items = [
     },
   },
   {
+    type: 'query',
     name: 'getEnsText',
     required: ['name', 'key'],
     query: {
@@ -211,6 +264,7 @@ export const items = [
     },
   },
   {
+    type: 'query',
     name: 'getFeeHistory',
     required: ['blockCount', 'rewardPercentiles'],
     query: {
@@ -220,6 +274,7 @@ export const items = [
     },
   },
   {
+    type: 'query',
     name: 'getGasPrice',
     required: [],
     query: {
@@ -229,6 +284,7 @@ export const items = [
     },
   },
   {
+    type: 'query',
     name: 'getProof',
     required: ['address', 'storageKeys'],
     query: {
@@ -238,6 +294,7 @@ export const items = [
     },
   },
   {
+    type: 'query',
     name: 'getStorageAt',
     required: ['address', 'slot'],
     query: {
@@ -250,6 +307,7 @@ export const items = [
     },
   },
   {
+    type: 'query',
     name: 'getTransaction',
     required: (o, p = o) => ({
       cond: `${p}.hash || (${p}.index && (${p}.blockHash || ${p}.blockNumber || ${p}.blockTag))`,
@@ -266,6 +324,7 @@ export const items = [
     },
   },
   {
+    type: 'query',
     name: 'getTransactionConfirmations',
     required: ['hash', 'transactionReceipt'],
     query: {
@@ -281,6 +340,7 @@ export const items = [
     },
   },
   {
+    type: 'query',
     name: 'getTransactionCount',
     required: ['address'],
     query: {
@@ -290,6 +350,7 @@ export const items = [
     },
   },
   {
+    type: 'query',
     name: 'getTransactionReceipt',
     required: ['hash'],
     query: {
@@ -299,6 +360,7 @@ export const items = [
     },
   },
   {
+    type: 'query',
     name: 'getWalletClient',
     required: [
       {
@@ -320,6 +382,7 @@ export const items = [
     },
   },
   {
+    type: 'query',
     name: 'prepareTransactionRequest',
     required: ['to'],
     query: {
@@ -354,6 +417,7 @@ export const items = [
     },
   },
   {
+    type: 'query',
     name: 'readContract',
     required: [
       [
@@ -404,6 +468,38 @@ export const items = [
     },
   },
   {
+    type: 'mutation',
+    name: 'reconnect',
+    query: {
+      imports: [],
+      data: [],
+      variables: [],
+      optionalParameters: true,
+    },
+  },
+  // {
+  //   type: 'mutation',
+  //   name: 'sendTransaction',
+  //   query: {
+  //     imports: [],
+  //     data: [],
+  //     variables: [
+  //       { name: 'config', type: 'Config' },
+  //       { name: 'chainId', type: "config['chains'][number]['id']" },
+  //     ],
+  //   },
+  // },
+  {
+    type: 'mutation',
+    name: 'signMessage',
+    query: {
+      imports: [],
+      data: [],
+      variables: [],
+    },
+  },
+  {
+    type: 'query',
     name: 'simulateContract',
     required: ['abi', 'address', 'connector', 'functionName'],
     query: {
@@ -435,6 +531,7 @@ export const items = [
     },
   },
   {
+    type: 'query',
     name: 'verifyMessage',
     required: ['address', 'message', 'signature'],
     query: {
@@ -444,6 +541,7 @@ export const items = [
     },
   },
   {
+    type: 'query',
     name: 'verifyTypedData',
     required: ['address', 'message', 'primaryType', 'signature', 'types'],
     query: {
@@ -466,6 +564,7 @@ export const items = [
     },
   },
   {
+    type: 'query',
     name: 'waitForCallsStatus',
     required: ['id', 'connector'],
     query: {
@@ -478,6 +577,7 @@ export const items = [
     },
   },
   {
+    type: 'query',
     name: 'waitForTransactionReceipt',
     required: ['hash'],
     query: {
@@ -490,49 +590,79 @@ export const items = [
       skipped: ['onReplaced'],
     },
   },
+  {
+    type: 'mutation',
+    name: 'watchAsset',
+    query: {
+      imports: [],
+      data: [],
+      variables: [],
+    },
+  },
 ] satisfies Item[]
 
-export type Item = {
-  name: string
-  required:
-    | ((
-        options: string,
-        parameters?: string,
-      ) => { cond: string; message: string })
-    | (requiredItem | requiredItem[])[]
-  query: {
-    imports: (
-      | 'Abi'
-      | 'BlockTag'
-      | 'ContractFunctionArgs'
-      | 'ContractFunctionName'
-      | 'FeeValuesType'
-      | 'PrepareTransactionRequestRequest'
-      | 'TypedData'
-      | { names: string[]; path: string }
-    )[]
-    options: (
-      | 'chainId'
-      | 'config'
-      | (typeParameter & { const?: true; default?: string })
-    )[]
-    optionsType?: (
-      t: string,
-      typePrefix: string,
-      slots: string,
-      extras: string,
-    ) => string
-    data: ('chainId' | 'config' | typeParameter)[]
-    cast?: {
-      options?: true
-      parameters?: true
-      queryKey?: true
-      return?: true
+export type Item =
+  | {
+      type: 'mutation'
+      name: string
+      query: {
+        imports: (
+          | 'Abi'
+          | 'BlockTag'
+          | 'ContractFunctionArgs'
+          | 'ContractFunctionName'
+          | 'FeeValuesType'
+          | 'PrepareTransactionRequestRequest'
+          | 'TypedData'
+          | { names: string[]; path: string }
+        )[]
+        data: typeParameter[]
+        variables: (typeParameter & { const?: true; default?: string })[]
+        optionalParameters?: true
+      }
     }
-    skipped?: string[]
-    extraOptions?: { name: string; default: string }[]
-  }
-}
+  | {
+      type: 'query'
+      name: string
+      required:
+        | ((
+            options: string,
+            parameters?: string,
+          ) => { cond: string; message: string })
+        | (requiredItem | requiredItem[])[]
+      query: {
+        imports: (
+          | 'Abi'
+          | 'BlockTag'
+          | 'ContractFunctionArgs'
+          | 'ContractFunctionName'
+          | 'FeeValuesType'
+          | 'PrepareTransactionRequestRequest'
+          | 'TypedData'
+          | { names: string[]; path: string }
+        )[]
+        options: (
+          | 'chainId'
+          | 'config'
+          | (typeParameter & { const?: true; default?: string })
+        )[]
+        optionsType?: (
+          t: string,
+          typePrefix: string,
+          slots: string,
+          extras: string,
+        ) => string
+        data: ('chainId' | 'config' | typeParameter)[]
+        cast?: {
+          options?: true
+          parameters?: true
+          queryKey?: true
+          return?: true
+        }
+        skipped?: string[]
+        extraOptions?: { name: string; default: string }[]
+      }
+    }
 
 export type typeParameter = { name: string; type: string }
 

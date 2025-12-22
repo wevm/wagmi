@@ -63,7 +63,7 @@ export type UseReadContractReturnType<
 export function useReadContract<
   const abi extends Abi | readonly unknown[],
   functionName extends ContractFunctionName<abi, 'pure' | 'view'>,
-  args extends ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
+  const args extends ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
   config extends Config = ResolvedRegister['config'],
   selectData = ReadContractData<abi, functionName, args>,
 >(
@@ -85,6 +85,7 @@ export function useReadContract<
   return useQuery({
     ...query,
     ...options,
-    structuralSharing: query.structuralSharing ?? structuralSharing,
+    enabled: options.enabled && (query.enabled ?? true),
+    structuralSharing: query.structuralSharing ?? options.structuralSharing,
   })
 }
