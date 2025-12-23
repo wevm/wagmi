@@ -1,5 +1,5 @@
 ---
-"wagmi": patch
+"@wagmi/connectors": patch
 ---
 
-Fixed `useReadContract` return type inference for ABI function overloads.
+Adds `/* webpackIgnore */` comment to fix dynamic imports in Webpack/Turbopack
