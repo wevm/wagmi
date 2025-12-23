@@ -80,12 +80,7 @@ export function readContractQueryKey<
   functionName extends ContractFunctionName<abi, 'pure' | 'view'>,
   args extends ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
   config extends Config,
->(
-  {
-    abi: _,
-    ...options
-  }: ReadContractOptions<abi, functionName, args, config> = {} as any,
-) {
+>(options: ReadContractOptions<abi, functionName, args, config> = {} as any) {
   return ['readContract', filterQueryOptions(options)] as const
 }
 

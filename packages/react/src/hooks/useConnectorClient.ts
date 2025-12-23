@@ -69,45 +69,29 @@ export function useConnectorClient<
   const { query = {}, ...rest } = parameters
 
   const config = useConfig(rest)
-  const queryClient = useQueryClient()
-  const { address, connector, status } = useConnection({ config })
   const chainId = useChainId({ config })
-  const activeConnector = parameters.connector ?? connector
-
-  const { queryKey, ...options } = getConnectorClientQueryOptions<
-    config,
-    chainId
-  >(config, {
+  const { address, connector } = useConnection({ config })
+  const options = getConnectorClientQueryOptions<config, chainId>(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
-    connector: activeConnector,
+    connector: parameters.connector ?? connector,
   })
-  const enabled = Boolean(
-    (status === 'connected' ||
-      (status === 'reconnecting' && activeConnector?.getProvider)) &&
-      (query.enabled ?? true),
-  )
+  const enabled = options.enabled && (query.enabled ?? true)
 
+  const queryClient = useQueryClient()
   const addressRef = useRef(address)
   // biome-ignore lint/correctness/useExhaustiveDependencies: `queryKey` not required
   useEffect(() => {
     const previousAddress = addressRef.current
     if (!address && previousAddress) {
       // remove when account is disconnected
-      queryClient.removeQueries({ queryKey })
+      queryClient.removeQueries({ queryKey: options.queryKey })
       addressRef.current = undefined
     } else if (address !== previousAddress) {
       // invalidate when address changes
-      queryClient.invalidateQueries({ queryKey })
+      queryClient.invalidateQueries({ queryKey: options.queryKey })
       addressRef.current = address
     }
   }, [address, queryClient])
-
-  return useQuery({
-    ...query,
-    ...options,
-    queryKey,
-    enabled,
-    staleTime: Number.POSITIVE_INFINITY,
-  })
+  return useQuery({ ...query, ...options, enabled })
 }
