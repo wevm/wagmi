@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "pnpm run --r --filter \"./packages/**\" build",
+    "build": "pnpm run --filter @wagmi/core --filter @wagmi/cli build && pnpm run --filter @wagmi/connectors build && pnpm run --filter wagmi --filter @wagmi/vue build",
     "bench:types": "TYPES=true vitest bench-d.ts",
     "changeset:prepublish": "pnpm version:update && pnpm build && node scripts/formatPackageJson.ts && node scripts/generateProxyPackages.ts",
     "changeset:publish": "pnpm changeset:prepublish && changeset publish",
@@ -58,8 +58,8 @@
     "react-dom": "catalog:",
     "sherif": "^1.0.0",
     "simple-git-hooks": "^2.11.1",
-    "typescript": "5.9.2",
-    "viem": "2.43.2",
+    "typescript": "5.9.3",
+    "viem": "2.43.3",
     "vite-plugin-react-fallback-throttle": "^0.1.1",
     "vitest": "^4.0.8",
     "vitest-browser-react": "^2.0.2"

@@ -270,9 +270,16 @@ export function walletConnect(parameters: WalletConnectParameters) {
       async function initProvider() {
         const optionalChains = config.chains.map((x) => x.id) as [number]
         if (!optionalChains.length) return
-        const { EthereumProvider } = await import(
-          '@walletconnect/ethereum-provider'
-        )
+        const { EthereumProvider } = await (() => {
+          // safe webpack optional peer dependency dynamic import
+          try {
+            return import('@walletconnect/ethereum-provider')
+          } catch {
+            throw new Error(
+              'dependency "@walletconnect/ethereum-provider" not found',
+            )
+          }
+        })()
         return await EthereumProvider.init({
           ...parameters,
           disableProviderPing: true,

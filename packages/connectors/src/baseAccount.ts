@@ -217,7 +217,14 @@ export function baseAccount(parameters: BaseAccountParameters = {}) {
           }
         })()
 
-        const { createBaseAccountSDK } = await import('@base-org/account')
+        const { createBaseAccountSDK } = await (() => {
+          // safe webpack optional peer dependency dynamic import
+          try {
+            return import('@base-org/account')
+          } catch {
+            throw new Error('dependency "@base-org/account" not found')
+          }
+        })()
         const sdk = createBaseAccountSDK({
           ...parameters,
           appChainIds: config.chains.map((x) => x.id),

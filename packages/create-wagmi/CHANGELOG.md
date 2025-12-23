@@ -1,5 +1,11 @@
 # create-wagmi
 
+## 2.0.19
+
+### Patch Changes
+
+- Fixed Vite React template build by removing global Buffer patch ([#4900](https://github.com/wevm/wagmi/pull/4900))
+
 ## 2.0.18
 
 ### Patch Changes

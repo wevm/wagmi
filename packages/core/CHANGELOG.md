@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 3.0.1
+
+### Patch Changes
+
+- Fixed `readContract` return type inference for ABI function overloads. ([`058c8c1`](https://github.com/wevm/wagmi/commit/058c8c18459a69a4aa2141e34640273a06a819f4))
+
 ## 3.0.0
 
 ### Major Changes
