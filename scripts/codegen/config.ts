@@ -417,57 +417,6 @@ export const items = [
     },
   },
   {
-    type: 'query',
-    name: 'readContract',
-    required: [
-      [
-        'address',
-        {
-          name: 'code',
-          cond: (options, name) =>
-            `('${name}' in ${options} && ${options}.${name})`,
-        },
-      ],
-      'abi',
-      'functionName',
-    ],
-    query: {
-      imports: [
-        'Abi',
-        'ContractFunctionArgs',
-        'ContractFunctionName',
-        { names: ['structuralSharing'], path: './utils.js' },
-      ],
-      // biome-ignore format: no formatting
-      data: [
-        { name: "abi", type: "Abi | readonly unknown[]" },
-        { name: "functionName", type: "ContractFunctionName<abi, 'pure' | 'view'>" },
-        { name: "args", type: "ContractFunctionArgs<abi, 'pure' | 'view', functionName>" },
-      ],
-      // biome-ignore format: no formatting
-      options: [
-        { name: "abi", type: "Abi | readonly unknown[]", const: true },
-        { name: "functionName", type: "ContractFunctionName<abi, 'pure' | 'view'>" },
-        { name: "args", type: "ContractFunctionArgs<abi, 'pure' | 'view', functionName>", const: true },
-        'config',
-      ],
-      optionsType: (t, typePrefix, slots, extras) =>
-        `${t}.UnionExactPartial<${typePrefix}Parameters<${slots}>> & ${extras}`,
-      cast: {
-        options: true,
-        parameters: true,
-        queryKey: true,
-        return: true,
-      },
-      extraOptions: [
-        {
-          name: 'structuralSharing',
-          default: 'structuralSharing',
-        },
-      ],
-    },
-  },
-  {
     type: 'mutation',
     name: 'reconnect',
     query: {

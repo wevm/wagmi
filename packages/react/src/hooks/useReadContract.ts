@@ -1,5 +1,4 @@
 'use client'
-
 import type {
   Config,
   ReadContractErrorType,
@@ -12,7 +11,6 @@ import {
   type ReadContractQueryFnData,
   type ReadContractQueryKey,
   readContractQueryOptions,
-  structuralSharing,
 } from '@wagmi/core/query'
 import type { Abi, ContractFunctionArgs, ContractFunctionName } from 'viem'
 
@@ -82,10 +80,6 @@ export function useReadContract<
     config,
     { ...(parameters as any), chainId: parameters.chainId ?? chainId },
   )
-  return useQuery({
-    ...query,
-    ...options,
-    enabled: options.enabled && (query.enabled ?? true),
-    structuralSharing: query.structuralSharing ?? options.structuralSharing,
-  })
+  const enabled = options.enabled && (query.enabled ?? true)
+  return useQuery({ ...query, ...options, enabled })
 }
