@@ -151,7 +151,14 @@ export function coinbaseWallet(
     },
     async getProvider() {
       if (!walletProvider) {
-        const { createCoinbaseWalletSDK } = await import('@coinbase/wallet-sdk')
+        const { createCoinbaseWalletSDK } = await (() => {
+          // safe webpack optional peer dependency dynamic import
+          try {
+            return import('@coinbase/wallet-sdk')
+          } catch {
+            throw new Error('dependency "@coinbase/wallet-sdk" not found')
+          }
+        })()
         const sdk = createCoinbaseWalletSDK({
           ...parameters,
           appChainIds: config.chains.map((x) => x.id),
