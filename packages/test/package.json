@@ -1,19 +1,9 @@
 {
   "name": "@wagmi/test",
-  "description": "Test utils for wagmi",
   "private": true,
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/wevm/wagmi.git",
-    "directory": "packages/test"
-  },
   "scripts": {
-    "build": "pnpm run clean && pnpm run build:esm+types",
-    "build:esm+types": "tsc --project tsconfig.build.json --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
     "check:types": "tsc --noEmit",
-    "clean": "rm -rf dist tsconfig.tsbuildinfo",
-    "test:build": "publint --strict"
+    "clean": "rm -rf dist tsconfig.tsbuildinfo"
   },
   "files": [
     "dist/**",

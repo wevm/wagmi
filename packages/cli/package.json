@@ -9,7 +9,7 @@
     "directory": "packages/cli"
   },
   "scripts": {
-    "build": "pnpm run clean && pnpm run build:esm+types",
+    "build": "pnpm run build:esm+types",
     "build:esm+types": "tsc --project tsconfig.build.json --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
     "check:types": "tsc --noEmit",
     "clean": "rm -rf dist tsconfig.tsbuildinfo config plugins",
