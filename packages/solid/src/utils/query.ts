@@ -33,13 +33,6 @@ export type SolidMutationParameters<
   >
 >
 
-export type UseMutationParameters<
-  data = unknown,
-  error = Error,
-  variables = void,
-  context = unknown,
-> = SolidMutationParameters<data, error, variables, context>
-
 export type UseMutationReturnType<
   data = unknown,
   error = Error,
@@ -71,13 +64,6 @@ export type SolidQueryParameters<
       | undefined
   }
 >
-
-export type UseQueryParameters<
-  queryFnData = unknown,
-  error = DefaultError,
-  data = queryFnData,
-  queryKey extends QueryKey = QueryKey,
-> = Accessor<SolidQueryParameters<queryFnData, error, data, queryKey>>
 
 export type UseQueryReturnType<data = unknown, error = DefaultError> = Compute<
   UseQueryResult<data, error> & {
@@ -137,24 +123,6 @@ export type SolidInfiniteQueryParameters<
         >['initialData']
       | undefined
   }
->
-
-export type UseInfiniteQueryParameters<
-  queryFnData = unknown,
-  error = DefaultError,
-  data = queryFnData,
-  queryData = queryFnData,
-  queryKey extends QueryKey = QueryKey,
-  pageParam = unknown,
-> = Accessor<
-  SolidInfiniteQueryParameters<
-    queryFnData,
-    error,
-    data,
-    queryData,
-    queryKey,
-    pageParam
-  >
 >
 
 export type UseInfiniteQueryReturnType<

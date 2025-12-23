@@ -59,7 +59,7 @@ export function useReconnect<context = unknown>(
 
   const mutationOptions = createMemo(() => reconnectMutationOptions(config()))
   const mutation = useMutation(() => ({
-    ...(parameters().mutation ?? {}),
+    ...parameters().mutation,
     ...mutationOptions(),
   }))
 

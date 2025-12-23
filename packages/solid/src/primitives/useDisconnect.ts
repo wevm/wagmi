@@ -12,7 +12,7 @@ import { type Accessor, createMemo, mergeProps } from 'solid-js'
 
 import type { ConfigParameter } from '../types/properties.js'
 import type {
-  UseMutationParameters,
+  SolidMutationParameters,
   UseMutationReturnType,
 } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
@@ -21,7 +21,7 @@ import { useConnections } from './useConnections.js'
 export type SolidDisconnectParameters<context = unknown> = Compute<
   ConfigParameter & {
     mutation?:
-      | UseMutationParameters<
+      | SolidMutationParameters<
           DisconnectData,
           DisconnectErrorType,
           DisconnectVariables,
@@ -68,5 +68,5 @@ export function useDisconnect<context = unknown>(
     connectors: connections().map((connection) => connection.connector),
     disconnect: mutation.mutate,
     disconnectAsync: mutation.mutateAsync,
-  }) as UseDisconnectReturnType<context>
+  }) satisfies UseDisconnectReturnType<context>
 }

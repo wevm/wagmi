@@ -14,7 +14,7 @@ const contextValue = { foo: 'bar' } as const
 
 test('context', () => {
   const connect = useConnect(() => ({
-    mutation: () => ({
+    mutation: {
       onMutate(variables) {
         expectTypeOf(variables).toEqualTypeOf<{
           chainId?: number | undefined
@@ -81,7 +81,7 @@ test('context', () => {
         }>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
       },
-    }),
+    },
   }))
 
   expectTypeOf(connect.data).toEqualTypeOf<

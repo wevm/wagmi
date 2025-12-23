@@ -11,7 +11,7 @@ import { type Accessor, createEffect, mergeProps, onCleanup } from 'solid-js'
 
 import type { ConfigParameter } from '../types/properties.js'
 import type {
-  UseMutationParameters,
+  SolidMutationParameters,
   UseMutationReturnType,
 } from '../utils/query.js'
 import { useMutation } from '../utils/query.js'
@@ -24,7 +24,7 @@ export type SolidConnectParameters<
 > = Compute<
   ConfigParameter<config> & {
     mutation?:
-      | UseMutationParameters<
+      | SolidMutationParameters<
           ConnectData<config, config['connectors'][number], boolean>,
           ConnectErrorType,
           ConnectVariables<config, config['connectors'][number], boolean>,
@@ -70,7 +70,7 @@ export function useConnect<config extends Config = Config, context = unknown>(
   const mutation = useMutation(() => {
     const mutationOptions = connectMutationOptions(config())
     return {
-      ...(parameters().mutation ?? {}),
+      ...parameters().mutation,
       ...mutationOptions,
     } as typeof mutationOptions
   })
