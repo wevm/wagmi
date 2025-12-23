@@ -62,7 +62,7 @@ jobs:
           node-version: 24.5
 
       - name: Build
-        run: pnpm build
+        run: pnpm clean && pnpm build
 
       - name: Publint
         run: pnpm test:build
