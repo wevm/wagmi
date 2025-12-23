@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 7.0.4
+
+### Patch Changes
+
+- Fixed internal dynamic imports when using Webpack ([#4911](https://github.com/wevm/wagmi/pull/4911))
+
 ## 7.0.3
 
 ### Patch Changes
