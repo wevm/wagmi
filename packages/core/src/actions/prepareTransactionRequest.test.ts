@@ -18,6 +18,7 @@ test('default', async () => {
 
   const {
     gas: _gas,
+    gasPrice: _gasPrice,
     maxFeePerGas: _mfpg,
     maxPriorityFeePerGas: _mpfpg,
     nonce: _nonce,
@@ -48,6 +49,7 @@ test('parameters: account', async () => {
 
   const {
     gas: _gas,
+    gasPrice: _gasPrice,
     maxFeePerGas: _mfpg,
     maxPriorityFeePerGas: _mpfpg,
     nonce: _nonce,
@@ -78,6 +80,7 @@ test('behavior: local account', async () => {
 
   const {
     gas: _gas,
+    gasPrice: _gasPrice,
     maxFeePerGas: _mfpg,
     maxPriorityFeePerGas: _mpfpg,
     nonce: _nonce,

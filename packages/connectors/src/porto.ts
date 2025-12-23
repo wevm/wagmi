@@ -214,8 +214,10 @@ export function porto(parameters: PortoParameters = {}) {
           return Porto.create({
             ...parameters,
             announceProvider: false,
-            chains: chains as never,
-            transports: transports as never,
+            // @ts-ignore
+            chains,
+            // @ts-ignore
+            transports,
           })
         })()
         return await porto_promise
