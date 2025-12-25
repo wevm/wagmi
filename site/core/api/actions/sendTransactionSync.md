@@ -258,6 +258,48 @@ const result = await sendTransactionSync(config, {
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
+### pollingInterval
+
+`number`
+
+The polling interval in seconds to poll for the transaction receipt.
+
+::: code-group
+```ts [index.ts]
+import { sendTransactionSync } from '@wagmi/core'
+import { parseEther } from 'viem'
+import { config } from './config'
+
+const result = await sendTransactionSync(config, {
+  to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
+  value: parseEther('0.01'),
+  pollingInterval: 1_000, // [!code focus]
+})
+```
+<<< @/snippets/core/config.ts[config.ts]
+:::
+
+### timeout
+
+`number`
+
+Timeout in milliseconds to wait for the transaction receipt.
+
+::: code-group
+```ts [index.ts]
+import { sendTransactionSync } from '@wagmi/core'
+import { parseEther } from 'viem'
+import { config } from './config'
+
+const result = await sendTransactionSync(config, {
+  to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
+  value: parseEther('0.01'),
+  timeout: 10_000, // [!code focus]
+})
+```
+<<< @/snippets/core/config.ts[config.ts]
+:::
+
 ### to
 
 `Address`
