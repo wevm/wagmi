@@ -27,6 +27,7 @@ test('exports', () => {
       "getConnections",
       "getConnectorClient",
       "getConnectors",
+      "getContractEvents",
       "getEnsAddress",
       "getEnsAvatar",
       "getEnsName",
