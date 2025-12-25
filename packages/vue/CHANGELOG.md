@@ -1,5 +1,14 @@
 # @wagmi/vue
 
+## 0.4.6
+
+### Patch Changes
+
+- Fixed published exports. ([`ed86500`](https://github.com/wevm/wagmi/commit/ed86500fbd56e5f543cb04e990b2dadc08d8b3b5))
+
+- Updated dependencies [[`ed86500`](https://github.com/wevm/wagmi/commit/ed86500fbd56e5f543cb04e990b2dadc08d8b3b5)]:
+  - @wagmi/connectors@7.0.5
+
 ## 0.4.5
 
 ### Patch Changes
