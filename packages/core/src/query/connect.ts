@@ -1,4 +1,7 @@
-import type { MutateOptions, MutationOptions } from '@tanstack/query-core'
+import type {
+  MutateOptions,
+  MutationObserverOptions,
+} from '@tanstack/query-core'
 
 import {
   type ConnectErrorType,
@@ -16,7 +19,7 @@ export function connectMutationOptions<config extends Config>(config: config) {
       return connect(config, variables)
     },
     mutationKey: ['connect'],
-  } as const satisfies MutationOptions<
+  } as const satisfies MutationObserverOptions<
     ConnectData<config, Connector | CreateConnectorFn, boolean>,
     ConnectErrorType,
     ConnectVariables<config, Connector | CreateConnectorFn, boolean>

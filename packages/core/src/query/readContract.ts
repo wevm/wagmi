@@ -1,6 +1,5 @@
-import type { QueryOptions } from '@tanstack/query-core'
+import type { QueryObserverOptions } from '@tanstack/query-core'
 import type { Abi, ContractFunctionArgs, ContractFunctionName } from 'viem'
-
 import {
   type ReadContractErrorType,
   type ReadContractParameters,
@@ -10,7 +9,7 @@ import {
 import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
 import type { UnionExactPartial } from '../types/utils.js'
-import { filterQueryOptions } from './utils.js'
+import { filterQueryOptions, structuralSharing } from './utils.js'
 
 export type ReadContractOptions<
   abi extends Abi | readonly unknown[],
@@ -21,44 +20,45 @@ export type ReadContractOptions<
   ScopeKeyParameter
 
 export function readContractQueryOptions<
-  config extends Config,
   const abi extends Abi | readonly unknown[],
   functionName extends ContractFunctionName<abi, 'pure' | 'view'>,
-  args extends ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
+  const args extends ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
+  config extends Config,
 >(
   config: config,
   options: ReadContractOptions<abi, functionName, args, config> = {} as any,
 ) {
   return {
+    enabled: Boolean(
+      Boolean(options.address || ('code' in options && options.code)) &&
+        options.abi &&
+        options.functionName,
+    ),
     // TODO: Support `signal` once Viem actions allow passthrough
     // https://tkdodo.eu/blog/why-you-want-react-query#bonus-cancellation
-    async queryFn({ queryKey }) {
-      const abi = options.abi as Abi
-      if (!abi) throw new Error('abi is required')
-
-      const { functionName, scopeKey: _, ...parameters } = queryKey[1]
-      const addressOrCodeParams = (() => {
-        const params = queryKey[1] as unknown as ReadContractParameters
-        if (params.address) return { address: params.address }
-        if (params.code) return { code: params.code }
+    queryFn: async (context) => {
+      const { scopeKey: _, ...parameters } = context.queryKey[1]
+      if (!parameters.address && !('code' in parameters && parameters.code))
         throw new Error('address or code is required')
-      })()
-
-      if (!functionName) throw new Error('functionName is required')
-
-      return readContract(config, {
-        abi,
-        functionName,
-        args: parameters.args as readonly unknown[],
-        ...addressOrCodeParams,
-        ...parameters,
-      }) as Promise<ReadContractData<abi, functionName, args>>
+      if (!options.abi) throw new Error('abi is required')
+      if (!parameters.functionName) throw new Error('functionName is required')
+      const result = await readContract(config, {
+        ...(parameters as any),
+        address: parameters.address,
+        code:
+          'code' in parameters && parameters.code ? parameters.code : undefined,
+        abi: options.abi,
+        functionName: parameters.functionName,
+      })
+      return result as ReadContractData<abi, functionName, args>
     },
     queryKey: readContractQueryKey(options as any) as any,
-  } as const satisfies QueryOptions<
+    structuralSharing,
+  } as const satisfies QueryObserverOptions<
     ReadContractQueryFnData<abi, functionName, args>,
     ReadContractErrorType,
     ReadContractData<abi, functionName, args>,
+    ReadContractQueryFnData<abi, functionName, args>,
     ReadContractQueryKey<abi, functionName, args, config>
   >
 }
@@ -76,13 +76,12 @@ export type ReadContractData<
 > = ReadContractQueryFnData<abi, functionName, args>
 
 export function readContractQueryKey<
-  config extends Config,
   const abi extends Abi | readonly unknown[],
   functionName extends ContractFunctionName<abi, 'pure' | 'view'>,
   args extends ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
+  config extends Config,
 >(options: ReadContractOptions<abi, functionName, args, config> = {} as any) {
-  const { abi: _, ...rest } = options
-  return ['readContract', filterQueryOptions(rest)] as const
+  return ['readContract', filterQueryOptions(options)] as const
 }
 
 export type ReadContractQueryKey<
@@ -90,4 +89,4 @@ export type ReadContractQueryKey<
   functionName extends ContractFunctionName<abi, 'pure' | 'view'>,
   args extends ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
   config extends Config,
-> = ReturnType<typeof readContractQueryKey<config, abi, functionName, args>>
+> = ReturnType<typeof readContractQueryKey<abi, functionName, args, config>>

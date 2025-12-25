@@ -1,5 +1,4 @@
-import type { QueryOptions } from '@tanstack/query-core'
-
+import type { QueryObserverOptions } from '@tanstack/query-core'
 import {
   type EstimateMaxPriorityFeePerGasErrorType,
   type EstimateMaxPriorityFeePerGasParameters,
@@ -22,14 +21,15 @@ export function estimateMaxPriorityFeePerGasQueryOptions<config extends Config>(
   options: EstimateMaxPriorityFeePerGasOptions<config> = {},
 ) {
   return {
-    async queryFn({ queryKey }) {
-      const { scopeKey: _, ...parameters } = queryKey[1]
+    queryFn: async (context) => {
+      const { scopeKey: _, ...parameters } = context.queryKey[1]
       return estimateMaxPriorityFeePerGas(config, parameters)
     },
     queryKey: estimateMaxPriorityFeePerGasQueryKey(options),
-  } as const satisfies QueryOptions<
+  } as const satisfies QueryObserverOptions<
     EstimateMaxPriorityFeePerGasQueryFnData,
     EstimateMaxPriorityFeePerGasErrorType,
+    EstimateMaxPriorityFeePerGasQueryFnData,
     EstimateMaxPriorityFeePerGasData,
     EstimateMaxPriorityFeePerGasQueryKey<config>
   >
