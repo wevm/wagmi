@@ -258,11 +258,12 @@ export {
 //   usePublicClient,
 // } from '../hooks/usePublicClient.js'
 
-// export {
-//   type UseReadContractParameters,
-//   type UseReadContractReturnType,
-//   useReadContract,
-// } from '../hooks/useReadContract.js'
+export {
+  type SolidReadContractParameters,
+  type UseReadContractParameters,
+  type UseReadContractReturnType,
+  useReadContract,
+} from '../primitives/useReadContract.js'
 
 // export {
 //   type UseReadContractsParameters,
@@ -430,11 +431,12 @@ export {
 //   useWatchPendingTransactions,
 // } from '../hooks/useWatchPendingTransactions.js'
 
-// export {
-//   type UseWriteContractParameters,
-//   type UseWriteContractReturnType,
-//   useWriteContract,
-// } from '../hooks/useWriteContract.js'
+export {
+  type SolidWriteContractParameters,
+  type UseWriteContractParameters,
+  type UseWriteContractReturnType,
+  useWriteContract,
+} from '../primitives/useWriteContract.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // Hydrate
