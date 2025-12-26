@@ -26,7 +26,7 @@ const abiOverload = parseAbi([
 test('overloads', () => {
   type Result = WriteContractParameters<typeof abiOverload, 'foo'>
   const res = {} as Result
-  attest.instantiations([17325, 'instantiations'])
+  attest.instantiations([21691, 'instantiations'])
   attest<
     | readonly []
     | readonly [account: `0x${string}`]

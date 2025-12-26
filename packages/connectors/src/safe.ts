@@ -95,7 +95,14 @@ export function safe(parameters: SafeParameters = {}) {
       if (!isIframe) return
 
       if (!provider_) {
-        const { default: SDK } = await import('@safe-global/safe-apps-sdk')
+        const { default: SDK } = await (() => {
+          // safe webpack optional peer dependency dynamic import
+          try {
+            return import('@safe-global/safe-apps-sdk')
+          } catch {
+            throw new Error('dependency "@safe-global/safe-apps-sdk" not found')
+          }
+        })()
         const sdk = new SDK(parameters)
 
         // `getInfo` hangs when not used in Safe App iFrame
@@ -107,7 +114,16 @@ export function safe(parameters: SafeParameters = {}) {
         // Unwrapping import for Vite compatibility.
         // See: https://github.com/vitejs/vite/issues/9703
         const SafeAppProvider = await (async () => {
-          const Provider = await import('@safe-global/safe-apps-provider')
+          const Provider = await (() => {
+            // safe webpack optional peer dependency dynamic import
+            try {
+              return import('@safe-global/safe-apps-provider')
+            } catch {
+              throw new Error(
+                'dependency "@safe-global/safe-apps-provider" not found',
+              )
+            }
+          })()
           if (
             typeof Provider.SafeAppProvider !== 'function' &&
             typeof Provider.default.SafeAppProvider === 'function'

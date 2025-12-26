@@ -45,6 +45,7 @@ minimumReleaseAgeExclude:
   - '@wagmi/solid'
   - '@wagmi/vue'
   - abitype
+  - ox
   - porto
   - wagmi
   - viem

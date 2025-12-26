@@ -3,9 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "pnpm run --r --filter \"./packages/**\" build",
+    "build": "pnpm run --filter @wagmi/core --filter @wagmi/cli build && pnpm run --filter @wagmi/connectors build && pnpm run --filter wagmi --filter @wagmi/vue build",
     "bench:types": "TYPES=true vitest bench-d.ts",
-    "changeset:prepublish": "pnpm version:update && pnpm build && node scripts/formatPackageJson.ts && node scripts/generateProxyPackages.ts",
+    "changeset:prepublish": "pnpm clean && pnpm version:update && pnpm build && node scripts/formatPackageJson.ts && node scripts/generateProxyPackages.ts",
     "changeset:publish": "pnpm changeset:prepublish && changeset publish",
     "changeset:version": "changeset version && pnpm version:update && pnpm format",
     "check": "biome check --write",
@@ -61,8 +61,8 @@
     "sherif": "^1.0.0",
     "simple-git-hooks": "^2.11.1",
     "solid-js": "catalog:",
-    "typescript": "5.9.2",
-    "viem": "2.38.0",
+    "typescript": "5.9.3",
+    "viem": "2.43.3",
     "vite-plugin-react-fallback-throttle": "^0.1.1",
     "vite-plugin-solid": "catalog:",
     "vitest": "^4.0.8",
@@ -140,7 +140,9 @@
       },
       "packages/test": {
         "entry": [
-          "src/{globalSetup,setup}.ts!",
+          "src/setup.ts!",
+          "src/setup.global.ts!",
+          "src/setup.global.types.ts!",
           "src/exports/{index,react}.ts!"
         ]
       },
