@@ -1,11 +1,11 @@
-import { abi, address, bytecode, chain, wait } from '@wagmi/test'
-import { renderPrimitive } from '@wagmi/test/solid'
+import { QueryClientProvider } from '@tanstack/solid-query'
+import { abi, address, bytecode, chain, config, wait } from '@wagmi/test'
+import { queryClient, renderPrimitive } from '@wagmi/test/solid'
+import { createComponent } from 'solid-js'
 import { expect, test, vi } from 'vitest'
 import { useReadContract } from './useReadContract.js'
 
-// const address = accounts[0];
-
-test('Default', async () => {
+test('default', async () => {
   const balanceOf = renderPrimitive(() =>
     useReadContract(() => ({
       address: address.wagmiMintExample,
@@ -15,7 +15,7 @@ test('Default', async () => {
     })),
   )
 
-  await vi.waitUntil(() => balanceOf.result.isSuccess, { timeout: 15_000 })
+  await vi.waitUntil(() => balanceOf.result.isSuccess, { timeout: 5_000 })
 
   expect(balanceOf.result).toMatchInlineSnapshot(`
     {
@@ -48,6 +48,7 @@ test('Default', async () => {
           "args": [
             "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
           ],
+          "chainId": 1,
           "functionName": "balanceOf",
         },
       ],
@@ -58,7 +59,7 @@ test('Default', async () => {
 })
 
 test('parameters: chainId', async () => {
-  const { result } = await renderPrimitive(() =>
+  const { result } = renderPrimitive(() =>
     useReadContract(() => ({
       address: address.wagmiMintExample,
       abi: abi.wagmiMintExample,
@@ -111,8 +112,71 @@ test('parameters: chainId', async () => {
   `)
 })
 
+test('parameters: config', async () => {
+  const { result } = renderPrimitive(
+    () =>
+      useReadContract(() => ({
+        address: address.wagmiMintExample,
+        abi: abi.wagmiMintExample,
+        functionName: 'balanceOf',
+        args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
+        config,
+      })),
+    {
+      wrapper: (props) =>
+        createComponent(QueryClientProvider, {
+          client: queryClient,
+          get children() {
+            return props.children
+          },
+        }),
+    },
+  )
+
+  await vi.waitUntil(() => result.isSuccess, { timeout: 5_000 })
+
+  expect(result).toMatchInlineSnapshot(`
+    {
+      "data": 10n,
+      "dataUpdatedAt": 1675209600000,
+      "error": null,
+      "errorUpdateCount": 0,
+      "errorUpdatedAt": 0,
+      "failureCount": 0,
+      "failureReason": null,
+      "fetchStatus": "idle",
+      "isError": false,
+      "isFetched": true,
+      "isFetchedAfterMount": true,
+      "isFetching": false,
+      "isInitialLoading": false,
+      "isLoading": false,
+      "isLoadingError": false,
+      "isPaused": false,
+      "isPending": false,
+      "isPlaceholderData": false,
+      "isRefetchError": false,
+      "isRefetching": false,
+      "isStale": true,
+      "isSuccess": true,
+      "queryKey": [
+        "readContract",
+        {
+          "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
+          "args": [
+            "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
+          ],
+          "chainId": 1,
+          "functionName": "balanceOf",
+        },
+      ],
+      "refetch": [Function],
+      "status": "success",
+    }
+  `)
+})
 test('parameters: deployless read (bytecode)', async () => {
-  const { result } = await renderPrimitive(() =>
+  const { result } = renderPrimitive(() =>
     useReadContract(() => ({
       abi: abi.wagmiMintExample,
       functionName: 'name',
@@ -126,7 +190,7 @@ test('parameters: deployless read (bytecode)', async () => {
 })
 
 test('behavior: disabled when properties missing', async () => {
-  const { result } = await renderPrimitive(() => useReadContract(() => ({})))
+  const { result } = renderPrimitive(() => useReadContract(() => ({})))
 
   await wait(100)
   await vi.waitFor(() => expect(result.isPending).toBeTruthy())
