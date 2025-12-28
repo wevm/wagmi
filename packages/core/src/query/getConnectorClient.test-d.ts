@@ -1,6 +1,5 @@
 import { chain, config } from '@wagmi/test'
 import { expectTypeOf, test } from 'vitest'
-
 import { getConnectorClientQueryOptions } from './getConnectorClient.js'
 
 const context = {} as any

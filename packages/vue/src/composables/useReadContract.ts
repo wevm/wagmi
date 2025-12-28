@@ -81,33 +81,25 @@ export function useReadContract<
   const parameters = computed(() => deepUnref(parameters_)) as any
 
   const config = useConfig(parameters)
-  const configChainId = useChainId({ config })
+  const chainId = useChainId({ config })
 
-  const queryOptions = computed(() => {
-    const {
-      abi,
-      address,
-      chainId = configChainId.value,
-      code,
-      functionName,
-      query = {},
-    } = parameters.value
-    const options = readContractQueryOptions<config, abi, functionName, args>(
-      config as any,
-      { ...parameters.value, chainId },
-    )
-    const enabled = Boolean(
-      (address || code) && abi && functionName && (query.enabled ?? true),
+  const options = computed(() => {
+    const { query = {} } = parameters.value
+    const options = readContractQueryOptions<abi, functionName, args, config>(
+      config as config,
+      {
+        ...parameters.value,
+        chainId: parameters.value.chainId ?? chainId.value,
+      },
     )
     return {
       ...query,
       ...options,
-      enabled,
+      enabled: options.enabled && (query.enabled ?? true),
       structuralSharing: query.structuralSharing ?? structuralSharing,
     }
   })
-
-  return useQuery(queryOptions) as UseReadContractReturnType<
+  return useQuery(options) as UseReadContractReturnType<
     abi,
     functionName,
     args,

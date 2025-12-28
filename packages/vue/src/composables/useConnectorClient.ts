@@ -75,37 +75,23 @@ export function useConnectorClient<
 
   const config = useConfig(parameters)
   const queryClient = useQueryClient()
-  const {
-    address,
-    connector: accountConnector,
-    status,
-  } = useConnection({ config })
-  const configChainId = useChainId({ config })
+  const { address, connector } = useConnection({ config })
+  const chainId = useChainId({ config })
 
-  const queryOptions = computed(() => {
-    const {
-      chainId = configChainId.value,
-      connector = accountConnector.value,
-      query = {},
-    } = parameters.value
-    const { queryKey, ...options } = getConnectorClientQueryOptions<
-      config,
-      chainId
-    >(config as config, {
-      ...deepUnref(parameters),
-      chainId: chainId as chainId,
-      connector: connector as Connector,
-    })
-    const enabled = Boolean(
-      (status.value === 'connected' ||
-        (status.value === 'reconnecting' && connector?.getProvider)) &&
-        (query.enabled ?? true),
+  const options = computed(() => {
+    const { query = {} } = parameters.value
+    const options = getConnectorClientQueryOptions<config, chainId>(
+      config as config,
+      {
+        ...deepUnref(parameters),
+        chainId: (parameters.chainId ?? chainId.value) as chainId,
+        connector: (parameters.value.connector ?? connector.value) as Connector,
+      },
     )
     return {
       ...query,
       ...options,
-      queryKey,
-      enabled,
+      enabled: Boolean(options.enabled && (query.enabled ?? true)),
       staleTime: Number.POSITIVE_INFINITY,
     }
   })
@@ -115,16 +101,15 @@ export function useConnectorClient<
     const previousAddress = addressRef.value
     if (!address && previousAddress) {
       // remove when account is disconnected
-      queryClient.removeQueries({ queryKey: queryOptions.value.queryKey })
+      queryClient.removeQueries({ queryKey: options.value.queryKey })
       addressRef.value = undefined
     } else if (address.value !== previousAddress) {
       // invalidate when address changes
-      queryClient.invalidateQueries({ queryKey: queryOptions.value.queryKey })
+      queryClient.invalidateQueries({ queryKey: options.value.queryKey })
       addressRef.value = address.value
     }
   })
-
-  return useQuery(queryOptions as any) as UseConnectorClientReturnType<
+  return useQuery(options as any) as UseConnectorClientReturnType<
     config,
     chainId,
     selectData
