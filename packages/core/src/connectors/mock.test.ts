@@ -55,6 +55,21 @@ test('behavior: connect#withCapabilities', async () => {
   )
 })
 
+test('behavior: eth_accounts returns configured accounts', async () => {
+  const connectorFn = mock({ accounts })
+  const connector = config._internal.connectors.setup(connectorFn)
+
+  await connector.connect()
+  await expect(connector.getAccounts()).resolves.toEqual(accounts)
+
+  const provider = await connector.getProvider()
+  await expect(
+    provider.request({
+      method: 'eth_accounts',
+    }),
+  ).resolves.toEqual(accounts)
+})
+
 test('behavior: features.connectError', async () => {
   const connectorFn = mock({ accounts, features: { connectError: true } })
   const connector = config._internal.connectors.setup(connectorFn)
