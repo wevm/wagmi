@@ -4,7 +4,6 @@ import { Connect } from './components/Connect'
 import { Connection } from './components/Connection'
 import { Connections } from './components/Connections'
 import { ConnectorClient } from './components/ConnectorClient'
-import { ReadContract } from './components/ReadContract'
 import { SwitchChain } from './components/SwitchChain'
 import { SwitchConnection } from './components/SwitchConnection'
 
@@ -21,7 +20,7 @@ function App() {
       <Balance />
       <ConnectorClient />
       {/* <SendTransaction /> */}
-      <ReadContract />
+      {/* <ReadContract /> */}
       {/* <ReadContracts /> */}
       {/* <WriteContract /> */}
     </>

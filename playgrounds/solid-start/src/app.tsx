@@ -10,7 +10,6 @@ import { Connections } from '~/components/Connections'
 import { ConnectorClient } from '~/components/ConnectorClient'
 import { SwitchChain } from '~/components/SwitchChain'
 import { SwitchConnection } from '~/components/SwitchConnection'
-import { ReadContract } from './components/ReadContract'
 import { config } from './wagmi'
 
 function getInitialState() {
@@ -37,7 +36,7 @@ export default function App() {
         <Balance />
         <ConnectorClient />
         {/* <SendTransaction /> */}
-        <ReadContract />
+        {/* <ReadContract /> */}
         {/* <ReadContracts /> */}
         {/* <WriteContract /> */}
       </QueryClientProvider>
