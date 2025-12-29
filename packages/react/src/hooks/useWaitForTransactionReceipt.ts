@@ -1,5 +1,4 @@
 'use client'
-
 import type {
   Config,
   ResolvedRegister,
@@ -13,7 +12,6 @@ import {
   type WaitForTransactionReceiptQueryKey,
   waitForTransactionReceiptQueryOptions,
 } from '@wagmi/core/query'
-
 import type { ConfigParameter, QueryParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
@@ -55,17 +53,14 @@ export function useWaitForTransactionReceipt<
     selectData
   > = {},
 ): UseWaitForTransactionReceiptReturnType<config, chainId, selectData> {
-  const { hash, query = {} } = parameters
-
+  const { query = {} } = parameters
   const config = useConfig(parameters)
   const chainId = useChainId({ config })
-
   const options = waitForTransactionReceiptQueryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
   })
-  const enabled = Boolean(hash && (query.enabled ?? true))
-
+  const enabled = options.enabled && (query.enabled ?? true)
   return useQuery({
     ...(query as any),
     ...options,

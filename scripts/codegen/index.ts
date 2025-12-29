@@ -4,6 +4,7 @@ import { promisify } from 'node:util'
 import { type Item, items, type requiredItem } from './config.ts'
 
 // TODO:
+// - actions
 // - react hooks/vue composables
 
 console.log('Generating query options.')
@@ -160,7 +161,6 @@ function genQueryOptions(item: Extract<Item, { type: 'query' }>) {
 
   const enabled = (() => {
     const o = 'options'
-    if (typeof item.required === 'function') return item.required(o).cond
     const get = (
       prop: string | { name: string; cond: (o: string, n: string) => string },
     ) => {
@@ -175,10 +175,6 @@ function genQueryOptions(item: Extract<Item, { type: 'query' }>) {
       .join(' && ')
   })()
   const requiredChecks = (() => {
-    if (typeof item.required === 'function') {
-      const res = item.required('options', 'parameters')
-      return `if (!(${res.cond})) throw new Error('${res.message}')`
-    }
     const get = (prop: requiredItem) => {
       const o = getParameterPrefix(prop)
       if (typeof prop === 'string') return `${o}.${prop}`
@@ -192,31 +188,29 @@ function genQueryOptions(item: Extract<Item, { type: 'query' }>) {
       })
       .join('\n')
   })()
-  const requiredParameters = [
-    ...(typeof item.required === 'function' ? [] : item.required).flatMap(
-      (x) => {
-        const get = (prop: requiredItem) => {
-          const o = getParameterPrefix(prop)
-          if (typeof prop === 'string') return `${o}.${prop}`
-          if (queryKeySkipped.includes(prop.name)) return `${o}.${prop.name}`
-          return `${prop.cond(o, prop.name)} ? ${o}.${prop.name} : undefined`
-        }
-        if (Array.isArray(x)) return x.map((y) => `${unwrapName(y)}: ${get(y)}`)
-        return `${unwrapName(x)}: ${get(x)}`
-      },
-    ),
-    ...(item.query.skipped?.map((x) => `${unwrapName(x)}: options.${x}`) ?? []),
-  ].join(', ')
+  const requiredParameters = item.required
+    .flatMap((x) => {
+      const get = (prop: requiredItem) => {
+        const o = getParameterPrefix(prop)
+        if (typeof prop === 'string') return `${o}.${prop}`
+        if (queryKeySkipped.includes(prop.name)) return `${o}.${prop.name}`
+        return `${prop.cond(o, prop.name)} ? ${o}.${prop.name} : undefined`
+      }
+      if (Array.isArray(x)) return x.map((y) => `${unwrapName(y)}: ${get(y)}`)
+      return `${unwrapName(x)}: ${get(x)}`
+    })
+    .join(', ')
 
   const t = 't'
-  const optionsType =
-    item.query.optionsType ??
-    ((t: string, typePrefix: string, slots: string, extras: string) =>
-      `${t}.Compute<${t}.ExactPartial<${typePrefix}Parameters<${slots}>> & ${extras}>`)
+  const optionsType = (
+    t: string,
+    typePrefix: string,
+    slots: string,
+    extras: string,
+  ) =>
+    `${t}.Compute<${t}.ExactPartial<${typePrefix}Parameters<${slots}>> & ${extras}>`
 
   const hasConnectorUid = (() => {
-    if (typeof item.required === 'function')
-      return /options\.connector(?:\s|$)/.test(item.required('options').cond)
     const filteredProperties = [
       ...new Set(
         item.required
@@ -254,7 +248,7 @@ export function ${item.name}QueryOptions<${functionTypeParameters}>(
       const result = await ${item.name}(config, ${requiredParameters ? `{ ...(parameters${item.query.cast?.parameters ? ' as any' : ''}), ${requiredParameters}}` : `parameters${item.query.cast?.parameters ? ' as never' : ''}`})
       return (result ?? null)${item.query.cast?.return ? ` as unknown as ${typePrefix}Data${dataSlots ? `<${dataSlots}>` : ''}` : ''}
     },
-    queryKey: ${item.name}QueryKey(options${item.query.cast?.queryKey ? ' as never' : ''}),${item.query.extraOptions?.length ? item.query.extraOptions.map((x) => `${x.name}: ${x.default}`).join(',\n') : ''}
+    queryKey: ${item.name}QueryKey(options${item.query.cast?.queryKey ? ' as never' : ''}),
   } as const satisfies QueryObserverOptions<
     ${typePrefix}QueryFnData${dataSlots ? `<${dataSlots}>` : ''},
     ${typePrefix}ErrorType,
@@ -269,7 +263,7 @@ export type ${typePrefix}QueryFnData${dataTypeParameters ? `<${dataTypeParameter
 export type ${typePrefix}Data${dataTypeParameters ? `<${dataTypeParameters}>` : ''} = ${typePrefix}QueryFnData${dataSlots ? `<${dataSlots}>` : ''}
 
 export function ${item.name}QueryKey<${functionTypeParameters}>(
-  ${item.query.skipped ? `{ ${item.query.skipped.map((x, i) => `${x}: ${'_'.repeat(i + 1)}`).join(', ')}, ...options }` : 'options'}: ${typePrefix}Options<${optionsSlots}> = {}${item.query.cast?.options ? ' as never' : ''},
+  options: ${typePrefix}Options<${optionsSlots}> = {}${item.query.cast?.options ? ' as never' : ''},
 ) {
   return ['${item.name}', filterQueryOptions(${hasConnectorUid ? '{ ...options, connectorUid: options.connector?.uid }' : 'options'})] as const
 }
