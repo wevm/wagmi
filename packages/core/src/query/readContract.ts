@@ -44,10 +44,10 @@ export function readContractQueryOptions<
       if (!parameters.functionName) throw new Error('functionName is required')
       const result = await readContract(config, {
         ...(parameters as any),
+        abi: options.abi,
         address: parameters.address,
         code:
           'code' in parameters && parameters.code ? parameters.code : undefined,
-        abi: options.abi,
         functionName: parameters.functionName,
       })
       return result as ReadContractData<abi, functionName, args>
@@ -78,7 +78,7 @@ export type ReadContractData<
 export function readContractQueryKey<
   const abi extends Abi | readonly unknown[],
   functionName extends ContractFunctionName<abi, 'pure' | 'view'>,
-  args extends ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
+  const args extends ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
   config extends Config,
 >(options: ReadContractOptions<abi, functionName, args, config> = {} as any) {
   return ['readContract', filterQueryOptions(options)] as const

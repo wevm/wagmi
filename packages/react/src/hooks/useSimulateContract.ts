@@ -1,5 +1,4 @@
 'use client'
-
 import type {
   Config,
   ResolvedRegister,
@@ -13,12 +12,11 @@ import {
   simulateContractQueryOptions,
 } from '@wagmi/core/query'
 import type { Abi, ContractFunctionArgs, ContractFunctionName } from 'viem'
-
 import type { ConfigParameter, QueryParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
-import { useConnectorClient } from './useConnectorClient.js'
+import { useConnection } from './useConnection.js'
 
 export type UseSimulateContractParameters<
   abi extends Abi | readonly unknown[] = Abi,
@@ -63,7 +61,7 @@ export type UseSimulateContractReturnType<
 export function useSimulateContract<
   const abi extends Abi | readonly unknown[],
   functionName extends ContractFunctionName<abi, 'nonpayable' | 'payable'>,
-  args extends ContractFunctionArgs<
+  const args extends ContractFunctionArgs<
     abi,
     'nonpayable' | 'payable',
     functionName
@@ -88,30 +86,22 @@ export function useSimulateContract<
   chainId,
   selectData
 > {
-  const { abi, address, connector, functionName, query = {} } = parameters
-
+  const { query = {} } = parameters
   const config = useConfig(parameters)
-  const { data: connectorClient } = useConnectorClient({
-    config,
-    connector,
-    query: { enabled: parameters.account === undefined },
-  })
+  const { address, connector } = useConnection({ config })
   const chainId = useChainId({ config })
-
   const options = simulateContractQueryOptions<
-    config,
     abi,
     functionName,
     args,
+    config,
     chainId
   >(config, {
     ...parameters,
-    account: parameters.account ?? connectorClient?.account,
+    account: parameters.account ?? address,
     chainId: parameters.chainId ?? chainId,
+    connector: parameters.connector ?? connector,
   })
-  const enabled = Boolean(
-    abi && address && functionName && (query.enabled ?? true),
-  )
-
+  const enabled = options.enabled && (query.enabled ?? true)
   return useQuery({ ...query, ...options, enabled })
 }

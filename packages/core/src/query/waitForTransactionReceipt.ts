@@ -27,7 +27,7 @@ export function waitForTransactionReceiptQueryOptions<
 ) {
   return {
     enabled: Boolean(options.hash),
-    async queryFn(context) {
+    queryFn: async (context) => {
       const { scopeKey: _, ...parameters } = context.queryKey[1]
       if (!parameters.hash) throw new Error('hash is required')
       const result = await waitForTransactionReceipt(config, {
@@ -42,6 +42,7 @@ export function waitForTransactionReceiptQueryOptions<
     WaitForTransactionReceiptQueryFnData<config, chainId>,
     WaitForTransactionReceiptErrorType,
     WaitForTransactionReceiptData<config, chainId>,
+    WaitForTransactionReceiptQueryFnData<config, chainId>,
     WaitForTransactionReceiptQueryKey<config, chainId>
   >
 }
