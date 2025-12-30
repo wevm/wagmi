@@ -55,8 +55,7 @@ export type SimulateContractParameters<
       chains[key],
       Account | Address
     >
-  > &
-    ChainIdParameter<config, chainId> &
+  > & { chain?: never } & ChainIdParameter<config, chainId> &
     ConnectorParameter
 }[number]
 

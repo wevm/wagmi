@@ -8,19 +8,24 @@ import {
 import type { Config } from '../createConfig.js'
 import type { ConnectorParameter } from '../types/properties.js'
 import { getAction } from '../utils/getAction.js'
-import { getConnectorClient } from './getConnectorClient.js'
+import {
+  type GetConnectorClientErrorType,
+  getConnectorClient,
+} from './getConnectorClient.js'
 
-export type GetCallsStatusParameters<_config extends Config = Config> =
-  viem_GetCallsStatusParameters & ConnectorParameter
+export type GetCallsStatusParameters = viem_GetCallsStatusParameters &
+  ConnectorParameter
 
 export type GetCallsStatusReturnType = viem_GetCallsStatusReturnType
 
-export type GetCallsStatusErrorType = viem_GetCallsStatusErrorType
+export type GetCallsStatusErrorType =
+  | viem_GetCallsStatusErrorType
+  | GetConnectorClientErrorType
 
 /** https://wagmi.sh/core/api/actions/getCallsStatus */
 export async function getCallsStatus<config extends Config>(
   config: config,
-  parameters: GetCallsStatusParameters<config>,
+  parameters: GetCallsStatusParameters,
 ): Promise<GetCallsStatusReturnType> {
   const { connector, id } = parameters
   const client = await getConnectorClient(config, { connector })

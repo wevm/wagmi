@@ -3,208 +3,277 @@ export const items = [
     type: 'query',
     name: 'call',
     required: [],
+    action: {
+      type: 'config',
+      parameters: ['config'],
+      returnType: [],
+      compute: {
+        parameters: false,
+      },
+    },
     query: {
-      imports: [],
-      data: [],
-      options: ['config'],
       cast: {
         parameters: true,
       },
+    },
+    primitive: {
+      types: ['react'],
     },
   },
   {
     type: 'query',
     name: 'getBlockNumber',
     required: [],
-    query: {
-      imports: [],
-      data: [],
-      options: ['config', 'chainId'],
+    action: {
+      type: 'config',
+      parameters: ['config', 'chainId'],
+      returnType: [],
+    },
+    query: {},
+    primitive: {
+      types: ['react', 'vue'],
     },
   },
   {
     type: 'query',
     name: 'getBlockTransactionCount',
     required: [],
-    query: {
-      imports: [],
-      data: [],
-      options: ['config', 'chainId'],
+    action: {
+      type: 'config',
+      parameters: ['config', 'chainId'],
+      returnType: [],
+    },
+    query: {},
+    primitive: {
+      types: ['react'],
     },
   },
   {
     type: 'query',
     name: 'getBytecode',
     required: ['address'],
+    action: {
+      type: 'config',
+      parameters: ['config'],
+      returnType: [],
+    },
     query: {
-      imports: [],
-      data: [],
-      options: ['config'],
       cast: {
         return: true,
       },
     },
-  },
-  {
-    type: 'query',
-    name: 'getCallsStatus',
-    required: ['id', 'connector'],
-    query: {
-      imports: [],
-      data: [],
-      options: ['config'],
+    primitive: {
+      types: ['react', 'vue'],
     },
   },
-  {
-    type: 'query',
-    name: 'getCapabilities',
-    required: ['connector'],
-    query: {
-      imports: [],
-      data: [
-        'config',
-        {
-          name: 'chainId',
-          type: "config['chains'][number]['id'] | undefined",
-        },
-      ],
-      options: [
-        'config',
-        {
-          name: 'chainId',
-          type: "config['chains'][number]['id'] | undefined",
-          default: 'undefined',
-        },
-      ],
-    },
-  },
+  // {
+  //   type: 'query',
+  //   name: 'getCallsStatus',
+  //   required: ['id', 'connector'],
+  //   action: {
+  //     type: 'connector',
+  //     parameters: ['config'],
+  //     returnType: [],
+  //   },
+  //   query: {},
+  // },
+  // {
+  //   type: 'query',
+  //   name: 'getCapabilities',
+  //   required: ['connector'],
+  //   action: {
+  //     type: 'connector',
+  //     parameters: [
+  //       'config',
+  //       {
+  //         name: 'chainId',
+  //         type: "config['chains'][number]['id'] | undefined",
+  //         default: 'undefined',
+  //       },
+  //     ],
+  //     returnType: [
+  //       'config',
+  //       {
+  //         name: 'chainId',
+  //         type: "config['chains'][number]['id'] | undefined",
+  //       },
+  //     ],
+  //   },
+  //   query: {},
+  // },
   {
     type: 'query',
     name: 'getEnsAddress',
     required: ['name'],
-    query: {
-      imports: [],
-      data: [],
-      options: ['config'],
+    action: {
+      type: 'config',
+      parameters: ['config'],
+      returnType: [],
+    },
+    query: {},
+    primitive: {
+      types: ['react', 'vue'],
     },
   },
   {
     type: 'query',
     name: 'getEnsAvatar',
     required: ['name'],
-    query: {
-      imports: [],
-      data: [],
-      options: ['config'],
+    action: {
+      type: 'config',
+      parameters: ['config'],
+      returnType: [],
+    },
+    query: {},
+    primitive: {
+      types: ['react', 'vue'],
     },
   },
   {
     type: 'query',
     name: 'getEnsName',
     required: ['address'],
-    query: {
-      imports: [],
-      data: [],
-      options: ['config'],
+    action: {
+      type: 'config',
+      parameters: ['config'],
+      returnType: [],
+    },
+    query: {},
+    primitive: {
+      types: ['react', 'vue'],
     },
   },
   {
     type: 'query',
     name: 'getEnsResolver',
     required: ['name'],
-    query: {
-      imports: [],
-      data: [],
-      options: ['config'],
+    action: {
+      type: 'config',
+      parameters: ['config'],
+      returnType: [],
+    },
+    query: {},
+    primitive: {
+      types: ['react'],
     },
   },
   {
     type: 'query',
     name: 'getEnsText',
     required: ['name', 'key'],
-    query: {
-      imports: [],
-      data: [],
-      options: ['config'],
+    action: {
+      type: 'config',
+      parameters: ['config'],
+      returnType: [],
+    },
+    query: {},
+    primitive: {
+      types: ['react'],
     },
   },
   {
     type: 'query',
     name: 'getFeeHistory',
     required: ['blockCount', 'rewardPercentiles'],
-    query: {
-      imports: [],
-      data: [],
-      options: ['config', 'chainId'],
+    action: {
+      type: 'config',
+      parameters: ['config', 'chainId'],
+      returnType: [],
+    },
+    query: {},
+    primitive: {
+      types: ['react'],
     },
   },
   {
     type: 'query',
     name: 'getGasPrice',
     required: [],
-    query: {
-      imports: [],
-      data: [],
-      options: ['config', 'chainId'],
+    action: {
+      type: 'config',
+      parameters: ['config', 'chainId'],
+      returnType: [],
+    },
+    query: {},
+    primitive: {
+      types: ['react'],
     },
   },
   {
     type: 'query',
     name: 'getProof',
     required: ['address', 'storageKeys'],
-    query: {
-      imports: [],
-      data: [],
-      options: ['config'],
+    action: {
+      type: 'config',
+      parameters: ['config'],
+      returnType: [],
+    },
+    query: {},
+    primitive: {
+      types: ['react'],
     },
   },
   {
     type: 'query',
     name: 'getStorageAt',
     required: ['address', 'slot'],
+    action: {
+      type: 'config',
+      parameters: ['config'],
+      returnType: [],
+    },
     query: {
-      imports: [],
-      data: [],
-      options: ['config'],
       cast: {
         return: true,
       },
+    },
+    primitive: {
+      types: ['react'],
     },
   },
   {
     type: 'query',
     name: 'getTransactionCount',
     required: ['address'],
-    query: {
-      imports: [],
-      data: [],
-      options: ['config'],
+    action: {
+      type: 'config',
+      parameters: ['config'],
+      returnType: [],
+    },
+    query: {},
+    primitive: {
+      types: ['react'],
     },
   },
   {
     type: 'query',
     name: 'verifyMessage',
     required: ['address', 'message', 'signature'],
-    query: {
-      imports: [],
-      data: [],
-      options: ['config'],
+    action: {
+      type: 'config',
+      parameters: ['config'],
+      returnType: [],
+    },
+    query: {},
+    primitive: {
+      types: ['react'],
     },
   },
-  {
-    type: 'query',
-    name: 'waitForCallsStatus',
-    required: ['id', 'connector'],
-    query: {
-      imports: [],
-      data: [],
-      options: ['config'],
-      cast: {
-        return: true,
-      },
-    },
-  },
-  // TODO: showCallsStatus
+  // {
+  //   type: 'query',
+  //   name: 'waitForCallsStatus',
+  //   required: ['id', 'connector'],
+  //   action: {
+  //     type: 'connector',
+  //     parameters: ['config'],
+  //     returnType: [],
+  //   },
+  //   query: {
+  //     cast: {
+  //       return: true,
+  //     },
+  //   },
+  // },
   {
     type: 'mutation',
     name: 'watchAsset',
@@ -223,7 +292,7 @@ export type Item =
       query: {
         imports: { names: string[]; path: string }[]
         data: typeParameter[]
-        variables: (typeParameter & { const?: true; default?: string })[]
+        variables: (typeParameter & { default?: string })[]
         optionalParameters?: true
       }
     }
@@ -231,20 +300,29 @@ export type Item =
       type: 'query'
       name: string
       required: (requiredItem | requiredItem[])[]
-      query: {
-        imports: { names: string[]; path: string }[]
-        options: (
+      action: {
+        type: 'config' | 'connector'
+        parameters: (
           | 'chainId'
           | 'config'
-          | (typeParameter & { const?: true; default?: string })
+          | (typeParameter & { default?: string })
         )[]
-        data: ('chainId' | 'config' | typeParameter)[]
+        returnType: ('chainId' | 'config' | typeParameter)[]
+        compute?: {
+          parameters?: boolean
+        }
+      }
+      query: {
+        imports?: { names: string[]; path: string }[]
         cast?: {
           options?: true
           parameters?: true
           queryKey?: true
           return?: true
         }
+      }
+      primitive: {
+        types: ('react' | 'vue')[]
       }
     }
 
