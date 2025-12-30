@@ -50,6 +50,7 @@ export default defineConfig({
       {
         test: {
           name: 'connectors',
+          exclude: ['./packages/connectors/src/tempo.test.ts'],
           include: ['./packages/connectors/src/**/*.test.ts'],
           environment: 'happy-dom',
         },
@@ -88,7 +89,10 @@ export default defineConfig({
             provider: playwright(),
             screenshotFailures: false,
           },
-          include: ['./packages/react/src/**/*.test.ts?(x)'],
+          include: [
+            './packages/react/src/**/*.test.ts?(x)',
+            './packages/connectors/src/tempo.test.ts',
+          ],
           testTimeout: 10_000,
           setupFiles: ['./packages/react/test/setup.ts'],
         },

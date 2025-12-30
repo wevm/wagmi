@@ -57,6 +57,9 @@ catalogs:
     nuxt:
       specifier: 4.2.1
       version: 4.2.1
+    ox:
+      specifier: 0.11.1
+      version: 0.11.1
     porto:
       specifier: 0.2.35
       version: 0.2.35
@@ -143,8 +146,8 @@ importers:
         specifier: 1.56.1
         version: 1.56.1
       prool:
-        specifier: ^0.0.24
-        version: 0.0.24(patch_hash=6ea470deaa7c0b09169321c017f09f7cc1c25c3c8051259b8efa8c34c8aaf823)
+        specifier: ^0.2.2
+        version: 0.2.2(patch_hash=6ea470deaa7c0b09169321c017f09f7cc1c25c3c8051259b8efa8c34c8aaf823)
       publint:
         specifier: ^0.2.11
         version: 0.2.11
@@ -281,6 +284,9 @@ importers:
       msw:
         specifier: ^2.4.9
         version: 2.4.9(typescript@5.9.3)
+      ox:
+        specifier: 'catalog:'
+        version: 0.11.1(typescript@5.9.3)(zod@3.25.76)
       porto:
         specifier: 'catalog:'
         version: 0.2.35(@types/react@19.2.3)(@wagmi/core@packages+core)(react@19.2.0)(typescript@5.9.3)(use-sync-external-store@1.4.0(react@19.2.0))(viem@2.43.3(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76))(wagmi@packages+react)
@@ -6765,10 +6771,6 @@ packages:
   minisearch@7.2.0:
     resolution: {integrity: sha512-dqT2XBYUOZOiC5t2HRnwADjhNS2cecp9u+TJRiJ1Qp/f5qjkeT5APcGPjHw+bz89Ms8Jp+cG4AlE+QZ/QnDglg==}
 
-  minizlib@3.0.2:
-    resolution: {integrity: sha512-oG62iEk+CYt5Xj2YqI5Xi9xWUeZhDI8jjQmC5oThVH5JGCTgIjr7ciJDzC7MBzYd//WvR1OTmP5Q38Q8ShQtVA==}
-    engines: {node: '>= 18'}
-
   minizlib@3.1.0:
     resolution: {integrity: sha512-KZxYo1BUkWD2TVFLr0MQoM8vUUigWD3LlD83a/75BqC+4qE0Hb1Vo5v1FgcfaNXvfXzr+5EhQ6ing/CaBijTlw==}
     engines: {node: '>= 18'}
@@ -7731,13 +7733,16 @@ packages:
     resolution: {integrity: sha512-NxNv/kLguCA7p3jE8oL2aEBsrJWgAakBpgmgK6lpPWV+WuOmY6r2/zbAVnP+T8bQlA0nzHXSJSJW0Hq7ylaD2Q==}
     engines: {node: '>= 6'}
 
-  prool@0.0.24:
-    resolution: {integrity: sha512-L0EGUF5vK1XAQtceaiwfGxf0LGeJwurUizzc3i6JESsUyMROzGxTSMSBiajF8AoQaDYWIX2s1m00sC36CATrvQ==}
+  prool@0.2.2:
+    resolution: {integrity: sha512-vtbgLBHKvPIVuVPR5t13fEKQ/xTqPNvIqLTcyJAyEBEBDzfk0GUkqdYvf+qhHsLBvRjJHKNoF7GPf/NkJBj45A==}
     engines: {node: '>=22'}
     peerDependencies:
       '@pimlico/alto': '*'
+      testcontainers: '>=11.10.0'
     peerDependenciesMeta:
       '@pimlico/alto':
+        optional: true
+      testcontainers:
         optional: true
 
   property-information@7.1.0:
@@ -16911,10 +16916,6 @@ snapshots:
 
   minisearch@7.2.0: {}
 
-  minizlib@3.0.2:
-    dependencies:
-      minipass: 7.1.2
-
   minizlib@3.1.0:
     dependencies:
       minipass: 7.1.2
@@ -18267,7 +18268,7 @@ snapshots:
       kleur: 3.0.3
       sisteransi: 1.0.5
 
-  prool@0.0.24(patch_hash=6ea470deaa7c0b09169321c017f09f7cc1c25c3c8051259b8efa8c34c8aaf823):
+  prool@0.2.2(patch_hash=6ea470deaa7c0b09169321c017f09f7cc1c25c3c8051259b8efa8c34c8aaf823):
     dependencies:
       change-case: 5.4.4
       eventemitter3: 5.0.1
@@ -18951,7 +18952,7 @@ snapshots:
       '@isaacs/fs-minipass': 4.0.1
       chownr: 3.0.0
       minipass: 7.1.2
-      minizlib: 3.0.2
+      minizlib: 3.1.0
       mkdirp: 3.0.1
       yallist: 5.0.0
 

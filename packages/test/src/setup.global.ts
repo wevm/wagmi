@@ -1,17 +1,15 @@
-import { createServer } from 'prool'
-import { anvil } from 'prool/instances'
-
+import { Instance, Server } from 'prool'
 import { chain as chainLookup } from './chains.js'
 
 export default async function () {
   const promises = []
   for (const chain of Object.values(chainLookup)) {
     promises.push(
-      createServer({
-        instance: anvil({
+      Server.create({
+        instance: Instance.anvil({
           chainId: chain.id,
-          forkUrl: chain.fork.url,
           forkBlockNumber: chain.fork.blockNumber,
+          forkUrl: chain.fork.url,
           noMining: true,
           // @ts-expect-error
           mnemonicSeedUnsafe: 1,
