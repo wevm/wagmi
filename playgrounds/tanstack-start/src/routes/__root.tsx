@@ -12,27 +12,25 @@ import { deserialize, type State, WagmiProvider } from 'wagmi'
 import appCss from '../index.css?url'
 import { getConfig, getWagmiStateSSR } from '../wagmi'
 
-interface MyRouterContext {
-  queryClient: QueryClient
-}
-
-export const Route = createRootRouteWithContext<MyRouterContext>()({
-  head: () => ({
-    meta: [
-      { charSet: 'utf-8' },
-      { title: 'TanStack Start Example' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-    ],
-    links: [
-      {
-        rel: 'stylesheet',
-        href: appCss,
-      },
-    ],
-  }),
-  loader: () => getWagmiStateSSR(),
-  shellComponent: RootDocument,
-})
+export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
+  {
+    head: () => ({
+      meta: [
+        { charSet: 'utf-8' },
+        { title: 'TanStack Start Example' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      ],
+      links: [
+        {
+          rel: 'stylesheet',
+          href: appCss,
+        },
+      ],
+    }),
+    loader: () => getWagmiStateSSR(),
+    shellComponent: RootDocument,
+  },
+)
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   const { queryClient } = Route.useRouteContext()
