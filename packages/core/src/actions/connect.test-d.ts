@@ -82,14 +82,12 @@ test('parameters: withCapabilities', async () => {
 })
 
 test('behavior: with config', () => {
-  const c1 = testConfig.connectors[0]!
   connect(testConfig, {
-    connector: c1,
+    connector: testConfig.connectors[0],
     foo: 'bar',
   })
-  const c4 = testConfig.connectors[3]!
   connect(testConfig, {
-    connector: c4,
+    connector: testConfig.connectors[3],
     // @ts-expect-error
     foo: 'bar',
   })
