@@ -66,8 +66,8 @@ export namespace getNonce {
     return {
       ...query,
       queryKey: queryKey(rest),
-      async queryFn({ queryKey }) {
-        const [, { account, nonceKey, ...parameters }] = queryKey
+      async queryFn(context) {
+        const [, { account, nonceKey, ...parameters }] = context.queryKey
         if (!account) throw new Error('account is required.')
         if (nonceKey === undefined) throw new Error('nonceKey is required.')
         return await getNonce(config, { account, nonceKey, ...parameters })

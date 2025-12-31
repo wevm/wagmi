@@ -1,8 +1,8 @@
-import { config, tempoAccounts, tempoLocal } from '@wagmi/test'
 import { beforeEach, describe, expect, test } from 'vitest'
+import { accounts, config, tempoLocal } from '../../test/config.js'
 import * as nonce from './nonce.js'
 
-const account = tempoAccounts[0]
+const account = accounts[0]
 
 beforeEach(async () => {
   await fetch(`${tempoLocal.rpcUrls.default.http[0]}/restart`)
@@ -15,6 +15,7 @@ describe('getNonce', () => {
       nonceKey: 1n,
       chainId: tempoLocal.id,
     })
+    console.log(result)
     expect(result).toMatch(expect.any(BigInt))
   })
 })

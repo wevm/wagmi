@@ -1,6 +1,6 @@
 {
   "extends": "./tsconfig.build.json",
-  "include": ["src/**/*.ts", "test/**/*.ts"],
+  "include": ["src/**/*.ts", "test/**/*.ts", "./vite-env.d.ts"],
   "exclude": [],
   "compilerOptions": {
     "resolveJsonModule": true,

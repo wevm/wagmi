@@ -1,7 +1,7 @@
-import { renderHook } from '@wagmi/test/react'
 import { expect, test, vi } from 'vitest'
 import { cdp } from 'vitest/browser'
 import { useConnect, useConnection } from 'wagmi'
+import { renderHook } from '../test/config.js'
 import { webAuthn } from './Connectors.js'
 import * as KeyManager from './KeyManager.js'
 
