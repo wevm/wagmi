@@ -1,6 +1,7 @@
-import type { Config } from '@wagmi/core'
-import type { ChainIdParameter, UnionCompute } from '@wagmi/core/internal'
 import { Actions } from 'viem/tempo'
+import type { Config } from '../../createConfig.js'
+import type { ChainIdParameter } from '../../types/properties.js'
+import type { UnionCompute } from '../../types/utils.js'
 
 /**
  * Funds an account with an initial amount of set token(s)
