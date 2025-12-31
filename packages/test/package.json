@@ -44,9 +44,6 @@
       ]
     }
   },
-  "dependencies": {
-    "ox": "catalog:"
-  },
   "peerDependencies": {
     "@tanstack/react-query": ">=5.0.0",
     "@tanstack/vue-query": ">=5.0.0",

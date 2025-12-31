@@ -83,7 +83,7 @@ test('parameters: withCapabilities', async () => {
 
 test('behavior: with config', () => {
   connect(testConfig, {
-    connector: testConfig.connectors[0],
+    connector: testConfig.connectors[0]!,
     foo: 'bar',
   })
   // @ts-expect-error

@@ -11,6 +11,5 @@ test('default', () => {
 
 test('parameters: config', () => {
   const result = useConnection({ config })
-  if (result.chain)
-    expectTypeOf(result.chain.id).toEqualTypeOf<1 | 10 | 456 | 402>()
+  if (result.chain) expectTypeOf(result.chain.id).toEqualTypeOf<1 | 10 | 456>()
 })

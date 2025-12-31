@@ -1,4 +1,5 @@
 /// <reference types="./vite-env.d.ts" />
+
 import type { FixedArray } from '@wagmi/core/internal'
 import { type Address, parseAbi } from 'viem'
 import { mnemonicToAccount } from 'viem/accounts'

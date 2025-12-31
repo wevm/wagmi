@@ -408,10 +408,6 @@ importers:
         version: link:../react
 
   packages/test:
-    dependencies:
-      ox:
-        specifier: 'catalog:'
-        version: 0.11.1(typescript@5.9.3)(zod@4.1.11)
     devDependencies:
       '@tanstack/react-query':
         specifier: 'catalog:'

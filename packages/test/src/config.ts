@@ -1,5 +1,6 @@
 import { createConfig, mock } from '@wagmi/core'
 import { http } from 'viem'
+
 import { mainnet, mainnet2, optimism } from './chains.js'
 import { accounts } from './constants.js'
 
