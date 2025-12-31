@@ -28,14 +28,14 @@ catalogs:
       specifier: 9.1.0
       version: 9.1.0
     '@tanstack/query-core':
-      specifier: 5.49.1
-      version: 5.49.1
+      specifier: 5.90.5
+      version: 5.90.5
     '@tanstack/react-query':
-      specifier: 5.49.2
-      version: 5.49.2
+      specifier: 5.90.5
+      version: 5.90.5
     '@tanstack/vue-query':
-      specifier: 5.49.1
-      version: 5.49.1
+      specifier: 5.90.5
+      version: 5.90.5
     '@types/react':
       specifier: ^19.2.0
       version: 19.2.3
@@ -289,7 +289,7 @@ importers:
         version: 2.4.9(typescript@5.9.3)
       porto:
         specifier: 'catalog:'
-        version: 0.2.35(@types/react@19.2.3)(@wagmi/core@packages+core)(react@19.2.0)(typescript@5.9.3)(use-sync-external-store@1.4.0(react@19.2.0))(viem@2.43.3(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76))(wagmi@packages+react)
+        version: 0.2.35(@tanstack/react-query@5.90.5(react@19.2.0))(@types/react@19.2.3)(@wagmi/core@packages+core)(react@19.2.0)(typescript@5.9.3)(use-sync-external-store@1.4.0(react@19.2.0))(viem@2.43.3(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76))(wagmi@packages+react)
 
   packages/core:
     dependencies:
@@ -305,7 +305,7 @@ importers:
     devDependencies:
       '@tanstack/query-core':
         specifier: 'catalog:'
-        version: 5.49.1
+        version: 5.90.5
 
   packages/create-wagmi:
     dependencies:
@@ -346,7 +346,7 @@ importers:
     devDependencies:
       '@tanstack/react-query':
         specifier: 'catalog:'
-        version: 5.49.2(react@19.2.0)
+        version: 5.90.5(react@19.2.0)
       '@types/react':
         specifier: 'catalog:'
         version: 19.2.3
@@ -367,7 +367,7 @@ importers:
     dependencies:
       '@tanstack/react-query':
         specifier: 'catalog:'
-        version: 5.49.2(react@19.2.0)
+        version: 5.90.5(react@19.2.0)
       react:
         specifier: 'catalog:'
         version: 19.2.0
@@ -383,7 +383,7 @@ importers:
     dependencies:
       '@tanstack/vue-query':
         specifier: 'catalog:'
-        version: 5.49.1(vue@3.4.27(typescript@5.9.3))
+        version: 5.90.5(vue@3.4.27(typescript@5.9.3))
       '@wagmi/vue':
         specifier: workspace:*
         version: link:../../vue
@@ -399,10 +399,10 @@ importers:
     devDependencies:
       '@tanstack/query-core':
         specifier: 'catalog:'
-        version: 5.49.1
+        version: 5.90.5
       '@tanstack/react-query':
         specifier: 'catalog:'
-        version: 5.49.2(react@19.2.0)
+        version: 5.90.5(react@19.2.0)
       '@types/react':
         specifier: 'catalog:'
         version: 19.2.3
@@ -420,10 +420,10 @@ importers:
     devDependencies:
       '@tanstack/react-query':
         specifier: 'catalog:'
-        version: 5.49.2(react@19.2.0)
+        version: 5.90.5(react@19.2.0)
       '@tanstack/vue-query':
         specifier: 'catalog:'
-        version: 5.49.1(vue@3.4.27(typescript@5.9.3))
+        version: 5.90.5(vue@3.4.27(typescript@5.9.3))
       '@types/react':
         specifier: 'catalog:'
         version: 19.2.3
@@ -463,7 +463,7 @@ importers:
         version: 4.2.1
       '@tanstack/vue-query':
         specifier: 'catalog:'
-        version: 5.49.1(vue@3.4.27(typescript@5.9.3))
+        version: 5.90.5(vue@3.4.27(typescript@5.9.3))
       '@vue/test-utils':
         specifier: ^2.4.6
         version: 2.4.6
@@ -481,7 +481,7 @@ importers:
         version: 14.2.3(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@tanstack/react-query':
         specifier: 'catalog:'
-        version: 5.49.2(react@19.2.0)
+        version: 5.90.5(react@19.2.0)
       next:
         specifier: ^16.0.7
         version: 16.0.10(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -512,7 +512,7 @@ importers:
     dependencies:
       '@tanstack/vue-query':
         specifier: 'catalog:'
-        version: 5.49.1(vue@3.4.27(typescript@5.9.3))
+        version: 5.90.5(vue@3.4.27(typescript@5.9.3))
       '@wagmi/vue':
         specifier: workspace:*
         version: link:../../packages/vue
@@ -570,10 +570,10 @@ importers:
         version: 5.90.12
       '@tanstack/react-query':
         specifier: 'catalog:'
-        version: 5.49.2(react@19.2.0)
+        version: 5.90.5(react@19.2.0)
       '@tanstack/react-query-persist-client':
         specifier: ^5.90.12
-        version: 5.90.12(@tanstack/react-query@5.49.2(react@19.2.0))(react@19.2.0)
+        version: 5.90.12(@tanstack/react-query@5.90.5(react@19.2.0))(react@19.2.0)
       idb-keyval:
         specifier: ^6.2.1
         version: 6.2.1
@@ -592,7 +592,7 @@ importers:
     devDependencies:
       '@tanstack/react-query-devtools':
         specifier: 5.0.5
-        version: 5.0.5(@tanstack/react-query@5.49.2(react@19.2.0))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+        version: 5.0.5(@tanstack/react-query@5.90.5(react@19.2.0))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       '@types/react':
         specifier: 'catalog:'
         version: 19.2.3
@@ -616,7 +616,7 @@ importers:
     dependencies:
       '@tanstack/vue-query':
         specifier: 'catalog:'
-        version: 5.49.1(vue@3.4.27(typescript@5.9.3))
+        version: 5.90.5(vue@3.4.27(typescript@5.9.3))
       '@wagmi/vue':
         specifier: workspace:*
         version: link:../../packages/vue
@@ -647,13 +647,13 @@ importers:
         version: 3.18.0(@nuxt/kit@3.19.2(magicast@0.3.5))(typescript@5.9.3)
       '@tanstack/query-core':
         specifier: 'catalog:'
-        version: 5.49.1
+        version: 5.90.5
       '@tanstack/react-query':
         specifier: 'catalog:'
-        version: 5.49.2(react@19.2.0)
+        version: 5.90.5(react@19.2.0)
       '@tanstack/vue-query':
         specifier: 'catalog:'
-        version: 5.49.1(vue@3.4.27(typescript@5.9.3))
+        version: 5.90.5(vue@3.4.27(typescript@5.9.3))
       '@types/react':
         specifier: 'catalog:'
         version: 19.2.3
@@ -3973,15 +3973,15 @@ packages:
   '@swc/helpers@0.5.15':
     resolution: {integrity: sha512-JQ5TuMi45Owi4/BIMAJBoSQoOJu12oOk/gADqlcUL9JEdHB8vyjUSsxqeNXnmXHjYKMi2WcYtezGEEhqUI/E2g==}
 
-  '@tanstack/match-sorter-utils@8.15.1':
-    resolution: {integrity: sha512-PnVV3d2poenUM31ZbZi/yXkBu3J7kd5k2u51CGwwNojag451AjTH9N6n41yjXz2fpLeewleyLBmNS6+HcGDlXw==}
+  '@tanstack/match-sorter-utils@8.19.4':
+    resolution: {integrity: sha512-Wo1iKt2b9OT7d+YGhvEPD3DXvPv2etTusIMhMUoG7fbhmxcXCtIjJDEygy91Y2JFlwGyjqiBPRozme7UD8hoqg==}
     engines: {node: '>=12'}
-
-  '@tanstack/query-core@5.49.1':
-    resolution: {integrity: sha512-JnC9ndmD1KKS01Rt/ovRUB1tmwO7zkyXAyIxN9mznuJrcNtOrkmOnQqdJF2ib9oHzc2VxHomnEG7xyfo54Npkw==}
 
   '@tanstack/query-core@5.90.10':
     resolution: {integrity: sha512-EhZVFu9rl7GfRNuJLJ3Y7wtbTnENsvzp+YpcAV7kCYiXni1v8qZh++lpw4ch4rrwC0u/EZRnBHIehzCGzwXDSQ==}
+
+  '@tanstack/query-core@5.90.5':
+    resolution: {integrity: sha512-wLamYp7FaDq6ZnNehypKI5fNvxHPfTYylE0m/ZpuuzJfJqhR5Pxg9gvGBHZx4n7J+V5Rg5mZxHHTlv25Zt5u+w==}
 
   '@tanstack/query-devtools@5.0.5':
     resolution: {integrity: sha512-xjuOhOrrO50sPoJ4WG9yPe3imQ0Ds/nutnmwdTqjM2ZTIkflh//p7q2iB6IxFBY9sB106h+PULlma8sgTuOKAQ==}
@@ -4005,13 +4005,13 @@ packages:
       '@tanstack/react-query': ^5.90.10
       react: ^18 || ^19
 
-  '@tanstack/react-query@5.49.2':
-    resolution: {integrity: sha512-6rfwXDK9BvmHISbNFuGd+wY3P44lyW7lWiA9vIFGT/T0P9aHD1VkjTvcM4SDAIbAQ9ygEZZoLt7dlU1o3NjMVA==}
+  '@tanstack/react-query@5.90.5':
+    resolution: {integrity: sha512-pN+8UWpxZkEJ/Rnnj2v2Sxpx1WFlaa9L6a4UO89p6tTQbeo+m0MS8oYDjbggrR8QcTyjKoYWKS3xJQGr3ExT8Q==}
     peerDependencies:
-      react: ^18.0.0
+      react: ^18 || ^19
 
-  '@tanstack/vue-query@5.49.1':
-    resolution: {integrity: sha512-/nTqP8PNCRzMcqTGEuFQE3ntUD3A+K05r6Dw/0hNwNS3PLEaKUKlxytmAhIoaoloQwbbAghjLyKRQZ+CMWv90A==}
+  '@tanstack/vue-query@5.90.5':
+    resolution: {integrity: sha512-bTEmgIb6o5BqkoJPNV7ZKKsDHjiVnNydORw1n6S/x0dppb3lTT5KFOotQ5PqZG3OQY+9AwA6RJJN3pEx+9j1Pg==}
     peerDependencies:
       '@vue/composition-api': ^1.1.2
       vue: ^2.6.0 || ^3.3.0
@@ -13377,13 +13377,13 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@tanstack/match-sorter-utils@8.15.1':
+  '@tanstack/match-sorter-utils@8.19.4':
     dependencies:
       remove-accents: 0.5.0
 
-  '@tanstack/query-core@5.49.1': {}
-
   '@tanstack/query-core@5.90.10': {}
+
+  '@tanstack/query-core@5.90.5': {}
 
   '@tanstack/query-devtools@5.0.5': {}
 
@@ -13396,28 +13396,28 @@ snapshots:
       '@tanstack/query-core': 5.90.10
       '@tanstack/query-persist-client-core': 5.91.9
 
-  '@tanstack/react-query-devtools@5.0.5(@tanstack/react-query@5.49.2(react@19.2.0))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)':
+  '@tanstack/react-query-devtools@5.0.5(@tanstack/react-query@5.90.5(react@19.2.0))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)':
     dependencies:
       '@tanstack/query-devtools': 5.0.5
-      '@tanstack/react-query': 5.49.2(react@19.2.0)
+      '@tanstack/react-query': 5.90.5(react@19.2.0)
       react: 19.2.0
       react-dom: 19.2.0(react@19.2.0)
 
-  '@tanstack/react-query-persist-client@5.90.12(@tanstack/react-query@5.49.2(react@19.2.0))(react@19.2.0)':
+  '@tanstack/react-query-persist-client@5.90.12(@tanstack/react-query@5.90.5(react@19.2.0))(react@19.2.0)':
     dependencies:
       '@tanstack/query-persist-client-core': 5.91.9
-      '@tanstack/react-query': 5.49.2(react@19.2.0)
+      '@tanstack/react-query': 5.90.5(react@19.2.0)
       react: 19.2.0
 
-  '@tanstack/react-query@5.49.2(react@19.2.0)':
+  '@tanstack/react-query@5.90.5(react@19.2.0)':
     dependencies:
-      '@tanstack/query-core': 5.49.1
+      '@tanstack/query-core': 5.90.5
       react: 19.2.0
 
-  '@tanstack/vue-query@5.49.1(vue@3.4.27(typescript@5.9.3))':
+  '@tanstack/vue-query@5.90.5(vue@3.4.27(typescript@5.9.3))':
     dependencies:
-      '@tanstack/match-sorter-utils': 8.15.1
-      '@tanstack/query-core': 5.49.1
+      '@tanstack/match-sorter-utils': 8.19.4
+      '@tanstack/query-core': 5.90.5
       '@vue/devtools-api': 6.6.4
       vue: 3.4.27(typescript@5.9.3)
       vue-demi: 0.14.10(vue@3.4.27(typescript@5.9.3))
@@ -18443,7 +18443,7 @@ snapshots:
 
   pony-cause@2.1.11: {}
 
-  porto@0.2.35(@types/react@19.2.3)(@wagmi/core@packages+core)(react@19.2.0)(typescript@5.9.3)(use-sync-external-store@1.4.0(react@19.2.0))(viem@2.43.3(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76))(wagmi@packages+react):
+  porto@0.2.35(@tanstack/react-query@5.90.5(react@19.2.0))(@types/react@19.2.3)(@wagmi/core@packages+core)(react@19.2.0)(typescript@5.9.3)(use-sync-external-store@1.4.0(react@19.2.0))(viem@2.43.3(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76))(wagmi@packages+react):
     dependencies:
       '@wagmi/core': link:packages/core
       hono: 4.10.3
@@ -18454,6 +18454,7 @@ snapshots:
       zod: 4.1.11
       zustand: 5.0.3(@types/react@19.2.3)(react@19.2.0)(use-sync-external-store@1.4.0(react@19.2.0))
     optionalDependencies:
+      '@tanstack/react-query': 5.90.5(react@19.2.0)
       react: 19.2.0
       typescript: 5.9.3
       wagmi: link:packages/react

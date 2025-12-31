@@ -1,11 +1,11 @@
-import { beforeEach, describe, expect, test } from 'vitest'
-import { accounts, config, tempoLocal } from '../../test/config.js'
+import { afterEach, describe, expect, test } from 'vitest'
+import { accounts, config, queryClient, rpcUrl } from '../../test/config.js'
 import * as nonce from './nonce.js'
 
 const account = accounts[0]
 
-beforeEach(async () => {
-  await fetch(`${tempoLocal.rpcUrls.default.http[0]}/restart`)
+afterEach(async () => {
+  await fetch(`${rpcUrl}/restart`)
 })
 
 describe('getNonce', () => {
@@ -13,9 +13,18 @@ describe('getNonce', () => {
     const result = await nonce.getNonce(config, {
       account: account.address,
       nonceKey: 1n,
-      chainId: tempoLocal.id,
     })
-    console.log(result)
-    expect(result).toMatch(expect.any(BigInt))
+    expect(result).toBe(0n)
+  })
+
+  describe('queryOptions', () => {
+    test('default', async () => {
+      const options = nonce.getNonce.queryOptions(config, {
+        account: account.address,
+        nonceKey: 1n,
+      })
+      const result = await queryClient.fetchQuery(options)
+      expect(result).toBe(0n)
+    })
   })
 })

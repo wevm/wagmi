@@ -13,6 +13,10 @@ import {
 import { createConfig, WagmiProvider } from 'wagmi'
 import { dangerous_secp256k1 } from '../src/Connectors.js'
 
+export const addresses = {
+  alphaUsd: '0x20c0000000000000000000000000000000000001',
+} as const
+
 export const accounts = Array.from({ length: 20 }, (_, i) => {
   const privateKey = Mnemonic.toPrivateKey(
     'test test test test test test test test test test test junk',

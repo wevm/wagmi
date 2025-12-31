@@ -32,6 +32,7 @@ export default defineConfig({
         // ignore third-party connectors
         'packages/connectors/**',
         'packages/core/src/connectors/injected.ts',
+        'packages/tempo/**',
       ],
     },
     globalSetup: process.env.TYPES
@@ -87,6 +88,10 @@ export default defineConfig({
             instances: [{ browser: 'chromium' }],
             provider: playwright(),
             screenshotFailures: false,
+          },
+          env: {
+            RPC_PORT: '4000',
+            VITE_NODE_TAG: '0.8.0',
           },
           include: ['./packages/tempo/src/**/*.test.ts'],
           testTimeout: 10_000,

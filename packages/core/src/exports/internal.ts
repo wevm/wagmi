@@ -43,6 +43,7 @@ export type {
   StrictOmit as Omit,
   UnionCompute,
   UnionExactPartial,
+  UnionLooseOmit,
   UnionStrictOmit,
 } from '../types/utils.js'
 
