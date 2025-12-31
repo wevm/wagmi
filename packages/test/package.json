@@ -52,7 +52,6 @@
     "@tanstack/vue-query": ">=5.0.0",
     "@types/react": ">=18",
     "@types/react-dom": ">=18",
-    "@wagmi/connectors": "workspace:*",
     "@wagmi/core": "workspace:*",
     "@wagmi/vue": "workspace:*",
     "prool": "^0.0.24",
@@ -74,9 +73,6 @@
       "optional": true
     },
     "@types/react-dom": {
-      "optional": true
-    },
-    "@wagmi/connectors": {
       "optional": true
     },
     "@wagmi/vue": {
@@ -103,7 +99,6 @@
     "@tanstack/vue-query": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "@wagmi/connectors": "workspace:*",
     "@wagmi/core": "workspace:*",
     "@wagmi/vue": "workspace:*",
     "react": "catalog:",

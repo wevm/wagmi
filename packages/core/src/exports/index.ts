@@ -478,6 +478,11 @@ export {
 } from '../connectors/createConnector.js'
 
 export {
+  type Dangerous_Secp256k1Parameters,
+  dangerous_secp256k1,
+} from '../connectors/dangerous_secp256k1.js'
+
+export {
   type InjectedParameters,
   injected,
 } from '../connectors/injected.js'

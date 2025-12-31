@@ -412,9 +412,6 @@ importers:
       '@types/react-dom':
         specifier: 'catalog:'
         version: 19.2.2(@types/react@19.2.3)
-      '@wagmi/connectors':
-        specifier: workspace:*
-        version: link:../connectors
       '@wagmi/core':
         specifier: workspace:*
         version: link:../core

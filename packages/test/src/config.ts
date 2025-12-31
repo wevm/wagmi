@@ -1,5 +1,4 @@
-import { dangerous_secp256k1 } from '@wagmi/connectors'
-import { createConfig, mock } from '@wagmi/core'
+import { createConfig, dangerous_secp256k1, mock } from '@wagmi/core'
 import { http } from 'viem'
 import { mainnet, mainnet2, optimism, tempoLocal } from './chains.js'
 import { accounts, tempoAccounts } from './constants.js'
