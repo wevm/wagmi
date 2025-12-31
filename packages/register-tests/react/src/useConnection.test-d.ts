@@ -9,7 +9,8 @@ test('default', () => {
   if (result.chain) expectTypeOf(result.chain.id).toEqualTypeOf<ChainId>()
 })
 
-test('parameters: config', async () => {
+test('parameters: config', () => {
   const result = useConnection({ config })
-  if (result.chain) expectTypeOf(result.chain.id).toEqualTypeOf<1 | 10 | 456>()
+  if (result.chain)
+    expectTypeOf(result.chain.id).toEqualTypeOf<1 | 10 | 456 | 402>()
 })

@@ -5,14 +5,28 @@ import { useConnect, useConnectors } from 'wagmi'
 test('infers connect parameters', () => {
   const connect = useConnect()
   const connectors = useConnectors()
-  const connector = connectors[0]!
+  const connector = connectors[0]! as (typeof connectors)[number]
 
   connect.mutate({
     connector,
     foo: 'bar',
   })
   connect.mutate({
+    connector: connectors[1],
+    // @ts-expect-error
+    foo: 'bar',
+  })
+  connect.mutate({
     connector,
+    capabilities: {
+      signInWithEthereum: {
+        nonce: 'foobarbaz',
+      },
+    },
+  })
+  connect.mutate({
+    connector: connectors[0],
+    // @ts-expect-error
     capabilities: {
       signInWithEthereum: {
         nonce: 'foobarbaz',

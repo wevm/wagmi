@@ -5,7 +5,9 @@ import { useConnectorClient } from './useConnectorClient.js'
 
 test('parameters: config', async () => {
   const client = useConnectorClient({ config })
-  expectTypeOf(client.data?.value?.chain?.id!).toEqualTypeOf<1 | 456 | 10>()
+  expectTypeOf(client.data?.value?.chain?.id!).toEqualTypeOf<
+    1 | 456 | 10 | 402
+  >()
 
   const client2 = useConnectorClient({ config, chainId: 1 })
   expectTypeOf(client2.data?.value?.chain?.id!).toEqualTypeOf<1>()

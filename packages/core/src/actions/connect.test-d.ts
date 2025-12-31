@@ -1,4 +1,4 @@
-import { accounts } from '@wagmi/test'
+import { accounts, config as testConfig } from '@wagmi/test'
 import { type Address, type Hex, http } from 'viem'
 import { mainnet } from 'viem/chains'
 import { expectTypeOf, test } from 'vitest'
@@ -79,4 +79,20 @@ test('parameters: withCapabilities', async () => {
       }[],
     ]
   >()
+})
+
+test('behavior: with config', () => {
+  const c1 = testConfig.connectors[0]!
+  connect(testConfig, {
+    connector: c1,
+    foo: 'bar',
+  })
+  const c4 = testConfig.connectors[3]!
+  connect(testConfig, {
+    connector: c4,
+    // @ts-expect-error
+    foo: 'bar',
+  })
+  // @ts-expect-error
+  testConfig.connectors[4]
 })

@@ -11,5 +11,5 @@ test('default', async () => {
 
 test('parameters: config', async () => {
   const chainId = useChainId({ config })
-  expectTypeOf(chainId).toEqualTypeOf<1 | 456 | 10>()
+  expectTypeOf(chainId).toEqualTypeOf<1 | 456 | 10 | 402>()
 })

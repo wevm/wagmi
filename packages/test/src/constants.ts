@@ -316,6 +316,7 @@ export const address = {
   optimism: {
     usdc: '0x7f5c764cbc14f9669b88837ca1490cca17c31607',
   },
+  tempoLocal: {},
 } as const satisfies Record<keyof typeof mainnetAddress, Address> &
   Record<keyof typeof chain, Record<string, Address>>
 
