@@ -55,7 +55,9 @@ export function webAuthn(options: webAuthn.Parameters) {
                 selectAccount?: boolean | undefined
                 type: 'sign-in'
               }
-            | {}
+            | {
+                type?: undefined
+              }
           >
         | undefined
       isReconnecting?: boolean | undefined
@@ -605,14 +607,7 @@ export function dangerous_secp256k1(
 
   type Properties = {
     connect<withCapabilities extends boolean = false>(parameters: {
-      capabilities?:
-        | OneOf<
-            | {
-                type: 'sign-up'
-              }
-            | {}
-          >
-        | undefined
+      capabilities?: { type?: 'sign-up' | undefined } | undefined
       chainId?: number | undefined
       isReconnecting?: boolean | undefined
       withCapabilities?: withCapabilities | boolean | undefined

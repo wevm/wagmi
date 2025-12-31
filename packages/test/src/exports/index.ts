@@ -1,5 +1,5 @@
 // biome-ignore lint/performance/noBarrelFile: entrypoint module
-export { chain, mainnet, mainnet2, optimism } from '../chains.js'
+export { chain, mainnet, mainnet2, optimism, tempoLocal } from '../chains.js'
 export {
   mainnet2TestClient,
   mainnetTestClient,
@@ -13,6 +13,7 @@ export {
   address,
   bytecode,
   privateKey,
+  tempoAccounts,
   typedData,
   walletConnectProjectId,
 } from '../constants.js'

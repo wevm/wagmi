@@ -54,8 +54,8 @@ function wagmiTestMethods(
     /** Resets fork attached to chain at starting block number. */
     resetFork() {
       return client.reset({
-        jsonRpcUrl: client.chain.fork.url,
-        blockNumber: client.chain.fork.blockNumber,
+        jsonRpcUrl: client.chain.fork?.url,
+        blockNumber: client.chain.fork?.blockNumber,
       })
     },
   }
