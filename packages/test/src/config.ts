@@ -1,23 +1,17 @@
-import { createConfig, dangerous_secp256k1, mock } from '@wagmi/core'
+import { createConfig, mock } from '@wagmi/core'
 import { http } from 'viem'
-import { mainnet, mainnet2, optimism, tempoLocal } from './chains.js'
-import { accounts, tempoAccounts } from './constants.js'
+import { mainnet, mainnet2, optimism } from './chains.js'
+import { accounts } from './constants.js'
 
 export const config = createConfig({
-  chains: [mainnet, mainnet2, optimism, tempoLocal],
-  connectors: [
-    mock({ accounts }),
-    mock({ accounts: reverse(accounts) }),
-    dangerous_secp256k1({ account: tempoAccounts.at(0) }),
-    dangerous_secp256k1({ account: tempoAccounts.at(1) }),
-  ],
+  chains: [mainnet, mainnet2, optimism],
+  connectors: [mock({ accounts }), mock({ accounts: reverse(accounts) })],
   pollingInterval: 100,
   storage: null,
   transports: {
     [mainnet.id]: http(),
     [mainnet2.id]: http(),
     [optimism.id]: http(),
-    [tempoLocal.id]: http(),
   },
 })
 

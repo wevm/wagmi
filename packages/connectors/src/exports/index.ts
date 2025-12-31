@@ -1,7 +1,5 @@
 // biome-ignore lint/performance/noBarrelFile: entrypoint module
 export {
-  type Dangerous_Secp256k1Parameters,
-  dangerous_secp256k1,
   type InjectedParameters,
   injected,
   type MockParameters,

@@ -1,25 +1,13 @@
 /// <reference types="./vite-env.d.ts" />
 import type { Compute } from '@wagmi/core/internal'
-import type { Instance } from 'prool'
 import * as chains from 'viem/chains'
 import { getRpcUrls } from './utils.js'
 
 export type Chain = Compute<
   chains.Chain & {
+    fork: { blockNumber: bigint; url: string }
     port: number
-  } & (
-      | {
-          fork: { blockNumber: bigint; url: string }
-          local?: undefined
-        }
-      | {
-          fork?: undefined
-          local: {
-            args: Instance.tempo.Parameters
-            tag: string
-          }
-        }
-    )
+  }
 >
 
 const mainnetFork = {
@@ -50,24 +38,10 @@ export const optimism = {
   },
 } as const satisfies Chain
 
-export const tempoLocal = {
-  ...chains.tempoLocalnet,
-  ...getRpcUrls({ port: 9545 }),
-  id: 402,
-  local: {
-    args: {
-      blockTime: '2ms',
-      log: unwrapEnv('VITE_TEMPO_LOG', 'error'),
-    },
-    tag: unwrapEnv('VITE_TEMPO_TAG', '0.8.0'),
-  },
-} as const satisfies Chain
-
 export const chain = {
   mainnet,
   mainnet2,
   optimism,
-  tempoLocal,
 }
 
 function unwrapEnv<

@@ -135,6 +135,14 @@
           "test/setup.ts"
         ]
       },
+      "packages/tempo": {
+        "entry": [
+          "src/exports/{index}.ts!"
+        ],
+        "ignore": [
+          "test/setup.ts"
+        ]
+      },
       "packages/test": {
         "entry": [
           "src/setup.ts!",

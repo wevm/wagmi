@@ -50,7 +50,6 @@ export default defineConfig({
       {
         test: {
           name: 'connectors',
-          exclude: ['./packages/connectors/src/tempo.test.ts'],
           include: ['./packages/connectors/src/**/*.test.ts'],
           environment: 'happy-dom',
         },
@@ -81,6 +80,24 @@ export default defineConfig({
         plugins: [reactFallbackThrottlePlugin()],
         resolve: { alias },
         test: {
+          name: 'tempo',
+          browser: {
+            enabled: true,
+            headless: true,
+            instances: [{ browser: 'chromium' }],
+            provider: playwright(),
+            screenshotFailures: false,
+          },
+          include: ['./packages/tempo/src/**/*.test.ts'],
+          testTimeout: 10_000,
+          globalSetup: ['./packages/tempo/test/setup.global.ts'],
+          setupFiles: ['./packages/tempo/test/setup.ts'],
+        },
+      },
+      {
+        plugins: [reactFallbackThrottlePlugin()],
+        resolve: { alias },
+        test: {
           name: 'react',
           browser: {
             enabled: true,
@@ -89,10 +106,7 @@ export default defineConfig({
             provider: playwright(),
             screenshotFailures: false,
           },
-          include: [
-            './packages/react/src/**/*.test.ts?(x)',
-            './packages/connectors/src/tempo.test.ts',
-          ],
+          include: ['./packages/react/src/**/*.test.ts?(x)'],
           testTimeout: 10_000,
           setupFiles: ['./packages/react/test/setup.ts'],
         },

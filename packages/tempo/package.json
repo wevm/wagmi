@@ -1,12 +1,12 @@
 {
-  "name": "@wagmi/connectors",
-  "description": "Collection of connectors for Wagmi",
-  "version": "7.0.5",
+  "name": "@wagmi/tempo",
+  "description": "Tempo extensions for Wagmi",
+  "version": "0.0.1",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/wevm/wagmi.git",
-    "directory": "packages/connectors"
+    "directory": "packages/tempo"
   },
   "scripts": {
     "build": "pnpm run build:esm+types",
@@ -35,58 +35,33 @@
     "./package.json": "./package.json"
   },
   "peerDependencies": {
-    "@base-org/account": "~2.4.0",
-    "@coinbase/wallet-sdk": "~4.3.6",
-    "@gemini-wallet/core": "~0.3.1",
-    "@metamask/sdk": "~0.33.1",
-    "@safe-global/safe-apps-provider": "~0.18.6",
-    "@safe-global/safe-apps-sdk": "~9.1.0",
-    "@wagmi/core": "workspace:*",
-    "@walletconnect/ethereum-provider": "~2.21.1",
-    "porto": "~0.2.35",
+    "@tanstack/query-core": ">=5.0.0",
+    "@wagmi/core": ">=2.18",
     "typescript": ">=5.7.3",
-    "viem": "2.x"
+    "viem": ">=2.43.0",
+    "wagmi": ">=2.19"
   },
   "peerDependenciesMeta": {
-    "@base-org/account": {
+    "@tanstack/query-core": {
       "optional": true
     },
-    "@coinbase/wallet-sdk": {
-      "optional": true
-    },
-    "@gemini-wallet/core": {
-      "optional": true
-    },
-    "@metamask/sdk": {
-      "optional": true
-    },
-    "@safe-global/safe-apps-provider": {
-      "optional": true
-    },
-    "@safe-global/safe-apps-sdk": {
-      "optional": true
-    },
-    "@walletconnect/ethereum-provider": {
-      "optional": true
-    },
-    "porto": {
+    "@wagmi/core": {
       "optional": true
     },
     "typescript": {
       "optional": true
+    },
+    "wagmi": {
+      "optional": true
     }
   },
+  "dependencies": {
+    "ox": "catalog:"
+  },
   "devDependencies": {
-    "@base-org/account": "catalog:",
-    "@coinbase/wallet-sdk": "catalog:",
-    "@gemini-wallet/core": "catalog:",
-    "@metamask/sdk": "catalog:",
-    "@safe-global/safe-apps-provider": "catalog:",
-    "@safe-global/safe-apps-sdk": "catalog:",
+    "@tanstack/query-core": "catalog:",
     "@wagmi/core": "workspace:*",
-    "@walletconnect/ethereum-provider": "catalog:",
-    "msw": "^2.4.9",
-    "porto": "catalog:"
+    "wagmi": "workspace:*"
   },
   "contributors": [
     "awkweb.eth <t@wevm.dev>",
@@ -94,13 +69,12 @@
   ],
   "funding": "https://github.com/sponsors/wevm",
   "keywords": [
-    "react",
-    "hooks",
+    "tempo",
+    "wagmi",
     "eth",
     "ethereum",
     "dapps",
     "wallet",
-    "web3",
-    "abi"
+    "web3"
   ]
 }

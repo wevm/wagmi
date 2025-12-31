@@ -86,11 +86,6 @@ test('behavior: with config', () => {
     connector: testConfig.connectors[0],
     foo: 'bar',
   })
-  connect(testConfig, {
-    connector: testConfig.connectors[3],
-    // @ts-expect-error
-    foo: 'bar',
-  })
   // @ts-expect-error
   testConfig.connectors[4]
 })

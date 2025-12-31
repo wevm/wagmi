@@ -1,11 +1,11 @@
-# @wagmi/tempo
+# @wagmi/core
 
-Tempo extensions for Wagmi
+VanillaJS library for Ethereum
 
 ## Installation
 
 ```bash
-pnpm add @wagmi/tempo @wagmi/core viem
+pnpm add @wagmi/core viem
 ```
 
 ## Documentation

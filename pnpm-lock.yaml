@@ -287,9 +287,6 @@ importers:
       msw:
         specifier: ^2.4.9
         version: 2.4.9(typescript@5.9.3)
-      ox:
-        specifier: 'catalog:'
-        version: 0.11.1(typescript@5.9.3)(zod@3.25.76)
       porto:
         specifier: 'catalog:'
         version: 0.2.35(@types/react@19.2.3)(@wagmi/core@packages+core)(react@19.2.0)(typescript@5.9.3)(use-sync-external-store@1.4.0(react@19.2.0))(viem@2.43.3(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76))(wagmi@packages+react)
@@ -393,6 +390,22 @@ importers:
       vue:
         specifier: 'catalog:'
         version: 3.4.27(typescript@5.9.3)
+
+  packages/tempo:
+    dependencies:
+      ox:
+        specifier: 'catalog:'
+        version: 0.11.1(typescript@5.9.3)(zod@4.1.11)
+    devDependencies:
+      '@tanstack/query-core':
+        specifier: 'catalog:'
+        version: 5.49.1
+      '@wagmi/core':
+        specifier: workspace:*
+        version: link:../core
+      wagmi:
+        specifier: workspace:*
+        version: link:../react
 
   packages/test:
     dependencies:

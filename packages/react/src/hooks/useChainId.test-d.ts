@@ -10,5 +10,5 @@ test('default', () => {
 
 test('parameters: config', () => {
   const chainId = useChainId({ config })
-  expectTypeOf(chainId).toEqualTypeOf<1 | 456 | 10 | 402>()
+  expectTypeOf(chainId).toEqualTypeOf<1 | 456 | 10>()
 })

@@ -1,9 +1,7 @@
 /// <reference types="./vite-env.d.ts" />
 import type { FixedArray } from '@wagmi/core/internal'
-import * as Mnemonic from 'ox/Mnemonic'
 import { type Address, parseAbi } from 'viem'
 import { mnemonicToAccount } from 'viem/accounts'
-import { Account as tempo_Account } from 'viem/tempo'
 import type { chain } from './chains.js'
 
 // Test accounts
@@ -16,17 +14,6 @@ export const accounts = new Array(10).fill(0).map(
       },
     ).address,
 ) as unknown as FixedArray<Address, 10>
-
-export const tempoAccounts = Array.from({ length: 20 }, (_, i) => {
-  const privateKey = Mnemonic.toPrivateKey(
-    'test test test test test test test test test test test junk',
-    {
-      as: 'Hex',
-      path: Mnemonic.path({ account: i }),
-    },
-  )
-  return tempo_Account.fromSecp256k1(privateKey)
-}) as unknown as FixedArray<tempo_Account.RootAccount, 20>
 
 // for `'0x95132632579b073D12a6673e18Ab05777a6B86f8'`
 export const privateKey =
@@ -316,7 +303,6 @@ export const address = {
   optimism: {
     usdc: '0x7f5c764cbc14f9669b88837ca1490cca17c31607',
   },
-  tempoLocal: {},
 } as const satisfies Record<keyof typeof mainnetAddress, Address> &
   Record<keyof typeof chain, Record<string, Address>>
 

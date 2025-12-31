@@ -1,11 +1,9 @@
-// biome-ignore lint/correctness/noUnusedImports: need for webauth cdp types
-import type * as _ from '@vitest/browser-playwright'
 import { renderHook } from '@wagmi/test/react'
-import type { Hex } from 'ox'
 import { expect, test, vi } from 'vitest'
 import { cdp } from 'vitest/browser'
 import { useConnect, useConnection } from 'wagmi'
-import { webAuthn } from './tempo.js'
+import { webAuthn } from './Connectors.js'
+import * as KeyManager from './KeyManager.js'
 
 async function setupWebAuthn() {
   const client = cdp()
@@ -44,16 +42,7 @@ test('connect', async (context) => {
   result.current.useConnect.mutate({
     capabilities: { type: 'sign-up', label: 'Test Account' },
     connector: webAuthn({
-      keyManager: {
-        async getPublicKey(parameters) {
-          const publicKey = localStorage.getItem(parameters.credential.id)
-          if (!publicKey) throw new Error('publicKey not found.')
-          return publicKey as Hex.Hex
-        },
-        async setPublicKey(parameters) {
-          localStorage.setItem(parameters.credential.id, parameters.publicKey)
-        },
-      },
+      keyManager: KeyManager.localStorage(),
     }),
   })
 
