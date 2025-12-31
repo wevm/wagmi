@@ -9,6 +9,9 @@ dist
 node_modules
 tsconfig.tsbuildinfo
 *.vitest-temp.json
+.tanstack
+.wrangler
+_
 
 # local env files
 .env
