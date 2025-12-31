@@ -5,6 +5,7 @@
       "**",
       "!**/CHANGELOG.md",
       "!**/pnpm-lock.yaml",
+      "!**/routeTree.gen.ts",
       "!**/tsconfig.base.json"
     ]
   },
