@@ -141,6 +141,9 @@ export async function myActionSync<config extends Config>(
 
 All query-based actions must include the following components:
 
+- Include `enabled` logic to disable the query when required reactive parameters (e.g. addresses) are undefined
+- The `enabled` conditional must check ALL required reactive parameters (e.g., `account && spender` for allowance checks)
+
 ```typescript
 import { filterQueryOptions } from 'wagmi/query'
 import type { QueryOptions, QueryParameter } from './utils.js'
@@ -173,6 +176,7 @@ export namespace myAction {
     const { query, ...rest } = parameters
     return {
       ...query,
+      enabled: Boolean(rest.account && (query.enabled ?? true)),
       queryKey: queryKey(rest),
       async queryFn(context) {
         const [, parameters] = context.queryKey
@@ -372,27 +376,20 @@ For read-only hooks that fetch data:
 - All parameters should be optional. Use `ExactPartial` to make all query parameters optional
 - Support optional `query` parameter for TanStack Query options
 - Default `parameters` to `{}` only if all parameters are truly optional (no required non-reactive parameters like `token`, `role`, etc.)
-- Include `enabled` logic to disable the query when required reactive parameters (e.g. addresses) are undefined
-- The `enabled` conditional must check ALL required reactive parameters (e.g., `account && spender` for allowance checks)
 
 ```typescript
 export function useMyAction<
   config extends Config = ResolvedRegister['config'],
   selectData = myAction.ReturnValue,
 >(parameters: useMyAction.Parameters<config, selectData> = {}) {
-  const { account, query = {} } = parameters
-
   const config = useConfig(parameters)
   const chainId = useChainId({ config })
-
   const options = myAction.queryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
-    query: undefined,
+    query: parameters.query,
   } as never)
-  const enabled = Boolean(account && (query.enabled ?? true))
-
-  return useQuery({ ...query, ...options, enabled })
+  return useQuery(options)
 }
 ```
 
@@ -409,7 +406,7 @@ export function useMyAction<
 >(
   parameters: useMyAction.Parameters<config, context> = {},
 ): useMyAction.ReturnType<config, context> {
-  const { mutation } = parameters
+  const { mutation = {} } = parameters
   const config = useConfig(parameters)
   return useMutation({
     ...mutation,
@@ -430,7 +427,7 @@ export function useMyActionSync<
 >(
   parameters: useMyActionSync.Parameters<config, context> = {},
 ): useMyActionSync.ReturnType<config, context> {
-  const { mutation } = parameters
+  const { mutation = {} } = parameters
   const config = useConfig(parameters)
   return useMutation({
     ...mutation,
