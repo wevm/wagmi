@@ -340,6 +340,9 @@ importers:
       '@wagmi/core':
         specifier: workspace:*
         version: link:../core
+      '@wagmi/tempo':
+        specifier: workspace:*
+        version: link:../tempo
       use-sync-external-store:
         specifier: 1.4.0
         version: 1.4.0(react@19.2.0)
