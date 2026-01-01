@@ -1,9 +1,12 @@
 import type { Address } from 'viem'
 import { describe, expect, test, vi } from 'vitest'
-import { accounts, renderHook } from '../../test/config.js'
+import { useConnect } from 'wagmi'
+import { accounts, config, renderHook } from '../../test/config.js'
 import * as nonce from './nonce.js'
+import * as token from './token.js'
 
 const account = accounts[0]
+const account2 = accounts[1]
 
 describe('useNonce', () => {
   test('default', async () => {
@@ -82,5 +85,56 @@ describe('useNonce', () => {
 
     // expect(result.current.isEnabled).toBe(true)
     expect(result.current.data).toBe(0n)
+  })
+})
+
+describe('useWatchNonceIncremented', () => {
+  test('default', async () => {
+    const { result: connectResult } = await renderHook(() => ({
+      connect: useConnect(),
+      transferSync: token.useTransferSync(),
+    }))
+
+    await connectResult.current.connect.connectAsync({
+      connector: config.connectors[0]!,
+    })
+
+    const events: any[] = []
+    await renderHook(() =>
+      nonce.useWatchNonceIncremented({
+        onNonceIncremented(args) {
+          events.push(args)
+        },
+        args: {
+          account: account.address,
+          nonceKey: 5n,
+        },
+      }),
+    )
+
+    // Have to manually set nonce because eth_FillTransaction does not support nonce keys
+    await connectResult.current.transferSync.mutateAsync({
+      to: account2.address,
+      amount: 1n,
+      token: 1n,
+      nonceKey: 5n,
+      nonce: 0,
+    })
+
+    await connectResult.current.transferSync.mutateAsync({
+      to: account2.address,
+      amount: 1n,
+      token: 1n,
+      nonceKey: 5n,
+      nonce: 1,
+    })
+
+    await vi.waitUntil(() => events.length >= 2)
+
+    expect(events).toHaveLength(2)
+    expect(events[0]?.account).toBe(account.address)
+    expect(events[0]?.nonceKey).toBe(5n)
+    expect(events[0]?.newNonce).toBe(1n)
+    expect(events[1]?.newNonce).toBe(2n)
   })
 })

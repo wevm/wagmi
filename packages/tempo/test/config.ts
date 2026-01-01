@@ -30,7 +30,7 @@ const id =
     Number(process.env.VITEST_POOL_ID ?? 1) +
       Math.floor(Math.random() * 10_000)) ||
   1 + Math.floor(Math.random() * 10_000)
-export const rpcUrl = `http://localhost:${import.meta.env.RPC_PORT ?? '8545'}/${id}`
+export const rpcUrl = `http://localhost:${import.meta.env.RPC_PORT ?? '4000'}/${id}`
 
 export const tempoLocal = defineChain({
   ...chains.tempoLocalnet,

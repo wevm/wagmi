@@ -89,10 +89,6 @@ export default defineConfig({
             provider: playwright(),
             screenshotFailures: false,
           },
-          env: {
-            RPC_PORT: '4000',
-            VITE_NODE_TAG: '0.8.0',
-          },
           include: ['./packages/tempo/src/**/*.test.ts'],
           testTimeout: 10_000,
           globalSetup: ['./packages/tempo/test/setup.global.ts'],

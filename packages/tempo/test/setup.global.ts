@@ -8,7 +8,7 @@ export default async function () {
     log: import.meta.env.VITE_NODE_LOG,
     port,
   } satisfies Instance.tempo.Parameters
-  const tag = import.meta.env.VITE_NODE_TAG ?? 'latest'
+  const tag = import.meta.env.VITE_NODE_TAG ?? '0.8.0'
   const server = Server.create({
     instance: TestContainers.Instance.tempo({
       ...args,

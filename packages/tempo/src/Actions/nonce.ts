@@ -1,11 +1,8 @@
 import type * as Query from '@tanstack/query-core'
 import type { Config } from '@wagmi/core'
-import type {
-  ChainIdParameter,
-  PartialBy,
-  RequiredBy,
-} from '@wagmi/core/internal'
+import type { ChainIdParameter, PartialBy } from '@wagmi/core/internal'
 import { Actions } from 'viem/tempo'
+import type { QueryOptions, QueryParameter } from './utils.js'
 
 /**
  * Gets the nonce for an account and nonce key.
@@ -17,7 +14,7 @@ import { Actions } from 'viem/tempo'
  * import { Actions } from 'tempo.ts/wagmi'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempo],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -79,23 +76,65 @@ export namespace getNonce {
     export type Parameters<
       config extends Config,
       selectData = getNonce.ReturnValue,
-    > = PartialBy<getNonce.Parameters<config>, 'account' | 'nonceKey'> & {
-      query?:
-        | Omit<ReturnValue<config, selectData>, 'queryKey' | 'queryFn'>
-        | undefined
-    }
-
-    export type ReturnValue<
-      config extends Config,
-      selectData = getNonce.ReturnValue,
-    > = RequiredBy<
-      Query.QueryOptions<
+    > = PartialBy<getNonce.Parameters<config>, 'account' | 'nonceKey'> &
+      QueryParameter<
         getNonce.ReturnValue,
         Query.DefaultError,
         selectData,
         getNonce.QueryKey<config>
-      >,
-      'queryKey' | 'queryFn'
+      >
+
+    export type ReturnValue<
+      config extends Config,
+      selectData = getNonce.ReturnValue,
+    > = QueryOptions<
+      getNonce.ReturnValue,
+      Query.DefaultError,
+      selectData,
+      getNonce.QueryKey<config>
     >
   }
+}
+
+/**
+ * Watches for nonce incremented events.
+ *
+ * @deprecated This function has been deprecated post-AllegroModerato. It will be removed in a future version.
+ *
+ * @example
+ * ```ts
+ * import { createConfig, http } from '@wagmi/core'
+ * import { tempo } from 'viem/chains'
+ * import { Actions } from 'tempo.ts/wagmi'
+ *
+ * const config = createConfig({
+ *   chains: [tempo],
+ *   transports: {
+ *     [tempo.id]: http(),
+ *   },
+ * })
+ *
+ * const unwatch = Actions.nonce.watchNonceIncremented(config, {
+ *   onNonceIncremented: (args, log) => {
+ *     console.log('Nonce incremented:', args)
+ *   },
+ * })
+ * ```
+ *
+ * @param config - Config.
+ * @param parameters - Parameters.
+ * @returns A function to unsubscribe from the event.
+ */
+export function watchNonceIncremented<config extends Config>(
+  config: config,
+  parameters: watchNonceIncremented.Parameters<config>,
+): () => void {
+  const { chainId, ...rest } = parameters
+  const client = config.getClient({ chainId })
+  return Actions.nonce.watchNonceIncremented(client, rest)
+}
+
+export declare namespace watchNonceIncremented {
+  export type Parameters<config extends Config> = ChainIdParameter<config> &
+    Actions.nonce.watchNonceIncremented.Parameters
 }
