@@ -16,9 +16,9 @@ catalog:
   '@nuxt/schema': 4.2.1
   '@safe-global/safe-apps-provider': 0.18.6
   '@safe-global/safe-apps-sdk': 9.1.0
-  '@tanstack/query-core': 5.90.5
-  '@tanstack/react-query': 5.90.5
-  '@tanstack/vue-query': 5.90.5
+  '@tanstack/query-core': 5.49.1
+  '@tanstack/react-query': 5.49.2
+  '@tanstack/vue-query': 5.49.1
   '@types/react': ^19.2.0
   '@types/react-dom': ^19.2.0
   '@vitejs/plugin-react': ^4.3.3
