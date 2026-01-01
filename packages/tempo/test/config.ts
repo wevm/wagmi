@@ -1,10 +1,20 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { connect, getConnection, getConnectorClient } from '@wagmi/core'
 import type { FixedArray } from '@wagmi/core/internal'
 import { Mnemonic } from 'ox'
 import * as React from 'react'
-import { defineChain, http } from 'viem'
+import {
+  type Account,
+  type Chain,
+  type Client,
+  defineChain,
+  http,
+  parseUnits,
+  type Transport,
+} from 'viem'
+import { sendTransactionSync } from 'viem/actions'
 import * as chains from 'viem/chains'
-import { Account as tempo_Account } from 'viem/tempo'
+import { Actions, Addresses, Tick, Account as tempo_Account } from 'viem/tempo'
 import {
   type RenderHookOptions,
   type RenderHookResult,
@@ -87,50 +97,192 @@ export function renderHook<result, props>(
   })
 }
 
-// export async function setupToken() {
-//   if (getAccount(config).status === 'disconnected')
-//     await connect(config, {
-//       connector: config.connectors[0]!,
-//     })
-//   const client = await getConnectorClient(config)
-//   return viem_setupToken(client as never)
-// }
-//
-// export async function setupPoolWithLiquidity() {
-//   if (getAccount(config).status === 'disconnected')
-//     await connect(config, {
-//       connector: config.connectors[0]!,
-//     })
-//   const client = await getConnectorClient(config)
-//   return viem_setupPoolWithLiquidity(client as never)
-// }
-//
-// export async function setupTokenPair() {
-//   if (getAccount(config).status === 'disconnected')
-//     await connect(config, {
-//       connector: config.connectors[0]!,
-//     })
-//   const client = await getConnectorClient(config)
-//   return viem_setupTokenPair(client as never)
-// }
-//
-// export async function setupOrders() {
-//   if (getAccount(config).status === 'disconnected')
-//     await connect(config, {
-//       connector: config.connectors[0]!,
-//     })
-//   const client = await getConnectorClient(config)
-//   return viem_setupOrders(client as never)
-// }
+export async function setupToken() {
+  if (getConnection(config).status === 'disconnected')
+    await connect(config, {
+      connector: config.connectors[0]!,
+    })
+  const client = await getConnectorClient(config)
+  return viem_setupToken(client as never)
+}
 
-// // Export types required for inference.
-// export {
-//   /** @deprecated */
-//   KeyAuthorization as z_KeyAuthorization,
-//   /** @deprecated */
-//   SignatureEnvelope as z_SignatureEnvelope,
-//   /** @deprecated */
-//   TokenId as z_TokenId,
-//   /** @deprecated */
-//   TxEnvelopeTempo as z_TxEnvelopeTempo,
-// } from 'ox/tempo'
+export async function setupPoolWithLiquidity() {
+  if (getConnection(config).status === 'disconnected')
+    await connect(config, {
+      connector: config.connectors[0]!,
+    })
+  const client = await getConnectorClient(config)
+  return viem_setupPoolWithLiquidity(client as never)
+}
+
+export async function setupTokenPair() {
+  if (getConnection(config).status === 'disconnected')
+    await connect(config, {
+      connector: config.connectors[0]!,
+    })
+  const client = await getConnectorClient(config)
+  return viem_setupTokenPair(client as never)
+}
+
+export async function setupOrders() {
+  if (getConnection(config).status === 'disconnected')
+    await connect(config, {
+      connector: config.connectors[0]!,
+    })
+  const client = await getConnectorClient(config)
+  return viem_setupOrders(client as never)
+}
+
+export async function viem_setupToken(
+  client: Client<Transport, Chain, Account>,
+  parameters: Partial<
+    Awaited<ReturnType<typeof Actions.token.createSync>>
+  > = {},
+) {
+  const token = await Actions.token.createSync(client, {
+    currency: 'USD',
+    name: 'Test Token',
+    symbol: 'TST',
+    ...parameters,
+  })
+
+  await Actions.token.grantRolesSync(client, {
+    roles: ['issuer'],
+    to: client.account.address,
+    token: token.token,
+  })
+
+  await Actions.token.mintSync(client, {
+    amount: parseUnits('10000', 6),
+    to: client.account.address,
+    token: token.token,
+  })
+
+  return token
+}
+
+export async function viem_setupPoolWithLiquidity(
+  client: Client<Transport, Chain, Account>,
+) {
+  // Create a new token for testing
+  const { token } = await Actions.token.createSync(client, {
+    name: 'Test Token',
+    symbol: 'TEST',
+    currency: 'USD',
+  })
+
+  // Grant issuer role to mint tokens
+  await Actions.token.grantRolesSync(client, {
+    token,
+    roles: ['issuer'],
+    to: client.account.address,
+  })
+
+  // Mint some tokens to account
+  await Actions.token.mintSync(client, {
+    to: client.account.address,
+    amount: parseUnits('1000', 6),
+    token,
+  })
+
+  // Add liquidity to pool
+  await Actions.amm.mintSync(client, {
+    userTokenAddress: token,
+    validatorTokenAddress: addresses.alphaUsd,
+    validatorTokenAmount: parseUnits('100', 6),
+    to: client.account.address,
+  })
+
+  return { tokenAddress: token }
+}
+
+export async function viem_setupTokenPair(
+  client: Client<Transport, typeof tempoLocal, Account>,
+) {
+  // Create quote token
+  const { token: quoteToken } = await Actions.token.createSync(client, {
+    name: 'Test Quote Token',
+    symbol: 'QUOTE',
+    currency: 'USD',
+  })
+
+  // Create base token
+  const { token: baseToken } = await Actions.token.createSync(client, {
+    name: 'Test Base Token',
+    symbol: 'BASE',
+    currency: 'USD',
+    quoteToken,
+  })
+
+  await sendTransactionSync(client, {
+    calls: [
+      Actions.token.grantRoles.call({
+        token: baseToken,
+        role: 'issuer',
+        to: client.account.address,
+      }),
+      Actions.token.grantRoles.call({
+        token: quoteToken,
+        role: 'issuer',
+        to: client.account.address,
+      }),
+      Actions.token.mint.call({
+        token: baseToken,
+        to: client.account.address,
+        amount: parseUnits('10000', 6),
+      }),
+      Actions.token.mint.call({
+        token: quoteToken,
+        to: client.account.address,
+        amount: parseUnits('10000', 6),
+      }),
+      Actions.token.approve.call({
+        token: baseToken,
+        spender: Addresses.stablecoinExchange,
+        amount: parseUnits('10000', 6),
+      }),
+      Actions.token.approve.call({
+        token: quoteToken,
+        spender: Addresses.stablecoinExchange,
+        amount: parseUnits('10000', 6),
+      }),
+    ],
+  })
+
+  // Create the pair on the DEX
+  return await Actions.dex.createPairSync(client, {
+    base: baseToken,
+  })
+}
+
+export async function viem_setupOrders(
+  client: Client<Transport, typeof tempoLocal, Account>,
+) {
+  const { base: base1 } = await viem_setupTokenPair(client)
+  const { base: base2 } = await viem_setupTokenPair(client)
+
+  const bases = [base1, base2]
+
+  // Create 50 orders with varying amounts, ticks, and tokens
+  const calls = []
+  for (let i = 0; i < 50; i++) {
+    const token = bases[i % bases.length]!
+    const amount = parseUnits(String(50 + i * 10), 6)
+    const isBuy = i % 2 === 0
+    const tickPrice = 1.0 + ((i % 20) - 10) * 0.001
+    const tick = Tick.fromPrice(String(tickPrice))
+
+    calls.push(
+      Actions.dex.place.call({
+        token,
+        amount,
+        type: isBuy ? 'buy' : 'sell',
+        tick,
+      }),
+    )
+  }
+
+  await sendTransactionSync(client, { calls } as never)
+
+  return { bases }
+}

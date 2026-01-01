@@ -2,6 +2,7 @@ import type * as Query from '@tanstack/query-core'
 import type { Config } from '@wagmi/core'
 import type { ChainIdParameter, PartialBy } from '@wagmi/core/internal'
 import { Actions } from 'viem/tempo'
+import { filterQueryOptions } from 'wagmi/query'
 import type { QueryOptions, QueryParameter } from './utils.js'
 
 /**
@@ -48,7 +49,7 @@ export namespace getNonce {
   export function queryKey<config extends Config>(
     parameters: PartialBy<Parameters<config>, 'account' | 'nonceKey'>,
   ) {
-    return ['getNonce', parameters] as const
+    return ['getNonce', filterQueryOptions(parameters)] as const
   }
 
   export type QueryKey<config extends Config> = ReturnType<
