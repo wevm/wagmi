@@ -3,11 +3,11 @@ import { type Config, getConnectorClient } from '@wagmi/core'
 import type {
   ChainIdParameter,
   ConnectorParameter,
-  RequiredBy,
   UnionLooseOmit,
 } from '@wagmi/core/internal'
 import type { Account } from 'viem'
 import { Actions } from 'viem/tempo'
+import type { QueryOptions, QueryParameter } from './utils.js'
 
 /**
  * Claims accumulated rewards for a recipient.
@@ -176,6 +176,7 @@ export namespace getTotalPerSecond {
     const { query, ...rest } = parameters
     return {
       ...query,
+      enabled: Boolean(rest.token && (query?.enabled ?? true)),
       queryKey: queryKey(rest),
       async queryFn({ queryKey }) {
         const [, parameters] = queryKey
@@ -188,23 +189,22 @@ export namespace getTotalPerSecond {
     export type Parameters<
       config extends Config,
       selectData = getTotalPerSecond.ReturnValue,
-    > = getTotalPerSecond.Parameters<config> & {
-      query?:
-        | Omit<ReturnValue<config, selectData>, 'queryKey' | 'queryFn'>
-        | undefined
-    }
-
-    export type ReturnValue<
-      config extends Config,
-      selectData = getTotalPerSecond.ReturnValue,
-    > = RequiredBy<
-      Query.QueryOptions<
+    > = getTotalPerSecond.Parameters<config> &
+      QueryParameter<
         getTotalPerSecond.ReturnValue,
         Query.DefaultError,
         selectData,
         getTotalPerSecond.QueryKey<config>
-      >,
-      'queryKey' | 'queryFn'
+      >
+
+    export type ReturnValue<
+      config extends Config,
+      selectData = getTotalPerSecond.ReturnValue,
+    > = QueryOptions<
+      getTotalPerSecond.ReturnValue,
+      Query.DefaultError,
+      selectData,
+      getTotalPerSecond.QueryKey<config>
     >
   }
 }
@@ -267,6 +267,7 @@ export namespace getUserRewardInfo {
     const { query, ...rest } = parameters
     return {
       ...query,
+      enabled: Boolean(rest.token && rest.account && (query?.enabled ?? true)),
       queryKey: queryKey(rest),
       async queryFn({ queryKey }) {
         const [, parameters] = queryKey
@@ -279,23 +280,22 @@ export namespace getUserRewardInfo {
     export type Parameters<
       config extends Config,
       selectData = getUserRewardInfo.ReturnValue,
-    > = getUserRewardInfo.Parameters<config> & {
-      query?:
-        | Omit<ReturnValue<config, selectData>, 'queryKey' | 'queryFn'>
-        | undefined
-    }
-
-    export type ReturnValue<
-      config extends Config,
-      selectData = getUserRewardInfo.ReturnValue,
-    > = RequiredBy<
-      Query.QueryOptions<
+    > = getUserRewardInfo.Parameters<config> &
+      QueryParameter<
         getUserRewardInfo.ReturnValue,
         Query.DefaultError,
         selectData,
         getUserRewardInfo.QueryKey<config>
-      >,
-      'queryKey' | 'queryFn'
+      >
+
+    export type ReturnValue<
+      config extends Config,
+      selectData = getUserRewardInfo.ReturnValue,
+    > = QueryOptions<
+      getUserRewardInfo.ReturnValue,
+      Query.DefaultError,
+      selectData,
+      getUserRewardInfo.QueryKey<config>
     >
   }
 }

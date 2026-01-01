@@ -63,6 +63,7 @@ export namespace getNonce {
     const { query, ...rest } = parameters
     return {
       ...query,
+      enabled: Boolean(rest.account && rest.nonceKey !== undefined && (query?.enabled ?? true)),
       queryKey: queryKey(rest),
       async queryFn(context) {
         const [, { account, nonceKey, ...parameters }] = context.queryKey

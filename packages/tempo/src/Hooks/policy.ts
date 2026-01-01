@@ -585,19 +585,13 @@ export function useGetData<
   config extends Config = ResolvedRegister['config'],
   selectData = Actions.getData.ReturnValue,
 >(parameters: useGetData.Parameters<config, selectData> = {}) {
-  const { policyId, query = {} } = parameters
-
   const config = useConfig(parameters)
   const chainId = useChainId({ config })
-
   const options = Actions.getData.queryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
-    query: undefined,
   } as never)
-  const enabled = Boolean(policyId !== undefined && (query.enabled ?? true))
-
-  return useQuery({ ...query, ...options, enabled })
+  return useQuery(options)
 }
 
 export declare namespace useGetData {
@@ -644,21 +638,13 @@ export function useIsAuthorized<
   config extends Config = ResolvedRegister['config'],
   selectData = Actions.isAuthorized.ReturnValue,
 >(parameters: useIsAuthorized.Parameters<config, selectData> = {}) {
-  const { policyId, user, query = {} } = parameters
-
   const config = useConfig(parameters)
   const chainId = useChainId({ config })
-
   const options = Actions.isAuthorized.queryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
-    query: undefined,
   } as never)
-  const enabled = Boolean(
-    policyId !== undefined && user && (query.enabled ?? true),
-  )
-
-  return useQuery({ ...query, ...options, enabled })
+  return useQuery(options)
 }
 
 export declare namespace useIsAuthorized {

@@ -485,19 +485,13 @@ export function useBalance<
   config extends Config = ResolvedRegister['config'],
   selectData = getBalance.ReturnValue,
 >(parameters: useBalance.Parameters<config, selectData>) {
-  const { account, query = {} } = parameters
-
   const config = useConfig(parameters)
   const chainId = useChainId({ config })
-
   const options = getBalance.queryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
-    query: undefined,
-  })
-  const enabled = Boolean(account && (query.enabled ?? true))
-
-  return useQuery({ ...query, ...options, enabled })
+  } as never)
+  return useQuery(options)
 }
 
 export declare namespace useBalance {
@@ -543,24 +537,13 @@ export function useBuyQuote<
   config extends Config = ResolvedRegister['config'],
   selectData = getBuyQuote.ReturnValue,
 >(parameters: useBuyQuote.Parameters<config, selectData>) {
-  const { query = {} } = parameters
-
   const config = useConfig(parameters)
   const chainId = useChainId({ config })
-
   const options = getBuyQuote.queryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
-    query: undefined,
-  })
-  const enabled = Boolean(
-    parameters.tokenIn &&
-      parameters.tokenOut &&
-      parameters.amountOut &&
-      (query.enabled ?? true),
-  )
-
-  return useQuery({ ...query, ...options, enabled })
+  } as never)
+  return useQuery(options)
 }
 
 export declare namespace useBuyQuote {
@@ -604,21 +587,13 @@ export function useOrder<
   config extends Config = ResolvedRegister['config'],
   selectData = getOrder.ReturnValue,
 >(parameters: useOrder.Parameters<config, selectData>) {
-  const { query = {} } = parameters
-
   const config = useConfig(parameters)
   const chainId = useChainId({ config })
-
   const options = getOrder.queryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
-    query: undefined,
-  })
-  const enabled = Boolean(
-    parameters.orderId !== undefined && (query.enabled ?? true),
-  )
-
-  return useQuery({ ...query, ...options, enabled })
+  } as never)
+  return useQuery(options)
 }
 
 export declare namespace useOrder {
@@ -663,21 +638,13 @@ export function useOrderbook<
   config extends Config = ResolvedRegister['config'],
   selectData = getOrderbook.ReturnValue,
 >(parameters: useOrderbook.Parameters<config, selectData>) {
-  const { query = {} } = parameters
-
   const config = useConfig(parameters)
   const chainId = useChainId({ config })
-
   const options = getOrderbook.queryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
-    query: undefined,
-  })
-  const enabled = Boolean(
-    parameters.base && parameters.quote && (query.enabled ?? true),
-  )
-
-  return useQuery({ ...query, ...options, enabled })
+  } as never)
+  return useQuery(options)
 }
 
 export declare namespace useOrderbook {
@@ -723,24 +690,13 @@ export function usePriceLevel<
   config extends Config = ResolvedRegister['config'],
   selectData = getTickLevel.ReturnValue,
 >(parameters: usePriceLevel.Parameters<config, selectData>) {
-  const { query = {} } = parameters
-
   const config = useConfig(parameters)
   const chainId = useChainId({ config })
-
   const options = getTickLevel.queryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
-    query: undefined,
-  })
-  const enabled = Boolean(
-    parameters.base &&
-      parameters.tick !== undefined &&
-      parameters.isBid !== undefined &&
-      (query.enabled ?? true),
-  )
-
-  return useQuery({ ...query, ...options, enabled })
+  } as never)
+  return useQuery(options)
 }
 
 export declare namespace usePriceLevel {
@@ -786,24 +742,13 @@ export function useSellQuote<
   config extends Config = ResolvedRegister['config'],
   selectData = getSellQuote.ReturnValue,
 >(parameters: useSellQuote.Parameters<config, selectData>) {
-  const { query = {} } = parameters
-
   const config = useConfig(parameters)
   const chainId = useChainId({ config })
-
   const options = getSellQuote.queryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
-    query: undefined,
-  })
-  const enabled = Boolean(
-    parameters.tokenIn &&
-      parameters.tokenOut &&
-      parameters.amountIn &&
-      (query.enabled ?? true),
-  )
-
-  return useQuery({ ...query, ...options, enabled })
+  } as never)
+  return useQuery(options)
 }
 
 export declare namespace useSellQuote {

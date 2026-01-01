@@ -4,11 +4,12 @@ import type {
   ChainIdParameter,
   ConnectorParameter,
   PartialBy,
-  RequiredBy,
   UnionLooseOmit,
 } from '@wagmi/core/internal'
 import type { Account } from 'viem'
 import { Actions } from 'viem/tempo'
+import { filterQueryOptions } from 'wagmi/query'
+import type { QueryOptions, QueryParameter } from './utils.js'
 
 /**
  * Gets the user's default fee token.
@@ -53,7 +54,7 @@ export namespace getUserToken {
   export function queryKey<config extends Config>(
     parameters: PartialBy<Parameters<config>, 'account'>,
   ) {
-    return ['getUserToken', parameters] as const
+    return ['getUserToken', filterQueryOptions(parameters)] as const
   }
 
   export type QueryKey<config extends Config> = ReturnType<
@@ -67,9 +68,10 @@ export namespace getUserToken {
     const { query, ...rest } = parameters
     return {
       ...query,
+      enabled: Boolean(rest.account && (query?.enabled ?? true)),
       queryKey: queryKey(rest),
-      async queryFn({ queryKey }) {
-        const [, { account, ...parameters }] = queryKey
+      async queryFn(context) {
+        const [, { account, ...parameters }] = context.queryKey
         if (!account) throw new Error('account is required.')
         return await getUserToken(config, { account, ...parameters })
       },
@@ -80,23 +82,22 @@ export namespace getUserToken {
     export type Parameters<
       config extends Config,
       selectData = getUserToken.ReturnValue,
-    > = PartialBy<getUserToken.Parameters<config>, 'account'> & {
-      query?:
-        | Omit<ReturnValue<config, selectData>, 'queryKey' | 'queryFn'>
-        | undefined
-    }
-
-    export type ReturnValue<
-      config extends Config,
-      selectData = getUserToken.ReturnValue,
-    > = RequiredBy<
-      Query.QueryOptions<
+    > = PartialBy<getUserToken.Parameters<config>, 'account'> &
+      QueryParameter<
         getUserToken.ReturnValue,
         Query.DefaultError,
         selectData,
         getUserToken.QueryKey<config>
-      >,
-      'queryKey' | 'queryFn'
+      >
+
+    export type ReturnValue<
+      config extends Config,
+      selectData = getUserToken.ReturnValue,
+    > = QueryOptions<
+      getUserToken.ReturnValue,
+      Query.DefaultError,
+      selectData,
+      getUserToken.QueryKey<config>
     >
   }
 }

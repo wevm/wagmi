@@ -3,11 +3,12 @@ import { type Config, getConnectorClient } from '@wagmi/core'
 import type {
   ChainIdParameter,
   ConnectorParameter,
-  RequiredBy,
   UnionLooseOmit,
 } from '@wagmi/core/internal'
 import type { Account } from 'viem'
 import { Actions } from 'viem/tempo'
+import { filterQueryOptions } from 'wagmi/query'
+import type { QueryOptions, QueryParameter } from './utils.js'
 
 /**
  * Gets the reserves for a liquidity pool.
@@ -53,7 +54,7 @@ export namespace getPool {
   export function queryKey<config extends Config>(
     parameters: Parameters<config>,
   ) {
-    return ['getPool', parameters] as const
+    return ['getPool', filterQueryOptions(parameters)] as const
   }
 
   export type QueryKey<config extends Config> = ReturnType<
@@ -67,6 +68,9 @@ export namespace getPool {
     const { query, ...rest } = parameters
     return {
       ...query,
+      enabled: Boolean(
+        rest.userToken && rest.validatorToken && (query?.enabled ?? true),
+      ),
       queryKey: queryKey(rest),
       async queryFn({ queryKey }) {
         const [, parameters] = queryKey
@@ -79,23 +83,22 @@ export namespace getPool {
     export type Parameters<
       config extends Config,
       selectData = getPool.ReturnValue,
-    > = getPool.Parameters<config> & {
-      query?:
-        | Omit<ReturnValue<config, selectData>, 'queryKey' | 'queryFn'>
-        | undefined
-    }
-
-    export type ReturnValue<
-      config extends Config,
-      selectData = getPool.ReturnValue,
-    > = RequiredBy<
-      Query.QueryOptions<
+    > = getPool.Parameters<config> &
+      QueryParameter<
         getPool.ReturnValue,
         Query.DefaultError,
         selectData,
         getPool.QueryKey<config>
-      >,
-      'queryKey' | 'queryFn'
+      >
+
+    export type ReturnValue<
+      config extends Config,
+      selectData = getPool.ReturnValue,
+    > = QueryOptions<
+      getPool.ReturnValue,
+      Query.DefaultError,
+      selectData,
+      getPool.QueryKey<config>
     >
   }
 }
@@ -149,7 +152,7 @@ export namespace getLiquidityBalance {
   export function queryKey<config extends Config>(
     parameters: Parameters<config>,
   ) {
-    return ['getLiquidityBalance', parameters] as const
+    return ['getLiquidityBalance', filterQueryOptions(parameters)] as const
   }
 
   export type QueryKey<config extends Config> = ReturnType<
@@ -163,6 +166,13 @@ export namespace getLiquidityBalance {
     const { query, ...rest } = parameters
     return {
       ...query,
+      enabled: Boolean(
+        rest.address &&
+          (rest.poolId ||
+            (rest.userToken !== undefined &&
+              rest.validatorToken !== undefined)) &&
+          (query?.enabled ?? true),
+      ),
       queryKey: queryKey(rest),
       async queryFn({ queryKey }) {
         const [, parameters] = queryKey
@@ -175,23 +185,22 @@ export namespace getLiquidityBalance {
     export type Parameters<
       config extends Config,
       selectData = getLiquidityBalance.ReturnValue,
-    > = getLiquidityBalance.Parameters<config> & {
-      query?:
-        | Omit<ReturnValue<config, selectData>, 'queryKey' | 'queryFn'>
-        | undefined
-    }
-
-    export type ReturnValue<
-      config extends Config,
-      selectData = getLiquidityBalance.ReturnValue,
-    > = RequiredBy<
-      Query.QueryOptions<
+    > = getLiquidityBalance.Parameters<config> &
+      QueryParameter<
         getLiquidityBalance.ReturnValue,
         Query.DefaultError,
         selectData,
         getLiquidityBalance.QueryKey<config>
-      >,
-      'queryKey' | 'queryFn'
+      >
+
+    export type ReturnValue<
+      config extends Config,
+      selectData = getLiquidityBalance.ReturnValue,
+    > = QueryOptions<
+      getLiquidityBalance.ReturnValue,
+      Query.DefaultError,
+      selectData,
+      getLiquidityBalance.QueryKey<config>
     >
   }
 }

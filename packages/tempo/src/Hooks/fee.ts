@@ -36,19 +36,13 @@ export function useUserToken<
   config extends Config = ResolvedRegister['config'],
   selectData = getUserToken.ReturnValue,
 >(parameters: useUserToken.Parameters<config, selectData>) {
-  const { account, query = {} } = parameters
-
   const config = useConfig(parameters)
   const chainId = useChainId({ config })
-
   const options = getUserToken.queryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
-    query: undefined,
-  })
-  const enabled = Boolean(account && (query.enabled ?? true))
-
-  return useQuery({ ...query, ...options, enabled })
+  } as never)
+  return useQuery(options)
 }
 
 export declare namespace useUserToken {
@@ -105,7 +99,7 @@ export function useSetUserToken<
     async mutationFn(variables) {
       return setUserToken(config, variables as never)
     },
-    mutationKey: ['setUserTokenSync'],
+    mutationKey: ['setUserToken'],
   }) as never
 }
 

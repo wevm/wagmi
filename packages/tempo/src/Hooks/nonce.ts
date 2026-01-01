@@ -32,21 +32,13 @@ export function useNonce<
   config extends Config = ResolvedRegister['config'],
   selectData = getNonce.ReturnValue,
 >(parameters: useNonce.Parameters<config, selectData> = {}) {
-  const { account, nonceKey, query = {} } = parameters
-
   const config = useConfig(parameters)
   const chainId = useChainId({ config })
-
   const options = getNonce.queryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
-    query: undefined,
-  })
-  const enabled = Boolean(
-    account && nonceKey !== undefined && (query.enabled ?? true),
-  )
-
-  return useQuery({ ...query, ...options, enabled })
+  } as never)
+  return useQuery(options)
 }
 
 export declare namespace useNonce {

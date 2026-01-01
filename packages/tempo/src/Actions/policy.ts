@@ -3,11 +3,11 @@ import { type Config, getConnectorClient } from '@wagmi/core'
 import type {
   ChainIdParameter,
   ConnectorParameter,
-  RequiredBy,
   UnionLooseOmit,
 } from '@wagmi/core/internal'
 import type { Account } from 'viem'
 import { Actions } from 'viem/tempo'
+import type { QueryOptions, QueryParameter } from './utils.js'
 
 /**
  * Creates a new policy.
@@ -532,6 +532,7 @@ export namespace getData {
     const { query, ...rest } = parameters
     return {
       ...query,
+      enabled: Boolean(rest.policyId !== undefined && (query?.enabled ?? true)),
       queryKey: queryKey(rest),
       async queryFn({ queryKey }) {
         const [, parameters] = queryKey
@@ -544,26 +545,22 @@ export namespace getData {
     export type Parameters<
       config extends Config,
       selectData = getData.ReturnValue,
-    > = getData.Parameters<config> & {
-      query?:
-        | UnionLooseOmit<
-            ReturnValue<config, selectData>,
-            'queryKey' | 'queryFn'
-          >
-        | undefined
-    }
-
-    export type ReturnValue<
-      config extends Config,
-      selectData = getData.ReturnValue,
-    > = RequiredBy<
-      Query.QueryOptions<
+    > = getData.Parameters<config> &
+      QueryParameter<
         getData.ReturnValue,
         Query.DefaultError,
         selectData,
         getData.QueryKey<config>
-      >,
-      'queryKey' | 'queryFn'
+      >
+
+    export type ReturnValue<
+      config extends Config,
+      selectData = getData.ReturnValue,
+    > = QueryOptions<
+      getData.ReturnValue,
+      Query.DefaultError,
+      selectData,
+      getData.QueryKey<config>
     >
   }
 }
@@ -626,6 +623,9 @@ export namespace isAuthorized {
     const { query, ...rest } = parameters
     return {
       ...query,
+      enabled: Boolean(
+        rest.policyId !== undefined && rest.user && (query?.enabled ?? true),
+      ),
       queryKey: queryKey(rest),
       async queryFn({ queryKey }) {
         const [, parameters] = queryKey
@@ -638,26 +638,22 @@ export namespace isAuthorized {
     export type Parameters<
       config extends Config,
       selectData = isAuthorized.ReturnValue,
-    > = isAuthorized.Parameters<config> & {
-      query?:
-        | UnionLooseOmit<
-            ReturnValue<config, selectData>,
-            'queryKey' | 'queryFn'
-          >
-        | undefined
-    }
-
-    export type ReturnValue<
-      config extends Config,
-      selectData = isAuthorized.ReturnValue,
-    > = RequiredBy<
-      Query.QueryOptions<
+    > = isAuthorized.Parameters<config> &
+      QueryParameter<
         isAuthorized.ReturnValue,
         Query.DefaultError,
         selectData,
         isAuthorized.QueryKey<config>
-      >,
-      'queryKey' | 'queryFn'
+      >
+
+    export type ReturnValue<
+      config extends Config,
+      selectData = isAuthorized.ReturnValue,
+    > = QueryOptions<
+      isAuthorized.ReturnValue,
+      Query.DefaultError,
+      selectData,
+      isAuthorized.QueryKey<config>
     >
   }
 }

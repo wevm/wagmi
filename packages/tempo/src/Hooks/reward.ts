@@ -169,19 +169,13 @@ export function useGetTotalPerSecond<
   config extends Config = ResolvedRegister['config'],
   selectData = Actions.getTotalPerSecond.ReturnValue,
 >(parameters: useGetTotalPerSecond.Parameters<config, selectData> = {}) {
-  const { query = {}, token } = parameters
-
   const config = useConfig(parameters)
   const chainId = useChainId({ config })
-
   const options = Actions.getTotalPerSecond.queryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
-    query: undefined,
   } as never)
-  const enabled = Boolean(token && (query.enabled ?? true))
-
-  return useQuery({ ...query, ...options, enabled })
+  return useQuery(options)
 }
 
 export declare namespace useGetTotalPerSecond {
@@ -237,19 +231,13 @@ export function useUserRewardInfo<
   config extends Config = ResolvedRegister['config'],
   selectData = Actions.getUserRewardInfo.ReturnValue,
 >(parameters: useUserRewardInfo.Parameters<config, selectData> = {}) {
-  const { account, query = {}, token } = parameters
-
   const config = useConfig(parameters)
   const chainId = useChainId({ config })
-
   const options = Actions.getUserRewardInfo.queryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
-    query: undefined,
   } as never)
-  const enabled = Boolean(token && account && (query.enabled ?? true))
-
-  return useQuery({ ...query, ...options, enabled })
+  return useQuery(options)
 }
 
 export declare namespace useUserRewardInfo {

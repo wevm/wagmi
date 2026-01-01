@@ -860,19 +860,13 @@ export function useGetAllowance<
   config extends Config = ResolvedRegister['config'],
   selectData = Actions.getAllowance.ReturnValue,
 >(parameters: useGetAllowance.Parameters<config, selectData> = {}) {
-  const { account, spender, query = {} } = parameters
-
   const config = useConfig(parameters)
   const chainId = useChainId({ config })
-
   const options = Actions.getAllowance.queryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
-    query: undefined,
   } as never)
-  const enabled = Boolean(account && spender && (query.enabled ?? true))
-
-  return useQuery({ ...query, ...options, enabled })
+  return useQuery(options)
 }
 
 export declare namespace useGetAllowance {
@@ -921,19 +915,13 @@ export function useGetBalance<
   config extends Config = ResolvedRegister['config'],
   selectData = Actions.getBalance.ReturnValue,
 >(parameters: useGetBalance.Parameters<config, selectData> = {}) {
-  const { account, query = {} } = parameters
-
   const config = useConfig(parameters)
   const chainId = useChainId({ config })
-
   const options = Actions.getBalance.queryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
-    query: undefined,
   } as never)
-  const enabled = Boolean(account && (query.enabled ?? true))
-
-  return useQuery({ ...query, ...options, enabled })
+  return useQuery(options)
 }
 
 export declare namespace useGetBalance {
@@ -982,20 +970,13 @@ export function useGetMetadata<
   config extends Config = ResolvedRegister['config'],
   selectData = Actions.getMetadata.ReturnValue,
 >(parameters: useGetMetadata.Parameters<config, selectData> = {}) {
-  const { query = {}, token } = parameters
-
   const config = useConfig(parameters)
   const chainId = useChainId({ config })
-
   const options = Actions.getMetadata.queryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
-    query: undefined,
-    token: token as never,
-  })
-  const enabled = Boolean(token && (query.enabled ?? true))
-
-  return useQuery({ ...query, ...options, enabled })
+  } as never)
+  return useQuery(options)
 }
 
 export declare namespace useGetMetadata {
@@ -1045,18 +1026,13 @@ export function useGetRoleAdmin<
   config extends Config = ResolvedRegister['config'],
   selectData = Actions.getRoleAdmin.ReturnValue,
 >(parameters: useGetRoleAdmin.Parameters<config, selectData>) {
-  const { query = {} } = parameters
-
   const config = useConfig(parameters)
   const chainId = useChainId({ config })
-
   const options = Actions.getRoleAdmin.queryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
-    query: undefined,
   } as never)
-
-  return useQuery({ ...query, ...options })
+  return useQuery(options)
 }
 
 export declare namespace useGetRoleAdmin {
@@ -1244,19 +1220,13 @@ export function useHasRole<
   config extends Config = ResolvedRegister['config'],
   selectData = Actions.hasRole.ReturnValue,
 >(parameters: useHasRole.Parameters<config, selectData>) {
-  const { account, query = {} } = parameters
-
   const config = useConfig(parameters)
   const chainId = useChainId({ config })
-
   const options = Actions.hasRole.queryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
-    query: undefined,
   } as never)
-  const enabled = Boolean(account && (query.enabled ?? true))
-
-  return useQuery({ ...query, ...options, enabled })
+  return useQuery(options)
 }
 
 export declare namespace useHasRole {

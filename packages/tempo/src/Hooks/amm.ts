@@ -42,24 +42,14 @@ import * as Actions from '../Actions/amm.js'
 export function usePool<
   config extends Config = ResolvedRegister['config'],
   selectData = Actions.getPool.ReturnValue,
->(parameters: usePool.Parameters<config, selectData>) {
-  const { userToken, validatorToken, query = {} } = parameters
-
+>(parameters: usePool.Parameters<config, selectData> = {}) {
   const config = useConfig(parameters)
   const chainId = useChainId({ config })
-
   const options = Actions.getPool.queryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
-    query: undefined,
   } as never)
-  const enabled = Boolean(
-    userToken !== undefined &&
-      validatorToken !== undefined &&
-      (query.enabled ?? true),
-  )
-
-  return useQuery({ ...query, ...options, enabled })
+  return useQuery(options)
 }
 
 export declare namespace usePool {
@@ -111,23 +101,13 @@ export function useLiquidityBalance<
   config extends Config = ResolvedRegister['config'],
   selectData = Actions.getLiquidityBalance.ReturnValue,
 >(parameters: useLiquidityBalance.Parameters<config, selectData> = {}) {
-  const { address, poolId, userToken, validatorToken, query = {} } = parameters
-
   const config = useConfig(parameters)
   const chainId = useChainId({ config })
-
   const options = Actions.getLiquidityBalance.queryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
-    query: undefined,
   } as never)
-  const enabled = Boolean(
-    address &&
-      (poolId || (userToken !== undefined && validatorToken !== undefined)) &&
-      (query.enabled ?? true),
-  )
-
-  return useQuery({ ...query, ...options, enabled })
+  return useQuery(options)
 }
 
 export declare namespace useLiquidityBalance {

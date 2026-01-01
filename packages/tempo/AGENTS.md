@@ -176,7 +176,7 @@ export namespace myAction {
     const { query, ...rest } = parameters
     return {
       ...query,
-      enabled: Boolean(rest.account && (query.enabled ?? true)),
+      enabled: Boolean(rest.account && (query?.enabled ?? true)),
       queryKey: queryKey(rest),
       async queryFn(context) {
         const [, parameters] = context.queryKey
@@ -387,7 +387,6 @@ export function useMyAction<
   const options = myAction.queryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
-    query: parameters.query,
   } as never)
   return useQuery(options)
 }

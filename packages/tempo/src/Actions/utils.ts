@@ -23,4 +23,4 @@ export type QueryOptions<
 > = RequiredBy<
   Query.QueryOptions<queryFnData, error, data, queryKey>,
   'queryKey' | 'queryFn'
->
+> & { enabled: boolean }

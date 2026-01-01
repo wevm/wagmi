@@ -4,11 +4,11 @@ import type {
   ChainIdParameter,
   ConnectorParameter,
   PartialBy,
-  RequiredBy,
   UnionLooseOmit,
 } from '@wagmi/core/internal'
 import type { Account } from 'viem'
 import { Actions } from 'viem/tempo'
+import type { QueryOptions, QueryParameter } from './utils.js'
 
 /**
  * Buys a specific amount of tokens.
@@ -407,6 +407,7 @@ export namespace getBalance {
     const { query, ...rest } = parameters
     return {
       ...query,
+      enabled: Boolean(rest.account && (query?.enabled ?? true)),
       queryKey: queryKey(rest),
       async queryFn({ queryKey }) {
         const [, { account, ...parameters }] = queryKey
@@ -420,23 +421,22 @@ export namespace getBalance {
     export type Parameters<
       config extends Config,
       selectData = getBalance.ReturnValue,
-    > = PartialBy<getBalance.Parameters<config>, 'account'> & {
-      query?:
-        | Omit<ReturnValue<config, selectData>, 'queryKey' | 'queryFn'>
-        | undefined
-    }
-
-    export type ReturnValue<
-      config extends Config,
-      selectData = getBalance.ReturnValue,
-    > = RequiredBy<
-      Query.QueryOptions<
+    > = PartialBy<getBalance.Parameters<config>, 'account'> &
+      QueryParameter<
         getBalance.ReturnValue,
         Query.DefaultError,
         selectData,
         getBalance.QueryKey<config>
-      >,
-      'queryKey' | 'queryFn'
+      >
+
+    export type ReturnValue<
+      config extends Config,
+      selectData = getBalance.ReturnValue,
+    > = QueryOptions<
+      getBalance.ReturnValue,
+      Query.DefaultError,
+      selectData,
+      getBalance.QueryKey<config>
     >
   }
 }
@@ -500,6 +500,9 @@ export namespace getBuyQuote {
     const { query, ...rest } = parameters
     return {
       ...query,
+      enabled: Boolean(
+        rest.tokenIn && rest.tokenOut && rest.amountOut && (query?.enabled ?? true),
+      ),
       queryKey: queryKey(rest),
       async queryFn({ queryKey }) {
         const [, parameters] = queryKey
@@ -512,23 +515,22 @@ export namespace getBuyQuote {
     export type Parameters<
       config extends Config,
       selectData = getBuyQuote.ReturnValue,
-    > = getBuyQuote.Parameters<config> & {
-      query?:
-        | Omit<ReturnValue<config, selectData>, 'queryKey' | 'queryFn'>
-        | undefined
-    }
-
-    export type ReturnValue<
-      config extends Config,
-      selectData = getBuyQuote.ReturnValue,
-    > = RequiredBy<
-      Query.QueryOptions<
+    > = getBuyQuote.Parameters<config> &
+      QueryParameter<
         getBuyQuote.ReturnValue,
         Query.DefaultError,
         selectData,
         getBuyQuote.QueryKey<config>
-      >,
-      'queryKey' | 'queryFn'
+      >
+
+    export type ReturnValue<
+      config extends Config,
+      selectData = getBuyQuote.ReturnValue,
+    > = QueryOptions<
+      getBuyQuote.ReturnValue,
+      Query.DefaultError,
+      selectData,
+      getBuyQuote.QueryKey<config>
     >
   }
 }
@@ -590,6 +592,7 @@ export namespace getOrder {
     const { query, ...rest } = parameters
     return {
       ...query,
+      enabled: Boolean(rest.orderId !== undefined && (query?.enabled ?? true)),
       queryKey: queryKey(rest),
       async queryFn({ queryKey }) {
         const [, parameters] = queryKey
@@ -602,23 +605,22 @@ export namespace getOrder {
     export type Parameters<
       config extends Config,
       selectData = getOrder.ReturnValue,
-    > = getOrder.Parameters<config> & {
-      query?:
-        | Omit<ReturnValue<config, selectData>, 'queryKey' | 'queryFn'>
-        | undefined
-    }
-
-    export type ReturnValue<
-      config extends Config,
-      selectData = getOrder.ReturnValue,
-    > = RequiredBy<
-      Query.QueryOptions<
+    > = getOrder.Parameters<config> &
+      QueryParameter<
         getOrder.ReturnValue,
         Query.DefaultError,
         selectData,
         getOrder.QueryKey<config>
-      >,
-      'queryKey' | 'queryFn'
+      >
+
+    export type ReturnValue<
+      config extends Config,
+      selectData = getOrder.ReturnValue,
+    > = QueryOptions<
+      getOrder.ReturnValue,
+      Query.DefaultError,
+      selectData,
+      getOrder.QueryKey<config>
     >
   }
 }
@@ -681,6 +683,7 @@ export namespace getOrderbook {
     const { query, ...rest } = parameters
     return {
       ...query,
+      enabled: Boolean(rest.base && rest.quote && (query?.enabled ?? true)),
       queryKey: queryKey(rest),
       async queryFn({ queryKey }) {
         const [, parameters] = queryKey
@@ -693,23 +696,22 @@ export namespace getOrderbook {
     export type Parameters<
       config extends Config,
       selectData = getOrderbook.ReturnValue,
-    > = getOrderbook.Parameters<config> & {
-      query?:
-        | Omit<ReturnValue<config, selectData>, 'queryKey' | 'queryFn'>
-        | undefined
-    }
-
-    export type ReturnValue<
-      config extends Config,
-      selectData = getOrderbook.ReturnValue,
-    > = RequiredBy<
-      Query.QueryOptions<
+    > = getOrderbook.Parameters<config> &
+      QueryParameter<
         getOrderbook.ReturnValue,
         Query.DefaultError,
         selectData,
         getOrderbook.QueryKey<config>
-      >,
-      'queryKey' | 'queryFn'
+      >
+
+    export type ReturnValue<
+      config extends Config,
+      selectData = getOrderbook.ReturnValue,
+    > = QueryOptions<
+      getOrderbook.ReturnValue,
+      Query.DefaultError,
+      selectData,
+      getOrderbook.QueryKey<config>
     >
   }
 }
@@ -773,6 +775,12 @@ export namespace getTickLevel {
     const { query, ...rest } = parameters
     return {
       ...query,
+      enabled: Boolean(
+        rest.base &&
+          rest.tick !== undefined &&
+          rest.isBid !== undefined &&
+          (query?.enabled ?? true),
+      ),
       queryKey: queryKey(rest),
       async queryFn({ queryKey }) {
         const [, parameters] = queryKey
@@ -785,23 +793,22 @@ export namespace getTickLevel {
     export type Parameters<
       config extends Config,
       selectData = getTickLevel.ReturnValue,
-    > = getTickLevel.Parameters<config> & {
-      query?:
-        | Omit<ReturnValue<config, selectData>, 'queryKey' | 'queryFn'>
-        | undefined
-    }
-
-    export type ReturnValue<
-      config extends Config,
-      selectData = getTickLevel.ReturnValue,
-    > = RequiredBy<
-      Query.QueryOptions<
+    > = getTickLevel.Parameters<config> &
+      QueryParameter<
         getTickLevel.ReturnValue,
         Query.DefaultError,
         selectData,
         getTickLevel.QueryKey<config>
-      >,
-      'queryKey' | 'queryFn'
+      >
+
+    export type ReturnValue<
+      config extends Config,
+      selectData = getTickLevel.ReturnValue,
+    > = QueryOptions<
+      getTickLevel.ReturnValue,
+      Query.DefaultError,
+      selectData,
+      getTickLevel.QueryKey<config>
     >
   }
 }
@@ -865,6 +872,9 @@ export namespace getSellQuote {
     const { query, ...rest } = parameters
     return {
       ...query,
+      enabled: Boolean(
+        rest.tokenIn && rest.tokenOut && rest.amountIn && (query?.enabled ?? true),
+      ),
       queryKey: queryKey(rest),
       async queryFn({ queryKey }) {
         const [, parameters] = queryKey
@@ -877,23 +887,22 @@ export namespace getSellQuote {
     export type Parameters<
       config extends Config,
       selectData = getSellQuote.ReturnValue,
-    > = getSellQuote.Parameters<config> & {
-      query?:
-        | Omit<ReturnValue<config, selectData>, 'queryKey' | 'queryFn'>
-        | undefined
-    }
-
-    export type ReturnValue<
-      config extends Config,
-      selectData = getSellQuote.ReturnValue,
-    > = RequiredBy<
-      Query.QueryOptions<
+    > = getSellQuote.Parameters<config> &
+      QueryParameter<
         getSellQuote.ReturnValue,
         Query.DefaultError,
         selectData,
         getSellQuote.QueryKey<config>
-      >,
-      'queryKey' | 'queryFn'
+      >
+
+    export type ReturnValue<
+      config extends Config,
+      selectData = getSellQuote.ReturnValue,
+    > = QueryOptions<
+      getSellQuote.ReturnValue,
+      Query.DefaultError,
+      selectData,
+      getSellQuote.QueryKey<config>
     >
   }
 }
