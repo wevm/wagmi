@@ -501,7 +501,10 @@ export namespace getBuyQuote {
     return {
       ...query,
       enabled: Boolean(
-        rest.tokenIn && rest.tokenOut && rest.amountOut && (query?.enabled ?? true),
+        rest.tokenIn &&
+          rest.tokenOut &&
+          rest.amountOut &&
+          (query?.enabled ?? true),
       ),
       queryKey: queryKey(rest),
       async queryFn({ queryKey }) {
@@ -873,7 +876,10 @@ export namespace getSellQuote {
     return {
       ...query,
       enabled: Boolean(
-        rest.tokenIn && rest.tokenOut && rest.amountIn && (query?.enabled ?? true),
+        rest.tokenIn &&
+          rest.tokenOut &&
+          rest.amountIn &&
+          (query?.enabled ?? true),
       ),
       queryKey: queryKey(rest),
       async queryFn({ queryKey }) {

@@ -830,9 +830,7 @@ export namespace getBalance {
     const { query, ...rest } = parameters
     return {
       ...query,
-      enabled: Boolean(
-        rest.account && rest.token && (query?.enabled ?? true),
-      ),
+      enabled: Boolean(rest.account && rest.token && (query?.enabled ?? true)),
       queryKey: queryKey(rest),
       async queryFn(context) {
         const [, parameters] = context.queryKey
