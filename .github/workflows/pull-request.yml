@@ -61,7 +61,7 @@ jobs:
           node-version: 24.5
 
       - name: Report build size
-        uses: preactjs/compressed-size-action@946a292cd35bd1088e0d7eb92b69d1a8d5b5d76a
+        uses: preactjs/compressed-size-action@8518045ed95e94e971b83333085e1cb99aa18aa8
         with:
           pattern: 'packages/**/dist/**'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
