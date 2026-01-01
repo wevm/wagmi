@@ -562,6 +562,7 @@ export function useWatchRewardScheduled<
   const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: rest.x is explicitly listed
   useEffect(() => {
     if (!enabled) return
     if (!onRewardScheduled) return
@@ -572,7 +573,17 @@ export function useWatchRewardScheduled<
       onRewardScheduled,
       token,
     })
-  }, [config, enabled, onRewardScheduled, rest, chainId, token])
+  }, [
+    config,
+    enabled,
+    chainId,
+    token,
+    onRewardScheduled,
+    rest.fromBlock,
+    rest.onError,
+    rest.poll,
+    rest.pollingInterval,
+  ])
 }
 
 export declare namespace useWatchRewardScheduled {
@@ -612,6 +623,7 @@ export function useWatchRewardRecipientSet<
   const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: rest.x is explicitly listed
   useEffect(() => {
     if (!enabled) return
     if (!onRewardRecipientSet) return
@@ -622,7 +634,17 @@ export function useWatchRewardRecipientSet<
       onRewardRecipientSet,
       token,
     })
-  }, [config, enabled, onRewardRecipientSet, rest, chainId, token])
+  }, [
+    config,
+    enabled,
+    chainId,
+    token,
+    onRewardRecipientSet,
+    rest.fromBlock,
+    rest.onError,
+    rest.poll,
+    rest.pollingInterval,
+  ])
 }
 
 export declare namespace useWatchRewardRecipientSet {

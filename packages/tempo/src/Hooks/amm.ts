@@ -615,6 +615,7 @@ export function useWatchRebalanceSwap<
   const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: rest.x is explicitly listed
   useEffect(() => {
     if (!enabled) return
     if (!onRebalanceSwap) return
@@ -623,7 +624,18 @@ export function useWatchRebalanceSwap<
       chainId,
       onRebalanceSwap,
     })
-  }, [config, enabled, onRebalanceSwap, rest, chainId])
+  }, [
+    config,
+    enabled,
+    chainId,
+    onRebalanceSwap,
+    rest.fromBlock,
+    rest.onError,
+    rest.poll,
+    rest.pollingInterval,
+    rest.userToken,
+    rest.validatorToken,
+  ])
 }
 
 export declare namespace useWatchRebalanceSwap {
@@ -662,6 +674,7 @@ export function useWatchFeeSwap<
   const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: rest.x is explicitly listed
   useEffect(() => {
     if (!enabled) return
     if (!onFeeSwap) return
@@ -670,7 +683,18 @@ export function useWatchFeeSwap<
       chainId,
       onFeeSwap,
     })
-  }, [config, enabled, onFeeSwap, rest, chainId])
+  }, [
+    config,
+    enabled,
+    chainId,
+    onFeeSwap,
+    rest.fromBlock,
+    rest.onError,
+    rest.poll,
+    rest.pollingInterval,
+    rest.userToken,
+    rest.validatorToken,
+  ])
 }
 
 export declare namespace useWatchFeeSwap {
@@ -709,6 +733,7 @@ export function useWatchMint<
   const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: rest.x is explicitly listed
   useEffect(() => {
     if (!enabled) return
     if (!onMint) return
@@ -717,7 +742,19 @@ export function useWatchMint<
       chainId,
       onMint,
     })
-  }, [config, enabled, onMint, rest, chainId])
+  }, [
+    config,
+    enabled,
+    chainId,
+    onMint,
+    rest.fromBlock,
+    rest.onError,
+    rest.poll,
+    rest.pollingInterval,
+    rest.sender,
+    rest.userToken,
+    rest.validatorToken,
+  ])
 }
 
 export declare namespace useWatchMint {
@@ -756,6 +793,7 @@ export function useWatchBurn<
   const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: rest.x is explicitly listed
   useEffect(() => {
     if (!enabled) return
     if (!onBurn) return
@@ -764,7 +802,18 @@ export function useWatchBurn<
       chainId,
       onBurn,
     })
-  }, [config, enabled, onBurn, rest, chainId])
+  }, [
+    config,
+    enabled,
+    chainId,
+    onBurn,
+    rest.fromBlock,
+    rest.onError,
+    rest.poll,
+    rest.pollingInterval,
+    rest.userToken,
+    rest.validatorToken,
+  ])
 }
 
 export declare namespace useWatchBurn {

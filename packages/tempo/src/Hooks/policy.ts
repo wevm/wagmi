@@ -698,6 +698,7 @@ export function useWatchCreate<
   const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: rest.x is explicitly listed
   useEffect(() => {
     if (!enabled) return
     if (!onPolicyCreated) return
@@ -706,7 +707,16 @@ export function useWatchCreate<
       chainId,
       onPolicyCreated,
     })
-  }, [config, enabled, onPolicyCreated, rest, chainId])
+  }, [
+    config,
+    enabled,
+    chainId,
+    onPolicyCreated,
+    rest.fromBlock,
+    rest.onError,
+    rest.poll,
+    rest.pollingInterval,
+  ])
 }
 
 export declare namespace useWatchCreate {
@@ -745,6 +755,7 @@ export function useWatchAdminUpdated<
   const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: rest.x is explicitly listed
   useEffect(() => {
     if (!enabled) return
     if (!onAdminUpdated) return
@@ -753,7 +764,16 @@ export function useWatchAdminUpdated<
       chainId,
       onAdminUpdated,
     })
-  }, [config, enabled, onAdminUpdated, rest, chainId])
+  }, [
+    config,
+    enabled,
+    chainId,
+    onAdminUpdated,
+    rest.fromBlock,
+    rest.onError,
+    rest.poll,
+    rest.pollingInterval,
+  ])
 }
 
 export declare namespace useWatchAdminUpdated {
@@ -792,6 +812,7 @@ export function useWatchWhitelistUpdated<
   const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: rest.x is explicitly listed
   useEffect(() => {
     if (!enabled) return
     if (!onWhitelistUpdated) return
@@ -800,7 +821,16 @@ export function useWatchWhitelistUpdated<
       chainId,
       onWhitelistUpdated,
     })
-  }, [config, enabled, onWhitelistUpdated, rest, chainId])
+  }, [
+    config,
+    enabled,
+    chainId,
+    onWhitelistUpdated,
+    rest.fromBlock,
+    rest.onError,
+    rest.poll,
+    rest.pollingInterval,
+  ])
 }
 
 export declare namespace useWatchWhitelistUpdated {
@@ -839,6 +869,7 @@ export function useWatchBlacklistUpdated<
   const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: rest.x is explicitly listed
   useEffect(() => {
     if (!enabled) return
     if (!onBlacklistUpdated) return
@@ -847,7 +878,16 @@ export function useWatchBlacklistUpdated<
       chainId,
       onBlacklistUpdated,
     })
-  }, [config, enabled, onBlacklistUpdated, rest, chainId])
+  }, [
+    config,
+    enabled,
+    chainId,
+    onBlacklistUpdated,
+    rest.fromBlock,
+    rest.onError,
+    rest.poll,
+    rest.pollingInterval,
+  ])
 }
 
 export declare namespace useWatchBlacklistUpdated {

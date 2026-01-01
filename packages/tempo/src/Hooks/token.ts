@@ -2510,6 +2510,7 @@ export function useWatchAdminRole<
   const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: rest.x is explicitly listed
   useEffect(() => {
     if (!enabled) return
     if (!onRoleAdminUpdated) return
@@ -2520,7 +2521,17 @@ export function useWatchAdminRole<
       onRoleAdminUpdated,
       token,
     })
-  }, [config, enabled, onRoleAdminUpdated, rest])
+  }, [
+    config,
+    enabled,
+    chainId,
+    token,
+    onRoleAdminUpdated,
+    rest.fromBlock,
+    rest.onError,
+    rest.poll,
+    rest.pollingInterval,
+  ])
 }
 
 export declare namespace useWatchAdminRole {
@@ -2559,6 +2570,7 @@ export function useWatchApprove<
   const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: rest.x is explicitly listed
   useEffect(() => {
     if (!enabled) return
     if (!onApproval) return
@@ -2569,7 +2581,17 @@ export function useWatchApprove<
       onApproval,
       token,
     })
-  }, [config, enabled, onApproval, rest])
+  }, [
+    config,
+    enabled,
+    chainId,
+    token,
+    onApproval,
+    rest.fromBlock,
+    rest.onError,
+    rest.poll,
+    rest.pollingInterval,
+  ])
 }
 
 export declare namespace useWatchApprove {
@@ -2608,6 +2630,7 @@ export function useWatchBurn<
   const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: rest.x is explicitly listed
   useEffect(() => {
     if (!enabled) return
     if (!onBurn) return
@@ -2618,7 +2641,17 @@ export function useWatchBurn<
       onBurn,
       token,
     })
-  }, [config, enabled, onBurn, rest, token])
+  }, [
+    config,
+    enabled,
+    chainId,
+    token,
+    onBurn,
+    rest.fromBlock,
+    rest.onError,
+    rest.poll,
+    rest.pollingInterval,
+  ])
 }
 
 export declare namespace useWatchBurn {
@@ -2657,6 +2690,7 @@ export function useWatchCreate<
   const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: rest.x is explicitly listed
   useEffect(() => {
     if (!enabled) return
     if (!onTokenCreated) return
@@ -2665,7 +2699,16 @@ export function useWatchCreate<
       chainId,
       onTokenCreated,
     })
-  }, [config, enabled, onTokenCreated, rest])
+  }, [
+    config,
+    enabled,
+    chainId,
+    onTokenCreated,
+    rest.fromBlock,
+    rest.onError,
+    rest.poll,
+    rest.pollingInterval,
+  ])
 }
 
 export declare namespace useWatchCreate {
@@ -2704,6 +2747,7 @@ export function useWatchMint<
   const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: rest.x is explicitly listed
   useEffect(() => {
     if (!enabled) return
     if (!onMint) return
@@ -2714,7 +2758,17 @@ export function useWatchMint<
       onMint,
       token,
     })
-  }, [config, enabled, onMint, rest, token])
+  }, [
+    config,
+    enabled,
+    chainId,
+    token,
+    onMint,
+    rest.fromBlock,
+    rest.onError,
+    rest.poll,
+    rest.pollingInterval,
+  ])
 }
 
 export declare namespace useWatchMint {
@@ -2753,6 +2807,7 @@ export function useWatchRole<
   const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: rest.x is explicitly listed
   useEffect(() => {
     if (!enabled) return
     if (!onRoleUpdated) return
@@ -2763,7 +2818,17 @@ export function useWatchRole<
       onRoleUpdated,
       token,
     })
-  }, [config, enabled, onRoleUpdated, rest, token])
+  }, [
+    config,
+    enabled,
+    chainId,
+    token,
+    onRoleUpdated,
+    rest.fromBlock,
+    rest.onError,
+    rest.poll,
+    rest.pollingInterval,
+  ])
 }
 
 export declare namespace useWatchRole {
@@ -2802,6 +2867,7 @@ export function useWatchTransfer<
   const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: rest.x is explicitly listed
   useEffect(() => {
     if (!enabled) return
     if (!onTransfer) return
@@ -2812,7 +2878,17 @@ export function useWatchTransfer<
       onTransfer,
       token,
     })
-  }, [config, enabled, onTransfer, rest])
+  }, [
+    config,
+    enabled,
+    chainId,
+    token,
+    onTransfer,
+    rest.fromBlock,
+    rest.onError,
+    rest.poll,
+    rest.pollingInterval,
+  ])
 }
 
 export declare namespace useWatchTransfer {
@@ -2854,6 +2930,7 @@ export function useWatchUpdateQuoteToken<
   const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: rest.x is explicitly listed
   useEffect(() => {
     if (!enabled) return
     if (!onUpdateQuoteToken) return
@@ -2864,7 +2941,17 @@ export function useWatchUpdateQuoteToken<
       onUpdateQuoteToken,
       token,
     })
-  }, [config, enabled, onUpdateQuoteToken, rest, token])
+  }, [
+    config,
+    enabled,
+    chainId,
+    token,
+    onUpdateQuoteToken,
+    rest.fromBlock,
+    rest.onError,
+    rest.poll,
+    rest.pollingInterval,
+  ])
 }
 
 export declare namespace useWatchUpdateQuoteToken {

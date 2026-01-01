@@ -1383,6 +1383,7 @@ export function useWatchFlipOrderPlaced<
   const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: rest.x is explicitly listed
   useEffect(() => {
     if (!enabled) return
     if (!onFlipOrderPlaced) return
@@ -1391,7 +1392,18 @@ export function useWatchFlipOrderPlaced<
       chainId,
       onFlipOrderPlaced,
     })
-  }, [config, enabled, onFlipOrderPlaced, rest, chainId])
+  }, [
+    config,
+    enabled,
+    chainId,
+    onFlipOrderPlaced,
+    rest.fromBlock,
+    rest.maker,
+    rest.onError,
+    rest.poll,
+    rest.pollingInterval,
+    rest.token,
+  ])
 }
 
 export declare namespace useWatchFlipOrderPlaced {
@@ -1430,6 +1442,7 @@ export function useWatchOrderCancelled<
   const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: rest.x is explicitly listed
   useEffect(() => {
     if (!enabled) return
     if (!onOrderCancelled) return
@@ -1438,7 +1451,17 @@ export function useWatchOrderCancelled<
       chainId,
       onOrderCancelled,
     })
-  }, [config, enabled, onOrderCancelled, rest, chainId])
+  }, [
+    config,
+    enabled,
+    chainId,
+    onOrderCancelled,
+    rest.fromBlock,
+    rest.onError,
+    rest.orderId,
+    rest.poll,
+    rest.pollingInterval,
+  ])
 }
 
 export declare namespace useWatchOrderCancelled {
@@ -1477,6 +1500,7 @@ export function useWatchOrderFilled<
   const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: rest.x is explicitly listed
   useEffect(() => {
     if (!enabled) return
     if (!onOrderFilled) return
@@ -1485,7 +1509,19 @@ export function useWatchOrderFilled<
       chainId,
       onOrderFilled,
     })
-  }, [config, enabled, onOrderFilled, rest, chainId])
+  }, [
+    config,
+    enabled,
+    chainId,
+    onOrderFilled,
+    rest.fromBlock,
+    rest.maker,
+    rest.onError,
+    rest.orderId,
+    rest.poll,
+    rest.pollingInterval,
+    rest.taker,
+  ])
 }
 
 export declare namespace useWatchOrderFilled {
@@ -1524,6 +1560,7 @@ export function useWatchOrderPlaced<
   const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: rest.x is explicitly listed
   useEffect(() => {
     if (!enabled) return
     if (!onOrderPlaced) return
@@ -1532,7 +1569,18 @@ export function useWatchOrderPlaced<
       chainId,
       onOrderPlaced,
     })
-  }, [config, enabled, onOrderPlaced, rest, chainId])
+  }, [
+    config,
+    enabled,
+    chainId,
+    onOrderPlaced,
+    rest.fromBlock,
+    rest.maker,
+    rest.onError,
+    rest.poll,
+    rest.pollingInterval,
+    rest.token,
+  ])
 }
 
 export declare namespace useWatchOrderPlaced {

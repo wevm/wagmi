@@ -91,6 +91,7 @@ export function useWatchNonceIncremented<
   const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: rest.x is explicitly listed
   useEffect(() => {
     if (!enabled) return
     if (!onNonceIncremented) return
@@ -99,7 +100,16 @@ export function useWatchNonceIncremented<
       chainId,
       onNonceIncremented,
     })
-  }, [config, enabled, onNonceIncremented, chainId, rest])
+  }, [
+    config,
+    enabled,
+    chainId,
+    onNonceIncremented,
+    rest.fromBlock,
+    rest.onError,
+    rest.poll,
+    rest.pollingInterval,
+  ])
 }
 
 export declare namespace useWatchNonceIncremented {
