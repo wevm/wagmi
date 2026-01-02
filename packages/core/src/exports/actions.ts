@@ -447,3 +447,10 @@ export {
   type WriteContractReturnType,
   writeContract,
 } from '../actions/writeContract.js'
+
+export {
+  type WriteContractSyncErrorType,
+  type WriteContractSyncParameters,
+  type WriteContractSyncReturnType,
+  writeContractSync,
+} from '../actions/writeContractSync.js'
