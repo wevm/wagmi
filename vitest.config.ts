@@ -1,7 +1,7 @@
 import path from 'node:path'
 import { playwright } from '@vitest/browser-playwright'
 import reactFallbackThrottlePlugin from 'vite-plugin-react-fallback-throttle'
-import { defineConfig } from 'vitest/config'
+import { defaultExclude, defineConfig } from 'vitest/config'
 
 const alias = {
   '@wagmi/connectors': path.resolve(
@@ -64,7 +64,10 @@ export default defineConfig({
             ...(process.env.TYPES ? ['**/*.bench-d.ts'] : []),
             './packages/core/src/**/*.test.ts',
           ],
-          exclude: ['./packages/core/src/tempo/**/*.test.ts'],
+          exclude: [
+            './packages/core/src/tempo/**/*.test.ts',
+            ...defaultExclude,
+          ],
           environment: 'happy-dom',
           testTimeout: 10_000,
           setupFiles: ['./packages/core/test/setup.ts'],
@@ -96,7 +99,9 @@ export default defineConfig({
             './packages/react/src/tempo/**/*.test.ts',
           ],
           testTimeout: 10_000,
-          globalSetup: ['./packages/test/src/tempo/setup.global.ts'],
+          globalSetup: process.env.TYPES
+            ? ['./packages/test/src/setup.global.types.ts']
+            : ['./packages/test/src/setup.global.ts'],
           setupFiles: ['./packages/test/src/tempo/setup.ts'],
         },
       },
@@ -113,7 +118,10 @@ export default defineConfig({
             screenshotFailures: false,
           },
           include: ['./packages/react/src/**/*.test.ts?(x)'],
-          exclude: ['./packages/react/src/tempo/**/*.test.ts'],
+          exclude: [
+            './packages/react/src/tempo/**/*.test.ts',
+            ...defaultExclude,
+          ],
           testTimeout: 10_000,
           setupFiles: ['./packages/react/test/setup.ts'],
         },
