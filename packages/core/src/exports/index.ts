@@ -60,6 +60,13 @@ export {
 } from '../actions/getBalance.js'
 
 export {
+  type GetBlobBaseFeeErrorType,
+  type GetBlobBaseFeeParameters,
+  type GetBlobBaseFeeReturnType,
+  getBlobBaseFee,
+} from '../actions/getBlobBaseFee.js'
+
+export {
   type GetBlockErrorType,
   type GetBlockParameters,
   type GetBlockReturnType,
