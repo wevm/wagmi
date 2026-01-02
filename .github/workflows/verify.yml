@@ -80,7 +80,7 @@ jobs:
     strategy:
       matrix:
         typescript-version: ['5.7.3', '5.8.3', '5.9.3', 'latest']
-        viem-version: ['2.38.0', 'latest']
+        viem-version: ['2.43.3', 'latest']
 
     steps:
       - name: Clone repository
@@ -127,6 +127,9 @@ jobs:
         uses: wevm/actions/.github/actions/pnpm@f7ad7f00e16e73322562922c241f21f0c7ffbbec
         with:
           node-version: 24.5
+
+      - name: Setup Docker
+        uses: docker/setup-docker-action@v4
 
       - name: Set up foundry
         uses: foundry-rs/foundry-toolchain@50d5a8956f2e319df19e6b57539d7e2acb9f8c1e # v1.5.0

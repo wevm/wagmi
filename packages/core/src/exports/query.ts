@@ -397,7 +397,6 @@ export {
 } from '../query/switchConnection.js'
 
 export {
-  filterQueryOptions,
   hashFn,
   structuralSharing,
 } from '../query/utils.js'

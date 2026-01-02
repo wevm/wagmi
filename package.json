@@ -120,7 +120,8 @@
           "test/setup.ts"
         ],
         "ignoreDependencies": [
-          "@tanstack/query-core"
+          "@tanstack/query-core",
+          "ox"
         ]
       },
       "packages/create-wagmi": {
