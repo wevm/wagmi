@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "pnpm run --filter @wagmi/core --filter @wagmi/cli build && pnpm run --filter @wagmi/connectors build && pnpm run --filter wagmi --filter @wagmi/vue --filter @wagmi/tempo build",
+    "build": "pnpm run --filter @wagmi/core --filter @wagmi/cli build && pnpm run --filter @wagmi/connectors build && pnpm run --filter wagmi --filter @wagmi/vue build",
     "bench:types": "TYPES=true vitest bench-d.ts",
     "changeset:prepublish": "pnpm clean && pnpm version:update && pnpm build && node scripts/formatPackageJson.ts && node scripts/generateProxyPackages.ts",
     "changeset:publish": "pnpm changeset:prepublish && changeset publish",
@@ -115,7 +115,7 @@
         ]
       },
       "packages/core": {
-        "entry": "src/exports/{actions,chains,codegen,experimental,index,internal,query}.ts!",
+        "entry": "src/exports/{actions,chains,codegen,experimental,index,internal,query,tempo}.ts!",
         "ignore": [
           "test/setup.ts"
         ],
@@ -128,16 +128,8 @@
       },
       "packages/react": {
         "entry": [
-          "src/exports/{actions,chains,codegen,connectors,experimental,index,internal,query}.ts!",
+          "src/exports/{actions,chains,codegen,connectors,experimental,index,internal,query,tempo}.ts!",
           "src/exports/actions/experimental.ts!"
-        ],
-        "ignore": [
-          "test/setup.ts"
-        ]
-      },
-      "packages/tempo": {
-        "entry": [
-          "src/exports/{index}.ts!"
         ],
         "ignore": [
           "test/setup.ts"
@@ -148,7 +140,9 @@
           "src/setup.ts!",
           "src/setup.global.ts!",
           "src/setup.global.types.ts!",
-          "src/exports/{index,react}.ts!"
+          "src/exports/{index,react,tempo}.ts!",
+          "src/tempo/setup.ts!",
+          "src/tempo/setup.global.ts!"
         ]
       },
       "packages/vue": {

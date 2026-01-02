@@ -32,7 +32,8 @@ export default defineConfig({
         // ignore third-party connectors
         'packages/connectors/**',
         'packages/core/src/connectors/injected.ts',
-        'packages/tempo/**',
+        'packages/core/src/tempo/**',
+        'packages/react/src/tempo/**',
       ],
     },
     globalSetup: process.env.TYPES
@@ -63,6 +64,7 @@ export default defineConfig({
             ...(process.env.TYPES ? ['**/*.bench-d.ts'] : []),
             './packages/core/src/**/*.test.ts',
           ],
+          exclude: ['./packages/core/src/tempo/**/*.test.ts'],
           environment: 'happy-dom',
           testTimeout: 10_000,
           setupFiles: ['./packages/core/test/setup.ts'],
@@ -89,10 +91,13 @@ export default defineConfig({
             provider: playwright(),
             screenshotFailures: false,
           },
-          include: ['./packages/tempo/src/**/*.test.ts'],
+          include: [
+            './packages/core/src/tempo/**/*.test.ts',
+            './packages/react/src/tempo/**/*.test.ts',
+          ],
           testTimeout: 10_000,
-          globalSetup: ['./packages/tempo/test/setup.global.ts'],
-          setupFiles: ['./packages/tempo/test/setup.ts'],
+          globalSetup: ['./packages/test/src/tempo/setup.global.ts'],
+          setupFiles: ['./packages/test/src/tempo/setup.ts'],
         },
       },
       {
@@ -108,6 +113,7 @@ export default defineConfig({
             screenshotFailures: false,
           },
           include: ['./packages/react/src/**/*.test.ts?(x)'],
+          exclude: ['./packages/react/src/tempo/**/*.test.ts'],
           testTimeout: 10_000,
           setupFiles: ['./packages/react/test/setup.ts'],
         },

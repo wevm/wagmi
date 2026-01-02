@@ -301,6 +301,9 @@ importers:
       '@tanstack/query-core':
         specifier: 'catalog:'
         version: 5.49.1
+      ox:
+        specifier: 'catalog:'
+        version: 0.11.1(typescript@5.9.3)(zod@4.1.11)
 
   packages/create-wagmi:
     dependencies:
@@ -335,9 +338,6 @@ importers:
       '@wagmi/core':
         specifier: workspace:*
         version: link:../core
-      '@wagmi/tempo':
-        specifier: workspace:*
-        version: link:../tempo
       use-sync-external-store:
         specifier: 1.4.0
         version: 1.4.0(react@19.2.0)
@@ -389,31 +389,6 @@ importers:
         specifier: 'catalog:'
         version: 3.4.27(typescript@5.9.3)
 
-  packages/tempo:
-    dependencies:
-      ox:
-        specifier: 'catalog:'
-        version: 0.11.1(typescript@5.9.3)(zod@4.1.11)
-    devDependencies:
-      '@tanstack/query-core':
-        specifier: 'catalog:'
-        version: 5.49.1
-      '@tanstack/react-query':
-        specifier: 'catalog:'
-        version: 5.49.2(react@19.2.0)
-      '@types/react':
-        specifier: 'catalog:'
-        version: 19.2.3
-      '@wagmi/core':
-        specifier: workspace:*
-        version: link:../core
-      react:
-        specifier: 'catalog:'
-        version: 19.2.0
-      wagmi:
-        specifier: workspace:*
-        version: link:../react
-
   packages/test:
     devDependencies:
       '@tanstack/react-query':
@@ -434,6 +409,9 @@ importers:
       '@wagmi/vue':
         specifier: workspace:*
         version: link:../vue
+      ox:
+        specifier: 'catalog:'
+        version: 0.11.1(typescript@5.9.3)(zod@4.1.11)
       react:
         specifier: 'catalog:'
         version: 19.2.0

@@ -108,7 +108,6 @@
   "dependencies": {
     "@wagmi/connectors": "workspace:*",
     "@wagmi/core": "workspace:*",
-    "@wagmi/tempo": "workspace:*",
     "use-sync-external-store": "1.4.0"
   },
   "devDependencies": {
