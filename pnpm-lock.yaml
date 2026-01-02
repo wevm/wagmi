@@ -91,11 +91,6 @@ overrides:
   vite@>=7.1.0 <=7.1.10: '>=7.1.11'
   ws@>=8.0.0 <8.17.1: 8.17.1
 
-patchedDependencies:
-  prool:
-    hash: 6ea470deaa7c0b09169321c017f09f7cc1c25c3c8051259b8efa8c34c8aaf823
-    path: patches/prool.patch
-
 importers:
 
   .:
@@ -147,7 +142,7 @@ importers:
         version: 1.56.1
       prool:
         specifier: ^0.2.2
-        version: 0.2.2(patch_hash=6ea470deaa7c0b09169321c017f09f7cc1c25c3c8051259b8efa8c34c8aaf823)(testcontainers@11.11.0)
+        version: 0.2.2(testcontainers@11.11.0)
       publint:
         specifier: ^0.2.11
         version: 0.2.11
@@ -18708,7 +18703,7 @@ snapshots:
       kleur: 3.0.3
       sisteransi: 1.0.5
 
-  prool@0.2.2(patch_hash=6ea470deaa7c0b09169321c017f09f7cc1c25c3c8051259b8efa8c34c8aaf823)(testcontainers@11.11.0):
+  prool@0.2.2(testcontainers@11.11.0):
     dependencies:
       change-case: 5.4.4
       eventemitter3: 5.0.1

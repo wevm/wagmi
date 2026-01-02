@@ -68,8 +68,6 @@ packages:
   - packages/register-tests/*
   - playgrounds/*
   - site
-patchedDependencies:
-  prool: patches/prool.patch
 peerDependencyRules:
   ignoreMissing:
     - '@algolia/client-search'

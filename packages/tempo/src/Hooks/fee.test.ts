@@ -1,4 +1,4 @@
-import type { Account } from 'viem'
+import type { Address } from 'viem'
 import { describe, expect, test, vi } from 'vitest'
 import { useConnect } from 'wagmi'
 import { accounts, config, renderHook } from '../../test/config.js'
@@ -6,10 +6,9 @@ import { useSetUserToken, useSetUserTokenSync, useUserToken } from './fee.js'
 
 describe('useUserToken', () => {
   test('default', async () => {
-    let account: Account | undefined
-
-    const { result, rerender } = await renderHook(() =>
-      useUserToken({ account }),
+    const { result, rerender } = await renderHook(
+      (props) => useUserToken({ account: props?.account }),
+      { initialProps: { account: undefined as Address | undefined } },
     )
 
     await vi.waitFor(() => result.current.fetchStatus === 'fetching')
@@ -24,7 +23,6 @@ describe('useUserToken', () => {
         "failureCount": 0,
         "failureReason": null,
         "fetchStatus": "idle",
-        "isEnabled": false,
         "isError": false,
         "isFetched": false,
         "isFetchedAfterMount": false,
@@ -39,10 +37,6 @@ describe('useUserToken', () => {
         "isRefetching": false,
         "isStale": false,
         "isSuccess": false,
-        "promise": Promise {
-          "reason": [Error: experimental_prefetchInRender feature flag is not enabled],
-          "status": "rejected",
-        },
         "queryKey": [
           "getUserToken",
           {
@@ -55,8 +49,7 @@ describe('useUserToken', () => {
       }
     `)
 
-    account = accounts[0]
-    rerender()
+    rerender({ account: accounts[0].address })
 
     await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy(), {
       timeout: 5_000,
@@ -75,7 +68,6 @@ describe('useUserToken', () => {
         "failureCount": 0,
         "failureReason": null,
         "fetchStatus": "idle",
-        "isEnabled": true,
         "isError": false,
         "isFetched": true,
         "isFetchedAfterMount": true,
@@ -90,26 +82,10 @@ describe('useUserToken', () => {
         "isRefetching": false,
         "isStale": true,
         "isSuccess": true,
-        "promise": Promise {
-          "reason": [Error: experimental_prefetchInRender feature flag is not enabled],
-          "status": "rejected",
-        },
         "queryKey": [
           "getUserToken",
           {
-            "account": {
-              "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-              "keyType": "secp256k1",
-              "publicKey": "0x8318535b54105d4a7aae60c08fc45f9687181b4fdfc625bd1a753fa7397fed753547f11ca8696646f2f3acb08e31016afac23e630c5d11f59f61fef57b0d2aa5",
-              "sign": [Function],
-              "signAuthorization": [Function],
-              "signKeyAuthorization": [Function],
-              "signMessage": [Function],
-              "signTransaction": [Function],
-              "signTypedData": [Function],
-              "source": "root",
-              "type": "local",
-            },
+            "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
             "chainId": 1337,
           },
         ],
