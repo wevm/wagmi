@@ -1,5 +1,4 @@
-import type { QueryOptions } from '@tanstack/query-core'
-
+import type { QueryObserverOptions } from '@tanstack/query-core'
 import {
   type WaitForTransactionReceiptErrorType,
   type WaitForTransactionReceiptParameters,
@@ -27,22 +26,23 @@ export function waitForTransactionReceiptQueryOptions<
   options: WaitForTransactionReceiptOptions<config, chainId> = {},
 ) {
   return {
-    async queryFn({ queryKey }) {
-      const { hash, ...parameters } = queryKey[1]
-      if (!hash) throw new Error('hash is required')
-      return waitForTransactionReceipt(config, {
+    enabled: Boolean(options.hash),
+    queryFn: async (context) => {
+      const { scopeKey: _, ...parameters } = context.queryKey[1]
+      if (!parameters.hash) throw new Error('hash is required')
+      const result = await waitForTransactionReceipt(config, {
         ...parameters,
+        hash: parameters.hash,
         onReplaced: options.onReplaced,
-        hash,
-      }) as unknown as Promise<
-        WaitForTransactionReceiptReturnType<config, chainId>
-      >
+      })
+      return result as WaitForTransactionReceiptData<config, chainId>
     },
     queryKey: waitForTransactionReceiptQueryKey(options),
-  } as const satisfies QueryOptions<
+  } as const satisfies QueryObserverOptions<
     WaitForTransactionReceiptQueryFnData<config, chainId>,
     WaitForTransactionReceiptErrorType,
     WaitForTransactionReceiptData<config, chainId>,
+    WaitForTransactionReceiptQueryFnData<config, chainId>,
     WaitForTransactionReceiptQueryKey<config, chainId>
   >
 }
@@ -60,9 +60,11 @@ export type WaitForTransactionReceiptData<
 export function waitForTransactionReceiptQueryKey<
   config extends Config,
   chainId extends config['chains'][number]['id'],
->(options: WaitForTransactionReceiptOptions<config, chainId> = {}) {
-  const { onReplaced: _, ...rest } = options
-  return ['waitForTransactionReceipt', filterQueryOptions(rest)] as const
+>({
+  onReplaced: _,
+  ...options
+}: WaitForTransactionReceiptOptions<config, chainId> = {}) {
+  return ['waitForTransactionReceipt', filterQueryOptions(options)] as const
 }
 
 export type WaitForTransactionReceiptQueryKey<

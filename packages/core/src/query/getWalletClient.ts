@@ -1,5 +1,4 @@
-import type { QueryOptions } from '@tanstack/query-core'
-
+import type { QueryObserverOptions } from '@tanstack/query-core'
 import {
   type GetWalletClientErrorType,
   type GetWalletClientParameters,
@@ -23,17 +22,28 @@ export function getWalletClientQueryOptions<
   chainId extends config['chains'][number]['id'],
 >(config: config, options: GetWalletClientOptions<config, chainId> = {}) {
   return {
+    enabled: Boolean(options.connector?.getProvider),
     gcTime: 0,
-    async queryFn({ queryKey }) {
-      const { connector } = options
-      const { connectorUid: _, scopeKey: _s, ...parameters } = queryKey[1]
-      return getWalletClient(config, { ...parameters, connector }) as never
+    queryFn: async (context) => {
+      if (!options.connector?.getProvider)
+        throw new Error('connector is required')
+      const {
+        connectorUid: _,
+        scopeKey: _s,
+        ...parameters
+      } = context.queryKey[1]
+      return getWalletClient(config, {
+        ...parameters,
+        connector: options.connector,
+      }) as unknown as Promise<GetWalletClientReturnType<config, chainId>>
     },
     queryKey: getWalletClientQueryKey(options),
-  } as const satisfies QueryOptions<
+    staleTime: Number.POSITIVE_INFINITY,
+  } as const satisfies QueryObserverOptions<
     GetWalletClientQueryFnData<config, chainId>,
     GetWalletClientErrorType,
     GetWalletClientData<config, chainId>,
+    GetWalletClientQueryFnData<config, chainId>,
     GetWalletClientQueryKey<config, chainId>
   >
 }
@@ -52,10 +62,9 @@ export function getWalletClientQueryKey<
   config extends Config,
   chainId extends config['chains'][number]['id'],
 >(options: GetWalletClientOptions<config, chainId> = {}) {
-  const { connector, ...parameters } = options
   return [
     'walletClient',
-    { ...filterQueryOptions(parameters), connectorUid: connector?.uid },
+    { ...filterQueryOptions(options), connectorUid: options.connector?.uid },
   ] as const
 }
 

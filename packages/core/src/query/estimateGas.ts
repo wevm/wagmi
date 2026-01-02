@@ -1,5 +1,4 @@
-import type { QueryOptions } from '@tanstack/query-core'
-
+import type { QueryObserverOptions } from '@tanstack/query-core'
 import {
   type EstimateGasErrorType,
   type EstimateGasParameters,
@@ -22,18 +21,23 @@ export function estimateGasQueryOptions<
   chainId extends config['chains'][number]['id'],
 >(config: config, options: EstimateGasOptions<config, chainId> = {} as any) {
   return {
-    async queryFn({ queryKey }) {
-      const { connector } = options
-      const { account, scopeKey: _, ...parameters } = queryKey[1]
-      if (!account && !connector)
+    enabled: Boolean(options.account || options.connector),
+    queryFn: async (context) => {
+      const { scopeKey: _, ...parameters } = context.queryKey[1]
+      if (!parameters.account && !options.connector)
         throw new Error('account or connector is required')
-      return estimateGas(config, { account, connector, ...(parameters as any) })
+      return estimateGas(config, {
+        ...(parameters as any),
+        account: parameters.account,
+        connector: options.connector,
+      })
     },
     queryKey: estimateGasQueryKey(options),
-  } as const satisfies QueryOptions<
+  } as const satisfies QueryObserverOptions<
     EstimateGasQueryFnData,
     EstimateGasErrorType,
     EstimateGasData,
+    EstimateGasQueryFnData,
     EstimateGasQueryKey<config, chainId>
   >
 }
@@ -46,8 +50,7 @@ export function estimateGasQueryKey<
   config extends Config,
   chainId extends config['chains'][number]['id'] | undefined,
 >(options: EstimateGasOptions<config, chainId> = {} as any) {
-  const { connector: _, ...rest } = options
-  return ['estimateGas', filterQueryOptions(rest)] as const
+  return ['estimateGas', filterQueryOptions(options)] as const
 }
 
 export type EstimateGasQueryKey<

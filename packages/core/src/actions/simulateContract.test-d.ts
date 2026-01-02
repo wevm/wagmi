@@ -1,7 +1,7 @@
 import { abi, config } from '@wagmi/test'
 import { type Address, http } from 'viem'
 import { celo, mainnet } from 'viem/chains'
-import { expectTypeOf, test } from 'vitest'
+import { assertType, expectTypeOf, test } from 'vitest'
 
 import { createConfig } from '../createConfig.js'
 import {
@@ -157,4 +157,40 @@ test('SimulateContractReturnType', () => {
       chainId: (typeof config)['chains'][number]['id']
     }
   }>()
+})
+
+test('overloads', async () => {
+  const result1 = await simulateContract(config, {
+    address: '0x',
+    abi: abi.writeOverloads,
+    functionName: 'foo',
+  })
+  assertType<number>(result1.result)
+
+  const result2 = await simulateContract(config, {
+    address: '0x',
+    abi: abi.writeOverloads,
+    functionName: 'foo',
+    args: [],
+  })
+  assertType<number>(result2.result)
+
+  const result3 = await simulateContract(config, {
+    address: '0x',
+    abi: abi.writeOverloads,
+    functionName: 'foo',
+    args: ['0x'],
+  })
+  assertType<string>(result3.result)
+
+  const result4 = await simulateContract(config, {
+    address: '0x',
+    abi: abi.writeOverloads,
+    functionName: 'foo',
+    args: ['0x', '0x'],
+  })
+  assertType<{
+    foo: `0x${string}`
+    bar: `0x${string}`
+  }>(result4.result)
 })

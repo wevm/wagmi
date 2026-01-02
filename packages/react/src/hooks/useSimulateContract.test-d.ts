@@ -1,6 +1,6 @@
 import { abi, type config } from '@wagmi/test'
 import type { Address } from 'viem'
-import { expectTypeOf, test } from 'vitest'
+import { assertType, expectTypeOf, test } from 'vitest'
 
 import {
   type UseSimulateContractParameters,
@@ -101,4 +101,43 @@ test('UseSimulateContractReturnType', () => {
       }
     | undefined
   >()
+})
+
+test('overloads', () => {
+  const result1 = useSimulateContract({
+    address: '0x',
+    abi: abi.writeOverloads,
+    functionName: 'foo',
+  })
+  assertType<number | undefined>(result1.data?.result)
+
+  const result2 = useSimulateContract({
+    address: '0x',
+    abi: abi.writeOverloads,
+    functionName: 'foo',
+    args: [],
+  })
+  assertType<number | undefined>(result2.data?.result)
+
+  const result3 = useSimulateContract({
+    address: '0x',
+    abi: abi.writeOverloads,
+    functionName: 'foo',
+    args: ['0x'],
+  })
+  assertType<string | undefined>(result3.data?.result)
+
+  const result4 = useSimulateContract({
+    address: '0x',
+    abi: abi.writeOverloads,
+    functionName: 'foo',
+    args: ['0x', '0x'],
+  })
+  assertType<
+    | {
+        foo: `0x${string}`
+        bar: `0x${string}`
+      }
+    | undefined
+  >(result4.data?.result)
 })

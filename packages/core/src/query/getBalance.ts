@@ -1,5 +1,4 @@
-import type { QueryOptions } from '@tanstack/query-core'
-
+import type { QueryObserverOptions } from '@tanstack/query-core'
 import {
   type GetBalanceErrorType,
   type GetBalanceParameters,
@@ -20,20 +19,22 @@ export function getBalanceQueryOptions<config extends Config>(
   options: GetBalanceOptions<config> = {},
 ) {
   return {
-    async queryFn({ queryKey }) {
-      const { address, scopeKey: _, ...parameters } = queryKey[1]
-      if (!address) throw new Error('address is required')
-      const balance = await getBalance(config, {
-        ...(parameters as GetBalanceParameters),
-        address,
+    enabled: Boolean(options.address),
+    queryFn: async (context) => {
+      const { scopeKey: _, ...parameters } = context.queryKey[1]
+      if (!parameters.address) throw new Error('address is required')
+      const result = await getBalance(config, {
+        ...(parameters as any),
+        address: parameters.address,
       })
-      return balance ?? null
+      return result ?? null
     },
     queryKey: getBalanceQueryKey(options),
-  } as const satisfies QueryOptions<
+  } as const satisfies QueryObserverOptions<
     GetBalanceQueryFnData,
     GetBalanceErrorType,
     GetBalanceData,
+    GetBalanceQueryFnData,
     GetBalanceQueryKey<config>
   >
 }
