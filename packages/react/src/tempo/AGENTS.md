@@ -12,7 +12,7 @@ An example of a generated hook set can be found in `Hooks/fee.ts`.
 
 ### Source of Truth
 
-- **All hooks must be based on their corresponding Wagmi actions** from `@wagmi/core/tempo`
+- **All hooks must be based on their corresponding Wagmi actions** from `@wagmi/core/tempo` (`packages/core/src/tempo/`)
 - Wagmi hooks are React hooks that wrap Wagmi actions with TanStack Query's `useQuery` and `useMutation`
 - If the Wagmi action is unclear or missing, implement the Wagmi action first
 
@@ -48,7 +48,6 @@ Example:
  * }
  * ```
  * 
- *
  * @param parameters - Parameters.
  * @returns Query result with token address and ID.
  */
@@ -92,7 +91,7 @@ export function useMyAction<
   context = unknown,
 >(
   parameters: useMyAction.Parameters<config, context> = {},
-): useMyAction.ReturnType<config, context> {
+): useMyAction.ReturnValue<config, context> {
   const { mutation = {} } = parameters
   const config = useConfig(parameters)
   return useMutation({
@@ -113,7 +112,7 @@ export function useMyActionSync<
   context = unknown,
 >(
   parameters: useMyActionSync.Parameters<config, context> = {},
-): useMyActionSync.ReturnType<config, context> {
+): useMyActionSync.ReturnValue<config, context> {
   const { mutation = {} } = parameters
   const config = useConfig(parameters)
   return useMutation({
@@ -133,7 +132,8 @@ For event watching hooks:
 - Call the corresponding action's watch function inside `useEffect`
 - All parameters should be optional using `ExactPartial`
 - Include an `enabled` parameter (defaults to `true`) to control whether the watcher is active
-- Check if the callback is defined before setting up the watcher
+- Check if all required properties (like the callback) are defined before setting up the watcher
+- Include all optional properties for `rest` in the dependency array (e.g. `rest.foo`, `rest.bar`, `rest.baz`)
 - Return the unwatch function from the `useEffect` for cleanup
 
 All watch hooks must include comprehensive JSDoc with:
@@ -178,7 +178,7 @@ export function useWatchMyEvent<
       chainId,
       onMyEvent,
     })
-  }, [config, enabled, onMyEvent, rest])
+  }, [config, enabled, onMyEvent, rest.foo, rest.bar, rest.baz])
 }
 
 export declare namespace useWatchMyEvent {
@@ -199,7 +199,7 @@ All query hooks must include the following components:
 export function useMyAction<
   config extends Config = ResolvedRegister['config'],
   selectData = myAction.ReturnValue,
->(parameters: useMyAction.Parameters<config, selectData> = {}) { ... }
+>(parameters: useMyAction.Parameters<config, selectData> = {}): useMyAction.ReturnValue<selectData> { ... }
 
 export declare namespace useMyAction {
   export type Parameters<
@@ -222,7 +222,6 @@ export declare namespace useMyAction {
 ```
 
 **Note:** Use `ExactPartial<T>` to make all query parameters optional. This ensures that reactive parameters can be undefined initially and populated later for proper reactivity.
-
 
 #### Watch Hooks
 
@@ -253,7 +252,7 @@ export function useMyAction<
   context = unknown,
 >(
   parameters: useMyAction.Parameters<config, context> = {},
-): useMyAction.ReturnType<config, context> { ... }
+): useMyAction.ReturnValue<config, context> { ... }
 
 export declare namespace useMyAction {
   type Parameters<
@@ -270,7 +269,7 @@ export declare namespace useMyAction {
       | undefined
   }
 
-  type ReturnType<
+  type ReturnValue<
     config extends Config = Config,
     context = unknown,
   > = UseMutationResult<
@@ -296,7 +295,7 @@ export declare namespace useMyActionSync {
       | undefined
   }
 
-  type ReturnType<
+  type ReturnValue<
     config extends Config = Config,
     context = unknown,
   > = UseMutationResult<

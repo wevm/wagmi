@@ -14,7 +14,7 @@ An example of a generated action set can be found in `Actions/fee.ts`.
 
 #### Source of Truth
 
-- **All actions must be based on their corresponding Viem actions** from `import { Actions } from viem/tempo` (local path might be `../viem/src/tempo/actions`)
+- **All actions must be based on their corresponding Viem actions** from `import { Actions } from viem/tempo` (local path might be `../viem/src/tempo/actions` or you can clone `gh repo clone wevm/viem`)
 - Wagmi actions are wrappers around Viem actions that integrate with Wagmi's config and TanStack Query
 
 #### Documentation Requirements
@@ -73,7 +73,7 @@ For read-only actions that fetch data:
 export function myAction<config extends Config>(
   config: config,
   parameters: myAction.Parameters<config>,
-) {
+): Promise<myAction.ReturnValue<config>> {
   const { chainId, ...rest } = parameters
   const client = config.getClient({ chainId })
   return viem_Actions.myAction(client, rest)
@@ -94,7 +94,7 @@ For state-changing actions, both variants must be implemented:
 export async function myAction<config extends Config>(
   config: config,
   parameters: myAction.Parameters<config>,
-): Promise<viem_Actions.myAction.ReturnValue> {
+): Promise<myAction.ReturnValue> {
   const { account, chainId, connector } = parameters
   const client = await getConnectorClient(config, {
     account,
@@ -120,7 +120,7 @@ export async function myAction<config extends Config>(
 export async function myActionSync<config extends Config>(
   config: config,
   parameters: myActionSync.Parameters<config>,
-): Promise<viem_Actions.myActionSync.ReturnValue> {
+): Promise<myActionSync.ReturnValue> {
   const { account, chainId, connector } = parameters
   const client = await getConnectorClient(config, {
     account,
@@ -146,7 +146,7 @@ All query-based actions must include the following components:
 - If there isn't an `ErrorType` for the Viem Action, use `import { BaseError } from 'viem'`
 
 ```typescript
-import { filterQueryOptions } from 'wagmi/query'
+import { filterQueryOptions } from '../../query/utils.js'
 import type { QueryOptions, QueryParameter } from './utils.js'
 
 export function myAction<config extends Config>(
@@ -223,7 +223,7 @@ All mutation-based actions must include the following components:
 export async function myAction<config extends Config>(
   config: config,
   parameters: myAction.Parameters<config>,
-): Promise<viem_Actions.myAction.ReturnValue> { ... }
+): Promise<myAction.ReturnValue> { ... }
 
 export declare namespace myAction {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
@@ -265,8 +265,8 @@ Organize tests by action name with a default test case. Use namespace imports fo
 
 ```typescript
 import { connect } from '@wagmi/core'
-import { describe, expect, test } from 'vitest'
 import { accounts,  config, queryClient } from '@wagmi/test/tempo'
+import { describe, expect, test } from 'vitest'
 import * as myNamespace from './myNamespace.js'
 
 const account = accounts[0]

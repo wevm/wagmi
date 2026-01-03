@@ -136,7 +136,15 @@ jobs:
         with:
           version: nightly
 
+      - name: Cache Playwright
+        uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('pnpm-lock.yaml') }}
+
       - name: Install Playwright
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: pnpm exec playwright install chromium --with-deps
 
       - name: Run tests
