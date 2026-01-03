@@ -101,7 +101,7 @@ export default defineConfig({
           testTimeout: 10_000,
           globalSetup: process.env.TYPES
             ? ['./packages/test/src/setup.global.types.ts']
-            : ['./packages/test/src/setup.global.ts'],
+            : ['./packages/test/src/tempo/setup.global.ts'],
           setupFiles: ['./packages/test/src/tempo/setup.ts'],
         },
       },
