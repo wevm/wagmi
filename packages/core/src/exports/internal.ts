@@ -37,10 +37,13 @@ export type {
   FixedArray,
   Mutable,
   OneOf,
+  PartialBy,
   RemoveUndefined,
+  RequiredBy,
   StrictOmit as Omit,
   UnionCompute,
   UnionExactPartial,
+  UnionLooseOmit,
   UnionStrictOmit,
 } from '../types/utils.js'
 

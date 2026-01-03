@@ -91,6 +91,25 @@ export type RemoveUndefined<type> = {
   [key in keyof type]: NonNullable<type[key]>
 }
 
+/**
+ * Creates a type that is {@link type} with the required keys {@link key}.
+ *
+ * @example
+ * ```ts
+ * RequiredBy<{ a?: string, b: number }, 'a'>
+ * // { a: string, b: number }
+ * ```
+ *
+ * @internal
+ */
+export type RequiredBy<type, key extends keyof type> = Omit<type, key> &
+  ExactRequired<Pick<type, key>>
+
+/** @internal */
+export type ExactRequired<type> = {
+  [key in keyof type]-?: Exclude<type[key], undefined>
+}
+
 ///////////////////////////////////////////////////////////////////////////
 // Loose types
 
