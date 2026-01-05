@@ -12,8 +12,8 @@ Creates a new transfer policy for token access control. [Learn more about transf
 import type { Config } from 'wagmi'
 import { tempoTestnet } from 'wagmi/chains'
 export const config = {} as Config<readonly [typeof tempoTestnet]>
-// ---cut---
 // @filename: example.ts
+// ---cut---
 import { Actions } from 'wagmi/tempo'
 import { config } from './config'
 

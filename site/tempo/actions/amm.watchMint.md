@@ -12,8 +12,8 @@ Watches for liquidity mint events on the Fee AMM.
 import type { Config } from 'wagmi'
 import { tempoTestnet } from 'wagmi/chains'
 export const config = {} as Config<readonly [typeof tempoTestnet]>
-// ---cut---
 // @filename: example.ts
+// ---cut---
 import { Actions } from 'wagmi/tempo'
 import { config } from './config'
 

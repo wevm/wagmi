@@ -12,8 +12,8 @@ Unpauses a TIP-20 token, allowing transfers to resume. Requires the `UNPAUSE` ro
 import type { Config } from 'wagmi'
 import { tempoTestnet } from 'wagmi/chains'
 export const config = {} as Config<readonly [typeof tempoTestnet]>
-// ---cut---
 // @filename: example.ts
+// ---cut---
 import { Actions } from 'wagmi/tempo'
 import { config } from './config'
 

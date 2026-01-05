@@ -12,8 +12,8 @@ Gets the quote for selling a specific amount of tokens.
 import type { Config } from 'wagmi'
 import { tempoTestnet } from 'wagmi/chains'
 export const config = {} as Config<readonly [typeof tempoTestnet]>
-// ---cut---
 // @filename: example.ts
+// ---cut---
 import { Actions } from 'wagmi/tempo'
 import { parseUnits } from 'viem'
 import { config } from './config'

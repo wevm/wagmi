@@ -12,8 +12,8 @@ Modifies the blacklist for a blacklist-type transfer policy. Requires policy adm
 import type { Config } from 'wagmi'
 import { tempoTestnet } from 'wagmi/chains'
 export const config = {} as Config<readonly [typeof tempoTestnet]>
-// ---cut---
 // @filename: example.ts
+// ---cut---
 import { Actions } from 'wagmi/tempo'
 import { config } from './config'
 

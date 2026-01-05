@@ -12,8 +12,8 @@ Burns TIP-20 tokens from a blocked address. Requires the `BURN_BLOCKED` role. [L
 import type { Config } from 'wagmi'
 import { tempoTestnet } from 'wagmi/chains'
 export const config = {} as Config<readonly [typeof tempoTestnet]>
-// ---cut---
 // @filename: example.ts
+// ---cut---
 import { Actions } from 'wagmi/tempo'
 import { parseUnits } from 'viem'
 import { config } from './config'

@@ -12,8 +12,8 @@ Approves a spender to transfer TIP-20 tokens on behalf of the caller.
 import type { Config } from 'wagmi'
 import { tempoTestnet } from 'wagmi/chains'
 export const config = {} as Config<readonly [typeof tempoTestnet]>
-// ---cut---
 // @filename: example.ts
+// ---cut---
 import { Actions } from 'wagmi/tempo'
 import { parseUnits } from 'viem'
 import { config } from './config'

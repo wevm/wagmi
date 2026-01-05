@@ -12,8 +12,8 @@ Places a flip order that automatically flips to the opposite side when filled.
 import type { Config } from 'wagmi'
 import { tempoTestnet } from 'wagmi/chains'
 export const config = {} as Config<readonly [typeof tempoTestnet]>
-// ---cut---
 // @filename: example.ts
+// ---cut---
 import { Actions } from 'wagmi/tempo'
 import { parseUnits } from 'viem'
 import { Tick } from 'viem/tempo'
