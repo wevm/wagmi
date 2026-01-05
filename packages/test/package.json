@@ -29,13 +29,13 @@
       "types": "./dist/types/exports/react.d.ts",
       "default": "./dist/esm/exports/react.js"
     },
-    "./vue": {
-      "types": "./dist/types/exports/vue.d.ts",
-      "default": "./dist/esm/exports/vue.js"
-    },
     "./tempo": {
       "types": "./dist/types/exports/tempo.d.ts",
       "default": "./dist/esm/exports/tempo.js"
+    },
+    "./vue": {
+      "types": "./dist/types/exports/vue.d.ts",
+      "default": "./dist/esm/exports/vue.js"
     },
     "./package.json": "./package.json"
   },
@@ -44,11 +44,11 @@
       "react": [
         "./dist/types/exports/react.d.ts"
       ],
-      "vue": [
-        "./dist/types/exports/vue.d.ts"
-      ],
       "tempo": [
         "./dist/types/exports/tempo.d.ts"
+      ],
+      "vue": [
+        "./dist/types/exports/vue.d.ts"
       ]
     }
   },

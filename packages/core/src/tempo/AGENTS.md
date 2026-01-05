@@ -31,7 +31,7 @@ All actions **must include comprehensive TSDoc** with:
 4. **`@returns` tag** - Description of the return value
 
 Example:
-```typescript
+```ts
 /**
  * Gets the user's default fee token.
  *
@@ -69,7 +69,7 @@ For read-only actions that fetch data:
 - Parameters include `ChainIdParameter<config>` and the Viem action's parameters
 - Must include query utilities for TanStack Query integration
 
-```typescript
+```ts
 export function myAction<config extends Config>(
   config: config,
   parameters: myAction.Parameters<config>,
@@ -90,7 +90,7 @@ For state-changing actions, both variants must be implemented:
 - Returns the result from the corresponding Viem action
 - Does not wait for transaction confirmation
 
-```typescript
+```ts
 export async function myAction<config extends Config>(
   config: config,
   parameters: myAction.Parameters<config>,
@@ -116,7 +116,7 @@ export async function myAction<config extends Config>(
 - Waits for transaction inclusion on a block before returning a response
 - Returns both the receipt and extracted event data
 
-```typescript
+```ts
 export async function myActionSync<config extends Config>(
   config: config,
   parameters: myActionSync.Parameters<config>,
@@ -145,7 +145,7 @@ All query-based actions must include the following components:
 - The `enabled` conditional must check ALL required reactive parameters (e.g., `account && spender` for allowance checks)
 - If there isn't an `ErrorType` for the Viem Action, use `import { BaseError } from 'viem'`
 
-```typescript
+```ts
 import { filterQueryOptions } from '../../query/utils.js'
 import type { QueryOptions, QueryParameter } from './utils.js'
 
@@ -219,7 +219,7 @@ All mutation-based actions must include the following components:
 
 - If there isn't an `ErrorType` for the Viem Action, use `import { BaseError } from 'viem'`
 
-```typescript
+```ts
 export async function myAction<config extends Config>(
   config: config,
   parameters: myAction.Parameters<config>,
@@ -263,7 +263,7 @@ See `Actions/token.test.ts` for a comprehensive example of test patterns and str
 
 Organize tests by action name with a default test case. Use namespace imports for cleaner code:
 
-```typescript
+```ts
 import { connect } from '@wagmi/core'
 import { accounts,  config, queryClient } from '@wagmi/test/tempo'
 import { describe, expect, test } from 'vitest'

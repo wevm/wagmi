@@ -216,3 +216,44 @@ export declare namespace setUserTokenSync {
 
   export type ErrorType = BaseErrorType // TODO: Actions.fee.setUserTokenSync.ErrorType
 }
+
+/**
+ * Watches for user token set events on the Fee Manager.
+ *
+ * @example
+ * ```ts
+ * import { createConfig, http } from '@wagmi/core'
+ * import { tempo } from '@wagmi/core/chains'
+ * import { Actions } from '@wagmi/core/tempo'
+ *
+ * const config = createConfig({
+ *   chains: [tempo],
+ *   transports: {
+ *     [tempo.id]: http(),
+ *   },
+ * })
+ *
+ * const unwatch = Actions.fee.watchSetUserToken(config, {
+ *   onUserTokenSet: (args, log) => {
+ *     console.log('User token set:', args)
+ *   },
+ * })
+ * ```
+ *
+ * @param config - Config.
+ * @param parameters - Parameters.
+ * @returns A function to unsubscribe from the event.
+ */
+export function watchSetUserToken<config extends Config>(
+  config: config,
+  parameters: watchSetUserToken.Parameters<config>,
+): () => void {
+  const { chainId, ...rest } = parameters
+  const client = config.getClient({ chainId })
+  return Actions.fee.watchSetUserToken(client, rest)
+}
+
+export declare namespace watchSetUserToken {
+  export type Parameters<config extends Config> = ChainIdParameter<config> &
+    Actions.fee.watchSetUserToken.Parameters
+}

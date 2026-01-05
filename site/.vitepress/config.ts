@@ -7,7 +7,6 @@ import {
 } from 'vitepress-plugin-group-icons'
 import llmstxt, { copyOrDownloadAsMarkdownButtons } from 'vitepress-plugin-llms'
 
-import { farcasterIcon } from './constants'
 import { getSidebar } from './sidebar'
 
 // https://vitepress.dev/reference/site-config
@@ -115,13 +114,12 @@ export default defineConfig({
       { icon: 'x', link: 'https://twitter.com/wevm_dev' },
       { icon: 'discord', link: 'https://discord.gg/9zHPXuBpqy' },
       { icon: 'bluesky', link: 'https://bsky.app/profile/wevm.dev' },
-      { icon: { svg: farcasterIcon }, link: 'https://farcaster.xyz/wevm' },
     ],
   },
   title: 'Wagmi',
   vite: {
     plugins: [
-      llmstxt({ ignoreFiles: ['shared/'] }),
+      // llmstxt({ ignoreFiles: ['shared/'] }),
       groupIconVitePlugin(),
       unocss(),
     ],

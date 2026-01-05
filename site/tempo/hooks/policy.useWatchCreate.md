@@ -1,0 +1,42 @@
+# `policy.useWatchCreate`
+
+Watches for policy creation events on the TIP403 Registry.
+
+## Usage
+
+::: code-group
+```ts twoslash [example.ts]
+// @errors: 2322
+import type { Config } from 'wagmi'
+import { tempoTestnet } from 'wagmi/chains'
+declare module 'wagmi' {
+  interface Register {
+    config: Config<readonly [typeof tempoTestnet]>
+  }
+}
+// ---cut---
+import { Hooks } from 'wagmi/tempo'
+
+Hooks.policy.useWatchCreate({
+  onPolicyCreated: (args, log) => {
+    console.log('args:', args)
+  },
+})
+```
+<<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
+:::
+
+## Parameters
+
+See [Wagmi Action `policy.watchCreate` Parameters](/tempo/actions/policy.watchCreate#parameters)
+
+### config
+
+`Config | undefined`
+
+[`Config`](https://wagmi.sh/react/api/createConfig#config) to use instead of retrieving from the nearest [`WagmiProvider`](https://wagmi.sh/react/api/WagmiProvider).
+
+## Action
+
+- [`policy.create`](/tempo/actions/policy.create)
+- [`policy.watchCreate`](/tempo/actions/policy.watchCreate)
