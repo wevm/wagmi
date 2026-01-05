@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 3.0.2
+
+### Patch Changes
+
+- Fixed `config.connectors` type inference ([#4923](https://github.com/wevm/wagmi/pull/4923))
+
 ## 3.0.1
 
 ### Patch Changes
