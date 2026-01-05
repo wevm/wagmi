@@ -3,4 +3,4 @@
 "@wagmi/core": minor
 ---
 
-Added `/tempo` entrypoint
+Added first-class support and extension for [Tempo](https://docs.tempo.xyz) via `/tempo` entrypoint.
