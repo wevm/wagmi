@@ -73,8 +73,9 @@ export default defineConfig({
     },
     nav: [
       { text: 'React', link: '/react/getting-started' },
-      { text: 'Vue', link: '/vue/getting-started' },
       { text: 'Core', link: '/core/getting-started' },
+      { text: 'Vue', link: '/vue/getting-started' },
+      { text: 'Tempo', link: '/tempo/getting-started' },
       { text: 'CLI', link: '/cli/getting-started' },
       // { text: 'Examples', link: '/examples/connect-wallet' },
       {
@@ -119,7 +120,7 @@ export default defineConfig({
   title: 'Wagmi',
   vite: {
     plugins: [
-      // llmstxt({ ignoreFiles: ['shared/'] }),
+      llmstxt({ ignoreFiles: ['shared/'] }),
       groupIconVitePlugin(),
       unocss(),
     ],

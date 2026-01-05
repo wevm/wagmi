@@ -11,6 +11,7 @@ Agent guidance for the Wagmi documentation site.
 ## Wagmi Actions
 
 - **All documentation must be based on their corresponding Wagmi actions** from `@wagmi/core/tempo` (`packages/core/src/tempo/`)
+- Make sure you update `site/tempo/actions/index.md` for new actions
 
 ### Query Actions
 
@@ -255,6 +256,7 @@ Polling frequency (in ms). Defaults to Client's pollingInterval config.
 ## Wagmi Hooks
 
 - **All documentation must be based on their corresponding Wagmi hooks** from `wagmi/tempo` (`packages/react/src/tempo/`)
+- Make sure you update `site/tempo/hooks/index.md` for new actions
 
 ### Query Hooks
 

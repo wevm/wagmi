@@ -5,10 +5,9 @@ Connector for a WebAuthn EOA.
 ## Usage
 
 ```ts [wagmi.config.ts]
-// @noErrors
-import { tempoTestnet } from 'viem/chains'
-import { KeyManager, webAuthn } from 'wagmi/tempo' // [!code focus]
 import { createConfig, http } from 'wagmi'
+import { tempoTestnet } from 'wagmi/chains'
+import { KeyManager, webAuthn } from 'wagmi/tempo' // [!code focus]
 
 export const config = createConfig({
   connectors: [

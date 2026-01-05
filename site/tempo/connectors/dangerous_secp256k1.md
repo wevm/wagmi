@@ -9,10 +9,9 @@ NOT RECOMMENDED FOR PRODUCTION USAGE. This connector stores private keys in clea
 ## Usage
 
 ```ts [wagmi.config.ts]
-// @noErrors
-import { tempoTestnet } from 'viem/chains'
-import { dangerous_secp256k1 } from 'wagmi/tempo' // [!code focus]
 import { createConfig, http } from 'wagmi'
+import { tempoTestnet } from 'wagmi/chains'
+import { dangerous_secp256k1 } from 'wagmi/tempo' // [!code focus]
 
 export const config = createConfig({
   connectors: [dangerous_secp256k1()], // [!code focus]
