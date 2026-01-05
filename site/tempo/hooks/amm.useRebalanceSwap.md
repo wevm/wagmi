@@ -18,17 +18,17 @@ declare module 'wagmi' {
 import { Hooks } from 'wagmi/tempo'
 import { parseUnits } from 'viem'
 
-const { data: result, mutate } = Hooks.amm.useRebalanceSwapSync()
+const rebalanceSwapSync = Hooks.amm.useRebalanceSwapSync()
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+rebalanceSwapSync.mutate({
   amountOut: parseUnits('10.5', 6),
   to: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
   userToken: '0x20c0000000000000000000000000000000000000',
   validatorToken: '0x20c0000000000000000000000000000000000001',
 })
 
-console.log('Amount in:', result?.amountIn)
+console.log('Amount in:', rebalanceSwapSync.data?.amountIn)
 // @log: 10605000n
 ```
 <<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
@@ -55,11 +55,11 @@ import { Actions } from 'viem/tempo'
 import { parseUnits } from 'viem'
 import { useWaitForTransactionReceipt } from 'wagmi'
 
-const { data: hash, mutate } = Hooks.amm.useRebalanceSwap()
-const { data: receipt } = useWaitForTransactionReceipt({ hash })
+const rebalanceSwap = Hooks.amm.useRebalanceSwap()
+const { data: receipt } = useWaitForTransactionReceipt({ hash: rebalanceSwap.data })
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+rebalanceSwap.mutate({
   amountOut: parseUnits('10.5', 6),
   to: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
   userToken: '0x20c0000000000000000000000000000000000000',

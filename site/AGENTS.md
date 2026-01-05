@@ -336,15 +336,15 @@ declare module 'wagmi' {
 // ---cut---
 import { Hooks } from 'wagmi/tempo'
 
-const { data: result, mutate } = Hooks.namespace.useHookSync()
+const actionNameSync = Hooks.namespace.useHookSync()
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+actionNameSync.mutate({
   foo: '0x...',
   bar: 123n,
 })
 
-console.log('Received baz:', result.baz)
+console.log('Received baz:', actionNameSync.data?.baz)
 // @log: Received baz: ...
 ```
 <<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
@@ -361,11 +361,11 @@ import { Actions } from 'viem/tempo'
 import { Hooks } from 'wagmi/tempo'
 import { useWaitForTransactionReceipt } from 'wagmi'
 
-const { data: hash, mutate } = Hooks.namespace.useHook()
-const { data: receipt } = useWaitForTransactionReceipt({ hash })
+const actionName = Hooks.namespace.useHook()
+const { data: receipt } = useWaitForTransactionReceipt({ hash: actionName.data })
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+actionName.mutate({
   foo: '0x...',
   bar: 123n,
 })

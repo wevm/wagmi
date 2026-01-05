@@ -17,16 +17,16 @@ declare module 'wagmi' {
 // ---cut---
 import { Hooks } from 'wagmi/tempo'
 
-const { data: result, mutate } = Hooks.policy.useModifyBlacklistSync()
+const modifyBlacklistSync = Hooks.policy.useModifyBlacklistSync()
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+modifyBlacklistSync.mutate({
   account: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
   policyId: 1n,
   restricted: true,
 })
 
-console.log('Transaction hash:', result.receipt.transactionHash)
+console.log('Transaction hash:', modifyBlacklistSync.data?.receipt.transactionHash)
 // @log: Transaction hash: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
 ```
 <<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
@@ -52,11 +52,11 @@ import { Hooks } from 'wagmi/tempo'
 import { Actions } from 'viem/tempo'
 import { useWaitForTransactionReceipt } from 'wagmi'
 
-const { data: hash, mutate } = Hooks.policy.useModifyBlacklist()
-const { data: receipt } = useWaitForTransactionReceipt({ hash })
+const modifyBlacklist = Hooks.policy.useModifyBlacklist()
+const { data: receipt } = useWaitForTransactionReceipt({ hash: modifyBlacklist.data })
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+modifyBlacklist.mutate({
   account: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
   policyId: 1n,
   restricted: true,

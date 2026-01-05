@@ -19,17 +19,17 @@ import { Hooks } from 'wagmi/tempo'
 import { parseUnits } from 'viem'
 import { Tick } from 'viem/tempo'
 
-const { data: result, mutate } = Hooks.dex.usePlaceSync()
+const placeSync = Hooks.dex.usePlaceSync()
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+placeSync.mutate({
   amount: parseUnits('100', 6),
   tick: Tick.fromPrice('0.99'),
   token: '0x20c0000000000000000000000000000000000001',
   type: 'buy',
 })
 
-console.log('Order ID:', result.orderId)
+console.log('Order ID:', placeSync.data?.orderId)
 // @log: Order ID: 123n
 ```
 <<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
@@ -57,11 +57,11 @@ import { parseUnits } from 'viem'
 import { Tick } from 'viem/tempo'
 import { useWaitForTransactionReceipt } from 'wagmi'
 
-const { data: hash, mutate } = Hooks.dex.usePlace()
-const { data: receipt } = useWaitForTransactionReceipt({ hash })
+const place = Hooks.dex.usePlace()
+const { data: receipt } = useWaitForTransactionReceipt({ hash: place.data })
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+place.mutate({
   amount: parseUnits('100', 6),
   tick: Tick.fromPrice('0.99'),
   token: '0x20c0000000000000000000000000000000000001',

@@ -18,20 +18,20 @@ declare module 'wagmi' {
 import { Hooks } from 'wagmi/tempo'
 import { parseUnits } from 'viem'
 
-const { data: result, mutate } = Hooks.token.useApproveSync()
+const approveSync = Hooks.token.useApproveSync()
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+approveSync.mutate({
   amount: parseUnits('10.5', 6),
   spender: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
   token: '0x20c0000000000000000000000000000000000000',
 })
 
-console.log('Approved amount:', result.amount)
+console.log('Approved amount:', approveSync.data?.amount)
 // @log: Approved amount: 10500000n
-console.log('Owner:', result.owner)
+console.log('Owner:', approveSync.data?.owner)
 // @log: Owner: 0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb
-console.log('Spender:', result.spender)
+console.log('Spender:', approveSync.data?.spender)
 // @log: Spender: 0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb
 ```
 <<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
@@ -58,11 +58,11 @@ import { Actions } from 'viem/tempo'
 import { parseUnits } from 'viem'
 import { useWaitForTransactionReceipt } from 'wagmi'
 
-const { data: hash, mutate } = Hooks.token.useApprove()
-const { data: receipt } = useWaitForTransactionReceipt({ hash })
+const approve = Hooks.token.useApprove()
+const { data: receipt } = useWaitForTransactionReceipt({ hash: approve.data })
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+approve.mutate({
   amount: parseUnits('10.5', 6),
   spender: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
   token: '0x20c0000000000000000000000000000000000000',

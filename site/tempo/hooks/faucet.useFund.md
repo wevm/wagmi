@@ -17,14 +17,14 @@ declare module 'wagmi' {
 // ---cut---
 import { Hooks } from 'wagmi/tempo'
 
-const { data: hashes, mutate } = Hooks.faucet.useFund()
+const fund = Hooks.faucet.useFund()
 
 // Call `mutate` in response to user action (e.g. button click)
-mutate({
+fund.mutate({
   account: '0xdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef',
 })
 
-console.log('Transaction hashes:', hashes)
+console.log('Transaction hashes:', fund.data)
 // @log: Transaction hashes: ['0x...', '0x...']
 ```
 <<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
@@ -46,14 +46,14 @@ declare module 'wagmi' {
 // ---cut---
 import { Hooks } from 'wagmi/tempo'
 
-const { data: receipts, mutate } = Hooks.faucet.useFundSync()
+const fundSync = Hooks.faucet.useFundSync()
 
 // Call `mutate` in response to user action
-mutate({
+fundSync.mutate({
   account: '0xdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef',
 })
 
-console.log('Receipts:', receipts)
+console.log('Receipts:', fundSync.data)
 // @log: Receipts: [{ blockNumber: 123n, ... }, { blockNumber: 123n, ... }]
 ```
 

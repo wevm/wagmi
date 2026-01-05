@@ -17,16 +17,16 @@ declare module 'wagmi' {
 // ---cut---
 import { Hooks } from 'wagmi/tempo'
 
-const { data: result, mutate } = Hooks.token.useSetRoleAdminSync()
+const setRoleAdminSync = Hooks.token.useSetRoleAdminSync()
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+setRoleAdminSync.mutate({
   adminRole: 'admin',
   role: 'issuer',
   token: '0x20c0000000000000000000000000000000000000',
 })
 
-console.log('Transaction hash:', result.receipt.transactionHash)
+console.log('Transaction hash:', setRoleAdminSync.data?.receipt.transactionHash)
 // @log: Transaction hash: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
 ```
 <<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
@@ -52,11 +52,11 @@ import { Hooks } from 'wagmi/tempo'
 import { Actions } from 'viem/tempo'
 import { useWaitForTransactionReceipt } from 'wagmi'
 
-const { data: hash, mutate } = Hooks.token.useSetRoleAdmin()
-const { data: receipt } = useWaitForTransactionReceipt({ hash })
+const setRoleAdmin = Hooks.token.useSetRoleAdmin()
+const { data: receipt } = useWaitForTransactionReceipt({ hash: setRoleAdmin.data })
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+setRoleAdmin.mutate({
   adminRole: 'admin',
   role: 'issuer',
   token: '0x20c0000000000000000000000000000000000000',

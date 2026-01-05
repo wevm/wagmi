@@ -17,15 +17,15 @@ declare module 'wagmi' {
 // ---cut---
 import { Hooks } from 'wagmi/tempo'
 
-const { data: result, mutate } = Hooks.policy.useSetAdminSync()
+const setAdminSync = Hooks.policy.useSetAdminSync()
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+setAdminSync.mutate({
   admin: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
   policyId: 1n,
 })
 
-console.log('Transaction hash:', result.receipt.transactionHash)
+console.log('Transaction hash:', setAdminSync.data?.receipt.transactionHash)
 // @log: Transaction hash: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
 ```
 <<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
@@ -51,11 +51,11 @@ import { Hooks } from 'wagmi/tempo'
 import { Actions } from 'viem/tempo'
 import { useWaitForTransactionReceipt } from 'wagmi'
 
-const { data: hash, mutate } = Hooks.policy.useSetAdmin()
-const { data: receipt } = useWaitForTransactionReceipt({ hash })
+const setAdmin = Hooks.policy.useSetAdmin()
+const { data: receipt } = useWaitForTransactionReceipt({ hash: setAdmin.data })
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+setAdmin.mutate({
   admin: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
   policyId: 1n,
 })

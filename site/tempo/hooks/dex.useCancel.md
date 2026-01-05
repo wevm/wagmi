@@ -17,14 +17,14 @@ declare module 'wagmi' {
 // ---cut---
 import { Hooks } from 'wagmi/tempo'
 
-const { data: result, mutate } = Hooks.dex.useCancelSync()
+const cancelSync = Hooks.dex.useCancelSync()
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+cancelSync.mutate({
   orderId: 123n,
 })
 
-console.log('Cancelled order ID:', result.orderId)
+console.log('Cancelled order ID:', cancelSync.data?.orderId)
 // @log: Cancelled order ID: 123n
 ```
 <<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
@@ -50,11 +50,11 @@ import { Hooks } from 'wagmi/tempo'
 import { Actions } from 'viem/tempo'
 import { useWaitForTransactionReceipt } from 'wagmi'
 
-const { data: hash, mutate } = Hooks.dex.useCancel()
-const { data: receipt } = useWaitForTransactionReceipt({ hash })
+const cancel = Hooks.dex.useCancel()
+const { data: receipt } = useWaitForTransactionReceipt({ hash: cancel.data })
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+cancel.mutate({
   orderId: 123n,
 })
 

@@ -18,15 +18,15 @@ declare module 'wagmi' {
 import { Hooks } from 'wagmi/tempo'
 import { parseUnits } from 'viem'
 
-const { data: result, mutate } = Hooks.token.useSetSupplyCapSync()
+const setSupplyCapSync = Hooks.token.useSetSupplyCapSync()
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+setSupplyCapSync.mutate({
   supplyCap: parseUnits('1000000', 6),
   token: '0x20c0000000000000000000000000000000000000',
 })
 
-console.log('Transaction hash:', result.receipt.transactionHash)
+console.log('Transaction hash:', setSupplyCapSync.data?.receipt.transactionHash)
 // @log: Transaction hash: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
 ```
 <<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
@@ -53,11 +53,11 @@ import { Actions } from 'viem/tempo'
 import { parseUnits } from 'viem'
 import { useWaitForTransactionReceipt } from 'wagmi'
 
-const { data: hash, mutate } = Hooks.token.useSetSupplyCap()
-const { data: receipt } = useWaitForTransactionReceipt({ hash })
+const setSupplyCap = Hooks.token.useSetSupplyCap()
+const { data: receipt } = useWaitForTransactionReceipt({ hash: setSupplyCap.data })
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+setSupplyCap.mutate({
   supplyCap: parseUnits('1000000', 6),
   token: '0x20c0000000000000000000000000000000000000',
 })

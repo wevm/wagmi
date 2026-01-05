@@ -17,10 +17,10 @@ declare module 'wagmi' {
 // ---cut---
 import { Hooks } from 'wagmi/tempo'
 
-const { data: result, mutate } = Hooks.policy.useCreateSync()
+const createSync = Hooks.policy.useCreateSync()
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+createSync.mutate({
   addresses: [
     '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
     '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
@@ -28,7 +28,7 @@ mutate({
   type: 'whitelist',
 })
 
-console.log('Policy ID:', result.policyId)
+console.log('Policy ID:', createSync.data?.policyId)
 // @log: Policy ID: 1n
 ```
 <<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
@@ -54,11 +54,11 @@ import { Hooks } from 'wagmi/tempo'
 import { Actions } from 'viem/tempo'
 import { useWaitForTransactionReceipt } from 'wagmi'
 
-const { data: hash, mutate } = Hooks.policy.useCreate()
-const { data: receipt } = useWaitForTransactionReceipt({ hash })
+const create = Hooks.policy.useCreate()
+const { data: receipt } = useWaitForTransactionReceipt({ hash: create.data })
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+create.mutate({
   addresses: [
     '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
     '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',

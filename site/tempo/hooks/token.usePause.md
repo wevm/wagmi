@@ -17,14 +17,14 @@ declare module 'wagmi' {
 // ---cut---
 import { Hooks } from 'wagmi/tempo'
 
-const { data: result, mutate } = Hooks.token.usePauseSync()
+const pauseSync = Hooks.token.usePauseSync()
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+pauseSync.mutate({
   token: '0x20c0000000000000000000000000000000000000',
 })
 
-console.log('Transaction hash:', result.receipt.transactionHash)
+console.log('Transaction hash:', pauseSync.data?.receipt.transactionHash)
 // @log: Transaction hash: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
 ```
 <<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
@@ -50,11 +50,11 @@ import { Hooks } from 'wagmi/tempo'
 import { Actions } from 'viem/tempo'
 import { useWaitForTransactionReceipt } from 'wagmi'
 
-const { data: hash, mutate } = Hooks.token.usePause()
-const { data: receipt } = useWaitForTransactionReceipt({ hash })
+const pause = Hooks.token.usePause()
+const { data: receipt } = useWaitForTransactionReceipt({ hash: pause.data })
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+pause.mutate({
   token: '0x20c0000000000000000000000000000000000000',
 })
 

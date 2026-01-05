@@ -18,20 +18,20 @@ declare module 'wagmi' {
 import { Hooks } from 'wagmi/tempo'
 import { parseUnits } from 'viem'
 
-const { data: result, mutate } = Hooks.token.useTransferSync()
+const transferSync = Hooks.token.useTransferSync()
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+transferSync.mutate({
   amount: parseUnits('10.5', 6),
   to: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
   token: '0x20c0000000000000000000000000000000000000',
 })
 
-console.log('Transfer amount:', result.amount)
+console.log('Transfer amount:', transferSync.data?.amount)
 // @log: Transfer amount: 10500000n
-console.log('From:', result.from)
+console.log('From:', transferSync.data?.from)
 // @log: From: 0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb
-console.log('To:', result.to)
+console.log('To:', transferSync.data?.to)
 // @log: To: 0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb
 ```
 <<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
@@ -58,11 +58,11 @@ import { Actions } from 'viem/tempo'
 import { parseUnits } from 'viem'
 import { useWaitForTransactionReceipt } from 'wagmi'
 
-const { data: hash, mutate } = Hooks.token.useTransfer()
-const { data: receipt } = useWaitForTransactionReceipt({ hash })
+const transfer = Hooks.token.useTransfer()
+const { data: receipt } = useWaitForTransactionReceipt({ hash: transfer.data })
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+transfer.mutate({
   amount: parseUnits('10.5', 6),
   to: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
   token: '0x20c0000000000000000000000000000000000000',

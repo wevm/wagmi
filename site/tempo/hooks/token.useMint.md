@@ -18,18 +18,18 @@ declare module 'wagmi' {
 import { Hooks } from 'wagmi/tempo'
 import { parseUnits } from 'viem'
 
-const { data: result, mutate } = Hooks.token.useMintSync()
+const mintSync = Hooks.token.useMintSync()
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+mintSync.mutate({
   amount: parseUnits('10.5', 6),
   to: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
   token: '0x20c0000000000000000000000000000000000000',
 })
 
-console.log('Minted amount:', result.amount)
+console.log('Minted amount:', mintSync.data?.amount)
 // @log: Minted amount: 10500000n
-console.log('Recipient:', result.to)
+console.log('Recipient:', mintSync.data?.to)
 // @log: Recipient: 0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb
 ```
 <<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
@@ -56,11 +56,11 @@ import { Actions } from 'viem/tempo'
 import { parseUnits } from 'viem'
 import { useWaitForTransactionReceipt } from 'wagmi'
 
-const { data: hash, mutate } = Hooks.token.useMint()
-const { data: receipt } = useWaitForTransactionReceipt({ hash })
+const mint = Hooks.token.useMint()
+const { data: receipt } = useWaitForTransactionReceipt({ hash: mint.data })
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+mint.mutate({
   amount: parseUnits('10.5', 6),
   to: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
   token: '0x20c0000000000000000000000000000000000000',

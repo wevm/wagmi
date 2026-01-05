@@ -17,16 +17,16 @@ declare module 'wagmi' {
 // ---cut---
 import { Hooks } from 'wagmi/tempo'
 
-const { data: result, mutate } = Hooks.token.useGrantRolesSync()
+const grantRolesSync = Hooks.token.useGrantRolesSync()
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+grantRolesSync.mutate({
   account: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
   roles: ['issuer', 'blocker'],
   token: '0x20c0000000000000000000000000000000000000',
 })
 
-console.log('Transaction hash:', result.receipt.transactionHash)
+console.log('Transaction hash:', grantRolesSync.data?.receipt.transactionHash)
 // @log: Transaction hash: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
 ```
 <<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
@@ -52,11 +52,11 @@ import { Hooks } from 'wagmi/tempo'
 import { Actions } from 'viem/tempo'
 import { useWaitForTransactionReceipt } from 'wagmi'
 
-const { data: hash, mutate } = Hooks.token.useGrantRoles()
-const { data: receipt } = useWaitForTransactionReceipt({ hash })
+const grantRoles = Hooks.token.useGrantRoles()
+const { data: receipt } = useWaitForTransactionReceipt({ hash: grantRoles.data })
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+grantRoles.mutate({
   account: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
   roles: ['issuer', 'blocker'],
   token: '0x20c0000000000000000000000000000000000000',

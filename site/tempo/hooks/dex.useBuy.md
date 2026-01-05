@@ -18,17 +18,17 @@ declare module 'wagmi' {
 import { Hooks } from 'wagmi/tempo'
 import { parseUnits } from 'viem'
 
-const { data: result, mutate } = Hooks.dex.useBuySync()
+const buySync = Hooks.dex.useBuySync()
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+buySync.mutate({
   amountOut: parseUnits('100', 6),
   maxAmountIn: parseUnits('105', 6),
   tokenIn: '0x20c0000000000000000000000000000000000001',
   tokenOut: '0x20c0000000000000000000000000000000000002',
 })
 
-console.log('Transaction hash:', result.receipt.transactionHash)
+console.log('Transaction hash:', buySync.data?.receipt.transactionHash)
 ```
 <<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
 :::
@@ -53,11 +53,11 @@ import { Hooks } from 'wagmi/tempo'
 import { parseUnits } from 'viem'
 import { useWaitForTransactionReceipt } from 'wagmi'
 
-const { data: hash, mutate } = Hooks.dex.useBuy()
-const { data: receipt } = useWaitForTransactionReceipt({ hash })
+const buy = Hooks.dex.useBuy()
+const { data: receipt } = useWaitForTransactionReceipt({ hash: buy.data })
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+buy.mutate({
   amountOut: parseUnits('100', 6),
   maxAmountIn: parseUnits('105', 6),
   tokenIn: '0x20c0000000000000000000000000000000000001',

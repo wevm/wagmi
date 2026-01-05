@@ -17,20 +17,20 @@ declare module 'wagmi' {
 // ---cut---
 import { Hooks } from 'wagmi/tempo'
 
-const { data: result, mutate } = Hooks.token.useCreateSync()
+const createSync = Hooks.token.useCreateSync()
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+createSync.mutate({
   currency: 'USD',
   name: 'My Company USD',
   symbol: 'CUSD',
 })
 
-console.log('Token address:', result.token)
+console.log('Token address:', createSync.data?.token)
 // @log: Token address: 0x20c0000000000000000000000000000000000004
-console.log('Token ID:', result.tokenId)
+console.log('Token ID:', createSync.data?.tokenId)
 // @log: Token ID: 4n
-console.log('Admin:', result.admin)
+console.log('Admin:', createSync.data?.admin)
 // @log: Admin: 0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb
 ```
 <<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
@@ -56,11 +56,11 @@ import { Hooks } from 'wagmi/tempo'
 import { Actions } from 'viem/tempo'
 import { useWaitForTransactionReceipt } from 'wagmi'
 
-const { data: hash, mutate } = Hooks.token.useCreate()
-const { data: receipt } = useWaitForTransactionReceipt({ hash })
+const create = Hooks.token.useCreate()
+const { data: receipt } = useWaitForTransactionReceipt({ hash: create.data })
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+create.mutate({
   currency: 'USD',
   name: 'My Company USD',
   symbol: 'CUSD',

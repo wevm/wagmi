@@ -17,15 +17,15 @@ declare module 'wagmi' {
 // ---cut---
 import { Hooks } from 'wagmi/tempo'
 
-const { data: result, mutate } = Hooks.token.useRenounceRolesSync()
+const renounceRolesSync = Hooks.token.useRenounceRolesSync()
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+renounceRolesSync.mutate({
   roles: ['issuer', 'blocker'],
   token: '0x20c0000000000000000000000000000000000000',
 })
 
-console.log('Transaction hash:', result.receipt.transactionHash)
+console.log('Transaction hash:', renounceRolesSync.data?.receipt.transactionHash)
 // @log: Transaction hash: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
 ```
 <<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
@@ -51,11 +51,11 @@ import { Hooks } from 'wagmi/tempo'
 import { Actions } from 'viem/tempo'
 import { useWaitForTransactionReceipt } from 'wagmi'
 
-const { data: hash, mutate } = Hooks.token.useRenounceRoles()
-const { data: receipt } = useWaitForTransactionReceipt({ hash })
+const renounceRoles = Hooks.token.useRenounceRoles()
+const { data: receipt } = useWaitForTransactionReceipt({ hash: renounceRoles.data })
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+renounceRoles.mutate({
   roles: ['issuer', 'blocker'],
   token: '0x20c0000000000000000000000000000000000000',
 })

@@ -17,15 +17,15 @@ declare module 'wagmi' {
 // ---cut---
 import { Hooks } from 'wagmi/tempo'
 
-const { data: result, mutate } = Hooks.dex.useCreatePairSync()
+const createPairSync = Hooks.dex.useCreatePairSync()
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+createPairSync.mutate({
   base: '0x20c0000000000000000000000000000000000001',
 })
 
-console.log('Base token:', result.base)
-console.log('Quote token:', result.quote)
+console.log('Base token:', createPairSync.data?.base)
+console.log('Quote token:', createPairSync.data?.quote)
 ```
 <<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
 :::
@@ -50,11 +50,11 @@ import { Hooks } from 'wagmi/tempo'
 import { Actions } from 'viem/tempo'
 import { useWaitForTransactionReceipt } from 'wagmi'
 
-const { data: hash, mutate } = Hooks.dex.useCreatePair()
-const { data: receipt } = useWaitForTransactionReceipt({ hash })
+const createPair = Hooks.dex.useCreatePair()
+const { data: receipt } = useWaitForTransactionReceipt({ hash: createPair.data })
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+createPair.mutate({
   base: '0x20c0000000000000000000000000000000000001',
 })
 

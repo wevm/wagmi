@@ -9,10 +9,10 @@ Sets the user's default fee token preference. [Learn more about fees](https://do
 ```ts [example.ts]
 import { Hooks } from 'wagmi/tempo'
 
-const { mutate } = Hooks.fee.useSetUserToken()
+const setUserToken = Hooks.fee.useSetUserToken()
 
 // Call `mutate` in response to user action
-mutate({
+setUserToken.mutate({
   token: '0x20c0000000000000000000000000000000000001',
 })
 ```
@@ -59,11 +59,11 @@ import { Hooks } from 'wagmi/tempo'
 import { Actions } from 'viem/tempo'
 import { useWaitForTransactionReceipt } from 'wagmi'
 
-const { data: hash, mutate } = Hooks.fee.useSetUserToken()
-const { data: receipt } = useWaitForTransactionReceipt({ hash })
+const setUserToken = Hooks.fee.useSetUserToken()
+const { data: receipt } = useWaitForTransactionReceipt({ hash: setUserToken.data })
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+setUserToken.mutate({
   token: '0x20c0000000000000000000000000000000000001',
 })
 

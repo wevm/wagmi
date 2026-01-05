@@ -17,14 +17,14 @@ declare module 'wagmi' {
 // ---cut---
 import { Hooks } from 'wagmi/tempo'
 
-const { data: result, mutate } = Hooks.reward.useClaimSync()
+const claimSync = Hooks.reward.useClaimSync()
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+claimSync.mutate({
   token: '0x20c0000000000000000000000000000000000000',
 })
 
-console.log('Transaction hash:', result.receipt.transactionHash)
+console.log('Transaction hash:', claimSync.data?.receipt.transactionHash)
 // @log: Transaction hash: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
 ```
 <<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
@@ -49,11 +49,11 @@ declare module 'wagmi' {
 import { Hooks } from 'wagmi/tempo'
 import { useWaitForTransactionReceipt } from 'wagmi'
 
-const { data: hash, mutate } = Hooks.reward.useClaim()
-const { data: receipt } = useWaitForTransactionReceipt({ hash })
+const claim = Hooks.reward.useClaim()
+const { data: receipt } = useWaitForTransactionReceipt({ hash: claim.data })
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+claim.mutate({
   token: '0x20c0000000000000000000000000000000000000',
 })
 ```

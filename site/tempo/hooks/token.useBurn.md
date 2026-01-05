@@ -18,17 +18,17 @@ declare module 'wagmi' {
 import { Hooks } from 'wagmi/tempo'
 import { parseUnits } from 'viem'
 
-const { data: result, mutate } = Hooks.token.useBurnSync()
+const burnSync = Hooks.token.useBurnSync()
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+burnSync.mutate({
   amount: parseUnits('10.5', 6),
   token: '0x20c0000000000000000000000000000000000000',
 })
 
-console.log('Burned amount:', result.amount)
+console.log('Burned amount:', burnSync.data?.amount)
 // @log: Burned amount: 10500000n
-console.log('From:', result.from)
+console.log('From:', burnSync.data?.from)
 // @log: From: 0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb
 ```
 <<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
@@ -55,11 +55,11 @@ import { Actions } from 'viem/tempo'
 import { parseUnits } from 'viem'
 import { useWaitForTransactionReceipt } from 'wagmi'
 
-const { data: hash, mutate } = Hooks.token.useBurn()
-const { data: receipt } = useWaitForTransactionReceipt({ hash })
+const burn = Hooks.token.useBurn()
+const { data: receipt } = useWaitForTransactionReceipt({ hash: burn.data })
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+burn.mutate({
   amount: parseUnits('10.5', 6),
   token: '0x20c0000000000000000000000000000000000000',
 })

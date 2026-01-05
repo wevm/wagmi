@@ -17,17 +17,17 @@ declare module 'wagmi' {
 // ---cut---
 import { Hooks } from 'wagmi/tempo'
 
-const { data: result, mutate } = Hooks.reward.useSetRecipientSync()
+const setRecipientSync = Hooks.reward.useSetRecipientSync()
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+setRecipientSync.mutate({
   recipient: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
   token: '0x20c0000000000000000000000000000000000000',
 })
 
-console.log('Holder:', result.holder)
+console.log('Holder:', setRecipientSync.data?.holder)
 // @log: Holder: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
-console.log('Recipient:', result.recipient)
+console.log('Recipient:', setRecipientSync.data?.recipient)
 // @log: Recipient: 0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb
 ```
 <<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
@@ -53,11 +53,11 @@ import { Hooks } from 'wagmi/tempo'
 import { Actions } from 'viem/tempo'
 import { useWaitForTransactionReceipt } from 'wagmi'
 
-const { data: hash, mutate } = Hooks.reward.useSetRecipient()
-const { data: receipt } = useWaitForTransactionReceipt({ hash })
+const setRecipient = Hooks.reward.useSetRecipient()
+const { data: receipt } = useWaitForTransactionReceipt({ hash: setRecipient.data })
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+setRecipient.mutate({
   recipient: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
   token: '0x20c0000000000000000000000000000000000000',
 })

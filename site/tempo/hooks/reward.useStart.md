@@ -18,18 +18,18 @@ declare module 'wagmi' {
 import { Hooks } from 'wagmi/tempo'
 import { parseEther } from 'viem'
 
-const { data: result, mutate } = Hooks.reward.useStartSync()
+const startSync = Hooks.reward.useStartSync()
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+startSync.mutate({
   amount: parseEther('1000'),
   seconds: 2_592_000, // 30 days
   token: '0x20c0000000000000000000000000000000000000',
 })
 
-console.log('Stream ID:', result.id)
+console.log('Stream ID:', startSync.data?.id)
 // @log: Stream ID: 1n
-console.log('Amount:', result.amount)
+console.log('Amount:', startSync.data?.amount)
 // @log: Amount: 1000000000000000000000n
 ```
 <<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
@@ -56,11 +56,11 @@ import { Actions } from 'viem/tempo'
 import { parseEther } from 'viem'
 import { useWaitForTransactionReceipt } from 'wagmi'
 
-const { data: hash, mutate } = Hooks.reward.useStart()
-const { data: receipt } = useWaitForTransactionReceipt({ hash })
+const start = Hooks.reward.useStart()
+const { data: receipt } = useWaitForTransactionReceipt({ hash: start.data })
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-mutate({
+start.mutate({
   amount: parseEther('1000'),
   seconds: 2_592_000,
   token: '0x20c0000000000000000000000000000000000000',
