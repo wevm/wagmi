@@ -660,33 +660,34 @@ export declare namespace useOrderbook {
 }
 
 /**
- * Hook for getting the price level information at a specific tick.
+ * Hook for getting the tick level information at a specific tick.
  *
  * @example
  * ```tsx
  * import { Hooks } from 'wagmi/tempo'
+ * import { Tick } from 'viem/tempo'
  *
  * function App() {
- *   const { data, isLoading } = Hooks.dex.usePriceLevel({
+ *   const { data, isLoading } = Hooks.dex.useTickLevel({
  *     base: '0x20c...11',
  *     tick: Tick.fromPrice('1.001'),
  *     isBid: true,
  *   })
  *
  *   if (isLoading) return <div>Loading...</div>
- *   return <div>Price Level: {JSON.stringify(data)}</div>
+ *   return <div>Tick Level: {JSON.stringify(data)}</div>
  * }
  * ```
  *
  * @param parameters - Parameters.
- * @returns Query result with the price level information.
+ * @returns Query result with the tick level information.
  */
-export function usePriceLevel<
+export function useTickLevel<
   config extends Config = ResolvedRegister['config'],
   selectData = Actions.dex.getTickLevel.ReturnValue,
 >(
-  parameters: usePriceLevel.Parameters<config, selectData>,
-): usePriceLevel.ReturnValue<selectData> {
+  parameters: useTickLevel.Parameters<config, selectData>,
+): useTickLevel.ReturnValue<selectData> {
   const config = useConfig(parameters)
   const chainId = useChainId({ config })
   const options = Actions.dex.getTickLevel.queryOptions(config, {
@@ -696,7 +697,7 @@ export function usePriceLevel<
   return useQuery(options) as never
 }
 
-export declare namespace usePriceLevel {
+export declare namespace useTickLevel {
   export type Parameters<
     config extends Config = ResolvedRegister['config'],
     selectData = Actions.dex.getTickLevel.ReturnValue,

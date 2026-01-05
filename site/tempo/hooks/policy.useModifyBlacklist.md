@@ -21,7 +21,7 @@ const modifyBlacklistSync = Hooks.policy.useModifyBlacklistSync()
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
 modifyBlacklistSync.mutate({
-  account: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
+  address: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
   policyId: 1n,
   restricted: true,
 })
@@ -57,7 +57,7 @@ const { data: receipt } = useWaitForTransactionReceipt({ hash: modifyBlacklist.d
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
 modifyBlacklist.mutate({
-  account: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
+  address: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
   policyId: 1n,
   restricted: true,
 })

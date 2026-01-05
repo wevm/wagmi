@@ -1,6 +1,8 @@
 import type { UseMutationResult } from '@tanstack/react-query'
 import type { Config, ResolvedRegister } from '@wagmi/core'
+import type { ExactPartial, UnionCompute } from '@wagmi/core/internal'
 import { Actions } from '@wagmi/core/tempo'
+import { useEffect } from 'react'
 
 import { useChainId } from '../../hooks/useChainId.js'
 import { useConfig } from '../../hooks/useConfig.js'
@@ -201,5 +203,62 @@ export declare namespace useSetUserTokenSync {
     Actions.fee.setUserTokenSync.ErrorType,
     Actions.fee.setUserTokenSync.Parameters<config>,
     context
+  >
+}
+
+/**
+ * Hook for watching user token set events.
+ *
+ * @example
+ * ```tsx
+ * import { Hooks } from 'wagmi/tempo'
+ *
+ * function App() {
+ *   Hooks.fee.useWatchSetUserToken({
+ *     onUserTokenSet(args) {
+ *       console.log('User token set:', args)
+ *     },
+ *   })
+ *
+ *   return <div>Watching for user token changes...</div>
+ * }
+ * ```
+ *
+ * @param parameters - Parameters.
+ */
+export function useWatchSetUserToken<
+  config extends Config = ResolvedRegister['config'],
+>(parameters: useWatchSetUserToken.Parameters<config> = {}) {
+  const { enabled = true, onUserTokenSet, ...rest } = parameters
+
+  const config = useConfig({ config: parameters.config })
+  const configChainId = useChainId({ config })
+  const chainId = parameters.chainId ?? configChainId
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: rest.x is explicitly listed
+  useEffect(() => {
+    if (!enabled) return
+    if (!onUserTokenSet) return
+    return Actions.fee.watchSetUserToken(config, {
+      ...rest,
+      chainId,
+      onUserTokenSet,
+    })
+  }, [
+    config,
+    enabled,
+    chainId,
+    onUserTokenSet,
+    rest.fromBlock,
+    rest.onError,
+    rest.poll,
+    rest.pollingInterval,
+  ])
+}
+
+export declare namespace useWatchSetUserToken {
+  type Parameters<config extends Config = Config> = UnionCompute<
+    ExactPartial<Actions.fee.watchSetUserToken.Parameters<config>> &
+      ConfigParameter<config> & { enabled?: boolean | undefined }
   >
 }

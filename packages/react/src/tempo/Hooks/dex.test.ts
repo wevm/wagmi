@@ -478,7 +478,7 @@ describe('useOrderbook', () => {
   })
 })
 
-describe('usePriceLevel', () => {
+describe('useTickLevel', () => {
   test('default', async () => {
     const { base } = await setupTokenPair()
 
@@ -493,7 +493,7 @@ describe('usePriceLevel', () => {
     })
 
     const { result } = await renderHook(() =>
-      dex.usePriceLevel({
+      dex.useTickLevel({
         base,
         tick,
         isBid: true,
@@ -515,7 +515,7 @@ describe('usePriceLevel', () => {
 
     // Query a tick with no orders
     const { result } = await renderHook(() =>
-      dex.usePriceLevel({
+      dex.useTickLevel({
         base,
         tick,
         isBid: true,

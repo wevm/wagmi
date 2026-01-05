@@ -18,7 +18,7 @@ declare module 'wagmi' {
 import { Hooks } from 'wagmi/tempo'
 
 const { data: isAuthorized } = Hooks.policy.useIsAuthorized({
-  address: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
+  user: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
   policyId: 1n,
 })
 

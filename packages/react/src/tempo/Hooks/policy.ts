@@ -570,7 +570,7 @@ export declare namespace useModifyBlacklistSync {
  * import { Hooks } from 'wagmi/tempo'
  *
  * function App() {
- *   const { data, isLoading } = Hooks.policy.useGetData({
+ *   const { data, isLoading } = Hooks.policy.useData({
  *     policyId: 2n,
  *   })
  *
@@ -582,12 +582,12 @@ export declare namespace useModifyBlacklistSync {
  * @param parameters - Parameters.
  * @returns Query result with policy data.
  */
-export function useGetData<
+export function useData<
   config extends Config = ResolvedRegister['config'],
   selectData = Actions.policy.getData.ReturnValue,
 >(
-  parameters: useGetData.Parameters<config, selectData> = {},
-): useGetData.ReturnValue<selectData> {
+  parameters: useData.Parameters<config, selectData> = {},
+): useData.ReturnValue<selectData> {
   const config = useConfig(parameters)
   const chainId = useChainId({ config })
   const options = Actions.policy.getData.queryOptions(config, {
@@ -597,7 +597,7 @@ export function useGetData<
   return useQuery(options) as never
 }
 
-export declare namespace useGetData {
+export declare namespace useData {
   export type Parameters<
     config extends Config = ResolvedRegister['config'],
     selectData = Actions.policy.getData.ReturnValue,

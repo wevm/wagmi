@@ -16,7 +16,7 @@ describe('useCreate', () => {
       createSync: policy.useCreateSync(),
     }))
 
-    await result.current.connect.connectAsync({
+    await result.current.connect.mutateAsync({
       connector: config.connectors[0]!,
     })
 
@@ -50,7 +50,7 @@ describe('useCreate', () => {
       createSync: policy.useCreateSync(),
     }))
 
-    await result.current.connect.connectAsync({
+    await result.current.connect.mutateAsync({
       connector: config.connectors[0]!,
     })
 
@@ -87,7 +87,7 @@ describe('useSetAdmin', () => {
       setAdminSync: policy.useSetAdminSync(),
     }))
 
-    await result.current.connect.connectAsync({
+    await result.current.connect.mutateAsync({
       connector: config.connectors[0]!,
     })
 
@@ -127,7 +127,7 @@ describe('useModifyWhitelist', () => {
       modifyWhitelistSync: policy.useModifyWhitelistSync(),
     }))
 
-    await result.current.connect.connectAsync({
+    await result.current.connect.mutateAsync({
       connector: config.connectors[0]!,
     })
 
@@ -207,7 +207,7 @@ describe('useModifyBlacklist', () => {
       modifyBlacklistSync: policy.useModifyBlacklistSync(),
     }))
 
-    await result.current.connect.connectAsync({
+    await result.current.connect.mutateAsync({
       connector: config.connectors[0]!,
     })
 
@@ -275,14 +275,14 @@ describe('useModifyBlacklist', () => {
   })
 })
 
-describe('useGetData', () => {
+describe('useData', () => {
   test('default', async () => {
     const { result: setupResult } = await renderHook(() => ({
       connect: useConnect(),
       createSync: policy.useCreateSync(),
     }))
 
-    await setupResult.current.connect.connectAsync({
+    await setupResult.current.connect.mutateAsync({
       connector: config.connectors[0]!,
     })
 
@@ -293,7 +293,7 @@ describe('useGetData', () => {
 
     {
       // get policy data
-      const { result } = await renderHook(() => policy.useGetData({ policyId }))
+      const { result } = await renderHook(() => policy.useData({ policyId }))
 
       await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
@@ -308,7 +308,7 @@ describe('useGetData', () => {
       createSync: policy.useCreateSync(),
     }))
 
-    await setupResult.current.connect.connectAsync({
+    await setupResult.current.connect.mutateAsync({
       connector: config.connectors[0]!,
     })
 
@@ -319,7 +319,7 @@ describe('useGetData', () => {
 
     {
       // get policy data
-      const { result } = await renderHook(() => policy.useGetData({ policyId }))
+      const { result } = await renderHook(() => policy.useData({ policyId }))
 
       await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
@@ -334,7 +334,7 @@ describe('useGetData', () => {
       createSync: policy.useCreateSync(),
     }))
 
-    await setupResult.current.connect.connectAsync({
+    await setupResult.current.connect.mutateAsync({
       connector: config.connectors[0]!,
     })
 
@@ -345,7 +345,7 @@ describe('useGetData', () => {
 
     // Query with undefined policyId initially
     const { result, rerender } = await renderHook(
-      (props) => policy.useGetData({ policyId: props?.policyId }),
+      (props) => policy.useData({ policyId: props?.policyId }),
       { initialProps: { policyId: undefined as bigint | undefined } },
     )
 
@@ -374,7 +374,7 @@ describe('useGetData', () => {
         createSync: policy.useCreateSync(),
       }))
 
-      await setupResult.current.connect.connectAsync({
+      await setupResult.current.connect.mutateAsync({
         connector: config.connectors[0]!,
       })
 
@@ -426,7 +426,7 @@ describe('useIsAuthorized', () => {
       modifyWhitelistSync: policy.useModifyWhitelistSync(),
     }))
 
-    await setupResult.current.connect.connectAsync({
+    await setupResult.current.connect.mutateAsync({
       connector: config.connectors[0]!,
     })
 
@@ -494,7 +494,7 @@ describe('useWatchCreate', () => {
       createSync: policy.useCreateSync(),
     }))
 
-    await connectResult.current.connect.connectAsync({
+    await connectResult.current.connect.mutateAsync({
       connector: config.connectors[0]!,
     })
 
@@ -529,7 +529,7 @@ describe('useWatchAdminUpdated', () => {
       setAdminSync: policy.useSetAdminSync(),
     }))
 
-    await connectResult.current.connect.connectAsync({
+    await connectResult.current.connect.mutateAsync({
       connector: config.connectors[0]!,
     })
 
@@ -570,7 +570,7 @@ describe('useWatchWhitelistUpdated', () => {
       modifyWhitelistSync: policy.useModifyWhitelistSync(),
     }))
 
-    await connectResult.current.connect.connectAsync({
+    await connectResult.current.connect.mutateAsync({
       connector: config.connectors[0]!,
     })
 
@@ -621,7 +621,7 @@ describe('useWatchBlacklistUpdated', () => {
       modifyBlacklistSync: policy.useModifyBlacklistSync(),
     }))
 
-    await connectResult.current.connect.connectAsync({
+    await connectResult.current.connect.mutateAsync({
       connector: config.connectors[0]!,
     })
 

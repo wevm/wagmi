@@ -63,8 +63,8 @@ revokeRoles.mutate({
 })
 
 if (receipt) {
-  const { args } 
-    = Actions.token.revokeRoles.extractEvent(receipt.logs)
+  const events 
+    = Actions.token.revokeRoles.extractEvents(receipt.logs)
 }
 ```
 

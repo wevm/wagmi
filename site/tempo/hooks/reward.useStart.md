@@ -23,7 +23,6 @@ const startSync = Hooks.reward.useStartSync()
 // Call `mutate` in response to user action (e.g. button click, form submission)
 startSync.mutate({
   amount: parseEther('1000'),
-  seconds: 2_592_000, // 30 days
   token: '0x20c0000000000000000000000000000000000000',
 })
 
@@ -62,13 +61,12 @@ const { data: receipt } = useWaitForTransactionReceipt({ hash: start.data })
 // Call `mutate` in response to user action (e.g. button click, form submission)
 start.mutate({
   amount: parseEther('1000'),
-  seconds: 2_592_000,
   token: '0x20c0000000000000000000000000000000000000',
 })
 
 if (receipt) {
   const { args: { id, funder, amount } }
-    = Actions.reward.distribute.extractEvent(receipt.logs)
+    = Actions.reward.start.extractEvent(receipt.logs)
 }
 ```
 

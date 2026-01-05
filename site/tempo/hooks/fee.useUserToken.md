@@ -21,9 +21,9 @@ const { data: userToken } = Hooks.fee.useUserToken({
   account: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
 })
 
-console.log('Fee token address:', userToken.address)
+console.log('Fee token address:', userToken?.address)
 // @log: Fee token address: 0x20c0000000000000000000000000000000000000
-console.log('Fee token ID:', userToken.id)
+console.log('Fee token ID:', userToken?.id)
 // @log: Fee token ID: 0n
 ```
 <<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]

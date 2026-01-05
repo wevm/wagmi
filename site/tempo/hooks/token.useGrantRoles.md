@@ -63,8 +63,8 @@ grantRoles.mutate({
 })
 
 if (receipt) {
-  const { args } 
-    = Actions.token.grantRoles.extractEvent(receipt.logs)
+  const events 
+    = Actions.token.grantRoles.extractEvents(receipt.logs)
 }
 ```
 

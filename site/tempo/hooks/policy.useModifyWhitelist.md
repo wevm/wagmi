@@ -21,7 +21,7 @@ const modifyWhitelistSync = Hooks.policy.useModifyWhitelistSync()
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
 modifyWhitelistSync.mutate({
-  account: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
+  address: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
   allowed: true,
   policyId: 1n,
 })
@@ -57,7 +57,7 @@ const { data: receipt } = useWaitForTransactionReceipt({ hash: modifyWhitelist.d
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
 modifyWhitelist.mutate({
-  account: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
+  address: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
   allowed: true,
   policyId: 1n,
 })

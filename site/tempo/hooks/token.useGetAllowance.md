@@ -18,7 +18,7 @@ declare module 'wagmi' {
 import { Hooks } from 'wagmi/tempo'
 
 const { data: allowance } = Hooks.token.useGetAllowance({
-  owner: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
+  account: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
   spender: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
   token: '0x20c0000000000000000000000000000000000000',
 })

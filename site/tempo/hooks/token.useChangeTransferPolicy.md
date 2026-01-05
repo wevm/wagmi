@@ -21,7 +21,7 @@ const changeTransferPolicySync = Hooks.token.useChangeTransferPolicySync()
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
 changeTransferPolicySync.mutate({
-  policy: 'allowlist',
+  policyId: 1n,
   token: '0x20c0000000000000000000000000000000000000',
 })
 
@@ -56,7 +56,7 @@ const { data: receipt } = useWaitForTransactionReceipt({ hash: changeTransferPol
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
 changeTransferPolicy.mutate({
-  policy: 'allowlist',
+  policyId: 1n,
   token: '0x20c0000000000000000000000000000000000000',
 })
 
