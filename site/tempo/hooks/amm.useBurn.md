@@ -34,7 +34,7 @@ console.log('Received user tokens:', burnSync.data?.amountUserToken)
 console.log('Received validator tokens:', burnSync.data?.amountValidatorToken)
 // @log: Received validator tokens: 5250000000000000000n
 ```
-<<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ### Asynchronous Usage

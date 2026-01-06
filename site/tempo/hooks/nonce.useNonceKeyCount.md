@@ -25,7 +25,7 @@ const { data: count } = Hooks.nonce.useNonceKeyCount({
 console.log('Active nonce keys:', count)
 // @log: Active nonce keys: 3n
 ```
-<<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ## Return Type

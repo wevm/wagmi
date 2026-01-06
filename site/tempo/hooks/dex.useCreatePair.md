@@ -28,7 +28,7 @@ createPairSync.mutate({
 console.log('Base token:', createPairSync.data?.base)
 console.log('Quote token:', createPairSync.data?.quote)
 ```
-<<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ### Asynchronous Usage

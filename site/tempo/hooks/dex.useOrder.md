@@ -25,7 +25,7 @@ const { data: order } = Hooks.dex.useOrder({
 console.log('Order details:', order)
 // @log: Order details: { amount: 100000000n, maker: '0x...', isBid: true, ... }
 ```
-<<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ## Return Type

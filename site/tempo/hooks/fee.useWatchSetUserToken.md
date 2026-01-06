@@ -24,7 +24,7 @@ Hooks.fee.useWatchSetUserToken({
   },
 })
 ```
-<<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ## Parameters

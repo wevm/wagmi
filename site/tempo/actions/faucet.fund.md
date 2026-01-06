@@ -26,7 +26,7 @@ console.log('Transaction hashes:', hashes)
 // @log: Transaction hashes: ['0x...', '0x...']
 ```
 
-<<< @/snippets/core/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/core/config-tempo.ts{ts} [config.ts]
 
 :::
 

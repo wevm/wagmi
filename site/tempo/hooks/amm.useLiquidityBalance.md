@@ -27,7 +27,7 @@ const { data: balance } = Hooks.amm.useLiquidityBalance({
 console.log('Liquidity balance:', balance)
 // @log: Liquidity balance: 10500000000000000000n
 ```
-<<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ## Return Type

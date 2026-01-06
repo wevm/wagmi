@@ -31,7 +31,7 @@ console.log('Amount:', amount)
 // @log: Amount: 1000000000000000000000n
 ```
 
-<<< @/snippets/core/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/core/config-tempo.ts{ts} [config.ts]
 
 :::
 

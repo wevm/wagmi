@@ -29,7 +29,7 @@ console.log('Amount needed:', amountIn)
 // @log: Amount needed: 100300000n
 ```
 
-<<< @/snippets/core/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/core/config-tempo.ts{ts} [config.ts]
 
 :::
 

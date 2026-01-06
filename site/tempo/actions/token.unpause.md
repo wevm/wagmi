@@ -26,7 +26,7 @@ console.log('Is paused:', isPaused)
 // @log: Is paused: false
 ```
 
-<<< @/snippets/core/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/core/config-tempo.ts{ts} [config.ts]
 
 :::
 

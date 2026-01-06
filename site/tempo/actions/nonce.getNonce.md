@@ -27,7 +27,7 @@ console.log('Nonce:', nonce)
 // @log: Nonce: 42n
 ```
 
-<<< @/snippets/core/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/core/config-tempo.ts{ts} [config.ts]
 
 :::
 

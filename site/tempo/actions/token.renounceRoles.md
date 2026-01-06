@@ -27,7 +27,7 @@ console.log('Roles renounced:', value.length)
 // @log: Roles renounced: 1
 ```
 
-<<< @/snippets/core/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/core/config-tempo.ts{ts} [config.ts]
 
 :::
 

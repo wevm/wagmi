@@ -31,7 +31,7 @@ sellSync.mutate({
 
 console.log('Transaction hash:', sellSync.data?.receipt.transactionHash)
 ```
-<<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ### Asynchronous Usage

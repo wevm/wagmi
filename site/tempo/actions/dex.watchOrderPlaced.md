@@ -28,7 +28,7 @@ const unwatch = Actions.dex.watchOrderPlaced(config, {
 unwatch()
 ```
 
-<<< @/snippets/core/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/core/config-tempo.ts{ts} [config.ts]
 
 :::
 

@@ -29,7 +29,7 @@ const unwatch = Actions.token.watchTransfer(config, {
 unwatch()
 ```
 
-<<< @/snippets/core/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/core/config-tempo.ts{ts} [config.ts]
 
 :::
 

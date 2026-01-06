@@ -32,7 +32,7 @@ rebalanceSwapSync.mutate({
 console.log('Amount in:', rebalanceSwapSync.data?.amountIn)
 // @log: 10605000n
 ```
-<<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ### Asynchronous Usage

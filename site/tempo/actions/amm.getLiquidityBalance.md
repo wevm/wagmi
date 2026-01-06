@@ -26,7 +26,7 @@ const balance = await Actions.amm.getLiquidityBalance(config, {
 console.log('Liquidity balance:', balance)
 // @log: Liquidity balance: 10500000000000000000n
 ```
-<<< @/snippets/core/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/core/config-tempo.ts{ts} [config.ts]
 :::
 
 ## Return Type

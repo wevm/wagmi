@@ -30,7 +30,7 @@ console.log('Reward balance:', data?.rewardBalance)
 console.log('Reward per token:', data?.rewardPerToken)
 // @log: Reward per token: 385802469135802469135n
 ```
-<<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ## Return Type

@@ -28,7 +28,7 @@ const { data: quote } = Hooks.dex.useBuyQuote({
 console.log('Amount needed:', quote)
 // @log: Amount needed: 100300000n
 ```
-<<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ## Return Type

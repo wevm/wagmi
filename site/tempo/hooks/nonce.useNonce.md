@@ -26,7 +26,7 @@ const { data: nonce } = Hooks.nonce.useNonce({
 console.log('Nonce:', nonce)
 // @log: Nonce: 42n
 ```
-<<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ## Return Type

@@ -26,7 +26,7 @@ console.log('Order details:', order)
 // @log: Order details: { amount: 100000000n, maker: '0x...', isBid: true, ... }
 ```
 
-<<< @/snippets/core/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/core/config-tempo.ts{ts} [config.ts]
 
 :::
 

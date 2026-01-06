@@ -31,7 +31,7 @@ console.log('Total supply:', pool.totalSupply)
 // @log: Total supply: 1000000000000000000000n
 ```
 
-<<< @/snippets/core/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/core/config-tempo.ts{ts} [config.ts]
 
 :::
 

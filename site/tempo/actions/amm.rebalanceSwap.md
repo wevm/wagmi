@@ -30,7 +30,7 @@ console.log('Amount in:', amountIn)
 // @log: 10605000n
 ```
 
-<<< @/snippets/core/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/core/config-tempo.ts{ts} [config.ts]
 
 :::
 

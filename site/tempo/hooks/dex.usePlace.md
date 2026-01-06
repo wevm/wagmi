@@ -33,7 +33,7 @@ placeSync.mutate({
 console.log('Order ID:', placeSync.data?.orderId)
 // @log: Order ID: 123n
 ```
-<<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ### Asynchronous Usage

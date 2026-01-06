@@ -32,7 +32,7 @@ mintSync.mutate({
 console.log('Liquidity minted:', mintSync.data?.liquidity)
 // @log: Liquidity minted: 100000000n
 ```
-<<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ### Asynchronous Usage

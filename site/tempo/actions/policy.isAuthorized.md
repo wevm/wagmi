@@ -27,7 +27,7 @@ console.log('Is authorized:', isAuthorized)
 // @log: Is authorized: true
 ```
 
-<<< @/snippets/core/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/core/config-tempo.ts{ts} [config.ts]
 
 :::
 

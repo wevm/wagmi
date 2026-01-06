@@ -26,7 +26,7 @@ console.log('Active nonce keys:', count)
 // @log: Active nonce keys: 3n
 ```
 
-<<< @/snippets/core/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/core/config-tempo.ts{ts} [config.ts]
 
 :::
 

@@ -25,7 +25,7 @@ Hooks.token.useWatchBurn({
   token: '0x20c0000000000000000000000000000000000000',
 })
 ```
-<<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ## Parameters

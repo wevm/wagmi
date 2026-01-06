@@ -28,7 +28,7 @@ fund.mutate({
 console.log('Transaction hashes:', fund.data)
 // @log: Transaction hashes: ['0x...', '0x...']
 ```
-<<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ### Synchronous Usage

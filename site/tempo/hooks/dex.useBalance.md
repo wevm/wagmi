@@ -26,7 +26,7 @@ const { data: balance } = Hooks.dex.useBalance({
 console.log('DEX balance:', balance)
 // @log: DEX balance: 1000000000n
 ```
-<<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ## Return Type

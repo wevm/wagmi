@@ -32,7 +32,7 @@ console.log('Reward per token:', rewardPerToken)
 // @log: Reward per token: 385802469135802469135n
 ```
 
-<<< @/snippets/core/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/core/config-tempo.ts{ts} [config.ts]
 
 :::
 

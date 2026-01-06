@@ -27,7 +27,7 @@ console.log('Fee token address:', userToken?.address)
 console.log('Fee token ID:', userToken?.id)
 // @log: Fee token ID: 0n
 ```
-<<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ## Return Type

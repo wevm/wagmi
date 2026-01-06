@@ -32,7 +32,7 @@ console.log('Stream ID:', startSync.data?.id)
 console.log('Amount:', startSync.data?.amount)
 // @log: Amount: 1000000000000000000000n
 ```
-<<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ### Asynchronous Usage

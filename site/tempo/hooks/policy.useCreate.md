@@ -32,7 +32,7 @@ createSync.mutate({
 console.log('Policy ID:', createSync.data?.policyId)
 // @log: Policy ID: 1n
 ```
-<<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ### Asynchronous Usage

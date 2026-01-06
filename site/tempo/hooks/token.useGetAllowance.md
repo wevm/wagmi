@@ -27,7 +27,7 @@ const { data: allowance } = Hooks.token.useGetAllowance({
 console.log('Allowance:', allowance)
 // @log: Allowance: 10500000n
 ```
-<<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ## Return Type

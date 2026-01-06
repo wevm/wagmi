@@ -26,7 +26,7 @@ console.log('Fee token:', result)
 // @log: Fee token: { address: '0x20c0000000000000000000000000000000000000', id: 0n }
 ```
 
-<<< @/snippets/core/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/core/config-tempo.ts{ts} [config.ts]
 
 :::
 

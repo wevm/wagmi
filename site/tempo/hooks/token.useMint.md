@@ -33,7 +33,7 @@ console.log('Minted amount:', mintSync.data?.amount)
 console.log('Recipient:', mintSync.data?.to)
 // @log: Recipient: 0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb
 ```
-<<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ### Asynchronous Usage

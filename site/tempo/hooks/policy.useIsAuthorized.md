@@ -26,7 +26,7 @@ const { data: isAuthorized } = Hooks.policy.useIsAuthorized({
 console.log('Is authorized:', isAuthorized)
 // @log: Is authorized: true
 ```
-<<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ## Return Type

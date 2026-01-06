@@ -26,7 +26,7 @@ const { data: balance } = Hooks.token.useGetBalance({
 console.log('Balance:', balance)
 // @log: Balance: 10500000n
 ```
-<<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ## Return Type

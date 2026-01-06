@@ -42,7 +42,7 @@ const result = await Actions.amm.action(config, {
 console.log('Result:', result)
 // @log: Result: 10500000000000000000n
 ```
-<<< @/snippets/core/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/core/config-tempo.ts{ts} [config.ts]
 :::
 
 ## Return Type
@@ -106,7 +106,7 @@ const result =
 console.log('Foo:', result.foo)
 // @log: Foo: 5250000000000000000n
 ```
-<<< @/snippets/core/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/core/config-tempo.ts{ts} [config.ts]
 :::
 
 ### Asynchronous Usage
@@ -192,7 +192,7 @@ const unwatch = Actions.namespace.watchAction(config, {
 // Later, stop watching
 unwatch()
 ```
-<<< @/snippets/core/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/core/config-tempo.ts{ts} [config.ts]
 :::
 
 ## Return Type
@@ -290,7 +290,7 @@ const { data: result } = Hooks.namespace.useHook({
 console.log('Result:', resut)
 // @log: Result: ...
 ```
-<<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ## Return Type
@@ -347,7 +347,7 @@ actionNameSync.mutate({
 console.log('Received baz:', actionNameSync.data?.baz)
 // @log: Received baz: ...
 ```
-<<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ### Asynchronous Usage
@@ -433,7 +433,7 @@ Hooks.amm.useWatchHook({
   },
 })
 ```
-<<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ## Parameters

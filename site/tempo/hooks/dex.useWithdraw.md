@@ -29,7 +29,7 @@ withdrawSync.mutate({
 
 console.log('Transaction hash:', withdrawSync.data?.receipt.transactionHash)
 ```
-<<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ### Asynchronous Usage

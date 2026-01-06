@@ -35,7 +35,7 @@ console.log('Owner:', approveSync.data?.owner)
 console.log('Spender:', approveSync.data?.spender)
 // @log: Spender: 0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb
 ```
-<<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ### Asynchronous Usage

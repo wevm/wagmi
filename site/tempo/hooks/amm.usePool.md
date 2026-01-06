@@ -30,7 +30,7 @@ console.log('Validator token reserve:', pool?.reserveValidatorToken)
 console.log('Total supply:', pool?.totalSupply)
 // @log: Total supply: 1000000000000000000000n
 ```
-<<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ## Return Type

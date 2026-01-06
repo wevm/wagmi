@@ -28,7 +28,7 @@ console.log('New supply cap:', newSupplyCap)
 // @log: New supply cap: 1000000000000n
 ```
 
-<<< @/snippets/core/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/core/config-tempo.ts{ts} [config.ts]
 
 :::
 

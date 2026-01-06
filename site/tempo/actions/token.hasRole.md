@@ -28,7 +28,7 @@ console.log('Has issuer role:', hasRole)
 // @log: Has issuer role: true
 ```
 
-<<< @/snippets/core/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/core/config-tempo.ts{ts} [config.ts]
 
 :::
 

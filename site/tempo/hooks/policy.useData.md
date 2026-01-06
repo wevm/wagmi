@@ -27,7 +27,7 @@ console.log('Policy admin:', policyData?.admin)
 console.log('Policy type:', policyData?.type)
 // @log: Policy type: whitelist
 ```
-<<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ## Return Type

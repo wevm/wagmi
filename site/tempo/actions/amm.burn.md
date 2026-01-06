@@ -31,7 +31,7 @@ console.log('Received user tokens:', amountUserToken)
 console.log('Received validator tokens:', amountValidatorToken)
 // @log: Received validator tokens: 5250000000000000000n
 ```
-<<< @/snippets/core/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/core/config-tempo.ts{ts} [config.ts]
 :::
 
 ### Asynchronous Usage

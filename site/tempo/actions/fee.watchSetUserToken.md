@@ -28,7 +28,7 @@ const unwatch = Actions.fee.watchSetUserToken(config, {
 unwatch()
 ```
 
-<<< @/snippets/core/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/core/config-tempo.ts{ts} [config.ts]
 
 :::
 

@@ -34,7 +34,7 @@ placeFlipSync.mutate({
 console.log('Flip order ID:', placeFlipSync.data?.orderId)
 // @log: Flip order ID: 456n
 ```
-<<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ### Asynchronous Usage

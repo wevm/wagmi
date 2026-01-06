@@ -33,7 +33,7 @@ console.log('Decimals:', metadata?.decimals)
 console.log('Total Supply:', metadata?.totalSupply)
 // @log: Total Supply: 1000000000000000000000n
 ```
-<<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ## Return Type

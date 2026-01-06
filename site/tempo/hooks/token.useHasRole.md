@@ -27,7 +27,7 @@ const { data: hasRole } = Hooks.token.useHasRole({
 console.log('Has issuer role:', hasRole)
 // @log: Has issuer role: true
 ```
-<<< @/snippets/react/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ## Return Type

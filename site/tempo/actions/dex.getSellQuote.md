@@ -29,7 +29,7 @@ console.log('Amount received:', amountOut)
 // @log: Amount received: 99700000n
 ```
 
-<<< @/snippets/core/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/core/config-tempo.ts{ts} [config.ts]
 
 :::
 

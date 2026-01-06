@@ -29,7 +29,7 @@ const { receipt } = await Actions.dex.buySync(config, {
 console.log('Transaction hash:', receipt.transactionHash)
 ```
 
-<<< @/snippets/core/config-tempo.ts{ts twoslash} [config.ts]
+<<< @/snippets/core/config-tempo.ts{ts} [config.ts]
 
 :::
 
