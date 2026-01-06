@@ -25,6 +25,7 @@ catalog:
   '@vitejs/plugin-vue': 6.0.1
   '@walletconnect/ethereum-provider': 2.21.1
   buffer: 6.0.3
+  ox: 0.11.1
   nuxt: 4.2.1
   porto: 0.2.35
   react: 19.2.0
@@ -43,6 +44,7 @@ minimumReleaseAgeExclude:
   - abitype
   - ox
   - porto
+  - prool
   - wagmi
   - viem
 overrides:
@@ -66,8 +68,6 @@ packages:
   - packages/register-tests/*
   - playgrounds/*
   - site
-patchedDependencies:
-  prool: patches/prool.patch
 peerDependencyRules:
   ignoreMissing:
     - '@algolia/client-search'

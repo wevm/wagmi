@@ -1,0 +1,83 @@
+# `policy.useCreate`
+
+Creates a new transfer policy for token access control. [Learn more about transfer policies](https://docs.tempo.xyz/protocol/tip403/overview)
+
+## Usage
+
+::: code-group
+```ts twoslash [example.ts]
+// @twoslash-cache: {"v":1,"hash":"e13be9674f34cecb6d1efe8ccab1940abeb9e94a06d019450df7b8523742032d","data":"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"}
+import { Hooks } from 'wagmi/tempo'
+
+const createSync = Hooks.policy.useCreateSync()
+
+// Call `mutate` in response to user action (e.g. button click, form submission)
+createSync.mutate({
+  addresses: [
+    '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
+    '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+  ],
+  type: 'whitelist',
+})
+
+console.log('Policy ID:', createSync.data?.policyId)
+// @log: Policy ID: 1n
+```
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
+:::
+
+### Asynchronous Usage
+
+The example above uses a `*Sync` variant of the action, that will wait for the transaction to be included before returning.
+
+If you are optimizing for performance, you should use the non-sync `policy.create` action and wait for inclusion manually:
+
+```ts
+import { Hooks } from 'wagmi/tempo'
+import { Actions } from 'viem/tempo'
+import { useWaitForTransactionReceipt } from 'wagmi'
+
+const create = Hooks.policy.useCreate()
+const { data: receipt } = useWaitForTransactionReceipt({ hash: create.data })
+
+// Call `mutate` in response to user action (e.g. button click, form submission)
+create.mutate({
+  addresses: [
+    '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
+    '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+  ],
+  type: 'whitelist',
+})
+
+if (receipt) {
+  const { args: { policyId } } 
+    = Actions.policy.create.extractEvent(receipt.logs)
+```
+
+## Return Type
+
+See [TanStack Query mutation docs](https://tanstack.com/query/v5/docs/framework/react/reference/useMutation) for more info hook return types.
+
+### data
+
+See [Wagmi Action `policy.create` Return Type](/tempo/actions/policy.create#return-type)
+
+### mutate/mutateAsync
+
+See [Wagmi Action `policy.create` Parameters](/tempo/actions/policy.create#parameters)
+
+## Parameters
+
+### config
+
+`Config | undefined`
+
+[`Config`](https://wagmi.sh/react/api/createConfig#config) to use instead of retrieving from the nearest [`WagmiProvider`](https://wagmi.sh/react/api/WagmiProvider).
+
+### mutation
+
+See the [TanStack Query mutation docs](https://tanstack.com/query/v5/docs/framework/react/reference/useMutation) for more info hook parameters.
+
+## Action
+
+- [`policy.create`](/tempo/actions/policy.create)

@@ -1,0 +1,93 @@
+# `token.burn`
+
+Burns TIP-20 tokens from the caller's balance.
+
+## Usage
+
+::: code-group
+
+```ts twoslash [example.ts]
+// @twoslash-cache: {"v":1,"hash":"e5eb311ca3488bbee0e7931eefae4e3f14d1d9b3f00dad2aa580098254b3ae39","data":"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"}
+// @filename: config.ts
+// @errors: 2322
+import type { Config } from 'wagmi'
+export const config = {} as Config
+// @filename: example.ts
+// ---cut---
+import { Actions } from 'wagmi/tempo'
+import { parseUnits } from 'viem'
+import { config } from './config'
+
+const { receipt } = await Actions.token.burnSync(config, {
+  amount: parseUnits('10.5', 6),
+  token: '0x20c0000000000000000000000000000000000000',
+})
+
+console.log('Transaction hash:', receipt.transactionHash)
+// @log: Transaction hash: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+```
+
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
+
+:::
+
+### Asynchronous Usage
+
+The example above uses a `*Sync` variant of the action, that will wait for the transaction to be included before returning.
+
+If you are optimizing for performance, you should use the non-sync `token.burn` action and wait for inclusion manually:
+
+```ts
+import { Actions as viem_Actions } from 'viem/tempo'
+import { Actions } from 'wagmi/tempo'
+import { parseUnits } from 'viem'
+import { waitForTransactionReceipt } from 'wagmi/actions'
+
+const hash = await Actions.token.burn(config, {
+  amount: parseUnits('10.5', 6),
+  token: '0x20c0000000000000000000000000000000000000',
+})
+const receipt = await waitForTransactionReceipt(config, { hash })
+
+const { args } 
+  = viem_Actions.token.burn.extractEvent(receipt.logs)
+```
+
+## Return Type
+
+```ts
+type ReturnType = {
+  /** Amount of tokens burned */
+  amount: bigint
+  /** Address tokens were burned from */
+  from: Address
+  /** Transaction receipt */
+  receipt: TransactionReceipt
+}
+```
+
+## Parameters
+
+### amount
+
+- **Type:** `bigint`
+
+Amount of tokens to burn.
+
+### memo (optional)
+
+- **Type:** `Hex`
+
+Memo to include in the transfer.
+
+### token
+
+- **Type:** `Address | bigint`
+
+Address or ID of the TIP-20 token.
+
+<!--@include: @shared/tempo-write-parameters.md-->
+
+## Viem
+
+- [`token.burn`](https://viem.sh/tempo/actions/token.burn)

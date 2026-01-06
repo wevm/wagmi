@@ -94,51 +94,51 @@ The `getNetwork` and `watchNetwork` actions were removed since the connected cha
 
 - Use [`config.chains`](/core/api/createConfig#chains-1) instead to get `chains`.
 
-  ::: code-group
-  ```ts [index.ts]
-  import { getNetwork } from '@wagmi/core' // [!code --]
+::: code-group
+```ts [index.ts]
+import { getNetwork } from '@wagmi/core' // [!code --]
 
-  const { chains } = getNetwork() // [!code --]
-  const chains = config.chains // [!code ++]
-  ```
-  <<< @/snippets/core/config.ts[config.ts]
-  :::
+const { chains } = getNetwork() // [!code --]
+const chains = config.chains // [!code ++]
+```
+<<< @/snippets/core/config.ts[config.ts]
+:::
 
 - Use [`getAccount`](/core/api/actions/getConnection) and `config.chains` instead to get `chain`.
 
-  ::: code-group
-  ```ts [index.ts]
-  import { getNetwork } from '@wagmi/core' // [!code --]
-  import { getAccount } from '@wagmi/core' // [!code ++]
-  import { config } from './config' // [!code ++]
+::: code-group
+```ts [index.ts]
+import { getNetwork } from '@wagmi/core' // [!code --]
+import { getAccount } from '@wagmi/core' // [!code ++]
+import { config } from './config' // [!code ++]
 
-  const { chain } = getNetwork() // [!code --]
-  const { chainId } = getAccount(config) // [!code ++]
-  const chain = chains.find(chain => chain.id === chainId) // [!code ++]
-  ```
-  <<< @/snippets/core/config.ts[config.ts]
-  :::
+const { chain } = getNetwork() // [!code --]
+const { chainId } = getAccount(config) // [!code ++]
+const chain = chains.find(chain => chain.id === chainId) // [!code ++]
+```
+<<< @/snippets/core/config.ts[config.ts]
+:::
 
   Before v2, `getNetwork().chain` could result in an invalid chain if the active connector's `chainId` was not configured in the list of `config.chains`. Using `getAccount` and `config.chains` is more work, but ensures that chain is either valid or not defined. You can also use `getAccount(config).chain` if you don't care about the chain being `undefined` when not configured.
 
 - Use `watchAccount` instead of `watchNetwork`.
 
-  ::: code-group
-  ```ts [index.ts]
-  import { watchNetwork } from '@wagmi/core' // [!code --]
-  import { watchAccount } from '@wagmi/core' // [!code ++]
-  import { config } from './config' // [!code ++]
+::: code-group
+```ts [index.ts]
+import { watchNetwork } from '@wagmi/core' // [!code --]
+import { watchAccount } from '@wagmi/core' // [!code ++]
+import { config } from './config' // [!code ++]
 
-  const unwatch = watchNetwork((data) => console.log('Changed!', data)) // [!code --]
-  const unwatch = watchAccount(config, { // [!code ++]
-    onChange(data) { // [!code ++]
-      const chains = config.chains // [!code ++]
-      const chain = chains.find(chain => chain.id === data.chainId) // [!code ++]
-    }, // [!code ++]
-  }) // [!code ++]
-  ```
-  <<< @/snippets/core/config.ts[config.ts]
-  :::
+const unwatch = watchNetwork((data) => console.log('Changed!', data)) // [!code --]
+const unwatch = watchAccount(config, { // [!code ++]
+onChange(data) { // [!code ++]
+    const chains = config.chains // [!code ++]
+    const chain = chains.find(chain => chain.id === data.chainId) // [!code ++]
+}, // [!code ++]
+}) // [!code ++]
+```
+<<< @/snippets/core/config.ts[config.ts]
+:::
 
 ### Removed `getWebSocketPublicClient` and `watchWebSocketPublicClient`
 
