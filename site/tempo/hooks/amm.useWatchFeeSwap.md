@@ -39,6 +39,5 @@ See [Wagmi Action `amm.watchFeeSwap` Parameters](/tempo/actions/amm.watchFeeSwap
 
 ## Action
 
-- [`amm.feeSwap`](/tempo/actions/amm.feeSwap)
 - [`amm.watchFeeSwap`](/tempo/actions/amm.watchFeeSwap)
 

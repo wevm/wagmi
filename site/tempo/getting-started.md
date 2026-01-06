@@ -14,7 +14,7 @@ It enshrines features like [token management](https://docs.tempo.xyz/protocol/ti
 
 ## Setup
 
-Wagmi React and Core both have first-class support for Tempo with [Hooks](/tempo/hooks) and [Actions](/tempo/actions). To get started, first follow the [Getting Started guide for React](/react/getting-started) or [Core](/core/getting-started) and make sure your [Viem](https://viem.sh) version is `{{viemVersion}}`.
+Wagmi React and Core both have first-class support for Tempo with [Hooks](/tempo/hooks/) and [Actions](/tempo/actions/). To get started, first follow the [Getting Started guide for React](/react/getting-started) or [Core](/core/getting-started) and make sure your [Viem](https://viem.sh) version is `{{viemVersion}}`.
 
 ::: code-group
 ```bash-vue [pnpm]
@@ -115,7 +115,7 @@ export const config = createConfig({
 
 ## Use Tempo Hooks
 
-You can also use [Tempo-specific Hooks](/tempo/hooks):
+You can also use [Tempo-specific Hooks](/tempo/hooks/):
 
 ::: code-group
 
@@ -181,5 +181,5 @@ export const config = createConfig({
 After you have set up your Tempo with Wagmi, you can now:
 
 - [**Guides & Examples**](https://docs.tempo.xyz/guide/tempo-transaction) Follow guides on how to [use accounts](https://docs.tempo.xyz/guide/use-accounts), [make payments](https://docs.tempo.xyz/guide/payments), [issue stablecoins](https://docs.tempo.xyz/guide/issuance), [exchange stablecoins](https://docs.tempo.xyz/guide/stablecoin-exchange), and more!
-- [**Tempo React Hooks**](/tempo/hooks) Browse the collection of React Hooks and learn how to use them.
-- [**Tempo Core Actions**](/tempo/actions) Browse the collection of Core Actions and learn how to use them.
+- [**Tempo React Hooks**](/tempo/hooks/) Browse the collection of React Hooks and learn how to use them.
+- [**Tempo Core Actions**](/tempo/actions/) Browse the collection of Core Actions and learn how to use them.

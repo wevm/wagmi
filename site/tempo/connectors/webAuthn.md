@@ -42,7 +42,7 @@ The `KeyManager` interface provides:
 - `getPublicKey(parameters)`: Function to retrieve the public key for a credential
 - `setPublicKey(parameters)`: Function to store the public key for a credential
 
-See [`KeyManager`](/tempo/keyManagers) for built-in implementations.
+See [`KeyManager`](/tempo/keyManagers/) for built-in implementations.
 
 ### createOptions (optional)
 
