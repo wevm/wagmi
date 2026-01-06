@@ -61,7 +61,6 @@ setUserToken.mutate({
 if (receipt) {
   const { args } 
     = Actions.fee.setUserToken.extractEvent(receipt.logs)
-}
 ```
 
 ## Return Type

@@ -42,7 +42,7 @@ const result = await Actions.amm.action(config, {
 console.log('Result:', result)
 // @log: Result: 10500000000000000000n
 ```
-<<< @/snippets/core/config-tempo.ts{ts} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ## Return Type
@@ -106,7 +106,7 @@ const result =
 console.log('Foo:', result.foo)
 // @log: Foo: 5250000000000000000n
 ```
-<<< @/snippets/core/config-tempo.ts{ts} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ### Asynchronous Usage
@@ -192,7 +192,7 @@ const unwatch = Actions.namespace.watchAction(config, {
 // Later, stop watching
 unwatch()
 ```
-<<< @/snippets/core/config-tempo.ts{ts} [config.ts]
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
 :::
 
 ## Return Type
@@ -271,15 +271,6 @@ description
 
 ::: code-group
 ```ts twoslash [example.ts]
-// @errors: 2322
-import type { Config } from 'wagmi'
-import { tempoTestnet } from 'wagmi/chains'
-declare module 'wagmi' {
-  interface Register {
-    config: Config<readonly [typeof tempoTestnet]>
-  }
-}
-// ---cut---
 import { Hooks } from 'wagmi/tempo'
 
 const { data: result } = Hooks.namespace.useHook({
@@ -325,15 +316,6 @@ description
 
 ::: code-group
 ```ts twoslash [example.ts]
-// @errors: 2322
-import type { Config } from 'wagmi'
-import { tempoTestnet } from 'wagmi/chains'
-declare module 'wagmi' {
-  interface Register {
-    config: Config<readonly [typeof tempoTestnet]>
-  }
-}
-// ---cut---
 import { Hooks } from 'wagmi/tempo'
 
 const actionNameSync = Hooks.namespace.useHookSync()
@@ -416,15 +398,6 @@ description
 
 ::: code-group
 ```ts twoslash [example.ts]
-// @errors: 2322
-import type { Config } from 'wagmi'
-import { tempoTestnet } from 'wagmi/chains'
-declare module 'wagmi' {
-  interface Register {
-    config: Config<readonly [typeof tempoTestnet]>
-  }
-}
-// ---cut---
 import { Hooks } from 'wagmi/tempo'
 
 Hooks.amm.useWatchHook({

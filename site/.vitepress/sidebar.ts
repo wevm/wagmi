@@ -1127,7 +1127,7 @@ export function getSidebar() {
       },
       {
         text: 'Hooks',
-        link: '/tempo/hooks',
+        link: '/tempo/hooks/',
         items: [
           {
             text: 'AMM',
@@ -1367,7 +1367,7 @@ export function getSidebar() {
       },
       {
         text: 'Actions',
-        link: '/tempo/actions',
+        link: '/tempo/actions/',
         items: [
           {
             text: 'AMM',
@@ -1583,7 +1583,7 @@ export function getSidebar() {
       },
       {
         text: 'Connectors',
-        link: '/tempo/connectors',
+        link: '/tempo/connectors/',
         items: [
           {
             text: 'dangerous_secp256k1',
@@ -1594,7 +1594,7 @@ export function getSidebar() {
       },
       {
         text: 'Key Managers',
-        link: '/tempo/keyManagers',
+        link: '/tempo/keyManagers/',
         items: [
           { text: 'http', link: '/tempo/keyManagers/http' },
           { text: 'localStorage', link: '/tempo/keyManagers/localStorage' },
