@@ -1,5 +1,17 @@
 # @wagmi/core
 
+## 3.1.0
+
+### Minor Changes
+
+- Added first-class support and extension for [Tempo](https://docs.tempo.xyz) via `/tempo` entrypoint. ([#4922](https://github.com/wevm/wagmi/pull/4922))
+
+## 3.0.2
+
+### Patch Changes
+
+- Fixed `config.connectors` type inference ([#4923](https://github.com/wevm/wagmi/pull/4923))
+
 ## 3.0.1
 
 ### Patch Changes

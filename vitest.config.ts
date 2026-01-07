@@ -2,7 +2,7 @@ import path from 'node:path'
 import { playwright } from '@vitest/browser-playwright'
 import reactFallbackThrottlePlugin from 'vite-plugin-react-fallback-throttle'
 import solid from 'vite-plugin-solid'
-import { defineConfig } from 'vitest/config'
+import { defaultExclude, defineConfig } from 'vitest/config'
 
 const alias = {
   '@wagmi/connectors': path.resolve(
@@ -34,6 +34,8 @@ export default defineConfig({
         // ignore third-party connectors
         'packages/connectors/**',
         'packages/core/src/connectors/injected.ts',
+        'packages/core/src/tempo/**',
+        'packages/react/src/tempo/**',
       ],
     },
     globalSetup: process.env.TYPES
@@ -64,6 +66,10 @@ export default defineConfig({
             ...(process.env.TYPES ? ['**/*.bench-d.ts'] : []),
             './packages/core/src/**/*.test.ts',
           ],
+          exclude: [
+            './packages/core/src/tempo/**/*.test.ts',
+            ...defaultExclude,
+          ],
           environment: 'happy-dom',
           testTimeout: 10_000,
           setupFiles: ['./packages/core/test/setup.ts'],
@@ -82,6 +88,29 @@ export default defineConfig({
         plugins: [reactFallbackThrottlePlugin()],
         resolve: { alias },
         test: {
+          name: 'tempo',
+          browser: {
+            enabled: true,
+            headless: true,
+            instances: [{ browser: 'chromium' }],
+            provider: playwright(),
+            screenshotFailures: false,
+          },
+          include: [
+            './packages/core/src/tempo/**/*.test.ts',
+            './packages/react/src/tempo/**/*.test.ts',
+          ],
+          testTimeout: 10_000,
+          globalSetup: process.env.TYPES
+            ? ['./packages/test/src/setup.global.types.ts']
+            : ['./packages/test/src/tempo/setup.global.ts'],
+          setupFiles: ['./packages/test/src/tempo/setup.ts'],
+        },
+      },
+      {
+        plugins: [reactFallbackThrottlePlugin()],
+        resolve: { alias },
+        test: {
           name: 'react',
           browser: {
             enabled: true,
@@ -91,6 +120,10 @@ export default defineConfig({
             screenshotFailures: false,
           },
           include: ['./packages/react/src/**/*.test.ts?(x)'],
+          exclude: [
+            './packages/react/src/tempo/**/*.test.ts',
+            ...defaultExclude,
+          ],
           testTimeout: 10_000,
           setupFiles: ['./packages/react/test/setup.ts'],
         },

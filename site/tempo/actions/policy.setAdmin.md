@@ -1,0 +1,87 @@
+# `policy.setAdmin`
+
+Sets the admin for a transfer policy. Requires current policy admin role.
+
+## Usage
+
+::: code-group
+
+```ts twoslash [example.ts]
+// @twoslash-cache: {"v":1,"hash":"983f569302010026098cc5bbf73d68463318d1076985854dbfdfd589c471fed0","data":"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="}
+// @filename: config.ts
+// @errors: 2322
+import type { Config } from 'wagmi'
+export const config = {} as Config
+// @filename: example.ts
+// ---cut---
+import { Actions } from 'wagmi/tempo'
+import { config } from './config'
+
+const { receipt } = await Actions.policy.setAdminSync(config, {
+  admin: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
+  policyId: 1n,
+})
+
+console.log('Transaction hash:', receipt.transactionHash)
+// @log: Transaction hash: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+```
+
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
+
+:::
+
+### Asynchronous Usage
+
+The example above uses a `*Sync` variant of the action, that will wait for the transaction to be included before returning.
+
+If you are optimizing for performance, you should use the non-sync `policy.setAdmin` action and wait for inclusion manually:
+
+```ts
+import { Actions as viem_Actions } from 'viem/tempo'
+import { Actions } from 'wagmi/tempo'
+import { waitForTransactionReceipt } from 'wagmi/actions'
+
+const hash = await Actions.policy.setAdmin(config, {
+  admin: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
+  policyId: 1n,
+})
+const receipt = await waitForTransactionReceipt(config, { hash })
+
+const { args } 
+  = viem_Actions.policy.setAdmin.extractEvent(receipt.logs)
+```
+
+## Return Type
+
+```ts
+type ReturnType = {
+  /** Address of the new admin */
+  admin: Address
+  /** ID of the policy */
+  policyId: bigint
+  /** Transaction receipt */
+  receipt: TransactionReceipt
+  /** Address that updated the admin */
+  updater: Address
+}
+```
+
+## Parameters
+
+### admin
+
+- **Type:** `Address`
+
+Address to set as the new policy admin.
+
+### policyId
+
+- **Type:** `bigint`
+
+ID of the policy to update.
+
+<!--@include: @shared/tempo-write-parameters.md-->
+
+## Viem
+
+- [`policy.setAdmin`](https://viem.sh/tempo/actions/policy.setAdmin)

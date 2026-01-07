@@ -1,0 +1,87 @@
+# `token.setSupplyCap`
+
+Sets the supply cap for a TIP-20 token. Requires the default admin role.
+
+## Usage
+
+::: code-group
+
+```ts twoslash [example.ts]
+// @twoslash-cache: {"v":1,"hash":"3425b57e63dd869d50e97fa72c6063375687c2cec9e58782eaf2d9e3f31e96b3","data":"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"}
+// @filename: config.ts
+// @errors: 2322
+import type { Config } from 'wagmi'
+export const config = {} as Config
+// @filename: example.ts
+// ---cut---
+import { Actions } from 'wagmi/tempo'
+import { parseUnits } from 'viem'
+import { config } from './config'
+
+const { newSupplyCap, receipt } = await Actions.token.setSupplyCapSync(config, {
+  supplyCap: parseUnits('1000000', 6),
+  token: '0x20c0000000000000000000000000000000000000',
+})
+
+console.log('New supply cap:', newSupplyCap)
+// @log: New supply cap: 1000000000000n
+```
+
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
+
+:::
+
+### Asynchronous Usage
+
+The example above uses a `*Sync` variant of the action, that will wait for the transaction to be included before returning.
+
+If you are optimizing for performance, you should use the non-sync `token.setSupplyCap` action and wait for inclusion manually:
+
+```ts
+import { Actions as viem_Actions } from 'viem/tempo'
+import { Actions } from 'wagmi/tempo'
+import { parseUnits } from 'viem'
+import { waitForTransactionReceipt } from 'wagmi/actions'
+
+const hash = await Actions.token.setSupplyCap(config, {
+  supplyCap: parseUnits('1000000', 6),
+  token: '0x20c0000000000000000000000000000000000000',
+})
+const receipt = await waitForTransactionReceipt(config, { hash })
+
+const { args } 
+  = viem_Actions.token.setSupplyCap.extractEvent(receipt.logs)
+```
+
+## Return Type
+
+```ts
+type ReturnType = {
+  /** New supply cap value */
+  newSupplyCap: bigint
+  /** Transaction receipt */
+  receipt: TransactionReceipt
+  /** Address that updated the supply cap */
+  updater: Address
+}
+```
+
+## Parameters
+
+### supplyCap
+
+- **Type:** `bigint`
+
+Maximum total supply allowed for the token.
+
+### token
+
+- **Type:** `Address | bigint`
+
+Address or ID of the TIP-20 token.
+
+<!--@include: @shared/tempo-write-parameters.md-->
+
+## Viem
+
+- [`token.setSupplyCap`](https://viem.sh/tempo/actions/token.setSupplyCap)
