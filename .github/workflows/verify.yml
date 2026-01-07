@@ -80,7 +80,7 @@ jobs:
     strategy:
       matrix:
         typescript-version: ['5.7.3', '5.8.3', '5.9.3', 'latest']
-        viem-version: ['2.38.0', 'latest']
+        viem-version: ['2.43.3', 'latest']
 
     steps:
       - name: Clone repository
@@ -128,12 +128,23 @@ jobs:
         with:
           node-version: 24.5
 
+      - name: Setup Docker
+        uses: docker/setup-docker-action@v4
+
       - name: Set up foundry
         uses: foundry-rs/foundry-toolchain@50d5a8956f2e319df19e6b57539d7e2acb9f8c1e # v1.5.0
         with:
           version: nightly
 
+      - name: Cache Playwright
+        uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('pnpm-lock.yaml') }}
+
       - name: Install Playwright
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: pnpm exec playwright install chromium --with-deps
 
       - name: Run tests

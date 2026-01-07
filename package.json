@@ -5,7 +5,7 @@
   "scripts": {
     "build": "pnpm run --filter @wagmi/core --filter @wagmi/cli build && pnpm run --filter @wagmi/connectors build && pnpm run --filter wagmi --filter @wagmi/vue build",
     "bench:types": "TYPES=true vitest bench-d.ts",
-    "changeset:prepublish": "pnpm version:update && pnpm build && node scripts/formatPackageJson.ts && node scripts/generateProxyPackages.ts",
+    "changeset:prepublish": "pnpm clean && pnpm version:update && pnpm build && node scripts/formatPackageJson.ts && node scripts/generateProxyPackages.ts",
     "changeset:publish": "pnpm changeset:prepublish && changeset publish",
     "changeset:version": "changeset version && pnpm version:update && pnpm format",
     "check": "biome check --write",
@@ -52,12 +52,13 @@
     "happy-dom": "^20.0.0",
     "knip": "^5.69.0",
     "playwright": "1.56.1",
-    "prool": "^0.0.24",
+    "prool": "^0.2.2",
     "publint": "^0.2.11",
     "react": "catalog:",
     "react-dom": "catalog:",
     "sherif": "^1.0.0",
     "simple-git-hooks": "^2.11.1",
+    "testcontainers": "^11.11.0",
     "typescript": "5.9.3",
     "viem": "2.43.3",
     "vite-plugin-react-fallback-throttle": "^0.1.1",
@@ -114,12 +115,13 @@
         ]
       },
       "packages/core": {
-        "entry": "src/exports/{actions,chains,codegen,experimental,index,internal,query}.ts!",
+        "entry": "src/exports/{actions,chains,codegen,experimental,index,internal,query,tempo}.ts!",
         "ignore": [
           "test/setup.ts"
         ],
         "ignoreDependencies": [
-          "@tanstack/query-core"
+          "@tanstack/query-core",
+          "ox"
         ]
       },
       "packages/create-wagmi": {
@@ -127,7 +129,7 @@
       },
       "packages/react": {
         "entry": [
-          "src/exports/{actions,chains,codegen,connectors,experimental,index,internal,query}.ts!",
+          "src/exports/{actions,chains,codegen,connectors,experimental,index,internal,query,tempo}.ts!",
           "src/exports/actions/experimental.ts!"
         ],
         "ignore": [
@@ -139,7 +141,9 @@
           "src/setup.ts!",
           "src/setup.global.ts!",
           "src/setup.global.types.ts!",
-          "src/exports/{index,react}.ts!"
+          "src/exports/{index,react,tempo}.ts!",
+          "src/tempo/setup.ts!",
+          "src/tempo/setup.global.ts!"
         ]
       },
       "packages/vue": {

@@ -396,7 +396,10 @@ export {
   switchConnectionMutationOptions,
 } from '../query/switchConnection.js'
 
-export { hashFn, structuralSharing } from '../query/utils.js'
+export {
+  hashFn,
+  structuralSharing,
+} from '../query/utils.js'
 
 export {
   type VerifyMessageData,

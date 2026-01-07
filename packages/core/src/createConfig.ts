@@ -414,7 +414,9 @@ export function createConfig<
       return chains.getState() as chains
     },
     get connectors() {
-      return connectors.getState() as Connector<connectorFns[number]>[]
+      return connectors.getState() as Readonly<{
+        [key in keyof connectorFns]: Connector<connectorFns[key]>
+      }>
     },
     storage,
 
@@ -552,7 +554,9 @@ export type Config<
     readonly CreateConnectorFn[] = readonly CreateConnectorFn[],
 > = {
   readonly chains: chains
-  readonly connectors: readonly Connector<connectorFns[number]>[]
+  readonly connectors: Readonly<{
+    [key in keyof connectorFns]: Connector<connectorFns[key]>
+  }>
   readonly storage: Storage | null
 
   readonly state: State<chains>

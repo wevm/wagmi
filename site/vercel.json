@@ -130,6 +130,18 @@
     },
 
     {
+      "source": "/core",
+      "destination": "/core/getting-started",
+      "permanent": true
+    },
+
+    {
+      "source": "/tempo",
+      "destination": "/tempo/getting-started",
+      "permanent": true
+    },
+
+    {
       "source": "/vue/api/actions/useAccount",
       "destination": "/vue/api/actions/useConnection",
       "permanent": true

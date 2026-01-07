@@ -1,7 +1,7 @@
 {
   "name": "wagmi",
   "description": "React Hooks for Ethereum",
-  "version": "3.1.2",
+  "version": "3.2.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -12,7 +12,7 @@
     "build": "pnpm run build:esm+types",
     "build:esm+types": "tsc --project tsconfig.build.json --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
     "check:types": "tsc --noEmit",
-    "clean": "rm -rf dist tsconfig.tsbuildinfo actions chains codegen connectors query",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo actions chains codegen connectors query tempo",
     "test:build": "publint --strict && attw --pack --ignore-rules cjs-resolves-to-esm"
   },
   "files": [
@@ -26,7 +26,8 @@
     "/codegen",
     "/connectors",
     "/internal",
-    "/query"
+    "/query",
+    "/tempo"
   ],
   "sideEffects": false,
   "type": "module",
@@ -62,6 +63,10 @@
       "types": "./dist/types/exports/query.d.ts",
       "default": "./dist/esm/exports/query.js"
     },
+    "./tempo": {
+      "types": "./dist/types/exports/tempo.d.ts",
+      "default": "./dist/esm/exports/tempo.js"
+    },
     "./package.json": "./package.json"
   },
   "typesVersions": {
@@ -83,6 +88,9 @@
       ],
       "query": [
         "./dist/types/exports/query.d.ts"
+      ],
+      "tempo": [
+        "./dist/types/exports/tempo.d.ts"
       ]
     }
   },

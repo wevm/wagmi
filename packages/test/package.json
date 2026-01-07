@@ -12,7 +12,8 @@
     "!src/**/*.test.ts",
     "!src/**/*.test-d.ts",
     "react/**",
-    "vue/**"
+    "vue/**",
+    "tempo/**"
   ],
   "sideEffects": false,
   "type": "module",
@@ -28,6 +29,10 @@
       "types": "./dist/types/exports/react.d.ts",
       "default": "./dist/esm/exports/react.js"
     },
+    "./tempo": {
+      "types": "./dist/types/exports/tempo.d.ts",
+      "default": "./dist/esm/exports/tempo.js"
+    },
     "./vue": {
       "types": "./dist/types/exports/vue.d.ts",
       "default": "./dist/esm/exports/vue.js"
@@ -38,6 +43,9 @@
     "*": {
       "react": [
         "./dist/types/exports/react.d.ts"
+      ],
+      "tempo": [
+        "./dist/types/exports/tempo.d.ts"
       ],
       "vue": [
         "./dist/types/exports/vue.d.ts"
@@ -51,6 +59,7 @@
     "@types/react-dom": ">=18",
     "@wagmi/core": "workspace:*",
     "@wagmi/vue": "workspace:*",
+    "ox": "catalog:",
     "prool": "^0.0.24",
     "react": ">=18",
     "react-dom": ">=18",
@@ -70,6 +79,9 @@
       "optional": true
     },
     "@types/react-dom": {
+      "optional": true
+    },
+    "@wagmi/vue": {
       "optional": true
     },
     "react": {
@@ -95,6 +107,7 @@
     "@types/react-dom": "catalog:",
     "@wagmi/core": "workspace:*",
     "@wagmi/vue": "workspace:*",
+    "ox": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
     "vue": "catalog:",

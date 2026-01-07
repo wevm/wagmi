@@ -79,7 +79,7 @@ const { writeContract: approve, error: approveError } = useWriteContract()
 Allows you to name the hook result whatever you want and not worry about also renaming properties.
 
 ```ts
-const connect = useConnect() // connect.isPending
+const connect = useConnect() // connect.mutate, connect.isPending
 const transfer = useWriteContract() // transfer.mutate, transfer.error, transfer.isPending
 const approve = useWriteContract() // approve.mutate, approve.error
 ```
