@@ -1,5 +1,7 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { ClientOnly, createFileRoute } from '@tanstack/react-router'
+import { getRequestHeader } from '@tanstack/react-start/server'
 import type { FormEvent } from 'react'
+import * as React from 'react'
 import { formatEther, type Hex, parseAbi, parseEther } from 'viem'
 import {
   type BaseError,
@@ -27,28 +29,48 @@ import {
 } from 'wagmi'
 import { switchChain } from 'wagmi/actions'
 import { optimism, sepolia } from 'wagmi/chains'
-
 import { wagmiContractConfig } from '../contracts'
 
-export const Route = createFileRoute('/')({ component: App })
+export const Route = createFileRoute('/')({
+  server: {
+    handlers: {
+      GET: async ({ next }) => {
+        const headers = getRequestHeader('cookie')
+        // biome-ignore lint/suspicious/noConsole: _
+        console.info(headers)
+        return next()
+      },
+    },
+  },
+  component: RouteComponent,
+})
 
-function App() {
+function RouteComponent() {
   useConnectionEffect({
-    onConnect(_data) {
-      // console.log('onConnect', data)
+    onConnect(data) {
+      console.log('onConnect', data)
     },
     onDisconnect() {
-      // console.log('onDisconnect')
+      console.log('onDisconnect')
     },
   })
 
   return (
     <>
       <Connection />
-      <Connect />
-      <SwitchConnection />
       <SwitchChain />
       <Repro />
+      {/* 
+      <Connect />
+      */}
+      {/*
+       */}
+      {/*  */}
+
+      <ClientOnly fallback={<React.Fragment />}>
+        <Connect />
+      </ClientOnly>
+      <SwitchConnection />
       <SignMessage />
       <Connections />
       <BlockNumber />
@@ -63,36 +85,32 @@ function App() {
 }
 
 function Connection() {
-  const connection = useConnection()
-  const { mutate: disconnect } = useDisconnect()
-  const { data: ensName } = useEnsName({
-    address: connection.address,
-  })
+  const { address, chainId } = useConnection()
+  const disconnect = useDisconnect()
+  const { data: ensName } = useEnsName({ address })
 
   return (
     <div>
       <h2>Connection</h2>
 
       <div>
-        account: {connection.address} {ensName}
+        account: {address} {ensName}
         <br />
-        chainId: {connection.chainId}
+        chainId: {chainId}
         <br />
-        status: {connection.status}
+        {/* status: {isMounted ? connection.status : 'disconnected'} */}
       </div>
 
-      {connection.status === 'connected' && (
-        <button type="button" onClick={() => disconnect()}>
-          Disconnect
-        </button>
-      )}
+      <button type="button" onClick={() => disconnect.mutate()}>
+        Disconnect
+      </button>
     </div>
   )
 }
 
 function Connect() {
   const chainId = useChainId()
-  const { mutate: connect, status, error } = useConnect()
+  const connect = useConnect()
   const connectors = useConnectors()
 
   return (
@@ -100,15 +118,15 @@ function Connect() {
       <h2>Connect</h2>
       {connectors.map((connector) => (
         <button
-          key={connector.uid}
-          onClick={() => connect({ connector, chainId })}
           type="button"
+          key={connector.uid}
+          onClick={() => connect.mutate({ connector, chainId })}
         >
           {connector.name}
         </button>
       ))}
-      <div>{status}</div>
-      <div>{error?.message}</div>
+      <div>{connect.status}</div>
+      <div>{connect.error?.message}</div>
     </div>
   )
 }
@@ -265,14 +283,14 @@ function ConnectorClient() {
 }
 
 function SendTransaction() {
-  const { data: hash, error, isPending, sendTransaction } = useSendTransaction()
+  const { data: hash, error, isPending, mutate } = useSendTransaction()
 
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     const formData = new FormData(e.target as HTMLFormElement)
     const to = formData.get('address') as Hex
     const value = formData.get('value') as string
-    sendTransaction({ to, value: parseEther(value) })
+    mutate({ to, value: parseEther(value) })
   }
 
   const { isLoading: isConfirming, isSuccess: isConfirmed } =

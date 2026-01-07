@@ -16,9 +16,12 @@
   "files.watcherExclude": {
     "**/routeTree.gen.ts": true
   },
-  "search.exclude": {
+  "files.exclude": {
+    "**/.tanstack": true,
+    "**/.wrangler": true,
     "**/routeTree.gen.ts": true
   },
+  "search.exclude": {},
   "files.readonlyInclude": {
     "**/routeTree.gen.ts": true
   }

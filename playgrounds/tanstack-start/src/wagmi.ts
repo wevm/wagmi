@@ -9,19 +9,12 @@ import {
   serialize,
 } from 'wagmi'
 import { mainnet, optimism, sepolia } from 'wagmi/chains'
-import { gemini, injected, metaMask, walletConnect } from 'wagmi/connectors'
+import { gemini, injected, metaMask } from 'wagmi/connectors'
 
 export function getConfig() {
   return createConfig({
     chains: [mainnet, sepolia, optimism],
-    connectors: [
-      injected(),
-      walletConnect({
-        projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID!,
-      }),
-      metaMask(),
-      gemini(),
-    ],
+    connectors: [injected(), metaMask(), gemini()],
     storage: createStorage({
       storage: cookieStorage,
     }),
