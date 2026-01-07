@@ -23,6 +23,7 @@ test('default', async () => {
   const {
     data: {
       gas: _gas,
+      gasPrice: _gasPrice,
       maxFeePerGas: _mfpg,
       maxPriorityFeePerGas: _mpfpg,
       nonce: _nonce,

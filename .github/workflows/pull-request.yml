@@ -17,6 +17,32 @@ jobs:
     uses: ./.github/workflows/verify.yml
     secrets: inherit
 
+  publish:
+    name: Publish preview release
+    needs: verify
+    # prevents this action from running on forks
+    if: github.repository == 'wevm/wagmi'
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
+
+      - name: Install dependencies
+        uses: wevm/actions/.github/actions/pnpm@f7ad7f00e16e73322562922c241f21f0c7ffbbec
+        with:
+          node-version: 24.5
+
+      - name: Publish to pkg.pr.new
+        run: |
+          pnpm changeset:prepublish
+          pnpx pkg-pr-new publish --pnpm --compact './packages/*'
+        env:
+          PKG_PR_NEW: true
+
   size:
     name: Size
     permissions:

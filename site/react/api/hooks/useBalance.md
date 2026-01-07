@@ -1,19 +1,19 @@
 ---
 title: useBalance
-description: Hook for fetching native currency or token balance.
+description: Hook for fetching native currency balance.
 ---
 
 <script setup>
 const packageName = 'wagmi'
 const actionName = 'getBalance'
 const typeName = 'GetBalance'
-const TData = '{ decimals: number; formatted: string; symbol: string; value: bigint; }'
+const TData = '{ decimals: number; symbol: string; value: bigint; }'
 const TError = 'GetBalanceErrorType'
 </script>
 
 # useBalance
 
-Hook for fetching native currency or token balance.
+Hook for fetching native currency balance.
 
 ## Import
 
@@ -162,47 +162,6 @@ function App() {
   const result = useBalance({
     address: '0x4557B18E779944BFE9d78A672452331C186a9f48',
     scopeKey: 'foo', // [!code focus]
-  })
-}
-```
-<<< @/snippets/react/config.ts[config.ts]
-:::
-
-### token <Badge type="warning">[deprecated](/react/guides/migrate-from-v1-to-v2#deprecated-usebalance-token-parameter)</Badge>
-
-`Address | undefined`
-
-ERC-20 token address to get balance for.
-
-::: code-group
-```ts [index.ts]
-import { useBalance } from 'wagmi'
-
-function App() {
-  const result = useBalance({
-    address: '0x4557B18E779944BFE9d78A672452331C186a9f48',
-    token: '0x6B175474E89094C44Da98b954EedeAC495271d0F', // [!code focus]
-  })
-}
-```
-<<< @/snippets/react/config.ts[config.ts]
-:::
-
-### unit <Badge type="warning">[deprecated](/react/guides/migrate-from-v1-to-v2#deprecated-usebalance-unit-parameter-and-formatted-return-value)</Badge>
-
-`'ether' | 'gwei' | 'wei' | number | undefined`
-
-- Units to use when formatting result.
-- Defaults to `'ether'`.
-
-::: code-group
-```ts [index.ts]
-import { useBalance } from 'wagmi'
-
-function App() {
-  const result = useBalance({
-    address: '0x4557B18E779944BFE9d78A672452331C186a9f48',
-    unit: 'ether', // [!code focus]
   })
 }
 ```

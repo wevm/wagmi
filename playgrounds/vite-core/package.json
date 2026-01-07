@@ -10,15 +10,15 @@
   "dependencies": {
     "@wagmi/connectors": "workspace:*",
     "@wagmi/core": "workspace:*",
-    "react": ">=18.3.1",
-    "react-dom": ">=18.3.1",
+    "react": "catalog:",
+    "react-dom": "catalog:",
     "viem": "2.*"
   },
   "devDependencies": {
-    "@types/react": ">=18.3.1",
-    "@types/react-dom": ">=18.3.0",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
     "@vitejs/plugin-react": "catalog:",
-    "buffer": "^6.0.3",
-    "vite": "^5.4.21"
+    "buffer": "catalog:",
+    "vite": "catalog:"
   }
 }

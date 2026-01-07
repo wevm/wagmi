@@ -93,4 +93,4 @@ import { type GetCapabilitiesErrorType } from '@wagmi/core'
 
 ## Viem
 
-- [`getCapabilities`](https://viem.sh/experimental/eip5792/getCapabilities)
+- [`getCapabilities`](https://viem.sh/docs/actions/wallet/getCapabilities)

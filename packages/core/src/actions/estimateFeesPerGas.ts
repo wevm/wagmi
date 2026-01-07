@@ -1,10 +1,4 @@
-import {
-  type Chain,
-  type FeeValuesEIP1559,
-  type FeeValuesLegacy,
-  type FeeValuesType,
-  formatUnits,
-} from 'viem'
+import type { Chain, FeeValuesType } from 'viem'
 import {
   type EstimateFeesPerGasErrorType as viem_EstimateFeesPerGasErrorType,
   type EstimateFeesPerGasParameters as viem_EstimateFeesPerGasParameters,
@@ -14,10 +8,8 @@ import {
 
 import type { Config } from '../createConfig.js'
 import type { ChainIdParameter } from '../types/properties.js'
-import type { Unit } from '../types/unit.js'
 import type { Compute, UnionCompute, UnionLooseOmit } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
-import { getUnit } from '../utils/getUnit.js'
 
 export type EstimateFeesPerGasParameters<
   type extends FeeValuesType = FeeValuesType,
@@ -27,23 +19,12 @@ export type EstimateFeesPerGasParameters<
     viem_EstimateFeesPerGasParameters<Chain, Chain, type>,
     'chain'
   > &
-    ChainIdParameter<config> & {
-      /** @deprecated */
-      formatUnits?: Unit | undefined
-    }
+    ChainIdParameter<config>
 >
 
 export type EstimateFeesPerGasReturnType<
   type extends FeeValuesType = FeeValuesType,
-> = Compute<
-  viem_EstimateFeesPerGasReturnType<type> & {
-    /** @deprecated */
-    formatted: UnionCompute<
-      | (type extends 'legacy' ? FeeValuesLegacy<string> : never)
-      | (type extends 'eip1559' ? FeeValuesEIP1559<string> : never)
-    >
-  }
->
+> = Compute<viem_EstimateFeesPerGasReturnType<type>>
 
 export type EstimateFeesPerGasErrorType = viem_EstimateFeesPerGasErrorType
 
@@ -54,7 +35,7 @@ export async function estimateFeesPerGas<
   config: config,
   parameters: EstimateFeesPerGasParameters<type, config> = {},
 ): Promise<EstimateFeesPerGasReturnType<type>> {
-  const { chainId, formatUnits: units = 'gwei', ...rest } = parameters
+  const { chainId, ...rest } = parameters
 
   const client = config.getClient({ chainId })
   const action = getAction(
@@ -68,17 +49,7 @@ export async function estimateFeesPerGas<
     chain: client.chain,
   })
 
-  const unit = getUnit(units)
-  const formatted = {
-    gasPrice: gasPrice ? formatUnits(gasPrice, unit) : undefined,
-    maxFeePerGas: maxFeePerGas ? formatUnits(maxFeePerGas, unit) : undefined,
-    maxPriorityFeePerGas: maxPriorityFeePerGas
-      ? formatUnits(maxPriorityFeePerGas, unit)
-      : undefined,
-  }
-
   return {
-    formatted,
     gasPrice,
     maxFeePerGas,
     maxPriorityFeePerGas,

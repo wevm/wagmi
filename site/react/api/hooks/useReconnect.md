@@ -31,10 +31,9 @@ import { useReconnect } from 'wagmi'
 import { useEffect } from 'react'
 
 function App() {
-  const { reconnect } = useReconnect()
-
+  const reconnect = useReconnect()
   useEffect(() => {
-    reconnect()
+    reconnect.mutate()
   }, [])
 }
 ```
@@ -63,7 +62,7 @@ import { useReconnect } from 'wagmi'
 import { config } from './config' // [!code focus]
 
 function App() {
-  const result = useReconnect({
+  const reconnect = useReconnect({
     config, // [!code focus]
   })
 }
@@ -79,7 +78,7 @@ function App() {
 import { type UseReconnectReturnType } from 'wagmi'
 ```
 
-### connectors
+### connectors <Badge type="warning">[deprecated](/react/guides/migrate-from-v2-to-v3#removed-useconnect-connectors-usereconnect-connectors)</Badge>
 
 `readonly Connector[]`
 
@@ -92,10 +91,10 @@ import { mainnet } from 'wagmi/chains'
 import { useEffect } from 'react'
 
 function App() {
-  const { reconnect, connectors } = useReconnect()
+  const reconnect = useReconnect()
 
   useEffect(() => {
-    reconnect({ connectors })
+    reconnect.mutate({ connectors: reconnect.connectors })
   }, [])
 }
 ```

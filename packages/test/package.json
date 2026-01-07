@@ -1,19 +1,9 @@
 {
   "name": "@wagmi/test",
-  "description": "Test utils for wagmi",
   "private": true,
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/wevm/wagmi.git",
-    "directory": "packages/test"
-  },
   "scripts": {
-    "build": "pnpm run clean && pnpm run build:esm+types",
-    "build:esm+types": "tsc --project tsconfig.build.json --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
     "check:types": "tsc --noEmit",
-    "clean": "rm -rf dist tsconfig.tsbuildinfo",
-    "test:build": "publint --strict"
+    "clean": "rm -rf dist tsconfig.tsbuildinfo"
   },
   "files": [
     "dist/**",
@@ -22,7 +12,8 @@
     "!src/**/*.test.ts",
     "!src/**/*.test-d.ts",
     "react/**",
-    "vue/**"
+    "vue/**",
+    "tempo/**"
   ],
   "sideEffects": false,
   "type": "module",
@@ -38,6 +29,10 @@
       "types": "./dist/types/exports/react.d.ts",
       "default": "./dist/esm/exports/react.js"
     },
+    "./tempo": {
+      "types": "./dist/types/exports/tempo.d.ts",
+      "default": "./dist/esm/exports/tempo.js"
+    },
     "./vue": {
       "types": "./dist/types/exports/vue.d.ts",
       "default": "./dist/esm/exports/vue.js"
@@ -48,6 +43,9 @@
     "*": {
       "react": [
         "./dist/types/exports/react.d.ts"
+      ],
+      "tempo": [
+        "./dist/types/exports/tempo.d.ts"
       ],
       "vue": [
         "./dist/types/exports/vue.d.ts"
@@ -61,10 +59,11 @@
     "@types/react-dom": ">=18",
     "@wagmi/core": "workspace:*",
     "@wagmi/vue": "workspace:*",
+    "ox": "catalog:",
     "prool": "^0.0.24",
     "react": ">=18",
     "react-dom": ">=18",
-    "typescript": ">=5.0.4",
+    "typescript": ">=5.7.3",
     "viem": "2.x",
     "vue": ">=3",
     "wagmi": "workspace:*"
@@ -80,6 +79,9 @@
       "optional": true
     },
     "@types/react-dom": {
+      "optional": true
+    },
+    "@wagmi/vue": {
       "optional": true
     },
     "react": {
@@ -105,6 +107,7 @@
     "@types/react-dom": "catalog:",
     "@wagmi/core": "workspace:*",
     "@wagmi/vue": "workspace:*",
+    "ox": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
     "vue": "catalog:",

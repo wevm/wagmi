@@ -1,4 +1,4 @@
-import { connect, disconnect, getAccount } from '@wagmi/core'
+import { connect, disconnect, getConnection } from '@wagmi/core'
 import { config, privateKey, typedData } from '@wagmi/test'
 import { renderHook } from '@wagmi/test/react'
 import { recoverTypedDataAddress } from 'viem'
@@ -13,7 +13,7 @@ test('default', async () => {
 
   const { result } = await renderHook(() => useSignTypedData())
 
-  result.current.signTypedData({
+  result.current.mutate({
     types: typedData.basic.types,
     primaryType: 'Mail',
     message: typedData.basic.message,
@@ -27,7 +27,7 @@ test('default', async () => {
       message: typedData.basic.message,
       signature: result.current.data!,
     }),
-  ).resolves.toEqual(getAccount(config).address)
+  ).resolves.toEqual(getConnection(config).address)
 
   await disconnect(config, { connector })
 })
@@ -36,7 +36,7 @@ test('behavior: local account', async () => {
   const { result } = await renderHook(() => useSignTypedData())
 
   const account = privateKeyToAccount(privateKey)
-  result.current.signTypedData({
+  result.current.mutate({
     account,
     types: typedData.basic.types,
     primaryType: 'Mail',

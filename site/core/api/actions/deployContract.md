@@ -215,11 +215,11 @@ export const wagmiAbi = [
 
 ::: code-group
 ```ts [index.ts]
-import { getAccount, deployContract } from '@wagmi/core'
+import { getConnection, deployContract } from '@wagmi/core'
 import { wagmiAbi } from './abi'
 import { config } from './config'
 
-const { connector } = getAccount(config)
+const { connector } = getConnection(config)
 const result = await deployContract(config, {
   abi: wagmiAbi,
   args: [69420],

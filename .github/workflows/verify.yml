@@ -62,7 +62,7 @@ jobs:
           node-version: 24.5
 
       - name: Build
-        run: pnpm build
+        run: pnpm clean && pnpm build
 
       - name: Publint
         run: pnpm test:build
@@ -79,8 +79,8 @@ jobs:
     timeout-minutes: 5
     strategy:
       matrix:
-        typescript-version: ['5.7.3', '5.8.3', '5.9.2', 'latest']
-        viem-version: ['2.38.0', 'latest']
+        typescript-version: ['5.7.3', '5.8.3', '5.9.3', 'latest']
+        viem-version: ['2.43.3', 'latest']
 
     steps:
       - name: Clone repository
@@ -98,6 +98,9 @@ jobs:
 
       - name: Check types
         run: pnpm check:types
+
+      - name: Bench types
+        run: pnpm bench:types
 
       # Redundant with `pnpm check:types`
       # If Vitest adds special features in the future, e.g. type coverage, can add this back!
@@ -125,13 +128,24 @@ jobs:
         with:
           node-version: 24.5
 
+      - name: Setup Docker
+        uses: docker/setup-docker-action@v4
+
       - name: Set up foundry
         uses: foundry-rs/foundry-toolchain@50d5a8956f2e319df19e6b57539d7e2acb9f8c1e # v1.5.0
         with:
           version: nightly
 
+      - name: Cache Playwright
+        uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('pnpm-lock.yaml') }}
+
       - name: Install Playwright
-        run: pnpx playwright@1.55.1 install --with-deps
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: pnpm exec playwright install chromium --with-deps
 
       - name: Run tests
         uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08

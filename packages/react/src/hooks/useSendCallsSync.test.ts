@@ -13,7 +13,7 @@ test('default', async () => {
 
   const { result } = await renderHook(() => useSendCallsSync())
 
-  result.current.sendCallsSync({
+  result.current.mutate({
     calls: [
       {
         data: '0xdeadbeef',

@@ -1,6 +1,7 @@
 <!-- <script setup>
 const packageName = 'wagmi'
 const connectorsPackageName = 'wagmi/connectors'
+const connectorDependencyVersion = 'x.y.z'
 </script> -->
 
 # porto
@@ -12,6 +13,28 @@ Connector for [Porto](https://porto.sh).
 ```ts-vue
 import { porto } from '{{connectorsPackageName}}'
 ```
+
+## Install
+
+<PackageMetadata package="porto" repo="ithacaxyz/porto" isOsiLicense licenseUrl="https://github.com/ithacaxyz/porto/blob/main/LICENSE-MIT" />
+
+::: code-group
+```bash-vue [pnpm]
+pnpm add porto@{{connectorDependencyVersion}}
+```
+
+```bash-vue [npm]
+npm install porto@{{connectorDependencyVersion}}
+```
+
+```bash-vue [yarn]
+yarn add porto@{{connectorDependencyVersion}}
+```
+
+```bash-vue [bun]
+bun add porto@{{connectorDependencyVersion}}
+```
+:::
 
 ## Usage
 

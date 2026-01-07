@@ -57,11 +57,6 @@ export function useSponsors() {
           img: 'linea-light.svg',
         },
         {
-          name: 'Routescan',
-          url: 'https://routescan.io',
-          img: 'routescan-light.svg',
-        },
-        {
           name: 'Gemini',
           url: 'https://gemini.com',
           img: 'gemini-light.svg',
@@ -172,6 +167,11 @@ export function useSponsors() {
           name: 'Sequence',
           url: 'https://sequence.xyz',
           img: 'sequence-light.svg',
+        },
+        {
+          name: 'Routescan',
+          url: 'https://routescan.io',
+          img: 'routescan-light.svg',
         },
       ],
     }

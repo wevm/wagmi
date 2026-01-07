@@ -1,5 +1,29 @@
 # create-wagmi
 
+## 2.0.19
+
+### Patch Changes
+
+- Fixed Vite React template build by removing global Buffer patch ([#4900](https://github.com/wevm/wagmi/pull/4900))
+
+## 2.0.18
+
+### Patch Changes
+
+- Bumped next.js template dependencies ([`d717d86`](https://github.com/wevm/wagmi/commit/d717d86962a6335d9c23e7fe530f17bae16f4e10))
+
+## 2.0.17
+
+### Patch Changes
+
+- Bumped next.js template dependencies ([`99c7e2f`](https://github.com/wevm/wagmi/commit/99c7e2f096ef3fc277b3f517c0ddd983bd920880))
+
+## 2.0.16
+
+### Patch Changes
+
+- Bumped Wagmi version ([`0112d33`](https://github.com/wevm/wagmi/commit/0112d33a20340f37b3b19538f55e1f32cb24c5f1))
+
 ## 2.0.15
 
 ### Patch Changes

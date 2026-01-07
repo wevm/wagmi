@@ -31,11 +31,11 @@ import { useConnect } from '@wagmi/vue'
 import { useConnect } from '@wagmi/vue'
 import { injected } from '@wagmi/connectors'
 
-const { connect } = useConnect()
+const connect = useConnect()
 </script>
 
 <template>
-  <button @click="connect({ connector: injected() })">
+  <button @click="connect.mutate({ connector: injected() })">
     Connect
   </button>
 </template>
@@ -61,7 +61,7 @@ import { type UseConnectParameters } from '@wagmi/vue'
 import { useConnect } from '@wagmi/vue'
 import { config } from './config' // [!code focus]
 
-const result = useConnect({
+const connect = useConnect({
   config, // [!code focus]
 })
 </script>
@@ -76,31 +76,6 @@ const result = useConnect({
 ```ts
 import { type UseConnectReturnType } from '@wagmi/vue'
 ```
-
-### connectors
-
-`readonly Connector[]`
-
-Globally configured connectors via [`createConfig`](/vue/api/createConfig#connectors). Useful for rendering a list of available connectors.
-
-::: code-group
-```vue [index.vue]
-<script setup lang="ts">
-import { useConnect } from '@wagmi/vue'
-
-const { connect, connectors } = useConnect()
-</script>
-
-<template>
-  <div>
-    <button v-for="connector in connectors" :key="connector.id" @click="connect({ connector })">
-      {{ connector.name }}
-    </button>
-  </div>
-</template>
-```
-<<< @/snippets/vue/config.ts[config.ts]
-:::
 
 <!--@include: @shared/mutation-result.md-->
 

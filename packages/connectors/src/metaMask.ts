@@ -41,14 +41,14 @@ export type MetaMaskParameters = Partial<
 > &
   OneOf<
     | {
-        /* Shortcut to connect and sign a message */
-        connectAndSign?: string | undefined
-      }
+      /* Shortcut to connect and sign a message */
+      connectAndSign?: string | undefined
+    }
     | {
-        // TODO: Strongly type `method` and `params`
-        /* Allow `connectWith` any rpc method */
-        connectWith?: { method: string; params: unknown[] } | undefined
-      }
+      // TODO: Strongly type `method` and `params`
+      /* Allow `connectWith` any rpc method */
+      connectWith?: { method: string; params: unknown[] } | undefined
+    }
   >
 
 metaMask.type = 'metaMask' as const
@@ -164,13 +164,13 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
               chainId,
               addEthereumChainParameter: chainConfig
                 ? {
-                    chainName: chainConfig.name,
-                    nativeCurrency: chainConfig.nativeCurrency,
-                    rpcUrls: chainConfig.rpcUrls.default?.http,
-                    blockExplorerUrls: chainConfig.blockExplorers?.default.url
-                      ? [chainConfig.blockExplorers?.default.url]
-                      : undefined,
-                  }
+                  chainName: chainConfig.name,
+                  nativeCurrency: chainConfig.nativeCurrency,
+                  rpcUrls: chainConfig.rpcUrls.default?.http,
+                  blockExplorerUrls: chainConfig.blockExplorers?.default.url
+                    ? [chainConfig.blockExplorers?.default.url]
+                    : undefined,
+                }
                 : undefined,
             }).catch((error) => {
               if (error.code === UserRejectedRequestError.code) throw error
@@ -197,9 +197,9 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           return {
             accounts: (withCapabilities
               ? accounts.map((account) => ({
-                  address: account,
-                  capabilities: {},
-                }))
+                address: account,
+                capabilities: {},
+              }))
               : accounts) as never,
             chainId: currentChainId,
           }
@@ -272,8 +272,8 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       async switchChain(
         parameters: Compute<{
           addEthereumChainParameter?:
-            | ExactPartial<StrictOmit<ViemAddEthereumChainParameter, 'chainId'>>
-            | undefined
+          | ExactPartial<StrictOmit<ViemAddEthereumChainParameter, 'chainId'>>
+          | undefined
           chainId: number
         }>,
       ) {

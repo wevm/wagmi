@@ -3,12 +3,10 @@ import {
   type UseSimulateContractParameters,
   useSimulateContract,
 } from '@wagmi/vue'
-import type { SimulateContractParameters } from '@wagmi/vue/actions'
 import { celo, mainnet, optimism } from '@wagmi/vue/chains'
 import type { SimulateContractOptions } from '@wagmi/vue/query'
 import type { Address } from 'viem'
 import { expectTypeOf, test } from 'vitest'
-
 import type { ChainId, config } from './config.js'
 
 test('chain formatters', () => {
@@ -51,30 +49,47 @@ test('UseSimulateContractParameters', () => {
     [Address, Address, bigint],
     typeof config
   >
+  const res = {} as Result
+  expectTypeOf(res.value?.functionName).toEqualTypeOf<
+    'approve' | 'transfer' | 'transferFrom' | undefined
+  >()
+  if (res.value?.args) {
+    expectTypeOf(res.value.args[0]).toEqualTypeOf<Address>()
+    expectTypeOf(res.value.args[1]).toEqualTypeOf<Address>()
+    expectTypeOf(res.value.args[2]).toEqualTypeOf<bigint>()
+  }
+  expectTypeOf(res.value?.chainId).toEqualTypeOf<ChainId | undefined>()
 
-  expectTypeOf<{
-    functionName?: 'approve' | 'transfer' | 'transferFrom' | undefined
-    args?: readonly [Address, Address, bigint] | undefined
-    chainId?: ChainId | undefined
-  }>().toMatchTypeOf<Result>()
-
-  type Result2 = SimulateContractParameters<
+  type Result2 = UseSimulateContractParameters<
     typeof abi.erc20,
     'transferFrom',
     [Address, Address, bigint],
     typeof config,
     typeof celo.id
   >
-  expectTypeOf<Result2['chainId']>().toEqualTypeOf<ChainId | undefined>()
+  expectTypeOf(({} as Result2).value?.chainId).toEqualTypeOf<
+    ChainId | undefined
+  >()
 
-  type Result3 = SimulateContractOptions<
+  type Result3 = UseSimulateContractParameters<
     typeof abi.erc20,
     'transferFrom',
     [Address, Address, bigint],
     typeof config,
     typeof celo.id
   >
-  expectTypeOf<Result3['chainId']>().toEqualTypeOf<ChainId | undefined>()
+  expectTypeOf(({} as Result3).value?.chainId).toEqualTypeOf<
+    ChainId | undefined
+  >()
+
+  type Result4 = SimulateContractOptions<
+    typeof abi.erc20,
+    'transferFrom',
+    [Address, Address, bigint],
+    typeof config,
+    typeof celo.id
+  >
+  expectTypeOf<Result4['chainId']>().toEqualTypeOf<ChainId | undefined>()
 })
 
 test('parameters: config', async () => {

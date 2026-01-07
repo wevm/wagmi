@@ -1,7 +1,6 @@
 {
   "name": "wagmi-vue-vite-starter",
   "private": true,
-  "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,15 +8,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@tanstack/vue-query": ">=5.45.0",
+    "@tanstack/vue-query": "latest",
     "@wagmi/vue": "latest",
     "viem": "latest",
-    "vue": ">=3.4.21"
+    "vue": "latest"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.0.4",
-    "buffer": "^6.0.3",
-    "vite": "^5.4.21",
-    "vue-tsc": "^2.0.6"
+    "@vitejs/plugin-vue": "latest",
+    "vite": "latest",
+    "vue-tsc": "latest"
   }
 }

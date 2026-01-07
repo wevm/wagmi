@@ -23,17 +23,6 @@ export {
 ////////////////////////////////////////////////////////////////////////////////
 
 export {
-  type UseAccountParameters,
-  type UseAccountReturnType,
-  useAccount,
-} from '../composables/useAccount.js'
-
-export {
-  type UseAccountEffectParameters,
-  useAccountEffect,
-} from '../composables/useAccountEffect.js'
-
-export {
   type UseBalanceParameters,
   type UseBalanceReturnType,
   useBalance,
@@ -56,31 +45,58 @@ export {
   type UseChainIdReturnType,
   useChainId,
 } from '../composables/useChainId.js'
+
 export {
   type UseChainsParameters,
   type UseChainsReturnType,
   useChains,
 } from '../composables/useChains.js'
+
 export {
   type UseClientParameters,
   type UseClientReturnType,
   useClient,
 } from '../composables/useClient.js'
+
 export {
   type UseConfigParameters,
   type UseConfigReturnType,
   useConfig,
 } from '../composables/useConfig.js'
+
 export {
   type UseConnectParameters,
   type UseConnectReturnType,
   useConnect,
 } from '../composables/useConnect.js'
+
+export {
+  /** @deprecated use `UseConnectionParameters` instead */
+  type UseConnectionParameters as UseAccountParameters,
+  type UseConnectionParameters,
+  /** @deprecated use `UseConnectionReturnType` instead */
+  type UseConnectionReturnType as UseAccountReturnType,
+  type UseConnectionReturnType,
+  /** @deprecated use `useConnection` instead */
+  useConnection as useAccount,
+  useConnection,
+} from '../composables/useConnection.js'
+
+export {
+  /** @deprecated use `UseConnectionEffectParameters` instead */
+  type UseConnectionEffectParameters as UseAccountEffectParameters,
+  type UseConnectionEffectParameters,
+  /** @deprecated use `useConnectionEffect` instead */
+  useConnectionEffect as useAccountEffect,
+  useConnectionEffect,
+} from '../composables/useConnectionEffect.js'
+
 export {
   type UseConnectionsParameters,
   type UseConnectionsReturnType,
   useConnections,
 } from '../composables/useConnections.js'
+
 export {
   type UseConnectorClientParameters,
   type UseConnectorClientReturnType,
@@ -160,16 +176,22 @@ export {
 } from '../composables/useSimulateContract.js'
 
 export {
-  type UseSwitchAccountParameters,
-  type UseSwitchAccountReturnType,
-  useSwitchAccount,
-} from '../composables/useSwitchAccount.js'
-
-export {
   type UseSwitchChainParameters,
   type UseSwitchChainReturnType,
   useSwitchChain,
 } from '../composables/useSwitchChain.js'
+
+export {
+  /** @deprecated use `UseSwitchConnectionParameters` instead */
+  type UseSwitchConnectionParameters as UseSwitchAccountParameters,
+  type UseSwitchConnectionParameters,
+  /** @deprecated use `UseSwitchConnectionReturnType` instead */
+  type UseSwitchConnectionReturnType as UseSwitchAccountReturnType,
+  type UseSwitchConnectionReturnType,
+  /** @deprecated use `useSwitchConnection` instead */
+  useSwitchConnection as useSwitchAccount,
+  useSwitchConnection,
+} from '../composables/useSwitchConnection.js'
 
 export {
   type UseTransactionParameters,
@@ -182,16 +204,19 @@ export {
   type UseTransactionReceiptReturnType,
   useTransactionReceipt,
 } from '../composables/useTransactionReceipt.js'
+
 export {
   type UseWaitForTransactionReceiptParameters,
   type UseWaitForTransactionReceiptReturnType,
   useWaitForTransactionReceipt,
 } from '../composables/useWaitForTransactionReceipt.js'
+
 export {
   type UseWatchBlockNumberParameters,
   type UseWatchBlockNumberReturnType,
   useWatchBlockNumber,
 } from '../composables/useWatchBlockNumber.js'
+
 export {
   type UseWatchContractEventParameters,
   type UseWatchContractEventReturnType,
@@ -247,7 +272,6 @@ export {
   injected,
   mock,
   noopStorage,
-  normalizeChainId,
   type PartializedState,
   ProviderNotFoundError,
   type ProviderNotFoundErrorType,

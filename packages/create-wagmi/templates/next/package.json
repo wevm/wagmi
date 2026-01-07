@@ -1,7 +1,7 @@
 {
   "name": "wagmi-next-starter",
   "private": true,
-  "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,24 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@tanstack/react-query": "5.45.1",
-    "next": "^15.5.4",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "@tanstack/react-query": "latest",
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest",
     "viem": "latest",
     "wagmi": "latest"
   },
   "devDependencies": {
-    "@types/node": "^20.12.10",
-    "@types/react": "^18.3.1",
-    "@types/react-dom": "^18.3.0",
+    "@types/node": "^24.10.1",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
     "@wagmi/cli": "latest",
-    "bufferutil": "^4.0.8",
-    "encoding": "^0.1.13",
-    "lokijs": "^1.5.12",
-    "pino-pretty": "^10.3.1",
-    "supports-color": "^9.4.0",
-    "typescript": "^5.9.2",
-    "utf-8-validate": "^5.0.2"
+    "typescript": "latest"
   }
 }

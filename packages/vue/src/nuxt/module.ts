@@ -24,8 +24,8 @@ export const wagmiModule: NuxtModule<WagmiModuleOptions> =
       // Add auto imports
       const composables = resolve('./runtime/composables')
       const names = [
-        'useAccount',
-        'useAccountEffect',
+        'useAccount' /** @deprecated */,
+        'useAccountEffect' /** @deprecated */,
         'useBalance',
         'useBlockNumber',
         'useChainId',
@@ -33,6 +33,8 @@ export const wagmiModule: NuxtModule<WagmiModuleOptions> =
         'useClient',
         'useConfig',
         'useConnect',
+        'useConnection',
+        'useConnectionEffect',
         'useConnections',
         'useConnectorClient',
         'useConnectors',
@@ -47,8 +49,9 @@ export const wagmiModule: NuxtModule<WagmiModuleOptions> =
         'useSignMessage',
         'useSignTypedData',
         'useSimulateContract',
-        'useSwitchAccount',
+        'useSwitchAccount' /** @deprecated */,
         'useSwitchChain',
+        'useSwitchConnection',
         'useTransaction',
         'useTransactionReceipt',
         'useWaitForTransactionReceipt',

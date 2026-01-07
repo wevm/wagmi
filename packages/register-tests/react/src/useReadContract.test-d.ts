@@ -1,7 +1,7 @@
-import type { abi } from '@wagmi/test'
+import { abi } from '@wagmi/test'
 import type { Address } from 'viem'
 import { expectTypeOf, test } from 'vitest'
-import type { useReadContract } from 'wagmi'
+import { useReadContract } from 'wagmi'
 
 import type { ChainId } from './config.js'
 
@@ -21,4 +21,18 @@ test('UseReadContractParameters', () => {
     args?: readonly [Address] | undefined
     chainId?: ChainId | undefined
   }>()
+
+  const result = useReadContract({
+    address: '0x',
+    abi: abi.erc20,
+    functionName: 'balanceOf',
+    args: ['0x'],
+    query: {
+      select(data) {
+        expectTypeOf(data).toEqualTypeOf<bigint>()
+        return data?.toString()
+      },
+    },
+  })
+  expectTypeOf(result.data).toEqualTypeOf<string | undefined>()
 })

@@ -20,9 +20,7 @@ afterEach(async () => {
 test('default', async () => {
   const { result } = await renderHook(() => useReconnect())
 
-  expect(result.current.connectors).toBeDefined()
-
-  result.current.reconnect()
+  result.current.mutate()
   await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current.data).toStrictEqual([])
@@ -33,9 +31,7 @@ test('parameters: connectors (Connector)', async () => {
 
   const { result } = await renderHook(() => useReconnect())
 
-  expect(result.current.connectors).toBeDefined()
-
-  result.current.reconnect({ connectors: [connector] })
+  result.current.mutate({ connectors: [connector] })
   await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current.data).toMatchObject(
@@ -57,9 +53,7 @@ test('parameters: connectors (CreateConnectorFn)', async () => {
 
   const { result } = await renderHook(() => useReconnect())
 
-  expect(result.current.connectors).toBeDefined()
-
-  result.current.reconnect({ connectors: [connector] })
+  result.current.mutate({ connectors: [connector] })
   await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current.data).toMatchObject(
@@ -77,7 +71,7 @@ test("behavior: doesn't reconnect if already reconnecting", async () => {
   config.setState((x) => ({ ...x, status: 'reconnecting' }))
   const { result } = await renderHook(() => useReconnect())
   await expect(
-    result.current.reconnectAsync({ connectors: [connector] }),
+    result.current.mutateAsync({ connectors: [connector] }),
   ).resolves.toStrictEqual([])
   config.setState((x) => ({ ...x, status: previousStatus }))
 })

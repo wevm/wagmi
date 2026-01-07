@@ -36,7 +36,11 @@ export type UseSignMessageReturnType<context = unknown> = Compute<
     SignMessageVariables,
     context
   > & {
+    mutate: SignMessageMutate<context>
+    mutateAsync: SignMessageMutateAsync<context>
+    /** @deprecated use `mutate` instead */
     signMessage: SignMessageMutate<context>
+    /** @deprecated use `mutateAsync` instead */
     signMessageAsync: SignMessageMutateAsync<context>
   }
 >
@@ -45,19 +49,12 @@ export type UseSignMessageReturnType<context = unknown> = Compute<
 export function useSignMessage<context = unknown>(
   parameters: UseSignMessageParameters<context> = {},
 ): UseSignMessageReturnType<context> {
-  const { mutation } = parameters
-
   const config = useConfig(parameters)
-
   const mutationOptions = signMessageMutationOptions(config)
-  const { mutate, mutateAsync, ...result } = useMutation({
-    ...mutation,
-    ...mutationOptions,
-  })
-
+  const mutation = useMutation({ ...parameters.mutation, ...mutationOptions })
   return {
-    ...result,
-    signMessage: mutate,
-    signMessageAsync: mutateAsync,
+    ...mutation,
+    signMessage: mutation.mutate,
+    signMessageAsync: mutation.mutateAsync,
   }
 }

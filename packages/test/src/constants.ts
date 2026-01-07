@@ -238,8 +238,8 @@ export const abi = {
   ]),
   viewOverloads: parseAbi([
     'function foo() view returns (int8)',
-    'function foo(address) view returns (string)',
-    'function foo(address, address) view returns ((address foo, address bar))',
+    'function foo(address account) view returns (string)',
+    'function foo(address a, address b) view returns ((address foo, address bar))',
     'function bar() view returns (int8)',
   ]),
   writeOverloads: parseAbi([

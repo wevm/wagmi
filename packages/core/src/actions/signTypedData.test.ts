@@ -5,7 +5,7 @@ import { expect, test } from 'vitest'
 import { mock } from '../connectors/mock.js'
 import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'
-import { getAccount } from './getAccount.js'
+import { getConnection } from './getConnection.js'
 import { signTypedData } from './signTypedData.js'
 
 const connector = config.connectors[0]!
@@ -24,7 +24,7 @@ test('default', async () => {
       message: typedData.basic.message,
       signature,
     }),
-  ).resolves.toBe(getAccount(config).address)
+  ).resolves.toBe(getConnection(config).address)
   await disconnect(config, { connector })
 })
 
@@ -46,7 +46,7 @@ test('behavior: user rejected request', async () => {
     [UserRejectedRequestError: User rejected the request.
 
     Details: Failed to sign typed data.
-    Version: viem@2.38.0]
+    Version: viem@2.43.3]
   `)
   await disconnect(config, { connector: connector_ })
 })

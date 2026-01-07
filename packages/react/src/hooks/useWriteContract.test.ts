@@ -12,7 +12,7 @@ test('default', async () => {
 
   const { result } = await renderHook(() => useWriteContract())
 
-  result.current.writeContract({
+  result.current.mutate({
     abi: abi.wagmiMintExample,
     address: address.wagmiMintExample,
     functionName: 'mint',

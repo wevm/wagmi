@@ -1,5 +1,4 @@
 import type { AppMetadata, ProviderInterface } from '@gemini-wallet/core'
-import { GeminiWalletProvider } from '@gemini-wallet/core'
 import {
   ChainNotConfiguredError,
   type Connector,
@@ -110,6 +109,14 @@ export function gemini(parameters: GeminiParameters = {}) {
     },
     async getProvider() {
       if (!walletProvider) {
+        const { GeminiWalletProvider } = await (() => {
+          // safe webpack optional peer dependency dynamic import
+          try {
+            return import('@gemini-wallet/core')
+          } catch {
+            throw new Error('dependency "@gemini-wallet/core" not found')
+          }
+        })()
         walletProvider = new GeminiWalletProvider({
           appMetadata: parameters.appMetadata ?? {},
           chain: {

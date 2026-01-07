@@ -23,9 +23,9 @@ import {
   type UseQueryReturnType,
   useQuery,
 } from '../utils/query.js'
-import { useAccount } from './useAccount.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
+import { useConnection } from './useConnection.js'
 
 export type UseConnectorClientParameters<
   config extends Config = Config,
@@ -79,7 +79,7 @@ export function useConnectorClient<
     address,
     connector: accountConnector,
     status,
-  } = useAccount({ config })
+  } = useConnection({ config })
   const configChainId = useChainId({ config })
 
   const queryOptions = computed(() => {

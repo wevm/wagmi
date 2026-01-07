@@ -37,7 +37,11 @@ export type UseReconnectReturnType<context = unknown> = Compute<
     context
   > & {
     connectors: readonly Connector[]
+    mutate: ReconnectMutate<context>
+    mutateAsync: ReconnectMutateAsync<context>
+    /** @deprecated use `mutate` instead */
     reconnect: ReconnectMutate<context>
+    /** @deprecated use `mutateAsync` instead */
     reconnectAsync: ReconnectMutateAsync<context>
   }
 >
@@ -46,20 +50,13 @@ export type UseReconnectReturnType<context = unknown> = Compute<
 export function useReconnect<context = unknown>(
   parameters: UseReconnectParameters<context> = {},
 ): UseReconnectReturnType<context> {
-  const { mutation } = parameters
-
   const config = useConfig(parameters)
-
   const mutationOptions = reconnectMutationOptions(config)
-  const { mutate, mutateAsync, ...result } = useMutation({
-    ...mutation,
-    ...mutationOptions,
-  })
-
+  const mutation = useMutation({ ...parameters.mutation, ...mutationOptions })
   return {
-    ...result,
+    ...mutation,
     connectors: config.connectors,
-    reconnect: mutate,
-    reconnectAsync: mutateAsync,
+    reconnect: mutation.mutate,
+    reconnectAsync: mutation.mutateAsync,
   }
 }

@@ -12,9 +12,7 @@ import {
 } from '@wagmi/core/query'
 import type { Abi, ContractFunctionArgs, ContractFunctionName } from 'viem'
 import { computed, type MaybeRef } from 'vue'
-
 import type { ConfigParameter, QueryParameter } from '../types/properties.js'
-import type { DeepMaybeRef } from '../types/ref.js'
 import { deepUnref } from '../utils/cloneDeep.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
@@ -36,9 +34,7 @@ export type UseSimulateContractParameters<
   chainId extends config['chains'][number]['id'] | undefined = undefined,
   selectData = SimulateContractData<abi, functionName, args, config, chainId>,
 > = MaybeRef<
-  DeepMaybeRef<
-    SimulateContractOptions<abi, functionName, args, config, chainId>
-  > &
+  SimulateContractOptions<abi, functionName, args, config, chainId> &
     ConfigParameter<config> &
     QueryParameter<
       SimulateContractQueryFnData<abi, functionName, args, config, chainId>,

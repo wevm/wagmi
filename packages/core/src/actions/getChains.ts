@@ -2,10 +2,8 @@ import type { Chain } from 'viem'
 import type { Config } from '../createConfig.js'
 import { deepEqual } from '../utils/deepEqual.js'
 
-export type GetChainsReturnType<config extends Config = Config> = readonly [
-  ...config['chains'],
-  ...Chain[],
-]
+export type GetChainsReturnType<config extends Config = Config> =
+  config['chains']
 
 let previousChains: readonly Chain[] = []
 

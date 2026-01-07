@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 2.8.0
+
+### Minor Changes
+
+- Added option to React plugin to disable generating hooks for each function/event in ABI. ([#4866](https://github.com/wevm/wagmi/pull/4866))
+
 ## 2.7.1
 
 ### Patch Changes

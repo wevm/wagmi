@@ -12,7 +12,7 @@ const tokenInfo = {
 const contextValue = { foo: 'bar' } as const
 
 test('context', () => {
-  const { context, data, error, watchAsset, variables } = useWatchAsset({
+  const watchAsset = useWatchAsset({
     mutation: {
       onMutate(variables) {
         expectTypeOf(variables).toEqualTypeOf<WatchAssetVariables>()
@@ -37,12 +37,16 @@ test('context', () => {
     },
   })
 
-  expectTypeOf(data).toEqualTypeOf<boolean | undefined>()
-  expectTypeOf(error).toEqualTypeOf<WatchAssetErrorType | null>()
-  expectTypeOf(variables).toEqualTypeOf<WatchAssetVariables | undefined>()
-  expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+  expectTypeOf(watchAsset.data).toEqualTypeOf<boolean | undefined>()
+  expectTypeOf(watchAsset.error).toEqualTypeOf<WatchAssetErrorType | null>()
+  expectTypeOf(watchAsset.variables).toEqualTypeOf<
+    WatchAssetVariables | undefined
+  >()
+  expectTypeOf(watchAsset.context).toEqualTypeOf<
+    typeof contextValue | undefined
+  >()
 
-  watchAsset(
+  watchAsset.mutate(
     { type: 'ERC20', options: tokenInfo },
     {
       onError(error, variables, context) {

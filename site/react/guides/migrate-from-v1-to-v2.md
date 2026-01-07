@@ -265,7 +265,7 @@ This might seem like more work, but it gives you more control and is more accura
 
 ### Removed `useNetwork` hook
 
-The `useNetwork` hook was removed since the connected chain is typically based on the connected account. Use [`useAccount`](/react/api/hooks/useAccount) to get the connected `chain`.
+The `useNetwork` hook was removed since the connected chain is typically based on the connected account. Use [`useAccount`](/react/api/hooks/useConnection) to get the connected `chain`.
 
 ```ts
 import { useNetwork } from 'wagmi' // [!code --]
@@ -287,7 +287,7 @@ const { chains } = useConfig() // [!code ++]
 
 ### Removed `onConnect` and `onDisconnect` callbacks from `useAccount`
 
-The `onConnect` and `onDisconnect` callbacks were removed from the `useAccount` hook since it is frequently used without these callbacks so it made sense to extract these into a new API, [`useAccountEffect`](/react/api/hooks/useAccountEffect), rather than clutter the `useAccount` hook.
+The `onConnect` and `onDisconnect` callbacks were removed from the `useAccount` hook since it is frequently used without these callbacks so it made sense to extract these into a new API, [`useAccountEffect`](/react/api/hooks/useConnectionEffect), rather than clutter the `useAccount` hook.
 
 ```ts
 import { useAccount } from 'wagmi' // [!code --]
@@ -622,7 +622,7 @@ const result = useReadContracts({ // [!code ++]
 The `formatUnits` parameter and related return values (e.g. `result.formatted`) are deprecated for the following hooks:
 
 - [`useEstimateFeesPerGas`](/react/api/hooks/useEstimateFeesPerGas)
-- [`useToken`](/react/api/hooks/useToken)
+- `useToken`
 
 Instead you can call `formatUnits` from Viem directly or use another number formatting library, like [dnum](https://github.com/bpierre/dnum) instead.
 

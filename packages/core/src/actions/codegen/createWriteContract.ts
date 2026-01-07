@@ -85,10 +85,7 @@ export type CreateWriteContractReturnType<
               | undefined
           }
         : Compute<ChainIdParameter<config, chainId>>) &
-      ConnectorParameter & {
-        /** @deprecated */
-        __mode?: 'prepared'
-      }
+      ConnectorParameter
   >,
 ) => Promise<WriteContractReturnType>
 

@@ -86,14 +86,14 @@ const result = await switchChain(config, {
 
 ::: code-group
 ```ts [index.ts]
-import { getConnections, switchAccount } from '@wagmi/core'
+import { getConnection, switchChain } from '@wagmi/core'
 import { mainnet } from '@wagmi/core/chains'
 import { config } from './config'
 
-const connections = getConnections(config)
+const connection = getConnection(config)
 const result = await switchChain(config, {
   chainId: mainnet.id,
-  connector: connections[0]?.connector, // [!code focus]
+  connector: connection?.connector, // [!code focus]
 })
 ```
 <<< @/snippets/core/config.ts[config.ts]

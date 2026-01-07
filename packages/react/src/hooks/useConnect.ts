@@ -46,9 +46,14 @@ export type UseConnectReturnType<
     ConnectVariables<config, config['connectors'][number], boolean>,
     context
   > & {
+    /** @deprecated use `mutate` instead */
     connect: ConnectMutate<config, context>
+    /** @deprecated use `mutateAsync` instead */
     connectAsync: ConnectMutateAsync<config, context>
+    /** @deprecated use `useConnectors` instead */
     connectors: Compute<UseConnectorsReturnType> | config['connectors']
+    mutate: ConnectMutate<config, context>
+    mutateAsync: ConnectMutateAsync<config, context>
   }
 >
 
@@ -59,13 +64,11 @@ export function useConnect<
 >(
   parameters: UseConnectParameters<config, context> = {},
 ): UseConnectReturnType<config, context> {
-  const { mutation } = parameters
-
   const config = useConfig(parameters)
 
   const mutationOptions = connectMutationOptions(config)
-  const { mutate, mutateAsync, ...result } = useMutation({
-    ...(mutation as typeof mutationOptions),
+  const mutation = useMutation({
+    ...(parameters.mutation as typeof mutationOptions),
     ...mutationOptions,
   })
 
@@ -75,16 +78,16 @@ export function useConnect<
       ({ status }) => status,
       (status, previousStatus) => {
         if (previousStatus === 'connected' && status === 'disconnected')
-          result.reset()
+          mutation.reset()
       },
     )
-  }, [config, result.reset])
+  }, [config, mutation.reset])
 
   type Return = UseConnectReturnType<config, context>
   return {
-    ...(result as Return),
-    connect: mutate as Return['connect'],
-    connectAsync: mutateAsync as Return['connectAsync'],
+    ...(mutation as Return),
+    connect: mutation.mutate as Return['mutate'],
+    connectAsync: mutation.mutateAsync as Return['mutateAsync'],
     connectors: useConnectors({ config }),
   }
 }

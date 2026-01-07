@@ -1,0 +1,95 @@
+# `token.burnBlocked`
+
+Burns TIP-20 tokens from a blocked address. Requires the `BURN_BLOCKED` role. [Learn more about token roles](https://docs.tempo.xyz/protocol/tip403/spec)
+
+## Usage
+
+::: code-group
+
+```ts twoslash [example.ts]
+// @twoslash-cache: {"v":1,"hash":"4c6f4c6c8a9a3012b0d32258ab141ad46f5a27fb53da72d2d92aecbf86789fa0","data":"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"}
+// @filename: config.ts
+// @errors: 2322
+import type { Config } from 'wagmi'
+export const config = {} as Config
+// @filename: example.ts
+// ---cut---
+import { Actions } from 'wagmi/tempo'
+import { parseUnits } from 'viem'
+import { config } from './config'
+
+const { receipt } = await Actions.token.burnBlockedSync(config, {
+  amount: parseUnits('10.5', 6),
+  from: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
+  token: '0x20c0000000000000000000000000000000000000',
+})
+
+console.log('Transaction hash:', receipt.transactionHash)
+// @log: Transaction hash: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+```
+
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
+
+:::
+
+### Asynchronous Usage
+
+The example above uses a `*Sync` variant of the action, that will wait for the transaction to be included before returning.
+
+If you are optimizing for performance, you should use the non-sync `token.burnBlocked` action and wait for inclusion manually:
+
+```ts
+import { Actions as viem_Actions } from 'viem/tempo'
+import { Actions } from 'wagmi/tempo'
+import { parseUnits } from 'viem'
+import { waitForTransactionReceipt } from 'wagmi/actions'
+
+const hash = await Actions.token.burnBlocked(config, {
+  amount: parseUnits('10.5', 6),
+  from: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
+  token: '0x20c0000000000000000000000000000000000000',
+})
+const receipt = await waitForTransactionReceipt(config, { hash })
+
+const { args } 
+  = viem_Actions.token.burnBlocked.extractEvent(receipt.logs)
+```
+
+## Return Type
+
+```ts
+type ReturnType = {
+  /** Amount of tokens burned */
+  amount: bigint
+  /** Address tokens were burned from */
+  from: Address
+  /** Transaction receipt */
+  receipt: TransactionReceipt
+}
+```
+
+## Parameters
+
+### amount
+
+- **Type:** `bigint`
+
+Amount of tokens to burn.
+
+### from
+
+- **Type:** `Address`
+
+Address to burn tokens from.
+
+### token
+
+- **Type:** `Address | bigint`
+
+Address or ID of the TIP-20 token.
+
+<!--@include: @shared/tempo-write-parameters.md-->
+
+## Viem
+
+- [`token.burnBlocked`](https://viem.sh/tempo/actions/token.burnBlocked)
