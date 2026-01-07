@@ -15,6 +15,7 @@ import type {
   ScopeKeyParameter,
 } from '../types/properties.js'
 import type { ExactPartial } from '../types/utils.js'
+import { serialize } from '../utils/serialize.js'
 import { filterQueryOptions } from './utils.js'
 
 export type ReadContractsOptions<
@@ -85,7 +86,10 @@ export function readContractsQueryKey<
   for (const contract of (options.contracts ??
     []) as (ContractFunctionParameters & { chainId: number })[]) {
     const { abi: _, ...rest } = contract
-    contracts.push({ ...rest, chainId: rest.chainId ?? options.chainId })
+    const serialized = JSON.parse(
+      serialize({ ...rest, chainId: rest.chainId ?? options.chainId }),
+    )
+    contracts.push(serialized)
   }
   return [
     'readContracts',

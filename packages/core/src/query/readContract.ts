@@ -10,6 +10,7 @@ import {
 import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
 import type { UnionExactPartial } from '../types/utils.js'
+import { serialize } from '../utils/serialize.js'
 import { filterQueryOptions } from './utils.js'
 
 export type ReadContractOptions<
@@ -82,7 +83,8 @@ export function readContractQueryKey<
   args extends ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
 >(options: ReadContractOptions<abi, functionName, args, config> = {} as any) {
   const { abi: _, ...rest } = options
-  return ['readContract', filterQueryOptions(rest)] as const
+  const serialized = JSON.parse(serialize(rest))
+  return ['readContract', filterQueryOptions(serialized)] as const
 }
 
 export type ReadContractQueryKey<
