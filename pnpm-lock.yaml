@@ -214,8 +214,8 @@ importers:
         specifier: 0.3.2
         version: 0.3.2(viem@2.38.0(bufferutil@4.0.8)(typescript@5.9.2)(utf-8-validate@5.0.10)(zod@3.25.76))
       '@metamask/connect-evm':
-        specifier: ^0.1.0
-        version: 0.1.0(@babel/runtime@7.28.4)(bufferutil@4.0.8)(encoding@0.1.13)(utf-8-validate@5.0.10)
+        specifier: ^0.1.2
+        version: 0.1.2(@babel/runtime@7.28.4)(bufferutil@4.0.8)(encoding@0.1.13)(utf-8-validate@5.0.10)
       '@safe-global/safe-apps-provider':
         specifier: 0.18.6
         version: 0.18.6(bufferutil@4.0.8)(encoding@0.1.13)(typescript@5.9.2)(utf-8-validate@5.0.10)(zod@3.25.76)
@@ -1993,13 +1993,13 @@ packages:
     resolution: {integrity: sha512-eyL+M6pLE6HLGgERrnH2yQ4xrQzqwQh7xct+by2wdHTjVvEUwg36SXsgrVOk+rCX8uKBEZOAykewvrSB9TZVrw==}
     engines: {node: ^18.18 || >=20}
 
-  '@metamask/connect-evm@0.1.0':
-    resolution: {integrity: sha512-LbGZtsX8aTzyUPpWN0ASRUH4heVlBouuz8b6UUiI6ZTIN1LBo0QIlrmPCzTVs7S77qYFD6hdlUXNNDSAWDmXgg==}
-    engines: {node: ^18.18 || >=20}
+  '@metamask/connect-evm@0.1.2':
+    resolution: {integrity: sha512-eb6+XxE/nxPSfbA8HqykEtsZ2fyVNHM8j49E42E60aYvOILYet1VGEtag41XdOJObH7j6VvX7dwBY+YrQ1bJpQ==}
+    engines: {node: '>=20.19.0'}
 
-  '@metamask/connect-multichain@0.3.0':
-    resolution: {integrity: sha512-Yo5bfuHLHKEqL5aHma7iRCZ/lNHnVbZW1/GoCTBV9aIb/0AcI+FEa+vDlISN9rTYGVmBLY4BfPBYzTaTVCZGrg==}
-    engines: {node: ^18.18 || >=20}
+  '@metamask/connect-multichain@0.4.0':
+    resolution: {integrity: sha512-GaoY472B3eNUIMf40v2o8lFNIce7O33flraGFChPdTjMIfm4lqY3O2C5LDtSbrdKFU0o+KVr1LzmnQwIsdk5Lw==}
+    engines: {node: '>=20.19.0'}
     peerDependencies:
       '@react-native-async-storage/async-storage': ^1.23
 
@@ -2065,13 +2065,13 @@ packages:
   '@metamask/mobile-wallet-protocol-dapp-client@0.2.2':
     resolution: {integrity: sha512-+tKa8va/5DUJLzK0LmnSCXXUGcyzMJkDGOAiFgIqWOo8V02WQNRatahO2eWQKv/A7fUL/JbflrXF6alHVmumXA==}
 
-  '@metamask/multichain-api-client@0.8.1':
-    resolution: {integrity: sha512-O/QYjYVA2P8vGex6Y1FR3fADJf0hSVb2CnamyuMc3hyXjARyAiLm0n8EQd508u0DYUuazoW3pE6KSkB7mlSnSg==}
+  '@metamask/multichain-api-client@0.10.1':
+    resolution: {integrity: sha512-LsqO2SiDcTgOuXyVYEB0zgBaVNhryhP2tYI3L7tLa7PoeDqMkNIreFhDeu8jM5tPWkCimQvMwCkG3DF4P5dD3A==}
     engines: {node: ^18.20 || ^20.17 || >=22}
 
-  '@metamask/multichain-ui@0.2.0':
-    resolution: {integrity: sha512-R3bVRs1D0M3aAMj+V854XduibA6Hp/vXHjbK772Yy3VPScuOLgb/tXS+ZeU9Ga1LGDulzPpXNU9jnCKSF87xHg==}
-    engines: {node: ^18.18 || >=20}
+  '@metamask/multichain-ui@0.3.0':
+    resolution: {integrity: sha512-1rkmFPepSyCToZoP+nSHbkGnZw7JBRlfmBWk3K0bCopdU7s/WNOCcunb7v8/QnNq7mWU5m0Aj6PtV5y1JgleNg==}
+    engines: {node: '>=20.19.0'}
 
   '@metamask/network-controller@25.0.0':
     resolution: {integrity: sha512-mDSP/H7mjmwnxqaEQCjpF8MrxI2KxBpnOv7zkgs1m7QSq03kLy+QXXCCV1S/RF55crYrORu445gASd/+0RuZsw==}
@@ -10888,11 +10888,11 @@ snapshots:
       - '@metamask/error-reporting-service'
       - supports-color
 
-  '@metamask/connect-evm@0.1.0(@babel/runtime@7.28.4)(bufferutil@4.0.8)(encoding@0.1.13)(utf-8-validate@5.0.10)':
+  '@metamask/connect-evm@0.1.2(@babel/runtime@7.28.4)(bufferutil@4.0.8)(encoding@0.1.13)(utf-8-validate@5.0.10)':
     dependencies:
       '@metamask/analytics': 0.2.0
       '@metamask/chain-agnostic-permission': 1.2.2(@babel/runtime@7.28.4)
-      '@metamask/connect-multichain': 0.3.0(bufferutil@4.0.8)(encoding@0.1.13)(utf-8-validate@5.0.10)
+      '@metamask/connect-multichain': 0.4.0(bufferutil@4.0.8)(encoding@0.1.13)(utf-8-validate@5.0.10)
       '@metamask/utils': 11.8.1
     transitivePeerDependencies:
       - '@babel/runtime'
@@ -10904,13 +10904,13 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@metamask/connect-multichain@0.3.0(bufferutil@4.0.8)(encoding@0.1.13)(utf-8-validate@5.0.10)':
+  '@metamask/connect-multichain@0.4.0(bufferutil@4.0.8)(encoding@0.1.13)(utf-8-validate@5.0.10)':
     dependencies:
       '@metamask/analytics': 0.2.0
       '@metamask/mobile-wallet-protocol-core': 0.3.1
       '@metamask/mobile-wallet-protocol-dapp-client': 0.2.2
-      '@metamask/multichain-api-client': 0.8.1
-      '@metamask/multichain-ui': 0.2.0
+      '@metamask/multichain-api-client': 0.10.1
+      '@metamask/multichain-ui': 0.3.0
       '@metamask/onboarding': 1.0.1
       '@metamask/utils': 11.8.1
       '@paulmillr/qr': 0.2.1
@@ -11058,9 +11058,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@metamask/multichain-api-client@0.8.1': {}
+  '@metamask/multichain-api-client@0.10.1': {}
 
-  '@metamask/multichain-ui@0.2.0':
+  '@metamask/multichain-ui@0.3.0':
     dependencies:
       '@paulmillr/qr': 0.2.1
       qr-code-styling: 1.9.2
