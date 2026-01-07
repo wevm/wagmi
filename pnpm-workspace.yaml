@@ -35,6 +35,10 @@ catalog:
 linkWorkspacePackages: deep
 minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
+  - 'wrangler'
+  - 'miniflare'
+  - '@cloudflare/vite-plugin'
+  - '@cloudflare/unenv-preset'
   - '@gemini-wallet/core'
   - '@wagmi/cli'
   - '@wagmi/connectors'

@@ -12,5 +12,17 @@
   },
   "[vue]": {
     "editor.defaultFormatter": "Vue.volar"
+  },
+  "files.watcherExclude": {
+    "**/routeTree.gen.ts": true
+  },
+  "files.exclude": {
+    "**/.tanstack": true,
+    "**/.wrangler": true,
+    "**/routeTree.gen.ts": true
+  },
+  "search.exclude": {},
+  "files.readonlyInclude": {
+    "**/routeTree.gen.ts": true
   }
 }
