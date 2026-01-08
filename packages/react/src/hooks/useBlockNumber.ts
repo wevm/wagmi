@@ -1,5 +1,4 @@
 'use client'
-
 import { useQueryClient } from '@tanstack/react-query'
 import type {
   Config,
@@ -16,7 +15,6 @@ import {
   type GetBlockNumberOptions,
   getBlockNumberQueryOptions,
 } from '@wagmi/core/query'
-
 import type { ConfigParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'

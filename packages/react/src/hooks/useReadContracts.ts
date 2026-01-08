@@ -1,5 +1,4 @@
 'use client'
-
 import type {
   Config,
   ReadContractsErrorType,
@@ -13,7 +12,6 @@ import {
 } from '@wagmi/core/query'
 import { useMemo } from 'react'
 import type { ContractFunctionParameters } from 'viem'
-
 import type { ConfigParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'

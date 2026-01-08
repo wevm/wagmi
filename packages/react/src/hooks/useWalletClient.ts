@@ -1,8 +1,6 @@
 'use client'
-
 // Almost identical implementation to `useConnectorClient` (except for return type)
 // Should update both in tandem
-
 import { useQueryClient } from '@tanstack/react-query'
 import type {
   Config,
@@ -16,7 +14,6 @@ import {
   getWalletClientQueryOptions,
 } from '@wagmi/core/query'
 import { useEffect, useRef } from 'react'
-
 import type { ConfigParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'

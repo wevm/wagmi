@@ -1,5 +1,4 @@
 'use client'
-
 import type {
   Config,
   GetEnsResolverErrorType,
@@ -11,7 +10,6 @@ import {
   type GetEnsResolverOptions,
   getEnsResolverQueryOptions,
 } from '@wagmi/core/query'
-
 import type { ConfigParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
