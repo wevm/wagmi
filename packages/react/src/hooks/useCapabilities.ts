@@ -1,5 +1,4 @@
 'use client'
-
 import type {
   Config,
   GetCapabilitiesErrorType,
@@ -11,7 +10,6 @@ import {
   type GetCapabilitiesOptions,
   getCapabilitiesQueryOptions,
 } from '@wagmi/core/query'
-
 import type { ConfigParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
@@ -39,11 +37,12 @@ export function useCapabilities<
 >(
   parameters: UseCapabilitiesParameters<config, chainId, selectData> = {},
 ): UseCapabilitiesReturnType<config, chainId, selectData> {
-  const { address } = useConnection()
   const config = useConfig(parameters)
+  const { address, connector } = useConnection({ config })
   const options = getCapabilitiesQueryOptions(config, {
     ...parameters,
     account: parameters.account ?? address,
+    connector: parameters.connector ?? connector,
     query: parameters.query,
   })
   return useQuery(options as never) as any

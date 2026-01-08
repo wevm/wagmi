@@ -10,15 +10,15 @@ test('default', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
-      "enabled": true,
+      "enabled": false,
       "queryFn": [Function],
       "queryKey": [
         "callsStatus",
         {
+          "connectorUid": undefined,
           "id": "0x0000000000000000000000000000000000000000",
         },
       ],
-      "retry": [Function],
     }
   `)
 })

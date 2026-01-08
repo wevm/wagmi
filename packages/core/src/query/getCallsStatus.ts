@@ -5,7 +5,6 @@ import {
   getCallsStatus,
 } from '../actions/getCallsStatus.js'
 import type { Config } from '../createConfig.js'
-import { ConnectorNotConnectedError } from '../errors/config.js'
 import { filterQueryOptions } from '../query/utils.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
 import type { QueryOptions, QueryParameter } from '../types/query.js'
@@ -30,16 +29,18 @@ export function getCallsStatusQueryOptions<
 ): GetCallsStatusQueryOptions<selectData> {
   return {
     ...options.query,
+    enabled: Boolean(
+      options.connector?.getProvider && (options.query?.enabled ?? true),
+    ),
     queryFn: async (context) => {
-      const [, { scopeKey: _, ...parameters }] = context.queryKey
+      if (!options.connector?.getProvider)
+        throw new Error('connector is required')
+      const [, { connectorUid: _, scopeKey: __, ...parameters }] =
+        context.queryKey
       const status = await getCallsStatus(config, parameters)
       return status
     },
     queryKey: getCallsStatusQueryKey(options),
-    retry(failureCount, error) {
-      if (error instanceof ConnectorNotConnectedError) return false
-      return failureCount < 3
-    },
   }
 }
 
@@ -50,7 +51,10 @@ export type GetCallsStatusData = GetCallsStatusQueryFnData
 export function getCallsStatusQueryKey(
   options: Compute<GetCallsStatusParameters & ScopeKeyParameter>,
 ) {
-  return ['callsStatus', filterQueryOptions(options)] as const
+  return [
+    'callsStatus',
+    { ...filterQueryOptions(options), connectorUid: options.connector?.uid },
+  ] as const
 }
 
 export type GetCallsStatusQueryKey = ReturnType<typeof getCallsStatusQueryKey>

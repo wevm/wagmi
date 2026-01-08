@@ -1,5 +1,4 @@
 'use client'
-
 import type {
   Config,
   ResolvedRegister,
@@ -11,10 +10,10 @@ import {
   type WaitForCallsStatusOptions,
   waitForCallsStatusQueryOptions,
 } from '@wagmi/core/query'
-
 import type { ConfigParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
+import { useConnection } from './useConnection.js'
 
 export type UseWaitForCallsStatusParameters<
   config extends Config = Config,
@@ -33,8 +32,10 @@ export function useWaitForCallsStatus<
   parameters: UseWaitForCallsStatusParameters<config, selectData>,
 ): UseWaitForCallsStatusReturnType<selectData> {
   const config = useConfig(parameters)
+  const { connector } = useConnection({ config })
   const options = waitForCallsStatusQueryOptions(config, {
     ...parameters,
+    connector: parameters.connector ?? connector,
     query: parameters.query,
   })
   return useQuery(options)

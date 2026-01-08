@@ -5,7 +5,6 @@ import {
   waitForCallsStatus,
 } from '../actions/waitForCallsStatus.js'
 import type { Config } from '../createConfig.js'
-import { ConnectorNotConnectedError } from '../errors/config.js'
 import { filterQueryOptions } from '../query/utils.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
 import type { QueryOptions, QueryParameter } from '../types/query.js'
@@ -29,9 +28,16 @@ export function waitForCallsStatusQueryOptions<
 ): WaitForCallsStatusQueryOptions<selectData> {
   return {
     ...options.query,
-    enabled: Boolean(options.id && (options.query?.enabled ?? true)),
+    enabled: Boolean(
+      options.id &&
+        options.connector?.getProvider &&
+        (options.query?.enabled ?? true),
+    ),
     queryFn: async (context) => {
-      const [, { scopeKey: _, ...parameters }] = context.queryKey
+      if (!options.connector?.getProvider)
+        throw new Error('connector is required')
+      const [, { connectorUid: _, scopeKey: __, ...parameters }] =
+        context.queryKey
       if (!parameters.id) throw new Error('id is required')
       const status = await waitForCallsStatus(config, {
         ...parameters,
@@ -40,10 +46,6 @@ export function waitForCallsStatusQueryOptions<
       return status
     },
     queryKey: waitForCallsStatusQueryKey(options),
-    retry(failureCount, error) {
-      if (error instanceof ConnectorNotConnectedError) return false
-      return failureCount < 3
-    },
   }
 }
 
@@ -56,7 +58,10 @@ export function waitForCallsStatusQueryKey(
     ExactPartial<WaitForCallsStatusParameters> & ScopeKeyParameter
   > = {},
 ) {
-  return ['callsStatus', filterQueryOptions(options)] as const
+  return [
+    'callsStatus',
+    { ...filterQueryOptions(options), connectorUid: options.connector?.uid },
+  ] as const
 }
 
 export type WaitForCallsStatusQueryKey = ReturnType<

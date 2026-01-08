@@ -71,10 +71,9 @@ export function getWalletClientQueryKey<
     ExactPartial<GetWalletClientParameters<config, chainId>> & ScopeKeyParameter
   > = {},
 ) {
-  const { connector, ...parameters } = options
   return [
     'walletClient',
-    { ...filterQueryOptions(parameters), connectorUid: connector?.uid },
+    { ...filterQueryOptions(options), connectorUid: options.connector?.uid },
   ] as const
 }
 
