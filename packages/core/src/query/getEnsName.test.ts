@@ -6,6 +6,7 @@ import { getEnsNameQueryOptions } from './getEnsName.js'
 test('default', () => {
   expect(getEnsNameQueryOptions(config)).toMatchInlineSnapshot(`
     {
+      "enabled": false,
       "queryFn": [Function],
       "queryKey": [
         "ensName",
@@ -20,6 +21,7 @@ test('parameters: chainId', () => {
     getEnsNameQueryOptions(config, { chainId: chain.mainnet.id }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": false,
       "queryFn": [Function],
       "queryKey": [
         "ensName",

@@ -1,5 +1,3 @@
-import type { QueryOptions } from '@tanstack/query-core'
-
 import {
   type GetCapabilitiesErrorType,
   type GetCapabilitiesParameters,
@@ -10,22 +8,35 @@ import type { Config } from '../createConfig.js'
 import { ConnectorNotConnectedError } from '../errors/config.js'
 import { filterQueryOptions } from '../query/utils.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
+import type { QueryOptions, QueryParameter } from '../types/query.js'
 import type { Compute, ExactPartial } from '../types/utils.js'
 
 export type GetCapabilitiesOptions<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] | undefined = undefined,
+  selectData = GetCapabilitiesData<config, chainId>,
 > = Compute<
   ExactPartial<GetCapabilitiesParameters<config, chainId>> & ScopeKeyParameter
->
+> &
+  QueryParameter<
+    GetCapabilitiesQueryFnData<config, chainId>,
+    GetCapabilitiesErrorType,
+    selectData,
+    GetCapabilitiesQueryKey<config, chainId>
+  >
 
 export function getCapabilitiesQueryOptions<
   config extends Config,
   chainId extends config['chains'][number]['id'] | undefined = undefined,
->(config: config, options: GetCapabilitiesOptions<config, chainId> = {}) {
+  selectData = GetCapabilitiesData<config, chainId>,
+>(
+  config: config,
+  options: GetCapabilitiesOptions<config, chainId, selectData> = {},
+): GetCapabilitiesQueryOptions<config, chainId, selectData> {
   return {
-    async queryFn({ queryKey }) {
-      const { scopeKey: _, ...parameters } = queryKey[1]
+    ...options.query,
+    queryFn: async (context) => {
+      const [, { scopeKey: _, ...parameters }] = context.queryKey
       const capabilities = await getCapabilities(config, parameters)
       return capabilities
     },
@@ -34,12 +45,7 @@ export function getCapabilitiesQueryOptions<
       if (error instanceof ConnectorNotConnectedError) return false
       return failureCount < 3
     },
-  } as const satisfies QueryOptions<
-    GetCapabilitiesQueryFnData<config, chainId>,
-    GetCapabilitiesErrorType,
-    GetCapabilitiesData<config, chainId>,
-    GetCapabilitiesQueryKey<config, chainId>
-  >
+  }
 }
 
 export type GetCapabilitiesQueryFnData<
@@ -55,7 +61,11 @@ export type GetCapabilitiesData<
 export function getCapabilitiesQueryKey<
   config extends Config,
   chainId extends config['chains'][number]['id'] | undefined = undefined,
->(options: GetCapabilitiesOptions<config, chainId> = {}) {
+>(
+  options: Compute<
+    ExactPartial<GetCapabilitiesParameters<config, chainId>> & ScopeKeyParameter
+  > = {},
+) {
   return ['capabilities', filterQueryOptions(options)] as const
 }
 
@@ -63,3 +73,14 @@ export type GetCapabilitiesQueryKey<
   config extends Config,
   chainId extends config['chains'][number]['id'] | undefined = undefined,
 > = ReturnType<typeof getCapabilitiesQueryKey<config, chainId>>
+
+export type GetCapabilitiesQueryOptions<
+  config extends Config,
+  chainId extends config['chains'][number]['id'] | undefined = undefined,
+  selectData = GetCapabilitiesData<config, chainId>,
+> = QueryOptions<
+  GetCapabilitiesQueryFnData<config, chainId>,
+  GetCapabilitiesErrorType,
+  selectData,
+  GetCapabilitiesQueryKey<config, chainId>
+>

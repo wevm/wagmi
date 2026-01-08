@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 
 import { useChainId } from '../../hooks/useChainId.js'
 import { useConfig } from '../../hooks/useConfig.js'
-import type { ConfigParameter, QueryParameter } from '../../types/properties.js'
+import type { ConfigParameter } from '../../types/properties.js'
 import {
   type UseMutationParameters,
   type UseQueryReturnType,
@@ -54,15 +54,8 @@ export declare namespace useUserToken {
     config extends Config = ResolvedRegister['config'],
     selectData = Actions.fee.getUserToken.ReturnValue,
   > = ConfigParameter<config> &
-    QueryParameter<
-      Actions.fee.getUserToken.ReturnValue,
-      Actions.fee.getUserToken.ErrorType,
-      selectData,
-      Actions.fee.getUserToken.QueryKey<config>
-    > &
-    Omit<
-      Actions.fee.getUserToken.queryOptions.Parameters<config, selectData>,
-      'query'
+    ExactPartial<
+      Actions.fee.getUserToken.queryOptions.Parameters<config, selectData>
     >
 
   export type ReturnValue<selectData = Actions.fee.getUserToken.ReturnValue> =

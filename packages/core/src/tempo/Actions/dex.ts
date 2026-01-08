@@ -6,8 +6,8 @@ import type {
   ChainIdParameter,
   ConnectorParameter,
 } from '../../types/properties.js'
+import type { QueryOptions, QueryParameter } from '../../types/query.js'
 import type { PartialBy, UnionLooseOmit } from '../../types/utils.js'
-import type { QueryOptions, QueryParameter } from './utils.js'
 
 /**
  * Buys a specific amount of tokens.

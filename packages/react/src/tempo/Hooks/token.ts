@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 
 import { useChainId } from '../../hooks/useChainId.js'
 import { useConfig } from '../../hooks/useConfig.js'
-import type { ConfigParameter, QueryParameter } from '../../types/properties.js'
+import type { ConfigParameter } from '../../types/properties.js'
 import {
   type UseMutationParameters,
   type UseQueryReturnType,
@@ -877,17 +877,8 @@ export declare namespace useGetAllowance {
     config extends Config = ResolvedRegister['config'],
     selectData = Actions.token.getAllowance.ReturnValue,
   > = ConfigParameter<config> &
-    QueryParameter<
-      Actions.token.getAllowance.ReturnValue,
-      Actions.token.getAllowance.ErrorType,
-      selectData,
-      Actions.token.getAllowance.QueryKey<config>
-    > &
     ExactPartial<
-      Omit<
-        Actions.token.getAllowance.queryOptions.Parameters<config, selectData>,
-        'query'
-      >
+      Actions.token.getAllowance.queryOptions.Parameters<config, selectData>
     >
 
   export type ReturnValue<selectData = Actions.token.getAllowance.ReturnValue> =
@@ -934,17 +925,8 @@ export declare namespace useGetBalance {
     config extends Config = ResolvedRegister['config'],
     selectData = Actions.token.getBalance.ReturnValue,
   > = ConfigParameter<config> &
-    QueryParameter<
-      Actions.token.getBalance.ReturnValue,
-      Actions.token.getBalance.ErrorType,
-      selectData,
-      Actions.token.getBalance.QueryKey<config>
-    > &
     ExactPartial<
-      Omit<
-        Actions.token.getBalance.queryOptions.Parameters<config, selectData>,
-        'query'
-      >
+      Actions.token.getBalance.queryOptions.Parameters<config, selectData>
     >
 
   export type ReturnValue<selectData = Actions.token.getBalance.ReturnValue> =
@@ -991,17 +973,8 @@ export declare namespace useGetMetadata {
     config extends Config = ResolvedRegister['config'],
     selectData = Actions.token.getMetadata.ReturnValue,
   > = ConfigParameter<config> &
-    QueryParameter<
-      Actions.token.getMetadata.ReturnValue,
-      Actions.token.getMetadata.ErrorType,
-      selectData,
-      Actions.token.getMetadata.QueryKey<config>
-    > &
     ExactPartial<
-      Omit<
-        Actions.token.getMetadata.queryOptions.Parameters<config, selectData>,
-        'query'
-      >
+      Actions.token.getMetadata.queryOptions.Parameters<config, selectData>
     >
 
   export type ReturnValue<selectData = Actions.token.getMetadata.ReturnValue> =
@@ -1049,17 +1022,8 @@ export declare namespace useGetRoleAdmin {
     config extends Config = ResolvedRegister['config'],
     selectData = Actions.token.getRoleAdmin.ReturnValue,
   > = ConfigParameter<config> &
-    QueryParameter<
-      Actions.token.getRoleAdmin.ReturnValue,
-      Actions.token.getRoleAdmin.ErrorType,
-      selectData,
-      Actions.token.getRoleAdmin.QueryKey<config>
-    > &
     ExactPartial<
-      Omit<
-        Actions.token.getRoleAdmin.queryOptions.Parameters<config, selectData>,
-        'query'
-      >
+      Actions.token.getRoleAdmin.queryOptions.Parameters<config, selectData>
     >
 
   export type ReturnValue<selectData = Actions.token.getRoleAdmin.ReturnValue> =
@@ -1245,17 +1209,8 @@ export declare namespace useHasRole {
     config extends Config = ResolvedRegister['config'],
     selectData = Actions.token.hasRole.ReturnValue,
   > = ConfigParameter<config> &
-    QueryParameter<
-      Actions.token.hasRole.ReturnValue,
-      Actions.token.hasRole.ErrorType,
-      selectData,
-      Actions.token.hasRole.QueryKey<config>
-    > &
     ExactPartial<
-      Omit<
-        Actions.token.hasRole.queryOptions.Parameters<config, selectData>,
-        'query'
-      >
+      Actions.token.hasRole.queryOptions.Parameters<config, selectData>
     >
 
   export type ReturnValue<selectData = Actions.token.hasRole.ReturnValue> =

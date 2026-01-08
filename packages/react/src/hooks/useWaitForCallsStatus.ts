@@ -9,28 +9,17 @@ import type { Compute } from '@wagmi/core/internal'
 import {
   type WaitForCallsStatusData,
   type WaitForCallsStatusOptions,
-  type WaitForCallsStatusQueryFnData,
-  type WaitForCallsStatusQueryKey,
   waitForCallsStatusQueryOptions,
 } from '@wagmi/core/query'
 
-import type { ConfigParameter, QueryParameter } from '../types/properties.js'
+import type { ConfigParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 
 export type UseWaitForCallsStatusParameters<
   config extends Config = Config,
   selectData = WaitForCallsStatusData,
-> = Compute<
-  WaitForCallsStatusOptions &
-    ConfigParameter<config> &
-    QueryParameter<
-      WaitForCallsStatusQueryFnData,
-      WaitForCallsStatusErrorType,
-      selectData,
-      WaitForCallsStatusQueryKey
-    >
->
+> = Compute<WaitForCallsStatusOptions<selectData> & ConfigParameter<config>>
 
 export type UseWaitForCallsStatusReturnType<
   selectData = WaitForCallsStatusData,
@@ -43,12 +32,10 @@ export function useWaitForCallsStatus<
 >(
   parameters: UseWaitForCallsStatusParameters<config, selectData>,
 ): UseWaitForCallsStatusReturnType<selectData> {
-  const { id, query = {} } = parameters
-
   const config = useConfig(parameters)
-
-  const options = waitForCallsStatusQueryOptions(config, parameters)
-  const enabled = Boolean(id && (query.enabled ?? true))
-
-  return useQuery({ ...query, ...options, enabled })
+  const options = waitForCallsStatusQueryOptions(config, {
+    ...parameters,
+    query: parameters.query,
+  })
+  return useQuery(options)
 }

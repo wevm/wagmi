@@ -1,14 +1,8 @@
-import type {
-  Config,
-  ResolvedRegister,
-  SimulateContractErrorType,
-  SimulateContractParameters,
-} from '@wagmi/core'
-import type { ScopeKeyParameter, UnionExactPartial } from '@wagmi/core/internal'
+import type { Config, ResolvedRegister } from '@wagmi/core'
+import type { UnionExactPartial } from '@wagmi/core/internal'
 import type {
   SimulateContractData,
-  SimulateContractQueryFnData,
-  SimulateContractQueryKey,
+  SimulateContractOptions,
 } from '@wagmi/core/query'
 import type {
   Abi,
@@ -17,7 +11,7 @@ import type {
   ContractFunctionName,
 } from 'viem'
 
-import type { ConfigParameter, QueryParameter } from '../../types/properties.js'
+import type { ConfigParameter } from '../../types/properties.js'
 import { useChainId } from '../useChainId.js'
 import { useConfig } from '../useConfig.js'
 import {
@@ -50,7 +44,7 @@ export type CreateUseSimulateContractReturnType<
   name extends functionName extends ContractFunctionName<abi, stateMutability>
     ? functionName
     : ContractFunctionName<abi, stateMutability>,
-  args extends ContractFunctionArgs<abi, stateMutability, name>,
+  const args extends ContractFunctionArgs<abi, stateMutability, name>,
   config extends Config = ResolvedRegister['config'],
   chainId extends config['chains'][number]['id'] | undefined = undefined,
   selectData = SimulateContractData<abi, name, args, config, chainId>,
@@ -66,17 +60,9 @@ export type CreateUseSimulateContractReturnType<
           | undefined
       : chainId | number | undefined
   } & UnionExactPartial<
-    // TODO: Take `abi` and `address` from above and omit from below (currently breaks inference)
-    SimulateContractParameters<abi, name, args, config, chainId>
+    SimulateContractOptions<abi, name, args, config, chainId, selectData>
   > &
-    ScopeKeyParameter &
-    ConfigParameter<config> &
-    QueryParameter<
-      SimulateContractQueryFnData<abi, name, args, config, chainId>,
-      SimulateContractErrorType,
-      selectData,
-      SimulateContractQueryKey<abi, name, args, config, chainId>
-    >,
+    ConfigParameter<config>,
 ) => UseSimulateContractReturnType<abi, name, args, config, chainId, selectData>
 
 export function createUseSimulateContract<

@@ -6,8 +6,8 @@ import type {
   ChainIdParameter,
   ConnectorParameter,
 } from '../../types/properties.js'
+import type { QueryOptions, QueryParameter } from '../../types/query.js'
 import type { UnionLooseOmit } from '../../types/utils.js'
-import type { QueryOptions, QueryParameter } from './utils.js'
 
 /**
  * Claims accumulated rewards for a recipient.

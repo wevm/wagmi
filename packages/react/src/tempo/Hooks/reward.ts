@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 
 import { useChainId } from '../../hooks/useChainId.js'
 import { useConfig } from '../../hooks/useConfig.js'
-import type { ConfigParameter, QueryParameter } from '../../types/properties.js'
+import type { ConfigParameter } from '../../types/properties.js'
 import {
   type UseMutationParameters,
   type UseQueryReturnType,
@@ -186,19 +186,10 @@ export declare namespace useGetTotalPerSecond {
     config extends Config = ResolvedRegister['config'],
     selectData = Actions.reward.getTotalPerSecond.ReturnValue,
   > = ConfigParameter<config> &
-    QueryParameter<
-      Actions.reward.getTotalPerSecond.ReturnValue,
-      Actions.reward.getTotalPerSecond.ErrorType,
-      selectData,
-      Actions.reward.getTotalPerSecond.QueryKey<config>
-    > &
     ExactPartial<
-      Omit<
-        Actions.reward.getTotalPerSecond.queryOptions.Parameters<
-          config,
-          selectData
-        >,
-        'query'
+      Actions.reward.getTotalPerSecond.queryOptions.Parameters<
+        config,
+        selectData
       >
     >
 
@@ -254,19 +245,10 @@ export declare namespace useUserRewardInfo {
     config extends Config = ResolvedRegister['config'],
     selectData = Actions.reward.getUserRewardInfo.ReturnValue,
   > = ConfigParameter<config> &
-    QueryParameter<
-      Actions.reward.getUserRewardInfo.ReturnValue,
-      Actions.reward.getUserRewardInfo.ErrorType,
-      selectData,
-      Actions.reward.getUserRewardInfo.QueryKey<config>
-    > &
     ExactPartial<
-      Omit<
-        Actions.reward.getUserRewardInfo.queryOptions.Parameters<
-          config,
-          selectData
-        >,
-        'query'
+      Actions.reward.getUserRewardInfo.queryOptions.Parameters<
+        config,
+        selectData
       >
     >
 

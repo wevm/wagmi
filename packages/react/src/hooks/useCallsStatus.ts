@@ -9,28 +9,17 @@ import type { Compute } from '@wagmi/core/internal'
 import {
   type GetCallsStatusData,
   type GetCallsStatusOptions,
-  type GetCallsStatusQueryFnData,
-  type GetCallsStatusQueryKey,
   getCallsStatusQueryOptions,
 } from '@wagmi/core/query'
 
-import type { ConfigParameter, QueryParameter } from '../types/properties.js'
+import type { ConfigParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 
 export type UseCallsStatusParameters<
   config extends Config = Config,
   selectData = GetCallsStatusData,
-> = Compute<
-  GetCallsStatusOptions &
-    ConfigParameter<config> &
-    QueryParameter<
-      GetCallsStatusQueryFnData,
-      GetCallsStatusErrorType,
-      selectData,
-      GetCallsStatusQueryKey
-    >
->
+> = Compute<GetCallsStatusOptions<selectData> & ConfigParameter<config>>
 
 export type UseCallsStatusReturnType<selectData = GetCallsStatusData> =
   UseQueryReturnType<selectData, GetCallsStatusErrorType>
@@ -42,11 +31,10 @@ export function useCallsStatus<
 >(
   parameters: UseCallsStatusParameters<config, selectData>,
 ): UseCallsStatusReturnType<selectData> {
-  const { query = {} } = parameters
-
   const config = useConfig(parameters)
-
-  const options = getCallsStatusQueryOptions(config, parameters)
-
-  return useQuery({ ...query, ...options })
+  const options = getCallsStatusQueryOptions(config, {
+    ...parameters,
+    query: parameters.query,
+  })
+  return useQuery(options)
 }

@@ -5,6 +5,7 @@ import type {
   ResolvedRegister,
 } from '@wagmi/core'
 import type {
+  QueryParameter,
   ScopeKeyParameter,
   UnionCompute,
   UnionExactPartial,
@@ -22,7 +23,7 @@ import type {
   ContractFunctionName,
 } from 'viem'
 
-import type { ConfigParameter, QueryParameter } from '../../types/properties.js'
+import type { ConfigParameter } from '../../types/properties.js'
 import { useChainId } from '../useChainId.js'
 import { useConfig } from '../useConfig.js'
 import {

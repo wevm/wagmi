@@ -3,8 +3,8 @@ import { Actions } from 'viem/tempo'
 import type { Config } from '../../createConfig.js'
 import { filterQueryOptions } from '../../query/utils.js'
 import type { ChainIdParameter } from '../../types/properties.js'
+import type { QueryOptions, QueryParameter } from '../../types/query.js'
 import type { PartialBy } from '../../types/utils.js'
-import type { QueryOptions, QueryParameter } from './utils.js'
 
 /**
  * Gets the nonce for an account and nonce key.

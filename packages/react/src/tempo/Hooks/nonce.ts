@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 
 import { useChainId } from '../../hooks/useChainId.js'
 import { useConfig } from '../../hooks/useConfig.js'
-import type { ConfigParameter, QueryParameter } from '../../types/properties.js'
+import type { ConfigParameter } from '../../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../../utils/query.js'
 
 /**
@@ -49,17 +49,8 @@ export declare namespace useNonce {
     config extends Config = ResolvedRegister['config'],
     selectData = Actions.nonce.getNonce.ReturnValue,
   > = ConfigParameter<config> &
-    QueryParameter<
-      Actions.nonce.getNonce.ReturnValue,
-      Actions.nonce.getNonce.ErrorType,
-      selectData,
-      Actions.nonce.getNonce.QueryKey<config>
-    > &
     ExactPartial<
-      Omit<
-        Actions.nonce.getNonce.queryOptions.Parameters<config, selectData>,
-        'query'
-      >
+      Actions.nonce.getNonce.queryOptions.Parameters<config, selectData>
     >
 
   export type ReturnValue<selectData = Actions.nonce.getNonce.ReturnValue> =
@@ -167,20 +158,8 @@ export declare namespace useNonceKeyCount {
     config extends Config = ResolvedRegister['config'],
     selectData = Actions.nonce.getNonceKeyCount.ReturnValue,
   > = ConfigParameter<config> &
-    QueryParameter<
-      Actions.nonce.getNonceKeyCount.ReturnValue,
-      Actions.nonce.getNonceKeyCount.ErrorType,
-      selectData,
-      Actions.nonce.getNonceKeyCount.QueryKey<config>
-    > &
     ExactPartial<
-      Omit<
-        Actions.nonce.getNonceKeyCount.queryOptions.Parameters<
-          config,
-          selectData
-        >,
-        'query'
-      >
+      Actions.nonce.getNonceKeyCount.queryOptions.Parameters<config, selectData>
     >
 
   export type ReturnValue<

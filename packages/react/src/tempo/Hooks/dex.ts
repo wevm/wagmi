@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 
 import { useChainId } from '../../hooks/useChainId.js'
 import { useConfig } from '../../hooks/useConfig.js'
-import type { ConfigParameter, QueryParameter } from '../../types/properties.js'
+import type { ConfigParameter } from '../../types/properties.js'
 import {
   type UseMutationParameters,
   type UseQueryReturnType,
@@ -476,15 +476,8 @@ export declare namespace useBalance {
     config extends Config = ResolvedRegister['config'],
     selectData = Actions.dex.getBalance.ReturnValue,
   > = ConfigParameter<config> &
-    QueryParameter<
-      Actions.dex.getBalance.ReturnValue,
-      Actions.dex.getBalance.ErrorType,
-      selectData,
-      Actions.dex.getBalance.QueryKey<config>
-    > &
-    Omit<
-      Actions.dex.getBalance.queryOptions.Parameters<config, selectData>,
-      'query'
+    ExactPartial<
+      Actions.dex.getBalance.queryOptions.Parameters<config, selectData>
     >
 
   export type ReturnValue<selectData = Actions.dex.getBalance.ReturnValue> =
@@ -533,15 +526,8 @@ export declare namespace useBuyQuote {
     config extends Config = ResolvedRegister['config'],
     selectData = Actions.dex.getBuyQuote.ReturnValue,
   > = ConfigParameter<config> &
-    QueryParameter<
-      Actions.dex.getBuyQuote.ReturnValue,
-      Actions.dex.getBuyQuote.ErrorType,
-      selectData,
-      Actions.dex.getBuyQuote.QueryKey<config>
-    > &
-    Omit<
-      Actions.dex.getBuyQuote.queryOptions.Parameters<config, selectData>,
-      'query'
+    ExactPartial<
+      Actions.dex.getBuyQuote.queryOptions.Parameters<config, selectData>
     >
 
   export type ReturnValue<selectData = Actions.dex.getBuyQuote.ReturnValue> =
@@ -588,15 +574,8 @@ export declare namespace useOrder {
     config extends Config = ResolvedRegister['config'],
     selectData = Actions.dex.getOrder.ReturnValue,
   > = ConfigParameter<config> &
-    QueryParameter<
-      Actions.dex.getOrder.ReturnValue,
-      Actions.dex.getOrder.ErrorType,
-      selectData,
-      Actions.dex.getOrder.QueryKey<config>
-    > &
-    Omit<
-      Actions.dex.getOrder.queryOptions.Parameters<config, selectData>,
-      'query'
+    ExactPartial<
+      Actions.dex.getOrder.queryOptions.Parameters<config, selectData>
     >
 
   export type ReturnValue<selectData = Actions.dex.getOrder.ReturnValue> =
@@ -644,15 +623,8 @@ export declare namespace useOrderbook {
     config extends Config = ResolvedRegister['config'],
     selectData = Actions.dex.getOrderbook.ReturnValue,
   > = ConfigParameter<config> &
-    QueryParameter<
-      Actions.dex.getOrderbook.ReturnValue,
-      Actions.dex.getOrderbook.ErrorType,
-      selectData,
-      Actions.dex.getOrderbook.QueryKey<config>
-    > &
-    Omit<
-      Actions.dex.getOrderbook.queryOptions.Parameters<config, selectData>,
-      'query'
+    ExactPartial<
+      Actions.dex.getOrderbook.queryOptions.Parameters<config, selectData>
     >
 
   export type ReturnValue<selectData = Actions.dex.getOrderbook.ReturnValue> =
@@ -702,15 +674,8 @@ export declare namespace useTickLevel {
     config extends Config = ResolvedRegister['config'],
     selectData = Actions.dex.getTickLevel.ReturnValue,
   > = ConfigParameter<config> &
-    QueryParameter<
-      Actions.dex.getTickLevel.ReturnValue,
-      Actions.dex.getTickLevel.ErrorType,
-      selectData,
-      Actions.dex.getTickLevel.QueryKey<config>
-    > &
-    Omit<
-      Actions.dex.getTickLevel.queryOptions.Parameters<config, selectData>,
-      'query'
+    ExactPartial<
+      Actions.dex.getTickLevel.queryOptions.Parameters<config, selectData>
     >
 
   export type ReturnValue<selectData = Actions.dex.getTickLevel.ReturnValue> =
@@ -759,15 +724,8 @@ export declare namespace useSellQuote {
     config extends Config = ResolvedRegister['config'],
     selectData = Actions.dex.getSellQuote.ReturnValue,
   > = ConfigParameter<config> &
-    QueryParameter<
-      Actions.dex.getSellQuote.ReturnValue,
-      Actions.dex.getSellQuote.ErrorType,
-      selectData,
-      Actions.dex.getSellQuote.QueryKey<config>
-    > &
-    Omit<
-      Actions.dex.getSellQuote.queryOptions.Parameters<config, selectData>,
-      'query'
+    ExactPartial<
+      Actions.dex.getSellQuote.queryOptions.Parameters<config, selectData>
     >
 
   export type ReturnValue<selectData = Actions.dex.getSellQuote.ReturnValue> =
