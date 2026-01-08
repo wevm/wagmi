@@ -1,8 +1,18 @@
-import type { Config, ResolvedRegister } from '@wagmi/core'
-import type { UnionExactPartial } from '@wagmi/core/internal'
+import type {
+  Config,
+  ResolvedRegister,
+  SimulateContractErrorType,
+  SimulateContractParameters,
+} from '@wagmi/core'
+import type {
+  QueryParameter,
+  ScopeKeyParameter,
+  UnionExactPartial,
+} from '@wagmi/core/internal'
 import type {
   SimulateContractData,
-  SimulateContractOptions,
+  SimulateContractQueryFnData,
+  SimulateContractQueryKey,
 } from '@wagmi/core/query'
 import type {
   Abi,
@@ -60,9 +70,17 @@ export type CreateUseSimulateContractReturnType<
           | undefined
       : chainId | number | undefined
   } & UnionExactPartial<
-    SimulateContractOptions<abi, name, args, config, chainId, selectData>
+    // TODO: Take `abi` and `address` from above and omit from below (currently breaks inference)
+    SimulateContractParameters<abi, name, args, config, chainId>
   > &
-    ConfigParameter<config>,
+    ScopeKeyParameter &
+    ConfigParameter<config> &
+    QueryParameter<
+      SimulateContractQueryFnData<abi, name, args, config, chainId>,
+      SimulateContractErrorType,
+      selectData,
+      SimulateContractQueryKey<abi, name, args, config, chainId>
+    >,
 ) => UseSimulateContractReturnType<abi, name, args, config, chainId, selectData>
 
 export function createUseSimulateContract<
