@@ -30,7 +30,12 @@ export const config = createConfig({
     }),
     porto(),
     baseAccount(),
-    metaMask(),
+    metaMask({
+      dapp: {
+        name: window.location.hostname,
+        url: window.location.href,
+      },
+    }),
     gemini(),
   ],
   transports: {
