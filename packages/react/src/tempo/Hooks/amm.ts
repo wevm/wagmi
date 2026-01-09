@@ -657,65 +657,6 @@ export declare namespace useWatchRebalanceSwap {
 }
 
 /**
- * Hook for watching fee swap events.
- *
- * @example
- * ```tsx
- * import { Hooks } from 'wagmi/tempo'
- *
- * function App() {
- *   Hooks.amm.useWatchFeeSwap({
- *     onFeeSwap(args) {
- *       console.log('Fee swap:', args)
- *     },
- *   })
- *
- *   return <div>Watching for fee swaps...</div>
- * }
- * ```
- *
- * @param parameters - Parameters.
- */
-export function useWatchFeeSwap<
-  config extends Config = ResolvedRegister['config'],
->(parameters: useWatchFeeSwap.Parameters<config> = {}) {
-  const { enabled = true, onFeeSwap, ...rest } = parameters
-
-  const config = useConfig({ config: parameters.config })
-  const configChainId = useChainId({ config })
-  const chainId = parameters.chainId ?? configChainId
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: rest.x is explicitly listed
-  useEffect(() => {
-    if (!enabled) return
-    if (!onFeeSwap) return
-    return Actions.amm.watchFeeSwap(config, {
-      ...rest,
-      chainId,
-      onFeeSwap,
-    })
-  }, [
-    config,
-    enabled,
-    chainId,
-    onFeeSwap,
-    rest.fromBlock,
-    rest.onError,
-    rest.poll,
-    rest.pollingInterval,
-    rest.userToken,
-    rest.validatorToken,
-  ])
-}
-
-export declare namespace useWatchFeeSwap {
-  type Parameters<config extends Config = Config> = UnionCompute<
-    ExactPartial<Actions.amm.watchFeeSwap.Parameters<config>> &
-      ConfigParameter<config> & { enabled?: boolean | undefined }
-  >
-}
-
-/**
  * Hook for watching liquidity mint events.
  *
  * @example

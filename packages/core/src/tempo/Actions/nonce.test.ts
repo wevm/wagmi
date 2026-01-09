@@ -1,14 +1,13 @@
-import { connect } from '@wagmi/core'
-import { accounts, config, queryClient, rpcUrl } from '@wagmi/test/tempo'
-import { afterEach, describe, expect, test } from 'vitest'
+import { accounts, config, queryClient, restart } from '@wagmi/test/tempo'
+import { beforeEach, describe, expect, test } from 'vitest'
 import * as nonce from './nonce.js'
 import * as token from './token.js'
 
 const account = accounts[0]
 const account2 = accounts[1]
 
-afterEach(async () => {
-  await fetch(`${rpcUrl}/restart`)
+beforeEach(async () => {
+  await restart()
 })
 
 describe('getNonce', () => {
@@ -31,10 +30,6 @@ describe('getNonce', () => {
 })
 
 test('watchNonceIncremented', async () => {
-  await connect(config, {
-    connector: config.connectors[0]!,
-  })
-
   const events: any[] = []
   const unwatch = nonce.watchNonceIncremented(config, {
     onNonceIncremented: (args) => {

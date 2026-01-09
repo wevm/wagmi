@@ -1263,13 +1263,13 @@ describe('watchRole', () => {
       to: account2.address,
     })
 
-    // Wait a bit for the event to be processed
+    // Wait for the specific event to be processed (creator gets roles during creation)
     await new Promise((resolve) => setTimeout(resolve, 500))
 
-    expect(events.length).toBeGreaterThan(0)
-    expect(events[0]?.account).toBe(account2.address)
-    expect(events[0]?.hasRole).toBe(true)
-    expect(events[0]?.type).toBe('granted')
+    const event = events.find((e) => e.account === account2.address)
+    expect(event).toBeDefined()
+    expect(event?.hasRole).toBe(true)
+    expect(event?.type).toBe('granted')
     unwatch()
   })
 })

@@ -20,7 +20,7 @@ import type { QueryOptions, QueryParameter } from './utils.js'
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -115,7 +115,7 @@ export namespace getPool {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -219,7 +219,7 @@ export namespace getLiquidityBalance {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -276,7 +276,7 @@ export declare namespace rebalanceSwap {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -336,7 +336,7 @@ export declare namespace rebalanceSwapSync {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -393,7 +393,7 @@ export declare namespace mint {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -450,7 +450,7 @@ export declare namespace mintSync {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -507,7 +507,7 @@ export declare namespace burn {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -564,7 +564,7 @@ export declare namespace burnSync {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -596,47 +596,6 @@ export declare namespace watchRebalanceSwap {
 }
 
 /**
- * Watches for fee swap events.
- *
- * @example
- * ```ts
- * import { createConfig, http } from '@wagmi/core'
- * import { tempo } from '@wagmi/core/chains'
- * import { Actions } from '@wagmi/core/tempo'
- *
- * const config = createConfig({
- *   chains: [tempoTestnet],
- *   transports: {
- *     [tempo.id]: http(),
- *   },
- * })
- *
- * const unwatch = Actions.amm.watchFeeSwap(config, {
- *   onFeeSwap: (args, log) => {
- *     console.log('Fee swap:', args)
- *   },
- * })
- * ```
- *
- * @param config - Config.
- * @param parameters - Parameters.
- * @returns A function to unsubscribe from the event.
- */
-export function watchFeeSwap<config extends Config>(
-  config: config,
-  parameters: watchFeeSwap.Parameters<config>,
-) {
-  const { chainId, ...rest } = parameters
-  const client = config.getClient({ chainId })
-  return Actions.amm.watchFeeSwap(client, rest)
-}
-
-export declare namespace watchFeeSwap {
-  export type Parameters<config extends Config> = ChainIdParameter<config> &
-    Actions.amm.watchFeeSwap.Parameters
-}
-
-/**
  * Watches for liquidity mint events.
  *
  * @example
@@ -646,7 +605,7 @@ export declare namespace watchFeeSwap {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -687,7 +646,7 @@ export declare namespace watchMint {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },

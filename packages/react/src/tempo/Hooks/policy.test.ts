@@ -553,12 +553,12 @@ describe('useWatchAdminUpdated', () => {
       admin: account2.address,
     })
 
-    await vi.waitUntil(() => events.length >= 1)
+    await vi.waitUntil(() => events.some((e) => e.admin === account2.address))
 
-    expect(events.length).toBeGreaterThanOrEqual(1)
-    expect(events[0]?.policyId).toBe(policyId)
-    expect(events[0]?.updater).toBe(account.address)
-    expect(events[0]?.admin).toBe(account2.address)
+    const event = events.find((e) => e.admin === account2.address)
+    expect(event).toBeDefined()
+    expect(event?.policyId).toBe(policyId)
+    expect(event?.updater).toBe(account.address)
   })
 })
 

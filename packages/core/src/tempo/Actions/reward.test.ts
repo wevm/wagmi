@@ -5,8 +5,7 @@ import { describe, expect, test } from 'vitest'
 import * as actions from './reward.js'
 import * as tokenActions from './token.js'
 
-// TODO: unskip
-describe.skip('claimSync', () => {
+describe('claimSync', () => {
   test('default', async () => {
     const { token } = await setupToken()
 
@@ -32,7 +31,7 @@ describe.skip('claimSync', () => {
     })
 
     // Start immediate reward
-    await actions.startSync(config, {
+    await actions.distributeSync(config, {
       amount: rewardAmount,
       token,
     })
@@ -63,11 +62,11 @@ describe.skip('claimSync', () => {
   })
 })
 
-describe('getTotalPerSecond', () => {
+describe('getGlobalRewardPerToken', () => {
   test('default', async () => {
     const { token } = await setupToken()
 
-    const rate = await actions.getTotalPerSecond(config, {
+    const rate = await actions.getGlobalRewardPerToken(config, {
       token,
     })
 
@@ -78,7 +77,7 @@ describe('getTotalPerSecond', () => {
     test('default', async () => {
       const { token } = await setupToken()
 
-      const options = actions.getTotalPerSecond.queryOptions(config, {
+      const options = actions.getGlobalRewardPerToken.queryOptions(config, {
         token,
       })
 
@@ -146,7 +145,7 @@ describe('setRecipientSync', () => {
   })
 })
 
-describe('watchRewardScheduled', () => {
+describe('watchRewardDistributed', () => {
   test('default', async () => {
     const { token } = await setupToken()
 
@@ -166,14 +165,14 @@ describe('watchRewardScheduled', () => {
     })
 
     const events: any[] = []
-    const unwatch = actions.watchRewardScheduled(config, {
+    const unwatch = actions.watchRewardDistributed(config, {
       token,
-      onRewardScheduled: (args) => {
+      onRewardDistributed: (args) => {
         events.push(args)
       },
     })
 
-    await actions.startSync(config, {
+    await actions.distributeSync(config, {
       amount: rewardAmount,
       token,
     })
