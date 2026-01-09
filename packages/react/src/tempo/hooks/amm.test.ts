@@ -459,11 +459,11 @@ describe('useWatchMint', () => {
     await vi.waitUntil(() => events.length >= 1)
 
     expect(events.length).toBeGreaterThanOrEqual(1)
-    expect(events[0]?.userToken.address.toLowerCase()).toBe(token.toLowerCase())
-    expect(events[0]?.validatorToken.address.toLowerCase()).toBe(
+    expect(events[0]?.userToken.toLowerCase()).toBe(token.toLowerCase())
+    expect(events[0]?.validatorToken.toLowerCase()).toBe(
       addresses.alphaUsd.toLowerCase(),
     )
-    expect(events[0]?.validatorToken.amount).toBe(parseUnits('100', 6))
+    expect(events[0]?.amountValidatorToken).toBe(parseUnits('100', 6))
   })
 })
 

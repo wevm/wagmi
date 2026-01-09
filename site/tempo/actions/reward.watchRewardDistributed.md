@@ -1,0 +1,81 @@
+# `reward.watchRewardDistributed`
+
+Watches for reward distributed events.
+
+## Usage
+
+::: code-group
+
+```ts twoslash [example.ts]
+// @twoslash-cache: {"v":1,"hash":"468089c03999f8f886d48f18ae80edff227a04649f0e95be6e2f75637d974e5d","data":"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"}
+// @filename: config.ts
+// @errors: 2322
+import type { Config } from 'wagmi'
+export const config = {} as Config
+// @filename: example.ts
+// ---cut---
+import { Actions } from 'wagmi/tempo'
+import { config } from './config'
+
+const unwatch = Actions.reward.watchRewardDistributed(config, {
+  onRewardDistributed(args, log) {
+    console.log('args:', args)
+  },
+  token: '0x20c0000000000000000000000000000000000000',
+})
+
+// Later, stop watching
+unwatch()
+```
+
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
+
+:::
+
+## Return Type
+
+`() => void`
+
+Returns a function to unsubscribe from the event.
+
+## Parameters
+
+### onRewardDistributed
+
+- **Type:** `function`
+
+```ts
+declare function onRewardDistributed(args: Args, log: Log): void
+
+type Args = {
+  /** Total amount distributed */
+  amount: bigint
+  /** Address that funded the distribution */
+  funder: Address
+}
+```
+
+Callback to invoke when a reward is distributed.
+
+### token
+
+- **Type:** `Address`
+
+Address of the TIP-20 token to watch.
+
+### args (optional)
+
+- **Type:** `object`
+
+```ts
+type Args = {
+  /** Filter by funder address */
+  funder?: Address | Address[]
+}
+```
+
+Optional filters to narrow down events by funder address.
+
+## Viem
+
+- [`reward.watchRewardDistributed`](https://viem.sh/tempo/actions/reward.watchRewardDistributed)

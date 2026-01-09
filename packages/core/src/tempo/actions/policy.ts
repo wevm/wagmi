@@ -19,7 +19,7 @@ import type { QueryOptions, QueryParameter } from './utils.js'
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -76,7 +76,7 @@ export declare namespace create {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -130,7 +130,7 @@ export declare namespace createSync {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -188,7 +188,7 @@ export declare namespace setAdmin {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -243,7 +243,7 @@ export declare namespace setAdminSync {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -305,7 +305,7 @@ export declare namespace modifyWhitelist {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -364,7 +364,7 @@ export declare namespace modifyWhitelistSync {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -426,7 +426,7 @@ export declare namespace modifyBlacklist {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -485,7 +485,7 @@ export declare namespace modifyBlacklistSync {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -577,7 +577,7 @@ export namespace getData {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -672,7 +672,7 @@ export namespace isAuthorized {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -713,7 +713,7 @@ export declare namespace watchCreate {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -754,7 +754,7 @@ export declare namespace watchAdminUpdated {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -795,7 +795,7 @@ export declare namespace watchWhitelistUpdated {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },

@@ -10,6 +10,7 @@ export {
   createWrapper,
   queryClient,
   renderHook,
+  restart,
   rpcUrl,
   setupOrders,
   setupPoolWithLiquidity,

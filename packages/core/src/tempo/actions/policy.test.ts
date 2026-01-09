@@ -364,10 +364,11 @@ describe('watchAdminUpdated', () => {
     await new Promise((resolve) => setTimeout(resolve, 500))
     unwatch()
 
-    expect(events.length).toBe(1)
-    expect(events[0].args.policyId).toBe(policyId)
-    expect(events[0].args.updater).toBe(account.address)
-    expect(events[0].args.admin).toBe(account2.address)
+    // Policy creation emits an admin event for the creator, so find the specific event
+    const event = events.find((e) => e.args.admin === account2.address)
+    expect(event).toBeDefined()
+    expect(event.args.policyId).toBe(policyId)
+    expect(event.args.updater).toBe(account.address)
   })
 })
 

@@ -9,7 +9,6 @@
 | [`amm.mint`](/tempo/actions/amm.mint) | Mints liquidity tokens by providing a token pair |
 | [`amm.rebalanceSwap`](/tempo/actions/amm.rebalanceSwap) | Performs a rebalance swap between user and validator tokens |
 | [`amm.watchBurn`](/tempo/actions/amm.watchBurn) | Watches for liquidity burn events |
-| [`amm.watchFeeSwap`](/tempo/actions/amm.watchFeeSwap) | Watches for fee swap events |
 | [`amm.watchMint`](/tempo/actions/amm.watchMint) | Watches for liquidity mint events |
 | [`amm.watchRebalanceSwap`](/tempo/actions/amm.watchRebalanceSwap) | Watches for rebalance swap events |
 | **Faucet Actions** | |
@@ -20,8 +19,6 @@
 | [`fee.watchSetUserToken`](/tempo/actions/fee.watchSetUserToken) | Watches for user token set events |
 | **Nonce Actions** | |
 | [`nonce.getNonce`](/tempo/actions/nonce.getNonce) | Gets the nonce for an account and nonce key |
-| [`nonce.getNonceKeyCount`](/tempo/actions/nonce.getNonceKeyCount) | Gets the number of active nonce keys for an account |
-| [`nonce.watchActiveKeyCountChanged`](/tempo/actions/nonce.watchActiveKeyCountChanged) | Watches for active key count changed events |
 | [`nonce.watchNonceIncremented`](/tempo/actions/nonce.watchNonceIncremented) | Watches for nonce incremented events |
 | **Policy Actions** | |
 | [`policy.create`](#TODO) | Creates a new transfer policy for token access control |
@@ -38,9 +35,9 @@
 | [`reward.claim`](/tempo/actions/reward.claim) | Claims accumulated rewards for the caller |
 | [`reward.getUserRewardInfo`](/tempo/actions/reward.getUserRewardInfo) | Gets reward information for a specific account |
 | [`reward.setRecipient`](/tempo/actions/reward.setRecipient) | Sets or changes the reward recipient for a token holder |
-| [`reward.start`](/tempo/actions/reward.start) | Starts a reward stream that distributes tokens to opted-in holders |
+| [`reward.distribute`](/tempo/actions/reward.distribute) | Distributes tokens to opted-in holders |
 | [`reward.watchRewardRecipientSet`](/tempo/actions/reward.watchRewardRecipientSet) | Watches for reward recipient set events |
-| [`reward.watchRewardScheduled`](/tempo/actions/reward.watchRewardScheduled) | Watches for reward scheduled events |
+| [`reward.watchRewardDistributed`](/tempo/actions/reward.watchRewardDistributed) | Watches for reward distributed events |
 | **Stablecoin DEX Actions** | |
 | [`dex.buy`](/tempo/actions/dex.buy) | Buys a specific amount of tokens from the Stablecoin DEX orderbook |
 | [`dex.cancel`](/tempo/actions/dex.cancel) | Cancels an order from the orderbook |

@@ -15,7 +15,7 @@ import type { UnionCompute } from '../../types/utils.js'
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -60,7 +60,7 @@ export declare namespace fund {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },

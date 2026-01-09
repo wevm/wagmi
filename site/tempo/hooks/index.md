@@ -9,7 +9,6 @@
 | [`amm.usePool`](/tempo/hooks/amm.usePool) | Hook for getting the reserves for a liquidity pool |
 | [`amm.useRebalanceSwap`](/tempo/hooks/amm.useRebalanceSwap) | Hook for performing a rebalance swap between user and validator tokens |
 | [`amm.useWatchBurn`](/tempo/hooks/amm.useWatchBurn) | Hook for watching liquidity burn events |
-| [`amm.useWatchFeeSwap`](/tempo/hooks/amm.useWatchFeeSwap) | Hook for watching fee swap events |
 | [`amm.useWatchMint`](/tempo/hooks/amm.useWatchMint) | Hook for watching liquidity mint events |
 | [`amm.useWatchRebalanceSwap`](/tempo/hooks/amm.useWatchRebalanceSwap) | Hook for watching rebalance swap events |
 | **Faucet Hooks** | |
@@ -20,8 +19,6 @@
 | [`fee.useWatchSetUserToken`](/tempo/hooks/fee.useWatchSetUserToken) | Hook for watching user token set events |
 | **Nonce Hooks** | |
 | [`nonce.useNonce`](/tempo/hooks/nonce.useNonce) | Hook for getting the nonce for an account and nonce key |
-| [`nonce.useNonceKeyCount`](/tempo/hooks/nonce.useNonceKeyCount) | Hook for getting the number of active nonce keys for an account |
-| [`nonce.useWatchActiveKeyCountChanged`](/tempo/hooks/nonce.useWatchActiveKeyCountChanged) | Hook for watching active key count changed events |
 | [`nonce.useWatchNonceIncremented`](/tempo/hooks/nonce.useWatchNonceIncremented) | Hook for watching nonce incremented events |
 | **Policy Hooks** | |
 | [`policy.useCreate`](#TODO) | Hook for creating a new transfer policy for token access control |
@@ -37,10 +34,10 @@
 | **Reward Hooks** | |
 | [`reward.useClaim`](/tempo/hooks/reward.useClaim) | Hook for claiming accumulated rewards |
 | [`reward.useSetRecipient`](/tempo/hooks/reward.useSetRecipient) | Hook for setting or changing the reward recipient for a token holder |
-| [`reward.useStart`](/tempo/hooks/reward.useStart) | Hook for starting a new reward stream that distributes tokens to opted-in holders |
+| [`reward.useDistribute`](/tempo/hooks/reward.useDistribute) | Hook for distributing tokens to opted-in holders |
 | [`reward.useUserRewardInfo`](/tempo/hooks/reward.useUserRewardInfo) | Hook for getting reward information for a specific account |
 | [`reward.useWatchRewardRecipientSet`](/tempo/hooks/reward.useWatchRewardRecipientSet) | Hook for watching reward recipient set events |
-| [`reward.useWatchRewardScheduled`](/tempo/hooks/reward.useWatchRewardScheduled) | Hook for watching reward scheduled events |
+| [`reward.useWatchRewardDistributed`](/tempo/hooks/reward.useWatchRewardDistributed) | Hook for watching reward distributed events |
 | **Stablecoin DEX Hooks** | |
 | [`dex.useBalance`](/tempo/hooks/dex.useBalance) | Hook for getting a user's token balance on the Stablecoin DEX |
 | [`dex.useBuy`](/tempo/hooks/dex.useBuy) | Hook for buying a specific amount of tokens from the Stablecoin DEX orderbook |

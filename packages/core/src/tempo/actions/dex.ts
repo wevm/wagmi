@@ -19,7 +19,7 @@ import type { QueryOptions, QueryParameter } from './utils.js'
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -79,7 +79,7 @@ export declare namespace buy {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -136,7 +136,7 @@ export declare namespace buySync {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -193,7 +193,7 @@ export declare namespace cancel {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -238,6 +238,120 @@ export declare namespace cancelSync {
 }
 
 /**
+ * Cancels a stale order from the orderbook.
+ *
+ * A stale order is one where the owner's balance or allowance has dropped
+ * below the order amount.
+ *
+ * @example
+ * ```ts
+ * import { createConfig, http } from '@wagmi/core'
+ * import { tempo } from '@wagmi/core/chains'
+ * import { Actions } from '@wagmi/core/tempo'
+ *
+ * const config = createConfig({
+ *   chains: [tempoModerato],
+ *   transports: {
+ *     [tempo.id]: http(),
+ *   },
+ * })
+ *
+ * const hash = await Actions.dex.cancelStale(config, {
+ *   orderId: 123n,
+ * })
+ * ```
+ *
+ * @param config - Config.
+ * @param parameters - Parameters.
+ * @returns The transaction hash.
+ */
+export async function cancelStale<config extends Config>(
+  config: config,
+  parameters: cancelStale.Parameters<config>,
+): Promise<Actions.dex.cancelStale.ReturnValue> {
+  const { account, chainId, connector } = parameters
+
+  const client = await getConnectorClient(config, {
+    account,
+    assertChainId: false,
+    chainId,
+    connector,
+  })
+
+  return Actions.dex.cancelStale(client, parameters as never)
+}
+
+export declare namespace cancelStale {
+  export type Parameters<config extends Config> = ChainIdParameter<config> &
+    ConnectorParameter &
+    UnionLooseOmit<
+      Actions.dex.cancelStale.Parameters<config['chains'][number], Account>,
+      'chain'
+    >
+
+  export type ReturnValue = Actions.dex.cancelStale.ReturnValue
+
+  export type ErrorType = BaseErrorType // TODO: Actions.dex.cancelStale.ErrorType
+}
+
+/**
+ * Cancels a stale order from the orderbook and waits for confirmation.
+ *
+ * A stale order is one where the owner's balance or allowance has dropped
+ * below the order amount.
+ *
+ * @example
+ * ```ts
+ * import { createConfig, http } from '@wagmi/core'
+ * import { tempo } from '@wagmi/core/chains'
+ * import { Actions } from '@wagmi/core/tempo'
+ *
+ * const config = createConfig({
+ *   chains: [tempoModerato],
+ *   transports: {
+ *     [tempo.id]: http(),
+ *   },
+ * })
+ *
+ * const result = await Actions.dex.cancelStaleSync(config, {
+ *   orderId: 123n,
+ * })
+ * ```
+ *
+ * @param config - Config.
+ * @param parameters - Parameters.
+ * @returns The transaction receipt and event data.
+ */
+export async function cancelStaleSync<config extends Config>(
+  config: config,
+  parameters: cancelStaleSync.Parameters<config>,
+): Promise<Actions.dex.cancelStaleSync.ReturnValue> {
+  const { account, chainId, connector } = parameters
+
+  const client = await getConnectorClient(config, {
+    account,
+    assertChainId: false,
+    chainId,
+    connector,
+  })
+
+  return Actions.dex.cancelStaleSync(client, parameters as never)
+}
+
+export declare namespace cancelStaleSync {
+  export type Parameters<config extends Config> = ChainIdParameter<config> &
+    ConnectorParameter &
+    UnionLooseOmit<
+      Actions.dex.cancelStaleSync.Parameters<config['chains'][number], Account>,
+      'chain'
+    >
+
+  export type ReturnValue = Actions.dex.cancelStaleSync.ReturnValue
+
+  export type ErrorType = BaseErrorType // TODO: Actions.dex.cancelStaleSync.ErrorType
+}
+
+/**
  * Creates a new trading pair on the DEX.
  *
  * @example
@@ -247,7 +361,7 @@ export declare namespace cancelSync {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -304,7 +418,7 @@ export declare namespace createPair {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -358,7 +472,7 @@ export declare namespace createPairSync {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -452,7 +566,7 @@ export namespace getBalance {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -551,7 +665,7 @@ export namespace getBuyQuote {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -643,7 +757,7 @@ export namespace getOrder {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -736,7 +850,7 @@ export namespace getOrderbook {
  * import { Actions, Tick } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -835,7 +949,7 @@ export namespace getTickLevel {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -934,7 +1048,7 @@ export namespace getSellQuote {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -991,7 +1105,7 @@ export declare namespace place {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -1052,7 +1166,7 @@ export declare namespace placeFlip {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -1113,7 +1227,7 @@ export declare namespace placeFlipSync {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -1170,7 +1284,7 @@ export declare namespace placeSync {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -1230,7 +1344,7 @@ export declare namespace sell {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -1287,7 +1401,7 @@ export declare namespace sellSync {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -1332,7 +1446,7 @@ export declare namespace watchFlipOrderPlaced {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -1377,7 +1491,7 @@ export declare namespace watchOrderCancelled {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -1422,7 +1536,7 @@ export declare namespace watchOrderFilled {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -1467,7 +1581,7 @@ export declare namespace watchOrderPlaced {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -1525,7 +1639,7 @@ export declare namespace withdraw {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
