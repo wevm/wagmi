@@ -1,4 +1,4 @@
-import { abi } from '@wagmi/test'
+import { abi, config as testConfig } from '@wagmi/test'
 import { test } from 'vitest'
 import { celo, mainnet, optimism } from 'wagmi/chains'
 import { createUseSimulateContract } from 'wagmi/codegen'
@@ -30,10 +30,10 @@ test('chain formatters', () => {
   })
 })
 
-// test('parameters: config', async () => {
-//   useSimulateErc20({
-//     config: testConfig,
-//     // @ts-expect-error
-//     feeCurrency: '0x',
-//   })
-// })
+test('parameters: config', async () => {
+  useSimulateErc20({
+    config: testConfig,
+    // @ts-expect-error
+    feeCurrency: '0x',
+  })
+})

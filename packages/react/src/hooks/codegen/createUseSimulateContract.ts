@@ -12,7 +12,6 @@ import type {
 import type {
   SimulateContractData,
   SimulateContractQueryFnData,
-  SimulateContractQueryKey,
 } from '@wagmi/core/query'
 import type {
   Abi,
@@ -78,8 +77,8 @@ export type CreateUseSimulateContractReturnType<
     QueryParameter<
       SimulateContractQueryFnData<abi, name, args, config, chainId>,
       SimulateContractErrorType,
-      selectData,
-      SimulateContractQueryKey<abi, name, args, config, chainId>
+      selectData
+      // TODO: Add `SimulateContractQueryKey<abi, name, args, config, chainId>` as 4th type param (currently causes TS2589)
     >,
 ) => UseSimulateContractReturnType<abi, name, args, config, chainId, selectData>
 
