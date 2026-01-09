@@ -299,6 +299,146 @@ export declare namespace useCancelSync {
 }
 
 /**
+ * Hook for cancelling a stale order from the orderbook.
+ *
+ * A stale order is one where the owner's balance or allowance has dropped
+ * below the order amount.
+ *
+ * @example
+ * ```tsx
+ * import { Hooks } from 'wagmi/tempo'
+ *
+ * function App() {
+ *   const { mutate, isPending } = Hooks.dex.useCancelStale()
+ *
+ *   return (
+ *     <button
+ *       onClick={() => mutate({ orderId: 123n })}
+ *       disabled={isPending}
+ *     >
+ *       Cancel Stale Order
+ *     </button>
+ *   )
+ * }
+ * ```
+ *
+ * @param parameters - Parameters.
+ * @returns Mutation result.
+ */
+export function useCancelStale<
+  config extends Config = ResolvedRegister['config'],
+  context = unknown,
+>(
+  parameters: useCancelStale.Parameters<config, context> = {},
+): useCancelStale.ReturnType<config, context> {
+  const { mutation } = parameters
+  const config = useConfig(parameters)
+  return useMutation({
+    ...mutation,
+    async mutationFn(variables) {
+      return Actions.dex.cancelStale(config, variables as never)
+    },
+    mutationKey: ['cancelStale'],
+  }) as never
+}
+
+export declare namespace useCancelStale {
+  type Parameters<
+    config extends Config = Config,
+    context = unknown,
+  > = ConfigParameter<config> & {
+    mutation?:
+      | UseMutationParameters<
+          Actions.dex.cancelStale.ReturnValue,
+          Actions.dex.cancelStale.ErrorType,
+          Actions.dex.cancelStale.Parameters<config>,
+          context
+        >
+      | undefined
+  }
+
+  type ReturnType<
+    config extends Config = Config,
+    context = unknown,
+  > = UseMutationResult<
+    Actions.dex.cancelStale.ReturnValue,
+    Actions.dex.cancelStale.ErrorType,
+    Actions.dex.cancelStale.Parameters<config>,
+    context
+  >
+}
+
+/**
+ * Hook for cancelling a stale order and waiting for confirmation.
+ *
+ * A stale order is one where the owner's balance or allowance has dropped
+ * below the order amount.
+ *
+ * @example
+ * ```tsx
+ * import { Hooks } from 'wagmi/tempo'
+ *
+ * function App() {
+ *   const { mutate, isPending } = Hooks.dex.useCancelStaleSync()
+ *
+ *   return (
+ *     <button
+ *       onClick={() => mutate({ orderId: 123n })}
+ *       disabled={isPending}
+ *     >
+ *       Cancel Stale Order
+ *     </button>
+ *   )
+ * }
+ * ```
+ *
+ * @param parameters - Parameters.
+ * @returns Mutation result.
+ */
+export function useCancelStaleSync<
+  config extends Config = ResolvedRegister['config'],
+  context = unknown,
+>(
+  parameters: useCancelStaleSync.Parameters<config, context> = {},
+): useCancelStaleSync.ReturnType<config, context> {
+  const { mutation } = parameters
+  const config = useConfig(parameters)
+  return useMutation({
+    ...mutation,
+    async mutationFn(variables) {
+      return Actions.dex.cancelStaleSync(config, variables as never)
+    },
+    mutationKey: ['cancelStaleSync'],
+  }) as never
+}
+
+export declare namespace useCancelStaleSync {
+  type Parameters<
+    config extends Config = Config,
+    context = unknown,
+  > = ConfigParameter<config> & {
+    mutation?:
+      | UseMutationParameters<
+          Actions.dex.cancelStaleSync.ReturnValue,
+          Actions.dex.cancelStaleSync.ErrorType,
+          Actions.dex.cancelStaleSync.Parameters<config>,
+          context
+        >
+      | undefined
+  }
+
+  type ReturnType<
+    config extends Config = Config,
+    context = unknown,
+  > = UseMutationResult<
+    Actions.dex.cancelStaleSync.ReturnValue,
+    Actions.dex.cancelStaleSync.ErrorType,
+    Actions.dex.cancelStaleSync.Parameters<config>,
+    context
+  >
+}
+
+/**
  * Hook for creating a new trading pair on the DEX.
  *
  * @example

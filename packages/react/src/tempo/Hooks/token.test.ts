@@ -1078,12 +1078,12 @@ describe('useWatchRole', () => {
       to: account2.address,
     })
 
-    await vi.waitUntil(() => events.length >= 1)
+    await vi.waitUntil(() => events.some((e) => e.account === account2.address))
 
-    expect(events.length).toBeGreaterThanOrEqual(1)
-    expect(events[0]?.account).toBe(account2.address)
-    expect(events[0]?.hasRole).toBe(true)
-    expect(events[0]?.type).toBe('granted')
+    const event = events.find((e) => e.account === account2.address)
+    expect(event).toBeDefined()
+    expect(event?.hasRole).toBe(true)
+    expect(event?.type).toBe('granted')
   })
 })
 

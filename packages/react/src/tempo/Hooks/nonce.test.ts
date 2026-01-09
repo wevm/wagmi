@@ -1,13 +1,16 @@
-import { accounts, config, renderHook } from '@wagmi/test/tempo'
+import { accounts, renderHook, restart } from '@wagmi/test/tempo'
 import type { Address } from 'viem'
-import { describe, expect, test, vi } from 'vitest'
+import { beforeEach, describe, expect, test, vi } from 'vitest'
 
-import { useConnect } from '../../hooks/useConnect.js'
 import * as nonce from './nonce.js'
 import * as token from './token.js'
 
 const account = accounts[0]
 const account2 = accounts[1]
+
+beforeEach(async () => {
+  await restart()
+})
 
 describe('useNonce', () => {
   test('default', async () => {
@@ -92,13 +95,8 @@ describe('useNonce', () => {
 describe('useWatchNonceIncremented', () => {
   test('default', async () => {
     const { result: connectResult } = await renderHook(() => ({
-      connect: useConnect(),
       transferSync: token.useTransferSync(),
     }))
-
-    await connectResult.current.connect.connectAsync({
-      connector: config.connectors[0]!,
-    })
 
     const events: any[] = []
     await renderHook(() =>

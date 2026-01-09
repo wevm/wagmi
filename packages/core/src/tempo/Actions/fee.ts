@@ -20,7 +20,7 @@ import type { QueryOptions, QueryParameter } from './utils.js'
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -113,7 +113,7 @@ export namespace getUserToken {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },
@@ -170,7 +170,7 @@ export declare namespace setUserToken {
  * import { Actions } from '@wagmi/core/tempo'
  *
  * const config = createConfig({
- *   chains: [tempoTestnet],
+ *   chains: [tempoModerato],
  *   transports: {
  *     [tempo.id]: http(),
  *   },

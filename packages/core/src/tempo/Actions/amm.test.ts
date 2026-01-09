@@ -107,16 +107,13 @@ describe('mintSync', () => {
       },
     )
     expect(mintReceipt).toBeDefined()
-    expect(mintResult).toMatchInlineSnapshot(`
-      {
-        "amountUserToken": 0n,
-        "amountValidatorToken": 100000000n,
-        "liquidity": 49999000n,
-        "sender": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "userToken": "0x20C0000000000000000000000000000000000004",
-        "validatorToken": "0x20C0000000000000000000000000000000000001",
-      }
-    `)
+    expect(mintResult.amountValidatorToken).toBe(100000000n)
+    expect(mintResult.liquidity).toBe(49999000n)
+    expect(mintResult.sender).toBe(account.address)
+    expect(mintResult.to).toBe(account.address)
+    expect(mintResult.validatorToken.toLowerCase()).toBe(
+      addresses.alphaUsd.toLowerCase(),
+    )
   })
 })
 

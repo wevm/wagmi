@@ -8,12 +8,12 @@ import { useConnect } from '../../hooks/useConnect.js'
 import * as rewardHooks from './reward.js'
 import * as tokenHooks from './token.js'
 
-describe('useGetTotalPerSecond', () => {
+describe('useGetGlobalRewardPerToken', () => {
   test('default', async () => {
     const { token } = await setupToken()
 
     const { result } = await renderHook(() =>
-      rewardHooks.useGetTotalPerSecond({
+      rewardHooks.useGetGlobalRewardPerToken({
         token,
       }),
     )
@@ -26,7 +26,7 @@ describe('useGetTotalPerSecond', () => {
   test('reactivity: token parameter', async () => {
     const { result, rerender } = await renderHook(
       (props) =>
-        rewardHooks.useGetTotalPerSecond({
+        rewardHooks.useGetGlobalRewardPerToken({
           token: props?.token,
         }),
       {
@@ -152,14 +152,14 @@ describe('useSetRecipientSync', () => {
   })
 })
 
-describe('useWatchRewardScheduled', () => {
+describe('useWatchRewardDistributed', () => {
   test('default', async () => {
     const { result: connectResult } = await renderHook(() => ({
       connect: useConnect(),
       grantRolesSync: tokenHooks.useGrantRolesSync(),
       mintSync: tokenHooks.useMintSync(),
       setRecipientSync: rewardHooks.useSetRecipientSync(),
-      startSync: rewardHooks.useStartSync(),
+      distributeSync: rewardHooks.useDistributeSync(),
     }))
 
     await connectResult.current.connect.mutateAsync({
@@ -190,15 +190,15 @@ describe('useWatchRewardScheduled', () => {
 
     const events: any[] = []
     await renderHook(() =>
-      rewardHooks.useWatchRewardScheduled({
+      rewardHooks.useWatchRewardDistributed({
         token: tokenAddr,
-        onRewardScheduled(args) {
+        onRewardDistributed(args) {
           events.push(args)
         },
       }),
     )
 
-    await connectResult.current.startSync.mutateAsync({
+    await connectResult.current.distributeSync.mutateAsync({
       token: tokenAddr,
       amount: rewardAmount,
     })

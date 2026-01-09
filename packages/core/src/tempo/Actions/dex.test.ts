@@ -221,7 +221,7 @@ describe('getBalance', () => {
     // Place and cancel order to create internal balance
     const { orderId } = await dex.placeSync(config, {
       token: base,
-      amount: parseUnits('50', 6),
+      amount: parseUnits('100', 6),
       type: 'buy',
       tick: Tick.fromPrice('1.0005'),
     })
@@ -351,7 +351,7 @@ describe('getOrder', () => {
     // Place a flip order
     const { orderId } = await dex.placeFlipSync(config, {
       token: base,
-      amount: parseUnits('50', 6),
+      amount: parseUnits('100', 6),
       type: 'buy',
       tick: Tick.fromPrice('1.001'),
       flipTick: Tick.fromPrice('1.002'),
@@ -366,7 +366,7 @@ describe('getOrder', () => {
     expect(order.maker).toBe(account.address)
     expect(order.isBid).toBe(true)
     expect(order.tick).toBe(Tick.fromPrice('1.001'))
-    expect(order.amount).toBe(parseUnits('50', 6))
+    expect(order.amount).toBe(parseUnits('100', 6))
     expect(order.isFlip).toBe(true)
     expect(order.flipTick).toBe(Tick.fromPrice('1.002'))
   })
@@ -432,7 +432,7 @@ describe('getOrder', () => {
     // Place second order at same tick
     const { orderId: orderId2 } = await dex.placeSync(config, {
       token: base,
-      amount: parseUnits('50', 6),
+      amount: parseUnits('100', 6),
       type: 'buy',
       tick,
     })
@@ -636,7 +636,7 @@ describe('getTickLevel', () => {
     // Place second order at same tick
     const { orderId: orderId2 } = await dex.placeSync(config, {
       token: base,
-      amount: parseUnits('50', 6),
+      amount: parseUnits('100', 6),
       type: 'buy',
       tick,
     })
@@ -670,7 +670,7 @@ describe('getTickLevel', () => {
     // Place a sell order (ask) at same tick
     await dex.placeSync(config, {
       token: base,
-      amount: parseUnits('50', 6),
+      amount: parseUnits('100', 6),
       type: 'sell',
       tick,
     })
@@ -710,7 +710,7 @@ describe('getTickLevel', () => {
 
     await dex.placeSync(config, {
       token: base,
-      amount: parseUnits('50', 6),
+      amount: parseUnits('100', 6),
       type: 'buy',
       tick,
     })
@@ -783,7 +783,7 @@ describe('getTickLevel', () => {
     // Place order at min tick
     await dex.placeSync(config, {
       token: base,
-      amount: parseUnits('10', 6),
+      amount: parseUnits('100', 6),
       type: 'sell',
       tick: Tick.minTick,
     })
@@ -799,7 +799,7 @@ describe('getTickLevel', () => {
     // Place order at max tick
     await dex.placeSync(config, {
       token: base,
-      amount: parseUnits('10', 6),
+      amount: parseUnits('100', 6),
       type: 'buy',
       tick: Tick.maxTick,
     })
@@ -872,7 +872,9 @@ describe('place', () => {
     expect(result).toMatchInlineSnapshot(`
       {
         "amount": 100000000n,
+        "flipTick": 0,
         "isBid": false,
+        "isFlipOrder": false,
         "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
         "tick": 100,
       }
@@ -896,7 +898,9 @@ describe('place', () => {
     expect(result2).toMatchInlineSnapshot(`
       {
         "amount": 100000000n,
+        "flipTick": 0,
         "isBid": true,
+        "isFlipOrder": false,
         "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
         "tick": 100,
       }
@@ -909,7 +913,7 @@ describe('place', () => {
     // Test at min tick (-2000)
     const { receipt: receipt1, ...result1 } = await dex.placeSync(config, {
       token: base,
-      amount: parseUnits('10', 6),
+      amount: parseUnits('100', 6),
       type: 'sell',
       tick: Tick.minTick,
     })
@@ -919,7 +923,7 @@ describe('place', () => {
     // Test at max tick (2000)
     const { receipt: receipt2, ...result2 } = await dex.placeSync(config, {
       token: base,
-      amount: parseUnits('10', 6),
+      amount: parseUnits('100', 6),
       type: 'buy',
       tick: Tick.maxTick,
     })
@@ -934,7 +938,7 @@ describe('place', () => {
     await expect(
       dex.placeSync(config, {
         token: base,
-        amount: parseUnits('10', 6),
+        amount: parseUnits('100', 6),
         type: 'buy',
         tick: Tick.maxTick + 1,
       }),
@@ -944,7 +948,7 @@ describe('place', () => {
     await expect(
       dex.placeSync(config, {
         token: base,
-        amount: parseUnits('10', 6),
+        amount: parseUnits('100', 6),
         type: 'sell',
         tick: Tick.minTick - 1,
       }),
@@ -1012,7 +1016,7 @@ describe('place', () => {
     // Place second order at same tick
     const { orderId: orderId2 } = await dex.placeSync(config, {
       token: base,
-      amount: parseUnits('50', 6),
+      amount: parseUnits('100', 6),
       type: 'buy',
       tick,
     })
@@ -1048,6 +1052,7 @@ describe('placeFlip', () => {
         "amount": 100000000n,
         "flipTick": 200,
         "isBid": true,
+        "isFlipOrder": true,
         "maker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
         "tick": 100,
       }
@@ -1060,7 +1065,7 @@ describe('placeFlip', () => {
     // Valid: flipTick > tick for bid
     const { receipt: receipt1 } = await dex.placeFlipSync(config, {
       token: base,
-      amount: parseUnits('10', 6),
+      amount: parseUnits('100', 6),
       type: 'buy',
       tick: Tick.fromPrice('1.0005'),
       flipTick: Tick.fromPrice('1.001'),
@@ -1071,7 +1076,7 @@ describe('placeFlip', () => {
     await expect(
       dex.placeFlipSync(config, {
         token: base,
-        amount: parseUnits('10', 6),
+        amount: parseUnits('100', 6),
         type: 'buy',
         tick: Tick.fromPrice('1.001'),
         flipTick: Tick.fromPrice('1.001'), // Equal
@@ -1081,7 +1086,7 @@ describe('placeFlip', () => {
     await expect(
       dex.placeFlipSync(config, {
         token: base,
-        amount: parseUnits('10', 6),
+        amount: parseUnits('100', 6),
         type: 'buy',
         tick: Tick.fromPrice('1.001'),
         flipTick: Tick.fromPrice('1.0005'), // Less than
@@ -1095,7 +1100,7 @@ describe('placeFlip', () => {
     // Valid: flipTick < tick for ask
     const { receipt: receipt1 } = await dex.placeFlipSync(config, {
       token: base,
-      amount: parseUnits('10', 6),
+      amount: parseUnits('100', 6),
       type: 'sell',
       tick: Tick.fromPrice('1.001'),
       flipTick: Tick.fromPrice('1.0005'),
@@ -1106,7 +1111,7 @@ describe('placeFlip', () => {
     await expect(
       dex.placeFlipSync(config, {
         token: base,
-        amount: parseUnits('10', 6),
+        amount: parseUnits('100', 6),
         type: 'sell',
         tick: Tick.fromPrice('1.0005'),
         flipTick: Tick.fromPrice('1.0005'), // Equal
@@ -1116,7 +1121,7 @@ describe('placeFlip', () => {
     await expect(
       dex.placeFlipSync(config, {
         token: base,
-        amount: parseUnits('10', 6),
+        amount: parseUnits('100', 6),
         type: 'sell',
         tick: Tick.fromPrice('1.0005'),
         flipTick: Tick.fromPrice('1.001'), // Greater than
@@ -1130,7 +1135,7 @@ describe('placeFlip', () => {
     // Flip order with ticks at extreme boundaries
     const { receipt } = await dex.placeFlipSync(config, {
       token: base,
-      amount: parseUnits('10', 6),
+      amount: parseUnits('100', 6),
       type: 'buy',
       tick: Tick.minTick,
       flipTick: Tick.maxTick,
@@ -1289,7 +1294,7 @@ describe('watchOrderCancelled', () => {
 
     const { orderId: orderId2 } = await dex.placeSync(config, {
       token: base,
-      amount: parseUnits('50', 6),
+      amount: parseUnits('100', 6),
       type: 'buy',
       tick: Tick.fromPrice('1.001'),
     })
@@ -1329,7 +1334,103 @@ describe('watchOrderCancelled', () => {
   })
 })
 
-describe.todo('watchOrderFilled')
+describe('watchOrderFilled', () => {
+  test('default', async () => {
+    const { base, quote } = await setupTokenPair()
+
+    // Place a sell order to create liquidity
+    const { orderId } = await dex.placeSync(config, {
+      token: base,
+      amount: parseUnits('100', 6),
+      type: 'sell',
+      tick: Tick.fromPrice('1.001'),
+    })
+
+    const receivedFills: Array<{
+      args: dex.watchOrderFilled.Args
+      log: dex.watchOrderFilled.Log
+    }> = []
+
+    const unwatch = dex.watchOrderFilled(config, {
+      onOrderFilled: (args, log) => {
+        receivedFills.push({ args, log })
+      },
+    })
+
+    try {
+      // Buy from the order to trigger a fill
+      await dex.buySync(config, {
+        tokenIn: quote,
+        tokenOut: base,
+        amountOut: parseUnits('50', 6),
+        maxAmountIn: parseUnits('100', 6),
+      })
+
+      await new Promise((resolve) => setTimeout(resolve, 200))
+
+      expect(receivedFills.length).toBeGreaterThanOrEqual(1)
+      expect(receivedFills[0]?.args.orderId).toBe(orderId)
+      expect(receivedFills[0]?.args.maker).toBe(account.address)
+      expect(receivedFills[0]?.args.taker).toBe(account.address)
+      expect(receivedFills[0]?.args.amountFilled).toBeGreaterThan(0n)
+    } finally {
+      unwatch()
+    }
+  })
+
+  test('behavior: filter by orderId', async () => {
+    const { base, quote } = await setupTokenPair()
+
+    // Place two sell orders
+    const { orderId: orderId1 } = await dex.placeSync(config, {
+      token: base,
+      amount: parseUnits('100', 6),
+      type: 'sell',
+      tick: Tick.fromPrice('1.001'),
+    })
+
+    const { orderId: orderId2 } = await dex.placeSync(config, {
+      token: base,
+      amount: parseUnits('100', 6),
+      type: 'sell',
+      tick: Tick.fromPrice('1.002'),
+    })
+
+    const receivedFills: Array<{
+      args: dex.watchOrderFilled.Args
+      log: dex.watchOrderFilled.Log
+    }> = []
+
+    // Watch only for fills on orderId1
+    const unwatch = dex.watchOrderFilled(config, {
+      orderId: orderId1,
+      onOrderFilled: (args, log) => {
+        receivedFills.push({ args, log })
+      },
+    })
+
+    try {
+      // Buy enough to fill orderId1 only (cheaper price first)
+      await dex.buySync(config, {
+        tokenIn: quote,
+        tokenOut: base,
+        amountOut: parseUnits('50', 6),
+        maxAmountIn: parseUnits('100', 6),
+      })
+
+      await new Promise((resolve) => setTimeout(resolve, 200))
+
+      // Should only receive fill for orderId1
+      expect(receivedFills.length).toBe(1)
+      expect(receivedFills[0]?.args.orderId).toBe(orderId1)
+
+      // Suppress unused variable warning
+      void orderId2
+    } finally {
+      unwatch()
+    }
+  })
+})
 
 describe('watchOrderPlaced', () => {
   test('default', async () => {
@@ -1358,7 +1459,7 @@ describe('watchOrderPlaced', () => {
       // Place second order
       await dex.placeSync(config, {
         token: base,
-        amount: parseUnits('50', 6),
+        amount: parseUnits('100', 6),
         type: 'sell',
         tick: Tick.fromPrice('0.999'),
       })
@@ -1370,7 +1471,7 @@ describe('watchOrderPlaced', () => {
       expect(receivedOrders[0]?.args.isBid).toBe(true)
       expect(receivedOrders[0]?.args.amount).toBe(parseUnits('100', 6))
       expect(receivedOrders[1]?.args.isBid).toBe(false)
-      expect(receivedOrders[1]?.args.amount).toBe(parseUnits('50', 6))
+      expect(receivedOrders[1]?.args.amount).toBe(parseUnits('100', 6))
     } finally {
       unwatch()
     }
@@ -1405,7 +1506,7 @@ describe('watchOrderPlaced', () => {
       // Place order on base2 (should NOT be captured)
       await dex.placeSync(config, {
         token: base2,
-        amount: parseUnits('50', 6),
+        amount: parseUnits('100', 6),
         type: 'buy',
         tick: Tick.fromPrice('1.001'),
       })
