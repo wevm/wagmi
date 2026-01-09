@@ -14,4 +14,4 @@ export {
 } from '@wagmi/core/tempo'
 
 // Export Hooks
-export * as Hooks from '../tempo/Hooks/index.js'
+export * as Hooks from '../tempo/hooks/index.js'
