@@ -238,6 +238,117 @@ export declare namespace cancelSync {
 }
 
 /**
+ * Cancels stale orders from restricted makers.
+ *
+ * @example
+ * ```ts
+ * import { createConfig, http } from '@wagmi/core'
+ * import { tempo } from '@wagmi/core/chains'
+ * import { Actions } from '@wagmi/core/tempo'
+ *
+ * const config = createConfig({
+ *   chains: [tempoTestnet],
+ *   transports: {
+ *     [tempo.id]: http(),
+ *   },
+ * })
+ *
+ * const hash = await Actions.dex.cancelStale(config, {
+ *   orderIds: [123n, 456n],
+ * })
+ * ```
+ *
+ * @param config - Config.
+ * @param parameters - Parameters.
+ * @returns The transaction hash.
+ */
+export async function cancelStale<config extends Config>(
+  config: config,
+  parameters: cancelStale.Parameters<config>,
+): Promise<Actions.dex.cancelStale.ReturnValue> {
+  const { account, chainId, connector } = parameters
+
+  const client = await getConnectorClient(config, {
+    account,
+    assertChainId: false,
+    chainId,
+    connector,
+  })
+
+  return Actions.dex.cancelStale(client, parameters as never)
+}
+
+export declare namespace cancelStale {
+  export type Parameters<config extends Config> = ChainIdParameter<config> &
+    ConnectorParameter &
+    UnionLooseOmit<
+      Actions.dex.cancelStale.Parameters<config['chains'][number], Account>,
+      'chain'
+    >
+
+  export type ReturnValue = Actions.dex.cancelStale.ReturnValue
+
+  export type ErrorType = BaseErrorType // TODO: Actions.dex.cancelStale.ErrorType
+}
+
+/**
+ * Cancels stale orders from restricted makers.
+ *
+ * Note: This is a synchronous action that waits for the transaction to
+ * be included on a block before returning a response.
+ *
+ * @example
+ * ```ts
+ * import { createConfig, http } from '@wagmi/core'
+ * import { tempo } from '@wagmi/core/chains'
+ * import { Actions } from '@wagmi/core/tempo'
+ *
+ * const config = createConfig({
+ *   chains: [tempoTestnet],
+ *   transports: {
+ *     [tempo.id]: http(),
+ *   },
+ * })
+ *
+ * const result = await Actions.dex.cancelStaleSync(config, {
+ *   orderIds: [123n, 456n],
+ * })
+ * ```
+ *
+ * @param config - Config.
+ * @param parameters - Parameters.
+ * @returns The transaction receipt and event data.
+ */
+export async function cancelStaleSync<config extends Config>(
+  config: config,
+  parameters: cancelStaleSync.Parameters<config>,
+): Promise<Actions.dex.cancelStaleSync.ReturnValue> {
+  const { account, chainId, connector } = parameters
+
+  const client = await getConnectorClient(config, {
+    account,
+    assertChainId: false,
+    chainId,
+    connector,
+  })
+
+  return Actions.dex.cancelStaleSync(client, parameters as never)
+}
+
+export declare namespace cancelStaleSync {
+  export type Parameters<config extends Config> = ChainIdParameter<config> &
+    ConnectorParameter &
+    UnionLooseOmit<
+      Actions.dex.cancelStaleSync.Parameters<config['chains'][number], Account>,
+      'chain'
+    >
+
+  export type ReturnValue = Actions.dex.cancelStaleSync.ReturnValue
+
+  export type ErrorType = BaseErrorType // TODO: Actions.dex.cancelStaleSync.ErrorType
+}
+
+/**
  * Creates a new trading pair on the DEX.
  *
  * @example

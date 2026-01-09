@@ -23,6 +23,17 @@ import {
 } from 'vitest-browser-react'
 import { createConfig, WagmiProvider } from 'wagmi'
 
+export const port = Number(import.meta.env.RPC_PORT ?? 4000)
+
+export const rpcUrl = (() => {
+  const id =
+    (typeof process !== 'undefined' &&
+      Number(process.env.VITEST_POOL_ID ?? 1) +
+        Math.floor(Math.random() * 10_000)) ||
+    1 + Math.floor(Math.random() * 10_000)
+  return `http://localhost:${port}/${id}`
+})()
+
 export const addresses = {
   alphaUsd: '0x20c0000000000000000000000000000000000001',
 } as const
@@ -34,13 +45,6 @@ export const accounts = Array.from({ length: 20 }, (_, i) => {
   )
   return tempo_Account.fromSecp256k1(privateKey)
 }) as unknown as FixedArray<tempo_Account.RootAccount, 20>
-
-const id =
-  (typeof process !== 'undefined' &&
-    Number(process.env.VITEST_POOL_ID ?? 1) +
-      Math.floor(Math.random() * 10_000)) ||
-  1 + Math.floor(Math.random() * 10_000)
-export const rpcUrl = `http://localhost:${import.meta.env.RPC_PORT ?? '4000'}/${id}`
 
 export const tempoLocal = defineChain({
   ...chains.tempoLocalnet,
@@ -232,12 +236,12 @@ export async function viem_setupTokenPair(
       }),
       Actions.token.approve.call({
         token: baseToken,
-        spender: Addresses.stablecoinExchange,
+        spender: Addresses.stablecoinDex,
         amount: parseUnits('10000', 6),
       }),
       Actions.token.approve.call({
         token: quoteToken,
-        spender: Addresses.stablecoinExchange,
+        spender: Addresses.stablecoinDex,
         amount: parseUnits('10000', 6),
       }),
     ],

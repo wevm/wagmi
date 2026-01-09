@@ -596,47 +596,6 @@ export declare namespace watchRebalanceSwap {
 }
 
 /**
- * Watches for fee swap events.
- *
- * @example
- * ```ts
- * import { createConfig, http } from '@wagmi/core'
- * import { tempo } from '@wagmi/core/chains'
- * import { Actions } from '@wagmi/core/tempo'
- *
- * const config = createConfig({
- *   chains: [tempoTestnet],
- *   transports: {
- *     [tempo.id]: http(),
- *   },
- * })
- *
- * const unwatch = Actions.amm.watchFeeSwap(config, {
- *   onFeeSwap: (args, log) => {
- *     console.log('Fee swap:', args)
- *   },
- * })
- * ```
- *
- * @param config - Config.
- * @param parameters - Parameters.
- * @returns A function to unsubscribe from the event.
- */
-export function watchFeeSwap<config extends Config>(
-  config: config,
-  parameters: watchFeeSwap.Parameters<config>,
-) {
-  const { chainId, ...rest } = parameters
-  const client = config.getClient({ chainId })
-  return Actions.amm.watchFeeSwap(client, rest)
-}
-
-export declare namespace watchFeeSwap {
-  export type Parameters<config extends Config> = ChainIdParameter<config> &
-    Actions.amm.watchFeeSwap.Parameters
-}
-
-/**
  * Watches for liquidity mint events.
  *
  * @example

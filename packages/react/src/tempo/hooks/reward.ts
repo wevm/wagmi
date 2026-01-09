@@ -147,14 +147,14 @@ export declare namespace useClaimSync {
 }
 
 /**
- * Hook for getting the total reward per second rate.
+ * Hook for getting the global reward per token.
  *
  * @example
  * ```tsx
  * import { Hooks } from 'wagmi/tempo'
  *
  * function App() {
- *   const { data, isLoading } = Hooks.reward.useGetTotalPerSecond({
+ *   const { data, isLoading } = Hooks.reward.useGetGlobalRewardPerToken({
  *     token: '0x20c0000000000000000000000000000000000001',
  *   })
  *
@@ -164,37 +164,37 @@ export declare namespace useClaimSync {
  * ```
  *
  * @param parameters - Parameters.
- * @returns Query result with total reward per second.
+ * @returns Query result with global reward per token.
  */
-export function useGetTotalPerSecond<
+export function useGetGlobalRewardPerToken<
   config extends Config = ResolvedRegister['config'],
-  selectData = Actions.reward.getTotalPerSecond.ReturnValue,
+  selectData = Actions.reward.getGlobalRewardPerToken.ReturnValue,
 >(
-  parameters: useGetTotalPerSecond.Parameters<config, selectData> = {},
-): useGetTotalPerSecond.ReturnValue<selectData> {
+  parameters: useGetGlobalRewardPerToken.Parameters<config, selectData> = {},
+): useGetGlobalRewardPerToken.ReturnValue<selectData> {
   const config = useConfig(parameters)
   const chainId = useChainId({ config })
-  const options = Actions.reward.getTotalPerSecond.queryOptions(config, {
+  const options = Actions.reward.getGlobalRewardPerToken.queryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
   } as never)
   return useQuery(options) as never
 }
 
-export declare namespace useGetTotalPerSecond {
+export declare namespace useGetGlobalRewardPerToken {
   export type Parameters<
     config extends Config = ResolvedRegister['config'],
-    selectData = Actions.reward.getTotalPerSecond.ReturnValue,
+    selectData = Actions.reward.getGlobalRewardPerToken.ReturnValue,
   > = ConfigParameter<config> &
     ExactPartial<
-      Actions.reward.getTotalPerSecond.queryOptions.Parameters<
+      Actions.reward.getGlobalRewardPerToken.queryOptions.Parameters<
         config,
         selectData
       >
     >
 
   export type ReturnValue<
-    selectData = Actions.reward.getTotalPerSecond.ReturnValue,
+    selectData = Actions.reward.getGlobalRewardPerToken.ReturnValue,
   > = UseQueryReturnType<selectData, Error>
 }
 
@@ -392,22 +392,22 @@ export declare namespace useSetRecipientSync {
 }
 
 /**
- * Hook for starting a new reward stream.
+ * Hook for distributing rewards.
  *
  * @example
  * ```tsx
  * import { Hooks } from 'wagmi/tempo'
  *
  * function App() {
- *   const { mutate: start } = Hooks.reward.useStart()
+ *   const { mutate: distribute } = Hooks.reward.useDistribute()
  *
  *   return (
- *     <button onClick={() => start({
+ *     <button onClick={() => distribute({
  *       amount: 100000000000000000000n,
  *       seconds: 86400,
  *       token: '0x20c0000000000000000000000000000000000001',
  *     })}>
- *       Start Reward
+ *       Distribute Rewards
  *     </button>
  *   )
  * }
@@ -416,33 +416,33 @@ export declare namespace useSetRecipientSync {
  * @param parameters - Parameters.
  * @returns Mutation result.
  */
-export function useStart<
+export function useDistribute<
   config extends Config = ResolvedRegister['config'],
   context = unknown,
 >(
-  parameters: useStart.Parameters<config, context> = {},
-): useStart.ReturnType<config, context> {
+  parameters: useDistribute.Parameters<config, context> = {},
+): useDistribute.ReturnType<config, context> {
   const { mutation } = parameters
   const config = useConfig(parameters)
   return useMutation({
     ...mutation,
     async mutationFn(variables) {
-      return Actions.reward.start(config, variables as never)
+      return Actions.reward.distribute(config, variables as never)
     },
-    mutationKey: ['start'],
+    mutationKey: ['distribute'],
   }) as never
 }
 
-export declare namespace useStart {
+export declare namespace useDistribute {
   type Parameters<
     config extends Config = Config,
     context = unknown,
   > = ConfigParameter<config> & {
     mutation?:
       | UseMutationParameters<
-          Actions.reward.start.ReturnValue,
-          Actions.reward.start.ErrorType,
-          Actions.reward.start.Parameters<config>,
+          Actions.reward.distribute.ReturnValue,
+          Actions.reward.distribute.ErrorType,
+          Actions.reward.distribute.Parameters<config>,
           context
         >
       | undefined
@@ -452,30 +452,30 @@ export declare namespace useStart {
     config extends Config = Config,
     context = unknown,
   > = UseMutationResult<
-    Actions.reward.start.ReturnValue,
-    Actions.reward.start.ErrorType,
-    Actions.reward.start.Parameters<config>,
+    Actions.reward.distribute.ReturnValue,
+    Actions.reward.distribute.ErrorType,
+    Actions.reward.distribute.Parameters<config>,
     context
   >
 }
 
 /**
- * Hook for starting a new reward stream and waiting for confirmation.
+ * Hook for distributing rewards and waiting for confirmation.
  *
  * @example
  * ```tsx
  * import { Hooks } from 'wagmi/tempo'
  *
  * function App() {
- *   const { mutate: startSync } = Hooks.reward.useStartSync()
+ *   const { mutate: distributeSync } = Hooks.reward.useDistributeSync()
  *
  *   return (
- *     <button onClick={() => startSync({
+ *     <button onClick={() => distributeSync({
  *       amount: 100000000000000000000n,
  *       seconds: 86400,
  *       token: '0x20c0000000000000000000000000000000000001',
  *     })}>
- *       Start Reward
+ *       Distribute Rewards
  *     </button>
  *   )
  * }
@@ -484,33 +484,33 @@ export declare namespace useStart {
  * @param parameters - Parameters.
  * @returns Mutation result.
  */
-export function useStartSync<
+export function useDistributeSync<
   config extends Config = ResolvedRegister['config'],
   context = unknown,
 >(
-  parameters: useStartSync.Parameters<config, context> = {},
-): useStartSync.ReturnType<config, context> {
+  parameters: useDistributeSync.Parameters<config, context> = {},
+): useDistributeSync.ReturnType<config, context> {
   const { mutation } = parameters
   const config = useConfig(parameters)
   return useMutation({
     ...mutation,
     async mutationFn(variables) {
-      return Actions.reward.startSync(config, variables as never)
+      return Actions.reward.distributeSync(config, variables as never)
     },
-    mutationKey: ['startSync'],
+    mutationKey: ['distributeSync'],
   }) as never
 }
 
-export declare namespace useStartSync {
+export declare namespace useDistributeSync {
   type Parameters<
     config extends Config = Config,
     context = unknown,
   > = ConfigParameter<config> & {
     mutation?:
       | UseMutationParameters<
-          Actions.reward.startSync.ReturnValue,
-          Actions.reward.startSync.ErrorType,
-          Actions.reward.startSync.Parameters<config>,
+          Actions.reward.distributeSync.ReturnValue,
+          Actions.reward.distributeSync.ErrorType,
+          Actions.reward.distributeSync.Parameters<config>,
           context
         >
       | undefined
@@ -520,38 +520,38 @@ export declare namespace useStartSync {
     config extends Config = Config,
     context = unknown,
   > = UseMutationResult<
-    Actions.reward.startSync.ReturnValue,
-    Actions.reward.startSync.ErrorType,
-    Actions.reward.startSync.Parameters<config>,
+    Actions.reward.distributeSync.ReturnValue,
+    Actions.reward.distributeSync.ErrorType,
+    Actions.reward.distributeSync.Parameters<config>,
     context
   >
 }
 
 /**
- * Hook for watching reward scheduled events.
+ * Hook for watching reward distributed events.
  *
  * @example
  * ```tsx
  * import { Hooks } from 'wagmi/tempo'
  *
  * function App() {
- *   Hooks.reward.useWatchRewardScheduled({
+ *   Hooks.reward.useWatchRewardDistributed({
  *     token: '0x20c0000000000000000000000000000000000001',
- *     onRewardScheduled(args) {
- *       console.log('Reward scheduled:', args)
+ *     onRewardDistributed(args) {
+ *       console.log('Reward distributed:', args)
  *     },
  *   })
  *
- *   return <div>Watching for reward scheduled events...</div>
+ *   return <div>Watching for reward distributed events...</div>
  * }
  * ```
  *
  * @param parameters - Parameters.
  */
-export function useWatchRewardScheduled<
+export function useWatchRewardDistributed<
   config extends Config = ResolvedRegister['config'],
->(parameters: useWatchRewardScheduled.Parameters<config> = {}) {
-  const { enabled = true, onRewardScheduled, token, ...rest } = parameters
+>(parameters: useWatchRewardDistributed.Parameters<config> = {}) {
+  const { enabled = true, onRewardDistributed, token, ...rest } = parameters
 
   const config = useConfig({ config: parameters.config })
   const configChainId = useChainId({ config })
@@ -560,12 +560,12 @@ export function useWatchRewardScheduled<
   // biome-ignore lint/correctness/useExhaustiveDependencies: rest.x is explicitly listed
   useEffect(() => {
     if (!enabled) return
-    if (!onRewardScheduled) return
+    if (!onRewardDistributed) return
     if (!token) return
-    return Actions.reward.watchRewardScheduled(config, {
+    return Actions.reward.watchRewardDistributed(config, {
       ...rest,
       chainId,
-      onRewardScheduled,
+      onRewardDistributed,
       token,
     })
   }, [
@@ -573,7 +573,7 @@ export function useWatchRewardScheduled<
     enabled,
     chainId,
     token,
-    onRewardScheduled,
+    onRewardDistributed,
     rest.fromBlock,
     rest.onError,
     rest.poll,
@@ -581,9 +581,9 @@ export function useWatchRewardScheduled<
   ])
 }
 
-export declare namespace useWatchRewardScheduled {
+export declare namespace useWatchRewardDistributed {
   type Parameters<config extends Config = Config> = UnionCompute<
-    ExactPartial<Actions.reward.watchRewardScheduled.Parameters<config>> &
+    ExactPartial<Actions.reward.watchRewardDistributed.Parameters<config>> &
       ConfigParameter<config> & { enabled?: boolean | undefined }
   >
 }

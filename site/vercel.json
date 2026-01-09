@@ -140,6 +140,56 @@
       "destination": "/tempo/getting-started",
       "permanent": true
     },
+    {
+      "source": "/tempo/actions/reward.start",
+      "destination": "/tempo/actions/reward.distribute",
+      "permanent": true
+    },
+    {
+      "source": "/tempo/actions/reward.watchRewardScheduled",
+      "destination": "/tempo/actions/reward.watchRewardDistributed",
+      "permanent": true
+    },
+    {
+      "source": "/tempo/hooks/reward.useStart",
+      "destination": "/tempo/hooks/reward.useDistribute",
+      "permanent": true
+    },
+    {
+      "source": "/tempo/hooks/reward.useWatchRewardScheduled",
+      "destination": "/tempo/hooks/reward.useWatchRewardDistributed",
+      "permanent": true
+    },
+    {
+      "source": "/tempo/actions/nonce.getNonceKeyCount",
+      "destination": "/tempo/actions/nonce.getNonce",
+      "permanent": true
+    },
+    {
+      "source": "/tempo/actions/nonce.watchActiveKeyCountChanged",
+      "destination": "/tempo/actions/nonce.watchNonceIncremented",
+      "permanent": true
+    },
+    {
+      "source": "/tempo/actions/amm.watchFeeSwap",
+      "destination": "/tempo/actions/amm.watchRebalanceSwap",
+      "permanent": true
+    },
+    {
+      "source": "/tempo/hooks/nonce.useNonceKeyCount",
+      "destination": "/tempo/hooks/nonce.useNonce",
+      "permanent": true
+    },
+    {
+      "source": "/tempo/hooks/nonce.useWatchActiveKeyCountChanged",
+      "destination": "/tempo/hooks/nonce.useWatchNonceIncremented",
+      "permanent": true
+    },
+    {
+      "source": "/tempo/hooks/amm.useWatchFeeSwap",
+      "destination": "/tempo/hooks/amm.useWatchRebalanceSwap",
+      "permanent": true
+    },
 
     {
       "source": "/vue/api/actions/useAccount",

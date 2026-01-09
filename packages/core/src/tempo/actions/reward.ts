@@ -120,7 +120,7 @@ export declare namespace claimSync {
 }
 
 /**
- * Gets the total reward per second rate for all active streams.
+ * Gets the global reward per token for all active distributions.
  *
  * @example
  * ```ts
@@ -135,36 +135,36 @@ export declare namespace claimSync {
  *   },
  * })
  *
- * const rate = await Actions.reward.getTotalPerSecond(config, {
+ * const rate = await Actions.reward.getGlobalRewardPerToken(config, {
  *   token: '0x20c0000000000000000000000000000000000001',
  * })
  * ```
  *
  * @param config - Config.
  * @param parameters - Parameters.
- * @returns The total reward per second (scaled by 1e18).
+ * @returns The global reward per token (scaled by 1e18).
  */
-export function getTotalPerSecond<config extends Config>(
+export function getGlobalRewardPerToken<config extends Config>(
   config: config,
-  parameters: getTotalPerSecond.Parameters<config>,
-): Promise<getTotalPerSecond.ReturnValue> {
+  parameters: getGlobalRewardPerToken.Parameters<config>,
+): Promise<getGlobalRewardPerToken.ReturnValue> {
   const { chainId, ...rest } = parameters
   const client = config.getClient({ chainId })
-  return Actions.reward.getTotalPerSecond(client, rest)
+  return Actions.reward.getGlobalRewardPerToken(client, rest)
 }
 
-export namespace getTotalPerSecond {
+export namespace getGlobalRewardPerToken {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
-    Actions.reward.getTotalPerSecond.Parameters
+    Actions.reward.getGlobalRewardPerToken.Parameters
 
-  export type ReturnValue = Actions.reward.getTotalPerSecond.ReturnValue
+  export type ReturnValue = Actions.reward.getGlobalRewardPerToken.ReturnValue
 
   export type ErrorType = BaseErrorType
 
   export function queryKey<config extends Config>(
     parameters: Parameters<config>,
   ) {
-    return ['getTotalPerSecond', parameters] as const
+    return ['getGlobalRewardPerToken', parameters] as const
   }
 
   export type QueryKey<config extends Config> = ReturnType<
@@ -182,7 +182,7 @@ export namespace getTotalPerSecond {
       queryKey: queryKey(rest),
       async queryFn({ queryKey }) {
         const [, parameters] = queryKey
-        return await getTotalPerSecond(config, parameters)
+        return await getGlobalRewardPerToken(config, parameters)
       },
     }
   }
@@ -190,23 +190,23 @@ export namespace getTotalPerSecond {
   export declare namespace queryOptions {
     export type Parameters<
       config extends Config,
-      selectData = getTotalPerSecond.ReturnValue,
-    > = getTotalPerSecond.Parameters<config> &
+      selectData = getGlobalRewardPerToken.ReturnValue,
+    > = getGlobalRewardPerToken.Parameters<config> &
       QueryParameter<
-        getTotalPerSecond.ReturnValue,
-        getTotalPerSecond.ErrorType,
+        getGlobalRewardPerToken.ReturnValue,
+        getGlobalRewardPerToken.ErrorType,
         selectData,
-        getTotalPerSecond.QueryKey<config>
+        getGlobalRewardPerToken.QueryKey<config>
       >
 
     export type ReturnValue<
       config extends Config,
-      selectData = getTotalPerSecond.ReturnValue,
+      selectData = getGlobalRewardPerToken.ReturnValue,
     > = QueryOptions<
-      getTotalPerSecond.ReturnValue,
-      getTotalPerSecond.ErrorType,
+      getGlobalRewardPerToken.ReturnValue,
+      getGlobalRewardPerToken.ErrorType,
       selectData,
-      getTotalPerSecond.QueryKey<config>
+      getGlobalRewardPerToken.QueryKey<config>
     >
   }
 }
@@ -423,7 +423,7 @@ export declare namespace setRecipientSync {
 }
 
 /**
- * Starts a new reward stream that distributes tokens to opted-in holders.
+ * Distributes rewards to opted-in holders.
  *
  * @example
  * ```ts
@@ -438,7 +438,7 @@ export declare namespace setRecipientSync {
  *   },
  * })
  *
- * const hash = await Actions.reward.start(config, {
+ * const hash = await Actions.reward.distribute(config, {
  *   amount: 100000000000000000000n,
  *   seconds: 86400,
  *   token: '0x20c0000000000000000000000000000000000001',
@@ -449,10 +449,10 @@ export declare namespace setRecipientSync {
  * @param parameters - Parameters.
  * @returns The transaction hash.
  */
-export async function start<config extends Config>(
+export async function distribute<config extends Config>(
   config: config,
-  parameters: start.Parameters<config>,
-): Promise<Actions.reward.start.ReturnValue> {
+  parameters: distribute.Parameters<config>,
+): Promise<Actions.reward.distribute.ReturnValue> {
   const { account, chainId, connector } = parameters
 
   const client = await getConnectorClient(config, {
@@ -462,25 +462,25 @@ export async function start<config extends Config>(
     connector,
   })
 
-  return Actions.reward.start(client, parameters as never)
+  return Actions.reward.distribute(client, parameters as never)
 }
 
-export declare namespace start {
+export declare namespace distribute {
   export type Parameters<config extends Config = Config> =
     ChainIdParameter<config> &
       ConnectorParameter &
       UnionLooseOmit<
-        Actions.reward.start.Parameters<config['chains'][number], Account>,
+        Actions.reward.distribute.Parameters<config['chains'][number], Account>,
         'chain'
       >
 
-  export type ReturnValue = Actions.reward.start.ReturnValue
+  export type ReturnValue = Actions.reward.distribute.ReturnValue
 
-  export type ErrorType = BaseErrorType // TODO: Actions.reward.start.ErrorType
+  export type ErrorType = BaseErrorType // TODO: Actions.reward.distribute.ErrorType
 }
 
 /**
- * Starts a new reward stream that distributes tokens to opted-in holders and waits for confirmation.
+ * Distributes rewards to opted-in holders and waits for confirmation.
  *
  * @example
  * ```ts
@@ -495,7 +495,7 @@ export declare namespace start {
  *   },
  * })
  *
- * const result = await Actions.reward.startSync(config, {
+ * const result = await Actions.reward.distributeSync(config, {
  *   amount: 100000000000000000000n,
  *   seconds: 86400,
  *   token: '0x20c0000000000000000000000000000000000001',
@@ -506,10 +506,10 @@ export declare namespace start {
  * @param parameters - Parameters.
  * @returns The transaction receipt and event data.
  */
-export async function startSync<config extends Config>(
+export async function distributeSync<config extends Config>(
   config: config,
-  parameters: startSync.Parameters<config>,
-): Promise<Actions.reward.startSync.ReturnValue> {
+  parameters: distributeSync.Parameters<config>,
+): Promise<Actions.reward.distributeSync.ReturnValue> {
   const { account, chainId, connector } = parameters
 
   const client = await getConnectorClient(config, {
@@ -519,25 +519,28 @@ export async function startSync<config extends Config>(
     connector,
   })
 
-  return Actions.reward.startSync(client, parameters as never)
+  return Actions.reward.distributeSync(client, parameters as never)
 }
 
-export declare namespace startSync {
+export declare namespace distributeSync {
   export type Parameters<config extends Config = Config> =
     ChainIdParameter<config> &
       ConnectorParameter &
       UnionLooseOmit<
-        Actions.reward.startSync.Parameters<config['chains'][number], Account>,
+        Actions.reward.distributeSync.Parameters<
+          config['chains'][number],
+          Account
+        >,
         'chain'
       >
 
-  export type ReturnValue = Actions.reward.startSync.ReturnValue
+  export type ReturnValue = Actions.reward.distributeSync.ReturnValue
 
-  export type ErrorType = BaseErrorType // TODO: Actions.reward.startSync.ErrorType
+  export type ErrorType = BaseErrorType // TODO: Actions.reward.distributeSync.ErrorType
 }
 
 /**
- * Watches for reward scheduled events.
+ * Watches for reward distributed events.
  *
  * @example
  * ```ts
@@ -552,10 +555,10 @@ export declare namespace startSync {
  *   },
  * })
  *
- * const unwatch = Actions.reward.watchRewardScheduled(config, {
+ * const unwatch = Actions.reward.watchRewardDistributed(config, {
  *   token: '0x20c0000000000000000000000000000000000001',
- *   onRewardScheduled: (args, log) => {
- *     console.log('Reward scheduled:', args)
+ *   onRewardDistributed: (args, log) => {
+ *     console.log('Reward distributed:', args)
  *   },
  * })
  * ```
@@ -564,18 +567,18 @@ export declare namespace startSync {
  * @param parameters - Parameters.
  * @returns A function to unsubscribe from the event.
  */
-export function watchRewardScheduled<config extends Config>(
+export function watchRewardDistributed<config extends Config>(
   config: config,
-  parameters: watchRewardScheduled.Parameters<config>,
+  parameters: watchRewardDistributed.Parameters<config>,
 ) {
   const { chainId, ...rest } = parameters
   const client = config.getClient({ chainId })
-  return Actions.reward.watchRewardScheduled(client, rest)
+  return Actions.reward.watchRewardDistributed(client, rest)
 }
 
-export declare namespace watchRewardScheduled {
+export declare namespace watchRewardDistributed {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
-    Actions.reward.watchRewardScheduled.Parameters
+    Actions.reward.watchRewardDistributed.Parameters
 }
 
 /**
