@@ -392,48 +392,58 @@ export function webAuthn(options: webAuthn.Parameters) {
 
       const targetChain = defineChain({
         ...chain,
-        async prepareTransactionRequest(args, { phase }) {
-          const keyAuthorization = await (async () => {
-            {
-              const keyAuthorization = (
-                args as {
-                  keyAuthorization?:
-                    | KeyAuthorization.KeyAuthorization
-                    | undefined
-                }
-              ).keyAuthorization
-              if (keyAuthorization) return keyAuthorization
+        prepareTransactionRequest: [
+          async (args, { phase }) => {
+            const keyAuthorization = await (async () => {
+              {
+                const keyAuthorization = (
+                  args as {
+                    keyAuthorization?:
+                      | KeyAuthorization.KeyAuthorization
+                      | undefined
+                  }
+                ).keyAuthorization
+                if (keyAuthorization) return keyAuthorization
+              }
+
+              const keyAuthorization = await config.storage?.getItem(
+                `pendingKeyAuthorization:${targetAccount?.address.toLowerCase()}`,
+              )
+              await config.storage?.removeItem(
+                `pendingKeyAuthorization:${targetAccount?.address.toLowerCase()}`,
+              )
+              return keyAuthorization
+            })()
+
+            const [prepareTransactionRequestFn, options] = (() => {
+              if (!chain.prepareTransactionRequest)
+                return [undefined, undefined]
+              if (typeof chain.prepareTransactionRequest === 'function')
+                return [chain.prepareTransactionRequest, undefined]
+              return chain.prepareTransactionRequest
+            })()
+
+            const request = await (async () => {
+              if (!prepareTransactionRequestFn) return {}
+              if (!options || options?.runAt?.includes(phase))
+                return await prepareTransactionRequestFn(args, { phase })
+              return {}
+            })()
+
+            return {
+              ...args,
+              ...request,
+              keyAuthorization,
             }
-
-            const keyAuthorization = await config.storage?.getItem(
-              `pendingKeyAuthorization:${targetAccount?.address.toLowerCase()}`,
-            )
-            await config.storage?.removeItem(
-              `pendingKeyAuthorization:${targetAccount?.address.toLowerCase()}`,
-            )
-            return keyAuthorization
-          })()
-
-          const [prepareTransactionRequestFn, options] = (() => {
-            if (!chain.prepareTransactionRequest) return [undefined, undefined]
-            if (typeof chain.prepareTransactionRequest === 'function')
-              return [chain.prepareTransactionRequest, undefined]
-            return chain.prepareTransactionRequest
-          })()
-
-          const request = await (async () => {
-            if (!prepareTransactionRequestFn) return {}
-            if (!options || options?.runAt?.includes(phase))
-              return await prepareTransactionRequestFn(args, { phase })
-            return {}
-          })()
-
-          return {
-            ...args,
-            ...request,
-            keyAuthorization,
-          }
-        },
+          },
+          {
+            runAt: [
+              'afterFillParameters',
+              'beforeFillParameters',
+              'beforeFillTransaction',
+            ],
+          },
+        ],
       })
 
       return createClient({
