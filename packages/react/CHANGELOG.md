@@ -1,5 +1,32 @@
 # wagmi
 
+## 3.3.0
+
+### Minor Changes
+
+- Updated to `viem@2.44.0` with Tempo Moderato support. ([#4940](https://github.com/wevm/wagmi/pull/4940))
+
+  **Breaking Changes (Tempo)**
+
+  - Renamed `reward.useStart` → `reward.useDistribute`
+  - Renamed `reward.useStartSync` → `reward.useDistributeSync`
+  - Renamed `reward.useGetTotalPerSecond` → `reward.useGetGlobalRewardPerToken`
+  - Renamed `reward.useWatchRewardScheduled` → `reward.useWatchRewardDistributed`
+  - Removed `nonce.useNonceKeyCount`
+  - Removed `nonce.useWatchActiveKeyCountChanged`
+  - Removed `amm.useWatchFeeSwap`
+
+  **New Features (Tempo)**
+
+  - Added `dex.useCancelStale` hook
+  - Added `dex.useCancelStaleSync` hook
+
+### Patch Changes
+
+- Updated dependencies [[`2ee3f55`](https://github.com/wevm/wagmi/commit/2ee3f559a2637c7aab3fca6c7d196cf238ecd63d)]:
+  - @wagmi/core@3.2.0
+  - @wagmi/connectors@8.0.0
+
 ## 3.2.0
 
 ### Minor Changes
