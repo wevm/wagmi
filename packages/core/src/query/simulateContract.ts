@@ -130,7 +130,7 @@ export function simulateContractQueryKey<
   > &
     ScopeKeyParameter = {} as any,
 ) {
-  const { abi: _, connector: __, ...rest } = options
+  const { connector: _, ...rest } = options
   return ['simulateContract', filterQueryOptions(rest)] as const
 }
 

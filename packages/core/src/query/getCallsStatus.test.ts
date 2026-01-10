@@ -15,7 +15,6 @@ test('default', () => {
       "queryKey": [
         "callsStatus",
         {
-          "connectorUid": undefined,
           "id": "0x0000000000000000000000000000000000000000",
         },
       ],

@@ -51,10 +51,7 @@ export type GetCallsStatusData = GetCallsStatusQueryFnData
 export function getCallsStatusQueryKey(
   options: Compute<GetCallsStatusParameters & ScopeKeyParameter>,
 ) {
-  return [
-    'callsStatus',
-    { ...filterQueryOptions(options), connectorUid: options.connector?.uid },
-  ] as const
+  return ['callsStatus', filterQueryOptions(options)] as const
 }
 
 export type GetCallsStatusQueryKey = ReturnType<typeof getCallsStatusQueryKey>
