@@ -1,4 +1,5 @@
 import { type QueryKey, replaceEqualDeep } from '@tanstack/query-core'
+import type { Connector } from '../createConfig.js'
 import type { Compute, StrictOmit } from '../types/utils.js'
 
 export function structuralSharing<data>(
@@ -48,10 +49,15 @@ function hasObjectPrototype(o: any): boolean {
   return Object.prototype.toString.call(o) === '[object Object]'
 }
 
-export function filterQueryOptions<type extends Record<string, unknown>>(
+export function filterQueryOptions<
+  type extends Record<string, unknown> & { connector?: Connector | undefined },
+>(
   options: type,
 ): Compute<
-  StrictOmit<type, 'abi' | 'config' | 'connector' | 'query' | 'watch'>
+  StrictOmit<type, 'abi' | 'config' | 'connector' | 'query' | 'watch'> &
+    (type extends { connector?: Connector | undefined }
+      ? { connectorUid?: string }
+      : unknown)
 > {
   // destructuring is super fast
   // biome-ignore format: no formatting
@@ -75,5 +81,6 @@ export function filterQueryOptions<type extends Record<string, unknown>>(
     abi, config, connector, query, watch,
     ...rest
   } = options
-  return rest as type
+  if (connector) return { connectorUid: connector?.uid, ...rest } as never
+  return rest as never
 }

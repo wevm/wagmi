@@ -20,8 +20,17 @@ test('structuralSharing', () => {
 })
 
 test('filterQueryOptions', () => {
-  const options = filterQueryOptions({ foo: 'bar', baz: true, abi: abi.erc20 })
-  expectTypeOf(options).toEqualTypeOf<{ foo: string; baz: boolean }>()
+  const options = filterQueryOptions({
+    foo: 'bar',
+    baz: true,
+    abi: abi.erc20,
+    connector: undefined,
+  })
+  expectTypeOf(options).toEqualTypeOf<{
+    foo: string
+    baz: boolean
+    connectorUid?: string | undefined
+  }>()
   expect(options).toMatchInlineSnapshot(`
     {
       "baz": true,

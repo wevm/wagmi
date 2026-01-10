@@ -65,8 +65,7 @@ export function estimateGasQueryKey<
       ScopeKeyParameter
   > = {} as any,
 ) {
-  const { connector: _, ...parameters } = options
-  return ['estimateGas', filterQueryOptions(parameters)] as const
+  return ['estimateGas', filterQueryOptions(options)] as const
 }
 
 export type EstimateGasQueryKey<

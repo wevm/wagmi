@@ -48,7 +48,6 @@ test('default', async () => {
         "walletClient",
         {
           "chainId": 1,
-          "connectorUid": undefined,
         },
       ],
       "refetch": [Function],

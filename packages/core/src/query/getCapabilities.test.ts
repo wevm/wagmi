@@ -10,9 +10,7 @@ test('default', () => {
       "queryFn": [Function],
       "queryKey": [
         "capabilities",
-        {
-          "connectorUid": undefined,
-        },
+        {},
       ],
     }
   `)
@@ -31,7 +29,6 @@ test('parameters: chainId', () => {
         "capabilities",
         {
           "account": "0x0000000000000000000000000000000000000000",
-          "connectorUid": undefined,
         },
       ],
     }

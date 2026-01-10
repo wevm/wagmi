@@ -58,10 +58,7 @@ export function waitForCallsStatusQueryKey(
     ExactPartial<WaitForCallsStatusParameters> & ScopeKeyParameter
   > = {},
 ) {
-  return [
-    'callsStatus',
-    { ...filterQueryOptions(options), connectorUid: options.connector?.uid },
-  ] as const
+  return ['callsStatus', filterQueryOptions(options)] as const
 }
 
 export type WaitForCallsStatusQueryKey = ReturnType<

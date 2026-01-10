@@ -74,10 +74,7 @@ export function getConnectorClientQueryKey<
       ScopeKeyParameter
   > = {},
 ) {
-  return [
-    'connectorClient',
-    { ...filterQueryOptions(options), connectorUid: options.connector?.uid },
-  ] as const
+  return ['connectorClient', filterQueryOptions(options)] as const
 }
 
 export type GetConnectorClientQueryKey<

@@ -88,8 +88,7 @@ export function readContractQueryKey<
   > &
     ScopeKeyParameter = {} as any,
 ) {
-  const { abi: _, ...rest } = options
-  return ['readContract', filterQueryOptions(rest)] as const
+  return ['readContract', filterQueryOptions(options)] as const
 }
 
 export type ReadContractQueryKey<

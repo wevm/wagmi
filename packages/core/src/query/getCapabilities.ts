@@ -67,10 +67,7 @@ export function getCapabilitiesQueryKey<
     ExactPartial<GetCapabilitiesParameters<config, chainId>> & ScopeKeyParameter
   > = {},
 ) {
-  return [
-    'capabilities',
-    { ...filterQueryOptions(options), connectorUid: options.connector?.uid },
-  ] as const
+  return ['capabilities', filterQueryOptions(options)] as const
 }
 
 export type GetCapabilitiesQueryKey<

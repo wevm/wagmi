@@ -11,9 +11,7 @@ test('default', () => {
       "queryFn": [Function],
       "queryKey": [
         "walletClient",
-        {
-          "connectorUid": undefined,
-        },
+        {},
       ],
       "staleTime": Infinity,
     }
@@ -32,7 +30,6 @@ test('parameters: chainId', () => {
         "walletClient",
         {
           "chainId": 1,
-          "connectorUid": undefined,
         },
       ],
       "staleTime": Infinity,
