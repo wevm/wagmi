@@ -8,6 +8,7 @@ test('default', () => {
     waitForTransactionReceiptQueryOptions(config, {}),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": false,
       "queryFn": [Function],
       "queryKey": [
         "waitForTransactionReceipt",

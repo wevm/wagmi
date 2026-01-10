@@ -8,6 +8,7 @@ export {
   type CallOptions,
   type CallQueryFnData,
   type CallQueryKey,
+  type CallQueryOptions,
   callQueryKey,
   callQueryOptions,
 } from '../query/call.js'
@@ -41,6 +42,7 @@ export {
   type EstimateFeesPerGasOptions,
   type EstimateFeesPerGasQueryFnData,
   type EstimateFeesPerGasQueryKey,
+  type EstimateFeesPerGasQueryOptions,
   estimateFeesPerGasQueryKey,
   estimateFeesPerGasQueryOptions,
 } from '../query/estimateFeesPerGas.js'
@@ -50,6 +52,7 @@ export {
   type EstimateGasOptions,
   type EstimateGasQueryFnData,
   type EstimateGasQueryKey,
+  type EstimateGasQueryOptions,
   estimateGasQueryKey,
   estimateGasQueryOptions,
 } from '../query/estimateGas.js'
@@ -59,6 +62,7 @@ export {
   type EstimateMaxPriorityFeePerGasOptions,
   type EstimateMaxPriorityFeePerGasQueryFnData,
   type EstimateMaxPriorityFeePerGasQueryKey,
+  type EstimateMaxPriorityFeePerGasQueryOptions,
   estimateMaxPriorityFeePerGasQueryKey,
   estimateMaxPriorityFeePerGasQueryOptions,
 } from '../query/estimateMaxPriorityFeePerGas.js'
@@ -68,6 +72,7 @@ export {
   type GetBalanceOptions,
   type GetBalanceQueryFnData,
   type GetBalanceQueryKey,
+  type GetBalanceQueryOptions,
   getBalanceQueryKey,
   getBalanceQueryOptions,
 } from '../query/getBalance.js'
@@ -77,6 +82,7 @@ export {
   type GetBlockOptions,
   type GetBlockQueryFnData,
   type GetBlockQueryKey,
+  type GetBlockQueryOptions,
   getBlockQueryKey,
   getBlockQueryOptions,
 } from '../query/getBlock.js'
@@ -86,6 +92,7 @@ export {
   type GetBlockNumberOptions,
   type GetBlockNumberQueryFnData,
   type GetBlockNumberQueryKey,
+  type GetBlockNumberQueryOptions,
   getBlockNumberQueryKey,
   getBlockNumberQueryOptions,
 } from '../query/getBlockNumber.js'
@@ -95,6 +102,7 @@ export {
   type GetBlockTransactionCountOptions,
   type GetBlockTransactionCountQueryFnData,
   type GetBlockTransactionCountQueryKey,
+  type GetBlockTransactionCountQueryOptions,
   getBlockTransactionCountQueryKey,
   getBlockTransactionCountQueryOptions,
 } from '../query/getBlockTransactionCount.js'
@@ -104,6 +112,7 @@ export {
   type GetBytecodeOptions,
   type GetBytecodeQueryFnData,
   type GetBytecodeQueryKey,
+  type GetBytecodeQueryOptions,
   getBytecodeQueryKey,
   getBytecodeQueryOptions,
 } from '../query/getBytecode.js'
@@ -113,6 +122,7 @@ export {
   type GetCallsStatusOptions,
   type GetCallsStatusQueryFnData,
   type GetCallsStatusQueryKey,
+  type GetCallsStatusQueryOptions,
   getCallsStatusQueryKey,
   getCallsStatusQueryOptions,
 } from '../query/getCallsStatus.js'
@@ -122,6 +132,7 @@ export {
   type GetCapabilitiesOptions,
   type GetCapabilitiesQueryFnData,
   type GetCapabilitiesQueryKey,
+  type GetCapabilitiesQueryOptions,
   getCapabilitiesQueryKey,
   getCapabilitiesQueryOptions,
 } from '../query/getCapabilities.js'
@@ -131,6 +142,7 @@ export {
   type GetConnectorClientOptions,
   type GetConnectorClientQueryFnData,
   type GetConnectorClientQueryKey,
+  type GetConnectorClientQueryOptions,
   getConnectorClientQueryKey,
   getConnectorClientQueryOptions,
 } from '../query/getConnectorClient.js'
@@ -140,6 +152,7 @@ export {
   type GetEnsAddressOptions,
   type GetEnsAddressQueryFnData,
   type GetEnsAddressQueryKey,
+  type GetEnsAddressQueryOptions,
   getEnsAddressQueryKey,
   getEnsAddressQueryOptions,
 } from '../query/getEnsAddress.js'
@@ -149,6 +162,7 @@ export {
   type GetEnsAvatarOptions,
   type GetEnsAvatarQueryFnData,
   type GetEnsAvatarQueryKey,
+  type GetEnsAvatarQueryOptions,
   getEnsAvatarQueryKey,
   getEnsAvatarQueryOptions,
 } from '../query/getEnsAvatar.js'
@@ -158,6 +172,7 @@ export {
   type GetEnsNameOptions,
   type GetEnsNameQueryFnData,
   type GetEnsNameQueryKey,
+  type GetEnsNameQueryOptions,
   getEnsNameQueryKey,
   getEnsNameQueryOptions,
 } from '../query/getEnsName.js'
@@ -167,6 +182,7 @@ export {
   type GetEnsResolverOptions,
   type GetEnsResolverQueryFnData,
   type GetEnsResolverQueryKey,
+  type GetEnsResolverQueryOptions,
   getEnsResolverQueryKey,
   getEnsResolverQueryOptions,
 } from '../query/getEnsResolver.js'
@@ -176,6 +192,7 @@ export {
   type GetEnsTextOptions,
   type GetEnsTextQueryFnData,
   type GetEnsTextQueryKey,
+  type GetEnsTextQueryOptions,
   getEnsTextQueryKey,
   getEnsTextQueryOptions,
 } from '../query/getEnsText.js'
@@ -185,6 +202,7 @@ export {
   type GetFeeHistoryOptions,
   type GetFeeHistoryQueryFnData,
   type GetFeeHistoryQueryKey,
+  type GetFeeHistoryQueryOptions,
   getFeeHistoryQueryKey,
   getFeeHistoryQueryOptions,
 } from '../query/getFeeHistory.js'
@@ -194,6 +212,7 @@ export {
   type GetGasPriceOptions,
   type GetGasPriceQueryFnData,
   type GetGasPriceQueryKey,
+  type GetGasPriceQueryOptions,
   getGasPriceQueryKey,
   getGasPriceQueryOptions,
 } from '../query/getGasPrice.js'
@@ -203,6 +222,7 @@ export {
   type GetProofOptions,
   type GetProofQueryFnData,
   type GetProofQueryKey,
+  type GetProofQueryOptions,
   getProofQueryKey,
   getProofQueryOptions,
 } from '../query/getProof.js'
@@ -212,6 +232,7 @@ export {
   type GetStorageAtOptions,
   type GetStorageAtQueryFnData,
   type GetStorageAtQueryKey,
+  type GetStorageAtQueryOptions,
   getStorageAtQueryKey,
   getStorageAtQueryOptions,
 } from '../query/getStorageAt.js'
@@ -221,6 +242,7 @@ export {
   type GetTransactionOptions,
   type GetTransactionQueryFnData,
   type GetTransactionQueryKey,
+  type GetTransactionQueryOptions,
   getTransactionQueryKey,
   getTransactionQueryOptions,
 } from '../query/getTransaction.js'
@@ -230,6 +252,7 @@ export {
   type GetTransactionConfirmationsOptions,
   type GetTransactionConfirmationsQueryFnData,
   type GetTransactionConfirmationsQueryKey,
+  type GetTransactionConfirmationsQueryOptions,
   getTransactionConfirmationsQueryKey,
   getTransactionConfirmationsQueryOptions,
 } from '../query/getTransactionConfirmations.js'
@@ -239,6 +262,7 @@ export {
   type GetTransactionCountOptions,
   type GetTransactionCountQueryFnData,
   type GetTransactionCountQueryKey,
+  type GetTransactionCountQueryOptions,
   getTransactionCountQueryKey,
   getTransactionCountQueryOptions,
 } from '../query/getTransactionCount.js'
@@ -248,6 +272,7 @@ export {
   type GetTransactionReceiptOptions,
   type GetTransactionReceiptQueryFnData,
   type GetTransactionReceiptQueryKey,
+  type GetTransactionReceiptQueryOptions,
   getTransactionReceiptQueryKey,
   getTransactionReceiptQueryOptions,
 } from '../query/getTransactionReceipt.js'
@@ -257,6 +282,7 @@ export {
   type GetWalletClientOptions,
   type GetWalletClientQueryFnData,
   type GetWalletClientQueryKey,
+  type GetWalletClientQueryOptions,
   getWalletClientQueryKey,
   getWalletClientQueryOptions,
 } from '../query/getWalletClient.js'
@@ -275,6 +301,7 @@ export {
   type PrepareTransactionRequestOptions,
   type PrepareTransactionRequestQueryFnData,
   type PrepareTransactionRequestQueryKey,
+  type PrepareTransactionRequestQueryOptions,
   prepareTransactionRequestQueryKey,
   prepareTransactionRequestQueryOptions,
 } from '../query/prepareTransactionRequest.js'
@@ -284,6 +311,7 @@ export {
   type ReadContractOptions,
   type ReadContractQueryFnData,
   type ReadContractQueryKey,
+  type ReadContractQueryOptions,
   readContractQueryKey,
   readContractQueryOptions,
 } from '../query/readContract.js'
@@ -293,6 +321,7 @@ export {
   type ReadContractsOptions,
   type ReadContractsQueryFnData,
   type ReadContractsQueryKey,
+  type ReadContractsQueryOptions,
   readContractsQueryKey,
   readContractsQueryOptions,
 } from '../query/readContracts.js'
@@ -366,6 +395,7 @@ export {
   type SimulateContractOptions,
   type SimulateContractQueryFnData,
   type SimulateContractQueryKey,
+  type SimulateContractQueryOptions,
   simulateContractQueryKey,
   simulateContractQueryOptions,
 } from '../query/simulateContract.js'
@@ -406,6 +436,7 @@ export {
   type VerifyMessageOptions,
   type VerifyMessageQueryFnData,
   type VerifyMessageQueryKey,
+  type VerifyMessageQueryOptions,
   verifyMessageQueryKey,
   verifyMessageQueryOptions,
 } from '../query/verifyMessage.js'
@@ -415,6 +446,7 @@ export {
   type VerifyTypedDataOptions,
   type VerifyTypedDataQueryFnData,
   type VerifyTypedDataQueryKey,
+  type VerifyTypedDataQueryOptions,
   verifyTypedDataQueryKey,
   verifyTypedDataQueryOptions,
 } from '../query/verifyTypedData.js'
@@ -424,6 +456,7 @@ export {
   type WaitForCallsStatusOptions,
   type WaitForCallsStatusQueryFnData,
   type WaitForCallsStatusQueryKey,
+  type WaitForCallsStatusQueryOptions,
   waitForCallsStatusQueryKey,
   waitForCallsStatusQueryOptions,
 } from '../query/waitForCallsStatus.js'
@@ -433,6 +466,7 @@ export {
   type WaitForTransactionReceiptOptions,
   type WaitForTransactionReceiptQueryFnData,
   type WaitForTransactionReceiptQueryKey,
+  type WaitForTransactionReceiptQueryOptions,
   waitForTransactionReceiptQueryKey,
   waitForTransactionReceiptQueryOptions,
 } from '../query/waitForTransactionReceipt.js'

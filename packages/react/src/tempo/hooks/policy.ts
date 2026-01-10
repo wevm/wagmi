@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 
 import { useChainId } from '../../hooks/useChainId.js'
 import { useConfig } from '../../hooks/useConfig.js'
-import type { ConfigParameter, QueryParameter } from '../../types/properties.js'
+import type { ConfigParameter } from '../../types/properties.js'
 import {
   type UseMutationParameters,
   type UseQueryReturnType,
@@ -602,17 +602,8 @@ export declare namespace useData {
     config extends Config = ResolvedRegister['config'],
     selectData = Actions.policy.getData.ReturnValue,
   > = ConfigParameter<config> &
-    QueryParameter<
-      Actions.policy.getData.ReturnValue,
-      Actions.policy.getData.ErrorType,
-      selectData,
-      Actions.policy.getData.QueryKey<config>
-    > &
     ExactPartial<
-      Omit<
-        Actions.policy.getData.queryOptions.Parameters<config, selectData>,
-        'query'
-      >
+      Actions.policy.getData.queryOptions.Parameters<config, selectData>
     >
 
   export type ReturnValue<selectData = Actions.policy.getData.ReturnValue> =
@@ -660,17 +651,8 @@ export declare namespace useIsAuthorized {
     config extends Config = ResolvedRegister['config'],
     selectData = Actions.policy.isAuthorized.ReturnValue,
   > = ConfigParameter<config> &
-    QueryParameter<
-      Actions.policy.isAuthorized.ReturnValue,
-      Actions.policy.isAuthorized.ErrorType,
-      selectData,
-      Actions.policy.isAuthorized.QueryKey<config>
-    > &
     ExactPartial<
-      Omit<
-        Actions.policy.isAuthorized.queryOptions.Parameters<config, selectData>,
-        'query'
-      >
+      Actions.policy.isAuthorized.queryOptions.Parameters<config, selectData>
     >
 
   export type ReturnValue<

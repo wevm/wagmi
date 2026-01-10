@@ -6,6 +6,7 @@ import { getWalletClientQueryOptions } from './getWalletClient.js'
 test('default', () => {
   expect(getWalletClientQueryOptions(config)).toMatchInlineSnapshot(`
     {
+      "enabled": false,
       "gcTime": 0,
       "queryFn": [Function],
       "queryKey": [
@@ -14,6 +15,7 @@ test('default', () => {
           "connectorUid": undefined,
         },
       ],
+      "staleTime": Infinity,
     }
   `)
 })
@@ -23,6 +25,7 @@ test('parameters: chainId', () => {
     getWalletClientQueryOptions(config, { chainId: chain.mainnet.id }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": false,
       "gcTime": 0,
       "queryFn": [Function],
       "queryKey": [
@@ -32,6 +35,7 @@ test('parameters: chainId', () => {
           "connectorUid": undefined,
         },
       ],
+      "staleTime": Infinity,
     }
   `)
 })

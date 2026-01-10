@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 
 import { useChainId } from '../../hooks/useChainId.js'
 import { useConfig } from '../../hooks/useConfig.js'
-import type { ConfigParameter, QueryParameter } from '../../types/properties.js'
+import type { ConfigParameter } from '../../types/properties.js'
 import {
   type UseMutationParameters,
   type UseQueryReturnType,
@@ -60,17 +60,8 @@ export declare namespace usePool {
     config extends Config = ResolvedRegister['config'],
     selectData = Actions.amm.getPool.ReturnValue,
   > = ConfigParameter<config> &
-    QueryParameter<
-      Actions.amm.getPool.ReturnValue,
-      Actions.amm.getPool.ErrorType,
-      selectData,
-      Actions.amm.getPool.QueryKey<config>
-    > &
     ExactPartial<
-      Omit<
-        Actions.amm.getPool.queryOptions.Parameters<config, selectData>,
-        'query'
-      >
+      Actions.amm.getPool.queryOptions.Parameters<config, selectData>
     >
 
   export type ReturnValue<selectData = Actions.amm.getPool.ReturnValue> =
@@ -123,19 +114,10 @@ export declare namespace useLiquidityBalance {
     config extends Config = ResolvedRegister['config'],
     selectData = Actions.amm.getLiquidityBalance.ReturnValue,
   > = ConfigParameter<config> &
-    QueryParameter<
-      Actions.amm.getLiquidityBalance.ReturnValue,
-      Actions.amm.getLiquidityBalance.ErrorType,
-      selectData,
-      Actions.amm.getLiquidityBalance.QueryKey<config>
-    > &
     ExactPartial<
-      Omit<
-        Actions.amm.getLiquidityBalance.queryOptions.Parameters<
-          config,
-          selectData
-        >,
-        'query'
+      Actions.amm.getLiquidityBalance.queryOptions.Parameters<
+        config,
+        selectData
       >
     >
 

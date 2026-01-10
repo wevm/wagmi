@@ -2,13 +2,13 @@ import type { Account, BaseErrorType } from 'viem'
 import { Actions } from 'viem/tempo'
 import { getConnectorClient } from '../../actions/getConnectorClient.js'
 import type { Config } from '../../createConfig.js'
-import { filterQueryOptions } from '../../query/utils.js'
 import type {
   ChainIdParameter,
   ConnectorParameter,
 } from '../../types/properties.js'
 import type { UnionLooseOmit } from '../../types/utils.js'
 import type { QueryOptions, QueryParameter } from './utils.js'
+import { filterQueryOptions } from './utils.js'
 
 /**
  * Gets the reserves for a liquidity pool.
@@ -180,7 +180,7 @@ export namespace getLiquidityBalance {
       queryKey: queryKey(rest),
       async queryFn({ queryKey }) {
         const [, parameters] = queryKey
-        return await getLiquidityBalance(config, parameters)
+        return await getLiquidityBalance(config, parameters as any)
       },
     }
   }

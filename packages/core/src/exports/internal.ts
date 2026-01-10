@@ -31,6 +31,8 @@ export type {
   ScopeKeyParameter,
 } from '../types/properties.js'
 
+export type { QueryParameter } from '../types/query.js'
+
 export type {
   Compute,
   ExactPartial,
