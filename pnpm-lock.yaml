@@ -564,7 +564,7 @@ importers:
         version: 1.9.10
       viem:
         specifier: 2.*
-        version: 2.43.3(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.1.11)
+        version: 2.44.0(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.1.11)
       vinxi:
         specifier: ^0.5.7
         version: 0.5.10(@types/node@24.6.2)(db0@0.3.4)(idb-keyval@6.2.1)(ioredis@5.8.2)(jiti@2.6.1)(terser@5.31.0)(tsx@4.20.6)(yaml@2.8.1)
@@ -665,7 +665,7 @@ importers:
         version: 1.9.10
       viem:
         specifier: 2.*
-        version: 2.43.3(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.1.11)
+        version: 2.44.0(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.1.11)
     devDependencies:
       buffer:
         specifier: 'catalog:'
