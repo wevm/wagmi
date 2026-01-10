@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 3.2.1
+
+### Patch Changes
+
+- `wagmi/tempo`: Fixed issue where `webAuthn` connector was not adhering to chain-specific `prepareTransactionRequest` phases. ([#4939](https://github.com/wevm/wagmi/pull/4939))
+
 ## 3.2.0
 
 ### Minor Changes
