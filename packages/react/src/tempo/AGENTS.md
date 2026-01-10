@@ -6,9 +6,9 @@ Agent guidance for `wagmi/tempo` Hooks.
 
 ## Wagmi Hooks
 
-When generating Wagmi hooks (in `Hooks/`), follow these guidelines.
+When generating Wagmi hooks (in `hooks/`), follow these guidelines.
 
-An example of a generated hook set can be found in `Hooks/fee.ts`.
+An example of a generated hook set can be found in `hooks/fee.ts`.
 
 ### Source of Truth
 
@@ -318,7 +318,7 @@ Tests should be co-located with hooks in `myNamespace.test.ts` files.
 
 The main difference is that hooks use React rendering patterns with `renderHook`, and mutation hooks don't require explicit `account` parameters in `mutateAsync` calls since they use the connector's account.
 
-See `Hooks/fee.test.ts` for a comprehensive example of test patterns and structure.
+See `hooks/fee.test.ts` for a comprehensive example of test patterns and structure.
 
 #### Test Structure
 

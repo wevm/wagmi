@@ -6,12 +6,14 @@ import { getCapabilitiesQueryOptions } from './getCapabilities.js'
 test('default', () => {
   expect(getCapabilitiesQueryOptions(config)).toMatchInlineSnapshot(`
     {
+      "enabled": false,
       "queryFn": [Function],
       "queryKey": [
         "capabilities",
-        {},
+        {
+          "connectorUid": undefined,
+        },
       ],
-      "retry": [Function],
     }
   `)
 })
@@ -23,14 +25,15 @@ test('parameters: chainId', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": false,
       "queryFn": [Function],
       "queryKey": [
         "capabilities",
         {
           "account": "0x0000000000000000000000000000000000000000",
+          "connectorUid": undefined,
         },
       ],
-      "retry": [Function],
     }
   `)
 })

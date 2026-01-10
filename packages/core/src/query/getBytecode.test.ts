@@ -10,6 +10,7 @@ test('default', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "getBytecode",
@@ -29,6 +30,7 @@ test('parameters: chainId', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "getBytecode",
@@ -49,6 +51,7 @@ test('parameters: blockNumber', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "getBytecode",
@@ -69,6 +72,7 @@ test('parameters: blockTag', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "getBytecode",

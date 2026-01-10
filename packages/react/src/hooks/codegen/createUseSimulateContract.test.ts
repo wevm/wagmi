@@ -1,11 +1,15 @@
 import { connect, disconnect } from '@wagmi/core'
 import { abi, address, chain, config } from '@wagmi/test'
 import { renderHook } from '@wagmi/test/react'
-import { expect, test, vi } from 'vitest'
+import { beforeEach, expect, test, vi } from 'vitest'
 
 import { createUseSimulateContract } from './createUseSimulateContract.js'
 
 const connector = config.connectors[0]!
+
+beforeEach(async () => {
+  await disconnect(config).catch(() => {})
+})
 
 test('default', async () => {
   await connect(config, { connector })
@@ -73,10 +77,7 @@ test('default', async () => {
       "queryKey": [
         "simulateContract",
         {
-          "account": {
-            "address": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
-            "type": "json-rpc",
-          },
+          "account": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
           "chainId": 1,
           "functionName": "mint",
@@ -160,10 +161,7 @@ test('multichain', async () => {
       "queryKey": [
         "simulateContract",
         {
-          "account": {
-            "address": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
-            "type": "json-rpc",
-          },
+          "account": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
           "chainId": 456,
           "functionName": "mint",
@@ -240,10 +238,7 @@ test('functionName', async () => {
       "queryKey": [
         "simulateContract",
         {
-          "account": {
-            "address": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
-            "type": "json-rpc",
-          },
+          "account": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
           "chainId": 1,
           "functionName": "mint",

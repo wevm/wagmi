@@ -1,5 +1,4 @@
 'use client'
-
 import type {
   Config,
   ReadContractsErrorType,
@@ -9,15 +8,11 @@ import type { Compute } from '@wagmi/core/internal'
 import {
   type ReadContractsData,
   type ReadContractsOptions,
-  type ReadContractsQueryFnData,
-  type ReadContractsQueryKey,
   readContractsQueryOptions,
-  structuralSharing,
 } from '@wagmi/core/query'
 import { useMemo } from 'react'
 import type { ContractFunctionParameters } from 'viem'
-
-import type { ConfigParameter, QueryParameter } from '../types/properties.js'
+import type { ConfigParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
@@ -28,14 +23,8 @@ export type UseReadContractsParameters<
   config extends Config = Config,
   selectData = ReadContractsData<contracts, allowFailure>,
 > = Compute<
-  ReadContractsOptions<contracts, allowFailure, config> &
-    ConfigParameter<config> &
-    QueryParameter<
-      ReadContractsQueryFnData<contracts, allowFailure>,
-      ReadContractsErrorType,
-      selectData,
-      ReadContractsQueryKey<contracts, allowFailure, config>
-    >
+  ReadContractsOptions<contracts, allowFailure, config, selectData> &
+    ConfigParameter<config>
 >
 
 export type UseReadContractsReturnType<
@@ -58,45 +47,24 @@ export function useReadContracts<
     selectData
   > = {},
 ): UseReadContractsReturnType<contracts, allowFailure, selectData> {
-  const { contracts = [], query = {} } = parameters
-
   const config = useConfig(parameters)
   const chainId = useChainId({ config })
   const contractsChainId = useMemo(() => {
-    const firstChainId = (contracts[0] as { chainId?: number } | undefined)
-      ?.chainId
+    const firstChainId = (
+      parameters.contracts?.[0] as { chainId?: number } | undefined
+    )?.chainId
     if (
-      (contracts as { chainId?: number }[]).every(
+      ((parameters.contracts ?? []) as { chainId?: number }[]).every(
         (contract) => contract.chainId === firstChainId,
       )
     )
       return firstChainId
     return undefined
-  }, [contracts])
-
-  const options = readContractsQueryOptions<config, contracts, allowFailure>(
-    config,
-    { ...parameters, chainId: contractsChainId ?? chainId },
-  )
-
-  const enabled = useMemo(() => {
-    let isContractsValid = false
-    for (const contract of contracts) {
-      const { abi, address, functionName } =
-        contract as ContractFunctionParameters
-      if (!abi || !address || !functionName) {
-        isContractsValid = false
-        break
-      }
-      isContractsValid = true
-    }
-    return Boolean(isContractsValid && (query.enabled ?? true))
-  }, [contracts, query.enabled])
-
-  return useQuery({
-    ...options,
-    ...query,
-    enabled,
-    structuralSharing: query.structuralSharing ?? structuralSharing,
+  }, [parameters.contracts])
+  const options = readContractsQueryOptions(config, {
+    ...parameters,
+    chainId: contractsChainId ?? chainId,
+    query: parameters.query,
   })
+  return useQuery(options) as any
 }

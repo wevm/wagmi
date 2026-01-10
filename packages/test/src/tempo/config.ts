@@ -23,6 +23,17 @@ import {
 } from 'vitest-browser-react'
 import { createConfig, WagmiProvider } from 'wagmi'
 
+export const port = Number(import.meta.env.RPC_PORT ?? 4000)
+
+export const rpcUrl = (() => {
+  const id =
+    (typeof process !== 'undefined' &&
+      Number(process.env.VITEST_POOL_ID ?? 1) +
+        Math.floor(Math.random() * 10_000)) ||
+    1 + Math.floor(Math.random() * 10_000)
+  return `http://localhost:${port}/${id}`
+})()
+
 export const addresses = {
   alphaUsd: '0x20c0000000000000000000000000000000000001',
 } as const
@@ -34,13 +45,6 @@ export const accounts = Array.from({ length: 20 }, (_, i) => {
   )
   return tempo_Account.fromSecp256k1(privateKey)
 }) as unknown as FixedArray<tempo_Account.RootAccount, 20>
-
-const id =
-  (typeof process !== 'undefined' &&
-    Number(process.env.VITEST_POOL_ID ?? 1) +
-      Math.floor(Math.random() * 10_000)) ||
-  1 + Math.floor(Math.random() * 10_000)
-export const rpcUrl = `http://localhost:${import.meta.env.RPC_PORT ?? '4000'}/${id}`
 
 export const tempoLocal = defineChain({
   ...chains.tempoLocalnet,
@@ -89,6 +93,30 @@ export function renderHook<result, props>(
     wrapper: createWrapper(WagmiProvider, { config, reconnectOnMount: false }),
     ...options,
   })
+}
+
+export async function restart() {
+  await fetch(`${rpcUrl}/restart`)
+
+  // Re-setup liquidity for fee tokens after restart
+  if (getConnection(config).status === 'disconnected')
+    await connect(config, {
+      connector: config.connectors[0]!,
+    })
+  const client = config.getClient()
+  await Promise.all(
+    [1n, 2n, 3n].map((id) =>
+      Actions.amm.mintSync(client, {
+        account: accounts[0],
+        feeToken: Addresses.pathUsd,
+        nonceKey: 'random',
+        userTokenAddress: id,
+        validatorTokenAddress: Addresses.pathUsd,
+        validatorTokenAmount: parseUnits('1000', 6),
+        to: accounts[0].address,
+      }),
+    ),
+  )
 }
 
 export async function setupToken() {
@@ -232,12 +260,12 @@ export async function viem_setupTokenPair(
       }),
       Actions.token.approve.call({
         token: baseToken,
-        spender: Addresses.stablecoinExchange,
+        spender: Addresses.stablecoinDex,
         amount: parseUnits('10000', 6),
       }),
       Actions.token.approve.call({
         token: quoteToken,
-        spender: Addresses.stablecoinExchange,
+        spender: Addresses.stablecoinDex,
         amount: parseUnits('10000', 6),
       }),
     ],
@@ -261,7 +289,7 @@ export async function viem_setupOrders(
   const calls = []
   for (let i = 0; i < 50; i++) {
     const token = bases[i % bases.length]!
-    const amount = parseUnits(String(50 + i * 10), 6)
+    const amount = parseUnits(String(100 + i * 10), 6)
     const isBuy = i % 2 === 0
     const tickPrice = 1.0 + ((i % 20) - 10) * 0.001
     const tick = Tick.fromPrice(String(tickPrice))

@@ -1,5 +1,4 @@
 'use client'
-
 import type {
   Config,
   ResolvedRegister,
@@ -8,17 +7,14 @@ import type {
 import {
   type SimulateContractData,
   type SimulateContractOptions,
-  type SimulateContractQueryFnData,
-  type SimulateContractQueryKey,
   simulateContractQueryOptions,
 } from '@wagmi/core/query'
 import type { Abi, ContractFunctionArgs, ContractFunctionName } from 'viem'
-
-import type { ConfigParameter, QueryParameter } from '../types/properties.js'
+import type { ConfigParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
-import { useConnectorClient } from './useConnectorClient.js'
+import { useConnection } from './useConnection.js'
 
 export type UseSimulateContractParameters<
   abi extends Abi | readonly unknown[] = Abi,
@@ -34,14 +30,15 @@ export type UseSimulateContractParameters<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] | undefined = undefined,
   selectData = SimulateContractData<abi, functionName, args, config, chainId>,
-> = SimulateContractOptions<abi, functionName, args, config, chainId> &
-  ConfigParameter<config> &
-  QueryParameter<
-    SimulateContractQueryFnData<abi, functionName, args, config, chainId>,
-    SimulateContractErrorType,
-    selectData,
-    SimulateContractQueryKey<abi, functionName, args, config, chainId>
-  >
+> = SimulateContractOptions<
+  abi,
+  functionName,
+  args,
+  config,
+  chainId,
+  selectData
+> &
+  ConfigParameter<config>
 
 export type UseSimulateContractReturnType<
   abi extends Abi | readonly unknown[] = Abi,
@@ -63,7 +60,7 @@ export type UseSimulateContractReturnType<
 export function useSimulateContract<
   const abi extends Abi | readonly unknown[],
   functionName extends ContractFunctionName<abi, 'nonpayable' | 'payable'>,
-  args extends ContractFunctionArgs<
+  const args extends ContractFunctionArgs<
     abi,
     'nonpayable' | 'payable',
     functionName
@@ -88,30 +85,15 @@ export function useSimulateContract<
   chainId,
   selectData
 > {
-  const { abi, address, connector, functionName, query = {} } = parameters
-
   const config = useConfig(parameters)
-  const { data: connectorClient } = useConnectorClient({
-    config,
-    connector,
-    query: { enabled: parameters.account === undefined },
-  })
+  const { address, connector } = useConnection()
   const chainId = useChainId({ config })
-
-  const options = simulateContractQueryOptions<
-    config,
-    abi,
-    functionName,
-    args,
-    chainId
-  >(config, {
-    ...parameters,
-    account: parameters.account ?? connectorClient?.account,
+  const options = simulateContractQueryOptions(config, {
+    ...(parameters as any),
+    account: parameters.account ?? address,
     chainId: parameters.chainId ?? chainId,
+    connector: parameters.connector ?? connector,
+    query: parameters.query,
   })
-  const enabled = Boolean(
-    abi && address && functionName && (query.enabled ?? true),
-  )
-
-  return useQuery({ ...query, ...options, enabled })
+  return useQuery(options) as any
 }

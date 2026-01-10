@@ -15,6 +15,7 @@ test('default', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "verifyMessage",
@@ -39,6 +40,7 @@ test('parameters: chainId', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "verifyMessage",
@@ -64,6 +66,7 @@ test('parameters: blockNumber', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "verifyMessage",
@@ -89,6 +92,7 @@ test('parameters: blockTag', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "verifyMessage",

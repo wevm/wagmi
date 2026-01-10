@@ -1,5 +1,4 @@
 'use client'
-
 import type {
   Config,
   GetBlockTransactionCountErrorType,
@@ -9,12 +8,9 @@ import type { UnionCompute } from '@wagmi/core/internal'
 import {
   type GetBlockTransactionCountData,
   type GetBlockTransactionCountOptions,
-  type GetBlockTransactionCountQueryFnData,
-  type GetBlockTransactionCountQueryKey,
   getBlockTransactionCountQueryOptions,
 } from '@wagmi/core/query'
-
-import type { ConfigParameter, QueryParameter } from '../types/properties.js'
+import type { ConfigParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
@@ -25,14 +21,8 @@ export type UseBlockTransactionCountParameters<
     config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetBlockTransactionCountData,
 > = UnionCompute<
-  GetBlockTransactionCountOptions<config, chainId> &
-    ConfigParameter<config> &
-    QueryParameter<
-      GetBlockTransactionCountQueryFnData,
-      GetBlockTransactionCountErrorType,
-      selectData,
-      GetBlockTransactionCountQueryKey<config, chainId>
-    >
+  GetBlockTransactionCountOptions<config, chainId, selectData> &
+    ConfigParameter<config>
 >
 
 export type UseBlockTransactionCountReturnType<
@@ -52,16 +42,12 @@ export function useBlockTransactionCount<
     selectData
   > = {},
 ): UseBlockTransactionCountReturnType<selectData> {
-  const { query = {} } = parameters
-
   const config = useConfig(parameters)
-  const configChainId = useChainId({ config })
-  const chainId = parameters.chainId ?? configChainId
-
+  const chainId = useChainId({ config })
   const options = getBlockTransactionCountQueryOptions(config, {
     ...parameters,
-    chainId,
+    chainId: parameters.chainId ?? chainId,
+    query: parameters.query,
   })
-
-  return useQuery({ ...query, ...options })
+  return useQuery(options)
 }

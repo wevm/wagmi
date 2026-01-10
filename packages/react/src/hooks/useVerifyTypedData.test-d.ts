@@ -1,4 +1,4 @@
-import type { typedData } from '@wagmi/test'
+import { typedData } from '@wagmi/test'
 import type { Address } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 import {
@@ -36,4 +36,20 @@ test('UseReadContractParameters', () => {
       contents: string
     }
   }>()
+})
+
+test('primaryType', async () => {
+  useVerifyTypedData({
+    address: '0x',
+    ...typedData.basic,
+    primaryType: 'Mail',
+    signature: '0x',
+  })
+  useVerifyTypedData({
+    address: '0x',
+    ...typedData.basic,
+    // @ts-expect-error
+    primaryType: 'foobarbaz',
+    signature: '0x',
+  })
 })
