@@ -4,23 +4,17 @@ import type {
   GetConnectorClientErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { Compute, Omit } from '@wagmi/core/internal'
+import type { Compute } from '@wagmi/core/internal'
 import {
   type GetConnectorClientData,
   type GetConnectorClientOptions,
-  type GetConnectorClientQueryFnData,
-  type GetConnectorClientQueryKey,
   getConnectorClientQueryOptions,
 } from '@wagmi/core/query'
 import type { Accessor } from 'solid-js'
 import { createEffect, createMemo, on } from 'solid-js'
 
 import type { ConfigParameter } from '../types/properties.js'
-import {
-  type SolidQueryParameters,
-  type UseQueryReturnType,
-  useQuery,
-} from '../utils/query.js'
+import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 import { useConnection } from './useConnection.js'
@@ -31,22 +25,8 @@ export type SolidConnectorClientParameters<
     config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetConnectorClientData<config, chainId>,
 > = Compute<
-  GetConnectorClientOptions<config, chainId> &
-    ConfigParameter<config> & {
-      query?:
-        | Compute<
-            Omit<
-              SolidQueryParameters<
-                GetConnectorClientQueryFnData<config, chainId>,
-                GetConnectorClientErrorType,
-                selectData,
-                GetConnectorClientQueryKey<config, chainId>
-              >,
-              'gcTime' | 'staleTime'
-            >
-          >
-        | undefined
-    }
+  GetConnectorClientOptions<config, chainId, selectData> &
+    ConfigParameter<config>
 >
 
 export type UseConnectorClientParameters<
@@ -77,52 +57,33 @@ export function useConnectorClient<
   > = () => ({}),
 ): UseConnectorClientReturnType<config, chainId, selectData> {
   const config = useConfig(parameters)
-  const queryClient = useQueryClient()
-  const connection = useConnection(() => ({
-    config: config(),
-  }))
-  const configChainId = useChainId(() => ({ config: config() }))
-
-  const queryOptions = createMemo(() => {
-    const {
-      chainId = configChainId(),
-      connector = connection().connector,
-      query = {},
-    } = parameters()
-    const { queryKey, ...options } = getConnectorClientQueryOptions<
-      config,
-      chainId
-    >(config(), {
+  const chainId = useChainId(() => ({ config: config() }))
+  const connection = useConnection(() => ({ config: config() }))
+  const options = createMemo(() =>
+    getConnectorClientQueryOptions<config, chainId>(config(), {
       ...parameters(),
-      chainId,
-      connector,
-    })
-    const enabled = Boolean(connection().status === 'connected' && connector)
+      chainId: parameters().chainId ?? chainId(),
+      connector: parameters().connector ?? connection().connector,
+      query: parameters().query as any,
+    }),
+  )
 
-    return {
-      ...query,
-      ...options,
-      queryKey,
-      enabled: query.enabled ?? enabled,
-      staleTime: Number.POSITIVE_INFINITY,
-    }
-  })
-
+  const queryClient = useQueryClient()
   createEffect(
     on(
       () => connection().address,
       (currentAddress, previousAddress) => {
         if (!currentAddress && previousAddress) {
           // remove when account is disconnected
-          queryClient.removeQueries({ queryKey: queryOptions().queryKey })
+          queryClient.removeQueries({ queryKey: options().queryKey })
         } else if (currentAddress !== previousAddress) {
           // invalidate when address changes
-          queryClient.invalidateQueries({ queryKey: queryOptions().queryKey })
+          queryClient.invalidateQueries({ queryKey: options().queryKey })
         }
       },
       { defer: true },
     ),
   )
 
-  return useQuery(queryOptions)
+  return useQuery(options) as any
 }

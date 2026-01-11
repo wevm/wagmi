@@ -12,13 +12,11 @@ import type {
 import {
   type GetBlockNumberData,
   type GetBlockNumberOptions,
-  type GetBlockNumberQueryFnData,
-  type GetBlockNumberQueryKey,
   getBlockNumberQueryOptions,
 } from '@wagmi/core/query'
 import { type Accessor, createMemo } from 'solid-js'
 
-import type { ConfigParameter, QueryParameter } from '../types/properties.js'
+import type { ConfigParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
@@ -33,14 +31,8 @@ export type SolidBlockNumberParameters<
     config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetBlockNumberData,
 > = Compute<
-  GetBlockNumberOptions<config, chainId> &
-    ConfigParameter<config> &
-    QueryParameter<
-      GetBlockNumberQueryFnData,
-      GetBlockNumberErrorType,
-      selectData,
-      GetBlockNumberQueryKey<config, chainId>
-    > & {
+  GetBlockNumberOptions<config, chainId, selectData> &
+    ConfigParameter<config> & {
       watch?:
         | boolean
         | UnionCompute<
@@ -77,44 +69,34 @@ export function useBlockNumber<
   > = () => ({}),
 ): UseBlockNumberReturnType<selectData> {
   const config = useConfig(parameters)
+  const chainId = useChainId(() => ({ config: config() }))
+  const options = createMemo(() =>
+    getBlockNumberQueryOptions(config(), {
+      ...parameters(),
+      chainId: parameters().chainId ?? chainId(),
+      query: parameters().query,
+    }),
+  )
+
   const queryClient = useQueryClient()
-  const configChainId = useChainId(() => ({ config: config() }))
-
-  const queryOptions = createMemo(() => {
-    const {
-      chainId = configChainId(),
-      query = {},
-      watch: _,
-      ...rest
-    } = parameters()
-    const options = getBlockNumberQueryOptions(config(), {
-      ...rest,
-      chainId,
-    })
-    return {
-      ...query,
-      ...options,
-    }
-  })
-
   const watchBlockNumberArgs = createMemo(() => {
-    const { chainId = configChainId(), query, watch } = parameters()
+    // Assign to variable to help type narrowing
+    const { watch } = parameters()
     return {
       ...({
         config: config(),
-        chainId,
+        chainId: parameters().chainId ?? chainId(),
         ...(typeof watch === 'object' ? watch : {}),
       } as SolidWatchBlockNumberParameters),
       enabled:
-        (query?.enabled ?? true) &&
+        (parameters().query?.enabled ?? true) &&
         (typeof watch === 'object' ? watch.enabled : watch),
       onBlockNumber(blockNumber) {
-        queryClient.setQueryData(queryOptions().queryKey, blockNumber)
+        queryClient.setQueryData(options().queryKey, blockNumber)
       },
     } satisfies SolidWatchBlockNumberParameters
   })
-
   useWatchBlockNumber(watchBlockNumberArgs)
 
-  return useQuery(queryOptions) satisfies UseBlockNumberReturnType<selectData>
+  return useQuery(options)
 }

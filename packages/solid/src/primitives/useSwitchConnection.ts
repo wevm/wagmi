@@ -18,7 +18,7 @@ import { type Accessor, createMemo, mergeProps } from 'solid-js'
 
 import type { ConfigParameter } from '../types/properties.js'
 import type {
-  UseMutationParameters,
+  SolidMutationParameters,
   UseMutationReturnType,
 } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
@@ -30,7 +30,7 @@ export type SolidSwitchConnectionParameters<
 > = Compute<
   ConfigParameter<config> & {
     mutation?:
-      | UseMutationParameters<
+      | SolidMutationParameters<
           SwitchConnectionData<config>,
           SwitchConnectionErrorType,
           SwitchConnectionVariables,
