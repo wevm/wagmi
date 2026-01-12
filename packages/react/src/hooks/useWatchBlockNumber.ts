@@ -7,7 +7,7 @@ import {
   watchBlockNumber,
 } from '@wagmi/core'
 import type { UnionCompute, UnionExactPartial } from '@wagmi/core/internal'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 import type { ConfigParameter, EnabledParameter } from '../types/properties.js'
 import { useChainId } from './useChainId.js'
@@ -39,6 +39,20 @@ export function useWatchBlockNumber<
   const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
+  // store callbacks in refs to prevent re-subscriptions when they change.
+  // refs are updated separately (in useEffect below) so the subscription
+  // remains stable while always calling the latest callback version.
+  const onBlockNumberRef = useRef(onBlockNumber)
+  const onErrorRef = useRef(rest.onError)
+
+  useEffect(() => {
+    onBlockNumberRef.current = onBlockNumber
+  }, [onBlockNumber])
+
+  useEffect(() => {
+    onErrorRef.current = rest.onError
+  }, [rest.onError])
+
   // TODO(react@19): cleanup
   // biome-ignore lint/correctness/useExhaustiveDependencies: `rest` changes every render so only including properties in dependency array
   useEffect(() => {
@@ -47,15 +61,16 @@ export function useWatchBlockNumber<
     return watchBlockNumber(config, {
       ...(rest as any),
       chainId,
-      onBlockNumber,
+      onBlockNumber: (blockNumber, prevBlockNumber) => {
+        onBlockNumberRef.current?.(blockNumber, prevBlockNumber)
+      },
+      onError: (error) => onErrorRef.current?.(error),
     })
   }, [
     chainId,
     config,
     enabled,
-    onBlockNumber,
     ///
-    rest.onError,
     rest.emitMissed,
     rest.emitOnBegin,
     rest.poll,
