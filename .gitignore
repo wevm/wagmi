@@ -9,6 +9,9 @@ dist
 node_modules
 tsconfig.tsbuildinfo
 *.vitest-temp.json
+_
+.tanstack
+.wrangler
 
 # local env files
 .env
@@ -40,4 +43,3 @@ packages/vue/connectors
 packages/vue/internal
 packages/vue/nuxt
 packages/vue/query
-_

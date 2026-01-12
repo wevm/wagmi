@@ -57,19 +57,12 @@ function RouteComponent() {
 
   return (
     <>
-      <Connection />
-      <SwitchChain />
-      <Repro />
-      {/* 
-      <Connect />
-      */}
-      {/*
-       */}
-      {/*  */}
-
       <ClientOnly fallback={<React.Fragment />}>
         <Connect />
       </ClientOnly>
+      <Connection />
+      <SwitchChain />
+      <Repro />
       <SwitchConnection />
       <SignMessage />
       <Connections />
