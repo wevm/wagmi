@@ -260,6 +260,7 @@ If you find Wagmi useful or use it for work, please consider [sponsoring Wagmi](
   </a>
 </p>
 
+
 [Sponsor Wagmi](https://github.com/sponsors/wevm?metadata_campaign=gh_readme_support_bottom)
 
 <br />
