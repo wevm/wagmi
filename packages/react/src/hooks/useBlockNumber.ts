@@ -1,5 +1,4 @@
 'use client'
-
 import { useQueryClient } from '@tanstack/react-query'
 import type {
   Config,
@@ -14,12 +13,9 @@ import type {
 import {
   type GetBlockNumberData,
   type GetBlockNumberOptions,
-  type GetBlockNumberQueryFnData,
-  type GetBlockNumberQueryKey,
   getBlockNumberQueryOptions,
 } from '@wagmi/core/query'
-
-import type { ConfigParameter, QueryParameter } from '../types/properties.js'
+import type { ConfigParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
@@ -34,14 +30,8 @@ export type UseBlockNumberParameters<
     config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetBlockNumberData,
 > = Compute<
-  GetBlockNumberOptions<config, chainId> &
-    ConfigParameter<config> &
-    QueryParameter<
-      GetBlockNumberQueryFnData,
-      GetBlockNumberErrorType,
-      selectData,
-      GetBlockNumberQueryKey<config, chainId>
-    > & {
+  GetBlockNumberOptions<config, chainId, selectData> &
+    ConfigParameter<config> & {
       watch?:
         | boolean
         | UnionCompute<
@@ -66,32 +56,29 @@ export function useBlockNumber<
 >(
   parameters: UseBlockNumberParameters<config, chainId, selectData> = {},
 ): UseBlockNumberReturnType<selectData> {
-  const { query = {}, watch } = parameters
-
   const config = useConfig(parameters)
-  const queryClient = useQueryClient()
-  const configChainId = useChainId({ config })
-  const chainId = parameters.chainId ?? configChainId
-
+  const chainId = useChainId({ config })
   const options = getBlockNumberQueryOptions(config, {
     ...parameters,
-    chainId,
+    chainId: parameters.chainId ?? chainId,
+    query: parameters.query,
   })
-
+  const queryClient = useQueryClient()
   useWatchBlockNumber({
     ...({
       config: parameters.config,
       chainId: parameters.chainId,
-      ...(typeof watch === 'object' ? watch : {}),
+      ...(typeof parameters.watch === 'object' ? parameters.watch : {}),
     } as UseWatchBlockNumberParameters),
     enabled: Boolean(
-      (query.enabled ?? true) &&
-        (typeof watch === 'object' ? watch.enabled : watch),
+      (options.enabled ?? true) &&
+        (typeof parameters.watch === 'object'
+          ? parameters.watch.enabled
+          : parameters.watch),
     ),
     onBlockNumber(blockNumber) {
       queryClient.setQueryData(options.queryKey, blockNumber)
     },
   })
-
-  return useQuery({ ...query, ...options })
+  return useQuery(options)
 }

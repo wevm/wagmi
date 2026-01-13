@@ -1,5 +1,50 @@
 # wagmi
 
+## 3.3.2
+
+### Patch Changes
+
+- Updated query internals. ([`4fefa57`](https://github.com/wevm/wagmi/commit/4fefa576014820b454344b579282ddecde5c7994))
+
+- Updated dependencies [[`4fefa57`](https://github.com/wevm/wagmi/commit/4fefa576014820b454344b579282ddecde5c7994)]:
+  - @wagmi/core@3.2.2
+  - @wagmi/connectors@7.1.2
+
+## 3.3.1
+
+### Patch Changes
+
+- Updated dependencies [[`a373b50`](https://github.com/wevm/wagmi/commit/a373b504f2ba199ca63ec0da6138ad1aa12a3a8f)]:
+  - @wagmi/core@3.2.1
+  - @wagmi/connectors@7.1.1
+
+## 3.3.0
+
+### Minor Changes
+
+- Updated to `viem@2.44.0` with Tempo Moderato support. ([#4940](https://github.com/wevm/wagmi/pull/4940))
+
+  **Breaking Changes (Tempo)**
+
+  - Renamed `reward.useStart` → `reward.useDistribute`
+  - Renamed `reward.useStartSync` → `reward.useDistributeSync`
+  - Renamed `reward.useGetTotalPerSecond` → `reward.useGetGlobalRewardPerToken`
+  - Renamed `reward.useWatchRewardScheduled` → `reward.useWatchRewardDistributed`
+  - Removed `nonce.useNonceKeyCount`
+  - Removed `nonce.useWatchActiveKeyCountChanged`
+  - Removed `amm.useWatchFeeSwap`
+
+  **New Features (Tempo)**
+
+  - Added `dex.useCancelStale` hook
+  - Added `dex.useCancelStaleSync` hook
+
+### Patch Changes
+
+- Updated dependencies [[`2ee3f55`](https://github.com/wevm/wagmi/commit/2ee3f559a2637c7aab3fca6c7d196cf238ecd63d)]:
+  - @wagmi/core@3.2.0
+  - @wagmi/connectors@8.0.0
+
 ## 3.2.0
 
 ### Minor Changes

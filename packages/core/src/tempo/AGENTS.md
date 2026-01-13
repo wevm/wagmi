@@ -8,9 +8,9 @@ Agent guidance for `@wagmi/core/tempo`.
 
 ### Wagmi Actions
 
-When generating Wagmi actions (in `Actions/`), follow these guidelines.
+When generating Wagmi actions (in `actions/`), follow these guidelines.
 
-An example of a generated action set can be found in `Actions/fee.ts`.
+An example of a generated action set can be found in `actions/fee.ts`.
 
 #### Source of Truth
 
@@ -146,7 +146,7 @@ All query-based actions must include the following components:
 - If there isn't an `ErrorType` for the Viem Action, use `import { BaseError } from 'viem'`
 
 ```ts
-import { filterQueryOptions } from '../../query/utils.js'
+import { filterQueryOptions } from './utils.js'
 import type { QueryOptions, QueryParameter } from './utils.js'
 
 export function myAction<config extends Config>(
@@ -257,7 +257,7 @@ Tests should be co-located with actions in `*action-name*.test.ts` files.
 
 The main difference is that Wagmi tests use `config` instead of `client`, and mutation actions don't require explicit `account` parameters since they use the connector's account.
 
-See `Actions/token.test.ts` for a comprehensive example of test patterns and structure.
+See `actions/token.test.ts` for a comprehensive example of test patterns and structure.
 
 ##### Test Structure
 

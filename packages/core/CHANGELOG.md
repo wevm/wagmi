@@ -1,5 +1,39 @@
 # @wagmi/core
 
+## 3.2.2
+
+### Patch Changes
+
+- Updated query internals. ([`4fefa57`](https://github.com/wevm/wagmi/commit/4fefa576014820b454344b579282ddecde5c7994))
+
+## 3.2.1
+
+### Patch Changes
+
+- `wagmi/tempo`: Fixed issue where `webAuthn` connector was not adhering to chain-specific `prepareTransactionRequest` phases. ([#4939](https://github.com/wevm/wagmi/pull/4939))
+
+## 3.2.0
+
+### Minor Changes
+
+- Updated to `viem@2.44.0` with Tempo Moderato support. ([#4940](https://github.com/wevm/wagmi/pull/4940))
+
+  **Breaking Changes (Tempo)**
+
+  - Renamed `reward.start` → `reward.distribute` (no longer supports streaming)
+  - Renamed `reward.startSync` → `reward.distributeSync`
+  - Renamed `reward.getTotalPerSecond` → `reward.getGlobalRewardPerToken`
+  - Renamed `reward.watchRewardScheduled` → `reward.watchRewardDistributed`
+  - Removed `nonce.getNonceKeyCount`
+  - Removed `nonce.watchActiveKeyCountChanged`
+  - Removed `amm.watchFeeSwap` (FeeSwap event no longer emitted by protocol)
+
+  **New Features (Tempo)**
+
+  - Added `dex.cancelStale` action to cancel stale orders from restricted makers
+  - Added `dex.cancelStaleSync` action
+  - Added `salt` parameter to `token.create`
+
 ## 3.1.0
 
 ### Minor Changes

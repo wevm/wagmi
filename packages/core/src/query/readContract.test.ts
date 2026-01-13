@@ -13,6 +13,7 @@ test('default', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "readContract",
@@ -24,6 +25,7 @@ test('default', () => {
           "functionName": "balanceOf",
         },
       ],
+      "structuralSharing": [Function],
     }
   `)
 })

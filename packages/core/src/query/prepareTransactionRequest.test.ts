@@ -15,6 +15,7 @@ test('default', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "prepareTransactionRequest",
@@ -38,6 +39,7 @@ test('parameters: account', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "prepareTransactionRequest",
@@ -71,6 +73,7 @@ test('parameters: data', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "prepareTransactionRequest",
@@ -93,6 +96,7 @@ test('parameters: chainId', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "prepareTransactionRequest",
@@ -115,6 +119,7 @@ test('parameters: nonce', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "prepareTransactionRequest",
@@ -137,6 +142,7 @@ test('parameters: gasPrice', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "prepareTransactionRequest",
@@ -159,6 +165,7 @@ test('parameters: maxFeePerGas', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "prepareTransactionRequest",
@@ -181,6 +188,7 @@ test('parameters: maxPriorityFeePerGas', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "prepareTransactionRequest",
@@ -203,6 +211,7 @@ test('parameters: type', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "prepareTransactionRequest",
@@ -225,6 +234,7 @@ test('parameters: parameters', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "prepareTransactionRequest",

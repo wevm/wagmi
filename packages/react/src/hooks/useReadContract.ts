@@ -1,5 +1,4 @@
 'use client'
-
 import type {
   Config,
   ReadContractErrorType,
@@ -9,14 +8,10 @@ import type { UnionCompute } from '@wagmi/core/internal'
 import {
   type ReadContractData,
   type ReadContractOptions,
-  type ReadContractQueryFnData,
-  type ReadContractQueryKey,
   readContractQueryOptions,
-  structuralSharing,
 } from '@wagmi/core/query'
-import type { Abi, ContractFunctionArgs, ContractFunctionName, Hex } from 'viem'
-
-import type { ConfigParameter, QueryParameter } from '../types/properties.js'
+import type { Abi, ContractFunctionArgs, ContractFunctionName } from 'viem'
+import type { ConfigParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
@@ -35,14 +30,8 @@ export type UseReadContractParameters<
   config extends Config = Config,
   selectData = ReadContractData<abi, functionName, args>,
 > = UnionCompute<
-  ReadContractOptions<abi, functionName, args, config> &
-    ConfigParameter<config> &
-    QueryParameter<
-      ReadContractQueryFnData<abi, functionName, args>,
-      ReadContractErrorType,
-      selectData,
-      ReadContractQueryKey<abi, functionName, args, config>
-    >
+  ReadContractOptions<abi, functionName, args, config, selectData> &
+    ConfigParameter<config>
 >
 
 export type UseReadContractReturnType<
@@ -75,25 +64,12 @@ export function useReadContract<
     selectData
   > = {} as any,
 ): UseReadContractReturnType<abi, functionName, args, selectData> {
-  const { abi, address, functionName, query = {} } = parameters
-  // @ts-ignore
-  const code = parameters.code as Hex | undefined
-
   const config = useConfig(parameters)
   const chainId = useChainId({ config })
-
-  const options = readContractQueryOptions<config, abi, functionName, args>(
-    config,
-    { ...(parameters as any), chainId: parameters.chainId ?? chainId },
-  )
-  const enabled = Boolean(
-    (address || code) && abi && functionName && (query.enabled ?? true),
-  )
-
-  return useQuery({
-    ...query,
-    ...options,
-    enabled,
-    structuralSharing: query.structuralSharing ?? structuralSharing,
+  const options = readContractQueryOptions(config, {
+    ...(parameters as any),
+    chainId: parameters.chainId ?? chainId,
+    query: parameters.query,
   })
+  return useQuery(options) as any
 }
