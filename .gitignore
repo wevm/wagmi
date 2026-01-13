@@ -1,14 +1,17 @@
+*.vitest-temp.json
 .DS_Store
 .attest
 .next
 .nuxt
 .pnpm-debug.log*
+.tanstack
+.wrangler
+_
 cache
 coverage
 dist
 node_modules
 tsconfig.tsbuildinfo
-*.vitest-temp.json
 
 # local env files
 .env
