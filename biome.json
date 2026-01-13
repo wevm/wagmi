@@ -5,7 +5,9 @@
       "**",
       "!**/CHANGELOG.md",
       "!**/pnpm-lock.yaml",
-      "!**/tsconfig.base.json"
+      "!**/routeTree.gen.ts",
+      "!**/tsconfig.base.json",
+      "!**/worker-configuration.d.ts"
     ]
   },
   "formatter": {
