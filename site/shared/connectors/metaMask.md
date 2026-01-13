@@ -16,23 +16,23 @@ import { metaMask } from '{{connectorsPackageName}}'
 
 ## Install
 
-<PackageMetadata package="@metamask/sdk" repo="MetaMask/metamask-sdk" licenseUrl="https://github.com/MetaMask/metamask-sdk/blob/main/packages/sdk/LICENSE" />
+<PackageMetadata package="@metamask/connect-evm" repo="MetaMask/connect-monorepo" licenseUrl="https://github.com/MetaMask/connect-monorepo/blob/main/packages/connect-evm/LICENSE" />
 
 ::: code-group
 ```bash-vue [pnpm]
-pnpm add @metamask/sdk@{{connectorDependencyVersion}}
+pnpm add @metamask/connect-evm@{{connectorDependencyVersion}}
 ```
 
 ```bash-vue [npm]
-npm install @metamask/sdk@{{connectorDependencyVersion}}
+npm install @metamask/connect-evm@{{connectorDependencyVersion}}
 ```
 
 ```bash-vue [yarn]
-yarn add @metamask/sdk@{{connectorDependencyVersion}}
+yarn add @metamask/connect-evm@{{connectorDependencyVersion}}
 ```
 
 ```bash-vue [bun]
-bun add @metamask/sdk@{{connectorDependencyVersion}}
+bun add @metamask/connect-evm@{{connectorDependencyVersion}}
 ```
 :::
 
