@@ -1,4 +1,5 @@
 import type { WebAuthnP256 } from 'ox'
+import * as Base64 from 'ox/Base64'
 import type * as Hex from 'ox/Hex'
 import * as Json from 'ox/Json'
 import {
@@ -158,7 +159,10 @@ export function http(
           headers: {
             'Content-Type': 'application/json',
           },
-          body: Json.stringify(parameters),
+          body: Json.stringify({
+            ...parameters,
+            credential: serializeCredential(parameters.credential),
+          }),
         },
       )
 
@@ -172,5 +176,64 @@ export namespace http {
   export type Options = {
     /** Custom fetch function. @default `globalThis.fetch`. */
     fetch?: typeof fetch | undefined
+  }
+}
+
+/**
+ * Serializes a WebAuthn credential for JSON transmission.
+ * @internal
+ */
+function serializeCredential(
+  credential: WebAuthnP256.P256Credential['raw'],
+): Record<string, unknown> {
+  const response = credential.response
+  return {
+    ...credential,
+    rawId: Base64.fromBytes(new Uint8Array(credential.rawId)),
+    response: {
+      clientDataJSON: Base64.fromBytes(new Uint8Array(response.clientDataJSON)),
+      ...('attestationObject' in response && {
+        attestationObject: Base64.fromBytes(
+          new Uint8Array(response.attestationObject as ArrayBuffer),
+        ),
+      }),
+      ...('getAuthenticatorData' in response &&
+        typeof response.getAuthenticatorData === 'function' && {
+          authenticatorData: Base64.fromBytes(
+            new Uint8Array(response.getAuthenticatorData() as ArrayBuffer),
+          ),
+        }),
+      ...('getPublicKey' in response &&
+        typeof response.getPublicKey === 'function' && {
+          publicKey: Base64.fromBytes(
+            new Uint8Array(response.getPublicKey() as ArrayBuffer),
+          ),
+        }),
+      ...('getPublicKeyAlgorithm' in response &&
+        typeof response.getPublicKeyAlgorithm === 'function' && {
+          publicKeyAlgorithm: response.getPublicKeyAlgorithm(),
+        }),
+      ...('getTransports' in response &&
+        typeof response.getTransports === 'function' && {
+          transports: response.getTransports(),
+        }),
+      ...('authenticatorData' in response && {
+        authenticatorData: Base64.fromBytes(
+          new Uint8Array(response.authenticatorData as ArrayBuffer),
+        ),
+      }),
+      ...('signature' in response && {
+        signature: Base64.fromBytes(
+          new Uint8Array(response.signature as ArrayBuffer),
+        ),
+      }),
+      ...('userHandle' in response && response.userHandle
+        ? {
+            userHandle: Base64.fromBytes(
+              new Uint8Array(response.userHandle as ArrayBuffer),
+            ),
+          }
+        : {}),
+    },
   }
 }
