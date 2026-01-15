@@ -360,17 +360,16 @@ export function webAuthn(options: webAuthn.Parameters) {
 
       const targetAccount = await (async () => {
         if (!accessKey) return account
+        if (!account) throw new Error('account not found.')
 
-        const item = await idb.get(
-          `accessKey:${accessKey.address.toLowerCase()}`,
-        )
+        const item = await idb.get(`accessKey:${account.address.toLowerCase()}`)
         if (
           item?.keyAuthorization.expiry &&
           item.keyAuthorization.expiry < Date.now() / 1000
         ) {
           // remove any pending key authorizations from storage.
           await config?.storage?.removeItem(
-            `pendingKeyAuthorization:${accessKey.address.toLowerCase()}`,
+            `pendingKeyAuthorization:${account.address.toLowerCase()}`,
           )
 
           const message = `Access key expired (on ${new Date(item.keyAuthorization.expiry * 1000).toLocaleString()}).`
