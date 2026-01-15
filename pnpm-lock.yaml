@@ -377,8 +377,6 @@ importers:
         specifier: 'catalog:'
         version: 19.2.3
 
-  packages/register-tests/solid: {}
-
   packages/register-tests/vue:
     dependencies:
       '@tanstack/vue-query':
@@ -656,8 +654,6 @@ importers:
       vite:
         specifier: 'catalog:'
         version: 7.2.2(@types/node@24.6.2)(jiti@2.6.1)(terser@5.31.0)(tsx@4.20.6)(yaml@2.8.1)
-
-  playgrounds/vite-solid: {}
 
   playgrounds/vite-vue:
     dependencies:
