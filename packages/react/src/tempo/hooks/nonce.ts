@@ -7,6 +7,7 @@ import { useChainId } from '../../hooks/useChainId.js'
 import { useConfig } from '../../hooks/useConfig.js'
 import type { ConfigParameter } from '../../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../../utils/query.js'
+import type { QueryParameter } from '../utils.js'
 
 /**
  * Hook for getting the nonce for an account and nonce key.
@@ -49,9 +50,13 @@ export declare namespace useNonce {
     config extends Config = ResolvedRegister['config'],
     selectData = Actions.nonce.getNonce.ReturnValue,
   > = ConfigParameter<config> &
-    ExactPartial<
-      Actions.nonce.getNonce.queryOptions.Parameters<config, selectData>
-    >
+    QueryParameter<
+      Actions.nonce.getNonce.ReturnValue,
+      Actions.nonce.getNonce.ErrorType,
+      selectData,
+      Actions.nonce.getNonce.QueryKey<config>
+    > &
+    ExactPartial<Actions.nonce.getNonce.Parameters<config>>
 
   export type ReturnValue<selectData = Actions.nonce.getNonce.ReturnValue> =
     UseQueryReturnType<selectData, Error>
