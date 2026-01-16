@@ -1,5 +1,15 @@
 # @wagmi/core
 
+## 3.2.3
+
+### Patch Changes
+
+- **wagmi/tempo:** Fixed access key lookup to use `account` address instead of `accessKey` address in `webAuthn` connector. ([#4953](https://github.com/wevm/wagmi/pull/4953))
+
+- Propagated `chain` to Viem's `sendTransactiion` to preserve chain-specific configuration. ([#4953](https://github.com/wevm/wagmi/pull/4953))
+
+- Fixed serialization of credentials in `KeyManager.http`. ([#4951](https://github.com/wevm/wagmi/pull/4951))
+
 ## 3.2.2
 
 ### Patch Changes
