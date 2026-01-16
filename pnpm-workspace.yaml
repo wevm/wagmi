@@ -42,6 +42,8 @@ minimumReleaseAgeExclude:
   - '@wagmi/test'
   - '@wagmi/vue'
   - abitype
+  - devalue
+  - h3
   - ox
   - porto
   - prool
