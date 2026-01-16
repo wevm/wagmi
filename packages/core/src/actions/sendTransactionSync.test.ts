@@ -3,7 +3,6 @@ import { parseEther } from 'viem'
 import { beforeEach, expect, test } from 'vitest'
 import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'
-import { sendTransaction } from './sendTransaction.js'
 import { sendTransactionSync } from './sendTransactionSync.js'
 
 const connector = config.connectors[0]!
