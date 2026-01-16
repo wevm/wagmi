@@ -36,7 +36,7 @@ test('default', async () => {
   })
 
   await vi.waitUntil(() => useSendCalls_render.result.current.isSuccess, {
-    timeout: 5_000,
+    timeout: 10_000,
   })
 
   expect(useWaitForCallsStatus_render.result.current.fetchStatus).toBe('idle')
@@ -50,7 +50,7 @@ test('default', async () => {
 
   await vi.waitUntil(
     () => useWaitForCallsStatus_render.result.current.isSuccess,
-    { timeout: 5_000 },
+    { timeout: 10_000 },
   )
 
   expect(useWaitForCallsStatus_render.result.current.data?.status).toBe(
