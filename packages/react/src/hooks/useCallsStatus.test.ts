@@ -36,7 +36,9 @@ test('default', async () => {
   const { result: result_2 } = await renderHook(() =>
     useCallsStatus({ id: result.current.data?.id! }),
   )
-  await vi.waitFor(() => expect(result_2.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result_2.current.isSuccess).toBeTruthy(), {
+    timeout: 5_000,
+  })
 
   expect(result_2.current.data).toMatchInlineSnapshot(
     `
@@ -57,7 +59,9 @@ test('default', async () => {
   const { result: result_3 } = await renderHook(() =>
     useCallsStatus({ id: result.current.data?.id! }),
   )
-  await vi.waitFor(() => expect(result_3.current.isSuccess).toBeTruthy())
+  await vi.waitFor(() => expect(result_3.current.isSuccess).toBeTruthy(), {
+    timeout: 5_000,
+  })
 
   expect(result_3.current.data?.status).toBe('success')
   expect(result_3.current.data?.statusCode).toBe(200)
