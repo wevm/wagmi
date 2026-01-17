@@ -1,5 +1,11 @@
 # wagmi
 
+## 3.3.4
+
+### Patch Changes
+
+- Fixed issue where `wagmi/tempo` hooks were not propagating `UseQueryOptions`. ([#4955](https://github.com/wevm/wagmi/pull/4955))
+
 ## 3.3.3
 
 ### Patch Changes
