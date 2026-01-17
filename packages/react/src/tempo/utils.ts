@@ -1,5 +1,5 @@
 import type * as Query from '@tanstack/react-query'
-import type { RequiredBy, UnionLooseOmit } from '@wagmi/core/internal'
+import type { UnionLooseOmit } from '@wagmi/core/internal'
 
 export type QueryParameter<
   queryFnData = unknown,
@@ -9,18 +9,8 @@ export type QueryParameter<
 > = {
   query?:
     | UnionLooseOmit<
-        QueryOptions<queryFnData, error, data, queryKey>,
+        Query.UseQueryOptions<queryFnData, error, data, queryKey>,
         'queryKey' | 'queryFn'
       >
     | undefined
 }
-
-export type QueryOptions<
-  queryFnData = unknown,
-  error = Query.DefaultError,
-  data = queryFnData,
-  queryKey extends Query.QueryKey = Query.QueryKey,
-> = RequiredBy<
-  Query.UseQueryOptions<queryFnData, error, data, queryKey>,
-  'queryKey' | 'queryFn'
-> & { enabled: boolean }
