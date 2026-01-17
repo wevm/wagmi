@@ -1,8 +1,5 @@
 import type * as Query from '@tanstack/react-query'
-import type {
-  RequiredBy,
-  UnionLooseOmit,
-} from '../../../core/src/types/utils.js'
+import type { RequiredBy, UnionLooseOmit } from '@wagmi/core/internal'
 
 export type QueryParameter<
   queryFnData = unknown,
