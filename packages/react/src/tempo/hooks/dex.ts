@@ -13,6 +13,7 @@ import {
   useMutation,
   useQuery,
 } from '../../utils/query.js'
+import type { QueryParameter } from '../utils.js'
 
 /**
  * Hook for buying a specific amount of tokens.
@@ -616,9 +617,13 @@ export declare namespace useBalance {
     config extends Config = ResolvedRegister['config'],
     selectData = Actions.dex.getBalance.ReturnValue,
   > = ConfigParameter<config> &
-    ExactPartial<
-      Actions.dex.getBalance.queryOptions.Parameters<config, selectData>
-    >
+    QueryParameter<
+      Actions.dex.getBalance.ReturnValue,
+      Actions.dex.getBalance.ErrorType,
+      selectData,
+      Actions.dex.getBalance.QueryKey<config>
+    > &
+    ExactPartial<Actions.dex.getBalance.Parameters<config>>
 
   export type ReturnValue<selectData = Actions.dex.getBalance.ReturnValue> =
     UseQueryReturnType<selectData, Error>
@@ -666,9 +671,13 @@ export declare namespace useBuyQuote {
     config extends Config = ResolvedRegister['config'],
     selectData = Actions.dex.getBuyQuote.ReturnValue,
   > = ConfigParameter<config> &
-    ExactPartial<
-      Actions.dex.getBuyQuote.queryOptions.Parameters<config, selectData>
-    >
+    QueryParameter<
+      Actions.dex.getBuyQuote.ReturnValue,
+      Actions.dex.getBuyQuote.ErrorType,
+      selectData,
+      Actions.dex.getBuyQuote.QueryKey<config>
+    > &
+    ExactPartial<Actions.dex.getBuyQuote.Parameters<config>>
 
   export type ReturnValue<selectData = Actions.dex.getBuyQuote.ReturnValue> =
     UseQueryReturnType<selectData, Error>
@@ -714,9 +723,13 @@ export declare namespace useOrder {
     config extends Config = ResolvedRegister['config'],
     selectData = Actions.dex.getOrder.ReturnValue,
   > = ConfigParameter<config> &
-    ExactPartial<
-      Actions.dex.getOrder.queryOptions.Parameters<config, selectData>
-    >
+    QueryParameter<
+      Actions.dex.getOrder.ReturnValue,
+      Actions.dex.getOrder.ErrorType,
+      selectData,
+      Actions.dex.getOrder.QueryKey<config>
+    > &
+    ExactPartial<Actions.dex.getOrder.Parameters<config>>
 
   export type ReturnValue<selectData = Actions.dex.getOrder.ReturnValue> =
     UseQueryReturnType<selectData, Error>
@@ -763,9 +776,13 @@ export declare namespace useOrderbook {
     config extends Config = ResolvedRegister['config'],
     selectData = Actions.dex.getOrderbook.ReturnValue,
   > = ConfigParameter<config> &
-    ExactPartial<
-      Actions.dex.getOrderbook.queryOptions.Parameters<config, selectData>
-    >
+    QueryParameter<
+      Actions.dex.getOrderbook.ReturnValue,
+      Actions.dex.getOrderbook.ErrorType,
+      selectData,
+      Actions.dex.getOrderbook.QueryKey<config>
+    > &
+    ExactPartial<Actions.dex.getOrderbook.Parameters<config>>
 
   export type ReturnValue<selectData = Actions.dex.getOrderbook.ReturnValue> =
     UseQueryReturnType<selectData, Error>
@@ -814,9 +831,13 @@ export declare namespace useTickLevel {
     config extends Config = ResolvedRegister['config'],
     selectData = Actions.dex.getTickLevel.ReturnValue,
   > = ConfigParameter<config> &
-    ExactPartial<
-      Actions.dex.getTickLevel.queryOptions.Parameters<config, selectData>
-    >
+    QueryParameter<
+      Actions.dex.getTickLevel.ReturnValue,
+      Actions.dex.getTickLevel.ErrorType,
+      selectData,
+      Actions.dex.getTickLevel.QueryKey<config>
+    > &
+    ExactPartial<Actions.dex.getTickLevel.Parameters<config>>
 
   export type ReturnValue<selectData = Actions.dex.getTickLevel.ReturnValue> =
     UseQueryReturnType<selectData, Error>
@@ -864,9 +885,13 @@ export declare namespace useSellQuote {
     config extends Config = ResolvedRegister['config'],
     selectData = Actions.dex.getSellQuote.ReturnValue,
   > = ConfigParameter<config> &
-    ExactPartial<
-      Actions.dex.getSellQuote.queryOptions.Parameters<config, selectData>
-    >
+    QueryParameter<
+      Actions.dex.getSellQuote.ReturnValue,
+      Actions.dex.getSellQuote.ErrorType,
+      selectData,
+      Actions.dex.getSellQuote.QueryKey<config>
+    > &
+    ExactPartial<Actions.dex.getSellQuote.Parameters<config>>
 
   export type ReturnValue<selectData = Actions.dex.getSellQuote.ReturnValue> =
     UseQueryReturnType<selectData, Error>
