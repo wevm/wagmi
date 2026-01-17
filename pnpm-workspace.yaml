@@ -47,6 +47,7 @@ minimumReleaseAgeExclude:
   - ox
   - porto
   - prool
+  - tar
   - wagmi
   - viem
 overrides:
