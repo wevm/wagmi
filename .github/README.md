@@ -273,3 +273,19 @@ If you find Wagmi useful or use it for work, please consider [sponsoring Wagmi](
   <img src="https://raw.githubusercontent.com/wevm/.github/refs/heads/main/content/quicknode-badge.svg" alt="Powered by QuickNode" height="35">
 </a>
 
+## Simple Wallet Connect Example
+
+```tsx
+import { useAccount, useConnect } from 'wagmi'
+import { injected } from 'wagmi/connectors'
+
+export function Wallet() {
+  const { address, isConnected } = useAccount()
+  const { connect } = useConnect()
+
+  if (!isConnected) {
+    return <button onClick={() => connect({ connector: injected() })}>Connect Wallet</button>
+  }
+
+  return <div>Connected: {address}</div>
+}
