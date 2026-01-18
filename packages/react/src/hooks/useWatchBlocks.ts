@@ -7,7 +7,7 @@ import {
   watchBlocks,
 } from '@wagmi/core'
 import type { UnionCompute, UnionExactPartial } from '@wagmi/core/internal'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import type { BlockTag } from 'viem'
 
 import type { ConfigParameter, EnabledParameter } from '../types/properties.js'
@@ -51,27 +51,41 @@ export function useWatchBlocks<
   const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
+  // store callbacks in refs to prevent re-subscriptions when they change.
+  // refs are updated separately (in useEffect below) so the subscription
+  // remains stable while always calling the latest callback version.
+  const onBlockRef = useRef(onBlock)
+  const onErrorRef = useRef(rest.onError)
+
+  useEffect(() => {
+    onBlockRef.current = onBlock
+  }, [onBlock])
+
+  useEffect(() => {
+    onErrorRef.current = rest.onError
+  }, [rest.onError])
+
   // TODO(react@19): cleanup
-  // biome-ignore lint/correctness/useExhaustiveDependencies: `rest` changes every render so only including properties in dependency array
+  // biome-ignore lint/correctness/useExhaustiveDependencies: `onBlock` and `onError` are excluded to prevent unnecessary re-subscriptions on render
   useEffect(() => {
     if (!enabled) return
-    if (!onBlock) return
+
     return watchBlocks(config, {
       ...(rest as any),
       chainId,
-      onBlock,
+      onBlock: (block: any, prevBlock: any) =>
+        onBlockRef.current?.(block, prevBlock),
+      onError: (error) => onErrorRef.current?.(error),
     })
   }, [
     chainId,
     config,
     enabled,
-    onBlock,
-    ///
+    //
     rest.blockTag,
     rest.emitMissed,
     rest.emitOnBegin,
     rest.includeTransactions,
-    rest.onError,
     rest.poll,
     rest.pollingInterval,
     rest.syncConnectedChain,
