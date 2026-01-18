@@ -100,6 +100,7 @@ test('exports', () => {
       "useWatchContractEvent",
       "useWatchPendingTransactions",
       "useWriteContract",
+      "useWriteContractSync",
       "version",
       "webSocket",
     ]

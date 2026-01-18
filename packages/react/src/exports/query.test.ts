@@ -96,6 +96,7 @@ test('exports', () => {
       "waitForTransactionReceiptQueryOptions",
       "watchAssetMutationOptions",
       "writeContractMutationOptions",
+      "writeContractSyncMutationOptions",
     ]
   `)
 })
