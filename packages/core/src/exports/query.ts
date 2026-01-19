@@ -378,6 +378,8 @@ export {
   type SignMessageData,
   type SignMessageMutate,
   type SignMessageMutateAsync,
+  type SignMessageMutationOptions,
+  type SignMessageOptions,
   type SignMessageVariables,
   signMessageMutationOptions,
 } from '../query/signMessage.js'
@@ -386,6 +388,8 @@ export {
   type SignTypedDataData,
   type SignTypedDataMutate,
   type SignTypedDataMutateAsync,
+  type SignTypedDataMutationOptions,
+  type SignTypedDataOptions,
   type SignTypedDataVariables,
   signTypedDataMutationOptions,
 } from '../query/signTypedData.js'

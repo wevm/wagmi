@@ -7,12 +7,25 @@ import {
   sendTransactionSync,
 } from '../actions/sendTransactionSync.js'
 import type { Config } from '../createConfig.js'
+import type { MutationParameter } from '../types/query.js'
 import type { Compute } from '../types/utils.js'
 
-export function sendTransactionSyncMutationOptions<config extends Config>(
-  config: config,
-) {
+export type SendTransactionSyncOptions<
+  config extends Config,
+  context = unknown,
+> = MutationParameter<
+  SendTransactionSyncData,
+  SendTransactionSyncErrorType,
+  SendTransactionSyncVariables<config, config['chains'][number]['id']>,
+  context
+>
+
+export function sendTransactionSyncMutationOptions<
+  config extends Config,
+  context,
+>(config: config, options: SendTransactionSyncOptions<config, context> = {}) {
   return {
+    ...(options.mutation as any),
     mutationFn(variables) {
       return sendTransactionSync(config, variables)
     },

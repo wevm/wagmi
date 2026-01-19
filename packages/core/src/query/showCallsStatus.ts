@@ -7,12 +7,22 @@ import {
   showCallsStatus,
 } from '../actions/showCallsStatus.js'
 import type { Config } from '../createConfig.js'
+import type { MutationParameter } from '../types/query.js'
 import type { Compute } from '../types/utils.js'
 
-export function showCallsStatusMutationOptions<config extends Config>(
+export type ShowCallsStatusOptions<context = unknown> = MutationParameter<
+  ShowCallsStatusData,
+  ShowCallsStatusErrorType,
+  ShowCallsStatusVariables,
+  context
+>
+
+export function showCallsStatusMutationOptions<config extends Config, context>(
   config: config,
+  options: ShowCallsStatusOptions<context> = {},
 ) {
   return {
+    ...(options.mutation as any),
     mutationFn(variables) {
       return showCallsStatus(config, variables)
     },

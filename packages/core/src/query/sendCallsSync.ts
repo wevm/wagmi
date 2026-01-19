@@ -7,12 +7,25 @@ import {
   sendCallsSync,
 } from '../actions/sendCallsSync.js'
 import type { Config } from '../createConfig.js'
+import type { MutationParameter } from '../types/query.js'
 import type { Compute } from '../types/utils.js'
 
-export function sendCallsSyncMutationOptions<config extends Config>(
+export type SendCallsSyncOptions<
+  config extends Config,
+  context = unknown,
+> = MutationParameter<
+  SendCallsSyncData,
+  SendCallsSyncErrorType,
+  SendCallsSyncVariables<config, config['chains'][number]['id']>,
+  context
+>
+
+export function sendCallsSyncMutationOptions<config extends Config, context>(
   config: config,
+  options: SendCallsSyncOptions<config, context> = {},
 ) {
   return {
+    ...(options.mutation as any),
     mutationFn(variables) {
       return sendCallsSync(config, variables)
     },

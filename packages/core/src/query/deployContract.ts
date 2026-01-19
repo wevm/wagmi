@@ -8,12 +8,25 @@ import {
   deployContract,
 } from '../actions/deployContract.js'
 import type { Config } from '../createConfig.js'
+import type { MutationParameter } from '../types/query.js'
 import type { Compute } from '../types/utils.js'
 
-export function deployContractMutationOptions<config extends Config>(
+export type DeployContractOptions<
+  config extends Config,
+  context = unknown,
+> = MutationParameter<
+  DeployContractData,
+  DeployContractErrorType,
+  DeployContractVariables<Abi, config, config['chains'][number]['id']>,
+  context
+>
+
+export function deployContractMutationOptions<config extends Config, context>(
   config: config,
+  options: DeployContractOptions<config, context> = {},
 ) {
   return {
+    ...(options.mutation as any),
     mutationFn(variables) {
       return deployContract(config, variables)
     },

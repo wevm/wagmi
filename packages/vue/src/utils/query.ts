@@ -1,5 +1,6 @@
 import {
   type DefaultError,
+  type MutateFunction,
   type MutationObserverOptions,
   type QueryKey,
   type UseMutationReturnType as tanstack_UseMutationReturnType,
@@ -40,11 +41,16 @@ export type UseMutationReturnType<
   error = Error,
   variables = void,
   context = unknown,
+  mutate = MutateFunction,
+  mutateAsync = MutateFunction,
 > = Compute<
   UnionStrictOmit<
     tanstack_UseMutationReturnType<data, error, variables, context>,
     'mutate' | 'mutateAsync'
-  >
+  > & {
+    mutate: mutate
+    mutateAsync: mutateAsync
+  }
 >
 
 export { useMutation }

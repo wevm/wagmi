@@ -8,7 +8,6 @@ import {
   type ReconnectVariables,
   reconnectMutationOptions,
 } from '@wagmi/core/query'
-
 import type { ConfigParameter } from '../types/properties.js'
 import type {
   UseMutationParameters,
@@ -51,12 +50,13 @@ export function useReconnect<context = unknown>(
   parameters: UseReconnectParameters<context> = {},
 ): UseReconnectReturnType<context> {
   const config = useConfig(parameters)
-  const mutationOptions = reconnectMutationOptions(config)
-  const mutation = useMutation({ ...parameters.mutation, ...mutationOptions })
+  const options = reconnectMutationOptions(config, parameters as any)
+  const mutation = useMutation(options)
+  type Return = UseReconnectReturnType<context>
   return {
-    ...mutation,
+    ...(mutation as Return),
     connectors: config.connectors,
-    reconnect: mutation.mutate,
-    reconnectAsync: mutation.mutateAsync,
+    reconnect: mutation.mutate as Return['mutate'],
+    reconnectAsync: mutation.mutateAsync as Return['mutateAsync'],
   }
 }

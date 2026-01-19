@@ -7,12 +7,25 @@ import {
   switchChain,
 } from '../actions/switchChain.js'
 import type { Config } from '../createConfig.js'
+import type { MutationParameter } from '../types/query.js'
 import type { Compute } from '../types/utils.js'
 
-export function switchChainMutationOptions<config extends Config>(
+export type SwitchChainOptions<
+  config extends Config,
+  context = unknown,
+> = MutationParameter<
+  SwitchChainData<config, config['chains'][number]['id']>,
+  SwitchChainErrorType,
+  SwitchChainVariables<config, config['chains'][number]['id']>,
+  context
+>
+
+export function switchChainMutationOptions<config extends Config, context>(
   config: config,
+  options: SwitchChainOptions<config, context> = {},
 ) {
   return {
+    ...(options.mutation as any),
     mutationFn(variables) {
       return switchChain(config, variables)
     },
