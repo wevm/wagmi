@@ -212,9 +212,7 @@ export declare namespace useMyAction {
       selectData,
       myAction.QueryKey<config>
     > &
-    ExactPartial<
-      Omit<myAction.queryOptions.Parameters<config, selectData>, 'query'>
-    >
+    ExactPartial<myAction.Parameters<config>>
 
   export type ReturnValue<selectData = myAction.ReturnValue> =
     UseQueryReturnType<selectData, Error>
