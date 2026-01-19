@@ -13,6 +13,7 @@ import {
   useMutation,
   useQuery,
 } from '../../utils/query.js'
+import type { QueryParameter } from '../utils.js'
 
 /**
  * Hook for approving a spender to transfer TIP20 tokens.
@@ -877,9 +878,13 @@ export declare namespace useGetAllowance {
     config extends Config = ResolvedRegister['config'],
     selectData = Actions.token.getAllowance.ReturnValue,
   > = ConfigParameter<config> &
-    ExactPartial<
-      Actions.token.getAllowance.queryOptions.Parameters<config, selectData>
-    >
+    QueryParameter<
+      Actions.token.getAllowance.ReturnValue,
+      Actions.token.getAllowance.ErrorType,
+      selectData,
+      Actions.token.getAllowance.QueryKey<config>
+    > &
+    ExactPartial<Actions.token.getAllowance.Parameters<config>>
 
   export type ReturnValue<selectData = Actions.token.getAllowance.ReturnValue> =
     UseQueryReturnType<selectData, Error>
@@ -925,9 +930,13 @@ export declare namespace useGetBalance {
     config extends Config = ResolvedRegister['config'],
     selectData = Actions.token.getBalance.ReturnValue,
   > = ConfigParameter<config> &
-    ExactPartial<
-      Actions.token.getBalance.queryOptions.Parameters<config, selectData>
-    >
+    QueryParameter<
+      Actions.token.getBalance.ReturnValue,
+      Actions.token.getBalance.ErrorType,
+      selectData,
+      Actions.token.getBalance.QueryKey<config>
+    > &
+    ExactPartial<Actions.token.getBalance.Parameters<config>>
 
   export type ReturnValue<selectData = Actions.token.getBalance.ReturnValue> =
     UseQueryReturnType<selectData, Error>
@@ -973,9 +982,13 @@ export declare namespace useGetMetadata {
     config extends Config = ResolvedRegister['config'],
     selectData = Actions.token.getMetadata.ReturnValue,
   > = ConfigParameter<config> &
-    ExactPartial<
-      Actions.token.getMetadata.queryOptions.Parameters<config, selectData>
-    >
+    QueryParameter<
+      Actions.token.getMetadata.ReturnValue,
+      Actions.token.getMetadata.ErrorType,
+      selectData,
+      Actions.token.getMetadata.QueryKey<config>
+    > &
+    ExactPartial<Actions.token.getMetadata.Parameters<config>>
 
   export type ReturnValue<selectData = Actions.token.getMetadata.ReturnValue> =
     UseQueryReturnType<selectData, Error>
@@ -1022,9 +1035,13 @@ export declare namespace useGetRoleAdmin {
     config extends Config = ResolvedRegister['config'],
     selectData = Actions.token.getRoleAdmin.ReturnValue,
   > = ConfigParameter<config> &
-    ExactPartial<
-      Actions.token.getRoleAdmin.queryOptions.Parameters<config, selectData>
-    >
+    QueryParameter<
+      Actions.token.getRoleAdmin.ReturnValue,
+      Actions.token.getRoleAdmin.ErrorType,
+      selectData,
+      Actions.token.getRoleAdmin.QueryKey<config>
+    > &
+    ExactPartial<Actions.token.getRoleAdmin.Parameters<config>>
 
   export type ReturnValue<selectData = Actions.token.getRoleAdmin.ReturnValue> =
     UseQueryReturnType<selectData, Error>
@@ -1209,9 +1226,13 @@ export declare namespace useHasRole {
     config extends Config = ResolvedRegister['config'],
     selectData = Actions.token.hasRole.ReturnValue,
   > = ConfigParameter<config> &
-    ExactPartial<
-      Actions.token.hasRole.queryOptions.Parameters<config, selectData>
-    >
+    QueryParameter<
+      Actions.token.hasRole.ReturnValue,
+      Actions.token.hasRole.ErrorType,
+      selectData,
+      Actions.token.hasRole.QueryKey<config>
+    > &
+    ExactPartial<Actions.token.hasRole.Parameters<config>>
 
   export type ReturnValue<selectData = Actions.token.hasRole.ReturnValue> =
     UseQueryReturnType<selectData, Error>
