@@ -1,5 +1,4 @@
 import type { MutateOptions, MutationOptions } from '@tanstack/query-core'
-
 import type { TypedData } from 'viem'
 import {
   type SignTypedDataErrorType,
@@ -8,22 +7,34 @@ import {
   signTypedData,
 } from '../actions/signTypedData.js'
 import type { Config } from '../createConfig.js'
+import type { MutationParameter } from '../types/query.js'
 import type { Compute } from '../types/utils.js'
 
-export function signTypedDataMutationOptions<config extends Config>(
+export type SignTypedDataOptions<context = unknown> = MutationParameter<
+  SignTypedDataData,
+  SignTypedDataErrorType,
+  SignTypedDataVariables,
+  context
+>
+
+export function signTypedDataMutationOptions<config extends Config, context>(
   config: config,
-) {
+  options: SignTypedDataOptions<context> = {},
+): SignTypedDataMutationOptions {
   return {
+    ...(options.mutation as any),
     mutationFn(variables) {
       return signTypedData(config, variables)
     },
     mutationKey: ['signTypedData'],
-  } as const satisfies MutationOptions<
-    SignTypedDataData,
-    SignTypedDataErrorType,
-    SignTypedDataVariables
-  >
+  }
 }
+
+export type SignTypedDataMutationOptions = MutationOptions<
+  SignTypedDataData,
+  SignTypedDataErrorType,
+  SignTypedDataVariables
+>
 
 export type SignTypedDataData = Compute<SignTypedDataReturnType>
 

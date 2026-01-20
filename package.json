@@ -33,7 +33,6 @@
     "test": "vitest",
     "test:build": "node scripts/generateProxyPackages.ts && pnpm run --r --parallel test:build",
     "test:cov": "vitest run --coverage",
-    "test:typecheck": "vitest typecheck",
     "test:update": "vitest --update",
     "version:update": "node scripts/updateVersion.ts",
     "version:update:viem": "node scripts/updateViemVersion.ts"

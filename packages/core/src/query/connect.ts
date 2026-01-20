@@ -1,5 +1,4 @@
 import type { MutateOptions, MutationOptions } from '@tanstack/query-core'
-
 import {
   type ConnectErrorType,
   type ConnectParameters,
@@ -8,20 +7,37 @@ import {
 } from '../actions/connect.js'
 import type { CreateConnectorFn } from '../connectors/createConnector.js'
 import type { Config, Connector } from '../createConfig.js'
+import type { MutationParameter } from '../types/query.js'
 import type { Compute } from '../types/utils.js'
 
-export function connectMutationOptions<config extends Config>(config: config) {
+export type ConnectOptions<
+  config extends Config,
+  context = unknown,
+> = MutationParameter<
+  ConnectData<config, config['connectors'][number], boolean>,
+  ConnectErrorType,
+  ConnectVariables<config, config['connectors'][number], boolean>,
+  context
+>
+
+export function connectMutationOptions<config extends Config, context>(
+  config: config,
+  options: ConnectOptions<config, context> = {},
+): ConnectMutationOptions<config> {
   return {
-    mutationFn(variables) {
+    ...(options.mutation as any),
+    mutationFn: async (variables) => {
       return connect(config, variables)
     },
     mutationKey: ['connect'],
-  } as const satisfies MutationOptions<
-    ConnectData<config, Connector | CreateConnectorFn, boolean>,
-    ConnectErrorType,
-    ConnectVariables<config, Connector | CreateConnectorFn, boolean>
-  >
+  }
 }
+
+export type ConnectMutationOptions<config extends Config> = MutationOptions<
+  ConnectData<config, config['connectors'][number], boolean>,
+  ConnectErrorType,
+  ConnectVariables<config, config['connectors'][number], boolean>
+>
 
 export type ConnectData<
   config extends Config,
