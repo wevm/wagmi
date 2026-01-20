@@ -2,4 +2,4 @@
 "@wagmi/core": patch
 ---
 
-Handle eth_accounts in mock connector to return configured accounts
+Fixed `eth_accounts` to return `mock#accounts` parameter when provided.
