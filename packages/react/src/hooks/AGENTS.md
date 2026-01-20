@@ -40,7 +40,6 @@ export function useMyAction<
   const options = myActionQueryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
-    query: parameters.query,
   })
   return useQuery(options)
 }

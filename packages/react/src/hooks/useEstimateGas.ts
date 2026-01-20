@@ -44,7 +44,6 @@ export function useEstimateGas(
     account: parameters.account ?? address,
     chainId: parameters.chainId ?? chainId,
     connector: parameters.connector ?? connector,
-    query: parameters.query,
   })
   return useQuery(options)
 }

@@ -43,7 +43,6 @@ export function useCapabilities<
     ...parameters,
     account: parameters.account ?? address,
     connector: parameters.connector ?? connector,
-    query: parameters.query,
   })
   return useQuery(options as never) as any
 }

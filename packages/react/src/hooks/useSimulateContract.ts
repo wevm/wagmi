@@ -93,7 +93,6 @@ export function useSimulateContract<
     account: parameters.account ?? address,
     chainId: parameters.chainId ?? chainId,
     connector: parameters.connector ?? connector,
-    query: parameters.query,
   })
   return useQuery(options) as any
 }

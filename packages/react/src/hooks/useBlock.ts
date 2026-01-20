@@ -85,7 +85,6 @@ export function useBlock<
   const options = getBlockQueryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
-    query: parameters.query,
   })
   const queryClient = useQueryClient()
   useWatchBlocks({

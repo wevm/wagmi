@@ -35,7 +35,6 @@ export function useCallsStatus<
   const options = getCallsStatusQueryOptions(config, {
     ...parameters,
     connector: parameters.connector ?? connector,
-    query: parameters.query,
   })
   return useQuery(options)
 }

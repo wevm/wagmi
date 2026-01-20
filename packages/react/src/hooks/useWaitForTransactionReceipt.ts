@@ -50,7 +50,6 @@ export function useWaitForTransactionReceipt<
   const options = waitForTransactionReceiptQueryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
-    query: parameters.query,
   })
   return useQuery(options) as any
 }

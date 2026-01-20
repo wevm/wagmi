@@ -73,7 +73,6 @@ export function usePrepareTransactionRequest<
   const options = prepareTransactionRequestQueryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
-    query: parameters.query,
   } as PrepareTransactionRequestOptions<config, chainId, request>)
   return useQuery(options) as any
 }
