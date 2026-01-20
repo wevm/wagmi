@@ -1,4 +1,3 @@
-import { useMutation } from '@tanstack/vue-query'
 import type {
   Config,
   ResolvedRegister,
@@ -9,33 +8,20 @@ import {
   type SwitchChainData,
   type SwitchChainMutate,
   type SwitchChainMutateAsync,
+  type SwitchChainOptions,
   type SwitchChainVariables,
   switchChainMutationOptions,
 } from '@wagmi/core/query'
 import type { Ref } from 'vue'
 import type { ConfigParameter } from '../types/properties.js'
-import type {
-  UseMutationParameters,
-  UseMutationReturnType,
-} from '../utils/query.js'
+import { type UseMutationReturnType, useMutation } from '../utils/query.js'
 import { useChains } from './useChains.js'
 import { useConfig } from './useConfig.js'
 
 export type UseSwitchChainParameters<
   config extends Config = Config,
   context = unknown,
-> = Compute<
-  ConfigParameter<config> & {
-    mutation?:
-      | UseMutationParameters<
-          SwitchChainData<config, config['chains'][number]['id']>,
-          SwitchChainErrorType,
-          SwitchChainVariables<config, config['chains'][number]['id']>,
-          context
-        >
-      | undefined
-  }
->
+> = Compute<ConfigParameter<config> & SwitchChainOptions<config, context>>
 
 export type UseSwitchChainReturnType<
   config extends Config = Config,

@@ -1,4 +1,3 @@
-import { useMutation } from '@tanstack/vue-query'
 import type {
   Config,
   Connector,
@@ -10,34 +9,21 @@ import {
   type SwitchConnectionData,
   type SwitchConnectionMutate,
   type SwitchConnectionMutateAsync,
+  type SwitchConnectionOptions,
   type SwitchConnectionVariables,
   switchConnectionMutationOptions,
 } from '@wagmi/core/query'
 import { computed, type Ref } from 'vue'
 
 import type { ConfigParameter } from '../types/properties.js'
-import type {
-  UseMutationParameters,
-  UseMutationReturnType,
-} from '../utils/query.js'
+import { type UseMutationReturnType, useMutation } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 import { useConnections } from './useConnections.js'
 
 export type UseSwitchConnectionParameters<
   config extends Config = Config,
   context = unknown,
-> = Compute<
-  ConfigParameter<config> & {
-    mutation?:
-      | UseMutationParameters<
-          SwitchConnectionData<config>,
-          SwitchConnectionErrorType,
-          SwitchConnectionVariables,
-          context
-        >
-      | undefined
-  }
->
+> = Compute<ConfigParameter<config> & SwitchConnectionOptions<config, context>>
 
 export type UseSwitchConnectionReturnType<
   config extends Config = Config,

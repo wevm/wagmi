@@ -50,7 +50,7 @@ export function useConnect<
   parameters: UseConnectParameters<config, context> = {},
 ): UseConnectReturnType<config, context> {
   const config = useConfig(parameters)
-  const options = connectMutationOptions(config, parameters as any)
+  const options = connectMutationOptions(config, parameters)
   const mutation = useMutation(options)
 
   // Reset mutation back to an idle state when the connector disconnects.

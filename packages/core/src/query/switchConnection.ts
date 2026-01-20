@@ -1,5 +1,4 @@
 import type { MutationOptions } from '@tanstack/query-core'
-
 import {
   type SwitchConnectionErrorType,
   type SwitchConnectionParameters,
@@ -24,19 +23,22 @@ export type SwitchConnectionOptions<
 export function switchConnectionMutationOptions<config extends Config, context>(
   config: config,
   options: SwitchConnectionOptions<config, context> = {},
-) {
+): SwitchConnectionMutationOptions<config> {
   return {
     ...(options.mutation as any),
     mutationFn(variables) {
       return switchConnection(config, variables)
     },
     mutationKey: ['switchConnection'],
-  } as const satisfies MutationOptions<
+  }
+}
+
+export type SwitchConnectionMutationOptions<config extends Config> =
+  MutationOptions<
     SwitchConnectionData<config>,
     SwitchConnectionErrorType,
     SwitchConnectionVariables
   >
-}
 
 export type SwitchConnectionData<config extends Config> = Compute<
   SwitchConnectionReturnType<config>

@@ -1,5 +1,4 @@
 import type { MutationOptions } from '@tanstack/query-core'
-
 import {
   type WatchAssetErrorType,
   type WatchAssetParameters,
@@ -21,19 +20,21 @@ export type WatchAssetOptions<context = unknown> = MutationParameter<
 export function watchAssetMutationOptions<context>(
   config: Config,
   options: WatchAssetOptions<context> = {},
-) {
+): WatchAssetMutationOptions {
   return {
     ...(options.mutation as any),
     mutationFn(variables) {
       return watchAsset(config, variables)
     },
     mutationKey: ['watchAsset'],
-  } as const satisfies MutationOptions<
-    WatchAssetData,
-    WatchAssetErrorType,
-    WatchAssetVariables
-  >
+  }
 }
+
+export type WatchAssetMutationOptions = MutationOptions<
+  WatchAssetData,
+  WatchAssetErrorType,
+  WatchAssetVariables
+>
 
 export type WatchAssetData = WatchAssetReturnType
 

@@ -1,5 +1,4 @@
 import type { MutateOptions, MutationOptions } from '@tanstack/query-core'
-
 import type { TypedData } from 'viem'
 import {
   type SignTypedDataErrorType,

@@ -39,17 +39,12 @@ export function useSignMessage<context = unknown>(
   parameters: UseSignMessageParameters<context> = {},
 ): UseSignMessageReturnType<context> {
   const config = useConfig(parameters)
-  const options = signMessageMutationOptions(config, parameters as any)
-  const mutation = useMutation<
-    SignMessageData,
-    SignMessageErrorType,
-    SignMessageVariables,
-    context
-  >(options)
+  const options = signMessageMutationOptions(config, parameters)
+  const mutation = useMutation(options)
   type Return = UseSignMessageReturnType<context>
   return {
     ...(mutation as Return),
-    signMessage: mutation.mutate as Return['signMessage'],
-    signMessageAsync: mutation.mutateAsync as Return['signMessageAsync'],
+    signMessage: mutation.mutate as Return['mutate'],
+    signMessageAsync: mutation.mutateAsync as Return['mutateAsync'],
   }
 }

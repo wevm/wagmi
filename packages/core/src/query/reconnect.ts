@@ -1,5 +1,4 @@
 import type { MutationOptions } from '@tanstack/query-core'
-
 import {
   type ReconnectErrorType,
   type ReconnectParameters,

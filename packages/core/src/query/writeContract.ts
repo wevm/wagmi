@@ -1,6 +1,5 @@
 import type { MutateOptions, MutationOptions } from '@tanstack/query-core'
 import type { Abi, ContractFunctionArgs, ContractFunctionName } from 'viem'
-
 import {
   type WriteContractErrorType,
   type WriteContractParameters,
@@ -30,14 +29,18 @@ export type WriteContractOptions<
 export function writeContractMutationOptions<config extends Config, context>(
   config: config,
   options: WriteContractOptions<config, context> = {},
-) {
+): WriteContractMutationOptions<config> {
   return {
     ...(options.mutation as any),
     mutationFn(variables) {
       return writeContract(config, variables)
     },
     mutationKey: ['writeContract'],
-  } as const satisfies MutationOptions<
+  }
+}
+
+export type WriteContractMutationOptions<config extends Config> =
+  MutationOptions<
     WriteContractData,
     WriteContractErrorType,
     WriteContractVariables<
@@ -48,7 +51,6 @@ export function writeContractMutationOptions<config extends Config, context>(
       config['chains'][number]['id']
     >
   >
-}
 
 export type WriteContractData = Compute<WriteContractReturnType>
 

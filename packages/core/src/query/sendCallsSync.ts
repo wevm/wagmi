@@ -1,5 +1,4 @@
 import type { MutateOptions, MutationOptions } from '@tanstack/query-core'
-
 import {
   type SendCallsSyncErrorType,
   type SendCallsSyncParameters,
@@ -23,19 +22,22 @@ export type SendCallsSyncOptions<
 export function sendCallsSyncMutationOptions<config extends Config, context>(
   config: config,
   options: SendCallsSyncOptions<config, context> = {},
-) {
+): SendCallsSyncMutationOptions<config> {
   return {
     ...(options.mutation as any),
     mutationFn(variables) {
       return sendCallsSync(config, variables)
     },
     mutationKey: ['sendCallsSync'],
-  } as const satisfies MutationOptions<
+  }
+}
+
+export type SendCallsSyncMutationOptions<config extends Config> =
+  MutationOptions<
     SendCallsSyncData,
     SendCallsSyncErrorType,
     SendCallsSyncVariables<config, config['chains'][number]['id']>
   >
-}
 
 export type SendCallsSyncData = Compute<SendCallsSyncReturnType>
 
