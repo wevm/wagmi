@@ -37,6 +37,7 @@ test('exports', () => {
       "useAccount",
       "useAccountEffect",
       "useBalance",
+      "useBlobBaseFee",
       "useBlock",
       "useBlockNumber",
       "useBlockTransactionCount",
