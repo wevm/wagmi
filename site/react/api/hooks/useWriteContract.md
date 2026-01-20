@@ -60,6 +60,43 @@ function App() {
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
+### Synchronous Usage
+
+If you want to wait for the transaction to be included in a block, you can use `useWriteContractSync`:
+
+::: code-group
+
+```tsx [index.tsx]
+import { useWriteContractSync } from 'wagmi'
+import { abi } from './abi'
+
+function App() {
+  const writeContractSync = useWriteContractSync()
+  return (
+    <button 
+      onClick={() => 
+        writeContractSync.mutate({ 
+          abi,
+          address: '0x6b175474e89094c44da98b954eedeac495271d0f',
+          functionName: 'transferFrom',
+          args: [
+            '0xd2135CfB216b74109775236E36d4b433F1DF507B',
+            '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+            123n,
+          ],
+       })
+      }
+    >
+      Transfer
+    </button>
+  )
+}
+```
+
+<<< @/snippets/abi-write.ts[abi.ts]
+<<< @/snippets/react/config.ts[config.ts]
+:::
+
 <!-- TODO: Usage for simulating before -->
 
 <!-- TODO: Usage for estimating gas before -->

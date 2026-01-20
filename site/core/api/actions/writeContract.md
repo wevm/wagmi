@@ -66,6 +66,30 @@ const hash = await writeContract(config, request)
 :::
 ::::
 
+### Synchronous Usage
+
+If you want to wait for the transaction to be included in a block before returning, you can use `writeContractSync`:
+
+::: code-group
+```ts [index.ts]
+import { writeContractSync } from '@wagmi/core'
+import { abi } from './abi'
+import { config } from './config'
+
+const receipt = await writeContractSync(config, {
+  abi,
+  address: '0x6b175474e89094c44da98b954eedeac495271d0f',
+  functionName: 'transferFrom',
+  args: [
+    '0xd2135CfB216b74109775236E36d4b433F1DF507B',
+    '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    123n,
+  ],
+})
+```
+<<< @/snippets/abi-write.ts[abi.ts]
+<<< @/snippets/core/config.ts[config.ts]
+:::
 
 ## Parameters
 

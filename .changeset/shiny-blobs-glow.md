@@ -2,4 +2,4 @@
 "wagmi": minor
 ---
 
-Added `useBlobBaseFee` hook.
+Added `useBlobBaseFee` and `useWriteContractSync` hooks.

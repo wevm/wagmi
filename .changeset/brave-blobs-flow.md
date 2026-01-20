@@ -2,4 +2,4 @@
 "@wagmi/core": minor
 ---
 
-Added `getBlobBaseFee` action.
+Added `getBlobBaseFee` and `writeContractSync` actions.
