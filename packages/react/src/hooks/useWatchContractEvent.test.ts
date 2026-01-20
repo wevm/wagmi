@@ -85,4 +85,5 @@ test('default', async () => {
   expect(logs[0]?.transactionHash).toMatch(transactionHashRegex)
 
   await disconnect(config, { connector })
+  await wait(500)
 })

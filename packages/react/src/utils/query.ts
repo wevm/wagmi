@@ -1,5 +1,6 @@
 import {
   type DefaultError,
+  type MutateFunction,
   type QueryKey,
   useInfiniteQuery as tanstack_useInfiniteQuery,
   useQuery as tanstack_useQuery,
@@ -19,6 +20,8 @@ import type {
 } from '@wagmi/core/internal'
 import { hashFn } from '@wagmi/core/query'
 
+export { useMutation }
+
 export type UseMutationParameters<
   data = unknown,
   error = Error,
@@ -36,16 +39,35 @@ export type UseMutationReturnType<
   error = Error,
   variables = void,
   context = unknown,
+  mutate = MutateFunction,
+  mutateAsync = MutateFunction,
 > = Compute<
   UnionStrictOmit<
     UseMutationResult<data, error, variables, context>,
     'mutate' | 'mutateAsync'
-  >
+  > & {
+    mutate: mutate
+    mutateAsync: mutateAsync
+  }
 >
 
-export { useMutation }
-
 ////////////////////////////////////////////////////////////////////////////////
+
+// Adding some basic customization.
+// Ideally we don't have this function, but `import('@tanstack/react-query').useQuery` currently has some quirks where it is super hard to
+// pass down the inferred `initialData` type because of it's discriminated overload in the on `useQuery`.
+export function useQuery<queryFnData, error, data, queryKey extends QueryKey>(
+  parameters: UseQueryParameters<queryFnData, error, data, queryKey> & {
+    queryKey: QueryKey
+  },
+): UseQueryReturnType<data, error> {
+  const result = tanstack_useQuery({
+    ...(parameters as any),
+    queryKeyHashFn: hashFn, // for bigint support
+  }) as UseQueryReturnType<data, error>
+  result.queryKey = parameters.queryKey
+  return result
+}
 
 export type UseQueryParameters<
   queryFnData = unknown,
@@ -69,23 +91,26 @@ export type UseQueryReturnType<data = unknown, error = DefaultError> = Compute<
   }
 >
 
+////////////////////////////////////////////////////////////////////////////////
+
 // Adding some basic customization.
-// Ideally we don't have this function, but `import('@tanstack/react-query').useQuery` currently has some quirks where it is super hard to
-// pass down the inferred `initialData` type because of it's discriminated overload in the on `useQuery`.
-export function useQuery<queryFnData, error, data, queryKey extends QueryKey>(
-  parameters: UseQueryParameters<queryFnData, error, data, queryKey> & {
+export function useInfiniteQuery<
+  queryFnData,
+  error,
+  data,
+  queryKey extends QueryKey,
+>(
+  parameters: UseInfiniteQueryParameters<queryFnData, error, data, queryKey> & {
     queryKey: QueryKey
   },
-): UseQueryReturnType<data, error> {
-  const result = tanstack_useQuery({
+): UseInfiniteQueryReturnType<data, error> {
+  const result = tanstack_useInfiniteQuery({
     ...(parameters as any),
     queryKeyHashFn: hashFn, // for bigint support
-  }) as UseQueryReturnType<data, error>
+  }) as UseInfiniteQueryReturnType<data, error>
   result.queryKey = parameters.queryKey
   return result
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 export type UseInfiniteQueryParameters<
   queryFnData = unknown,
@@ -123,23 +148,4 @@ export type UseInfiniteQueryReturnType<
   error = DefaultError,
 > = UseInfiniteQueryResult<data, error> & {
   queryKey: QueryKey
-}
-
-// Adding some basic customization.
-export function useInfiniteQuery<
-  queryFnData,
-  error,
-  data,
-  queryKey extends QueryKey,
->(
-  parameters: UseInfiniteQueryParameters<queryFnData, error, data, queryKey> & {
-    queryKey: QueryKey
-  },
-): UseInfiniteQueryReturnType<data, error> {
-  const result = tanstack_useInfiniteQuery({
-    ...(parameters as any),
-    queryKeyHashFn: hashFn, // for bigint support
-  }) as UseInfiniteQueryReturnType<data, error>
-  result.queryKey = parameters.queryKey
-  return result
 }

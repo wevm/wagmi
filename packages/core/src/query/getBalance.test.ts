@@ -8,6 +8,7 @@ const address = accounts[0]
 test('default', () => {
   expect(getBalanceQueryOptions(config, { address })).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "balance",
@@ -24,6 +25,7 @@ test('parameters: chainId', () => {
     getBalanceQueryOptions(config, { address, chainId: chain.mainnet.id }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "balance",

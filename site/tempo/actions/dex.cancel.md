@@ -1,0 +1,75 @@
+# `dex.cancel`
+
+Cancels an order from the Stablecoin DEX orderbook.  
+
+## Usage
+
+::: code-group
+
+```ts twoslash [example.ts]
+// @twoslash-cache: {"v":1,"hash":"8e63dbc2614d60dc2105888794c30ac7532f2a92ed7af97887d3f5dd42573f7c","data":"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"}
+// @filename: config.ts
+// @errors: 2322
+import type { Config } from 'wagmi'
+export const config = {} as Config
+// @filename: example.ts
+// ---cut---
+import { Actions } from 'wagmi/tempo'
+import { config } from './config'
+
+const { orderId, receipt } = await Actions.dex.cancelSync(config, {
+  orderId: 123n,
+})
+
+console.log('Cancelled order ID:', orderId)
+// @log: Cancelled order ID: 123n
+```
+
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
+
+:::
+
+### Asynchronous Usage
+
+The example above uses a `*Sync` variant of the action, that will wait for the transaction to be included before returning.
+
+If you are optimizing for performance, you should use the non-sync `dex.cancel` action and wait for inclusion manually:
+
+```ts
+import { Actions } from 'wagmi/tempo'
+import { Actions as viem_Actions } from 'viem/tempo'
+import { waitForTransactionReceipt } from 'wagmi/actions'
+
+const hash = await Actions.dex.cancel(config, {
+  orderId: 123n,
+})
+const receipt = await waitForTransactionReceipt(config, { hash })
+
+const { args: { orderId } } 
+  = viem_Actions.dex.cancel.extractEvent(receipt.logs)
+```
+
+## Return Type
+
+```ts
+type ReturnType = {
+  /** ID of the cancelled order */
+  orderId: bigint
+  /** Transaction receipt */
+  receipt: TransactionReceipt
+}
+```
+
+## Parameters
+
+### orderId
+
+- **Type:** `bigint`
+
+ID of the order to cancel.
+
+<!--@include: @shared/tempo-write-parameters.md-->
+
+## Viem
+
+- [`dex.cancel`](https://viem.sh/tempo/actions/dex.cancel)

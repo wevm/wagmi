@@ -1,0 +1,36 @@
+{
+  "name": "tanstack-start",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "pnpm build && wrangler deploy"
+  },
+  "dependencies": {
+    "@cloudflare/vite-plugin": "^1.20.0",
+    "@tanstack/react-query": "catalog:",
+    "@tanstack/react-query-devtools": "^5.91.2",
+    "@tanstack/react-router": "^1.145.7",
+    "@tanstack/react-router-ssr-query": "^1.145.7",
+    "@tanstack/react-start": "^1.145.7",
+    "@tanstack/router-plugin": "^1.145.7",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "viem": "2.*",
+    "wagmi": "workspace:*"
+  },
+  "devDependencies": {
+    "@tanstack/devtools-vite": "^0.4.1",
+    "@tanstack/react-devtools": "^0.9.1",
+    "@tanstack/react-router-devtools": "^1.145.7",
+    "@types/node": "^24.5.1",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "typescript": "^5.9.3",
+    "vite": "catalog:",
+    "wrangler": "^4.57.0"
+  }
+}

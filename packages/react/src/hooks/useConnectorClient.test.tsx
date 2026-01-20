@@ -45,7 +45,6 @@ test('default', async () => {
         "connectorClient",
         {
           "chainId": 1,
-          "connectorUid": undefined,
         },
       ],
       "refetch": [Function],

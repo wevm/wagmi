@@ -75,6 +75,11 @@ export async function sendTransactionSync<
       connector,
     })
 
+  const chain = (() => {
+    if (!chainId || client.chain?.id === chainId) return client.chain
+    return { id: chainId }
+  })()
+
   const action = getAction(
     client,
     viem_sendTransactionSync,
@@ -83,7 +88,8 @@ export async function sendTransactionSync<
   const hash = await action({
     ...(rest as any),
     ...(account ? { account } : {}),
-    chain: chainId ? { id: chainId } : null,
+    assertChainId: !!chainId,
+    chain,
     gas: rest.gas ?? undefined,
   })
 

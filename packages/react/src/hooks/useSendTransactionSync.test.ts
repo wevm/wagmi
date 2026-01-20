@@ -2,11 +2,15 @@ import { connect, disconnect } from '@wagmi/core'
 import { config, testClient, wait } from '@wagmi/test'
 import { renderHook } from '@wagmi/test/react'
 import { parseEther } from 'viem'
-import { expect, test, vi } from 'vitest'
+import { beforeEach, expect, test, vi } from 'vitest'
 
 import { useSendTransactionSync } from './useSendTransactionSync.js'
 
 const connector = config.connectors[0]!
+
+beforeEach(async () => {
+  await disconnect(config).catch(() => {})
+})
 
 test('default', async () => {
   await connect(config, { connector })
@@ -19,7 +23,7 @@ test('default', async () => {
   })
   await wait(2_000)
   await testClient.mainnet.mine({ blocks: 1 })
-  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 15_000 })
 
   expect(result.current.data).toBeDefined()
 

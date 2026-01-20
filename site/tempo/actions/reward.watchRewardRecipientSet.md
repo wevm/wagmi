@@ -1,0 +1,83 @@
+# `reward.watchRewardRecipientSet`
+
+Watches for reward recipient set events when token holders change their reward recipient.
+
+## Usage
+
+::: code-group
+
+```ts twoslash [example.ts]
+// @twoslash-cache: {"v":1,"hash":"7c5c4a80757b69fb0cc9e78c15e065ab4f7f1e8dca7ffc4ca8ae3da467de30df","data":"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"}
+// @filename: config.ts
+// @errors: 2322
+import type { Config } from 'wagmi'
+export const config = {} as Config
+// @filename: example.ts
+// ---cut---
+import { Actions } from 'wagmi/tempo'
+import { config } from './config'
+
+const unwatch = Actions.reward.watchRewardRecipientSet(config, {
+  onRewardRecipientSet(args, log) {
+    console.log('args:', args)
+  },
+  token: '0x20c0000000000000000000000000000000000000',
+})
+
+// Later, stop watching
+unwatch()
+```
+
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
+
+:::
+
+## Return Type
+
+`() => void`
+
+Returns a function to unsubscribe from the event.
+
+## Parameters
+
+### onRewardRecipientSet
+
+- **Type:** `function`
+
+```ts
+declare function onRewardRecipientSet(args: Args, log: Log): void
+
+type Args = {
+  /** Token holder address who set their reward recipient */
+  holder: Address
+  /** New reward recipient address (zero address indicates opt-out) */
+  recipient: Address
+}
+```
+
+Callback to invoke when a reward recipient is set.
+
+### token
+
+- **Type:** `Address`
+
+Address of the TIP-20 token to watch.
+
+### args (optional)
+
+- **Type:** `object`
+
+```ts
+type Args = {
+  /** Filter events by holder address */
+  holder?: Address
+  /** Filter events by recipient address */
+  recipient?: Address
+}
+```
+
+Optional filters for the event.
+
+## Viem
+
+- [`reward.watchRewardRecipientSet`](https://viem.sh/tempo/actions/reward.watchRewardRecipientSet)

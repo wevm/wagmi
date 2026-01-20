@@ -34,7 +34,7 @@ for await (const packagePath of packagePaths) {
       const branch = (
         process.env.GITHUB_HEAD_REF ||
         child_process.execSync('git branch --show-current').toString().trim()
-      ).replace(/[^a-zA-Z0-9]/g, '_')
+      ).replace(/[^a-zA-Z0-9]/g, '-')
       return `0.0.0-${branch}.${gitHash}`
     }
     return packageJson.version

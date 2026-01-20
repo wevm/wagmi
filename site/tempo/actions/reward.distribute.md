@@ -1,0 +1,88 @@
+# `reward.distribute`
+
+Distributes tokens to opted-in holders.
+
+## Usage
+
+::: code-group
+
+```ts twoslash [example.ts]
+// @twoslash-cache: {"v":1,"hash":"68cfc834c7b00e507b2686e4d8050a386080048e317a40941faee9b9d01b80bc","data":"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"}
+// @filename: config.ts
+// @errors: 2322
+import type { Config } from 'wagmi'
+export const config = {} as Config
+// @filename: example.ts
+// ---cut---
+import { Actions } from 'wagmi/tempo'
+import { parseEther } from 'viem'
+import { config } from './config'
+
+const { amount, funder, receipt } =
+  await Actions.reward.distributeSync(config, {
+    amount: parseEther('1000'),
+    token: '0x20c0000000000000000000000000000000000000',
+  })
+
+console.log('Amount:', amount)
+// @log: Amount: 1000000000000000000000n
+```
+
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
+
+:::
+
+### Asynchronous Usage
+
+The example above uses a `*Sync` variant of the action, that will wait for the transaction to be included before returning.
+
+If you are optimizing for performance, you should use the non-sync `reward.distribute` action and wait for inclusion manually:
+
+```ts
+import { Actions as viem_Actions } from 'viem/tempo'
+import { Actions } from 'wagmi/tempo'
+import { parseEther } from 'viem'
+import { waitForTransactionReceipt } from 'wagmi/actions'
+
+const hash = await Actions.reward.distribute(config, {
+  amount: parseEther('1000'),
+  token: '0x20c0000000000000000000000000000000000000',
+})
+const receipt = await waitForTransactionReceipt(config, { hash })
+
+const { args: { funder, amount } }
+  = viem_Actions.reward.distribute.extractEvent(receipt.logs)
+```
+
+## Return Type
+
+```ts
+type ReturnType = {
+  /** Total amount distributed */
+  amount: bigint
+  /** Address that funded the distribution */
+  funder: Address
+  /** Transaction receipt */
+  receipt: TransactionReceipt
+}
+```
+
+## Parameters
+
+### amount
+
+- **Type:** `bigint`
+
+The amount of tokens to distribute. Must be greater than 0.
+
+### token
+
+- **Type:** `Address`
+
+Address of the TIP-20 token.
+
+<!--@include: @shared/tempo-write-parameters.md-->
+
+## Viem
+
+- [`reward.distribute`](https://viem.sh/tempo/actions/reward.distribute)

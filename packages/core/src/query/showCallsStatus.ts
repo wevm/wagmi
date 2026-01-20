@@ -1,5 +1,4 @@
 import type { MutateOptions, MutationOptions } from '@tanstack/query-core'
-
 import {
   type ShowCallsStatusErrorType,
   type ShowCallsStatusParameters,
@@ -7,22 +6,34 @@ import {
   showCallsStatus,
 } from '../actions/showCallsStatus.js'
 import type { Config } from '../createConfig.js'
+import type { MutationParameter } from '../types/query.js'
 import type { Compute } from '../types/utils.js'
 
-export function showCallsStatusMutationOptions<config extends Config>(
+export type ShowCallsStatusOptions<context = unknown> = MutationParameter<
+  ShowCallsStatusData,
+  ShowCallsStatusErrorType,
+  ShowCallsStatusVariables,
+  context
+>
+
+export function showCallsStatusMutationOptions<config extends Config, context>(
   config: config,
-) {
+  options: ShowCallsStatusOptions<context> = {},
+): ShowCallsStatusMutationOptions {
   return {
+    ...(options.mutation as any),
     mutationFn(variables) {
       return showCallsStatus(config, variables)
     },
     mutationKey: ['showCallsStatus'],
-  } as const satisfies MutationOptions<
-    ShowCallsStatusData,
-    ShowCallsStatusErrorType,
-    ShowCallsStatusVariables
-  >
+  }
 }
+
+export type ShowCallsStatusMutationOptions = MutationOptions<
+  ShowCallsStatusData,
+  ShowCallsStatusErrorType,
+  ShowCallsStatusVariables
+>
 
 export type ShowCallsStatusData = Compute<ShowCallsStatusReturnType>
 

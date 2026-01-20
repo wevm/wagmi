@@ -91,6 +91,7 @@ test('default', async () => {
   await wait(1000) // wait for events to be emitted
 
   unwatch()
+  await wait(100)
   expect(logs.length).toBe(2)
   expect(logs[0]?.transactionHash).toMatch(transactionHashRegex)
 

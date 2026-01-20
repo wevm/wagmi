@@ -22,6 +22,7 @@
     "dev:next": "pnpm --filter next-app dev",
     "dev:nuxt": "pnpm --filter nuxt-app dev",
     "dev:react": "pnpm --filter vite-react dev",
+    "dev:start": "pnpm --filter tanstack-start dev",
     "dev:vue": "pnpm --filter vite-vue dev",
     "docs:dev": "pnpm --filter site dev",
     "format": "biome format --write",
@@ -32,7 +33,6 @@
     "test": "vitest",
     "test:build": "node scripts/generateProxyPackages.ts && pnpm run --r --parallel test:build",
     "test:cov": "vitest run --coverage",
-    "test:typecheck": "vitest typecheck",
     "test:update": "vitest --update",
     "version:update": "node scripts/updateVersion.ts",
     "version:update:viem": "node scripts/updateViemVersion.ts"
@@ -45,23 +45,24 @@
     "@svitejs/changesets-changelog-github-compact": "^1.2.0",
     "@types/node": "^24.5.1",
     "@vitejs/plugin-react": "catalog:",
-    "@vitest/browser": "^4.0.8",
-    "@vitest/browser-playwright": "^4.0.8",
-    "@vitest/coverage-v8": "^4.0.8",
+    "@vitest/browser": "^4.0.16",
+    "@vitest/browser-playwright": "^4.0.16",
+    "@vitest/coverage-v8": "^4.0.16",
     "@wagmi/test": "workspace:*",
     "happy-dom": "^20.0.0",
     "knip": "^5.69.0",
     "playwright": "1.56.1",
-    "prool": "^0.0.24",
+    "prool": "^0.2.2",
     "publint": "^0.2.11",
     "react": "catalog:",
     "react-dom": "catalog:",
     "sherif": "^1.0.0",
     "simple-git-hooks": "^2.11.1",
-    "typescript": "5.9.3",
-    "viem": "2.43.3",
+    "testcontainers": "^11.11.0",
+    "typescript": "^5.9.3",
+    "viem": "^2.44.4",
     "vite-plugin-react-fallback-throttle": "^0.1.1",
-    "vitest": "^4.0.8",
+    "vitest": "^4.0.16",
     "vitest-browser-react": "^2.0.2"
   },
   "packageManager": "pnpm@10.22.0",
@@ -114,12 +115,13 @@
         ]
       },
       "packages/core": {
-        "entry": "src/exports/{actions,chains,codegen,experimental,index,internal,query}.ts!",
+        "entry": "src/exports/{actions,chains,codegen,experimental,index,internal,query,tempo}.ts!",
         "ignore": [
           "test/setup.ts"
         ],
         "ignoreDependencies": [
-          "@tanstack/query-core"
+          "@tanstack/query-core",
+          "ox"
         ]
       },
       "packages/create-wagmi": {
@@ -127,7 +129,7 @@
       },
       "packages/react": {
         "entry": [
-          "src/exports/{actions,chains,codegen,connectors,experimental,index,internal,query}.ts!",
+          "src/exports/{actions,chains,codegen,connectors,experimental,index,internal,query,tempo}.ts!",
           "src/exports/actions/experimental.ts!"
         ],
         "ignore": [
@@ -139,7 +141,9 @@
           "src/setup.ts!",
           "src/setup.global.ts!",
           "src/setup.global.types.ts!",
-          "src/exports/{index,react}.ts!"
+          "src/exports/{index,react,tempo}.ts!",
+          "src/tempo/setup.ts!",
+          "src/tempo/setup.global.ts!"
         ]
       },
       "packages/vue": {

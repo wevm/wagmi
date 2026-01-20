@@ -1,0 +1,85 @@
+# `token.changeTransferPolicy`
+
+Changes the transfer policy for a TIP-20 token. Requires the default admin role. [Learn more about transfer policies](https://docs.tempo.xyz/protocol/tip403/spec)
+
+## Usage
+
+::: code-group
+
+```ts twoslash [example.ts]
+// @twoslash-cache: {"v":1,"hash":"782fbb9e3637fb97aaa75c17e78a39fa8f7ff7754db53d7b3ab76722d9c43fad","data":"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="}
+// @filename: config.ts
+// @errors: 2322
+import type { Config } from 'wagmi'
+export const config = {} as Config
+// @filename: example.ts
+// ---cut---
+import { Actions } from 'wagmi/tempo'
+import { config } from './config'
+
+const { receipt } = await Actions.token.changeTransferPolicySync(config, {
+  policyId: 1n,
+  token: '0x20c0000000000000000000000000000000000000',
+})
+
+console.log('Transaction hash:', receipt.transactionHash)
+// @log: Transaction hash: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+```
+
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
+
+:::
+
+### Asynchronous Usage
+
+The example above uses a `*Sync` variant of the action, that will wait for the transaction to be included before returning.
+
+If you are optimizing for performance, you should use the non-sync `token.changeTransferPolicy` action and wait for inclusion manually:
+
+```ts
+import { Actions as viem_Actions } from 'viem/tempo'
+import { Actions } from 'wagmi/tempo'
+import { waitForTransactionReceipt } from 'wagmi/actions'
+
+const hash = await Actions.token.changeTransferPolicy(config, {
+  policyId: 1n,
+  token: '0x20c0000000000000000000000000000000000000',
+})
+const receipt = await waitForTransactionReceipt(config, { hash })
+
+const { args } 
+  = viem_Actions.token.changeTransferPolicy.extractEvent(receipt.logs)
+```
+
+## Return Type
+
+```ts
+type ReturnType = {
+  /** ID of the new transfer policy */
+  newPolicyId: bigint
+  /** Transaction receipt */
+  receipt: TransactionReceipt
+  /** Address that updated the policy */
+  updater: Address
+}
+```
+
+## Parameters
+
+### policyId
+
+- **Type:** `bigint`
+
+New transfer policy ID.
+
+### token
+
+- **Type:** `Address | bigint`
+
+Address or ID of the TIP-20 token.
+
+<!--@include: @shared/tempo-write-parameters.md-->
+
+## Viem
+
+- [`token.changeTransferPolicy`](https://viem.sh/tempo/actions/token.changeTransferPolicy)

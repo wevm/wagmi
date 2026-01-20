@@ -96,7 +96,7 @@ Once a playground dev server is running, you can make changes to any of the pack
 
 ## 6. Running the test suite
 
-Wagmi uses [Vitest](https://vitest.dev) to run tests and [Prool](https://github.com/wevm/prool) to execute tests against locally running chain forks. First, install [Anvil](https://github.com/foundry-rs/foundry/tree/master/crates/anvil) via [Foundryup](https://book.getfoundry.sh/getting-started/installation).
+Wagmi uses [Vitest](https://vitest.dev) to run tests and [Prool](https://github.com/wevm/prool) to execute tests against locally running chain forks. First, make sure you have Docker ([OrbStack](https://orbstack.dev) works great!) and install [Anvil](https://github.com/foundry-rs/foundry/tree/master/crates/anvil) via [Foundryup](https://book.getfoundry.sh/getting-started/installation).
 
 ```bash
 curl -L https://foundry.paradigm.xyz | bash

@@ -10,6 +10,7 @@ test('default', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "getTransactionReceipt",
@@ -29,6 +30,7 @@ test('parameters: chainId', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "getTransactionReceipt",

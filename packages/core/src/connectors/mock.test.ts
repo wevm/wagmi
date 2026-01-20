@@ -79,7 +79,7 @@ test('behavior: features.connectError', async () => {
     [UserRejectedRequestError: User rejected the request.
 
     Details: Failed to connect.
-    Version: viem@2.43.3]
+    Version: viem@2.44.4]
   `)
 })
 
@@ -107,7 +107,7 @@ test('behavior: connector.getProvider request errors', async () => {
     [UserRejectedRequestError: User rejected the request.
 
     Details: Failed to sign typed data.
-    Version: viem@2.43.3]
+    Version: viem@2.44.4]
   `)
 
   await expect(
@@ -119,7 +119,7 @@ test('behavior: connector.getProvider request errors', async () => {
     [UserRejectedRequestError: User rejected the request.
 
     Details: Failed to switch chain.
-    Version: viem@2.43.3]
+    Version: viem@2.44.4]
   `)
 
   await expect(
@@ -131,7 +131,7 @@ test('behavior: connector.getProvider request errors', async () => {
     [UserRejectedRequestError: User rejected the request.
 
     Details: Failed to switch chain.
-    Version: viem@2.43.3]
+    Version: viem@2.44.4]
   `)
 
   await expect(
@@ -143,7 +143,7 @@ test('behavior: connector.getProvider request errors', async () => {
     [UserRejectedRequestError: User rejected the request.
 
     Details: Failed to sign message.
-    Version: viem@2.43.3]
+    Version: viem@2.44.4]
   `)
 })
 

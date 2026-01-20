@@ -1,5 +1,84 @@
 # wagmi
 
+## 3.3.4
+
+### Patch Changes
+
+- Fixed issue where `wagmi/tempo` hooks were not propagating `UseQueryOptions`. ([#4955](https://github.com/wevm/wagmi/pull/4955))
+
+## 3.3.3
+
+### Patch Changes
+
+- Updated dependencies [[`979fe26`](https://github.com/wevm/wagmi/commit/979fe265e5273a8b49a4469ffab88b1a18b1aeaa), [`979fe26`](https://github.com/wevm/wagmi/commit/979fe265e5273a8b49a4469ffab88b1a18b1aeaa), [`e4541de`](https://github.com/wevm/wagmi/commit/e4541def76a1744dc36c188453265cc6e9d83722)]:
+  - @wagmi/core@3.2.3
+  - @wagmi/connectors@7.1.3
+
+## 3.3.2
+
+### Patch Changes
+
+- Updated query internals. ([`4fefa57`](https://github.com/wevm/wagmi/commit/4fefa576014820b454344b579282ddecde5c7994))
+
+- Updated dependencies [[`4fefa57`](https://github.com/wevm/wagmi/commit/4fefa576014820b454344b579282ddecde5c7994)]:
+  - @wagmi/core@3.2.2
+  - @wagmi/connectors@7.1.2
+
+## 3.3.1
+
+### Patch Changes
+
+- Updated dependencies [[`a373b50`](https://github.com/wevm/wagmi/commit/a373b504f2ba199ca63ec0da6138ad1aa12a3a8f)]:
+  - @wagmi/core@3.2.1
+  - @wagmi/connectors@7.1.1
+
+## 3.3.0
+
+### Minor Changes
+
+- Updated to `viem@2.44.0` with Tempo Moderato support. ([#4940](https://github.com/wevm/wagmi/pull/4940))
+
+  **Breaking Changes (Tempo)**
+
+  - Renamed `reward.useStart` → `reward.useDistribute`
+  - Renamed `reward.useStartSync` → `reward.useDistributeSync`
+  - Renamed `reward.useGetTotalPerSecond` → `reward.useGetGlobalRewardPerToken`
+  - Renamed `reward.useWatchRewardScheduled` → `reward.useWatchRewardDistributed`
+  - Removed `nonce.useNonceKeyCount`
+  - Removed `nonce.useWatchActiveKeyCountChanged`
+  - Removed `amm.useWatchFeeSwap`
+
+  **New Features (Tempo)**
+
+  - Added `dex.useCancelStale` hook
+  - Added `dex.useCancelStaleSync` hook
+
+### Patch Changes
+
+- Updated dependencies [[`2ee3f55`](https://github.com/wevm/wagmi/commit/2ee3f559a2637c7aab3fca6c7d196cf238ecd63d)]:
+  - @wagmi/core@3.2.0
+  - @wagmi/connectors@8.0.0
+
+## 3.2.0
+
+### Minor Changes
+
+- Added first-class support and extension for [Tempo](https://docs.tempo.xyz) via `/tempo` entrypoint. ([#4922](https://github.com/wevm/wagmi/pull/4922))
+
+### Patch Changes
+
+- Updated dependencies [[`14989e4`](https://github.com/wevm/wagmi/commit/14989e425a36b765a6a24e5abf1782c2a26c70db)]:
+  - @wagmi/core@3.1.0
+  - @wagmi/connectors@8.0.0
+
+## 3.1.4
+
+### Patch Changes
+
+- Updated dependencies [[`a5c4381`](https://github.com/wevm/wagmi/commit/a5c4381563374018dca0074017b21181ac027e9a)]:
+  - @wagmi/core@3.0.2
+  - @wagmi/connectors@7.0.6
+
 ## 3.1.3
 
 ### Patch Changes
