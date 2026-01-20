@@ -59,6 +59,42 @@ function App() {
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
+### Synchronous Usage
+
+If you want to wait for the calls to be included in a block, you can use `useSendCallsSync`:
+
+::: code-group
+```tsx [index.tsx]
+import { useSendCallsSync } from 'wagmi'
+import { parseEther } from 'viem'
+
+function App() {
+  const sendCallsSync = useSendCallsSync()
+  return (
+    <button
+      onClick={() =>
+        sendCallsSync.mutate({
+          calls: [
+            {
+              to: '0x70997970c51812dc3a010c7d01b50e0d17dc79c8',
+              value: parseEther('1')
+            },
+            {
+              data: '0xdeadbeef',
+              to: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+            },
+          ]
+        })
+      }
+    >
+      Send calls
+    </button>
+  )
+}
+```
+<<< @/snippets/react/config.ts[config.ts]
+:::
+
 ## Parameters
 
 ```ts
