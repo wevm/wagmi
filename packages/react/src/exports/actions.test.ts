@@ -14,6 +14,7 @@ test('exports', () => {
       "estimateMaxPriorityFeePerGas",
       "getAccount",
       "getBalance",
+      "getBlobBaseFee",
       "getBlock",
       "getBlockNumber",
       "getBlockTransactionCount",
