@@ -176,7 +176,7 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
         const pathParts = broadcastFile.split('/')
         const chainIdPart = pathParts[pathParts.length - 2]
         if (!chainIdPart) continue
-        const chainId = Number.parseInt(chainIdPart)
+        const chainId = Number.parseInt(chainIdPart, 10)
         if (Number.isNaN(chainId)) continue
 
         const transactions = broadcast.transactions || []

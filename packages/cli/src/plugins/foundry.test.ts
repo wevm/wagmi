@@ -1,5 +1,5 @@
+import fs from 'node:fs/promises'
 import fixtures from 'fixturez'
-import { promises as fs } from 'fs'
 import { dirname, resolve } from 'pathe'
 import { afterEach, expect, test, vi } from 'vitest'
 
