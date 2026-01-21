@@ -1,6 +1,6 @@
 import fixtures from 'fixturez'
-import { dirname, resolve } from 'pathe'
 import { promises as fs } from 'fs'
+import { dirname, resolve } from 'pathe'
 import { afterEach, expect, test, vi } from 'vitest'
 
 import { foundry } from './foundry.js'
@@ -165,6 +165,7 @@ test('broadcast deployments', async () => {
   const broadcastContent = {
     transactions: [
       {
+        transactionType: 'CREATE',
         contractName: 'Counter',
         contractAddress: '0x1234567890123456789012345678901234567890',
         additionalContracts: [
@@ -252,4 +253,150 @@ test('broadcast deployments', async () => {
         },
       ]
     `)
+})
+
+test('broadcast deployments filters CALL transactions', async () => {
+  const dir = f.temp()
+  const spy = vi.spyOn(process, 'cwd')
+  spy.mockImplementation(() => dir)
+
+  const broadcastDir = resolve(dir, 'broadcast')
+  const scriptDir = resolve(broadcastDir, 'Deploy.s.sol')
+  const chainDir = resolve(scriptDir, '1')
+  await fs.mkdir(chainDir, { recursive: true })
+  const broadcastContent = {
+    transactions: [
+      {
+        transactionType: 'CREATE',
+        contractName: 'Counter',
+        contractAddress: '0x1234567890123456789012345678901234567890',
+        additionalContracts: [],
+      },
+      {
+        transactionType: 'CALL',
+        contractName: 'CalledContract',
+        contractAddress: '0xCCCC000000000000000000000000000000000000',
+        additionalContracts: [],
+      },
+      {
+        transactionType: 'CREATE2',
+        contractName: 'Factory',
+        contractAddress: '0xFFFF000000000000000000000000000000000000',
+        additionalContracts: [],
+      },
+    ],
+  }
+  await fs.writeFile(
+    resolve(chainDir, 'run-latest.json'),
+    JSON.stringify(broadcastContent, null, 2),
+  )
+
+  const artifactsDir = resolve(dir, 'out')
+  await fs.mkdir(artifactsDir, { recursive: true })
+  const counterArtifact = {
+    abi: [
+      {
+        inputs: [],
+        name: 'increment',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+    ],
+  }
+  const factoryArtifact = {
+    abi: [
+      {
+        inputs: [],
+        name: 'deploy',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+    ],
+  }
+  await fs.writeFile(
+    resolve(artifactsDir, 'Counter.json'),
+    JSON.stringify(counterArtifact, null, 2),
+  )
+  await fs.writeFile(
+    resolve(artifactsDir, 'Factory.json'),
+    JSON.stringify(factoryArtifact, null, 2),
+  )
+
+  const result = await foundry({
+    includeBroadcasts: true,
+  }).contracts?.()
+
+  const counter = result?.find((c) => c.name === 'Counter')
+  expect(counter?.address).toEqual({
+    '1': '0x1234567890123456789012345678901234567890',
+  })
+
+  const calledContract = result?.find((c) => c.name === 'CalledContract')
+  expect(calledContract).toBeUndefined()
+
+  const factory = result?.find((c) => c.name === 'Factory')
+  expect(factory?.address).toEqual({
+    '1': '0xFFFF000000000000000000000000000000000000',
+  })
+})
+
+test('watch callbacks use broadcast deployments', async () => {
+  const dir = f.temp()
+  const spy = vi.spyOn(process, 'cwd')
+  spy.mockImplementation(() => dir)
+
+  const broadcastDir = resolve(dir, 'broadcast')
+  const scriptDir = resolve(broadcastDir, 'Deploy.s.sol')
+  const chainDir = resolve(scriptDir, '1')
+  await fs.mkdir(chainDir, { recursive: true })
+  const broadcastContent = {
+    transactions: [
+      {
+        transactionType: 'CREATE',
+        contractName: 'Counter',
+        contractAddress: '0x1234567890123456789012345678901234567890',
+        additionalContracts: [],
+      },
+    ],
+  }
+  await fs.writeFile(
+    resolve(chainDir, 'run-latest.json'),
+    JSON.stringify(broadcastContent, null, 2),
+  )
+
+  const artifactsDir = resolve(dir, 'out')
+  await fs.mkdir(artifactsDir, { recursive: true })
+  const counterArtifact = {
+    abi: [
+      {
+        inputs: [],
+        name: 'increment',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+    ],
+  }
+  await fs.writeFile(
+    resolve(artifactsDir, 'Counter.json'),
+    JSON.stringify(counterArtifact, null, 2),
+  )
+
+  const plugin = foundry({
+    includeBroadcasts: true,
+  })
+
+  await plugin.contracts?.()
+
+  const artifactPath = resolve(artifactsDir, 'Counter.json')
+  const contract = await plugin.watch.onChange?.(artifactPath)
+
+  expect(contract).toMatchObject({
+    name: 'Counter',
+    address: {
+      '1': '0x1234567890123456789012345678901234567890',
+    },
+  })
 })

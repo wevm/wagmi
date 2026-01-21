@@ -127,6 +127,8 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
     namePrefix = '',
   } = config
 
+  let allDeployments: { [key: string]: ContractConfig['address'] } = deployments
+
   function getContractName(artifactPath: string, usePrefix = true) {
     const filename = basename(artifactPath)
     const extension = extname(artifactPath)
@@ -137,7 +139,7 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
     artifactPath: string,
     contractDeployments: {
       [key: string]: ContractConfig['address']
-    } = deployments,
+    } = allDeployments,
   ) {
     const artifact = await JSON.parse(await readFile(artifactPath, 'utf8'))
     return {
@@ -174,11 +176,16 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
         const pathParts = broadcastFile.split('/')
         const chainIdPart = pathParts[pathParts.length - 2]
         if (!chainIdPart) continue
-        const chainId = parseInt(chainIdPart)
-        if (isNaN(chainId)) continue
+        const chainId = Number.parseInt(chainIdPart)
+        if (Number.isNaN(chainId)) continue
 
         const transactions = broadcast.transactions || []
         for (const tx of transactions) {
+          if (
+            tx.transactionType !== 'CREATE' &&
+            tx.transactionType !== 'CREATE2'
+          )
+            continue
           if (tx.contractName && tx.contractAddress) {
             const contractName = tx.contractName
             const contractAddress = tx.contractAddress
@@ -203,7 +210,6 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
         logger.warn(
           `Failed to parse broadcast file ${broadcastFile}: ${(error as Error).message}`,
         )
-        continue
       }
     }
 
@@ -254,23 +260,21 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
         })
       if (!existsSync(artifactsDirectory))
         throw new Error('Artifacts not found.')
-
-      const broadcastDeployments: { [key: string]: ContractConfig['address'] } =
-        includeBroadcasts
-          ? Object.fromEntries(
-              Object.entries(await getBroadcastDeployments(project)).map(
-                ([contractName, chainAddresses]) => [
-                  contractName,
-                  chainAddresses as ContractConfig['address'],
-                ],
-              ),
-            )
-          : {}
-      const mergedDeployments = { ...broadcastDeployments, ...deployments }
+      if (includeBroadcasts) {
+        const broadcastDeployments = Object.fromEntries(
+          Object.entries(await getBroadcastDeployments(project)).map(
+            ([contractName, chainAddresses]) => [
+              contractName,
+              chainAddresses as ContractConfig['address'],
+            ],
+          ),
+        )
+        allDeployments = { ...broadcastDeployments, ...deployments }
+      }
       const artifactPaths = await getArtifactPaths(artifactsDirectory)
       const contracts = []
       for (const artifactPath of artifactPaths) {
-        const contract = await getContract(artifactPath, mergedDeployments)
+        const contract = await getContract(artifactPath, allDeployments)
         if (!contract.abi?.length) continue
         contracts.push(contract)
       }
