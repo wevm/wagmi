@@ -23,6 +23,27 @@ test('default', async () => {
     to?: `0x${string}` | undefined
     value?: bigint | undefined
   }>()
+
+  getContractEvents(config, {
+    address: '0x',
+    abi: abi.erc20,
+    eventName: 'Transfer',
+    args: {
+      // @ts-expect-error
+      foo: '0x',
+      to: '0x',
+    },
+  })
+  getContractEvents(config, {
+    address: '0x',
+    abi: abi.erc20,
+    // @ts-expect-error
+    eventName: 'Foo',
+    args: {
+      from: '0x',
+      to: '0x',
+    },
+  })
 })
 
 test('behavior: strict', async () => {

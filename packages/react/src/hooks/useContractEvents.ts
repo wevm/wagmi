@@ -1,21 +1,17 @@
 'use client'
-
 import type {
   Config,
   GetContractEventsErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { Compute } from '@wagmi/core/internal'
+import type { UnionCompute } from '@wagmi/core/internal'
 import {
   type GetContractEventsData,
   type GetContractEventsOptions,
-  type GetContractEventsQueryFnData,
-  type GetContractEventsQueryKey,
   getContractEventsQueryOptions,
 } from '@wagmi/core/query'
 import type { Abi, BlockNumber, BlockTag, ContractEventName } from 'viem'
-
-import type { ConfigParameter, QueryParameter } from '../types/properties.js'
+import type { ConfigParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
@@ -38,7 +34,7 @@ export type UseContractEventsParameters<
     fromBlock,
     toBlock
   >,
-> = Compute<
+> = UnionCompute<
   GetContractEventsOptions<
     abi,
     eventName,
@@ -46,23 +42,10 @@ export type UseContractEventsParameters<
     fromBlock,
     toBlock,
     config,
-    chainId
+    chainId,
+    selectData
   > &
-    ConfigParameter<config> &
-    QueryParameter<
-      GetContractEventsQueryFnData<abi, eventName, strict, fromBlock, toBlock>,
-      GetContractEventsErrorType,
-      selectData,
-      GetContractEventsQueryKey<
-        config,
-        chainId,
-        abi,
-        eventName,
-        strict,
-        fromBlock,
-        toBlock
-      >
-    >
+    ConfigParameter<config>
 >
 
 export type UseContractEventsReturnType<
@@ -109,7 +92,7 @@ export function useContractEvents<
     config,
     chainId,
     selectData
-  > = {},
+  > = {} as any,
 ): UseContractEventsReturnType<
   abi,
   eventName,
@@ -118,20 +101,11 @@ export function useContractEvents<
   toBlock,
   selectData
 > {
-  const { abi, query = {} } = parameters
-
   const config = useConfig(parameters)
   const chainId = useChainId({ config })
-
   const options = getContractEventsQueryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
   })
-  const enabled = Boolean(abi && (query.enabled ?? true))
-
-  return useQuery({
-    ...query,
-    ...options,
-    enabled,
-  })
+  return useQuery(options)
 }

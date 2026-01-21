@@ -18,19 +18,14 @@ import { getContractEvents } from '@wagmi/core'
 
 By default, `getContractEvents` returns all matched events on the ABI. In practice, you must use scoping to filter for specific events.
 
-import { publicClient } from './client'
 ::: code-group
 ```ts [index.ts]
 import { getContractEvents } from '@wagmi/core'
 import { abi } from './abi'
 import { config } from './config'
 
-
 // Fetch event logs for every event on every ERC-20 contract. 
-const logs = getContractEvents(config, {
-  abi,
-})
-
+const logs = getContractEvents(config, { abi })
 ```
 <<< @/snippets/abi-event.ts[abi.ts]
 <<< @/snippets/core/config.ts[config.ts]

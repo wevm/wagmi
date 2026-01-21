@@ -23,6 +23,27 @@ test('default', () => {
       value?: bigint | undefined
     }>()
   }
+
+  useContractEvents({
+    address: '0x',
+    abi: abi.erc20,
+    // @ts-expect-error
+    eventName: 'Foo',
+    args: {
+      from: '0x',
+      to: '0x',
+    },
+  })
+  useContractEvents({
+    address: '0x',
+    abi: abi.erc20,
+    eventName: 'Transfer',
+    args: {
+      // @ts-expect-error
+      foo: '0x',
+      to: '0x',
+    },
+  })
 })
 
 test('behavior: strict', () => {

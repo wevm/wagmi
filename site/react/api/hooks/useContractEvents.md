@@ -24,9 +24,7 @@ import { abi } from './abi'
 
 function App() {
   // Fetch event logs for every event on every ERC-20 contract. 
-  const result = useContractEvents({
-    abi,
-  })
+  const result = useContractEvents({ abi })
 }
 ```
 <<< @/snippets/abi-event.ts[abi.ts]

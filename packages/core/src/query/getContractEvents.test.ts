@@ -12,14 +12,25 @@ test('default', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
-        "contractEvents",
+        "getContractEvents",
         {
           "address": "0x",
           "eventName": "Approval",
         },
       ],
+      "structuralSharing": [Function],
     }
   `)
+})
+
+test('enabled', () => {
+  expect(
+    getContractEventsQueryOptions(config, {
+      address: '0x',
+      eventName: 'Approval',
+    }).enabled,
+  ).toBe(false)
 })

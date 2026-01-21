@@ -1,4 +1,3 @@
-import type { QueryOptions } from '@tanstack/query-core'
 import type { Abi, BlockNumber, BlockTag, ContractEventName } from 'viem'
 import {
   type GetContractEventsErrorType,
@@ -8,8 +7,9 @@ import {
 } from '../actions/getContractEvents.js'
 import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
-import type { Compute, ExactPartial } from '../types/utils.js'
-import { filterQueryOptions } from './utils.js'
+import type { QueryOptions, QueryParameter } from '../types/query.js'
+import type { UnionExactPartial } from '../types/utils.js'
+import { filterQueryOptions, structuralSharing } from './utils.js'
 
 export type GetContractEventsOptions<
   abi extends Abi | readonly unknown[],
@@ -19,32 +19,15 @@ export type GetContractEventsOptions<
   toBlock extends BlockNumber | BlockTag | undefined,
   config extends Config,
   chainId extends config['chains'][number]['id'],
-> = Compute<
-  ExactPartial<
-    GetContractEventsParameters<
-      abi,
-      eventName,
-      strict,
-      fromBlock,
-      toBlock,
-      config,
-      chainId
-    > &
-      ScopeKeyParameter
-  >
->
-
-export function getContractEventsQueryOptions<
-  config extends Config,
-  chainId extends config['chains'][number]['id'],
-  const abi extends Abi | readonly unknown[],
-  eventName extends ContractEventName<abi> | undefined,
-  strict extends boolean | undefined = undefined,
-  fromBlock extends BlockNumber | BlockTag | undefined = undefined,
-  toBlock extends BlockNumber | BlockTag | undefined = undefined,
->(
-  config: config,
-  options: GetContractEventsOptions<
+  selectData = GetContractEventsData<
+    abi,
+    eventName,
+    strict,
+    fromBlock,
+    toBlock
+  >,
+> = UnionExactPartial<
+  GetContractEventsParameters<
     abi,
     eventName,
     strict,
@@ -52,24 +35,13 @@ export function getContractEventsQueryOptions<
     toBlock,
     config,
     chainId
-  > = {},
-) {
-  return {
-    async queryFn({ queryKey }) {
-      const abi = options.abi as Abi
-      if (!abi) throw new Error('abi is required')
-
-      const { scopeKey: _, ...parameters } = queryKey[1]
-
-      return getContractEvents(config, { abi, ...parameters }) as Promise<
-        GetContractEventsData<abi, eventName, strict, fromBlock, toBlock>
-      >
-    },
-    queryKey: getContractEventsQueryKey(options),
-  } as const satisfies QueryOptions<
+  >
+> &
+  ScopeKeyParameter &
+  QueryParameter<
     GetContractEventsQueryFnData<abi, eventName, strict, fromBlock, toBlock>,
     GetContractEventsErrorType,
-    GetContractEventsData<abi, eventName, strict, fromBlock, toBlock>,
+    selectData,
     GetContractEventsQueryKey<
       config,
       chainId,
@@ -79,6 +51,74 @@ export function getContractEventsQueryOptions<
       fromBlock,
       toBlock
     >
+  >
+
+export function getContractEventsQueryOptions<
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
+  const abi extends Abi | readonly unknown[],
+  eventName extends ContractEventName<abi> | undefined,
+  strict extends boolean | undefined = undefined,
+  fromBlock extends BlockNumber | BlockTag | undefined = undefined,
+  toBlock extends BlockNumber | BlockTag | undefined = undefined,
+  selectData = GetContractEventsData<
+    abi,
+    eventName,
+    strict,
+    fromBlock,
+    toBlock
+  >,
+>(
+  config: config,
+  options: GetContractEventsOptions<
+    abi,
+    eventName,
+    strict,
+    fromBlock,
+    toBlock,
+    config,
+    chainId,
+    selectData
+  > = {} as any,
+): GetContractEventsQueryOptions<
+  abi,
+  eventName,
+  strict,
+  fromBlock,
+  toBlock,
+  config,
+  chainId,
+  selectData
+> {
+  return {
+    ...options.query,
+    enabled: Boolean(options.abi && (options.query?.enabled ?? true)),
+    queryFn: async (context) => {
+      if (!options.abi) throw new Error('abi is required')
+      const [, { scopeKey: _, ...parameters }] = context.queryKey
+      const result = await getContractEvents(config, {
+        ...(parameters as any),
+        abi: options.abi,
+      })
+      return result as GetContractEventsData<
+        abi,
+        eventName,
+        strict,
+        fromBlock,
+        toBlock
+      >
+    },
+    queryKey: getContractEventsQueryKey(options as any) as any,
+    structuralSharing,
+  } as GetContractEventsQueryOptions<
+    abi,
+    eventName,
+    strict,
+    fromBlock,
+    toBlock,
+    config,
+    chainId,
+    selectData
   >
 }
 
@@ -107,18 +147,20 @@ export function getContractEventsQueryKey<
   fromBlock extends BlockNumber | BlockTag | undefined = undefined,
   toBlock extends BlockNumber | BlockTag | undefined = undefined,
 >(
-  options: GetContractEventsOptions<
-    abi,
-    eventName,
-    strict,
-    fromBlock,
-    toBlock,
-    config,
-    chainId
-  >,
+  options: UnionExactPartial<
+    GetContractEventsParameters<
+      abi,
+      eventName,
+      strict,
+      fromBlock,
+      toBlock,
+      config,
+      chainId
+    >
+  > &
+    ScopeKeyParameter = {} as any,
 ) {
-  const { abi: _, ...rest } = options
-  return ['contractEvents', filterQueryOptions(rest)] as const
+  return ['getContractEvents', filterQueryOptions(options)] as const
 }
 
 export type GetContractEventsQueryKey<
@@ -131,6 +173,36 @@ export type GetContractEventsQueryKey<
   toBlock extends BlockNumber | BlockTag | undefined,
 > = ReturnType<
   typeof getContractEventsQueryKey<
+    config,
+    chainId,
+    abi,
+    eventName,
+    strict,
+    fromBlock,
+    toBlock
+  >
+>
+
+export type GetContractEventsQueryOptions<
+  abi extends Abi | readonly unknown[],
+  eventName extends ContractEventName<abi> | undefined,
+  strict extends boolean | undefined,
+  fromBlock extends BlockNumber | BlockTag | undefined,
+  toBlock extends BlockNumber | BlockTag | undefined,
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
+  selectData = GetContractEventsData<
+    abi,
+    eventName,
+    strict,
+    fromBlock,
+    toBlock
+  >,
+> = QueryOptions<
+  GetContractEventsQueryFnData<abi, eventName, strict, fromBlock, toBlock>,
+  GetContractEventsErrorType,
+  selectData,
+  GetContractEventsQueryKey<
     config,
     chainId,
     abi,
