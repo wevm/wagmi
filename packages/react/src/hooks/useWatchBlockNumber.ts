@@ -1,5 +1,4 @@
 'use client'
-
 import {
   type Config,
   type ResolvedRegister,
@@ -7,8 +6,7 @@ import {
   watchBlockNumber,
 } from '@wagmi/core'
 import type { UnionCompute, UnionExactPartial } from '@wagmi/core/internal'
-import { useEffect } from 'react'
-
+import { useEffect, useRef } from 'react'
 import type { ConfigParameter, EnabledParameter } from '../types/properties.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
@@ -39,23 +37,28 @@ export function useWatchBlockNumber<
   const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
+  const onBlockNumberRef = useRef(onBlockNumber)
+  const onErrorRef = useRef(rest.onError)
+  onBlockNumberRef.current = onBlockNumber
+  onErrorRef.current = rest.onError
+
   // TODO(react@19): cleanup
   // biome-ignore lint/correctness/useExhaustiveDependencies: `rest` changes every render so only including properties in dependency array
   useEffect(() => {
     if (!enabled) return
-    if (!onBlockNumber) return
+    if (!onBlockNumberRef.current) return
     return watchBlockNumber(config, {
       ...(rest as any),
       chainId,
-      onBlockNumber,
+      onBlockNumber: (blockNumber, prevBlockNumber) =>
+        onBlockNumberRef.current?.(blockNumber, prevBlockNumber),
+      onError: (error) => onErrorRef.current?.(error),
     })
   }, [
     chainId,
     config,
     enabled,
-    onBlockNumber,
     ///
-    rest.onError,
     rest.emitMissed,
     rest.emitOnBegin,
     rest.poll,

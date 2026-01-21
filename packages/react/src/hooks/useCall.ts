@@ -33,7 +33,6 @@ export function useCall<
   const options = callQueryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
-    query: parameters.query,
   })
   return useQuery(options)
 }

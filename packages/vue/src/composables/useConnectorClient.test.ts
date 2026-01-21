@@ -124,7 +124,6 @@ test('behavior: switch chains', async () => {
   const [switchChain] = renderComposable(() => useSwitchChain())
 
   expect(connectorClient.data.value).not.toBeDefined()
-
   await waitFor(connectorClient.data, (data) => data !== undefined)
 
   switchChain.mutate({ chainId: 456 })
@@ -132,9 +131,7 @@ test('behavior: switch chains', async () => {
   await waitFor(connectorClient.data, (data) => data !== undefined)
   expect(connectorClient.data?.value?.chain.id).toEqual(456)
 
-  switchChain.mutate({ chainId: 1 })
-  await waitFor(switchChain.isSuccess, (isSuccess) => isSuccess === true)
-  await waitFor(connectorClient.data, (data) => data !== undefined)
+  await switchChain.mutateAsync({ chainId: 1 })
   expect(connectorClient.data?.value?.chain.id).toEqual(1)
 
   await disconnect(config, { connector })

@@ -1,5 +1,19 @@
 import type * as Query from '@tanstack/query-core'
-import type { RequiredBy, UnionLooseOmit } from './utils.js'
+import type { Compute, LooseOmit, RequiredBy, UnionLooseOmit } from './utils.js'
+
+export type MutationParameter<
+  data = unknown,
+  error = Error,
+  variables = void,
+  context = unknown,
+> = {
+  mutation?:
+    | LooseOmit<
+        Query.MutationOptions<data, error, Compute<variables>, context>,
+        'mutationFn' | 'mutationKey' | 'throwOnError'
+      >
+    | undefined
+}
 
 export type QueryParameter<
   queryFnData = unknown,

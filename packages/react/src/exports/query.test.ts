@@ -18,6 +18,8 @@ test('exports', () => {
       "estimateMaxPriorityFeePerGasQueryOptions",
       "getBalanceQueryKey",
       "getBalanceQueryOptions",
+      "getBlobBaseFeeQueryKey",
+      "getBlobBaseFeeQueryOptions",
       "getBlockNumberQueryKey",
       "getBlockNumberQueryOptions",
       "getBlockQueryKey",
@@ -32,6 +34,8 @@ test('exports', () => {
       "getCapabilitiesQueryOptions",
       "getConnectorClientQueryKey",
       "getConnectorClientQueryOptions",
+      "getContractEventsQueryKey",
+      "getContractEventsQueryOptions",
       "getEnsAddressQueryKey",
       "getEnsAddressQueryOptions",
       "getEnsAvatarQueryKey",
@@ -96,6 +100,7 @@ test('exports', () => {
       "waitForTransactionReceiptQueryOptions",
       "watchAssetMutationOptions",
       "writeContractMutationOptions",
+      "writeContractSyncMutationOptions",
     ]
   `)
 })

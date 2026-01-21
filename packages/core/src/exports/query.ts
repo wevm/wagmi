@@ -17,6 +17,8 @@ export {
   type ConnectData,
   type ConnectMutate,
   type ConnectMutateAsync,
+  type ConnectMutationOptions,
+  type ConnectOptions,
   type ConnectVariables,
   connectMutationOptions,
 } from '../query/connect.js'
@@ -25,6 +27,8 @@ export {
   type DeployContractData,
   type DeployContractMutate,
   type DeployContractMutateAsync,
+  type DeployContractMutationOptions,
+  type DeployContractOptions,
   type DeployContractVariables,
   deployContractMutationOptions,
 } from '../query/deployContract.js'
@@ -33,6 +37,8 @@ export {
   type DisconnectData,
   type DisconnectMutate,
   type DisconnectMutateAsync,
+  type DisconnectMutationOptions,
+  type DisconnectOptions,
   type DisconnectVariables,
   disconnectMutationOptions,
 } from '../query/disconnect.js'
@@ -76,6 +82,16 @@ export {
   getBalanceQueryKey,
   getBalanceQueryOptions,
 } from '../query/getBalance.js'
+
+export {
+  type GetBlobBaseFeeData,
+  type GetBlobBaseFeeOptions,
+  type GetBlobBaseFeeQueryFnData,
+  type GetBlobBaseFeeQueryKey,
+  type GetBlobBaseFeeQueryOptions,
+  getBlobBaseFeeQueryKey,
+  getBlobBaseFeeQueryOptions,
+} from '../query/getBlobBaseFee.js'
 
 export {
   type GetBlockData,
@@ -146,6 +162,16 @@ export {
   getConnectorClientQueryKey,
   getConnectorClientQueryOptions,
 } from '../query/getConnectorClient.js'
+
+export {
+  type GetContractEventsData,
+  type GetContractEventsOptions,
+  type GetContractEventsQueryFnData,
+  type GetContractEventsQueryKey,
+  type GetContractEventsQueryOptions,
+  getContractEventsQueryKey,
+  getContractEventsQueryOptions,
+} from '../query/getContractEvents.js'
 
 export {
   type GetEnsAddressData,
@@ -330,6 +356,8 @@ export {
   type ReconnectData,
   type ReconnectMutate,
   type ReconnectMutateAsync,
+  type ReconnectMutationOptions,
+  type ReconnectOptions,
   type ReconnectVariables,
   reconnectMutationOptions,
 } from '../query/reconnect.js'
@@ -338,6 +366,8 @@ export {
   type SendCallsData,
   type SendCallsMutate,
   type SendCallsMutateAsync,
+  type SendCallsMutationOptions,
+  type SendCallsOptions,
   type SendCallsVariables,
   sendCallsMutationOptions,
 } from '../query/sendCalls.js'
@@ -346,6 +376,8 @@ export {
   type SendCallsSyncData,
   type SendCallsSyncMutate,
   type SendCallsSyncMutateAsync,
+  type SendCallsSyncMutationOptions,
+  type SendCallsSyncOptions,
   type SendCallsSyncVariables,
   sendCallsSyncMutationOptions,
 } from '../query/sendCallsSync.js'
@@ -354,6 +386,8 @@ export {
   type SendTransactionData,
   type SendTransactionMutate,
   type SendTransactionMutateAsync,
+  type SendTransactionMutationOptions,
+  type SendTransactionOptions,
   type SendTransactionVariables,
   sendTransactionMutationOptions,
 } from '../query/sendTransaction.js'
@@ -362,6 +396,8 @@ export {
   type SendTransactionSyncData,
   type SendTransactionSyncMutate,
   type SendTransactionSyncMutateAsync,
+  type SendTransactionSyncMutationOptions,
+  type SendTransactionSyncOptions,
   type SendTransactionSyncVariables,
   sendTransactionSyncMutationOptions,
 } from '../query/sendTransactionSync.js'
@@ -370,6 +406,8 @@ export {
   type ShowCallsStatusData,
   type ShowCallsStatusMutate,
   type ShowCallsStatusMutateAsync,
+  type ShowCallsStatusMutationOptions,
+  type ShowCallsStatusOptions,
   type ShowCallsStatusVariables,
   showCallsStatusMutationOptions,
 } from '../query/showCallsStatus.js'
@@ -378,6 +416,8 @@ export {
   type SignMessageData,
   type SignMessageMutate,
   type SignMessageMutateAsync,
+  type SignMessageMutationOptions,
+  type SignMessageOptions,
   type SignMessageVariables,
   signMessageMutationOptions,
 } from '../query/signMessage.js'
@@ -386,6 +426,8 @@ export {
   type SignTypedDataData,
   type SignTypedDataMutate,
   type SignTypedDataMutateAsync,
+  type SignTypedDataMutationOptions,
+  type SignTypedDataOptions,
   type SignTypedDataVariables,
   signTypedDataMutationOptions,
 } from '../query/signTypedData.js'
@@ -404,6 +446,8 @@ export {
   type SwitchChainData,
   type SwitchChainMutate,
   type SwitchChainMutateAsync,
+  type SwitchChainMutationOptions,
+  type SwitchChainOptions,
   type SwitchChainVariables,
   switchChainMutationOptions,
 } from '../query/switchChain.js'
@@ -418,6 +462,12 @@ export {
   /** @deprecated use `SwitchConnectionMutateAsync` instead */
   type SwitchConnectionMutateAsync as SwitchAccountMutateAsync,
   type SwitchConnectionMutateAsync,
+  /** @deprecated use `SwitchConnectionMutationOptions` instead */
+  type SwitchConnectionMutationOptions as SwitchAccountMutationOptions,
+  type SwitchConnectionMutationOptions,
+  /** @deprecated use `SwitchConnectionOptions` instead */
+  type SwitchConnectionOptions as SwitchAccountOptions,
+  type SwitchConnectionOptions,
   /** @deprecated use `SwitchConnectionVariables` instead */
   type SwitchConnectionVariables as SwitchAccountVariables,
   type SwitchConnectionVariables,
@@ -475,6 +525,8 @@ export {
   type WatchAssetData,
   type WatchAssetMutate,
   type WatchAssetMutateAsync,
+  type WatchAssetMutationOptions,
+  type WatchAssetOptions,
   type WatchAssetVariables,
   watchAssetMutationOptions,
 } from '../query/watchAsset.js'
@@ -483,6 +535,18 @@ export {
   type WriteContractData,
   type WriteContractMutate,
   type WriteContractMutateAsync,
+  type WriteContractMutationOptions,
+  type WriteContractOptions,
   type WriteContractVariables,
   writeContractMutationOptions,
 } from '../query/writeContract.js'
+
+export {
+  type WriteContractSyncData,
+  type WriteContractSyncMutate,
+  type WriteContractSyncMutateAsync,
+  type WriteContractSyncMutationOptions,
+  type WriteContractSyncOptions,
+  type WriteContractSyncVariables,
+  writeContractSyncMutationOptions,
+} from '../query/writeContractSync.js'

@@ -152,6 +152,10 @@ export function getSidebar() {
         items: [
           { text: 'useBalance', link: '/react/api/hooks/useBalance' },
           {
+            text: 'useBlobBaseFee',
+            link: '/react/api/hooks/useBlobBaseFee',
+          },
+          {
             text: 'useBlockNumber',
             link: '/react/api/hooks/useBlockNumber',
           },
@@ -197,6 +201,10 @@ export function getSidebar() {
           {
             text: 'useConnectors',
             link: '/react/api/hooks/useConnectors',
+          },
+          {
+            text: 'useContractEvents',
+            link: '/react/api/hooks/useContractEvents',
           },
           {
             text: 'useDeployContract',
@@ -264,16 +272,8 @@ export function getSidebar() {
             link: '/react/api/hooks/useSendCalls',
           },
           {
-            text: 'useSendCallsSync',
-            link: '/react/api/hooks/useSendCallsSync',
-          },
-          {
             text: 'useSendTransaction',
             link: '/react/api/hooks/useSendTransaction',
-          },
-          {
-            text: 'useSendTransactionSync',
-            link: '/react/api/hooks/useSendTransactionSync',
           },
           {
             text: 'useShowCallsStatus',
@@ -789,6 +789,10 @@ export function getSidebar() {
           },
           { text: 'getBalance', link: '/core/api/actions/getBalance' },
           {
+            text: 'getBlobBaseFee',
+            link: '/core/api/actions/getBlobBaseFee',
+          },
+          {
             text: 'getBlock',
             link: '/core/api/actions/getBlock',
           },
@@ -830,6 +834,10 @@ export function getSidebar() {
           {
             text: 'getConnectors',
             link: '/core/api/actions/getConnectors',
+          },
+          {
+            text: 'getContractEvents',
+            link: '/core/api/actions/getContractEvents',
           },
           {
             text: 'getEnsAddress',
@@ -907,16 +915,8 @@ export function getSidebar() {
             link: '/core/api/actions/sendCalls',
           },
           {
-            text: 'sendCallsSync',
-            link: '/core/api/actions/sendCallsSync',
-          },
-          {
             text: 'sendTransaction',
             link: '/core/api/actions/sendTransaction',
-          },
-          {
-            text: 'sendTransactionSync',
-            link: '/core/api/actions/sendTransactionSync',
           },
           {
             text: 'showCallsStatus',

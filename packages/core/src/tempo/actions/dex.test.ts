@@ -1,23 +1,13 @@
 import { connect } from '@wagmi/core'
-import {
-  accounts,
-  addresses,
-  config,
-  setupOrders,
-  setupTokenPair,
-} from '@wagmi/test/tempo'
+import { accounts, addresses, config, setupTokenPair } from '@wagmi/test/tempo'
 import { isAddress, parseUnits } from 'viem'
 import { Tick } from 'viem/tempo'
-import { beforeAll, describe, expect, test } from 'vitest'
+import { describe, expect, test } from 'vitest'
 import * as dex from './dex.js'
 import * as token from './token.js'
 
 const account = accounts[0]
 const account2 = accounts[1]
-
-beforeAll(async () => {
-  await setupOrders()
-})
 
 describe('buy', () => {
   test('default', async () => {

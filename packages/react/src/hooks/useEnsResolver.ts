@@ -35,7 +35,6 @@ export function useEnsResolver<
   const options = getEnsResolverQueryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
-    query: parameters.query,
   })
   return useQuery(options)
 }

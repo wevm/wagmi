@@ -31,6 +31,12 @@ export {
 } from '../hooks/useBalance.js'
 
 export {
+  type UseBlobBaseFeeParameters,
+  type UseBlobBaseFeeReturnType,
+  useBlobBaseFee,
+} from '../hooks/useBlobBaseFee.js'
+
+export {
   type UseBlockParameters,
   type UseBlockReturnType,
   useBlock,
@@ -140,6 +146,12 @@ export {
   type UseConnectorsReturnType,
   useConnectors,
 } from '../hooks/useConnectors.js'
+
+export {
+  type UseContractEventsParameters,
+  type UseContractEventsReturnType,
+  useContractEvents,
+} from '../hooks/useContractEvents.js'
 
 export {
   type UseDeployContractParameters,
@@ -411,6 +423,12 @@ export {
   type UseWriteContractReturnType,
   useWriteContract,
 } from '../hooks/useWriteContract.js'
+
+export {
+  type UseWriteContractSyncParameters,
+  type UseWriteContractSyncReturnType,
+  useWriteContractSync,
+} from '../hooks/useWriteContractSync.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // Hydrate

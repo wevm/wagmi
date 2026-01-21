@@ -2,6 +2,26 @@
   "cleanUrls": true,
   "redirects": [
     {
+      "source": "/core/api/actions/sendTransactionSync",
+      "destination": "/core/api/actions/sendTransaction",
+      "permanent": true
+    },
+    {
+      "source": "/core/api/actions/sendCallsSync",
+      "destination": "/core/api/actions/sendCalls",
+      "permanent": true
+    },
+    {
+      "source": "/react/api/hooks/useSendTransactionSync",
+      "destination": "/react/api/hooks/useSendTransaction",
+      "permanent": true
+    },
+    {
+      "source": "/react/api/hooks/useSendCallsSync",
+      "destination": "/react/api/hooks/useSendCalls",
+      "permanent": true
+    },
+    {
       "source": "/tempo/actions/reward.start",
       "destination": "/tempo/actions/reward.distribute",
       "permanent": true
