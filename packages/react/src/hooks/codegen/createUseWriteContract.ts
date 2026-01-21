@@ -304,6 +304,8 @@ export function createUseWriteContract<
     )
     return {
       ...(result as any),
+      mutate,
+      mutateAsync,
       writeContract: mutate,
       writeContractAsync: mutateAsync,
     }
