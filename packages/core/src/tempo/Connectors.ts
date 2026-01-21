@@ -91,7 +91,9 @@ export function webAuthn(options: webAuthn.Parameters) {
         'webAuthn.activeCredential',
       )
       if (!credential) return
-      account = Account.fromWebAuthnP256(credential)
+      account = Account.fromWebAuthnP256(credential, {
+        rpId: options.getOptions?.rpId ?? options.rpId,
+      })
     },
     async connect(parameters = {}) {
       const capabilities =
@@ -243,7 +245,9 @@ export function webAuthn(options: webAuthn.Parameters) {
         normalizeValue(credential),
       )
 
-      account = Account.fromWebAuthnP256(credential)
+      account = Account.fromWebAuthnP256(credential, {
+        rpId: options.getOptions?.rpId ?? options.rpId,
+      })
 
       if (keyPair) {
         accessKey = Account.fromWebCryptoP256(keyPair, {
