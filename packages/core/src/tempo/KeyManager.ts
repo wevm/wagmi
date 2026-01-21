@@ -200,22 +200,24 @@ function serializeCredential(
       ...('getAuthenticatorData' in response &&
         typeof response.getAuthenticatorData === 'function' && {
           authenticatorData: Base64.fromBytes(
-            new Uint8Array(response.getAuthenticatorData() as ArrayBuffer),
+            new Uint8Array(
+              response.getAuthenticatorData.call(response) as ArrayBuffer,
+            ),
           ),
         }),
       ...('getPublicKey' in response &&
         typeof response.getPublicKey === 'function' && {
           publicKey: Base64.fromBytes(
-            new Uint8Array(response.getPublicKey() as ArrayBuffer),
+            new Uint8Array(response.getPublicKey.call(response) as ArrayBuffer),
           ),
         }),
       ...('getPublicKeyAlgorithm' in response &&
         typeof response.getPublicKeyAlgorithm === 'function' && {
-          publicKeyAlgorithm: response.getPublicKeyAlgorithm(),
+          publicKeyAlgorithm: response.getPublicKeyAlgorithm.call(response),
         }),
       ...('getTransports' in response &&
         typeof response.getTransports === 'function' && {
-          transports: response.getTransports(),
+          transports: response.getTransports.call(response),
         }),
       ...('authenticatorData' in response && {
         authenticatorData: Base64.fromBytes(
