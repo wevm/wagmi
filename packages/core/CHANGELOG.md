@@ -1,11 +1,5 @@
 # @wagmi/core
 
-## 3.2.4
-
-### Patch Changes
-
-- Added explicit return type to mutation options. ([#4959](https://github.com/wevm/wagmi/pull/4959))
-
 ## 3.2.3
 
 ### Patch Changes
