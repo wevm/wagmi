@@ -25,22 +25,22 @@ export type MetaMaskParameters = UnionCompute<
     logging?: unknown
     /** Mobile-specific options, including preferredOpenLink for React Native deeplinks */
     mobile?: {
-      /** Whether to use deeplink (default: true) or universal link */
-      useDeeplink?: boolean;
       /** Custom function to open deeplinks - required for React Native since window.location.href doesn't work */
-      preferredOpenLink?: (deeplink: string, target?: string) => void;
+      preferredOpenLink?: (deeplink: string, target?: string) => void
+      /** Whether to use deeplink (default: true) or universal link */
+      useDeeplink?: boolean
     }
   } & OneOf<
-    | {
-      /* Shortcut to connect and sign a message */
-      connectAndSign?: string | undefined
-    }
-    | {
-      // TODO: Strongly type `method` and `params`
-      /* Allow `connectWith` any rpc method */
-      connectWith?: { method: string; params: unknown[] } | undefined
-    }
-  >
+      | {
+          /* Shortcut to connect and sign a message */
+          connectAndSign?: string | undefined
+        }
+      | {
+          // TODO: Strongly type `method` and `params`
+          /* Allow `connectWith` any rpc method */
+          connectWith?: { method: string; params: unknown[] } | undefined
+        }
+    >
 >
 
 type CreateMetamaskConnectEVMParameters = Parameters<
@@ -280,13 +280,13 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
               if (parameters.logging) return true
               return parameters.debug
             })(),
-            ...(parameters.mobile && { mobile: parameters.mobile }),
             eventHandlers: {
               accountsChanged: this.onAccountsChanged.bind(this),
               chainChanged: this.onChainChanged.bind(this),
               connect: this.onConnect.bind(this),
               disconnect: this.onDisconnect.bind(this),
             },
+            ...(parameters.mobile && { mobile: parameters.mobile }),
           })
         }
         metamask = await metamaskPromise
