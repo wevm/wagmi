@@ -1,5 +1,3 @@
-import type { QueryOptions } from '@tanstack/query-core'
-
 import type { PrepareTransactionRequestRequest as viem_PrepareTransactionRequestRequest } from 'viem'
 
 import {
@@ -11,6 +9,7 @@ import {
 import type { Config } from '../createConfig.js'
 import type { SelectChains } from '../types/chain.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
+import type { QueryOptions, QueryParameter } from '../types/query.js'
 import type { UnionExactPartial } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
@@ -21,10 +20,17 @@ export type PrepareTransactionRequestOptions<
     SelectChains<config, chainId>[0],
     SelectChains<config, chainId>[0]
   >,
+  selectData = PrepareTransactionRequestData<config, chainId, request>,
 > = UnionExactPartial<
   PrepareTransactionRequestParameters<config, chainId, request>
 > &
-  ScopeKeyParameter
+  ScopeKeyParameter &
+  QueryParameter<
+    PrepareTransactionRequestQueryFnData<config, chainId, request>,
+    PrepareTransactionRequestErrorType,
+    selectData,
+    PrepareTransactionRequestQueryKey<config, chainId, request>
+  >
 
 export function prepareTransactionRequestQueryOptions<
   config extends Config,
@@ -33,33 +39,35 @@ export function prepareTransactionRequestQueryOptions<
     SelectChains<config, chainId>[0],
     SelectChains<config, chainId>[0]
   >,
+  selectData = PrepareTransactionRequestData<config, chainId, request>,
 >(
   config: config,
   options: PrepareTransactionRequestOptions<
     config,
     chainId,
-    request
+    request,
+    selectData
   > = {} as any,
-) {
+): PrepareTransactionRequestQueryOptions<config, chainId, request, selectData> {
   return {
-    queryFn({ queryKey }) {
-      const { scopeKey: _, to, ...parameters } = queryKey[1]
-      if (!to) throw new Error('to is required')
+    ...options.query,
+    enabled: Boolean(options.to && (options.query?.enabled ?? true)),
+    queryFn: async (context) => {
+      const [, { scopeKey: _, ...parameters }] = context.queryKey
+      if (!parameters.to) throw new Error('to is required')
       return prepareTransactionRequest(config, {
-        to,
         ...(parameters as any),
+        to: parameters.to,
       }) as unknown as Promise<
         PrepareTransactionRequestQueryFnData<config, chainId, request>
       >
     },
-    queryKey: prepareTransactionRequestQueryKey(options),
-  } as const satisfies QueryOptions<
-    PrepareTransactionRequestQueryFnData<config, chainId, request>,
-    PrepareTransactionRequestErrorType,
-    PrepareTransactionRequestData<config, chainId, request>,
-    PrepareTransactionRequestQueryKey<config, chainId, request>
-  >
+    queryKey: prepareTransactionRequestQueryKey(
+      options,
+    ) as PrepareTransactionRequestQueryKey<config, chainId, request>,
+  }
 }
+
 export type PrepareTransactionRequestQueryFnData<
   config extends Config,
   chainId extends config['chains'][number]['id'] | undefined,
@@ -85,7 +93,12 @@ export function prepareTransactionRequestQueryKey<
     SelectChains<config, chainId>[0],
     SelectChains<config, chainId>[0]
   >,
->(options: PrepareTransactionRequestOptions<config, chainId, request>) {
+>(
+  options: UnionExactPartial<
+    PrepareTransactionRequestParameters<config, chainId, request>
+  > &
+    ScopeKeyParameter = {} as any,
+) {
   return ['prepareTransactionRequest', filterQueryOptions(options)] as const
 }
 
@@ -98,4 +111,19 @@ export type PrepareTransactionRequestQueryKey<
   >,
 > = ReturnType<
   typeof prepareTransactionRequestQueryKey<config, chainId, request>
+>
+
+export type PrepareTransactionRequestQueryOptions<
+  config extends Config,
+  chainId extends config['chains'][number]['id'] | undefined,
+  request extends viem_PrepareTransactionRequestRequest<
+    SelectChains<config, chainId>[0],
+    SelectChains<config, chainId>[0]
+  >,
+  selectData = PrepareTransactionRequestData<config, chainId, request>,
+> = QueryOptions<
+  PrepareTransactionRequestQueryFnData<config, chainId, request>,
+  PrepareTransactionRequestErrorType,
+  selectData,
+  PrepareTransactionRequestQueryKey<config, chainId, request>
 >

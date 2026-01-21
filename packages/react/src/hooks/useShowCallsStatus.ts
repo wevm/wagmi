@@ -1,5 +1,4 @@
 'use client'
-
 import { useMutation } from '@tanstack/react-query'
 import type {
   Config,
@@ -11,42 +10,28 @@ import {
   type ShowCallsStatusData,
   type ShowCallsStatusMutate,
   type ShowCallsStatusMutateAsync,
+  type ShowCallsStatusOptions,
   type ShowCallsStatusVariables,
   showCallsStatusMutationOptions,
 } from '@wagmi/core/query'
-
 import type { ConfigParameter } from '../types/properties.js'
-import type {
-  UseMutationParameters,
-  UseMutationReturnType,
-} from '../utils/query.js'
+import type { UseMutationReturnType } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 
 export type UseShowCallsStatusParameters<
   config extends Config = Config,
   context = unknown,
-> = Compute<
-  ConfigParameter<config> & {
-    mutation?:
-      | UseMutationParameters<
-          ShowCallsStatusData,
-          ShowCallsStatusErrorType,
-          ShowCallsStatusVariables,
-          context
-        >
-      | undefined
-  }
->
+> = Compute<ConfigParameter<config> & ShowCallsStatusOptions<context>>
 
 export type UseShowCallsStatusReturnType<context = unknown> = Compute<
   UseMutationReturnType<
     ShowCallsStatusData,
     ShowCallsStatusErrorType,
     ShowCallsStatusVariables,
-    context
+    context,
+    ShowCallsStatusMutate,
+    ShowCallsStatusMutateAsync
   > & {
-    mutate: ShowCallsStatusMutate
-    mutateAsync: ShowCallsStatusMutateAsync
     /** @deprecated use `mutate` instead */
     showCallsStatus: ShowCallsStatusMutate
     /** @deprecated use `mutateAsync` instead */
@@ -62,11 +47,11 @@ export function useShowCallsStatus<
   parameters: UseShowCallsStatusParameters<config, context> = {},
 ): UseShowCallsStatusReturnType<context> {
   const config = useConfig(parameters)
-  const mutationOptions = showCallsStatusMutationOptions(config)
-  const mutation = useMutation({ ...parameters.mutation, ...mutationOptions })
+  const options = showCallsStatusMutationOptions(config, parameters)
+  const mutation = useMutation(options)
   type Return = UseShowCallsStatusReturnType<context>
   return {
-    ...mutation,
+    ...(mutation as Return),
     showCallsStatus: mutation.mutate as Return['mutate'],
     showCallsStatusAsync: mutation.mutateAsync as Return['mutateAsync'],
   }

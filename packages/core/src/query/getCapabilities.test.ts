@@ -6,12 +6,12 @@ import { getCapabilitiesQueryOptions } from './getCapabilities.js'
 test('default', () => {
   expect(getCapabilitiesQueryOptions(config)).toMatchInlineSnapshot(`
     {
+      "enabled": false,
       "queryFn": [Function],
       "queryKey": [
         "capabilities",
         {},
       ],
-      "retry": [Function],
     }
   `)
 })
@@ -23,6 +23,7 @@ test('parameters: chainId', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": false,
       "queryFn": [Function],
       "queryKey": [
         "capabilities",
@@ -30,7 +31,6 @@ test('parameters: chainId', () => {
           "account": "0x0000000000000000000000000000000000000000",
         },
       ],
-      "retry": [Function],
     }
   `)
 })

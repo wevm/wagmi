@@ -25,6 +25,7 @@ test('default', async () => {
   expect(
     blockNumbers.map((blockNumber) => blockNumber - blockNumbers[0]!),
   ).toEqual([0n, 1n, 2n])
+  await wait(500)
 })
 
 test('parameters: enabled', async () => {
@@ -64,4 +65,5 @@ test('parameters: enabled', async () => {
   expect(
     blockNumbers.map((blockNumber) => blockNumber - blockNumbers[0]!),
   ).toEqual([0n, 1n, 2n])
+  await wait(500)
 })

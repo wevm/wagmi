@@ -31,11 +31,10 @@ for await (const packagePath of packagePaths) {
         .execSync('git rev-parse --short HEAD')
         .toString()
         .trim()
-      const branch = child_process
-        .execSync('git branch --show-current')
-        .toString()
-        .trim()
-        .replace(/[^a-zA-Z0-9]/g, '_')
+      const branch = (
+        process.env.GITHUB_HEAD_REF ||
+        child_process.execSync('git branch --show-current').toString().trim()
+      ).replace(/[^a-zA-Z0-9]/g, '-')
       return `0.0.0-${branch}.${gitHash}`
     }
     return packageJson.version

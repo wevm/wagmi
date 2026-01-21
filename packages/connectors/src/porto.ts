@@ -88,8 +88,22 @@ export function porto(parameters: PortoParameters = {}) {
 
         try {
           if (!accounts?.length && !isReconnecting) {
-            const { RpcSchema } = await import('porto')
-            const { z } = await import('porto/internal')
+            const { RpcSchema } = await (() => {
+              // safe webpack optional peer dependency dynamic import
+              try {
+                return import('porto')
+              } catch {
+                throw new Error('dependency "porto" not found')
+              }
+            })()
+            const { z } = await (() => {
+              // safe webpack optional peer dependency dynamic import
+              try {
+                return import('porto/internal')
+              } catch {
+                throw new Error('dependency "porto/internal" not found')
+              }
+            })()
             const res = await provider.request({
               method: 'wallet_connect',
               params: [
@@ -189,12 +203,21 @@ export function porto(parameters: PortoParameters = {}) {
       },
       async getPortoInstance() {
         porto_promise ??= (async () => {
-          const { Porto } = await import('porto')
+          const { Porto } = await (() => {
+            // safe webpack optional peer dependency dynamic import
+            try {
+              return import('porto')
+            } catch {
+              throw new Error('dependency "porto" not found')
+            }
+          })()
           return Porto.create({
             ...parameters,
             announceProvider: false,
-            chains: chains as never,
-            transports: transports as never,
+            // @ts-ignore
+            chains,
+            // @ts-ignore
+            transports,
           })
         })()
         return await porto_promise

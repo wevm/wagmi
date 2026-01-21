@@ -11,6 +11,7 @@ test('default', async () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "feeHistory",
@@ -35,6 +36,7 @@ test('parameters: chainId', async () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "feeHistory",
@@ -60,6 +62,7 @@ test('parameters: blockNumber', async () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "feeHistory",
@@ -85,6 +88,7 @@ test('parameters: blockTag', async () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "feeHistory",

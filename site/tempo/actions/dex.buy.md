@@ -1,0 +1,94 @@
+# `dex.buy`
+
+Buys a specific amount of tokens from the Stablecoin DEX orderbook.  
+
+## Usage
+
+::: code-group
+
+```ts twoslash [example.ts]
+// @twoslash-cache: {"v":1,"hash":"514f8188da5f3aadb6f821b1369361f48b3a9b8e33f46d5689339bc21bc9aed7","data":"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="}
+// @filename: config.ts
+// @errors: 2322
+import type { Config } from 'wagmi'
+export const config = {} as Config
+// @filename: example.ts
+// ---cut---
+import { Actions } from 'wagmi/tempo'
+import { parseUnits } from 'viem'
+import { config } from './config'
+
+const { receipt } = await Actions.dex.buySync(config, {
+  amountOut: parseUnits('100', 6),
+  maxAmountIn: parseUnits('105', 6),
+  tokenIn: '0x20c0000000000000000000000000000000000001',
+  tokenOut: '0x20c0000000000000000000000000000000000002',
+})
+
+console.log('Transaction hash:', receipt.transactionHash)
+```
+
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
+
+:::
+
+### Asynchronous Usage
+
+The example above uses a `*Sync` variant of the action, that will wait for the transaction to be included before returning.
+
+If you are optimizing for performance, you should use the non-sync `dex.buy` action and wait for inclusion manually:
+
+```ts
+import { Actions } from 'wagmi/tempo'
+import { waitForTransactionReceipt } from 'wagmi/actions'
+import { parseUnits } from 'viem'
+
+const hash = await Actions.dex.buy(config, {
+  amountOut: parseUnits('100', 6),
+  maxAmountIn: parseUnits('105', 6),
+  tokenIn: '0x20c0000000000000000000000000000000000001',
+  tokenOut: '0x20c0000000000000000000000000000000000002',
+})
+const receipt = await waitForTransactionReceipt(config, { hash })
+```
+
+## Return Type
+
+```ts
+type ReturnType = {
+  /** Transaction receipt */
+  receipt: TransactionReceipt
+}
+```
+
+## Parameters
+
+### amountOut
+
+- **Type:** `bigint`
+
+Amount of tokenOut to buy.
+
+### maxAmountIn
+
+- **Type:** `bigint`
+
+Maximum amount of tokenIn to spend.
+
+### tokenIn
+
+- **Type:** `Address`
+
+Address of the token to spend.
+
+### tokenOut
+
+- **Type:** `Address`
+
+Address of the token to buy.
+
+<!--@include: @shared/tempo-write-parameters.md-->
+
+## Viem
+
+- [`dex.buy`](https://viem.sh/tempo/actions/dex.buy)

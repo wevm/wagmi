@@ -1,6 +1,6 @@
-import { expect, test } from 'vitest'
-
-import { structuralSharing } from './utils.js'
+import { abi } from '@wagmi/test'
+import { expect, expectTypeOf, test } from 'vitest'
+import { filterQueryOptions, structuralSharing } from './utils.js'
 
 test('structuralSharing', () => {
   expect(
@@ -15,6 +15,26 @@ test('structuralSharing', () => {
   ).toMatchInlineSnapshot(`
     {
       "foo": "baz",
+    }
+  `)
+})
+
+test('filterQueryOptions', () => {
+  const options = filterQueryOptions({
+    foo: 'bar',
+    baz: true,
+    abi: abi.erc20,
+    connector: undefined,
+  })
+  expectTypeOf(options).toEqualTypeOf<{
+    foo: string
+    baz: boolean
+    connectorUid?: string | undefined
+  }>()
+  expect(options).toMatchInlineSnapshot(`
+    {
+      "baz": true,
+      "foo": "bar",
     }
   `)
 })

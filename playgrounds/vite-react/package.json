@@ -18,7 +18,7 @@
     "wagmi": "workspace:*"
   },
   "devDependencies": {
-    "@tanstack/react-query-devtools": "5.0.5",
+    "@tanstack/react-query-devtools": "^5.91.2",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "@vitejs/plugin-react": "catalog:",

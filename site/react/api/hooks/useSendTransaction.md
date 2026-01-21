@@ -49,6 +49,34 @@ function App() {
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
+### Synchronous Usage
+
+If you want to wait for the transaction to be included in a block, you can use `useSendTransactionSync`:
+
+::: code-group
+```tsx [index.tsx]
+import { useSendTransactionSync } from 'wagmi'
+import { parseEther } from 'viem'
+
+function App() {
+  const sendTransactionSync = useSendTransactionSync()
+  return (
+    <button
+      onClick={() =>
+        sendTransactionSync.mutate({
+          to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
+          value: parseEther('0.01'),
+        })
+      }
+    >
+      Send transaction
+    </button>
+  )
+}
+```
+<<< @/snippets/react/config.ts[config.ts]
+:::
+
 ## Parameters
 
 ```ts

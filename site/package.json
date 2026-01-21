@@ -4,11 +4,11 @@
   "type": "module",
   "scripts": {
     "dev": "vitepress dev",
-    "build": "vitepress build",
+    "build": "NODE_OPTIONS=\"--max-old-space-size=16384\" vitepress build",
     "preview": "vitepress preview"
   },
   "devDependencies": {
-    "@shikijs/vitepress-twoslash": "3.18.0",
+    "@shikijs/vitepress-twoslash": "3.20.0",
     "@tanstack/query-core": "catalog:",
     "@tanstack/react-query": "catalog:",
     "@tanstack/vue-query": "catalog:",

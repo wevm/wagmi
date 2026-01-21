@@ -60,6 +60,13 @@ export {
 } from '../actions/getBalance.js'
 
 export {
+  type GetBlobBaseFeeErrorType,
+  type GetBlobBaseFeeParameters,
+  type GetBlobBaseFeeReturnType,
+  getBlobBaseFee,
+} from '../actions/getBlobBaseFee.js'
+
+export {
   type GetBlockErrorType,
   type GetBlockParameters,
   type GetBlockReturnType,
@@ -473,6 +480,13 @@ export {
   type WriteContractReturnType,
   writeContract,
 } from '../actions/writeContract.js'
+
+export {
+  type WriteContractSyncErrorType,
+  type WriteContractSyncParameters,
+  type WriteContractSyncReturnType,
+  writeContractSync,
+} from '../actions/writeContractSync.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // Connectors

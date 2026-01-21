@@ -37,6 +37,7 @@ test('exports', () => {
       "useAccount",
       "useAccountEffect",
       "useBalance",
+      "useBlobBaseFee",
       "useBlock",
       "useBlockNumber",
       "useBlockTransactionCount",
@@ -101,6 +102,7 @@ test('exports', () => {
       "useWatchContractEvent",
       "useWatchPendingTransactions",
       "useWriteContract",
+      "useWriteContractSync",
       "version",
       "webSocket",
     ]

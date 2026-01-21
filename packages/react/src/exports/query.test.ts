@@ -18,6 +18,8 @@ test('exports', () => {
       "estimateMaxPriorityFeePerGasQueryOptions",
       "getBalanceQueryKey",
       "getBalanceQueryOptions",
+      "getBlobBaseFeeQueryKey",
+      "getBlobBaseFeeQueryOptions",
       "getBlockNumberQueryKey",
       "getBlockNumberQueryOptions",
       "getBlockQueryKey",
@@ -98,6 +100,7 @@ test('exports', () => {
       "waitForTransactionReceiptQueryOptions",
       "watchAssetMutationOptions",
       "writeContractMutationOptions",
+      "writeContractSyncMutationOptions",
     ]
   `)
 })

@@ -86,12 +86,13 @@ test('behavior: value exceeds balance', async () => {
      - \`value\` is the amount of ether to send to the recipient.
      
     Request Arguments:
+      chain:  Ethereum (id: 1)
       from:   0x95132632579b073D12a6673e18Ab05777a6B86f8
       to:     0xd2135CfB216b74109775236E36d4b433F1DF507B
       value:  99999 ETH
 
     Details: Insufficient funds for gas * price + value
-    Version: viem@2.38.0]
+    Version: viem@2.44.4]
   `)
   await disconnect(config, { connector })
 })

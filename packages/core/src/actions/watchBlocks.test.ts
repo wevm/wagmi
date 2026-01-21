@@ -21,4 +21,5 @@ test('default', async () => {
   expect(blocks.length).toBe(3)
 
   unwatch()
+  await wait(100)
 })

@@ -19,7 +19,6 @@ jobs:
 
   publish:
     name: Publish preview release
-    needs: verify
     # prevents this action from running on forks
     if: github.repository == 'wevm/wagmi'
     permissions:
@@ -38,7 +37,6 @@ jobs:
 
       - name: Publish to pkg.pr.new
         run: |
-          pnpm clean
           pnpm changeset:prepublish
           pnpx pkg-pr-new publish --pnpm --compact './packages/*'
         env:

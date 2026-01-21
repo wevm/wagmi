@@ -13,6 +13,7 @@ test('exports', () => {
       "estimateGas",
       "estimateMaxPriorityFeePerGas",
       "getBalance",
+      "getBlobBaseFee",
       "getBlock",
       "getBlockNumber",
       "getBlockTransactionCount",

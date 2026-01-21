@@ -1,5 +1,3 @@
-import type { QueryOptions } from '@tanstack/query-core'
-
 import {
   type GetEnsNameErrorType,
   type GetEnsNameParameters,
@@ -8,30 +6,38 @@ import {
 } from '../actions/getEnsName.js'
 import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
+import type { QueryOptions, QueryParameter } from '../types/query.js'
 import type { Compute, ExactPartial } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
-export type GetEnsNameOptions<config extends Config> = Compute<
-  ExactPartial<GetEnsNameParameters<config>> & ScopeKeyParameter
->
-
-export function getEnsNameQueryOptions<config extends Config>(
-  config: config,
-  options: GetEnsNameOptions<config> = {},
-) {
-  return {
-    async queryFn({ queryKey }) {
-      const { address, scopeKey: _, ...parameters } = queryKey[1]
-      if (!address) throw new Error('address is required')
-      return getEnsName(config, { ...parameters, address })
-    },
-    queryKey: getEnsNameQueryKey(options),
-  } as const satisfies QueryOptions<
+export type GetEnsNameOptions<
+  config extends Config,
+  selectData = GetEnsNameData,
+> = Compute<ExactPartial<GetEnsNameParameters<config>> & ScopeKeyParameter> &
+  QueryParameter<
     GetEnsNameQueryFnData,
     GetEnsNameErrorType,
-    GetEnsNameData,
+    selectData,
     GetEnsNameQueryKey<config>
   >
+
+export function getEnsNameQueryOptions<
+  config extends Config,
+  selectData = GetEnsNameData,
+>(
+  config: config,
+  options: GetEnsNameOptions<config, selectData> = {},
+): GetEnsNameQueryOptions<config, selectData> {
+  return {
+    ...options.query,
+    enabled: Boolean(options.address && (options.query?.enabled ?? true)),
+    queryFn: async (context) => {
+      const [, { scopeKey: _, ...parameters }] = context.queryKey
+      if (!parameters.address) throw new Error('address is required')
+      return getEnsName(config, { ...parameters, address: parameters.address })
+    },
+    queryKey: getEnsNameQueryKey(options),
+  }
 }
 
 export type GetEnsNameQueryFnData = GetEnsNameReturnType
@@ -39,11 +45,23 @@ export type GetEnsNameQueryFnData = GetEnsNameReturnType
 export type GetEnsNameData = GetEnsNameQueryFnData
 
 export function getEnsNameQueryKey<config extends Config>(
-  options: GetEnsNameOptions<config> = {},
+  options: Compute<
+    ExactPartial<GetEnsNameParameters<config>> & ScopeKeyParameter
+  > = {},
 ) {
   return ['ensName', filterQueryOptions(options)] as const
 }
 
 export type GetEnsNameQueryKey<config extends Config> = ReturnType<
   typeof getEnsNameQueryKey<config>
+>
+
+export type GetEnsNameQueryOptions<
+  config extends Config,
+  selectData = GetEnsNameData,
+> = QueryOptions<
+  GetEnsNameQueryFnData,
+  GetEnsNameErrorType,
+  selectData,
+  GetEnsNameQueryKey<config>
 >

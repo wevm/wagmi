@@ -1,5 +1,4 @@
 import type { MutateOptions, MutationOptions } from '@tanstack/query-core'
-
 import {
   type SwitchChainErrorType,
   type SwitchChainParameters,
@@ -7,22 +6,37 @@ import {
   switchChain,
 } from '../actions/switchChain.js'
 import type { Config } from '../createConfig.js'
+import type { MutationParameter } from '../types/query.js'
 import type { Compute } from '../types/utils.js'
 
-export function switchChainMutationOptions<config extends Config>(
+export type SwitchChainOptions<
+  config extends Config,
+  context = unknown,
+> = MutationParameter<
+  SwitchChainData<config, config['chains'][number]['id']>,
+  SwitchChainErrorType,
+  SwitchChainVariables<config, config['chains'][number]['id']>,
+  context
+>
+
+export function switchChainMutationOptions<config extends Config, context>(
   config: config,
-) {
+  options: SwitchChainOptions<config, context> = {},
+): SwitchChainMutationOptions<config> {
   return {
+    ...(options.mutation as any),
     mutationFn(variables) {
       return switchChain(config, variables)
     },
     mutationKey: ['switchChain'],
-  } as const satisfies MutationOptions<
-    SwitchChainData<config, config['chains'][number]['id']>,
-    SwitchChainErrorType,
-    SwitchChainVariables<config, config['chains'][number]['id']>
-  >
+  }
 }
+
+export type SwitchChainMutationOptions<config extends Config> = MutationOptions<
+  SwitchChainData<config, config['chains'][number]['id']>,
+  SwitchChainErrorType,
+  SwitchChainVariables<config, config['chains'][number]['id']>
+>
 
 export type SwitchChainData<
   config extends Config,

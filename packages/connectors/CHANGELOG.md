@@ -1,5 +1,66 @@
 # @wagmi/connectors
 
+## 7.1.3
+
+### Patch Changes
+
+- Updated dependencies [[`979fe26`](https://github.com/wevm/wagmi/commit/979fe265e5273a8b49a4469ffab88b1a18b1aeaa), [`979fe26`](https://github.com/wevm/wagmi/commit/979fe265e5273a8b49a4469ffab88b1a18b1aeaa), [`e4541de`](https://github.com/wevm/wagmi/commit/e4541def76a1744dc36c188453265cc6e9d83722)]:
+  - @wagmi/core@3.2.3
+
+## 7.1.2
+
+### Patch Changes
+
+- Updated dependencies [[`4fefa57`](https://github.com/wevm/wagmi/commit/4fefa576014820b454344b579282ddecde5c7994)]:
+  - @wagmi/core@3.2.2
+
+## 7.1.1
+
+### Patch Changes
+
+- Updated dependencies [[`a373b50`](https://github.com/wevm/wagmi/commit/a373b504f2ba199ca63ec0da6138ad1aa12a3a8f)]:
+  - @wagmi/core@3.2.1
+
+## 7.1.0
+
+### Patch Changes
+
+- Updated dependencies [[`2ee3f55`](https://github.com/wevm/wagmi/commit/2ee3f559a2637c7aab3fca6c7d196cf238ecd63d)]:
+  - @wagmi/core@3.2.0
+
+## 7.0.7
+
+### Patch Changes
+
+- Updated dependencies [[`14989e4`](https://github.com/wevm/wagmi/commit/14989e425a36b765a6a24e5abf1782c2a26c70db)]:
+  - @wagmi/core@3.1.0
+
+## 7.0.6
+
+### Patch Changes
+
+- Updated dependencies [[`a5c4381`](https://github.com/wevm/wagmi/commit/a5c4381563374018dca0074017b21181ac027e9a)]:
+  - @wagmi/core@3.0.2
+
+## 7.0.5
+
+### Patch Changes
+
+- Fixed published exports. ([`ed86500`](https://github.com/wevm/wagmi/commit/ed86500fbd56e5f543cb04e990b2dadc08d8b3b5))
+
+## 7.0.4
+
+### Patch Changes
+
+- Fixed internal dynamic imports when using Webpack ([#4911](https://github.com/wevm/wagmi/pull/4911))
+
+## 7.0.3
+
+### Patch Changes
+
+- Updated dependencies [[`058c8c1`](https://github.com/wevm/wagmi/commit/058c8c18459a69a4aa2141e34640273a06a819f4)]:
+  - @wagmi/core@3.0.1
+
 ## 7.0.2
 
 ### Patch Changes

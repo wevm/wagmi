@@ -6,6 +6,7 @@ import { getEnsAddressQueryOptions } from './getEnsAddress.js'
 test('default', () => {
   expect(getEnsAddressQueryOptions(config)).toMatchInlineSnapshot(`
     {
+      "enabled": false,
       "queryFn": [Function],
       "queryKey": [
         "ensAddress",
@@ -20,6 +21,7 @@ test('parameters: chainId', () => {
     getEnsAddressQueryOptions(config, { chainId: chain.mainnet.id }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": false,
       "queryFn": [Function],
       "queryKey": [
         "ensAddress",
