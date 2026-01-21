@@ -36,6 +36,8 @@ test('exports', () => {
       "getCapabilitiesQueryOptions",
       "getConnectorClientQueryKey",
       "getConnectorClientQueryOptions",
+      "getContractEventsQueryKey",
+      "getContractEventsQueryOptions",
       "getEnsAddressQueryKey",
       "getEnsAddressQueryOptions",
       "getEnsAvatarQueryKey",

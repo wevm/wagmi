@@ -168,6 +168,7 @@ export {
   type GetContractEventsOptions,
   type GetContractEventsQueryFnData,
   type GetContractEventsQueryKey,
+  type GetContractEventsQueryOptions,
   getContractEventsQueryKey,
   getContractEventsQueryOptions,
 } from '../query/getContractEvents.js'
