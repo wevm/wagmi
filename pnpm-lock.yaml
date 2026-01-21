@@ -92,6 +92,7 @@ overrides:
   node-forge@<1.3.2: '>=1.3.2'
   semver@<5.7.2: '>=5.7.2'
   serialize-javascript@>=6.0.0 <6.0.2: 6.0.2
+  seroval@<1.4.1: '>=1.4.1'
   tar@<=7.5.3: 7.5.4
   tmp@<=0.2.3: 0.2.4
   undici@<6.23.0: 6.23.0
@@ -8924,21 +8925,13 @@ packages:
     resolution: {integrity: sha512-16OL3NnUBw8JG1jBLUoZJsLnQq0n5Ua6aHalhJK4fMQkz1lqR7Osz1sA30trBtd9VUDc2NgkuRCn8+/pBwqZ+w==}
     engines: {node: '>=10'}
     peerDependencies:
-      seroval: ^1.0
+      seroval: '>=1.4.1'
 
   seroval-plugins@1.4.2:
     resolution: {integrity: sha512-X7p4MEDTi+60o2sXZ4bnDBhgsUYDSkQEvzYZuJyFqWg9jcoPsHts5nrg5O956py2wyt28lUrBxk0M0/wU8URpA==}
     engines: {node: '>=10'}
     peerDependencies:
-      seroval: ^1.0
-
-  seroval@1.3.2:
-    resolution: {integrity: sha512-RbcPH1n5cfwKrru7v7+zrZvjLurgHhGyso3HTyGtRivGWgYjbOmGuivCQaORNELjNONoK35nj28EoWul9sb1zQ==}
-    engines: {node: '>=10'}
-
-  seroval@1.4.0:
-    resolution: {integrity: sha512-BdrNXdzlofomLTiRnwJTSEAaGKyHHZkbMXIywOh7zlzp4uZnXErEwl9XZ+N1hJSNpeTtNxWvVwN0wUzAIQ4Hpg==}
-    engines: {node: '>=10'}
+      seroval: '>=1.4.1'
 
   seroval@1.4.2:
     resolution: {integrity: sha512-N3HEHRCZYn3cQbsC4B5ldj9j+tHdf4JZoYPlcI4rRYu0Xy4qN8MQf1Z08EibzB0WpgRG5BGK08FTrmM66eSzKQ==}
@@ -12828,7 +12821,7 @@ snapshots:
       pkg-types: 2.3.0
       postcss: 8.5.6
       rollup-plugin-visualizer: 6.0.5(rollup@4.53.3)
-      seroval: 1.4.0
+      seroval: 1.4.2
       std-env: 3.10.0
       ufo: 1.6.1
       unenv: 2.0.0-rc.24
@@ -20556,17 +20549,13 @@ snapshots:
     dependencies:
       randombytes: 2.1.0
 
-  seroval-plugins@1.3.3(seroval@1.3.2):
+  seroval-plugins@1.3.3(seroval@1.4.2):
     dependencies:
-      seroval: 1.3.2
+      seroval: 1.4.2
 
   seroval-plugins@1.4.2(seroval@1.4.2):
     dependencies:
       seroval: 1.4.2
-
-  seroval@1.3.2: {}
-
-  seroval@1.4.0: {}
 
   seroval@1.4.2: {}
 
@@ -20786,8 +20775,8 @@ snapshots:
   solid-js@1.9.10:
     dependencies:
       csstype: 3.1.3
-      seroval: 1.3.2
-      seroval-plugins: 1.3.3(seroval@1.3.2)
+      seroval: 1.4.2
+      seroval-plugins: 1.3.3(seroval@1.4.2)
 
   sonic-boom@2.8.0:
     dependencies:
