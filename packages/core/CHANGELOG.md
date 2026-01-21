@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 3.3.1
+
+### Patch Changes
+
+- Fixed "illegal invocation" error when signing up with passkeys while using password manager browser extensions ([#4968](https://github.com/wevm/wagmi/pull/4968))
+
 ## 3.3.0
 
 ### Minor Changes

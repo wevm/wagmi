@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 2.9.0
+
+### Minor Changes
+
+- Added `includeBroadcasts` option to Foundry plugin to automatically populate deployments mapping from `run-latest.json` files in the `broadcast/` directory. ([#4908](https://github.com/wevm/wagmi/pull/4908))
+
 ## 2.8.0
 
 ### Minor Changes
