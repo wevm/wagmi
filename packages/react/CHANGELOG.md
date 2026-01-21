@@ -1,5 +1,23 @@
 # wagmi
 
+## 3.4.0
+
+### Minor Changes
+
+- Added `useContractEvents` hook. ([#4905](https://github.com/wevm/wagmi/pull/4905))
+
+- Added `useBlobBaseFee` and `useWriteContractSync` hooks. ([`dfe7904`](https://github.com/wevm/wagmi/commit/dfe790426d5ac24d55eacdf8d0193292de801911))
+
+### Patch Changes
+
+- Fixed `createUseWriteContract` not returning `mutate`/`mutateAsyc` with `abi` injected. ([#4967](https://github.com/wevm/wagmi/pull/4967))
+
+- Fixed re-subscribe every render for `useWatchBlockNumber`, `useWatchBlocks`, `useWatchContractEvent`, `useWatchPendingTransactions`. ([`b5d6911`](https://github.com/wevm/wagmi/commit/b5d6911a863e35d677374acd744c054daacd663a))
+
+- Updated dependencies [[`dfe7904`](https://github.com/wevm/wagmi/commit/dfe790426d5ac24d55eacdf8d0193292de801911), [`d503a2c`](https://github.com/wevm/wagmi/commit/d503a2cb6ef96018669a66d03f72a2b2b06dc0fb), [`5399840`](https://github.com/wevm/wagmi/commit/53998407645edd95d85e50a931acaed87c05e256), [`5978cc5`](https://github.com/wevm/wagmi/commit/5978cc508ac837be88ed84c15ea5aa805f59005a), [`67612ed`](https://github.com/wevm/wagmi/commit/67612edfbcb971b71c86964aae72ff3ef80bbe10), [`dbe9484`](https://github.com/wevm/wagmi/commit/dbe9484c1a635c3fc9b658a7d8e34ccc0a82ed1d)]:
+  - @wagmi/core@3.3.0
+  - @wagmi/connectors@8.0.0
+
 ## 3.3.4
 
 ### Patch Changes
