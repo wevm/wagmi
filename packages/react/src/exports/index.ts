@@ -148,6 +148,12 @@ export {
 } from '../hooks/useConnectors.js'
 
 export {
+  type UseContractEventsParameters,
+  type UseContractEventsReturnType,
+  useContractEvents,
+} from '../hooks/useContractEvents.js'
+
+export {
   type UseDeployContractParameters,
   type UseDeployContractReturnType,
   useDeployContract,

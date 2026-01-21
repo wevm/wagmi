@@ -14,6 +14,14 @@ test('default', async () => {
   })
   const result = await options.queryFn(context)
   expectTypeOf(result).toEqualTypeOf<bigint>()
+
+  readContractQueryOptions(config, {
+    address: '0x',
+    abi: abi.erc20,
+    // @ts-expect-error
+    functionName: 'foo',
+    args: ['0x'],
+  })
 })
 
 test('overloads', async () => {

@@ -203,6 +203,10 @@ export function getSidebar() {
             link: '/react/api/hooks/useConnectors',
           },
           {
+            text: 'useContractEvents',
+            link: '/react/api/hooks/useContractEvents',
+          },
+          {
             text: 'useDeployContract',
             link: '/react/api/hooks/useDeployContract',
           },
@@ -830,6 +834,10 @@ export function getSidebar() {
           {
             text: 'getConnectors',
             link: '/core/api/actions/getConnectors',
+          },
+          {
+            text: 'getContractEvents',
+            link: '/core/api/actions/getContractEvents',
           },
           {
             text: 'getEnsAddress',
