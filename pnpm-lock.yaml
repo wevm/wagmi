@@ -626,6 +626,9 @@ importers:
       '@tanstack/react-query-persist-client':
         specifier: ^5.90.12
         version: 5.90.12(@tanstack/react-query@5.49.2(react@19.2.0))(react@19.2.0)
+      cuer:
+        specifier: ^0.0.3
+        version: 0.0.3(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3)
       idb-keyval:
         specifier: ^6.2.1
         version: 6.2.1
@@ -6115,6 +6118,16 @@ packages:
   csstype@3.1.3:
     resolution: {integrity: sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==}
 
+  cuer@0.0.3:
+    resolution: {integrity: sha512-f/UNxRMRCYtfLEGECAViByA3JNflZImOk11G9hwSd+44jvzrc99J35u5l+fbdQ2+ZG441GvOpaeGYBmWquZsbQ==}
+    peerDependencies:
+      react: '>=18'
+      react-dom: '>=18'
+      typescript: '>=5.4.0'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
   dataloader@1.4.0:
     resolution: {integrity: sha512-68s5jYdlvasItOJnCuI2Q9s4q98g0pCyL3HrcKJu8KNugUl8ahgmZYg38ysLTgQjjXX3H8CJLkAvWrclWfcalw==}
 
@@ -8681,6 +8694,10 @@ packages:
   qr-code-styling@1.9.2:
     resolution: {integrity: sha512-RgJaZJ1/RrXJ6N0j7a+pdw3zMBmzZU4VN2dtAZf8ZggCfRB5stEQ3IoDNGaNhYY3nnZKYlYSLl5YkfWN5dPutg==}
     engines: {node: '>=18.18.0'}
+
+  qr@0.5.4:
+    resolution: {integrity: sha512-gjVMHOt7CX+BQd7JLQ9fnS4kJK4Lj4u+Conq52tcCbW7YH3mATTtBbTMA+7cQ1rKOkDo61olFHJReawe+XFxIA==}
+    engines: {node: '>= 20.19.0'}
 
   qrcode-generator@1.5.2:
     resolution: {integrity: sha512-pItrW0Z9HnDBnFmgiNrY1uxRdri32Uh9EjNYLPVC2zZ3ZRIIEqBoDgm4DkvDwNNDHTK7FNkmr8zAa77BYc9xNw==}
@@ -17060,6 +17077,14 @@ snapshots:
 
   csstype@3.1.3: {}
 
+  cuer@0.0.3(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3):
+    dependencies:
+      qr: 0.5.4
+      react: 19.2.0
+      react-dom: 19.2.0(react@19.2.0)
+    optionalDependencies:
+      typescript: 5.9.3
+
   dataloader@1.4.0: {}
 
   dayjs@1.11.13: {}
@@ -20285,6 +20310,8 @@ snapshots:
   qr-code-styling@1.9.2:
     dependencies:
       qrcode-generator: 1.5.2
+
+  qr@0.5.4: {}
 
   qrcode-generator@1.5.2: {}
 
