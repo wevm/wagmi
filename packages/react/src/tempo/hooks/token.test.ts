@@ -1177,6 +1177,100 @@ describe('useWatchUpdateQuoteToken', () => {
   })
 })
 
-describe.todo('useBurnBlocked')
+describe('useBurnBlocked', () => {
+  test('default', async () => {
+    const { result } = await renderHook(() => ({
+      connect: useConnect(),
+      createSync: hooks.useCreateSync(),
+      grantRolesSync: hooks.useGrantRolesSync(),
+      mintSync: hooks.useMintSync(),
+      burnBlocked: hooks.useBurnBlocked(),
+    }))
 
-describe.todo('useBurnBlockedSync')
+    await result.current.connect.mutateAsync({
+      connector: config.connectors[0]!,
+    })
+
+    // Create a new token
+    const { token: tokenAddr } = await result.current.createSync.mutateAsync({
+      currency: 'USD',
+      name: 'Burn Blocked Hook Token',
+      symbol: 'BBHOOK',
+    })
+
+    // Grant issuer role
+    await result.current.grantRolesSync.mutateAsync({
+      token: tokenAddr,
+      roles: ['issuer'],
+      to: account.address,
+    })
+
+    // Mint tokens to account2
+    await result.current.mintSync.mutateAsync({
+      token: tokenAddr,
+      to: account2.address,
+      amount: parseUnits('1000', 6),
+    })
+
+    const hash = await result.current.burnBlocked.mutateAsync({
+      token: tokenAddr,
+      amount: parseUnits('100', 6),
+      from: account2.address,
+    })
+    expect(hash).toBeDefined()
+
+    await vi.waitFor(() =>
+      expect(result.current.burnBlocked.isSuccess).toBeTruthy(),
+    )
+  })
+})
+
+describe('useBurnBlockedSync', () => {
+  test('default', async () => {
+    const { result } = await renderHook(() => ({
+      connect: useConnect(),
+      createSync: hooks.useCreateSync(),
+      grantRolesSync: hooks.useGrantRolesSync(),
+      mintSync: hooks.useMintSync(),
+      burnBlocked: hooks.useBurnBlockedSync(),
+    }))
+
+    await result.current.connect.mutateAsync({
+      connector: config.connectors[0]!,
+    })
+
+    // Create a new token
+    const { token: tokenAddr } = await result.current.createSync.mutateAsync({
+      currency: 'USD',
+      name: 'Burn Blocked Hook Token Sync',
+      symbol: 'BBHOOKSYNC',
+    })
+
+    // Grant issuer role
+    await result.current.grantRolesSync.mutateAsync({
+      token: tokenAddr,
+      roles: ['issuer'],
+      to: account.address,
+    })
+
+    // Mint tokens to account2
+    await result.current.mintSync.mutateAsync({
+      token: tokenAddr,
+      to: account2.address,
+      amount: parseUnits('1000', 6),
+    })
+
+    const { receipt, ...data } =
+      await result.current.burnBlocked.mutateAsync({
+        token: tokenAddr,
+        amount: parseUnits('100', 6),
+        from: account2.address,
+      })
+    expect(receipt).toBeDefined()
+    expect(data).toBeDefined()
+
+    await vi.waitFor(() =>
+      expect(result.current.burnBlocked.isSuccess).toBeTruthy(),
+    )
+  })
+})

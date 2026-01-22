@@ -451,9 +451,86 @@ describe('createSync', () => {
   })
 })
 
-describe.todo('burnBlocked')
+describe('burnBlocked', () => {
+  test('default', async () => {
+    await connect(config, {
+      connector: config.connectors[0]!,
+    })
 
-describe.todo('burnBlockedSync')
+    // Create a new token
+    const { token: tokenAddr } = await token.createSync(config, {
+      currency: 'USD',
+      name: 'Burn Blocked Token',
+      symbol: 'BURNBLOCKED',
+    })
+
+    // Grant issuer role to ourselves (to mint) and burn (to burn blocked)
+    // Assuming issuer has burn rights or we grant specific rights.
+    // Let's grant 'issuer' as usual for minting.
+    await token.grantRolesSync(config, {
+      token: tokenAddr,
+      roles: ['issuer'],
+      to: account.address,
+    })
+
+    // Mint tokens to account2
+    await token.mintSync(config, {
+      token: tokenAddr,
+      to: account2.address,
+      amount: parseUnits('1000', 6),
+    })
+
+    const hash = await token.burnBlocked(config, {
+      token: tokenAddr,
+      amount: parseUnits('100', 6),
+      from: account2.address,
+    })
+    expect(hash).toBeDefined()
+    expect(typeof hash).toBe('string')
+  })
+})
+
+describe('burnBlockedSync', () => {
+  test('default', async () => {
+    await connect(config, {
+      connector: config.connectors[0]!,
+    })
+
+    // Create a new token
+    const { token: tokenAddr } = await token.createSync(config, {
+      currency: 'USD',
+      name: 'Burn Blocked Token Sync',
+      symbol: 'BURNBLOCKEDSYNC',
+    })
+
+    // Grant issuer role
+    await token.grantRolesSync(config, {
+      token: tokenAddr,
+      roles: ['issuer'],
+      to: account.address,
+    })
+
+    // Mint tokens to account2
+    await token.mintSync(config, {
+      token: tokenAddr,
+      to: account2.address,
+      amount: parseUnits('1000', 6),
+    })
+
+    const { receipt, ...result } = await token.burnBlockedSync(config, {
+      token: tokenAddr,
+      amount: parseUnits('100', 6),
+      from: account2.address,
+    })
+    expect(receipt).toBeDefined()
+    expect(result).toMatchInlineSnapshot(`
+      {
+        "amount": 100000000n,
+        "from": "0x8C8d35429F74ec245F8Ef2f4Fd1e551cFF97d650",
+      }
+    `)
+  })
+})
 
 describe('changeTransferPolicy', () => {
   test('default', async () => {
