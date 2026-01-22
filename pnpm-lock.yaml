@@ -16,8 +16,8 @@ catalogs:
       specifier: 0.3.2
       version: 0.3.2
     '@metamask/connect-evm':
-      specifier: 0.1.2
-      version: 0.1.2
+      specifier: 0.2.0
+      version: 0.2.0
     '@nuxt/schema':
       specifier: 4.2.1
       version: 4.2.1
@@ -275,7 +275,7 @@ importers:
         version: 0.3.2(viem@2.44.4(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76))
       '@metamask/connect-evm':
         specifier: 'catalog:'
-        version: 0.1.2(@babel/runtime@7.28.4)(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+        version: 0.2.0(@babel/runtime@7.28.4)(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@safe-global/safe-apps-provider':
         specifier: 'catalog:'
         version: 0.18.6(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
@@ -469,7 +469,7 @@ importers:
         version: 5.49.2(react@19.2.0)
       next:
         specifier: ^16.0.7
-        version: 16.0.10(@babel/core@7.28.5)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+        version: 16.0.10(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       react:
         specifier: 'catalog:'
         version: 19.2.0
@@ -2475,12 +2475,12 @@ packages:
     resolution: {integrity: sha512-807Y6JxqeY3tckSRDse96RmHV6atDsSPLD/x9KIync8ccFjOwSZlv0n4NA5Bsi0znjOogU0jEe5hPNIDTFzFRg==}
     engines: {node: ^18.18 || >=20}
 
-  '@metamask/connect-evm@0.1.2':
-    resolution: {integrity: sha512-eb6+XxE/nxPSfbA8HqykEtsZ2fyVNHM8j49E42E60aYvOILYet1VGEtag41XdOJObH7j6VvX7dwBY+YrQ1bJpQ==}
+  '@metamask/connect-evm@0.2.0':
+    resolution: {integrity: sha512-UcM4iNhEChxN3S0Amedqv0JnIJ+PSa3G0E5EyNW56sH/aZWsQnX4Gl7/nar4C3hb6zgREBW4qZeAq+dE4tdHAQ==}
     engines: {node: '>=20.19.0'}
 
-  '@metamask/connect-multichain@0.4.0':
-    resolution: {integrity: sha512-GaoY472B3eNUIMf40v2o8lFNIce7O33flraGFChPdTjMIfm4lqY3O2C5LDtSbrdKFU0o+KVr1LzmnQwIsdk5Lw==}
+  '@metamask/connect-multichain@0.5.0':
+    resolution: {integrity: sha512-hS+jzpd3VynpPMXocArEOsyQwMqpgcOXfS2WcKgLxTitg9MyqR7o1PE1TnLXaCB4RkWiLr+FenpUhtu4MdzKAg==}
     engines: {node: '>=20.19.0'}
     peerDependencies:
       '@react-native-async-storage/async-storage': ^1.23
@@ -2536,6 +2536,10 @@ packages:
 
   '@metamask/rpc-errors@7.0.2':
     resolution: {integrity: sha512-YYYHsVYd46XwY2QZzpGeU4PSdRhHdxnzkB8piWGvJW2xbikZ3R+epAYEL4q/K8bh9JPTucsUdwRFnACor1aOYw==}
+    engines: {node: ^18.20 || ^20.17 || >=22}
+
+  '@metamask/rpc-errors@7.0.3':
+    resolution: {integrity: sha512-nrEaeBawm8yFU7hetJKok/CUs0tQsWtTqp3OLbFhPUMXYqU7uI5LAV5vi9o7rTjFkUyof7Nzbw5bea5+1ou+dg==}
     engines: {node: ^18.20 || ^20.17 || >=22}
 
   '@metamask/safe-event-emitter@3.1.1':
@@ -12034,11 +12038,11 @@ snapshots:
       - '@babel/runtime'
       - supports-color
 
-  '@metamask/connect-evm@0.1.2(@babel/runtime@7.28.4)(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
+  '@metamask/connect-evm@0.2.0(@babel/runtime@7.28.4)(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
     dependencies:
       '@metamask/analytics': 0.2.0
       '@metamask/chain-agnostic-permission': 1.4.0(@babel/runtime@7.28.4)
-      '@metamask/connect-multichain': 0.4.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      '@metamask/connect-multichain': 0.5.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@metamask/utils': 11.9.0
     transitivePeerDependencies:
       - '@babel/runtime'
@@ -12048,7 +12052,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@metamask/connect-multichain@0.4.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
+  '@metamask/connect-multichain@0.5.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
     dependencies:
       '@metamask/analytics': 0.2.0
       '@metamask/mobile-wallet-protocol-core': 0.3.1
@@ -12056,6 +12060,7 @@ snapshots:
       '@metamask/multichain-api-client': 0.10.1
       '@metamask/multichain-ui': 0.3.0
       '@metamask/onboarding': 1.0.1
+      '@metamask/rpc-errors': 7.0.3
       '@metamask/utils': 11.9.0
       '@paulmillr/qr': 0.2.1
       bowser: 2.11.0
@@ -12160,6 +12165,13 @@ snapshots:
       - supports-color
 
   '@metamask/rpc-errors@7.0.2':
+    dependencies:
+      '@metamask/utils': 11.9.0
+      fast-safe-stringify: 2.1.1
+    transitivePeerDependencies:
+      - supports-color
+
+  '@metamask/rpc-errors@7.0.3':
     dependencies:
       '@metamask/utils': 11.9.0
       fast-safe-stringify: 2.1.1
@@ -18905,7 +18917,7 @@ snapshots:
 
   nanotar@0.2.0: {}
 
-  next@16.0.10(@babel/core@7.28.5)(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
+  next@16.0.10(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
     dependencies:
       '@next/env': 16.0.10
       '@swc/helpers': 0.5.15
@@ -18913,7 +18925,7 @@ snapshots:
       postcss: 8.4.31
       react: 19.2.0
       react-dom: 19.2.0(react@19.2.0)
-      styled-jsx: 5.1.6(@babel/core@7.28.5)(react@19.2.0)
+      styled-jsx: 5.1.6(react@19.2.0)
     optionalDependencies:
       '@next/swc-darwin-arm64': 16.0.10
       '@next/swc-darwin-x64': 16.0.10
@@ -20910,12 +20922,10 @@ snapshots:
 
   structured-clone-es@1.0.0: {}
 
-  styled-jsx@5.1.6(@babel/core@7.28.5)(react@19.2.0):
+  styled-jsx@5.1.6(react@19.2.0):
     dependencies:
       client-only: 0.0.1
       react: 19.2.0
-    optionalDependencies:
-      '@babel/core': 7.28.5
 
   stylehacks@7.0.6(postcss@8.5.6):
     dependencies:

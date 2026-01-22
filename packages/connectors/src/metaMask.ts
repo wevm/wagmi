@@ -1,5 +1,5 @@
 import type {
-  createMetamaskConnectEVM,
+  createEVMClient,
   EIP1193Provider,
   MetamaskConnectEVM,
 } from '@metamask/connect-evm'
@@ -18,9 +18,9 @@ import {
 } from 'viem'
 
 export type MetaMaskParameters = UnionCompute<
-  ExactPartial<Pick<CreateMetamaskConnectEVMParameters, 'dapp' | 'debug'>> & {
+  ExactPartial<Pick<CreateEVMClientParameters, 'dapp' | 'debug'>> & {
     /** @deprecated use `dapp` instead */
-    dappMetadata?: CreateMetamaskConnectEVMParameters['dapp']
+    dappMetadata?: CreateEVMClientParameters['dapp']
     /** @deprecated use `debug` instead */
     logging?: unknown
     /** Mobile-specific options, including preferredOpenLink for React Native deeplinks */
@@ -31,20 +31,20 @@ export type MetaMaskParameters = UnionCompute<
       useDeeplink?: boolean
     }
   } & OneOf<
-      | {
-          /* Shortcut to connect and sign a message */
-          connectAndSign?: string | undefined
-        }
-      | {
-          // TODO: Strongly type `method` and `params`
-          /* Allow `connectWith` any rpc method */
-          connectWith?: { method: string; params: unknown[] } | undefined
-        }
-    >
+    | {
+      /* Shortcut to connect and sign a message */
+      connectAndSign?: string | undefined
+    }
+    | {
+      // TODO: Strongly type `method` and `params`
+      /* Allow `connectWith` any rpc method */
+      connectWith?: { method: string; params: unknown[] } | undefined
+    }
+  >
 >
 
-type CreateMetamaskConnectEVMParameters = Parameters<
-  typeof createMetamaskConnectEVM
+type CreateEVMClientParameters = Parameters<
+  typeof createEVMClient
 >[0]
 
 metaMask.type = 'metaMask' as const
@@ -251,14 +251,14 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
     async getInstance() {
       if (!metamask) {
         if (!metamaskPromise) {
-          const { createMetamaskConnectEVM } = await (() => {
+          const { createEVMClient } = await (() => {
             try {
               return import('@metamask/connect-evm')
             } catch {
               throw new Error('dependency "@metamask/connect-evm" not found')
             }
           })()
-          metamaskPromise = createMetamaskConnectEVM({
+          metamaskPromise = createEVMClient({
             api: {
               supportedNetworks: Object.fromEntries(
                 config.chains.map((chain) => [
@@ -285,6 +285,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
               chainChanged: this.onChainChanged.bind(this),
               connect: this.onConnect.bind(this),
               disconnect: this.onDisconnect.bind(this),
+              displayUri: this.onDisplayUri.bind(this),
             },
             ...(parameters.mobile && { mobile: parameters.mobile }),
           })
