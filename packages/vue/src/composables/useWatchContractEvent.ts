@@ -6,12 +6,12 @@ import {
 } from '@wagmi/core'
 import type {
   ConfigParameter,
-  EnabledParameter,
   UnionCompute,
   UnionExactPartial,
 } from '@wagmi/core/internal'
 import type { Abi, ContractEventName } from 'viem'
 import { computed, watchEffect } from 'vue'
+import type { EnabledParameter } from '../types/properties.js'
 import type { DeepMaybeRef } from '../types/ref.js'
 import { deepUnref } from '../utils/cloneDeep.js'
 import { useChainId } from './useChainId.js'

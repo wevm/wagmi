@@ -50,6 +50,8 @@ export { useConnectors } from '../primitives/useConnectors.js'
 
 export { useDisconnect } from '../primitives/useDisconnect.js'
 
+export { useReconnect } from '../primitives/useReconnect.js'
+
 export { useSwitchChain } from '../primitives/useSwitchChain.js'
 
 export { useSwitchConnection } from '../primitives/useSwitchConnection.js'
