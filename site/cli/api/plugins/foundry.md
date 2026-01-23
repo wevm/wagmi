@@ -49,6 +49,29 @@ export default defineConfig({
 })
 ```
 
+### includeBroadcasts
+
+`boolean | undefined`
+
+Automatically detect contract deployments from Foundry's `run-latest.json` files in the `broadcast/` directory.
+
+- The `deployments` mapping can be used to override broadcast deployments for the same contract.
+- Broadcasts are read once when `wagmi generate` runs. To pick up new broadcast deployments after running deploy scripts, rerun the generate command.
+- Defaults to `false`.
+
+```ts
+import { defineConfig } from '@wagmi/cli'
+import { foundry } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    foundry({
+      includeBroadcasts: true, // [!code focus]
+    }),
+  ],
+})
+```
+
 ### deployments
 
 `{ [key: string]: address?: Address | Record<chainId, Address> | undefined } | undefined`
