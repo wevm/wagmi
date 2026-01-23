@@ -4,7 +4,7 @@ import type {
   GetConnectorClientErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { Compute } from '@wagmi/core/internal'
+import type { Compute, ConfigParameter } from '@wagmi/core/internal'
 import {
   type GetConnectorClientData,
   type GetConnectorClientOptions,
@@ -12,36 +12,10 @@ import {
 } from '@wagmi/core/query'
 import type { Accessor } from 'solid-js'
 import { createEffect, createMemo, on } from 'solid-js'
-
-import type { ConfigParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 import { useConnection } from './useConnection.js'
-
-export type SolidConnectorClientParameters<
-  config extends Config = Config,
-  chainId extends
-    config['chains'][number]['id'] = config['chains'][number]['id'],
-  selectData = GetConnectorClientData<config, chainId>,
-> = Compute<
-  GetConnectorClientOptions<config, chainId, selectData> &
-    ConfigParameter<config>
->
-
-export type UseConnectorClientParameters<
-  config extends Config = Config,
-  chainId extends
-    config['chains'][number]['id'] = config['chains'][number]['id'],
-  selectData = GetConnectorClientData<config, chainId>,
-> = Accessor<SolidConnectorClientParameters<config, chainId, selectData>>
-
-export type UseConnectorClientReturnType<
-  config extends Config = Config,
-  chainId extends
-    config['chains'][number]['id'] = config['chains'][number]['id'],
-  selectData = GetConnectorClientData<config, chainId>,
-> = UseQueryReturnType<selectData, GetConnectorClientErrorType>
 
 /** https://wagmi.sh/solid/api/primitives/useConnectorClient */
 export function useConnectorClient<
@@ -50,24 +24,22 @@ export function useConnectorClient<
     config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetConnectorClientData<config, chainId>,
 >(
-  parameters: UseConnectorClientParameters<
+  parameters: useConnectorClient.Parameters<
     config,
     chainId,
     selectData
   > = () => ({}),
-): UseConnectorClientReturnType<config, chainId, selectData> {
+): useConnectorClient.ReturnType<config, chainId, selectData> {
   const config = useConfig(parameters)
   const chainId = useChainId(() => ({ config: config() }))
   const connection = useConnection(() => ({ config: config() }))
   const options = createMemo(() =>
     getConnectorClientQueryOptions<config, chainId>(config(), {
-      ...parameters(),
+      ...(parameters() as any),
       chainId: parameters().chainId ?? chainId(),
       connector: parameters().connector ?? connection().connector,
-      query: parameters().query as any,
     }),
   )
-
   const queryClient = useQueryClient()
   createEffect(
     on(
@@ -84,6 +56,31 @@ export function useConnectorClient<
       { defer: true },
     ),
   )
-
   return useQuery(options) as any
+}
+
+export namespace useConnectorClient {
+  export type Parameters<
+    config extends Config = Config,
+    chainId extends
+      config['chains'][number]['id'] = config['chains'][number]['id'],
+    selectData = GetConnectorClientData<config, chainId>,
+  > = Accessor<SolidParameters<config, chainId, selectData>>
+
+  export type ReturnType<
+    config extends Config = Config,
+    chainId extends
+      config['chains'][number]['id'] = config['chains'][number]['id'],
+    selectData = GetConnectorClientData<config, chainId>,
+  > = UseQueryReturnType<selectData, GetConnectorClientErrorType>
+
+  export type SolidParameters<
+    config extends Config = Config,
+    chainId extends
+      config['chains'][number]['id'] = config['chains'][number]['id'],
+    selectData = GetConnectorClientData<config, chainId>,
+  > = Compute<
+    GetConnectorClientOptions<config, chainId, selectData> &
+      ConfigParameter<config>
+  >
 }

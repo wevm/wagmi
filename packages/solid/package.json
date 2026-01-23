@@ -25,7 +25,6 @@
     "/chains",
     "/codegen",
     "/connectors",
-    "/internal",
     "/query"
   ],
   "sideEffects": false,
@@ -54,10 +53,6 @@
       "types": "./dist/types/exports/connectors.d.ts",
       "default": "./dist/esm/exports/connectors.js"
     },
-    "./internal": {
-      "types": "./dist/types/exports/internal.d.ts",
-      "default": "./dist/esm/exports/internal.js"
-    },
     "./query": {
       "types": "./dist/types/exports/query.d.ts",
       "default": "./dist/esm/exports/query.js"
@@ -77,9 +72,6 @@
       ],
       "connectors": [
         "./dist/types/exports/connectors.d.ts"
-      ],
-      "internal": [
-        "./dist/types/exports/internal.d.ts"
       ],
       "query": [
         "./dist/types/exports/query.d.ts"

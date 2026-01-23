@@ -10,7 +10,7 @@ import './index.css'
 // `@coinbase-wallet/sdk` uses `Buffer`
 globalThis.Buffer = Buffer
 
-import App from './App.tsx'
+import { App } from './App.tsx'
 import { config } from './wagmi.ts'
 
 const queryClient = new QueryClient()

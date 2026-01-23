@@ -1,11 +1,10 @@
 'use client'
 
 import type { Config, ResolvedRegister } from '@wagmi/core'
+import type { ConfigParameter } from '@wagmi/core/internal'
 import { useContext } from 'react'
-
 import { WagmiContext } from '../context.js'
 import { WagmiProviderNotFoundError } from '../errors/context.js'
-import type { ConfigParameter } from '../types/properties.js'
 
 export type UseConfigParameters<config extends Config = Config> =
   ConfigParameter<config>

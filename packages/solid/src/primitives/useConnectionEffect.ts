@@ -1,33 +1,12 @@
 import { type GetConnectionReturnType, watchConnection } from '@wagmi/core'
-import type { Compute } from '@wagmi/core/internal'
+import type { Compute, ConfigParameter } from '@wagmi/core/internal'
 import type { Accessor } from 'solid-js'
 import { createEffect, onCleanup } from 'solid-js'
-
-import type { ConfigParameter } from '../types/properties.js'
 import { useConfig } from './useConfig.js'
-
-export type SolidConnectionEffectParameters = Compute<
-  {
-    onConnect?(
-      data: Compute<
-        Pick<
-          Extract<GetConnectionReturnType, { status: 'connected' }>,
-          'address' | 'addresses' | 'chain' | 'chainId' | 'connector'
-        > & {
-          isReconnected: boolean
-        }
-      >,
-    ): void
-    onDisconnect?(): void
-  } & ConfigParameter
->
-
-export type UseConnectionEffectParameters =
-  Accessor<SolidConnectionEffectParameters>
 
 /** https://wagmi.sh/solid/api/primitives/useConnectionEffect */
 export function useConnectionEffect(
-  parameters: UseConnectionEffectParameters = () => ({}),
+  parameters: useConnectionEffect.Parameters = () => ({}),
 ) {
   const config = useConfig(parameters)
 
@@ -64,4 +43,24 @@ export function useConnectionEffect(
     })
     onCleanup(() => unsubscribe())
   })
+}
+
+export namespace useConnectionEffect {
+  export type Parameters = Accessor<SolidParameters>
+
+  export type SolidParameters = Compute<
+    {
+      onConnect?(
+        data: Compute<
+          Pick<
+            Extract<GetConnectionReturnType, { status: 'connected' }>,
+            'address' | 'addresses' | 'chain' | 'chainId' | 'connector'
+          > & {
+            isReconnected: boolean
+          }
+        >,
+      ): void
+      onDisconnect?(): void
+    } & ConfigParameter
+  >
 }

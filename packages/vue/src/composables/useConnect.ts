@@ -5,7 +5,7 @@ import type {
   GetConnectorsReturnType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { Compute } from '@wagmi/core/internal'
+import type { Compute, ConfigParameter } from '@wagmi/core/internal'
 import {
   type ConnectData,
   type ConnectMutate,
@@ -15,7 +15,6 @@ import {
   connectMutationOptions,
 } from '@wagmi/core/query'
 import { onScopeDispose } from 'vue'
-import type { ConfigParameter } from '../types/properties.js'
 import type { UseMutationReturnType } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 import { useConnectors } from './useConnectors.js'
@@ -33,7 +32,9 @@ export type UseConnectReturnType<
     ConnectData<config, config['connectors'][number], boolean>,
     ConnectErrorType,
     ConnectVariables<config, config['connectors'][number], boolean>,
-    context
+    context,
+    ConnectMutate<config, context>,
+    ConnectMutateAsync<config, context>
   > & {
     /** @deprecated use `mutate` instead */
     connect: ConnectMutate<config, context>
@@ -41,8 +42,6 @@ export type UseConnectReturnType<
     connectAsync: ConnectMutateAsync<config, context>
     /** @deprecated use `useConnectors` instead */
     connectors: Compute<GetConnectorsReturnType> | config['connectors']
-    mutate: ConnectMutate<config, context>
-    mutateAsync: ConnectMutateAsync<config, context>
   }
 >
 

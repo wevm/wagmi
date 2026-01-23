@@ -133,7 +133,7 @@
       },
       "packages/react": {
         "entry": [
-          "src/exports/{actions,chains,codegen,connectors,experimental,index,internal,query,tempo}.ts!",
+          "src/exports/{actions,chains,codegen,connectors,experimental,index,query,tempo}.ts!",
           "src/exports/actions/experimental.ts!"
         ],
         "ignore": [
@@ -152,7 +152,7 @@
       },
       "packages/vue": {
         "entry": [
-          "src/exports/{actions,chains,connectors,index,internal,nuxt,query}.ts!",
+          "src/exports/{actions,chains,connectors,index,nuxt,query}.ts!",
           "src/exports/actions/experimental.ts!"
         ],
         "ignore": [
@@ -165,7 +165,7 @@
       },
       "packages/solid": {
         "entry": [
-          "src/exports/{actions,chains,connectors,index,internal,query}.ts!",
+          "src/exports/{actions,chains,connectors,index,query}.ts!",
           "src/exports/actions/experimental.ts!"
         ],
         "ignore": [

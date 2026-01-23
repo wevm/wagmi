@@ -3,6 +3,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import type { Config, GetBlockErrorType, ResolvedRegister } from '@wagmi/core'
 import type {
   Compute,
+  ConfigParameter,
   UnionCompute,
   UnionStrictOmit,
 } from '@wagmi/core/internal'
@@ -12,7 +13,6 @@ import {
   getBlockQueryOptions,
 } from '@wagmi/core/query'
 import type { BlockTag } from 'viem'
-import type { ConfigParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'

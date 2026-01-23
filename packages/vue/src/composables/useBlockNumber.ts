@@ -6,6 +6,7 @@ import type {
 } from '@wagmi/core'
 import type {
   Compute,
+  ConfigParameter,
   UnionCompute,
   UnionStrictOmit,
 } from '@wagmi/core/internal'
@@ -15,8 +16,6 @@ import {
   getBlockNumberQueryOptions,
 } from '@wagmi/core/query'
 import { computed } from 'vue'
-
-import type { ConfigParameter } from '../types/properties.js'
 import type { DeepMaybeRef, DeepUnwrapRef } from '../types/ref.js'
 import { deepUnref } from '../utils/cloneDeep.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'

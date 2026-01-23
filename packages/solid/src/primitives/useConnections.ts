@@ -3,31 +3,19 @@ import {
   getConnections,
   watchConnections,
 } from '@wagmi/core'
+import type { ConfigParameter } from '@wagmi/core/internal'
 import { type Accessor, createEffect, createSignal, onCleanup } from 'solid-js'
-
-import type { ConfigParameter } from '../types/properties.js'
 import { useConfig } from './useConfig.js'
-
-export type SolidConnectionsParameters = ConfigParameter
-
-export type UseConnectionsParameters = Accessor<SolidConnectionsParameters>
-
-export type SolidConnectionsReturnType = GetConnectionsReturnType
-
-export type UseConnectionsReturnType = Accessor<SolidConnectionsReturnType>
 
 /** https://wagmi.sh/solid/api/primitives/useConnections */
 export function useConnections(
-  parameters: UseConnectionsParameters = () => ({}),
-): UseConnectionsReturnType {
+  parameters: useConnections.Parameters = () => ({}),
+): useConnections.ReturnType {
   const config = useConfig(parameters)
-
   const [connections, setConnections] = createSignal(getConnections(config()))
-
   createEffect(() => {
     const _config = config()
     setConnections(() => getConnections(_config))
-
     const unsubscribe = watchConnections(_config, {
       onChange(data) {
         setConnections(() => data)
@@ -35,6 +23,12 @@ export function useConnections(
     })
     onCleanup(() => unsubscribe())
   })
-
   return connections
+}
+
+export namespace useConnections {
+  export type Parameters = Accessor<SolidParameters>
+  export type ReturnType = Accessor<SolidReturnType>
+  export type SolidParameters = ConfigParameter
+  export type SolidReturnType = GetConnectionsReturnType
 }

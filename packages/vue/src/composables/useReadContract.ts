@@ -3,7 +3,7 @@ import type {
   ReadContractErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { UnionCompute } from '@wagmi/core/internal'
+import type { ConfigParameter, UnionCompute } from '@wagmi/core/internal'
 import {
   type ReadContractData,
   type ReadContractOptions,
@@ -11,7 +11,6 @@ import {
 } from '@wagmi/core/query'
 import type { Abi, ContractFunctionArgs, ContractFunctionName } from 'viem'
 import { computed, type MaybeRef } from 'vue'
-import type { ConfigParameter } from '../types/properties.js'
 import type { DeepMaybeRef } from '../types/ref.js'
 import { deepUnref } from '../utils/cloneDeep.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'

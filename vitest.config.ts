@@ -143,7 +143,7 @@ export default defineConfig({
         plugins: [solid()],
         resolve: { alias },
         test: {
-          name: '@wagmi/solid',
+          name: 'solid',
           browser: {
             enabled: true,
             headless: true,

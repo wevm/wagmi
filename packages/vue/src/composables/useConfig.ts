@@ -1,12 +1,11 @@
 import type { Config, ResolvedRegister } from '@wagmi/core'
+import type { ConfigParameter } from '@wagmi/core/internal'
 import { hasInjectionContext, inject, unref } from 'vue'
-
 import {
   WagmiInjectionContextError,
   WagmiPluginNotFoundError,
 } from '../errors/plugin.js'
 import { configKey } from '../plugin.js'
-import type { ConfigParameter } from '../types/properties.js'
 import type { DeepMaybeRef } from '../types/ref.js'
 
 export type UseConfigParameters<config extends Config = Config> = DeepMaybeRef<

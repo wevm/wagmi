@@ -3,13 +3,13 @@ import type {
   EstimateGasErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
+import type { ConfigParameter } from '@wagmi/core/internal'
 import {
   type EstimateGasData,
   type EstimateGasOptions,
   estimateGasQueryOptions,
 } from '@wagmi/core/query'
 import { computed } from 'vue'
-import type { ConfigParameter } from '../types/properties.js'
 import type { DeepMaybeRef } from '../types/ref.js'
 import { deepUnref } from '../utils/cloneDeep.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'

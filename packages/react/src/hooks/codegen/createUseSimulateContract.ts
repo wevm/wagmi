@@ -5,6 +5,7 @@ import type {
   SimulateContractParameters,
 } from '@wagmi/core'
 import type {
+  ConfigParameter,
   QueryParameter,
   ScopeKeyParameter,
   UnionExactPartial,
@@ -19,8 +20,6 @@ import type {
   ContractFunctionArgs,
   ContractFunctionName,
 } from 'viem'
-
-import type { ConfigParameter } from '../../types/properties.js'
 import { useChainId } from '../useChainId.js'
 import { useConfig } from '../useConfig.js'
 import {

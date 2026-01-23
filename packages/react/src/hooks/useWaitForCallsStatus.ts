@@ -4,13 +4,12 @@ import type {
   ResolvedRegister,
   WaitForCallsStatusErrorType,
 } from '@wagmi/core'
-import type { Compute } from '@wagmi/core/internal'
+import type { Compute, ConfigParameter } from '@wagmi/core/internal'
 import {
   type WaitForCallsStatusData,
   type WaitForCallsStatusOptions,
   waitForCallsStatusQueryOptions,
 } from '@wagmi/core/query'
-import type { ConfigParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 import { useConnection } from './useConnection.js'

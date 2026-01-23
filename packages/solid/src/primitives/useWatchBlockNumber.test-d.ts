@@ -3,10 +3,7 @@ import { http, webSocket } from 'viem'
 import { mainnet, optimism } from 'viem/chains'
 import { expectTypeOf, test } from 'vitest'
 
-import {
-  type SolidWatchBlockNumberParameters,
-  useWatchBlockNumber,
-} from './useWatchBlockNumber.js'
+import { useWatchBlockNumber } from './useWatchBlockNumber.js'
 
 test('default', () => {
   useWatchBlockNumber(() => ({
@@ -24,7 +21,7 @@ test('differing transports', () => {
     },
   })
 
-  type Result = SolidWatchBlockNumberParameters<
+  type Result = useWatchBlockNumber.SolidParameters<
     typeof config,
     typeof mainnet.id | typeof optimism.id
   >
@@ -35,7 +32,7 @@ test('differing transports', () => {
     onBlockNumber() {},
   }))
 
-  type Result2 = SolidWatchBlockNumberParameters<
+  type Result2 = useWatchBlockNumber.SolidParameters<
     typeof config,
     typeof mainnet.id
   >
@@ -54,7 +51,7 @@ test('differing transports', () => {
     onBlockNumber() {},
   }))
 
-  type Result3 = SolidWatchBlockNumberParameters<
+  type Result3 = useWatchBlockNumber.SolidParameters<
     typeof config,
     typeof optimism.id
   >
