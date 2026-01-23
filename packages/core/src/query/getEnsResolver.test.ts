@@ -6,6 +6,7 @@ import { getEnsResolverQueryOptions } from './getEnsResolver.js'
 test('default', () => {
   expect(getEnsResolverQueryOptions(config)).toMatchInlineSnapshot(`
     {
+      "enabled": false,
       "queryFn": [Function],
       "queryKey": [
         "ensResolver",
@@ -20,6 +21,7 @@ test('parameters: chainId', () => {
     getEnsResolverQueryOptions(config, { chainId: chain.mainnet.id }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": false,
       "queryFn": [Function],
       "queryKey": [
         "ensResolver",

@@ -8,15 +8,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@tanstack/vue-query": ">=5.45.0",
+    "@tanstack/vue-query": "catalog:",
     "@wagmi/vue": "workspace:*",
     "viem": "2.*",
-    "vue": ">=3.4.21"
+    "vue": "catalog:"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.0.4",
-    "buffer": "^6.0.3",
-    "vite": "^5.2.11",
-    "vue-tsc": "^2.0.6"
+    "@vitejs/plugin-vue": "catalog:",
+    "buffer": "catalog:",
+    "vite": "catalog:",
+    "vue-tsc": "3.1.3"
   }
 }

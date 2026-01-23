@@ -23,6 +23,10 @@ export type BlockExplorerConfig = {
    */
   cacheDuration?: number | undefined
   /**
+   * Chain ID for block explorer. Appended to the request URL as query param `&chainId=${chainId}`.
+   */
+  chainId?: number | undefined
+  /**
    * Contracts to fetch ABIs for.
    */
   contracts: Compute<Omit<ContractConfig, 'abi'>>[]
@@ -30,9 +34,7 @@ export type BlockExplorerConfig = {
    * Function to get address from contract config.
    */
   getAddress?:
-    | ((config: {
-        address: NonNullable<ContractConfig['address']>
-      }) => Address)
+    | ((config: { address: NonNullable<ContractConfig['address']> }) => Address)
     | undefined
   /**
    * Name of source.
@@ -63,6 +65,7 @@ export function blockExplorer(config: BlockExplorerConfig) {
     apiKey,
     baseUrl,
     cacheDuration,
+    chainId,
     contracts,
     getAddress = ({ address }) => {
       if (typeof address === 'string') return address
@@ -91,9 +94,11 @@ export function blockExplorer(config: BlockExplorerConfig) {
     request({ address }) {
       if (!address) throw new Error('address is required')
       return {
-        url: `${baseUrl}?module=contract&action=getabi&address=${getAddress({
-          address,
-        })}${apiKey ? `&apikey=${apiKey}` : ''}`,
+        url: `${baseUrl}?${chainId ? `chainId=${chainId}&` : ''}module=contract&action=getabi&address=${getAddress(
+          {
+            address,
+          },
+        )}${apiKey ? `&apikey=${apiKey}` : ''}`,
       }
     },
   })

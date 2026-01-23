@@ -8,16 +8,16 @@ const connector = config.connectors[0]!
 const contextValue = { foo: 'bar' } as const
 
 test('parameter', () => {
-  expectTypeOf(useDisconnect().disconnect)
+  expectTypeOf(useDisconnect().mutate)
     .parameter(0)
     .toEqualTypeOf<{ connector?: Connector | undefined } | undefined>()
-  expectTypeOf(useDisconnect().disconnect)
+  expectTypeOf(useDisconnect().mutateAsync)
     .parameter(0)
     .toEqualTypeOf<{ connector?: Connector | undefined } | undefined>()
 })
 
 test('context', () => {
-  const { context, data, disconnect, error, variables } = useDisconnect({
+  const disconnect = useDisconnect({
     mutation: {
       onMutate(variables) {
         expectTypeOf(variables).toEqualTypeOf<
@@ -50,14 +50,18 @@ test('context', () => {
     },
   })
 
-  expectTypeOf(data.value).toEqualTypeOf<void | undefined>()
-  expectTypeOf(error.value).toEqualTypeOf<DisconnectErrorType | null>()
-  expectTypeOf(variables.value).toEqualTypeOf<
+  expectTypeOf(disconnect.data.value).toEqualTypeOf<void | undefined>()
+  expectTypeOf(
+    disconnect.error.value,
+  ).toEqualTypeOf<DisconnectErrorType | null>()
+  expectTypeOf(disconnect.variables.value).toEqualTypeOf<
     { connector?: Connector | undefined } | undefined
   >()
-  expectTypeOf(context.value).toEqualTypeOf<typeof contextValue | undefined>()
+  expectTypeOf(disconnect.context.value).toEqualTypeOf<
+    typeof contextValue | undefined
+  >()
 
-  disconnect(
+  disconnect.mutate(
     { connector },
     {
       onError(error, variables, context) {

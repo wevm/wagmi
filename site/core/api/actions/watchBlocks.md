@@ -246,4 +246,4 @@ Function for cleaning up watcher.
 
 ## Viem
 
-- [`watchBlocks`](https://viem.sh/docs/actions/public/watchBlocks.html)
+- [`watchBlocks`](https://viem.sh/docs/actions/public/watchBlocks)

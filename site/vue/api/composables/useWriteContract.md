@@ -34,11 +34,11 @@ import { useWriteContract } from '@wagmi/vue'
 import { useWriteContract } from '@wagmi/vue'
 import { abi } from './abi'
 
-const { writeContract } = useWriteContract()
+const writeContract = useWriteContract()
 </script>
 
 <template>
-  <button @click="writeContract({ 
+  <button @click="writeContract.mutate({ 
     abi,
     address: '0x6b175474e89094c44da98b954eedeac495271d0f',
     functionName: 'transferFrom',
@@ -80,7 +80,7 @@ import { type UseWriteContractParameters } from '@wagmi/vue'
 import { useWriteContract } from '@wagmi/vue'
 import { config } from './config' // [!code focus]
 
-const result = useWriteContract({
+const writeContract = useWriteContract({
   config, // [!code focus]
 })
 </script>

@@ -1,27 +1,29 @@
 // biome-ignore lint/performance/noBarrelFile: entrypoint module
-export { actions, type ActionsConfig } from '../plugins/actions.js'
+export { type ActionsConfig, actions } from '../plugins/actions.js'
 
 export {
-  blockExplorer,
   type BlockExplorerConfig,
+  blockExplorer,
 } from '../plugins/blockExplorer.js'
 
-export { etherscan, type EtherscanConfig } from '../plugins/etherscan.js'
+export { type EtherscanConfig, etherscan } from '../plugins/etherscan.js'
 
-export { fetch, type FetchConfig } from '../plugins/fetch.js'
+export { type FetchConfig, fetch } from '../plugins/fetch.js'
 
 export {
+  type FoundryConfig,
   foundry,
   foundryDefaultExcludes,
-  type FoundryConfig,
 } from '../plugins/foundry.js'
 
 export {
+  type HardhatConfig,
   hardhat,
   hardhatDefaultExcludes,
-  type HardhatConfig,
 } from '../plugins/hardhat.js'
 
-export { react, type ReactConfig } from '../plugins/react.js'
+export { type ReactConfig, react } from '../plugins/react.js'
 
-export { sourcify, type SourcifyConfig } from '../plugins/sourcify.js'
+export { type RoutescanConfig, routescan } from '../plugins/routescan.js'
+
+export { type SourcifyConfig, sourcify } from '../plugins/sourcify.js'

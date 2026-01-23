@@ -1,8 +1,5 @@
 {
   "extends": "./tsconfig.base.json",
-  "include": ["scripts/**/*.ts", "vitest.workspace.ts", "vitest.config.ts"],
-  "exclude": [],
-  "compilerOptions": {
-    "types": ["@types/bun"]
-  }
+  "include": ["scripts/**/*.ts", "vitest.config.ts"],
+  "exclude": []
 }

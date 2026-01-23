@@ -6,7 +6,7 @@
 
 ## Leveraging Viem Actions
 
-All of the core [Wagmi Hooks](/react/api/actions) are friendly wrappers around [Viem Actions](https://viem.sh/docs/actions/public/introduction.html) that inject a multi-chain and connector aware [Wagmi Config](/react/api/createConfig).
+All of the core [Wagmi Hooks](/react/api/actions) are friendly wrappers around [Viem Actions](https://viem.sh/docs/actions/public/introduction) that inject a multi-chain and connector aware [Wagmi Config](/react/api/createConfig).
 
 There may be cases where you might want to dig deeper and utilize Viem Actions directly (maybe a Hook doesn't exist in Wagmi yet). In these cases, you can create your own custom Wagmi Hook by importing Viem Actions directly via `viem/actions` and plugging in a Viem Client returned by the [`useClient` Hook](/react/api/hooks/useClient).
 
@@ -114,7 +114,7 @@ function Example() {
 
 ## Private Key & Mnemonic Accounts
 
-It is possible to utilize Viem's [Private Key & Mnemonic Accounts](https://viem.sh/docs/accounts/local.html) with Wagmi by explicitly passing through the account via the `account` argument on Wagmi Actions.
+It is possible to utilize Viem's [Private Key & Mnemonic Accounts](https://viem.sh/docs/accounts/local) with Wagmi by explicitly passing through the account via the `account` argument on Wagmi Actions.
 
 ```tsx
 import { http, createConfig, useSendTransaction } from 'wagmi' 
@@ -145,6 +145,6 @@ function Example() {
 
 ::: info
 
-Wagmi currently does not support hoisting Private Key & Mnemonic Accounts to the top-level Wagmi Config – meaning you have to explicitly pass through the account to every Action. If you feel like this is a feature that should be added, please [open an discussion](https://github.com/wevm/wagmi/discussions/new?category=ideas).
+Wagmi currently does not support hoisting Private Key & Mnemonic Accounts to the top-level Wagmi Config – meaning you have to explicitly pass through the account to every Action. If you feel like this is a feature that should be added, please [open a discussion](https://github.com/wevm/wagmi/discussions/new?category=ideas).
 
 :::

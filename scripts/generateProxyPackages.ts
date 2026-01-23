@@ -1,18 +1,17 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
-import { glob } from 'glob'
 
 // Generates proxy packages for package.json#exports.
 
 console.log('Generating proxy packages.')
 
 // Get all package.json files
-const packagePaths = await glob('packages/**/package.json', {
-  ignore: ['**/dist/**', '**/node_modules/**'],
+const packagePaths = fs.glob('packages/**/package.json', {
+  exclude: ['**/dist/**', '**/node_modules/**'],
 })
 
 let count = 0
-for (const packagePath of packagePaths) {
+for await (const packagePath of packagePaths) {
   type Package = Record<string, unknown> & {
     name?: string | undefined
     private?: boolean | undefined
@@ -20,8 +19,9 @@ for (const packagePath of packagePaths) {
       | Record<string, { types: string; default: string } | string>
       | undefined
   }
-  const file = Bun.file(packagePath)
-  const packageJson = (await file.json()) as Package
+  const packageJson = JSON.parse(
+    await fs.readFile(packagePath, 'utf-8'),
+  ) as Package
 
   // Skip private packages
   if (packageJson.private) continue
@@ -44,9 +44,10 @@ for (const packagePath of packagePaths) {
 
     const types = path.relative(key, exports.types)
     const main = path.relative(key, exports.default)
-    await Bun.write(
+    await fs.writeFile(
       `${proxyDir}/package.json`,
       `${JSON.stringify({ type: 'module', types, main }, undefined, 2)}\n`,
+      'utf-8',
     )
   }
 }

@@ -7,7 +7,6 @@ import type {
 
 import type { Config } from '../../createConfig.js'
 import type { UnionCompute, UnionStrictOmit } from '../../types/utils.js'
-import { getAccount } from '../getAccount.js'
 import { getChainId } from '../getChainId.js'
 import {
   type ReadContractParameters,
@@ -76,11 +75,8 @@ export function createReadContract<
   if (c.address !== undefined && typeof c.address === 'object')
     return (config, parameters) => {
       const configChainId = getChainId(config)
-      const account = getAccount(config)
       const chainId =
-        (parameters as { chainId?: number })?.chainId ??
-        account.chainId ??
-        configChainId
+        (parameters as { chainId?: number })?.chainId ?? configChainId
       return readContract(config, {
         ...(parameters as any),
         ...(c.functionName ? { functionName: c.functionName } : {}),

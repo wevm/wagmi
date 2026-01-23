@@ -1,8 +1,7 @@
 import type { RequestPermissionsErrorType } from '@wagmi/core'
 import type { RequestPermissionsVariables } from '@wagmi/core/query'
-import { expectTypeOf, test } from 'vitest'
-
 import type { WalletPermission } from 'viem'
+import { expectTypeOf, test } from 'vitest'
 import { useRequestPermissions } from './useRequestPermissions.js'
 
 const contextValue = { foo: 'bar' } as const

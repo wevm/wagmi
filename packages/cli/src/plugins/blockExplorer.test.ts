@@ -4,20 +4,20 @@ import { afterAll, afterEach, beforeAll, expect, test } from 'vitest'
 import {
   address,
   apiKey,
-  baseUrl,
-  handlers,
+  getHandlers,
   unverifiedContractAddress,
 } from '../../test/utils.js'
 import { blockExplorer } from './blockExplorer.js'
 
-const server = setupServer(...handlers)
+const baseUrl = 'https://api.etherscan.io/v2/api'
+const server = setupServer(...getHandlers(baseUrl))
 
 beforeAll(() => server.listen())
 afterEach(() => server.resetHandlers())
 afterAll(() => server.close())
 
-test('fetches ABI', () => {
-  expect(
+test('fetches ABI', async () => {
+  await expect(
     blockExplorer({
       apiKey,
       baseUrl,
@@ -26,8 +26,8 @@ test('fetches ABI', () => {
   ).resolves.toMatchSnapshot()
 })
 
-test('fetches ABI with multichain deployment', () => {
-  expect(
+test('fetches ABI with multichain deployment', async () => {
+  await expect(
     blockExplorer({
       apiKey,
       baseUrl,
@@ -38,8 +38,8 @@ test('fetches ABI with multichain deployment', () => {
   ).resolves.toMatchSnapshot()
 })
 
-test('fails to fetch for unverified contract', () => {
-  expect(
+test('fails to fetch for unverified contract', async () => {
+  await expect(
     blockExplorer({
       apiKey,
       baseUrl,

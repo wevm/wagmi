@@ -1,18 +1,40 @@
 <!-- <script setup>
-const docsPath = 'react'
 const packageName = 'wagmi'
 const connectorsPackageName = 'wagmi/connectors'
+const connectorDependencyVersion = 'x.y.z'
 </script> -->
 
 # metaMask
 
-Connector for the [MetaMask SDK](https://github.com/MetaMask/metamask-sdk).
+Connector for [MetaMask SDK](https://github.com/MetaMask/metamask-sdk).
 
 ## Import
 
 ```ts-vue
 import { metaMask } from '{{connectorsPackageName}}'
 ```
+
+## Install
+
+<PackageMetadata package="@metamask/sdk" repo="MetaMask/metamask-sdk" licenseUrl="https://github.com/MetaMask/metamask-sdk/blob/main/packages/sdk/LICENSE" />
+
+::: code-group
+```bash-vue [pnpm]
+pnpm add @metamask/sdk@{{connectorDependencyVersion}}
+```
+
+```bash-vue [npm]
+npm install @metamask/sdk@{{connectorDependencyVersion}}
+```
+
+```bash-vue [yarn]
+yarn add @metamask/sdk@{{connectorDependencyVersion}}
+```
+
+```bash-vue [bun]
+bun add @metamask/sdk@{{connectorDependencyVersion}}
+```
+:::
 
 ## Usage
 
@@ -36,133 +58,87 @@ export const config = createConfig({
 ```ts-vue
 import { type MetaMaskParameters } from '{{connectorsPackageName}}'
 ```
-Check out the [MetaMask SDK docs](https://github.com/MetaMask/metamask-sdk?tab=readme-ov-file#sdk-options) for more info. A few options are omitted that Wagmi manages internally.
 
-### communicationLayerPreference
-
-`CommunicationLayerPreference | undefined`
-
-The preferred communication layer to use for the SDK.
-
-### communicationServerUrl
-
-`string | undefined`
-
-The URL of the communication server to use for the SDK.
+Check out the [MetaMask SDK docs](https://docs.metamask.io/wallet/connect/3rd-party-libraries/wagmi/) for more info. A few options are omitted that Wagmi manages internally.
 
 ### dappMetadata
 
 `DappMetadata | undefined`
 
-- Metadata about the dapp using the SDK.
-- Defaults to `{ name: 'wagmi' }`.
+Metadata is used to fill details for the UX on confirmation screens in MetaMask, including the following fields:
 
-### enableAnalytics
+- `name`: `string` - The name of the dapp.
+- `url`: `string` - URL of the dapp (defaults to `window.location.origin`).
+- `iconUrl`: `string` - URL to the dapp's favicon or icon.
 
-`boolean | undefined`
+```ts-vue
+import { metaMask } from '{{connectorsPackageName}}'
 
-- Send anonymous analytics to MetaMask to help us improve the SDK.
-- Defaults to `false`.
-
-### extensionOnly
-
-`boolean | undefined`
-
-- If MetaMask browser extension is detected, directly use it.
-- Defaults to `true`.
-
-### forceDeleteProvider
-
-`boolean | undefined`
-
-If true, the SDK will force delete the provider from the global `window` object.
-
-
-### forceInjectProvider
-
-`boolean | undefined`
-
-If true, the SDK will force inject the provider into the global `window` object.
-
-### infuraAPIKey
-
-`string | undefined`
-
-The Infura API key to use for RPC requests.
-
-### injectProvider
-
-`boolean | undefined`
-
-If true, the SDK will inject the provider into the global `window` object.
+const connector = metaMask({
+  dappMetadata: { // [!code focus]
+    name: 'My Wagmi App', // [!code focus]
+    url: 'https://example.com', // [!code focus]
+    iconUrl: 'https://example.com/favicon.ico', // [!code focus]
+  }
+})
+```
 
 ### logging
 
 `SDKLoggingOptions | undefined`
 
-Options for customizing the logging behavior of the SDK.
+Enables SDK-side logging to provide visibility into:
 
-### modals
+- RPC methods being called.
+- Events received for syncing the chain or active account.
+- Raw RPC responses.
 
-`RemoteConnectionProps['modals'] | undefined`
+In this context, this is especially useful to observe what calls are made through Wagmi hooks.
 
-An object that allows you to customize or translate each of the displayed modals. See the nodejs example for more information.
+Relevant options:
 
-### openDeeplink
+```ts
+{
+  developerMode: boolean, // Enables developer mode logs
+  sdk: boolean           // Enables SDK-specific logs
+}
+```
 
-`((arg: string) => void) | undefined`
+```ts
+import { metaMask } from '{{connectorsPackageName}}'
 
-A function that will be called to open a deeplink to the MetaMask Mobile app.
+const connector = metaMask({
+  logging: { developerMode: true, sdk: true } // [!code focus]
+})
+```
 
-### preferDesktop
-
-`boolean | undefined`
-
-If true, the SDK will prefer the desktop version of MetaMask over the mobile version.
-
-### shouldShimWeb3
-
-`boolean | undefined`
-
-If true, the SDK will shim the window.web3 object with the provider returned by the SDK (useful for compatibility with older browser).
-
-### storage
-
-`StorageManagerProps | undefined`
-
-Options for customizing the storage manager used by the SDK.
-
-### timer
-
-`any | undefined`
-
-A timer object to use for scheduling tasks.
-
-### transports
-
-`string[] | undefined`
-
-An array of transport protocols to use for communication with the MetaMask wallet.
-
-### ui
-
-`SDKUIOptions | undefined`
-
-Options for customizing the SDK UI.
-
-### useDeeplink
+### headless
 
 `boolean | undefined`
 
-- If `true`, the SDK will use deeplinks to connect with MetaMask Mobile. If `false`, the SDK will use universal links to connect with MetaMask Mobile.
-- Defaults to `true`.
+- Enables headless mode, disabling MetaMask's built-in modal.
+- Allows developers to create their own modal, such as for displaying a QR code.
 
-::: warning
-Setting `useDeeplink` to `false` can negatively impact performance on iOS Safari as Universal Link connections are canceled if they do not occur within ~500ms of an interaction (e.g. button press).
-:::
+This is particularly relevant for web-only setups using Wagmi, where developers want complete control over the UI.
 
-### wakeLockType
+To get the deeplink to display in the QR code, listen to the `display_uri` event.
 
-`WakeLockStatus | undefined`
+The default is `false`.
 
-The type of wake lock to use when the SDK is running in the background.
+```ts-vue
+import { metaMask } from '{{connectorsPackageName}}'
+
+const connector = metaMask({
+  headless: true // [!code focus]
+})
+```
+
+## Advanced
+
+By default, if the EIP-6963 MetaMask injected provider is detected, this connector will replace it.
+
+EIP-6963 defines a standard way for dapps to interact with multiple wallets simultaneously by injecting providers into the browser. Wallets that implement this standard can make their presence known to dapps in a consistent and predictable manner.
+
+When MetaMask SDK detects an EIP-6963-compliant provider (such as MetaMask itself), the connector will automatically replace the default injected provider (like `window.ethereum`) with the one provided by MetaMask SDK.
+
+See the [`rdns` property](https://wagmi.sh/dev/creating-connectors#properties) for more information.

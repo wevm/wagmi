@@ -4,29 +4,16 @@ import {
   type SignTypedDataData,
   type SignTypedDataMutate,
   type SignTypedDataMutateAsync,
+  type SignTypedDataOptions,
   type SignTypedDataVariables,
   signTypedDataMutationOptions,
 } from '@wagmi/core/query'
-
 import type { ConfigParameter } from '../types/properties.js'
-import {
-  type UseMutationParameters,
-  type UseMutationReturnType,
-  useMutation,
-} from '../utils/query.js'
+import { type UseMutationReturnType, useMutation } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 
 export type UseSignTypedDataParameters<context = unknown> = Compute<
-  ConfigParameter & {
-    mutation?:
-      | UseMutationParameters<
-          SignTypedDataData,
-          SignTypedDataErrorType,
-          SignTypedDataVariables,
-          context
-        >
-      | undefined
-  }
+  ConfigParameter & SignTypedDataOptions<context>
 >
 
 export type UseSignTypedDataReturnType<context = unknown> = Compute<
@@ -34,9 +21,13 @@ export type UseSignTypedDataReturnType<context = unknown> = Compute<
     SignTypedDataData,
     SignTypedDataErrorType,
     SignTypedDataVariables,
-    context
+    context,
+    SignTypedDataMutate<context>,
+    SignTypedDataMutateAsync<context>
   > & {
+    /** @deprecated use `mutate` instead */
     signTypedData: SignTypedDataMutate<context>
+    /** @deprecated use `mutateAsync` instead */
     signTypedDataAsync: SignTypedDataMutateAsync<context>
   }
 >
@@ -45,20 +36,13 @@ export type UseSignTypedDataReturnType<context = unknown> = Compute<
 export function useSignTypedData<context = unknown>(
   parameters: UseSignTypedDataParameters<context> = {},
 ): UseSignTypedDataReturnType<context> {
-  const { mutation } = parameters
-
   const config = useConfig(parameters)
-
-  const mutationOptions = signTypedDataMutationOptions(config)
-  const { mutate, mutateAsync, ...result } = useMutation({
-    ...mutation,
-    ...mutationOptions,
-  })
-
+  const options = signTypedDataMutationOptions(config, parameters)
+  const mutation = useMutation(options)
   type Return = UseSignTypedDataReturnType<context>
   return {
-    ...result,
-    signTypedData: mutate as Return['signTypedData'],
-    signTypedDataAsync: mutateAsync as Return['signTypedDataAsync'],
+    ...(mutation as Return),
+    signTypedData: mutation.mutate as Return['mutate'],
+    signTypedDataAsync: mutation.mutateAsync as Return['mutateAsync'],
   }
 }

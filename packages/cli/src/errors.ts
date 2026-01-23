@@ -1,12 +1,12 @@
-import type { z } from 'zod'
+import type * as z from 'zod'
 
 class ValidationError extends Error {
-  details: Zod.ZodIssue[]
+  details: z.core.$ZodIssue[]
 
   constructor(
     message: string,
     options: {
-      details: Zod.ZodIssue[]
+      details: z.core.$ZodIssue[]
     },
   ) {
     super(message)
@@ -29,15 +29,15 @@ export function fromZodError(
     prefix?: string
   } = {},
 ): ValidationError {
-  function joinPath(arr: Array<string | number>): string {
+  function joinPath(arr: Array<string | number | symbol>): string {
     return arr.reduce<string>((acc, value) => {
       if (typeof value === 'number') return `${acc}[${value}]`
       const separator = acc === '' ? '' : '.'
-      return acc + separator + value
+      return acc + separator + value.toString()
     }, '')
   }
 
-  const reason = zError.errors
+  const reason = zError.issues
     // limit max number of issues printed in the reason section
     .slice(0, maxIssuesInMessage)
     // format error message
@@ -52,6 +52,6 @@ export function fromZodError(
   const message = reason ? [prefix, reason].join(prefixSeparator) : prefix
 
   return new ValidationError(message, {
-    details: zError.errors,
+    details: zError.issues,
   })
 }

@@ -42,6 +42,7 @@ test('default', async () => {
   await testClient.mainnet.mine({ blocks: 1 })
 
   unwatch()
+  await wait(100)
   expect(transactions.length).toBe(2)
   expect(transactions[0]).toMatch(transactionHashRegex)
 

@@ -1,16 +1,16 @@
 import { wait } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
-import { expect, test } from 'vitest'
+import { renderHook } from '@wagmi/test/react'
+import { expect, test, vi } from 'vitest'
 import { useWaitForTransactionReceipt } from './useWaitForTransactionReceipt.js'
 
 test('default', async () => {
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useWaitForTransactionReceipt({
       hash: '0x60668ed8c2dc110d61d945a936fcd45b8f13654e5c78481c8c825d1148c7ef30',
     }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result).toMatchInlineSnapshot(`
     {
@@ -22,12 +22,12 @@ test('default', async () => {
           "contractAddress": null,
           "cumulativeGasUsed": 12949744n,
           "effectiveGasPrice": 9371645552n,
-          "from": "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e",
+          "from": "0xa0cf798816d4b9b9866b5330eea46a18382f251e",
           "gasUsed": 21000n,
           "logs": [],
           "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
           "status": "success",
-          "to": "0xd2135CfB216b74109775236E36d4b433F1DF507B",
+          "to": "0xd2135cfb216b74109775236e36d4b433f1df507b",
           "transactionHash": "0x60668ed8c2dc110d61d945a936fcd45b8f13654e5c78481c8c825d1148c7ef30",
           "transactionIndex": 144,
           "type": "eip1559",
@@ -68,10 +68,10 @@ test('default', async () => {
 })
 
 test('disabled when hash is undefined', async () => {
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useWaitForTransactionReceipt({ hash: undefined }),
   )
 
   await wait(100)
-  await waitFor(() => expect(result.current.isPending).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isPending).toBeTruthy())
 })

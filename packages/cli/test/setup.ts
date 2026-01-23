@@ -1,38 +1,42 @@
+import { mkdir } from 'node:fs/promises'
 import { homedir } from 'node:os'
-import { default as fs } from 'fs-extra'
+import type { createSpinner as nanospinner_createSpinner } from 'nanospinner'
 import { join } from 'pathe'
 import { vi } from 'vitest'
 
 const cacheDir = join(homedir(), '.wagmi-cli/plugins/fetch/cache')
-await fs.ensureDir(cacheDir)
+await mkdir(cacheDir, { recursive: true })
 
-vi.mock('ora', async () => {
-  function ora() {
-    class Ora {
-      #text: string | undefined
+vi.mock('nanospinner', async (importOriginal) => {
+  const mod = await importOriginal<{
+    createSpinner: typeof nanospinner_createSpinner
+  }>()
 
-      start(text: string | undefined = 'start') {
-        // biome-ignore lint/suspicious/noConsoleLog: console.log is used for logging
+  function createSpinner(
+    initialText: string,
+    opts: Parameters<typeof nanospinner_createSpinner>[1],
+  ) {
+    let currentText = ''
+    const spinner = mod.createSpinner(initialText, opts)
+    return {
+      ...spinner,
+      start(text = initialText) {
         console.log(`- ${text}`)
-        this.#text = text
-      }
-
-      succeed(text: string | undefined = this.#text ?? 'succeed') {
-        // biome-ignore lint/suspicious/noConsoleLog: console.log is used for logging
-        console.log(`✔ ${text}`)
-        this.#text = undefined
-      }
-
-      fail(text: string | undefined = this.#text ?? 'fail') {
-        console.error(`✖ ${text}`)
-        this.#text = undefined
-      }
+        spinner.start(text)
+        currentText = text
+      },
+      success(text = currentText) {
+        console.log(`√ ${text}`)
+        spinner.success(text)
+      },
+      error(text = currentText) {
+        // biome-ignore lint/suspicious/noConsole: logging error
+        console.error(`× ${text}`)
+        spinner.error(text)
+      },
     }
-    return new Ora()
   }
-  return {
-    default: ora,
-  }
+  return { createSpinner }
 })
 
 vi.mock('picocolors', async () => {

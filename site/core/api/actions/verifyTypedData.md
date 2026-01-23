@@ -592,4 +592,4 @@ import { type VerifyTypedDataErrorType } from '@wagmi/core'
 
 ## Viem
 
-- [`verifyTypedData`](https://viem.sh/docs/actions/public/verifyTypedData.html)
+- [`verifyTypedData`](https://viem.sh/docs/actions/public/verifyTypedData)

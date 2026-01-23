@@ -204,4 +204,4 @@ import { type WatchPendingTransactionsError } from '@wagmi/core'
 
 ## Viem
 
-- [`watchPendingTransactions`](https://viem.sh/docs/actions/public/watchPendingTransactions.html)
+- [`watchPendingTransactions`](https://viem.sh/docs/actions/public/watchPendingTransactions)

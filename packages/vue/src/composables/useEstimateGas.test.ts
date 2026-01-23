@@ -45,7 +45,7 @@ test('default', async () => {
       "queryKey": [
         "estimateGas",
         {
-          "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "account": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "chainId": 1,
           "to": "0xd2135CfB216b74109775236E36d4b433F1DF507B",
           "value": 10000000000000000n,

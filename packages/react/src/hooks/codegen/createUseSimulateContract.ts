@@ -4,11 +4,14 @@ import type {
   SimulateContractErrorType,
   SimulateContractParameters,
 } from '@wagmi/core'
-import type { ScopeKeyParameter, UnionExactPartial } from '@wagmi/core/internal'
+import type {
+  QueryParameter,
+  ScopeKeyParameter,
+  UnionExactPartial,
+} from '@wagmi/core/internal'
 import type {
   SimulateContractData,
   SimulateContractQueryFnData,
-  SimulateContractQueryKey,
 } from '@wagmi/core/query'
 import type {
   Abi,
@@ -17,8 +20,7 @@ import type {
   ContractFunctionName,
 } from 'viem'
 
-import type { ConfigParameter, QueryParameter } from '../../types/properties.js'
-import { useAccount } from '../useAccount.js'
+import type { ConfigParameter } from '../../types/properties.js'
 import { useChainId } from '../useChainId.js'
 import { useConfig } from '../useConfig.js'
 import {
@@ -51,7 +53,7 @@ export type CreateUseSimulateContractReturnType<
   name extends functionName extends ContractFunctionName<abi, stateMutability>
     ? functionName
     : ContractFunctionName<abi, stateMutability>,
-  args extends ContractFunctionArgs<abi, stateMutability, name>,
+  const args extends ContractFunctionArgs<abi, stateMutability, name>,
   config extends Config = ResolvedRegister['config'],
   chainId extends config['chains'][number]['id'] | undefined = undefined,
   selectData = SimulateContractData<abi, name, args, config, chainId>,
@@ -75,8 +77,8 @@ export type CreateUseSimulateContractReturnType<
     QueryParameter<
       SimulateContractQueryFnData<abi, name, args, config, chainId>,
       SimulateContractErrorType,
-      selectData,
-      SimulateContractQueryKey<abi, name, args, config, chainId>
+      selectData
+      // TODO: Add `SimulateContractQueryKey<abi, name, args, config, chainId>` as 4th type param (currently causes TS2589)
     >,
 ) => UseSimulateContractReturnType<abi, name, args, config, chainId, selectData>
 
@@ -96,11 +98,8 @@ export function createUseSimulateContract<
     return (parameters) => {
       const config = useConfig(parameters)
       const configChainId = useChainId({ config })
-      const account = useAccount({ config })
       const chainId =
-        (parameters as { chainId?: number })?.chainId ??
-        account.chainId ??
-        configChainId
+        (parameters as { chainId?: number })?.chainId ?? configChainId
       return useSimulateContract({
         ...(parameters as any),
         ...(props.functionName ? { functionName: props.functionName } : {}),

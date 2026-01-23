@@ -1,5 +1,3 @@
-import type { QueryOptions } from '@tanstack/query-core'
-
 import {
   type GetConnectorClientErrorType,
   type GetConnectorClientParameters,
@@ -8,38 +6,53 @@ import {
 } from '../actions/getConnectorClient.js'
 import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
+import type { QueryOptions, QueryParameter } from '../types/query.js'
 import type { Compute, ExactPartial } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
 export type GetConnectorClientOptions<
   config extends Config,
   chainId extends config['chains'][number]['id'],
+  selectData = GetConnectorClientData<config, chainId>,
 > = Compute<
   ExactPartial<GetConnectorClientParameters<config, chainId>> &
     ScopeKeyParameter
->
+> &
+  Omit<
+    QueryParameter<
+      GetConnectorClientQueryFnData<config, chainId>,
+      GetConnectorClientErrorType,
+      selectData,
+      GetConnectorClientQueryKey<config, chainId>
+    >,
+    'gcTime' | 'staleTime'
+  >
 
 export function getConnectorClientQueryOptions<
   config extends Config,
   chainId extends config['chains'][number]['id'],
->(config: config, options: GetConnectorClientOptions<config, chainId> = {}) {
+  selectData = GetConnectorClientData<config, chainId>,
+>(
+  config: config,
+  options: GetConnectorClientOptions<config, chainId, selectData> = {},
+): GetConnectorClientQueryOptions<config, chainId, selectData> {
   return {
+    ...options.query,
+    enabled: Boolean(
+      options.connector?.getProvider && (options.query?.enabled ?? true),
+    ),
     gcTime: 0,
-    async queryFn({ queryKey }) {
-      const { connector } = options
-      const { connectorUid: _, scopeKey: _s, ...parameters } = queryKey[1]
+    queryFn: async (context) => {
+      const [, { connectorUid: _, scopeKey: __, ...parameters }] =
+        context.queryKey
       return getConnectorClient(config, {
         ...parameters,
-        connector,
+        connector: options.connector,
       }) as unknown as Promise<GetConnectorClientReturnType<config, chainId>>
     },
     queryKey: getConnectorClientQueryKey(options),
-  } as const satisfies QueryOptions<
-    GetConnectorClientQueryFnData<config, chainId>,
-    GetConnectorClientErrorType,
-    GetConnectorClientData<config, chainId>,
-    GetConnectorClientQueryKey<config, chainId>
-  >
+    staleTime: Number.POSITIVE_INFINITY,
+  }
 }
 
 export type GetConnectorClientQueryFnData<
@@ -55,15 +68,27 @@ export type GetConnectorClientData<
 export function getConnectorClientQueryKey<
   config extends Config,
   chainId extends config['chains'][number]['id'],
->(options: GetConnectorClientOptions<config, chainId> = {}) {
-  const { connector, ...parameters } = options
-  return [
-    'connectorClient',
-    { ...filterQueryOptions(parameters), connectorUid: connector?.uid },
-  ] as const
+>(
+  options: Compute<
+    ExactPartial<GetConnectorClientParameters<config, chainId>> &
+      ScopeKeyParameter
+  > = {},
+) {
+  return ['connectorClient', filterQueryOptions(options)] as const
 }
 
 export type GetConnectorClientQueryKey<
   config extends Config,
   chainId extends config['chains'][number]['id'],
 > = ReturnType<typeof getConnectorClientQueryKey<config, chainId>>
+
+export type GetConnectorClientQueryOptions<
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
+  selectData = GetConnectorClientData<config, chainId>,
+> = QueryOptions<
+  GetConnectorClientQueryFnData<config, chainId>,
+  GetConnectorClientErrorType,
+  selectData,
+  GetConnectorClientQueryKey<config, chainId>
+>

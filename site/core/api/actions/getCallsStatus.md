@@ -1,5 +1,5 @@
 <script setup>
-const packageName = '@wagmi/core/experimental'
+const packageName = '@wagmi/core'
 const actionName = 'getCallsStatus'
 const typeName = 'GetCallsStatus'
 </script>
@@ -10,21 +10,17 @@ Action to fetch the status and receipts of a call batch that was sent via [`send
 
 [Read more.](https://github.com/ethereum/EIPs/blob/1663ea2e7a683285f977eda51c32cec86553f585/EIPS/eip-5792.md#wallet_getcallsstatus)
 
-::: warning
-This is an experimental action that is not supported in most wallets. It is recommended to have a fallback mechanism if using this in production.
-:::
-
 ## Import
 
 ```ts
-import { getCallsStatus } from '@wagmi/core/experimental'
+import { getCallsStatus } from '@wagmi/core'
 ```
 
 ## Usage
 
 ::: code-group
 ```ts [index.ts]
-import { getCallsStatus } from '@wagmi/core/experimental'
+import { getCallsStatus } from '@wagmi/core'
 import { config } from './config'
 
 const status = await getCallsStatus(config, {
@@ -37,7 +33,7 @@ const status = await getCallsStatus(config, {
 ## Parameters
 
 ```ts
-import { type GetCallsStatusParameters } from '@wagmi/core/experimental'
+import { type GetCallsStatusParameters } from '@wagmi/core'
 ```
 
 ### connector
@@ -48,7 +44,7 @@ Connector to get call statuses with.
 
 ::: code-group
 ```ts [index.ts]
-import { getConnections, getCallsStatus } from '@wagmi/core/experimental'
+import { getConnections, getCallsStatus } from '@wagmi/core'
 import { config } from './config'
 
 const connections = getConnections(config)
@@ -68,7 +64,7 @@ Identifier of the call batch.
 
 ::: code-group
 ```ts [index.ts]
-import { getCallsStatus } from '@wagmi/core/experimental'
+import { getCallsStatus } from '@wagmi/core'
 import { config } from './config'
 
 const status = await getCallsStatus(config, {
@@ -81,21 +77,21 @@ const status = await getCallsStatus(config, {
 ## Return Type
 
 ```ts
-import { type GetCallsStatusReturnType } from '@wagmi/core/experimental'
+import { type GetCallsStatusReturnType } from '@wagmi/core'
 ```
 
-`bigint`
+`{ status: 'PENDING' | 'CONFIRMED', receipts: TransactionReceipt[] }`
 
-Most recent block number seen.
+The status and receipts of the call batch.
 
 ## Error
 
 ```ts
-import { type GetCallsStatusErrorType } from '@wagmi/core/experimental'
+import { type GetCallsStatusErrorType } from '@wagmi/core'
 ```
 
 <!--@include: @shared/query-imports.md-->
 
 ## Viem
 
-- [`getCallsStatus`](https://viem.sh/experimental/eip5792/getCallsStatus)
+- [`getCallsStatus`](https://viem.sh/docs/actions/wallet/getCallsStatus)

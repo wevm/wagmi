@@ -1,5 +1,4 @@
 import type { MutationOptions } from '@tanstack/query-core'
-
 import {
   type DisconnectErrorType,
   type DisconnectParameters,
@@ -7,22 +6,34 @@ import {
   disconnect,
 } from '../actions/disconnect.js'
 import type { Config } from '../createConfig.js'
+import type { MutationParameter } from '../types/query.js'
 import type { Mutate, MutateAsync } from './types.js'
 
-export function disconnectMutationOptions<config extends Config>(
+export type DisconnectOptions<context = unknown> = MutationParameter<
+  DisconnectData,
+  DisconnectErrorType,
+  DisconnectVariables,
+  context
+>
+
+export function disconnectMutationOptions<config extends Config, context>(
   config: config,
-) {
+  options: DisconnectOptions<context> = {},
+): DisconnectMutationOptions {
   return {
-    mutationFn(variables) {
+    ...(options.mutation as any),
+    mutationFn: async (variables) => {
       return disconnect(config, variables)
     },
     mutationKey: ['disconnect'],
-  } as const satisfies MutationOptions<
-    DisconnectData,
-    DisconnectErrorType,
-    DisconnectVariables
-  >
+  }
 }
+
+export type DisconnectMutationOptions = MutationOptions<
+  DisconnectData,
+  DisconnectErrorType,
+  DisconnectVariables
+>
 
 export type DisconnectData = DisconnectReturnType
 

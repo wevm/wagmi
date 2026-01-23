@@ -14,7 +14,7 @@ const hideQueryOptions = ['gcTime', 'staleTime']
 
 # useConnectorClient
 
-Composable for getting a Viem [`Client`](https://viem.sh/docs/clients/custom.html) object for the current or provided connector.
+Composable for getting a Viem [`Client`](https://viem.sh/docs/clients/custom) object for the current or provided connector.
 
 ## Import
 
@@ -77,7 +77,7 @@ const result = useConnectorClient({
 
 `Config | undefined`
 
-[`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/api/WagmiProvider).
+[`Config`](/react/api/createConfig#config) to use instead of retrieving from the nearest [`WagmiProvider`](/react/api/WagmiProvider).
 
 ::: code-group
 ```vue [index.vue]

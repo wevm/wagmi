@@ -1,7 +1,7 @@
 {
   "name": "wagmi",
   "description": "React Hooks for Ethereum",
-  "version": "2.12.17",
+  "version": "3.4.1",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -9,10 +9,10 @@
     "directory": "packages/react"
   },
   "scripts": {
-    "build": "pnpm run clean && pnpm run build:esm+types",
+    "build": "pnpm run build:esm+types",
     "build:esm+types": "tsc --project tsconfig.build.json --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
     "check:types": "tsc --noEmit",
-    "clean": "rm -rf dist tsconfig.tsbuildinfo actions chains codegen connectors experimental query",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo actions chains codegen connectors query tempo",
     "test:build": "publint --strict && attw --pack --ignore-rules cjs-resolves-to-esm"
   },
   "files": [
@@ -25,8 +25,9 @@
     "/chains",
     "/codegen",
     "/connectors",
-    "/experimental",
-    "/query"
+    "/internal",
+    "/query",
+    "/tempo"
   ],
   "sideEffects": false,
   "type": "module",
@@ -42,10 +43,6 @@
       "types": "./dist/types/exports/actions.d.ts",
       "default": "./dist/esm/exports/actions.js"
     },
-    "./actions/experimental": {
-      "types": "./dist/types/exports/actions/experimental.d.ts",
-      "default": "./dist/esm/exports/actions/experimental.js"
-    },
     "./chains": {
       "types": "./dist/types/exports/chains.d.ts",
       "default": "./dist/esm/exports/chains.js"
@@ -58,30 +55,49 @@
       "types": "./dist/types/exports/connectors.d.ts",
       "default": "./dist/esm/exports/connectors.js"
     },
-    "./experimental": {
-      "types": "./dist/types/exports/experimental.d.ts",
-      "default": "./dist/esm/exports/experimental.js"
+    "./internal": {
+      "types": "./dist/types/exports/internal.d.ts",
+      "default": "./dist/esm/exports/internal.js"
     },
     "./query": {
       "types": "./dist/types/exports/query.d.ts",
       "default": "./dist/esm/exports/query.js"
     },
+    "./tempo": {
+      "types": "./dist/types/exports/tempo.d.ts",
+      "default": "./dist/esm/exports/tempo.js"
+    },
     "./package.json": "./package.json"
   },
   "typesVersions": {
     "*": {
-      "actions": ["./dist/types/exports/actions.d.ts"],
-      "chains": ["./dist/types/exports/chains.d.ts"],
-      "codegen": ["./dist/types/exports/codegen.d.ts"],
-      "connectors": ["./dist/types/exports/connectors.d.ts"],
-      "experimental": ["./dist/types/exports/experimental.d.ts"],
-      "query": ["./dist/types/exports/query.d.ts"]
+      "actions": [
+        "./dist/types/exports/actions.d.ts"
+      ],
+      "chains": [
+        "./dist/types/exports/chains.d.ts"
+      ],
+      "codegen": [
+        "./dist/types/exports/codegen.d.ts"
+      ],
+      "connectors": [
+        "./dist/types/exports/connectors.d.ts"
+      ],
+      "internal": [
+        "./dist/types/exports/internal.d.ts"
+      ],
+      "query": [
+        "./dist/types/exports/query.d.ts"
+      ],
+      "tempo": [
+        "./dist/types/exports/tempo.d.ts"
+      ]
     }
   },
   "peerDependencies": {
     "@tanstack/react-query": ">=5.0.0",
     "react": ">=18",
-    "typescript": ">=5.0.4",
+    "typescript": ">=5.7.3",
     "viem": "2.x"
   },
   "peerDependenciesMeta": {
@@ -92,19 +108,20 @@
   "dependencies": {
     "@wagmi/connectors": "workspace:*",
     "@wagmi/core": "workspace:*",
-    "use-sync-external-store": "1.2.0"
+    "use-sync-external-store": "1.4.0"
   },
   "devDependencies": {
-    "@tanstack/react-query": ">=5.45.1",
-    "@testing-library/dom": "^10.4.0",
-    "@testing-library/react": ">=16.0.1",
-    "@types/react": ">=18.3.1",
-    "@types/react-dom": ">=18.3.0",
+    "@tanstack/react-query": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
     "@types/use-sync-external-store": "^0.0.6",
-    "react": ">=18.3.1",
-    "react-dom": ">=18.3.1"
+    "react": "catalog:",
+    "react-dom": "catalog:"
   },
-  "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
+  "contributors": [
+    "awkweb.eth <t@wevm.dev>",
+    "jxom.eth <j@wevm.dev>"
+  ],
   "funding": "https://github.com/sponsors/wevm",
   "keywords": [
     "wagmi",

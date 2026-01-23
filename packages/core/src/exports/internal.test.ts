@@ -6,8 +6,8 @@ test('exports', () => {
   expect(Object.keys(internal)).toMatchInlineSnapshot(`
     [
       "watchChains",
-      "Emitter",
       "createEmitter",
+      "Emitter",
       "deepEqual",
       "uid",
     ]

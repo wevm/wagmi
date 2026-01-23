@@ -94,14 +94,13 @@
   --vp-home-hero-name-color: transparent;
   --vp-home-hero-name-background: -webkit-linear-gradient(
     120deg,
-    #bd34fe 30%,
-    #41d1ff
+    var(--vp-c-brand-1) 30%,
+    var(--vp-c-brand-3)
   );
-
   --vp-home-hero-image-background-image: linear-gradient(
     -45deg,
-    #bd34fe 50%,
-    #47caff 50%
+    var(--vp-c-brand-1) 50%,
+    var(--vp-c-brand-3) 50%
   );
   --vp-home-hero-image-filter: blur(44px);
 }
@@ -142,7 +141,21 @@
   opacity: 0.3;
 }
 
+/**
+ * twoslash
+ * -------------------------------------------------------------------------- */
+
 .twoslash-error-line {
   max-width: min-content;
   white-space: wrap;
+}
+
+html.dark .shiki,
+html.dark .shiki span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  /* Optional, if you also want font styles */
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
 }

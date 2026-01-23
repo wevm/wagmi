@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import Account from './components/Account.vue'
 import Connect from './components/Connect.vue'
+import Connection from './components/Connection.vue'
 </script>
 
 <template>
-  <Account />
+  <Connection />
   <Balance />
   <Connect />
   <Connections />

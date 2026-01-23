@@ -168,7 +168,7 @@ const { data: balance, queryKey } = useBalance({
 })
 
 useEffect(() => {
-  if (blockNumber % 5 === 0) // [!code focus]
+  if (blockNumber && blockNumber % 5n === 0n) // [!code focus]
     queryClient.invalidateQueries({ queryKey }) // [!code focus]
 }, [blockNumber, queryClient])
 ```
@@ -265,7 +265,7 @@ This might seem like more work, but it gives you more control and is more accura
 
 ### Removed `useNetwork` hook
 
-The `useNetwork` hook was removed since the connected chain is typically based on the connected account. Use [`useAccount`](/react/api/hooks/useAccount) to get the connected `chain`.
+The `useNetwork` hook was removed since the connected chain is typically based on the connected account. Use [`useAccount`](/react/api/hooks/useConnection) to get the connected `chain`.
 
 ```ts
 import { useNetwork } from 'wagmi' // [!code --]
@@ -287,7 +287,7 @@ const { chains } = useConfig() // [!code ++]
 
 ### Removed `onConnect` and `onDisconnect` callbacks from `useAccount`
 
-The `onConnect` and `onDisconnect` callbacks were removed from the `useAccount` hook since it is frequently used without these callbacks so it made sense to extract these into a new API, [`useAccountEffect`](/react/api/hooks/useAccountEffect), rather than clutter the `useAccount` hook.
+The `onConnect` and `onDisconnect` callbacks were removed from the `useAccount` hook since it is frequently used without these callbacks so it made sense to extract these into a new API, [`useAccountEffect`](/react/api/hooks/useConnectionEffect), rather than clutter the `useAccount` hook.
 
 ```ts
 import { useAccount } from 'wagmi' // [!code --]
@@ -306,7 +306,7 @@ useAccountEffect({ // [!code ++]
 
 ### Removed `useWebSocketPublicClient`
 
-The Wagmi [`Config`](/react/api/createConfig) does not separate transport types anymore. Simply use Viem's [`webSocket`](https://viem.sh/docs/clients/transports/websocket.html) transport instead when setting up your Wagmi `Config`. You can get Viem `Client` instance with this transport attached by using [`useClient`](/react/api/hooks/useClient) or [`usePublicClient`](/react/api/hooks/usePublicClient).
+The Wagmi [`Config`](/react/api/createConfig) does not separate transport types anymore. Simply use Viem's [`webSocket`](https://viem.sh/docs/clients/transports/websocket) transport instead when setting up your Wagmi `Config`. You can get Viem `Client` instance with this transport attached by using [`useClient`](/react/api/hooks/useClient) or [`usePublicClient`](/react/api/hooks/usePublicClient).
 
 ### Removed `useInfiniteReadContracts` `paginatedIndexesConfig`
 
@@ -422,7 +422,7 @@ A number of errors were renamed to better reflect their functionality or replace
 
 ### Removed internal ENS name normalization
 
-Before v2, Wagmi handled ENS name normalization internally for `useEnsAddress`, `useEnsAvatar`, and `useEnsResolver`, using Viem's [`normalize`](https://viem.sh/docs/ens/utilities/normalize.html) function. This added extra bundle size as full normalization is quite heavy. For v2, you must normalize ENS names yourself before passing them to these hooks. You can use Viem's `normalize` function or any other function that performs [UTS-46 normalization](https://unicode.org/reports/tr46).
+Before v2, Wagmi handled ENS name normalization internally for `useEnsAddress`, `useEnsAvatar`, and `useEnsResolver`, using Viem's [`normalize`](https://viem.sh/docs/ens/utilities/normalize) function. This added extra bundle size as full normalization is quite heavy. For v2, you must normalize ENS names yourself before passing them to these hooks. You can use Viem's `normalize` function or any other function that performs [UTS-46 normalization](https://unicode.org/reports/tr46).
 
 ```ts
 import { useEnsAddress } from 'wagmi'
@@ -471,7 +471,7 @@ import { erc20Abi } from 'viem' // [!code ++]
 
 ### Removed `'wagmi/providers/*` entrypoints
 
-It never made sense that we would have provider URLs hardcoded in the Wagmi codebase. Use [Viem transports](https://viem.sh/docs/clients/intro.html#transports) along with RPC provider URLs instead.
+It never made sense that we would have provider URLs hardcoded in the Wagmi codebase. Use [Viem transports](https://viem.sh/docs/clients/intro#transports) along with RPC provider URLs instead.
 
 ```ts
 import { alchemyProvider } from 'wagmi/providers/alchemy' // [!code --]
@@ -622,7 +622,7 @@ const result = useReadContracts({ // [!code ++]
 The `formatUnits` parameter and related return values (e.g. `result.formatted`) are deprecated for the following hooks:
 
 - [`useEstimateFeesPerGas`](/react/api/hooks/useEstimateFeesPerGas)
-- [`useToken`](/react/api/hooks/useToken)
+- `useToken`
 
 Instead you can call `formatUnits` from Viem directly or use another number formatting library, like [dnum](https://github.com/bpierre/dnum) instead.
 

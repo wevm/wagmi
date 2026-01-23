@@ -4,16 +4,15 @@ import type {
   ReconnectErrorType,
 } from '@wagmi/core'
 import { config } from '@wagmi/test'
-import { expectTypeOf, test } from 'vitest'
-
 import type { Address } from 'viem'
+import { expectTypeOf, test } from 'vitest'
 import { useReconnect } from './useReconnect.js'
 
 const connectors = [config.connectors[0]!]
 const contextValue = { foo: 'bar' } as const
 
 test('context', () => {
-  const { context, data, error, reconnect, variables } = useReconnect({
+  const reconnect = useReconnect({
     mutation: {
       onMutate(variables) {
         expectTypeOf(variables).toEqualTypeOf<
@@ -79,7 +78,7 @@ test('context', () => {
     },
   })
 
-  expectTypeOf(data).toEqualTypeOf<
+  expectTypeOf(reconnect.data).toEqualTypeOf<
     | {
         accounts: readonly [Address, ...Address[]]
         chainId: number
@@ -87,16 +86,18 @@ test('context', () => {
       }[]
     | undefined
   >()
-  expectTypeOf(error).toEqualTypeOf<ReconnectErrorType | null>()
-  expectTypeOf(variables).toEqualTypeOf<
+  expectTypeOf(reconnect.error).toEqualTypeOf<ReconnectErrorType | null>()
+  expectTypeOf(reconnect.variables).toEqualTypeOf<
     | {
         connectors?: readonly (CreateConnectorFn | Connector)[] | undefined
       }
     | undefined
   >()
-  expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+  expectTypeOf(reconnect.context).toEqualTypeOf<
+    typeof contextValue | undefined
+  >()
 
-  reconnect(
+  reconnect.mutate(
     { connectors },
     {
       onError(error, variables, context) {

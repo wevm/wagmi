@@ -1,6 +1,6 @@
 # Chain Properties
 
-Some chains support additional properties related to blocks and transactions. This is powered by Viem's [formatters](https://viem.sh/docs/clients/chains.html#formatters) and [serializers](https://viem.sh/docs/clients/chains.html#serializers). For example, Celo, ZkSync, OP Stack chains support all support additional properties. In order to use these properties in a type-safe way, there are a few things you should be aware of.
+Some chains support additional properties related to blocks and transactions. This is powered by Viem's [formatters](https://viem.sh/docs/chains/formatters) and [serializers](https://viem.sh/docs/chains/serializers). For example, Celo, ZkSync, OP Stack chains support all support additional properties. In order to use these properties in a type-safe way, there are a few things you should be aware of.
 
 <br/>
 

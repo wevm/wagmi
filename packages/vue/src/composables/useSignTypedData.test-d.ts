@@ -11,7 +11,7 @@ import { useSignTypedData } from './useSignTypedData.js'
 const contextValue = { foo: 'bar' } as const
 
 test('context', () => {
-  const { context, data, error, signTypedData, variables } = useSignTypedData({
+  const signTypedData = useSignTypedData({
     mutation: {
       onMutate(variables) {
         expectTypeOf(variables).toMatchTypeOf<SignTypedDataVariables>()
@@ -36,14 +36,20 @@ test('context', () => {
     },
   })
 
-  expectTypeOf(data.value).toEqualTypeOf<SignTypedDataReturnType | undefined>()
-  expectTypeOf(error.value).toEqualTypeOf<SignTypedDataErrorType | null>()
-  expectTypeOf(variables.value).toMatchTypeOf<
+  expectTypeOf(signTypedData.data.value).toEqualTypeOf<
+    SignTypedDataReturnType | undefined
+  >()
+  expectTypeOf(
+    signTypedData.error.value,
+  ).toEqualTypeOf<SignTypedDataErrorType | null>()
+  expectTypeOf(signTypedData.variables.value).toMatchTypeOf<
     SignTypedDataVariables | undefined
   >()
-  expectTypeOf(context.value).toEqualTypeOf<typeof contextValue | undefined>()
+  expectTypeOf(signTypedData.context.value).toEqualTypeOf<
+    typeof contextValue | undefined
+  >()
 
-  signTypedData(
+  signTypedData.mutate(
     {
       types: typedData.basic.types,
       primaryType: 'Person',

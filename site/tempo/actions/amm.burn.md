@@ -1,0 +1,113 @@
+# `amm.burn`
+
+Burns liquidity tokens and receives the underlying token pair. [Learn more about the Fee AMM](https://docs.tempo.xyz/protocol/fees/spec-fee-amm)
+
+## Usage
+
+::: code-group
+```ts twoslash [example.ts]
+// @twoslash-cache: {"v":1,"hash":"15a04714fe58dc0283f87db9029cec245122d1b5c43e71becacad49ab6778a83","data":"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="}
+// @filename: config.ts
+// @errors: 2322
+import type { Config } from 'wagmi'
+export const config = {} as Config
+// @filename: example.ts
+// ---cut---
+import { Actions } from 'wagmi/tempo'
+import { parseUnits } from 'viem'
+import { config } from './config'
+
+const { amountUserToken, amountValidatorToken, receipt } =
+  await Actions.amm.burnSync(config, {
+    liquidity: parseUnits('10.5', 18),
+    to: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
+    userToken: '0x20c0000000000000000000000000000000000000',
+    validatorToken: '0x20c0000000000000000000000000000000000001',
+  })
+
+console.log('Received user tokens:', amountUserToken)
+// @log: Received user tokens: 5250000000000000000n
+console.log('Received validator tokens:', amountValidatorToken)
+// @log: Received validator tokens: 5250000000000000000n
+```
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
+:::
+
+### Asynchronous Usage
+
+The example above uses a `*Sync` variant of the action, that will wait for the transaction to be included before returning.
+
+If you are optimizing for performance, you should use the non-sync `amm.burn` action and wait for inclusion manually:
+
+```ts
+import { Actions as viem_Actions } from 'viem/tempo'
+import { Actions } from 'wagmi/tempo'
+import { waitForTransactionReceipt } from 'wagmi/actions'
+import { parseUnits } from 'viem'
+
+const hash = await Actions.amm.burn(config, {
+  liquidity: parseUnits('10.5', 18),
+  to: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
+  userToken: '0x20c0000000000000000000000000000000000000',
+  validatorToken: '0x20c0000000000000000000000000000000000001',
+})
+const receipt = await waitForTransactionReceipt(config, { hash })
+
+const { args: { amountUserToken, amountValidatorToken } } 
+  = viem_Actions.amm.burn.extractEvent(receipt.logs)
+```
+
+## Return Type
+
+```ts
+type ReturnType = {
+  /** Amount of user tokens received */
+  amountUserToken: bigint
+  /** Amount of validator tokens received */
+  amountValidatorToken: bigint
+  /** Amount of liquidity tokens burned */
+  liquidity: bigint
+  /** Transaction receipt */
+  receipt: TransactionReceipt
+  /** Address that initiated the burn */
+  sender: Address
+  /** Address that received the underlying tokens */
+  to: Address
+  /** Address of the user token */
+  userToken: Address
+  /** Address of the validator token */
+  validatorToken: Address
+}
+```
+
+## Parameters
+
+### liquidity
+
+- **Type:** `bigint`
+
+Amount of LP tokens to burn.
+
+### to
+
+- **Type:** `Address`
+
+Address to send tokens to.
+
+### userToken
+
+- **Type:** `Address | bigint`
+
+Address or ID of the user token.
+
+### validatorToken
+
+- **Type:** `Address | bigint`
+
+Address or ID of the validator token.
+
+<!--@include: @shared/tempo-write-parameters.md-->
+
+## Viem
+
+- [`amm.burn`](https://viem.sh/tempo/actions/amm.burn)

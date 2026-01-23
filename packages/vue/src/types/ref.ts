@@ -17,7 +17,7 @@ type UnwrapLeaf =
   | WeakSet<any>
 
 export type DeepMaybeRef<value> = MaybeRef<
-  // biome-ignore lint/complexity/noBannedTypes:
+  // biome-ignore lint/complexity/noBannedTypes: allowed
   value extends Function | Config | Connector
     ? value
     : value extends object | any[]
@@ -31,7 +31,7 @@ export type DeepUnwrapRef<T> = T extends UnwrapLeaf
   ? T
   : T extends Ref<infer U>
     ? DeepUnwrapRef<U>
-    : // biome-ignore lint/complexity/noBannedTypes:
+    : // biome-ignore lint/complexity/noBannedTypes: allowed
       T extends {}
       ? {
           [Property in keyof T]: DeepUnwrapRef<T[Property]>

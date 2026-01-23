@@ -1,9 +1,9 @@
-import { accounts, config } from '@wagmi/test'
+import { config } from '@wagmi/test'
 import { expect, test } from 'vitest'
 
 import { verifyMessage } from './verifyMessage.js'
 
-const eoaAddress = accounts[0]
+const eoaAddress = '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266'
 const smartAccountAddress = '0x3FCf42e10CC70Fe75A62EB3aDD6D305Aa840d145'
 
 test('smart account: valid signature', async () => {

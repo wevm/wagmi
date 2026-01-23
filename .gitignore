@@ -1,13 +1,17 @@
+*.vitest-temp.json
 .DS_Store
+.attest
 .next
 .nuxt
 .pnpm-debug.log*
+.tanstack
+.wrangler
+_
 cache
 coverage
 dist
 node_modules
 tsconfig.tsbuildinfo
-*.vitest-temp.json
 
 # local env files
 .env
@@ -31,9 +35,11 @@ packages/react/chains
 packages/react/codegen
 packages/react/connectors
 packages/react/experimental
+packages/react/internal
 packages/react/query
 packages/vue/actions
 packages/vue/chains
 packages/vue/connectors
+packages/vue/internal
 packages/vue/nuxt
 packages/vue/query

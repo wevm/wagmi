@@ -47,10 +47,10 @@ import { type WatchAssetParameters } from '@wagmi/core'
 
 ::: code-group
 ```ts [index.ts]
-import { getAccount, watchAsset } from '@wagmi/core'
+import { getConnection, watchAsset } from '@wagmi/core'
 import { config } from './config'
 
-const { connector } = getAccount(config)
+const { connector } = getConnection(config)
 const result = await watchAsset(config, {
   connector, // [!code focus]
   options: {
@@ -130,5 +130,5 @@ import { type WatchAssetErrorType } from '@wagmi/core'
 
 ## Viem
 
-- [`watchAsset`](https://viem.sh/docs/actions/wallet/watchAsset.html)
+- [`watchAsset`](https://viem.sh/docs/actions/wallet/watchAsset)
 

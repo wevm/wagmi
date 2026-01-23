@@ -3,13 +3,10 @@ import type { Compute } from '@wagmi/core/internal'
 import {
   type GetEnsNameData,
   type GetEnsNameOptions,
-  type GetEnsNameQueryFnData,
-  type GetEnsNameQueryKey,
   getEnsNameQueryOptions,
 } from '@wagmi/core/query'
-
 import { computed } from 'vue'
-import type { ConfigParameter, QueryParameter } from '../types/properties.js'
+import type { ConfigParameter } from '../types/properties.js'
 import type { DeepMaybeRef } from '../types/ref.js'
 import { deepUnref } from '../utils/cloneDeep.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
@@ -20,16 +17,7 @@ export type UseEnsNameParameters<
   config extends Config = Config,
   selectData = GetEnsNameData,
 > = Compute<
-  DeepMaybeRef<
-    GetEnsNameOptions<config> &
-      ConfigParameter<config> &
-      QueryParameter<
-        GetEnsNameQueryFnData,
-        GetEnsNameErrorType,
-        selectData,
-        GetEnsNameQueryKey<config>
-      >
-  >
+  DeepMaybeRef<GetEnsNameOptions<config, selectData> & ConfigParameter<config>>
 >
 
 export type UseEnsNameReturnType<selectData = GetEnsNameData> =
@@ -40,26 +28,18 @@ export function useEnsName<
   config extends Config = ResolvedRegister['config'],
   selectData = GetEnsNameData,
 >(
-  parameters_: UseEnsNameParameters<config, selectData> = {},
+  parameters: UseEnsNameParameters<config, selectData> = {},
 ): UseEnsNameReturnType<selectData> {
-  const parameters = computed(() => deepUnref(parameters_))
-
-  const config = useConfig(parameters)
-  const configChainId = useChainId({ config })
-
-  const queryOptions = computed(() => {
-    const {
-      address,
-      chainId = configChainId.value,
-      query = {},
-    } = parameters.value
-    const options = getEnsNameQueryOptions(config, {
-      ...parameters.value,
-      chainId,
-    })
-    const enabled = Boolean(address && (query.enabled ?? true))
-    return { ...query, ...options, enabled }
-  })
-
-  return useQuery(queryOptions as any) as UseEnsNameReturnType<selectData>
+  const params = computed(() => deepUnref(parameters))
+  const config = useConfig(params)
+  const chainId = useChainId({ config })
+  const options = computed(() =>
+    getEnsNameQueryOptions(config as any, {
+      ...params.value,
+      address: params.value.address,
+      chainId: params.value.chainId ?? chainId.value,
+      query: params.value.query,
+    }),
+  )
+  return useQuery(options as any) as any
 }

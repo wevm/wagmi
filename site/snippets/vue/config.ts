@@ -1,4 +1,4 @@
-import { http, createConfig } from '@wagmi/vue'
+import { createConfig, http } from '@wagmi/vue'
 import { mainnet, sepolia } from '@wagmi/vue/chains'
 
 export const config = createConfig({

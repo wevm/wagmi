@@ -13,7 +13,7 @@ const TVariables = 'TVariables'
 
 [TanStack Query mutation docs](https://tanstack.com/query/v5/docs/react/reference/useMutation)
 
-### {{mutate}}
+### mutate
 
 `(variables: {{TVariables}}, { onSuccess, onSettled, onError }) => void`
 
@@ -44,11 +44,11 @@ The mutation function you can call with variables to trigger the mutation and op
   - This function will fire when the mutation is either successfully fetched or encounters an error and be passed either the data or error
   - If you make multiple requests, `onSuccess` will fire only after the latest call you've made.
 
-### {{mutate}}Async
+### mutateAsync
 
 `(variables: {{TVariables}}, { onSuccess, onSettled, onError }) => Promise<{{TData}}>`
 
-Similar to [`{{mutate}}`](#mutate) but returns a promise which can be awaited.
+Similar to [`mutate`](#mutate) but returns a promise which can be awaited.
 
 ### data
 
@@ -118,5 +118,5 @@ A function to clean the mutation internal state (e.g. it resets the mutation to 
 
 `{{TVariables}} | undefined`
 
-- The variables object passed to [`{{mutate}}`](#mutate).
+- The variables object passed to [`mutate`](#mutate).
 - Defaults to `undefined`.

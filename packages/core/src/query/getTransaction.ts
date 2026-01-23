@@ -1,5 +1,3 @@
-import type { QueryOptions } from '@tanstack/query-core'
-
 import {
   type GetTransactionErrorType,
   type GetTransactionParameters,
@@ -8,42 +6,61 @@ import {
 } from '../actions/getTransaction.js'
 import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
+import type { QueryOptions, QueryParameter } from '../types/query.js'
 import type { Compute, ExactPartial } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
 export type GetTransactionOptions<
   config extends Config,
   chainId extends config['chains'][number]['id'],
+  selectData = GetTransactionData<config, chainId>,
 > = Compute<
   ExactPartial<GetTransactionParameters<config, chainId>> & ScopeKeyParameter
->
+> &
+  QueryParameter<
+    GetTransactionQueryFnData<config, chainId>,
+    GetTransactionErrorType,
+    selectData,
+    GetTransactionQueryKey<config, chainId>
+  >
 
 export function getTransactionQueryOptions<
   config extends Config,
   chainId extends config['chains'][number]['id'],
->(config: config, options: GetTransactionOptions<config, chainId> = {}) {
+  selectData = GetTransactionData<config, chainId>,
+>(
+  config: config,
+  options: GetTransactionOptions<config, chainId, selectData> = {},
+): GetTransactionQueryOptions<config, chainId, selectData> {
   return {
-    async queryFn({ queryKey }) {
-      const { blockHash, blockNumber, blockTag, hash, index } = queryKey[1]
-      if (!blockHash && !blockNumber && !blockTag && !hash)
-        throw new Error('blockHash, blockNumber, blockTag, or hash is required')
-      if (!hash && !index)
-        throw new Error(
-          'index is required for blockHash, blockNumber, or blockTag',
+    ...options.query,
+    enabled: Boolean(
+      (options.hash ||
+        (options.index &&
+          (options.blockHash || options.blockNumber || options.blockTag))) &&
+        (options.query?.enabled ?? true),
+    ),
+    queryFn: async (context) => {
+      const [, { scopeKey: _, ...parameters }] = context.queryKey
+      if (
+        !(
+          parameters.hash ||
+          (parameters.index &&
+            (parameters.blockHash ||
+              parameters.blockNumber ||
+              parameters.blockTag))
         )
-      const { scopeKey: _, ...rest } = queryKey[1]
+      )
+        throw new Error(
+          'hash OR index AND blockHash, blockNumber, blockTag is required',
+        )
       return getTransaction(
         config,
-        rest as GetTransactionParameters,
+        parameters as GetTransactionParameters,
       ) as unknown as Promise<GetTransactionQueryFnData<config, chainId>>
     },
     queryKey: getTransactionQueryKey(options),
-  } as const satisfies QueryOptions<
-    GetTransactionQueryFnData<config, chainId>,
-    GetTransactionErrorType,
-    GetTransactionData<config, chainId>,
-    GetTransactionQueryKey<config, chainId>
-  >
+  }
 }
 
 export type GetTransactionQueryFnData<
@@ -59,7 +76,11 @@ export type GetTransactionData<
 export function getTransactionQueryKey<
   config extends Config,
   chainId extends config['chains'][number]['id'],
->(options: GetTransactionOptions<config, chainId> = {}) {
+>(
+  options: Compute<
+    ExactPartial<GetTransactionParameters<config, chainId>> & ScopeKeyParameter
+  > = {},
+) {
   return ['transaction', filterQueryOptions(options)] as const
 }
 
@@ -67,3 +88,14 @@ export type GetTransactionQueryKey<
   config extends Config,
   chainId extends config['chains'][number]['id'],
 > = ReturnType<typeof getTransactionQueryKey<config, chainId>>
+
+export type GetTransactionQueryOptions<
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
+  selectData = GetTransactionData<config, chainId>,
+> = QueryOptions<
+  GetTransactionQueryFnData<config, chainId>,
+  GetTransactionErrorType,
+  selectData,
+  GetTransactionQueryKey<config, chainId>
+>

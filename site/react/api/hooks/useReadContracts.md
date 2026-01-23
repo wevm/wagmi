@@ -3,6 +3,14 @@ title: useReadContracts
 description: Hook for calling multiple read methods on a contract.
 ---
 
+<script setup>
+const packageName = 'wagmi'
+const actionName = 'readContracts'
+const typeName = 'ReadContracts'
+const TData = 'ReadContractsReturnType'
+const TError = 'ReadContractsErrorType'
+</script>
+
 # useReadContracts
 
 Hook for calling multiple read methods on a contract.
@@ -326,7 +334,7 @@ function App() {
 
 `Config | undefined`
 
-[`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/api/WagmiProvider).
+[`Config`](/react/api/createConfig#config) to use instead of retrieving from the nearest [`WagmiProvider`](/react/api/WagmiProvider).
 
 ::: code-group
 ```tsx [index.tsx]
@@ -388,6 +396,8 @@ import { type UseReadContractsReturnType } from 'wagmi'
 ```
 
 <!--@include: @shared/query-result.md-->
+
+<!--@include: @shared/query-imports.md-->
 
 ## Action
 

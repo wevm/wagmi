@@ -1,0 +1,97 @@
+# `token.approve`
+
+Approves a spender to transfer TIP-20 tokens on behalf of the caller.
+
+## Usage
+
+::: code-group
+
+```ts twoslash [example.ts]
+// @twoslash-cache: {"v":1,"hash":"ac90d56fef4b8b0bb0fdd99d1f3d9e38719b2c463becd75cdc590e023c1e0813","data":"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"}
+// @filename: config.ts
+// @errors: 2322
+import type { Config } from 'wagmi'
+export const config = {} as Config
+// @filename: example.ts
+// ---cut---
+import { Actions } from 'wagmi/tempo'
+import { parseUnits } from 'viem'
+import { config } from './config'
+
+const { receipt } = await Actions.token.approveSync(config, {
+  amount: parseUnits('10.5', 6),
+  spender: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
+  token: '0x20c0000000000000000000000000000000000000',
+})
+
+console.log('Transaction hash:', receipt.transactionHash)
+// @log: Transaction hash: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+```
+
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
+
+:::
+
+### Asynchronous Usage
+
+The example above uses a `*Sync` variant of the action, that will wait for the transaction to be included before returning.
+
+If you are optimizing for performance, you should use the non-sync `token.approve` action and wait for inclusion manually:
+
+```ts
+import { Actions as viem_Actions } from 'viem/tempo'
+import { Actions } from 'wagmi/tempo'
+import { parseUnits } from 'viem'
+import { waitForTransactionReceipt } from 'wagmi/actions'
+
+const hash = await Actions.token.approve(config, {
+  amount: parseUnits('10.5', 6),
+  spender: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEbb',
+  token: '0x20c0000000000000000000000000000000000000',
+})
+const receipt = await waitForTransactionReceipt(config, { hash })
+
+const { args } 
+  = viem_Actions.token.approve.extractEvent(receipt.logs)
+```
+
+## Return Type
+
+```ts
+type ReturnType = {
+  /** Address of the token owner */
+  owner: Address
+  /** Address of the spender */
+  spender: Address
+  /** Amount of tokens approved */
+  amount: bigint
+  /** Transaction receipt */
+  receipt: TransactionReceipt
+}
+```
+
+## Parameters
+
+### amount
+
+- **Type:** `bigint`
+
+Amount of tokens to approve.
+
+### spender
+
+- **Type:** `Address`
+
+Address of the spender.
+
+### token
+
+- **Type:** `Address | bigint`
+
+Address or ID of the TIP-20 token.
+
+<!--@include: @shared/tempo-write-parameters.md-->
+
+## Viem
+
+- [`token.approve`](https://viem.sh/tempo/actions/token.approve)

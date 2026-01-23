@@ -75,11 +75,50 @@ const result = await connect(config, {
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
+### withCapabilities
+
+`boolean | undefined`
+
+- Exposes [capabilities](https://eips.ethereum.org/EIPS/eip-7846#capabilities) on return type.
+- Defaults to `false`.
+
+::: code-group
+```ts [index.ts]
+import { connect } from '@wagmi/core'
+import { mainnet } from '@wagmi/core/chains'
+import { injected } from '@wagmi/connectors'
+import { config } from './config'
+
+const result = await connect(config, {
+  connector: injected(),
+  withCapabilities: true, // [!code focus]
+})
+```
+<<< @/snippets/core/config.ts[config.ts]
+:::
+
 ## Return Type
 
 ```ts
 import { type ConnectReturnType } from '@wagmi/core'
 ```
+
+::: tip
+When [`withCapabilities: false | undefined`](#withcapabilities):
+```ts
+type ConnectReturnType = {
+  accounts: readonly Address[]
+  // ...
+}
+```
+When [`withCapabilities: true`](#withcapabilities):
+```ts
+type ConnectReturnType = {
+  accounts: readonly { address: Address; capabilities: Record<string, unknown> }[]
+  // ...
+}
+```
+:::
 
 ### accounts
 

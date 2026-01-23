@@ -1,6 +1,7 @@
 import type {
   MetaMaskSDK,
   MetaMaskSDKOptions,
+  RPC_URLS_MAP,
   SDKProvider,
 } from '@metamask/sdk'
 import {
@@ -8,31 +9,59 @@ import {
   type Connector,
   createConnector,
   extractRpcUrls,
+  ProviderNotFoundError,
 } from '@wagmi/core'
 import type {
   Compute,
   ExactPartial,
+  OneOf,
   RemoveUndefined,
+  UnionCompute,
 } from '@wagmi/core/internal'
 import {
   type AddEthereumChainParameter,
   type Address,
+  getAddress,
   type Hex,
+  hexToNumber,
+  numberToHex,
   type ProviderConnectInfo,
   type ProviderRpcError,
   ResourceUnavailableRpcError,
   type RpcError,
   SwitchChainError,
   UserRejectedRequestError,
-  getAddress,
-  hexToNumber,
-  numberToHex,
   withRetry,
   withTimeout,
 } from 'viem'
 
-export type MetaMaskParameters = Compute<
-  ExactPartial<Omit<MetaMaskSDKOptions, '_source' | 'readonlyRPCMap'>>
+export type MetaMaskParameters = UnionCompute<
+  WagmiMetaMaskSDKOptions &
+    OneOf<
+      | {
+          /* Shortcut to connect and sign a message */
+          connectAndSign?: string | undefined
+        }
+      | {
+          // TODO: Strongly type `method` and `params`
+          /* Allow `connectWith` any rpc method */
+          connectWith?: { method: string; params: unknown[] } | undefined
+        }
+    >
+>
+
+type WagmiMetaMaskSDKOptions = Compute<
+  ExactPartial<
+    Omit<
+      MetaMaskSDKOptions,
+      | '_source'
+      | 'forceDeleteProvider'
+      | 'forceInjectProvider'
+      | 'injectProvider'
+      | 'useDeeplink'
+      | 'readonlyRPCMap'
+    >
+  >
 >
 
 metaMask.type = 'metaMask' as const
@@ -57,15 +86,25 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
   return createConnector<Provider, Properties>((config) => ({
     id: 'metaMaskSDK',
     name: 'MetaMask',
+    rdns: ['io.metamask', 'io.metamask.mobile'],
     type: metaMask.type,
     async setup() {
       const provider = await this.getProvider()
-      if (provider && !connect) {
-        connect = this.onConnect.bind(this)
-        provider.on('connect', connect as Listener)
+      if (provider?.on) {
+        if (!connect) {
+          connect = this.onConnect.bind(this)
+          provider.on('connect', connect as Listener)
+        }
+
+        // We shouldn't need to listen for `'accountsChanged'` here since the `'connect'` event should suffice (and wallet shouldn't be connected yet).
+        // Some wallets, like MetaMask, do not implement the `'connect'` event and overload `'accountsChanged'` instead.
+        if (!accountsChanged) {
+          accountsChanged = this.onAccountsChanged.bind(this)
+          provider.on('accountsChanged', accountsChanged as Listener)
+        }
       }
     },
-    async connect({ chainId, isReconnecting } = {}) {
+    async connect({ chainId, isReconnecting, withCapabilities } = {}) {
       const provider = await this.getProvider()
       if (!displayUri) {
         displayUri = this.onDisplayUri
@@ -76,11 +115,26 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       if (isReconnecting) accounts = await this.getAccounts().catch(() => [])
 
       try {
+        let signResponse: string | undefined
+        let connectWithResponse: unknown | undefined
         if (!accounts?.length) {
-          const requestedAccounts = (await sdk.connect()) as string[]
-          accounts = requestedAccounts.map((x) => getAddress(x))
-        }
+          if (parameters.connectAndSign || parameters.connectWith) {
+            if (parameters.connectAndSign)
+              signResponse = await sdk.connectAndSign({
+                msg: parameters.connectAndSign,
+              })
+            else if (parameters.connectWith)
+              connectWithResponse = await sdk.connectWith({
+                method: parameters.connectWith.method,
+                params: parameters.connectWith.params,
+              })
 
+            accounts = await this.getAccounts()
+          } else {
+            const requestedAccounts = (await sdk.connect()) as string[]
+            accounts = requestedAccounts.map((x) => getAddress(x))
+          }
+        }
         // Switch to chain if provided
         let currentChainId = (await this.getChainId()) as number
         if (chainId && currentChainId !== chainId) {
@@ -95,6 +149,19 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           provider.removeListener('display_uri', displayUri)
           displayUri = undefined
         }
+
+        if (signResponse)
+          provider.emit('connectAndSign', {
+            accounts,
+            chainId: currentChainId,
+            signResponse,
+          })
+        else if (connectWithResponse)
+          provider.emit('connectWith', {
+            accounts,
+            chainId: currentChainId,
+            connectWithResponse,
+          })
 
         // Manage EIP-1193 event listeners
         // https://eips.ethereum.org/EIPS/eip-1193#events
@@ -115,7 +182,13 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           provider.on('disconnect', disconnect as Listener)
         }
 
-        return { accounts, chainId: currentChainId }
+        return {
+          // TODO(v3): Make `withCapabilities: true` default behavior
+          accounts: (withCapabilities
+            ? accounts.map((address) => ({ address, capabilities: {} }))
+            : accounts) as never,
+          chainId: currentChainId,
+        }
       } catch (err) {
         const error = err as RpcError
         if (error.code === UserRejectedRequestError.code)
@@ -129,10 +202,6 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       const provider = await this.getProvider()
 
       // Manage EIP-1193 event listeners
-      if (accountsChanged) {
-        provider.removeListener('accountsChanged', accountsChanged)
-        accountsChanged = undefined
-      }
       if (chainChanged) {
         provider.removeListener('chainChanged', chainChanged)
         chainChanged = undefined
@@ -167,30 +236,58 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         // Unwrapping import for Vite compatibility.
         // See: https://github.com/vitejs/vite/issues/9703
         const MetaMaskSDK = await (async () => {
-          const { default: SDK } = await import('@metamask/sdk')
+          const { default: SDK } = await (() => {
+            // safe webpack optional peer dependency dynamic import
+            try {
+              return import('@metamask/sdk')
+            } catch {
+              throw new Error('dependency "@metamask/sdk" not found')
+            }
+          })()
           if (typeof SDK !== 'function' && typeof SDK.default === 'function')
             return SDK.default
           return SDK as unknown as typeof SDK.default
         })()
 
+        const readonlyRPCMap: RPC_URLS_MAP = {}
+        for (const chain of config.chains)
+          readonlyRPCMap[numberToHex(chain.id)] = extractRpcUrls({
+            chain,
+            transports: config.transports,
+          })?.[0]
+
         sdk = new MetaMaskSDK({
-          _source: 'wagmi',
           // Workaround cast since MetaMask SDK does not support `'exactOptionalPropertyTypes'`
           ...(parameters as RemoveUndefined<typeof parameters>),
-          readonlyRPCMap: Object.fromEntries(
-            config.chains.map((chain) => {
-              const [url] = extractRpcUrls({
-                chain,
-                transports: config.transports,
-              })
-              return [chain.id, url]
-            }),
-          ),
-          dappMetadata: parameters.dappMetadata ?? { name: 'wagmi' },
-          useDeeplink: parameters.useDeeplink ?? true,
+          _source: 'wagmi',
+          forceDeleteProvider: false,
+          forceInjectProvider: false,
+          injectProvider: false,
+          readonlyRPCMap,
+          dappMetadata: {
+            ...parameters.dappMetadata,
+            // Test if name and url are set AND not empty
+            name: parameters.dappMetadata?.name
+              ? parameters.dappMetadata?.name
+              : 'wagmi',
+            url: parameters.dappMetadata?.url
+              ? parameters.dappMetadata?.url
+              : typeof window !== 'undefined'
+                ? window.location.origin
+                : 'https://wagmi.sh',
+          },
+          useDeeplink: true,
         })
-        await sdk.init()
-        return sdk.getProvider()!
+        const result = await sdk.init()
+        // On initial load, sometimes `sdk.getProvider` does not return provider.
+        // https://github.com/wevm/wagmi/issues/4367
+        // Use result of `init` call if available.
+        const provider = (() => {
+          if (result?.activeProvider) return result.activeProvider
+          return sdk.getProvider()
+        })()
+        if (!provider) throw new ProviderNotFoundError()
+        return provider
       }
 
       if (!provider) {
@@ -223,35 +320,25 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       if (!chain) throw new SwitchChainError(new ChainNotConfiguredError())
 
       try {
-        await Promise.all([
-          provider
-            .request({
-              method: 'wallet_switchEthereumChain',
-              params: [{ chainId: numberToHex(chainId) }],
-            })
-            // During `'wallet_switchEthereumChain'`, MetaMask makes a `'net_version'` RPC call to the target chain.
-            // If this request fails, MetaMask does not emit the `'chainChanged'` event, but will still switch the chain.
-            // To counter this behavior, we request and emit the current chain ID to confirm the chain switch either via
-            // this callback or an externally emitted `'chainChanged'` event.
-            // https://github.com/MetaMask/metamask-extension/issues/24247
-            .then(async () => {
-              const currentChainId = await this.getChainId()
-              if (currentChainId === chainId)
-                config.emitter.emit('change', { chainId })
-            }),
-          new Promise<void>((resolve) => {
-            const listener = ((data) => {
-              if ('chainId' in data && data.chainId === chainId) {
-                config.emitter.off('change', listener)
-                resolve()
-              }
-            }) satisfies Parameters<typeof config.emitter.on>[1]
-            config.emitter.on('change', listener)
-          }),
-        ])
+        await provider.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: numberToHex(chainId) }],
+        })
+
+        // During `'wallet_switchEthereumChain'`, MetaMask makes a `'net_version'` RPC call to the target chain.
+        // If this request fails, MetaMask does not emit the `'chainChanged'` event, but will still switch the chain.
+        // To counter this behavior, we request and emit the current chain ID to confirm the chain switch either via
+        // this callback or an externally emitted `'chainChanged'` event.
+        // https://github.com/MetaMask/metamask-extension/issues/24247
+        await waitForChainIdToSync()
+        await sendAndWaitForChangeEvent(chainId)
+
         return chain
       } catch (err) {
         const error = err as RpcError
+
+        if (error.code === UserRejectedRequestError.code)
+          throw new UserRejectedRequestError(error)
 
         // Indicates chain is not added to provider
         if (
@@ -262,61 +349,94 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
             ?.data?.originalError?.code === 4902
         ) {
           try {
-            const { default: blockExplorer, ...blockExplorers } =
-              chain.blockExplorers ?? {}
-            let blockExplorerUrls: string[] | undefined
-            if (addEthereumChainParameter?.blockExplorerUrls)
-              blockExplorerUrls = addEthereumChainParameter.blockExplorerUrls
-            else if (blockExplorer)
-              blockExplorerUrls = [
-                blockExplorer.url,
-                ...Object.values(blockExplorers).map((x) => x.url),
-              ]
-
-            let rpcUrls: readonly string[]
-            if (addEthereumChainParameter?.rpcUrls?.length)
-              rpcUrls = addEthereumChainParameter.rpcUrls
-            else rpcUrls = [chain.rpcUrls.default?.http[0] ?? '']
-
-            const addEthereumChain = {
-              blockExplorerUrls,
-              chainId: numberToHex(chainId),
-              chainName: addEthereumChainParameter?.chainName ?? chain.name,
-              iconUrls: addEthereumChainParameter?.iconUrls,
-              nativeCurrency:
-                addEthereumChainParameter?.nativeCurrency ??
-                chain.nativeCurrency,
-              rpcUrls,
-            } satisfies AddEthereumChainParameter
-
             await provider.request({
               method: 'wallet_addEthereumChain',
-              params: [addEthereumChain],
+              params: [
+                {
+                  blockExplorerUrls: (() => {
+                    const { default: blockExplorer, ...blockExplorers } =
+                      chain.blockExplorers ?? {}
+                    if (addEthereumChainParameter?.blockExplorerUrls)
+                      return addEthereumChainParameter.blockExplorerUrls
+                    if (blockExplorer)
+                      return [
+                        blockExplorer.url,
+                        ...Object.values(blockExplorers).map((x) => x.url),
+                      ]
+                    return
+                  })(),
+                  chainId: numberToHex(chainId),
+                  chainName: addEthereumChainParameter?.chainName ?? chain.name,
+                  iconUrls: addEthereumChainParameter?.iconUrls,
+                  nativeCurrency:
+                    addEthereumChainParameter?.nativeCurrency ??
+                    chain.nativeCurrency,
+                  rpcUrls: (() => {
+                    if (addEthereumChainParameter?.rpcUrls?.length)
+                      return addEthereumChainParameter.rpcUrls
+                    return [chain.rpcUrls.default?.http[0] ?? '']
+                  })(),
+                } satisfies AddEthereumChainParameter,
+              ],
             })
 
-            const currentChainId = hexToNumber(
-              // Call `'eth_chainId'` directly to guard against `this.state.chainId` (via `provider.getChainId`) being stale.
-              (await provider.request({ method: 'eth_chainId' })) as Hex,
-            )
-            if (currentChainId !== chainId)
-              throw new UserRejectedRequestError(
-                new Error('User rejected switch after adding network.'),
-              )
+            await waitForChainIdToSync()
+            await sendAndWaitForChangeEvent(chainId)
 
             return chain
-          } catch (error) {
-            throw new UserRejectedRequestError(error as Error)
+          } catch (err) {
+            const error = err as RpcError
+            if (error.code === UserRejectedRequestError.code)
+              throw new UserRejectedRequestError(error)
+            throw new SwitchChainError(error)
           }
         }
 
-        if (error.code === UserRejectedRequestError.code)
-          throw new UserRejectedRequestError(error)
         throw new SwitchChainError(error)
+      }
+
+      async function waitForChainIdToSync() {
+        // On mobile, there is a race condition between the result of `'wallet_addEthereumChain'` and `'eth_chainId'`.
+        // To avoid this, we wait for `'eth_chainId'` to return the expected chain ID with a retry loop.
+        await withRetry(
+          async () => {
+            const value = hexToNumber(
+              // `'eth_chainId'` is cached by the MetaMask SDK side to avoid unnecessary deeplinks
+              (await provider.request({ method: 'eth_chainId' })) as Hex,
+            )
+            // `value` doesn't match expected `chainId`, throw to trigger retry
+            if (value !== chainId)
+              throw new Error('User rejected switch after adding network.')
+            return value
+          },
+          {
+            delay: 50,
+            retryCount: 20, // android device encryption is slower
+          },
+        )
+      }
+
+      async function sendAndWaitForChangeEvent(chainId: number) {
+        await new Promise<void>((resolve) => {
+          const listener = ((data) => {
+            if ('chainId' in data && data.chainId === chainId) {
+              config.emitter.off('change', listener)
+              resolve()
+            }
+          }) satisfies Parameters<typeof config.emitter.on>[1]
+          config.emitter.on('change', listener)
+          config.emitter.emit('change', { chainId })
+        })
       }
     },
     async onAccountsChanged(accounts) {
       // Disconnect if there are no accounts
-      if (accounts.length === 0) this.onDisconnect()
+      if (accounts.length === 0) {
+        // ... and using browser extension
+        if (sdk.isExtensionActive()) this.onDisconnect()
+        // FIXME(upstream): Mobile app sometimes emits invalid `accountsChanged` event with empty accounts array
+        else return
+      }
       // Connect if emitter is listening for connect event (e.g. is disconnected and connects through wallet interface)
       else if (config.emitter.listenerCount('connect')) {
         const chainId = (await this.getChainId()).toString()
@@ -369,10 +489,6 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       config.emitter.emit('disconnect')
 
       // Manage EIP-1193 event listeners
-      if (!accountsChanged) {
-        accountsChanged = this.onAccountsChanged.bind(this)
-        provider.on('accountsChanged', accountsChanged as Listener)
-      }
       if (chainChanged) {
         provider.removeListener('chainChanged', chainChanged)
         chainChanged = undefined

@@ -28,7 +28,7 @@ Data layer performance is also critical. Slow, unnecessary, and manual data fetc
 
 ## Feature Coverage
 
-Wagmi supports the most popular and commonly-used Ethereum features out of the box with 40+ React Hooks for accounts, wallets, contracts, transactions, signing, ENS, and more. Wagmi also supports just about any wallet out there through it's official [connectors](/react/api/connectors), [EIP-6963 support](/react/api/createConfig#multiinjectedproviderdiscovery), and [extensible API](/dev/creating-connectors).
+Wagmi supports the most popular and commonly-used Ethereum features out of the box with 40+ React Hooks for accounts, wallets, contracts, transactions, signing, ENS, and more. Wagmi also supports just about any wallet out there through official [connectors](/react/api/connectors), [EIP-6963 support](/react/api/createConfig#multiinjectedproviderdiscovery), and [extensible API](/dev/creating-connectors).
 
 If you need lower-level control, you can always drop down to [Wagmi Core](/core/getting-started) or [Viem](https://viem.sh), which Wagmi uses internally to perform blockchain operations. Wagmi also manages multi-chain support automatically so developers can focus on their applications instead of adding custom code.
 
