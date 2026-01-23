@@ -12,7 +12,7 @@ catalog:
   '@base-org/account': 2.4.0
   '@coinbase/wallet-sdk': 4.3.6
   '@gemini-wallet/core': 0.3.2
-  '@metamask/connect-evm': 0.2.0
+  '@metamask/connect-evm': 0.3.1
   '@nuxt/schema': 4.2.1
   '@safe-global/safe-apps-provider': 0.18.6
   '@safe-global/safe-apps-sdk': 9.1.0

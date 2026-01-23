@@ -16,8 +16,8 @@ catalogs:
       specifier: 0.3.2
       version: 0.3.2
     '@metamask/connect-evm':
-      specifier: 0.2.0
-      version: 0.2.0
+      specifier: 0.3.1
+      version: 0.3.1
     '@nuxt/schema':
       specifier: 4.2.1
       version: 4.2.1
@@ -145,7 +145,7 @@ importers:
         version: 5.69.0(@types/node@24.6.2)(typescript@5.9.3)
       node:
         specifier: runtime:^24.5.1
-        version: runtime:24.12.0
+        version: runtime:24.13.0
       playwright:
         specifier: 1.56.1
         version: 1.56.1
@@ -275,7 +275,7 @@ importers:
         version: 0.3.2(viem@2.44.4(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76))
       '@metamask/connect-evm':
         specifier: 'catalog:'
-        version: 0.2.0(@babel/runtime@7.28.4)(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+        version: 0.3.1(@babel/runtime@7.28.4)(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@safe-global/safe-apps-provider':
         specifier: 'catalog:'
         version: 0.18.6(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
@@ -2478,12 +2478,12 @@ packages:
     resolution: {integrity: sha512-807Y6JxqeY3tckSRDse96RmHV6atDsSPLD/x9KIync8ccFjOwSZlv0n4NA5Bsi0znjOogU0jEe5hPNIDTFzFRg==}
     engines: {node: ^18.18 || >=20}
 
-  '@metamask/connect-evm@0.2.0':
-    resolution: {integrity: sha512-UcM4iNhEChxN3S0Amedqv0JnIJ+PSa3G0E5EyNW56sH/aZWsQnX4Gl7/nar4C3hb6zgREBW4qZeAq+dE4tdHAQ==}
+  '@metamask/connect-evm@0.3.1':
+    resolution: {integrity: sha512-nEakpZqPQUrI6zr4f/NlLjAXns5X0Pe0CwlZ934BuEgQuiY4BZrqs5V6l4B0sFfNDDjsZIeeJiy26NrdTTFFNw==}
     engines: {node: '>=20.19.0'}
 
-  '@metamask/connect-multichain@0.5.0':
-    resolution: {integrity: sha512-hS+jzpd3VynpPMXocArEOsyQwMqpgcOXfS2WcKgLxTitg9MyqR7o1PE1TnLXaCB4RkWiLr+FenpUhtu4MdzKAg==}
+  '@metamask/connect-multichain@0.5.1':
+    resolution: {integrity: sha512-kiubQhpzuKEqmE4S20woaMoj2uAAEUzUoYHzTXqi5RDcoe2HmFqtw0dmSReGO6COP6fouKnt7eNj9Ht9OHbNZQ==}
     engines: {node: '>=20.19.0'}
     peerDependencies:
       '@react-native-async-storage/async-storage': ^1.23
@@ -7837,94 +7837,94 @@ packages:
   node-releases@2.0.27:
     resolution: {integrity: sha512-nmh3lCkYZ3grZvqcCH+fjmQ7X+H0OeZgP40OierEaAptX4XofMh5kwNbWh7lBduUzCcV/8kZ+NDLCwm2iorIlA==}
 
-  node@runtime:24.12.0:
+  node@runtime:24.13.0:
     resolution:
       type: variations
       variants:
         - resolution:
             archive: tarball
             bin: bin/node
-            integrity: sha256-MfPQZbuE8GnlIuVdDTA1vTZMul2KIiM/9oAF0oHou3g=
+            integrity: sha256-rCHprwik1UsFfYAMA7yVMilGlSuNqoEcramL+2aozo8=
             type: binary
-            url: https://nodejs.org/download/release/v24.12.0/node-v24.12.0-aix-ppc64.tar.gz
+            url: https://nodejs.org/download/release/v24.13.0/node-v24.13.0-aix-ppc64.tar.gz
           targets:
             - cpu: ppc64
               os: aix
         - resolution:
             archive: tarball
             bin: bin/node
-            integrity: sha256-MZ8iGtxeRP8O1X6KRBsihPArjcb8h7jrkqapNkP9gIA=
+            integrity: sha256-1ZWWHlY/yuBX1KD7mS8XWlTZf8xKFNwtR02S3e6jufg=
             type: binary
-            url: https://nodejs.org/download/release/v24.12.0/node-v24.12.0-darwin-arm64.tar.gz
+            url: https://nodejs.org/download/release/v24.13.0/node-v24.13.0-darwin-arm64.tar.gz
           targets:
             - cpu: arm64
               os: darwin
         - resolution:
             archive: tarball
             bin: bin/node
-            integrity: sha256-uC6kxi/QjiUMq1nWJeddd8xbCj1gxmmOvuRUXIihacU=
+            integrity: sha256-bwPBtI3b4bEppvgDi+COCJnwXxcYW00+Q1AYCrZpp/M=
             type: binary
-            url: https://nodejs.org/download/release/v24.12.0/node-v24.12.0-darwin-x64.tar.gz
+            url: https://nodejs.org/download/release/v24.13.0/node-v24.13.0-darwin-x64.tar.gz
           targets:
             - cpu: x64
               os: darwin
         - resolution:
             archive: tarball
             bin: bin/node
-            integrity: sha256-myou65io6zc2EiTiodBgMArS3RQ69Y39sW3nhd8PEig=
+            integrity: sha256-D21AuUxqLra0wkD/yLn9Otp6sETBd91BPAbh75pj8IE=
             type: binary
-            url: https://nodejs.org/download/release/v24.12.0/node-v24.12.0-linux-arm64.tar.gz
+            url: https://nodejs.org/download/release/v24.13.0/node-v24.13.0-linux-arm64.tar.gz
           targets:
             - cpu: arm64
               os: linux
         - resolution:
             archive: tarball
             bin: bin/node
-            integrity: sha256-Zux5tNZPQQmu34IhCHFdC2CXEY35FZwvYyFHfaTqF6o=
+            integrity: sha256-GAEZMLGCocW0nSMmGR/bpYJwvfe0W4x9+FXvMZMbFIo=
             type: binary
-            url: https://nodejs.org/download/release/v24.12.0/node-v24.12.0-linux-ppc64le.tar.gz
+            url: https://nodejs.org/download/release/v24.13.0/node-v24.13.0-linux-ppc64le.tar.gz
           targets:
             - cpu: ppc64le
               os: linux
         - resolution:
             archive: tarball
             bin: bin/node
-            integrity: sha256-jclgolVdsap3/RMcJb5XG594RLyLJ454cyufWA/n1YA=
+            integrity: sha256-V0RhC2JPLoKuHKJ52OznuMpGZDcjlTPS0DNWUwO8HTk=
             type: binary
-            url: https://nodejs.org/download/release/v24.12.0/node-v24.12.0-linux-s390x.tar.gz
+            url: https://nodejs.org/download/release/v24.13.0/node-v24.13.0-linux-s390x.tar.gz
           targets:
             - cpu: s390x
               os: linux
         - resolution:
             archive: tarball
             bin: bin/node
-            integrity: sha256-YVkifgr318PGuy+pAEUrBKbLiEGnAqeazGEyCdcLBNA=
+            integrity: sha256-YiOq0agfnR57aCxZ0S4t4jP3tMN0dc1A0cicQrc3/6g=
             type: binary
-            url: https://nodejs.org/download/release/v24.12.0/node-v24.12.0-linux-x64.tar.gz
+            url: https://nodejs.org/download/release/v24.13.0/node-v24.13.0-linux-x64.tar.gz
           targets:
             - cpu: x64
               os: linux
         - resolution:
             archive: zip
             bin: node.exe
-            integrity: sha256-sF5+Bm+BPTWtPNnCTu2u4HTAEqx+AAcSl2CP3S6UiuM=
-            prefix: node-v24.12.0-win-arm64
+            integrity: sha256-krn5sMDBI+EeSvxTXw7BnNmHRl7qUGQnVTpJlxNkFYo=
+            prefix: node-v24.13.0-win-arm64
             type: binary
-            url: https://nodejs.org/download/release/v24.12.0/node-v24.12.0-win-arm64.zip
+            url: https://nodejs.org/download/release/v24.13.0/node-v24.13.0-win-arm64.zip
           targets:
             - cpu: arm64
               os: win32
         - resolution:
             archive: zip
             bin: node.exe
-            integrity: sha256-nBJfYa6Ue1LneQlYMPnKwmeEagQ+9xkhg8hAFqqtKBI=
-            prefix: node-v24.12.0-win-x64
+            integrity: sha256-yidCaVvo3kQCfXGz9TpL2zYAm5VXX+Gub38LXOCRy4g=
+            prefix: node-v24.13.0-win-x64
             type: binary
-            url: https://nodejs.org/download/release/v24.12.0/node-v24.12.0-win-x64.zip
+            url: https://nodejs.org/download/release/v24.13.0/node-v24.13.0-win-x64.zip
           targets:
             - cpu: x64
               os: win32
-    version: 24.12.0
+    version: 24.13.0
     hasBin: true
 
   nopt@7.2.1:
@@ -12029,7 +12029,7 @@ snapshots:
     dependencies:
       '@metamask/base-controller': 9.0.0
       '@metamask/messenger': 0.3.0
-      '@metamask/rpc-errors': 7.0.2
+      '@metamask/rpc-errors': 7.0.3
       '@metamask/utils': 11.9.0
       nanoid: 3.3.11
     transitivePeerDependencies:
@@ -12048,18 +12048,18 @@ snapshots:
       '@metamask/api-specs': 0.14.0
       '@metamask/controller-utils': 11.18.0(@babel/runtime@7.28.4)
       '@metamask/permission-controller': 12.2.0(@babel/runtime@7.28.4)
-      '@metamask/rpc-errors': 7.0.2
+      '@metamask/rpc-errors': 7.0.3
       '@metamask/utils': 11.9.0
       lodash: 4.17.21
     transitivePeerDependencies:
       - '@babel/runtime'
       - supports-color
 
-  '@metamask/connect-evm@0.2.0(@babel/runtime@7.28.4)(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
+  '@metamask/connect-evm@0.3.1(@babel/runtime@7.28.4)(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
     dependencies:
       '@metamask/analytics': 0.2.0
       '@metamask/chain-agnostic-permission': 1.4.0(@babel/runtime@7.28.4)
-      '@metamask/connect-multichain': 0.5.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      '@metamask/connect-multichain': 0.5.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@metamask/utils': 11.9.0
     transitivePeerDependencies:
       - '@babel/runtime'
@@ -12069,7 +12069,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@metamask/connect-multichain@0.5.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
+  '@metamask/connect-multichain@0.5.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
     dependencies:
       '@metamask/analytics': 0.2.0
       '@metamask/mobile-wallet-protocol-core': 0.3.1
@@ -12081,6 +12081,7 @@ snapshots:
       '@metamask/utils': 11.9.0
       '@paulmillr/qr': 0.2.1
       bowser: 2.11.0
+      buffer: 6.0.3
       cross-fetch: 4.1.0
       eciesjs: 0.4.16
       eventemitter3: 5.0.1
@@ -12123,7 +12124,7 @@ snapshots:
 
   '@metamask/json-rpc-engine@10.2.0':
     dependencies:
-      '@metamask/rpc-errors': 7.0.2
+      '@metamask/rpc-errors': 7.0.3
       '@metamask/safe-event-emitter': 3.1.1
       '@metamask/utils': 11.9.0
       '@types/deep-freeze-strict': 1.1.2
@@ -12171,7 +12172,7 @@ snapshots:
       '@metamask/controller-utils': 11.18.0(@babel/runtime@7.28.4)
       '@metamask/json-rpc-engine': 10.2.0
       '@metamask/messenger': 0.3.0
-      '@metamask/rpc-errors': 7.0.2
+      '@metamask/rpc-errors': 7.0.3
       '@metamask/utils': 11.9.0
       '@types/deep-freeze-strict': 1.1.2
       deep-freeze-strict: 1.1.1
@@ -19200,7 +19201,7 @@ snapshots:
 
   node-releases@2.0.27: {}
 
-  node@runtime:24.12.0: {}
+  node@runtime:24.13.0: {}
 
   nopt@7.2.1:
     dependencies:
