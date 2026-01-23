@@ -67,7 +67,6 @@ export function useBlockNumber<
     getBlockNumberQueryOptions(config as any, {
       ...params.value,
       chainId: params.value.chainId ?? chainId.value,
-      query: params.value.query,
     }),
   )
 

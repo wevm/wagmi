@@ -48,9 +48,8 @@ export function useTransaction<
   const chainId = useChainId({ config })
   const options = computed(() =>
     getTransactionQueryOptions(config as any, {
-      ...params.value,
+      ...(params.value as any),
       chainId: params.value.chainId ?? chainId.value,
-      query: params.value.query as any,
     }),
   )
   return useQuery(options as any) as any

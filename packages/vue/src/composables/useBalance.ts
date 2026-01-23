@@ -36,7 +36,6 @@ export function useBalance<
     getBalanceQueryOptions(config as any, {
       ...params.value,
       chainId: params.value.chainId ?? chainId.value,
-      query: params.value.query,
     }),
   )
   return useQuery(options as any) as any

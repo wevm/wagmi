@@ -35,9 +35,7 @@ export function useEnsName<
   const options = computed(() =>
     getEnsNameQueryOptions(config as any, {
       ...params.value,
-      address: params.value.address,
       chainId: params.value.chainId ?? chainId.value,
-      query: params.value.query,
     }),
   )
   return useQuery(options as any) as any

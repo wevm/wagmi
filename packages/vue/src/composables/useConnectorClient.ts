@@ -53,10 +53,9 @@ export function useConnectorClient<
   const { address, connector } = useConnection({ config })
   const options = computed(() =>
     getConnectorClientQueryOptions(config as any, {
-      ...params.value,
+      ...(params.value as any),
       chainId: params.value.chainId ?? chainId.value,
       connector: (params.value.connector ?? connector.value) as Connector,
-      query: params.value.query as any,
     }),
   )
 
