@@ -10,34 +10,20 @@ import {
   type ConnectData,
   type ConnectMutate,
   type ConnectMutateAsync,
+  type ConnectOptions,
   type ConnectVariables,
   connectMutationOptions,
 } from '@wagmi/core/query'
 import { onScopeDispose } from 'vue'
-
 import type { ConfigParameter } from '../types/properties.js'
-import type {
-  UseMutationParameters,
-  UseMutationReturnType,
-} from '../utils/query.js'
+import type { UseMutationReturnType } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 import { useConnectors } from './useConnectors.js'
 
 export type UseConnectParameters<
   config extends Config = Config,
   context = unknown,
-> = Compute<
-  ConfigParameter<config> & {
-    mutation?:
-      | UseMutationParameters<
-          ConnectData<config, config['connectors'][number], boolean>,
-          ConnectErrorType,
-          ConnectVariables<config, config['connectors'][number], boolean>,
-          context
-        >
-      | undefined
-  }
->
+> = Compute<ConfigParameter<config> & ConnectOptions<config, context>>
 
 export type UseConnectReturnType<
   config extends Config = Config,
@@ -68,30 +54,24 @@ export function useConnect<
   parameters: UseConnectParameters<config, context> = {},
 ): UseConnectReturnType<config, context> {
   const config = useConfig(parameters)
-
-  const mutationOptions = connectMutationOptions(config)
-  const { mutate, mutateAsync, ...result } = useMutation({
-    ...(parameters.mutation as typeof mutationOptions),
-    ...mutationOptions,
-  })
+  const options = connectMutationOptions(config, parameters)
+  const mutation = useMutation(options)
 
   // Reset mutation back to an idle state when the connector disconnects.
   const unsubscribe = config.subscribe(
     ({ status }) => status,
     (status, previousStatus) => {
       if (previousStatus === 'connected' && status === 'disconnected')
-        result.reset()
+        mutation.reset()
     },
   )
   onScopeDispose(() => unsubscribe())
 
   type Return = UseConnectReturnType<config, context>
   return {
-    ...(result as Return),
-    connect: mutate as Return['mutate'],
-    connectAsync: mutateAsync as Return['mutateAsync'],
+    ...(mutation as Return),
+    connect: mutation.mutate as Return['mutate'],
+    connectAsync: mutation.mutateAsync as Return['mutateAsync'],
     connectors: useConnectors({ config }).value,
-    mutate: mutate as Return['mutate'],
-    mutateAsync: mutateAsync as Return['mutateAsync'],
   }
 }

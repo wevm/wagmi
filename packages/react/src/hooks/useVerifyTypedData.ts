@@ -45,7 +45,6 @@ export function useVerifyTypedData<
   const options = verifyTypedDataQueryOptions(config, {
     ...(parameters as any),
     chainId: parameters.chainId ?? chainId,
-    query: parameters.query,
   })
   return useQuery(options) as any
 }

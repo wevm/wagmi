@@ -60,6 +60,13 @@ export {
 } from '../actions/getBalance.js'
 
 export {
+  type GetBlobBaseFeeErrorType,
+  type GetBlobBaseFeeParameters,
+  type GetBlobBaseFeeReturnType,
+  getBlobBaseFee,
+} from '../actions/getBlobBaseFee.js'
+
+export {
   type GetBlockErrorType,
   type GetBlockParameters,
   type GetBlockReturnType,
@@ -140,6 +147,13 @@ export {
   type GetConnectorsReturnType,
   getConnectors,
 } from '../actions/getConnectors.js'
+
+export {
+  type GetContractEventsErrorType,
+  type GetContractEventsParameters,
+  type GetContractEventsReturnType,
+  getContractEvents,
+} from '../actions/getContractEvents.js'
 
 export {
   type GetEnsAddressErrorType,

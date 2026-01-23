@@ -46,7 +46,6 @@ export function useTransactionReceipt<
   const options = getTransactionReceiptQueryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
-    query: parameters.query,
   })
   return useQuery(options) as any
 }

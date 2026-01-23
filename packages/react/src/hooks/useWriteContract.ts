@@ -1,5 +1,4 @@
 'use client'
-
 import { useMutation } from '@tanstack/react-query'
 import type {
   Config,
@@ -10,37 +9,19 @@ import {
   type WriteContractData,
   type WriteContractMutate,
   type WriteContractMutateAsync,
+  type WriteContractOptions,
   type WriteContractVariables,
   writeContractMutationOptions,
 } from '@wagmi/core/query'
 import type { Abi } from 'viem'
-
 import type { ConfigParameter } from '../types/properties.js'
-import type {
-  UseMutationParameters,
-  UseMutationReturnType,
-} from '../utils/query.js'
+import type { UseMutationReturnType } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 
 export type UseWriteContractParameters<
   config extends Config = Config,
   context = unknown,
-> = ConfigParameter<config> & {
-  mutation?:
-    | UseMutationParameters<
-        WriteContractData,
-        WriteContractErrorType,
-        WriteContractVariables<
-          Abi,
-          string,
-          readonly unknown[],
-          config,
-          config['chains'][number]['id']
-        >,
-        context
-      >
-    | undefined
-}
+> = ConfigParameter<config> & WriteContractOptions<config, context>
 
 export type UseWriteContractReturnType<
   config extends Config = Config,
@@ -55,10 +36,10 @@ export type UseWriteContractReturnType<
     config,
     config['chains'][number]['id']
   >,
-  context
+  context,
+  WriteContractMutate<config, context>,
+  WriteContractMutateAsync<config, context>
 > & {
-  mutate: WriteContractMutate<config, context>
-  mutateAsync: WriteContractMutateAsync<config, context>
   /** @deprecated use `mutate` instead */
   writeContract: WriteContractMutate<config, context>
   /** @deprecated use `mutateAsync` instead */
@@ -73,13 +54,11 @@ export function useWriteContract<
   parameters: UseWriteContractParameters<config, context> = {},
 ): UseWriteContractReturnType<config, context> {
   const config = useConfig(parameters)
-  const mutationOptions = writeContractMutationOptions(config)
-  const mutation = useMutation({ ...parameters.mutation, ...mutationOptions })
+  const options = writeContractMutationOptions(config, parameters)
+  const mutation = useMutation(options)
   type Return = UseWriteContractReturnType<config, context>
   return {
-    ...mutation,
-    mutate: mutation.mutate as Return['mutate'],
-    mutateAsync: mutation.mutateAsync as Return['mutateAsync'],
+    ...(mutation as Return),
     writeContract: mutation.mutate as Return['mutate'],
     writeContractAsync: mutation.mutateAsync as Return['mutateAsync'],
   }

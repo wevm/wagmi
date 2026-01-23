@@ -92,14 +92,24 @@ export function readContractsQueryKey<
     ChainIdParameter<config> = {},
 ) {
   const contracts = []
+  let hasContractWithoutChainId = false
   for (const contract of (options.contracts ??
     []) as (ContractFunctionParameters & { chainId: number })[]) {
     const { abi: _, ...rest } = contract
-    contracts.push({ ...rest, chainId: rest.chainId ?? options.chainId })
+    if (rest.chainId === undefined) hasContractWithoutChainId = true
+    const chainId = rest.chainId ?? options.chainId
+    contracts.push({ ...rest, ...(chainId ? { chainId } : {}) })
   }
+  const { chainId: _, ...rest } = options
   return [
     'readContracts',
-    filterQueryOptions({ ...options, contracts }),
+    filterQueryOptions({
+      ...rest,
+      ...(hasContractWithoutChainId && options.chainId
+        ? { chainId: options.chainId }
+        : {}),
+      contracts,
+    }),
   ] as const
 }
 

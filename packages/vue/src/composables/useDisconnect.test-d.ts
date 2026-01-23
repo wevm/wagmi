@@ -8,10 +8,10 @@ const connector = config.connectors[0]!
 const contextValue = { foo: 'bar' } as const
 
 test('parameter', () => {
-  expectTypeOf(useDisconnect().disconnect)
+  expectTypeOf(useDisconnect().mutate)
     .parameter(0)
     .toEqualTypeOf<{ connector?: Connector | undefined } | undefined>()
-  expectTypeOf(useDisconnect().disconnect)
+  expectTypeOf(useDisconnect().mutateAsync)
     .parameter(0)
     .toEqualTypeOf<{ connector?: Connector | undefined } | undefined>()
 })

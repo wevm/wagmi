@@ -1,5 +1,4 @@
 import type { TypedData } from 'viem'
-
 import {
   type VerifyTypedDataErrorType,
   type VerifyTypedDataParameters,

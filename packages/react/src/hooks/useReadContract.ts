@@ -69,7 +69,6 @@ export function useReadContract<
   const options = readContractQueryOptions(config, {
     ...(parameters as any),
     chainId: parameters.chainId ?? chainId,
-    query: parameters.query,
   })
   return useQuery(options) as any
 }

@@ -1,6 +1,5 @@
 import type { MutateOptions, MutationOptions } from '@tanstack/query-core'
 import type { Abi, ContractConstructorArgs } from 'viem'
-
 import {
   type DeployContractErrorType,
   type DeployContractParameters,
@@ -8,22 +7,38 @@ import {
   deployContract,
 } from '../actions/deployContract.js'
 import type { Config } from '../createConfig.js'
+import type { MutationParameter } from '../types/query.js'
 import type { Compute } from '../types/utils.js'
 
-export function deployContractMutationOptions<config extends Config>(
+export type DeployContractOptions<
+  config extends Config,
+  context = unknown,
+> = MutationParameter<
+  DeployContractData,
+  DeployContractErrorType,
+  DeployContractVariables<Abi, config, config['chains'][number]['id']>,
+  context
+>
+
+export function deployContractMutationOptions<config extends Config, context>(
   config: config,
-) {
+  options: DeployContractOptions<config, context> = {},
+): DeployContractMutationOptions<config> {
   return {
+    ...(options.mutation as any),
     mutationFn(variables) {
       return deployContract(config, variables)
     },
     mutationKey: ['deployContract'],
-  } as const satisfies MutationOptions<
+  }
+}
+
+export type DeployContractMutationOptions<config extends Config> =
+  MutationOptions<
     DeployContractData,
     DeployContractErrorType,
     DeployContractVariables<Abi, config, config['chains'][number]['id']>
   >
-}
 
 export type DeployContractData = Compute<DeployContractReturnType>
 

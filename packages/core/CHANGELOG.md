@@ -1,5 +1,29 @@
 # @wagmi/core
 
+## 3.3.1
+
+### Patch Changes
+
+- Fixed "illegal invocation" error when signing up with passkeys while using password manager browser extensions ([#4968](https://github.com/wevm/wagmi/pull/4968))
+
+## 3.3.0
+
+### Minor Changes
+
+- Added `getBlobBaseFee` and `writeContractSync` actions. ([`dfe7904`](https://github.com/wevm/wagmi/commit/dfe790426d5ac24d55eacdf8d0193292de801911))
+
+- Added `getContractEvents` action. ([#4905](https://github.com/wevm/wagmi/pull/4905))
+
+### Patch Changes
+
+- Fixed `eth_accounts` to return `mock#accounts` parameter when provided. ([#4920](https://github.com/wevm/wagmi/pull/4920))
+
+- Added explicit return type to mutation options. ([#4964](https://github.com/wevm/wagmi/pull/4964))
+
+- Fixed `readContractsQueryKey` using passed `chainId` when all contracts specifiy `chainId` ([`5978cc5`](https://github.com/wevm/wagmi/commit/5978cc508ac837be88ed84c15ea5aa805f59005a))
+
+- **`wagmi/tempo`:** Propagated `rpId` to `Account.fromWebAuthnP256` in webAuthn connector. ([#4963](https://github.com/wevm/wagmi/pull/4963))
+
 ## 3.2.3
 
 ### Patch Changes
