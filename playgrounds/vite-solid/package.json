@@ -10,12 +10,12 @@
   "dependencies": {
     "@tanstack/solid-query": "catalog:",
     "@wagmi/solid": "workspace:*",
-    "viem": "2.*",
-    "solid-js": "catalog:"
+    "solid-js": "catalog:",
+    "viem": "2.*"
   },
   "devDependencies": {
-    "vite-plugin-solid": "catalog:",
     "buffer": "catalog:",
-    "vite": "catalog:"
+    "vite": "catalog:",
+    "vite-plugin-solid": "catalog:"
   }
 }
