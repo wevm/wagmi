@@ -9,7 +9,7 @@ const contextValue = { foo: 'bar' } as const
 
 test('context', () => {
   const switchConnection = useSwitchConnection(() => ({
-    mutation: () => ({
+    mutation: {
       onMutate(variables) {
         expectTypeOf(variables).toEqualTypeOf<{ connector: Connector }>()
         return contextValue
@@ -39,7 +39,7 @@ test('context', () => {
         expectTypeOf(variables).toEqualTypeOf<{ connector: Connector }>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
       },
-    }),
+    },
   }))
 
   expectTypeOf(switchConnection.data).toEqualTypeOf<

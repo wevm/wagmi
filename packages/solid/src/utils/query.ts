@@ -1,8 +1,8 @@
 import {
+  type CreateMutateFunction,
   type DefaultError,
   type QueryKey,
   type SolidInfiniteQueryOptions,
-  type SolidMutationOptions,
   type SolidQueryOptions,
   // TODO: import use___ once solid-query version is updated
   createInfiniteQuery as tanstack_useInfiniteQuery,
@@ -15,34 +15,26 @@ import {
 import type {
   Compute,
   ExactPartial,
-  Omit,
   UnionStrictOmit,
 } from '@wagmi/core/internal'
 import { hashFn } from '@wagmi/core/query'
 import { type Accessor, mergeProps } from 'solid-js'
-
-export type SolidMutationParameters<
-  data = unknown,
-  error = Error,
-  variables = void,
-  context = unknown,
-> = Compute<
-  Omit<
-    SolidMutationOptions<data, error, Compute<variables>, context>,
-    'mutationFn' | 'mutationKey' | 'throwOnError'
-  >
->
 
 export type UseMutationReturnType<
   data = unknown,
   error = Error,
   variables = void,
   context = unknown,
+  mutate = CreateMutateFunction,
+  mutateAsync = CreateMutateFunction,
 > = Compute<
   UnionStrictOmit<
     UseMutationResult<data, error, variables, context>,
     'mutate' | 'mutateAsync'
-  >
+  > & {
+    mutate: mutate
+    mutateAsync: mutateAsync
+  }
 >
 
 export { useMutation }

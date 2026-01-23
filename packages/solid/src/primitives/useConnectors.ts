@@ -5,35 +5,18 @@ import {
   type ResolvedRegister,
   watchConnectors,
 } from '@wagmi/core'
+import type { ConfigParameter } from '@wagmi/core/internal'
 import { type Accessor, createEffect, createSignal, onCleanup } from 'solid-js'
-
-import type { SolidConfigParameters } from './useConfig.js'
 import { useConfig } from './useConfig.js'
-
-export type SolidConnectorsParameters<config extends Config = Config> =
-  SolidConfigParameters<config>
-
-export type UseConnectorsParameters<config extends Config = Config> = Accessor<
-  SolidConnectorsParameters<config>
->
-
-export type SolidConnectorsReturnType<config extends Config = Config> =
-  GetConnectorsReturnType<config>
-
-export type UseConnectorsReturnType<config extends Config = Config> = Accessor<
-  SolidConnectorsReturnType<config>
->
 
 /** https://wagmi.sh/solid/api/primitives/useConnectors */
 export function useConnectors<
   config extends Config = ResolvedRegister['config'],
 >(
-  parameters: UseConnectorsParameters<config> = () => ({}),
-): UseConnectorsReturnType<config> {
+  parameters: useConnectors.Parameters<config> = () => ({}),
+): useConnectors.ReturnType<config> {
   const config = useConfig(parameters)
-
   const [connectors, setConnectors] = createSignal(getConnectors(config()))
-
   createEffect(() => {
     const _config = config()
     setConnectors(() => getConnectors(_config))
@@ -45,6 +28,21 @@ export function useConnectors<
     })
     onCleanup(() => unsubscribe())
   })
-
   return connectors
+}
+
+export namespace useConnectors {
+  export type Parameters<config extends Config = Config> = Accessor<
+    SolidParameters<config>
+  >
+
+  export type ReturnType<config extends Config = Config> = Accessor<
+    SolidReturnType<config>
+  >
+
+  export type SolidParameters<config extends Config = Config> =
+    ConfigParameter<config>
+
+  export type SolidReturnType<config extends Config = Config> =
+    GetConnectorsReturnType<config>
 }
