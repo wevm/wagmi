@@ -12,13 +12,18 @@ import {
   getPermissionsQueryOptions,
 } from '@wagmi/core/query'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
+import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 import { useConnection } from './useConnection.js'
 
 export type UsePermissionsParameters<
   config extends Config = Config,
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetPermissionsData,
-> = Compute<GetPermissionsOptions<config, selectData> & ConfigParameter<config>>
+> = Compute<
+  GetPermissionsOptions<config, chainId, selectData> & ConfigParameter<config>
+>
 
 export type UsePermissionsReturnType<selectData = GetPermissionsData> =
   UseQueryReturnType<selectData, GetPermissionsErrorType>
@@ -26,14 +31,18 @@ export type UsePermissionsReturnType<selectData = GetPermissionsData> =
 /** https://wagmi.sh/react/api/hooks/usePermissions */
 export function usePermissions<
   config extends Config = ResolvedRegister['config'],
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetPermissionsData,
 >(
-  parameters: UsePermissionsParameters<config, selectData> = {},
+  parameters: UsePermissionsParameters<config, chainId, selectData> = {},
 ): UsePermissionsReturnType<selectData> {
   const config = useConfig(parameters)
+  const chainId = useChainId({ config })
   const { connector } = useConnection({ config })
   const options = getPermissionsQueryOptions(config, {
     ...parameters,
+    chainId: parameters.chainId ?? chainId,
     connector: parameters.connector ?? connector,
   })
   return useQuery(options)

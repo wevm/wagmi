@@ -12,24 +12,27 @@ import type { Compute, ExactPartial } from '../types/utils.js'
 
 export type GetPermissionsOptions<
   config extends Config = Config,
+  chainId extends
+    config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetPermissionsData,
 > = Compute<
-  ExactPartial<GetPermissionsParameters<config>> & ScopeKeyParameter
+  ExactPartial<GetPermissionsParameters<config, chainId>> & ScopeKeyParameter
 > &
   QueryParameter<
     GetPermissionsQueryFnData,
     GetPermissionsErrorType,
     selectData,
-    GetPermissionsQueryKey<config>
+    GetPermissionsQueryKey<config, chainId>
   >
 
 export function getPermissionsQueryOptions<
   config extends Config,
+  chainId extends config['chains'][number]['id'],
   selectData = GetPermissionsData,
 >(
   config: config,
-  options: GetPermissionsOptions<config, selectData> = {},
-): GetPermissionsQueryOptions<config, selectData> {
+  options: GetPermissionsOptions<config, chainId, selectData> = {},
+): GetPermissionsQueryOptions<config, chainId, selectData> {
   return {
     ...options.query,
     enabled: Boolean(
@@ -51,24 +54,29 @@ export type GetPermissionsQueryFnData = GetPermissionsReturnType
 
 export type GetPermissionsData = GetPermissionsQueryFnData
 
-export function getPermissionsQueryKey<config extends Config>(
+export function getPermissionsQueryKey<
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
+>(
   options: Compute<
-    ExactPartial<GetPermissionsParameters<config>> & ScopeKeyParameter
+    ExactPartial<GetPermissionsParameters<config, chainId>> & ScopeKeyParameter
   > = {},
 ) {
   return ['permissions', filterQueryOptions(options)] as const
 }
 
-export type GetPermissionsQueryKey<config extends Config> = ReturnType<
-  typeof getPermissionsQueryKey<config>
->
+export type GetPermissionsQueryKey<
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
+> = ReturnType<typeof getPermissionsQueryKey<config, chainId>>
 
 export type GetPermissionsQueryOptions<
   config extends Config,
+  chainId extends config['chains'][number]['id'],
   selectData = GetPermissionsData,
 > = QueryOptions<
   GetPermissionsQueryFnData,
   GetPermissionsErrorType,
   selectData,
-  GetPermissionsQueryKey<config>
+  GetPermissionsQueryKey<config, chainId>
 >
