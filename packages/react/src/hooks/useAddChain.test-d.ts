@@ -1,8 +1,7 @@
 import type { AddChainErrorType } from '@wagmi/core'
 import type { AddChainVariables } from '@wagmi/core/query'
-import { expectTypeOf, test } from 'vitest'
-
 import { avalanche } from 'viem/chains'
+import { expectTypeOf, test } from 'vitest'
 import { useAddChain } from './useAddChain.js'
 
 const contextValue = { foo: 'bar' } as const
