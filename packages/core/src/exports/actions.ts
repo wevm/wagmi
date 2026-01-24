@@ -266,6 +266,13 @@ export {
 } from '../actions/multicall.js'
 
 export {
+  type PrepareAuthorizationErrorType,
+  type PrepareAuthorizationParameters,
+  type PrepareAuthorizationReturnType,
+  prepareAuthorization,
+} from '../actions/prepareAuthorization.js'
+
+export {
   type PrepareTransactionRequestErrorType,
   type PrepareTransactionRequestParameters,
   type PrepareTransactionRequestReturnType,

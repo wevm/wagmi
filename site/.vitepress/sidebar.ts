@@ -255,6 +255,10 @@ export function getSidebar() {
             link: '/react/api/hooks/useInfiniteReadContracts',
           },
           {
+            text: 'usePrepareAuthorization',
+            link: '/react/api/hooks/usePrepareAuthorization',
+          },
+          {
             text: 'usePrepareTransactionRequest',
             link: '/react/api/hooks/usePrepareTransactionRequest',
           },
@@ -900,6 +904,10 @@ export function getSidebar() {
           {
             text: 'multicall',
             link: '/core/api/actions/multicall',
+          },
+          {
+            text: 'prepareAuthorization',
+            link: '/core/api/actions/prepareAuthorization',
           },
           {
             text: 'prepareTransactionRequest',

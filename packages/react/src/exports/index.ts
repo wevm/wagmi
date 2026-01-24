@@ -232,6 +232,12 @@ export {
 } from '../hooks/useInfiniteReadContracts.js'
 
 export {
+  type UsePrepareAuthorizationParameters,
+  type UsePrepareAuthorizationReturnType,
+  usePrepareAuthorization,
+} from '../hooks/usePrepareAuthorization.js'
+
+export {
   type UsePrepareTransactionRequestParameters,
   type UsePrepareTransactionRequestReturnType,
   usePrepareTransactionRequest,

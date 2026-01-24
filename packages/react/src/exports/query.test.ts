@@ -67,6 +67,8 @@ test('exports', () => {
       "hashFn",
       "infiniteReadContractsQueryKey",
       "infiniteReadContractsQueryOptions",
+      "prepareAuthorizationQueryKey",
+      "prepareAuthorizationQueryOptions",
       "prepareTransactionRequestQueryKey",
       "prepareTransactionRequestQueryOptions",
       "readContractQueryKey",

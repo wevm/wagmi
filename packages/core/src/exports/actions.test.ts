@@ -45,6 +45,7 @@ test('exports', () => {
       "getTransactionReceipt",
       "getWalletClient",
       "multicall",
+      "prepareAuthorization",
       "prepareTransactionRequest",
       "readContract",
       "readContracts",

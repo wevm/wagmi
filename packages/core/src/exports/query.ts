@@ -323,6 +323,16 @@ export {
 } from '../query/infiniteReadContracts.js'
 
 export {
+  type PrepareAuthorizationData,
+  type PrepareAuthorizationOptions,
+  type PrepareAuthorizationQueryFnData,
+  type PrepareAuthorizationQueryKey,
+  type PrepareAuthorizationQueryOptions,
+  prepareAuthorizationQueryKey,
+  prepareAuthorizationQueryOptions,
+} from '../query/prepareAuthorization.js'
+
+export {
   type PrepareTransactionRequestData,
   type PrepareTransactionRequestOptions,
   type PrepareTransactionRequestQueryFnData,

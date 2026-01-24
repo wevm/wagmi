@@ -66,6 +66,8 @@ test('exports', () => {
       "getWalletClientQueryOptions",
       "infiniteReadContractsQueryKey",
       "infiniteReadContractsQueryOptions",
+      "prepareAuthorizationQueryKey",
+      "prepareAuthorizationQueryOptions",
       "prepareTransactionRequestQueryKey",
       "prepareTransactionRequestQueryOptions",
       "readContractQueryKey",
