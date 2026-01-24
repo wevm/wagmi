@@ -28,7 +28,7 @@ import { useAddChain } from 'wagmi'
 ::: code-group
 ```tsx [index.tsx]
 import { avalanche } from 'viem/chains'
-import { useAddchain } from 'wagmi'
+import { useAddChain } from 'wagmi'
 
 function App() {
   const { addChain } = useAddChain()
@@ -61,14 +61,12 @@ import { type UseAddChainParameters } from 'wagmi'
 
 ::: code-group
 ```tsx [index.tsx]
-import { avalanche } from 'viem/chains'
 import { useAddChain } from 'wagmi'
 import { config } from './config' // [!code focus]
 
 function App() {
   const result = useAddChain({
     config, // [!code focus]
-    chain: avalanche,
   })
 }
 ```

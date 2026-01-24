@@ -6,24 +6,39 @@ import {
   addChain,
 } from '../actions/addChain.js'
 import type { Config } from '../createConfig.js'
+import type { MutationParameter } from '../types/query.js'
+import type { Compute } from '../types/utils.js'
 import type { Mutate, MutateAsync } from './types.js'
 
-export function addChainMutationOptions(config: Config) {
+export type AddChainOptions<context = unknown> = MutationParameter<
+  AddChainData,
+  AddChainErrorType,
+  AddChainVariables,
+  context
+>
+
+export function addChainMutationOptions<context>(
+  config: Config,
+  options: AddChainOptions<context> = {},
+): AddChainMutationOptions {
   return {
+    ...(options.mutation as any),
     mutationFn(variables) {
       return addChain(config, variables)
     },
     mutationKey: ['addChain'],
-  } as const satisfies MutationOptions<
-    AddChainData,
-    AddChainErrorType,
-    AddChainVariables
-  >
+  }
 }
+
+export type AddChainMutationOptions = MutationOptions<
+  AddChainData,
+  AddChainErrorType,
+  AddChainVariables
+>
 
 export type AddChainData = void
 
-export type AddChainVariables = AddChainParameters
+export type AddChainVariables = Compute<AddChainParameters>
 
 export type AddChainMutate<context = unknown> = Mutate<
   AddChainData,

@@ -1,8 +1,8 @@
 import { connect, disconnect } from '@wagmi/core'
 import { config } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
+import { renderHook } from '@wagmi/test/react'
 import { avalanche } from 'viem/chains'
-import { expect, test } from 'vitest'
+import { test, vi } from 'vitest'
 
 import { useAddChain } from './useAddChain.js'
 
@@ -11,10 +11,10 @@ const connector = config.connectors[0]!
 test('default', async () => {
   await connect(config, { connector })
 
-  const { result } = renderHook(() => useAddChain())
+  const { result } = await renderHook(() => useAddChain())
 
-  result.current.addChain({ chain: avalanche })
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  result.current.mutate({ chain: avalanche })
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   await disconnect(config, { connector })
 })
@@ -22,12 +22,12 @@ test('default', async () => {
 test('no block explorer', async () => {
   await connect(config, { connector })
 
-  const { result } = renderHook(() => useAddChain())
+  const { result } = await renderHook(() => useAddChain())
 
-  result.current.addChain({
+  result.current.mutate({
     chain: { ...avalanche, blockExplorers: undefined },
   })
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   await disconnect(config, { connector })
 })

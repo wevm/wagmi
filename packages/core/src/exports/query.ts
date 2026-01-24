@@ -7,6 +7,8 @@ export {
   type AddChainData,
   type AddChainMutate,
   type AddChainMutateAsync,
+  type AddChainMutationOptions,
+  type AddChainOptions,
   type AddChainVariables,
   addChainMutationOptions,
 } from '../query/addChain.js'

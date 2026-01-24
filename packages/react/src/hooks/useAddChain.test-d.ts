@@ -7,7 +7,7 @@ import { useAddChain } from './useAddChain.js'
 const contextValue = { foo: 'bar' } as const
 
 test('context', () => {
-  const { context, data, error, addChain, variables } = useAddChain({
+  const addChain = useAddChain({
     mutation: {
       onMutate(variables) {
         expectTypeOf(variables).toEqualTypeOf<AddChainVariables>()
@@ -32,12 +32,16 @@ test('context', () => {
     },
   })
 
-  expectTypeOf(data).toEqualTypeOf<void | undefined>()
-  expectTypeOf(error).toEqualTypeOf<AddChainErrorType | null>()
-  expectTypeOf(variables).toEqualTypeOf<AddChainVariables | undefined>()
-  expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+  expectTypeOf(addChain.data).toEqualTypeOf<void | undefined>()
+  expectTypeOf(addChain.error).toEqualTypeOf<AddChainErrorType | null>()
+  expectTypeOf(addChain.variables).toEqualTypeOf<
+    AddChainVariables | undefined
+  >()
+  expectTypeOf(addChain.context).toEqualTypeOf<
+    typeof contextValue | undefined
+  >()
 
-  addChain(
+  addChain.mutate(
     { chain: avalanche },
     {
       onError(error, variables, context) {

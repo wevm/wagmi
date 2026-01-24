@@ -2,33 +2,20 @@
 
 import { useMutation } from '@tanstack/react-query'
 import type { AddChainErrorType } from '@wagmi/core'
-import type { Compute } from '@wagmi/core/internal'
+import type { Compute, ConfigParameter } from '@wagmi/core/internal'
 import {
   type AddChainData,
   type AddChainMutate,
   type AddChainMutateAsync,
+  type AddChainOptions,
   type AddChainVariables,
   addChainMutationOptions,
 } from '@wagmi/core/query'
-
-import type { ConfigParameter } from '../types/properties.js'
-import type {
-  UseMutationParameters,
-  UseMutationReturnType,
-} from '../utils/query.js'
+import type { UseMutationReturnType } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 
 export type UseAddChainParameters<context = unknown> = Compute<
-  ConfigParameter & {
-    mutation?:
-      | UseMutationParameters<
-          AddChainData,
-          AddChainErrorType,
-          AddChainVariables,
-          context
-        >
-      | undefined
-  }
+  ConfigParameter & AddChainOptions<context>
 >
 
 export type UseAddChainReturnType<context = unknown> = Compute<
@@ -36,9 +23,13 @@ export type UseAddChainReturnType<context = unknown> = Compute<
     AddChainData,
     AddChainErrorType,
     AddChainVariables,
-    context
+    context,
+    AddChainMutate<context>,
+    AddChainMutateAsync<context>
   > & {
+    /** @deprecated use `mutate` instead */
     addChain: AddChainMutate<context>
+    /** @deprecated use `mutateAsync` instead */
     addChainAsync: AddChainMutateAsync<context>
   }
 >
@@ -47,19 +38,13 @@ export type UseAddChainReturnType<context = unknown> = Compute<
 export function useAddChain<context = unknown>(
   parameters: UseAddChainParameters<context> = {},
 ): UseAddChainReturnType<context> {
-  const { mutation } = parameters
-
   const config = useConfig(parameters)
-
-  const mutationOptions = addChainMutationOptions(config)
-  const { mutate, mutateAsync, ...result } = useMutation({
-    ...mutation,
-    ...mutationOptions,
-  })
-
+  const options = addChainMutationOptions(config, parameters)
+  const mutation = useMutation(options)
+  type Return = UseAddChainReturnType<context>
   return {
-    ...result,
-    addChain: mutate,
-    addChainAsync: mutateAsync,
+    ...(mutation as Return),
+    addChain: mutation.mutate as Return['mutate'],
+    addChainAsync: mutation.mutateAsync as Return['mutateAsync'],
   }
 }
