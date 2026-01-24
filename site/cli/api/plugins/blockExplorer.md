@@ -17,7 +17,7 @@ import { blockExplorer } from '@wagmi/cli/plugins'
 export default defineConfig({
   plugins: [
     blockExplorer({
-      baseUrl: 'https://api.etherscan.io/api',
+      baseUrl: 'https://api.etherscan.io/v2/api',
       contracts: [
         {
           name: 'Wagmigotchi',
@@ -49,7 +49,7 @@ export default defineConfig({
   plugins: [
     blockExplorer({
       apiKey: process.env.ETHERSCAN_API_KEY, // [!code focus]
-      baseUrl: 'https://api.etherscan.io/api',
+      baseUrl: 'https://api.etherscan.io/v2/api',
       contracts: [
         {
           name: 'Wagmigotchi',
@@ -74,7 +74,7 @@ import { blockExplorer } from '@wagmi/cli/plugins'
 export default defineConfig({
   plugins: [
     blockExplorer({
-      baseUrl: 'https://api.etherscan.io/api', // [!code focus]
+      baseUrl: 'https://api.etherscan.io/v2/api', // [!code focus]
       contracts: [
         {
           name: 'Wagmigotchi',
@@ -99,7 +99,7 @@ import { blockExplorer } from '@wagmi/cli/plugins'
 export default defineConfig({
   plugins: [
     blockExplorer({
-      baseUrl: 'https://api.etherscan.io/api',
+      baseUrl: 'https://api.etherscan.io/v2/api',
       cacheDuration: 300_000, // [!code focus]
       contracts: [
         {
@@ -111,6 +111,34 @@ export default defineConfig({
   ],
 })
 ```
+
+### chainId
+
+`number | undefined`
+
+Chain ID for block explorer. Appended to the request URL as query param `&chainId=${chainId}`.
+
+```ts
+import { defineConfig } from '@wagmi/cli'
+import { blockExplorer } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    blockExplorer({
+      apiKey: process.env.ETHERSCAN_API_KEY,
+      baseUrl: 'https://api.etherscan.io/v2/api',
+      chainId: 1, // [!code focus]
+      contracts: [
+        {
+          name: 'Wagmigotchi',
+          address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        },
+      ],
+    }),
+  ],
+})
+```
+
 
 ### contracts
 
@@ -125,7 +153,7 @@ import { blockExplorer } from '@wagmi/cli/plugins'
 export default defineConfig({
   plugins: [
     blockExplorer({
-      baseUrl: 'https://api.etherscan.io/api',
+      baseUrl: 'https://api.etherscan.io/v2/api',
       contracts: [ // [!code focus]
         { // [!code focus]
           name: 'Wagmigotchi', // [!code focus]
@@ -151,7 +179,7 @@ import { blockExplorer } from '@wagmi/cli/plugins'
 export default defineConfig({
   plugins: [
     blockExplorer({
-      baseUrl: 'https://api.etherscan.io/api',
+      baseUrl: 'https://api.etherscan.io/v2/api',
       contracts: [
         {
           name: 'Wagmigotchi',
@@ -181,7 +209,7 @@ import { blockExplorer } from '@wagmi/cli/plugins'
 export default defineConfig({
   plugins: [
     blockExplorer({
-      baseUrl: 'https://api.etherscan.io/api',
+      baseUrl: 'https://api.etherscan.io/v2/api',
       contracts: [
         {
           name: 'Wagmigotchi',

@@ -1,3 +1,5 @@
+src/generated.ts
+
 # Logs
 logs
 *.log

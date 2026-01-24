@@ -11,6 +11,23 @@ export type ExactPartial<type> = {
   [key in keyof type]?: type[key] | undefined
 }
 
+/**
+ * Creates a fixed array of `count` elements of type `type`.
+ *
+ * @example
+ * ```ts
+ * type Result = FixedArray<string, 3>
+ * //   ^? type Result = readonly [string, string, string]
+ * ```
+ */
+export type FixedArray<
+  type,
+  count extends number,
+  result extends readonly type[] = [],
+> = result['length'] extends count
+  ? result
+  : FixedArray<type, count, readonly [...result, type]>
+
 /** Checks if {@link type} can be narrowed further than {@link type2} */
 export type IsNarrowable<type, type2> = IsUnknown<type> extends true
   ? false
@@ -72,6 +89,25 @@ export type PartialBy<type, key extends keyof type> = ExactPartial<
 /* Removes `undefined` from object property */
 export type RemoveUndefined<type> = {
   [key in keyof type]: NonNullable<type[key]>
+}
+
+/**
+ * Creates a type that is {@link type} with the required keys {@link key}.
+ *
+ * @example
+ * ```ts
+ * RequiredBy<{ a?: string, b: number }, 'a'>
+ * // { a: string, b: number }
+ * ```
+ *
+ * @internal
+ */
+export type RequiredBy<type, key extends keyof type> = Omit<type, key> &
+  ExactRequired<Pick<type, key>>
+
+/** @internal */
+export type ExactRequired<type> = {
+  [key in keyof type]-?: Exclude<type[key], undefined>
 }
 
 ///////////////////////////////////////////////////////////////////////////

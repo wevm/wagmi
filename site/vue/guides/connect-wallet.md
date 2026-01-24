@@ -68,19 +68,19 @@ Next, we will need to inject our App with plugins so that our application is awa
 
 ```ts [main.ts]
 // 1. Import modules.
-import { VueQueryPlugin } from '@tanstack/vue-query';
-import { WagmiPlugin } from '@wagmi/vue';
-import { createApp } from 'vue';
+import { VueQueryPlugin } from '@tanstack/vue-query'
+import { WagmiPlugin } from '@wagmi/vue'
+import { createApp } from 'vue'
 
-import App from './App.vue';
-import { config } from './wagmi';
+import App from './App.vue'
+import { config } from './wagmi'
 
 createApp(App)
   // 2. Inject the Wagmi plugin.
   .use(WagmiPlugin, { config })
   // 3. Inject the Vue Query plugin.
   .use(VueQueryPlugin, {})
-  .mount('#app');
+  .mount('#app')
 ```
 
 ```vue [App.vue]
@@ -125,10 +125,11 @@ Below, we are rendering a list of `connectors` retrieved from `useConnect`. When
 
 ```vue [Connect.vue]
 <script setup lang="ts">
-import { useConnect, useChainId } from '@wagmi/vue';
+import { useChainId, useConnect, useConnectors } from '@wagmi/vue'
 
-const chainId = useChainId();
-const { connectors, connect } = useConnect();
+const chainId = useChainId()
+const { connect } = useConnect()
+const connectors = useConnectors()
 </script>
 
 <template>
@@ -151,19 +152,19 @@ const { connectors, connect } = useConnect();
 
 ```ts [main.ts]
 // 1. Import modules.
-import { VueQueryPlugin } from '@tanstack/vue-query';
-import { WagmiPlugin } from '@wagmi/vue';
-import { createApp } from 'vue';
+import { VueQueryPlugin } from '@tanstack/vue-query'
+import { WagmiPlugin } from '@wagmi/vue'
+import { createApp } from 'vue'
 
-import App from './App.vue';
-import { config } from './wagmi';
+import App from './App.vue'
+import { config } from './wagmi'
 
 createApp(App)
   // 2. Inject the Wagmi plugin.
   .use(WagmiPlugin, { config })
   // 3. Inject the Vue Query plugin.
   .use(VueQueryPlugin, {})
-  .mount('#app');
+  .mount('#app')
 ```
 
 ```ts [config.ts]
@@ -190,22 +191,22 @@ export const config = createConfig({
 
 :::
 
-### 4. Display Connected Account
+### 4. Display Connection
 
-Lastly, if an account is connected, we want to show some basic information, like the connected address and ENS name and avatar.
+Lastly, if an connection is made, we want to show some basic information, like the connected address and ENS name and avatar.
 
-Below, we are using hooks like `useAccount`, `useEnsAvatar` and `useEnsName` to extract this information.
+Below, we are using hooks like `useConnection`, `useEnsAvatar` and `useEnsName` to extract this information.
 
 We are also utilizing `useDisconnect` to show a "Disconnect" button so a user can disconnect their wallet.
 
 ::: code-group
 
-```vue [Account.vue]
+```vue [Connection.vue]
 <script setup lang="ts">
-import { useAccount, useDisconnect } from '@wagmi/vue';
+import { useConnection, useDisconnect } from '@wagmi/vue'
 
-const { address, connector } = useAccount();
-const { disconnect } = useDisconnect();
+const { address, connector } = useConnection()
+const { disconnect } = useDisconnect()
 </script>
 
 <template>
@@ -217,10 +218,11 @@ const { disconnect } = useDisconnect();
 
 ```vue [Connect.vue]
 <script setup lang="ts">
-import { useConnect, useChainId } from '@wagmi/vue';
+import { useChainId, useConnect, useConnectors } from '@wagmi/vue'
 
-const chainId = useChainId();
-const { connectors, connect } = useConnect();
+const chainId = useChainId()
+const { connect } = useConnect()
+const connectors = useConnectors()
 </script>
 
 <template>
@@ -243,19 +245,19 @@ const { connectors, connect } = useConnect();
 
 ```ts [main.ts]
 // 1. Import modules.
-import { VueQueryPlugin } from '@tanstack/vue-query';
-import { WagmiPlugin } from '@wagmi/vue';
-import { createApp } from 'vue';
+import { VueQueryPlugin } from '@tanstack/vue-query'
+import { WagmiPlugin } from '@wagmi/vue'
+import { createApp } from 'vue'
 
-import App from './App.vue';
-import { config } from './wagmi';
+import App from './App.vue'
+import { config } from './wagmi'
 
 createApp(App)
   // 2. Inject the Wagmi plugin.
   .use(WagmiPlugin, { config })
   // 3. Inject the Vue Query plugin.
   .use(VueQueryPlugin, {})
-  .mount('#app');
+  .mount('#app')
 ```
 
 ```ts [config.ts]
@@ -284,32 +286,32 @@ export const config = createConfig({
 
 ### 5. Wire it up!
 
-Finally, we can wire up our Connect and Account components to our application's entrypoint.
+Finally, we can wire up our Connect and Connection components to our application's entrypoint.
 
 ::: code-group
 
 ```vue [App.vue]
 <script setup lang="ts">
-import { useAccount } from '@wagmi/vue';
-import Account from './Account.vue'; // [!code ++]
-import Connect from './Connect.vue'; // [!code ++]
+import { useConnection } from '@wagmi/vue'
+import Connection from './Connection.vue' // [!code ++]
+import Connect from './Connect.vue' // [!code ++]
 
-const { isConnected } = useAccount();
+const { isConnected } = useConnection()
 </script>
 
 <template>
-  <Account v-if="isConnected" /> // [!code ++]
+  <Connection v-if="isConnected" /> // [!code ++]
   <Connect v-else /> // [!code ++]
 </template>
 
 ```
 
-```vue [Account.vue]
+```vue [Connection.vue]
 <script setup lang="ts">
-import { useAccount, useDisconnect } from '@wagmi/vue';
+import { useConnection, useDisconnect } from '@wagmi/vue'
 
-const { address, connector } = useAccount();
-const { disconnect } = useDisconnect();
+const { address, connector } = useConnection()
+const { disconnect } = useDisconnect()
 </script>
 
 <template>
@@ -321,10 +323,11 @@ const { disconnect } = useDisconnect();
 
 ```vue [Connect.vue]
 <script setup lang="ts">
-import { useConnect, useChainId } from '@wagmi/vue';
+import { useChainId, useConnect, useConnectors } from '@wagmi/vue'
 
-const chainId = useChainId();
-const { connectors, connect } = useConnect();
+const chainId = useChainId()
+const { connect } = useConnect()
+const connectors = useConnectors()
 </script>
 
 <template>
@@ -339,19 +342,19 @@ const { connectors, connect } = useConnect();
 
 ```ts [main.ts]
 // 1. Import modules.
-import { VueQueryPlugin } from '@tanstack/vue-query';
-import { WagmiPlugin } from '@wagmi/vue';
-import { createApp } from 'vue';
+import { VueQueryPlugin } from '@tanstack/vue-query'
+import { WagmiPlugin } from '@wagmi/vue'
+import { createApp } from 'vue'
 
-import App from './App.vue';
-import { config } from './wagmi';
+import App from './App.vue'
+import { config } from './wagmi'
 
 createApp(App)
   // 2. Inject the Wagmi plugin.
   .use(WagmiPlugin, { config })
   // 3. Inject the Vue Query plugin.
   .use(VueQueryPlugin, {})
-  .mount('#app');
+  .mount('#app')
 ```
 
 ```ts [config.ts]

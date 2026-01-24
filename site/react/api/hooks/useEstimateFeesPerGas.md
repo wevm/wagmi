@@ -7,7 +7,7 @@ description: Hook for fetching an estimate for the fees per gas (in wei) for a t
 const packageName = 'wagmi'
 const actionName = 'estimateFeesPerGas'
 const typeName = 'EstimateFeesPerGas'
-const TData = '{ formatted: { gasPrice: string | undefined; maxFeePerGas: string | undefined; maxPriorityFeePerGas: string | undefined; }; gasPrice: bigint | undefined; maxFeePerGas: bigint | undefined; maxPriorityFeePerGas: bigint | undefined; }'
+const TData = '{ gasPrice: bigint | undefined; maxFeePerGas: bigint | undefined; maxPriorityFeePerGas: bigint | undefined; }'
 const TError = 'EstimateFeesPerGasErrorType'
 </script>
 
@@ -64,7 +64,7 @@ function App() {
 
 `Config | undefined`
 
-[`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/api/WagmiProvider).
+[`Config`](/react/api/createConfig#config) to use instead of retrieving from the nearest [`WagmiProvider`](/react/api/WagmiProvider).
 
 ::: code-group
 ```tsx [index.tsx]
@@ -74,26 +74,6 @@ import { config } from './config' // [!code focus]
 function App() {
   const result = useEstimateFeesPerGas({
     config, // [!code focus]
-  })
-}
-```
-<<< @/snippets/react/config.ts[config.ts]
-:::
-
-### formatUnits
-
-`'ether' | 'gwei' | 'wei' | number | undefined`
-
-- Units to use when formatting result.
-- Defaults to `'ether'`.
-
-::: code-group
-```ts [index.ts]
-import { useEstimateFeesPerGas } from 'wagmi'
-
-function App() {
-  const result = useEstimateFeesPerGas({
-    formatUnits: 'ether', // [!code focus]
   })
 }
 ```

@@ -2,6 +2,77 @@
   "cleanUrls": true,
   "redirects": [
     {
+      "source": "/core/api/actions/sendTransactionSync",
+      "destination": "/core/api/actions/sendTransaction",
+      "permanent": true
+    },
+    {
+      "source": "/core/api/actions/sendCallsSync",
+      "destination": "/core/api/actions/sendCalls",
+      "permanent": true
+    },
+    {
+      "source": "/react/api/hooks/useSendTransactionSync",
+      "destination": "/react/api/hooks/useSendTransaction",
+      "permanent": true
+    },
+    {
+      "source": "/react/api/hooks/useSendCallsSync",
+      "destination": "/react/api/hooks/useSendCalls",
+      "permanent": true
+    },
+    {
+      "source": "/tempo/actions/reward.start",
+      "destination": "/tempo/actions/reward.distribute",
+      "permanent": true
+    },
+    {
+      "source": "/tempo/actions/reward.watchRewardScheduled",
+      "destination": "/tempo/actions/reward.watchRewardDistributed",
+      "permanent": true
+    },
+    {
+      "source": "/tempo/actions/nonce.getNonceKeyCount",
+      "destination": "/tempo/actions/nonce",
+      "permanent": true
+    },
+    {
+      "source": "/tempo/actions/nonce.watchActiveKeyCountChanged",
+      "destination": "/tempo/actions/nonce",
+      "permanent": true
+    },
+    {
+      "source": "/tempo/actions/amm.watchFeeSwap",
+      "destination": "/tempo/actions/amm",
+      "permanent": true
+    },
+    {
+      "source": "/tempo/hooks/reward.useStart",
+      "destination": "/tempo/hooks/reward.useDistribute",
+      "permanent": true
+    },
+    {
+      "source": "/tempo/hooks/reward.useWatchRewardScheduled",
+      "destination": "/tempo/hooks/reward.useWatchRewardDistributed",
+      "permanent": true
+    },
+    {
+      "source": "/tempo/hooks/nonce.useNonceKeyCount",
+      "destination": "/tempo/hooks/nonce",
+      "permanent": true
+    },
+    {
+      "source": "/tempo/hooks/nonce.useWatchActiveKeyCountChanged",
+      "destination": "/tempo/hooks/nonce",
+      "permanent": true
+    },
+    {
+      "source": "/tempo/hooks/amm.useWatchFeeSwap",
+      "destination": "/tempo/hooks/amm",
+      "permanent": true
+    },
+
+    {
       "source": "/cli",
       "destination": "/cli/getting-started",
       "permanent": true
@@ -40,6 +111,21 @@
     {
       "source": "/core/config",
       "destination": "/core/api/createConfig",
+      "permanent": true
+    },
+    {
+      "source": "/core/api/actions/getAccount",
+      "destination": "/core/api/actions/getConnection",
+      "permanent": true
+    },
+    {
+      "source": "/core/api/actions/switchAccount",
+      "destination": "/core/api/actions/switchConnection",
+      "permanent": true
+    },
+    {
+      "source": "/core/api/actions/watchAccount",
+      "destination": "/core/api/actions/watchConnection",
       "permanent": true
     },
 
@@ -96,6 +182,49 @@
     {
       "source": "/react/prepare-hooks/usePrepareSendTransaction",
       "destination": "/react/api/hooks/useEstimateFeesPerGas",
+      "permanent": true
+    },
+    {
+      "source": "/react/api/actions/useAccount",
+      "destination": "/react/api/actions/useConnection",
+      "permanent": true
+    },
+    {
+      "source": "/react/api/actions/useAccountEffect",
+      "destination": "/react/api/actions/useConnectionEffect",
+      "permanent": true
+    },
+    {
+      "source": "/react/api/actions/useSwitchAccount",
+      "destination": "/react/api/actions/useSwitchConnection",
+      "permanent": true
+    },
+
+    {
+      "source": "/core",
+      "destination": "/core/getting-started",
+      "permanent": true
+    },
+
+    {
+      "source": "/tempo",
+      "destination": "/tempo/getting-started",
+      "permanent": true
+    },
+
+    {
+      "source": "/vue/api/actions/useAccount",
+      "destination": "/vue/api/actions/useConnection",
+      "permanent": true
+    },
+    {
+      "source": "/vue/api/actions/useAccountEffect",
+      "destination": "/vue/api/actions/useConnectionEffect",
+      "permanent": true
+    },
+    {
+      "source": "/vue/api/actions/useSwitchAccount",
+      "destination": "/vue/api/actions/useSwitchConnection",
       "permanent": true
     },
 

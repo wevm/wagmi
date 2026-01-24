@@ -78,7 +78,7 @@ The previous global `config` singleton made it so you couldn't use multiple `Con
 
 ### Removed `getContract`
 
-Removed `getContract` export. Use Viem's [`getContract`](https://viem.sh/docs/contract/getContract.html) instead.
+Removed `getContract` export. Use Viem's [`getContract`](https://viem.sh/docs/contract/getContract) instead.
 
 ```ts
 import { getContract } from '@wagmi/core' // [!code --]
@@ -94,57 +94,57 @@ The `getNetwork` and `watchNetwork` actions were removed since the connected cha
 
 - Use [`config.chains`](/core/api/createConfig#chains-1) instead to get `chains`.
 
-  ::: code-group
-  ```ts [index.ts]
-  import { getNetwork } from '@wagmi/core' // [!code --]
+::: code-group
+```ts [index.ts]
+import { getNetwork } from '@wagmi/core' // [!code --]
 
-  const { chains } = getNetwork() // [!code --]
-  const chains = config.chains // [!code ++]
-  ```
-  <<< @/snippets/core/config.ts[config.ts]
-  :::
+const { chains } = getNetwork() // [!code --]
+const chains = config.chains // [!code ++]
+```
+<<< @/snippets/core/config.ts[config.ts]
+:::
 
-- Use [`getAccount`](/core/api/actions/getAccount) and `config.chains` instead to get `chain`.
+- Use [`getAccount`](/core/api/actions/getConnection) and `config.chains` instead to get `chain`.
 
-  ::: code-group
-  ```ts [index.ts]
-  import { getNetwork } from '@wagmi/core' // [!code --]
-  import { getAccount } from '@wagmi/core' // [!code ++]
-  import { config } from './config' // [!code ++]
+::: code-group
+```ts [index.ts]
+import { getNetwork } from '@wagmi/core' // [!code --]
+import { getAccount } from '@wagmi/core' // [!code ++]
+import { config } from './config' // [!code ++]
 
-  const { chain } = getNetwork() // [!code --]
-  const { chainId } = getAccount(config) // [!code ++]
-  const chain = chains.find(chain => chain.id === chainId) // [!code ++]
-  ```
-  <<< @/snippets/core/config.ts[config.ts]
-  :::
+const { chain } = getNetwork() // [!code --]
+const { chainId } = getAccount(config) // [!code ++]
+const chain = chains.find(chain => chain.id === chainId) // [!code ++]
+```
+<<< @/snippets/core/config.ts[config.ts]
+:::
 
   Before v2, `getNetwork().chain` could result in an invalid chain if the active connector's `chainId` was not configured in the list of `config.chains`. Using `getAccount` and `config.chains` is more work, but ensures that chain is either valid or not defined. You can also use `getAccount(config).chain` if you don't care about the chain being `undefined` when not configured.
 
 - Use `watchAccount` instead of `watchNetwork`.
 
-  ::: code-group
-  ```ts [index.ts]
-  import { watchNetwork } from '@wagmi/core' // [!code --]
-  import { watchAccount } from '@wagmi/core' // [!code ++]
-  import { config } from './config' // [!code ++]
+::: code-group
+```ts [index.ts]
+import { watchNetwork } from '@wagmi/core' // [!code --]
+import { watchAccount } from '@wagmi/core' // [!code ++]
+import { config } from './config' // [!code ++]
 
-  const unwatch = watchNetwork((data) => console.log('Changed!', data)) // [!code --]
-  const unwatch = watchAccount(config, { // [!code ++]
-    onChange(data) { // [!code ++]
-      const chains = config.chains // [!code ++]
-      const chain = chains.find(chain => chain.id === data.chainId) // [!code ++]
-    }, // [!code ++]
-  }) // [!code ++]
-  ```
-  <<< @/snippets/core/config.ts[config.ts]
-  :::
+const unwatch = watchNetwork((data) => console.log('Changed!', data)) // [!code --]
+const unwatch = watchAccount(config, { // [!code ++]
+onChange(data) { // [!code ++]
+    const chains = config.chains // [!code ++]
+    const chain = chains.find(chain => chain.id === data.chainId) // [!code ++]
+}, // [!code ++]
+}) // [!code ++]
+```
+<<< @/snippets/core/config.ts[config.ts]
+:::
 
 ### Removed `getWebSocketPublicClient` and `watchWebSocketPublicClient`
 
-Viem [Transports](https://viem.sh/docs/clients/intro.html#transports) now determine the type of client that is returned. You can use [`getPublicClient`](/core/api/actions/getPublicClient) and [`watchPublicClient`](/core/api/actions/watchPublicClient) to retrieve Viem [`PublicClient`](https://viem.sh/docs/clients/public.html) instances.
+Viem [Transports](https://viem.sh/docs/clients/intro#transports) now determine the type of client that is returned. You can use [`getPublicClient`](/core/api/actions/getPublicClient) and [`watchPublicClient`](/core/api/actions/watchPublicClient) to retrieve Viem [`PublicClient`](https://viem.sh/docs/clients/public) instances.
 
-Alternatively, you can use [`getClient`](/core/api/actions/getClient) and [`watchClient`](/core/api/actions/watchClient) to retrieve plain Viem [`Client`](https://viem.sh/docs/clients/custom.html) instances. This is a better option for users that care about optimizing bundle size to be as small as possible.
+Alternatively, you can use [`getClient`](/core/api/actions/getClient) and [`watchClient`](/core/api/actions/watchClient) to retrieve plain Viem [`Client`](https://viem.sh/docs/clients/custom) instances. This is a better option for users that care about optimizing bundle size to be as small as possible.
 
 ### Removed `watchReadContract`, `watchReadContracts`, and `watchReadMulticall`
 
@@ -367,7 +367,7 @@ A number of errors were renamed to better reflect their functionality or replace
 
 ### Removed internal ENS normalization
 
-Before v2, Wagmi handled ENS name normalization internally for `getEnsAddress`, `getEnsAvatar`, and `getEnsResolver`, using Viem's [`normalize`](https://viem.sh/docs/ens/utilities/normalize.html) function. This added extra bundle size as full normalization is quite heavy. For v2, you must normalize ENS names yourself before passing them to these actions. You can use Viem's `normalize` function or any other function that performs [UTS-46 normalization](https://unicode.org/reports/tr46).
+Before v2, Wagmi handled ENS name normalization internally for `getEnsAddress`, `getEnsAvatar`, and `getEnsResolver`, using Viem's [`normalize`](https://viem.sh/docs/ens/utilities/normalize) function. This added extra bundle size as full normalization is quite heavy. For v2, you must normalize ENS names yourself before passing them to these actions. You can use Viem's `normalize` function or any other function that performs [UTS-46 normalization](https://unicode.org/reports/tr46).
 
 
 ::: code-group
@@ -421,7 +421,7 @@ import { erc20Abi } from 'viem' // [!code ++]
 
 ### Removed `'@wagmi/core/providers/*` entrypoints
 
-It never made sense that we would have provider URLs hardcoded in the Wagmi codebase. Use [Viem transports](https://viem.sh/docs/clients/intro.html#transports) along with RPC provider URLs instead.
+It never made sense that we would have provider URLs hardcoded in the Wagmi codebase. Use [Viem transports](https://viem.sh/docs/clients/intro#transports) along with RPC provider URLs instead.
 
 ```ts
 import { alchemyProvider } from '@wagmi/core/providers/alchemy' // [!code --]
@@ -551,7 +551,7 @@ const result = await readContracts(config, { // [!code ++]
 The `formatUnits` parameter and related return values (e.g. `result.formatted`) are deprecated for the following actions:
 
 - [`estimateFeesPerGas`](/core/api/actions/estimateFeesPerGas)
-- [`getToken`](/core/api/actions/getToken)
+- `getToken`
 
 Instead you can call `formatUnits` from Viem directly or use another number formatting library, like [dnum](https://github.com/bpierre/dnum) instead.
 
@@ -579,7 +579,7 @@ The following actions were renamed to better reflect their functionality and und
 - `fetchEnsAvatar` is now [`getEnsAvatar`](/core/api/actions/getEnsAvatar)
 - `fetchEnsName` is now [`getEnsName`](/core/api/actions/getEnsName)
 - `fetchEnsResolver` is now [`getEnsResolver`](/core/api/actions/getEnsResolver)
-- `fetchToken` is now [`getToken`](/core/api/actions/getToken)
+- `fetchToken` is now `getToken`
 - `fetchTransaction` is now [`getTransaction`](/core/api/actions/getTransaction)
 - `switchNetwork` is now [`switchChain`](/core/api/actions/switchChain)
 - `waitForTransaction` is now [`waitForTransactionReceipt`](/core/api/actions/waitForTransactionReceipt)

@@ -1,5 +1,5 @@
+import { writeFile } from 'node:fs/promises'
 import dedent from 'dedent'
-import { default as fs } from 'fs-extra'
 import { relative, resolve } from 'pathe'
 import pc from 'picocolors'
 import { z } from 'zod'
@@ -47,8 +47,8 @@ export async function init(options: Init = {}) {
     return configPath
   }
 
-  const spinner = logger.spinner()
-  spinner.start('Creating config')
+  const spinner = logger.spinner('Creating config')
+  spinner.start()
   // Check if project is using TypeScript
   const isUsingTypeScript = await getIsUsingTypeScript()
   const rootDir = resolve(options.root || process.cwd())
@@ -85,8 +85,8 @@ export async function init(options: Init = {}) {
   }
 
   const formatted = await format(content)
-  await fs.writeFile(outPath, formatted)
-  spinner.succeed()
+  await writeFile(outPath, formatted)
+  spinner.success()
   logger.success(
     `Config created at ${pc.gray(relative(process.cwd(), outPath))}`,
   )

@@ -4,7 +4,7 @@ description: Hook for fetching the number of the most recent block seen.
 ---
 
 <script setup>
-const packageName = 'wagmi/experimental'
+const packageName = 'wagmi'
 const actionName = 'getCapabilities'
 const typeName = 'GetCapabilities'
 const TData = 'GetCapabilitiesReturnType'
@@ -17,21 +17,17 @@ Hook to extract capabilities (grouped by chain ID) that a connected wallet suppo
 
 [Read more.](https://github.com/ethereum/EIPs/blob/815028dc634463e1716fc5ce44c019a6040f0bef/EIPS/eip-5792.md#wallet_getcapabilities)
 
-::: warning
-This is an experimental Hook that is not supported in most wallets. It is recommended to have a fallback mechanism if using this in production.
-:::
-
 ## Import
 
 ```ts
-import { useCapabilities } from 'wagmi/experimental'
+import { useCapabilities } from 'wagmi'
 ```
 
 ## Usage
 
 ::: code-group
 ```tsx [index.tsx]
-import { useCapabilities } from 'wagmi/experimental'
+import { useCapabilities } from 'wagmi'
 
 function App() {
   const result = useCapabilities()
@@ -43,7 +39,7 @@ function App() {
 ## Parameters
 
 ```ts
-import { type UseCapabilitiesParameters } from 'wagmi/experimental'
+import { type UseCapabilitiesParameters } from 'wagmi'
 ```
 
 ### account
@@ -68,11 +64,11 @@ const status = await useCapabilities({
 
 `Config | undefined`
 
-[`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/api/WagmiProvider).
+[`Config`](/react/api/createConfig#config) to use instead of retrieving from the nearest [`WagmiProvider`](/react/api/WagmiProvider).
 
 ::: code-group
 ```tsx [index.tsx]
-import { useCapabilities } from 'wagmi/experimental'
+import { useCapabilities } from 'wagmi'
 import { config } from './config' // [!code focus]
 
 function App() {
@@ -92,7 +88,7 @@ Connector to get call statuses with.
 
 ::: code-group
 ```tsx [index.tsx]
-import { useCapabilities, useConnections } from 'wagmi/experimental'
+import { useCapabilities, useConnections } from 'wagmi'
 import { config } from './config' // [!code focus]
 
 function App() {
@@ -113,7 +109,7 @@ Scopes the cache to a given context. Hooks that have identical context will shar
 
 ::: code-group
 ```tsx [index.tsx]
-import { useCapabilities } from 'wagmi/experimental'
+import { useCapabilities } from 'wagmi'
 import { config } from './config' // [!code focus]
 
 function App() {
@@ -130,7 +126,7 @@ function App() {
 ## Return Type
 
 ```ts
-import { type UseCapabilitiesReturnType } from 'wagmi/experimental'
+import { type UseCapabilitiesReturnType } from 'wagmi'
 ```
 
 <!--@include: @shared/query-result.md-->
@@ -139,4 +135,4 @@ import { type UseCapabilitiesReturnType } from 'wagmi/experimental'
 
 ## Action
 
-- [`getCapabilities`](https://viem.sh/experimental/eip5792/getCapabilities)
+- [`getCapabilities`](https://viem.sh/docs/actions/wallet/getCapabilities)

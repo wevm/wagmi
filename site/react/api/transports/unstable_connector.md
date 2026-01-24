@@ -1,3 +1,7 @@
+---
+title: unstable_connector
+---
+
 <script setup>
 const docsPath = 'react'
 const packageName = 'wagmi'

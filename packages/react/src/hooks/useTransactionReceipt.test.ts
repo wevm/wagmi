@@ -1,17 +1,17 @@
 import { chain, wait } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
+import { renderHook } from '@wagmi/test/react'
 import type { Hash } from 'viem'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 import { useTransactionReceipt } from './useTransactionReceipt.js'
 
 test('default', async () => {
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useTransactionReceipt({
       hash: '0xbf7d27700d053765c9638d3b9d39eb3c56bfc48377583e8be483d61f9f18a871',
     }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -21,12 +21,12 @@ test('default', async () => {
         "contractAddress": null,
         "cumulativeGasUsed": 21000n,
         "effectiveGasPrice": 33427926161n,
-        "from": "0x043022ef9fCa1066024d19d681e2CcF44Ff90De3",
+        "from": "0x043022ef9fca1066024d19d681e2ccf44ff90de3",
         "gasUsed": 21000n,
         "logs": [],
         "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
         "status": "success",
-        "to": "0x318a5FB4F1604FC46375A1dB9A9018B6e423b345",
+        "to": "0x318a5fb4f1604fc46375a1db9a9018b6e423b345",
         "transactionHash": "0xbf7d27700d053765c9638d3b9d39eb3c56bfc48377583e8be483d61f9f18a871",
         "transactionIndex": 0,
         "type": "legacy",
@@ -66,14 +66,14 @@ test('default', async () => {
 })
 
 test('parameters: chainId', async () => {
-  const { result } = renderHook(() =>
+  const { result } = await renderHook(() =>
     useTransactionReceipt({
       chainId: chain.mainnet2.id,
       hash: '0xbf7d27700d053765c9638d3b9d39eb3c56bfc48377583e8be483d61f9f18a871',
     }),
   )
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -83,12 +83,12 @@ test('parameters: chainId', async () => {
         "contractAddress": null,
         "cumulativeGasUsed": 21000n,
         "effectiveGasPrice": 33427926161n,
-        "from": "0x043022ef9fCa1066024d19d681e2CcF44Ff90De3",
+        "from": "0x043022ef9fca1066024d19d681e2ccf44ff90de3",
         "gasUsed": 21000n,
         "logs": [],
         "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
         "status": "success",
-        "to": "0x318a5FB4F1604FC46375A1dB9A9018B6e423b345",
+        "to": "0x318a5fb4f1604fc46375a1db9a9018b6e423b345",
         "transactionHash": "0xbf7d27700d053765c9638d3b9d39eb3c56bfc48377583e8be483d61f9f18a871",
         "transactionIndex": 0,
         "type": "legacy",
@@ -128,12 +128,12 @@ test('parameters: chainId', async () => {
 })
 
 test('behavior: hash: undefined -> defined', async () => {
-  let hash: Hash | undefined = undefined
-
-  const { result, rerender } = renderHook(() =>
-    useTransactionReceipt({
-      hash,
-    }),
+  const { result, rerender } = await renderHook(
+    (props) =>
+      useTransactionReceipt({
+        hash: props?.hash,
+      }),
+    { initialProps: { hash: undefined as Hash | undefined } },
   )
 
   expect(result.current).toMatchInlineSnapshot(`
@@ -172,10 +172,11 @@ test('behavior: hash: undefined -> defined', async () => {
     }
   `)
 
-  hash = '0xbf7d27700d053765c9638d3b9d39eb3c56bfc48377583e8be483d61f9f18a871'
-  rerender()
+  rerender({
+    hash: '0xbf7d27700d053765c9638d3b9d39eb3c56bfc48377583e8be483d61f9f18a871',
+  })
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -185,12 +186,12 @@ test('behavior: hash: undefined -> defined', async () => {
         "contractAddress": null,
         "cumulativeGasUsed": 21000n,
         "effectiveGasPrice": 33427926161n,
-        "from": "0x043022ef9fCa1066024d19d681e2CcF44Ff90De3",
+        "from": "0x043022ef9fca1066024d19d681e2ccf44ff90de3",
         "gasUsed": 21000n,
         "logs": [],
         "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
         "status": "success",
-        "to": "0x318a5FB4F1604FC46375A1dB9A9018B6e423b345",
+        "to": "0x318a5fb4f1604fc46375a1db9a9018b6e423b345",
         "transactionHash": "0xbf7d27700d053765c9638d3b9d39eb3c56bfc48377583e8be483d61f9f18a871",
         "transactionIndex": 0,
         "type": "legacy",
@@ -230,8 +231,8 @@ test('behavior: hash: undefined -> defined', async () => {
 })
 
 test('behavior: disabled when properties missing', async () => {
-  const { result } = renderHook(() => useTransactionReceipt())
+  const { result } = await renderHook(() => useTransactionReceipt())
 
   await wait(100)
-  await waitFor(() => expect(result.current.isPending).toBeTruthy())
+  await vi.waitFor(() => expect(result.current.isPending).toBeTruthy())
 })

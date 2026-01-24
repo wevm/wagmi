@@ -4,17 +4,13 @@ import type {
   WatchContractEventParameters,
 } from '@wagmi/core'
 import type {
+  ConfigParameter,
+  EnabledParameter,
   UnionCompute,
   UnionExactPartial,
   UnionStrictOmit,
 } from '@wagmi/core/internal'
 import type { Abi, Address, ContractEventName } from 'viem'
-
-import type {
-  ConfigParameter,
-  EnabledParameter,
-} from '../../types/properties.js'
-import { useAccount } from '../useAccount.js'
 import { useChainId } from '../useChainId.js'
 import { useConfig } from '../useConfig.js'
 import { useWatchContractEvent } from '../useWatchContractEvent.js'
@@ -77,11 +73,8 @@ export function createUseWatchContractEvent<
     return (parameters) => {
       const config = useConfig(parameters)
       const configChainId = useChainId({ config })
-      const account = useAccount({ config })
       const chainId =
-        (parameters as { chainId?: number })?.chainId ??
-        account.chainId ??
-        configChainId
+        (parameters as { chainId?: number })?.chainId ?? configChainId
       return useWatchContractEvent({
         ...(parameters as any),
         ...(props.eventName ? { eventName: props.eventName } : {}),

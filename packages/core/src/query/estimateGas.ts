@@ -1,5 +1,3 @@
-import type { QueryOptions } from '@tanstack/query-core'
-
 import {
   type EstimateGasErrorType,
   type EstimateGasParameters,
@@ -8,34 +6,50 @@ import {
 } from '../actions/estimateGas.js'
 import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
-import type { UnionExactPartial } from '../types/utils.js'
+import type { QueryOptions, QueryParameter } from '../types/query.js'
+import type { Compute, UnionExactPartial } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
 export type EstimateGasOptions<
   config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
-> = UnionExactPartial<EstimateGasParameters<config, chainId>> &
-  ScopeKeyParameter
+  chainId extends config['chains'][number]['id'] | undefined = undefined,
+  selectData = EstimateGasData,
+> = Compute<
+  UnionExactPartial<EstimateGasParameters<config, chainId>> & ScopeKeyParameter
+> &
+  QueryParameter<
+    EstimateGasQueryFnData,
+    EstimateGasErrorType,
+    selectData,
+    EstimateGasQueryKey<config, chainId>
+  >
 
 export function estimateGasQueryOptions<
   config extends Config,
-  chainId extends config['chains'][number]['id'],
->(config: config, options: EstimateGasOptions<config, chainId> = {} as any) {
+  chainId extends config['chains'][number]['id'] | undefined = undefined,
+  selectData = EstimateGasData,
+>(
+  config: config,
+  options: EstimateGasOptions<config, chainId, selectData> = {} as any,
+): EstimateGasQueryOptions<config, chainId, selectData> {
   return {
-    async queryFn({ queryKey }) {
-      const { connector } = options
-      const { account, scopeKey: _, ...parameters } = queryKey[1]
-      if (!account && !connector)
+    ...options.query,
+    enabled: Boolean(
+      (options.account || options.connector) &&
+        (options.query?.enabled ?? true),
+    ),
+    queryFn: async (context) => {
+      const [, { scopeKey: _, ...parameters }] = context.queryKey
+      if (!parameters.account && !options.connector)
         throw new Error('account or connector is required')
-      return estimateGas(config, { account, connector, ...(parameters as any) })
+      return estimateGas(config, {
+        ...(parameters as any),
+        account: parameters.account,
+        connector: options.connector,
+      })
     },
     queryKey: estimateGasQueryKey(options),
-  } as const satisfies QueryOptions<
-    EstimateGasQueryFnData,
-    EstimateGasErrorType,
-    EstimateGasData,
-    EstimateGasQueryKey<config, chainId>
-  >
+  }
 }
 
 export type EstimateGasQueryFnData = EstimateGasReturnType
@@ -44,13 +58,28 @@ export type EstimateGasData = EstimateGasQueryFnData
 
 export function estimateGasQueryKey<
   config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
->(options: EstimateGasOptions<config, chainId> = {} as any) {
-  const { connector: _, ...rest } = options
-  return ['estimateGas', filterQueryOptions(rest)] as const
+  chainId extends config['chains'][number]['id'] | undefined = undefined,
+>(
+  options: Compute<
+    UnionExactPartial<EstimateGasParameters<config, chainId>> &
+      ScopeKeyParameter
+  > = {} as any,
+) {
+  return ['estimateGas', filterQueryOptions(options)] as const
 }
 
 export type EstimateGasQueryKey<
   config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
+  chainId extends config['chains'][number]['id'] | undefined = undefined,
 > = ReturnType<typeof estimateGasQueryKey<config, chainId>>
+
+export type EstimateGasQueryOptions<
+  config extends Config,
+  chainId extends config['chains'][number]['id'] | undefined = undefined,
+  selectData = EstimateGasData,
+> = QueryOptions<
+  EstimateGasQueryFnData,
+  EstimateGasErrorType,
+  selectData,
+  EstimateGasQueryKey<config, chainId>
+>

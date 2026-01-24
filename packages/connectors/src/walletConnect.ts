@@ -1,22 +1,22 @@
 import {
   ChainNotConfiguredError,
   type Connector,
-  ProviderNotFoundError,
   createConnector,
   extractRpcUrls,
+  ProviderNotFoundError,
 } from '@wagmi/core'
 import type { Compute, ExactPartial, Omit } from '@wagmi/core/internal'
 import type { EthereumProvider } from '@walletconnect/ethereum-provider'
 import {
   type AddEthereumChainParameter,
   type Address,
+  getAddress,
+  numberToHex,
   type ProviderConnectInfo,
   type ProviderRpcError,
   type RpcError,
   SwitchChainError,
   UserRejectedRequestError,
-  getAddress,
-  numberToHex,
 } from 'viem'
 
 type WalletConnectConnector = Connector & {
@@ -78,8 +78,16 @@ export function walletConnect(parameters: WalletConnectParameters) {
 
   type Provider = Awaited<ReturnType<(typeof EthereumProvider)['init']>>
   type Properties = {
-    connect(parameters?: { chainId?: number; pairingTopic?: string }): Promise<{
-      accounts: readonly Address[]
+    // TODO(v3): Make `withCapabilities: true` default behavior
+    connect<withCapabilities extends boolean = false>(parameters?: {
+      chainId?: number | undefined
+      isReconnecting?: boolean | undefined
+      pairingTopic?: string | undefined
+      withCapabilities?: withCapabilities | boolean | undefined
+    }): Promise<{
+      accounts: withCapabilities extends true
+        ? readonly { address: Address }[]
+        : readonly Address[]
       chainId: number
     }>
     getNamespaceChainsIds(): number[]
@@ -122,7 +130,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
         provider.on('session_delete', sessionDelete)
       }
     },
-    async connect({ chainId, ...rest } = {}) {
+    async connect({ chainId, withCapabilities, ...rest } = {}) {
       try {
         const provider = await this.getProvider()
         if (!provider) throw new ProviderNotFoundError()
@@ -163,7 +171,23 @@ export function walletConnect(parameters: WalletConnectParameters) {
 
         // If session exists and chains are authorized, enable provider for required chain
         const accounts = (await provider.enable()).map((x) => getAddress(x))
-        const currentChainId = await this.getChainId()
+
+        // Switch to chain if provided
+        let currentChainId = await this.getChainId()
+        if (chainId && currentChainId !== chainId) {
+          const chain = await this.switchChain!({ chainId }).catch(
+            (error: RpcError) => {
+              if (
+                error.code === UserRejectedRequestError.code &&
+                (error.cause as RpcError | undefined)?.message !==
+                  'Missing or invalid. request() method: wallet_addEthereumChain'
+              )
+                throw error
+              return { id: currentChainId }
+            },
+          )
+          currentChainId = chain?.id ?? currentChainId
+        }
 
         if (displayUri) {
           provider.removeListener('display_uri', displayUri)
@@ -190,7 +214,12 @@ export function walletConnect(parameters: WalletConnectParameters) {
           provider.on('session_delete', sessionDelete)
         }
 
-        return { accounts, chainId: currentChainId }
+        return {
+          accounts: (withCapabilities
+            ? accounts.map((address) => ({ address, capabilities: {} }))
+            : accounts) as never,
+          chainId: currentChainId,
+        }
       } catch (error) {
         if (
           /(user rejected|connection request reset)/i.test(
@@ -241,9 +270,16 @@ export function walletConnect(parameters: WalletConnectParameters) {
       async function initProvider() {
         const optionalChains = config.chains.map((x) => x.id) as [number]
         if (!optionalChains.length) return
-        const { EthereumProvider } = await import(
-          '@walletconnect/ethereum-provider'
-        )
+        const { EthereumProvider } = await (() => {
+          // safe webpack optional peer dependency dynamic import
+          try {
+            return import('@walletconnect/ethereum-provider')
+          } catch {
+            throw new Error(
+              'dependency "@walletconnect/ethereum-provider" not found',
+            )
+          }
+        })()
         return await EthereumProvider.init({
           ...parameters,
           disableProviderPing: true,
@@ -307,7 +343,9 @@ export function walletConnect(parameters: WalletConnectParameters) {
           new Promise<void>((resolve) => {
             const listener = ({
               chainId: currentChainId,
-            }: { chainId?: number | undefined }) => {
+            }: {
+              chainId?: number | undefined
+            }) => {
               if (currentChainId === chainId) {
                 config.emitter.off('change', listener)
                 resolve()
@@ -420,7 +458,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
     getNamespaceChainsIds() {
       if (!provider_) return []
       const chainIds = provider_.session?.namespaces[NAMESPACE]?.accounts?.map(
-        (account) => Number.parseInt(account.split(':')[1] || ''),
+        (account) => Number.parseInt(account.split(':')[1] || '', 10),
       )
       return chainIds ?? []
     },

@@ -18,7 +18,7 @@ Check out the [Contributing Guide](/dev/contributing) to get your local developm
 
 ## 2. Create a new file for the connector
 
-Create a new file in `packages/connector/src` named after the connector you want to add.
+Create a new file in `packages/connectors/src` named after the connector you want to add.
 
 For example, if you want to add Foo, you would create a file named `foo.ts`. File names should be camel-cased and as short as possible.
 
@@ -41,6 +41,7 @@ export function fooBarBaz(parameters: FooBarBazParameters = {}) {
 Now that the base of the connector is set up, you should see a type error that looks something like this:
 
 ```ts twoslash
+// @twoslash-cache: {"v":1,"hash":"51529c3efa008aca29b1a99d6189d29f0675b46bfd307c0fa712fc44cfd1d5b5","data":"N4Igdg9gJgpgziAXAbVAFwJ4AcZJACwgDcYAnEAGhDRgA808AKAQwBsBLZuASgAIBjUjGY0AwhDBgY/NBFIAeAK5gA1pADuYCrwBK0uVHlw0pdmADm25WoiaAfNr38DRk2cu9rGsA96ihIjDiktKypABiYEqq3o76pIbGphZWMbY+cc4JrskeXul2hYyCwmISUjJykYh+AWUhlRFR+ZqZLknuqTb2bdkdKZ5p9nbcNf6lQeWhVc1DWrrxiW4DLRkLWUu5Xd6FADpg7AC2WHJoAnWTDWGUIMbMpAyIAAxUrDAWaPhIAIwArFRoe7mGCPEAlQLBCrXV5mXDPKj8fD3ZgyMhIJ4AXwo6GwcIIxDRALooMYWGRhxBZD4zjAADN2OYasB9rxWQIkWY4DUAlAJKwMLxkKIOfMAHTi4XMMzIAC6MoA3Cy2TBDuw0DRSDUAKKq9VkeSQ6akLUkMBoACyzCwdkVYDZvGMcmYwIA/EylfbWSoYBgav1zLbPWzgWgAJI0Q41eTegXE95QOAO5YeIhsRQwXhxsAJ3iMADKYWdMHDKstWF4ADJ1u1k9sCtxkDGZdpYLTmIpWGgAGppjNZnOp1jp3gAH14YA7rFHg1bsKgdkYMZqMZbMDbHe7vbdvFb7c7PaHGbHylnUigfAAvHZc7uNwfh/3ExPWFOXbxB8Ox8+pzUPzA+GOAAKpAQKqcAwPIt77r2mb0PGT6Trwb5/tO368L+vY2h6nrgWGEZRjGsE0Nmib+toKGPrmBZOsCJaHGWlbVtk4qiiMjY+jKqGTguS68Cu769hhh6XteRAQOwUDTsBoHsOB8hiRJWF2kGvBCIcBJ0TUi4+n6yYie+4mSUBIFgRBCnzoGbIYlxL7Tiea5zpZrImMwYBwCcDxwNuTguBOhwAEZkNoAAqpCue5pzXse2YOWetoYjcdwPD8ADsrzvOYnxIAAbACQIgngNL0uYNwcFI6IIkiYWouQiDfClWI4jgeBkCB5BUEljwAEwABzpR8XyIAALAi0Bwl1KVDS8ID0m8YDMBSeBmLAtCimgCBUBJLWkKQAC0E1Tbt3xPENu1DTcND0HgwW4rwADkwAYndvCybwYFwO4vCfBmtIQC+tifVgIE4A87DwLwtImV9t0PYKtC6bkMo1Ks8qqcIvJgPyL00tu/p2TF9JxWjzAY1jEkI+4qM8nyArzRSFMWFT6M06pUBubjybTtTmMCv6sr46eMBQEzJMs5gOAMwGDogooWDbowjD6dJpnyYZIwC7FQuoyxvDfF1b1yBmLGoxI5rwHARby4wFJwBbwI1NJRASWQZu20W+nmQBM6a8LvBPTUEnaHTMDaOLIcCFMMjaK5kk9QbQiiqVMAkKw21taVsIVWCVUohqSC9RizZgmNhUXIajQK0VDL6Ywj3cNwNwUoCSCgFmH0SHg60gBiGJAA=="}
 // @errors: 2740
 import { createConnector } from '@wagmi/core'
 // ---cut---
@@ -54,7 +55,7 @@ The type error tells you what properties are missing from `createConnector`'s re
 - `icon`: Optional icon URL for the connector.
 - `id`: The ID for the connector. This should be camel-cased and as short as possible. Example: `fooBarBaz`.
 - `name`: Human-readable name for the connector. Example: `'Foo Bar Baz'`.
-- `supportsSimulation`: Whether the connector supports contract simulation. This should be disabled if a connector's wallet cannot accurately simulate contract writes or display contract revert messages. Defaults to `false`.
+- `rdns`: Optional reverse DNS for the connector. This is used to filter out duplicate [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963) injected providers when `createConfig#multiInjectedProviderDiscovery` is enabled.
 
 #### Methods
 
@@ -98,7 +99,7 @@ All address values returned and emitted by the connector should be checksummed u
 
 ## 5. Export the connector
 
-Export the connector from `packages/connector/src/exports/index.ts` in alphabetic order.
+Export the connector from `packages/connectors/src/exports/index.ts` in alphabetic order.
 
 ```ts
 export { fooBarBaz } from './fooBarBaz.js'

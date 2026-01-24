@@ -9,7 +9,7 @@ Wagmi contains everything you need to get started with building a Connect Wallet
 You can use a pre-built Connect Wallet module from a third-party library such as:
 
 - [ConnectKit](https://docs.family.co/connectkit) - [Guide](https://docs.family.co/connectkit/getting-started)
-- [AppKit](https://walletconnect.com/appkit) - [Guide](https://docs.walletconnect.com/appkit/next/core/installation)
+- [AppKit](https://reown.com/appkit) - [Guide](https://docs.reown.com/appkit/next/core/installation)
 - [RainbowKit](https://www.rainbowkit.com/) - [Guide](https://www.rainbowkit.com/docs/installation)
 - [Dynamic](https://www.dynamic.xyz/) - [Guide](https://docs.dynamic.xyz/quickstart)
 - [Privy](https://privy.io) - [Guide](https://docs.privy.io/guide/react/wallets/usage/wagmi)
@@ -60,7 +60,7 @@ In the above configuration, we want to set up connectors for Injected (browser),
 
 Make sure to replace the `projectId` with your own WalletConnect Project ID, if you wish to use WalletConnect! 
 
-[Get your Project ID](https://cloud.walletconnect.com/)
+[Get your Project ID](https://cloud.reown.com/)
 
 :::
 
@@ -125,10 +125,11 @@ Below, we are rendering a list of `connectors` retrieved from `useConnect`. When
 
 ```tsx [wallet-options.tsx]
 import * as React from 'react'
-import { Connector, useConnect } from 'wagmi'
+import { Connector, useConnect, useConnectors } from 'wagmi'
 
 export function WalletOptions() {
-  const { connectors, connect } = useConnect()
+  const { connect } = useConnect()
+  const connectors = useConnectors()
 
   return connectors.map((connector) => (
     <button key={connector.uid} onClick={() => connect({ connector })}>
@@ -183,21 +184,21 @@ export const config = createConfig({
 
 :::
 
-### 4. Display Connected Account
+### 4. Display Connection
 
-Lastly, if an account is connected, we want to show some basic information, like the connected address and ENS name and avatar.
+Lastly, if an connection is made, we want to show some basic information, like the connected address and ENS name and avatar.
 
-Below, we are using hooks like `useAccount`, `useEnsAvatar` and `useEnsName` to extract this information.
+Below, we are using hooks like `useConnection`, `useEnsAvatar` and `useEnsName` to extract this information.
 
 We are also utilizing `useDisconnect` to show a "Disconnect" button so a user can disconnect their wallet.
 
 ::: code-group
 
-```tsx [account.tsx]
-import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from 'wagmi'
+```tsx [connection.tsx]
+import { useConnection, useDisconnect, useEnsAvatar, useEnsName } from 'wagmi'
 
-export function Account() {
-  const { address } = useAccount()
+export function Connection() {
+  const { address } = useConnection()
   const { disconnect } = useDisconnect()
   const { data: ensName } = useEnsName({ address })
   const { data: ensAvatar } = useEnsAvatar({ name: ensName! })
@@ -214,10 +215,11 @@ export function Account() {
 
 ```tsx [wallet-options.tsx]
 import * as React from 'react'
-import { Connector, useConnect } from 'wagmi'
+import { Connector, useConnect, useConnectors } from 'wagmi'
 
 export function WalletOptions() {
-  const { connectors, connect } = useConnect()
+  const { connect } = useConnect()
+  const connectors = useConnectors()
 
   return connectors.map((connector) => (
     <WalletOption
@@ -299,22 +301,22 @@ export const config = createConfig({
 
 ### 5. Wire it up!
 
-Finally, we can wire up our Wallet Options and Account components to our application's entrypoint.
+Finally, we can wire up our Wallet Options and Connection components to our application's entrypoint.
 
 ::: code-group
 
 ```tsx [app.tsx]
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { WagmiProvider, useAccount } from 'wagmi'
+import { WagmiProvider, useConnection } from 'wagmi'
 import { config } from './config'
-import { Account } from './account' // [!code ++]
+import { Connection } from './connection' // [!code ++]
 import { WalletOptions } from './wallet-options' // [!code ++]
 
 const queryClient = new QueryClient()
 
 function ConnectWallet() { // [!code ++]
-  const { isConnected } = useAccount() // [!code ++]
-  if (isConnected) return <Account /> // [!code ++]
+  const { isConnected } = useConnection() // [!code ++]
+  if (isConnected) return <Connection /> // [!code ++]
   return <WalletOptions /> // [!code ++]
 } // [!code ++]
 
@@ -329,11 +331,11 @@ function App() {
 }
 ```
 
-```tsx [account.tsx]
-import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from 'wagmi'
+```tsx [connection.tsx]
+import { useConnection, useDisconnect, useEnsAvatar, useEnsName } from 'wagmi'
 
-export function Account() {
-  const { address } = useAccount()
+export function Connection() {
+  const { address } = useConnection()
   const { disconnect } = useDisconnect()
   const { data: ensName } = useEnsName({ address })
   const { data: ensAvatar } = useEnsAvatar({ name: ensName! })
@@ -350,10 +352,11 @@ export function Account() {
 
 ```tsx [wallet-options.tsx]
 import * as React from 'react'
-import { Connector, useConnect } from 'wagmi'
+import { Connector, useConnect, useConnectors } from 'wagmi'
 
 export function WalletOptions() {
-  const { connectors, connect } = useConnect()
+  const { connect } = useConnect()
+  const connectors = useConnectors()
 
   return connectors.map((connector) => (
     <WalletOption

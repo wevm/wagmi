@@ -1,9 +1,9 @@
 import { connect } from '@wagmi/core'
 import { config } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
-import { beforeEach, expect, test } from 'vitest'
+import { renderHook } from '@wagmi/test/react'
+import { beforeEach, expect, test, vi } from 'vitest'
 
-import { useAccount } from './useAccount.js'
+import { useConnection } from './useConnection.js'
 import { useDisconnect } from './useDisconnect.js'
 
 const connector = config.connectors[0]!
@@ -13,20 +13,20 @@ beforeEach(async () => {
 })
 
 test('default', async () => {
-  const { result } = renderHook(() => ({
-    useAccount: useAccount(),
+  const { result } = await renderHook(() => ({
+    useConnection: useConnection(),
     useDisconnect: useDisconnect(),
   }))
 
-  expect(result.current.useAccount.address).toBeDefined()
-  expect(result.current.useAccount.status).toEqual('connected')
+  expect(result.current.useConnection.address).toBeDefined()
+  expect(result.current.useConnection.status).toEqual('connected')
 
-  result.current.useDisconnect.disconnect()
+  result.current.useDisconnect.mutate()
 
-  await waitFor(() =>
-    expect(result.current.useAccount.isDisconnected).toBeTruthy(),
+  await vi.waitFor(() =>
+    expect(result.current.useConnection.isDisconnected).toBeTruthy(),
   )
 
-  expect(result.current.useAccount.address).not.toBeDefined()
-  expect(result.current.useAccount.status).toEqual('disconnected')
+  expect(result.current.useConnection.address).not.toBeDefined()
+  expect(result.current.useConnection.status).toEqual('disconnected')
 })

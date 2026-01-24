@@ -33,6 +33,7 @@ await call(config, {
 ## Parameters
 
 ```ts twoslash
+// @twoslash-cache: {"v":1,"hash":"f9d98dd791931821ca041f2ffa5df1409ff16b6299b7878935aa5d977af43747","data":"N4Igdg9gJgpgziAXAbVAFwJ4AcZJACwgDcYAnEAGhDRgA808AKAQwBsBLZuASgAJMcvAMJtWABWalmAWxg1ScADwBjCGABm7AOa86NMFDjC1mnQF5jG7QD5eFka3GSZcskYBkw/M3ZgAklASUrLyKiY2ADpg7NJYEKRowqJBLvIIVHBokgyIAIwALFSsMGBaaPhIBVRZpFpyeA5Owa4KlCAcYLiIAAxUyt5SyvKV+QC+ALp90F0gMXEJvMD82DBJjikhbryjvOqkENK8AOQAAgDuzFrS7AD0qqQwR20hzEigeiVw7Gp4aAijoyAA"}
 import { type CallParameters } from '@wagmi/core'
 ```
 
@@ -147,7 +148,7 @@ await call(config, {
 
 `bigint | undefined`
 
-The price (in wei) to pay per gas. Only applies to [Legacy Transactions](https://viem.sh/docs/glossary/terms.html#legacy-transaction).
+The price (in wei) to pay per gas. Only applies to [Legacy Transactions](https://viem.sh/docs/glossary/terms#legacy-transaction).
 
 ::: code-group
 ```ts [index.ts]
@@ -169,7 +170,7 @@ await call(config, {
 
 `bigint | undefined`
 
-Total fee per gas (in wei), inclusive of `maxPriorityFeePerGas`. Only applies to [EIP-1559 Transactions](https://viem.sh/docs/glossary/terms.html#eip-1559-transaction).
+Total fee per gas (in wei), inclusive of `maxPriorityFeePerGas`. Only applies to [EIP-1559 Transactions](https://viem.sh/docs/glossary/terms#eip-1559-transaction).
 
 ::: code-group
 ```ts [index.ts]
@@ -191,7 +192,7 @@ await call(config, {
 
 `bigint | undefined`
 
-Max priority fee per gas (in wei). Only applies to [EIP-1559 Transactions](https://viem.sh/docs/glossary/terms.html#eip-1559-transaction).
+Max priority fee per gas (in wei). Only applies to [EIP-1559 Transactions](https://viem.sh/docs/glossary/terms#eip-1559-transaction).
 
 ::: code-group
 ```ts [index.ts]
@@ -320,6 +321,7 @@ await call(config, {
 ## Return Type
 
 ```ts twoslash
+// @twoslash-cache: {"v":1,"hash":"21d9f77d5084c8206ac7e44980e375eda94c1b843ad4d776e3c3ed3a076f7de7","data":"N4Igdg9gJgpgziAXAbVAFwJ4AcZJACwgDcYAnEAGhDRgA808AKAQwBsBLZuASgAJMcvAMJtWAJRhoArqTAAVbDF4BeXsAA6YXtt5RmaZol4AJOrwA+vKWFgAzdmBhQA3JoC+m9gFssEUmmFRCWlZBRxKEDgDfyQARgAWKlYYMABzNHw4xOpmUlTJPBFWcUkZeUUIjkckAAYqAGN8XOZ6mnJEBLcAXQboXEQQb19/NX5FQOLgsrClN15bUggvXgByAAEAd2ZUr3YAenq/GBWIr0lmJFA6GjA4dggwPDQENzcgA==="}
 import { type CallReturnType } from '@wagmi/core'
 ```
 
@@ -330,6 +332,7 @@ The call data.
 ## Error
 
 ```ts twoslash
+// @twoslash-cache: {"v":1,"hash":"b8acbdeab78439603d8a045b8f32426b8530ecc55b9057e0cccd65e1da03193a","data":"N4Igdg9gJgpgziAXAbVAFwJ4AcZJACwgDcYAnEAGhDRgA808AKAQwBsBLZuASgAJMcvAMJtWAUVKkIpACrYYvALy8A8gFt2aADwjW42jADGAVzTsIYCVNnyKvADohDzY3BiOAfLwBkvYPbBeIN5nVxhEXgAFZlI3AEFDQwhjMDQraTlBAB9eAEkwIjZ2KDioKFJ4OHSbbN4EpJS0AGU0ZhohCwAzDkM0yQz5Xhz8mgBzMhVTFU6AJWYwcerMhRym9gAvGDFaQxgYKDhosvYFtc2lwZyL2pa2mDi4OHZRsDUYVI6wbvZe65W8gpFKAAIQwNDgABl3qM0Pg/kNeAA6ZG8ABsAEZeGppApkYiEQBxGBoABy0C2/VIM2JxlIYGWAG4AgBfALsNRYaRoYSiP6UEBwVqkBiIdEAFiorGhsKQ6IAzFQheMRSBdOJKct+RwwLhEAAGKiGfAxZi9MiysXMgC6hvJeHZnOFfn4gzV8OZvE6UjUvAA5AABADuzFGGgA9EkKr7+W9WkhQHQaGAnhY8GgEMzmUA=="}
 import { type CallErrorType } from '@wagmi/core'
 ```
 
@@ -337,4 +340,4 @@ import { type CallErrorType } from '@wagmi/core'
 
 ## Viem
 
-- [`call`](https://viem.sh/docs/actions/public/call.html)
+- [`call`](https://viem.sh/docs/actions/public/call)

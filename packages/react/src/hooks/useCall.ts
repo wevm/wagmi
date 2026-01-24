@@ -1,16 +1,11 @@
 'use client'
-
 import type { CallErrorType, Config, ResolvedRegister } from '@wagmi/core'
-import type { Compute } from '@wagmi/core/internal'
+import type { Compute, ConfigParameter } from '@wagmi/core/internal'
 import {
   type CallData,
   type CallOptions,
-  type CallQueryKey,
   callQueryOptions,
 } from '@wagmi/core/query'
-import type { CallQueryFnData } from '@wagmi/core/query'
-
-import type { ConfigParameter, QueryParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
@@ -18,16 +13,7 @@ import { useConfig } from './useConfig.js'
 export type UseCallParameters<
   config extends Config = Config,
   selectData = CallData,
-> = Compute<
-  CallOptions<config> &
-    ConfigParameter<config> &
-    QueryParameter<
-      CallQueryFnData,
-      CallErrorType,
-      selectData,
-      CallQueryKey<config>
-    >
->
+> = Compute<CallOptions<config, selectData> & ConfigParameter<config>>
 
 export type UseCallReturnType<selectData = CallData> = UseQueryReturnType<
   selectData,
@@ -41,15 +27,11 @@ export function useCall<
 >(
   parameters: UseCallParameters<config, selectData> = {},
 ): UseCallReturnType<selectData> {
-  const { query = {} } = parameters
-
   const config = useConfig(parameters)
   const chainId = useChainId({ config })
-
   const options = callQueryOptions(config, {
     ...parameters,
     chainId: parameters.chainId ?? chainId,
   })
-
-  return useQuery({ ...query, ...options })
+  return useQuery(options)
 }

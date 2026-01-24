@@ -15,7 +15,7 @@ beforeEach(async () => {
 test('default', async () => {
   await expect(connect(config, { connector })).resolves.toMatchObject(
     expect.objectContaining({
-      accounts: expect.any(Array),
+      accounts: expect.arrayContaining([expect.any(String)]),
       chainId: expect.any(Number),
     }),
   )
@@ -25,7 +25,7 @@ test('parameters: chainId', async () => {
   const chainId = chain.mainnet2.id
   await expect(connect(config, { connector, chainId })).resolves.toMatchObject(
     expect.objectContaining({
-      accounts: expect.any(Array),
+      accounts: expect.arrayContaining([expect.any(String)]),
       chainId,
     }),
   )
@@ -37,11 +37,28 @@ test('parameters: connector', async () => {
     connect(config, { connector: connector_ }),
   ).resolves.toMatchObject(
     expect.objectContaining({
-      accounts: expect.any(Array),
+      accounts: expect.arrayContaining([expect.any(String)]),
       chainId: expect.any(Number),
     }),
   )
   await disconnect(config, { connector: connector_ })
+})
+
+test('parameters: withCapabilities', async () => {
+  await expect(
+    connect(config, { connector, withCapabilities: true }),
+  ).resolves.toMatchObject(
+    expect.objectContaining({
+      accounts: expect.arrayContaining([
+        expect.objectContaining({
+          address: expect.any(String),
+          capabilities: expect.objectContaining({
+            foo: expect.objectContaining({ bar: expect.any(String) }),
+          }),
+        }),
+      ]),
+    }),
+  )
 })
 
 test('behavior: user rejected request', async () => {
@@ -57,7 +74,7 @@ test('behavior: user rejected request', async () => {
     [UserRejectedRequestError: User rejected the request.
 
     Details: Failed to connect.
-    Version: viem@2.17.0]
+    Version: viem@2.44.4]
   `)
 })
 

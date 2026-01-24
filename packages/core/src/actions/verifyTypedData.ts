@@ -8,14 +8,14 @@ import {
 
 import type { Config } from '../createConfig.js'
 import type { ChainIdParameter } from '../types/properties.js'
-import type { Compute } from '../types/utils.js'
+import type { UnionCompute } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 
 export type VerifyTypedDataParameters<
   typedData extends TypedData | Record<string, unknown> = TypedData,
   primaryType extends keyof typedData | 'EIP712Domain' = keyof typedData,
   config extends Config = Config,
-> = Compute<
+> = UnionCompute<
   viem_VerifyTypedDataParameters<typedData, primaryType> &
     ChainIdParameter<config>
 >

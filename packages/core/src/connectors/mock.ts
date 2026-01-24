@@ -1,19 +1,20 @@
 import {
   type Address,
+  custom,
   type EIP1193RequestFn,
+  fromHex,
+  getAddress,
   type Hex,
+  keccak256,
+  numberToHex,
   RpcRequestError,
   SwitchChainError,
+  stringToHex,
   type Transport,
   UserRejectedRequestError,
   type WalletCallReceipt,
+  type WalletGetCallsStatusReturnType,
   type WalletRpcSchema,
-  custom,
-  fromHex,
-  getAddress,
-  keccak256,
-  numberToHex,
-  stringToHex,
 } from 'viem'
 import { rpc } from 'viem/utils'
 
@@ -27,6 +28,7 @@ export type MockParameters = {
   accounts: readonly [Address, ...Address[]]
   features?:
     | {
+        defaultConnected?: boolean | undefined
         connectError?: boolean | Error | undefined
         getPermissionsError?: boolean | Error | undefined
         switchChainError?: boolean | Error | undefined
@@ -41,22 +43,45 @@ export type MockParameters = {
 mock.type = 'mock' as const
 export function mock(parameters: MockParameters) {
   const transactionCache = new Map<Hex, Hex[]>()
-  const features = parameters.features ?? {}
+  const features =
+    parameters.features ??
+    ({ defaultConnected: false } satisfies MockParameters['features'])
 
   type Provider = ReturnType<
     Transport<'custom', unknown, EIP1193RequestFn<WalletRpcSchema>>
   >
-  let connected = false
+  type Properties = {
+    // TODO(v3): Make `withCapabilities: true` default behavior
+    connect<withCapabilities extends boolean = false>(parameters?: {
+      chainId?: number | undefined
+      isReconnecting?: boolean | undefined
+      foo?: string | undefined
+      withCapabilities?: withCapabilities | boolean | undefined
+    }): Promise<{
+      accounts: withCapabilities extends true
+        ? readonly {
+            address: Address
+            capabilities: {
+              foo: {
+                bar: Hex
+              }
+            }
+          }[]
+        : readonly Address[]
+      chainId: number
+    }>
+  }
+  let connected = features.defaultConnected
   let connectedChainId: number
 
-  return createConnector<Provider>((config) => ({
+  return createConnector<Provider, Properties>((config) => ({
     id: 'mock',
     name: 'Mock Connector',
     type: mock.type,
     async setup() {
       connectedChainId = config.chains[0].id
     },
-    async connect({ chainId } = {}) {
+    async connect({ chainId, withCapabilities } = {}) {
       if (features.connectError) {
         if (typeof features.connectError === 'boolean')
           throw new UserRejectedRequestError(new Error('Failed to connect.'))
@@ -77,7 +102,12 @@ export function mock(parameters: MockParameters) {
       connected = true
 
       return {
-        accounts: accounts.map((x) => getAddress(x)),
+        accounts: (withCapabilities
+          ? accounts.map((x) => ({
+              address: getAddress(x),
+              capabilities: { foo: { bar: x } },
+            }))
+          : accounts.map((x) => getAddress(x))) as never,
         chainId: currentChainId,
       }
     },
@@ -135,6 +165,7 @@ export function mock(parameters: MockParameters) {
       const request: EIP1193RequestFn = async ({ method, params }) => {
         // eth methods
         if (method === 'eth_chainId') return numberToHex(connectedChainId)
+        if (method === 'eth_accounts') return parameters.accounts
         if (method === 'eth_requestAccounts') return parameters.accounts
         if (method === 'eth_signTypedData_v4')
           if (features.signTypedDataError) {
@@ -198,7 +229,7 @@ export function mock(parameters: MockParameters) {
               paymasterService: {
                 supported:
                   (params as [Hex])[0] ===
-                  '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',
+                  '0x95132632579b073D12a6673e18Ab05777a6B86f8',
               },
               sessionKeys: {
                 supported: true,
@@ -208,7 +239,7 @@ export function mock(parameters: MockParameters) {
               paymasterService: {
                 supported:
                   (params as [Hex])[0] ===
-                  '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',
+                  '0x95132632579b073D12a6673e18Ab05777a6B86f8',
               },
             },
           }
@@ -216,11 +247,17 @@ export function mock(parameters: MockParameters) {
         if (method === 'wallet_sendCalls') {
           const hashes = []
           const calls = (params as any)[0].calls
+          const from = (params as any)[0].from
           for (const call of calls) {
             const { result, error } = await rpc.http(url, {
               body: {
                 method: 'eth_sendTransaction',
-                params: [call],
+                params: [
+                  {
+                    ...call,
+                    ...(typeof from !== 'undefined' ? { from } : {}),
+                  },
+                ],
               },
             })
             if (error)
@@ -233,12 +270,21 @@ export function mock(parameters: MockParameters) {
           }
           const id = keccak256(stringToHex(JSON.stringify(calls)))
           transactionCache.set(id, hashes)
-          return id
+          return { id }
         }
 
         if (method === 'wallet_getCallsStatus') {
           const hashes = transactionCache.get((params as any)[0])
-          if (!hashes) return null
+          if (!hashes)
+            return {
+              atomic: false,
+              chainId: '0x1',
+              id: (params as any)[0],
+              status: 100,
+              receipts: [],
+              version: '2.0.0',
+            } satisfies WalletGetCallsStatusReturnType
+
           const receipts = await Promise.all(
             hashes.map(async (hash) => {
               const { result, error } = await rpc.http(url, {
@@ -265,9 +311,24 @@ export function mock(parameters: MockParameters) {
               } satisfies WalletCallReceipt
             }),
           )
-          if (receipts.some((x) => !x))
-            return { status: 'PENDING', receipts: [] }
-          return { status: 'CONFIRMED', receipts }
+          const receipts_ = receipts.filter((x) => x !== null)
+          if (receipts_.length === 0)
+            return {
+              atomic: false,
+              chainId: '0x1',
+              id: (params as any)[0],
+              status: 100,
+              receipts: [],
+              version: '2.0.0',
+            } satisfies WalletGetCallsStatusReturnType
+          return {
+            atomic: false,
+            chainId: '0x1',
+            id: (params as any)[0],
+            status: 200,
+            receipts: receipts_,
+            version: '2.0.0',
+          } satisfies WalletGetCallsStatusReturnType
         }
 
         if (method === 'wallet_showCallsStatus') return

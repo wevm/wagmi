@@ -1,23 +1,25 @@
 import type { FormEvent } from 'react'
-import { type Hex, formatEther, parseAbi, parseEther } from 'viem'
+import { formatEther, type Hex, parseAbi, parseEther, stringify } from 'viem'
 import {
   type BaseError,
-  useAccount,
-  useAccountEffect,
   useBalance,
   useBlockNumber,
   useChainId,
+  useChains,
   useConnect,
+  useConnection,
+  useConnectionEffect,
   useConnections,
   useConnectorClient,
+  useConnectors,
   useDisconnect,
   useEnsName,
   useReadContract,
   useReadContracts,
   useSendTransaction,
   useSignMessage,
-  useSwitchAccount,
   useSwitchChain,
+  useSwitchConnection,
   useWaitForTransactionReceipt,
   useWriteContract,
 } from 'wagmi'
@@ -26,7 +28,7 @@ import { optimism } from 'wagmi/chains'
 import { wagmiContractConfig } from './contracts'
 
 function App() {
-  useAccountEffect({
+  useConnectionEffect({
     onConnect(_data) {
       // console.log('onConnect', data)
     },
@@ -37,9 +39,9 @@ function App() {
 
   return (
     <>
-      <Account />
+      <Connection />
       <Connect />
-      <SwitchAccount />
+      <SwitchConnection />
       <SwitchChain />
       <SignMessage />
       <Connections />
@@ -54,26 +56,26 @@ function App() {
   )
 }
 
-function Account() {
-  const account = useAccount()
+function Connection() {
+  const connection = useConnection()
   const { disconnect } = useDisconnect()
   const { data: ensName } = useEnsName({
-    address: account.address,
+    address: connection.address,
   })
 
   return (
     <div>
-      <h2>Account</h2>
+      <h2>Connection</h2>
 
       <div>
-        account: {account.address} {ensName}
+        account: {connection.address} {ensName}
         <br />
-        chainId: {account.chainId}
+        chainId: {connection.chainId}
         <br />
-        status: {account.status}
+        status: {connection.status}
       </div>
 
-      {account.status !== 'disconnected' && (
+      {connection.status !== 'disconnected' && (
         <button type="button" onClick={() => disconnect()}>
           Disconnect
         </button>
@@ -84,7 +86,8 @@ function Account() {
 
 function Connect() {
   const chainId = useChainId()
-  const { connectors, connect, status, error } = useConnect()
+  const connect = useConnect()
+  const connectors = useConnectors()
 
   return (
     <div>
@@ -92,31 +95,42 @@ function Connect() {
       {connectors.map((connector) => (
         <button
           key={connector.uid}
-          onClick={() => connect({ connector, chainId })}
+          onClick={async () => {
+            connect
+              .mutateAsync({
+                connector,
+                chainId,
+                withCapabilities: true,
+              })
+              .then(console.log)
+              // biome-ignore lint/suspicious/noConsole: allow
+              .catch(console.error)
+          }}
           type="button"
         >
           {connector.name}
         </button>
       ))}
-      <div>{status}</div>
-      <div>{error?.message}</div>
+      <div>{connect.status}</div>
+      <div>{connect.error?.message}</div>
     </div>
   )
 }
 
-function SwitchAccount() {
-  const account = useAccount()
-  const { connectors, switchAccount } = useSwitchAccount()
+function SwitchConnection() {
+  const connection = useConnection()
+  const { switchConnection } = useSwitchConnection()
+  const connections = useConnections()
 
   return (
     <div>
-      <h2>Switch Account</h2>
+      <h2>Switch Connection</h2>
 
-      {connectors.map((connector) => (
+      {connections.map(({ connector }) => (
         <button
-          disabled={account.connector?.uid === connector.uid}
+          disabled={connection.connector?.uid === connector.uid}
           key={connector.uid}
-          onClick={() => switchAccount({ connector })}
+          onClick={() => switchConnection({ connector })}
           type="button"
         >
           {connector.name}
@@ -128,7 +142,8 @@ function SwitchAccount() {
 
 function SwitchChain() {
   const chainId = useChainId()
-  const { chains, switchChain, error } = useSwitchChain()
+  const { switchChain, error } = useSwitchChain()
+  const chains = useChains()
 
   return (
     <div>
@@ -151,7 +166,7 @@ function SwitchChain() {
 }
 
 function SignMessage() {
-  const { data, signMessage } = useSignMessage()
+  const signMessage = useSignMessage()
 
   return (
     <div>
@@ -161,14 +176,14 @@ function SignMessage() {
         onSubmit={(event) => {
           event.preventDefault()
           const formData = new FormData(event.target as HTMLFormElement)
-          signMessage({ message: formData.get('message') as string })
+          signMessage.mutate({ message: formData.get('message') as string })
         }}
       >
         <input name="message" />
         <button type="submit">Sign Message</button>
       </form>
 
-      {data}
+      {signMessage.data}
     </div>
   )
 }
@@ -183,7 +198,7 @@ function Connections() {
       {connections.map((connection) => (
         <div key={connection.connector.uid}>
           <div>connector {connection.connector.name}</div>
-          <div>accounts: {JSON.stringify(connection.accounts)}</div>
+          <div>accounts: {stringify(connection.accounts)}</div>
           <div>chainId: {connection.chainId}</div>
         </div>
       ))}
@@ -192,7 +207,7 @@ function Connections() {
 }
 
 function Balance() {
-  const { address } = useAccount()
+  const { address } = useConnection()
 
   const { data: default_ } = useBalance({ address })
   const { data: account_ } = useBalance({ address })
@@ -210,7 +225,7 @@ function Balance() {
         {!!default_?.value && formatEther(default_.value)}
       </div>
       <div>
-        Balance (Account Chain):{' '}
+        Balance (Connection Chain):{' '}
         {!!account_?.value && formatEther(account_.value)}
       </div>
       <div>
@@ -236,7 +251,7 @@ function BlockNumber() {
       <h2>Block Number</h2>
 
       <div>Block Number (Default Chain): {default_?.toString()}</div>
-      <div>Block Number (Account Chain): {account_?.toString()}</div>
+      <div>Block Number (Connection Chain): {account_?.toString()}</div>
       <div>Block Number (Optimism): {optimism_?.toString()}</div>
     </div>
   )

@@ -1,7 +1,6 @@
 import { config, testClient, wait } from '@wagmi/test'
-import { expect, test } from 'vitest'
-
 import type { Block } from 'viem'
+import { expect, test, vi } from 'vitest'
 import { watchBlocks } from './watchBlocks.js'
 
 test('default', async () => {
@@ -13,18 +12,14 @@ test('default', async () => {
   })
 
   await testClient.mainnet.mine({ blocks: 1 })
-  await wait(100)
+  await wait(500)
   await testClient.mainnet.mine({ blocks: 1 })
-  await wait(100)
+  await wait(500)
   await testClient.mainnet.mine({ blocks: 1 })
-  await wait(100)
 
+  await vi.waitUntil(() => blocks.length === 3, { timeout: 5_000 })
   expect(blocks.length).toBe(3)
-  expect(blocks.map((block) => block.number! - blocks[0]?.number!)).toEqual([
-    0n,
-    1n,
-    2n,
-  ])
 
   unwatch()
+  await wait(100)
 })

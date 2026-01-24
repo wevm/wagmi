@@ -13,7 +13,7 @@ Vue Composables for accounts, wallets, contracts, transactions, signing, ENS, an
 ## Import
 
 ```ts
-import { useAccount } from '@wagmi/vue'
+import { useConnection } from '@wagmi/vue'
 ```
 
 ## Available Composables

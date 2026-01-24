@@ -8,21 +8,22 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@tanstack/query-sync-storage-persister": "5.0.5",
-    "@tanstack/react-query": ">=5.45.1",
-    "@tanstack/react-query-persist-client": "5.0.5",
+    "@tanstack/query-sync-storage-persister": "^5.90.12",
+    "@tanstack/react-query": "catalog:",
+    "@tanstack/react-query-persist-client": "^5.90.12",
     "idb-keyval": "^6.2.1",
-    "react": ">=18.3.1",
-    "react-dom": ">=18.3.1",
+    "react": "catalog:",
+    "react-dom": "catalog:",
     "viem": "2.*",
     "wagmi": "workspace:*"
   },
   "devDependencies": {
-    "@tanstack/react-query-devtools": "5.0.5",
-    "@types/react": ">=18.3.1",
-    "@types/react-dom": ">=18.3.0",
-    "@vitejs/plugin-react": "^4.2.1",
-    "buffer": "^6.0.3",
-    "vite": "^5.2.11"
+    "@tanstack/react-query-devtools": "^5.91.2",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "@wagmi/cli": "workspace:*",
+    "buffer": "catalog:",
+    "vite": "catalog:"
   }
 }

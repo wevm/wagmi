@@ -42,12 +42,6 @@ function App() {
 import { type UseWaitForTransactionReceiptParameters } from 'wagmi'
 ```
 
-## Parameters
-
-```ts
-import { type WaitForTransactionReceiptParameters } from '@wagmi/core'
-```
-
 ### chainId
 
 `config['chains'][number]['id'] | undefined`
@@ -70,7 +64,7 @@ function App() {
 
 `Config | undefined`
 
-[`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/api/WagmiProvider).
+[`Config`](/react/api/createConfig#config) to use instead of retrieving from the nearest [`WagmiProvider`](/react/api/WagmiProvider).
 
 ::: code-group
 ```tsx [index.tsx]

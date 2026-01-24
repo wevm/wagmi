@@ -1,5 +1,5 @@
-import { findUp } from 'find-up'
-import { default as fs } from 'fs-extra'
+import { existsSync } from 'node:fs'
+import escalade from 'escalade'
 import { resolve } from 'pathe'
 
 // Do not reorder
@@ -26,8 +26,14 @@ export async function findConfig(parameters: FindConfigParameters = {}) {
   const rootDir = resolve(root || process.cwd())
   if (config) {
     const path = resolve(rootDir, config)
-    if (fs.pathExistsSync(path)) return path
+    if (existsSync(path)) return path
     return
   }
-  return findUp(configFiles, { cwd: rootDir })
+  const configPath = await escalade(rootDir, (_dir, names) => {
+    for (const name of names) {
+      if (configFiles.includes(name)) return name
+    }
+    return undefined
+  })
+  return configPath
 }

@@ -166,4 +166,4 @@ import { type GetProofErrorType } from '@wagmi/core'
 
 ## Viem
 
-- [`getProof`](https://viem.sh/docs/actions/public/getProof.html)
+- [`getProof`](https://viem.sh/docs/actions/public/getProof)

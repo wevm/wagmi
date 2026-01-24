@@ -13,13 +13,17 @@ Connectors for popular wallet providers and protocols.
 
 ## Import
 
+Available via the `'@wagmi/connectors'` package.
+
 ```ts
-import { injected } from 'wagmi/connectors'
+import { injected } from '@wagmi/connectors'
 ```
 
 ## Built-In Connectors
 
-Available via the `'wagmi/connectors'` entrypoint.
+::: tip
+Some connectors require third-party packages. See the "Install" section on each connector's page for more info on license, version, and more.
+:::
 
 <ul>
   <li v-for="connector of connectors">

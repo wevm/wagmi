@@ -14,33 +14,41 @@ export {
 ////////////////////////////////////////////////////////////////////////////////
 
 export {
-  type EventData,
-  Emitter,
   createEmitter,
+  Emitter,
+  type EventData,
 } from '../createEmitter.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // Types
 ////////////////////////////////////////////////////////////////////////////////
 
-export { type SelectChains } from '../types/chain.js'
+export type { SelectChains } from '../types/chain.js'
 
-export {
-  type ChainIdParameter,
-  type ConnectorParameter,
-  type ScopeKeyParameter,
+export type {
+  ChainIdParameter,
+  ConfigParameter,
+  ConnectorParameter,
+  EnabledParameter,
+  ScopeKeyParameter,
 } from '../types/properties.js'
 
-export {
-  type Compute,
-  type ExactPartial,
-  type Mutable,
-  type StrictOmit as Omit,
-  type OneOf,
-  type RemoveUndefined,
-  type UnionCompute,
-  type UnionStrictOmit,
-  type UnionExactPartial,
+export type { QueryParameter } from '../types/query.js'
+
+export type {
+  Compute,
+  ExactPartial,
+  FixedArray,
+  Mutable,
+  OneOf,
+  PartialBy,
+  RemoveUndefined,
+  RequiredBy,
+  StrictOmit as Omit,
+  UnionCompute,
+  UnionExactPartial,
+  UnionLooseOmit,
+  UnionStrictOmit,
 } from '../types/utils.js'
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -1,4 +1,4 @@
-import { http, type WriteContractErrorType, createConfig } from '@wagmi/core'
+import { createConfig, http, type WriteContractErrorType } from '@wagmi/core'
 import { base } from '@wagmi/core/chains'
 import { abi } from '@wagmi/test'
 import type { Abi, Address, Hash } from 'viem'
@@ -10,17 +10,10 @@ import { useWriteContract } from './useWriteContract.js'
 const contextValue = { foo: 'bar' } as const
 
 test('context', () => {
-  const {
-    context,
-    data,
-    error,
-    writeContract: write,
-    variables,
-  } = useWriteContract({
+  const writeContract = useWriteContract({
     mutation: {
       onMutate(variables) {
         expectTypeOf(variables).toMatchTypeOf<{
-          __mode?: 'prepared'
           chainId?: number | undefined
           abi: Abi
           functionName: string
@@ -33,7 +26,6 @@ test('context', () => {
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
 
         expectTypeOf(variables).toMatchTypeOf<{
-          __mode?: 'prepared'
           chainId?: number | undefined
           abi: Abi
           functionName: string
@@ -45,7 +37,6 @@ test('context', () => {
         expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
 
         expectTypeOf(variables).toMatchTypeOf<{
-          __mode?: 'prepared'
           chainId?: number | undefined
           abi: Abi
           functionName: string
@@ -58,7 +49,6 @@ test('context', () => {
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
 
         expectTypeOf(variables).toMatchTypeOf<{
-          __mode?: 'prepared'
           chainId?: number | undefined
           abi: Abi
           functionName: string
@@ -68,14 +58,18 @@ test('context', () => {
     },
   })
 
-  expectTypeOf(data).toEqualTypeOf<Hash | undefined>()
-  expectTypeOf(error).toEqualTypeOf<WriteContractErrorType | null>()
-  expectTypeOf(variables).toMatchTypeOf<
+  expectTypeOf(writeContract.data).toEqualTypeOf<Hash | undefined>()
+  expectTypeOf(
+    writeContract.error,
+  ).toEqualTypeOf<WriteContractErrorType | null>()
+  expectTypeOf(writeContract.variables).toMatchTypeOf<
     { chainId?: number | undefined } | undefined
   >()
-  expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+  expectTypeOf(writeContract.context).toEqualTypeOf<
+    typeof contextValue | undefined
+  >()
 
-  write(
+  writeContract.mutate(
     {
       address: '0x',
       abi: abi.erc20,
@@ -89,7 +83,6 @@ test('context', () => {
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
 
         expectTypeOf(variables).toMatchTypeOf<{
-          __mode?: 'prepared'
           chainId?: number | undefined
           abi: typeof abi.erc20
           functionName: 'transferFrom'
@@ -105,7 +98,6 @@ test('context', () => {
           readonly [Address, Address, bigint]
         >()
         expectTypeOf(variables).toMatchTypeOf<{
-          __mode?: 'prepared'
           chainId?: number | undefined
           abi: typeof abi.erc20
           functionName: 'transferFrom'
@@ -118,7 +110,6 @@ test('context', () => {
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
 
         expectTypeOf(variables).toMatchTypeOf<{
-          __mode?: 'prepared'
           chainId?: number | undefined
           abi: typeof abi.erc20
           functionName: 'transferFrom'

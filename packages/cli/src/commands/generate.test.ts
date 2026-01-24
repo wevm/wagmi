@@ -1,5 +1,5 @@
+import { readFile } from 'node:fs/promises'
 import dedent from 'dedent'
-import { readFile } from 'fs-extra'
 import { resolve } from 'pathe'
 import { afterEach, beforeEach, expect, test, vi } from 'vitest'
 
@@ -43,15 +43,15 @@ test('generates output', async () => {
   await generate()
 
   expect(console.formatted).toMatchInlineSnapshot(`
-      "- Validating plugins
-      ✔ Validating plugins
-      - Resolving contracts
-      ✔ Resolving contracts
-      - Running plugins
-      ✔ Running plugins
-      - Writing to generated.js
-      ✔ Writing to generated.js"
-    `)
+    "- Validating plugins
+    √ Validating plugins
+    - Resolving contracts
+    √ Resolving contracts
+    - Running plugins
+    √ Running plugins
+    - Writing to generated.js
+    √ Writing to generated.js"
+  `)
 })
 
 test('generates typescript output', async () => {
@@ -77,15 +77,15 @@ test('generates typescript output', async () => {
   await generate()
 
   expect(console.formatted).toMatchInlineSnapshot(`
-      "- Validating plugins
-      ✔ Validating plugins
-      - Resolving contracts
-      ✔ Resolving contracts
-      - Running plugins
-      ✔ Running plugins
-      - Writing to generated.ts
-      ✔ Writing to generated.ts"
-    `)
+    "- Validating plugins
+    √ Validating plugins
+    - Resolving contracts
+    √ Resolving contracts
+    - Running plugins
+    √ Running plugins
+    - Writing to generated.ts
+    √ Writing to generated.ts"
+  `)
   await expect(typecheck(paths.tsconfig)).resolves.toMatchInlineSnapshot('""')
 })
 
@@ -124,15 +124,15 @@ test('generates output with plugin', async () => {
   await generate()
 
   expect(console.formatted).toMatchInlineSnapshot(`
-      "- Validating plugins
-      ✔ Validating plugins
-      - Resolving contracts
-      ✔ Resolving contracts
-      - Running plugins
-      ✔ Running plugins
-      - Writing to generated.ts
-      ✔ Writing to generated.ts"
-    `)
+    "- Validating plugins
+    √ Validating plugins
+    - Resolving contracts
+    √ Resolving contracts
+    - Running plugins
+    √ Running plugins
+    - Writing to generated.ts
+    √ Writing to generated.ts"
+  `)
   /* eslint-disable no-irregular-whitespace */
   await expect(
     readFile(resolve(dir, 'generated.ts'), 'utf8'),
@@ -169,7 +169,7 @@ test('behavior: invalid cli options', async () => {
     }),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
     [Error: Invalid option
-    - Expected string, received number at \`config\`]
+    - Invalid input: expected string, received number at \`config\`]
   `)
 })
 
@@ -273,12 +273,12 @@ test('behavior: displays message if no contracts found', async () => {
 
   expect(console.formatted).toMatchInlineSnapshot(
     `
-          "- Validating plugins
-          ✔ Validating plugins
-          - Resolving contracts
-          ✖ Resolving contracts
-          No contracts found."
-        `,
+    "- Validating plugins
+    √ Validating plugins
+    - Resolving contracts
+    × Resolving contracts
+    No contracts found."
+  `,
   )
 })
 
@@ -334,7 +334,7 @@ test('behavior: throws when address is invalid', async () => {
 
   await expect(generate()).rejects.toThrowErrorMatchingInlineSnapshot(`
     [Error: Invalid address for contract "Foo"
-    - Invalid address]
+    - Invalid input]
   `)
 })
 
@@ -389,16 +389,16 @@ test('behavior: displays message if using --watch flag without watchers configur
   await generate({ watch: true })
 
   expect(console.formatted).toMatchInlineSnapshot(`
-          "- Validating plugins
-          ✔ Validating plugins
-          - Resolving contracts
-          ✔ Resolving contracts
-          - Running plugins
-          ✔ Running plugins
-          - Writing to generated.ts
-          ✔ Writing to generated.ts
-          Used --watch flag, but no plugins are watching."
-        `)
+    "- Validating plugins
+    √ Validating plugins
+    - Resolving contracts
+    √ Resolving contracts
+    - Running plugins
+    √ Running plugins
+    - Writing to generated.ts
+    √ Writing to generated.ts
+    Used --watch flag, but no plugins are watching."
+  `)
 })
 
 test.todo('behavior: save config file logs change')

@@ -1,20 +1,15 @@
 'use client'
-
 import type {
   Config,
   GetGasPriceErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { Compute } from '@wagmi/core/internal'
+import type { Compute, ConfigParameter } from '@wagmi/core/internal'
 import {
   type GetGasPriceData,
   type GetGasPriceOptions,
-  type GetGasPriceQueryFnData,
-  type GetGasPriceQueryKey,
   getGasPriceQueryOptions,
 } from '@wagmi/core/query'
-
-import type { ConfigParameter, QueryParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
@@ -25,14 +20,7 @@ export type UseGasPriceParameters<
     config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetGasPriceData,
 > = Compute<
-  GetGasPriceOptions<config, chainId> &
-    ConfigParameter<config> &
-    QueryParameter<
-      GetGasPriceQueryFnData,
-      GetGasPriceErrorType,
-      selectData,
-      GetGasPriceQueryKey<config, chainId>
-    >
+  GetGasPriceOptions<config, chainId, selectData> & ConfigParameter<config>
 >
 
 export type UseGasPriceReturnType<selectData = GetGasPriceData> =
@@ -47,16 +35,11 @@ export function useGasPrice<
 >(
   parameters: UseGasPriceParameters<config, chainId, selectData> = {},
 ): UseGasPriceReturnType<selectData> {
-  const { query = {} } = parameters
-
   const config = useConfig(parameters)
-  const configChainId = useChainId({ config })
-  const chainId = parameters.chainId ?? configChainId
-
+  const chainId = useChainId({ config })
   const options = getGasPriceQueryOptions(config, {
     ...parameters,
-    chainId,
+    chainId: parameters.chainId ?? chainId,
   })
-
-  return useQuery({ ...query, ...options })
+  return useQuery(options)
 }

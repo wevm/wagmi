@@ -6,6 +6,7 @@ import { getTransactionQueryOptions } from './getTransaction.js'
 test('default', () => {
   expect(getTransactionQueryOptions(config)).toMatchInlineSnapshot(`
     {
+      "enabled": false,
       "queryFn": [Function],
       "queryKey": [
         "transaction",
@@ -20,6 +21,7 @@ test('parameters: chainId', () => {
     getTransactionQueryOptions(config, { chainId: chain.mainnet.id }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": false,
       "queryFn": [Function],
       "queryKey": [
         "transaction",

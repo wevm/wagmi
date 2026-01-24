@@ -1,7 +1,9 @@
 import { abi, config } from '@wagmi/test'
-import { expectTypeOf, test } from 'vitest'
+import { assertType, expectTypeOf, test } from 'vitest'
 
 import { readContractsQueryOptions } from './readContracts.js'
+
+const context = {} as any
 
 test('default', async () => {
   const options = readContractsQueryOptions(config, {
@@ -55,4 +57,69 @@ test('allowFailure: false', async () => {
   })
   const result = await options.queryFn({} as any)
   expectTypeOf(result).toEqualTypeOf<[bigint, string]>()
+})
+
+test('overloads', async () => {
+  {
+    const options = readContractsQueryOptions(config, {
+      allowFailure: false,
+      contracts: [
+        { address: '0x', abi: abi.viewOverloads, functionName: 'foo' },
+      ],
+    })
+    const result = await options.queryFn(context)
+    assertType<[number]>(result)
+  }
+  {
+    const options = readContractsQueryOptions(config, {
+      allowFailure: false,
+      contracts: [
+        {
+          address: '0x',
+          abi: abi.viewOverloads,
+          functionName: 'foo',
+          args: [],
+        },
+      ],
+    })
+    const result = await options.queryFn(context)
+    assertType<[number]>(result)
+  }
+  {
+    const options = readContractsQueryOptions(config, {
+      allowFailure: false,
+      contracts: [
+        {
+          address: '0x',
+          abi: abi.viewOverloads,
+          functionName: 'foo',
+          args: ['0x'],
+        },
+      ],
+    })
+    const result = await options.queryFn(context)
+    assertType<[string]>(result)
+  }
+  {
+    const options = readContractsQueryOptions(config, {
+      allowFailure: false,
+      contracts: [
+        {
+          address: '0x',
+          abi: abi.viewOverloads,
+          functionName: 'foo',
+          args: ['0x', '0x'],
+        },
+      ],
+    })
+    const result = await options.queryFn(context)
+    assertType<
+      [
+        {
+          foo: `0x${string}`
+          bar: `0x${string}`
+        },
+      ]
+    >(result)
+  }
 })

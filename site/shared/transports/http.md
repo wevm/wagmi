@@ -4,7 +4,7 @@ const packageName = 'wagmi'
 
 # http
 
-The `http` Transport connects to a JSON-RPC API via HTTP. Wraps Viem's [`http` Transport](https://viem.sh/docs/clients/transports/http.html).
+The `http` Transport connects to a JSON-RPC API via HTTP. Wraps Viem's [`http` Transport](https://viem.sh/docs/clients/transports/http).
 
 ## Import
 
@@ -25,8 +25,8 @@ export const config = createConfig({
   chains: [mainnet, sepolia],
   connectors: [injected()],
   transports: {
-    [mainnet.id]: http('https://eth-mainnet.g.alchemy.com/v2/...'), // [!code hl]
-    [sepolia.id]: http('https://eth-sepolia.g.alchemy.com/v2/...'), // [!code hl]
+    [mainnet.id]: http('https://foo-bar-baz.quiknode.pro/...'), // [!code hl]
+    [sepolia.id]: http('https://foo-bar-sep.quiknode.pro/...'), // [!code hl]
   },
 })
 ```
@@ -44,7 +44,7 @@ The Transport will batch up Actions over a given period and execute them in a si
 You can enable Batch JSON-RPC by setting the `batch` flag to `true`:
 
 ```ts 
-const transport = http('https://eth-mainnet.g.alchemy.com/v2/...', {
+const transport = http('https://foo-bar-baz.quiknode.pro/...', {
   batch: true // [!code hl]
 })
 ```
@@ -58,7 +58,7 @@ const transport = http('https://eth-mainnet.g.alchemy.com/v2/...', {
 URL of the JSON-RPC API. Defaults to `chain.rpcUrls.default.http[0]`.
 
 ```ts
-const transport = http('https://eth-mainnet.g.alchemy.com/v2/...')
+const transport = http('https://foo-bar-baz.quiknode.pro/...')
 ```
 
 ### batch
@@ -68,7 +68,7 @@ const transport = http('https://eth-mainnet.g.alchemy.com/v2/...')
 Toggle to enable Batch JSON-RPC. Defaults to `false`
 
 ```ts 
-const transport = http('https://eth-mainnet.g.alchemy.com/v2/...', {
+const transport = http('https://foo-bar-baz.quiknode.pro/...', {
   batch: true // [!code focus]
 })
 ```
@@ -80,7 +80,7 @@ const transport = http('https://eth-mainnet.g.alchemy.com/v2/...', {
 The maximum number of JSON-RPC requests to send in a batch. Defaults to `1_000`.
 
 ```ts 
-const transport = http('https://eth-mainnet.g.alchemy.com/v2/...', {
+const transport = http('https://foo-bar-baz.quiknode.pro/...', {
   batch: {
     batchSize: 2_000 // [!code focus]
   }
@@ -94,7 +94,7 @@ const transport = http('https://eth-mainnet.g.alchemy.com/v2/...', {
 The maximum number of milliseconds to wait before sending a batch. Defaults to `0` ([zero delay](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Event_loop#zero_delays)).
 
 ```ts 
-const transport = http('https://eth-mainnet.g.alchemy.com/v2/...', {
+const transport = http('https://foo-bar-baz.quiknode.pro/...', {
   batch: {
     wait: 16 // [!code focus]
   }
@@ -108,7 +108,7 @@ const transport = http('https://eth-mainnet.g.alchemy.com/v2/...', {
 [Fetch options](https://developer.mozilla.org/en-US/docs/Web/API/fetch) to pass to the internal `fetch` function. Useful for passing auth headers or cache options.
 
 ```ts
-const transport = http('https://eth-mainnet.g.alchemy.com/v2/...', {
+const transport = http('https://foo-bar-baz.quiknode.pro/...', {
   fetchOptions: { // [!code focus:5]
     headers: {
       'Authorization': 'Bearer ...'
@@ -124,7 +124,7 @@ const transport = http('https://eth-mainnet.g.alchemy.com/v2/...', {
 A key for the Transport. Defaults to `"http"`.
 
 ```ts
-const transport = http('https://eth-mainnet.g.alchemy.com/v2/...', {
+const transport = http('https://foo-bar-baz.quiknode.pro/...', {
   key: 'alchemy', // [!code focus]
 })
 ```
@@ -136,7 +136,7 @@ const transport = http('https://eth-mainnet.g.alchemy.com/v2/...', {
 A name for the Transport. Defaults to `"HTTP JSON-RPC"`.
 
 ```ts
-const transport = http('https://eth-mainnet.g.alchemy.com/v2/...', {
+const transport = http('https://foo-bar-baz.quiknode.pro/...', {
   name: 'Alchemy HTTP Provider', // [!code focus]
 })
 ```
@@ -148,7 +148,7 @@ const transport = http('https://eth-mainnet.g.alchemy.com/v2/...', {
 The max number of times to retry when a request fails. Defaults to `3`.
 
 ```ts
-const transport = http('https://eth-mainnet.g.alchemy.com/v2/...', {
+const transport = http('https://foo-bar-baz.quiknode.pro/...', {
   retryCount: 5, // [!code focus]
 })
 ```
@@ -160,7 +160,7 @@ const transport = http('https://eth-mainnet.g.alchemy.com/v2/...', {
 The base delay (in ms) between retries. By default, the Transport will use [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) (`~~(1 << count) * retryDelay`), which means the time between retries is not constant.
 
 ```ts
-const transport = http('https://eth-mainnet.g.alchemy.com/v2/...', {
+const transport = http('https://foo-bar-baz.quiknode.pro/...', {
   retryDelay: 100, // [!code focus]
 })
 ```
@@ -172,7 +172,7 @@ const transport = http('https://eth-mainnet.g.alchemy.com/v2/...', {
 The timeout for requests. Defaults to `10_000`.
 
 ```ts
-const transport = http('https://eth-mainnet.g.alchemy.com/v2/...', {
+const transport = http('https://foo-bar-baz.quiknode.pro/...', {
   timeout: 60_000, // [!code focus]
 })
 ```

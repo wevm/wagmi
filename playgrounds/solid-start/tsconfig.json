@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "allowJs": true,
+    "strict": true,
+    "noEmit": true,
+    "types": ["vinxi/types/client"],
+    "isolatedModules": true,
+    "paths": {
+      "~/*": ["./src/*"],
+      "@wagmi/connectors": ["../../packages/connectors/src/exports"],
+      "@wagmi/core": ["../../packages/core/src/exports"],
+      "@wagmi/core/*": ["../../packages/core/src/exports/*"],
+      "@wagmi/solid": ["../../packages/solid/src/exports"],
+      "@wagmi/solid/*": ["../../packages/solid/src/exports/*"]
+    }
+  }
+}

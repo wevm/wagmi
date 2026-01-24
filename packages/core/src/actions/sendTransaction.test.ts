@@ -1,8 +1,7 @@
 import { config, privateKey, transactionHashRegex } from '@wagmi/test'
 import { parseEther } from 'viem'
-import { beforeEach, expect, test } from 'vitest'
-
 import { privateKeyToAccount } from 'viem/accounts'
+import { beforeEach, expect, test } from 'vitest'
 import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'
 import { sendTransaction } from './sendTransaction.js'
@@ -15,11 +14,17 @@ beforeEach(async () => {
 })
 
 test('default', async () => {
-  await connect(config, { connector })
+  const result = await connect(config, { connector })
+  config.state.connections.set(connector.uid, {
+    ...result,
+    // Switch up the current account because the default one is running out of funds somewhere
+    accounts: result.accounts.slice(1) as unknown as typeof result.accounts,
+    connector,
+  })
   await expect(
     sendTransaction(config, {
       to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
-      value: parseEther('0.01'),
+      value: parseEther('0.0001'),
     }),
   ).resolves.toMatch(transactionHashRegex)
   await disconnect(config, { connector })
@@ -31,7 +36,7 @@ test('behavior: connector not connected', async () => {
     sendTransaction(config, {
       connector: config.connectors[1],
       to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
-      value: parseEther('0.01'),
+      value: parseEther('0.0001'),
     }),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
     [ConnectorNotConnectedError: Connector not connected.
@@ -47,7 +52,7 @@ test('behavior: account does not exist on connector', async () => {
     sendTransaction(config, {
       account: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
       to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
-      value: parseEther('0.01'),
+      value: parseEther('0.0001'),
     }),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
     [ConnectorAccountNotFoundError: Account "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e" not found for connector "Mock Connector".
@@ -77,12 +82,13 @@ test('behavior: value exceeds balance', async () => {
      - \`value\` is the amount of ether to send to the recipient.
      
     Request Arguments:
-      from:   0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+      chain:  Ethereum (id: 1)
+      from:   0x95132632579b073D12a6673e18Ab05777a6B86f8
       to:     0xd2135CfB216b74109775236E36d4b433F1DF507B
       value:  99999 ETH
 
     Details: Insufficient funds for gas * price + value
-    Version: viem@2.17.0]
+    Version: viem@2.44.4]
   `)
   await disconnect(config, { connector })
 })
@@ -93,7 +99,7 @@ test('behavior: local account', async () => {
     sendTransaction(config, {
       account,
       to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
-      value: parseEther('0.01'),
+      value: parseEther('0.000001'),
     }),
   ).resolves.toMatch(transactionHashRegex)
 })

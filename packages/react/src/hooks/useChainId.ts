@@ -3,13 +3,12 @@
 import {
   type Config,
   type GetChainIdReturnType,
-  type ResolvedRegister,
   getChainId,
+  type ResolvedRegister,
   watchChainId,
 } from '@wagmi/core'
+import type { ConfigParameter } from '@wagmi/core/internal'
 import { useSyncExternalStore } from 'react'
-
-import type { ConfigParameter } from '../types/properties.js'
 import { useConfig } from './useConfig.js'
 
 export type UseChainIdParameters<config extends Config = Config> =

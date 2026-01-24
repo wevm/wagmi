@@ -276,7 +276,7 @@ const queryClient = new QueryClient({ // [!code hl]
       queryKeyHashFn: hashFn, // [!code hl]
     }, // [!code hl]
   }, // [!code hl]
-}); // [!code hl]
+}) // [!code hl]
 
 createApp(App)
   .use(WagmiPlugin, { config })

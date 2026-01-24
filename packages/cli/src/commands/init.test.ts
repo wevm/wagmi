@@ -1,10 +1,10 @@
-import { default as fs } from 'fs-extra'
+import { existsSync } from 'node:fs'
+import { mkdir, readFile } from 'node:fs/promises'
 import { resolve } from 'pathe'
 import { afterEach, beforeEach, expect, test, vi } from 'vitest'
 
 import { createFixture, watchConsole } from '../../test/utils.js'
 import { defaultConfig } from '../config.js'
-
 import { init } from './init.js'
 
 let console: ReturnType<typeof watchConsole>
@@ -23,8 +23,8 @@ test('creates config file', async () => {
 
   const configFile = await init()
 
-  expect(fs.existsSync(configFile)).toBeTruthy()
-  expect(await fs.readFile(configFile, 'utf-8')).toMatchInlineSnapshot(`
+  expect(existsSync(configFile)).toBeTruthy()
+  expect(await readFile(configFile, 'utf-8')).toMatchInlineSnapshot(`
       "// @ts-check
 
       /** @type {import('@wagmi/cli').Config} */
@@ -38,10 +38,10 @@ test('creates config file', async () => {
   expect(
     console.formatted.replaceAll(dir, 'path/to/project'),
   ).toMatchInlineSnapshot(`
-        "- Creating config
-        ✔ Creating config
-        Config created at wagmi.config.js"
-      `)
+    "- Creating config
+    √ Creating config
+    Config created at wagmi.config.js"
+  `)
 })
 
 test('parameters: config', async () => {
@@ -53,8 +53,8 @@ test('parameters: config', async () => {
     config: 'foo.config.ts',
   })
 
-  expect(fs.existsSync(configFile)).toBeTruthy()
-  expect(await fs.readFile(configFile, 'utf-8')).toMatchInlineSnapshot(`
+  expect(existsSync(configFile)).toBeTruthy()
+  expect(await readFile(configFile, 'utf-8')).toMatchInlineSnapshot(`
         "// @ts-check
 
         /** @type {import('@wagmi/cli').Config} */
@@ -68,10 +68,10 @@ test('parameters: config', async () => {
   expect(
     console.formatted.replaceAll(dir, 'path/to/project'),
   ).toMatchInlineSnapshot(`
-          "- Creating config
-          ✔ Creating config
-          Config created at foo.config.ts"
-        `)
+    "- Creating config
+    √ Creating config
+    Config created at foo.config.ts"
+  `)
 })
 
 test('parameters: content', async () => {
@@ -90,8 +90,8 @@ test('parameters: content', async () => {
     },
   })
 
-  expect(fs.existsSync(configFile)).toBeTruthy()
-  expect(await fs.readFile(configFile, 'utf-8')).toMatchInlineSnapshot(`
+  expect(existsSync(configFile)).toBeTruthy()
+  expect(await readFile(configFile, 'utf-8')).toMatchInlineSnapshot(`
       "import { defineConfig } from '@wagmi/cli'
 
       export default defineConfig({
@@ -104,24 +104,24 @@ test('parameters: content', async () => {
   expect(
     console.formatted.replaceAll(dir, 'path/to/project'),
   ).toMatchInlineSnapshot(`
-          "- Creating config
-          ✔ Creating config
-          Config created at wagmi.config.ts"
-        `)
+    "- Creating config
+    √ Creating config
+    Config created at wagmi.config.ts"
+  `)
 })
 
 test('parameters: root', async () => {
   const { dir } = await createFixture()
   const spy = vi.spyOn(process, 'cwd')
   spy.mockImplementation(() => dir)
-  fs.mkdir(resolve(dir, 'foo'))
+  mkdir(resolve(dir, 'foo'))
 
   const configFile = await init({
     root: 'foo/',
   })
 
-  expect(fs.existsSync(configFile)).toBeTruthy()
-  expect(await fs.readFile(configFile, 'utf-8')).toMatchInlineSnapshot(`
+  expect(existsSync(configFile)).toBeTruthy()
+  expect(await readFile(configFile, 'utf-8')).toMatchInlineSnapshot(`
         "// @ts-check
 
         /** @type {import('@wagmi/cli').Config} */
@@ -135,10 +135,10 @@ test('parameters: root', async () => {
   expect(
     console.formatted.replaceAll(dir, 'path/to/project'),
   ).toMatchInlineSnapshot(`
-          "- Creating config
-          ✔ Creating config
-          Config created at foo/wagmi.config.js"
-        `)
+    "- Creating config
+    √ Creating config
+    Config created at foo/wagmi.config.js"
+  `)
 })
 
 test('behavior: creates config file in TypeScript format', async () => {
@@ -152,8 +152,8 @@ test('behavior: creates config file in TypeScript format', async () => {
 
   const configFile = await init()
 
-  expect(fs.existsSync(configFile)).toBeTruthy()
-  expect(await fs.readFile(configFile, 'utf-8')).toMatchInlineSnapshot(`
+  expect(existsSync(configFile)).toBeTruthy()
+  expect(await readFile(configFile, 'utf-8')).toMatchInlineSnapshot(`
       "import { defineConfig } from '@wagmi/cli'
 
       export default defineConfig({
@@ -166,10 +166,10 @@ test('behavior: creates config file in TypeScript format', async () => {
   expect(
     console.formatted.replaceAll(dir, 'path/to/project'),
   ).toMatchInlineSnapshot(`
-          "- Creating config
-          ✔ Creating config
-          Config created at wagmi.config.ts"
-        `)
+    "- Creating config
+    √ Creating config
+    Config created at wagmi.config.ts"
+  `)
 })
 
 test('behavior: displays config file location when config exists', async () => {

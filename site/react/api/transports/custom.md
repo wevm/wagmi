@@ -1,3 +1,7 @@
+---
+title: custom
+---
+
 <script setup>
 const packageName = 'wagmi'
 </script>

@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { useAccount, useBalance } from '@wagmi/vue'
+import { useBalance, useConnection } from '@wagmi/vue'
+import { formatEther } from 'viem'
 
-const { address } = useAccount()
+const { address } = useConnection()
 const { data: balance } = useBalance({ address })
 </script>
 
 <template>
   <h2>Balance</h2>
 
-  Balance: {{ balance?.formatted }}
+  Balance: {{ formatEther(balance?.value ?? 0n) }}
 </template>

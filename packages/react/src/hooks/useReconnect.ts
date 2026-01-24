@@ -1,34 +1,20 @@
 'use client'
-
 import { useMutation } from '@tanstack/react-query'
 import type { Connector, ReconnectErrorType } from '@wagmi/core'
-import type { Compute } from '@wagmi/core/internal'
+import type { Compute, ConfigParameter } from '@wagmi/core/internal'
 import {
   type ReconnectData,
   type ReconnectMutate,
   type ReconnectMutateAsync,
+  type ReconnectOptions,
   type ReconnectVariables,
   reconnectMutationOptions,
 } from '@wagmi/core/query'
-
-import type { ConfigParameter } from '../types/properties.js'
-import type {
-  UseMutationParameters,
-  UseMutationReturnType,
-} from '../utils/query.js'
+import type { UseMutationReturnType } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 
 export type UseReconnectParameters<context = unknown> = Compute<
-  ConfigParameter & {
-    mutation?:
-      | UseMutationParameters<
-          ReconnectData,
-          ReconnectErrorType,
-          ReconnectVariables,
-          context
-        >
-      | undefined
-  }
+  ConfigParameter & ReconnectOptions<context>
 >
 
 export type UseReconnectReturnType<context = unknown> = Compute<
@@ -36,10 +22,15 @@ export type UseReconnectReturnType<context = unknown> = Compute<
     ReconnectData,
     ReconnectErrorType,
     ReconnectVariables,
-    context
+    context,
+    ReconnectMutate<context>,
+    ReconnectMutateAsync<context>
   > & {
+    /** @deprecated use `useConnectors` instead */
     connectors: readonly Connector[]
+    /** @deprecated use `mutate` instead */
     reconnect: ReconnectMutate<context>
+    /** @deprecated use `mutateAsync` instead */
     reconnectAsync: ReconnectMutateAsync<context>
   }
 >
@@ -48,20 +39,14 @@ export type UseReconnectReturnType<context = unknown> = Compute<
 export function useReconnect<context = unknown>(
   parameters: UseReconnectParameters<context> = {},
 ): UseReconnectReturnType<context> {
-  const { mutation } = parameters
-
   const config = useConfig(parameters)
-
-  const mutationOptions = reconnectMutationOptions(config)
-  const { mutate, mutateAsync, ...result } = useMutation({
-    ...mutation,
-    ...mutationOptions,
-  })
-
+  const options = reconnectMutationOptions(config, parameters)
+  const mutation = useMutation(options)
+  type Return = UseReconnectReturnType<context>
   return {
-    ...result,
+    ...(mutation as Return),
     connectors: config.connectors,
-    reconnect: mutate,
-    reconnectAsync: mutateAsync,
+    reconnect: mutation.mutate as Return['mutate'],
+    reconnectAsync: mutation.mutateAsync as Return['mutateAsync'],
   }
 }

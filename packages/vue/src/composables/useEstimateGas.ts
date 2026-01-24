@@ -3,36 +3,26 @@ import type {
   EstimateGasErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
+import type { ConfigParameter } from '@wagmi/core/internal'
 import {
   type EstimateGasData,
   type EstimateGasOptions,
-  type EstimateGasQueryFnData,
-  type EstimateGasQueryKey,
   estimateGasQueryOptions,
 } from '@wagmi/core/query'
 import { computed } from 'vue'
-
-import type { ConfigParameter, QueryParameter } from '../types/properties.js'
 import type { DeepMaybeRef } from '../types/ref.js'
 import { deepUnref } from '../utils/cloneDeep.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
-import { useConnectorClient } from './useConnectorClient.js'
+import { useConnection } from './useConnection.js'
 
 export type UseEstimateGasParameters<
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] | undefined = undefined,
   selectData = EstimateGasData,
 > = DeepMaybeRef<
-  EstimateGasOptions<config, chainId> &
-    ConfigParameter<config> &
-    QueryParameter<
-      EstimateGasQueryFnData,
-      EstimateGasErrorType,
-      selectData,
-      EstimateGasQueryKey<config, chainId>
-    >
+  EstimateGasOptions<config, chainId, selectData> & ConfigParameter<config>
 >
 
 export type UseEstimateGasReturnType<selectData = EstimateGasData> =
@@ -48,36 +38,19 @@ export function useEstimateGas<
 ): UseEstimateGasReturnType<selectData>
 
 export function useEstimateGas(
-  parameters_: UseEstimateGasParameters = {},
+  parameters: UseEstimateGasParameters = {},
 ): UseEstimateGasReturnType {
-  const parameters = computed(() => deepUnref(parameters_))
-
-  const config = useConfig(parameters)
-  const { data: connectorClient } = useConnectorClient(
-    computed(() => ({
-      connector: parameters.value.connector,
-      query: { enabled: parameters.value.account === undefined },
-    })),
+  const params = computed(() => deepUnref(parameters))
+  const config = useConfig(params)
+  const { address, connector } = useConnection({ config })
+  const chainId = useChainId({ config })
+  const options = computed(() =>
+    estimateGasQueryOptions(config as any, {
+      ...params.value,
+      account: params.value.account ?? address.value,
+      chainId: params.value.chainId ?? chainId.value,
+      connector: params.value.connector ?? connector.value,
+    }),
   )
-
-  const configChainId = useChainId({ config })
-
-  const queryOptions = computed(() => {
-    const {
-      account = connectorClient?.value?.account,
-      chainId = configChainId.value,
-      connector,
-      query = {},
-    } = parameters.value
-    const options = estimateGasQueryOptions(config, {
-      ...parameters.value,
-      account,
-      chainId,
-      connector,
-    })
-    const enabled = Boolean((account || connector) && (query.enabled ?? true))
-    return { ...query, ...options, enabled }
-  })
-
-  return useQuery(queryOptions)
+  return useQuery(options as any) as any
 }
