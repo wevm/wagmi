@@ -6,6 +6,7 @@ import type {
 } from '@wagmi/core'
 import type {
   Compute,
+  ConfigParameter,
   UnionCompute,
   UnionStrictOmit,
 } from '@wagmi/core/internal'
@@ -15,45 +16,10 @@ import {
   getBlockNumberQueryOptions,
 } from '@wagmi/core/query'
 import { type Accessor, createMemo } from 'solid-js'
-
-import type { ConfigParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
-import {
-  type SolidWatchBlockNumberParameters,
-  useWatchBlockNumber,
-} from './useWatchBlockNumber.js'
-
-export type SolidBlockNumberParameters<
-  config extends Config = Config,
-  chainId extends
-    config['chains'][number]['id'] = config['chains'][number]['id'],
-  selectData = GetBlockNumberData,
-> = Compute<
-  GetBlockNumberOptions<config, chainId, selectData> &
-    ConfigParameter<config> & {
-      watch?:
-        | boolean
-        | UnionCompute<
-            UnionStrictOmit<
-              SolidWatchBlockNumberParameters<config, chainId>,
-              'chainId' | 'config' | 'onBlockNumber' | 'onError'
-            >
-          >
-        | undefined
-    }
->
-
-export type UseBlockNumberParameters<
-  config extends Config = Config,
-  chainId extends
-    config['chains'][number]['id'] = config['chains'][number]['id'],
-  selectData = GetBlockNumberData,
-> = Accessor<SolidBlockNumberParameters<config, chainId, selectData>>
-
-export type UseBlockNumberReturnType<selectData = GetBlockNumberData> =
-  UseQueryReturnType<selectData, GetBlockNumberErrorType>
+import { useWatchBlockNumber } from './useWatchBlockNumber.js'
 
 /** https://wagmi.sh/solid/api/hooks/useBlockNumber */
 export function useBlockNumber<
@@ -62,22 +28,20 @@ export function useBlockNumber<
     config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetBlockNumberData,
 >(
-  parameters: UseBlockNumberParameters<
+  parameters: useBlockNumber.Parameters<
     config,
     chainId,
     selectData
   > = () => ({}),
-): UseBlockNumberReturnType<selectData> {
+): useBlockNumber.ReturnType<selectData> {
   const config = useConfig(parameters)
   const chainId = useChainId(() => ({ config: config() }))
   const options = createMemo(() =>
     getBlockNumberQueryOptions(config(), {
       ...parameters(),
       chainId: parameters().chainId ?? chainId(),
-      query: parameters().query,
     }),
   )
-
   const queryClient = useQueryClient()
   const watchBlockNumberArgs = createMemo(() => {
     // Assign to variable to help type narrowing
@@ -87,16 +51,49 @@ export function useBlockNumber<
         config: config(),
         chainId: parameters().chainId ?? chainId(),
         ...(typeof watch === 'object' ? watch : {}),
-      } as SolidWatchBlockNumberParameters),
+      } as useWatchBlockNumber.SolidParameters),
       enabled:
         (parameters().query?.enabled ?? true) &&
         (typeof watch === 'object' ? watch.enabled : watch),
       onBlockNumber(blockNumber) {
         queryClient.setQueryData(options().queryKey, blockNumber)
       },
-    } satisfies SolidWatchBlockNumberParameters
+    } satisfies useWatchBlockNumber.SolidParameters
   })
   useWatchBlockNumber(watchBlockNumberArgs)
-
   return useQuery(options)
+}
+
+export namespace useBlockNumber {
+  export type Parameters<
+    config extends Config = Config,
+    chainId extends
+      config['chains'][number]['id'] = config['chains'][number]['id'],
+    selectData = GetBlockNumberData,
+  > = Accessor<SolidParameters<config, chainId, selectData>>
+
+  export type ReturnType<selectData = GetBlockNumberData> = UseQueryReturnType<
+    selectData,
+    GetBlockNumberErrorType
+  >
+
+  export type SolidParameters<
+    config extends Config = Config,
+    chainId extends
+      config['chains'][number]['id'] = config['chains'][number]['id'],
+    selectData = GetBlockNumberData,
+  > = Compute<
+    GetBlockNumberOptions<config, chainId, selectData> &
+      ConfigParameter<config> & {
+        watch?:
+          | boolean
+          | UnionCompute<
+              UnionStrictOmit<
+                useWatchBlockNumber.SolidParameters<config, chainId>,
+                'chainId' | 'config' | 'onBlockNumber' | 'onError'
+              >
+            >
+          | undefined
+      }
+  >
 }

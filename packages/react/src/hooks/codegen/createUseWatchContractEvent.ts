@@ -4,16 +4,13 @@ import type {
   WatchContractEventParameters,
 } from '@wagmi/core'
 import type {
+  ConfigParameter,
+  EnabledParameter,
   UnionCompute,
   UnionExactPartial,
   UnionStrictOmit,
 } from '@wagmi/core/internal'
 import type { Abi, Address, ContractEventName } from 'viem'
-
-import type {
-  ConfigParameter,
-  EnabledParameter,
-} from '../../types/properties.js'
 import { useChainId } from '../useChainId.js'
 import { useConfig } from '../useConfig.js'
 import { useWatchContractEvent } from '../useWatchContractEvent.js'

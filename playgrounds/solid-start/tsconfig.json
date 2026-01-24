@@ -13,7 +13,12 @@
     "types": ["vinxi/types/client"],
     "isolatedModules": true,
     "paths": {
-      "~/*": ["./src/*"]
+      "~/*": ["./src/*"],
+      "@wagmi/connectors": ["../../packages/connectors/src/exports"],
+      "@wagmi/core": ["../../packages/core/src/exports"],
+      "@wagmi/core/*": ["../../packages/core/src/exports/*"],
+      "@wagmi/solid": ["../../packages/solid/src/exports"],
+      "@wagmi/solid/*": ["../../packages/solid/src/exports/*"]
     }
   }
 }

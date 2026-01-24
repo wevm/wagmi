@@ -3,7 +3,7 @@ import type {
   ResolvedRegister,
   SwitchChainErrorType,
 } from '@wagmi/core'
-import type { Compute } from '@wagmi/core/internal'
+import type { Compute, ConfigParameter } from '@wagmi/core/internal'
 import {
   type SwitchChainData,
   type SwitchChainMutate,
@@ -13,7 +13,6 @@ import {
   switchChainMutationOptions,
 } from '@wagmi/core/query'
 import type { Ref } from 'vue'
-import type { ConfigParameter } from '../types/properties.js'
 import { type UseMutationReturnType, useMutation } from '../utils/query.js'
 import { useChains } from './useChains.js'
 import { useConfig } from './useConfig.js'
@@ -31,12 +30,12 @@ export type UseSwitchChainReturnType<
     SwitchChainData<config, config['chains'][number]['id']>,
     SwitchChainErrorType,
     SwitchChainVariables<config, config['chains'][number]['id']>,
-    context
+    context,
+    SwitchChainMutate<config, context>,
+    SwitchChainMutateAsync<config, context>
   > & {
     /** @deprecated use `useChains` instead */
     chains: Ref<config['chains']>
-    mutate: SwitchChainMutate<config, context>
-    mutateAsync: SwitchChainMutateAsync<config, context>
     /** @deprecated use `mutate` instead */
     switchChain: SwitchChainMutate<config, context>
     /** @deprecated use `mutateAsync` instead */

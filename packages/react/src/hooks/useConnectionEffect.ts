@@ -1,10 +1,8 @@
 'use client'
 
 import { type GetConnectionReturnType, watchConnection } from '@wagmi/core'
-import type { Compute } from '@wagmi/core/internal'
+import type { Compute, ConfigParameter } from '@wagmi/core/internal'
 import { useEffect } from 'react'
-
-import type { ConfigParameter } from '../types/properties.js'
 import { useConfig } from './useConfig.js'
 
 export type UseConnectionEffectParameters = Compute<

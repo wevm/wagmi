@@ -16,7 +16,15 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    "paths": {
+      "@wagmi/connectors": ["../../packages/connectors/src/exports"],
+      "@wagmi/core": ["../../packages/core/src/exports"],
+      "@wagmi/core/*": ["../../packages/core/src/exports/*"],
+      "@wagmi/solid": ["../../packages/solid/src/exports"],
+      "@wagmi/solid/*": ["../../packages/solid/src/exports/*"]
+    }
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

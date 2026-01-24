@@ -3,6 +3,7 @@ import type {
   ResolvedRegister,
   SimulateContractErrorType,
 } from '@wagmi/core'
+import type { ConfigParameter } from '@wagmi/core/internal'
 import {
   type SimulateContractData,
   type SimulateContractOptions,
@@ -10,7 +11,6 @@ import {
 } from '@wagmi/core/query'
 import type { Abi, ContractFunctionArgs, ContractFunctionName } from 'viem'
 import { computed, type MaybeRef } from 'vue'
-import type { ConfigParameter } from '../types/properties.js'
 import { deepUnref } from '../utils/cloneDeep.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
@@ -98,7 +98,6 @@ export function useSimulateContract<
       account: params.value.account ?? address.value,
       chainId: params.value.chainId ?? chainId.value,
       connector: params.value.connector ?? connector.value,
-      query: params.value.query,
     }),
   )
   return useQuery(options as any) as any

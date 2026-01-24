@@ -30,6 +30,7 @@ packages/core/codegen
 packages/core/experimental
 packages/core/internal
 packages/core/query
+packages/core/tempo
 packages/react/actions
 packages/react/chains
 packages/react/codegen
@@ -37,6 +38,12 @@ packages/react/connectors
 packages/react/experimental
 packages/react/internal
 packages/react/query
+packages/react/tempo
+packages/solid/actions
+packages/solid/chains
+packages/solid/connectors
+packages/solid/internal
+packages/solid/query
 packages/vue/actions
 packages/vue/chains
 packages/vue/connectors

@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 3.3.2
+
+### Patch Changes
+
+- Updated internal exports ([`68e17db`](https://github.com/wevm/wagmi/commit/68e17db7ff84982db8f52f54e6f047c5efab62ab))
+
 ## 3.3.1
 
 ### Patch Changes

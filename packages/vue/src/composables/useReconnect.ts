@@ -1,5 +1,5 @@
 import type { Connector, ReconnectErrorType } from '@wagmi/core'
-import type { Compute } from '@wagmi/core/internal'
+import type { Compute, ConfigParameter } from '@wagmi/core/internal'
 import {
   type ReconnectData,
   type ReconnectMutate,
@@ -8,7 +8,6 @@ import {
   type ReconnectVariables,
   reconnectMutationOptions,
 } from '@wagmi/core/query'
-import type { ConfigParameter } from '../types/properties.js'
 import { type UseMutationReturnType, useMutation } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 
@@ -21,11 +20,11 @@ export type UseReconnectReturnType<context = unknown> = Compute<
     ReconnectData,
     ReconnectErrorType,
     ReconnectVariables,
-    context
+    context,
+    ReconnectMutate<context>,
+    ReconnectMutateAsync<context>
   > & {
     connectors: readonly Connector[]
-    mutate: ReconnectMutate<context>
-    mutateAsync: ReconnectMutateAsync<context>
     /** @deprecated use `mutate` instead */
     reconnect: ReconnectMutate<context>
     /** @deprecated use `mutateAsync` instead */

@@ -4,6 +4,7 @@ import type {
   ResolvedRegister,
   WriteContractErrorType,
 } from '@wagmi/core'
+import type { ConfigParameter } from '@wagmi/core/internal'
 import {
   type WriteContractData,
   type WriteContractMutate,
@@ -13,7 +14,6 @@ import {
   writeContractMutationOptions,
 } from '@wagmi/core/query'
 import type { Abi } from 'viem'
-import type { ConfigParameter } from '../types/properties.js'
 import type { UseMutationReturnType } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 

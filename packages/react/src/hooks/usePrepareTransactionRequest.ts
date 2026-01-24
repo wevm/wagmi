@@ -5,13 +5,13 @@ import type {
   ResolvedRegister,
   SelectChains,
 } from '@wagmi/core'
+import type { ConfigParameter } from '@wagmi/core/internal'
 import {
   type PrepareTransactionRequestData,
   type PrepareTransactionRequestOptions,
   prepareTransactionRequestQueryOptions,
 } from '@wagmi/core/query'
 import type { PrepareTransactionRequestRequest as viem_PrepareTransactionRequestRequest } from 'viem'
-import type { ConfigParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'

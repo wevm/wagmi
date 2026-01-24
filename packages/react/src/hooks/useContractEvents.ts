@@ -4,14 +4,13 @@ import type {
   GetContractEventsErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { UnionCompute } from '@wagmi/core/internal'
+import type { ConfigParameter, UnionCompute } from '@wagmi/core/internal'
 import {
   type GetContractEventsData,
   type GetContractEventsOptions,
   getContractEventsQueryOptions,
 } from '@wagmi/core/query'
 import type { Abi, BlockNumber, BlockTag, ContractEventName } from 'viem'
-import type { ConfigParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'

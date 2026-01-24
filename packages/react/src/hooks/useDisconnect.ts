@@ -1,7 +1,7 @@
 'use client'
 import { useMutation } from '@tanstack/react-query'
 import type { Connector, DisconnectErrorType } from '@wagmi/core'
-import type { Compute } from '@wagmi/core/internal'
+import type { Compute, ConfigParameter } from '@wagmi/core/internal'
 import {
   type DisconnectData,
   type DisconnectMutate,
@@ -10,7 +10,6 @@ import {
   type DisconnectVariables,
   disconnectMutationOptions,
 } from '@wagmi/core/query'
-import type { ConfigParameter } from '../types/properties.js'
 import type { UseMutationReturnType } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 import { useConnections } from './useConnections.js'

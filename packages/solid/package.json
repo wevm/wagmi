@@ -1,7 +1,7 @@
 {
   "name": "@wagmi/solid",
   "description": "Solid Primitives for Ethereum",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -12,7 +12,7 @@
     "build": "pnpm run clean && pnpm run build:esm+types",
     "build:esm+types": "tsc --project tsconfig.build.json --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
     "check:types": "tsc --noEmit",
-    "clean": "rm -rf dist tsconfig.tsbuildinfo actions chains codegen connectors query",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo actions chains connectors query",
     "test:build": "publint --strict && attw --pack --ignore-rules cjs-resolves-to-esm"
   },
   "files": [
@@ -23,9 +23,7 @@
     "!src/**/*.test-d.ts",
     "/actions",
     "/chains",
-    "/codegen",
     "/connectors",
-    "/internal",
     "/query"
   ],
   "sideEffects": false,
@@ -46,17 +44,9 @@
       "types": "./dist/types/exports/chains.d.ts",
       "default": "./dist/esm/exports/chains.js"
     },
-    "./codegen": {
-      "types": "./dist/types/exports/codegen.d.ts",
-      "default": "./dist/esm/exports/codegen.js"
-    },
     "./connectors": {
       "types": "./dist/types/exports/connectors.d.ts",
       "default": "./dist/esm/exports/connectors.js"
-    },
-    "./internal": {
-      "types": "./dist/types/exports/internal.d.ts",
-      "default": "./dist/esm/exports/internal.js"
     },
     "./query": {
       "types": "./dist/types/exports/query.d.ts",
@@ -72,14 +62,8 @@
       "chains": [
         "./dist/types/exports/chains.d.ts"
       ],
-      "codegen": [
-        "./dist/types/exports/codegen.d.ts"
-      ],
       "connectors": [
         "./dist/types/exports/connectors.d.ts"
-      ],
-      "internal": [
-        "./dist/types/exports/internal.d.ts"
       ],
       "query": [
         "./dist/types/exports/query.d.ts"

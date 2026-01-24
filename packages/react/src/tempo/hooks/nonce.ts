@@ -1,11 +1,13 @@
 import type { Config, ResolvedRegister } from '@wagmi/core'
-import type { ExactPartial, UnionCompute } from '@wagmi/core/internal'
+import type {
+  ConfigParameter,
+  ExactPartial,
+  UnionCompute,
+} from '@wagmi/core/internal'
 import { Actions } from '@wagmi/core/tempo'
 import { useEffect } from 'react'
-
 import { useChainId } from '../../hooks/useChainId.js'
 import { useConfig } from '../../hooks/useConfig.js'
-import type { ConfigParameter } from '../../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../../utils/query.js'
 import type { QueryParameter } from '../utils.js'
 

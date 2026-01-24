@@ -3,9 +3,8 @@ import {
   getConnections,
   watchConnections,
 } from '@wagmi/core'
+import type { ConfigParameter } from '@wagmi/core/internal'
 import { onScopeDispose, type Ref, readonly, ref } from 'vue'
-
-import type { ConfigParameter } from '../types/properties.js'
 import { useConfig } from './useConfig.js'
 
 export type UseConnectionsParameters = ConfigParameter

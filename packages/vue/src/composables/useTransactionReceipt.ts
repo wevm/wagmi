@@ -3,14 +3,13 @@ import type {
   GetTransactionReceiptErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { Compute } from '@wagmi/core/internal'
+import type { Compute, ConfigParameter } from '@wagmi/core/internal'
 import {
   type GetTransactionReceiptData,
   type GetTransactionReceiptOptions,
   getTransactionReceiptQueryOptions,
 } from '@wagmi/core/query'
 import { computed } from 'vue'
-import type { ConfigParameter } from '../types/properties.js'
 import type { DeepMaybeRef } from '../types/ref.js'
 import { deepUnref } from '../utils/cloneDeep.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
@@ -50,9 +49,8 @@ export function useTransactionReceipt<
   const chainId = useChainId({ config })
   const options = computed(() =>
     getTransactionReceiptQueryOptions(config as any, {
-      ...params.value,
+      ...(params.value as any),
       chainId: params.value.chainId ?? chainId.value,
-      query: params.value.query as any,
     }),
   )
   return useQuery(options as any) as any

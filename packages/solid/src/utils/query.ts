@@ -1,5 +1,6 @@
 import {
   type DefaultError,
+  type MutateFunction,
   type QueryKey,
   type SolidInfiniteQueryOptions,
   type SolidMutationOptions,
@@ -38,11 +39,16 @@ export type UseMutationReturnType<
   error = Error,
   variables = void,
   context = unknown,
+  mutate = MutateFunction,
+  mutateAsync = MutateFunction,
 > = Compute<
   UnionStrictOmit<
     UseMutationResult<data, error, variables, context>,
     'mutate' | 'mutateAsync'
-  >
+  > & {
+    mutate: mutate
+    mutateAsync: mutateAsync
+  }
 >
 
 export { useMutation }

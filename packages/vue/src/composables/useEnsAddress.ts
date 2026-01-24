@@ -3,14 +3,13 @@ import type {
   GetEnsAddressErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { Compute } from '@wagmi/core/internal'
+import type { Compute, ConfigParameter } from '@wagmi/core/internal'
 import {
   type GetEnsAddressData,
   type GetEnsAddressOptions,
   getEnsAddressQueryOptions,
 } from '@wagmi/core/query'
 import { computed } from 'vue'
-import type { ConfigParameter } from '../types/properties.js'
 import type { DeepMaybeRef } from '../types/ref.js'
 import { deepUnref } from '../utils/cloneDeep.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
@@ -43,7 +42,6 @@ export function useEnsAddress<
     getEnsAddressQueryOptions(config as any, {
       ...params.value,
       chainId: params.value.chainId ?? chainId.value,
-      query: params.value.query,
     }),
   )
   return useQuery(options as any) as any

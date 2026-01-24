@@ -4,14 +4,13 @@ import type {
   EstimateFeesPerGasErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { Compute } from '@wagmi/core/internal'
+import type { Compute, ConfigParameter } from '@wagmi/core/internal'
 import {
   type EstimateFeesPerGasData,
   type EstimateFeesPerGasOptions,
   estimateFeesPerGasQueryOptions,
 } from '@wagmi/core/query'
 import type { FeeValuesType } from 'viem'
-import type { ConfigParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
