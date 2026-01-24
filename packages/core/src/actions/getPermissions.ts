@@ -34,7 +34,7 @@ export type GetPermissionsErrorType =
 
 /** https://wagmi.sh/core/api/actions/getPermissions */
 export async function getPermissions<config extends Config>(
-  config: Config,
+  config: config,
   parameters: GetPermissionsParameters<config> = {},
 ): Promise<GetPermissionsReturnType> {
   const { connector, chainId } = parameters

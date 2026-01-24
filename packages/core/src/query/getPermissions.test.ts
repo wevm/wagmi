@@ -6,9 +6,10 @@ import { getPermissionsQueryOptions } from './getPermissions.js'
 test('default', () => {
   expect(getPermissionsQueryOptions(config)).toMatchInlineSnapshot(`
     {
+      "enabled": false,
       "queryFn": [Function],
       "queryKey": [
-        "getPermissions",
+        "permissions",
         {},
       ],
     }
@@ -20,9 +21,10 @@ test('parameters: chainId', () => {
     getPermissionsQueryOptions(config, { chainId: chain.mainnet.id }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": false,
       "queryFn": [Function],
       "queryKey": [
-        "getPermissions",
+        "permissions",
         {
           "chainId": 1,
         },

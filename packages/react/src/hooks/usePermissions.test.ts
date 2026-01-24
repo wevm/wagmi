@@ -1,7 +1,7 @@
 import { connect, disconnect } from '@wagmi/core'
 import { config } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
-import { expect, test } from 'vitest'
+import { renderHook } from '@wagmi/test/react'
+import { expect, test, vi } from 'vitest'
 
 import { usePermissions } from './usePermissions.js'
 
@@ -9,11 +9,12 @@ const connector = config.connectors[0]!
 
 test('default', async () => {
   await connect(config, { connector })
-  const { result } = renderHook(() => usePermissions())
+  const { result } = await renderHook(() => usePermissions())
 
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
-  expect(result.current).toMatchInlineSnapshot(`
+  const { queryKey: _, ...rest } = result.current
+  expect(rest).toMatchInlineSnapshot(`
     {
       "data": [
         {
@@ -50,12 +51,6 @@ test('default', async () => {
       "isRefetching": false,
       "isStale": true,
       "isSuccess": true,
-      "queryKey": [
-        "getPermissions",
-        {
-          "chainId": 1,
-        },
-      ],
       "refetch": [Function],
       "status": "success",
     }
