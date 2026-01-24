@@ -4,7 +4,6 @@ import {
   type RequestPermissionsReturnType as viem_RequestPermissionsReturnType,
   requestPermissions as viem_requestPermissions,
 } from 'viem/actions'
-
 import type { Config } from '../createConfig.js'
 import type { BaseErrorType, ErrorType } from '../errors/base.js'
 import type { ConnectorParameter } from '../types/properties.js'
@@ -31,12 +30,11 @@ export type RequestPermissionsErrorType =
   | viem_RequestPermissionsErrorType
 
 /** https://wagmi.sh/core/api/actions/requestPermissions */
-export async function requestPermissions(
-  config: Config,
+export async function requestPermissions<config extends Config>(
+  config: config,
   parameters: RequestPermissionsParameters,
 ): Promise<RequestPermissionsReturnType> {
   const { connector, ...rest } = parameters
-
   const client = await getConnectorClient(config, { connector })
 
   const action = getAction(

@@ -1,7 +1,7 @@
 import { connect, disconnect } from '@wagmi/core'
 import { config } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
-import { expect, test } from 'vitest'
+import { renderHook } from '@wagmi/test/react'
+import { expect, test, vi } from 'vitest'
 
 import { useRequestPermissions } from './useRequestPermissions.js'
 
@@ -10,10 +10,10 @@ const connector = config.connectors[0]!
 test('default', async () => {
   await connect(config, { connector })
 
-  const { result } = renderHook(() => useRequestPermissions())
+  const { result } = await renderHook(() => useRequestPermissions())
 
-  result.current.requestPermissions({ eth_accounts: {} })
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  result.current.mutate({ eth_accounts: {} })
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   expect(result.current.data).toMatchInlineSnapshot(`
     [
