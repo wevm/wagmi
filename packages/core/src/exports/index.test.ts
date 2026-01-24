@@ -54,6 +54,7 @@ test('exports', () => {
       "sendTransaction",
       "sendTransactionSync",
       "showCallsStatus",
+      "signAuthorization",
       "signMessage",
       "signTypedData",
       "simulateContract",

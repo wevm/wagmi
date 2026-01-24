@@ -80,6 +80,7 @@ test('exports', () => {
       "useSendTransaction",
       "useSendTransactionSync",
       "useShowCallsStatus",
+      "useSignAuthorization",
       "useSignMessage",
       "useSignTypedData",
       "useSimulateContract",

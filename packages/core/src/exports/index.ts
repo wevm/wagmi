@@ -331,6 +331,13 @@ export {
 } from '../actions/showCallsStatus.js'
 
 export {
+  type SignAuthorizationErrorType,
+  type SignAuthorizationParameters,
+  type SignAuthorizationReturnType,
+  signAuthorization,
+} from '../actions/signAuthorization.js'
+
+export {
   type SignMessageErrorType,
   type SignMessageParameters,
   type SignMessageReturnType,

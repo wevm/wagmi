@@ -298,6 +298,12 @@ export {
 } from '../hooks/useShowCallsStatus.js'
 
 export {
+  type UseSignAuthorizationParameters,
+  type UseSignAuthorizationReturnType,
+  useSignAuthorization,
+} from '../hooks/useSignAuthorization.js'
+
+export {
   type UseSignMessageParameters,
   type UseSignMessageReturnType,
   useSignMessage,

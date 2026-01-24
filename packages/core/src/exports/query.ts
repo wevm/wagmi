@@ -413,6 +413,16 @@ export {
 } from '../query/showCallsStatus.js'
 
 export {
+  type SignAuthorizationData,
+  type SignAuthorizationMutate,
+  type SignAuthorizationMutateAsync,
+  type SignAuthorizationMutationOptions,
+  type SignAuthorizationOptions,
+  type SignAuthorizationVariables,
+  signAuthorizationMutationOptions,
+} from '../query/signAuthorization.js'
+
+export {
   type SignMessageData,
   type SignMessageMutate,
   type SignMessageMutateAsync,

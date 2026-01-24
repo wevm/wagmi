@@ -280,6 +280,10 @@ export function getSidebar() {
             link: '/react/api/hooks/useShowCallsStatus',
           },
           {
+            text: 'useSignAuthorization',
+            link: '/react/api/hooks/useSignAuthorization',
+          },
+          {
             text: 'useSignMessage',
             link: '/react/api/hooks/useSignMessage',
           },
@@ -921,6 +925,10 @@ export function getSidebar() {
           {
             text: 'showCallsStatus',
             link: '/core/api/actions/showCallsStatus',
+          },
+          {
+            text: 'signAuthorization',
+            link: '/core/api/actions/signAuthorization',
           },
           {
             text: 'signMessage',

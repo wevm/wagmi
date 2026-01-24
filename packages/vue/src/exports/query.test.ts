@@ -80,6 +80,7 @@ test('exports', () => {
       "sendTransactionMutationOptions",
       "sendTransactionSyncMutationOptions",
       "showCallsStatusMutationOptions",
+      "signAuthorizationMutationOptions",
       "signMessageMutationOptions",
       "signTypedDataMutationOptions",
       "simulateContractQueryKey",
