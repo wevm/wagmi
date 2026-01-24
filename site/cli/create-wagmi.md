@@ -25,7 +25,7 @@ bun create wagmi
 
 ### `-t`, `--template`
 
-By default, `create-wagmi` scaffolds a basic Vite application with Wagmi. However, you can specify a custom [template](#templates) by passing the `--template`/`-t` flag:
+You can specify a custom [template](#templates) by passing the `--template`/`-t` flag:
 
 ::: code-group
 ```bash [pnpm]
@@ -60,6 +60,16 @@ Prints the CLI version.
 
 - `next`: A Next.js Wagmi project.
 - `nuxt`: A Nuxt Wagmi project.
-- `vite-react` (default): A Vite (React) Wagmi project.
+- `vite-react`: A Vite (React) Wagmi project.
 - `vite-vanilla`: A Vite Wagmi Core project.
 - `vite-vue`: A Vite (Vue) Wagmi project.
+
+If you do not specify the template on the command line, you will be prompted to select a framework and variant.
+
+- **React** : A React project.
+  - **Vite** : A React + Vite Wagmi project (`vite-react`).
+  - **Next** : A React + Next Wagmi project (`next`).
+- **Vue**: A Vue project.
+  - **Vite**: A Vue + Vite Wagmi project (`vite-vue`).
+  - **Nuxt**: A Vue + Nuxt Wagmi project (`nuxt`).
+- **Vanilla**: A Vite Wagmi project without React (`vite-vanilla`).

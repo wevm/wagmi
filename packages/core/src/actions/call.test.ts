@@ -76,12 +76,12 @@ test('insufficient funds', async () => {
      - \`value\` is the amount of ether to send to the recipient.
      
     Raw Call Arguments:
-      from:   0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
-      to:     0x70997970c51812dc3a010c7d01b50e0d17dc79c8
+      from:   0x95132632579b073D12a6673e18Ab05777a6B86f8
+      to:     0x1D5D7e139A994CeE7f360be398Ef032fE5D74fce
       value:  100000 ETH
 
     Details: Insufficient funds for gas * price + value
-    Version: viem@2.17.0]
+    Version: viem@2.44.4]
   `)
 })
 
@@ -98,13 +98,13 @@ test('maxFeePerGas less than maxPriorityFeePerGas', async () => {
     [CallExecutionError: The provided tip (\`maxPriorityFeePerGas\` = 22 gwei) cannot be higher than the fee cap (\`maxFeePerGas\` = 20 gwei).
 
     Raw Call Arguments:
-      from:                  0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+      from:                  0x95132632579b073D12a6673e18Ab05777a6B86f8
       to:                    0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2
       data:                  0x06fdde03
       maxFeePerGas:          20 gwei
       maxPriorityFeePerGas:  22 gwei
 
-    Version: viem@2.17.0]
+    Version: viem@2.44.4]
   `)
 })
 
@@ -116,15 +116,15 @@ test('contract revert (contract error)', async () => {
       to: address.wagmiMintExample,
     }),
   ).rejects.toThrowErrorMatchingInlineSnapshot(`
-    [CallExecutionError: Execution reverted with reason: revert: Token ID is taken.
+    [CallExecutionError: Execution reverted with reason: Token ID is taken.
 
     Raw Call Arguments:
-      from:  0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+      from:  0x95132632579b073D12a6673e18Ab05777a6B86f8
       to:    0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2
       data:  0xa0712d6800000000000000000000000000000000000000000000000000000000000001a4
 
-    Details: execution reverted: revert: Token ID is taken
-    Version: viem@2.17.0]
+    Details: execution reverted: Token ID is taken
+    Version: viem@2.44.4]
   `)
 })
 
@@ -139,11 +139,11 @@ test('contract revert (insufficient params)', async () => {
     [CallExecutionError: Execution reverted for an unknown reason.
 
     Raw Call Arguments:
-      from:  0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+      from:  0x95132632579b073D12a6673e18Ab05777a6B86f8
       to:    0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2
       data:  0xa0712d68
 
     Details: execution reverted
-    Version: viem@2.17.0]
+    Version: viem@2.44.4]
   `)
 })

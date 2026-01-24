@@ -3,17 +3,13 @@ import type {
   GetTransactionReceiptErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { Compute } from '@wagmi/core/internal'
+import type { Compute, ConfigParameter } from '@wagmi/core/internal'
 import {
   type GetTransactionReceiptData,
   type GetTransactionReceiptOptions,
-  type GetTransactionReceiptQueryKey,
   getTransactionReceiptQueryOptions,
 } from '@wagmi/core/query'
-import type { GetTransactionReceiptQueryFnData } from '@wagmi/core/query'
-
 import { computed } from 'vue'
-import type { ConfigParameter, QueryParameter } from '../types/properties.js'
 import type { DeepMaybeRef } from '../types/ref.js'
 import { deepUnref } from '../utils/cloneDeep.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
@@ -27,14 +23,8 @@ export type UseTransactionReceiptParameters<
   selectData = GetTransactionReceiptData<config, chainId>,
 > = Compute<
   DeepMaybeRef<
-    GetTransactionReceiptOptions<config, chainId> &
-      ConfigParameter<config> &
-      QueryParameter<
-        GetTransactionReceiptQueryFnData<config, chainId>,
-        GetTransactionReceiptErrorType,
-        selectData,
-        GetTransactionReceiptQueryKey<config, chainId>
-      >
+    GetTransactionReceiptOptions<config, chainId, selectData> &
+      ConfigParameter<config>
   >
 >
 
@@ -52,34 +42,16 @@ export function useTransactionReceipt<
     config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetTransactionReceiptData<config, chainId>,
 >(
-  parameters_: UseTransactionReceiptParameters<
-    config,
-    chainId,
-    selectData
-  > = {},
+  parameters: UseTransactionReceiptParameters<config, chainId, selectData> = {},
 ): UseTransactionReceiptReturnType<config, chainId, selectData> {
-  const parameters = computed(() => deepUnref(parameters_))
-
-  const config = useConfig(parameters)
-  const configChainId = useChainId({ config })
-
-  const queryOptions = computed(() => {
-    const { chainId = configChainId.value, hash, query = {} } = parameters.value
-    const options = getTransactionReceiptQueryOptions(config, {
-      ...parameters.value,
-      chainId,
-    })
-    const enabled = Boolean(hash && (query.enabled ?? true))
-    return {
-      ...(query as any),
-      ...options,
-      enabled,
-    }
-  })
-
-  return useQuery(queryOptions) as UseTransactionReceiptReturnType<
-    config,
-    chainId,
-    selectData
-  >
+  const params = computed(() => deepUnref(parameters))
+  const config = useConfig(params)
+  const chainId = useChainId({ config })
+  const options = computed(() =>
+    getTransactionReceiptQueryOptions(config as any, {
+      ...(params.value as any),
+      chainId: params.value.chainId ?? chainId.value,
+    }),
+  )
+  return useQuery(options as any) as any
 }

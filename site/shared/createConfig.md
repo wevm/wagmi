@@ -33,7 +33,7 @@ const config = createConfig({
 
 ::: tip Integrating a Viem Client
 
-Instead of using [`transports`](#transports), it's possible to provide a function that returns a Viem [`Client`](https://viem.sh/docs/clients/custom.html) via the [`client`](#client) property for more fine-grained control over Wagmi's internal `Client` creation.
+Instead of using [`transports`](#transports), it's possible to provide a function that returns a Viem [`Client`](https://viem.sh/docs/clients/custom) via the [`client`](#client) property for more fine-grained control over Wagmi's internal `Client` creation.
 
 ```ts-vue {3,7-9}
 import { createConfig, http } from '{{packageName}}'
@@ -185,7 +185,7 @@ const config = createConfig({
 
 `{ multicall?: boolean | { batchSize?: number | undefined; wait?: number | undefined } | undefined } | { [_ in chains[number]["id"]]?: { multicall?: boolean | { batchSize?: number | undefined; wait?: number | undefined } | undefined } | undefined } | undefined`
 
-- Batch settings. See [Viem docs](https://viem.sh/docs/clients/custom.html#batch-optional) for more info.
+- Batch settings. See [Viem docs](https://viem.sh/docs/clients/custom#batch-optional) for more info.
 - Defaults to `{ multicall: true }`.
 
 ```ts-vue
@@ -206,7 +206,7 @@ const config = createConfig({
 
 `number | { [_ in chains[number]['id']]?: number | undefined } | undefined`
 
-- Frequency in milliseconds for polling enabled features. See [Viem docs](https://viem.sh/docs/clients/public.html#cachetime-optional) for more info.
+- Frequency in milliseconds for polling enabled features. See [Viem docs](https://viem.sh/docs/clients/public#cachetime-optional) for more info.
 - Defaults to [`pollingInterval`](#pollinginterval) or `4_000`.
 
 ```ts-vue
@@ -227,7 +227,7 @@ const config = createConfig({
 
 `number | { [_ in chains[number]['id']]?: number | undefined } | undefined`
 
-- Frequency in milliseconds for polling enabled features. See [Viem docs](https://viem.sh/docs/clients/custom.html#pollinginterval-optional) for more info.
+- Frequency in milliseconds for polling enabled features. See [Viem docs](https://viem.sh/docs/clients/custom#pollinginterval-optional) for more info.
 - Defaults to `4_000`.
 
 ```ts-vue
@@ -248,7 +248,7 @@ const config = createConfig({
 
 `Record<chains[number]['id'], Transport>`
 
-Mapping of [chain IDs](#chains) to <a :href="`/${docsPath}/api/transports`">`Transport`</a>s. This mapping is used internally when creating chain-aware Viem [`Client`](https://viem.sh/docs/clients/custom.html) objects. See the <a :href="`/${docsPath}/api/transports`">Transport docs</a> for more info.
+Mapping of [chain IDs](#chains) to <a :href="`/${docsPath}/api/transports`">`Transport`</a>s. This mapping is used internally when creating chain-aware Viem [`Client`](https://viem.sh/docs/clients/custom) objects. See the <a :href="`/${docsPath}/api/transports`">Transport docs</a> for more info.
 
 ```ts-vue
 import { createConfig, fallback, http } from '{{packageName}}' // [!code focus]
@@ -272,7 +272,7 @@ const config = createConfig({
 
 `(parameters: { chain: chains[number] }) => Client<Transport, chains[number]>`
 
-Function for creating new Viem [`Client`](https://viem.sh/docs/clients/custom.html) to be used internally. Exposes more control over the internal `Client` creation logic versus using the [`transports`](#transports) property.
+Function for creating new Viem [`Client`](https://viem.sh/docs/clients/custom) to be used internally. Exposes more control over the internal `Client` creation logic versus using the [`transports`](#transports) property.
 
 ```ts-vue
 import { createClient, http } from 'viem' // [!code focus]
@@ -288,7 +288,7 @@ const config = createConfig({
 ```
 
 ::: warning
-When using this option, you likely want to pass `parameters.chain` straight through to [`createClient`](https://viem.sh/docs/clients/custom.html#createclient) to ensure the Viem `Client` is in sync with any active connections.
+When using this option, you likely want to pass `parameters.chain` straight through to [`createClient`](https://viem.sh/docs/clients/custom#createclient) to ensure the Viem `Client` is in sync with any active connections.
 :::
 
 ## Return Type
@@ -333,7 +333,7 @@ The `Config` object's internal state. See [`State`](#state-1) for more info.
 
 `(parameters?: { chainId?: chainId | chains[number]['id'] | undefined }): Client<transports[chainId], Extract<chains[number], { id: chainId }>>`
 
-Creates new Viem [`Client`](https://viem.sh/docs/clients/custom.html) object.
+Creates new Viem [`Client`](https://viem.sh/docs/clients/custom) object.
 
 ::: code-group
 ```ts-vue [index.ts]

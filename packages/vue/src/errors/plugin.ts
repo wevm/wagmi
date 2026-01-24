@@ -9,7 +9,7 @@ export class WagmiPluginNotFoundError extends BaseError {
     super(
       'No `config` found in Vue context, use `WagmiPlugin` to properly initialize the library.',
       {
-        docsPath: '/api/TODO',
+        docsPath: '/api/Nuxt',
       },
     )
   }
@@ -24,7 +24,7 @@ export class WagmiInjectionContextError extends BaseError {
     super(
       'Wagmi composables can only be used inside `setup()` function or functions that support injection context.',
       {
-        docsPath: '/api/TODO',
+        docsPath: '/api/Nuxt',
       },
     )
   }

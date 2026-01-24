@@ -2,6 +2,8 @@ name: Changesets
 on:
   push:
     branches: [main]
+permissions:
+  contents: read
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -10,31 +12,37 @@ concurrency:
 jobs:
   verify:
     name: Verify
+    permissions:
+      contents: write
     uses: ./.github/workflows/verify.yml
     secrets: inherit
 
   changesets:
     name: Publish
     needs: verify
+    # prevents this action from running on forks
+    if: github.repository == 'wevm/wagmi'
     permissions:
-      contents: write
-      id-token: write
-      pull-requests: write
+      contents: write # to create release (changesets/action)
+      id-token: write # OpenID Connect token needed for provenance
+      pull-requests: write # to create pull request (changesets/action)
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
     steps:
       - name: Clone repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
         with:
           # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
           fetch-depth: 0
 
       - name: Install dependencies
-        uses: wevm/actions/.github/actions/pnpm@main
+        uses: wevm/actions/.github/actions/pnpm@f7ad7f00e16e73322562922c241f21f0c7ffbbec
+        with:
+          node-version: 24.5
 
       - name: PR or publish
-        uses: changesets/action@v1
+        uses: changesets/action@e0145edc7d9d8679003495b11f87bd8ef63c0cba # v1.5.3
         with:
           title: 'chore: version packages'
           commit: 'chore: version packages'
@@ -43,18 +51,14 @@ jobs:
           version: pnpm changeset:version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish prerelease
+      - name: Publish canary release
         if: steps.changesets.outputs.published != 'true'
         continue-on-error: true
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          npm config set "//registry.npmjs.org/:_authToken" "$NPM_TOKEN"
           git reset --hard origin/main
-          pnpm clean
           pnpm changeset version --no-git-tag --snapshot canary
           pnpm changeset:prepublish
           pnpm changeset publish --no-git-tag --snapshot canary --tag canary

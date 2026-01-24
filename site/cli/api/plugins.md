@@ -19,6 +19,7 @@ import { etherscan } from '@wagmi/cli/plugins'
 - [`foundry`](/cli/api/plugins/foundry) Generate ABIs and watch for Foundry project changes.
 - [`hardhat`](/cli/api/plugins/hardhat) Generate ABIs and watch for Hardhat projects changes.
 - [`react`](/cli/api/plugins/react) Generate type-safe React Hooks from configuration `contracts`.
+- [`routescan`](/cli/api/plugins/routescan) Fetch ABIs from Routescan and add into configuration.
 - [`sourcify`](/cli/api/plugins/sourcify) Fetch ABIs from Sourcify from configuration `contracts`.
 
 ## Create Plugin

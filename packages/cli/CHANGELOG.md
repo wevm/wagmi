@@ -1,5 +1,121 @@
 # @wagmi/cli
 
+## 2.9.0
+
+### Minor Changes
+
+- Added `includeBroadcasts` option to Foundry plugin to automatically populate deployments mapping from `run-latest.json` files in the `broadcast/` directory. ([#4908](https://github.com/wevm/wagmi/pull/4908))
+
+## 2.8.0
+
+### Minor Changes
+
+- Added option to React plugin to disable generating hooks for each function/event in ABI. ([#4866](https://github.com/wevm/wagmi/pull/4866))
+
+## 2.7.1
+
+### Patch Changes
+
+- Bumped chains for block explorer plugins. ([`ed2d473`](https://github.com/wevm/wagmi/commit/ed2d473172e8d063f29400b8edcec33e5d21a659))
+
+## 2.7.0
+
+### Minor Changes
+
+- Updated block explorer plugins supported chains. ([#4830](https://github.com/wevm/wagmi/pull/4830))
+
+## 2.6.0
+
+### Minor Changes
+
+- Bumped internal deps. ([#4808](https://github.com/wevm/wagmi/pull/4808))
+
+## 2.5.1
+
+### Patch Changes
+
+- [#4773](https://github.com/wevm/wagmi/pull/4773) [`d4c367ca46c508598c997cf229a31593a1e2b8b8`](https://github.com/wevm/wagmi/commit/d4c367ca46c508598c997cf229a31593a1e2b8b8) Thanks [@tmm](https://github.com/tmm)! - Fixed issue with codegen actions/hooks, where `syncConnectedChain: false` did not work as intended.
+
+## 2.5.0
+
+### Minor Changes
+
+- [`1edb09f7b69da3d7819d0e070e875e2c6fe8015d`](https://github.com/wevm/wagmi/commit/1edb09f7b69da3d7819d0e070e875e2c6fe8015d) Thanks [@tmm](https://github.com/tmm)! - Added testnets to `routescan` plugin
+
+## 2.4.0
+
+### Minor Changes
+
+- [#4757](https://github.com/wevm/wagmi/pull/4757) [`aec8a61ef0dfe02421d514bd130505ec13f8d3a0`](https://github.com/wevm/wagmi/commit/aec8a61ef0dfe02421d514bd130505ec13f8d3a0) Thanks [@tmm](https://github.com/tmm)! - Added Routescan plugin.
+
+## 2.3.2
+
+### Patch Changes
+
+- [#4727](https://github.com/wevm/wagmi/pull/4727) [`910e6c6180bd632e65bad348bd0814de5a8cfa4b`](https://github.com/wevm/wagmi/commit/910e6c6180bd632e65bad348bd0814de5a8cfa4b) Thanks [@reallesee](https://github.com/reallesee)! - `fetch` plugin: cleared timeout on fetch error
+
+## 2.3.1
+
+### Patch Changes
+
+- [#4655](https://github.com/wevm/wagmi/pull/4655) [`43241c8417f3c342036bb46ec8e507d052ae2691`](https://github.com/wevm/wagmi/commit/43241c8417f3c342036bb46ec8e507d052ae2691) Thanks [@tmm](https://github.com/tmm)! - Bumped internal deps.
+
+## 2.3.0
+
+### Minor Changes
+
+- [#4629](https://github.com/wevm/wagmi/pull/4629) [`66dec7d75d580b3121ebc7e8162c1f9ae37cfd41`](https://github.com/wevm/wagmi/commit/66dec7d75d580b3121ebc7e8162c1f9ae37cfd41) Thanks [@allezxandre](https://github.com/allezxandre)! - Upgraded to Sourcify v2 API in `sourcify` plugin
+
+## 2.2.1
+
+### Patch Changes
+
+- [`7b0dbe3886c1a7c6dbbdab945d7436ec20ad8f93`](https://github.com/wevm/wagmi/commit/7b0dbe3886c1a7c6dbbdab945d7436ec20ad8f93) Thanks [@tmm](https://github.com/tmm)! - Updated block explorer chains.
+
+## 2.2.0
+
+### Minor Changes
+
+- [#4503](https://github.com/wevm/wagmi/pull/4503) [`8fce8a6f97aa2ee5fd1bda6a3ece422b10324b5a`](https://github.com/wevm/wagmi/commit/8fce8a6f97aa2ee5fd1bda6a3ece422b10324b5a) Thanks [@tmm](https://github.com/tmm)! - Updated Etherscan Plugin to use Etherscan API v2.
+
+- [#4507](https://github.com/wevm/wagmi/pull/4507) [`6f09cc57935891e1c67d6df3459f6998985c69dc`](https://github.com/wevm/wagmi/commit/6f09cc57935891e1c67d6df3459f6998985c69dc) Thanks [@tmm](https://github.com/tmm)! - Added `tryFetchProxyImplementation` flag to Etherscan Plugin to enable fetching the implementation ABI instead of the proxy ABI.
+
+## 2.1.22
+
+### Patch Changes
+
+- [#4462](https://github.com/wevm/wagmi/pull/4462) [`0b2238d27cecbcd33aee64fb0e30ddc18b6ddf74`](https://github.com/wevm/wagmi/commit/0b2238d27cecbcd33aee64fb0e30ddc18b6ddf74) Thanks [@groninge01](https://github.com/groninge01)! - Added Sonic to Etherscan plugin.
+
+## 2.1.21
+
+### Patch Changes
+
+- [#4457](https://github.com/wevm/wagmi/pull/4457) [`21ec74da7f93fc13e253d7b35ddeddc23422a6c1`](https://github.com/wevm/wagmi/commit/21ec74da7f93fc13e253d7b35ddeddc23422a6c1) Thanks [@tmm](https://github.com/tmm)! - Removed internal dependency.
+
+## 2.1.20
+
+### Patch Changes
+
+- [#4450](https://github.com/wevm/wagmi/pull/4450) [`7b9a6bb35881b657a00bdd7ccd7edea32660f5bf`](https://github.com/wevm/wagmi/commit/7b9a6bb35881b657a00bdd7ccd7edea32660f5bf) Thanks [@tmm](https://github.com/tmm)! - Removed internal usage of `fs-extra`.
+
+## 2.1.19
+
+### Patch Changes
+
+- [#4449](https://github.com/wevm/wagmi/pull/4449) [`3fa5c238baa13d948e89974b0bb8530f8fa264fd`](https://github.com/wevm/wagmi/commit/3fa5c238baa13d948e89974b0bb8530f8fa264fd) Thanks [@tmm](https://github.com/tmm)! - Removed `ora` for `nanospinner`.
+
+## 2.1.18
+
+### Patch Changes
+
+- [#4399](https://github.com/wevm/wagmi/pull/4399) [`bc18673e4c272e3b60a1b6016934fe3fbeb6d93a`](https://github.com/wevm/wagmi/commit/bc18673e4c272e3b60a1b6016934fe3fbeb6d93a) Thanks [@tmm](https://github.com/tmm)! - Added Polygon Amoy to Sourcify and Etherscan plugins.
+
+## 2.1.17
+
+### Patch Changes
+
+- [#4370](https://github.com/wevm/wagmi/pull/4370) [`cb58b1ea3ad40e77210f24eb598f9d2306db998c`](https://github.com/wevm/wagmi/commit/cb58b1ea3ad40e77210f24eb598f9d2306db998c) Thanks [@talentlessguy](https://github.com/talentlessguy)! - Bumped internal dependencies.
+
 ## 2.1.16
 
 ### Patch Changes

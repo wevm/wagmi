@@ -1,27 +1,31 @@
 import {
+  createStore as createMipd,
   type EIP6963ProviderDetail,
   type Store as MipdStore,
-  createStore as createMipd,
 } from 'mipd'
 import {
   type Address,
   type Chain,
   type Client,
-  type EIP1193RequestFn,
   createClient,
+  type EIP1193RequestFn,
   type ClientConfig as viem_ClientConfig,
   type Transport as viem_Transport,
 } from 'viem'
 import { persist, subscribeWithSelector } from 'zustand/middleware'
-import { type Mutate, type StoreApi, createStore } from 'zustand/vanilla'
+import { createStore, type Mutate, type StoreApi } from 'zustand/vanilla'
 
 import type {
   ConnectorEventMap,
   CreateConnectorFn,
 } from './connectors/createConnector.js'
 import { injected } from './connectors/injected.js'
-import { type Emitter, type EventData, createEmitter } from './createEmitter.js'
-import { type Storage, createStorage, noopStorage } from './createStorage.js'
+import { createEmitter, type Emitter, type EventData } from './createEmitter.js'
+import {
+  createStorage,
+  getDefaultStorage,
+  type Storage,
+} from './createStorage.js'
 import { ChainNotConfiguredError } from './errors/config.js'
 import type {
   Compute,
@@ -33,49 +37,17 @@ import type {
 import { uid } from './utils/uid.js'
 import { version } from './version.js'
 
-export type CreateConfigParameters<
-  chains extends readonly [Chain, ...Chain[]] = readonly [Chain, ...Chain[]],
-  transports extends Record<chains[number]['id'], Transport> = Record<
-    chains[number]['id'],
-    Transport
-  >,
-> = Compute<
-  {
-    chains: chains
-    connectors?: CreateConnectorFn[] | undefined
-    multiInjectedProviderDiscovery?: boolean | undefined
-    storage?: Storage | null | undefined
-    ssr?: boolean | undefined
-    syncConnectedChain?: boolean | undefined
-  } & OneOf<
-    | ({ transports: transports } & {
-        [key in keyof ClientConfig]?:
-          | ClientConfig[key]
-          | { [_ in chains[number]['id']]?: ClientConfig[key] | undefined }
-          | undefined
-      })
-    | {
-        client(parameters: { chain: chains[number] }): Client<
-          transports[chains[number]['id']],
-          chains[number]
-        >
-      }
-  >
->
-
 export function createConfig<
   const chains extends readonly [Chain, ...Chain[]],
   transports extends Record<chains[number]['id'], Transport>,
+  const connectorFns extends readonly CreateConnectorFn[],
 >(
-  parameters: CreateConfigParameters<chains, transports>,
-): Config<chains, transports> {
+  parameters: CreateConfigParameters<chains, transports, connectorFns>,
+): Config<chains, transports, connectorFns> {
   const {
     multiInjectedProviderDiscovery = true,
     storage = createStorage({
-      storage:
-        typeof window !== 'undefined' && window.localStorage
-          ? window.localStorage
-          : noopStorage,
+      storage: getDefaultStorage(),
     }),
     syncConnectedChain = true,
     ssr = false,
@@ -92,14 +64,29 @@ export function createConfig<
       : undefined
 
   const chains = createStore(() => rest.chains)
-  const connectors = createStore(() =>
-    [
-      ...(rest.connectors ?? []),
-      ...(!ssr
-        ? (mipd?.getProviders().map(providerDetailToConnector) ?? [])
-        : []),
-    ].map(setup),
-  )
+  const connectors = createStore(() => {
+    const collection = []
+    const rdnsSet = new Set<string>()
+    for (const connectorFns of rest.connectors ?? []) {
+      const connector = setup(connectorFns)
+      collection.push(connector)
+      if (!ssr && connector.rdns) {
+        const rdnsValues =
+          typeof connector.rdns === 'string' ? [connector.rdns] : connector.rdns
+        for (const rdns of rdnsValues) {
+          rdnsSet.add(rdns)
+        }
+      }
+    }
+    if (!ssr && mipd) {
+      const providers = mipd.getProviders()
+      for (const provider of providers) {
+        if (rdnsSet.has(provider.info.rdns)) continue
+        collection.push(setup(providerDetailToConnector(provider)))
+      }
+    }
+    return collection
+  })
   function setup(connectorFn: CreateConnectorFn): Connector {
     // Set up emitter with uid and add to connector so they are "linked" together.
     const emitter = createEmitter<ConnectorEventMap>(uid())
@@ -211,9 +198,9 @@ export function createConfig<
   let currentVersion: number
   const prefix = '0.0.0-canary-'
   if (version.startsWith(prefix))
-    currentVersion = Number.parseInt(version.replace(prefix, ''))
+    currentVersion = Number.parseInt(version.replace(prefix, ''), 10)
   // use package major version to version store
-  else currentVersion = Number.parseInt(version.split('.')[0] ?? '0')
+  else currentVersion = Number.parseInt(version.split('.')[0] ?? '0', 10)
 
   const store = createStore(
     subscribeWithSelector(
@@ -274,6 +261,7 @@ export function createConfig<
         : getInitialState,
     ),
   )
+  store.setState(getInitialState())
 
   function validatePersistedChainId(
     persistedState: unknown,
@@ -313,15 +301,24 @@ export function createConfig<
 
   // EIP-6963 subscribe for new wallet providers
   mipd?.subscribe((providerDetails) => {
-    const currentConnectorIds = new Map()
+    const connectorIdSet = new Set<string>()
+    const connectorRdnsSet = new Set<string>()
     for (const connector of connectors.getState()) {
-      currentConnectorIds.set(connector.id, true)
+      connectorIdSet.add(connector.id)
+      if (connector.rdns) {
+        const rdnsValues =
+          typeof connector.rdns === 'string' ? [connector.rdns] : connector.rdns
+        for (const rdns of rdnsValues) {
+          connectorRdnsSet.add(rdns)
+        }
+      }
     }
 
     const newConnectors: Connector[] = []
     for (const providerDetail of providerDetails) {
+      if (connectorRdnsSet.has(providerDetail.info.rdns)) continue
       const connector = setup(providerDetailToConnector(providerDetail))
-      if (currentConnectorIds.has(connector.id)) continue
+      if (connectorIdSet.has(connector.id)) continue
       newConnectors.push(connector)
     }
 
@@ -417,7 +414,9 @@ export function createConfig<
       return chains.getState() as chains
     },
     get connectors() {
-      return connectors.getState()
+      return connectors.getState() as Readonly<{
+        [key in keyof connectorFns]: Connector<connectorFns[key]>
+      }>
     },
     storage,
 
@@ -454,6 +453,26 @@ export function createConfig<
 
     _internal: {
       mipd,
+      async revalidate() {
+        // Check connections to see if they are still active
+        const state = store.getState()
+        const connections = state.connections
+        let current = state.current
+        for (const [, connection] of connections) {
+          const connector = connection.connector
+          // check if `connect.isAuthorized` exists
+          // partial connectors in storage do not have it
+          const isAuthorized = connector.isAuthorized
+            ? await connector.isAuthorized()
+            : false
+          if (isAuthorized) continue
+          // Remove stale connection
+          connections.delete(connector.uid)
+          if (current === connector.uid) current = null
+        }
+        // set connections
+        store.setState((x) => ({ ...x, connections, current }))
+      },
       store,
       ssr: Boolean(ssr),
       syncConnectedChain,
@@ -472,7 +491,9 @@ export function createConfig<
       },
       connectors: {
         providerDetailToConnector,
-        setup,
+        setup: setup as <connectorFn extends CreateConnectorFn>(
+          connectorFn: connectorFn,
+        ) => Connector<connectorFn>,
         setState(value) {
           return connectors.setState(
             typeof value === 'function' ? value(connectors.getState()) : value,
@@ -492,15 +513,50 @@ export function createConfig<
 // Types
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
+export type CreateConfigParameters<
+  chains extends readonly [Chain, ...Chain[]] = readonly [Chain, ...Chain[]],
+  transports extends Record<chains[number]['id'], Transport> = Record<
+    chains[number]['id'],
+    Transport
+  >,
+  connectorFns extends
+    readonly CreateConnectorFn[] = readonly CreateConnectorFn[],
+> = Compute<
+  {
+    chains: chains
+    connectors?: connectorFns | undefined
+    multiInjectedProviderDiscovery?: boolean | undefined
+    storage?: Storage | null | undefined
+    ssr?: boolean | undefined
+    syncConnectedChain?: boolean | undefined
+  } & OneOf<
+    | ({ transports: transports } & {
+        [key in keyof ClientConfig]?:
+          | ClientConfig[key]
+          | { [_ in chains[number]['id']]?: ClientConfig[key] | undefined }
+          | undefined
+      })
+    | {
+        client(parameters: {
+          chain: chains[number]
+        }): Client<transports[chains[number]['id']], chains[number]>
+      }
+  >
+>
+
 export type Config<
   chains extends readonly [Chain, ...Chain[]] = readonly [Chain, ...Chain[]],
   transports extends Record<chains[number]['id'], Transport> = Record<
     chains[number]['id'],
     Transport
   >,
+  connectorFns extends
+    readonly CreateConnectorFn[] = readonly CreateConnectorFn[],
 > = {
   readonly chains: chains
-  readonly connectors: readonly Connector[]
+  readonly connectors: Readonly<{
+    [key in keyof connectorFns]: Connector<connectorFns[key]>
+  }>
   readonly storage: Storage | null
 
   readonly state: State<chains>
@@ -537,6 +593,7 @@ type Internal<
   >,
 > = {
   readonly mipd: MipdStore | undefined
+  revalidate: () => Promise<void>
   readonly store: Mutate<StoreApi<any>, [['zustand/persist', any]]>
   readonly ssr: boolean
   readonly syncConnectedChain: boolean
@@ -561,7 +618,9 @@ type Internal<
     providerDetailToConnector(
       providerDetail: EIP6963ProviderDetail,
     ): CreateConnectorFn
-    setup(connectorFn: CreateConnectorFn): Connector
+    setup<connectorFn extends CreateConnectorFn>(
+      connectorFn: connectorFn,
+    ): Connector<connectorFn>
     setState(value: Connector[] | ((state: Connector[]) => Connector[])): void
     subscribe(
       listener: (state: Connector[], prevState: Connector[]) => void,
@@ -593,7 +652,9 @@ export type Connection = {
   connector: Connector
 }
 
-export type Connector = ReturnType<CreateConnectorFn> & {
+export type Connector<
+  createConnectorFn extends CreateConnectorFn = CreateConnectorFn,
+> = ReturnType<createConnectorFn> & {
   emitter: Emitter<ConnectorEventMap>
   uid: string
 }

@@ -3,17 +3,13 @@ import type {
   ResolvedRegister,
   WaitForTransactionReceiptErrorType,
 } from '@wagmi/core'
-import type { Compute } from '@wagmi/core/internal'
+import type { Compute, ConfigParameter } from '@wagmi/core/internal'
 import {
   type WaitForTransactionReceiptData,
   type WaitForTransactionReceiptOptions,
-  type WaitForTransactionReceiptQueryFnData,
-  type WaitForTransactionReceiptQueryKey,
   waitForTransactionReceiptQueryOptions,
 } from '@wagmi/core/query'
 import { computed } from 'vue'
-
-import type { ConfigParameter, QueryParameter } from '../types/properties.js'
 import type { DeepMaybeRef } from '../types/ref.js'
 import { deepUnref } from '../utils/cloneDeep.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
@@ -27,14 +23,8 @@ export type UseWaitForTransactionReceiptParameters<
   selectData = WaitForTransactionReceiptData<config, chainId>,
 > = Compute<
   DeepMaybeRef<
-    WaitForTransactionReceiptOptions<config, chainId> &
-      ConfigParameter<config> &
-      QueryParameter<
-        WaitForTransactionReceiptQueryFnData<config, chainId>,
-        WaitForTransactionReceiptErrorType,
-        selectData,
-        WaitForTransactionReceiptQueryKey<config, chainId>
-      >
+    WaitForTransactionReceiptOptions<config, chainId, selectData> &
+      ConfigParameter<config>
   >
 >
 
@@ -52,33 +42,20 @@ export function useWaitForTransactionReceipt<
     config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = WaitForTransactionReceiptData<config, chainId>,
 >(
-  parameters_: UseWaitForTransactionReceiptParameters<
+  parameters: UseWaitForTransactionReceiptParameters<
     config,
     chainId,
     selectData
   > = {},
 ): UseWaitForTransactionReceiptReturnType<config, chainId, selectData> {
-  const parameters = computed(() => deepUnref(parameters_))
-  const config = useConfig(parameters_)
-  const configChainId = useChainId()
-
-  const queryOptions = computed(() => {
-    const { chainId = configChainId.value, hash, query = {} } = parameters.value
-
-    const options = waitForTransactionReceiptQueryOptions(config, {
-      ...parameters.value,
-      chainId,
-    })
-    const enabled = Boolean(hash && (query.enabled ?? true))
-
-    return {
-      ...query,
-      ...options,
-      enabled,
-    }
-  })
-
-  return useQuery(
-    queryOptions as any,
-  ) as UseWaitForTransactionReceiptReturnType<config, chainId, selectData>
+  const params = computed(() => deepUnref(parameters))
+  const config = useConfig(params)
+  const chainId = useChainId({ config })
+  const options = computed(() =>
+    waitForTransactionReceiptQueryOptions(config as any, {
+      ...(params.value as any),
+      chainId: params.value.chainId ?? chainId.value,
+    }),
+  )
+  return useQuery(options as any) as any
 }

@@ -1,0 +1,78 @@
+# `dex.withdraw`
+
+Withdraws tokens from the Stablecoin DEX to your wallet.  
+
+## Usage
+
+::: code-group
+
+```ts twoslash [example.ts]
+// @twoslash-cache: {"v":1,"hash":"023ba6e6ceee483261ba554408e01773012c9493ad2b5216c866b9cc71fec07f","data":"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="}
+// @filename: config.ts
+// @errors: 2322
+import type { Config } from 'wagmi'
+export const config = {} as Config
+// @filename: example.ts
+// ---cut---
+import { Actions } from 'wagmi/tempo'
+import { parseUnits } from 'viem'
+import { config } from './config'
+
+const { receipt } = await Actions.dex.withdrawSync(config, {
+  amount: parseUnits('100', 6),
+  token: '0x20c0000000000000000000000000000000000001',
+})
+
+console.log('Transaction hash:', receipt.transactionHash)
+```
+
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
+
+:::
+
+### Asynchronous Usage
+
+The example above uses a `*Sync` variant of the action, that will wait for the transaction to be included before returning.
+
+If you are optimizing for performance, you should use the non-sync `dex.withdraw` action and wait for inclusion manually:
+
+```ts
+import { Actions } from 'wagmi/tempo'
+import { waitForTransactionReceipt } from 'wagmi/actions'
+import { parseUnits } from 'viem'
+
+const hash = await Actions.dex.withdraw(config, {
+  amount: parseUnits('100', 6),
+  token: '0x20c0000000000000000000000000000000000001',
+})
+const receipt = await waitForTransactionReceipt(config, { hash })
+```
+
+## Return Type
+
+```ts
+type ReturnType = {
+  /** Transaction receipt */
+  receipt: TransactionReceipt
+}
+```
+
+## Parameters
+
+### amount
+
+- **Type:** `bigint`
+
+Amount of tokens to withdraw.
+
+### token
+
+- **Type:** `Address`
+
+Address of the token to withdraw.
+
+<!--@include: @shared/tempo-write-parameters.md-->
+
+## Viem
+
+- [`dex.withdraw`](https://viem.sh/tempo/actions/dex.withdraw)

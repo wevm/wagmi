@@ -8,11 +8,6 @@ test('types', () => {
         gasPrice?: undefined
         maxFeePerGas: bigint
         maxPriorityFeePerGas: bigint
-        formatted: {
-          gasPrice?: undefined
-          maxFeePerGas: string
-          maxPriorityFeePerGas: string
-        }
       }
     | undefined
   >()
@@ -23,11 +18,6 @@ test('types', () => {
         gasPrice: bigint
         maxFeePerGas?: undefined
         maxPriorityFeePerGas?: undefined
-        formatted: {
-          gasPrice: string
-          maxFeePerGas?: undefined
-          maxPriorityFeePerGas?: undefined
-        }
       }
     | undefined
   >()
@@ -38,11 +28,6 @@ test('types', () => {
         gasPrice?: undefined
         maxFeePerGas: bigint
         maxPriorityFeePerGas: bigint
-        formatted: {
-          gasPrice?: undefined
-          maxFeePerGas: string
-          maxPriorityFeePerGas: string
-        }
       }
     | undefined
   >()

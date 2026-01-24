@@ -1,3 +1,7 @@
+---
+title: createConfig
+---
+
 <script setup>
 const docsPath = 'react'
 const packageName = 'wagmi'

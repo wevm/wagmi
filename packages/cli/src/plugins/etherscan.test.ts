@@ -1,24 +1,27 @@
+import { mkdir, rm } from 'node:fs/promises'
 import { setupServer } from 'msw/node'
 import { afterAll, afterEach, beforeAll, expect, test } from 'vitest'
 
 import {
   address,
   apiKey,
-  handlers,
+  getHandlers,
   invalidApiKey,
+  proxyAddress,
   timeoutAddress,
   unverifiedContractAddress,
 } from '../../test/utils.js'
 import { etherscan } from './etherscan.js'
+import { getCacheDir } from './fetch.js'
 
-const server = setupServer(...handlers)
+const server = setupServer(...getHandlers())
 
 beforeAll(() => server.listen())
 afterEach(() => server.resetHandlers())
 afterAll(() => server.close())
 
-test('fetches ABI', () => {
-  expect(
+test('fetches ABI', async () => {
+  await expect(
     etherscan({
       apiKey,
       chainId: 1,
@@ -27,8 +30,8 @@ test('fetches ABI', () => {
   ).resolves.toMatchSnapshot()
 })
 
-test('fetches ABI with multichain deployment', () => {
-  expect(
+test('fetches ABI with multichain deployment', async () => {
+  await expect(
     etherscan({
       apiKey,
       chainId: 1,
@@ -39,8 +42,8 @@ test('fetches ABI with multichain deployment', () => {
   ).resolves.toMatchSnapshot()
 })
 
-test('fails to fetch for unverified contract', () => {
-  expect(
+test('fails to fetch for unverified contract', async () => {
+  await expect(
     etherscan({
       apiKey,
       chainId: 1,
@@ -53,8 +56,8 @@ test('fails to fetch for unverified contract', () => {
   )
 })
 
-test('missing address for chainId', () => {
-  expect(
+test('missing address for chainId', async () => {
+  await expect(
     etherscan({
       apiKey,
       chainId: 1,
@@ -66,12 +69,44 @@ test('missing address for chainId', () => {
   )
 })
 
-test('invalid api key', () => {
-  expect(
+test('invalid api key', async () => {
+  await expect(
     etherscan({
       apiKey: invalidApiKey,
       chainId: 1,
       contracts: [{ name: 'WagmiMintExample', address: timeoutAddress }],
     }).contracts?.(),
   ).rejects.toThrowErrorMatchingInlineSnapshot('[Error: Invalid API Key]')
+})
+
+test('tryFetchProxyImplementation: fetches ABI', async () => {
+  const cacheDir = getCacheDir()
+  await mkdir(cacheDir, { recursive: true })
+
+  await expect(
+    etherscan({
+      apiKey,
+      chainId: 1,
+      contracts: [{ name: 'WagmiMintExample', address }],
+      tryFetchProxyImplementation: true,
+    }).contracts?.(),
+  ).resolves.toMatchSnapshot()
+
+  await rm(cacheDir, { recursive: true })
+})
+
+test('tryFetchProxyImplementation: fetches implementation ABI', async () => {
+  const cacheDir = getCacheDir()
+  await mkdir(cacheDir, { recursive: true })
+
+  await expect(
+    etherscan({
+      apiKey,
+      chainId: 1,
+      contracts: [{ name: 'FiatToken', address: proxyAddress }],
+      tryFetchProxyImplementation: true,
+    }).contracts?.(),
+  ).resolves.toMatchSnapshot()
+
+  await rm(cacheDir, { recursive: true })
 })

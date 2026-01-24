@@ -4,7 +4,7 @@ description: Action to request for the wallet to show information about a call b
 ---
 
 <script setup>
-const packageName = 'wagmi/experimental'
+const packageName = 'wagmi'
 const actionName = 'showCallsStatus'
 const typeName = 'ShowCallsStatus'
 const mutate = 'showCallsStatus'
@@ -15,34 +15,31 @@ const TVariables = 'ShowCallsStatusVariables'
 
 # useShowCallsStatus
 
-Action to request for the wallet to show information about a call batch that was sent via `useShowCalls`.
+Action to request for the wallet to show information about a call batch that was sent via `useSendCalls`.
 
 [Read more.](https://github.com/ethereum/EIPs/blob/1663ea2e7a683285f977eda51c32cec86553f585/EIPS/eip-5792.md#wallet_showcallsstatus)
 
-::: warning
-This is an experimental action that is not supported in most wallets. It is recommended to have a fallback mechanism if using this in production.
-:::
+ 
 
 ## Import
 
 ```ts
-import { useShowCallsStatus } from 'wagmi/experimental'
+import { useShowCallsStatus } from 'wagmi'
 ```
 
 ## Usage
 
 ::: code-group
 ```tsx [index.tsx]
-import { useShowCallsStatus } from 'wagmi/experimental'
+import { useShowCallsStatus } from 'wagmi'
 import { parseEther } from 'viem'
 
 function App() {
-  const { showCallsStatus } = useShowCallsStatus()
-
+  const showCallsStatus = useShowCallsStatus()
   return (
     <button
       onClick={() =>
-        showCallsStatus({
+        showCallsStatus.mutate({
           id: '0x1234567890abcdef',
         })
       }
@@ -58,22 +55,22 @@ function App() {
 ## Parameters
 
 ```ts
-import { type UseShowCallsStatusParameters } from 'wagmi/experimental'
+import { type UseShowCallsStatusParameters } from 'wagmi'
 ```
 
 ### config
 
 `Config | undefined`
 
-[`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/api/WagmiProvider).
+[`Config`](/react/api/createConfig#config) to use instead of retrieving from the nearest [`WagmiProvider`](/react/api/WagmiProvider).
 
 ::: code-group
 ```tsx [index.tsx]
-import { useShowCallsStatus } from 'wagmi/experimental'
+import { useShowCallsStatus } from 'wagmi'
 import { config } from './config' // [!code focus]
 
 function App() {
-  const result = useShowCallsStatus({
+  const showCallsStatus = useShowCallsStatus({
     config, // [!code focus]
   })
 }
@@ -86,7 +83,7 @@ function App() {
 ## Return Type
 
 ```ts
-import { type UseShowCallsStatusReturnType } from 'wagmi/experimental'
+import { type UseShowCallsStatusReturnType } from 'wagmi'
 ```
 
 <!--@include: @shared/mutation-result.md-->

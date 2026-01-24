@@ -22,15 +22,10 @@ import type {
 } from '../types/properties.js'
 import type { Compute, UnionCompute } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
-import { getAccount } from './getAccount.js'
 import {
   type GetConnectorClientErrorType,
   getConnectorClient,
 } from './getConnectorClient.js'
-import {
-  type SimulateContractErrorType,
-  simulateContract,
-} from './simulateContract.js'
 
 export type WriteContractParameters<
   abi extends Abi | readonly unknown[] = Abi,
@@ -52,7 +47,7 @@ export type WriteContractParameters<
 > = UnionCompute<
   {
     // TODO: Should use `UnionStrictOmit<..., 'chain'>` on `viem_WriteContractParameters` result instead
-    // temp workaround that doesn't affect runtime behavior for for https://github.com/wevm/wagmi/issues/3981
+    // temp workaround that doesn't affect runtime behavior for https://github.com/wevm/wagmi/issues/3981
     [key in keyof chains]: viem_WriteContractParameters<
       abi,
       functionName,
@@ -64,7 +59,7 @@ export type WriteContractParameters<
     >
   }[number] &
     Compute<ChainIdParameter<config, chainId>> &
-    ConnectorParameter & { __mode?: 'prepared' }
+    ConnectorParameter
 >
 
 export type WriteContractReturnType = viem_WriteContractReturnType
@@ -72,8 +67,6 @@ export type WriteContractReturnType = viem_WriteContractReturnType
 export type WriteContractErrorType =
   // getConnectorClient()
   | GetConnectorClientErrorType
-  // simulateContract()
-  | SimulateContractErrorType
   // base
   | BaseErrorType
   | ErrorType
@@ -95,33 +88,30 @@ export async function writeContract<
   config: config,
   parameters: WriteContractParameters<abi, functionName, args, config, chainId>,
 ): Promise<WriteContractReturnType> {
-  const { account, chainId, connector, __mode, ...rest } = parameters
+  const { account, chainId, connector, ...request } = parameters
 
   let client: Client
-  if (typeof account === 'object' && account.type === 'local')
+  if (typeof account === 'object' && account?.type === 'local')
     client = config.getClient({ chainId })
   else
-    client = await getConnectorClient(config, { account, chainId, connector })
-
-  const { connector: activeConnector } = getAccount(config)
-
-  let request: any
-  if (__mode === 'prepared' || activeConnector?.supportsSimulation)
-    request = rest
-  else {
-    const { request: simulateRequest } = await simulateContract(config, {
-      ...rest,
-      account,
+    client = await getConnectorClient(config, {
+      account: account ?? undefined,
+      assertChainId: false,
       chainId,
-    } as any)
-    request = simulateRequest
-  }
+      connector,
+    })
+
+  const chain = (() => {
+    if (!chainId || client.chain?.id === chainId) return client.chain
+    return { id: chainId }
+  })()
 
   const action = getAction(client, viem_writeContract, 'writeContract')
   const hash = await action({
-    ...request,
+    ...(request as any),
     ...(account ? { account } : {}),
-    chain: chainId ? { id: chainId } : null,
+    assertChainId: !!chainId,
+    chain,
   })
 
   return hash

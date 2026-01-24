@@ -5,7 +5,7 @@ description: Hook for getting Viem `Client` instance.
 
 # useClient
 
-Hook for getting Viem [`Client`](https://viem.sh/docs/clients/custom.html) instance.
+Hook for getting Viem [`Client`](https://viem.sh/docs/clients/custom) instance.
 
 ## Import
 
@@ -57,7 +57,7 @@ function App() {
 
 `Config | undefined`
 
-[`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/api/WagmiProvider).
+[`Config`](/react/api/createConfig#config) to use instead of retrieving from the nearest [`WagmiProvider`](/react/api/WagmiProvider).
 
 ::: code-group
 ```tsx [index.tsx]
@@ -81,7 +81,7 @@ import { type UseClientReturnType } from 'wagmi'
 
 `Client | undefined`
 
-Viem [`Client`](https://viem.sh/docs/clients/custom.html) instance.
+Viem [`Client`](https://viem.sh/docs/clients/custom) instance.
 
 ## Action
 

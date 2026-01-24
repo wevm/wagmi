@@ -15,11 +15,12 @@ test('default', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "prepareTransactionRequest",
         {
-          "to": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "to": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "value": 1000000000000000000n,
         },
       ],
@@ -38,6 +39,7 @@ test('parameters: account', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "prepareTransactionRequest",
@@ -46,13 +48,15 @@ test('parameters: account', () => {
             "address": "0x14791697260E4c9A71f18484C9f997B308e59325",
             "nonceManager": undefined,
             "publicKey": "0x046655feed4d214c261e0a6b554395596f1f1476a77d999560e5a8df9b8a1a3515217e88dd05e938efdd71b2cce322bf01da96cd42087b236e8f5043157a9c068e",
+            "sign": [Function],
+            "signAuthorization": [Function],
             "signMessage": [Function],
             "signTransaction": [Function],
             "signTypedData": [Function],
             "source": "privateKey",
             "type": "local",
           },
-          "to": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "to": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "value": 1000000000000000000n,
         },
       ],
@@ -69,12 +73,13 @@ test('parameters: data', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "prepareTransactionRequest",
         {
           "data": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-          "to": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "to": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "value": 1000000000000000000n,
         },
       ],
@@ -91,12 +96,13 @@ test('parameters: chainId', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "prepareTransactionRequest",
         {
           "chainId": 456,
-          "to": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "to": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "value": 1000000000000000000n,
         },
       ],
@@ -113,12 +119,13 @@ test('parameters: nonce', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "prepareTransactionRequest",
         {
           "nonce": 5,
-          "to": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "to": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "value": 1000000000000000000n,
         },
       ],
@@ -135,12 +142,13 @@ test('parameters: gasPrice', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "prepareTransactionRequest",
         {
           "gasPrice": 10000000000n,
-          "to": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "to": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "value": 1000000000000000000n,
         },
       ],
@@ -157,12 +165,13 @@ test('parameters: maxFeePerGas', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "prepareTransactionRequest",
         {
           "maxFeePerGas": 100000000000n,
-          "to": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "to": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "value": 1000000000000000000n,
         },
       ],
@@ -179,12 +188,13 @@ test('parameters: maxPriorityFeePerGas', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "prepareTransactionRequest",
         {
           "maxPriorityFeePerGas": 5000000000n,
-          "to": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "to": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "value": 1000000000000000000n,
         },
       ],
@@ -201,11 +211,12 @@ test('parameters: type', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "prepareTransactionRequest",
         {
-          "to": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "to": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "type": "eip1559",
           "value": 1000000000000000000n,
         },
@@ -223,6 +234,7 @@ test('parameters: parameters', () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "enabled": true,
       "queryFn": [Function],
       "queryKey": [
         "prepareTransactionRequest",
@@ -230,7 +242,7 @@ test('parameters: parameters', () => {
           "parameters": [
             "gas",
           ],
-          "to": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "to": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "value": 1000000000000000000n,
         },
       ],

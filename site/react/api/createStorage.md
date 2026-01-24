@@ -1,3 +1,7 @@
+---
+title: createStorage
+---
+
 <script setup>
 const docsPath = "react"
 const packageName = 'wagmi'

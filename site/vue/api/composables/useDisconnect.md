@@ -30,11 +30,11 @@ import { useDisconnect } from '@wagmi/vue'
 <script setup lang="ts">
 import { useDisconnect } from '@wagmi/vue'
 
-const { disconnect } = useDisconnect()
+const disconnect = useDisconnect()
 </script>
 
 <template>
-  <button @click="disconnect()">
+  <button @click="disconnect.mutate()">
     Disconnect
   </button>
 </template>
@@ -60,7 +60,7 @@ import { type UseDisconnectParameters } from '@wagmi/vue'
 import { useDisconnect } from '@wagmi/vue'
 import { config } from './config' // [!code focus]
 
-const result = useDisconnect({
+const disconnect = useDisconnect({
   config, // [!code focus]
 })
 </script>
@@ -75,32 +75,6 @@ const result = useDisconnect({
 ```ts
 import { type UseDisconnectReturnType } from '@wagmi/vue'
 ```
-
-### connectors
-
-`readonly Connector[]`
-
-Connectors that are currently connected. Useful for rendering a list of connectors to disconnect.
-
-::: code-group
-```vue [index.vue]
-<script setup lang="ts">
-import { useDisconnect } from '@wagmi/vue'
-import { mainnet } from 'wagmi/chains'
-
-const { connectors, disconnect } = useDisconnect()
-</script>
-
-<template>
-  <div>
-    <button v-for="connector in connectors" :key="connector.id" @click="disconnect({ connector })">
-      {{ connector.name }}
-    </button>
-  </div>
-</template>
-```
-<<< @/snippets/vue/config.ts[config.ts]
-:::
 
 <!--@include: @shared/mutation-result.md-->
 

@@ -10,7 +10,7 @@ const typeName = 'Connect'
 const mutate = 'connect'
 const TData = '{ accounts: readonly [Address, ...Address[]]; chainId: number; }'
 const TError = 'ConnectErrorType'
-const TVariables = '{ chainId?: number | undefined; connector?: CreateConnectorFn | Connector | undefined; }'
+const TVariables = '{ chainId?: number | undefined; connector?: CreateConnectorFn | Connector | undefined; withCapabilities?: boolean | undefined }'
 </script>
 
 # useConnect
@@ -31,10 +31,9 @@ import { useConnect } from 'wagmi'
 import { injected } from 'wagmi/connectors'
 
 function App() {
-  const { connect } = useConnect()
-
+  const connect = useConnect()
   return (
-    <button onClick={() => connect({ connector: injected() })}>
+    <button onClick={() => connect.mutate({ connector: injected() })}>
       Connect
     </button>
   )
@@ -53,7 +52,7 @@ import { type UseConnectParameters } from 'wagmi'
 
 `Config | undefined`
 
-[`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/api/WagmiProvider).
+[`Config`](/react/api/createConfig#config) to use instead of retrieving from the nearest [`WagmiProvider`](/react/api/WagmiProvider).
 
 ::: code-group
 ```tsx [index.tsx]
@@ -61,7 +60,7 @@ import { useConnect } from 'wagmi'
 import { config } from './config' // [!code focus]
 
 function App() {
-  const result = useConnect({
+  const connect = useConnect({
     config, // [!code focus]
   })
 }
@@ -77,7 +76,7 @@ function App() {
 import { type UseConnectReturnType } from 'wagmi'
 ```
 
-### connectors
+### connectors <Badge type="warning">[deprecated](/react/guides/migrate-from-v2-to-v3#removed-useconnect-connectors-usereconnect-connectors)</Badge>
 
 `readonly Connector[]`
 
@@ -88,12 +87,12 @@ Globally configured connectors via [`createConfig`](/react/api/createConfig#conn
 import { useConnect } from 'wagmi'
 
 function App() {
-  const { connect, connectors } = useConnect()
+  const connect = useConnect()
 
   return (
     <div>
-      {connectors.map((connector) => (
-        <button key={connector.id} onClick={() => connect({ connector })}>
+      {connect.connectors.map((connector) => (
+        <button key={connector.id} onClick={() => connect.mutate({ connector })}>
           {connector.name}
         </button>
       ))}

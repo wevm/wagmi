@@ -6,7 +6,7 @@ const typeName = 'GetBalance'
 
 # getBalance
 
-Action for fetching native currency or token balance.
+Action for fetching native currency balance.
 
 ## Import
 
@@ -114,45 +114,6 @@ const balance = await getBalance(config, {
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
-### token
-
-`Address | undefined`
-
-ERC-20 token address to get balance for.
-
-::: code-group
-```ts [index.ts]
-import { getBalance } from '@wagmi/core'
-import { config } from './config'
-
-const balance = getBalance(config, {
-  address: '0x4557B18E779944BFE9d78A672452331C186a9f48',
-  token: '0x6B175474E89094C44Da98b954EedeAC495271d0F', // [!code focus]
-})
-```
-<<< @/snippets/core/config.ts[config.ts]
-:::
-
-### unit
-
-`'ether' | 'gwei' | 'wei' | number | undefined`
-
-- Units to use when formatting result.
-- Defaults to `'ether'`.
-
-::: code-group
-```ts [index.ts]
-import { getBalance } from '@wagmi/core'
-import { config } from './config'
-
-const balance = getBalance(config, {
-  address: '0x4557B18E779944BFE9d78A672452331C186a9f48',
-  unit: 'ether', // [!code focus]
-})
-```
-<<< @/snippets/core/config.ts[config.ts]
-:::
-
 ## Return Type
 
 ```ts
@@ -165,17 +126,11 @@ import { type GetBalanceReturnType } from '@wagmi/core'
 
 Number of decimals for balance [`value`](#value).
 
-### formatted
-
-`string`
-
-Formatted value of balance using [`unit`](#unit).
-
 ### symbol
 
 `string`
 
-Symbol of native currency or token.
+Symbol of native currency.
 
 ### value
 
@@ -193,5 +148,5 @@ import { type GetBalanceErrorType } from '@wagmi/core'
 
 ## Viem
 
-- [`getBalance`](https://viem.sh/docs/actions/public/getBalance.html) for native currency balances
-- [`multicall`](https://viem.sh/docs/actions/public/multicall.html) for token balances
+- [`getBalance`](https://viem.sh/docs/actions/public/getBalance) for native currency balances
+- [`multicall`](https://viem.sh/docs/contract/multicall) for token balances

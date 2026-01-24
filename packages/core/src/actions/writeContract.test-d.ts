@@ -1,5 +1,5 @@
 import { abi, config } from '@wagmi/test'
-import { http, type Address, parseAbi } from 'viem'
+import { type Address, http, parseAbi } from 'viem'
 import { celo, mainnet } from 'viem/chains'
 import { expectTypeOf, test } from 'vitest'
 
@@ -28,7 +28,6 @@ test('simulateContract', async () => {
   })
   await writeContract(config, request)
   await writeContract(config, {
-    __mode: 'prepared',
     address: '0x',
     abi: abi.erc20,
     functionName: 'transferFrom',

@@ -1,13 +1,20 @@
 {
+  "name": "workspace",
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "pnpm run --r --filter \"./packages/**\" build",
-    "changeset:prepublish": "pnpm version:update && pnpm build && bun scripts/formatPackageJson.ts && bun scripts/generateProxyPackages.ts",
+    "build": "pnpm run --filter @wagmi/core --filter @wagmi/cli build && pnpm run --filter @wagmi/connectors build && pnpm run --filter wagmi --filter @wagmi/solid --filter @wagmi/vue build",
+    "bench:types": "TYPES=true vitest bench-d.ts",
+    "changeset:prepublish": "pnpm clean && pnpm version:update && pnpm build && node scripts/formatPackageJson.ts && node scripts/generateProxyPackages.ts",
     "changeset:publish": "pnpm changeset:prepublish && changeset publish",
     "changeset:version": "changeset version && pnpm version:update && pnpm format",
+    "check": "biome check --write",
+    "check:repo": "sherif -i viem",
+    "check:types": "pnpm run --r --parallel check:types && tsc --noEmit",
+    "check:unused": "pnpm clean && knip",
     "clean": "pnpm run --r --parallel clean && rm -rf packages/**/*.json.tmp",
     "deps": "pnpx taze -r",
+    "deps:ci": "pnpx actions-up",
     "dev": "pnpm dev:react",
     "dev:cli": "pnpm --filter cli dev",
     "dev:core": "pnpm --filter vite-core dev",
@@ -15,112 +22,132 @@
     "dev:next": "pnpm --filter next-app dev",
     "dev:nuxt": "pnpm --filter nuxt-app dev",
     "dev:react": "pnpm --filter vite-react dev",
+    "dev:solid": "pnpm --filter vite-solid dev",
+    "dev:solid-start": "pnpm --filter solid-start-app dev",
+    "dev:start": "pnpm --filter tanstack-start dev",
     "dev:vue": "pnpm --filter vite-vue dev",
     "docs:dev": "pnpm --filter site dev",
-    "check": "biome check --write",
-    "check:repo": "sherif -i viem",
-    "check:types": "pnpm run --r --parallel typecheck && tsc --noEmit",
-    "check:unused": "pnpm clean && knip",
     "format": "biome format --write",
     "postinstall": "pnpm preconstruct",
-    "preconstruct": "bun scripts/preconstruct.ts",
+    "preconstruct": "node scripts/preconstruct.ts",
     "preinstall": "pnpx only-allow pnpm",
     "prepare": "pnpm simple-git-hooks",
     "test": "vitest",
-    "test:build": "bun scripts/generateProxyPackages.ts && pnpm run --r --parallel test:build",
-    "test:cli": "vitest --project @wagmi/cli",
-    "test:core": "vitest --project @wagmi/core",
-    "test:create-wagmi": "vitest --project create-wagmi",
+    "test:build": "node scripts/generateProxyPackages.ts && pnpm run --r --parallel test:build",
     "test:cov": "vitest run --coverage",
-    "test:react": "vitest --project wagmi",
-    "test:typecheck": "vitest typecheck",
     "test:update": "vitest --update",
-    "test:ui": "vitest --ui",
-    "test:vue": "vitest --project @wagmi/vue",
-    "version:update": "bun scripts/updateVersion.ts",
-    "version:update:viem": "bun scripts/updateViemVersion.ts"
+    "version:update": "node scripts/updateVersion.ts",
+    "version:update:viem": "node scripts/updateViemVersion.ts"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.16.4",
-    "@biomejs/biome": "^1.9.2",
-    "@changesets/changelog-github": "0.4.6",
-    "@changesets/cli": "^2.27.8",
-    "@types/bun": "^1.1.10",
-    "@vitest/coverage-v8": "^2.1.1",
-    "@vitest/ui": "^2.1.1",
+    "@ark/attest": "^0.56.0",
+    "@biomejs/biome": "^2.2.4",
+    "@changesets/cli": "^3.0.0-next.0",
+    "@svitejs/changesets-changelog-github-compact": "^1.2.0",
+    "@types/node": "^24.5.1",
+    "@vitejs/plugin-react": "catalog:",
+    "@vitest/browser": "^4.0.16",
+    "@vitest/browser-playwright": "^4.0.16",
+    "@vitest/coverage-v8": "^4.0.16",
     "@wagmi/test": "workspace:*",
-    "bun": "^1.1.29",
-    "glob": "^10.4.5",
-    "happy-dom": "^15.7.4",
-    "knip": "^5.30.6",
-    "prool": "^0.0.16",
+    "happy-dom": "^20.0.0",
+    "knip": "^5.69.0",
+    "playwright": "1.56.1",
+    "prool": "^0.2.2",
     "publint": "^0.2.11",
+    "react": "catalog:",
+    "react-dom": "catalog:",
     "sherif": "^1.0.0",
     "simple-git-hooks": "^2.11.1",
-    "typescript": "5.5.2",
-    "viem": "2.17.0",
-    "vitest": "^2.1.1"
+    "solid-js": "catalog:",
+    "testcontainers": "^11.11.0",
+    "typescript": "^5.9.3",
+    "viem": "^2.44.4",
+    "vite-plugin-react-fallback-throttle": "^0.1.1",
+    "vite-plugin-solid": "catalog:",
+    "vitest": "^4.0.16",
+    "vitest-browser-react": "^2.0.2"
   },
-  "packageManager": "pnpm@9.11.0",
-  "pnpm": {
-    "peerDependencyRules": {
-      "ignoreMissing": [
-        "@algolia/client-search",
-        "react",
-        "react-native",
-        "search-insights"
-      ]
+  "packageManager": "pnpm@10.22.0",
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "^24.5.1",
+      "onFail": "download"
     }
-  },
-  "engines": {
-    "node": "22.x"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm check"
   },
   "knip": {
-    "ignore": ["**/templates/**", "**/hardhat.config.js"],
-    "ignoreBinaries": ["only-allow"],
+    "ignore": [
+      "**/templates/**",
+      "**/hardhat.config.js",
+      "packages/**/*.bench-d.ts",
+      "scripts/**"
+    ],
     "ignoreWorkspaces": [
       "packages/register-tests/**",
       "packages/test",
-      "playgrounds/**"
+      "playgrounds/**",
+      "site/**"
     ],
     "workspaces": {
-      ".": {
-        "project": "scripts/*.ts"
-      },
       "packages/cli": {
         "entry": [
           "src/cli.ts!",
           "src/exports/{config,index,plugins}.ts!",
           "types/*.d.ts!"
         ],
-        "ignore": ["test/{constants,setup,utils}.ts"]
+        "ignore": [
+          "test/{constants,setup,utils}.ts"
+        ]
       },
       "packages/connectors": {
         "entry": "src/exports/index.ts!",
-        "ignoreDependencies": ["@walletconnect/modal"]
+        "ignoreDependencies": [
+          "@base-org/account",
+          "@coinbase/wallet-sdk",
+          "@gemini-wallet/core",
+          "@metamask/sdk",
+          "@safe-global/safe-apps-provider",
+          "@safe-global/safe-apps-sdk",
+          "@wagmi/core",
+          "@walletconnect/ethereum-provider",
+          "porto"
+        ]
       },
       "packages/core": {
-        "entry": "src/exports/{actions,chains,codegen,experimental,index,internal,query}.ts!",
-        "ignore": ["test/setup.ts"],
-        "ignoreDependencies": ["@tanstack/query-core"]
+        "entry": "src/exports/{actions,chains,codegen,experimental,index,internal,query,tempo}.ts!",
+        "ignore": [
+          "test/setup.ts"
+        ],
+        "ignoreDependencies": [
+          "@tanstack/query-core",
+          "ox"
+        ]
       },
       "packages/create-wagmi": {
         "entry": "src/cli.ts!"
       },
       "packages/react": {
         "entry": [
-          "src/exports/{actions,chains,codegen,connectors,experimental,index,query}.ts!",
+          "src/exports/{actions,chains,codegen,connectors,experimental,index,query,tempo}.ts!",
           "src/exports/actions/experimental.ts!"
         ],
-        "ignore": ["test/setup.ts"]
+        "ignore": [
+          "test/setup.ts"
+        ]
       },
       "packages/test": {
         "entry": [
-          "src/{globalSetup,setup}.ts!",
-          "src/exports/{index,react}.ts!"
+          "src/setup.ts!",
+          "src/setup.global.ts!",
+          "src/setup.global.types.ts!",
+          "src/exports/{index,react,tempo}.ts!",
+          "src/tempo/setup.ts!",
+          "src/tempo/setup.global.ts!"
         ]
       },
       "packages/vue": {
@@ -128,11 +155,22 @@
           "src/exports/{actions,chains,connectors,index,nuxt,query}.ts!",
           "src/exports/actions/experimental.ts!"
         ],
-        "ignore": ["src/nuxt/runtime/*", "test/setup.ts"],
-        "ignoreDependencies": ["nuxt"]
+        "ignore": [
+          "src/nuxt/runtime/*",
+          "test/setup.ts"
+        ],
+        "ignoreDependencies": [
+          "nuxt"
+        ]
       },
-      "site": {
-        "project": ["**/*.ts", "**/*.tsx"]
+      "packages/solid": {
+        "entry": [
+          "src/exports/{actions,chains,connectors,index,query}.ts!",
+          "src/exports/actions/experimental.ts!"
+        ],
+        "ignore": [
+          "test/setup.ts"
+        ]
       }
     }
   }

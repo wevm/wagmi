@@ -1,19 +1,20 @@
 <script setup lang="ts">
-import { useChainId, useConnect } from '@wagmi/vue'
+import { useChainId, useConnect, useConnectors } from '@wagmi/vue'
 
 const chainId = useChainId()
-const { connect, connectors, error, status } = useConnect()
+const connect = useConnect()
+const connectors = useConnectors()
 </script>
 
 <template>
   <h2>Connect</h2>
 
-  <button v-for="connector in connectors" :key="connector.id" type="button" @click="connect({ connector, chainId })">
+  <button v-for="connector in connectors" :key="connector.id" type="button" @click="connect.mutate({ connector, chainId })">
     {{ connector.name }}
   </button>
 
   <div>
-    {{ status }}
-    {{ error?.message }}
+    {{ connect.status.value }}
+    {{ connect.error?.value?.message }}
   </div>
 </template>

@@ -65,6 +65,10 @@ export function getSidebar() {
             link: '/react/guides/faq',
           },
           {
+            text: 'Migrate from v2 to v3',
+            link: '/react/guides/migrate-from-v2-to-v3',
+          },
+          {
             text: 'Migrate from v1 to v2',
             link: '/react/guides/migrate-from-v1-to-v2',
           },
@@ -82,8 +86,12 @@ export function getSidebar() {
             link: '/react/api/connectors',
             items: [
               {
-                text: 'coinbaseWallet',
-                link: '/react/api/connectors/coinbaseWallet',
+                text: 'baseAccount',
+                link: '/react/api/connectors/baseAccount',
+              },
+              {
+                text: 'gemini',
+                link: '/react/api/connectors/gemini',
               },
               { text: 'injected', link: '/react/api/connectors/injected' },
               {
@@ -93,6 +101,10 @@ export function getSidebar() {
               {
                 text: 'mock',
                 link: '/react/api/connectors/mock',
+              },
+              {
+                text: 'porto',
+                link: '/react/api/connectors/porto',
               },
               {
                 text: 'safe',
@@ -138,13 +150,12 @@ export function getSidebar() {
         text: 'Hooks',
         link: '/react/api/hooks',
         items: [
-          { text: 'useAccount', link: '/react/api/hooks/useAccount' },
-          {
-            text: 'useAccountEffect',
-            link: '/react/api/hooks/useAccountEffect',
-          },
           { text: 'useAddChain', link: '/react/api/hooks/useAddChain' },
           { text: 'useBalance', link: '/react/api/hooks/useBalance' },
+          {
+            text: 'useBlobBaseFee',
+            link: '/react/api/hooks/useBlobBaseFee',
+          },
           {
             text: 'useBlockNumber',
             link: '/react/api/hooks/useBlockNumber',
@@ -162,11 +173,24 @@ export function getSidebar() {
             link: '/react/api/hooks/useBytecode',
           },
           { text: 'useCall', link: '/react/api/hooks/useCall' },
+          {
+            text: 'useCallsStatus',
+            link: '/react/api/hooks/useCallsStatus',
+          },
+          {
+            text: 'useCapabilities',
+            link: '/react/api/hooks/useCapabilities',
+          },
           { text: 'useChainId', link: '/react/api/hooks/useChainId' },
           { text: 'useChains', link: '/react/api/hooks/useChains' },
           { text: 'useClient', link: '/react/api/hooks/useClient' },
           { text: 'useConfig', link: '/react/api/hooks/useConfig' },
           { text: 'useConnect', link: '/react/api/hooks/useConnect' },
+          { text: 'useConnection', link: '/react/api/hooks/useConnection' },
+          {
+            text: 'useConnectionEffect',
+            link: '/react/api/hooks/useConnectionEffect',
+          },
           {
             text: 'useConnections',
             link: '/react/api/hooks/useConnections',
@@ -178,6 +202,10 @@ export function getSidebar() {
           {
             text: 'useConnectors',
             link: '/react/api/hooks/useConnectors',
+          },
+          {
+            text: 'useContractEvents',
+            link: '/react/api/hooks/useContractEvents',
           },
           {
             text: 'useDeployContract',
@@ -228,12 +256,12 @@ export function getSidebar() {
             link: '/react/api/hooks/useInfiniteReadContracts',
           },
           {
-            text: 'useReadContract',
-            link: '/react/api/hooks/useReadContract',
-          },
-          {
             text: 'usePrepareTransactionRequest',
             link: '/react/api/hooks/usePrepareTransactionRequest',
+          },
+          {
+            text: 'useReadContract',
+            link: '/react/api/hooks/useReadContract',
           },
           {
             text: 'useReadContracts',
@@ -241,8 +269,16 @@ export function getSidebar() {
           },
           { text: 'useReconnect', link: '/react/api/hooks/useReconnect' },
           {
+            text: 'useSendCalls',
+            link: '/react/api/hooks/useSendCalls',
+          },
+          {
             text: 'useSendTransaction',
             link: '/react/api/hooks/useSendTransaction',
+          },
+          {
+            text: 'useShowCallsStatus',
+            link: '/react/api/hooks/useShowCallsStatus',
           },
           {
             text: 'useSignMessage',
@@ -261,12 +297,12 @@ export function getSidebar() {
             link: '/react/api/hooks/useStorageAt',
           },
           {
-            text: 'useSwitchAccount',
-            link: '/react/api/hooks/useSwitchAccount',
-          },
-          {
             text: 'useSwitchChain',
             link: '/react/api/hooks/useSwitchChain',
+          },
+          {
+            text: 'useSwitchConnection',
+            link: '/react/api/hooks/useSwitchConnection',
           },
           {
             text: 'useTransaction',
@@ -285,8 +321,8 @@ export function getSidebar() {
             link: '/react/api/hooks/useTransactionReceipt',
           },
           {
-            text: 'useToken',
-            link: '/react/api/hooks/useToken',
+            text: 'useWaitForCallsStatus',
+            link: '/react/api/hooks/useWaitForCallsStatus',
           },
           {
             text: 'useWaitForTransactionReceipt',
@@ -344,37 +380,8 @@ export function getSidebar() {
                 link: '/react/api/utilities/cookieToInitialState',
               },
               { text: 'deserialize', link: '/react/api/utilities/deserialize' },
-              {
-                text: 'normalizeChainId',
-                link: '/react/api/utilities/normalizeChainId',
-              },
               { text: 'serialize', link: '/react/api/utilities/serialize' },
             ],
-          },
-        ],
-      },
-      {
-        text: 'Experimental',
-        items: [
-          {
-            text: 'useCallsStatus',
-            link: '/react/api/hooks/useCallsStatus',
-          },
-          {
-            text: 'useCapabilities',
-            link: '/react/api/hooks/useCapabilities',
-          },
-          {
-            text: 'useSendCalls',
-            link: '/react/api/hooks/useSendCalls',
-          },
-          {
-            text: 'useShowCallsStatus',
-            link: '/react/api/hooks/useShowCallsStatus',
-          },
-          {
-            text: 'useWriteContracts',
-            link: '/react/api/hooks/useWriteContracts',
           },
         ],
       },
@@ -446,8 +453,12 @@ export function getSidebar() {
             link: '/vue/api/connectors',
             items: [
               {
-                text: 'coinbaseWallet',
-                link: '/vue/api/connectors/coinbaseWallet',
+                text: 'baseAccount',
+                link: '/vue/api/connectors/baseAccount',
+              },
+              {
+                text: 'gemini',
+                link: '/vue/api/connectors/gemini',
               },
               { text: 'injected', link: '/vue/api/connectors/injected' },
               {
@@ -457,6 +468,10 @@ export function getSidebar() {
               {
                 text: 'mock',
                 link: '/vue/api/connectors/mock',
+              },
+              {
+                text: 'porto',
+                link: '/vue/api/connectors/porto',
               },
               {
                 text: 'safe',
@@ -503,11 +518,6 @@ export function getSidebar() {
         text: 'Composables',
         link: '/vue/api/composables',
         items: [
-          { text: 'useAccount', link: '/vue/api/composables/useAccount' },
-          {
-            text: 'useAccountEffect',
-            link: '/vue/api/composables/useAccountEffect',
-          },
           {
             text: 'useBalance',
             link: '/vue/api/composables/useBalance',
@@ -525,6 +535,11 @@ export function getSidebar() {
           { text: 'useClient', link: '/vue/api/composables/useClient' },
           { text: 'useConfig', link: '/vue/api/composables/useConfig' },
           { text: 'useConnect', link: '/vue/api/composables/useConnect' },
+          { text: 'useConnection', link: '/vue/api/composables/useConnection' },
+          {
+            text: 'useConnectionEffect',
+            link: '/vue/api/composables/useConnectionEffect',
+          },
           {
             text: 'useConnections',
             link: '/vue/api/composables/useConnections',
@@ -578,12 +593,12 @@ export function getSidebar() {
             link: '/vue/api/composables/useSimulateContract',
           },
           {
-            text: 'useSwitchAccount',
-            link: '/vue/api/composables/useSwitchAccount',
-          },
-          {
             text: 'useSwitchChain',
             link: '/vue/api/composables/useSwitchChain',
+          },
+          {
+            text: 'useSwitchConnection',
+            link: '/vue/api/composables/useSwitchConnection',
           },
           {
             text: 'useTransaction',
@@ -672,6 +687,10 @@ export function getSidebar() {
             link: '/core/guides/faq',
           },
           {
+            text: 'Migrate from v2 to v3',
+            link: '/core/guides/migrate-from-v2-to-v3',
+          },
+          {
             text: 'Migrate from v1 to v2',
             link: '/core/guides/migrate-from-v1-to-v2',
           },
@@ -690,8 +709,12 @@ export function getSidebar() {
             link: '/core/api/connectors',
             items: [
               {
-                text: 'coinbaseWallet',
-                link: '/core/api/connectors/coinbaseWallet',
+                text: 'baseAccount',
+                link: '/core/api/connectors/baseAccount',
+              },
+              {
+                text: 'gemini',
+                link: '/core/api/connectors/gemini',
               },
               { text: 'injected', link: '/core/api/connectors/injected' },
               {
@@ -701,6 +724,10 @@ export function getSidebar() {
               {
                 text: 'mock',
                 link: '/core/api/connectors/mock',
+              },
+              {
+                text: 'porto',
+                link: '/core/api/connectors/porto',
               },
               {
                 text: 'safe',
@@ -762,8 +789,11 @@ export function getSidebar() {
             text: 'estimateMaxPriorityFeePerGas',
             link: '/core/api/actions/estimateMaxPriorityFeePerGas',
           },
-          { text: 'getAccount', link: '/core/api/actions/getAccount' },
           { text: 'getBalance', link: '/core/api/actions/getBalance' },
+          {
+            text: 'getBlobBaseFee',
+            link: '/core/api/actions/getBlobBaseFee',
+          },
           {
             text: 'getBlock',
             link: '/core/api/actions/getBlock',
@@ -780,12 +810,21 @@ export function getSidebar() {
             text: 'getBytecode',
             link: '/core/api/actions/getBytecode',
           },
+          {
+            text: 'getCallsStatus',
+            link: '/core/api/actions/getCallsStatus',
+          },
+          {
+            text: 'getCapabilities',
+            link: '/core/api/actions/getCapabilities',
+          },
           { text: 'getChainId', link: '/core/api/actions/getChainId' },
           { text: 'getChains', link: '/core/api/actions/getChains' },
           {
             text: 'getClient',
             link: '/core/api/actions/getClient',
           },
+          { text: 'getConnection', link: '/core/api/actions/getConnection' },
           {
             text: 'getConnections',
             link: '/core/api/actions/getConnections',
@@ -797,6 +836,10 @@ export function getSidebar() {
           {
             text: 'getConnectors',
             link: '/core/api/actions/getConnectors',
+          },
+          {
+            text: 'getContractEvents',
+            link: '/core/api/actions/getContractEvents',
           },
           {
             text: 'getEnsAddress',
@@ -832,7 +875,6 @@ export function getSidebar() {
             text: 'getStorageAt',
             link: '/core/api/actions/getStorageAt',
           },
-          { text: 'getToken', link: '/core/api/actions/getToken' },
           {
             text: 'getTransaction',
             link: '/core/api/actions/getTransaction',
@@ -871,8 +913,16 @@ export function getSidebar() {
             link: '/core/api/actions/readContracts',
           },
           {
+            text: 'sendCalls',
+            link: '/core/api/actions/sendCalls',
+          },
+          {
             text: 'sendTransaction',
             link: '/core/api/actions/sendTransaction',
+          },
+          {
+            text: 'showCallsStatus',
+            link: '/core/api/actions/showCallsStatus',
           },
           {
             text: 'signMessage',
@@ -887,12 +937,12 @@ export function getSidebar() {
             link: '/core/api/actions/simulateContract',
           },
           {
-            text: 'switchAccount',
-            link: '/core/api/actions/switchAccount',
-          },
-          {
             text: 'switchChain',
             link: '/core/api/actions/switchChain',
+          },
+          {
+            text: 'switchConnection',
+            link: '/core/api/actions/switchConnection',
           },
           {
             text: 'verifyMessage',
@@ -903,12 +953,12 @@ export function getSidebar() {
             link: '/core/api/actions/verifyTypedData',
           },
           {
-            text: 'waitForTransactionReceipt',
-            link: '/core/api/actions/waitForTransactionReceipt',
+            text: 'waitForCallsStatus',
+            link: '/core/api/actions/waitForCallsStatus',
           },
           {
-            text: 'watchAccount',
-            link: '/core/api/actions/watchAccount',
+            text: 'waitForTransactionReceipt',
+            link: '/core/api/actions/waitForTransactionReceipt',
           },
           {
             text: 'watchAsset',
@@ -929,6 +979,10 @@ export function getSidebar() {
           {
             text: 'watchClient',
             link: '/core/api/actions/watchClient',
+          },
+          {
+            text: 'watchConnection',
+            link: '/core/api/actions/watchConnection',
           },
           {
             text: 'watchConnections',
@@ -969,37 +1023,8 @@ export function getSidebar() {
                 link: '/core/api/utilities/cookieToInitialState',
               },
               { text: 'deserialize', link: '/core/api/utilities/deserialize' },
-              {
-                text: 'normalizeChainId',
-                link: '/core/api/utilities/normalizeChainId',
-              },
               { text: 'serialize', link: '/core/api/utilities/serialize' },
             ],
-          },
-        ],
-      },
-      {
-        text: 'Experimental',
-        items: [
-          {
-            text: 'getCallsStatus',
-            link: '/core/api/actions/getCallsStatus',
-          },
-          {
-            text: 'getCapabilities',
-            link: '/core/api/actions/getCapabilities',
-          },
-          {
-            text: 'sendCalls',
-            link: '/core/api/actions/sendCalls',
-          },
-          {
-            text: 'showCallsStatus',
-            link: '/core/api/actions/showCallsStatus',
-          },
-          {
-            text: 'writeContracts',
-            link: '/core/api/actions/writeContracts',
           },
         ],
       },
@@ -1090,6 +1115,491 @@ export function getSidebar() {
             text: 'Sign In With Ethereum',
             link: '/examples/sign-in-with-ethereum',
           },
+        ],
+      },
+    ],
+    '/tempo': [
+      {
+        text: 'Tempo',
+        items: [
+          { text: 'Getting Started', link: '/tempo/getting-started' },
+          { text: 'Chains', link: '/tempo/chains' },
+          { text: 'Tempo Docs & Guides', link: 'https://docs.tempo.xyz' },
+        ],
+      },
+      {
+        text: 'Hooks',
+        link: '/tempo/hooks/',
+        items: [
+          {
+            text: 'AMM',
+            collapsed: true,
+            items: [
+              { text: 'useBurn', link: '/tempo/hooks/amm.useBurn' },
+              {
+                text: 'useLiquidityBalance',
+                link: '/tempo/hooks/amm.useLiquidityBalance',
+              },
+              { text: 'useMint', link: '/tempo/hooks/amm.useMint' },
+              { text: 'usePool', link: '/tempo/hooks/amm.usePool' },
+              {
+                text: 'useRebalanceSwap',
+                link: '/tempo/hooks/amm.useRebalanceSwap',
+              },
+              { text: 'useWatchBurn', link: '/tempo/hooks/amm.useWatchBurn' },
+              {
+                text: 'useWatchFeeSwap',
+                link: '/tempo/hooks/amm.useWatchFeeSwap',
+              },
+              { text: 'useWatchMint', link: '/tempo/hooks/amm.useWatchMint' },
+              {
+                text: 'useWatchRebalanceSwap',
+                link: '/tempo/hooks/amm.useWatchRebalanceSwap',
+              },
+            ],
+          },
+          {
+            text: 'DEX',
+            collapsed: true,
+            items: [
+              { text: 'useBalance', link: '/tempo/hooks/dex.useBalance' },
+              { text: 'useBuy', link: '/tempo/hooks/dex.useBuy' },
+              { text: 'useBuyQuote', link: '/tempo/hooks/dex.useBuyQuote' },
+              { text: 'useCancel', link: '/tempo/hooks/dex.useCancel' },
+              { text: 'useCreatePair', link: '/tempo/hooks/dex.useCreatePair' },
+              { text: 'useOrder', link: '/tempo/hooks/dex.useOrder' },
+              { text: 'usePlace', link: '/tempo/hooks/dex.usePlace' },
+              { text: 'usePlaceFlip', link: '/tempo/hooks/dex.usePlaceFlip' },
+              { text: 'useSell', link: '/tempo/hooks/dex.useSell' },
+              { text: 'useSellQuote', link: '/tempo/hooks/dex.useSellQuote' },
+              { text: 'useTickLevel', link: '/tempo/hooks/dex.useTickLevel' },
+              {
+                text: 'useWatchFlipOrderPlaced',
+                link: '/tempo/hooks/dex.useWatchFlipOrderPlaced',
+              },
+              {
+                text: 'useWatchOrderCancelled',
+                link: '/tempo/hooks/dex.useWatchOrderCancelled',
+              },
+              {
+                text: 'useWatchOrderFilled',
+                link: '/tempo/hooks/dex.useWatchOrderFilled',
+              },
+              {
+                text: 'useWatchOrderPlaced',
+                link: '/tempo/hooks/dex.useWatchOrderPlaced',
+              },
+              { text: 'useWithdraw', link: '/tempo/hooks/dex.useWithdraw' },
+            ],
+          },
+          {
+            text: 'Faucet',
+            collapsed: true,
+            items: [{ text: 'useFund', link: '/tempo/hooks/faucet.useFund' }],
+          },
+          {
+            text: 'Fee',
+            collapsed: true,
+            items: [
+              {
+                text: 'useSetUserToken',
+                link: '/tempo/hooks/fee.useSetUserToken',
+              },
+              { text: 'useUserToken', link: '/tempo/hooks/fee.useUserToken' },
+              {
+                text: 'useWatchSetUserToken',
+                link: '/tempo/hooks/fee.useWatchSetUserToken',
+              },
+            ],
+          },
+          {
+            text: 'Nonce',
+            collapsed: true,
+            items: [
+              { text: 'useNonce', link: '/tempo/hooks/nonce.useNonce' },
+              {
+                text: 'useNonceKeyCount',
+                link: '/tempo/hooks/nonce.useNonceKeyCount',
+              },
+              {
+                text: 'useWatchActiveKeyCountChanged',
+                link: '/tempo/hooks/nonce.useWatchActiveKeyCountChanged',
+              },
+              {
+                text: 'useWatchNonceIncremented',
+                link: '/tempo/hooks/nonce.useWatchNonceIncremented',
+              },
+            ],
+          },
+          {
+            text: 'Policy',
+            collapsed: true,
+            items: [
+              { text: 'useCreate', link: '/tempo/hooks/policy.useCreate' },
+              { text: 'useData', link: '/tempo/hooks/policy.useData' },
+              {
+                text: 'useIsAuthorized',
+                link: '/tempo/hooks/policy.useIsAuthorized',
+              },
+              {
+                text: 'useModifyBlacklist',
+                link: '/tempo/hooks/policy.useModifyBlacklist',
+              },
+              {
+                text: 'useModifyWhitelist',
+                link: '/tempo/hooks/policy.useModifyWhitelist',
+              },
+              { text: 'useSetAdmin', link: '/tempo/hooks/policy.useSetAdmin' },
+              {
+                text: 'useWatchAdminUpdated',
+                link: '/tempo/hooks/policy.useWatchAdminUpdated',
+              },
+              {
+                text: 'useWatchBlacklistUpdated',
+                link: '/tempo/hooks/policy.useWatchBlacklistUpdated',
+              },
+              {
+                text: 'useWatchCreate',
+                link: '/tempo/hooks/policy.useWatchCreate',
+              },
+              {
+                text: 'useWatchWhitelistUpdated',
+                link: '/tempo/hooks/policy.useWatchWhitelistUpdated',
+              },
+            ],
+          },
+          {
+            text: 'Reward',
+            collapsed: true,
+            items: [
+              { text: 'useClaim', link: '/tempo/hooks/reward.useClaim' },
+              {
+                text: 'useSetRecipient',
+                link: '/tempo/hooks/reward.useSetRecipient',
+              },
+              { text: 'useStart', link: '/tempo/hooks/reward.useStart' },
+              {
+                text: 'useUserRewardInfo',
+                link: '/tempo/hooks/reward.useUserRewardInfo',
+              },
+              {
+                text: 'useWatchRewardRecipientSet',
+                link: '/tempo/hooks/reward.useWatchRewardRecipientSet',
+              },
+              {
+                text: 'useWatchRewardScheduled',
+                link: '/tempo/hooks/reward.useWatchRewardScheduled',
+              },
+            ],
+          },
+          {
+            text: 'Token',
+            collapsed: true,
+            items: [
+              { text: 'useApprove', link: '/tempo/hooks/token.useApprove' },
+              { text: 'useBurn', link: '/tempo/hooks/token.useBurn' },
+              {
+                text: 'useBurnBlocked',
+                link: '/tempo/hooks/token.useBurnBlocked',
+              },
+              {
+                text: 'useChangeTransferPolicy',
+                link: '/tempo/hooks/token.useChangeTransferPolicy',
+              },
+              { text: 'useCreate', link: '/tempo/hooks/token.useCreate' },
+              {
+                text: 'useGetAllowance',
+                link: '/tempo/hooks/token.useGetAllowance',
+              },
+              {
+                text: 'useGetBalance',
+                link: '/tempo/hooks/token.useGetBalance',
+              },
+              {
+                text: 'useGetMetadata',
+                link: '/tempo/hooks/token.useGetMetadata',
+              },
+              {
+                text: 'useGrantRoles',
+                link: '/tempo/hooks/token.useGrantRoles',
+              },
+              { text: 'useHasRole', link: '/tempo/hooks/token.useHasRole' },
+              { text: 'useMint', link: '/tempo/hooks/token.useMint' },
+              { text: 'usePause', link: '/tempo/hooks/token.usePause' },
+              {
+                text: 'useRenounceRoles',
+                link: '/tempo/hooks/token.useRenounceRoles',
+              },
+              {
+                text: 'useRevokeRoles',
+                link: '/tempo/hooks/token.useRevokeRoles',
+              },
+              {
+                text: 'useSetRoleAdmin',
+                link: '/tempo/hooks/token.useSetRoleAdmin',
+              },
+              {
+                text: 'useSetSupplyCap',
+                link: '/tempo/hooks/token.useSetSupplyCap',
+              },
+              { text: 'useTransfer', link: '/tempo/hooks/token.useTransfer' },
+              { text: 'useUnpause', link: '/tempo/hooks/token.useUnpause' },
+              {
+                text: 'useWatchAdminRole',
+                link: '/tempo/hooks/token.useWatchAdminRole',
+              },
+              {
+                text: 'useWatchApprove',
+                link: '/tempo/hooks/token.useWatchApprove',
+              },
+              { text: 'useWatchBurn', link: '/tempo/hooks/token.useWatchBurn' },
+              {
+                text: 'useWatchCreate',
+                link: '/tempo/hooks/token.useWatchCreate',
+              },
+              { text: 'useWatchMint', link: '/tempo/hooks/token.useWatchMint' },
+              { text: 'useWatchRole', link: '/tempo/hooks/token.useWatchRole' },
+              {
+                text: 'useWatchTransfer',
+                link: '/tempo/hooks/token.useWatchTransfer',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        text: 'Actions',
+        link: '/tempo/actions/',
+        items: [
+          {
+            text: 'AMM',
+            collapsed: true,
+            items: [
+              { text: 'burn', link: '/tempo/actions/amm.burn' },
+              {
+                text: 'getLiquidityBalance',
+                link: '/tempo/actions/amm.getLiquidityBalance',
+              },
+              { text: 'getPool', link: '/tempo/actions/amm.getPool' },
+              { text: 'mint', link: '/tempo/actions/amm.mint' },
+              {
+                text: 'rebalanceSwap',
+                link: '/tempo/actions/amm.rebalanceSwap',
+              },
+              { text: 'watchBurn', link: '/tempo/actions/amm.watchBurn' },
+              { text: 'watchFeeSwap', link: '/tempo/actions/amm.watchFeeSwap' },
+              { text: 'watchMint', link: '/tempo/actions/amm.watchMint' },
+              {
+                text: 'watchRebalanceSwap',
+                link: '/tempo/actions/amm.watchRebalanceSwap',
+              },
+            ],
+          },
+          {
+            text: 'DEX',
+            collapsed: true,
+            items: [
+              { text: 'buy', link: '/tempo/actions/dex.buy' },
+              { text: 'cancel', link: '/tempo/actions/dex.cancel' },
+              { text: 'createPair', link: '/tempo/actions/dex.createPair' },
+              { text: 'getBalance', link: '/tempo/actions/dex.getBalance' },
+              { text: 'getBuyQuote', link: '/tempo/actions/dex.getBuyQuote' },
+              { text: 'getOrder', link: '/tempo/actions/dex.getOrder' },
+              { text: 'getSellQuote', link: '/tempo/actions/dex.getSellQuote' },
+              { text: 'getTickLevel', link: '/tempo/actions/dex.getTickLevel' },
+              { text: 'place', link: '/tempo/actions/dex.place' },
+              { text: 'placeFlip', link: '/tempo/actions/dex.placeFlip' },
+              { text: 'sell', link: '/tempo/actions/dex.sell' },
+              {
+                text: 'watchFlipOrderPlaced',
+                link: '/tempo/actions/dex.watchFlipOrderPlaced',
+              },
+              {
+                text: 'watchOrderCancelled',
+                link: '/tempo/actions/dex.watchOrderCancelled',
+              },
+              {
+                text: 'watchOrderFilled',
+                link: '/tempo/actions/dex.watchOrderFilled',
+              },
+              {
+                text: 'watchOrderPlaced',
+                link: '/tempo/actions/dex.watchOrderPlaced',
+              },
+              { text: 'withdraw', link: '/tempo/actions/dex.withdraw' },
+            ],
+          },
+          {
+            text: 'Faucet',
+            collapsed: true,
+            items: [{ text: 'fund', link: '/tempo/actions/faucet.fund' }],
+          },
+          {
+            text: 'Fee',
+            collapsed: true,
+            items: [
+              { text: 'getUserToken', link: '/tempo/actions/fee.getUserToken' },
+              { text: 'setUserToken', link: '/tempo/actions/fee.setUserToken' },
+              {
+                text: 'watchSetUserToken',
+                link: '/tempo/actions/fee.watchSetUserToken',
+              },
+            ],
+          },
+          {
+            text: 'Nonce',
+            collapsed: true,
+            items: [
+              { text: 'getNonce', link: '/tempo/actions/nonce.getNonce' },
+              {
+                text: 'getNonceKeyCount',
+                link: '/tempo/actions/nonce.getNonceKeyCount',
+              },
+              {
+                text: 'watchActiveKeyCountChanged',
+                link: '/tempo/actions/nonce.watchActiveKeyCountChanged',
+              },
+              {
+                text: 'watchNonceIncremented',
+                link: '/tempo/actions/nonce.watchNonceIncremented',
+              },
+            ],
+          },
+          {
+            text: 'Policy',
+            collapsed: true,
+            items: [
+              { text: 'create', link: '/tempo/actions/policy.create' },
+              { text: 'getData', link: '/tempo/actions/policy.getData' },
+              {
+                text: 'isAuthorized',
+                link: '/tempo/actions/policy.isAuthorized',
+              },
+              {
+                text: 'modifyBlacklist',
+                link: '/tempo/actions/policy.modifyBlacklist',
+              },
+              {
+                text: 'modifyWhitelist',
+                link: '/tempo/actions/policy.modifyWhitelist',
+              },
+              { text: 'setAdmin', link: '/tempo/actions/policy.setAdmin' },
+              {
+                text: 'watchAdminUpdated',
+                link: '/tempo/actions/policy.watchAdminUpdated',
+              },
+              {
+                text: 'watchBlacklistUpdated',
+                link: '/tempo/actions/policy.watchBlacklistUpdated',
+              },
+              {
+                text: 'watchCreate',
+                link: '/tempo/actions/policy.watchCreate',
+              },
+              {
+                text: 'watchWhitelistUpdated',
+                link: '/tempo/actions/policy.watchWhitelistUpdated',
+              },
+            ],
+          },
+          {
+            text: 'Reward',
+            collapsed: true,
+            items: [
+              { text: 'claim', link: '/tempo/actions/reward.claim' },
+              {
+                text: 'getUserRewardInfo',
+                link: '/tempo/actions/reward.getUserRewardInfo',
+              },
+              {
+                text: 'setRecipient',
+                link: '/tempo/actions/reward.setRecipient',
+              },
+              { text: 'start', link: '/tempo/actions/reward.start' },
+              {
+                text: 'watchRewardRecipientSet',
+                link: '/tempo/actions/reward.watchRewardRecipientSet',
+              },
+              {
+                text: 'watchRewardScheduled',
+                link: '/tempo/actions/reward.watchRewardScheduled',
+              },
+            ],
+          },
+          {
+            text: 'Token',
+            collapsed: true,
+            items: [
+              { text: 'approve', link: '/tempo/actions/token.approve' },
+              { text: 'burn', link: '/tempo/actions/token.burn' },
+              { text: 'burnBlocked', link: '/tempo/actions/token.burnBlocked' },
+              {
+                text: 'changeTransferPolicy',
+                link: '/tempo/actions/token.changeTransferPolicy',
+              },
+              { text: 'create', link: '/tempo/actions/token.create' },
+              {
+                text: 'getAllowance',
+                link: '/tempo/actions/token.getAllowance',
+              },
+              { text: 'getBalance', link: '/tempo/actions/token.getBalance' },
+              { text: 'getMetadata', link: '/tempo/actions/token.getMetadata' },
+              { text: 'grantRoles', link: '/tempo/actions/token.grantRoles' },
+              { text: 'hasRole', link: '/tempo/actions/token.hasRole' },
+              { text: 'mint', link: '/tempo/actions/token.mint' },
+              { text: 'pause', link: '/tempo/actions/token.pause' },
+              {
+                text: 'renounceRoles',
+                link: '/tempo/actions/token.renounceRoles',
+              },
+              { text: 'revokeRoles', link: '/tempo/actions/token.revokeRoles' },
+              {
+                text: 'setRoleAdmin',
+                link: '/tempo/actions/token.setRoleAdmin',
+              },
+              {
+                text: 'setSupplyCap',
+                link: '/tempo/actions/token.setSupplyCap',
+              },
+              { text: 'transfer', link: '/tempo/actions/token.transfer' },
+              { text: 'unpause', link: '/tempo/actions/token.unpause' },
+              {
+                text: 'watchAdminRole',
+                link: '/tempo/actions/token.watchAdminRole',
+              },
+              {
+                text: 'watchApprove',
+                link: '/tempo/actions/token.watchApprove',
+              },
+              { text: 'watchBurn', link: '/tempo/actions/token.watchBurn' },
+              { text: 'watchCreate', link: '/tempo/actions/token.watchCreate' },
+              { text: 'watchMint', link: '/tempo/actions/token.watchMint' },
+              { text: 'watchRole', link: '/tempo/actions/token.watchRole' },
+              {
+                text: 'watchTransfer',
+                link: '/tempo/actions/token.watchTransfer',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        text: 'Connectors',
+        link: '/tempo/connectors/',
+        items: [
+          {
+            text: 'dangerous_secp256k1',
+            link: '/tempo/connectors/dangerous_secp256k1',
+          },
+          { text: 'webAuthn', link: '/tempo/connectors/webAuthn' },
+        ],
+      },
+      {
+        text: 'Key Managers',
+        link: '/tempo/keyManagers/',
+        items: [
+          { text: 'http', link: '/tempo/keyManagers/http' },
+          { text: 'localStorage', link: '/tempo/keyManagers/localStorage' },
         ],
       },
     ],

@@ -1,3 +1,7 @@
+---
+title: cookieToInitialState
+---
+
 <script setup>
 const packageName = 'wagmi'
 </script>

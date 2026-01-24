@@ -184,4 +184,4 @@ import { type GetEnsAddressErrorType } from '@wagmi/core'
 
 ## Viem
 
-- [`getEnsAddress`](https://viem.sh/docs/ens/actions/getEnsAddress.html)
+- [`getEnsAddress`](https://viem.sh/docs/ens/actions/getEnsAddress)

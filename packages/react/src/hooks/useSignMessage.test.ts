@@ -1,10 +1,9 @@
-import { connect, disconnect, getAccount } from '@wagmi/core'
+import { connect, disconnect, getConnection } from '@wagmi/core'
 import { config, privateKey } from '@wagmi/test'
-import { renderHook, waitFor } from '@wagmi/test/react'
+import { renderHook } from '@wagmi/test/react'
 import { recoverMessageAddress } from 'viem'
-import { expect, test } from 'vitest'
-
 import { privateKeyToAccount } from 'viem/accounts'
+import { expect, test, vi } from 'vitest'
 import { useSignMessage } from './useSignMessage.js'
 
 const connector = config.connectors[0]!
@@ -12,27 +11,27 @@ const connector = config.connectors[0]!
 test('default', async () => {
   await connect(config, { connector })
 
-  const { result } = renderHook(() => useSignMessage())
+  const { result } = await renderHook(() => useSignMessage())
 
-  result.current.signMessage({ message: 'foo bar baz' })
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  result.current.mutate({ message: 'foo bar baz' })
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   await expect(
     recoverMessageAddress({
       message: 'foo bar baz',
       signature: result.current.data!,
     }),
-  ).resolves.toEqual(getAccount(config).address)
+  ).resolves.toEqual(getConnection(config).address)
 
   await disconnect(config, { connector })
 })
 
 test('behavior: local account', async () => {
-  const { result } = renderHook(() => useSignMessage())
+  const { result } = await renderHook(() => useSignMessage())
 
   const account = privateKeyToAccount(privateKey)
-  result.current.signMessage({ account, message: 'foo bar baz' })
-  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  result.current.mutate({ account, message: 'foo bar baz' })
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
 
   await expect(
     recoverMessageAddress({

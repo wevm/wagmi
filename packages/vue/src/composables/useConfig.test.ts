@@ -17,7 +17,7 @@ test('behavior: throws when not provided via WagmiPlugin', () => {
     expect(error).toMatchInlineSnapshot(`
       [WagmiPluginNotFoundError: No \`config\` found in Vue context, use \`WagmiPlugin\` to properly initialize the library.
 
-      Docs: https://wagmi.sh/vue/api/TODO.html
+      Docs: https://wagmi.sh/vue/api/Nuxt.html
       Version: @wagmi/vue@x.y.z]
     `)
   }

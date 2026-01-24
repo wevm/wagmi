@@ -37,16 +37,24 @@ export type CreateConnectorFn<
     readonly icon?: string | undefined
     readonly id: string
     readonly name: string
-    readonly supportsSimulation?: boolean | undefined
+    readonly rdns?: string | readonly string[] | undefined
     readonly type: string
 
     setup?(): Promise<void>
-    connect(
+    // TODO(v3): Make `withCapabilities: true` default behavior
+    connect<withCapabilities extends boolean = false>(
       parameters?:
-        | { chainId?: number | undefined; isReconnecting?: boolean | undefined }
+        | {
+            chainId?: number | undefined
+            isReconnecting?: boolean | undefined
+            withCapabilities?: withCapabilities | boolean | undefined
+          }
         | undefined,
     ): Promise<{
-      accounts: readonly Address[]
+      // TODO(v3): Add `capabilities` (e.g. `readonly { address: Address; capabilities: Record<string, unknown> | undefined }`)
+      accounts: withCapabilities extends true
+        ? readonly { address: Address; capabilities: Record<string, unknown> }[]
+        : readonly Address[]
       chainId: number
     }>
     disconnect(): Promise<void>
@@ -80,6 +88,12 @@ export function createConnector<
   provider,
   properties extends Record<string, unknown> = Record<string, unknown>,
   storageItem extends Record<string, unknown> = Record<string, unknown>,
->(createConnectorFn: CreateConnectorFn<provider, properties, storageItem>) {
+  ///
+  createConnectorFn extends CreateConnectorFn<
+    provider,
+    properties,
+    storageItem
+  > = CreateConnectorFn<provider, properties, storageItem>,
+>(createConnectorFn: createConnectorFn) {
   return createConnectorFn
 }

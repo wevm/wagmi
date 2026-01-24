@@ -1,13 +1,14 @@
-import { coinbaseWallet, metaMask, walletConnect } from '@wagmi/connectors'
-import { http, createConfig, createStorage } from '@wagmi/core'
+import { baseAccount, gemini, metaMask, walletConnect } from '@wagmi/connectors'
+import { createConfig, createStorage, http } from '@wagmi/core'
 import { mainnet, optimism, sepolia } from '@wagmi/core/chains'
 
 export const config = createConfig({
   chains: [mainnet, sepolia, optimism],
   connectors: [
     walletConnect({ projectId: import.meta.env.VITE_WC_PROJECT_ID }),
-    coinbaseWallet(),
+    baseAccount(),
     metaMask(),
+    gemini(),
   ],
   storage: createStorage({ storage: localStorage, key: 'vite-core' }),
   transports: {

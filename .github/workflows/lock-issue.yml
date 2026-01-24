@@ -1,4 +1,6 @@
 name: Lock Issue
+permissions:
+  issues: write
 
 on:
   schedule:
@@ -7,7 +9,7 @@ on:
 jobs:
   lock-issue:
     if: ${{ github.repository_owner == 'wevm' }}
-    uses: wevm/actions/.github/workflows/lock-issue.yml@main
+    uses: wevm/actions/.github/workflows/lock-issue.yml@f7ad7f00e16e73322562922c241f21f0c7ffbbec
     with:
       issue-comment: |
         This issue has been locked since it has been closed for more than 14 days.

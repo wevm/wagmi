@@ -30,20 +30,6 @@ export default defineConfig({
 })
 ```
 
-The following Etherscan block explorers and their testnets are supported (e.g. Ethereum Mainnet and Sepolia):
-
-- [Ethereum](https://etherscan.io)
-- [Arbiscan](https://arbiscan.io)
-- [SnowScan](https://snowscan.xyz)
-- [BscScan](https://bscscan.com)
-- [FTMScan](https://ftmscan.com)
-- [HecoScan](https://hecoinfo.com)
-- [Optimistic Etherscan](https://optimistic.etherscan.io)
-- [PolygonScan](https://polygonscan.com)
-- [CeloScan](https://celoscan.io)
-- [FraxScan](https://fraxscan.com)
-- [GnosisScan](https://gnosisscan.io)
-
 ## Configuration
 
 ```ts
@@ -110,6 +96,8 @@ export default defineConfig({
 
 Chain ID to use for fetching ABI. If [`address`](/cli/config/options#address) is an object, `chainId` is used to select the address.
 
+View supported chains on the [Etherscan docs](https://docs.etherscan.io/etherscan-v2/getting-started/supported-chains).
+
 ```ts
 import { defineConfig } from '@wagmi/cli'
 import { blockExplorer } from '@wagmi/cli/plugins'
@@ -162,3 +150,33 @@ export default defineConfig({
   ],
 })
 ```
+
+### tryFetchProxyImplementation
+
+`boolean | undefined`
+
+- Whether to try fetching proxy implementation address of the contract.
+- Defaults to `false`.
+
+```ts
+import { defineConfig } from '@wagmi/cli'
+import { blockExplorer } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    etherscan({
+      apiKey: process.env.ETHERSCAN_API_KEY,
+      chainId: 1, 
+      contracts: [
+        {
+          name: 'FiatToken',
+          address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+        },
+      ],
+      tryFetchProxyImplementation: true, // [!code focus]
+    }),
+  ],
+})
+```
+
+

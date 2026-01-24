@@ -1,0 +1,77 @@
+# `fee.setUserToken`
+
+Sets the user's default fee token preference. [Learn more about fees](https://docs.tempo.xyz/protocol/fees)
+
+## Usage
+
+::: code-group
+
+```ts twoslash [example.ts]
+// @twoslash-cache: {"v":1,"hash":"f0b0a406d4ab0b85a6a931aef7b66a18557d4e63a6f5cf4303ff3b1ade02ff54","data":"N4Igdg9gJgpgziAXAbVAFwJ4AcZJACwgDcYAnEAGhDRgA808BLAWywlLQAIBBAYzUYQwCKnDQBDDkgCcVADYwwAczT4kAdioTSSmA0Qg+AoSJBzGYXIgAMVXvknj+ZGQF8K6bFYLEXWuvogABTi5uJwAJScvCZcMWAAZoxKiJwAwkJJSgA6YCxsHNGZyZQgYpL6ACyaZooqaogAbFqSuoHxWaXmlkgAjHYOpE405IjS7p44eIQk5P70ePFinKQwvDCMWGipACpDwsOCYABKaxtbpeVSiAAc/bXKqhotOnp4q+ubDPIWVgDMA0czlGNwm1C8018c2oASYrHYXCMR1MV300lkD3qz2orTeBiRJi6vyQAJA9iBIyQACZGmDMFMDDM/DCFgZ8gjOAkYLhRNp9L1rDUFI8GqTtG08FyeWZiYhSeShsCSZU6RDGVDSjRWSAEgBXMD8I6cOB6ACqJtIOwgAGtFABlDAGgA8GUSyQAfEEOslUq6shROFhHMw9GQ4KkCcIAHRSqMmtDmshW21gB0GqMABWDodIcBdxSU7oiqQzpAgzEYJqdwFynDrnF1FtSAANrLQACTAMSkCxKVzNgDctfraBtihbbc73d7/aHYHrKzOX12+zghyEp0+WznrnduTA4hDcCD62NZotyftjt4pSgEF4CAMdr0cE4qhgDYtAHJX7AEuJdTkLgpTfMcwCjXJcgAOQgGhdnwStOEQ8RjWvfAy0gRtOHXedVHELgAHdxEYNBXwSdg33wD80FXHDQNyAAjD8LF4ORdVgKBOCEbDOAYuR72tXiYHI1ZFzQXVSDyZQeNWY8TBgKNNXEJRH2QZAQDoQ8sAUUpmz00jcnZQpgGiVZ8JgP1kgDfA0DQLBOFcTky2YTgvwAASIpQKwAehiVYv0M+FjLfGB4Qcpzy1cjzlJ8vyYF8hwLDgAK8iCrgTMjV9HISZyos82L2Himh4RS3IljiAtOAAXlMmBzMspQghredokS4RUmQYq2B2eA0EsNAAF0KGHGjxGEApSNSZqF060K2CjRgoAG1IbLsoIImGlr3FyVwIkgg1YkXOBAK4GrxCIkieENEwY25ONzyTMC014L0CwDabQJTVIvzbKlrF4KNAesawAFYQa/TbdtyPTmxAIb1KDIZmFKb0lE4ABadIC0U+GQERw9SnxkMRlfTGsyRnM4Bxih1NWcTJNMHYqLfWjrvnD5zi4MbOJgEgwC4KB8PEHGhrKPk+l6e5hSxRBemaHFXkCeNE0tJ7ryJHo5UBRVKTlUEPHBBkfFmTVYQMEIwkiIphAqt0Uixu3Aom63Ol5Co+ipG55DqJ4mheCUDFRjX/m14YXEQMHVSNploS1QIgiwMscA4DAolHL7OGyEBfv+4G8/zgvC6L4vrF6LPLnF2XKlsTFfZB/28WoMDg6QSpQ6VRAqSj7wY9N7UDyPE8PyWCAFFyIhJGtuBR5gX0TBn2970fEAmY/ZsR4UZtOGYaBAI/RPiEW+AeLgfIFE4WAGN1JQlF7KeZ8o/CkNfU+KzkSfR0omBcgAKXECe7S8B7Fse+58QzkjyHAFyB8iBH04gxDAnACIwAYrxMsBELRU32qvbeu9z50Amq+NABEIDGhwLwRgSReBFHhJYfm4Z9oACoeCcGbK6aem9ojvzgK+AiJF8Dbz0IQKAL9dT2Gwq+de88FBRn4o1CIzYAxSOEDPKMZAyykHWlvbmrCN4KSIpJLRj84hjSEp+GAnFP4ER7DQUC2EwCIJgrAKMAArF+NE6rMAgmAZh3BOBKH4gxUIujpEwC3klCQBph4FgkhYux1iSLUVIcgZsB91g8LjGgO8uo0DNgGkEVaWBwzeW8pAWAbiozsCUN5O8D5vLvxoGIdGRAqSVCjLQby4gsCMG8mk+AVMbLMDkAAYj6TwsQ2S0BRG5rkFJYyqYTPUXkgptkimIBKWUmAFSqk1KXvU8yTSWltI6V0np8yoyDJGfMxZpBSARCjJwHBASIBBLkCElRnDeCmKYuYzifDVAQByUhNKd93ysM2YgPRW8d5QD3t43IAB9RhjCADqkgpJKGRQi+CH5nmvNAR+F5Li1hoB/IIgFIjsKiUsPwsgU9Kw0H5nIDAuQ4BoQwoC185hbRfzQRADBdLuAZgAJJEKoog2SoU+IwADJAUgVLqLivpWIRQaBmW5HCOyoQnLODco/KEN5sEqLyqcQpNxxoPGHippwZ8iqPwpMgLY7i8zODCu8gAeWWYU4ppToBbKpjs2pcB9mNLQM01p7TOndN6WWdJAy0BDOGeIdGjqYDoyEOjeZ6NBBRBErkHeokLAiWYPhI48KwAAFFaBaXPo2UFzM8XBOURwsJiB9owzcWVUJsiICNS/FROQ/EkHsDkFAL8EQ5wlM4KWCwk1OADqHSQ0go6AyfwmYCtAXaPkKTkUEftMBB2kIAKTJQDF+Jdo7x2Tu8tOns9CVoHsXSOqAq7SHrpyVultajbnsCCJYAinAK0/s0V+FFhAIBFIDNPYmCFpJBM4g4LAOBLBjoiBO3IU6Z30M4OoiiR41y6HsZxcovBBKjVPGurJ6i21gCnXWIDGjUhgYgBBuAUHyxCLvvB+dXTkMWIwzehcT9kC81CMtEGssQYCYXNhLggDgFoCjKQfUwqwBM0rK6OOnA/1+sQEQZgss/hUlljcPatHBP1ifu6hixL+BKZU2phCcBNMBG0xC/TcprDSD1mZujlmuAQtnWQA8cgY33n6d5OgawclHEQOodQstpDSaE1wETE85ADXRtY3jZAmidypMl/zOH0vya+G53TQXJKhDC3GyLtBovGDAHFxoTRrC+Ys3WJ+gX+bBeqyWiwkX0sIunMoTufw5T7XKpwAeH4aqgcYIOzgxwXlJSEF+OceiowGLAEEZsAARMauh5Wdhm64AAhJwA7ygyBnebOh8zt7Z3hku4dulKKFtvOWwxVbYALtXaO2d19FrYC3OhnpfaVaa0fjrdJMFbDQlb1YuEBhYAwfNk7QdG2XEgU1TaHaS1zA7QccIARdaG3DrqOqv4vQ+OzKE+J/ysnn6uDMAwOwh+NV/0EqjOzhQQQN0BnUfd/NbPu27v3Ye4dy7UPXse/e+dj7SEXpfXYjdIvec7t7Xuhdx7T2uWV1e6TWG5066lyu1XH6wCs419+jRf6YAAYY7+0D4HIPGg46oLj4gEM5ZQ+O+7mG71zuQE70gTHXdsfdzBr3PukOKAsUNOx6jJuHRm1T+bi2vs/fW+r7t23dv/bpSdw8MBzsveu6QW7Aeb3G+e4X+V73M8rZUb98vAOgfJ7ADDJSKkkBqTKNyUoyBp4SXWPk716zvK31ULqBiUYYjMF9eU4NmzvJ8Red5I5kbzAMV8t2txEQ4ai1RH0aQQofYNBqOKRueiW5xfbrraw3dIQm3mPHGD0Aog293fh5SMAAD8qQY0GAAYgMlSWwRwoQ5MVqQBDiyAA0xYnARAEAi02mAA1L0FxLMPxN7oflQEGngLXnYs2O+rkkgvwtNg7t0ApJwAALInSbDnytC6ghjYZfLzg/JBg8IWIBj/ICLvi5BJC5hcCNhxLhC8qJwsCSCIK/6EY6IGrYRQBQAkSQFvKiGcTiHHQMRiAkQxZCDjyhC6jHyvwLYfzJKpJB4JBBB/AKLj6rKT4lpgDqCVI6D1IWC6gdKOGZp/7BqOF/AxqzoJBRh/AXIJpyBmZBBgrMGsGkQKrYSLZcEmiWLmExZyAxjsAlpoBaJ2F2Q+qbLbKuFBohq9ThrHJRo9KpGhGJqpHFr4S1FhqtCRD3Ltp6QY5TYxD6inScAgzk7bo9p9odH8ypBHpjoBiDFTKy616pDjGpD1x2KkGfqqLi4zEQxFCdHV5y5zozHdFA4LFd7g6o6pjcicApKVH1HZErK5GT75EBqFF7INIlFb4nLRqVGXLDI1EZF1GfENE6BWwiS4KFqJDfFlo96qTqSnxRKlBEDWBRi9CwnAxH5uzXB/T1y1yigNyBByJ341AKhhwgjP7qiv4sjtCHQczLiPKsyNabicwVzuxjY1zSy+xX64iBBkkXA/Caw4mDB4kkh/AEnGzMhxx4AJxJxkCYBpyUlHAAAS4Q+AE4HYXYNEM4sM+BS8eAMpcAAiEACQlEiEo0BwbMtJyJfwXsaJfQqJ1+gQ+pa4bMGpagHJVgXJFI4clQvQ/JEgSgpQM2eAWJSJ+gVIYM3sIoSANcQpBgewY0NpjWPGmpqQbYvQVIfwlQIMjQ6gNw0g1g4gDEvAf4CZSZKZaZGZWZOZwkeZyZqZ6ZmZ2ZuZiZ5ZhZVZJZCQd+GIuJHcT+osMQsAcIzsGUbMWUEULk56MUPSXUEAKURk6ULsyQ4UOUkUX4UYe+dspUmOywJkbJXAjkZ0F0iIfZt0CkysF4asBor0ds70I0YE30OcvAJcN5t5hcvQEMO0ZmixMi4uEZBp0ZDgsZqx65UY1pOEdpZmpQxM4gSAoAAQigp8QgeApEIArgrgQAA="}
+// @filename: config.ts
+// @errors: 2322
+import type { Config } from 'wagmi'
+export const config = {} as Config
+// @filename: example.ts
+// ---cut---
+import { Actions } from 'wagmi/tempo'
+import { config } from './config'
+
+const { receipt } = await Actions.fee.setUserTokenSync(config, {
+  token: '0x20c0000000000000000000000000000000000001',
+})
+
+console.log('Transaction hash:', receipt.transactionHash)
+// @log: Transaction hash: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+```
+
+<<< @/snippets/react/config-tempo.ts{ts} [config.ts]
+
+:::
+
+### Asynchronous Usage
+
+The example above uses a `*Sync` variant of the action, that will wait for the transaction to be included before returning.
+
+If you are optimizing for performance, you should use the non-sync `fee.setUserToken` action and wait for inclusion manually:
+
+```ts
+import { Actions as viem_Actions } from 'viem/tempo'
+import { Actions } from 'wagmi/tempo'
+import { waitForTransactionReceipt } from 'wagmi/actions'
+
+const hash = await Actions.fee.setUserToken(config, {
+  token: '0x20c0000000000000000000000000000000000001',
+})
+const receipt = await waitForTransactionReceipt(config, { hash })
+
+const { args } 
+  = viem_Actions.fee.setUserToken.extractEvent(receipt.logs)
+```
+
+## Return Type
+
+```ts
+type ReturnType = {
+  /** Address of the user */
+  user: Address
+  /** Address of the token set */
+  token: Address
+  /** Transaction receipt */
+  receipt: TransactionReceipt
+}
+```
+
+## Parameters
+
+### token
+
+- **Type:** `Address | bigint`
+
+Address or ID of the TIP-20 token to use for fees.
+
+<!--@include: @shared/tempo-write-parameters.md-->
+
+## Viem
+
+- [`fee.setUserToken`](https://viem.sh/tempo/actions/fee.setUserToken)

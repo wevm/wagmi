@@ -38,18 +38,18 @@ export {
 } from '../actions/disconnect.js'
 
 export {
-  type EstimateGasErrorType,
-  type EstimateGasParameters,
-  type EstimateGasReturnType,
-  estimateGas,
-} from '../actions/estimateGas.js'
-
-export {
   type EstimateFeesPerGasErrorType,
   type EstimateFeesPerGasParameters,
   type EstimateFeesPerGasReturnType,
   estimateFeesPerGas,
 } from '../actions/estimateFeesPerGas.js'
+
+export {
+  type EstimateGasErrorType,
+  type EstimateGasParameters,
+  type EstimateGasReturnType,
+  estimateGas,
+} from '../actions/estimateGas.js'
 
 export {
   type EstimateMaxPriorityFeePerGasErrorType,
@@ -59,18 +59,18 @@ export {
 } from '../actions/estimateMaxPriorityFeePerGas.js'
 
 export {
-  type GetAccountReturnType,
-  getAccount,
-} from '../actions/getAccount.js'
-
-export {
+  type GetBalanceErrorType,
   type GetBalanceParameters,
   type GetBalanceReturnType,
-  type GetBalanceErrorType,
   getBalance,
-  /** @deprecated use `getBalance` instead */
-  getBalance as fetchBalance,
 } from '../actions/getBalance.js'
+
+export {
+  type GetBlobBaseFeeErrorType,
+  type GetBlobBaseFeeParameters,
+  type GetBlobBaseFeeReturnType,
+  getBlobBaseFee,
+} from '../actions/getBlobBaseFee.js'
 
 export {
   type GetBlockErrorType,
@@ -84,8 +84,6 @@ export {
   type GetBlockNumberParameters,
   type GetBlockNumberReturnType,
   getBlockNumber,
-  /** @deprecated use `getBlockNumber` instead */
-  getBlockNumber as fetchBlockNumber,
 } from '../actions/getBlockNumber.js'
 
 export {
@@ -101,6 +99,20 @@ export {
   type GetBytecodeReturnType,
   getBytecode,
 } from '../actions/getBytecode.js'
+
+export {
+  type GetCallsStatusErrorType,
+  type GetCallsStatusParameters,
+  type GetCallsStatusReturnType,
+  getCallsStatus,
+} from '../actions/getCallsStatus.js'
+
+export {
+  type GetCapabilitiesErrorType,
+  type GetCapabilitiesParameters,
+  type GetCapabilitiesReturnType,
+  getCapabilities,
+} from '../actions/getCapabilities.js'
 
 export {
   type GetChainIdReturnType,
@@ -119,14 +131,18 @@ export {
 } from '../actions/getClient.js'
 
 export {
+  /** @deprecated use `GetConnectionReturnType` instead */
+  type GetConnectionReturnType as GetAccountReturnType,
+  type GetConnectionReturnType,
+  /** @deprecated use `getConnection` instead */
+  getConnection as getAccount,
+  getConnection,
+} from '../actions/getConnection.js'
+
+export {
   type GetConnectionsReturnType,
   getConnections,
 } from '../actions/getConnections.js'
-
-export {
-  type GetConnectorsReturnType,
-  getConnectors,
-} from '../actions/getConnectors.js'
 
 export {
   type GetConnectorClientErrorType,
@@ -136,12 +152,22 @@ export {
 } from '../actions/getConnectorClient.js'
 
 export {
+  type GetConnectorsReturnType,
+  getConnectors,
+} from '../actions/getConnectors.js'
+
+export {
+  type GetContractEventsErrorType,
+  type GetContractEventsParameters,
+  type GetContractEventsReturnType,
+  getContractEvents,
+} from '../actions/getContractEvents.js'
+
+export {
   type GetEnsAddressErrorType,
   type GetEnsAddressParameters,
   type GetEnsAddressReturnType,
   getEnsAddress,
-  /** @deprecated use `getEnsAddress` instead */
-  getEnsAddress as fetchEnsAddress,
 } from '../actions/getEnsAddress.js'
 
 export {
@@ -149,8 +175,6 @@ export {
   type GetEnsAvatarParameters,
   type GetEnsAvatarReturnType,
   getEnsAvatar,
-  /** @deprecated use `getEnsAvatar` instead */
-  getEnsAvatar as fetchEnsAvatar,
 } from '../actions/getEnsAvatar.js'
 
 export {
@@ -158,8 +182,6 @@ export {
   type GetEnsNameParameters,
   type GetEnsNameReturnType,
   getEnsName,
-  /** @deprecated */
-  getEnsName as fetchEnsName,
 } from '../actions/getEnsName.js'
 
 export {
@@ -167,8 +189,6 @@ export {
   type GetEnsResolverParameters,
   type GetEnsResolverReturnType,
   getEnsResolver,
-  /** @deprecated use `getEnsResolver` instead */
-  getEnsResolver as fetchEnsResolver,
 } from '../actions/getEnsResolver.js'
 
 export {
@@ -213,21 +233,10 @@ export {
 } from '../actions/getStorageAt.js'
 
 export {
-  type GetTokenErrorType,
-  type GetTokenParameters,
-  type GetTokenReturnType,
-  getToken,
-  /** @deprecated use `getToken` instead */
-  getToken as fetchToken,
-} from '../actions/getToken.js'
-
-export {
   type GetTransactionErrorType,
   type GetTransactionParameters,
   type GetTransactionReturnType,
   getTransaction,
-  /** @deprecated use `getTransaction` instead */
-  getTransaction as fetchTransaction,
 } from '../actions/getTransaction.js'
 
 export {
@@ -272,16 +281,16 @@ export {
 } from '../actions/prepareTransactionRequest.js'
 
 export {
+  type ReadContractErrorType,
   type ReadContractParameters,
   type ReadContractReturnType,
-  type ReadContractErrorType,
   readContract,
 } from '../actions/readContract.js'
 
 export {
+  type ReadContractsErrorType,
   type ReadContractsParameters,
   type ReadContractsReturnType,
-  type ReadContractsErrorType,
   readContracts,
 } from '../actions/readContracts.js'
 
@@ -293,11 +302,39 @@ export {
 } from '../actions/reconnect.js'
 
 export {
+  type SendCallsErrorType,
+  type SendCallsParameters,
+  type SendCallsReturnType,
+  sendCalls,
+} from '../actions/sendCalls.js'
+
+export {
+  type SendCallsSyncErrorType,
+  type SendCallsSyncParameters,
+  type SendCallsSyncReturnType,
+  sendCallsSync,
+} from '../actions/sendCallsSync.js'
+
+export {
   type SendTransactionErrorType,
   type SendTransactionParameters,
   type SendTransactionReturnType,
   sendTransaction,
 } from '../actions/sendTransaction.js'
+
+export {
+  type SendTransactionSyncErrorType,
+  type SendTransactionSyncParameters,
+  type SendTransactionSyncReturnType,
+  sendTransactionSync,
+} from '../actions/sendTransactionSync.js'
+
+export {
+  type ShowCallsStatusErrorType,
+  type ShowCallsStatusParameters,
+  type ShowCallsStatusReturnType,
+  showCallsStatus,
+} from '../actions/showCallsStatus.js'
 
 export {
   type SignMessageErrorType,
@@ -321,20 +358,26 @@ export {
 } from '../actions/simulateContract.js'
 
 export {
-  type SwitchAccountErrorType,
-  type SwitchAccountParameters,
-  type SwitchAccountReturnType,
-  switchAccount,
-} from '../actions/switchAccount.js'
-
-export {
   type SwitchChainErrorType,
   type SwitchChainParameters,
   type SwitchChainReturnType,
   switchChain,
-  /** @deprecated use `switchChain` instead */
-  switchChain as switchNetwork,
 } from '../actions/switchChain.js'
+
+export {
+  /** @deprecated use `SwitchConnectionErrorType` instead */
+  type SwitchConnectionErrorType as SwitchAccountErrorType,
+  type SwitchConnectionErrorType,
+  /** @deprecated use `SwitchConnectionParameters` instead */
+  type SwitchConnectionParameters as SwitchAccountParameters,
+  type SwitchConnectionParameters,
+  /** @deprecated use `SwitchConnectionReturnType` instead */
+  type SwitchConnectionReturnType as SwitchAccountReturnType,
+  type SwitchConnectionReturnType,
+  /** @deprecated use `switchConnection` instead */
+  switchConnection as switchAccount,
+  switchConnection,
+} from '../actions/switchConnection.js'
 
 export {
   type VerifyMessageErrorType,
@@ -351,29 +394,37 @@ export {
 } from '../actions/verifyTypedData.js'
 
 export {
-  type WatchAccountParameters,
-  type WatchAccountReturnType,
-  watchAccount,
-} from '../actions/watchAccount.js'
+  type WaitForCallsStatusErrorType,
+  type WaitForCallsStatusParameters,
+  type WaitForCallsStatusReturnType,
+  waitForCallsStatus,
+} from '../actions/waitForCallsStatus.js'
 
 export {
-  type WatchAssetParameters,
+  type WaitForTransactionReceiptErrorType,
+  type WaitForTransactionReceiptParameters,
+  type WaitForTransactionReceiptReturnType,
+  waitForTransactionReceipt,
+} from '../actions/waitForTransactionReceipt.js'
+
+export {
   type WatchAssetErrorType,
+  type WatchAssetParameters,
   type WatchAssetReturnType,
   watchAsset,
 } from '../actions/watchAsset.js'
-
-export {
-  type WatchBlocksParameters,
-  type WatchBlocksReturnType,
-  watchBlocks,
-} from '../actions/watchBlocks.js'
 
 export {
   type WatchBlockNumberParameters,
   type WatchBlockNumberReturnType,
   watchBlockNumber,
 } from '../actions/watchBlockNumber.js'
+
+export {
+  type WatchBlocksParameters,
+  type WatchBlocksReturnType,
+  watchBlocks,
+} from '../actions/watchBlocks.js'
 
 export {
   type WatchChainIdParameters,
@@ -386,6 +437,18 @@ export {
   type WatchClientReturnType,
   watchClient,
 } from '../actions/watchClient.js'
+
+export {
+  /** @deprecated use `WatchConnectionParameters` instead */
+  type WatchConnectionParameters as WatchAccountParameters,
+  type WatchConnectionParameters,
+  /** @deprecated use `WatchConnectionReturnType` instead */
+  type WatchConnectionReturnType as WatchAccountReturnType,
+  type WatchConnectionReturnType,
+  /** @deprecated use `watchConnection` instead */
+  watchConnection as watchAccount,
+  watchConnection,
+} from '../actions/watchConnection.js'
 
 export {
   type WatchConnectionsParameters,
@@ -418,20 +481,18 @@ export {
 } from '../actions/watchPublicClient.js'
 
 export {
-  type WaitForTransactionReceiptErrorType,
-  type WaitForTransactionReceiptParameters,
-  type WaitForTransactionReceiptReturnType,
-  waitForTransactionReceipt,
-  /** @deprecated use `waitForTransactionReceipt` instead */
-  waitForTransactionReceipt as waitForTransaction,
-} from '../actions/waitForTransactionReceipt.js'
-
-export {
   type WriteContractErrorType,
   type WriteContractParameters,
   type WriteContractReturnType,
   writeContract,
 } from '../actions/writeContract.js'
+
+export {
+  type WriteContractSyncErrorType,
+  type WriteContractSyncParameters,
+  type WriteContractSyncReturnType,
+  writeContractSync,
+} from '../actions/writeContractSync.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // Connectors
@@ -458,14 +519,14 @@ export {
 ////////////////////////////////////////////////////////////////////////////////
 
 export {
+  type Config,
   type Connection,
   type Connector,
-  type Config,
   type CreateConfigParameters,
+  createConfig,
   type PartializedState,
   type State,
   type Transport,
-  createConfig,
 } from '../createConfig.js'
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -474,10 +535,10 @@ export {
 
 export {
   type CreateStorageParameters,
-  type Storage,
-  type StorageItemMap,
   createStorage,
   noopStorage,
+  type Storage,
+  type StorageItemMap,
 } from '../createStorage.js'
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -493,27 +554,27 @@ export { hydrate } from '../hydrate.js'
 export { BaseError } from '../errors/base.js'
 
 export {
-  type ChainNotConfiguredErrorType,
   ChainNotConfiguredError,
-  type ConnectorNotConnectedErrorType,
-  ConnectorNotConnectedError,
-  type ConnectorAlreadyConnectedErrorType,
-  ConnectorAlreadyConnectedError,
-  type ConnectorNotFoundErrorType,
-  ConnectorNotFoundError,
-  type ConnectorAccountNotFoundErrorType,
+  type ChainNotConfiguredErrorType,
   ConnectorAccountNotFoundError,
-  type ConnectorChainMismatchErrorType,
+  type ConnectorAccountNotFoundErrorType,
+  ConnectorAlreadyConnectedError,
+  type ConnectorAlreadyConnectedErrorType,
   ConnectorChainMismatchError,
-  type ConnectorUnavailableReconnectingErrorType,
+  type ConnectorChainMismatchErrorType,
+  ConnectorNotConnectedError,
+  type ConnectorNotConnectedErrorType,
+  ConnectorNotFoundError,
+  type ConnectorNotFoundErrorType,
   ConnectorUnavailableReconnectingError,
+  type ConnectorUnavailableReconnectingErrorType,
 } from '../errors/config.js'
 
 export {
-  type ProviderNotFoundErrorType,
   ProviderNotFoundError,
-  type SwitchChainNotSupportedErrorType,
+  type ProviderNotFoundErrorType,
   SwitchChainNotSupportedError,
+  type SwitchChainNotSupportedErrorType,
 } from '../errors/connector.js'
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -523,8 +584,8 @@ export {
 export { custom, http, webSocket } from 'viem'
 
 export {
-  type ConnectorTransportConfig,
   type ConnectorTransport,
+  type ConnectorTransportConfig,
   unstable_connector,
 } from '../transports/connector.js'
 
@@ -534,9 +595,9 @@ export { fallback } from '../transports/fallback.js'
 // Types
 ////////////////////////////////////////////////////////////////////////////////
 
-export { type SelectChains } from '../types/chain.js'
+export type { SelectChains } from '../types/chain.js'
 
-export { type Register, type ResolvedRegister } from '../types/register.js'
+export type { Register, ResolvedRegister } from '../types/register.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // Utilities
@@ -553,8 +614,6 @@ export { deepEqual } from '../utils/deepEqual.js'
 export { deserialize } from '../utils/deserialize.js'
 
 export { extractRpcUrls } from '../utils/extractRpcUrls.js'
-
-export { normalizeChainId } from '../utils/normalizeChainId.js'
 
 export { serialize } from '../utils/serialize.js'
 

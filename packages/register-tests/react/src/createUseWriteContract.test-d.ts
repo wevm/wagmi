@@ -9,20 +9,20 @@ const useWriteErc20 = createUseWriteContract({
 })
 
 test('chain formatters', () => {
-  const { writeContract } = useWriteErc20()
+  const { mutate } = useWriteErc20()
   const shared = {
     address: '0x',
     functionName: 'transferFrom',
     args: ['0x', '0x', 123n],
   } as const
 
-  writeContract({
+  mutate({
     ...shared,
     feeCurrency: '0x',
   })
 
   type Result = Parameters<
-    typeof writeContract<
+    typeof mutate<
       typeof abi.erc20,
       'transferFrom',
       [Address, Address, bigint],
@@ -32,20 +32,20 @@ test('chain formatters', () => {
   expectTypeOf<Result['feeCurrency']>().toEqualTypeOf<
     `0x${string}` | undefined
   >()
-  writeContract({
+  mutate({
     ...shared,
     chainId: celo.id,
     feeCurrency: '0x',
   })
 
-  writeContract({
+  mutate({
     ...shared,
     chainId: mainnet.id,
     // @ts-expect-error
     feeCurrency: '0x',
   })
 
-  writeContract({
+  mutate({
     ...shared,
     chainId: optimism.id,
     // @ts-expect-error
@@ -54,9 +54,9 @@ test('chain formatters', () => {
 })
 
 test('parameters: config', async () => {
-  const { writeContract } = useWriteErc20({ config })
+  const { mutate } = useWriteErc20({ config })
 
-  writeContract({
+  mutate({
     address: '0x',
     functionName: 'transferFrom',
     args: ['0x', '0x', 123n],

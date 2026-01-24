@@ -1,4 +1,3 @@
-import type { QueryOptions } from '@tanstack/query-core'
 import type { BlockTag } from 'viem'
 
 import {
@@ -9,6 +8,7 @@ import {
 } from '../actions/getBlock.js'
 import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
+import type { QueryOptions, QueryParameter } from '../types/query.js'
 import type { Compute, ExactPartial } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
@@ -18,35 +18,51 @@ export type GetBlockOptions<
   config extends Config,
   chainId extends
     config['chains'][number]['id'] = config['chains'][number]['id'],
+  selectData = GetBlockData<includeTransactions, blockTag, config, chainId>,
 > = Compute<
   ExactPartial<
     GetBlockParameters<includeTransactions, blockTag, config, chainId>
   > &
     ScopeKeyParameter
->
+> &
+  QueryParameter<
+    GetBlockQueryFnData<includeTransactions, blockTag, config, chainId>,
+    GetBlockErrorType,
+    selectData,
+    GetBlockQueryKey<includeTransactions, blockTag, config, chainId>
+  >
 
 export function getBlockQueryOptions<
   config extends Config,
   chainId extends config['chains'][number]['id'],
-  includeTransactions extends boolean,
-  blockTag extends BlockTag,
+  includeTransactions extends boolean = false,
+  blockTag extends BlockTag = 'latest',
+  selectData = GetBlockData<includeTransactions, blockTag, config, chainId>,
 >(
   config: config,
-  options: GetBlockOptions<includeTransactions, blockTag, config, chainId> = {},
-) {
+  options: GetBlockOptions<
+    includeTransactions,
+    blockTag,
+    config,
+    chainId,
+    selectData
+  > = {},
+): GetBlockQueryOptions<
+  includeTransactions,
+  blockTag,
+  config,
+  chainId,
+  selectData
+> {
   return {
-    async queryFn({ queryKey }) {
-      const { scopeKey: _, ...parameters } = queryKey[1]
-      const block = await getBlock(config, parameters)
+    ...options.query,
+    queryFn: async (context) => {
+      const [, { scopeKey: _, ...parameters }] = context.queryKey
+      const block = await getBlock(config, parameters as any)
       return (block ?? null) as any
     },
     queryKey: getBlockQueryKey(options),
-  } as const satisfies QueryOptions<
-    GetBlockQueryFnData<includeTransactions, blockTag, config, chainId>,
-    GetBlockErrorType,
-    GetBlockData<includeTransactions, blockTag, config, chainId>,
-    GetBlockQueryKey<includeTransactions, blockTag, config, chainId>
-  >
+  }
 }
 
 export type GetBlockQueryFnData<
@@ -69,7 +85,12 @@ export function getBlockQueryKey<
   includeTransactions extends boolean = false,
   blockTag extends BlockTag = 'latest',
 >(
-  options: GetBlockOptions<includeTransactions, blockTag, config, chainId> = {},
+  options: Compute<
+    ExactPartial<
+      GetBlockParameters<includeTransactions, blockTag, config, chainId>
+    > &
+      ScopeKeyParameter
+  > = {},
 ) {
   return ['block', filterQueryOptions(options)] as const
 }
@@ -81,4 +102,17 @@ export type GetBlockQueryKey<
   chainId extends config['chains'][number]['id'],
 > = ReturnType<
   typeof getBlockQueryKey<config, chainId, includeTransactions, blockTag>
+>
+
+export type GetBlockQueryOptions<
+  includeTransactions extends boolean,
+  blockTag extends BlockTag,
+  config extends Config,
+  chainId extends config['chains'][number]['id'],
+  selectData = GetBlockData<includeTransactions, blockTag, config, chainId>,
+> = QueryOptions<
+  GetBlockQueryFnData<includeTransactions, blockTag, config, chainId>,
+  GetBlockErrorType,
+  selectData,
+  GetBlockQueryKey<includeTransactions, blockTag, config, chainId>
 >

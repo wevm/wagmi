@@ -4,7 +4,7 @@ const packageName = 'wagmi'
 
 # fallback
 
-The `fallback` Transport consumes **multiple** Transports. If a Transport request fails, it will fall back to the next one in the list. Wraps Viem's [`fallback` Transport](https://viem.sh/docs/clients/transports/fallback.html).
+The `fallback` Transport consumes **multiple** Transports. If a Transport request fails, it will fall back to the next one in the list. Wraps Viem's [`fallback` Transport](https://viem.sh/docs/clients/transports/fallback).
 
 ## Import
 
@@ -27,7 +27,7 @@ export const config = createConfig({
   connectors: [injected()],
   transports: {
     [mainnet.id]: fallback([ // [!code hl]
-      http('https://eth-mainnet.g.alchemy.com/v2/...'), // [!code hl]
+      http('https://foo-bar-baz.quiknode.pro/...'), // [!code hl]
       http('https://mainnet.infura.io/v3/...'), // [!code hl]
     ]) // [!code hl]
   },

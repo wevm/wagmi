@@ -21,6 +21,10 @@ import { injected } from 'wagmi/connectors'
 
 ## Available Connectors
 
+::: tip
+Some connectors require third-party packages. See the "Install" section on each connector's page for more info on license, version, and more.
+:::
+
 <ul>
   <li v-for="connector of connectors">
     <a :href="connector.link">{{ connector.text }}</a>

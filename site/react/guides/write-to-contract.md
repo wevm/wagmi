@@ -328,7 +328,7 @@ Finally, we can wire up our Mint NFT component to our application's entrypoint.
 
 ```tsx [app.tsx]
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { WagmiProvider, useAccount } from 'wagmi'
+import { WagmiProvider } from 'wagmi'
 import { config } from './config'
 import { MintNft } from './mint-nft' // [!code ++]
 

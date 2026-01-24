@@ -11,6 +11,8 @@ test('chain formatters', async () => {
     transports: { [celo.id]: http(), [mainnet.id]: http() },
   })
   const result = await getTransaction(config, { hash: '0x123' })
+  // @ts-expect-error
+  result.feeCurrency
   if (result.chainId === celo.id) {
     expectTypeOf(result.feeCurrency).toEqualTypeOf<`0x${string}` | null>()
   }

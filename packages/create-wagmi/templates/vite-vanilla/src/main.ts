@@ -1,5 +1,5 @@
+import { connect, disconnect, reconnect, watchConnection } from '@wagmi/core'
 import { Buffer } from 'buffer'
-import { connect, disconnect, reconnect, watchAccount } from '@wagmi/core'
 
 import './style.css'
 import { config } from './wagmi'
@@ -8,8 +8,8 @@ globalThis.Buffer = Buffer
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>
-    <div id="account">
-      <h2>Account</h2>
+    <div id="connection">
+      <h2>Connection</h2>
 
       <div>
         status:
@@ -55,22 +55,23 @@ function setupApp(element: HTMLDivElement) {
     })
   }
 
-  watchAccount(config, {
-    onChange(account) {
-      const accountElement = element.querySelector<HTMLDivElement>('#account')!
-      accountElement.innerHTML = `
-        <h2>Account</h2>
+  watchConnection(config, {
+    onChange(connection) {
+      const connectionElement =
+        element.querySelector<HTMLDivElement>('#connection')!
+      connectionElement.innerHTML = `
+        <h2>Connection</h2>
         <div>
-          status: ${account.status}
+          status: ${connection.status}
           <br />
           addresses: ${
-            account.addresses ? JSON.stringify(account.addresses) : ''
+            connection.addresses ? JSON.stringify(connection.addresses) : ''
           }
           <br />
-          chainId: ${account.chainId ?? ''}
+          chainId: ${connection.chainId ?? ''}
         </div>
         ${
-          account.status === 'connected'
+          connection.status === 'connected'
             ? `<button id="disconnect" type="button">Disconnect</button>`
             : ''
         }

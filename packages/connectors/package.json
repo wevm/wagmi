@@ -1,7 +1,7 @@
 {
   "name": "@wagmi/connectors",
   "description": "Collection of connectors for Wagmi",
-  "version": "5.1.14",
+  "version": "7.1.6",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -9,7 +9,7 @@
     "directory": "packages/connectors"
   },
   "scripts": {
-    "build": "pnpm run clean && pnpm run build:esm+types",
+    "build": "pnpm run build:esm+types",
     "build:esm+types": "tsc --project tsconfig.build.json --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
     "check:types": "tsc --noEmit",
     "clean": "rm -rf dist tsconfig.tsbuildinfo",
@@ -35,29 +35,63 @@
     "./package.json": "./package.json"
   },
   "peerDependencies": {
+    "@base-org/account": "^2.5.1",
+    "@coinbase/wallet-sdk": "^4.3.6",
+    "@gemini-wallet/core": "~0.3.1",
+    "@metamask/sdk": "~0.33.1",
+    "@safe-global/safe-apps-provider": "~0.18.6",
+    "@safe-global/safe-apps-sdk": "^9.1.0",
     "@wagmi/core": "workspace:*",
-    "typescript": ">=5.0.4",
+    "@walletconnect/ethereum-provider": "^2.21.1",
+    "porto": "~0.2.35",
+    "typescript": ">=5.7.3",
     "viem": "2.x"
   },
   "peerDependenciesMeta": {
+    "@base-org/account": {
+      "optional": true
+    },
+    "@coinbase/wallet-sdk": {
+      "optional": true
+    },
+    "@gemini-wallet/core": {
+      "optional": true
+    },
+    "@metamask/sdk": {
+      "optional": true
+    },
+    "@safe-global/safe-apps-provider": {
+      "optional": true
+    },
+    "@safe-global/safe-apps-sdk": {
+      "optional": true
+    },
+    "@walletconnect/ethereum-provider": {
+      "optional": true
+    },
+    "porto": {
+      "optional": true
+    },
     "typescript": {
       "optional": true
     }
   },
-  "dependencies": {
-    "@coinbase/wallet-sdk": "4.0.4",
-    "@metamask/sdk": "0.28.4",
-    "@safe-global/safe-apps-provider": "0.18.3",
-    "@safe-global/safe-apps-sdk": "9.1.0",
-    "@walletconnect/ethereum-provider": "2.16.1",
-    "@walletconnect/modal": "2.6.2",
-    "cbw-sdk": "npm:@coinbase/wallet-sdk@3.9.3"
-  },
   "devDependencies": {
+    "@base-org/account": "catalog:",
+    "@coinbase/wallet-sdk": "catalog:",
+    "@gemini-wallet/core": "catalog:",
+    "@metamask/sdk": "catalog:",
+    "@safe-global/safe-apps-provider": "catalog:",
+    "@safe-global/safe-apps-sdk": "catalog:",
     "@wagmi/core": "workspace:*",
-    "msw": "^2.4.9"
+    "@walletconnect/ethereum-provider": "catalog:",
+    "msw": "^2.4.9",
+    "porto": "catalog:"
   },
-  "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
+  "contributors": [
+    "awkweb.eth <t@wevm.dev>",
+    "jxom.eth <j@wevm.dev>"
+  ],
   "funding": "https://github.com/sponsors/wevm",
   "keywords": [
     "react",

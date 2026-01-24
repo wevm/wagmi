@@ -23,14 +23,31 @@ export function hydrate(config: Config, parameters: HydrateParameters) {
     async onMount() {
       if (config._internal.ssr) {
         await config._internal.store.persist.rehydrate()
-        const mipdConnectors = config._internal.mipd
-          ?.getProviders()
-          .map(config._internal.connectors.providerDetailToConnector)
-          .map(config._internal.connectors.setup)
-        config._internal.connectors.setState((connectors) => [
-          ...connectors,
-          ...(mipdConnectors ?? []),
-        ])
+        if (config._internal.mipd) {
+          config._internal.connectors.setState((connectors) => {
+            const rdnsSet = new Set<string>()
+            for (const connector of connectors ?? []) {
+              if (connector.rdns) {
+                const rdnsValues = Array.isArray(connector.rdns)
+                  ? connector.rdns
+                  : [connector.rdns]
+                for (const rdns of rdnsValues) {
+                  rdnsSet.add(rdns)
+                }
+              }
+            }
+            const mipdConnectors = []
+            const providers = config._internal.mipd?.getProviders() ?? []
+            for (const provider of providers) {
+              if (rdnsSet.has(provider.info.rdns)) continue
+              const connectorFn =
+                config._internal.connectors.providerDetailToConnector(provider)
+              const connector = config._internal.connectors.setup(connectorFn)
+              mipdConnectors.push(connector)
+            }
+            return [...connectors, ...mipdConnectors]
+          })
+        }
       }
 
       if (reconnectOnMount) reconnect(config)

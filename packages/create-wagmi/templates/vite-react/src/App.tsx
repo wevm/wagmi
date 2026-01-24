@@ -1,24 +1,25 @@
-import { useAccount, useConnect, useDisconnect } from 'wagmi'
+import { useConnect, useConnection, useConnectors, useDisconnect } from 'wagmi'
 
 function App() {
-  const account = useAccount()
-  const { connectors, connect, status, error } = useConnect()
+  const connection = useConnection()
+  const { connect, status, error } = useConnect()
+  const connectors = useConnectors()
   const { disconnect } = useDisconnect()
 
   return (
     <>
       <div>
-        <h2>Account</h2>
+        <h2>Connection</h2>
 
         <div>
-          status: {account.status}
+          status: {connection.status}
           <br />
-          addresses: {JSON.stringify(account.addresses)}
+          addresses: {JSON.stringify(connection.addresses)}
           <br />
-          chainId: {account.chainId}
+          chainId: {connection.chainId}
         </div>
 
-        {account.status === 'connected' && (
+        {connection.status === 'connected' && (
           <button type="button" onClick={() => disconnect()}>
             Disconnect
           </button>

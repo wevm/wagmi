@@ -1,11 +1,11 @@
 import { type QueryKey, replaceEqualDeep } from '@tanstack/query-core'
-import { deepEqual } from '../utils/deepEqual.js'
+import type { Connector } from '../createConfig.js'
+import type { Compute, StrictOmit } from '../types/utils.js'
 
 export function structuralSharing<data>(
   oldData: data | undefined,
   newData: data,
 ): data {
-  if (deepEqual(oldData, newData)) return oldData as data
   return replaceEqualDeep(oldData, newData)
 }
 
@@ -23,7 +23,7 @@ export function hashFn(queryKey: QueryKey): string {
   })
 }
 
-// biome-ignore lint/complexity/noBannedTypes:
+// biome-ignore lint/complexity/noBannedTypes: using
 function isPlainObject(value: any): value is Object {
   if (!hasObjectPrototype(value)) {
     return false
@@ -38,7 +38,7 @@ function isPlainObject(value: any): value is Object {
   if (!hasObjectPrototype(prot)) return false
 
   // If constructor does not have an Object-specific method
-  // biome-ignore lint/suspicious/noPrototypeBuiltins: <explanation>
+  // biome-ignore lint/suspicious/noPrototypeBuiltins: using
   if (!prot.hasOwnProperty('isPrototypeOf')) return false
 
   // Most likely a plain Object
@@ -49,27 +49,38 @@ function hasObjectPrototype(o: any): boolean {
   return Object.prototype.toString.call(o) === '[object Object]'
 }
 
-export function filterQueryOptions<type extends Record<string, unknown>>(
+export function filterQueryOptions<
+  type extends Record<string, unknown> & { connector?: Connector | undefined },
+>(
   options: type,
-): type {
+): Compute<
+  StrictOmit<type, 'abi' | 'config' | 'connector' | 'query' | 'watch'> &
+    (type extends { connector?: Connector | undefined }
+      ? { connectorUid?: string }
+      : unknown)
+> {
   // destructuring is super fast
   // biome-ignore format: no formatting
   const {
     // import('@tanstack/query-core').QueryOptions
+    // biome-ignore lint/correctness/noUnusedVariables: tossing
     _defaulted, behavior, gcTime, initialData, initialDataUpdatedAt, maxPages, meta, networkMode, queryFn, queryHash, queryKey, queryKeyHashFn, retry, retryDelay, structuralSharing,
 
     // import('@tanstack/query-core').InfiniteQueryObserverOptions
+    // biome-ignore lint/correctness/noUnusedVariables: tossing
     getPreviousPageParam, getNextPageParam, initialPageParam,
-    
+
     // import('@tanstack/react-query').UseQueryOptions
+    // biome-ignore lint/correctness/noUnusedVariables: tossing
     _optimisticResults, enabled, notifyOnChangeProps, placeholderData, refetchInterval, refetchIntervalInBackground, refetchOnMount, refetchOnReconnect, refetchOnWindowFocus, retryOnMount, select, staleTime, suspense, throwOnError,
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // wagmi
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    config, connector, query,
+    // biome-ignore lint/correctness/noUnusedVariables: tossing
+    abi, config, connector, query, watch,
     ...rest
   } = options
-
-  return rest as type
+  if (connector) return { connectorUid: connector?.uid, ...rest } as never
+  return rest as never
 }

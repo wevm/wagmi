@@ -6,7 +6,7 @@
     "jsx": "preserve",
     "lib": ["DOM", "ESNext"],
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "Bundler",
     "noUnusedLocals": true,
     "paths": {
       "~/*": ["src/*"]

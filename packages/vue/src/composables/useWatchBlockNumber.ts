@@ -4,10 +4,13 @@ import {
   type WatchBlockNumberParameters,
   watchBlockNumber,
 } from '@wagmi/core'
-import type { UnionCompute, UnionExactPartial } from '@wagmi/core/internal'
+import type {
+  ConfigParameter,
+  UnionCompute,
+  UnionExactPartial,
+} from '@wagmi/core/internal'
 import { computed, watchEffect } from 'vue'
-
-import type { ConfigParameter, EnabledParameter } from '../types/properties.js'
+import type { EnabledParameter } from '../types/properties.js'
 import type { DeepMaybeRef } from '../types/ref.js'
 import { deepUnref } from '../utils/cloneDeep.js'
 import { useChainId } from './useChainId.js'

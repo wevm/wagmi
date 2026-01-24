@@ -1,15 +1,17 @@
 'use client'
-
 import {
   type Config,
   type ResolvedRegister,
   type WatchPendingTransactionsParameters,
   watchPendingTransactions,
 } from '@wagmi/core'
-import type { UnionCompute, UnionExactPartial } from '@wagmi/core/internal'
-import { useEffect } from 'react'
-
-import type { ConfigParameter, EnabledParameter } from '../types/properties.js'
+import type {
+  ConfigParameter,
+  EnabledParameter,
+  UnionCompute,
+  UnionExactPartial,
+} from '@wagmi/core/internal'
+import { useEffect, useRef } from 'react'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
@@ -42,24 +44,29 @@ export function useWatchPendingTransactions<
   const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
+  const onTransactionsRef = useRef(onTransactions)
+  const onErrorRef = useRef(rest.onError)
+  onTransactionsRef.current = onTransactions
+  onErrorRef.current = rest.onError
+
   // TODO(react@19): cleanup
   // biome-ignore lint/correctness/useExhaustiveDependencies: `rest` changes every render so only including properties in dependency array
   useEffect(() => {
     if (!enabled) return
-    if (!onTransactions) return
+    if (!onTransactionsRef.current) return
     return watchPendingTransactions(config, {
       ...(rest as any),
       chainId,
-      onTransactions,
+      onTransactions: (transactions) =>
+        onTransactionsRef.current?.(transactions),
+      onError: (error) => onErrorRef.current?.(error),
     })
   }, [
     chainId,
     config,
     enabled,
-    onTransactions,
     ///
     rest.batch,
-    rest.onError,
     rest.poll,
     rest.pollingInterval,
     rest.syncConnectedChain,

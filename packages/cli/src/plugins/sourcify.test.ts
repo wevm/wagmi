@@ -1,43 +1,32 @@
-import { http, HttpResponse } from 'msw'
+import { HttpResponse, http } from 'msw'
 import { setupServer } from 'msw/node'
 import { afterAll, afterEach, beforeAll, expect, test } from 'vitest'
 
 import { depositAbi } from '../../test/constants.js'
 import { sourcify } from './sourcify.js'
 
-const baseUrl = 'https://repo.sourcify.dev/contracts/full_match'
+const baseUrl = 'https://sourcify.dev/server/v2/contract'
 const address = '0x00000000219ab540356cbb839cbe05303d7705fa'
 const chainId = 1
 const multichainAddress = '0xC4c622862a8F548997699bE24EA4bc504e5cA865'
 const multichainIdGnosis = 100
 const multichainIdPolygon = 137
 const successJson = {
-  compiler: { version: '0.6.11+commit.5ef660b1' },
-  language: 'Solidity',
-  output: {
-    abi: depositAbi,
-    devdoc: {},
-    userdoc: {},
-  },
-  settings: {},
-  sources: {},
-  version: 1,
+  abi: depositAbi,
 }
 
 const handlers = [
-  http.get(`${baseUrl}/${chainId}/${address}/metadata.json`, () =>
+  http.get(`${baseUrl}/${chainId}/${address}`, () =>
     HttpResponse.json(successJson),
   ),
-  http.get(`${baseUrl}/${multichainIdGnosis}/${address}/metadata.json`, () =>
+  http.get(`${baseUrl}/${multichainIdGnosis}/${address}`, () =>
     HttpResponse.json({}, { status: 404 }),
   ),
-  http.get(
-    `${baseUrl}/${multichainIdGnosis}/${multichainAddress}/metadata.json`,
-    () => HttpResponse.json(successJson),
+  http.get(`${baseUrl}/${multichainIdGnosis}/${multichainAddress}`, () =>
+    HttpResponse.json(successJson),
   ),
-  http.get(
-    `${baseUrl}/${multichainIdPolygon}/${multichainAddress}/metadata.json`,
-    () => HttpResponse.json(successJson),
+  http.get(`${baseUrl}/${multichainIdPolygon}/${multichainAddress}`, () =>
+    HttpResponse.json(successJson),
   ),
 ]
 
@@ -47,8 +36,8 @@ beforeAll(() => server.listen())
 afterEach(() => server.resetHandlers())
 afterAll(() => server.close())
 
-test('fetches ABI', () => {
-  expect(
+test('fetches ABI', async () => {
+  await expect(
     sourcify({
       chainId: chainId,
       contracts: [{ name: 'DepositContract', address }],
@@ -56,8 +45,8 @@ test('fetches ABI', () => {
   ).resolves.toMatchSnapshot()
 })
 
-test('fetches ABI with multichain deployment', () => {
-  expect(
+test('fetches ABI with multichain deployment', async () => {
+  await expect(
     sourcify({
       chainId: 100,
       contracts: [
@@ -70,8 +59,8 @@ test('fetches ABI with multichain deployment', () => {
   ).resolves.toMatchSnapshot()
 })
 
-test('fails to fetch for unverified contract', () => {
-  expect(
+test('fails to fetch for unverified contract', async () => {
+  await expect(
     sourcify({
       chainId: 100,
       contracts: [{ name: 'DepositContract', address }],
@@ -81,8 +70,8 @@ test('fails to fetch for unverified contract', () => {
   )
 })
 
-test('missing address for chainId', () => {
-  expect(
+test('missing address for chainId', async () => {
+  await expect(
     sourcify({
       chainId: 1,
       // @ts-expect-error `chainId` and `keyof typeof contracts[number].address` mismatch

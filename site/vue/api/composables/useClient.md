@@ -5,7 +5,7 @@ description: Composable for getting Viem `Client` instance.
 
 # useClient
 
-Composable for getting Viem [`Client`](https://viem.sh/docs/clients/custom.html) instance.
+Composable for getting Viem [`Client`](https://viem.sh/docs/clients/custom) instance.
 
 ## Import
 
@@ -81,7 +81,7 @@ import { type UseClientReturnType } from '@wagmi/vue'
 
 `Client | undefined`
 
-Viem [`Client`](https://viem.sh/docs/clients/custom.html) instance.
+Viem [`Client`](https://viem.sh/docs/clients/custom) instance.
 
 ## Action
 

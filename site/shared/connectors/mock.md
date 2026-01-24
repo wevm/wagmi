@@ -91,6 +91,11 @@ const connector = mock({
   }, // [!code focus]
 })
 ```
+#### defaultConnected
+
+`boolean | undefined`
+
+Whether the connector is connected by default.
 
 #### connectError
 

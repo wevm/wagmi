@@ -31,7 +31,7 @@ export const config = createConfig({
   transports: {
     [mainnet.id]: fallback([
       unstable_connector(injected), // [!code hl]
-      http('https://eth-mainnet.g.alchemy.com/v2/...')
+      http('https://foo-bar-baz.quiknode.pro/...')
     ])
   },
 })

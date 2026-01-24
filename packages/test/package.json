@@ -1,19 +1,9 @@
 {
   "name": "@wagmi/test",
-  "description": "Test utils for wagmi",
   "private": true,
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/wevm/wagmi.git",
-    "directory": "packages/test"
-  },
   "scripts": {
-    "build": "pnpm run clean && pnpm run build:esm+types",
-    "build:esm+types": "tsc --project tsconfig.build.json --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
     "check:types": "tsc --noEmit",
-    "clean": "rm -rf dist tsconfig.tsbuildinfo",
-    "test:build": "publint --strict"
+    "clean": "rm -rf dist tsconfig.tsbuildinfo"
   },
   "files": [
     "dist/**",
@@ -22,7 +12,9 @@
     "!src/**/*.test.ts",
     "!src/**/*.test-d.ts",
     "react/**",
-    "vue/**"
+    "solid/**",
+    "vue/**",
+    "tempo/**"
   ],
   "sideEffects": false,
   "type": "module",
@@ -38,6 +30,14 @@
       "types": "./dist/types/exports/react.d.ts",
       "default": "./dist/esm/exports/react.js"
     },
+    "./solid": {
+      "types": "./dist/types/exports/solid.d.ts",
+      "default": "./dist/esm/exports/solid.js"
+    },
+    "./tempo": {
+      "types": "./dist/types/exports/tempo.d.ts",
+      "default": "./dist/esm/exports/tempo.js"
+    },
     "./vue": {
       "types": "./dist/types/exports/vue.d.ts",
       "default": "./dist/esm/exports/vue.js"
@@ -46,22 +46,35 @@
   },
   "typesVersions": {
     "*": {
-      "react": ["./dist/types/exports/react.d.ts"],
-      "vue": ["./dist/types/exports/vue.d.ts"]
+      "react": [
+        "./dist/types/exports/react.d.ts"
+      ],
+      "solid": [
+        "./dist/types/exports/solid.d.ts"
+      ],
+      "tempo": [
+        "./dist/types/exports/tempo.d.ts"
+      ],
+      "vue": [
+        "./dist/types/exports/vue.d.ts"
+      ]
     }
   },
   "peerDependencies": {
     "@tanstack/react-query": ">=5.0.0",
+    "@tanstack/solid-query": ">=5.0.0",
     "@tanstack/vue-query": ">=5.0.0",
-    "@testing-library/react": ">=14.0.0",
     "@types/react": ">=18",
     "@types/react-dom": ">=18",
     "@wagmi/core": "workspace:*",
+    "@wagmi/solid": "workspace:*",
     "@wagmi/vue": "workspace:*",
-    "prool": "^0.0.4",
+    "ox": "catalog:",
+    "prool": "^0.0.24",
     "react": ">=18",
     "react-dom": ">=18",
-    "typescript": ">=5.0.4",
+    "solid-js": "1.x",
+    "typescript": ">=5.7.3",
     "viem": "2.x",
     "vue": ">=3",
     "wagmi": "workspace:*"
@@ -70,10 +83,10 @@
     "@tanstack/react-query": {
       "optional": true
     },
-    "@tanstack/vue-query": {
+    "@tanstack/solid-query": {
       "optional": true
     },
-    "@testing-library/react": {
+    "@tanstack/vue-query": {
       "optional": true
     },
     "@types/react": {
@@ -82,10 +95,16 @@
     "@types/react-dom": {
       "optional": true
     },
+    "@wagmi/vue": {
+      "optional": true
+    },
     "react": {
       "optional": true
     },
     "react-dom": {
+      "optional": true
+    },
+    "solid-js": {
       "optional": true
     },
     "typescript": {
@@ -99,20 +118,32 @@
     }
   },
   "devDependencies": {
-    "@tanstack/react-query": ">=5.45.1",
-    "@tanstack/vue-query": ">=5.45.0",
-    "@testing-library/dom": "^10.4.0",
-    "@testing-library/react": ">=16.0.1",
-    "@types/react": ">=18.3.1",
-    "@types/react-dom": ">=18.3.0",
+    "@solidjs/testing-library": "^0.8.10",
+    "@tanstack/react-query": "catalog:",
+    "@tanstack/solid-query": "catalog:",
+    "@tanstack/vue-query": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
     "@wagmi/core": "workspace:*",
+    "@wagmi/solid": "workspace:*",
     "@wagmi/vue": "workspace:*",
-    "react": ">=18.3.1",
-    "react-dom": ">=18.3.1",
-    "vue": ">=3.4.21",
+    "ox": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "solid-js": "catalog:",
+    "vue": "catalog:",
     "wagmi": "workspace:*"
   },
-  "contributors": ["awkweb.eth <t@wevm.dev>", "jxom.eth <j@wevm.dev>"],
+  "contributors": [
+    "awkweb.eth <t@wevm.dev>",
+    "jxom.eth <j@wevm.dev>"
+  ],
   "funding": "https://github.com/sponsors/wevm",
-  "keywords": ["eth", "ethereum", "dapps", "wallet", "web3"]
+  "keywords": [
+    "eth",
+    "ethereum",
+    "dapps",
+    "wallet",
+    "web3"
+  ]
 }

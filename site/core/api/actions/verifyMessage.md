@@ -66,7 +66,7 @@ By default, wagmi verifies the UTF-8 representation of the message.
 
 ::: code-group
 ```ts [index.ts]
-import { getAccount, verifyMessage } from '@wagmi/core'
+import { verifyMessage } from '@wagmi/core'
 import { config } from './config'
 
 await verifyMessage(config, {
@@ -197,4 +197,4 @@ import { type VerifyMessageErrorType } from '@wagmi/core'
 
 ## Viem
 
-- [`verifyMessage`](https://viem.sh/docs/actions/public/verifyMessage.html)
+- [`verifyMessage`](https://viem.sh/docs/actions/public/verifyMessage)

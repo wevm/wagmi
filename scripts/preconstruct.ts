@@ -1,18 +1,17 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
-import { glob } from 'glob'
 
 // Symlinks package sources to dist for local development
 
 console.log('Setting up packages for development.')
 
 // Get all package.json files
-const packagePaths = await glob('**/package.json', {
-  ignore: ['**/dist/**', '**/node_modules/**'],
+const packagePaths = fs.glob('**/package.json', {
+  exclude: ['**/dist/**', '**/node_modules/**'],
 })
 
 let count = 0
-for (const packagePath of packagePaths) {
+for await (const packagePath of packagePaths) {
   type Package = {
     bin?: Record<string, string> | undefined
     exports?:
@@ -21,8 +20,9 @@ for (const packagePath of packagePaths) {
     name?: string | undefined
     private?: boolean | undefined
   }
-  const file = Bun.file(packagePath)
-  const packageJson = (await file.json()) as Package
+  const packageJson = JSON.parse(
+    await fs.readFile(packagePath, 'utf-8'),
+  ) as Package
 
   // Skip private packages
   if (packageJson.private && packageJson.name !== '@wagmi/test') continue

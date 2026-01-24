@@ -1,6 +1,7 @@
-import { execa } from 'execa'
+import { execSync, spawn } from 'node:child_process'
+import { existsSync } from 'node:fs'
+import { readFile } from 'node:fs/promises'
 import { fdir } from 'fdir'
-import { default as fs } from 'fs-extra'
 import { basename, extname, join, resolve } from 'pathe'
 import pc from 'picocolors'
 
@@ -84,7 +85,7 @@ export function hardhat(config: HardhatConfig): HardhatResult {
   }
 
   async function getContract(artifactPath: string) {
-    const artifact = await fs.readJSON(artifactPath)
+    const artifact = await JSON.parse(await readFile(artifactPath, 'utf8'))
     return {
       abi: artifact.abi,
       address: deployments[artifact.contractName],
@@ -115,7 +116,11 @@ export function hardhat(config: HardhatConfig): HardhatResult {
         const [command, ...options] = (
           typeof clean === 'boolean' ? `${packageManager} hardhat clean` : clean
         ).split(' ')
-        await execa(command!, options, { cwd: project })
+        execSync(`${command!} ${options.join(' ')}`, {
+          cwd: project,
+          encoding: 'utf-8',
+          stdio: 'pipe',
+        })
       }
       if (build) {
         const packageManager = await getPackageManager(true)
@@ -124,9 +129,13 @@ export function hardhat(config: HardhatConfig): HardhatResult {
             ? `${packageManager} hardhat compile`
             : build
         ).split(' ')
-        await execa(command!, options, { cwd: project })
+        execSync(`${command!} ${options.join(' ')}`, {
+          cwd: project,
+          encoding: 'utf-8',
+          stdio: 'pipe',
+        })
       }
-      if (!fs.pathExistsSync(artifactsDirectory))
+      if (!existsSync(artifactsDirectory))
         throw new Error('Artifacts not found.')
 
       const artifactPaths = await getArtifactPaths(artifactsDirectory)
@@ -141,7 +150,7 @@ export function hardhat(config: HardhatConfig): HardhatResult {
     name: 'Hardhat',
     async validate() {
       // Check that project directory exists
-      if (!(await fs.pathExists(project)))
+      if (!existsSync(project))
         throw new Error(`Hardhat project ${pc.gray(project)} not found.`)
 
       // Check that `hardhat` is installed
@@ -179,7 +188,7 @@ export function hardhat(config: HardhatConfig): HardhatResult {
               logger.log(
                 `${pc.blue('Hardhat')} Detected ${event} at ${basename(path)}`,
               )
-              const subprocess = execa(command!, options, {
+              const subprocess = spawn(command!, options, {
                 cwd: project,
               })
               subprocess.stdout?.on('data', (data) => {

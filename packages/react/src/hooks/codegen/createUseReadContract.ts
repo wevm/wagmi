@@ -5,10 +5,11 @@ import type {
   ResolvedRegister,
 } from '@wagmi/core'
 import type {
+  ConfigParameter,
+  QueryParameter,
   ScopeKeyParameter,
   UnionCompute,
   UnionExactPartial,
-  UnionStrictOmit,
 } from '@wagmi/core/internal'
 import type {
   ReadContractData,
@@ -20,10 +21,8 @@ import type {
   Address,
   ContractFunctionArgs,
   ContractFunctionName,
+  ExactPartial,
 } from 'viem'
-
-import type { ConfigParameter, QueryParameter } from '../../types/properties.js'
-import { useAccount } from '../useAccount.js'
 import { useChainId } from '../useChainId.js'
 import { useConfig } from '../useConfig.js'
 import {
@@ -53,25 +52,22 @@ export type CreateUseReadContractReturnType<
   address extends Address | Record<number, Address> | undefined,
   functionName extends ContractFunctionName<abi, stateMutability> | undefined,
   ///
-  omittedProperties extends 'abi' | 'address' | 'chainId' | 'functionName' =
+  omittedProperties extends 'abi' | 'address' | 'functionName' =
     | 'abi'
     | (address extends undefined ? never : 'address')
-    | (address extends Record<number, Address> ? 'chainId' : never)
     | (functionName extends undefined ? never : 'functionName'),
 > = <
   name extends functionName extends ContractFunctionName<abi, stateMutability>
     ? functionName
     : ContractFunctionName<abi, stateMutability>,
-  args extends ContractFunctionArgs<abi, stateMutability, name>,
+  const args extends ContractFunctionArgs<abi, stateMutability, name>,
   config extends Config = ResolvedRegister['config'],
   selectData = ReadContractData<abi, name, args>,
 >(
   parameters?: UnionCompute<
     UnionExactPartial<
-      UnionStrictOmit<
-        ReadContractParameters<abi, name, args, config>,
-        omittedProperties
-      >
+      // TODO: Ideally use UnionStrictOmit with omittedProperties (abi, address, functionName)
+      ReadContractParameters<abi, name, args, config>
     > &
       ScopeKeyParameter &
       ConfigParameter<config> &
@@ -84,7 +80,8 @@ export type CreateUseReadContractReturnType<
   > &
     (address extends Record<number, Address>
       ? { chainId?: keyof address | undefined }
-      : unknown),
+      : unknown) &
+    ExactPartial<Record<omittedProperties, undefined>>,
 ) => UseReadContractReturnType<abi, name, args, selectData>
 
 export function createUseReadContract<
@@ -103,11 +100,8 @@ export function createUseReadContract<
     return (parameters) => {
       const config = useConfig(parameters)
       const configChainId = useChainId({ config })
-      const account = useAccount({ config })
       const chainId =
-        (parameters as { chainId?: number })?.chainId ??
-        account.chainId ??
-        configChainId
+        (parameters as { chainId?: number })?.chainId ?? configChainId
       return useReadContract({
         ...(parameters as any),
         ...(props.functionName ? { functionName: props.functionName } : {}),

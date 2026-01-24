@@ -3,19 +3,14 @@ import type {
   ReadContractErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { UnionCompute } from '@wagmi/core/internal'
+import type { ConfigParameter, UnionCompute } from '@wagmi/core/internal'
 import {
   type ReadContractData,
   type ReadContractOptions,
-  type ReadContractQueryFnData,
-  type ReadContractQueryKey,
   readContractQueryOptions,
-  structuralSharing,
 } from '@wagmi/core/query'
 import type { Abi, ContractFunctionArgs, ContractFunctionName } from 'viem'
-import { computed } from 'vue'
-
-import type { ConfigParameter, QueryParameter } from '../types/properties.js'
+import { computed, type MaybeRef } from 'vue'
 import type { DeepMaybeRef } from '../types/ref.js'
 import { deepUnref } from '../utils/cloneDeep.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
@@ -35,17 +30,29 @@ export type UseReadContractParameters<
   > = ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
   config extends Config = Config,
   selectData = ReadContractData<abi, functionName, args>,
-> = UnionCompute<
-  DeepMaybeRef<
-    ReadContractOptions<abi, functionName, args, config> &
-      ConfigParameter<config> &
-      QueryParameter<
-        ReadContractQueryFnData<abi, functionName, args>,
-        ReadContractErrorType,
-        selectData,
-        ReadContractQueryKey<abi, functionName, args, config>
-      >
+> = MaybeRef<
+  UnionCompute<
+    ReadContractOptions<abi, functionName, args, config, selectData> &
+      ConfigParameter<config>
   >
+>
+
+type UseReadContractParametersLoose<
+  abi extends Abi | readonly unknown[] = Abi,
+  functionName extends ContractFunctionName<
+    abi,
+    'pure' | 'view'
+  > = ContractFunctionName<abi, 'pure' | 'view'>,
+  args extends ContractFunctionArgs<
+    abi,
+    'pure' | 'view',
+    functionName
+  > = ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
+  config extends Config = Config,
+  selectData = ReadContractData<abi, functionName, args>,
+> = DeepMaybeRef<
+  ReadContractOptions<abi, functionName, args, config, selectData> &
+    ConfigParameter<Config>
 >
 
 export type UseReadContractReturnType<
@@ -66,51 +73,44 @@ export type UseReadContractReturnType<
 export function useReadContract<
   const abi extends Abi | readonly unknown[],
   functionName extends ContractFunctionName<abi, 'pure' | 'view'>,
-  args extends ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
+  const args extends ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
   config extends Config = ResolvedRegister['config'],
   selectData = ReadContractData<abi, functionName, args>,
 >(
-  parameters_: UseReadContractParameters<
+  parameters: UseReadContractParameters<
     abi,
     functionName,
     args,
     config,
     selectData
-  > = {} as any,
-): UseReadContractReturnType<abi, functionName, args, selectData> {
-  const parameters = computed(() => deepUnref(parameters_)) as any
-
-  const config = useConfig(parameters)
-  const configChainId = useChainId({ config })
-
-  const queryOptions = computed(() => {
-    const {
-      abi,
-      address,
-      chainId = configChainId.value,
-      code,
-      functionName,
-      query = {},
-    } = parameters.value
-    const options = readContractQueryOptions<config, abi, functionName, args>(
-      config as any,
-      { ...parameters.value, chainId },
-    )
-    const enabled = Boolean(
-      (address || code) && abi && functionName && (query.enabled ?? true),
-    )
-    return {
-      ...query,
-      ...options,
-      enabled,
-      structuralSharing: query.structuralSharing ?? structuralSharing,
-    }
-  })
-
-  return useQuery(queryOptions) as UseReadContractReturnType<
+  >,
+): UseReadContractReturnType<abi, functionName, args, selectData>
+export function useReadContract<
+  const abi extends Abi | readonly unknown[],
+  functionName extends ContractFunctionName<abi, 'pure' | 'view'>,
+  const args extends ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
+  config extends Config = ResolvedRegister['config'],
+  selectData = ReadContractData<abi, functionName, args>,
+>(
+  parameters: UseReadContractParametersLoose<
     abi,
     functionName,
     args,
+    config,
     selectData
-  >
+  >,
+): UseReadContractReturnType
+export function useReadContract(
+  parameters: UseReadContractParametersLoose = {},
+): UseReadContractReturnType {
+  const params = computed(() => deepUnref(parameters)) as any
+  const config = useConfig(params)
+  const chainId = useChainId({ config })
+  const options = computed(() =>
+    readContractQueryOptions(config as any, {
+      ...params.value,
+      chainId: params.value.chainId ?? chainId.value,
+    }),
+  )
+  return useQuery(options as any) as any
 }

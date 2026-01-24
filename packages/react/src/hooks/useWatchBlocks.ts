@@ -1,16 +1,18 @@
 'use client'
-
 import {
   type Config,
   type ResolvedRegister,
   type WatchBlocksParameters,
   watchBlocks,
 } from '@wagmi/core'
-import type { UnionCompute, UnionExactPartial } from '@wagmi/core/internal'
-import { useEffect } from 'react'
+import type {
+  ConfigParameter,
+  EnabledParameter,
+  UnionCompute,
+  UnionExactPartial,
+} from '@wagmi/core/internal'
+import { useEffect, useRef } from 'react'
 import type { BlockTag } from 'viem'
-
-import type { ConfigParameter, EnabledParameter } from '../types/properties.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
@@ -51,27 +53,32 @@ export function useWatchBlocks<
   const configChainId = useChainId({ config })
   const chainId = parameters.chainId ?? configChainId
 
+  const onBlockRef = useRef(onBlock)
+  const onErrorRef = useRef(rest.onError)
+  onBlockRef.current = onBlock
+  onErrorRef.current = rest.onError
+
   // TODO(react@19): cleanup
   // biome-ignore lint/correctness/useExhaustiveDependencies: `rest` changes every render so only including properties in dependency array
   useEffect(() => {
     if (!enabled) return
-    if (!onBlock) return
+    if (!onBlockRef.current) return
     return watchBlocks(config, {
       ...(rest as any),
       chainId,
-      onBlock,
+      onBlock: (block, prevBlock) =>
+        onBlockRef.current?.(block as any, prevBlock as any),
+      onError: (error) => onErrorRef.current?.(error),
     })
   }, [
     chainId,
     config,
     enabled,
-    onBlock,
     ///
     rest.blockTag,
     rest.emitMissed,
     rest.emitOnBegin,
     rest.includeTransactions,
-    rest.onError,
     rest.poll,
     rest.pollingInterval,
     rest.syncConnectedChain,

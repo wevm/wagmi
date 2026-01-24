@@ -1,8 +1,8 @@
+import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { homedir } from 'node:os'
-import { default as fs } from 'fs-extra'
 import { join } from 'pathe'
 
-import type { Abi } from 'abitype'
+import type { Abi } from 'viem'
 import type { ContractConfig, Plugin } from '../config.js'
 import type { Compute, RequiredBy } from '../types.js'
 
@@ -42,6 +42,7 @@ export type FetchConfig = {
    */
   request: (config: {
     address?: ContractConfig['address'] | undefined
+    name: ContractConfig['name']
   }) =>
     | { url: RequestInfo; init?: RequestInit | undefined }
     | Promise<{ url: RequestInfo; init?: RequestInit | undefined }>
@@ -69,26 +70,24 @@ export function fetch(config: FetchConfig): FetchResult {
 
   return {
     async contracts() {
-      const cacheDir = join(homedir(), '.wagmi-cli/plugins/fetch/cache')
-      await fs.ensureDir(cacheDir)
+      const cacheDir = getCacheDir()
+      await mkdir(cacheDir, { recursive: true })
 
       const timestamp = Date.now() + cacheDuration
       const contracts = []
       for (const contract of contractConfigs) {
         const cacheKey = getCacheKey({ contract })
         const cacheFilePath = join(cacheDir, `${cacheKey}.json`)
-        const cachedFile = await fs.readJSON(cacheFilePath).catch(() => null)
+        const cachedFile = JSON.parse(
+          await readFile(cacheFilePath, 'utf8').catch(() => 'null'),
+        )
 
         let abi: Abi | undefined
         if (cachedFile?.timestamp > Date.now()) abi = cachedFile.abi
         else {
+          const controller = new globalThis.AbortController()
+          const timeout = setTimeout(() => controller.abort(), timeoutDuration)
           try {
-            const controller = new globalThis.AbortController()
-            const timeout = setTimeout(
-              () => controller.abort(),
-              timeoutDuration,
-            )
-
             const { url, init } = await request(contract)
             const response = await globalThis.fetch(url, {
               ...init,
@@ -97,11 +96,15 @@ export function fetch(config: FetchConfig): FetchResult {
             clearTimeout(timeout)
 
             abi = await parse({ response })
-            await fs.writeJSON(cacheFilePath, { abi, timestamp })
+            await writeFile(
+              cacheFilePath,
+              `${JSON.stringify({ abi, timestamp }, undefined, 2)}\n`,
+            )
           } catch (error) {
+            clearTimeout(timeout)
             try {
               // Attempt to read from cache if fetch fails.
-              abi = (await fs.readJSON(cacheFilePath)).abi
+              abi = JSON.parse(await readFile(cacheFilePath, 'utf8')).abi
             } catch {}
             if (!abi) throw error
           }
@@ -114,4 +117,8 @@ export function fetch(config: FetchConfig): FetchResult {
     },
     name,
   }
+}
+
+export function getCacheDir() {
+  return join(homedir(), '.wagmi-cli/plugins/fetch/cache')
 }

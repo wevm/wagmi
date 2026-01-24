@@ -17,7 +17,7 @@ test('default', async () => {
 
   await waitFor(result.isSuccess)
 
-  expect(result.data.value).toBe(4n)
+  expect(result.data.value).toBe(10n)
   expect(result.queryKey).toMatchInlineSnapshot(`
     [
       "readContract",
@@ -46,7 +46,7 @@ test('parameters: chainId', async () => {
 
   await waitFor(result.isSuccess)
 
-  expect(result.data.value).toBe(4n)
+  expect(result.data.value).toBe(10n)
   expect(result.queryKey).toMatchInlineSnapshot(`
     [
       "readContract",

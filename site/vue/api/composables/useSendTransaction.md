@@ -31,12 +31,12 @@ import { useSendTransaction } from '@wagmi/vue'
 import { useSendTransaction } from '@wagmi/vue'
 import { parseEther } from 'viem'
 
-const { sendTransaction } = useSendTransaction()
+const sendTransaction = useSendTransaction()
 </script>
 
 <template>
   <button
-    @click="sendTransaction({
+    @click="sendTransaction.mutate({
       to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
       value: parseEther('0.01')
     })"
@@ -66,7 +66,7 @@ import { type UseSendTransactionParameters } from '@wagmi/vue'
 import { useSendTransaction } from '@wagmi/vue'
 import { config } from './config' // [!code focus]
 
-const result = useSendTransaction({
+const sendTransaction = useSendTransaction({
   config, // [!code focus]
 })
 </script>

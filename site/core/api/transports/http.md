@@ -1,3 +1,7 @@
+---
+title: http
+---
+
 <script setup>
 const packageName = '@wagmi/core'
 </script>

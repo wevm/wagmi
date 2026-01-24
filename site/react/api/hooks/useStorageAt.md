@@ -13,7 +13,7 @@ const TError = 'GetStorageAtErrorType'
 
 # useStorageAt
 
-Hook for for returning the value from a storage slot at a given address.
+Hook for returning the value from a storage slot at a given address.
 
 ## Import
 
@@ -151,7 +151,7 @@ function App() {
 
 `Config | undefined`
 
-[`Config`](/react/api/createConfig#config) to use instead of retrieving from the from nearest [`WagmiProvider`](/react/api/WagmiProvider).
+[`Config`](/react/api/createConfig#config) to use instead of retrieving from the nearest [`WagmiProvider`](/react/api/WagmiProvider).
 
 ::: code-group
 ```tsx [index.tsx]

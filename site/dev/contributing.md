@@ -1,7 +1,7 @@
 <script setup>
 import packageJson from '../../package.json'
 
-const nodeVersion = packageJson.engines.node
+const nodeVersion = packageJson.devEngines.runtime.version
 const packageManager = packageJson.packageManager
 </script>
 
@@ -64,7 +64,7 @@ After the install completes, pnpm links packages across the project for developm
 The [dev playgrounds](#_5-running-the-dev-playgrounds) and [test suite](#_6-running-the-test-suite) require environment variables to be set. Copy over the following environment variables to `.env`, and fill them out.
 
 ```bash
-VITE_MAINNET_FORK_URL=https://cloudflare-eth.com
+VITE_MAINNET_FORK_URL=https://eth.merkle.io
 VITE_OPTIMISM_FORK_URL=https://mainnet.optimism.io
 
 NEXT_PUBLIC_WC_PROJECT_ID=3fbb6bba6f1de962d911bb5b5c9dba88
@@ -96,21 +96,23 @@ Once a playground dev server is running, you can make changes to any of the pack
 
 ## 6. Running the test suite
 
-Wagmi uses [Vitest](https://vitest.dev) to run tests and [Prool](https://github.com/wevm/prool) to execute tests against locally running chain forks. First, install [Anvil](https://github.com/foundry-rs/foundry/tree/master/anvil) via [Foundryup](https://book.getfoundry.sh/getting-started/installation).
+Wagmi uses [Vitest](https://vitest.dev) to run tests and [Prool](https://github.com/wevm/prool) to execute tests against locally running chain forks. First, make sure you have Docker ([OrbStack](https://orbstack.dev) works great!) and install [Anvil](https://github.com/foundry-rs/foundry/tree/master/crates/anvil) via [Foundryup](https://book.getfoundry.sh/getting-started/installation).
 
 ```bash
 curl -L https://foundry.paradigm.xyz | bash
 foundryup
 ```
 
+You'll also need to install [Playwright](https://playwright.dev/) browser binaries:
+
+```bash
+pnpm exec playwright install
+```
+
 Next, make sure you have set up your [env variables](#_4-adding-the-env-variables). Now you are ready to run the tests! You have the following options for running tests:
 
 - `pnpm test [package?]` — runs tests in watch mode
 - `pnpm test:cov` — runs tests and reports coverage
-- `pnpm test:ui` — runs tests in the [Vitest UI](https://vitest.dev/guide/ui.html)
-- `pnpm test:core` — runs `@wagmi/core` tests
-- `pnpm test:react` — runs `wagmi` tests
-- `pnpm test:vue` — runs `@wagmi/vue` tests
 
 When adding new features or fixing bugs, it's important to add test cases to cover the new or updated behavior. If snapshot tests fail, you can run the `test:update` command to update the snapshots.
 
@@ -167,6 +169,12 @@ Use [Taze](https://github.com/antfu/taze) by running:
 pnpm deps       # prints outdated deps
 pnpm deps patch # print outdated deps with new patch versions
 pnpm deps -w    # updates deps (best done with clean working tree)
+```
+
+Update GitHub Actions via [Actions Up!](https://github.com/azat-io/actions-up) by running:
+
+```bash
+pnpm deps:ci
 ```
 
 [Socket](https://socket.dev) checks pull requests for vulnerabilities when new dependencies and versions are added, but you should also be vigilant! When updating dependencies, you should check release notes and source code as well as lock versions when possible.

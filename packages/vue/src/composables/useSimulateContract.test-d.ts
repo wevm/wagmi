@@ -19,7 +19,6 @@ test('default', () => {
     | {
         result: boolean
         request: {
-          __mode: 'prepared'
           chainId?: undefined
           abi: readonly [
             {
@@ -43,6 +42,7 @@ test('default', () => {
 })
 
 test('select data', () => {
+  // @ts-ignore TODO: Type instantiation is excessively deep and possibly infinite.
   const result = useSimulateContract({
     address: '0x',
     abi: abi.erc20,
@@ -73,7 +73,6 @@ test('UseSimulateContractReturnType', () => {
     | {
         result: boolean
         request: {
-          __mode: 'prepared'
           chainId: number
           abi: readonly [
             {
