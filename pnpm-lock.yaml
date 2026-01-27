@@ -16,8 +16,8 @@ catalogs:
       specifier: 0.3.2
       version: 0.3.2
     '@metamask/connect-evm':
-      specifier: 0.3.1
-      version: 0.3.1
+      specifier: 0.4.0
+      version: 0.4.0
     '@nuxt/schema':
       specifier: 4.2.1
       version: 4.2.1
@@ -276,7 +276,7 @@ importers:
         version: 0.3.2(viem@2.44.4(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76))
       '@metamask/connect-evm':
         specifier: 'catalog:'
-        version: 0.3.1(@babel/runtime@7.28.4)(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+        version: 0.4.0(@babel/runtime@7.28.4)(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@safe-global/safe-apps-provider':
         specifier: 'catalog:'
         version: 0.18.6(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
@@ -2674,8 +2674,8 @@ packages:
     resolution: {integrity: sha512-807Y6JxqeY3tckSRDse96RmHV6atDsSPLD/x9KIync8ccFjOwSZlv0n4NA5Bsi0znjOogU0jEe5hPNIDTFzFRg==}
     engines: {node: ^18.18 || >=20}
 
-  '@metamask/connect-evm@0.3.1':
-    resolution: {integrity: sha512-nEakpZqPQUrI6zr4f/NlLjAXns5X0Pe0CwlZ934BuEgQuiY4BZrqs5V6l4B0sFfNDDjsZIeeJiy26NrdTTFFNw==}
+  '@metamask/connect-evm@0.4.0':
+    resolution: {integrity: sha512-2VGB076kW10V7365Y9QHDeyTRvLM0szP8V2Z8CUi75hmBKQN4ypt0rp3y+1YgxJbURTcpTjfnbd2EHTVfjh7RA==}
     engines: {node: '>=20.19.0'}
 
   '@metamask/connect-multichain@0.5.1':
@@ -12390,7 +12390,7 @@ snapshots:
       - '@babel/runtime'
       - supports-color
 
-  '@metamask/connect-evm@0.3.1(@babel/runtime@7.28.4)(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
+  '@metamask/connect-evm@0.4.0(@babel/runtime@7.28.4)(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
     dependencies:
       '@metamask/analytics': 0.2.0
       '@metamask/chain-agnostic-permission': 1.4.0(@babel/runtime@7.28.4)
