@@ -18,19 +18,8 @@ import {
 } from 'viem'
 
 export type MetaMaskParameters = UnionCompute<
-  ExactPartial<Pick<CreateEVMClientParameters, 'dapp' | 'debug'>> & {
-    /** @deprecated use `dapp` instead */
-    dappMetadata?: CreateEVMClientParameters['dapp']
-    /** @deprecated use `debug` instead */
-    logging?: unknown
-    /** Mobile-specific options, including preferredOpenLink for React Native deeplinks */
-    mobile?: {
-      /** Custom function to open deeplinks - required for React Native since window.location.href doesn't work */
-      preferredOpenLink?: (deeplink: string, target?: string) => void
-      /** Whether to use deeplink (default: true) or universal link */
-      useDeeplink?: boolean
-    }
-  } & OneOf<
+  ExactPartial<Omit<CreateEVMClientParameters, 'api' | 'eventHandlers'>> &
+    OneOf<
       | {
           /* Shortcut to connect and sign a message */
           connectAndSign?: string | undefined
@@ -256,7 +245,19 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
               throw new Error('dependency "@metamask/connect-evm" not found')
             }
           })()
+
+          const defaultDappParams =
+            typeof window === 'undefined'
+              ? {
+                  name: 'wagmi',
+                }
+              : {
+                  name: window.location.hostname,
+                  url: window.location.href,
+                }
+
           metamaskPromise = createEVMClient({
+            ...parameters,
             api: {
               supportedNetworks: Object.fromEntries(
                 config.chains.map((chain) => [
@@ -265,19 +266,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
                 ]),
               ),
             },
-            dapp: (() => {
-              if (parameters.dappMetadata) return parameters.dappMetadata
-              if (parameters.dapp) return parameters.dapp
-              if (typeof window === 'undefined') return { name: 'wagmi' }
-              return {
-                name: window.location.hostname,
-                url: window.location.href,
-              }
-            })(),
-            debug: (() => {
-              if (parameters.logging) return true
-              return parameters.debug
-            })(),
+            dapp: parameters.dapp ?? defaultDappParams,
             eventHandlers: {
               accountsChanged: this.onAccountsChanged.bind(this),
               chainChanged: this.onChainChanged.bind(this),
@@ -285,7 +274,6 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
               disconnect: this.onDisconnect.bind(this),
               displayUri: this.onDisplayUri.bind(this),
             },
-            ...(parameters.mobile && { mobile: parameters.mobile }),
           })
         }
         metamask = await metamaskPromise
