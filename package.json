@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "pnpm run --filter @wagmi/core --filter @wagmi/cli build && pnpm run --filter @wagmi/connectors build && pnpm run --filter wagmi --filter @wagmi/vue build",
+    "build": "pnpm run --filter @wagmi/core --filter @wagmi/cli build && pnpm run --filter @wagmi/connectors build && pnpm run --filter wagmi --filter @wagmi/solid --filter @wagmi/vue build",
     "bench:types": "TYPES=true vitest bench-d.ts",
     "changeset:prepublish": "pnpm clean && pnpm version:update && pnpm build && node scripts/formatPackageJson.ts && node scripts/generateProxyPackages.ts",
     "changeset:publish": "pnpm changeset:prepublish && changeset publish",
@@ -22,6 +22,8 @@
     "dev:next": "pnpm --filter next-app dev",
     "dev:nuxt": "pnpm --filter nuxt-app dev",
     "dev:react": "pnpm --filter vite-react dev",
+    "dev:solid": "pnpm --filter vite-solid dev",
+    "dev:solid-start": "pnpm --filter solid-start-app dev",
     "dev:start": "pnpm --filter tanstack-start dev",
     "dev:vue": "pnpm --filter vite-vue dev",
     "docs:dev": "pnpm --filter site dev",
@@ -58,10 +60,12 @@
     "react-dom": "catalog:",
     "sherif": "^1.0.0",
     "simple-git-hooks": "^2.11.1",
+    "solid-js": "catalog:",
     "testcontainers": "^11.11.0",
     "typescript": "^5.9.3",
     "viem": "^2.44.4",
     "vite-plugin-react-fallback-throttle": "^0.1.1",
+    "vite-plugin-solid": "catalog:",
     "vitest": "^4.0.16",
     "vitest-browser-react": "^2.0.2"
   },
@@ -129,7 +133,7 @@
       },
       "packages/react": {
         "entry": [
-          "src/exports/{actions,chains,codegen,connectors,experimental,index,internal,query,tempo}.ts!",
+          "src/exports/{actions,chains,codegen,connectors,experimental,index,query,tempo}.ts!",
           "src/exports/actions/experimental.ts!"
         ],
         "ignore": [
@@ -148,7 +152,7 @@
       },
       "packages/vue": {
         "entry": [
-          "src/exports/{actions,chains,connectors,index,internal,nuxt,query}.ts!",
+          "src/exports/{actions,chains,connectors,index,nuxt,query}.ts!",
           "src/exports/actions/experimental.ts!"
         ],
         "ignore": [
@@ -157,6 +161,15 @@
         ],
         "ignoreDependencies": [
           "nuxt"
+        ]
+      },
+      "packages/solid": {
+        "entry": [
+          "src/exports/{actions,chains,connectors,index,query}.ts!",
+          "src/exports/actions/experimental.ts!"
+        ],
+        "ignore": [
+          "test/setup.ts"
         ]
       }
     }

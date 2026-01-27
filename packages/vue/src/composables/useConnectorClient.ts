@@ -5,14 +5,13 @@ import type {
   GetConnectorClientErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { Compute } from '@wagmi/core/internal'
+import type { Compute, ConfigParameter } from '@wagmi/core/internal'
 import {
   type GetConnectorClientData,
   type GetConnectorClientOptions,
   getConnectorClientQueryOptions,
 } from '@wagmi/core/query'
 import { computed, ref, watchEffect } from 'vue'
-import type { ConfigParameter } from '../types/properties.js'
 import type { DeepMaybeRef } from '../types/ref.js'
 import { deepUnref } from '../utils/cloneDeep.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
@@ -54,10 +53,9 @@ export function useConnectorClient<
   const { address, connector } = useConnection({ config })
   const options = computed(() =>
     getConnectorClientQueryOptions(config as any, {
-      ...params.value,
+      ...(params.value as any),
       chainId: params.value.chainId ?? chainId.value,
       connector: (params.value.connector ?? connector.value) as Connector,
-      query: params.value.query as any,
     }),
   )
 

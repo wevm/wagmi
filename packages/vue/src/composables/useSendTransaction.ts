@@ -4,7 +4,7 @@ import type {
   ResolvedRegister,
   SendTransactionErrorType,
 } from '@wagmi/core'
-import type { Compute } from '@wagmi/core/internal'
+import type { Compute, ConfigParameter } from '@wagmi/core/internal'
 import {
   type SendTransactionData,
   type SendTransactionMutate,
@@ -13,7 +13,6 @@ import {
   type SendTransactionVariables,
   sendTransactionMutationOptions,
 } from '@wagmi/core/query'
-import type { ConfigParameter } from '../types/properties.js'
 import type { UseMutationReturnType } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 

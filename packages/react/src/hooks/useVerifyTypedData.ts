@@ -4,13 +4,13 @@ import type {
   ResolvedRegister,
   VerifyTypedDataErrorType,
 } from '@wagmi/core'
+import type { ConfigParameter } from '@wagmi/core/internal'
 import {
   type VerifyTypedDataData,
   type VerifyTypedDataOptions,
   verifyTypedDataQueryOptions,
 } from '@wagmi/core/query'
 import type { TypedData } from 'viem'
-import type { ConfigParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'

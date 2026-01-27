@@ -1,8 +1,8 @@
 import type { UseMutationResult } from '@tanstack/react-query'
 import type { Config, ResolvedRegister } from '@wagmi/core'
+import type { ConfigParameter } from '@wagmi/core/internal'
 import { Actions } from '@wagmi/core/tempo'
 import { useConfig } from '../../hooks/useConfig.js'
-import type { ConfigParameter } from '../../types/properties.js'
 import { type UseMutationParameters, useMutation } from '../../utils/query.js'
 
 /**

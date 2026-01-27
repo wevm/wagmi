@@ -5,7 +5,7 @@ import type {
   DeployContractErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { Compute } from '@wagmi/core/internal'
+import type { Compute, ConfigParameter } from '@wagmi/core/internal'
 import {
   type DeployContractData,
   type DeployContractMutate,
@@ -15,7 +15,6 @@ import {
   deployContractMutationOptions,
 } from '@wagmi/core/query'
 import type { Abi } from 'viem'
-import type { ConfigParameter } from '../types/properties.js'
 import type { UseMutationReturnType } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 

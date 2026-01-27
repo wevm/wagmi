@@ -1,0 +1,18 @@
+{
+  "name": "solid-start-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vinxi dev",
+    "build": "vinxi build",
+    "start": "vinxi start"
+  },
+  "dependencies": {
+    "@solidjs/start": "^1.1.0",
+    "@tanstack/solid-query": "catalog:",
+    "@wagmi/solid": "workspace:*",
+    "solid-js": "catalog:",
+    "viem": "2.*",
+    "vinxi": "^0.5.7"
+  }
+}

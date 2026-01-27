@@ -4,13 +4,13 @@ import type {
   ResolvedRegister,
   SimulateContractErrorType,
 } from '@wagmi/core'
+import type { ConfigParameter } from '@wagmi/core/internal'
 import {
   type SimulateContractData,
   type SimulateContractOptions,
   simulateContractQueryOptions,
 } from '@wagmi/core/query'
 import type { Abi, ContractFunctionArgs, ContractFunctionName } from 'viem'
-import type { ConfigParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'

@@ -4,13 +4,12 @@ import type {
   GetStorageAtErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { Compute } from '@wagmi/core/internal'
+import type { Compute, ConfigParameter } from '@wagmi/core/internal'
 import {
   type GetStorageAtData,
   type GetStorageAtOptions,
   getStorageAtQueryOptions,
 } from '@wagmi/core/query'
-import type { ConfigParameter } from '../types/properties.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'

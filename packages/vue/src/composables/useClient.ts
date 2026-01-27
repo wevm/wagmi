@@ -6,7 +6,7 @@ import {
   type ResolvedRegister,
   watchClient,
 } from '@wagmi/core'
-import type { Compute } from '@wagmi/core/internal'
+import type { Compute, ConfigParameter } from '@wagmi/core/internal'
 import {
   computed,
   onScopeDispose,
@@ -15,8 +15,6 @@ import {
   ref,
   watchEffect,
 } from 'vue'
-
-import type { ConfigParameter } from '../types/properties.js'
 import type { DeepMaybeRef } from '../types/ref.js'
 import { deepUnref } from '../utils/cloneDeep.js'
 import { useConfig } from './useConfig.js'

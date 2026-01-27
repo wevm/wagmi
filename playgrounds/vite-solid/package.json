@@ -1,0 +1,21 @@
+{
+  "name": "vite-solid",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@tanstack/solid-query": "catalog:",
+    "@wagmi/solid": "workspace:*",
+    "solid-js": "catalog:",
+    "viem": "2.*"
+  },
+  "devDependencies": {
+    "buffer": "catalog:",
+    "vite": "catalog:",
+    "vite-plugin-solid": "catalog:"
+  }
+}

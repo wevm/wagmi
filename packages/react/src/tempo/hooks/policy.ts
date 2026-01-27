@@ -1,12 +1,14 @@
 import type { UseMutationResult } from '@tanstack/react-query'
 import type { Config, ResolvedRegister } from '@wagmi/core'
-import type { ExactPartial, UnionCompute } from '@wagmi/core/internal'
+import type {
+  ConfigParameter,
+  ExactPartial,
+  UnionCompute,
+} from '@wagmi/core/internal'
 import { Actions } from '@wagmi/core/tempo'
 import { useEffect } from 'react'
-
 import { useChainId } from '../../hooks/useChainId.js'
 import { useConfig } from '../../hooks/useConfig.js'
-import type { ConfigParameter } from '../../types/properties.js'
 import {
   type UseMutationParameters,
   type UseQueryReturnType,

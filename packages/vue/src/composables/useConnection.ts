@@ -5,9 +5,8 @@ import {
   type ResolvedRegister,
   watchConnection,
 } from '@wagmi/core'
+import type { ConfigParameter } from '@wagmi/core/internal'
 import { onScopeDispose, reactive, readonly, type ToRefs, toRefs } from 'vue'
-
-import type { ConfigParameter } from '../types/properties.js'
 import { updateState } from '../utils/updateState.js'
 import { useConfig } from './useConfig.js'
 

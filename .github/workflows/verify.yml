@@ -112,12 +112,12 @@ jobs:
     permissions:
       contents: read
     runs-on: ubuntu-latest
-    timeout-minutes: 11
+    timeout-minutes: 10
     strategy:
-      max-parallel: 3
+      max-parallel: 4
       matrix:
-        shard: [1, 2, 3]
-        total-shards: [3]
+        shard: [1, 2, 3, 4]
+        total-shards: [4]
 
     steps:
       - name: Clone repository

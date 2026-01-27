@@ -1,6 +1,7 @@
 import path from 'node:path'
 import { playwright } from '@vitest/browser-playwright'
 import reactFallbackThrottlePlugin from 'vite-plugin-react-fallback-throttle'
+import solid from 'vite-plugin-solid'
 import { defaultExclude, defineConfig } from 'vitest/config'
 
 const alias = {
@@ -11,6 +12,7 @@ const alias = {
   '@wagmi/core': path.resolve(__dirname, './packages/core/src/exports'),
   '@wagmi/test': path.resolve(__dirname, './packages/test/src/exports'),
   '@wagmi/vue': path.resolve(__dirname, './packages/vue/src/exports'),
+  '@wagmi/solid': path.resolve(__dirname, './packages/solid/src/exports'),
   wagmi: path.resolve(__dirname, './packages/react/src/exports'),
 }
 
@@ -136,6 +138,23 @@ export default defineConfig({
           setupFiles: ['./packages/vue/test/setup.ts'],
         },
         resolve: { alias },
+      },
+      {
+        plugins: [solid()],
+        resolve: { alias },
+        test: {
+          name: 'solid',
+          browser: {
+            enabled: true,
+            headless: true,
+            instances: [{ browser: 'chromium' }],
+            provider: playwright(),
+            screenshotFailures: false,
+          },
+          include: ['./packages/solid/src/**/*.test.ts?(x)'],
+          testTimeout: 10_000,
+          setupFiles: ['./packages/solid/test/setup.ts'],
+        },
       },
       {
         test: {

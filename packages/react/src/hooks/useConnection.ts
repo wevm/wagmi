@@ -8,7 +8,7 @@ import {
   watchConnection,
 } from '@wagmi/core'
 
-import type { ConfigParameter } from '../types/properties.js'
+import type { ConfigParameter } from '@wagmi/core/internal'
 import { useConfig } from './useConfig.js'
 import { useSyncExternalStoreWithTracked } from './useSyncExternalStoreWithTracked.js'
 
