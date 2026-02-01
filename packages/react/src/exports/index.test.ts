@@ -36,6 +36,7 @@ test('exports', () => {
       "unstable_connector",
       "useAccount",
       "useAccountEffect",
+      "useAddChain",
       "useBalance",
       "useBlobBaseFee",
       "useBlock",
