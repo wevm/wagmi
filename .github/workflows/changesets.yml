@@ -42,7 +42,7 @@ jobs:
           node-version: 24.5
 
       - name: PR or publish
-        uses: changesets/action@e0145edc7d9d8679003495b11f87bd8ef63c0cba # v1.5.3
+        uses: changesets/action@c48e67d110a68bc90ccf1098e9646092baacaa87 # v1.6.0
         with:
           title: 'chore: version packages'
           commit: 'chore: version packages'
