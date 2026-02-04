@@ -1,6 +1,9 @@
 <script setup>
 import packageJson from '../../packages/solid/package.json'
 
+const docsPath = 'solid'
+const packageDir = 'solid'
+const packageName = '@wagmi/solid'
 const viemVersion = packageJson.peerDependencies.viem
 </script>
 
@@ -34,12 +37,4 @@ bun add @wagmi/solid viem@{{viemVersion}} @tanstack/solid-query
 - [TanStack Query](https://tanstack.com/query/v5) is an async state manager that handles requests, caching, and more.
 - [TypeScript](/solid/typescript) is optional, but highly recommended. Learn more about [TypeScript support](/solid/typescript).
 
-## Requirements
-
-`@wagmi/solid` requires the following peer dependencies:
-
-- `solid-js@1.x`
-- `viem@2.x`
-- `@tanstack/solid-query@>=5.0.0`
-
-Make sure you have these installed in your project.
+<!--@include: @shared/installation.md-->

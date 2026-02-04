@@ -1,35 +1,28 @@
+<script setup>
+import { getSidebar } from '../../.vitepress/sidebar'
+
+const transports = getSidebar()['/core']
+  .find(x => x.text.includes('Configuration')).items
+  .find(x => x.text.includes('Transports')).items
+  .sort((a, b) => a.text.localeCompare(b.text))
+</script>
+
 # Transports
 
-Transports define how requests are made to Ethereum nodes.
+[`createConfig`](/solid/api/createConfig) can be instantiated with a set of Transports for each chain. A Transport is the intermediary layer that is responsible for executing outgoing JSON-RPC requests to the RPC Provider (e.g. Alchemy, Infura, etc).
 
 ## Import
 
 ```ts
-import { http, webSocket, fallback } from '@wagmi/solid'
+import { http } from '@wagmi/solid'
 ```
 
-## Available Transports
+## Built-In Transports
 
-- [`http`](/solid/api/transports/http) - HTTP JSON-RPC transport
-- [`webSocket`](/solid/api/transports/webSocket) - WebSocket transport
-- [`fallback`](/solid/api/transports/fallback) - Fallback transport for reliability
-- [`custom`](/solid/api/transports/custom) - Custom EIP-1193 transport
+Available via the `'@wagmi/solid'` entrypoint.
 
-## Usage
-
-```ts
-import { createConfig, http } from '@wagmi/solid'
-import { mainnet, sepolia } from '@wagmi/solid/chains'
-
-const config = createConfig({
-  chains: [mainnet, sepolia],
-  transports: {
-    [mainnet.id]: http('https://mainnet.example.com'),
-    [sepolia.id]: http('https://sepolia.example.com'),
-  },
-})
-```
-
-## More Information
-
-See the [`@wagmi/core` Transports docs](/core/api/transports) for more information on transports.
+<ul>
+  <li v-for="transport of transports">
+    <a :href="transport.link">{{ transport.text }}</a>
+  </li>
+</ul>

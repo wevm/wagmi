@@ -39,21 +39,17 @@ function App() {
   )
 }
 ```
-```ts [config.ts]
-import { http, createConfig } from '@wagmi/solid'
-import { mainnet, sepolia } from '@wagmi/solid/chains'
-
-export const config = createConfig({
-  chains: [mainnet, sepolia],
-  transports: {
-    [mainnet.id]: http(),
-    [sepolia.id]: http(),
-  },
-})
-```
+<<< @/snippets/solid/config.ts[config.ts]
 :::
 
 ## Parameters
+
+```ts
+import { useConnect } from '@wagmi/solid'
+
+useConnect.Parameters
+useConnect.SolidParameters
+```
 
 Parameters are passed as a getter function to maintain Solid reactivity.
 
@@ -70,51 +66,19 @@ useConnect(() => ({
 
 [`Config`](/solid/api/createConfig#config) to use instead of retrieving from the nearest [`WagmiProvider`](/solid/api/WagmiProvider).
 
-### mutation
-
-TanStack Query mutation options. See the [TanStack Query mutation docs](https://tanstack.com/query/v5/docs/framework/solid/reference/createMutation) for more info.
+<!--@include: @shared/mutation-options.md-->
 
 ## Return Type
 
 ```ts
-import { type CreateMutationResult } from '@tanstack/solid-query'
+import { useConnect } from '@wagmi/solid'
+
+useConnect.ReturnType
 ```
 
-### mutate
+<!--@include: @shared/mutation-result.md-->
 
-`(variables: { chainId?: number; connector?: Connector }) => void`
-
-Function to trigger the connection.
-
-### mutateAsync
-
-`(variables: { chainId?: number; connector?: Connector }) => Promise<{ accounts: Address[]; chainId: number }>`
-
-Async version of `mutate` that returns a promise.
-
-### data
-
-`{ accounts: Address[]; chainId: number } | undefined`
-
-The connection data after successful connection.
-
-### error
-
-`ConnectErrorType | null`
-
-The error object if the connection failed.
-
-### isError / isIdle / isPending / isSuccess
-
-`boolean`
-
-Boolean flags indicating the mutation status.
-
-### reset
-
-`() => void`
-
-Function to reset the mutation state.
+<!--@include: @shared/mutation-imports.md-->
 
 ::: tip
 Not all connectors support connecting directly to a `chainId` (e.g. they don't support programmatic chain switching). In those cases, the connector will connect to whatever chain the connector's provider (e.g. wallet) is connected to.

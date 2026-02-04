@@ -1,32 +1,26 @@
+<script setup>
+import packageJson from '../../../package.json'
+import SearchChains from '../../components/SearchChains.vue'
+
+const viemVersion = packageJson.devDependencies.viem
+</script>
+
 # Chains
 
-A collection of popular EVM-compatible chains.
+Viem `Chain` objects. More info at the [Viem docs](https://viem.sh/docs/chains/introduction).
 
 ## Import
 
-```ts
-import { mainnet, sepolia } from '@wagmi/solid/chains'
-```
-
-## Usage
+Import via the `'@wagmi/solid/chains'` entrypoint (proxies all chains from `'viem/chains'`).
 
 ```ts
-import { createConfig, http } from '@wagmi/solid'
-import { mainnet, sepolia } from '@wagmi/solid/chains'
-
-const config = createConfig({
-  chains: [mainnet, sepolia],
-  transports: {
-    [mainnet.id]: http(),
-    [sepolia.id]: http(),
-  },
-})
+import { mainnet } from '@wagmi/solid/chains'
 ```
 
-## Chains
+## Available Chains
 
-See the [`@wagmi/core` Chains docs](/core/api/chains) for the full list of available chains.
+Chain definitions as of `viem@{{viemVersion}}`. For `viem@latest`, visit the [Viem repo](https://github.com/wevm/viem/blob/main/src/chains/index.ts).
 
-## Custom Chains
+<SearchChains />
 
-You can also define custom chains. See the [Viem documentation](https://viem.sh/docs/chains/introduction#custom-chains) for more information.
+<!--@include: @shared/create-chain.md-->

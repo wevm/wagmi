@@ -33,21 +33,17 @@ function App() {
   }))
 }
 ```
-```ts [config.ts]
-import { http, createConfig } from '@wagmi/solid'
-import { mainnet, sepolia } from '@wagmi/solid/chains'
-
-export const config = createConfig({
-  chains: [mainnet, sepolia],
-  transports: {
-    [mainnet.id]: http(),
-    [sepolia.id]: http(),
-  },
-})
-```
+<<< @/snippets/solid/config.ts[config.ts]
 :::
 
 ## Parameters
+
+```ts
+import { useBalance } from '@wagmi/solid'
+
+useBalance.Parameters
+useBalance.SolidParameters
+```
 
 Parameters are passed as a getter function to maintain Solid reactivity.
 
@@ -94,44 +90,19 @@ ID of chain to use when fetching data.
 
 Scopes the cache to a given context. Primitives that have identical context will share the same cache.
 
-### query
-
-TanStack Query parameters. See the [TanStack Query query docs](https://tanstack.com/query/v5/docs/framework/solid/reference/createQuery) for more info.
+<!--@include: @shared/query-options.md-->
 
 ## Return Type
 
 ```ts
-import { type CreateQueryResult } from '@tanstack/solid-query'
+import { useBalance } from '@wagmi/solid'
+
+useBalance.ReturnType
 ```
 
-Returns a TanStack Query result object with the following properties:
+<!--@include: @shared/query-result.md-->
 
-### data
-
-`{ decimals: number; symbol: string; value: bigint; } | undefined`
-
-The balance data, including:
-- `decimals`: Number of decimals for the token
-- `symbol`: Token symbol
-- `value`: Raw balance value as bigint
-
-### error
-
-`GetBalanceErrorType | null`
-
-The error object if the query failed.
-
-### isError / isPending / isSuccess
-
-`boolean`
-
-Boolean flags indicating the query status.
-
-### refetch
-
-`() => Promise<...>`
-
-Function to manually refetch the data.
+<!--@include: @shared/query-imports.md-->
 
 ## Action
 

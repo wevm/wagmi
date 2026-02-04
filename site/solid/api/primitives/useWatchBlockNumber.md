@@ -32,21 +32,17 @@ function App() {
   return <p>Block number: {blockNumber()?.toString()}</p>
 }
 ```
-```ts [config.ts]
-import { http, createConfig } from '@wagmi/solid'
-import { mainnet, sepolia } from '@wagmi/solid/chains'
-
-export const config = createConfig({
-  chains: [mainnet, sepolia],
-  transports: {
-    [mainnet.id]: http(),
-    [sepolia.id]: http(),
-  },
-})
-```
+<<< @/snippets/solid/config.ts[config.ts]
 :::
 
 ## Parameters
+
+```ts
+import { useWatchBlockNumber } from '@wagmi/solid'
+
+useWatchBlockNumber.Parameters
+useWatchBlockNumber.SolidParameters
+```
 
 Parameters are passed as a getter function to maintain Solid reactivity.
 
@@ -121,6 +117,12 @@ Polling frequency (in ms). Defaults to the transport's `pollingInterval`.
 Whether or not to sync the chain with the connected chain. Defaults to `true`.
 
 ## Return Type
+
+```ts
+import { useWatchBlockNumber } from '@wagmi/solid'
+
+useWatchBlockNumber.ReturnType
+```
 
 `void`
 

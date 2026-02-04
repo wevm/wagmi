@@ -32,21 +32,17 @@ function App() {
   return <div>...</div>
 }
 ```
-```ts [config.ts]
-import { http, createConfig } from '@wagmi/solid'
-import { mainnet, sepolia } from '@wagmi/solid/chains'
-
-export const config = createConfig({
-  chains: [mainnet, sepolia],
-  transports: {
-    [mainnet.id]: http(),
-    [sepolia.id]: http(),
-  },
-})
-```
+<<< @/snippets/solid/config.ts[config.ts]
 :::
 
 ## Parameters
+
+```ts
+import { useConnectionEffect } from '@wagmi/solid'
+
+useConnectionEffect.Parameters
+useConnectionEffect.SolidParameters
+```
 
 Parameters are passed as a getter function to maintain Solid reactivity.
 
@@ -76,6 +72,12 @@ Callback that is called when no more accounts are connected.
 [`Config`](/solid/api/createConfig#config) to use instead of retrieving from the nearest [`WagmiProvider`](/solid/api/WagmiProvider).
 
 ## Return Type
+
+```ts
+import { useConnectionEffect } from '@wagmi/solid'
+
+useConnectionEffect.ReturnType
+```
 
 `void`
 

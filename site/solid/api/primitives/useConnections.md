@@ -36,21 +36,17 @@ function App() {
   )
 }
 ```
-```ts [config.ts]
-import { http, createConfig } from '@wagmi/solid'
-import { mainnet, sepolia } from '@wagmi/solid/chains'
-
-export const config = createConfig({
-  chains: [mainnet, sepolia],
-  transports: {
-    [mainnet.id]: http(),
-    [sepolia.id]: http(),
-  },
-})
-```
+<<< @/snippets/solid/config.ts[config.ts]
 :::
 
 ## Parameters
+
+```ts
+import { useConnections } from '@wagmi/solid'
+
+useConnections.Parameters
+useConnections.SolidParameters
+```
 
 Parameters are passed as a getter function to maintain Solid reactivity.
 
@@ -67,6 +63,12 @@ useConnections(() => ({
 [`Config`](/solid/api/createConfig#config) to use instead of retrieving from the nearest [`WagmiProvider`](/solid/api/WagmiProvider).
 
 ## Return Type
+
+```ts
+import { useConnections } from '@wagmi/solid'
+
+useConnections.ReturnType
+```
 
 `Accessor<readonly Connection[]>`
 

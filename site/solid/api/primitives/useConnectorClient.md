@@ -25,21 +25,17 @@ function App() {
   // client() returns the Wallet Client when connected
 }
 ```
-```ts [config.ts]
-import { http, createConfig } from '@wagmi/solid'
-import { mainnet, sepolia } from '@wagmi/solid/chains'
-
-export const config = createConfig({
-  chains: [mainnet, sepolia],
-  transports: {
-    [mainnet.id]: http(),
-    [sepolia.id]: http(),
-  },
-})
-```
+<<< @/snippets/solid/config.ts[config.ts]
 :::
 
 ## Parameters
+
+```ts
+import { useConnectorClient } from '@wagmi/solid'
+
+useConnectorClient.Parameters
+useConnectorClient.SolidParameters
+```
 
 Parameters are passed as a getter function to maintain Solid reactivity.
 
@@ -74,33 +70,19 @@ ID of chain to use for the client.
 
 Connector to get the client for. Defaults to the active connector.
 
-### query
-
-TanStack Query parameters. See the [TanStack Query query docs](https://tanstack.com/query/v5/docs/framework/solid/reference/createQuery) for more info.
+<!--@include: @shared/query-options.md-->
 
 ## Return Type
 
 ```ts
-import { type CreateQueryResult } from '@tanstack/solid-query'
+import { useConnectorClient } from '@wagmi/solid'
+
+useConnectorClient.ReturnType
 ```
 
-### data
+<!--@include: @shared/query-result.md-->
 
-`WalletClient | undefined`
-
-The Viem Wallet Client instance.
-
-### error
-
-`GetConnectorClientErrorType | null`
-
-The error object if the query failed.
-
-### isError / isPending / isSuccess
-
-`boolean`
-
-Boolean flags indicating the query status.
+<!--@include: @shared/query-imports.md-->
 
 ## Action
 

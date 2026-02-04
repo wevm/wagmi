@@ -57,6 +57,13 @@ export const config = createConfig({
 
 ## Parameters
 
+```ts
+import { useConnectors } from '@wagmi/solid'
+
+useConnectors.Parameters
+useConnectors.SolidParameters
+```
+
 Parameters are passed as a getter function to maintain Solid reactivity.
 
 ```ts
@@ -72,6 +79,12 @@ useConnectors(() => ({
 [`Config`](/solid/api/createConfig#config) to use instead of retrieving from the nearest [`WagmiProvider`](/solid/api/WagmiProvider).
 
 ## Return Type
+
+```ts
+import { useConnectors } from '@wagmi/solid'
+
+useConnectors.ReturnType
+```
 
 `Accessor<readonly Connector[]>`
 
