@@ -16,7 +16,7 @@ import { metaMask } from '{{connectorsPackageName}}'
 
 ## Install
 
-<PackageMetadata package="@metamask/connect-evm" repo="MetaMask/connect-monorepo" licenseUrl="https://github.com/MetaMask/connect-monorepo/blob/main/packages/connect-evm/LICENSE" />
+<PackageMetadata package="@metamask/connect-evm" repo="MetaMask/connect-monorepo" isOsiLicense licenseUrl="https://github.com/MetaMask/connect-monorepo/blob/main/packages/connect-evm/LICENSE" />
 
 ::: code-group
 ```bash-vue [pnpm]

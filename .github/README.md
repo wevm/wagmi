@@ -93,10 +93,10 @@ If you find Wagmi useful or use it for work, please consider [sponsoring Wagmi](
       <img alt="paradigm logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/paradigm-light.svg" width="auto" height="70">
     </picture>
   </a>
-  <a href="https://ithaca.xyz">
+  <a href="https://tempo.xyz">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/ithaca-dark.svg">
-      <img alt="ithaca logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/ithaca-light.svg" width="auto" height="70">
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/tempo-dark.svg">
+      <img alt="tempo logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/tempo-light.svg" width="auto" height="70">
     </picture>
   </a>
 </p>
@@ -112,12 +112,6 @@ If you find Wagmi useful or use it for work, please consider [sponsoring Wagmi](
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/context-dark.svg">
       <img alt="context logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/context-light.svg" width="auto" height="50">
-    </picture>
-  </a>
-  <a href="https://walletconnect.com">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/walletconnect-dark.svg">
-      <img alt="WalletConnect logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/walletconnect-light.svg" width="auto" height="50">
     </picture>
   </a>
   <a href="https://twitter.com/prtyDAO">
@@ -156,18 +150,6 @@ If you find Wagmi useful or use it for work, please consider [sponsoring Wagmi](
       <img alt="pancake logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/pancake-light.svg" width="auto" height="50">
     </picture>
   </a>
-  <a href="https://celo.org">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/celo-dark.svg">
-      <img alt="celo logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/celo-light.svg" width="auto" height="50">
-    </picture>
-  </a>
-  <a href="https://rainbow.me">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/rainbow-dark.svg">
-      <img alt="rainbow logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/rainbow-light.svg" width="auto" height="50">
-    </picture>
-  </a>
   <a href="https://pimlico.io">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/pimlico-dark.svg">
@@ -180,58 +162,16 @@ If you find Wagmi useful or use it for work, please consider [sponsoring Wagmi](
       <img alt="zora logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/zora-light.svg" width="auto" height="50">
     </picture>
   </a>
-  <a href="https://lattice.xyz">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/lattice-dark.svg">
-      <img alt="lattice logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/lattice-light.svg" width="auto" height="50">
-    </picture>
-  </a>
-  <a href="https://twitter.com/supafinance">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/supa-dark.svg">
-      <img alt="supa logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/supa-light.svg" width="auto" height="50">
-    </picture>
-  </a>
-  <a href="https://zksync.io">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/zksync-dark.svg">
-      <img alt="zksync logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/zksync-light.svg" width="auto" height="50">
-    </picture>
-  </a>
   <a href="https://syndicate.io">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/syndicate-dark.svg">
       <img alt="syndicate logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/syndicate-light.svg" width="auto" height="50">
     </picture>
   </a>
-  <a href="https://reservoir.tools">
+  <a href="https://relay.link">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/reservoir-dark.svg">
-      <img alt="reservoir logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/reservoir-light.svg" width="auto" height="50">
-    </picture>
-  </a>
-  <a href="https://linea.build">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/linea-dark.svg">
-      <img alt="linea logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/linea-light.svg" width="auto" height="50">
-    </picture>
-  </a>
-  <a href="https://uniswap.org">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/uniswap-dark.svg">
-      <img alt="uniswap logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/uniswap-light.svg" width="auto" height="50">
-    </picture>
-  </a>
-  <a href="https://biconomy.io">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/b0276d897be98a4c94ad1d1c72ce99a1020eeb58/content/sponsors/biconomy-dark.svg">
-      <img alt="biconomy logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/biconomy-light.svg" width="auto" height="50">
-    </picture>
-  </a>
-  <a href="https://thirdweb.com">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/thirdweb-dark.svg">
-      <img alt="thirdweb logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/thirdweb-light.svg" width="auto" height="50">
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/relay-dark.svg">
+      <img alt="relay logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/relay-light.svg" width="auto" height="50">
     </picture>
   </a>
   <a href="https://polymarket.com">
@@ -256,6 +196,12 @@ If you find Wagmi useful or use it for work, please consider [sponsoring Wagmi](
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/gemini-dark.svg">
       <img alt="gemini logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/gemini-light.svg" width="auto" height="50">
+    </picture>
+  </a>
+  <a href="https://web3auth.io">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/web3auth-dark.svg">
+      <img alt="web3auth logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/web3auth-light.svg" width="auto" height="50">
     </picture>
   </a>
 </p>

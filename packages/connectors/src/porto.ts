@@ -211,6 +211,7 @@ export function porto(parameters: PortoParameters = {}) {
               throw new Error('dependency "porto" not found')
             }
           })()
+          // @ts-ignore
           return Porto.create({
             ...parameters,
             announceProvider: false,

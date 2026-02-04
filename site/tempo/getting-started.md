@@ -95,7 +95,7 @@ function App() {
 ```
 ```tsx [config.ts]
 import { createConfig, http } from 'wagmi'
-import { tempoTest } from 'wagmi/chains'
+import { tempoTestnet } from 'wagmi/chains'
 import { KeyManager, webAuthn } from 'wagmi/tempo'
 
 export const config = createConfig({
@@ -104,10 +104,10 @@ export const config = createConfig({
       keyManager: KeyManager.localStorage(),
     }),
   ],
-  chains: [tempoTest],
+  chains: [tempoTestnet],
   multiInjectedProviderDiscovery: false,
   transports: {
-    [tempoTest.id]: http(),
+    [tempoTestnet.id]: http(),
   },
 })
 ```
