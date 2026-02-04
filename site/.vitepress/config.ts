@@ -78,6 +78,7 @@ export default withTwoslashInlineCache(
         { text: 'React', link: '/react/getting-started' },
         { text: 'Core', link: '/core/getting-started' },
         { text: 'Vue', link: '/vue/getting-started' },
+        { text: 'Solid', link: '/solid/getting-started' },
         { text: 'Tempo', link: '/tempo/getting-started' },
         { text: 'CLI', link: '/cli/getting-started' },
         // { text: 'Examples', link: '/examples/connect-wallet' },
