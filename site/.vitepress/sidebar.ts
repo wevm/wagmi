@@ -1221,7 +1221,10 @@ export function getSidebar() {
             text: 'useConnectors',
             link: '/solid/api/primitives/useConnectors',
           },
-          { text: 'useDisconnect', link: '/solid/api/primitives/useDisconnect' },
+          {
+            text: 'useDisconnect',
+            link: '/solid/api/primitives/useDisconnect',
+          },
           { text: 'useReconnect', link: '/solid/api/primitives/useReconnect' },
           {
             text: 'useSwitchChain',
