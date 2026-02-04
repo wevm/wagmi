@@ -9,8 +9,6 @@ Wagmi contains everything you need to get started with building a Connect Wallet
 You can use a pre-built Connect Wallet module from a third-party library such as:
 
 - [ConnectKit](https://docs.family.co/connectkit) - [Guide](https://docs.family.co/connectkit/getting-started)
-- [AppKit](https://reown.com/appkit) - [Guide](https://docs.reown.com/appkit/next/core/installation)
-- [RainbowKit](https://www.rainbowkit.com/) - [Guide](https://www.rainbowkit.com/docs/installation)
 - [Dynamic](https://www.dynamic.xyz/) - [Guide](https://docs.dynamic.xyz/quickstart)
 - [Privy](https://privy.io) - [Guide](https://docs.privy.io/guide/react/wallets/usage/wagmi)
 

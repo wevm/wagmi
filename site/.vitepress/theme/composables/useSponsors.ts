@@ -35,9 +35,9 @@ export function useSponsors() {
           img: 'paradigm-light.svg',
         },
         {
-          name: 'Ithaca',
-          url: 'https://ithaca.xyz',
-          img: 'ithaca-light.svg',
+          name: 'Tempo',
+          url: 'https://tempo.xyz',
+          img: 'tempo-light.svg',
         },
       ],
       gold: [
@@ -45,16 +45,6 @@ export function useSponsors() {
           name: 'Stripe',
           url: 'https://www.stripe.com',
           img: 'stripe-light.svg',
-        },
-        {
-          name: 'zkSync',
-          url: 'https://zksync.io',
-          img: 'zksync-light.svg',
-        },
-        {
-          name: 'Linea',
-          url: 'https://linea.build',
-          img: 'linea-light.svg',
         },
         {
           name: 'Gemini',
@@ -72,11 +62,6 @@ export function useSponsors() {
           name: 'Context',
           url: 'https://twitter.com/context',
           img: 'context-light.svg',
-        },
-        {
-          name: 'WalletConnect',
-          url: 'https://walletconnect.com',
-          img: 'walletconnect-light.svg',
         },
         {
           name: 'PartyDAO',
@@ -104,16 +89,6 @@ export function useSponsors() {
           img: 'pancake-light.svg',
         },
         {
-          name: 'Celo',
-          url: 'https://celo.org',
-          img: 'celo-light.svg',
-        },
-        {
-          name: 'Rainbow',
-          url: 'https://rainbow.me',
-          img: 'rainbow-light.svg',
-        },
-        {
           name: 'Pimlico',
           url: 'https://pimlico.io',
           img: 'pimlico-light.svg',
@@ -124,39 +99,14 @@ export function useSponsors() {
           img: 'zora-light.svg',
         },
         {
-          name: 'Lattice',
-          url: 'https://lattice.xyz',
-          img: 'lattice-light.svg',
-        },
-        {
-          name: 'Supa',
-          url: 'https://twitter.com/supafinance',
-          img: 'supa-light.svg',
-        },
-        {
           name: 'Syndicate',
           url: 'https://syndicate.io',
           img: 'syndicate-light.svg',
         },
         {
-          name: 'Reservoir',
-          url: 'https://reservoir.tools',
-          img: 'reservoir-light.svg',
-        },
-        {
-          name: 'Uniswap',
-          url: 'https://uniswap.org',
-          img: 'uniswap-light.svg',
-        },
-        {
-          name: 'Biconomy',
-          url: 'https://biconomy.io',
-          img: 'biconomy-light.svg',
-        },
-        {
-          name: 'Thirdweb',
-          url: 'https://thirdweb.com',
-          img: 'thirdweb-light.svg',
+          name: 'Relay',
+          url: 'https://relay.link',
+          img: 'relay-light.svg',
         },
         {
           name: 'Polymarket',
@@ -167,6 +117,11 @@ export function useSponsors() {
           name: 'Sequence',
           url: 'https://sequence.xyz',
           img: 'sequence-light.svg',
+        },
+        {
+          name: 'Web3Auth',
+          url: 'https://web3auth.io',
+          img: 'web3auth-light.svg',
         },
         {
           name: 'Routescan',
