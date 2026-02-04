@@ -77,9 +77,16 @@ export default withTwoslashInlineCache(
       nav: [
         { text: 'React', link: '/react/getting-started' },
         { text: 'Core', link: '/core/getting-started' },
-        { text: 'Vue', link: '/vue/getting-started' },
         { text: 'Tempo', link: '/tempo/getting-started' },
         { text: 'CLI', link: '/cli/getting-started' },
+        {
+          text: 'Frameworks',
+          items: [
+            { text: 'React', link: '/react/getting-started' },
+            { text: 'Solid', link: '/solid/getting-started' },
+            { text: 'Vue', link: '/vue/getting-started' },
+          ],
+        },
         // { text: 'Examples', link: '/examples/connect-wallet' },
         {
           text: 'More',
