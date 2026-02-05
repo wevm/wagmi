@@ -850,8 +850,8 @@ importers:
         specifier: ^1.6.5
         version: 1.6.5(vite@7.2.2(@types/node@24.6.2)(jiti@2.6.1)(terser@5.31.0)(tsx@4.20.6)(yaml@2.8.1))
       vitepress-plugin-llms:
-        specifier: ^1.10.0
-        version: 1.10.0
+        specifier: 1.9.0
+        version: 1.9.0
       vue:
         specifier: 'catalog:'
         version: 3.4.27(typescript@5.9.3)
@@ -8592,6 +8592,9 @@ packages:
   path-to-regexp@6.3.0:
     resolution: {integrity: sha512-Yhpw4T9C6hPpgPeA28us07OJeqZ5EzQTkbfwuhsUg0c237RomFoETJgmp2sa3F/41gfLE6G5cqcYwznmeEeOlQ==}
 
+  path-to-regexp@8.3.0:
+    resolution: {integrity: sha512-7jdwVIRtsP8MYpdXSwOS0YdD0Du+qOoF/AEPIt88PcCFrZCzx41oxku1jD88hZBwbNUIEfpqvuhjFaMAqMTWnA==}
+
   path-type@3.0.0:
     resolution: {integrity: sha512-T2ZUsdZFHgA3u4e5PfPbjd7HDDpxPnQb5jN0SrDsjNSuVXHJqtwTnWqG0B1jZrgmJ/7lj1EmVIByWt1gxGkWvg==}
     engines: {node: '>=4'}
@@ -10569,8 +10572,8 @@ packages:
       vite:
         optional: true
 
-  vitepress-plugin-llms@1.10.0:
-    resolution: {integrity: sha512-dgD5KV8D9vXlQtAf/KUjSgr3QymH1fHT7XkQ/UuIqvIjnKdzZI+0gT3puGxUBuqgvlFjYWA6f8k80tXl6gwWkw==}
+  vitepress-plugin-llms@1.9.0:
+    resolution: {integrity: sha512-Tq8F00w8/OZs936c4kRnRJbLJDi0/MlKfDBbmSaEs9J9q5pD/fi9EwCJdn6C3RQWfZ383VxTvMihU4LaWmI05Q==}
 
   vitepress@1.6.3:
     resolution: {integrity: sha512-fCkfdOk8yRZT8GD9BFqusW3+GggWYZ/rYncOfmgcDtP3ualNHCAg+Robxp2/6xfH1WwPHtGpPwv7mbA3qomtBw==}
@@ -20690,6 +20693,8 @@ snapshots:
 
   path-to-regexp@6.3.0: {}
 
+  path-to-regexp@8.3.0: {}
+
   path-type@3.0.0:
     dependencies:
       pify: 3.0.0
@@ -22889,7 +22894,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  vitepress-plugin-llms@1.10.0:
+  vitepress-plugin-llms@1.9.0:
     dependencies:
       gray-matter: 4.0.3
       markdown-it: 14.1.0
@@ -22897,7 +22902,7 @@ snapshots:
       mdast-util-from-markdown: 2.0.2
       millify: 6.1.0
       minimatch: 10.1.1
-      path-to-regexp: 6.3.0
+      path-to-regexp: 8.3.0
       picocolors: 1.1.1
       pretty-bytes: 7.1.0
       remark: 15.0.1

@@ -25,7 +25,7 @@
     "viem": "~2.45.1",
     "vitepress": "1.6.3",
     "vitepress-plugin-group-icons": "^1.6.5",
-    "vitepress-plugin-llms": "^1.10.0",
+    "vitepress-plugin-llms": "1.9.0",
     "vue": "catalog:",
     "wagmi": "workspace:*"
   }
