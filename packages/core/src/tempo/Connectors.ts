@@ -53,6 +53,12 @@ export function webAuthn(options: webAuthn.Parameters) {
   type Properties = {
     // TODO(v3): Make `withCapabilities: true` default behavior
     connect<withCapabilities extends boolean = false>(parameters: {
+      accessKey?:
+        | {
+            address: Address.Address
+            expiry: number
+          }
+        | undefined
       chainId?: number | undefined
       capabilities?:
         | OneOf<
@@ -98,8 +104,16 @@ export function webAuthn(options: webAuthn.Parameters) {
     async connect(parameters = {}) {
       const capabilities =
         'capabilities' in parameters ? (parameters.capabilities ?? {}) : {}
+      const externalAccessKey =
+        'accessKey' in parameters ? parameters.accessKey : undefined
 
-      if (
+      if (externalAccessKey) {
+        const now = Date.now() / 1000
+        if (externalAccessKey.expiry < now)
+          throw new Error(
+            `\`accessKey.expiry = ${externalAccessKey.expiry}\` is in the past (${new Date(externalAccessKey.expiry * 1000).toLocaleString()}). Please provide a valid expiry.`,
+          )
+      } else if (
         accessKeyOptions?.strict &&
         accessKeyOptions.expiry &&
         accessKeyOptions.expiry < Date.now() / 1000
@@ -139,7 +153,8 @@ export function webAuthn(options: webAuthn.Parameters) {
 
           // Get key pair (access key) to use for the account.
           const keyPair = await (async () => {
-            if (!accessKeyOptions) return undefined
+            if (!accessKeyOptions && !externalAccessKey) return undefined
+            if (externalAccessKey) return undefined
             return await WebCryptoP256.createKeyPair()
           })()
 
@@ -156,12 +171,16 @@ export function webAuthn(options: webAuthn.Parameters) {
           if (credential) {
             // Get key pair (access key) to use for the account.
             const keyPair = await (async () => {
+              if (externalAccessKey) return undefined
               if (!accessKeyOptions) return undefined
               const address = Address.fromPublicKey(
                 PublicKey.fromHex(credential.publicKey),
               )
               return await idb.get(`accessKey:${address}`)
             })()
+
+            // If using an external access key, skip local keypair checks.
+            if (externalAccessKey) return { credential, keyPair: undefined }
 
             // If the access key provisioning is not in strict mode, return the credential and key pair (if exists).
             if (!accessKeyOptions?.strict) return { credential, keyPair }
@@ -181,19 +200,27 @@ export function webAuthn(options: webAuthn.Parameters) {
         {
           // Get key pair (access key) to use for the account.
           const keyPair = await (async () => {
-            if (!accessKeyOptions) return undefined
+            if (!accessKeyOptions && !externalAccessKey) return undefined
+            if (externalAccessKey) return undefined
             return await WebCryptoP256.createKeyPair()
           })()
 
           // If we are provisioning an access key, we will need to sign a key authorization.
           // We will need the hash (digest) to sign, and the address of the access key to construct the key authorization.
           const { hash, keyAuthorization_unsigned } = await (async () => {
-            if (!keyPair)
-              return { accessKeyAddress: undefined, hash: undefined }
-            const accessKeyAddress = Address.fromPublicKey(keyPair.publicKey)
+            const accessKeyAddress =
+              externalAccessKey?.address ??
+              (keyPair ? Address.fromPublicKey(keyPair.publicKey) : undefined)
+
+            if (!accessKeyAddress)
+              return { keyAuthorization_unsigned: undefined, hash: undefined }
+
+            const expiry = externalAccessKey?.expiry ?? accessKeyOptions?.expiry
+
             const keyAuthorization_unsigned = KeyAuthorization.from({
-              ...accessKeyOptions,
               address: accessKeyAddress,
+              expiry,
+              strict: accessKeyOptions?.strict ?? false,
               type: 'p256',
             })
             const hash = KeyAuthorization.getSignPayload(
@@ -249,7 +276,22 @@ export function webAuthn(options: webAuthn.Parameters) {
         rpId: options.getOptions?.rpId ?? options.rpId,
       })
 
-      if (keyPair) {
+      if (externalAccessKey) {
+        const keyAuth =
+          keyAuthorization ??
+          (await account.signKeyAuthorization(
+            {
+              accessKeyAddress: externalAccessKey.address,
+              keyType: 'p256',
+            },
+            { expiry: externalAccessKey.expiry },
+          ))
+
+        await config?.storage?.setItem(
+          `pendingKeyAuthorization:${account.address.toLowerCase()}`,
+          keyAuth,
+        )
+      } else if (keyPair) {
         accessKey = Account.fromWebCryptoP256(keyPair, {
           access: account,
         })
