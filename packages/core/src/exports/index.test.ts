@@ -56,6 +56,8 @@ test('exports', () => {
       "showCallsStatus",
       "signMessage",
       "signTypedData",
+      "simulateBlocks",
+      "simulateCalls",
       "simulateContract",
       "switchChain",
       "switchAccount",

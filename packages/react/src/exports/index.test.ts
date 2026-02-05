@@ -82,6 +82,8 @@ test('exports', () => {
       "useShowCallsStatus",
       "useSignMessage",
       "useSignTypedData",
+      "useSimulateBlocks",
+      "useSimulateCalls",
       "useSimulateContract",
       "useStorageAt",
       "useSwitchAccount",

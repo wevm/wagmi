@@ -310,6 +310,18 @@ export {
 } from '../hooks/useSignTypedData.js'
 
 export {
+  type UseSimulateBlocksParameters,
+  type UseSimulateBlocksReturnType,
+  useSimulateBlocks,
+} from '../hooks/useSimulateBlocks.js'
+
+export {
+  type UseSimulateCallsParameters,
+  type UseSimulateCallsReturnType,
+  useSimulateCalls,
+} from '../hooks/useSimulateCalls.js'
+
+export {
   type UseSimulateContractParameters,
   type UseSimulateContractReturnType,
   useSimulateContract,
