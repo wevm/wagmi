@@ -278,20 +278,14 @@ export function webAuthn(options: webAuthn.Parameters) {
       })
 
       if (externalAccessKey) {
-        const keyAuth =
-          keyAuthorization ??
-          (await account.signKeyAuthorization(
+        if (!keyAuthorization)
+          await account.signKeyAuthorization(
             {
               accessKeyAddress: externalAccessKey.address,
               keyType: 'p256',
             },
             { expiry: externalAccessKey.expiry },
-          ))
-
-        await config?.storage?.setItem(
-          `pendingKeyAuthorization:${account.address.toLowerCase()}`,
-          keyAuth,
-        )
+          )
       } else if (keyPair) {
         accessKey = Account.fromWebCryptoP256(keyPair, {
           access: account,
