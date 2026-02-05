@@ -53,15 +53,9 @@ export function webAuthn(options: webAuthn.Parameters) {
   type Properties = {
     // TODO(v3): Make `withCapabilities: true` default behavior
     connect<withCapabilities extends boolean = false>(parameters: {
-      accessKey?:
-        | {
-            address: Address.Address
-            expiry: number
-          }
-        | undefined
       chainId?: number | undefined
       capabilities?:
-        | OneOf<
+        | (OneOf<
             | {
                 label?: string | undefined
                 type: 'sign-up'
@@ -73,7 +67,14 @@ export function webAuthn(options: webAuthn.Parameters) {
             | {
                 type?: undefined
               }
-          >
+          > & {
+            accessKey?:
+              | {
+                  address: Address.Address
+                  expiry: number
+                }
+              | undefined
+          })
         | undefined
       isReconnecting?: boolean | undefined
       withCapabilities?: withCapabilities | boolean | undefined
@@ -105,7 +106,7 @@ export function webAuthn(options: webAuthn.Parameters) {
       const capabilities =
         'capabilities' in parameters ? (parameters.capabilities ?? {}) : {}
       const externalAccessKey =
-        'accessKey' in parameters ? parameters.accessKey : undefined
+        'accessKey' in capabilities ? capabilities.accessKey : undefined
 
       if (externalAccessKey) {
         const now = Date.now() / 1000
