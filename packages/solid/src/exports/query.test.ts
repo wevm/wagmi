@@ -83,6 +83,8 @@ test('exports', () => {
       "signTypedDataMutationOptions",
       "simulateBlocksQueryKey",
       "simulateBlocksQueryOptions",
+      "simulateCallsQueryKey",
+      "simulateCallsQueryOptions",
       "simulateContractQueryKey",
       "simulateContractQueryOptions",
       "structuralSharing",

@@ -36,6 +36,7 @@ test('exports', () => {
       "useSignMessage",
       "useSignTypedData",
       "useSimulateBlocks",
+      "useSimulateCalls",
       "useSimulateContract",
       "useSwitchChain",
       "useSwitchAccount",

@@ -336,6 +336,13 @@ export {
 } from '../actions/simulateBlocks.js'
 
 export {
+  type SimulateCallsErrorType,
+  type SimulateCallsParameters,
+  type SimulateCallsReturnType,
+  simulateCalls,
+} from '../actions/simulateCalls.js'
+
+export {
   type SimulateContractErrorType,
   type SimulateContractParameters,
   type SimulateContractReturnType,

@@ -176,6 +176,12 @@ export {
 } from '../composables/useSimulateBlocks.js'
 
 export {
+  type UseSimulateCallsParameters,
+  type UseSimulateCallsReturnType,
+  useSimulateCalls,
+} from '../composables/useSimulateCalls.js'
+
+export {
   type UseSimulateContractParameters,
   type UseSimulateContractReturnType,
   useSimulateContract,

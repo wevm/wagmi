@@ -443,6 +443,16 @@ export {
 } from '../query/simulateBlocks.js'
 
 export {
+  type SimulateCallsData,
+  type SimulateCallsOptions,
+  type SimulateCallsQueryFnData,
+  type SimulateCallsQueryKey,
+  type SimulateCallsQueryOptions,
+  simulateCallsQueryKey,
+  simulateCallsQueryOptions,
+} from '../query/simulateCalls.js'
+
+export {
   type SimulateContractData,
   type SimulateContractOptions,
   type SimulateContractQueryFnData,
