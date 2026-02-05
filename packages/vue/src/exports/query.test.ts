@@ -82,6 +82,8 @@ test('exports', () => {
       "showCallsStatusMutationOptions",
       "signMessageMutationOptions",
       "signTypedDataMutationOptions",
+      "simulateBlocksQueryKey",
+      "simulateBlocksQueryOptions",
       "simulateContractQueryKey",
       "simulateContractQueryOptions",
       "switchChainMutationOptions",

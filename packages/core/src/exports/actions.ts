@@ -329,6 +329,13 @@ export {
 } from '../actions/signTypedData.js'
 
 export {
+  type SimulateBlocksErrorType,
+  type SimulateBlocksParameters,
+  type SimulateBlocksReturnType,
+  simulateBlocks,
+} from '../actions/simulateBlocks.js'
+
+export {
   type SimulateContractErrorType,
   type SimulateContractParameters,
   type SimulateContractReturnType,

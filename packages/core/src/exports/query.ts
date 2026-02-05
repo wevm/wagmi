@@ -433,6 +433,16 @@ export {
 } from '../query/signTypedData.js'
 
 export {
+  type SimulateBlocksData,
+  type SimulateBlocksOptions,
+  type SimulateBlocksQueryFnData,
+  type SimulateBlocksQueryKey,
+  type SimulateBlocksQueryOptions,
+  simulateBlocksQueryKey,
+  simulateBlocksQueryOptions,
+} from '../query/simulateBlocks.js'
+
+export {
   type SimulateContractData,
   type SimulateContractOptions,
   type SimulateContractQueryFnData,

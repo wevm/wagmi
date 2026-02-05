@@ -170,6 +170,12 @@ export {
 } from '../composables/useSignTypedData.js'
 
 export {
+  type UseSimulateBlocksParameters,
+  type UseSimulateBlocksReturnType,
+  useSimulateBlocks,
+} from '../composables/useSimulateBlocks.js'
+
+export {
   type UseSimulateContractParameters,
   type UseSimulateContractReturnType,
   useSimulateContract,
