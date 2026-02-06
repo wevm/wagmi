@@ -16,23 +16,23 @@ import { metaMask } from '{{connectorsPackageName}}'
 
 ## Install
 
-<PackageMetadata package="@metamask/sdk" repo="MetaMask/metamask-sdk" licenseUrl="https://github.com/MetaMask/metamask-sdk/blob/main/packages/sdk/LICENSE" />
+<PackageMetadata package="@metamask/connect-evm" repo="MetaMask/connect-monorepo" isOsiLicense licenseUrl="https://github.com/MetaMask/connect-monorepo/blob/main/packages/connect-evm/LICENSE" />
 
 ::: code-group
 ```bash-vue [pnpm]
-pnpm add @metamask/sdk@{{connectorDependencyVersion}}
+pnpm add @metamask/connect-evm@{{connectorDependencyVersion}}
 ```
 
 ```bash-vue [npm]
-npm install @metamask/sdk@{{connectorDependencyVersion}}
+npm install @metamask/connect-evm@{{connectorDependencyVersion}}
 ```
 
 ```bash-vue [yarn]
-yarn add @metamask/sdk@{{connectorDependencyVersion}}
+yarn add @metamask/connect-evm@{{connectorDependencyVersion}}
 ```
 
 ```bash-vue [bun]
-bun add @metamask/sdk@{{connectorDependencyVersion}}
+bun add @metamask/connect-evm@{{connectorDependencyVersion}}
 ```
 :::
 
@@ -61,7 +61,7 @@ import { type MetaMaskParameters } from '{{connectorsPackageName}}'
 
 Check out the [MetaMask SDK docs](https://docs.metamask.io/wallet/connect/3rd-party-libraries/wagmi/) for more info. A few options are omitted that Wagmi manages internally.
 
-### dappMetadata
+### dapp
 
 `DappMetadata | undefined`
 
@@ -71,11 +71,13 @@ Metadata is used to fill details for the UX on confirmation screens in MetaMask,
 - `url`: `string` - URL of the dapp (defaults to `window.location.origin`).
 - `iconUrl`: `string` - URL to the dapp's favicon or icon.
 
+Defaults to `{ name: window.location.hostname }`.
+
 ```ts-vue
 import { metaMask } from '{{connectorsPackageName}}'
 
 const connector = metaMask({
-  dappMetadata: { // [!code focus]
+  dapp: { // [!code focus]
     name: 'My Wagmi App', // [!code focus]
     url: 'https://example.com', // [!code focus]
     iconUrl: 'https://example.com/favicon.ico', // [!code focus]
@@ -83,53 +85,52 @@ const connector = metaMask({
 })
 ```
 
-### logging
-
-`SDKLoggingOptions | undefined`
-
-Enables SDK-side logging to provide visibility into:
-
-- RPC methods being called.
-- Events received for syncing the chain or active account.
-- Raw RPC responses.
-
-In this context, this is especially useful to observe what calls are made through Wagmi hooks.
-
-Relevant options:
-
-```ts
-{
-  developerMode: boolean, // Enables developer mode logs
-  sdk: boolean           // Enables SDK-specific logs
-}
-```
-
-```ts
-import { metaMask } from '{{connectorsPackageName}}'
-
-const connector = metaMask({
-  logging: { developerMode: true, sdk: true } // [!code focus]
-})
-```
-
-### headless
+### debug
 
 `boolean | undefined`
 
-- Enables headless mode, disabling MetaMask's built-in modal.
-- Allows developers to create their own modal, such as for displaying a QR code.
-
-This is particularly relevant for web-only setups using Wagmi, where developers want complete control over the UI.
-
-To get the deeplink to display in the QR code, listen to the `display_uri` event.
-
-The default is `false`.
+Enables debug mode for the MetaMask SDK. When enabled, provides additional logging and debugging information.
 
 ```ts-vue
 import { metaMask } from '{{connectorsPackageName}}'
 
 const connector = metaMask({
-  headless: true // [!code focus]
+  debug: true // [!code focus]
+})
+```
+
+### connectAndSign
+
+`string | undefined`
+
+Shortcut to connect and sign a message in a single operation. When provided, the connector will connect to MetaMask and immediately prompt the user to sign the specified message.
+
+This parameter is mutually exclusive with `connectWith` - only one can be used at a time.
+
+```ts-vue
+import { metaMask } from '{{connectorsPackageName}}'
+
+const connector = metaMask({
+  connectAndSign: 'Sign this message to connect', // [!code focus]
+})
+```
+
+### connectWith
+
+`{ method: string; params: unknown[] } | undefined`
+
+Allows connecting with any RPC method. When provided, the connector will connect to MetaMask and immediately call the specified RPC method with the given parameters.
+
+This parameter is mutually exclusive with `connectAndSign` - only one can be used at a time.
+
+```ts-vue
+import { metaMask } from '{{connectorsPackageName}}'
+
+const connector = metaMask({
+  connectWith: { // [!code focus]
+    method: 'eth_requestAccounts', // [!code focus]
+    params: [], // [!code focus]
+  }
 })
 ```
 
