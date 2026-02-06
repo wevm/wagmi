@@ -17,6 +17,10 @@ export {
   walletConnectProjectId,
 } from '../constants.js'
 
-export { addressRegex, transactionHashRegex } from '../regex.js'
+export {
+  addressRegex,
+  signedTransactionRegex,
+  transactionHashRegex,
+} from '../regex.js'
 
 export { wait } from '../utils.js'
