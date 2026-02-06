@@ -48,6 +48,7 @@ test('context', () => {
                 }[],
               ]
           chainId: number
+          keyAuthorization?: unknown | undefined
         }>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
       },
@@ -67,6 +68,7 @@ test('context', () => {
                     }[],
                   ]
               chainId: number
+              keyAuthorization?: unknown | undefined
             }
           | undefined
         >()
@@ -90,6 +92,7 @@ test('context', () => {
               ...{ address: Address; capabilities: Record<string, unknown> }[],
             ]
         chainId: number
+        keyAuthorization?: unknown | undefined
       }
     | undefined
   >()
@@ -129,6 +132,7 @@ test('context', () => {
         expectTypeOf(data).toEqualTypeOf<{
           accounts: readonly [Address, ...Address[]]
           chainId: number
+          keyAuthorization?: unknown | undefined
         }>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
       },
@@ -137,6 +141,7 @@ test('context', () => {
           | {
               accounts: readonly [Address, ...Address[]]
               chainId: number
+              keyAuthorization?: unknown | undefined
             }
           | undefined
         >()
@@ -176,6 +181,7 @@ test('context', () => {
             }[],
           ]
           chainId: number
+          keyAuthorization?: unknown | undefined
         }>()
       },
       onSettled(data, _error, _variables, _context) {
@@ -196,6 +202,7 @@ test('context', () => {
                 }[],
               ]
               chainId: number
+              keyAuthorization?: unknown | undefined
             }
           | undefined
         >()
@@ -225,6 +232,7 @@ test('context', () => {
         }[],
       ]
       chainId: number
+      keyAuthorization?: unknown | undefined
     }>()
   })()
 })

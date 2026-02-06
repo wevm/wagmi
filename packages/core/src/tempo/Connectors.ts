@@ -68,17 +68,16 @@ export function webAuthn(options: webAuthn.Parameters) {
                 type?: undefined
               }
           > & {
-            accessKey?:
-              | {
-                  address: Address.Address
-                  expiry: number
-                }
-              | undefined
+            accessKey?: Account.signKeyAuthorization.Parameters | undefined
           })
         | undefined
       isReconnecting?: boolean | undefined
       withCapabilities?: withCapabilities | boolean | undefined
-    }): Promise<{ accounts: readonly Address.Address[]; chainId: number }>
+    }): Promise<{
+      accounts: readonly Address.Address[]
+      chainId: number
+      keyAuthorization?: KeyAuthorization.KeyAuthorization<true> | undefined
+    }>
   }
   type Provider = Pick<EIP1193Provider, 'request'>
   type StorageItem = {
@@ -110,7 +109,7 @@ export function webAuthn(options: webAuthn.Parameters) {
 
       if (externalAccessKey) {
         const now = Date.now() / 1000
-        if (externalAccessKey.expiry < now)
+        if (externalAccessKey.expiry && externalAccessKey.expiry < now)
           throw new Error(
             `\`accessKey.expiry = ${externalAccessKey.expiry}\` is in the past (${new Date(externalAccessKey.expiry * 1000).toLocaleString()}). Please provide a valid expiry.`,
           )
@@ -209,18 +208,30 @@ export function webAuthn(options: webAuthn.Parameters) {
           // If we are provisioning an access key, we will need to sign a key authorization.
           // We will need the hash (digest) to sign, and the address of the access key to construct the key authorization.
           const { hash, keyAuthorization_unsigned } = await (async () => {
-            const accessKeyAddress =
-              externalAccessKey?.address ??
-              (keyPair ? Address.fromPublicKey(keyPair.publicKey) : undefined)
+            if (externalAccessKey) {
+              const keyAuthorization_unsigned = KeyAuthorization.from({
+                address: externalAccessKey.key.accessKeyAddress,
+                expiry: externalAccessKey.expiry,
+                limits: externalAccessKey.limits,
+                strict: accessKeyOptions?.strict ?? false,
+                type: externalAccessKey.key.keyType,
+              })
+              const hash = KeyAuthorization.getSignPayload(
+                keyAuthorization_unsigned,
+              )
+              return { keyAuthorization_unsigned, hash }
+            }
+
+            const accessKeyAddress = keyPair
+              ? Address.fromPublicKey(keyPair.publicKey)
+              : undefined
 
             if (!accessKeyAddress)
               return { keyAuthorization_unsigned: undefined, hash: undefined }
 
-            const expiry = externalAccessKey?.expiry ?? accessKeyOptions?.expiry
-
             const keyAuthorization_unsigned = KeyAuthorization.from({
               address: accessKeyAddress,
-              expiry,
+              expiry: accessKeyOptions?.expiry,
               strict: accessKeyOptions?.strict ?? false,
               type: 'p256',
             })
@@ -277,15 +288,16 @@ export function webAuthn(options: webAuthn.Parameters) {
         rpId: options.getOptions?.rpId ?? options.rpId,
       })
 
+      let signedKeyAuthorization:
+        | KeyAuthorization.KeyAuthorization<true>
+        | undefined
       if (externalAccessKey) {
-        if (!keyAuthorization)
-          await account.signKeyAuthorization(
-            {
-              accessKeyAddress: externalAccessKey.address,
-              keyType: 'p256',
-            },
-            { expiry: externalAccessKey.expiry },
-          )
+        signedKeyAuthorization =
+          keyAuthorization ??
+          (await account.signKeyAuthorization(externalAccessKey.key, {
+            expiry: externalAccessKey.expiry,
+            limits: externalAccessKey.limits,
+          }))
       } else if (keyPair) {
         accessKey = Account.fromWebCryptoP256(keyPair, {
           access: account,
@@ -347,6 +359,7 @@ export function webAuthn(options: webAuthn.Parameters) {
           ? [{ address }]
           : [address]) as never,
         chainId,
+        keyAuthorization: signedKeyAuthorization,
       }
     },
     async disconnect() {

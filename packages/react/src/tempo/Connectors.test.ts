@@ -86,11 +86,16 @@ describe('capabilities.accessKey', () => {
     )
 
     // Reconnect with an external access key
-    await result.current.useConnect.mutateAsync({
+    const accessKeyAddress = '0x0000000000000000000000000000000000000001'
+    const accessKeyExpiry = Math.floor(Date.now() / 1000) + 86400
+    const connectResult = await result.current.useConnect.mutateAsync({
       capabilities: {
         accessKey: {
-          address: '0x0000000000000000000000000000000000000001',
-          expiry: Math.floor(Date.now() / 1000) + 86400,
+          key: {
+            accessKeyAddress,
+            keyType: 'p256',
+          },
+          expiry: accessKeyExpiry,
         },
       },
       connector,
@@ -101,6 +106,10 @@ describe('capabilities.accessKey', () => {
     )
     expect(result.current.useConnection.address).toBeDefined()
     expect(result.current.useConnection.address).toMatch(/^0x[a-fA-F0-9]{40}$/)
+
+    expect(connectResult.keyAuthorization).toBeDefined()
+    expect(connectResult.keyAuthorization!.address).toEqual(accessKeyAddress)
+    expect(connectResult.keyAuthorization!.expiry).toEqual(accessKeyExpiry)
   })
 
   test('connect with accessKey (without grantAccessKey)', async (context) => {
@@ -133,11 +142,16 @@ describe('capabilities.accessKey', () => {
     )
 
     // Should work with accessKey even without grantAccessKey on the connector
-    await result.current.useConnect.mutateAsync({
+    const accessKeyAddress = '0x0000000000000000000000000000000000000002'
+    const accessKeyExpiry = Math.floor(Date.now() / 1000) + 86400
+    const connectResult = await result.current.useConnect.mutateAsync({
       capabilities: {
         accessKey: {
-          address: '0x0000000000000000000000000000000000000002',
-          expiry: Math.floor(Date.now() / 1000) + 86400,
+          key: {
+            accessKeyAddress,
+            keyType: 'p256',
+          },
+          expiry: accessKeyExpiry,
         },
       },
       connector,
@@ -147,6 +161,10 @@ describe('capabilities.accessKey', () => {
       expect(result.current.useConnection.isConnected).toBeTruthy(),
     )
     expect(result.current.useConnection.address).toBeDefined()
+
+    expect(connectResult.keyAuthorization).toBeDefined()
+    expect(connectResult.keyAuthorization!.address).toEqual(accessKeyAddress)
+    expect(connectResult.keyAuthorization!.expiry).toEqual(accessKeyExpiry)
   })
 
   test('expired accessKey throws', async (context) => {
@@ -165,7 +183,10 @@ describe('capabilities.accessKey', () => {
       result.current.useConnect.mutateAsync({
         capabilities: {
           accessKey: {
-            address: '0x0000000000000000000000000000000000000001',
+            key: {
+              accessKeyAddress: '0x0000000000000000000000000000000000000001',
+              keyType: 'p256',
+            },
             expiry: Math.floor(Date.now() / 1000) - 3600, // 1 hour in the past
           },
         },
