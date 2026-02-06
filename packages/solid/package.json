@@ -71,7 +71,7 @@
     }
   },
   "peerDependencies": {
-    "@tanstack/solid-query": ">=5.0.0",
+    "@tanstack/solid-query": ">=5.0.0 <5.71.9",
     "solid-js": "1.x",
     "typescript": ">=5.7.3",
     "viem": "2.x"
