@@ -54,8 +54,8 @@ test('connect', async (context) => {
   expect(result.current.useConnection.status).toEqual('connected')
 })
 
-describe('capabilities.accessKey', () => {
-  test('connect with accessKey', async (context) => {
+describe('capabilities.sign', () => {
+  test('connect with sign hash', async (context) => {
     const cleanup = await setupWebAuthn()
     context.onTestFinished(async () => await cleanup())
 
@@ -71,7 +71,7 @@ describe('capabilities.accessKey', () => {
 
     // Sign up first to create a credential
     await result.current.useConnect.mutateAsync({
-      capabilities: { type: 'sign-up', label: 'Access Key Test' },
+      capabilities: { type: 'sign-up', label: 'Sign Test' },
       connector,
     })
     await vi.waitFor(() =>
@@ -85,18 +85,12 @@ describe('capabilities.accessKey', () => {
       expect(result.current.useConnection.isConnected).toBeFalsy(),
     )
 
-    // Reconnect with an external access key
-    const accessKeyAddress = '0x0000000000000000000000000000000000000001'
-    const accessKeyExpiry = Math.floor(Date.now() / 1000) + 86400
+    // Reconnect with a hash to sign
+    const hash =
+      '0x0000000000000000000000000000000000000000000000000000000000000001'
     const connectResult = await result.current.useConnect.mutateAsync({
       capabilities: {
-        accessKey: {
-          key: {
-            accessKeyAddress,
-            keyType: 'p256',
-          },
-          expiry: accessKeyExpiry,
-        },
+        sign: { hash },
       },
       connector,
     })
@@ -107,12 +101,11 @@ describe('capabilities.accessKey', () => {
     expect(result.current.useConnection.address).toBeDefined()
     expect(result.current.useConnection.address).toMatch(/^0x[a-fA-F0-9]{40}$/)
 
-    expect(connectResult.keyAuthorization).toBeDefined()
-    expect(connectResult.keyAuthorization!.address).toEqual(accessKeyAddress)
-    expect(connectResult.keyAuthorization!.expiry).toEqual(accessKeyExpiry)
+    expect(connectResult.signature).toBeDefined()
+    expect(connectResult.signature).toMatch(/^0x/)
   })
 
-  test('connect with accessKey (without grantAccessKey)', async (context) => {
+  test('connect with sign hash (without grantAccessKey)', async (context) => {
     const cleanup = await setupWebAuthn()
     context.onTestFinished(async () => await cleanup())
 
@@ -141,18 +134,12 @@ describe('capabilities.accessKey', () => {
       expect(result.current.useConnection.isConnected).toBeFalsy(),
     )
 
-    // Should work with accessKey even without grantAccessKey on the connector
-    const accessKeyAddress = '0x0000000000000000000000000000000000000002'
-    const accessKeyExpiry = Math.floor(Date.now() / 1000) + 86400
+    // Should work with sign even without grantAccessKey on the connector
+    const hash =
+      '0x0000000000000000000000000000000000000000000000000000000000000002'
     const connectResult = await result.current.useConnect.mutateAsync({
       capabilities: {
-        accessKey: {
-          key: {
-            accessKeyAddress,
-            keyType: 'p256',
-          },
-          expiry: accessKeyExpiry,
-        },
+        sign: { hash },
       },
       connector,
     })
@@ -162,36 +149,7 @@ describe('capabilities.accessKey', () => {
     )
     expect(result.current.useConnection.address).toBeDefined()
 
-    expect(connectResult.keyAuthorization).toBeDefined()
-    expect(connectResult.keyAuthorization!.address).toEqual(accessKeyAddress)
-    expect(connectResult.keyAuthorization!.expiry).toEqual(accessKeyExpiry)
-  })
-
-  test('expired accessKey throws', async (context) => {
-    const cleanup = await setupWebAuthn()
-    context.onTestFinished(async () => await cleanup())
-
-    const connector = webAuthn({
-      keyManager: KeyManager.localStorage(),
-    })
-
-    const { result } = await renderHook(() => ({
-      useConnect: useConnect(),
-    }))
-
-    await expect(
-      result.current.useConnect.mutateAsync({
-        capabilities: {
-          accessKey: {
-            key: {
-              accessKeyAddress: '0x0000000000000000000000000000000000000001',
-              keyType: 'p256',
-            },
-            expiry: Math.floor(Date.now() / 1000) - 3600, // 1 hour in the past
-          },
-        },
-        connector,
-      }),
-    ).rejects.toThrow('is in the past')
+    expect(connectResult.signature).toBeDefined()
+    expect(connectResult.signature).toMatch(/^0x/)
   })
 })

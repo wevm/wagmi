@@ -70,17 +70,17 @@ export type ConnectReturnType<
           ? capabilities
           : Record<string, unknown>
         : never),
-  keyAuthorization extends unknown =
+  signature =
     | (connector extends CreateConnectorFn
         ? Awaited<ReturnType<ReturnType<connector>['connect']>> extends {
-            keyAuthorization?: infer K
+            signature?: infer K
           }
           ? K
           : unknown
         : never)
     | (connector extends Connector
         ? Awaited<ReturnType<connector['connect']>> extends {
-            keyAuthorization?: infer K
+            signature?: infer K
           }
           ? K
           : unknown
@@ -95,7 +95,7 @@ export type ConnectReturnType<
   chainId:
     | config['chains'][number]['id']
     | (number extends config['chains'][number]['id'] ? number : number & {})
-  keyAuthorization?: keyAuthorization | undefined
+  signature?: signature | undefined
 }
 
 export type ConnectErrorType =
@@ -164,8 +164,8 @@ export async function connect<
           )
         : data.accounts) as never,
       chainId: data.chainId,
-      ...('keyAuthorization' in data && data.keyAuthorization
-        ? { keyAuthorization: data.keyAuthorization }
+      ...('signature' in data && data.signature
+        ? { signature: data.signature }
         : {}),
     } as never
   } catch (error) {

@@ -68,7 +68,11 @@ export function webAuthn(options: webAuthn.Parameters) {
                 type?: undefined
               }
           > & {
-            accessKey?: Account.signKeyAuthorization.Parameters | undefined
+            sign?:
+              | {
+                  hash: Hex.Hex
+                }
+              | undefined
           })
         | undefined
       isReconnecting?: boolean | undefined
@@ -76,7 +80,7 @@ export function webAuthn(options: webAuthn.Parameters) {
     }): Promise<{
       accounts: readonly Address.Address[]
       chainId: number
-      keyAuthorization?: KeyAuthorization.KeyAuthorization<true> | undefined
+      signature?: Hex.Hex | undefined
     }>
   }
   type Provider = Pick<EIP1193Provider, 'request'>
@@ -104,16 +108,10 @@ export function webAuthn(options: webAuthn.Parameters) {
     async connect(parameters = {}) {
       const capabilities =
         'capabilities' in parameters ? (parameters.capabilities ?? {}) : {}
-      const externalAccessKey =
-        'accessKey' in capabilities ? capabilities.accessKey : undefined
+      const signHash =
+        'sign' in capabilities ? capabilities.sign?.hash : undefined
 
-      if (externalAccessKey) {
-        const now = Date.now() / 1000
-        if (externalAccessKey.expiry && externalAccessKey.expiry < now)
-          throw new Error(
-            `\`accessKey.expiry = ${externalAccessKey.expiry}\` is in the past (${new Date(externalAccessKey.expiry * 1000).toLocaleString()}). Please provide a valid expiry.`,
-          )
-      } else if (
+      if (
         accessKeyOptions?.strict &&
         accessKeyOptions.expiry &&
         accessKeyOptions.expiry < Date.now() / 1000
@@ -153,8 +151,7 @@ export function webAuthn(options: webAuthn.Parameters) {
 
           // Get key pair (access key) to use for the account.
           const keyPair = await (async () => {
-            if (!accessKeyOptions && !externalAccessKey) return undefined
-            if (externalAccessKey) return undefined
+            if (!accessKeyOptions) return undefined
             return await WebCryptoP256.createKeyPair()
           })()
 
@@ -169,18 +166,19 @@ export function webAuthn(options: webAuthn.Parameters) {
           )) as WebAuthnP256.getCredential.ReturnValue | undefined
 
           if (credential) {
+            // If signing a hash, skip local keypair checks and return
+            // the stored credential — the hash will be signed in the
+            // provisioning block via `account.sign`.
+            if (signHash) return { credential, keyPair: undefined }
+
             // Get key pair (access key) to use for the account.
             const keyPair = await (async () => {
-              if (externalAccessKey) return undefined
               if (!accessKeyOptions) return undefined
               const address = Address.fromPublicKey(
                 PublicKey.fromHex(credential.publicKey),
               )
               return await idb.get(`accessKey:${address}`)
             })()
-
-            // If using an external access key, skip local keypair checks.
-            if (externalAccessKey) return { credential, keyPair: undefined }
 
             // If the access key provisioning is not in strict mode, return the credential and key pair (if exists).
             if (!accessKeyOptions?.strict) return { credential, keyPair }
@@ -200,28 +198,13 @@ export function webAuthn(options: webAuthn.Parameters) {
         {
           // Get key pair (access key) to use for the account.
           const keyPair = await (async () => {
-            if (!accessKeyOptions && !externalAccessKey) return undefined
-            if (externalAccessKey) return undefined
+            if (!accessKeyOptions) return undefined
             return await WebCryptoP256.createKeyPair()
           })()
 
           // If we are provisioning an access key, we will need to sign a key authorization.
           // We will need the hash (digest) to sign, and the address of the access key to construct the key authorization.
           const { hash, keyAuthorization_unsigned } = await (async () => {
-            if (externalAccessKey) {
-              const keyAuthorization_unsigned = KeyAuthorization.from({
-                address: externalAccessKey.key.accessKeyAddress,
-                expiry: externalAccessKey.expiry,
-                limits: externalAccessKey.limits,
-                strict: accessKeyOptions?.strict ?? false,
-                type: externalAccessKey.key.keyType,
-              })
-              const hash = KeyAuthorization.getSignPayload(
-                keyAuthorization_unsigned,
-              )
-              return { keyAuthorization_unsigned, hash }
-            }
-
             const accessKeyAddress = keyPair
               ? Address.fromPublicKey(keyPair.publicKey)
               : undefined
@@ -255,7 +238,7 @@ export function webAuthn(options: webAuthn.Parameters) {
               if (!publicKey) throw new Error('publicKey not found.')
               return publicKey
             },
-            hash,
+            hash: signHash ?? hash,
             rpId: options.getOptions?.rpId ?? options.rpId,
           })
 
@@ -288,16 +271,9 @@ export function webAuthn(options: webAuthn.Parameters) {
         rpId: options.getOptions?.rpId ?? options.rpId,
       })
 
-      let signedKeyAuthorization:
-        | KeyAuthorization.KeyAuthorization<true>
-        | undefined
-      if (externalAccessKey) {
-        signedKeyAuthorization =
-          keyAuthorization ??
-          (await account.signKeyAuthorization(externalAccessKey.key, {
-            expiry: externalAccessKey.expiry,
-            limits: externalAccessKey.limits,
-          }))
+      let signature: Hex.Hex | undefined
+      if (signHash) {
+        signature = await account.sign({ hash: signHash })
       } else if (keyPair) {
         accessKey = Account.fromWebCryptoP256(keyPair, {
           access: account,
@@ -359,7 +335,7 @@ export function webAuthn(options: webAuthn.Parameters) {
           ? [{ address }]
           : [address]) as never,
         chainId,
-        keyAuthorization: signedKeyAuthorization,
+        signature,
       }
     },
     async disconnect() {
