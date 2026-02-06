@@ -155,7 +155,9 @@ export function webAuthn(options: webAuthn.Parameters) {
           })
 
           // Get key pair (access key) to use for the account.
+          // Skip if signing a hash — access key provisioning is deferred.
           const keyPair = await (async () => {
+            if (signHash) return undefined
             if (!accessKeyOptions) return undefined
             return await WebCryptoP256.createKeyPair()
           })()
@@ -204,7 +206,9 @@ export function webAuthn(options: webAuthn.Parameters) {
         // Discover credential
         {
           // Get key pair (access key) to use for the account.
+          // Skip if signing a hash — access key provisioning is deferred.
           const keyPair = await (async () => {
+            if (signHash) return undefined
             if (!accessKeyOptions) return undefined
             return await WebCryptoP256.createKeyPair()
           })()
