@@ -232,6 +232,12 @@ export {
 } from '../hooks/useInfiniteReadContracts.js'
 
 export {
+  type UsePermissionsParameters,
+  type UsePermissionsReturnType,
+  usePermissions,
+} from '../hooks/usePermissions.js'
+
+export {
   type UsePrepareTransactionRequestParameters,
   type UsePrepareTransactionRequestReturnType,
   usePrepareTransactionRequest,
