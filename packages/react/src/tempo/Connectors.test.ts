@@ -55,7 +55,37 @@ test('connect', async (context) => {
 })
 
 describe('capabilities.sign', () => {
-  test('connect with sign hash', async (context) => {
+  test('sign-up + sign (create path)', async (context) => {
+    const cleanup = await setupWebAuthn()
+    context.onTestFinished(async () => await cleanup())
+
+    const connector = webAuthn({
+      keyManager: KeyManager.localStorage(),
+    })
+
+    const { result } = await renderHook(() => ({
+      useConnection: useConnection(),
+      useConnect: useConnect(),
+    }))
+
+    const hash =
+      '0x0000000000000000000000000000000000000000000000000000000000000001'
+    const connectResult = await result.current.useConnect.mutateAsync({
+      capabilities: { type: 'sign-up', label: 'Create+Sign', sign: { hash } },
+      connector,
+    })
+
+    await vi.waitFor(() =>
+      expect(result.current.useConnection.isConnected).toBeTruthy(),
+    )
+    expect(result.current.useConnection.address).toBeDefined()
+    expect(result.current.useConnection.address).toMatch(/^0x[a-fA-F0-9]{40}$/)
+
+    expect(connectResult.signature).toBeDefined()
+    expect(connectResult.signature).toMatch(/^0x/)
+  })
+
+  test('discover path: disconnect then reconnect with sign', async (context) => {
     const cleanup = await setupWebAuthn()
     context.onTestFinished(async () => await cleanup())
 
@@ -69,9 +99,8 @@ describe('capabilities.sign', () => {
       useDisconnect: useDisconnect(),
     }))
 
-    // Sign up first to create a credential
     await result.current.useConnect.mutateAsync({
-      capabilities: { type: 'sign-up', label: 'Sign Test' },
+      capabilities: { type: 'sign-up', label: 'Discover Test' },
       connector,
     })
     await vi.waitFor(() =>
@@ -85,7 +114,6 @@ describe('capabilities.sign', () => {
       expect(result.current.useConnection.isConnected).toBeFalsy(),
     )
 
-    // Reconnect with a hash to sign
     const hash =
       '0x0000000000000000000000000000000000000000000000000000000000000001'
     const connectResult = await result.current.useConnect.mutateAsync({
@@ -105,12 +133,12 @@ describe('capabilities.sign', () => {
     expect(connectResult.signature).toMatch(/^0x/)
   })
 
-  test('connect with sign hash (without grantAccessKey)', async (context) => {
+  test('sign skips access key provisioning (with grantAccessKey)', async (context) => {
     const cleanup = await setupWebAuthn()
     context.onTestFinished(async () => await cleanup())
 
-    // Connector created without grantAccessKey
     const connector = webAuthn({
+      grantAccessKey: true,
       keyManager: KeyManager.localStorage(),
     })
 
@@ -120,9 +148,8 @@ describe('capabilities.sign', () => {
       useDisconnect: useDisconnect(),
     }))
 
-    // Sign up to create credential
     await result.current.useConnect.mutateAsync({
-      capabilities: { type: 'sign-up', label: 'No Grant Test' },
+      capabilities: { type: 'sign-up', label: 'Grant Test' },
       connector,
     })
     await vi.waitFor(() =>
@@ -134,7 +161,6 @@ describe('capabilities.sign', () => {
       expect(result.current.useConnection.isConnected).toBeFalsy(),
     )
 
-    // Should work with sign even without grantAccessKey on the connector
     const hash =
       '0x0000000000000000000000000000000000000000000000000000000000000002'
     const connectResult = await result.current.useConnect.mutateAsync({
