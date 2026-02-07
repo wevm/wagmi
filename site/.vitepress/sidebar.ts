@@ -1225,7 +1225,23 @@ export function getSidebar() {
             text: 'useDisconnect',
             link: '/solid/api/primitives/useDisconnect',
           },
+          {
+            text: 'useInfiniteReadContracts',
+            link: '/solid/api/primitives/useInfiniteReadContracts',
+          },
+          {
+            text: 'useReadContract',
+            link: '/solid/api/primitives/useReadContract',
+          },
+          {
+            text: 'useReadContracts',
+            link: '/solid/api/primitives/useReadContracts',
+          },
           { text: 'useReconnect', link: '/solid/api/primitives/useReconnect' },
+          {
+            text: 'useSimulateContract',
+            link: '/solid/api/primitives/useSimulateContract',
+          },
           {
             text: 'useSwitchChain',
             link: '/solid/api/primitives/useSwitchChain',
@@ -1237,6 +1253,14 @@ export function getSidebar() {
           {
             text: 'useWatchBlockNumber',
             link: '/solid/api/primitives/useWatchBlockNumber',
+          },
+          {
+            text: 'useWatchContractEvent',
+            link: '/solid/api/primitives/useWatchContractEvent',
+          },
+          {
+            text: 'useWriteContract',
+            link: '/solid/api/primitives/useWriteContract',
           },
         ],
       },
