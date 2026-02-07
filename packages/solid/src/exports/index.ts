@@ -56,6 +56,12 @@ export { useSwitchChain } from '../primitives/useSwitchChain.js'
 
 export { useSwitchConnection } from '../primitives/useSwitchConnection.js'
 
+export { useTransaction } from '../primitives/useTransaction.js'
+
+export { useTransactionReceipt } from '../primitives/useTransactionReceipt.js'
+
+export { useWaitForTransactionReceipt } from '../primitives/useWaitForTransactionReceipt.js'
+
 export { useWatchBlockNumber } from '../primitives/useWatchBlockNumber.js'
 
 ////////////////////////////////////////////////////////////////////////////////
