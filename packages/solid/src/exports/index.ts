@@ -28,6 +28,8 @@ export { useBalance } from '../primitives/useBalance.js'
 
 export { useBlockNumber } from '../primitives/useBlockNumber.js'
 
+export { useInfiniteReadContracts } from '../primitives/useInfiniteReadContracts.js'
+
 export { useChainId } from '../primitives/useChainId.js'
 
 export { useChains } from '../primitives/useChains.js'
@@ -50,13 +52,25 @@ export { useConnectors } from '../primitives/useConnectors.js'
 
 export { useDisconnect } from '../primitives/useDisconnect.js'
 
+export { useReadContract } from '../primitives/useReadContract.js'
+
+export { useReadContracts } from '../primitives/useReadContracts.js'
+
 export { useReconnect } from '../primitives/useReconnect.js'
 
 export { useSwitchChain } from '../primitives/useSwitchChain.js'
 
+export { useSimulateContract } from '../primitives/useSimulateContract.js'
+
 export { useSwitchConnection } from '../primitives/useSwitchConnection.js'
 
 export { useWatchBlockNumber } from '../primitives/useWatchBlockNumber.js'
+
+export { useWatchContractEvent } from '../primitives/useWatchContractEvent.js'
+
+export { useWriteContract } from '../primitives/useWriteContract.js'
+
+export { useWriteContractSync } from '../primitives/useWriteContractSync.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // Hydrate
