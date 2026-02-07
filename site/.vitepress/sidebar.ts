@@ -1235,6 +1235,18 @@ export function getSidebar() {
             link: '/solid/api/primitives/useSwitchConnection',
           },
           {
+            text: 'useTransaction',
+            link: '/solid/api/primitives/useTransaction',
+          },
+          {
+            text: 'useTransactionReceipt',
+            link: '/solid/api/primitives/useTransactionReceipt',
+          },
+          {
+            text: 'useWaitForTransactionReceipt',
+            link: '/solid/api/primitives/useWaitForTransactionReceipt',
+          },
+          {
             text: 'useWatchBlockNumber',
             link: '/solid/api/primitives/useWatchBlockNumber',
           },
