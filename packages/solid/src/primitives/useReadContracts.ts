@@ -55,20 +55,23 @@ export function useReadContracts<
 
 export namespace useReadContracts {
   export type Parameters<
-    contracts extends readonly unknown[] = readonly ContractFunctionParameters[],
+    contracts extends
+      readonly unknown[] = readonly ContractFunctionParameters[],
     allowFailure extends boolean = true,
     config extends Config = Config,
     selectData = ReadContractsData<contracts, allowFailure>,
   > = Accessor<SolidParameters<contracts, allowFailure, config, selectData>>
 
   export type ReturnType<
-    contracts extends readonly unknown[] = readonly ContractFunctionParameters[],
+    contracts extends
+      readonly unknown[] = readonly ContractFunctionParameters[],
     allowFailure extends boolean = true,
     selectData = ReadContractsData<contracts, allowFailure>,
   > = UseQueryReturnType<selectData, ReadContractsErrorType>
 
   export type SolidParameters<
-    contracts extends readonly unknown[] = readonly ContractFunctionParameters[],
+    contracts extends
+      readonly unknown[] = readonly ContractFunctionParameters[],
     allowFailure extends boolean = true,
     config extends Config = Config,
     selectData = ReadContractsData<contracts, allowFailure>,

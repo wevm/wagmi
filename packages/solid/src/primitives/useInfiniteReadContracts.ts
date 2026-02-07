@@ -1,3 +1,4 @@
+import type { DefaultError, QueryKey } from '@tanstack/solid-query'
 import type {
   Config,
   ReadContractsErrorType,
@@ -12,7 +13,6 @@ import {
   infiniteReadContractsQueryOptions,
   structuralSharing,
 } from '@wagmi/core/query'
-import type { DefaultError, QueryKey } from '@tanstack/solid-query'
 import type { Accessor } from 'solid-js'
 import { createMemo } from 'solid-js'
 import type { ContractFunctionParameters } from 'viem'
@@ -72,12 +72,10 @@ export function useInfiniteReadContracts<
         chainId: chainId(),
         contracts:
           contracts as useInfiniteReadContracts.SolidParameters['contracts'],
-        query:
-          query as unknown as SolidInfiniteQueryParameters,
+        query: query as unknown as SolidInfiniteQueryParameters,
       }),
       ...(query as any),
-      structuralSharing:
-        (query as any).structuralSharing ?? structuralSharing,
+      structuralSharing: (query as any).structuralSharing ?? structuralSharing,
     }
   })
 
@@ -86,7 +84,8 @@ export function useInfiniteReadContracts<
 
 export namespace useInfiniteReadContracts {
   export type Parameters<
-    contracts extends readonly unknown[] = readonly ContractFunctionParameters[],
+    contracts extends
+      readonly unknown[] = readonly ContractFunctionParameters[],
     allowFailure extends boolean = true,
     config extends Config = Config,
     pageParam = unknown,
@@ -96,35 +95,27 @@ export namespace useInfiniteReadContracts {
   >
 
   export type ReturnType<
-    contracts extends readonly unknown[] = readonly ContractFunctionParameters[],
+    contracts extends
+      readonly unknown[] = readonly ContractFunctionParameters[],
     allowFailure extends boolean = true,
     selectData = InfiniteReadContractsData<contracts, allowFailure>,
   > = UseInfiniteQueryReturnType<selectData, ReadContractsErrorType>
 
   export type SolidParameters<
-    contracts extends readonly unknown[] = readonly ContractFunctionParameters[],
+    contracts extends
+      readonly unknown[] = readonly ContractFunctionParameters[],
     allowFailure extends boolean = true,
     config extends Config = Config,
     pageParam = unknown,
     selectData = InfiniteReadContractsData<contracts, allowFailure>,
-  > = InfiniteReadContractsOptions<
-    contracts,
-    allowFailure,
-    pageParam,
-    config
-  > &
+  > = InfiniteReadContractsOptions<contracts, allowFailure, pageParam, config> &
     ConfigParameter<config> &
     InfiniteQueryParameter<
       InfiniteReadContractsQueryFnData<contracts, allowFailure>,
       ReadContractsErrorType,
       selectData,
       InfiniteReadContractsData<contracts, allowFailure>,
-      InfiniteReadContractsQueryKey<
-        contracts,
-        allowFailure,
-        pageParam,
-        config
-      >,
+      InfiniteReadContractsQueryKey<contracts, allowFailure, pageParam, config>,
       pageParam
     >
 }

@@ -61,9 +61,7 @@ export namespace useWatchContractEvent {
     config extends Config = Config,
     chainId extends
       config['chains'][number]['id'] = config['chains'][number]['id'],
-  > = Accessor<
-    SolidParameters<abi, eventName, strict, config, chainId>
-  >
+  > = Accessor<SolidParameters<abi, eventName, strict, config, chainId>>
 
   export type ReturnType = void
 

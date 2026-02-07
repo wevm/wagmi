@@ -27,40 +27,26 @@ export {
 export { useBalance } from '../primitives/useBalance.js'
 
 export { useBlockNumber } from '../primitives/useBlockNumber.js'
-
-export { useInfiniteReadContracts } from '../primitives/useInfiniteReadContracts.js'
-
 export { useChainId } from '../primitives/useChainId.js'
-
 export { useChains } from '../primitives/useChains.js'
-
 export { useClient } from '../primitives/useClient.js'
-
 export { useConfig } from '../primitives/useConfig.js'
-
 export { useConnect } from '../primitives/useConnect.js'
-
 export { useConnection } from '../primitives/useConnection.js'
-
 export { useConnectionEffect } from '../primitives/useConnectionEffect.js'
-
 export { useConnections } from '../primitives/useConnections.js'
-
 export { useConnectorClient } from '../primitives/useConnectorClient.js'
-
 export { useConnectors } from '../primitives/useConnectors.js'
-
 export { useDisconnect } from '../primitives/useDisconnect.js'
+export { useInfiniteReadContracts } from '../primitives/useInfiniteReadContracts.js'
 
 export { useReadContract } from '../primitives/useReadContract.js'
 
 export { useReadContracts } from '../primitives/useReadContracts.js'
 
 export { useReconnect } from '../primitives/useReconnect.js'
-
-export { useSwitchChain } from '../primitives/useSwitchChain.js'
-
 export { useSimulateContract } from '../primitives/useSimulateContract.js'
+export { useSwitchChain } from '../primitives/useSwitchChain.js'
 
 export { useSwitchConnection } from '../primitives/useSwitchConnection.js'
 
