@@ -73,6 +73,7 @@ describe('capabilities.sign', () => {
     const connectResult = await result.current.useConnect.mutateAsync({
       capabilities: { type: 'sign-up', label: 'Create+Sign', sign: { hash } },
       connector,
+      withCapabilities: true,
     })
 
     await vi.waitFor(() =>
@@ -81,8 +82,8 @@ describe('capabilities.sign', () => {
     expect(result.current.useConnection.address).toBeDefined()
     expect(result.current.useConnection.address).toMatch(/^0x[a-fA-F0-9]{40}$/)
 
-    expect(connectResult.signature).toBeDefined()
-    expect(connectResult.signature).toMatch(/^0x/)
+    expect(connectResult.accounts[0]?.capabilities.signature).toBeDefined()
+    expect(connectResult.accounts[0]?.capabilities.signature).toMatch(/^0x/)
   })
 
   test('discover path: disconnect then reconnect with sign', async (context) => {
@@ -121,6 +122,7 @@ describe('capabilities.sign', () => {
         sign: { hash },
       },
       connector,
+      withCapabilities: true,
     })
 
     await vi.waitFor(() =>
@@ -129,8 +131,8 @@ describe('capabilities.sign', () => {
     expect(result.current.useConnection.address).toBeDefined()
     expect(result.current.useConnection.address).toMatch(/^0x[a-fA-F0-9]{40}$/)
 
-    expect(connectResult.signature).toBeDefined()
-    expect(connectResult.signature).toMatch(/^0x/)
+    expect(connectResult.accounts[0]?.capabilities.signature).toBeDefined()
+    expect(connectResult.accounts[0]?.capabilities.signature).toMatch(/^0x/)
   })
 
   test('sign skips access key provisioning (with grantAccessKey)', async (context) => {
@@ -168,6 +170,7 @@ describe('capabilities.sign', () => {
         sign: { hash },
       },
       connector,
+      withCapabilities: true,
     })
 
     await vi.waitFor(() =>
@@ -175,7 +178,7 @@ describe('capabilities.sign', () => {
     )
     expect(result.current.useConnection.address).toBeDefined()
 
-    expect(connectResult.signature).toBeDefined()
-    expect(connectResult.signature).toMatch(/^0x/)
+    expect(connectResult.accounts[0]?.capabilities.signature).toBeDefined()
+    expect(connectResult.accounts[0]?.capabilities.signature).toMatch(/^0x/)
   })
 })

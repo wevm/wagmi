@@ -78,9 +78,13 @@ export function webAuthn(options: webAuthn.Parameters) {
       isReconnecting?: boolean | undefined
       withCapabilities?: withCapabilities | boolean | undefined
     }): Promise<{
-      accounts: readonly Address.Address[]
+      accounts: withCapabilities extends true
+        ? readonly {
+            address: Address.Address
+            capabilities: { signature?: Hex.Hex | undefined }
+          }[]
+        : readonly Address.Address[]
       chainId: number
-      signature?: Hex.Hex | undefined
     }>
   }
   type Provider = Pick<EIP1193Provider, 'request'>
@@ -352,10 +356,9 @@ export function webAuthn(options: webAuthn.Parameters) {
 
       return {
         accounts: (parameters.withCapabilities
-          ? [{ address }]
+          ? [{ address, capabilities: { signature } }]
           : [address]) as never,
         chainId,
-        signature,
       }
     },
     async disconnect() {
