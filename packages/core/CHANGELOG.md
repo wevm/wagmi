@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 3.3.3
+
+### Patch Changes
+
+- Added ability to sign arbitrary `hash` on `webAuthn#connect`. ([#4994](https://github.com/wevm/wagmi/pull/4994))
+
 ## 3.3.2
 
 ### Patch Changes
