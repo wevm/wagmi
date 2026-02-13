@@ -21,19 +21,11 @@ test('array', () => {
 })
 
 test('function', () => {
-  const config = vi.fn().mockImplementation(() => ({
-    contracts: [],
-    out: 'wagmi.ts',
-    plugins: [],
-  }))
+  const config = vi.fn()
   expect(defineConfig(config)).toEqual(config)
 })
 
 test('async function', () => {
-  const config = vi.fn().mockImplementation(async () => ({
-    contracts: [],
-    out: 'wagmi.ts',
-    plugins: [],
-  }))
+  const config = vi.fn()
   expect(defineConfig(config)).toEqual(config)
 })
