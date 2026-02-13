@@ -1,4 +1,7 @@
-import type {
+function createCDPEmbeddedWalletConnector(parameters: {
+  cdpConfig: Config;
+  providerConfig: CDPEmbeddedWalletConfig;
+}): CreateConnectorFn<unknown>;import type {
   createCoinbaseWalletSDK,
   ProviderInterface,
 } from '@coinbase/wallet-sdk'
