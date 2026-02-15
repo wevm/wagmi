@@ -109,7 +109,6 @@
         "ignoreDependencies": [
           "@base-org/account",
           "@coinbase/wallet-sdk",
-          "@gemini-wallet/core",
           "@metamask/sdk",
           "@safe-global/safe-apps-provider",
           "@safe-global/safe-apps-sdk",

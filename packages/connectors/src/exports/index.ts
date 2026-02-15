@@ -10,7 +10,6 @@ export {
   type CoinbaseWalletParameters,
   coinbaseWallet,
 } from '../coinbaseWallet.js'
-export { type GeminiParameters, gemini } from '../gemini.js'
 export { type MetaMaskParameters, metaMask } from '../metaMask.js'
 export { type PortoParameters, porto } from '../porto.js'
 export { type SafeParameters, safe } from '../safe.js'

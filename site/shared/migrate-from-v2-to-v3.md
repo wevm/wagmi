@@ -68,30 +68,6 @@ bun add @coinbase/wallet-sdk@{{packageJson?.peerDependencies?.['@coinbase/wallet
 ```
 :::
 
-### gemini
-
-<a :href="`/${docsPath}/api/connectors/gemini`">`gemini`</a> requires `@gemini-wallet/core`
-
-<PackageMetadata package="@gemini-wallet/core" repo="gemini/gemini-wallet-core" isOsiLicense licenseUrl="https://github.com/gemini/gemini-wallet-core/blob/main/LICENSE" />
-
-::: code-group
-```bash-vue [pnpm]
-pnpm add @gemini-wallet/core@{{packageJson?.peerDependencies?.['@gemini-wallet/core']}}
-```
-
-```bash-vue [npm]
-npm install @gemini-wallet/core@{{packageJson?.peerDependencies?.['@gemini-wallet/core']}}
-```
-
-```bash-vue [yarn]
-yarn add @gemini-wallet/core@{{packageJson?.peerDependencies?.['@gemini-wallet/core']}}
-```
-
-```bash-vue [bun]
-bun add @gemini-wallet/core@{{packageJson?.peerDependencies?.['@gemini-wallet/core']}}
-```
-:::
-
 ### metaMask
 
 <a :href="`/${docsPath}/api/connectors/metaMask`">`metaMask`</a> requires `@metamask/sdk`
