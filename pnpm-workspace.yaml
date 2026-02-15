@@ -15,6 +15,7 @@ auditConfig:
     - GHSA-29xp-372q-xqph
     - GHSA-mh29-5h37-fv8m
     - GHSA-5j98-mcp5-4vw2
+    - GHSA-92fh-27vv-894w
 
 autoInstallPeers: false
 
