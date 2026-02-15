@@ -44,7 +44,7 @@ catalog:
   solid-js: 1.9.10
   vite: 7.2.2
   vite-plugin-solid: 2.11.10
-  vue: 3.4.27
+  vue: 3.5.25
 
 linkWorkspacePackages: deep
 
