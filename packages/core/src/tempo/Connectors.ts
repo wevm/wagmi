@@ -68,6 +68,7 @@ export function webAuthn(options: webAuthn.Parameters) {
                 type?: undefined
               }
           > & {
+            credential?: { id: string; publicKey: Hex.Hex } | undefined
             sign?:
               | {
                   hash: Hex.Hex
@@ -114,6 +115,32 @@ export function webAuthn(options: webAuthn.Parameters) {
         'capabilities' in parameters ? (parameters.capabilities ?? {}) : {}
       const signHash =
         'sign' in capabilities ? capabilities.sign?.hash : undefined
+
+      // Fast path: if a credential is provided directly, use it.
+      if ('credential' in capabilities && capabilities.credential) {
+        const credential =
+          capabilities.credential as WebAuthnP256.P256Credential
+        config.storage?.setItem(
+          'webAuthn.activeCredential',
+          normalizeValue(credential),
+        )
+        config.storage?.setItem(
+          'webAuthn.lastActiveCredential',
+          normalizeValue(credential),
+        )
+        account = Account.fromWebAuthnP256(credential, {
+          rpId: options.getOptions?.rpId ?? options.rpId,
+        })
+        const address = getAddress(account.address)
+        const chainId = parameters.chainId ?? config.chains[0]?.id
+        if (!chainId) throw new ChainNotConfiguredError()
+        return {
+          accounts: (parameters.withCapabilities
+            ? [{ address }]
+            : [address]) as never,
+          chainId,
+        }
+      }
 
       if (
         accessKeyOptions?.strict &&
