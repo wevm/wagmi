@@ -10,6 +10,7 @@ import { useWaitForCallsStatus } from './useWaitForCallsStatus.js'
 const connector = config.connectors[0]!
 
 test('default', async () => {
+  await disconnect(config, { connector }).catch(() => {})
   await connect(config, { connector })
 
   const useSendCalls_render = await renderHook(() => useSendCalls())
