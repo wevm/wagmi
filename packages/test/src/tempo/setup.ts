@@ -21,7 +21,7 @@ beforeAll(async () => {
       Actions.amm.mintSync(client, {
         account: accounts[0],
         feeToken: Addresses.pathUsd,
-        nonceKey: 'random',
+        nonceKey: 'expiring',
         userTokenAddress: id,
         validatorTokenAddress: Addresses.pathUsd,
         validatorTokenAmount: parseUnits('1000', 6),

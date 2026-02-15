@@ -46,9 +46,9 @@ Nonce for the transaction.
 
 ### nonceKey (optional)
 
-- **Type:** `'random' | bigint`
+- **Type:** `'expiring' | bigint`
 
-Nonce key for the transaction. Use `'random'` to generate a random nonce key.
+Nonce key for the transaction. 
 
 ### validBefore (optional)
 
