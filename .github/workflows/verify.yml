@@ -112,12 +112,7 @@ jobs:
     permissions:
       contents: read
     runs-on: ubuntu-latest
-    timeout-minutes: 20
-    strategy:
-      max-parallel: 4
-      matrix:
-        shard: [1, 2, 3, 4]
-        total-shards: [4]
+    timeout-minutes: 30
 
     steps:
       - name: Clone repository
@@ -153,7 +148,7 @@ jobs:
       - name: Run tests
         uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08
         with:
-          command: CI=true pnpm test:cov --shard=${{ matrix.shard }}/${{ matrix.total-shards }} --retry=3 --bail=1
+          command: CI=true pnpm test:cov --retry=3 --bail=1
           max_attempts: 3
           timeout_minutes: 5
         env:

@@ -23,13 +23,6 @@ export default defineConfig({
     },
   },
   test: {
-    fileParallelism: false,
-    pool: 'forks',
-    poolOptions: {
-      forks: {
-        singleFork: true,
-      },
-    },
     coverage: {
       reporter: process.env.CI ? ['lcov'] : ['text', 'json', 'html'],
       exclude: [
