@@ -60,10 +60,7 @@ describe('useGetAllowance', () => {
     // Set spender
     rerender({ account: account.address, spender: account2.address })
 
-    await vi.waitFor(() => {
-      console.log('[useGetAllowance reactivity] status:', result.current.status, 'fetchStatus:', result.current.fetchStatus, 'error:', result.current.error?.message, 'isSuccess:', result.current.isSuccess)
-      expect(result.current.isSuccess).toBeTruthy()
-    })
+    await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
     // Should now be enabled and have data
     // expect(result.current.isEnabled).toBe(true)
