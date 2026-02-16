@@ -12,7 +12,7 @@ describe('useUserToken', () => {
       { initialProps: { account: undefined as Address | undefined } },
     )
 
-    await vi.waitFor(() => result.current.fetchStatus === 'fetching')
+    await vi.waitFor(() => expect(result.current.fetchStatus).toBe('idle'))
 
     expect(result.current).toMatchInlineSnapshot(`
       {

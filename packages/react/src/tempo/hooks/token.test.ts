@@ -42,7 +42,7 @@ describe('useGetAllowance', () => {
       },
     )
 
-    await vi.waitFor(() => result.current.fetchStatus === 'fetching')
+    await vi.waitFor(() => expect(result.current.fetchStatus).toBe('idle'))
 
     // Should be disabled when account or spender is undefined
     expect(result.current.data).toBeUndefined()
@@ -52,7 +52,7 @@ describe('useGetAllowance', () => {
     // Set account but not spender
     rerender({ account: account.address, spender: undefined })
 
-    await vi.waitFor(() => result.current.fetchStatus === 'fetching')
+    await vi.waitFor(() => expect(result.current.fetchStatus).toBe('idle'))
 
     // Still disabled when spender is undefined
     // expect(result.current.isEnabled).toBe(false)
@@ -99,7 +99,7 @@ describe('useGetBalance', () => {
       },
     )
 
-    await vi.waitFor(() => result.current.fetchStatus === 'fetching')
+    await vi.waitFor(() => expect(result.current.fetchStatus).toBe('idle'))
 
     // Should be disabled when account is undefined
     expect(result.current.data).toBeUndefined()
@@ -230,7 +230,7 @@ describe('useHasRole', () => {
       },
     )
 
-    await vi.waitFor(() => result.current.fetchStatus === 'fetching')
+    await vi.waitFor(() => expect(result.current.fetchStatus).toBe('idle'))
 
     // Should be disabled when account is undefined
     expect(result.current.data).toBeUndefined()

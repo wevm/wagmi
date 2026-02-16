@@ -36,7 +36,7 @@ describe('useGetGlobalRewardPerToken', () => {
       },
     )
 
-    await vi.waitFor(() => result.current.fetchStatus === 'idle')
+    await vi.waitFor(() => expect(result.current.fetchStatus).toBe('idle'))
 
     // Should be disabled when token is undefined
     expect(result.current.data).toBeUndefined()
@@ -92,7 +92,7 @@ describe('useUserRewardInfo', () => {
       },
     )
 
-    await vi.waitFor(() => result.current.fetchStatus === 'idle')
+    await vi.waitFor(() => expect(result.current.fetchStatus).toBe('idle'))
 
     // Should be disabled when both token and account are undefined
     expect(result.current.data).toBeUndefined()
@@ -105,7 +105,7 @@ describe('useUserRewardInfo', () => {
     // Set token only (account still undefined)
     rerender({ token, account: undefined })
 
-    await vi.waitFor(() => result.current.fetchStatus === 'idle')
+    await vi.waitFor(() => expect(result.current.fetchStatus).toBe('idle'))
 
     // Should still be disabled when account is undefined
     expect(result.current.data).toBeUndefined()

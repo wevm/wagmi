@@ -45,7 +45,7 @@ describe('usePool', () => {
       },
     )
 
-    await vi.waitFor(() => result.current.fetchStatus === 'idle')
+    await vi.waitFor(() => expect(result.current.fetchStatus).toBe('idle'))
 
     // Should be disabled when tokens are undefined
     expect(result.current.data).toBeUndefined()
@@ -100,7 +100,7 @@ describe('useLiquidityBalance', () => {
       },
     )
 
-    await vi.waitFor(() => result.current.fetchStatus === 'idle')
+    await vi.waitFor(() => expect(result.current.fetchStatus).toBe('idle'))
 
     // Should be disabled when parameters are undefined
     expect(result.current.data).toBeUndefined()
