@@ -11,6 +11,7 @@ export {
   queryClient,
   renderHook,
   restart,
+  waitFor,
   rpcUrl,
   setupOrders,
   setupPoolWithLiquidity,

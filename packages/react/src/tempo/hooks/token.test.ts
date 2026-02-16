@@ -1,4 +1,4 @@
-import { accounts, addresses, config, renderHook } from '@wagmi/test/tempo'
+import { accounts, addresses, config, renderHook, waitFor } from '@wagmi/test/tempo'
 import { type Address, parseUnits } from 'viem'
 import { describe, expect, test, vi } from 'vitest'
 
@@ -18,9 +18,7 @@ describe('useGetAllowance', () => {
       }),
     )
 
-    await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy(), {
-      timeout: 5000,
-    })
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
     expect(result.current.data).toBeDefined()
     expect(typeof result.current.data).toBe('bigint')
@@ -42,7 +40,7 @@ describe('useGetAllowance', () => {
       },
     )
 
-    await vi.waitFor(() => expect(result.current.fetchStatus).toBe('idle'))
+    await waitFor(() => expect(result.current.fetchStatus).toBe('idle'))
 
     // Should be disabled when account or spender is undefined
     expect(result.current.data).toBeUndefined()
@@ -52,7 +50,7 @@ describe('useGetAllowance', () => {
     // Set account but not spender
     rerender({ account: account.address, spender: undefined })
 
-    await vi.waitFor(() => expect(result.current.fetchStatus).toBe('idle'))
+    await waitFor(() => expect(result.current.fetchStatus).toBe('idle'))
 
     // Still disabled when spender is undefined
     // expect(result.current.isEnabled).toBe(false)
@@ -60,7 +58,7 @@ describe('useGetAllowance', () => {
     // Set spender
     rerender({ account: account.address, spender: account2.address })
 
-    await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
     // Should now be enabled and have data
     // expect(result.current.isEnabled).toBe(true)
@@ -78,7 +76,7 @@ describe('useGetBalance', () => {
       }),
     )
 
-    await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
     expect(result.current.data).toBeDefined()
     expect(typeof result.current.data).toBe('bigint')
@@ -99,7 +97,7 @@ describe('useGetBalance', () => {
       },
     )
 
-    await vi.waitFor(() => expect(result.current.fetchStatus).toBe('idle'))
+    await waitFor(() => expect(result.current.fetchStatus).toBe('idle'))
 
     // Should be disabled when account is undefined
     expect(result.current.data).toBeUndefined()
@@ -109,7 +107,7 @@ describe('useGetBalance', () => {
     // Set account
     rerender({ account: account.address })
 
-    await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
     // Should now be enabled and have data
     // expect(result.current.isEnabled).toBe(true)
@@ -127,7 +125,7 @@ describe('useGetMetadata', () => {
       }),
     )
 
-    await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
     expect(result.current.data).toBeDefined()
     expect(result.current.data?.name).toBeDefined()
@@ -161,7 +159,7 @@ describe('useGetRoleAdmin', () => {
       }),
     )
 
-    await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
     expect(result.current.data).toBeDefined()
     expect(typeof result.current.data).toBe('string')
@@ -194,7 +192,7 @@ describe('useHasRole', () => {
       }),
     )
 
-    await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
     expect(result.current.data).toBe(true)
   })
@@ -230,7 +228,7 @@ describe('useHasRole', () => {
       },
     )
 
-    await vi.waitFor(() => expect(result.current.fetchStatus).toBe('idle'))
+    await waitFor(() => expect(result.current.fetchStatus).toBe('idle'))
 
     // Should be disabled when account is undefined
     expect(result.current.data).toBeUndefined()
@@ -240,7 +238,7 @@ describe('useHasRole', () => {
     // Set account
     rerender({ account: account.address })
 
-    await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
     // Should now be enabled and have data
     // expect(result.current.isEnabled).toBe(true)
@@ -267,7 +265,7 @@ describe('useApproveSync', () => {
     expect(data).toBeDefined()
     expect(data.receipt).toBeDefined()
 
-    await vi.waitFor(() =>
+    await waitFor(() =>
       expect(result.current.approve.isSuccess).toBeTruthy(),
     )
   })
@@ -315,7 +313,7 @@ describe('useBurnSync', () => {
     expect(data).toBeDefined()
     expect(data.receipt).toBeDefined()
 
-    await vi.waitFor(() => expect(result.current.burn.isSuccess).toBeTruthy())
+    await waitFor(() => expect(result.current.burn.isSuccess).toBeTruthy())
   })
 })
 
@@ -345,7 +343,7 @@ describe('useChangeTransferPolicySync', () => {
     expect(data).toBeDefined()
     expect(data.receipt).toBeDefined()
 
-    await vi.waitFor(() =>
+    await waitFor(() =>
       expect(result.current.changeTransferPolicy.isSuccess).toBeTruthy(),
     )
   })
@@ -372,7 +370,7 @@ describe('useCreateSync', () => {
     expect(data.token).toBeDefined()
     expect(data.name).toBe('Hook Test Token Sync')
 
-    await vi.waitFor(() => expect(result.current.create.isSuccess).toBeTruthy())
+    await waitFor(() => expect(result.current.create.isSuccess).toBeTruthy())
   })
 })
 
@@ -415,7 +413,7 @@ describe('useUpdateQuoteTokenSync', () => {
     expect(data).toBeDefined()
     expect(data.receipt).toBeDefined()
 
-    await vi.waitFor(() =>
+    await waitFor(() =>
       expect(result.current.updateQuoteToken.isSuccess).toBeTruthy(),
     )
   })
@@ -447,7 +445,7 @@ describe('useGrantRoles', () => {
     })
     expect(hash).toBeDefined()
 
-    await vi.waitFor(() =>
+    await waitFor(() =>
       expect(result.current.grantRoles.isSuccess).toBeTruthy(),
     )
   })
@@ -481,7 +479,7 @@ describe('useGrantRolesSync', () => {
     expect(data.receipt).toBeDefined()
     expect(data.value).toBeDefined()
 
-    await vi.waitFor(() =>
+    await waitFor(() =>
       expect(result.current.grantRoles.isSuccess).toBeTruthy(),
     )
   })
@@ -522,7 +520,7 @@ describe('useMintSync', () => {
     expect(data).toBeDefined()
     expect(data.receipt).toBeDefined()
 
-    await vi.waitFor(() => expect(result.current.mint.isSuccess).toBeTruthy())
+    await waitFor(() => expect(result.current.mint.isSuccess).toBeTruthy())
   })
 })
 
@@ -559,7 +557,7 @@ describe('usePauseSync', () => {
     expect(data).toBeDefined()
     expect(data.receipt).toBeDefined()
 
-    await vi.waitFor(() => expect(result.current.pause.isSuccess).toBeTruthy())
+    await waitFor(() => expect(result.current.pause.isSuccess).toBeTruthy())
   })
 })
 
@@ -598,7 +596,7 @@ describe('useRenounceRolesSync', () => {
     expect(data.receipt).toBeDefined()
     expect(data.value).toBeDefined()
 
-    await vi.waitFor(() =>
+    await waitFor(() =>
       expect(result.current.renounceRoles.isSuccess).toBeTruthy(),
     )
   })
@@ -640,7 +638,7 @@ describe('useRevokeRolesSync', () => {
     expect(data.receipt).toBeDefined()
     expect(data.value).toBeDefined()
 
-    await vi.waitFor(() =>
+    await waitFor(() =>
       expect(result.current.revokeRoles.isSuccess).toBeTruthy(),
     )
   })
@@ -673,7 +671,7 @@ describe('useSetRoleAdminSync', () => {
     expect(data).toBeDefined()
     expect(data.receipt).toBeDefined()
 
-    await vi.waitFor(() =>
+    await waitFor(() =>
       expect(result.current.setRoleAdmin.isSuccess).toBeTruthy(),
     )
   })
@@ -705,7 +703,7 @@ describe('useSetSupplyCapSync', () => {
     expect(data).toBeDefined()
     expect(data.receipt).toBeDefined()
 
-    await vi.waitFor(() =>
+    await waitFor(() =>
       expect(result.current.setSupplyCap.isSuccess).toBeTruthy(),
     )
   })
@@ -730,7 +728,7 @@ describe('useTransferSync', () => {
     expect(data).toBeDefined()
     expect(data.receipt).toBeDefined()
 
-    await vi.waitFor(() =>
+    await waitFor(() =>
       expect(result.current.transfer.isSuccess).toBeTruthy(),
     )
   })
@@ -775,7 +773,7 @@ describe('useUnpauseSync', () => {
     expect(data).toBeDefined()
     expect(data.receipt).toBeDefined()
 
-    await vi.waitFor(() =>
+    await waitFor(() =>
       expect(result.current.unpause.isSuccess).toBeTruthy(),
     )
   })
@@ -814,7 +812,7 @@ describe('usePrepareUpdateQuoteTokenSync', () => {
     expect(data).toBeDefined()
     expect(data.receipt).toBeDefined()
 
-    await vi.waitFor(() =>
+    await waitFor(() =>
       expect(result.current.prepareUpdateQuoteToken.isSuccess).toBeTruthy(),
     )
   })

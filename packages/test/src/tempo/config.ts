@@ -96,6 +96,10 @@ export function renderHook<result, props>(
   })
 }
 
+export function waitFor(callback: () => void, options?: { timeout?: number }) {
+  return vi.waitFor(callback, { timeout: 10_000, ...options })
+}
+
 export async function restart() {
   await fetch(`${rpcUrl}/restart`)
 
