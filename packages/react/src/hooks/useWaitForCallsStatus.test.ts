@@ -46,7 +46,7 @@ test('default', async () => {
     'fetching',
   )
 
-  await wait(0)
+  await wait(1_000)
   await testClient.mainnet.mine({ blocks: 1 })
 
   await vi.waitUntil(

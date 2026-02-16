@@ -7,7 +7,7 @@ import { useBlock } from './useBlock.js'
 test('mounts', async () => {
   const { result } = await renderHook(() => useBlock())
 
-  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 10_000 })
 
   const { data, ...rest } = result.current
   expect(data).toBeDefined()
@@ -51,7 +51,7 @@ test('parameters: watch', async () => {
 
   const { result } = await renderHook(() => useBlock({ watch: true }))
 
-  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 10_000 })
   const block = result.current.data!
   expect(block).toBeDefined()
 

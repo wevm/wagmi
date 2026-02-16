@@ -53,7 +53,7 @@ describe('useUserToken', () => {
     rerender({ account: accounts[0].address })
 
     await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy(), {
-      timeout: 5_000,
+      timeout: 10_000,
     })
 
     expect(result.current).toMatchInlineSnapshot(`

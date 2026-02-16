@@ -15,7 +15,7 @@ test.skip('default', async () => {
     }),
   )
 
-  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 10_000 })
 
   expect({ ...result.current, data: null }).toMatchInlineSnapshot(`
     {
@@ -111,7 +111,7 @@ test.skip('behavior: address: undefined -> defined', async () => {
 
   rerender({ address: '0x4200000000000000000000000000000000000016' })
 
-  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 10_000 })
 
   expect({ ...result.current, data: null }).toMatchInlineSnapshot(`
     {

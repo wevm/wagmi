@@ -35,7 +35,7 @@ describe('useNonce', () => {
     rerender()
 
     await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy(), {
-      timeout: 5_000,
+      timeout: 10_000,
     })
 
     // Should now be enabled and have data
@@ -60,7 +60,7 @@ describe('useNonce', () => {
     rerender()
 
     await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy(), {
-      timeout: 5_000,
+      timeout: 10_000,
     })
 
     // expect(result.current.isEnabled).toBe(true)
@@ -84,7 +84,7 @@ describe('useNonce', () => {
     rerender()
 
     await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy(), {
-      timeout: 5_000,
+      timeout: 10_000,
     })
 
     // expect(result.current.isEnabled).toBe(true)

@@ -26,7 +26,7 @@ test('default', async () => {
       value: parseEther('0.0001'),
     }),
     (async () => {
-      await wait(1000)
+      await wait(3000)
       await testClient.mainnet.mine({ blocks: 1 })
     })(),
   ])

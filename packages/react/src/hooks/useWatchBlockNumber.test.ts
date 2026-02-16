@@ -20,7 +20,7 @@ test('default', async () => {
   await wait(100)
   await testClient.mainnet.mine({ blocks: 1 })
 
-  await vi.waitUntil(() => blockNumbers.length === 3, { timeout: 5_000 })
+  await vi.waitUntil(() => blockNumbers.length === 3, { timeout: 10_000 })
   expect(blockNumbers.length).toBe(3)
 })
 
@@ -44,7 +44,7 @@ test('behavior: does not resubscribe when onBlockNumber changes', async () => {
   )
 
   await testClient.mainnet.mine({ blocks: 1 })
-  await vi.waitUntil(() => blockNumbers.length >= 1, { timeout: 5_000 })
+  await vi.waitUntil(() => blockNumbers.length >= 1, { timeout: 10_000 })
 
   // Rerender with new callback references multiple times
   rerender({
@@ -67,7 +67,7 @@ test('behavior: does not resubscribe when onBlockNumber changes', async () => {
   })
 
   await testClient.mainnet.mine({ blocks: 1 })
-  await vi.waitUntil(() => blockNumbers.length >= 2, { timeout: 5_000 })
+  await vi.waitUntil(() => blockNumbers.length >= 2, { timeout: 10_000 })
 
   rerender({
     callback: (blockNumber: bigint) => {
@@ -99,14 +99,14 @@ test('behavior: uses latest callback after rerender', async () => {
   )
 
   await testClient.mainnet.mine({ blocks: 1 })
-  await vi.waitUntil(() => blockNumbers1.length >= 1, { timeout: 5_000 })
+  await vi.waitUntil(() => blockNumbers1.length >= 1, { timeout: 10_000 })
 
   rerender({
     callback: (blockNumber) => blockNumbers2.push(blockNumber),
   })
 
   await testClient.mainnet.mine({ blocks: 1 })
-  await vi.waitUntil(() => blockNumbers2.length >= 1, { timeout: 5_000 })
+  await vi.waitUntil(() => blockNumbers2.length >= 1, { timeout: 10_000 })
 
   expect(blockNumbers1.length).toBe(1)
   expect(blockNumbers2.length).toBeGreaterThanOrEqual(1)

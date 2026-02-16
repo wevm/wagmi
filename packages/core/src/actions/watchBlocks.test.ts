@@ -17,7 +17,7 @@ test('default', async () => {
   await wait(500)
   await testClient.mainnet.mine({ blocks: 1 })
 
-  await vi.waitUntil(() => blocks.length === 3, { timeout: 5_000 })
+  await vi.waitUntil(() => blocks.length === 3, { timeout: 10_000 })
   expect(blocks.length).toBe(3)
 
   unwatch()

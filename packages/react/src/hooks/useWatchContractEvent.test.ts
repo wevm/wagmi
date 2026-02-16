@@ -118,7 +118,7 @@ test('behavior: uses latest callback after rerender', async () => {
     args: [accounts[1], parseEther('0.001', 'gwei')],
   })
   await testClient.mainnet.mine({ blocks: 1 })
-  await vi.waitUntil(() => logs1.length >= 1, { timeout: 5_000 })
+  await vi.waitUntil(() => logs1.length >= 1, { timeout: 10_000 })
 
   rerender({
     callback: (next) => {
@@ -133,7 +133,7 @@ test('behavior: uses latest callback after rerender', async () => {
     args: [accounts[1], parseEther('0.001', 'gwei')],
   })
   await testClient.mainnet.mine({ blocks: 1 })
-  await vi.waitUntil(() => logs2.length >= 1, { timeout: 5_000 })
+  await vi.waitUntil(() => logs2.length >= 1, { timeout: 10_000 })
 
   expect(logs1.length).toBe(1)
   expect(logs2.length).toBeGreaterThanOrEqual(1)

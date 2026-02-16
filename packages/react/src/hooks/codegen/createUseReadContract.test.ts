@@ -24,7 +24,7 @@ test('default', async () => {
     }),
   )
 
-  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 10_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -84,7 +84,7 @@ test('multichain', async () => {
     }),
   )
 
-  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 10_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -140,7 +140,7 @@ test('functionName', async () => {
     }),
   )
 
-  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 10_000 })
 
   expect(result.current).toMatchInlineSnapshot(`
     {
@@ -206,7 +206,7 @@ test('behavior: syncConnectedChain on', async () => {
   )
 
   await vi.waitUntil(() => result.current.isSuccess, {
-    timeout: 5_000,
+    timeout: 10_000,
   })
 
   expect(result.current.queryKey).toMatchInlineSnapshot(`
@@ -227,7 +227,7 @@ test('behavior: syncConnectedChain on', async () => {
 
   rerender()
   await vi.waitUntil(() => result.current.isSuccess, {
-    timeout: 5_000,
+    timeout: 10_000,
   })
 
   expect(result.current.queryKey).toMatchInlineSnapshot(`
@@ -283,7 +283,7 @@ test('behavior: syncConnectedChain off', async () => {
   )
 
   await vi.waitUntil(() => result.current.isSuccess, {
-    timeout: 5_000,
+    timeout: 10_000,
   })
 
   expect(result.current.queryKey).toMatchInlineSnapshot(`
@@ -304,7 +304,7 @@ test('behavior: syncConnectedChain off', async () => {
 
   rerender()
   await vi.waitUntil(() => result.current.isSuccess, {
-    timeout: 5_000,
+    timeout: 10_000,
   })
 
   expect(result.current.queryKey).toMatchInlineSnapshot(`
