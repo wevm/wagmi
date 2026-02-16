@@ -1,5 +1,5 @@
 import { accounts, config, queryClient, restart } from '@wagmi/test/tempo'
-import { beforeEach, describe, expect, test } from 'vitest'
+import { beforeEach, describe, expect, test, vi } from 'vitest'
 import * as nonce from './nonce.js'
 import * as token from './token.js'
 
@@ -58,12 +58,13 @@ test('watchNonceIncremented', async () => {
     nonce: 1,
   })
 
-  await new Promise((resolve) => setTimeout(resolve, 1000))
+  await vi.waitFor(() => {
+    expect(events).toHaveLength(2)
+  })
+  unwatch()
 
-  expect(events).toHaveLength(2)
   expect(events[0]?.account).toBe(account.address)
   expect(events[0]?.nonceKey).toBe(5n)
   expect(events[0]?.newNonce).toBe(1n)
   expect(events[1]?.newNonce).toBe(2n)
-  unwatch()
 })

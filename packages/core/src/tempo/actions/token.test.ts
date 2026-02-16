@@ -1,7 +1,7 @@
 import { connect } from '@wagmi/core'
 import { accounts, addresses, config, queryClient } from '@wagmi/test/tempo'
 import { parseUnits } from 'viem'
-import { describe, expect, test } from 'vitest'
+import { describe, expect, test, vi } from 'vitest'
 import * as token from './token.js'
 
 const account = accounts[0]
@@ -1068,12 +1068,12 @@ describe('watchAdminRole', () => {
       adminRole: 'pause',
     })
 
-    // Wait a bit for the event to be processed
-    await new Promise((resolve) => setTimeout(resolve, 500))
-
-    expect(events.length).toBeGreaterThan(0)
-    expect(events[0]).toBeDefined()
+    await vi.waitFor(() => {
+      expect(events.length).toBeGreaterThan(0)
+    })
     unwatch()
+
+    expect(events[0]).toBeDefined()
   })
 })
 
@@ -1098,14 +1098,14 @@ describe('watchApprove', () => {
       token: addresses.alphaUsd,
     })
 
-    // Wait a bit for the event to be processed
-    await new Promise((resolve) => setTimeout(resolve, 500))
+    await vi.waitFor(() => {
+      expect(events.length).toBeGreaterThan(0)
+    })
+    unwatch()
 
-    expect(events.length).toBeGreaterThan(0)
     expect(events[0]?.owner).toBe(account.address)
     expect(events[0]?.spender).toBe(account2.address)
     expect(events[0]?.amount).toBe(parseUnits('50', 6))
-    unwatch()
   })
 })
 
@@ -1148,13 +1148,13 @@ describe('watchBurn', () => {
       amount: parseUnits('10', 6),
     })
 
-    // Wait a bit for the event to be processed
-    await new Promise((resolve) => setTimeout(resolve, 500))
+    await vi.waitFor(() => {
+      expect(events.length).toBeGreaterThan(0)
+    })
+    unwatch()
 
-    expect(events.length).toBeGreaterThan(0)
     expect(events[0]?.from).toBe(account.address)
     expect(events[0]?.amount).toBe(parseUnits('10', 6))
-    unwatch()
   })
 })
 
@@ -1178,15 +1178,15 @@ describe('watchCreate', () => {
       currency: 'USD',
     })
 
-    // Wait a bit for the event to be processed
-    await new Promise((resolve) => setTimeout(resolve, 500))
+    await vi.waitFor(() => {
+      expect(events.length).toBeGreaterThan(0)
+    })
+    unwatch()
 
-    expect(events.length).toBeGreaterThan(0)
     expect(events[0]?.name).toBe('Watch Create Token')
     expect(events[0]?.symbol).toBe('WATCHCREATE')
     expect(events[0]?.currency).toBe('USD')
     expect(events[0]?.admin).toBe(account.address)
-    unwatch()
   })
 })
 
@@ -1225,13 +1225,13 @@ describe('watchMint', () => {
       amount: parseUnits('100', 6),
     })
 
-    // Wait a bit for the event to be processed
-    await new Promise((resolve) => setTimeout(resolve, 500))
+    await vi.waitFor(() => {
+      expect(events.length).toBeGreaterThan(0)
+    })
+    unwatch()
 
-    expect(events.length).toBeGreaterThan(0)
     expect(events[0]?.to).toBe(account.address)
     expect(events[0]?.amount).toBe(parseUnits('100', 6))
-    unwatch()
   })
 })
 
@@ -1263,14 +1263,14 @@ describe('watchRole', () => {
       to: account2.address,
     })
 
-    // Wait for the specific event to be processed (creator gets roles during creation)
-    await new Promise((resolve) => setTimeout(resolve, 500))
+    await vi.waitFor(() => {
+      expect(events.find((e) => e.account === account2.address)).toBeDefined()
+    })
+    unwatch()
 
     const event = events.find((e) => e.account === account2.address)
-    expect(event).toBeDefined()
     expect(event?.hasRole).toBe(true)
     expect(event?.type).toBe('granted')
-    unwatch()
   })
 })
 
@@ -1295,13 +1295,13 @@ describe('watchTransfer', () => {
       token: addresses.alphaUsd,
     })
 
-    // Wait a bit for the event to be processed
-    await new Promise((resolve) => setTimeout(resolve, 500))
+    await vi.waitFor(() => {
+      expect(events.length).toBeGreaterThan(0)
+    })
+    unwatch()
 
-    expect(events.length).toBeGreaterThan(0)
     expect(events[0]?.from).toBe(account.address)
     expect(events[0]?.to).toBe(account2.address)
     expect(events[0]?.amount).toBe(parseUnits('5', 6))
-    unwatch()
   })
 })
