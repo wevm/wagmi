@@ -1,8 +1,8 @@
 import { connect, disconnect } from '@wagmi/core'
 import { parseUnits } from 'viem'
 import { Actions, Addresses } from 'viem/tempo'
-import { afterAll, beforeAll, beforeEach, vi } from 'vitest'
-import { accounts, config, rpcUrl } from './config.js'
+import { beforeAll, beforeEach, vi } from 'vitest'
+import { accounts, config } from './config.js'
 
 // @ts-expect-error
 BigInt.prototype.toJSON = function () {
@@ -44,10 +44,6 @@ beforeEach(async () => {
   vi.spyOn(Date, 'now').mockReturnValue(
     new Date(Date.UTC(2023, 1, 1)).valueOf(),
   )
-})
-
-afterAll(async () => {
-  await fetch(`${rpcUrl}/stop`)
 })
 
 vi.mock('../src/version.ts', () => {

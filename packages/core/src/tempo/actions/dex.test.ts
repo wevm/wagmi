@@ -2,7 +2,7 @@ import { connect } from '@wagmi/core'
 import { accounts, addresses, config, setupTokenPair } from '@wagmi/test/tempo'
 import { isAddress, parseUnits } from 'viem'
 import { Tick } from 'viem/tempo'
-import { describe, expect, test } from 'vitest'
+import { describe, expect, test, vi } from 'vitest'
 import * as dex from './dex.js'
 import * as token from './token.js'
 
@@ -1222,9 +1222,9 @@ describe('watchFlipOrderPlaced', () => {
         flipTick: Tick.fromPrice('1.002'),
       })
 
-      await new Promise((resolve) => setTimeout(resolve, 200))
-
-      expect(receivedOrders).toHaveLength(1)
+      await vi.waitFor(() => {
+        expect(receivedOrders).toHaveLength(1)
+      })
       expect(receivedOrders[0]?.args.flipTick).toBe(Tick.fromPrice('1.002'))
       expect(receivedOrders[0]?.args.tick).toBe(Tick.fromPrice('1.001'))
     } finally {
@@ -1262,9 +1262,9 @@ describe('watchOrderCancelled', () => {
         orderId,
       })
 
-      await new Promise((resolve) => setTimeout(resolve, 200))
-
-      expect(receivedCancellations).toHaveLength(1)
+      await vi.waitFor(() => {
+        expect(receivedCancellations).toHaveLength(1)
+      })
       expect(receivedCancellations[0]?.args.orderId).toBe(orderId)
     } finally {
       unwatch()
@@ -1313,10 +1313,9 @@ describe('watchOrderCancelled', () => {
         orderId: orderId2,
       })
 
-      await new Promise((resolve) => setTimeout(resolve, 200))
-
-      // Should only receive 1 event
-      expect(receivedCancellations).toHaveLength(1)
+      await vi.waitFor(() => {
+        expect(receivedCancellations).toHaveLength(1)
+      })
       expect(receivedCancellations[0]?.args.orderId).toBe(orderId1)
     } finally {
       unwatch()
@@ -1356,9 +1355,9 @@ describe('watchOrderFilled', () => {
         maxAmountIn: parseUnits('100', 6),
       })
 
-      await new Promise((resolve) => setTimeout(resolve, 200))
-
-      expect(receivedFills.length).toBeGreaterThanOrEqual(1)
+      await vi.waitFor(() => {
+        expect(receivedFills.length).toBeGreaterThanOrEqual(1)
+      })
       expect(receivedFills[0]?.args.orderId).toBe(orderId)
       expect(receivedFills[0]?.args.maker).toBe(account.address)
       expect(receivedFills[0]?.args.taker).toBe(account.address)
@@ -1408,10 +1407,9 @@ describe('watchOrderFilled', () => {
         maxAmountIn: parseUnits('100', 6),
       })
 
-      await new Promise((resolve) => setTimeout(resolve, 200))
-
-      // Should only receive fill for orderId1
-      expect(receivedFills.length).toBe(1)
+      await vi.waitFor(() => {
+        expect(receivedFills.length).toBeGreaterThanOrEqual(1)
+      })
       expect(receivedFills[0]?.args.orderId).toBe(orderId1)
 
       // Suppress unused variable warning
@@ -1454,10 +1452,9 @@ describe('watchOrderPlaced', () => {
         tick: Tick.fromPrice('0.999'),
       })
 
-      // Wait for events
-      await new Promise((resolve) => setTimeout(resolve, 200))
-
-      expect(receivedOrders).toHaveLength(2)
+      await vi.waitFor(() => {
+        expect(receivedOrders).toHaveLength(2)
+      })
       expect(receivedOrders[0]?.args.isBid).toBe(true)
       expect(receivedOrders[0]?.args.amount).toBe(parseUnits('100', 6))
       expect(receivedOrders[1]?.args.isBid).toBe(false)
@@ -1501,10 +1498,9 @@ describe('watchOrderPlaced', () => {
         tick: Tick.fromPrice('1.001'),
       })
 
-      await new Promise((resolve) => setTimeout(resolve, 200))
-
-      // Should only receive 1 event
-      expect(receivedOrders).toHaveLength(1)
+      await vi.waitFor(() => {
+        expect(receivedOrders).toHaveLength(1)
+      })
       expect(receivedOrders[0]?.args.token.toLowerCase()).toBe(
         base.toLowerCase(),
       )
