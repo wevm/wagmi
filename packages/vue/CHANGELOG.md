@@ -1,5 +1,17 @@
 # @wagmi/vue
 
+## 0.5.0
+
+### Minor Changes
+
+- Added `useSignTransaction` ([#4995](https://github.com/wevm/wagmi/pull/4995))
+
+### Patch Changes
+
+- Updated dependencies [[`8b96e2f`](https://github.com/wevm/wagmi/commit/8b96e2f46d9b3441d3b499b03924700ac0629be6)]:
+  - @wagmi/core@3.4.0
+  - @wagmi/connectors@8.0.0
+
 ## 0.4.17
 
 ### Patch Changes

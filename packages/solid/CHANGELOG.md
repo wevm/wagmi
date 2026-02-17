@@ -1,5 +1,15 @@
 # @wagmi/solid
 
+## 0.0.4
+
+### Patch Changes
+
+- Updated query entrypoint exports ([#4995](https://github.com/wevm/wagmi/pull/4995))
+
+- Updated dependencies [[`8b96e2f`](https://github.com/wevm/wagmi/commit/8b96e2f46d9b3441d3b499b03924700ac0629be6)]:
+  - @wagmi/core@3.4.0
+  - @wagmi/connectors@8.0.0
+
 ## 0.0.3
 
 ### Patch Changes
