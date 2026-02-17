@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 3.4.0
+
+### Minor Changes
+
+- Added `signTransaction` action ([#4995](https://github.com/wevm/wagmi/pull/4995))
+
 ## 3.3.4
 
 ### Patch Changes
