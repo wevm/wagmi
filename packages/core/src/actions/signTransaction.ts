@@ -9,7 +9,6 @@ import type {
   SignTransactionReturnType as viem_SignTransactionReturnType,
 } from 'viem'
 import { signTransaction as viem_signTransaction } from 'viem/actions'
-
 import type { Config } from '../createConfig.js'
 import type { BaseErrorType, ErrorType } from '../errors/base.js'
 import type { SelectChains } from '../types/chain.js'
@@ -17,7 +16,7 @@ import type {
   ChainIdParameter,
   ConnectorParameter,
 } from '../types/properties.js'
-import type { Compute } from '../types/utils.js'
+import type { UnionCompute, UnionLooseOmit } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
 import {
   type GetConnectorClientErrorType,
@@ -38,23 +37,25 @@ export type SignTransactionParameters<
   //
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = {
-  [key in keyof chains]: Compute<
-    Omit<
+  [key in keyof chains]: UnionCompute<
+    UnionLooseOmit<
       viem_SignTransactionParameters<
         chains[key],
         Account,
         chains[key],
-        request
+        request extends viem_SignTransactionRequest<chains[key], chains[key]>
+          ? request
+          : never
       >,
       'chain' | 'gas'
     > &
       ChainIdParameter<config, chainId> &
-      ConnectorParameter
+      ConnectorParameter & {
+        /** Gas provided for transaction execution. */
+        gas?: TransactionRequest['gas'] | null
+      }
   >
-}[number] & {
-  /** Gas provided for transaction execution. */
-  gas?: TransactionRequest['gas'] | null
-}
+}[number]
 
 export type SignTransactionReturnType<
   config extends Config = Config,
@@ -82,13 +83,13 @@ export type SignTransactionErrorType =
 export async function signTransaction<
   config extends Config,
   chainId extends config['chains'][number]['id'],
-  request extends viem_SignTransactionRequest<
+  const request extends viem_SignTransactionRequest<
     SelectChains<config, chainId>[0],
     SelectChains<config, chainId>[0]
   >,
 >(
   config: config,
-  parameters: SignTransactionParameters<config, chainId, request>,
+  parameters: SignTransactionParameters<config, chainId, request> & request,
 ): Promise<SignTransactionReturnType<config, chainId, request>> {
   const { account, chainId, connector, ...rest } = parameters
 

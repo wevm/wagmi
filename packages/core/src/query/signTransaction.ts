@@ -41,7 +41,7 @@ export function signTransactionMutationOptions<
   return {
     ...(options.mutation as any),
     mutationFn(variables) {
-      return signTransaction(config, variables)
+      return signTransaction(config, variables as any)
     },
     mutationKey: ['signTransaction'],
   }
@@ -81,12 +81,12 @@ export type SignTransactionVariables<
 
 export type SignTransactionMutate<config extends Config, context = unknown> = <
   chainId extends config['chains'][number]['id'],
-  request extends viem_SignTransactionRequest<
+  const request extends viem_SignTransactionRequest<
     SelectChains<config, chainId>[0],
     SelectChains<config, chainId>[0]
   >,
 >(
-  variables: SignTransactionVariables<config, chainId, request>,
+  variables: SignTransactionVariables<config, chainId, request> & request,
   options?:
     | Compute<
         MutateOptions<
@@ -104,12 +104,12 @@ export type SignTransactionMutateAsync<
   context = unknown,
 > = <
   chainId extends config['chains'][number]['id'],
-  request extends viem_SignTransactionRequest<
+  const request extends viem_SignTransactionRequest<
     SelectChains<config, chainId>[0],
     SelectChains<config, chainId>[0]
   >,
 >(
-  variables: SignTransactionVariables<config, chainId, request>,
+  variables: SignTransactionVariables<config, chainId, request> & request,
   options?:
     | Compute<
         MutateOptions<
