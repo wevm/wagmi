@@ -7,7 +7,7 @@ import { useSignTransaction } from './useSignTransaction.js'
 const contextValue = { foo: 'bar' } as const
 
 test('context', () => {
-  const sendTransaction = useSignTransaction({
+  const signTransaction = useSignTransaction({
     mutation: {
       onMutate(variables) {
         expectTypeOf(variables).toMatchTypeOf<
@@ -40,18 +40,18 @@ test('context', () => {
     },
   })
 
-  expectTypeOf(sendTransaction.data.value).toMatchTypeOf<Hash | undefined>()
+  expectTypeOf(signTransaction.data.value).toMatchTypeOf<Hash | undefined>()
   expectTypeOf(
-    sendTransaction.error.value,
+    signTransaction.error.value,
   ).toEqualTypeOf<SignTransactionErrorType | null>()
-  expectTypeOf(sendTransaction.variables.value).toMatchTypeOf<
+  expectTypeOf(signTransaction.variables.value).toMatchTypeOf<
     { chainId?: number | undefined } | undefined
   >()
-  expectTypeOf(sendTransaction.context.value).toEqualTypeOf<
+  expectTypeOf(signTransaction.context.value).toEqualTypeOf<
     typeof contextValue | undefined
   >()
 
-  sendTransaction.mutate(
+  signTransaction.mutate(
     { to: '0x' },
     {
       onError(error, variables, context) {

@@ -109,7 +109,7 @@ export async function signTransaction<
   })()
 
   const action = getAction(client, viem_signTransaction, 'signTransaction')
-  const hash = await action({
+  const serializedTransaction = await action({
     ...(rest as any),
     ...(account ? { account } : {}),
     assertChainId: !!chainId,
@@ -117,5 +117,5 @@ export async function signTransaction<
     gas: rest.gas ?? undefined,
   })
 
-  return hash as any
+  return serializedTransaction as any
 }

@@ -15,7 +15,7 @@ const TVariables = 'SignTransactionVariables'
 
 # useSignTransaction
 
-Composable for creating, signing, and signing transactions to networks.
+Composable for signing transactions.
 
 ## Import
 
