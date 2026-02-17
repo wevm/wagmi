@@ -1,6 +1,6 @@
 # @wagmi/connectors
 
-## 8.0.0
+## 7.2.1
 
 ### Patch Changes
 
