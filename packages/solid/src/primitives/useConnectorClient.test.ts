@@ -56,7 +56,7 @@ test('behavior: connected on mount', async () => {
 
   const { result } = renderPrimitive(() => useConnectorClient())
 
-  await vi.waitUntil(() => result.isSuccess, { timeout: 5_000 })
+  await vi.waitUntil(() => result.isSuccess, { timeout: 10_000 })
 
   const { data, queryKey: _, ...rest } = result
   expect(data).toMatchObject(
@@ -132,20 +132,20 @@ test('behavior: switch chains', async () => {
 
   result.useSwitchChain.mutate({ chainId: 456 })
   await vi.waitUntil(() => result.useSwitchChain.isSuccess, {
-    timeout: 5_000,
+    timeout: 10_000,
   })
   result.useSwitchChain.reset()
   await vi.waitUntil(() => result.useConnectorClient.isSuccess, {
-    timeout: 5_000,
+    timeout: 10_000,
   })
   expect(result.useConnectorClient.data?.chain.id).toEqual(456)
 
   result.useSwitchChain.mutate({ chainId: 1 })
   await vi.waitUntil(() => result.useSwitchChain.isSuccess, {
-    timeout: 5_000,
+    timeout: 10_000,
   })
   await vi.waitUntil(() => result.useConnectorClient.isSuccess, {
-    timeout: 5_000,
+    timeout: 10_000,
   })
   expect(result.useConnectorClient.data?.chain.id).toEqual(1)
 

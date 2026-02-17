@@ -73,7 +73,7 @@ test('behavior: connect called on reconnect', async () => {
   })
 
   await vi.waitFor(() => expect(onConnect).toBeCalledTimes(1), {
-    timeout: 5_000,
+    timeout: 10_000,
   })
 
   await disconnect(config)

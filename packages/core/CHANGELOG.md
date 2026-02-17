@@ -1,5 +1,17 @@
 # @wagmi/core
 
+## 3.3.4
+
+### Patch Changes
+
+- Added credential fast path to `webAuthn` connector — pass `capabilities.credential` directly to skip the WebAuthn ceremony when the credential is already known. ([#5005](https://github.com/wevm/wagmi/pull/5005))
+
+## 3.3.3
+
+### Patch Changes
+
+- Added ability to sign arbitrary `hash` on `webAuthn#connect`. ([#4994](https://github.com/wevm/wagmi/pull/4994))
+
 ## 3.3.2
 
 ### Patch Changes

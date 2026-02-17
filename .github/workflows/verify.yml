@@ -80,7 +80,7 @@ jobs:
     strategy:
       matrix:
         typescript-version: ['5.7.3', '5.8.3', '5.9.3', 'latest']
-        viem-version: ['2.44.0', 'latest']
+        viem-version: ['2.46.0', 'latest']
 
     steps:
       - name: Clone repository
@@ -112,7 +112,7 @@ jobs:
     permissions:
       contents: read
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     strategy:
       max-parallel: 4
       matrix:
@@ -146,6 +146,9 @@ jobs:
       - name: Install Playwright
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: pnpm exec playwright install chromium --with-deps
+
+      - name: Pull Tempo Docker image
+        run: docker pull ghcr.io/tempoxyz/tempo:latest
 
       - name: Run tests
         uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08

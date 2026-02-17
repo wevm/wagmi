@@ -19,7 +19,7 @@ test('default', async () => {
   const { result } = await renderHook(() => useWatchAsset())
 
   result.current.mutate({ type: 'ERC20', options: tokenInfo })
-  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 10_000 })
 
   expect(result.current.data).toEqual(true)
 

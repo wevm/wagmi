@@ -349,7 +349,7 @@ describe('useData', () => {
       { initialProps: { policyId: undefined as bigint | undefined } },
     )
 
-    await vi.waitFor(() => result.current.fetchStatus === 'fetching')
+    await vi.waitFor(() => expect(result.current.fetchStatus).toBe('idle'))
 
     // Should be disabled when policyId is undefined
     expect(result.current.data).toBeUndefined()
@@ -457,7 +457,7 @@ describe('useIsAuthorized', () => {
       },
     )
 
-    await vi.waitFor(() => result.current.fetchStatus === 'fetching')
+    await vi.waitFor(() => expect(result.current.fetchStatus).toBe('idle'))
 
     // Should be disabled when parameters are undefined
     expect(result.current.data).toBeUndefined()

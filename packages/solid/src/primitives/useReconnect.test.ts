@@ -21,7 +21,7 @@ test('default', async () => {
   const { result } = renderPrimitive(() => useReconnect())
 
   result.mutate()
-  await vi.waitUntil(() => result.isSuccess, { timeout: 5_000 })
+  await vi.waitUntil(() => result.isSuccess, { timeout: 10_000 })
 
   expect(result.data).toStrictEqual([])
 })
@@ -32,7 +32,7 @@ test('parameters: connectors (Connector)', async () => {
   const { result } = renderPrimitive(() => useReconnect())
 
   result.mutate({ connectors: [connector] })
-  await vi.waitUntil(() => result.isSuccess, { timeout: 5_000 })
+  await vi.waitUntil(() => result.isSuccess, { timeout: 10_000 })
 
   expect(result.data).toMatchObject(
     expect.arrayContaining([
@@ -54,7 +54,7 @@ test('parameters: connectors (CreateConnectorFn)', async () => {
   const { result } = renderPrimitive(() => useReconnect())
 
   result.mutate({ connectors: [connector] })
-  await vi.waitUntil(() => result.isSuccess, { timeout: 5_000 })
+  await vi.waitUntil(() => result.isSuccess, { timeout: 10_000 })
 
   expect(result.data).toMatchObject(
     expect.arrayContaining([

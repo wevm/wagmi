@@ -224,7 +224,7 @@ describe('useBalance', () => {
       { initialProps: { account: undefined as Address | undefined } },
     )
 
-    await vi.waitFor(() => result.current.fetchStatus === 'fetching')
+    await vi.waitFor(() => expect(result.current.fetchStatus).toBe('idle'))
 
     // Verify initial state (disabled/pending when account missing)
     expect(result.current.status).toBe('pending')

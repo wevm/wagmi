@@ -148,7 +148,7 @@ export async function connect<
           )
         : data.accounts) as never,
       chainId: data.chainId,
-    }
+    } as never
   } catch (error) {
     config.setState((x) => ({
       ...x,

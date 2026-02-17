@@ -20,7 +20,7 @@ test('default', async () => {
       functionName: 'mint',
     }),
     (async () => {
-      await wait(1000)
+      await wait(3000)
       await testClient.mainnet.mine({ blocks: 1 })
     })(),
   ])

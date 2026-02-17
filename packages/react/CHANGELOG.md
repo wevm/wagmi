@@ -1,5 +1,23 @@
 # wagmi
 
+## 3.4.4
+
+### Patch Changes
+
+- Updated dependencies [[`c1dedd9`](https://github.com/wevm/wagmi/commit/c1dedd99c0a1878d7cd48476946868636ac81dd8), [`9dbdd82`](https://github.com/wevm/wagmi/commit/9dbdd8277808eb361fe7fe01ea34e4c6bb85c7a5)]:
+  - @wagmi/core@3.3.4
+  - @wagmi/connectors@7.2.0
+
+## 3.4.3
+
+### Patch Changes
+
+- Added ability to sign arbitrary `hash` on `webAuthn#connect`. ([#4994](https://github.com/wevm/wagmi/pull/4994))
+
+- Updated dependencies [[`4b3f5a3`](https://github.com/wevm/wagmi/commit/4b3f5a3f7b3f242e8fbc1f08ae2f81ae13c5e09f)]:
+  - @wagmi/core@3.3.3
+  - @wagmi/connectors@7.1.7
+
 ## 3.4.2
 
 ### Patch Changes

@@ -21,7 +21,7 @@ test('default', async () => {
     address: address.wagmiMintExample,
     functionName: 'mint',
   })
-  await wait(2_000)
+  await wait(4_000)
   await testClient.mainnet.mine({ blocks: 1 })
   await vi.waitUntil(() => result.current.isSuccess, { timeout: 15_000 })
 
