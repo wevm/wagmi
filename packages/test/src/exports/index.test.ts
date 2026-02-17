@@ -22,6 +22,7 @@ test('exports', () => {
       "typedData",
       "walletConnectProjectId",
       "addressRegex",
+      "signedTransactionRegex",
       "transactionHashRegex",
       "wait",
     ]
