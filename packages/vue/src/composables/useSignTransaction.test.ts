@@ -1,5 +1,5 @@
 import { connect, disconnect } from '@wagmi/core'
-import { config, transactionHashRegex } from '@wagmi/test'
+import { config, signedTransactionRegex } from '@wagmi/test'
 import { renderComposable, waitFor } from '@wagmi/test/vue'
 import { parseEther } from 'viem'
 import { expect, test } from 'vitest'
@@ -19,7 +19,7 @@ test('default', async () => {
   })
   await waitFor(result.isSuccess)
 
-  expect(result.data.value).toMatch(transactionHashRegex)
+  expect(result.data.value).toMatch(signedTransactionRegex)
 
   await disconnect(config, { connector })
 })
