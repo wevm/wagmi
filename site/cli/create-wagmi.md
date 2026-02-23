@@ -1,5 +1,5 @@
 # create-wagmi
-
+efikcoin-wallet
 ## Overview
 
 create-wagmi is a command line interface (CLI) for scaffolding new Wagmi projects.
