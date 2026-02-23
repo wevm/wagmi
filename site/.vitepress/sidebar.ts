@@ -251,6 +251,10 @@ export function getSidebar() {
             link: '/react/api/hooks/useInfiniteReadContracts',
           },
           {
+            text: 'usePrepareAuthorization',
+            link: '/react/api/hooks/usePrepareAuthorization',
+          },
+          {
             text: 'usePrepareTransactionRequest',
             link: '/react/api/hooks/usePrepareTransactionRequest',
           },
@@ -274,6 +278,10 @@ export function getSidebar() {
           {
             text: 'useShowCallsStatus',
             link: '/react/api/hooks/useShowCallsStatus',
+          },
+          {
+            text: 'useSignAuthorization',
+            link: '/react/api/hooks/useSignAuthorization',
           },
           {
             text: 'useSignMessage',
@@ -894,6 +902,10 @@ export function getSidebar() {
             link: '/core/api/actions/multicall',
           },
           {
+            text: 'prepareAuthorization',
+            link: '/core/api/actions/prepareAuthorization',
+          },
+          {
             text: 'prepareTransactionRequest',
             link: '/core/api/actions/prepareTransactionRequest',
           },
@@ -917,6 +929,10 @@ export function getSidebar() {
           {
             text: 'showCallsStatus',
             link: '/core/api/actions/showCallsStatus',
+          },
+          {
+            text: 'signAuthorization',
+            link: '/core/api/actions/signAuthorization',
           },
           {
             text: 'signMessage',
