@@ -52,6 +52,10 @@ export { useDisconnect } from '../primitives/useDisconnect.js'
 
 export { useReconnect } from '../primitives/useReconnect.js'
 
+export { useSimulateBlocks } from '../primitives/useSimulateBlocks.js'
+
+export { useSimulateCalls } from '../primitives/useSimulateCalls.js'
+
 export { useSwitchChain } from '../primitives/useSwitchChain.js'
 
 export { useSwitchConnection } from '../primitives/useSwitchConnection.js'
