@@ -264,6 +264,10 @@ export function getSidebar() {
           },
           { text: 'useReconnect', link: '/react/api/hooks/useReconnect' },
           {
+            text: 'useRequestPermissions',
+            link: '/react/api/hooks/useRequestPermissions',
+          },
+          {
             text: 'useSendCalls',
             link: '/react/api/hooks/useSendCalls',
           },
@@ -905,6 +909,10 @@ export function getSidebar() {
           {
             text: 'readContracts',
             link: '/core/api/actions/readContracts',
+          },
+          {
+            text: 'requestPermissions',
+            link: '/core/api/actions/requestPermissions',
           },
           {
             text: 'sendCalls',

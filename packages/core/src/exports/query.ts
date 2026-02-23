@@ -363,6 +363,16 @@ export {
 } from '../query/reconnect.js'
 
 export {
+  type RequestPermissionsData,
+  type RequestPermissionsMutate,
+  type RequestPermissionsMutateAsync,
+  type RequestPermissionsMutationOptions,
+  type RequestPermissionsOptions,
+  type RequestPermissionsVariables,
+  requestPermissionsMutationOptions,
+} from '../query/requestPermissions.js'
+
+export {
   type SendCallsData,
   type SendCallsMutate,
   type SendCallsMutateAsync,
