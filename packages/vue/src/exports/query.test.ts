@@ -7,6 +7,7 @@ test('exports', () => {
     [
       "useMutation",
       "useQuery",
+      "addChainMutationOptions",
       "callQueryKey",
       "callQueryOptions",
       "connectMutationOptions",
