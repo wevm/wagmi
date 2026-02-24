@@ -89,10 +89,6 @@ export function getSidebar() {
                 text: 'baseAccount',
                 link: '/react/api/connectors/baseAccount',
               },
-              {
-                text: 'gemini',
-                link: '/react/api/connectors/gemini',
-              },
               { text: 'injected', link: '/react/api/connectors/injected' },
               {
                 text: 'metaMask',
@@ -284,6 +280,10 @@ export function getSidebar() {
             link: '/react/api/hooks/useSignMessage',
           },
           {
+            text: 'useSignTransaction',
+            link: '/react/api/hooks/useSignTransaction',
+          },
+          {
             text: 'useSignTypedData',
             link: '/react/api/hooks/useSignTypedData',
           },
@@ -455,10 +455,6 @@ export function getSidebar() {
                 text: 'baseAccount',
                 link: '/vue/api/connectors/baseAccount',
               },
-              {
-                text: 'gemini',
-                link: '/vue/api/connectors/gemini',
-              },
               { text: 'injected', link: '/vue/api/connectors/injected' },
               {
                 text: 'metaMask',
@@ -582,6 +578,10 @@ export function getSidebar() {
           {
             text: 'useSignMessage',
             link: '/vue/api/composables/useSignMessage',
+          },
+          {
+            text: 'useSignTransaction',
+            link: '/vue/api/composables/useSignTransaction',
           },
           {
             text: 'useSignTypedData',
@@ -710,10 +710,6 @@ export function getSidebar() {
               {
                 text: 'baseAccount',
                 link: '/core/api/connectors/baseAccount',
-              },
-              {
-                text: 'gemini',
-                link: '/core/api/connectors/gemini',
               },
               { text: 'injected', link: '/core/api/connectors/injected' },
               {
@@ -1086,6 +1082,162 @@ export function getSidebar() {
       {
         text: 'create-wagmi',
         link: '/cli/create-wagmi',
+      },
+    ],
+    '/solid': [
+      {
+        text: 'Introduction',
+        items: [
+          { text: 'Why Wagmi', link: '/solid/why' },
+          { text: 'Installation', link: '/solid/installation' },
+          { text: 'Getting Started', link: '/solid/getting-started' },
+          { text: 'TypeScript', link: '/solid/typescript' },
+        ],
+      },
+      {
+        text: 'Guides',
+        items: [
+          {
+            text: 'TanStack Query',
+            link: '/solid/guides/tanstack-query',
+          },
+          {
+            text: 'Viem',
+            link: '/solid/guides/viem',
+          },
+          {
+            text: 'Error Handling',
+            link: '/solid/guides/error-handling',
+          },
+          {
+            text: 'Connect Wallet',
+            link: '/solid/guides/connect-wallet',
+          },
+        ],
+      },
+      {
+        text: 'Configuration',
+        items: [
+          { text: 'createConfig', link: '/solid/api/createConfig' },
+          { text: 'createStorage', link: '/solid/api/createStorage' },
+          { text: 'Chains', link: '/solid/api/chains' },
+          {
+            text: 'Connectors',
+            collapsed: true,
+            link: '/solid/api/connectors',
+            items: [
+              {
+                text: 'baseAccount',
+                link: '/solid/api/connectors/baseAccount',
+              },
+              { text: 'injected', link: '/solid/api/connectors/injected' },
+              {
+                text: 'metaMask',
+                link: '/solid/api/connectors/metaMask',
+              },
+              {
+                text: 'mock',
+                link: '/solid/api/connectors/mock',
+              },
+              {
+                text: 'porto',
+                link: '/solid/api/connectors/porto',
+              },
+              {
+                text: 'safe',
+                link: '/solid/api/connectors/safe',
+              },
+              {
+                text: 'walletConnect',
+                link: '/solid/api/connectors/walletConnect',
+              },
+            ],
+          },
+          {
+            text: 'Transports',
+            collapsed: true,
+            link: '/solid/api/transports',
+            items: [
+              {
+                text: 'custom (EIP-1193)',
+                link: '/solid/api/transports/custom',
+              },
+              {
+                text: 'fallback',
+                link: '/solid/api/transports/fallback',
+              },
+              {
+                text: 'http',
+                link: '/solid/api/transports/http',
+              },
+              {
+                text: 'webSocket',
+                link: '/solid/api/transports/webSocket',
+              },
+            ],
+          },
+          { text: 'WagmiProvider', link: '/solid/api/WagmiProvider' },
+        ],
+      },
+      {
+        text: 'Primitives',
+        link: '/solid/api/primitives',
+        items: [
+          { text: 'useBalance', link: '/solid/api/primitives/useBalance' },
+          {
+            text: 'useBlockNumber',
+            link: '/solid/api/primitives/useBlockNumber',
+          },
+          { text: 'useChainId', link: '/solid/api/primitives/useChainId' },
+          { text: 'useChains', link: '/solid/api/primitives/useChains' },
+          { text: 'useClient', link: '/solid/api/primitives/useClient' },
+          { text: 'useConfig', link: '/solid/api/primitives/useConfig' },
+          { text: 'useConnect', link: '/solid/api/primitives/useConnect' },
+          {
+            text: 'useConnection',
+            link: '/solid/api/primitives/useConnection',
+          },
+          {
+            text: 'useConnectionEffect',
+            link: '/solid/api/primitives/useConnectionEffect',
+          },
+          {
+            text: 'useConnections',
+            link: '/solid/api/primitives/useConnections',
+          },
+          {
+            text: 'useConnectorClient',
+            link: '/solid/api/primitives/useConnectorClient',
+          },
+          {
+            text: 'useConnectors',
+            link: '/solid/api/primitives/useConnectors',
+          },
+          {
+            text: 'useDisconnect',
+            link: '/solid/api/primitives/useDisconnect',
+          },
+          { text: 'useReconnect', link: '/solid/api/primitives/useReconnect' },
+          {
+            text: 'useSwitchChain',
+            link: '/solid/api/primitives/useSwitchChain',
+          },
+          {
+            text: 'useSwitchConnection',
+            link: '/solid/api/primitives/useSwitchConnection',
+          },
+          {
+            text: 'useWatchBlockNumber',
+            link: '/solid/api/primitives/useWatchBlockNumber',
+          },
+        ],
+      },
+      {
+        text: 'Miscellaneous',
+        items: [
+          { text: 'Actions', link: '/solid/api/actions' },
+          { text: 'Errors', link: '/solid/api/errors' },
+        ],
       },
     ],
     '/dev': [

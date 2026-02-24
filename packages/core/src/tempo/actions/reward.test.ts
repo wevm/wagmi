@@ -1,7 +1,7 @@
 import { getConnection } from '@wagmi/core'
 import { config, queryClient, setupToken } from '@wagmi/test/tempo'
 import { parseUnits } from 'viem'
-import { describe, expect, test } from 'vitest'
+import { describe, expect, test, vi } from 'vitest'
 import * as actions from './reward.js'
 import * as tokenActions from './token.js'
 
@@ -177,12 +177,13 @@ describe('watchRewardDistributed', () => {
       token,
     })
 
-    await new Promise((resolve) => setTimeout(resolve, 500))
+    await vi.waitFor(() => {
+      expect(events.length).toBeGreaterThan(0)
+    })
+    unwatch()
 
-    expect(events.length).toBeGreaterThan(0)
     expect(events[0]?.amount).toBe(rewardAmount)
     expect(events[0]?.funder).toBe(connection.address)
-    unwatch()
   })
 })
 
@@ -205,11 +206,12 @@ describe('watchRewardRecipientSet', () => {
       token,
     })
 
-    await new Promise((resolve) => setTimeout(resolve, 500))
+    await vi.waitFor(() => {
+      expect(events.length).toBeGreaterThan(0)
+    })
+    unwatch()
 
-    expect(events.length).toBeGreaterThan(0)
     expect(events[0]?.holder).toBe(account.address)
     expect(events[0]?.recipient).toBe(account.address)
-    unwatch()
   })
 })

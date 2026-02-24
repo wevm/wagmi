@@ -10,6 +10,7 @@ import { useWaitForCallsStatus } from './useWaitForCallsStatus.js'
 const connector = config.connectors[0]!
 
 test('default', async () => {
+  await disconnect(config, { connector }).catch(() => {})
   await connect(config, { connector })
 
   const useSendCalls_render = await renderHook(() => useSendCalls())
@@ -45,7 +46,7 @@ test('default', async () => {
     'fetching',
   )
 
-  await wait(0)
+  await wait(1_000)
   await testClient.mainnet.mine({ blocks: 1 })
 
   await vi.waitUntil(

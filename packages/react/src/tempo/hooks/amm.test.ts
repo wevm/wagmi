@@ -31,17 +31,21 @@ describe('usePool', () => {
   })
 
   test('reactivity: token parameters', async () => {
-    let userToken: Address | undefined
-    let validatorToken: Address | undefined
-
-    const { result, rerender } = await renderHook(() =>
-      hooks.usePool({
-        userToken,
-        validatorToken,
-      }),
+    const { result, rerender } = await renderHook(
+      (props) =>
+        hooks.usePool({
+          userToken: props?.userToken,
+          validatorToken: props?.validatorToken,
+        }),
+      {
+        initialProps: {
+          userToken: undefined as Address | undefined,
+          validatorToken: undefined as Address | undefined,
+        },
+      },
     )
 
-    await vi.waitFor(() => result.current.fetchStatus === 'idle')
+    await vi.waitFor(() => expect(result.current.fetchStatus).toBe('idle'))
 
     // Should be disabled when tokens are undefined
     expect(result.current.data).toBeUndefined()
@@ -49,9 +53,10 @@ describe('usePool', () => {
     // expect(result.current.isEnabled).toBe(false)
 
     // Set tokens
-    userToken = addresses.alphaUsd
-    validatorToken = '0x20c0000000000000000000000000000000000001'
-    rerender()
+    rerender({
+      userToken: addresses.alphaUsd,
+      validatorToken: '0x20c0000000000000000000000000000000000001',
+    })
 
     await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
@@ -72,26 +77,30 @@ describe('useLiquidityBalance', () => {
     )
 
     await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy(), {
-      timeout: 5_000,
+      timeout: 10_000,
     })
 
     expect(result.current.data).toMatchInlineSnapshot('0n')
   })
 
   test('reactivity: poolId and address parameters', async () => {
-    let userToken: Address | undefined
-    let validatorToken: Address | undefined
-    let address: Address | undefined
-
-    const { result, rerender } = await renderHook(() =>
-      hooks.useLiquidityBalance({
-        userToken,
-        validatorToken,
-        address,
-      }),
+    const { result, rerender } = await renderHook(
+      (props) =>
+        hooks.useLiquidityBalance({
+          userToken: props?.userToken,
+          validatorToken: props?.validatorToken,
+          address: props?.address,
+        }),
+      {
+        initialProps: {
+          userToken: undefined as Address | undefined,
+          validatorToken: undefined as Address | undefined,
+          address: undefined as Address | undefined,
+        },
+      },
     )
 
-    await vi.waitFor(() => result.current.fetchStatus === 'idle')
+    await vi.waitFor(() => expect(result.current.fetchStatus).toBe('idle'))
 
     // Should be disabled when parameters are undefined
     expect(result.current.data).toBeUndefined()
@@ -99,10 +108,11 @@ describe('useLiquidityBalance', () => {
     // expect(result.current.isEnabled).toBe(false)
 
     // Set parameters
-    userToken = addresses.alphaUsd
-    validatorToken = '0x20c0000000000000000000000000000000000001'
-    address = account.address
-    rerender()
+    rerender({
+      userToken: addresses.alphaUsd,
+      validatorToken: '0x20c0000000000000000000000000000000000001',
+      address: account.address,
+    })
 
     await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 

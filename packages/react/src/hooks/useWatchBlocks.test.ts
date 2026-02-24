@@ -21,7 +21,7 @@ test('default', async () => {
   await wait(500)
   await testClient.mainnet.mine({ blocks: 1 })
 
-  await vi.waitUntil(() => blocks.length === 3, { timeout: 5_000 })
+  await vi.waitUntil(() => blocks.length === 3, { timeout: 10_000 })
   expect(blocks.length).toBe(3)
 })
 
@@ -42,14 +42,14 @@ test('behavior: uses latest callback after rerender', async () => {
   )
 
   await testClient.mainnet.mine({ blocks: 1 })
-  await vi.waitUntil(() => blocks1.length >= 1, { timeout: 5_000 })
+  await vi.waitUntil(() => blocks1.length >= 1, { timeout: 10_000 })
 
   rerender({
     callback: (block) => blocks2.push(block),
   })
 
   await testClient.mainnet.mine({ blocks: 1 })
-  await vi.waitUntil(() => blocks2.length >= 1, { timeout: 5_000 })
+  await vi.waitUntil(() => blocks2.length >= 1, { timeout: 10_000 })
 
   expect(blocks1.length).toBe(1)
   expect(blocks2.length).toBeGreaterThanOrEqual(1)

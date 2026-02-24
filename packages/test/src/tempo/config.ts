@@ -16,6 +16,7 @@ import {
 } from 'viem'
 import { sendTransactionSync } from 'viem/actions'
 import { Actions, Addresses, Tick, Account as tempo_Account } from 'viem/tempo'
+import { vi } from 'vitest'
 import {
   type RenderHookOptions,
   type RenderHookResult,
@@ -104,18 +105,24 @@ export async function restart() {
       connector: config.connectors[0]!,
     })
   const client = config.getClient()
+
+  // Temporarily restore real Date.now so viem calculates a valid validBefore timestamp.
+  if ((Date.now as any).mockRestore) (Date.now as any).mockRestore()
   await Promise.all(
     [1n, 2n, 3n].map((id) =>
       Actions.amm.mintSync(client, {
         account: accounts[0],
         feeToken: Addresses.pathUsd,
-        nonceKey: 'random',
+        nonceKey: 'expiring',
         userTokenAddress: id,
         validatorTokenAddress: Addresses.pathUsd,
         validatorTokenAmount: parseUnits('1000', 6),
         to: accounts[0].address,
       }),
     ),
+  )
+  vi.spyOn(Date, 'now').mockReturnValue(
+    new Date(Date.UTC(2023, 1, 1)).valueOf(),
   )
 }
 

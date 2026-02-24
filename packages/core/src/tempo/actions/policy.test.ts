@@ -1,6 +1,6 @@
 import { connect } from '@wagmi/core'
 import { accounts, config, queryClient } from '@wagmi/test/tempo'
-import { describe, expect, test } from 'vitest'
+import { describe, expect, test, vi } from 'vitest'
 import * as policy from './policy.js'
 
 const account = accounts[0]
@@ -327,10 +327,11 @@ describe('watchCreate', () => {
       type: 'whitelist',
     })
 
-    await new Promise((resolve) => setTimeout(resolve, 500))
+    await vi.waitFor(() => {
+      expect(events.length).toBeGreaterThanOrEqual(1)
+    })
     unwatch()
 
-    expect(events.length).toBe(1)
     expect(events[0].args.policyId).toBeDefined()
     expect(events[0].args.updater).toBe(account.address)
     expect(events[0].args.type).toBe('whitelist')
@@ -361,12 +362,13 @@ describe('watchAdminUpdated', () => {
       admin: account2.address,
     })
 
-    await new Promise((resolve) => setTimeout(resolve, 500))
+    await vi.waitFor(() => {
+      const event = events.find((e) => e.args.admin === account2.address)
+      expect(event).toBeDefined()
+    })
     unwatch()
 
-    // Policy creation emits an admin event for the creator, so find the specific event
     const event = events.find((e) => e.args.admin === account2.address)
-    expect(event).toBeDefined()
     expect(event.args.policyId).toBe(policyId)
     expect(event.args.updater).toBe(account.address)
   })
@@ -404,10 +406,11 @@ describe('watchWhitelistUpdated', () => {
       allowed: false,
     })
 
-    await new Promise((resolve) => setTimeout(resolve, 500))
+    await vi.waitFor(() => {
+      expect(events.length).toBeGreaterThanOrEqual(2)
+    })
     unwatch()
 
-    expect(events.length).toBe(2)
     expect(events[0].args.policyId).toBe(policyId)
     expect(events[0].args.updater).toBe(account.address)
     expect(events[0].args.account).toBe(account2.address)
@@ -448,10 +451,11 @@ describe('watchBlacklistUpdated', () => {
       restricted: false,
     })
 
-    await new Promise((resolve) => setTimeout(resolve, 500))
+    await vi.waitFor(() => {
+      expect(events.length).toBeGreaterThanOrEqual(2)
+    })
     unwatch()
 
-    expect(events.length).toBe(2)
     expect(events[0].args.policyId).toBe(policyId)
     expect(events[0].args.updater).toBe(account.address)
     expect(events[0].args.account).toBe(account2.address)

@@ -55,7 +55,7 @@ export function webAuthn(options: webAuthn.Parameters) {
     connect<withCapabilities extends boolean = false>(parameters: {
       chainId?: number | undefined
       capabilities?:
-        | OneOf<
+        | (OneOf<
             | {
                 label?: string | undefined
                 type: 'sign-up'
@@ -67,11 +67,26 @@ export function webAuthn(options: webAuthn.Parameters) {
             | {
                 type?: undefined
               }
-          >
+          > & {
+            credential?: { id: string; publicKey: Hex.Hex } | undefined
+            sign?:
+              | {
+                  hash: Hex.Hex
+                }
+              | undefined
+          })
         | undefined
       isReconnecting?: boolean | undefined
       withCapabilities?: withCapabilities | boolean | undefined
-    }): Promise<{ accounts: readonly Address.Address[]; chainId: number }>
+    }): Promise<{
+      accounts: withCapabilities extends true
+        ? readonly {
+            address: Address.Address
+            capabilities: { signature?: Hex.Hex | undefined }
+          }[]
+        : readonly Address.Address[]
+      chainId: number
+    }>
   }
   type Provider = Pick<EIP1193Provider, 'request'>
   type StorageItem = {
@@ -98,6 +113,34 @@ export function webAuthn(options: webAuthn.Parameters) {
     async connect(parameters = {}) {
       const capabilities =
         'capabilities' in parameters ? (parameters.capabilities ?? {}) : {}
+      const signHash =
+        'sign' in capabilities ? capabilities.sign?.hash : undefined
+
+      // Fast path: if a credential is provided directly, use it.
+      if ('credential' in capabilities && capabilities.credential) {
+        const credential =
+          capabilities.credential as WebAuthnP256.P256Credential
+        config.storage?.setItem(
+          'webAuthn.activeCredential',
+          normalizeValue(credential),
+        )
+        config.storage?.setItem(
+          'webAuthn.lastActiveCredential',
+          normalizeValue(credential),
+        )
+        account = Account.fromWebAuthnP256(credential, {
+          rpId: options.getOptions?.rpId ?? options.rpId,
+        })
+        const address = getAddress(account.address)
+        const chainId = parameters.chainId ?? config.chains[0]?.id
+        if (!chainId) throw new ChainNotConfiguredError()
+        return {
+          accounts: (parameters.withCapabilities
+            ? [{ address }]
+            : [address]) as never,
+          chainId,
+        }
+      }
 
       if (
         accessKeyOptions?.strict &&
@@ -112,7 +155,12 @@ export function webAuthn(options: webAuthn.Parameters) {
       // - a WebAuthn `credential` to instantiate an account
       // - optionally, a `keyPair` to use as the access key for the account
       // - optionally, a signed `keyAuthorization` to provision the access key
-      const { credential, keyAuthorization, keyPair } = await (async () => {
+      const {
+        credential,
+        keyAuthorization,
+        keyPair,
+        signature: signedHash,
+      } = await (async () => {
         // If the connection type is of "sign-up", we are going to create a new credential
         // and provision an access key (if needed).
         if (capabilities.type === 'sign-up') {
@@ -138,12 +186,14 @@ export function webAuthn(options: webAuthn.Parameters) {
           })
 
           // Get key pair (access key) to use for the account.
+          // Skip if signing a hash — access key provisioning is deferred.
           const keyPair = await (async () => {
+            if (signHash) return undefined
             if (!accessKeyOptions) return undefined
             return await WebCryptoP256.createKeyPair()
           })()
 
-          return { credential, keyPair }
+          return { credential, keyPair, signature: undefined }
         }
 
         // If we are not selecting an account, we will check if an active credential is present in
@@ -154,6 +204,12 @@ export function webAuthn(options: webAuthn.Parameters) {
           )) as WebAuthnP256.getCredential.ReturnValue | undefined
 
           if (credential) {
+            // If signing a hash, skip local keypair checks and return
+            // the stored credential — the hash will be signed via
+            // `account.sign` since `createCredential` cannot sign.
+            if (signHash)
+              return { credential, keyPair: undefined, signature: undefined }
+
             // Get key pair (access key) to use for the account.
             const keyPair = await (async () => {
               if (!accessKeyOptions) return undefined
@@ -164,10 +220,11 @@ export function webAuthn(options: webAuthn.Parameters) {
             })()
 
             // If the access key provisioning is not in strict mode, return the credential and key pair (if exists).
-            if (!accessKeyOptions?.strict) return { credential, keyPair }
+            if (!accessKeyOptions?.strict)
+              return { credential, keyPair, signature: undefined }
 
             // If a key pair is found, return the credential and key pair.
-            if (keyPair) return { credential, keyPair }
+            if (keyPair) return { credential, keyPair, signature: undefined }
 
             // If we are reconnecting, throw an error if not found.
             if (parameters.isReconnecting)
@@ -180,7 +237,9 @@ export function webAuthn(options: webAuthn.Parameters) {
         // Discover credential
         {
           // Get key pair (access key) to use for the account.
+          // Skip if signing a hash — access key provisioning is deferred.
           const keyPair = await (async () => {
+            if (signHash) return undefined
             if (!accessKeyOptions) return undefined
             return await WebCryptoP256.createKeyPair()
           })()
@@ -188,12 +247,17 @@ export function webAuthn(options: webAuthn.Parameters) {
           // If we are provisioning an access key, we will need to sign a key authorization.
           // We will need the hash (digest) to sign, and the address of the access key to construct the key authorization.
           const { hash, keyAuthorization_unsigned } = await (async () => {
-            if (!keyPair)
-              return { accessKeyAddress: undefined, hash: undefined }
-            const accessKeyAddress = Address.fromPublicKey(keyPair.publicKey)
+            const accessKeyAddress = keyPair
+              ? Address.fromPublicKey(keyPair.publicKey)
+              : undefined
+
+            if (!accessKeyAddress)
+              return { keyAuthorization_unsigned: undefined, hash: undefined }
+
             const keyAuthorization_unsigned = KeyAuthorization.from({
-              ...accessKeyOptions,
               address: accessKeyAddress,
+              expiry: accessKeyOptions?.expiry,
+              strict: accessKeyOptions?.strict ?? false,
               type: 'p256',
             })
             const hash = KeyAuthorization.getSignPayload(
@@ -216,23 +280,30 @@ export function webAuthn(options: webAuthn.Parameters) {
               if (!publicKey) throw new Error('publicKey not found.')
               return publicKey
             },
-            hash,
+            hash: signHash ?? hash,
             rpId: options.getOptions?.rpId ?? options.rpId,
+          })
+
+          const envelope = SignatureEnvelope.from({
+            metadata: credential.metadata,
+            signature: credential.signature,
+            publicKey: PublicKey.fromHex(credential.publicKey),
+            type: 'webAuthn',
           })
 
           const keyAuthorization = keyAuthorization_unsigned
             ? KeyAuthorization.from({
                 ...keyAuthorization_unsigned,
-                signature: SignatureEnvelope.from({
-                  metadata: credential.metadata,
-                  signature: credential.signature,
-                  publicKey: PublicKey.fromHex(credential.publicKey),
-                  type: 'webAuthn',
-                }),
+                signature: envelope,
               })
             : undefined
 
-          return { credential, keyAuthorization, keyPair }
+          const signature =
+            signHash && !keyAuthorization_unsigned
+              ? SignatureEnvelope.serialize(envelope)
+              : undefined
+
+          return { credential, keyAuthorization, keyPair, signature }
         }
       })()
 
@@ -249,7 +320,12 @@ export function webAuthn(options: webAuthn.Parameters) {
         rpId: options.getOptions?.rpId ?? options.rpId,
       })
 
-      if (keyPair) {
+      let signature: Hex.Hex | undefined
+      if (signHash && !signedHash) {
+        signature = await account.sign({ hash: signHash })
+      } else if (signedHash) {
+        signature = signedHash
+      } else if (keyPair) {
         accessKey = Account.fromWebCryptoP256(keyPair, {
           access: account,
         })
@@ -307,7 +383,7 @@ export function webAuthn(options: webAuthn.Parameters) {
 
       return {
         accounts: (parameters.withCapabilities
-          ? [{ address }]
+          ? [{ address, capabilities: { signature } }]
           : [address]) as never,
         chainId,
       }

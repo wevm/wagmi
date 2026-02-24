@@ -1,7 +1,7 @@
 {
   "name": "@wagmi/solid",
   "description": "Solid Primitives for Ethereum",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "license": "MIT",
   "repository": {
     "type": "git",

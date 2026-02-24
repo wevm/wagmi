@@ -1,5 +1,30 @@
 # @wagmi/connectors
 
+## 7.2.1
+
+### Patch Changes
+
+- Updated dependencies [[`8b96e2f`](https://github.com/wevm/wagmi/commit/8b96e2f46d9b3441d3b499b03924700ac0629be6)]:
+  - @wagmi/core@3.4.0
+
+## 7.2.0
+
+### Minor Changes
+
+- **Breaking:** Removed `gemini` connector (former sponsor). If you still need this connector, vendor the [source code](https://github.com/wevm/wagmi/blob/9bbf13eac895669e70b233de767c8731d221f16e/packages/connectors/src/gemini.ts) into your project directly. ([`9dbdd82`](https://github.com/wevm/wagmi/commit/9dbdd8277808eb361fe7fe01ea34e4c6bb85c7a5))
+
+### Patch Changes
+
+- Updated dependencies [[`c1dedd9`](https://github.com/wevm/wagmi/commit/c1dedd99c0a1878d7cd48476946868636ac81dd8)]:
+  - @wagmi/core@3.3.4
+
+## 7.1.7
+
+### Patch Changes
+
+- Updated dependencies [[`4b3f5a3`](https://github.com/wevm/wagmi/commit/4b3f5a3f7b3f242e8fbc1f08ae2f81ae13c5e09f)]:
+  - @wagmi/core@3.3.3
+
 ## 7.1.6
 
 ### Patch Changes

@@ -2,7 +2,6 @@ import { createConfig, http } from '@wagmi/solid'
 import { celo, mainnet, optimism, sepolia } from '@wagmi/solid/chains'
 import {
   baseAccount,
-  gemini,
   metaMask,
   porto,
   walletConnect,
@@ -17,7 +16,6 @@ export const config = createConfig({
     porto(),
     baseAccount(),
     metaMask(),
-    gemini(),
   ],
   transports: {
     [mainnet.id]: http(),

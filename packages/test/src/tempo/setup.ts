@@ -1,8 +1,8 @@
 import { connect, disconnect } from '@wagmi/core'
 import { parseUnits } from 'viem'
 import { Actions, Addresses } from 'viem/tempo'
-import { afterAll, beforeAll, beforeEach, vi } from 'vitest'
-import { accounts, config, rpcUrl } from './config.js'
+import { beforeAll, beforeEach, vi } from 'vitest'
+import { accounts, config } from './config.js'
 
 // @ts-expect-error
 BigInt.prototype.toJSON = function () {
@@ -16,12 +16,14 @@ beforeAll(async () => {
   const client = config.getClient()
 
   // Mint liquidity for fee tokens.
+  // Temporarily restore real Date.now so viem calculates a valid validBefore timestamp.
+  if ((Date.now as any).mockRestore) (Date.now as any).mockRestore()
   await Promise.all(
     [1n, 2n, 3n].map((id) =>
       Actions.amm.mintSync(client, {
         account: accounts[0],
         feeToken: Addresses.pathUsd,
-        nonceKey: 'random',
+        nonceKey: 'expiring',
         userTokenAddress: id,
         validatorTokenAddress: Addresses.pathUsd,
         validatorTokenAmount: parseUnits('1000', 6),
@@ -29,16 +31,19 @@ beforeAll(async () => {
       }),
     ),
   )
+  vi.spyOn(Date, 'now').mockReturnValue(
+    new Date(Date.UTC(2023, 1, 1)).valueOf(),
+  )
 
   await disconnect(config).catch(() => {})
 })
 
 beforeEach(async () => {
   await disconnect(config).catch(() => {})
-})
-
-afterAll(async () => {
-  await fetch(`${rpcUrl}/stop`)
+  // Make dates stable across runs (set here so it doesn't affect beforeAll setup)
+  vi.spyOn(Date, 'now').mockReturnValue(
+    new Date(Date.UTC(2023, 1, 1)).valueOf(),
+  )
 })
 
 vi.mock('../src/version.ts', () => {
@@ -48,6 +53,3 @@ vi.mock('../src/version.ts', () => {
 vi.mock('../../core/src/version.ts', () => {
   return { version: 'x.y.z' }
 })
-
-// Make dates stable across runs
-Date.now = vi.fn(() => new Date(Date.UTC(2023, 1, 1)).valueOf())

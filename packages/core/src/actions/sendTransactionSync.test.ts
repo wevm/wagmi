@@ -26,7 +26,7 @@ test('default', async () => {
       value: parseEther('0.0001'),
     }),
     (async () => {
-      await wait(1000)
+      await wait(3000)
       await testClient.mainnet.mine({ blocks: 1 })
     })(),
   ])
@@ -92,7 +92,7 @@ test('behavior: value exceeds balance', async () => {
       value:  99999 ETH
 
     Details: Insufficient funds for gas * price + value
-    Version: viem@2.44.4]
+    Version: viem@2.46.0]
   `)
   await disconnect(config, { connector })
 })

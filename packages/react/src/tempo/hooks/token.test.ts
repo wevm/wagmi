@@ -27,18 +27,22 @@ describe('useGetAllowance', () => {
   })
 
   test('reactivity: account parameter', async () => {
-    let accountAddress: Address | undefined
-    let spenderAddress: Address | undefined
-
-    const { result, rerender } = await renderHook(() =>
-      hooks.useGetAllowance({
-        account: accountAddress,
-        spender: spenderAddress,
-        token: addresses.alphaUsd,
-      }),
+    const { result, rerender } = await renderHook(
+      (props) =>
+        hooks.useGetAllowance({
+          account: props?.account,
+          spender: props?.spender,
+          token: addresses.alphaUsd,
+        }),
+      {
+        initialProps: {
+          account: undefined as Address | undefined,
+          spender: undefined as Address | undefined,
+        },
+      },
     )
 
-    await vi.waitFor(() => result.current.fetchStatus === 'fetching')
+    await vi.waitFor(() => expect(result.current.fetchStatus).toBe('idle'))
 
     // Should be disabled when account or spender is undefined
     expect(result.current.data).toBeUndefined()
@@ -46,17 +50,15 @@ describe('useGetAllowance', () => {
     // expect(result.current.isEnabled).toBe(false)
 
     // Set account but not spender
-    accountAddress = account.address
-    rerender()
+    rerender({ account: account.address, spender: undefined })
 
-    await vi.waitFor(() => result.current.fetchStatus === 'fetching')
+    await vi.waitFor(() => expect(result.current.fetchStatus).toBe('idle'))
 
     // Still disabled when spender is undefined
     // expect(result.current.isEnabled).toBe(false)
 
     // Set spender
-    spenderAddress = account2.address
-    rerender()
+    rerender({ account: account.address, spender: account2.address })
 
     await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
@@ -84,16 +86,20 @@ describe('useGetBalance', () => {
   })
 
   test('reactivity: account parameter', async () => {
-    let accountAddress: Address | undefined
-
-    const { result, rerender } = await renderHook(() =>
-      hooks.useGetBalance({
-        account: accountAddress,
-        token: addresses.alphaUsd,
-      }),
+    const { result, rerender } = await renderHook(
+      (props) =>
+        hooks.useGetBalance({
+          account: props?.account,
+          token: addresses.alphaUsd,
+        }),
+      {
+        initialProps: {
+          account: undefined as Address | undefined,
+        },
+      },
     )
 
-    await vi.waitFor(() => result.current.fetchStatus === 'fetching')
+    await vi.waitFor(() => expect(result.current.fetchStatus).toBe('idle'))
 
     // Should be disabled when account is undefined
     expect(result.current.data).toBeUndefined()
@@ -101,8 +107,7 @@ describe('useGetBalance', () => {
     // expect(result.current.isEnabled).toBe(false)
 
     // Set account
-    accountAddress = account.address
-    rerender()
+    rerender({ account: account.address })
 
     await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
@@ -211,17 +216,21 @@ describe('useHasRole', () => {
       symbol: 'HRHRTEST',
     })
 
-    let accountAddress: Address | undefined
-
-    const { result, rerender } = await renderHook(() =>
-      hooks.useHasRole({
-        account: accountAddress,
-        token: createData.token,
-        role: 'defaultAdmin',
-      }),
+    const { result, rerender } = await renderHook(
+      (props) =>
+        hooks.useHasRole({
+          account: props?.account,
+          token: createData.token,
+          role: 'defaultAdmin',
+        }),
+      {
+        initialProps: {
+          account: undefined as Address | undefined,
+        },
+      },
     )
 
-    await vi.waitFor(() => result.current.fetchStatus === 'fetching')
+    await vi.waitFor(() => expect(result.current.fetchStatus).toBe('idle'))
 
     // Should be disabled when account is undefined
     expect(result.current.data).toBeUndefined()
@@ -229,8 +238,7 @@ describe('useHasRole', () => {
     // expect(result.current.isEnabled).toBe(false)
 
     // Set account
-    accountAddress = account.address
-    rerender()
+    rerender({ account: account.address })
 
     await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
