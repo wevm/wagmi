@@ -8,6 +8,7 @@ import type { ExactPartial, OneOf, UnionCompute } from '@wagmi/core/internal'
 import {
   type Address,
   getAddress,
+  numberToHex,
   type ProviderConnectInfo,
   ResourceUnavailableRpcError,
   type RpcError,
@@ -62,7 +63,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         let signResponse: string | undefined
         let connectWithResponse: unknown | undefined
         if (!accounts?.length) {
-          const chainIds = config.chains.map((chain) => chain.id)
+          const chainIds = config.chains.map((chain) => numberToHex(chain.id))
           if (parameters.connectAndSign || parameters.connectWith) {
             if (parameters.connectAndSign)
               signResponse = await instance.connectAndSign({
@@ -95,13 +96,13 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         if (signResponse)
           provider.emit('connectAndSign', {
             accounts,
-            chainId: currentChainId,
+            chainId: numberToHex(currentChainId),
             signResponse,
           })
         else if (connectWithResponse)
           provider.emit('connectWith', {
             accounts,
-            chainId: currentChainId,
+            chainId: numberToHex(currentChainId),
             connectWithResponse,
           })
 
@@ -171,20 +172,22 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       }
     },
     async switchChain({ addEthereumChainParameter, chainId }) {
-      const chain = config.chains.find(({ id }) => id === chainId)
+      const chain = config.chains.find(({ id }) => id === Number(chainId))
       if (!chain) throw new SwitchChainError(new ChainNotConfiguredError())
+
+      const hexChainId = numberToHex(chainId)
 
       try {
         const instance = await this.getInstance()
         await instance.switchChain({
-          chainId,
+          chainId: hexChainId,
           chainConfiguration: {
             blockExplorerUrls: addEthereumChainParameter?.blockExplorerUrls
               ? [...addEthereumChainParameter.blockExplorerUrls]
               : chain.blockExplorers?.default.url
                 ? [chain.blockExplorers.default.url]
                 : undefined,
-            chainId: `0x${chainId.toString(16)}`,
+            chainId: hexChainId,
             chainName: addEthereumChainParameter?.chainName ?? chain.name,
             iconUrls: addEthereumChainParameter?.iconUrls,
             nativeCurrency:
@@ -261,8 +264,8 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
             api: {
               supportedNetworks: Object.fromEntries(
                 config.chains.map((chain) => [
-                  `eip155:${chain.id}`,
-                  chain.rpcUrls.default?.http[0],
+                  numberToHex(chain.id),
+                  chain.rpcUrls.default?.http[0] ?? '',
                 ]),
               ),
             },
