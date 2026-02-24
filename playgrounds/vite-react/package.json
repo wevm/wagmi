@@ -11,6 +11,7 @@
     "@tanstack/query-sync-storage-persister": "^5.90.12",
     "@tanstack/react-query": "catalog:",
     "@tanstack/react-query-persist-client": "^5.90.12",
+    "cuer": "^0.0.3",
     "idb-keyval": "^6.2.1",
     "react": "catalog:",
     "react-dom": "catalog:",

@@ -9,7 +9,7 @@ import packageJson from '../../../../packages/connectors/package.json'
 const docsPath = 'core'
 const packageName = '@wagmi/core'
 const connectorsPackageName = '@wagmi/connectors'
-const connectorDependencyVersion = packageJson.peerDependencies['@metamask/sdk']
+const connectorDependencyVersion = packageJson.peerDependencies['@metamask/connect-evm']
 </script>
 
 <!-- @include: @shared/connectors/metaMask.md -->
