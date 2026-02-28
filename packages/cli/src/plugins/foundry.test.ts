@@ -400,3 +400,70 @@ test('watch callbacks use broadcast deployments', async () => {
     },
   })
 })
+
+test('named deployments can share one artifact ABI', async () => {
+  const dir = f.temp()
+  const spy = vi.spyOn(process, 'cwd')
+  spy.mockImplementation(() => dir)
+
+  const artifactsDir = resolve(dir, 'out')
+  await fs.mkdir(artifactsDir, { recursive: true })
+  const erc20Artifact = {
+    abi: [
+      {
+        inputs: [],
+        name: 'totalSupply',
+        outputs: [{ type: 'uint256' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+    ],
+  }
+  await fs.writeFile(
+    resolve(artifactsDir, 'ERC20.json'),
+    JSON.stringify(erc20Artifact, null, 2),
+  )
+
+  const contracts = await foundry({
+    deployments: {
+      DAI: {
+        artifact: 'ERC20',
+        address: {
+          1: '0x0000000000000000000000000000000000000001',
+        },
+      },
+      WETH: {
+        artifact: 'ERC20',
+        address: {
+          1: '0x0000000000000000000000000000000000000002',
+        },
+      },
+    },
+    forge: {
+      build: false,
+      rebuild: false,
+    },
+  }).contracts?.()
+
+  expect(contracts).toEqual([
+    {
+      abi: erc20Artifact.abi,
+      address: undefined,
+      name: 'ERC20',
+    },
+    {
+      abi: erc20Artifact.abi,
+      address: {
+        1: '0x0000000000000000000000000000000000000001',
+      },
+      name: 'DAI',
+    },
+    {
+      abi: erc20Artifact.abi,
+      address: {
+        1: '0x0000000000000000000000000000000000000002',
+      },
+      name: 'WETH',
+    },
+  ])
+})

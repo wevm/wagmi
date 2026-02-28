@@ -74,7 +74,7 @@ export default defineConfig({
 
 ### deployments
 
-`{ [key: string]: address?: Address | Record<chainId, Address> | undefined } | undefined`
+`{ [key: string]: Address | Record<chainId, Address> | { artifact: string; address: Address | Record<chainId, Address> } } | undefined`
 
 Mapping of addresses to attach to artifacts.
 
@@ -91,6 +91,35 @@ export default defineConfig({
           5: '0x112234455c3a32fd11230c42e7bccd4a84e02010', // [!code focus]
         }, // [!code focus]
       }, // [!code focus]
+    }),
+  ],
+})
+```
+
+To generate multiple contract configs from one artifact ABI, use named
+deployments:
+
+```ts
+import { defineConfig } from '@wagmi/cli'
+import { foundry } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    foundry({
+      deployments: {
+        DAI: {
+          artifact: 'ERC20',
+          address: {
+            1: '0x0000000000000000000000000000000000000001',
+          },
+        },
+        WETH: {
+          artifact: 'ERC20',
+          address: {
+            1: '0x0000000000000000000000000000000000000002',
+          },
+        },
+      },
     }),
   ],
 })
