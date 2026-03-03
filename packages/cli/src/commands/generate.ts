@@ -180,7 +180,9 @@ export async function generate(options: Generate = {}) {
           let needsWrite = false
           if (event === 'change' || event === 'add') {
             const eventFn =
-              event === 'change' ? watchConfig.onChange : watchConfig.onAdd
+              event === 'change'
+                ? watchConfig.onChange
+                : watchConfig.onAdd ?? watchConfig.onChange
             const config = await eventFn?.(path)
             if (!config) return
 
