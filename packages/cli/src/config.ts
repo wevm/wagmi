@@ -65,7 +65,9 @@ export type Watch = {
   /** Callback that fires when watcher is shutdown */
   onClose?: (() => MaybePromise<void>) | undefined
   /** Callback that fires when file is removed */
-  onRemove?: ((path: string) => MaybePromise<MaybeArray<string> | undefined>) | undefined
+  onRemove?:
+    | ((path: string) => MaybePromise<MaybeArray<string> | undefined>)
+    | undefined
 }
 
 export type Plugin = {
