@@ -1,0 +1,10 @@
+Timestamp (UTC),Transaction Description,Currency,Amount,To Currency,To Amount,Native Currency,Native Amount,Native Amount (in USD),Transaction Kind,Transaction Hash
+2024-11-16 10:29:20,Withdraw FIL (Cronos),FIL,-3.5,,,EUR,14.01675483883501165,14.86624482128793015242703625,crypto_withdrawal,0xb53c1bc4ffa841bc00ee34578a04d4442578c96c339f199df22e63ced3c1b00b
+2024-11-16 10:22:41,Buy FIL,FIL,3.5,,,EUR,14.72,15.612110384,crypto_purchase,
+2024-11-15 01:16:09,DPoS non-compound interest received,CRO,0.00002476,,,EUR,0.00000332,0.000003521209679,finance.dpos.non_compound_interest.crypto_wallet,
+2024-11-13 00:39:26,DPoS non-compound interest received,CRO,0.00002656,,,EUR,0.00000436,0.000004624239217,finance.dpos.non_compound_interest.crypto_wallet,
+2024-11-11 01:01:03,DPoS non-compound interest received,CRO,0.00003547,,,EUR,0.00000384,0.000004072724448,finance.dpos.non_compound_interest.crypto_wallet,
+2024-11-10 15:20:12,Withdraw FIL (Cronos),FIL,-1.737,,,EUR,6.608801104989568042,7.00932964381781993479502365,crypto_withdrawal,0x55c723e8ba6610bac7f035ed294952db8844b6082b3a647c38ac0c0a074c9524
+2024-11-08 22:19:02,Coinsbee -  Gift Cards,FIL,-3.091,CRO,-106.7,CRO,106.7,16.8198923583075,crypto_payment,
+2024-11-08 21:52:05,Coinsbee -  Gift Cards,FIL,-6.244,CRO,-213.1,CRO,213.1,33.5924935478475,crypto_payment,
+2024-11-08 00:34:01,DPoS non-compound interest received,CRO,0.0000232,,,EUR,0.0000019,0.0000020151501175,finance.dpos.non_compound_interest.crypto_wallet,
