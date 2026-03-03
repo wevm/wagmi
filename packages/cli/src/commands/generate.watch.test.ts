@@ -89,9 +89,9 @@ test('watch: add falls back to onChange when onAdd is omitted', async () => {
   await getPluginWatcher()?.emit('all', 'add', 'contracts/bar.json')
   await new Promise((resolve) => setTimeout(resolve, 250))
 
-  await expect(readFile(resolve(dir, 'generated.js'), 'utf8')).resolves.toContain(
-    'export const barAbi = []',
-  )
+  await expect(
+    readFile(resolve(dir, 'generated.js'), 'utf8'),
+  ).resolves.toContain('export const barAbi = []')
 })
 
 test('watch: unlink supports removing multiple contracts', async () => {

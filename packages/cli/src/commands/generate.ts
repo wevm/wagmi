@@ -182,7 +182,7 @@ export async function generate(options: Generate = {}) {
             const eventFn =
               event === 'change'
                 ? watchConfig.onChange
-                : watchConfig.onAdd ?? watchConfig.onChange
+                : (watchConfig.onAdd ?? watchConfig.onChange)
             const config = await eventFn?.(path)
             if (!config) return
 
