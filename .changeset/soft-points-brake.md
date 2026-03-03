@@ -2,4 +2,4 @@
 "@wagmi/cli": patch
 ---
 
-fix(foundry): support named deployments so multiple generated contracts can share one artifact ABI
+fix(foundry): support named deployments sharing one artifact ABI, including watch-mode add/change/remove updates

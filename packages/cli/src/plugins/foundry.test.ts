@@ -401,6 +401,75 @@ test('watch callbacks use broadcast deployments', async () => {
   })
 })
 
+test('watch callbacks include named deployments for one artifact', async () => {
+  const dir = f.temp()
+  const spy = vi.spyOn(process, 'cwd')
+  spy.mockImplementation(() => dir)
+
+  const artifactsDir = resolve(dir, 'out')
+  await fs.mkdir(artifactsDir, { recursive: true })
+  const erc20Artifact = {
+    abi: [
+      {
+        inputs: [],
+        name: 'totalSupply',
+        outputs: [{ type: 'uint256' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+    ],
+  }
+  const artifactPath = resolve(artifactsDir, 'ERC20.json')
+  await fs.writeFile(artifactPath, JSON.stringify(erc20Artifact, null, 2))
+
+  const plugin = foundry({
+    deployments: {
+      DAI: {
+        artifact: 'ERC20',
+        address: {
+          1: '0x0000000000000000000000000000000000000001',
+        },
+      },
+      WETH: {
+        artifact: 'ERC20',
+        address: {
+          1: '0x0000000000000000000000000000000000000002',
+        },
+      },
+    },
+    forge: {
+      build: false,
+      rebuild: false,
+    },
+  })
+
+  const contracts = await plugin.watch.onChange?.(artifactPath)
+  expect(contracts).toEqual([
+    {
+      abi: erc20Artifact.abi,
+      address: undefined,
+      name: 'ERC20',
+    },
+    {
+      abi: erc20Artifact.abi,
+      address: {
+        1: '0x0000000000000000000000000000000000000001',
+      },
+      name: 'DAI',
+    },
+    {
+      abi: erc20Artifact.abi,
+      address: {
+        1: '0x0000000000000000000000000000000000000002',
+      },
+      name: 'WETH',
+    },
+  ])
+
+  const removed = await plugin.watch.onRemove?.(artifactPath)
+  expect(removed).toEqual(['ERC20', 'DAI', 'WETH'])
+})
+
 test('named deployments can share one artifact ABI', async () => {
   const dir = f.temp()
   const spy = vi.spyOn(process, 'cwd')

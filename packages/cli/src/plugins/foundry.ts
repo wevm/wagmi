@@ -188,6 +188,41 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
     }
   }
 
+  async function getContractsForArtifact(artifactPath: string) {
+    const artifactName = getArtifactName(artifactPath)
+    const contracts: ContractConfig[] = []
+
+    const artifactContract = await getContract(artifactPath)
+    if (artifactContract.abi?.length) contracts.push(artifactContract)
+
+    for (const [name, deployment] of Object.entries(namedDeployments)) {
+      if (deployment.artifact !== artifactName) continue
+
+      const contract = await getContract(artifactPath, {
+        address: deployment.address,
+        name,
+      })
+      if (!contract.abi?.length) continue
+      contracts.push(contract)
+    }
+
+    if (contracts.length === 0) return undefined
+    return contracts.length === 1 ? contracts[0] : contracts
+  }
+
+  function getContractNamesForArtifact(artifactPath: string) {
+    const artifactName = getArtifactName(artifactPath)
+    const contractNames = new Set<string>([getContractName(artifactName)])
+
+    for (const [name, deployment] of Object.entries(namedDeployments)) {
+      if (deployment.artifact !== artifactName) continue
+      contractNames.add(getContractName(name))
+    }
+
+    const names = [...contractNames]
+    return names.length === 1 ? names[0] : names
+  }
+
   function getArtifactPaths(artifactsDirectory: string) {
     const crawler = new fdir().withBasePath().globWithOptions(
       include.map((x) => `${artifactsDirectory}/**/${x}`),
@@ -391,13 +426,13 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
         ...exclude.map((x) => `!${artifactsDirectory}/**/${x}`),
       ],
       async onAdd(path) {
-        return getContract(path)
+        return getContractsForArtifact(path)
       },
       async onChange(path) {
-        return getContract(path)
+        return getContractsForArtifact(path)
       },
       async onRemove(path) {
-        return getContractName(getArtifactName(path))
+        return getContractNamesForArtifact(path)
       },
     },
   }

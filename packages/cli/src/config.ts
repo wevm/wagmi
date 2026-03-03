@@ -56,14 +56,16 @@ export type Watch = {
   paths: string[] | (() => MaybePromise<string[]>)
   /** Callback that fires when file is added */
   onAdd?:
-    | ((path: string) => MaybePromise<ContractConfig | undefined>)
+    | ((path: string) => MaybePromise<MaybeArray<ContractConfig> | undefined>)
     | undefined
   /** Callback that fires when file changes */
-  onChange: (path: string) => MaybePromise<ContractConfig | undefined>
+  onChange: (
+    path: string,
+  ) => MaybePromise<MaybeArray<ContractConfig> | undefined>
   /** Callback that fires when watcher is shutdown */
   onClose?: (() => MaybePromise<void>) | undefined
   /** Callback that fires when file is removed */
-  onRemove?: ((path: string) => MaybePromise<string | undefined>) | undefined
+  onRemove?: ((path: string) => MaybePromise<MaybeArray<string> | undefined>) | undefined
 }
 
 export type Plugin = {
