@@ -53,7 +53,7 @@ test('context', () => {
         expectTypeOf(data).toEqualTypeOf<Hash>()
         expectTypeOf(variables.functionName).toEqualTypeOf<'transfer'>()
         expectTypeOf(variables.args).toEqualTypeOf<readonly [Address, bigint]>()
-        expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
       },
     },
   )

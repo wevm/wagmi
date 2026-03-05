@@ -102,7 +102,7 @@ test('context', () => {
           connector?: Connector | undefined
         }>()
         expectTypeOf(data).toEqualTypeOf<Compute<Chain>>()
-        expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
       },
       onSettled(data, error, variables, context) {
         expectTypeOf(data).toEqualTypeOf<Compute<Chain> | undefined>()

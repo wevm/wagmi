@@ -57,7 +57,7 @@ test('context', () => {
       onSuccess(data, variables, context) {
         expectTypeOf(variables).toEqualTypeOf<WatchAssetVariables>()
         expectTypeOf(data).toEqualTypeOf<boolean>()
-        expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
       },
       onSettled(data, error, variables, context) {
         expectTypeOf(data).toEqualTypeOf<boolean | undefined>()

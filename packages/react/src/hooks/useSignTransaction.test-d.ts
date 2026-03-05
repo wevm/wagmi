@@ -72,7 +72,7 @@ test('context', () => {
           chainId?: number | undefined
         }>()
         expectTypeOf(data).toMatchTypeOf<Hash>()
-        expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
       },
       onSettled(data, error, variables, context) {
         expectTypeOf(data).toMatchTypeOf<Hash | undefined>()

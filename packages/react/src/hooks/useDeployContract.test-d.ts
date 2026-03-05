@@ -83,7 +83,7 @@ test('context', () => {
       },
       onSuccess(data, variables, context) {
         expectTypeOf(data).toEqualTypeOf<Hash>()
-        expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
 
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
