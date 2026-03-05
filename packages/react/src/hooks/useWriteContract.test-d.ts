@@ -91,7 +91,7 @@ test('context', () => {
       },
       onSuccess(data, variables, context) {
         expectTypeOf(data).toEqualTypeOf<Hash>()
-        expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
 
         expectTypeOf(variables.functionName).toEqualTypeOf<'transferFrom'>()
         expectTypeOf(variables.args).toEqualTypeOf<

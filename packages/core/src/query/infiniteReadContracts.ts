@@ -61,7 +61,6 @@ export function infiniteReadContractsQueryOptions<
     InfiniteReadContractsQueryFnData<contracts, allowFailure>,
     ReadContractsErrorType,
     InfiniteReadContractsData<contracts, allowFailure>,
-    InfiniteReadContractsData<contracts, allowFailure>,
     InfiniteReadContractsQueryKey<contracts, allowFailure, pageParam, config>,
     pageParam
   >

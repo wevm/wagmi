@@ -81,7 +81,7 @@ test('context', () => {
             wallet: `0x${string}`
           }
         }>()
-        expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
       },
       onSettled(data, error, variables, context) {
         expectTypeOf(data).toEqualTypeOf<SignTypedDataReturnType | undefined>()
