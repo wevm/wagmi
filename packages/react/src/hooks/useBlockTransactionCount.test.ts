@@ -20,6 +20,7 @@ test('default', async () => {
       "failureCount": 0,
       "failureReason": null,
       "fetchStatus": "idle",
+      "isEnabled": true,
       "isError": false,
       "isFetched": true,
       "isFetchedAfterMount": true,
@@ -34,6 +35,10 @@ test('default', async () => {
       "isRefetching": false,
       "isStale": true,
       "isSuccess": true,
+      "promise": Promise {
+        "reason": [Error: experimental_prefetchInRender feature flag is not enabled],
+        "status": "rejected",
+      },
       "queryKey": [
         "blockTransactionCount",
         {
@@ -64,6 +69,7 @@ test('parameters: chainId', async () => {
       "failureCount": 0,
       "failureReason": null,
       "fetchStatus": "idle",
+      "isEnabled": true,
       "isError": false,
       "isFetched": true,
       "isFetchedAfterMount": true,
@@ -78,6 +84,10 @@ test('parameters: chainId', async () => {
       "isRefetching": false,
       "isStale": true,
       "isSuccess": true,
+      "promise": Promise {
+        "reason": [Error: experimental_prefetchInRender feature flag is not enabled],
+        "status": "rejected",
+      },
       "queryKey": [
         "blockTransactionCount",
         {
@@ -108,6 +118,7 @@ test('parameters: blockNumber', async () => {
       "failureCount": 0,
       "failureReason": null,
       "fetchStatus": "idle",
+      "isEnabled": true,
       "isError": false,
       "isFetched": true,
       "isFetchedAfterMount": true,
@@ -122,6 +133,10 @@ test('parameters: blockNumber', async () => {
       "isRefetching": false,
       "isStale": true,
       "isSuccess": true,
+      "promise": Promise {
+        "reason": [Error: experimental_prefetchInRender feature flag is not enabled],
+        "status": "rejected",
+      },
       "queryKey": [
         "blockTransactionCount",
         {
@@ -156,6 +171,7 @@ test('parameters: blockHash', async () => {
       "failureCount": 0,
       "failureReason": null,
       "fetchStatus": "idle",
+      "isEnabled": true,
       "isError": false,
       "isFetched": true,
       "isFetchedAfterMount": true,
@@ -170,6 +186,10 @@ test('parameters: blockHash', async () => {
       "isRefetching": false,
       "isStale": true,
       "isSuccess": true,
+      "promise": Promise {
+        "reason": [Error: experimental_prefetchInRender feature flag is not enabled],
+        "status": "rejected",
+      },
       "queryKey": [
         "blockTransactionCount",
         {
@@ -203,6 +223,7 @@ test('parameters: blockTag', async () => {
       "failureCount": 0,
       "failureReason": null,
       "fetchStatus": "idle",
+      "isEnabled": true,
       "isError": false,
       "isFetched": true,
       "isFetchedAfterMount": true,
@@ -217,6 +238,10 @@ test('parameters: blockTag', async () => {
       "isRefetching": false,
       "isStale": true,
       "isSuccess": true,
+      "promise": Promise {
+        "reason": [Error: experimental_prefetchInRender feature flag is not enabled],
+        "status": "rejected",
+      },
       "queryKey": [
         "blockTransactionCount",
         {

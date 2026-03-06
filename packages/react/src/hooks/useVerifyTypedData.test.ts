@@ -31,6 +31,7 @@ test('valid signature', async () => {
       "failureCount": 0,
       "failureReason": null,
       "fetchStatus": "idle",
+      "isEnabled": true,
       "isError": false,
       "isFetched": true,
       "isFetchedAfterMount": true,
@@ -45,6 +46,10 @@ test('valid signature', async () => {
       "isRefetching": false,
       "isStale": true,
       "isSuccess": true,
+      "promise": Promise {
+        "reason": [Error: experimental_prefetchInRender feature flag is not enabled],
+        "status": "rejected",
+      },
       "queryKey": [
         "verifyTypedData",
         {
@@ -125,6 +130,7 @@ test('invalid signature', async () => {
       "failureCount": 0,
       "failureReason": null,
       "fetchStatus": "idle",
+      "isEnabled": true,
       "isError": false,
       "isFetched": true,
       "isFetchedAfterMount": true,
@@ -139,6 +145,10 @@ test('invalid signature', async () => {
       "isRefetching": false,
       "isStale": true,
       "isSuccess": true,
+      "promise": Promise {
+        "reason": [Error: experimental_prefetchInRender feature flag is not enabled],
+        "status": "rejected",
+      },
       "queryKey": [
         "verifyTypedData",
         {
@@ -220,6 +230,7 @@ test('account not deployed', async () => {
       "failureCount": 0,
       "failureReason": null,
       "fetchStatus": "idle",
+      "isEnabled": true,
       "isError": false,
       "isFetched": true,
       "isFetchedAfterMount": true,
@@ -234,6 +245,10 @@ test('account not deployed', async () => {
       "isRefetching": false,
       "isStale": true,
       "isSuccess": true,
+      "promise": Promise {
+        "reason": [Error: experimental_prefetchInRender feature flag is not enabled],
+        "status": "rejected",
+      },
       "queryKey": [
         "verifyTypedData",
         {
@@ -314,6 +329,7 @@ test('behavior: signature: undefined -> defined', async () => {
       "failureCount": 0,
       "failureReason": null,
       "fetchStatus": "idle",
+      "isEnabled": false,
       "isError": false,
       "isFetched": false,
       "isFetchedAfterMount": false,
@@ -328,6 +344,10 @@ test('behavior: signature: undefined -> defined', async () => {
       "isRefetching": false,
       "isStale": false,
       "isSuccess": false,
+      "promise": Promise {
+        "reason": [Error: experimental_prefetchInRender feature flag is not enabled],
+        "status": "rejected",
+      },
       "queryKey": [
         "verifyTypedData",
         {
@@ -402,6 +422,7 @@ test('behavior: signature: undefined -> defined', async () => {
       "failureCount": 0,
       "failureReason": null,
       "fetchStatus": "idle",
+      "isEnabled": true,
       "isError": false,
       "isFetched": true,
       "isFetchedAfterMount": true,
@@ -416,6 +437,10 @@ test('behavior: signature: undefined -> defined', async () => {
       "isRefetching": false,
       "isStale": true,
       "isSuccess": true,
+      "promise": Promise {
+        "reason": [Error: experimental_prefetchInRender feature flag is not enabled],
+        "status": "rejected",
+      },
       "queryKey": [
         "verifyTypedData",
         {
