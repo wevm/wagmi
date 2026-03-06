@@ -60,6 +60,7 @@ export default defineConfig({
         resolve: { alias },
       },
       {
+        define: { VITEST_POOL_OFFSET: 100 },
         test: {
           name: 'core',
           include: [
@@ -71,6 +72,7 @@ export default defineConfig({
             ...defaultExclude,
           ],
           environment: 'happy-dom',
+          fileParallelism: false,
           testTimeout: 20_000,
           setupFiles: ['./packages/core/test/setup.ts'],
         },
@@ -110,6 +112,7 @@ export default defineConfig({
         },
       },
       {
+        define: { VITEST_POOL_OFFSET: 200 },
         plugins: [reactFallbackThrottlePlugin()],
         resolve: { alias },
         test: {
@@ -126,21 +129,25 @@ export default defineConfig({
             './packages/react/src/tempo/**/*.test.ts',
             ...defaultExclude,
           ],
+          fileParallelism: false,
           testTimeout: 20_000,
           setupFiles: ['./packages/react/test/setup.ts'],
         },
       },
       {
+        define: { VITEST_POOL_OFFSET: 300 },
         test: {
           name: 'vue',
           include: ['./packages/vue/src/**/*.test.ts?(x)'],
           environment: 'happy-dom',
+          fileParallelism: false,
           testTimeout: 20_000,
           setupFiles: ['./packages/vue/test/setup.ts'],
         },
         resolve: { alias },
       },
       {
+        define: { VITEST_POOL_OFFSET: 400 },
         plugins: [solid()],
         resolve: { alias },
         test: {
@@ -153,6 +160,7 @@ export default defineConfig({
             screenshotFailures: false,
           },
           include: ['./packages/solid/src/**/*.test.ts?(x)'],
+          fileParallelism: false,
           testTimeout: 20_000,
           setupFiles: ['./packages/solid/test/setup.ts'],
         },

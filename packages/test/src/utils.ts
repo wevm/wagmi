@@ -1,8 +1,11 @@
-const pool =
-  (typeof process !== 'undefined' &&
-    Number(process.env.VITEST_POOL_ID ?? 1) +
-      Math.floor(Math.random() * 10_000)) ||
-  1 + Math.floor(Math.random() * 10_000)
+declare const VITEST_POOL_OFFSET: number | undefined
+
+const projectOffset =
+  typeof VITEST_POOL_OFFSET !== 'undefined' ? VITEST_POOL_OFFSET : 0
+const poolId =
+  (typeof process !== 'undefined' && Number(process.env.VITEST_POOL_ID ?? 1)) ||
+  1
+const pool = poolId + projectOffset
 
 export function getRpcUrls({ port }: { port: number }) {
   return {
