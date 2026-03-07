@@ -116,19 +116,11 @@ export type UseInfiniteQueryParameters<
   queryFnData = unknown,
   error = DefaultError,
   data = queryFnData,
-  queryData = queryFnData,
   queryKey extends QueryKey = QueryKey,
   pageParam = unknown,
 > = Compute<
   Omit<
-    UseInfiniteQueryOptions<
-      queryFnData,
-      error,
-      data,
-      queryData,
-      queryKey,
-      pageParam
-    >,
+    UseInfiniteQueryOptions<queryFnData, error, data, queryKey, pageParam>,
     'initialData'
   > & {
     // Fix `initialData` type

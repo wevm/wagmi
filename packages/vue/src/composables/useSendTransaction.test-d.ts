@@ -1,4 +1,7 @@
-import type { SendTransactionErrorType } from '@wagmi/core'
+import type {
+  MutationFunctionContext,
+  SendTransactionErrorType,
+} from '@wagmi/core'
 import type { Hash } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
@@ -9,33 +12,37 @@ const contextValue = { foo: 'bar' } as const
 test('context', () => {
   const sendTransaction = useSendTransaction({
     mutation: {
-      onMutate(variables) {
+      onMutate(variables, mutationContext) {
         expectTypeOf(variables).toMatchTypeOf<
           { chainId?: number | undefined } | undefined
         >()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
         return contextValue
       },
-      onError(error, variables, context) {
+      onError(error, variables, context, mutationContext) {
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
         }>()
         expectTypeOf(error).toEqualTypeOf<SendTransactionErrorType>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
-      onSuccess(data, variables, context) {
+      onSuccess(data, variables, context, mutationContext) {
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
         }>()
         expectTypeOf(data).toEqualTypeOf<Hash>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
-      onSettled(data, error, variables, context) {
+      onSettled(data, error, variables, context, mutationContext) {
         expectTypeOf(data).toEqualTypeOf<Hash | undefined>()
         expectTypeOf(error).toEqualTypeOf<SendTransactionErrorType | null>()
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
         }>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
     },
   })
@@ -54,27 +61,30 @@ test('context', () => {
   sendTransaction.mutate(
     { to: '0x' },
     {
-      onError(error, variables, context) {
+      onError(error, variables, context, mutationContext) {
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
         }>()
         expectTypeOf(error).toEqualTypeOf<SendTransactionErrorType>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
-      onSuccess(data, variables, context) {
+      onSuccess(data, variables, context, mutationContext) {
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
         }>()
         expectTypeOf(data).toEqualTypeOf<Hash>()
-        expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
-      onSettled(data, error, variables, context) {
+      onSettled(data, error, variables, context, mutationContext) {
         expectTypeOf(data).toEqualTypeOf<Hash | undefined>()
         expectTypeOf(error).toEqualTypeOf<SendTransactionErrorType | null>()
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
         }>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
     },
   )

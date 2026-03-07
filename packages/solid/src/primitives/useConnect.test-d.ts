@@ -2,6 +2,7 @@ import type {
   ConnectErrorType,
   Connector,
   CreateConnectorFn,
+  MutationFunctionContext,
 } from '@wagmi/core'
 import { config } from '@wagmi/test'
 import type { Address, Hex } from 'viem'
@@ -15,15 +16,16 @@ const contextValue = { foo: 'bar' } as const
 test('context', () => {
   const connect = useConnect(() => ({
     mutation: {
-      onMutate(variables) {
+      onMutate(variables, mutationContext) {
         expectTypeOf(variables).toEqualTypeOf<{
           chainId?: number | undefined
           connector: Connector | CreateConnectorFn
           withCapabilities?: boolean | undefined
         }>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
         return contextValue
       },
-      onError(error, variables, context) {
+      onError(error, variables, context, mutationContext) {
         expectTypeOf(variables).toEqualTypeOf<{
           chainId?: number | undefined
           connector: Connector | CreateConnectorFn
@@ -31,8 +33,9 @@ test('context', () => {
         }>()
         expectTypeOf(error).toEqualTypeOf<ConnectErrorType>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
-      onSuccess(data, variables, context) {
+      onSuccess(data, variables, context, mutationContext) {
         expectTypeOf(variables).toEqualTypeOf<{
           chainId?: number | undefined
           connector: Connector | CreateConnectorFn
@@ -52,8 +55,9 @@ test('context', () => {
           chainId: number
         }>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
-      onSettled(data, error, variables, context) {
+      onSettled(data, error, variables, context, mutationContext) {
         expectTypeOf(data).toEqualTypeOf<
           | {
               accounts:
@@ -80,6 +84,7 @@ test('context', () => {
           withCapabilities?: boolean | undefined
         }>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
     },
   }))
@@ -113,7 +118,7 @@ test('context', () => {
   connect.mutate(
     { connector },
     {
-      onError(error, variables, context) {
+      onError(error, variables, context, mutationContext) {
         expectTypeOf(variables).toEqualTypeOf<{
           chainId?: number | undefined
           connector: typeof connector | CreateConnectorFn
@@ -122,6 +127,7 @@ test('context', () => {
         }>()
         expectTypeOf(error).toEqualTypeOf<ConnectErrorType>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
       onSuccess(data, variables, context) {
         expectTypeOf(variables).toEqualTypeOf<{
@@ -134,7 +140,7 @@ test('context', () => {
           accounts: readonly [Address, ...Address[]]
           chainId: number
         }>()
-        expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
       },
       onSettled(data, error, variables, context) {
         expectTypeOf(data).toEqualTypeOf<
@@ -163,7 +169,7 @@ test('context', () => {
       withCapabilities: true,
     },
     {
-      onSuccess(data, _variables, _context) {
+      onSuccess(data, _variables, _context, _mutationContext) {
         expectTypeOf(data).toEqualTypeOf<{
           accounts: readonly [
             {
@@ -182,7 +188,7 @@ test('context', () => {
           chainId: number
         }>()
       },
-      onSettled(data, _error, _variables, _context) {
+      onSettled(data, _error, _variables, _context, _mutationContext) {
         expectTypeOf(data).toEqualTypeOf<
           | {
               accounts: readonly [
