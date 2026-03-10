@@ -32,16 +32,16 @@ export type MetaMaskParameters = UnionCompute<
       useDeeplink?: boolean
     }
   } & OneOf<
-    | {
-      /* Shortcut to connect and sign a message */
-      connectAndSign?: string | undefined
-    }
-    | {
-      // TODO: Strongly type `method` and `params`
-      /* Allow `connectWith` any rpc method */
-      connectWith?: { method: string; params: unknown[] } | undefined
-    }
-  >
+      | {
+          /* Shortcut to connect and sign a message */
+          connectAndSign?: string | undefined
+        }
+      | {
+          // TODO: Strongly type `method` and `params`
+          /* Allow `connectWith` any rpc method */
+          connectWith?: { method: string; params: unknown[] } | undefined
+        }
+    >
 >
 
 type CreateEVMClientParameters = Parameters<typeof createEVMClient>[0]
@@ -262,12 +262,12 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           const defaultDappParams =
             typeof window === 'undefined'
               ? {
-                name: 'wagmi',
-              }
+                  name: 'wagmi',
+                }
               : {
-                name: window.location.hostname,
-                url: window.location.href,
-              }
+                  name: window.location.hostname,
+                  url: window.location.href,
+                }
 
           metamaskPromise = createEVMClient({
             ...parameters,
