@@ -3,26 +3,6 @@ import { assertType, expectTypeOf, test } from 'vitest'
 
 import { createUseReadContract } from './createUseReadContract.js'
 
-const abiSameArgsDifferentReturns = [
-  {
-    type: 'function',
-    name: 'foo',
-    stateMutability: 'view',
-    inputs: [{ name: 'ilk', type: 'bytes32' }],
-    outputs: [{ type: 'uint256' }],
-  },
-  {
-    type: 'function',
-    name: 'bar',
-    stateMutability: 'view',
-    inputs: [{ name: 'ilk', type: 'bytes32' }],
-    outputs: [
-      { name: 'art', type: 'uint256' },
-      { name: 'rate', type: 'uint256' },
-    ],
-  },
-] as const
-
 test('default', () => {
   const useReadErc20 = createUseReadContract({
     abi: abi.erc20,
@@ -168,16 +148,45 @@ test('functionName with overloads', () => {
 })
 
 test('narrows data for functions with matching argument shapes', () => {
+  const abiSameArgsDifferentReturns = [
+    {
+      type: 'function',
+      name: 'foo',
+      stateMutability: 'view',
+      inputs: [{ name: 'ilk', type: 'bytes32' }],
+      outputs: [{ type: 'uint256' }],
+    },
+    {
+      type: 'function',
+      name: 'bar',
+      stateMutability: 'view',
+      inputs: [{ name: 'ilk', type: 'bytes32' }],
+      outputs: [
+        { name: 'art', type: 'uint256' },
+        { name: 'rate', type: 'uint256' },
+      ],
+    },
+  ] as const
   const useReadContractSameArgs = createUseReadContract({
     abi: abiSameArgsDifferentReturns,
   })
 
-  const result = useReadContractSameArgs({
-    functionName: 'bar',
-    args: [
-      '0x0000000000000000000000000000000000000000000000000000000000000000',
-    ],
-  })
-
-  assertType<readonly [bigint, bigint] | undefined>(result.data)
+  {
+    const result = useReadContractSameArgs({
+      functionName: 'foo',
+      args: [
+        '0x0000000000000000000000000000000000000000000000000000000000000000',
+      ],
+    })
+    assertType<bigint | undefined>(result.data)
+  }
+  {
+    const result = useReadContractSameArgs({
+      functionName: 'bar',
+      args: [
+        '0x0000000000000000000000000000000000000000000000000000000000000000',
+      ],
+    })
+    assertType<readonly [bigint, bigint] | undefined>(result.data)
+  }
 })
