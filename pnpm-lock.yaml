@@ -13,8 +13,8 @@ catalogs:
       specifier: 4.3.6
       version: 4.3.6
     '@metamask/connect-evm':
-      specifier: 0.5.0
-      version: 0.5.0
+      specifier: 0.6.0
+      version: 0.6.0
     '@nuxt/schema':
       specifier: 4.2.1
       version: 4.2.1
@@ -289,7 +289,7 @@ importers:
         version: 4.3.6(@types/react@19.2.3)(bufferutil@4.0.8)(immer@9.0.21)(react@19.2.0)(typescript@5.9.3)(use-sync-external-store@1.6.0(react@19.2.0))(utf-8-validate@5.0.10)(zod@3.25.76)
       '@metamask/connect-evm':
         specifier: 'catalog:'
-        version: 0.5.0(@babel/runtime@7.28.4)(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+        version: 0.6.0(@babel/runtime@7.28.4)(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@safe-global/safe-apps-provider':
         specifier: 'catalog:'
         version: 0.18.6(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
@@ -2652,12 +2652,12 @@ packages:
     resolution: {integrity: sha512-807Y6JxqeY3tckSRDse96RmHV6atDsSPLD/x9KIync8ccFjOwSZlv0n4NA5Bsi0znjOogU0jEe5hPNIDTFzFRg==}
     engines: {node: ^18.18 || >=20}
 
-  '@metamask/connect-evm@0.5.0':
-    resolution: {integrity: sha512-fcMfqiLib0jsjddLuCgWImyXE/lO2qElhY+l6FQJEwiMB+9pvaXIAcH3eE1f+1CLRJoV+5cskDjiXoZ7ckjzkw==}
+  '@metamask/connect-evm@0.6.0':
+    resolution: {integrity: sha512-dD9Y0SUrsni2n0SYf4SjwNkasmlOMZGr7NW+GJqlZVIIoRFm0+txa0I5QZcHwtI5lCF1XTQNhj9dK7K9Bac9IA==}
     engines: {node: '>=20.19.0'}
 
-  '@metamask/connect-multichain@0.6.0':
-    resolution: {integrity: sha512-7CfoY6GQ1ahyWp2cvQSzUzOPV+UqL1k2DJYZAQLoqaY2nFqWsEtpK7kZtRdYCwzXJCC8oeFwxppIqm58hjWVOQ==}
+  '@metamask/connect-multichain@0.8.0':
+    resolution: {integrity: sha512-aRyRB9h9XIWrVPOMrQOioyWHy3KAfTKhMCqs5fPugCN+u5XrfAX+NeEGXyfDT+RlnxNwXCLBVaHv84mCpC7QFQ==}
     engines: {node: '>=20.19.0'}
     peerDependencies:
       '@react-native-async-storage/async-storage': ^1.23
@@ -2686,11 +2686,13 @@ packages:
     resolution: {integrity: sha512-Wa9ctLwtD2B3ut9bJW0OLhoM4X2J7y7kuiWZbl+s8cuUBPmTS5IoUUUpvCDWOkucUsJ+6ZiqWMl2d5oSqLN28g==}
     engines: {node: ^18.18 || >=20}
 
-  '@metamask/mobile-wallet-protocol-core@0.3.1':
-    resolution: {integrity: sha512-gQKL/0oruG0boBmFhNSNbr5velKf7wGc+KTU47vSHXvNJQ/BQhOVWmHJrbTPzvyOU5tRDlls0IwCSSVbEMQ42g==}
+  '@metamask/mobile-wallet-protocol-core@0.4.0':
+    resolution: {integrity: sha512-rB1wMogvSUsFaxyH/eVUCczIkTxVaPPETlD/wgm+gw7EbWP0LlZPY7Bh+DICSfUCJ0zqnoFuwr77WNJvZ6ZiWw==}
+    engines: {node: '>=20'}
 
-  '@metamask/mobile-wallet-protocol-dapp-client@0.2.2':
-    resolution: {integrity: sha512-+tKa8va/5DUJLzK0LmnSCXXUGcyzMJkDGOAiFgIqWOo8V02WQNRatahO2eWQKv/A7fUL/JbflrXF6alHVmumXA==}
+  '@metamask/mobile-wallet-protocol-dapp-client@0.3.0':
+    resolution: {integrity: sha512-rXStrvIa57a8OaeM+3HeR6Z9ETHOvmQi/9s6CLplDwH2hn2MWjI6WW3EUrxq2KGmGuhbO5Oo21ANnD23QKfduw==}
+    engines: {node: '>=20'}
 
   '@metamask/multichain-api-client@0.10.1':
     resolution: {integrity: sha512-LsqO2SiDcTgOuXyVYEB0zgBaVNhryhP2tYI3L7tLa7PoeDqMkNIreFhDeu8jM5tPWkCimQvMwCkG3DF4P5dD3A==}
@@ -5793,6 +5795,9 @@ packages:
   async-lock@1.4.1:
     resolution: {integrity: sha512-Az2ZTpuytrtqENulXwO3GGv1Bztugx6TT37NIo7imr/Qo0gsYiGtSdBa2B6fsXhTpVZDNfu1Qn3pk531e3q+nQ==}
 
+  async-mutex@0.5.0:
+    resolution: {integrity: sha512-1A94B18jkJ3DYq284ohPxoXbfTA5HsQ7/Mf4DEhcyLx3Bz27Rh59iScbB6EPiP+B+joue6YCxcMXSbFC1tZKwA==}
+
   async-sema@3.1.1:
     resolution: {integrity: sha512-tLRNUXati5MFePdAk8dw7Qt7DpxPB60ofAgn8WRhW6a2rcimZnYBP9oxHiv0OHy+Wz7kPMG+t4LGdt31+4EmGg==}
 
@@ -6659,8 +6664,8 @@ packages:
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
 
-  eciesjs@0.4.16:
-    resolution: {integrity: sha512-dS5cbA9rA2VR4Ybuvhg6jvdmp46ubLn3E+px8cG/35aEDNclrqoCjg6mt0HYZ/M+OoESS3jSkCrqk1kWAEhWAw==}
+  eciesjs@0.4.17:
+    resolution: {integrity: sha512-TOOURki4G7sD1wDCjj7NfLaXZZ49dFOeEb5y39IXpb8p0hRzVvfvzZHOi5JcT+PpyAbi/Y+lxPb8eTag2WYH8w==}
     engines: {bun: '>=1', deno: '>=2', node: '>=16'}
 
   editorconfig@1.0.4:
@@ -12585,11 +12590,11 @@ snapshots:
       - '@babel/runtime'
       - supports-color
 
-  '@metamask/connect-evm@0.5.0(@babel/runtime@7.28.4)(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
+  '@metamask/connect-evm@0.6.0(@babel/runtime@7.28.4)(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
     dependencies:
       '@metamask/analytics': 0.2.0
       '@metamask/chain-agnostic-permission': 1.4.0(@babel/runtime@7.28.4)
-      '@metamask/connect-multichain': 0.6.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      '@metamask/connect-multichain': 0.8.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@metamask/utils': 11.9.0
     transitivePeerDependencies:
       - '@babel/runtime'
@@ -12599,11 +12604,11 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@metamask/connect-multichain@0.6.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
+  '@metamask/connect-multichain@0.8.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
     dependencies:
       '@metamask/analytics': 0.2.0
-      '@metamask/mobile-wallet-protocol-core': 0.3.1
-      '@metamask/mobile-wallet-protocol-dapp-client': 0.2.2
+      '@metamask/mobile-wallet-protocol-core': 0.4.0
+      '@metamask/mobile-wallet-protocol-dapp-client': 0.3.0
       '@metamask/multichain-api-client': 0.10.1
       '@metamask/multichain-ui': 0.3.0
       '@metamask/onboarding': 1.0.1
@@ -12613,7 +12618,7 @@ snapshots:
       bowser: 2.11.0
       buffer: 6.0.3
       cross-fetch: 4.1.0
-      eciesjs: 0.4.16
+      eciesjs: 0.4.17
       eventemitter3: 5.0.1
       pako: 2.1.0
       uuid: 11.1.0
@@ -12665,15 +12670,16 @@ snapshots:
 
   '@metamask/messenger@0.3.0': {}
 
-  '@metamask/mobile-wallet-protocol-core@0.3.1':
+  '@metamask/mobile-wallet-protocol-core@0.4.0':
     dependencies:
+      async-mutex: 0.5.0
       centrifuge: 5.5.3
       eventemitter3: 5.0.1
       uuid: 11.1.0
 
-  '@metamask/mobile-wallet-protocol-dapp-client@0.2.2':
+  '@metamask/mobile-wallet-protocol-dapp-client@0.3.0':
     dependencies:
-      '@metamask/mobile-wallet-protocol-core': 0.3.1
+      '@metamask/mobile-wallet-protocol-core': 0.4.0
       '@metamask/utils': 9.3.0
       uuid: 11.1.0
     transitivePeerDependencies:
@@ -17070,6 +17076,10 @@ snapshots:
 
   async-lock@1.4.1: {}
 
+  async-mutex@0.5.0:
+    dependencies:
+      tslib: 2.8.1
+
   async-sema@3.1.1: {}
 
   async@3.2.5: {}
@@ -17937,7 +17947,7 @@ snapshots:
 
   eastasianwidth@0.2.0: {}
 
-  eciesjs@0.4.16:
+  eciesjs@0.4.17:
     dependencies:
       '@ecies/ciphers': 0.2.5(@noble/ciphers@1.3.0)
       '@noble/ciphers': 1.3.0
