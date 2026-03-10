@@ -19,18 +19,29 @@ import {
 } from 'viem'
 
 export type MetaMaskParameters = UnionCompute<
-  ExactPartial<Omit<CreateEVMClientParameters, 'api' | 'eventHandlers'>> &
-    OneOf<
-      | {
-          /* Shortcut to connect and sign a message */
-          connectAndSign?: string | undefined
-        }
-      | {
-          // TODO: Strongly type `method` and `params`
-          /* Allow `connectWith` any rpc method */
-          connectWith?: { method: string; params: unknown[] } | undefined
-        }
-    >
+  ExactPartial<Omit<CreateEVMClientParameters, 'api' | 'eventHandlers'>> & {
+    /** @deprecated use `dapp` instead */
+    dappMetadata?: CreateEVMClientParameters['dapp']
+    /** @deprecated use `debug` instead */
+    logging?: unknown
+    /** Mobile-specific options, including preferredOpenLink for React Native deeplinks */
+    mobile?: {
+      /** Custom function to open deeplinks - required for React Native since window.location.href doesn't work */
+      preferredOpenLink?: (deeplink: string, target?: string) => void
+      /** Whether to use deeplink (default: true) or universal link */
+      useDeeplink?: boolean
+    }
+  } & OneOf<
+    | {
+      /* Shortcut to connect and sign a message */
+      connectAndSign?: string | undefined
+    }
+    | {
+      // TODO: Strongly type `method` and `params`
+      /* Allow `connectWith` any rpc method */
+      connectWith?: { method: string; params: unknown[] } | undefined
+    }
+  >
 >
 
 type CreateEVMClientParameters = Parameters<typeof createEVMClient>[0]
@@ -84,7 +95,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           }
         }
         // Switch to chain if provided
-        let currentChainId = (await this.getChainId()) as number
+        let currentChainId = await this.getChainId()
         if (chainId && currentChainId !== chainId) {
           const chain = await this.switchChain!({ chainId }).catch((error) => {
             if (error.code === UserRejectedRequestError.code) throw error
@@ -155,7 +166,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         // JSON-RPC requests on page load
         const timeout = 10
         const accounts = await withRetry(
-          () =>
+          async () =>
             withTimeout(
               async () => {
                 const accounts = await this.getAccounts()
@@ -166,7 +177,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
             ),
           { delay: timeout + 1, retryCount: 3 },
         )
-        return !!accounts.length
+        return Boolean(accounts.length)
       } catch {
         return false
       }
@@ -230,7 +241,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       // https://github.com/MetaMask/providers/pull/120
       if (error && (error as RpcError<1013>).code === 1013) {
         const provider = await this.getProvider()
-        if (provider && !!(await this.getAccounts()).length) return
+        if (provider && Boolean((await this.getAccounts()).length)) return
       }
 
       config.emitter.emit('disconnect')
@@ -241,23 +252,22 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
     async getInstance() {
       if (!metamask) {
         if (!metamaskPromise) {
-          const { createEVMClient } = await (() => {
+          const { createEVMClient } = await (async () => {
             try {
               return import('@metamask/connect-evm')
             } catch {
               throw new Error('dependency "@metamask/connect-evm" not found')
             }
           })()
-
           const defaultDappParams =
             typeof window === 'undefined'
               ? {
-                  name: 'wagmi',
-                }
+                name: 'wagmi',
+              }
               : {
-                  name: window.location.hostname,
-                  url: window.location.href,
-                }
+                name: window.location.hostname,
+                url: window.location.href,
+              }
 
           metamaskPromise = createEVMClient({
             ...parameters,
@@ -269,7 +279,9 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
                 ]),
               ),
             },
-            dapp: parameters.dapp ?? defaultDappParams,
+            dapp:
+              parameters.dappMetadata ?? parameters.dapp ?? defaultDappParams,
+            debug: parameters.logging ? true : parameters.debug,
             eventHandlers: {
               accountsChanged: this.onAccountsChanged.bind(this),
               chainChanged: this.onChainChanged.bind(this),
@@ -277,6 +289,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
               disconnect: this.onDisconnect.bind(this),
               displayUri: this.onDisplayUri.bind(this),
             },
+            ...(parameters.mobile && { mobile: parameters.mobile }),
           })
         }
         metamask = await metamaskPromise
