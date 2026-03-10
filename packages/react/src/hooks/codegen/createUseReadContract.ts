@@ -21,7 +21,6 @@ import type {
   Address,
   ContractFunctionArgs,
   ContractFunctionName,
-  ExactPartial,
 } from 'viem'
 import { useChainId } from '../useChainId.js'
 import { useConfig } from '../useConfig.js'
@@ -51,11 +50,6 @@ export type CreateUseReadContractReturnType<
   abi extends Abi | readonly unknown[],
   address extends Address | Record<number, Address> | undefined,
   functionName extends ContractFunctionName<abi, stateMutability> | undefined,
-  ///
-  omittedProperties extends 'abi' | 'address' | 'functionName' =
-    | 'abi'
-    | (address extends undefined ? never : 'address')
-    | (functionName extends undefined ? never : 'functionName'),
 > = <
   name extends functionName extends ContractFunctionName<abi, stateMutability>
     ? functionName
@@ -65,8 +59,12 @@ export type CreateUseReadContractReturnType<
   selectData = ReadContractData<abi, name, args>,
 >(
   parameters?: UnionCompute<
-    UnionExactPartial<
-      // TODO: Ideally use UnionStrictOmit with omittedProperties (abi, address, functionName)
+    {
+      abi?: undefined
+      address?: address extends undefined ? Address : undefined
+      functionName?: functionName extends undefined ? name : undefined
+    } & UnionExactPartial<
+      // TODO: Omit abi/address/functionName from below once it does not break inference.
       ReadContractParameters<abi, name, args, config>
     > &
       ScopeKeyParameter &
@@ -80,8 +78,7 @@ export type CreateUseReadContractReturnType<
   > &
     (address extends Record<number, Address>
       ? { chainId?: keyof address | undefined }
-      : unknown) &
-    ExactPartial<Record<omittedProperties, undefined>>,
+      : unknown),
 ) => UseReadContractReturnType<abi, name, args, selectData>
 
 export function createUseReadContract<
