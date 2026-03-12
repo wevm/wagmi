@@ -109,7 +109,7 @@
         "ignoreDependencies": [
           "@base-org/account",
           "@coinbase/wallet-sdk",
-          "@metamask/sdk",
+          "@metamask/connect-evm",
           "@safe-global/safe-apps-provider",
           "@safe-global/safe-apps-sdk",
           "@wagmi/core",

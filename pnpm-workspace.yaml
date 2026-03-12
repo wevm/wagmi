@@ -22,6 +22,7 @@ autoInstallPeers: false
 catalog:
   '@base-org/account': 2.4.0
   '@coinbase/wallet-sdk': 4.3.6
+  '@metamask/connect-evm': 0.7.0
   '@metamask/sdk': 0.33.1
   '@nuxt/schema': 4.2.1
   '@safe-global/safe-apps-provider': 0.18.6
@@ -52,6 +53,10 @@ minimumReleaseAge: 1440
 
 minimumReleaseAgeExclude:
   - '@isaacs/brace-expansion'
+  - '@metamask/connect-evm'
+  - '@metamask/connect-multichain'
+  - '@metamask/multichain-ui'
+  - '@metamask/analytics'
   - '@wagmi/cli'
   - '@wagmi/connectors'
   - '@wagmi/core'
@@ -79,7 +84,7 @@ overrides:
   happy-dom@<20.0.2: '>=20.0.2'
   hono@<4.11.7: 4.11.7
   lodash@>=4.0.0 <=4.17.22: '>=4.17.23'
-  markdown-it@>=13.0.0 <14.1.1: '14.1.1'
+  markdown-it@>=13.0.0 <14.1.1: 14.1.1
   mdast-util-to-hast@<13.2.1: '>=13.2.1'
   nanoid@<3.3.8: 3.3.8
   node-forge@<1.3.2: '>=1.3.2'
