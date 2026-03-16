@@ -6,7 +6,7 @@ const connectorDependencyVersion = 'x.y.z'
 
 # metaMask
 
-Connector for [MetaMask SDK](https://github.com/MetaMask/metamask-sdk).
+Connector for [MetaMask Connect](https://github.com/MetaMask/connect-monorepo).
 
 ## Import
 
@@ -59,7 +59,7 @@ export const config = createConfig({
 import { type MetaMaskParameters } from '{{connectorsPackageName}}'
 ```
 
-Check out the [MetaMask SDK docs](https://docs.metamask.io/wallet/connect/3rd-party-libraries/wagmi/) for more info. A few options are omitted that Wagmi manages internally.
+Check out the [MetaMask Connect docs](https://docs.metamask.io/wallet/connect/3rd-party-libraries/wagmi/) for more info. A few options are omitted that Wagmi manages internally.
 
 ### dapp
 
@@ -140,6 +140,5 @@ By default, if the EIP-6963 MetaMask injected provider is detected, this connect
 
 EIP-6963 defines a standard way for dapps to interact with multiple wallets simultaneously by injecting providers into the browser. Wallets that implement this standard can make their presence known to dapps in a consistent and predictable manner.
 
-When MetaMask SDK detects an EIP-6963-compliant provider (such as MetaMask itself), the connector will automatically replace the default injected provider (like `window.ethereum`) with the one provided by MetaMask SDK.
 
 See the [`rdns` property](https://wagmi.sh/dev/creating-connectors#properties) for more information.
