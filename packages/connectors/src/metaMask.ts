@@ -19,19 +19,8 @@ import {
 } from 'viem'
 
 export type MetaMaskParameters = UnionCompute<
-  ExactPartial<Omit<CreateEVMClientParameters, 'api' | 'eventHandlers'>> & {
-    /** @deprecated use `dapp` instead */
-    dappMetadata?: CreateEVMClientParameters['dapp']
-    /** @deprecated use `debug` instead */
-    logging?: unknown
-    /** Mobile-specific options, including preferredOpenLink for React Native deeplinks */
-    mobile?: {
-      /** Custom function to open deeplinks - required for React Native since window.location.href doesn't work */
-      preferredOpenLink?: (deeplink: string, target?: string) => void
-      /** Whether to use deeplink (default: true) or universal link */
-      useDeeplink?: boolean
-    }
-  } & OneOf<
+  ExactPartial<Omit<CreateEVMClientParameters, 'api' | 'eventHandlers'>> &
+    OneOf<
       | {
           /* Shortcut to connect and sign a message */
           connectAndSign?: string | undefined
@@ -279,9 +268,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
                 ]),
               ),
             },
-            dapp:
-              parameters.dappMetadata ?? parameters.dapp ?? defaultDappParams,
-            debug: parameters.logging ? true : parameters.debug,
+            dapp: parameters.dapp ?? defaultDappParams,
             eventHandlers: {
               accountsChanged: this.onAccountsChanged.bind(this),
               chainChanged: this.onChainChanged.bind(this),
