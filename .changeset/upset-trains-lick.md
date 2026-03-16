@@ -24,11 +24,6 @@ The connector parameters have been simplified and changed to align with the new 
 
 - `dappMetadata` - Use `dapp` instead
 - `logging` - Use `debug` instead
-- `forceDeleteProvider`
-- `forceInjectProvider`
-- `injectProvider`
-- `useDeeplink` - Use `mobile.useDeeplink` instead
-- `readonlyRPCMap`
 - `headless` - Use `ui.headless` instead
 - `checkInstallationImmediately`
 - `checkInstallationOnAllCalls`
