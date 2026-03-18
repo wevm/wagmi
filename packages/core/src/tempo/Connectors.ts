@@ -357,9 +357,17 @@ export function webAuthn(options: webAuthn.Parameters) {
         }
         // If we are not reconnecting, orchestrate the provisioning of the access key.
         else {
+          const keyAuthParameters: NonNullable<
+            Parameters<typeof account.signKeyAuthorization>[1]
+          > & {
+            chainId?: number | undefined
+          } = {
+            ...accessKeyOptions,
+            chainId: parameters.chainId ?? config.chains[0]?.id,
+          }
           const keyAuth =
             keyAuthorization ??
-            (await account.signKeyAuthorization(accessKey, accessKeyOptions))
+            (await account.signKeyAuthorization(accessKey, keyAuthParameters))
 
           await config?.storage?.setItem(
             `pendingKeyAuthorization:${account.address.toLowerCase()}`,
