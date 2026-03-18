@@ -364,7 +364,7 @@ export function webAuthn(options: webAuthn.Parameters) {
             (await account.signKeyAuthorization(accessKey, {
               ...accessKeyOptions,
               chainId: BigInt(parameters.chainId ?? config.chains[0]?.id ?? 0),
-            }))
+            } as never))
 
           await config?.storage?.setItem(
             `pendingKeyAuthorization:${account.address.toLowerCase()}`,
