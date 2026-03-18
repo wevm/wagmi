@@ -16,6 +16,7 @@ auditConfig:
     - GHSA-mh29-5h37-fv8m
     - GHSA-5j98-mcp5-4vw2
     - GHSA-92fh-27vv-894w
+    - GHSA-677m-j7p3-52f9
 
 autoInstallPeers: false
 
@@ -76,7 +77,6 @@ overrides:
   esbuild@<=0.24.2: 0.25.0
   glob@>=10.2.0 <10.5.0: 10.5.0
   h3@<1.15.6: 1.15.6
-  h3@>=2.0.0-0 <2.0.1-rc.15: 2.0.1-rc.15
   happy-dom@<20.0.2: '>=20.0.2'
   minimatch@<3.1.4: 3.1.4
   minimatch@>=5.0.0 <5.1.8: 5.1.8
