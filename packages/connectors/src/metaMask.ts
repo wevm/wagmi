@@ -19,8 +19,22 @@ import {
 } from 'viem'
 
 export type MetaMaskParameters = UnionCompute<
-  ExactPartial<Omit<CreateEVMClientParameters, 'api' | 'eventHandlers'>> &
-    OneOf<
+  ExactPartial<Omit<CreateEVMClientParameters, 'api' | 'eventHandlers'>> & {
+    /**
+     * @deprecated Use `dapp` instead.
+     *
+     * Metadata is used to fill details for the UX on confirmation screens in MetaMask.
+     */
+    dappMetadata?: { name?: string; url?: string; iconUrl?: string } | undefined
+    /**
+     * @deprecated Use `debug` instead.
+     */
+    logging?: { sdk?: boolean } | undefined
+    /**
+     * @deprecated Use `ui.headless` instead.
+     */
+    headless?: boolean | undefined
+  } & OneOf<
       | {
           /* Shortcut to connect and sign a message */
           connectAndSign?: string | undefined
@@ -52,7 +66,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
     name: 'MetaMask',
     rdns: ['io.metamask', 'io.metamask.mobile'],
     type: metaMask.type,
-    async connect({ chainId = 1, isReconnecting, withCapabilities } = {}) {
+    async connect({ chainId, isReconnecting, withCapabilities } = {}) {
       const instance = await this.getInstance()
       const provider = instance.getProvider()
 
@@ -210,9 +224,14 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       }
     },
     async onAccountsChanged(accounts) {
-      config.emitter.emit('change', {
-        accounts: accounts.map((account) => getAddress(account)),
-      })
+      if (accounts.length === 0) this.onDisconnect()
+      else if (config.emitter.listenerCount('connect')) {
+        const chainId = (await this.getChainId()).toString()
+        this.onConnect({ chainId })
+      } else
+        config.emitter.emit('change', {
+          accounts: accounts.map((x) => getAddress(x)),
+        })
     },
     onChainChanged(chain) {
       const chainId = Number(chain)
@@ -250,13 +269,8 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           })()
           const defaultDappParams =
             typeof window === 'undefined'
-              ? {
-                  name: 'wagmi',
-                }
-              : {
-                  name: window.location.hostname,
-                  url: window.location.href,
-                }
+              ? { name: 'wagmi' }
+              : { name: window.location.hostname, url: window.location.href }
 
           metamaskPromise = createEVMClient({
             ...parameters,
@@ -268,7 +282,11 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
                 ]),
               ),
             },
-            dapp: parameters.dapp ?? defaultDappParams,
+            dapp:
+              parameters.dapp ??
+              (parameters.dappMetadata as CreateEVMClientParameters['dapp']) ??
+              defaultDappParams,
+            debug: parameters.debug ?? parameters.logging?.sdk,
             eventHandlers: {
               accountsChanged: this.onAccountsChanged.bind(this),
               chainChanged: this.onChainChanged.bind(this),
@@ -278,6 +296,12 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
             },
             analytics: {
               integrationType: 'wagmi',
+            },
+            ui: {
+              ...parameters.ui,
+              ...(parameters.headless != null && {
+                headless: parameters.headless,
+              }),
             },
             ...(parameters.mobile && { mobile: parameters.mobile }),
           })
