@@ -1,8 +1,5 @@
 ---
 "@wagmi/connectors": major
-"wagmi": minor
-"@wagmi/vue": patch
-"@wagmi/solid": patch
 ---
 
 Migrated MetaMask connector from `@metamask/sdk` to the new `@metamask/connect-evm` package.
