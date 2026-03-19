@@ -284,8 +284,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
             },
             dapp:
               parameters.dapp ??
-              (parameters.dappMetadata as CreateEVMClientParameters['dapp']) ??
-              defaultDappParams,
+              ({ ...defaultDappParams, ...parameters.dappMetadata }),
             debug: parameters.debug ?? parameters.logging?.sdk,
             eventHandlers: {
               accountsChanged: this.onAccountsChanged.bind(this),
