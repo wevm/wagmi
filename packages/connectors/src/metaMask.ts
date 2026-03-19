@@ -224,14 +224,9 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       }
     },
     async onAccountsChanged(accounts) {
-      if (accounts.length === 0) this.onDisconnect()
-      else if (config.emitter.listenerCount('connect')) {
-        const chainId = (await this.getChainId()).toString()
-        this.onConnect({ chainId })
-      } else
-        config.emitter.emit('change', {
-          accounts: accounts.map((x) => getAddress(x)),
-        })
+      config.emitter.emit('change', {
+        accounts: accounts.map((x) => getAddress(x)),
+      })
     },
     onChainChanged(chain) {
       const chainId = Number(chain)
@@ -282,9 +277,10 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
                 ]),
               ),
             },
-            dapp:
-              parameters.dapp ??
-              ({ ...defaultDappParams, ...parameters.dappMetadata }),
+            dapp: parameters.dapp ?? {
+              ...defaultDappParams,
+              ...parameters.dappMetadata,
+            },
             debug: parameters.debug ?? parameters.logging?.sdk,
             eventHandlers: {
               accountsChanged: this.onAccountsChanged.bind(this),
