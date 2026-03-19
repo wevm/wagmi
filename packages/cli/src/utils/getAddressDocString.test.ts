@@ -35,6 +35,9 @@ test('multichain address with unknown chain id', async () => {
       },
     }),
   ).toMatchInlineSnapshot(
-    '"* [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e)"',
+    `
+    "* - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e)
+    * - [__View Contract on Expanse Network Expanse Explorer__](https://explorer.expanse.tech/address/0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e)"
+  `,
   )
 })

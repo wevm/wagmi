@@ -254,8 +254,10 @@ export function webAuthn(options: webAuthn.Parameters) {
             if (!accessKeyAddress)
               return { keyAuthorization_unsigned: undefined, hash: undefined }
 
+            const chainId = parameters.chainId ?? config.chains[0]?.id
             const keyAuthorization_unsigned = KeyAuthorization.from({
               address: accessKeyAddress,
+              chainId: chainId ? BigInt(chainId) : undefined,
               expiry: accessKeyOptions?.expiry,
               strict: accessKeyOptions?.strict ?? false,
               type: 'p256',
@@ -359,11 +361,14 @@ export function webAuthn(options: webAuthn.Parameters) {
         else {
           const keyAuth =
             keyAuthorization ??
-            (await account.signKeyAuthorization(accessKey, accessKeyOptions))
+            (await account.signKeyAuthorization(accessKey, {
+              ...accessKeyOptions,
+              chainId: BigInt(parameters.chainId ?? config.chains[0]?.id ?? 0),
+            } as never))
 
           await config?.storage?.setItem(
             `pendingKeyAuthorization:${account.address.toLowerCase()}`,
-            keyAuth,
+            keyAuth as never,
           )
           await idb.set(`accessKey:${account.address.toLowerCase()}`, {
             ...keyPair,
