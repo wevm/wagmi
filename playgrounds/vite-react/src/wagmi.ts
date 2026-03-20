@@ -24,7 +24,7 @@ export const config = createConfig({
     }),
     porto(),
     baseAccount(),
-    metaMask(),
+    metaMask({ ui: { headless: true } }),
   ],
   transports: {
     [mainnet.id]: http(),
