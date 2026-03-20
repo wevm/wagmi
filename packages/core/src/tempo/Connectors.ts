@@ -854,3 +854,378 @@ export declare namespace dangerous_secp256k1 {
     account?: LocalAccount | undefined
   }
 }
+
+crossDomainAccessKey.type = 'crossDomainAccessKey' as const
+
+/**
+ * Connector for cross-domain access key authorization.
+ *
+ * Generates a secp256k1 key locally and authorizes it via a popup
+ * to the domain where the user's passkey wallet lives (e.g., tempo.xyz).
+ * This solves the WebAuthn rpId domain-binding limitation — users
+ * keep their main wallet and grant spending access to third-party apps.
+ */
+export function crossDomainAccessKey(
+  options: crossDomainAccessKey.Parameters,
+) {
+  let account: LocalAccount | undefined
+  let pendingKeyAuthorization:
+    | KeyAuthorization.KeyAuthorization
+    | undefined
+
+  const defaultExpiry = Math.floor(
+    (Date.now() + 24 * 60 * 60 * 1000) / 1000, // one day
+  )
+
+  type Properties = {
+    connect(parameters: {
+      chainId?: number | undefined
+      isReconnecting?: boolean | undefined
+    }): Promise<{
+      accounts: readonly Address.Address[]
+      chainId: number
+    }>
+  }
+  type Provider = Pick<EIP1193Provider, 'request'>
+  type StorageItem = {
+    'crossDomain.activeAddress': Address.Address
+    [key: `crossDomain.${string}.privateKey`]: Hex.Hex
+    [key: `crossDomain.${string}.authorization`]: KeyAuthorization.KeyAuthorization
+  }
+
+  return createConnector<Provider, Properties, StorageItem>((config) => ({
+    id: 'crossDomainAccessKey',
+    name: 'EOA (Cross-Domain Access Key)',
+    type: 'crossDomainAccessKey',
+    async setup() {
+      const address = await config.storage?.getItem(
+        'crossDomain.activeAddress',
+      )
+      if (!address) return
+      const privateKey = await config.storage?.getItem(
+        `crossDomain.${address}.privateKey`,
+      )
+      if (privateKey) account = privateKeyToAccount(privateKey)
+    },
+    async connect(parameters = {}) {
+      // Try to restore existing key
+      const existingAddress = await config.storage?.getItem(
+        'crossDomain.activeAddress',
+      )
+      if (existingAddress) {
+        const privateKey = await config.storage?.getItem(
+          `crossDomain.${existingAddress}.privateKey`,
+        )
+        const storedAuth = await config.storage?.getItem(
+          `crossDomain.${existingAddress}.authorization`,
+        )
+
+        if (privateKey && storedAuth) {
+          // Check expiry
+          if (
+            storedAuth.expiry &&
+            storedAuth.expiry < Date.now() / 1000
+          ) {
+            // Expired — clear and re-authorize
+            await config.storage?.removeItem(
+              `crossDomain.${existingAddress}.privateKey`,
+            )
+            await config.storage?.removeItem(
+              `crossDomain.${existingAddress}.authorization`,
+            )
+            await config.storage?.removeItem('crossDomain.activeAddress')
+          } else {
+            account = privateKeyToAccount(privateKey)
+            pendingKeyAuthorization = storedAuth
+
+            const chainId =
+              parameters.chainId ?? config.chains[0]?.id
+            if (!chainId) throw new ChainNotConfiguredError()
+
+            return {
+              accounts: [getAddress(account.address)] as never,
+              chainId,
+            }
+          }
+        }
+      }
+
+      // Generate new secp256k1 key
+      const privateKey = generatePrivateKey()
+      account = privateKeyToAccount(privateKey)
+      const accessKeyAddress = account.address
+
+      // Build unsigned key authorization
+      const chainId = parameters.chainId ?? config.chains[0]?.id
+      const expiry = options.expiry ?? defaultExpiry
+      const keyAuthorization_unsigned = KeyAuthorization.from({
+        address: accessKeyAddress as `0x${string}`,
+        chainId: chainId ? BigInt(chainId) : undefined,
+        expiry,
+        type: 'secp256k1',
+      })
+      const hash = KeyAuthorization.getSignPayload(
+        keyAuthorization_unsigned,
+      )
+
+      // Open popup to authorization relay
+      const credential = await requestCrossDomainAuthorization({
+        authorizationUrl: options.authorizationUrl,
+        keyAddress: accessKeyAddress,
+        hash,
+        chainId: chainId ?? 0,
+        expiry,
+      })
+
+      // Build signed key authorization from the credential response
+      const keyAuthorization = KeyAuthorization.from({
+        ...keyAuthorization_unsigned,
+        signature: SignatureEnvelope.from({
+          metadata: credential.metadata,
+          signature: credential.signature,
+          publicKey: PublicKey.fromHex(credential.publicKey),
+          type: 'webAuthn',
+        }),
+      })
+
+      // Store everything
+      pendingKeyAuthorization = keyAuthorization
+      await config.storage?.setItem(
+        'crossDomain.activeAddress',
+        getAddress(accessKeyAddress),
+      )
+      await config.storage?.setItem(
+        `crossDomain.${getAddress(accessKeyAddress)}.privateKey`,
+        privateKey,
+      )
+      await config.storage?.setItem(
+        `crossDomain.${getAddress(accessKeyAddress)}.authorization`,
+        keyAuthorization as never,
+      )
+
+      if (!chainId) throw new ChainNotConfiguredError()
+
+      return {
+        accounts: [getAddress(accessKeyAddress)] as never,
+        chainId,
+      }
+    },
+    async disconnect() {
+      await config.storage?.removeItem('crossDomain.activeAddress')
+      config.emitter.emit('disconnect')
+      account = undefined
+      pendingKeyAuthorization = undefined
+    },
+    async getAccounts() {
+      if (!account) return []
+      return [getAddress(account.address)]
+    },
+    async getChainId() {
+      return config.chains[0]?.id!
+    },
+    async isAuthorized() {
+      try {
+        const accounts = await this.getAccounts()
+        return !!accounts.length
+      } catch {
+        return false
+      }
+    },
+    async switchChain({ chainId }) {
+      const chain = config.chains.find((chain) => chain.id === chainId)
+      if (!chain) throw new SwitchChainError(new ChainNotConfiguredError())
+      return chain
+    },
+    onAccountsChanged() {},
+    onChainChanged(chain) {
+      const chainId = Number(chain)
+      config.emitter.emit('change', { chainId })
+    },
+    async onDisconnect() {
+      config.emitter.emit('disconnect')
+      account = undefined
+      pendingKeyAuthorization = undefined
+    },
+    async getClient({ chainId } = {}) {
+      const chain =
+        config.chains.find((x) => x.id === chainId) ?? config.chains[0]
+      if (!chain) throw new ChainNotConfiguredError()
+
+      const transports = config.transports
+      if (!transports) throw new ChainNotConfiguredError()
+
+      const transport = transports[chain.id]
+      if (!transport) throw new ChainNotConfiguredError()
+
+      if (!account) throw new Error('account not found.')
+
+      // Include pending key authorization in transaction preparation
+      const targetChain = defineChain({
+        ...chain,
+        prepareTransactionRequest: [
+          async (args, { phase }) => {
+            const keyAuthorization = await (async () => {
+              const existing = (
+                args as {
+                  keyAuthorization?:
+                    | KeyAuthorization.KeyAuthorization
+                    | undefined
+                }
+              ).keyAuthorization
+              if (existing) return existing
+
+              // Use pending authorization (first tx after connect)
+              if (pendingKeyAuthorization) {
+                const auth = pendingKeyAuthorization
+                pendingKeyAuthorization = undefined
+                return auth
+              }
+
+              // Check storage
+              const address = account?.address?.toLowerCase()
+              if (!address) return undefined
+              const stored = await config.storage?.getItem(
+                `crossDomain.${address}.authorization`,
+              )
+              if (stored) {
+                await config.storage?.removeItem(
+                  `crossDomain.${address}.authorization`,
+                )
+                return stored
+              }
+
+              return undefined
+            })()
+
+            const [prepareTransactionRequestFn, fnOptions] = (() => {
+              if (!chain.prepareTransactionRequest)
+                return [undefined, undefined]
+              if (typeof chain.prepareTransactionRequest === 'function')
+                return [chain.prepareTransactionRequest, undefined]
+              return chain.prepareTransactionRequest
+            })()
+
+            const request = await (async () => {
+              if (!prepareTransactionRequestFn) return {}
+              if (!fnOptions || fnOptions?.runAt?.includes(phase))
+                return await prepareTransactionRequestFn(args, { phase })
+              return {}
+            })()
+
+            return {
+              ...args,
+              ...request,
+              keyAuthorization,
+            }
+          },
+          {
+            runAt: [
+              'afterFillParameters',
+              'beforeFillParameters',
+              'beforeFillTransaction',
+            ],
+          },
+        ],
+      })
+
+      return createClient({
+        account,
+        chain: targetChain,
+        transport: walletNamespaceCompat(transport, {
+          account,
+        }),
+      })
+    },
+    async getProvider({ chainId } = {}) {
+      const { request } = await this.getClient!({ chainId })
+      return { request }
+    },
+  }))
+}
+
+/**
+ * Opens a popup to the authorization relay and waits for the signed credential.
+ */
+function requestCrossDomainAuthorization(parameters: {
+  authorizationUrl: string
+  keyAddress: string
+  hash: Hex.Hex
+  chainId: number
+  expiry: number
+}): Promise<{
+  metadata: any
+  signature: any
+  publicKey: Hex.Hex
+}> {
+  const { authorizationUrl, keyAddress, hash, chainId, expiry } =
+    parameters
+
+  const url = new URL(authorizationUrl)
+  url.searchParams.set('keyAddress', keyAddress)
+  url.searchParams.set('hash', hash)
+  url.searchParams.set('chainId', String(chainId))
+  url.searchParams.set('expiry', String(expiry))
+  url.searchParams.set('origin', window.location.origin)
+
+  return new Promise((resolve, reject) => {
+    const width = 500
+    const height = 600
+    const left = window.screenX + (window.innerWidth - width) / 2
+    const top = window.screenY + (window.innerHeight - height) / 2
+
+    const popup = window.open(
+      url.toString(),
+      'tempo-authorize',
+      `width=${width},height=${height},left=${left},top=${top},popup=true`,
+    )
+
+    if (!popup) {
+      reject(new Error('Failed to open authorization popup. Check popup blocker.'))
+      return
+    }
+
+    const expectedOrigin = url.origin
+
+    const onMessage = (event: MessageEvent) => {
+      if (event.origin !== expectedOrigin) return
+      if (event.data?.type !== 'keyAuthorization') return
+
+      cleanup()
+
+      if (event.data.error) {
+        reject(new Error(event.data.error))
+        return
+      }
+
+      resolve(event.data.credential)
+    }
+
+    const pollClosed = setInterval(() => {
+      if (popup.closed) {
+        cleanup()
+        reject(new Error('Authorization popup was closed.'))
+      }
+    }, 500)
+
+    const cleanup = () => {
+      window.removeEventListener('message', onMessage)
+      clearInterval(pollClosed)
+      try { popup.close() } catch {}
+    }
+
+    window.addEventListener('message', onMessage)
+  })
+}
+
+export declare namespace crossDomainAccessKey {
+  export type Parameters = {
+    /** URL of the authorization relay page (e.g., 'https://tempo.xyz/authorize') */
+    authorizationUrl: string
+    /** Access key expiry as unix timestamp (seconds). Default: 24 hours from now. */
+    expiry?: number | undefined
+    /** Spending limits for the access key. */
+    limits?:
+      | { token: Address.Address; limit: bigint }[]
+      | undefined
+  }
+}
