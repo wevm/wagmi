@@ -66,5 +66,11 @@ export const wagmiModule: NuxtModule<WagmiModuleOptions> =
         'useWriteContract',
       ]
       addImports(names.map((name) => ({ from: composables, name })))
+
+      // Pre-bundle CJS dependencies for Vite compatibility
+      nuxt.options.vite ??= {}
+      nuxt.options.vite.optimizeDeps ??= {}
+      nuxt.options.vite.optimizeDeps.include ??= []
+      nuxt.options.vite.optimizeDeps.include.push('eventemitter3')
     },
   })
