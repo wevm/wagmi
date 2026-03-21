@@ -21,6 +21,13 @@ export const wagmiModule: NuxtModule<WagmiModuleOptions> =
         references.push({ types: '@wagmi/vue/nuxt' })
       })
 
+      // Ensure CJS dependencies are pre-bundled for ESM compatibility
+      nuxt.hook('vite:extendConfig', (config) => {
+        config.optimizeDeps ??= {}
+        config.optimizeDeps.include ??= []
+        config.optimizeDeps.include.push('eventemitter3')
+      })
+
       // Add auto imports
       const composables = resolve('./runtime/composables')
       const names = [
