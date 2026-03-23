@@ -1,5 +1,22 @@
 # @wagmi/vue
 
+## 0.5.1
+
+### Patch Changes
+
+- Update MetaMask connector from `@metamask/sdk` to the new `@metamask/connect-evm`. ([#4960](https://github.com/wevm/wagmi/pull/4960))
+
+  ```bash
+  npm install @metamask/connect-evm
+  npm uninstall @metamask/sdk
+  ```
+
+- Added `eventemitter3` to Vite `optimizeDeps.include` in Nuxt module to fix CJS/ESM interop error when using auto-imports. ([#5028](https://github.com/wevm/wagmi/pull/5028))
+
+- Updated dependencies [[`2f4316c`](https://github.com/wevm/wagmi/commit/2f4316ced40944b3af01534e4b6e9c1a4455c7a6), [`2a566ec`](https://github.com/wevm/wagmi/commit/2a566ecc770805abe5a39fb960bfb0336240df86)]:
+  - @wagmi/core@3.4.1
+  - @wagmi/connectors@8.0.0
+
 ## 0.5.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 3.4.1
+
+### Patch Changes
+
+- Fixed chainId not being passed to Tempo webAuthn key authorization ([#5024](https://github.com/wevm/wagmi/pull/5024))
+
 ## 3.4.0
 
 ### Minor Changes
