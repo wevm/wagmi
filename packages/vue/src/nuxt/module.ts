@@ -1,5 +1,10 @@
 import type { NuxtModule } from '@nuxt/schema'
-import { addImports, createResolver, defineNuxtModule } from 'nuxt/kit'
+import {
+  addImports,
+  createResolver,
+  defineNuxtModule,
+  extendViteConfig,
+} from 'nuxt/kit'
 
 // biome-ignore lint/complexity/noBannedTypes: allowed
 export type WagmiModuleOptions = {}
@@ -22,7 +27,7 @@ export const wagmiModule: NuxtModule<WagmiModuleOptions> =
       })
 
       // Ensure CJS dependencies are pre-bundled for ESM compatibility
-      nuxt.hook('vite:extendConfig', (config) => {
+      extendViteConfig((config) => {
         config.optimizeDeps ??= {}
         config.optimizeDeps.include ??= []
         config.optimizeDeps.include.push('eventemitter3')
@@ -66,11 +71,5 @@ export const wagmiModule: NuxtModule<WagmiModuleOptions> =
         'useWriteContract',
       ]
       addImports(names.map((name) => ({ from: composables, name })))
-
-      // Pre-bundle CJS dependencies for Vite compatibility
-      nuxt.options.vite ??= {}
-      nuxt.options.vite.optimizeDeps ??= {}
-      nuxt.options.vite.optimizeDeps.include ??= []
-      nuxt.options.vite.optimizeDeps.include.push('eventemitter3')
     },
   })
