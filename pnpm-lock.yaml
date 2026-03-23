@@ -92,7 +92,8 @@ overrides:
   elliptic@<=6.6.0: '>=6.6.1'
   esbuild@<=0.24.2: 0.25.0
   glob@>=10.2.0 <10.5.0: 10.5.0
-  h3@<1.15.6: 1.15.6
+  h3@<1.15.9: 1.15.9
+  h3-v2: npm:h3@2.0.1-rc.17
   happy-dom@<20.0.2: '>=20.0.2'
   minimatch@<3.1.4: 3.1.4
   minimatch@>=5.0.0 <5.1.8: 5.1.8
@@ -7489,11 +7490,11 @@ packages:
     resolution: {integrity: sha512-O1Ld7Dr+nqPnmGpdhzLmMTQ4vAsD+rHwMm1NLUmoUFFymBOMKxCCrtDxqdBRYXdeEPEi3SyoR4TizJLQrnKBNA==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
-  h3@1.15.6:
-    resolution: {integrity: sha512-oi15ESLW5LRthZ+qPCi5GNasY/gvynSKUQxgiovrY63bPAtG59wtM+LSrlcwvOHAXzGrXVLnI97brbkdPF9WoQ==}
+  h3@1.15.9:
+    resolution: {integrity: sha512-H7UPnyIupUOYUQu7f2x7ABVeMyF/IbJjqn20WSXpMdnQB260luADUkSgJU7QTWLutq8h3tUayMQ1DdbSYX5LkA==}
 
-  h3@2.0.1-rc.16:
-    resolution: {integrity: sha512-h+pjvyujdo9way8qj6FUbhaQcHlR8FEq65EhTX9ViT5pK8aLj68uFl4hBkF+hsTJAH+H1END2Yv6hTIsabGfag==}
+  h3@2.0.1-rc.17:
+    resolution: {integrity: sha512-9rPJs68qMj7HJH78z7uSIAw6rl3EElLdVSirTeAf6B5ogwiFVIr9AKMMS4u00Gp8DYIPnnjtw3ZWN7EkYcPBrQ==}
     engines: {node: '>=20.11.1'}
     hasBin: true
     peerDependencies:
@@ -9648,6 +9649,10 @@ packages:
     engines: {node: '>=10'}
     peerDependencies:
       seroval: '>=1.4.1'
+
+  seroval@1.4.1:
+    resolution: {integrity: sha512-9GOc+8T6LN4aByLN75uRvMbrwY5RDBW6lSlknsY4LEa9ZmWcxKcRe1G/Q3HZXjltxMHTrStnvrwAICxZrhldtg==}
+    engines: {node: '>=10'}
 
   seroval@1.4.2:
     resolution: {integrity: sha512-N3HEHRCZYn3cQbsC4B5ldj9j+tHdf4JZoYPlcI4rRYu0Xy4qN8MQf1Z08EibzB0WpgRG5BGK08FTrmM66eSzKQ==}
@@ -13468,7 +13473,7 @@ snapshots:
       fuse.js: 7.1.0
       get-port-please: 3.2.0
       giget: 2.0.0
-      h3: 1.15.6
+      h3: 1.15.9
       httpxy: 0.1.7
       jiti: 2.6.1
       listhen: 1.9.0
@@ -13732,7 +13737,7 @@ snapshots:
       errx: 0.1.0
       escape-string-regexp: 5.0.0
       exsolve: 1.0.8
-      h3: 1.15.6
+      h3: 1.15.9
       impound: 1.0.0
       klona: 2.0.6
       mocked-exports: 0.1.1
@@ -13849,7 +13854,7 @@ snapshots:
       exsolve: 1.0.8
       externality: 1.0.2
       get-port-please: 3.2.0
-      h3: 1.15.6
+      h3: 1.15.9
       jiti: 2.6.1
       knitwork: 1.2.0
       magic-string: 0.30.21
@@ -13908,7 +13913,7 @@ snapshots:
       escape-string-regexp: 5.0.0
       exsolve: 1.0.8
       get-port-please: 3.2.0
-      h3: 1.15.6
+      h3: 1.15.9
       jiti: 2.6.1
       knitwork: 1.2.0
       magic-string: 0.30.21
@@ -13919,7 +13924,7 @@ snapshots:
       pkg-types: 2.3.0
       postcss: 8.5.6
       rollup-plugin-visualizer: 6.0.5(rollup@4.59.0)
-      seroval: 1.4.2
+      seroval: 1.4.1
       std-env: 3.10.0
       ufo: 1.6.3
       unenv: 2.0.0-rc.24
@@ -15829,8 +15834,8 @@ snapshots:
       '@tanstack/history': 1.145.7
       '@tanstack/store': 0.8.0
       cookie-es: 2.0.0
-      seroval: 1.4.2
-      seroval-plugins: 1.4.2(seroval@1.4.2)
+      seroval: 1.5.1
+      seroval-plugins: 1.4.2(seroval@1.5.1)
       tiny-invariant: 1.3.3
       tiny-warning: 1.0.3
 
@@ -16025,7 +16030,7 @@ snapshots:
       '@tanstack/router-core': 1.167.4
       '@tanstack/start-client-core': 1.166.12
       '@tanstack/start-storage-context': 1.166.12
-      h3-v2: h3@2.0.1-rc.16
+      h3-v2: h3@2.0.1-rc.17
       seroval: 1.5.1
       tiny-invariant: 1.3.3
     transitivePeerDependencies:
@@ -16469,7 +16474,7 @@ snapshots:
       consola: 3.4.2
       defu: 6.1.4
       get-port-please: 3.2.0
-      h3: 1.15.6
+      h3: 1.15.9
       http-shutdown: 1.2.2
       jiti: 1.21.7
       mlly: 1.8.0
@@ -19204,7 +19209,7 @@ snapshots:
     dependencies:
       duplexer: 0.1.2
 
-  h3@1.15.6:
+  h3@1.15.9:
     dependencies:
       cookie-es: 1.2.2
       crossws: 0.3.5
@@ -19216,7 +19221,7 @@ snapshots:
       ufo: 1.6.3
       uncrypto: 0.1.3
 
-  h3@2.0.1-rc.16:
+  h3@2.0.1-rc.17:
     dependencies:
       rou3: 0.8.1
       srvx: 0.11.12
@@ -19701,7 +19706,7 @@ snapshots:
       crossws: 0.3.5
       defu: 6.1.4
       get-port-please: 3.2.0
-      h3: 1.15.6
+      h3: 1.15.9
       http-shutdown: 1.2.2
       jiti: 2.6.1
       mlly: 1.8.0
@@ -20371,7 +20376,7 @@ snapshots:
       exsolve: 1.0.8
       globby: 14.1.0
       gzip-size: 7.0.0
-      h3: 1.15.6
+      h3: 1.15.9
       hookable: 5.5.3
       httpxy: 0.1.7
       ioredis: 5.8.0
@@ -20472,7 +20477,7 @@ snapshots:
       exsolve: 1.0.8
       globby: 15.0.0
       gzip-size: 7.0.0
-      h3: 1.15.6
+      h3: 1.15.9
       hookable: 5.5.3
       httpxy: 0.1.7
       ioredis: 5.8.2
@@ -20624,7 +20629,7 @@ snapshots:
       escape-string-regexp: 5.0.0
       estree-walker: 3.0.3
       exsolve: 1.0.7
-      h3: 1.15.6
+      h3: 1.15.9
       hookable: 5.5.3
       ignore: 7.0.5
       impound: 1.0.0
@@ -20747,7 +20752,7 @@ snapshots:
       errx: 0.1.0
       escape-string-regexp: 5.0.0
       exsolve: 1.0.8
-      h3: 1.15.6
+      h3: 1.15.9
       hookable: 5.5.3
       ignore: 7.0.5
       impound: 1.0.0
@@ -22026,17 +22031,23 @@ snapshots:
 
   serialize-javascript@7.0.3: {}
 
-  seroval-plugins@1.3.3(seroval@1.4.2):
+  seroval-plugins@1.3.3(seroval@1.4.1):
     dependencies:
-      seroval: 1.4.2
+      seroval: 1.4.1
 
   seroval-plugins@1.4.2(seroval@1.4.2):
     dependencies:
       seroval: 1.4.2
 
+  seroval-plugins@1.4.2(seroval@1.5.1):
+    dependencies:
+      seroval: 1.5.1
+
   seroval-plugins@1.5.1(seroval@1.5.1):
     dependencies:
       seroval: 1.5.1
+
+  seroval@1.4.1: {}
 
   seroval@1.4.2: {}
 
@@ -22244,8 +22255,8 @@ snapshots:
   solid-js@1.9.10:
     dependencies:
       csstype: 3.1.3
-      seroval: 1.4.2
-      seroval-plugins: 1.3.3(seroval@1.4.2)
+      seroval: 1.4.1
+      seroval-plugins: 1.3.3(seroval@1.4.1)
 
   solid-refresh@0.6.3(solid-js@1.9.10):
     dependencies:
@@ -22934,7 +22945,7 @@ snapshots:
       anymatch: 3.1.3
       chokidar: 4.0.3
       destr: 2.0.5
-      h3: 1.15.6
+      h3: 1.15.9
       lru-cache: 10.4.3
       node-fetch-native: 1.6.7
       ofetch: 1.5.1
@@ -22949,7 +22960,7 @@ snapshots:
       anymatch: 3.1.3
       chokidar: 4.0.3
       destr: 2.0.5
-      h3: 1.15.6
+      h3: 1.15.9
       lru-cache: 10.4.3
       node-fetch-native: 1.6.7
       ofetch: 1.5.1
@@ -22964,7 +22975,7 @@ snapshots:
       anymatch: 3.1.3
       chokidar: 4.0.3
       destr: 2.0.5
-      h3: 1.15.6
+      h3: 1.15.9
       lru-cache: 10.4.3
       node-fetch-native: 1.6.7
       ofetch: 1.5.1
@@ -23173,7 +23184,7 @@ snapshots:
       es-module-lexer: 1.7.0
       esbuild: 0.25.12
       get-port-please: 3.2.0
-      h3: 1.15.6
+      h3: 1.15.9
       hookable: 5.5.3
       http-proxy: 1.18.1
       micromatch: 4.0.8
