@@ -1,5 +1,104 @@
 # @wagmi/connectors
 
+## 8.0.0
+
+### Major Changes
+
+- Migrated MetaMask connector from `@metamask/sdk` to the new `@metamask/connect-evm` package. ([#4960](https://github.com/wevm/wagmi/pull/4960))
+
+  ## Breaking Changes
+
+  ### New Peer Dependency
+
+  You must install `@metamask/connect-evm` as a peer dependency:
+
+  ```bash
+  npm install @metamask/connect-evm
+  # or
+  pnpm add @metamask/connect-evm
+  ```
+
+  ### Parameter Changes
+
+  The connector parameters have been simplified and changed to align with the new SDK.
+
+  **Removed options:**
+
+  - `dappMetadata` - Use `dapp` instead
+  - `logging` - Use `debug` instead
+  - `headless` - Use `ui.headless` instead
+  - `checkInstallationImmediately`
+  - `checkInstallationOnAllCalls`
+  - `preferDesktop` - Use `ui.preferExtension` instead
+  - `openDeeplink` - Use `mobile.preferredOpenLink` instead
+  - `extensionOnly`
+  - `infuraAPIKey`
+  - `communicationLayerPreference`
+  - `communicationServerUrl`
+  - `enableAnalytics`
+  - `shouldShimWeb3`
+  - `storage`
+  - `timer`
+  - `i18nOptions`
+  - `modals`
+  - All communication layer options
+
+  **New options:**
+
+  - `dapp` - Dapp identification (`{ name: string, url?: string, iconUrl?: string }`)
+  - `debug` - Enable debug logging (boolean)
+  - `mobile` - Mobile-specific options:
+    - `preferredOpenLink` - Custom function to open deeplinks (required for React Native)
+    - `useDeeplink` - Use `metamask://` deeplink vs `https://metamask.app.link` universal link
+  - `ui` - UI configuration options:
+    - `headless` - Disable built-in UI
+    - `preferExtension` - Prefer browser extension over mobile
+    - `showInstallModal` - Show install modal when MetaMask is not installed
+  - `transport` - Transport configuration:
+    - `extensionId` - Extension ID for browser extension transport
+
+  **Preserved options:**
+
+  - `connectAndSign` - Shortcut to connect and sign a message
+  - `connectWith` - Connect with any RPC method
+
+  ### Migration Example
+
+  **Before:**
+
+  ```ts
+  import { metaMask } from "wagmi/connectors";
+
+  metaMask({
+    dappMetadata: {
+      name: "My DApp",
+      url: "https://mydapp.com",
+      iconUrl: "https://mydapp.com/icon.png",
+    },
+    logging: { sdk: true },
+  });
+  ```
+
+  **After:**
+
+  ```ts
+  import { metaMask } from "wagmi/connectors";
+
+  metaMask({
+    dapp: {
+      name: "My DApp",
+      url: "https://mydapp.com",
+      iconUrl: "https://mydapp.com/icon.png",
+    },
+    debug: true,
+  });
+  ```
+
+### Patch Changes
+
+- Updated dependencies [[`2f4316c`](https://github.com/wevm/wagmi/commit/2f4316ced40944b3af01534e4b6e9c1a4455c7a6)]:
+  - @wagmi/core@3.4.1
+
 ## 7.2.1
 
 ### Patch Changes
