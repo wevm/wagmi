@@ -1,3 +1,4 @@
+import type { MutationFunctionContext } from '@wagmi/core'
 import { abi } from '@wagmi/test'
 import type { Address, Hash } from 'viem'
 import { mainnet, optimism } from 'viem/chains'
@@ -28,16 +29,17 @@ test('context', () => {
 
   const { writeContract } = useWriteErc20({
     mutation: {
-      onMutate() {
+      onMutate(_mutationContext) {
         return contextValue
       },
-      onSuccess(data, variables, context) {
+      onSuccess(data, variables, context, mutationContext) {
         expectTypeOf(data).toEqualTypeOf<Hash>()
         expectTypeOf(variables.functionName).toEqualTypeOf<string>()
         expectTypeOf(variables.args).toEqualTypeOf<
           readonly unknown[] | undefined
         >()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
     },
   })
@@ -49,11 +51,12 @@ test('context', () => {
       args: ['0x', 123n],
     },
     {
-      onSuccess(data, variables, context) {
+      onSuccess(data, variables, context, mutationContext) {
         expectTypeOf(data).toEqualTypeOf<Hash>()
         expectTypeOf(variables.functionName).toEqualTypeOf<'transfer'>()
         expectTypeOf(variables.args).toEqualTypeOf<readonly [Address, bigint]>()
-        expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
     },
   )

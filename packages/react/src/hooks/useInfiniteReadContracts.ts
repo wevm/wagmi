@@ -37,7 +37,6 @@ export type UseInfiniteContractReadsParameters<
     InfiniteReadContractsQueryFnData<contracts, allowFailure>,
     ReadContractsErrorType,
     selectData,
-    InfiniteReadContractsData<contracts, allowFailure>,
     InfiniteReadContractsQueryKey<contracts, allowFailure, pageParam, config>,
     pageParam
   >
