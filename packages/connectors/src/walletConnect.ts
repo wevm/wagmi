@@ -338,6 +338,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
       const chain = config.chains.find((x) => x.id === chainId)
       if (!chain) throw new SwitchChainError(new ChainNotConfiguredError())
 
+      let removeChangeListener: (() => void) | undefined
       try {
         await Promise.all([
           new Promise<void>((resolve) => {
@@ -351,6 +352,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
                 resolve()
               }
             }
+            removeChangeListener = () => config.emitter.off('change', listener)
             config.emitter.on('change', listener)
           }),
           provider.request({
@@ -364,6 +366,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
 
         return chain
       } catch (err) {
+        removeChangeListener?.()
         const error = err as RpcError
 
         if (/(user rejected)/i.test(error.message))
