@@ -59,7 +59,7 @@ export const config = createConfig({
 import { type MetaMaskParameters } from '{{connectorsPackageName}}'
 ```
 
-Check out the [MetaMask Connect docs](https://docs.metamask.io/wallet/connect/3rd-party-libraries/wagmi/) for more info. A few options are omitted that Wagmi manages internally.
+Check out the [MetaMask Connect docs](https://docs.metamask.io/metamask-connect/evm/quickstart/wagmi/) for more info. A few options are omitted that Wagmi manages internally.
 
 ### dapp
 
