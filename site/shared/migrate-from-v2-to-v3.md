@@ -70,25 +70,25 @@ bun add @coinbase/wallet-sdk@{{packageJson?.peerDependencies?.['@coinbase/wallet
 
 ### metaMask
 
-<a :href="`/${docsPath}/api/connectors/metaMask`">`metaMask`</a> requires `@metamask/sdk`
+<a :href="`/${docsPath}/api/connectors/metaMask`">`metaMask`</a> requires `@metamask/connect-evm`
 
-<PackageMetadata package="@metamask/sdk" repo="MetaMask/metamask-sdk" licenseUrl="https://github.com/MetaMask/metamask-sdk/blob/main/packages/sdk/LICENSE" />
+<PackageMetadata package="@metamask/connect-evm" repo="MetaMask/connect-monorepo" isOsiLicense licenseUrl="https://github.com/MetaMask/connect-monorepo/blob/main/packages/connect-evm/LICENSE" />
 
 ::: code-group
 ```bash-vue [pnpm]
-pnpm add @metamask/sdk@{{packageJson?.peerDependencies?.['@metamask/sdk']}}
+pnpm add @metamask/connect-evm@{{packageJson?.peerDependencies?.['@metamask/connect-evm']}}
 ```
 
 ```bash-vue [npm]
-npm install @metamask/sdk@{{packageJson?.peerDependencies?.['@metamask/sdk']}}
+npm install @metamask/connect-evm@{{packageJson?.peerDependencies?.['@metamask/connect-evm']}}
 ```
 
 ```bash-vue [yarn]
-yarn add @metamask/sdk@{{packageJson?.peerDependencies?.['@metamask/sdk']}}
+yarn add @metamask/connect-evm@{{packageJson?.peerDependencies?.['@metamask/connect-evm']}}
 ```
 
 ```bash-vue [bun]
-bun add @metamask/sdk@{{packageJson?.peerDependencies?.['@metamask/sdk']}}
+bun add @metamask/connect-evm@{{packageJson?.peerDependencies?.['@metamask/connect-evm']}}
 ```
 :::
 
