@@ -1,4 +1,5 @@
 import {
+  BaseError,
   ChainNotConfiguredError,
   type Connector,
   createConnector,
@@ -74,6 +75,21 @@ export type WalletConnectParameters = Compute<
 
 walletConnect.type = 'walletConnect' as const
 export function walletConnect(parameters: WalletConnectParameters) {
+  if (!parameters.projectId?.trim()) {
+    throw new BaseError(
+      '`projectId` is required for the WalletConnect connector.',
+      {
+        metaMessages: [
+          'Get a project ID at https://cloud.walletconnect.com',
+          ...(parameters.projectId !== undefined
+            ? [`Received: ${JSON.stringify(parameters.projectId)}`]
+            : []),
+        ],
+        docsPath: '/core/api/connectors/walletConnect',
+      },
+    )
+  }
+
   const isNewChainsStale = parameters.isNewChainsStale ?? true
 
   type Provider = Awaited<ReturnType<(typeof EthereumProvider)['init']>>

@@ -53,6 +53,18 @@ afterEach(() => server.resetHandlers())
 
 afterAll(() => server.close())
 
+test('throws on empty projectId', () => {
+  expect(() => walletConnect({ projectId: '' })).toThrowError(
+    '`projectId` is required for the WalletConnect connector.',
+  )
+})
+
+test('throws on whitespace-only projectId', () => {
+  expect(() => walletConnect({ projectId: '   ' })).toThrowError(
+    '`projectId` is required for the WalletConnect connector.',
+  )
+})
+
 test('setup', () => {
   const connectorFn = walletConnect({ projectId: walletConnectProjectId })
   const connector = config._internal.connectors.setup(connectorFn)
