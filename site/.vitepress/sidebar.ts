@@ -223,6 +223,10 @@ export function getSidebar() {
             link: '/react/api/hooks/useFeeHistory',
           },
           {
+            text: 'usePermissions',
+            link: '/react/api/hooks/usePermissions',
+          },
+          {
             text: 'useProof',
             link: '/react/api/hooks/useProof',
           },
@@ -856,6 +860,10 @@ export function getSidebar() {
           {
             text: 'getGasPrice',
             link: '/core/api/actions/getGasPrice',
+          },
+          {
+            text: 'getPermissions',
+            link: '/core/api/actions/getPermissions',
           },
           {
             text: 'getProof',
