@@ -1,0 +1,25 @@
+import { connect, disconnect } from '@wagmi/core'
+import { abi, address, config } from '@wagmi/test'
+import { renderPrimitive } from '@wagmi/test/solid'
+import { expect, test, vi } from 'vitest'
+
+import { useWriteContract } from './useWriteContract.js'
+
+const connector = config.connectors[0]!
+
+test('default', async () => {
+  await connect(config, { connector })
+
+  const { result } = renderPrimitive(() => useWriteContract())
+
+  result.mutate({
+    abi: abi.wagmiMintExample,
+    address: address.wagmiMintExample,
+    functionName: 'mint',
+  })
+  await vi.waitUntil(() => result.isSuccess, { timeout: 5_000 })
+
+  expect(result.data).toBeDefined()
+
+  await disconnect(config, { connector })
+})
