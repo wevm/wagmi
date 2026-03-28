@@ -13,6 +13,12 @@ import {
 
 import { walletConnect } from './walletConnect.js'
 
+vi.mock('@walletconnect/ethereum-provider', () => ({
+  EthereumProvider: {
+    init: vi.fn(),
+  },
+}))
+
 const handlers = [
   http.get('https://relay.walletconnect.com', async () =>
     HttpResponse.json(
@@ -64,4 +70,37 @@ test('setup', () => {
   expectTypeOf<ConnectFnParameters['pairingTopic']>().toMatchTypeOf<
     string | undefined
   >()
+})
+
+test('behavior: removes change listener from emitter after switchChain fails', async () => {
+  const { EthereumProvider } = await import('@walletconnect/ethereum-provider')
+
+  const mockProvider = {
+    events: { setMaxListeners: vi.fn() },
+    on: vi.fn(),
+    off: vi.fn(),
+    once: vi.fn(),
+    removeListener: vi.fn(),
+    request: vi
+      .fn()
+      .mockRejectedValue(
+        Object.assign(new Error('User rejected the request.'), { code: 4001 }),
+      ),
+  }
+  vi.mocked(EthereumProvider.init).mockResolvedValue(mockProvider as any)
+
+  const connectorFn = walletConnect({ projectId: walletConnectProjectId })
+  const connector = config._internal.connectors.setup(connectorFn)
+
+  // Force provider initialization
+  await connector.getProvider()
+
+  const listenersBefore = connector.emitter.listenerCount('change')
+
+  await expect(
+    connector.switchChain!({ chainId: 1 }),
+  ).rejects.toThrow()
+
+  // The listener registered inside switchChain must be cleaned up on failure
+  expect(connector.emitter.listenerCount('change')).toBe(listenersBefore)
 })
