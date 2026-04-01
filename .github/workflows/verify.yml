@@ -151,7 +151,7 @@ jobs:
         run: docker pull ghcr.io/tempoxyz/tempo:latest
 
       - name: Run tests
-        uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08
+        uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60
         with:
           command: CI=true pnpm test:cov --shard=${{ matrix.shard }}/${{ matrix.total-shards }} --retry=3 --bail=1
           max_attempts: 3
