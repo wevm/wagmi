@@ -129,7 +129,7 @@ jobs:
           node-version: 24.5
 
       - name: Setup Docker
-        uses: docker/setup-docker-action@v4
+        uses: docker/setup-docker-action@v5
 
       - name: Set up foundry
         uses: foundry-rs/foundry-toolchain@50d5a8956f2e319df19e6b57539d7e2acb9f8c1e # v1.5.0
