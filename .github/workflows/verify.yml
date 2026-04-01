@@ -137,7 +137,7 @@ jobs:
           version: nightly
 
       - name: Cache Playwright
-        uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7
         id: playwright-cache
         with:
           path: ~/.cache/ms-playwright
