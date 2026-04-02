@@ -74,6 +74,11 @@ export type WalletConnectParameters = Compute<
 
 walletConnect.type = 'walletConnect' as const
 export function walletConnect(parameters: WalletConnectParameters) {
+  if (!parameters.projectId?.trim())
+    throw new Error(
+      'projectId is required. Get one at https://cloud.walletconnect.com/',
+    )
+
   const isNewChainsStale = parameters.isNewChainsStale ?? true
 
   type Provider = Awaited<ReturnType<(typeof EthereumProvider)['init']>>
@@ -338,16 +343,13 @@ export function walletConnect(parameters: WalletConnectParameters) {
       const chain = config.chains.find((x) => x.id === chainId)
       if (!chain) throw new SwitchChainError(new ChainNotConfiguredError())
 
+      let listener: ({ chainId: currentChainId }: { chainId?: number | undefined }) => void
       try {
         await Promise.all([
           new Promise<void>((resolve) => {
-            const listener = ({
-              chainId: currentChainId,
-            }: {
-              chainId?: number | undefined
-            }) => {
+            listener = ({ chainId: currentChainId }: { chainId?: number | undefined }) => {
               if (currentChainId === chainId) {
-                config.emitter.off('change', listener)
+                config.emitter.off('change', listener!)
                 resolve()
               }
             }
@@ -364,6 +366,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
 
         return chain
       } catch (err) {
+        config.emitter.off('change', listener!)
         const error = err as RpcError
 
         if (/(user rejected)/i.test(error.message))
