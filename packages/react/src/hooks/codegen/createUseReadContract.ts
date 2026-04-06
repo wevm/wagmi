@@ -9,7 +9,6 @@ import type {
   QueryParameter,
   ScopeKeyParameter,
   UnionCompute,
-  UnionExactPartial,
 } from '@wagmi/core/internal'
 import type {
   ReadContractData,
@@ -46,6 +45,12 @@ export type CreateUseReadContractParameters<
     | undefined
 }
 
+/** Call-level options from ReadContractParameters (excludes abi, address, functionName, args). */
+type ReadContractCallOptions<config extends Config> = Omit<
+  ReadContractParameters<Abi, string, readonly unknown[], config>,
+  'abi' | 'address' | 'functionName' | 'args'
+>
+
 export type CreateUseReadContractReturnType<
   abi extends Abi | readonly unknown[],
   address extends Address | Record<number, Address> | undefined,
@@ -63,10 +68,8 @@ export type CreateUseReadContractReturnType<
       abi?: undefined
       address?: address extends undefined ? Address : undefined
       functionName?: functionName extends undefined ? name : undefined
-    } & UnionExactPartial<
-      // TODO: Omit abi/address/functionName from below once it does not break inference.
-      ReadContractParameters<abi, name, args, config>
-    > &
+      args?: args | undefined
+    } & Partial<ReadContractCallOptions<config>> &
       ScopeKeyParameter &
       ConfigParameter<config> &
       QueryParameter<
