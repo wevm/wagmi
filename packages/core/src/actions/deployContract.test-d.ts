@@ -116,6 +116,15 @@ test('tempo feePayer', () => {
     feePayer,
   })
 
+  deployContract(config, {
+    chainId: mainnet.id,
+    abi: abi.bayc,
+    bytecode: bytecode.bayc,
+    args: ['Bored Ape Wagmi Club', 'BAYC', 69420n, 0n],
+    // @ts-expect-error
+    feePayer: true,
+  })
+
   type Result = DeployContractParameters<
     typeof abi.bayc,
     typeof config,

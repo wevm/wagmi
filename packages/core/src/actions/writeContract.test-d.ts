@@ -134,6 +134,16 @@ test('tempo feePayer', () => {
     feePayer,
   })
 
+  writeContract(config, {
+    chainId: mainnet.id,
+    address: '0x',
+    abi: abi.erc20,
+    functionName: 'transferFrom',
+    args: ['0x', '0x', 123n],
+    // @ts-expect-error
+    feePayer: true,
+  })
+
   type Result = WriteContractParameters<
     typeof abi.erc20,
     'transferFrom',

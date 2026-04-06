@@ -84,6 +84,14 @@ test('tempo feePayer', () => {
     feePayer,
   })
 
+  sendTransactionSync(config, {
+    chainId: mainnet.id,
+    to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
+    value: 1n,
+    // @ts-expect-error
+    feePayer: true,
+  })
+
   type Result = SendTransactionSyncParameters<typeof config, typeof mainnet.id>
   expectTypeOf<Result>().not.toMatchTypeOf<{
     feePayer?: true | typeof feePayer | undefined
