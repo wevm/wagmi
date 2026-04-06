@@ -37,8 +37,8 @@ catalog:
   '@tanstack/vue-query': 5.49.1
   '@types/react': ^19.2.0
   '@types/react-dom': ^19.2.0
-  '@vitejs/plugin-react': ^4.3.3
-  '@vitejs/plugin-vue': 6.0.1
+  '@vitejs/plugin-react': ^6.0.1
+  '@vitejs/plugin-vue': 6.0.5
   '@walletconnect/ethereum-provider': 2.21.1
   buffer: 6.0.3
   nuxt: 4.2.1
@@ -47,8 +47,8 @@ catalog:
   react: 19.2.0
   react-dom: 19.2.0
   solid-js: 1.9.10
-  vite: 7.2.2
-  vite-plugin-solid: 2.11.10
+  vite: 8.0.5
+  vite-plugin-solid: 2.11.12
   vue: 3.5.25
 
 linkWorkspacePackages: deep
@@ -70,6 +70,8 @@ minimumReleaseAgeExclude:
   - prool
   - wagmi
   - viem
+  - vite
+  - vite-plugin-solid
 
 overrides:
   '@isaacs/brace-expansion@<=5.0.0': 5.0.1

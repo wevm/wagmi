@@ -131,7 +131,7 @@ describe('useSetUserTokenSync', () => {
     })
 
     const data = await result.current.setUserToken.mutateAsync({
-      token: '0x20C0000000000000000000000000000000000001',
+      token: 2n,
     })
     expect(data).toBeDefined()
 

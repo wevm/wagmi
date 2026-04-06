@@ -55,7 +55,7 @@ describe('setUserTokenSync', () => {
     })
     const result = await setUserTokenSync(config, {
       account,
-      token: '0x20C0000000000000000000000000000000000001',
+      token: 2n,
     })
     expect(result).toBeDefined()
   })

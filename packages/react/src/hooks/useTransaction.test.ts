@@ -18,6 +18,7 @@ test('default', async () => {
         "accessList": [],
         "blockHash": "0xd725a38b51e5ceec8c5f6c9ccfdb2cc423af993bb650af5eedca5e4be7156ba7",
         "blockNumber": 15189204n,
+        "blockTimestamp": "0x62d9ee50",
         "chainId": 1,
         "from": "0xa0cf798816d4b9b9866b5330eea46a18382f251e",
         "gas": 21000n,
