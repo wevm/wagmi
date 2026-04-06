@@ -1,5 +1,14 @@
 # @wagmi/connectors
 
+## 8.0.1
+
+### Patch Changes
+
+- Fixed listener leak in WalletConnect connector `switchChain` when chain switch fails. ([#5033](https://github.com/wevm/wagmi/pull/5033))
+
+- Updated dependencies [[`2a4660e`](https://github.com/wevm/wagmi/commit/2a4660e96e3c28bd9c2424a298beb57bce8902d2)]:
+  - @wagmi/core@3.4.2
+
 ## 8.0.0
 
 ### Major Changes
