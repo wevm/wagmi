@@ -1,6 +1,8 @@
-import type { WriteContractErrorType } from '@wagmi/core'
+import { createConfig, http, type WriteContractErrorType } from '@wagmi/core'
 import { abi } from '@wagmi/test'
 import type { Abi, Address, Hash } from 'viem'
+import { privateKeyToAccount } from 'viem/accounts'
+import { mainnet, tempoLocalnet } from 'viem/chains'
 import { expectTypeOf, test } from 'vitest'
 
 import { useSimulateContract } from './useSimulateContract.js'
@@ -131,4 +133,44 @@ test('useSimulateContract', () => {
 
   const request = data?.value?.request
   if (request) writeContract.mutate(request)
+})
+
+test('tempo feePayer', () => {
+  const feePayer = privateKeyToAccount(
+    '0x0123456789012345678901234567890123456789012345678901234567890123',
+  )
+  const config = createConfig({
+    chains: [mainnet, tempoLocalnet],
+    transports: { [mainnet.id]: http(), [tempoLocalnet.id]: http() },
+  })
+
+  const writeContract = useWriteContract({ config })
+
+  writeContract.mutate({
+    chainId: tempoLocalnet.id,
+    address: '0x',
+    abi: abi.erc20,
+    functionName: 'transferFrom',
+    args: ['0x', '0x', 123n],
+    feePayer: true,
+  })
+
+  writeContract.mutate({
+    chainId: tempoLocalnet.id,
+    address: '0x',
+    abi: abi.erc20,
+    functionName: 'transferFrom',
+    args: ['0x', '0x', 123n],
+    feePayer,
+  })
+
+  writeContract.mutate({
+    chainId: mainnet.id,
+    address: '0x',
+    abi: abi.erc20,
+    functionName: 'transferFrom',
+    args: ['0x', '0x', 123n],
+    // @ts-expect-error
+    feePayer: true,
+  })
 })

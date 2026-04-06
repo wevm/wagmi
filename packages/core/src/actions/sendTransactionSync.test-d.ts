@@ -5,9 +5,9 @@ import { expectTypeOf, test } from 'vitest'
 
 import { createConfig } from '../createConfig.js'
 import {
-  type SendTransactionParameters,
-  sendTransaction,
-} from './sendTransaction.js'
+  type SendTransactionSyncParameters,
+  sendTransactionSync,
+} from './sendTransactionSync.js'
 
 test('chain formatters', () => {
   const config = createConfig({
@@ -15,29 +15,29 @@ test('chain formatters', () => {
     transports: { [celo.id]: http(), [mainnet.id]: http() },
   })
 
-  type Result = SendTransactionParameters<typeof config>
+  type Result = SendTransactionSyncParameters<typeof config>
   expectTypeOf<Result>().toMatchTypeOf<{
     chainId?: typeof celo.id | typeof mainnet.id | undefined
     feeCurrency?: `0x${string}` | undefined
   }>()
-  sendTransaction(config, {
+  sendTransactionSync(config, {
     to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
     value: parseEther('0.01'),
     feeCurrency: '0x',
   })
 
-  type Result2 = SendTransactionParameters<typeof config, typeof celo.id>
+  type Result2 = SendTransactionSyncParameters<typeof config, typeof celo.id>
   expectTypeOf<Result2>().toMatchTypeOf<{
     feeCurrency?: `0x${string}` | undefined
   }>()
-  sendTransaction(config, {
+  sendTransactionSync(config, {
     chainId: celo.id,
     to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
     value: parseEther('0.01'),
     feeCurrency: '0x',
   })
 
-  type Result3 = SendTransactionParameters<typeof config, typeof mainnet.id>
+  type Result3 = SendTransactionSyncParameters<typeof config, typeof mainnet.id>
   expectTypeOf<Result3>().not.toMatchTypeOf<{
     feeCurrency?: `0x${string}` | undefined
   }>()
@@ -53,13 +53,13 @@ test('tempo feePayer', () => {
     transports: { [tempoLocalnet.id]: http() },
   })
 
-  sendTransaction(tempoConfig, {
+  sendTransactionSync(tempoConfig, {
     to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
     value: 1n,
     feePayer: true,
   })
 
-  sendTransaction(tempoConfig, {
+  sendTransactionSync(tempoConfig, {
     to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
     value: 1n,
     feePayer,
@@ -70,21 +70,21 @@ test('tempo feePayer', () => {
     transports: { [mainnet.id]: http(), [tempoLocalnet.id]: http() },
   })
 
-  sendTransaction(config, {
+  sendTransactionSync(config, {
     chainId: tempoLocalnet.id,
     to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
     value: 1n,
     feePayer: true,
   })
 
-  sendTransaction(config, {
+  sendTransactionSync(config, {
     chainId: tempoLocalnet.id,
     to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
     value: 1n,
     feePayer,
   })
 
-  sendTransaction(config, {
+  sendTransactionSync(config, {
     chainId: mainnet.id,
     to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
     value: 1n,
@@ -92,7 +92,7 @@ test('tempo feePayer', () => {
     feePayer: true,
   })
 
-  type Result = SendTransactionParameters<typeof config, typeof mainnet.id>
+  type Result = SendTransactionSyncParameters<typeof config, typeof mainnet.id>
   expectTypeOf<Result>().not.toMatchTypeOf<{
     feePayer?: true | typeof feePayer | undefined
   }>()

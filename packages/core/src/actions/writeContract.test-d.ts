@@ -1,6 +1,7 @@
 import { abi, config } from '@wagmi/test'
 import { type Address, http, parseAbi } from 'viem'
-import { celo, mainnet } from 'viem/chains'
+import { privateKeyToAccount } from 'viem/accounts'
+import { celo, mainnet, tempoLocalnet } from 'viem/chains'
 import { expectTypeOf, test } from 'vitest'
 
 import { createConfig } from '../createConfig.js'
@@ -103,6 +104,56 @@ test('chain formatters', () => {
     // @ts-expect-error
     feeCurrency: '0x',
   })
+})
+
+test('tempo feePayer', () => {
+  const feePayer = privateKeyToAccount(
+    '0x0123456789012345678901234567890123456789012345678901234567890123',
+  )
+
+  const config = createConfig({
+    chains: [mainnet, tempoLocalnet],
+    transports: { [mainnet.id]: http(), [tempoLocalnet.id]: http() },
+  })
+
+  writeContract(config, {
+    chainId: tempoLocalnet.id,
+    address: '0x',
+    abi: abi.erc20,
+    functionName: 'transferFrom',
+    args: ['0x', '0x', 123n],
+    feePayer: true,
+  })
+
+  writeContract(config, {
+    chainId: tempoLocalnet.id,
+    address: '0x',
+    abi: abi.erc20,
+    functionName: 'transferFrom',
+    args: ['0x', '0x', 123n],
+    feePayer,
+  })
+
+  writeContract(config, {
+    chainId: mainnet.id,
+    address: '0x',
+    abi: abi.erc20,
+    functionName: 'transferFrom',
+    args: ['0x', '0x', 123n],
+    // @ts-expect-error
+    feePayer: true,
+  })
+
+  type Result = WriteContractParameters<
+    typeof abi.erc20,
+    'transferFrom',
+    [Address, Address, bigint],
+    typeof config,
+    typeof mainnet.id
+  >
+  expectTypeOf<Result>().not.toMatchTypeOf<{
+    feePayer?: true | typeof feePayer | undefined
+  }>()
 })
 
 test('overloads', async () => {
