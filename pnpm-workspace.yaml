@@ -8,15 +8,19 @@ packages:
 
 auditConfig:
   ignoreGhsas:
-    - GHSA-g3ch-rx76-35fx
-    - GHSA-ffrw-9mx8-89p8
-    - GHSA-qpm2-6cq5-7pq5
-    - GHSA-93m4-6634-74q7
-    - GHSA-29xp-372q-xqph
-    - GHSA-mh29-5h37-fv8m
-    - GHSA-5j98-mcp5-4vw2
-    - GHSA-92fh-27vv-894w
-    - GHSA-677m-j7p3-52f9
+    - GHSA-g3ch-rx76-35fx # vue-template-compiler: XSS via prototype pollution (Vue 2 EOL, no patch)
+    - GHSA-ffrw-9mx8-89p8 # fast-redact: prototype pollution (withdrawn advisory)
+    - GHSA-qpm2-6cq5-7pq5 # happy-dom: prototype pollution sandbox escape (dev-only)
+    - GHSA-93m4-6634-74q7 # vite: server.fs.deny bypass via backslash on Windows
+    - GHSA-29xp-372q-xqph # node-tar: race condition memory exposure in sync list
+    - GHSA-mh29-5h37-fv8m # js-yaml: prototype pollution via merge (<<)
+    - GHSA-5j98-mcp5-4vw2 # glob CLI: command injection via -c/--cmd
+    - GHSA-92fh-27vv-894w # nanotar: path traversal in parseTar (no patch)
+    - GHSA-677m-j7p3-52f9 # socket.io-parser: unbounded binary attachments DoS
+    - GHSA-v2wj-q39q-566r # vite: server.fs.deny bypass with queries (patched versions blocked by minimumReleaseAge)
+    - GHSA-p9ff-h696-f583 # vite: arbitrary file read via dev server WebSocket (patched versions blocked by minimumReleaseAge)
+    - GHSA-4w7w-66w2-5vf9 # vite: path traversal in optimized deps .map handling (patched versions blocked by minimumReleaseAge)
+    - GHSA-f886-m6hf-6m8v # brace-expansion: zero-step sequence DoS (transitive via testcontainers)
 
 autoInstallPeers: false
 
@@ -69,6 +73,8 @@ minimumReleaseAgeExclude:
 
 overrides:
   '@isaacs/brace-expansion@<=5.0.0': 5.0.1
+  brace-expansion@<1.1.13: '>=1.1.13'
+  brace-expansion@>=2.0.0 <2.0.3: '>=2.0.3'
   axios@<=1.13.4: 1.13.5
   cookie@<0.7.0: 0.7.0
   bn.js@>=5.0.0 <5.2.3: 5.2.3
@@ -78,21 +84,21 @@ overrides:
   esbuild@<=0.24.2: 0.25.0
   glob@>=10.2.0 <10.5.0: 10.5.0
   h3@<1.15.9: 1.15.9
-  h3-v2: npm:h3@2.0.1-rc.17
-  happy-dom@<20.0.2: '>=20.0.2'
+  h3-v2: npm:h3@2.0.1-rc.18
+  happy-dom@<20.8.9: '>=20.8.9'
   minimatch@<3.1.4: 3.1.4
   minimatch@>=5.0.0 <5.1.8: 5.1.8
   minimatch@>=9.0.0 <9.0.7: 9.0.7
   minimatch@>=10.0.0 <10.2.3: 10.2.3
   hono@<4.12.7: 4.12.7
-  lodash@>=4.0.0 <=4.17.22: '>=4.17.23'
+  lodash@>=4.0.0 <=4.17.23: '>=4.18.0'
   markdown-it@>=13.0.0 <14.1.1: 14.1.1
   mdast-util-to-hast@<13.2.1: '>=13.2.1'
   nanoid@<3.3.8: 3.3.8
-  node-forge@<1.3.2: '>=1.3.2'
+  node-forge@<1.4.0: '>=1.4.0'
   rollup@>=4.0.0 <4.59.0: 4.59.0
   semver@<5.7.2: '>=5.7.2'
-  serialize-javascript@<=7.0.2: 7.0.3
+  serialize-javascript@<7.0.5: '>=7.0.5'
   simple-git@>=3.15.0 <3.32.3: 3.32.3
   seroval@<1.4.1: '>=1.4.1'
   svgo@=4.0.0: 4.0.1
@@ -101,8 +107,16 @@ overrides:
   unhead@<=2.1.10: 2.1.11
   undici@<6.24.0: 6.24.0
   undici@>=7.0.0 <7.24.0: 7.24.0
-  vite@>=7.1.0 <=7.1.10: '>=7.1.11'
+  vite@>=6.0.0 <=6.4.1: '>=6.4.2'
+  vite@>=7.0.0 <=7.3.1: '>=7.3.2'
+  vite@>=8.0.0 <=8.0.4: '>=8.0.5'
   wrangler@>=4.0.0 <4.59.1: '>=4.59.1'
+  defu@<=6.1.4: '>=6.1.5'
+  picomatch@<2.3.2: '>=2.3.2'
+  picomatch@>=4.0.0 <4.0.4: '>=4.0.4'
+  smol-toml@<1.6.1: '>=1.6.1'
+  srvx@<0.11.13: '>=0.11.13'
+  yaml@>=2.0.0 <2.8.3: '>=2.8.3'
   ws@>=8.0.0 <8.17.1: 8.17.1
 
 peerDependencyRules:

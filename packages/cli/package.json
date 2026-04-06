@@ -81,7 +81,7 @@
     "nanospinner": "1.2.2",
     "pathe": "^1.1.2",
     "picocolors": "^1.0.0",
-    "picomatch": "^3.0.0",
+    "picomatch": "^4.0.4",
     "prettier": "^3.0.3",
     "viem": "2.x",
     "zod": "^4.1.11"
