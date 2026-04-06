@@ -100,6 +100,17 @@ test('overloads', () => {
       }
     | undefined
   >(result4.data)
+
+  useReadViewOverloads({
+    // @ts-expect-error invalid functionName
+    functionName: 'invalid',
+  })
+
+  useReadViewOverloads({
+    functionName: 'foo',
+    // @ts-expect-error too many args
+    args: ['0x', '0x', '0x'],
+  })
 })
 
 test('functionName', () => {
@@ -189,4 +200,21 @@ test('narrows data for functions with matching argument shapes', () => {
     })
     assertType<readonly [bigint, bigint] | undefined>(result.data)
   }
+
+  useReadContractSameArgs({
+    // @ts-expect-error invalid functionName
+    functionName: 'baz',
+  })
+
+  useReadContractSameArgs({
+    functionName: 'foo',
+    // @ts-expect-error wrong args for foo (expects bytes32)
+    args: [123n],
+  })
+
+  useReadContractSameArgs({
+    functionName: 'foo',
+    // @ts-expect-error abi not allowed on generated hook
+    abi: abiSameArgsDifferentReturns,
+  })
 })
