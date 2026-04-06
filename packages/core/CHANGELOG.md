@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 3.4.2
+
+### Patch Changes
+
+- Fixed `feePayer` types for Tempo chains on `sendTransaction`, `sendTransactionSync`, and `deployContract`. ([#5022](https://github.com/wevm/wagmi/pull/5022))
+
 ## 3.4.1
 
 ### Patch Changes

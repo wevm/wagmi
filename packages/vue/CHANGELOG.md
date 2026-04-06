@@ -1,5 +1,15 @@
 # @wagmi/vue
 
+## 0.5.2
+
+### Patch Changes
+
+- Fixed `feePayer` types for Tempo chains on `useSendTransaction`. ([#5022](https://github.com/wevm/wagmi/pull/5022))
+
+- Updated dependencies [[`2a4660e`](https://github.com/wevm/wagmi/commit/2a4660e96e3c28bd9c2424a298beb57bce8902d2), [`f53f3f5`](https://github.com/wevm/wagmi/commit/f53f3f5d434f946ebcdb2a42fc7c3e2ac4522f15)]:
+  - @wagmi/core@3.4.2
+  - @wagmi/connectors@8.0.1
+
 ## 0.5.1
 
 ### Patch Changes
