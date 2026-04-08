@@ -1,3 +1,4 @@
+import { tempoWallet as accounts_tempoWallet } from 'accounts/wagmi'
 import * as Address from 'ox/Address'
 import type * as Hex from 'ox/Hex'
 import * as PublicKey from 'ox/PublicKey'
@@ -854,3 +855,8 @@ export declare namespace dangerous_secp256k1 {
     account?: LocalAccount | undefined
   }
 }
+
+export type TempoWalletParameters = NonNullable<
+  Parameters<typeof accounts_tempoWallet>[0]
+>
+export const tempoWallet = accounts_tempoWallet

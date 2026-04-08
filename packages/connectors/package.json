@@ -42,6 +42,7 @@
     "@safe-global/safe-apps-sdk": "^9.1.0",
     "@wagmi/core": "workspace:*",
     "@walletconnect/ethereum-provider": "^2.21.1",
+    "accounts": "^0.5.2",
     "porto": "~0.2.35",
     "typescript": ">=5.7.3",
     "viem": "2.x"
@@ -70,6 +71,9 @@
     },
     "typescript": {
       "optional": true
+    },
+    "accounts": {
+      "optional": true
     }
   },
   "devDependencies": {
@@ -80,6 +84,7 @@
     "@safe-global/safe-apps-sdk": "catalog:",
     "@wagmi/core": "workspace:*",
     "@walletconnect/ethereum-provider": "catalog:",
+    "accounts": "catalog:",
     "msw": "^2.4.9",
     "porto": "catalog:"
   },
