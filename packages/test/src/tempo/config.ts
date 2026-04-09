@@ -54,10 +54,7 @@ export const tempoLocal = defineChain({
 
 export const config = createConfig({
   chains: [tempoLocal],
-  connectors: [
-    dangerous_secp256k1({ account: accounts.at(0) }),
-    dangerous_secp256k1({ account: accounts.at(1) }),
-  ],
+  connectors: [dangerous_secp256k1(), dangerous_secp256k1()],
   pollingInterval: 100,
   storage: null,
   transports: {

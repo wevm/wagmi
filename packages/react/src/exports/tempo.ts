@@ -8,7 +8,6 @@ export {
   Actions,
   type Dangerous_Secp256k1Parameters,
   dangerous_secp256k1,
-  KeyManager,
   type TempoWalletParameters,
   tempoWallet,
   type WebAuthnParameters,

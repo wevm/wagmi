@@ -18,15 +18,11 @@ export const config = createConfig({
   chains: [tempoTestnet],
   multiInjectedProviderDiscovery: false,
   transports: {
-    [tempo.id]: http(),
+    [tempoTestnet.id]: http(),
   },
 })
 ```
 
 ## Parameters
 
-### account
-
-- **Type:** `LocalAccount`
-
-Optional account to use with connector. If not provided, one is created internally for you.
+See the [Accounts SDK docs](https://docs.tempo.xyz/accounts) for more info on available parameters.

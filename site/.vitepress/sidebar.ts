@@ -1762,14 +1762,6 @@ export function getSidebar() {
           { text: 'webAuthn', link: '/tempo/connectors/webAuthn' },
         ],
       },
-      {
-        text: 'Key Managers',
-        link: '/tempo/keyManagers/',
-        items: [
-          { text: 'http', link: '/tempo/keyManagers/http' },
-          { text: 'localStorage', link: '/tempo/keyManagers/localStorage' },
-        ],
-      },
     ],
   } satisfies DefaultTheme.Sidebar
 }

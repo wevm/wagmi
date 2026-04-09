@@ -13,4 +13,3 @@ export {
   type WebAuthnParameters,
   webAuthn,
 } from '../tempo/Connectors.js'
-export * as KeyManager from '../tempo/KeyManager.js'
