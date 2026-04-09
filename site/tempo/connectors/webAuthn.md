@@ -2,25 +2,22 @@
 
 Connector for a WebAuthn EOA.
 
-## Usage
+:::warning Deprecated
+Use `webAuthn` from `accounts/wagmi` instead.
+:::
 
-```ts [wagmi.config.ts]
-import { createConfig, http } from 'wagmi'
-import { tempoTestnet } from 'wagmi/chains'
-import { webAuthn } from 'wagmi/tempo' // [!code focus]
+## Install
 
-export const config = createConfig({
-  connectors: [
-    webAuthn(), // [!code focus]
-  ],
-  chains: [tempoTestnet],
-  multiInjectedProviderDiscovery: false,
-  transports: {
-    [tempoTestnet.id]: http(),
-  },
-})
+```bash
+npm i accounts
 ```
 
-## Parameters
+## Import
 
-See the [Accounts SDK docs](https://docs.tempo.xyz/accounts) for more info on available parameters.
+```ts
+import { webAuthn } from 'accounts/wagmi'
+```
+
+## Docs
+
+See the [Accounts SDK docs](https://docs.tempo.xyz/accounts/wagmi/webAuthn) for setup and parameters.

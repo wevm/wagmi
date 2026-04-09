@@ -96,12 +96,10 @@ function App() {
 ```tsx [config.ts]
 import { createConfig, http } from 'wagmi'
 import { tempoTestnet } from 'wagmi/chains'
-import { webAuthn } from 'wagmi/tempo'
+import { tempoWallet } from 'wagmi/tempo'
 
 export const config = createConfig({
-  connectors: [
-    webAuthn(),
-  ],
+  connectors: [tempoWallet()],
   chains: [tempoTestnet],
   multiInjectedProviderDiscovery: false,
   transports: {
@@ -156,12 +154,10 @@ function App() {
 ```tsx [config.ts]
 import { createConfig, http } from 'wagmi'
 import { tempo } from 'wagmi/chains'
-import { webAuthn } from 'wagmi/tempo'
+import { tempoWallet } from 'wagmi/tempo'
 
 export const config = createConfig({
-  connectors: [
-    webAuthn(),
-  ],
+  connectors: [tempoWallet()],
   chains: [tempo],
   multiInjectedProviderDiscovery: false,
   transports: {
