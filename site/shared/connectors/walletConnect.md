@@ -80,19 +80,6 @@ const connector = walletConnect({
 })
 ```
 
-### disableProviderPing
-
-`boolean | undefined`
-
-```ts-vue
-import { walletConnect } from '{{connectorsPackageName}}'
-
-const connector = walletConnect({
-  disableProviderPing: false, // [!code focus]
-  projectId: '3fcc6bba6f1de962d911bb5b5c3dba68',
-})
-```
-
 ### isNewChainsStale
 
 `boolean | undefined`
@@ -200,7 +187,7 @@ import { walletConnect } from '{{connectorsPackageName}}'
 
 const connector = walletConnect({
   projectId: '3fcc6bba6f1de962d911bb5b5c3dba68',
-  relayUrl: 'wss://relay.walletconnect.org', // [!code focus]
+  relayUrl: 'wss://relay.walletconnect.com', // [!code focus]
 })
 ```
 
