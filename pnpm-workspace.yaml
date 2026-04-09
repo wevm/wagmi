@@ -40,7 +40,7 @@ catalog:
   '@vitejs/plugin-react': ^6.0.1
   '@vitejs/plugin-vue': 6.0.5
   '@walletconnect/ethereum-provider': 2.21.1
-  accounts: 0.5.5
+  accounts: 0.5.7
   buffer: 6.0.3
   nuxt: 4.2.1
   ox: 0.11.1
@@ -110,7 +110,7 @@ overrides:
   svgo@=4.0.0: 4.0.1
   tar@<=7.5.10: 7.5.11
   tmp@<=0.2.3: 0.2.4
-  unhead@<=2.1.10: 2.1.11
+  unhead@<2.1.13: 2.1.13
   undici@<6.24.0: 6.24.0
   undici@>=7.0.0 <7.24.0: 7.24.0
   vite@>=6.0.0 <=6.4.1: '>=6.4.2'
