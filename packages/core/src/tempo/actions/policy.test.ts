@@ -1,4 +1,4 @@
-import { connect } from '@wagmi/core'
+import { connect, getBlockNumber } from '@wagmi/core'
 import { accounts, config, queryClient } from '@wagmi/test/tempo'
 import { describe, expect, test, vi } from 'vitest'
 import * as policy from './policy.js'
@@ -349,8 +349,10 @@ describe('watchAdminUpdated', () => {
       type: 'whitelist',
     })
 
+    const fromBlock = await getBlockNumber(config)
     const events: any[] = []
     const unwatch = policy.watchAdminUpdated(config, {
+      fromBlock,
       onAdminUpdated: (args, log) => {
         events.push({ args, log })
       },

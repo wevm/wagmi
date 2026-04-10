@@ -9,6 +9,11 @@ BigInt.prototype.toJSON = function () {
   return this.toString()
 }
 
+async function disconnectAll() {
+  for (const { connector } of config.state.connections.values())
+    await disconnect(config, { connector }).catch(() => {})
+}
+
 beforeAll(async () => {
   await connect(config, {
     connector: config.connectors[0]!,
@@ -18,28 +23,26 @@ beforeAll(async () => {
   // Mint liquidity for fee tokens.
   // Temporarily restore real Date.now so viem calculates a valid validBefore timestamp.
   if ((Date.now as any).mockRestore) (Date.now as any).mockRestore()
-  await Promise.all(
-    [1n, 2n, 3n].map((id) =>
-      Actions.amm.mintSync(client, {
-        account: accounts[0],
-        feeToken: Addresses.pathUsd,
-        nonceKey: 'expiring',
-        userTokenAddress: id,
-        validatorTokenAddress: Addresses.pathUsd,
-        validatorTokenAmount: parseUnits('1000', 6),
-        to: accounts[0].address,
-      }),
-    ),
-  )
+  for (const id of [1n, 2n, 3n]) {
+    await Actions.amm.mintSync(client, {
+      account: accounts[0],
+      feeToken: Addresses.pathUsd,
+      nonceKey: 'expiring',
+      userTokenAddress: id,
+      validatorTokenAddress: Addresses.pathUsd,
+      validatorTokenAmount: parseUnits('1000', 6),
+      to: accounts[0].address,
+    })
+  }
   vi.spyOn(Date, 'now').mockReturnValue(
     new Date(Date.UTC(2023, 1, 1)).valueOf(),
   )
 
-  await disconnect(config).catch(() => {})
+  await disconnectAll()
 })
 
 beforeEach(async () => {
-  await disconnect(config).catch(() => {})
+  await disconnectAll()
   // Make dates stable across runs (set here so it doesn't affect beforeAll setup)
   vi.spyOn(Date, 'now').mockReturnValue(
     new Date(Date.UTC(2023, 1, 1)).valueOf(),

@@ -1752,7 +1752,7 @@ export function getSidebar() {
       },
       {
         text: 'Connectors',
-        link: '/tempo/connectors/',
+        link: '/tempo/connectors',
         items: [
           { text: 'tempoWallet', link: '/tempo/connectors/tempoWallet' },
           { text: 'webAuthn', link: '/tempo/connectors/webAuthn' },

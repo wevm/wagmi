@@ -169,6 +169,52 @@ export const config = createConfig({
 
 :::
 
+## Use Tempo Actions
+
+You can also use [Tempo-specific Actions](/tempo/actions/) directly via the `wagmi/tempo` and `@wagmi/core/tempo` entrypoints:
+
+::: code-group
+
+```ts [React]
+import { createConfig, http } from 'wagmi'
+import { tempoTestnet } from 'wagmi/chains'
+import { Actions, tempoWallet } from 'wagmi/tempo'
+
+const config = createConfig({
+  connectors: [tempoWallet()],
+  chains: [tempoTestnet],
+  multiInjectedProviderDiscovery: false,
+  transports: {
+    [tempoTestnet.id]: http(),
+  },
+})
+
+const metadata = await Actions.token.getMetadata(config, {
+  token: '0x20c0000000000000000000000000000000000001',
+})
+```
+
+```ts [Core]
+import { createConfig, http } from '@wagmi/core'
+import { tempoTestnet } from '@wagmi/core/chains'
+import { Actions, tempoWallet } from '@wagmi/core/tempo'
+
+const config = createConfig({
+  connectors: [tempoWallet()],
+  chains: [tempoTestnet],
+  multiInjectedProviderDiscovery: false,
+  transports: {
+    [tempoTestnet.id]: http(),
+  },
+})
+
+const metadata = await Actions.token.getMetadata(config, {
+  token: '0x20c0000000000000000000000000000000000001',
+})
+```
+
+:::
+
 ## Next Steps
 
 After you have set up your Tempo with Wagmi, you can now:

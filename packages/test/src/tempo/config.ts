@@ -39,12 +39,17 @@ export const addresses = {
   alphaUsd: '0x20c0000000000000000000000000000000000001',
 } as const
 
+const mnemonic = 'test test test test test test test test test test test junk'
+
+function privateKeyForAccount(account: number) {
+  return Mnemonic.toPrivateKey(mnemonic, {
+    as: 'Hex',
+    path: Mnemonic.path({ account }),
+  })
+}
+
 export const accounts = Array.from({ length: 20 }, (_, i) => {
-  const privateKey = Mnemonic.toPrivateKey(
-    'test test test test test test test test test test test junk',
-    { as: 'Hex', path: Mnemonic.path({ account: i }) },
-  )
-  return tempo_Account.fromSecp256k1(privateKey)
+  return tempo_Account.fromSecp256k1(privateKeyForAccount(i))
 }) as unknown as FixedArray<tempo_Account.RootAccount, 20>
 
 export const tempoLocal = defineChain({
@@ -54,7 +59,10 @@ export const tempoLocal = defineChain({
 
 export const config = createConfig({
   chains: [tempoLocal],
-  connectors: [dangerous_secp256k1(), dangerous_secp256k1()],
+  connectors: [
+    dangerous_secp256k1({ privateKey: privateKeyForAccount(0) }),
+    dangerous_secp256k1({ privateKey: privateKeyForAccount(1) }),
+  ],
   pollingInterval: 100,
   storage: null,
   transports: {
@@ -105,19 +113,17 @@ export async function restart() {
 
   // Temporarily restore real Date.now so viem calculates a valid validBefore timestamp.
   if ((Date.now as any).mockRestore) (Date.now as any).mockRestore()
-  await Promise.all(
-    [1n, 2n, 3n].map((id) =>
-      Actions.amm.mintSync(client, {
-        account: accounts[0],
-        feeToken: Addresses.pathUsd,
-        nonceKey: 'expiring',
-        userTokenAddress: id,
-        validatorTokenAddress: Addresses.pathUsd,
-        validatorTokenAmount: parseUnits('1000', 6),
-        to: accounts[0].address,
-      }),
-    ),
-  )
+  for (const id of [1n, 2n, 3n]) {
+    await Actions.amm.mintSync(client, {
+      account: accounts[0],
+      feeToken: Addresses.pathUsd,
+      nonceKey: 'expiring',
+      userTokenAddress: id,
+      validatorTokenAddress: Addresses.pathUsd,
+      validatorTokenAmount: parseUnits('1000', 6),
+      to: accounts[0].address,
+    })
+  }
   vi.spyOn(Date, 'now').mockReturnValue(
     new Date(Date.UTC(2023, 1, 1)).valueOf(),
   )

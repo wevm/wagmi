@@ -4,9 +4,15 @@ Wagmi-specific connectors for Tempo.
 
 ## Import
 
-```ts
+::: code-group
+```ts [React]
 import { tempoWallet } from 'wagmi/tempo'
 ```
+
+```ts [Core]
+import { tempoWallet } from '@wagmi/core/tempo'
+```
+:::
 
 ## Available Connectors
 
