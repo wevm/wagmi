@@ -4,6 +4,8 @@ Connector for a WebAuthn EOA.
 
 :::warning Deprecated
 Use `webAuthn` from `accounts/wagmi` instead.
+
+See the [Accounts SDK docs](https://docs.tempo.xyz/accounts/wagmi/webAuthn) for setup and parameters.
 :::
 
 ## Install
@@ -17,7 +19,3 @@ npm i accounts
 ```ts
 import { webAuthn } from 'accounts/wagmi'
 ```
-
-## Docs
-
-See the [Accounts SDK docs](https://docs.tempo.xyz/accounts/wagmi/webAuthn) for setup and parameters.

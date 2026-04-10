@@ -25,6 +25,7 @@ npm install viem@{{viemVersion}}
 ```
 ```bash-vue [yarn]
 yarn add viem@{{viemVersion}}
+```
 
 ```bash-vue [bun]
 bun add viem@{{viemVersion}}
