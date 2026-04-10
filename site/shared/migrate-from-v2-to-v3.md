@@ -141,30 +141,6 @@ bun add @safe-global/safe-apps-provider@{{packageJson?.peerDependencies?.['@safe
 ```
 :::
 
-### tempoWallet
-
-<a :href="`/${docsPath}/api/connectors/tempoWallet`">`tempoWallet`</a> requires `accounts`
-
-<PackageMetadata package="accounts" repo="tempoxyz/accounts" isOsiLicense licenseUrl="https://github.com/tempoxyz/accounts/blob/main/LICENSE-MIT" />
-
-::: code-group
-```bash-vue [pnpm]
-pnpm add accounts@{{packageJson?.peerDependencies?.accounts}}
-```
-
-```bash-vue [npm]
-npm install accounts@{{packageJson?.peerDependencies?.accounts}}
-```
-
-```bash-vue [yarn]
-yarn add accounts@{{packageJson?.peerDependencies?.accounts}}
-```
-
-```bash-vue [bun]
-bun add accounts@{{packageJson?.peerDependencies?.accounts}}
-```
-:::
-
 ### walletConnect
 
 <a :href="`/${docsPath}/api/connectors/walletConnect`">`walletConnect`</a> requires `@walletconnect/ethereum-provider`

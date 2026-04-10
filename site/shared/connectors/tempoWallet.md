@@ -14,28 +14,6 @@ Connector for Tempo Wallet via the [Accounts SDK](https://docs.tempo.xyz/account
 import { tempoWallet } from '{{connectorsPackageName}}'
 ```
 
-## Install
-
-<PackageMetadata package="accounts" repo="tempoxyz/accounts" isOsiLicense licenseUrl="https://github.com/tempoxyz/accounts/blob/main/LICENSE-MIT" />
-
-::: code-group
-```bash-vue [pnpm]
-pnpm add accounts@{{connectorDependencyVersion}}
-```
-
-```bash-vue [npm]
-npm install accounts@{{connectorDependencyVersion}}
-```
-
-```bash-vue [yarn]
-yarn add accounts@{{connectorDependencyVersion}}
-```
-
-```bash-vue [bun]
-bun add accounts@{{connectorDependencyVersion}}
-```
-:::
-
 ## Usage
 
 ```ts-vue

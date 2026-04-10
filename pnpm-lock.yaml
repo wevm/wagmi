@@ -302,6 +302,10 @@ importers:
         version: 3.0.13(bufferutil@4.0.8)(utf-8-validate@5.0.10)
 
   packages/connectors:
+    dependencies:
+      accounts:
+        specifier: 'catalog:'
+        version: 0.6.1(@types/react@19.2.3)(@wagmi/core@packages+core)(immer@9.0.21)(react@19.2.0)(typescript@5.9.3)(use-sync-external-store@1.6.0(react@19.2.0))(viem@2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76))
     devDependencies:
       '@base-org/account':
         specifier: 'catalog:'
@@ -324,9 +328,6 @@ importers:
       '@walletconnect/ethereum-provider':
         specifier: 'catalog:'
         version: 2.21.1(@types/react@19.2.3)(bufferutil@4.0.8)(db0@0.3.4)(ioredis@5.8.2)(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
-      accounts:
-        specifier: 'catalog:'
-        version: 0.6.1(@types/react@19.2.3)(@wagmi/core@packages+core)(immer@9.0.21)(react@19.2.0)(typescript@5.9.3)(use-sync-external-store@1.6.0(react@19.2.0))(viem@2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76))
       msw:
         specifier: ^2.4.9
         version: 2.4.9(typescript@5.9.3)

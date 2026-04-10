@@ -124,6 +124,7 @@
         ],
         "ignoreDependencies": [
           "@tanstack/query-core",
+          "accounts",
           "ox"
         ]
       },
