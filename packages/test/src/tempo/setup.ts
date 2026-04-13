@@ -1,4 +1,4 @@
-import { connect, disconnect } from '@wagmi/core'
+import { connect, disconnect, getConnection } from '@wagmi/core'
 import { parseUnits } from 'viem'
 import { Actions, Addresses } from 'viem/tempo'
 import { beforeAll, beforeEach, vi } from 'vitest'
@@ -10,9 +10,10 @@ BigInt.prototype.toJSON = function () {
 }
 
 beforeAll(async () => {
-  await connect(config, {
-    connector: config.connectors[0]!,
-  })
+  if (getConnection(config).status === 'disconnected')
+    await connect(config, {
+      connector: config.connectors[0]!,
+    })
   const client = config.getClient()
 
   // Mint liquidity for fee tokens.

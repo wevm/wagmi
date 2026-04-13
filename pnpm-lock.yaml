@@ -208,7 +208,7 @@ importers:
         version: 5.9.3
       viem:
         specifier: 2.47.5
-        version: 2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.1.11)
+        version: 2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6)
       vite-plugin-react-fallback-throttle:
         specifier: ^0.1.3
         version: 0.1.3(react-dom@19.2.0(react@19.2.0))(vite@8.0.5(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(esbuild@0.27.4)(jiti@2.6.1)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))
@@ -321,6 +321,9 @@ importers:
       '@walletconnect/ethereum-provider':
         specifier: 'catalog:'
         version: 2.21.1(@types/react@19.2.3)(bufferutil@4.0.8)(db0@0.3.4)(ioredis@5.8.2)(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
+      accounts:
+        specifier: ^0.6.5
+        version: 0.6.5(@types/react@19.2.3)(@wagmi/core@packages+core)(immer@9.0.21)(react@19.2.0)(typescript@5.9.3)(use-sync-external-store@1.6.0(react@19.2.0))(viem@2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76))
       msw:
         specifier: ^2.4.9
         version: 2.4.9(typescript@5.9.3)
@@ -343,9 +346,12 @@ importers:
       '@tanstack/query-core':
         specifier: 'catalog:'
         version: 5.49.1
+      accounts:
+        specifier: ^0.6.5
+        version: 0.6.5(@types/react@19.2.3)(@wagmi/core@packages+core)(immer@9.0.21)(react@19.2.0)(typescript@5.9.3)(use-sync-external-store@1.6.0(react@19.2.0))(viem@2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6))
       ox:
         specifier: 'catalog:'
-        version: 0.11.1(typescript@5.9.3)(zod@4.1.11)
+        version: 0.11.1(typescript@5.9.3)(zod@4.3.6)
 
   packages/create-wagmi:
     dependencies:
@@ -490,7 +496,7 @@ importers:
         version: link:../vue
       ox:
         specifier: 'catalog:'
-        version: 0.11.1(typescript@5.9.3)(zod@4.1.11)
+        version: 0.11.1(typescript@5.9.3)(zod@4.3.6)
       react:
         specifier: 'catalog:'
         version: 19.2.0
@@ -527,7 +533,7 @@ importers:
         version: 2.4.6
       nuxt:
         specifier: 'catalog:'
-        version: 4.2.1(@biomejs/biome@2.2.4)(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@parcel/watcher@2.4.1)(@types/node@24.6.2)(@vue/compiler-sfc@3.5.25)(bufferutil@4.0.8)(db0@0.3.4)(idb-keyval@6.2.1)(ioredis@5.8.2)(magicast@0.5.2)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(rollup@4.59.0)(terser@5.31.0)(tsx@4.21.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(vite@8.0.5(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(esbuild@0.27.4)(jiti@2.6.1)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))(vue-tsc@3.1.3(typescript@5.9.3))(yaml@2.8.3)
+        version: 4.2.1(@biomejs/biome@2.2.4)(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@parcel/watcher@2.4.1)(@types/node@24.6.2)(@vue/compiler-sfc@3.5.25)(bufferutil@4.0.8)(db0@0.3.4)(idb-keyval@6.2.2)(ioredis@5.8.2)(magicast@0.5.2)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(rollup@4.59.0)(terser@5.31.0)(tsx@4.21.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(vite@8.0.5(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(esbuild@0.27.4)(jiti@2.6.1)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))(vue-tsc@3.1.3(typescript@5.9.3))(yaml@2.8.3)
       vue:
         specifier: 'catalog:'
         version: 3.5.25(typescript@5.9.3)
@@ -542,7 +548,7 @@ importers:
         version: 5.49.2(react@19.2.0)
       next:
         specifier: ^16.1.7
-        version: 16.1.7(@babel/core@7.29.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+        version: 16.1.7(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       react:
         specifier: 'catalog:'
         version: 19.2.0
@@ -551,7 +557,7 @@ importers:
         version: 19.2.0(react@19.2.0)
       viem:
         specifier: 2.*
-        version: 2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.1.11)
+        version: 2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6)
       wagmi:
         specifier: workspace:*
         version: link:../../packages/react
@@ -576,10 +582,10 @@ importers:
         version: link:../../packages/vue
       nuxt:
         specifier: 'catalog:'
-        version: 4.2.1(@biomejs/biome@2.2.4)(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@parcel/watcher@2.4.1)(@types/node@24.6.2)(@vue/compiler-sfc@3.5.25)(bufferutil@4.0.8)(db0@0.3.4)(idb-keyval@6.2.1)(ioredis@5.8.2)(magicast@0.5.2)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(rollup@4.59.0)(terser@5.31.0)(tsx@4.21.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(vite@8.0.5(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(esbuild@0.27.4)(jiti@2.6.1)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))(vue-tsc@3.1.3(typescript@5.9.3))(yaml@2.8.3)
+        version: 4.2.1(@biomejs/biome@2.2.4)(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@parcel/watcher@2.4.1)(@types/node@24.6.2)(@vue/compiler-sfc@3.5.25)(bufferutil@4.0.8)(db0@0.3.4)(idb-keyval@6.2.2)(ioredis@5.8.2)(magicast@0.5.2)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(rollup@4.59.0)(terser@5.31.0)(tsx@4.21.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(vite@8.0.5(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(esbuild@0.27.4)(jiti@2.6.1)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))(vue-tsc@3.1.3(typescript@5.9.3))(yaml@2.8.3)
       viem:
         specifier: 2.*
-        version: 2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.1.11)
+        version: 2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6)
       vue:
         specifier: 'catalog:'
         version: 3.5.25(typescript@5.9.3)
@@ -591,7 +597,7 @@ importers:
     dependencies:
       '@solidjs/start':
         specifier: ^1.1.0
-        version: 1.2.1(solid-js@1.9.10)(vinxi@0.5.10(@types/node@24.6.2)(db0@0.3.4)(idb-keyval@6.2.1)(ioredis@5.8.2)(jiti@2.6.1)(lightningcss@1.32.0)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))(vite@8.0.5(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(esbuild@0.27.4)(jiti@2.6.1)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))
+        version: 1.2.1(solid-js@1.9.10)(vinxi@0.5.10(@types/node@24.6.2)(db0@0.3.4)(idb-keyval@6.2.2)(ioredis@5.8.2)(jiti@2.6.1)(lightningcss@1.32.0)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))(vite@8.0.5(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(esbuild@0.27.4)(jiti@2.6.1)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))
       '@tanstack/solid-query':
         specifier: 'catalog:'
         version: 5.49.1(solid-js@1.9.10)
@@ -603,10 +609,10 @@ importers:
         version: 1.9.10
       viem:
         specifier: 2.*
-        version: 2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.1.11)
+        version: 2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6)
       vinxi:
         specifier: ^0.5.7
-        version: 0.5.10(@types/node@24.6.2)(db0@0.3.4)(idb-keyval@6.2.1)(ioredis@5.8.2)(jiti@2.6.1)(lightningcss@1.32.0)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3)
+        version: 0.5.10(@types/node@24.6.2)(db0@0.3.4)(idb-keyval@6.2.2)(ioredis@5.8.2)(jiti@2.6.1)(lightningcss@1.32.0)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3)
 
   playgrounds/tanstack-start:
     dependencies:
@@ -639,7 +645,7 @@ importers:
         version: 19.2.0(react@19.2.0)
       viem:
         specifier: 2.*
-        version: 2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.1.11)
+        version: 2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6)
       wagmi:
         specifier: workspace:*
         version: link:../../packages/react
@@ -691,7 +697,7 @@ importers:
         version: 19.2.0(react@19.2.0)
       viem:
         specifier: 2.*
-        version: 2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.1.11)
+        version: 2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6)
     devDependencies:
       '@types/react':
         specifier: 'catalog:'
@@ -734,7 +740,7 @@ importers:
         version: 19.2.0(react@19.2.0)
       viem:
         specifier: 2.*
-        version: 2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.1.11)
+        version: 2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6)
       wagmi:
         specifier: workspace:*
         version: link:../../packages/react
@@ -774,7 +780,7 @@ importers:
         version: 1.9.10
       viem:
         specifier: 2.*
-        version: 2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.1.11)
+        version: 2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6)
     devDependencies:
       buffer:
         specifier: 'catalog:'
@@ -796,7 +802,7 @@ importers:
         version: link:../../packages/vue
       viem:
         specifier: 2.*
-        version: 2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.1.11)
+        version: 2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6)
       vue:
         specifier: 'catalog:'
         version: 3.5.25(typescript@5.9.3)
@@ -848,7 +854,7 @@ importers:
         version: 1.0.2(typescript@5.9.3)(zod@3.25.76)
       nuxt:
         specifier: ^3.19.2
-        version: 3.19.2(@biomejs/biome@2.2.4)(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@parcel/watcher@2.4.1)(@types/node@24.6.2)(@vue/compiler-sfc@3.5.25)(bufferutil@4.0.8)(db0@0.3.4)(idb-keyval@6.2.1)(ioredis@5.8.2)(magicast@0.3.5)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(rollup@4.59.0)(terser@5.31.0)(tsx@4.21.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(vite@8.0.5(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(esbuild@0.27.4)(jiti@2.6.1)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))(vue-tsc@3.1.3(typescript@5.9.3))(yaml@2.8.3)
+        version: 3.19.2(@biomejs/biome@2.2.4)(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@parcel/watcher@2.4.1)(@types/node@24.6.2)(@vue/compiler-sfc@3.5.25)(bufferutil@4.0.8)(db0@0.3.4)(idb-keyval@6.2.2)(ioredis@5.8.2)(magicast@0.3.5)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(rollup@4.59.0)(terser@5.31.0)(tsx@4.21.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(vite@8.0.5(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(esbuild@0.27.4)(jiti@2.6.1)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))(vue-tsc@3.1.3(typescript@5.9.3))(yaml@2.8.3)
       react:
         specifier: 'catalog:'
         version: 19.2.0
@@ -863,7 +869,7 @@ importers:
         version: 2.46.3(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
       vitepress:
         specifier: 1.6.3
-        version: 1.6.3(@algolia/client-search@5.42.0)(@types/node@24.6.2)(@types/react@19.2.3)(axios@1.13.5)(change-case@5.4.4)(fuse.js@7.1.0)(idb-keyval@6.2.1)(lightningcss@1.32.0)(postcss@8.5.8)(qrcode@1.5.3)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(terser@5.31.0)(typescript@5.9.3)
+        version: 1.6.3(@algolia/client-search@5.42.0)(@types/node@24.6.2)(@types/react@19.2.3)(axios@1.13.5)(change-case@5.4.4)(fuse.js@7.1.0)(idb-keyval@6.2.2)(lightningcss@1.32.0)(postcss@8.5.8)(qrcode@1.5.3)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(terser@5.31.0)(typescript@5.9.3)
       vitepress-plugin-group-icons:
         specifier: ^1.6.5
         version: 1.6.5(vite@8.0.5(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(esbuild@0.27.4)(jiti@2.6.1)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))
@@ -1282,6 +1288,9 @@ packages:
 
   '@bundled-es-modules/tough-cookie@0.1.6':
     resolution: {integrity: sha512-dvMHbL464C0zI+Yqxbz6kZ5TOEp7GLW+pry/RWndAR8MJQAXZ2rPmIs8tziTZjeIyhSNZgZbCePtfSbdWqStJw==}
+
+  '@cfworker/json-schema@4.1.1':
+    resolution: {integrity: sha512-gAmrUZSGtKc3AiBL71iNWxDsyUC5uMaKKGdvzYsBoTW/xi42JQHl7eKV2OYzCUqvc+D2RCcf7EXY2iCyFIk6og==}
 
   '@changesets/apply-release-plan@8.0.0-next.0':
     resolution: {integrity: sha512-bWfOXzGrBnc0oc1W9APPzZ48fT2Xid6ygiIBkUxd2SMJx9VWMSyA0CG/E3edZOKjs4d+a/LykeP7lWzIPGdouw==}
@@ -2952,6 +2961,15 @@ packages:
   '@metamask/utils@9.3.0':
     resolution: {integrity: sha512-w8CVbdkDrVXFJbfBSlDfafDR6BAkpDmv1bC1UJVCoVny5tW2RKAdn9i68Xf7asYT4TnUhl/hN4zfUiKQq9II4g==}
     engines: {node: '>=16.0.0'}
+
+  '@modelcontextprotocol/server@2.0.0-alpha.2':
+    resolution: {integrity: sha512-gmLgdHzlYM8L7Aw/+VE0kxjT25WKamtUSLNhdOgrJq5CrESvqVSoAfWSJJeNPUXNTluQ+dYDGFbKVitdsJtbPA==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      '@cfworker/json-schema': ^4.1.1
+    peerDependenciesMeta:
+      '@cfworker/json-schema':
+        optional: true
 
   '@mswjs/interceptors@0.35.9':
     resolution: {integrity: sha512-SSnyl/4ni/2ViHKkiZb8eajA/eN1DNFaHjhGiLUdZvDz6PKF4COSf/17xqSz64nOo2Ia29SA6B2KNCsyCbVmaQ==}
@@ -5297,6 +5315,9 @@ packages:
     resolution: {integrity: sha512-o4PXJQidqJl82ckFaXUeoAW+XysPLauYI43Abki5hABd853iMhitooc6znOnczgbTYmEP6U6/y1ZyKAIsvMKGg==}
     engines: {node: '>=18'}
 
+  '@toon-format/toon@2.1.0':
+    resolution: {integrity: sha512-JwWptdF5eOA0HaQxbKAzkpQtR4wSWTEfDlEy/y3/4okmOAX1qwnpLZMmtEWr+ncAhTTY1raCKH0kteHhSXnQqg==}
+
   '@tybys/wasm-util@0.10.1':
     resolution: {integrity: sha512-9tTaPJLSiejZKx+Bmog4uSubteqTvFrVrURwkmHixBo0G4seD0zUxp98E1DzUBJxLQ3NPwXrGKDiVjwx/DpPsg==}
 
@@ -5619,7 +5640,7 @@ packages:
     resolution: {integrity: sha512-+MaE752hU0wfPFJEUAIxqw18+20euHHdxVtMvbFcOEpjEyfqXH/5DCoTHiVJ0J29EhTJdoTkjEv5YBKU9dnoTw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
-      vite: '>=6.4.2'
+      vite: '>=7.3.2'
       vue: ^3.2.25
 
   '@vitejs/plugin-vue@6.0.5':
@@ -5656,7 +5677,7 @@ packages:
     resolution: {integrity: sha512-Ize4iQtEALHDttPRCmN+FKqOl2vxTiNUhzobQFFt/BM1lRUTG7zRCLOykG/6Vo4E4hnUdfVLo5/eqKPukcWW7Q==}
     peerDependencies:
       msw: ^2.4.9
-      vite: '>=6.4.2'
+      vite: '>=8.0.5'
     peerDependenciesMeta:
       msw:
         optional: true
@@ -6024,6 +6045,29 @@ packages:
   abort-controller@3.0.0:
     resolution: {integrity: sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==}
     engines: {node: '>=6.5'}
+
+  accounts@0.6.5:
+    resolution: {integrity: sha512-JpS9nqSy441T0y6MVFu9sK2RJJgtLXASDBgmPjFpUEnQEHZjfVvfrmDCwZEhXCgaOAA16eHiR7v9LPPCrXdyNA==}
+    peerDependencies:
+      '@react-native-async-storage/async-storage': ^3.0.2
+      '@wagmi/core': '>=2'
+      expo-secure-store: ^55.0.12
+      expo-web-browser: ^55.0.13
+      react: '>=18'
+      viem: '>=2.43.3'
+    peerDependenciesMeta:
+      '@react-native-async-storage/async-storage':
+        optional: true
+      '@wagmi/core':
+        optional: true
+      expo-secure-store:
+        optional: true
+      expo-web-browser:
+        optional: true
+      react:
+        optional: true
+      viem:
+        optional: true
 
   acorn-import-attributes@1.9.5:
     resolution: {integrity: sha512-n02Vykv5uA3eHGM/Z2dQrcD56kL8TyDb2p1+0P83PClMnC/nc+anbQRhIOWnSq4Ke/KvDPrY3C9hDtC/A3eHnQ==}
@@ -7663,6 +7707,10 @@ packages:
   highlight.js@10.7.3:
     resolution: {integrity: sha512-tzcUFauisWKNHaRkN4Wjl/ZA07gENAjFl3J/c480dprkGTg5EQstgaNFqBfUqCq54kZRIEcreTsAgF/m2quD7A==}
 
+  hono@4.12.12:
+    resolution: {integrity: sha512-p1JfQMKaceuCbpJKAPKVqyqviZdS0eUxH9v82oWo1kb9xjQ5wA6iP3FNVAPDFlz5/p7d45lO+BpSk1tuSZMF4Q==}
+    engines: {node: '>=16.9.0'}
+
   hono@4.12.7:
     resolution: {integrity: sha512-jq9l1DM0zVIvsm3lv9Nw9nlJnMNPOcAtsbsgiUhWcFzPE99Gvo6yRTlszSLLYacMeQ6quHD6hMfId8crVHvexw==}
     engines: {node: '>=16.9.0'}
@@ -7737,6 +7785,9 @@ packages:
   idb-keyval@6.2.1:
     resolution: {integrity: sha512-8Sb3veuYCyrZL+VBt9LJfZjLUPWVvqn8tG28VqYNFCo43KHcKuq+b4EiXGeuaLAQWL2YmyDgMp2aSpH9JHsEQg==}
 
+  idb-keyval@6.2.2:
+    resolution: {integrity: sha512-yjD9nARJ/jb1g+CvD0tlhUHOrJ9Sy0P8T9MF3YaLlHnSRpwPfpTX0XIvpmw3gAJUmEu3FiICLBDPXVwyEvrleg==}
+
   idna-uts46-hx@2.3.1:
     resolution: {integrity: sha512-PWoF9Keq6laYdIRwwCdhTPl60xRqAloYNMQLiyUnG42VjT53oW07BXIRM+NK7eQjzXjAk2gUvX9caRxlnF9TAA==}
     engines: {node: '>=4.0.0'}
@@ -7769,6 +7820,11 @@ packages:
 
   impound@1.0.0:
     resolution: {integrity: sha512-8lAJ+1Arw2sMaZ9HE2ZmL5zOcMnt18s6+7Xqgq2aUVy4P1nlzAyPtzCDxsk51KVFwHEEdc6OWvUyqwHwhRYaug==}
+
+  incur@0.3.25:
+    resolution: {integrity: sha512-jrSkzauM42ilbQJ6THVkAY6dTulkyVW0sZpVHdA8gfiBwrLrLnLUf8U3bAOegAKBIMSOFgk1idchgu9xm9HMng==}
+    engines: {node: '>=22'}
+    hasBin: true
 
   inflight@1.0.6:
     resolution: {integrity: sha512-k92I/b08q4wvFscXCLvqfsHCrjrF7yiXsQuIVvVE7N82W3+aqpzuUdBbfhWcy/FZR3/4IgflMgKLOsvPDrGCJA==}
@@ -8535,6 +8591,25 @@ packages:
   mocked-exports@0.1.1:
     resolution: {integrity: sha512-aF7yRQr/Q0O2/4pIXm6PZ5G+jAd7QS4Yu8m+WEeEHGnbo+7mE36CbLSDQiXYV8bVL3NfmdeqPJct0tUlnjVSnA==}
 
+  mppx@0.5.12:
+    resolution: {integrity: sha512-pr6epOYJd8Q6D+MRMc27G48IMh0naAGMMyY1cZYrxMXVwH8PPn1ZaqUwv31svcjOV+UpSrSAe/MP2hRWJ0KQ7A==}
+    hasBin: true
+    peerDependencies:
+      '@modelcontextprotocol/sdk': '>=1.25.0'
+      elysia: '>=1'
+      express: '>=5'
+      hono: '>=4.12.12'
+      viem: '>=2.47.5'
+    peerDependenciesMeta:
+      '@modelcontextprotocol/sdk':
+        optional: true
+      elysia:
+        optional: true
+      express:
+        optional: true
+      hono:
+        optional: true
+
   mri@1.2.0:
     resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==}
     engines: {node: '>=4'}
@@ -8923,6 +8998,22 @@ packages:
 
   ox@0.12.4:
     resolution: {integrity: sha512-+P+C7QzuwPV8lu79dOwjBKfB2CbnbEXe/hfyyrff1drrO1nOOj3Hc87svHfcW1yneRr3WXaKr6nz11nq+/DF9Q==}
+    peerDependencies:
+      typescript: '>=5.4.0'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
+  ox@0.14.10:
+    resolution: {integrity: sha512-PYsqEnSP7CrcxISS3uVBtw9yPy2gATAnWNptTI0pMnlrXLTiw0Xw/IIivJVHDFgGvKuRAtBSafhVjs+jis3CVA==}
+    peerDependencies:
+      typescript: '>=5.4.0'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
+  ox@0.14.16:
+    resolution: {integrity: sha512-sPk+pUM3W01H0/S0Fw7TFGCIcNpWD9v3BoebwSx4y20JGBOSV6lzLd3/t5yVllFWeQ9mtgSEww6bmjsXaVtagA==}
     peerDependencies:
       typescript: '>=5.4.0'
     peerDependenciesMeta:
@@ -10829,7 +10920,7 @@ packages:
   vite-hot-client@2.1.0:
     resolution: {integrity: sha512-7SpgZmU7R+dDnSmvXE1mfDtnHLHQSisdySVR7lO8ceAXvM0otZeuQQ6C8LrS5d/aYyP/QZ0hI0L+dIPrm4YlFQ==}
     peerDependencies:
-      vite: '>=6.4.2'
+      vite: '>=7.3.2'
 
   vite-node@3.2.4:
     resolution: {integrity: sha512-EbKSKh+bh1E1IFxeO0pg1n4dvoOTt0UDiXMd/qn++r98+jPO1xtJilvXldeuQ8giIB5IkpjCgMleHMNEsGH6pg==}
@@ -10943,7 +11034,7 @@ packages:
     peerDependencies:
       '@testing-library/jest-dom': ^5.16.6 || ^5.17.0 || ^6.*
       solid-js: ^1.7.2
-      vite: '>=6.4.2'
+      vite: '>=7.3.2'
     peerDependenciesMeta:
       '@testing-library/jest-dom':
         optional: true
@@ -11272,6 +11363,9 @@ packages:
     resolution: {integrity: sha512-3hu+tD8YzSLGuFYtPRb48vdhKMi0KQV5sn+uWr8+7dMEq/2G/dtLrdDinkLjqq5TIbIBjYJ4Ax/n3YiaW7QM8A==}
     engines: {node: 20 || >=22}
 
+  webauthx@0.1.1:
+    resolution: {integrity: sha512-3jiskZl0jiTUoO8r3ySUYItdXNDBpfzxnxPx7XM0giF2dIY7S4KqHVbH04Qglz98nP8RaSV1/+3eDCx1s3WDiQ==}
+
   webidl-conversions@3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
 
@@ -11514,8 +11608,29 @@ packages:
   zod@4.1.11:
     resolution: {integrity: sha512-WPsqwxITS2tzx1bzhIKsEs19ABD5vmCVa4xBo2tq/SrV4RNZtfws1EnCWQXM6yh8bD08a1idvkB5MZSBiZsjwg==}
 
+  zod@4.3.6:
+    resolution: {integrity: sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg==}
+
   zustand@5.0.0:
     resolution: {integrity: sha512-LE+VcmbartOPM+auOjCCLQOsQ05zUTp8RkgwRzefUk+2jISdMMFnxvyTjA4YNWr5ZGXYbVsEMZosttuxUBkojQ==}
+    engines: {node: '>=12.20.0'}
+    peerDependencies:
+      '@types/react': '>=18.0.0'
+      immer: '>=9.0.6'
+      react: '>=18.0.0'
+      use-sync-external-store: '>=1.2.0'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      immer:
+        optional: true
+      react:
+        optional: true
+      use-sync-external-store:
+        optional: true
+
+  zustand@5.0.12:
+    resolution: {integrity: sha512-i77ae3aZq4dhMlRhJVCYgMLKuSiZAaUPAct2AksxQ+gOtimhGMdXljRT21P5BNpeT4kXlLIckvkPM029OljD7g==}
     engines: {node: '>=12.20.0'}
     peerDependencies:
       '@types/react': '>=18.0.0'
@@ -12151,6 +12266,8 @@ snapshots:
     dependencies:
       '@types/tough-cookie': 4.0.5
       tough-cookie: 4.1.4
+
+  '@cfworker/json-schema@4.1.1': {}
 
   '@changesets/apply-release-plan@8.0.0-next.0':
     dependencies:
@@ -13511,6 +13628,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@modelcontextprotocol/server@2.0.0-alpha.2(@cfworker/json-schema@4.1.1)':
+    dependencies:
+      zod: 4.3.6
+    optionalDependencies:
+      '@cfworker/json-schema': 4.1.1
+
   '@mswjs/interceptors@0.35.9':
     dependencies:
       '@open-draft/deferred-promise': 2.2.0
@@ -14006,7 +14129,7 @@ snapshots:
     transitivePeerDependencies:
       - magicast
 
-  '@nuxt/nitro-server@4.2.1(db0@0.3.4)(idb-keyval@6.2.1)(ioredis@5.8.2)(magicast@0.5.2)(nuxt@4.2.1(@biomejs/biome@2.2.4)(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@parcel/watcher@2.4.1)(@types/node@24.6.2)(@vue/compiler-sfc@3.5.25)(bufferutil@4.0.8)(db0@0.3.4)(idb-keyval@6.2.1)(ioredis@5.8.2)(magicast@0.5.2)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(rollup@4.59.0)(terser@5.31.0)(tsx@4.21.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(vite@8.0.5(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(esbuild@0.27.4)(jiti@2.6.1)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))(vue-tsc@3.1.3(typescript@5.9.3))(yaml@2.8.3))(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(typescript@5.9.3)':
+  '@nuxt/nitro-server@4.2.1(db0@0.3.4)(idb-keyval@6.2.2)(ioredis@5.8.2)(magicast@0.5.2)(nuxt@4.2.1(@biomejs/biome@2.2.4)(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@parcel/watcher@2.4.1)(@types/node@24.6.2)(@vue/compiler-sfc@3.5.25)(bufferutil@4.0.8)(db0@0.3.4)(idb-keyval@6.2.2)(ioredis@5.8.2)(magicast@0.5.2)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(rollup@4.59.0)(terser@5.31.0)(tsx@4.21.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(vite@8.0.5(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(esbuild@0.27.4)(jiti@2.6.1)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))(vue-tsc@3.1.3(typescript@5.9.3))(yaml@2.8.3))(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(typescript@5.9.3)':
     dependencies:
       '@nuxt/devalue': 2.0.2
       '@nuxt/kit': 4.2.1(magicast@0.5.2)
@@ -14023,15 +14146,15 @@ snapshots:
       impound: 1.0.0
       klona: 2.0.6
       mocked-exports: 0.1.1
-      nitropack: 2.12.9(idb-keyval@6.2.1)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))
-      nuxt: 4.2.1(@biomejs/biome@2.2.4)(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@parcel/watcher@2.4.1)(@types/node@24.6.2)(@vue/compiler-sfc@3.5.25)(bufferutil@4.0.8)(db0@0.3.4)(idb-keyval@6.2.1)(ioredis@5.8.2)(magicast@0.5.2)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(rollup@4.59.0)(terser@5.31.0)(tsx@4.21.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(vite@8.0.5(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(esbuild@0.27.4)(jiti@2.6.1)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))(vue-tsc@3.1.3(typescript@5.9.3))(yaml@2.8.3)
+      nitropack: 2.12.9(idb-keyval@6.2.2)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))
+      nuxt: 4.2.1(@biomejs/biome@2.2.4)(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@parcel/watcher@2.4.1)(@types/node@24.6.2)(@vue/compiler-sfc@3.5.25)(bufferutil@4.0.8)(db0@0.3.4)(idb-keyval@6.2.2)(ioredis@5.8.2)(magicast@0.5.2)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(rollup@4.59.0)(terser@5.31.0)(tsx@4.21.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(vite@8.0.5(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(esbuild@0.27.4)(jiti@2.6.1)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))(vue-tsc@3.1.3(typescript@5.9.3))(yaml@2.8.3)
       pathe: 2.0.3
       pkg-types: 2.3.0
       radix3: 1.1.2
       std-env: 3.10.0
       ufo: 1.6.3
       unctx: 2.4.1
-      unstorage: 1.17.2(db0@0.3.4)(idb-keyval@6.2.1)(ioredis@5.8.2)
+      unstorage: 1.17.2(db0@0.3.4)(idb-keyval@6.2.2)(ioredis@5.8.2)
       vue: 3.5.25(typescript@5.9.3)
       vue-bundle-renderer: 2.2.0
       vue-devtools-stub: 0.1.0
@@ -14183,7 +14306,7 @@ snapshots:
       - vue-tsc
       - yaml
 
-  '@nuxt/vite-builder@4.2.1(@biomejs/biome@2.2.4)(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(magicast@0.5.2)(nuxt@4.2.1(@biomejs/biome@2.2.4)(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@parcel/watcher@2.4.1)(@types/node@24.6.2)(@vue/compiler-sfc@3.5.25)(bufferutil@4.0.8)(db0@0.3.4)(idb-keyval@6.2.1)(ioredis@5.8.2)(magicast@0.5.2)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(rollup@4.59.0)(terser@5.31.0)(tsx@4.21.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(vite@8.0.5(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(esbuild@0.27.4)(jiti@2.6.1)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))(vue-tsc@3.1.3(typescript@5.9.3))(yaml@2.8.3))(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(rollup@4.59.0)(terser@5.31.0)(tsx@4.21.0)(typescript@5.9.3)(vue-tsc@3.1.3(typescript@5.9.3))(vue@3.5.25(typescript@5.9.3))(yaml@2.8.3)':
+  '@nuxt/vite-builder@4.2.1(@biomejs/biome@2.2.4)(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(magicast@0.5.2)(nuxt@4.2.1(@biomejs/biome@2.2.4)(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@parcel/watcher@2.4.1)(@types/node@24.6.2)(@vue/compiler-sfc@3.5.25)(bufferutil@4.0.8)(db0@0.3.4)(idb-keyval@6.2.2)(ioredis@5.8.2)(magicast@0.5.2)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(rollup@4.59.0)(terser@5.31.0)(tsx@4.21.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(vite@8.0.5(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(esbuild@0.27.4)(jiti@2.6.1)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))(vue-tsc@3.1.3(typescript@5.9.3))(yaml@2.8.3))(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(rollup@4.59.0)(terser@5.31.0)(tsx@4.21.0)(typescript@5.9.3)(vue-tsc@3.1.3(typescript@5.9.3))(vue@3.5.25(typescript@5.9.3))(yaml@2.8.3)':
     dependencies:
       '@nuxt/kit': 4.2.1(magicast@0.5.2)
       '@rollup/plugin-replace': 6.0.3(rollup@4.59.0)
@@ -14203,7 +14326,7 @@ snapshots:
       magic-string: 0.30.21
       mlly: 1.8.0
       mocked-exports: 0.1.1
-      nuxt: 4.2.1(@biomejs/biome@2.2.4)(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@parcel/watcher@2.4.1)(@types/node@24.6.2)(@vue/compiler-sfc@3.5.25)(bufferutil@4.0.8)(db0@0.3.4)(idb-keyval@6.2.1)(ioredis@5.8.2)(magicast@0.5.2)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(rollup@4.59.0)(terser@5.31.0)(tsx@4.21.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(vite@8.0.5(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(esbuild@0.27.4)(jiti@2.6.1)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))(vue-tsc@3.1.3(typescript@5.9.3))(yaml@2.8.3)
+      nuxt: 4.2.1(@biomejs/biome@2.2.4)(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@parcel/watcher@2.4.1)(@types/node@24.6.2)(@vue/compiler-sfc@3.5.25)(bufferutil@4.0.8)(db0@0.3.4)(idb-keyval@6.2.2)(ioredis@5.8.2)(magicast@0.5.2)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(rollup@4.59.0)(terser@5.31.0)(tsx@4.21.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(vite@8.0.5(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(esbuild@0.27.4)(jiti@2.6.1)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))(vue-tsc@3.1.3(typescript@5.9.3))(yaml@2.8.3)
       pathe: 2.0.3
       pkg-types: 2.3.0
       postcss: 8.5.6
@@ -15896,11 +16019,11 @@ snapshots:
     dependencies:
       solid-js: 1.9.10
 
-  '@solidjs/start@1.2.1(solid-js@1.9.10)(vinxi@0.5.10(@types/node@24.6.2)(db0@0.3.4)(idb-keyval@6.2.1)(ioredis@5.8.2)(jiti@2.6.1)(lightningcss@1.32.0)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))(vite@8.0.5(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(esbuild@0.27.4)(jiti@2.6.1)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))':
+  '@solidjs/start@1.2.1(solid-js@1.9.10)(vinxi@0.5.10(@types/node@24.6.2)(db0@0.3.4)(idb-keyval@6.2.2)(ioredis@5.8.2)(jiti@2.6.1)(lightningcss@1.32.0)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))(vite@8.0.5(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(esbuild@0.27.4)(jiti@2.6.1)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))':
     dependencies:
       '@tanstack/server-functions-plugin': 1.121.21(vite@8.0.5(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(esbuild@0.27.4)(jiti@2.6.1)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))
-      '@vinxi/plugin-directives': 0.5.1(vinxi@0.5.10(@types/node@24.6.2)(db0@0.3.4)(idb-keyval@6.2.1)(ioredis@5.8.2)(jiti@2.6.1)(lightningcss@1.32.0)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))
-      '@vinxi/server-components': 0.5.1(vinxi@0.5.10(@types/node@24.6.2)(db0@0.3.4)(idb-keyval@6.2.1)(ioredis@5.8.2)(jiti@2.6.1)(lightningcss@1.32.0)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))
+      '@vinxi/plugin-directives': 0.5.1(vinxi@0.5.10(@types/node@24.6.2)(db0@0.3.4)(idb-keyval@6.2.2)(ioredis@5.8.2)(jiti@2.6.1)(lightningcss@1.32.0)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))
+      '@vinxi/server-components': 0.5.1(vinxi@0.5.10(@types/node@24.6.2)(db0@0.3.4)(idb-keyval@6.2.2)(ioredis@5.8.2)(jiti@2.6.1)(lightningcss@1.32.0)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))
       cookie-es: 2.0.0
       defu: 6.1.6
       error-stack-parser: 2.1.4
@@ -15912,7 +16035,7 @@ snapshots:
       source-map-js: 1.2.1
       terracotta: 1.1.0(solid-js@1.9.10)
       tinyglobby: 0.2.15
-      vinxi: 0.5.10(@types/node@24.6.2)(db0@0.3.4)(idb-keyval@6.2.1)(ioredis@5.8.2)(jiti@2.6.1)(lightningcss@1.32.0)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3)
+      vinxi: 0.5.10(@types/node@24.6.2)(db0@0.3.4)(idb-keyval@6.2.2)(ioredis@5.8.2)(jiti@2.6.1)(lightningcss@1.32.0)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3)
       vite-plugin-solid: 2.11.10(solid-js@1.9.10)(vite@8.0.5(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(esbuild@0.27.4)(jiti@2.6.1)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))
     transitivePeerDependencies:
       - '@testing-library/jest-dom'
@@ -16411,6 +16534,8 @@ snapshots:
       picocolors: 1.1.1
       pretty-format: 27.5.1
 
+  '@toon-format/toon@2.1.0': {}
+
   '@tybys/wasm-util@0.10.1':
     dependencies:
       tslib: 2.8.1
@@ -16829,7 +16954,7 @@ snapshots:
       untun: 0.1.3
       uqr: 0.1.2
 
-  '@vinxi/plugin-directives@0.5.1(vinxi@0.5.10(@types/node@24.6.2)(db0@0.3.4)(idb-keyval@6.2.1)(ioredis@5.8.2)(jiti@2.6.1)(lightningcss@1.32.0)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))':
+  '@vinxi/plugin-directives@0.5.1(vinxi@0.5.10(@types/node@24.6.2)(db0@0.3.4)(idb-keyval@6.2.2)(ioredis@5.8.2)(jiti@2.6.1)(lightningcss@1.32.0)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))':
     dependencies:
       '@babel/parser': 7.28.5
       acorn: 8.15.0
@@ -16840,18 +16965,18 @@ snapshots:
       magicast: 0.2.11
       recast: 0.23.11
       tslib: 2.8.1
-      vinxi: 0.5.10(@types/node@24.6.2)(db0@0.3.4)(idb-keyval@6.2.1)(ioredis@5.8.2)(jiti@2.6.1)(lightningcss@1.32.0)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3)
+      vinxi: 0.5.10(@types/node@24.6.2)(db0@0.3.4)(idb-keyval@6.2.2)(ioredis@5.8.2)(jiti@2.6.1)(lightningcss@1.32.0)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3)
 
-  '@vinxi/server-components@0.5.1(vinxi@0.5.10(@types/node@24.6.2)(db0@0.3.4)(idb-keyval@6.2.1)(ioredis@5.8.2)(jiti@2.6.1)(lightningcss@1.32.0)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))':
+  '@vinxi/server-components@0.5.1(vinxi@0.5.10(@types/node@24.6.2)(db0@0.3.4)(idb-keyval@6.2.2)(ioredis@5.8.2)(jiti@2.6.1)(lightningcss@1.32.0)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))':
     dependencies:
-      '@vinxi/plugin-directives': 0.5.1(vinxi@0.5.10(@types/node@24.6.2)(db0@0.3.4)(idb-keyval@6.2.1)(ioredis@5.8.2)(jiti@2.6.1)(lightningcss@1.32.0)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))
+      '@vinxi/plugin-directives': 0.5.1(vinxi@0.5.10(@types/node@24.6.2)(db0@0.3.4)(idb-keyval@6.2.2)(ioredis@5.8.2)(jiti@2.6.1)(lightningcss@1.32.0)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))
       acorn: 8.15.0
       acorn-loose: 8.5.2
       acorn-typescript: 1.4.13(acorn@8.15.0)
       astring: 1.9.0
       magicast: 0.2.11
       recast: 0.23.11
-      vinxi: 0.5.10(@types/node@24.6.2)(db0@0.3.4)(idb-keyval@6.2.1)(ioredis@5.8.2)(jiti@2.6.1)(lightningcss@1.32.0)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3)
+      vinxi: 0.5.10(@types/node@24.6.2)(db0@0.3.4)(idb-keyval@6.2.2)(ioredis@5.8.2)(jiti@2.6.1)(lightningcss@1.32.0)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3)
 
   '@vitejs/plugin-react@6.0.1(vite@8.0.5(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(esbuild@0.27.4)(jiti@2.6.1)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))':
     dependencies:
@@ -17220,7 +17345,7 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@vueuse/integrations@12.8.2(axios@1.13.5)(change-case@5.4.4)(focus-trap@7.6.6)(fuse.js@7.1.0)(idb-keyval@6.2.1)(qrcode@1.5.3)(typescript@5.9.3)':
+  '@vueuse/integrations@12.8.2(axios@1.13.5)(change-case@5.4.4)(focus-trap@7.6.6)(fuse.js@7.1.0)(idb-keyval@6.2.2)(qrcode@1.5.3)(typescript@5.9.3)':
     dependencies:
       '@vueuse/core': 12.8.2(typescript@5.9.3)
       '@vueuse/shared': 12.8.2(typescript@5.9.3)
@@ -17230,7 +17355,7 @@ snapshots:
       change-case: 5.4.4
       focus-trap: 7.6.6
       fuse.js: 7.1.0
-      idb-keyval: 6.2.1
+      idb-keyval: 6.2.2
       qrcode: 1.5.3
     transitivePeerDependencies:
       - typescript
@@ -17819,9 +17944,60 @@ snapshots:
       typescript: 5.9.3
       zod: 4.1.11
 
+  abitype@1.2.3(typescript@5.9.3)(zod@4.3.6):
+    optionalDependencies:
+      typescript: 5.9.3
+      zod: 4.3.6
+
   abort-controller@3.0.0:
     dependencies:
       event-target-shim: 5.0.1
+
+  accounts@0.6.5(@types/react@19.2.3)(@wagmi/core@packages+core)(immer@9.0.21)(react@19.2.0)(typescript@5.9.3)(use-sync-external-store@1.6.0(react@19.2.0))(viem@2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)):
+    dependencies:
+      hono: 4.12.12
+      idb-keyval: 6.2.2
+      mipd: 0.0.7(typescript@5.9.3)
+      mppx: 0.5.12(hono@4.12.12)(typescript@5.9.3)(viem@2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76))
+      ox: 0.14.16(typescript@5.9.3)(zod@4.3.6)
+      webauthx: 0.1.1(typescript@5.9.3)(zod@4.3.6)
+      zod: 4.3.6
+      zustand: 5.0.12(@types/react@19.2.3)(immer@9.0.21)(react@19.2.0)(use-sync-external-store@1.6.0(react@19.2.0))
+    optionalDependencies:
+      '@wagmi/core': link:packages/core
+      react: 19.2.0
+      viem: 2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
+    transitivePeerDependencies:
+      - '@modelcontextprotocol/sdk'
+      - '@types/react'
+      - elysia
+      - express
+      - immer
+      - typescript
+      - use-sync-external-store
+
+  accounts@0.6.5(@types/react@19.2.3)(@wagmi/core@packages+core)(immer@9.0.21)(react@19.2.0)(typescript@5.9.3)(use-sync-external-store@1.6.0(react@19.2.0))(viem@2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6)):
+    dependencies:
+      hono: 4.12.12
+      idb-keyval: 6.2.2
+      mipd: 0.0.7(typescript@5.9.3)
+      mppx: 0.5.12(hono@4.12.12)(typescript@5.9.3)(viem@2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6))
+      ox: 0.14.16(typescript@5.9.3)(zod@4.3.6)
+      webauthx: 0.1.1(typescript@5.9.3)(zod@4.3.6)
+      zod: 4.3.6
+      zustand: 5.0.12(@types/react@19.2.3)(immer@9.0.21)(react@19.2.0)(use-sync-external-store@1.6.0(react@19.2.0))
+    optionalDependencies:
+      '@wagmi/core': link:packages/core
+      react: 19.2.0
+      viem: 2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6)
+    transitivePeerDependencies:
+      - '@modelcontextprotocol/sdk'
+      - '@types/react'
+      - elysia
+      - express
+      - immer
+      - typescript
+      - use-sync-external-store
 
   acorn-import-attributes@1.9.5(acorn@8.15.0):
     dependencies:
@@ -19677,6 +19853,8 @@ snapshots:
 
   highlight.js@10.7.3: {}
 
+  hono@4.12.12: {}
+
   hono@4.12.7: {}
 
   hookable@5.5.3: {}
@@ -19753,6 +19931,8 @@ snapshots:
 
   idb-keyval@6.2.1: {}
 
+  idb-keyval@6.2.2: {}
+
   idna-uts46-hx@2.3.1:
     dependencies:
       punycode: 2.1.0
@@ -19780,6 +19960,15 @@ snapshots:
       pathe: 2.0.3
       unplugin: 2.3.10
       unplugin-utils: 0.2.5
+
+  incur@0.3.25:
+    dependencies:
+      '@cfworker/json-schema': 4.1.1
+      '@modelcontextprotocol/server': 2.0.0-alpha.2(@cfworker/json-schema@4.1.1)
+      '@toon-format/toon': 2.1.0
+      tokenx: 1.3.0
+      yaml: 2.8.3
+      zod: 4.3.6
 
   inflight@1.0.6:
     dependencies:
@@ -20694,6 +20883,28 @@ snapshots:
 
   mocked-exports@0.1.1: {}
 
+  mppx@0.5.12(hono@4.12.12)(typescript@5.9.3)(viem@2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)):
+    dependencies:
+      incur: 0.3.25
+      ox: 0.14.10(typescript@5.9.3)(zod@4.3.6)
+      viem: 2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
+      zod: 4.3.6
+    optionalDependencies:
+      hono: 4.12.12
+    transitivePeerDependencies:
+      - typescript
+
+  mppx@0.5.12(hono@4.12.12)(typescript@5.9.3)(viem@2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6)):
+    dependencies:
+      incur: 0.3.25
+      ox: 0.14.10(typescript@5.9.3)(zod@4.3.6)
+      viem: 2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6)
+      zod: 4.3.6
+    optionalDependencies:
+      hono: 4.12.12
+    transitivePeerDependencies:
+      - typescript
+
   mri@1.2.0: {}
 
   mrmime@1.0.1: {}
@@ -20753,7 +20964,7 @@ snapshots:
 
   nanotar@0.2.0: {}
 
-  next@16.1.7(@babel/core@7.29.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
+  next@16.1.7(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
     dependencies:
       '@next/env': 16.1.7
       '@swc/helpers': 0.5.15
@@ -20762,7 +20973,7 @@ snapshots:
       postcss: 8.4.31
       react: 19.2.0
       react-dom: 19.2.0(react@19.2.0)
-      styled-jsx: 5.1.6(@babel/core@7.29.0)(react@19.2.0)
+      styled-jsx: 5.1.6(react@19.2.0)
     optionalDependencies:
       '@next/swc-darwin-arm64': 16.1.7
       '@next/swc-darwin-x64': 16.1.7
@@ -20777,7 +20988,7 @@ snapshots:
       - '@babel/core'
       - babel-plugin-macros
 
-  nitropack@2.12.6(idb-keyval@6.2.1)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)):
+  nitropack@2.12.6(idb-keyval@6.2.2)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.4.2
       '@rollup/plugin-alias': 5.1.1(rollup@4.59.0)
@@ -20844,7 +21055,7 @@ snapshots:
       unenv: 2.0.0-rc.24
       unimport: 5.5.0
       unplugin-utils: 0.3.0
-      unstorage: 1.17.1(db0@0.3.2)(idb-keyval@6.2.1)(ioredis@5.8.0)
+      unstorage: 1.17.1(db0@0.3.2)(idb-keyval@6.2.2)(ioredis@5.8.0)
       untyped: 2.0.0
       unwasm: 0.3.11
       youch: 4.1.0-beta.13
@@ -20878,7 +21089,7 @@ snapshots:
       - supports-color
       - uploadthing
 
-  nitropack@2.12.9(idb-keyval@6.2.1)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)):
+  nitropack@2.12.9(idb-keyval@6.2.2)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.4.2
       '@rollup/plugin-alias': 5.1.1(rollup@4.59.0)
@@ -20945,7 +21156,7 @@ snapshots:
       unenv: 2.0.0-rc.24
       unimport: 5.5.0
       unplugin-utils: 0.3.1
-      unstorage: 1.17.2(db0@0.3.4)(idb-keyval@6.2.1)(ioredis@5.8.2)
+      unstorage: 1.17.2(db0@0.3.4)(idb-keyval@6.2.2)(ioredis@5.8.2)
       untyped: 2.0.0
       unwasm: 0.3.11
       youch: 4.1.0-beta.13
@@ -21037,7 +21248,7 @@ snapshots:
     dependencies:
       boolbase: 1.0.0
 
-  nuxt@3.19.2(@biomejs/biome@2.2.4)(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@parcel/watcher@2.4.1)(@types/node@24.6.2)(@vue/compiler-sfc@3.5.25)(bufferutil@4.0.8)(db0@0.3.4)(idb-keyval@6.2.1)(ioredis@5.8.2)(magicast@0.3.5)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(rollup@4.59.0)(terser@5.31.0)(tsx@4.21.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(vite@8.0.5(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(esbuild@0.27.4)(jiti@2.6.1)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))(vue-tsc@3.1.3(typescript@5.9.3))(yaml@2.8.3):
+  nuxt@3.19.2(@biomejs/biome@2.2.4)(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@parcel/watcher@2.4.1)(@types/node@24.6.2)(@vue/compiler-sfc@3.5.25)(bufferutil@4.0.8)(db0@0.3.4)(idb-keyval@6.2.2)(ioredis@5.8.2)(magicast@0.3.5)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(rollup@4.59.0)(terser@5.31.0)(tsx@4.21.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(vite@8.0.5(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(esbuild@0.27.4)(jiti@2.6.1)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))(vue-tsc@3.1.3(typescript@5.9.3))(yaml@2.8.3):
     dependencies:
       '@nuxt/cli': 3.28.0(magicast@0.3.5)
       '@nuxt/devalue': 2.0.2
@@ -21072,7 +21283,7 @@ snapshots:
       mlly: 1.8.0
       mocked-exports: 0.1.1
       nanotar: 0.2.0
-      nitropack: 2.12.6(idb-keyval@6.2.1)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))
+      nitropack: 2.12.6(idb-keyval@6.2.2)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))
       nypm: 0.6.2
       ofetch: 1.4.1
       ohash: 2.0.11
@@ -21096,7 +21307,7 @@ snapshots:
       unimport: 5.4.0
       unplugin: 2.3.10
       unplugin-vue-router: 0.15.0(@vue/compiler-sfc@3.5.25)(typescript@5.9.3)(vue-router@4.5.1(vue@3.5.25(typescript@5.9.3)))(vue@3.5.25(typescript@5.9.3))
-      unstorage: 1.17.1(db0@0.3.4)(idb-keyval@6.2.1)(ioredis@5.8.2)
+      unstorage: 1.17.1(db0@0.3.4)(idb-keyval@6.2.2)(ioredis@5.8.2)
       untyped: 2.0.0
       vue: 3.5.25(typescript@5.9.3)
       vue-bundle-renderer: 2.1.2
@@ -21163,16 +21374,16 @@ snapshots:
       - xml2js
       - yaml
 
-  nuxt@4.2.1(@biomejs/biome@2.2.4)(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@parcel/watcher@2.4.1)(@types/node@24.6.2)(@vue/compiler-sfc@3.5.25)(bufferutil@4.0.8)(db0@0.3.4)(idb-keyval@6.2.1)(ioredis@5.8.2)(magicast@0.5.2)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(rollup@4.59.0)(terser@5.31.0)(tsx@4.21.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(vite@8.0.5(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(esbuild@0.27.4)(jiti@2.6.1)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))(vue-tsc@3.1.3(typescript@5.9.3))(yaml@2.8.3):
+  nuxt@4.2.1(@biomejs/biome@2.2.4)(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@parcel/watcher@2.4.1)(@types/node@24.6.2)(@vue/compiler-sfc@3.5.25)(bufferutil@4.0.8)(db0@0.3.4)(idb-keyval@6.2.2)(ioredis@5.8.2)(magicast@0.5.2)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(rollup@4.59.0)(terser@5.31.0)(tsx@4.21.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(vite@8.0.5(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(esbuild@0.27.4)(jiti@2.6.1)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))(vue-tsc@3.1.3(typescript@5.9.3))(yaml@2.8.3):
     dependencies:
       '@dxup/nuxt': 0.2.2(magicast@0.5.2)
       '@nuxt/cli': 3.30.0(magicast@0.5.2)
       '@nuxt/devtools': 3.1.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)(vite@8.0.5(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(esbuild@0.27.4)(jiti@2.6.1)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))(vue@3.5.25(typescript@5.9.3))
       '@nuxt/kit': 4.2.1(magicast@0.5.2)
-      '@nuxt/nitro-server': 4.2.1(db0@0.3.4)(idb-keyval@6.2.1)(ioredis@5.8.2)(magicast@0.5.2)(nuxt@4.2.1(@biomejs/biome@2.2.4)(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@parcel/watcher@2.4.1)(@types/node@24.6.2)(@vue/compiler-sfc@3.5.25)(bufferutil@4.0.8)(db0@0.3.4)(idb-keyval@6.2.1)(ioredis@5.8.2)(magicast@0.5.2)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(rollup@4.59.0)(terser@5.31.0)(tsx@4.21.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(vite@8.0.5(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(esbuild@0.27.4)(jiti@2.6.1)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))(vue-tsc@3.1.3(typescript@5.9.3))(yaml@2.8.3))(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(typescript@5.9.3)
+      '@nuxt/nitro-server': 4.2.1(db0@0.3.4)(idb-keyval@6.2.2)(ioredis@5.8.2)(magicast@0.5.2)(nuxt@4.2.1(@biomejs/biome@2.2.4)(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@parcel/watcher@2.4.1)(@types/node@24.6.2)(@vue/compiler-sfc@3.5.25)(bufferutil@4.0.8)(db0@0.3.4)(idb-keyval@6.2.2)(ioredis@5.8.2)(magicast@0.5.2)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(rollup@4.59.0)(terser@5.31.0)(tsx@4.21.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(vite@8.0.5(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(esbuild@0.27.4)(jiti@2.6.1)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))(vue-tsc@3.1.3(typescript@5.9.3))(yaml@2.8.3))(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(typescript@5.9.3)
       '@nuxt/schema': 4.2.1
       '@nuxt/telemetry': 2.6.6(magicast@0.5.2)
-      '@nuxt/vite-builder': 4.2.1(@biomejs/biome@2.2.4)(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(magicast@0.5.2)(nuxt@4.2.1(@biomejs/biome@2.2.4)(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@parcel/watcher@2.4.1)(@types/node@24.6.2)(@vue/compiler-sfc@3.5.25)(bufferutil@4.0.8)(db0@0.3.4)(idb-keyval@6.2.1)(ioredis@5.8.2)(magicast@0.5.2)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(rollup@4.59.0)(terser@5.31.0)(tsx@4.21.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(vite@8.0.5(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(esbuild@0.27.4)(jiti@2.6.1)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))(vue-tsc@3.1.3(typescript@5.9.3))(yaml@2.8.3))(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(rollup@4.59.0)(terser@5.31.0)(tsx@4.21.0)(typescript@5.9.3)(vue-tsc@3.1.3(typescript@5.9.3))(vue@3.5.25(typescript@5.9.3))(yaml@2.8.3)
+      '@nuxt/vite-builder': 4.2.1(@biomejs/biome@2.2.4)(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(magicast@0.5.2)(nuxt@4.2.1(@biomejs/biome@2.2.4)(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@parcel/watcher@2.4.1)(@types/node@24.6.2)(@vue/compiler-sfc@3.5.25)(bufferutil@4.0.8)(db0@0.3.4)(idb-keyval@6.2.2)(ioredis@5.8.2)(magicast@0.5.2)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(rollup@4.59.0)(terser@5.31.0)(tsx@4.21.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(vite@8.0.5(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1)(@types/node@24.6.2)(esbuild@0.27.4)(jiti@2.6.1)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))(vue-tsc@3.1.3(typescript@5.9.3))(yaml@2.8.3))(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(rollup@4.59.0)(terser@5.31.0)(tsx@4.21.0)(typescript@5.9.3)(vue-tsc@3.1.3(typescript@5.9.3))(vue@3.5.25(typescript@5.9.3))(yaml@2.8.3)
       '@unhead/vue': 2.0.19(vue@3.5.25(typescript@5.9.3))
       '@vue/shared': 3.5.25
       c12: 3.3.2(magicast@0.5.2)
@@ -21373,7 +21584,7 @@ snapshots:
 
   outvariant@1.4.3: {}
 
-  ox@0.11.1(typescript@5.9.3)(zod@4.1.11):
+  ox@0.11.1(typescript@5.9.3)(zod@4.3.6):
     dependencies:
       '@adraffy/ens-normalize': 1.11.1
       '@noble/ciphers': 1.3.0
@@ -21381,7 +21592,7 @@ snapshots:
       '@noble/hashes': 1.8.0
       '@scure/bip32': 1.7.0
       '@scure/bip39': 1.6.0
-      abitype: 1.2.3(typescript@5.9.3)(zod@4.1.11)
+      abitype: 1.2.3(typescript@5.9.3)(zod@4.3.6)
       eventemitter3: 5.0.1
     optionalDependencies:
       typescript: 5.9.3
@@ -21418,6 +21629,36 @@ snapshots:
     transitivePeerDependencies:
       - zod
 
+  ox@0.14.10(typescript@5.9.3)(zod@4.3.6):
+    dependencies:
+      '@adraffy/ens-normalize': 1.11.1
+      '@noble/ciphers': 1.3.0
+      '@noble/curves': 1.9.1
+      '@noble/hashes': 1.8.0
+      '@scure/bip32': 1.7.0
+      '@scure/bip39': 1.6.0
+      abitype: 1.2.3(typescript@5.9.3)(zod@4.3.6)
+      eventemitter3: 5.0.1
+    optionalDependencies:
+      typescript: 5.9.3
+    transitivePeerDependencies:
+      - zod
+
+  ox@0.14.16(typescript@5.9.3)(zod@4.3.6):
+    dependencies:
+      '@adraffy/ens-normalize': 1.11.1
+      '@noble/ciphers': 1.3.0
+      '@noble/curves': 1.9.1
+      '@noble/hashes': 1.8.0
+      '@scure/bip32': 1.7.0
+      '@scure/bip39': 1.6.0
+      abitype: 1.2.3(typescript@5.9.3)(zod@4.3.6)
+      eventemitter3: 5.0.1
+    optionalDependencies:
+      typescript: 5.9.3
+    transitivePeerDependencies:
+      - zod
+
   ox@0.14.5(typescript@5.9.3)(zod@3.25.76):
     dependencies:
       '@adraffy/ens-normalize': 1.11.1
@@ -21442,6 +21683,21 @@ snapshots:
       '@scure/bip32': 1.7.0
       '@scure/bip39': 1.6.0
       abitype: 1.2.3(typescript@5.9.3)(zod@4.1.11)
+      eventemitter3: 5.0.1
+    optionalDependencies:
+      typescript: 5.9.3
+    transitivePeerDependencies:
+      - zod
+
+  ox@0.14.5(typescript@5.9.3)(zod@4.3.6):
+    dependencies:
+      '@adraffy/ens-normalize': 1.11.1
+      '@noble/ciphers': 1.3.0
+      '@noble/curves': 1.9.1
+      '@noble/hashes': 1.8.0
+      '@scure/bip32': 1.7.0
+      '@scure/bip39': 1.6.0
+      abitype: 1.2.3(typescript@5.9.3)(zod@4.3.6)
       eventemitter3: 5.0.1
     optionalDependencies:
       typescript: 5.9.3
@@ -22880,12 +23136,10 @@ snapshots:
 
   structured-clone-es@1.0.0: {}
 
-  styled-jsx@5.1.6(@babel/core@7.29.0)(react@19.2.0):
+  styled-jsx@5.1.6(react@19.2.0):
     dependencies:
       client-only: 0.0.1
       react: 19.2.0
-    optionalDependencies:
-      '@babel/core': 7.29.0
 
   stylehacks@7.0.6(postcss@8.5.6):
     dependencies:
@@ -23397,7 +23651,7 @@ snapshots:
       picomatch: 4.0.4
       webpack-virtual-modules: 0.6.2
 
-  unstorage@1.17.1(db0@0.3.2)(idb-keyval@6.2.1)(ioredis@5.8.0):
+  unstorage@1.17.1(db0@0.3.2)(idb-keyval@6.2.2)(ioredis@5.8.0):
     dependencies:
       anymatch: 3.1.3
       chokidar: 4.0.3
@@ -23409,10 +23663,10 @@ snapshots:
       ufo: 1.6.3
     optionalDependencies:
       db0: 0.3.2
-      idb-keyval: 6.2.1
+      idb-keyval: 6.2.2
       ioredis: 5.8.0
 
-  unstorage@1.17.1(db0@0.3.4)(idb-keyval@6.2.1)(ioredis@5.8.2):
+  unstorage@1.17.1(db0@0.3.4)(idb-keyval@6.2.2)(ioredis@5.8.2):
     dependencies:
       anymatch: 3.1.3
       chokidar: 4.0.3
@@ -23424,7 +23678,7 @@ snapshots:
       ufo: 1.6.3
     optionalDependencies:
       db0: 0.3.4
-      idb-keyval: 6.2.1
+      idb-keyval: 6.2.2
       ioredis: 5.8.2
 
   unstorage@1.17.2(db0@0.3.4)(idb-keyval@6.2.1)(ioredis@5.8.2):
@@ -23440,6 +23694,21 @@ snapshots:
     optionalDependencies:
       db0: 0.3.4
       idb-keyval: 6.2.1
+      ioredis: 5.8.2
+
+  unstorage@1.17.2(db0@0.3.4)(idb-keyval@6.2.2)(ioredis@5.8.2):
+    dependencies:
+      anymatch: 3.1.3
+      chokidar: 4.0.3
+      destr: 2.0.5
+      h3: 1.15.9
+      lru-cache: 10.4.3
+      node-fetch-native: 1.6.7
+      ofetch: 1.5.1
+      ufo: 1.6.3
+    optionalDependencies:
+      db0: 0.3.4
+      idb-keyval: 6.2.2
       ioredis: 5.8.2
 
   untun@0.1.3:
@@ -23624,7 +23893,24 @@ snapshots:
       - utf-8-validate
       - zod
 
-  vinxi@0.5.10(@types/node@24.6.2)(db0@0.3.4)(idb-keyval@6.2.1)(ioredis@5.8.2)(jiti@2.6.1)(lightningcss@1.32.0)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3):
+  viem@2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6):
+    dependencies:
+      '@noble/curves': 1.9.1
+      '@noble/hashes': 1.8.0
+      '@scure/bip32': 1.7.0
+      '@scure/bip39': 1.6.0
+      abitype: 1.2.3(typescript@5.9.3)(zod@4.3.6)
+      isows: 1.0.7(ws@8.18.3(bufferutil@4.0.8)(utf-8-validate@5.0.10))
+      ox: 0.14.5(typescript@5.9.3)(zod@4.3.6)
+      ws: 8.18.3(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+    optionalDependencies:
+      typescript: 5.9.3
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+      - zod
+
+  vinxi@0.5.10(@types/node@24.6.2)(db0@0.3.4)(idb-keyval@6.2.2)(ioredis@5.8.2)(jiti@2.6.1)(lightningcss@1.32.0)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3):
     dependencies:
       '@babel/core': 7.28.5
       '@babel/plugin-syntax-jsx': 7.27.1(@babel/core@7.28.5)
@@ -23645,7 +23931,7 @@ snapshots:
       hookable: 5.5.3
       http-proxy: 1.18.1
       micromatch: 4.0.8
-      nitropack: 2.12.9(idb-keyval@6.2.1)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))
+      nitropack: 2.12.9(idb-keyval@6.2.2)(rolldown@1.0.0-rc.12(@emnapi/core@1.5.0)(@emnapi/runtime@1.8.1))
       node-fetch-native: 1.6.7
       path-to-regexp: 6.3.0
       pathe: 1.1.2
@@ -23657,7 +23943,7 @@ snapshots:
       ufo: 1.6.3
       unctx: 2.4.1
       unenv: 1.10.0
-      unstorage: 1.17.2(db0@0.3.4)(idb-keyval@6.2.1)(ioredis@5.8.2)
+      unstorage: 1.17.2(db0@0.3.4)(idb-keyval@6.2.2)(ioredis@5.8.2)
       vite: 7.2.2(@types/node@24.6.2)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3)
       zod: 4.1.11
     transitivePeerDependencies:
@@ -24001,7 +24287,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  vitepress@1.6.3(@algolia/client-search@5.42.0)(@types/node@24.6.2)(@types/react@19.2.3)(axios@1.13.5)(change-case@5.4.4)(fuse.js@7.1.0)(idb-keyval@6.2.1)(lightningcss@1.32.0)(postcss@8.5.8)(qrcode@1.5.3)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(terser@5.31.0)(typescript@5.9.3):
+  vitepress@1.6.3(@algolia/client-search@5.42.0)(@types/node@24.6.2)(@types/react@19.2.3)(axios@1.13.5)(change-case@5.4.4)(fuse.js@7.1.0)(idb-keyval@6.2.2)(lightningcss@1.32.0)(postcss@8.5.8)(qrcode@1.5.3)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(terser@5.31.0)(typescript@5.9.3):
     dependencies:
       '@docsearch/css': 3.8.2
       '@docsearch/js': 3.8.2(@algolia/client-search@5.42.0)(@types/react@19.2.3)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -24014,7 +24300,7 @@ snapshots:
       '@vue/devtools-api': 7.7.7
       '@vue/shared': 3.5.22
       '@vueuse/core': 12.8.2(typescript@5.9.3)
-      '@vueuse/integrations': 12.8.2(axios@1.13.5)(change-case@5.4.4)(focus-trap@7.6.6)(fuse.js@7.1.0)(idb-keyval@6.2.1)(qrcode@1.5.3)(typescript@5.9.3)
+      '@vueuse/integrations': 12.8.2(axios@1.13.5)(change-case@5.4.4)(focus-trap@7.6.6)(fuse.js@7.1.0)(idb-keyval@6.2.2)(qrcode@1.5.3)(typescript@5.9.3)
       focus-trap: 7.6.6
       mark.js: 8.11.1
       minisearch: 7.2.0
@@ -24157,6 +24443,13 @@ snapshots:
       typescript: 5.9.3
 
   walk-up-path@4.0.0: {}
+
+  webauthx@0.1.1(typescript@5.9.3)(zod@4.3.6):
+    dependencies:
+      ox: 0.14.16(typescript@5.9.3)(zod@4.3.6)
+    transitivePeerDependencies:
+      - typescript
+      - zod
 
   webidl-conversions@3.0.1: {}
 
@@ -24405,7 +24698,16 @@ snapshots:
 
   zod@4.1.11: {}
 
+  zod@4.3.6: {}
+
   zustand@5.0.0(@types/react@19.2.3)(immer@9.0.21)(react@19.2.0)(use-sync-external-store@1.6.0(react@19.2.0)):
+    optionalDependencies:
+      '@types/react': 19.2.3
+      immer: 9.0.21
+      react: 19.2.0
+      use-sync-external-store: 1.6.0(react@19.2.0)
+
+  zustand@5.0.12(@types/react@19.2.3)(immer@9.0.21)(react@19.2.0)(use-sync-external-store@1.6.0(react@19.2.0)):
     optionalDependencies:
       '@types/react': 19.2.3
       immer: 9.0.21

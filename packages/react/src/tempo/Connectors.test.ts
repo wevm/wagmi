@@ -1,4 +1,4 @@
-import { KeyManager, webAuthn } from '@wagmi/core/tempo'
+import { webAuthn } from '@wagmi/core/tempo'
 import { renderHook } from '@wagmi/test/tempo'
 import { describe, expect, test, vi } from 'vitest'
 import { cdp } from 'vitest/browser'
@@ -39,10 +39,8 @@ test('connect', async (context) => {
   expect(result.current.useConnection.status).toEqual('disconnected')
 
   result.current.useConnect.mutate({
-    capabilities: { type: 'sign-up', label: 'Test Account' },
-    connector: webAuthn({
-      keyManager: KeyManager.localStorage(),
-    }),
+    capabilities: { method: 'register', name: 'Test Account' },
+    connector: webAuthn(),
   })
 
   await vi.waitFor(() =>
@@ -55,13 +53,11 @@ test('connect', async (context) => {
 })
 
 describe('capabilities.sign', () => {
-  test('sign-up + sign (create path)', async (context) => {
+  test('register + sign (create path)', async (context) => {
     const cleanup = await setupWebAuthn()
     context.onTestFinished(async () => await cleanup())
 
-    const connector = webAuthn({
-      keyManager: KeyManager.localStorage(),
-    })
+    const connector = webAuthn()
 
     const { result } = await renderHook(() => ({
       useConnection: useConnection(),
@@ -71,7 +67,7 @@ describe('capabilities.sign', () => {
     const hash =
       '0x0000000000000000000000000000000000000000000000000000000000000001'
     const connectResult = await result.current.useConnect.mutateAsync({
-      capabilities: { type: 'sign-up', label: 'Create+Sign', sign: { hash } },
+      capabilities: { digest: hash, method: 'register', name: 'Create+Sign' },
       connector,
       withCapabilities: true,
     })
@@ -90,9 +86,7 @@ describe('capabilities.sign', () => {
     const cleanup = await setupWebAuthn()
     context.onTestFinished(async () => await cleanup())
 
-    const connector = webAuthn({
-      keyManager: KeyManager.localStorage(),
-    })
+    const connector = webAuthn()
 
     const { result } = await renderHook(() => ({
       useConnection: useConnection(),
@@ -101,7 +95,7 @@ describe('capabilities.sign', () => {
     }))
 
     await result.current.useConnect.mutateAsync({
-      capabilities: { type: 'sign-up', label: 'Discover Test' },
+      capabilities: { method: 'register', name: 'Discover Test' },
       connector,
     })
     await vi.waitFor(() =>
@@ -118,9 +112,7 @@ describe('capabilities.sign', () => {
     const hash =
       '0x0000000000000000000000000000000000000000000000000000000000000001'
     const connectResult = await result.current.useConnect.mutateAsync({
-      capabilities: {
-        sign: { hash },
-      },
+      capabilities: { digest: hash },
       connector,
       withCapabilities: true,
     })
@@ -135,13 +127,14 @@ describe('capabilities.sign', () => {
     expect(connectResult.accounts[0]?.capabilities.signature).toMatch(/^0x/)
   })
 
-  test('sign skips access key provisioning (with grantAccessKey)', async (context) => {
+  test('sign skips access key provisioning (with authorizeAccessKey)', async (context) => {
     const cleanup = await setupWebAuthn()
     context.onTestFinished(async () => await cleanup())
 
     const connector = webAuthn({
-      grantAccessKey: true,
-      keyManager: KeyManager.localStorage(),
+      authorizeAccessKey: () => ({
+        expiry: Math.floor((Date.now() + 24 * 60 * 60 * 1000) / 1000),
+      }),
     })
 
     const { result } = await renderHook(() => ({
@@ -151,7 +144,7 @@ describe('capabilities.sign', () => {
     }))
 
     await result.current.useConnect.mutateAsync({
-      capabilities: { type: 'sign-up', label: 'Grant Test' },
+      capabilities: { method: 'register', name: 'Grant Test' },
       connector,
     })
     await vi.waitFor(() =>
@@ -166,9 +159,7 @@ describe('capabilities.sign', () => {
     const hash =
       '0x0000000000000000000000000000000000000000000000000000000000000002'
     const connectResult = await result.current.useConnect.mutateAsync({
-      capabilities: {
-        sign: { hash },
-      },
+      capabilities: { digest: hash },
       connector,
       withCapabilities: true,
     })

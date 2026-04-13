@@ -1737,19 +1737,12 @@ export function getSidebar() {
         text: 'Connectors',
         link: '/tempo/connectors/',
         items: [
+          { text: 'tempoWallet', link: '/tempo/connectors/tempoWallet' },
           {
             text: 'dangerous_secp256k1',
             link: '/tempo/connectors/dangerous_secp256k1',
           },
           { text: 'webAuthn', link: '/tempo/connectors/webAuthn' },
-        ],
-      },
-      {
-        text: 'Key Managers',
-        link: '/tempo/keyManagers/',
-        items: [
-          { text: 'http', link: '/tempo/keyManagers/http' },
-          { text: 'localStorage', link: '/tempo/keyManagers/localStorage' },
         ],
       },
     ],

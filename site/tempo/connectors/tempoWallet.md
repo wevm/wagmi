@@ -1,16 +1,16 @@
-# `webAuthn`
+# `tempoWallet`
 
-Connector for a WebAuthn EOA.
+Connector for the Tempo Wallet dialog.
 
 ## Usage
 
 ```ts [wagmi.config.ts]
 import { createConfig, http } from 'wagmi'
 import { tempoTestnet } from 'wagmi/chains'
-import { webAuthn } from 'wagmi/tempo' // [!code focus]
+import { tempoWallet } from 'wagmi/connectors' // [!code focus]
 
 export const config = createConfig({
-  connectors: [webAuthn()], // [!code focus]
+  connectors: [tempoWallet()], // [!code focus]
   chains: [tempoTestnet],
   multiInjectedProviderDiscovery: false,
   transports: {
@@ -19,21 +19,21 @@ export const config = createConfig({
 })
 ```
 
-Use `webAuthn({ authUrl: '/api/webauthn' })` if you want registration and authentication challenges to come from a server endpoint instead of the default local browser ceremony.
+`tempoWallet` is a thin wagmi wrapper around the root `accounts` dialog adapter. Install the optional `accounts` dependency alongside `wagmi` to use it.
 
 ## Parameters
 
-### authUrl (optional)
+### host (optional)
 
 - **Type:** `string`
 
-URL of a server-backed WebAuthn handler.
+Override the Tempo Wallet dialog host.
 
-### ceremony (optional)
+### dialog (optional)
 
-- **Type:** `WebAuthnCeremony`
+- **Type:** `Window | HTMLElement | ShadowRoot | string`
 
-Custom WebAuthn ceremony implementation.
+Override where the dialog mounts.
 
 ### icon (optional)
 

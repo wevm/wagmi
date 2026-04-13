@@ -16,6 +16,8 @@ It enshrines features like [token management](https://docs.tempo.xyz/protocol/ti
 
 Wagmi React and Core both have first-class support for Tempo with [Hooks](/tempo/hooks/) and [Actions](/tempo/actions/). To get started, first follow the [Getting Started guide for React](/react/getting-started) or [Core](/core/getting-started) and make sure your [Viem](https://viem.sh) version is `{{viemVersion}}`.
 
+For account connections, use the supported wrappers around `accounts`: `tempoWallet()` from `wagmi/connectors`, or `webAuthn()` / `webAuthn({ authUrl })` and `dangerous_secp256k1()` from `wagmi/tempo`.
+
 ::: code-group
 ```bash-vue [pnpm]
 pnpm add viem@{{viemVersion}}
@@ -96,14 +98,10 @@ function App() {
 ```tsx [config.ts]
 import { createConfig, http } from 'wagmi'
 import { tempoTestnet } from 'wagmi/chains'
-import { KeyManager, webAuthn } from 'wagmi/tempo'
+import { webAuthn } from 'wagmi/tempo'
 
 export const config = createConfig({
-  connectors: [
-    webAuthn({
-      keyManager: KeyManager.localStorage(),
-    }),
-  ],
+  connectors: [webAuthn()],
   chains: [tempoTestnet],
   multiInjectedProviderDiscovery: false,
   transports: {
@@ -158,14 +156,10 @@ function App() {
 ```tsx [config.ts]
 import { createConfig, http } from 'wagmi'
 import { tempo } from 'wagmi/chains'
-import { KeyManager, webAuthn } from 'wagmi/tempo'
+import { webAuthn } from 'wagmi/tempo'
 
 export const config = createConfig({
-  connectors: [
-    webAuthn({
-      keyManager: KeyManager.localStorage(),
-    }),
-  ],
+  connectors: [webAuthn()],
   chains: [tempo],
   multiInjectedProviderDiscovery: false,
   transports: {

@@ -18,15 +18,15 @@ export const config = createConfig({
   chains: [tempoTestnet],
   multiInjectedProviderDiscovery: false,
   transports: {
-    [tempo.id]: http(),
+    [tempoTestnet.id]: http(),
   },
 })
 ```
 
 ## Parameters
 
-### account
+### privateKey
 
-- **Type:** `LocalAccount`
+- **Type:** `Hex`
 
-Optional account to use with connector. If not provided, one is created internally for you.
+Optional fixed private key to expose through the connector. If omitted, the connector generates and persists one for you.

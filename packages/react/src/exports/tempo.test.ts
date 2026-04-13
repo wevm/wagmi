@@ -7,7 +7,6 @@ test('exports', () => {
     [
       "Actions",
       "Hooks",
-      "KeyManager",
       "dangerous_secp256k1",
       "webAuthn",
     ]

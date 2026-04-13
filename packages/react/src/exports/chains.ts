@@ -1,7 +1,2 @@
-////////////////////////////////////////////////////////////////////////////////
-// viem/chains
-////////////////////////////////////////////////////////////////////////////////
-
-// biome-ignore lint/performance/noBarrelFile: entrypoint module
-// biome-ignore lint/performance/noReExportAll: entrypoint module
-export * from 'viem/chains'
+export * from 'viem/chains';
+//# sourceMappingURL=chains.d.ts.map

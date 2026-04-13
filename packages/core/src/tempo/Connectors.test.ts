@@ -1,6 +1,6 @@
 /// <reference types="@vitest/browser-playwright" />
 import { createConfig, createStorage } from '@wagmi/core'
-import { KeyManager, webAuthn } from '@wagmi/core/tempo'
+import { webAuthn } from '@wagmi/core/tempo'
 import { tempoLocal } from '@wagmi/test/tempo'
 import { http } from 'viem'
 import { describe, expect, test } from 'vitest'
@@ -29,7 +29,7 @@ async function setupWebAuthn() {
 }
 
 describe('webAuthn', () => {
-  describe('sign-up with grantAccessKey', () => {
+  describe('register with authorizeAccessKey', () => {
     test('passes chainId to signKeyAuthorization', async (context) => {
       const cleanup = await setupWebAuthn()
       context.onTestFinished(async () => await cleanup())
@@ -46,31 +46,30 @@ describe('webAuthn', () => {
 
       const connector = config._internal.connectors.setup(
         webAuthn({
-          grantAccessKey: true,
-          keyManager: KeyManager.localStorage(),
+          authorizeAccessKey: () => ({
+            expiry: Math.floor((Date.now() + 24 * 60 * 60 * 1000) / 1000),
+          }),
         }),
       )
 
       const chainId = tempoLocal.id
 
       const result = await connector.connect({
-        capabilities: { type: 'sign-up', label: 'ChainId Test' },
+        capabilities: { method: 'register', name: 'ChainId Test' },
         chainId,
+        withCapabilities: true,
       })
 
       expect(result.chainId).toBe(chainId)
-
-      // Retrieve the pending key authorization from storage to verify chainId.
-      // The connector stores it at `pendingKeyAuthorization:<address>`.
-      const address = (result.accounts as readonly string[])[0]!.toLowerCase()
-      const keyAuth = await storage.getItem(
-        `pendingKeyAuthorization:${address}` as any,
+      expect(result.accounts[0]?.capabilities.keyAuthorization).toBeDefined()
+      expect(
+        BigInt(
+          result.accounts[0]?.capabilities.keyAuthorization
+            ?.chainId as unknown as `0x${string}`,
+        ),
+      ).toBe(
+        BigInt(chainId),
       )
-
-      expect(keyAuth).toBeDefined()
-      // The key authorization should include the chainId passed during connect.
-      // KeyAuthorization stores chainId as bigint.
-      expect(BigInt((keyAuth as any).chainId)).toBe(BigInt(chainId))
     })
   })
 })

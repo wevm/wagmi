@@ -21,14 +21,10 @@ setUserToken.mutate({
 // @noErrors
 import { createConfig, http } from 'wagmi'
 import { tempo } from 'wagmi/chains'
-import { KeyManager, webAuthn } from 'wagmi/tempo'
+import { webAuthn } from 'wagmi/tempo'
 
 export const config = createConfig({
-  connectors: [
-    webAuthn({
-      keyManager: KeyManager.localStorage(),
-    }),
-  ],
+  connectors: [webAuthn()],
   chains: [tempo],
   multiInjectedProviderDiscovery: false,
   transports: {
