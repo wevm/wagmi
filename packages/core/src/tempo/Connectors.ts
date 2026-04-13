@@ -1,4 +1,5 @@
 import type {
+  dialog as accountsDialog,
   dangerous_secp256k1 as accountsDangerousSecp256k1,
   Provider as AccountsProvider,
   Rpc as AccountsRpc,
@@ -18,10 +19,12 @@ import type { Connector } from '../createConfig.js'
 import { ChainNotConfiguredError } from '../errors/config.js'
 
 type AccountsModule = {
+  dialog: typeof accountsDialog
   Provider: typeof AccountsProvider
   dangerous_secp256k1: typeof accountsDangerousSecp256k1
   webAuthn: typeof accountsWebAuthn
 }
+type AccountsDialogParameters = NonNullable<Parameters<typeof accountsDialog>[0]>
 type AccountsProviderParameters = NonNullable<
   Parameters<typeof AccountsProvider.create>[0]
 >
@@ -43,6 +46,55 @@ type AccountsConnectParameters = NonNullable<
 type CapabilitiesRequest = AccountsConnectParameters['capabilities']
 type InternalAccount =
   AccountsRpc.wallet_connect.Encoded['returns']['accounts'][number]
+
+const tempoWalletIcon =
+  'data:image/svg+xml,<svg width="269" height="269" viewBox="0 0 269 269" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="269" height="269" fill="black"/><path d="M123.273 190.794H93.445L121.09 105.318H85.7334L93.445 80.2642H191.95L184.238 105.318H150.773L123.273 190.794Z" fill="white"/></svg>'
+
+/** @deprecated use `tempoWallet.Parameters` instead */
+export type TempoWalletParameters = tempoWallet.Parameters
+
+/**
+ * Connector for the Tempo Wallet dialog.
+ */
+export function tempoWallet(parameters: tempoWallet.Parameters = {}) {
+  const {
+    dialog: dialogOption,
+    host,
+    icon = tempoWalletIcon,
+    name,
+    rdns,
+    ...providerParameters
+  } = parameters
+
+  return setup({
+    createAdapter(accounts) {
+      return accounts.dialog({
+        dialog: dialogOption,
+        host,
+        icon,
+        name,
+        rdns,
+      })
+    },
+    icon,
+    id: rdns ?? 'xyz.tempo',
+    name: name ?? 'Tempo Wallet',
+    providerParameters,
+    rdns: rdns ?? 'xyz.tempo',
+    type: 'injected',
+  })
+}
+
+export declare namespace tempoWallet {
+  export type Parameters = Omit<AccountsProviderParameters, 'adapter' | 'chains'> &
+    AccountsDialogParameters
+
+  export type ConnectParameters<withCapabilities extends boolean = false> =
+    setup.ConnectParameters<withCapabilities>
+
+  export type ConnectReturnType<withCapabilities extends boolean = false> =
+    setup.ConnectReturnType<withCapabilities>
+}
 
 /** @deprecated use `webAuthn.Parameters` instead */
 export type WebAuthnParameters = webAuthn.Parameters

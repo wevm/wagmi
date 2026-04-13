@@ -4,7 +4,7 @@ export { type CoinbaseWalletParameters, coinbaseWallet, } from '../coinbaseWalle
 export { type MetaMaskParameters, metaMask } from '../metaMask.js';
 export { type PortoParameters, porto } from '../porto.js';
 export { type SafeParameters, safe } from '../safe.js';
-export { type TempoWalletParameters, tempoWallet } from '../tempoWallet.js';
+export { type TempoWalletParameters, tempoWallet } from '@wagmi/core/tempo';
 export { version } from '../version.js';
 export { type WalletConnectParameters, walletConnect, } from '../walletConnect.js';
 //# sourceMappingURL=index.d.ts.map

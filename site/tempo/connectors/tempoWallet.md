@@ -7,7 +7,7 @@ Connector for the Tempo Wallet dialog.
 ```ts [wagmi.config.ts]
 import { createConfig, http } from 'wagmi'
 import { tempoTestnet } from 'wagmi/chains'
-import { tempoWallet } from 'wagmi/connectors' // [!code focus]
+import { tempoWallet } from 'wagmi/tempo' // [!code focus]
 
 export const config = createConfig({
   connectors: [tempoWallet()], // [!code focus]
@@ -19,7 +19,7 @@ export const config = createConfig({
 })
 ```
 
-`tempoWallet` is a thin wagmi wrapper around the root `accounts` dialog adapter. Install the optional `accounts` dependency alongside `wagmi` to use it.
+`tempoWallet` is a thin wagmi wrapper around the root `accounts` dialog adapter. Install the optional `accounts` dependency alongside `wagmi` to use it. It is also re-exported from `wagmi/connectors`.
 
 ## Parameters
 

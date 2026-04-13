@@ -4,6 +4,7 @@ import { expect, test, vi } from 'vitest'
 vi.mock('accounts', () => ({
   Provider: {
     create: () => ({
+      getClient: vi.fn(),
       on: vi.fn(),
       removeListener: vi.fn(),
       request: vi.fn(),
@@ -12,7 +13,7 @@ vi.mock('accounts', () => ({
   dialog: vi.fn(() => ({})),
 }))
 
-import { tempoWallet } from './tempoWallet.js'
+import { tempoWallet } from './Connectors.js'
 
 test('setup', () => {
   const connectorFn = tempoWallet()
