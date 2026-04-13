@@ -1,11 +1,15 @@
 import { connect, disconnect } from '@wagmi/core'
 import { abi, address, config, wait } from '@wagmi/test'
 import { renderHook } from '@wagmi/test/react'
-import { expect, test, vi } from 'vitest'
+import { beforeEach, expect, test, vi } from 'vitest'
 
 import { useSimulateContract } from './useSimulateContract.js'
 
 const connector = config.connectors[0]!
+
+beforeEach(async () => {
+  await disconnect(config).catch(() => {})
+})
 
 test('default', async () => {
   await connect(config, { connector })

@@ -1,5 +1,4 @@
 import { mkdir, rm, writeFile } from 'node:fs/promises'
-import { homedir } from 'node:os'
 import { setupServer } from 'msw/node'
 import { afterAll, afterEach, beforeAll, expect, test } from 'vitest'
 
@@ -71,7 +70,7 @@ test('aborts request', async () => {
 })
 
 test('reads from cache', async () => {
-  const cacheDir = `${homedir}/.wagmi-cli/plugins/fetch/cache`
+  const cacheDir = getCacheDir()
   await mkdir(cacheDir, { recursive: true })
 
   const contract = {

@@ -1,10 +1,14 @@
-import { mkdir } from 'node:fs/promises'
-import { homedir } from 'node:os'
+import { mkdir, mkdtemp } from 'node:fs/promises'
+import { tmpdir } from 'node:os'
 import type { createSpinner as nanospinner_createSpinner } from 'nanospinner'
 import { join } from 'pathe'
 import { vi } from 'vitest'
 
-const cacheDir = join(homedir(), '.wagmi-cli/plugins/fetch/cache')
+const homeDir = await mkdtemp(join(tmpdir(), 'wagmi-cli-'))
+process.env.HOME = homeDir
+process.env.USERPROFILE = homeDir
+
+const cacheDir = join(homeDir, '.wagmi-cli/plugins/fetch/cache')
 await mkdir(cacheDir, { recursive: true })
 
 vi.mock('nanospinner', async (importOriginal) => {
