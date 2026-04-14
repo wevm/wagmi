@@ -1,6 +1,7 @@
 <script setup>
-import packageJson from '../../packages/core/package.json'
+import connectorsPackageJson from '../../packages/connectors/package.json'
 
+const accountsVersion = connectorsPackageJson.peerDependencies.accounts
 const viemVersion = '>=2.43.3'
 </script>
 
@@ -16,21 +17,19 @@ It enshrines features like [token management](https://docs.tempo.xyz/protocol/ti
 
 Wagmi React and Core both have first-class support for Tempo with [Hooks](/tempo/hooks) and [Actions](/tempo/actions). To get started, first follow the [Getting Started guide for React](/react/getting-started) or [Core](/core/getting-started) and make sure your [Viem](https://viem.sh) version is `{{viemVersion}}`.
 
-For account connections, import Tempo connectors from `wagmi/tempo`. The examples below use `tempoWallet()`, and you can also use `webAuthn()` / `webAuthn({ authUrl })` or `dangerous_secp256k1()` when needed.
-
 ::: code-group
 ```bash-vue [pnpm]
-pnpm add viem@{{viemVersion}}
+pnpm add viem@{{viemVersion}} accounts@{{accountsVersion}}
 ```
 ```bash-vue [npm]
-npm install viem@{{viemVersion}}
+npm install viem@{{viemVersion}} accounts@{{accountsVersion}}
 ```
 ```bash-vue [yarn]
-yarn add viem@{{viemVersion}}
+yarn add viem@{{viemVersion}} accounts@{{accountsVersion}}
 ```
 
 ```bash-vue [bun]
-bun add viem@{{viemVersion}}
+bun add viem@{{viemVersion}} accounts@{{accountsVersion}}
 ```
 :::
 
