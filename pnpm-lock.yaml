@@ -326,8 +326,8 @@ importers:
         specifier: 'catalog:'
         version: 2.21.1(@types/react@19.2.3)(bufferutil@4.0.8)(db0@0.3.4)(ioredis@5.8.2)(react@19.2.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
       accounts:
-        specifier: ^0.6.5
-        version: 0.6.5(@types/react@19.2.3)(@wagmi/core@packages+core)(immer@9.0.21)(react@19.2.0)(typescript@5.9.3)(use-sync-external-store@1.6.0(react@19.2.0))(viem@2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76))
+        specifier: 'catalog:'
+        version: 0.6.7(@types/react@19.2.3)(@wagmi/core@packages+core)(immer@9.0.21)(react@19.2.0)(typescript@5.9.3)(use-sync-external-store@1.6.0(react@19.2.0))(viem@2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76))
       msw:
         specifier: ^2.4.9
         version: 2.4.9(typescript@5.9.3)
@@ -351,8 +351,8 @@ importers:
         specifier: 'catalog:'
         version: 5.49.1
       accounts:
-        specifier: ^0.6.5
-        version: 0.6.5(@types/react@19.2.3)(@wagmi/core@packages+core)(immer@9.0.21)(react@19.2.0)(typescript@5.9.3)(use-sync-external-store@1.6.0(react@19.2.0))(viem@2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6))
+        specifier: 'catalog:'
+        version: 0.6.7(@types/react@19.2.3)(@wagmi/core@packages+core)(immer@9.0.21)(react@19.2.0)(typescript@5.9.3)(use-sync-external-store@1.6.0(react@19.2.0))(viem@2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6))
       ox:
         specifier: 'catalog:'
         version: 0.11.1(typescript@5.9.3)(zod@4.3.6)
@@ -5633,7 +5633,7 @@ packages:
     resolution: {integrity: sha512-uQkfxzlF8SGHJJVH966lFTdjM/lGcwJGzwAHpVqAPDD/QcsqoUGa+q31ox1BrUfi+FLP2ChVp7uLXE3DkHyDdQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
-      vite: '>=6.4.2'
+      vite: '>=7.3.2'
       vue: ^3.0.0
 
   '@vitejs/plugin-vue@5.2.4':
@@ -5647,7 +5647,7 @@ packages:
     resolution: {integrity: sha512-+MaE752hU0wfPFJEUAIxqw18+20euHHdxVtMvbFcOEpjEyfqXH/5DCoTHiVJ0J29EhTJdoTkjEv5YBKU9dnoTw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
-      vite: '>=6.4.2'
+      vite: '>=7.3.2'
       vue: ^3.2.25
 
   '@vitejs/plugin-vue@6.0.5':
@@ -5684,7 +5684,7 @@ packages:
     resolution: {integrity: sha512-Ize4iQtEALHDttPRCmN+FKqOl2vxTiNUhzobQFFt/BM1lRUTG7zRCLOykG/6Vo4E4hnUdfVLo5/eqKPukcWW7Q==}
     peerDependencies:
       msw: ^2.4.9
-      vite: '>=6.4.2'
+      vite: '>=8.0.5'
     peerDependenciesMeta:
       msw:
         optional: true
@@ -6052,29 +6052,6 @@ packages:
   abort-controller@3.0.0:
     resolution: {integrity: sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==}
     engines: {node: '>=6.5'}
-
-  accounts@0.6.5:
-    resolution: {integrity: sha512-JpS9nqSy441T0y6MVFu9sK2RJJgtLXASDBgmPjFpUEnQEHZjfVvfrmDCwZEhXCgaOAA16eHiR7v9LPPCrXdyNA==}
-    peerDependencies:
-      '@react-native-async-storage/async-storage': ^3.0.2
-      '@wagmi/core': '>=2'
-      expo-secure-store: ^55.0.12
-      expo-web-browser: ^55.0.13
-      react: '>=18'
-      viem: '>=2.43.3'
-    peerDependenciesMeta:
-      '@react-native-async-storage/async-storage':
-        optional: true
-      '@wagmi/core':
-        optional: true
-      expo-secure-store:
-        optional: true
-      expo-web-browser:
-        optional: true
-      react:
-        optional: true
-      viem:
-        optional: true
 
   accounts@0.6.7:
     resolution: {integrity: sha512-bXTyx3AFoe98dnlavPsxp7Uoho+QXNdOeHNdsvzC5pzQ2idgK50yUiBTKXtI7+E8kSvvfzGQR8ZdwfgJS5bJHg==}
@@ -10936,7 +10913,7 @@ packages:
   vite-hot-client@2.1.0:
     resolution: {integrity: sha512-7SpgZmU7R+dDnSmvXE1mfDtnHLHQSisdySVR7lO8ceAXvM0otZeuQQ6C8LrS5d/aYyP/QZ0hI0L+dIPrm4YlFQ==}
     peerDependencies:
-      vite: '>=6.4.2'
+      vite: '>=7.3.2'
 
   vite-node@3.2.4:
     resolution: {integrity: sha512-EbKSKh+bh1E1IFxeO0pg1n4dvoOTt0UDiXMd/qn++r98+jPO1xtJilvXldeuQ8giIB5IkpjCgMleHMNEsGH6pg==}
@@ -11024,7 +11001,7 @@ packages:
     engines: {node: '>=14'}
     peerDependencies:
       '@nuxt/kit': '*'
-      vite: '>=6.4.2'
+      vite: '>=7.3.2'
     peerDependenciesMeta:
       '@nuxt/kit':
         optional: true
@@ -11050,7 +11027,7 @@ packages:
     peerDependencies:
       '@testing-library/jest-dom': ^5.16.6 || ^5.17.0 || ^6.*
       solid-js: ^1.7.2
-      vite: '>=6.4.2'
+      vite: '>=7.3.2'
     peerDependenciesMeta:
       '@testing-library/jest-dom':
         optional: true
@@ -17969,7 +17946,7 @@ snapshots:
     dependencies:
       event-target-shim: 5.0.1
 
-  accounts@0.6.5(@types/react@19.2.3)(@wagmi/core@packages+core)(immer@9.0.21)(react@19.2.0)(typescript@5.9.3)(use-sync-external-store@1.6.0(react@19.2.0))(viem@2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)):
+  accounts@0.6.7(@types/react@19.2.3)(@wagmi/core@packages+core)(immer@9.0.21)(react@19.2.0)(typescript@5.9.3)(use-sync-external-store@1.6.0(react@19.2.0))(viem@2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)):
     dependencies:
       hono: 4.12.12
       idb-keyval: 6.2.2
@@ -17983,29 +17960,6 @@ snapshots:
       '@wagmi/core': link:packages/core
       react: 19.2.0
       viem: 2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
-    transitivePeerDependencies:
-      - '@modelcontextprotocol/sdk'
-      - '@types/react'
-      - elysia
-      - express
-      - immer
-      - typescript
-      - use-sync-external-store
-
-  accounts@0.6.5(@types/react@19.2.3)(@wagmi/core@packages+core)(immer@9.0.21)(react@19.2.0)(typescript@5.9.3)(use-sync-external-store@1.6.0(react@19.2.0))(viem@2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6)):
-    dependencies:
-      hono: 4.12.12
-      idb-keyval: 6.2.2
-      mipd: 0.0.7(typescript@5.9.3)
-      mppx: 0.5.12(hono@4.12.12)(typescript@5.9.3)(viem@2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6))
-      ox: 0.14.16(typescript@5.9.3)(zod@4.3.6)
-      webauthx: 0.1.1(typescript@5.9.3)(zod@4.3.6)
-      zod: 4.3.6
-      zustand: 5.0.12(@types/react@19.2.3)(immer@9.0.21)(react@19.2.0)(use-sync-external-store@1.6.0(react@19.2.0))
-    optionalDependencies:
-      '@wagmi/core': link:packages/core
-      react: 19.2.0
-      viem: 2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6)
     transitivePeerDependencies:
       - '@modelcontextprotocol/sdk'
       - '@types/react'
