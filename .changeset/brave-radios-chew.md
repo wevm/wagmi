@@ -2,4 +2,4 @@
 '@wagmi/connectors': patch
 ---
 
-Added the `tempoWallet` connector.
+Added `tempoWallet` connector
