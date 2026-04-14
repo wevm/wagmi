@@ -80,7 +80,8 @@ export default withTwoslashInlineCache(
         { text: 'Tempo', link: '/tempo/getting-started' },
         { text: 'CLI', link: '/cli/getting-started' },
         {
-          text: 'Frameworks',
+          text: '<span class="frameworks-nav-label">Frameworks</span>',
+          activeMatch: '$^',
           items: [
             { text: 'React', link: '/react/getting-started' },
             { text: 'Solid', link: '/solid/getting-started' },

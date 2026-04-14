@@ -14,9 +14,9 @@ It enshrines features like [token management](https://docs.tempo.xyz/protocol/ti
 
 ## Setup
 
-Wagmi React and Core both have first-class support for Tempo with [Hooks](/tempo/hooks/) and [Actions](/tempo/actions/). To get started, first follow the [Getting Started guide for React](/react/getting-started) or [Core](/core/getting-started) and make sure your [Viem](https://viem.sh) version is `{{viemVersion}}`.
+Wagmi React and Core both have first-class support for Tempo with [Hooks](/tempo/hooks) and [Actions](/tempo/actions). To get started, first follow the [Getting Started guide for React](/react/getting-started) or [Core](/core/getting-started) and make sure your [Viem](https://viem.sh) version is `{{viemVersion}}`.
 
-For account connections, use the supported wrappers around `accounts` from `wagmi/tempo`: `tempoWallet()`, `webAuthn()` / `webAuthn({ authUrl })`, and `dangerous_secp256k1()`. `tempoWallet()` is also re-exported from `wagmi/connectors` and `@wagmi/connectors`.
+For account connections, import Tempo connectors from `wagmi/tempo`. The examples below use `tempoWallet()`, and you can also use `webAuthn()` / `webAuthn({ authUrl })` or `dangerous_secp256k1()` when needed.
 
 ::: code-group
 ```bash-vue [pnpm]
@@ -27,6 +27,7 @@ npm install viem@{{viemVersion}}
 ```
 ```bash-vue [yarn]
 yarn add viem@{{viemVersion}}
+```
 
 ```bash-vue [bun]
 bun add viem@{{viemVersion}}
@@ -97,15 +98,15 @@ function App() {
 ```
 ```tsx [config.ts]
 import { createConfig, http } from 'wagmi'
-import { tempoTestnet } from 'wagmi/chains'
-import { webAuthn } from 'wagmi/tempo'
+import { tempo } from 'wagmi/chains'
+import { tempoWallet } from 'wagmi/tempo'
 
 export const config = createConfig({
-  connectors: [webAuthn()],
-  chains: [tempoTestnet],
+  connectors: [tempoWallet()],
+  chains: [tempo],
   multiInjectedProviderDiscovery: false,
   transports: {
-    [tempoTestnet.id]: http(),
+    [tempo.id]: http(),
   },
 })
 ```
@@ -113,7 +114,7 @@ export const config = createConfig({
 
 ## Use Tempo Hooks
 
-You can also use [Tempo-specific Hooks](/tempo/hooks/):
+You can also use [Tempo-specific Hooks](/tempo/hooks):
 
 ::: code-group
 
@@ -156,10 +157,74 @@ function App() {
 ```tsx [config.ts]
 import { createConfig, http } from 'wagmi'
 import { tempo } from 'wagmi/chains'
-import { webAuthn } from 'wagmi/tempo'
+import { tempoWallet } from 'wagmi/tempo'
 
 export const config = createConfig({
-  connectors: [webAuthn()],
+  connectors: [tempoWallet()],
+  chains: [tempo],
+  multiInjectedProviderDiscovery: false,
+  transports: {
+    [tempo.id]: http(),
+  },
+})
+```
+
+:::
+
+## Use Tempo Actions
+
+You can also use [Tempo-specific Actions](/tempo/actions) directly via the `wagmi/tempo` and `@wagmi/core/tempo` entrypoints:
+
+::: code-group
+
+```ts [React]
+import { Actions } from 'wagmi/tempo'
+import { config } from './config'
+
+const alphaUsd = '0x20c0000000000000000000000000000000000001'
+
+const metadata = await Actions.token.getMetadata(config, {
+  token: alphaUsd,
+})
+
+console.log('Token:', metadata.name, `(${metadata.symbol})`)
+```
+
+```ts [React config.ts]
+import { createConfig, http } from 'wagmi'
+import { tempo } from 'wagmi/chains'
+import { tempoWallet } from 'wagmi/tempo'
+
+export const config = createConfig({
+  connectors: [tempoWallet()],
+  chains: [tempo],
+  multiInjectedProviderDiscovery: false,
+  transports: {
+    [tempo.id]: http(),
+  },
+})
+```
+
+```ts [Core]
+import { Actions } from '@wagmi/core/tempo'
+import { config } from './config'
+
+const alphaUsd = '0x20c0000000000000000000000000000000000001'
+
+const metadata = await Actions.token.getMetadata(config, {
+  token: alphaUsd,
+})
+
+console.log('Token:', metadata.name, `(${metadata.symbol})`)
+```
+
+```ts [Core config.ts]
+import { createConfig, http } from '@wagmi/core'
+import { tempo } from '@wagmi/core/chains'
+import { tempoWallet } from '@wagmi/core/tempo'
+
+export const config = createConfig({
+  connectors: [tempoWallet()],
   chains: [tempo],
   multiInjectedProviderDiscovery: false,
   transports: {
@@ -175,5 +240,5 @@ export const config = createConfig({
 After you have set up your Tempo with Wagmi, you can now:
 
 - [**Guides & Examples**](https://docs.tempo.xyz/guide/tempo-transaction) Follow guides on how to [use accounts](https://docs.tempo.xyz/guide/use-accounts), [make payments](https://docs.tempo.xyz/guide/payments), [issue stablecoins](https://docs.tempo.xyz/guide/issuance), [exchange stablecoins](https://docs.tempo.xyz/guide/stablecoin-exchange), and more!
-- [**Tempo React Hooks**](/tempo/hooks/) Browse the collection of React Hooks and learn how to use them.
-- [**Tempo Core Actions**](/tempo/actions/) Browse the collection of Core Actions and learn how to use them.
+- [**Tempo React Hooks**](/tempo/hooks) Browse the collection of React Hooks and learn how to use them.
+- [**Tempo Core Actions**](/tempo/actions) Browse the collection of Core Actions and learn how to use them.

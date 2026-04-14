@@ -107,6 +107,10 @@ export function getSidebar() {
                 link: '/react/api/connectors/safe',
               },
               {
+                text: 'tempoWallet',
+                link: '/react/api/connectors/tempoWallet',
+              },
+              {
                 text: 'walletConnect',
                 link: '/react/api/connectors/walletConnect',
               },
@@ -473,6 +477,10 @@ export function getSidebar() {
                 link: '/vue/api/connectors/safe',
               },
               {
+                text: 'tempoWallet',
+                link: '/vue/api/connectors/tempoWallet',
+              },
+              {
                 text: 'walletConnect',
                 link: '/vue/api/connectors/walletConnect',
               },
@@ -727,6 +735,10 @@ export function getSidebar() {
               {
                 text: 'safe',
                 link: '/core/api/connectors/safe',
+              },
+              {
+                text: 'tempoWallet',
+                link: '/core/api/connectors/tempoWallet',
               },
               {
                 text: 'walletConnect',
@@ -1148,6 +1160,10 @@ export function getSidebar() {
                 link: '/solid/api/connectors/safe',
               },
               {
+                text: 'tempoWallet',
+                link: '/solid/api/connectors/tempoWallet',
+              },
+              {
                 text: 'walletConnect',
                 link: '/solid/api/connectors/walletConnect',
               },
@@ -1274,12 +1290,13 @@ export function getSidebar() {
         items: [
           { text: 'Getting Started', link: '/tempo/getting-started' },
           { text: 'Chains', link: '/tempo/chains' },
+          { text: 'Connectors', link: '/tempo/connectors' },
           { text: 'Tempo Docs & Guides', link: 'https://docs.tempo.xyz' },
         ],
       },
       {
         text: 'Hooks',
-        link: '/tempo/hooks/',
+        link: '/tempo/hooks',
         items: [
           {
             text: 'AMM',
@@ -1519,7 +1536,7 @@ export function getSidebar() {
       },
       {
         text: 'Actions',
-        link: '/tempo/actions/',
+        link: '/tempo/actions',
         items: [
           {
             text: 'AMM',
@@ -1735,7 +1752,7 @@ export function getSidebar() {
       },
       {
         text: 'Connectors',
-        link: '/tempo/connectors/',
+        link: '/tempo/connectors',
         items: [
           { text: 'tempoWallet', link: '/tempo/connectors/tempoWallet' },
           {

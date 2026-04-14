@@ -1,27 +1,56 @@
+<script setup>
+import PackageMetadata from '../../components/PackageMetadata.vue'
+import packageJson from '../../../packages/connectors/package.json'
+
+const connectorDependencyVersion = packageJson.peerDependencies['accounts']
+</script>
+
 # `webAuthn`
 
 Connector for a WebAuthn EOA.
+
+## Install
+
+<PackageMetadata package="accounts" repo="tempoxyz/accounts" isOsiLicense licenseUrl="https://github.com/tempoxyz/accounts/blob/main/LICENSE-MIT" />
+
+::: code-group
+```bash-vue [pnpm]
+pnpm add accounts@{{connectorDependencyVersion}}
+```
+
+```bash-vue [npm]
+npm install accounts@{{connectorDependencyVersion}}
+```
+
+```bash-vue [yarn]
+yarn add accounts@{{connectorDependencyVersion}}
+```
+
+```bash-vue [bun]
+bun add accounts@{{connectorDependencyVersion}}
+```
+:::
 
 ## Usage
 
 ```ts [wagmi.config.ts]
 import { createConfig, http } from 'wagmi'
-import { tempoTestnet } from 'wagmi/chains'
+import { tempo } from 'wagmi/chains'
 import { webAuthn } from 'wagmi/tempo' // [!code focus]
 
 export const config = createConfig({
   connectors: [webAuthn()], // [!code focus]
-  chains: [tempoTestnet],
+  chains: [tempo],
   multiInjectedProviderDiscovery: false,
   transports: {
-    [tempoTestnet.id]: http(),
+    [tempo.id]: http(),
   },
 })
 ```
 
 Use `webAuthn({ authUrl: '/api/webauthn' })` if you want registration and authentication challenges to come from a server endpoint instead of the default local browser ceremony.
 
-`webAuthn` is a thin wagmi wrapper around the root `accounts` package. Install the optional `accounts` dependency alongside `wagmi` to use it.
+`webAuthn` is a thin wagmi wrapper around the root `accounts` package.
 
 ## Parameters
 
