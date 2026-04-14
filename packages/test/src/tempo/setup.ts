@@ -1,8 +1,8 @@
 import { connect, disconnect, getConnection } from '@wagmi/core'
 import { parseUnits } from 'viem'
 import { Actions, Addresses } from 'viem/tempo'
-import { beforeAll, beforeEach, vi } from 'vitest'
-import { accounts, config } from './config.js'
+import { afterAll, beforeAll, beforeEach, vi } from 'vitest'
+import { accounts, config, destroy } from './config.js'
 
 async function disconnectAll() {
   while (getConnection(config).status !== 'disconnected')
@@ -50,6 +50,11 @@ beforeEach(async () => {
   vi.spyOn(Date, 'now').mockReturnValue(
     new Date(Date.UTC(2023, 1, 1)).valueOf(),
   )
+})
+
+afterAll(async () => {
+  await disconnectAll()
+  await destroy()
 })
 
 vi.mock('../src/version.ts', () => {

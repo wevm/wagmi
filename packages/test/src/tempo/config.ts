@@ -24,15 +24,12 @@ import {
   renderHook as vbr_renderHook,
 } from 'vitest-browser-react'
 import { createConfig, WagmiProvider } from 'wagmi'
+import { getPoolId } from '../utils.js'
 
 export const port = Number(import.meta.env.RPC_PORT ?? 4000)
 
 export const rpcUrl = (() => {
-  const id =
-    (typeof process !== 'undefined' &&
-      Number(process.env.VITEST_POOL_ID ?? 1) +
-        Math.floor(Math.random() * 10_000)) ||
-    1 + Math.floor(Math.random() * 10_000)
+  const id = getPoolId()
   return `http://localhost:${port}/${id}`
 })()
 
@@ -128,6 +125,10 @@ export async function restart() {
   vi.spyOn(Date, 'now').mockReturnValue(
     new Date(Date.UTC(2023, 1, 1)).valueOf(),
   )
+}
+
+export async function destroy() {
+  await fetch(`${rpcUrl}/destroy`)
 }
 
 export async function setupToken() {
