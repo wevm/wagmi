@@ -1,7 +1,9 @@
 /// <reference types="@vitest/browser-playwright" />
-import { createConfig, createStorage } from '@wagmi/core'
-import { webAuthn } from '@wagmi/core/tempo'
-import { tempoLocal } from '@wagmi/test/tempo'
+
+import { connect, createConfig, disconnect, getConnection } from '@wagmi/core'
+import { tempoWallet, webAuthn } from '@wagmi/core/tempo'
+import { accounts, tempoLocal } from '@wagmi/test/tempo'
+import { Storage as AccountsStorage, Dialog } from 'accounts'
 import { http } from 'viem'
 import { describe, expect, test } from 'vitest'
 import { cdp } from 'vitest/browser'
@@ -28,17 +30,88 @@ async function setupWebAuthn() {
   }
 }
 
+function createTempoWalletDialog(address: `0x${string}`) {
+  return Dialog.define({ name: 'test' }, ({ store }: any) => ({
+    close() {},
+    destroy() {},
+    open() {},
+    async syncRequests(requests) {
+      for (const queued of requests) {
+        if (queued.request.method !== 'wallet_connect') continue
+
+        store.setState((state: any) => ({
+          ...state,
+          requestQueue: state.requestQueue.map((request: any) =>
+            request.request.id === queued.request.id
+              ? {
+                  request: request.request,
+                  result: {
+                    accounts: [{ address, capabilities: {} }],
+                  },
+                  status: 'success',
+                }
+              : request,
+          ),
+        }))
+      }
+    },
+  }))
+}
+
+describe('tempoWallet', () => {
+  test('connect + getAccounts + disconnect', async () => {
+    const config = createConfig({
+      chains: [tempoLocal],
+      connectors: [],
+      storage: null,
+      transports: {
+        [tempoLocal.id]: http(),
+      },
+    })
+
+    const address = accounts[0]!.address
+    const connector = config._internal.connectors.setup(
+      tempoWallet({
+        dialog: createTempoWalletDialog(address),
+        storage: AccountsStorage.memory({ key: 'tempo-wallet-test' }),
+      }),
+    )
+
+    expect(await connector.getAccounts()).toEqual([])
+    expect(await connector.isAuthorized()).toBe(false)
+    expect(getConnection(config).status).toBe('disconnected')
+
+    const result = await connect(config, { connector })
+    expect(result).toMatchObject({
+      accounts: [address],
+      chainId: tempoLocal.id,
+    })
+    expect(await connector.getAccounts()).toEqual([address])
+    expect(await connector.isAuthorized()).toBe(true)
+    expect(getConnection(config)).toMatchObject({
+      address,
+      addresses: [address],
+      chainId: tempoLocal.id,
+      isConnected: true,
+      status: 'connected',
+    })
+
+    await disconnect(config, { connector })
+    expect(await connector.getAccounts()).toEqual([])
+    expect(await connector.isAuthorized()).toBe(false)
+  })
+})
+
 describe('webAuthn', () => {
   describe('register with authorizeAccessKey', () => {
     test('passes chainId to signKeyAuthorization', async (context) => {
       const cleanup = await setupWebAuthn()
       context.onTestFinished(async () => await cleanup())
 
-      const storage = createStorage({ storage: localStorage })
       const config = createConfig({
         chains: [tempoLocal],
         connectors: [],
-        storage,
+        storage: null,
         transports: {
           [tempoLocal.id]: http(),
         },
