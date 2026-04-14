@@ -38,7 +38,7 @@ test('default', async () => {
   })
 
   expect(useWaitForCallsStatus_render.result.current.fetchStatus).toBe('idle')
-  useWaitForCallsStatus_render.rerender({ id: data.id })
+  useWaitForCallsStatus_render.rerender({ id: data.id as Hex })
   expect(useWaitForCallsStatus_render.result.current.fetchStatus).toBe(
     'fetching',
   )
