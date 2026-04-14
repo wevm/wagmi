@@ -12,6 +12,7 @@ import {
   type RpcError,
   SwitchChainError,
   UserRejectedRequestError,
+  withRetry,
 } from 'viem'
 
 import { createConnector } from '../connectors/createConnector.js'
@@ -40,7 +41,7 @@ type AccountsWebAuthnParameters = NonNullable<
 >
 type Provider = Pick<
   ReturnType<typeof AccountsProvider.create>,
-  'getClient' | 'on' | 'removeListener' | 'request'
+  'getAccount' | 'getClient' | 'on' | 'removeListener' | 'request'
 >
 type AccountsConnectParameters = NonNullable<
   AccountsRpc.wallet_connect.Decoded['params']
@@ -168,20 +169,40 @@ export declare namespace dangerous_secp256k1 {
     Omit<AccountsProviderParameters, 'adapter' | 'chains'>
 }
 
-function createAccountsStorage(storage: {
-  getItem(key: string, defaultValue?: null | undefined): unknown
-  setItem(key: string, value: unknown): void | Promise<void>
-  removeItem(key: string): void | Promise<void>
-}): AccountsStorage {
+function createAccountsStorage(
+  storage: {
+    getItem(key: string, defaultValue?: null | undefined): unknown
+    setItem(key: string, value: unknown): void | Promise<void>
+    removeItem(key: string): void | Promise<void>
+  },
+  namespace: string,
+): AccountsStorage {
+  const prefix = `accounts.${namespace}`
   return {
     async getItem<value>(key: string) {
-      return ((await storage.getItem(key, null)) ?? null) as value | null
+      return ((await storage.getItem(`${prefix}.${key}`, null)) ??
+        null) as value | null
     },
     async removeItem(key) {
-      await storage.removeItem(key)
+      await storage.removeItem(`${prefix}.${key}`)
     },
     async setItem(key, value) {
-      await storage.setItem(key, value)
+      await storage.setItem(`${prefix}.${key}`, value)
+    },
+  }
+}
+
+function createMemoryAccountsStorage(): AccountsStorage {
+  const map = new Map<string, unknown>()
+  return {
+    async getItem<value>(key: string) {
+      return (map.get(key) ?? null) as value | null
+    },
+    async removeItem(key) {
+      map.delete(key)
+    },
+    async setItem(key, value) {
+      map.set(key, value)
     },
   }
 }
@@ -215,9 +236,11 @@ function _setup(parameters: setup.Parameters) {
           ...parameters.providerParameters,
           adapter: parameters.createAdapter(accounts),
           chains: config.chains as never,
-          ...(parameters.providerParameters.storage || !config.storage
-            ? {}
-            : { storage: createAccountsStorage(config.storage) }),
+          storage:
+            parameters.providerParameters.storage ??
+            (config.storage
+              ? createAccountsStorage(config.storage, parameters.id)
+              : createMemoryAccountsStorage()),
         }) as unknown as Provider
       })()
 
@@ -325,14 +348,16 @@ function _setup(parameters: setup.Parameters) {
       },
       async getClient({ chainId } = {}) {
         const provider = await getProvider()
-        return provider.getClient({ chainId }) as never
+        return Object.assign(provider.getClient({ chainId }), {
+          account: provider.getAccount(),
+        }) as never
       },
       async getProvider() {
         return await getProvider()
       },
       async isAuthorized() {
         try {
-          const accounts = await this.getAccounts()
+          const accounts = await withRetry(() => this.getAccounts())
           return !!accounts.length
         } catch {
           return false

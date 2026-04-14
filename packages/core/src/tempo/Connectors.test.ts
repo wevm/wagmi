@@ -30,7 +30,10 @@ async function setupWebAuthn() {
   }
 }
 
-function createTempoWalletDialog(address: `0x${string}`) {
+function createTempoWalletDialog(
+  address: `0x${string}`,
+  capabilities: Record<string, unknown> = {},
+) {
   return Dialog.define({ name: 'test' }, ({ store }: any) => ({
     close() {},
     destroy() {},
@@ -46,7 +49,7 @@ function createTempoWalletDialog(address: `0x${string}`) {
               ? {
                   request: request.request,
                   result: {
-                    accounts: [{ address, capabilities: {} }],
+                    accounts: [{ address, capabilities }],
                   },
                   status: 'success',
                 }
