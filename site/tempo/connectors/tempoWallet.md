@@ -19,7 +19,7 @@ export const config = createConfig({
 })
 ```
 
-`tempoWallet` is a thin wagmi wrapper around the root `accounts` dialog adapter. Install the optional `accounts` dependency alongside `wagmi` to use it. It is also re-exported from `wagmi/connectors`.
+`tempoWallet` is a thin wagmi wrapper around the root `accounts` dialog adapter. Install the optional `accounts` dependency alongside `wagmi` to use it. It is also re-exported from `wagmi/connectors` and `@wagmi/connectors`.
 
 ## Parameters
 

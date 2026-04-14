@@ -12,6 +12,7 @@ test('exports', () => {
       "metaMask",
       "porto",
       "safe",
+      "tempoWallet",
       "version",
       "walletConnect",
     ]

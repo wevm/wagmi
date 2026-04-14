@@ -23,6 +23,8 @@ export const config = createConfig({
 })
 ```
 
+`dangerous_secp256k1` is a thin wagmi wrapper around the root `accounts` package. Install the optional `accounts` dependency alongside `wagmi` to use it.
+
 ## Parameters
 
 ### privateKey

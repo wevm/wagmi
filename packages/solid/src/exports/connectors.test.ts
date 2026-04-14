@@ -12,6 +12,7 @@ test('exports', () => {
       "mock",
       "porto",
       "safe",
+      "tempoWallet",
       "version",
       "walletConnect",
     ]

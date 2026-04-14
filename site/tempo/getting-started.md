@@ -16,7 +16,7 @@ It enshrines features like [token management](https://docs.tempo.xyz/protocol/ti
 
 Wagmi React and Core both have first-class support for Tempo with [Hooks](/tempo/hooks/) and [Actions](/tempo/actions/). To get started, first follow the [Getting Started guide for React](/react/getting-started) or [Core](/core/getting-started) and make sure your [Viem](https://viem.sh) version is `{{viemVersion}}`.
 
-For account connections, use the supported wrappers around `accounts` from `wagmi/tempo`: `tempoWallet()`, `webAuthn()` / `webAuthn({ authUrl })`, and `dangerous_secp256k1()`. `tempoWallet()` is also re-exported from `wagmi/connectors`.
+For account connections, use the supported wrappers around `accounts` from `wagmi/tempo`: `tempoWallet()`, `webAuthn()` / `webAuthn({ authUrl })`, and `dangerous_secp256k1()`. `tempoWallet()` is also re-exported from `wagmi/connectors` and `@wagmi/connectors`.
 
 ::: code-group
 ```bash-vue [pnpm]

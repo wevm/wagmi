@@ -1,8 +1,8 @@
 import type {
-  dialog as accountsDialog,
-  dangerous_secp256k1 as accountsDangerousSecp256k1,
   Provider as AccountsProvider,
   Rpc as AccountsRpc,
+  dangerous_secp256k1 as accountsDangerousSecp256k1,
+  dialog as accountsDialog,
   webAuthn as accountsWebAuthn,
 } from 'accounts'
 import {
@@ -24,7 +24,9 @@ type AccountsModule = {
   dangerous_secp256k1: typeof accountsDangerousSecp256k1
   webAuthn: typeof accountsWebAuthn
 }
-type AccountsDialogParameters = NonNullable<Parameters<typeof accountsDialog>[0]>
+type AccountsDialogParameters = NonNullable<
+  Parameters<typeof accountsDialog>[0]
+>
 type AccountsProviderParameters = NonNullable<
   Parameters<typeof AccountsProvider.create>[0]
 >
@@ -66,7 +68,7 @@ export function tempoWallet(parameters: tempoWallet.Parameters = {}) {
     ...providerParameters
   } = parameters
 
-  return setup({
+  return _setup({
     createAdapter(accounts) {
       return accounts.dialog({
         dialog: dialogOption,
@@ -86,7 +88,10 @@ export function tempoWallet(parameters: tempoWallet.Parameters = {}) {
 }
 
 export declare namespace tempoWallet {
-  export type Parameters = Omit<AccountsProviderParameters, 'adapter' | 'chains'> &
+  export type Parameters = Omit<
+    AccountsProviderParameters,
+    'adapter' | 'chains'
+  > &
     AccountsDialogParameters
 
   export type ConnectParameters<withCapabilities extends boolean = false> =
@@ -108,7 +113,7 @@ export function webAuthn(parameters: webAuthn.Parameters = {}) {
   const { authUrl, ceremony, icon, name, rdns, ...providerParameters } =
     parameters
 
-  return setup({
+  return _setup({
     createAdapter(accounts) {
       return ceremony
         ? accounts.webAuthn({ ceremony, icon, name, rdns })
@@ -145,7 +150,7 @@ export function dangerous_secp256k1(
 ) {
   const { icon, name, privateKey, rdns, ...providerParameters } = parameters
 
-  return setup({
+  return _setup({
     createAdapter(accounts) {
       return accounts.dangerous_secp256k1({ icon, name, privateKey, rdns })
     },
@@ -181,7 +186,7 @@ function createAccountsStorage(storage: {
   }
 }
 
-function setup(parameters: setup.Parameters) {
+function _setup(parameters: setup.Parameters) {
   type Properties = {
     connect<withCapabilities extends boolean = false>(
       parameters?: setup.ConnectParameters<withCapabilities>,

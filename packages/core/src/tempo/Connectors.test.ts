@@ -67,9 +67,7 @@ describe('webAuthn', () => {
           result.accounts[0]?.capabilities.keyAuthorization
             ?.chainId as unknown as `0x${string}`,
         ),
-      ).toBe(
-        BigInt(chainId),
-      )
+      ).toBe(BigInt(chainId))
     })
   })
 })

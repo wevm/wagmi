@@ -21,6 +21,8 @@ export const config = createConfig({
 
 Use `webAuthn({ authUrl: '/api/webauthn' })` if you want registration and authentication challenges to come from a server endpoint instead of the default local browser ceremony.
 
+`webAuthn` is a thin wagmi wrapper around the root `accounts` package. Install the optional `accounts` dependency alongside `wagmi` to use it.
+
 ## Parameters
 
 ### authUrl (optional)
