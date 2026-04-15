@@ -5,7 +5,7 @@ import { describe, expect, test, vi } from 'vitest'
 import * as actions from './reward.js'
 import * as tokenActions from './token.js'
 
-describe.skip('flaky: merge unblock', () => {
+describe('reward', () => {
   describe('claimSync', () => {
     test('default', async () => {
       const { token } = await setupToken()

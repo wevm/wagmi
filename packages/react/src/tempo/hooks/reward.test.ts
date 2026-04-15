@@ -1,4 +1,4 @@
-import { getConnection } from '@wagmi/core'
+import { disconnect, getConnection } from '@wagmi/core'
 import { config, renderHook, setupToken } from '@wagmi/test/tempo'
 import type { Address } from 'viem'
 import { parseUnits } from 'viem'
@@ -8,7 +8,7 @@ import { useConnect } from '../../hooks/useConnect.js'
 import * as rewardHooks from './reward.js'
 import * as tokenHooks from './token.js'
 
-describe.skip('flaky: merge unblock', () => {
+describe('reward', () => {
   describe('useGetGlobalRewardPerToken', () => {
     test('default', async () => {
       const { token } = await setupToken()
@@ -131,6 +131,8 @@ describe.skip('flaky: merge unblock', () => {
 
   describe('useSetRecipientSync', () => {
     test('default', async () => {
+      await disconnect(config).catch(() => {})
+
       const { result } = await renderHook(() => ({
         connect: useConnect(),
         setRecipient: rewardHooks.useSetRecipientSync(),
@@ -155,6 +157,8 @@ describe.skip('flaky: merge unblock', () => {
 
   describe('useWatchRewardDistributed', () => {
     test('default', async () => {
+      await disconnect(config).catch(() => {})
+
       const { result: connectResult } = await renderHook(() => ({
         connect: useConnect(),
         grantRolesSync: tokenHooks.useGrantRolesSync(),
@@ -214,6 +218,8 @@ describe.skip('flaky: merge unblock', () => {
 
   describe('useWatchRewardRecipientSet', () => {
     test('default', async () => {
+      await disconnect(config).catch(() => {})
+
       const { result: connectResult } = await renderHook(() => ({
         connect: useConnect(),
         setRecipientSync: rewardHooks.useSetRecipientSync(),
