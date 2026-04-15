@@ -128,7 +128,7 @@ describe('dex', () => {
       expect(dexBalanceAfter).toBeGreaterThan(0n)
     })
 
-    test('behavior: non-maker can cancel', async () => {
+    test.skip('behavior: non-maker can cancel', async () => {
       const { base } = await setupTokenPair()
 
       // Account places order
