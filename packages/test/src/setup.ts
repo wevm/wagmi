@@ -1,18 +1,13 @@
 import { disconnect } from '@wagmi/core'
-import { afterAll, beforeAll, beforeEach } from 'vitest'
+import { afterAll, beforeEach } from 'vitest'
 import { testClient } from './clients.js'
 import { config } from './config.js'
-
-beforeAll(async () => {
-  await Promise.all(
-    Object.values(testClient).map((client) => client.resetFork()),
-  )
-})
 
 beforeEach(async () => {
   await disconnect(config).catch(() => {})
 })
 
 afterAll(async () => {
-  await Promise.all(Object.values(testClient).map((client) => client.destroy()))
+  // If you are using a fork, you can reset your anvil instance to the initial fork block.
+  await Promise.all(Object.values(testClient).map((client) => client.restart()))
 })
