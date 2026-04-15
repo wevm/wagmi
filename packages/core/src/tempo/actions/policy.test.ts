@@ -1,12 +1,16 @@
-import { connect } from '@wagmi/core'
+import { connect, disconnect } from '@wagmi/core'
 import { accounts, config, queryClient } from '@wagmi/test/tempo'
-import { describe, expect, test, vi } from 'vitest'
+import { beforeEach, describe, expect, test, vi } from 'vitest'
 import * as policy from './policy.js'
 
 const account = accounts[0]
 const account2 = accounts[1]
 
-describe.skip('flaky: merge unblock', () => {
+beforeEach(async () => {
+  await disconnect(config).catch(() => {})
+})
+
+describe('policy', () => {
   describe('create', () => {
     test('default', async () => {
       await connect(config, {

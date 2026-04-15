@@ -1,7 +1,8 @@
+import { disconnect } from '@wagmi/core'
 import { Actions } from '@wagmi/core/tempo'
 import { accounts, config, queryClient, renderHook } from '@wagmi/test/tempo'
 import type { Address } from 'viem'
-import { describe, expect, test, vi } from 'vitest'
+import { beforeEach, describe, expect, test, vi } from 'vitest'
 
 import { useConnect } from '../../hooks/useConnect.js'
 import * as policy from './policy.js'
@@ -9,7 +10,11 @@ import * as policy from './policy.js'
 const account = accounts[0]
 const account2 = accounts[1]
 
-describe.skip('flaky: merge unblock', () => {
+beforeEach(async () => {
+  await disconnect(config).catch(() => {})
+})
+
+describe('policy', () => {
   describe('useCreate', () => {
     test('default', async () => {
       const { result } = await renderHook(() => ({
