@@ -1,3 +1,4 @@
+import { connect, disconnect, getConnection } from '@wagmi/core'
 import { Actions } from '@wagmi/core/tempo'
 import {
   accounts,
@@ -8,13 +9,16 @@ import {
 } from '@wagmi/test/tempo'
 import { type Address, isAddress, parseUnits } from 'viem'
 import { Tick } from 'viem/tempo'
-import { describe, expect, test, vi } from 'vitest'
+import { beforeEach, describe, expect, test, vi } from 'vitest'
 
-import { useConnect } from '../../hooks/useConnect.js'
 import * as dex from './dex.js'
 
 const account = accounts[0]
 const account2 = accounts[1]
+
+beforeEach(async () => {
+  await disconnect(config).catch(() => {})
+})
 
 describe('useBuy', () => {
   test('default', async () => {
@@ -131,17 +135,17 @@ describe('useCancel', () => {
     expect(dexBalanceAfter).toBeGreaterThan(0n)
   })
 
-  test.skip('behavior: only maker can cancel', async () => {
+  test('behavior: non-maker can cancel', async () => {
     const { base } = await setupTokenPair()
 
     const { result } = await renderHook(() => ({
-      connect: useConnect(),
       place: dex.usePlaceSync(),
       cancel: dex.useCancelSync(),
     }))
 
     // Account places order
     const { orderId } = await result.current.place.mutateAsync({
+      connector: config.connectors[0]!,
       token: base,
       amount: parseUnits('100', 6),
       type: 'buy',
@@ -155,17 +159,22 @@ describe('useCancel', () => {
       token: addresses.alphaUsd,
     })
 
-    // Use a different account via the connector
-    await result.current.connect.connectAsync({
+    await disconnect(config).catch(() => {})
+    await connect(config, {
       connector: config.connectors[1]!,
     })
+    expect(getConnection(config).address).toBe(account2.address)
 
-    // Account2 tries to cancel - should fail
-    await expect(
-      result.current.cancel.mutateAsync({
+    // Account2 can cancel the order.
+    const { receipt, orderId: returnedOrderId } =
+      await result.current.cancel.mutateAsync({
+        connector: config.connectors[1]!,
         orderId,
-      }),
-    ).rejects.toThrow('The contract function "cancel" reverted')
+      })
+
+    expect(receipt).toBeDefined()
+    expect(receipt.status).toBe('success')
+    expect(returnedOrderId).toBe(orderId)
   })
 
   test('behavior: cannot cancel non-existent order', async () => {
