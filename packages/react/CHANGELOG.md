@@ -1,5 +1,15 @@
 # wagmi
 
+## 3.6.2
+
+### Patch Changes
+
+- Added `tempoWallet` connector ([#5058](https://github.com/wevm/wagmi/pull/5058))
+
+- Updated dependencies [[`c29bdfd`](https://github.com/wevm/wagmi/commit/c29bdfd510d00b57795c1a2e26feeddbca7b2509), [`c29bdfd`](https://github.com/wevm/wagmi/commit/c29bdfd510d00b57795c1a2e26feeddbca7b2509)]:
+  - @wagmi/connectors@8.0.2
+  - @wagmi/core@3.4.3
+
 ## 3.6.1
 
 ### Patch Changes
