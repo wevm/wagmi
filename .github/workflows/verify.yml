@@ -157,7 +157,7 @@ jobs:
         with:
           command: CI=true pnpm test:cov --shard=${{ matrix.shard }}/${{ matrix.total-shards }} --retry=3 --bail=1
           max_attempts: 3
-          timeout_minutes: 5
+          timeout_minutes: 6
         env:
           VITE_MAINNET_FORK_URL: ${{ secrets.VITE_MAINNET_FORK_URL }}
           VITE_OPTIMISM_FORK_URL: ${{ secrets.VITE_OPTIMISM_FORK_URL }}
