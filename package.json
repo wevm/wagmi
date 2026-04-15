@@ -107,6 +107,7 @@
       "packages/connectors": {
         "entry": "src/exports/index.ts!",
         "ignoreDependencies": [
+          "accounts",
           "@base-org/account",
           "@coinbase/wallet-sdk",
           "@metamask/connect-evm",
@@ -124,6 +125,7 @@
         ],
         "ignoreDependencies": [
           "@tanstack/query-core",
+          "accounts",
           "ox"
         ]
       },

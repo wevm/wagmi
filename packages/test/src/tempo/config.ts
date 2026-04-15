@@ -10,6 +10,7 @@ import {
   type Chain,
   type Client,
   defineChain,
+  type Hex,
   http,
   parseUnits,
   type Transport,
@@ -39,13 +40,16 @@ export const addresses = {
   alphaUsd: '0x20c0000000000000000000000000000000000001',
 } as const
 
-export const accounts = Array.from({ length: 20 }, (_, i) => {
-  const privateKey = Mnemonic.toPrivateKey(
+export const privateKeys = Array.from({ length: 20 }, (_, i) =>
+  Mnemonic.toPrivateKey(
     'test test test test test test test test test test test junk',
     { as: 'Hex', path: Mnemonic.path({ account: i }) },
-  )
-  return tempo_Account.fromSecp256k1(privateKey)
-}) as unknown as FixedArray<tempo_Account.RootAccount, 20>
+  ),
+) as unknown as FixedArray<Hex, 20>
+
+export const accounts = privateKeys.map((privateKey) =>
+  tempo_Account.fromSecp256k1(privateKey),
+) as unknown as FixedArray<tempo_Account.RootAccount, 20>
 
 export const tempoLocal = defineChain({
   ...chains.tempoLocalnet,
@@ -55,8 +59,8 @@ export const tempoLocal = defineChain({
 export const config = createConfig({
   chains: [tempoLocal],
   connectors: [
-    dangerous_secp256k1({ account: accounts.at(0) }),
-    dangerous_secp256k1({ account: accounts.at(1) }),
+    dangerous_secp256k1({ privateKey: privateKeys[0] }),
+    dangerous_secp256k1({ privateKey: privateKeys[1] }),
   ],
   pollingInterval: 100,
   storage: null,
@@ -124,6 +128,10 @@ export async function restart() {
   vi.spyOn(Date, 'now').mockReturnValue(
     new Date(Date.UTC(2023, 1, 1)).valueOf(),
   )
+}
+
+export async function destroy() {
+  await fetch(`${rpcUrl}/destroy`)
 }
 
 export async function setupToken() {

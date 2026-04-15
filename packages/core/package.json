@@ -87,12 +87,16 @@
   },
   "peerDependencies": {
     "@tanstack/query-core": ">=5.0.0",
+    "accounts": "catalog:",
     "ox": ">=0.11.1",
     "typescript": ">=5.7.3",
     "viem": "2.x"
   },
   "peerDependenciesMeta": {
     "@tanstack/query-core": {
+      "optional": true
+    },
+    "accounts": {
       "optional": true
     },
     "ox": {
@@ -109,6 +113,7 @@
   },
   "devDependencies": {
     "@tanstack/query-core": "catalog:",
+    "accounts": "catalog:",
     "ox": "catalog:"
   },
   "contributors": [

@@ -1,29 +1,106 @@
-import * as Address from 'ox/Address'
-import type * as Hex from 'ox/Hex'
-import * as PublicKey from 'ox/PublicKey'
-import { KeyAuthorization, SignatureEnvelope } from 'ox/tempo'
+import type {
+  Provider as AccountsProvider,
+  Rpc as AccountsRpc,
+  dangerous_secp256k1 as accountsDangerousSecp256k1,
+  dialog as accountsDialog,
+  webAuthn as accountsWebAuthn,
+} from 'accounts'
 import {
-  createClient,
-  defineChain,
-  type EIP1193Provider,
-  getAddress,
+  type Address,
+  numberToHex,
+  type ProviderConnectInfo,
+  type RpcError,
   SwitchChainError,
+  UserRejectedRequestError,
+  withRetry,
 } from 'viem'
-import {
-  generatePrivateKey,
-  type LocalAccount,
-  privateKeyToAccount,
-} from 'viem/accounts'
-import {
-  Account,
-  WebAuthnP256,
-  WebCryptoP256,
-  walletNamespaceCompat,
-} from 'viem/tempo'
+
 import { createConnector } from '../connectors/createConnector.js'
+import type { Connector } from '../createConfig.js'
 import { ChainNotConfiguredError } from '../errors/config.js'
-import type { OneOf } from '../types/utils.js'
-import type * as KeyManager from './KeyManager.js'
+
+type AccountsModule = {
+  dialog: typeof accountsDialog
+  Provider: typeof AccountsProvider
+  dangerous_secp256k1: typeof accountsDangerousSecp256k1
+  webAuthn: typeof accountsWebAuthn
+}
+type AccountsDialogParameters = NonNullable<
+  Parameters<typeof accountsDialog>[0]
+>
+type AccountsProviderParameters = NonNullable<
+  Parameters<typeof AccountsProvider.create>[0]
+>
+type AccountsAdapter = NonNullable<AccountsProviderParameters['adapter']>
+type AccountsDangerousSecp256k1Parameters = NonNullable<
+  Parameters<typeof accountsDangerousSecp256k1>[0]
+>
+type AccountsStorage = NonNullable<AccountsProviderParameters['storage']>
+type AccountsWebAuthnParameters = NonNullable<
+  Parameters<typeof accountsWebAuthn>[0]
+>
+type Provider = Pick<
+  ReturnType<typeof AccountsProvider.create>,
+  'getAccount' | 'getClient' | 'on' | 'removeListener' | 'request'
+>
+type AccountsConnectParameters = NonNullable<
+  AccountsRpc.wallet_connect.Decoded['params']
+>[0]
+type CapabilitiesRequest = AccountsConnectParameters['capabilities']
+type InternalAccount =
+  AccountsRpc.wallet_connect.Encoded['returns']['accounts'][number]
+
+const tempoWalletIcon =
+  'data:image/svg+xml,<svg width="269" height="269" viewBox="0 0 269 269" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="269" height="269" fill="black"/><path d="M123.273 190.794H93.445L121.09 105.318H85.7334L93.445 80.2642H191.95L184.238 105.318H150.773L123.273 190.794Z" fill="white"/></svg>'
+
+/** @deprecated use `tempoWallet.Parameters` instead */
+export type TempoWalletParameters = tempoWallet.Parameters
+
+/**
+ * Connector for the Tempo Wallet dialog.
+ */
+export function tempoWallet(parameters: tempoWallet.Parameters = {}) {
+  const {
+    dialog: dialogOption,
+    host,
+    icon = tempoWalletIcon,
+    name,
+    rdns,
+    ...providerParameters
+  } = parameters
+
+  return _setup({
+    createAdapter(accounts) {
+      return accounts.dialog({
+        dialog: dialogOption,
+        host,
+        icon,
+        name,
+        rdns,
+      })
+    },
+    icon,
+    id: rdns ?? 'xyz.tempo',
+    name: name ?? 'Tempo Wallet',
+    providerParameters,
+    rdns: rdns ?? 'xyz.tempo',
+    type: 'injected',
+  })
+}
+
+export declare namespace tempoWallet {
+  export type Parameters = Omit<
+    AccountsProviderParameters,
+    'adapter' | 'chains'
+  > &
+    AccountsDialogParameters
+
+  export type ConnectParameters<withCapabilities extends boolean = false> =
+    setup.ConnectParameters<withCapabilities>
+
+  export type ConnectReturnType<withCapabilities extends boolean = false> =
+    setup.ConnectReturnType<withCapabilities>
+}
 
 /** @deprecated use `webAuthn.Parameters` instead */
 export type WebAuthnParameters = webAuthn.Parameters
@@ -33,648 +110,28 @@ webAuthn.type = 'webAuthn' as const
 /**
  * Connector for a WebAuthn EOA.
  */
-export function webAuthn(options: webAuthn.Parameters) {
-  let account: Account.RootAccount | undefined
-  let accessKey: Account.AccessKeyAccount | undefined
+export function webAuthn(parameters: webAuthn.Parameters = {}) {
+  const { authUrl, ceremony, icon, name, rdns, ...providerParameters } =
+    parameters
 
-  const defaultAccessKeyOptions = {
-    expiry: Math.floor(
-      (Date.now() + 24 * 60 * 60 * 1000) / 1000, // one day
-    ),
-    strict: false,
-  }
-  const accessKeyOptions = (() => {
-    if (typeof options.grantAccessKey === 'object')
-      return { ...defaultAccessKeyOptions, ...options.grantAccessKey }
-    if (options.grantAccessKey === true) return defaultAccessKeyOptions
-    return undefined
-  })()
-
-  type Properties = {
-    // TODO(v3): Make `withCapabilities: true` default behavior
-    connect<withCapabilities extends boolean = false>(parameters: {
-      chainId?: number | undefined
-      capabilities?:
-        | (OneOf<
-            | {
-                label?: string | undefined
-                type: 'sign-up'
-              }
-            | {
-                selectAccount?: boolean | undefined
-                type: 'sign-in'
-              }
-            | {
-                type?: undefined
-              }
-          > & {
-            credential?: { id: string; publicKey: Hex.Hex } | undefined
-            sign?:
-              | {
-                  hash: Hex.Hex
-                }
-              | undefined
-          })
-        | undefined
-      isReconnecting?: boolean | undefined
-      withCapabilities?: withCapabilities | boolean | undefined
-    }): Promise<{
-      accounts: withCapabilities extends true
-        ? readonly {
-            address: Address.Address
-            capabilities: { signature?: Hex.Hex | undefined }
-          }[]
-        : readonly Address.Address[]
-      chainId: number
-    }>
-  }
-  type Provider = Pick<EIP1193Provider, 'request'>
-  type StorageItem = {
-    [
-      key: `pendingKeyAuthorization:${string}`
-    ]: KeyAuthorization.KeyAuthorization
-    'webAuthn.activeCredential': WebAuthnP256.P256Credential
-    'webAuthn.lastActiveCredential': WebAuthnP256.P256Credential
-  }
-
-  return createConnector<Provider, Properties, StorageItem>((config) => ({
+  return _setup({
+    createAdapter(accounts) {
+      return ceremony
+        ? accounts.webAuthn({ ceremony, icon, name, rdns })
+        : accounts.webAuthn({ authUrl, icon, name, rdns })
+    },
+    icon,
     id: 'webAuthn',
-    name: 'EOA (WebAuthn)',
+    name: name ?? 'EOA (WebAuthn)',
+    providerParameters,
+    rdns,
     type: 'webAuthn',
-    async setup() {
-      const credential = await config.storage?.getItem(
-        'webAuthn.activeCredential',
-      )
-      if (!credential) return
-      account = Account.fromWebAuthnP256(credential, {
-        rpId: options.getOptions?.rpId ?? options.rpId,
-      })
-    },
-    async connect(parameters = {}) {
-      const capabilities =
-        'capabilities' in parameters ? (parameters.capabilities ?? {}) : {}
-      const signHash =
-        'sign' in capabilities ? capabilities.sign?.hash : undefined
-
-      // Fast path: if a credential is provided directly, use it.
-      if ('credential' in capabilities && capabilities.credential) {
-        const credential =
-          capabilities.credential as WebAuthnP256.P256Credential
-        config.storage?.setItem(
-          'webAuthn.activeCredential',
-          normalizeValue(credential),
-        )
-        config.storage?.setItem(
-          'webAuthn.lastActiveCredential',
-          normalizeValue(credential),
-        )
-        account = Account.fromWebAuthnP256(credential, {
-          rpId: options.getOptions?.rpId ?? options.rpId,
-        })
-        const address = getAddress(account.address)
-        const chainId = parameters.chainId ?? config.chains[0]?.id
-        if (!chainId) throw new ChainNotConfiguredError()
-        return {
-          accounts: (parameters.withCapabilities
-            ? [{ address }]
-            : [address]) as never,
-          chainId,
-        }
-      }
-
-      if (
-        accessKeyOptions?.strict &&
-        accessKeyOptions.expiry &&
-        accessKeyOptions.expiry < Date.now() / 1000
-      )
-        throw new Error(
-          `\`grantAccessKey.expiry = ${accessKeyOptions.expiry}\` is in the past (${new Date(accessKeyOptions.expiry * 1000).toLocaleString()}). Please provide a valid expiry.`,
-        )
-
-      // We are going to need to find:
-      // - a WebAuthn `credential` to instantiate an account
-      // - optionally, a `keyPair` to use as the access key for the account
-      // - optionally, a signed `keyAuthorization` to provision the access key
-      const {
-        credential,
-        keyAuthorization,
-        keyPair,
-        signature: signedHash,
-      } = await (async () => {
-        // If the connection type is of "sign-up", we are going to create a new credential
-        // and provision an access key (if needed).
-        if (capabilities.type === 'sign-up') {
-          // Create credential (sign up)
-          const createOptions_remote = await options.keyManager.getChallenge?.()
-          const label =
-            capabilities.label ??
-            options.createOptions?.label ??
-            new Date().toISOString()
-          const rpId =
-            createOptions_remote?.rp?.id ??
-            options.createOptions?.rpId ??
-            options.rpId
-          const credential = await WebAuthnP256.createCredential({
-            ...(options.createOptions ?? {}),
-            label,
-            rpId,
-            ...(createOptions_remote ?? {}),
-          })
-          await options.keyManager.setPublicKey({
-            credential: credential.raw,
-            publicKey: credential.publicKey,
-          })
-
-          // Get key pair (access key) to use for the account.
-          // Skip if signing a hash — access key provisioning is deferred.
-          const keyPair = await (async () => {
-            if (signHash) return undefined
-            if (!accessKeyOptions) return undefined
-            return await WebCryptoP256.createKeyPair()
-          })()
-
-          return { credential, keyPair, signature: undefined }
-        }
-
-        // If we are not selecting an account, we will check if an active credential is present in
-        // storage and if so, we will use it to instantiate an account.
-        if (!capabilities.selectAccount) {
-          const credential = (await config.storage?.getItem(
-            'webAuthn.activeCredential',
-          )) as WebAuthnP256.getCredential.ReturnValue | undefined
-
-          if (credential) {
-            // If signing a hash, skip local keypair checks and return
-            // the stored credential — the hash will be signed via
-            // `account.sign` since `createCredential` cannot sign.
-            if (signHash)
-              return { credential, keyPair: undefined, signature: undefined }
-
-            // Get key pair (access key) to use for the account.
-            const keyPair = await (async () => {
-              if (!accessKeyOptions) return undefined
-              const address = Address.fromPublicKey(
-                PublicKey.fromHex(credential.publicKey),
-              )
-              return await idb.get(`accessKey:${address}`)
-            })()
-
-            // If the access key provisioning is not in strict mode, return the credential and key pair (if exists).
-            if (!accessKeyOptions?.strict)
-              return { credential, keyPair, signature: undefined }
-
-            // If a key pair is found, return the credential and key pair.
-            if (keyPair) return { credential, keyPair, signature: undefined }
-
-            // If we are reconnecting, throw an error if not found.
-            if (parameters.isReconnecting)
-              throw new Error('credential not found.')
-
-            // Otherwise, we want to continue to sign up or register against new key pair.
-          }
-        }
-
-        // Discover credential
-        {
-          // Get key pair (access key) to use for the account.
-          // Skip if signing a hash — access key provisioning is deferred.
-          const keyPair = await (async () => {
-            if (signHash) return undefined
-            if (!accessKeyOptions) return undefined
-            return await WebCryptoP256.createKeyPair()
-          })()
-
-          // If we are provisioning an access key, we will need to sign a key authorization.
-          // We will need the hash (digest) to sign, and the address of the access key to construct the key authorization.
-          const { hash, keyAuthorization_unsigned } = await (async () => {
-            const accessKeyAddress = keyPair
-              ? Address.fromPublicKey(keyPair.publicKey)
-              : undefined
-
-            if (!accessKeyAddress)
-              return { keyAuthorization_unsigned: undefined, hash: undefined }
-
-            const chainId = parameters.chainId ?? config.chains[0]?.id
-            const keyAuthorization_unsigned = KeyAuthorization.from({
-              address: accessKeyAddress,
-              chainId: chainId ? BigInt(chainId) : undefined,
-              expiry: accessKeyOptions?.expiry,
-              strict: accessKeyOptions?.strict ?? false,
-              type: 'p256',
-            })
-            const hash = KeyAuthorization.getSignPayload(
-              keyAuthorization_unsigned,
-            )
-            return { keyAuthorization_unsigned, hash }
-          })()
-
-          // If no active credential, we will attempt to load the last active credential from storage.
-          const lastActiveCredential = !capabilities.selectAccount
-            ? await config.storage?.getItem('webAuthn.lastActiveCredential')
-            : undefined
-          const credential = await WebAuthnP256.getCredential({
-            ...(options.getOptions ?? {}),
-            credentialId: lastActiveCredential?.id,
-            async getPublicKey(credential) {
-              const publicKey = await options.keyManager.getPublicKey({
-                credential,
-              })
-              if (!publicKey) throw new Error('publicKey not found.')
-              return publicKey
-            },
-            hash: signHash ?? hash,
-            rpId: options.getOptions?.rpId ?? options.rpId,
-          })
-
-          const envelope = SignatureEnvelope.from({
-            metadata: credential.metadata,
-            signature: credential.signature,
-            publicKey: PublicKey.fromHex(credential.publicKey),
-            type: 'webAuthn',
-          })
-
-          const keyAuthorization = keyAuthorization_unsigned
-            ? KeyAuthorization.from({
-                ...keyAuthorization_unsigned,
-                signature: envelope,
-              })
-            : undefined
-
-          const signature =
-            signHash && !keyAuthorization_unsigned
-              ? SignatureEnvelope.serialize(envelope)
-              : undefined
-
-          return { credential, keyAuthorization, keyPair, signature }
-        }
-      })()
-
-      config.storage?.setItem(
-        'webAuthn.lastActiveCredential',
-        normalizeValue(credential),
-      )
-      config.storage?.setItem(
-        'webAuthn.activeCredential',
-        normalizeValue(credential),
-      )
-
-      account = Account.fromWebAuthnP256(credential, {
-        rpId: options.getOptions?.rpId ?? options.rpId,
-      })
-
-      let signature: Hex.Hex | undefined
-      if (signHash && !signedHash) {
-        signature = await account.sign({ hash: signHash })
-      } else if (signedHash) {
-        signature = signedHash
-      } else if (keyPair) {
-        accessKey = Account.fromWebCryptoP256(keyPair, {
-          access: account,
-        })
-
-        // If we are reconnecting, check if the access key is expired.
-        if (parameters.isReconnecting) {
-          if (
-            'keyAuthorization' in keyPair &&
-            keyPair.keyAuthorization.expiry &&
-            keyPair.keyAuthorization.expiry < Date.now() / 1000
-          ) {
-            // remove any pending key authorizations from storage.
-            await config?.storage?.removeItem(
-              `pendingKeyAuthorization:${account.address.toLowerCase()}`,
-            )
-
-            const message = `Access key expired (on ${new Date(keyPair.keyAuthorization.expiry * 1000).toLocaleString()}).`
-            accessKey = undefined
-
-            // if in strict mode, disconnect and throw an error.
-            if (accessKeyOptions?.strict) {
-              await this.disconnect()
-              throw new Error(message)
-            }
-            // otherwise, fall back to the root account.
-            // biome-ignore lint/suspicious/noConsole: notify
-            console.warn(`${message} Falling back to passkey.`)
-          }
-        }
-        // If we are not reconnecting, orchestrate the provisioning of the access key.
-        else {
-          const keyAuth =
-            keyAuthorization ??
-            (await account.signKeyAuthorization(accessKey, {
-              ...accessKeyOptions,
-              chainId: BigInt(parameters.chainId ?? config.chains[0]?.id ?? 0),
-            } as never))
-
-          await config?.storage?.setItem(
-            `pendingKeyAuthorization:${account.address.toLowerCase()}`,
-            keyAuth as never,
-          )
-          await idb.set(`accessKey:${account.address.toLowerCase()}`, {
-            ...keyPair,
-            keyAuthorization: keyAuth,
-          })
-        }
-        // If we are granting an access key and it is in strict mode, throw an error if the access key is not provisioned.
-      } else if (accessKeyOptions?.strict) {
-        await config.storage?.removeItem('webAuthn.activeCredential')
-        throw new Error('access key not found')
-      }
-
-      const address = getAddress(account.address)
-
-      const chainId = parameters.chainId ?? config.chains[0]?.id
-      if (!chainId) throw new ChainNotConfiguredError()
-
-      return {
-        accounts: (parameters.withCapabilities
-          ? [{ address, capabilities: { signature } }]
-          : [address]) as never,
-        chainId,
-      }
-    },
-    async disconnect() {
-      await config.storage?.removeItem('webAuthn.activeCredential')
-      config.emitter.emit('disconnect')
-      account = undefined
-    },
-    async getAccounts() {
-      if (!account) return []
-      return [getAddress(account.address)]
-    },
-    async getChainId() {
-      return config.chains[0]?.id!
-    },
-    async isAuthorized() {
-      try {
-        const accounts = await this.getAccounts()
-        return !!accounts.length
-      } catch (error) {
-        // biome-ignore lint/suspicious/noConsole: notify
-        console.error(
-          'Connector.webAuthn: Failed to check authorization',
-          error,
-        )
-        return false
-      }
-    },
-    async switchChain({ chainId }) {
-      const chain = config.chains.find((chain) => chain.id === chainId)
-      if (!chain) throw new SwitchChainError(new ChainNotConfiguredError())
-      return chain
-    },
-    onAccountsChanged() {},
-    onChainChanged(chain) {
-      const chainId = Number(chain)
-      config.emitter.emit('change', { chainId })
-    },
-    async onDisconnect() {
-      config.emitter.emit('disconnect')
-      account = undefined
-    },
-    async getClient({ chainId } = {}) {
-      const chain =
-        config.chains.find((x) => x.id === chainId) ?? config.chains[0]
-      if (!chain) throw new ChainNotConfiguredError()
-
-      const transports = config.transports
-      if (!transports) throw new ChainNotConfiguredError()
-
-      const transport = transports[chain.id]
-      if (!transport) throw new ChainNotConfiguredError()
-
-      const targetAccount = await (async () => {
-        if (!accessKey) return account
-        if (!account) throw new Error('account not found.')
-
-        const item = await idb.get(`accessKey:${account.address.toLowerCase()}`)
-        if (
-          item?.keyAuthorization.expiry &&
-          item.keyAuthorization.expiry < Date.now() / 1000
-        ) {
-          // remove any pending key authorizations from storage.
-          await config?.storage?.removeItem(
-            `pendingKeyAuthorization:${account.address.toLowerCase()}`,
-          )
-
-          const message = `Access key expired (on ${new Date(item.keyAuthorization.expiry * 1000).toLocaleString()}).`
-
-          // if in strict mode, disconnect and throw an error.
-          if (accessKeyOptions?.strict) {
-            await this.disconnect()
-            throw new Error(message)
-          }
-
-          // otherwise, fall back to the root account.
-          // biome-ignore lint/suspicious/noConsole: notify
-          console.warn(`${message} Falling back to passkey.`)
-          return account
-        }
-        return accessKey
-      })()
-      if (!targetAccount) throw new Error('account not found.')
-
-      const targetChain = defineChain({
-        ...chain,
-        prepareTransactionRequest: [
-          async (args, { phase }) => {
-            const keyAuthorization = await (async () => {
-              {
-                const keyAuthorization = (
-                  args as {
-                    keyAuthorization?:
-                      | KeyAuthorization.KeyAuthorization
-                      | undefined
-                  }
-                ).keyAuthorization
-                if (keyAuthorization) return keyAuthorization
-              }
-
-              const keyAuthorization = await config.storage?.getItem(
-                `pendingKeyAuthorization:${targetAccount?.address.toLowerCase()}`,
-              )
-              await config.storage?.removeItem(
-                `pendingKeyAuthorization:${targetAccount?.address.toLowerCase()}`,
-              )
-              return keyAuthorization
-            })()
-
-            const [prepareTransactionRequestFn, options] = (() => {
-              if (!chain.prepareTransactionRequest)
-                return [undefined, undefined]
-              if (typeof chain.prepareTransactionRequest === 'function')
-                return [chain.prepareTransactionRequest, undefined]
-              return chain.prepareTransactionRequest
-            })()
-
-            const request = await (async () => {
-              if (!prepareTransactionRequestFn) return {}
-              if (!options || options?.runAt?.includes(phase))
-                return await prepareTransactionRequestFn(args, { phase })
-              return {}
-            })()
-
-            return {
-              ...args,
-              ...request,
-              keyAuthorization,
-            }
-          },
-          {
-            runAt: [
-              'afterFillParameters',
-              'beforeFillParameters',
-              'beforeFillTransaction',
-            ],
-          },
-        ],
-      })
-
-      return createClient({
-        account: targetAccount,
-        chain: targetChain,
-        transport: walletNamespaceCompat(transport, {
-          account: targetAccount,
-        }),
-      })
-    },
-    async getProvider({ chainId } = {}) {
-      const { request } = await this.getClient!({ chainId })
-      return { request }
-    },
-  }))
+  })
 }
 
-export namespace webAuthn {
-  export type Parameters = {
-    /** Options for WebAuthn registration. */
-    createOptions?:
-      | Pick<
-          WebAuthnP256.createCredential.Parameters,
-          'createFn' | 'label' | 'rpId' | 'userId' | 'timeout'
-        >
-      | undefined
-    /** Options for WebAuthn authentication. */
-    getOptions?:
-      | Pick<WebAuthnP256.getCredential.Parameters, 'getFn' | 'rpId'>
-      | undefined
-    /**
-     * Whether or not to grant an access key upon connection, and optionally, expiry + limits to assign to the key.
-     */
-    grantAccessKey?:
-      | boolean
-      | (Pick<KeyAuthorization.KeyAuthorization, 'expiry' | 'limits'> & {
-          /** Whether or not to throw an error and disconnect if the access key is not provisioned or is expired. */
-          strict?: boolean | undefined
-        })
-    /** Public key manager. */
-    keyManager: KeyManager.KeyManager
-    /** The RP ID to use for WebAuthn. */
-    rpId?: string | undefined
-  }
-}
-
-/**
- * Normalizes a value into a structured-clone compatible format.
- *
- * @see https://developer.mozilla.org/en-US/docs/Web/API/Window/structuredClone
- */
-function normalizeValue<type>(value: type): type {
-  if (Array.isArray(value)) return value.map(normalizeValue) as never
-  if (typeof value === 'function') return undefined as never
-  if (typeof value !== 'object' || value === null) return value
-  if (Object.getPrototypeOf(value) !== Object.prototype)
-    try {
-      return structuredClone(value)
-    } catch {
-      return undefined as never
-    }
-
-  const normalized: Record<string, unknown> = {}
-  for (const [k, v] of Object.entries(value)) normalized[k] = normalizeValue(v)
-  return normalized as never
-}
-
-// Based on `idb-keyval`
-// https://github.com/jakearchibald/idb-keyval
-let defaultGetStoreFunc:
-  | (<type>(
-      txMode: IDBTransactionMode,
-      callback: (store: IDBObjectStore) => type | PromiseLike<type>,
-    ) => Promise<type>)
-  | undefined
-
-const idb = {
-  /**
-   * Get a value by its key.
-   *
-   * @param key
-   * @param customStore Method to get a custom store. Use with caution (see the docs).
-   */
-  get<type = any>(key: IDBValidKey): Promise<type | undefined> {
-    return this.defaultGetStore()('readonly', (store) =>
-      this.promisifyRequest(store.get(key)),
-    )
-  },
-  /**
-   * Set a value with a key.
-   *
-   * @param key
-   * @param value
-   * @param customStore Method to get a custom store. Use with caution (see the docs).
-   */
-  set(key: IDBValidKey, value: any): Promise<void> {
-    return this.defaultGetStore()('readwrite', (store) => {
-      store.put(value, key)
-      return this.promisifyRequest(store.transaction)
-    })
-  },
-  defaultGetStore() {
-    if (!defaultGetStoreFunc)
-      defaultGetStoreFunc = this.createStore('keyval-store', 'keyval')
-    return defaultGetStoreFunc
-  },
-  createStore(
-    dbName: string,
-    storeName: string,
-  ): NonNullable<typeof defaultGetStoreFunc> {
-    let dbp: Promise<IDBDatabase> | undefined
-
-    const getDB = () => {
-      if (dbp) return dbp
-      const request = indexedDB.open(dbName)
-      request.onupgradeneeded = () =>
-        request.result.createObjectStore(storeName)
-      dbp = this.promisifyRequest(request)
-
-      dbp.then(
-        (db) => {
-          // It seems like Safari sometimes likes to just close the connection.
-          // It's supposed to fire this event when that happens. Let's hope it does!
-          db.onclose = () => {
-            dbp = undefined
-          }
-        },
-        () => {},
-      )
-      return dbp
-    }
-
-    return (txMode, callback) =>
-      getDB().then((db) =>
-        callback(db.transaction(storeName, txMode).objectStore(storeName)),
-      )
-  },
-  promisifyRequest<type = undefined>(
-    request: IDBRequest<type> | IDBTransaction,
-  ): Promise<type> {
-    return new Promise<type>((resolve, reject) => {
-      // @ts-ignore - file size hacks
-      request.oncomplete = request.onsuccess = () => resolve(request.result)
-      // @ts-ignore - file size hacks
-      request.onabort = request.onerror = () => reject(request.error)
-    })
-  },
+export declare namespace webAuthn {
+  export type Parameters = AccountsWebAuthnParameters &
+    Omit<AccountsProviderParameters, 'adapter' | 'chains'>
 }
 
 /** @deprecated use `dangerous_secp256k1.Parameters` instead */
@@ -690,167 +147,318 @@ dangerous_secp256k1.type = 'dangerous_secp256k1' as const
  * length of the storage used.
  */
 export function dangerous_secp256k1(
-  options: dangerous_secp256k1.Parameters = {},
+  parameters: dangerous_secp256k1.Parameters = {},
 ) {
-  let account: LocalAccount | undefined
+  const { icon, name, privateKey, rdns, ...providerParameters } = parameters
 
-  type Properties = {
-    // TODO(v3): Make `withCapabilities: true` default behavior
-    connect<withCapabilities extends boolean = false>(parameters: {
-      capabilities?: { type?: 'sign-up' | undefined } | undefined
-      chainId?: number | undefined
-      isReconnecting?: boolean | undefined
-      withCapabilities?: withCapabilities | boolean | undefined
-    }): Promise<{
-      accounts: readonly Address.Address[]
-      chainId: number
-    }>
-  }
-  type Provider = Pick<EIP1193Provider, 'request'>
-  type StorageItem = {
-    'secp256k1.activeAddress': Address.Address
-    'secp256k1.lastActiveAddress': Address.Address
-    [key: `secp256k1.${string}.privateKey`]: Hex.Hex
-  }
-
-  return createConnector<Provider, Properties, StorageItem>((config) => ({
+  return _setup({
+    createAdapter(accounts) {
+      return accounts.dangerous_secp256k1({ icon, name, privateKey, rdns })
+    },
+    icon,
     id: 'secp256k1',
-    name: 'EOA (Secp256k1)',
+    name: name ?? 'EOA (Secp256k1)',
+    providerParameters,
+    rdns,
     type: 'secp256k1',
-    async setup() {
-      const address = await config.storage?.getItem('secp256k1.activeAddress')
-      const privateKey = await config.storage?.getItem(
-        `secp256k1.${address}.privateKey`,
-      )
-      if (privateKey) account = privateKeyToAccount(privateKey)
-      else if (
-        address &&
-        options.account &&
-        Address.isEqual(address, options.account.address)
-      )
-        account = options.account
-    },
-    async connect(parameters = {}) {
-      const address = await (async () => {
-        if (
-          'capabilities' in parameters &&
-          parameters.capabilities?.type === 'sign-up'
-        ) {
-          const privateKey = generatePrivateKey()
-          const account = privateKeyToAccount(privateKey)
-          const address = account.address
-          await config.storage?.setItem(
-            `secp256k1.${address}.privateKey`,
-            privateKey,
-          )
-          await config.storage?.setItem('secp256k1.activeAddress', address)
-          await config.storage?.setItem('secp256k1.lastActiveAddress', address)
-          return address
-        }
-
-        const address = await config.storage?.getItem(
-          'secp256k1.lastActiveAddress',
-        )
-        const privateKey = await config.storage?.getItem(
-          `secp256k1.${address}.privateKey`,
-        )
-
-        if (privateKey) account = privateKeyToAccount(privateKey)
-        else if (options.account) {
-          account = options.account
-          await config.storage?.setItem(
-            'secp256k1.lastActiveAddress',
-            account.address,
-          )
-        }
-
-        if (!account) throw new Error('account not found.')
-
-        await config.storage?.setItem(
-          'secp256k1.activeAddress',
-          account.address,
-        )
-        return account.address
-      })()
-
-      const chainId = parameters.chainId ?? config.chains[0]?.id
-      if (!chainId) throw new ChainNotConfiguredError()
-
-      return {
-        accounts: (parameters.withCapabilities
-          ? [{ address }]
-          : [address]) as never,
-        chainId,
-      }
-    },
-    async disconnect() {
-      await config.storage?.removeItem('secp256k1.activeAddress')
-      account = undefined
-    },
-    async getAccounts() {
-      if (!account) return []
-      return [getAddress(account.address)]
-    },
-    async getChainId() {
-      return config.chains[0]?.id!
-    },
-    async isAuthorized() {
-      try {
-        const accounts = await this.getAccounts()
-        return !!accounts.length
-      } catch (error) {
-        // biome-ignore lint/suspicious/noConsole: notify
-        console.error(
-          'Connector.secp256k1: Failed to check authorization',
-          error,
-        )
-        return false
-      }
-    },
-    async switchChain({ chainId }) {
-      const chain = config.chains.find((chain) => chain.id === chainId)
-      if (!chain) throw new SwitchChainError(new ChainNotConfiguredError())
-      return chain
-    },
-    onAccountsChanged() {},
-    onChainChanged(chain) {
-      const chainId = Number(chain)
-      config.emitter.emit('change', { chainId })
-    },
-    async onDisconnect() {
-      config.emitter.emit('disconnect')
-      account = undefined
-    },
-    async getClient({ chainId } = {}) {
-      const chain =
-        config.chains.find((x) => x.id === chainId) ?? config.chains[0]
-      if (!chain) throw new ChainNotConfiguredError()
-
-      const transports = config.transports
-      if (!transports) throw new ChainNotConfiguredError()
-
-      const transport = transports[chain.id]
-      if (!transport) throw new ChainNotConfiguredError()
-
-      if (!account) throw new Error('account not found.')
-
-      return createClient({
-        account,
-        chain,
-        transport: walletNamespaceCompat(transport, {
-          account,
-        }),
-      })
-    },
-    async getProvider({ chainId } = {}) {
-      const { request } = await this.getClient!({ chainId })
-      return { request }
-    },
-  }))
+  })
 }
 
 export declare namespace dangerous_secp256k1 {
+  export type Parameters = AccountsDangerousSecp256k1Parameters &
+    Omit<AccountsProviderParameters, 'adapter' | 'chains'>
+}
+
+function createAccountsStorage(
+  storage: {
+    getItem(key: string, defaultValue?: null | undefined): unknown
+    setItem(key: string, value: unknown): void | Promise<void>
+    removeItem(key: string): void | Promise<void>
+  },
+  namespace: string,
+): AccountsStorage {
+  const prefix = `accounts.${namespace}`
+  return {
+    async getItem<value>(key: string) {
+      return ((await storage.getItem(`${prefix}.${key}`, null)) ??
+        null) as value | null
+    },
+    async removeItem(key) {
+      await storage.removeItem(`${prefix}.${key}`)
+    },
+    async setItem(key, value) {
+      await storage.setItem(`${prefix}.${key}`, value)
+    },
+  }
+}
+
+function createMemoryAccountsStorage(): AccountsStorage {
+  const map = new Map<string, unknown>()
+  return {
+    async getItem<value>(key: string) {
+      return (map.get(key) ?? null) as value | null
+    },
+    async removeItem(key) {
+      map.delete(key)
+    },
+    async setItem(key, value) {
+      map.set(key, value)
+    },
+  }
+}
+
+function _setup(parameters: setup.Parameters) {
+  type Properties = {
+    connect<withCapabilities extends boolean = false>(
+      parameters?: setup.ConnectParameters<withCapabilities>,
+    ): Promise<setup.ConnectReturnType<withCapabilities>>
+  }
+
+  return createConnector<Provider, Properties>((config) => {
+    const chains = config.chains
+    let providerPromise: Promise<Provider> | undefined
+
+    let accountsChanged: Connector['onAccountsChanged'] | undefined
+    let chainChanged: ((chain: string) => void) | undefined
+    let connect: ((connectInfo: ProviderConnectInfo) => void) | undefined
+    let disconnect: ((error?: Error | undefined) => void) | undefined
+
+    async function getAccountsModule() {
+      return await import('accounts').catch(() => {
+        throw new Error('dependency "accounts" not found')
+      })
+    }
+
+    async function getProvider() {
+      providerPromise ??= (async () => {
+        const accounts = await getAccountsModule()
+        return accounts.Provider.create({
+          ...parameters.providerParameters,
+          adapter: parameters.createAdapter(accounts),
+          chains: config.chains as never,
+          storage:
+            parameters.providerParameters.storage ??
+            (config.storage
+              ? createAccountsStorage(config.storage, parameters.id)
+              : createMemoryAccountsStorage()),
+        }) as unknown as Provider
+      })()
+
+      return await providerPromise
+    }
+
+    return {
+      icon: parameters.icon,
+      id: parameters.id,
+      name: parameters.name,
+      rdns: parameters.rdns,
+      type: parameters.type,
+      async connect(connectParameters = {}) {
+        const { chainId, isReconnecting, withCapabilities } = connectParameters
+        const capabilities =
+          'capabilities' in connectParameters
+            ? connectParameters.capabilities
+            : undefined
+
+        let accounts: readonly InternalAccount[] = []
+        let currentChainId: number | undefined
+
+        if (isReconnecting) {
+          accounts = await this.getAccounts()
+            .then((accounts) =>
+              accounts.map((address) => ({ address, capabilities: {} })),
+            )
+            .catch(() => [])
+        }
+
+        try {
+          if (!accounts.length && !isReconnecting) {
+            const provider = await getProvider()
+            const response = (await provider.request({
+              method: 'wallet_connect',
+              params: [
+                {
+                  ...(chainId ? { chainId } : {}),
+                  ...(capabilities ? { capabilities } : {}),
+                },
+              ] as never,
+            })) as AccountsRpc.wallet_connect.Encoded['returns']
+            accounts = response.accounts
+          }
+
+          currentChainId ??= await this.getChainId()
+          if (!currentChainId) throw new ChainNotConfiguredError()
+
+          const provider = await getProvider()
+          if (connect) {
+            provider.removeListener('connect', connect)
+            connect = undefined
+          }
+          if (!accountsChanged) {
+            accountsChanged = this.onAccountsChanged.bind(this)
+            provider.on('accountsChanged', accountsChanged as never)
+          }
+          if (!chainChanged) {
+            chainChanged = this.onChainChanged.bind(this)
+            provider.on('chainChanged', chainChanged)
+          }
+          if (!disconnect) {
+            disconnect = this.onDisconnect.bind(this)
+            provider.on('disconnect', disconnect)
+          }
+
+          return {
+            accounts: (withCapabilities
+              ? accounts
+              : accounts.map((account) => account.address)) as never,
+            chainId: currentChainId,
+          }
+        } catch (error) {
+          const rpcError = error as RpcError
+          if (rpcError.code === UserRejectedRequestError.code)
+            throw new UserRejectedRequestError(rpcError)
+          throw rpcError
+        }
+      },
+      async disconnect() {
+        const provider = await getProvider()
+
+        if (chainChanged) {
+          provider.removeListener('chainChanged', chainChanged)
+          chainChanged = undefined
+        }
+        if (disconnect) {
+          provider.removeListener('disconnect', disconnect)
+          disconnect = undefined
+        }
+        if (!connect) {
+          connect = this.onConnect?.bind(this)
+          if (connect) provider.on('connect', connect)
+        }
+
+        await provider.request({ method: 'wallet_disconnect' })
+      },
+      async getAccounts() {
+        const provider = await getProvider()
+        return await provider.request({ method: 'eth_accounts' })
+      },
+      async getChainId() {
+        const provider = await getProvider()
+        return Number(await provider.request({ method: 'eth_chainId' }))
+      },
+      async getClient({ chainId } = {}) {
+        const provider = await getProvider()
+        return Object.assign(provider.getClient({ chainId }), {
+          account: provider.getAccount(),
+        }) as never
+      },
+      async getProvider() {
+        return await getProvider()
+      },
+      async isAuthorized() {
+        try {
+          const accounts = await withRetry(() => this.getAccounts())
+          return !!accounts.length
+        } catch {
+          return false
+        }
+      },
+      onAccountsChanged(accounts) {
+        config.emitter.emit('change', {
+          accounts: accounts as readonly Address[],
+        })
+      },
+      onChainChanged(chain) {
+        config.emitter.emit('change', { chainId: Number(chain) })
+      },
+      async onConnect(connectInfo) {
+        const accounts = await this.getAccounts()
+        if (accounts.length === 0) return
+
+        const chainId = Number(connectInfo.chainId)
+        config.emitter.emit('connect', { accounts, chainId })
+
+        const provider = await getProvider()
+        if (connect) {
+          provider.removeListener('connect', connect)
+          connect = undefined
+        }
+        if (!accountsChanged) {
+          accountsChanged = this.onAccountsChanged.bind(this)
+          provider.on('accountsChanged', accountsChanged as never)
+        }
+        if (!chainChanged) {
+          chainChanged = this.onChainChanged.bind(this)
+          provider.on('chainChanged', chainChanged)
+        }
+        if (!disconnect) {
+          disconnect = this.onDisconnect.bind(this)
+          provider.on('disconnect', disconnect)
+        }
+      },
+      async onDisconnect(_error) {
+        const provider = await getProvider()
+
+        config.emitter.emit('disconnect')
+
+        if (chainChanged) {
+          provider.removeListener('chainChanged', chainChanged)
+          chainChanged = undefined
+        }
+        if (disconnect) {
+          provider.removeListener('disconnect', disconnect)
+          disconnect = undefined
+        }
+        if (!connect) {
+          connect = this.onConnect?.bind(this)
+          if (connect) provider.on('connect', connect)
+        }
+      },
+      async setup() {
+        if (!connect) {
+          const provider = await getProvider()
+          connect = this.onConnect?.bind(this)
+          if (connect) provider.on('connect', connect)
+        }
+      },
+      async switchChain({ chainId }) {
+        const chain = chains.find((chain) => chain.id === chainId)
+        if (!chain) throw new SwitchChainError(new ChainNotConfiguredError())
+
+        const provider = await getProvider()
+        await provider.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: numberToHex(chainId) }],
+        })
+
+        return chain
+      },
+    }
+  })
+}
+
+export declare namespace setup {
   export type Parameters = {
-    account?: LocalAccount | undefined
+    createAdapter: (accounts: AccountsModule) => AccountsAdapter
+    icon?: string | undefined
+    id: string
+    name: string
+    providerParameters: Omit<AccountsProviderParameters, 'adapter' | 'chains'>
+    rdns?: string | readonly string[] | undefined
+    type: string
+  }
+
+  export type ConnectParameters<withCapabilities extends boolean = false> = {
+    capabilities?: CapabilitiesRequest | undefined
+    chainId?: number | undefined
+    isReconnecting?: boolean | undefined
+    withCapabilities?: withCapabilities | boolean | undefined
+  }
+
+  export type ConnectReturnType<withCapabilities extends boolean = false> = {
+    accounts: withCapabilities extends true
+      ? readonly InternalAccount[]
+      : readonly Address[]
+    chainId: number
   }
 }

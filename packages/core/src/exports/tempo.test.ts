@@ -6,7 +6,6 @@ test('exports', () => {
   expect(Object.keys(tempo)).toMatchInlineSnapshot(`
     [
       "Actions",
-      "Hooks",
       "dangerous_secp256k1",
       "tempoWallet",
       "webAuthn",
