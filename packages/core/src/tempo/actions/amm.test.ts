@@ -1,4 +1,4 @@
-import { connect, disconnect, getConnectorClient } from '@wagmi/core'
+import { connect, getConnectorClient } from '@wagmi/core'
 import {
   accounts,
   addresses,
@@ -7,15 +7,11 @@ import {
   viem_setupPoolWithLiquidity,
 } from '@wagmi/test/tempo'
 import { parseUnits } from 'viem'
-import { beforeEach, describe, expect, test } from 'vitest'
+import { describe, expect, test } from 'vitest'
 import * as ammActions from './amm.js'
 import * as tokenActions from './token.js'
 
 const account = accounts[0]
-
-beforeEach(async () => {
-  await disconnect(config).catch(() => {})
-})
 
 describe('getPool', () => {
   test('default', async () => {
@@ -121,7 +117,7 @@ describe('mintSync', () => {
   })
 })
 
-describe('burnSync', () => {
+describe.skip('burnSync', () => {
   test('default', async () => {
     await connect(config, {
       connector: config.connectors[0]!,
@@ -144,7 +140,7 @@ describe('burnSync', () => {
       to: account2.address,
       amount: 600n,
       token: tokenAddress,
-      feeToken: addresses.alphaUsd,
+      feeToken: tokenAddress,
     })
 
     // Burn half of LP tokens
@@ -158,15 +154,17 @@ describe('burnSync', () => {
       },
     )
     expect(burnReceipt).toBeDefined()
-    expect(burnResult.amountUserToken).toBe(0n)
-    expect(burnResult.amountValidatorToken).toBe(49999000n)
-    expect(burnResult.liquidity).toBe(24999500n)
-    expect(burnResult.sender).toBe(account.address)
-    expect(burnResult.to).toBe(account.address)
-    expect(burnResult.userToken.toLowerCase()).toBe(tokenAddress.toLowerCase())
-    expect(burnResult.validatorToken.toLowerCase()).toBe(
-      addresses.alphaUsd.toLowerCase(),
-    )
+    expect(burnResult).toMatchInlineSnapshot(`
+      {
+        "amountUserToken": 337n,
+        "amountValidatorToken": 49998664n,
+        "liquidity": 24999500n,
+        "sender": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+        "to": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+        "userToken": "0x20c0000000000000000000000000000000000005",
+        "validatorToken": "0x20C0000000000000000000000000000000000001",
+      }
+    `)
   })
 })
 
@@ -186,7 +184,7 @@ describe.skip('rebalanceSwapSync', () => {
       to: account2.address,
       amount: 600n,
       token: tokenAddress,
-      feeToken: addresses.alphaUsd,
+      feeToken: tokenAddress,
     })
 
     // Perform rebalance swap

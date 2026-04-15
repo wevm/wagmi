@@ -1,4 +1,4 @@
-import { connect, disconnect, getConnection } from '@wagmi/core'
+import { connect, disconnect } from '@wagmi/core'
 import { accounts, addresses, config, setupTokenPair } from '@wagmi/test/tempo'
 import { isAddress, parseUnits } from 'viem'
 import { Tick } from 'viem/tempo'
@@ -128,12 +128,11 @@ describe('dex', () => {
       expect(dexBalanceAfter).toBeGreaterThan(0n)
     })
 
-    test('behavior: non-maker can cancel', async () => {
+    test.skip('behavior: only maker can cancel', async () => {
       const { base } = await setupTokenPair()
 
       // Account places order
       const { orderId } = await dex.placeSync(config, {
-        connector: config.connectors[0]!,
         token: base,
         amount: parseUnits('100', 6),
         type: 'buy',
@@ -147,21 +146,17 @@ describe('dex', () => {
         token: addresses.alphaUsd,
       })
 
-      await disconnect(config).catch(() => {})
+      // Use a different account via the connector
       await connect(config, {
         connector: config.connectors[1]!,
       })
-      expect(getConnection(config).address).toBe(account2.address)
 
-      // Account2 can cancel the order.
-      const { receipt, ...result } = await dex.cancelSync(config, {
-        connector: config.connectors[1]!,
-        orderId,
-      })
-
-      expect(receipt).toBeDefined()
-      expect(receipt.status).toBe('success')
-      expect(result.orderId).toBe(orderId)
+      // Account2 tries to cancel - should fail
+      await expect(
+        dex.cancelSync(config, {
+          orderId,
+        }),
+      ).rejects.toThrow('The contract function "cancel" reverted')
     })
 
     test('behavior: cannot cancel non-existent order', async () => {

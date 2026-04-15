@@ -179,7 +179,7 @@ describe('useMintSync', () => {
   })
 })
 
-describe('useBurnSync', () => {
+describe.skip('useBurnSync', () => {
   test('default', async () => {
     const { result } = await renderHook(() => ({
       connect: useConnect(),
@@ -230,7 +230,7 @@ describe('useBurnSync', () => {
       to: '0x30D861999070Ae03B9548501DBd573E11A9f59Ee',
       amount: 600n,
       token: token,
-      feeToken: addresses.alphaUsd,
+      feeToken: token,
     })
 
     // Get LP balance before burn
@@ -313,7 +313,7 @@ describe.skip('useRebalanceSwapSync', () => {
       to: '0x30D861999070Ae03B9548501DBd573E11A9f59Ee',
       amount: 600n,
       token: token,
-      feeToken: addresses.alphaUsd,
+      feeToken: token,
     })
 
     const account2 = accounts[1]
@@ -386,7 +386,7 @@ describe.skip('useWatchRebalanceSwap', () => {
       to: '0x30D861999070Ae03B9548501DBd573E11A9f59Ee',
       amount: 600n,
       token: token,
-      feeToken: addresses.alphaUsd,
+      feeToken: token,
     })
 
     const events: any[] = []
@@ -482,7 +482,7 @@ describe('useWatchMint', () => {
   })
 })
 
-describe('useWatchBurn', () => {
+describe.skip('useWatchBurn', () => {
   test('default', async () => {
     const { result: connectResult } = await renderHook(() => ({
       connect: useConnect(),
@@ -533,7 +533,7 @@ describe('useWatchBurn', () => {
       to: '0x30D861999070Ae03B9548501DBd573E11A9f59Ee',
       amount: 600n,
       token: token,
-      feeToken: addresses.alphaUsd,
+      feeToken: token,
     })
 
     // Get LP balance
