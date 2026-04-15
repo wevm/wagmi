@@ -1,6 +1,7 @@
+import { disconnect } from '@wagmi/core'
 import { accounts, addresses, config, renderHook } from '@wagmi/test/tempo'
 import { type Address, parseUnits } from 'viem'
-import { describe, expect, test, vi } from 'vitest'
+import { beforeEach, describe, expect, test, vi } from 'vitest'
 
 import { useConnect } from '../../hooks/useConnect.js'
 import * as hooks from './token.js'
@@ -8,7 +9,11 @@ import * as hooks from './token.js'
 const account = accounts[0]
 const account2 = accounts[1]
 
-describe.skip('flaky: merge unblock', () => {
+beforeEach(async () => {
+  await disconnect(config).catch(() => {})
+})
+
+describe('token', () => {
   describe('useGetAllowance', () => {
     test('default', async () => {
       const { result } = await renderHook(() =>

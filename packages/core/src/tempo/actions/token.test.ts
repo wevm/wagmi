@@ -1,13 +1,17 @@
-import { connect } from '@wagmi/core'
+import { connect, disconnect } from '@wagmi/core'
 import { accounts, addresses, config, queryClient } from '@wagmi/test/tempo'
 import { parseUnits } from 'viem'
-import { describe, expect, test, vi } from 'vitest'
+import { beforeEach, describe, expect, test, vi } from 'vitest'
 import * as token from './token.js'
 
 const account = accounts[0]
 const account2 = accounts[1]
 
-describe.skip('flaky: merge unblock', () => {
+beforeEach(async () => {
+  await disconnect(config).catch(() => {})
+})
+
+describe('token', () => {
   describe('getAllowance', () => {
     test('default', async () => {
       const allowance = await token.getAllowance(config, {
