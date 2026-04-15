@@ -9,7 +9,7 @@ import { sendCalls } from './sendCalls.js'
 
 const connector = config.connectors[0]!
 
-test.skip('default', async () => {
+test('default', async () => {
   await connect(config, { connector })
   const { id } = await sendCalls(config, {
     calls: [

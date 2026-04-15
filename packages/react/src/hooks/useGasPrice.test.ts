@@ -52,7 +52,7 @@ test('default', async () => {
   `)
 })
 
-test.skip('parameters: chainId', async () => {
+test('parameters: chainId', async () => {
   await testClient.mainnet2.restart()
 
   await testClient.mainnet2.setNextBlockBaseFeePerGas({

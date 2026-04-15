@@ -40,8 +40,7 @@ test('zero data', async () => {
   `)
 })
 
-// TODO: Re-enable
-test.skip('parameters: blockNumber', async () => {
+test('parameters: blockNumber', async () => {
   await expect(
     call(config, {
       account,
