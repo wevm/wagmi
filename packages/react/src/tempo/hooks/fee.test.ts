@@ -1,3 +1,4 @@
+import { disconnect } from '@wagmi/core'
 import { accounts, config, renderHook } from '@wagmi/test/tempo'
 import type { Address } from 'viem'
 import { describe, expect, test, vi } from 'vitest'
@@ -5,7 +6,7 @@ import { describe, expect, test, vi } from 'vitest'
 import { useConnect } from '../../hooks/useConnect.js'
 import { useSetUserToken, useSetUserTokenSync, useUserToken } from './fee.js'
 
-describe.skip('flaky: merge unblock', () => {
+describe('fee', () => {
   describe('useUserToken', () => {
     test('default', async () => {
       const { result, rerender } = await renderHook(
@@ -100,6 +101,8 @@ describe.skip('flaky: merge unblock', () => {
 
   describe('useSetUserToken', () => {
     test('default', async () => {
+      await disconnect(config).catch(() => {})
+
       const { result } = await renderHook(() => ({
         connect: useConnect(),
         setUserToken: useSetUserToken(),
@@ -122,6 +125,8 @@ describe.skip('flaky: merge unblock', () => {
 
   describe('useSetUserTokenSync', () => {
     test('default', async () => {
+      await disconnect(config).catch(() => {})
+
       const { result } = await renderHook(() => ({
         connect: useConnect(),
         setUserToken: useSetUserTokenSync(),

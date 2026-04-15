@@ -80,7 +80,7 @@ function createTempoWalletDialog(
   })) as any
 }
 
-describe.skip('flaky: merge unblock', () => {
+describe('connectors', () => {
   describe('tempoWallet', () => {
     test('connect + get accounts + disconnect', async () => {
       const config = createConfig({
