@@ -17,8 +17,6 @@ It enshrines features like [token management](https://docs.tempo.xyz/protocol/ti
 
 Wagmi React and Core both have first-class support for Tempo with [Hooks](/tempo/hooks/) and [Actions](/tempo/actions/). To get started, first follow the [Getting Started guide for React](/react/getting-started) or [Core](/core/getting-started) and make sure your [Viem](https://viem.sh) version is `{{viemVersion}}`.
 
-> Zone actions and hooks are supported in `viem >=2.48.0`.
-
 ::: code-group
 ```bash-vue [pnpm]
 pnpm add viem@{{viemVersion}} accounts@{{accountsVersion}}

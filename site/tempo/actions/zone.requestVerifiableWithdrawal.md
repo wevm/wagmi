@@ -4,6 +4,11 @@ Requests a verifiable withdrawal from a zone to the parent Tempo chain.
 
 This variant includes a `revealTo` public key so the sequencer can encrypt the withdrawal details for the recipient.
 
+
+::: info Requires viem >=2.48.0
+Zone actions and hooks require `viem >=2.48.0`.
+:::
+
 ## Usage
 
 ::: code-group

@@ -4,6 +4,11 @@ Signs and stores a zone authorization token for the configured account and zone 
 
 The token is persisted to the provided storage so future zone RPC requests made through `viem/tempo/zones` transports can send the `X-Authorization-Token` header automatically.
 
+
+::: info Requires viem >=2.48.0
+Zone actions and hooks require `viem >=2.48.0`.
+:::
+
 ## Usage
 
 ::: code-group
