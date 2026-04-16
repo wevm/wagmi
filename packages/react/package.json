@@ -90,7 +90,7 @@
     "@tanstack/react-query": ">=5.0.0",
     "react": ">=18",
     "typescript": ">=5.7.3",
-    "viem": ">=2.48.0"
+    "viem": "2.x"
   },
   "peerDependenciesMeta": {
     "typescript": {
