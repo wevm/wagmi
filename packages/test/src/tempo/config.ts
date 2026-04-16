@@ -17,6 +17,7 @@ import {
 } from 'viem'
 import { sendTransactionSync } from 'viem/actions'
 import { Actions, Addresses, Tick, Account as tempo_Account } from 'viem/tempo'
+import { http as zoneHttp } from 'viem/tempo/zones'
 import { vi } from 'vitest'
 import {
   type RenderHookOptions,
@@ -24,6 +25,15 @@ import {
   renderHook as vbr_renderHook,
 } from 'vitest-browser-react'
 import { createConfig, WagmiProvider } from 'wagmi'
+import {
+  zoneId,
+  zoneLocal,
+  zonePortalAddress,
+  zonePortalEncryptionKey,
+  zonePortalEncryptionKeyCount,
+  zoneRpcUrl,
+  zoneStorage,
+} from './zone.js'
 
 export const port = Number(import.meta.env.RPC_PORT ?? 4000)
 
@@ -53,11 +63,20 @@ export const accounts = privateKeys.map((privateKey) =>
 
 export const tempoLocal = defineChain({
   ...chains.tempoLocalnet,
+  contracts: {
+    zonePortal: {
+      [zoneId]: {
+        address: zonePortalAddress,
+        encryptionKeyCount: zonePortalEncryptionKeyCount,
+        sequencerEncryptionKey: zonePortalEncryptionKey,
+      },
+    },
+  },
   rpcUrls: { default: { http: [rpcUrl] } },
 }).extend({ feeToken: 1n })
 
 export const config = createConfig({
-  chains: [tempoLocal],
+  chains: [tempoLocal, zoneLocal],
   connectors: [
     dangerous_secp256k1({ privateKey: privateKeys[0] }),
     dangerous_secp256k1({ privateKey: privateKeys[1] }),
@@ -66,6 +85,7 @@ export const config = createConfig({
   storage: null,
   transports: {
     [tempoLocal.id]: http(),
+    [zoneLocal.id]: zoneHttp(zoneRpcUrl, { storage: zoneStorage }),
   },
 })
 
