@@ -4,7 +4,6 @@ Deposits tokens from the parent Tempo chain into a zone.
 
 Use the `*Sync` variant when you want the receipt before continuing. The non-sync `zone.deposit` action returns the transaction hash immediately.
 
-
 ::: info Requires viem >=2.48.0
 Zone actions and hooks require `viem >=2.48.0`.
 :::

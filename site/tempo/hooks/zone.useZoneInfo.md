@@ -4,7 +4,6 @@ Hook for getting Tempo zone metadata.
 
 This hook expects a zone authorization token to already exist in storage. Use [`zone.useSignAuthorizationToken`](/tempo/hooks/zone.useSignAuthorizationToken) first.
 
-
 ::: info Requires viem >=2.48.0
 Zone actions and hooks require `viem >=2.48.0`.
 :::

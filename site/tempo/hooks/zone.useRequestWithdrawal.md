@@ -2,7 +2,6 @@
 
 Hook for requesting a withdrawal from a zone to the parent Tempo chain.
 
-
 ::: info Requires viem >=2.48.0
 Zone actions and hooks require `viem >=2.48.0`.
 :::

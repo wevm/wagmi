@@ -4,7 +4,6 @@ Requests a withdrawal from a zone to the parent Tempo chain.
 
 Use the `*Sync` variant when you want the receipt before continuing. The non-sync `zone.requestWithdrawal` action returns the transaction hash immediately.
 
-
 ::: info Requires viem >=2.48.0
 Zone actions and hooks require `viem >=2.48.0`.
 :::
