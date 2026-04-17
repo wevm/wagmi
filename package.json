@@ -11,6 +11,7 @@
     "check": "biome check --write",
     "check:repo": "sherif -i viem",
     "check:types": "pnpm run --r --parallel check:types && tsgo --noEmit",
+    "check:types:typescript": "pnpm -r --parallel --filter './packages/*' --filter './packages/register-tests/*' exec tsc --noEmit && tsc --noEmit",
     "check:unused": "pnpm clean && knip",
     "clean": "pnpm run --r --parallel clean && rm -rf packages/**/*.json.tmp",
     "deps": "pnpx taze -r",

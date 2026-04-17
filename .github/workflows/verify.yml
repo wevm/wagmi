@@ -99,7 +99,7 @@ jobs:
         run: pnpm preconstruct
 
       - name: Check types
-        run: pnpm check:types
+        run: pnpm check:types:typescript
 
       - name: Bench types
         run: pnpm bench:types

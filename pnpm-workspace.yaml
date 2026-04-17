@@ -126,6 +126,9 @@ overrides:
   yaml@>=2.0.0 <2.8.3: '>=2.8.3'
   ws@>=8.0.0 <8.17.1: 8.17.1
 
+patchedDependencies:
+  vitepress-plugin-llms@1.12.1: patches/vitepress-plugin-llms@1.12.1.patch
+
 peerDependencyRules:
   ignoreMissing:
     - '@algolia/client-search'
