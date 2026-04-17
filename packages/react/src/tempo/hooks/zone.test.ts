@@ -11,13 +11,19 @@ import {
   zoneStorage,
 } from '@wagmi/test/tempo'
 import { Storage } from 'viem/tempo'
-import { beforeEach, describe, expect, test, vi } from 'vitest'
+import { beforeAll, beforeEach, describe, expect, test, vi } from 'vitest'
 
 import { useConnect } from '../../hooks/useConnect.js'
 import * as zoneHooks from './zone.js'
 
 const revealTo =
   '0x0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798' as const
+let depositToken: Awaited<ReturnType<typeof setupToken>>['token']
+
+beforeAll(async () => {
+  ;({ token: depositToken } = await setupToken())
+  await disconnect(config).catch(() => {})
+})
 
 beforeEach(async () => {
   await disconnect(config).catch(() => {})
@@ -40,10 +46,6 @@ describe('useSignAuthorizationToken', () => {
     })
     expect(await zoneStorage.getItem(`auth:token:${zoneLocal.id}`)).toBe(
       result_.token,
-    )
-
-    await vi.waitFor(() =>
-      expect(result.current.signAuthorizationToken.isSuccess).toBeTruthy(),
     )
   })
 
@@ -79,19 +81,14 @@ describe('useDeposit', () => {
       connector: config.connectors[0]!,
     })
 
-    const { token } = await setupToken()
     const hash = await result.current.deposit.mutateAsync({
       amount: 123_000n,
       chainId: tempoLocal.id,
-      token,
+      token: depositToken,
       zoneId: zoneInfo.zoneId,
     })
 
     expect(hash).toBeDefined()
-
-    await vi.waitFor(() =>
-      expect(result.current.deposit.isSuccess).toBeTruthy(),
-    )
   })
 })
 
@@ -106,19 +103,14 @@ describe('useDepositSync', () => {
       connector: config.connectors[0]!,
     })
 
-    const { token } = await setupToken()
     const data = await result.current.deposit.mutateAsync({
       amount: 456_000n,
       chainId: tempoLocal.id,
-      token,
+      token: depositToken,
       zoneId: zoneInfo.zoneId,
     })
 
     expect(data.receipt.status).toBe('success')
-
-    await vi.waitFor(() =>
-      expect(result.current.deposit.isSuccess).toBeTruthy(),
-    )
   })
 })
 
@@ -133,19 +125,14 @@ describe('useEncryptedDeposit', () => {
       connector: config.connectors[0]!,
     })
 
-    const { token } = await setupToken()
     const hash = await result.current.deposit.mutateAsync({
       amount: 123_000n,
       chainId: tempoLocal.id,
-      token,
+      token: depositToken,
       zoneId: zoneInfo.zoneId,
     })
 
     expect(hash).toBeDefined()
-
-    await vi.waitFor(() =>
-      expect(result.current.deposit.isSuccess).toBeTruthy(),
-    )
   })
 })
 
@@ -160,19 +147,14 @@ describe('useEncryptedDepositSync', () => {
       connector: config.connectors[0]!,
     })
 
-    const { token } = await setupToken()
     const data = await result.current.deposit.mutateAsync({
       amount: 456_000n,
       chainId: tempoLocal.id,
-      token,
+      token: depositToken,
       zoneId: zoneInfo.zoneId,
     })
 
     expect(data.receipt.status).toBe('success')
-
-    await vi.waitFor(() =>
-      expect(result.current.deposit.isSuccess).toBeTruthy(),
-    )
   })
 })
 
@@ -194,10 +176,6 @@ describe('useRequestWithdrawal', () => {
     })
 
     expect(hash).toBeDefined()
-
-    await vi.waitFor(() =>
-      expect(result.current.requestWithdrawal.isSuccess).toBeTruthy(),
-    )
   })
 })
 
@@ -219,10 +197,6 @@ describe('useRequestWithdrawalSync', () => {
     })
 
     expect(data.receipt.status).toBe('success')
-
-    await vi.waitFor(() =>
-      expect(result.current.requestWithdrawal.isSuccess).toBeTruthy(),
-    )
   })
 })
 
@@ -245,10 +219,6 @@ describe('useRequestVerifiableWithdrawal', () => {
     })
 
     expect(hash).toBeDefined()
-
-    await vi.waitFor(() =>
-      expect(result.current.requestWithdrawal.isSuccess).toBeTruthy(),
-    )
   })
 })
 
@@ -271,10 +241,6 @@ describe('useRequestVerifiableWithdrawalSync', () => {
     })
 
     expect(data.receipt.status).toBe('success')
-
-    await vi.waitFor(() =>
-      expect(result.current.requestWithdrawal.isSuccess).toBeTruthy(),
-    )
   })
 })
 

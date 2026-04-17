@@ -81,7 +81,7 @@ export const config = createConfig({
     dangerous_secp256k1({ privateKey: privateKeys[0] }),
     dangerous_secp256k1({ privateKey: privateKeys[1] }),
   ],
-  pollingInterval: 100,
+  pollingInterval: 25,
   storage: null,
   transports: {
     [tempoLocal.id]: http(),
@@ -203,16 +203,19 @@ export async function viem_setupToken(
     ...parameters,
   })
 
-  await Actions.token.grantRolesSync(client, {
-    roles: ['issuer'],
-    to: client.account.address,
-    token: token.token,
-  })
-
-  await Actions.token.mintSync(client, {
-    amount: parseUnits('10000', 6),
-    to: client.account.address,
-    token: token.token,
+  await sendTransactionSync(client, {
+    calls: [
+      Actions.token.grantRoles.call({
+        role: 'issuer',
+        to: client.account.address,
+        token: token.token,
+      }),
+      Actions.token.mint.call({
+        amount: parseUnits('10000', 6),
+        to: client.account.address,
+        token: token.token,
+      }),
+    ],
   })
 
   return token

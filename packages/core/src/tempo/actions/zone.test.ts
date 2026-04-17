@@ -12,12 +12,18 @@ import {
   zoneStorage,
 } from '@wagmi/test/tempo'
 import { Addresses, Storage } from 'viem/tempo'
-import { beforeEach, describe, expect, test } from 'vitest'
+import { beforeAll, beforeEach, describe, expect, test } from 'vitest'
 import * as tokenActions from './token.js'
 import * as zoneActions from './zone.js'
 
 const revealTo =
   '0x0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798' as const
+let depositToken: Awaited<ReturnType<typeof setupToken>>['token']
+
+beforeAll(async () => {
+  ;({ token: depositToken } = await setupToken())
+  await disconnect(config).catch(() => {})
+})
 
 beforeEach(async () => {
   await disconnect(config).catch(() => {})
@@ -65,11 +71,10 @@ describe('deposit', () => {
       connector: config.connectors[0]!,
     })
 
-    const { token } = await setupToken()
     const hash = await zoneActions.deposit(config, {
       amount: 123_000n,
       chainId: tempoLocal.id,
-      token,
+      token: depositToken,
       zoneId: zoneInfo.zoneId,
     })
 
@@ -83,12 +88,11 @@ describe('depositSync', () => {
       connector: config.connectors[0]!,
     })
 
-    const { token } = await setupToken()
     const amount = 456_000n
     const result = await zoneActions.depositSync(config, {
       amount,
       chainId: tempoLocal.id,
-      token,
+      token: depositToken,
       zoneId: zoneInfo.zoneId,
     })
 
@@ -98,7 +102,7 @@ describe('depositSync', () => {
         account: accounts[0].address,
         chainId: tempoLocal.id,
         spender: zonePortalAddress,
-        token,
+        token: depositToken,
       }),
     ).toBe(amount)
   })
@@ -110,11 +114,10 @@ describe('encryptedDeposit', () => {
       connector: config.connectors[0]!,
     })
 
-    const { token } = await setupToken()
     const hash = await zoneActions.encryptedDeposit(config, {
       amount: 123_000n,
       chainId: tempoLocal.id,
-      token,
+      token: depositToken,
       zoneId: zoneInfo.zoneId,
     })
 
@@ -128,12 +131,11 @@ describe('encryptedDepositSync', () => {
       connector: config.connectors[0]!,
     })
 
-    const { token } = await setupToken()
     const amount = 456_000n
     const result = await zoneActions.encryptedDepositSync(config, {
       amount,
       chainId: tempoLocal.id,
-      token,
+      token: depositToken,
       zoneId: zoneInfo.zoneId,
     })
 
@@ -143,7 +145,7 @@ describe('encryptedDepositSync', () => {
         account: accounts[0].address,
         chainId: tempoLocal.id,
         spender: zonePortalAddress,
-        token,
+        token: depositToken,
       }),
     ).toBe(amount)
   })

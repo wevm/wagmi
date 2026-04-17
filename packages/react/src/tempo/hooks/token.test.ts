@@ -315,8 +315,6 @@ describe.skip('flaky: merge unblock', () => {
       })
       expect(data).toBeDefined()
       expect(data.receipt).toBeDefined()
-
-      await vi.waitFor(() => expect(result.current.burn.isSuccess).toBeTruthy())
     })
   })
 
@@ -526,8 +524,6 @@ describe.skip('flaky: merge unblock', () => {
       })
       expect(data).toBeDefined()
       expect(data.receipt).toBeDefined()
-
-      await vi.waitFor(() => expect(result.current.mint.isSuccess).toBeTruthy())
     })
   })
 

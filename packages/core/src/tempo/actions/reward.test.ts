@@ -1,26 +1,47 @@
-import { getConnection } from '@wagmi/core'
-import { config, queryClient, setupToken } from '@wagmi/test/tempo'
+import { connect, disconnect, getConnection } from '@wagmi/core'
+import { accounts, config, queryClient, setupToken } from '@wagmi/test/tempo'
 import { parseUnits } from 'viem'
-import { describe, expect, test, vi } from 'vitest'
+import { beforeAll, beforeEach, describe, expect, test, vi } from 'vitest'
 import * as actions from './reward.js'
 import * as tokenActions from './token.js'
+
+let claimToken: Awaited<ReturnType<typeof setupToken>>['token']
+let readToken: Awaited<ReturnType<typeof setupToken>>['token']
+let setRecipientToken: Awaited<ReturnType<typeof setupToken>>['token']
+let distributedWatchToken: Awaited<ReturnType<typeof setupToken>>['token']
+let recipientWatchToken: Awaited<ReturnType<typeof setupToken>>['token']
+
+beforeAll(async () => {
+  ;({ token: claimToken } = await setupToken())
+  ;({ token: readToken } = await setupToken())
+  ;({ token: setRecipientToken } = await setupToken())
+  ;({ token: distributedWatchToken } = await setupToken())
+  ;({ token: recipientWatchToken } = await setupToken())
+  await disconnect(config).catch(() => {})
+})
+
+beforeEach(async () => {
+  await disconnect(config).catch(() => {})
+})
 
 describe('reward', () => {
   describe('claimSync', () => {
     test('default', async () => {
-      const { token } = await setupToken()
+      await connect(config, {
+        connector: config.connectors[0]!,
+      })
 
       const connection = getConnection(config)
 
       const balanceBefore = await tokenActions.getBalance(config, {
         account: connection.address!,
-        token,
+        token: claimToken,
       })
 
       // Opt in to rewards
       await actions.setRecipientSync(config, {
         recipient: connection.address!,
-        token,
+        token: claimToken,
       })
 
       // Mint reward tokens
@@ -28,32 +49,32 @@ describe('reward', () => {
       await tokenActions.mintSync(config, {
         amount: rewardAmount,
         to: connection.address!,
-        token,
+        token: claimToken,
       })
 
       // Start immediate reward
       await actions.distributeSync(config, {
         amount: rewardAmount,
-        token,
+        token: claimToken,
       })
 
       // Trigger reward accrual by transferring
       await tokenActions.transferSync(config, {
         amount: 1n,
         to: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
-        token,
+        token: claimToken,
       })
 
       // Claim rewards
       const { receipt } = await actions.claimSync(config, {
-        token,
+        token: claimToken,
       })
 
       expect(receipt).toBeDefined()
 
       const balanceAfter = await tokenActions.getBalance(config, {
         account: connection.address!,
-        token,
+        token: claimToken,
       })
 
       // Balance should have increased due to claimed rewards
@@ -65,10 +86,8 @@ describe('reward', () => {
 
   describe('getGlobalRewardPerToken', () => {
     test('default', async () => {
-      const { token } = await setupToken()
-
       const rate = await actions.getGlobalRewardPerToken(config, {
-        token,
+        token: readToken,
       })
 
       expect(rate).toBe(0n)
@@ -76,10 +95,8 @@ describe('reward', () => {
 
     describe('queryOptions', () => {
       test('default', async () => {
-        const { token } = await setupToken()
-
         const options = actions.getGlobalRewardPerToken.queryOptions(config, {
-          token,
+          token: readToken,
         })
 
         const rate = await queryClient.fetchQuery(options)
@@ -91,13 +108,9 @@ describe('reward', () => {
 
   describe('getUserRewardInfo', () => {
     test('default', async () => {
-      const { token } = await setupToken()
-
-      const connection = getConnection(config)
-
       const info = await actions.getUserRewardInfo(config, {
-        token,
-        account: connection.address!,
+        token: readToken,
+        account: accounts[0].address,
       })
 
       expect(info.rewardRecipient).toBeDefined()
@@ -107,13 +120,9 @@ describe('reward', () => {
 
     describe('queryOptions', () => {
       test('default', async () => {
-        const { token } = await setupToken()
-
-        const connection = getConnection(config)
-
         const options = actions.getUserRewardInfo.queryOptions(config, {
-          token,
-          account: connection.address!,
+          token: readToken,
+          account: accounts[0].address,
         })
 
         const info = await queryClient.fetchQuery(options)
@@ -127,7 +136,9 @@ describe('reward', () => {
 
   describe('setRecipientSync', () => {
     test('default', async () => {
-      const { token } = await setupToken()
+      await connect(config, {
+        connector: config.connectors[0]!,
+      })
 
       const connection = getConnection(config)
 
@@ -136,7 +147,7 @@ describe('reward', () => {
         config,
         {
           recipient: connection.address!,
-          token,
+          token: setRecipientToken,
         },
       )
 
@@ -148,26 +159,28 @@ describe('reward', () => {
 
   describe('watchRewardDistributed', () => {
     test('default', async () => {
-      const { token } = await setupToken()
+      await connect(config, {
+        connector: config.connectors[0]!,
+      })
 
       const connection = getConnection(config)
 
       // Setup rewards
       await actions.setRecipientSync(config, {
         recipient: connection.address!,
-        token,
+        token: distributedWatchToken,
       })
 
       const rewardAmount = parseUnits('100', 6)
       await tokenActions.mintSync(config, {
         amount: rewardAmount,
         to: connection.address!,
-        token,
+        token: distributedWatchToken,
       })
 
       const events: any[] = []
       const unwatch = actions.watchRewardDistributed(config, {
-        token,
+        token: distributedWatchToken,
         onRewardDistributed: (args) => {
           events.push(args)
         },
@@ -175,7 +188,7 @@ describe('reward', () => {
 
       await actions.distributeSync(config, {
         amount: rewardAmount,
-        token,
+        token: distributedWatchToken,
       })
 
       await vi.waitFor(() => {
@@ -190,13 +203,15 @@ describe('reward', () => {
 
   describe('watchRewardRecipientSet', () => {
     test('default', async () => {
-      const { token } = await setupToken()
+      await connect(config, {
+        connector: config.connectors[0]!,
+      })
 
       const account = getConnection(config)
 
       const events: any[] = []
       const unwatch = actions.watchRewardRecipientSet(config, {
-        token,
+        token: recipientWatchToken,
         onRewardRecipientSet: (args) => {
           events.push(args)
         },
@@ -204,7 +219,7 @@ describe('reward', () => {
 
       await actions.setRecipientSync(config, {
         recipient: account.address!,
-        token,
+        token: recipientWatchToken,
       })
 
       await vi.waitFor(() => {
