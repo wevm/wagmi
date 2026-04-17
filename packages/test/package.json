@@ -2,7 +2,7 @@
   "name": "@wagmi/test",
   "private": true,
   "scripts": {
-    "check:types": "tsc --noEmit",
+    "check:types": "tsgo --noEmit",
     "clean": "rm -rf dist tsconfig.tsbuildinfo"
   },
   "files": [

@@ -191,7 +191,7 @@ export async function setupOrders() {
 }
 
 export async function viem_setupToken(
-  client: Client<Transport, Chain, Account>,
+  client: Client<Transport, typeof tempoLocal, Account>,
   parameters: Partial<
     Awaited<ReturnType<typeof Actions.token.createSync>>
   > = {},
