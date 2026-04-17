@@ -3,13 +3,26 @@ import { parseUnits } from 'viem'
 import { Actions, Addresses } from 'viem/tempo'
 import { beforeAll, beforeEach, vi } from 'vitest'
 import { accounts, config } from './config.js'
+import { zoneLocal, zoneStorage } from './zone.js'
 
 // @ts-expect-error
 BigInt.prototype.toJSON = function () {
   return this.toString()
 }
 
+async function clearZoneStorage() {
+  await Promise.all([
+    zoneStorage.removeItem(`auth:token:${zoneLocal.id}`),
+    ...accounts.map((account) =>
+      zoneStorage.removeItem(
+        `auth:${account.address.toLowerCase()}:${zoneLocal.id}`,
+      ),
+    ),
+  ])
+}
+
 beforeAll(async () => {
+  await clearZoneStorage()
   await connect(config, {
     connector: config.connectors[0]!,
   })
@@ -40,6 +53,7 @@ beforeAll(async () => {
 
 beforeEach(async () => {
   await disconnect(config).catch(() => {})
+  await clearZoneStorage()
   // Make dates stable across runs (set here so it doesn't affect beforeAll setup)
   vi.spyOn(Date, 'now').mockReturnValue(
     new Date(Date.UTC(2023, 1, 1)).valueOf(),
