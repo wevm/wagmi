@@ -15,7 +15,7 @@ import { safe } from './safe.js'
 
 test('setup', () => {
   const connectorFn = safe({
-    allowedDomains: [/gnosis-safe.io$/, /app.safe.global$/],
+    allowedDomains: [/^gnosis-safe\.io$/, /^app\.safe\.global$/],
     debug: false,
   })
   const connector = config._internal.connectors.setup(connectorFn)

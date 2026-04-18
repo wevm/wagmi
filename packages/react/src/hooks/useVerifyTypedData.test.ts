@@ -5,7 +5,9 @@ import { expect, test, vi } from 'vitest'
 
 import { useVerifyTypedData } from './useVerifyTypedData.js'
 
-const smartAccountAddress = '0x3FCf42e10CC70Fe75A62EB3aDD6D305Aa840d145'
+const eoaAddress = '0x95132632579b073D12a6673e18Ab05777a6B86f8'
+const eoaSignature =
+  '0xc75a2d80156ba6a5dc4ce0d3526b105da4674c8d1da690650f1403eb7855489b4c84fa0e7d3fa893479269f6d4cd0026c94f654bc5d51e7b17c3b71641c44d291c'
 const notDeployedAddress = '0xdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef'
 
 test('valid signature', async () => {
@@ -13,9 +15,8 @@ test('valid signature', async () => {
     useVerifyTypedData({
       ...typedData.basic,
       primaryType: 'Mail',
-      address: smartAccountAddress,
-      signature:
-        '0x79d756d805073dc97b7bc885b0d56ddf319a2599530fe1e178c2a7de5be88980068d24f20a79b318ea0a84d33ae06f93db77e4235e5d9eeb8b1d7a63922ada3e1c',
+      address: eoaAddress,
+      signature: eoaSignature,
     }),
   )
 
@@ -53,7 +54,7 @@ test('valid signature', async () => {
       "queryKey": [
         "verifyTypedData",
         {
-          "address": "0x3FCf42e10CC70Fe75A62EB3aDD6D305Aa840d145",
+          "address": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "chainId": 1,
           "domain": {
             "chainId": 1,
@@ -73,7 +74,7 @@ test('valid signature', async () => {
             },
           },
           "primaryType": "Mail",
-          "signature": "0x79d756d805073dc97b7bc885b0d56ddf319a2599530fe1e178c2a7de5be88980068d24f20a79b318ea0a84d33ae06f93db77e4235e5d9eeb8b1d7a63922ada3e1c",
+          "signature": "0xc75a2d80156ba6a5dc4ce0d3526b105da4674c8d1da690650f1403eb7855489b4c84fa0e7d3fa893479269f6d4cd0026c94f654bc5d51e7b17c3b71641c44d291c",
           "types": {
             "Mail": [
               {
@@ -113,7 +114,7 @@ test('invalid signature', async () => {
     useVerifyTypedData({
       ...typedData.basic,
       primaryType: 'Mail',
-      address: smartAccountAddress,
+      address: eoaAddress,
       signature: '0xdead',
     }),
   )
@@ -152,7 +153,7 @@ test('invalid signature', async () => {
       "queryKey": [
         "verifyTypedData",
         {
-          "address": "0x3FCf42e10CC70Fe75A62EB3aDD6D305Aa840d145",
+          "address": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "chainId": 1,
           "domain": {
             "chainId": 1,
@@ -313,7 +314,7 @@ test('behavior: signature: undefined -> defined', async () => {
       useVerifyTypedData({
         ...typedData.basic,
         primaryType: 'Mail',
-        address: smartAccountAddress,
+        address: eoaAddress,
         signature: props?.signature,
       }),
     { initialProps: { signature: undefined as Hex | undefined } },
@@ -351,7 +352,7 @@ test('behavior: signature: undefined -> defined', async () => {
       "queryKey": [
         "verifyTypedData",
         {
-          "address": "0x3FCf42e10CC70Fe75A62EB3aDD6D305Aa840d145",
+          "address": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "chainId": 1,
           "domain": {
             "chainId": 1,
@@ -406,8 +407,7 @@ test('behavior: signature: undefined -> defined', async () => {
   `)
 
   rerender({
-    signature:
-      '0x79d756d805073dc97b7bc885b0d56ddf319a2599530fe1e178c2a7de5be88980068d24f20a79b318ea0a84d33ae06f93db77e4235e5d9eeb8b1d7a63922ada3e1c',
+    signature: eoaSignature,
   })
 
   await vi.waitUntil(() => result.current.isSuccess, { timeout: 10_000 })
@@ -444,7 +444,7 @@ test('behavior: signature: undefined -> defined', async () => {
       "queryKey": [
         "verifyTypedData",
         {
-          "address": "0x3FCf42e10CC70Fe75A62EB3aDD6D305Aa840d145",
+          "address": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
           "chainId": 1,
           "domain": {
             "chainId": 1,
@@ -464,7 +464,7 @@ test('behavior: signature: undefined -> defined', async () => {
             },
           },
           "primaryType": "Mail",
-          "signature": "0x79d756d805073dc97b7bc885b0d56ddf319a2599530fe1e178c2a7de5be88980068d24f20a79b318ea0a84d33ae06f93db77e4235e5d9eeb8b1d7a63922ada3e1c",
+          "signature": "0xc75a2d80156ba6a5dc4ce0d3526b105da4674c8d1da690650f1403eb7855489b4c84fa0e7d3fa893479269f6d4cd0026c94f654bc5d51e7b17c3b71641c44d291c",
           "types": {
             "Mail": [
               {

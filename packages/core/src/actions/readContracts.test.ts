@@ -382,7 +382,7 @@ test('throws if allowFailure=false & a contract method fails', async () => {
 
     Docs: https://viem.sh/docs/contract/readContract
     Details: execution reverted: ERC721Enumerable: owner index out of bounds
-    Version: viem@2.47.5]
+    Version: viem@2.48.0]
   `,
   )
 })
@@ -436,7 +436,7 @@ test('allowFailure=true & a contract method fails', async () => {
 
     Docs: https://viem.sh/docs/contract/readContract
     Details: execution reverted: ERC721Enumerable: owner index out of bounds
-    Version: viem@2.47.5],
+    Version: viem@2.48.0],
         "result": undefined,
         "status": "failure",
       },
@@ -451,7 +451,7 @@ test('allowFailure=true & a contract method fails', async () => {
 
     Docs: https://viem.sh/docs/contract/readContract
     Details: execution reverted: ERC721Enumerable: owner index out of bounds
-    Version: viem@2.47.5],
+    Version: viem@2.48.0],
         "result": undefined,
         "status": "failure",
       },
@@ -489,7 +489,7 @@ test('throws if allowFailure=false & encoding contract function data fails', asy
       args:             (1e+31)
 
     Docs: https://viem.sh/docs/contract/readContract
-    Version: viem@2.47.5]
+    Version: viem@2.48.0]
   `,
   )
 })
@@ -548,7 +548,7 @@ test('allowFailure=true & encoding contract function data fails', async () => {
       args:             (1e+31)
 
     Docs: https://viem.sh/docs/contract/readContract
-    Version: viem@2.47.5],
+    Version: viem@2.48.0],
         "result": undefined,
         "status": "failure",
       },
@@ -566,7 +566,7 @@ test('allowFailure=true & encoding contract function data fails', async () => {
       args:             (1e+31)
 
     Docs: https://viem.sh/docs/contract/readContract
-    Version: viem@2.47.5],
+    Version: viem@2.48.0],
         "result": undefined,
         "status": "failure",
       },
@@ -604,7 +604,7 @@ test('should throw if allowFailure=false & a contract has no response', async ()
       args:          (0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC)
 
     Docs: https://viem.sh/docs/contract/readContract
-    Version: viem@2.47.5]
+    Version: viem@2.48.0]
   `,
   )
 })
@@ -656,7 +656,7 @@ test('allowFailure=true & a contract has no response', async () => {
       args:          (0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC)
 
     Docs: https://viem.sh/docs/contract/readContract
-    Version: viem@2.47.5],
+    Version: viem@2.48.0],
         "result": undefined,
         "status": "failure",
       },

@@ -24,8 +24,10 @@ jobs:
         with:
           node-version: 24.5
 
+      # TODO: Remove `--ignore-registry-errors` when issue fixed
+      # https://github.com/pnpm/pnpm/issues/11265
       - name: Audit dependencies
-        run: pnpm audit
+        run: pnpm audit --ignore-registry-errors
 
       - name: Check repo
         run: pnpm check:repo
@@ -80,7 +82,7 @@ jobs:
     strategy:
       matrix:
         typescript-version: ['5.7.3', '5.8.3', '5.9.3', 'latest']
-        viem-version: ['2.46.0', 'latest']
+        viem-version: ['2.48.0', 'latest']
 
     steps:
       - name: Clone repository
@@ -97,7 +99,7 @@ jobs:
         run: pnpm preconstruct
 
       - name: Check types
-        run: pnpm check:types
+        run: pnpm check:types:typescript
 
       - name: Bench types
         run: pnpm bench:types

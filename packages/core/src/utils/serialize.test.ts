@@ -92,7 +92,7 @@ describe('stringify', () => {
       const result = serialize(simpleObject, replacer)
 
       expect(result).toMatchInlineSnapshot(
-        `"{"boolean":"primitive-true","fn":"primitive-fn() {\\n    return \\"foo\\";\\n  }","nan":"primitive-NaN","nil":"primitive-null","number":"primitive-123","string":"primitive-foo","undef":"primitive-undefined"}"`,
+        `"{"boolean":"primitive-true","fn":"primitive-fn() {\\n\\t\\treturn \\"foo\\";\\n\\t}","nan":"primitive-NaN","nil":"primitive-null","number":"primitive-123","string":"primitive-foo","undef":"primitive-undefined"}"`,
       )
     })
 
@@ -151,7 +151,7 @@ describe('stringify', () => {
       const result = serialize(complexObject, replacer)
 
       expect(result).toMatchInlineSnapshot(
-        `"{"boolean":"primitive-true","fn":"primitive-fn() {\\n    return \\"foo\\";\\n  }","nan":"primitive-NaN","nil":"primitive-null","number":"primitive-123","string":"primitive-foo","undef":"primitive-undefined","array":["primitive-foo",{"bar":"primitive-baz"}],"buffer":{"type":"primitive-Buffer","data":["primitive-116","primitive-104","primitive-105","primitive-115","primitive-32","primitive-105","primitive-115","primitive-32","primitive-97","primitive-32","primitive-116","primitive-101","primitive-115","primitive-116","primitive-32","primitive-98","primitive-117","primitive-102","primitive-102","primitive-101","primitive-114"]},"error":{},"foo":{"value":"primitive-value"},"map":{"__type":"primitive-Map","value":[["primitive-foo",{"bar":"primitive-baz"}]]},"object":{"foo":{"bar":"primitive-baz"}},"promise":{},"regexp":{},"set":{},"weakmap":{},"weakset":{}}"`,
+        `"{"boolean":"primitive-true","fn":"primitive-fn() {\\n\\t\\treturn \\"foo\\";\\n\\t}","nan":"primitive-NaN","nil":"primitive-null","number":"primitive-123","string":"primitive-foo","undef":"primitive-undefined","array":["primitive-foo",{"bar":"primitive-baz"}],"buffer":{"type":"primitive-Buffer","data":["primitive-116","primitive-104","primitive-105","primitive-115","primitive-32","primitive-105","primitive-115","primitive-32","primitive-97","primitive-32","primitive-116","primitive-101","primitive-115","primitive-116","primitive-32","primitive-98","primitive-117","primitive-102","primitive-102","primitive-101","primitive-114"]},"error":{},"foo":{"value":"primitive-value"},"map":{"__type":"primitive-Map","value":[["primitive-foo",{"bar":"primitive-baz"}]]},"object":{"foo":{"bar":"primitive-baz"}},"promise":{},"regexp":{},"set":{},"weakmap":{},"weakset":{}}"`,
       )
     })
 

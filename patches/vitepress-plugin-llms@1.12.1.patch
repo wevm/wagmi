@@ -1,0 +1,89 @@
+diff --git a/dist/index.js b/dist/index.js
+index 3f0014958341d286b142fe8a78bb40ce73a4c552..a289499e30bbdc921e6430d985d0d393f03668d9 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -70,6 +70,21 @@ var stripExt = (filepath, usePosix = false) => {
+ };
+ var stripExtPosix = (filepath) => stripExt(filepath, true);
+ var transformToPosixPath = (filepath) => filepath.replaceAll("\\", "/");
++var maxParallelFileTasks = 1;
++async function mapInBatches(items, mapper, batchSize = maxParallelFileTasks) {
++  const results = [];
++  for (let i = 0;i < items.length; i += batchSize) {
++    const batch = items.slice(i, i + batchSize);
++    results.push(...await Promise.all(batch.map(mapper)));
++  }
++  return results;
++}
++async function forEachInBatches(items, mapper, batchSize = maxParallelFileTasks) {
++  for (let i = 0;i < items.length; i += batchSize) {
++    const batch = items.slice(i, i + batchSize);
++    await Promise.all(batch.map(mapper));
++  }
++}
+ function getDirectoriesAtDepths(files, baseDir, maxDepth) {
+   const directories = new Set([baseDir]);
+   for (const file of files) {
+@@ -181,19 +196,22 @@ async function generateLLMsFullTxt(preparedFiles, options) {
+     const relativePath = file.path;
+     return relativePath.startsWith(directoryFilter + path3.sep) || relativePath === directoryFilter;
+   }) : preparedFiles;
+-  const fileContents = await Promise.all(filteredFiles.map((file) => {
++  let output = "";
++  for (const [index, file] of filteredFiles.entries()) {
+     const metadata = generateMetadata(file.file, {
+       domain,
+       filePath: file.path,
+       linksExtension,
+       base
+     });
+-    return matter.stringify(file.file.content, metadata);
+-  }));
+-  return fileContents.join(`
++    if (index > 0)
++      output += `
+ ---
+ 
+-`);
++`;
++    output += matter.stringify(file.file.content, metadata);
++  }
++  return output;
+ }
+ 
+ // src/generator/llms-txt.ts
+@@ -365,7 +383,7 @@ import fs2 from "node:fs/promises";
+ import path5 from "node:path";
+ import matter3 from "gray-matter";
+ async function generateLLMFriendlyPages(preparedFiles, outDir, domain, base) {
+-  const tasks = preparedFiles.map(async (file) => {
++  await forEachInBatches(preparedFiles, async (file) => {
+     try {
+       const mdFile = file.file;
+       const targetPath = path5.resolve(outDir, file.path);
+@@ -381,7 +399,6 @@ async function generateLLMFriendlyPages(preparedFiles, outDir, domain, base) {
+       logger_default.error(`Failed to process ${file.path}: ${error.message}`);
+     }
+   });
+-  await Promise.all(tasks);
+ }
+ 
+ // src/markdown/remark-plugins/remark-please.ts
+@@ -887,7 +904,7 @@ async function generateBundle(bundle, settings, config, indexMdFile, mdFiles) {
+     }
+   }
+   const mdFilesList = Array.from(mdFiles);
+-  const preparedFiles = await Promise.all(mdFilesList.map(async ([file, content]) => {
++  const preparedFiles = await mapInBatches(mdFilesList, async ([file, content]) => {
+     const resolvedOutFilePath = path10.relative(settings.workDir, resolveOutputFilePath(file, settings.workDir, config.vitepress.userConfig?.rewrites));
+     const markdownProcessor = remark().use(remarkFrontmatter).use(snippets_default({ srcDir: settings.workDir })).use(remark_please_default("unwrap", "llm-only")).use(remark_please_default("remove", "llm-exclude")).use(replace_image_urls_default(imageMap));
+     if (settings.stripHTML) {
+@@ -907,7 +924,7 @@ async function generateBundle(bundle, settings, config, indexMdFile, mdFiles) {
+     const title = extractTitle(processedMarkdown)?.trim() ?? "Untitled";
+     const filePath = path10.basename(resolvedOutFilePath) === "index.md" && path10.dirname(resolvedOutFilePath) !== "." && path10.dirname(resolvedOutFilePath) !== "" ? `${path10.dirname(resolvedOutFilePath)}.md` : resolvedOutFilePath;
+     return { path: filePath, title, file: processedMarkdown };
+-  }));
++  });
+   preparedFiles.sort((a, b) => a.title.localeCompare(b.title));
+   const perOutput = settings.ignoreFilesPerOutput ?? {};
+   const llmsTxtPatterns = resolveIgnorePatterns(settings.ignoreFiles, perOutput.llmsTxt ?? []);

@@ -5,6 +5,7 @@ export {
   type MockParameters,
   mock,
 } from '@wagmi/core'
+export { type TempoWalletParameters, tempoWallet } from '@wagmi/core/tempo'
 export { type BaseAccountParameters, baseAccount } from '../baseAccount.js'
 export {
   type CoinbaseWalletParameters,

@@ -1,8 +1,30 @@
-import { KeyManager, webAuthn } from '@wagmi/core/tempo'
-import { renderHook } from '@wagmi/test/tempo'
+import { createConfig, createStorage } from '@wagmi/core'
+import { tempoWallet, webAuthn } from '@wagmi/core/tempo'
+import {
+  accounts,
+  createWrapper,
+  renderHook,
+  tempoLocal,
+} from '@wagmi/test/tempo'
+import { http } from 'viem'
 import { describe, expect, test, vi } from 'vitest'
 import { cdp } from 'vitest/browser'
-import { useConnect, useConnection, useDisconnect } from 'wagmi'
+import { useConnect, useConnection, useDisconnect, WagmiProvider } from 'wagmi'
+
+function createMemoryStorage() {
+  const state: Record<string, string> = {}
+  return {
+    getItem(key: string) {
+      return state[key] ?? null
+    },
+    removeItem(key: string) {
+      delete state[key]
+    },
+    setItem(key: string, value: string) {
+      state[key] = value
+    },
+  }
+}
 
 async function setupWebAuthn() {
   const client = cdp()
@@ -26,159 +48,406 @@ async function setupWebAuthn() {
   }
 }
 
-test('connect', async (context) => {
-  const cleanup = await setupWebAuthn()
-  context.onTestFinished(async () => await cleanup())
+function createTempoWalletDialog(
+  address: `0x${string}`,
+  onConnectRequest?: () => void,
+) {
+  return (({ store }: any) => ({
+    close() {},
+    destroy() {},
+    open() {},
+    async syncRequests(requests: any[]) {
+      for (const queued of requests) {
+        if (queued.request.method !== 'wallet_connect') continue
+        onConnectRequest?.()
 
-  const { result } = await renderHook(() => ({
-    useConnection: useConnection(),
-    useConnect: useConnect(),
-  }))
+        store.setState((state: any) => ({
+          ...state,
+          requestQueue: state.requestQueue.map((request: any) =>
+            request.request.id === queued.request.id
+              ? {
+                  request: request.request,
+                  result: {
+                    accounts: [{ address, capabilities: {} }],
+                  },
+                  status: 'success',
+                }
+              : request,
+          ),
+        }))
+      }
+    },
+  })) as any
+}
 
-  expect(result.current.useConnection.address).not.toBeDefined()
-  expect(result.current.useConnection.status).toEqual('disconnected')
+describe('connectors', () => {
+  describe('tempoWallet', () => {
+    test('connect + get accounts + disconnect', async () => {
+      const config = createConfig({
+        chains: [tempoLocal],
+        connectors: [],
+        storage: null,
+        transports: {
+          [tempoLocal.id]: http(),
+        },
+      })
 
-  result.current.useConnect.mutate({
-    capabilities: { type: 'sign-up', label: 'Test Account' },
-    connector: webAuthn({
-      keyManager: KeyManager.localStorage(),
-    }),
+      const address = accounts[0]!.address
+      const connector = config._internal.connectors.setup(
+        tempoWallet({
+          dialog: createTempoWalletDialog(address),
+          storage: {
+            async getItem() {
+              return null
+            },
+            async removeItem() {},
+            async setItem() {},
+          },
+        }),
+      )
+
+      const { result } = await renderHook(
+        () => ({
+          useConnection: useConnection(),
+          useConnect: useConnect(),
+          useDisconnect: useDisconnect(),
+        }),
+        {
+          wrapper: createWrapper(WagmiProvider, {
+            config,
+            reconnectOnMount: false,
+          }),
+        },
+      )
+
+      expect(result.current.useConnection.address).not.toBeDefined()
+      expect(result.current.useConnection.status).toEqual('disconnected')
+
+      const connectResult = await result.current.useConnect.mutateAsync({
+        connector,
+      })
+      expect(connectResult).toMatchObject({
+        accounts: [address],
+        chainId: tempoLocal.id,
+      })
+
+      await vi.waitFor(() =>
+        expect(result.current.useConnection.isConnected).toBeTruthy(),
+      )
+      expect(result.current.useConnection.address).toEqual(address)
+      expect(result.current.useConnection.addresses).toEqual([address])
+
+      await result.current.useDisconnect.mutateAsync({ connector })
+      await vi.waitFor(() =>
+        expect(result.current.useDisconnect.isSuccess).toBeTruthy(),
+      )
+      expect(await connector.getAccounts()).toEqual([])
+    })
+
+    test('reconnects on mount', async () => {
+      const address = accounts[0]!.address
+      const storage = createMemoryStorage()
+      let connectRequests = 0
+
+      const connectorFn = tempoWallet({
+        dialog: createTempoWalletDialog(address, () => {
+          connectRequests += 1
+        }),
+      })
+
+      const config = createConfig({
+        chains: [tempoLocal],
+        connectors: [connectorFn],
+        storage: createStorage({ storage, key: 'tempo-wallet-test' }),
+        transports: {
+          [tempoLocal.id]: http(),
+        },
+      })
+
+      const firstRender = await renderHook(
+        () => ({
+          useConnection: useConnection(),
+          useConnect: useConnect(),
+        }),
+        {
+          wrapper: createWrapper(WagmiProvider, {
+            config,
+            reconnectOnMount: false,
+          }),
+        },
+      )
+
+      await firstRender.result.current.useConnect.mutateAsync({
+        connector: config.connectors[0]!,
+      })
+
+      await vi.waitFor(() =>
+        expect(
+          firstRender.result.current.useConnection.isConnected,
+        ).toBeTruthy(),
+      )
+      expect(connectRequests).toBe(1)
+
+      await vi.waitFor(() =>
+        expect(storage.getItem('tempo-wallet-test.store')).not.toBeNull(),
+      )
+      await vi.waitFor(() =>
+        expect(
+          JSON.parse(storage.getItem('tempo-wallet-test.recentConnectorId')!),
+        ).toBe('xyz.tempo'),
+      )
+      await vi.waitFor(() =>
+        expect(
+          storage.getItem('tempo-wallet-test.accounts.xyz.tempo.store'),
+        ).not.toBeNull(),
+      )
+      firstRender.unmount()
+
+      const reconnectedConfig = createConfig({
+        chains: [tempoLocal],
+        connectors: [connectorFn],
+        storage: createStorage({ storage, key: 'tempo-wallet-test' }),
+        transports: {
+          [tempoLocal.id]: http(),
+        },
+      })
+
+      const secondRender = await renderHook(() => useConnection(), {
+        wrapper: createWrapper(WagmiProvider, {
+          config: reconnectedConfig,
+          reconnectOnMount: true,
+        }),
+      })
+
+      await vi.waitFor(() =>
+        expect(secondRender.result.current.isConnected).toBeTruthy(),
+      )
+      expect(secondRender.result.current.address).toEqual(address)
+      expect(secondRender.result.current.addresses).toEqual([address])
+      expect(connectRequests).toBe(1)
+    })
   })
 
-  await vi.waitFor(() =>
-    expect(result.current.useConnection.isConnected).toBeTruthy(),
-  )
-
-  expect(result.current.useConnection.address).toBeDefined()
-  expect(result.current.useConnection.address).toMatch(/^0x[a-fA-F0-9]{40}$/)
-  expect(result.current.useConnection.status).toEqual('connected')
-})
-
-describe('capabilities.sign', () => {
-  test('sign-up + sign (create path)', async (context) => {
+  test('connect', async (context) => {
     const cleanup = await setupWebAuthn()
     context.onTestFinished(async () => await cleanup())
 
-    const connector = webAuthn({
-      keyManager: KeyManager.localStorage(),
+    const config = createConfig({
+      chains: [tempoLocal],
+      connectors: [],
+      storage: null,
+      transports: {
+        [tempoLocal.id]: http(),
+      },
     })
+    const connector = config._internal.connectors.setup(webAuthn())
 
-    const { result } = await renderHook(() => ({
-      useConnection: useConnection(),
-      useConnect: useConnect(),
-    }))
+    const { result } = await renderHook(
+      () => ({
+        useConnection: useConnection(),
+        useConnect: useConnect(),
+      }),
+      {
+        wrapper: createWrapper(WagmiProvider, {
+          config,
+          reconnectOnMount: false,
+        }),
+      },
+    )
 
-    const hash =
-      '0x0000000000000000000000000000000000000000000000000000000000000001'
-    const connectResult = await result.current.useConnect.mutateAsync({
-      capabilities: { type: 'sign-up', label: 'Create+Sign', sign: { hash } },
+    expect(result.current.useConnection.address).not.toBeDefined()
+    expect(result.current.useConnection.status).toEqual('disconnected')
+
+    result.current.useConnect.mutate({
+      capabilities: { method: 'register', name: 'Test Account' },
       connector,
-      withCapabilities: true,
     })
 
     await vi.waitFor(() =>
       expect(result.current.useConnection.isConnected).toBeTruthy(),
     )
+
     expect(result.current.useConnection.address).toBeDefined()
     expect(result.current.useConnection.address).toMatch(/^0x[a-fA-F0-9]{40}$/)
-
-    expect(connectResult.accounts[0]?.capabilities.signature).toBeDefined()
-    expect(connectResult.accounts[0]?.capabilities.signature).toMatch(/^0x/)
+    expect(result.current.useConnection.status).toEqual('connected')
   })
 
-  test('discover path: disconnect then reconnect with sign', async (context) => {
-    const cleanup = await setupWebAuthn()
-    context.onTestFinished(async () => await cleanup())
+  describe('capabilities.sign', () => {
+    test('register + sign (create path)', async (context) => {
+      const cleanup = await setupWebAuthn()
+      context.onTestFinished(async () => await cleanup())
 
-    const connector = webAuthn({
-      keyManager: KeyManager.localStorage(),
+      const config = createConfig({
+        chains: [tempoLocal],
+        connectors: [],
+        storage: null,
+        transports: {
+          [tempoLocal.id]: http(),
+        },
+      })
+
+      const connector = config._internal.connectors.setup(webAuthn())
+
+      const { result } = await renderHook(
+        () => ({
+          useConnection: useConnection(),
+          useConnect: useConnect(),
+        }),
+        {
+          wrapper: createWrapper(WagmiProvider, {
+            config,
+            reconnectOnMount: false,
+          }),
+        },
+      )
+
+      const hash =
+        '0x0000000000000000000000000000000000000000000000000000000000000001'
+      const connectResult = await result.current.useConnect.mutateAsync({
+        capabilities: { digest: hash, method: 'register', name: 'Create+Sign' },
+        connector,
+        withCapabilities: true,
+      })
+
+      await vi.waitFor(() =>
+        expect(result.current.useConnection.isConnected).toBeTruthy(),
+      )
+      expect(result.current.useConnection.address).toBeDefined()
+      expect(result.current.useConnection.address).toMatch(
+        /^0x[a-fA-F0-9]{40}$/,
+      )
+
+      expect(connectResult.accounts[0]?.capabilities.signature).toBeDefined()
+      expect(connectResult.accounts[0]?.capabilities.signature).toMatch(/^0x/)
     })
 
-    const { result } = await renderHook(() => ({
-      useConnection: useConnection(),
-      useConnect: useConnect(),
-      useDisconnect: useDisconnect(),
-    }))
+    test('discover path: disconnect then reconnect with sign', async (context) => {
+      const cleanup = await setupWebAuthn()
+      context.onTestFinished(async () => await cleanup())
 
-    await result.current.useConnect.mutateAsync({
-      capabilities: { type: 'sign-up', label: 'Discover Test' },
-      connector,
-    })
-    await vi.waitFor(() =>
-      expect(result.current.useConnection.isConnected).toBeTruthy(),
-    )
-    const address = result.current.useConnection.address
-    expect(address).toBeDefined()
+      const config = createConfig({
+        chains: [tempoLocal],
+        connectors: [],
+        storage: null,
+        transports: {
+          [tempoLocal.id]: http(),
+        },
+      })
 
-    await result.current.useDisconnect.mutateAsync({})
-    await vi.waitFor(() =>
-      expect(result.current.useConnection.isConnected).toBeFalsy(),
-    )
+      const connector = config._internal.connectors.setup(webAuthn())
 
-    const hash =
-      '0x0000000000000000000000000000000000000000000000000000000000000001'
-    const connectResult = await result.current.useConnect.mutateAsync({
-      capabilities: {
-        sign: { hash },
-      },
-      connector,
-      withCapabilities: true,
-    })
+      const { result } = await renderHook(
+        () => ({
+          useConnection: useConnection(),
+          useConnect: useConnect(),
+          useDisconnect: useDisconnect(),
+        }),
+        {
+          wrapper: createWrapper(WagmiProvider, {
+            config,
+            reconnectOnMount: false,
+          }),
+        },
+      )
 
-    await vi.waitFor(() =>
-      expect(result.current.useConnection.isConnected).toBeTruthy(),
-    )
-    expect(result.current.useConnection.address).toBeDefined()
-    expect(result.current.useConnection.address).toMatch(/^0x[a-fA-F0-9]{40}$/)
+      await result.current.useConnect.mutateAsync({
+        capabilities: { method: 'register', name: 'Discover Test' },
+        connector,
+      })
+      await vi.waitFor(() =>
+        expect(result.current.useConnection.isConnected).toBeTruthy(),
+      )
+      const address = result.current.useConnection.address
+      expect(address).toBeDefined()
 
-    expect(connectResult.accounts[0]?.capabilities.signature).toBeDefined()
-    expect(connectResult.accounts[0]?.capabilities.signature).toMatch(/^0x/)
-  })
+      await result.current.useDisconnect.mutateAsync({ connector })
+      await vi.waitFor(() =>
+        expect(result.current.useConnection.isConnected).toBeFalsy(),
+      )
 
-  test('sign skips access key provisioning (with grantAccessKey)', async (context) => {
-    const cleanup = await setupWebAuthn()
-    context.onTestFinished(async () => await cleanup())
+      const hash =
+        '0x0000000000000000000000000000000000000000000000000000000000000001'
+      const connectResult = await result.current.useConnect.mutateAsync({
+        capabilities: { digest: hash },
+        connector,
+        withCapabilities: true,
+      })
 
-    const connector = webAuthn({
-      grantAccessKey: true,
-      keyManager: KeyManager.localStorage(),
-    })
+      await vi.waitFor(() =>
+        expect(result.current.useConnection.isConnected).toBeTruthy(),
+      )
+      expect(result.current.useConnection.address).toBeDefined()
+      expect(result.current.useConnection.address).toMatch(
+        /^0x[a-fA-F0-9]{40}$/,
+      )
 
-    const { result } = await renderHook(() => ({
-      useConnection: useConnection(),
-      useConnect: useConnect(),
-      useDisconnect: useDisconnect(),
-    }))
-
-    await result.current.useConnect.mutateAsync({
-      capabilities: { type: 'sign-up', label: 'Grant Test' },
-      connector,
-    })
-    await vi.waitFor(() =>
-      expect(result.current.useConnection.isConnected).toBeTruthy(),
-    )
-
-    await result.current.useDisconnect.mutateAsync({})
-    await vi.waitFor(() =>
-      expect(result.current.useConnection.isConnected).toBeFalsy(),
-    )
-
-    const hash =
-      '0x0000000000000000000000000000000000000000000000000000000000000002'
-    const connectResult = await result.current.useConnect.mutateAsync({
-      capabilities: {
-        sign: { hash },
-      },
-      connector,
-      withCapabilities: true,
+      expect(connectResult.accounts[0]?.capabilities.signature).toBeDefined()
+      expect(connectResult.accounts[0]?.capabilities.signature).toMatch(/^0x/)
     })
 
-    await vi.waitFor(() =>
-      expect(result.current.useConnection.isConnected).toBeTruthy(),
-    )
-    expect(result.current.useConnection.address).toBeDefined()
+    test('sign skips access key provisioning (with authorizeAccessKey)', async (context) => {
+      const cleanup = await setupWebAuthn()
+      context.onTestFinished(async () => await cleanup())
 
-    expect(connectResult.accounts[0]?.capabilities.signature).toBeDefined()
-    expect(connectResult.accounts[0]?.capabilities.signature).toMatch(/^0x/)
+      const config = createConfig({
+        chains: [tempoLocal],
+        connectors: [],
+        storage: null,
+        transports: {
+          [tempoLocal.id]: http(),
+        },
+      })
+
+      const connector = config._internal.connectors.setup(
+        webAuthn({
+          authorizeAccessKey: () => ({
+            expiry: Math.floor((Date.now() + 24 * 60 * 60 * 1000) / 1000),
+          }),
+        }),
+      )
+
+      const { result } = await renderHook(
+        () => ({
+          useConnection: useConnection(),
+          useConnect: useConnect(),
+          useDisconnect: useDisconnect(),
+        }),
+        {
+          wrapper: createWrapper(WagmiProvider, {
+            config,
+            reconnectOnMount: false,
+          }),
+        },
+      )
+
+      await result.current.useConnect.mutateAsync({
+        capabilities: { method: 'register', name: 'Grant Test' },
+        connector,
+      })
+      await vi.waitFor(() =>
+        expect(result.current.useConnection.isConnected).toBeTruthy(),
+      )
+
+      await result.current.useDisconnect.mutateAsync({ connector })
+      await vi.waitFor(() =>
+        expect(result.current.useConnection.isConnected).toBeFalsy(),
+      )
+
+      const hash =
+        '0x0000000000000000000000000000000000000000000000000000000000000002'
+      const connectResult = await result.current.useConnect.mutateAsync({
+        capabilities: { digest: hash },
+        connector,
+        withCapabilities: true,
+      })
+
+      await vi.waitFor(() =>
+        expect(result.current.useConnection.isConnected).toBeTruthy(),
+      )
+      expect(result.current.useConnection.address).toBeDefined()
+
+      expect(connectResult.accounts[0]?.capabilities.signature).toBeDefined()
+      expect(connectResult.accounts[0]?.capabilities.signature).toMatch(/^0x/)
+    })
   })
 })

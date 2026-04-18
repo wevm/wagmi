@@ -1,7 +1,7 @@
 {
   "name": "@wagmi/solid",
   "description": "Solid Primitives for Ethereum",
-  "version": "0.0.4",
+  "version": "0.0.8",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -11,7 +11,7 @@
   "scripts": {
     "build": "pnpm run clean && pnpm run build:esm+types",
     "build:esm+types": "tsc --project tsconfig.build.json --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
-    "check:types": "tsc --noEmit",
+    "check:types": "tsgo --noEmit",
     "clean": "rm -rf dist tsconfig.tsbuildinfo actions chains connectors query",
     "test:build": "publint --strict && attw --pack --ignore-rules cjs-resolves-to-esm"
   },

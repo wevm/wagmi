@@ -2,7 +2,7 @@
   "name": "@wagmi/test",
   "private": true,
   "scripts": {
-    "check:types": "tsc --noEmit",
+    "check:types": "tsgo --noEmit",
     "clean": "rm -rf dist tsconfig.tsbuildinfo"
   },
   "files": [
@@ -75,7 +75,7 @@
     "react-dom": ">=18",
     "solid-js": "1.x",
     "typescript": ">=5.7.3",
-    "viem": "2.x",
+    "viem": ">=2.48.0",
     "vue": ">=3",
     "wagmi": "workspace:*"
   },
