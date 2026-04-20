@@ -89,6 +89,10 @@ export function getSidebar() {
                 text: 'baseAccount',
                 link: '/react/api/connectors/baseAccount',
               },
+              {
+                text: 'coinbaseWallet',
+                link: '/react/api/connectors/coinbaseWallet',
+              },
               { text: 'injected', link: '/react/api/connectors/injected' },
               {
                 text: 'metaMask',
@@ -459,6 +463,10 @@ export function getSidebar() {
                 text: 'baseAccount',
                 link: '/vue/api/connectors/baseAccount',
               },
+              {
+                text: 'coinbaseWallet',
+                link: '/vue/api/connectors/coinbaseWallet',
+              },
               { text: 'injected', link: '/vue/api/connectors/injected' },
               {
                 text: 'metaMask',
@@ -718,6 +726,10 @@ export function getSidebar() {
               {
                 text: 'baseAccount',
                 link: '/core/api/connectors/baseAccount',
+              },
+              {
+                text: 'coinbaseWallet',
+                link: '/core/api/connectors/coinbaseWallet',
               },
               { text: 'injected', link: '/core/api/connectors/injected' },
               {
@@ -1141,6 +1153,10 @@ export function getSidebar() {
               {
                 text: 'baseAccount',
                 link: '/solid/api/connectors/baseAccount',
+              },
+              {
+                text: 'coinbaseWallet',
+                link: '/solid/api/connectors/coinbaseWallet',
               },
               { text: 'injected', link: '/solid/api/connectors/injected' },
               {
