@@ -129,7 +129,7 @@ test('context', () => {
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
         expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
-      onSuccess(data, variables, context) {
+      onSuccess(data, variables, context, mutationContext) {
         expectTypeOf(variables).toEqualTypeOf<{
           chainId?: number | undefined
           connector: typeof connector | CreateConnectorFn
@@ -141,8 +141,9 @@ test('context', () => {
           chainId: number
         }>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
-      onSettled(data, error, variables, context) {
+      onSettled(data, error, variables, context, mutationContext) {
         expectTypeOf(data).toEqualTypeOf<
           | {
               accounts: readonly [Address, ...Address[]]
@@ -158,6 +159,7 @@ test('context', () => {
           withCapabilities?: boolean | undefined
         }>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
     },
   )
