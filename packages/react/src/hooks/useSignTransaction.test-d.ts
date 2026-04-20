@@ -1,4 +1,7 @@
-import type { SignTransactionErrorType } from '@wagmi/core'
+import type {
+  MutationFunctionContext,
+  SignTransactionErrorType,
+} from '@wagmi/core'
 import type {
   Hash,
   TransactionSerializedEIP1559,
@@ -15,33 +18,37 @@ const contextValue = { foo: 'bar' } as const
 test('context', () => {
   const signTransaction = useSignTransaction({
     mutation: {
-      onMutate(variables) {
+      onMutate(variables, mutationContext) {
         expectTypeOf(variables).toMatchTypeOf<
           { chainId?: number | undefined } | undefined
         >()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
         return contextValue
       },
-      onError(error, variables, context) {
+      onError(error, variables, context, mutationContext) {
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
         }>()
         expectTypeOf(error).toEqualTypeOf<SignTransactionErrorType>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
-      onSuccess(data, variables, context) {
+      onSuccess(data, variables, context, mutationContext) {
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
         }>()
         expectTypeOf(data).toMatchTypeOf<Hash>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
-      onSettled(data, error, variables, context) {
+      onSettled(data, error, variables, context, mutationContext) {
         expectTypeOf(data).toMatchTypeOf<Hash | undefined>()
         expectTypeOf(error).toEqualTypeOf<SignTransactionErrorType | null>()
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
         }>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
     },
   })
@@ -60,27 +67,30 @@ test('context', () => {
   signTransaction.mutate(
     { to: '0x' },
     {
-      onError(error, variables, context) {
+      onError(error, variables, context, mutationContext) {
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
         }>()
         expectTypeOf(error).toEqualTypeOf<SignTransactionErrorType>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
-      onSuccess(data, variables, context) {
+      onSuccess(data, variables, context, mutationContext) {
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
         }>()
         expectTypeOf(data).toMatchTypeOf<Hash>()
-        expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
-      onSettled(data, error, variables, context) {
+      onSettled(data, error, variables, context, mutationContext) {
         expectTypeOf(data).toMatchTypeOf<Hash | undefined>()
         expectTypeOf(error).toEqualTypeOf<SignTransactionErrorType | null>()
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
         }>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
     },
   )

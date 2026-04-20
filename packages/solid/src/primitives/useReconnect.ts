@@ -1,4 +1,3 @@
-import { createMutation as useMutation } from '@tanstack/solid-query'
 import type { ReconnectErrorType } from '@wagmi/core'
 import type { Compute, ConfigParameter } from '@wagmi/core/internal'
 import {
@@ -11,6 +10,7 @@ import {
 } from '@wagmi/core/query'
 import type { Accessor } from 'solid-js'
 import type { UseMutationReturnType } from '../utils/query.js'
+import { useMutation } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 
 /** https://wagmi.sh/solid/api/primitives/useReconnect */

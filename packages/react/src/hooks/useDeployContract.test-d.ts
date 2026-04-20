@@ -1,4 +1,7 @@
-import type { DeployContractErrorType } from '@wagmi/core'
+import type {
+  DeployContractErrorType,
+  MutationFunctionContext,
+} from '@wagmi/core'
 import { abi, bytecode } from '@wagmi/test'
 import type { Abi, Hash } from 'viem'
 import { expectTypeOf, test } from 'vitest'
@@ -10,17 +13,19 @@ const contextValue = { foo: 'bar' } as const
 test('context', () => {
   const deployContract = useDeployContract({
     mutation: {
-      onMutate(variables) {
+      onMutate(variables, mutationContext) {
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
           abi: Abi
           args?: readonly unknown[] | undefined
         }>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
         return contextValue
       },
-      onError(error, variables, context) {
+      onError(error, variables, context, mutationContext) {
         expectTypeOf(error).toEqualTypeOf<DeployContractErrorType>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
 
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
@@ -28,9 +33,10 @@ test('context', () => {
           args?: readonly unknown[] | undefined
         }>()
       },
-      onSuccess(data, variables, context) {
+      onSuccess(data, variables, context, mutationContext) {
         expectTypeOf(data).toEqualTypeOf<Hash>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
 
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
@@ -38,10 +44,11 @@ test('context', () => {
           args?: readonly unknown[] | undefined
         }>()
       },
-      onSettled(data, error, variables, context) {
+      onSettled(data, error, variables, context, mutationContext) {
         expectTypeOf(data).toEqualTypeOf<Hash | undefined>()
         expectTypeOf(error).toEqualTypeOf<DeployContractErrorType | null>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
 
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
@@ -71,9 +78,10 @@ test('context', () => {
       chainId: 1,
     },
     {
-      onError(error, variables, context) {
+      onError(error, variables, context, mutationContext) {
         expectTypeOf(error).toEqualTypeOf<DeployContractErrorType>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
 
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
@@ -81,9 +89,10 @@ test('context', () => {
           args: readonly [string, string, bigint, bigint]
         }>()
       },
-      onSuccess(data, variables, context) {
+      onSuccess(data, variables, context, mutationContext) {
         expectTypeOf(data).toEqualTypeOf<Hash>()
-        expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
 
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
@@ -91,10 +100,11 @@ test('context', () => {
           args: readonly [string, string, bigint, bigint]
         }>()
       },
-      onSettled(data, error, variables, context) {
+      onSettled(data, error, variables, context, mutationContext) {
         expectTypeOf(data).toEqualTypeOf<Hash | undefined>()
         expectTypeOf(error).toEqualTypeOf<DeployContractErrorType | null>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
 
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined

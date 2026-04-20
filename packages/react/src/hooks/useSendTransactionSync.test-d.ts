@@ -3,6 +3,7 @@
 import {
   createConfig,
   http,
+  type MutationFunctionContext,
   type SendTransactionSyncErrorType,
 } from '@wagmi/core'
 import type { TransactionReceipt } from 'viem'
@@ -17,33 +18,37 @@ const contextValue = { foo: 'bar' } as const
 test('context', () => {
   const sendTransactionSync = useSendTransactionSync({
     mutation: {
-      onMutate(variables) {
+      onMutate(variables, mutationContext) {
         expectTypeOf(variables).toMatchTypeOf<
           { chainId?: number | undefined } | undefined
         >()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
         return contextValue
       },
-      onError(error, variables, context) {
+      onError(error, variables, context, mutationContext) {
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
         }>()
         expectTypeOf(error).toEqualTypeOf<SendTransactionSyncErrorType>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
-      onSuccess(data, variables, context) {
+      onSuccess(data, variables, context, mutationContext) {
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
         }>()
         expectTypeOf(data).toEqualTypeOf<TransactionReceipt>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
-      onSettled(data, error, variables, context) {
+      onSettled(data, error, variables, context, mutationContext) {
         expectTypeOf(data).toEqualTypeOf<TransactionReceipt | undefined>()
         expectTypeOf(error).toEqualTypeOf<SendTransactionSyncErrorType | null>()
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
         }>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
     },
   })
