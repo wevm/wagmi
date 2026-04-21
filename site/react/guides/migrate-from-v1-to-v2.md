@@ -80,6 +80,14 @@ Wagmi v2 no longer publishes a separate `cjs` tag since very few people use this
 
 ## Hooks
 
+:::tip[Automate the migration]
+You can automate ~80% of this migration, including the complex TanStack Query v5 callback refactoring, using the community codemod [`@zerosky1221/wagmi-v1-to-v2`](https://app.codemod.com/registry/@zerosky1221/wagmi-v1-to-v2):
+
+```bash
+npx codemod@latest @zerosky1221/wagmi-v1-to-v2 -t ./src
+```
+:::
+
 ### Removed mutation setup arguments
 
 Mutation hooks are hooks that change network or application state, sign data, or perform write operations through mutation functions. With Wagmi v1, you could pass arguments directly to these hooks instead of using them with their mutation functions. For example:
