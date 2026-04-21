@@ -88,7 +88,6 @@
   "peerDependencies": {
     "@tanstack/query-core": ">=5.0.0",
     "accounts": "~0.6.7",
-    "ox": ">=0.11.1",
     "typescript": ">=5.7.3",
     "viem": "2.x"
   },
@@ -97,9 +96,6 @@
       "optional": true
     },
     "accounts": {
-      "optional": true
-    },
-    "ox": {
       "optional": true
     },
     "typescript": {
@@ -113,8 +109,7 @@
   },
   "devDependencies": {
     "@tanstack/query-core": "catalog:",
-    "accounts": "catalog:",
-    "ox": "catalog:"
+    "accounts": "catalog:"
   },
   "contributors": [
     "awkweb.eth <t@wevm.dev>",
