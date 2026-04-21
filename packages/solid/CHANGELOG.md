@@ -1,5 +1,13 @@
 # @wagmi/solid
 
+## 0.0.9
+
+### Patch Changes
+
+- Updated dependencies [[`2777227`](https://github.com/wevm/wagmi/commit/277722736aa88697408f68eb18ed08228303f27c), [`23d6e27`](https://github.com/wevm/wagmi/commit/23d6e2768a8e73f4ed5cc5196cdd1bf600af7c18)]:
+  - @wagmi/core@3.4.5
+  - @wagmi/connectors@8.0.4
+
 ## 0.0.8
 
 ### Patch Changes

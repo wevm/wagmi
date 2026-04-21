@@ -1,5 +1,13 @@
 # @wagmi/core
 
+## 3.4.5
+
+### Patch Changes
+
+- Fixed tempo entrypoint dependency wiring ([#5069](https://github.com/wevm/wagmi/pull/5069))
+
+- Updated `accounts` peer dep range ([`23d6e27`](https://github.com/wevm/wagmi/commit/23d6e2768a8e73f4ed5cc5196cdd1bf600af7c18))
+
 ## 3.4.4
 
 ### Patch Changes
