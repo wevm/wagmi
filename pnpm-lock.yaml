@@ -13656,7 +13656,7 @@ snapshots:
       '@metamask/superstruct': 3.2.1
       '@noble/hashes': 1.8.0
       '@scure/base': 1.2.6
-      '@types/debug': 4.1.13
+      '@types/debug': 4.1.7
       '@types/lodash': 4.17.24
       debug: 4.4.3
       lodash: 4.18.1
@@ -13672,7 +13672,7 @@ snapshots:
       '@metamask/superstruct': 3.2.1
       '@noble/hashes': 1.8.0
       '@scure/base': 1.2.6
-      '@types/debug': 4.1.13
+      '@types/debug': 4.1.7
       debug: 4.4.3
       pony-cause: 2.1.11
       semver: 7.7.3
