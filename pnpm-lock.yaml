@@ -13,8 +13,8 @@ catalogs:
       specifier: 4.3.6
       version: 4.3.6
     '@metamask/connect-evm':
-      specifier: 0.9.0
-      version: 0.9.0
+      specifier: 1.0.0
+      version: 1.0.0
     '@nuxt/schema':
       specifier: 4.2.1
       version: 4.2.1
@@ -316,7 +316,7 @@ importers:
         version: 4.3.6(@types/react@19.2.3)(bufferutil@4.0.8)(immer@9.0.21)(react@19.2.0)(typescript@5.9.3)(use-sync-external-store@1.6.0(react@19.2.0))(utf-8-validate@5.0.10)(zod@3.25.76)
       '@metamask/connect-evm':
         specifier: 'catalog:'
-        version: 0.9.0(@babel/runtime@7.28.4)(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+        version: 1.0.0(@babel/runtime@7.28.4)(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@safe-global/safe-apps-provider':
         specifier: 'catalog:'
         version: 0.18.6(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
@@ -2886,12 +2886,12 @@ packages:
     resolution: {integrity: sha512-807Y6JxqeY3tckSRDse96RmHV6atDsSPLD/x9KIync8ccFjOwSZlv0n4NA5Bsi0znjOogU0jEe5hPNIDTFzFRg==}
     engines: {node: ^18.18 || >=20}
 
-  '@metamask/connect-evm@0.9.0':
-    resolution: {integrity: sha512-Ts2WZcCRYTjS8T2HMQiSOwtuqJABApV5DEB6PadwRi94msK95tQtaMOdvq8wo8uW/MrqGyYJWp4li54Mqn/i5g==}
+  '@metamask/connect-evm@1.0.0':
+    resolution: {integrity: sha512-Tqn+WcOefgYF4qck4Xzhx1n6TFr+6Sphcn1q6/5GJwMmycRRr6vDP8hfVP7sL7v+yYAkzDSPu7KUduOdLYjX4A==}
     engines: {node: '>=20.19.0'}
 
-  '@metamask/connect-multichain@0.11.0':
-    resolution: {integrity: sha512-08l/B/Mc27pcYN7jq8+yraliVZdqftkLdv/UomB9lvvQx9Z6+l8igVWVMWziHcyBWa+v7+ExJaWtF+kTk3Y5yA==}
+  '@metamask/connect-multichain@0.12.1':
+    resolution: {integrity: sha512-v8rYIdhrnN3m8HhjIkiRjn0hXSoKEW0dT5idpsJ/q//EBXJfn/s1FWLgNJCwoTFM60wJah0hHk4gz6XZF/BZCg==}
     engines: {node: '>=20.19.0'}
     peerDependencies:
       '@react-native-async-storage/async-storage': ^1.23
@@ -2935,8 +2935,8 @@ packages:
     resolution: {integrity: sha512-LsqO2SiDcTgOuXyVYEB0zgBaVNhryhP2tYI3L7tLa7PoeDqMkNIreFhDeu8jM5tPWkCimQvMwCkG3DF4P5dD3A==}
     engines: {node: ^18.20 || ^20.17 || >=22}
 
-  '@metamask/multichain-ui@0.4.0':
-    resolution: {integrity: sha512-CaUyPssiJ5bXP5YXBLadAbRwJ+c//cpzYCFS8P8Nq53Qa4lUVhViAzqvM4667SS3YClGNjNY0tWGyGbXkCmWHg==}
+  '@metamask/multichain-ui@0.4.1':
+    resolution: {integrity: sha512-tJgTot8Pfkda895A6biJu7rE+jlQdVCNVzGgW+2wM9aFG20G+GEbQy3KO7uC4ImUvaKV4SyJ45r6Ir/Yf55mqw==}
     engines: {node: '>=20.19.0'}
 
   '@metamask/number-to-bn@1.7.1':
@@ -13511,11 +13511,11 @@ snapshots:
       - '@babel/runtime'
       - supports-color
 
-  '@metamask/connect-evm@0.9.0(@babel/runtime@7.28.4)(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
+  '@metamask/connect-evm@1.0.0(@babel/runtime@7.28.4)(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
     dependencies:
       '@metamask/analytics': 0.4.0
       '@metamask/chain-agnostic-permission': 1.4.0(@babel/runtime@7.28.4)
-      '@metamask/connect-multichain': 0.11.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      '@metamask/connect-multichain': 0.12.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@metamask/utils': 11.10.0
     transitivePeerDependencies:
       - '@babel/runtime'
@@ -13525,13 +13525,13 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@metamask/connect-multichain@0.11.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
+  '@metamask/connect-multichain@0.12.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
     dependencies:
       '@metamask/analytics': 0.4.0
       '@metamask/mobile-wallet-protocol-core': 0.4.0
       '@metamask/mobile-wallet-protocol-dapp-client': 0.3.0
       '@metamask/multichain-api-client': 0.10.1
-      '@metamask/multichain-ui': 0.4.0
+      '@metamask/multichain-ui': 0.4.1
       '@metamask/onboarding': 1.0.1
       '@metamask/rpc-errors': 7.0.3
       '@metamask/utils': 11.10.0
@@ -13608,7 +13608,7 @@ snapshots:
 
   '@metamask/multichain-api-client@0.10.1': {}
 
-  '@metamask/multichain-ui@0.4.0':
+  '@metamask/multichain-ui@0.4.1':
     dependencies:
       '@paulmillr/qr': 0.2.1
       qr-code-styling: 1.9.2
@@ -13656,7 +13656,7 @@ snapshots:
       '@metamask/superstruct': 3.2.1
       '@noble/hashes': 1.8.0
       '@scure/base': 1.2.6
-      '@types/debug': 4.1.7
+      '@types/debug': 4.1.13
       '@types/lodash': 4.17.24
       debug: 4.4.3
       lodash: 4.18.1
@@ -13672,7 +13672,7 @@ snapshots:
       '@metamask/superstruct': 3.2.1
       '@noble/hashes': 1.8.0
       '@scure/base': 1.2.6
-      '@types/debug': 4.1.7
+      '@types/debug': 4.1.13
       debug: 4.4.3
       pony-cause: 2.1.11
       semver: 7.7.3
