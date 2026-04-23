@@ -2,4 +2,4 @@
 '@wagmi/core': patch
 ---
 
-feat(tempo): Pass `theme` option through to `tempoWallet` connector.
+Passed `theme` option through to `tempoWallet` connector.
