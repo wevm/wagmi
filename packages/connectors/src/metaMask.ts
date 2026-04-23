@@ -115,14 +115,14 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           provider.emit('connectAndSign', {
             accounts,
             chainId: numberToHex(currentChainId),
-            signature: signResponse,
-          })
+            signResponse,
+          } as never)
         else if (connectWithResponse)
           provider.emit('connectWith', {
             accounts,
             chainId: numberToHex(currentChainId),
-            result: connectWithResponse,
-          })
+            connectWithResponse,
+          } as never)
 
         return {
           // TODO(v3): Make `withCapabilities: true` default behavior
