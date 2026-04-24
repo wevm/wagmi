@@ -35,7 +35,6 @@ type AccountsAdapter = NonNullable<AccountsProviderParameters['adapter']>
 type AccountsDangerousSecp256k1Parameters = NonNullable<
   Parameters<typeof accountsDangerousSecp256k1>[0]
 >
-type AccountsStorage = NonNullable<AccountsProviderParameters['storage']>
 type AccountsWebAuthnParameters = NonNullable<
   Parameters<typeof accountsWebAuthn>[0]
 >
@@ -171,44 +170,6 @@ export declare namespace dangerous_secp256k1 {
     Omit<AccountsProviderParameters, 'adapter' | 'chains'>
 }
 
-function createAccountsStorage(
-  storage: {
-    getItem(key: string, defaultValue?: null | undefined): unknown
-    setItem(key: string, value: unknown): void | Promise<void>
-    removeItem(key: string): void | Promise<void>
-  },
-  namespace: string,
-): AccountsStorage {
-  const prefix = `accounts.${namespace}`
-  return {
-    async getItem<value>(key: string) {
-      return ((await storage.getItem(`${prefix}.${key}`, null)) ??
-        null) as value | null
-    },
-    async removeItem(key) {
-      await storage.removeItem(`${prefix}.${key}`)
-    },
-    async setItem(key, value) {
-      await storage.setItem(`${prefix}.${key}`, value)
-    },
-  }
-}
-
-function createMemoryAccountsStorage(): AccountsStorage {
-  const map = new Map<string, unknown>()
-  return {
-    async getItem<value>(key: string) {
-      return (map.get(key) ?? null) as value | null
-    },
-    async removeItem(key) {
-      map.delete(key)
-    },
-    async setItem(key, value) {
-      map.set(key, value)
-    },
-  }
-}
-
 function _setup(parameters: setup.Parameters) {
   type Properties = {
     connect<withCapabilities extends boolean = false>(
@@ -238,11 +199,6 @@ function _setup(parameters: setup.Parameters) {
           ...parameters.providerParameters,
           adapter: parameters.createAdapter(accounts),
           chains: config.chains as never,
-          storage:
-            parameters.providerParameters.storage ??
-            (config.storage
-              ? createAccountsStorage(config.storage, parameters.id)
-              : createMemoryAccountsStorage()),
         }) as unknown as Provider
       })()
 
