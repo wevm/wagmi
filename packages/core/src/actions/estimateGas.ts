@@ -1,4 +1,4 @@
-import type { Account, Address, Chain } from 'viem'
+import type { Chain } from 'viem'
 import {
   type EstimateGasErrorType as viem_EstimateGasErrorType,
   type EstimateGasParameters as viem_EstimateGasParameters,
@@ -15,10 +15,8 @@ import type {
 } from '../types/properties.js'
 import type { UnionCompute, UnionLooseOmit } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
-import {
-  type GetConnectorClientErrorType,
-  getConnectorClient,
-} from './getConnectorClient.js'
+import { getConnectorAccount } from './getConnectorAccount.js'
+import type { GetConnectorClientErrorType } from './getConnectorClient.js'
 
 export type EstimateGasParameters<
   config extends Config = Config,
@@ -56,17 +54,11 @@ export async function estimateGas<
 ): Promise<EstimateGasReturnType> {
   const { chainId, connector, ...rest } = parameters
 
-  let account: Address | Account
-  if (parameters.account) account = parameters.account
-  else {
-    const connectorClient = await getConnectorClient(config, {
-      account: parameters.account,
-      assertChainId: false,
-      chainId,
-      connector,
-    })
-    account = connectorClient.account
-  }
+  const account = await getConnectorAccount(config, {
+    account: parameters.account,
+    chainId,
+    connector,
+  })
 
   const client = config.getClient({ chainId })
   const action = getAction(client, viem_estimateGas, 'estimateGas')

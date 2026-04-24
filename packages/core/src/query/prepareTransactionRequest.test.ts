@@ -64,6 +64,29 @@ test('parameters: account', () => {
   `)
 })
 
+test('parameters: connector', () => {
+  expect(
+    prepareTransactionRequestQueryOptions(config, {
+      connector: config.connectors[0],
+      to: targetAccount,
+      value: parseEther('1'),
+    }),
+  ).toMatchInlineSnapshot(`
+    {
+      "enabled": true,
+      "queryFn": [Function],
+      "queryKey": [
+        "prepareTransactionRequest",
+        {
+          "connectorUid": "${config.connectors[0]?.uid}",
+          "to": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
+          "value": 1000000000000000000n,
+        },
+      ],
+    }
+  `)
+})
+
 test('parameters: data', () => {
   expect(
     prepareTransactionRequestQueryOptions(config, {

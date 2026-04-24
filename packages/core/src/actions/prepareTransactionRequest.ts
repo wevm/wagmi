@@ -10,15 +10,20 @@ import type {
 import { prepareTransactionRequest as viem_prepareTransactionRequest } from 'viem/actions'
 
 import type { Config } from '../createConfig.js'
+import type { BaseErrorType, ErrorType } from '../errors/base.js'
 import type { SelectChains } from '../types/chain.js'
-import type { ChainIdParameter } from '../types/properties.js'
+import type {
+  ChainIdParameter,
+  ConnectorParameter,
+} from '../types/properties.js'
 import type {
   IsNarrowable,
   UnionCompute,
   UnionStrictOmit,
 } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
-import { getConnection } from './getConnection.js'
+import { getConnectorAccount } from './getConnectorAccount.js'
+import type { GetConnectorClientErrorType } from './getConnectorClient.js'
 
 export type PrepareTransactionRequestParameters<
   config extends Config = Config,
@@ -51,7 +56,8 @@ export type PrepareTransactionRequestParameters<
       >,
       'chain'
     > &
-      ChainIdParameter<config, chainId> & {
+      ChainIdParameter<config, chainId> &
+      ConnectorParameter & {
         to: Address
       }
   >
@@ -89,7 +95,10 @@ export type PrepareTransactionRequestReturnType<
 }[number]
 
 export type PrepareTransactionRequestErrorType =
-  viem_PrepareTransactionRequestErrorType
+  | GetConnectorClientErrorType
+  | BaseErrorType
+  | ErrorType
+  | viem_PrepareTransactionRequestErrorType
 
 /** https://wagmi.sh/core/api/actions/prepareTransactionRequest */
 export async function prepareTransactionRequest<
@@ -103,9 +112,15 @@ export async function prepareTransactionRequest<
   config: config,
   parameters: PrepareTransactionRequestParameters<config, chainId, request>,
 ): Promise<PrepareTransactionRequestReturnType<config, chainId, request>> {
-  const { account: account_, chainId, ...rest } = parameters
+  const { chainId, connector, ...rest } = parameters
 
-  const account = account_ ?? getConnection(config).address
+  const account = await getConnectorAccount(config, {
+    account: parameters.account,
+    chainId,
+    connector,
+    required: false,
+  })
+
   const client = config.getClient({ chainId })
 
   const action = getAction(

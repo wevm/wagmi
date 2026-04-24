@@ -12,6 +12,7 @@ const targetAccount = accounts[1]
 test('default', async () => {
   const options = prepareTransactionRequestQueryOptions(config, {
     chainId: 1,
+    connector: config.connectors[0],
     to: '0x',
     value: parseEther('1'),
   })
@@ -47,6 +48,7 @@ test('chain formatters', async () => {
   {
     const options = prepareTransactionRequestQueryOptions(config, {
       chainId: celo.id,
+      connector: config.connectors[0],
       to: targetAccount,
       value: parseEther('0.01'),
       feeCurrency: '0x',

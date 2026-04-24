@@ -57,6 +57,7 @@ export function prepareTransactionRequestQueryOptions<
       if (!parameters.to) throw new Error('to is required')
       return prepareTransactionRequest(config, {
         ...(parameters as any),
+        connector: options.connector,
         to: parameters.to,
       }) as unknown as Promise<
         PrepareTransactionRequestQueryFnData<config, chainId, request>

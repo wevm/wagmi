@@ -22,10 +22,8 @@ import type {
 } from '../types/properties.js'
 import type { Compute, PartialBy, UnionCompute } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
-import {
-  type GetConnectorClientErrorType,
-  getConnectorClient,
-} from './getConnectorClient.js'
+import { getConnectorAccount } from './getConnectorAccount.js'
+import type { GetConnectorClientErrorType } from './getConnectorClient.js'
 
 export type SimulateContractParameters<
   abi extends Abi | readonly unknown[] = Abi,
@@ -130,16 +128,11 @@ export async function simulateContract<
   const { abi, chainId, connector, ...rest } =
     parameters as SimulateContractParameters
 
-  let account: Address | Account
-  if (parameters.account) account = parameters.account
-  else {
-    const connectorClient = await getConnectorClient(config, {
-      assertChainId: false,
-      chainId,
-      connector,
-    })
-    account = connectorClient.account
-  }
+  const account = await getConnectorAccount(config, {
+    account: parameters.account,
+    chainId,
+    connector,
+  })
 
   const client = config.getClient({ chainId })
   const action = getAction(client, viem_simulateContract, 'simulateContract')
