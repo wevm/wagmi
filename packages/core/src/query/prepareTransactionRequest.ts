@@ -51,13 +51,15 @@ export function prepareTransactionRequestQueryOptions<
 ): PrepareTransactionRequestQueryOptions<config, chainId, request, selectData> {
   return {
     ...options.query,
-    enabled: Boolean(options.to && (options.query?.enabled ?? true)),
+    enabled: Boolean(
+      (options.to || options.calls) && (options.query?.enabled ?? true),
+    ),
     queryFn: async (context) => {
       const [, { scopeKey: _, ...parameters }] = context.queryKey
-      if (!parameters.to) throw new Error('to is required')
+      if (!parameters.to && !parameters.calls)
+        throw new Error('to or calls is required')
       return prepareTransactionRequest(config, {
         ...(parameters as any),
-        to: parameters.to,
       }) as unknown as Promise<
         PrepareTransactionRequestQueryFnData<config, chainId, request>
       >
