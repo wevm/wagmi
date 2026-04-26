@@ -351,7 +351,7 @@ function _setup(parameters: setup.Parameters) {
       async getClient({ chainId } = {}) {
         const provider = await getProvider()
         return Object.assign(provider.getClient({ chainId }), {
-          account: provider.getAccount(),
+          account: provider.getAccount({ signable: true }),
         }) as never
       },
       async getProvider() {
