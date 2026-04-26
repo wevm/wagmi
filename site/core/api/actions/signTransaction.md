@@ -32,25 +32,8 @@ const result = await signTransaction(config, {
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
-### Synchronous Usage
-
-If you want to wait for the transaction to be included in a block before returning, you can use `signTransactionSync`:
-
-::: code-group
-
-```ts [index.ts]
-import { signTransactionSync } from '@wagmi/core'
-import { parseEther } from 'viem'
-import { config } from './config'
-
-const receipt = await signTransactionSync(config, {
-  to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
-  value: parseEther('0.01'),
-})
-```
-
-<<< @/snippets/core/config.ts[config.ts]
-:::
+`signTransaction` only signs the transaction and returns the serialized transaction.
+If you want to broadcast a transaction, use [`sendTransaction`](/core/api/actions/sendTransaction) or [`writeContract`](/core/api/actions/writeContract) instead.
 
 ## Parameters
 
