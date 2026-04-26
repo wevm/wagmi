@@ -174,7 +174,7 @@ import { normalize } from 'viem/ens'
 
 function App() {
   const result = useEnsAvatar({
-    gatewayUrls: ['https://cloudflare-ipfs.com'] { // [!code focus]
+    gatewayUrls: ['https://cloudflare-ipfs.com'], // [!code focus]
     name: normalize('wevm.eth'),
   })
 }
