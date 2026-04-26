@@ -1,5 +1,17 @@
 # @wagmi/core
 
+## 3.4.6
+
+### Patch Changes
+
+- Resolved `account` in `prepareTransactionRequest` via `getConnectorClient` so connectors with a `getClient` method can supply a signable account. ([#5084](https://github.com/wevm/wagmi/pull/5084))
+
+- Fixed `tempoWallet` connector to use default storage on `accounts`. ([#5078](https://github.com/wevm/wagmi/pull/5078))
+
+- Passed `theme` option through to `tempoWallet` connector. ([#5074](https://github.com/wevm/wagmi/pull/5074))
+
+- `wagmi/tempo`: Updated `webAuthn` connector's `getClient` to return a signable account via `provider.getAccount({ signable: true })`. ([#5084](https://github.com/wevm/wagmi/pull/5084))
+
 ## 3.4.5
 
 ### Patch Changes
