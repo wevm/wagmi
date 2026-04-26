@@ -52,7 +52,7 @@ export type PrepareTransactionRequestParameters<
       'chain'
     > &
       ChainIdParameter<config, chainId> & {
-        to: Address
+        to?: Address | undefined
       }
   >
 }[number]
