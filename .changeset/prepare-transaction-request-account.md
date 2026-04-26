@@ -2,4 +2,4 @@
 '@wagmi/core': patch
 ---
 
-`prepareTransactionRequest` now resolves the account via `getConnectorClient` when no `account` is provided. This lets connectors that implement `getClient` (e.g. `webAuthn`) supply a local signing account instead of falling back to a json-rpc account. Also updated the `webAuthn` connector's `getClient` to return a signable account via `provider.getAccount({ signable: true })`.
+Resolved `account` in `prepareTransactionRequest` via `getConnectorClient` so connectors with a `getClient` method can supply a signable account. Updated `webAuthn` connector to return a signable account from `getClient`.
