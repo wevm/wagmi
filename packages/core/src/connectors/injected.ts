@@ -357,15 +357,23 @@ export function injected(parameters: InjectedParameters = {}) {
       const chain = config.chains.find((x) => x.id === chainId)
       if (!chain) throw new SwitchChainError(new ChainNotConfiguredError())
 
-      const promise = new Promise<void>((resolve) => {
-        const listener = ((data) => {
-          if ('chainId' in data && data.chainId === chainId) {
-            config.emitter.off('change', listener)
-            resolve()
-          }
-        }) satisfies Parameters<typeof config.emitter.on>[1]
-        config.emitter.on('change', listener)
-      })
+      const createChainChangeListener = () => {
+        let cleanup = () => {}
+        const promise = new Promise<void>((resolve) => {
+          const listener = ((data) => {
+            if ('chainId' in data && data.chainId === chainId) {
+              cleanup()
+              resolve()
+            }
+          }) satisfies Parameters<typeof config.emitter.on>[1]
+          cleanup = () => config.emitter.off('change', listener)
+          config.emitter.on('change', listener)
+        })
+
+        return { cleanup, promise }
+      }
+
+      let { cleanup, promise } = createChainChangeListener()
 
       try {
         await Promise.all([
@@ -388,6 +396,7 @@ export function injected(parameters: InjectedParameters = {}) {
         ])
         return chain
       } catch (err) {
+        cleanup()
         const error = err as RpcError
 
         // Indicates chain is not added to provider
@@ -426,6 +435,7 @@ export function injected(parameters: InjectedParameters = {}) {
               rpcUrls,
             } satisfies AddEthereumChainParameter
 
+            ;({ cleanup, promise } = createChainChangeListener())
             await Promise.all([
               provider
                 .request({
@@ -446,6 +456,7 @@ export function injected(parameters: InjectedParameters = {}) {
 
             return chain
           } catch (error) {
+            cleanup()
             throw new UserRejectedRequestError(error as Error)
           }
         }
