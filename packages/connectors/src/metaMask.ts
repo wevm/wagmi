@@ -19,24 +19,6 @@ import {
   withTimeout,
 } from 'viem'
 
-type LegacyConnectorEventPayloads = {
-  connectAndSign: {
-    accounts: readonly Address[]
-    chainId: Hex
-    signResponse: string
-  }
-  connectWith: {
-    accounts: readonly Address[]
-    chainId: Hex
-    connectWithResponse: unknown
-  }
-}
-
-type LegacyEmit = <K extends keyof LegacyConnectorEventPayloads>(
-  event: K,
-  payload: LegacyConnectorEventPayloads[K],
-) => boolean
-
 export type MetaMaskParameters = UnionCompute<
   ExactPartial<Omit<CreateEVMClientParameters, 'api' | 'eventHandlers'>> & {
     /**
@@ -87,7 +69,24 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
     type: metaMask.type,
     async connect({ chainId, isReconnecting, withCapabilities } = {}) {
       const instance = await this.getInstance()
-      const provider = instance.getProvider()
+      const provider = instance.getProvider() as EIP1193Provider & {
+        emit: <key extends keyof LegacyConnectorEventPayloads>(
+          event: key,
+          payload: LegacyConnectorEventPayloads[key],
+        ) => boolean
+      }
+      type LegacyConnectorEventPayloads = {
+        connectAndSign: {
+          accounts: readonly Address[]
+          chainId: Hex
+          signResponse: string
+        }
+        connectWith: {
+          accounts: readonly Address[]
+          chainId: Hex
+          connectWithResponse: unknown
+        }
+      }
 
       let accounts: readonly Address[] = []
       if (isReconnecting) accounts = await this.getAccounts().catch(() => [])
@@ -130,7 +129,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           currentChainId = chain?.id ?? currentChainId
         }
 
-        const emitLegacy = provider.emit as LegacyEmit
+        const emitLegacy = provider.emit
         if (signResponse)
           emitLegacy('connectAndSign', {
             accounts,
