@@ -129,15 +129,14 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           currentChainId = chain?.id ?? currentChainId
         }
 
-        const emitLegacy = provider.emit
         if (signResponse)
-          emitLegacy('connectAndSign', {
+          provider.emit('connectAndSign', {
             accounts,
             chainId: numberToHex(currentChainId),
             signResponse,
           })
         else if (connectWithResponse)
-          emitLegacy('connectWith', {
+          provider.emit('connectWith', {
             accounts,
             chainId: numberToHex(currentChainId),
             connectWithResponse,
