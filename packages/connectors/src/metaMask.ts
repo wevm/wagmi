@@ -8,6 +8,7 @@ import type { ExactPartial, OneOf, UnionCompute } from '@wagmi/core/internal'
 import {
   type Address,
   getAddress,
+  type Hex,
   numberToHex,
   type ProviderConnectInfo,
   ResourceUnavailableRpcError,
@@ -68,7 +69,24 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
     type: metaMask.type,
     async connect({ chainId, isReconnecting, withCapabilities } = {}) {
       const instance = await this.getInstance()
-      const provider = instance.getProvider()
+      const provider = instance.getProvider() as EIP1193Provider & {
+        emit: <key extends keyof LegacyConnectorEventPayloads>(
+          event: key,
+          payload: LegacyConnectorEventPayloads[key],
+        ) => boolean
+      }
+      type LegacyConnectorEventPayloads = {
+        connectAndSign: {
+          accounts: readonly Address[]
+          chainId: Hex
+          signResponse: string
+        }
+        connectWith: {
+          accounts: readonly Address[]
+          chainId: Hex
+          connectWithResponse: unknown
+        }
+      }
 
       let accounts: readonly Address[] = []
       if (isReconnecting) accounts = await this.getAccounts().catch(() => [])
@@ -80,16 +98,20 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           const chainIds = config.chains.map((chain) => numberToHex(chain.id))
           if (parameters.connectAndSign || parameters.connectWith) {
             if (parameters.connectAndSign)
-              signResponse = await instance.connectAndSign({
-                chainIds,
-                message: parameters.connectAndSign,
-              })
+              signResponse = (
+                await instance.connectAndSign({
+                  chainIds,
+                  message: parameters.connectAndSign,
+                })
+              ).signature
             else if (parameters.connectWith)
-              connectWithResponse = await instance.connectWith({
-                chainIds,
-                method: parameters.connectWith.method,
-                params: parameters.connectWith.params,
-              })
+              connectWithResponse = (
+                await instance.connectWith({
+                  chainIds,
+                  method: parameters.connectWith.method,
+                  params: parameters.connectWith.params,
+                })
+              ).result
 
             accounts = await this.getAccounts()
           } else {
