@@ -8,6 +8,7 @@ import type { ExactPartial, OneOf, UnionCompute } from '@wagmi/core/internal'
 import {
   type Address,
   getAddress,
+  type Hex,
   numberToHex,
   type ProviderConnectInfo,
   ResourceUnavailableRpcError,
@@ -17,6 +18,24 @@ import {
   withRetry,
   withTimeout,
 } from 'viem'
+
+type LegacyConnectorEventPayloads = {
+  connectAndSign: {
+    accounts: readonly Address[]
+    chainId: Hex
+    signResponse: string
+  }
+  connectWith: {
+    accounts: readonly Address[]
+    chainId: Hex
+    connectWithResponse: unknown
+  }
+}
+
+type LegacyEmit = <K extends keyof LegacyConnectorEventPayloads>(
+  event: K,
+  payload: LegacyConnectorEventPayloads[K],
+) => boolean
 
 export type MetaMaskParameters = UnionCompute<
   ExactPartial<Omit<CreateEVMClientParameters, 'api' | 'eventHandlers'>> & {
@@ -111,18 +130,19 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
           currentChainId = chain?.id ?? currentChainId
         }
 
+        const emitLegacy = provider.emit as LegacyEmit
         if (signResponse)
-          provider.emit('connectAndSign', {
+          emitLegacy('connectAndSign', {
             accounts,
             chainId: numberToHex(currentChainId),
             signResponse,
-          } as never)
+          })
         else if (connectWithResponse)
-          provider.emit('connectWith', {
+          emitLegacy('connectWith', {
             accounts,
             chainId: numberToHex(currentChainId),
             connectWithResponse,
-          } as never)
+          })
 
         return {
           // TODO(v3): Make `withCapabilities: true` default behavior
