@@ -1,12 +1,17 @@
+import { disconnect } from '@wagmi/core'
 import { accounts, addresses, config, renderHook } from '@wagmi/test/tempo'
 import { type Address, parseUnits } from 'viem'
-import { describe, expect, test, vi } from 'vitest'
+import { beforeEach, describe, expect, test, vi } from 'vitest'
 
 import { useConnect } from '../../hooks/useConnect.js'
 import * as hooks from './amm.js'
 import * as tokenHooks from './token.js'
 
 const account = accounts[0]
+
+beforeEach(async () => {
+  await disconnect(config).catch(() => {})
+})
 
 describe('usePool', () => {
   test('default', async () => {

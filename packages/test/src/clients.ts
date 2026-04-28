@@ -47,6 +47,10 @@ function wagmiTestMethods(
   >,
 ) {
   return {
+    /** Destroys instance attached to chain. */
+    async destroy() {
+      return await fetch(`${client.chain.rpcUrls.default.http[0]}/destroy`)
+    },
     /** Resets instance attached to chain. */
     async restart() {
       return await fetch(`${client.chain.rpcUrls.default.http[0]}/restart`)

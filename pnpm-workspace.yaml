@@ -27,7 +27,7 @@ autoInstallPeers: false
 catalog:
   '@base-org/account': 2.4.0
   '@coinbase/wallet-sdk': 4.3.6
-  '@metamask/connect-evm': 0.9.0
+  '@metamask/connect-evm': 1.0.0
   '@nuxt/schema': 4.2.1
   '@safe-global/safe-apps-provider': 0.18.6
   '@safe-global/safe-apps-sdk': 9.1.0
@@ -40,6 +40,7 @@ catalog:
   '@vitejs/plugin-react': ^6.0.1
   '@vitejs/plugin-vue': 6.0.5
   '@walletconnect/ethereum-provider': 2.21.1
+  accounts: 0.8.1
   buffer: 6.0.3
   nuxt: 4.2.1
   ox: 0.11.1
@@ -64,9 +65,11 @@ minimumReleaseAgeExclude:
   - '@wagmi/test'
   - '@wagmi/solid'
   - '@wagmi/vue'
+  - accounts
   - abitype
   - ox
   - porto
+  - hono
   - prool
   - wagmi
   - viem
@@ -77,13 +80,14 @@ overrides:
   '@isaacs/brace-expansion@<=5.0.0': 5.0.1
   brace-expansion@<1.1.13: '>=1.1.13'
   brace-expansion@>=2.0.0 <2.0.3: '>=2.0.3'
-  axios@<=1.13.4: 1.13.5
+  axios@<1.15.0: 1.15.0
   cookie@<0.7.0: 0.7.0
   bn.js@>=5.0.0 <5.2.3: 5.2.3
   devalue@<5.6.4: 5.6.4
   diff@<8.0.3: 8.0.3
   elliptic@<=6.6.0: '>=6.6.1'
   esbuild@<=0.24.2: 0.25.0
+  follow-redirects@<=1.15.11: 1.16.0
   glob@>=10.2.0 <10.5.0: 10.5.0
   h3@<1.15.9: 1.15.9
   h3-v2: npm:h3@2.0.1-rc.18
@@ -92,12 +96,13 @@ overrides:
   minimatch@>=5.0.0 <5.1.8: 5.1.8
   minimatch@>=9.0.0 <9.0.7: 9.0.7
   minimatch@>=10.0.0 <10.2.3: 10.2.3
-  hono@<4.12.7: 4.12.7
+  hono@<4.12.14: 4.12.14
   lodash@>=4.0.0 <=4.17.23: '>=4.18.0'
   markdown-it@>=13.0.0 <14.1.1: 14.1.1
   mdast-util-to-hast@<13.2.1: '>=13.2.1'
   nanoid@<3.3.8: 3.3.8
   node-forge@<1.4.0: '>=1.4.0'
+  protobufjs@<7.5.5: 7.5.5
   rollup@>=4.0.0 <4.59.0: 4.59.0
   semver@<5.7.2: '>=5.7.2'
   serialize-javascript@<7.0.5: '>=7.0.5'
@@ -106,12 +111,14 @@ overrides:
   svgo@=4.0.0: 4.0.1
   tar@<=7.5.10: 7.5.11
   tmp@<=0.2.3: 0.2.4
-  unhead@<=2.1.10: 2.1.11
+  unhead@<2.1.13: 2.1.13
   undici@<6.24.0: 6.24.0
   undici@>=7.0.0 <7.24.0: 7.24.0
   vite@>=6.0.0 <=6.4.1: '>=6.4.2'
   vite@>=7.0.0 <=7.3.1: '>=7.3.2'
   vite@>=8.0.0 <=8.0.4: '>=8.0.5'
+  postcss@<8.5.10: 8.5.10
+  uuid@<14.0.0: 14.0.0
   wrangler@>=4.0.0 <4.59.1: '>=4.59.1'
   defu@<=6.1.4: '>=6.1.5'
   picomatch@<2.3.2: '>=2.3.2'

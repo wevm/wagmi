@@ -22,3 +22,13 @@ export {
   viem_setupToken,
   viem_setupTokenPair,
 } from '../tempo/config.js'
+export {
+  zoneDepositStatus,
+  zoneInfo,
+  zoneLocal,
+  zonePortalAddress,
+  zonePortalEncryptionKey,
+  zonePortalEncryptionKeyCount,
+  zoneRpcUrl,
+  zoneStorage,
+} from '../tempo/zone.js'

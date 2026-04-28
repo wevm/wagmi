@@ -34,7 +34,10 @@ test('default', async () => {
 
   expect(data).toMatchInlineSnapshot(`
     {
-      "account": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
+      "account": {
+        "address": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
+        "type": "json-rpc",
+      },
       "chainId": 1,
       "from": "0x95132632579b073D12a6673e18Ab05777a6B86f8",
       "to": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",

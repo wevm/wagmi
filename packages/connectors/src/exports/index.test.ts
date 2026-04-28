@@ -7,6 +7,7 @@ test('exports', () => {
     [
       "injected",
       "mock",
+      "tempoWallet",
       "baseAccount",
       "coinbaseWallet",
       "metaMask",

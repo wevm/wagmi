@@ -1,7 +1,7 @@
 {
   "name": "@wagmi/core",
   "description": "VanillaJS library for Ethereum",
-  "version": "3.4.2",
+  "version": "3.4.6",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -11,7 +11,7 @@
   "scripts": {
     "build": "pnpm run build:esm+types",
     "build:esm+types": "tsc --project tsconfig.build.json --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
-    "check:types": "tsc --noEmit",
+    "check:types": "tsgo --noEmit",
     "clean": "rm -rf dist tsconfig.tsbuildinfo actions chains codegen internal query tempo",
     "test:build": "publint --strict && attw --pack --ignore-rules cjs-resolves-to-esm"
   },
@@ -87,7 +87,7 @@
   },
   "peerDependencies": {
     "@tanstack/query-core": ">=5.0.0",
-    "ox": ">=0.11.1",
+    "accounts": "~0.8.1",
     "typescript": ">=5.7.3",
     "viem": "2.x"
   },
@@ -95,7 +95,7 @@
     "@tanstack/query-core": {
       "optional": true
     },
-    "ox": {
+    "accounts": {
       "optional": true
     },
     "typescript": {
@@ -109,7 +109,7 @@
   },
   "devDependencies": {
     "@tanstack/query-core": "catalog:",
-    "ox": "catalog:"
+    "accounts": "catalog:"
   },
   "contributors": [
     "awkweb.eth <t@wevm.dev>",

@@ -81,3 +81,13 @@
 | [`token.useWatchMint`](/tempo/hooks/token.useWatchMint) | Hook for watching token mint events |
 | [`token.useWatchRole`](/tempo/hooks/token.useWatchRole) | Hook for watching role membership update events |
 | [`token.useWatchTransfer`](/tempo/hooks/token.useWatchTransfer) | Hook for watching token transfer events |
+| **Zone Hooks** | |
+| [`zone.useAuthorizationTokenInfo`](/tempo/hooks/zone.useAuthorizationTokenInfo) | Hook for getting information about the current zone authorization token |
+| [`zone.useDeposit`](/tempo/hooks/zone.useDeposit) | Hook for depositing tokens from the parent Tempo chain into a zone |
+| [`zone.useDepositStatus`](/tempo/hooks/zone.useDepositStatus) | Hook for getting deposit processing status for a Tempo block number |
+| [`zone.useEncryptedDeposit`](/tempo/hooks/zone.useEncryptedDeposit) | Hook for depositing tokens into a zone with an encrypted recipient and memo |
+| [`zone.useRequestVerifiableWithdrawal`](/tempo/hooks/zone.useRequestVerifiableWithdrawal) | Hook for requesting a verifiable withdrawal from a zone to the parent Tempo chain |
+| [`zone.useRequestWithdrawal`](/tempo/hooks/zone.useRequestWithdrawal) | Hook for requesting a withdrawal from a zone to the parent Tempo chain |
+| [`zone.useSignAuthorizationToken`](/tempo/hooks/zone.useSignAuthorizationToken) | Hook for signing and storing a Tempo zone authorization token |
+| [`zone.useWithdrawalFee`](/tempo/hooks/zone.useWithdrawalFee) | Hook for getting the withdrawal fee for a given gas limit |
+| [`zone.useZoneInfo`](/tempo/hooks/zone.useZoneInfo) | Hook for getting Tempo zone metadata |

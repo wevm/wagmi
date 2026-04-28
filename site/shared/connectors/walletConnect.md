@@ -161,7 +161,7 @@ const connector = walletConnect({
 
 `string`
 
-WalletConnect Cloud project identifier. You can find your `projectId` on your [WalletConnect dashboard](https://cloud.reown.com/sign-in).
+WalletConnect Cloud project identifier. You can find your `projectId` on your [WalletConnect dashboard](https://dashboard.reown.com/sign-in).
 
 ```ts-vue
 import { walletConnect } from '{{connectorsPackageName}}'

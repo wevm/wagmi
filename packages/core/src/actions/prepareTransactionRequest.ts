@@ -18,7 +18,7 @@ import type {
   UnionStrictOmit,
 } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
-import { getConnection } from './getConnection.js'
+import { getConnectorClient } from './getConnectorClient.js'
 
 export type PrepareTransactionRequestParameters<
   config extends Config = Config,
@@ -105,7 +105,17 @@ export async function prepareTransactionRequest<
 ): Promise<PrepareTransactionRequestReturnType<config, chainId, request>> {
   const { account: account_, chainId, ...rest } = parameters
 
-  const account = account_ ?? getConnection(config).address
+  let account: Address | Account | undefined
+  if (account_) account = account_
+  else {
+    const connectorClient = await getConnectorClient(config, {
+      account: account_,
+      assertChainId: false,
+      chainId,
+    })
+    account = connectorClient.account
+  }
+
   const client = config.getClient({ chainId })
 
   const action = getAction(

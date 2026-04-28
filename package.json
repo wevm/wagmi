@@ -10,7 +10,8 @@
     "changeset:version": "changeset version && pnpm version:update && pnpm format",
     "check": "biome check --write",
     "check:repo": "sherif -i viem",
-    "check:types": "pnpm run --r --parallel check:types && tsc --noEmit",
+    "check:types": "pnpm run --r --parallel check:types && tsgo --noEmit",
+    "check:types:typescript": "pnpm -r --parallel --filter './packages/*' --filter './packages/register-tests/*' exec tsc --noEmit && tsc --noEmit",
     "check:unused": "pnpm clean && knip",
     "clean": "pnpm run --r --parallel clean && rm -rf packages/**/*.json.tmp",
     "deps": "pnpx taze -r",
@@ -46,6 +47,7 @@
     "@changesets/cli": "^3.0.0-next.0",
     "@svitejs/changesets-changelog-github-compact": "^1.2.0",
     "@types/node": "^24.5.1",
+    "@typescript/native-preview": "7.0.0-dev.20260415.1",
     "@vitejs/plugin-react": "catalog:",
     "@vitest/browser": "^4.1.2",
     "@vitest/browser-playwright": "^4.1.2",
@@ -63,7 +65,7 @@
     "solid-js": "catalog:",
     "testcontainers": "^11.13.0",
     "typescript": "^5.9.3",
-    "viem": "2.47.5",
+    "viem": "2.48.3",
     "vite-plugin-react-fallback-throttle": "^0.1.3",
     "vite-plugin-solid": "catalog:",
     "vitest": "^4.1.2",
@@ -107,6 +109,7 @@
       "packages/connectors": {
         "entry": "src/exports/index.ts!",
         "ignoreDependencies": [
+          "accounts",
           "@base-org/account",
           "@coinbase/wallet-sdk",
           "@metamask/connect-evm",
@@ -124,6 +127,7 @@
         ],
         "ignoreDependencies": [
           "@tanstack/query-core",
+          "accounts",
           "ox"
         ]
       },

@@ -61,7 +61,7 @@ export class ConnectorAccountNotFoundError extends BaseError {
   }
 }
 
-export type ConnectorChainMismatchErrorType = ConnectorAccountNotFoundError & {
+export type ConnectorChainMismatchErrorType = ConnectorChainMismatchError & {
   name: 'ConnectorChainMismatchError'
 }
 export class ConnectorChainMismatchError extends BaseError {
