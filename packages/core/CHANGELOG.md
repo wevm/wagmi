@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 3.4.7
+
+### Patch Changes
+
+- Fixed an issue where `prepareTransactionRequest` required a top-level `to` when using `calls`. ([#5079](https://github.com/wevm/wagmi/pull/5079))
+
 ## 3.4.6
 
 ### Patch Changes
