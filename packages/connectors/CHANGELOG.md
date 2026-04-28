@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 8.0.8
+
+### Patch Changes
+
+- Bumped accounts package version ([`c9c0e2b`](https://github.com/wevm/wagmi/commit/c9c0e2b027985edc1e5c1fcd25fd69d9811472f3))
+
 ## 8.0.7
 
 ### Patch Changes
