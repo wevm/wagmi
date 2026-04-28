@@ -1,6 +1,7 @@
 import type {
   Account,
   Address,
+  Calls,
   Chain,
   PrepareTransactionRequestErrorType as viem_PrepareTransactionRequestErrorType,
   PrepareTransactionRequestParameters as viem_PrepareTransactionRequestParameters,
@@ -36,26 +37,47 @@ export type PrepareTransactionRequestParameters<
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = {
   [key in keyof chains]: UnionCompute<
-    UnionStrictOmit<
-      viem_PrepareTransactionRequestParameters<
-        chains[key],
-        Account,
-        chains[key],
-        Account | Address,
-        request extends viem_PrepareTransactionRequestRequest<
-          chains[key],
+    | (PrepareTransactionRequestParameters_base<
+        config,
+        chainId,
+        request,
+        chains[key]
+      > & {
+        calls?: undefined
+        to: Address
+      })
+    | (UnionStrictOmit<
+        PrepareTransactionRequestParameters_base<
+          config,
+          chainId,
+          request,
           chains[key]
-        >
-          ? request
-          : never
-      >,
-      'chain'
-    > &
-      ChainIdParameter<config, chainId> & {
+        >,
+        'to'
+      > & {
+        calls: Calls<readonly unknown[]>
         to?: Address | undefined
-      }
+      })
   >
 }[number]
+type PrepareTransactionRequestParameters_base<
+  config extends Config,
+  chainId extends config['chains'][number]['id'] | undefined,
+  request extends viem_PrepareTransactionRequestRequest<Chain, Chain>,
+  chain extends Chain,
+> = UnionStrictOmit<
+  viem_PrepareTransactionRequestParameters<
+    chain,
+    Account,
+    chain,
+    Account | Address,
+    request extends viem_PrepareTransactionRequestRequest<chain, chain>
+      ? request
+      : never
+  >,
+  'chain'
+> &
+  ChainIdParameter<config, chainId>
 
 export type PrepareTransactionRequestReturnType<
   config extends Config = Config,

@@ -49,14 +49,17 @@ export function prepareTransactionRequestQueryOptions<
     selectData
   > = {} as any,
 ): PrepareTransactionRequestQueryOptions<config, chainId, request, selectData> {
+  const hasCalls = Array.isArray(options.calls) && options.calls.length > 0
   return {
     ...options.query,
     enabled: Boolean(
-      (options.to || options.calls) && (options.query?.enabled ?? true),
+      (options.to || hasCalls) && (options.query?.enabled ?? true),
     ),
     queryFn: async (context) => {
       const [, { scopeKey: _, ...parameters }] = context.queryKey
-      if (!parameters.to && !parameters.calls)
+      const hasCalls =
+        Array.isArray(parameters.calls) && parameters.calls.length > 0
+      if (!parameters.to && !hasCalls)
         throw new Error('to or calls is required')
       return prepareTransactionRequest(config, {
         ...(parameters as any),

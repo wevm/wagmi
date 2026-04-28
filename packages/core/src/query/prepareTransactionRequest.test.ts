@@ -234,7 +234,7 @@ test('parameters: calls without to', () => {
           data: '0xa9059cbb',
         },
       ],
-    } as any),
+    }),
   ).toMatchInlineSnapshot(`
     {
       "enabled": true,
