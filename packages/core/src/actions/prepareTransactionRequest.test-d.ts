@@ -78,3 +78,19 @@ test('chain formatters', async () => {
     feeCurrency: '0x',
   })
 })
+
+test('parameters: calls without to', async () => {
+  await prepareTransactionRequest(config, {
+    calls: [
+      {
+        to: targetAccount,
+        data: '0xa9059cbb',
+      },
+    ],
+  })
+})
+
+test('parameters: to or calls required', () => {
+  // @ts-expect-error
+  prepareTransactionRequest(config, {})
+})

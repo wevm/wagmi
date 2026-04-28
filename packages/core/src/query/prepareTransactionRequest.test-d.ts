@@ -68,3 +68,16 @@ test('chain formatters', async () => {
     expectTypeOf(request.chainId).toEqualTypeOf(mainnet.id)
   }
 })
+
+test('parameters: calls without to', async () => {
+  const options = prepareTransactionRequestQueryOptions(config, {
+    calls: [
+      {
+        to: targetAccount,
+        data: '0xa9059cbb',
+      },
+    ],
+  })
+  const request = await options.queryFn(context)
+  request.chainId
+})
