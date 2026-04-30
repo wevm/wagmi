@@ -155,6 +155,10 @@ useWatchContractEvent.ReturnType
 
 Primitive returns `void`.
 
+## Type Inference
+
+With [`abi`](#abi) setup correctly, TypeScript will infer the correct types for [`eventName`](#eventname), [`args`](#args), and [`onLogs`](#onlogs) parameters. See the Wagmi [TypeScript docs](/solid/typescript) for more information.
+
 ## Action
 
 - [`watchContractEvent`](/core/api/actions/watchContractEvent)

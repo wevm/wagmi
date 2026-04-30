@@ -142,6 +142,10 @@ useReadContracts.ReturnType
 
 <!--@include: @shared/query-result.md-->
 
+## Type Inference
+
+With each contract ABI in [`contracts`](#contracts) setup correctly, TypeScript will infer the correct types for each contract's `functionName`, `args`, and the return type. See the Wagmi [TypeScript docs](/solid/typescript) for more information.
+
 <!--@include: @shared/query-imports.md-->
 
 ## Action

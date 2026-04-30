@@ -11,7 +11,7 @@ import {
 import { renderPrimitive } from '@wagmi/test/solid'
 import { createWalletClient, erc20Abi, http, parseEther } from 'viem'
 import type { WatchEventOnLogsParameter } from 'viem/actions'
-import { expect, test, vi } from 'vitest'
+import { expect, test } from 'vitest'
 
 import { useWatchContractEvent } from './useWatchContractEvent.js'
 

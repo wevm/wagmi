@@ -1,6 +1,5 @@
 import type { WriteContractErrorType } from '@wagmi/core'
-import { abi } from '@wagmi/test'
-import type { Abi, Address, Hash } from 'viem'
+import type { Abi, Hash } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
 import { useWriteContract } from './useWriteContract.js'

@@ -1262,6 +1262,10 @@ export function getSidebar() {
             text: 'useWriteContract',
             link: '/solid/api/primitives/useWriteContract',
           },
+          {
+            text: 'useWriteContractSync',
+            link: '/solid/api/primitives/useWriteContractSync',
+          },
         ],
       },
       {

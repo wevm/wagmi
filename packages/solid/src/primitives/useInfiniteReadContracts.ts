@@ -66,15 +66,17 @@ export function useInfiniteReadContracts<
 
   const options = createMemo(() => {
     const { contracts = [], query } = parameters()
+    const options = infiniteReadContractsQueryOptions(config(), {
+      ...parameters(),
+      chainId: chainId(),
+      contracts:
+        contracts as useInfiniteReadContracts.SolidParameters['contracts'],
+      query: query as unknown as SolidInfiniteQueryParameters,
+    })
     return {
-      ...infiniteReadContractsQueryOptions(config(), {
-        ...parameters(),
-        chainId: chainId(),
-        contracts:
-          contracts as useInfiniteReadContracts.SolidParameters['contracts'],
-        query: query as unknown as SolidInfiniteQueryParameters,
-      }),
       ...(query as any),
+      ...options,
+      initialPageParam: options.initialPageParam,
       structuralSharing: (query as any).structuralSharing ?? structuralSharing,
     }
   })

@@ -80,8 +80,12 @@ The return type's [`data`](#data) property is a `TransactionReceipt` containing 
 
 <!--@include: @shared/mutation-result.md-->
 
+## Type Inference
+
+With [`abi`](/core/api/actions/writeContract#abi) setup correctly, TypeScript will infer the correct types for [`functionName`](/core/api/actions/writeContract#functionname), [`args`](/core/api/actions/writeContract#args), and [`value`](/core/api/actions/writeContract#value) when calling `mutate` or `mutateAsync`. See the Wagmi [TypeScript docs](/solid/typescript) for more information.
+
 <!--@include: @shared/mutation-imports.md-->
 
 ## Action
 
-- [`writeContract`](/core/api/actions/writeContract)
+- [`writeContractSync`](/core/api/actions/writeContract#synchronous-usage)

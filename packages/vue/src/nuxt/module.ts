@@ -17,9 +17,12 @@ export const wagmiModule: NuxtModule<WagmiModuleOptions> =
       const { resolve } = createResolver(import.meta.url)
 
       // Add types
-      nuxt.hook('prepare:types', ({ references }) => {
-        references.push({ types: '@wagmi/vue/nuxt' })
-      })
+      nuxt.hook(
+        'prepare:types',
+        ({ references }: { references: { types: string }[] }) => {
+          references.push({ types: '@wagmi/vue/nuxt' })
+        },
+      )
 
       // Add auto imports
       const composables = resolve('./runtime/composables')

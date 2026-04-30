@@ -161,6 +161,10 @@ The return type's [`data`](#data) property is inferrable via the combination of 
 
 <!--@include: @shared/query-result.md-->
 
+## Type Inference
+
+With [`abi`](#abi) setup correctly, TypeScript will infer the correct types for [`functionName`](#functionname), [`args`](#args), and [`value`](#value). See the Wagmi [TypeScript docs](/solid/typescript) for more information.
+
 <!--@include: @shared/query-imports.md-->
 
 ## Action

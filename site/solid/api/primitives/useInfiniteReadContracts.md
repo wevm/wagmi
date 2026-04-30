@@ -114,6 +114,10 @@ useInfiniteReadContracts.ReturnType
 
 <!--@include: @shared/query-result.md-->
 
+## Type Inference
+
+With each contract ABI returned from [`contracts`](#contracts) setup correctly, TypeScript will infer the correct types for each contract's `functionName`, `args`, and the paginated return type. See the Wagmi [TypeScript docs](/solid/typescript) for more information.
+
 ## Action
 
 - [`readContracts`](/core/api/actions/readContracts)
