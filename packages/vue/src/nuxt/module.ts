@@ -1,4 +1,4 @@
-import type { NuxtModule } from '@nuxt/schema'
+import type { NuxtHooks, NuxtModule } from '@nuxt/schema'
 import {
   addImports,
   createResolver,
@@ -24,7 +24,8 @@ export const wagmiModule: NuxtModule<WagmiModuleOptions> =
       // Add types
       nuxt.hook(
         'prepare:types',
-        ({ references }: { references: { types: string }[] }) => {
+        (options: Parameters<NuxtHooks['prepare:types']>[0]) => {
+          const { references } = options
           references.push({ types: '@wagmi/vue/nuxt' })
         },
       )
