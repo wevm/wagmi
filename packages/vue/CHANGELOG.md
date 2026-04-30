@@ -1,5 +1,11 @@
 # @wagmi/vue
 
+## 0.5.10
+
+### Patch Changes
+
+- Fixed `useReadContract` type inference when passing reactive `args` values such as Vue `computed()` results. ([`d9bbd4f`](https://github.com/wevm/wagmi/commit/d9bbd4f8ddb6a9e4fde52642fedd6b1e56f67e44))
+
 ## 0.5.9
 
 ### Patch Changes

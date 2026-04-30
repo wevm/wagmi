@@ -1,5 +1,11 @@
 # @wagmi/solid
 
+## 0.0.14
+
+### Patch Changes
+
+- Added contract interaction primitives: `useReadContract`, `useReadContracts`, `useInfiniteReadContracts`, `useSimulateContract`, `useWriteContract`, `useWriteContractSync`, and `useWatchContractEvent`. ([#4997](https://github.com/wevm/wagmi/pull/4997))
+
 ## 0.0.13
 
 ### Patch Changes
