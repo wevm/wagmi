@@ -3,7 +3,11 @@ import type {
   ReadContractErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { ConfigParameter, UnionCompute } from '@wagmi/core/internal'
+import type {
+  ConfigParameter,
+  UnionCompute,
+  UnionLooseOmit,
+} from '@wagmi/core/internal'
 import {
   type ReadContractData,
   type ReadContractOptions,
@@ -35,6 +39,31 @@ export type UseReadContractParameters<
     ReadContractOptions<abi, functionName, args, config, selectData> &
       ConfigParameter<config>
   >
+>
+
+type UseReadContractParametersWithMaybeRefArgs<
+  abi extends Abi | readonly unknown[] = Abi,
+  functionName extends ContractFunctionName<
+    abi,
+    'pure' | 'view'
+  > = ContractFunctionName<abi, 'pure' | 'view'>,
+  args extends ContractFunctionArgs<
+    abi,
+    'pure' | 'view',
+    functionName
+  > = ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
+  config extends Config = Config,
+  selectData = ReadContractData<abi, functionName, args>,
+> = UnionCompute<
+  UnionLooseOmit<
+    ReadContractOptions<abi, functionName, args, config, selectData> &
+      ConfigParameter<config>,
+    'abi' | 'args' | 'functionName'
+  > & {
+    abi: abi
+    functionName: functionName
+    args?: MaybeRef<args | readonly unknown[] | undefined>
+  }
 >
 
 type UseReadContractParametersLoose<
@@ -92,6 +121,21 @@ export function useReadContract<
   config extends Config = ResolvedRegister['config'],
   selectData = ReadContractData<abi, functionName, args>,
 >(
+  parameters: UseReadContractParametersWithMaybeRefArgs<
+    abi,
+    functionName,
+    args,
+    config,
+    selectData
+  >,
+): UseReadContractReturnType<abi, functionName, args, selectData>
+export function useReadContract<
+  const abi extends Abi | readonly unknown[],
+  functionName extends ContractFunctionName<abi, 'pure' | 'view'>,
+  const args extends ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
+  config extends Config = ResolvedRegister['config'],
+  selectData = ReadContractData<abi, functionName, args>,
+>(
   parameters: UseReadContractParametersLoose<
     abi,
     functionName,
@@ -99,7 +143,7 @@ export function useReadContract<
     config,
     selectData
   >,
-): UseReadContractReturnType
+): UseReadContractReturnType<abi, functionName, args, selectData>
 export function useReadContract(
   parameters: UseReadContractParametersLoose = {},
 ): UseReadContractReturnType {
