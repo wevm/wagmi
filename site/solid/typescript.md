@@ -121,28 +121,182 @@ useBlockNumber(() => ({ chainId: 123, config: configB }))
 
 This approach is more explicit, but works well for advanced use-cases, if you don't want to use Solid Context or declaration merging, etc.
 
-## Reactive Parameters
+## Const-Assert ABIs & Typed Data
 
-In Solid, primitive parameters are passed as getter functions (accessors) to maintain reactivity. This is different from React where parameters are passed directly as objects.
+`@wagmi/solid` can infer types based on [ABIs](https://docs.soliditylang.org/en/latest/abi-spec.html#json) and [EIP-712](https://eips.ethereum.org/EIPS/eip-712) Typed Data definitions, powered by [Viem](https://viem.sh) and [ABIType](https://github.com/wevm/abitype). This achieves full end-to-end type-safety from your contracts to your frontend and enlightened developer experience by autocompleting ABI item names, catching misspellings, inferring argument and return types (including overloads), and more.
+
+For this to work, you must either [const-assert](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) ABIs and Typed Data (more info below) or define them inline. For example, `useReadContract`'s `abi` configuration parameter:
 
 ```ts
-// React style (NOT used in @wagmi/solid)
-useBlockNumber({ chainId: 1 })
-
-// Solid style (used in @wagmi/solid)
-useBlockNumber(() => ({ chainId: 1 }))
+const { data } = useReadContract(() => ({
+  abi: […], // <--- defined inline // [!code focus]
+}))
 ```
 
-This allows Wagmi to react to changes in your parameters automatically when using Solid's reactive primitives like `createSignal`.
-
 ```ts
-import { createSignal } from 'solid-js'
-import { useBlockNumber } from '@wagmi/solid'
+const abi = […] as const // <--- const assertion // [!code focus]
+const { data } = useReadContract(() => ({ abi }))
+```
 
-const [chainId, setChainId] = createSignal(1)
+If type inference isn't working, it's likely you forgot to add a `const` assertion or define the configuration parameter inline. Also, make sure your ABIs, Typed Data definitions, and [TypeScript configuration](#requirements) are valid and set up correctly.
 
-// Block number will automatically update when chainId changes
-useBlockNumber(() => ({ chainId: chainId() }))
+::: tip
+Unfortunately [TypeScript doesn't support importing JSON `as const` yet](https://github.com/microsoft/TypeScript/issues/32063). Check out the [Wagmi CLI](/cli/getting-started) to help with this! It can automatically fetch ABIs from Etherscan and other block explorers, resolve ABIs from your Foundry/Hardhat projects, and more.
+:::
+
+Anywhere you see the `abi` or `types` configuration property, you can likely use const-asserted or inline ABIs and Typed Data to get type-safety and inference. These properties are also called out in the docs.
+
+Here's what [`useReadContract`](/solid/api/primitives/useReadContract) looks like with and without a const-asserted `abi` property.
+
+::: code-group
+```ts twoslash [Const-Asserted]
+// @twoslash-cache: {"v":1,"hash":"25c05b213e654cde6c0450f8420a688d95bd909200e1d2a0249b6c4fe82629ee","data":"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"}
+const erc721Abi = [
+  {
+    name: 'balanceOf',
+    type: 'function',
+    stateMutability: 'view',
+    inputs: [{ type: 'address', name: 'owner' }],
+    outputs: [{ type: 'uint256' }],
+  },
+  {
+    name: 'isApprovedForAll',
+    type: 'function',
+    stateMutability: 'view',
+    inputs: [
+      { type: 'address', name: 'owner' },
+      { type: 'address', name: 'operator' },
+    ],
+    outputs: [{ type: 'bool' }],
+  },
+  {
+    name: 'getApproved',
+    type: 'function',
+    stateMutability: 'view',
+    inputs: [{ type: 'uint256', name: 'tokenId' }],
+    outputs: [{ type: 'address' }],
+  },
+  {
+    name: 'ownerOf',
+    type: 'function',
+    stateMutability: 'view',
+    inputs: [{ type: 'uint256', name: 'tokenId' }],
+    outputs: [{ type: 'address' }],
+  },
+  {
+    name: 'tokenURI',
+    type: 'function',
+    stateMutability: 'pure',
+    inputs: [{ type: 'uint256', name: 'tokenId' }],
+    outputs: [{ type: 'string' }],
+  },
+] as const
+// ---cut---
+import { useReadContract } from '@wagmi/solid'
+
+const { data } = useReadContract(() => ({
+  address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+  abi: erc721Abi,
+  functionName: 'balanceOf',
+  // ^?
+
+
+
+  args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e'],
+  // ^?
+}))
+
+data
+// ^?
+```
+```ts twoslash [Not Const-Asserted]
+// @twoslash-cache: {"v":1,"hash":"32049753cbd54692b7d3bf9ee3c0c319131f5a4f222c2d2401ececdcd5564dac","data":"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"}
+declare const erc721Abi: {
+  name: string;
+  type: string;
+  stateMutability: string;
+  inputs: {
+    type: string;
+    name: string;
+  }[];
+  outputs: {
+    type: string;
+  }[];
+}[]
+// ---cut---
+import { useReadContract } from '@wagmi/solid'
+
+const { data } = useReadContract(() => ({
+  address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+  abi: erc721Abi,
+  functionName: 'balanceOf',
+  // ^?
+
+
+
+  args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e'],
+  // ^?
+}))
+
+data
+// ^?
+```
+:::
+
+<br/>
+<br/>
+
+You can prevent runtime errors and be more productive by making sure your ABIs and Typed Data definitions are set up appropriately. 🎉
+
+```ts twoslash
+// @errors: 2820
+const erc721Abi = [
+  {
+    name: 'balanceOf',
+    type: 'function',
+    stateMutability: 'view',
+    inputs: [{ type: 'address', name: 'owner' }],
+    outputs: [{ type: 'uint256' }],
+  },
+  {
+    name: 'isApprovedForAll',
+    type: 'function',
+    stateMutability: 'view',
+    inputs: [
+      { type: 'address', name: 'owner' },
+      { type: 'address', name: 'operator' },
+    ],
+    outputs: [{ type: 'bool' }],
+  },
+  {
+    name: 'getApproved',
+    type: 'function',
+    stateMutability: 'view',
+    inputs: [{ type: 'uint256', name: 'tokenId' }],
+    outputs: [{ type: 'address' }],
+  },
+  {
+    name: 'ownerOf',
+    type: 'function',
+    stateMutability: 'view',
+    inputs: [{ type: 'uint256', name: 'tokenId' }],
+    outputs: [{ type: 'address' }],
+  },
+  {
+    name: 'tokenURI',
+    type: 'function',
+    stateMutability: 'pure',
+    inputs: [{ type: 'uint256', name: 'tokenId' }],
+    outputs: [{ type: 'string' }],
+  },
+] as const
+// ---cut---
+import { useReadContract } from '@wagmi/solid'
+
+useReadContract(() => ({
+  abi: erc721Abi,
+  functionName: 'balanecOf',
+}))
 ```
 
 ## Configure Internal Types
