@@ -1,7 +1,7 @@
 {
   "name": "@wagmi/core",
   "description": "VanillaJS library for Ethereum",
-  "version": "3.4.4",
+  "version": "3.4.7",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -87,8 +87,7 @@
   },
   "peerDependencies": {
     "@tanstack/query-core": ">=5.0.0",
-    "accounts": "catalog:",
-    "ox": ">=0.11.1",
+    "accounts": "~0.8.1",
     "typescript": ">=5.7.3",
     "viem": "2.x"
   },
@@ -97,9 +96,6 @@
       "optional": true
     },
     "accounts": {
-      "optional": true
-    },
-    "ox": {
       "optional": true
     },
     "typescript": {
@@ -113,8 +109,7 @@
   },
   "devDependencies": {
     "@tanstack/query-core": "catalog:",
-    "accounts": "catalog:",
-    "ox": "catalog:"
+    "accounts": "catalog:"
   },
   "contributors": [
     "awkweb.eth <t@wevm.dev>",

@@ -196,11 +196,6 @@ describe('connectors', () => {
           JSON.parse(storage.getItem('tempo-wallet-test.recentConnectorId')!),
         ).toBe('xyz.tempo'),
       )
-      await vi.waitFor(() =>
-        expect(
-          storage.getItem('tempo-wallet-test.accounts.xyz.tempo.store'),
-        ).not.toBeNull(),
-      )
       firstRender.unmount()
 
       const reconnectedConfig = createConfig({

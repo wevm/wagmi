@@ -17,7 +17,7 @@ jobs:
       - name: Clone repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
         with:
-          token: ${{ secrets.GH_PTOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install dependencies
         uses: wevm/actions/.github/actions/pnpm@f7ad7f00e16e73322562922c241f21f0c7ffbbec
@@ -78,11 +78,11 @@ jobs:
       contents: read
     needs: check
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 8
     strategy:
       matrix:
         typescript-version: ['5.7.3', '5.8.3', '5.9.3', 'latest']
-        viem-version: ['2.48.0', 'latest']
+        viem-version: ['2.48.3', 'latest']
 
     steps:
       - name: Clone repository

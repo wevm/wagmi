@@ -78,8 +78,14 @@ export const tempoLocal = defineChain({
 export const config = createConfig({
   chains: [tempoLocal, zoneLocal],
   connectors: [
-    dangerous_secp256k1({ privateKey: privateKeys[0] }),
-    dangerous_secp256k1({ privateKey: privateKeys[1] }),
+    dangerous_secp256k1({
+      privateKey: privateKeys[0],
+      storage: createMemoryStorage(),
+    }),
+    dangerous_secp256k1({
+      privateKey: privateKeys[1],
+      storage: createMemoryStorage(),
+    }),
   ],
   pollingInterval: 25,
   storage: null,
@@ -88,6 +94,19 @@ export const config = createConfig({
     [zoneLocal.id]: zoneHttp(zoneRpcUrl, { storage: zoneStorage }),
   },
 })
+
+function createMemoryStorage() {
+  const map = new Map<string, unknown>()
+  return {
+    getItem: (key: string) => (map.get(key) ?? null) as never,
+    setItem: (key: string, value: unknown) => {
+      map.set(key, value)
+    },
+    removeItem: (key: string) => {
+      map.delete(key)
+    },
+  }
+}
 
 export const queryClient = new QueryClient()
 

@@ -38,6 +38,7 @@ function createTempoWalletDialog(
     close() {},
     destroy() {},
     open() {},
+    syncTheme() {},
     async syncRequests(requests) {
       for (const queued of requests) {
         if (queued.request.method !== 'wallet_connect') continue

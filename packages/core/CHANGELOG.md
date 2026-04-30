@@ -1,5 +1,31 @@
 # @wagmi/core
 
+## 3.4.7
+
+### Patch Changes
+
+- Fixed an issue where `prepareTransactionRequest` required a top-level `to` when using `calls`. ([#5079](https://github.com/wevm/wagmi/pull/5079))
+
+## 3.4.6
+
+### Patch Changes
+
+- Resolved `account` in `prepareTransactionRequest` via `getConnectorClient` so connectors with a `getClient` method can supply a signable account. ([#5084](https://github.com/wevm/wagmi/pull/5084))
+
+- Fixed `tempoWallet` connector to use default storage on `accounts`. ([#5078](https://github.com/wevm/wagmi/pull/5078))
+
+- Passed `theme` option through to `tempoWallet` connector. ([#5074](https://github.com/wevm/wagmi/pull/5074))
+
+- `wagmi/tempo`: Updated `webAuthn` connector's `getClient` to return a signable account via `provider.getAccount({ signable: true })`. ([#5084](https://github.com/wevm/wagmi/pull/5084))
+
+## 3.4.5
+
+### Patch Changes
+
+- Fixed tempo entrypoint dependency wiring ([#5069](https://github.com/wevm/wagmi/pull/5069))
+
+- Updated `accounts` peer dep range ([`23d6e27`](https://github.com/wevm/wagmi/commit/23d6e2768a8e73f4ed5cc5196cdd1bf600af7c18))
+
 ## 3.4.4
 
 ### Patch Changes
