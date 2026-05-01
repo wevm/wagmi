@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 3.4.8
+
+### Patch Changes
+
+- Restricted `signable` account hydration in `getClient` to connectors with locally-hydratable signing material (`webAuthn`, `dangerous_secp256k1`). ([#5093](https://github.com/wevm/wagmi/pull/5093))
+
 ## 3.4.7
 
 ### Patch Changes
