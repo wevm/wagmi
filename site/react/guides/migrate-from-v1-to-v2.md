@@ -43,6 +43,29 @@ Moving forward after Wagmi v2, new functionality will be opt-in with old functio
 The Wagmi v1 docs are still available at [1.x.wagmi.sh/react](https://1.x.wagmi.sh/react).
 :::
 
+
+## Automated Migration
+
+::: tip Run a codemod to automate ~85% of this migration
+
+```bash [npm]
+npx codemod waleedbhattiii-wagmi-v1-to-v2
+```
+
+```bash [pnpm]
+pnpm dlx codemod waleedbhattiii-wagmi-v1-to-v2
+```
+
+```bash [yarn]
+yarn dlx codemod waleedbhattiii-wagmi-v1-to-v2
+```
+
+The codemod handles all hook renames, provider changes, connector refactors, TanStack Query param restructuring, and import cleanup. Patterns requiring manual review are flagged with `TODO(wagmi-codemod)` comments.
+
+- Source: [github.com/Waleedbhattiii/wagmi-v1-to-v2](https://github.com/Waleedbhattiii/wagmi-v1-to-v2)
+- Registry: [app.codemod.com/registry/waleedbhattiii-wagmi-v1-to-v2](https://app.codemod.com/registry/waleedbhattiii-wagmi-v1-to-v2)
+:::
+
 ## Dependencies
 
 ### Moved TanStack Query to peer dependencies
