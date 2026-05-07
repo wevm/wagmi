@@ -6,6 +6,7 @@ import type {
 import { ChainNotConfiguredError, createConnector } from '@wagmi/core'
 import type { ExactPartial, OneOf, UnionCompute } from '@wagmi/core/internal'
 import {
+  type AddEthereumChainParameter,
   type Address,
   getAddress,
   type Hex,
@@ -241,6 +242,49 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
 
         if (error.code === UserRejectedRequestError.code)
           throw new UserRejectedRequestError(error)
+
+        // Indicates chain is not added to provider
+        if (error.code === 4902) {
+          try {
+            const provider = await this.getProvider()
+
+            let blockExplorerUrls: string[] | undefined
+            if (addEthereumChainParameter?.blockExplorerUrls)
+              blockExplorerUrls = addEthereumChainParameter.blockExplorerUrls
+            else
+              blockExplorerUrls = chain.blockExplorers?.default.url
+                ? [chain.blockExplorers.default.url]
+                : []
+
+            let rpcUrls: readonly string[]
+            if (addEthereumChainParameter?.rpcUrls?.length)
+              rpcUrls = addEthereumChainParameter.rpcUrls
+            else rpcUrls = [chain.rpcUrls.default?.http[0] ?? '']
+
+            const addEthereumChain = {
+              blockExplorerUrls,
+              chainId: hexChainId,
+              chainName: addEthereumChainParameter?.chainName ?? chain.name,
+              iconUrls: addEthereumChainParameter?.iconUrls,
+              nativeCurrency:
+                addEthereumChainParameter?.nativeCurrency ??
+                chain.nativeCurrency,
+              rpcUrls,
+            } satisfies AddEthereumChainParameter
+
+            await provider.request({
+              method: 'wallet_addEthereumChain',
+              params: [addEthereumChain],
+            })
+
+            return chain
+          } catch (err) {
+            const error = err as RpcError
+            if (error.code === UserRejectedRequestError.code)
+              throw new UserRejectedRequestError(error)
+            throw new SwitchChainError(error)
+          }
+        }
 
         throw new SwitchChainError(error)
       }
