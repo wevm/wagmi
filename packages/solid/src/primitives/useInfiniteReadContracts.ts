@@ -32,13 +32,7 @@ type InfiniteQueryParameter<
   pageParam = unknown,
 > = {
   query: Omit<
-    SolidInfiniteQueryParameters<
-      queryFnData,
-      error,
-      data,
-      queryKey,
-      pageParam
-    >,
+    SolidInfiniteQueryParameters<queryFnData, error, data, queryKey, pageParam>,
     'queryFn' | 'queryHash' | 'queryKey' | 'queryKeyHashFn' | 'throwOnError'
   >
 }
