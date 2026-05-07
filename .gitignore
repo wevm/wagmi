@@ -1,9 +1,11 @@
 *.vitest-temp.json
 .DS_Store
 .attest
+.amp
 .next
 .nuxt
 .pnpm-debug.log*
+.vercel
 .tanstack
 .wrangler
 _

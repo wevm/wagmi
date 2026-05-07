@@ -126,6 +126,7 @@ export function webAuthn(parameters: webAuthn.Parameters = {}) {
     name: name ?? 'EOA (WebAuthn)',
     providerParameters,
     rdns,
+    signable: true,
     type: 'webAuthn',
   })
 }
@@ -161,6 +162,7 @@ export function dangerous_secp256k1(
     name: name ?? 'EOA (Secp256k1)',
     providerParameters,
     rdns,
+    signable: true,
     type: 'secp256k1',
   })
 }
@@ -307,7 +309,7 @@ function _setup(parameters: setup.Parameters) {
       async getClient({ chainId } = {}) {
         const provider = await getProvider()
         return Object.assign(provider.getClient({ chainId }), {
-          account: provider.getAccount({ signable: true }),
+          account: provider.getAccount({ signable: parameters.signable }),
         }) as never
       },
       async getProvider() {
@@ -397,12 +399,21 @@ function _setup(parameters: setup.Parameters) {
 
 export declare namespace setup {
   export type Parameters = {
+    /** Builds the underlying `accounts` adapter (dialog, webAuthn, secp256k1) the connector wraps. */
     createAdapter: (accounts: AccountsModule) => AccountsAdapter
+    /** Optional connector icon (data URL or remote URL). Surfaced via EIP-6963 announcement. */
     icon?: string | undefined
+    /** Connector ID. */
     id: string
+    /** Human-readable connector name. */
     name: string
+    /** Forwarded to `Provider.create`. */
     providerParameters: Omit<AccountsProviderParameters, 'adapter' | 'chains'>
+    /** EIP-6963 reverse-DNS ID(s) for the connector. */
     rdns?: string | readonly string[] | undefined
+    /** Whether the connector's accounts can be hydrated for local signing. */
+    signable?: boolean | undefined
+    /** Connector type. */
     type: string
   }
 

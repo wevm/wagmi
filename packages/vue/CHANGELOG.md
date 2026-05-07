@@ -1,5 +1,19 @@
 # @wagmi/vue
 
+## 0.5.11
+
+### Patch Changes
+
+- Updated dependencies [[`28b1437`](https://github.com/wevm/wagmi/commit/28b1437ec427e426b43543203f95ba8dc81ae649)]:
+  - @wagmi/core@3.4.8
+  - @wagmi/connectors@8.0.9
+
+## 0.5.10
+
+### Patch Changes
+
+- Fixed `useReadContract` type inference when passing reactive `args` values such as Vue `computed()` results. ([`d9bbd4f`](https://github.com/wevm/wagmi/commit/d9bbd4f8ddb6a9e4fde52642fedd6b1e56f67e44))
+
 ## 0.5.9
 
 ### Patch Changes

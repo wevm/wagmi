@@ -1,5 +1,19 @@
 # @wagmi/solid
 
+## 0.0.15
+
+### Patch Changes
+
+- Updated dependencies [[`28b1437`](https://github.com/wevm/wagmi/commit/28b1437ec427e426b43543203f95ba8dc81ae649)]:
+  - @wagmi/core@3.4.8
+  - @wagmi/connectors@8.0.9
+
+## 0.0.14
+
+### Patch Changes
+
+- Added contract interaction primitives: `useReadContract`, `useReadContracts`, `useInfiniteReadContracts`, `useSimulateContract`, `useWriteContract`, `useWriteContractSync`, and `useWatchContractEvent`. ([#4997](https://github.com/wevm/wagmi/pull/4997))
+
 ## 0.0.13
 
 ### Patch Changes
