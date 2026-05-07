@@ -1,5 +1,10 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { connect, getConnection, getConnectorClient } from '@wagmi/core'
+import {
+  connect,
+  createConnector,
+  getConnection,
+  getConnectorClient,
+} from '@wagmi/core'
 import * as chains from '@wagmi/core/chains'
 import type { FixedArray } from '@wagmi/core/internal'
 import { dangerous_secp256k1 } from '@wagmi/core/tempo'
@@ -7,11 +12,13 @@ import { Mnemonic } from 'ox'
 import * as React from 'react'
 import {
   type Account,
+  type Address,
   type Chain,
   type Client,
   defineChain,
   type Hex,
   http,
+  numberToHex,
   parseUnits,
   type Transport,
 } from 'viem'
@@ -86,6 +93,7 @@ export const config = createConfig({
       privateKey: privateKeys[1],
       storage: createMemoryStorage(),
     }),
+    mockWallet({ accounts: [accounts[0].address, accounts[1].address] }),
   ],
   pollingInterval: 25,
   storage: null,
@@ -94,6 +102,95 @@ export const config = createConfig({
     [zoneLocal.id]: zoneHttp(zoneRpcUrl, { storage: zoneStorage }),
   },
 })
+
+/**
+ * Mock connector for testing tempo wallet flow methods
+ * (`wallet_send`, `wallet_swap`, `wallet_deposit`).
+ *
+ * Returns canned receipts for wallet flow methods so tests can verify the
+ * action wiring without needing a real wallet.
+ */
+function mockWallet(parameters: {
+  accounts: readonly [Address, ...Address[]]
+}) {
+  let connected = false
+  let connectedChainId: number = tempoLocal.id
+
+  const receipt = {
+    blockHash:
+      '0x0000000000000000000000000000000000000000000000000000000000000001',
+    blockNumber: 1n,
+    contractAddress: null,
+    cumulativeGasUsed: 1n,
+    effectiveGasPrice: 1n,
+    from: '0x0000000000000000000000000000000000000001',
+    gasUsed: 1n,
+    logs: [],
+    logsBloom: '0x0',
+    status: 'success',
+    to: null,
+    transactionHash:
+      '0x0000000000000000000000000000000000000000000000000000000000000002',
+    transactionIndex: 0,
+    type: 'tempo',
+  } as const
+
+  return createConnector((config) => ({
+    id: 'mock-wallet',
+    name: 'Mock Wallet Connector',
+    type: 'mockWallet' as const,
+    async setup() {
+      connectedChainId = config.chains[0].id
+    },
+    async connect({ chainId } = {}) {
+      connected = true
+      const currentChainId = chainId ?? (await this.getChainId())
+      connectedChainId = currentChainId
+      return {
+        accounts: parameters.accounts as readonly Address[],
+        chainId: currentChainId,
+      } as never
+    },
+    async disconnect() {
+      connected = false
+    },
+    async getAccounts() {
+      return parameters.accounts
+    },
+    async getChainId() {
+      return connectedChainId
+    },
+    async isAuthorized() {
+      return connected
+    },
+    onAccountsChanged(accounts) {
+      config.emitter.emit('change', { accounts: accounts as readonly Address[] })
+    },
+    onChainChanged(chain) {
+      config.emitter.emit('change', { chainId: Number(chain) })
+    },
+    async onDisconnect() {
+      connected = false
+      config.emitter.emit('disconnect')
+    },
+    async getProvider() {
+      return {
+        on() {},
+        removeListener() {},
+        async request({ method }: { method: string }) {
+          if (method === 'eth_chainId') return numberToHex(connectedChainId)
+          if (method === 'eth_accounts' || method === 'eth_requestAccounts')
+            return parameters.accounts
+          if (method === 'wallet_send')
+            return { chainId: connectedChainId, receipt }
+          if (method === 'wallet_swap') return { receipt }
+          if (method === 'wallet_deposit') return { receipts: [receipt] }
+          return null
+        },
+      }
+    },
+  }))
+}
 
 function createMemoryStorage() {
   const map = new Map<string, unknown>()
