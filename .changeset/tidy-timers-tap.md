@@ -3,4 +3,4 @@
 "wagmi": patch
 ---
 
-`wagmi/tempo:` Added Actions and Hooks for `viem/tempo#wallet` actions.
+`wagmi/tempo`: Added Actions and Hooks for `viem/tempo#wallet` actions.
