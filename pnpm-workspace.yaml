@@ -48,7 +48,7 @@ catalog:
   react: 19.2.0
   react-dom: 19.2.0
   solid-js: 1.9.10
-  vite: 8.0.5
+  vite: 8.0.11
   vite-plugin-solid: 2.11.12
   vue: 3.5.25
 
@@ -80,7 +80,7 @@ overrides:
   '@isaacs/brace-expansion@<=5.0.0': 5.0.1
   brace-expansion@<1.1.13: '>=1.1.13'
   brace-expansion@>=2.0.0 <2.0.3: '>=2.0.3'
-  axios@<1.15.0: 1.15.0
+  axios@<1.15.2: 1.15.2
   cookie@<0.7.0: 0.7.0
   bn.js@>=5.0.0 <5.2.3: 5.2.3
   devalue@<5.6.4: 5.6.4
@@ -96,7 +96,7 @@ overrides:
   minimatch@>=5.0.0 <5.1.8: 5.1.8
   minimatch@>=9.0.0 <9.0.7: 9.0.7
   minimatch@>=10.0.0 <10.2.3: 10.2.3
-  hono@<4.12.14: 4.12.14
+  hono@<4.12.16: 4.12.16
   lodash@>=4.0.0 <=4.17.23: '>=4.18.0'
   markdown-it@>=13.0.0 <14.1.1: 14.1.1
   mdast-util-to-hast@<13.2.1: '>=13.2.1'
@@ -106,7 +106,8 @@ overrides:
   rollup@>=4.0.0 <4.59.0: 4.59.0
   semver@<5.7.2: '>=5.7.2'
   serialize-javascript@<7.0.5: '>=7.0.5'
-  simple-git@>=3.15.0 <3.32.3: 3.32.3
+  nitropack@<2.13.4: 2.13.4
+  simple-git@>=3.15.0 <3.36.0: 3.36.0
   seroval@<1.4.1: '>=1.4.1'
   svgo@=4.0.0: 4.0.1
   tar@<=7.5.10: 7.5.11
@@ -116,7 +117,7 @@ overrides:
   undici@>=7.0.0 <7.24.0: 7.24.0
   vite@>=6.0.0 <=6.4.1: '>=6.4.2'
   vite@>=7.0.0 <=7.3.1: '>=7.3.2'
-  vite@>=8.0.0 <=8.0.4: '>=8.0.5'
+  vite@>=8.0.0 <8.0.11: '>=8.0.11'
   postcss@<8.5.10: 8.5.10
   uuid@<14.0.0: 14.0.0
   wrangler@>=4.0.0 <4.59.1: '>=4.59.1'
@@ -145,5 +146,5 @@ trustPolicyExclude:
   - semver@6.3.1
   - undici@6.22.0
   - serialize-javascript@7.0.3
-  - simple-git@3.32.3
+  - simple-git@3.36.0
   - vite@5.4.21 || 6.4.1
