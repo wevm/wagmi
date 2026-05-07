@@ -1,6 +1,6 @@
 ---
-"@wagmi/core": minor
-"wagmi": minor
+"@wagmi/core": patch
+"wagmi": patch
 ---
 
-Added Tempo wallet actions and React hooks for wallet send, swap, and deposit flows.
+`wagmi/tempo:` Added Actions and Hooks for `viem/tempo#wallet` actions.
