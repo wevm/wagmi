@@ -164,7 +164,9 @@ function mockWallet(parameters: {
       return connected
     },
     onAccountsChanged(accounts) {
-      config.emitter.emit('change', { accounts: accounts as readonly Address[] })
+      config.emitter.emit('change', {
+        accounts: accounts as readonly Address[],
+      })
     },
     onChainChanged(chain) {
       config.emitter.emit('change', { chainId: Number(chain) })
