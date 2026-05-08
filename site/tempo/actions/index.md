@@ -80,6 +80,10 @@
 | [`token.watchMint`](/tempo/actions/token.watchMint) | Watches for token mint events |
 | [`token.watchRole`](/tempo/actions/token.watchRole) | Watches for role membership update events |
 | [`token.watchTransfer`](/tempo/actions/token.watchTransfer) | Watches for token transfer events |
+| **Wallet Actions** | |
+| [`wallet.deposit`](/tempo/actions/wallet.deposit) | Opens the wallet deposit flow with optional pre-filled deposit fields |
+| [`wallet.send`](/tempo/actions/wallet.send) | Opens the wallet send flow with optional pre-filled send fields |
+| [`wallet.swap`](/tempo/actions/wallet.swap) | Opens the wallet swap flow with optional pre-filled swap fields |
 | **Zone Actions** | |
 | [`zone.deposit`](/tempo/actions/zone.deposit) | Deposits tokens from the parent Tempo chain into a zone |
 | [`zone.getAuthorizationTokenInfo`](/tempo/actions/zone.getAuthorizationTokenInfo) | Gets information about the current zone authorization token |
