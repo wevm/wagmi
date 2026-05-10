@@ -89,7 +89,7 @@
   "devDependencies": {
     "@types/dedent": "^0.7.2",
     "@types/node": "^24.5.1",
-    "fixturez": "^1.1.0",
+    "fs-fixture": "^2.13.0",
     "msw": "^2.4.9"
   },
   "contributors": [
