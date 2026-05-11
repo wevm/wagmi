@@ -126,6 +126,7 @@ export function webAuthn(parameters: webAuthn.Parameters = {}) {
     name: name ?? 'EOA (WebAuthn)',
     providerParameters,
     rdns,
+    signable: true,
     type: 'webAuthn',
   })
 }
@@ -161,6 +162,7 @@ export function dangerous_secp256k1(
     name: name ?? 'EOA (Secp256k1)',
     providerParameters,
     rdns,
+    signable: true,
     type: 'secp256k1',
   })
 }
@@ -411,6 +413,8 @@ export declare namespace setup {
     providerParameters: Omit<AccountsProviderParameters, 'adapter' | 'chains'>
     /** EIP-6963 reverse-DNS ID(s) for the connector. */
     rdns?: string | readonly string[] | undefined
+    /** @deprecated No longer read by the connector. The setup type still accepts it for backwards compatibility with existing custom connectors but it has no effect -- `getClient` always hands viem the root account and the SDK provider performs signing orchestration internally. */
+    signable?: boolean | undefined
     /** Connector type. */
     type: string
   }
