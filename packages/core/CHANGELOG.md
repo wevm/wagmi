@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 3.4.11
+
+### Patch Changes
+
+- **`wagmi/tempo`:** Fixed `getClient` on Tempo connectors to always provide a JSON-RPC account. ([#5117](https://github.com/wevm/wagmi/pull/5117))
+
 ## 3.4.10
 
 ### Patch Changes
