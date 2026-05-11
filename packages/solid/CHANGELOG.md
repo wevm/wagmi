@@ -1,5 +1,11 @@
 # @wagmi/solid
 
+## 0.0.19
+
+### Patch Changes
+
+- Fixed `useReadContracts` to prefer an explicit `chainId` parameter over inferred or connected chain ids. ([`8c56235`](https://github.com/wevm/wagmi/commit/8c56235764b33980051beffb3466f36bb200c768))
+
 ## 0.0.18
 
 ### Patch Changes
