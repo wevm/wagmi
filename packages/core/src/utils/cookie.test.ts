@@ -42,6 +42,8 @@ test('cookieToInitialState', () => {
 
   expect(cookieToInitialState(config)).toMatchInlineSnapshot('undefined')
   expect(cookieToInitialState(config), 'foo').toMatchInlineSnapshot('undefined')
+  expect(cookieToInitialState(config, 'wagmi.store=invalid; ')).toBeUndefined()
+  expect(cookieToInitialState(config, 'wagmi.store=null; ')).toBeUndefined()
 })
 
 test('parseCookie', () => {
