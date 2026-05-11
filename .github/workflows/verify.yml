@@ -136,7 +136,7 @@ jobs:
       - name: Set up foundry
         uses: foundry-rs/foundry-toolchain@50d5a8956f2e319df19e6b57539d7e2acb9f8c1e # v1.5.0
         with:
-          version: nightly-9afdb7228261da6fe282f00f8e787079cf7427f4
+          version: nightly
 
       - name: Cache Playwright
         uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb
