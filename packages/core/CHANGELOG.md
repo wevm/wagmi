@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 3.4.9
+
+### Patch Changes
+
+- `wagmi/tempo`: Added Actions and Hooks for `viem/tempo#wallet` actions. ([#5103](https://github.com/wevm/wagmi/pull/5103))
+
 ## 3.4.8
 
 ### Patch Changes
