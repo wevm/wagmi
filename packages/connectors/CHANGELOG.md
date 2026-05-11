@@ -1,5 +1,16 @@
 # @wagmi/connectors
 
+## 8.0.12
+
+### Patch Changes
+
+- **Breaking(`wagmi/tempo`):** Bumped the `accounts` peer dependency range from `~0.8.1` to `~0.10`. ([#5112](https://github.com/wevm/wagmi/pull/5112))
+
+- `wagmi/tempo`: Forwarded config `transports` to the underlying `accounts` provider. ([#5112](https://github.com/wevm/wagmi/pull/5112))
+
+- Updated dependencies [[`3829b3c`](https://github.com/wevm/wagmi/commit/3829b3c2abea72f50a25b112f0e6d5bec6ac8be6)]:
+  - @wagmi/core@3.4.10
+
 ## 8.0.11
 
 ### Patch Changes
