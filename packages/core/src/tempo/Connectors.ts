@@ -14,6 +14,7 @@ import {
   UserRejectedRequestError,
   withRetry,
 } from 'viem'
+import { parseAccount } from 'viem/utils'
 
 import { createConnector } from '../connectors/createConnector.js'
 import type { Connector } from '../createConfig.js'
@@ -311,7 +312,7 @@ function _setup(parameters: setup.Parameters) {
         // access key orchestration internally before signing.
         const { address } = provider.getAccount({ accessKey: false })
         return Object.assign(provider.getClient({ chainId }), {
-          account: address,
+          account: parseAccount(address),
         }) as never
       },
       async getProvider() {
