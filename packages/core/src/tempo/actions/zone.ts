@@ -1254,6 +1254,7 @@ async function getSignableConnectorAccount<config extends Config>(
         getAccount?:
           | ((parameters?: {
               address?: Address | undefined
+              signable?: boolean | undefined
             }) => Account | undefined)
           | undefined
       }
@@ -1265,6 +1266,7 @@ async function getSignableConnectorAccount<config extends Config>(
       address: parameters.account
         ? parseAccount(parameters.account).address
         : undefined,
+      signable: true,
     })
   } catch {
     return
