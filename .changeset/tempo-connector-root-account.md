@@ -3,4 +3,4 @@
 'wagmi': patch
 ---
 
-`viem/tempo`: Fixed Tempo connectors leaking access key flavored accounts into viem by passing `accessKey: false` to `provider.getAccount` in `getClient`.
+**Breaking(`wagmi/tempo`):** Removed the `signable` setup parameter from Tempo connectors. The connector now always hands viem the root account in `getClient` and the SDK provider performs signing orchestration internally.

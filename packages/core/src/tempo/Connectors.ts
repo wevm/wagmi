@@ -199,6 +199,7 @@ function _setup(parameters: setup.Parameters) {
           ...parameters.providerParameters,
           adapter: parameters.createAdapter(accounts),
           chains: config.chains as never,
+          transports: config.transports as never,
         }) as unknown as Provider
       })()
 
@@ -411,8 +412,6 @@ export declare namespace setup {
     providerParameters: Omit<AccountsProviderParameters, 'adapter' | 'chains'>
     /** EIP-6963 reverse-DNS ID(s) for the connector. */
     rdns?: string | readonly string[] | undefined
-    /** @deprecated */
-    signable?: boolean | undefined
     /** Connector type. */
     type: string
   }
