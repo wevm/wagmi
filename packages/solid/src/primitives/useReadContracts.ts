@@ -3,7 +3,11 @@ import type {
   ReadContractsErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { Compute, ConfigParameter } from '@wagmi/core/internal'
+import type {
+  ChainIdParameter,
+  Compute,
+  ConfigParameter,
+} from '@wagmi/core/internal'
 import {
   type ReadContractsData,
   type ReadContractsOptions,
@@ -47,7 +51,7 @@ export function useReadContracts<
   const options = createMemo(() =>
     readContractsQueryOptions(config(), {
       ...parameters(),
-      chainId: contractsChainId() ?? chainId(),
+      chainId: parameters().chainId ?? contractsChainId() ?? chainId(),
     }),
   )
   return useQuery(options) as any
@@ -77,6 +81,7 @@ export namespace useReadContracts {
     selectData = ReadContractsData<contracts, allowFailure>,
   > = Compute<
     ReadContractsOptions<contracts, allowFailure, config, selectData> &
+      ChainIdParameter<config> &
       ConfigParameter<config>
   >
 }
