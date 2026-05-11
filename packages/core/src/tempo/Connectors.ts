@@ -14,6 +14,7 @@ import {
   UserRejectedRequestError,
   withRetry,
 } from 'viem'
+import { parseAccount } from 'viem/utils'
 
 import { createConnector } from '../connectors/createConnector.js'
 import type { Connector } from '../createConfig.js'
@@ -307,10 +308,11 @@ function _setup(parameters: setup.Parameters) {
       },
       async getClient({ chainId } = {}) {
         const provider = await getProvider()
+        // Always provide a JSON-RPC account; the SDK provider performs
+        // access key orchestration internally before signing.
+        const { address } = provider.getAccount({ accessKey: false })
         return Object.assign(provider.getClient({ chainId }), {
-          // Always use the root account; the SDK provider performs
-          // access key orchestration internally before signing.
-          account: provider.getAccount({ accessKey: false }),
+          account: parseAccount(address),
         }) as never
       },
       async getProvider() {
