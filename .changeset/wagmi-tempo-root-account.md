@@ -3,4 +3,4 @@
 'wagmi': patch
 ---
 
-Fixed Tempo connectors leaking access-key flavored accounts into viem's transaction prep. `getClient` now passes `accessKey: false` to `provider.getAccount` so viem always sees the root account; the SDK provider continues to perform access-key orchestration internally before signing. The `signable` setup parameter is deprecated and no longer read.
+Fixed Tempo connectors leaking access-key flavored accounts into viem by passing `accessKey: false` to `provider.getAccount` in `getClient`, and deprecated the now-unused `signable` setup parameter.

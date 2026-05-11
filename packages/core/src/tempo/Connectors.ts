@@ -126,7 +126,6 @@ export function webAuthn(parameters: webAuthn.Parameters = {}) {
     name: name ?? 'EOA (WebAuthn)',
     providerParameters,
     rdns,
-    signable: true,
     type: 'webAuthn',
   })
 }
@@ -162,7 +161,6 @@ export function dangerous_secp256k1(
     name: name ?? 'EOA (Secp256k1)',
     providerParameters,
     rdns,
-    signable: true,
     type: 'secp256k1',
   })
 }
