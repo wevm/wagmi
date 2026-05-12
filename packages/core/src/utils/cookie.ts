@@ -26,7 +26,7 @@ export function cookieToInitialState(config: Config, cookie?: string | null) {
   const parsed = parseCookie(cookie, key)
   if (!parsed) return undefined
   try {
-    return deserialize<{ state?: State }>(parsed)?.state
+    return deserialize<{ state?: State } | null>(parsed)?.state
   } catch {
     return undefined
   }
