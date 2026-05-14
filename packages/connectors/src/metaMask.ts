@@ -104,11 +104,10 @@ function watchInjectedMetaMaskProvider() {
 }
 
 function findInjectedMetaMaskProvider(): EIP1193Provider | undefined {
-  watchInjectedMetaMaskProvider()
-
   // Match the connector's own `rdns` array. Order matters: prefer the desktop
   // extension over the mobile in-app browser when both somehow announce on the
-  // same surface.
+  // same surface. The cache is primed by `setup()` via
+  // `watchInjectedMetaMaskProvider()`.
   for (const rdns of metaMaskRdns) {
     const provider = injectedMetaMaskProviders.get(rdns)
     if (provider) return provider
