@@ -67,6 +67,7 @@ minimumReleaseAgeExclude:
   - '@wagmi/vue'
   - accounts
   - abitype
+  - devalue
   - ox
   - porto
   - hono
