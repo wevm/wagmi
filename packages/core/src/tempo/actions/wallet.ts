@@ -67,7 +67,10 @@ export async function transfer<config extends Config>(
     connector,
   })
 
-  return Actions.wallet.transfer(client, rest as Actions.wallet.transfer.Parameters)
+  return Actions.wallet.transfer(
+    client,
+    rest as Actions.wallet.transfer.Parameters,
+  )
 }
 
 export declare namespace transfer {
