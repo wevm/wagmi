@@ -6,27 +6,29 @@ import { useConfig } from '../../hooks/useConfig.js'
 import { type UseMutationParameters, useMutation } from '../../utils/query.js'
 
 /**
- * Hook for opening the wallet send flow with optional pre-filled send fields.
+ * Hook for transferring a TIP-20 token. By default, submits the transfer
+ * without showing an editable UI. Pass `editable: true` to open the
+ * wallet's send UI with optional pre-filled fields.
  *
  * @example
  * ```tsx
  * import { Hooks } from 'wagmi/tempo'
  *
  * function App() {
- *   const { mutate, isPending } = Hooks.wallet.useSend()
+ *   const { mutate, isPending } = Hooks.wallet.useTransfer()
  *
  *   return (
  *     <button
  *       onClick={() =>
  *         mutate({
+ *           amount: '1.5',
  *           to: '0x...',
- *           token: '0x...',
- *           value: '1.5',
+ *           token: 'pathUSD',
  *         })
  *       }
  *       disabled={isPending}
  *     >
- *       Send
+ *       Transfer
  *     </button>
  *   )
  * }
@@ -35,33 +37,33 @@ import { type UseMutationParameters, useMutation } from '../../utils/query.js'
  * @param parameters - Parameters.
  * @returns Mutation result.
  */
-export function useSend<
+export function useTransfer<
   config extends Config = ResolvedRegister['config'],
   context = unknown,
 >(
-  parameters: useSend.Parameters<config, context> = {},
-): useSend.ReturnType<config, context> {
+  parameters: useTransfer.Parameters<config, context> = {},
+): useTransfer.ReturnType<config, context> {
   const { mutation } = parameters
   const config = useConfig(parameters)
   return useMutation({
     ...mutation,
     async mutationFn(variables) {
-      return Actions.wallet.send(config, variables)
+      return Actions.wallet.transfer(config, variables)
     },
-    mutationKey: ['wallet', 'send'],
+    mutationKey: ['wallet', 'transfer'],
   })
 }
 
-export declare namespace useSend {
+export declare namespace useTransfer {
   type Parameters<
     config extends Config = Config,
     context = unknown,
   > = ConfigParameter<config> & {
     mutation?:
       | UseMutationParameters<
-          Actions.wallet.send.ReturnValue,
-          Actions.wallet.send.ErrorType,
-          Actions.wallet.send.Parameters<config>,
+          Actions.wallet.transfer.ReturnValue,
+          Actions.wallet.transfer.ErrorType,
+          Actions.wallet.transfer.Parameters<config>,
           context
         >
       | undefined
@@ -71,9 +73,9 @@ export declare namespace useSend {
     config extends Config = Config,
     context = unknown,
   > = UseMutationResult<
-    Actions.wallet.send.ReturnValue,
-    Actions.wallet.send.ErrorType,
-    Actions.wallet.send.Parameters<config>,
+    Actions.wallet.transfer.ReturnValue,
+    Actions.wallet.transfer.ErrorType,
+    Actions.wallet.transfer.Parameters<config>,
     context
   >
 }

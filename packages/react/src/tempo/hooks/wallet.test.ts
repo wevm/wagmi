@@ -2,7 +2,7 @@ import { disconnect } from '@wagmi/core'
 import { config, renderHook } from '@wagmi/test/tempo'
 import { beforeEach, describe, expect, test, vi } from 'vitest'
 import { useConnect } from '../../hooks/useConnect.js'
-import { useDeposit, useSend, useSwap } from './wallet.js'
+import { useDeposit, useSwap, useTransfer } from './wallet.js'
 
 const connector = config.connectors[2]!
 
@@ -10,25 +10,27 @@ beforeEach(async () => {
   await disconnect(config).catch(() => {})
 })
 
-describe('useSend', () => {
+describe('useTransfer', () => {
   test('default', async () => {
     const { result } = await renderHook(() => ({
       connect: useConnect(),
-      send: useSend(),
+      transfer: useTransfer(),
     }))
 
     await result.current.connect.connectAsync({ connector })
 
-    const data = await result.current.send.mutateAsync({
+    const data = await result.current.transfer.mutateAsync({
+      amount: '1.5',
       to: '0x0000000000000000000000000000000000000003',
       token: '0x0000000000000000000000000000000000000004',
-      value: '1.5',
     })
 
     expect(data.receipt).toBeDefined()
     expect(data.chainId).toBe(1337)
 
-    await vi.waitFor(() => expect(result.current.send.isSuccess).toBeTruthy())
+    await vi.waitFor(() =>
+      expect(result.current.transfer.isSuccess).toBeTruthy(),
+    )
   })
 })
 

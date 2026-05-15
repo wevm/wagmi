@@ -10,14 +10,14 @@ beforeEach(async () => {
   await connect(config, { connector })
 })
 
-describe('send', () => {
-  test('default', async () => {
+describe('transfer', () => {
+  test('default (read-only)', async () => {
     await expect(
-      wallet.send(config, {
+      wallet.transfer(config, {
+        amount: '1.5',
         feePayer: false,
         to: '0x0000000000000000000000000000000000000003',
         token: '0x0000000000000000000000000000000000000004',
-        value: '1.5',
       }),
     ).resolves.toMatchInlineSnapshot(`
       {
@@ -42,8 +42,8 @@ describe('send', () => {
     `)
   })
 
-  test('default: no parameters', async () => {
-    const result = await wallet.send(config)
+  test('editable: no parameters', async () => {
+    const result = await wallet.transfer(config, { editable: true })
     expect(result.receipt).toBeDefined()
   })
 })

@@ -105,7 +105,7 @@ export const config = createConfig({
 
 /**
  * Mock connector for testing tempo wallet flow methods
- * (`wallet_send`, `wallet_swap`, `wallet_deposit`).
+ * (`wallet_transfer`, `wallet_swap`, `wallet_deposit`).
  *
  * Returns canned receipts for wallet flow methods so tests can verify the
  * action wiring without needing a real wallet.
@@ -183,7 +183,7 @@ function mockWallet(parameters: {
           if (method === 'eth_chainId') return numberToHex(connectedChainId)
           if (method === 'eth_accounts' || method === 'eth_requestAccounts')
             return parameters.accounts
-          if (method === 'wallet_send')
+          if (method === 'wallet_transfer')
             return { chainId: connectedChainId, receipt }
           if (method === 'wallet_swap') return { receipt }
           if (method === 'wallet_deposit') return { receipts: [receipt] }
