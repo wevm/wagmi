@@ -1,6 +1,6 @@
-# `wallet.useSend`
+# `wallet.useTransfer`
 
-Hook for opening the wallet send flow with optional pre-filled send fields.
+Hook for transferring a TIP-20 token via the `wallet_transfer` JSON-RPC method on the connected wallet.
 
 ## Usage
 
@@ -9,16 +9,16 @@ Hook for opening the wallet send flow with optional pre-filled send fields.
 ```ts [example.ts]
 import { Hooks } from 'wagmi/tempo'
 
-const send = Hooks.wallet.useSend()
+const transfer = Hooks.wallet.useTransfer()
 
 // Call `mutate` in response to user action (e.g. button click, form submission)
-send.mutate({
+transfer.mutate({
+  amount: '1.5',
   to: '0x20c0000000000000000000000000000000000001',
-  token: '0x20c0000000000000000000000000000000000002',
-  value: '1.5',
+  token: 'pathUSD',
 })
 
-console.log('Transaction hash:', send.data?.receipt.transactionHash)
+console.log('Transaction hash:', transfer.data?.receipt.transactionHash)
 // @log: Transaction hash: 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
 ```
 
@@ -26,17 +26,30 @@ console.log('Transaction hash:', send.data?.receipt.transactionHash)
 
 :::
 
+## Editable mode
+
+By default, `useTransfer` submits the transfer without showing an editable UI.
+
+Pass `editable: true` to open the wallet's send UI instead, with any supplied fields pre-filled for the user to confirm or edit before signing.
+
+```ts
+transfer.mutate({
+  editable: true,
+  token: 'pathUSD',
+})
+```
+
 ## Return Type
 
 See [TanStack Query mutation docs](https://tanstack.com/query/v5/docs/framework/react/reference/useMutation) for more info hook return types.
 
 ### data
 
-See [Wagmi Action `wallet.send` Return Type](/tempo/actions/wallet.send#return-type)
+See [Wagmi Action `wallet.transfer` Return Type](/tempo/actions/wallet.transfer#return-type)
 
 ### mutate/mutateAsync
 
-See [Wagmi Action `wallet.send` Parameters](/tempo/actions/wallet.send#parameters)
+See [Wagmi Action `wallet.transfer` Parameters](/tempo/actions/wallet.transfer#parameters)
 
 ## Parameters
 
@@ -52,4 +65,4 @@ See the [TanStack Query mutation docs](https://tanstack.com/query/v5/docs/framew
 
 ## Action
 
-- [`wallet.send`](/tempo/actions/wallet.send)
+- [`wallet.transfer`](/tempo/actions/wallet.transfer)

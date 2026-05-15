@@ -20,7 +20,9 @@ type AccountParameter = {
 }
 
 /**
- * Opens the wallet send flow with optional pre-filled send fields.
+ * Transfers a TIP-20 token. By default, submits the transfer without
+ * showing an editable UI. Pass `editable: true` to open the wallet's
+ * send UI with optional pre-filled fields.
  *
  * @example
  * ```ts
@@ -35,21 +37,27 @@ type AccountParameter = {
  *   },
  * })
  *
- * const { receipt } = await Actions.wallet.send(config, {
+ * const { receipt } = await Actions.wallet.transfer(config, {
+ *   amount: '1.5',
  *   to: '0x...',
  *   token: '0x...',
- *   value: '1.5',
+ * })
+ *
+ * // Open the wallet UI instead.
+ * await Actions.wallet.transfer(config, {
+ *   editable: true,
+ *   token: 'pathUSD',
  * })
  * ```
  *
  * @param config - Config.
  * @param parameters - Parameters.
- * @returns The submitted send receipt and chain ID.
+ * @returns The submitted transfer receipt and chain ID.
  */
-export async function send<config extends Config>(
+export async function transfer<config extends Config>(
   config: config,
-  parameters: send.Parameters<config> = {},
-): Promise<send.ReturnValue> {
+  parameters: transfer.Parameters<config>,
+): Promise<transfer.ReturnValue> {
   const { account, chainId, connector, ...rest } = parameters
 
   const client = await getConnectorClient(config, {
@@ -59,23 +67,23 @@ export async function send<config extends Config>(
     connector,
   })
 
-  return Actions.wallet.send(client, rest)
+  return Actions.wallet.transfer(client, rest as Actions.wallet.transfer.Parameters)
 }
 
-export declare namespace send {
+export declare namespace transfer {
   export type Parameters<config extends Config> = UnionCompute<
     ChainIdParameter<config> &
       ConnectorParameter &
       AccountParameter &
-      Actions.wallet.send.Parameters
+      Actions.wallet.transfer.Parameters
   >
 
-  export type ReturnValue = Actions.wallet.send.ReturnValue
+  export type ReturnValue = Actions.wallet.transfer.ReturnValue
 
   export type ErrorType =
     | GetConnectorClientErrorType
     | BaseErrorType
-    | Actions.wallet.send.ErrorType
+    | Actions.wallet.transfer.ErrorType
 }
 
 /**

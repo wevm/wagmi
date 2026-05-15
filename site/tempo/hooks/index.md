@@ -83,8 +83,8 @@
 | [`token.useWatchTransfer`](/tempo/hooks/token.useWatchTransfer) | Hook for watching token transfer events |
 | **Wallet Hooks** | |
 | [`wallet.useDeposit`](/tempo/hooks/wallet.useDeposit) | Hook for opening the wallet deposit flow with optional pre-filled deposit fields |
-| [`wallet.useSend`](/tempo/hooks/wallet.useSend) | Hook for opening the wallet send flow with optional pre-filled send fields |
 | [`wallet.useSwap`](/tempo/hooks/wallet.useSwap) | Hook for opening the wallet swap flow with optional pre-filled swap fields |
+| [`wallet.useTransfer`](/tempo/hooks/wallet.useTransfer) | Hook for transferring a TIP-20 token |
 | **Zone Hooks** | |
 | [`zone.useAuthorizationTokenInfo`](/tempo/hooks/zone.useAuthorizationTokenInfo) | Hook for getting information about the current zone authorization token |
 | [`zone.useDeposit`](/tempo/hooks/zone.useDeposit) | Hook for depositing tokens from the parent Tempo chain into a zone |
