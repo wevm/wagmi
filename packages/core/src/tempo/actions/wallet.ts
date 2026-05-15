@@ -40,7 +40,7 @@ type AccountParameter = {
  * const { receipt } = await Actions.wallet.transfer(config, {
  *   amount: '1.5',
  *   to: '0x...',
- *   token: '0x...',
+ *   token: 'pathUSD',
  * })
  *
  * // Open the wallet UI instead.

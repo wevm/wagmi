@@ -23,7 +23,7 @@ import { type UseMutationParameters, useMutation } from '../../utils/query.js'
  *         mutate({
  *           amount: '1.5',
  *           to: '0x...',
- *           token: '0x...',
+ *           token: 'pathUSD',
  *         })
  *       }
  *       disabled={isPending}
