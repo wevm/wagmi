@@ -1,9 +1,9 @@
 ---
-"@wagmi/core": minor
-"wagmi": minor
+"@wagmi/core": patch
+"wagmi": patch
 ---
 
-`tempo`: Renamed `Actions.wallet.send` to `Actions.wallet.transfer` and `Hooks.wallet.useSend` to `Hooks.wallet.useTransfer`. Parameters now follow viem's discriminated `editable` shape — `amount`, `to`, and `token` are required by default; pass `editable: true` to open the wallet UI with optional pre-filled fields.
+`wagmi/tempo`: Renamed `Actions.wallet.send` to `Actions.wallet.transfer` and `Hooks.wallet.useSend` to `Hooks.wallet.useTransfer`. 
 
 Also bumps the `accounts` peer dependency to `~0.12`.
 
