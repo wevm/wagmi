@@ -30,7 +30,7 @@ To ensure everything works correctly, make sure your `tsconfig.json` has [`stric
 
 ## Config Types
 
-By default Vue Plugins does not work well with type inference. To support strong type-safety across the Vue Plugins boundary, there are two options available:
+By default Vue Plugin does not work well with type inference. To support strong type-safety across the Vue Plugin boundary, there are two options available:
 
 - Declaration merging to "register" your `config` globally with TypeScript.
 - `config` property to pass your `config` directly to composables.
