@@ -1,5 +1,6 @@
 import { config } from '@wagmi/test'
-import { expect, test, vi } from 'vitest'
+import type { Provider } from 'accounts'
+import { expect, expectTypeOf, test, vi } from 'vitest'
 
 vi.mock('accounts', () => ({
   Provider: {
@@ -22,6 +23,28 @@ test('tempoWallet: setup', () => {
 
   expect(connector.name).toEqual('Tempo Wallet')
   expect(connector.id).toEqual('xyz.tempo')
+})
+
+test('tempoWallet: accepts Provider.create parameters', () => {
+  type ProviderParameters = NonNullable<Parameters<typeof Provider.create>[0]>
+
+  expectTypeOf<tempoWallet.Parameters>().toMatchTypeOf<
+    Pick<
+      ProviderParameters,
+      'authorizeAccessKey' | 'feePayer' | 'mpp' | 'relay' | 'testnet'
+    >
+  >()
+
+  const authorizeAccessKey = () => ({ expiry: 1 })
+  const connectorFn = tempoWallet({
+    authorizeAccessKey,
+    feePayer: '/relay',
+    mpp: false,
+    relay: '/relay',
+    testnet: true,
+  })
+
+  expect(connectorFn).toBeTypeOf('function')
 })
 
 test('dangerous_secp256k1: setup', () => {
