@@ -5,8 +5,8 @@ import { type ReactElement, useEffect, useRef } from 'react'
 
 export type HydrateProps = {
   config: ResolvedRegister['config']
-  initialState?: State | undefined
-  reconnectOnMount?: boolean | undefined
+  initialState?: State
+  reconnectOnMount?: boolean
 }
 
 export function Hydrate(parameters: React.PropsWithChildren<HydrateProps>) {
