@@ -114,17 +114,33 @@ export type PrepareTransactionRequestErrorType =
   viem_PrepareTransactionRequestErrorType
 
 /** https://wagmi.sh/core/api/actions/prepareTransactionRequest */
-export async function prepareTransactionRequest<
+export function prepareTransactionRequest<
   config extends Config,
-  chainId extends config['chains'][number]['id'] | undefined,
+  const chainId extends config['chains'][number]['id'],
   const request extends viem_PrepareTransactionRequestRequest<
-    SelectChains<config, chainId>['0'],
-    SelectChains<config, chainId>['0']
+    SelectChains<config, chainId>[0],
+    SelectChains<config, chainId>[0]
   >,
 >(
   config: config,
-  parameters: PrepareTransactionRequestParameters<config, chainId, request>,
-): Promise<PrepareTransactionRequestReturnType<config, chainId, request>> {
+  parameters: PrepareTransactionRequestParameters<config, chainId, request> &
+    request & { chainId: chainId },
+): Promise<PrepareTransactionRequestReturnType<config, chainId, request>>
+export function prepareTransactionRequest<
+  config extends Config,
+  const request extends viem_PrepareTransactionRequestRequest<
+    SelectChains<config, undefined>[0],
+    SelectChains<config, undefined>[0]
+  >,
+>(
+  config: config,
+  parameters: PrepareTransactionRequestParameters<config, undefined, request> &
+    request & { chainId?: undefined },
+): Promise<PrepareTransactionRequestReturnType<config, undefined, request>>
+export async function prepareTransactionRequest(
+  config: Config,
+  parameters: PrepareTransactionRequestParameters,
+): Promise<PrepareTransactionRequestReturnType> {
   const { account: account_, chainId, ...rest } = parameters
 
   let account: Address | Account | undefined
@@ -148,7 +164,5 @@ export async function prepareTransactionRequest<
   return action({
     ...rest,
     ...(account ? { account } : {}),
-  } as unknown as viem_PrepareTransactionRequestParameters) as unknown as Promise<
-    PrepareTransactionRequestReturnType<config, chainId, request>
-  >
+  } as unknown as viem_PrepareTransactionRequestParameters) as unknown as Promise<PrepareTransactionRequestReturnType>
 }
