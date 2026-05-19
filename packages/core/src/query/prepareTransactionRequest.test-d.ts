@@ -61,6 +61,8 @@ test('chain formatters', async () => {
       chainId: mainnet.id,
       to: targetAccount,
       value: parseEther('0.01'),
+      // @ts-expect-error
+      feeCurrency: '0x',
     })
     const request = await options.queryFn(context)
     expectTypeOf(request.chainId).toEqualTypeOf(mainnet.id)

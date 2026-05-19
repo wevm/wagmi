@@ -3,6 +3,7 @@ import type {
   Address,
   Calls,
   Chain,
+  ExtractFormattedTransactionRequest as viem_ExtractFormattedTransactionRequest,
   PrepareTransactionRequestErrorType as viem_PrepareTransactionRequestErrorType,
   PrepareTransactionRequestParameters as viem_PrepareTransactionRequestParameters,
   PrepareTransactionRequestRequest as viem_PrepareTransactionRequestRequest,
@@ -113,34 +114,65 @@ export type PrepareTransactionRequestReturnType<
 export type PrepareTransactionRequestErrorType =
   viem_PrepareTransactionRequestErrorType
 
+type PrepareTransactionRequestExactParameters<
+  config extends Config,
+  parameters,
+  chainId extends config['chains'][number]['id'] | undefined,
+  allowed = PrepareTransactionRequestParameters<config, chainId>,
+> = parameters &
+  allowed &
+  Record<Exclude<keyof parameters, keyof allowed>, never>
+
+type PrepareTransactionRequestRequestForReturn<
+  config extends Config,
+  parameters,
+  chainId extends config['chains'][number]['id'] | undefined,
+> = parameters extends viem_PrepareTransactionRequestRequest<
+  SelectChains<config, chainId>[0],
+  SelectChains<config, chainId>[0]
+>
+  ? parameters
+  : viem_ExtractFormattedTransactionRequest<
+      SelectChains<config, chainId>[0],
+      {
+        type?: parameters extends { type?: infer type extends string }
+          ? type
+          : undefined
+      }
+    > &
+      Pick<
+        viem_PrepareTransactionRequestRequest<
+          SelectChains<config, chainId>[0],
+          SelectChains<config, chainId>[0]
+        >,
+        'kzg' | 'parameters'
+      >
+
 /** https://wagmi.sh/core/api/actions/prepareTransactionRequest */
-export function prepareTransactionRequest<
+export async function prepareTransactionRequest<
   config extends Config,
-  const chainId extends config['chains'][number]['id'],
-  const request extends viem_PrepareTransactionRequestRequest<
-    SelectChains<config, chainId>[0],
-    SelectChains<config, chainId>[0]
-  >,
+  const parameters,
+  chainId extends
+    | config['chains'][number]['id']
+    | undefined = parameters extends {
+    chainId?: infer chainId extends config['chains'][number]['id']
+  }
+    ? chainId
+    : undefined,
 >(
   config: config,
-  parameters: PrepareTransactionRequestParameters<config, chainId, request> &
-    request & { chainId: chainId },
-): Promise<PrepareTransactionRequestReturnType<config, chainId, request>>
-export function prepareTransactionRequest<
-  config extends Config,
-  const request extends viem_PrepareTransactionRequestRequest<
-    SelectChains<config, undefined>[0],
-    SelectChains<config, undefined>[0]
+  parameters: PrepareTransactionRequestExactParameters<
+    config,
+    parameters,
+    chainId
   >,
->(
-  config: config,
-  parameters: PrepareTransactionRequestParameters<config, undefined, request> &
-    request & { chainId?: undefined },
-): Promise<PrepareTransactionRequestReturnType<config, undefined, request>>
-export async function prepareTransactionRequest(
-  config: Config,
-  parameters: PrepareTransactionRequestParameters,
-): Promise<PrepareTransactionRequestReturnType> {
+): Promise<
+  PrepareTransactionRequestReturnType<
+    config,
+    chainId,
+    PrepareTransactionRequestRequestForReturn<config, parameters, chainId>
+  >
+> {
   const { account: account_, chainId, ...rest } = parameters
 
   let account: Address | Account | undefined
@@ -164,5 +196,11 @@ export async function prepareTransactionRequest(
   return action({
     ...rest,
     ...(account ? { account } : {}),
-  } as unknown as viem_PrepareTransactionRequestParameters) as unknown as Promise<PrepareTransactionRequestReturnType>
+  } as unknown as viem_PrepareTransactionRequestParameters) as unknown as Promise<
+    PrepareTransactionRequestReturnType<
+      config,
+      chainId,
+      PrepareTransactionRequestRequestForReturn<config, parameters, chainId>
+    >
+  >
 }

@@ -71,6 +71,13 @@ test('chain formatters', async () => {
   expectTypeOf<Result3>().not.toMatchTypeOf<{
     feeCurrency?: `0x${string}` | undefined
   }>()
+  prepareTransactionRequest(config, {
+    chainId: mainnet.id,
+    to: targetAccount,
+    value: parseEther('0.01'),
+    // @ts-expect-error
+    feeCurrency: '0x',
+  })
 })
 
 test('parameters: calls without to', async () => {
