@@ -1,3 +1,4 @@
+import type { EIP6963ProviderDetail } from 'mipd'
 import type {
   AddEthereumChainParameter,
   Address,
@@ -30,6 +31,7 @@ export type CreateConnectorFn<
 > = (config: {
   chains: readonly [Chain, ...Chain[]]
   emitter: Emitter<ConnectorEventMap>
+  readonly providers: readonly EIP6963ProviderDetail[]
   storage?: Compute<Storage<storageItem>> | null | undefined
   transports?: Record<number, Transport> | undefined
 }) => Compute<

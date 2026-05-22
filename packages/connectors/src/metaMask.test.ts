@@ -1,5 +1,5 @@
 import { createConfig, reconnect } from '@wagmi/core'
-import { chain, config } from '@wagmi/test'
+import { chain, config, Provider } from '@wagmi/test'
 import { getAddress, http } from 'viem'
 import { beforeEach, expect, test, vi } from 'vitest'
 
@@ -32,6 +32,7 @@ vi.mock('@metamask/connect-evm', () => ({
 beforeEach(() => {
   vi.clearAllMocks()
   vi.resetModules()
+  config._internal.mipd?.clear()
 })
 
 test('setup', async () => {
@@ -125,29 +126,29 @@ test('connect still loads SDK when EIP-6963 MetaMask provider is announced', asy
   }
 })
 
-function announceProviderOnRequest(provider: {
-  request: ReturnType<typeof vi.fn>
-}) {
-  const announce = () =>
-    window.dispatchEvent(
-      new CustomEvent('eip6963:announceProvider', {
-        detail: {
-          info: {
-            icon: 'data:image/svg+xml,<svg></svg>',
-            name: 'MetaMask',
-            rdns: 'io.metamask',
-            uuid: 'metaMask',
-          },
-          provider,
-        },
-      }),
-    )
+function announceProviderOnRequest(provider: Provider.Provider) {
+  const event = new CustomEvent('eip6963:announceProvider', {
+    detail: Object.freeze({
+      info: {
+        icon: 'data:image/svg+xml,<svg></svg>',
+        name: 'MetaMask',
+        rdns: 'io.metamask',
+        uuid: 'metaMask',
+      },
+      provider,
+    }),
+  })
+  window.dispatchEvent(event)
+
+  const announce = () => window.dispatchEvent(event)
   window.addEventListener('eip6963:requestProvider', announce)
   return () => window.removeEventListener('eip6963:requestProvider', announce)
 }
 
 function mockEip6963Provider(request: (args: { method: string }) => unknown) {
-  return {
+  const provider = Provider.from({
     request: vi.fn(async (args: { method: string }) => request(args)),
-  }
+  })
+  vi.spyOn(provider, 'request')
+  return provider
 }

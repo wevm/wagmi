@@ -50,71 +50,6 @@ export type MetaMaskParameters = UnionCompute<
 
 type CreateEVMClientParameters = Parameters<typeof createEVMClient>[0]
 
-const metaMaskRdns = ['io.metamask', 'io.metamask.mobile'] as const
-
-type Eip6963ProviderDetail = {
-  info?: { rdns?: string | undefined } | undefined
-  provider?: unknown
-}
-
-let unwatchInjectedMetaMaskProvider: (() => void) | undefined
-const injectedMetaMaskProviders = new Map<
-  (typeof metaMaskRdns)[number],
-  EIP1193Provider
->()
-
-/**
- * If the SDK has not been loaded yet, watch EIP-6963 announcements for the
- * MetaMask provider so the connector's read-only / probe methods
- * (`getProvider`, `isAuthorized`, `getAccounts`, `getChainId`) can answer
- * without dynamically importing `@metamask/connect-evm`.
- *
- * This avoids paying the SDK bundle download/parse cost on every page load
- * via `reconnect()` for users who have the MetaMask extension installed but
- * have not yet user-initiated a connection through this connector. Once
- * `connect()` runs, the SDK is loaded and all subsequent calls go through it
- * — no provider-instance flip-flop, event wiring stays on the SDK provider.
- *
- * Returns `undefined` on the server or when no MetaMask EIP-6963 announcement
- * has been received (e.g. mobile-web with no extension), in which case callers
- * fall through to `getInstance()`.
- */
-function watchInjectedMetaMaskProvider() {
-  if (typeof window === 'undefined') return undefined
-  if (unwatchInjectedMetaMaskProvider) return undefined
-
-  const handler = (event: Event) => {
-    const detail = (event as CustomEvent<Eip6963ProviderDetail>).detail
-    if (!detail?.provider) return
-
-    const rdns = detail.info?.rdns
-    if (rdns !== 'io.metamask' && rdns !== 'io.metamask.mobile') return
-
-    injectedMetaMaskProviders.set(rdns, detail.provider as EIP1193Provider)
-  }
-
-  window.addEventListener('eip6963:announceProvider', handler)
-  window.dispatchEvent(new Event('eip6963:requestProvider'))
-
-  unwatchInjectedMetaMaskProvider = () => {
-    window.removeEventListener('eip6963:announceProvider', handler)
-    unwatchInjectedMetaMaskProvider = undefined
-    injectedMetaMaskProviders.clear()
-  }
-}
-
-function findInjectedMetaMaskProvider(): EIP1193Provider | undefined {
-  // Match the connector's own `rdns` array. Order matters: prefer the desktop
-  // extension over the mobile in-app browser when both somehow announce on the
-  // same surface. The cache is primed by `setup()` via
-  // `watchInjectedMetaMaskProvider()`.
-  for (const rdns of metaMaskRdns) {
-    const provider = injectedMetaMaskProviders.get(rdns)
-    if (provider) return provider
-  }
-  return undefined
-}
-
 metaMask.type = 'metaMask' as const
 export function metaMask(parameters: MetaMaskParameters = {}) {
   type Provider = EIP1193Provider
@@ -132,9 +67,6 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
     name: 'MetaMask',
     rdns: ['io.metamask', 'io.metamask.mobile'],
     type: metaMask.type,
-    async setup() {
-      watchInjectedMetaMaskProvider()
-    },
     async connect({ chainId, isReconnecting, withCapabilities } = {}) {
       const instance = await this.getInstance()
       const provider = instance.getProvider() as EIP1193Provider & {
@@ -234,11 +166,9 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       // Pre-connect: serve from the EIP-6963 MetaMask provider when present
       // so we don't import the SDK chunk just to answer this probe.
       if (!metamask && !metamaskPromise) {
-        const injected = findInjectedMetaMaskProvider()
+        const injected = config.providers[0]?.provider
         if (injected) {
-          const accounts = (await injected.request({
-            method: 'eth_accounts',
-          })) as string[]
+          const accounts = await injected.request({ method: 'eth_accounts' })
           return accounts.map((x) => getAddress(x))
         }
       }
@@ -255,7 +185,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
     async getChainId() {
       // Pre-connect: serve from the EIP-6963 MetaMask provider when present.
       if (!metamask && !metamaskPromise) {
-        const injected = findInjectedMetaMaskProvider()
+        const injected = config.providers[0]?.provider
         if (injected) {
           const chainId = await injected.request({ method: 'eth_chainId' })
           return Number(chainId)
@@ -273,8 +203,8 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       // wagmi's `reconnect()` probe doesn't have to dynamically import the
       // SDK on every page load for extension users.
       if (!metamask && !metamaskPromise) {
-        const injected = findInjectedMetaMaskProvider()
-        if (injected) return injected
+        const injected = config.providers[0]?.provider
+        if (injected) return injected as EIP1193Provider
       }
       const instance = await this.getInstance()
       return instance.getProvider()
@@ -286,11 +216,9 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         // SDK retry/timeout dance below is only necessary for the mobile
         // SDK transport path.
         if (!metamask && !metamaskPromise) {
-          const injected = findInjectedMetaMaskProvider()
+          const injected = config.providers[0]?.provider
           if (injected) {
-            const accounts = (await injected.request({
-              method: 'eth_accounts',
-            })) as readonly string[]
+            const accounts = await injected.request({ method: 'eth_accounts' })
             return accounts.length > 0
           }
         }
