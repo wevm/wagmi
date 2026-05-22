@@ -5,4 +5,4 @@
 "@wagmi/vue": minor
 ---
 
-Bumped Tanstack Query Packages to v5.90.x
+Bumped Tanstack Query Packages to v5.100.x
