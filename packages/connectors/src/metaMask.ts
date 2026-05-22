@@ -163,6 +163,15 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       return instance.disconnect()
     },
     async getAccounts() {
+      // Pre-connect: serve from the EIP-6963 MetaMask provider when present
+      // so we don't import the SDK chunk just to answer this probe.
+      if (!metamask && !metamaskPromise) {
+        const injected = config.providers[0]?.provider
+        if (injected) {
+          const accounts = await injected.request({ method: 'eth_accounts' })
+          return accounts.map((x) => getAddress(x))
+        }
+      }
       const instance = await this.getInstance()
       if (instance.accounts.length)
         return instance.accounts.map((x) => getAddress(x))
@@ -174,6 +183,14 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       return accounts.map((x) => getAddress(x))
     },
     async getChainId() {
+      // Pre-connect: serve from the EIP-6963 MetaMask provider when present.
+      if (!metamask && !metamaskPromise) {
+        const injected = config.providers[0]?.provider
+        if (injected) {
+          const chainId = await injected.request({ method: 'eth_chainId' })
+          return Number(chainId)
+        }
+      }
       const instance = await this.getInstance()
       if (instance.getChainId()) return Number(instance.getChainId())
       // Fallback to provider if SDK doesn't return chainId
@@ -182,11 +199,29 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       return Number(chainId)
     },
     async getProvider() {
+      // Pre-connect: return the EIP-6963 MetaMask provider directly so
+      // wagmi's `reconnect()` probe doesn't have to dynamically import the
+      // SDK on every page load for extension users.
+      if (!metamask && !metamaskPromise) {
+        const injected = config.providers[0]?.provider
+        if (injected) return injected as EIP1193Provider
+      }
       const instance = await this.getInstance()
       return instance.getProvider()
     },
     async isAuthorized() {
       try {
+        // Pre-connect: ask the EIP-6963 MetaMask provider directly to avoid
+        // a chunk download for an `eth_accounts` probe on page load. The
+        // SDK retry/timeout dance below is only necessary for the mobile
+        // SDK transport path.
+        if (!metamask && !metamaskPromise) {
+          const injected = config.providers[0]?.provider
+          if (injected) {
+            const accounts = await injected.request({ method: 'eth_accounts' })
+            return accounts.length > 0
+          }
+        }
         // MetaMask mobile provider sometimes fails to immediately resolve
         // JSON-RPC requests on page load
         const timeout = 10
