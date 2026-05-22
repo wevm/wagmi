@@ -351,3 +351,43 @@ test('behavior: all same chainId', async () => {
     }
   `)
 })
+
+test('behavior: explicit chainId overrides connected chain', async () => {
+  const { mainnet, mainnet2 } = chain
+  await switchChain(config, { chainId: mainnet2.id })
+  const { result } = renderPrimitive(() =>
+    useReadContracts(() => ({
+      chainId: mainnet.id,
+      contracts: [
+        {
+          abi: abi.wagmigotchi,
+          address: address.wagmigotchi,
+          functionName: 'love',
+          args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
+        },
+      ],
+      query: {
+        enabled: false,
+      },
+    })),
+  )
+
+  expect(result.queryKey).toMatchInlineSnapshot(`
+    [
+      "readContracts",
+      {
+        "chainId": 1,
+        "contracts": [
+          {
+            "address": "0xecb504d39723b0be0e3a9aa33d646642d1051ee1",
+            "args": [
+              "0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c",
+            ],
+            "chainId": 1,
+            "functionName": "love",
+          },
+        ],
+      },
+    ]
+  `)
+})

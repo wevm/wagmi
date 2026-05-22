@@ -1,5 +1,43 @@
 # @wagmi/connectors
 
+## 8.0.14
+
+### Patch Changes
+
+- Updated dependencies [[`f1e6d70`](https://github.com/wevm/wagmi/commit/f1e6d702327180699b40cd55e3fd6daa13ca3bbd), [`4c44cd0`](https://github.com/wevm/wagmi/commit/4c44cd012a8fde65dcc3548557b580b5b6b33291)]:
+  - @wagmi/core@3.4.12
+
+## 8.0.13
+
+### Patch Changes
+
+- Updated dependencies [[`9e8418a`](https://github.com/wevm/wagmi/commit/9e8418a1f751622846dde564ddd1eef4693f6005)]:
+  - @wagmi/core@3.4.11
+
+## 8.0.12
+
+### Patch Changes
+
+- **Breaking(`wagmi/tempo`):** Bumped the `accounts` peer dependency range from `~0.8.1` to `~0.10`. ([#5112](https://github.com/wevm/wagmi/pull/5112))
+
+- `wagmi/tempo`: Forwarded config `transports` to the underlying `accounts` provider. ([#5112](https://github.com/wevm/wagmi/pull/5112))
+
+- Updated dependencies [[`3829b3c`](https://github.com/wevm/wagmi/commit/3829b3c2abea72f50a25b112f0e6d5bec6ac8be6)]:
+  - @wagmi/core@3.4.10
+
+## 8.0.11
+
+### Patch Changes
+
+- Widened `@metamask/connect-evm` peer dependency range from `~1.0.0` to `^1.0.0` so consumers automatically pick up non-breaking 1.x releases (e.g. the bundle-size improvements in `@metamask/connect-evm@1.1.0+`, which transitively brings `@metamask/connect-multichain@0.13.0` with lazy-loaded MWP infrastructure) without needing a manual `overrides` / `resolutions` entry. ([#5107](https://github.com/wevm/wagmi/pull/5107))
+
+## 8.0.10
+
+### Patch Changes
+
+- Updated dependencies [[`f86ad01`](https://github.com/wevm/wagmi/commit/f86ad0140f0d1c90936d43265f483477ace2eb56)]:
+  - @wagmi/core@3.4.9
+
 ## 8.0.9
 
 ### Patch Changes

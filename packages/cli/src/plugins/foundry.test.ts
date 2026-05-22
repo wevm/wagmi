@@ -1,18 +1,25 @@
 import fs from 'node:fs/promises'
-import fixtures from 'fixturez'
+import { createFixture } from 'fs-fixture'
 import { dirname, resolve } from 'pathe'
 import { afterEach, expect, test, vi } from 'vitest'
 
 import { foundry } from './foundry.js'
 
-const f = fixtures(__dirname)
+const fixtures: Awaited<ReturnType<typeof createFixture>>[] = []
 
-afterEach(() => {
+async function createTempDir() {
+  const fixture = await createFixture()
+  fixtures.push(fixture)
+  return fixture.path
+}
+
+afterEach(async () => {
   vi.restoreAllMocks()
+  await Promise.all(fixtures.splice(0).map((fixture) => fixture.rm()))
 })
 
 test('forge not installed', async () => {
-  const dir = f.temp()
+  const dir = await createTempDir()
   await expect(
     foundry({
       project: dir,
@@ -27,7 +34,7 @@ test('forge not installed', async () => {
 })
 
 test('project does not exist', async () => {
-  const dir = f.temp()
+  const dir = await createTempDir()
   const spy = vi.spyOn(process, 'cwd')
   spy.mockImplementation(() => dir)
 
@@ -154,7 +161,7 @@ test('contracts without project', async () => {
 })
 
 test('broadcast deployments', async () => {
-  const dir = f.temp()
+  const dir = await createTempDir()
   const spy = vi.spyOn(process, 'cwd')
   spy.mockImplementation(() => dir)
 
@@ -256,7 +263,7 @@ test('broadcast deployments', async () => {
 })
 
 test('broadcast deployments filters CALL transactions', async () => {
-  const dir = f.temp()
+  const dir = await createTempDir()
   const spy = vi.spyOn(process, 'cwd')
   spy.mockImplementation(() => dir)
 
@@ -343,7 +350,7 @@ test('broadcast deployments filters CALL transactions', async () => {
 })
 
 test('watch callbacks use broadcast deployments', async () => {
-  const dir = f.temp()
+  const dir = await createTempDir()
   const spy = vi.spyOn(process, 'cwd')
   spy.mockImplementation(() => dir)
 

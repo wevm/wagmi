@@ -1577,6 +1577,15 @@ export function getSidebar() {
             ],
           },
           {
+            text: 'Wallet',
+            collapsed: true,
+            items: [
+              { text: 'useDeposit', link: '/tempo/hooks/wallet.useDeposit' },
+              { text: 'useSwap', link: '/tempo/hooks/wallet.useSwap' },
+              { text: 'useTransfer', link: '/tempo/hooks/wallet.useTransfer' },
+            ],
+          },
+          {
             text: 'Zone',
             collapsed: true,
             items: [
@@ -1829,6 +1838,15 @@ export function getSidebar() {
                 text: 'watchTransfer',
                 link: '/tempo/actions/token.watchTransfer',
               },
+            ],
+          },
+          {
+            text: 'Wallet',
+            collapsed: true,
+            items: [
+              { text: 'deposit', link: '/tempo/actions/wallet.deposit' },
+              { text: 'swap', link: '/tempo/actions/wallet.swap' },
+              { text: 'transfer', link: '/tempo/actions/wallet.transfer' },
             ],
           },
           {

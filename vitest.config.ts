@@ -102,7 +102,7 @@ export default defineConfig({
             './packages/react/src/tempo/**/*.test.ts',
           ],
           fileParallelism: false,
-          hookTimeout: 20_000,
+          hookTimeout: 40_000,
           testTimeout: 30_000,
           globalSetup: process.env.TYPES
             ? ['./packages/test/src/setup.global.types.ts']

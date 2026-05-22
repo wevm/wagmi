@@ -14,6 +14,7 @@ import {
   UserRejectedRequestError,
   withRetry,
 } from 'viem'
+import { parseAccount } from 'viem/utils'
 
 import { createConnector } from '../connectors/createConnector.js'
 import type { Connector } from '../createConfig.js'
@@ -126,7 +127,6 @@ export function webAuthn(parameters: webAuthn.Parameters = {}) {
     name: name ?? 'EOA (WebAuthn)',
     providerParameters,
     rdns,
-    signable: true,
     type: 'webAuthn',
   })
 }
@@ -162,7 +162,6 @@ export function dangerous_secp256k1(
     name: name ?? 'EOA (Secp256k1)',
     providerParameters,
     rdns,
-    signable: true,
     type: 'secp256k1',
   })
 }
@@ -201,6 +200,7 @@ function _setup(parameters: setup.Parameters) {
           ...parameters.providerParameters,
           adapter: parameters.createAdapter(accounts),
           chains: config.chains as never,
+          transports: config.transports as never,
         }) as unknown as Provider
       })()
 
@@ -308,8 +308,11 @@ function _setup(parameters: setup.Parameters) {
       },
       async getClient({ chainId } = {}) {
         const provider = await getProvider()
+        // Always provide a JSON-RPC account; the SDK provider performs
+        // access key orchestration internally before signing.
+        const { address } = provider.getAccount({ accessKey: false })
         return Object.assign(provider.getClient({ chainId }), {
-          account: provider.getAccount({ signable: parameters.signable }),
+          account: parseAccount(address),
         }) as never
       },
       async getProvider() {
@@ -411,8 +414,6 @@ export declare namespace setup {
     providerParameters: Omit<AccountsProviderParameters, 'adapter' | 'chains'>
     /** EIP-6963 reverse-DNS ID(s) for the connector. */
     rdns?: string | readonly string[] | undefined
-    /** Whether the connector's accounts can be hydrated for local signing. */
-    signable?: boolean | undefined
     /** Connector type. */
     type: string
   }

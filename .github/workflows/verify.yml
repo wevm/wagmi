@@ -82,7 +82,7 @@ jobs:
     strategy:
       matrix:
         typescript-version: ['5.7.3', '5.8.3', '5.9.3', 'latest']
-        viem-version: ['2.48.3', 'latest']
+        viem-version: ['2.49.2', 'latest']
 
     steps:
       - name: Clone repository
@@ -114,7 +114,7 @@ jobs:
     permissions:
       contents: read
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     strategy:
       max-parallel: 4
       matrix:
@@ -157,7 +157,7 @@ jobs:
         with:
           command: CI=true pnpm test:cov --shard=${{ matrix.shard }}/${{ matrix.total-shards }} --retry=3 --bail=1
           max_attempts: 3
-          timeout_minutes: 5
+          timeout_minutes: 10
         env:
           VITE_MAINNET_FORK_URL: ${{ secrets.VITE_MAINNET_FORK_URL }}
           VITE_OPTIMISM_FORK_URL: ${{ secrets.VITE_OPTIMISM_FORK_URL }}

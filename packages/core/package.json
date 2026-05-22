@@ -1,7 +1,7 @@
 {
   "name": "@wagmi/core",
   "description": "VanillaJS library for Ethereum",
-  "version": "3.4.8",
+  "version": "3.4.12",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -87,7 +87,7 @@
   },
   "peerDependencies": {
     "@tanstack/query-core": ">=5.0.0",
-    "accounts": "~0.8.1",
+    "accounts": "~0.12",
     "typescript": ">=5.7.3",
     "viem": "2.x"
   },
