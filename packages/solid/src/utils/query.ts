@@ -1,10 +1,10 @@
 import {
   type DefaultError,
+  type InfiniteQueryOptions,
   type MutateFunction,
+  type MutationOptions,
   type QueryKey,
-  type SolidInfiniteQueryOptions,
-  type SolidMutationOptions,
-  type SolidQueryOptions,
+  type QueryOptions,
   useInfiniteQuery as tanstack_useInfiniteQuery,
   useQuery as tanstack_useQuery,
   type UseInfiniteQueryResult,
@@ -28,7 +28,7 @@ export type SolidMutationParameters<
   context = unknown,
 > = Compute<
   Omit<
-    SolidMutationOptions<data, error, Compute<variables>, context>,
+    MutationOptions<data, error, Compute<variables>, context>,
     'mutationFn' | 'mutationKey' | 'throwOnError'
   >
 >
@@ -61,11 +61,11 @@ export type SolidQueryParameters<
   queryKey extends QueryKey = QueryKey,
 > = Compute<
   ExactPartial<
-    Omit<SolidQueryOptions<queryFnData, error, data, queryKey>, 'initialData'>
+    Omit<QueryOptions<queryFnData, error, data, queryKey>, 'initialData'>
   > & {
     // Fix `initialData` type
     initialData?:
-      | SolidQueryOptions<queryFnData, error, data, queryKey>['initialData']
+      | QueryOptions<queryFnData, error, data, queryKey>['initialData']
       | undefined
   }
 >
@@ -107,17 +107,12 @@ export type SolidInfiniteQueryParameters<
   pageParam = unknown,
 > = Compute<
   Omit<
-    SolidInfiniteQueryOptions<queryFnData, error, data, queryKey, pageParam>,
+    InfiniteQueryOptions<queryFnData, error, data, queryKey, pageParam>,
     'initialData'
   > & {
     // Fix `initialData` type
     initialData?:
-      | SolidInfiniteQueryOptions<
-          queryFnData,
-          error,
-          data,
-          queryKey
-        >['initialData']
+      | InfiniteQueryOptions<queryFnData, error, data, queryKey>['initialData']
       | undefined
   }
 >
