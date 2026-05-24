@@ -163,6 +163,105 @@ Would you like to contribute this content? Feel free to [open a Pull Request](ht
 
 #### Vanilla SSR
 
-Would you like to contribute this content? Feel free to [open a Pull Request](https://github.com/wevm/wagmi/pulls)!
-<!-- TODO -->
+For non-framework SSR setups (e.g. Express, Fastify, or any Node.js server with a custom rendering pipeline), you will need to extract the cookie from the incoming request headers on the server, and pass the initial state to the client for hydration.
+
+**Server side:** Extract the cookie from the request and serialize the initial state into the HTML.
+
+**Client side:** Deserialize the state and pass it to `WagmiProvider`.
+
+::: code-group
+```tsx [server.ts]
+import { renderToString } from 'react-dom/server'
+import { cookieToInitialState } from 'wagmi' // [!code ++]
+
+import { getConfig } from './config'
+import { App } from './App'
+
+function handler(req, res) {
+  const config = getConfig()
+  const initialState = cookieToInitialState(config, req.headers.cookie) // [!code ++]
+
+  const appHtml = renderToString(
+    <App initialState={initialState} />
+  )
+
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+      <body>
+        <div id="app">${appHtml}</div>
+        <script>
+          window.__WAGMI_INITIAL_STATE__ = ${JSON.stringify(initialState)} // [!code ++]
+        </script>
+        <script src="/client.js"></script>
+      </body>
+    </html>
+  `)
+}
+```
+
+```tsx [client.tsx]
+import { hydrateRoot } from 'react-dom/client'
+import { type State } from 'wagmi'
+
+import { App } from './App'
+
+const initialState = // [!code ++]
+  (window as any).__WAGMI_INITIAL_STATE__ as State | undefined // [!code ++]
+
+hydrateRoot(
+  document.getElementById('app')!,
+  <App initialState={initialState} />
+)
+```
+
+```tsx [App.tsx]
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { useState } from 'react'
+import { type State, WagmiProvider } from 'wagmi'
+
+import { getConfig } from './config'
+
+type Props = {
+  initialState: State | undefined // [!code ++]
+}
+
+export function App({ initialState }: Props) {
+  const [config] = useState(() => getConfig())
+  const [queryClient] = useState(() => new QueryClient())
+
+  return (
+    <WagmiProvider config={config} initialState={initialState}> // [!code ++]
+      <QueryClientProvider client={queryClient}>
+        {/* ... */}
+      </QueryClientProvider>
+    </WagmiProvider>
+  )
+}
+```
+
+```tsx [config.ts]
+import {
+  createConfig,
+  http,
+  cookieStorage,
+  createStorage
+} from 'wagmi'
+import { mainnet, sepolia } from 'wagmi/chains'
+
+export function getConfig() {
+  return createConfig({
+    chains: [mainnet, sepolia],
+    ssr: true,
+    storage: createStorage({  // [!code ++]
+      storage: cookieStorage, // [!code ++]
+    }),  // [!code ++]
+    transports: {
+      [mainnet.id]: http(),
+      [sepolia.id]: http(),
+    },
+  })
+}
+```
+:::
 
