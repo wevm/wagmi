@@ -158,8 +158,74 @@ export function getConfig() {
 
 #### Next.js Pages Directory
 
-Would you like to contribute this content? Feel free to [open a Pull Request](https://github.com/wevm/wagmi/pulls)!
-<!-- TODO -->
+In our `pages/_app.tsx` file, we will need to extract the cookie from the request headers via `App.getInitialProps` and pass it to [`cookieToInitialState`](/react/api/utilities/cookieToInitialState).
+
+We will need to pass this result to the [`initialState` property](/react/api/WagmiProvider#initialstate) of the `WagmiProvider`.
+
+::: code-group
+```tsx [pages/_app.tsx]
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { useState } from 'react'
+import { cookieToInitialState, type State, WagmiProvider } from 'wagmi' // [!code ++]
+import type { AppContext, AppProps } from 'next/app'
+import App from 'next/app' // [!code ++]
+
+import { getConfig } from '../config'
+
+type PageProps = {
+  cookie: string | undefined // [!code ++]
+}
+
+export default function MyApp({ Component, pageProps }: AppProps<PageProps>) {
+  const [config] = useState(() => getConfig())
+  const [queryClient] = useState(() => new QueryClient())
+  const initialState = cookieToInitialState(config, pageProps.cookie) // [!code ++]
+
+  return (
+    <WagmiProvider config={config} initialState={initialState}> // [!code ++]
+      <QueryClientProvider client={queryClient}>
+        <Component {...pageProps} />
+      </QueryClientProvider>
+    </WagmiProvider>
+  )
+}
+
+MyApp.getInitialProps = async (appContext: AppContext) => { // [!code ++]
+  const appProps = await App.getInitialProps(appContext) // [!code ++]
+  return { // [!code ++]
+    ...appProps, // [!code ++]
+    pageProps: { // [!code ++]
+      ...appProps.pageProps, // [!code ++]
+      cookie: appContext.ctx.req?.headers.cookie, // [!code ++]
+    }, // [!code ++]
+  } // [!code ++]
+} // [!code ++]
+```
+
+```tsx [config.ts]
+import {
+  createConfig,
+  http,
+  cookieStorage,
+  createStorage
+} from 'wagmi'
+import { mainnet, sepolia } from 'wagmi/chains'
+
+export function getConfig() {
+  return createConfig({
+    chains: [mainnet, sepolia],
+    ssr: true,
+    storage: createStorage({  // [!code ++]
+      storage: cookieStorage, // [!code ++]
+    }),  // [!code ++]
+    transports: {
+      [mainnet.id]: http(),
+      [sepolia.id]: http(),
+    },
+  })
+}
+```
+:::
 
 #### Vanilla SSR
 
