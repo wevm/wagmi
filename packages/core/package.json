@@ -88,7 +88,7 @@
   "peerDependencies": {
     "@tanstack/query-core": ">=5.0.0",
     "accounts": "~0.12",
-    "typescript": ">=5.7.3",
+    "typescript": ">=5.9.3",
     "viem": "2.x"
   },
   "peerDependenciesMeta": {
