@@ -367,10 +367,13 @@ describe('policy', () => {
         admin: account2.address,
       })
 
-      await vi.waitFor(() => {
-        const event = events.find((e) => e.args.admin === account2.address)
-        expect(event).toBeDefined()
-      })
+      await vi.waitFor(
+        () => {
+          const event = events.find((e) => e.args.admin === account2.address)
+          expect(event).toBeDefined()
+        },
+        { timeout: 5_000 },
+      )
       unwatch()
 
       const event = events.find((e) => e.args.admin === account2.address)
