@@ -156,6 +156,119 @@ export function getConfig() {
 ```
 :::
 
+#### TanStack Start
+
+TanStack Start handles SSR differently from Next.js. Instead of a `layout.tsx` Server Component, TanStack Start uses a root route file (`__root.tsx`) with a [`beforeLoad`](https://tanstack.com/router/latest/docs/api/router/RouteOptionsType#beforeload-method) hook to run server-side logic. There is also no need for a `"use client"` directive — TanStack Start components can use hooks and client-side features by default.
+
+We will use [`createServerFn`](https://tanstack.com/start/latest/docs/framework/react/guide/server-functions#what-are-server-functions) to read the cookie on the server, pass it through route context, and inject it into the `WagmiProvider`.
+
+::: code-group
+
+```tsx [src/routes/__root.tsx]
+import {
+  HeadContent,
+  Outlet,
+  Scripts,
+  createRootRoute,
+} from '@tanstack/react-router'
+import { createServerFn } from '@tanstack/react-start'
+import { getRequestHeaders } from '@tanstack/react-start/server'
+import * as React from 'react'
+import { cookieToInitialState } from 'wagmi'
+import { getConfig } from '../config'
+import { Providers } from '../providers'
+
+const getSSRCookie = createServerFn().handler(async () => { // [!code ++]
+  const headers = getRequestHeaders() // [!code ++]
+  return headers.get('cookie') || '' // [!code ++]
+}) // [!code ++]
+
+export const Route = createRootRoute({
+  component: RootComponent,
+  shellComponent: RootShell,
+  beforeLoad: async () => { // [!code ++]
+    const cookie = await getSSRCookie() // [!code ++]
+    const initialState = cookieToInitialState(getConfig(), cookie) // [!code ++]
+    return { wagmiInitialState: initialState } // [!code ++]
+  }, // [!code ++]
+})
+
+function RootComponent() {
+  const { wagmiInitialState } = Route.useRouteContext() // [!code ++]
+  return (
+    <Providers> // [!code --]
+    <Providers initialState={wagmiInitialState}> // [!code ++]
+      <Outlet />
+    </Providers>
+  )
+}
+
+function RootShell({ children }: { children: React.ReactNode }) {
+  return (
+    <html>
+      <head>
+        <HeadContent />
+      </head>
+      <body>
+        {children}
+        <Scripts />
+      </body>
+    </html>
+  )
+}
+```
+
+```tsx [src/providers.tsx]
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { type ReactNode, useState } from 'react'
+import { type State, WagmiProvider } from 'wagmi'
+
+import { getConfig } from './config'
+
+type Props = {
+  children: ReactNode,
+  initialState: State | undefined, // [!code ++]
+}
+
+export function Providers({ children }: Props) {  // [!code --]
+export function Providers({ children, initialState }: Props) {  // [!code ++]
+  const [config] = useState(() => getConfig())
+  const [queryClient] = useState(() => new QueryClient())
+
+  return (
+    <WagmiProvider config={config}> // [!code --]
+    <WagmiProvider config={config} initialState={initialState}> // [!code ++]
+      <QueryClientProvider client={queryClient}>
+        {children}
+      </QueryClientProvider>
+    </WagmiProvider>
+  )
+}
+```
+
+```tsx [src/config.ts]
+import { createConfig, http, cookieStorage, createStorage } from "wagmi";
+import { mainnet, sepolia } from "wagmi/chains";
+
+export function getConfig() {
+  return createConfig({
+    chains: [mainnet, sepolia],
+    ssr: true,
+    storage: createStorage({
+      // [!code ++]
+      storage: cookieStorage, // [!code ++]
+    }), // [!code ++]
+    transports: {
+      [mainnet.id]: http(),
+      [sepolia.id]: http(),
+    },
+  });
+}
+```
+
+:::
+
+
 #### Next.js Pages Directory
 
 Would you like to contribute this content? Feel free to [open a Pull Request](https://github.com/wevm/wagmi/pulls)!
