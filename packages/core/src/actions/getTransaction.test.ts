@@ -7,8 +7,7 @@ test('default', async () => {
   const result = await getTransaction(config, {
     hash: '0xa559259bd2d0e8372421e222ff3545f705b5da60005bd787a23c2e68d6d7fefd',
   })
-  const value = { ...result }
-  delete (value as { blockTimestamp?: bigint }).blockTimestamp
+  const { blockTimestamp: _blockTimestamp, ...value } = result
 
   expect(value).toMatchInlineSnapshot(`
     {

@@ -12,8 +12,8 @@ test('default', async () => {
 
   await vi.waitUntil(() => result.current.isSuccess, { timeout: 10_000 })
 
-  const value = { ...result.current, data: { ...result.current.data } }
-  delete (value.data as { blockTimestamp?: bigint }).blockTimestamp
+  const { blockTimestamp: _blockTimestamp, ...data } = result.current.data ?? {}
+  const value = { ...result.current, data }
 
   expect(value).toMatchInlineSnapshot(`
     {

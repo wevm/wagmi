@@ -13,8 +13,9 @@ test('default', async () => {
 
   await waitFor(result.isSuccess)
 
-  const value = deepUnref(result)
-  delete (value.data as { blockTimestamp?: bigint }).blockTimestamp
+  const { data: data_, ...rest } = deepUnref(result)
+  const { blockTimestamp: _blockTimestamp, ...data } = data_ ?? {}
+  const value = { ...rest, data }
 
   expect(value).toMatchInlineSnapshot(`
     {
