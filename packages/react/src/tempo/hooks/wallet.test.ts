@@ -68,10 +68,10 @@ describe('useDeposit', () => {
 
     const data = await result.current.deposit.mutateAsync({
       address: '0x0000000000000000000000000000000000000003',
+      amount: '3.5',
       chainId: 1,
       displayName: 'Account',
       token: '0x0000000000000000000000000000000000000004',
-      value: '3.5',
     })
 
     expect(data?.receipts).toBeDefined()
