@@ -134,7 +134,7 @@ overrides:
   srvx@<0.11.13: '>=0.11.13'
   svgo@=4.0.0: 4.0.1
   tar@<=7.5.10: 7.5.11
-  tmp@<=0.2.3: 0.2.4
+  tmp@<0.2.6: 0.2.6
   undici@<6.24.0: 6.24.0
   undici@>=7.0.0 <7.24.0: 7.24.0
   unhead@<2.1.13: 2.1.13
@@ -10436,12 +10436,8 @@ packages:
     resolution: {integrity: sha512-Bf+ILmBgretUrdJxzXM0SgXLZ3XfiaUuOj/IKQHuTXip+05Xn+uyEYdVg0kYDipTBcLrCVyUzAPz7QmArb0mmw==}
     engines: {node: '>=14.0.0'}
 
-  tmp@0.2.4:
-    resolution: {integrity: sha512-UdiSoX6ypifLmrfQ/XfiawN6hkjSBpCjhKxxZcWlUUmoXLaCKQU0bx4HF/tdDK2uzRuchf1txGvrWBzYREssoQ==}
-    engines: {node: '>=14.14'}
-
-  tmp@0.2.5:
-    resolution: {integrity: sha512-voyz6MApa1rQGUxT3E+BK7/ROe8itEx7vD8/HEvt4xwXucvQ5G5oeEiHkmHZJuBO21RpOf+YYm9MOivj709jow==}
+  tmp@0.2.6:
+    resolution: {integrity: sha512-5sJPdPjfI5Kx+qbrDesxkglRBxW//g7hCsqspEjwkewGvBMGIKMOTKzLt1hFVJzyadba3lDUN20O9qhvbQUSTA==}
     engines: {node: '>=14.14'}
 
   to-regex-range@5.0.1:
@@ -19243,7 +19239,7 @@ snapshots:
     dependencies:
       chardet: 0.7.0
       iconv-lite: 0.4.24
-      tmp: 0.2.4
+      tmp: 0.2.6
 
   externality@1.0.2:
     dependencies:
@@ -22933,7 +22929,7 @@ snapshots:
       properties-reader: 3.0.1
       ssh-remote-port-forward: 1.0.4
       tar-fs: 3.1.2
-      tmp: 0.2.5
+      tmp: 0.2.6
       undici: 7.24.4
     transitivePeerDependencies:
       - bare-abort-controller
@@ -22986,9 +22982,7 @@ snapshots:
 
   tinyrainbow@3.1.0: {}
 
-  tmp@0.2.4: {}
-
-  tmp@0.2.5: {}
+  tmp@0.2.6: {}
 
   to-regex-range@5.0.1:
     dependencies:
