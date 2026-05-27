@@ -168,7 +168,7 @@ export declare namespace useSwap {
  *       onClick={() =>
  *         mutate({
  *           token: '0x...',
- *           value: '1.5',
+ *           amount: '1.5',
  *         })
  *       }
  *       disabled={isPending}

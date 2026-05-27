@@ -168,7 +168,7 @@ bun add @walletconnect/ethereum-provider@{{packageJson?.peerDependencies?.['@wal
 
 ## Bumped Minimum TypeScript Version
 
-The minimum supported TypeScript version is now `5.7.3` instead of `5.0.4`. Older versions of TypeScript should continue to work, but since [TypeScript doesn't follow semver](https://www.learningtypescript.com/articles/why-typescript-doesnt-follow-strict-semantic-versioning) we recommend you update to at least `5.7.3`. This should be relatively simple as there haven't been any breaking changes since `5.0.4`.
+The minimum supported TypeScript version is now `5.9.3` instead of `5.0.4`. Older versions of TypeScript should continue to work, but since [TypeScript doesn't follow semver](https://www.learningtypescript.com/articles/why-typescript-doesnt-follow-strict-semantic-versioning) we recommend you update to at least `5.9.3`. This should be relatively simple as there haven't been any breaking changes since `5.0.4`.
 
 ## Migrate v2 Deprecations
 

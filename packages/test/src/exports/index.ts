@@ -1,4 +1,6 @@
 // biome-ignore lint/performance/noBarrelFile: entrypoint module
+export { Provider } from 'ox'
+
 export { chain, mainnet, mainnet2, optimism } from '../chains.js'
 export {
   mainnet2TestClient,

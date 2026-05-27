@@ -87,7 +87,7 @@ test('UseSimulateContractParameters', () => {
   expectTypeOf<Result4['chainId']>().toEqualTypeOf<ChainId | undefined>()
 })
 
-test('parameters: config', async () => {
+test('parameters: config', () => {
   useSimulateContract({
     config: testConfig,
     // @ts-expect-error
