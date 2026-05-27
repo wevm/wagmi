@@ -154,7 +154,7 @@ export function MintNFT() {
         disabled={isPending} // [!code ++]
         type="submit"
       >
-        Mint // [!code --]
+        {'Mint'} // [!code --]
         {isPending ? 'Confirming...' : 'Mint'} // [!code ++]
       </button>
       {hash && <div>Transaction Hash: {hash}</div>}
