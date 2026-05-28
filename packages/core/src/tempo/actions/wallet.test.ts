@@ -94,7 +94,6 @@ describe('deposit', () => {
         chainId: 1,
         displayName: 'Account',
         token: '0x0000000000000000000000000000000000000004',
-        value: '3.5',
       }),
     ).resolves.toMatchInlineSnapshot(`
       {

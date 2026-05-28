@@ -1,7 +1,7 @@
 {
   "name": "@wagmi/vue",
   "description": "Vue Composables for Ethereum",
-  "version": "0.5.16",
+  "version": "0.5.17",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -81,7 +81,7 @@
   "peerDependencies": {
     "@tanstack/vue-query": ">=5.0.0",
     "nuxt": ">=3.0.0 || >=4.0.0",
-    "typescript": ">=5.7.3",
+    "typescript": ">=5.9.3",
     "viem": "2.x",
     "vue": ">=3"
   },

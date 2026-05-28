@@ -166,7 +166,7 @@ export declare namespace swap {
  *
  * const result = await Actions.wallet.deposit(config, {
  *   token: '0x...',
- *   value: '1.5',
+ *   amount: '1.5',
  * })
  * ```
  *

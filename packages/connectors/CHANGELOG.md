@@ -1,5 +1,16 @@
 # @wagmi/connectors
 
+## 8.0.15
+
+### Patch Changes
+
+- Bumped `@metamask/connect-evm` catalog version to `1.3.1`. ([#5123](https://github.com/wevm/wagmi/pull/5123))
+
+- Improved the `metaMask` connector to answer pre-connect probe methods from an announced EIP-6963 MetaMask provider when available, avoiding an SDK import just to check extension state. ([#5128](https://github.com/wevm/wagmi/pull/5128))
+
+- Updated dependencies [[`df7bd38`](https://github.com/wevm/wagmi/commit/df7bd38954bd6f5dba3c5efe510ac3ada90c1403)]:
+  - @wagmi/core@3.5.0
+
 ## 8.0.14
 
 ### Patch Changes
