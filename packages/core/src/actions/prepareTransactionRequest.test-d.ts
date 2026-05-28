@@ -1,6 +1,7 @@
 import { accounts, config } from '@wagmi/test'
 import { http, parseEther } from 'viem'
-import { celo, mainnet } from 'viem/chains'
+import { privateKeyToAccount } from 'viem/accounts'
+import { celo, mainnet, tempoLocalnet } from 'viem/chains'
 import { expectTypeOf, test } from 'vitest'
 
 import { createConfig } from '../createConfig.js'
@@ -93,4 +94,25 @@ test('parameters: calls without to', async () => {
 test('parameters: to or calls required', () => {
   // @ts-expect-error
   prepareTransactionRequest(config, {})
+})
+
+test('tempo transaction type', async () => {
+  const feePayer = privateKeyToAccount(
+    '0x0123456789012345678901234567890123456789012345678901234567890123',
+  )
+
+  const config = createConfig({
+    chains: [mainnet, tempoLocalnet],
+    transports: { [mainnet.id]: http(), [tempoLocalnet.id]: http() },
+  })
+
+  const request = await prepareTransactionRequest(config, {
+    calls: [],
+    chainId: tempoLocalnet.id,
+    feePayer,
+    type: 'tempo',
+  })
+
+  expectTypeOf(request.chainId).toEqualTypeOf<typeof tempoLocalnet.id>()
+  expectTypeOf(request.type).toEqualTypeOf<'tempo'>()
 })
