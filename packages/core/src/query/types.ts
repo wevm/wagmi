@@ -12,7 +12,6 @@ export type InfiniteQueryOptions<
   queryFnData = unknown,
   error = DefaultError,
   data = queryFnData,
-  queryData = queryFnData,
   queryKey extends QueryKey = QueryKey,
   pageParam = unknown,
   ///
@@ -20,14 +19,12 @@ export type InfiniteQueryOptions<
     queryFnData,
     error,
     data,
-    queryData,
     queryKey,
     pageParam
   > = InfiniteQueryObserverOptions<
     queryFnData,
     error,
     data,
-    queryData,
     queryKey,
     pageParam
   >,

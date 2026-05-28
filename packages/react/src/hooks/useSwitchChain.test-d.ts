@@ -1,4 +1,8 @@
-import type { Connector, SwitchChainErrorType } from '@wagmi/core'
+import type {
+  Connector,
+  MutationFunctionContext,
+  SwitchChainErrorType,
+} from '@wagmi/core'
 import type { Chain } from '@wagmi/core/chains'
 import type { Compute, ExactPartial } from '@wagmi/core/internal'
 import { chain } from '@wagmi/test'
@@ -12,7 +16,7 @@ const contextValue = { foo: 'bar' } as const
 test('context', () => {
   const switchChain = useSwitchChain({
     mutation: {
-      onMutate(variables) {
+      onMutate(variables, mutationContext) {
         expectTypeOf(variables).toEqualTypeOf<{
           addEthereumChainParameter?:
             | ExactPartial<Omit<AddEthereumChainParameter, 'chainId'>>
@@ -20,9 +24,10 @@ test('context', () => {
           chainId: number
           connector?: Connector | undefined
         }>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
         return contextValue
       },
-      onError(error, variables, context) {
+      onError(error, variables, context, mutationContext) {
         expectTypeOf(variables).toEqualTypeOf<{
           addEthereumChainParameter?:
             | ExactPartial<Omit<AddEthereumChainParameter, 'chainId'>>
@@ -32,8 +37,9 @@ test('context', () => {
         }>()
         expectTypeOf(error).toEqualTypeOf<SwitchChainErrorType>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
-      onSuccess(data, variables, context) {
+      onSuccess(data, variables, context, mutationContext) {
         expectTypeOf(variables).toEqualTypeOf<{
           addEthereumChainParameter?:
             | ExactPartial<Omit<AddEthereumChainParameter, 'chainId'>>
@@ -43,8 +49,9 @@ test('context', () => {
         }>()
         expectTypeOf(data).toEqualTypeOf<Compute<Chain>>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
-      onSettled(data, error, variables, context) {
+      onSettled(data, error, variables, context, mutationContext) {
         expectTypeOf(data).toEqualTypeOf<Compute<Chain> | undefined>()
         expectTypeOf(error).toEqualTypeOf<SwitchChainErrorType | null>()
         expectTypeOf(variables).toEqualTypeOf<{
@@ -55,6 +62,7 @@ test('context', () => {
           connector?: Connector | undefined
         }>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
     },
   })
@@ -78,7 +86,7 @@ test('context', () => {
   switchChain.mutate(
     { chainId },
     {
-      onError(error, variables, context) {
+      onError(error, variables, context, mutationContext) {
         expectTypeOf(variables).toEqualTypeOf<{
           addEthereumChainParameter?:
             | ExactPartial<Omit<AddEthereumChainParameter, 'chainId'>>
@@ -88,8 +96,9 @@ test('context', () => {
         }>()
         expectTypeOf(error).toEqualTypeOf<SwitchChainErrorType>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
-      onSuccess(data, variables, context) {
+      onSuccess(data, variables, context, mutationContext) {
         expectTypeOf(variables).toEqualTypeOf<{
           addEthereumChainParameter?:
             | ExactPartial<Omit<AddEthereumChainParameter, 'chainId'>>
@@ -98,9 +107,10 @@ test('context', () => {
           connector?: Connector | undefined
         }>()
         expectTypeOf(data).toEqualTypeOf<Compute<Chain>>()
-        expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
-      onSettled(data, error, variables, context) {
+      onSettled(data, error, variables, context, mutationContext) {
         expectTypeOf(data).toEqualTypeOf<Compute<Chain> | undefined>()
         expectTypeOf(error).toEqualTypeOf<SwitchChainErrorType | null>()
         expectTypeOf(variables).toEqualTypeOf<{
@@ -111,6 +121,7 @@ test('context', () => {
           connector?: Connector | undefined
         }>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
     },
   )

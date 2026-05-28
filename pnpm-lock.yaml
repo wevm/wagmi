@@ -25,17 +25,17 @@ catalogs:
       specifier: 9.1.0
       version: 9.1.0
     '@tanstack/query-core':
-      specifier: 5.49.1
-      version: 5.49.1
+      specifier: 5.100.11
+      version: 5.100.11
     '@tanstack/react-query':
-      specifier: 5.49.2
-      version: 5.49.2
+      specifier: 5.100.11
+      version: 5.100.11
     '@tanstack/solid-query':
-      specifier: 5.49.1
-      version: 5.49.1
+      specifier: 5.100.11
+      version: 5.100.11
     '@tanstack/vue-query':
-      specifier: 5.49.1
-      version: 5.49.1
+      specifier: 5.100.11
+      version: 5.100.11
     '@types/react':
       specifier: ^19.2.0
       version: 19.2.3
@@ -354,7 +354,7 @@ importers:
         version: 2.4.9(typescript@5.9.3)
       porto:
         specifier: 'catalog:'
-        version: 0.2.37(@types/react@19.2.3)(@wagmi/core@packages+core)(react@19.2.0)(typescript@5.9.3)(use-sync-external-store@1.6.0(react@19.2.0))(viem@2.51.0(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76))(wagmi@packages+react)
+        version: 0.2.37(@tanstack/react-query@5.100.11(react@19.2.0))(@types/react@19.2.3)(@wagmi/core@packages+core)(react@19.2.0)(typescript@5.9.3)(use-sync-external-store@1.6.0(react@19.2.0))(viem@2.51.0(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76))(wagmi@packages+react)
 
   packages/core:
     dependencies:
@@ -370,7 +370,7 @@ importers:
     devDependencies:
       '@tanstack/query-core':
         specifier: 'catalog:'
-        version: 5.49.1
+        version: 5.100.11
       accounts:
         specifier: 'catalog:'
         version: 0.12.0(@types/react@19.2.3)(@wagmi/core@packages+core)(react@19.2.0)(typescript@5.9.3)(use-sync-external-store@1.6.0(react@19.2.0))(viem@2.51.0(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6))(wagmi@packages+react)
@@ -414,7 +414,7 @@ importers:
     devDependencies:
       '@tanstack/react-query':
         specifier: 'catalog:'
-        version: 5.49.2(react@19.2.0)
+        version: 5.100.11(react@19.2.0)
       '@types/react':
         specifier: 'catalog:'
         version: 19.2.3
@@ -435,7 +435,7 @@ importers:
     dependencies:
       '@tanstack/react-query':
         specifier: 'catalog:'
-        version: 5.49.2(react@19.2.0)
+        version: 5.100.11(react@19.2.0)
       react:
         specifier: 'catalog:'
         version: 19.2.0
@@ -451,7 +451,7 @@ importers:
     dependencies:
       '@tanstack/solid-query':
         specifier: 'catalog:'
-        version: 5.49.1(solid-js@1.9.10)
+        version: 5.100.11(solid-js@1.9.10)
       '@wagmi/solid':
         specifier: workspace:*
         version: link:../../solid
@@ -463,7 +463,7 @@ importers:
     dependencies:
       '@tanstack/vue-query':
         specifier: 'catalog:'
-        version: 5.49.1(vue@3.5.25(typescript@5.9.3))
+        version: 5.100.11(vue@3.5.25(typescript@5.9.3))
       '@wagmi/vue':
         specifier: workspace:*
         version: link:../../vue
@@ -482,7 +482,7 @@ importers:
     devDependencies:
       '@tanstack/solid-query':
         specifier: 'catalog:'
-        version: 5.49.1(solid-js@1.9.10)
+        version: 5.100.11(solid-js@1.9.10)
       solid-js:
         specifier: 'catalog:'
         version: 1.9.10
@@ -494,13 +494,13 @@ importers:
         version: 0.8.10(solid-js@1.9.10)
       '@tanstack/react-query':
         specifier: 'catalog:'
-        version: 5.49.2(react@19.2.0)
+        version: 5.100.11(react@19.2.0)
       '@tanstack/solid-query':
         specifier: 'catalog:'
-        version: 5.49.1(solid-js@1.9.10)
+        version: 5.100.11(solid-js@1.9.10)
       '@tanstack/vue-query':
         specifier: 'catalog:'
-        version: 5.49.1(vue@3.5.25(typescript@5.9.3))
+        version: 5.100.11(vue@3.5.25(typescript@5.9.3))
       '@types/react':
         specifier: 'catalog:'
         version: 19.2.3
@@ -549,7 +549,7 @@ importers:
         version: 4.4.6
       '@tanstack/vue-query':
         specifier: 'catalog:'
-        version: 5.49.1(vue@3.5.25(typescript@5.9.3))
+        version: 5.100.11(vue@3.5.25(typescript@5.9.3))
       '@vue/test-utils':
         specifier: ^2.4.6
         version: 2.4.6
@@ -567,7 +567,7 @@ importers:
         version: 14.2.3(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@tanstack/react-query':
         specifier: 'catalog:'
-        version: 5.49.2(react@19.2.0)
+        version: 5.100.11(react@19.2.0)
       next:
         specifier: ^16.2.6
         version: 16.2.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -598,7 +598,7 @@ importers:
     dependencies:
       '@tanstack/vue-query':
         specifier: 'catalog:'
-        version: 5.49.1(vue@3.5.25(typescript@5.9.3))
+        version: 5.100.11(vue@3.5.25(typescript@5.9.3))
       '@wagmi/vue':
         specifier: workspace:*
         version: link:../../packages/vue
@@ -622,7 +622,7 @@ importers:
         version: 1.2.1(solid-js@1.9.10)(vinxi@0.5.10(@types/node@24.6.2)(db0@0.3.4)(idb-keyval@6.2.2)(ioredis@5.10.1)(jiti@2.7.0)(oxc-parser@0.131.0)(rolldown@1.0.2)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))(vite@8.0.14(@types/node@24.6.2)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))
       '@tanstack/solid-query':
         specifier: 'catalog:'
-        version: 5.49.1(solid-js@1.9.10)
+        version: 5.100.11(solid-js@1.9.10)
       '@wagmi/solid':
         specifier: workspace:*
         version: link:../../packages/solid
@@ -643,16 +643,16 @@ importers:
         version: 1.20.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)(vite@8.0.14(@types/node@24.6.2)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))(workerd@1.20260120.0)(wrangler@4.60.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
       '@tanstack/react-query':
         specifier: 'catalog:'
-        version: 5.49.2(react@19.2.0)
+        version: 5.100.11(react@19.2.0)
       '@tanstack/react-query-devtools':
         specifier: ^5.91.2
-        version: 5.91.2(@tanstack/react-query@5.49.2(react@19.2.0))(react@19.2.0)
+        version: 5.91.2(@tanstack/react-query@5.100.11(react@19.2.0))(react@19.2.0)
       '@tanstack/react-router':
         specifier: ^1.145.7
         version: 1.147.3(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       '@tanstack/react-router-ssr-query':
         specifier: ^1.145.7
-        version: 1.147.3(@tanstack/query-core@5.90.10)(@tanstack/react-query@5.49.2(react@19.2.0))(@tanstack/react-router@1.147.3(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@tanstack/router-core@1.169.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+        version: 1.147.3(@tanstack/query-core@5.100.11)(@tanstack/react-query@5.100.11(react@19.2.0))(@tanstack/react-router@1.147.3(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@tanstack/router-core@1.169.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       '@tanstack/react-start':
         specifier: ^1.166.16
         version: 1.166.16(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(vite-plugin-solid@2.11.12(solid-js@1.9.10)(vite@8.0.14(@types/node@24.6.2)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3)))(vite@8.0.14(@types/node@24.6.2)(esbuild@0.28.0)(jiti@2.7.0)(terser@5.31.0)(tsx@4.21.0)(yaml@2.8.3))
@@ -744,10 +744,10 @@ importers:
         version: 5.90.12
       '@tanstack/react-query':
         specifier: 'catalog:'
-        version: 5.49.2(react@19.2.0)
+        version: 5.100.11(react@19.2.0)
       '@tanstack/react-query-persist-client':
         specifier: ^5.90.12
-        version: 5.90.12(@tanstack/react-query@5.49.2(react@19.2.0))(react@19.2.0)
+        version: 5.90.12(@tanstack/react-query@5.100.11(react@19.2.0))(react@19.2.0)
       accounts:
         specifier: 'catalog:'
         version: 0.12.0(@types/react@19.2.3)(@wagmi/core@packages+core)(react@19.2.0)(typescript@5.9.3)(use-sync-external-store@1.6.0(react@19.2.0))(viem@2.47.5(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6))(wagmi@packages+react)
@@ -772,7 +772,7 @@ importers:
     devDependencies:
       '@tanstack/react-query-devtools':
         specifier: ^5.91.2
-        version: 5.91.2(@tanstack/react-query@5.49.2(react@19.2.0))(react@19.2.0)
+        version: 5.91.2(@tanstack/react-query@5.100.11(react@19.2.0))(react@19.2.0)
       '@types/react':
         specifier: 'catalog:'
         version: 19.2.3
@@ -796,7 +796,7 @@ importers:
     dependencies:
       '@tanstack/solid-query':
         specifier: 'catalog:'
-        version: 5.49.1(solid-js@1.9.10)
+        version: 5.100.11(solid-js@1.9.10)
       '@wagmi/solid':
         specifier: workspace:*
         version: link:../../packages/solid
@@ -821,7 +821,7 @@ importers:
     dependencies:
       '@tanstack/vue-query':
         specifier: 'catalog:'
-        version: 5.49.1(vue@3.5.25(typescript@5.9.3))
+        version: 5.100.11(vue@3.5.25(typescript@5.9.3))
       '@wagmi/vue':
         specifier: workspace:*
         version: link:../../packages/vue
@@ -852,13 +852,13 @@ importers:
         version: 3.20.0(@nuxt/kit@3.21.6(magicast@0.5.2))(typescript@5.9.3)
       '@tanstack/query-core':
         specifier: 'catalog:'
-        version: 5.49.1
+        version: 5.100.11
       '@tanstack/react-query':
         specifier: 'catalog:'
-        version: 5.49.2(react@19.2.0)
+        version: 5.100.11(react@19.2.0)
       '@tanstack/vue-query':
         specifier: 'catalog:'
-        version: 5.49.1(vue@3.5.25(typescript@5.9.3))
+        version: 5.100.11(vue@3.5.25(typescript@5.9.3))
       '@types/react':
         specifier: 'catalog:'
         version: 19.2.3
@@ -5089,8 +5089,8 @@ packages:
     resolution: {integrity: sha512-Wo1iKt2b9OT7d+YGhvEPD3DXvPv2etTusIMhMUoG7fbhmxcXCtIjJDEygy91Y2JFlwGyjqiBPRozme7UD8hoqg==}
     engines: {node: '>=12'}
 
-  '@tanstack/query-core@5.49.1':
-    resolution: {integrity: sha512-JnC9ndmD1KKS01Rt/ovRUB1tmwO7zkyXAyIxN9mznuJrcNtOrkmOnQqdJF2ib9oHzc2VxHomnEG7xyfo54Npkw==}
+  '@tanstack/query-core@5.100.11':
+    resolution: {integrity: sha512-lmE0994apShXPj8CUxgx4ch5yUJhE9k/+tVwihBvPOyerACWdBocfFg24t8+0RhtlTd7tEgchDkhlCxNssvDxw==}
 
   '@tanstack/query-core@5.90.10':
     resolution: {integrity: sha512-EhZVFu9rl7GfRNuJLJ3Y7wtbTnENsvzp+YpcAV7kCYiXni1v8qZh++lpw4ch4rrwC0u/EZRnBHIehzCGzwXDSQ==}
@@ -5125,10 +5125,10 @@ packages:
       '@tanstack/react-query': ^5.90.10
       react: ^18 || ^19
 
-  '@tanstack/react-query@5.49.2':
-    resolution: {integrity: sha512-6rfwXDK9BvmHISbNFuGd+wY3P44lyW7lWiA9vIFGT/T0P9aHD1VkjTvcM4SDAIbAQ9ygEZZoLt7dlU1o3NjMVA==}
+  '@tanstack/react-query@5.100.11':
+    resolution: {integrity: sha512-J0f9s5x3LE1450nNNfYx+e/n0DMa0uOBdFJUy5r0RvmsXd4nB/n0rbHtHI1vYXhikNFan+wf51p6Tmp4c8ucrg==}
     peerDependencies:
-      react: ^18.0.0
+      react: ^18 || ^19
 
   '@tanstack/react-router-devtools@1.149.0':
     resolution: {integrity: sha512-QJ6epMhRKTS8WrBmcMFjK1v+jDaimMQuySCSNA8NR1ZROKv3xx0gY8AjyVVgQ1h78HSXXRMYH3aql2kWYjc31g==}
@@ -5294,8 +5294,8 @@ packages:
     resolution: {integrity: sha512-a05fzK+jBGacsSAc1vE8an7lpBh4H0PyIEcivtEyHLomgSeElAJxm9E2It/0nYRZ5Lh23m0okbhzJNaYWZpAOg==}
     engines: {node: '>=12'}
 
-  '@tanstack/solid-query@5.49.1':
-    resolution: {integrity: sha512-bEOphgQ2ohBBauxQmBUnmYFJe4rqOFX/AmtHgypeF7cbYH9F05TVn8zbXmpZnvyV2ASU0BDbxCrztRdg2JpKaA==}
+  '@tanstack/solid-query@5.100.11':
+    resolution: {integrity: sha512-T6elzjzSwzc0hr5Se+WlQHjBilxHA5q6w1XWYz72XhlUR66fQtcQdH/rtoJR/SOmRuwyHowR7IvsO/6JhraBxg==}
     peerDependencies:
       solid-js: ^1.6.0
 
@@ -5345,8 +5345,8 @@ packages:
     engines: {node: '>=20.19'}
     hasBin: true
 
-  '@tanstack/vue-query@5.49.1':
-    resolution: {integrity: sha512-/nTqP8PNCRzMcqTGEuFQE3ntUD3A+K05r6Dw/0hNwNS3PLEaKUKlxytmAhIoaoloQwbbAghjLyKRQZ+CMWv90A==}
+  '@tanstack/vue-query@5.100.11':
+    resolution: {integrity: sha512-bU4uz7y/XorQzr7R008hR5+YI885rk5F8t5+UGIVfFEJL8eXeJUJLGZC+YOJR/SdoLjedxOMOPz6D6VH8Gh9Sg==}
     peerDependencies:
       '@vue/composition-api': ^1.1.2
       vue: ^2.6.0 || ^3.3.0
@@ -15960,7 +15960,7 @@ snapshots:
     dependencies:
       remove-accents: 0.5.0
 
-  '@tanstack/query-core@5.49.1': {}
+  '@tanstack/query-core@5.100.11': {}
 
   '@tanstack/query-core@5.90.10': {}
 
@@ -15987,21 +15987,21 @@ snapshots:
       - csstype
       - utf-8-validate
 
-  '@tanstack/react-query-devtools@5.91.2(@tanstack/react-query@5.49.2(react@19.2.0))(react@19.2.0)':
+  '@tanstack/react-query-devtools@5.91.2(@tanstack/react-query@5.100.11(react@19.2.0))(react@19.2.0)':
     dependencies:
       '@tanstack/query-devtools': 5.92.0
-      '@tanstack/react-query': 5.49.2(react@19.2.0)
+      '@tanstack/react-query': 5.100.11(react@19.2.0)
       react: 19.2.0
 
-  '@tanstack/react-query-persist-client@5.90.12(@tanstack/react-query@5.49.2(react@19.2.0))(react@19.2.0)':
+  '@tanstack/react-query-persist-client@5.90.12(@tanstack/react-query@5.100.11(react@19.2.0))(react@19.2.0)':
     dependencies:
       '@tanstack/query-persist-client-core': 5.91.9
-      '@tanstack/react-query': 5.49.2(react@19.2.0)
+      '@tanstack/react-query': 5.100.11(react@19.2.0)
       react: 19.2.0
 
-  '@tanstack/react-query@5.49.2(react@19.2.0)':
+  '@tanstack/react-query@5.100.11(react@19.2.0)':
     dependencies:
-      '@tanstack/query-core': 5.49.1
+      '@tanstack/query-core': 5.100.11
       react: 19.2.0
 
   '@tanstack/react-router-devtools@1.149.0(@tanstack/react-router@1.147.3(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@tanstack/router-core@1.169.2)(csstype@3.2.3)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)':
@@ -16015,12 +16015,12 @@ snapshots:
     transitivePeerDependencies:
       - csstype
 
-  '@tanstack/react-router-ssr-query@1.147.3(@tanstack/query-core@5.90.10)(@tanstack/react-query@5.49.2(react@19.2.0))(@tanstack/react-router@1.147.3(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@tanstack/router-core@1.169.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)':
+  '@tanstack/react-router-ssr-query@1.147.3(@tanstack/query-core@5.100.11)(@tanstack/react-query@5.100.11(react@19.2.0))(@tanstack/react-router@1.147.3(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@tanstack/router-core@1.169.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)':
     dependencies:
-      '@tanstack/query-core': 5.90.10
-      '@tanstack/react-query': 5.49.2(react@19.2.0)
+      '@tanstack/query-core': 5.100.11
+      '@tanstack/react-query': 5.100.11(react@19.2.0)
       '@tanstack/react-router': 1.147.3(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
-      '@tanstack/router-ssr-query-core': 1.147.1(@tanstack/query-core@5.90.10)(@tanstack/router-core@1.169.2)
+      '@tanstack/router-ssr-query-core': 1.147.1(@tanstack/query-core@5.100.11)(@tanstack/router-core@1.169.2)
       react: 19.2.0
       react-dom: 19.2.0(react@19.2.0)
     transitivePeerDependencies:
@@ -16211,9 +16211,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@tanstack/router-ssr-query-core@1.147.1(@tanstack/query-core@5.90.10)(@tanstack/router-core@1.169.2)':
+  '@tanstack/router-ssr-query-core@1.147.1(@tanstack/query-core@5.100.11)(@tanstack/router-core@1.169.2)':
     dependencies:
-      '@tanstack/query-core': 5.90.10
+      '@tanstack/query-core': 5.100.11
       '@tanstack/router-core': 1.169.2
 
   '@tanstack/router-utils@1.143.11':
@@ -16258,9 +16258,9 @@ snapshots:
       - supports-color
       - vite
 
-  '@tanstack/solid-query@5.49.1(solid-js@1.9.10)':
+  '@tanstack/solid-query@5.100.11(solid-js@1.9.10)':
     dependencies:
-      '@tanstack/query-core': 5.49.1
+      '@tanstack/query-core': 5.100.11
       solid-js: 1.9.10
 
   '@tanstack/start-client-core@1.166.12':
@@ -16341,10 +16341,10 @@ snapshots:
 
   '@tanstack/virtual-file-routes@1.161.7': {}
 
-  '@tanstack/vue-query@5.49.1(vue@3.5.25(typescript@5.9.3))':
+  '@tanstack/vue-query@5.100.11(vue@3.5.25(typescript@5.9.3))':
     dependencies:
       '@tanstack/match-sorter-utils': 8.19.4
-      '@tanstack/query-core': 5.49.1
+      '@tanstack/query-core': 5.100.11
       '@vue/devtools-api': 6.6.4
       vue: 3.5.25(typescript@5.9.3)
       vue-demi: 0.14.10(vue@3.5.25(typescript@5.9.3))
@@ -21603,7 +21603,7 @@ snapshots:
 
   pony-cause@2.1.11: {}
 
-  porto@0.2.37(@types/react@19.2.3)(@wagmi/core@packages+core)(react@19.2.0)(typescript@5.9.3)(use-sync-external-store@1.6.0(react@19.2.0))(viem@2.51.0(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76))(wagmi@packages+react):
+  porto@0.2.37(@tanstack/react-query@5.100.11(react@19.2.0))(@types/react@19.2.3)(@wagmi/core@packages+core)(react@19.2.0)(typescript@5.9.3)(use-sync-external-store@1.6.0(react@19.2.0))(viem@2.51.0(bufferutil@4.0.8)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76))(wagmi@packages+react):
     dependencies:
       '@wagmi/core': link:packages/core
       hono: 4.12.18
@@ -21614,6 +21614,7 @@ snapshots:
       zod: 4.1.11
       zustand: 5.0.3(@types/react@19.2.3)(react@19.2.0)(use-sync-external-store@1.6.0(react@19.2.0))
     optionalDependencies:
+      '@tanstack/react-query': 5.100.11(react@19.2.0)
       react: 19.2.0
       typescript: 5.9.3
       wagmi: link:packages/react

@@ -598,6 +598,8 @@ export { fallback } from '../transports/fallback.js'
 
 export type { SelectChains } from '../types/chain.js'
 
+export type { MutationFunctionContext } from '../types/query.js'
+
 export type { Register, ResolvedRegister } from '../types/register.js'
 
 ////////////////////////////////////////////////////////////////////////////////

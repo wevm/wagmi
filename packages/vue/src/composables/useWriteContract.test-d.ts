@@ -1,4 +1,9 @@
-import { createConfig, http, type WriteContractErrorType } from '@wagmi/core'
+import {
+  createConfig,
+  http,
+  type MutationFunctionContext,
+  type WriteContractErrorType,
+} from '@wagmi/core'
 import { abi } from '@wagmi/test'
 import type { Abi, Address, Hash } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
@@ -13,18 +18,20 @@ const contextValue = { foo: 'bar' } as const
 test('context', () => {
   const writeContract = useWriteContract({
     mutation: {
-      onMutate(variables) {
+      onMutate(variables, mutationContext) {
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
           abi: Abi
           functionName: string
           args?: readonly unknown[] | undefined
         }>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
         return contextValue
       },
-      onError(error, variables, context) {
+      onError(error, variables, context, mutationContext) {
         expectTypeOf(error).toEqualTypeOf<WriteContractErrorType>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
 
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
@@ -33,9 +40,10 @@ test('context', () => {
           args?: readonly unknown[] | undefined
         }>()
       },
-      onSuccess(data, variables, context) {
+      onSuccess(data, variables, context, mutationContext) {
         expectTypeOf(data).toEqualTypeOf<Hash>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
 
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
@@ -44,10 +52,11 @@ test('context', () => {
           args?: readonly unknown[] | undefined
         }>()
       },
-      onSettled(data, error, variables, context) {
+      onSettled(data, error, variables, context, mutationContext) {
         expectTypeOf(data).toEqualTypeOf<Hash | undefined>()
         expectTypeOf(error).toEqualTypeOf<WriteContractErrorType | null>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
 
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
@@ -79,9 +88,10 @@ test('context', () => {
       chainId: 1,
     },
     {
-      onError(error, variables, context) {
+      onError(error, variables, context, mutationContext) {
         expectTypeOf(error).toEqualTypeOf<WriteContractErrorType>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
 
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
@@ -90,9 +100,10 @@ test('context', () => {
           args: readonly [Address, Address, bigint]
         }>()
       },
-      onSuccess(data, variables, context) {
+      onSuccess(data, variables, context, mutationContext) {
         expectTypeOf(data).toEqualTypeOf<Hash>()
-        expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
 
         expectTypeOf(variables.functionName).toEqualTypeOf<'transferFrom'>()
         expectTypeOf(variables.args).toEqualTypeOf<
@@ -105,10 +116,11 @@ test('context', () => {
           args: readonly [Address, Address, bigint]
         }>()
       },
-      onSettled(data, error, variables, context) {
+      onSettled(data, error, variables, context, mutationContext) {
         expectTypeOf(data).toEqualTypeOf<Hash | undefined>()
         expectTypeOf(error).toEqualTypeOf<WriteContractErrorType | null>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
 
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined

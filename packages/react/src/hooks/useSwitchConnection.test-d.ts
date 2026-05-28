@@ -1,4 +1,8 @@
-import type { Connector, SwitchAccountErrorType } from '@wagmi/core'
+import type {
+  Connector,
+  MutationFunctionContext,
+  SwitchAccountErrorType,
+} from '@wagmi/core'
 import { config } from '@wagmi/test'
 import type { Address } from 'viem'
 import { expectTypeOf, test } from 'vitest'
@@ -10,24 +14,27 @@ const contextValue = { foo: 'bar' } as const
 test('context', () => {
   const switchConnection = useSwitchConnection({
     mutation: {
-      onMutate(variables) {
+      onMutate(variables, mutationContext) {
         expectTypeOf(variables).toEqualTypeOf<{ connector: Connector }>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
         return contextValue
       },
-      onError(error, variables, context) {
+      onError(error, variables, context, mutationContext) {
         expectTypeOf(variables).toEqualTypeOf<{ connector: Connector }>()
         expectTypeOf(error).toEqualTypeOf<SwitchAccountErrorType>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
-      onSuccess(data, variables, context) {
+      onSuccess(data, variables, context, mutationContext) {
         expectTypeOf(variables).toEqualTypeOf<{ connector: Connector }>()
         expectTypeOf(data).toEqualTypeOf<{
           accounts: readonly [Address, ...Address[]]
           chainId: number
         }>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
-      onSettled(data, error, variables, context) {
+      onSettled(data, error, variables, context, mutationContext) {
         expectTypeOf(data).toEqualTypeOf<
           | {
               accounts: readonly [Address, ...Address[]]
@@ -38,6 +45,7 @@ test('context', () => {
         expectTypeOf(error).toEqualTypeOf<SwitchAccountErrorType | null>()
         expectTypeOf(variables).toEqualTypeOf<{ connector: Connector }>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
     },
   })
@@ -62,20 +70,22 @@ test('context', () => {
   switchConnection.mutate(
     { connector },
     {
-      onError(error, variables, context) {
+      onError(error, variables, context, mutationContext) {
         expectTypeOf(variables).toEqualTypeOf<{ connector: Connector }>()
         expectTypeOf(error).toEqualTypeOf<SwitchAccountErrorType>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
-      onSuccess(data, variables, context) {
+      onSuccess(data, variables, context, mutationContext) {
         expectTypeOf(variables).toEqualTypeOf<{ connector: Connector }>()
         expectTypeOf(data).toEqualTypeOf<{
           accounts: readonly [Address, ...Address[]]
           chainId: number
         }>()
-        expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
-      onSettled(data, error, variables, context) {
+      onSettled(data, error, variables, context, mutationContext) {
         expectTypeOf(data).toEqualTypeOf<
           | {
               accounts: readonly [Address, ...Address[]]
@@ -86,6 +96,7 @@ test('context', () => {
         expectTypeOf(error).toEqualTypeOf<SwitchAccountErrorType | null>()
         expectTypeOf(variables).toEqualTypeOf<{ connector: Connector }>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
     },
   )

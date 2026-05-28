@@ -28,19 +28,11 @@ type InfiniteQueryParameter<
   queryFnData = unknown,
   error = DefaultError,
   data = queryFnData,
-  queryData = queryFnData,
   queryKey extends QueryKey = QueryKey,
   pageParam = unknown,
 > = {
   query: Omit<
-    SolidInfiniteQueryParameters<
-      queryFnData,
-      error,
-      data,
-      queryData,
-      queryKey,
-      pageParam
-    >,
+    SolidInfiniteQueryParameters<queryFnData, error, data, queryKey, pageParam>,
     'queryFn' | 'queryHash' | 'queryKey' | 'queryKeyHashFn' | 'throwOnError'
   >
 }
@@ -116,7 +108,6 @@ export namespace useInfiniteReadContracts {
       InfiniteReadContractsQueryFnData<contracts, allowFailure>,
       ReadContractsErrorType,
       selectData,
-      InfiniteReadContractsData<contracts, allowFailure>,
       InfiniteReadContractsQueryKey<contracts, allowFailure, pageParam, config>,
       pageParam
     >

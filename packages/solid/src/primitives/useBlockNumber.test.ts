@@ -23,6 +23,7 @@ describe.sequential('useBlockNumber', () => {
       "failureCount": 0,
       "failureReason": null,
       "fetchStatus": "idle",
+      "isEnabled": true,
       "isError": false,
       "isFetched": true,
       "isFetchedAfterMount": true,
@@ -37,6 +38,11 @@ describe.sequential('useBlockNumber', () => {
       "isRefetching": false,
       "isStale": true,
       "isSuccess": true,
+      "promise": Promise {
+        "reject": [Function],
+        "resolve": [Function],
+        "status": "pending",
+      },
       "queryKey": [
         "blockNumber",
         {

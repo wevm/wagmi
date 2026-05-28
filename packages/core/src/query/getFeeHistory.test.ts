@@ -1,7 +1,10 @@
+import { QueryClient } from '@tanstack/query-core'
 import { chain, config } from '@wagmi/test'
 import { expect, test } from 'vitest'
 
 import { getFeeHistoryQueryOptions } from './getFeeHistory.js'
+
+const queryClient = new QueryClient()
 
 test('default', async () => {
   expect(
@@ -109,6 +112,7 @@ test('behavior: blockCount is required', async () => {
   const options = getFeeHistoryQueryOptions(config, {})
   await expect(
     options.queryFn({
+      client: queryClient,
       queryKey: options.queryKey,
       signal: new AbortSignal(),
       meta: undefined,
@@ -122,6 +126,7 @@ test('behavior: rewardPercentiles is required', async () => {
   const options = getFeeHistoryQueryOptions(config, { blockCount: 4 })
   await expect(
     options.queryFn({
+      client: queryClient,
       queryKey: options.queryKey,
       signal: new AbortSignal(),
       meta: undefined,

@@ -1,4 +1,8 @@
-import type { Connector, DisconnectErrorType } from '@wagmi/core'
+import type {
+  Connector,
+  DisconnectErrorType,
+  MutationFunctionContext,
+} from '@wagmi/core'
 import { config } from '@wagmi/test'
 import { expectTypeOf, test } from 'vitest'
 
@@ -19,33 +23,37 @@ test('parameter', () => {
 test('context', () => {
   const disconnect = useDisconnect({
     mutation: {
-      onMutate(variables) {
+      onMutate(variables, mutationContext) {
         expectTypeOf(variables).toEqualTypeOf<
           { connector?: Connector | undefined } | undefined
         >()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
         return contextValue
       },
-      onError(error, variables, context) {
+      onError(error, variables, context, mutationContext) {
         expectTypeOf(variables).toEqualTypeOf<
           { connector?: Connector | undefined } | undefined
         >()
         expectTypeOf(error).toEqualTypeOf<DisconnectErrorType>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
-      onSuccess(data, variables, context) {
+      onSuccess(data, variables, context, mutationContext) {
         expectTypeOf(variables).toEqualTypeOf<
           { connector?: Connector | undefined } | undefined
         >()
         expectTypeOf(data).toEqualTypeOf<void>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
-      onSettled(data, error, variables, context) {
+      onSettled(data, error, variables, context, mutationContext) {
         expectTypeOf(data).toEqualTypeOf<void | undefined>()
         expectTypeOf(error).toEqualTypeOf<DisconnectErrorType | null>()
         expectTypeOf(variables).toEqualTypeOf<
           { connector?: Connector | undefined } | undefined
         >()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
     },
   })
@@ -64,27 +72,30 @@ test('context', () => {
   disconnect.mutate(
     { connector },
     {
-      onError(error, variables, context) {
+      onError(error, variables, context, mutationContext) {
         expectTypeOf(variables).toEqualTypeOf<
           { connector?: Connector | undefined } | undefined
         >()
         expectTypeOf(error).toEqualTypeOf<DisconnectErrorType>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
-      onSuccess(data, variables, context) {
+      onSuccess(data, variables, context, mutationContext) {
         expectTypeOf(variables).toEqualTypeOf<
           { connector?: Connector | undefined } | undefined
         >()
         expectTypeOf(data).toEqualTypeOf<void>()
-        expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
+        expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
-      onSettled(data, error, variables, context) {
+      onSettled(data, error, variables, context, mutationContext) {
         expectTypeOf(data).toEqualTypeOf<void | undefined>()
         expectTypeOf(error).toEqualTypeOf<DisconnectErrorType | null>()
         expectTypeOf(variables).toEqualTypeOf<
           { connector?: Connector | undefined } | undefined
         >()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
     },
   )

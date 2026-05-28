@@ -1,4 +1,7 @@
-import type { WriteContractSyncErrorType } from '@wagmi/core'
+import type {
+  MutationFunctionContext,
+  WriteContractSyncErrorType,
+} from '@wagmi/core'
 import { abi } from '@wagmi/test'
 import type { Abi, TransactionReceipt } from 'viem'
 import { expectTypeOf, test } from 'vitest'
@@ -10,27 +13,31 @@ const contextValue = { foo: 'bar' } as const
 test('context', () => {
   const writeContractSync = useWriteContractSync(() => ({
     mutation: {
-      onMutate(variables) {
+      onMutate(variables, mutationContext) {
         expectTypeOf(variables).toMatchTypeOf<{
           chainId?: number | undefined
           abi: Abi
           functionName: string
           args?: readonly unknown[] | undefined
         }>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
         return contextValue
       },
-      onError(error, _variables, context) {
+      onError(error, _variables, context, mutationContext) {
         expectTypeOf(error).toEqualTypeOf<WriteContractSyncErrorType>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
-      onSuccess(data, _variables, context) {
+      onSuccess(data, _variables, context, mutationContext) {
         expectTypeOf(data).toEqualTypeOf<TransactionReceipt>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
-      onSettled(data, error, _variables, context) {
+      onSettled(data, error, _variables, context, mutationContext) {
         expectTypeOf(data).toEqualTypeOf<TransactionReceipt | undefined>()
         expectTypeOf(error).toEqualTypeOf<WriteContractSyncErrorType | null>()
         expectTypeOf(context).toEqualTypeOf<typeof contextValue | undefined>()
+        expectTypeOf(mutationContext).toEqualTypeOf<MutationFunctionContext>()
       },
     },
   }))

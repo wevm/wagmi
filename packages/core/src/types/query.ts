@@ -1,6 +1,8 @@
 import type * as Query from '@tanstack/query-core'
 import type { Compute, LooseOmit, RequiredBy, UnionLooseOmit } from './utils.js'
 
+export type { MutationFunctionContext } from '@tanstack/query-core'
+
 export type MutationParameter<
   data = unknown,
   error = Error,

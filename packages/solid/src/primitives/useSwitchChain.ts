@@ -1,4 +1,3 @@
-import { createMutation as useMutation } from '@tanstack/solid-query'
 import type {
   Config,
   ResolvedRegister,
@@ -15,6 +14,7 @@ import {
 } from '@wagmi/core/query'
 import type { Accessor } from 'solid-js'
 import type { UseMutationReturnType } from '../utils/query.js'
+import { useMutation } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 
 /** https://wagmi.sh/solid/api/primitives/useSwitchChain */
