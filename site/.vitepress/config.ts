@@ -115,7 +115,27 @@ export default withTwoslashInlineCache(
             const html = md.render(src, env)
             if (env.frontmatter?.search === false) return ''
             if (env.relativePath.startsWith('shared')) return ''
-            return html
+
+            const frameworkLabels: Record<string, string> = {
+              'react/': 'React',
+              'vue/': 'Vue',
+              'solid/': 'Solid',
+              'core/': 'Core',
+              'cli/': 'CLI',
+              'components/': 'Components',
+              'tempo/': 'Tempo',
+            }
+
+            const label = Object.entries(frameworkLabels).find(([dir]) =>
+              env.relativePath.startsWith(dir),
+            )?.[1]
+
+            if (!label) return html
+
+            return html.replace(
+              /(<h1[^>]*>)(.*?)(<\/h1>)/s,
+              `$1${label}: $2$3`,
+            )
           },
         },
       },
