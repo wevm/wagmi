@@ -10,6 +10,7 @@ const docsPath = 'react'
 const packageName = 'wagmi'
 const connectorsPackageName = 'wagmi/connectors'
 const connectorDependencyVersion = packageJson.peerDependencies['@metamask/connect-evm']
+const connectMultichainVersion = packageJson.peerDependencies['@metamask/connect-multichain']
 </script>
 
 <!-- @include: @shared/connectors/metaMask.md -->
