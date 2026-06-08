@@ -204,7 +204,10 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       // SDK on every page load for extension users.
       if (!metamask && !metamaskPromise) {
         const injected = config.providers[0]?.provider
-        if (injected) return injected as EIP1193Provider
+        // `EIP1193Provider` is a concrete class in `@metamask/connect-evm` v2,
+        // so the structurally-compatible EIP-6963 provider needs a cast through
+        // `unknown`. It satisfies the EIP-1193 surface wagmi consumes at runtime.
+        if (injected) return injected as unknown as EIP1193Provider
       }
       const instance = await this.getInstance()
       return instance.getProvider()
@@ -326,6 +329,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
 
           metamaskPromise = createEVMClient({
             ...parameters,
+            skipAutoAnnounce: true,
             api: {
               supportedNetworks: Object.fromEntries(
                 config.chains.map((chain) => [
