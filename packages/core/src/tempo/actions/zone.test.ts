@@ -3,6 +3,7 @@ import {
   accounts,
   config,
   queryClient,
+  restart,
   setupToken,
   tempoLocal,
   zoneDepositStatus,
@@ -21,6 +22,7 @@ const revealTo =
 let depositToken: Awaited<ReturnType<typeof setupToken>>['token']
 
 beforeAll(async () => {
+  await restart()
   ;({ token: depositToken } = await setupToken())
   await disconnect(config).catch(() => {})
 })

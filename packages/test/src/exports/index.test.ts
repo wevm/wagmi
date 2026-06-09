@@ -5,6 +5,7 @@ import * as react from './index.js'
 test('exports', () => {
   expect(Object.keys(react)).toMatchInlineSnapshot(`
     [
+      "Provider",
       "chain",
       "mainnet",
       "mainnet2",

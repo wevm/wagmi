@@ -45,6 +45,16 @@ beforeAll(async () => {
       }),
     ),
   )
+
+  await Actions.validator.add(client, {
+    account: accounts[0],
+    newValidatorAddress: accounts[19].address,
+    publicKey:
+      '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef',
+    active: true,
+    inboundAddress: '192.168.1.100:8080',
+    outboundAddress: '192.168.1.100:8080',
+  })
   vi.spyOn(Date, 'now').mockReturnValue(
     new Date(Date.UTC(2023, 1, 1)).valueOf(),
   )

@@ -18,7 +18,7 @@
     "@wagmi/solid": "workspace:*",
     "@wagmi/vue": "workspace:*",
     "abitype": "*",
-    "nuxt": "^3.19.2",
+    "nuxt": "^3.21.6",
     "react": "catalog:",
     "solid-js": "catalog:",
     "unocss": "^66.5.6",
