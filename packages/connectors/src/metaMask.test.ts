@@ -102,6 +102,19 @@ test('falls back to SDK when no EIP-6963 MetaMask provider is announced', async 
   expect(mocks.createEVMClient).toHaveBeenCalledTimes(1)
 })
 
+test('forces skipAutoAnnounce when loading the SDK', async () => {
+  const { metaMask } = await import('./metaMask.js')
+  // wagmi already surfaces the native MetaMask provider via MIPD/EIP-6963, so
+  // the connector must always opt the SDK out of announcing a second provider.
+  const connector = config._internal.connectors.setup(metaMask())
+
+  await connector.getProvider()
+
+  expect(mocks.createEVMClient).toHaveBeenCalledWith(
+    expect.objectContaining({ skipAutoAnnounce: true }),
+  )
+})
+
 test('connect still loads SDK when EIP-6963 MetaMask provider is announced', async () => {
   const { metaMask } = await import('./metaMask.js')
   const provider = mockEip6963Provider(({ method }) => {
