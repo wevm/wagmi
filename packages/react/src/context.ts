@@ -1,28 +1,22 @@
 'use client'
 
-import type { ResolvedRegister, State } from '@wagmi/core'
-import { createContext, createElement } from 'react'
-import { Hydrate } from './hydrate.js'
+import type { ResolvedRegister } from '@wagmi/core'
+import { createContext, createElement, type PropsWithChildren } from 'react'
+import { Hydrate, type HydrateProps } from './hydrate.js'
 
 export const WagmiContext = createContext<
   ResolvedRegister['config'] | undefined
 >(undefined)
 
-export type WagmiProviderProps = {
-  config: ResolvedRegister['config']
-  initialState?: State | undefined
-  reconnectOnMount?: boolean | undefined
-}
+export type WagmiProviderProps = HydrateProps
 
 export function WagmiProvider(
-  parameters: React.PropsWithChildren<WagmiProviderProps>,
+  parameters: PropsWithChildren<WagmiProviderProps>,
 ) {
   const { children, config } = parameters
-
-  const props = { value: config }
   return createElement(
     Hydrate,
     parameters,
-    createElement(WagmiContext.Provider, props, children),
+    createElement(WagmiContext.Provider, { value: config }, children),
   )
 }
