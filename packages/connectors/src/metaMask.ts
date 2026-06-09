@@ -20,7 +20,12 @@ import {
 } from 'viem'
 
 export type MetaMaskParameters = UnionCompute<
-  ExactPartial<Omit<CreateEVMClientParameters, 'api' | 'eventHandlers'>> & {
+  ExactPartial<
+    Omit<
+      CreateEVMClientParameters,
+      'api' | 'eventHandlers' | 'skipAutoAnnounce'
+    >
+  > & {
     /**
      * @deprecated Use `dapp` instead.
      *
