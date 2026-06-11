@@ -11,6 +11,52 @@ import { getSidebar } from './sidebar'
 
 const withTwoslashInlineCache = createTwoslashWithInlineCache()
 
+const searchFrameworkLabels = [
+  ['react/', 'React'],
+  ['vue/', 'Vue'],
+  ['solid/', 'Solid'],
+  ['core/', 'Core'],
+  ['cli/', 'CLI'],
+  ['components/', 'Components'],
+  ['tempo/', 'Tempo'],
+] as const
+
+function getSearchFrameworkLabel(file: string) {
+  const normalizedFile = file.replaceAll('\\', '/')
+  return searchFrameworkLabels.find(([dir]) =>
+    normalizedFile.includes(`/site/${dir}`),
+  )?.[1]
+}
+
+const headingRegex = /<h(\d*).*?>(.*?<a.*? href="#.*?".*?>.*?<\/a>)<\/h\1>/gi
+const headingContentRegex = /(.*?)<a.*? href="#(.*?)".*?>.*?<\/a>/i
+
+function* splitSearchPageIntoSections(html: string, frameworkLabel?: string) {
+  const result = html.split(headingRegex)
+  result.shift()
+  let parentTitles: string[] = []
+  for (let i = 0; i < result.length; i += 3) {
+    const level = Number.parseInt(result[i]!, 10) - 1
+    const heading = result[i + 1]!
+    const headingResult = headingContentRegex.exec(heading)
+    const title = clearHtmlTags(headingResult?.[1] ?? '').trim()
+    const anchor = headingResult?.[2] ?? ''
+    const content = result[i + 2]
+    if (!title || !content) continue
+    const titles = parentTitles.slice(0, level)
+    titles[level] = title
+    const filteredTitles = titles.filter(Boolean)
+    if (frameworkLabel) filteredTitles.unshift(frameworkLabel)
+    yield { anchor, titles: filteredTitles, text: clearHtmlTags(content) }
+    if (level === 0) parentTitles = [title]
+    else parentTitles[level] = title
+  }
+}
+
+function clearHtmlTags(str: string) {
+  return str.replace(/<[^>]*>/g, '')
+}
+
 // https://vitepress.dev/reference/site-config
 export default withTwoslashInlineCache(
   defineConfig({
@@ -116,6 +162,14 @@ export default withTwoslashInlineCache(
             if (env.frontmatter?.search === false) return ''
             if (env.relativePath.startsWith('shared')) return ''
             return html
+          },
+          miniSearch: {
+            _splitIntoSections(file, html) {
+              return splitSearchPageIntoSections(
+                html,
+                getSearchFrameworkLabel(file),
+              )
+            },
           },
         },
       },
