@@ -10,7 +10,6 @@ const docsPath = 'vue'
 const packageName = '@wagmi/vue'
 const connectorsPackageName = '@wagmi/vue/connectors'
 const connectorDependencyVersion = packageJson.peerDependencies['@metamask/connect-evm']
-const connectMultichainVersion = packageJson.peerDependencies['@metamask/connect-multichain']
 </script>
 
 <!-- @include: @shared/connectors/metaMask.md -->

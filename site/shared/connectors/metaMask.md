@@ -2,7 +2,6 @@
 const packageName = 'wagmi'
 const connectorsPackageName = 'wagmi/connectors'
 const connectorDependencyVersion = 'x.y.z'
-const connectMultichainVersion = 'x.y.z'
 </script> -->
 
 # metaMask
@@ -18,23 +17,22 @@ import { metaMask } from '{{connectorsPackageName}}'
 ## Install
 
 <PackageMetadata package="@metamask/connect-evm" repo="MetaMask/connect-monorepo" licenseUrl="https://github.com/MetaMask/connect-monorepo/blob/main/packages/connect-evm/LICENSE" />
-<PackageMetadata package="@metamask/connect-multichain" repo="MetaMask/connect-monorepo" licenseUrl="https://github.com/MetaMask/connect-monorepo/blob/main/packages/connect-multichain/LICENSE" />
 
 ::: code-group
 ```bash-vue [pnpm]
-pnpm add @metamask/connect-evm@{{connectorDependencyVersion}} @metamask/connect-multichain@{{connectMultichainVersion}}
+pnpm add @metamask/connect-evm@{{connectorDependencyVersion}}
 ```
 
 ```bash-vue [npm]
-npm install @metamask/connect-evm@{{connectorDependencyVersion}} @metamask/connect-multichain@{{connectMultichainVersion}}
+npm install @metamask/connect-evm@{{connectorDependencyVersion}}
 ```
 
 ```bash-vue [yarn]
-yarn add @metamask/connect-evm@{{connectorDependencyVersion}} @metamask/connect-multichain@{{connectMultichainVersion}}
+yarn add @metamask/connect-evm@{{connectorDependencyVersion}}
 ```
 
 ```bash-vue [bun]
-bun add @metamask/connect-evm@{{connectorDependencyVersion}} @metamask/connect-multichain@{{connectMultichainVersion}}
+bun add @metamask/connect-evm@{{connectorDependencyVersion}}
 ```
 :::
 

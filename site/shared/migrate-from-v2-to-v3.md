@@ -70,26 +70,25 @@ bun add @coinbase/wallet-sdk@{{packageJson?.peerDependencies?.['@coinbase/wallet
 
 ### metaMask
 
-<a :href="`/${docsPath}/api/connectors/metaMask`">`metaMask`</a> requires `@metamask/connect-evm` and `@metamask/connect-multichain`
+<a :href="`/${docsPath}/api/connectors/metaMask`">`metaMask`</a> requires `@metamask/connect-evm`
 
 <PackageMetadata package="@metamask/connect-evm" repo="MetaMask/connect-monorepo" isOsiLicense licenseUrl="https://github.com/MetaMask/connect-monorepo/blob/main/packages/connect-evm/LICENSE" />
-<PackageMetadata package="@metamask/connect-multichain" repo="MetaMask/connect-monorepo" isOsiLicense licenseUrl="https://github.com/MetaMask/connect-monorepo/blob/main/packages/connect-multichain/LICENSE" />
 
 ::: code-group
 ```bash-vue [pnpm]
-pnpm add @metamask/connect-evm@{{packageJson?.peerDependencies?.['@metamask/connect-evm']}} @metamask/connect-multichain@{{packageJson?.peerDependencies?.['@metamask/connect-multichain']}}
+pnpm add @metamask/connect-evm@{{packageJson?.peerDependencies?.['@metamask/connect-evm']}}
 ```
 
 ```bash-vue [npm]
-npm install @metamask/connect-evm@{{packageJson?.peerDependencies?.['@metamask/connect-evm']}} @metamask/connect-multichain@{{packageJson?.peerDependencies?.['@metamask/connect-multichain']}}
+npm install @metamask/connect-evm@{{packageJson?.peerDependencies?.['@metamask/connect-evm']}}
 ```
 
 ```bash-vue [yarn]
-yarn add @metamask/connect-evm@{{packageJson?.peerDependencies?.['@metamask/connect-evm']}} @metamask/connect-multichain@{{packageJson?.peerDependencies?.['@metamask/connect-multichain']}}
+yarn add @metamask/connect-evm@{{packageJson?.peerDependencies?.['@metamask/connect-evm']}}
 ```
 
 ```bash-vue [bun]
-bun add @metamask/connect-evm@{{packageJson?.peerDependencies?.['@metamask/connect-evm']}} @metamask/connect-multichain@{{packageJson?.peerDependencies?.['@metamask/connect-multichain']}}
+bun add @metamask/connect-evm@{{packageJson?.peerDependencies?.['@metamask/connect-evm']}}
 ```
 :::
 

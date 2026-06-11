@@ -37,8 +37,7 @@
   "peerDependencies": {
     "@base-org/account": "^2.5.1",
     "@coinbase/wallet-sdk": "^4.3.6",
-    "@metamask/connect-evm": "^2.0.0",
-    "@metamask/connect-multichain": "^1.0.0",
+    "@metamask/connect-evm": "^2.1.0",
     "@safe-global/safe-apps-provider": "~0.18.6",
     "@safe-global/safe-apps-sdk": "^9.1.0",
     "@wagmi/core": "workspace:*",
@@ -56,9 +55,6 @@
       "optional": true
     },
     "@metamask/connect-evm": {
-      "optional": true
-    },
-    "@metamask/connect-multichain": {
       "optional": true
     },
     "@safe-global/safe-apps-provider": {
@@ -84,7 +80,6 @@
     "@base-org/account": "catalog:",
     "@coinbase/wallet-sdk": "catalog:",
     "@metamask/connect-evm": "catalog:",
-    "@metamask/connect-multichain": "catalog:",
     "@safe-global/safe-apps-provider": "catalog:",
     "@safe-global/safe-apps-sdk": "catalog:",
     "@wagmi/core": "workspace:*",
