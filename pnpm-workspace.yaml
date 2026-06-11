@@ -84,7 +84,8 @@ overrides:
   '@isaacs/brace-expansion@<=5.0.0': 5.0.1
   '@protobufjs/utf8@<=1.1.0': '>=1.1.1'
   '@tanstack/start-server-core@<1.167.30': '>=1.167.30'
-  axios@<1.15.2: 1.15.2
+  '@grpc/grpc-js@<1.14.4': 1.14.4
+  axios@<1.16.0: 1.16.0
   bn.js@>=5.0.0 <5.2.3: 5.2.3
   brace-expansion@<1.1.13: '>=1.1.13'
   brace-expansion@>=2.0.0 <2.0.3: '>=2.0.3'
@@ -102,7 +103,7 @@ overrides:
   h3-v2: npm:h3@2.0.1-rc.18
   h3@<1.15.9: 1.15.9
   happy-dom@<20.8.9: '>=20.8.9'
-  hono@<4.12.18: 4.12.18
+  hono@<4.12.21: 4.12.21
   js-cookie@<=3.0.5: 3.0.7
   lodash@>=4.0.0 <=4.17.23: '>=4.18.0'
   markdown-it@>=13.0.0 <14.1.1: 14.1.1
@@ -124,6 +125,7 @@ overrides:
   semver@<5.7.2: '>=5.7.2'
   serialize-javascript@<7.0.5: '>=7.0.5'
   seroval@<1.4.1: '>=1.4.1'
+  shell-quote@<=1.8.3: 1.8.4
   simple-git@>=3.15.0 <3.36.0: 3.36.0
   smol-toml@<1.6.1: '>=1.6.1'
   srvx@<0.11.13: '>=0.11.13'
