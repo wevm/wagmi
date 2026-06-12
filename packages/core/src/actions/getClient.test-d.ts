@@ -1,6 +1,9 @@
 import { chain, config } from '@wagmi/test'
+import { http } from 'viem'
+import { waitForTransactionReceipt } from 'viem/actions'
 import { expectTypeOf, test } from 'vitest'
-
+import { createConfig } from '../createConfig.js'
+import { arbitrumNova, optimism } from '../exports/chains.js'
 import { getClient } from './getClient.js'
 
 test('default', () => {
@@ -24,4 +27,16 @@ test('behavior: unconfigured chain', () => {
     chainId: 123456,
   })
   expectTypeOf(client).toEqualTypeOf<undefined>()
+})
+
+test('behavior: viem actions', () => {
+  const config = createConfig({
+    chains: [arbitrumNova, optimism],
+    transports: {
+      [arbitrumNova.id]: http(),
+      [optimism.id]: http(),
+    },
+  })
+  const client = getClient(config)
+  waitForTransactionReceipt(client, { hash: '0x123' })
 })
