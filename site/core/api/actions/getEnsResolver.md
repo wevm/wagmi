@@ -157,7 +157,7 @@ The address of the resolver.
 ## Error
 
 ```ts
-import { type getEnsResolverError } from '@wagmi/core'
+import { type GetEnsResolverErrorType } from '@wagmi/core'
 ```
 
 <!--@include: @shared/query-imports.md-->
