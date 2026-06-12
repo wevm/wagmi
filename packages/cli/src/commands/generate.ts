@@ -180,16 +180,28 @@ export async function generate(options: Generate = {}) {
           let needsWrite = false
           if (event === 'change' || event === 'add') {
             const eventFn =
-              event === 'change' ? watchConfig.onChange : watchConfig.onAdd
+              event === 'change'
+                ? watchConfig.onChange
+                : (watchConfig.onAdd ?? watchConfig.onChange)
             const config = await eventFn?.(path)
             if (!config) return
-            const contract = await getContract({ ...config, isTypeScript })
-            contractMap.set(contract.name, contract)
+
+            const contractConfigs = Array.isArray(config) ? config : [config]
+            for (const contractConfig of contractConfigs) {
+              const contract = await getContract({
+                ...contractConfig,
+                isTypeScript,
+              })
+              contractMap.set(contract.name, contract)
+            }
             needsWrite = true
           } else if (event === 'unlink') {
             const name = await watchConfig.onRemove?.(path)
             if (!name) return
-            contractMap.delete(name)
+
+            const contractNames = Array.isArray(name) ? name : [name]
+            for (const contractName of contractNames)
+              contractMap.delete(contractName)
             needsWrite = true
           }
 

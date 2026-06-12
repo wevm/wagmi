@@ -43,6 +43,17 @@ export const foundryDefaultExcludes = [
   '**.t.sol/*.json',
 ]
 
+export type FoundryNamedDeployment = {
+  /** Artifact name to source the ABI from. */
+  artifact: string
+  /** Address or addresses to attach to the generated contract config. */
+  address: ContractConfig['address']
+}
+
+export type FoundryDeployment =
+  | ContractConfig['address']
+  | FoundryNamedDeployment
+
 export type FoundryConfig = {
   /**
    * Project's artifacts directory.
@@ -60,8 +71,18 @@ export type FoundryConfig = {
    * @default false
    */
   includeBroadcasts?: boolean | undefined
-  /** Mapping of addresses to attach to artifacts. */
-  deployments?: { [key: string]: ContractConfig['address'] } | undefined
+  /**
+   * Mapping of addresses to attach to artifacts.
+   *
+   * To generate multiple contract configs from one artifact ABI, use named deployments:
+   *
+   * @example
+   * {
+   *   DAI: { artifact: 'ERC20', address: { 1: '0x...' } },
+   *   WETH: { artifact: 'ERC20', address: { 1: '0x...' } },
+   * }
+   */
+  deployments?: { [key: string]: FoundryDeployment } | undefined
   /** Artifact files to exclude. */
   exclude?: string[] | undefined
   /** [Forge](https://book.getfoundry.sh/forge) configuration */
@@ -127,26 +148,79 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
     namePrefix = '',
   } = config
 
-  let allDeployments: { [key: string]: ContractConfig['address'] } = deployments
+  const namedDeployments: { [key: string]: FoundryNamedDeployment } = {}
+  const staticDeployments: { [key: string]: ContractConfig['address'] } = {}
+  for (const [name, deployment] of Object.entries(deployments)) {
+    if (isFoundryNamedDeployment(deployment))
+      namedDeployments[name] = deployment
+    else staticDeployments[name] = deployment
+  }
+  let allDeployments = staticDeployments
 
-  function getContractName(artifactPath: string, usePrefix = true) {
+  function getArtifactName(artifactPath: string) {
     const filename = basename(artifactPath)
     const extension = extname(artifactPath)
-    return `${usePrefix ? namePrefix : ''}${filename.replace(extension, '')}`
+    return filename.replace(extension, '')
+  }
+
+  function getContractName(name: string) {
+    return `${namePrefix}${name}`
   }
 
   async function getContract(
     artifactPath: string,
-    contractDeployments: {
-      [key: string]: ContractConfig['address']
-    } = allDeployments,
+    {
+      address,
+      contractDeployments = allDeployments,
+      name,
+    }: {
+      address?: ContractConfig['address']
+      contractDeployments?: { [key: string]: ContractConfig['address'] }
+      name?: string
+    } = {},
   ) {
+    const artifactName = getArtifactName(artifactPath)
     const artifact = await JSON.parse(await readFile(artifactPath, 'utf8'))
     return {
       abi: artifact.abi,
-      address: contractDeployments[getContractName(artifactPath, false)],
-      name: getContractName(artifactPath),
+      address: address ?? contractDeployments[artifactName],
+      name: getContractName(name ?? artifactName),
     }
+  }
+
+  async function getContractsForArtifact(artifactPath: string) {
+    const artifactName = getArtifactName(artifactPath)
+    const contracts: ContractConfig[] = []
+
+    const artifactContract = await getContract(artifactPath)
+    if (artifactContract.abi?.length) contracts.push(artifactContract)
+
+    for (const [name, deployment] of Object.entries(namedDeployments)) {
+      if (deployment.artifact !== artifactName) continue
+
+      const contract = await getContract(artifactPath, {
+        address: deployment.address,
+        name,
+      })
+      if (!contract.abi?.length) continue
+      contracts.push(contract)
+    }
+
+    if (contracts.length === 0) return undefined
+    return contracts.length === 1 ? contracts[0] : contracts
+  }
+
+  function getContractNamesForArtifact(artifactPath: string) {
+    const artifactName = getArtifactName(artifactPath)
+    const contractNames = new Set<string>([getContractName(artifactName)])
+
+    for (const [name, deployment] of Object.entries(namedDeployments)) {
+      if (deployment.artifact !== artifactName) continue
+      contractNames.add(getContractName(name))
+    }
+
+    const names = [...contractNames]
+    return names.length === 1 ? names[0] : names
   }
 
   function getArtifactPaths(artifactsDirectory: string) {
@@ -269,12 +343,34 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
             ],
           ),
         )
-        allDeployments = { ...broadcastDeployments, ...deployments }
+        allDeployments = { ...broadcastDeployments, ...staticDeployments }
       }
       const artifactPaths = await getArtifactPaths(artifactsDirectory)
+      const artifactPathMap = new Map<string, string>()
       const contracts = []
       for (const artifactPath of artifactPaths) {
-        const contract = await getContract(artifactPath, allDeployments)
+        artifactPathMap.set(getArtifactName(artifactPath), artifactPath)
+        const contract = await getContract(artifactPath, {
+          contractDeployments: allDeployments,
+        })
+        if (!contract.abi?.length) continue
+        contracts.push(contract)
+      }
+
+      for (const [name, deployment] of Object.entries(namedDeployments)) {
+        const artifactPath = artifactPathMap.get(deployment.artifact)
+        if (!artifactPath) {
+          logger.warn(
+            `Foundry deployment "${name}" references missing artifact "${deployment.artifact}".`,
+          )
+          continue
+        }
+
+        const contract = await getContract(artifactPath, {
+          address: deployment.address,
+          contractDeployments: allDeployments,
+          name,
+        })
         if (!contract.abi?.length) continue
         contracts.push(contract)
       }
@@ -330,14 +426,25 @@ export function foundry(config: FoundryConfig = {}): FoundryResult {
         ...exclude.map((x) => `!${artifactsDirectory}/**/${x}`),
       ],
       async onAdd(path) {
-        return getContract(path)
+        return getContractsForArtifact(path)
       },
       async onChange(path) {
-        return getContract(path)
+        return getContractsForArtifact(path)
       },
       async onRemove(path) {
-        return getContractName(path)
+        return getContractNamesForArtifact(path)
       },
     },
   }
+}
+
+function isFoundryNamedDeployment(
+  deployment: FoundryDeployment,
+): deployment is FoundryNamedDeployment {
+  return (
+    typeof deployment === 'object' &&
+    deployment !== null &&
+    'artifact' in deployment &&
+    'address' in deployment
+  )
 }
