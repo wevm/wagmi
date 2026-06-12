@@ -36,6 +36,7 @@ test('exports', () => {
       "getEnsText",
       "getFeeHistory",
       "getGasPrice",
+      "getPermissions",
       "getProof",
       "getPublicClient",
       "getStorageAt",

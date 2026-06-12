@@ -69,6 +69,7 @@ test('exports', () => {
       "useFeeHistory",
       "useGasPrice",
       "useInfiniteReadContracts",
+      "usePermissions",
       "usePrepareTransactionRequest",
       "useProof",
       "usePublicClient",
