@@ -154,6 +154,7 @@ export function getSidebar() {
         text: 'Hooks',
         link: '/react/api/hooks',
         items: [
+          { text: 'useAddChain', link: '/react/api/hooks/useAddChain' },
           { text: 'useBalance', link: '/react/api/hooks/useBalance' },
           {
             text: 'useBlobBaseFee',
@@ -791,6 +792,7 @@ export function getSidebar() {
         text: 'Actions',
         link: '/core/api/actions',
         items: [
+          { text: 'addChain', link: '/core/api/actions/addChain' },
           {
             text: 'call',
             link: '/core/api/actions/call',
