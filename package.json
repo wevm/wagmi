@@ -54,7 +54,7 @@
     "@vitest/coverage-v8": "^4.1.8",
     "@wagmi/test": "workspace:*",
     "happy-dom": "^20.0.0",
-    "knip": "^6.16.1",
+    "knip": "5.69.0",
     "playwright": "1.56.1",
     "prool": "^0.2.3",
     "publint": "^0.3.18",
