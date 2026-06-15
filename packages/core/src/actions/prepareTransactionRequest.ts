@@ -3,6 +3,7 @@ import type {
   Address,
   Calls,
   Chain,
+  Client,
   PrepareTransactionRequestErrorType as viem_PrepareTransactionRequestErrorType,
   PrepareTransactionRequestParameters as viem_PrepareTransactionRequestParameters,
   PrepareTransactionRequestRequest as viem_PrepareTransactionRequestRequest,
@@ -12,7 +13,10 @@ import { prepareTransactionRequest as viem_prepareTransactionRequest } from 'vie
 
 import type { Config } from '../createConfig.js'
 import type { SelectChains } from '../types/chain.js'
-import type { ChainIdParameter } from '../types/properties.js'
+import type {
+  ChainIdParameter,
+  ConnectorParameter,
+} from '../types/properties.js'
 import type {
   IsNarrowable,
   UnionCompute,
@@ -77,7 +81,8 @@ type PrepareTransactionRequestParameters_base<
   >,
   'chain'
 > &
-  ChainIdParameter<config, chainId>
+  ChainIdParameter<config, chainId> &
+  ConnectorParameter
 
 export type PrepareTransactionRequestReturnType<
   config extends Config = Config,
@@ -125,15 +130,18 @@ export async function prepareTransactionRequest<
   config: config,
   parameters: PrepareTransactionRequestParameters<config, chainId, request>,
 ): Promise<PrepareTransactionRequestReturnType<config, chainId, request>> {
-  const { account: account_, chainId, ...rest } = parameters
-  const connectorClient = await getConnectorClient(config, {
-    account: account_,
-    assertChainId: false,
-    chainId,
-  })
+  const { account, chainId, connector, ...rest } = parameters
 
-  const account = account_ ?? connectorClient.account
-  const client = connectorClient ?? config.getClient({ chainId })
+  let client: Client
+  if (typeof account === 'object' && account?.type === 'local')
+    client = config.getClient({ chainId })
+  else
+    client = await getConnectorClient(config, {
+      account: account ?? undefined,
+      assertChainId: false,
+      chainId,
+      connector,
+    })
 
   const action = getAction(
     client,

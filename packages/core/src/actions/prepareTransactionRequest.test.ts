@@ -158,7 +158,7 @@ test('behavior: routes through connector client when connector exposes `getClien
   expect(publicRequest).not.toHaveBeenCalled()
 })
 
-test('behavior: uses public client when connector has no `getClient`', async () => {
+test('behavior: routes a local account through the public client', async () => {
   const publicRequest = vi.fn(async () => {
     throw new Error('public client used')
   })
@@ -172,10 +172,10 @@ test('behavior: uses public client when connector has no `getClient`', async () 
     },
   })
 
-  await connect(config, { connector: config.connectors[0]! })
-
+  // No connector connected: a local account must route through the app client.
   await expect(
     prepareTransactionRequest(config, {
+      account: privateKeyToAccount(privateKey),
       to: '0x70997970c51812dc3a010c7d01b50e0d17dc79c8',
       value: parseEther('1'),
     }),
