@@ -31,7 +31,7 @@ catalog:
   '@base-org/account': 2.4.0
   '@coinbase/wallet-sdk': 4.3.6
   '@metamask/connect-evm': 2.1.0
-  '@nuxt/schema': 4.4.6
+  '@nuxt/schema': 4.4.8
   '@safe-global/safe-apps-provider': 0.18.6
   '@safe-global/safe-apps-sdk': 9.1.0
   '@tanstack/query-core': 5.49.1
@@ -45,7 +45,7 @@ catalog:
   '@walletconnect/ethereum-provider': 2.21.1
   accounts: 0.12.0
   buffer: 6.0.3
-  nuxt: 4.4.6
+  nuxt: 4.4.8
   ox: 0.11.1
   porto: 0.2.37
   react: 19.2.0
@@ -112,7 +112,7 @@ overrides:
   knip>js-yaml@<=4.1.1: 4.2.0
   launch-editor@<=2.14.0: 2.14.1
   lodash@>=4.0.0 <=4.17.23: '>=4.18.0'
-  markdown-it@>=13.0.0 <14.1.1: 14.1.1
+  markdown-it@>=13.0.0 <14.2.0: 14.2.0
   mdast-util-to-hast@<13.2.1: '>=13.2.1'
   minimatch@<3.1.4: 3.1.4
   minimatch@5.1.8>brace-expansion: 5.0.6
