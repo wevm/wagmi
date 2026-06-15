@@ -1,7 +1,9 @@
-import { accounts, config, privateKey } from '@wagmi/test'
-import { parseEther } from 'viem'
+import { accounts, chain, config, privateKey } from '@wagmi/test'
+import { createClient, custom, parseEther } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
-import { afterEach, expect, test } from 'vitest'
+import { afterEach, expect, test, vi } from 'vitest'
+import { mock } from '../connectors/mock.js'
+import { createConfig } from '../createConfig.js'
 import { connect } from './connect.js'
 import { disconnect } from './disconnect.js'
 import { prepareTransactionRequest } from './prepareTransactionRequest.js'
@@ -112,4 +114,72 @@ test('behavior: local account', async () => {
       "value": 1000000000000000000n,
     }
   `)
+})
+
+test('behavior: routes through connector client when connector exposes `getClient`', async () => {
+  const connectorRequest = vi.fn(async () => {
+    throw new Error('connector client used')
+  })
+  const publicRequest = vi.fn(async () => {
+    throw new Error('public client used')
+  })
+
+  const connectorClient = createClient({
+    account: accounts[0],
+    chain: chain.mainnet,
+    transport: custom({ request: connectorRequest }, { retryCount: 0 }),
+  })
+
+  const config = createConfig({
+    chains: [chain.mainnet],
+    connectors: [
+      (params) => ({
+        ...mock({ accounts })(params),
+        getClient: async () => connectorClient,
+      }),
+    ],
+    storage: null,
+    transports: {
+      [chain.mainnet.id]: custom({ request: publicRequest }, { retryCount: 0 }),
+    },
+  })
+
+  await connect(config, { connector: config.connectors[0]! })
+
+  // The connector client's transport throws, proving prepare ran against it.
+  await expect(
+    prepareTransactionRequest(config, {
+      to: '0x70997970c51812dc3a010c7d01b50e0d17dc79c8',
+      value: parseEther('1'),
+    }),
+  ).rejects.toThrowError()
+
+  expect(connectorRequest).toHaveBeenCalled()
+  expect(publicRequest).not.toHaveBeenCalled()
+})
+
+test('behavior: uses public client when connector has no `getClient`', async () => {
+  const publicRequest = vi.fn(async () => {
+    throw new Error('public client used')
+  })
+
+  const config = createConfig({
+    chains: [chain.mainnet],
+    connectors: [mock({ accounts })],
+    storage: null,
+    transports: {
+      [chain.mainnet.id]: custom({ request: publicRequest }, { retryCount: 0 }),
+    },
+  })
+
+  await connect(config, { connector: config.connectors[0]! })
+
+  await expect(
+    prepareTransactionRequest(config, {
+      to: '0x70997970c51812dc3a010c7d01b50e0d17dc79c8',
+      value: parseEther('1'),
+    }),
+  ).rejects.toThrowError()
+
+  expect(publicRequest).toHaveBeenCalled()
 })

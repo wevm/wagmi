@@ -126,19 +126,14 @@ export async function prepareTransactionRequest<
   parameters: PrepareTransactionRequestParameters<config, chainId, request>,
 ): Promise<PrepareTransactionRequestReturnType<config, chainId, request>> {
   const { account: account_, chainId, ...rest } = parameters
+  const connectorClient = await getConnectorClient(config, {
+    account: account_,
+    assertChainId: false,
+    chainId,
+  })
 
-  let account: Address | Account | undefined
-  if (account_) account = account_
-  else {
-    const connectorClient = await getConnectorClient(config, {
-      account: account_,
-      assertChainId: false,
-      chainId,
-    })
-    account = connectorClient.account
-  }
-
-  const client = config.getClient({ chainId })
+  const account = account_ ?? connectorClient.account
+  const client = connectorClient ?? config.getClient({ chainId })
 
   const action = getAction(
     client,
