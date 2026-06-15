@@ -14,6 +14,7 @@ auditConfig:
     - GHSA-93m4-6634-74q7 # vite: server.fs.deny bypass via backslash on Windows
     - GHSA-29xp-372q-xqph # node-tar: race condition memory exposure in sync list
     - GHSA-mh29-5h37-fv8m # js-yaml: prototype pollution via merge (<<)
+    - GHSA-h67p-54hq-rp68 # js-yaml: DoS via merge keys (gray-matter latest requires js-yaml v3)
     - GHSA-5j98-mcp5-4vw2 # glob CLI: command injection via -c/--cmd
     - GHSA-92fh-27vv-894w # nanotar: path traversal in parseTar (no patch)
     - GHSA-677m-j7p3-52f9 # socket.io-parser: unbounded binary attachments DoS
@@ -106,7 +107,6 @@ overrides:
   h3@<1.15.9: 1.15.9
   happy-dom@<20.8.9: '>=20.8.9'
   hono@<4.12.21: 4.12.21
-  js-yaml@<=4.1.1: 4.2.0
   js-cookie@<=3.0.5: 3.0.7
   launch-editor@<=2.14.0: 2.14.1
   lodash@>=4.0.0 <=4.17.23: '>=4.18.0'
