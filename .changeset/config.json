@@ -11,6 +11,7 @@
   "baseBranch": "main",
   "updateInternalDependencies": "minor",
   "ignore": [
+    "*-register",
     "@wagmi/test",
     "site",
     "next-app",
