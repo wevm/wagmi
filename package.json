@@ -44,7 +44,7 @@
     "@arethetypeswrong/cli": "^0.16.4",
     "@ark/attest": "^0.56.0",
     "@biomejs/biome": "^2.2.4",
-    "@changesets/cli": "^3.0.0-next.5",
+    "@changesets/cli": "^2.31.0",
     "@svitejs/changesets-changelog-github-compact": "^1.2.0",
     "@types/node": "^24.5.1",
     "@typescript/native-preview": "7.0.0-dev.20260415.1",
