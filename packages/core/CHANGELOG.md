@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 3.5.1
+### Patch Changes
+
+
+- Updated `prepareTransactionRequest` to use the connector client when available. ([#5154](https://github.com/wevm/wagmi/pull/5154))
+
 ## 3.5.0
 
 ### Minor Changes
