@@ -62,6 +62,10 @@ yarn add wagmi viem@{{viemVersion}} @tanstack/react-query
 ```bash-vue [bun]
 bun add wagmi viem@{{viemVersion}} @tanstack/react-query
 ```
+
+```bash-vue [deno]
+deno add wagmi viem@{{viemVersion}} @tanstack/react-query
+```
 :::
 
 - [Viem](https://viem.sh) is a TypeScript interface for Ethereum that performs blockchain operations.
