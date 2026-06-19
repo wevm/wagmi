@@ -37,6 +37,10 @@ yarn add {{packageName}}@canary
 ```bash-vue [bun]
 bun add {{packageName}}@canary
 ```
+
+```bash-vue [deno]
+deno add {{packageName}}@canary
+```
 :::
 
 Or clone the [Wagmi repo](https://github.com/wevm/wagmi) to your local machine, build, and link it yourself.

@@ -24,6 +24,10 @@ yarn add @wagmi/cli
 ```bash-vue [bun]
 bun add @wagmi/cli
 ```
+
+```bash-vue [deno]
+deno add @wagmi/cli
+```
 :::
 
 ::: info Not ready to migrate yet?

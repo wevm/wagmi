@@ -30,6 +30,10 @@ yarn add @wagmi/core @wagmi/connectors viem@{{viemVersion}}
 ```bash-vue [bun]
 bun add @wagmi/core @wagmi/connectors viem@{{viemVersion}}
 ```
+
+```bash-vue [deno]
+deno add @wagmi/core @wagmi/connectors viem@{{viemVersion}}
+```
 :::
 
 - [Wagmi Connectors](/core/api/connectors) is a collection of interfaces for linking accounts/wallets to Wagmi.

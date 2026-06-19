@@ -35,6 +35,10 @@ yarn add @wagmi/core@3
 ```bash [bun]
 bun add @wagmi/core@3
 ```
+
+```bash [deno]
+deno add @wagmi/core@3
+```
 :::
 
 ::: info Not ready to migrate yet?

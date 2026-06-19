@@ -30,6 +30,10 @@ yarn create wagmi
 ```bash [bun]
 bun create wagmi
 ```
+
+```bash [deno]
+deno create --npm wagmi
+```
 :::
 
 Once the command runs, you'll see some prompts to complete.
@@ -61,6 +65,10 @@ yarn add @wagmi/vue viem@{{viemVersion}} @tanstack/vue-query
 
 ```bash-vue [bun]
 bun add @wagmi/vue viem@{{viemVersion}} @tanstack/vue-query
+```
+
+```bash-vue [deno]
+deno add @wagmi/vue viem@{{viemVersion}} @tanstack/vue-query
 ```
 :::
 

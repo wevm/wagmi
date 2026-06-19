@@ -32,6 +32,10 @@ yarn add @wagmi/core viem@{{viemVersion}} @wagmi/connectors
 ```bash-vue [bun]
 bun add @wagmi/core viem@{{viemVersion}} @wagmi/connectors
 ```
+
+```bash-vue [deno]
+deno add @wagmi/core viem@{{viemVersion}} @wagmi/connectors
+```
 :::
 
 ::: info Wagmi Core v2 should be the last major version that will have this many actionable breaking changes. 
@@ -272,6 +276,10 @@ yarn add @wagmi/connectors
 
 ```bash-vue [bun]
 bun add @wagmi/connectors
+```
+
+```bash-vue [deno]
+deno add @wagmi/connectors
 ```
 :::
 

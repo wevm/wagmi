@@ -22,6 +22,10 @@ yarn add @wagmi/cli
 ```bash [bun]
 bun add @wagmi/cli
 ```
+
+```bash [deno]
+deno add @wagmi/cli
+```
 :::
 
 ## Using Unreleased Commits
@@ -43,6 +47,10 @@ yarn add @wagmi/cli@canary
 
 ```bash [bun]
 bun add @wagmi/cli@canary
+```
+
+```bash [deno]
+deno add @wagmi/cli@canary
 ```
 :::
 

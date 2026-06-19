@@ -34,6 +34,10 @@ yarn add @walletconnect/ethereum-provider@{{connectorDependencyVersion}}
 ```bash-vue [bun]
 bun add @walletconnect/ethereum-provider@{{connectorDependencyVersion}}
 ```
+
+```bash-vue [deno]
+deno add @walletconnect/ethereum-provider@{{connectorDependencyVersion}}
+```
 :::
 
 ## Usage

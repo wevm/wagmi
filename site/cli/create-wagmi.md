@@ -19,6 +19,10 @@ yarn create wagmi
 ```bash [bun]
 bun create wagmi
 ```
+
+```bash [deno]
+deno create --npm wagmi
+```
 :::
 
 ## Options
@@ -39,6 +43,10 @@ yarn create wagmi --template next
 ```
 ```bash [bun]
 bun create wagmi --template next
+```
+
+```bash [deno]
+deno create --npm wagmi --template next
 ```
 :::
 

@@ -246,6 +246,10 @@ yarn add @tanstack/vue-query-devtools
 ```bash [bun]
 bun i @tanstack/vue-query-devtools
 ```
+
+```bash [deno]
+deno i @tanstack/vue-query-devtools
+```
 :::
 
 #### Usage

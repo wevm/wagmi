@@ -27,6 +27,10 @@ yarn wagmi --help
 ```bash [bun]
 bun wagmi --help
 ```
+
+```bash [deno]
+deno wagmi --help
+```
 :::
 
 ### `-v`, `--version`
@@ -48,6 +52,10 @@ yarn wagmi --version
 
 ```bash [bun]
 bun wagmi --version
+```
+
+```bash [deno]
+deno wagmi --version
 ```
 :::
 

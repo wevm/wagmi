@@ -34,6 +34,10 @@ yarn add @coinbase/wallet-sdk@{{connectorDependencyVersion}}
 ```bash-vue [bun]
 bun add @coinbase/wallet-sdk@{{connectorDependencyVersion}}
 ```
+
+```bash-vue [deno]
+deno add @coinbase/wallet-sdk@{{connectorDependencyVersion}}
+```
 :::
 
 ## Usage

@@ -33,6 +33,10 @@ yarn add wagmi viem@{{viemVersion}} @tanstack/react-query
 ```bash-vue [bun]
 bun add wagmi viem@{{viemVersion}} @tanstack/react-query
 ```
+
+```bash-vue [deno]
+deno add wagmi viem@{{viemVersion}} @tanstack/react-query
+```
 :::
 
 ::: info Wagmi v2 should be the last major version that will have this many actionable breaking changes. 

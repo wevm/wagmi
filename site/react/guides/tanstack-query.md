@@ -51,6 +51,10 @@ yarn add @tanstack/query-sync-storage-persister @tanstack/react-query-persist-cl
 ```bash [bun]
 bun i @tanstack/query-sync-storage-persister @tanstack/react-query-persist-client
 ```
+
+```bash [deno]
+deno i @tanstack/query-sync-storage-persister @tanstack/react-query-persist-client
+```
 :::
 
 #### Usage
@@ -116,6 +120,10 @@ yarn add @tanstack/query-async-storage-persister @tanstack/react-query-persist-c
 
 ```bash [bun]
 bun i @tanstack/query-async-storage-persister @tanstack/react-query-persist-client
+```
+
+```bash [deno]
+deno i @tanstack/query-async-storage-persister @tanstack/react-query-persist-client
 ```
 :::
 
@@ -380,6 +388,10 @@ yarn add @tanstack/react-query-devtools
 
 ```bash [bun]
 bun i @tanstack/react-query-devtools
+```
+
+```bash [deno]
+deno i @tanstack/react-query-devtools
 ```
 :::
 

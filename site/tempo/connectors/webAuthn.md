@@ -29,6 +29,10 @@ yarn add accounts@{{connectorDependencyVersion}}
 ```bash-vue [bun]
 bun add accounts@{{connectorDependencyVersion}}
 ```
+
+```bash-vue [deno]
+deno add accounts@{{connectorDependencyVersion}}
+```
 :::
 
 ## Usage

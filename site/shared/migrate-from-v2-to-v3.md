@@ -42,6 +42,10 @@ yarn add @base-org/account@{{packageJson?.peerDependencies?.['@base-org/account'
 ```bash-vue [bun]
 bun add @base-org/account@{{packageJson?.peerDependencies?.['@base-org/account']}}
 ```
+
+```bash-vue [deno]
+deno add @base-org/account@{{packageJson?.peerDependencies?.['@base-org/account']}}
+```
 :::
 
 ### coinbaseWallet
@@ -65,6 +69,10 @@ yarn add @coinbase/wallet-sdk@{{packageJson?.peerDependencies?.['@coinbase/walle
 
 ```bash-vue [bun]
 bun add @coinbase/wallet-sdk@{{packageJson?.peerDependencies?.['@coinbase/wallet-sdk']}}
+```
+
+```bash-vue [deno]
+deno add @coinbase/wallet-sdk@{{packageJson?.peerDependencies?.['@coinbase/wallet-sdk']}}
 ```
 :::
 
@@ -90,6 +98,10 @@ yarn add @metamask/connect-evm@{{packageJson?.peerDependencies?.['@metamask/conn
 ```bash-vue [bun]
 bun add @metamask/connect-evm@{{packageJson?.peerDependencies?.['@metamask/connect-evm']}}
 ```
+
+```bash-vue [deno]
+deno add @metamask/connect-evm@{{packageJson?.peerDependencies?.['@metamask/connect-evm']}}
+```
 :::
 
 ### porto
@@ -113,6 +125,10 @@ yarn add porto@{{packageJson?.peerDependencies?.['porto']}}
 
 ```bash-vue [bun]
 bun add porto@{{packageJson?.peerDependencies?.['porto']}}
+```
+
+```bash-vue [deno]
+deno add porto@{{packageJson?.peerDependencies?.['porto']}}
 ```
 :::
 
@@ -139,6 +155,10 @@ yarn add @safe-global/safe-apps-provider@{{packageJson?.peerDependencies?.['@saf
 ```bash-vue [bun]
 bun add @safe-global/safe-apps-provider@{{packageJson?.peerDependencies?.['@safe-global/safe-apps-provider']}} @safe-global/safe-apps-sdk@{{packageJson?.peerDependencies?.['@safe-global/safe-apps-sdk']}} 
 ```
+
+```bash-vue [deno]
+deno add @safe-global/safe-apps-provider@{{packageJson?.peerDependencies?.['@safe-global/safe-apps-provider']}} @safe-global/safe-apps-sdk@{{packageJson?.peerDependencies?.['@safe-global/safe-apps-sdk']}} 
+```
 :::
 
 ### walletConnect
@@ -162,6 +182,10 @@ yarn add @walletconnect/ethereum-provider@{{packageJson?.peerDependencies?.['@wa
 
 ```bash-vue [bun]
 bun add @walletconnect/ethereum-provider@{{packageJson?.peerDependencies?.['@walletconnect/ethereum-provider']}}
+```
+
+```bash-vue [deno]
+deno add @walletconnect/ethereum-provider@{{packageJson?.peerDependencies?.['@walletconnect/ethereum-provider']}}
 ```
 :::
 

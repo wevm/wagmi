@@ -30,6 +30,10 @@ yarn create wagmi
 ```bash [bun]
 bun create wagmi
 ```
+
+```bash [deno]
+deno create --npm wagmi
+```
 :::
 
 Once the command runs, you'll see some prompts to complete.

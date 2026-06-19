@@ -31,6 +31,10 @@ yarn add viem@{{viemVersion}} accounts@{{accountsVersion}}
 ```bash-vue [bun]
 bun add viem@{{viemVersion}} accounts@{{accountsVersion}}
 ```
+
+```bash-vue [deno]
+deno add viem@{{viemVersion}} accounts@{{accountsVersion}}
+```
 :::
 
 To dive a layer deeper, check out the [Viem Tempo docs](https://viem.sh/tempo).

@@ -34,6 +34,10 @@ yarn add porto@{{connectorDependencyVersion}}
 ```bash-vue [bun]
 bun add porto@{{connectorDependencyVersion}}
 ```
+
+```bash-vue [deno]
+deno add porto@{{connectorDependencyVersion}}
+```
 :::
 
 ## Usage

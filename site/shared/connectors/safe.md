@@ -35,6 +35,10 @@ yarn add @safe-global/safe-apps-provider@{{connectorDependencyVersions?.[0]}} @s
 ```bash-vue [bun]
 bun add @safe-global/safe-apps-provider@{{connectorDependencyVersions?.[0]}} @safe-global/safe-apps-sdk@{{connectorDependencyVersions?.[1]}}
 ```
+
+```bash-vue [deno]
+deno add @safe-global/safe-apps-provider@{{connectorDependencyVersions?.[0]}} @safe-global/safe-apps-sdk@{{connectorDependencyVersions?.[1]}}
+```
 :::
 
 ## Usage

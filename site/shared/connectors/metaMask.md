@@ -34,6 +34,10 @@ yarn add @metamask/connect-evm@{{connectorDependencyVersion}}
 ```bash-vue [bun]
 bun add @metamask/connect-evm@{{connectorDependencyVersion}}
 ```
+
+```bash-vue [deno]
+deno add @metamask/connect-evm@{{connectorDependencyVersion}}
+```
 :::
 
 ## Usage

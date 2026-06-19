@@ -24,6 +24,10 @@ yarn add -D @wagmi/cli
 ```bash [bun]
 bun add -D @wagmi/cli
 ```
+
+```bash [deno]
+deno add -D @wagmi/cli
+```
 :::
 
 ## Create Config File
@@ -45,6 +49,10 @@ yarn wagmi init
 
 ```bash [bun]
 bun wagmi init
+```
+
+```bash [deno]
+deno wagmi init
 ```
 :::
 
@@ -122,6 +130,10 @@ yarn wagmi generate
 
 ```bash [bun]
 bun wagmi generate
+```
+
+```bash [deno]
+deno wagmi generate
 ```
 :::
 

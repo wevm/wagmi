@@ -31,6 +31,10 @@ yarn add @wagmi/solid viem@{{viemVersion}} @tanstack/solid-query
 ```bash-vue [bun]
 bun add @wagmi/solid viem@{{viemVersion}} @tanstack/solid-query
 ```
+
+```bash-vue [deno]
+deno add @wagmi/solid viem@{{viemVersion}} @tanstack/solid-query
+```
 :::
 
 - [Viem](https://viem.sh) is a TypeScript interface for Ethereum that performs blockchain operations.
