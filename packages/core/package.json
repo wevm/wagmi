@@ -87,7 +87,7 @@
   },
   "peerDependencies": {
     "@tanstack/query-core": ">=5.0.0",
-    "accounts": "~0.12",
+    "accounts": ">=0.12 <0.15",
     "typescript": ">=5.9.3",
     "viem": "2.x"
   },

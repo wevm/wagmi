@@ -42,7 +42,7 @@
     "@safe-global/safe-apps-sdk": "^9.1.0",
     "@wagmi/core": "workspace:*",
     "@walletconnect/ethereum-provider": "^2.21.1",
-    "accounts": "~0.10",
+    "accounts": ">=0.12 <0.15",
     "porto": "~0.2.35",
     "typescript": ">=5.9.3",
     "viem": "2.x"
