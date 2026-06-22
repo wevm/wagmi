@@ -1,5 +1,17 @@
 # @wagmi/core
 
+## 3.5.1
+### Patch Changes
+
+
+- Updated `prepareTransactionRequest` to use the connector client when available. ([#5154](https://github.com/wevm/wagmi/pull/5154))
+
+## 3.5.0
+
+### Minor Changes
+
+- Added discovered EIP-6963 providers to the connector setup config. ([#5128](https://github.com/wevm/wagmi/pull/5128))
+
 ## 3.4.12
 
 ### Patch Changes
