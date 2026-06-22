@@ -5,7 +5,7 @@ const connectorsPackageName = 'wagmi/connectors'
 
 # walletConnect
 
-Connector for [WalletConnect](https://walletconnect.com).
+Connector for [WalletConnect](https://walletconnect.network).
 
 ## Import
 
