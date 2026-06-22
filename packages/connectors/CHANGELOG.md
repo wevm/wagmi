@@ -1,8 +1,17 @@
 # @wagmi/connectors
 
-## 8.0.16
+## 8.0.17
+
 ### Patch Changes
 
+- Bumped accounts peer version ([`3e12a5e`](https://github.com/wevm/wagmi/commit/3e12a5e43e050101123afeedf44333373f03e9bf))
+
+- Updated dependencies [[`3e12a5e`](https://github.com/wevm/wagmi/commit/3e12a5e43e050101123afeedf44333373f03e9bf)]:
+  - @wagmi/core@3.5.2
+
+## 8.0.16
+
+### Patch Changes
 
 - Updated `@metamask/connect-evm` to `2.1.0` and set `skipAutoAnnounce: true` on the `metaMask` connector to prevent the SDK from announcing its EIP-1193 provider via EIP-6963. ([#5151](https://github.com/wevm/wagmi/pull/5151))
 

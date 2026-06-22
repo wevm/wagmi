@@ -1,8 +1,14 @@
 # @wagmi/core
 
-## 3.5.1
+## 3.5.2
+
 ### Patch Changes
 
+- Bumped accounts peer version ([`3e12a5e`](https://github.com/wevm/wagmi/commit/3e12a5e43e050101123afeedf44333373f03e9bf))
+
+## 3.5.1
+
+### Patch Changes
 
 - Updated `prepareTransactionRequest` to use the connector client when available. ([#5154](https://github.com/wevm/wagmi/pull/5154))
 
