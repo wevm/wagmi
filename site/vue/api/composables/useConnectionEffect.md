@@ -36,7 +36,7 @@ useConnectionEffect({
 ## Parameters
 
 ```ts
-import { type useConnectionEffectParameters } from '@wagmi/vue'
+import { type UseConnectionEffectParameters } from '@wagmi/vue'
 ```
 
 ### config
