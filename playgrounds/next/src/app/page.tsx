@@ -63,7 +63,7 @@ export default function App() {
 
 function Connection() {
   const connection = useConnection()
-  const {mutate: disconnect} = useDisconnect()
+  const { mutate: disconnect } = useDisconnect()
   const { data: ensName } = useEnsName({
     address: connection.address,
   })
@@ -264,7 +264,12 @@ function ConnectorClient() {
 }
 
 function SendTransaction() {
-  const { data: hash, error, isPending, mutate: sendTransaction } = useSendTransaction()
+  const {
+    data: hash,
+    error,
+    isPending,
+    mutate: sendTransaction,
+  } = useSendTransaction()
 
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -353,7 +358,12 @@ function ReadContracts() {
 }
 
 function WriteContract() {
-  const { data: hash, error, isPending, mutate: writeContract } = useWriteContract()
+  const {
+    data: hash,
+    error,
+    isPending,
+    mutate: writeContract,
+  } = useWriteContract()
 
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
