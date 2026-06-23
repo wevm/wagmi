@@ -129,7 +129,7 @@ function getExport(connector: Connector, source?: string) {
       : connector === 'tempoWallet'
         ? '@wagmi/core/tempo'
         : `../${connector}.js`)
-  const typeName = `${connector[0].toUpperCase()}${connector.slice(
+  const typeName = `${connector.slice(0, 1).toUpperCase()}${connector.slice(
     1,
   )}Parameters`
 
