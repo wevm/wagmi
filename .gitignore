@@ -26,6 +26,15 @@ tsconfig.tsbuildinfo
 # proxy packages
 packages/cli/config
 packages/cli/plugins
+packages/connectors/baseAccount/
+packages/connectors/coinbaseWallet/
+packages/connectors/injected/
+packages/connectors/metaMask/
+packages/connectors/mock/
+packages/connectors/porto/
+packages/connectors/safe/
+packages/connectors/tempoWallet/
+packages/connectors/walletConnect/
 packages/core/actions
 packages/core/chains
 packages/core/codegen
