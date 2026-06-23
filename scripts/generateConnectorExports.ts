@@ -16,7 +16,7 @@ const connectors = [
 ] as const
 type Connector = (typeof connectors)[number]
 
-const frameworkPackages = ['packages/react', 'packages/vue', 'packages/solid']
+const frameworkPackages = ['react', 'vue', 'solid']
 
 let count = 0
 
@@ -26,7 +26,7 @@ if (process.argv.includes('--clean')) {
     console.log(`- ${connector}`)
     await removeFile(`packages/connectors/src/exports/${connector}.ts`)
     for (const pkg of frameworkPackages)
-      await removeFile(`${pkg}/src/exports/${connector}.ts`)
+      await removeFile(`packages/${pkg}/src/exports/${connector}.ts`)
   }
   console.log(`Done. Cleaned ${count} ${count === 1 ? 'file' : 'files'}.`)
   process.exit(0)
@@ -42,7 +42,7 @@ for (const connector of connectors) {
   )
   for (const pkg of frameworkPackages)
     await writeFile(
-      `${pkg}/src/exports/${connector}.ts`,
+      `packages/${pkg}/src/exports/${connector}.ts`,
       getExport(connector, `@wagmi/connectors/${connector}`),
     )
 }
@@ -54,7 +54,7 @@ await updatePackageJson('packages/connectors/package.json', {
 })
 
 for (const pkg of frameworkPackages)
-  await updatePackageJson(`${pkg}/package.json`, {
+  await updatePackageJson(`packages/${pkg}/package.json`, {
     exportPrefix: './connectors',
     typesPrefix: 'connectors/',
     exportPathPrefix: 'exports',
