@@ -98,7 +98,10 @@ export function safe(parameters: SafeParameters = {}) {
         const { default: SDK } = await (() => {
           // safe webpack optional peer dependency dynamic import
           try {
-            return import('@safe-global/safe-apps-sdk')
+            return import(
+              /* turbopackOptional: true */
+              '@safe-global/safe-apps-sdk'
+            )
           } catch {
             throw new Error('dependency "@safe-global/safe-apps-sdk" not found')
           }
@@ -117,7 +120,10 @@ export function safe(parameters: SafeParameters = {}) {
           const Provider = await (() => {
             // safe webpack optional peer dependency dynamic import
             try {
-              return import('@safe-global/safe-apps-provider')
+              return import(
+                /* turbopackOptional: true */
+                '@safe-global/safe-apps-provider'
+              )
             } catch {
               throw new Error(
                 'dependency "@safe-global/safe-apps-provider" not found',

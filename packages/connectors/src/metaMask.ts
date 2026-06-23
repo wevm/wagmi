@@ -324,7 +324,10 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         if (!metamaskPromise) {
           const { createEVMClient } = await (async () => {
             try {
-              return import('@metamask/connect-evm')
+              return import(
+                /* turbopackOptional: true */
+                '@metamask/connect-evm'
+              )
             } catch {
               throw new Error('dependency "@metamask/connect-evm" not found')
             }
