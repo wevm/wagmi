@@ -16,8 +16,14 @@ import {
   withRetry,
 } from 'viem'
 
+/**
+ * @deprecated https://ithaca.xyz/updates/sunsetting-porto
+ */
 export type PortoParameters = ExactPartial<Porto.Config>
 
+/**
+ * @deprecated https://ithaca.xyz/updates/sunsetting-porto
+ */
 export function porto(parameters: PortoParameters = {}) {
   type Provider = ReturnType<typeof Porto.create>['provider']
   type ProviderWithEvents = Provider & {
@@ -99,7 +105,10 @@ export function porto(parameters: PortoParameters = {}) {
             const { RpcSchema } = await (() => {
               // safe webpack optional peer dependency dynamic import
               try {
-                return import('porto')
+                return import(
+                  /* turbopackOptional: true */
+                  'porto'
+                )
               } catch {
                 throw new Error('dependency "porto" not found')
               }
@@ -107,7 +116,10 @@ export function porto(parameters: PortoParameters = {}) {
             const { z } = await (() => {
               // safe webpack optional peer dependency dynamic import
               try {
-                return import('porto/internal')
+                return import(
+                  /* turbopackOptional: true */
+                  'porto/internal'
+                )
               } catch {
                 throw new Error('dependency "porto/internal" not found')
               }
@@ -218,7 +230,10 @@ export function porto(parameters: PortoParameters = {}) {
           const { Porto } = await (() => {
             // safe webpack optional peer dependency dynamic import
             try {
-              return import('porto')
+              return import(
+                /* turbopackOptional: true */
+                'porto'
+              )
             } catch {
               throw new Error('dependency "porto" not found')
             }
