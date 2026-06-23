@@ -2,4 +2,4 @@
 "@wagmi/connectors": patch
 ---
 
-Deprecated the Porto connector following Porto's sunset announcement.
+Deprecated Porto connector following [sunset announcement](https://ithaca.xyz/updates/sunsetting-porto).
