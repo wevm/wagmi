@@ -1,5 +1,16 @@
 # @wagmi/connectors
 
+## 8.0.18
+
+### Patch Changes
+
+- Added connector-specific subpath exports and marked optional connector dependency imports as optional for Turbopack resolution. ([#5165](https://github.com/wevm/wagmi/pull/5165))
+
+- Deprecated Porto connector following [sunset announcement](https://ithaca.xyz/updates/sunsetting-porto). ([#5165](https://github.com/wevm/wagmi/pull/5165))
+
+- Updated dependencies [[`05338be`](https://github.com/wevm/wagmi/commit/05338be96451fdc7eae4410fbe2b360605944f11)]:
+  - @wagmi/core@3.5.3
+
 ## 8.0.17
 
 ### Patch Changes
