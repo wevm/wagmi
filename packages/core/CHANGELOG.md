@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 3.5.3
+
+### Patch Changes
+
+- Added connector-specific subpath exports and marked optional connector dependency imports as optional for Turbopack resolution. ([#5165](https://github.com/wevm/wagmi/pull/5165))
+
 ## 3.5.2
 
 ### Patch Changes
