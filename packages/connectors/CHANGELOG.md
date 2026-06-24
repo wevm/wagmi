@@ -1,5 +1,12 @@
 # @wagmi/connectors
 
+## 8.0.19
+
+### Patch Changes
+
+- Updated dependencies [[`f0b78c3`](https://github.com/wevm/wagmi/commit/f0b78c3cc1b298134497d157543816f8c7bf007d)]:
+  - @wagmi/core@3.5.4
+
 ## 8.0.18
 
 ### Patch Changes

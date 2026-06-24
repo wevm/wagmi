@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 3.5.4
+
+### Patch Changes
+
+- Fixed Tempo Zone types for optional fields. ([#5167](https://github.com/wevm/wagmi/pull/5167))
+
 ## 3.5.3
 
 ### Patch Changes
