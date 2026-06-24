@@ -1,5 +1,15 @@
 # @wagmi/vue
 
+## 0.5.20
+
+### Patch Changes
+
+- Added connector-specific subpath exports and marked optional connector dependency imports as optional for Turbopack resolution. ([#5165](https://github.com/wevm/wagmi/pull/5165))
+
+- Updated dependencies [[`05338be`](https://github.com/wevm/wagmi/commit/05338be96451fdc7eae4410fbe2b360605944f11), [`05338be`](https://github.com/wevm/wagmi/commit/05338be96451fdc7eae4410fbe2b360605944f11)]:
+  - @wagmi/connectors@8.0.18
+  - @wagmi/core@3.5.3
+
 ## 0.5.19
 
 ### Patch Changes
