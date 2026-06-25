@@ -7,7 +7,11 @@ import type {
   ConnectorParameter,
 } from '../../types/properties.js'
 import type { UnionLooseOmit } from '../../types/utils.js'
-import type { QueryOptions, QueryParameter } from './utils.js'
+import type {
+  OptionalTransactionOverrides,
+  QueryOptions,
+  QueryParameter,
+} from './utils.js'
 
 /**
  * Creates a new policy.
@@ -54,7 +58,9 @@ export declare namespace create {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.policy.create.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.policy.create.Parameters<config['chains'][number], Account>
+      >,
       'chain' | 'admin'
     >
 
@@ -111,7 +117,9 @@ export declare namespace createSync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.policy.createSync.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.policy.createSync.Parameters<config['chains'][number], Account>
+      >,
       'chain' | 'admin'
     >
 
@@ -166,7 +174,9 @@ export declare namespace setAdmin {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.policy.setAdmin.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.policy.setAdmin.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -224,7 +234,12 @@ export declare namespace setAdminSync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.policy.setAdminSync.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.policy.setAdminSync.Parameters<
+          config['chains'][number],
+          Account
+        >
+      >,
       'chain'
     >
 
@@ -280,9 +295,11 @@ export declare namespace modifyWhitelist {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.policy.modifyWhitelist.Parameters<
-        config['chains'][number],
-        Account
+      OptionalTransactionOverrides<
+        Actions.policy.modifyWhitelist.Parameters<
+          config['chains'][number],
+          Account
+        >
       >,
       'chain'
     >
@@ -342,9 +359,11 @@ export declare namespace modifyWhitelistSync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.policy.modifyWhitelistSync.Parameters<
-        config['chains'][number],
-        Account
+      OptionalTransactionOverrides<
+        Actions.policy.modifyWhitelistSync.Parameters<
+          config['chains'][number],
+          Account
+        >
       >,
       'chain'
     >
@@ -401,9 +420,11 @@ export declare namespace modifyBlacklist {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.policy.modifyBlacklist.Parameters<
-        config['chains'][number],
-        Account
+      OptionalTransactionOverrides<
+        Actions.policy.modifyBlacklist.Parameters<
+          config['chains'][number],
+          Account
+        >
       >,
       'chain'
     >
@@ -463,9 +484,11 @@ export declare namespace modifyBlacklistSync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.policy.modifyBlacklistSync.Parameters<
-        config['chains'][number],
-        Account
+      OptionalTransactionOverrides<
+        Actions.policy.modifyBlacklistSync.Parameters<
+          config['chains'][number],
+          Account
+        >
       >,
       'chain'
     >
