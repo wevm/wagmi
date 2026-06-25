@@ -1,5 +1,15 @@
 # wagmi
 
+## 3.6.21
+
+### Patch Changes
+
+- Fixed Tempo types so transaction override parameters are optional. ([#5171](https://github.com/wevm/wagmi/pull/5171))
+
+- Updated dependencies [[`1d6989e`](https://github.com/wevm/wagmi/commit/1d6989e4692ba70a0fbd6b353fe1294c54824a69)]:
+  - @wagmi/core@3.5.5
+  - @wagmi/connectors@8.0.20
+
 ## 3.6.20
 
 ### Patch Changes

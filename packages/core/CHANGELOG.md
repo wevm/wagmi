@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 3.5.5
+
+### Patch Changes
+
+- Fixed Tempo types so transaction override parameters are optional. ([#5171](https://github.com/wevm/wagmi/pull/5171))
+
 ## 3.5.4
 
 ### Patch Changes
