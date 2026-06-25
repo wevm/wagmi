@@ -207,6 +207,13 @@ export {
 } from '../actions/getGasPrice.js'
 
 export {
+  type GetPermissionsErrorType,
+  type GetPermissionsParameters,
+  type GetPermissionsReturnType,
+  getPermissions,
+} from '../actions/getPermissions.js'
+
+export {
   type GetProofErrorType,
   type GetProofParameters,
   type GetProofReturnType,
