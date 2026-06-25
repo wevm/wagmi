@@ -20,18 +20,6 @@ const frameworkPackages = ['react', 'vue', 'solid']
 
 let count = 0
 
-if (process.argv.includes('--clean')) {
-  console.log('Cleaning connector exports.')
-  for (const connector of connectors) {
-    console.log(`- ${connector}`)
-    await removeFile(`packages/connectors/src/exports/${connector}.ts`)
-    for (const pkg of frameworkPackages)
-      await removeFile(`packages/${pkg}/src/exports/${connector}.ts`)
-  }
-  console.log(`Done. Cleaned ${count} ${count === 1 ? 'file' : 'files'}.`)
-  process.exit(0)
-}
-
 console.log('Generating connector exports.')
 
 for (const connector of connectors) {
@@ -151,10 +139,5 @@ function getExport(connector: Connector, source?: string) {
 async function writeFile(filePath: string, content: string) {
   await fs.mkdir(path.dirname(filePath), { recursive: true })
   await fs.writeFile(filePath, content, 'utf-8')
-  count += 1
-}
-
-async function removeFile(filePath: string) {
-  await fs.rm(filePath, { force: true })
   count += 1
 }
