@@ -37,6 +37,7 @@
   "peerDependencies": {
     "@base-org/account": "^2.5.1",
     "@coinbase/wallet-sdk": "^4.3.6",
+    "@megaeth-labs/wallet-sdk": "^0.1.19",
     "@metamask/connect-evm": "^2.1.0",
     "@safe-global/safe-apps-provider": "~0.18.6",
     "@safe-global/safe-apps-sdk": "^9.1.0",
@@ -52,6 +53,9 @@
       "optional": true
     },
     "@coinbase/wallet-sdk": {
+      "optional": true
+    },
+    "@megaeth-labs/wallet-sdk": {
       "optional": true
     },
     "@metamask/connect-evm": {
@@ -79,6 +83,7 @@
   "devDependencies": {
     "@base-org/account": "catalog:",
     "@coinbase/wallet-sdk": "catalog:",
+    "@megaeth-labs/wallet-sdk": "^0.1.19",
     "@metamask/connect-evm": "catalog:",
     "@safe-global/safe-apps-provider": "catalog:",
     "@safe-global/safe-apps-sdk": "catalog:",

@@ -11,6 +11,7 @@ test('exports', () => {
       "baseAccount",
       "coinbaseWallet",
       "metaMask",
+      "mossWallet",
       "porto",
       "safe",
       "version",
