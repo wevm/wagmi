@@ -83,7 +83,7 @@
   "devDependencies": {
     "@base-org/account": "catalog:",
     "@coinbase/wallet-sdk": "catalog:",
-    "@megaeth-labs/wallet-sdk": "^0.1.19",
+    "@megaeth-labs/wallet-sdk": "^0.1.24",
     "@metamask/connect-evm": "catalog:",
     "@safe-global/safe-apps-provider": "catalog:",
     "@safe-global/safe-apps-sdk": "catalog:",
