@@ -28,6 +28,15 @@ if (process.argv.includes('--clean')) {
     for (const pkg of frameworkPackages)
       await removeFile(`packages/${pkg}/src/exports/${connector}.ts`)
   }
+  await cleanPackageJson('packages/connectors/package.json', {
+    exportPrefix: '.',
+    typesPrefix: '',
+  })
+  for (const pkg of frameworkPackages)
+    await cleanPackageJson(`packages/${pkg}/package.json`, {
+      exportPrefix: './connectors',
+      typesPrefix: 'connectors/',
+    })
   console.log(`Done. Cleaned ${count} ${count === 1 ? 'file' : 'files'}.`)
   process.exit(0)
 }
@@ -126,6 +135,39 @@ async function updatePackageJson(
   }
   if (!insertedTypesVersions) nextPackageJson.typesVersions = typesVersions
   packageJson = nextPackageJson
+
+  await writeFile(
+    packageJsonPath,
+    `${JSON.stringify(packageJson, undefined, 2)}\n`,
+  )
+}
+
+async function cleanPackageJson(
+  packageJsonPath: string,
+  options: {
+    exportPrefix: '.' | './connectors'
+    typesPrefix: '' | 'connectors/'
+  },
+) {
+  const packageJson = JSON.parse(
+    await fs.readFile(packageJsonPath, 'utf-8'),
+  ) as PackageJson
+  const originalPackageJson = JSON.stringify(packageJson)
+
+  for (const connector of connectors) {
+    delete packageJson.exports?.[`${options.exportPrefix}/${connector}`]
+
+    const typesVersions = packageJson.typesVersions
+    const typesVersion = typesVersions?.['*']
+    if (!typesVersion) continue
+
+    delete typesVersion[`${options.typesPrefix}${connector}`]
+    if (Object.keys(typesVersion).length === 0) delete typesVersions['*']
+    if (Object.keys(typesVersions).length === 0)
+      delete packageJson.typesVersions
+  }
+
+  if (JSON.stringify(packageJson) === originalPackageJson) return
 
   await writeFile(
     packageJsonPath,
