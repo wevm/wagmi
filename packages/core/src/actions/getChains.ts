@@ -5,15 +5,18 @@ import { deepEqual } from '../utils/deepEqual.js'
 export type GetChainsReturnType<config extends Config = Config> =
   config['chains']
 
-let previousChains: readonly Chain[] = []
+const previousChainsByConfig = new WeakMap<Config, readonly Chain[]>()
 
 /** https://wagmi.sh/core/api/actions/getChains */
 export function getChains<config extends Config>(
   config: config,
 ): GetChainsReturnType<config> {
+  const previousChains = previousChainsByConfig.get(config)
   const chains = config.chains
-  if (deepEqual(previousChains, chains))
+
+  if (previousChains && deepEqual(previousChains, chains))
     return previousChains as GetChainsReturnType<config>
-  previousChains = chains
+
+  previousChainsByConfig.set(config, chains)
   return chains as unknown as GetChainsReturnType<config>
 }
