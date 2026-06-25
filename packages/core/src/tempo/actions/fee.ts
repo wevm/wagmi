@@ -7,7 +7,11 @@ import type {
   ConnectorParameter,
 } from '../../types/properties.js'
 import type { PartialBy, UnionLooseOmit } from '../../types/utils.js'
-import type { QueryOptions, QueryParameter } from './utils.js'
+import type {
+  OptionalTransactionOverrides,
+  QueryOptions,
+  QueryParameter,
+} from './utils.js'
 import { filterQueryOptions } from './utils.js'
 
 /**
@@ -148,7 +152,9 @@ export declare namespace setUserToken {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.fee.setUserToken.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.fee.setUserToken.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -205,9 +211,11 @@ export declare namespace setUserTokenSync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.fee.setUserTokenSync.Parameters<
-        config['chains'][number],
-        Account
+      OptionalTransactionOverrides<
+        Actions.fee.setUserTokenSync.Parameters<
+          config['chains'][number],
+          Account
+        >
       >,
       'chain'
     >

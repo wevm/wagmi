@@ -36,7 +36,7 @@ test('deposit variables', () => {
     zoneId: 7,
   })
 
-  expectTypeOf(deposit.variables).toMatchTypeOf<
+  expectTypeOf(deposit.variables).toExtend<
     | {
         account?: unknown
         amount: bigint
@@ -58,7 +58,7 @@ test('depositSync variables', () => {
     zoneId: 7,
   })
 
-  expectTypeOf(deposit.variables).toMatchTypeOf<
+  expectTypeOf(deposit.variables).toExtend<
     | {
         account?: unknown
         amount: bigint
@@ -80,7 +80,7 @@ test('encryptedDeposit variables', () => {
     zoneId: 7,
   })
 
-  expectTypeOf(deposit.variables).toMatchTypeOf<
+  expectTypeOf(deposit.variables).toExtend<
     | {
         account?: unknown
         amount: bigint
@@ -102,7 +102,7 @@ test('encryptedDepositSync variables', () => {
     zoneId: 7,
   })
 
-  expectTypeOf(deposit.variables).toMatchTypeOf<
+  expectTypeOf(deposit.variables).toExtend<
     | {
         account?: unknown
         amount: bigint
@@ -123,7 +123,7 @@ test('requestWithdrawal variables', () => {
     token,
   })
 
-  expectTypeOf(withdraw.variables).toMatchTypeOf<
+  expectTypeOf(withdraw.variables).toExtend<
     | {
         account?: unknown
         amount: bigint
@@ -143,7 +143,7 @@ test('requestWithdrawalSync variables', () => {
     token,
   })
 
-  expectTypeOf(withdraw.variables).toMatchTypeOf<
+  expectTypeOf(withdraw.variables).toExtend<
     | {
         account?: unknown
         amount: bigint
@@ -164,7 +164,7 @@ test('requestVerifiableWithdrawal variables', () => {
     token,
   })
 
-  expectTypeOf(withdraw.variables).toMatchTypeOf<
+  expectTypeOf(withdraw.variables).toExtend<
     | {
         account?: unknown
         amount: bigint
@@ -186,7 +186,7 @@ test('requestVerifiableWithdrawalSync variables', () => {
     token,
   })
 
-  expectTypeOf(withdraw.variables).toMatchTypeOf<
+  expectTypeOf(withdraw.variables).toExtend<
     | {
         account?: unknown
         amount: bigint

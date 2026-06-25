@@ -7,7 +7,11 @@ import type {
   ConnectorParameter,
 } from '../../types/properties.js'
 import type { UnionLooseOmit } from '../../types/utils.js'
-import type { QueryOptions, QueryParameter } from './utils.js'
+import type {
+  OptionalTransactionOverrides,
+  QueryOptions,
+  QueryParameter,
+} from './utils.js'
 
 /**
  * Claims accumulated rewards for a recipient.
@@ -55,7 +59,9 @@ export declare namespace claim {
     ChainIdParameter<config> &
       ConnectorParameter &
       UnionLooseOmit<
-        Actions.reward.claim.Parameters<config['chains'][number], Account>,
+        OptionalTransactionOverrides<
+          Actions.reward.claim.Parameters<config['chains'][number], Account>
+        >,
         'chain'
       >
 
@@ -110,7 +116,9 @@ export declare namespace claimSync {
     ChainIdParameter<config> &
       ConnectorParameter &
       UnionLooseOmit<
-        Actions.reward.claimSync.Parameters<config['chains'][number], Account>,
+        OptionalTransactionOverrides<
+          Actions.reward.claimSync.Parameters<config['chains'][number], Account>
+        >,
         'chain'
       >
 
@@ -351,9 +359,11 @@ export declare namespace setRecipient {
     ChainIdParameter<config> &
       ConnectorParameter &
       UnionLooseOmit<
-        Actions.reward.setRecipient.Parameters<
-          config['chains'][number],
-          Account
+        OptionalTransactionOverrides<
+          Actions.reward.setRecipient.Parameters<
+            config['chains'][number],
+            Account
+          >
         >,
         'chain'
       >
@@ -410,9 +420,11 @@ export declare namespace setRecipientSync {
     ChainIdParameter<config> &
       ConnectorParameter &
       UnionLooseOmit<
-        Actions.reward.setRecipientSync.Parameters<
-          config['chains'][number],
-          Account
+        OptionalTransactionOverrides<
+          Actions.reward.setRecipientSync.Parameters<
+            config['chains'][number],
+            Account
+          >
         >,
         'chain'
       >
@@ -470,7 +482,12 @@ export declare namespace distribute {
     ChainIdParameter<config> &
       ConnectorParameter &
       UnionLooseOmit<
-        Actions.reward.distribute.Parameters<config['chains'][number], Account>,
+        OptionalTransactionOverrides<
+          Actions.reward.distribute.Parameters<
+            config['chains'][number],
+            Account
+          >
+        >,
         'chain'
       >
 
@@ -527,9 +544,11 @@ export declare namespace distributeSync {
     ChainIdParameter<config> &
       ConnectorParameter &
       UnionLooseOmit<
-        Actions.reward.distributeSync.Parameters<
-          config['chains'][number],
-          Account
+        OptionalTransactionOverrides<
+          Actions.reward.distributeSync.Parameters<
+            config['chains'][number],
+            Account
+          >
         >,
         'chain'
       >

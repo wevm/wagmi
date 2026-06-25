@@ -21,22 +21,12 @@ import type {
   ConnectorParameter,
 } from '../../types/properties.js'
 import type { PartialBy, UnionLooseOmit } from '../../types/utils.js'
-import type { QueryOptions, QueryParameter } from './utils.js'
+import type {
+  OptionalTransactionOverrides,
+  QueryOptions,
+  QueryParameter,
+} from './utils.js'
 import { filterQueryOptions } from './utils.js'
-
-type TransactionOverrideParameter =
-  | 'account'
-  | 'gas'
-  | 'maxFeePerGas'
-  | 'maxPriorityFeePerGas'
-  | 'nonce'
-
-type OptionalTransactionOverrides<parameters> = parameters extends object
-  ? PartialBy<
-      parameters,
-      Extract<TransactionOverrideParameter, keyof parameters>
-    >
-  : parameters
 
 /**
  * Gets information about the currently stored zone authorization token.

@@ -26,7 +26,7 @@ test('deposit parameters', () => {
     zoneId: 7,
   })
 
-  expectTypeOf<zoneActions.deposit.Parameters<typeof config>>().toMatchTypeOf<{
+  expectTypeOf<zoneActions.deposit.Parameters<typeof config>>().toExtend<{
     account?: unknown
     amount: bigint
     chainId?: number | undefined
@@ -43,9 +43,7 @@ test('depositSync parameters', () => {
     zoneId: 7,
   })
 
-  expectTypeOf<
-    zoneActions.depositSync.Parameters<typeof config>
-  >().toMatchTypeOf<{
+  expectTypeOf<zoneActions.depositSync.Parameters<typeof config>>().toExtend<{
     account?: unknown
     amount: bigint
     chainId?: number | undefined
@@ -64,7 +62,7 @@ test('encryptedDeposit parameters', () => {
 
   expectTypeOf<
     zoneActions.encryptedDeposit.Parameters<typeof config>
-  >().toMatchTypeOf<{
+  >().toExtend<{
     account?: unknown
     amount: bigint
     chainId?: number | undefined
@@ -83,7 +81,7 @@ test('encryptedDepositSync parameters', () => {
 
   expectTypeOf<
     zoneActions.encryptedDepositSync.Parameters<typeof config>
-  >().toMatchTypeOf<{
+  >().toExtend<{
     account?: unknown
     amount: bigint
     chainId?: number | undefined
@@ -101,7 +99,7 @@ test('requestWithdrawal parameters', () => {
 
   expectTypeOf<
     zoneActions.requestWithdrawal.Parameters<typeof config>
-  >().toMatchTypeOf<{
+  >().toExtend<{
     account?: unknown
     amount: bigint
     chainId?: number | undefined
@@ -118,7 +116,7 @@ test('requestWithdrawalSync parameters', () => {
 
   expectTypeOf<
     zoneActions.requestWithdrawalSync.Parameters<typeof config>
-  >().toMatchTypeOf<{
+  >().toExtend<{
     account?: unknown
     amount: bigint
     chainId?: number | undefined
@@ -136,7 +134,7 @@ test('requestVerifiableWithdrawal parameters', () => {
 
   expectTypeOf<
     zoneActions.requestVerifiableWithdrawal.Parameters<typeof config>
-  >().toMatchTypeOf<{
+  >().toExtend<{
     account?: unknown
     amount: bigint
     chainId?: number | undefined
@@ -155,7 +153,7 @@ test('requestVerifiableWithdrawalSync parameters', () => {
 
   expectTypeOf<
     zoneActions.requestVerifiableWithdrawalSync.Parameters<typeof config>
-  >().toMatchTypeOf<{
+  >().toExtend<{
     account?: unknown
     amount: bigint
     chainId?: number | undefined

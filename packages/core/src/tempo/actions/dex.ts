@@ -7,7 +7,11 @@ import type {
   ConnectorParameter,
 } from '../../types/properties.js'
 import type { PartialBy, UnionLooseOmit } from '../../types/utils.js'
-import type { QueryOptions, QueryParameter } from './utils.js'
+import type {
+  OptionalTransactionOverrides,
+  QueryOptions,
+  QueryParameter,
+} from './utils.js'
 
 /**
  * Buys a specific amount of tokens.
@@ -57,7 +61,9 @@ export declare namespace buy {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.dex.buy.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.dex.buy.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -117,7 +123,9 @@ export declare namespace buySync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.dex.buySync.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.dex.buySync.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -171,7 +179,9 @@ export declare namespace cancel {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.dex.cancel.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.dex.cancel.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -228,7 +238,9 @@ export declare namespace cancelSync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.dex.cancelSync.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.dex.cancelSync.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -285,7 +297,9 @@ export declare namespace cancelStale {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.dex.cancelStale.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.dex.cancelStale.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -342,7 +356,12 @@ export declare namespace cancelStaleSync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.dex.cancelStaleSync.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.dex.cancelStaleSync.Parameters<
+          config['chains'][number],
+          Account
+        >
+      >,
       'chain'
     >
 
@@ -396,7 +415,9 @@ export declare namespace createPair {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.dex.createPair.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.dex.createPair.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -453,7 +474,9 @@ export declare namespace createPairSync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.dex.createPairSync.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.dex.createPairSync.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -1086,7 +1109,9 @@ export declare namespace place {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.dex.place.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.dex.place.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -1144,7 +1169,9 @@ export declare namespace placeFlip {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.dex.placeFlip.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.dex.placeFlip.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -1205,7 +1232,9 @@ export declare namespace placeFlipSync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.dex.placeFlipSync.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.dex.placeFlipSync.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -1265,7 +1294,9 @@ export declare namespace placeSync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.dex.placeSync.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.dex.placeSync.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -1322,7 +1353,9 @@ export declare namespace sell {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.dex.sell.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.dex.sell.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -1382,7 +1415,9 @@ export declare namespace sellSync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.dex.sellSync.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.dex.sellSync.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -1617,7 +1652,9 @@ export declare namespace withdraw {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.dex.withdraw.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.dex.withdraw.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -1675,7 +1712,9 @@ export declare namespace withdrawSync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.dex.withdrawSync.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.dex.withdrawSync.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
