@@ -154,7 +154,10 @@ export function coinbaseWallet(
         const { createCoinbaseWalletSDK } = await (() => {
           // safe webpack optional peer dependency dynamic import
           try {
-            return import('@coinbase/wallet-sdk')
+            return import(
+              /* turbopackOptional: true */
+              '@coinbase/wallet-sdk'
+            )
           } catch {
             throw new Error('dependency "@coinbase/wallet-sdk" not found')
           }

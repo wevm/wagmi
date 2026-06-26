@@ -45,7 +45,7 @@ jobs:
 
       - name: Create version pull request
         id: changesets
-        uses: changesets/action@e0145edc7d9d8679003495b11f87bd8ef63c0cba # v1.5.3
+        uses: changesets/action@a45c4d594aa4e2c509dc14a9f2b3b67ba3780d0d # v1.9.0
         with:
           title: 'chore: version packages'
           commit: 'chore: version packages'
@@ -78,7 +78,7 @@ jobs:
 
       - name: Publish to npm
         id: publish
-        uses: changesets/action@e0145edc7d9d8679003495b11f87bd8ef63c0cba # v1.5.3
+        uses: changesets/action@a45c4d594aa4e2c509dc14a9f2b3b67ba3780d0d # v1.9.0
         with:
           createGithubReleases: true
           publish: pnpm changeset:publish

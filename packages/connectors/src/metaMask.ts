@@ -20,7 +20,12 @@ import {
 } from 'viem'
 
 export type MetaMaskParameters = UnionCompute<
-  ExactPartial<Omit<CreateEVMClientParameters, 'api' | 'eventHandlers'>> & {
+  ExactPartial<
+    Omit<
+      CreateEVMClientParameters,
+      'api' | 'eventHandlers' | 'skipAutoAnnounce'
+    >
+  > & {
     /**
      * @deprecated Use `dapp` instead.
      *
@@ -204,7 +209,12 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
       // SDK on every page load for extension users.
       if (!metamask && !metamaskPromise) {
         const injected = config.providers[0]?.provider
-        if (injected) return injected as EIP1193Provider
+        // In `@metamask/connect-evm` v2, `EIP1193Provider` is a class with
+        // private fields, so it's nominally typed — an injected EIP-6963
+        // provider can't be assigned to it directly and must be cast through
+        // `unknown`. The provider implements the EIP-1193 surface (`request` +
+        // events) wagmi uses at runtime.
+        if (injected) return injected as unknown as EIP1193Provider
       }
       const instance = await this.getInstance()
       return instance.getProvider()
@@ -314,7 +324,10 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
         if (!metamaskPromise) {
           const { createEVMClient } = await (async () => {
             try {
-              return import('@metamask/connect-evm')
+              return import(
+                /* turbopackOptional: true */
+                '@metamask/connect-evm'
+              )
             } catch {
               throw new Error('dependency "@metamask/connect-evm" not found')
             }
@@ -326,6 +339,7 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
 
           metamaskPromise = createEVMClient({
             ...parameters,
+            skipAutoAnnounce: true,
             api: {
               supportedNetworks: Object.fromEntries(
                 config.chains.map((chain) => [

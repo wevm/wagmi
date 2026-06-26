@@ -220,7 +220,10 @@ export function baseAccount(parameters: BaseAccountParameters = {}) {
         const { createBaseAccountSDK } = await (() => {
           // safe webpack optional peer dependency dynamic import
           try {
-            return import('@base-org/account')
+            return import(
+              /* turbopackOptional: true */
+              '@base-org/account'
+            )
           } catch {
             throw new Error('dependency "@base-org/account" not found')
           }

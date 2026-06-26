@@ -21,7 +21,11 @@ import type {
   ConnectorParameter,
 } from '../../types/properties.js'
 import type { PartialBy, UnionLooseOmit } from '../../types/utils.js'
-import type { QueryOptions, QueryParameter } from './utils.js'
+import type {
+  OptionalTransactionOverrides,
+  QueryOptions,
+  QueryParameter,
+} from './utils.js'
 import { filterQueryOptions } from './utils.js'
 
 /**
@@ -572,7 +576,9 @@ export declare namespace deposit {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.zone.deposit.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.zone.deposit.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -683,7 +689,9 @@ export declare namespace depositSync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.zone.depositSync.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.zone.depositSync.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -796,9 +804,11 @@ export declare namespace encryptedDeposit {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.zone.encryptedDeposit.Parameters<
-        config['chains'][number],
-        Account
+      OptionalTransactionOverrides<
+        Actions.zone.encryptedDeposit.Parameters<
+          config['chains'][number],
+          Account
+        >
       >,
       'chain'
     >
@@ -926,9 +936,11 @@ export declare namespace encryptedDepositSync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.zone.encryptedDepositSync.Parameters<
-        config['chains'][number],
-        Account
+      OptionalTransactionOverrides<
+        Actions.zone.encryptedDepositSync.Parameters<
+          config['chains'][number],
+          Account
+        >
       >,
       'chain'
     >
@@ -988,9 +1000,11 @@ export declare namespace requestWithdrawal {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.zone.requestWithdrawal.Parameters<
-        config['chains'][number],
-        Account
+      OptionalTransactionOverrides<
+        Actions.zone.requestWithdrawal.Parameters<
+          config['chains'][number],
+          Account
+        >
       >,
       'chain'
     >
@@ -1053,9 +1067,11 @@ export declare namespace requestWithdrawalSync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.zone.requestWithdrawalSync.Parameters<
-        config['chains'][number],
-        Account
+      OptionalTransactionOverrides<
+        Actions.zone.requestWithdrawalSync.Parameters<
+          config['chains'][number],
+          Account
+        >
       >,
       'chain'
     >
@@ -1117,9 +1133,11 @@ export declare namespace requestVerifiableWithdrawal {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.zone.requestVerifiableWithdrawal.Parameters<
-        config['chains'][number],
-        Account
+      OptionalTransactionOverrides<
+        Actions.zone.requestVerifiableWithdrawal.Parameters<
+          config['chains'][number],
+          Account
+        >
       >,
       'chain'
     >
@@ -1187,9 +1205,11 @@ export declare namespace requestVerifiableWithdrawalSync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.zone.requestVerifiableWithdrawalSync.Parameters<
-        config['chains'][number],
-        Account
+      OptionalTransactionOverrides<
+        Actions.zone.requestVerifiableWithdrawalSync.Parameters<
+          config['chains'][number],
+          Account
+        >
       >,
       'chain'
     >

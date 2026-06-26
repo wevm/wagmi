@@ -188,7 +188,10 @@ function _setup(parameters: setup.Parameters) {
     let disconnect: ((error?: Error | undefined) => void) | undefined
 
     async function getAccountsModule() {
-      return await import('accounts').catch(() => {
+      return await import(
+        /* turbopackOptional: true */
+        'accounts'
+      ).catch(() => {
         throw new Error('dependency "accounts" not found')
       })
     }

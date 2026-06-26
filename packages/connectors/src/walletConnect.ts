@@ -273,7 +273,10 @@ export function walletConnect(parameters: WalletConnectParameters) {
         const { EthereumProvider } = await (() => {
           // safe webpack optional peer dependency dynamic import
           try {
-            return import('@walletconnect/ethereum-provider')
+            return import(
+              /* turbopackOptional: true */
+              '@walletconnect/ethereum-provider'
+            )
           } catch {
             throw new Error(
               'dependency "@walletconnect/ethereum-provider" not found',
