@@ -407,3 +407,87 @@ test('watch callbacks use broadcast deployments', async () => {
     },
   })
 })
+
+test('deployments: multiple addresses sharing same ABI via DisplayName:ArtifactName', async () => {
+  const dir = await createTempDir()
+  const spy = vi.spyOn(process, 'cwd')
+  spy.mockImplementation(() => dir)
+
+  const artifactsDir = resolve(dir, 'out')
+  await fs.mkdir(artifactsDir, { recursive: true })
+
+  const erc20Abi = [
+    {
+      inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+      name: 'balanceOf',
+      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+      stateMutability: 'view',
+      type: 'function',
+    },
+  ]
+  await fs.writeFile(
+    resolve(artifactsDir, 'ERC20.json'),
+    JSON.stringify({ abi: erc20Abi }, null, 2),
+  )
+
+  const contracts = await foundry({
+    deployments: {
+      'DAI:ERC20': { 1: '0x6B175474E89094C44Da98b954EedeAC495271d0F' },
+      'WETH:ERC20': { 1: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2' },
+    },
+    forge: { build: false },
+  }).contracts?.()
+
+  expect(contracts).toHaveLength(2)
+
+  const dai = contracts?.find((c) => c.name === 'DAI')
+  const weth = contracts?.find((c) => c.name === 'WETH')
+
+  expect(dai).toBeDefined()
+  expect(dai?.abi).toEqual(erc20Abi)
+  expect(dai?.address).toEqual({
+    1: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
+  })
+
+  expect(weth).toBeDefined()
+  expect(weth?.abi).toEqual(erc20Abi)
+  expect(weth?.address).toEqual({
+    1: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
+  })
+})
+
+test('deployments: single DisplayName:ArtifactName alias', async () => {
+  const dir = await createTempDir()
+  const spy = vi.spyOn(process, 'cwd')
+  spy.mockImplementation(() => dir)
+
+  const artifactsDir = resolve(dir, 'out')
+  await fs.mkdir(artifactsDir, { recursive: true })
+
+  const erc20Abi = [
+    {
+      inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+      name: 'balanceOf',
+      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+      stateMutability: 'view',
+      type: 'function',
+    },
+  ]
+  await fs.writeFile(
+    resolve(artifactsDir, 'ERC20.json'),
+    JSON.stringify({ abi: erc20Abi }, null, 2),
+  )
+
+  const contracts = await foundry({
+    deployments: {
+      'DAI:ERC20': { 1: '0x6B175474E89094C44Da98b954EedeAC495271d0F' },
+    },
+    forge: { build: false },
+  }).contracts?.()
+
+  expect(contracts).toHaveLength(1)
+  expect(contracts?.[0]?.name).toBe('DAI')
+  expect(contracts?.[0]?.address).toEqual({
+    1: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
+  })
+})
