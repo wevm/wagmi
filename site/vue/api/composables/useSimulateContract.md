@@ -45,7 +45,41 @@ const result = useSimulateContract({
 <<< @/snippets/vue/config.ts[config.ts]
 :::
 
-<!-- TODO: Usage for combining with useWriteContract -->
+::: details Composing with `useWriteContract`
+
+`useSimulateContract` can be combined with [`useWriteContract`](/vue/api/composables/useWriteContract) to reduce the amount of validation required by wallets.
+
+::: code-group
+```vue [index.vue]
+<script setup lang="ts">
+import { useSimulateContract, useWriteContract } from '@wagmi/vue'
+import { abi } from './abi'
+
+const { data } = useSimulateContract({
+  abi,
+  address: '0x6b175474e89094c44da98b954eedeac495271d0f',
+  functionName: 'transferFrom',
+  args: [
+    '0xd2135CfB216b74109775236E36d4b433F1DF507B',
+    '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    123n,
+  ],
+})
+const writeContract = useWriteContract()
+</script>
+
+<template>
+  <button
+    :disabled="!data?.request"
+    @click="data?.request && writeContract.mutate(data.request)"
+  >
+    Transfer
+  </button>
+</template>
+```
+<<< @/snippets/abi-write.ts[abi.ts]
+<<< @/snippets/vue/config.ts[config.ts]
+:::
 
 ## Parameters
 
