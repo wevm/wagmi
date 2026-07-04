@@ -96,7 +96,7 @@ const client = getWalletClient(config, {
 ## Return Type
 
 ```ts
-import { type GetChainIdReturnType } from '@wagmi/core'
+import { type GetWalletClientReturnType } from '@wagmi/core'
 ```
 
 `WalletClient`

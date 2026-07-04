@@ -92,7 +92,7 @@ const client = await getConnectorClient(config, {
 ## Return Type
 
 ```ts
-import { type GetChainIdReturnType } from '@wagmi/core'
+import { type GetConnectorClientReturnType } from '@wagmi/core'
 ```
 
 `Client`
