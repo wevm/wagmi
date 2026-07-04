@@ -110,6 +110,8 @@ function App() {
 import { type UseWriteContractsReturnType } from 'wagmi/experimental'
 ```
 
+The mutation data contains the call batch `id`, not a transaction hash. Use [`useCallsStatus`](/react/api/hooks/useCallsStatus) or [`useWaitForCallsStatus`](/react/api/hooks/useWaitForCallsStatus) to check inclusion and retrieve receipts. Do not pass this value to `useWaitForTransactionReceipt`.
+
 <!--@include: @shared/mutation-result.md-->
 
 <!--@include: @shared/mutation-imports.md-->

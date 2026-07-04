@@ -304,6 +304,8 @@ import { type WriteContractsReturnType } from '@wagmi/core/experimental'
 
 Identifier of the call batch.
 
+The `id` is not a transaction hash. Use [`getCallsStatus`](/core/api/actions/getCallsStatus) or [`waitForCallsStatus`](/core/api/actions/waitForCallsStatus) to check inclusion and retrieve receipts. Do not pass this value to `waitForTransactionReceipt`.
+
 ## Error
 
 ```ts
