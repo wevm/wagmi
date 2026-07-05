@@ -76,6 +76,44 @@ function App() {
 <<< @/snippets/react/config.ts[config.ts]
 :::
 
+## Track call status
+
+`useWriteContracts` returns an `id` for the call batch, not a transaction hash.
+Use [`useCallsStatus`](/react/api/hooks/useCallsStatus) to fetch receipts for the
+batch. Do not pass the `id` to
+[`useWaitForTransactionReceipt`](/react/api/hooks/useWaitForTransactionReceipt),
+which expects an on-chain transaction hash.
+
+::: code-group
+```tsx [index.tsx]
+import { useCallsStatus } from 'wagmi'
+import { useWriteContracts } from 'wagmi/experimental'
+
+function App() {
+  const { data, writeContracts } = useWriteContracts()
+  const status = useCallsStatus({
+    id: data?.id ?? '',
+    query: { enabled: Boolean(data?.id) },
+  })
+
+  return (
+    <button
+      onClick={() =>
+        writeContracts({
+          contracts: [
+            /* ... */
+          ],
+        })
+      }
+    >
+      Send calls
+    </button>
+  )
+}
+```
+<<< @/snippets/react/config.ts[config.ts]
+:::
+
 ## Parameters
 
 ```ts

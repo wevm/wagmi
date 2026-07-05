@@ -6,7 +6,7 @@ const typeName = 'GetCallsStatus'
 
 # getCallsStatus
 
-Action to fetch the status and receipts of a call batch that was sent via [`sendCalls`](/core/api/actions/sendCalls).
+Action to fetch the status and receipts of a call batch that was sent via [`sendCalls`](/core/api/actions/sendCalls) or [`writeContracts`](/core/api/actions/writeContracts).
 
 [Read more.](https://github.com/ethereum/EIPs/blob/1663ea2e7a683285f977eda51c32cec86553f585/EIPS/eip-5792.md#wallet_getcallsstatus)
 

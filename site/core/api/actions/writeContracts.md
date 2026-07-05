@@ -58,6 +58,31 @@ const id = await writeContracts(config, {
 <<< @/snippets/core/config.ts[config.ts]
 :::
 
+## Track call status
+
+The returned `id` is a call batch identifier, not a transaction hash. Use
+[`getCallsStatus`](/core/api/actions/getCallsStatus) to fetch receipts for the
+batch. Do not pass the `id` to
+[`waitForTransactionReceipt`](/core/api/actions/waitForTransactionReceipt),
+which expects an on-chain transaction hash.
+
+::: code-group
+```ts [index.ts]
+import { getCallsStatus } from '@wagmi/core'
+import { writeContracts } from '@wagmi/core/experimental'
+import { config } from './config'
+
+const { id } = await writeContracts(config, {
+  contracts: [
+    /* ... */
+  ],
+})
+
+const status = await getCallsStatus(config, { id })
+```
+<<< @/snippets/core/config.ts[config.ts]
+:::
+
 ## Parameters
 
 ```ts

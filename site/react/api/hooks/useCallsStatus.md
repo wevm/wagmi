@@ -13,7 +13,7 @@ const TError = 'GetCallsStatusErrorType'
 
 # useCallsStatus
 
-Hook to fetch the status and receipts of a call batch that was sent via [`useSendCalls`](/react/api/hooks/useSendCalls).
+Hook to fetch the status and receipts of a call batch that was sent via [`useSendCalls`](/react/api/hooks/useSendCalls) or [`useWriteContracts`](/react/api/hooks/useWriteContracts).
 
  
 
