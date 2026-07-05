@@ -20,7 +20,7 @@ Composable for switching the current connection.
 ## Import
 
 ```ts
-import { useSwitchConnection } from 'wagmi'
+import { useSwitchConnection } from '@wagmi/vue'
 ```
 
 ## Usage
@@ -28,7 +28,7 @@ import { useSwitchConnection } from 'wagmi'
 ::: code-group
 ```vue [index.vue]
 <script setup lang="ts">
-import { useConnections, useSwitchConnection } from 'wagmi'
+import { useConnections, useSwitchConnection } from '@wagmi/vue'
 
 const switchConnection = useSwitchConnection()
 const connections = useConnections()
@@ -52,7 +52,7 @@ const connections = useConnections()
 ## Parameters
 
 ```ts
-import { type UseSwitchConnectionParameters } from 'wagmi'
+import { type UseSwitchConnectionParameters } from '@wagmi/vue'
 ```
 
 ### config
@@ -64,7 +64,7 @@ import { type UseSwitchConnectionParameters } from 'wagmi'
 ::: code-group
 ```vue [index.vue]
 <script setup lang="ts">
-import { useSwitchConnection } from 'wagmi'
+import { useSwitchConnection } from '@wagmi/vue'
 import { config } from './config' // [!code focus]
 
 const switchConnection = useSwitchConnection({
@@ -80,7 +80,7 @@ const switchConnection = useSwitchConnection({
 ## Return Type
 
 ```ts
-import { type UseSwitchConnectionReturnType } from 'wagmi'
+import { type UseSwitchConnectionReturnType } from '@wagmi/vue'
 ```
 
 <!--@include: @shared/mutation-result.md-->

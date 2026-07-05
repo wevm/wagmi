@@ -71,7 +71,7 @@ Now that we have the form handler, we can hook up the [`useWriteContract` Compos
 
 ```vue [MintNft.vue]
 <script setup lang="ts">
-import { useWriteContract } from 'wagmi' // [!code ++]
+import { useWriteContract } from '@wagmi/vue' // [!code ++]
 import { abi } from './abi' // [!code ++]
 
 const { data: hash, writeContract } = useWriteContract() // [!code ++]
@@ -119,7 +119,7 @@ We can optionally add a loading state to the "Mint" button while we are waiting 
 
 ```vue [MintNft.vue]
 <script setup lang="ts">
-import { useWriteContract } from 'wagmi'
+import { useWriteContract } from '@wagmi/vue'
 import { abi } from './abi'
 
 const { 
@@ -177,7 +177,7 @@ We can also display the transaction confirmation status to the user by using the
 import { 
   useWaitForTransactionReceipt, // [!code ++]
   useWriteContract 
-} from 'wagmi'
+} from '@wagmi/vue'
 import { abi } from './abi'
 
 const { 
@@ -242,7 +242,7 @@ If the user rejects the transaction, or the user does not have enough funds to c
 import { 
   useWaitForTransactionReceipt,
   useWriteContract 
-} from 'wagmi'
+} from '@wagmi/vue'
 import { abi } from './abi'
 
 const { 
@@ -327,7 +327,7 @@ const { isConnected } = useConnection()
 import { 
   useWaitForTransactionReceipt,
   useWriteContract 
-} from 'wagmi'
+} from '@wagmi/vue'
 import { abi } from './abi'
 
 const { 

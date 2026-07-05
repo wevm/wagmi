@@ -10,7 +10,7 @@ The component below shows how to retrieve the token balance of an address from t
 
 ```vue [ReadContract.vue]
 <script setup lang="ts">
-import { useReadContract } from 'wagmi'
+import { useReadContract } from '@wagmi/vue'
 import { wagmiContractConfig } from './contracts'
 
 const { data: balance } = useReadContract({
@@ -70,7 +70,7 @@ The [`useReadContract` Composable](/vue/api/composables/useReadContract) also re
 
 ```vue [ReadContract.vue]
 <script setup lang="ts">
-import { useReadContract } from 'wagmi'
+import { useReadContract } from '@wagmi/vue'
 
 const { 
   data: balance,

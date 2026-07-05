@@ -71,7 +71,7 @@ Now that we have the form handler, we can hook up the [`useSendTransaction` Comp
 
 ```vue [SendTransaction.vue]
 <script setup lang="ts">
-  import { useSendTransaction } from 'wagmi' // [!code ++]
+  import { useSendTransaction } from '@wagmi/vue' // [!code ++]
   import { parseEther } from 'viem' // [!code ++]
 
   const { data: hash, sendTransaction } = useSendTransaction() // [!code ++]
@@ -104,7 +104,7 @@ We can optionally add a loading state to the "Send" button while we are waiting 
 
 ```vue [SendTransaction.vue]
 <script setup lang="ts">
-  import { useSendTransaction } from 'wagmi'
+  import { useSendTransaction } from '@wagmi/vue'
   import { parseEther } from 'viem'
 
   const { 
@@ -147,7 +147,7 @@ We can also display the transaction confirmation status to the user by using the
   import { 
     useSendTransaction,
     useWaitForTransactionReceipt, // [!code ++]
-  } from 'wagmi'
+  } from '@wagmi/vue'
   import { parseEther } from 'viem'
 
   const { 
@@ -197,7 +197,7 @@ If the user rejects the transaction, or the user does not have enough funds to c
   import { 
     useSendTransaction,
     useWaitForTransactionReceipt,
-  } from 'wagmi'
+  } from '@wagmi/vue'
   import { parseEther } from 'viem'
 
   const { 
@@ -266,7 +266,7 @@ const { isConnected } = useConnection()
   import { 
     useSendTransaction,
     useWaitForTransactionReceipt,
-  } from 'wagmi'
+  } from '@wagmi/vue'
   import { parseEther } from 'viem'
 
   const { 

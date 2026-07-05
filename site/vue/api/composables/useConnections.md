@@ -10,7 +10,7 @@ Composable for getting active connections.
 ## Import
 
 ```ts
-import { useConnections } from 'wagmi'
+import { useConnections } from '@wagmi/vue'
 ```
 
 ## Usage
@@ -18,7 +18,7 @@ import { useConnections } from 'wagmi'
 ::: code-group
 ```vue [index.vue]
 <script setup lang="ts">
-import { useConnections } from 'wagmi'
+import { useConnections } from '@wagmi/vue'
 
 const connections = useConnections()
 </script>
@@ -29,7 +29,7 @@ const connections = useConnections()
 ## Parameters
 
 ```ts
-import { type UseConnectionsParameters } from 'wagmi'
+import { type UseConnectionsParameters } from '@wagmi/vue'
 ```
 
 ### config
@@ -41,7 +41,7 @@ import { type UseConnectionsParameters } from 'wagmi'
 ::: code-group
 ```vue [index.vue]
 <script setup lang="ts">
-import { useConnections } from 'wagmi'
+import { useConnections } from '@wagmi/vue'
 import { config } from './config' // [!code focus]
 
 const connections = useConnections({
@@ -55,7 +55,7 @@ const connections = useConnections({
 ## Return Type
 
 ```ts
-import { type UseConnectionsReturnType } from 'wagmi'
+import { type UseConnectionsReturnType } from '@wagmi/vue'
 ```
 
 ## Action

@@ -10,7 +10,7 @@ Composable for getting [`Config`](/vue/api/createConfig#config) from the [`Wagmi
 ## Import
 
 ```ts
-import { useConfig } from 'wagmi'
+import { useConfig } from '@wagmi/vue'
 ```
 
 ## Usage
@@ -18,7 +18,7 @@ import { useConfig } from 'wagmi'
 ::: code-group
 ```vue [index.vue]
 <script setup lang="ts">
-import { useConfig } from 'wagmi'
+import { useConfig } from '@wagmi/vue'
 
 const config = useConfig()
 </script>
@@ -29,5 +29,5 @@ const config = useConfig()
 ## Return Type
 
 ```ts
-import { type UseConfigReturnType } from 'wagmi'
+import { type UseConfigReturnType } from '@wagmi/vue'
 ```
