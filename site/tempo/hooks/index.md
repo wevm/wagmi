@@ -21,16 +21,16 @@
 | [`nonce.useNonce`](/tempo/hooks/nonce.useNonce) | Hook for getting the nonce for an account and nonce key |
 | [`nonce.useWatchNonceIncremented`](/tempo/hooks/nonce.useWatchNonceIncremented) | Hook for watching nonce incremented events |
 | **Policy Hooks** | |
-| [`policy.useCreate`](#TODO) | Hook for creating a new transfer policy for token access control |
-| [`policy.useData`](#TODO) | Hook for getting the data for a transfer policy, including its type and admin address |
-| [`policy.useIsAuthorized`](#TODO) | Hook for checking if an address is authorized by a transfer policy |
-| [`policy.useModifyBlacklist`](#TODO) | Hook for modifying the blacklist for a blacklist-type transfer policy |
-| [`policy.useModifyWhitelist`](#TODO) | Hook for modifying the whitelist for a whitelist-type transfer policy |
-| [`policy.useSetAdmin`](#TODO) | Hook for setting the admin for a transfer policy |
-| [`policy.useWatchAdminUpdated`](#TODO) | Hook for watching policy admin update events |
-| [`policy.useWatchBlacklistUpdated`](#TODO) | Hook for watching blacklist update events |
-| [`policy.useWatchCreate`](#TODO) | Hook for watching policy creation events |
-| [`policy.useWatchWhitelistUpdated`](#TODO) | Hook for watching whitelist update events |
+| [`policy.useCreate`](/tempo/hooks/policy.useCreate) | Hook for creating a new transfer policy for token access control |
+| [`policy.useData`](/tempo/hooks/policy.useData) | Hook for getting the data for a transfer policy, including its type and admin address |
+| [`policy.useIsAuthorized`](/tempo/hooks/policy.useIsAuthorized) | Hook for checking if an address is authorized by a transfer policy |
+| [`policy.useModifyBlacklist`](/tempo/hooks/policy.useModifyBlacklist) | Hook for modifying the blacklist for a blacklist-type transfer policy |
+| [`policy.useModifyWhitelist`](/tempo/hooks/policy.useModifyWhitelist) | Hook for modifying the whitelist for a whitelist-type transfer policy |
+| [`policy.useSetAdmin`](/tempo/hooks/policy.useSetAdmin) | Hook for setting the admin for a transfer policy |
+| [`policy.useWatchAdminUpdated`](/tempo/hooks/policy.useWatchAdminUpdated) | Hook for watching policy admin update events |
+| [`policy.useWatchBlacklistUpdated`](/tempo/hooks/policy.useWatchBlacklistUpdated) | Hook for watching blacklist update events |
+| [`policy.useWatchCreate`](/tempo/hooks/policy.useWatchCreate) | Hook for watching policy creation events |
+| [`policy.useWatchWhitelistUpdated`](/tempo/hooks/policy.useWatchWhitelistUpdated) | Hook for watching whitelist update events |
 | **Reward Hooks** | |
 | [`reward.useClaim`](/tempo/hooks/reward.useClaim) | Hook for claiming accumulated rewards |
 | [`reward.useSetRecipient`](/tempo/hooks/reward.useSetRecipient) | Hook for setting or changing the reward recipient for a token holder |
