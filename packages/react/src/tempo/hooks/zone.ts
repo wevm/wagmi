@@ -498,10 +498,10 @@ export function useEncryptedDeposit<
   return useMutation({
     ...mutation,
     async mutationFn(variables) {
-      return Actions.zone.encryptedDeposit(config, variables)
+      return Actions.zone.encryptedDeposit(config, variables as never)
     },
     mutationKey: ['encryptedDeposit'],
-  })
+  }) as useEncryptedDeposit.ReturnType<config, context>
 }
 
 export declare namespace useEncryptedDeposit {
@@ -575,10 +575,10 @@ export function useEncryptedDepositSync<
   return useMutation({
     ...mutation,
     async mutationFn(variables) {
-      return Actions.zone.encryptedDepositSync(config, variables)
+      return Actions.zone.encryptedDepositSync(config, variables as never)
     },
     mutationKey: ['encryptedDepositSync'],
-  })
+  }) as useEncryptedDepositSync.ReturnType<config, context>
 }
 
 export declare namespace useEncryptedDepositSync {

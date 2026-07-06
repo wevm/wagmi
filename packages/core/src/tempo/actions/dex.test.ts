@@ -46,7 +46,7 @@ describe.skip('flaky: merge unblock', () => {
       })
 
       // Should have received base tokens
-      expect(baseBalanceAfter).toBeGreaterThan(baseBalanceBefore)
+      expect(baseBalanceAfter.amount).toBeGreaterThan(baseBalanceBefore.amount)
     })
 
     test('behavior: respects maxAmountIn', async () => {
@@ -985,15 +985,15 @@ describe.skip('flaky: merge unblock', () => {
       })
 
       // Base token balance should be unchanged (we're buying base, not selling)
-      expect(baseBalanceAfter).toBe(baseBalanceBefore)
+      expect(baseBalanceAfter.amount).toBe(baseBalanceBefore.amount)
 
       // Quote token balance should decrease (escrowed for the bid)
       // Amount = orderAmount * (1 + tick/1000) for bids
       const expectedQuoteEscrowed =
         (orderAmount * BigInt(100000 + tick)) / BigInt(100000)
-      expect(quoteBalanceBefore - quoteBalanceAfter).toBeGreaterThanOrEqual(
-        expectedQuoteEscrowed,
-      )
+      expect(
+        quoteBalanceBefore.amount - quoteBalanceAfter.amount,
+      ).toBeGreaterThanOrEqual(expectedQuoteEscrowed)
     })
 
     test('behavior: multiple orders at same tick', async () => {
@@ -1564,7 +1564,9 @@ describe.skip('flaky: merge unblock', () => {
         token: quote,
         account: account.address,
       })
-      expect(walletBalanceAfter).toBeGreaterThan(walletBalanceBefore)
+      expect(walletBalanceAfter.amount).toBeGreaterThan(
+        walletBalanceBefore.amount,
+      )
     })
   })
 })

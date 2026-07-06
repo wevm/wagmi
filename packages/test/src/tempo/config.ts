@@ -333,12 +333,12 @@ export async function viem_setupToken(
 
   await sendTransactionSync(client, {
     calls: [
-      Actions.token.grantRoles.call({
+      Actions.token.grantRoles.call(client, {
         role: 'issuer',
         to: client.account.address,
         token: token.token,
       }),
-      Actions.token.mint.call({
+      Actions.token.mint.call(client, {
         amount: parseUnits('10000', 6),
         to: client.account.address,
         token: token.token,
@@ -404,32 +404,32 @@ export async function viem_setupTokenPair(
 
   await sendTransactionSync(client, {
     calls: [
-      Actions.token.grantRoles.call({
+      Actions.token.grantRoles.call(client, {
         token: baseToken,
         role: 'issuer',
         to: client.account.address,
       }),
-      Actions.token.grantRoles.call({
+      Actions.token.grantRoles.call(client, {
         token: quoteToken,
         role: 'issuer',
         to: client.account.address,
       }),
-      Actions.token.mint.call({
+      Actions.token.mint.call(client, {
         token: baseToken,
         to: client.account.address,
         amount: parseUnits('10000', 6),
       }),
-      Actions.token.mint.call({
+      Actions.token.mint.call(client, {
         token: quoteToken,
         to: client.account.address,
         amount: parseUnits('10000', 6),
       }),
-      Actions.token.approve.call({
+      Actions.token.approve.call(client, {
         token: baseToken,
         spender: Addresses.stablecoinDex,
         amount: parseUnits('10000', 6),
       }),
-      Actions.token.approve.call({
+      Actions.token.approve.call(client, {
         token: quoteToken,
         spender: Addresses.stablecoinDex,
         amount: parseUnits('10000', 6),
