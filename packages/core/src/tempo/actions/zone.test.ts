@@ -21,6 +21,25 @@ const revealTo =
   '0x0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798' as const
 let depositToken: Awaited<ReturnType<typeof setupToken>>['token']
 
+function getPreparedEncryptedDeposit() {
+  return {
+    amount: 123_000n,
+    chainId: tempoLocal.id,
+    encrypted: {
+      ciphertext: '0x01',
+      ephemeralPubkeyX:
+        '0x0000000000000000000000000000000000000000000000000000000000000001',
+      ephemeralPubkeyYParity: 1,
+      nonce: '0x000000000000000000000000',
+      tag: '0x00000000000000000000000000000000',
+    },
+    keyIndex: 0n,
+    portalAddress: zonePortalAddress,
+    token: depositToken,
+    zoneId: zoneInfo.zoneId,
+  } as const
+}
+
 beforeAll(async () => {
   await restart()
   ;({ token: depositToken } = await setupToken())
@@ -125,6 +144,21 @@ describe('encryptedDeposit', () => {
 
     expect(hash).toBeDefined()
   })
+
+  test('parameters: prepared encrypted payload', async () => {
+    await connect(config, {
+      connector: config.connectors[0]!,
+    })
+
+    await expect(
+      zoneActions.encryptedDeposit(
+        config,
+        getPreparedEncryptedDeposit() as never,
+      ),
+    ).rejects.toThrow(
+      `No portal address configured for zone ${zoneInfo.zoneId} on chain ${tempoLocal.id}.`,
+    )
+  })
 })
 
 describe('encryptedDepositSync', () => {
@@ -150,6 +184,21 @@ describe('encryptedDepositSync', () => {
         token: depositToken,
       }),
     ).toMatchObject({ amount })
+  })
+
+  test('parameters: prepared encrypted payload', async () => {
+    await connect(config, {
+      connector: config.connectors[0]!,
+    })
+
+    await expect(
+      zoneActions.encryptedDepositSync(
+        config,
+        getPreparedEncryptedDeposit() as never,
+      ),
+    ).rejects.toThrow(
+      `No portal address configured for zone ${zoneInfo.zoneId} on chain ${tempoLocal.id}.`,
+    )
   })
 })
 
