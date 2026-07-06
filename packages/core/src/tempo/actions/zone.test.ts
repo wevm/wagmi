@@ -14,12 +14,35 @@ import {
 } from '@wagmi/test/tempo'
 import { Addresses, Storage } from 'viem/tempo'
 import { beforeAll, beforeEach, describe, expect, test } from 'vitest'
+import { waitForTransactionReceipt } from '../../actions/waitForTransactionReceipt.js'
 import * as tokenActions from './token.js'
 import * as zoneActions from './zone.js'
 
 const revealTo =
   '0x0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798' as const
 let depositToken: Awaited<ReturnType<typeof setupToken>>['token']
+
+function getPreparedEncryptedDepositWithInvalidMemo() {
+  return {
+    amount: 123_000n,
+    chainId: tempoLocal.id,
+    encrypted: {
+      ciphertext: '0x01',
+      ephemeralPubkeyX:
+        '0x0000000000000000000000000000000000000000000000000000000000000001',
+      ephemeralPubkeyYParity: 1,
+      nonce: '0x000000000000000000000000',
+      tag: '0x00000000000000000000000000000000',
+    },
+    keyIndex: 999n,
+    // Prepared payloads should ignore memo. If this takes the unprepared path,
+    // the invalid bytes32 memo will fail ABI encoding.
+    memo: '0x01',
+    portalAddress: zonePortalAddress,
+    token: depositToken,
+    zoneId: zoneInfo.zoneId,
+  } as const
+}
 
 beforeAll(async () => {
   await restart()
@@ -125,6 +148,22 @@ describe('encryptedDeposit', () => {
 
     expect(hash).toBeDefined()
   })
+
+  test('parameters: prepared encrypted payload', async () => {
+    await connect(config, {
+      connector: config.connectors[0]!,
+    })
+
+    const hash = await zoneActions.encryptedDeposit(
+      config,
+      getPreparedEncryptedDepositWithInvalidMemo(),
+    )
+    const receipt = await waitForTransactionReceipt(config, {
+      chainId: tempoLocal.id,
+      hash,
+    })
+    expect(receipt.status).toBe('success')
+  })
 })
 
 describe('encryptedDepositSync', () => {
@@ -150,6 +189,18 @@ describe('encryptedDepositSync', () => {
         token: depositToken,
       }),
     ).toMatchObject({ amount })
+  })
+
+  test('parameters: prepared encrypted payload', async () => {
+    await connect(config, {
+      connector: config.connectors[0]!,
+    })
+
+    const result = await zoneActions.encryptedDepositSync(
+      config,
+      getPreparedEncryptedDepositWithInvalidMemo(),
+    )
+    expect(result.receipt.status).toBe('success')
   })
 })
 

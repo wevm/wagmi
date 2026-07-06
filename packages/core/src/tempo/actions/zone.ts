@@ -746,11 +746,53 @@ export async function encryptedDeposit<config extends Config>(
   const account_ = account ?? client.account
   if (!account_) throw new Error('`account` is required.')
 
-  if ('encrypted' in rest)
-    return Actions.zone.encryptedDeposit(client, {
-      ...rest,
-      chainId: resolvedChainId,
-    } as never)
+  if ('encrypted' in rest) {
+    const {
+      amount,
+      encrypted,
+      keyIndex,
+      memo: _,
+      portalAddress: __,
+      token,
+      zoneId,
+      ...tx
+    } = rest as unknown as encryptedDeposit.PreparedParameters
+    const portal = resolvePortal(config, resolvedChainId, zoneId)
+    const portalAddress = portal.address
+    const tokenAddress = TokenId.toAddress(token)
+    return viem_sendTransaction(client, {
+      ...tx,
+      calls: [
+        {
+          data: encodeFunctionData({
+            abi: Abis.tip20,
+            functionName: 'approve',
+            args: [portalAddress, amount],
+          }),
+          to: tokenAddress,
+        },
+        {
+          data: encodeFunctionData({
+            abi: ZoneAbis.zonePortal,
+            functionName: 'depositEncrypted',
+            args: [
+              tokenAddress,
+              amount,
+              keyIndex,
+              {
+                ephemeralPubkeyX: encrypted.ephemeralPubkeyX,
+                ephemeralPubkeyYParity: encrypted.ephemeralPubkeyYParity,
+                ciphertext: encrypted.ciphertext,
+                nonce: encrypted.nonce,
+                tag: encrypted.tag,
+              },
+            ],
+          }),
+          to: portalAddress,
+        },
+      ],
+    } as never) as never
+  }
 
   const accountAddress = parseAccount(account_).address
   const {
@@ -807,6 +849,11 @@ export async function encryptedDeposit<config extends Config>(
 }
 
 export declare namespace encryptedDeposit {
+  export type PreparedParameters = Omit<
+    Actions.zone.encryptedDeposit.Args,
+    'chainId' | 'recipient'
+  > & { portalAddress: Address }
+
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
@@ -881,12 +928,55 @@ export async function encryptedDepositSync<config extends Config>(
   const account_ = account ?? client.account
   if (!account_) throw new Error('`account` is required.')
 
-  if ('encrypted' in rest)
-    return Actions.zone.encryptedDepositSync(client, {
-      ...rest,
-      chainId: resolvedChainId,
+  if ('encrypted' in rest) {
+    const {
+      amount,
+      encrypted,
+      keyIndex,
+      memo: _,
+      portalAddress: __,
+      token,
+      zoneId,
+      ...tx
+    } = rest as unknown as encryptedDepositSync.PreparedParameters
+    const portal = resolvePortal(config, resolvedChainId, zoneId)
+    const portalAddress = portal.address
+    const tokenAddress = TokenId.toAddress(token)
+    const receipt = (await viem_sendTransactionSync(client, {
+      ...tx,
+      calls: [
+        {
+          data: encodeFunctionData({
+            abi: Abis.tip20,
+            functionName: 'approve',
+            args: [portalAddress, amount],
+          }),
+          to: tokenAddress,
+        },
+        {
+          data: encodeFunctionData({
+            abi: ZoneAbis.zonePortal,
+            functionName: 'depositEncrypted',
+            args: [
+              tokenAddress,
+              amount,
+              keyIndex,
+              {
+                ephemeralPubkeyX: encrypted.ephemeralPubkeyX,
+                ephemeralPubkeyYParity: encrypted.ephemeralPubkeyYParity,
+                ciphertext: encrypted.ciphertext,
+                nonce: encrypted.nonce,
+                tag: encrypted.tag,
+              },
+            ],
+          }),
+          to: portalAddress,
+        },
+      ],
       throwOnReceiptRevert,
-    } as never)
+    } as never)) as never
+    return { receipt }
+  }
 
   const accountAddress = parseAccount(account_).address
   const {
@@ -946,6 +1036,8 @@ export async function encryptedDepositSync<config extends Config>(
 }
 
 export declare namespace encryptedDepositSync {
+  export type PreparedParameters = encryptedDeposit.PreparedParameters
+
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
