@@ -6,7 +6,7 @@
 
 - Updated dependencies [[`a45049e`](https://github.com/wevm/wagmi/commit/a45049ea060adb3326bab3f4fe3ef681013d9c63)]:
   - @wagmi/core@3.6.0
-  - @wagmi/connectors@9.0.0
+  - @wagmi/connectors@8.0.21
 
 ## 0.0.27
 
