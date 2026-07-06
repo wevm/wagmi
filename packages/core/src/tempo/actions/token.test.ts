@@ -16,7 +16,7 @@ describe.skip('flaky: merge unblock', () => {
         token: addresses.alphaUsd,
       })
       expect(allowance).toBeDefined()
-      expect(typeof allowance).toBe('bigint')
+      expect(typeof allowance.amount).toBe('bigint')
     })
 
     describe('queryOptions', () => {
@@ -28,7 +28,7 @@ describe.skip('flaky: merge unblock', () => {
         })
         const allowance = await queryClient.fetchQuery(options)
         expect(allowance).toBeDefined()
-        expect(typeof allowance).toBe('bigint')
+        expect(typeof allowance.amount).toBe('bigint')
       })
     })
   })
@@ -40,8 +40,8 @@ describe.skip('flaky: merge unblock', () => {
         token: addresses.alphaUsd,
       })
       expect(balance).toBeDefined()
-      expect(typeof balance).toBe('bigint')
-      expect(balance).toBeGreaterThan(0n)
+      expect(typeof balance.amount).toBe('bigint')
+      expect(balance.amount).toBeGreaterThan(0n)
     })
 
     describe('queryOptions', () => {
@@ -52,8 +52,8 @@ describe.skip('flaky: merge unblock', () => {
         })
         const balance = await queryClient.fetchQuery(options)
         expect(balance).toBeDefined()
-        expect(typeof balance).toBe('bigint')
-        expect(balance).toBeGreaterThan(0n)
+        expect(typeof balance.amount).toBe('bigint')
+        expect(balance.amount).toBeGreaterThan(0n)
       })
     })
   })
