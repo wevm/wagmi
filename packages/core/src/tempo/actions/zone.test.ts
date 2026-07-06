@@ -106,7 +106,7 @@ describe('depositSync', () => {
         spender: zonePortalAddress,
         token: depositToken,
       }),
-    ).toBe(amount)
+    ).toMatchObject({ amount })
   })
 })
 
@@ -149,7 +149,7 @@ describe('encryptedDepositSync', () => {
         spender: zonePortalAddress,
         token: depositToken,
       }),
-    ).toBe(amount)
+    ).toMatchObject({ amount })
   })
 })
 
@@ -190,7 +190,7 @@ describe('requestWithdrawalSync', () => {
         spender: Addresses.zoneOutbox,
         token: zoneInfo.zoneTokens[0],
       }),
-    ).toBe(amount)
+    ).toMatchObject({ amount })
   })
 })
 
@@ -233,7 +233,7 @@ describe('requestVerifiableWithdrawalSync', () => {
         spender: Addresses.zoneOutbox,
         token: zoneInfo.zoneTokens[0],
       }),
-    ).toBe(amount)
+    ).toMatchObject({ amount })
   })
 })
 
