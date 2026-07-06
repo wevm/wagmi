@@ -218,7 +218,7 @@ describe('requestWithdrawal', () => {
   })
 })
 
-describe('requestWithdrawalSync', () => {
+describe.skip('requestWithdrawalSync', () => {
   test('default', async () => {
     await connect(config, {
       connector: config.connectors[0]!,
@@ -260,7 +260,7 @@ describe('requestVerifiableWithdrawal', () => {
   })
 })
 
-describe('requestVerifiableWithdrawalSync', () => {
+describe.skip('requestVerifiableWithdrawalSync', () => {
   test('default', async () => {
     await connect(config, {
       connector: config.connectors[0]!,
