@@ -23,8 +23,9 @@ describe.skip('flaky: merge unblock', () => {
         timeout: 5000,
       })
 
-      expect(result.current.data).toBeDefined()
-      expect(typeof result.current.data).toBe('bigint')
+      const data = result.current.data
+      expect(data).toBeDefined()
+      expect(typeof data!.amount).toBe('bigint')
     })
 
     test('reactivity: account parameter', async () => {
@@ -65,8 +66,9 @@ describe.skip('flaky: merge unblock', () => {
 
       // Should now be enabled and have data
       // expect(result.current.isEnabled).toBe(true)
-      expect(result.current.data).toBeDefined()
-      expect(typeof result.current.data).toBe('bigint')
+      const data = result.current.data
+      expect(data).toBeDefined()
+      expect(typeof data!.amount).toBe('bigint')
     })
   })
 
@@ -81,9 +83,10 @@ describe.skip('flaky: merge unblock', () => {
 
       await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-      expect(result.current.data).toBeDefined()
-      expect(typeof result.current.data).toBe('bigint')
-      expect(result.current.data).toBeGreaterThan(0n)
+      const data = result.current.data
+      expect(data).toBeDefined()
+      expect(typeof data!.amount).toBe('bigint')
+      expect(data!.amount).toBeGreaterThan(0n)
     })
 
     test('reactivity: account parameter', async () => {
@@ -114,9 +117,10 @@ describe.skip('flaky: merge unblock', () => {
 
       // Should now be enabled and have data
       // expect(result.current.isEnabled).toBe(true)
-      expect(result.current.data).toBeDefined()
-      expect(typeof result.current.data).toBe('bigint')
-      expect(result.current.data).toBeGreaterThan(0n)
+      const data = result.current.data
+      expect(data).toBeDefined()
+      expect(typeof data!.amount).toBe('bigint')
+      expect(data!.amount).toBeGreaterThan(0n)
     })
   })
 

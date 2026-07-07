@@ -746,6 +746,12 @@ export async function encryptedDeposit<config extends Config>(
   const account_ = account ?? client.account
   if (!account_) throw new Error('`account` is required.')
 
+  if ('encrypted' in rest)
+    return Actions.zone.encryptedDeposit(client, {
+      ...rest,
+      chainId: resolvedChainId,
+    } as never)
+
   const accountAddress = parseAccount(account_).address
   const {
     amount,
@@ -874,6 +880,13 @@ export async function encryptedDepositSync<config extends Config>(
 
   const account_ = account ?? client.account
   if (!account_) throw new Error('`account` is required.')
+
+  if ('encrypted' in rest)
+    return Actions.zone.encryptedDepositSync(client, {
+      ...rest,
+      chainId: resolvedChainId,
+      throwOnReceiptRevert,
+    } as never)
 
   const accountAddress = parseAccount(account_).address
   const {

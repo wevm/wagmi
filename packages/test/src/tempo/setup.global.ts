@@ -397,6 +397,14 @@ function createZoneRpcServer(port: number) {
             abi: Abis.tip20,
             data: call.data as `0x${string}`,
           })
+          if (decoded.functionName === 'decimals') {
+            send({
+              id: payload.id,
+              jsonrpc: '2.0',
+              result: encodeAbiParameters([{ type: 'uint8' }], [6]),
+            })
+            return
+          }
           if (decoded.functionName === 'allowance') {
             const [owner, spender] = decoded.args as readonly [string, string]
             const allowance =

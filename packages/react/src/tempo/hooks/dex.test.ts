@@ -1081,6 +1081,8 @@ describe('useWithdraw', () => {
       token: quote,
       account: account.address,
     })
-    expect(walletBalanceAfter).toBeGreaterThan(walletBalanceBefore)
+    expect(walletBalanceAfter.amount).toBeGreaterThan(
+      walletBalanceBefore.amount,
+    )
   })
 })
