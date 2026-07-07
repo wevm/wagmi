@@ -42,9 +42,7 @@ import { http as zoneHttp, zone } from 'viem/tempo/zones'
 const zoneChain = zone(7)
 
 export const config = createConfig({
-  connectors: [
-    webAuthn(),
-  ],
+  connectors: [webAuthn()],
   chains: [zoneChain],
   multiInjectedProviderDiscovery: false,
   transports: {
