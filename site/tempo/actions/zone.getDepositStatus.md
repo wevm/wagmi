@@ -14,17 +14,13 @@ Zone actions and hooks require `viem >=2.48.0`.
 
 ```ts [example.ts]
 import { createConfig } from 'wagmi'
-import { KeyManager, webAuthn } from 'wagmi/tempo'
+import { webAuthn } from 'wagmi/tempo'
 import { http as zoneHttp, zone } from 'viem/tempo/zones'
 
 const zoneChain = zone(7)
 
 const config = createConfig({
-  connectors: [
-    webAuthn({
-      keyManager: KeyManager.localStorage(),
-    }),
-  ],
+  connectors: [webAuthn()],
   chains: [zoneChain],
   multiInjectedProviderDiscovery: false,
   transports: {
