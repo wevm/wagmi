@@ -58,7 +58,6 @@ export async function waitForTransactionReceipt<
   const receipt = await action({ ...rest, timeout })
 
   if (receipt.status === 'reverted') {
-    const reasonLookupTimeout = timeout > 0 ? Math.min(timeout, 10_000) : 10_000
     throw await withTimeout(
       async () => {
         const action_getTransaction = getAction(
@@ -85,7 +84,7 @@ export async function waitForTransactionReceipt<
         return new Error(reason)
       },
       {
-        timeout: reasonLookupTimeout,
+        timeout: timeout > 0 ? Math.min(timeout, 10_000) : 10_000,
         errorInstance: new Error('unknown reason'),
       },
     )
