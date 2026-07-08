@@ -61,6 +61,10 @@ export function getSidebar() {
             link: '/react/guides/write-to-contract',
           },
           {
+            text: 'Cross-chain Swaps',
+            link: '/react/guides/cross-chain-swaps',
+          },
+          {
             text: 'FAQ / Troubleshooting',
             link: '/react/guides/faq',
           },
