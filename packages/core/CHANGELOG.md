@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 3.6.1
+
+### Patch Changes
+
+- Fixed `waitForTransactionReceipt` staying pending for reverted transactions when revert-reason lookup hangs behind a fallback transport. ([#5190](https://github.com/wevm/wagmi/pull/5190))
+
 ## 3.6.0
 
 ### Minor Changes
