@@ -94,13 +94,14 @@ function App() {
 Identifier of the call batch.
 
 ::: code-group
-```ts [index.ts]
-import { useWaitForCallsStatus } from '@wagmi/core'
-import { config } from './config'
+```tsx [index.tsx]
+import { useWaitForCallsStatus } from 'wagmi'
 
-const status = await useWaitForCallsStatus({
-  id: '0x1234567890abcdef', // [!code focus]
-})
+function App() {
+  const result = useWaitForCallsStatus({
+    id: '0x1234567890abcdef', // [!code focus]
+  })
+}
 ```
 <<< @/snippets/react/config.ts[config.ts]
 :::
@@ -112,14 +113,15 @@ const status = await useWaitForCallsStatus({
 Polling interval in milliseconds.
 
 ::: code-group
-```ts [index.ts]
-import { useWaitForCallsStatus } from '@wagmi/core'
-import { config } from './config'
+```tsx [index.tsx]
+import { useWaitForCallsStatus } from 'wagmi'
 
-const status = await useWaitForCallsStatus({
-  id: '0x1234567890abcdef',
-  pollingInterval: 1_000, // [!code focus]
-})
+function App() {
+  const result = useWaitForCallsStatus({
+    id: '0x1234567890abcdef',
+    pollingInterval: 1_000, // [!code focus]
+  })
+}
 ```
 <<< @/snippets/react/config.ts[config.ts]
 :::
@@ -152,14 +154,15 @@ function App() {
 Timeout in milliseconds.
 
 ::: code-group
-```ts [index.ts]
-import { useWaitForCallsStatus } from '@wagmi/core'
-import { config } from './config'
+```tsx [index.tsx]
+import { useWaitForCallsStatus } from 'wagmi'
 
-const status = await useWaitForCallsStatus({
-  id: '0x1234567890abcdef',
-  timeout: 10_000, // [!code focus]
-})
+function App() {
+  const result = useWaitForCallsStatus({
+    id: '0x1234567890abcdef',
+    timeout: 10_000, // [!code focus]
+  })
+}
 ```
 <<< @/snippets/react/config.ts[config.ts]
 :::
