@@ -98,6 +98,7 @@
     "@wagmi/core": "workspace:*"
   },
   "devDependencies": {
+    "@nuxt/kit": "catalog:",
     "@nuxt/schema": "catalog:",
     "@tanstack/vue-query": "catalog:",
     "@vue/test-utils": "^2.4.6",
