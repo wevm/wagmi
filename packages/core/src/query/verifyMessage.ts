@@ -7,13 +7,15 @@ import {
 import type { Config } from '../createConfig.js'
 import type { ScopeKeyParameter } from '../types/properties.js'
 import type { QueryOptions, QueryParameter } from '../types/query.js'
-import type { Compute, ExactPartial } from '../types/utils.js'
+import type { Compute, UnionExactPartial } from '../types/utils.js'
 import { filterQueryOptions } from './utils.js'
 
 export type VerifyMessageOptions<
   config extends Config,
   selectData = VerifyMessageData,
-> = Compute<ExactPartial<VerifyMessageParameters<config>> & ScopeKeyParameter> &
+> = Compute<
+  UnionExactPartial<VerifyMessageParameters<config>> & ScopeKeyParameter
+> &
   QueryParameter<
     VerifyMessageQueryFnData,
     VerifyMessageErrorType,
@@ -42,7 +44,7 @@ export function verifyMessageQueryOptions<
       if (!parameters.message) throw new Error('message is required')
       if (!parameters.signature) throw new Error('signature is required')
       const verified = await verifyMessage(config, {
-        ...parameters,
+        ...(parameters as any),
         address: parameters.address,
         message: parameters.message,
         signature: parameters.signature,
@@ -59,7 +61,7 @@ export type VerifyMessageData = VerifyMessageQueryFnData
 
 export function verifyMessageQueryKey<config extends Config>(
   options: Compute<
-    ExactPartial<VerifyMessageParameters<config>> & ScopeKeyParameter
+    UnionExactPartial<VerifyMessageParameters<config>> & ScopeKeyParameter
   > = {},
 ) {
   return ['verifyMessage', filterQueryOptions(options)] as const

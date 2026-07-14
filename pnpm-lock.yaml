@@ -15,6 +15,9 @@ catalogs:
     '@metamask/connect-evm':
       specifier: 2.1.0
       version: 2.1.0
+    '@nuxt/kit':
+      specifier: 4.4.8
+      version: 4.4.8
     '@nuxt/schema':
       specifier: 4.4.8
       version: 4.4.8
@@ -547,6 +550,9 @@ importers:
         specifier: workspace:*
         version: link:../core
     devDependencies:
+      '@nuxt/kit':
+        specifier: 'catalog:'
+        version: 4.4.8(magicast@0.5.3)
       '@nuxt/schema':
         specifier: 'catalog:'
         version: 4.4.8
