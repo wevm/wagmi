@@ -16,8 +16,8 @@ import { zone } from 'viem/tempo/zones'
 const zoneChain = zone(7)
 
 const { data } = Hooks.zone.useWithdrawalFee({
+  callbackGas: 21_000n,
   chainId: zoneChain.id,
-  gas: 21_000n,
   query: {
     initialData: 22_000n,
   },

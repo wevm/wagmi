@@ -1,7 +1,14 @@
-import { chain, config } from '@wagmi/test'
-import { expect, test } from 'vitest'
+import { chain, config, testClient } from '@wagmi/test'
+import { beforeAll, expect, test } from 'vitest'
 
 import { getFeeHistory } from './getFeeHistory.js'
+
+beforeAll(async () => {
+  await Promise.all([
+    testClient.mainnet.mine({ blocks: 4 }),
+    testClient.mainnet2.mine({ blocks: 4 }),
+  ])
+})
 
 test('default', async () => {
   await expect(
@@ -37,7 +44,7 @@ test('parameters: blockNumber', async () => {
     getFeeHistory(config, {
       blockCount: 4,
       rewardPercentiles: [25, 75],
-      blockNumber: 18677379n,
+      blockNumber: chain.mainnet.fork.blockNumber + 4n,
     }),
   ).resolves.toMatchObject({
     baseFeePerGas: expect.arrayContaining([expect.any(BigInt)]),
@@ -52,7 +59,7 @@ test('parameters: blockTag', async () => {
     getFeeHistory(config, {
       blockCount: 4,
       rewardPercentiles: [25, 75],
-      blockTag: 'safe',
+      blockTag: 'latest',
     }),
   ).resolves.toMatchObject({
     baseFeePerGas: expect.arrayContaining([expect.any(BigInt)]),

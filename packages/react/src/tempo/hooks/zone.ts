@@ -138,7 +138,7 @@ export declare namespace useDepositStatus {
  * function App() {
  *   const { data, isLoading } = Hooks.zone.useWithdrawalFee({
  *     chainId: zoneChain.id,
- *     gas: 21_000n,
+ *     callbackGas: 21_000n,
  *   })
  *
  *   if (isLoading) return <div>Loading...</div>
