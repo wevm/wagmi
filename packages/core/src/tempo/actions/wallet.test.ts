@@ -1,5 +1,5 @@
 import { connect, disconnect } from '@wagmi/core'
-import { config } from '@wagmi/test/tempo'
+import { config, tempoLocal } from '@wagmi/test/tempo'
 import { beforeEach, describe, expect, test } from 'vitest'
 import * as wallet from './wallet.js'
 
@@ -91,7 +91,7 @@ describe('deposit', () => {
     await expect(
       wallet.deposit(config, {
         address: '0x0000000000000000000000000000000000000003',
-        chainId: 1,
+        chainId: tempoLocal.id,
         displayName: 'Account',
         token: '0x0000000000000000000000000000000000000004',
       }),

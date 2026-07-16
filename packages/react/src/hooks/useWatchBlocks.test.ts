@@ -44,7 +44,7 @@ test('behavior: uses latest callback after rerender', async () => {
   await testClient.mainnet.mine({ blocks: 1 })
   await vi.waitUntil(() => blocks1.length >= 1, { timeout: 10_000 })
 
-  rerender({
+  await rerender({
     callback: (block) => blocks2.push(block),
   })
 

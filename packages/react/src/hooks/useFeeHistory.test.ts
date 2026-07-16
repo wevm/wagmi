@@ -1,8 +1,15 @@
-import { chain, wait } from '@wagmi/test'
+import { chain, testClient, wait } from '@wagmi/test'
 import { renderHook } from '@wagmi/test/react'
-import { expect, test, vi } from 'vitest'
+import { beforeAll, expect, test, vi } from 'vitest'
 
 import { useFeeHistory } from './useFeeHistory.js'
+
+beforeAll(async () => {
+  await Promise.all([
+    testClient.mainnet.mine({ blocks: 4 }),
+    testClient.mainnet2.mine({ blocks: 4 }),
+  ])
+})
 
 test('default', async () => {
   const { result } = await renderHook(() =>
@@ -124,7 +131,7 @@ test('parameters: blockNumber', async () => {
     useFeeHistory({
       blockCount: 4,
       rewardPercentiles: [25, 75],
-      blockNumber: 18677379n,
+      blockNumber: chain.mainnet.fork.blockNumber + 4n,
     }),
   )
 
@@ -164,7 +171,7 @@ test('parameters: blockNumber', async () => {
         "feeHistory",
         {
           "blockCount": 4,
-          "blockNumber": 18677379n,
+          "blockNumber": 23535884n,
           "chainId": 1,
           "rewardPercentiles": [
             25,
@@ -183,7 +190,7 @@ test('parameters: blockTag', async () => {
     useFeeHistory({
       blockCount: 4,
       rewardPercentiles: [25, 75],
-      blockTag: 'safe',
+      blockTag: 'latest',
     }),
   )
 
@@ -223,7 +230,7 @@ test('parameters: blockTag', async () => {
         "feeHistory",
         {
           "blockCount": 4,
-          "blockTag": "safe",
+          "blockTag": "latest",
           "chainId": 1,
           "rewardPercentiles": [
             25,

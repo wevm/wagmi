@@ -260,7 +260,7 @@ export namespace getDepositStatus {
  *
  * const fee = await Actions.zone.getWithdrawalFee(config, {
  *   chainId: zoneChain.id,
- *   gas: 21_000n,
+ *   callbackGas: 21_000n,
  * })
  *
  * console.log(fee)
@@ -536,6 +536,7 @@ export async function deposit<config extends Config>(
   const accountAddress = parseAccount(account_).address
   const {
     amount,
+    bouncebackRecipient = accountAddress,
     memo = zeroHash,
     recipient = accountAddress,
     token,
@@ -564,7 +565,7 @@ export async function deposit<config extends Config>(
         data: encodeFunctionData({
           abi: ZoneAbis.zonePortal,
           functionName: 'deposit',
-          args: [tokenAddress, recipient, amount, memo],
+          args: [tokenAddress, recipient, amount, memo, bouncebackRecipient],
         }),
         to: portalAddress,
       },
@@ -646,6 +647,7 @@ export async function depositSync<config extends Config>(
   const accountAddress = parseAccount(account_).address
   const {
     amount,
+    bouncebackRecipient = accountAddress,
     memo = zeroHash,
     recipient = accountAddress,
     token,
@@ -674,7 +676,7 @@ export async function depositSync<config extends Config>(
         data: encodeFunctionData({
           abi: ZoneAbis.zonePortal,
           functionName: 'deposit',
-          args: [tokenAddress, recipient, amount, memo],
+          args: [tokenAddress, recipient, amount, memo, bouncebackRecipient],
         }),
         to: portalAddress,
       },
@@ -746,13 +748,16 @@ export async function encryptedDeposit<config extends Config>(
   const account_ = account ?? client.account
   if (!account_) throw new Error('`account` is required.')
 
-  if ('encrypted' in rest)
+  const accountAddress = parseAccount(account_).address
+  const { bouncebackRecipient = accountAddress, ...rest_ } = rest
+
+  if ('encrypted' in rest_)
     return Actions.zone.encryptedDeposit(client, {
-      ...rest,
+      ...rest_,
+      bouncebackRecipient,
       chainId: resolvedChainId,
     } as never)
 
-  const accountAddress = parseAccount(account_).address
   const {
     amount,
     memo,
@@ -760,7 +765,7 @@ export async function encryptedDeposit<config extends Config>(
     token,
     zoneId,
     ...tx
-  } = rest
+  } = rest_
   const portal = resolvePortal(config, resolvedChainId, zoneId)
   const portalAddress = portal.address
   const tokenAddress = TokenId.toAddress(token)
@@ -798,7 +803,13 @@ export async function encryptedDeposit<config extends Config>(
         data: encodeFunctionData({
           abi: ZoneAbis.zonePortal,
           functionName: 'depositEncrypted',
-          args: [tokenAddress, amount, keyIndex - 1n, encrypted],
+          args: [
+            tokenAddress,
+            amount,
+            keyIndex - 1n,
+            encrypted,
+            bouncebackRecipient,
+          ],
         }),
         to: portalAddress,
       },
@@ -881,14 +892,17 @@ export async function encryptedDepositSync<config extends Config>(
   const account_ = account ?? client.account
   if (!account_) throw new Error('`account` is required.')
 
-  if ('encrypted' in rest)
+  const accountAddress = parseAccount(account_).address
+  const { bouncebackRecipient = accountAddress, ...rest_ } = rest
+
+  if ('encrypted' in rest_)
     return Actions.zone.encryptedDepositSync(client, {
-      ...rest,
+      ...rest_,
+      bouncebackRecipient,
       chainId: resolvedChainId,
       throwOnReceiptRevert,
     } as never)
 
-  const accountAddress = parseAccount(account_).address
   const {
     amount,
     memo,
@@ -896,7 +910,7 @@ export async function encryptedDepositSync<config extends Config>(
     token,
     zoneId,
     ...tx
-  } = rest
+  } = rest_
   const portal = resolvePortal(config, resolvedChainId, zoneId)
   const portalAddress = portal.address
   const tokenAddress = TokenId.toAddress(token)
@@ -934,7 +948,13 @@ export async function encryptedDepositSync<config extends Config>(
         data: encodeFunctionData({
           abi: ZoneAbis.zonePortal,
           functionName: 'depositEncrypted',
-          args: [tokenAddress, amount, keyIndex - 1n, encrypted],
+          args: [
+            tokenAddress,
+            amount,
+            keyIndex - 1n,
+            encrypted,
+            bouncebackRecipient,
+          ],
         }),
         to: portalAddress,
       },

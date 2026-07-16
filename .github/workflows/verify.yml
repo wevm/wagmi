@@ -82,7 +82,7 @@ jobs:
     strategy:
       matrix:
         typescript-version: ['5.9.3', '6.0.3', 'latest']
-        viem-version: ['2.54.0', 'latest']
+        viem-version: ['2.55.2', 'latest']
 
     steps:
       - name: Clone repository
@@ -102,6 +102,8 @@ jobs:
         run: pnpm check:types:typescript
 
       - name: Bench types
+        # @ark/attest does not support TypeScript 7 yet.
+        if: matrix.typescript-version != 'latest'
         run: pnpm bench:types
 
       # Redundant with `pnpm check:types`
@@ -130,9 +132,6 @@ jobs:
         with:
           node-version: 24.5
 
-      - name: Setup Docker
-        uses: docker/setup-docker-action@v4
-
       - name: Set up foundry
         uses: foundry-rs/foundry-toolchain@50d5a8956f2e319df19e6b57539d7e2acb9f8c1e # v1.5.0
         with:
@@ -152,13 +151,10 @@ jobs:
         timeout-minutes: 5
         run: pnpm exec playwright install chromium --with-deps
 
-      - name: Pull Tempo Docker image
-        run: docker pull ghcr.io/tempoxyz/tempo:latest
-
       - name: Run tests
         uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08
         with:
-          command: CI=true pnpm test:cov --shard=${{ matrix.shard }}/${{ matrix.total-shards }} --retry=3 --bail=1
+          command: CI=true pnpm test:cov --project='!tempo*' --shard=${{ matrix.shard }}/${{ matrix.total-shards }} --retry=3 --bail=1
           max_attempts: 3
           timeout_minutes: 10
         env:
@@ -169,3 +165,99 @@ jobs:
         uses: codecov/codecov-action@5a1091511ad55cbe89839c7260b706298ca349f7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+
+  test-tempo:
+    name: Test Tempo
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      max-parallel: 3
+      matrix:
+        shard: [1, 2, 3]
+        total-shards: [3]
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
+
+      - name: Install dependencies
+        uses: wevm/actions/.github/actions/pnpm@2a55cccb5234b9fa0bbd87c1eaba45571c466a68
+        with:
+          node-version: 24.5
+
+      - name: Cache Playwright
+        uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
+      - name: Install Playwright
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        timeout-minutes: 5
+        run: pnpm exec playwright install chromium --with-deps
+
+      - name: Pull Tempo Docker image
+        run: docker pull ghcr.io/tempoxyz/tempo:latest
+
+      - name: Run Tempo tests
+        uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08
+        with:
+          command: CI=true pnpm test:cov --project=tempo --shard=${{ matrix.shard }}/${{ matrix.total-shards }} --retry=3 --bail=1
+          max_attempts: 3
+          timeout_minutes: 10
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@5a1091511ad55cbe89839c7260b706298ca349f7
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+  test-tempo-zones:
+    name: Test Tempo Zones
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
+
+      - name: Install dependencies
+        uses: wevm/actions/.github/actions/pnpm@2a55cccb5234b9fa0bbd87c1eaba45571c466a68
+        with:
+          node-version: 24.5
+
+      - name: Cache Playwright
+        uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
+      - name: Install Playwright
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        timeout-minutes: 5
+        run: pnpm exec playwright install chromium --with-deps
+
+      - name: Pull Tempo Docker images
+        run: |
+          docker pull ghcr.io/tempoxyz/tempo:sha-e828ab7
+          docker pull ghcr.io/tempoxyz/tempo-zone:sha-aae82c4
+
+      - name: Run Tempo Zone tests
+        uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08
+        with:
+          command: CI=true pnpm test --run --bail=1 --project tempo-zone
+          max_attempts: 3
+          timeout_minutes: 10
+        env:
+          VITE_TEMPO_ZONES: 'true'
+          VITE_TEMPO_TAG: sha-e828ab7
+          VITE_TEMPO_ZONE_TAG: sha-aae82c4

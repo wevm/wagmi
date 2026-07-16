@@ -1,75 +1,120 @@
-import * as chains from '@wagmi/core/chains'
-import { defineChain, zeroHash } from 'viem'
-import { Storage } from 'viem/tempo'
-import { zone } from 'viem/tempo/zones'
+import { QueryClient } from '@tanstack/react-query'
+import {
+  type CreateConfigParameters,
+  connect,
+  createConfig,
+  getConnection,
+  getConnectorClient,
+} from '@wagmi/core'
+import { tempoLocalnet } from '@wagmi/core/chains'
+import { dangerous_secp256k1 } from '@wagmi/core/tempo'
+import { type Address, defineChain, parseUnits, webSocket } from 'viem'
+import { Actions, Addresses, Storage } from 'viem/tempo'
+import { zone, http as zoneHttp } from 'viem/tempo/zones'
+import { inject } from 'vitest'
+import { accounts, createRenderHook, privateKeys } from './config.js'
 
-export const zoneId = 7
-export const zoneRpcPort = 4001
-export const zoneRpcUrl = `http://localhost:${zoneRpcPort}`
-export const zonePortalAddress = '0x1c00000000000000000000000000000000000007'
-export const zonePortalEncryptionKey = {
-  x: '0x79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798',
-  yParity: 2,
-} as const
-export const zonePortalEncryptionKeyCount = 1n
-export const zoneSequencer = '0x0000000000000000000000000000000000000007'
-export const zoneTokens = [
-  '0x20c0000000000000000000000000000000000001',
-] as const
+export type TempoZoneContext = {
+  chainId: number
+  factoryAddress: Address
+  l1RpcUrl: string
+  portalAddress: Address
+  privateRpcUrl: string
+  publicRpcUrl: string
+  zoneId: number
+}
 
-export const zoneInfo = {
-  chainId: zone(zoneId).id,
-  sequencer: zoneSequencer,
-  zoneId,
-  zoneTokens,
-} as const
+declare module 'vitest' {
+  export interface ProvidedContext {
+    tempoZone: TempoZoneContext
+  }
+}
 
-export const zoneInfoRpcReturnValue = {
-  chainId: `0x${zoneInfo.chainId.toString(16)}`,
-  sequencer: zoneInfo.sequencer,
-  zoneId: `0x${zoneInfo.zoneId.toString(16)}`,
-  zoneTokens: zoneInfo.zoneTokens,
-} as const
+export const context = inject('tempoZone')
+export const portalAddress = context.portalAddress
+export const zoneId = context.zoneId
+export const zoneStorage = Storage.memory()
 
-export const zoneDepositStatus = {
-  deposits: [
-    {
-      amount: 123_000_000n,
-      depositHash:
-        '0x1111111111111111111111111111111111111111111111111111111111111111',
-      kind: 'regular',
-      memo: zeroHash,
-      recipient: '0x20c0000000000000000000000000000000000002',
-      sender: '0x20c0000000000000000000000000000000000000',
-      status: 'processed',
-      token: zoneTokens[0],
+export const parentChain = defineChain({
+  ...tempoLocalnet,
+  contracts: {
+    ...tempoLocalnet.contracts,
+    zonePortal: {
+      [zoneId]: { address: portalAddress },
     },
-  ],
-  processed: true,
-  tempoBlockNumber: 42n,
-  zoneProcessedThrough: 42n,
-} as const
+  },
+  rpcUrls: { default: { http: [], webSocket: [context.l1RpcUrl] } },
+}).extend({ feeToken: 1n })
 
-export const zoneDepositStatusRpcReturnValue = {
-  deposits: zoneDepositStatus.deposits.map((deposit) => ({
-    amount: `0x${deposit.amount.toString(16)}`,
-    depositHash: deposit.depositHash,
-    kind: deposit.kind,
-    memo: deposit.memo,
-    recipient: deposit.recipient,
-    sender: deposit.sender,
-    status: deposit.status,
-    token: deposit.token,
-  })),
-  processed: zoneDepositStatus.processed,
-  tempoBlockNumber: `0x${zoneDepositStatus.tempoBlockNumber.toString(16)}`,
-  zoneProcessedThrough: `0x${zoneDepositStatus.zoneProcessedThrough.toString(16)}`,
-} as const
-
-export const zoneLocal = defineChain({
+export const zoneChain = defineChain({
   ...zone(zoneId),
-  rpcUrls: { default: { http: [zoneRpcUrl] } },
-  sourceId: chains.tempoLocalnet.id,
+  id: context.chainId,
+  rpcUrls: { default: { http: [context.privateRpcUrl] } },
+  sourceId: parentChain.id,
 })
 
-export const zoneStorage = Storage.memory()
+export const config = createConfig({
+  chains: [parentChain, zoneChain],
+  connectors: [
+    dangerous_secp256k1({
+      privateKey: privateKeys[0],
+    }),
+  ],
+  pollingInterval: 100,
+  storage: null,
+  transports: {
+    [parentChain.id]: webSocket(context.l1RpcUrl),
+    [zoneChain.id]: zoneHttp(context.privateRpcUrl, { storage: zoneStorage }),
+  },
+} as const satisfies CreateConfigParameters)
+
+export const queryClient = new QueryClient()
+
+export async function authorize() {
+  if (getConnection(config).status === 'disconnected')
+    await connect(config, { connector: config.connectors[0]! })
+  const client = await getConnectorClient(config, {
+    assertChainId: false,
+    chainId: zoneChain.id,
+  })
+  return Actions.zone.signAuthorizationToken(client, {
+    account: accounts[0],
+    storage: zoneStorage,
+    zoneId,
+  })
+}
+
+export async function depositAndWait(amount: bigint) {
+  await authorize()
+  const client = await getConnectorClient(config, { chainId: parentChain.id })
+  const { receipt } = await Actions.zone.depositSync(client, {
+    amount,
+    portalAddress,
+    token: Addresses.pathUsd,
+    zoneId,
+  })
+  const zoneClient = config.getClient({ chainId: zoneChain.id })
+  const status = await Actions.zone.waitForDepositStatus(zoneClient, {
+    pollingInterval: 100,
+    tempoBlockNumber: receipt.blockNumber,
+    timeout: 30_000,
+  })
+  return { receipt, status }
+}
+
+export async function setupZoneBalance(amount: bigint) {
+  await authorize()
+  const client = config.getClient({ chainId: zoneChain.id })
+  const info = await Actions.zone.getZoneInfo(client)
+  const token = info.zoneTokens[0]!
+  const balance = await Actions.token.getBalance(client, {
+    account: accounts[0].address,
+    token,
+  })
+  const minimumBalance = amount + parseUnits('1', 6)
+  if (balance.amount < minimumBalance)
+    await depositAndWait(minimumBalance - balance.amount)
+  return token
+}
+
+export const renderHook = createRenderHook(config, queryClient)
