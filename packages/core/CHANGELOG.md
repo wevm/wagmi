@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 3.6.2
+
+### Patch Changes
+
+- Fixed Tempo Zone action compatibility with Viem 2.55.2. ([#5198](https://github.com/wevm/wagmi/pull/5198))
+
 ## 3.6.1
 
 ### Patch Changes
