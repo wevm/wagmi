@@ -101,6 +101,11 @@ export default defineConfig({
             './packages/core/src/tempo/**/*.test.ts',
             './packages/react/src/tempo/**/*.test.ts',
           ],
+          exclude: [
+            './packages/core/src/tempo/actions/zone.test.ts',
+            './packages/react/src/tempo/hooks/zone.test.ts',
+            ...defaultExclude,
+          ],
           fileParallelism: false,
           hookTimeout: 40_000,
           testTimeout: 30_000,
@@ -110,6 +115,35 @@ export default defineConfig({
           setupFiles: ['./packages/test/src/tempo/setup.ts'],
         },
       },
+      ...(process.env.VITE_TEMPO_ZONES === 'true'
+        ? [
+            {
+              plugins: [react(), reactFallbackThrottlePlugin()],
+              resolve: { alias },
+              test: {
+                name: 'tempo-zone',
+                browser: {
+                  enabled: true,
+                  headless: true,
+                  instances: [{ browser: 'chromium' as const }],
+                  provider: playwright({
+                    launchOptions: { args: ['--disable-web-security'] },
+                  }),
+                  screenshotFailures: false,
+                },
+                fileParallelism: false,
+                globalSetup: ['./packages/test/src/tempo/setup.global.zone.ts'],
+                hookTimeout: 150_000,
+                include: [
+                  './packages/core/src/tempo/actions/zone.test.ts',
+                  './packages/react/src/tempo/hooks/zone.test.ts',
+                ],
+                setupFiles: ['./packages/test/src/tempo/setup.zone.ts'],
+                testTimeout: 60_000,
+              },
+            },
+          ]
+        : []),
       {
         plugins: [react(), reactFallbackThrottlePlugin()],
         resolve: { alias },

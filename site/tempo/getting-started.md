@@ -2,7 +2,7 @@
 import connectorsPackageJson from '../../packages/connectors/package.json'
 
 const accountsVersion = connectorsPackageJson.peerDependencies.accounts
-const viemVersion = '>=2.54.0'
+const viemVersion = '>=2.55.2'
 </script>
 
 # Getting Started
