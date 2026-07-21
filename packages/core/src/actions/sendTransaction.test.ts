@@ -88,7 +88,7 @@ test('behavior: value exceeds balance', async () => {
       value:  99999 ETH
 
     Details: Insufficient funds for gas * price + value
-    Version: viem@2.55.2]
+    Version: viem@https://pkg.pr.new/viem@4878]
   `)
   await disconnect(config, { connector })
 })
