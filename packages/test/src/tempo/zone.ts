@@ -94,12 +94,12 @@ export async function depositAndWait(amount: bigint) {
     zoneId,
   })
   const zoneClient = config.getClient({ chainId: zoneChain.id })
-  const status = await Actions.zone.waitForDepositStatus(zoneClient, {
+  const info = await Actions.zone.waitForTempoBlock(zoneClient, {
     pollingInterval: 100,
     tempoBlockNumber: receipt.blockNumber,
     timeout: 30_000,
   })
-  return { receipt, status }
+  return { info, receipt }
 }
 
 export async function setupZoneBalance(amount: bigint) {

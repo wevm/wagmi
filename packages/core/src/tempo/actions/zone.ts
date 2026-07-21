@@ -20,7 +20,7 @@ import type {
   ChainIdParameter,
   ConnectorParameter,
 } from '../../types/properties.js'
-import type { PartialBy, UnionLooseOmit } from '../../types/utils.js'
+import type { UnionLooseOmit } from '../../types/utils.js'
 import type {
   OptionalTransactionOverrides,
   QueryOptions,
@@ -132,116 +132,6 @@ export namespace getAuthorizationTokenInfo {
 }
 
 /**
- * Gets deposit processing status for a Tempo block number.
- *
- * @example
- * ```ts
- * import { createConfig } from '@wagmi/core'
- * import { Actions, dangerous_secp256k1 } from '@wagmi/core/tempo'
- * import { Account } from 'viem/tempo'
- * import { http as zoneHttp, zone } from 'viem/tempo/zones'
- *
- * const zoneChain = zone(7)
- * const account = Account.fromSecp256k1('0x...')
- * const config = createConfig({
- *   chains: [zoneChain],
- *   connectors: [dangerous_secp256k1({ account })],
- *   transports: {
- *     [zoneChain.id]: zoneHttp(),
- *   },
- * })
- *
- * await Actions.zone.signAuthorizationToken(config, {
- *   chainId: zoneChain.id,
- * })
- *
- * const status = await Actions.zone.getDepositStatus(config, {
- *   chainId: zoneChain.id,
- *   tempoBlockNumber: 42n,
- * })
- *
- * console.log(status.processed)
- * ```
- *
- * @param config - Config.
- * @param parameters - Parameters.
- * @returns The deposit status.
- */
-export function getDepositStatus<config extends Config>(
-  config: config,
-  parameters: getDepositStatus.Parameters<config>,
-): Promise<getDepositStatus.ReturnValue> {
-  const { chainId, ...rest } = parameters
-  const client = config.getClient({ chainId })
-  return Actions.zone.getDepositStatus(client, rest)
-}
-
-export namespace getDepositStatus {
-  export type Parameters<config extends Config> = ChainIdParameter<config> &
-    Actions.zone.getDepositStatus.Parameters
-
-  export type ReturnValue = Actions.zone.getDepositStatus.ReturnType
-
-  export type ErrorType = Actions.zone.getDepositStatus.ErrorType
-
-  export function queryKey<config extends Config>(
-    parameters: PartialBy<Parameters<config>, 'tempoBlockNumber'>,
-  ) {
-    return ['getDepositStatus', filterQueryOptions(parameters)] as const
-  }
-
-  export type QueryKey<config extends Config> = ReturnType<
-    typeof queryKey<config>
-  >
-
-  export function queryOptions<config extends Config, selectData = ReturnValue>(
-    config: Config,
-    parameters: queryOptions.Parameters<config, selectData>,
-  ): queryOptions.ReturnValue<config, selectData> {
-    const { query, ...rest } = parameters
-    return {
-      ...query,
-      enabled: Boolean(
-        rest.tempoBlockNumber !== undefined && (query?.enabled ?? true),
-      ),
-      queryKey: queryKey(rest),
-      async queryFn(context) {
-        const [, { tempoBlockNumber, ...parameters }] = context.queryKey
-        if (tempoBlockNumber === undefined)
-          throw new Error('tempoBlockNumber is required.')
-        return await getDepositStatus(config, {
-          ...parameters,
-          tempoBlockNumber,
-        })
-      },
-    }
-  }
-
-  export declare namespace queryOptions {
-    export type Parameters<
-      config extends Config,
-      selectData = getDepositStatus.ReturnValue,
-    > = PartialBy<getDepositStatus.Parameters<config>, 'tempoBlockNumber'> &
-      QueryParameter<
-        getDepositStatus.ReturnValue,
-        getDepositStatus.ErrorType,
-        selectData,
-        getDepositStatus.QueryKey<config>
-      >
-
-    export type ReturnValue<
-      config extends Config,
-      selectData = getDepositStatus.ReturnValue,
-    > = QueryOptions<
-      getDepositStatus.ReturnValue,
-      getDepositStatus.ErrorType,
-      selectData,
-      getDepositStatus.QueryKey<config>
-    >
-  }
-}
-
-/**
  * Gets the withdrawal fee for a given gas limit.
  *
  * @example
@@ -338,7 +228,7 @@ export namespace getWithdrawalFee {
 }
 
 /**
- * Gets the current zone metadata.
+ * Gets the current zone metadata and latest imported Tempo block number.
  *
  * @example
  * ```ts
@@ -358,12 +248,12 @@ export namespace getWithdrawalFee {
  *   chainId: zoneChain.id,
  * })
  *
- * console.log(info.zoneId)
+ * console.log(info.tempoBlockNumber)
  * ```
  *
  * @param config - Config.
  * @param parameters - Parameters.
- * @returns The zone metadata.
+ * @returns The zone metadata and latest imported Tempo block number.
  */
 export function getZoneInfo<config extends Config>(
   config: config,

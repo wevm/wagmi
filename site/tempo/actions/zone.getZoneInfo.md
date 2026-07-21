@@ -1,6 +1,6 @@
 # `zone.getZoneInfo`
 
-Gets metadata for a Tempo zone chain, including the zone ID, parent chain ID, sequencer, and available zone tokens.
+Gets metadata for a Tempo zone chain, including the latest imported Tempo block number, zone ID, parent chain ID, sequencer, and available zone tokens.
 
 This action expects the zone transport to already have an authorization token in storage. Use [`zone.signAuthorizationToken`](/tempo/actions/zone.signAuthorizationToken) first.
 
@@ -50,6 +50,7 @@ console.log('Zone ID:', result.zoneId)
 type ReturnType = {
   chainId: number
   sequencer: Address
+  tempoBlockNumber: bigint
   zoneId: number
   zoneTokens: readonly Address[]
 }

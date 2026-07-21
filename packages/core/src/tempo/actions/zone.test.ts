@@ -4,7 +4,6 @@ import {
   authorize,
   config,
   context,
-  depositAndWait,
   parentChain,
   portalAddress,
   queryClient,
@@ -326,52 +325,6 @@ describe('getAuthorizationTokenInfo', () => {
     )
     expect(result.account.toLowerCase()).toBe(accounts[0].address.toLowerCase())
     expect(result.expiresAt).toBe(BigInt(expiresAt))
-  })
-})
-
-describe('getDepositStatus', () => {
-  test('default', async () => {
-    await connect(config, {
-      connector: config.connectors[0]!,
-    })
-
-    const { receipt, status } = await depositAndWait(123_000n)
-
-    const result = await zoneActions.getDepositStatus(config, {
-      chainId: zoneChain.id,
-      tempoBlockNumber: receipt.blockNumber,
-    })
-    expect(result).toMatchObject({
-      deposits: status.deposits,
-      processed: true,
-      tempoBlockNumber: receipt.blockNumber,
-    })
-    expect(result.zoneProcessedThrough).toBeGreaterThanOrEqual(
-      receipt.blockNumber,
-    )
-  })
-
-  test('queryOptions', async () => {
-    await connect(config, {
-      connector: config.connectors[0]!,
-    })
-
-    const { receipt, status } = await depositAndWait(123_000n)
-
-    const result = await queryClient.fetchQuery(
-      zoneActions.getDepositStatus.queryOptions(config, {
-        chainId: zoneChain.id,
-        tempoBlockNumber: receipt.blockNumber,
-      }),
-    )
-    expect(result).toMatchObject({
-      deposits: status.deposits,
-      processed: true,
-      tempoBlockNumber: receipt.blockNumber,
-    })
-    expect(result.zoneProcessedThrough).toBeGreaterThanOrEqual(
-      receipt.blockNumber,
-    )
   })
 })
 
