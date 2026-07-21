@@ -92,5 +92,6 @@
 | [`zone.useRequestVerifiableWithdrawal`](/tempo/hooks/zone.useRequestVerifiableWithdrawal) | Hook for requesting a verifiable withdrawal from a zone to the parent Tempo chain |
 | [`zone.useRequestWithdrawal`](/tempo/hooks/zone.useRequestWithdrawal) | Hook for requesting a withdrawal from a zone to the parent Tempo chain |
 | [`zone.useSignAuthorizationToken`](/tempo/hooks/zone.useSignAuthorizationToken) | Hook for signing and storing a Tempo zone authorization token |
+| [`zone.useWaitForTempoBlock`](/tempo/hooks/zone.useWaitForTempoBlock) | Hook for waiting for a zone to import a Tempo block |
 | [`zone.useWithdrawalFee`](/tempo/hooks/zone.useWithdrawalFee) | Hook for getting the withdrawal fee for a given gas limit |
 | [`zone.useZoneInfo`](/tempo/hooks/zone.useZoneInfo) | Hook for getting Tempo zone metadata and the latest imported Tempo block number |

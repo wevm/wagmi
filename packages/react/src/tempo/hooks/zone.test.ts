@@ -4,6 +4,7 @@ import {
   authorize,
   config,
   context,
+  depositAndWait,
   parentChain,
   renderHook,
   setupZoneBalance,
@@ -277,6 +278,51 @@ describe('useZoneInfo', () => {
       zoneId,
     })
     expect(result.current.data?.zoneTokens.length).toBeGreaterThan(0)
+  })
+})
+
+describe('useWaitForTempoBlock', () => {
+  test('default', async () => {
+    const { receipt } = await depositAndWait(123_000n)
+
+    const { result } = await renderHook(() =>
+      zoneHooks.useWaitForTempoBlock({
+        chainId: zoneChain.id,
+        tempoBlockNumber: receipt.blockNumber,
+      }),
+    )
+
+    await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+
+    expect(result.current.data?.tempoBlockNumber).toBeGreaterThanOrEqual(
+      receipt.blockNumber,
+    )
+  })
+
+  test('reactivity: tempoBlockNumber parameter', async () => {
+    const { receipt } = await depositAndWait(123_000n)
+
+    const { result, rerender } = await renderHook(
+      (props) =>
+        zoneHooks.useWaitForTempoBlock({
+          chainId: zoneChain.id,
+          tempoBlockNumber: props?.tempoBlockNumber,
+        }),
+      {
+        initialProps: { tempoBlockNumber: undefined as bigint | undefined },
+      },
+    )
+
+    expect(result.current.data).toBeUndefined()
+    expect(result.current.isSuccess).toBe(false)
+
+    rerender({ tempoBlockNumber: receipt.blockNumber })
+
+    await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+
+    expect(result.current.data?.tempoBlockNumber).toBeGreaterThanOrEqual(
+      receipt.blockNumber,
+    )
   })
 })
 

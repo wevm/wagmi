@@ -20,7 +20,7 @@ import type {
   ChainIdParameter,
   ConnectorParameter,
 } from '../../types/properties.js'
-import type { UnionLooseOmit } from '../../types/utils.js'
+import type { PartialBy, UnionLooseOmit } from '../../types/utils.js'
 import type {
   OptionalTransactionOverrides,
   QueryOptions,
@@ -316,6 +316,109 @@ export namespace getZoneInfo {
       getZoneInfo.ErrorType,
       selectData,
       getZoneInfo.QueryKey<config>
+    >
+  }
+}
+
+/**
+ * Waits for a zone to import a Tempo block.
+ *
+ * @example
+ * ```ts
+ * import { createConfig } from '@wagmi/core'
+ * import { Actions } from '@wagmi/core/tempo'
+ * import { http as zoneHttp, zone } from 'viem/tempo/zones'
+ *
+ * const zoneChain = zone(7)
+ * const config = createConfig({
+ *   chains: [zoneChain],
+ *   transports: {
+ *     [zoneChain.id]: zoneHttp(),
+ *   },
+ * })
+ *
+ * const info = await Actions.zone.waitForTempoBlock(config, {
+ *   chainId: zoneChain.id,
+ *   tempoBlockNumber: 42n,
+ * })
+ *
+ * console.log(info.tempoBlockNumber)
+ * ```
+ *
+ * @param config - Config.
+ * @param parameters - Parameters.
+ * @returns The zone metadata after the block has been imported.
+ */
+export function waitForTempoBlock<config extends Config>(
+  config: config,
+  parameters: waitForTempoBlock.Parameters<config>,
+): Promise<waitForTempoBlock.ReturnValue> {
+  const { chainId, ...rest } = parameters
+  const client = config.getClient({ chainId })
+  return Actions.zone.waitForTempoBlock(client, rest)
+}
+
+export namespace waitForTempoBlock {
+  export type Parameters<config extends Config> = ChainIdParameter<config> &
+    Actions.zone.waitForTempoBlock.Parameters
+
+  export type ReturnValue = Actions.zone.waitForTempoBlock.ReturnType
+
+  export type ErrorType = Actions.zone.waitForTempoBlock.ErrorType
+
+  export function queryKey<config extends Config>(
+    parameters: PartialBy<Parameters<config>, 'tempoBlockNumber'>,
+  ) {
+    return ['waitForTempoBlock', filterQueryOptions(parameters)] as const
+  }
+
+  export type QueryKey<config extends Config> = ReturnType<
+    typeof queryKey<config>
+  >
+
+  export function queryOptions<config extends Config, selectData = ReturnValue>(
+    config: Config,
+    parameters: queryOptions.Parameters<config, selectData>,
+  ): queryOptions.ReturnValue<config, selectData> {
+    const { query, ...rest } = parameters
+    return {
+      ...query,
+      enabled: Boolean(
+        rest.tempoBlockNumber !== undefined && (query?.enabled ?? true),
+      ),
+      queryKey: queryKey(rest),
+      async queryFn(context) {
+        const [, { tempoBlockNumber, ...parameters }] = context.queryKey
+        if (tempoBlockNumber === undefined)
+          throw new Error('tempoBlockNumber is required.')
+        return await waitForTempoBlock(config, {
+          ...parameters,
+          tempoBlockNumber,
+        })
+      },
+    }
+  }
+
+  export declare namespace queryOptions {
+    export type Parameters<
+      config extends Config,
+      selectData = waitForTempoBlock.ReturnValue,
+    > = PartialBy<waitForTempoBlock.Parameters<config>, 'tempoBlockNumber'> &
+      QueryParameter<
+        waitForTempoBlock.ReturnValue,
+        waitForTempoBlock.ErrorType,
+        selectData,
+        waitForTempoBlock.QueryKey<config>
+      >
+
+    export type ReturnValue<
+      config extends Config,
+      selectData = waitForTempoBlock.ReturnValue,
+    > = QueryOptions<
+      waitForTempoBlock.ReturnValue,
+      waitForTempoBlock.ErrorType,
+      selectData,
+      waitForTempoBlock.QueryKey<config>
     >
   }
 }

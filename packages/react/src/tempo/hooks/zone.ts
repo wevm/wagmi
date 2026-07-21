@@ -183,6 +183,64 @@ export declare namespace useZoneInfo {
 }
 
 /**
+ * Hook for waiting for a zone to import a Tempo block.
+ *
+ * @example
+ * ```tsx
+ * import { Hooks } from 'wagmi/tempo'
+ * import { zone } from 'viem/tempo/zones'
+ *
+ * const zoneChain = zone(7)
+ *
+ * function App() {
+ *   const { data, isLoading } = Hooks.zone.useWaitForTempoBlock({
+ *     chainId: zoneChain.id,
+ *     tempoBlockNumber: 42n,
+ *   })
+ *
+ *   if (isLoading) return <div>Waiting...</div>
+ *   return <div>Tempo Block: {data?.tempoBlockNumber}</div>
+ * }
+ * ```
+ *
+ * @param parameters - Parameters.
+ * @returns Query result with the zone metadata after the block has been
+ * imported.
+ */
+export function useWaitForTempoBlock<
+  config extends Config = ResolvedRegister['config'],
+  selectData = Actions.zone.waitForTempoBlock.ReturnValue,
+>(
+  parameters: useWaitForTempoBlock.Parameters<config, selectData> = {},
+): useWaitForTempoBlock.ReturnValue<selectData> {
+  const config = useConfig(parameters)
+  const chainId = useChainId({ config })
+  const options = Actions.zone.waitForTempoBlock.queryOptions(config, {
+    ...parameters,
+    chainId: parameters.chainId ?? chainId,
+  } as never)
+  return useQuery(options) as never
+}
+
+export declare namespace useWaitForTempoBlock {
+  export type Parameters<
+    config extends Config = ResolvedRegister['config'],
+    selectData = Actions.zone.waitForTempoBlock.ReturnValue,
+  > = ConfigParameter<config> &
+    QueryParameter<
+      Actions.zone.waitForTempoBlock.ReturnValue,
+      Actions.zone.waitForTempoBlock.ErrorType,
+      selectData,
+      Actions.zone.waitForTempoBlock.QueryKey<config>
+    > &
+    ExactPartial<Actions.zone.waitForTempoBlock.Parameters<config>>
+
+  export type ReturnValue<
+    selectData = Actions.zone.waitForTempoBlock.ReturnValue,
+  > = UseQueryReturnType<selectData, Error>
+}
+
+/**
  * Hook for signing and storing a zone authorization token.
  *
  * @example

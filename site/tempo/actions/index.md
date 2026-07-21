@@ -93,3 +93,4 @@
 | [`zone.requestVerifiableWithdrawal`](/tempo/actions/zone.requestVerifiableWithdrawal) | Requests a verifiable withdrawal from a zone to the parent Tempo chain |
 | [`zone.requestWithdrawal`](/tempo/actions/zone.requestWithdrawal) | Requests a withdrawal from a zone to the parent Tempo chain |
 | [`zone.signAuthorizationToken`](/tempo/actions/zone.signAuthorizationToken) | Signs and stores a zone authorization token |
+| [`zone.waitForTempoBlock`](/tempo/actions/zone.waitForTempoBlock) | Waits for a zone to import a Tempo block |

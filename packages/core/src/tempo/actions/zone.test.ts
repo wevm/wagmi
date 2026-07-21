@@ -4,6 +4,7 @@ import {
   authorize,
   config,
   context,
+  depositAndWait,
   parentChain,
   portalAddress,
   queryClient,
@@ -281,6 +282,30 @@ describe('getZoneInfo', () => {
         }),
       ),
     ).toMatchObject({ chainId: context.chainId, zoneId })
+  })
+})
+
+describe('waitForTempoBlock', () => {
+  test('default', async () => {
+    const { receipt } = await depositAndWait(123_000n)
+
+    const result = await zoneActions.waitForTempoBlock(config, {
+      chainId: zoneChain.id,
+      tempoBlockNumber: receipt.blockNumber,
+    })
+    expect(result.tempoBlockNumber).toBeGreaterThanOrEqual(receipt.blockNumber)
+  })
+
+  test('queryOptions', async () => {
+    const { receipt } = await depositAndWait(123_000n)
+
+    const result = await queryClient.fetchQuery(
+      zoneActions.waitForTempoBlock.queryOptions(config, {
+        chainId: zoneChain.id,
+        tempoBlockNumber: receipt.blockNumber,
+      }),
+    )
+    expect(result.tempoBlockNumber).toBeGreaterThanOrEqual(receipt.blockNumber)
   })
 })
 
