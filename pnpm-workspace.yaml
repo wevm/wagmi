@@ -88,7 +88,8 @@ overrides:
   '@protobufjs/utf8@<=1.1.0': '>=1.1.1'
   '@tanstack/start-server-core@<1.167.30': '>=1.167.30'
   '@grpc/grpc-js@<1.14.4': 1.14.4
-  axios@<1.16.0: 1.16.0
+  adm-zip@<0.6.0: 0.6.0
+  axios@<1.18.0: 1.18.1
   bn.js@>=5.0.0 <5.2.3: 5.2.3
   brace-expansion@<1.1.13: '>=1.1.13'
   brace-expansion@>=2.0.0 <2.0.3: '>=2.0.3'

@@ -41,6 +41,21 @@ test('default', async () => {
   `)
 })
 
+test('parameters: blockNumber 0 (genesis)', async () => {
+  // `blockNumber: 0n` is falsy but a valid block (genesis). Ensure it queries
+  // block 0 (where `address` has no balance) instead of falling back to
+  // `blockTag: 'latest'` (10000 ETH set in `beforeEach`).
+  await expect(
+    getBalance(config, { address, blockNumber: 0n }),
+  ).resolves.toMatchInlineSnapshot(`
+    {
+      "decimals": 18,
+      "symbol": "ETH",
+      "value": 0n,
+    }
+  `)
+})
+
 test('parameters: chainId', async () => {
   await expect(
     getBalance(config, { address, chainId: chain.mainnet2.id }),
