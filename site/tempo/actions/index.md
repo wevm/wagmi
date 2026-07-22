@@ -87,10 +87,10 @@
 | **Zone Actions** | |
 | [`zone.deposit`](/tempo/actions/zone.deposit) | Deposits tokens from the parent Tempo chain into a zone |
 | [`zone.getAuthorizationTokenInfo`](/tempo/actions/zone.getAuthorizationTokenInfo) | Gets information about the current zone authorization token |
-| [`zone.getDepositStatus`](/tempo/actions/zone.getDepositStatus) | Gets deposit processing status for a Tempo block number |
 | [`zone.encryptedDeposit`](/tempo/actions/zone.encryptedDeposit) | Deposits tokens into a zone with an encrypted recipient and memo |
 | [`zone.getWithdrawalFee`](/tempo/actions/zone.getWithdrawalFee) | Gets the withdrawal fee for a given gas limit |
-| [`zone.getZoneInfo`](/tempo/actions/zone.getZoneInfo) | Gets metadata for a Tempo zone chain |
+| [`zone.getZoneInfo`](/tempo/actions/zone.getZoneInfo) | Gets metadata and the latest imported Tempo block number for a zone |
 | [`zone.requestVerifiableWithdrawal`](/tempo/actions/zone.requestVerifiableWithdrawal) | Requests a verifiable withdrawal from a zone to the parent Tempo chain |
 | [`zone.requestWithdrawal`](/tempo/actions/zone.requestWithdrawal) | Requests a withdrawal from a zone to the parent Tempo chain |
 | [`zone.signAuthorizationToken`](/tempo/actions/zone.signAuthorizationToken) | Signs and stores a zone authorization token |
+| [`zone.waitForTempoBlock`](/tempo/actions/zone.waitForTempoBlock) | Waits for a zone to import a Tempo block |

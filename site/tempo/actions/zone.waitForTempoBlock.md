@@ -1,12 +1,8 @@
-# `zone.getDepositStatus`
+# `zone.waitForTempoBlock`
 
-Gets deposit processing status for a Tempo block number.
+Waits for a zone to import a Tempo block.
 
 This action expects the zone transport to already have an authorization token in storage. Use [`zone.signAuthorizationToken`](/tempo/actions/zone.signAuthorizationToken) first.
-
-::: info Requires viem >=2.48.0
-Zone actions and hooks require `viem >=2.48.0`.
-:::
 
 ## Usage
 
@@ -34,13 +30,13 @@ await Actions.zone.signAuthorizationToken(config, {
   chainId: zoneChain.id,
 })
 
-const result = await Actions.zone.getDepositStatus(config, {
+const info = await Actions.zone.waitForTempoBlock(config, {
   chainId: zoneChain.id,
   tempoBlockNumber: 42n,
 })
 
-console.log('Processed:', result.processed)
-// @log: Processed: true
+console.log('Imported Tempo block:', info.tempoBlockNumber)
+// @log: Imported Tempo block: 42n
 ```
 
 :::
@@ -49,25 +45,23 @@ console.log('Processed:', result.processed)
 
 ```ts
 type ReturnType = {
-  deposits: readonly {
-    amount: bigint
-    depositHash: Hex
-    kind: 'encrypted' | 'regular'
-    memo: Hex | null
-    recipient: Address | null
-    sender: Address
-    status: 'failed' | 'pending' | 'processed'
-    token: Address
-  }[]
-  processed: boolean
+  chainId: number
+  sequencer: Address
   tempoBlockNumber: bigint
-  zoneProcessedThrough: bigint
+  zoneId: number
+  zoneTokens: readonly Address[]
 }
 ```
 
-Deposit processing status for the requested Tempo block number.
+Zone metadata after the requested Tempo block has been imported.
 
 ## Parameters
+
+### tempoBlockNumber
+
+- **Type:** `bigint`
+
+Tempo block number to wait for.
 
 ### chainId (optional)
 
@@ -75,12 +69,20 @@ Deposit processing status for the requested Tempo block number.
 
 Zone chain ID to query. Useful when your Wagmi config supports more than one chain.
 
-### tempoBlockNumber
+### pollingInterval (optional)
 
-- **Type:** `bigint`
+- **Type:** `number`
+- **Default:** Client polling interval
 
-Tempo block number to inspect for deposit processing.
+Polling frequency in milliseconds.
+
+### timeout (optional)
+
+- **Type:** `number`
+- **Default:** `60_000`
+
+Timeout in milliseconds.
 
 ## Viem
 
-- [`zone.getDepositStatus`](https://viem.sh/tempo/actions/zone.getDepositStatus)
+- [`zone.waitForTempoBlock`](https://viem.sh/tempo/actions/zone.waitForTempoBlock)

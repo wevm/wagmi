@@ -82,7 +82,7 @@ jobs:
     strategy:
       matrix:
         typescript-version: ['5.9.3', '6.0.3', 'latest']
-        viem-version: ['2.55.2', 'latest']
+        viem-version: ['2.55.7', 'latest']
 
     steps:
       - name: Clone repository
@@ -249,7 +249,7 @@ jobs:
       - name: Pull Tempo Docker images
         run: |
           docker pull ghcr.io/tempoxyz/tempo:sha-e828ab7
-          docker pull ghcr.io/tempoxyz/tempo-zone:sha-aae82c4
+          docker pull ghcr.io/tempoxyz/tempo-zone:sha-db90b21
 
       - name: Run Tempo Zone tests
         uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08
@@ -260,4 +260,4 @@ jobs:
         env:
           VITE_TEMPO_ZONES: 'true'
           VITE_TEMPO_TAG: sha-e828ab7
-          VITE_TEMPO_ZONE_TAG: sha-aae82c4
+          VITE_TEMPO_ZONE_TAG: sha-db90b21

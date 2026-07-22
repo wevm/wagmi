@@ -69,63 +69,6 @@ export declare namespace useAuthorizationTokenInfo {
 }
 
 /**
- * Hook for getting deposit processing status for a Tempo block number.
- *
- * @example
- * ```tsx
- * import { Hooks } from 'wagmi/tempo'
- * import { zone } from 'viem/tempo/zones'
- *
- * const zoneChain = zone(7)
- *
- * function App() {
- *   const { data, isLoading } = Hooks.zone.useDepositStatus({
- *     chainId: zoneChain.id,
- *     tempoBlockNumber: 42n,
- *   })
- *
- *   if (isLoading) return <div>Loading...</div>
- *   return <div>Processed: {String(data?.processed)}</div>
- * }
- * ```
- *
- * @param parameters - Parameters.
- * @returns Query result with the current deposit status.
- */
-export function useDepositStatus<
-  config extends Config = ResolvedRegister['config'],
-  selectData = Actions.zone.getDepositStatus.ReturnValue,
->(
-  parameters: useDepositStatus.Parameters<config, selectData> = {},
-): useDepositStatus.ReturnValue<selectData> {
-  const config = useConfig(parameters)
-  const chainId = useChainId({ config })
-  const options = Actions.zone.getDepositStatus.queryOptions(config, {
-    ...parameters,
-    chainId: parameters.chainId ?? chainId,
-  } as never)
-  return useQuery(options) as never
-}
-
-export declare namespace useDepositStatus {
-  export type Parameters<
-    config extends Config = ResolvedRegister['config'],
-    selectData = Actions.zone.getDepositStatus.ReturnValue,
-  > = ConfigParameter<config> &
-    QueryParameter<
-      Actions.zone.getDepositStatus.ReturnValue,
-      Actions.zone.getDepositStatus.ErrorType,
-      selectData,
-      Actions.zone.getDepositStatus.QueryKey<config>
-    > &
-    ExactPartial<Actions.zone.getDepositStatus.Parameters<config>>
-
-  export type ReturnValue<
-    selectData = Actions.zone.getDepositStatus.ReturnValue,
-  > = UseQueryReturnType<selectData, Error>
-}
-
-/**
  * Hook for getting the withdrawal fee for a given gas limit.
  *
  * @example
@@ -183,7 +126,8 @@ export declare namespace useWithdrawalFee {
 }
 
 /**
- * Hook for getting the current zone metadata.
+ * Hook for getting the current zone metadata and latest imported Tempo block
+ * number.
  *
  * @example
  * ```tsx
@@ -198,12 +142,13 @@ export declare namespace useWithdrawalFee {
  *   })
  *
  *   if (isLoading) return <div>Loading...</div>
- *   return <div>Zone ID: {data?.zoneId}</div>
+ *   return <div>Tempo Block: {data?.tempoBlockNumber}</div>
  * }
  * ```
  *
  * @param parameters - Parameters.
- * @returns Query result with the current zone metadata.
+ * @returns Query result with the current zone metadata and latest imported
+ * Tempo block number.
  */
 export function useZoneInfo<
   config extends Config = ResolvedRegister['config'],
@@ -235,6 +180,64 @@ export declare namespace useZoneInfo {
 
   export type ReturnValue<selectData = Actions.zone.getZoneInfo.ReturnValue> =
     UseQueryReturnType<selectData, Error>
+}
+
+/**
+ * Hook for waiting for a zone to import a Tempo block.
+ *
+ * @example
+ * ```tsx
+ * import { Hooks } from 'wagmi/tempo'
+ * import { zone } from 'viem/tempo/zones'
+ *
+ * const zoneChain = zone(7)
+ *
+ * function App() {
+ *   const { data, isLoading } = Hooks.zone.useWaitForTempoBlock({
+ *     chainId: zoneChain.id,
+ *     tempoBlockNumber: 42n,
+ *   })
+ *
+ *   if (isLoading) return <div>Waiting...</div>
+ *   return <div>Tempo Block: {data?.tempoBlockNumber}</div>
+ * }
+ * ```
+ *
+ * @param parameters - Parameters.
+ * @returns Query result with the zone metadata after the block has been
+ * imported.
+ */
+export function useWaitForTempoBlock<
+  config extends Config = ResolvedRegister['config'],
+  selectData = Actions.zone.waitForTempoBlock.ReturnValue,
+>(
+  parameters: useWaitForTempoBlock.Parameters<config, selectData> = {},
+): useWaitForTempoBlock.ReturnValue<selectData> {
+  const config = useConfig(parameters)
+  const chainId = useChainId({ config })
+  const options = Actions.zone.waitForTempoBlock.queryOptions(config, {
+    ...parameters,
+    chainId: parameters.chainId ?? chainId,
+  } as never)
+  return useQuery(options) as never
+}
+
+export declare namespace useWaitForTempoBlock {
+  export type Parameters<
+    config extends Config = ResolvedRegister['config'],
+    selectData = Actions.zone.waitForTempoBlock.ReturnValue,
+  > = ConfigParameter<config> &
+    QueryParameter<
+      Actions.zone.waitForTempoBlock.ReturnValue,
+      Actions.zone.waitForTempoBlock.ErrorType,
+      selectData,
+      Actions.zone.waitForTempoBlock.QueryKey<config>
+    > &
+    ExactPartial<Actions.zone.waitForTempoBlock.Parameters<config>>
+
+  export type ReturnValue<
+    selectData = Actions.zone.waitForTempoBlock.ReturnValue,
+  > = UseQueryReturnType<selectData, Error>
 }
 
 /**

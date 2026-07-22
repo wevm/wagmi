@@ -7,7 +7,10 @@ import {
   getConnectorClient,
 } from '@wagmi/core'
 import { tempoLocalnet } from '@wagmi/core/chains'
-import { dangerous_secp256k1 } from '@wagmi/core/tempo'
+import {
+  dangerous_secp256k1,
+  Actions as wagmi_Actions,
+} from '@wagmi/core/tempo'
 import { type Address, defineChain, parseUnits, webSocket } from 'viem'
 import { Actions, Addresses, Storage } from 'viem/tempo'
 import { zone, http as zoneHttp } from 'viem/tempo/zones'
@@ -93,13 +96,13 @@ export async function depositAndWait(amount: bigint) {
     token: Addresses.pathUsd,
     zoneId,
   })
-  const zoneClient = config.getClient({ chainId: zoneChain.id })
-  const status = await Actions.zone.waitForDepositStatus(zoneClient, {
+  const info = await wagmi_Actions.zone.waitForTempoBlock(config, {
+    chainId: zoneChain.id,
     pollingInterval: 100,
     tempoBlockNumber: receipt.blockNumber,
     timeout: 30_000,
   })
-  return { receipt, status }
+  return { info, receipt }
 }
 
 export async function setupZoneBalance(amount: bigint) {

@@ -281,6 +281,51 @@ describe('useZoneInfo', () => {
   })
 })
 
+describe('useWaitForTempoBlock', () => {
+  test('default', async () => {
+    const { receipt } = await depositAndWait(123_000n)
+
+    const { result } = await renderHook(() =>
+      zoneHooks.useWaitForTempoBlock({
+        chainId: zoneChain.id,
+        tempoBlockNumber: receipt.blockNumber,
+      }),
+    )
+
+    await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+
+    expect(result.current.data?.tempoBlockNumber).toBeGreaterThanOrEqual(
+      receipt.blockNumber,
+    )
+  })
+
+  test('reactivity: tempoBlockNumber parameter', async () => {
+    const { receipt } = await depositAndWait(123_000n)
+
+    const { result, rerender } = await renderHook(
+      (props) =>
+        zoneHooks.useWaitForTempoBlock({
+          chainId: zoneChain.id,
+          tempoBlockNumber: props?.tempoBlockNumber,
+        }),
+      {
+        initialProps: { tempoBlockNumber: undefined as bigint | undefined },
+      },
+    )
+
+    expect(result.current.data).toBeUndefined()
+    expect(result.current.isSuccess).toBe(false)
+
+    rerender({ tempoBlockNumber: receipt.blockNumber })
+
+    await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+
+    expect(result.current.data?.tempoBlockNumber).toBeGreaterThanOrEqual(
+      receipt.blockNumber,
+    )
+  })
+})
+
 describe('useAuthorizationTokenInfo', () => {
   test('default', async () => {
     const { result: connectResult } = await renderHook(() => ({
@@ -309,77 +354,6 @@ describe('useAuthorizationTokenInfo', () => {
       accounts[0].address.toLowerCase(),
     )
     expect(result.current.data?.expiresAt).toBe(BigInt(expiresAt))
-  })
-})
-
-describe('useDepositStatus', () => {
-  test('default', async () => {
-    const { result: connectResult } = await renderHook(() => ({
-      connect: useConnect(),
-      signAuthorizationToken: zoneHooks.useSignAuthorizationToken(),
-    }))
-
-    await connectResult.current.connect.connectAsync({
-      connector: config.connectors[0]!,
-    })
-    const { receipt, status } = await depositAndWait(123_000n)
-
-    const { result } = await renderHook(() =>
-      zoneHooks.useDepositStatus({
-        chainId: zoneChain.id,
-        tempoBlockNumber: receipt.blockNumber,
-      }),
-    )
-
-    await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
-
-    expect(result.current.data).toMatchObject({
-      deposits: status.deposits,
-      processed: true,
-      tempoBlockNumber: receipt.blockNumber,
-    })
-    expect(result.current.data?.zoneProcessedThrough).toBeGreaterThanOrEqual(
-      receipt.blockNumber,
-    )
-  })
-
-  test('reactivity: tempoBlockNumber parameter', async () => {
-    const { result: connectResult } = await renderHook(() => ({
-      connect: useConnect(),
-      signAuthorizationToken: zoneHooks.useSignAuthorizationToken(),
-    }))
-
-    await connectResult.current.connect.connectAsync({
-      connector: config.connectors[0]!,
-    })
-    const { receipt, status } = await depositAndWait(123_000n)
-
-    const { result, rerender } = await renderHook(
-      (props) =>
-        zoneHooks.useDepositStatus({
-          chainId: zoneChain.id,
-          tempoBlockNumber: props?.tempoBlockNumber,
-        }),
-      {
-        initialProps: { tempoBlockNumber: undefined as bigint | undefined },
-      },
-    )
-
-    expect(result.current.data).toBeUndefined()
-    expect(result.current.isSuccess).toBe(false)
-
-    rerender({ tempoBlockNumber: receipt.blockNumber })
-
-    await vi.waitFor(() => expect(result.current.isSuccess).toBeTruthy())
-
-    expect(result.current.data).toMatchObject({
-      deposits: status.deposits,
-      processed: true,
-      tempoBlockNumber: receipt.blockNumber,
-    })
-    expect(result.current.data?.zoneProcessedThrough).toBeGreaterThanOrEqual(
-      receipt.blockNumber,
-    )
   })
 })
 
