@@ -1,5 +1,15 @@
 # wagmi
 
+## 3.7.4
+
+### Patch Changes
+
+- **Breaking (`wagmi/tempo`):** Removed `Hooks.zone.useDepositStatus` to align with the current Tempo Zone API. Use `Hooks.zone.useWaitForTempoBlock` to wait for a block import, or use `Hooks.zone.useZoneInfo` and inspect `tempoBlockNumber` for a one-shot read. ([#5204](https://github.com/wevm/wagmi/pull/5204))
+
+- Updated dependencies [[`0a8eb51`](https://github.com/wevm/wagmi/commit/0a8eb51805bca0f684ad7bc1851c6ad6ba806ba2), [`bfa70e3`](https://github.com/wevm/wagmi/commit/bfa70e36ef420ef6b3546e7dd74a22f51835d25a)]:
+  - @wagmi/core@3.6.4
+  - @wagmi/connectors@8.0.25
+
 ## 3.7.3
 
 ### Patch Changes
