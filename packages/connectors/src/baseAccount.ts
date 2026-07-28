@@ -217,24 +217,23 @@ export function baseAccount(parameters: BaseAccountParameters = {}) {
           }
         })()
 
-        const { createBaseAccountSDK } = await (() => {
-          // safe webpack optional peer dependency dynamic import
-          try {
-            return import(
-              /* turbopackOptional: true */
-              '@base-org/account'
-            )
-          } catch {
-            throw new Error('dependency "@base-org/account" not found')
-          }
-        })()
-        const sdk = createBaseAccountSDK({
-          ...parameters,
-          appChainIds: config.chains.map((x) => x.id),
-          preference,
-        })
+        // safe webpack optional peer dependency dynamic import
+        try {
+          const { createBaseAccountSDK } = await import(
+            /* turbopackOptional: true */
+            '@base-org/account'
+          )
+          const sdk = createBaseAccountSDK({
+            ...parameters,
+            appChainIds: config.chains.map((x) => x.id),
+            preference,
+          })
 
-        walletProvider = sdk.getProvider()
+          walletProvider = sdk.getProvider()
+        } catch (error) {
+          // biome-ignore lint/complexity/noUselessCatch: try block marks dependency as optional for webpack
+          throw error
+        }
       }
 
       return walletProvider

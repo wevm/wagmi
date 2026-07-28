@@ -151,27 +151,26 @@ export function coinbaseWallet(
     },
     async getProvider() {
       if (!walletProvider) {
-        const { createCoinbaseWalletSDK } = await (() => {
-          // safe webpack optional peer dependency dynamic import
-          try {
-            return import(
-              /* turbopackOptional: true */
-              '@coinbase/wallet-sdk'
-            )
-          } catch {
-            throw new Error('dependency "@coinbase/wallet-sdk" not found')
-          }
-        })()
-        const sdk = createCoinbaseWalletSDK({
-          ...parameters,
-          appChainIds: config.chains.map((x) => x.id),
-          preference: {
-            options: 'all',
-            ...(parameters.preference ?? {}),
-          },
-        })
+        // safe webpack optional peer dependency dynamic import
+        try {
+          const { createCoinbaseWalletSDK } = await import(
+            /* turbopackOptional: true */
+            '@coinbase/wallet-sdk'
+          )
+          const sdk = createCoinbaseWalletSDK({
+            ...parameters,
+            appChainIds: config.chains.map((x) => x.id),
+            preference: {
+              options: 'all',
+              ...(parameters.preference ?? {}),
+            },
+          })
 
-        walletProvider = sdk.getProvider()
+          walletProvider = sdk.getProvider()
+        } catch (error) {
+          // biome-ignore lint/complexity/noUselessCatch: try block marks dependency as optional for webpack
+          throw error
+        }
       }
 
       return walletProvider

@@ -91,6 +91,7 @@
       "scripts/**"
     ],
     "ignoreWorkspaces": [
+      "packages/engine-tests",
       "packages/register-tests/**",
       "packages/test",
       "playgrounds/**",

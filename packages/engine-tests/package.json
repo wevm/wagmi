@@ -1,0 +1,22 @@
+{
+  "name": "engine-tests",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "clean": "rm -rf next/.next vite/dist tsconfig.tsbuildinfo",
+    "test:build": "node test.ts"
+  },
+  "dependencies": {
+    "@base-org/account": "catalog:",
+    "next": "16.3.0-canary.96",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "viem": "2.*",
+    "vite": "catalog:",
+    "wagmi": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:"
+  }
+}
