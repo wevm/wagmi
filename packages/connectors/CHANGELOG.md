@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 8.0.26
+
+### Patch Changes
+
+- Fixed optional connector SDK imports retaining unused dependency exports in application bundles. ([#5207](https://github.com/wevm/wagmi/pull/5207))
+
 ## 8.0.25
 
 ### Patch Changes
