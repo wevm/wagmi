@@ -34,7 +34,7 @@
     "preinstall": "pnpx only-allow pnpm",
     "prepare": "pnpm simple-git-hooks",
     "test": "vitest",
-    "test:build": "node scripts/generateConnectorExports.ts && node scripts/generateProxyPackages.ts && pnpm run --r --parallel --filter '!engine-tests' test:build",
+    "test:build": "node scripts/generateConnectorExports.ts && node scripts/generateProxyPackages.ts && pnpm run --r --parallel test:build",
     "test:cov": "vitest run --coverage",
     "test:update": "vitest --update",
     "version:update": "node scripts/updateVersion.ts",

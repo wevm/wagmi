@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "clean": "rm -rf next/.next vite/dist tsconfig.tsbuildinfo",
-    "test:build": "node test.ts"
+    "test": "node test.ts"
   },
   "dependencies": {
     "@base-org/account": "catalog:",
