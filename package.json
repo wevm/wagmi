@@ -9,7 +9,7 @@
     "changeset:publish": "pnpm changeset:prepublish && changeset publish",
     "changeset:version": "changeset version && pnpm version:update && pnpm format",
     "check": "biome check --write",
-    "check:repo": "sherif -i viem",
+    "check:repo": "sherif -i viem -p engine-tests",
     "check:types": "pnpm run --r --parallel check:types && tsgo --noEmit",
     "check:types:typescript": "pnpm -r --parallel --filter './packages/*' --filter './packages/register-tests/*' exec tsc --noEmit && tsc --noEmit",
     "check:unused": "pnpm clean && knip",
@@ -91,6 +91,7 @@
       "scripts/**"
     ],
     "ignoreWorkspaces": [
+      "packages/engine-tests",
       "packages/register-tests/**",
       "packages/test",
       "playgrounds/**",

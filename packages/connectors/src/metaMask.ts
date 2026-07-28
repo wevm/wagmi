@@ -322,55 +322,55 @@ export function metaMask(parameters: MetaMaskParameters = {}) {
     async getInstance() {
       if (!metamask) {
         if (!metamaskPromise) {
-          const { createEVMClient } = await (async () => {
-            try {
-              return import(
-                /* turbopackOptional: true */
-                '@metamask/connect-evm'
-              )
-            } catch {
-              throw new Error('dependency "@metamask/connect-evm" not found')
-            }
-          })()
-          const defaultDappParams =
-            typeof window === 'undefined'
-              ? { name: 'wagmi' }
-              : { name: window.location.hostname, url: window.location.href }
+          // safe webpack optional peer dependency dynamic import
+          try {
+            const { createEVMClient } = await import(
+              /* turbopackOptional: true */
+              '@metamask/connect-evm'
+            )
+            const defaultDappParams =
+              typeof window === 'undefined'
+                ? { name: 'wagmi' }
+                : { name: window.location.hostname, url: window.location.href }
 
-          metamaskPromise = createEVMClient({
-            ...parameters,
-            skipAutoAnnounce: true,
-            api: {
-              supportedNetworks: Object.fromEntries(
-                config.chains.map((chain) => [
-                  numberToHex(chain.id),
-                  chain.rpcUrls.default?.http[0] ?? '',
-                ]),
-              ),
-            },
-            dapp: parameters.dapp ?? {
-              ...defaultDappParams,
-              ...parameters.dappMetadata,
-            },
-            debug: parameters.debug ?? parameters.logging?.sdk,
-            eventHandlers: {
-              accountsChanged: this.onAccountsChanged.bind(this),
-              chainChanged: this.onChainChanged.bind(this),
-              connect: this.onConnect.bind(this),
-              disconnect: this.onDisconnect.bind(this),
-              displayUri: this.onDisplayUri.bind(this),
-            },
-            analytics: {
-              integrationType: 'wagmi',
-            },
-            ui: {
-              ...parameters.ui,
-              ...(parameters.headless != null && {
-                headless: parameters.headless,
-              }),
-            },
-            ...(parameters.mobile && { mobile: parameters.mobile }),
-          })
+            metamaskPromise = createEVMClient({
+              ...parameters,
+              skipAutoAnnounce: true,
+              api: {
+                supportedNetworks: Object.fromEntries(
+                  config.chains.map((chain) => [
+                    numberToHex(chain.id),
+                    chain.rpcUrls.default?.http[0] ?? '',
+                  ]),
+                ),
+              },
+              dapp: parameters.dapp ?? {
+                ...defaultDappParams,
+                ...parameters.dappMetadata,
+              },
+              debug: parameters.debug ?? parameters.logging?.sdk,
+              eventHandlers: {
+                accountsChanged: this.onAccountsChanged.bind(this),
+                chainChanged: this.onChainChanged.bind(this),
+                connect: this.onConnect.bind(this),
+                disconnect: this.onDisconnect.bind(this),
+                displayUri: this.onDisplayUri.bind(this),
+              },
+              analytics: {
+                integrationType: 'wagmi',
+              },
+              ui: {
+                ...parameters.ui,
+                ...(parameters.headless != null && {
+                  headless: parameters.headless,
+                }),
+              },
+              ...(parameters.mobile && { mobile: parameters.mobile }),
+            })
+          } catch (error) {
+            // biome-ignore lint/complexity/noUselessCatch: try block marks dependency as optional for webpack
+            throw error
+          }
         }
         metamask = await metamaskPromise
       }

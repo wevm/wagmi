@@ -102,28 +102,14 @@ export function porto(parameters: PortoParameters = {}) {
 
         try {
           if (!accounts?.length && !isReconnecting) {
-            const { RpcSchema } = await (() => {
-              // safe webpack optional peer dependency dynamic import
-              try {
-                return import(
-                  /* turbopackOptional: true */
-                  'porto'
-                )
-              } catch {
-                throw new Error('dependency "porto" not found')
-              }
-            })()
-            const { z } = await (() => {
-              // safe webpack optional peer dependency dynamic import
-              try {
-                return import(
-                  /* turbopackOptional: true */
-                  'porto/internal'
-                )
-              } catch {
-                throw new Error('dependency "porto/internal" not found')
-              }
-            })()
+            const { RpcSchema } = await import(
+              /* turbopackOptional: true */
+              'porto'
+            )
+            const { z } = await import(
+              /* turbopackOptional: true */
+              'porto/internal'
+            )
             const res = await provider.request({
               method: 'wallet_connect',
               params: [
@@ -227,26 +213,25 @@ export function porto(parameters: PortoParameters = {}) {
       },
       async getPortoInstance() {
         porto_promise ??= (async () => {
-          const { Porto } = await (() => {
-            // safe webpack optional peer dependency dynamic import
-            try {
-              return import(
-                /* turbopackOptional: true */
-                'porto'
-              )
-            } catch {
-              throw new Error('dependency "porto" not found')
-            }
-          })()
-          // @ts-ignore
-          return Porto.create({
-            ...parameters,
-            announceProvider: false,
+          // safe webpack optional peer dependency dynamic import
+          try {
+            const { Porto } = await import(
+              /* turbopackOptional: true */
+              'porto'
+            )
             // @ts-ignore
-            chains,
-            // @ts-ignore
-            transports,
-          })
+            return Porto.create({
+              ...parameters,
+              announceProvider: false,
+              // @ts-ignore
+              chains,
+              // @ts-ignore
+              transports,
+            })
+          } catch (error) {
+            // biome-ignore lint/complexity/noUselessCatch: try block marks dependency as optional for webpack
+            throw error
+          }
         })()
         return await porto_promise
       },
