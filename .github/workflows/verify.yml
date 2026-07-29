@@ -69,6 +69,9 @@ jobs:
       - name: Publint
         run: pnpm test:build
 
+      - name: Engine tests
+        run: pnpm --filter engine-tests test
+
       - name: Check for unused files, dependencies, and exports
         run: pnpm knip --production
 

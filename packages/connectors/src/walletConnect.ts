@@ -270,35 +270,32 @@ export function walletConnect(parameters: WalletConnectParameters) {
       async function initProvider() {
         const optionalChains = config.chains.map((x) => x.id) as [number]
         if (!optionalChains.length) return
-        const { EthereumProvider } = await (() => {
-          // safe webpack optional peer dependency dynamic import
-          try {
-            return import(
-              /* turbopackOptional: true */
-              '@walletconnect/ethereum-provider'
-            )
-          } catch {
-            throw new Error(
-              'dependency "@walletconnect/ethereum-provider" not found',
-            )
-          }
-        })()
-        return await EthereumProvider.init({
-          ...parameters,
-          disableProviderPing: true,
-          optionalChains,
-          projectId: parameters.projectId,
-          rpcMap: Object.fromEntries(
-            config.chains.map((chain) => {
-              const [url] = extractRpcUrls({
-                chain,
-                transports: config.transports,
-              })
-              return [chain.id, url]
-            }),
-          ),
-          showQrModal: parameters.showQrModal ?? true,
-        })
+        // safe webpack optional peer dependency dynamic import
+        try {
+          const { EthereumProvider } = await import(
+            /* turbopackOptional: true */
+            '@walletconnect/ethereum-provider'
+          )
+          return await EthereumProvider.init({
+            ...parameters,
+            disableProviderPing: true,
+            optionalChains,
+            projectId: parameters.projectId,
+            rpcMap: Object.fromEntries(
+              config.chains.map((chain) => {
+                const [url] = extractRpcUrls({
+                  chain,
+                  transports: config.transports,
+                })
+                return [chain.id, url]
+              }),
+            ),
+            showQrModal: parameters.showQrModal ?? true,
+          })
+        } catch (error) {
+          // biome-ignore lint/complexity/noUselessCatch: try block marks dependency as optional for webpack
+          throw error
+        }
       }
 
       if (!provider_) {
