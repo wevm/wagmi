@@ -8,7 +8,7 @@ import {
   tempo,
   tempoTestnet,
 } from 'wagmi/chains'
-import { baseAccount, metaMask, porto, walletConnect } from 'wagmi/connectors'
+import { baseAccount, metaMask, walletConnect } from 'wagmi/connectors'
 import { tempoWallet } from 'wagmi/tempo'
 
 const indexedDBStorage = {
@@ -29,7 +29,6 @@ export const config = createConfig({
     walletConnect({
       projectId: import.meta.env.VITE_WC_PROJECT_ID,
     }),
-    porto(),
     baseAccount(),
     tempoWallet(),
     metaMask({ ui: { headless: true } }),
