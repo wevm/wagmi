@@ -91,7 +91,7 @@ overrides:
   bn.js@>=5.0.0 <5.2.3: 5.2.3
   brace-expansion@<1.1.13: '>=1.1.13'
   brace-expansion@>=2.0.0 <2.0.3: '>=2.0.3'
-  brace-expansion@>=5.0.0 <5.0.8: 5.0.8
+  brace-expansion@>=5.0.0 <5.0.9: 5.0.9
   cookie@<0.7.0: 0.7.0
   defu@<=6.1.4: '>=6.1.5'
   devalue@<5.6.4: 5.6.4
@@ -115,7 +115,7 @@ overrides:
   markdown-it@>=13.0.0 <14.2.0: 14.2.0
   mdast-util-to-hast@<13.2.1: '>=13.2.1'
   minimatch@<3.1.4: 3.1.4
-  minimatch@5.1.8>brace-expansion: 5.0.8
+  minimatch@5.1.8>brace-expansion: 5.0.9
   minimatch@>=10.0.0 <10.2.3: 10.2.3
   minimatch@>=5.0.0 <5.1.8: 5.1.8
   minimatch@>=9.0.0 <9.0.7: 9.0.7
@@ -124,7 +124,7 @@ overrides:
   node-forge@<1.4.0: '>=1.4.0'
   picomatch@<2.3.2: '>=2.3.2'
   picomatch@>=4.0.0 <4.0.4: '>=4.0.4'
-  postcss@<8.5.18: 8.5.18
+  postcss@<8.5.23: 8.5.23
   protobufjs@<8.6.6: 8.6.6
   rollup@>=4.0.0 <4.59.0: 4.59.0
   semver@<5.7.2: '>=5.7.2'
@@ -138,8 +138,8 @@ overrides:
   svgo@>=4.0.0 <4.0.2: 4.0.2
   tar@<=7.5.20: 7.5.21
   tmp@<0.2.7: 0.2.7
-  undici@<6.27.0: 6.27.0
-  undici@>=7.0.0 <7.28.0: 7.28.0
+  undici@<6.28.0: 6.28.0
+  undici@>=7.0.0 <7.29.0: 7.29.0
   unhead@<2.1.13: 2.1.13
   uuid@<14.0.0: 14.0.0
   vite@>=5.0.0 <6.4.3: 6.4.3
