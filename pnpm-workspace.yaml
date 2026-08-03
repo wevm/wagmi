@@ -47,7 +47,6 @@ catalog:
   buffer: 6.0.3
   nuxt: 4.4.8
   ox: 0.11.1
-  porto: 0.2.37
   react: 19.2.0
   react-dom: 19.2.0
   solid-js: 1.9.10
@@ -73,7 +72,6 @@ minimumReleaseAgeExclude:
   - abitype
   - devalue
   - ox
-  - porto
   - hono
   - mppx
   - prool

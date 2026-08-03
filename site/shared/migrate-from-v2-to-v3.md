@@ -10,7 +10,7 @@ const docsPath = 'react'
 
 All connector dependencies are now optional peer dependencies. This means that if you want to use a specific connector, you need to install its required dependencies. 
 
-For example, if you are using the <a :href="`/${docsPath}/api/connectors/porto`">`porto`</a> connector, you also need to install the `porto` npm package. Required connector dependencies are listed below (along with links to npm, GitHub, [Socket](https://socket.dev), and licenses) and on docs pages under the "Install" section.
+For example, if you are using the <a :href="`/${docsPath}/api/connectors/baseAccount`">`baseAccount`</a> connector, you also need to install the `@base-org/account` npm package. Required connector dependencies are listed below (along with links to npm, GitHub, [Socket](https://socket.dev), and licenses) and on docs pages under the "Install" section.
 
 :::tip Secure your supply-chain
 Since you are now responsible for managing connector dependencies, take a look at Wagmi's <a :href="`/${docsPath}/installation#security`">Security Getting Started</a> section to brush up on some best practices.
@@ -89,30 +89,6 @@ yarn add @metamask/connect-evm@{{packageJson?.peerDependencies?.['@metamask/conn
 
 ```bash-vue [bun]
 bun add @metamask/connect-evm@{{packageJson?.peerDependencies?.['@metamask/connect-evm']}}
-```
-:::
-
-### porto
-
-<a :href="`/${docsPath}/api/connectors/porto`">`porto`</a> requires `porto`
-
-<PackageMetadata package="porto" repo="ithacaxyz/porto" isOsiLicense licenseUrl="https://github.com/ithacaxyz/porto/blob/main/LICENSE-MIT" />
-
-::: code-group
-```bash-vue [pnpm]
-pnpm add porto@{{packageJson?.peerDependencies?.['porto']}}
-```
-
-```bash-vue [npm]
-npm install porto@{{packageJson?.peerDependencies?.['porto']}}
-```
-
-```bash-vue [yarn]
-yarn add porto@{{packageJson?.peerDependencies?.['porto']}}
-```
-
-```bash-vue [bun]
-bun add porto@{{packageJson?.peerDependencies?.['porto']}}
 ```
 :::
 

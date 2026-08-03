@@ -9,7 +9,6 @@ const connectors = [
   'injected',
   'metaMask',
   'mock',
-  'porto',
   'safe',
   'tempoWallet',
   'walletConnect',
