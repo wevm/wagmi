@@ -1,5 +1,11 @@
 # @wagmi/connectors
 
+## 8.1.0
+
+### Minor Changes
+
+- **Breaking:** Removed the deprecated `porto` connector following its sunset. ([#5214](https://github.com/wevm/wagmi/pull/5214))
+
 ## 8.0.26
 
 ### Patch Changes
