@@ -1,7 +1,7 @@
 {
   "name": "@wagmi/connectors",
   "description": "Collection of connectors for Wagmi",
-  "version": "8.0.26",
+  "version": "8.1.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -43,7 +43,6 @@
     "@wagmi/core": "workspace:*",
     "@walletconnect/ethereum-provider": "^2.21.1",
     "accounts": "~0.14",
-    "porto": "~0.2.35",
     "typescript": ">=5.9.3",
     "viem": "2.x"
   },
@@ -69,9 +68,6 @@
     "accounts": {
       "optional": true
     },
-    "porto": {
-      "optional": true
-    },
     "typescript": {
       "optional": true
     }
@@ -85,8 +81,7 @@
     "@wagmi/core": "workspace:*",
     "@walletconnect/ethereum-provider": "catalog:",
     "accounts": "catalog:",
-    "msw": "^2.4.9",
-    "porto": "catalog:"
+    "msw": "^2.4.9"
   },
   "contributors": [
     "awkweb.eth <t@wevm.dev>",

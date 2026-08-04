@@ -1,11 +1,6 @@
 import { createConfig, http } from '@wagmi/solid'
 import { celo, mainnet, optimism, sepolia } from '@wagmi/solid/chains'
-import {
-  baseAccount,
-  metaMask,
-  porto,
-  walletConnect,
-} from '@wagmi/solid/connectors'
+import { baseAccount, metaMask, walletConnect } from '@wagmi/solid/connectors'
 
 export const config = createConfig({
   chains: [mainnet, sepolia, optimism, celo],
@@ -13,7 +8,6 @@ export const config = createConfig({
     walletConnect({
       projectId: import.meta.env.VITE_WC_PROJECT_ID,
     }),
-    porto(),
     baseAccount(),
     metaMask(),
   ],
