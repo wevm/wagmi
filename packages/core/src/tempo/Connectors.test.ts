@@ -106,6 +106,38 @@ describe('tempoWallet', () => {
   })
 })
 
+describe('getProvider', () => {
+  test('resolves when dynamic import returns a then-only thenable', async () => {
+    const config = createConfig({
+      chains: [tempoLocal],
+      connectors: [],
+      storage: null,
+      transports: {
+        [tempoLocal.id]: http(),
+      },
+    })
+
+    const address = accounts[0]!.address
+    const dialog = createTempoWalletDialog(address)
+    const storage = AccountsStorage.memory({ key: 'tempo-metro-test' })
+
+    const originalCatch = Promise.prototype.catch
+    let provider: Promise<unknown>
+    // @ts-expect-error Simulate Metro's then-only dynamic import result.
+    Promise.prototype.catch = undefined
+    try {
+      const connector = config._internal.connectors.setup(
+        tempoWallet({ dialog, storage }),
+      )
+      provider = connector.getProvider()
+    } finally {
+      Promise.prototype.catch = originalCatch
+    }
+
+    await expect(provider).resolves.toBeDefined()
+  })
+})
+
 describe('webAuthn', () => {
   describe('register with authorizeAccessKey', () => {
     test('passes chainId to signKeyAuthorization', async (context) => {
