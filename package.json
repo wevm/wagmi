@@ -65,7 +65,7 @@
     "solid-js": "catalog:",
     "testcontainers": "^11.13.0",
     "typescript": "^5.9.3",
-    "viem": "2.55.7",
+    "viem": "https://pkg.pr.new/viem@729d59eb43b6d92461346d1d733af0d84f67386c",
     "vite": "catalog:",
     "vite-plugin-react-fallback-throttle": "^0.1.3",
     "vite-plugin-solid": "catalog:",

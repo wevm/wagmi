@@ -29,6 +29,7 @@ async function getPreparedEncryptedDeposit() {
       bouncebackRecipient: accounts[0].address,
       portalAddress,
       recipient: accounts[0].address,
+      sender: accounts[0].address,
       token: depositToken,
       zoneId,
     },
