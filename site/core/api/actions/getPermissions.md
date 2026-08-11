@@ -59,10 +59,10 @@ const permissions = await getPermissions(config, {
 
 ::: code-group
 ```ts [index.ts]
-import { getAccount, getPermissions } from '@wagmi/core'
+import { getConnection, getPermissions } from '@wagmi/core'
 import { config } from './config'
 
-const { connector } = getAccount(config)
+const { connector } = getConnection(config)
 const permissions = await getPermissions(config, {
   connector, // [!code focus]
 })
