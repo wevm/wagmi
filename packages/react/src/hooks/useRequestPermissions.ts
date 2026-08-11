@@ -5,7 +5,7 @@ import type {
   RequestPermissionsErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { Compute } from '@wagmi/core/internal'
+import type { Compute, ConfigParameter } from '@wagmi/core/internal'
 import {
   type RequestPermissionsData,
   type RequestPermissionsMutate,
@@ -14,7 +14,6 @@ import {
   type RequestPermissionsVariables,
   requestPermissionsMutationOptions,
 } from '@wagmi/core/query'
-import type { ConfigParameter } from '../types/properties.js'
 import type { UseMutationReturnType } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 

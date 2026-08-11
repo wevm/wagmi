@@ -34,6 +34,18 @@ const permissions = await requestPermissions(config,  {
 import { type RequestPermissionsParameters } from '@wagmi/core'
 ```
 
+### eth_accounts
+
+`Record<string, any>`
+
+Account permissions to request from the wallet.
+
+```ts
+const permissions = await requestPermissions(config, {
+  eth_accounts: {}, // [!code focus]
+})
+```
+
 ### connector
 
 `Connector | undefined`
@@ -75,4 +87,3 @@ import { type RequestPermissionsErrorType } from '@wagmi/core'
 ## Viem
 
 - [`requestPermissions`](https://viem.sh/docs/actions/wallet/requestPermissions.html)
-
