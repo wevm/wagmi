@@ -4,7 +4,11 @@ import type {
   ReadContractsErrorType,
   ResolvedRegister,
 } from '@wagmi/core'
-import type { Compute, ConfigParameter } from '@wagmi/core/internal'
+import type {
+  ChainIdParameter,
+  Compute,
+  ConfigParameter,
+} from '@wagmi/core/internal'
 import {
   type ReadContractsData,
   type ReadContractsOptions,
@@ -23,6 +27,7 @@ export type UseReadContractsParameters<
   selectData = ReadContractsData<contracts, allowFailure>,
 > = Compute<
   ReadContractsOptions<contracts, allowFailure, config, selectData> &
+    ChainIdParameter<config> &
     ConfigParameter<config>
 >
 
@@ -62,7 +67,7 @@ export function useReadContracts<
   }, [parameters.contracts])
   const options = readContractsQueryOptions(config, {
     ...parameters,
-    chainId: contractsChainId ?? chainId,
+    chainId: parameters.chainId ?? contractsChainId ?? chainId,
   })
   return useQuery(options) as any
 }

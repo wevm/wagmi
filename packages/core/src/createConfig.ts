@@ -90,16 +90,26 @@ export function createConfig<
   function setup(connectorFn: CreateConnectorFn): Connector {
     // Set up emitter with uid and add to connector so they are "linked" together.
     const emitter = createEmitter<ConnectorEventMap>(uid())
+    let rdns: string | readonly string[] | undefined
     const connector = {
       ...connectorFn({
         emitter,
         chains: chains.getState(),
+        get providers() {
+          if (!mipd || !rdns) return []
+          const rdnsValues = typeof rdns === 'string' ? [rdns] : rdns
+          const providers = mipd.getProviders()
+          return rdnsValues.flatMap((rdns) =>
+            providers.filter((provider) => provider.info.rdns === rdns),
+          )
+        },
         storage,
         transports: rest.transports,
       }),
       emitter,
       uid: emitter.uid,
     }
+    rdns = connector.rdns
 
     // Start listening for `connect` events on connector setup
     // This allows connectors to "connect" themselves without user interaction (e.g. MetaMask's "Manually connect to current site")

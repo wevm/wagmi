@@ -47,7 +47,7 @@ features:
     linkText: How to use TanStack Query
   - icon: 🌳
     title: Modular By Design
-    details: Don't use React or Vue? Use VanillaJS or build an adapter for your favorite framework.
+    details: Don't use React, Vue, Solid? Use VanillaJS or build an adapter for your favorite framework.
     link: /core/getting-started
     linkText: Learn about Wagmi Core
   - icon: ✌️

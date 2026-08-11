@@ -32,7 +32,7 @@ Wagmi Core supports the most popular and commonly-used Ethereum features out of 
 
 If you need lower-level control, you can always drop down to [Viem](https://viem.sh), which Wagmi Core uses internally to perform blockchain operations. Wagmi Core also manages multi-chain support automatically so developers can focus on their applications instead of adding custom code.
 
-Finally, Wagmi Core has a [CLI](/cli/getting-started) to manage ABIs as well as a robust ecosystem of third-party libraries, like [ConnectKit](https://docs.family.co/connectkit), [RainbowKit](https://www.rainbowkit.com), [AppKit](https://walletconnect.com/appkit), [Dynamic](https://www.dynamic.xyz), [Privy](https://privy.io), and many more, so you can get started quickly without needing to build everything from scratch.
+Finally, Wagmi Core has a [CLI](/cli/getting-started) to manage ABIs as well as a robust ecosystem of third-party libraries, like [ConnectKit](https://docs.family.co/connectkit), [Dynamic](https://www.dynamic.xyz), [Privy](https://privy.io), and many more, so you can get started quickly without needing to build everything from scratch.
 
 ## Stability
 

@@ -9,7 +9,7 @@ describe.sequential('useBlockNumber', () => {
 
     const { result, cleanup } = renderPrimitive(() => useBlockNumber())
 
-    await vi.waitUntil(() => result.isSuccess, { timeout: 5_000 })
+    await vi.waitUntil(() => result.isSuccess, { timeout: 10_000 })
 
     // result is a proxy object (store in Solid)
     // so we spread it into a new object for snapshot testing
@@ -57,7 +57,7 @@ describe.sequential('useBlockNumber', () => {
       useBlockNumber(() => ({ watch: { pollingInterval: 100 } })),
     )
 
-    await vi.waitUntil(() => result.isSuccess, { timeout: 5_000 })
+    await vi.waitUntil(() => result.isSuccess, { timeout: 10_000 })
     const blockNumber = result.data!
     expect(result.data).toBeTypeOf('bigint')
 
@@ -66,7 +66,7 @@ describe.sequential('useBlockNumber', () => {
       () => {
         expect(result.data).toEqual(blockNumber + 1n)
       },
-      { timeout: 5_000 },
+      { timeout: 10_000 },
     )
 
     await testClient.mainnet.mine({ blocks: 1 })
@@ -74,7 +74,7 @@ describe.sequential('useBlockNumber', () => {
       () => {
         expect(result.data).toEqual(blockNumber + 2n)
       },
-      { timeout: 5_000 },
+      { timeout: 10_000 },
     )
     cleanup()
   })

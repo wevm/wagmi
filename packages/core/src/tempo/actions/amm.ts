@@ -7,7 +7,11 @@ import type {
   ConnectorParameter,
 } from '../../types/properties.js'
 import type { UnionLooseOmit } from '../../types/utils.js'
-import type { QueryOptions, QueryParameter } from './utils.js'
+import type {
+  OptionalTransactionOverrides,
+  QueryOptions,
+  QueryParameter,
+} from './utils.js'
 import { filterQueryOptions } from './utils.js'
 
 /**
@@ -257,7 +261,9 @@ export declare namespace rebalanceSwap {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.amm.rebalanceSwap.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.amm.rebalanceSwap.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -314,9 +320,11 @@ export declare namespace rebalanceSwapSync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.amm.rebalanceSwapSync.Parameters<
-        config['chains'][number],
-        Account
+      OptionalTransactionOverrides<
+        Actions.amm.rebalanceSwapSync.Parameters<
+          config['chains'][number],
+          Account
+        >
       >,
       'chain'
     >
@@ -374,7 +382,9 @@ export declare namespace mint {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.amm.mint.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.amm.mint.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -431,7 +441,9 @@ export declare namespace mintSync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.amm.mintSync.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.amm.mintSync.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -488,7 +500,9 @@ export declare namespace burn {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.amm.burn.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.amm.burn.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 
@@ -545,7 +559,9 @@ export declare namespace burnSync {
   export type Parameters<config extends Config> = ChainIdParameter<config> &
     ConnectorParameter &
     UnionLooseOmit<
-      Actions.amm.burnSync.Parameters<config['chains'][number], Account>,
+      OptionalTransactionOverrides<
+        Actions.amm.burnSync.Parameters<config['chains'][number], Account>
+      >,
       'chain'
     >
 

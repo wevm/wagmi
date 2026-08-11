@@ -1,5 +1,10 @@
-import type { NuxtModule } from '@nuxt/schema'
-import { addImports, createResolver, defineNuxtModule } from 'nuxt/kit'
+import type { NuxtHooks, NuxtModule } from '@nuxt/schema'
+import {
+  addImports,
+  createResolver,
+  defineNuxtModule,
+  extendViteConfig,
+} from 'nuxt/kit'
 
 // biome-ignore lint/complexity/noBannedTypes: allowed
 export type WagmiModuleOptions = {}
@@ -17,8 +22,19 @@ export const wagmiModule: NuxtModule<WagmiModuleOptions> =
       const { resolve } = createResolver(import.meta.url)
 
       // Add types
-      nuxt.hook('prepare:types', ({ references }) => {
-        references.push({ types: '@wagmi/vue/nuxt' })
+      nuxt.hook(
+        'prepare:types',
+        (options: Parameters<NuxtHooks['prepare:types']>[0]) => {
+          const { references } = options
+          references.push({ types: '@wagmi/vue/nuxt' })
+        },
+      )
+
+      // Ensure CJS dependencies are pre-bundled for ESM compatibility
+      extendViteConfig((config) => {
+        config.optimizeDeps ??= {}
+        config.optimizeDeps.include ??= []
+        config.optimizeDeps.include.push('eventemitter3')
       })
 
       // Add auto imports

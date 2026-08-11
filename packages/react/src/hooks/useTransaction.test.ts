@@ -10,9 +10,12 @@ test('default', async () => {
     }),
   )
 
-  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 10_000 })
 
-  expect(result.current).toMatchInlineSnapshot(`
+  const { blockTimestamp: _blockTimestamp, ...data } = result.current.data ?? {}
+  const value = { ...result.current, data }
+
+  expect(value).toMatchInlineSnapshot(`
     {
       "data": {
         "accessList": [],

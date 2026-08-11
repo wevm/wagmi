@@ -270,32 +270,32 @@ export function walletConnect(parameters: WalletConnectParameters) {
       async function initProvider() {
         const optionalChains = config.chains.map((x) => x.id) as [number]
         if (!optionalChains.length) return
-        const { EthereumProvider } = await (() => {
-          // safe webpack optional peer dependency dynamic import
-          try {
-            return import('@walletconnect/ethereum-provider')
-          } catch {
-            throw new Error(
-              'dependency "@walletconnect/ethereum-provider" not found',
-            )
-          }
-        })()
-        return await EthereumProvider.init({
-          ...parameters,
-          disableProviderPing: true,
-          optionalChains,
-          projectId: parameters.projectId,
-          rpcMap: Object.fromEntries(
-            config.chains.map((chain) => {
-              const [url] = extractRpcUrls({
-                chain,
-                transports: config.transports,
-              })
-              return [chain.id, url]
-            }),
-          ),
-          showQrModal: parameters.showQrModal ?? true,
-        })
+        // safe webpack optional peer dependency dynamic import
+        try {
+          const { EthereumProvider } = await import(
+            /* turbopackOptional: true */
+            '@walletconnect/ethereum-provider'
+          )
+          return await EthereumProvider.init({
+            ...parameters,
+            disableProviderPing: true,
+            optionalChains,
+            projectId: parameters.projectId,
+            rpcMap: Object.fromEntries(
+              config.chains.map((chain) => {
+                const [url] = extractRpcUrls({
+                  chain,
+                  transports: config.transports,
+                })
+                return [chain.id, url]
+              }),
+            ),
+            showQrModal: parameters.showQrModal ?? true,
+          })
+        } catch (error) {
+          // biome-ignore lint/complexity/noUselessCatch: try block marks dependency as optional for webpack
+          throw error
+        }
       }
 
       if (!provider_) {
@@ -338,15 +338,12 @@ export function walletConnect(parameters: WalletConnectParameters) {
       const chain = config.chains.find((x) => x.id === chainId)
       if (!chain) throw new SwitchChainError(new ChainNotConfiguredError())
 
+      let listener: (opts: { chainId?: number | undefined }) => void = () => {}
       try {
         await Promise.all([
           new Promise<void>((resolve) => {
-            const listener = ({
-              chainId: currentChainId,
-            }: {
-              chainId?: number | undefined
-            }) => {
-              if (currentChainId === chainId) {
+            listener = (opts) => {
+              if (opts.chainId === chainId) {
                 config.emitter.off('change', listener)
                 resolve()
               }
@@ -364,6 +361,7 @@ export function walletConnect(parameters: WalletConnectParameters) {
 
         return chain
       } catch (err) {
+        config.emitter.off('change', listener)
         const error = err as RpcError
 
         if (/(user rejected)/i.test(error.message))

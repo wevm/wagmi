@@ -2,7 +2,7 @@
   "name": "@wagmi/test",
   "private": true,
   "scripts": {
-    "check:types": "tsc --noEmit",
+    "check:types": "tsgo --noEmit",
     "clean": "rm -rf dist tsconfig.tsbuildinfo"
   },
   "files": [
@@ -38,6 +38,10 @@
       "types": "./dist/types/exports/tempo.d.ts",
       "default": "./dist/esm/exports/tempo.js"
     },
+    "./tempo/zone": {
+      "types": "./dist/types/exports/tempo/zone.d.ts",
+      "default": "./dist/esm/exports/tempo/zone.js"
+    },
     "./vue": {
       "types": "./dist/types/exports/vue.d.ts",
       "default": "./dist/esm/exports/vue.js"
@@ -54,6 +58,9 @@
       ],
       "tempo": [
         "./dist/types/exports/tempo.d.ts"
+      ],
+      "tempo/zone": [
+        "./dist/types/exports/tempo/zone.d.ts"
       ],
       "vue": [
         "./dist/types/exports/vue.d.ts"
@@ -74,8 +81,8 @@
     "react": ">=18",
     "react-dom": ">=18",
     "solid-js": "1.x",
-    "typescript": ">=5.7.3",
-    "viem": "2.x",
+    "typescript": ">=5.9.3",
+    "viem": ">=2.49.2",
     "vue": ">=3",
     "wagmi": "workspace:*"
   },

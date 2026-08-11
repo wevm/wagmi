@@ -105,7 +105,7 @@ export const wagmiAbi = [
 ## Parameters
 
 ```ts
-import { type useDeployContractParameters } from 'wagmi'
+import { type UseDeployContractParameters } from 'wagmi'
 ```
 
 ### config
@@ -133,7 +133,7 @@ function App() {
 ## Return Type
 
 ```ts
-import { type useDeployContractReturnType } from 'wagmi'
+import { type UseDeployContractReturnType } from 'wagmi'
 ```
 
 <!--@include: @shared/mutation-result.md-->

@@ -1,10 +1,17 @@
 import { accounts, chain, config, testClient } from '@wagmi/test'
-import { parseEther } from 'viem'
+import { http, parseEther } from 'viem'
 import { beforeEach, expect, test } from 'vitest'
 
+import { createConfig } from '../createConfig.js'
 import { getBalance } from './getBalance.js'
 
 const address = accounts[0]
+
+const configWithoutMulticall = createConfig({
+  batch: { multicall: false },
+  chains: [chain.mainnet],
+  transports: { [chain.mainnet.id]: http() },
+})
 
 beforeEach(async () => {
   await testClient.mainnet.setBalance({
@@ -37,6 +44,21 @@ test('default', async () => {
       "decimals": 18,
       "symbol": "ETH",
       "value": 6969122222156660000000n,
+    }
+  `)
+})
+
+test('parameters: blockNumber 0 (genesis)', async () => {
+  // `blockNumber: 0n` is falsy but a valid block (genesis). Ensure it queries
+  // block 0 (where `address` has no balance) instead of falling back to
+  // `blockTag: 'latest'` (10000 ETH set in `beforeEach`).
+  await expect(
+    getBalance(configWithoutMulticall, { address, blockNumber: 0n }),
+  ).resolves.toMatchInlineSnapshot(`
+    {
+      "decimals": 18,
+      "symbol": "ETH",
+      "value": 0n,
     }
   `)
 })

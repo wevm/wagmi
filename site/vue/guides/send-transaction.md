@@ -1,6 +1,6 @@
 # Send Transaction
 
-The following guide teaches you how to send transactions in Wagmi. The example below builds on the [Connect Wallet guide](/vue/guides/connect-wallet) and uses the [useSendTransaction](/vue/api/composables/useSendTransaction) & [useWaitForTransaction](/vue/api/composables/useWaitForTransactionReceipt) composables. 
+The following guide teaches you how to send transactions in Wagmi. The example below builds on the [Connect Wallet guide](/vue/guides/connect-wallet) and uses the [useSendTransaction](/vue/api/composables/useSendTransaction) & [useWaitForTransactionReceipt](/vue/api/composables/useWaitForTransactionReceipt) composables. 
 
 ## Example
 

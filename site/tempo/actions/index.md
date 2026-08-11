@@ -21,16 +21,16 @@
 | [`nonce.getNonce`](/tempo/actions/nonce.getNonce) | Gets the nonce for an account and nonce key |
 | [`nonce.watchNonceIncremented`](/tempo/actions/nonce.watchNonceIncremented) | Watches for nonce incremented events |
 | **Policy Actions** | |
-| [`policy.create`](#TODO) | Creates a new transfer policy for token access control |
-| [`policy.getData`](#TODO) | Gets the data for a transfer policy, including its type and admin address |
-| [`policy.isAuthorized`](#TODO) | Checks if an address is authorized by a transfer policy |
-| [`policy.modifyBlacklist`](#TODO) | Modifies the blacklist for a blacklist-type transfer policy |
-| [`policy.modifyWhitelist`](#TODO) | Modifies the whitelist for a whitelist-type transfer policy |
-| [`policy.setAdmin`](#TODO) | Sets the admin for a transfer policy |
-| [`policy.watchAdminUpdated`](#TODO) | Watches for policy admin update events |
-| [`policy.watchBlacklistUpdated`](#TODO) | Watches for blacklist update events |
-| [`policy.watchCreate`](#TODO) | Watches for policy creation events |
-| [`policy.watchWhitelistUpdated`](#TODO) | Watches for whitelist update events |
+| [`policy.create`](/tempo/actions/policy.create) | Creates a new transfer policy for token access control |
+| [`policy.getData`](/tempo/actions/policy.getData) | Gets the data for a transfer policy, including its type and admin address |
+| [`policy.isAuthorized`](/tempo/actions/policy.isAuthorized) | Checks if an address is authorized by a transfer policy |
+| [`policy.modifyBlacklist`](/tempo/actions/policy.modifyBlacklist) | Modifies the blacklist for a blacklist-type transfer policy |
+| [`policy.modifyWhitelist`](/tempo/actions/policy.modifyWhitelist) | Modifies the whitelist for a whitelist-type transfer policy |
+| [`policy.setAdmin`](/tempo/actions/policy.setAdmin) | Sets the admin for a transfer policy |
+| [`policy.watchAdminUpdated`](/tempo/actions/policy.watchAdminUpdated) | Watches for policy admin update events |
+| [`policy.watchBlacklistUpdated`](/tempo/actions/policy.watchBlacklistUpdated) | Watches for blacklist update events |
+| [`policy.watchCreate`](/tempo/actions/policy.watchCreate) | Watches for policy creation events |
+| [`policy.watchWhitelistUpdated`](/tempo/actions/policy.watchWhitelistUpdated) | Watches for whitelist update events |
 | **Reward Actions** | |
 | [`reward.claim`](/tempo/actions/reward.claim) | Claims accumulated rewards for the caller |
 | [`reward.getUserRewardInfo`](/tempo/actions/reward.getUserRewardInfo) | Gets reward information for a specific account |
@@ -80,3 +80,17 @@
 | [`token.watchMint`](/tempo/actions/token.watchMint) | Watches for token mint events |
 | [`token.watchRole`](/tempo/actions/token.watchRole) | Watches for role membership update events |
 | [`token.watchTransfer`](/tempo/actions/token.watchTransfer) | Watches for token transfer events |
+| **Wallet Actions** | |
+| [`wallet.deposit`](/tempo/actions/wallet.deposit) | Opens the wallet deposit flow with optional pre-filled deposit fields |
+| [`wallet.swap`](/tempo/actions/wallet.swap) | Opens the wallet swap flow with optional pre-filled swap fields |
+| [`wallet.transfer`](/tempo/actions/wallet.transfer) | Transfers a TIP-20 token |
+| **Zone Actions** | |
+| [`zone.deposit`](/tempo/actions/zone.deposit) | Deposits tokens from the parent Tempo chain into a zone |
+| [`zone.getAuthorizationTokenInfo`](/tempo/actions/zone.getAuthorizationTokenInfo) | Gets information about the current zone authorization token |
+| [`zone.encryptedDeposit`](/tempo/actions/zone.encryptedDeposit) | Deposits tokens into a zone with an encrypted recipient and memo |
+| [`zone.getWithdrawalFee`](/tempo/actions/zone.getWithdrawalFee) | Gets the withdrawal fee for a given gas limit |
+| [`zone.getZoneInfo`](/tempo/actions/zone.getZoneInfo) | Gets metadata and the latest imported Tempo block number for a zone |
+| [`zone.requestVerifiableWithdrawal`](/tempo/actions/zone.requestVerifiableWithdrawal) | Requests a verifiable withdrawal from a zone to the parent Tempo chain |
+| [`zone.requestWithdrawal`](/tempo/actions/zone.requestWithdrawal) | Requests a withdrawal from a zone to the parent Tempo chain |
+| [`zone.signAuthorizationToken`](/tempo/actions/zone.signAuthorizationToken) | Signs and stores a zone authorization token |
+| [`zone.waitForTempoBlock`](/tempo/actions/zone.waitForTempoBlock) | Waits for a zone to import a Tempo block |

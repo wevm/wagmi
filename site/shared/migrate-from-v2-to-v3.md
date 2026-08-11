@@ -10,7 +10,7 @@ const docsPath = 'react'
 
 All connector dependencies are now optional peer dependencies. This means that if you want to use a specific connector, you need to install its required dependencies. 
 
-For example, if you are using the <a :href="`/${docsPath}/api/connectors/porto`">`porto`</a> connector, you also need to install the `porto` npm package. Required connector dependencies are listed below (along with links to npm, GitHub, [Socket](https://socket.dev), and licenses) and on docs pages under the "Install" section.
+For example, if you are using the <a :href="`/${docsPath}/api/connectors/baseAccount`">`baseAccount`</a> connector, you also need to install the `@base-org/account` npm package. Required connector dependencies are listed below (along with links to npm, GitHub, [Socket](https://socket.dev), and licenses) and on docs pages under the "Install" section.
 
 :::tip Secure your supply-chain
 Since you are now responsible for managing connector dependencies, take a look at Wagmi's <a :href="`/${docsPath}/installation#security`">Security Getting Started</a> section to brush up on some best practices.
@@ -68,75 +68,27 @@ bun add @coinbase/wallet-sdk@{{packageJson?.peerDependencies?.['@coinbase/wallet
 ```
 :::
 
-### gemini
-
-<a :href="`/${docsPath}/api/connectors/gemini`">`gemini`</a> requires `@gemini-wallet/core`
-
-<PackageMetadata package="@gemini-wallet/core" repo="gemini/gemini-wallet-core" isOsiLicense licenseUrl="https://github.com/gemini/gemini-wallet-core/blob/main/LICENSE" />
-
-::: code-group
-```bash-vue [pnpm]
-pnpm add @gemini-wallet/core@{{packageJson?.peerDependencies?.['@gemini-wallet/core']}}
-```
-
-```bash-vue [npm]
-npm install @gemini-wallet/core@{{packageJson?.peerDependencies?.['@gemini-wallet/core']}}
-```
-
-```bash-vue [yarn]
-yarn add @gemini-wallet/core@{{packageJson?.peerDependencies?.['@gemini-wallet/core']}}
-```
-
-```bash-vue [bun]
-bun add @gemini-wallet/core@{{packageJson?.peerDependencies?.['@gemini-wallet/core']}}
-```
-:::
-
 ### metaMask
 
-<a :href="`/${docsPath}/api/connectors/metaMask`">`metaMask`</a> requires `@metamask/sdk`
+<a :href="`/${docsPath}/api/connectors/metaMask`">`metaMask`</a> requires `@metamask/connect-evm`
 
-<PackageMetadata package="@metamask/sdk" repo="MetaMask/metamask-sdk" licenseUrl="https://github.com/MetaMask/metamask-sdk/blob/main/packages/sdk/LICENSE" />
-
-::: code-group
-```bash-vue [pnpm]
-pnpm add @metamask/sdk@{{packageJson?.peerDependencies?.['@metamask/sdk']}}
-```
-
-```bash-vue [npm]
-npm install @metamask/sdk@{{packageJson?.peerDependencies?.['@metamask/sdk']}}
-```
-
-```bash-vue [yarn]
-yarn add @metamask/sdk@{{packageJson?.peerDependencies?.['@metamask/sdk']}}
-```
-
-```bash-vue [bun]
-bun add @metamask/sdk@{{packageJson?.peerDependencies?.['@metamask/sdk']}}
-```
-:::
-
-### porto
-
-<a :href="`/${docsPath}/api/connectors/porto`">`porto`</a> requires `porto`
-
-<PackageMetadata package="porto" repo="ithacaxyz/porto" isOsiLicense licenseUrl="https://github.com/ithacaxyz/porto/blob/main/LICENSE-MIT" />
+<PackageMetadata package="@metamask/connect-evm" repo="MetaMask/connect-monorepo" isOsiLicense licenseUrl="https://github.com/MetaMask/connect-monorepo/blob/main/packages/connect-evm/LICENSE" />
 
 ::: code-group
 ```bash-vue [pnpm]
-pnpm add porto@{{packageJson?.peerDependencies?.['porto']}}
+pnpm add @metamask/connect-evm@{{packageJson?.peerDependencies?.['@metamask/connect-evm']}}
 ```
 
 ```bash-vue [npm]
-npm install porto@{{packageJson?.peerDependencies?.['porto']}}
+npm install @metamask/connect-evm@{{packageJson?.peerDependencies?.['@metamask/connect-evm']}}
 ```
 
 ```bash-vue [yarn]
-yarn add porto@{{packageJson?.peerDependencies?.['porto']}}
+yarn add @metamask/connect-evm@{{packageJson?.peerDependencies?.['@metamask/connect-evm']}}
 ```
 
 ```bash-vue [bun]
-bun add porto@{{packageJson?.peerDependencies?.['porto']}}
+bun add @metamask/connect-evm@{{packageJson?.peerDependencies?.['@metamask/connect-evm']}}
 ```
 :::
 
@@ -192,7 +144,7 @@ bun add @walletconnect/ethereum-provider@{{packageJson?.peerDependencies?.['@wal
 
 ## Bumped Minimum TypeScript Version
 
-The minimum supported TypeScript version is now `5.7.3` instead of `5.0.4`. Older versions of TypeScript should continue to work, but since [TypeScript doesn't follow semver](https://www.learningtypescript.com/articles/why-typescript-doesnt-follow-strict-semantic-versioning) we recommend you update to at least `5.7.3`. This should be relatively simple as there haven't been any breaking changes since `5.0.4`.
+The minimum supported TypeScript version is now `5.9.3` instead of `5.0.4`. Older versions of TypeScript should continue to work, but since [TypeScript doesn't follow semver](https://www.learningtypescript.com/articles/why-typescript-doesnt-follow-strict-semantic-versioning) we recommend you update to at least `5.9.3`. This should be relatively simple as there haven't been any breaking changes since `5.0.4`.
 
 ## Migrate v2 Deprecations
 

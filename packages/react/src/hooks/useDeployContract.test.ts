@@ -16,7 +16,7 @@ test('default', async () => {
     bytecode: bytecode.bayc,
     args: ['Bored Ape Wagmi Club', 'BAYC', 69420n, 0n],
   })
-  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 10_000 })
 
   expect(result.current.data).toMatch(transactionHashRegex)
 

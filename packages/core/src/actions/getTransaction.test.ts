@@ -4,11 +4,12 @@ import { expect, test } from 'vitest'
 import { getTransaction } from './getTransaction.js'
 
 test('default', async () => {
-  await expect(
-    getTransaction(config, {
-      hash: '0xa559259bd2d0e8372421e222ff3545f705b5da60005bd787a23c2e68d6d7fefd',
-    }),
-  ).resolves.toMatchInlineSnapshot(`
+  const result = await getTransaction(config, {
+    hash: '0xa559259bd2d0e8372421e222ff3545f705b5da60005bd787a23c2e68d6d7fefd',
+  })
+  const { blockTimestamp: _blockTimestamp, ...value } = result
+
+  expect(value).toMatchInlineSnapshot(`
     {
       "accessList": [],
       "blockHash": "0x61c4e868008b465addd7c0a5da03db28bb9911597c58e239a85dd14dd43fd56a",

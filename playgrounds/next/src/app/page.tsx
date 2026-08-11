@@ -63,7 +63,7 @@ export default function App() {
 
 function Connection() {
   const connection = useConnection()
-  const { disconnect } = useDisconnect()
+  const { mutate: disconnect } = useDisconnect()
   const { data: ensName } = useEnsName({
     address: connection.address,
   })
@@ -91,7 +91,7 @@ function Connection() {
 
 function Connect() {
   const chainId = useChainId()
-  const { connect, status, error } = useConnect()
+  const { mutate: connect, status, error } = useConnect()
   const connectors = useConnectors()
 
   return (
@@ -114,7 +114,7 @@ function Connect() {
 
 function SwitchConnection() {
   const connection = useConnection()
-  const { switchConnection } = useSwitchConnection()
+  const { mutate: switchConnection } = useSwitchConnection()
   const connections = useConnections()
 
   return (
@@ -137,7 +137,7 @@ function SwitchConnection() {
 
 function SwitchChain() {
   const chainId = useChainId()
-  const { switchChain, error } = useSwitchChain()
+  const { mutate: switchChain, error } = useSwitchChain()
   const chains = useChains()
 
   return (
@@ -161,7 +161,7 @@ function SwitchChain() {
 }
 
 function SignMessage() {
-  const { data, signMessage } = useSignMessage()
+  const { data, mutate: signMessage } = useSignMessage()
 
   return (
     <div>
@@ -264,7 +264,12 @@ function ConnectorClient() {
 }
 
 function SendTransaction() {
-  const { data: hash, error, isPending, sendTransaction } = useSendTransaction()
+  const {
+    data: hash,
+    error,
+    isPending,
+    mutate: sendTransaction,
+  } = useSendTransaction()
 
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -353,7 +358,12 @@ function ReadContracts() {
 }
 
 function WriteContract() {
-  const { data: hash, error, isPending, writeContract } = useWriteContract()
+  const {
+    data: hash,
+    error,
+    isPending,
+    mutate: writeContract,
+  } = useWriteContract()
 
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()

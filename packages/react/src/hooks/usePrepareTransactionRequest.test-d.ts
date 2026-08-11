@@ -25,3 +25,18 @@ test('parameters: config', () => {
   })
   if (result.data) expectTypeOf(result.data.chainId).toEqualTypeOf<456>()
 })
+
+test('parameters: calls without to', () => {
+  const result = usePrepareTransactionRequest({
+    calls: [
+      {
+        to: '0x0000000000000000000000000000000000000000',
+        data: '0xa9059cbb',
+      },
+    ],
+  })
+
+  expectTypeOf(result.data).toMatchTypeOf<
+    PrepareTransactionRequestReturnType | undefined
+  >()
+})

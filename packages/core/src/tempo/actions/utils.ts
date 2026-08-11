@@ -1,5 +1,22 @@
 import type * as Query from '@tanstack/query-core'
-import type { RequiredBy, UnionLooseOmit } from '../../types/utils.js'
+import type {
+  PartialBy,
+  RequiredBy,
+  UnionLooseOmit,
+} from '../../types/utils.js'
+
+export type OptionalTransactionOverrides<parameters> = parameters extends object
+  ? PartialBy<
+      parameters,
+      Extract<TransactionOverrideParameter, keyof parameters>
+    >
+  : parameters
+type TransactionOverrideParameter =
+  | 'account'
+  | 'gas'
+  | 'maxFeePerGas'
+  | 'maxPriorityFeePerGas'
+  | 'nonce'
 
 export type QueryParameter<
   queryFnData = unknown,

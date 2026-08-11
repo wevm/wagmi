@@ -114,7 +114,7 @@ test('parameters: root', async () => {
   const { dir } = await createFixture()
   const spy = vi.spyOn(process, 'cwd')
   spy.mockImplementation(() => dir)
-  mkdir(resolve(dir, 'foo'))
+  await mkdir(resolve(dir, 'foo'))
 
   const configFile = await init({
     root: 'foo/',

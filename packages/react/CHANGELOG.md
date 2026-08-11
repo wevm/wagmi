@@ -1,5 +1,317 @@
 # wagmi
 
+## 3.7.6
+
+### Patch Changes
+
+- Updated dependencies [[`77e4566`](https://github.com/wevm/wagmi/commit/77e4566c736df1c216568532deeb5e295541d608)]:
+  - @wagmi/connectors@8.1.0
+
+## 3.7.5
+
+### Patch Changes
+
+- Updated dependencies [[`a3c5483`](https://github.com/wevm/wagmi/commit/a3c5483b7c32f0eba1632f537f62688b5c23d546)]:
+  - @wagmi/connectors@8.0.26
+
+## 3.7.4
+
+### Patch Changes
+
+- **Breaking (`wagmi/tempo`):** Removed `Hooks.zone.useDepositStatus` to align with the current Tempo Zone API. Use `Hooks.zone.useWaitForTempoBlock` to wait for a block import, or use `Hooks.zone.useZoneInfo` and inspect `tempoBlockNumber` for a one-shot read. ([#5204](https://github.com/wevm/wagmi/pull/5204))
+
+- Updated dependencies [[`0a8eb51`](https://github.com/wevm/wagmi/commit/0a8eb51805bca0f684ad7bc1851c6ad6ba806ba2), [`bfa70e3`](https://github.com/wevm/wagmi/commit/bfa70e36ef420ef6b3546e7dd74a22f51835d25a)]:
+  - @wagmi/core@3.6.4
+  - @wagmi/connectors@8.0.25
+
+## 3.7.3
+
+### Patch Changes
+
+- Updated dependencies [[`57ac9b0`](https://github.com/wevm/wagmi/commit/57ac9b0a4b31d02875fc4ae7f76bb785e3d17fd6)]:
+  - @wagmi/core@3.6.3
+  - @wagmi/connectors@8.0.24
+
+## 3.7.2
+
+### Patch Changes
+
+- Fixed Tempo Zone hook compatibility with Viem 2.55.2. ([#5198](https://github.com/wevm/wagmi/pull/5198))
+
+- Updated dependencies [[`54497eb`](https://github.com/wevm/wagmi/commit/54497eb43667829c8abd9f90ad9093b2ec6afe09)]:
+  - @wagmi/core@3.6.2
+  - @wagmi/connectors@8.0.23
+
+## 3.7.1
+
+### Patch Changes
+
+- Updated dependencies [[`18e9421`](https://github.com/wevm/wagmi/commit/18e94210c6d394a9049b42e5d016b30a50a5154b)]:
+  - @wagmi/core@3.6.1
+  - @wagmi/connectors@8.0.22
+
+## 3.7.0
+
+### Minor Changes
+
+- **Breaking (wagmi/tempo):** Updated Tempo APIs for viem 2.54.0: token balance and allowance reads now return `Amount` objects. ([#5188](https://github.com/wevm/wagmi/pull/5188))
+
+### Patch Changes
+
+- Updated dependencies [[`a45049e`](https://github.com/wevm/wagmi/commit/a45049ea060adb3326bab3f4fe3ef681013d9c63)]:
+  - @wagmi/core@3.6.0
+  - @wagmi/connectors@8.0.21
+
+## 3.6.21
+
+### Patch Changes
+
+- Fixed Tempo types so transaction override parameters are optional. ([#5171](https://github.com/wevm/wagmi/pull/5171))
+
+- Updated dependencies [[`1d6989e`](https://github.com/wevm/wagmi/commit/1d6989e4692ba70a0fbd6b353fe1294c54824a69)]:
+  - @wagmi/core@3.5.5
+  - @wagmi/connectors@8.0.20
+
+## 3.6.20
+
+### Patch Changes
+
+- Fixed Tempo Zone types for optional fields. ([#5167](https://github.com/wevm/wagmi/pull/5167))
+
+- Updated dependencies [[`f0b78c3`](https://github.com/wevm/wagmi/commit/f0b78c3cc1b298134497d157543816f8c7bf007d)]:
+  - @wagmi/core@3.5.4
+  - @wagmi/connectors@8.0.19
+
+## 3.6.19
+
+### Patch Changes
+
+- Added connector-specific subpath exports and marked optional connector dependency imports as optional for Turbopack resolution. ([#5165](https://github.com/wevm/wagmi/pull/5165))
+
+- Updated dependencies [[`05338be`](https://github.com/wevm/wagmi/commit/05338be96451fdc7eae4410fbe2b360605944f11), [`05338be`](https://github.com/wevm/wagmi/commit/05338be96451fdc7eae4410fbe2b360605944f11)]:
+  - @wagmi/connectors@8.0.18
+  - @wagmi/core@3.5.3
+
+## 3.6.18
+
+### Patch Changes
+
+- Updated dependencies [[`3e12a5e`](https://github.com/wevm/wagmi/commit/3e12a5e43e050101123afeedf44333373f03e9bf)]:
+  - @wagmi/connectors@8.0.17
+  - @wagmi/core@3.5.2
+
+## 3.6.17
+
+### Patch Changes
+
+- Updated dependencies [[`8e87bef`](https://github.com/wevm/wagmi/commit/8e87befe9d1b9fb3c93a3328e3ca3d036019bf71), [`a800b79`](https://github.com/wevm/wagmi/commit/a800b795f1829ee4ec8feeaed2a60c00f6b55464)]:
+  - @wagmi/connectors@8.0.16
+  - @wagmi/core@3.5.1
+
+## 3.6.16
+
+### Patch Changes
+
+- Updated dependencies [[`b029f1c`](https://github.com/wevm/wagmi/commit/b029f1cb2d89fa80c4f74d25a2f99c328bc4e8c7), [`df7bd38`](https://github.com/wevm/wagmi/commit/df7bd38954bd6f5dba3c5efe510ac3ada90c1403), [`df7bd38`](https://github.com/wevm/wagmi/commit/df7bd38954bd6f5dba3c5efe510ac3ada90c1403)]:
+  - @wagmi/connectors@9.0.0
+  - @wagmi/core@3.5.0
+
+## 3.6.15
+
+### Patch Changes
+
+- Handled malformed cookie state in `cookieToInitialState`. ([#5116](https://github.com/wevm/wagmi/pull/5116))
+
+- `wagmi/tempo`: Renamed `Actions.wallet.send` to `Actions.wallet.transfer` and `Hooks.wallet.useSend` to `Hooks.wallet.useTransfer`. ([#5121](https://github.com/wevm/wagmi/pull/5121))
+
+  Also bumps the `accounts` peer dependency to `~0.12`.
+
+  ```diff
+  - await Actions.wallet.send(config, {
+  -   to: '0x...',
+  -   token: '0x...',
+  -   value: '1.5',
+  - })
+  + await Actions.wallet.transfer(config, {
+  +   amount: '1.5',
+  +   to: '0x...',
+  +   token: '0x...',
+  + })
+  ```
+
+  ```diff
+  - const send = Hooks.wallet.useSend()
+  + const transfer = Hooks.wallet.useTransfer()
+  ```
+
+- Updated dependencies [[`f1e6d70`](https://github.com/wevm/wagmi/commit/f1e6d702327180699b40cd55e3fd6daa13ca3bbd), [`4c44cd0`](https://github.com/wevm/wagmi/commit/4c44cd012a8fde65dcc3548557b580b5b6b33291)]:
+  - @wagmi/core@3.4.12
+  - @wagmi/connectors@8.0.14
+
+## 3.6.14
+
+### Patch Changes
+
+- Updated dependencies [[`9e8418a`](https://github.com/wevm/wagmi/commit/9e8418a1f751622846dde564ddd1eef4693f6005)]:
+  - @wagmi/core@3.4.11
+  - @wagmi/connectors@8.0.13
+
+## 3.6.13
+
+### Patch Changes
+
+- Fixed `useReadContracts` to prefer an explicit `chainId` parameter over inferred or connected chain ids. ([`8c56235`](https://github.com/wevm/wagmi/commit/8c56235764b33980051beffb3466f36bb200c768))
+
+## 3.6.12
+
+### Patch Changes
+
+- Updated dependencies [[`3829b3c`](https://github.com/wevm/wagmi/commit/3829b3c2abea72f50a25b112f0e6d5bec6ac8be6), [`3829b3c`](https://github.com/wevm/wagmi/commit/3829b3c2abea72f50a25b112f0e6d5bec6ac8be6), [`3829b3c`](https://github.com/wevm/wagmi/commit/3829b3c2abea72f50a25b112f0e6d5bec6ac8be6)]:
+  - @wagmi/connectors@8.0.12
+  - @wagmi/core@3.4.10
+
+## 3.6.11
+
+### Patch Changes
+
+- Updated dependencies [[`bb4fdbb`](https://github.com/wevm/wagmi/commit/bb4fdbb22df7d358dd461a3f32e83ac6ba4a0f20)]:
+  - @wagmi/connectors@8.0.11
+
+## 3.6.10
+
+### Patch Changes
+
+- `wagmi/tempo`: Added Actions and Hooks for `viem/tempo#wallet` actions. ([#5103](https://github.com/wevm/wagmi/pull/5103))
+
+- Updated dependencies [[`f86ad01`](https://github.com/wevm/wagmi/commit/f86ad0140f0d1c90936d43265f483477ace2eb56)]:
+  - @wagmi/core@3.4.9
+  - @wagmi/connectors@8.0.10
+
+## 3.6.9
+
+### Patch Changes
+
+- Updated dependencies [[`28b1437`](https://github.com/wevm/wagmi/commit/28b1437ec427e426b43543203f95ba8dc81ae649)]:
+  - @wagmi/core@3.4.8
+  - @wagmi/connectors@8.0.9
+
+## 3.6.8
+
+### Patch Changes
+
+- Updated dependencies [[`c9c0e2b`](https://github.com/wevm/wagmi/commit/c9c0e2b027985edc1e5c1fcd25fd69d9811472f3)]:
+  - @wagmi/connectors@8.0.8
+
+## 3.6.7
+
+### Patch Changes
+
+- Updated dependencies [[`2a9795d`](https://github.com/wevm/wagmi/commit/2a9795dd31f63c92dc0be1898e792fb3be8ec481)]:
+  - @wagmi/core@3.4.7
+  - @wagmi/connectors@8.0.7
+
+## 3.6.6
+
+### Patch Changes
+
+- Updated dependencies [[`f893ee6`](https://github.com/wevm/wagmi/commit/f893ee6cadd8090d003a9fd1117765c7ac18eb28)]:
+  - @wagmi/connectors@8.0.6
+
+## 3.6.5
+
+### Patch Changes
+
+- Updated dependencies [[`2058bd6`](https://github.com/wevm/wagmi/commit/2058bd668ae897a3c5480cf565c5716c4d06449b), [`a91f53e`](https://github.com/wevm/wagmi/commit/a91f53ecc4fecd1c39a268fd8a9ae7e8092f857f), [`98d85f5`](https://github.com/wevm/wagmi/commit/98d85f5eede0be988e94d799b9266749fccaae3c), [`2058bd6`](https://github.com/wevm/wagmi/commit/2058bd668ae897a3c5480cf565c5716c4d06449b)]:
+  - @wagmi/core@3.4.6
+  - @wagmi/connectors@8.0.5
+
+## 3.6.4
+
+### Patch Changes
+
+- Updated dependencies [[`2777227`](https://github.com/wevm/wagmi/commit/277722736aa88697408f68eb18ed08228303f27c), [`23d6e27`](https://github.com/wevm/wagmi/commit/23d6e2768a8e73f4ed5cc5196cdd1bf600af7c18)]:
+  - @wagmi/core@3.4.5
+  - @wagmi/connectors@8.0.4
+
+## 3.6.3
+
+### Patch Changes
+
+- Added Tempo Zones support. ([#5062](https://github.com/wevm/wagmi/pull/5062))
+
+- Updated dependencies [[`10b37ee`](https://github.com/wevm/wagmi/commit/10b37ee5407849d79a95302b2d60edbfb8f6b0c4), [`10b37ee`](https://github.com/wevm/wagmi/commit/10b37ee5407849d79a95302b2d60edbfb8f6b0c4)]:
+  - @wagmi/core@3.4.4
+  - @wagmi/connectors@8.0.3
+
+## 3.6.2
+
+### Patch Changes
+
+- Added `tempoWallet` connector ([#5058](https://github.com/wevm/wagmi/pull/5058))
+
+- Updated dependencies [[`c29bdfd`](https://github.com/wevm/wagmi/commit/c29bdfd510d00b57795c1a2e26feeddbca7b2509), [`c29bdfd`](https://github.com/wevm/wagmi/commit/c29bdfd510d00b57795c1a2e26feeddbca7b2509)]:
+  - @wagmi/connectors@8.0.2
+  - @wagmi/core@3.4.3
+
+## 3.6.1
+
+### Patch Changes
+
+- Fixed `feePayer` types for Tempo chains on `useSendTransaction`, `useSendTransactionSync`, `useWriteContract`, and `useWriteContractSync`. ([#5022](https://github.com/wevm/wagmi/pull/5022))
+
+- Fixed `createUseReadContract` return type inference when multiple view functions share the same argument shape. ([#5020](https://github.com/wevm/wagmi/pull/5020))
+
+- Updated dependencies [[`2a4660e`](https://github.com/wevm/wagmi/commit/2a4660e96e3c28bd9c2424a298beb57bce8902d2), [`f53f3f5`](https://github.com/wevm/wagmi/commit/f53f3f5d434f946ebcdb2a42fc7c3e2ac4522f15)]:
+  - @wagmi/core@3.4.2
+  - @wagmi/connectors@8.0.1
+
+## 3.6.0
+
+### Minor Changes
+
+- Update MetaMask connector from `@metamask/sdk` to the new `@metamask/connect-evm`. ([#4960](https://github.com/wevm/wagmi/pull/4960))
+
+  ```bash
+  npm install @metamask/connect-evm
+  npm uninstall @metamask/sdk
+  ```
+
+### Patch Changes
+
+- Updated dependencies [[`2f4316c`](https://github.com/wevm/wagmi/commit/2f4316ced40944b3af01534e4b6e9c1a4455c7a6), [`2a566ec`](https://github.com/wevm/wagmi/commit/2a566ecc770805abe5a39fb960bfb0336240df86)]:
+  - @wagmi/core@3.4.1
+  - @wagmi/connectors@8.0.0
+
+## 3.5.0
+
+### Minor Changes
+
+- Added `useSignTransaction` ([#4995](https://github.com/wevm/wagmi/pull/4995))
+
+### Patch Changes
+
+- Updated dependencies [[`8b96e2f`](https://github.com/wevm/wagmi/commit/8b96e2f46d9b3441d3b499b03924700ac0629be6)]:
+  - @wagmi/core@3.4.0
+  - @wagmi/connectors@7.2.1
+
+## 3.4.4
+
+### Patch Changes
+
+- Updated dependencies [[`c1dedd9`](https://github.com/wevm/wagmi/commit/c1dedd99c0a1878d7cd48476946868636ac81dd8), [`9dbdd82`](https://github.com/wevm/wagmi/commit/9dbdd8277808eb361fe7fe01ea34e4c6bb85c7a5)]:
+  - @wagmi/core@3.3.4
+  - @wagmi/connectors@7.2.0
+
+## 3.4.3
+
+### Patch Changes
+
+- Added ability to sign arbitrary `hash` on `webAuthn#connect`. ([#4994](https://github.com/wevm/wagmi/pull/4994))
+
+- Updated dependencies [[`4b3f5a3`](https://github.com/wevm/wagmi/commit/4b3f5a3f7b3f242e8fbc1f08ae2f81ae13c5e09f)]:
+  - @wagmi/core@3.3.3
+  - @wagmi/connectors@7.1.7
+
 ## 3.4.2
 
 ### Patch Changes

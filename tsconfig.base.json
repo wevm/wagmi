@@ -37,6 +37,9 @@
 
     // Skip type checking for node modules
     "skipLibCheck": true,
-    "noErrorTruncation": true
+    "noErrorTruncation": true,
+
+    // TypeScript 6.0 defaults `types` to `[]`, so we need to explicitly include `node`.
+    "types": ["node"]
   }
 }

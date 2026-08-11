@@ -69,7 +69,7 @@ test('default', () => {
     }),
   ).toMatchInlineSnapshot(`
     [
-      "https://eth.merkle.io",
+      "https://ethereum.reth.rs/rpc",
     ]
   `)
 
@@ -85,7 +85,7 @@ test('default', () => {
     }),
   ).toMatchInlineSnapshot(`
     [
-      "https://eth.merkle.io",
+      "https://ethereum.reth.rs/rpc",
       "https://lol.com",
     ]
   `)

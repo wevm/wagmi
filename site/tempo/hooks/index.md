@@ -21,16 +21,16 @@
 | [`nonce.useNonce`](/tempo/hooks/nonce.useNonce) | Hook for getting the nonce for an account and nonce key |
 | [`nonce.useWatchNonceIncremented`](/tempo/hooks/nonce.useWatchNonceIncremented) | Hook for watching nonce incremented events |
 | **Policy Hooks** | |
-| [`policy.useCreate`](#TODO) | Hook for creating a new transfer policy for token access control |
-| [`policy.useData`](#TODO) | Hook for getting the data for a transfer policy, including its type and admin address |
-| [`policy.useIsAuthorized`](#TODO) | Hook for checking if an address is authorized by a transfer policy |
-| [`policy.useModifyBlacklist`](#TODO) | Hook for modifying the blacklist for a blacklist-type transfer policy |
-| [`policy.useModifyWhitelist`](#TODO) | Hook for modifying the whitelist for a whitelist-type transfer policy |
-| [`policy.useSetAdmin`](#TODO) | Hook for setting the admin for a transfer policy |
-| [`policy.useWatchAdminUpdated`](#TODO) | Hook for watching policy admin update events |
-| [`policy.useWatchBlacklistUpdated`](#TODO) | Hook for watching blacklist update events |
-| [`policy.useWatchCreate`](#TODO) | Hook for watching policy creation events |
-| [`policy.useWatchWhitelistUpdated`](#TODO) | Hook for watching whitelist update events |
+| [`policy.useCreate`](/tempo/hooks/policy.useCreate) | Hook for creating a new transfer policy for token access control |
+| [`policy.useData`](/tempo/hooks/policy.useData) | Hook for getting the data for a transfer policy, including its type and admin address |
+| [`policy.useIsAuthorized`](/tempo/hooks/policy.useIsAuthorized) | Hook for checking if an address is authorized by a transfer policy |
+| [`policy.useModifyBlacklist`](/tempo/hooks/policy.useModifyBlacklist) | Hook for modifying the blacklist for a blacklist-type transfer policy |
+| [`policy.useModifyWhitelist`](/tempo/hooks/policy.useModifyWhitelist) | Hook for modifying the whitelist for a whitelist-type transfer policy |
+| [`policy.useSetAdmin`](/tempo/hooks/policy.useSetAdmin) | Hook for setting the admin for a transfer policy |
+| [`policy.useWatchAdminUpdated`](/tempo/hooks/policy.useWatchAdminUpdated) | Hook for watching policy admin update events |
+| [`policy.useWatchBlacklistUpdated`](/tempo/hooks/policy.useWatchBlacklistUpdated) | Hook for watching blacklist update events |
+| [`policy.useWatchCreate`](/tempo/hooks/policy.useWatchCreate) | Hook for watching policy creation events |
+| [`policy.useWatchWhitelistUpdated`](/tempo/hooks/policy.useWatchWhitelistUpdated) | Hook for watching whitelist update events |
 | **Reward Hooks** | |
 | [`reward.useClaim`](/tempo/hooks/reward.useClaim) | Hook for claiming accumulated rewards |
 | [`reward.useSetRecipient`](/tempo/hooks/reward.useSetRecipient) | Hook for setting or changing the reward recipient for a token holder |
@@ -81,3 +81,17 @@
 | [`token.useWatchMint`](/tempo/hooks/token.useWatchMint) | Hook for watching token mint events |
 | [`token.useWatchRole`](/tempo/hooks/token.useWatchRole) | Hook for watching role membership update events |
 | [`token.useWatchTransfer`](/tempo/hooks/token.useWatchTransfer) | Hook for watching token transfer events |
+| **Wallet Hooks** | |
+| [`wallet.useDeposit`](/tempo/hooks/wallet.useDeposit) | Hook for opening the wallet deposit flow with optional pre-filled deposit fields |
+| [`wallet.useSwap`](/tempo/hooks/wallet.useSwap) | Hook for opening the wallet swap flow with optional pre-filled swap fields |
+| [`wallet.useTransfer`](/tempo/hooks/wallet.useTransfer) | Hook for transferring a TIP-20 token |
+| **Zone Hooks** | |
+| [`zone.useAuthorizationTokenInfo`](/tempo/hooks/zone.useAuthorizationTokenInfo) | Hook for getting information about the current zone authorization token |
+| [`zone.useDeposit`](/tempo/hooks/zone.useDeposit) | Hook for depositing tokens from the parent Tempo chain into a zone |
+| [`zone.useEncryptedDeposit`](/tempo/hooks/zone.useEncryptedDeposit) | Hook for depositing tokens into a zone with an encrypted recipient and memo |
+| [`zone.useRequestVerifiableWithdrawal`](/tempo/hooks/zone.useRequestVerifiableWithdrawal) | Hook for requesting a verifiable withdrawal from a zone to the parent Tempo chain |
+| [`zone.useRequestWithdrawal`](/tempo/hooks/zone.useRequestWithdrawal) | Hook for requesting a withdrawal from a zone to the parent Tempo chain |
+| [`zone.useSignAuthorizationToken`](/tempo/hooks/zone.useSignAuthorizationToken) | Hook for signing and storing a Tempo zone authorization token |
+| [`zone.useWaitForTempoBlock`](/tempo/hooks/zone.useWaitForTempoBlock) | Hook for waiting for a zone to import a Tempo block |
+| [`zone.useWithdrawalFee`](/tempo/hooks/zone.useWithdrawalFee) | Hook for getting the withdrawal fee for a given gas limit |
+| [`zone.useZoneInfo`](/tempo/hooks/zone.useZoneInfo) | Hook for getting Tempo zone metadata and the latest imported Tempo block number |
