@@ -100,6 +100,17 @@ test('overloads', () => {
       }
     | undefined
   >(result4.data)
+
+  useReadViewOverloads({
+    // @ts-expect-error invalid functionName
+    functionName: 'invalid',
+  })
+
+  useReadViewOverloads({
+    functionName: 'foo',
+    // @ts-expect-error too many args
+    args: ['0x', '0x', '0x'],
+  })
 })
 
 test('functionName', () => {
@@ -145,4 +156,65 @@ test('functionName with overloads', () => {
       }
     | undefined
   >(result4.data)
+})
+
+test('narrows data for functions with matching argument shapes', () => {
+  const abiSameArgsDifferentReturns = [
+    {
+      type: 'function',
+      name: 'foo',
+      stateMutability: 'view',
+      inputs: [{ name: 'ilk', type: 'bytes32' }],
+      outputs: [{ type: 'uint256' }],
+    },
+    {
+      type: 'function',
+      name: 'bar',
+      stateMutability: 'view',
+      inputs: [{ name: 'ilk', type: 'bytes32' }],
+      outputs: [
+        { name: 'art', type: 'uint256' },
+        { name: 'rate', type: 'uint256' },
+      ],
+    },
+  ] as const
+  const useReadContractSameArgs = createUseReadContract({
+    abi: abiSameArgsDifferentReturns,
+  })
+
+  {
+    const result = useReadContractSameArgs({
+      functionName: 'foo',
+      args: [
+        '0x0000000000000000000000000000000000000000000000000000000000000000',
+      ],
+    })
+    assertType<bigint | undefined>(result.data)
+  }
+  {
+    const result = useReadContractSameArgs({
+      functionName: 'bar',
+      args: [
+        '0x0000000000000000000000000000000000000000000000000000000000000000',
+      ],
+    })
+    assertType<readonly [bigint, bigint] | undefined>(result.data)
+  }
+
+  useReadContractSameArgs({
+    // @ts-expect-error invalid functionName
+    functionName: 'baz',
+  })
+
+  useReadContractSameArgs({
+    functionName: 'foo',
+    // @ts-expect-error wrong args for foo (expects bytes32)
+    args: [123n],
+  })
+
+  useReadContractSameArgs({
+    functionName: 'foo',
+    // @ts-expect-error abi not allowed on generated hook
+    abi: abiSameArgsDifferentReturns,
+  })
 })

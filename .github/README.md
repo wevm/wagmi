@@ -114,12 +114,6 @@ If you find Wagmi useful or use it for work, please consider [sponsoring Wagmi](
       <img alt="context logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/context-light.svg" width="auto" height="50">
     </picture>
   </a>
-  <a href="https://twitter.com/prtyDAO">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/partydao-dark.svg">
-      <img alt="PartyDAO logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/partydao-light.svg" width="auto" height="50">
-    </picture>
-  </a>
   <a href="https://dynamic.xyz">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/dynamic-dark.svg">
@@ -144,7 +138,7 @@ If you find Wagmi useful or use it for work, please consider [sponsoring Wagmi](
       <img alt="Privy logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/privy-light.svg" width="auto" height="50">
     </picture>
   </a>
-  <a href="https://pancakeswap.finance/">
+  <a href="https://pancakeswap.finance">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/pancake-dark.svg">
       <img alt="pancake logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/pancake-light.svg" width="auto" height="50">
@@ -180,22 +174,10 @@ If you find Wagmi useful or use it for work, please consider [sponsoring Wagmi](
       <img alt="polymarket logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/polymarket-light.svg" width="auto" height="50">
     </picture>
   </a>
-  <a href="https://routescan.io">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/routescan-dark.svg">
-      <img alt="routescan logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/routescan-light.svg" width="auto" height="50">
-    </picture>
-  </a>
   <a href="https://sequence.xyz">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/sequence-dark.svg">
       <img alt="sequence logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/sequence-light.svg" width="auto" height="50">
-    </picture>
-  </a>
-  <a href="https://gemini.com">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/gemini-dark.svg">
-      <img alt="gemini logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/sponsors/gemini-light.svg" width="auto" height="50">
     </picture>
   </a>
   <a href="https://web3auth.io">
@@ -214,8 +196,5 @@ If you find Wagmi useful or use it for work, please consider [sponsoring Wagmi](
 <a href="https://vercel.com/?utm_source=wevm&utm_campaign=oss">
   <img src="https://www.datocms-assets.com/31049/1618983297-powered-by-vercel.svg" alt="Powered by Vercel" height="35">
 </a>
-<br />
-<a href="https://quicknode.com/?utm_source=wevm&utm_campaign=oss">
-  <img src="https://raw.githubusercontent.com/wevm/.github/refs/heads/main/content/quicknode-badge.svg" alt="Powered by QuickNode" height="35">
-</a>
+
 

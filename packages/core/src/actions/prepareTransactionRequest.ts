@@ -1,7 +1,9 @@
 import type {
   Account,
   Address,
+  Calls,
   Chain,
+  Client,
   PrepareTransactionRequestErrorType as viem_PrepareTransactionRequestErrorType,
   PrepareTransactionRequestParameters as viem_PrepareTransactionRequestParameters,
   PrepareTransactionRequestRequest as viem_PrepareTransactionRequestRequest,
@@ -11,14 +13,17 @@ import { prepareTransactionRequest as viem_prepareTransactionRequest } from 'vie
 
 import type { Config } from '../createConfig.js'
 import type { SelectChains } from '../types/chain.js'
-import type { ChainIdParameter } from '../types/properties.js'
+import type {
+  ChainIdParameter,
+  ConnectorParameter,
+} from '../types/properties.js'
 import type {
   IsNarrowable,
   UnionCompute,
   UnionStrictOmit,
 } from '../types/utils.js'
 import { getAction } from '../utils/getAction.js'
-import { getConnection } from './getConnection.js'
+import { getConnectorClient } from './getConnectorClient.js'
 
 export type PrepareTransactionRequestParameters<
   config extends Config = Config,
@@ -36,26 +41,48 @@ export type PrepareTransactionRequestParameters<
   chains extends readonly Chain[] = SelectChains<config, chainId>,
 > = {
   [key in keyof chains]: UnionCompute<
-    UnionStrictOmit<
-      viem_PrepareTransactionRequestParameters<
-        chains[key],
-        Account,
-        chains[key],
-        Account | Address,
-        request extends viem_PrepareTransactionRequestRequest<
-          chains[key],
-          chains[key]
-        >
-          ? request
-          : never
-      >,
-      'chain'
-    > &
-      ChainIdParameter<config, chainId> & {
+    | (PrepareTransactionRequestParameters_base<
+        config,
+        chainId,
+        request,
+        chains[key]
+      > & {
+        calls?: undefined
         to: Address
-      }
+      })
+    | (UnionStrictOmit<
+        PrepareTransactionRequestParameters_base<
+          config,
+          chainId,
+          request,
+          chains[key]
+        >,
+        'to'
+      > & {
+        calls: Calls<readonly unknown[]>
+        to?: Address | undefined
+      })
   >
 }[number]
+type PrepareTransactionRequestParameters_base<
+  config extends Config,
+  chainId extends config['chains'][number]['id'] | undefined,
+  request extends viem_PrepareTransactionRequestRequest<Chain, Chain>,
+  chain extends Chain,
+> = UnionStrictOmit<
+  viem_PrepareTransactionRequestParameters<
+    chain,
+    Account,
+    chain,
+    Account | Address,
+    request extends viem_PrepareTransactionRequestRequest<chain, chain>
+      ? request
+      : never
+  >,
+  'chain'
+> &
+  ChainIdParameter<config, chainId> &
+  ConnectorParameter
 
 export type PrepareTransactionRequestReturnType<
   config extends Config = Config,
@@ -103,10 +130,18 @@ export async function prepareTransactionRequest<
   config: config,
   parameters: PrepareTransactionRequestParameters<config, chainId, request>,
 ): Promise<PrepareTransactionRequestReturnType<config, chainId, request>> {
-  const { account: account_, chainId, ...rest } = parameters
+  const { account, chainId, connector, ...rest } = parameters
 
-  const account = account_ ?? getConnection(config).address
-  const client = config.getClient({ chainId })
+  let client: Client
+  if (typeof account === 'object' && account?.type === 'local')
+    client = config.getClient({ chainId })
+  else
+    client = await getConnectorClient(config, {
+      account: account ?? undefined,
+      assertChainId: false,
+      chainId,
+      connector,
+    })
 
   const action = getAction(
     client,

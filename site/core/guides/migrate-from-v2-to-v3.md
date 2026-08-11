@@ -15,7 +15,7 @@ const docsPath = 'core'
 
 Wagmi v3 gives you total control over connector dependencies. Since Wagmi's initial release, Wagmi included required connector dependencies as part of its package to eliminate the need to manage multiple third-party dependencies.
 
-This worked worked well in the early years as a "batteries-included" approach, but didn't allow for more fine-grained control over your dependency tree. By giving you control over connector dependencies, you can decide to only install what you need, manage version bumps at your own pace, and have total control over what third-party code and licenses you bring into your project
+This worked well in the early years as a "batteries-included" approach, but didn't allow for more fine-grained control over your dependency tree. By giving you control over connector dependencies, you can decide to only install what you need, manage version bumps at your own pace, and have total control over what third-party code and licenses you bring into your project
 
 To get started, install the latest version of Wagmi.
 

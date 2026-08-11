@@ -46,11 +46,6 @@ export function useSponsors() {
           url: 'https://www.stripe.com',
           img: 'stripe-light.svg',
         },
-        {
-          name: 'Gemini',
-          url: 'https://gemini.com',
-          img: 'gemini-light.svg',
-        },
       ],
       silver: [
         {
@@ -62,11 +57,6 @@ export function useSponsors() {
           name: 'Context',
           url: 'https://twitter.com/context',
           img: 'context-light.svg',
-        },
-        {
-          name: 'PartyDAO',
-          url: 'https://twitter.com/prtyDAO',
-          img: 'partydao-light.svg',
         },
         {
           name: 'SushiSwap',
@@ -122,11 +112,6 @@ export function useSponsors() {
           name: 'Web3Auth',
           url: 'https://web3auth.io',
           img: 'web3auth-light.svg',
-        },
-        {
-          name: 'Routescan',
-          url: 'https://routescan.io',
-          img: 'routescan-light.svg',
         },
       ],
     }

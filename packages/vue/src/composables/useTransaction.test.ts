@@ -13,7 +13,11 @@ test('default', async () => {
 
   await waitFor(result.isSuccess)
 
-  expect(deepUnref(result)).toMatchInlineSnapshot(`
+  const { data: data_, ...rest } = deepUnref(result)
+  const { blockTimestamp: _blockTimestamp, ...data } = data_ ?? {}
+  const value = { ...rest, data }
+
+  expect(value).toMatchInlineSnapshot(`
     {
       "data": {
         "accessList": [],

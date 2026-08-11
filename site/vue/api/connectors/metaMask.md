@@ -9,7 +9,7 @@ import packageJson from '../../../../packages/connectors/package.json'
 const docsPath = 'vue'
 const packageName = '@wagmi/vue'
 const connectorsPackageName = '@wagmi/vue/connectors'
-const connectorDependencyVersion = packageJson.peerDependencies['@metamask/sdk']
+const connectorDependencyVersion = packageJson.peerDependencies['@metamask/connect-evm']
 </script>
 
 <!-- @include: @shared/connectors/metaMask.md -->

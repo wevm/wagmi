@@ -1,6 +1,6 @@
 ---
 title: useCapabilities
-description: Hook for fetching the number of the most recent block seen.
+description: Hook for fetching wallet capabilities.
 ---
 
 <script setup>
@@ -49,13 +49,14 @@ import { type UseCapabilitiesParameters } from 'wagmi'
 Fetch capabilities for the provided account.
 
 ::: code-group
-```ts [index.ts]
-import { useCapabilities } from '@wagmi/core'
-import { config } from './config'
+```tsx [index.tsx]
+import { useCapabilities } from 'wagmi'
 
-const status = await useCapabilities({
-  account: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', // [!code focus]
-})
+function App() {
+  const result = useCapabilities({
+    account: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', // [!code focus]
+  })
+}
 ```
 <<< @/snippets/react/config.ts[config.ts]
 :::
@@ -84,7 +85,7 @@ function App() {
 
 `Connector | undefined`
 
-Connector to get call statuses with.
+Connector to get capabilities with.
 
 ::: code-group
 ```tsx [index.tsx]

@@ -1,11 +1,15 @@
 import { spawnSync } from 'node:child_process'
 import { cp, mkdir, symlink, writeFile } from 'node:fs/promises'
-import fixtures from 'fixturez'
+import { createFixture as createFsFixture } from 'fs-fixture'
 import { HttpResponse, http } from 'msw'
 import * as path from 'pathe'
-import { vi } from 'vitest'
+import { afterEach, vi } from 'vitest'
 
-const f = fixtures(__dirname)
+const fixtures: Awaited<ReturnType<typeof createFsFixture>>[] = []
+
+afterEach(async () => {
+  await Promise.all(fixtures.splice(0).map((fixture) => fixture.rm()))
+})
 
 type Json =
   | string
@@ -20,7 +24,10 @@ export async function createFixture<
     tsconfig?: true
   },
 >(config: { copyNodeModules?: boolean; dir?: string; files?: TFiles } = {}) {
-  const dir = config.dir ?? f.temp()
+  const fixture = config.dir ? undefined : await createFsFixture()
+  if (fixture) fixtures.push(fixture)
+
+  const dir = config.dir ?? fixture!.path
   await mkdir(dir, { recursive: true })
 
   // Create test files

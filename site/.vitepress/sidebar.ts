@@ -90,8 +90,8 @@ export function getSidebar() {
                 link: '/react/api/connectors/baseAccount',
               },
               {
-                text: 'gemini',
-                link: '/react/api/connectors/gemini',
+                text: 'coinbaseWallet',
+                link: '/react/api/connectors/coinbaseWallet',
               },
               { text: 'injected', link: '/react/api/connectors/injected' },
               {
@@ -103,12 +103,12 @@ export function getSidebar() {
                 link: '/react/api/connectors/mock',
               },
               {
-                text: 'porto',
-                link: '/react/api/connectors/porto',
-              },
-              {
                 text: 'safe',
                 link: '/react/api/connectors/safe',
+              },
+              {
+                text: 'tempoWallet',
+                link: '/react/api/connectors/tempoWallet',
               },
               {
                 text: 'walletConnect',
@@ -284,6 +284,10 @@ export function getSidebar() {
             link: '/react/api/hooks/useSignMessage',
           },
           {
+            text: 'useSignTransaction',
+            link: '/react/api/hooks/useSignTransaction',
+          },
+          {
             text: 'useSignTypedData',
             link: '/react/api/hooks/useSignTypedData',
           },
@@ -456,8 +460,8 @@ export function getSidebar() {
                 link: '/vue/api/connectors/baseAccount',
               },
               {
-                text: 'gemini',
-                link: '/vue/api/connectors/gemini',
+                text: 'coinbaseWallet',
+                link: '/vue/api/connectors/coinbaseWallet',
               },
               { text: 'injected', link: '/vue/api/connectors/injected' },
               {
@@ -469,12 +473,12 @@ export function getSidebar() {
                 link: '/vue/api/connectors/mock',
               },
               {
-                text: 'porto',
-                link: '/vue/api/connectors/porto',
-              },
-              {
                 text: 'safe',
                 link: '/vue/api/connectors/safe',
+              },
+              {
+                text: 'tempoWallet',
+                link: '/vue/api/connectors/tempoWallet',
               },
               {
                 text: 'walletConnect',
@@ -582,6 +586,10 @@ export function getSidebar() {
           {
             text: 'useSignMessage',
             link: '/vue/api/composables/useSignMessage',
+          },
+          {
+            text: 'useSignTransaction',
+            link: '/vue/api/composables/useSignTransaction',
           },
           {
             text: 'useSignTypedData',
@@ -712,8 +720,8 @@ export function getSidebar() {
                 link: '/core/api/connectors/baseAccount',
               },
               {
-                text: 'gemini',
-                link: '/core/api/connectors/gemini',
+                text: 'coinbaseWallet',
+                link: '/core/api/connectors/coinbaseWallet',
               },
               { text: 'injected', link: '/core/api/connectors/injected' },
               {
@@ -725,12 +733,12 @@ export function getSidebar() {
                 link: '/core/api/connectors/mock',
               },
               {
-                text: 'porto',
-                link: '/core/api/connectors/porto',
-              },
-              {
                 text: 'safe',
                 link: '/core/api/connectors/safe',
+              },
+              {
+                text: 'tempoWallet',
+                link: '/core/api/connectors/tempoWallet',
               },
               {
                 text: 'walletConnect',
@@ -1135,8 +1143,8 @@ export function getSidebar() {
                 link: '/solid/api/connectors/baseAccount',
               },
               {
-                text: 'gemini',
-                link: '/solid/api/connectors/gemini',
+                text: 'coinbaseWallet',
+                link: '/solid/api/connectors/coinbaseWallet',
               },
               { text: 'injected', link: '/solid/api/connectors/injected' },
               {
@@ -1148,12 +1156,12 @@ export function getSidebar() {
                 link: '/solid/api/connectors/mock',
               },
               {
-                text: 'porto',
-                link: '/solid/api/connectors/porto',
-              },
-              {
                 text: 'safe',
                 link: '/solid/api/connectors/safe',
+              },
+              {
+                text: 'tempoWallet',
+                link: '/solid/api/connectors/tempoWallet',
               },
               {
                 text: 'walletConnect',
@@ -1225,7 +1233,23 @@ export function getSidebar() {
             text: 'useDisconnect',
             link: '/solid/api/primitives/useDisconnect',
           },
+          {
+            text: 'useInfiniteReadContracts',
+            link: '/solid/api/primitives/useInfiniteReadContracts',
+          },
+          {
+            text: 'useReadContract',
+            link: '/solid/api/primitives/useReadContract',
+          },
+          {
+            text: 'useReadContracts',
+            link: '/solid/api/primitives/useReadContracts',
+          },
           { text: 'useReconnect', link: '/solid/api/primitives/useReconnect' },
+          {
+            text: 'useSimulateContract',
+            link: '/solid/api/primitives/useSimulateContract',
+          },
           {
             text: 'useSwitchChain',
             link: '/solid/api/primitives/useSwitchChain',
@@ -1237,6 +1261,18 @@ export function getSidebar() {
           {
             text: 'useWatchBlockNumber',
             link: '/solid/api/primitives/useWatchBlockNumber',
+          },
+          {
+            text: 'useWatchContractEvent',
+            link: '/solid/api/primitives/useWatchContractEvent',
+          },
+          {
+            text: 'useWriteContract',
+            link: '/solid/api/primitives/useWriteContract',
+          },
+          {
+            text: 'useWriteContractSync',
+            link: '/solid/api/primitives/useWriteContractSync',
           },
         ],
       },
@@ -1282,12 +1318,13 @@ export function getSidebar() {
         items: [
           { text: 'Getting Started', link: '/tempo/getting-started' },
           { text: 'Chains', link: '/tempo/chains' },
+          { text: 'Connectors', link: '/tempo/connectors' },
           { text: 'Tempo Docs & Guides', link: 'https://docs.tempo.xyz' },
         ],
       },
       {
         text: 'Hooks',
-        link: '/tempo/hooks/',
+        link: '/tempo/hooks',
         items: [
           {
             text: 'AMM',
@@ -1523,11 +1560,59 @@ export function getSidebar() {
               },
             ],
           },
+          {
+            text: 'Wallet',
+            collapsed: true,
+            items: [
+              { text: 'useDeposit', link: '/tempo/hooks/wallet.useDeposit' },
+              { text: 'useSwap', link: '/tempo/hooks/wallet.useSwap' },
+              { text: 'useTransfer', link: '/tempo/hooks/wallet.useTransfer' },
+            ],
+          },
+          {
+            text: 'Zone',
+            collapsed: true,
+            items: [
+              {
+                text: 'useAuthorizationTokenInfo',
+                link: '/tempo/hooks/zone.useAuthorizationTokenInfo',
+              },
+              {
+                text: 'useDeposit',
+                link: '/tempo/hooks/zone.useDeposit',
+              },
+              {
+                text: 'useDepositStatus',
+                link: '/tempo/hooks/zone.useDepositStatus',
+              },
+              {
+                text: 'useEncryptedDeposit',
+                link: '/tempo/hooks/zone.useEncryptedDeposit',
+              },
+              {
+                text: 'useRequestVerifiableWithdrawal',
+                link: '/tempo/hooks/zone.useRequestVerifiableWithdrawal',
+              },
+              {
+                text: 'useRequestWithdrawal',
+                link: '/tempo/hooks/zone.useRequestWithdrawal',
+              },
+              {
+                text: 'useSignAuthorizationToken',
+                link: '/tempo/hooks/zone.useSignAuthorizationToken',
+              },
+              {
+                text: 'useWithdrawalFee',
+                link: '/tempo/hooks/zone.useWithdrawalFee',
+              },
+              { text: 'useZoneInfo', link: '/tempo/hooks/zone.useZoneInfo' },
+            ],
+          },
         ],
       },
       {
         text: 'Actions',
-        link: '/tempo/actions/',
+        link: '/tempo/actions',
         items: [
           {
             text: 'AMM',
@@ -1739,25 +1824,69 @@ export function getSidebar() {
               },
             ],
           },
+          {
+            text: 'Wallet',
+            collapsed: true,
+            items: [
+              { text: 'deposit', link: '/tempo/actions/wallet.deposit' },
+              { text: 'swap', link: '/tempo/actions/wallet.swap' },
+              { text: 'transfer', link: '/tempo/actions/wallet.transfer' },
+            ],
+          },
+          {
+            text: 'Zone',
+            collapsed: true,
+            items: [
+              {
+                text: 'deposit',
+                link: '/tempo/actions/zone.deposit',
+              },
+              {
+                text: 'getAuthorizationTokenInfo',
+                link: '/tempo/actions/zone.getAuthorizationTokenInfo',
+              },
+              {
+                text: 'getDepositStatus',
+                link: '/tempo/actions/zone.getDepositStatus',
+              },
+              {
+                text: 'encryptedDeposit',
+                link: '/tempo/actions/zone.encryptedDeposit',
+              },
+              {
+                text: 'getWithdrawalFee',
+                link: '/tempo/actions/zone.getWithdrawalFee',
+              },
+              {
+                text: 'getZoneInfo',
+                link: '/tempo/actions/zone.getZoneInfo',
+              },
+              {
+                text: 'requestVerifiableWithdrawal',
+                link: '/tempo/actions/zone.requestVerifiableWithdrawal',
+              },
+              {
+                text: 'requestWithdrawal',
+                link: '/tempo/actions/zone.requestWithdrawal',
+              },
+              {
+                text: 'signAuthorizationToken',
+                link: '/tempo/actions/zone.signAuthorizationToken',
+              },
+            ],
+          },
         ],
       },
       {
         text: 'Connectors',
-        link: '/tempo/connectors/',
+        link: '/tempo/connectors',
         items: [
+          { text: 'tempoWallet', link: '/tempo/connectors/tempoWallet' },
           {
             text: 'dangerous_secp256k1',
             link: '/tempo/connectors/dangerous_secp256k1',
           },
           { text: 'webAuthn', link: '/tempo/connectors/webAuthn' },
-        ],
-      },
-      {
-        text: 'Key Managers',
-        link: '/tempo/keyManagers/',
-        items: [
-          { text: 'http', link: '/tempo/keyManagers/http' },
-          { text: 'localStorage', link: '/tempo/keyManagers/localStorage' },
         ],
       },
     ],

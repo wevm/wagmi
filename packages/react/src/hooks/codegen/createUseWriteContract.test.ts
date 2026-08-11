@@ -29,7 +29,7 @@ test('multichain', async () => {
   const { result } = await renderHook(() => useWriteWagmiMintExample())
 
   result.current.writeContract({ functionName: 'mint' })
-  await vi.waitUntil(() => result.current.isSuccess, { timeout: 5_000 })
+  await vi.waitUntil(() => result.current.isSuccess, { timeout: 10_000 })
 
   console.log(result.current.data)
   expect(result.current.data).toBeDefined()

@@ -32,3 +32,11 @@ test('parameters: chainId', () => {
     }
   `)
 })
+
+test('parameters: index 0 with blockNumber enables query', () => {
+  const options = getTransactionQueryOptions(config, {
+    blockNumber: 1n,
+    index: 0,
+  })
+  expect(options.enabled).toBe(true)
+})

@@ -184,7 +184,7 @@ export const config = createConfig({
 
 ### 4. Display Connection
 
-Lastly, if an connection is made, we want to show some basic information, like the connected address and ENS name and avatar.
+Lastly, if a connection is made, we want to show some basic information, like the connected address and ENS name and avatar.
 
 Below, we are using hooks like `useConnection`, `useEnsAvatar` and `useEnsName` to extract this information.
 
